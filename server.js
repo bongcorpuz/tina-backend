@@ -18,7 +18,6 @@ import cors from "cors";
 import OpenAI from "openai";
 
 import { listDriveFiles, extractTextFromFile } from "./drive-reader.js";
-import { classifyTaxQuestion } from "./tax-classifier.js";
 
 import {
   loginUser,
@@ -164,13 +163,6 @@ function uniqueSources(docs = []) {
     }));
 }
 
-function getFallbackRefs() {
-  return [
-    "National Internal Revenue Code (NIRC), as amended",
-    "Relevant BIR Revenue Regulations / RMCs / RMOs"
-  ];
-}
-
 function buildMemoryContext(messages = []) {
   if (!messages.length) return "No prior conversation.";
 
@@ -206,6 +198,36 @@ async function saveConversationTurn({
   await saveMemoryHooks(supabase, userId, hooks);
 }
 
+/*
+  Allows protected admin/index routes using either:
+  1. normal JWT authentication, or
+  2. INDEX_SECRET for quick Render/browser testing.
+
+  Example:
+  /index-drive?secret=YOUR_INDEX_SECRET
+*/
+function allowAuthenticatedOrIndexSecret(req, res, next) {
+  const providedSecret =
+    req.query.secret ||
+    req.headers["x-index-secret"] ||
+    req.headers["x-admin-secret"];
+
+  if (
+    process.env.INDEX_SECRET &&
+    providedSecret &&
+    providedSecret === process.env.INDEX_SECRET
+  ) {
+    req.user = {
+      id: "index-secret-admin",
+      username: "index-secret-admin",
+      role: "admin"
+    };
+    return next();
+  }
+
+  return authenticate(req, res, next);
+}
+
 /* ================= HEALTH ================= */
 
 app.get("/", (req, res) => {
@@ -218,7 +240,8 @@ app.get("/health", (req, res) => {
     openai: Boolean(process.env.OPENAI_API_KEY),
     supabase: Boolean(process.env.SUPABASE_URL),
     googleDriveFolder: Boolean(process.env.GOOGLE_DRIVE_FOLDER_ID),
-    googleKeyFile: Boolean(process.env.GOOGLE_SERVICE_ACCOUNT_KEY_FILE),
+    googleServiceAccountJson: Boolean(process.env.GOOGLE_SERVICE_ACCOUNT_JSON),
+    oldGoogleKeyFile: Boolean(process.env.GOOGLE_SERVICE_ACCOUNT_KEY_FILE),
     vectorStore: getVectorStoreStats(),
     time: new Date().toISOString()
   });
@@ -353,7 +376,7 @@ app.get("/conversations/:conversationId/messages", authenticate, async (req, res
 
 /* ================= GOOGLE DRIVE ROUTES ================= */
 
-app.get("/list", authenticate, async (req, res) => {
+app.get("/list", allowAuthenticatedOrIndexSecret, async (req, res) => {
   try {
     const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
 
@@ -380,7 +403,7 @@ app.get("/list", authenticate, async (req, res) => {
   }
 });
 
-app.get("/read-drive", authenticate, async (req, res) => {
+app.get("/read-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
   try {
     const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
 
@@ -402,6 +425,7 @@ app.get("/read-drive", authenticate, async (req, res) => {
         results.push({
           fileName: file.name,
           normalizedSource: normalizeSourceName(file.name),
+          path: file.path || file.name,
           mimeType: file.mimeType,
           textLength: text.length,
           textPreview: text.substring(0, 1000)
@@ -410,6 +434,7 @@ app.get("/read-drive", authenticate, async (req, res) => {
         results.push({
           fileName: file.name,
           normalizedSource: normalizeSourceName(file.name),
+          path: file.path || file.name,
           mimeType: file.mimeType,
           textLength: 0,
           error: fileError.message || "Failed to read file"
@@ -432,7 +457,7 @@ app.get("/read-drive", authenticate, async (req, res) => {
   }
 });
 
-app.get("/index-drive", authenticate, async (req, res) => {
+app.get("/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
   try {
     const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
 
@@ -443,6 +468,7 @@ app.get("/index-drive", authenticate, async (req, res) => {
       });
     }
 
+    console.log("Starting Google Drive indexing...");
     await clearVectorStore();
 
     const files = await listDriveFiles(folderId);
@@ -458,6 +484,7 @@ app.get("/index-drive", authenticate, async (req, res) => {
           failed.push({
             fileName: file.name,
             normalizedSource: normalizeSourceName(file.name),
+            path: file.path || file.name,
             mimeType: file.mimeType,
             reason: "No readable text"
           });
@@ -472,7 +499,8 @@ app.get("/index-drive", authenticate, async (req, res) => {
           originalSource: file.name,
           normalizedSource,
           mimeType: file.mimeType,
-          path: file.path || file.name
+          path: file.path || file.name,
+          modifiedTime: file.modifiedTime || null
         });
 
         indexed.push({
@@ -496,13 +524,22 @@ app.get("/index-drive", authenticate, async (req, res) => {
       }
     }
 
+    const stats = getVectorStoreStats();
+
+    console.log("Google Drive indexing completed:", {
+      totalFilesChecked: files.length,
+      filesIndexed: indexed.length,
+      filesFailed: failed.length,
+      vectorStore: stats
+    });
+
     res.json({
       success: true,
       message: "Drive indexing completed.",
       totalFilesChecked: files.length,
       filesIndexed: indexed.length,
       filesFailed: failed.length,
-      vectorStore: getVectorStoreStats(),
+      vectorStore: stats,
       indexed,
       failed
     });
@@ -515,7 +552,7 @@ app.get("/index-drive", authenticate, async (req, res) => {
   }
 });
 
-app.get("/vector-stats", authenticate, async (req, res) => {
+app.get("/vector-stats", allowAuthenticatedOrIndexSecret, async (req, res) => {
   try {
     res.json({
       success: true,
@@ -529,6 +566,47 @@ app.get("/vector-stats", authenticate, async (req, res) => {
     });
   }
 });
+
+/* ================= FALLBACK ANSWER ================= */
+
+async function generateGeneralFallbackAnswer(cleanQuestion, memoryContext) {
+  const fallbackSystemPrompt = `
+You are TINA, Tax Information Navigation Assistant for Bong Corpuz & Co. CPAs.
+
+You are allowed to answer using general tax knowledge only when no indexed Google Drive source is available.
+
+Rules:
+1. Clearly state that no indexed source was found.
+2. Do not pretend the answer came from the indexed knowledge base.
+3. Keep the answer concise, professional, and Philippine-tax oriented.
+4. If the matter requires legal/tax verification, advise checking the NIRC, BIR issuances, or official BIR source.
+5. Do not invent specific RR, RMC, RMO, deadlines, rates, or citations if uncertain.
+`.trim();
+
+  const fallbackUserPrompt = `
+Conversation Memory:
+${memoryContext}
+
+Question:
+${cleanQuestion}
+`.trim();
+
+  const response = await openai.chat.completions.create({
+    model: process.env.OPENAI_MODEL || "gpt-4o-mini",
+    temperature: 0.2,
+    messages: [
+      { role: "system", content: fallbackSystemPrompt },
+      { role: "user", content: fallbackUserPrompt }
+    ]
+  });
+
+  const text = response.choices?.[0]?.message?.content?.trim();
+
+  return (
+    "No sufficient indexed Google Drive source was found. The following is a general TINA fallback answer and should be verified against official BIR/NIRC sources:\n\n" +
+    (text || "No fallback answer generated.")
+  );
+}
 
 /* ================= ASK WITH EXPERT TINA FLOW ================= */
 
@@ -571,9 +649,19 @@ app.post("/ask", authenticate, async (req, res) => {
       }
     }
 
+    /*
+      If no indexed docs are found:
+      - For specific RR/RMC/RMO: do not fallback, to avoid fake issuance answers.
+      - For general questions: use general fallback.
+    */
     if (!relevantDocs || relevantDocs.length === 0) {
-      const answerText =
-        "No sufficient data found in indexed sources. TINA will not generate an answer without a verified source.";
+      let answerText;
+
+      if (issuance) {
+        answerText = `No indexed document found for ${issuance.type} No. ${issuance.number}-${issuance.year}. TINA will not generate a speculative answer. Please upload or re-index the exact issuance.`;
+      } else {
+        answerText = await generateGeneralFallbackAnswer(cleanQuestion, memoryContext);
+      }
 
       await saveConversationTurn({
         conversationId,
@@ -585,13 +673,18 @@ app.post("/ask", authenticate, async (req, res) => {
       return res.json({
         success: true,
         answer: answerText,
-        answerMode: "no_context",
-        confidence: "LOW",
+        answerMode: issuance ? "no_exact_issuance_match" : "general_fallback_no_context",
+        confidence: issuance ? "LOW" : "GENERAL",
         sourcesUsed: [],
-        vectorMatches: 0
+        vectorMatches: 0,
+        detectedIssuance: issuance || null
       });
     }
 
+    /*
+      Exact issuance protection:
+      If user asks RR 01-2026, TINA must use the exact indexed document only.
+    */
     if (issuance) {
       const exactDocs = relevantDocs.filter((doc) =>
         isExactIssuanceMatch(doc, issuance)
@@ -613,7 +706,7 @@ app.post("/ask", authenticate, async (req, res) => {
           answerMode: "no_exact_issuance_match",
           confidence: "LOW",
           sourcesUsed: [],
-          vectorMatches: 0,
+          vectorMatches: relevantDocs.length,
           detectedIssuance: issuance
         });
       }
@@ -629,9 +722,20 @@ app.post("/ask", authenticate, async (req, res) => {
       return !Number.isNaN(score) && score >= MIN_SCORE;
     });
 
+    /*
+      Low score:
+      - For specific issuance: already protected above.
+      - For general question: allow general fallback instead of dead-end.
+    */
     if (highConfidenceDocs.length === 0) {
-      const answerText =
-        "Insufficient supporting data found in indexed sources. TINA will not generate an answer to avoid incorrect interpretation.";
+      let answerText;
+
+      if (issuance) {
+        answerText =
+          "Insufficient supporting data found in indexed sources. TINA will not generate an answer to avoid incorrect interpretation.";
+      } else {
+        answerText = await generateGeneralFallbackAnswer(cleanQuestion, memoryContext);
+      }
 
       await saveConversationTurn({
         conversationId,
@@ -643,8 +747,8 @@ app.post("/ask", authenticate, async (req, res) => {
       return res.json({
         success: true,
         answer: answerText,
-        answerMode: "low_confidence",
-        confidence: "LOW",
+        answerMode: issuance ? "low_confidence" : "general_fallback_low_confidence",
+        confidence: issuance ? "LOW" : "GENERAL",
         sourcesUsed: [],
         vectorMatches: relevantDocs.length,
         detectedIssuance: issuance || null
@@ -754,8 +858,7 @@ Answer strictly using only the CONTEXT. If the CONTEXT does not clearly support 
       );
 
     if (!answerText || !answerText.toLowerCase().includes("source:")) {
-      answerText =
-        "Answer blocked: No verifiable source citation was generated.";
+      answerText = "Answer blocked: No verifiable source citation was generated.";
     } else if (!hasSourceMention) {
       answerText += `\n\nSource: ${sourceNames.join(", ")}`;
     }
@@ -780,7 +883,7 @@ Answer strictly using only the CONTEXT. If the CONTEXT does not clearly support 
     console.error("Ask error:", error);
     res.status(500).json({
       success: false,
-      error: "Ask failed"
+      error: error.message || "Ask failed"
     });
   }
 });
