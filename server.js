@@ -1,3 +1,7 @@
+import "dotenv/config";
+import express from "express";
+import cors from "cors";
+import OpenAI from "openai";
 import { createClient } from "@supabase/supabase-js";
 
 import {
@@ -12,18 +16,12 @@ import {
   saveMemoryHooks
 } from "./memory-hooks.js";
 
-import "dotenv/config";
-import express from "express";
-import cors from "cors";
-import OpenAI from "openai";
-
 import { listDriveFiles, extractTextFromFile } from "./drive-reader.js";
 
 import {
   loginUser,
   registerUser,
-  authenticate,
-  requireAdmin
+  authenticate
 } from "./auth.js";
 
 import {
@@ -37,7 +35,7 @@ import {
 const app = express();
 
 app.use(cors({ origin: "*" }));
-app.use(express.json({ limit: "10mb" }));
+app.use(express.json({ limit: "25mb" }));
 
 /* ================= INIT ================= */
 
@@ -99,72 +97,20 @@ function getDocOriginalName(doc = {}) {
   );
 }
 
-/* ================= TINA V2 AUTHORITY ENGINE ================= */
+/* ================= AUTHORITY ENGINE ================= */
 
 function getSourceTier(doc = {}) {
   const value = `${getDocPath(doc)} ${getDocOriginalName(doc)} ${doc.source || ""}`.toLowerCase();
 
-  if (value.includes("01_tax_code")) {
-    return {
-      tier: 1,
-      label: "Tax Code / NIRC",
-      weight: 1.0
-    };
-  }
+  if (value.includes("01_tax_code")) return { tier: 1, label: "Tax Code / NIRC", weight: 1.0 };
+  if (value.includes("02_revenue_regulations")) return { tier: 2, label: "Revenue Regulations", weight: 0.95 };
+  if (value.includes("03_rmc")) return { tier: 3, label: "Revenue Memorandum Circulars", weight: 0.9 };
+  if (value.includes("04_rmo")) return { tier: 4, label: "Revenue Memorandum Orders", weight: 0.85 };
+  if (value.includes("05_bir_rulings")) return { tier: 5, label: "BIR Rulings", weight: 0.75 };
+  if (value.includes("06_court_cases")) return { tier: 6, label: "Court Cases", weight: 0.6 };
+  if (value.includes("07_cpa_notes")) return { tier: 7, label: "CPA Notes / Internal Notes", weight: 0.4 };
 
-  if (value.includes("02_revenue_regulations")) {
-    return {
-      tier: 2,
-      label: "Revenue Regulations",
-      weight: 0.95
-    };
-  }
-
-  if (value.includes("03_rmc")) {
-    return {
-      tier: 3,
-      label: "Revenue Memorandum Circulars",
-      weight: 0.9
-    };
-  }
-
-  if (value.includes("04_rmo")) {
-    return {
-      tier: 4,
-      label: "Revenue Memorandum Orders",
-      weight: 0.85
-    };
-  }
-
-  if (value.includes("05_bir_rulings")) {
-    return {
-      tier: 5,
-      label: "BIR Rulings",
-      weight: 0.75
-    };
-  }
-
-  if (value.includes("06_court_cases")) {
-    return {
-      tier: 6,
-      label: "Court Cases",
-      weight: 0.6
-    };
-  }
-
-  if (value.includes("07_cpa_notes")) {
-    return {
-      tier: 7,
-      label: "CPA Notes / Internal Notes",
-      weight: 0.4
-    };
-  }
-
-  return {
-    tier: 99,
-    label: "Unclassified Source",
-    weight: 0.5
-  };
+  return { tier: 99, label: "Unclassified Source", weight: 0.5 };
 }
 
 function classifyQuestion(question = "") {
@@ -175,16 +121,9 @@ function classifyQuestion(question = "") {
     q.includes("revenue regulation") ||
     q.includes("revenue memorandum circular") ||
     q.includes("revenue memorandum order")
-  ) {
-    return "issuance";
-  }
+  ) return "issuance";
 
-  if (
-    q.includes("bir ruling") ||
-    q.includes("da(") ||
-    q.includes("ot-") ||
-    q.includes("ruling no")
-  ) {
+  if (q.includes("bir ruling") || q.includes("da(") || q.includes("ot-") || q.includes("ruling no")) {
     return "ruling";
   }
 
@@ -196,9 +135,7 @@ function classifyQuestion(question = "") {
     q.includes("cta") ||
     q.includes("supreme court") ||
     q.includes("g.r. no")
-  ) {
-    return "case";
-  }
+  ) return "case";
 
   if (
     q.startsWith("what is") ||
@@ -207,9 +144,7 @@ function classifyQuestion(question = "") {
     q.includes("meaning of") ||
     q.includes("definition of") ||
     q.includes("explain")
-  ) {
-    return "concept";
-  }
+  ) return "concept";
 
   if (
     q.includes("deadline") ||
@@ -219,9 +154,7 @@ function classifyQuestion(question = "") {
     q.includes("rate") ||
     q.includes("threshold") ||
     q.includes("penalty")
-  ) {
-    return "compliance";
-  }
+  ) return "compliance";
 
   return "general";
 }
@@ -229,25 +162,11 @@ function classifyQuestion(question = "") {
 function isPreferredForQuestion(doc, questionType) {
   const { tier } = getSourceTier(doc);
 
-  if (questionType === "concept") {
-    return tier === 1 || tier === 2 || tier === 3;
-  }
-
-  if (questionType === "compliance") {
-    return tier === 1 || tier === 2 || tier === 3 || tier === 4;
-  }
-
-  if (questionType === "ruling") {
-    return tier === 5 || tier === 1 || tier === 2 || tier === 3;
-  }
-
-  if (questionType === "case") {
-    return tier === 6;
-  }
-
-  if (questionType === "issuance") {
-    return tier === 2 || tier === 3 || tier === 4;
-  }
+  if (questionType === "concept") return tier === 1 || tier === 2 || tier === 3;
+  if (questionType === "compliance") return tier === 1 || tier === 2 || tier === 3 || tier === 4;
+  if (questionType === "ruling") return tier === 5 || tier === 1 || tier === 2 || tier === 3;
+  if (questionType === "case") return tier === 6;
+  if (questionType === "issuance") return tier === 2 || tier === 3 || tier === 4;
 
   return true;
 }
@@ -266,19 +185,13 @@ function rankDocsByAuthority(docs = []) {
       };
     })
     .sort((a, b) => {
-      if (b.adjustedScore !== a.adjustedScore) {
-        return b.adjustedScore - a.adjustedScore;
-      }
-
+      if (b.adjustedScore !== a.adjustedScore) return b.adjustedScore - a.adjustedScore;
       return a.sourceTier.tier - b.sourceTier.tier;
     });
 }
 
 function filterDocsByQuestionType(docs = [], questionType = "general") {
-  const preferredDocs = docs.filter((doc) =>
-    isPreferredForQuestion(doc, questionType)
-  );
-
+  const preferredDocs = docs.filter((doc) => isPreferredForQuestion(doc, questionType));
   return preferredDocs.length > 0 ? preferredDocs : docs;
 }
 
@@ -287,44 +200,14 @@ function filterDocsByQuestionType(docs = [], questionType = "general") {
 function detectIssuanceQuery(question = "") {
   const q = String(question || "");
 
-  const rr = q.match(
-    /\b(?:RR|Revenue\s+Regulation[s]?)\s*(?:No\.?)?\s*0*(\d+)\s*[-_ ]?\s*(\d{2,4})\b/i
-  );
+  const rr = q.match(/\b(?:RR|Revenue\s+Regulation[s]?)\s*(?:No\.?)?\s*0*(\d+)\s*[-_ ]?\s*(\d{2,4})\b/i);
+  if (rr) return { type: "RR", number: rr[1], year: rr[2], normalized: `rr-${rr[1]}-${rr[2]}` };
 
-  if (rr) {
-    return {
-      type: "RR",
-      number: rr[1],
-      year: rr[2],
-      normalized: `rr-${rr[1]}-${rr[2]}`
-    };
-  }
+  const rmc = q.match(/\b(?:RMC|Revenue\s+Memorandum\s+Circular[s]?)\s*(?:No\.?)?\s*0*(\d+)\s*[-_ ]?\s*(\d{2,4})\b/i);
+  if (rmc) return { type: "RMC", number: rmc[1], year: rmc[2], normalized: `rmc-${rmc[1]}-${rmc[2]}` };
 
-  const rmc = q.match(
-    /\b(?:RMC|Revenue\s+Memorandum\s+Circular[s]?)\s*(?:No\.?)?\s*0*(\d+)\s*[-_ ]?\s*(\d{2,4})\b/i
-  );
-
-  if (rmc) {
-    return {
-      type: "RMC",
-      number: rmc[1],
-      year: rmc[2],
-      normalized: `rmc-${rmc[1]}-${rmc[2]}`
-    };
-  }
-
-  const rmo = q.match(
-    /\b(?:RMO|Revenue\s+Memorandum\s+Order[s]?)\s*(?:No\.?)?\s*0*(\d+)\s*[-_ ]?\s*(\d{2,4})\b/i
-  );
-
-  if (rmo) {
-    return {
-      type: "RMO",
-      number: rmo[1],
-      year: rmo[2],
-      normalized: `rmo-${rmo[1]}-${rmo[2]}`
-    };
-  }
+  const rmo = q.match(/\b(?:RMO|Revenue\s+Memorandum\s+Order[s]?)\s*(?:No\.?)?\s*0*(\d+)\s*[-_ ]?\s*(\d{2,4})\b/i);
+  if (rmo) return { type: "RMO", number: rmo[1], year: rmo[2], normalized: `rmo-${rmo[1]}-${rmo[2]}` };
 
   return null;
 }
@@ -382,12 +265,7 @@ function buildMemoryContext(messages = []) {
     .join("\n");
 }
 
-async function saveConversationTurn({
-  conversationId,
-  userId,
-  question,
-  answerText
-}) {
+async function saveConversationTurn({ conversationId, userId, question, answerText }) {
   if (!conversationId || !userId) return;
 
   await saveMessage(supabase, {
@@ -432,10 +310,31 @@ function allowAuthenticatedOrIndexSecret(req, res, next) {
   return authenticate(req, res, next);
 }
 
-/* ================= HEALTH ================= */
+/* ================= HEALTH / DIAGNOSTICS ================= */
 
 app.get("/", (req, res) => {
-  res.send("TINA backend is running.");
+  res.send("TINA backend is running. Use /health, /routes, /index-drive?secret=YOUR_SECRET.");
+});
+
+app.get("/routes", (req, res) => {
+  res.json({
+    success: true,
+    message: "Available TINA backend routes",
+    routes: [
+      "GET /",
+      "GET /health",
+      "GET /routes",
+      "POST /register",
+      "POST /login",
+      "GET /list?secret=YOUR_SECRET",
+      "GET /read-drive?secret=YOUR_SECRET",
+      "GET /index-drive?secret=YOUR_SECRET",
+      "GET /reindex?secret=YOUR_SECRET",
+      "GET /admin/index-drive?secret=YOUR_SECRET",
+      "GET /vector-stats?secret=YOUR_SECRET",
+      "POST /ask"
+    ]
+  });
 });
 
 app.get("/health", (req, res) => {
@@ -443,8 +342,13 @@ app.get("/health", (req, res) => {
     status: "ok",
     engine: "TINA v2 Big 4 Tax Intelligence Engine",
     openai: Boolean(process.env.OPENAI_API_KEY),
-    supabase: Boolean(process.env.SUPABASE_URL),
+    openaiModel: process.env.OPENAI_MODEL || "gpt-4o-mini",
+    supabaseUrl: Boolean(process.env.SUPABASE_URL),
+    supabaseServiceRole: Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY),
     googleDriveFolder: Boolean(process.env.GOOGLE_DRIVE_FOLDER_ID),
+    googleDriveFolderIdPreview: process.env.GOOGLE_DRIVE_FOLDER_ID
+      ? `${process.env.GOOGLE_DRIVE_FOLDER_ID.slice(0, 6)}...`
+      : null,
     googleServiceAccountJson: Boolean(process.env.GOOGLE_SERVICE_ACCOUNT_JSON),
     oldGoogleKeyFile: Boolean(process.env.GOOGLE_SERVICE_ACCOUNT_KEY_FILE),
     indexSecretEnabled: Boolean(process.env.INDEX_SECRET),
@@ -508,9 +412,7 @@ app.post("/conversations", authenticate, async (req, res) => {
     const userId = getUserId(req);
     const { title } = req.body;
 
-    if (!userId) {
-      return res.status(401).json({ error: "User ID not found in token." });
-    }
+    if (!userId) return res.status(401).json({ error: "User ID not found in token." });
 
     const conversation = await createConversation(supabase, {
       userId,
@@ -534,9 +436,7 @@ app.get("/conversations", authenticate, async (req, res) => {
   try {
     const userId = getUserId(req);
 
-    if (!userId) {
-      return res.status(401).json({ error: "User ID not found in token." });
-    }
+    if (!userId) return res.status(401).json({ error: "User ID not found in token." });
 
     const conversations = await getUserConversations(supabase, userId);
 
@@ -558,9 +458,7 @@ app.get("/conversations/:conversationId/messages", authenticate, async (req, res
     const userId = getUserId(req);
     const { conversationId } = req.params;
 
-    if (!userId) {
-      return res.status(401).json({ error: "User ID not found in token." });
-    }
+    if (!userId) return res.status(401).json({ error: "User ID not found in token." });
 
     const messages = await getConversationMessages(supabase, {
       conversationId,
@@ -581,6 +479,112 @@ app.get("/conversations/:conversationId/messages", authenticate, async (req, res
 });
 
 /* ================= GOOGLE DRIVE ROUTES ================= */
+
+async function runDriveIndexing() {
+  const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
+
+  if (!folderId) {
+    throw new Error("GOOGLE_DRIVE_FOLDER_ID not set");
+  }
+
+  console.log("🚀 Starting TINA v2 Google Drive indexing...");
+  console.log("📁 Folder ID:", folderId);
+
+  await clearVectorStore();
+
+  const files = await listDriveFiles(folderId);
+  const indexed = [];
+  const failed = [];
+
+  console.log(`📄 Files found in Google Drive: ${files.length}`);
+
+  for (const file of files) {
+    try {
+      console.log(`🔎 Reading file: ${file.name}`);
+
+      let text = await extractTextFromFile(file);
+      text = (text || "").replace(/\n+/g, " ").replace(/\s+/g, " ").trim();
+
+      const path = file.path || file.name;
+      const normalizedSource = normalizeSourceName(file.name);
+
+      const tierInfo = getSourceTier({
+        source: file.name,
+        metadata: {
+          path,
+          originalFileName: file.name
+        }
+      });
+
+      if (!text) {
+        failed.push({
+          fileName: file.name,
+          normalizedSource,
+          path,
+          authorityTier: tierInfo,
+          mimeType: file.mimeType,
+          reason: "No readable text"
+        });
+        continue;
+      }
+
+      const result = await addDocumentToVectorStore(text, normalizedSource, {
+        fileId: file.id,
+        originalFileName: file.name,
+        originalSource: file.name,
+        normalizedSource,
+        mimeType: file.mimeType,
+        path,
+        modifiedTime: file.modifiedTime || null,
+        authorityTier: tierInfo.tier,
+        authorityLabel: tierInfo.label,
+        authorityWeight: tierInfo.weight
+      });
+
+      indexed.push({
+        fileName: file.name,
+        normalizedSource,
+        path,
+        authorityTier: tierInfo,
+        mimeType: file.mimeType,
+        textLength: text.length,
+        chunksAdded: result?.chunksAdded ?? 0,
+        status: "Indexed",
+        preview: text.substring(0, 200)
+      });
+
+      console.log(`✅ Indexed: ${file.name}`);
+    } catch (fileError) {
+      console.error(`❌ Failed file: ${file.name}`, fileError);
+
+      failed.push({
+        fileName: file.name,
+        normalizedSource: normalizeSourceName(file.name),
+        path: file.path || file.name,
+        mimeType: file.mimeType,
+        reason: fileError.message || "File indexing failed"
+      });
+    }
+  }
+
+  const stats = getVectorStoreStats();
+
+  console.log("✅ TINA v2 Google Drive indexing completed:", {
+    totalFilesChecked: files.length,
+    filesIndexed: indexed.length,
+    filesFailed: failed.length,
+    vectorStore: stats
+  });
+
+  return {
+    totalFilesChecked: files.length,
+    filesIndexed: indexed.length,
+    filesFailed: failed.length,
+    vectorStore: stats,
+    indexed,
+    failed
+  };
+}
 
 app.get("/list", allowAuthenticatedOrIndexSecret, async (req, res) => {
   try {
@@ -669,110 +673,60 @@ app.get("/read-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
 
 app.get("/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
   try {
-    const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
-
-    if (!folderId) {
-      return res.status(400).json({
-        success: false,
-        error: "GOOGLE_DRIVE_FOLDER_ID not set"
-      });
-    }
-
-    console.log("Starting TINA v2 Google Drive indexing...");
-    await clearVectorStore();
-
-    const files = await listDriveFiles(folderId);
-    const indexed = [];
-    const failed = [];
-
-    for (const file of files) {
-      try {
-        let text = await extractTextFromFile(file);
-        text = (text || "").replace(/\n+/g, " ").replace(/\s+/g, " ").trim();
-
-        const path = file.path || file.name;
-        const normalizedSource = normalizeSourceName(file.name);
-
-        const tierInfo = getSourceTier({
-          source: file.name,
-          metadata: {
-            path,
-            originalFileName: file.name
-          }
-        });
-
-        if (!text) {
-          failed.push({
-            fileName: file.name,
-            normalizedSource,
-            path,
-            authorityTier: tierInfo,
-            mimeType: file.mimeType,
-            reason: "No readable text"
-          });
-          continue;
-        }
-
-        const result = await addDocumentToVectorStore(text, normalizedSource, {
-          fileId: file.id,
-          originalFileName: file.name,
-          originalSource: file.name,
-          normalizedSource,
-          mimeType: file.mimeType,
-          path,
-          modifiedTime: file.modifiedTime || null,
-          authorityTier: tierInfo.tier,
-          authorityLabel: tierInfo.label,
-          authorityWeight: tierInfo.weight
-        });
-
-        indexed.push({
-          fileName: file.name,
-          normalizedSource,
-          path,
-          authorityTier: tierInfo,
-          mimeType: file.mimeType,
-          textLength: text.length,
-          chunksAdded: result?.chunksAdded ?? 0,
-          status: "Indexed",
-          preview: text.substring(0, 200)
-        });
-      } catch (fileError) {
-        failed.push({
-          fileName: file.name,
-          normalizedSource: normalizeSourceName(file.name),
-          path: file.path || file.name,
-          mimeType: file.mimeType,
-          reason: fileError.message || "File indexing failed"
-        });
-      }
-    }
-
-    const stats = getVectorStoreStats();
-
-    console.log("TINA v2 Google Drive indexing completed:", {
-      totalFilesChecked: files.length,
-      filesIndexed: indexed.length,
-      filesFailed: failed.length,
-      vectorStore: stats
-    });
+    const result = await runDriveIndexing();
 
     res.json({
       success: true,
       engine: "TINA v2 Big 4 Tax Intelligence Engine",
       message: "Drive indexing completed.",
-      totalFilesChecked: files.length,
-      filesIndexed: indexed.length,
-      filesFailed: failed.length,
-      vectorStore: stats,
-      indexed,
-      failed
+      ...result
     });
   } catch (error) {
     console.error("Index-drive error:", error);
     res.status(500).json({
       success: false,
+      route: "/index-drive",
       error: error.message || "Drive indexing failed"
+    });
+  }
+});
+
+app.get("/reindex", allowAuthenticatedOrIndexSecret, async (req, res) => {
+  try {
+    const result = await runDriveIndexing();
+
+    res.json({
+      success: true,
+      engine: "TINA v2 Big 4 Tax Intelligence Engine",
+      message: "Drive re-indexing completed.",
+      ...result
+    });
+  } catch (error) {
+    console.error("Reindex error:", error);
+    res.status(500).json({
+      success: false,
+      route: "/reindex",
+      error: error.message || "Drive re-indexing failed"
+    });
+  }
+});
+
+app.get("/admin/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
+  try {
+    const result = await runDriveIndexing();
+
+    res.json({
+      success: true,
+      engine: "TINA v2 Big 4 Tax Intelligence Engine",
+      message: "Admin Drive indexing completed.",
+      ...result
+    });
+  } catch (error) {
+    console.error("Admin index-drive error:", error);
+    res.status(500).json({
+      success: false,
+      route: "/admin/index-drive",
+      error: error.message || "Admin Drive indexing failed"
     });
   }
 });
@@ -889,7 +843,7 @@ app.post("/ask", authenticate, async (req, res) => {
       let answerText;
 
       if (issuance || questionType === "issuance") {
-        answerText = `No indexed document found for the requested issuance. TINA will not generate a speculative answer. Please upload or re-index the exact RR/RMC/RMO.`;
+        answerText = "No indexed document found for the requested issuance. TINA will not generate a speculative answer. Please upload or re-index the exact RR/RMC/RMO.";
       } else {
         answerText = await generateGeneralFallbackAnswer(
           cleanQuestion,
@@ -920,9 +874,7 @@ app.post("/ask", authenticate, async (req, res) => {
     }
 
     if (issuance) {
-      const exactDocs = relevantDocs.filter((doc) =>
-        isExactIssuanceMatch(doc, issuance)
-      );
+      const exactDocs = relevantDocs.filter((doc) => isExactIssuanceMatch(doc, issuance));
 
       if (exactDocs.length === 0) {
         const answerText = `No indexed document found for ${issuance.type} No. ${issuance.number}-${issuance.year}. TINA will not generate a speculative answer. Please upload or re-index the exact issuance.`;
@@ -965,8 +917,7 @@ app.post("/ask", authenticate, async (req, res) => {
       let answerText;
 
       if (issuance || questionType === "issuance") {
-        answerText =
-          "Insufficient supporting data found in indexed sources. TINA will not generate an answer to avoid incorrect interpretation.";
+        answerText = "Insufficient supporting data found in indexed sources. TINA will not generate an answer to avoid incorrect interpretation.";
       } else {
         answerText = await generateGeneralFallbackAnswer(
           cleanQuestion,
@@ -997,7 +948,6 @@ app.post("/ask", authenticate, async (req, res) => {
     }
 
     const sourcesUsed = uniqueSources(highConfidenceDocs);
-
     const topTier = Math.min(...sourcesUsed.map((s) => s.authorityTier || 99));
 
     let confidence = "MEDIUM";
@@ -1148,6 +1098,18 @@ Answer strictly using only the CONTEXT. Apply the authority hierarchy. If contex
       error: error.message || "Ask failed"
     });
   }
+});
+
+/* ================= 404 HANDLER ================= */
+
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    error: "Route not found",
+    method: req.method,
+    path: req.originalUrl,
+    message: "Check /routes to confirm available backend routes."
+  });
 });
 
 /* ================= START ================= */
