@@ -1,26 +1,15 @@
-import fs from "fs";
-import path from "path";
-import os from "os";
 import OpenAI from "openai";
+import { createClient } from "@supabase/supabase-js";
 import "dotenv/config";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
 
-/*
-  Render-safe vector file.
-
-  Default:
-  - Render/Linux: /tmp/vector-store.json
-  - Local fallback: OS temp directory
-
-  Optional override:
-  - VECTOR_STORE_FILE=/tmp/vector-store.json
-*/
-const VECTOR_FILE =
-  process.env.VECTOR_STORE_FILE ||
-  path.join(os.tmpdir(), "vector-store.json");
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY
+);
 
 const EMBEDDING_MODEL =
   process.env.OPENAI_EMBEDDING_MODEL || "text-embedding-3-small";
@@ -28,52 +17,7 @@ const EMBEDDING_MODEL =
 const CHUNK_SIZE = Number(process.env.VECTOR_CHUNK_SIZE || 1200);
 const CHUNK_OVERLAP = Number(process.env.VECTOR_CHUNK_OVERLAP || 200);
 
-/* ================= STORE ================= */
-
-function ensureStoreDirectory() {
-  const dir = path.dirname(VECTOR_FILE);
-
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
-  }
-}
-
-function loadStore() {
-  try {
-    ensureStoreDirectory();
-
-    if (!fs.existsSync(VECTOR_FILE)) {
-      return [];
-    }
-
-    const raw = fs.readFileSync(VECTOR_FILE, "utf8");
-    const parsed = JSON.parse(raw || "[]");
-
-    if (!Array.isArray(parsed)) {
-      console.warn("Vector store is not an array. Resetting in memory.");
-      return [];
-    }
-
-    return parsed;
-  } catch (error) {
-    console.error("Vector store load error:", error.message);
-    return [];
-  }
-}
-
-function saveStore(data) {
-  try {
-    ensureStoreDirectory();
-
-    const safeData = Array.isArray(data) ? data : [];
-    fs.writeFileSync(VECTOR_FILE, JSON.stringify(safeData, null, 2), "utf8");
-
-    return true;
-  } catch (error) {
-    console.error("Vector store save error:", error.message);
-    throw error;
-  }
-}
+const VECTOR_TABLE = "tina_vector_store";
 
 /* ================= TEXT / EMBEDDINGS ================= */
 
@@ -93,7 +37,6 @@ function chunkText(text, chunkSize = CHUNK_SIZE, overlap = CHUNK_OVERLAP) {
     if (end >= clean.length) break;
 
     start = Math.max(0, end - overlap);
-
     if (start >= end) break;
   }
 
@@ -111,24 +54,6 @@ async function embedText(text) {
   });
 
   return response.data?.[0]?.embedding || [];
-}
-
-function cosineSimilarity(a, b) {
-  if (!a?.length || !b?.length || a.length !== b.length) return 0;
-
-  let dot = 0;
-  let normA = 0;
-  let normB = 0;
-
-  for (let i = 0; i < a.length; i++) {
-    dot += a[i] * b[i];
-    normA += a[i] * a[i];
-    normB += b[i] * b[i];
-  }
-
-  if (!normA || !normB) return 0;
-
-  return dot / (Math.sqrt(normA) * Math.sqrt(normB));
 }
 
 /* ================= NORMALIZATION ================= */
@@ -259,68 +184,66 @@ function buildPossibleSourceKeywords(query = "") {
   return [...new Set(keywords.map(normalizeForMatch).filter(Boolean))];
 }
 
-function itemMatchesKeyword(item, keyword) {
-  const normalizedKeyword = normalizeForMatch(keyword);
+/* ================= HELPERS ================= */
 
-  const candidates = [
-    item.source,
-    item.originalSource,
-    item.metadata?.originalSource,
-    item.metadata?.originalFileName,
-    item.metadata?.normalizedSource,
-    item.metadata?.path,
-    item.metadata?.fileId
-  ]
-    .filter(Boolean)
-    .map(normalizeForMatch);
-
-  return candidates.some((candidate) => candidate.includes(normalizedKeyword));
+function mapRowToResult(row, score = 1) {
+  return {
+    source: row.source,
+    originalSource: row.original_source || row.metadata?.originalSource || row.source,
+    text: row.text,
+    chunkIndex: row.chunk_index,
+    metadata: row.metadata || {},
+    score: row.score ?? score
+  };
 }
 
-function mapStoreItemToResult(item, score = 1) {
-  return {
-    source: item.source,
-    originalSource:
-      item.originalSource || item.metadata?.originalSource || item.source,
-    text: item.text,
-    chunkIndex: item.chunkIndex,
-    metadata: item.metadata || {},
-    score
-  };
+function buildSourceIlikeFilters(keyword) {
+  const normalizedKeyword = normalizeForMatch(keyword);
+
+  return [
+    `source.ilike.%${normalizedKeyword}%`,
+    `original_source.ilike.%${normalizedKeyword}%`,
+    `metadata->>originalSource.ilike.%${normalizedKeyword}%`,
+    `metadata->>originalFileName.ilike.%${normalizedKeyword}%`,
+    `metadata->>normalizedSource.ilike.%${normalizedKeyword}%`,
+    `metadata->>path.ilike.%${normalizedKeyword}%`
+  ].join(",");
 }
 
 /* ================= PUBLIC API ================= */
 
 export async function clearVectorStore() {
-  saveStore([]);
-  console.log(`🧹 Vector store cleared: ${VECTOR_FILE}`);
+  const { error } = await supabase
+    .from(VECTOR_TABLE)
+    .delete()
+    .neq("id", "00000000-0000-0000-0000-000000000000");
+
+  if (error) throw error;
+
+  console.log("🧹 Supabase vector store cleared.");
+
   return true;
 }
 
 export async function removeSourceFromVectorStore(source) {
-  const store = loadStore();
   const normalizedSource = normalizeSourceName(source);
 
-  const filtered = store.filter((item) => {
-    return (
-      item.source !== normalizedSource &&
-      item.metadata?.normalizedSource !== normalizedSource
-    );
-  });
+  const { data, error } = await supabase
+    .from(VECTOR_TABLE)
+    .delete()
+    .eq("source", normalizedSource)
+    .select("id");
 
-  saveStore(filtered);
+  if (error) throw error;
 
   return {
     source: normalizedSource,
-    removedChunks: store.length - filtered.length,
-    remainingChunks: filtered.length
+    removedChunks: data?.length || 0
   };
 }
 
 export async function addDocumentToVectorStore(text, source, metadata = {}) {
   const chunks = chunkText(text);
-  const store = loadStore();
-
   const normalizedSource = normalizeSourceName(
     metadata.normalizedSource || source
   );
@@ -334,17 +257,18 @@ export async function addDocumentToVectorStore(text, source, metadata = {}) {
     };
   }
 
-  let chunksAdded = 0;
+  await removeSourceFromVectorStore(normalizedSource);
+
+  const rows = [];
 
   for (let i = 0; i < chunks.length; i++) {
     const chunk = chunks[i];
     const embedding = await embedText(chunk);
 
-    store.push({
-      id: `${Date.now()}-${i}-${Math.random().toString(36).slice(2)}`,
+    rows.push({
       source: normalizedSource,
-      originalSource: source,
-      chunkIndex: i,
+      original_source: source,
+      chunk_index: i,
       text: chunk,
       embedding,
       metadata: {
@@ -352,69 +276,83 @@ export async function addDocumentToVectorStore(text, source, metadata = {}) {
         originalSource: metadata.originalSource || source,
         originalFileName: metadata.originalFileName || source,
         normalizedSource,
-        vectorFile: VECTOR_FILE
-      },
-      createdAt: new Date().toISOString()
+        storage: "supabase"
+      }
     });
-
-    chunksAdded++;
   }
 
-  saveStore(store);
+  const batchSize = 50;
+  let inserted = 0;
+
+  for (let i = 0; i < rows.length; i += batchSize) {
+    const batch = rows.slice(i, i + batchSize);
+
+    const { error } = await supabase.from(VECTOR_TABLE).insert(batch);
+
+    if (error) {
+      console.error("Supabase vector insert error:", error);
+      throw error;
+    }
+
+    inserted += batch.length;
+  }
 
   console.log(
-    `✅ Vector saved: ${source} | chunks added: ${chunksAdded} | total chunks: ${store.length}`
+    `✅ Supabase vectors saved: ${source} | chunks added: ${inserted}`
   );
 
   return {
     source: normalizedSource,
     originalSource: source,
-    chunksAdded,
-    totalChunks: store.length,
-    vectorFile: VECTOR_FILE
+    chunksAdded: inserted,
+    storage: "supabase"
   };
 }
 
 export async function searchSimilar(query, topK = 5) {
-  const store = loadStore();
-
-  if (!store.length) {
-    console.warn("Vector search skipped: store is empty.");
-    return [];
-  }
-
   const queryEmbedding = await embedText(query);
 
-  return store
-    .map((item) =>
-      mapStoreItemToResult(
-        item,
-        cosineSimilarity(queryEmbedding, item.embedding)
-      )
-    )
-    .sort((a, b) => b.score - a.score)
-    .slice(0, topK);
+  const { data, error } = await supabase.rpc("match_tina_vectors", {
+    query_embedding: queryEmbedding,
+    match_count: topK
+  });
+
+  if (error) {
+    console.error("Supabase vector search error:", error);
+    throw error;
+  }
+
+  return (data || []).map((row) => mapRowToResult(row, row.score));
 }
 
-export function searchBySourceName(keyword, topK = 8) {
-  const store = loadStore();
+export async function searchBySourceName(keyword, topK = 8) {
+  if (!keyword) return [];
 
-  if (!store.length || !keyword) return [];
+  const normalizedKeyword = normalizeForMatch(keyword);
 
-  return store
-    .filter((item) => itemMatchesKeyword(item, keyword))
-    .slice(0, topK)
-    .map((item) => mapStoreItemToResult(item, 1));
+  const { data, error } = await supabase
+    .from(VECTOR_TABLE)
+    .select("source, original_source, chunk_index, text, metadata")
+    .or(buildSourceIlikeFilters(normalizedKeyword))
+    .order("chunk_index", { ascending: true })
+    .limit(topK);
+
+  if (error) {
+    console.error("Supabase source-name search error:", error);
+    throw error;
+  }
+
+  return (data || []).map((row) => mapRowToResult(row, 1));
 }
 
 export async function smartSearch(query, topK = 8) {
   const keywords = buildPossibleSourceKeywords(query);
 
   for (const keyword of keywords) {
-    const exactMatches = searchBySourceName(keyword, topK);
+    const exactMatches = await searchBySourceName(keyword, topK);
 
     if (exactMatches.length > 0) {
-      console.log(`🎯 Exact source match found for keyword: ${keyword}`);
+      console.log(`🎯 Exact source match found in Supabase: ${keyword}`);
       return exactMatches;
     }
   }
@@ -422,28 +360,45 @@ export async function smartSearch(query, topK = 8) {
   return await searchSimilar(query, topK);
 }
 
-export function getVectorStoreStats() {
-  const store = loadStore();
+export async function getVectorStoreStats() {
+  const { count, error } = await supabase
+    .from(VECTOR_TABLE)
+    .select("*", { count: "exact", head: true });
 
-  const sources = [...new Set(store.map((item) => item.source).filter(Boolean))];
-
-  let fileSizeBytes = 0;
-
-  try {
-    if (fs.existsSync(VECTOR_FILE)) {
-      fileSizeBytes = fs.statSync(VECTOR_FILE).size;
-    }
-  } catch {
-    fileSizeBytes = 0;
+  if (error) {
+    return {
+      storage: "supabase",
+      error: error.message,
+      chunks: 0,
+      sources: 0,
+      sourceNames: []
+    };
   }
 
+  const { data: sourceRows, error: sourceError } = await supabase
+    .from(VECTOR_TABLE)
+    .select("source")
+    .limit(10000);
+
+  if (sourceError) {
+    return {
+      storage: "supabase",
+      chunks: count || 0,
+      sources: 0,
+      sourceNames: [],
+      error: sourceError.message
+    };
+  }
+
+  const sourceNames = [
+    ...new Set((sourceRows || []).map((row) => row.source).filter(Boolean))
+  ];
+
   return {
-    chunks: store.length,
-    sources: sources.length,
-    sourceNames: sources,
-    vectorFile: VECTOR_FILE,
-    fileExists: fs.existsSync(VECTOR_FILE),
-    fileSizeBytes,
+    storage: "supabase",
+    chunks: count || 0,
+    sources: sourceNames.length,
+    sourceNames,
     embeddingModel: EMBEDDING_MODEL,
     chunkSize: CHUNK_SIZE,
     chunkOverlap: CHUNK_OVERLAP
