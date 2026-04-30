@@ -37,8 +37,6 @@ const app = express();
 app.use(cors({ origin: "*" }));
 app.use(express.json({ limit: "25mb" }));
 
-/* ================= INIT ================= */
-
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -48,7 +46,7 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
 
-/* ================= BASIC HELPERS ================= */
+/* ================= HELPERS ================= */
 
 function getUserId(req) {
   return req.user?.id || req.user?.user_id || req.user?.sub || req.user?.username;
@@ -61,17 +59,23 @@ function normalizeSourceName(name = "") {
     .replace(/revenue memorandum circular[s]?/g, "rmc")
     .replace(/revenue memorandum order[s]?/g, "rmo")
     .replace(/\brev\.?\s*reg\.?\b/g, "rr")
+    .replace(/\brev\.?\s*memo\.?\s*circular\b/g, "rmc")
+    .replace(/\brev\.?\s*memo\.?\s*order\b/g, "rmo")
     .replace(/\bno\.?\b/g, "")
+    .replace(/[_–—]/g, "-")
     .replace(/\s+/g, "_")
-    .replace(/[^a-z0-9._-]/g, "")
+    .replace(/[^a-z0-9._()/-]/g, "")
+    .replace(/[\\/]+/g, "/")
     .replace(/_+/g, "_")
-    .replace(/^_+|_+$/g, "");
+    .replace(/-+/g, "-")
+    .replace(/^[_-]+|[_-]+$/g, "");
 }
 
 function normalizeForMatch(value = "") {
   return normalizeSourceName(value)
     .replace(/\.(pdf|docx|doc|txt|csv|md|json)$/i, "")
     .replace(/[_\s]/g, "-")
+    .replace(/[\\/]/g, "-")
     .replace(/-+/g, "-")
     .trim();
 }
@@ -123,9 +127,7 @@ function classifyQuestion(question = "") {
     q.includes("revenue memorandum order")
   ) return "issuance";
 
-  if (q.includes("bir ruling") || q.includes("da(") || q.includes("ot-") || q.includes("ruling no")) {
-    return "ruling";
-  }
+  if (q.includes("bir ruling") || q.includes("da(") || q.includes("ot-") || q.includes("ruling no")) return "ruling";
 
   if (
     q.includes("case") ||
@@ -136,6 +138,26 @@ function classifyQuestion(question = "") {
     q.includes("supreme court") ||
     q.includes("g.r. no")
   ) return "case";
+
+  if (
+    q.includes("compute") ||
+    q.includes("calculate") ||
+    q.includes("tax due") ||
+    q.includes("vat payable") ||
+    q.includes("mcit") ||
+    q.includes("rcit") ||
+    q.includes("nolco") ||
+    q.includes("withholding") ||
+    q.includes("ewt")
+  ) return "tax_computation";
+
+  if (
+    q.includes("risk") ||
+    q.includes("audit") ||
+    q.includes("exposure") ||
+    q.includes("assessment") ||
+    q.includes("deficiency")
+  ) return "audit_risk";
 
   if (
     q.startsWith("what is") ||
@@ -164,6 +186,8 @@ function isPreferredForQuestion(doc, questionType) {
 
   if (questionType === "concept") return tier === 1 || tier === 2 || tier === 3;
   if (questionType === "compliance") return tier === 1 || tier === 2 || tier === 3 || tier === 4;
+  if (questionType === "tax_computation") return tier === 1 || tier === 2 || tier === 3;
+  if (questionType === "audit_risk") return tier <= 7;
   if (questionType === "ruling") return tier === 5 || tier === 1 || tier === 2 || tier === 3;
   if (questionType === "case") return tier === 6;
   if (questionType === "issuance") return tier === 2 || tier === 3 || tier === 4;
@@ -310,7 +334,7 @@ function allowAuthenticatedOrIndexSecret(req, res, next) {
   return authenticate(req, res, next);
 }
 
-/* ================= HEALTH / DIAGNOSTICS ================= */
+/* ================= HEALTH / ROUTES ================= */
 
 app.get("/", (req, res) => {
   res.send("TINA backend is running. Use /health, /routes, /index-drive?secret=YOUR_SECRET.");
@@ -319,7 +343,7 @@ app.get("/", (req, res) => {
 app.get("/routes", (req, res) => {
   res.json({
     success: true,
-    message: "Available TINA backend routes",
+    engine: "TINA Big 4 Mode",
     routes: [
       "GET /",
       "GET /health",
@@ -337,10 +361,12 @@ app.get("/routes", (req, res) => {
   });
 });
 
-app.get("/health", (req, res) => {
+app.get("/health", async (req, res) => {
+  const vectorStats = await getVectorStoreStats();
+
   res.json({
     status: "ok",
-    engine: "TINA v2 Big 4 Tax Intelligence Engine",
+    engine: "TINA Big 4 Tax Intelligence Engine",
     openai: Boolean(process.env.OPENAI_API_KEY),
     openaiModel: process.env.OPENAI_MODEL || "gpt-4o-mini",
     supabaseUrl: Boolean(process.env.SUPABASE_URL),
@@ -352,7 +378,7 @@ app.get("/health", (req, res) => {
     googleServiceAccountJson: Boolean(process.env.GOOGLE_SERVICE_ACCOUNT_JSON),
     oldGoogleKeyFile: Boolean(process.env.GOOGLE_SERVICE_ACCOUNT_KEY_FILE),
     indexSecretEnabled: Boolean(process.env.INDEX_SECRET),
-    vectorStore: getVectorStoreStats(),
+    vectorStore: vectorStats,
     time: new Date().toISOString()
   });
 });
@@ -478,7 +504,7 @@ app.get("/conversations/:conversationId/messages", authenticate, async (req, res
   }
 });
 
-/* ================= GOOGLE DRIVE ROUTES ================= */
+/* ================= GOOGLE DRIVE INDEXING ================= */
 
 async function runDriveIndexing() {
   const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
@@ -487,7 +513,7 @@ async function runDriveIndexing() {
     throw new Error("GOOGLE_DRIVE_FOLDER_ID not set");
   }
 
-  console.log("🚀 Starting TINA v2 Google Drive indexing...");
+  console.log("🚀 Starting TINA Big 4 Google Drive indexing...");
   console.log("📁 Folder ID:", folderId);
 
   await clearVectorStore();
@@ -567,9 +593,9 @@ async function runDriveIndexing() {
     }
   }
 
-  const stats = getVectorStoreStats();
+  const stats = await getVectorStoreStats();
 
-  console.log("✅ TINA v2 Google Drive indexing completed:", {
+  console.log("✅ TINA Big 4 Google Drive indexing completed:", {
     totalFilesChecked: files.length,
     filesIndexed: indexed.length,
     filesFailed: failed.length,
@@ -677,7 +703,7 @@ app.get("/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
 
     res.json({
       success: true,
-      engine: "TINA v2 Big 4 Tax Intelligence Engine",
+      engine: "TINA Big 4 Tax Intelligence Engine",
       message: "Drive indexing completed.",
       ...result
     });
@@ -697,7 +723,7 @@ app.get("/reindex", allowAuthenticatedOrIndexSecret, async (req, res) => {
 
     res.json({
       success: true,
-      engine: "TINA v2 Big 4 Tax Intelligence Engine",
+      engine: "TINA Big 4 Tax Intelligence Engine",
       message: "Drive re-indexing completed.",
       ...result
     });
@@ -717,7 +743,7 @@ app.get("/admin/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) 
 
     res.json({
       success: true,
-      engine: "TINA v2 Big 4 Tax Intelligence Engine",
+      engine: "TINA Big 4 Tax Intelligence Engine",
       message: "Admin Drive indexing completed.",
       ...result
     });
@@ -733,10 +759,12 @@ app.get("/admin/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) 
 
 app.get("/vector-stats", allowAuthenticatedOrIndexSecret, async (req, res) => {
   try {
+    const vectorStats = await getVectorStoreStats();
+
     res.json({
       success: true,
-      engine: "TINA v2 Big 4 Tax Intelligence Engine",
-      vectorStore: getVectorStoreStats()
+      engine: "TINA Big 4 Tax Intelligence Engine",
+      vectorStore: vectorStats
     });
   } catch (error) {
     console.error("Vector stats error:", error);
@@ -747,21 +775,21 @@ app.get("/vector-stats", allowAuthenticatedOrIndexSecret, async (req, res) => {
   }
 });
 
-/* ================= FALLBACK ANSWER ================= */
+/* ================= FALLBACK ================= */
 
 async function generateGeneralFallbackAnswer(cleanQuestion, memoryContext, reason = "No sufficient indexed source was found.") {
   const fallbackSystemPrompt = `
 You are TINA, Tax Information Navigation Assistant for Bong Corpuz & Co. CPAs.
 
-You are allowed to answer using general tax knowledge only when indexed Google Drive sources are absent or weak.
+You may answer using general Philippine tax knowledge only when indexed sources are absent or weak.
 
 Rules:
-1. Clearly state that the answer is a general fallback answer.
-2. Do not pretend the answer came from the indexed knowledge base.
-3. Keep the answer concise, professional, and Philippine-tax oriented.
-4. If the matter requires legal/tax verification, advise checking the NIRC, BIR issuances, or official BIR source.
-5. Do not invent specific RR, RMC, RMO, deadlines, rates, thresholds, or citations if uncertain.
-6. For exact issuance questions, do not provide speculative content.
+1. Clearly state that this is a general fallback answer.
+2. Do not pretend the answer came from indexed Google Drive sources.
+3. Keep the answer professional and Philippine-tax oriented.
+4. Do not invent specific RR, RMC, RMO, BIR rulings, dates, forms, deadlines, rates, or case citations.
+5. For exact issuance questions, do not provide speculative content.
+6. Recommend verification against official NIRC/BIR/CTA/Supreme Court sources.
 `.trim();
 
   const fallbackUserPrompt = `
@@ -789,12 +817,12 @@ ${cleanQuestion}
   return (
     "General TINA Fallback Answer\n\n" +
     `Source Status: ${reason}\n\n` +
-    "Important Note: This answer is not based on an indexed Google Drive source and should be verified against official BIR/NIRC sources.\n\n" +
+    "Important Note: This answer is not based on an indexed Google Drive source and should be verified against official BIR/NIRC/court sources.\n\n" +
     (text || "No fallback answer generated.")
   );
 }
 
-/* ================= ASK WITH TINA V2 ENGINE ================= */
+/* ================= ASK: BIG 4 MODE ================= */
 
 app.post("/ask", authenticate, async (req, res) => {
   try {
@@ -825,12 +853,12 @@ app.post("/ask", authenticate, async (req, res) => {
     let relevantDocs = [];
 
     try {
-      relevantDocs = await smartSearch(cleanQuestion, 16);
+      relevantDocs = await smartSearch(cleanQuestion, 24);
     } catch (error) {
       console.error("Smart search failed:", error.message);
 
       try {
-        relevantDocs = await searchSimilar(cleanQuestion, 16);
+        relevantDocs = await searchSimilar(cleanQuestion, 24);
       } catch (fallbackError) {
         console.error("Fallback search failed:", fallbackError.message);
       }
@@ -843,12 +871,13 @@ app.post("/ask", authenticate, async (req, res) => {
       let answerText;
 
       if (issuance || questionType === "issuance") {
-        answerText = "No indexed document found for the requested issuance. TINA will not generate a speculative answer. Please upload or re-index the exact RR/RMC/RMO.";
+        answerText =
+          "No indexed document found for the requested issuance. TINA will not generate a speculative answer. Please upload or re-index the exact RR/RMC/RMO.";
       } else {
         answerText = await generateGeneralFallbackAnswer(
           cleanQuestion,
           memoryContext,
-          "No indexed Google Drive source matched the question."
+          "No indexed Google Drive/Supabase vector source matched the question."
         );
       }
 
@@ -861,7 +890,7 @@ app.post("/ask", authenticate, async (req, res) => {
 
       return res.json({
         success: true,
-        engine: "TINA v2",
+        engine: "TINA Big 4 Mode",
         answer: answerText,
         answerMode: issuance ? "no_exact_issuance_match" : "general_fallback_no_context",
         confidence: issuance ? "LOW" : "GENERAL",
@@ -874,7 +903,9 @@ app.post("/ask", authenticate, async (req, res) => {
     }
 
     if (issuance) {
-      const exactDocs = relevantDocs.filter((doc) => isExactIssuanceMatch(doc, issuance));
+      const exactDocs = relevantDocs.filter((doc) =>
+        isExactIssuanceMatch(doc, issuance)
+      );
 
       if (exactDocs.length === 0) {
         const answerText = `No indexed document found for ${issuance.type} No. ${issuance.number}-${issuance.year}. TINA will not generate a speculative answer. Please upload or re-index the exact issuance.`;
@@ -888,7 +919,7 @@ app.post("/ask", authenticate, async (req, res) => {
 
         return res.json({
           success: true,
-          engine: "TINA v2",
+          engine: "TINA Big 4 Mode",
           answer: answerText,
           answerMode: "no_exact_issuance_match",
           confidence: "LOW",
@@ -903,7 +934,7 @@ app.post("/ask", authenticate, async (req, res) => {
       relevantDocs = rankDocsByAuthority(exactDocs);
     }
 
-    const MIN_SCORE = issuance ? 0 : 0.45;
+    const MIN_SCORE = issuance ? 0 : 0.38;
 
     let highConfidenceDocs = relevantDocs.filter((doc) => {
       const score = Number(doc.score);
@@ -911,18 +942,19 @@ app.post("/ask", authenticate, async (req, res) => {
       return !Number.isNaN(score) && score >= MIN_SCORE;
     });
 
-    highConfidenceDocs = rankDocsByAuthority(highConfidenceDocs).slice(0, 8);
+    highConfidenceDocs = rankDocsByAuthority(highConfidenceDocs).slice(0, 10);
 
     if (highConfidenceDocs.length === 0) {
       let answerText;
 
       if (issuance || questionType === "issuance") {
-        answerText = "Insufficient supporting data found in indexed sources. TINA will not generate an answer to avoid incorrect interpretation.";
+        answerText =
+          "Insufficient supporting data found in indexed sources. TINA will not generate an answer to avoid incorrect interpretation.";
       } else {
         answerText = await generateGeneralFallbackAnswer(
           cleanQuestion,
           memoryContext,
-          "Indexed sources were found but the similarity confidence was low."
+          "Indexed sources were found but similarity confidence was low."
         );
       }
 
@@ -935,7 +967,7 @@ app.post("/ask", authenticate, async (req, res) => {
 
       return res.json({
         success: true,
-        engine: "TINA v2",
+        engine: "TINA Big 4 Mode",
         answer: answerText,
         answerMode: issuance ? "low_confidence" : "general_fallback_low_confidence",
         confidence: issuance ? "LOW" : "GENERAL",
@@ -954,7 +986,8 @@ app.post("/ask", authenticate, async (req, res) => {
     if (issuance) confidence = "HIGH";
     else if (topTier <= 2) confidence = "HIGH";
     else if (topTier <= 4) confidence = "MEDIUM";
-    else confidence = "LIMITED";
+    else if (topTier <= 7) confidence = "LIMITED";
+    else confidence = "LOW";
 
     const context = highConfidenceDocs
       .map((doc, index) => {
@@ -974,9 +1007,15 @@ ${doc.text}
       .join("\n\n---\n\n");
 
     const systemPrompt = `
-You are TINA v2, Big 4-level Tax Intelligence and Navigation Assistant for Bong Corpuz & Co. CPAs.
+You are TINA Big 4 Mode, a Philippine tax research, compliance, and audit-risk assistant for Bong Corpuz & Co. CPAs.
 
-You are a Philippine tax, BIR compliance, and tax research assistant.
+You must behave like a Big 4 senior tax manager:
+- precise
+- source-grounded
+- conservative
+- audit-defensible
+- no hallucinations
+- no unsupported legal conclusions
 
 SOURCE AUTHORITY HIERARCHY:
 Tier 1: NIRC / Tax Code
@@ -988,42 +1027,49 @@ Tier 6: Court Cases
 Tier 7: CPA Notes / Internal Notes
 
 STRICT RULES:
-1. Answer ONLY from the provided CONTEXT.
-2. Do NOT use general knowledge, prior knowledge, assumptions, or memory when indexed context is provided.
-3. Do NOT invent RR, RMC, RMO, BIR rulings, dates, sections, forms, deadlines, rates, thresholds, case doctrines, or legal citations.
-4. If the answer is not explicitly supported by the CONTEXT, say: "No verified answer found in the indexed source."
-5. If a specific issuance is asked and the exact issuance is not in the CONTEXT, say: "No indexed document found for the requested issuance."
-6. Prefer higher authority sources over lower authority sources.
-7. Use court cases only as interpretative support unless the question specifically asks about a case.
-8. Use CPA notes only as internal guidance, not primary legal authority.
-9. Always cite source filename/path shown in the CONTEXT.
+1. Answer ONLY from the provided CONTEXT when indexed context is available.
+2. Do NOT use general knowledge, assumptions, or memory to add legal bases not shown in CONTEXT.
+3. Do NOT invent RR, RMC, RMO, BIR rulings, dates, sections, rates, forms, thresholds, deadlines, case doctrines, or citations.
+4. If a specific issuance is asked and the exact issuance is not in CONTEXT, say: "No indexed document found for the requested issuance."
+5. Prefer higher authority sources over lower authority sources.
+6. If sources conflict, identify the conflict and prefer the higher authority source.
+7. Use court cases as interpretative authority, not as substitute for statute/regulation unless the question asks about case doctrine.
+8. Use CPA notes only as internal guidance, not primary authority.
+9. Always cite exact filename/path shown in CONTEXT.
 10. Do not mention ChatGPT.
+11. Do not overstate certainty. State limitations clearly.
+12. For computations, show formula only if the formula is found or reasonably derived from the context. If not, state that computation support is insufficient.
+13. For audit-risk questions, separate legal basis, exposure, evidence needed, and recommended next steps.
 
-REQUIRED FORMAT:
+REQUIRED BIG 4 FORMAT:
 
-Direct Answer:
-[Concise answer based only on context.]
+Executive Answer:
+[Short answer. State the tax/compliance conclusion plainly.]
 
-Primary Legal / Tax Basis:
-[Specific NIRC/RR/RMC/RMO/BIR ruling/case basis shown in context, or "Not shown in retrieved context."]
+Issue:
+[Frame the tax issue.]
 
-Key Provisions / Findings:
-- [Only provisions shown in context.]
-- [If not shown, say "Not shown in retrieved context."]
+Applicable Source / Legal Basis:
+[Identify exact source, section/provision if shown, and authority tier. If not shown, say "Not shown in retrieved context."]
 
-Practical Compliance Notes:
-- [Practical tax/compliance implication based only on context.]
-- [If not shown, say "Not shown in retrieved context."]
+Analysis:
+[Reasoned explanation based only on retrieved context.]
 
-Limitations / Verification Note:
-[State if amendment status, supersession, effective date, or completeness is not shown in context.]
+Practical Compliance / Audit Implication:
+[State filing, withholding, VAT, income tax, documentation, or audit impact based only on context.]
+
+Recommended Action:
+[Conservative next step: verify, document, reconcile, compute, file, amend, or obtain support.]
+
+Limitations:
+[State any missing facts, missing provisions, amendment status, completeness limits, or need for official verification.]
 
 Confidence:
-[HIGH, MEDIUM, LIMITED, or LOW based on the supplied source authority and context.]
+[HIGH, MEDIUM, LIMITED, or LOW.]
 
 Sources Used:
 [List exact filename/path from CONTEXT.]
-    `.trim();
+`.trim();
 
     const userPrompt = `
 Conversation Memory:
@@ -1042,8 +1088,8 @@ USER QUESTION:
 ${cleanQuestion}
 
 Instruction:
-Answer strictly using only the CONTEXT. Apply the authority hierarchy. If context is insufficient, say so.
-    `.trim();
+Answer strictly using only the CONTEXT. Apply the source hierarchy and Big 4 format.
+`.trim();
 
     const response = await openai.chat.completions.create({
       model: process.env.OPENAI_MODEL || "gpt-4o-mini",
@@ -1081,9 +1127,9 @@ Answer strictly using only the CONTEXT. Apply the authority hierarchy. If contex
 
     return res.json({
       success: true,
-      engine: "TINA v2",
+      engine: "TINA Big 4 Mode",
       answer: answerText,
-      answerMode: issuance ? "exact_issuance_strict_rag" : "authority_ranked_rag",
+      answerMode: issuance ? "exact_issuance_big4_rag" : "big4_authority_ranked_rag",
       confidence,
       sourceStatus: "INDEXED_SOURCE_USED",
       questionType,
@@ -1100,7 +1146,7 @@ Answer strictly using only the CONTEXT. Apply the authority hierarchy. If contex
   }
 });
 
-/* ================= 404 HANDLER ================= */
+/* ================= 404 ================= */
 
 app.use((req, res) => {
   res.status(404).json({
@@ -1117,5 +1163,5 @@ app.use((req, res) => {
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`🚀 TINA v2 Backend running on port ${PORT}`);
+  console.log(`🚀 TINA Big 4 Backend running on port ${PORT}`);
 });
