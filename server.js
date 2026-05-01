@@ -1,4 +1,5 @@
 import { detectTopic } from "./topic-detector.js";
+import { saveTopicState } from "./memory-hooks.js";
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
@@ -838,8 +839,17 @@ app.post("/ask", authenticate, async (req, res) => {
     }
 
     const cleanQuestion = question.trim();
-    const issuance = detectIssuanceQuery(cleanQuestion);
-    const questionType = classifyQuestion(cleanQuestion);
+
+    const topicData = await detectTopic({
+      question: cleanQuestion,
+      userId,
+      sessionId: conversationId
+    });
+
+    const finalQuestion = topicData.resolvedQuestion || cleanQuestion;
+
+    const issuance = detectIssuanceQuery(finalQuestion);
+    const questionType = classifyQuestion(finalQuestion);
 
     let conversationHistory = [];
     if (conversationId && userId) {
@@ -854,12 +864,12 @@ app.post("/ask", authenticate, async (req, res) => {
     let relevantDocs = [];
 
     try {
-      relevantDocs = await smartSearch(cleanQuestion, 24);
+      relevantDocs = await smartSearch(finalQuestion, 24);
     } catch (error) {
       console.error("Smart search failed:", error.message);
 
       try {
-        relevantDocs = await searchSimilar(cleanQuestion, 24);
+        relevantDocs = await searchSimilar(finalQuestion, 24);
       } catch (fallbackError) {
         console.error("Fallback search failed:", fallbackError.message);
       }
@@ -867,6 +877,25 @@ app.post("/ask", authenticate, async (req, res) => {
 
     relevantDocs = rankDocsByAuthority(relevantDocs || []);
     relevantDocs = filterDocsByQuestionType(relevantDocs, questionType);
+
+    async function saveAllMemory(answerText) {
+      await saveConversationTurn({
+        conversationId,
+        userId,
+        question: cleanQuestion,
+        answerText
+      });
+
+      await saveTopicState({
+        userId,
+        sessionId: conversationId,
+        topic: topicData.topic,
+        subject: topicData.subject,
+        taxType: topicData.taxType,
+        question: cleanQuestion,
+        answer: answerText
+      });
+    }
 
     if (!relevantDocs || relevantDocs.length === 0) {
       let answerText;
@@ -876,18 +905,13 @@ app.post("/ask", authenticate, async (req, res) => {
           "No indexed document found for the requested issuance. TINA will not generate a speculative answer. Please upload or re-index the exact RR/RMC/RMO.";
       } else {
         answerText = await generateGeneralFallbackAnswer(
-          cleanQuestion,
+          finalQuestion,
           memoryContext,
           "No indexed Google Drive/Supabase vector source matched the question."
         );
       }
 
-      await saveConversationTurn({
-        conversationId,
-        userId,
-        question: cleanQuestion,
-        answerText
-      });
+      await saveAllMemory(answerText);
 
       return res.json({
         success: true,
@@ -897,6 +921,9 @@ app.post("/ask", authenticate, async (req, res) => {
         confidence: issuance ? "LOW" : "GENERAL",
         sourceStatus: "NO_INDEXED_SOURCE",
         questionType,
+        topicData,
+        originalQuestion: cleanQuestion,
+        resolvedQuestion: finalQuestion,
         sourcesUsed: [],
         vectorMatches: 0,
         detectedIssuance: issuance || null
@@ -911,12 +938,7 @@ app.post("/ask", authenticate, async (req, res) => {
       if (exactDocs.length === 0) {
         const answerText = `No indexed document found for ${issuance.type} No. ${issuance.number}-${issuance.year}. TINA will not generate a speculative answer. Please upload or re-index the exact issuance.`;
 
-        await saveConversationTurn({
-          conversationId,
-          userId,
-          question: cleanQuestion,
-          answerText
-        });
+        await saveAllMemory(answerText);
 
         return res.json({
           success: true,
@@ -926,6 +948,9 @@ app.post("/ask", authenticate, async (req, res) => {
           confidence: "LOW",
           sourceStatus: "NO_EXACT_ISSUANCE_MATCH",
           questionType,
+          topicData,
+          originalQuestion: cleanQuestion,
+          resolvedQuestion: finalQuestion,
           sourcesUsed: [],
           vectorMatches: relevantDocs.length,
           detectedIssuance: issuance
@@ -953,18 +978,13 @@ app.post("/ask", authenticate, async (req, res) => {
           "Insufficient supporting data found in indexed sources. TINA will not generate an answer to avoid incorrect interpretation.";
       } else {
         answerText = await generateGeneralFallbackAnswer(
-          cleanQuestion,
+          finalQuestion,
           memoryContext,
           "Indexed sources were found but similarity confidence was low."
         );
       }
 
-      await saveConversationTurn({
-        conversationId,
-        userId,
-        question: cleanQuestion,
-        answerText
-      });
+      await saveAllMemory(answerText);
 
       return res.json({
         success: true,
@@ -974,6 +994,9 @@ app.post("/ask", authenticate, async (req, res) => {
         confidence: issuance ? "LOW" : "GENERAL",
         sourceStatus: issuance ? "LOW_CONFIDENCE_EXACT_QUERY" : "LOW_CONFIDENCE_GENERAL_QUERY",
         questionType,
+        topicData,
+        originalQuestion: cleanQuestion,
+        resolvedQuestion: finalQuestion,
         sourcesUsed: [],
         vectorMatches: relevantDocs.length,
         detectedIssuance: issuance || null
@@ -1076,6 +1099,15 @@ Sources Used:
 Conversation Memory:
 ${memoryContext}
 
+Topic Data:
+${JSON.stringify(topicData)}
+
+Original User Question:
+${cleanQuestion}
+
+Resolved Question Used for Search:
+${finalQuestion}
+
 Question Type:
 ${questionType}
 
@@ -1084,9 +1116,6 @@ ${issuance ? JSON.stringify(issuance) : "None"}
 
 CONTEXT:
 ${context}
-
-USER QUESTION:
-${cleanQuestion}
 
 Instruction:
 Answer strictly using only the CONTEXT. Apply the source hierarchy and Big 4 format.
@@ -1119,12 +1148,7 @@ Answer strictly using only the CONTEXT. Apply the source hierarchy and Big 4 for
       answerText += `\n\nConfidence:\n${confidence}`;
     }
 
-    await saveConversationTurn({
-      conversationId,
-      userId,
-      question: cleanQuestion,
-      answerText
-    });
+    await saveAllMemory(answerText);
 
     return res.json({
       success: true,
@@ -1134,6 +1158,9 @@ Answer strictly using only the CONTEXT. Apply the source hierarchy and Big 4 for
       confidence,
       sourceStatus: "INDEXED_SOURCE_USED",
       questionType,
+      topicData,
+      originalQuestion: cleanQuestion,
+      resolvedQuestion: finalQuestion,
       sourcesUsed,
       vectorMatches: highConfidenceDocs.length,
       detectedIssuance: issuance || null
