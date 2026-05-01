@@ -1,3 +1,4 @@
+import { detectTopic } from "./topic-detector.js";
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
