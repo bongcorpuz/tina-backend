@@ -1275,7 +1275,21 @@ app.post("/ask", authenticate, async (req, res) => {
       });
     }
 
-    const hookConfig = await loadTaxHookConfig(question);
+    let effectiveQuestion = question;
+
+const existingMode = await getModeState(supabase, userId, conversationId);
+
+if (
+  existingMode &&
+  existingMode.active_hook &&
+  existingMode.active_hook !== "/ask" &&
+  !isExplicitModeHook(question)
+) {
+  effectiveQuestion = `${existingMode.active_hook} ${question}`;
+}
+
+const hookConfig = await loadTaxHookConfig(effectiveQuestion);
+    
     const cleanQuestion = hookConfig.cleanQuestion;
     const originalQuestion = hookConfig.originalQuestion;
     const hookInstruction = buildHookInstruction(hookConfig);
