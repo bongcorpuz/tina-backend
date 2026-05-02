@@ -1491,79 +1491,91 @@ if (
 
     /* ================= ADAPTIVE QUIZ MODE ================= */
 
-    if (hookConfig.mode === "QUIZ_MASTER" || hookConfig.mode === "ADAPTIVE_QUIZ") {
-      const quizProfile = await getAdaptiveQuizProfile(
-        supabase,
-        userId,
-        cleanQuestion
-      );
+if (hookConfig.mode === "QUIZ_MASTER" || hookConfig.mode === "ADAPTIVE_QUIZ") {
+  const quizProfile = await getAdaptiveQuizProfile(
+    supabase,
+    userId,
+    cleanQuestion
+  );
 
-      const quizPrompt = buildAdaptiveQuizPrompt({
-        topic: quizProfile.topic,
-        difficulty: quizProfile.difficulty,
-        profile: quizProfile.profile
-      });
+  const quizPrompt = buildAdaptiveQuizPrompt({
+    topic: quizProfile.topic,
+    difficulty: quizProfile.difficulty,
+    profile: quizProfile.profile
+  });
 
-      const response = await openai.chat.completions.create({
-        model: process.env.OPENAI_MODEL || "gpt-4o-mini",
-        temperature: 0.3,
-        messages: [{ role: "user", content: quizPrompt }]
-      });
+  const response = await openai.chat.completions.create({
+    model: process.env.OPENAI_MODEL || "gpt-4o-mini",
+    temperature: 0.3,
+    messages: [{ role: "user", content: quizPrompt }]
+  });
 
-      const rawQuiz = response.choices?.[0]?.message?.content?.trim() || "";
-      const quiz = safeParseQuizJson(rawQuiz);
+  const rawQuiz = response.choices?.[0]?.message?.content?.trim() || "";
+  const quiz = safeParseQuizJson(rawQuiz);
 
-      if (!quiz) {
-        return res.json({
-          success: false,
-          engine: "TINA Adaptive Learning Engine",
-          error: "Unable to generate valid adaptive quiz JSON.",
-          rawQuiz
-        });
-      }
+  if (!quiz) {
+    return res.json({
+      success: false,
+      engine: "TINA Adaptive Learning Engine",
+      error: "Unable to generate valid adaptive quiz JSON.",
+      rawQuiz
+    });
+  }
 
-      await storeUnansweredQuiz(supabase, {
-        userId,
-        sessionId: conversationId,
-        quiz,
-        mode: hookConfig.mode
-      });
+  const storedQuiz = await storeUnansweredQuiz(supabase, {
+    userId,
+    sessionId: null,
+    quiz,
+    mode: hookConfig.mode
+  });
 
-      const answerText = [
-        `Topic: ${quiz.topic}`,
-        `Difficulty: ${quiz.difficulty}`,
-        "",
-        "Question:",
-        quiz.question,
-        "",
-        `A. ${quiz.choices.A}`,
-        `B. ${quiz.choices.B}`,
-        `C. ${quiz.choices.C}`,
-        `D. ${quiz.choices.D}`,
-        "",
-        "Instruction:",
-        "Answer A, B, C, or D."
-      ].join("\n");
+  if (!storedQuiz) {
+    return res.json({
+      success: false,
+      engine: "TINA Adaptive Learning Engine",
+      error: "Quiz was generated but was not saved.",
+      answer:
+        "TINA generated the quiz but could not save it. Please check the tina_learning_attempts table in Supabase."
+    });
+  }
 
-      await saveSimpleHookMemory(answerText);
+  const answerText = [
+    `Topic: ${quiz.topic}`,
+    `Difficulty: ${quiz.difficulty}`,
+    "",
+    "Question:",
+    quiz.question,
+    "",
+    `A. ${quiz.choices.A}`,
+    `B. ${quiz.choices.B}`,
+    `C. ${quiz.choices.C}`,
+    `D. ${quiz.choices.D}`,
+    "",
+    "Instruction:",
+    "Answer A, B, C, or D."
+  ].join("\n");
 
-      return res.json({
-        success: true,
-        engine: "TINA Adaptive Learning Engine",
-        hook: hookConfig.hook_code,
-        mode: hookConfig.mode,
-        hookTitle: hookConfig.title,
-        answer: answerText,
-        answerMode: "adaptive_quiz_question_generated",
-        topic: quiz.topic,
-        difficulty: quiz.difficulty,
-        confidence: "ADAPTIVE",
-        sourceStatus: "QUIZ_MODE_NO_RAG_REQUIRED",
-        sourcesUsed: [],
-        vectorMatches: 0
-      });
-    }
+  await saveSimpleHookMemory(answerText);
 
+  return res.json({
+    success: true,
+    engine: "TINA Adaptive Learning Engine",
+    hook: hookConfig.hook_code,
+    mode: hookConfig.mode,
+    hookTitle: hookConfig.title,
+    answer: answerText,
+    answerMode: "adaptive_quiz_question_generated",
+    quizId: storedQuiz.id,
+    topic: quiz.topic,
+    difficulty: quiz.difficulty,
+    correctAnswerStored: Boolean(storedQuiz.correct_answer),
+    pendingAnswerStored: storedQuiz.user_answer === null,
+    confidence: "ADAPTIVE",
+    sourceStatus: "QUIZ_SAVED_AND_READY",
+    sourcesUsed: [],
+    vectorMatches: 0
+  });
+}
     /* ================= REVIEW MODE: TEACH + ASK ================= */
 
     if (hookConfig.mode === "TAX_REVIEWER") {
