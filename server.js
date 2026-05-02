@@ -1529,15 +1529,16 @@ if (hookConfig.mode === "QUIZ_MASTER" || hookConfig.mode === "ADAPTIVE_QUIZ") {
     mode: hookConfig.mode
   });
 
-  if (!storedQuiz) {
-    return res.json({
-      success: false,
-      engine: "TINA Adaptive Learning Engine",
-      error: "Quiz was generated but was not saved.",
-      answer:
-        "TINA generated the quiz but could not save it. Please check the tina_learning_attempts table in Supabase."
-    });
-  }
+  if (!storedQuiz || storedQuiz.saveFailed) {
+  return res.json({
+    success: false,
+    engine: "TINA Adaptive Learning Engine",
+    error: "Quiz was generated but was not saved.",
+    supabaseError: storedQuiz?.error || null,
+    answer:
+      "TINA generated the quiz but could not save it. Supabase rejected the insert. Check Render logs for STORE UNANSWERED QUIZ ERROR."
+  });
+}
 
   const answerText = [
     `Topic: ${quiz.topic}`,
