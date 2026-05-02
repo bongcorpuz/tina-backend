@@ -824,44 +824,32 @@ ${cleanQuestion}
   );
 }
 
-/* ================= DYNAMIC TAX HOOKS ================= */
+/* ================= DYNAMIC TAX HOOKS - STRICT MODE ================= */
 
 async function loadTaxHookConfig(rawQuestion = "") {
   const text = String(rawQuestion || "").trim();
-  const lower = text.toLowerCase();
 
   let hookCode = "/ask";
   let cleanQuestion = text;
 
-  const possibleHook = lower.split(/\s+/)[0];
+  const firstWord = text.split(/\s+/)[0]?.toLowerCase() || "";
 
-  const hookAliases = {
-    "/quizz": "/quiz",
-    "/exam": "/quiz",
-    "/test": "/quiz",
-    "/reviewer": "/review",
-    "/study": "/review",
-    "/expert": "/tax"
-  };
+  const allowedHooks = [
+    "/ask",
+    "/tax",
+    "/review",
+    "/quiz",
+    "/feedback",
+    "/source"
+  ];
 
-  if (possibleHook.startsWith("/")) {
-    hookCode = hookAliases[possibleHook] || possibleHook;
-    cleanQuestion = text.slice(possibleHook.length).trim();
+  if (allowedHooks.includes(firstWord)) {
+    hookCode = firstWord;
+    cleanQuestion = text.slice(firstWord.length).trim();
   }
 
-  const { data, error } = await supabase
-    .from("tina_tax_hooks")
-    .select("*")
-    .eq("hook_code", hookCode)
-    .eq("status", "active")
-    .maybeSingle();
-
-  if (error) {
-    console.error("Hook config load error:", error.message);
-  }
-
-  if (!data) {
-    return {
+  const hardcodedHooks = {
+    "/ask": {
       hook_code: "/ask",
       mode: "ASK",
       title: "Default TINA Assistant",
@@ -871,14 +859,142 @@ async function loadTaxHookConfig(rawQuestion = "") {
       output_format: "short_format",
       response_template: {
         sections: ["Short Answer", "Explanation", "Practical Note"]
-      },
-      cleanQuestion: text,
-      originalQuestion: text
-    };
+      }
+    },
+
+    "/tax": {
+      hook_code: "/tax",
+      mode: "TAX_EXPERT",
+      title: "Big 4 Tax Expert Mode",
+      requires_retrieval: true,
+      requires_memory: true,
+      requires_feedback: false,
+      output_format: "big4_format",
+      response_template: {
+        sections: [
+          "Executive Answer",
+          "Issue",
+          "Applicable Source / Legal Basis",
+          "Analysis",
+          "Practical Compliance / Audit Implication",
+          "Recommended Action",
+          "Limitations",
+          "Confidence",
+          "Sources Used"
+        ]
+      }
+    },
+
+    "/review": {
+      hook_code: "/review",
+      mode: "TAX_REVIEWER",
+      title: "CPALE Tax Reviewer Mode",
+      requires_retrieval: false,
+      requires_memory: true,
+      requires_feedback: false,
+      output_format: "review_format",
+      response_template: {
+        sections: [
+          "Topic",
+          "Core Concept",
+          "Rule",
+          "Simple Example",
+          "CPALE Trap",
+          "Quick Recall",
+          "Practice Question",
+          "Instruction"
+        ]
+      }
+    },
+
+    "/quiz": {
+      hook_code: "/quiz",
+      mode: "QUIZ_MASTER",
+      title: "Tax Quiz Mode",
+      requires_retrieval: false,
+      requires_memory: true,
+      requires_feedback: false,
+      output_format: "quiz_format",
+      response_template: {
+        sections: ["Question", "A", "B", "C", "D", "Instruction"]
+      }
+    },
+
+    "/feedback": {
+      hook_code: "/feedback",
+      mode: "FEEDBACK",
+      title: "Feedback Mode",
+      requires_retrieval: false,
+      requires_memory: true,
+      requires_feedback: true,
+      output_format: "feedback_format",
+      response_template: {
+        sections: ["Acknowledgement", "Correction Captured", "Learning Note"]
+      }
+    },
+
+    "/source": {
+      hook_code: "/source",
+      mode: "SOURCE_FINDER",
+      title: "Source Finder Mode",
+      requires_retrieval: true,
+      requires_memory: false,
+      requires_feedback: false,
+      output_format: "source_finder_format",
+      response_template: {
+        sections: [
+          "Best Matching Source",
+          "Document / Regulation / Case Title",
+          "Relevant Section or Keyword",
+          "Short Summary",
+          "Confidence",
+          "Sources Used"
+        ]
+      }
+    }
+  };
+
+  const fallbackConfig = hardcodedHooks[hookCode] || hardcodedHooks["/ask"];
+
+  try {
+    const { data, error } = await supabase
+      .from("tina_tax_hooks")
+      .select("*")
+      .eq("hook_code", hookCode)
+      .eq("status", "active")
+      .maybeSingle();
+
+    if (error) {
+      console.error("Hook config load error:", error.message);
+    }
+
+    if (data) {
+      return {
+        ...fallbackConfig,
+        ...data,
+
+        // Strict control: database may tune labels/templates,
+        // but it must not change the core mode behavior.
+        hook_code: fallbackConfig.hook_code,
+        mode: fallbackConfig.mode,
+        requires_retrieval: fallbackConfig.requires_retrieval,
+
+        title: data.title || fallbackConfig.title,
+        requires_memory: data.requires_memory ?? fallbackConfig.requires_memory,
+        requires_feedback: data.requires_feedback ?? fallbackConfig.requires_feedback,
+        output_format: data.output_format || fallbackConfig.output_format,
+        response_template: data.response_template || fallbackConfig.response_template,
+
+        cleanQuestion: cleanQuestion || text,
+        originalQuestion: text
+      };
+    }
+  } catch (error) {
+    console.error("Hook config fallback used:", error.message);
   }
 
   return {
-    ...data,
+    ...fallbackConfig,
     cleanQuestion: cleanQuestion || text,
     originalQuestion: text
   };
@@ -928,6 +1044,15 @@ ${sections}
     `.trim();
   }
 
+  if (mode === "SOURCE_FINDER") {
+    return `
+Mode: Source Finder Mode.
+Find and summarize the best indexed source only.
+Required sections:
+${sections}
+    `.trim();
+  }
+
   return `
 Mode: Default TINA Assistant.
 Answer clearly and professionally.
@@ -935,7 +1060,6 @@ Required sections:
 ${sections}
   `.trim();
 }
-
 /* ================= ASK: DYNAMIC HOOK ENGINE + BIG 4 RAG ================= */
 
 app.post("/ask", authenticate, async (req, res) => {
