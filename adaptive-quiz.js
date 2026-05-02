@@ -54,7 +54,6 @@ export async function getAdaptiveQuizProfile(supabase, userId, requestedTopic = 
     pickRandomTaxTopic();
 
   const mastery = await getTopicMastery(supabase, userId, topic, "");
-
   const difficulty = mastery?.difficulty_level || 1;
 
   return {
@@ -65,11 +64,7 @@ export async function getAdaptiveQuizProfile(supabase, userId, requestedTopic = 
   };
 }
 
-export function buildAdaptiveQuizPrompt({
-  topic,
-  difficulty,
-  profile
-}) {
+export function buildAdaptiveQuizPrompt({ topic, difficulty, profile }) {
   return `
 You are TINA, an adaptive CPALE Taxation examiner.
 
@@ -97,6 +92,7 @@ Rules:
 - Give exactly four choices: A, B, C, D.
 - Provide the correct answer internally in the JSON.
 - Provide a concise explanation.
+- Provide a CPALE trap.
 - Do not include markdown.
 - Do not include extra text outside JSON.
 
@@ -128,7 +124,29 @@ export function safeParseQuizJson(text = "") {
       .replace(/```$/i, "")
       .trim();
 
-    return JSON.parse(cleaned);
+    const parsed = JSON.parse(cleaned);
+
+    if (
+      !parsed.question ||
+      !parsed.choices ||
+      !parsed.choices.A ||
+      !parsed.choices.B ||
+      !parsed.choices.C ||
+      !parsed.choices.D ||
+      !parsed.correctAnswer
+    ) {
+      console.error("Quiz JSON invalid structure.");
+      return null;
+    }
+
+    parsed.correctAnswer = String(parsed.correctAnswer).trim().toUpperCase();
+
+    if (!["A", "B", "C", "D"].includes(parsed.correctAnswer)) {
+      console.error("Quiz JSON invalid correctAnswer.");
+      return null;
+    }
+
+    return parsed;
   } catch (error) {
     console.error("Quiz JSON parse error:", error.message);
     return null;
@@ -152,7 +170,7 @@ export async function saveQuizAttempt(
     .from("tina_learning_attempts")
     .insert({
       user_id: userId,
-      session_id: sessionId,
+      session_id: sessionId || null,
       mode,
       topic: quiz.topic,
       subtopic: quiz.subtopic || "",
@@ -206,11 +224,26 @@ export async function getLastUnansweredQuiz(supabase, userId, sessionId = null) 
   const { data, error } = await query.maybeSingle();
 
   if (error) {
-    console.error("Get unanswered quiz error:", error.message);
+    console.error("Get unanswered quiz error with session:", error.message);
+  }
+
+  if (data) return data;
+
+  const fallback = await supabase
+    .from("tina_learning_attempts")
+    .select("*")
+    .eq("user_id", userId)
+    .is("user_answer", null)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (fallback.error) {
+    console.error("Get unanswered quiz fallback error:", fallback.error.message);
     return null;
   }
 
-  return data || null;
+  return fallback.data || null;
 }
 
 export async function storeUnansweredQuiz(
@@ -224,21 +257,29 @@ export async function storeUnansweredQuiz(
 ) {
   if (!userId || !quiz) return null;
 
+  const normalizedQuiz = {
+    ...quiz,
+    topic: quiz.topic || "General Taxation",
+    subtopic: quiz.subtopic || "",
+    difficulty: quiz.difficulty || 1,
+    correctAnswer: String(quiz.correctAnswer || "").trim().toUpperCase()
+  };
+
   const { data, error } = await supabase
     .from("tina_learning_attempts")
     .insert({
       user_id: userId,
-      session_id: sessionId,
+      session_id: sessionId || null,
       mode,
-      topic: quiz.topic,
-      subtopic: quiz.subtopic || "",
-      difficulty: quiz.difficulty || 1,
-      question: quiz.question,
-      choices: quiz.choices,
-      correct_answer: quiz.correctAnswer,
+      topic: normalizedQuiz.topic,
+      subtopic: normalizedQuiz.subtopic,
+      difficulty: normalizedQuiz.difficulty,
+      question: normalizedQuiz.question,
+      choices: normalizedQuiz.choices,
+      correct_answer: normalizedQuiz.correctAnswer,
       user_answer: null,
       is_correct: null,
-      explanation: quiz.explanation
+      explanation: normalizedQuiz.explanation,
     })
     .select()
     .single();
@@ -247,6 +288,15 @@ export async function storeUnansweredQuiz(
     console.error("Store unanswered quiz error:", error.message);
     return null;
   }
+
+  console.log("STORED QUIZ:", {
+    id: data.id,
+    userId,
+    sessionId: sessionId || null,
+    topic: data.topic,
+    correctAnswer: data.correct_answer,
+    question: data.question
+  });
 
   return data;
 }
@@ -259,6 +309,12 @@ export async function answerLastQuiz(
     userAnswer
   }
 ) {
+  console.log("FETCHING LAST QUIZ FOR:", {
+    userId,
+    sessionId: sessionId || null,
+    userAnswer
+  });
+
   const lastQuiz = await getLastUnansweredQuiz(supabase, userId, sessionId);
 
   if (!lastQuiz) {
@@ -268,8 +324,16 @@ export async function answerLastQuiz(
     };
   }
 
-  const cleanAnswer = String(userAnswer || "").trim().toUpperCase();
-  const correctAnswer = String(lastQuiz.correct_answer || "").trim().toUpperCase();
+  const cleanAnswer = String(userAnswer || "")
+    .replace(/[^A-Da-d]/g, "")
+    .trim()
+    .toUpperCase();
+
+  const correctAnswer = String(lastQuiz.correct_answer || "")
+    .replace(/[^A-Da-d]/g, "")
+    .trim()
+    .toUpperCase();
+
   const isCorrect = cleanAnswer === correctAnswer;
 
   const { data, error } = await supabase
@@ -303,12 +367,22 @@ export async function answerLastQuiz(
     isCorrect
   });
 
+  console.log("QUIZ ANSWER RECORDED:", {
+    quizId: lastQuiz.id,
+    userAnswer: cleanAnswer,
+    correctAnswer,
+    isCorrect
+  });
+
   return {
     found: true,
     isCorrect,
     correctAnswer,
+    userAnswer: cleanAnswer,
     attempt: data,
     mastery,
-    explanation: lastQuiz.explanation
+    explanation: lastQuiz.explanation,
+    topic: lastQuiz.topic,
+    difficulty: lastQuiz.difficulty
   };
 }
