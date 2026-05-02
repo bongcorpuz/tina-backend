@@ -1300,8 +1300,7 @@ Answer clearly and professionally.
 Required sections:
 ${sections}
   `.trim();
-}
-/* ================= ASK: DYNAMIC HOOK ENGINE + BIG 4 RAG ================= */
+}/* ================= ASK: DYNAMIC HOOK ENGINE + BIG 4 RAG ================= */
 
 app.post("/ask", authenticate, async (req, res) => {
   try {
@@ -1309,105 +1308,160 @@ app.post("/ask", authenticate, async (req, res) => {
     const userId = getUserId(req);
 
     const rawQuestion = String(question || "").trim();
-const firstWord = rawQuestion.split(/\s+/)[0]?.toLowerCase();
+    const firstWord = rawQuestion.split(/\s+/)[0]?.toLowerCase();
 
-/* ================= MODE COMMANDS ================= */
-
-if (firstWord === "/exit" || firstWord === "/reset") {
-  await clearModeState(supabase, userId, conversationId);
-
-  return res.json({
-    success: true,
-    engine: "TINA Mode State System",
-    answer: "Mode reset. TINA is now back to Default Ask Mode.",
-    hook: "/ask",
-    mode: "ASK",
-    sourceStatus: "MODE_RESET",
-    sourcesUsed: [],
-    vectorMatches: 0
-  });
-}
-
-if (firstWord === "/mode") {
-  const currentMode = await getModeState(supabase, userId, conversationId);
-
-  return res.json({
-    success: true,
-    engine: "TINA Mode State System",
-    answer: currentMode
-      ? `Current Mode: ${currentMode.active_mode}\nHook: ${currentMode.active_hook}\nTitle: ${currentMode.mode_title}`
-      : "Current Mode: ASK\nHook: /ask\nTitle: Default TINA Assistant",
-    modeState: currentMode || {
-      active_hook: "/ask",
-      active_mode: "ASK",
-      mode_title: "Default TINA Assistant"
-    },
-    sourceStatus: "MODE_STATUS"
-  });
-}
-
-    
-
-    if (!question || !question.trim()) {
+    if (!rawQuestion) {
       return res.status(400).json({
         success: false,
         error: "Question required"
       });
     }
 
-    let effectiveQuestion = question;
+    /* ================= MODE COMMANDS ================= */
 
-const existingMode = await getModeState(supabase, userId, conversationId);
+    if (firstWord === "/exit" || firstWord === "/reset") {
+      await clearModeState(supabase, userId, conversationId);
 
-if (
-  existingMode &&
-  existingMode.active_hook &&
-  existingMode.active_hook !== "/ask" &&
-  !isExplicitModeHook(question)
-) {
-  effectiveQuestion = `${existingMode.active_hook} ${question}`;
-}
+      return res.json({
+        success: true,
+        engine: "TINA Mode State System",
+        answer: "Mode reset. TINA is now back to Default Ask Mode.",
+        hook: "/ask",
+        mode: "ASK",
+        sourceStatus: "MODE_RESET",
+        sourcesUsed: [],
+        vectorMatches: 0
+      });
+    }
 
-const hookConfig = await loadTaxHookConfig(effectiveQuestion);
-    
+    if (firstWord === "/mode") {
+      const currentMode = await getModeState(supabase, userId, conversationId);
+
+      return res.json({
+        success: true,
+        engine: "TINA Mode State System",
+        answer: currentMode
+          ? `Current Mode: ${currentMode.active_mode}\nHook: ${currentMode.active_hook}\nTitle: ${currentMode.mode_title}`
+          : "Current Mode: ASK\nHook: /ask\nTitle: Default TINA Assistant",
+        modeState: currentMode || {
+          active_hook: "/ask",
+          active_mode: "ASK",
+          mode_title: "Default TINA Assistant"
+        },
+        sourceStatus: "MODE_STATUS"
+      });
+    }
+
+    /* ================= FORCE ANSWER CHECKER FIRST ================= */
+
+    const possibleQuizAnswer = rawQuestion
+      .replace(/[^A-Da-d]/g, "")
+      .trim()
+      .toUpperCase();
+
+    if (
+      ["A", "B", "C", "D"].includes(possibleQuizAnswer) &&
+      rawQuestion.length <= 5
+    ) {
+      const result = await answerLastQuiz(supabase, {
+        userId,
+        sessionId: conversationId,
+        userAnswer: possibleQuizAnswer
+      });
+
+      console.log("FORCE QUIZ CHECK RESULT:", {
+        userId,
+        conversationId,
+        rawQuestion,
+        possibleQuizAnswer,
+        found: result?.found,
+        isCorrect: result?.isCorrect
+      });
+
+      if (result && result.found) {
+        const answerText = [
+          result.isCorrect ? "Result: Correct" : "Result: Incorrect",
+          "",
+          `Correct Answer: ${result.correctAnswer}`,
+          "",
+          `Why: ${result.explanation || "No explanation stored."}`,
+          "",
+          result.isCorrect
+            ? "Next: TINA will increase or maintain your difficulty level."
+            : "Next: TINA will lower the difficulty or repair this weak area."
+        ].join("\n");
+
+        return res.json({
+          success: true,
+          engine: "TINA Adaptive Learning Engine",
+          hook: "/quiz",
+          mode: "ADAPTIVE_QUIZ_CHECK",
+          answer: answerText,
+          answerMode: "adaptive_quiz_checked",
+          isCorrect: result.isCorrect,
+          mastery: result.mastery,
+          sourceStatus: "QUIZ_ATTEMPT_RECORDED",
+          sourcesUsed: [],
+          vectorMatches: 0
+        });
+      }
+    }
+
+    /* ================= MODE STATE RESOLUTION ================= */
+
+    let effectiveQuestion = rawQuestion;
+
+    const existingMode = await getModeState(supabase, userId, conversationId);
+
+    if (
+      existingMode &&
+      existingMode.active_hook &&
+      existingMode.active_hook !== "/ask" &&
+      !isExplicitModeHook(rawQuestion)
+    ) {
+      effectiveQuestion = `${existingMode.active_hook} ${rawQuestion}`;
+    }
+
+    const hookConfig = await loadTaxHookConfig(effectiveQuestion);
+
     const cleanQuestion = hookConfig.cleanQuestion;
     const originalQuestion = hookConfig.originalQuestion;
     const hookInstruction = buildHookInstruction(hookConfig);
 
     /* ================= LEARNING PROGRESS MODE ================= */
 
-if (hookConfig.mode === "LEARNING_PROGRESS") {
-  const profile = await getOrCreateLearnerProfile(supabase, userId);
+    if (hookConfig.mode === "LEARNING_PROGRESS") {
+      const profile = await getOrCreateLearnerProfile(supabase, userId);
 
-  const answerText = profile
-    ? [
-        "Learning Progress",
-        "",
-        `Skill Level: ${profile.skill_level}`,
-        `Learning Goal: ${profile.learning_goal}`,
-        `Total Questions: ${profile.total_questions}`,
-        `Correct Answers: ${profile.correct_answers}`,
-        `Accuracy Rate: ${Math.round(Number(profile.accuracy_rate || 0) * 100)}%`,
-        `Last Reviewed Topic: ${profile.last_reviewed_topic || "None"}`,
-        "",
-        `Weak Topics: ${(profile.weak_topics || []).join(", ") || "None yet"}`,
-        `Strong Topics: ${(profile.strong_topics || []).join(", ") || "None yet"}`
-      ].join("\n")
-    : "No learning profile found yet.";
+      const answerText = profile
+        ? [
+            "Learning Progress",
+            "",
+            `Skill Level: ${profile.skill_level}`,
+            `Learning Goal: ${profile.learning_goal}`,
+            `Total Questions: ${profile.total_questions}`,
+            `Correct Answers: ${profile.correct_answers}`,
+            `Accuracy Rate: ${Math.round(Number(profile.accuracy_rate || 0) * 100)}%`,
+            `Last Reviewed Topic: ${profile.last_reviewed_topic || "None"}`,
+            "",
+            `Weak Topics: ${(profile.weak_topics || []).join(", ") || "None yet"}`,
+            `Strong Topics: ${(profile.strong_topics || []).join(", ") || "None yet"}`
+          ].join("\n")
+        : "No learning profile found yet.";
 
-  return res.json({
-    success: true,
-    engine: "TINA Adaptive Learning Engine",
-    hook: hookConfig.hook_code,
-    mode: hookConfig.mode,
-    hookTitle: hookConfig.title,
-    answer: answerText,
-    answerMode: "learning_progress",
-    sourceStatus: "LEARNING_PROFILE_USED",
-    sourcesUsed: [],
-    vectorMatches: 0
-  });
-}
+      return res.json({
+        success: true,
+        engine: "TINA Adaptive Learning Engine",
+        hook: hookConfig.hook_code,
+        mode: hookConfig.mode,
+        hookTitle: hookConfig.title,
+        answer: answerText,
+        answerMode: "learning_progress",
+        sourceStatus: "LEARNING_PROFILE_USED",
+        sourcesUsed: [],
+        vectorMatches: 0
+      });
+    }
 
     if (!cleanQuestion || !cleanQuestion.trim()) {
       return res.status(400).json({
@@ -1417,170 +1471,130 @@ if (hookConfig.mode === "LEARNING_PROGRESS") {
     }
 
     async function saveSimpleHookMemory(answerText) {
-  if (hookConfig.requires_memory === false) return;
+      if (hookConfig.requires_memory === false) return;
 
-  await saveConversationTurn({
-    conversationId,
-    userId,
-    question: originalQuestion,
-    answerText
-  });
+      await saveConversationTurn({
+        conversationId,
+        userId,
+        question: originalQuestion,
+        answerText
+      });
 
-  await saveModeState(supabase, {
-    userId,
-    sessionId: conversationId,
-    activeHook: hookConfig.hook_code,
-    activeMode: hookConfig.mode,
-    modeTitle: hookConfig.title,
-    lastQuestion: originalQuestion,
-    lastAnswer: answerText
-  });
-}
+      await saveModeState(supabase, {
+        userId,
+        sessionId: conversationId,
+        activeHook: hookConfig.hook_code,
+        activeMode: hookConfig.mode,
+        modeTitle: hookConfig.title,
+        lastQuestion: originalQuestion,
+        lastAnswer: answerText
+      });
+    }
 
-  /* ================= ADAPTIVE QUIZ ANSWER CHECKER ================= */
+    /* ================= FEEDBACK MODE ================= */
 
-const possibleQuizAnswer = String(cleanQuestion || "").trim().toUpperCase();
+    if (hookConfig.mode === "FEEDBACK") {
+      const answerText =
+        "Feedback received. Thank you. TINA will use this correction to improve future answers.";
 
-if (["A", "B", "C", "D"].includes(possibleQuizAnswer)) {
-  const result = await answerLastQuiz(supabase, {
-    userId,
-    sessionId: conversationId,
-    userAnswer: possibleQuizAnswer
-  });
+      await saveSimpleHookMemory(answerText);
 
-  if (result.found) {
-    const answerText = [
-      result.isCorrect ? "Result: Correct" : "Result: Incorrect",
-      "",
-      `Correct Answer: ${result.correctAnswer}`,
-      "",
-      `Why: ${result.explanation || "No explanation stored."}`,
-      "",
-      result.isCorrect
-        ? "Next: TINA will increase or maintain your difficulty level."
-        : "Next: TINA will lower the difficulty or repair this weak area."
-    ].join("\n");
+      return res.json({
+        success: true,
+        engine: "TINA Dynamic Hook Engine",
+        hook: hookConfig.hook_code,
+        mode: hookConfig.mode,
+        hookTitle: hookConfig.title,
+        answer: answerText,
+        answerMode: "feedback_captured",
+        confidence: "N/A",
+        sourceStatus: "FEEDBACK_CAPTURED",
+        originalQuestion,
+        resolvedQuestion: cleanQuestion,
+        sourcesUsed: [],
+        vectorMatches: 0
+      });
+    }
 
-    return res.json({
-      success: true,
-      engine: "TINA Adaptive Learning Engine",
-      hook: hookConfig.hook_code,
-      mode: "ADAPTIVE_QUIZ_CHECK",
-      answer: answerText,
-      answerMode: "adaptive_quiz_checked",
-      isCorrect: result.isCorrect,
-      mastery: result.mastery,
-      sourceStatus: "QUIZ_ATTEMPT_RECORDED",
-      sourcesUsed: [],
-      vectorMatches: 0
-    });
-  }
-}
+    /* ================= ADAPTIVE QUIZ MODE ================= */
 
-/* ================= FEEDBACK MODE ================= */
+    if (hookConfig.mode === "QUIZ_MASTER" || hookConfig.mode === "ADAPTIVE_QUIZ") {
+      const quizProfile = await getAdaptiveQuizProfile(
+        supabase,
+        userId,
+        cleanQuestion
+      );
 
-if (hookConfig.mode === "FEEDBACK") {
-  const answerText =
-    "Feedback received. Thank you. TINA will use this correction to improve future answers.";
+      const quizPrompt = buildAdaptiveQuizPrompt({
+        topic: quizProfile.topic,
+        difficulty: quizProfile.difficulty,
+        profile: quizProfile.profile
+      });
 
-  await saveSimpleHookMemory(answerText);
+      const response = await openai.chat.completions.create({
+        model: process.env.OPENAI_MODEL || "gpt-4o-mini",
+        temperature: 0.3,
+        messages: [{ role: "user", content: quizPrompt }]
+      });
 
-  return res.json({
-    success: true,
-    engine: "TINA Dynamic Hook Engine",
-    hook: hookConfig.hook_code,
-    mode: hookConfig.mode,
-    hookTitle: hookConfig.title,
-    answer: answerText,
-    answerMode: "feedback_captured",
-    confidence: "N/A",
-    sourceStatus: "FEEDBACK_CAPTURED",
-    originalQuestion,
-    resolvedQuestion: cleanQuestion,
-    sourcesUsed: [],
-    vectorMatches: 0
-  });
-}
+      const rawQuiz = response.choices?.[0]?.message?.content?.trim() || "";
+      const quiz = safeParseQuizJson(rawQuiz);
 
-/* ================= ADAPTIVE QUIZ MODE ================= */
+      if (!quiz) {
+        return res.json({
+          success: false,
+          engine: "TINA Adaptive Learning Engine",
+          error: "Unable to generate valid adaptive quiz JSON.",
+          rawQuiz
+        });
+      }
 
-if (hookConfig.mode === "QUIZ_MASTER" || hookConfig.mode === "ADAPTIVE_QUIZ") {
-  const quizProfile = await getAdaptiveQuizProfile(
-    supabase,
-    userId,
-    cleanQuestion
-  );
+      await storeUnansweredQuiz(supabase, {
+        userId,
+        sessionId: conversationId,
+        quiz,
+        mode: hookConfig.mode
+      });
 
-  const quizPrompt = buildAdaptiveQuizPrompt({
-    topic: quizProfile.topic,
-    difficulty: quizProfile.difficulty,
-    profile: quizProfile.profile
-  });
+      const answerText = [
+        `Topic: ${quiz.topic}`,
+        `Difficulty: ${quiz.difficulty}`,
+        "",
+        "Question:",
+        quiz.question,
+        "",
+        `A. ${quiz.choices.A}`,
+        `B. ${quiz.choices.B}`,
+        `C. ${quiz.choices.C}`,
+        `D. ${quiz.choices.D}`,
+        "",
+        "Instruction:",
+        "Answer A, B, C, or D."
+      ].join("\n");
 
-  const response = await openai.chat.completions.create({
-    model: process.env.OPENAI_MODEL || "gpt-4o-mini",
-    temperature: 0.3,
-    messages: [{ role: "user", content: quizPrompt }]
-  });
+      await saveSimpleHookMemory(answerText);
 
-  const rawQuiz = response.choices?.[0]?.message?.content?.trim() || "";
-  const quiz = safeParseQuizJson(rawQuiz);
+      return res.json({
+        success: true,
+        engine: "TINA Adaptive Learning Engine",
+        hook: hookConfig.hook_code,
+        mode: hookConfig.mode,
+        hookTitle: hookConfig.title,
+        answer: answerText,
+        answerMode: "adaptive_quiz_question_generated",
+        topic: quiz.topic,
+        difficulty: quiz.difficulty,
+        confidence: "ADAPTIVE",
+        sourceStatus: "QUIZ_MODE_NO_RAG_REQUIRED",
+        sourcesUsed: [],
+        vectorMatches: 0
+      });
+    }
 
-  if (!quiz) {
-    return res.json({
-      success: false,
-      engine: "TINA Adaptive Learning Engine",
-      error: "Unable to generate valid adaptive quiz JSON.",
-      rawQuiz
-    });
-  }
+    /* ================= REVIEW MODE: TEACH + ASK ================= */
 
-  await storeUnansweredQuiz(supabase, {
-    userId,
-    sessionId: conversationId,
-    quiz,
-    mode: hookConfig.mode
-  });
-
-  const answerText = [
-    `Topic: ${quiz.topic}`,
-    `Difficulty: ${quiz.difficulty}`,
-    "",
-    "Question:",
-    quiz.question,
-    "",
-    `A. ${quiz.choices.A}`,
-    `B. ${quiz.choices.B}`,
-    `C. ${quiz.choices.C}`,
-    `D. ${quiz.choices.D}`,
-    "",
-    "Instruction:",
-    "Answer A, B, C, or D."
-  ].join("\n");
-
-  await saveSimpleHookMemory(answerText);
-
-  return res.json({
-    success: true,
-    engine: "TINA Adaptive Learning Engine",
-    hook: hookConfig.hook_code,
-    mode: hookConfig.mode,
-    hookTitle: hookConfig.title,
-    answer: answerText,
-    answerMode: "adaptive_quiz_question_generated",
-    topic: quiz.topic,
-    difficulty: quiz.difficulty,
-    confidence: "ADAPTIVE",
-    sourceStatus: "QUIZ_MODE_NO_RAG_REQUIRED",
-    sourcesUsed: [],
-    vectorMatches: 0
-  });
-}
-
-/* ================= REVIEW MODE: TEACH + ASK ================= */
-
-if (hookConfig.mode === "TAX_REVIEWER") {
-  const reviewPrompt = `
+    if (hookConfig.mode === "TAX_REVIEWER") {
+      const reviewPrompt = `
 You are TINA, a CPALE taxation reviewer.
 
 Teach this topic:
@@ -1621,34 +1635,34 @@ Instruction:
 Answer the practice question, then TINA will check your answer.
 `.trim();
 
-  const response = await openai.chat.completions.create({
-    model: process.env.OPENAI_MODEL || "gpt-4o-mini",
-    temperature: 0.3,
-    messages: [{ role: "user", content: reviewPrompt }]
-  });
+      const response = await openai.chat.completions.create({
+        model: process.env.OPENAI_MODEL || "gpt-4o-mini",
+        temperature: 0.3,
+        messages: [{ role: "user", content: reviewPrompt }]
+      });
 
-  const answerText =
-    response.choices?.[0]?.message?.content?.trim() ||
-    "Unable to generate reviewer lesson.";
+      const answerText =
+        response.choices?.[0]?.message?.content?.trim() ||
+        "Unable to generate reviewer lesson.";
 
-  await saveSimpleHookMemory(answerText);
+      await saveSimpleHookMemory(answerText);
 
-  return res.json({
-    success: true,
-    engine: "TINA Dynamic Hook Engine",
-    hook: hookConfig.hook_code,
-    mode: hookConfig.mode,
-    hookTitle: hookConfig.title,
-    answer: answerText,
-    answerMode: "reviewer_teach_and_ask",
-    confidence: "GENERAL_REVIEWER",
-    sourceStatus: "REVIEW_MODE_NO_RAG_REQUIRED",
-    originalQuestion,
-    resolvedQuestion: cleanQuestion,
-    sourcesUsed: [],
-    vectorMatches: 0
-  });
-}
+      return res.json({
+        success: true,
+        engine: "TINA Dynamic Hook Engine",
+        hook: hookConfig.hook_code,
+        mode: hookConfig.mode,
+        hookTitle: hookConfig.title,
+        answer: answerText,
+        answerMode: "reviewer_teach_and_ask",
+        confidence: "GENERAL_REVIEWER",
+        sourceStatus: "REVIEW_MODE_NO_RAG_REQUIRED",
+        originalQuestion,
+        resolvedQuestion: cleanQuestion,
+        sourcesUsed: [],
+        vectorMatches: 0
+      });
+    }
     
         /* ================= TOPIC + MEMORY ================= */
 
