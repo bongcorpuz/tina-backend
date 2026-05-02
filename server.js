@@ -1338,74 +1338,67 @@ app.post("/ask", authenticate, async (req, res) => {
 
     /* ================= FORCE QUIZ ANSWER CHECKER ================= */
 
-    const quizAnswerCandidate = rawQuestion
-      .replace(/[^A-Da-d]/g, "")
-      .trim()
-      .toUpperCase();
+const quizAnswerCandidate = rawQuestion
+  .replace(/[^A-Da-d]/g, "")
+  .trim()
+  .toUpperCase();
 
-    if (
-      ["A", "B", "C", "D"].includes(quizAnswerCandidate) &&
-      rawQuestion.length <= 5
-    ) {
-      console.log("QUIZ ANSWER DETECTED:", {
-        rawQuestion,
-        quizAnswerCandidate,
-        userId,
-        conversationId
-      });
+if (
+  ["A", "B", "C", "D"].includes(quizAnswerCandidate) &&
+  rawQuestion.length <= 5
+) {
+  console.log("QUIZ ANSWER DETECTED:", {
+    rawQuestion,
+    quizAnswerCandidate,
+    userId
+  });
 
-      let result = await answerLastQuiz(supabase, {
-        userId,
-        sessionId: conversationId,
-        userAnswer: quizAnswerCandidate
-      });
+  const result = await answerLastQuiz(supabase, {
+    userId,
+    userAnswer: quizAnswerCandidate
+  });
 
-      // fallback if no session match
-      if (!result || !result.found) {
-        result = await answerLastQuiz(supabase, {
-          userId,
-          sessionId: null,
-          userAnswer: quizAnswerCandidate
-        });
-      }
+  console.log("QUIZ RESULT:", result);
 
-      console.log("QUIZ RESULT:", result);
+  if (result && result.found) {
+    const answerText = [
+      result.isCorrect ? "Correct ✅" : "Incorrect ❌",
+      "",
+      `Your Answer: ${result.userAnswer || quizAnswerCandidate}`,
+      `Correct Answer: ${result.correctAnswer}`,
+      "",
+      `Explanation: ${result.explanation || "No explanation available."}`,
+      "",
+      result.isCorrect
+        ? "Next: TINA will increase or maintain your difficulty level."
+        : "Next: TINA will reinforce this topic before increasing difficulty."
+    ].join("\n");
 
-      if (result && result.found) {
-        const answerText = [
-          result.isCorrect ? "Correct ✅" : "Incorrect ❌",
-          "",
-          `Your Answer: ${result.userAnswer || quizAnswerCandidate}`,
-          `Correct Answer: ${result.correctAnswer}`,
-          "",
-          `Explanation: ${result.explanation || "No explanation available."}`
-        ].join("\n");
+    return res.json({
+      success: true,
+      engine: "TINA Adaptive Learning Engine",
+      mode: "QUIZ_CHECK",
+      answer: answerText,
+      isCorrect: result.isCorrect,
+      mastery: result.mastery || null,
+      topic: result.topic || null,
+      difficulty: result.difficulty || null,
+      sourceStatus: "QUIZ_ANSWER_PROCESSED",
+      sourcesUsed: [],
+      vectorMatches: 0
+    });
+  }
 
-        return res.json({
-          success: true,
-          engine: "TINA Adaptive Learning Engine",
-          mode: "QUIZ_CHECK",
-          answer: answerText,
-          isCorrect: result.isCorrect,
-          mastery: result.mastery,
-          sourceStatus: "QUIZ_ANSWER_PROCESSED",
-          sourcesUsed: [],
-          vectorMatches: 0
-        });
-      }
-
-      return res.json({
-        success: false,
-        engine: "TINA Adaptive Learning Engine",
-        mode: "QUIZ_CHECK_FAILED",
-        answer:
-          "No pending quiz found. Please start a new quiz using /quiz VAT.",
-        sourceStatus: "NO_PENDING_QUIZ",
-        sourcesUsed: [],
-        vectorMatches: 0
-      });
-    }
-
+  return res.json({
+    success: false,
+    engine: "TINA Adaptive Learning Engine",
+    mode: "QUIZ_CHECK_FAILED",
+    answer: "No pending quiz found. Please start a new quiz using /quiz VAT.",
+    sourceStatus: "NO_PENDING_QUIZ",
+    sourcesUsed: [],
+    vectorMatches: 0
+  });
+}
 /* ================= MODE STATE RESOLUTION ================= */
 
     let effectiveQuestion = rawQuestion;
