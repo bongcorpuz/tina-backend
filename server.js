@@ -223,17 +223,48 @@ function filterDocsByQuestionType(docs = [], questionType = "general") {
 
 /* ================= ISSUANCE DETECTION ================= */
 
+function normalizeIssuanceNumber(num = "") {
+  return String(num || "").replace(/^0+/, "") || "0";
+}
+
+function normalizeIssuanceYear(year = "") {
+  const y = String(year || "").trim();
+  return y.length === 2 ? `20${y}` : y;
+}
+
 function detectIssuanceQuery(question = "") {
   const q = String(question || "");
 
-  const rr = q.match(/\b(?:RR|Revenue\s+Regulation[s]?)\s*(?:No\.?)?\s*0*(\d+)\s*[-_ ]?\s*(\d{2,4})\b/i);
-  if (rr) return { type: "RR", number: rr[1], year: rr[2], normalized: `rr-${rr[1]}-${rr[2]}` };
+  const patterns = [
+    {
+      type: "RR",
+      regex: /\b(?:RR|Revenue\s+Regulation[s]?)\s*(?:No\.?)?\s*0*(\d+)[\s\-_]?(\d{2,4})\b/i
+    },
+    {
+      type: "RMC",
+      regex: /\b(?:RMC|Revenue\s+Memorandum\s+Circular[s]?)\s*(?:No\.?)?\s*0*(\d+)[\s\-_]?(\d{2,4})\b/i
+    },
+    {
+      type: "RMO",
+      regex: /\b(?:RMO|Revenue\s+Memorandum\s+Order[s]?)\s*(?:No\.?)?\s*0*(\d+)[\s\-_]?(\d{2,4})\b/i
+    }
+  ];
 
-  const rmc = q.match(/\b(?:RMC|Revenue\s+Memorandum\s+Circular[s]?)\s*(?:No\.?)?\s*0*(\d+)\s*[-_ ]?\s*(\d{2,4})\b/i);
-  if (rmc) return { type: "RMC", number: rmc[1], year: rmc[2], normalized: `rmc-${rmc[1]}-${rmc[2]}` };
+  for (const item of patterns) {
+    const match = q.match(item.regex);
 
-  const rmo = q.match(/\b(?:RMO|Revenue\s+Memorandum\s+Order[s]?)\s*(?:No\.?)?\s*0*(\d+)\s*[-_ ]?\s*(\d{2,4})\b/i);
-  if (rmo) return { type: "RMO", number: rmo[1], year: rmo[2], normalized: `rmo-${rmo[1]}-${rmo[2]}` };
+    if (match) {
+      const number = normalizeIssuanceNumber(match[1]);
+      const year = normalizeIssuanceYear(match[2]);
+
+      return {
+        type: item.type,
+        number,
+        year,
+        normalized: `${item.type.toLowerCase()}-${number}-${year}`
+      };
+    }
+  }
 
   return null;
 }
@@ -241,9 +272,14 @@ function detectIssuanceQuery(question = "") {
 function isExactIssuanceMatch(doc, issuance) {
   if (!doc || !issuance) return false;
 
-  const target = normalizeForMatch(issuance.normalized);
+  const type = String(issuance.type || "").toLowerCase();
+  const number = normalizeIssuanceNumber(issuance.number);
+  const year = normalizeIssuanceYear(issuance.year);
 
-  const candidates = [
+  const number2 = number.padStart(2, "0");
+  const number3 = number.padStart(3, "0");
+
+  const rawCandidates = [
     doc.source,
     doc.originalSource,
     doc.metadata?.originalSource,
@@ -251,13 +287,70 @@ function isExactIssuanceMatch(doc, issuance) {
     doc.metadata?.normalizedSource,
     doc.metadata?.path,
     doc.path
-  ]
-    .filter(Boolean)
-    .map(normalizeForMatch);
+  ].filter(Boolean);
 
-  return candidates.some((candidate) => candidate.includes(target));
+  const normalizedCandidates = rawCandidates.map(normalizeForMatch);
+
+  const fullName =
+    type === "rr"
+      ? "revenue-regulation"
+      : type === "rmc"
+      ? "revenue-memorandum-circular"
+      : "revenue-memorandum-order";
+
+  const pluralFullName =
+    type === "rr"
+      ? "revenue-regulations"
+      : type === "rmc"
+      ? "revenue-memorandum-circulars"
+      : "revenue-memorandum-orders";
+
+  const possibleTargets = [
+    `${type}-${number}-${year}`,
+    `${type}-${number2}-${year}`,
+    `${type}-${number3}-${year}`,
+
+    `${type}_${number}-${year}`,
+    `${type}_${number2}-${year}`,
+    `${type}_${number3}-${year}`,
+
+    `${type}-${number}_${year}`,
+    `${type}-${number2}_${year}`,
+    `${type}-${number3}_${year}`,
+
+    `${type}${number}-${year}`,
+    `${type}${number2}-${year}`,
+    `${type}${number3}-${year}`,
+
+    `${type}${number}_${year}`,
+    `${type}${number2}_${year}`,
+    `${type}${number3}_${year}`,
+
+    `${type}${number}${year}`,
+    `${type}${number2}${year}`,
+    `${type}${number3}${year}`,
+
+    `${type}-no-${number}-${year}`,
+    `${type}-no-${number2}-${year}`,
+    `${type}-no-${number3}-${year}`,
+
+    `${fullName}-${number}-${year}`,
+    `${fullName}-${number2}-${year}`,
+    `${fullName}-${number3}-${year}`,
+
+    `${fullName}-no-${number}-${year}`,
+    `${fullName}-no-${number2}-${year}`,
+    `${fullName}-no-${number3}-${year}`,
+
+    `${pluralFullName}-${number}-${year}`,
+    `${pluralFullName}-${number2}-${year}`,
+    `${pluralFullName}-${number3}-${year}`
+  ].map(normalizeForMatch);
+
+  return normalizedCandidates.some((candidate) =>
+    possibleTargets.some((target) => candidate.includes(target))
+  );
 }
-
 /* ================= SOURCE LINK HELPER ================= */
 
 function buildGoogleDriveLinks(doc = {}) {
