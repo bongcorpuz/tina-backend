@@ -1317,6 +1317,71 @@ app.post("/ask", authenticate, async (req, res) => {
       });
     }
 
+/* ================= FORCE QUIZ ANSWER CHECKER ================= */
+
+const possibleQuizAnswer = rawQuestion
+  .replace(/[^A-Da-d]/g, "")
+  .trim()
+  .toUpperCase();
+
+if (
+  ["A", "B", "C", "D"].includes(possibleQuizAnswer) &&
+  rawQuestion.length <= 5
+) {
+  console.log("QUIZ ANSWER DETECTED:", {
+    rawQuestion,
+    possibleQuizAnswer,
+    userId,
+    conversationId
+  });
+
+  let result = await answerLastQuiz(supabase, {
+    userId,
+    sessionId: conversationId,
+    userAnswer: possibleQuizAnswer
+  });
+
+  // 🔥 fallback if session mismatch
+  if (!result || !result.found) {
+    console.log("Session match failed. Trying global lookup...");
+
+    result = await answerLastQuiz(supabase, {
+      userId,
+      sessionId: null,
+      userAnswer: possibleQuizAnswer
+    });
+  }
+
+  console.log("QUIZ RESULT:", result);
+
+  if (result && result.found) {
+    const answerText = [
+      result.isCorrect ? "Result: Correct" : "Result: Incorrect",
+      "",
+      `Your Answer: ${result.userAnswer}`,
+      `Correct Answer: ${result.correctAnswer}`,
+      "",
+      `Explanation: ${result.explanation || "No explanation available."}`,
+      "",
+      result.isCorrect
+        ? "Next: Difficulty will increase."
+        : "Next: TINA will reinforce this topic."
+    ].join("\n");
+
+    return res.json({
+      success: true,
+      engine: "TINA Adaptive Learning Engine",
+      mode: "QUIZ_CHECK",
+      answer: answerText,
+      isCorrect: result.isCorrect,
+      mastery: result.mastery,
+      sourceStatus: "QUIZ_ANSWER_PROCESSED",
+      sourcesUsed: [],
+      vectorMatches: 0
+    });
+  }
+}
+    
     /* ================= MODE COMMANDS ================= */
 
     if (firstWord === "/exit" || firstWord === "/reset") {
