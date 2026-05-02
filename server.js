@@ -1458,7 +1458,21 @@ Answer the practice question, then TINA will check your answer.
 
     let relevantDocs = [];
 
-    const retrievalQuery = finalQuestion;
+    const retrievalQuery = issuance
+  ? [
+      finalQuestion,
+      `${issuance.type} ${issuance.number}-${issuance.year}`,
+      `${issuance.type} ${String(issuance.number).padStart(2, "0")}-${issuance.year}`,
+      `${issuance.type} ${String(issuance.number).padStart(3, "0")}-${issuance.year}`,
+      `${issuance.type} No. ${issuance.number}-${issuance.year}`,
+      `${issuance.type} No. ${String(issuance.number).padStart(2, "0")}-${issuance.year}`,
+      `${issuance.type} No. ${String(issuance.number).padStart(3, "0")}-${issuance.year}`,
+      `Revenue Regulation ${issuance.number}-${issuance.year}`,
+      `Revenue Regulation No. ${issuance.number}-${issuance.year}`,
+      `Revenue Memorandum Circular ${issuance.number}-${issuance.year}`,
+      `Revenue Memorandum Order ${issuance.number}-${issuance.year}`
+    ].join(" ")
+  : finalQuestion;
 
     if (hookConfig.requires_retrieval !== false) {
       try {
