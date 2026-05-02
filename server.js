@@ -1599,6 +1599,46 @@ Answer the practice question, then TINA will check your answer.
       });
     }
 
+    /* ================= ADAPTIVE QUIZ ANSWER CHECKER ================= */
+
+if (
+  ["A", "B", "C", "D"].includes(String(cleanQuestion || "").trim().toUpperCase())
+) {
+  const result = await answerLastQuiz(supabase, {
+    userId,
+    sessionId: conversationId,
+    userAnswer: cleanQuestion
+  });
+
+  if (result.found) {
+    const answerText = [
+      result.isCorrect ? "Result: Correct" : "Result: Incorrect",
+      "",
+      `Correct Answer: ${result.correctAnswer}`,
+      "",
+      `Why: ${result.explanation || "No explanation stored."}`,
+      "",
+      result.isCorrect
+        ? "Next: TINA will increase or maintain your difficulty level."
+        : "Next: TINA will lower the difficulty or repair this weak area."
+    ].join("\n");
+
+    return res.json({
+      success: true,
+      engine: "TINA Adaptive Learning Engine",
+      hook: hookConfig.hook_code,
+      mode: "ADAPTIVE_QUIZ_CHECK",
+      answer: answerText,
+      answerMode: "adaptive_quiz_checked",
+      isCorrect: result.isCorrect,
+      mastery: result.mastery,
+      sourceStatus: "QUIZ_ATTEMPT_RECORDED",
+      sourcesUsed: [],
+      vectorMatches: 0
+    });
+  }
+}
+    
         /* ================= TOPIC + MEMORY ================= */
 
     const topicData = await detectTopic({
