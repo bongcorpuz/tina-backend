@@ -928,7 +928,7 @@ Required sections:
 }
 
 
-/* ================= ASK: BIG 4 MODE ================= */
+/* ================= ASK: DYNAMIC HOOK ENGINE + BIG 4 RAG ================= */
 
 app.post("/ask", authenticate, async (req, res) => {
   try {
@@ -942,7 +942,60 @@ app.post("/ask", authenticate, async (req, res) => {
       });
     }
 
-    const cleanQuestion = question.trim();
+    /* ================= HOOK DETECTION ================= */
+
+    const hookConfig = await loadTaxHookConfig(question);
+    const cleanQuestion = hookConfig.cleanQuestion;
+    const originalQuestion = hookConfig.originalQuestion;
+    const hookInstruction = buildHookInstruction(hookConfig);
+
+    if (!cleanQuestion || !cleanQuestion.trim()) {
+      return res.status(400).json({
+        success: false,
+        error: "Question required after hook"
+      });
+    }
+
+    /* ================= FEEDBACK MODE ================= */
+
+    if (hookConfig.mode === "FEEDBACK") {
+      const answerText =
+        "Feedback received. Thank you. TINA will use this correction to improve future answers.";
+
+      if (conversationId && userId) {
+        await saveMessage(supabase, {
+          conversationId,
+          userId,
+          role: "user",
+          content: originalQuestion
+        });
+
+        await saveMessage(supabase, {
+          conversationId,
+          userId,
+          role: "assistant",
+          content: answerText
+        });
+      }
+
+      return res.json({
+        success: true,
+        engine: "TINA Dynamic Hook Engine",
+        hook: hookConfig.hook_code,
+        mode: hookConfig.mode,
+        hookTitle: hookConfig.title,
+        answer: answerText,
+        answerMode: "feedback_captured",
+        confidence: "N/A",
+        sourceStatus: "FEEDBACK_CAPTURED",
+        originalQuestion,
+        resolvedQuestion: cleanQuestion,
+        sourcesUsed: [],
+        vectorMatches: 0
+      });
+    }
+
+    /* ================= TOPIC + MEMORY ================= */
 
     const topicData = await detectTopic({
       question: cleanQuestion,
@@ -965,28 +1018,11 @@ app.post("/ask", authenticate, async (req, res) => {
 
     const memoryContext = buildMemoryContext(conversationHistory);
 
-    let relevantDocs = [];
-
-    try {
-      relevantDocs = await smartSearch(finalQuestion, 24);
-    } catch (error) {
-      console.error("Smart search failed:", error.message);
-
-      try {
-        relevantDocs = await searchSimilar(finalQuestion, 24);
-      } catch (fallbackError) {
-        console.error("Fallback search failed:", fallbackError.message);
-      }
-    }
-
-    relevantDocs = rankDocsByAuthority(relevantDocs || []);
-    relevantDocs = filterDocsByQuestionType(relevantDocs, questionType);
-
     async function saveAllMemory(answerText) {
       await saveConversationTurn({
         conversationId,
         userId,
-        question: cleanQuestion,
+        question: originalQuestion,
         answerText
       });
 
@@ -996,10 +1032,33 @@ app.post("/ask", authenticate, async (req, res) => {
         topic: topicData.topic,
         subject: topicData.subject,
         taxType: topicData.taxType,
-        question: cleanQuestion,
+        question: originalQuestion,
         answer: answerText
       });
     }
+
+    /* ================= RETRIEVAL ================= */
+
+    let relevantDocs = [];
+
+    if (hookConfig.requires_retrieval !== false) {
+      try {
+        relevantDocs = await smartSearch(finalQuestion, 24);
+      } catch (error) {
+        console.error("Smart search failed:", error.message);
+
+        try {
+          relevantDocs = await searchSimilar(finalQuestion, 24);
+        } catch (fallbackError) {
+          console.error("Fallback search failed:", fallbackError.message);
+        }
+      }
+
+      relevantDocs = rankDocsByAuthority(relevantDocs || []);
+      relevantDocs = filterDocsByQuestionType(relevantDocs, questionType);
+    }
+
+    /* ================= NO SOURCE HANDLING ================= */
 
     if (!relevantDocs || relevantDocs.length === 0) {
       let answerText;
@@ -1019,20 +1078,25 @@ app.post("/ask", authenticate, async (req, res) => {
 
       return res.json({
         success: true,
-        engine: "TINA Big 4 Mode",
+        engine: "TINA Dynamic Hook Engine",
+        hook: hookConfig.hook_code,
+        mode: hookConfig.mode,
+        hookTitle: hookConfig.title,
         answer: answerText,
         answerMode: issuance ? "no_exact_issuance_match" : "general_fallback_no_context",
         confidence: issuance ? "LOW" : "GENERAL",
         sourceStatus: "NO_INDEXED_SOURCE",
         questionType,
         topicData,
-        originalQuestion: cleanQuestion,
+        originalQuestion,
         resolvedQuestion: finalQuestion,
         sourcesUsed: [],
         vectorMatches: 0,
         detectedIssuance: issuance || null
       });
     }
+
+    /* ================= EXACT ISSUANCE CHECK ================= */
 
     if (issuance) {
       const exactDocs = relevantDocs.filter((doc) =>
@@ -1046,14 +1110,17 @@ app.post("/ask", authenticate, async (req, res) => {
 
         return res.json({
           success: true,
-          engine: "TINA Big 4 Mode",
+          engine: "TINA Dynamic Hook Engine",
+          hook: hookConfig.hook_code,
+          mode: hookConfig.mode,
+          hookTitle: hookConfig.title,
           answer: answerText,
           answerMode: "no_exact_issuance_match",
           confidence: "LOW",
           sourceStatus: "NO_EXACT_ISSUANCE_MATCH",
           questionType,
           topicData,
-          originalQuestion: cleanQuestion,
+          originalQuestion,
           resolvedQuestion: finalQuestion,
           sourcesUsed: [],
           vectorMatches: relevantDocs.length,
@@ -1063,6 +1130,8 @@ app.post("/ask", authenticate, async (req, res) => {
 
       relevantDocs = rankDocsByAuthority(exactDocs);
     }
+
+    /* ================= CONFIDENCE FILTER ================= */
 
     const MIN_SCORE = issuance ? 0 : 0.38;
 
@@ -1092,20 +1161,25 @@ app.post("/ask", authenticate, async (req, res) => {
 
       return res.json({
         success: true,
-        engine: "TINA Big 4 Mode",
+        engine: "TINA Dynamic Hook Engine",
+        hook: hookConfig.hook_code,
+        mode: hookConfig.mode,
+        hookTitle: hookConfig.title,
         answer: answerText,
         answerMode: issuance ? "low_confidence" : "general_fallback_low_confidence",
         confidence: issuance ? "LOW" : "GENERAL",
         sourceStatus: issuance ? "LOW_CONFIDENCE_EXACT_QUERY" : "LOW_CONFIDENCE_GENERAL_QUERY",
         questionType,
         topicData,
-        originalQuestion: cleanQuestion,
+        originalQuestion,
         resolvedQuestion: finalQuestion,
         sourcesUsed: [],
         vectorMatches: relevantDocs.length,
         detectedIssuance: issuance || null
       });
     }
+
+    /* ================= CONTEXT BUILDING ================= */
 
     const sourcesUsed = uniqueSources(highConfidenceDocs);
     const topTier = Math.min(...sourcesUsed.map((s) => s.authorityTier || 99));
@@ -1134,10 +1208,17 @@ ${doc.text}
       })
       .join("\n\n---\n\n");
 
-    const systemPrompt = `
-You are TINA Big 4 Mode, a Philippine tax research, compliance, and audit-risk assistant for Bong Corpuz & Co. CPAs.
+    /* ================= SYSTEM PROMPT ================= */
 
-You must behave like a Big 4 senior tax manager:
+    const systemPrompt = `
+You are TINA, a Philippine tax research, compliance, education, and audit-risk assistant for Bong Corpuz & Co. CPAs.
+
+ACTIVE HOOK MODE:
+${hookInstruction}
+
+You must follow the ACTIVE HOOK MODE behavior strictly.
+
+CORE BEHAVIOR:
 - precise
 - source-grounded
 - conservative
@@ -1169,44 +1250,78 @@ STRICT RULES:
 12. For computations, show formula only if the formula is found or reasonably derived from the context. If not, state that computation support is insufficient.
 13. For audit-risk questions, separate legal basis, exposure, evidence needed, and recommended next steps.
 
-REQUIRED BIG 4 FORMAT:
+MODE-SPECIFIC OUTPUT RULES:
 
-Executive Answer:
-[Short answer. State the tax/compliance conclusion plainly.]
+ASK MODE:
+Use:
+Short Answer
+Explanation
+Practical Note
+Confidence
+Sources Used
 
-Issue:
-[Frame the tax issue.]
+TAX_EXPERT MODE:
+Use:
+Executive Answer
+Issue
+Applicable Source / Legal Basis
+Analysis
+Practical Compliance / Audit Implication
+Recommended Action
+Limitations
+Confidence
+Sources Used
 
-Applicable Source / Legal Basis:
-[Identify exact source, section/provision if shown, and authority tier. If not shown, say "Not shown in retrieved context."]
+TAX_REVIEWER MODE:
+Use:
+Topic
+Core Concept
+Rule
+Simple Example
+CPALE Trap
+Quick Recall
+Practice Question
+Answer and Explanation
+Sources Used
 
-Analysis:
-[Reasoned explanation based only on retrieved context.]
+QUIZ_MASTER MODE:
+Ask only one multiple-choice question.
+Use:
+Question
+A.
+B.
+C.
+D.
+Instruction
+Do not reveal the answer unless the user already supplied an answer.
 
-Practical Compliance / Audit Implication:
-[State filing, withholding, VAT, income tax, documentation, or audit impact based only on context.]
-
-Recommended Action:
-[Conservative next step: verify, document, reconcile, compute, file, amend, or obtain support.]
-
-Limitations:
-[State any missing facts, missing provisions, amendment status, completeness limits, or need for official verification.]
-
-Confidence:
-[HIGH, MEDIUM, LIMITED, or LOW.]
-
-Sources Used:
-[List exact filename/path from CONTEXT.]
+SOURCE_FINDER MODE:
+Use:
+Best Matching Source
+Document / Regulation / Case Title
+Relevant Section or Keyword
+Short Summary
+Confidence
+Sources Used
 `.trim();
 
     const userPrompt = `
 Conversation Memory:
 ${memoryContext}
 
+Hook:
+${hookConfig.hook_code}
+
+Mode:
+${hookConfig.mode}
+
 Topic Data:
 ${JSON.stringify(topicData)}
 
 Original User Question:
+${originalQuestion}
+
+Clean Question:
 ${cleanQuestion}
 
 Resolved Question Used for Search:
@@ -1222,12 +1337,14 @@ CONTEXT:
 ${context}
 
 Instruction:
-Answer strictly using only the CONTEXT. Apply the source hierarchy and Big 4 format.
+Answer strictly using only the CONTEXT. Apply the source hierarchy and the active hook mode.
 `.trim();
+
+    /* ================= OPENAI CALL ================= */
 
     const response = await openai.chat.completions.create({
       model: process.env.OPENAI_MODEL || "gpt-4o-mini",
-      temperature: 0,
+      temperature: hookConfig.mode === "TAX_REVIEWER" || hookConfig.mode === "QUIZ_MASTER" ? 0.2 : 0,
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: userPrompt }
@@ -1256,14 +1373,19 @@ Answer strictly using only the CONTEXT. Apply the source hierarchy and Big 4 for
 
     return res.json({
       success: true,
-      engine: "TINA Big 4 Mode",
+      engine: "TINA Dynamic Hook Engine",
+      hook: hookConfig.hook_code,
+      mode: hookConfig.mode,
+      hookTitle: hookConfig.title,
       answer: answerText,
-      answerMode: issuance ? "exact_issuance_big4_rag" : "big4_authority_ranked_rag",
+      answerMode: issuance
+        ? `exact_issuance_${hookConfig.mode.toLowerCase()}_rag`
+        : `${hookConfig.mode.toLowerCase()}_authority_ranked_rag`,
       confidence,
       sourceStatus: "INDEXED_SOURCE_USED",
       questionType,
       topicData,
-      originalQuestion: cleanQuestion,
+      originalQuestion,
       resolvedQuestion: finalQuestion,
       sourcesUsed,
       vectorMatches: highConfidenceDocs.length,
@@ -1277,7 +1399,6 @@ Answer strictly using only the CONTEXT. Apply the source hierarchy and Big 4 for
     });
   }
 });
-
 /* ================= 404 ================= */
 
 app.use((req, res) => {
