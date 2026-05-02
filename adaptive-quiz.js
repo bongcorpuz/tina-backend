@@ -139,6 +139,9 @@ export function safeParseQuizJson(text = "") {
       return null;
     }
 
+    parsed.topic = parsed.topic || "General Taxation";
+    parsed.subtopic = parsed.subtopic || "";
+    parsed.difficulty = Number(parsed.difficulty || 1);
     parsed.correctAnswer = String(parsed.correctAnswer).trim().toUpperCase();
 
     if (!["A", "B", "C", "D"].includes(parsed.correctAnswer)) {
@@ -157,61 +160,90 @@ export async function storeUnansweredQuiz(
   supabase,
   {
     userId,
-    sessionId,
+    sessionId = null,
     quiz,
     mode = "ADAPTIVE_QUIZ"
   }
 ) {
-  if (!userId || !quiz) return null;
+  if (!userId || !quiz) {
+    console.error("STORE QUIZ FAILED: missing userId or quiz", { userId, quiz });
+    return {
+      saveFailed: true,
+      error: "Missing userId or quiz"
+    };
+  }
 
-  const normalizedQuiz = {
-    ...quiz,
+  let choices = quiz.choices || {};
+
+  if (typeof choices === "string") {
+    try {
+      choices = JSON.parse(choices);
+    } catch (error) {
+      console.error("STORE QUIZ FAILED: invalid choices JSON", {
+        choices,
+        error: error.message
+      });
+
+      return {
+        saveFailed: true,
+        error: "Invalid choices JSON"
+      };
+    }
+  }
+
+  const payload = {
+    user_id: String(userId),
+    session_id: sessionId || null,
+    mode: mode || "ADAPTIVE_QUIZ",
     topic: quiz.topic || "General Taxation",
     subtopic: quiz.subtopic || "",
     difficulty: Number(quiz.difficulty || 1),
-    correctAnswer: String(quiz.correctAnswer || "").trim().toUpperCase()
+    question: String(quiz.question || ""),
+    choices,
+    correct_answer: String(quiz.correctAnswer || quiz.correct_answer || "")
+      .trim()
+      .toUpperCase(),
+    user_answer: null,
+    is_correct: null,
+    explanation: String(quiz.explanation || "")
   };
+
+  if (!payload.question || !payload.correct_answer || !["A", "B", "C", "D"].includes(payload.correct_answer)) {
+    console.error("STORE QUIZ FAILED: invalid payload", payload);
+    return {
+      saveFailed: true,
+      error: "Invalid quiz payload"
+    };
+  }
+
+  console.log("STORE QUIZ PAYLOAD:", payload);
 
   const { data, error } = await supabase
     .from("tina_learning_attempts")
-    .insert({
-      user_id: userId,
-      session_id: sessionId || null,
-      mode,
-      topic: normalizedQuiz.topic,
-      subtopic: normalizedQuiz.subtopic,
-      difficulty: normalizedQuiz.difficulty,
-      question: normalizedQuiz.question,
-      choices: normalizedQuiz.choices,
-      correct_answer: normalizedQuiz.correctAnswer,
-      user_answer: null,
-      is_correct: null,
-      explanation: normalizedQuiz.explanation
-    })
+    .insert(payload)
     .select()
     .single();
 
   if (error) {
-  console.error("STORE UNANSWERED QUIZ ERROR:", {
-    message: error.message,
-    details: error.details,
-    hint: error.hint,
-    code: error.code
-  });
+    console.error("STORE UNANSWERED QUIZ ERROR:", {
+      message: error.message,
+      details: error.details,
+      hint: error.hint,
+      code: error.code,
+      payload
+    });
 
-  return {
-    saveFailed: true,
-    error
-  };
-}
+    return {
+      saveFailed: true,
+      error
+    };
+  }
 
-  console.log("STORED QUIZ:", {
+  console.log("QUIZ STORED SUCCESSFULLY:", {
     id: data.id,
-    userId,
-    sessionId: sessionId || null,
+    userId: data.user_id,
     topic: data.topic,
-    correctAnswer: data.correct_answer,
-    question: data.question
+    correctAnswer: data.correct_answer
   });
 
   return data;
@@ -223,7 +255,7 @@ export async function getLastUnansweredQuiz(supabase, userId) {
   const { data, error } = await supabase
     .from("tina_learning_attempts")
     .select("*")
-    .eq("user_id", userId)
+    .eq("user_id", String(userId))
     .is("user_answer", null)
     .order("created_at", { ascending: false })
     .limit(1)
