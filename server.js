@@ -1377,20 +1377,84 @@ if ((!finalQuestion || finalQuestion.length < 5) && conversationId && userId) {
 
     /* ================= RETRIEVAL ================= */
 
-    let relevantDocs = [];
+let relevantDocs = [];
 
-    if (hookConfig.requires_retrieval !== false) {
-      try {
-        relevantDocs = await smartSearch(finalQuestion, 24);
-      } catch (error) {
-        console.error("Smart search failed:", error.message);
+const retrievalQuery = finalQuestion;
 
-        try {
-          relevantDocs = await searchSimilar(finalQuestion, 24);
-        } catch (fallbackError) {
-          console.error("Fallback search failed:", fallbackError.message);
-        }
-      }
+if (hookConfig.requires_retrieval !== false) {
+  try {
+    relevantDocs = await smartSearch(retrievalQuery, 24);
+  } catch (error) {
+    console.error("Smart search failed:", error.message);
+
+    try {
+      relevantDocs = await searchSimilar(retrievalQuery, 24);
+    } catch (fallbackError) {
+      console.error("Fallback search failed:", fallbackError.message);
+    }
+  }
+
+  // ✅ Big 4 Layer 1: Authority Ranking
+  relevantDocs = rankDocsByAuthority(relevantDocs || []);
+
+  // ✅ Big 4 Layer 2: Question-Type Filtering
+  relevantDocs = filterDocsByQuestionType(relevantDocs, questionType);
+
+  /* ================= SOURCE FINDER MODE ================= */
+
+  if (hookConfig.mode === "SOURCE_FINDER") {
+    const sourceDocs = relevantDocs.slice(0, 10);
+    const sourcesUsed = uniqueSources(sourceDocs);
+
+    if (!sourcesUsed || sourcesUsed.length === 0) {
+      return res.json({
+        success: true,
+        engine: "TINA Dynamic Hook Engine",
+        hook: hookConfig.hook_code,
+        mode: hookConfig.mode,
+        hookTitle: hookConfig.title,
+        answer: "No indexed source found for the requested query.",
+        answerMode: "source_finder_no_match",
+        confidence: "LOW",
+        sourceStatus: "NO_INDEXED_SOURCE",
+        originalQuestion,
+        resolvedQuestion: finalQuestion,
+        sourcesUsed: [],
+        vectorMatches: 0
+      });
+    }
+
+    const answerText =
+      "Source Finder Results\n\n" +
+      sourcesUsed
+        .map((s, i) => {
+          return [
+            `${i + 1}. ${s.title}`,
+            `Authority: Tier ${s.authorityTier} - ${s.authorityLabel}`,
+            `View: ${s.driveViewUrl || "No link"}`,
+            `Download: ${s.driveDownloadUrl || "No link"}`,
+            `Preview: ${s.preview || ""}`
+          ].join("\n");
+        })
+        .join("\n\n");
+
+    return res.json({
+      success: true,
+      engine: "TINA Dynamic Hook Engine",
+      hook: hookConfig.hook_code,
+      mode: hookConfig.mode,
+      hookTitle: hookConfig.title,
+      answer: answerText,
+      answerMode: "source_finder_results",
+      confidence: "SOURCE_LIST",
+      sourceStatus: "INDEXED_SOURCE_LISTED",
+      originalQuestion,
+      resolvedQuestion: finalQuestion,
+      sourcesUsed,
+      vectorMatches: sourceDocs.length
+    });
+  }
+}
 
       /* ================= SOURCE FINDER MODE ================= */
 
