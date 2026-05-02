@@ -835,8 +835,17 @@ async function loadTaxHookConfig(rawQuestion = "") {
 
   const possibleHook = lower.split(/\s+/)[0];
 
+  const hookAliases = {
+    "/quizz": "/quiz",
+    "/exam": "/quiz",
+    "/test": "/quiz",
+    "/reviewer": "/review",
+    "/study": "/review",
+    "/expert": "/tax"
+  };
+
   if (possibleHook.startsWith("/")) {
-    hookCode = possibleHook;
+    hookCode = hookAliases[possibleHook] || possibleHook;
     cleanQuestion = text.slice(possibleHook.length).trim();
   }
 
@@ -879,34 +888,34 @@ function buildHookInstruction(hookConfig = {}) {
   const mode = hookConfig.mode || "ASK";
   const template = hookConfig.response_template || {};
   const sections = Array.isArray(template.sections)
-    ? template.sections.join("\n- ")
-    : "Use a clear professional format.";
+    ? template.sections.map((s) => `- ${s}`).join("\n")
+    : "- Use a clear professional format.";
 
   if (mode === "TAX_EXPERT") {
     return `
 Mode: Big 4 Tax Expert Mode.
 Use strict professional tax research format.
 Required sections:
-- ${sections}
+${sections}
     `.trim();
   }
 
   if (mode === "TAX_REVIEWER") {
     return `
 Mode: CPALE Tax Reviewer Mode.
-Teach the topic clearly like a tax reviewer.
+Teach the topic clearly like a tax reviewer, then ask one question.
 Required sections:
-- ${sections}
+${sections}
     `.trim();
   }
 
   if (mode === "QUIZ_MASTER") {
     return `
 Mode: Tax Quiz Mode.
-Ask only one multiple-choice question at a time.
+TINA must ask one multiple-choice question.
 Do not reveal the answer until the user replies.
 Required sections:
-- ${sections}
+${sections}
     `.trim();
   }
 
@@ -915,7 +924,7 @@ Required sections:
 Mode: Feedback Mode.
 Acknowledge the feedback and capture the correction for future improvement.
 Required sections:
-- ${sections}
+${sections}
     `.trim();
   }
 
@@ -923,10 +932,9 @@ Required sections:
 Mode: Default TINA Assistant.
 Answer clearly and professionally.
 Required sections:
-- ${sections}
+${sections}
   `.trim();
 }
-
 
 /* ================= ASK: DYNAMIC HOOK ENGINE + BIG 4 RAG ================= */
 
@@ -942,8 +950,6 @@ app.post("/ask", authenticate, async (req, res) => {
       });
     }
 
-    /* ================= HOOK DETECTION ================= */
-
     const hookConfig = await loadTaxHookConfig(question);
     const cleanQuestion = hookConfig.cleanQuestion;
     const originalQuestion = hookConfig.originalQuestion;
@@ -956,27 +962,24 @@ app.post("/ask", authenticate, async (req, res) => {
       });
     }
 
+    async function saveSimpleHookMemory(answerText) {
+      if (hookConfig.requires_memory === false) return;
+
+      await saveConversationTurn({
+        conversationId,
+        userId,
+        question: originalQuestion,
+        answerText
+      });
+    }
+
     /* ================= FEEDBACK MODE ================= */
 
     if (hookConfig.mode === "FEEDBACK") {
       const answerText =
         "Feedback received. Thank you. TINA will use this correction to improve future answers.";
 
-      if (conversationId && userId) {
-        await saveMessage(supabase, {
-          conversationId,
-          userId,
-          role: "user",
-          content: originalQuestion
-        });
-
-        await saveMessage(supabase, {
-          conversationId,
-          userId,
-          role: "assistant",
-          content: answerText
-        });
-      }
+      await saveSimpleHookMemory(answerText);
 
       return res.json({
         success: true,
@@ -988,6 +991,143 @@ app.post("/ask", authenticate, async (req, res) => {
         answerMode: "feedback_captured",
         confidence: "N/A",
         sourceStatus: "FEEDBACK_CAPTURED",
+        originalQuestion,
+        resolvedQuestion: cleanQuestion,
+        sourcesUsed: [],
+        vectorMatches: 0
+      });
+    }
+
+    /* ================= QUIZ MODE: TINA ASKS FIRST ================= */
+
+    if (hookConfig.mode === "QUIZ_MASTER") {
+      const quizPrompt = `
+You are TINA, a CPALE taxation examiner.
+
+Create ONE multiple-choice question about this topic:
+${cleanQuestion}
+
+Rules:
+- Ask only ONE question.
+- Give four choices: A, B, C, and D.
+- Do NOT reveal the correct answer.
+- Do NOT explain yet.
+- Wait for the user to answer A, B, C, or D.
+- Keep it Philippine taxation-focused.
+
+Output format:
+
+Question:
+[question]
+
+A. [choice]
+B. [choice]
+C. [choice]
+D. [choice]
+
+Instruction:
+Answer A, B, C, or D.
+`.trim();
+
+      const response = await openai.chat.completions.create({
+        model: process.env.OPENAI_MODEL || "gpt-4o-mini",
+        temperature: 0.3,
+        messages: [
+          { role: "user", content: quizPrompt }
+        ]
+      });
+
+      const answerText =
+        response.choices?.[0]?.message?.content?.trim() ||
+        "Unable to generate quiz question.";
+
+      await saveSimpleHookMemory(answerText);
+
+      return res.json({
+        success: true,
+        engine: "TINA Dynamic Hook Engine",
+        hook: hookConfig.hook_code,
+        mode: hookConfig.mode,
+        hookTitle: hookConfig.title,
+        answer: answerText,
+        answerMode: "quiz_question_generated",
+        confidence: "N/A",
+        sourceStatus: "QUIZ_MODE_NO_RAG_REQUIRED",
+        originalQuestion,
+        resolvedQuestion: cleanQuestion,
+        sourcesUsed: [],
+        vectorMatches: 0
+      });
+    }
+
+    /* ================= REVIEW MODE: TEACH + ASK ================= */
+
+    if (hookConfig.mode === "TAX_REVIEWER") {
+      const reviewPrompt = `
+You are TINA, a CPALE taxation reviewer.
+
+Teach this topic:
+${cleanQuestion}
+
+Rules:
+- Teach clearly and simply.
+- Use Philippine taxation context.
+- Explain like a CPA board exam reviewer.
+- Include one common CPALE trap.
+- End by asking ONE review question.
+- Do not make a long legal memo.
+
+Output format:
+
+Topic:
+[topic]
+
+Core Concept:
+[explanation]
+
+Rule:
+[rule]
+
+Simple Example:
+[example]
+
+CPALE Trap:
+[trap]
+
+Quick Recall:
+[one-liner memory aid]
+
+Practice Question:
+[ask one question]
+
+Instruction:
+Answer the practice question, then TINA will check your answer.
+`.trim();
+
+      const response = await openai.chat.completions.create({
+        model: process.env.OPENAI_MODEL || "gpt-4o-mini",
+        temperature: 0.3,
+        messages: [
+          { role: "user", content: reviewPrompt }
+        ]
+      });
+
+      const answerText =
+        response.choices?.[0]?.message?.content?.trim() ||
+        "Unable to generate reviewer lesson.";
+
+      await saveSimpleHookMemory(answerText);
+
+      return res.json({
+        success: true,
+        engine: "TINA Dynamic Hook Engine",
+        hook: hookConfig.hook_code,
+        mode: hookConfig.mode,
+        hookTitle: hookConfig.title,
+        answer: answerText,
+        answerMode: "reviewer_teach_and_ask",
+        confidence: "GENERAL_REVIEWER",
+        sourceStatus: "REVIEW_MODE_NO_RAG_REQUIRED",
         originalQuestion,
         resolvedQuestion: cleanQuestion,
         sourcesUsed: [],
@@ -1019,6 +1159,8 @@ app.post("/ask", authenticate, async (req, res) => {
     const memoryContext = buildMemoryContext(conversationHistory);
 
     async function saveAllMemory(answerText) {
+      if (hookConfig.requires_memory === false) return;
+
       await saveConversationTurn({
         conversationId,
         userId,
@@ -1272,29 +1414,6 @@ Limitations
 Confidence
 Sources Used
 
-TAX_REVIEWER MODE:
-Use:
-Topic
-Core Concept
-Rule
-Simple Example
-CPALE Trap
-Quick Recall
-Practice Question
-Answer and Explanation
-Sources Used
-
-QUIZ_MASTER MODE:
-Ask only one multiple-choice question.
-Use:
-Question
-A.
-B.
-C.
-D.
-Instruction
-Do not reveal the answer unless the user already supplied an answer.
-
 SOURCE_FINDER MODE:
 Use:
 Best Matching Source
@@ -1340,11 +1459,9 @@ Instruction:
 Answer strictly using only the CONTEXT. Apply the source hierarchy and the active hook mode.
 `.trim();
 
-    /* ================= OPENAI CALL ================= */
-
     const response = await openai.chat.completions.create({
       model: process.env.OPENAI_MODEL || "gpt-4o-mini",
-      temperature: hookConfig.mode === "TAX_REVIEWER" || hookConfig.mode === "QUIZ_MASTER" ? 0.2 : 0,
+      temperature: 0,
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: userPrompt }
@@ -1399,6 +1516,7 @@ Answer strictly using only the CONTEXT. Apply the source hierarchy and the activ
     });
   }
 });
+
 /* ================= 404 ================= */
 
 app.use((req, res) => {
