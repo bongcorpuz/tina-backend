@@ -1,3 +1,9 @@
+import {
+  getModeState,
+  saveModeState,
+  clearModeState,
+  isExplicitModeHook
+} from "./mode-state.js";
 import { detectTopic } from "./topic-detector.js";
 import { getLastTopicState, saveTopicState } from "./memory-hooks.js";
 import "dotenv/config";
