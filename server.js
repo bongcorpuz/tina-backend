@@ -1,5 +1,5 @@
 import { detectTopic } from "./topic-detector.js";
-import { saveTopicState } from "./memory-hooks.js";
+import { getLastTopicState, saveTopicState } from "./memory-hooks.js";
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
