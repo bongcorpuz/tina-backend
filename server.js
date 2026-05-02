@@ -1406,24 +1406,6 @@ app.post("/ask", authenticate, async (req, res) => {
       });
     }
 
-    /* ================= CONTINUE NORMAL FLOW BELOW ================= */
-
-    // your existing hook engine / RAG / quiz generation continues here...
-
-    return res.json({
-      success: true,
-      answer: "TINA is ready. (Continue with your main logic here.)"
-    });
-
-  } catch (error) {
-    console.error("ASK ERROR:", error);
-    return res.status(500).json({
-      success: false,
-      error: error.message || "Internal server error"
-    });
-  }
-});
-
 /* ================= MODE STATE RESOLUTION ================= */
 
     let effectiveQuestion = rawQuestion;
