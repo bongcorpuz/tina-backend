@@ -1417,62 +1417,7 @@ if (
       });
     }
 
-    /* ================= FORCE ANSWER CHECKER FIRST ================= */
-
-    const possibleQuizAnswer = rawQuestion
-      .replace(/[^A-Da-d]/g, "")
-      .trim()
-      .toUpperCase();
-
-    if (
-      ["A", "B", "C", "D"].includes(possibleQuizAnswer) &&
-      rawQuestion.length <= 5
-    ) {
-      const result = await answerLastQuiz(supabase, {
-        userId,
-        sessionId: conversationId,
-        userAnswer: possibleQuizAnswer
-      });
-
-      console.log("FORCE QUIZ CHECK RESULT:", {
-        userId,
-        conversationId,
-        rawQuestion,
-        possibleQuizAnswer,
-        found: result?.found,
-        isCorrect: result?.isCorrect
-      });
-
-      if (result && result.found) {
-        const answerText = [
-          result.isCorrect ? "Result: Correct" : "Result: Incorrect",
-          "",
-          `Correct Answer: ${result.correctAnswer}`,
-          "",
-          `Why: ${result.explanation || "No explanation stored."}`,
-          "",
-          result.isCorrect
-            ? "Next: TINA will increase or maintain your difficulty level."
-            : "Next: TINA will lower the difficulty or repair this weak area."
-        ].join("\n");
-
-        return res.json({
-          success: true,
-          engine: "TINA Adaptive Learning Engine",
-          hook: "/quiz",
-          mode: "ADAPTIVE_QUIZ_CHECK",
-          answer: answerText,
-          answerMode: "adaptive_quiz_checked",
-          isCorrect: result.isCorrect,
-          mastery: result.mastery,
-          sourceStatus: "QUIZ_ATTEMPT_RECORDED",
-          sourcesUsed: [],
-          vectorMatches: 0
-        });
-      }
-    }
-
-    /* ================= MODE STATE RESOLUTION ================= */
+   /* ================= MODE STATE RESOLUTION ================= */
 
     let effectiveQuestion = rawQuestion;
 
