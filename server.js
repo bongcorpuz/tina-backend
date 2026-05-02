@@ -902,25 +902,16 @@ function startIndexingInBackground() {
 }
 
 app.get("/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
-  try {
-    const result = await runDriveIndexing();
+  const started = startIndexingInBackground();
 
-    res.json({
-      success: true,
-      engine: "TINA Big 4 Tax Intelligence Engine",
-      message: "Drive indexing completed.",
-      ...result
-    });
-  } catch (error) {
-    console.error("Index-drive error:", error);
-    res.status(500).json({
-      success: false,
-      route: "/index-drive",
-      error: error.message || "Drive indexing failed"
-    });
-  }
+  return res.json({
+    success: true,
+    engine: "TINA Background Indexing Engine",
+    route: "/index-drive",
+    ...started,
+    statusUrl: "/index-status?secret=YOUR_SECRET"
+  });
 });
-
 app.get("/reindex", allowAuthenticatedOrIndexSecret, async (req, res) => {
   try {
     const result = await runDriveIndexing();
