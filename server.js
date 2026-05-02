@@ -1437,32 +1437,72 @@ if (hookConfig.mode === "LEARNING_PROGRESS") {
   });
 }
 
-    /* ================= FEEDBACK MODE ================= */
+  /* ================= ADAPTIVE QUIZ ANSWER CHECKER ================= */
 
-    if (hookConfig.mode === "FEEDBACK") {
-      const answerText =
-        "Feedback received. Thank you. TINA will use this correction to improve future answers.";
+const possibleQuizAnswer = String(cleanQuestion || "").trim().toUpperCase();
 
-      await saveSimpleHookMemory(answerText);
+if (["A", "B", "C", "D"].includes(possibleQuizAnswer)) {
+  const result = await answerLastQuiz(supabase, {
+    userId,
+    sessionId: conversationId,
+    userAnswer: possibleQuizAnswer
+  });
 
-      return res.json({
-        success: true,
-        engine: "TINA Dynamic Hook Engine",
-        hook: hookConfig.hook_code,
-        mode: hookConfig.mode,
-        hookTitle: hookConfig.title,
-        answer: answerText,
-        answerMode: "feedback_captured",
-        confidence: "N/A",
-        sourceStatus: "FEEDBACK_CAPTURED",
-        originalQuestion,
-        resolvedQuestion: cleanQuestion,
-        sourcesUsed: [],
-        vectorMatches: 0
-      });
-    }
+  if (result.found) {
+    const answerText = [
+      result.isCorrect ? "Result: Correct" : "Result: Incorrect",
+      "",
+      `Correct Answer: ${result.correctAnswer}`,
+      "",
+      `Why: ${result.explanation || "No explanation stored."}`,
+      "",
+      result.isCorrect
+        ? "Next: TINA will increase or maintain your difficulty level."
+        : "Next: TINA will lower the difficulty or repair this weak area."
+    ].join("\n");
 
- /* ================= ADAPTIVE QUIZ MODE ================= */
+    return res.json({
+      success: true,
+      engine: "TINA Adaptive Learning Engine",
+      hook: hookConfig.hook_code,
+      mode: "ADAPTIVE_QUIZ_CHECK",
+      answer: answerText,
+      answerMode: "adaptive_quiz_checked",
+      isCorrect: result.isCorrect,
+      mastery: result.mastery,
+      sourceStatus: "QUIZ_ATTEMPT_RECORDED",
+      sourcesUsed: [],
+      vectorMatches: 0
+    });
+  }
+}
+
+/* ================= FEEDBACK MODE ================= */
+
+if (hookConfig.mode === "FEEDBACK") {
+  const answerText =
+    "Feedback received. Thank you. TINA will use this correction to improve future answers.";
+
+  await saveSimpleHookMemory(answerText);
+
+  return res.json({
+    success: true,
+    engine: "TINA Dynamic Hook Engine",
+    hook: hookConfig.hook_code,
+    mode: hookConfig.mode,
+    hookTitle: hookConfig.title,
+    answer: answerText,
+    answerMode: "feedback_captured",
+    confidence: "N/A",
+    sourceStatus: "FEEDBACK_CAPTURED",
+    originalQuestion,
+    resolvedQuestion: cleanQuestion,
+    sourcesUsed: [],
+    vectorMatches: 0
+  });
+}
+
+/* ================= ADAPTIVE QUIZ MODE ================= */
 
 if (hookConfig.mode === "QUIZ_MASTER" || hookConfig.mode === "ADAPTIVE_QUIZ") {
   const quizProfile = await getAdaptiveQuizProfile(
@@ -1480,9 +1520,7 @@ if (hookConfig.mode === "QUIZ_MASTER" || hookConfig.mode === "ADAPTIVE_QUIZ") {
   const response = await openai.chat.completions.create({
     model: process.env.OPENAI_MODEL || "gpt-4o-mini",
     temperature: 0.3,
-    messages: [
-      { role: "user", content: quizPrompt }
-    ]
+    messages: [{ role: "user", content: quizPrompt }]
   });
 
   const rawQuiz = response.choices?.[0]?.message?.content?.trim() || "";
@@ -1538,10 +1576,11 @@ if (hookConfig.mode === "QUIZ_MASTER" || hookConfig.mode === "ADAPTIVE_QUIZ") {
     vectorMatches: 0
   });
 }
-    /* ================= REVIEW MODE: TEACH + ASK ================= */
 
-    if (hookConfig.mode === "TAX_REVIEWER") {
-      const reviewPrompt = `
+/* ================= REVIEW MODE: TEACH + ASK ================= */
+
+if (hookConfig.mode === "TAX_REVIEWER") {
+  const reviewPrompt = `
 You are TINA, a CPALE taxation reviewer.
 
 Teach this topic:
@@ -1582,75 +1621,33 @@ Instruction:
 Answer the practice question, then TINA will check your answer.
 `.trim();
 
-      const response = await openai.chat.completions.create({
-        model: process.env.OPENAI_MODEL || "gpt-4o-mini",
-        temperature: 0.3,
-        messages: [
-          { role: "user", content: reviewPrompt }
-        ]
-      });
-
-      const answerText =
-        response.choices?.[0]?.message?.content?.trim() ||
-        "Unable to generate reviewer lesson.";
-
-      await saveSimpleHookMemory(answerText);
-
-      return res.json({
-        success: true,
-        engine: "TINA Dynamic Hook Engine",
-        hook: hookConfig.hook_code,
-        mode: hookConfig.mode,
-        hookTitle: hookConfig.title,
-        answer: answerText,
-        answerMode: "reviewer_teach_and_ask",
-        confidence: "GENERAL_REVIEWER",
-        sourceStatus: "REVIEW_MODE_NO_RAG_REQUIRED",
-        originalQuestion,
-        resolvedQuestion: cleanQuestion,
-        sourcesUsed: [],
-        vectorMatches: 0
-      });
-    }
-
-    /* ================= ADAPTIVE QUIZ ANSWER CHECKER ================= */
-
-if (
-  ["A", "B", "C", "D"].includes(String(cleanQuestion || "").trim().toUpperCase())
-) {
-  const result = await answerLastQuiz(supabase, {
-    userId,
-    sessionId: conversationId,
-    userAnswer: cleanQuestion
+  const response = await openai.chat.completions.create({
+    model: process.env.OPENAI_MODEL || "gpt-4o-mini",
+    temperature: 0.3,
+    messages: [{ role: "user", content: reviewPrompt }]
   });
 
-  if (result.found) {
-    const answerText = [
-      result.isCorrect ? "Result: Correct" : "Result: Incorrect",
-      "",
-      `Correct Answer: ${result.correctAnswer}`,
-      "",
-      `Why: ${result.explanation || "No explanation stored."}`,
-      "",
-      result.isCorrect
-        ? "Next: TINA will increase or maintain your difficulty level."
-        : "Next: TINA will lower the difficulty or repair this weak area."
-    ].join("\n");
+  const answerText =
+    response.choices?.[0]?.message?.content?.trim() ||
+    "Unable to generate reviewer lesson.";
 
-    return res.json({
-      success: true,
-      engine: "TINA Adaptive Learning Engine",
-      hook: hookConfig.hook_code,
-      mode: "ADAPTIVE_QUIZ_CHECK",
-      answer: answerText,
-      answerMode: "adaptive_quiz_checked",
-      isCorrect: result.isCorrect,
-      mastery: result.mastery,
-      sourceStatus: "QUIZ_ATTEMPT_RECORDED",
-      sourcesUsed: [],
-      vectorMatches: 0
-    });
-  }
+  await saveSimpleHookMemory(answerText);
+
+  return res.json({
+    success: true,
+    engine: "TINA Dynamic Hook Engine",
+    hook: hookConfig.hook_code,
+    mode: hookConfig.mode,
+    hookTitle: hookConfig.title,
+    answer: answerText,
+    answerMode: "reviewer_teach_and_ask",
+    confidence: "GENERAL_REVIEWER",
+    sourceStatus: "REVIEW_MODE_NO_RAG_REQUIRED",
+    originalQuestion,
+    resolvedQuestion: cleanQuestion,
+    sourcesUsed: [],
+    vectorMatches: 0
+  });
 }
     
         /* ================= TOPIC + MEMORY ================= */
