@@ -1562,26 +1562,36 @@ Answer the practice question, then TINA will check your answer.
     const memoryContext = buildMemoryContext(conversationHistory);
 
     async function saveAllMemory(answerText) {
-      if (hookConfig.requires_memory === false) return;
+  if (hookConfig.requires_memory === false) return;
 
-      await saveConversationTurn({
-        conversationId,
-        userId,
-        question: originalQuestion,
-        answerText
-      });
+  await saveConversationTurn({
+    conversationId,
+    userId,
+    question: originalQuestion,
+    answerText
+  });
 
-      await saveTopicState({
-        userId,
-        sessionId: conversationId,
-        topic: topicData.topic,
-        subject: topicData.subject,
-        taxType: topicData.taxType,
-        question: originalQuestion,
-        answer: answerText
-      });
-    }
+  await saveTopicState({
+    userId,
+    sessionId: conversationId,
+    topic: topicData.topic,
+    subject: topicData.subject,
+    taxType: topicData.taxType,
+    question: originalQuestion,
+    answer: answerText
+  });
 
+  await saveModeState(supabase, {
+    userId,
+    sessionId: conversationId,
+    activeHook: hookConfig.hook_code,
+    activeMode: hookConfig.mode,
+    modeTitle: hookConfig.title,
+    lastQuestion: originalQuestion,
+    lastAnswer: answerText
+  });
+}
+    
     /* ================= RETRIEVAL ================= */
 
     let relevantDocs = [];
