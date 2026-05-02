@@ -24,6 +24,18 @@ import {
   saveMemoryHooks
 } from "./memory-hooks.js";
 
+import {
+  getAdaptiveQuizProfile,
+  buildAdaptiveQuizPrompt,
+  safeParseQuizJson,
+  storeUnansweredQuiz,
+  answerLastQuiz
+} from "./adaptive-quiz.js";
+
+import {
+  getOrCreateLearnerProfile
+} from "./learner-profile.js";
+
 import { listDriveFiles, extractTextFromFile } from "./drive-reader.js";
 
 import {
