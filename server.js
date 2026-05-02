@@ -1048,13 +1048,15 @@ async function loadTaxHookConfig(rawQuestion = "") {
   const firstWord = text.split(/\s+/)[0]?.toLowerCase() || "";
 
   const allowedHooks = [
-    "/ask",
-    "/tax",
-    "/review",
-    "/quiz",
-    "/feedback",
-    "/source"
-  ];
+  "/ask",
+  "/tax",
+  "/review",
+  "/quiz",
+  "/diagnostic",
+  "/progress",
+  "/feedback",
+  "/source"
+];
 
   if (allowedHooks.includes(firstWord)) {
     hookCode = firstWord;
