@@ -1336,17 +1336,38 @@ app.post("/ask", authenticate, async (req, res) => {
       });
     }
 
-    /* ================= FORCE QUIZ ANSWER CHECKER ================= */
+/* ================= FORCE QUIZ ANSWER CHECKER (SMART PARSER) ================= */
 
-const quizAnswerCandidate = rawQuestion
-  .replace(/[^A-Da-d]/g, "")
-  .trim()
-  .toUpperCase();
+function extractQuizAnswer(input = "") {
+  const text = input.trim().toLowerCase();
 
-if (
-  ["A", "B", "C", "D"].includes(quizAnswerCandidate) &&
-  rawQuestion.length <= 5
-) {
+  // 1. Strict single-letter (fast path)
+  if (/^[a-d]$/.test(text)) return text.toUpperCase();
+
+  // 2. Common natural patterns
+  const patterns = [
+    /answer\s*(is)?\s*([a-d])/i,
+    /i\s*(choose|pick|select)\s*([a-d])/i,
+    /option\s*([a-d])/i,
+    /\b([a-d])\b/i
+  ];
+
+  for (const pattern of patterns) {
+    const match = text.match(pattern);
+    if (match) {
+      const letter = match[match.length - 1];
+      if (/[a-d]/i.test(letter)) {
+        return letter.toUpperCase();
+      }
+    }
+  }
+
+  return null;
+}
+
+const quizAnswerCandidate = extractQuizAnswer(rawQuestion);
+
+if (quizAnswerCandidate) {
   console.log("QUIZ ANSWER DETECTED:", {
     rawQuestion,
     quizAnswerCandidate,
@@ -1370,8 +1391,8 @@ if (
       `Explanation: ${result.explanation || "No explanation available."}`,
       "",
       result.isCorrect
-        ? "Next: TINA will increase or maintain your difficulty level."
-        : "Next: TINA will reinforce this topic before increasing difficulty."
+        ? "Next: Difficulty will increase or remain appropriate."
+        : "Next: TINA will reinforce this topic."
     ].join("\n");
 
     return res.json({
@@ -1399,6 +1420,7 @@ if (
     vectorMatches: 0
   });
 }
+    
 /* ================= MODE STATE RESOLUTION ================= */
 
     let effectiveQuestion = rawQuestion;
