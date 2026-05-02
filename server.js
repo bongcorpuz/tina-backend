@@ -1342,15 +1342,25 @@ const hookConfig = await loadTaxHookConfig(effectiveQuestion);
     }
 
     async function saveSimpleHookMemory(answerText) {
-      if (hookConfig.requires_memory === false) return;
+  if (hookConfig.requires_memory === false) return;
 
-      await saveConversationTurn({
-        conversationId,
-        userId,
-        question: originalQuestion,
-        answerText
-      });
-    }
+  await saveConversationTurn({
+    conversationId,
+    userId,
+    question: originalQuestion,
+    answerText
+  });
+
+  await saveModeState(supabase, {
+    userId,
+    sessionId: conversationId,
+    activeHook: hookConfig.hook_code,
+    activeMode: hookConfig.mode,
+    modeTitle: hookConfig.title,
+    lastQuestion: originalQuestion,
+    lastAnswer: answerText
+  });
+}
 
     /* ================= FEEDBACK MODE ================= */
 
