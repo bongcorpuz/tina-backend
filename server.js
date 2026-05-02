@@ -1135,6 +1135,32 @@ async function loadTaxHookConfig(rawQuestion = "") {
       }
     },
 
+    "/diagnostic": {
+  hook_code: "/diagnostic",
+  mode: "ADAPTIVE_QUIZ",
+  title: "Adaptive CPALE Diagnostic Quiz",
+  requires_retrieval: false,
+  requires_memory: true,
+  requires_feedback: false,
+  output_format: "adaptive_quiz_format",
+  response_template: {
+    sections: ["Question", "Choices", "Instruction"]
+  }
+},
+
+"/progress": {
+  hook_code: "/progress",
+  mode: "LEARNING_PROGRESS",
+  title: "Learning Progress Tracker",
+  requires_retrieval: false,
+  requires_memory: true,
+  requires_feedback: false,
+  output_format: "progress_format",
+  response_template: {
+    sections: ["Profile", "Accuracy", "Weak Topics", "Strong Topics"]
+  }
+},
+
     "/feedback": {
       hook_code: "/feedback",
       mode: "FEEDBACK",
