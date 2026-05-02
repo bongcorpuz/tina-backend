@@ -18,7 +18,6 @@ const supabase = createClient(
 
 /* =========================================================
    GET LAST TOPIC STATE
-   Used to understand follow-up questions
 ========================================================= */
 
 export async function getLastTopicState(userId, sessionId) {
@@ -29,9 +28,7 @@ export async function getLastTopicState(userId, sessionId) {
     .select("*")
     .eq("session_id", sessionId);
 
-  if (userId) {
-    query = query.eq("user_id", userId);
-  }
+  if (userId) query = query.eq("user_id", userId);
 
   const { data, error } = await query.maybeSingle();
 
@@ -45,7 +42,6 @@ export async function getLastTopicState(userId, sessionId) {
 
 /* =========================================================
    SAVE / UPDATE TOPIC STATE
-   One active topic per session
 ========================================================= */
 
 export async function saveTopicState({
@@ -86,7 +82,6 @@ export async function saveTopicState({
 
 /* =========================================================
    SAVE CONVERSATION MEMORY
-   Stores user and assistant messages
 ========================================================= */
 
 export async function saveConversationMemory({
@@ -126,7 +121,6 @@ export async function saveConversationMemory({
 
 /* =========================================================
    GET RECENT CONVERSATION MEMORY
-   Used to give TINA short-term chat context
 ========================================================= */
 
 export async function getRecentConversationMemory(userId, sessionId, limit = 8) {
@@ -139,9 +133,7 @@ export async function getRecentConversationMemory(userId, sessionId, limit = 8) 
     .order("created_at", { ascending: false })
     .limit(limit);
 
-  if (userId) {
-    query = query.eq("user_id", userId);
-  }
+  if (userId) query = query.eq("user_id", userId);
 
   const { data, error } = await query;
 
@@ -155,7 +147,6 @@ export async function getRecentConversationMemory(userId, sessionId, limit = 8) 
 
 /* =========================================================
    SAVE LONG-TERM MEMORY
-   Stores durable user/company/tax preferences or recurring facts
 ========================================================= */
 
 export async function saveLongTermMemory({
@@ -194,7 +185,6 @@ export async function saveLongTermMemory({
 
 /* =========================================================
    GET LONG-TERM MEMORY
-   Used to personalize TINA responses
 ========================================================= */
 
 export async function getLongTermMemory(userId, limit = 10) {
@@ -216,8 +206,120 @@ export async function getLongTermMemory(userId, limit = 10) {
 }
 
 /* =========================================================
+   EXTRACT MEMORY HOOKS
+   Required by server.js
+========================================================= */
+
+export function extractMemoryHooks(text = "") {
+  const content = String(text || "").trim();
+  if (!content) return [];
+
+  const lower = content.toLowerCase();
+  const hooks = [];
+
+  if (lower.includes("vat")) hooks.push("VAT");
+  if (lower.includes("input vat")) hooks.push("INPUT_VAT");
+  if (lower.includes("output vat")) hooks.push("OUTPUT_VAT");
+
+  if (
+    lower.includes("withholding") ||
+    lower.includes("ewt") ||
+    lower.includes("expanded withholding")
+  ) {
+    hooks.push("EWT");
+  }
+
+  if (
+    lower.includes("income tax") ||
+    lower.includes("rcit") ||
+    lower.includes("mcit") ||
+    lower.includes("nolco")
+  ) {
+    hooks.push("INCOME_TAX");
+  }
+
+  if (/\brr\s*[\d-]+/i.test(content) || lower.includes("revenue regulation")) {
+    hooks.push("REVENUE_REGULATION");
+  }
+
+  if (/\brmc\s*[\d-]+/i.test(content) || lower.includes("revenue memorandum circular")) {
+    hooks.push("RMC");
+  }
+
+  if (/\brmo\s*[\d-]+/i.test(content) || lower.includes("revenue memorandum order")) {
+    hooks.push("RMO");
+  }
+
+  if (lower.includes("bir ruling") || lower.includes("ruling no")) {
+    hooks.push("BIR_RULING");
+  }
+
+  if (
+    lower.includes("case") ||
+    lower.includes("cta") ||
+    lower.includes("supreme court") ||
+    lower.includes("g.r. no") ||
+    lower.includes(" v. ") ||
+    lower.includes(" vs ")
+  ) {
+    hooks.push("CASE_LAW");
+  }
+
+  if (
+    lower.includes("risk") ||
+    lower.includes("audit") ||
+    lower.includes("exposure") ||
+    lower.includes("deficiency")
+  ) {
+    hooks.push("AUDIT_RISK");
+  }
+
+  if (
+    lower.includes("deadline") ||
+    lower.includes("filing") ||
+    lower.includes("form") ||
+    lower.includes("penalty") ||
+    lower.includes("compliance")
+  ) {
+    hooks.push("COMPLIANCE");
+  }
+
+  return [...new Set(hooks)];
+}
+
+/* =========================================================
+   SAVE MEMORY HOOKS
+   Required by server.js
+========================================================= */
+
+export async function saveMemoryHooks(externalSupabase, userId, hooks = []) {
+  const db = externalSupabase || supabase;
+
+  if (!db || !userId || !Array.isArray(hooks) || hooks.length === 0) {
+    return [];
+  }
+
+  const rows = hooks.map((hook) => ({
+    user_id: String(userId),
+    hook: String(hook),
+    created_at: new Date().toISOString()
+  }));
+
+  const { data, error } = await db
+    .from("tina_memory_hooks")
+    .insert(rows)
+    .select();
+
+  if (error) {
+    console.error("saveMemoryHooks error:", error.message);
+    return [];
+  }
+
+  return data || [];
+}
+
+/* =========================================================
    DELETE SESSION MEMORY
-   Useful for reset chat button
 ========================================================= */
 
 export async function clearSessionMemory(userId, sessionId) {
@@ -228,9 +330,7 @@ export async function clearSessionMemory(userId, sessionId) {
     .delete()
     .eq("session_id", sessionId);
 
-  if (userId) {
-    query = query.eq("user_id", userId);
-  }
+  if (userId) query = query.eq("user_id", userId);
 
   const { error } = await query;
 
@@ -244,7 +344,6 @@ export async function clearSessionMemory(userId, sessionId) {
 
 /* =========================================================
    DELETE TOPIC STATE
-   Useful when starting a new topic/session
 ========================================================= */
 
 export async function clearTopicState(userId, sessionId) {
@@ -255,9 +354,7 @@ export async function clearTopicState(userId, sessionId) {
     .delete()
     .eq("session_id", sessionId);
 
-  if (userId) {
-    query = query.eq("user_id", userId);
-  }
+  if (userId) query = query.eq("user_id", userId);
 
   const { error } = await query;
 
@@ -271,7 +368,6 @@ export async function clearTopicState(userId, sessionId) {
 
 /* =========================================================
    MEMORY HEALTH CHECK
-   Useful for /health endpoint
 ========================================================= */
 
 export async function memoryHealthCheck() {
