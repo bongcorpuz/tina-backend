@@ -1475,6 +1475,28 @@ Answer the practice question, then TINA will check your answer.
   : finalQuestion;
 
     if (hookConfig.requires_retrieval !== false) {
+      
+      /* ================= ISSUANCE-FIRST RETRIEVAL ================= */
+
+      if (issuance) {
+        try {
+          const allDocs = await smartSearch(retrievalQuery, 50);
+
+          const exactDocs = (allDocs || []).filter((doc) =>
+            isExactIssuanceMatch(doc, issuance)
+          );
+
+          if (exactDocs.length > 0) {
+            relevantDocs = rankDocsByAuthority(exactDocs);
+          } else {
+            relevantDocs = [];
+          }
+        } catch (error) {
+          console.error("Issuance-first retrieval failed:", error.message);
+          relevantDocs = [];
+        }
+      } else {
+      
       try {
         relevantDocs = await smartSearch(retrievalQuery, 24);
       } catch (error) {
