@@ -1374,6 +1374,41 @@ const hookConfig = await loadTaxHookConfig(effectiveQuestion);
     const originalQuestion = hookConfig.originalQuestion;
     const hookInstruction = buildHookInstruction(hookConfig);
 
+    /* ================= LEARNING PROGRESS MODE ================= */
+
+if (hookConfig.mode === "LEARNING_PROGRESS") {
+  const profile = await getOrCreateLearnerProfile(supabase, userId);
+
+  const answerText = profile
+    ? [
+        "Learning Progress",
+        "",
+        `Skill Level: ${profile.skill_level}`,
+        `Learning Goal: ${profile.learning_goal}`,
+        `Total Questions: ${profile.total_questions}`,
+        `Correct Answers: ${profile.correct_answers}`,
+        `Accuracy Rate: ${Math.round(Number(profile.accuracy_rate || 0) * 100)}%`,
+        `Last Reviewed Topic: ${profile.last_reviewed_topic || "None"}`,
+        "",
+        `Weak Topics: ${(profile.weak_topics || []).join(", ") || "None yet"}`,
+        `Strong Topics: ${(profile.strong_topics || []).join(", ") || "None yet"}`
+      ].join("\n")
+    : "No learning profile found yet.";
+
+  return res.json({
+    success: true,
+    engine: "TINA Adaptive Learning Engine",
+    hook: hookConfig.hook_code,
+    mode: hookConfig.mode,
+    hookTitle: hookConfig.title,
+    answer: answerText,
+    answerMode: "learning_progress",
+    sourceStatus: "LEARNING_PROFILE_USED",
+    sourcesUsed: [],
+    vectorMatches: 0
+  });
+}
+
     if (!cleanQuestion || !cleanQuestion.trim()) {
       return res.status(400).json({
         success: false,
