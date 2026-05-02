@@ -734,14 +734,7 @@ async function runDriveIndexing() {
 
   const stats = await getVectorStoreStats();
 
-  console.log("✅ TINA Big 4 Google Drive indexing completed:", {
-    totalFilesChecked: files.length,
-    filesIndexed: indexed.length,
-    filesFailed: failed.length,
-    vectorStore: stats
-  });
-
-  return {
+  const result = {
     totalFilesChecked: files.length,
     filesIndexed: indexed.length,
     filesFailed: failed.length,
@@ -749,7 +742,132 @@ async function runDriveIndexing() {
     indexed,
     failed
   };
+
+  console.log("✅ TINA Big 4 Google Drive indexing completed:", result);
+
+  return result;
 }
+
+/* ================= BACKGROUND INDEXING CONTROL ================= */
+
+let isIndexingRunning = false;
+
+let lastIndexingStatus = {
+  running: false,
+  startedAt: null,
+  finishedAt: null,
+  success: null,
+  message: "No indexing job has started yet.",
+  error: null,
+  result: null
+};
+
+function startIndexingInBackground() {
+  if (isIndexingRunning) {
+    return {
+      started: false,
+      message: "Indexing is already running."
+    };
+  }
+
+  isIndexingRunning = true;
+
+  lastIndexingStatus = {
+    running: true,
+    startedAt: new Date().toISOString(),
+    finishedAt: null,
+    success: null,
+    message: "Indexing is running in background.",
+    error: null,
+    result: null
+  };
+
+  runDriveIndexing()
+    .then((result) => {
+      lastIndexingStatus = {
+        running: false,
+        startedAt: lastIndexingStatus.startedAt,
+        finishedAt: new Date().toISOString(),
+        success: true,
+        message: "Indexing completed successfully.",
+        error: null,
+        result
+      };
+    })
+    .catch((error) => {
+      console.error("Background indexing error:", error);
+
+      lastIndexingStatus = {
+        running: false,
+        startedAt: lastIndexingStatus.startedAt,
+        finishedAt: new Date().toISOString(),
+        success: false,
+        message: "Indexing failed.",
+        error: error.message || "Unknown indexing error",
+        result: null
+      };
+    })
+    .finally(() => {
+      isIndexingRunning = false;
+    });
+
+  return {
+    started: true,
+    message: "Indexing started in background."
+  };
+}
+
+/* ================= INDEXING ROUTES ================= */
+
+app.get("/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
+  const started = startIndexingInBackground();
+
+  return res.json({
+    success: true,
+    engine: "TINA Background Indexing Engine",
+    route: "/index-drive",
+    ...started,
+    statusUrl: "/index-status?secret=YOUR_SECRET"
+  });
+});
+
+app.get("/index-status", allowAuthenticatedOrIndexSecret, async (req, res) => {
+  const vectorStats = await getVectorStoreStats();
+
+  return res.json({
+    success: true,
+    engine: "TINA Background Indexing Engine",
+    indexing: lastIndexingStatus,
+    vectorStore: vectorStats,
+    time: new Date().toISOString()
+  });
+});
+
+app.get("/reindex", allowAuthenticatedOrIndexSecret, async (req, res) => {
+  const started = startIndexingInBackground();
+
+  return res.json({
+    success: true,
+    engine: "TINA Background Indexing Engine",
+    route: "/reindex",
+    ...started,
+    statusUrl: "/index-status?secret=YOUR_SECRET"
+  });
+});
+
+app.get("/admin/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
+  const started = startIndexingInBackground();
+
+  return res.json({
+    success: true,
+    engine: "TINA Background Indexing Engine",
+    route: "/admin/index-drive",
+    ...started,
+    statusUrl: "/index-status?secret=YOUR_SECRET"
+  });
+});
+
+/* ================= DRIVE UTILITY ROUTES ================= */
 
 app.get("/list", allowAuthenticatedOrIndexSecret, async (req, res) => {
   try {
@@ -832,122 +950,6 @@ app.get("/read-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
     res.status(500).json({
       success: false,
       error: error.message || "Drive read failed"
-    });
-  }
-});
-
-/* ================= BACKGROUND INDEXING CONTROL ================= */
-
-let isIndexingRunning = false;
-let lastIndexingStatus = {
-  running: false,
-  startedAt: null,
-  finishedAt: null,
-  success: null,
-  message: "No indexing job has started yet.",
-  error: null
-};
-
-function startIndexingInBackground() {
-  if (isIndexingRunning) {
-    return {
-      started: false,
-      message: "Indexing is already running."
-    };
-  }
-
-  isIndexingRunning = true;
-
-  lastIndexingStatus = {
-    running: true,
-    startedAt: new Date().toISOString(),
-    finishedAt: null,
-    success: null,
-    message: "Indexing is running in background.",
-    error: null
-  };
-
-  runDriveIndexing()
-    .then((result) => {
-      lastIndexingStatus = {
-        running: false,
-        startedAt: lastIndexingStatus.startedAt,
-        finishedAt: new Date().toISOString(),
-        success: true,
-        message: "Indexing completed successfully.",
-        error: null,
-        result
-      };
-    })
-    .catch((error) => {
-      console.error("Background indexing error:", error);
-
-      lastIndexingStatus = {
-        running: false,
-        startedAt: lastIndexingStatus.startedAt,
-        finishedAt: new Date().toISOString(),
-        success: false,
-        message: "Indexing failed.",
-        error: error.message || "Unknown indexing error"
-      };
-    })
-    .finally(() => {
-      isIndexingRunning = false;
-    });
-
-  return {
-    started: true,
-    message: "Indexing started in background."
-  };
-}
-
-app.get("/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
-  const started = startIndexingInBackground();
-
-  return res.json({
-    success: true,
-    engine: "TINA Background Indexing Engine",
-    route: "/index-drive",
-    ...started,
-    statusUrl: "/index-status?secret=YOUR_SECRET"
-  });
-});
-app.get("/reindex", allowAuthenticatedOrIndexSecret, async (req, res) => {
-  try {
-    const result = await runDriveIndexing();
-
-    res.json({
-      success: true,
-      engine: "TINA Big 4 Tax Intelligence Engine",
-      message: "Drive re-indexing completed.",
-      ...result
-    });
-  } catch (error) {
-    console.error("Reindex error:", error);
-    res.status(500).json({
-      success: false,
-      route: "/reindex",
-      error: error.message || "Drive re-indexing failed"
-    });
-  }
-});
-
-app.get("/admin/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
-  try {
-    const result = await runDriveIndexing();
-
-    res.json({
-      success: true,
-      engine: "TINA Big 4 Tax Intelligence Engine",
-      message: "Admin Drive indexing completed.",
-      ...result
-    });
-  } catch (error) {
-    console.error("Admin index-drive error:", error);
-    res.status(500).json({
-      success: false,
-      route: "/admin/index-drive",
-      error: error.message || "Admin Drive indexing failed"
     });
   }
 });
