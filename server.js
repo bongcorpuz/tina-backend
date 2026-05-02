@@ -824,6 +824,110 @@ ${cleanQuestion}
   );
 }
 
+/* ================= DYNAMIC TAX HOOKS ================= */
+
+async function loadTaxHookConfig(rawQuestion = "") {
+  const text = String(rawQuestion || "").trim();
+  const lower = text.toLowerCase();
+
+  let hookCode = "/ask";
+  let cleanQuestion = text;
+
+  const possibleHook = lower.split(/\s+/)[0];
+
+  if (possibleHook.startsWith("/")) {
+    hookCode = possibleHook;
+    cleanQuestion = text.slice(possibleHook.length).trim();
+  }
+
+  const { data, error } = await supabase
+    .from("tina_tax_hooks")
+    .select("*")
+    .eq("hook_code", hookCode)
+    .eq("status", "active")
+    .maybeSingle();
+
+  if (error) {
+    console.error("Hook config load error:", error.message);
+  }
+
+  if (!data) {
+    return {
+      hook_code: "/ask",
+      mode: "ASK",
+      title: "Default TINA Assistant",
+      requires_retrieval: true,
+      requires_memory: true,
+      requires_feedback: false,
+      output_format: "short_format",
+      response_template: {
+        sections: ["Short Answer", "Explanation", "Practical Note"]
+      },
+      cleanQuestion: text,
+      originalQuestion: text
+    };
+  }
+
+  return {
+    ...data,
+    cleanQuestion: cleanQuestion || text,
+    originalQuestion: text
+  };
+}
+
+function buildHookInstruction(hookConfig = {}) {
+  const mode = hookConfig.mode || "ASK";
+  const template = hookConfig.response_template || {};
+  const sections = Array.isArray(template.sections)
+    ? template.sections.join("\n- ")
+    : "Use a clear professional format.";
+
+  if (mode === "TAX_EXPERT") {
+    return `
+Mode: Big 4 Tax Expert Mode.
+Use strict professional tax research format.
+Required sections:
+- ${sections}
+    `.trim();
+  }
+
+  if (mode === "TAX_REVIEWER") {
+    return `
+Mode: CPALE Tax Reviewer Mode.
+Teach the topic clearly like a tax reviewer.
+Required sections:
+- ${sections}
+    `.trim();
+  }
+
+  if (mode === "QUIZ_MASTER") {
+    return `
+Mode: Tax Quiz Mode.
+Ask only one multiple-choice question at a time.
+Do not reveal the answer until the user replies.
+Required sections:
+- ${sections}
+    `.trim();
+  }
+
+  if (mode === "FEEDBACK") {
+    return `
+Mode: Feedback Mode.
+Acknowledge the feedback and capture the correction for future improvement.
+Required sections:
+- ${sections}
+    `.trim();
+  }
+
+  return `
+Mode: Default TINA Assistant.
+Answer clearly and professionally.
+Required sections:
+- ${sections}
+  `.trim();
+}
+
+
 /* ================= ASK: BIG 4 MODE ================= */
 
 app.post("/ask", authenticate, async (req, res) => {
