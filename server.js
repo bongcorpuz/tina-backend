@@ -258,26 +258,69 @@ function isExactIssuanceMatch(doc, issuance) {
   return candidates.some((candidate) => candidate.includes(target));
 }
 
+/* ================= SOURCE LINK HELPER ================= */
+
+function buildGoogleDriveLinks(doc = {}) {
+  const fileId =
+    doc.metadata?.fileId ||
+    doc.fileId ||
+    doc.id ||
+    null;
+
+  if (!fileId) {
+    return {
+      fileId: null,
+      driveViewUrl: null,
+      driveDownloadUrl: null
+    };
+  }
+
+  return {
+    fileId,
+    driveViewUrl: `https://drive.google.com/file/d/${fileId}/view`,
+    driveDownloadUrl: `https://drive.google.com/uc?export=download&id=${fileId}`
+  };
+}
+
+/* ================= UNIQUE SOURCES WITH LINKS ================= */
+
 function uniqueSources(docs = []) {
   const seen = new Set();
 
   return docs
     .filter((doc) => {
-      const key = doc.source || getDocOriginalName(doc);
+      const key =
+        doc.metadata?.fileId ||
+        doc.fileId ||
+        doc.source ||
+        getDocOriginalName(doc);
+
       if (!key || seen.has(key)) return false;
+
       seen.add(key);
       return true;
     })
-    .map((doc) => ({
-      source: doc.source,
-      originalSource: getDocOriginalName(doc),
-      path: getDocPath(doc),
-      score: doc.score,
-      adjustedScore: doc.adjustedScore,
-      authorityTier: doc.sourceTier?.tier || getSourceTier(doc).tier,
-      authorityLabel: doc.sourceTier?.label || getSourceTier(doc).label,
-      preview: doc.text ? doc.text.substring(0, 200) : ""
-    }));
+    .map((doc) => {
+      const links = buildGoogleDriveLinks(doc);
+      const originalSource = getDocOriginalName(doc);
+      const path = getDocPath(doc);
+      const tier = doc.sourceTier || getSourceTier(doc);
+
+      return {
+        title: originalSource || doc.source || "Untitled Source",
+        source: doc.source,
+        originalSource,
+        path,
+        fileId: links.fileId,
+        driveViewUrl: links.driveViewUrl,
+        driveDownloadUrl: links.driveDownloadUrl,
+        score: doc.score,
+        adjustedScore: doc.adjustedScore,
+        authorityTier: tier?.tier || 99,
+        authorityLabel: tier?.label || "Unclassified Source",
+        preview: doc.text ? doc.text.substring(0, 300) : ""
+      };
+    });
 }
 
 /* ================= MEMORY ================= */
