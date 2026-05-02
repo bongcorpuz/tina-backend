@@ -192,9 +192,18 @@ export async function storeUnansweredQuiz(
     .single();
 
   if (error) {
-    console.error("Store unanswered quiz error:", error.message);
-    return null;
-  }
+  console.error("STORE UNANSWERED QUIZ ERROR:", {
+    message: error.message,
+    details: error.details,
+    hint: error.hint,
+    code: error.code
+  });
+
+  return {
+    saveFailed: true,
+    error
+  };
+}
 
   console.log("STORED QUIZ:", {
     id: data.id,
