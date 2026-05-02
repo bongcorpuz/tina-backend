@@ -1268,6 +1268,46 @@ app.post("/ask", authenticate, async (req, res) => {
     const { question, conversationId } = req.body;
     const userId = getUserId(req);
 
+    const rawQuestion = String(question || "").trim();
+const firstWord = rawQuestion.split(/\s+/)[0]?.toLowerCase();
+
+/* ================= MODE COMMANDS ================= */
+
+if (firstWord === "/exit" || firstWord === "/reset") {
+  await clearModeState(supabase, userId, conversationId);
+
+  return res.json({
+    success: true,
+    engine: "TINA Mode State System",
+    answer: "Mode reset. TINA is now back to Default Ask Mode.",
+    hook: "/ask",
+    mode: "ASK",
+    sourceStatus: "MODE_RESET",
+    sourcesUsed: [],
+    vectorMatches: 0
+  });
+}
+
+if (firstWord === "/mode") {
+  const currentMode = await getModeState(supabase, userId, conversationId);
+
+  return res.json({
+    success: true,
+    engine: "TINA Mode State System",
+    answer: currentMode
+      ? `Current Mode: ${currentMode.active_mode}\nHook: ${currentMode.active_hook}\nTitle: ${currentMode.mode_title}`
+      : "Current Mode: ASK\nHook: /ask\nTitle: Default TINA Assistant",
+    modeState: currentMode || {
+      active_hook: "/ask",
+      active_mode: "ASK",
+      mode_title: "Default TINA Assistant"
+    },
+    sourceStatus: "MODE_STATUS"
+  });
+}
+
+    
+
     if (!question || !question.trim()) {
       return res.status(400).json({
         success: false,
