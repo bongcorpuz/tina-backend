@@ -836,6 +836,71 @@ app.get("/read-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
   }
 });
 
+/* ================= BACKGROUND INDEXING CONTROL ================= */
+
+let isIndexingRunning = false;
+let lastIndexingStatus = {
+  running: false,
+  startedAt: null,
+  finishedAt: null,
+  success: null,
+  message: "No indexing job has started yet.",
+  error: null
+};
+
+function startIndexingInBackground() {
+  if (isIndexingRunning) {
+    return {
+      started: false,
+      message: "Indexing is already running."
+    };
+  }
+
+  isIndexingRunning = true;
+
+  lastIndexingStatus = {
+    running: true,
+    startedAt: new Date().toISOString(),
+    finishedAt: null,
+    success: null,
+    message: "Indexing is running in background.",
+    error: null
+  };
+
+  runDriveIndexing()
+    .then((result) => {
+      lastIndexingStatus = {
+        running: false,
+        startedAt: lastIndexingStatus.startedAt,
+        finishedAt: new Date().toISOString(),
+        success: true,
+        message: "Indexing completed successfully.",
+        error: null,
+        result
+      };
+    })
+    .catch((error) => {
+      console.error("Background indexing error:", error);
+
+      lastIndexingStatus = {
+        running: false,
+        startedAt: lastIndexingStatus.startedAt,
+        finishedAt: new Date().toISOString(),
+        success: false,
+        message: "Indexing failed.",
+        error: error.message || "Unknown indexing error"
+      };
+    })
+    .finally(() => {
+      isIndexingRunning = false;
+    });
+
+  return {
+    started: true,
+    message: "Indexing started in background."
+  };
+}
+
 app.get("/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
   try {
     const result = await runDriveIndexing();
