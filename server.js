@@ -1311,7 +1311,19 @@ Answer the practice question, then TINA will check your answer.
       sessionId: conversationId
     });
 
-    const finalQuestion = topicData.resolvedQuestion || cleanQuestion;
+    /* ================= TOPIC MEMORY FALLBACK ================= */
+
+if ((!finalQuestion || finalQuestion.length < 5) && conversationId && userId) {
+  try {
+    const lastState = await getLastTopicState(userId, conversationId);
+
+    if (lastState?.last_question) {
+      finalQuestion = lastState.last_question;
+    }
+  } catch (e) {
+    console.error("Topic fallback error:", e.message);
+  }
+}
 
     const issuance = detectIssuanceQuery(finalQuestion);
     const questionType = classifyQuestion(finalQuestion);
