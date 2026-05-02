@@ -1305,11 +1305,27 @@ Answer the practice question, then TINA will check your answer.
 
     /* ================= TOPIC + MEMORY ================= */
 
-    const topicData = await detectTopic({
-      question: cleanQuestion,
-      userId,
-      sessionId: conversationId
-    });
+const topicData = await detectTopic({
+  question: cleanQuestion,
+  userId,
+  sessionId: conversationId
+});
+
+let finalQuestion = topicData.resolvedQuestion || cleanQuestion;
+
+/* ================= TOPIC MEMORY FALLBACK ================= */
+
+if ((!finalQuestion || finalQuestion.length < 5) && conversationId && userId) {
+  try {
+    const lastState = await getLastTopicState(userId, conversationId);
+
+    if (lastState?.last_question) {
+      finalQuestion = lastState.last_question;
+    }
+  } catch (e) {
+    console.error("Topic fallback error:", e.message);
+  }
+}
 
     /* ================= TOPIC MEMORY FALLBACK ================= */
 
