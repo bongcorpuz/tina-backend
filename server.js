@@ -1462,68 +1462,82 @@ if (hookConfig.mode === "LEARNING_PROGRESS") {
       });
     }
 
-    /* ================= QUIZ MODE: TINA ASKS FIRST ================= */
+ /* ================= ADAPTIVE QUIZ MODE ================= */
 
-    if (hookConfig.mode === "QUIZ_MASTER") {
-      const quizPrompt = `
-You are TINA, a CPALE taxation examiner.
+if (hookConfig.mode === "QUIZ_MASTER" || hookConfig.mode === "ADAPTIVE_QUIZ") {
+  const quizProfile = await getAdaptiveQuizProfile(
+    supabase,
+    userId,
+    cleanQuestion
+  );
 
-Create ONE multiple-choice question about this topic:
-${cleanQuestion}
+  const quizPrompt = buildAdaptiveQuizPrompt({
+    topic: quizProfile.topic,
+    difficulty: quizProfile.difficulty,
+    profile: quizProfile.profile
+  });
 
-Rules:
-- Ask only ONE question.
-- Give four choices: A, B, C, and D.
-- Do NOT reveal the correct answer.
-- Do NOT explain yet.
-- Wait for the user to answer A, B, C, or D.
-- Keep it Philippine taxation-focused.
+  const response = await openai.chat.completions.create({
+    model: process.env.OPENAI_MODEL || "gpt-4o-mini",
+    temperature: 0.3,
+    messages: [
+      { role: "user", content: quizPrompt }
+    ]
+  });
 
-Output format:
+  const rawQuiz = response.choices?.[0]?.message?.content?.trim() || "";
+  const quiz = safeParseQuizJson(rawQuiz);
 
-Question:
-[question]
+  if (!quiz) {
+    return res.json({
+      success: false,
+      engine: "TINA Adaptive Learning Engine",
+      error: "Unable to generate valid adaptive quiz JSON.",
+      rawQuiz
+    });
+  }
 
-A. [choice]
-B. [choice]
-C. [choice]
-D. [choice]
+  await storeUnansweredQuiz(supabase, {
+    userId,
+    sessionId: conversationId,
+    quiz,
+    mode: hookConfig.mode
+  });
 
-Instruction:
-Answer A, B, C, or D.
-`.trim();
+  const answerText = [
+    `Topic: ${quiz.topic}`,
+    `Difficulty: ${quiz.difficulty}`,
+    "",
+    "Question:",
+    quiz.question,
+    "",
+    `A. ${quiz.choices.A}`,
+    `B. ${quiz.choices.B}`,
+    `C. ${quiz.choices.C}`,
+    `D. ${quiz.choices.D}`,
+    "",
+    "Instruction:",
+    "Answer A, B, C, or D."
+  ].join("\n");
 
-      const response = await openai.chat.completions.create({
-        model: process.env.OPENAI_MODEL || "gpt-4o-mini",
-        temperature: 0.3,
-        messages: [
-          { role: "user", content: quizPrompt }
-        ]
-      });
+  await saveSimpleHookMemory(answerText);
 
-      const answerText =
-        response.choices?.[0]?.message?.content?.trim() ||
-        "Unable to generate quiz question.";
-
-      await saveSimpleHookMemory(answerText);
-
-      return res.json({
-        success: true,
-        engine: "TINA Dynamic Hook Engine",
-        hook: hookConfig.hook_code,
-        mode: hookConfig.mode,
-        hookTitle: hookConfig.title,
-        answer: answerText,
-        answerMode: "quiz_question_generated",
-        confidence: "N/A",
-        sourceStatus: "QUIZ_MODE_NO_RAG_REQUIRED",
-        originalQuestion,
-        resolvedQuestion: cleanQuestion,
-        sourcesUsed: [],
-        vectorMatches: 0
-      });
-    }
-
+  return res.json({
+    success: true,
+    engine: "TINA Adaptive Learning Engine",
+    hook: hookConfig.hook_code,
+    mode: hookConfig.mode,
+    hookTitle: hookConfig.title,
+    answer: answerText,
+    answerMode: "adaptive_quiz_question_generated",
+    topic: quiz.topic,
+    difficulty: quiz.difficulty,
+    confidence: "ADAPTIVE",
+    sourceStatus: "QUIZ_MODE_NO_RAG_REQUIRED",
+    sourcesUsed: [],
+    vectorMatches: 0
+  });
+}
     /* ================= REVIEW MODE: TEACH + ASK ================= */
 
     if (hookConfig.mode === "TAX_REVIEWER") {
