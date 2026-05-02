@@ -1331,25 +1331,14 @@ if (
   console.log("QUIZ ANSWER DETECTED:", {
     rawQuestion,
     quizAnswerCandidate,
-    userId,
-    conversationId
+    userId
   });
 
-  let result = await answerLastQuiz(supabase, {
+  // 🔥 FIX: REMOVE sessionId completely
+  const result = await answerLastQuiz(supabase, {
     userId,
-    sessionId: conversationId,
     userAnswer: quizAnswerCandidate
   });
-
-  if (!result || !result.found) {
-    console.log("No quiz found with session. Trying global quiz lookup.");
-
-    result = await answerLastQuiz(supabase, {
-      userId,
-      sessionId: null,
-      userAnswer: quizAnswerCandidate
-    });
-  }
 
   console.log("QUIZ RESULT:", result);
 
@@ -1363,7 +1352,7 @@ if (
       `Explanation: ${result.explanation || "No explanation available."}`,
       "",
       result.isCorrect
-        ? "Next: Difficulty will increase or remain at the appropriate level."
+        ? "Next: Difficulty will increase."
         : "Next: TINA will reinforce this topic."
     ].join("\n");
 
@@ -1385,47 +1374,12 @@ if (
     engine: "TINA Adaptive Learning Engine",
     mode: "QUIZ_CHECK_FAILED",
     answer:
-      "TINA detected your quiz answer, but no pending quiz was found. Please start a new quiz using /quiz VAT.",
+      "No pending quiz found. Start a new quiz using /quiz VAT.",
     sourceStatus: "NO_PENDING_QUIZ",
     sourcesUsed: [],
     vectorMatches: 0
   });
-}    
-    /* ================= MODE COMMANDS ================= */
-
-    if (firstWord === "/exit" || firstWord === "/reset") {
-      await clearModeState(supabase, userId, conversationId);
-
-      return res.json({
-        success: true,
-        engine: "TINA Mode State System",
-        answer: "Mode reset. TINA is now back to Default Ask Mode.",
-        hook: "/ask",
-        mode: "ASK",
-        sourceStatus: "MODE_RESET",
-        sourcesUsed: [],
-        vectorMatches: 0
-      });
-    }
-
-    if (firstWord === "/mode") {
-      const currentMode = await getModeState(supabase, userId, conversationId);
-
-      return res.json({
-        success: true,
-        engine: "TINA Mode State System",
-        answer: currentMode
-          ? `Current Mode: ${currentMode.active_mode}\nHook: ${currentMode.active_hook}\nTitle: ${currentMode.mode_title}`
-          : "Current Mode: ASK\nHook: /ask\nTitle: Default TINA Assistant",
-        modeState: currentMode || {
-          active_hook: "/ask",
-          active_mode: "ASK",
-          mode_title: "Default TINA Assistant"
-        },
-        sourceStatus: "MODE_STATUS"
-      });
-    }
-
+}
    /* ================= MODE STATE RESOLUTION ================= */
 
     let effectiveQuestion = rawQuestion;
