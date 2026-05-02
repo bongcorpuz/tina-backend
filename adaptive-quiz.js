@@ -153,99 +153,6 @@ export function safeParseQuizJson(text = "") {
   }
 }
 
-export async function saveQuizAttempt(
-  supabase,
-  {
-    userId,
-    sessionId,
-    mode = "ADAPTIVE_QUIZ",
-    quiz,
-    userAnswer,
-    isCorrect
-  }
-) {
-  if (!userId || !quiz) return null;
-
-  const { data, error } = await supabase
-    .from("tina_learning_attempts")
-    .insert({
-      user_id: userId,
-      session_id: sessionId || null,
-      mode,
-      topic: quiz.topic,
-      subtopic: quiz.subtopic || "",
-      difficulty: quiz.difficulty || 1,
-      question: quiz.question,
-      choices: quiz.choices,
-      correct_answer: quiz.correctAnswer,
-      user_answer: userAnswer,
-      is_correct: isCorrect,
-      explanation: quiz.explanation
-    })
-    .select()
-    .single();
-
-  if (error) {
-    console.error("Save quiz attempt error:", error.message);
-    return null;
-  }
-
-  await updateLearnerProfileStats(supabase, {
-    userId,
-    topic: quiz.topic,
-    isCorrect
-  });
-
-  await updateTopicMastery(supabase, {
-    userId,
-    topic: quiz.topic,
-    subtopic: quiz.subtopic || "",
-    isCorrect
-  });
-
-  return data;
-}
-
-export async function getLastUnansweredQuiz(supabase, userId, sessionId = null) {
-  if (!userId) return null;
-
-  let query = supabase
-    .from("tina_learning_attempts")
-    .select("*")
-    .eq("user_id", userId)
-    .is("user_answer", null)
-    .order("created_at", { ascending: false })
-    .limit(1);
-
-  if (sessionId) {
-    query = query.eq("session_id", sessionId);
-  }
-
-  const { data, error } = await query.maybeSingle();
-
-  if (error) {
-    console.error("Get unanswered quiz error with session:", error.message);
-  }
-
-  if (data) return data;
-
-  const fallback = await supabase
-    .from("tina_learning_attempts")
-    .select("*")
-    .eq("user_id", userId)
-    .is("user_answer", null)
-    .order("created_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
-
-  if (fallback.error) {
-    console.error("Get unanswered quiz fallback error:", fallback.error.message);
-    return null;
-  }
-
-  return fallback.data || null;
-}
-
 export async function storeUnansweredQuiz(
   supabase,
   {
@@ -261,7 +168,7 @@ export async function storeUnansweredQuiz(
     ...quiz,
     topic: quiz.topic || "General Taxation",
     subtopic: quiz.subtopic || "",
-    difficulty: quiz.difficulty || 1,
+    difficulty: Number(quiz.difficulty || 1),
     correctAnswer: String(quiz.correctAnswer || "").trim().toUpperCase()
   };
 
@@ -279,7 +186,7 @@ export async function storeUnansweredQuiz(
       correct_answer: normalizedQuiz.correctAnswer,
       user_answer: null,
       is_correct: null,
-      explanation: normalizedQuiz.explanation,
+      explanation: normalizedQuiz.explanation
     })
     .select()
     .single();
@@ -301,21 +208,39 @@ export async function storeUnansweredQuiz(
   return data;
 }
 
+export async function getLastUnansweredQuiz(supabase, userId) {
+  if (!userId) return null;
+
+  const { data, error } = await supabase
+    .from("tina_learning_attempts")
+    .select("*")
+    .eq("user_id", userId)
+    .is("user_answer", null)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (error) {
+    console.error("Get latest unanswered quiz error:", error.message);
+    return null;
+  }
+
+  return data || null;
+}
+
 export async function answerLastQuiz(
   supabase,
   {
     userId,
-    sessionId,
     userAnswer
   }
 ) {
-  console.log("FETCHING LAST QUIZ FOR:", {
+  console.log("FETCHING LATEST UNANSWERED QUIZ FOR USER:", {
     userId,
-    sessionId: sessionId || null,
     userAnswer
   });
 
-  const lastQuiz = await getLastUnansweredQuiz(supabase, userId, sessionId);
+  const lastQuiz = await getLastUnansweredQuiz(supabase, userId);
 
   if (!lastQuiz) {
     return {
@@ -369,6 +294,7 @@ export async function answerLastQuiz(
 
   console.log("QUIZ ANSWER RECORDED:", {
     quizId: lastQuiz.id,
+    topic: lastQuiz.topic,
     userAnswer: cleanAnswer,
     correctAnswer,
     isCorrect
