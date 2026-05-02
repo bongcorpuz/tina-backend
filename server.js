@@ -59,17 +59,6 @@ app.use(express.json({ limit: "25mb" }));
 
 /* ================= USER HELPER ================= */
 
-function getUserId(req) {
-  return (
-    req.user?.id ||
-    req.user?.user_id ||
-    req.user?.sub ||
-    req.user?.username ||
-    req.user?.email ||
-    null
-  );
-}
-
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -82,7 +71,14 @@ const openai = new OpenAI({
 /* ================= HELPERS ================= */
 
 function getUserId(req) {
-  return req.user?.id || req.user?.user_id || req.user?.sub || req.user?.username;
+  return (
+    req.user?.id ||
+    req.user?.user_id ||
+    req.user?.sub ||
+    req.user?.username ||
+    req.user?.email ||
+    null
+  );
 }
 
 function normalizeSourceName(name = "") {
