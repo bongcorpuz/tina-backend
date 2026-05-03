@@ -49,6 +49,7 @@ import {
   addDocumentToVectorStore,
   searchSimilar,
   smartSearch,
+  getQuizSourceChunks,
   getVectorStoreStats
 } from "./vector-store.js";
 
