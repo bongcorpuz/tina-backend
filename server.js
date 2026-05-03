@@ -29,7 +29,9 @@ import {
   buildAdaptiveQuizPrompt,
   safeParseQuizJson,
   storeUnansweredQuiz,
-  answerLastQuiz
+  answerLastQuiz,
+  getRecentQuizHistory,
+  buildQuizExclusionFromHistory
 } from "./adaptive-quiz.js";
 
 import {
