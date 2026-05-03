@@ -1357,7 +1357,7 @@ if (exitCommands.includes(rawQuestion.toLowerCase())) {
   });
 }  
 
-/* ================= FORCE QUIZ ANSWER CHECKER (SMART PARSER) ================= */
+/* ================= FORCE QUIZ ANSWER CHECKER (SMART PARSER + DIRECT DB FIX) ================= */
 
 function extractQuizAnswer(input = "") {
   const text = input.trim().toLowerCase();
@@ -1382,135 +1382,207 @@ function extractQuizAnswer(input = "") {
   return null;
 }
 
+async function fetchLatestPendingQuizDirect(userId) {
+  let { data, error } = await supabase
+    .from("tina_learning_attempts")
+    .select("*")
+    .eq("user_id", String(userId))
+    .is("user_answer", null)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (error) {
+    console.error("Primary pending quiz fetch error:", error.message);
+  }
+
+  if (data) return data;
+
+  const fallback = await supabase
+    .from("tina_learning_attempts")
+    .select("*")
+    .is("user_answer", null)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (fallback.error) {
+    console.error("Fallback pending quiz fetch error:", fallback.error.message);
+    return null;
+  }
+
+  return fallback.data || null;
+}
+
 const quizAnswerCandidate = extractQuizAnswer(rawQuestion);
 
 if (quizAnswerCandidate) {
-  console.log("QUIZ ANSWER DETECTED:", {
-    rawQuestion,
-    quizAnswerCandidate,
-    userId
-  });
+  const pendingQuiz = await fetchLatestPendingQuizDirect(userId);
 
-  const result = await answerLastQuiz(supabase, {
-    userId,
-    userAnswer: quizAnswerCandidate
-  });
-
-  console.log("QUIZ RESULT:", result);
-
-  if (result && result.found) {
-    const quizProfile = await getAdaptiveQuizProfile(
-      supabase,
-      userId,
-      result.topic || ""
-    );
-
-    const recentHistory = await getRecentQuizHistory(supabase, {
-      userId,
-      topic: quizProfile.topic,
-      limit: 20
-    });
-
-    const exclusions = buildQuizExclusionFromHistory(recentHistory);
-
-    const sourceChunks = await getQuizSourceChunks({
-      topic: quizProfile.topic,
-      excludeSourcePaths: exclusions.excludeSourcePaths,
-      excludeChunkIds: exclusions.excludeChunkIds,
-      limit: 3
-    });
-
-    const nextQuizPrompt = buildAdaptiveQuizPrompt({
-      topic: quizProfile.topic,
-      difficulty: quizProfile.difficulty,
-      profile: quizProfile.profile,
-      sourceChunks,
-      recentQuestions: recentHistory
-    });
-
-    const nextResponse = await openai.chat.completions.create({
-      model: process.env.OPENAI_MODEL || "gpt-4o-mini",
-      temperature: 0.3,
-      messages: [{ role: "user", content: nextQuizPrompt }]
-    });
-
-    const rawNextQuiz =
-      nextResponse.choices?.[0]?.message?.content?.trim() || "";
-
-    const nextQuiz = safeParseQuizJson(rawNextQuiz);
-
-    let nextQuizText = "";
-
-    if (nextQuiz) {
-      const storedNextQuiz = await storeUnansweredQuiz(supabase, {
-        userId,
-        sessionId: conversationId || null,
-        quiz: nextQuiz,
-        mode: "QUIZ_MASTER",
-        sourceChunks
-      });
-
-      if (storedNextQuiz && !storedNextQuiz.saveFailed) {
-        nextQuizText = [
-          "",
-          "Next Question:",
-          `Topic: ${nextQuiz.topic}`,
-          `Difficulty: ${nextQuiz.difficulty}`,
-          "",
-          nextQuiz.question,
-          "",
-          `A. ${nextQuiz.choices.A}`,
-          `B. ${nextQuiz.choices.B}`,
-          `C. ${nextQuiz.choices.C}`,
-          `D. ${nextQuiz.choices.D}`,
-          "",
-          "Instruction:",
-          "Answer A, B, C, or D. Type /bye or /exit to stop quiz mode."
-        ].join("\n");
-      }
-    }
-
-    const answerText = [
-      result.isCorrect ? "Correct ✅" : "Incorrect ❌",
-      "",
-      `Your Answer: ${result.userAnswer || quizAnswerCandidate}`,
-      `Correct Answer: ${result.correctAnswer}`,
-      "",
-      `Explanation: ${result.explanation || "No explanation available."}`,
-      "",
-      result.sourceTitle ? `Source: ${result.sourceTitle}` : "",
-      result.sourcePath ? `Source Path: ${result.sourcePath}` : "",
-      nextQuizText ||
-        "\nNext question could not be generated. Type /quiz to continue."
-    ]
-      .filter(Boolean)
-      .join("\n");
-
+  if (!pendingQuiz) {
     return res.json({
-      success: true,
+      success: false,
       engine: "TINA Continuous Adaptive Quiz Engine",
-      mode: "QUIZ_CHECK_AND_NEXT",
-      answer: answerText,
-      isCorrect: result.isCorrect,
-      mastery: result.mastery || null,
-      topic: result.topic || null,
-      difficulty: result.difficulty || null,
-      sourceStatus: sourceChunks.length
-        ? "GDRIVE_GROUNDED_NEXT_QUIZ"
-        : "GENERAL_NEXT_QUIZ",
-      sourcesUsed: sourceChunks,
-      vectorMatches: sourceChunks.length
+      mode: "QUIZ_CHECK_FAILED",
+      answer: "No pending quiz found. Please start a new quiz using /quiz VAT.",
+      sourceStatus: "NO_PENDING_QUIZ",
+      sourcesUsed: [],
+      vectorMatches: 0
     });
   }
 
+  const cleanAnswer = quizAnswerCandidate;
+  const correctAnswer = String(pendingQuiz.correct_answer || "")
+    .replace(/[^A-Da-d]/g, "")
+    .trim()
+    .toUpperCase();
+
+  const isCorrect = cleanAnswer === correctAnswer;
+
+  const { data: answeredQuiz, error: answerError } = await supabase
+    .from("tina_learning_attempts")
+    .update({
+      user_answer: cleanAnswer,
+      is_correct: isCorrect,
+      answered_at: new Date().toISOString()
+    })
+    .eq("id", pendingQuiz.id)
+    .select()
+    .single();
+
+  if (answerError) {
+    console.error("Direct quiz answer update error:", answerError.message);
+
+    return res.json({
+      success: false,
+      engine: "TINA Continuous Adaptive Quiz Engine",
+      mode: "QUIZ_UPDATE_FAILED",
+      answer: "TINA found the pending quiz but failed to save your answer.",
+      sourceStatus: "QUIZ_UPDATE_FAILED",
+      sourcesUsed: [],
+      vectorMatches: 0
+    });
+  }
+
+  await updateLearnerProfileStats(supabase, {
+    userId,
+    topic: pendingQuiz.topic,
+    isCorrect
+  });
+
+  const mastery = await updateTopicMastery(supabase, {
+    userId,
+    topic: pendingQuiz.topic,
+    subtopic: pendingQuiz.subtopic || "",
+    isCorrect
+  });
+
+  const quizProfile = await getAdaptiveQuizProfile(
+    supabase,
+    userId,
+    pendingQuiz.topic || "VAT"
+  );
+
+  const recentHistory = await getRecentQuizHistory(supabase, {
+    userId,
+    topic: quizProfile.topic,
+    limit: 20
+  });
+
+  const exclusions = buildQuizExclusionFromHistory(recentHistory);
+
+  const sourceChunks = await getQuizSourceChunks({
+    topic: quizProfile.topic,
+    excludeSourcePaths: exclusions.excludeSourcePaths,
+    excludeChunkIds: exclusions.excludeChunkIds,
+    limit: 3
+  });
+
+  const nextQuizPrompt = buildAdaptiveQuizPrompt({
+    topic: quizProfile.topic,
+    difficulty: quizProfile.difficulty,
+    profile: quizProfile.profile,
+    sourceChunks,
+    recentQuestions: recentHistory
+  });
+
+  const nextResponse = await openai.chat.completions.create({
+    model: process.env.OPENAI_MODEL || "gpt-4o-mini",
+    temperature: 0.3,
+    messages: [{ role: "user", content: nextQuizPrompt }]
+  });
+
+  const rawNextQuiz =
+    nextResponse.choices?.[0]?.message?.content?.trim() || "";
+
+  const nextQuiz = safeParseQuizJson(rawNextQuiz);
+
+  let nextQuizText = "";
+
+  if (nextQuiz) {
+    const storedNextQuiz = await storeUnansweredQuiz(supabase, {
+      userId,
+      sessionId: conversationId || null,
+      quiz: nextQuiz,
+      mode: "QUIZ_MASTER",
+      sourceChunks
+    });
+
+    if (storedNextQuiz && !storedNextQuiz.saveFailed) {
+      nextQuizText = [
+        "",
+        "Next Question:",
+        `Topic: ${nextQuiz.topic}`,
+        `Difficulty: ${nextQuiz.difficulty}`,
+        "",
+        nextQuiz.question,
+        "",
+        `A. ${nextQuiz.choices.A}`,
+        `B. ${nextQuiz.choices.B}`,
+        `C. ${nextQuiz.choices.C}`,
+        `D. ${nextQuiz.choices.D}`,
+        "",
+        "Instruction:",
+        "Answer A, B, C, or D. Type /bye or /exit to stop quiz mode.",
+        "",
+        storedNextQuiz.source_title ? `Source: ${storedNextQuiz.source_title}` : "",
+        storedNextQuiz.source_path ? `Source Path: ${storedNextQuiz.source_path}` : ""
+      ]
+        .filter(Boolean)
+        .join("\n");
+    }
+  }
+
+  const answerText = [
+    isCorrect ? "Correct ✅" : "Incorrect ❌",
+    "",
+    `Your Answer: ${cleanAnswer}`,
+    `Correct Answer: ${correctAnswer}`,
+    "",
+    `Explanation: ${pendingQuiz.explanation || "No explanation available."}`,
+    "",
+    pendingQuiz.source_title ? `Source: ${pendingQuiz.source_title}` : "",
+    pendingQuiz.source_path ? `Source Path: ${pendingQuiz.source_path}` : "",
+    nextQuizText || "\nNext question could not be generated. Type /quiz to continue."
+  ]
+    .filter(Boolean)
+    .join("\n");
+
   return res.json({
-    success: false,
-    engine: "TINA Adaptive Learning Engine",
-    mode: "QUIZ_CHECK_FAILED",
-    answer: "No pending quiz found. Please start a new quiz using /quiz VAT.",
-    sourceStatus: "NO_PENDING_QUIZ",
-    sourcesUsed: [],
-    vectorMatches: 0
+    success: true,
+    engine: "TINA Continuous Adaptive Quiz Engine",
+    mode: "QUIZ_CHECK_AND_NEXT",
+    answer: answerText,
+    isCorrect,
+    mastery,
+    answeredQuiz,
+    topic: pendingQuiz.topic || null,
+    difficulty: pendingQuiz.difficulty || null,
+    sourceStatus: sourceChunks.length
+      ? "GDRIVE_GROUNDED_NEXT_QUIZ"
+      : "GENERAL_NEXT_QUIZ",
+    sourcesUsed: sourceChunks,
+    vectorMatches: sourceChunks.length
   });
 }
     
