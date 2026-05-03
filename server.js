@@ -196,17 +196,22 @@ function isModeCommand(text = "") {
   ].some((prefix) => value.startsWith(prefix));
 }
 
-async function fetchLatestPendingQuizDirect(userId) {
+async function fetchLatestPendingQuizDirect(userId, conversationId = null) {
   if (!userId) return null;
 
-  const { data, error } = await supabase
+  let query = supabase
     .from("tina_learning_attempts")
     .select("*")
     .eq("user_id", String(userId))
     .is("user_answer", null)
     .order("created_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
+    .limit(1);
+
+  if (conversationId) {
+    query = query.eq("session_id", conversationId);
+  }
+
+  const { data, error } = await query.maybeSingle();
 
   if (error) {
     console.error("fetchLatestPendingQuizDirect error:", error.message);
@@ -1009,7 +1014,7 @@ async function checkAndContinuePendingQuiz({
   conversationId,
   answerText
 }) {
-  const pendingQuiz = await fetchLatestPendingQuizDirect(userId);
+  const pendingQuiz = await fetchLatestPendingQuizDirect(userId, conversationId);
 
   if (!pendingQuiz) {
     return {
@@ -1715,14 +1720,14 @@ app.post("/ask", authenticate, async (req, res) => {
       });
     }
 
-    const pendingQuiz = await fetchLatestPendingQuizDirect(userId);
+    const pendingQuiz = await fetchLatestPendingQuizDirect(userId, conversationId || null);
     const directQuizAnswer = extractQuizAnswer(rawQuestion);
     const directCommand = isModeCommand(rawQuestion);
 
     if (pendingQuiz && directQuizAnswer) {
       const quizResult = await checkAndContinuePendingQuiz({
         userId,
-        conversationId,
+        conversationId: conversationId || null,
         answerText: rawQuestion
       });
 
