@@ -1485,7 +1485,13 @@ const isCommand =
   rawQuestion.startsWith("/quit") ||
   rawQuestion.startsWith("/reset");
 
-if (pendingQuizForValidation && !quizAnswerCandidate && !isCommand) {
+if (
+  hookConfig?.mode === "QUIZ_MASTER" &&
+  pendingQuizForValidation &&
+  !quizAnswerCandidate &&
+  !isCommand
+) {
+  
   return res.json({
     success: false,
     engine: "TINA Continuous Adaptive Quiz Engine",
@@ -1497,7 +1503,7 @@ if (pendingQuizForValidation && !quizAnswerCandidate && !isCommand) {
   });
 }
     
-if (quizAnswerCandidate) {
+if (hookConfig?.mode === "QUIZ_MASTER" && quizAnswerCandidate) {
   const pendingQuiz = await fetchLatestPendingQuizDirect(userId);
 
   if (!pendingQuiz) {
