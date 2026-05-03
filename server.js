@@ -1605,7 +1605,7 @@ if (quizAnswerCandidate) {
       });
     }
 
-    /* ================= ADAPTIVE QUIZ MODE ================= */
+   /* ================= ADAPTIVE QUIZ MODE ================= */
 
 if (hookConfig.mode === "QUIZ_MASTER" || hookConfig.mode === "ADAPTIVE_QUIZ") {
   const quizProfile = await getAdaptiveQuizProfile(
@@ -1614,10 +1614,27 @@ if (hookConfig.mode === "QUIZ_MASTER" || hookConfig.mode === "ADAPTIVE_QUIZ") {
     cleanQuestion
   );
 
+  const recentHistory = await getRecentQuizHistory(supabase, {
+    userId,
+    topic: quizProfile.topic,
+    limit: 20
+  });
+
+  const exclusions = buildQuizExclusionFromHistory(recentHistory);
+
+  const sourceChunks = await getQuizSourceChunks({
+    topic: quizProfile.topic,
+    excludeSourcePaths: exclusions.excludeSourcePaths,
+    excludeChunkIds: exclusions.excludeChunkIds,
+    limit: 3
+  });
+
   const quizPrompt = buildAdaptiveQuizPrompt({
     topic: quizProfile.topic,
     difficulty: quizProfile.difficulty,
-    profile: quizProfile.profile
+    profile: quizProfile.profile,
+    sourceChunks,
+    recentQuestions: recentHistory
   });
 
   const response = await openai.chat.completions.create({
@@ -1640,21 +1657,22 @@ if (hookConfig.mode === "QUIZ_MASTER" || hookConfig.mode === "ADAPTIVE_QUIZ") {
 
   const storedQuiz = await storeUnansweredQuiz(supabase, {
     userId,
-    sessionId: null,
+    sessionId: conversationId || null,
     quiz,
-    mode: hookConfig.mode
+    mode: hookConfig.mode,
+    sourceChunks
   });
 
   if (!storedQuiz || storedQuiz.saveFailed) {
-  return res.json({
-    success: false,
-    engine: "TINA Adaptive Learning Engine",
-    error: "Quiz was generated but was not saved.",
-    supabaseError: storedQuiz?.error || null,
-    answer:
-      "TINA generated the quiz but could not save it. Supabase rejected the insert. Check Render logs for STORE UNANSWERED QUIZ ERROR."
-  });
-}
+    return res.json({
+      success: false,
+      engine: "TINA Adaptive Learning Engine",
+      error: "Quiz was generated but was not saved.",
+      supabaseError: storedQuiz?.error || null,
+      answer:
+        "TINA generated the quiz but could not save it. Supabase rejected the insert. Check Render logs for STORE UNANSWERED QUIZ ERROR."
+    });
+  }
 
   const answerText = [
     `Topic: ${quiz.topic}`,
@@ -1669,30 +1687,38 @@ if (hookConfig.mode === "QUIZ_MASTER" || hookConfig.mode === "ADAPTIVE_QUIZ") {
     `D. ${quiz.choices.D}`,
     "",
     "Instruction:",
-    "Answer A, B, C, or D."
-  ].join("\n");
+    "Answer A, B, C, or D. Type /bye or /exit to stop quiz mode.",
+    "",
+    storedQuiz.source_title ? `Source: ${storedQuiz.source_title}` : "",
+    storedQuiz.source_path ? `Source Path: ${storedQuiz.source_path}` : ""
+  ]
+    .filter(Boolean)
+    .join("\n");
 
   await saveSimpleHookMemory(answerText);
 
   return res.json({
     success: true,
-    engine: "TINA Adaptive Learning Engine",
+    engine: "TINA GDrive-Grounded Adaptive Quiz Engine",
     hook: hookConfig.hook_code,
     mode: hookConfig.mode,
     hookTitle: hookConfig.title,
     answer: answerText,
-    answerMode: "adaptive_quiz_question_generated",
+    answerMode: "gdrive_grounded_adaptive_quiz_question_generated",
     quizId: storedQuiz.id,
     topic: quiz.topic,
     difficulty: quiz.difficulty,
     correctAnswerStored: Boolean(storedQuiz.correct_answer),
     pendingAnswerStored: storedQuiz.user_answer === null,
-    confidence: "ADAPTIVE",
-    sourceStatus: "QUIZ_SAVED_AND_READY",
-    sourcesUsed: [],
-    vectorMatches: 0
+    confidence: sourceChunks.length ? "GDRIVE_GROUNDED" : "GENERAL_ADAPTIVE",
+    sourceStatus: sourceChunks.length
+      ? "GDRIVE_GROUNDED_QUIZ_SAVED_AND_READY"
+      : "GENERAL_QUIZ_SAVED_AND_READY",
+    sourcesUsed: sourceChunks,
+    vectorMatches: sourceChunks.length
   });
 }
+    
     /* ================= REVIEW MODE: TEACH + ASK ================= */
 
     if (hookConfig.mode === "TAX_REVIEWER") {
