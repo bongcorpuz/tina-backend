@@ -392,13 +392,6 @@ export async function storeUnansweredQuiz(
     };
   }
 
-  console.log("STORE QUIZ PAYLOAD:", {
-    ...payload,
-    source_excerpt: payload.source_excerpt
-      ? payload.source_excerpt.slice(0, 150)
-      : null
-  });
-
   const { data, error } = await supabase
     .from("tina_learning_attempts")
     .insert(payload)
@@ -420,14 +413,6 @@ export async function storeUnansweredQuiz(
     };
   }
 
-  console.log("QUIZ STORED SUCCESSFULLY:", {
-    id: data.id,
-    userId: data.user_id,
-    topic: data.topic,
-    correctAnswer: data.correct_answer,
-    sourceTitle: data.source_title
-  });
-
   return data;
 }
 
@@ -436,7 +421,9 @@ export async function storeUnansweredQuiz(
 export async function getLastUnansweredQuiz(supabase, userId) {
   if (!userId) return null;
 
-  const { data, error } = await supabase
+  console.log("DEBUG FETCH QUIZ userId:", userId);
+
+  let { data, error } = await supabase
     .from("tina_learning_attempts")
     .select("*")
     .eq("user_id", String(userId))
@@ -446,11 +433,27 @@ export async function getLastUnansweredQuiz(supabase, userId) {
     .maybeSingle();
 
   if (error) {
-    console.error("Get latest unanswered quiz error:", error.message);
+    console.error("Primary unanswered quiz fetch error:", error.message);
+  }
+
+  if (data) return data;
+
+  console.warn("FALLBACK TRIGGERED — pending quiz exists but user_id may not match.");
+
+  const fallback = await supabase
+    .from("tina_learning_attempts")
+    .select("*")
+    .is("user_answer", null)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (fallback.error) {
+    console.error("Fallback unanswered quiz fetch error:", fallback.error.message);
     return null;
   }
 
-  return data || null;
+  return fallback.data || null;
 }
 
 /* ================= ANSWER CHECKER ================= */
@@ -517,14 +520,6 @@ export async function answerLastQuiz(
     userId,
     topic: lastQuiz.topic,
     subtopic: lastQuiz.subtopic || "",
-    isCorrect
-  });
-
-  console.log("QUIZ ANSWER RECORDED:", {
-    quizId: lastQuiz.id,
-    topic: lastQuiz.topic,
-    userAnswer: cleanAnswer,
-    correctAnswer,
     isCorrect
   });
 
