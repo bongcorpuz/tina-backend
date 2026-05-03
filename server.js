@@ -1344,10 +1344,8 @@ app.post("/ask", authenticate, async (req, res) => {
 function extractQuizAnswer(input = "") {
   const text = input.trim().toLowerCase();
 
-  // 1. Strict single-letter (fast path)
   if (/^[a-d]$/.test(text)) return text.toUpperCase();
 
-  // 2. Common natural patterns
   const patterns = [
     /answer\s*(is)?\s*([a-d])/i,
     /i\s*(choose|pick|select)\s*([a-d])/i,
@@ -1359,9 +1357,7 @@ function extractQuizAnswer(input = "") {
     const match = text.match(pattern);
     if (match) {
       const letter = match[match.length - 1];
-      if (/[a-d]/i.test(letter)) {
-        return letter.toUpperCase();
-      }
+      if (/[a-d]/i.test(letter)) return letter.toUpperCase();
     }
   }
 
@@ -1385,6 +1381,77 @@ if (quizAnswerCandidate) {
   console.log("QUIZ RESULT:", result);
 
   if (result && result.found) {
+    const quizProfile = await getAdaptiveQuizProfile(
+      supabase,
+      userId,
+      result.topic || ""
+    );
+
+    const recentHistory = await getRecentQuizHistory(supabase, {
+      userId,
+      topic: quizProfile.topic,
+      limit: 20
+    });
+
+    const exclusions = buildQuizExclusionFromHistory(recentHistory);
+
+    const sourceChunks = await getQuizSourceChunks({
+      topic: quizProfile.topic,
+      excludeSourcePaths: exclusions.excludeSourcePaths,
+      excludeChunkIds: exclusions.excludeChunkIds,
+      limit: 3
+    });
+
+    const nextQuizPrompt = buildAdaptiveQuizPrompt({
+      topic: quizProfile.topic,
+      difficulty: quizProfile.difficulty,
+      profile: quizProfile.profile,
+      sourceChunks,
+      recentQuestions: recentHistory
+    });
+
+    const nextResponse = await openai.chat.completions.create({
+      model: process.env.OPENAI_MODEL || "gpt-4o-mini",
+      temperature: 0.3,
+      messages: [{ role: "user", content: nextQuizPrompt }]
+    });
+
+    const rawNextQuiz =
+      nextResponse.choices?.[0]?.message?.content?.trim() || "";
+
+    const nextQuiz = safeParseQuizJson(rawNextQuiz);
+
+    let nextQuizText = "";
+
+    if (nextQuiz) {
+      const storedNextQuiz = await storeUnansweredQuiz(supabase, {
+        userId,
+        sessionId: conversationId || null,
+        quiz: nextQuiz,
+        mode: "QUIZ_MASTER",
+        sourceChunks
+      });
+
+      if (storedNextQuiz && !storedNextQuiz.saveFailed) {
+        nextQuizText = [
+          "",
+          "Next Question:",
+          `Topic: ${nextQuiz.topic}`,
+          `Difficulty: ${nextQuiz.difficulty}`,
+          "",
+          nextQuiz.question,
+          "",
+          `A. ${nextQuiz.choices.A}`,
+          `B. ${nextQuiz.choices.B}`,
+          `C. ${nextQuiz.choices.C}`,
+          `D. ${nextQuiz.choices.D}`,
+          "",
+          "Instruction:",
+          "Answer A, B, C, or D. Type /bye or /exit to stop quiz mode."
+        ].join("\n");
+      }
+    }
+
     const answerText = [
       result.isCorrect ? "Correct ✅" : "Incorrect ❌",
       "",
@@ -1393,23 +1460,28 @@ if (quizAnswerCandidate) {
       "",
       `Explanation: ${result.explanation || "No explanation available."}`,
       "",
-      result.isCorrect
-        ? "Next: Difficulty will increase or remain appropriate."
-        : "Next: TINA will reinforce this topic."
-    ].join("\n");
+      result.sourceTitle ? `Source: ${result.sourceTitle}` : "",
+      result.sourcePath ? `Source Path: ${result.sourcePath}` : "",
+      nextQuizText ||
+        "\nNext question could not be generated. Type /quiz to continue."
+    ]
+      .filter(Boolean)
+      .join("\n");
 
     return res.json({
       success: true,
-      engine: "TINA Adaptive Learning Engine",
-      mode: "QUIZ_CHECK",
+      engine: "TINA Continuous Adaptive Quiz Engine",
+      mode: "QUIZ_CHECK_AND_NEXT",
       answer: answerText,
       isCorrect: result.isCorrect,
       mastery: result.mastery || null,
       topic: result.topic || null,
       difficulty: result.difficulty || null,
-      sourceStatus: "QUIZ_ANSWER_PROCESSED",
-      sourcesUsed: [],
-      vectorMatches: 0
+      sourceStatus: sourceChunks.length
+        ? "GDRIVE_GROUNDED_NEXT_QUIZ"
+        : "GENERAL_NEXT_QUIZ",
+      sourcesUsed: sourceChunks,
+      vectorMatches: sourceChunks.length
     });
   }
 
