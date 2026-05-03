@@ -176,6 +176,26 @@ function extractQuizAnswer(text = "") {
   return match?.[1]?.toUpperCase() || null;
 }
 
+function isModeCommand(text = "") {
+  const value = String(text || "").trim().toLowerCase();
+
+  return [
+    "/ask",
+    "/tax",
+    "/review",
+    "/quiz",
+    "/diagnostic",
+    "/progress",
+    "/feedback",
+    "/source",
+    "/bye",
+    "/exit",
+    "/stop",
+    "/quit",
+    "/reset"
+  ].some((prefix) => value.startsWith(prefix));
+}
+
 async function fetchLatestPendingQuizDirect(userId) {
   if (!userId) return null;
 
@@ -984,6 +1004,169 @@ async function generateAndStoreQuiz({
   };
 }
 
+async function checkAndContinuePendingQuiz({
+  userId,
+  conversationId,
+  answerText
+}) {
+  const pendingQuiz = await fetchLatestPendingQuizDirect(userId);
+
+  if (!pendingQuiz) {
+    return {
+      handled: false
+    };
+  }
+
+  const cleanAnswer = extractQuizAnswer(answerText);
+
+  if (!cleanAnswer) {
+    return {
+      handled: true,
+      response: {
+        success: false,
+        engine: "TINA Continuous Adaptive Quiz Engine",
+        mode: "INVALID_QUIZ_ANSWER",
+        answer: "Please answer using letter A, B, C, or D only. Example: A",
+        sourceStatus: "INVALID_QUIZ_ANSWER",
+        sourcesUsed: [],
+        vectorMatches: 0
+      }
+    };
+  }
+
+  const correctAnswer = String(pendingQuiz.correct_answer || "")
+    .replace(/[^A-Da-d]/g, "")
+    .trim()
+    .toUpperCase();
+
+  if (!["A", "B", "C", "D"].includes(correctAnswer)) {
+    return {
+      handled: true,
+      response: {
+        success: false,
+        engine: "TINA Continuous Adaptive Quiz Engine",
+        mode: "QUIZ_CHECK_FAILED",
+        answer: "Pending quiz has invalid correct answer data in Supabase.",
+        sourceStatus: "INVALID_PENDING_QUIZ_DATA",
+        sourcesUsed: [],
+        vectorMatches: 0
+      }
+    };
+  }
+
+  const isCorrect = cleanAnswer === correctAnswer;
+
+  const { data: answeredQuiz, error: answerError } =
+    await updatePendingQuizAnswerDirect({
+      pendingQuiz,
+      cleanAnswer,
+      isCorrect
+    });
+
+  if (answerError || !answeredQuiz) {
+    return {
+      handled: true,
+      response: {
+        success: false,
+        engine: "TINA Continuous Adaptive Quiz Engine",
+        mode: "QUIZ_UPDATE_FAILED",
+        answer: "TINA failed to save your answer. Check Supabase update/RLS.",
+        sourceStatus: "QUIZ_UPDATE_FAILED",
+        sourcesUsed: [],
+        vectorMatches: 0
+      }
+    };
+  }
+
+  await updateLearnerProfileStats(supabase, {
+    userId,
+    topic: pendingQuiz.topic,
+    isCorrect
+  });
+
+  const mastery = await updateTopicMastery(supabase, {
+    userId,
+    topic: pendingQuiz.topic,
+    subtopic: pendingQuiz.subtopic || "",
+    isCorrect
+  });
+
+  const nextHookConfig = {
+    hook_code: "/quiz",
+    mode: "QUIZ_MASTER",
+    title: "Tax Quiz Mode",
+    requires_memory: true
+  };
+
+  const nextQuizResult = await generateAndStoreQuiz({
+    userId,
+    conversationId,
+    hookConfig: nextHookConfig,
+    requestedTopic: pendingQuiz.topic || "VAT"
+  });
+
+  let nextQuizText = "\nNext question could not be generated. Type /quiz to continue.";
+  let nextSources = [];
+
+  if (nextQuizResult.ok) {
+    nextSources = nextQuizResult.sourceChunks || [];
+    nextQuizText = ["", "Next Question:", nextQuizResult.answerText].join("\n");
+  }
+
+  const finalAnswer = [
+    isCorrect ? "Correct ✅" : "Incorrect ❌",
+    "",
+    `Your Answer: ${cleanAnswer}`,
+    `Correct Answer: ${correctAnswer}`,
+    "",
+    `Explanation: ${pendingQuiz.explanation || "No explanation available."}`,
+    "",
+    pendingQuiz.source_title ? `Source: ${pendingQuiz.source_title}` : "",
+    pendingQuiz.source_path ? `Source Path: ${pendingQuiz.source_path}` : "",
+    nextQuizText
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  if (conversationId) {
+    await saveConversationTurn({
+      conversationId,
+      userId,
+      question: answerText,
+      answerText: finalAnswer
+    });
+  }
+
+  await saveModeState(supabase, {
+    userId,
+    sessionId: conversationId || null,
+    activeHook: "/quiz",
+    activeMode: "QUIZ_MASTER",
+    modeTitle: "Tax Quiz Mode",
+    lastQuestion: answerText,
+    lastAnswer: finalAnswer
+  });
+
+  return {
+    handled: true,
+    response: {
+      success: true,
+      engine: "TINA Continuous Adaptive Quiz Engine",
+      mode: "QUIZ_CHECK_AND_NEXT",
+      answer: finalAnswer,
+      isCorrect,
+      mastery,
+      topic: pendingQuiz.topic || null,
+      difficulty: pendingQuiz.difficulty || null,
+      sourceStatus: nextSources.length
+        ? "GDRIVE_GROUNDED_NEXT_QUIZ"
+        : "GENERAL_NEXT_QUIZ",
+      sourcesUsed: nextSources,
+      vectorMatches: nextSources.length
+    }
+  };
+}
+
 /* ================= GOOGLE DRIVE INDEXING ================= */
 
 async function runDriveIndexing() {
@@ -993,21 +1176,14 @@ async function runDriveIndexing() {
     throw new Error("GOOGLE_DRIVE_FOLDER_ID not set");
   }
 
-  console.log("🚀 Starting TINA Big 4 Google Drive indexing...");
-  console.log("📁 Folder ID:", folderId);
-
   await clearVectorStore();
 
   const files = await listDriveFiles(folderId);
   const indexed = [];
   const failed = [];
 
-  console.log(`📄 Files found in Google Drive: ${files.length}`);
-
   for (const file of files) {
     try {
-      console.log(`🔎 Reading file: ${file.name}`);
-
       let text = await extractTextFromFile(file);
       text = (text || "").replace(/\n+/g, " ").replace(/\s+/g, " ").trim();
 
@@ -1058,10 +1234,8 @@ async function runDriveIndexing() {
         status: "Indexed",
         preview: text.substring(0, 200)
       });
-
-      console.log(`✅ Indexed: ${file.name}`);
     } catch (fileError) {
-      console.error(`❌ Failed file: ${file.name}`, fileError);
+      console.error(`Failed file: ${file.name}`, fileError);
 
       failed.push({
         fileName: file.name,
@@ -1541,6 +1715,34 @@ app.post("/ask", authenticate, async (req, res) => {
       });
     }
 
+    const pendingQuiz = await fetchLatestPendingQuizDirect(userId);
+    const directQuizAnswer = extractQuizAnswer(rawQuestion);
+    const directCommand = isModeCommand(rawQuestion);
+
+    if (pendingQuiz && directQuizAnswer) {
+      const quizResult = await checkAndContinuePendingQuiz({
+        userId,
+        conversationId,
+        answerText: rawQuestion
+      });
+
+      if (quizResult.handled) {
+        return res.json(quizResult.response);
+      }
+    }
+
+    if (pendingQuiz && !directQuizAnswer && !directCommand) {
+      return res.json({
+        success: false,
+        engine: "TINA Continuous Adaptive Quiz Engine",
+        mode: "INVALID_QUIZ_ANSWER",
+        answer: "Please answer the current quiz using letter A, B, C, or D only. Example: A. Or type /bye to exit quiz mode.",
+        sourceStatus: "INVALID_QUIZ_ANSWER",
+        sourcesUsed: [],
+        vectorMatches: 0
+      });
+    }
+
     let effectiveQuestion = rawQuestion;
 
     const existingMode = await getModeState(supabase, userId, conversationId || null);
@@ -1557,49 +1759,6 @@ app.post("/ask", authenticate, async (req, res) => {
     const cleanQuestion = hookConfig.cleanQuestion;
     const originalQuestion = hookConfig.originalQuestion;
     const hookInstruction = buildHookInstruction(hookConfig);
-    const quizAnswerCandidate = extractQuizAnswer(rawQuestion);
-
-    const commandPrefixes = [
-      "/quiz",
-      "/ask",
-      "/tax",
-      "/review",
-      "/diagnostic",
-      "/progress",
-      "/feedback",
-      "/source",
-      "/bye",
-      "/exit",
-      "/stop",
-      "/quit",
-      "/reset"
-    ];
-
-    const isCommand = commandPrefixes.some((prefix) =>
-      rawQuestion.toLowerCase().startsWith(prefix)
-    );
-
-    const pendingQuizForValidation =
-      hookConfig.mode === "QUIZ_MASTER"
-        ? await fetchLatestPendingQuizDirect(userId)
-        : null;
-
-    if (
-      hookConfig.mode === "QUIZ_MASTER" &&
-      pendingQuizForValidation &&
-      !quizAnswerCandidate &&
-      !isCommand
-    ) {
-      return res.json({
-        success: false,
-        engine: "TINA Continuous Adaptive Quiz Engine",
-        mode: "INVALID_QUIZ_ANSWER",
-        answer: "Please answer using letter A, B, C, or D only. Example: A",
-        sourceStatus: "INVALID_QUIZ_ANSWER",
-        sourcesUsed: [],
-        vectorMatches: 0
-      });
-    }
 
     async function saveSimpleHookMemory(answerText) {
       if (hookConfig.requires_memory === false) return;
@@ -1677,113 +1836,6 @@ app.post("/ask", authenticate, async (req, res) => {
         resolvedQuestion: cleanQuestion,
         sourcesUsed: [],
         vectorMatches: 0
-      });
-    }
-
-    if (
-      hookConfig.mode === "QUIZ_MASTER" &&
-      quizAnswerCandidate &&
-      pendingQuizForValidation
-    ) {
-      const pendingQuiz = pendingQuizForValidation;
-      const cleanAnswer = quizAnswerCandidate;
-      const correctAnswer = String(pendingQuiz.correct_answer || "")
-        .replace(/[^A-Da-d]/g, "")
-        .trim()
-        .toUpperCase();
-
-      if (!["A", "B", "C", "D"].includes(correctAnswer)) {
-        return res.json({
-          success: false,
-          engine: "TINA Continuous Adaptive Quiz Engine",
-          mode: "QUIZ_CHECK_FAILED",
-          answer: "Pending quiz has invalid correct answer data in Supabase.",
-          sourceStatus: "INVALID_PENDING_QUIZ_DATA",
-          sourcesUsed: [],
-          vectorMatches: 0
-        });
-      }
-
-      const isCorrect = cleanAnswer === correctAnswer;
-
-      const { data: answeredQuiz, error: answerError } =
-        await updatePendingQuizAnswerDirect({
-          pendingQuiz,
-          cleanAnswer,
-          isCorrect
-        });
-
-      if (answerError || !answeredQuiz) {
-        return res.json({
-          success: false,
-          engine: "TINA Continuous Adaptive Quiz Engine",
-          mode: "QUIZ_UPDATE_FAILED",
-          answer: "TINA failed to save your answer. Check Supabase update/RLS.",
-          sourceStatus: "QUIZ_UPDATE_FAILED",
-          sourcesUsed: [],
-          vectorMatches: 0
-        });
-      }
-
-      await updateLearnerProfileStats(supabase, {
-        userId,
-        topic: pendingQuiz.topic,
-        isCorrect
-      });
-
-      const mastery = await updateTopicMastery(supabase, {
-        userId,
-        topic: pendingQuiz.topic,
-        subtopic: pendingQuiz.subtopic || "",
-        isCorrect
-      });
-
-      const nextQuizResult = await generateAndStoreQuiz({
-        userId,
-        conversationId,
-        hookConfig,
-        requestedTopic: pendingQuiz.topic || "VAT"
-      });
-
-      let nextQuizText = "\nNext question could not be generated. Type /quiz to continue.";
-      let nextSources = [];
-
-      if (nextQuizResult.ok) {
-        nextSources = nextQuizResult.sourceChunks || [];
-        nextQuizText = ["", "Next Question:", nextQuizResult.answerText].join("\n");
-      }
-
-      const answerText = [
-        isCorrect ? "Correct ✅" : "Incorrect ❌",
-        "",
-        `Your Answer: ${cleanAnswer}`,
-        `Correct Answer: ${correctAnswer}`,
-        "",
-        `Explanation: ${pendingQuiz.explanation || "No explanation available."}`,
-        "",
-        pendingQuiz.source_title ? `Source: ${pendingQuiz.source_title}` : "",
-        pendingQuiz.source_path ? `Source Path: ${pendingQuiz.source_path}` : "",
-        nextQuizText
-      ]
-        .filter(Boolean)
-        .join("\n");
-
-      await saveSimpleHookMemory(answerText);
-
-      return res.json({
-        success: true,
-        engine: "TINA Continuous Adaptive Quiz Engine",
-        mode: "QUIZ_CHECK_AND_NEXT",
-        answer: answerText,
-        isCorrect,
-        mastery,
-        topic: pendingQuiz.topic || null,
-        difficulty: pendingQuiz.difficulty || null,
-        sourceStatus: nextSources.length
-          ? "GDRIVE_GROUNDED_NEXT_QUIZ"
-          : "GENERAL_NEXT_QUIZ",
-        sourcesUsed: nextSources,
-        vectorMatches: nextSources.length
       });
     }
 
@@ -2397,5 +2449,5 @@ app.use((req, res) => {
 const PORT = Number(process.env.PORT || 5000);
 
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`🚀 TINA Big 4 Backend running on port ${PORT}`);
+  console.log(`TINA Big 4 Backend running on port ${PORT}`);
 });
