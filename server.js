@@ -1457,14 +1457,35 @@ async function updatePendingQuizAnswerDirect({ pendingQuiz, cleanAnswer, isCorre
   };
 }
 
-const quizAnswerCandidate = extractQuizAnswer(rawQuestion);    
-const pendingQuizForValidation = await fetchLatestPendingQuizDirect(userId);
+const quizAnswerCandidate = extractQuizAnswer(rawQuestion);
 
-if (
-  pendingQuizForValidation &&
-  !quizAnswerCandidate &&
-  !isExplicitModeHook(rawQuestion)
-) {
+/* ================= STRICT QUIZ ANSWER VALIDATION ================= */
+
+const { data: pendingQuizForValidation } = await supabase
+  .from("tina_learning_attempts")
+  .select("id, user_id")
+  .eq("user_id", String(userId))
+  .is("user_answer", null)
+  .order("created_at", { ascending: false })
+  .limit(1)
+  .maybeSingle();
+
+const isCommand =
+  rawQuestion.startsWith("/quiz") ||
+  rawQuestion.startsWith("/ask") ||
+  rawQuestion.startsWith("/tax") ||
+  rawQuestion.startsWith("/review") ||
+  rawQuestion.startsWith("/diagnostic") ||
+  rawQuestion.startsWith("/progress") ||
+  rawQuestion.startsWith("/feedback") ||
+  rawQuestion.startsWith("/source") ||
+  rawQuestion.startsWith("/bye") ||
+  rawQuestion.startsWith("/exit") ||
+  rawQuestion.startsWith("/stop") ||
+  rawQuestion.startsWith("/quit") ||
+  rawQuestion.startsWith("/reset");
+
+if (pendingQuizForValidation && !quizAnswerCandidate && !isCommand) {
   return res.json({
     success: false,
     engine: "TINA Continuous Adaptive Quiz Engine",
@@ -1475,7 +1496,7 @@ if (
     vectorMatches: 0
   });
 }
-
+    
 if (quizAnswerCandidate) {
   const pendingQuiz = await fetchLatestPendingQuizDirect(userId);
 
