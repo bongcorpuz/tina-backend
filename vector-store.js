@@ -33,7 +33,6 @@ function chunkText(text, chunkSize = CHUNK_SIZE, overlap = CHUNK_OVERLAP) {
     const chunk = clean.slice(start, end).trim();
 
     if (chunk) chunks.push(chunk);
-
     if (end >= clean.length) break;
 
     start = Math.max(0, end - overlap);
@@ -188,8 +187,10 @@ function buildPossibleSourceKeywords(query = "") {
 
 function mapRowToResult(row, score = 1) {
   return {
+    id: row.id,
     source: row.source,
-    originalSource: row.original_source || row.metadata?.originalSource || row.source,
+    originalSource:
+      row.original_source || row.metadata?.originalSource || row.source,
     text: row.text,
     chunkIndex: row.chunk_index,
     metadata: row.metadata || {},
@@ -221,7 +222,6 @@ export async function clearVectorStore() {
   if (error) throw error;
 
   console.log("🧹 Supabase vector store cleared.");
-
   return true;
 }
 
@@ -297,9 +297,7 @@ export async function addDocumentToVectorStore(text, source, metadata = {}) {
     inserted += batch.length;
   }
 
-  console.log(
-    `✅ Supabase vectors saved: ${source} | chunks added: ${inserted}`
-  );
+  console.log(`✅ Supabase vectors saved: ${source} | chunks added: ${inserted}`);
 
   return {
     source: normalizedSource,
@@ -332,7 +330,7 @@ export async function searchBySourceName(keyword, topK = 8) {
 
   const { data, error } = await supabase
     .from(VECTOR_TABLE)
-    .select("source, original_source, chunk_index, text, metadata")
+    .select("id, source, original_source, chunk_index, text, metadata")
     .or(buildSourceIlikeFilters(normalizedKeyword))
     .order("chunk_index", { ascending: true })
     .limit(topK);
@@ -359,6 +357,75 @@ export async function smartSearch(query, topK = 8) {
 
   return await searchSimilar(query, topK);
 }
+
+/* ================= QUIZ SOURCE RETRIEVAL ================= */
+
+export async function getQuizSourceChunks({
+  topic = "",
+  excludeSourcePaths = [],
+  excludeChunkIds = [],
+  limit = 5
+} = {}) {
+  const cleanTopic = String(topic || "").trim();
+  const normalizedTopic = normalizeForMatch(cleanTopic);
+
+  let query = supabase
+    .from(VECTOR_TABLE)
+    .select("id, source, original_source, chunk_index, text, metadata")
+    .not("text", "is", null)
+    .limit(limit * 8);
+
+  if (cleanTopic) {
+    query = query.or(
+      [
+        `text.ilike.%${cleanTopic}%`,
+        `source.ilike.%${normalizedTopic}%`,
+        `original_source.ilike.%${cleanTopic}%`,
+        `metadata->>originalSource.ilike.%${cleanTopic}%`,
+        `metadata->>originalFileName.ilike.%${cleanTopic}%`,
+        `metadata->>path.ilike.%${cleanTopic}%`
+      ].join(",")
+    );
+  }
+
+  const { data, error } = await query;
+
+  if (error) {
+    console.error("getQuizSourceChunks error:", error.message);
+    return [];
+  }
+
+  let rows = data || [];
+
+  rows = rows.filter((row) => {
+    const path = row.metadata?.path || row.original_source || row.source || "";
+    const chunkId = String(row.id || "");
+
+    if (excludeSourcePaths.includes(path)) return false;
+    if (excludeChunkIds.includes(chunkId)) return false;
+
+    return String(row.text || "").trim().length >= 300;
+  });
+
+  rows = rows.sort(() => Math.random() - 0.5).slice(0, limit);
+
+  return rows.map((row) => ({
+    id: row.id,
+    source: row.source,
+    originalSource:
+      row.original_source || row.metadata?.originalSource || row.source,
+    sourceTitle:
+      row.metadata?.originalFileName || row.original_source || row.source,
+    sourcePath: row.metadata?.path || row.original_source || row.source,
+    fileId: row.metadata?.fileId || null,
+    chunkIndex: row.chunk_index,
+    text: row.text,
+    metadata: row.metadata || {},
+    score: 1
+  }));
+}
+
+/* ================= VECTOR STORE STATS ================= */
 
 export async function getVectorStoreStats() {
   const { count, error } = await supabase
