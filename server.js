@@ -1638,6 +1638,67 @@ async function updatePendingQuizAnswerDirect({ pendingQuiz, cleanAnswer, isCorre
     const cleanQuestion = hookConfig.cleanQuestion;
     const originalQuestion = hookConfig.originalQuestion;
     const hookInstruction = buildHookInstruction(hookConfig);
+    const quizAnswerCandidate = extractQuizAnswer(rawQuestion);
+
+/* ================= STRICT QUIZ ANSWER VALIDATION ================= */
+
+const { data: pendingQuizForValidation } = await supabase
+  .from("tina_learning_attempts")
+  .select("id, user_id")
+  .eq("user_id", String(userId))
+  .is("user_answer", null)
+  .order("created_at", { ascending: false })
+  .limit(1)
+  .maybeSingle();
+
+const isCommand =
+  rawQuestion.startsWith("/quiz") ||
+  rawQuestion.startsWith("/ask") ||
+  rawQuestion.startsWith("/tax") ||
+  rawQuestion.startsWith("/review") ||
+  rawQuestion.startsWith("/diagnostic") ||
+  rawQuestion.startsWith("/progress") ||
+  rawQuestion.startsWith("/feedback") ||
+  rawQuestion.startsWith("/source") ||
+  rawQuestion.startsWith("/bye") ||
+  rawQuestion.startsWith("/exit") ||
+  rawQuestion.startsWith("/stop") ||
+  rawQuestion.startsWith("/quit") ||
+  rawQuestion.startsWith("/reset");
+
+if (
+  hookConfig?.mode === "QUIZ_MASTER" &&
+  pendingQuizForValidation &&
+  !quizAnswerCandidate &&
+  !isCommand
+) {
+  
+  return res.json({
+    success: false,
+    engine: "TINA Continuous Adaptive Quiz Engine",
+    mode: "INVALID_QUIZ_ANSWER",
+    answer: "Please answer using letter A, B, C, or D only. Example: A",
+    sourceStatus: "INVALID_QUIZ_ANSWER",
+    sourcesUsed: [],
+    vectorMatches: 0
+  });
+}
+    
+if (hookConfig?.mode === "QUIZ_MASTER" && quizAnswerCandidate) {
+  const pendingQuiz = await fetchLatestPendingQuizDirect(userId);
+
+  if (!pendingQuiz) {
+    return res.json({
+      success: false,
+      engine: "TINA Continuous Adaptive Quiz Engine",
+      mode: "QUIZ_CHECK_FAILED",
+      answer: "No pending quiz found. Please start a new quiz using /quiz VAT.",
+      sourceStatus: "NO_PENDING_QUIZ",
+      sourcesUsed: [],
+      vectorMatches: 0
+    });
+  }
+
 
     /* ================= LEARNING PROGRESS MODE ================= */
 
