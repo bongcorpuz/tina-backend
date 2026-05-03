@@ -195,6 +195,66 @@ function isModeCommand(text = "") {
   ].some((prefix) => value.startsWith(prefix));
 }
 
+function isAssessmentMode(mode = "") {
+  return ["QUIZ_MASTER", "ADAPTIVE_QUIZ", "TAX_REVIEWER"].includes(mode);
+}
+
+function formatQuestionBlock({
+  prefix = "",
+  quiz,
+  storedQuiz,
+  teachingText = ""
+}) {
+  const parts = [];
+
+  if (prefix) parts.push(prefix);
+  if (teachingText) {
+    parts.push(teachingText);
+    parts.push("");
+  }
+
+  parts.push(`Topic: ${quiz.topic}`);
+  parts.push(`Difficulty: ${quiz.difficulty}`);
+  parts.push("");
+  parts.push("Question:");
+  parts.push(quiz.question);
+  parts.push("");
+  parts.push(`A. ${quiz.choices.A}`);
+  parts.push(`B. ${quiz.choices.B}`);
+  parts.push(`C. ${quiz.choices.C}`);
+  parts.push(`D. ${quiz.choices.D}`);
+  parts.push("");
+  parts.push("Instruction:");
+  parts.push("Answer A, B, C, or D. Type /bye or /exit to stop.");
+  parts.push("");
+
+  if (storedQuiz?.source_title) parts.push(`Source: ${storedQuiz.source_title}`);
+  if (storedQuiz?.source_path) parts.push(`Source Path: ${storedQuiz.source_path}`);
+
+  return parts.filter(Boolean).join("\n");
+}
+
+async function saveConversationTurn({ conversationId, userId, question, answerText }) {
+  if (!conversationId || !userId) return;
+
+  await saveMessage(supabase, {
+    conversationId,
+    userId,
+    role: "user",
+    content: question
+  });
+
+  await saveMessage(supabase, {
+    conversationId,
+    userId,
+    role: "assistant",
+    content: answerText
+  });
+
+  const hooks = extractMemoryHooks(question);
+  await saveMemoryHooks(supabase, userId, hooks);
+}
+
 async function fetchLatestPendingQuizDirect(userId, conversationId = null) {
   if (!userId) return null;
 
@@ -251,27 +311,6 @@ async function updatePendingQuizAnswerDirect({
   }
 
   return { data, error };
-}
-
-async function saveConversationTurn({ conversationId, userId, question, answerText }) {
-  if (!conversationId || !userId) return;
-
-  await saveMessage(supabase, {
-    conversationId,
-    userId,
-    role: "user",
-    content: question
-  });
-
-  await saveMessage(supabase, {
-    conversationId,
-    userId,
-    role: "assistant",
-    content: answerText
-  });
-
-  const hooks = extractMemoryHooks(question);
-  await saveMemoryHooks(supabase, userId, hooks);
 }
 
 /* ================= AUTHORITY ENGINE ================= */
@@ -727,9 +766,7 @@ async function loadTaxHookConfig(rawQuestion = "") {
           "Rule",
           "Simple Example",
           "CPALE Trap",
-          "Quick Recall",
-          "Practice Question",
-          "Instruction"
+          "Quick Recall"
         ]
       }
     },
@@ -862,7 +899,7 @@ ${sections}
   if (mode === "TAX_REVIEWER") {
     return `
 Mode: CPALE Tax Reviewer Mode.
-Teach the topic clearly like a tax reviewer, then ask one question.
+Teach briefly, then continue with multiple-choice questions only.
 Required sections:
 ${sections}
     `.trim();
@@ -871,8 +908,7 @@ ${sections}
   if (mode === "QUIZ_MASTER" || mode === "ADAPTIVE_QUIZ") {
     return `
 Mode: Quiz Mode.
-TINA must ask one multiple-choice question.
-Do not reveal the answer until the user replies.
+TINA must ask one multiple-choice question and continue until the user exits.
 Required sections:
 ${sections}
     `.trim();
@@ -904,13 +940,60 @@ ${sections}
   `.trim();
 }
 
-/* ================= QUIZ HELPERS ================= */
+/* ================= REVIEW TEACHING ================= */
 
-async function generateAndStoreQuiz({
+async function buildReviewTeachingBlock(topic = "") {
+  const prompt = `
+You are TINA, a CPALE taxation reviewer.
+
+Teach this topic briefly and clearly:
+${topic}
+
+Rules:
+- Philippine taxation context only
+- concise, useful, exam-oriented
+- no long memo
+- no practice question
+- no free-text answer request
+
+Output format exactly:
+
+Topic:
+[topic]
+
+Core Concept:
+[brief explanation]
+
+Rule:
+[brief rule]
+
+Simple Example:
+[brief example]
+
+CPALE Trap:
+[brief trap]
+
+Quick Recall:
+[memory aid]
+`.trim();
+
+  const response = await openai.chat.completions.create({
+    model: process.env.OPENAI_MODEL || "gpt-4o-mini",
+    temperature: 0.3,
+    messages: [{ role: "user", content: prompt }]
+  });
+
+  return response.choices?.[0]?.message?.content?.trim() || "";
+}
+
+/* ================= CONTINUOUS ASSESSMENT HELPERS ================= */
+
+async function generateStoredAssessmentQuestion({
   userId,
   conversationId,
   hookConfig,
-  requestedTopic
+  requestedTopic,
+  teachingText = ""
 }) {
   const quizProfile = await getAdaptiveQuizProfile(
     supabase,
@@ -953,7 +1036,7 @@ async function generateAndStoreQuiz({
   if (!quiz) {
     return {
       ok: false,
-      error: "Unable to generate valid adaptive quiz JSON.",
+      error: "Unable to generate valid multiple-choice question JSON.",
       rawQuiz,
       sourceChunks
     };
@@ -970,7 +1053,7 @@ async function generateAndStoreQuiz({
   if (!storedQuiz || storedQuiz.saveFailed) {
     return {
       ok: false,
-      error: "Quiz was generated but was not saved.",
+      error: "Question was generated but could not be saved.",
       supabaseError: storedQuiz?.error || null,
       rawQuiz,
       quiz,
@@ -978,59 +1061,42 @@ async function generateAndStoreQuiz({
     };
   }
 
-  const answerText = [
-    `Topic: ${quiz.topic}`,
-    `Difficulty: ${quiz.difficulty}`,
-    "",
-    "Question:",
-    quiz.question,
-    "",
-    `A. ${quiz.choices.A}`,
-    `B. ${quiz.choices.B}`,
-    `C. ${quiz.choices.C}`,
-    `D. ${quiz.choices.D}`,
-    "",
-    "Instruction:",
-    "Answer A, B, C, or D. Type /bye or /exit to stop quiz mode.",
-    "",
-    storedQuiz.source_title ? `Source: ${storedQuiz.source_title}` : "",
-    storedQuiz.source_path ? `Source Path: ${storedQuiz.source_path}` : ""
-  ]
-    .filter(Boolean)
-    .join("\n");
+  const answerText = formatQuestionBlock({
+    quiz,
+    storedQuiz,
+    teachingText
+  });
 
   return {
     ok: true,
     quiz,
     storedQuiz,
-    answerText,
-    sourceChunks
+    sourceChunks,
+    answerText
   };
 }
 
-async function checkAndContinuePendingQuiz({
+async function continueAssessmentLoop({
   userId,
   conversationId,
-  answerText
+  incomingAnswer
 }) {
   const pendingQuiz = await fetchLatestPendingQuizDirect(userId, conversationId);
 
   if (!pendingQuiz) {
-    return {
-      handled: false
-    };
+    return { handled: false };
   }
 
-  const cleanAnswer = extractQuizAnswer(answerText);
+  const cleanAnswer = extractQuizAnswer(incomingAnswer);
 
   if (!cleanAnswer) {
     return {
       handled: true,
       response: {
         success: false,
-        engine: "TINA Continuous Adaptive Quiz Engine",
-        mode: "INVALID_QUIZ_ANSWER",
-        answer: "Please answer using letter A, B, C, or D only. Example: A",
+        engine: "TINA Continuous Learning Engine",
+        mode: "INVALID_ANSWER",
+        answer: "Please answer using letter A, B, C, or D only. Example: A. Type /bye or /exit to stop.",
         sourceStatus: "INVALID_QUIZ_ANSWER",
         sourcesUsed: [],
         vectorMatches: 0
@@ -1048,9 +1114,9 @@ async function checkAndContinuePendingQuiz({
       handled: true,
       response: {
         success: false,
-        engine: "TINA Continuous Adaptive Quiz Engine",
-        mode: "QUIZ_CHECK_FAILED",
-        answer: "Pending quiz has invalid correct answer data in Supabase.",
+        engine: "TINA Continuous Learning Engine",
+        mode: "INVALID_PENDING_QUESTION",
+        answer: "Pending question has invalid correct-answer data.",
         sourceStatus: "INVALID_PENDING_QUIZ_DATA",
         sourcesUsed: [],
         vectorMatches: 0
@@ -1060,21 +1126,20 @@ async function checkAndContinuePendingQuiz({
 
   const isCorrect = cleanAnswer === correctAnswer;
 
-  const { data: answeredQuiz, error: answerError } =
-    await updatePendingQuizAnswerDirect({
-      pendingQuiz,
-      cleanAnswer,
-      isCorrect
-    });
+  const { data: answeredQuiz, error: answerError } = await updatePendingQuizAnswerDirect({
+    pendingQuiz,
+    cleanAnswer,
+    isCorrect
+  });
 
   if (answerError || !answeredQuiz) {
     return {
       handled: true,
       response: {
         success: false,
-        engine: "TINA Continuous Adaptive Quiz Engine",
-        mode: "QUIZ_UPDATE_FAILED",
-        answer: "TINA failed to save your answer. Check Supabase update/RLS.",
+        engine: "TINA Continuous Learning Engine",
+        mode: "ANSWER_SAVE_FAILED",
+        answer: "TINA failed to save your answer.",
         sourceStatus: "QUIZ_UPDATE_FAILED",
         sourcesUsed: [],
         vectorMatches: 0
@@ -1095,26 +1160,44 @@ async function checkAndContinuePendingQuiz({
     isCorrect
   });
 
+  const nextMode =
+    pendingQuiz.mode === "TAX_REVIEWER"
+      ? "TAX_REVIEWER"
+      : pendingQuiz.mode === "ADAPTIVE_QUIZ"
+        ? "ADAPTIVE_QUIZ"
+        : "QUIZ_MASTER";
+
   const nextHookConfig = {
-    hook_code: "/quiz",
-    mode: "QUIZ_MASTER",
-    title: "Tax Quiz Mode",
+    hook_code:
+      nextMode === "TAX_REVIEWER"
+        ? "/review"
+        : nextMode === "ADAPTIVE_QUIZ"
+          ? "/diagnostic"
+          : "/quiz",
+    mode: nextMode,
+    title:
+      nextMode === "TAX_REVIEWER"
+        ? "CPALE Tax Reviewer Mode"
+        : nextMode === "ADAPTIVE_QUIZ"
+          ? "Adaptive CPALE Diagnostic Quiz"
+          : "Tax Quiz Mode",
     requires_memory: true
   };
 
-  const nextQuizResult = await generateAndStoreQuiz({
+  const nextQuestion = await generateStoredAssessmentQuestion({
     userId,
     conversationId,
     hookConfig: nextHookConfig,
-    requestedTopic: pendingQuiz.topic || "VAT"
+    requestedTopic: pendingQuiz.topic || "VAT",
+    teachingText: ""
   });
 
-  let nextQuizText = "\nNext question could not be generated. Type /quiz to continue.";
+  let nextQuestionText = "\nNext question could not be generated. Type the mode command again to continue.";
   let nextSources = [];
 
-  if (nextQuizResult.ok) {
-    nextSources = nextQuizResult.sourceChunks || [];
-    nextQuizText = ["", "Next Question:", nextQuizResult.answerText].join("\n");
+  if (nextQuestion.ok) {
+    nextSources = nextQuestion.sourceChunks || [];
+    nextQuestionText = ["", "Next Question:", nextQuestion.answerText].join("\n");
   }
 
   const finalAnswer = [
@@ -1127,7 +1210,7 @@ async function checkAndContinuePendingQuiz({
     "",
     pendingQuiz.source_title ? `Source: ${pendingQuiz.source_title}` : "",
     pendingQuiz.source_path ? `Source Path: ${pendingQuiz.source_path}` : "",
-    nextQuizText
+    nextQuestionText
   ]
     .filter(Boolean)
     .join("\n");
@@ -1136,7 +1219,7 @@ async function checkAndContinuePendingQuiz({
     await saveConversationTurn({
       conversationId,
       userId,
-      question: answerText,
+      question: incomingAnswer,
       answerText: finalAnswer
     });
   }
@@ -1144,10 +1227,10 @@ async function checkAndContinuePendingQuiz({
   await saveModeState(supabase, {
     userId,
     sessionId: conversationId || null,
-    activeHook: "/quiz",
-    activeMode: "QUIZ_MASTER",
-    modeTitle: "Tax Quiz Mode",
-    lastQuestion: answerText,
+    activeHook: nextHookConfig.hook_code,
+    activeMode: nextHookConfig.mode,
+    modeTitle: nextHookConfig.title,
+    lastQuestion: incomingAnswer,
     lastAnswer: finalAnswer
   });
 
@@ -1155,16 +1238,16 @@ async function checkAndContinuePendingQuiz({
     handled: true,
     response: {
       success: true,
-      engine: "TINA Continuous Adaptive Quiz Engine",
-      mode: "QUIZ_CHECK_AND_NEXT",
+      engine: "TINA Continuous Learning Engine",
+      mode: "ANSWER_CHECKED_AND_NEXT_READY",
       answer: finalAnswer,
       isCorrect,
       mastery,
       topic: pendingQuiz.topic || null,
       difficulty: pendingQuiz.difficulty || null,
       sourceStatus: nextSources.length
-        ? "GDRIVE_GROUNDED_NEXT_QUIZ"
-        : "GENERAL_NEXT_QUIZ",
+        ? "GDRIVE_GROUNDED_NEXT_QUESTION"
+        : "GENERAL_NEXT_QUESTION",
       sourcesUsed: nextSources,
       vectorMatches: nextSources.length
     }
@@ -1712,7 +1795,7 @@ app.post("/ask", authenticate, async (req, res) => {
         success: true,
         engine: "TINA Mode State System",
         mode: "MODE_CLEARED",
-        answer: "Quiz/review mode ended. You are now back in normal /ask mode.",
+        answer: "Continuous question mode ended. You are now back in normal /ask mode.",
         sourceStatus: "MODE_STATE_CLEARED",
         sourcesUsed: [],
         vectorMatches: 0
@@ -1721,33 +1804,34 @@ app.post("/ask", authenticate, async (req, res) => {
 
     const existingMode = await getModeState(supabase, userId, conversationId || null);
 
-    const isQuizModeActive =
+    const isAssessmentModeActive =
       existingMode?.active_hook === "/quiz" ||
-      existingMode?.active_mode === "QUIZ_MASTER" ||
-      existingMode?.active_mode === "ADAPTIVE_QUIZ";
+      existingMode?.active_hook === "/review" ||
+      existingMode?.active_hook === "/diagnostic" ||
+      isAssessmentMode(existingMode?.active_mode);
 
     const pendingQuiz = await fetchLatestPendingQuizDirect(userId, conversationId || null);
     const directQuizAnswer = extractQuizAnswer(rawQuestion);
     const directCommand = isModeCommand(rawQuestion);
 
     if (pendingQuiz && directQuizAnswer) {
-      const quizResult = await checkAndContinuePendingQuiz({
+      const loopResult = await continueAssessmentLoop({
         userId,
         conversationId: conversationId || null,
-        answerText: rawQuestion
+        incomingAnswer: rawQuestion
       });
 
-      if (quizResult.handled) {
-        return res.json(quizResult.response);
+      if (loopResult.handled) {
+        return res.json(loopResult.response);
       }
     }
 
-    if (pendingQuiz && isQuizModeActive && !directQuizAnswer && !directCommand) {
+    if (pendingQuiz && isAssessmentModeActive && !directQuizAnswer && !directCommand) {
       return res.json({
         success: false,
-        engine: "TINA Continuous Adaptive Quiz Engine",
-        mode: "INVALID_QUIZ_ANSWER",
-        answer: "Please answer the current quiz using letter A, B, C, or D only. Example: A. Or type /bye to exit quiz mode.",
+        engine: "TINA Continuous Learning Engine",
+        mode: "INVALID_ANSWER",
+        answer: "Please answer the current multiple-choice question using A, B, C, or D only. Type /bye or /exit to stop.",
         sourceStatus: "INVALID_QUIZ_ANSWER",
         sourcesUsed: [],
         vectorMatches: 0
@@ -1849,46 +1933,92 @@ app.post("/ask", authenticate, async (req, res) => {
     }
 
     if (hookConfig.mode === "QUIZ_MASTER" || hookConfig.mode === "ADAPTIVE_QUIZ") {
-      const quizResult = await generateAndStoreQuiz({
+      const questionResult = await generateStoredAssessmentQuestion({
         userId,
         conversationId,
         hookConfig,
-        requestedTopic: cleanQuestion
+        requestedTopic: cleanQuestion,
+        teachingText: ""
       });
 
-      if (!quizResult.ok) {
+      if (!questionResult.ok) {
         return res.json({
           success: false,
-          engine: "TINA Adaptive Learning Engine",
-          error: quizResult.error,
-          rawQuiz: quizResult.rawQuiz || null,
-          supabaseError: quizResult.supabaseError || null,
-          answer:
-            "TINA generated the quiz flow but could not complete it. Check Render logs for quiz generation/save errors."
+          engine: "TINA Continuous Learning Engine",
+          error: questionResult.error,
+          rawQuiz: questionResult.rawQuiz || null,
+          supabaseError: questionResult.supabaseError || null,
+          answer: "TINA failed to generate the next stored multiple-choice question."
         });
       }
 
-      await saveSimpleHookMemory(quizResult.answerText);
+      await saveSimpleHookMemory(questionResult.answerText);
 
       return res.json({
         success: true,
-        engine: "TINA GDrive-Grounded Adaptive Quiz Engine",
+        engine: "TINA Continuous Learning Engine",
         hook: hookConfig.hook_code,
         mode: hookConfig.mode,
         hookTitle: hookConfig.title,
-        answer: quizResult.answerText,
-        answerMode: "gdrive_grounded_adaptive_quiz_question_generated",
-        quizId: quizResult.storedQuiz.id,
-        topic: quizResult.quiz.topic,
-        difficulty: quizResult.quiz.difficulty,
-        correctAnswerStored: Boolean(quizResult.storedQuiz.correct_answer),
-        pendingAnswerStored: quizResult.storedQuiz.user_answer === null,
-        confidence: quizResult.sourceChunks.length ? "GDRIVE_GROUNDED" : "GENERAL_ADAPTIVE",
-        sourceStatus: quizResult.sourceChunks.length
-          ? "GDRIVE_GROUNDED_QUIZ_SAVED_AND_READY"
-          : "GENERAL_QUIZ_SAVED_AND_READY",
-        sourcesUsed: quizResult.sourceChunks,
-        vectorMatches: quizResult.sourceChunks.length
+        answer: questionResult.answerText,
+        answerMode: "continuous_question_generated",
+        quizId: questionResult.storedQuiz.id,
+        topic: questionResult.quiz.topic,
+        difficulty: questionResult.quiz.difficulty,
+        correctAnswerStored: Boolean(questionResult.storedQuiz.correct_answer),
+        pendingAnswerStored: questionResult.storedQuiz.user_answer === null,
+        confidence: questionResult.sourceChunks.length ? "GDRIVE_GROUNDED" : "GENERAL_ADAPTIVE",
+        sourceStatus: questionResult.sourceChunks.length
+          ? "GDRIVE_GROUNDED_QUESTION_READY"
+          : "GENERAL_QUESTION_READY",
+        sourcesUsed: questionResult.sourceChunks,
+        vectorMatches: questionResult.sourceChunks.length
+      });
+    }
+
+    if (hookConfig.mode === "TAX_REVIEWER") {
+      const teachingText = await buildReviewTeachingBlock(cleanQuestion);
+
+      const questionResult = await generateStoredAssessmentQuestion({
+        userId,
+        conversationId,
+        hookConfig,
+        requestedTopic: cleanQuestion,
+        teachingText
+      });
+
+      if (!questionResult.ok) {
+        return res.json({
+          success: false,
+          engine: "TINA Continuous Learning Engine",
+          error: questionResult.error,
+          rawQuiz: questionResult.rawQuiz || null,
+          supabaseError: questionResult.supabaseError || null,
+          answer: teachingText || "TINA failed to generate the reviewer multiple-choice question."
+        });
+      }
+
+      await saveSimpleHookMemory(questionResult.answerText);
+
+      return res.json({
+        success: true,
+        engine: "TINA Continuous Learning Engine",
+        hook: hookConfig.hook_code,
+        mode: hookConfig.mode,
+        hookTitle: hookConfig.title,
+        answer: questionResult.answerText,
+        answerMode: "review_then_continuous_question_generated",
+        quizId: questionResult.storedQuiz.id,
+        topic: questionResult.quiz.topic,
+        difficulty: questionResult.quiz.difficulty,
+        correctAnswerStored: Boolean(questionResult.storedQuiz.correct_answer),
+        pendingAnswerStored: questionResult.storedQuiz.user_answer === null,
+        confidence: questionResult.sourceChunks.length ? "GDRIVE_GROUNDED" : "GENERAL_ADAPTIVE",
+        sourceStatus: questionResult.sourceChunks.length
+          ? "GDRIVE_GROUNDED_QUESTION_READY"
+          : "GENERAL_QUESTION_READY",
+        sourcesUsed: questionResult.sourceChunks,
+        vectorMatches: questionResult.sourceChunks.length
       });
     }
 
@@ -1896,77 +2026,6 @@ app.post("/ask", authenticate, async (req, res) => {
       return res.status(400).json({
         success: false,
         error: "Question required after hook"
-      });
-    }
-
-    if (hookConfig.mode === "TAX_REVIEWER") {
-      const reviewPrompt = `
-You are TINA, a CPALE taxation reviewer.
-
-Teach this topic:
-${cleanQuestion}
-
-Rules:
-- Teach clearly and simply.
-- Use Philippine taxation context.
-- Explain like a tax reviewer.
-- Include one common CPALE trap.
-- End by asking ONE review question.
-- Do not make a long legal memo.
-
-Output format:
-
-Topic:
-[topic]
-
-Core Concept:
-[explanation]
-
-Rule:
-[rule]
-
-Simple Example:
-[example]
-
-CPALE Trap:
-[trap]
-
-Quick Recall:
-[one-liner memory aid]
-
-Practice Question:
-[ask one question]
-
-Instruction:
-Answer the practice question, then TINA will check your answer.
-`.trim();
-
-      const response = await openai.chat.completions.create({
-        model: process.env.OPENAI_MODEL || "gpt-4o-mini",
-        temperature: 0.3,
-        messages: [{ role: "user", content: reviewPrompt }]
-      });
-
-      const answerText =
-        response.choices?.[0]?.message?.content?.trim() ||
-        "Unable to generate reviewer lesson.";
-
-      await saveSimpleHookMemory(answerText);
-
-      return res.json({
-        success: true,
-        engine: "TINA Dynamic Hook Engine",
-        hook: hookConfig.hook_code,
-        mode: hookConfig.mode,
-        hookTitle: hookConfig.title,
-        answer: answerText,
-        answerMode: "reviewer_teach_and_ask",
-        confidence: "GENERAL_REVIEWER",
-        sourceStatus: "REVIEW_MODE_NO_RAG_REQUIRED",
-        originalQuestion,
-        resolvedQuestion: cleanQuestion,
-        sourcesUsed: [],
-        vectorMatches: 0
       });
     }
 
@@ -1981,7 +2040,6 @@ Answer the practice question, then TINA will check your answer.
     if ((!finalQuestion || finalQuestion.length < 5) && conversationId && userId) {
       try {
         const lastState = await getLastTopicState(userId, conversationId);
-
         if (lastState?.last_question) {
           finalQuestion = lastState.last_question;
         }
@@ -2137,18 +2195,14 @@ Answer the practice question, then TINA will check your answer.
     }
 
     if (!relevantDocs.length) {
-      let answerText;
-
-      if (issuance || questionType === "issuance") {
-        answerText =
-          "No indexed document found for the requested issuance. TINA will not generate a speculative answer. Please upload or re-index the exact RR/RMC/RMO.";
-      } else {
-        answerText = await generateGeneralFallbackAnswer(
-          finalQuestion,
-          memoryContext,
-          "No indexed Google Drive/Supabase vector source matched the question."
-        );
-      }
+      const answerText =
+        issuance || questionType === "issuance"
+          ? "No indexed document found for the requested issuance. TINA will not generate a speculative answer. Please upload or re-index the exact RR/RMC/RMO."
+          : await generateGeneralFallbackAnswer(
+              finalQuestion,
+              memoryContext,
+              "No indexed Google Drive/Supabase vector source matched the question."
+            );
 
       await saveAllMemory(answerText);
 
@@ -2216,18 +2270,14 @@ Answer the practice question, then TINA will check your answer.
     highConfidenceDocs = rankDocsByAuthority(highConfidenceDocs).slice(0, 10);
 
     if (!highConfidenceDocs.length) {
-      let answerText;
-
-      if (issuance || questionType === "issuance") {
-        answerText =
-          "Insufficient supporting data found in indexed sources. TINA will not generate an answer to avoid incorrect interpretation.";
-      } else {
-        answerText = await generateGeneralFallbackAnswer(
-          finalQuestion,
-          memoryContext,
-          "Indexed sources were found but similarity confidence was low."
-        );
-      }
+      const answerText =
+        issuance || questionType === "issuance"
+          ? "Insufficient supporting data found in indexed sources. TINA will not generate an answer to avoid incorrect interpretation."
+          : await generateGeneralFallbackAnswer(
+              finalQuestion,
+              memoryContext,
+              "Indexed sources were found but similarity confidence was low."
+            );
 
       await saveAllMemory(answerText);
 
