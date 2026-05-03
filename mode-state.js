@@ -122,3 +122,4 @@ export function isExplicitModeHook(text = "") {
   "/reset",
   "/mode"
 ].includes(firstWord);
+}
