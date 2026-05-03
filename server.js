@@ -169,7 +169,6 @@ function buildMemoryContext(messages = []) {
 function extractQuizAnswer(text = "") {
   const cleaned = String(text || "").trim().toUpperCase();
   if (!cleaned) return null;
-
   if (/^[ABCD]$/.test(cleaned)) return cleaned;
 
   const match = cleaned.match(/^(?:ANSWER\s*[:\-]?\s*)?([ABCD])$/i);
@@ -1720,53 +1719,42 @@ app.post("/ask", authenticate, async (req, res) => {
       });
     }
 
-const existingMode = await getModeState(supabase, userId, conversationId || null);
-
-const isQuizModeActive =
-  existingMode?.active_hook === "/quiz" ||
-  existingMode?.active_mode === "QUIZ_MASTER" ||
-  existingMode?.active_mode === "ADAPTIVE_QUIZ";
-
-const pendingQuiz = await fetchLatestPendingQuizDirect(userId, conversationId || null);
-const directQuizAnswer = extractQuizAnswer(rawQuestion);
-const directCommand = isModeCommand(rawQuestion);
-
-if (pendingQuiz && directQuizAnswer) {
-  const quizResult = await checkAndContinuePendingQuiz({
-    userId,
-    conversationId: conversationId || null,
-    answerText: rawQuestion
-  });
-
-  if (quizResult.handled) {
-    return res.json(quizResult.response);
-  }
-}
-
-if (pendingQuiz && isQuizModeActive && !directQuizAnswer && !directCommand) {
-  return res.json({
-    success: false,
-    engine: "TINA Continuous Adaptive Quiz Engine",
-    mode: "INVALID_QUIZ_ANSWER",
-    answer: "Please answer the current quiz using letter A, B, C, or D only. Example: A. Or type /bye to exit quiz mode.",
-    sourceStatus: "INVALID_QUIZ_ANSWER",
-    sourcesUsed: [],
-    vectorMatches: 0
-  });
-}
-
-let effectiveQuestion = rawQuestion;
-
-if (
-  existingMode?.active_hook &&
-  existingMode.active_hook !== "/ask" &&
-  !isExplicitModeHook(rawQuestion)
-) {
-  effectiveQuestion = `${existingMode.active_hook} ${rawQuestion}`;
-}
-    let effectiveQuestion = rawQuestion;
-
     const existingMode = await getModeState(supabase, userId, conversationId || null);
+
+    const isQuizModeActive =
+      existingMode?.active_hook === "/quiz" ||
+      existingMode?.active_mode === "QUIZ_MASTER" ||
+      existingMode?.active_mode === "ADAPTIVE_QUIZ";
+
+    const pendingQuiz = await fetchLatestPendingQuizDirect(userId, conversationId || null);
+    const directQuizAnswer = extractQuizAnswer(rawQuestion);
+    const directCommand = isModeCommand(rawQuestion);
+
+    if (pendingQuiz && directQuizAnswer) {
+      const quizResult = await checkAndContinuePendingQuiz({
+        userId,
+        conversationId: conversationId || null,
+        answerText: rawQuestion
+      });
+
+      if (quizResult.handled) {
+        return res.json(quizResult.response);
+      }
+    }
+
+    if (pendingQuiz && isQuizModeActive && !directQuizAnswer && !directCommand) {
+      return res.json({
+        success: false,
+        engine: "TINA Continuous Adaptive Quiz Engine",
+        mode: "INVALID_QUIZ_ANSWER",
+        answer: "Please answer the current quiz using letter A, B, C, or D only. Example: A. Or type /bye to exit quiz mode.",
+        sourceStatus: "INVALID_QUIZ_ANSWER",
+        sourcesUsed: [],
+        vectorMatches: 0
+      });
+    }
+
+    let effectiveQuestion = rawQuestion;
 
     if (
       existingMode?.active_hook &&
@@ -1921,7 +1909,7 @@ ${cleanQuestion}
 Rules:
 - Teach clearly and simply.
 - Use Philippine taxation context.
-- Explain like a CPA board exam reviewer.
+- Explain like a tax reviewer.
 - Include one common CPALE trap.
 - End by asking ONE review question.
 - Do not make a long legal memo.
@@ -1993,6 +1981,7 @@ Answer the practice question, then TINA will check your answer.
     if ((!finalQuestion || finalQuestion.length < 5) && conversationId && userId) {
       try {
         const lastState = await getLastTopicState(userId, conversationId);
+
         if (lastState?.last_question) {
           finalQuestion = lastState.last_question;
         }
