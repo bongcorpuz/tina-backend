@@ -1,16 +1,25 @@
+// FILE: server.js
+
+import "dotenv/config";
+import express from "express";
+import cors from "cors";
+import OpenAI from "openai";
+import { createClient } from "@supabase/supabase-js";
+
 import {
   getModeState,
   saveModeState,
   clearModeState,
   isExplicitModeHook
 } from "./mode-state.js";
+
 import { detectTopic } from "./topic-detector.js";
-import { getLastTopicState, saveTopicState } from "./memory-hooks.js";
-import "dotenv/config";
-import express from "express";
-import cors from "cors";
-import OpenAI from "openai";
-import { createClient } from "@supabase/supabase-js";
+import {
+  getLastTopicState,
+  saveTopicState,
+  extractMemoryHooks,
+  saveMemoryHooks
+} from "./memory-hooks.js";
 
 import {
   createConversation,
@@ -20,16 +29,10 @@ import {
 } from "./conversation-memory.js";
 
 import {
-  extractMemoryHooks,
-  saveMemoryHooks
-} from "./memory-hooks.js";
-
-import {
   getAdaptiveQuizProfile,
   buildAdaptiveQuizPrompt,
   safeParseQuizJson,
   storeUnansweredQuiz,
-  answerLastQuiz,
   getRecentQuizHistory,
   buildQuizExclusionFromHistory
 } from "./adaptive-quiz.js";
@@ -57,16 +60,35 @@ import {
   getVectorStoreStats
 } from "./vector-store.js";
 
+/* ================= ENV ================= */
+
+const requiredEnv = [
+  "SUPABASE_URL",
+  "SUPABASE_SERVICE_ROLE_KEY",
+  "OPENAI_API_KEY"
+];
+
+for (const key of requiredEnv) {
+  if (!process.env[key]) {
+    throw new Error(`Missing required environment variable: ${key}`);
+  }
+}
+
+/* ================= APP ================= */
+
 const app = express();
 
 app.use(cors({ origin: "*" }));
 app.use(express.json({ limit: "25mb" }));
 
-/* ================= USER HELPER ================= */
-
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
+  process.env.SUPABASE_SERVICE_ROLE_KEY,
+  {
+    auth: {
+      persistSession: false
+    }
+  }
 );
 
 const openai = new OpenAI({
@@ -133,6 +155,99 @@ function getDocOriginalName(doc = {}) {
       doc.source ||
       ""
   );
+}
+
+function buildMemoryContext(messages = []) {
+  if (!messages.length) return "No prior conversation.";
+
+  return messages
+    .slice(-10)
+    .map((msg) => `${String(msg.role).toUpperCase()}: ${msg.content}`)
+    .join("\n");
+}
+
+function extractQuizAnswer(text = "") {
+  const cleaned = String(text || "").trim().toUpperCase();
+  if (!cleaned) return null;
+
+  if (/^[ABCD]$/.test(cleaned)) return cleaned;
+
+  const match = cleaned.match(/^(?:ANSWER\s*[:\-]?\s*)?([ABCD])$/i);
+  return match?.[1]?.toUpperCase() || null;
+}
+
+async function fetchLatestPendingQuizDirect(userId) {
+  if (!userId) return null;
+
+  const { data, error } = await supabase
+    .from("tina_learning_attempts")
+    .select("*")
+    .eq("user_id", String(userId))
+    .is("user_answer", null)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (error) {
+    console.error("fetchLatestPendingQuizDirect error:", error.message);
+    return null;
+  }
+
+  return data || null;
+}
+
+async function updatePendingQuizAnswerDirect({
+  pendingQuiz,
+  cleanAnswer,
+  isCorrect
+}) {
+  if (!pendingQuiz?.id) {
+    return {
+      data: null,
+      error: new Error("Pending quiz id is required.")
+    };
+  }
+
+  const payload = {
+    user_answer: cleanAnswer,
+    is_correct: Boolean(isCorrect),
+    answered_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  };
+
+  const { data, error } = await supabase
+    .from("tina_learning_attempts")
+    .update(payload)
+    .eq("id", pendingQuiz.id)
+    .select()
+    .single();
+
+  if (error) {
+    console.error("updatePendingQuizAnswerDirect error:", error.message);
+  }
+
+  return { data, error };
+}
+
+async function saveConversationTurn({ conversationId, userId, question, answerText }) {
+  if (!conversationId || !userId) return;
+
+  await saveMessage(supabase, {
+    conversationId,
+    userId,
+    role: "user",
+    content: question
+  });
+
+  await saveMessage(supabase, {
+    conversationId,
+    userId,
+    role: "assistant",
+    content: answerText
+  });
+
+  const hooks = extractMemoryHooks(question);
+  await saveMemoryHooks(supabase, userId, hooks);
 }
 
 /* ================= AUTHORITY ENGINE ================= */
@@ -327,53 +442,44 @@ function isExactIssuanceMatch(doc, issuance) {
     type === "rr"
       ? "revenue-regulation"
       : type === "rmc"
-      ? "revenue-memorandum-circular"
-      : "revenue-memorandum-order";
+        ? "revenue-memorandum-circular"
+        : "revenue-memorandum-order";
 
   const pluralFullName =
     type === "rr"
       ? "revenue-regulations"
       : type === "rmc"
-      ? "revenue-memorandum-circulars"
-      : "revenue-memorandum-orders";
+        ? "revenue-memorandum-circulars"
+        : "revenue-memorandum-orders";
 
   const possibleTargets = [
     `${type}-${number}-${year}`,
     `${type}-${number2}-${year}`,
     `${type}-${number3}-${year}`,
-
     `${type}_${number}-${year}`,
     `${type}_${number2}-${year}`,
     `${type}_${number3}-${year}`,
-
     `${type}-${number}_${year}`,
     `${type}-${number2}_${year}`,
     `${type}-${number3}_${year}`,
-
     `${type}${number}-${year}`,
     `${type}${number2}-${year}`,
     `${type}${number3}-${year}`,
-
     `${type}${number}_${year}`,
     `${type}${number2}_${year}`,
     `${type}${number3}_${year}`,
-
     `${type}${number}${year}`,
     `${type}${number2}${year}`,
     `${type}${number3}${year}`,
-
     `${type}-no-${number}-${year}`,
     `${type}-no-${number2}-${year}`,
     `${type}-no-${number3}-${year}`,
-
     `${fullName}-${number}-${year}`,
     `${fullName}-${number2}-${year}`,
     `${fullName}-${number3}-${year}`,
-
     `${fullName}-no-${number}-${year}`,
     `${fullName}-no-${number2}-${year}`,
     `${fullName}-no-${number3}-${year}`,
-
     `${pluralFullName}-${number}-${year}`,
     `${pluralFullName}-${number2}-${year}`,
     `${pluralFullName}-${number3}-${year}`
@@ -383,14 +489,11 @@ function isExactIssuanceMatch(doc, issuance) {
     possibleTargets.some((target) => candidate.includes(target))
   );
 }
-/* ================= SOURCE LINK HELPER ================= */
+
+/* ================= SOURCE LINKS ================= */
 
 function buildGoogleDriveLinks(doc = {}) {
-  const fileId =
-    doc.metadata?.fileId ||
-    doc.fileId ||
-    doc.id ||
-    null;
+  const fileId = doc.metadata?.fileId || doc.fileId || null;
 
   if (!fileId) {
     return {
@@ -407,10 +510,7 @@ function buildGoogleDriveLinks(doc = {}) {
   };
 }
 
-/* ================= UNIQUE SOURCES WITH LINKS ================= */
-
 function uniqueSources(docs = []) {
-  
   const seen = new Set();
 
   return docs
@@ -449,38 +549,6 @@ function uniqueSources(docs = []) {
     });
 }
 
-/* ================= MEMORY ================= */
-
-function buildMemoryContext(messages = []) {
-  if (!messages.length) return "No prior conversation.";
-
-  return messages
-    .slice(-10)
-    .map((msg) => `${String(msg.role).toUpperCase()}: ${msg.content}`)
-    .join("\n");
-}
-
-async function saveConversationTurn({ conversationId, userId, question, answerText }) {
-  if (!conversationId || !userId) return;
-
-  await saveMessage(supabase, {
-    conversationId,
-    userId,
-    role: "user",
-    content: question
-  });
-
-  await saveMessage(supabase, {
-    conversationId,
-    userId,
-    role: "assistant",
-    content: answerText
-  });
-
-  const hooks = extractMemoryHooks(question);
-  await saveMemoryHooks(supabase, userId, hooks);
-}
-
 /* ================= ADMIN SECRET ================= */
 
 function allowAuthenticatedOrIndexSecret(req, res, next) {
@@ -505,175 +573,416 @@ function allowAuthenticatedOrIndexSecret(req, res, next) {
   return authenticate(req, res, next);
 }
 
-/* ================= HEALTH / ROUTES ================= */
+/* ================= FALLBACK ================= */
 
-app.get("/", (req, res) => {
-  res.send("TINA backend is running. Use /health, /routes, /index-drive?secret=YOUR_SECRET.");
-});
+async function generateGeneralFallbackAnswer(
+  cleanQuestion,
+  memoryContext,
+  reason = "No sufficient indexed source was found."
+) {
+  const fallbackSystemPrompt = `
+You are TINA, Tax Information Navigation Assistant for Bong Corpuz & Co. CPAs.
 
-app.get("/routes", (req, res) => {
-  res.json({
-    success: true,
-    engine: "TINA Big 4 Mode",
-    routes: [
-      "GET /",
-      "GET /health",
-      "GET /routes",
-      "POST /register",
-      "POST /login",
-      "GET /list?secret=YOUR_SECRET",
-      "GET /read-drive?secret=YOUR_SECRET",
-      "GET /index-drive?secret=YOUR_SECRET",
-      "GET /reindex?secret=YOUR_SECRET",
-      "GET /admin/index-drive?secret=YOUR_SECRET",
-      "GET /vector-stats?secret=YOUR_SECRET",
-      "POST /ask"
+You may answer using general Philippine tax knowledge only when indexed sources are absent or weak.
+
+Rules:
+1. Clearly state that this is a general fallback answer.
+2. Do not pretend the answer came from indexed Google Drive sources.
+3. Keep the answer professional and Philippine-tax oriented.
+4. Do not invent specific RR, RMC, RMO, BIR rulings, dates, forms, deadlines, rates, or case citations.
+5. For exact issuance questions, do not provide speculative content.
+6. Recommend verification against official NIRC/BIR/CTA/Supreme Court sources.
+`.trim();
+
+  const fallbackUserPrompt = `
+Reason for fallback:
+${reason}
+
+Conversation Memory:
+${memoryContext}
+
+Question:
+${cleanQuestion}
+`.trim();
+
+  const response = await openai.chat.completions.create({
+    model: process.env.OPENAI_MODEL || "gpt-4o-mini",
+    temperature: 0.2,
+    messages: [
+      { role: "system", content: fallbackSystemPrompt },
+      { role: "user", content: fallbackUserPrompt }
     ]
   });
-});
 
-app.get("/health", async (req, res) => {
-  const vectorStats = await getVectorStoreStats();
+  const text = response.choices?.[0]?.message?.content?.trim();
 
-  res.json({
-    status: "ok",
-    engine: "TINA Big 4 Tax Intelligence Engine",
-    openai: Boolean(process.env.OPENAI_API_KEY),
-    openaiModel: process.env.OPENAI_MODEL || "gpt-4o-mini",
-    supabaseUrl: Boolean(process.env.SUPABASE_URL),
-    supabaseServiceRole: Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY),
-    googleDriveFolder: Boolean(process.env.GOOGLE_DRIVE_FOLDER_ID),
-    googleDriveFolderIdPreview: process.env.GOOGLE_DRIVE_FOLDER_ID
-      ? `${process.env.GOOGLE_DRIVE_FOLDER_ID.slice(0, 6)}...`
-      : null,
-    googleServiceAccountJson: Boolean(process.env.GOOGLE_SERVICE_ACCOUNT_JSON),
-    oldGoogleKeyFile: Boolean(process.env.GOOGLE_SERVICE_ACCOUNT_KEY_FILE),
-    indexSecretEnabled: Boolean(process.env.INDEX_SECRET),
-    vectorStore: vectorStats,
-    time: new Date().toISOString()
-  });
-});
+  return [
+    "General TINA Fallback Answer",
+    "",
+    `Source Status: ${reason}`,
+    "",
+    "Important Note: This answer is not based on an indexed Google Drive source and should be verified against official BIR/NIRC/court sources.",
+    "",
+    text || "No fallback answer generated."
+  ].join("\n");
+}
 
-/* ================= AUTH ================= */
+/* ================= HOOK CONFIG ================= */
 
-app.post("/register", async (req, res) => {
-  try {
-    const { username, password, email, mobile, company } = req.body;
+async function loadTaxHookConfig(rawQuestion = "") {
+  const text = String(rawQuestion || "").trim();
 
-    const user = await registerUser(
-      username,
-      password,
-      "user",
-      email,
-      mobile,
-      company
-    );
+  let hookCode = "/ask";
+  let cleanQuestion = text;
 
-    res.status(201).json({
-      message: "Registration successful.",
-      user
-    });
-  } catch (error) {
-    console.error("Register error:", error);
-    res.status(400).json({
-      error: error.message || "Registration failed"
-    });
+  const firstWord = text.split(/\s+/)[0]?.toLowerCase() || "";
+
+  const allowedHooks = [
+    "/ask",
+    "/tax",
+    "/review",
+    "/quiz",
+    "/diagnostic",
+    "/progress",
+    "/feedback",
+    "/source"
+  ];
+
+  if (allowedHooks.includes(firstWord)) {
+    hookCode = firstWord;
+    cleanQuestion = text.slice(firstWord.length).trim();
   }
-});
 
-app.post("/login", async (req, res) => {
+  const hardcodedHooks = {
+    "/ask": {
+      hook_code: "/ask",
+      mode: "ASK",
+      title: "Default TINA Assistant",
+      requires_retrieval: true,
+      requires_memory: true,
+      requires_feedback: false,
+      output_format: "short_format",
+      response_template: {
+        sections: ["Short Answer", "Explanation", "Practical Note"]
+      }
+    },
+    "/tax": {
+      hook_code: "/tax",
+      mode: "TAX_EXPERT",
+      title: "Big 4 Tax Expert Mode",
+      requires_retrieval: true,
+      requires_memory: true,
+      requires_feedback: false,
+      output_format: "big4_format",
+      response_template: {
+        sections: [
+          "Executive Answer",
+          "Issue",
+          "Applicable Source / Legal Basis",
+          "Analysis",
+          "Practical Compliance / Audit Implication",
+          "Recommended Action",
+          "Limitations",
+          "Confidence",
+          "Sources Used"
+        ]
+      }
+    },
+    "/review": {
+      hook_code: "/review",
+      mode: "TAX_REVIEWER",
+      title: "CPALE Tax Reviewer Mode",
+      requires_retrieval: false,
+      requires_memory: true,
+      requires_feedback: false,
+      output_format: "review_format",
+      response_template: {
+        sections: [
+          "Topic",
+          "Core Concept",
+          "Rule",
+          "Simple Example",
+          "CPALE Trap",
+          "Quick Recall",
+          "Practice Question",
+          "Instruction"
+        ]
+      }
+    },
+    "/quiz": {
+      hook_code: "/quiz",
+      mode: "QUIZ_MASTER",
+      title: "Tax Quiz Mode",
+      requires_retrieval: false,
+      requires_memory: true,
+      requires_feedback: false,
+      output_format: "quiz_format",
+      response_template: {
+        sections: ["Question", "A", "B", "C", "D", "Instruction"]
+      }
+    },
+    "/diagnostic": {
+      hook_code: "/diagnostic",
+      mode: "ADAPTIVE_QUIZ",
+      title: "Adaptive CPALE Diagnostic Quiz",
+      requires_retrieval: false,
+      requires_memory: true,
+      requires_feedback: false,
+      output_format: "adaptive_quiz_format",
+      response_template: {
+        sections: ["Question", "Choices", "Instruction"]
+      }
+    },
+    "/progress": {
+      hook_code: "/progress",
+      mode: "LEARNING_PROGRESS",
+      title: "Learning Progress Tracker",
+      requires_retrieval: false,
+      requires_memory: true,
+      requires_feedback: false,
+      output_format: "progress_format",
+      response_template: {
+        sections: ["Profile", "Accuracy", "Weak Topics", "Strong Topics"]
+      }
+    },
+    "/feedback": {
+      hook_code: "/feedback",
+      mode: "FEEDBACK",
+      title: "Feedback Mode",
+      requires_retrieval: false,
+      requires_memory: true,
+      requires_feedback: true,
+      output_format: "feedback_format",
+      response_template: {
+        sections: ["Acknowledgement", "Correction Captured", "Learning Note"]
+      }
+    },
+    "/source": {
+      hook_code: "/source",
+      mode: "SOURCE_FINDER",
+      title: "Source Finder Mode",
+      requires_retrieval: true,
+      requires_memory: false,
+      requires_feedback: false,
+      output_format: "source_finder_format",
+      response_template: {
+        sections: [
+          "Best Matching Source",
+          "Document / Regulation / Case Title",
+          "Relevant Section or Keyword",
+          "Short Summary",
+          "Confidence",
+          "Sources Used"
+        ]
+      }
+    }
+  };
+
+  const fallbackConfig = hardcodedHooks[hookCode] || hardcodedHooks["/ask"];
+
   try {
-    const { username, password } = req.body;
+    const { data, error } = await supabase
+      .from("tina_tax_hooks")
+      .select("*")
+      .eq("hook_code", hookCode)
+      .eq("status", "active")
+      .maybeSingle();
 
-    const result = await loginUser(username, password);
-
-    if (!result) {
-      return res.status(401).json({
-        error: "Invalid credentials"
-      });
+    if (error) {
+      console.error("Hook config load error:", error.message);
     }
 
-    res.json(result);
+    if (data) {
+      return {
+        ...fallbackConfig,
+        ...data,
+        hook_code: fallbackConfig.hook_code,
+        mode: fallbackConfig.mode,
+        requires_retrieval: fallbackConfig.requires_retrieval,
+        title: data.title || fallbackConfig.title,
+        requires_memory: data.requires_memory ?? fallbackConfig.requires_memory,
+        requires_feedback: data.requires_feedback ?? fallbackConfig.requires_feedback,
+        output_format: data.output_format || fallbackConfig.output_format,
+        response_template: data.response_template || fallbackConfig.response_template,
+        cleanQuestion: cleanQuestion || text,
+        originalQuestion: text
+      };
+    }
   } catch (error) {
-    console.error("Login error:", error);
-    res.status(500).json({
-      error: "Login failed"
-    });
+    console.error("Hook config fallback used:", error.message);
   }
-});
 
-/* ================= CONVERSATIONS ================= */
+  return {
+    ...fallbackConfig,
+    cleanQuestion: cleanQuestion || text,
+    originalQuestion: text
+  };
+}
 
-app.post("/conversations", authenticate, async (req, res) => {
-  try {
-    const userId = getUserId(req);
-    const { title } = req.body;
+function buildHookInstruction(hookConfig = {}) {
+  const mode = hookConfig.mode || "ASK";
+  const template = hookConfig.response_template || {};
+  const sections = Array.isArray(template.sections)
+    ? template.sections.map((s) => `- ${s}`).join("\n")
+    : "- Use a clear professional format.";
 
-    if (!userId) return res.status(401).json({ error: "User ID not found in token." });
-
-    const conversation = await createConversation(supabase, {
-      userId,
-      title: title || "New Conversation"
-    });
-
-    res.status(201).json({
-      success: true,
-      conversation
-    });
-  } catch (error) {
-    console.error("Create conversation error:", error);
-    res.status(500).json({
-      success: false,
-      error: error.message || "Failed to create conversation"
-    });
+  if (mode === "TAX_EXPERT") {
+    return `
+Mode: Big 4 Tax Expert Mode.
+Use strict professional tax research format.
+Required sections:
+${sections}
+    `.trim();
   }
-});
 
-app.get("/conversations", authenticate, async (req, res) => {
-  try {
-    const userId = getUserId(req);
-
-    if (!userId) return res.status(401).json({ error: "User ID not found in token." });
-
-    const conversations = await getUserConversations(supabase, userId);
-
-    res.json({
-      success: true,
-      conversations
-    });
-  } catch (error) {
-    console.error("Get conversations error:", error);
-    res.status(500).json({
-      success: false,
-      error: error.message || "Failed to load conversations"
-    });
+  if (mode === "TAX_REVIEWER") {
+    return `
+Mode: CPALE Tax Reviewer Mode.
+Teach the topic clearly like a tax reviewer, then ask one question.
+Required sections:
+${sections}
+    `.trim();
   }
-});
 
-app.get("/conversations/:conversationId/messages", authenticate, async (req, res) => {
-  try {
-    const userId = getUserId(req);
-    const { conversationId } = req.params;
-
-    if (!userId) return res.status(401).json({ error: "User ID not found in token." });
-
-    const messages = await getConversationMessages(supabase, {
-      conversationId,
-      userId
-    });
-
-    res.json({
-      success: true,
-      messages
-    });
-  } catch (error) {
-    console.error("Get messages error:", error);
-    res.status(500).json({
-      success: false,
-      error: error.message || "Failed to load messages"
-    });
+  if (mode === "QUIZ_MASTER" || mode === "ADAPTIVE_QUIZ") {
+    return `
+Mode: Quiz Mode.
+TINA must ask one multiple-choice question.
+Do not reveal the answer until the user replies.
+Required sections:
+${sections}
+    `.trim();
   }
-});
+
+  if (mode === "FEEDBACK") {
+    return `
+Mode: Feedback Mode.
+Acknowledge the feedback and capture the correction for future improvement.
+Required sections:
+${sections}
+    `.trim();
+  }
+
+  if (mode === "SOURCE_FINDER") {
+    return `
+Mode: Source Finder Mode.
+Find and summarize the best indexed source only.
+Required sections:
+${sections}
+    `.trim();
+  }
+
+  return `
+Mode: Default TINA Assistant.
+Answer clearly and professionally.
+Required sections:
+${sections}
+  `.trim();
+}
+
+/* ================= QUIZ HELPERS ================= */
+
+async function generateAndStoreQuiz({
+  userId,
+  conversationId,
+  hookConfig,
+  requestedTopic
+}) {
+  const quizProfile = await getAdaptiveQuizProfile(
+    supabase,
+    userId,
+    requestedTopic
+  );
+
+  const recentHistory = await getRecentQuizHistory(supabase, {
+    userId,
+    topic: quizProfile.topic,
+    limit: 20
+  });
+
+  const exclusions = buildQuizExclusionFromHistory(recentHistory);
+
+  const sourceChunks = await getQuizSourceChunks({
+    topic: quizProfile.topic,
+    excludeSourcePaths: exclusions.excludeSourcePaths,
+    excludeChunkIds: exclusions.excludeChunkIds,
+    limit: 3
+  });
+
+  const quizPrompt = buildAdaptiveQuizPrompt({
+    topic: quizProfile.topic,
+    difficulty: quizProfile.difficulty,
+    profile: quizProfile.profile,
+    sourceChunks,
+    recentQuestions: recentHistory
+  });
+
+  const response = await openai.chat.completions.create({
+    model: process.env.OPENAI_MODEL || "gpt-4o-mini",
+    temperature: 0.3,
+    messages: [{ role: "user", content: quizPrompt }]
+  });
+
+  const rawQuiz = response.choices?.[0]?.message?.content?.trim() || "";
+  const quiz = safeParseQuizJson(rawQuiz);
+
+  if (!quiz) {
+    return {
+      ok: false,
+      error: "Unable to generate valid adaptive quiz JSON.",
+      rawQuiz,
+      sourceChunks
+    };
+  }
+
+  const storedQuiz = await storeUnansweredQuiz(supabase, {
+    userId,
+    sessionId: conversationId || null,
+    quiz,
+    mode: hookConfig.mode,
+    sourceChunks
+  });
+
+  if (!storedQuiz || storedQuiz.saveFailed) {
+    return {
+      ok: false,
+      error: "Quiz was generated but was not saved.",
+      supabaseError: storedQuiz?.error || null,
+      rawQuiz,
+      quiz,
+      sourceChunks
+    };
+  }
+
+  const answerText = [
+    `Topic: ${quiz.topic}`,
+    `Difficulty: ${quiz.difficulty}`,
+    "",
+    "Question:",
+    quiz.question,
+    "",
+    `A. ${quiz.choices.A}`,
+    `B. ${quiz.choices.B}`,
+    `C. ${quiz.choices.C}`,
+    `D. ${quiz.choices.D}`,
+    "",
+    "Instruction:",
+    "Answer A, B, C, or D. Type /bye or /exit to stop quiz mode.",
+    "",
+    storedQuiz.source_title ? `Source: ${storedQuiz.source_title}` : "",
+    storedQuiz.source_path ? `Source Path: ${storedQuiz.source_path}` : ""
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  return {
+    ok: true,
+    quiz,
+    storedQuiz,
+    answerText,
+    sourceChunks
+  };
+}
 
 /* ================= GOOGLE DRIVE INDEXING ================= */
 
@@ -766,7 +1075,7 @@ async function runDriveIndexing() {
 
   const stats = await getVectorStoreStats();
 
-  const result = {
+  return {
     totalFilesChecked: files.length,
     filesIndexed: indexed.length,
     filesFailed: failed.length,
@@ -774,13 +1083,9 @@ async function runDriveIndexing() {
     indexed,
     failed
   };
-
-  console.log("✅ TINA Big 4 Google Drive indexing completed:", result);
-
-  return result;
 }
 
-/* ================= BACKGROUND INDEXING CONTROL ================= */
+/* ================= BACKGROUND INDEXING ================= */
 
 let isIndexingRunning = false;
 
@@ -828,7 +1133,6 @@ function startIndexingInBackground() {
     })
     .catch((error) => {
       console.error("Background indexing error:", error);
-
       lastIndexingStatus = {
         running: false,
         startedAt: lastIndexingStatus.startedAt,
@@ -849,7 +1153,194 @@ function startIndexingInBackground() {
   };
 }
 
-/* ================= INDEXING ROUTES ================= */
+/* ================= BASIC ROUTES ================= */
+
+app.get("/", (req, res) => {
+  res.send("TINA backend is running. Use /health, /routes, /index-drive?secret=YOUR_SECRET.");
+});
+
+app.get("/routes", (req, res) => {
+  res.json({
+    success: true,
+    engine: "TINA Big 4 Mode",
+    routes: [
+      "GET /",
+      "GET /health",
+      "GET /routes",
+      "POST /register",
+      "POST /login",
+      "POST /conversations",
+      "GET /conversations",
+      "GET /conversations/:conversationId/messages",
+      "GET /list?secret=YOUR_SECRET",
+      "GET /read-drive?secret=YOUR_SECRET",
+      "GET /index-drive?secret=YOUR_SECRET",
+      "GET /index-status?secret=YOUR_SECRET",
+      "GET /reindex?secret=YOUR_SECRET",
+      "GET /admin/index-drive?secret=YOUR_SECRET",
+      "GET /vector-stats?secret=YOUR_SECRET",
+      "POST /ask"
+    ]
+  });
+});
+
+app.get("/health", async (req, res) => {
+  try {
+    const vectorStats = await getVectorStoreStats();
+
+    res.json({
+      status: "ok",
+      engine: "TINA Big 4 Tax Intelligence Engine",
+      openai: Boolean(process.env.OPENAI_API_KEY),
+      openaiModel: process.env.OPENAI_MODEL || "gpt-4o-mini",
+      supabaseUrl: Boolean(process.env.SUPABASE_URL),
+      supabaseServiceRole: Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY),
+      googleDriveFolder: Boolean(process.env.GOOGLE_DRIVE_FOLDER_ID),
+      googleDriveFolderIdPreview: process.env.GOOGLE_DRIVE_FOLDER_ID
+        ? `${process.env.GOOGLE_DRIVE_FOLDER_ID.slice(0, 6)}...`
+        : null,
+      googleServiceAccountJson: Boolean(process.env.GOOGLE_SERVICE_ACCOUNT_JSON),
+      oldGoogleKeyFile: Boolean(process.env.GOOGLE_SERVICE_ACCOUNT_KEY_FILE),
+      indexSecretEnabled: Boolean(process.env.INDEX_SECRET),
+      vectorStore: vectorStats,
+      time: new Date().toISOString()
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      error: error.message || "Health check failed"
+    });
+  }
+});
+
+/* ================= AUTH ROUTES ================= */
+
+app.post("/register", async (req, res) => {
+  try {
+    const { username, password, email, mobile, company } = req.body;
+
+    const user = await registerUser(
+      username,
+      password,
+      "user",
+      email,
+      mobile,
+      company
+    );
+
+    res.status(201).json({
+      message: "Registration successful.",
+      user
+    });
+  } catch (error) {
+    console.error("Register error:", error);
+    res.status(400).json({
+      error: error.message || "Registration failed"
+    });
+  }
+});
+
+app.post("/login", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+
+    const result = await loginUser(username, password);
+
+    if (!result) {
+      return res.status(401).json({
+        error: "Invalid credentials"
+      });
+    }
+
+    return res.json(result);
+  } catch (error) {
+    console.error("Login error:", error);
+    return res.status(500).json({
+      error: "Login failed"
+    });
+  }
+});
+
+/* ================= CONVERSATIONS ================= */
+
+app.post("/conversations", authenticate, async (req, res) => {
+  try {
+    const userId = getUserId(req);
+    const { title } = req.body;
+
+    if (!userId) {
+      return res.status(401).json({ error: "User ID not found in token." });
+    }
+
+    const conversation = await createConversation(supabase, {
+      userId,
+      title: title || "New Conversation"
+    });
+
+    return res.status(201).json({
+      success: true,
+      conversation
+    });
+  } catch (error) {
+    console.error("Create conversation error:", error);
+    return res.status(500).json({
+      success: false,
+      error: error.message || "Failed to create conversation"
+    });
+  }
+});
+
+app.get("/conversations", authenticate, async (req, res) => {
+  try {
+    const userId = getUserId(req);
+
+    if (!userId) {
+      return res.status(401).json({ error: "User ID not found in token." });
+    }
+
+    const conversations = await getUserConversations(supabase, userId);
+
+    return res.json({
+      success: true,
+      conversations
+    });
+  } catch (error) {
+    console.error("Get conversations error:", error);
+    return res.status(500).json({
+      success: false,
+      error: error.message || "Failed to load conversations"
+    });
+  }
+});
+
+app.get("/conversations/:conversationId/messages", authenticate, async (req, res) => {
+  try {
+    const userId = getUserId(req);
+    const { conversationId } = req.params;
+
+    if (!userId) {
+      return res.status(401).json({ error: "User ID not found in token." });
+    }
+
+    const messages = await getConversationMessages(supabase, {
+      conversationId,
+      userId
+    });
+
+    return res.json({
+      success: true,
+      messages
+    });
+  } catch (error) {
+    console.error("Get messages error:", error);
+    return res.status(500).json({
+      success: false,
+      error: error.message || "Failed to load messages"
+    });
+  }
+});
+
+/* ================= INDEX ROUTES ================= */
 
 app.get("/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
   const started = startIndexingInBackground();
@@ -864,15 +1355,22 @@ app.get("/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
 });
 
 app.get("/index-status", allowAuthenticatedOrIndexSecret, async (req, res) => {
-  const vectorStats = await getVectorStoreStats();
+  try {
+    const vectorStats = await getVectorStoreStats();
 
-  return res.json({
-    success: true,
-    engine: "TINA Background Indexing Engine",
-    indexing: lastIndexingStatus,
-    vectorStore: vectorStats,
-    time: new Date().toISOString()
-  });
+    return res.json({
+      success: true,
+      engine: "TINA Background Indexing Engine",
+      indexing: lastIndexingStatus,
+      vectorStore: vectorStats,
+      time: new Date().toISOString()
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      error: error.message || "Failed to read index status"
+    });
+  }
 });
 
 app.get("/reindex", allowAuthenticatedOrIndexSecret, async (req, res) => {
@@ -899,7 +1397,7 @@ app.get("/admin/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) 
   });
 });
 
-/* ================= DRIVE UTILITY ROUTES ================= */
+/* ================= DRIVE ROUTES ================= */
 
 app.get("/list", allowAuthenticatedOrIndexSecret, async (req, res) => {
   try {
@@ -914,14 +1412,14 @@ app.get("/list", allowAuthenticatedOrIndexSecret, async (req, res) => {
 
     const files = await listDriveFiles(folderId);
 
-    res.json({
+    return res.json({
       success: true,
       totalFiles: files.length,
       files
     });
   } catch (error) {
     console.error("List error:", error);
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       error: error.message || "Failed to list files"
     });
@@ -971,7 +1469,7 @@ app.get("/read-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
       }
     }
 
-    res.json({
+    return res.json({
       success: true,
       message: "Drive read completed.",
       filesRead: results.length,
@@ -979,7 +1477,7 @@ app.get("/read-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
     });
   } catch (error) {
     console.error("Read-drive error:", error);
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       error: error.message || "Drive read failed"
     });
@@ -990,340 +1488,27 @@ app.get("/vector-stats", allowAuthenticatedOrIndexSecret, async (req, res) => {
   try {
     const vectorStats = await getVectorStoreStats();
 
-    res.json({
+    return res.json({
       success: true,
       engine: "TINA Big 4 Tax Intelligence Engine",
       vectorStore: vectorStats
     });
   } catch (error) {
     console.error("Vector stats error:", error);
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       error: error.message || "Failed to read vector stats"
     });
   }
 });
 
-/* ================= FALLBACK ================= */
-
-async function generateGeneralFallbackAnswer(cleanQuestion, memoryContext, reason = "No sufficient indexed source was found.") {
-  const fallbackSystemPrompt = `
-You are TINA, Tax Information Navigation Assistant for Bong Corpuz & Co. CPAs.
-
-You may answer using general Philippine tax knowledge only when indexed sources are absent or weak.
-
-Rules:
-1. Clearly state that this is a general fallback answer.
-2. Do not pretend the answer came from indexed Google Drive sources.
-3. Keep the answer professional and Philippine-tax oriented.
-4. Do not invent specific RR, RMC, RMO, BIR rulings, dates, forms, deadlines, rates, or case citations.
-5. For exact issuance questions, do not provide speculative content.
-6. Recommend verification against official NIRC/BIR/CTA/Supreme Court sources.
-`.trim();
-
-  const fallbackUserPrompt = `
-Reason for fallback:
-${reason}
-
-Conversation Memory:
-${memoryContext}
-
-Question:
-${cleanQuestion}
-`.trim();
-
-  const response = await openai.chat.completions.create({
-    model: process.env.OPENAI_MODEL || "gpt-4o-mini",
-    temperature: 0.2,
-    messages: [
-      { role: "system", content: fallbackSystemPrompt },
-      { role: "user", content: fallbackUserPrompt }
-    ]
-  });
-
-  const text = response.choices?.[0]?.message?.content?.trim();
-
-  return (
-    "General TINA Fallback Answer\n\n" +
-    `Source Status: ${reason}\n\n` +
-    "Important Note: This answer is not based on an indexed Google Drive source and should be verified against official BIR/NIRC/court sources.\n\n" +
-    (text || "No fallback answer generated.")
-  );
-}
-
-/* ================= DYNAMIC TAX HOOKS - STRICT MODE ================= */
-
-async function loadTaxHookConfig(rawQuestion = "") {
-  const text = String(rawQuestion || "").trim();
-
-  let hookCode = "/ask";
-  let cleanQuestion = text;
-
-  const firstWord = text.split(/\s+/)[0]?.toLowerCase() || "";
-
-  const allowedHooks = [
-  "/ask",
-  "/tax",
-  "/review",
-  "/quiz",
-  "/diagnostic",
-  "/progress",
-  "/feedback",
-  "/source"
-];
-
-  if (allowedHooks.includes(firstWord)) {
-    hookCode = firstWord;
-    cleanQuestion = text.slice(firstWord.length).trim();
-  }
-
-  const hardcodedHooks = {
-    "/ask": {
-      hook_code: "/ask",
-      mode: "ASK",
-      title: "Default TINA Assistant",
-      requires_retrieval: true,
-      requires_memory: true,
-      requires_feedback: false,
-      output_format: "short_format",
-      response_template: {
-        sections: ["Short Answer", "Explanation", "Practical Note"]
-      }
-    },
-
-    "/tax": {
-      hook_code: "/tax",
-      mode: "TAX_EXPERT",
-      title: "Big 4 Tax Expert Mode",
-      requires_retrieval: true,
-      requires_memory: true,
-      requires_feedback: false,
-      output_format: "big4_format",
-      response_template: {
-        sections: [
-          "Executive Answer",
-          "Issue",
-          "Applicable Source / Legal Basis",
-          "Analysis",
-          "Practical Compliance / Audit Implication",
-          "Recommended Action",
-          "Limitations",
-          "Confidence",
-          "Sources Used"
-        ]
-      }
-    },
-
-    "/review": {
-      hook_code: "/review",
-      mode: "TAX_REVIEWER",
-      title: "CPALE Tax Reviewer Mode",
-      requires_retrieval: false,
-      requires_memory: true,
-      requires_feedback: false,
-      output_format: "review_format",
-      response_template: {
-        sections: [
-          "Topic",
-          "Core Concept",
-          "Rule",
-          "Simple Example",
-          "CPALE Trap",
-          "Quick Recall",
-          "Practice Question",
-          "Instruction"
-        ]
-      }
-    },
-
-    "/quiz": {
-      hook_code: "/quiz",
-      mode: "QUIZ_MASTER",
-      title: "Tax Quiz Mode",
-      requires_retrieval: false,
-      requires_memory: true,
-      requires_feedback: false,
-      output_format: "quiz_format",
-      response_template: {
-        sections: ["Question", "A", "B", "C", "D", "Instruction"]
-      }
-    },
-
-    "/diagnostic": {
-  hook_code: "/diagnostic",
-  mode: "ADAPTIVE_QUIZ",
-  title: "Adaptive CPALE Diagnostic Quiz",
-  requires_retrieval: false,
-  requires_memory: true,
-  requires_feedback: false,
-  output_format: "adaptive_quiz_format",
-  response_template: {
-    sections: ["Question", "Choices", "Instruction"]
-  }
-},
-
-"/progress": {
-  hook_code: "/progress",
-  mode: "LEARNING_PROGRESS",
-  title: "Learning Progress Tracker",
-  requires_retrieval: false,
-  requires_memory: true,
-  requires_feedback: false,
-  output_format: "progress_format",
-  response_template: {
-    sections: ["Profile", "Accuracy", "Weak Topics", "Strong Topics"]
-  }
-},
-
-    "/feedback": {
-      hook_code: "/feedback",
-      mode: "FEEDBACK",
-      title: "Feedback Mode",
-      requires_retrieval: false,
-      requires_memory: true,
-      requires_feedback: true,
-      output_format: "feedback_format",
-      response_template: {
-        sections: ["Acknowledgement", "Correction Captured", "Learning Note"]
-      }
-    },
-
-    "/source": {
-      hook_code: "/source",
-      mode: "SOURCE_FINDER",
-      title: "Source Finder Mode",
-      requires_retrieval: true,
-      requires_memory: false,
-      requires_feedback: false,
-      output_format: "source_finder_format",
-      response_template: {
-        sections: [
-          "Best Matching Source",
-          "Document / Regulation / Case Title",
-          "Relevant Section or Keyword",
-          "Short Summary",
-          "Confidence",
-          "Sources Used"
-        ]
-      }
-    }
-  };
-
-  const fallbackConfig = hardcodedHooks[hookCode] || hardcodedHooks["/ask"];
-
-  try {
-    const { data, error } = await supabase
-      .from("tina_tax_hooks")
-      .select("*")
-      .eq("hook_code", hookCode)
-      .eq("status", "active")
-      .maybeSingle();
-
-    if (error) {
-      console.error("Hook config load error:", error.message);
-    }
-
-    if (data) {
-      return {
-        ...fallbackConfig,
-        ...data,
-
-        // Strict control: database may tune labels/templates,
-        // but it must not change the core mode behavior.
-        hook_code: fallbackConfig.hook_code,
-        mode: fallbackConfig.mode,
-        requires_retrieval: fallbackConfig.requires_retrieval,
-
-        title: data.title || fallbackConfig.title,
-        requires_memory: data.requires_memory ?? fallbackConfig.requires_memory,
-        requires_feedback: data.requires_feedback ?? fallbackConfig.requires_feedback,
-        output_format: data.output_format || fallbackConfig.output_format,
-        response_template: data.response_template || fallbackConfig.response_template,
-
-        cleanQuestion: cleanQuestion || text,
-        originalQuestion: text
-      };
-    }
-  } catch (error) {
-    console.error("Hook config fallback used:", error.message);
-  }
-
-  return {
-    ...fallbackConfig,
-    cleanQuestion: cleanQuestion || text,
-    originalQuestion: text
-  };
-}
-
-function buildHookInstruction(hookConfig = {}) {
-  const mode = hookConfig.mode || "ASK";
-  const template = hookConfig.response_template || {};
-  const sections = Array.isArray(template.sections)
-    ? template.sections.map((s) => `- ${s}`).join("\n")
-    : "- Use a clear professional format.";
-
-  if (mode === "TAX_EXPERT") {
-    return `
-Mode: Big 4 Tax Expert Mode.
-Use strict professional tax research format.
-Required sections:
-${sections}
-    `.trim();
-  }
-
-  if (mode === "TAX_REVIEWER") {
-    return `
-Mode: CPALE Tax Reviewer Mode.
-Teach the topic clearly like a tax reviewer, then ask one question.
-Required sections:
-${sections}
-    `.trim();
-  }
-
-  if (mode === "QUIZ_MASTER") {
-    return `
-Mode: Tax Quiz Mode.
-TINA must ask one multiple-choice question.
-Do not reveal the answer until the user replies.
-Required sections:
-${sections}
-    `.trim();
-  }
-
-  if (mode === "FEEDBACK") {
-    return `
-Mode: Feedback Mode.
-Acknowledge the feedback and capture the correction for future improvement.
-Required sections:
-${sections}
-    `.trim();
-  }
-
-  if (mode === "SOURCE_FINDER") {
-    return `
-Mode: Source Finder Mode.
-Find and summarize the best indexed source only.
-Required sections:
-${sections}
-    `.trim();
-  }
-
-  return `
-Mode: Default TINA Assistant.
-Answer clearly and professionally.
-Required sections:
-${sections}
-  `.trim();
-}
-
-/* ================= ASK: DYNAMIC HOOK ENGINE + BIG 4 RAG ================= */
+/* ================= ASK ROUTE ================= */
 
 app.post("/ask", authenticate, async (req, res) => {
   try {
     const { question, conversationId } = req.body;
     const userId = getUserId(req);
 
-    // ✅ CRITICAL FIX: prevent NULL user_id insert error
     if (!userId) {
       return res.status(401).json({
         success: false,
@@ -1332,7 +1517,6 @@ app.post("/ask", authenticate, async (req, res) => {
     }
 
     const rawQuestion = String(question || "").trim();
-    const firstWord = rawQuestion.split(/\s+/)[0]?.toLowerCase();
 
     if (!rawQuestion) {
       return res.status(400).json({
@@ -1341,34 +1525,28 @@ app.post("/ask", authenticate, async (req, res) => {
       });
     }
 
-  /* ================= MODE EXIT COMMANDS ================= */
+    const exitCommands = ["/bye", "/exit", "/stop", "/quit", "/reset"];
 
-const exitCommands = ["/bye", "/exit", "/stop", "/quit", "/reset"];
+    if (exitCommands.includes(rawQuestion.toLowerCase())) {
+      await clearModeState(supabase, userId, conversationId || null);
 
-if (exitCommands.includes(rawQuestion.toLowerCase())) {
-  await clearModeState(supabase, userId, conversationId || null);
-
-  return res.json({
-    success: true,
-    engine: "TINA Mode State System",
-    mode: "MODE_CLEARED",
-    answer: "Quiz/review mode ended. You are now back in normal /ask mode.",
-    sourceStatus: "MODE_STATE_CLEARED",
-    sourcesUsed: [],
-    vectorMatches: 0
-  });
-}  
-
-    
-/* ================= MODE STATE RESOLUTION ================= */
+      return res.json({
+        success: true,
+        engine: "TINA Mode State System",
+        mode: "MODE_CLEARED",
+        answer: "Quiz/review mode ended. You are now back in normal /ask mode.",
+        sourceStatus: "MODE_STATE_CLEARED",
+        sourcesUsed: [],
+        vectorMatches: 0
+      });
+    }
 
     let effectiveQuestion = rawQuestion;
 
-    const existingMode = await getModeState(supabase, userId, conversationId);
+    const existingMode = await getModeState(supabase, userId, conversationId || null);
 
     if (
-      existingMode &&
-      existingMode.active_hook &&
+      existingMode?.active_hook &&
       existingMode.active_hook !== "/ask" &&
       !isExplicitModeHook(rawQuestion)
     ) {
@@ -1376,275 +1554,50 @@ if (exitCommands.includes(rawQuestion.toLowerCase())) {
     }
 
     const hookConfig = await loadTaxHookConfig(effectiveQuestion);
-
     const cleanQuestion = hookConfig.cleanQuestion;
     const originalQuestion = hookConfig.originalQuestion;
     const hookInstruction = buildHookInstruction(hookConfig);
-
-    
     const quizAnswerCandidate = extractQuizAnswer(rawQuestion);
 
-/* ================= STRICT QUIZ ANSWER VALIDATION ================= */
+    const commandPrefixes = [
+      "/quiz",
+      "/ask",
+      "/tax",
+      "/review",
+      "/diagnostic",
+      "/progress",
+      "/feedback",
+      "/source",
+      "/bye",
+      "/exit",
+      "/stop",
+      "/quit",
+      "/reset"
+    ];
 
-const { data: pendingQuizForValidation } = await supabase
-  .from("tina_learning_attempts")
-  .select("id, user_id")
-  .eq("user_id", String(userId))
-  .is("user_answer", null)
-  .order("created_at", { ascending: false })
-  .limit(1)
-  .maybeSingle();
+    const isCommand = commandPrefixes.some((prefix) =>
+      rawQuestion.toLowerCase().startsWith(prefix)
+    );
 
-const isCommand =
-  rawQuestion.startsWith("/quiz") ||
-  rawQuestion.startsWith("/ask") ||
-  rawQuestion.startsWith("/tax") ||
-  rawQuestion.startsWith("/review") ||
-  rawQuestion.startsWith("/diagnostic") ||
-  rawQuestion.startsWith("/progress") ||
-  rawQuestion.startsWith("/feedback") ||
-  rawQuestion.startsWith("/source") ||
-  rawQuestion.startsWith("/bye") ||
-  rawQuestion.startsWith("/exit") ||
-  rawQuestion.startsWith("/stop") ||
-  rawQuestion.startsWith("/quit") ||
-  rawQuestion.startsWith("/reset");
+    const pendingQuizForValidation =
+      hookConfig.mode === "QUIZ_MASTER"
+        ? await fetchLatestPendingQuizDirect(userId)
+        : null;
 
-if (
-  hookConfig?.mode === "QUIZ_MASTER" &&
-  pendingQuizForValidation &&
-  !quizAnswerCandidate &&
-  !isCommand
-) {
-  
-  return res.json({
-    success: false,
-    engine: "TINA Continuous Adaptive Quiz Engine",
-    mode: "INVALID_QUIZ_ANSWER",
-    answer: "Please answer using letter A, B, C, or D only. Example: A",
-    sourceStatus: "INVALID_QUIZ_ANSWER",
-    sourcesUsed: [],
-    vectorMatches: 0
-  });
-}
-    
-if (hookConfig?.mode === "QUIZ_MASTER" && quizAnswerCandidate) {
-  const pendingQuiz = await fetchLatestPendingQuizDirect(userId);
-
-  if (!pendingQuiz) {
-    return res.json({
-      success: false,
-      engine: "TINA Continuous Adaptive Quiz Engine",
-      mode: "QUIZ_CHECK_FAILED",
-      answer: "No pending quiz found. Please start a new quiz using /quiz VAT.",
-      sourceStatus: "NO_PENDING_QUIZ",
-      sourcesUsed: [],
-      vectorMatches: 0
-    });
-  }
-
-/* ================= QUIZ ANSWER PROCESSOR + NEXT QUESTION ================= */
-
-if (hookConfig.mode === "QUIZ_MASTER" && quizAnswerCandidate) {
-  const cleanAnswer = quizAnswerCandidate;
-
-  if (!pendingQuiz) {
-    return res.json({
-      success: false,
-      engine: "TINA Continuous Adaptive Quiz Engine",
-      mode: "QUIZ_CHECK_FAILED",
-      answer: "No pending quiz found. Start with /quiz VAT.",
-      sourceStatus: "NO_PENDING_QUIZ",
-      sourcesUsed: [],
-      vectorMatches: 0
-    });
-  }
-
-  const correctAnswer = String(pendingQuiz.correct_answer || "")
-    .replace(/[^A-Da-d]/g, "")
-    .trim()
-    .toUpperCase();
-
-  const isCorrect = cleanAnswer === correctAnswer;
-
-  const { data: answeredQuiz, error: answerError } =
-    await updatePendingQuizAnswerDirect({
-      pendingQuiz,
-      cleanAnswer,
-      isCorrect
-    });
-
-  if (answerError || !answeredQuiz) {
-    return res.json({
-      success: false,
-      engine: "TINA Continuous Adaptive Quiz Engine",
-      mode: "QUIZ_UPDATE_FAILED",
-      answer: "TINA failed to save your answer. Check Supabase update/RLS.",
-      sourceStatus: "QUIZ_UPDATE_FAILED",
-      sourcesUsed: [],
-      vectorMatches: 0
-    });
-  }
-
-  // update learning
-  await updateLearnerProfileStats(supabase, {
-    userId,
-    topic: pendingQuiz.topic,
-    isCorrect
-  });
-
-  const mastery = await updateTopicMastery(supabase, {
-    userId,
-    topic: pendingQuiz.topic,
-    subtopic: pendingQuiz.subtopic || "",
-    isCorrect
-  });
-
-  // build next question (source-grounded)
-  const quizProfile = await getAdaptiveQuizProfile(
-    supabase,
-    userId,
-    pendingQuiz.topic || "VAT"
-  );
-
-  const recentHistory = await getRecentQuizHistory(supabase, {
-    userId,
-    topic: quizProfile.topic,
-    limit: 20
-  });
-
-  const exclusions = buildQuizExclusionFromHistory(recentHistory);
-
-  const sourceChunks = await getQuizSourceChunks({
-    topic: quizProfile.topic,
-    excludeSourcePaths: exclusions.excludeSourcePaths,
-    excludeChunkIds: exclusions.excludeChunkIds,
-    limit: 3
-  });
-
-  const nextPrompt = buildAdaptiveQuizPrompt({
-    topic: quizProfile.topic,
-    difficulty: quizProfile.difficulty,
-    profile: quizProfile.profile,
-    sourceChunks,
-    recentQuestions: recentHistory
-  });
-
-  const nextResp = await openai.chat.completions.create({
-    model: process.env.OPENAI_MODEL || "gpt-4o-mini",
-    temperature: 0.3,
-    messages: [{ role: "user", content: nextPrompt }]
-  });
-
-  const rawNext = nextResp.choices?.[0]?.message?.content?.trim() || "";
-  const nextQuiz = safeParseQuizJson(rawNext);
-
-  let nextQuizText = "";
-
-  if (nextQuiz) {
-    const storedNext = await storeUnansweredQuiz(supabase, {
-      userId,
-      sessionId: conversationId || null,
-      quiz: nextQuiz,
-      mode: "QUIZ_MASTER",
-      sourceChunks
-    });
-
-    if (storedNext && !storedNext.saveFailed) {
-      nextQuizText = [
-        "",
-        "Next Question:",
-        `Topic: ${nextQuiz.topic}`,
-        `Difficulty: ${nextQuiz.difficulty}`,
-        "",
-        nextQuiz.question,
-        "",
-        `A. ${nextQuiz.choices.A}`,
-        `B. ${nextQuiz.choices.B}`,
-        `C. ${nextQuiz.choices.C}`,
-        `D. ${nextQuiz.choices.D}`,
-        "",
-        "Instruction:",
-        "Answer A, B, C, or D. Type /bye or /exit to stop quiz mode.",
-        "",
-        storedNext.source_title ? `Source: ${storedNext.source_title}` : "",
-        storedNext.source_path ? `Source Path: ${storedNext.source_path}` : ""
-      ]
-        .filter(Boolean)
-        .join("\n");
-    }
-  }
-
-  const answerText = [
-    isCorrect ? "Correct ✅" : "Incorrect ❌",
-    "",
-    `Your Answer: ${cleanAnswer}`,
-    `Correct Answer: ${correctAnswer}`,
-    "",
-    `Explanation: ${pendingQuiz.explanation || "No explanation available."}`,
-    "",
-    pendingQuiz.source_title ? `Source: ${pendingQuiz.source_title}` : "",
-    pendingQuiz.source_path ? `Source Path: ${pendingQuiz.source_path}` : "",
-    nextQuizText || "\nNext question could not be generated. Type /quiz to continue."
-  ]
-    .filter(Boolean)
-    .join("\n");
-
-  return res.json({
-    success: true,
-    engine: "TINA Continuous Adaptive Quiz Engine",
-    mode: "QUIZ_CHECK_AND_NEXT",
-    answer: answerText,
-    isCorrect,
-    mastery,
-    topic: pendingQuiz.topic || null,
-    difficulty: pendingQuiz.difficulty || null,
-    sourceStatus: sourceChunks.length
-      ? "GDRIVE_GROUNDED_NEXT_QUIZ"
-      : "GENERAL_NEXT_QUIZ",
-    sourcesUsed: sourceChunks,
-    vectorMatches: sourceChunks.length
-  });
-}
-    /* ================= LEARNING PROGRESS MODE ================= */
-
-    if (hookConfig.mode === "LEARNING_PROGRESS") {
-      const profile = await getOrCreateLearnerProfile(supabase, userId);
-
-      const answerText = profile
-        ? [
-            "Learning Progress",
-            "",
-            `Skill Level: ${profile.skill_level}`,
-            `Learning Goal: ${profile.learning_goal}`,
-            `Total Questions: ${profile.total_questions}`,
-            `Correct Answers: ${profile.correct_answers}`,
-            `Accuracy Rate: ${Math.round(Number(profile.accuracy_rate || 0) * 100)}%`,
-            `Last Reviewed Topic: ${profile.last_reviewed_topic || "None"}`,
-            "",
-            `Weak Topics: ${(profile.weak_topics || []).join(", ") || "None yet"}`,
-            `Strong Topics: ${(profile.strong_topics || []).join(", ") || "None yet"}`
-          ].join("\n")
-        : "No learning profile found yet.";
-
+    if (
+      hookConfig.mode === "QUIZ_MASTER" &&
+      pendingQuizForValidation &&
+      !quizAnswerCandidate &&
+      !isCommand
+    ) {
       return res.json({
-        success: true,
-        engine: "TINA Adaptive Learning Engine",
-        hook: hookConfig.hook_code,
-        mode: hookConfig.mode,
-        hookTitle: hookConfig.title,
-        answer: answerText,
-        answerMode: "learning_progress",
-        sourceStatus: "LEARNING_PROFILE_USED",
+        success: false,
+        engine: "TINA Continuous Adaptive Quiz Engine",
+        mode: "INVALID_QUIZ_ANSWER",
+        answer: "Please answer using letter A, B, C, or D only. Example: A",
+        sourceStatus: "INVALID_QUIZ_ANSWER",
         sourcesUsed: [],
         vectorMatches: 0
-      });
-    }
-
-    if (!cleanQuestion || !cleanQuestion.trim()) {
-      return res.status(400).json({
-        success: false,
-        error: "Question required after hook"
       });
     }
 
@@ -1660,7 +1613,7 @@ if (hookConfig.mode === "QUIZ_MASTER" && quizAnswerCandidate) {
 
       await saveModeState(supabase, {
         userId,
-        sessionId: conversationId,
+        sessionId: conversationId || null,
         activeHook: hookConfig.hook_code,
         activeMode: hookConfig.mode,
         modeTitle: hookConfig.title,
@@ -1669,7 +1622,40 @@ if (hookConfig.mode === "QUIZ_MASTER" && quizAnswerCandidate) {
       });
     }
 
-    /* ================= FEEDBACK MODE ================= */
+    if (hookConfig.mode === "LEARNING_PROGRESS") {
+      const profile = await getOrCreateLearnerProfile(supabase, userId);
+
+      const answerText = profile
+        ? [
+            "Learning Progress",
+            "",
+            `Skill Level: ${profile.skill_level || "beginner"}`,
+            `Learning Goal: ${profile.learning_goal || "CPALE"}`,
+            `Total Questions: ${profile.total_questions || 0}`,
+            `Correct Answers: ${profile.correct_answers || 0}`,
+            `Accuracy Rate: ${Math.round(Number(profile.accuracy_rate || 0) * 100)}%`,
+            `Last Reviewed Topic: ${profile.last_reviewed_topic || "None"}`,
+            "",
+            `Weak Topics: ${(profile.weak_topics || []).join(", ") || "None yet"}`,
+            `Strong Topics: ${(profile.strong_topics || []).join(", ") || "None yet"}`
+          ].join("\n")
+        : "No learning profile found yet.";
+
+      await saveSimpleHookMemory(answerText);
+
+      return res.json({
+        success: true,
+        engine: "TINA Adaptive Learning Engine",
+        hook: hookConfig.hook_code,
+        mode: hookConfig.mode,
+        hookTitle: hookConfig.title,
+        answer: answerText,
+        answerMode: "learning_progress",
+        sourceStatus: "LEARNING_PROFILE_USED",
+        sourcesUsed: [],
+        vectorMatches: 0
+      });
+    }
 
     if (hookConfig.mode === "FEEDBACK") {
       const answerText =
@@ -1694,121 +1680,163 @@ if (hookConfig.mode === "QUIZ_MASTER" && quizAnswerCandidate) {
       });
     }
 
-   /* ================= ADAPTIVE QUIZ MODE ================= */
+    if (
+      hookConfig.mode === "QUIZ_MASTER" &&
+      quizAnswerCandidate &&
+      pendingQuizForValidation
+    ) {
+      const pendingQuiz = pendingQuizForValidation;
+      const cleanAnswer = quizAnswerCandidate;
+      const correctAnswer = String(pendingQuiz.correct_answer || "")
+        .replace(/[^A-Da-d]/g, "")
+        .trim()
+        .toUpperCase();
 
-if (hookConfig.mode === "QUIZ_MASTER" || hookConfig.mode === "ADAPTIVE_QUIZ") {
-  const quizProfile = await getAdaptiveQuizProfile(
-    supabase,
-    userId,
-    cleanQuestion
-  );
+      if (!["A", "B", "C", "D"].includes(correctAnswer)) {
+        return res.json({
+          success: false,
+          engine: "TINA Continuous Adaptive Quiz Engine",
+          mode: "QUIZ_CHECK_FAILED",
+          answer: "Pending quiz has invalid correct answer data in Supabase.",
+          sourceStatus: "INVALID_PENDING_QUIZ_DATA",
+          sourcesUsed: [],
+          vectorMatches: 0
+        });
+      }
 
-  const recentHistory = await getRecentQuizHistory(supabase, {
-    userId,
-    topic: quizProfile.topic,
-    limit: 20
-  });
+      const isCorrect = cleanAnswer === correctAnswer;
 
-  const exclusions = buildQuizExclusionFromHistory(recentHistory);
+      const { data: answeredQuiz, error: answerError } =
+        await updatePendingQuizAnswerDirect({
+          pendingQuiz,
+          cleanAnswer,
+          isCorrect
+        });
 
-  const sourceChunks = await getQuizSourceChunks({
-    topic: quizProfile.topic,
-    excludeSourcePaths: exclusions.excludeSourcePaths,
-    excludeChunkIds: exclusions.excludeChunkIds,
-    limit: 3
-  });
+      if (answerError || !answeredQuiz) {
+        return res.json({
+          success: false,
+          engine: "TINA Continuous Adaptive Quiz Engine",
+          mode: "QUIZ_UPDATE_FAILED",
+          answer: "TINA failed to save your answer. Check Supabase update/RLS.",
+          sourceStatus: "QUIZ_UPDATE_FAILED",
+          sourcesUsed: [],
+          vectorMatches: 0
+        });
+      }
 
-  const quizPrompt = buildAdaptiveQuizPrompt({
-    topic: quizProfile.topic,
-    difficulty: quizProfile.difficulty,
-    profile: quizProfile.profile,
-    sourceChunks,
-    recentQuestions: recentHistory
-  });
+      await updateLearnerProfileStats(supabase, {
+        userId,
+        topic: pendingQuiz.topic,
+        isCorrect
+      });
 
-  const response = await openai.chat.completions.create({
-    model: process.env.OPENAI_MODEL || "gpt-4o-mini",
-    temperature: 0.3,
-    messages: [{ role: "user", content: quizPrompt }]
-  });
+      const mastery = await updateTopicMastery(supabase, {
+        userId,
+        topic: pendingQuiz.topic,
+        subtopic: pendingQuiz.subtopic || "",
+        isCorrect
+      });
 
-  const rawQuiz = response.choices?.[0]?.message?.content?.trim() || "";
-  const quiz = safeParseQuizJson(rawQuiz);
+      const nextQuizResult = await generateAndStoreQuiz({
+        userId,
+        conversationId,
+        hookConfig,
+        requestedTopic: pendingQuiz.topic || "VAT"
+      });
 
-  if (!quiz) {
-    return res.json({
-      success: false,
-      engine: "TINA Adaptive Learning Engine",
-      error: "Unable to generate valid adaptive quiz JSON.",
-      rawQuiz
-    });
-  }
+      let nextQuizText = "\nNext question could not be generated. Type /quiz to continue.";
+      let nextSources = [];
 
-  const storedQuiz = await storeUnansweredQuiz(supabase, {
-    userId,
-    sessionId: conversationId || null,
-    quiz,
-    mode: hookConfig.mode,
-    sourceChunks
-  });
+      if (nextQuizResult.ok) {
+        nextSources = nextQuizResult.sourceChunks || [];
+        nextQuizText = ["", "Next Question:", nextQuizResult.answerText].join("\n");
+      }
 
-  if (!storedQuiz || storedQuiz.saveFailed) {
-    return res.json({
-      success: false,
-      engine: "TINA Adaptive Learning Engine",
-      error: "Quiz was generated but was not saved.",
-      supabaseError: storedQuiz?.error || null,
-      answer:
-        "TINA generated the quiz but could not save it. Supabase rejected the insert. Check Render logs for STORE UNANSWERED QUIZ ERROR."
-    });
-  }
+      const answerText = [
+        isCorrect ? "Correct ✅" : "Incorrect ❌",
+        "",
+        `Your Answer: ${cleanAnswer}`,
+        `Correct Answer: ${correctAnswer}`,
+        "",
+        `Explanation: ${pendingQuiz.explanation || "No explanation available."}`,
+        "",
+        pendingQuiz.source_title ? `Source: ${pendingQuiz.source_title}` : "",
+        pendingQuiz.source_path ? `Source Path: ${pendingQuiz.source_path}` : "",
+        nextQuizText
+      ]
+        .filter(Boolean)
+        .join("\n");
 
-  const answerText = [
-    `Topic: ${quiz.topic}`,
-    `Difficulty: ${quiz.difficulty}`,
-    "",
-    "Question:",
-    quiz.question,
-    "",
-    `A. ${quiz.choices.A}`,
-    `B. ${quiz.choices.B}`,
-    `C. ${quiz.choices.C}`,
-    `D. ${quiz.choices.D}`,
-    "",
-    "Instruction:",
-    "Answer A, B, C, or D. Type /bye or /exit to stop quiz mode.",
-    "",
-    storedQuiz.source_title ? `Source: ${storedQuiz.source_title}` : "",
-    storedQuiz.source_path ? `Source Path: ${storedQuiz.source_path}` : ""
-  ]
-    .filter(Boolean)
-    .join("\n");
+      await saveSimpleHookMemory(answerText);
 
-  await saveSimpleHookMemory(answerText);
+      return res.json({
+        success: true,
+        engine: "TINA Continuous Adaptive Quiz Engine",
+        mode: "QUIZ_CHECK_AND_NEXT",
+        answer: answerText,
+        isCorrect,
+        mastery,
+        topic: pendingQuiz.topic || null,
+        difficulty: pendingQuiz.difficulty || null,
+        sourceStatus: nextSources.length
+          ? "GDRIVE_GROUNDED_NEXT_QUIZ"
+          : "GENERAL_NEXT_QUIZ",
+        sourcesUsed: nextSources,
+        vectorMatches: nextSources.length
+      });
+    }
 
-  return res.json({
-    success: true,
-    engine: "TINA GDrive-Grounded Adaptive Quiz Engine",
-    hook: hookConfig.hook_code,
-    mode: hookConfig.mode,
-    hookTitle: hookConfig.title,
-    answer: answerText,
-    answerMode: "gdrive_grounded_adaptive_quiz_question_generated",
-    quizId: storedQuiz.id,
-    topic: quiz.topic,
-    difficulty: quiz.difficulty,
-    correctAnswerStored: Boolean(storedQuiz.correct_answer),
-    pendingAnswerStored: storedQuiz.user_answer === null,
-    confidence: sourceChunks.length ? "GDRIVE_GROUNDED" : "GENERAL_ADAPTIVE",
-    sourceStatus: sourceChunks.length
-      ? "GDRIVE_GROUNDED_QUIZ_SAVED_AND_READY"
-      : "GENERAL_QUIZ_SAVED_AND_READY",
-    sourcesUsed: sourceChunks,
-    vectorMatches: sourceChunks.length
-  });
-}
-    
-    /* ================= REVIEW MODE: TEACH + ASK ================= */
+    if (hookConfig.mode === "QUIZ_MASTER" || hookConfig.mode === "ADAPTIVE_QUIZ") {
+      const quizResult = await generateAndStoreQuiz({
+        userId,
+        conversationId,
+        hookConfig,
+        requestedTopic: cleanQuestion
+      });
+
+      if (!quizResult.ok) {
+        return res.json({
+          success: false,
+          engine: "TINA Adaptive Learning Engine",
+          error: quizResult.error,
+          rawQuiz: quizResult.rawQuiz || null,
+          supabaseError: quizResult.supabaseError || null,
+          answer:
+            "TINA generated the quiz flow but could not complete it. Check Render logs for quiz generation/save errors."
+        });
+      }
+
+      await saveSimpleHookMemory(quizResult.answerText);
+
+      return res.json({
+        success: true,
+        engine: "TINA GDrive-Grounded Adaptive Quiz Engine",
+        hook: hookConfig.hook_code,
+        mode: hookConfig.mode,
+        hookTitle: hookConfig.title,
+        answer: quizResult.answerText,
+        answerMode: "gdrive_grounded_adaptive_quiz_question_generated",
+        quizId: quizResult.storedQuiz.id,
+        topic: quizResult.quiz.topic,
+        difficulty: quizResult.quiz.difficulty,
+        correctAnswerStored: Boolean(quizResult.storedQuiz.correct_answer),
+        pendingAnswerStored: quizResult.storedQuiz.user_answer === null,
+        confidence: quizResult.sourceChunks.length ? "GDRIVE_GROUNDED" : "GENERAL_ADAPTIVE",
+        sourceStatus: quizResult.sourceChunks.length
+          ? "GDRIVE_GROUNDED_QUIZ_SAVED_AND_READY"
+          : "GENERAL_QUIZ_SAVED_AND_READY",
+        sourcesUsed: quizResult.sourceChunks,
+        vectorMatches: quizResult.sourceChunks.length
+      });
+    }
+
+    if (!cleanQuestion || !cleanQuestion.trim()) {
+      return res.status(400).json({
+        success: false,
+        error: "Question required after hook"
+      });
+    }
 
     if (hookConfig.mode === "TAX_REVIEWER") {
       const reviewPrompt = `
@@ -1880,28 +1908,23 @@ Answer the practice question, then TINA will check your answer.
         vectorMatches: 0
       });
     }
-    
-        /* ================= TOPIC + MEMORY ================= */
 
     const topicData = await detectTopic({
       question: cleanQuestion,
       userId,
-      sessionId: conversationId
+      sessionId: conversationId || null
     });
 
     let finalQuestion = topicData.resolvedQuestion || cleanQuestion;
 
-    /* ================= TOPIC MEMORY FALLBACK ================= */
-
     if ((!finalQuestion || finalQuestion.length < 5) && conversationId && userId) {
       try {
         const lastState = await getLastTopicState(userId, conversationId);
-
         if (lastState?.last_question) {
           finalQuestion = lastState.last_question;
         }
-      } catch (e) {
-        console.error("Topic fallback error:", e.message);
+      } catch (error) {
+        console.error("Topic fallback error:", error.message);
       }
     }
 
@@ -1919,100 +1942,89 @@ Answer the practice question, then TINA will check your answer.
     const memoryContext = buildMemoryContext(conversationHistory);
 
     async function saveAllMemory(answerText) {
-  if (hookConfig.requires_memory === false) return;
+      if (hookConfig.requires_memory === false) return;
 
-  await saveConversationTurn({
-    conversationId,
-    userId,
-    question: originalQuestion,
-    answerText
-  });
+      await saveConversationTurn({
+        conversationId,
+        userId,
+        question: originalQuestion,
+        answerText
+      });
 
-  await saveTopicState({
-    userId,
-    sessionId: conversationId,
-    topic: topicData.topic,
-    subject: topicData.subject,
-    taxType: topicData.taxType,
-    question: originalQuestion,
-    answer: answerText
-  });
+      await saveTopicState({
+        userId,
+        sessionId: conversationId || null,
+        topic: topicData.topic,
+        subject: topicData.subject,
+        taxType: topicData.taxType,
+        question: originalQuestion,
+        answer: answerText
+      });
 
-  await saveModeState(supabase, {
-    userId,
-    sessionId: conversationId,
-    activeHook: hookConfig.hook_code,
-    activeMode: hookConfig.mode,
-    modeTitle: hookConfig.title,
-    lastQuestion: originalQuestion,
-    lastAnswer: answerText
-  });
-}
-    
-    /* ================= RETRIEVAL ================= */
+      await saveModeState(supabase, {
+        userId,
+        sessionId: conversationId || null,
+        activeHook: hookConfig.hook_code,
+        activeMode: hookConfig.mode,
+        modeTitle: hookConfig.title,
+        lastQuestion: originalQuestion,
+        lastAnswer: answerText
+      });
+    }
 
     let relevantDocs = [];
 
     const retrievalQuery = issuance
-  ? [
-      finalQuestion,
-      `${issuance.type} ${issuance.number}-${issuance.year}`,
-      `${issuance.type} ${String(issuance.number).padStart(2, "0")}-${issuance.year}`,
-      `${issuance.type} ${String(issuance.number).padStart(3, "0")}-${issuance.year}`,
-      `${issuance.type} No. ${issuance.number}-${issuance.year}`,
-      `${issuance.type} No. ${String(issuance.number).padStart(2, "0")}-${issuance.year}`,
-      `${issuance.type} No. ${String(issuance.number).padStart(3, "0")}-${issuance.year}`,
-      `Revenue Regulation ${issuance.number}-${issuance.year}`,
-      `Revenue Regulation No. ${issuance.number}-${issuance.year}`,
-      `Revenue Memorandum Circular ${issuance.number}-${issuance.year}`,
-      `Revenue Memorandum Order ${issuance.number}-${issuance.year}`
-    ].join(" ")
-  : finalQuestion;
+      ? [
+          finalQuestion,
+          `${issuance.type} ${issuance.number}-${issuance.year}`,
+          `${issuance.type} ${String(issuance.number).padStart(2, "0")}-${issuance.year}`,
+          `${issuance.type} ${String(issuance.number).padStart(3, "0")}-${issuance.year}`,
+          `${issuance.type} No. ${issuance.number}-${issuance.year}`,
+          `${issuance.type} No. ${String(issuance.number).padStart(2, "0")}-${issuance.year}`,
+          `${issuance.type} No. ${String(issuance.number).padStart(3, "0")}-${issuance.year}`,
+          `Revenue Regulation ${issuance.number}-${issuance.year}`,
+          `Revenue Regulation No. ${issuance.number}-${issuance.year}`,
+          `Revenue Memorandum Circular ${issuance.number}-${issuance.year}`,
+          `Revenue Memorandum Order ${issuance.number}-${issuance.year}`
+        ].join(" ")
+      : finalQuestion;
 
     if (hookConfig.requires_retrieval !== false) {
-  /* ================= ISSUANCE-FIRST RETRIEVAL ================= */
-
-  if (issuance) {
-    try {
-      const allDocs = await smartSearch(retrievalQuery, 50);
-
-      const exactDocs = (allDocs || []).filter((doc) =>
-        isExactIssuanceMatch(doc, issuance)
-      );
-
-      if (exactDocs.length > 0) {
-        relevantDocs = rankDocsByAuthority(exactDocs);
+      if (issuance) {
+        try {
+          const allDocs = await smartSearch(retrievalQuery, 50);
+          const exactDocs = (allDocs || []).filter((doc) =>
+            isExactIssuanceMatch(doc, issuance)
+          );
+          relevantDocs = exactDocs.length > 0 ? rankDocsByAuthority(exactDocs) : [];
+        } catch (error) {
+          console.error("Issuance-first retrieval failed:", error.message);
+          relevantDocs = [];
+        }
       } else {
-        relevantDocs = [];
+        try {
+          relevantDocs = await smartSearch(retrievalQuery, 24);
+        } catch (error) {
+          console.error("Smart search failed:", error.message);
+
+          try {
+            relevantDocs = await searchSimilar(retrievalQuery, 24);
+          } catch (fallbackError) {
+            console.error("Fallback search failed:", fallbackError.message);
+            relevantDocs = [];
+          }
+        }
       }
-    } catch (error) {
-      console.error("Issuance-first retrieval failed:", error.message);
-      relevantDocs = [];
-    }
-  } else {
-    try {
-      relevantDocs = await smartSearch(retrievalQuery, 24);
-    } catch (error) {
-      console.error("Smart search failed:", error.message);
 
-      try {
-        relevantDocs = await searchSimilar(retrievalQuery, 24);
-      } catch (fallbackError) {
-        console.error("Fallback search failed:", fallbackError.message);
-      }
-    }
-  }
-
-  relevantDocs = rankDocsByAuthority(relevantDocs || []);
-  relevantDocs = filterDocsByQuestionType(relevantDocs, questionType);
-
-      /* ================= SOURCE FINDER MODE ================= */
+      relevantDocs = rankDocsByAuthority(relevantDocs || []);
+      relevantDocs = filterDocsByQuestionType(relevantDocs, questionType);
 
       if (hookConfig.mode === "SOURCE_FINDER") {
         const sourceDocs = relevantDocs.slice(0, 10);
         const sourcesUsed = uniqueSources(sourceDocs);
 
-        if (!sourcesUsed || sourcesUsed.length === 0) {
+        if (!sourcesUsed.length) {
           return res.json({
             success: true,
             engine: "TINA Dynamic Hook Engine",
@@ -2033,15 +2045,15 @@ Answer the practice question, then TINA will check your answer.
         const answerText =
           "Source Finder Results\n\n" +
           sourcesUsed
-            .map((s, i) => {
-              return [
+            .map((s, i) =>
+              [
                 `${i + 1}. ${s.title}`,
                 `Authority: Tier ${s.authorityTier} - ${s.authorityLabel}`,
                 `View: ${s.driveViewUrl || "No link"}`,
                 `Download: ${s.driveDownloadUrl || "No link"}`,
                 `Preview: ${s.preview || ""}`
-              ].join("\n");
-            })
+              ].join("\n")
+            )
             .join("\n\n");
 
         return res.json({
@@ -2061,9 +2073,8 @@ Answer the practice question, then TINA will check your answer.
         });
       }
     }
-    /* ================= NO SOURCE HANDLING ================= */
 
-    if (!relevantDocs || relevantDocs.length === 0) {
+    if (!relevantDocs.length) {
       let answerText;
 
       if (issuance || questionType === "issuance") {
@@ -2099,14 +2110,12 @@ Answer the practice question, then TINA will check your answer.
       });
     }
 
-    /* ================= EXACT ISSUANCE CHECK ================= */
-
     if (issuance) {
       const exactDocs = relevantDocs.filter((doc) =>
         isExactIssuanceMatch(doc, issuance)
       );
 
-      if (exactDocs.length === 0) {
+      if (!exactDocs.length) {
         const answerText = `No indexed document found for ${issuance.type} No. ${issuance.number}-${issuance.year}. TINA will not generate a speculative answer. Please upload or re-index the exact issuance.`;
 
         await saveAllMemory(answerText);
@@ -2134,8 +2143,6 @@ Answer the practice question, then TINA will check your answer.
       relevantDocs = rankDocsByAuthority(exactDocs);
     }
 
-    /* ================= CONFIDENCE FILTER ================= */
-
     const MIN_SCORE = issuance ? 0 : 0.38;
 
     let highConfidenceDocs = relevantDocs.filter((doc) => {
@@ -2146,7 +2153,7 @@ Answer the practice question, then TINA will check your answer.
 
     highConfidenceDocs = rankDocsByAuthority(highConfidenceDocs).slice(0, 10);
 
-    if (highConfidenceDocs.length === 0) {
+    if (!highConfidenceDocs.length) {
       let answerText;
 
       if (issuance || questionType === "issuance") {
@@ -2182,8 +2189,6 @@ Answer the practice question, then TINA will check your answer.
       });
     }
 
-    /* ================= CONTEXT BUILDING ================= */
-
     const sourcesUsed = uniqueSources(highConfidenceDocs);
     const topTier = Math.min(...sourcesUsed.map((s) => s.authorityTier || 99));
 
@@ -2210,8 +2215,6 @@ ${doc.text}
         `.trim();
       })
       .join("\n\n---\n\n");
-
-    /* ================= SYSTEM PROMPT ================= */
 
     const systemPrompt = `
 You are TINA, a Philippine tax research, compliance, education, and audit-risk assistant for Bong Corpuz & Co. CPAs.
@@ -2330,7 +2333,6 @@ Answer strictly using only the CONTEXT. Apply the source hierarchy and the activ
     });
 
     let answerText = response.choices?.[0]?.message?.content?.trim() || "";
-
     const sourceNames = sourcesUsed
       .map((s) => s.path || s.originalSource || s.source)
       .filter(Boolean);
@@ -2371,7 +2373,7 @@ Answer strictly using only the CONTEXT. Apply the source hierarchy and the activ
     });
   } catch (error) {
     console.error("Ask error:", error);
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       error: error.message || "Ask failed"
     });
@@ -2392,7 +2394,7 @@ app.use((req, res) => {
 
 /* ================= START ================= */
 
-const PORT = process.env.PORT || 5000;
+const PORT = Number(process.env.PORT || 5000);
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 TINA Big 4 Backend running on port ${PORT}`);
