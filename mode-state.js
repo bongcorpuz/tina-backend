@@ -107,14 +107,18 @@ export function isExplicitModeHook(text = "") {
   const firstWord = String(text || "").trim().split(/\s+/)[0]?.toLowerCase();
 
   return [
-    "/ask",
-    "/tax",
-    "/review",
-    "/quiz",
-    "/feedback",
-    "/source",
-    "/exit",
-    "/reset",
-    "/mode"
-  ].includes(firstWord);
-}
+  "/ask",
+  "/tax",
+  "/review",
+  "/quiz",
+  "/diagnostic",
+  "/progress",
+  "/feedback",
+  "/source",
+  "/bye",
+  "/exit",
+  "/stop",
+  "/quit",
+  "/reset",
+  "/mode"
+].includes(firstWord);
