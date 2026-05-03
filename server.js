@@ -1455,7 +1455,19 @@ async function updatePendingQuizAnswerDirect({ pendingQuiz, cleanAnswer, isCorre
   };
 }
 
-const quizAnswerCandidate = extractQuizAnswer(rawQuestion);
+const pendingQuizForValidation = await fetchLatestPendingQuizDirect(userId);
+
+if (pendingQuizForValidation && !quizAnswerCandidate) {
+  return res.json({
+    success: false,
+    engine: "TINA Continuous Adaptive Quiz Engine",
+    mode: "INVALID_QUIZ_ANSWER",
+    answer: "Please answer using letter A, B, C, or D only. Example: A",
+    sourceStatus: "INVALID_QUIZ_ANSWER",
+    sourcesUsed: [],
+    vectorMatches: 0
+  });
+}
 
 if (quizAnswerCandidate) {
   const pendingQuiz = await fetchLatestPendingQuizDirect(userId);
