@@ -85,6 +85,8 @@ function normalizeForMatch(value = "") {
     .trim();
 }
 
+/* ================= ISSUANCE MATCHING ================= */
+
 function padNumber(num = "") {
   const n = String(num || "").replace(/^0+/, "");
   return {
@@ -131,12 +133,7 @@ function buildPossibleSourceKeywords(query = "") {
 
   if (rrMatch) {
     keywords.push(
-      ...buildIssuanceKeywords(
-        "rr",
-        rrMatch[1],
-        rrMatch[2],
-        "revenue regulation"
-      )
+      ...buildIssuanceKeywords("rr", rrMatch[1], rrMatch[2], "revenue regulation")
     );
   }
 
@@ -146,12 +143,7 @@ function buildPossibleSourceKeywords(query = "") {
 
   if (rmcMatch) {
     keywords.push(
-      ...buildIssuanceKeywords(
-        "rmc",
-        rmcMatch[1],
-        rmcMatch[2],
-        "revenue memorandum circular"
-      )
+      ...buildIssuanceKeywords("rmc", rmcMatch[1], rmcMatch[2], "revenue memorandum circular")
     );
   }
 
@@ -161,12 +153,7 @@ function buildPossibleSourceKeywords(query = "") {
 
   if (rmoMatch) {
     keywords.push(
-      ...buildIssuanceKeywords(
-        "rmo",
-        rmoMatch[1],
-        rmoMatch[2],
-        "revenue memorandum order"
-      )
+      ...buildIssuanceKeywords("rmo", rmoMatch[1], rmoMatch[2], "revenue memorandum order")
     );
   }
 
@@ -181,6 +168,193 @@ function buildPossibleSourceKeywords(query = "") {
   }
 
   return [...new Set(keywords.map(normalizeForMatch).filter(Boolean))];
+}
+
+/* ================= STRICT QUIZ TOPIC FILTERING ================= */
+
+function getTopicKeywords(topic = "") {
+  const q = String(topic || "").toLowerCase();
+
+  if (q.includes("vat") || q.includes("value-added")) {
+    return [
+      "vat",
+      "value-added tax",
+      "value added tax",
+      "output vat",
+      "input vat",
+      "zero-rated",
+      "zero rated",
+      "vat-exempt",
+      "vat exempt",
+      "exempt transaction",
+      "vatable",
+      "2550",
+      "2550q",
+      "12%"
+    ];
+  }
+
+  if (q.includes("withholding") || q.includes("ewt") || q.includes("cwt")) {
+    return [
+      "withholding tax",
+      "expanded withholding",
+      "creditable withholding",
+      "ewt",
+      "cwt",
+      "withholding agent",
+      "bir form 2307",
+      "2307",
+      "1601"
+    ];
+  }
+
+  if (q.includes("income") || q.includes("rcit") || q.includes("mcit") || q.includes("nolco")) {
+    return [
+      "income tax",
+      "rcit",
+      "mcit",
+      "nolco",
+      "regular corporate income tax",
+      "minimum corporate income tax",
+      "taxable income",
+      "gross income",
+      "deductions"
+    ];
+  }
+
+  if (q.includes("percentage")) {
+    return ["percentage tax", "2551", "non-vat", "non vat", "gross receipts", "3%"];
+  }
+
+  if (q.includes("final")) {
+    return ["final tax", "final withholding", "passive income", "interest income", "royalties", "dividends"];
+  }
+
+  if (q.includes("capital") || q.includes("cgt")) {
+    return ["capital gains tax", "cgt", "capital asset", "sale of shares", "real property", "6%"];
+  }
+
+  if (q.includes("donor")) {
+    return ["donor", "donor's tax", "donors tax", "gift", "donation"];
+  }
+
+  if (q.includes("estate")) {
+    return ["estate tax", "estate", "decedent", "gross estate", "net estate"];
+  }
+
+  if (q.includes("dst") || q.includes("documentary")) {
+    return ["documentary stamp tax", "dst", "documentary stamp", "stamp tax"];
+  }
+
+  if (q.includes("remed") || q.includes("assessment") || q.includes("protest")) {
+    return [
+      "tax remedies",
+      "assessment",
+      "protest",
+      "fan",
+      "final assessment notice",
+      "prescription",
+      "refund",
+      "claim for refund",
+      "cta"
+    ];
+  }
+
+  if (q.includes("admin") || q.includes("filing") || q.includes("registration")) {
+    return [
+      "tax administration",
+      "registration",
+      "filing",
+      "return",
+      "deadline",
+      "penalty",
+      "surcharge",
+      "interest",
+      "compromise"
+    ];
+  }
+
+  if (q.includes("local") || q.includes("lgu")) {
+    return ["local taxation", "local tax", "business tax", "lgu", "mayor's permit", "local business tax"];
+  }
+
+  return [String(topic || "").trim()].filter(Boolean);
+}
+
+function getTopicNegativeKeywords(topic = "") {
+  const q = String(topic || "").toLowerCase();
+
+  if (q.includes("vat") || q.includes("value-added")) {
+    return [
+      "estate tax",
+      "donor",
+      "donor's tax",
+      "documentary stamp",
+      "dst",
+      "capital gains",
+      "local business tax",
+      "expanded withholding",
+      "withholding tax",
+      "ewt",
+      "cwt"
+    ];
+  }
+
+  if (q.includes("withholding") || q.includes("ewt") || q.includes("cwt")) {
+    return [
+      "estate tax",
+      "donor",
+      "documentary stamp",
+      "capital gains",
+      "local business tax"
+    ];
+  }
+
+  if (q.includes("income") || q.includes("rcit") || q.includes("mcit") || q.includes("nolco")) {
+    return [
+      "estate tax",
+      "donor's tax",
+      "documentary stamp tax",
+      "local business tax"
+    ];
+  }
+
+  return [];
+}
+
+function scoreQuizRowForTopic(row, topic = "") {
+  const text = `${row.text || ""} ${row.source || ""} ${row.original_source || ""} ${JSON.stringify(row.metadata || {})}`.toLowerCase();
+  const path = String(row.metadata?.path || row.original_source || row.source || "").toLowerCase();
+
+  const keywords = getTopicKeywords(topic);
+  const negatives = getTopicNegativeKeywords(topic);
+
+  let score = 0;
+
+  for (const kw of keywords) {
+    const k = kw.toLowerCase();
+    if (!k) continue;
+
+    if (text.includes(k)) score += 2;
+    if (path.includes(k)) score += 4;
+  }
+
+  for (const bad of negatives) {
+    const b = bad.toLowerCase();
+    if (!b) continue;
+
+    if (text.includes(b)) score -= 2;
+    if (path.includes(b)) score -= 5;
+  }
+
+  if (path.includes("01_tax_code")) score += 3;
+  if (path.includes("02_revenue_regulations")) score += 4;
+  if (path.includes("03_rmc")) score += 3;
+  if (path.includes("04_rmo")) score += 2;
+  if (path.includes("05_bir_rulings")) score += 1;
+  if (path.includes("07_cpa_notes")) score += 1;
+
+  return score;
 }
 
 /* ================= HELPERS ================= */
@@ -358,7 +532,7 @@ export async function smartSearch(query, topK = 8) {
   return await searchSimilar(query, topK);
 }
 
-/* ================= QUIZ SOURCE RETRIEVAL ================= */
+/* ================= STRICT QUIZ SOURCE RETRIEVAL ================= */
 
 export async function getQuizSourceChunks({
   topic = "",
@@ -368,24 +542,33 @@ export async function getQuizSourceChunks({
 } = {}) {
   const cleanTopic = String(topic || "").trim();
   const normalizedTopic = normalizeForMatch(cleanTopic);
+  const topicKeywords = getTopicKeywords(cleanTopic);
 
   let query = supabase
     .from(VECTOR_TABLE)
     .select("id, source, original_source, chunk_index, text, metadata")
     .not("text", "is", null)
-    .limit(limit * 8);
+    .limit(Math.max(limit * 20, 80));
 
   if (cleanTopic) {
-    query = query.or(
-      [
-        `text.ilike.%${cleanTopic}%`,
-        `source.ilike.%${normalizedTopic}%`,
-        `original_source.ilike.%${cleanTopic}%`,
-        `metadata->>originalSource.ilike.%${cleanTopic}%`,
-        `metadata->>originalFileName.ilike.%${cleanTopic}%`,
-        `metadata->>path.ilike.%${cleanTopic}%`
-      ].join(",")
-    );
+    const filters = [
+      `text.ilike.%${cleanTopic}%`,
+      `source.ilike.%${normalizedTopic}%`,
+      `original_source.ilike.%${cleanTopic}%`,
+      `metadata->>originalSource.ilike.%${cleanTopic}%`,
+      `metadata->>originalFileName.ilike.%${cleanTopic}%`,
+      `metadata->>path.ilike.%${cleanTopic}%`
+    ];
+
+    for (const kw of topicKeywords.slice(0, 8)) {
+      const nk = normalizeForMatch(kw);
+      filters.push(`text.ilike.%${kw}%`);
+      filters.push(`source.ilike.%${nk}%`);
+      filters.push(`original_source.ilike.%${kw}%`);
+      filters.push(`metadata->>path.ilike.%${kw}%`);
+    }
+
+    query = query.or(filters.join(","));
   }
 
   const { data, error } = await query;
@@ -407,7 +590,22 @@ export async function getQuizSourceChunks({
     return String(row.text || "").trim().length >= 300;
   });
 
-  rows = rows.sort(() => Math.random() - 0.5).slice(0, limit);
+  rows = rows
+    .map((row) => ({
+      ...row,
+      quizTopicScore: scoreQuizRowForTopic(row, cleanTopic)
+    }))
+    .filter((row) => {
+      if (!cleanTopic) return true;
+      return row.quizTopicScore >= 2;
+    })
+    .sort((a, b) => {
+      if (b.quizTopicScore !== a.quizTopicScore) {
+        return b.quizTopicScore - a.quizTopicScore;
+      }
+      return Math.random() - 0.5;
+    })
+    .slice(0, limit);
 
   return rows.map((row) => ({
     id: row.id,
@@ -420,8 +618,12 @@ export async function getQuizSourceChunks({
     fileId: row.metadata?.fileId || null,
     chunkIndex: row.chunk_index,
     text: row.text,
-    metadata: row.metadata || {},
-    score: 1
+    metadata: {
+      ...(row.metadata || {}),
+      quizTopic: cleanTopic,
+      quizTopicScore: row.quizTopicScore
+    },
+    score: row.quizTopicScore
   }));
 }
 
