@@ -1414,6 +1414,48 @@ async function fetchLatestPendingQuizDirect(userId) {
   return fallback.data || null;
 }
 
+async function updatePendingQuizAnswerDirect({ pendingQuiz, cleanAnswer, isCorrect }) {
+  let { data, error } = await supabase
+    .from("tina_learning_attempts")
+    .update({
+      user_answer: cleanAnswer,
+      is_correct: isCorrect,
+      answered_at: new Date().toISOString()
+    })
+    .eq("id", pendingQuiz.id)
+    .select()
+    .maybeSingle();
+
+  if (!error && data) {
+    return { data, error: null };
+  }
+
+  console.warn("Primary quiz update failed. Trying fallback.", {
+    error: error?.message || null,
+    pendingQuizId: pendingQuiz.id
+  });
+
+  const fallback = await supabase
+    .from("tina_learning_attempts")
+    .update({
+      user_answer: cleanAnswer,
+      is_correct: isCorrect,
+      answered_at: new Date().toISOString()
+    })
+    .eq("id", String(pendingQuiz.id))
+    .select()
+    .maybeSingle();
+
+  if (!fallback.error && fallback.data) {
+    return { data: fallback.data, error: null };
+  }
+
+  return {
+    data: null,
+    error: fallback.error || error || new Error("No quiz row was updated.")
+  };
+}
+
 const quizAnswerCandidate = extractQuizAnswer(rawQuestion);
 
 if (quizAnswerCandidate) {
@@ -1439,25 +1481,31 @@ if (quizAnswerCandidate) {
 
   const isCorrect = cleanAnswer === correctAnswer;
 
-  const { data: answeredQuiz, error: answerError } = await supabase
-    .from("tina_learning_attempts")
-    .update({
-      user_answer: cleanAnswer,
-      is_correct: isCorrect,
-      answered_at: new Date().toISOString()
-    })
-    .eq("id", pendingQuiz.id)
-    .select()
-    .single();
+  const { data: answeredQuiz, error: answerError } =
+    await updatePendingQuizAnswerDirect({
+      pendingQuiz,
+      cleanAnswer,
+      isCorrect
+    });
 
-  if (answerError) {
-    console.error("Direct quiz answer update error:", answerError.message);
+  if (answerError || !answeredQuiz) {
+    console.error("Final quiz answer update error:", {
+      message: answerError?.message || "No quiz row was updated.",
+      pendingQuizId: pendingQuiz.id,
+      pendingQuizUserId: pendingQuiz.user_id
+    });
 
     return res.json({
       success: false,
       engine: "TINA Continuous Adaptive Quiz Engine",
       mode: "QUIZ_UPDATE_FAILED",
-      answer: "TINA found the pending quiz but failed to save your answer.",
+      answer:
+        "TINA found the pending quiz but failed to save your answer. Please check Supabase RLS/update policy or the id column type.",
+      debug: {
+        pendingQuizId: pendingQuiz.id,
+        pendingQuizUserId: pendingQuiz.user_id,
+        error: answerError?.message || "No quiz row was updated."
+      },
       sourceStatus: "QUIZ_UPDATE_FAILED",
       sourcesUsed: [],
       vectorMatches: 0
