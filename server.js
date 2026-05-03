@@ -1339,6 +1339,24 @@ app.post("/ask", authenticate, async (req, res) => {
       });
     }
 
+  /* ================= MODE EXIT COMMANDS ================= */
+
+const exitCommands = ["/bye", "/exit", "/stop", "/quit", "/reset"];
+
+if (exitCommands.includes(rawQuestion.toLowerCase())) {
+  await clearModeState(supabase, userId, conversationId || null);
+
+  return res.json({
+    success: true,
+    engine: "TINA Mode State System",
+    mode: "MODE_CLEARED",
+    answer: "Quiz/review mode ended. You are now back in normal /ask mode.",
+    sourceStatus: "MODE_STATE_CLEARED",
+    sourcesUsed: [],
+    vectorMatches: 0
+  });
+}  
+
 /* ================= FORCE QUIZ ANSWER CHECKER (SMART PARSER) ================= */
 
 function extractQuizAnswer(input = "") {
