@@ -22,12 +22,19 @@ const TAX_TOPICS = [
   "Local Taxation"
 ];
 
+/* ================= TOPIC DETECTION ================= */
+
 export function detectQuizTopic(text = "") {
   const q = String(text || "").toLowerCase();
 
   if (q.includes("vat") || q.includes("value-added")) return "VAT";
   if (q.includes("withholding") || q.includes("ewt") || q.includes("cwt")) return "Withholding Tax";
-  if (q.includes("income tax") || q.includes("rcit") || q.includes("mcit") || q.includes("nolco")) return "Income Tax";
+  if (
+    q.includes("income tax") ||
+    q.includes("rcit") ||
+    q.includes("mcit") ||
+    q.includes("nolco")
+  ) return "Income Tax";
   if (q.includes("percentage tax")) return "Percentage Tax";
   if (q.includes("final tax")) return "Final Tax";
   if (q.includes("capital gains") || q.includes("cgt")) return "Capital Gains Tax";
@@ -35,6 +42,7 @@ export function detectQuizTopic(text = "") {
   if (q.includes("estate")) return "Estate Tax";
   if (q.includes("dst") || q.includes("documentary stamp")) return "Documentary Stamp Tax";
   if (q.includes("remedy") || q.includes("assessment") || q.includes("protest")) return "Tax Remedies";
+  if (q.includes("admin") || q.includes("registration") || q.includes("filing")) return "Tax Administration";
   if (q.includes("local tax") || q.includes("business tax")) return "Local Taxation";
 
   return null;
@@ -44,7 +52,13 @@ export function pickRandomTaxTopic() {
   return TAX_TOPICS[Math.floor(Math.random() * TAX_TOPICS.length)];
 }
 
-export async function getAdaptiveQuizProfile(supabase, userId, requestedTopic = "") {
+/* ================= ADAPTIVE PROFILE ================= */
+
+export async function getAdaptiveQuizProfile(
+  supabase,
+  userId,
+  requestedTopic = ""
+) {
   const profile = await getOrCreateLearnerProfile(supabase, userId);
 
   const topic =
@@ -54,7 +68,7 @@ export async function getAdaptiveQuizProfile(supabase, userId, requestedTopic = 
     pickRandomTaxTopic();
 
   const mastery = await getTopicMastery(supabase, userId, topic, "");
-  const difficulty = mastery?.difficulty_level || 1;
+  const difficulty = Number(mastery?.difficulty_level || 1);
 
   return {
     profile,
@@ -64,7 +78,146 @@ export async function getAdaptiveQuizProfile(supabase, userId, requestedTopic = 
   };
 }
 
-export function buildAdaptiveQuizPrompt({ topic, difficulty, profile }) {
+/* ================= RECENT QUIZ HISTORY ================= */
+
+export async function getRecentQuizHistory(
+  supabase,
+  {
+    userId,
+    topic = "",
+    limit = 20
+  }
+) {
+  if (!userId) return [];
+
+  let query = supabase
+    .from("tina_learning_attempts")
+    .select("id, topic, subtopic, question, source_path, chunk_index, created_at")
+    .eq("user_id", String(userId))
+    .order("created_at", { ascending: false })
+    .limit(limit);
+
+  if (topic) {
+    query = query.eq("topic", topic);
+  }
+
+  const { data, error } = await query;
+
+  if (error) {
+    console.error("getRecentQuizHistory error:", error.message);
+    return [];
+  }
+
+  return data || [];
+}
+
+export function buildQuizExclusionFromHistory(history = []) {
+  const excludeSourcePaths = [];
+  const excludeChunkIds = [];
+
+  for (const item of history || []) {
+    if (item.source_path && !excludeSourcePaths.includes(item.source_path)) {
+      excludeSourcePaths.push(item.source_path);
+    }
+
+    if (item.id && !excludeChunkIds.includes(String(item.id))) {
+      excludeChunkIds.push(String(item.id));
+    }
+  }
+
+  return {
+    excludeSourcePaths,
+    excludeChunkIds
+  };
+}
+
+/* ================= SOURCE HELPERS ================= */
+
+function normalizeSourceChunk(sourceChunk = null) {
+  if (!sourceChunk) return null;
+
+  return {
+    source_file_id: sourceChunk.fileId || sourceChunk.metadata?.fileId || null,
+    source_title:
+      sourceChunk.sourceTitle ||
+      sourceChunk.metadata?.originalFileName ||
+      sourceChunk.originalSource ||
+      sourceChunk.source ||
+      null,
+    source_path:
+      sourceChunk.sourcePath ||
+      sourceChunk.metadata?.path ||
+      sourceChunk.originalSource ||
+      sourceChunk.source ||
+      null,
+    chunk_index:
+      typeof sourceChunk.chunkIndex === "number"
+        ? sourceChunk.chunkIndex
+        : sourceChunk.chunk_index ?? null,
+    source_excerpt: String(sourceChunk.text || "").slice(0, 1500),
+    source_metadata: sourceChunk.metadata || {}
+  };
+}
+
+function buildSourceContext(sourceChunks = []) {
+  if (!Array.isArray(sourceChunks) || sourceChunks.length === 0) {
+    return "";
+  }
+
+  return sourceChunks
+    .map((chunk, index) => {
+      return `
+SOURCE ${index + 1}
+Title: ${chunk.sourceTitle || chunk.originalSource || chunk.source || "Untitled"}
+Path: ${chunk.sourcePath || chunk.metadata?.path || "No path"}
+Chunk Index: ${chunk.chunkIndex ?? chunk.chunk_index ?? "N/A"}
+Text:
+${String(chunk.text || "").slice(0, 2500)}
+      `.trim();
+    })
+    .join("\n\n---\n\n");
+}
+
+function pickPrimarySourceChunk(sourceChunks = []) {
+  if (!Array.isArray(sourceChunks) || sourceChunks.length === 0) return null;
+  return sourceChunks[0] || null;
+}
+
+/* ================= PROMPTS ================= */
+
+export function buildAdaptiveQuizPrompt({
+  topic,
+  difficulty,
+  profile,
+  sourceChunks = [],
+  recentQuestions = []
+}) {
+  const sourceContext = buildSourceContext(sourceChunks);
+
+  const recentQuestionText = (recentQuestions || [])
+    .map((q, i) => `${i + 1}. ${q.question}`)
+    .join("\n");
+
+  const sourceInstruction = sourceContext
+    ? `
+SOURCE CONTEXT:
+${sourceContext}
+
+STRICT SOURCE RULES:
+- Create the question primarily from the SOURCE CONTEXT.
+- Do not invent legal bases not found in the SOURCE CONTEXT.
+- If the source is incomplete, ask a conceptual question only from what is shown.
+- The explanation must be supported by the SOURCE CONTEXT.
+`
+    : `
+SOURCE CONTEXT:
+No indexed source chunk was provided.
+
+GENERAL FALLBACK RULES:
+- Create a general Philippine taxation CPALE-style question.
+- Do not cite a specific RR, RMC, RMO, case, date, section, form, rate, or deadline unless certain.
+`;
+
   return `
 You are TINA, an adaptive CPALE Taxation examiner.
 
@@ -86,11 +239,17 @@ Difficulty guide:
 4 = exception or CPALE trap
 5 = mixed CPALE-style scenario
 
+${sourceInstruction}
+
+Recent questions already asked:
+${recentQuestionText || "None"}
+
 Rules:
 - Philippine taxation only.
 - Ask only ONE question.
 - Give exactly four choices: A, B, C, D.
-- Provide the correct answer internally in the JSON.
+- Avoid repeating recent questions.
+- Provide the correct answer internally in JSON.
 - Provide a concise explanation.
 - Provide a CPALE trap.
 - Do not include markdown.
@@ -115,6 +274,8 @@ Return valid JSON only using this structure:
 }
 `.trim();
 }
+
+/* ================= JSON PARSER ================= */
 
 export function safeParseQuizJson(text = "") {
   try {
@@ -156,13 +317,16 @@ export function safeParseQuizJson(text = "") {
   }
 }
 
+/* ================= STORE QUIZ ================= */
+
 export async function storeUnansweredQuiz(
   supabase,
   {
     userId,
     sessionId = null,
     quiz,
-    mode = "ADAPTIVE_QUIZ"
+    mode = "ADAPTIVE_QUIZ",
+    sourceChunks = []
   }
 ) {
   if (!userId || !quiz) {
@@ -191,6 +355,8 @@ export async function storeUnansweredQuiz(
     }
   }
 
+  const primarySource = normalizeSourceChunk(pickPrimarySourceChunk(sourceChunks));
+
   const payload = {
     user_id: String(userId),
     session_id: sessionId || null,
@@ -205,10 +371,20 @@ export async function storeUnansweredQuiz(
       .toUpperCase(),
     user_answer: null,
     is_correct: null,
-    explanation: String(quiz.explanation || "")
+    explanation: String(quiz.explanation || ""),
+    source_file_id: primarySource?.source_file_id || null,
+    source_title: primarySource?.source_title || null,
+    source_path: primarySource?.source_path || null,
+    chunk_index: primarySource?.chunk_index ?? null,
+    source_excerpt: primarySource?.source_excerpt || null,
+    source_metadata: primarySource?.source_metadata || {}
   };
 
-  if (!payload.question || !payload.correct_answer || !["A", "B", "C", "D"].includes(payload.correct_answer)) {
+  if (
+    !payload.question ||
+    !payload.correct_answer ||
+    !["A", "B", "C", "D"].includes(payload.correct_answer)
+  ) {
     console.error("STORE QUIZ FAILED: invalid payload", payload);
     return {
       saveFailed: true,
@@ -216,7 +392,12 @@ export async function storeUnansweredQuiz(
     };
   }
 
-  console.log("STORE QUIZ PAYLOAD:", payload);
+  console.log("STORE QUIZ PAYLOAD:", {
+    ...payload,
+    source_excerpt: payload.source_excerpt
+      ? payload.source_excerpt.slice(0, 150)
+      : null
+  });
 
   const { data, error } = await supabase
     .from("tina_learning_attempts")
@@ -243,11 +424,14 @@ export async function storeUnansweredQuiz(
     id: data.id,
     userId: data.user_id,
     topic: data.topic,
-    correctAnswer: data.correct_answer
+    correctAnswer: data.correct_answer,
+    sourceTitle: data.source_title
   });
 
   return data;
 }
+
+/* ================= RETRIEVE PENDING QUIZ ================= */
 
 export async function getLastUnansweredQuiz(supabase, userId) {
   if (!userId) return null;
@@ -268,6 +452,8 @@ export async function getLastUnansweredQuiz(supabase, userId) {
 
   return data || null;
 }
+
+/* ================= ANSWER CHECKER ================= */
 
 export async function answerLastQuiz(
   supabase,
@@ -306,7 +492,8 @@ export async function answerLastQuiz(
     .from("tina_learning_attempts")
     .update({
       user_answer: cleanAnswer,
-      is_correct: isCorrect
+      is_correct: isCorrect,
+      answered_at: new Date().toISOString()
     })
     .eq("id", lastQuiz.id)
     .select()
@@ -350,6 +537,11 @@ export async function answerLastQuiz(
     mastery,
     explanation: lastQuiz.explanation,
     topic: lastQuiz.topic,
-    difficulty: lastQuiz.difficulty
+    subtopic: lastQuiz.subtopic || "",
+    difficulty: lastQuiz.difficulty,
+    sourceTitle: lastQuiz.source_title || null,
+    sourcePath: lastQuiz.source_path || null,
+    sourceExcerpt: lastQuiz.source_excerpt || null,
+    sourceMetadata: lastQuiz.source_metadata || null
   };
 }
