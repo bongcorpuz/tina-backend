@@ -35,7 +35,9 @@ import {
 } from "./adaptive-quiz.js";
 
 import {
-  getOrCreateLearnerProfile
+  getOrCreateLearnerProfile,
+  updateLearnerProfileStats,
+  updateTopicMastery
 } from "./learner-profile.js";
 
 import { listDriveFiles, extractTextFromFile } from "./drive-reader.js";
