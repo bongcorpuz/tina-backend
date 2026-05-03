@@ -1364,12 +1364,11 @@ function extractQuizAnswer(input = "") {
 
   if (/^[a-d]$/.test(text)) return text.toUpperCase();
 
-  const patterns = [
-    /answer\s*(is)?\s*([a-d])/i,
-    /i\s*(choose|pick|select)\s*([a-d])/i,
-    /option\s*([a-d])/i,
-    /\b([a-d])\b/i
-  ];
+const patterns = [
+  /^answer\s*(is)?\s*([a-d])$/i,
+  /^i\s*(choose|pick|select)\s*([a-d])$/i,
+  /^option\s*([a-d])$/i
+];
 
   for (const pattern of patterns) {
     const match = text.match(pattern);
