@@ -1458,7 +1458,11 @@ async function updatePendingQuizAnswerDirect({ pendingQuiz, cleanAnswer, isCorre
 const quizAnswerCandidate = extractQuizAnswer(rawQuestion);    
 const pendingQuizForValidation = await fetchLatestPendingQuizDirect(userId);
 
-if (pendingQuizForValidation && !quizAnswerCandidate) {
+if (
+  pendingQuizForValidation &&
+  !quizAnswerCandidate &&
+  !isExplicitModeHook(rawQuestion)
+) {
   return res.json({
     success: false,
     engine: "TINA Continuous Adaptive Quiz Engine",
