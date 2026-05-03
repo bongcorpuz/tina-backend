@@ -1455,6 +1455,7 @@ async function updatePendingQuizAnswerDirect({ pendingQuiz, cleanAnswer, isCorre
   };
 }
 
+const quizAnswerCandidate = extractQuizAnswer(rawQuestion);    
 const pendingQuizForValidation = await fetchLatestPendingQuizDirect(userId);
 
 if (pendingQuizForValidation && !quizAnswerCandidate) {
