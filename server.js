@@ -296,57 +296,6 @@ const shouldFallback =
   supportedClaims.length === 0 ||
   (!retrieval.exactCitation?.matched && topConfidence < 0.25);
 
-
-// ==============================
-// FILE: vector-store.js
-// PATCH 3: make addDocumentToVectorStore preserve hierarchy metadata
-// Replace your addDocumentToVectorStore function body with this pattern
-// only if your current implementation does not already preserve metadata fields.
-// ==============================
-
-  const embedding = await getEmbedding(content);
-
-  const payload = {
-    text: content,
-    source: docSource,
-    embedding,
-    metadata: {
-      ...metadata,
-      path: metadata.path || metadata.fileName || docSource,
-      originalSource: metadata.originalSource || docSource,
-      authorityType: metadata.authorityType || "SECONDARY",
-      authorityLevel: Number(metadata.authorityLevel || 9),
-      authorityScore: Number(metadata.authorityScore || 40),
-      authorityLabel: metadata.authorityLabel || "Secondary / Commentary",
-      normalizedReference: metadata.normalizedReference || null,
-      normalizedAliases: Array.isArray(metadata.normalizedAliases)
-        ? metadata.normalizedAliases
-        : [],
-      recencyDate: metadata.recencyDate || metadata.modifiedTime || null
-    }
-  };
-
-  const { data, error } = await supabase
-    .from("tina_vector_store")
-    .insert(payload)
-    .select()
-    .single();
-
-  if (error) {
-    console.error("addDocumentToVectorStore error:", error.message);
-    return {
-      success: false,
-      error: error.message
-    };
-  }
-
-  return {
-    success: true,
-    data
-  };
-}
-
-
 // ==============================
 // FILE: vector-store.js
 // PATCH 4: if smartSearch/searchSimilar strip metadata, preserve it.
