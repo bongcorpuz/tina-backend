@@ -1,5 +1,9 @@
 // FILE: feedback-learning.js
 
+function normalizeText(value = "") {
+  return String(value || "").trim();
+}
+
 export async function storeFeedbackEntry(
   supabase,
   {
@@ -12,11 +16,11 @@ export async function storeFeedbackEntry(
     userCorrection = ""
   }
 ) {
-  const cleanUserId = String(userId || "").trim();
-  const cleanQuestion = String(originalQuestion || "").trim();
-  const cleanAnswer = String(originalAnswer || "").trim();
-  const cleanFeedbackType = String(feedbackType || "general_feedback").trim();
-  const cleanCorrection = String(userCorrection || "").trim();
+  const cleanUserId = normalizeText(userId);
+  const cleanQuestion = normalizeText(originalQuestion);
+  const cleanAnswer = normalizeText(originalAnswer);
+  const cleanFeedbackType = normalizeText(feedbackType || "general_feedback");
+  const cleanCorrection = normalizeText(userCorrection);
 
   if (!cleanUserId) {
     throw new Error("userId is required");
@@ -65,8 +69,8 @@ export async function listPendingFeedback(supabase) {
 }
 
 export async function approveFeedbackEntry(supabase, feedbackId, reviewer) {
-  const cleanFeedbackId = String(feedbackId || "").trim();
-  const cleanReviewer = String(reviewer || "").trim();
+  const cleanFeedbackId = normalizeText(feedbackId);
+  const cleanReviewer = normalizeText(reviewer);
 
   if (!cleanFeedbackId) {
     throw new Error("feedbackId is required");
@@ -102,9 +106,9 @@ export async function rejectFeedbackEntry(
   reviewer,
   notes = ""
 ) {
-  const cleanFeedbackId = String(feedbackId || "").trim();
-  const cleanReviewer = String(reviewer || "").trim();
-  const cleanNotes = String(notes || "").trim();
+  const cleanFeedbackId = normalizeText(feedbackId);
+  const cleanReviewer = normalizeText(reviewer);
+  const cleanNotes = normalizeText(notes);
 
   if (!cleanFeedbackId) {
     throw new Error("feedbackId is required");
@@ -136,7 +140,7 @@ export async function rejectFeedbackEntry(
 }
 
 export async function applyApprovedFeedbackToKnowledge(supabase, feedbackId) {
-  const cleanFeedbackId = String(feedbackId || "").trim();
+  const cleanFeedbackId = normalizeText(feedbackId);
 
   if (!cleanFeedbackId) {
     throw new Error("feedbackId is required");
@@ -174,7 +178,9 @@ export async function applyApprovedFeedbackToKnowledge(supabase, feedbackId) {
     .single();
 
   if (insertError) {
-    throw new Error(insertError.message || "Failed to create feedback learning action");
+    throw new Error(
+      insertError.message || "Failed to create feedback learning action"
+    );
   }
 
   return {
