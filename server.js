@@ -307,22 +307,44 @@ async function updatePendingQuizAnswerDirect({
   const payload = {
     user_answer: cleanAnswer,
     is_correct: Boolean(isCorrect),
-    answered_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+    answered_at: new Date().toISOString()
   };
+
+  if (pendingQuiz.updated_at !== undefined) {
+    payload.updated_at = new Date().toISOString();
+  }
 
   const { data, error } = await supabase
     .from("tina_learning_attempts")
     .update(payload)
     .eq("id", pendingQuiz.id)
-    .select()
-    .single();
+    .select();
 
   if (error) {
-    console.error("updatePendingQuizAnswerDirect error:", error.message);
+    console.error("updatePendingQuizAnswerDirect error:", error.message, {
+      pendingQuizId: pendingQuiz.id,
+      payload
+    });
+
+    return {
+      data: null,
+      error
+    };
   }
 
-  return { data, error };
+  const updatedRow = Array.isArray(data) ? data[0] || null : data || null;
+
+  if (!updatedRow) {
+    return {
+      data: null,
+      error: new Error("No quiz row was updated.")
+    };
+  }
+
+  return {
+    data: updatedRow,
+    error: null
+  };
 }
 
 /* ================= AUTHORITY ENGINE ================= */
