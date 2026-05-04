@@ -1,6 +1,9 @@
+// FILE: vector-store.js
+
 import OpenAI from "openai";
 import { createClient } from "@supabase/supabase-js";
 import "dotenv/config";
+import { buildAuthorityMetadata } from "./authority-engine.js";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
@@ -8,7 +11,12 @@ const openai = new OpenAI({
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
+  process.env.SUPABASE_SERVICE_ROLE_KEY,
+  {
+    auth: {
+      persistSession: false
+    }
+  }
 );
 
 const EMBEDDING_MODEL =
@@ -357,17 +365,113 @@ function scoreQuizRowForTopic(row, topic = "") {
   return score;
 }
 
+/* ================= AUTHORITY HELPERS ================= */
+
+function buildAuthorityFields(text, source, metadata = {}) {
+  const authority = buildAuthorityMetadata({
+    fileName:
+      metadata.fileName ||
+      metadata.originalFileName ||
+      metadata.originalSource ||
+      source,
+    path: metadata.path || source,
+    text,
+    modifiedTime: metadata.modifiedTime || metadata.recencyDate || null
+  });
+
+  return {
+    authority_type: authority.authorityType,
+    authority_level: authority.authorityLevel,
+    authority_score: authority.authorityScore,
+    authority_label: authority.authorityLabel,
+    normalized_reference: authority.normalizedReference,
+    normalized_aliases: authority.normalizedAliases,
+    recency_date: authority.recencyDate,
+    jurisdiction: metadata.jurisdiction || "PH",
+    source_category: metadata.sourceCategory || null,
+    document_title:
+      metadata.documentTitle ||
+      metadata.originalFileName ||
+      metadata.originalSource ||
+      source,
+    effective_from: metadata.effectiveFrom || null,
+    effective_to: metadata.effectiveTo || null
+  };
+}
+
+function buildStoredMetadata(source, metadata, authorityFields) {
+  return {
+    ...metadata,
+    originalSource: metadata.originalSource || source,
+    originalFileName:
+      metadata.originalFileName ||
+      metadata.fileName ||
+      metadata.originalSource ||
+      source,
+    normalizedSource: metadata.normalizedSource || normalizeSourceName(source),
+    storage: "supabase",
+    authorityType: authorityFields.authority_type,
+    authorityLevel: authorityFields.authority_level,
+    authorityScore: authorityFields.authority_score,
+    authorityLabel: authorityFields.authority_label,
+    normalizedReference: authorityFields.normalized_reference,
+    normalizedAliases: authorityFields.normalized_aliases,
+    recencyDate: authorityFields.recency_date,
+    jurisdiction: authorityFields.jurisdiction,
+    sourceCategory: authorityFields.source_category,
+    documentTitle: authorityFields.document_title,
+    effectiveFrom: authorityFields.effective_from,
+    effectiveTo: authorityFields.effective_to
+  };
+}
+
 /* ================= HELPERS ================= */
 
 function mapRowToResult(row, score = 1) {
+  const metadata = row.metadata || {};
+
   return {
     id: row.id,
     source: row.source,
     originalSource:
-      row.original_source || row.metadata?.originalSource || row.source,
+      row.original_source || metadata.originalSource || row.source,
     text: row.text,
     chunkIndex: row.chunk_index,
-    metadata: row.metadata || {},
+    metadata: {
+      ...metadata,
+      authorityType: row.authority_type || metadata.authorityType || "SECONDARY",
+      authorityLevel: Number(row.authority_level || metadata.authorityLevel || 9),
+      authorityScore: Number(row.authority_score || metadata.authorityScore || 40),
+      authorityLabel:
+        row.authority_label || metadata.authorityLabel || "Secondary / Commentary",
+      normalizedReference:
+        row.normalized_reference || metadata.normalizedReference || null,
+      normalizedAliases: Array.isArray(row.normalized_aliases)
+        ? row.normalized_aliases
+        : Array.isArray(metadata.normalizedAliases)
+          ? metadata.normalizedAliases
+          : [],
+      recencyDate: row.recency_date || metadata.recencyDate || null,
+      jurisdiction: row.jurisdiction || metadata.jurisdiction || "PH",
+      sourceCategory: row.source_category || metadata.sourceCategory || null,
+      documentTitle:
+        row.document_title || metadata.documentTitle || metadata.originalFileName || row.source,
+      effectiveFrom: row.effective_from || metadata.effectiveFrom || null,
+      effectiveTo: row.effective_to || metadata.effectiveTo || null
+    },
+    authorityType: row.authority_type || metadata.authorityType || "SECONDARY",
+    authorityLevel: Number(row.authority_level || metadata.authorityLevel || 9),
+    authorityScore: Number(row.authority_score || metadata.authorityScore || 40),
+    authorityLabel:
+      row.authority_label || metadata.authorityLabel || "Secondary / Commentary",
+    normalizedReference:
+      row.normalized_reference || metadata.normalizedReference || null,
+    normalizedAliases: Array.isArray(row.normalized_aliases)
+      ? row.normalized_aliases
+      : Array.isArray(metadata.normalizedAliases)
+        ? metadata.normalizedAliases
+        : [],
+    recencyDate: row.recency_date || metadata.recencyDate || null,
     score: row.score ?? score
   };
 }
@@ -381,7 +485,8 @@ function buildSourceIlikeFilters(keyword) {
     `metadata->>originalSource.ilike.%${normalizedKeyword}%`,
     `metadata->>originalFileName.ilike.%${normalizedKeyword}%`,
     `metadata->>normalizedSource.ilike.%${normalizedKeyword}%`,
-    `metadata->>path.ilike.%${normalizedKeyword}%`
+    `metadata->>path.ilike.%${normalizedKeyword}%`,
+    `normalized_reference.ilike.%${normalizedKeyword}%`
   ].join(",");
 }
 
@@ -439,19 +544,37 @@ export async function addDocumentToVectorStore(text, source, metadata = {}) {
     const chunk = chunks[i];
     const embedding = await embedText(chunk);
 
+    const authorityFields = buildAuthorityFields(chunk, source, {
+      ...metadata,
+      normalizedSource
+    });
+
     rows.push({
       source: normalizedSource,
       original_source: source,
       chunk_index: i,
       text: chunk,
       embedding,
-      metadata: {
-        ...metadata,
-        originalSource: metadata.originalSource || source,
-        originalFileName: metadata.originalFileName || source,
-        normalizedSource,
-        storage: "supabase"
-      }
+      metadata: buildStoredMetadata(
+        source,
+        {
+          ...metadata,
+          normalizedSource
+        },
+        authorityFields
+      ),
+      authority_type: authorityFields.authority_type,
+      authority_level: authorityFields.authority_level,
+      authority_score: authorityFields.authority_score,
+      authority_label: authorityFields.authority_label,
+      normalized_reference: authorityFields.normalized_reference,
+      normalized_aliases: authorityFields.normalized_aliases,
+      recency_date: authorityFields.recency_date,
+      jurisdiction: authorityFields.jurisdiction,
+      source_category: authorityFields.source_category,
+      document_title: authorityFields.document_title,
+      effective_from: authorityFields.effective_from,
+      effective_to: authorityFields.effective_to
     });
   }
 
@@ -504,7 +627,28 @@ export async function searchBySourceName(keyword, topK = 8) {
 
   const { data, error } = await supabase
     .from(VECTOR_TABLE)
-    .select("id, source, original_source, chunk_index, text, metadata")
+    .select(
+      [
+        "id",
+        "source",
+        "original_source",
+        "chunk_index",
+        "text",
+        "metadata",
+        "authority_type",
+        "authority_level",
+        "authority_score",
+        "authority_label",
+        "normalized_reference",
+        "normalized_aliases",
+        "recency_date",
+        "jurisdiction",
+        "source_category",
+        "document_title",
+        "effective_from",
+        "effective_to"
+      ].join(",")
+    )
     .or(buildSourceIlikeFilters(normalizedKeyword))
     .order("chunk_index", { ascending: true })
     .limit(topK);
@@ -546,7 +690,28 @@ export async function getQuizSourceChunks({
 
   let query = supabase
     .from(VECTOR_TABLE)
-    .select("id, source, original_source, chunk_index, text, metadata")
+    .select(
+      [
+        "id",
+        "source",
+        "original_source",
+        "chunk_index",
+        "text",
+        "metadata",
+        "authority_type",
+        "authority_level",
+        "authority_score",
+        "authority_label",
+        "normalized_reference",
+        "normalized_aliases",
+        "recency_date",
+        "jurisdiction",
+        "source_category",
+        "document_title",
+        "effective_from",
+        "effective_to"
+      ].join(",")
+    )
     .not("text", "is", null)
     .limit(Math.max(limit * 20, 80));
 
@@ -613,16 +778,46 @@ export async function getQuizSourceChunks({
     originalSource:
       row.original_source || row.metadata?.originalSource || row.source,
     sourceTitle:
-      row.metadata?.originalFileName || row.original_source || row.source,
+      row.document_title ||
+      row.metadata?.documentTitle ||
+      row.metadata?.originalFileName ||
+      row.original_source ||
+      row.source,
     sourcePath: row.metadata?.path || row.original_source || row.source,
     fileId: row.metadata?.fileId || null,
     chunkIndex: row.chunk_index,
     text: row.text,
     metadata: {
       ...(row.metadata || {}),
+      authorityType: row.authority_type || row.metadata?.authorityType || "SECONDARY",
+      authorityLevel: Number(row.authority_level || row.metadata?.authorityLevel || 9),
+      authorityScore: Number(row.authority_score || row.metadata?.authorityScore || 40),
+      authorityLabel:
+        row.authority_label || row.metadata?.authorityLabel || "Secondary / Commentary",
+      normalizedReference:
+        row.normalized_reference || row.metadata?.normalizedReference || null,
+      normalizedAliases: Array.isArray(row.normalized_aliases)
+        ? row.normalized_aliases
+        : Array.isArray(row.metadata?.normalizedAliases)
+          ? row.metadata.normalizedAliases
+          : [],
+      recencyDate: row.recency_date || row.metadata?.recencyDate || null,
       quizTopic: cleanTopic,
       quizTopicScore: row.quizTopicScore
     },
+    authorityType: row.authority_type || row.metadata?.authorityType || "SECONDARY",
+    authorityLevel: Number(row.authority_level || row.metadata?.authorityLevel || 9),
+    authorityScore: Number(row.authority_score || row.metadata?.authorityScore || 40),
+    authorityLabel:
+      row.authority_label || row.metadata?.authorityLabel || "Secondary / Commentary",
+    normalizedReference:
+      row.normalized_reference || row.metadata?.normalizedReference || null,
+    normalizedAliases: Array.isArray(row.normalized_aliases)
+      ? row.normalized_aliases
+      : Array.isArray(row.metadata?.normalizedAliases)
+        ? row.metadata.normalizedAliases
+        : [],
+    recencyDate: row.recency_date || row.metadata?.recencyDate || null,
     score: row.quizTopicScore
   }));
 }
