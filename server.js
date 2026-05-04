@@ -1767,7 +1767,7 @@ app.get("/vector-stats", allowAuthenticatedOrIndexSecret, async (req, res) => {
 
 app.post("/ask", authenticate, async (req, res) => {
   try {
-    const { question, conversationId } = req.body;
+    const { question, conversationId, correction, feedbackType } = req.body;
     const userId = getUserId(req);
 
     if (!userId) {
