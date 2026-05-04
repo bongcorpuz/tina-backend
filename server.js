@@ -1859,9 +1859,11 @@ app.post("/ask", authenticate, async (req, res) => {
       });
     }
 
-    const exitCommands = ["/bye", "/exit", "/stop", "/quit", "/reset"];
+ const existingMode = await getModeState(supabase, userId, conversationId || null);
 
-  if (exitCommands.includes(rawQuestion.toLowerCase())) {
+const exitCommands = ["/bye", "/exit", "/stop", "/quit", "/reset"];
+
+if (exitCommands.includes(rawQuestion.toLowerCase())) {
   const activeHook = existingMode?.active_hook || "/ask";
 
   await clearModeState(supabase, userId, conversationId || null);
@@ -1891,9 +1893,11 @@ app.post("/ask", authenticate, async (req, res) => {
   });
 }
 
-   const existingMode = await getModeState(supabase, userId, conversationId || null);
+const pendingQuiz = await fetchLatestPendingQuizDirect(
+  userId,
+  conversationId || null
+);
 
-const pendingQuiz = await fetchLatestPendingQuizDirect(userId, conversationId || null);
 const directQuizAnswer = extractQuizAnswer(rawQuestion);
 const normalizedInput = rawQuestion.toLowerCase();
 const allowedExitCommands = ["/bye", "/exit", "/stop", "/quit", "/reset"];
@@ -1940,7 +1944,6 @@ if (pendingQuiz && !directQuizAnswer) {
     });
   }
 }
-
     let effectiveQuestion = rawQuestion;
 
     if (
