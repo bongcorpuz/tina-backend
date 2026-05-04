@@ -116,6 +116,8 @@ const app = express();
 app.use(cors({ origin: "*" }));
 app.use(express.json({ limit: "25mb" }));
 
+const reindexController = createBackgroundReindexController();
+
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY,
