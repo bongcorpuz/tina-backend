@@ -228,7 +228,6 @@ function extractTopClaims(answerDraft = "") {
 
 export async function resolveExactCitation(supabase, query) {
   const cleanQuery = safeString(query);
-  const q = lower(cleanQuery);
 
   const patterns = [
     {
@@ -284,11 +283,7 @@ export async function resolveExactCitation(supabase, query) {
   const { data, error } = await supabase
     .from("tina_vector_store")
     .select("*")
-    .or(
-      candidateStrings
-        .map((value) => `source.ilike.%${value}%`)
-        .join(",")
-    )
+    .or(candidateStrings.map((value) => `source.ilike.%${value}%`).join(","))
     .limit(25);
 
   if (error) {
@@ -338,7 +333,6 @@ export async function hybridRetrieve({
   }
 
   const exact = await resolveExactCitation(supabase, cleanQuery);
-
   const exactDocs = exact.documents || [];
 
   let metadataDocs = [];
@@ -403,8 +397,7 @@ export async function hybridRetrieve({
     const vectorScore = safeNumber(doc.score, 0);
     const keywordScore = computeKeywordScore(cleanQuery, textBlob);
     const tier = inferAuthorityTier(doc);
-    const combinedScore =
-      Math.max(vectorScore, keywordScore) * authorityWeight(tier);
+    const combinedScore = Math.max(vectorScore, keywordScore) * authorityWeight(tier);
 
     return {
       ...doc,
@@ -437,11 +430,7 @@ export function normalizeRetrievedEvidence(docs = []) {
 
     return {
       id: buildDocIdentity(doc),
-      vector_chunk_id:
-        doc.id ||
-        doc.chunk_id ||
-        doc.metadata?.chunkId ||
-        null,
+      vector_chunk_id: doc.id || doc.chunk_id || doc.metadata?.chunkId || null,
       topic: classifyEvidenceTopic(doc),
       text: safeString(doc.text),
       source_path: getDocPath(doc),
@@ -556,19 +545,114 @@ export async function synthesizeGroundedAnswer({
   const context = topEvidence
     .map((item, index) => {
       return [
-        `SOURCE ${index + 1}`,
-        `Title: ${item.source_title || "Untitled"}`,
-        `Path: ${item.source_path || "Unknown"}`,
-        `Authority Tier: ${item.authority_tier} - ${item.authority_label}`,
-        `Section: ${item.section_label || "N/A"}`,
-        `Score: ${item.score}`,
-        `Text:`,
+        `SOURCE ${index + 1}: ${item.source_title || "Untitled Source"}`,
+        `PATH: ${item.source_path || "Unknown"}`,
+        `AUTHORITY TIER: ${item.authority_tier} - ${item.authority_label}`,
+        `SECTION: ${item.section_label || "N/A"}`,
+        `SCORE: ${item.score}`,
+        `TEXT:`,
         item.text || ""
       ].join("\n");
     })
     .join("\n\n---\n\n");
 
-  const conflictText = conflicts.length
+  const systemPrompt = `
+You are TINA, a Philippine tax research, compliance, education, and audit-risk assistant for Bong Corpuz & Co. CPAs.
+
+ACTIVE HOOK MODE:
+${hookConfig?.mode || "ASK"}
+
+You must follow the ACTIVE HOOK MODE behavior strictly.
+
+CORE BEHAVIOR:
+- precise
+- source-grounded
+- conservative
+- audit-defensible
+- no hallucinations
+- no unsupported legal conclusions
+
+SOURCE AUTHORITY HIERARCHY:
+Tier 1: NIRC / Tax Code
+Tier 2: Revenue Regulations
+Tier 3: Revenue Memorandum Circulars
+Tier 4: Revenue Memorandum Orders
+Tier 5: BIR Rulings
+Tier 6: Court Cases
+Tier 7: CPA Notes / Internal Notes
+
+STRICT RULES:
+1. Answer ONLY from the provided CONTEXT when indexed context is available.
+2. Do NOT use general knowledge, assumptions, or memory to add legal bases not shown in CONTEXT.
+3. Do NOT invent RR, RMC, RMO, BIR rulings, dates, sections, rates, forms, thresholds, deadlines, case doctrines, or citations.
+4. If a specific issuance is asked and the exact issuance is not in CONTEXT, say: "No indexed document found for the requested issuance."
+5. Prefer higher authority sources over lower authority sources.
+6. If sources conflict, identify the conflict and prefer the higher authority source.
+7. Use court cases as interpretative authority, not as substitute for statute/regulation unless the question asks about case doctrine.
+8. Use CPA notes only as internal guidance, not primary authority.
+9. Always cite exact filename/path shown in CONTEXT.
+10. Do not mention ChatGPT.
+11. Do not overstate certainty. State limitations clearly.
+12. For computations, show formula only if the formula is found or reasonably derived from the context. If not, state that computation support is insufficient.
+13. For audit-risk questions, separate legal basis, exposure, evidence needed, and recommended next steps.
+
+MODE-SPECIFIC OUTPUT RULES:
+
+ASK MODE:
+Use:
+Short Answer
+Explanation
+Practical Note
+Confidence
+Sources Used
+
+TAX_EXPERT MODE:
+Use:
+Executive Answer
+Issue
+Applicable Source / Legal Basis
+Analysis
+Practical Compliance / Audit Implication
+Recommended Action
+Limitations
+Confidence
+Sources Used
+
+SOURCE_FINDER MODE:
+Use:
+Best Matching Source
+Document / Regulation / Case Title
+Relevant Section or Keyword
+Short Summary
+Confidence
+Sources Used
+`.trim();
+
+  const userPrompt = `
+Conversation Memory:
+${memoryContext || "No prior conversation."}
+
+Hook:
+${hookConfig?.hook_code || "/ask"}
+
+Mode:
+${hookConfig?.mode || "ASK"}
+
+Topic Data:
+${JSON.stringify(topicData || {})}
+
+Original User Question:
+${originalQuestion}
+
+Clean Question:
+${cleanQuestion}
+
+Question Type:
+${questionType}
+
+Conflicts:
+${
+  conflicts.length
     ? conflicts
         .map((item, index) =>
           [
@@ -581,43 +665,14 @@ export async function synthesizeGroundedAnswer({
           ].join("\n")
         )
         .join("\n\n")
-    : "No explicit conflicts detected.";
+    : "No explicit conflicts detected."
+}
 
-  const systemPrompt = `
-You are TINA, a Philippine tax reasoning engine.
+CONTEXT:
+${context}
 
-Rules:
-1. Answer only from the supplied evidence.
-2. Prefer higher-authority evidence.
-3. If evidence conflicts, say so clearly and prefer the higher-authority source.
-4. Do not invent unsupported claims.
-5. Keep the answer grounded, conservative, and audit-defensible.
-6. End with "Confidence" and "Sources Used".
-
-Active mode: ${safeString(hookConfig?.mode || "ASK")}
-Question type: ${safeString(questionType || "general")}
-`.trim();
-
-  const userPrompt = `
-Original Question:
-${safeString(originalQuestion)}
-
-Clean Question:
-${safeString(cleanQuestion)}
-
-Topic Data:
-${JSON.stringify(topicData || {})}
-
-Conversation Memory:
-${safeString(memoryContext) || "No prior conversation."}
-
-Evidence:
-${context || "No evidence provided."}
-
-Conflicts:
-${conflictText}
-
-Write a grounded answer using only the evidence above.
+Instruction:
+Answer strictly using only the CONTEXT. Apply the source hierarchy and the active hook mode.
 `.trim();
 
   const response = await openai.chat.completions.create({
