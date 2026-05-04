@@ -1863,7 +1863,6 @@ app.post("/ask", authenticate, async (req, res) => {
     const hookConfig = await loadTaxHookConfig(effectiveQuestion);
     const cleanQuestion = hookConfig.cleanQuestion;
     const originalQuestion = hookConfig.originalQuestion;
-    const hookInstruction = buildHookInstruction(hookConfig);
 
     async function saveSimpleHookMemory(answerText) {
       if (hookConfig.requires_memory === false) return;
@@ -1922,21 +1921,43 @@ app.post("/ask", authenticate, async (req, res) => {
     }
 
     if (hookConfig.mode === "FEEDBACK") {
+      const cleanCorrection = String(correction || "").trim();
+      const cleanFeedbackType = String(feedbackType || "general_feedback").trim();
+
+      if (!cleanCorrection) {
+        return res.status(400).json({
+          success: false,
+          error: "Feedback correction is required.",
+          hint: "Send { question, conversationId, correction, feedbackType }"
+        });
+      }
+
+      const feedbackResult = await storeFeedbackEntry(supabase, {
+        userId,
+        sessionId: conversationId || null,
+        originalQuestion,
+        originalAnswer: "",
+        feedbackType: cleanFeedbackType,
+        userCorrection: cleanCorrection
+      });
+
       const answerText =
-        "Feedback received. Thank you. TINA will use this correction to improve future answers.";
+        "Feedback received and stored for review. Thank you. TINA will only learn from this after validation.";
 
       await saveSimpleHookMemory(answerText);
 
       return res.json({
         success: true,
-        engine: "TINA Dynamic Hook Engine",
+        engine: "TINA Feedback Learning Engine",
         hook: hookConfig.hook_code,
         mode: hookConfig.mode,
         hookTitle: hookConfig.title,
         answer: answerText,
-        answerMode: "feedback_captured",
+        answerMode: "feedback_stored_for_review",
         confidence: "N/A",
-        sourceStatus: "FEEDBACK_CAPTURED",
+        sourceStatus: "FEEDBACK_STORED",
+        feedbackId: feedbackResult?.id || null,
+        feedbackType: cleanFeedbackType,
         originalQuestion,
         resolvedQuestion: cleanQuestion,
         sourcesUsed: [],
@@ -2104,216 +2125,204 @@ app.post("/ask", authenticate, async (req, res) => {
       });
     }
 
-    let relevantDocs = [];
+    const retrieval = await hybridRetrieve({
+      supabase,
+      vectorStore: { smartSearch, searchSimilar },
+      query: finalQuestion,
+      questionType,
+      taxType: topicData.taxType || "",
+      topK: 24
+    });
 
-    const retrievalQuery = issuance
-      ? [
-          finalQuestion,
-          `${issuance.type} ${issuance.number}-${issuance.year}`,
-          `${issuance.type} ${String(issuance.number).padStart(2, "0")}-${issuance.year}`,
-          `${issuance.type} ${String(issuance.number).padStart(3, "0")}-${issuance.year}`,
-          `${issuance.type} No. ${issuance.number}-${issuance.year}`,
-          `${issuance.type} No. ${String(issuance.number).padStart(2, "0")}-${issuance.year}`,
-          `${issuance.type} No. ${String(issuance.number).padStart(3, "0")}-${issuance.year}`,
-          `Revenue Regulation ${issuance.number}-${issuance.year}`,
-          `Revenue Regulation No. ${issuance.number}-${issuance.year}`,
-          `Revenue Memorandum Circular ${issuance.number}-${issuance.year}`,
-          `Revenue Memorandum Order ${issuance.number}-${issuance.year}`
-        ].join(" ")
-      : finalQuestion;
+    let evidence = normalizeRetrievedEvidence(retrieval.results || []);
+    evidence = rankEvidenceByAuthority(evidence);
 
-    if (hookConfig.requires_retrieval !== false) {
-      if (issuance) {
-        try {
-          const allDocs = await smartSearch(retrievalQuery, 50);
-          const exactDocs = (allDocs || []).filter((doc) =>
-            isExactIssuanceMatch(doc, issuance)
-          );
-          relevantDocs = exactDocs.length > 0 ? rankDocsByAuthority(exactDocs) : [];
-        } catch (error) {
-          console.error("Issuance-first retrieval failed:", error.message);
-          relevantDocs = [];
-        }
-      } else {
-        try {
-          relevantDocs = await smartSearch(retrievalQuery, 24);
-        } catch (error) {
-          console.error("Smart search failed:", error.message);
+    const conflicts = detectEvidenceConflicts(evidence);
+    const topEvidence = evidence.slice(0, 10);
 
-          try {
-            relevantDocs = await searchSimilar(retrievalQuery, 24);
-          } catch (fallbackError) {
-            console.error("Fallback search failed:", fallbackError.message);
-            relevantDocs = [];
-          }
-        }
-      }
+    const fallbackReason =
+      !topEvidence.length
+        ? "No indexed Google Drive/Supabase vector source matched the question."
+        : "Indexed sources were found but evidence strength was insufficient.";
 
-      relevantDocs = rankDocsByAuthority(relevantDocs || []);
-      relevantDocs = filterDocsByQuestionType(relevantDocs, questionType);
-
-      if (hookConfig.mode === "SOURCE_FINDER") {
-        const sourceDocs = relevantDocs.slice(0, 10);
-        const sourcesUsed = uniqueSources(sourceDocs);
-
-        if (!sourcesUsed.length) {
-          return res.json({
-            success: true,
-            engine: "TINA Dynamic Hook Engine",
-            hook: hookConfig.hook_code,
-            mode: hookConfig.mode,
-            hookTitle: hookConfig.title,
-            answer: "No indexed source found for the requested query.",
-            answerMode: "source_finder_no_match",
-            confidence: "LOW",
-            sourceStatus: "NO_INDEXED_SOURCE",
+    const preliminaryAnswer =
+      topEvidence.length > 0
+        ? await synthesizeGroundedAnswer({
+            openai,
+            hookConfig,
             originalQuestion,
-            resolvedQuestion: finalQuestion,
-            sourcesUsed: [],
-            vectorMatches: 0
+            cleanQuestion,
+            topicData,
+            questionType,
+            evidence: topEvidence,
+            conflicts,
+            memoryContext
+          })
+        : "";
+
+    const evidenceMap = buildClaimEvidenceMap(preliminaryAnswer, topEvidence);
+
+    const supportedClaims = evidenceMap.filter(
+      (item) => item.support_status === "supported" || item.support_status === "partial"
+    );
+
+    const topConfidence =
+      topEvidence.length > 0
+        ? Math.max(...topEvidence.map((item) => Number(item.score || 0)))
+        : 0;
+
+    const shouldFallback =
+      topEvidence.length === 0 ||
+      supportedClaims.length === 0 ||
+      (!issuance && topConfidence < 0.25);
+
+    let reasoningRun = null;
+
+    try {
+      reasoningRun = await saveReasoningRun(supabase, {
+        userId,
+        sessionId: conversationId || null,
+        question: originalQuestion,
+        normalizedQuestion: finalQuestion,
+        questionType,
+        mode: hookConfig.mode,
+        retrievalStatus: topEvidence.length ? "evidence_found" : "no_evidence",
+        reasoningStatus: shouldFallback ? "fallback" : "grounded_answer",
+        fallbackUsed: shouldFallback,
+        topConfidence: Number(topConfidence.toFixed(4)),
+        answerSummary: preliminaryAnswer.slice(0, 1000)
+      });
+
+      if (reasoningRun?.id) {
+        await saveReasoningEvidence(supabase, {
+          reasoningRunId: reasoningRun.id,
+          evidence: evidenceMap
+        });
+
+        if (conflicts.length) {
+          await saveReasoningConflicts(supabase, {
+            reasoningRunId: reasoningRun.id,
+            conflicts
           });
         }
-
-        const answerText =
-          "Source Finder Results\n\n" +
-          sourcesUsed
-            .map((s, i) =>
-              [
-                `${i + 1}. ${s.title}`,
-                `Authority: Tier ${s.authorityTier} - ${s.authorityLabel}`,
-                `View: ${s.driveViewUrl || "No link"}`,
-                `Download: ${s.driveDownloadUrl || "No link"}`,
-                `Preview: ${s.preview || ""}`
-              ].join("\n")
-            )
-            .join("\n\n");
-
-        return res.json({
-          success: true,
-          engine: "TINA Dynamic Hook Engine",
-          hook: hookConfig.hook_code,
-          mode: hookConfig.mode,
-          hookTitle: hookConfig.title,
-          answer: answerText,
-          answerMode: "source_finder_results",
-          confidence: "SOURCE_LIST",
-          sourceStatus: "INDEXED_SOURCE_LISTED",
-          originalQuestion,
-          resolvedQuestion: finalQuestion,
-          sourcesUsed,
-          vectorMatches: sourceDocs.length
-        });
       }
+    } catch (reasoningError) {
+      console.error("Reasoning persistence error:", reasoningError.message);
     }
 
-    if (!relevantDocs.length) {
-      const answerText =
-        issuance || questionType === "issuance"
-          ? "No indexed document found for the requested issuance. TINA will not generate a speculative answer. Please upload or re-index the exact RR/RMC/RMO."
-          : await generateGeneralFallbackAnswer(
-              finalQuestion,
-              memoryContext,
-              "No indexed Google Drive/Supabase vector source matched the question."
-            );
+    if (hookConfig.mode === "SOURCE_FINDER") {
+      const sourcesUsed = topEvidence.map((item) => ({
+        title: item.source_title,
+        source: item.source_title,
+        originalSource: item.source_title,
+        path: item.source_path,
+        fileId: null,
+        driveViewUrl: null,
+        driveDownloadUrl: null,
+        score: item.score,
+        adjustedScore: item.score,
+        authorityTier: item.authority_tier,
+        authorityLabel: item.authority_label,
+        preview: item.text ? item.text.substring(0, 300) : ""
+      }));
 
-      await saveAllMemory(answerText);
-
-      return res.json({
-        success: true,
-        engine: "TINA Dynamic Hook Engine",
-        hook: hookConfig.hook_code,
-        mode: hookConfig.mode,
-        hookTitle: hookConfig.title,
-        answer: answerText,
-        answerMode: issuance ? "no_exact_issuance_match" : "general_fallback_no_context",
-        confidence: issuance ? "LOW" : "GENERAL",
-        sourceStatus: "NO_INDEXED_SOURCE",
-        questionType,
-        topicData,
-        originalQuestion,
-        resolvedQuestion: finalQuestion,
-        sourcesUsed: [],
-        vectorMatches: 0,
-        detectedIssuance: issuance || null
-      });
-    }
-
-    if (issuance) {
-      const exactDocs = relevantDocs.filter((doc) =>
-        isExactIssuanceMatch(doc, issuance)
-      );
-
-      if (!exactDocs.length) {
-        const answerText = `No indexed document found for ${issuance.type} No. ${issuance.number}-${issuance.year}. TINA will not generate a speculative answer. Please upload or re-index the exact issuance.`;
-
-        await saveAllMemory(answerText);
-
+      if (!sourcesUsed.length) {
         return res.json({
           success: true,
-          engine: "TINA Dynamic Hook Engine",
+          engine: "TINA Reasoning Engine",
           hook: hookConfig.hook_code,
           mode: hookConfig.mode,
           hookTitle: hookConfig.title,
-          answer: answerText,
-          answerMode: "no_exact_issuance_match",
+          answer: "No indexed source found for the requested query.",
+          answerMode: "source_finder_no_match",
           confidence: "LOW",
-          sourceStatus: "NO_EXACT_ISSUANCE_MATCH",
-          questionType,
-          topicData,
+          sourceStatus: "NO_INDEXED_SOURCE",
           originalQuestion,
           resolvedQuestion: finalQuestion,
           sourcesUsed: [],
-          vectorMatches: relevantDocs.length,
-          detectedIssuance: issuance
+          vectorMatches: 0
         });
       }
 
-      relevantDocs = rankDocsByAuthority(exactDocs);
+      const answerText =
+        "Source Finder Results\n\n" +
+        sourcesUsed
+          .map((s, i) =>
+            [
+              `${i + 1}. ${s.title}`,
+              `Authority: Tier ${s.authorityTier} - ${s.authorityLabel}`,
+              `Preview: ${s.preview || ""}`
+            ].join("\n")
+          )
+          .join("\n\n");
+
+      return res.json({
+        success: true,
+        engine: "TINA Reasoning Engine",
+        hook: hookConfig.hook_code,
+        mode: hookConfig.mode,
+        hookTitle: hookConfig.title,
+        answer: answerText,
+        answerMode: "source_finder_results",
+        confidence: "SOURCE_LIST",
+        sourceStatus: "INDEXED_SOURCE_LISTED",
+        originalQuestion,
+        resolvedQuestion: finalQuestion,
+        sourcesUsed,
+        vectorMatches: sourcesUsed.length
+      });
     }
 
-    const MIN_SCORE = issuance ? 0 : 0.38;
-
-    let highConfidenceDocs = relevantDocs.filter((doc) => {
-      const score = Number(doc.score);
-      if (issuance) return true;
-      return !Number.isNaN(score) && score >= MIN_SCORE;
-    });
-
-    highConfidenceDocs = rankDocsByAuthority(highConfidenceDocs).slice(0, 10);
-
-    if (!highConfidenceDocs.length) {
+    if (shouldFallback) {
       const answerText =
         issuance || questionType === "issuance"
-          ? "Insufficient supporting data found in indexed sources. TINA will not generate an answer to avoid incorrect interpretation."
+          ? "No indexed document found or insufficient verified evidence for the requested issuance. TINA will not generate a speculative answer."
           : await generateGeneralFallbackAnswer(
               finalQuestion,
               memoryContext,
-              "Indexed sources were found but similarity confidence was low."
+              fallbackReason
             );
 
       await saveAllMemory(answerText);
 
       return res.json({
         success: true,
-        engine: "TINA Dynamic Hook Engine",
+        engine: "TINA Reasoning Engine",
         hook: hookConfig.hook_code,
         mode: hookConfig.mode,
         hookTitle: hookConfig.title,
         answer: answerText,
-        answerMode: issuance ? "low_confidence" : "general_fallback_low_confidence",
+        answerMode: issuance ? "no_exact_issuance_match" : "general_fallback",
         confidence: issuance ? "LOW" : "GENERAL",
-        sourceStatus: issuance ? "LOW_CONFIDENCE_EXACT_QUERY" : "LOW_CONFIDENCE_GENERAL_QUERY",
+        sourceStatus: "FALLBACK_USED",
         questionType,
         topicData,
         originalQuestion,
         resolvedQuestion: finalQuestion,
         sourcesUsed: [],
-        vectorMatches: relevantDocs.length,
-        detectedIssuance: issuance || null
+        vectorMatches: topEvidence.length,
+        detectedIssuance: issuance || null,
+        reasoningRunId: reasoningRun?.id || null
       });
     }
 
-    const sourcesUsed = uniqueSources(highConfidenceDocs);
+    let answerText = preliminaryAnswer || "No verified answer found in the indexed source.";
+
+    const sourcesUsed = uniqueSources(
+      topEvidence.map((item) => ({
+        source: item.source_title,
+        originalSource: item.source_title,
+        path: item.source_path,
+        text: item.text,
+        score: item.score,
+        adjustedScore: item.score,
+        sourceTier: {
+          tier: item.authority_tier,
+          label: item.authority_label
+        }
+      }))
+    );
+
     const topTier = Math.min(...sourcesUsed.map((s) => s.authorityTier || 99));
 
     let confidence = "MEDIUM";
@@ -2323,177 +2332,43 @@ app.post("/ask", authenticate, async (req, res) => {
     else if (topTier <= 7) confidence = "LIMITED";
     else confidence = "LOW";
 
-    const context = highConfidenceDocs
-      .map((doc, index) => {
-        const tier = getSourceTier(doc);
-
-        return `
-SOURCE ${index + 1}: ${doc.source}
-ORIGINAL SOURCE: ${getDocOriginalName(doc)}
-PATH: ${getDocPath(doc)}
-AUTHORITY TIER: ${tier.tier} - ${tier.label}
-VECTOR SCORE: ${doc.score ?? "Not shown"}
-ADJUSTED SCORE: ${doc.adjustedScore ?? "Not shown"}
-TEXT:
-${doc.text}
-        `.trim();
-      })
-      .join("\n\n---\n\n");
-
-    const systemPrompt = `
-You are TINA, a Philippine tax research, compliance, education, and audit-risk assistant for Bong Corpuz & Co. CPAs.
-
-ACTIVE HOOK MODE:
-${hookInstruction}
-
-You must follow the ACTIVE HOOK MODE behavior strictly.
-
-CORE BEHAVIOR:
-- precise
-- source-grounded
-- conservative
-- audit-defensible
-- no hallucinations
-- no unsupported legal conclusions
-
-SOURCE AUTHORITY HIERARCHY:
-Tier 1: NIRC / Tax Code
-Tier 2: Revenue Regulations
-Tier 3: Revenue Memorandum Circulars
-Tier 4: Revenue Memorandum Orders
-Tier 5: BIR Rulings
-Tier 6: Court Cases
-Tier 7: CPA Notes / Internal Notes
-
-STRICT RULES:
-1. Answer ONLY from the provided CONTEXT when indexed context is available.
-2. Do NOT use general knowledge, assumptions, or memory to add legal bases not shown in CONTEXT.
-3. Do NOT invent RR, RMC, RMO, BIR rulings, dates, sections, rates, forms, thresholds, deadlines, case doctrines, or citations.
-4. If a specific issuance is asked and the exact issuance is not in CONTEXT, say: "No indexed document found for the requested issuance."
-5. Prefer higher authority sources over lower authority sources.
-6. If sources conflict, identify the conflict and prefer the higher authority source.
-7. Use court cases as interpretative authority, not as substitute for statute/regulation unless the question asks about case doctrine.
-8. Use CPA notes only as internal guidance, not primary authority.
-9. Always cite exact filename/path shown in CONTEXT.
-10. Do not mention ChatGPT.
-11. Do not overstate certainty. State limitations clearly.
-12. For computations, show formula only if the formula is found or reasonably derived from the context. If not, state that computation support is insufficient.
-13. For audit-risk questions, separate legal basis, exposure, evidence needed, and recommended next steps.
-
-MODE-SPECIFIC OUTPUT RULES:
-
-ASK MODE:
-Use:
-Short Answer
-Explanation
-Practical Note
-Confidence
-Sources Used
-
-TAX_EXPERT MODE:
-Use:
-Executive Answer
-Issue
-Applicable Source / Legal Basis
-Analysis
-Practical Compliance / Audit Implication
-Recommended Action
-Limitations
-Confidence
-Sources Used
-
-SOURCE_FINDER MODE:
-Use:
-Best Matching Source
-Document / Regulation / Case Title
-Relevant Section or Keyword
-Short Summary
-Confidence
-Sources Used
-`.trim();
-
-    const userPrompt = `
-Conversation Memory:
-${memoryContext}
-
-Hook:
-${hookConfig.hook_code}
-
-Mode:
-${hookConfig.mode}
-
-Topic Data:
-${JSON.stringify(topicData)}
-
-Original User Question:
-${originalQuestion}
-
-Clean Question:
-${cleanQuestion}
-
-Resolved Question Used for Search:
-${finalQuestion}
-
-Question Type:
-${questionType}
-
-Detected Issuance:
-${issuance ? JSON.stringify(issuance) : "None"}
-
-CONTEXT:
-${context}
-
-Instruction:
-Answer strictly using only the CONTEXT. Apply the source hierarchy and the active hook mode.
-`.trim();
-
-    const response = await openai.chat.completions.create({
-      model: process.env.OPENAI_MODEL || "gpt-4o-mini",
-      temperature: 0,
-      messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: userPrompt }
-      ]
-    });
-
-    let answerText = response.choices?.[0]?.message?.content?.trim() || "";
-    const sourceNames = sourcesUsed
-      .map((s) => s.path || s.originalSource || s.source)
-      .filter(Boolean);
-
-    if (!answerText) {
-      answerText = "No verified answer found in the indexed source.";
-    }
-
     if (!answerText.toLowerCase().includes("sources used:")) {
-      answerText += `\n\nSources Used:\n${sourceNames.map((s) => `- ${s}`).join("\n")}`;
+      answerText += `\n\nSources Used:\n${sourcesUsed
+        .map((s) => `- ${s.path || s.originalSource || s.source}`)
+        .join("\n")}`;
     }
 
     if (!answerText.toLowerCase().includes("confidence:")) {
       answerText += `\n\nConfidence:\n${confidence}`;
     }
 
+    if (conflicts.length && !answerText.toLowerCase().includes("conflict")) {
+      answerText += `\n\nConflict Note:\nPotential source conflict detected. TINA preferred the higher-authority evidence where applicable.`;
+    }
+
     await saveAllMemory(answerText);
 
     return res.json({
       success: true,
-      engine: "TINA Dynamic Hook Engine",
+      engine: "TINA Reasoning Engine",
       hook: hookConfig.hook_code,
       mode: hookConfig.mode,
       hookTitle: hookConfig.title,
       answer: answerText,
       answerMode: issuance
-        ? `exact_issuance_${hookConfig.mode.toLowerCase()}_rag`
-        : `${hookConfig.mode.toLowerCase()}_authority_ranked_rag`,
+        ? `exact_issuance_${hookConfig.mode.toLowerCase()}_reasoned`
+        : `${hookConfig.mode.toLowerCase()}_reasoned_answer`,
       confidence,
-      sourceStatus: "INDEXED_SOURCE_USED",
+      sourceStatus: "INDEXED_REASONED_SOURCE_USED",
       questionType,
       topicData,
       originalQuestion,
       resolvedQuestion: finalQuestion,
       sourcesUsed,
-      vectorMatches: highConfidenceDocs.length,
-      detectedIssuance: issuance || null
+      vectorMatches: topEvidence.length,
+      detectedIssuance: issuance || null,
+      reasoningRunId: reasoningRun?.id || null,
+      conflictCount: conflicts.length
     });
   } catch (error) {
     console.error("Ask error:", error);
@@ -2503,6 +2378,7 @@ Answer strictly using only the CONTEXT. Apply the source hierarchy and the activ
     });
   }
 });
+
 
 /* ================= 404 ================= */
 
