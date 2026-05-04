@@ -1806,6 +1806,29 @@ app.get("/vector-stats", allowAuthenticatedOrIndexSecret, async (req, res) => {
   }
 });
 
+async function clearPendingQuizAttempts(userId, conversationId = null) {
+  if (!userId) return;
+
+  let query = supabase
+    .from("tina_learning_attempts")
+    .update({
+      updated_at: new Date().toISOString()
+    })
+    .eq("user_id", userId)
+    .is("user_answer", null);
+
+  if (conversationId) {
+    query = query.eq("session_id", conversationId);
+  }
+
+  const { error } = await query;
+
+  if (error) {
+    console.error("clearPendingQuizAttempts error:", error.message);
+  }
+}
+
+
 /* ================= ASK ROUTE ================= */
 
 app.post("/ask", authenticate, async (req, res) => {
