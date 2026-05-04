@@ -1845,41 +1845,39 @@ app.post("/ask", authenticate, async (req, res) => {
       });
     }
 
-    const existingMode = await getModeState(supabase, userId, conversationId || null);
+   const existingMode = await getModeState(supabase, userId, conversationId || null);
 
-    const isAssessmentModeActive =
-      existingMode?.active_hook === "/quiz" ||
-      existingMode?.active_hook === "/review" ||
-      existingMode?.active_hook === "/diagnostic" ||
-      isAssessmentMode(existingMode?.active_mode);
+const pendingQuiz = await fetchLatestPendingQuizDirect(userId, conversationId || null);
+const directQuizAnswer = extractQuizAnswer(rawQuestion);
+const normalizedInput = rawQuestion.toLowerCase();
+const allowedExitCommands = ["/bye", "/exit", "/stop", "/quit", "/reset"];
 
-    const pendingQuiz = await fetchLatestPendingQuizDirect(userId, conversationId || null);
-    const directQuizAnswer = extractQuizAnswer(rawQuestion);
-    const directCommand = isModeCommand(rawQuestion);
+if (pendingQuiz && directQuizAnswer) {
+  const loopResult = await continueAssessmentLoop({
+    userId,
+    conversationId: conversationId || null,
+    incomingAnswer: rawQuestion
+  });
 
-    if (pendingQuiz && directQuizAnswer) {
-      const loopResult = await continueAssessmentLoop({
-        userId,
-        conversationId: conversationId || null,
-        incomingAnswer: rawQuestion
-      });
+  if (loopResult.handled) {
+    return res.json(loopResult.response);
+  }
+}
 
-      if (loopResult.handled) {
-        return res.json(loopResult.response);
-      }
-    }
-
-   if (pendingQuiz && !directQuizAnswer) {
-  const normalizedInput = rawQuestion.toLowerCase();
-  const allowedExitCommands = ["/bye", "/exit", "/stop", "/quit", "/reset"];
-
+if (pendingQuiz && !directQuizAnswer) {
   if (!allowedExitCommands.includes(normalizedInput)) {
+    const lockedMode =
+      existingMode?.active_hook === "/review"
+        ? "review"
+        : existingMode?.active_hook === "/diagnostic"
+          ? "diagnostic"
+          : "quiz";
+
     return res.json({
       success: false,
       engine: "TINA Continuous Learning Engine",
       mode: "QUIZ_MODE_LOCKED",
-      answer:
-        "You are still in active quiz mode. Please answer using A, B, C, or D only. Type /bye or /exit to leave quiz mode.",
+      answer: `You are still in active ${lockedMode} mode. Please answer using A, B, C, or D only. Type /bye or /exit to leave this mode.`,
       sourceStatus: "QUIZ_MODE_LOCKED",
       sourcesUsed: [],
       vectorMatches: 0
