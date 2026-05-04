@@ -1,34 +1,24 @@
-import { createClient } from "@supabase/supabase-js";
+// FILE: memory-hooks.js
 
-if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-  throw new Error(
-    "Missing Supabase environment variables: SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY"
-  );
+function normalizeText(value = "") {
+  return String(value || "").trim();
 }
-
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY,
-  {
-    auth: {
-      persistSession: false
-    }
-  }
-);
 
 /* =========================================================
    GET LAST TOPIC STATE
 ========================================================= */
 
-export async function getLastTopicState(userId, sessionId) {
-  if (!sessionId) return null;
+export async function getLastTopicState(supabase, userId, sessionId) {
+  if (!supabase || !sessionId) return null;
 
   let query = supabase
     .from("tina_topic_state")
     .select("*")
     .eq("session_id", sessionId);
 
-  if (userId) query = query.eq("user_id", userId);
+  if (userId) {
+    query = query.eq("user_id", userId);
+  }
 
   const { data, error } = await query.maybeSingle();
 
@@ -44,16 +34,19 @@ export async function getLastTopicState(userId, sessionId) {
    SAVE / UPDATE TOPIC STATE
 ========================================================= */
 
-export async function saveTopicState({
-  userId = null,
-  sessionId,
-  topic = "general",
-  subject = "general",
-  taxType = "general",
-  question = "",
-  answer = ""
-}) {
-  if (!sessionId) return null;
+export async function saveTopicState(
+  supabase,
+  {
+    userId = null,
+    sessionId,
+    topic = "general",
+    subject = "general",
+    taxType = "general",
+    question = "",
+    answer = ""
+  }
+) {
+  if (!supabase || !sessionId) return null;
 
   const payload = {
     user_id: userId || null,
@@ -77,24 +70,27 @@ export async function saveTopicState({
     return null;
   }
 
-  return data;
+  return data || null;
 }
 
 /* =========================================================
    SAVE CONVERSATION MEMORY
 ========================================================= */
 
-export async function saveConversationMemory({
-  userId = null,
-  sessionId = null,
-  role,
-  content,
-  topic = "general",
-  subject = "general",
-  taxType = "general",
-  source = "chat"
-}) {
-  if (!content || !role) return null;
+export async function saveConversationMemory(
+  supabase,
+  {
+    userId = null,
+    sessionId = null,
+    role,
+    content,
+    topic = "general",
+    subject = "general",
+    taxType = "general",
+    source = "chat"
+  }
+) {
+  if (!supabase || !content || !role) return null;
 
   const { data, error } = await supabase
     .from("tina_conversation_memory")
@@ -116,15 +112,20 @@ export async function saveConversationMemory({
     return null;
   }
 
-  return data;
+  return data || null;
 }
 
 /* =========================================================
    GET RECENT CONVERSATION MEMORY
 ========================================================= */
 
-export async function getRecentConversationMemory(userId, sessionId, limit = 8) {
-  if (!sessionId) return [];
+export async function getRecentConversationMemory(
+  supabase,
+  userId,
+  sessionId,
+  limit = 8
+) {
+  if (!supabase || !sessionId) return [];
 
   let query = supabase
     .from("tina_conversation_memory")
@@ -133,7 +134,9 @@ export async function getRecentConversationMemory(userId, sessionId, limit = 8) 
     .order("created_at", { ascending: false })
     .limit(limit);
 
-  if (userId) query = query.eq("user_id", userId);
+  if (userId) {
+    query = query.eq("user_id", userId);
+  }
 
   const { data, error } = await query;
 
@@ -149,15 +152,18 @@ export async function getRecentConversationMemory(userId, sessionId, limit = 8) 
    SAVE LONG-TERM MEMORY
 ========================================================= */
 
-export async function saveLongTermMemory({
-  userId = null,
-  memoryType = "preference",
-  memoryKey,
-  memoryValue,
-  confidence = 0.8,
-  source = "chat"
-}) {
-  if (!memoryKey || !memoryValue) return null;
+export async function saveLongTermMemory(
+  supabase,
+  {
+    userId = null,
+    memoryType = "preference",
+    memoryKey,
+    memoryValue,
+    confidence = 0.8,
+    source = "chat"
+  }
+) {
+  if (!supabase || !memoryKey || !memoryValue) return null;
 
   const payload = {
     user_id: userId || null,
@@ -180,15 +186,15 @@ export async function saveLongTermMemory({
     return null;
   }
 
-  return data;
+  return data || null;
 }
 
 /* =========================================================
    GET LONG-TERM MEMORY
 ========================================================= */
 
-export async function getLongTermMemory(userId, limit = 10) {
-  if (!userId) return [];
+export async function getLongTermMemory(supabase, userId, limit = 10) {
+  if (!supabase || !userId) return [];
 
   const { data, error } = await supabase
     .from("tina_long_term_memory")
@@ -211,7 +217,7 @@ export async function getLongTermMemory(userId, limit = 10) {
 ========================================================= */
 
 export function extractMemoryHooks(text = "") {
-  const content = String(text || "").trim();
+  const content = normalizeText(text);
   if (!content) return [];
 
   const lower = content.toLowerCase();
@@ -242,7 +248,10 @@ export function extractMemoryHooks(text = "") {
     hooks.push("REVENUE_REGULATION");
   }
 
-  if (/\brmc\s*[\d-]+/i.test(content) || lower.includes("revenue memorandum circular")) {
+  if (
+    /\brmc\s*[\d-]+/i.test(content) ||
+    lower.includes("revenue memorandum circular")
+  ) {
     hooks.push("RMC");
   }
 
@@ -292,10 +301,8 @@ export function extractMemoryHooks(text = "") {
    Required by server.js
 ========================================================= */
 
-export async function saveMemoryHooks(externalSupabase, userId, hooks = []) {
-  const db = externalSupabase || supabase;
-
-  if (!db || !userId || !Array.isArray(hooks) || hooks.length === 0) {
+export async function saveMemoryHooks(supabase, userId, hooks = []) {
+  if (!supabase || !userId || !Array.isArray(hooks) || hooks.length === 0) {
     return [];
   }
 
@@ -305,7 +312,7 @@ export async function saveMemoryHooks(externalSupabase, userId, hooks = []) {
     created_at: new Date().toISOString()
   }));
 
-  const { data, error } = await db
+  const { data, error } = await supabase
     .from("tina_memory_hooks")
     .insert(rows)
     .select();
@@ -322,15 +329,17 @@ export async function saveMemoryHooks(externalSupabase, userId, hooks = []) {
    DELETE SESSION MEMORY
 ========================================================= */
 
-export async function clearSessionMemory(userId, sessionId) {
-  if (!sessionId) return false;
+export async function clearSessionMemory(supabase, userId, sessionId) {
+  if (!supabase || !sessionId) return false;
 
   let query = supabase
     .from("tina_conversation_memory")
     .delete()
     .eq("session_id", sessionId);
 
-  if (userId) query = query.eq("user_id", userId);
+  if (userId) {
+    query = query.eq("user_id", userId);
+  }
 
   const { error } = await query;
 
@@ -346,15 +355,17 @@ export async function clearSessionMemory(userId, sessionId) {
    DELETE TOPIC STATE
 ========================================================= */
 
-export async function clearTopicState(userId, sessionId) {
-  if (!sessionId) return false;
+export async function clearTopicState(supabase, userId, sessionId) {
+  if (!supabase || !sessionId) return false;
 
   let query = supabase
     .from("tina_topic_state")
     .delete()
     .eq("session_id", sessionId);
 
-  if (userId) query = query.eq("user_id", userId);
+  if (userId) {
+    query = query.eq("user_id", userId);
+  }
 
   const { error } = await query;
 
@@ -370,7 +381,14 @@ export async function clearTopicState(userId, sessionId) {
    MEMORY HEALTH CHECK
 ========================================================= */
 
-export async function memoryHealthCheck() {
+export async function memoryHealthCheck(supabase) {
+  if (!supabase) {
+    return {
+      ok: false,
+      error: "Supabase client is required"
+    };
+  }
+
   const { error } = await supabase
     .from("tina_topic_state")
     .select("id")
