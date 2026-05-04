@@ -60,6 +60,18 @@ import {
   getVectorStoreStats
 } from "./vector-store.js";
 
+import {
+  hybridRetrieve,
+  normalizeRetrievedEvidence,
+  detectEvidenceConflicts,
+  rankEvidenceByAuthority,
+  buildClaimEvidenceMap,
+  synthesizeGroundedAnswer,
+  saveReasoningRun,
+  saveReasoningEvidence,
+  saveReasoningConflicts
+} from "./reasoning-engine.js";
+
 /* ================= ENV ================= */
 
 const requiredEnv = [
