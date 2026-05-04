@@ -2229,56 +2229,177 @@ if (pendingQuiz && !directQuizAnswer) {
     }
 
     const retrieval = await hybridRetrieve({
-      supabase,
-      vectorStore: { smartSearch, searchSimilar },
-      query: finalQuestion,
+  supabase,
+  vectorStore: { smartSearch, searchSimilar },
+  query: finalQuestion,
+  questionType,
+  taxType: topicData.taxType || "",
+  topK: 24
+});
+
+const hierarchyRerankedDocs = rerankByHierarchy(
+  retrieval.results || [],
+  finalQuestion
+);
+
+let evidence = normalizeRetrievedEvidence(
+  hierarchyRerankedDocs.map((doc) => ({
+    ...doc,
+    authority_tier: doc.authorityLevel ?? doc.authority_tier,
+    metadata: {
+      ...(doc.metadata || {}),
+      authorityTier:
+        doc.authorityLevel ?? doc.metadata?.authorityTier ?? null,
+      authorityType:
+        doc.authorityType ?? doc.metadata?.authorityType ?? null,
+      authorityScore:
+        doc.authorityScore ?? doc.metadata?.authorityScore ?? null,
+      normalizedReference:
+        doc.normalizedReference ??
+        doc.metadata?.normalizedReference ??
+        null,
+      normalizedAliases:
+        doc.normalizedAliases ??
+        doc.metadata?.normalizedAliases ??
+        []
+    }
+  }))
+);
+
+evidence = rankEvidenceByAuthority(evidence);
+
+const hierarchyConflict = detectHierarchyConflict(
+  hierarchyRerankedDocs.slice(0, 5)
+);
+
+const topLegalBases = selectTopLegalBases(
+  hierarchyRerankedDocs,
+  2
+);
+
+const conflicts = detectEvidenceConflicts(evidence);
+
+if (hierarchyConflict?.conflict) {
+  conflicts.unshift({
+    conflict_topic: "authority_hierarchy",
+    source_a_path:
+      hierarchyConflict.conflictingDocs?.[0]?.path ||
+      hierarchyConflict.conflictingDocs?.[0]?.metadata?.path ||
+      hierarchyConflict.conflictingDocs?.[0]?.source ||
+      null,
+    source_b_path:
+      hierarchyConflict.conflictingDocs?.[1]?.path ||
+      hierarchyConflict.conflictingDocs?.[1]?.metadata?.path ||
+      hierarchyConflict.conflictingDocs?.[1]?.source ||
+      null,
+    source_a_claim: (
+      hierarchyConflict.conflictingDocs?.[0]?.text || ""
+    ).slice(0, 500),
+    source_b_claim: (
+      hierarchyConflict.conflictingDocs?.[1]?.text || ""
+    ).slice(0, 500),
+    preferred_source_path: hierarchyConflict.controllingSource || null,
+    conflict_reason:
+      hierarchyConflict.reason || "Higher authority prevails.",
+    resolution_basis: `Controlling authority: ${
+      hierarchyConflict.controllingAuthority || "UNKNOWN"
+    }`
+  });
+}
+
+const topEvidence = evidence.slice(0, 10);
+
+const strictContext = hierarchyRerankedDocs
+  .slice(0, 5)
+  .map((doc, index) =>
+    [
+      `SOURCE ${index + 1}: ${doc.source || doc.originalSource || "Untitled Source"}`,
+      `PATH: ${doc.path || doc.metadata?.path || "Unknown"}`,
+      `AUTHORITY TYPE: ${doc.authorityType || doc.metadata?.authorityType || "SECONDARY"}`,
+      `AUTHORITY LEVEL: ${doc.authorityLevel || doc.metadata?.authorityLevel || 99}`,
+      `AUTHORITY SCORE: ${doc.authorityScore || doc.metadata?.authorityScore || 0}`,
+      `FINAL SCORE: ${doc.finalScore || 0}`,
+      `TEXT:`,
+      doc.text || ""
+    ].join("\n")
+  )
+  .join("\n\n---\n\n");
+
+const fallbackReason =
+  !topEvidence.length
+    ? "No indexed Google Drive/Supabase vector source matched the question."
+    : "Indexed sources were found but evidence strength was insufficient.";
+
+let preliminaryAnswer = "";
+
+if (topEvidence.length > 0) {
+  const strictPrompt = buildStrictAnswerPrompt({
+    hookMode: hookConfig?.mode || "ASK",
+    originalQuestion,
+    cleanQuestion,
+    context: strictContext,
+    topLegalBases,
+    conflict: hierarchyConflict
+  });
+
+  const strictResponse = await openai.chat.completions.create({
+    model: process.env.OPENAI_MODEL || "gpt-4o-mini",
+    temperature: 0,
+    messages: [
+      { role: "system", content: strictPrompt },
+      {
+        role: "user",
+        content: [
+          `Conversation Memory:`,
+          memoryContext || "No prior conversation.",
+          ``,
+          `Topic Data:`,
+          JSON.stringify(topicData || {}),
+          ``,
+          `Question Type: ${questionType}`,
+          `Resolved Question: ${finalQuestion}`
+        ].join("\n")
+      }
+    ]
+  });
+
+  preliminaryAnswer =
+    strictResponse.choices?.[0]?.message?.content?.trim() ||
+    (await synthesizeGroundedAnswer({
+      openai,
+      hookConfig,
+      originalQuestion,
+      cleanQuestion,
+      topicData,
       questionType,
-      taxType: topicData.taxType || "",
-      topK: 24
-    });
+      evidence: topEvidence,
+      conflicts,
+      memoryContext
+    }));
+}
 
-    let evidence = normalizeRetrievedEvidence(retrieval.results || []);
-    evidence = rankEvidenceByAuthority(evidence);
+const evidenceMap = buildClaimEvidenceMap(preliminaryAnswer, topEvidence);
 
-    const conflicts = detectEvidenceConflicts(evidence);
-    const topEvidence = evidence.slice(0, 10);
+const supportedClaims = evidenceMap.filter(
+  (item) =>
+    item.support_status === "supported" ||
+    item.support_status === "partial"
+);
 
-    const fallbackReason =
-      !topEvidence.length
-        ? "No indexed Google Drive/Supabase vector source matched the question."
-        : "Indexed sources were found but evidence strength was insufficient.";
+const topConfidence =
+  hierarchyRerankedDocs.length > 0
+    ? Math.max(
+        ...hierarchyRerankedDocs.map((item) =>
+          Number(item.finalScore || item.score || 0)
+        )
+      )
+    : 0;
 
-    const preliminaryAnswer =
-      topEvidence.length > 0
-        ? await synthesizeGroundedAnswer({
-            openai,
-            hookConfig,
-            originalQuestion,
-            cleanQuestion,
-            topicData,
-            questionType,
-            evidence: topEvidence,
-            conflicts,
-            memoryContext
-          })
-        : "";
-
-    const evidenceMap = buildClaimEvidenceMap(preliminaryAnswer, topEvidence);
-
-    const supportedClaims = evidenceMap.filter(
-      (item) => item.support_status === "supported" || item.support_status === "partial"
-    );
-
-    const topConfidence =
-      topEvidence.length > 0
-        ? Math.max(...topEvidence.map((item) => Number(item.score || 0)))
-        : 0;
-
-    const shouldFallback =
-      topEvidence.length === 0 ||
-      supportedClaims.length === 0 ||
-      (!issuance && topConfidence < 0.25);
-
+const shouldFallback =
+  topEvidence.length === 0 ||
+  supportedClaims.length === 0 ||
+  (!retrieval.exactCitation?.matched && topConfidence < 0.25);
+    
     let reasoningRun = null;
 
     try {
