@@ -1,3 +1,5 @@
+// FILE: auth.js
+
 import "dotenv/config";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
@@ -15,7 +17,44 @@ if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
   throw new Error("Supabase credentials are missing");
 }
 
-const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+  auth: {
+    persistSession: false
+  }
+});
+
+function normalizeText(value = "") {
+  return String(value || "").trim();
+}
+
+function normalizeLower(value = "") {
+  return normalizeText(value).toLowerCase();
+}
+
+function createAuthToken(user) {
+  return jwt.sign(
+    {
+      id: user.id,
+      username: user.username,
+      role: user.role,
+      otpVerified: Boolean(user.otp_verified)
+    },
+    JWT_SECRET,
+    { expiresIn: "8h" }
+  );
+}
+
+function buildPublicUser(user) {
+  return {
+    id: user.id,
+    username: user.username,
+    email: user.email,
+    mobile: user.mobile,
+    company: user.company || "",
+    role: user.role,
+    otpVerified: Boolean(user.otp_verified)
+  };
+}
 
 /* ================= REGISTER ================= */
 
@@ -27,28 +66,22 @@ export async function registerUser(
   mobile = "",
   company = ""
 ) {
-  // ✅ FIX: company is now optional
-  if (!username || !password || !email || !mobile) {
-    throw new Error(
-      "Username, password, email, and mobile are required"
-    );
+  const cleanUsername = normalizeLower(username);
+  const cleanEmail = normalizeLower(email);
+  const cleanMobile = normalizeText(mobile);
+  const cleanCompany = normalizeText(company);
+
+  if (!cleanUsername || !password || !cleanEmail || !cleanMobile) {
+    throw new Error("Username, password, email, and mobile are required");
   }
 
-  // Minimum 6 chars, at least 1 uppercase, 1 number, 1 special character
-const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,}$/;
+  const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,}$/;
 
-if (!passwordRegex.test(password)) {
-  throw new Error(
-    "Password must be at least 6 characters and include 1 uppercase letter, 1 number, and 1 special character"
-  );
-}
-
-  const cleanUsername = username.trim().toLowerCase();
-  const cleanEmail = email.trim().toLowerCase();
-  const cleanMobile = mobile.trim();
-
-  // ✅ FIX: handle optional company safely
-  const cleanCompany = company ? company.trim() : "";
+  if (!passwordRegex.test(password)) {
+    throw new Error(
+      "Password must be at least 6 characters and include 1 uppercase letter, 1 number, and 1 special character"
+    );
+  }
 
   const passwordHash = await bcrypt.hash(password, 12);
 
@@ -57,35 +90,39 @@ if (!passwordRegex.test(password)) {
     .insert({
       username: cleanUsername,
       password_hash: passwordHash,
-      role,
+      role: normalizeLower(role) || "user",
       email: cleanEmail,
       mobile: cleanMobile,
-      company: cleanCompany || null, // optional stored as null if empty
+      company: cleanCompany || null,
       otp_verified: false,
-      is_active: true // ensure active by default
+      is_active: true
     })
     .select("id, username, email, mobile, company, role, otp_verified")
     .single();
 
   if (error) {
     if (error.code === "23505") {
-      throw new Error("Username already exists");
+      throw new Error("Username, email, or mobile already exists");
     }
 
-    throw new Error(error.message);
+    throw new Error(error.message || "Registration failed");
   }
 
-  return data;
+  return {
+    ...data,
+    company: data.company || "",
+    otpVerified: Boolean(data.otp_verified)
+  };
 }
 
 /* ================= LOGIN ================= */
 
 export async function loginUser(username, password) {
-  if (!username || !password) {
+  const cleanUsername = normalizeLower(username);
+
+  if (!cleanUsername || !password) {
     return null;
   }
-
-  const cleanUsername = username.trim().toLowerCase();
 
   const { data: user, error } = await supabase
     .from("app_users")
@@ -105,25 +142,11 @@ export async function loginUser(username, password) {
     return null;
   }
 
-  const token = jwt.sign(
-    {
-      id: user.id,
-      username: user.username,
-      role: user.role,
-      otpVerified: user.otp_verified
-    },
-    JWT_SECRET,
-    { expiresIn: "8h" }
-  );
+  const token = createAuthToken(user);
 
   return {
     token,
-    role: user.role,
-    username: user.username,
-    email: user.email,
-    mobile: user.mobile,
-    company: user.company || "",
-    otpVerified: user.otp_verified
+    ...buildPublicUser(user)
   };
 }
 
@@ -143,8 +166,8 @@ export function authenticate(req, res, next) {
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
     req.user = decoded;
-    next();
-  } catch (error) {
+    return next();
+  } catch {
     return res.status(401).json({
       error: "Invalid or expired token"
     });
@@ -160,5 +183,5 @@ export function requireAdmin(req, res, next) {
     });
   }
 
-  next();
+  return next();
 }
