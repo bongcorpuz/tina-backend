@@ -304,17 +304,6 @@ const shouldFallback =
 // only if your current implementation does not already preserve metadata fields.
 // ==============================
 
-export async function addDocumentToVectorStore({ text, source, metadata = {} }) {
-  const content = String(text || "").trim();
-  const docSource = String(source || metadata.fileName || "Unknown Source").trim();
-
-  if (!content) {
-    return {
-      success: false,
-      error: "Document text is required"
-    };
-  }
-
   const embedding = await getEmbedding(content);
 
   const payload = {
