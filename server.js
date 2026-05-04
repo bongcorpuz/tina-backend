@@ -44,7 +44,7 @@ import {
 } from "./learner-profile.js";
 
 import { listDriveFiles, extractTextFromFile } from "./drive-reader.js";
-
+import { storeFeedbackEntry } from "./feedback-learning.js";
 import {
   loginUser,
   registerUser,
