@@ -1866,18 +1866,28 @@ if (pendingQuiz && directQuizAnswer) {
 
 if (pendingQuiz && !directQuizAnswer) {
   if (!allowedExitCommands.includes(normalizedInput)) {
-    const lockedMode =
-      existingMode?.active_hook === "/review"
-        ? "review"
-        : existingMode?.active_hook === "/diagnostic"
-          ? "diagnostic"
-          : "quiz";
+    const activeHook = existingMode?.active_hook || "/quiz";
+
+    let lockedModeLabel = "quiz";
+    let lockedModeMessage =
+      "You are still in active quiz mode. Please answer using A, B, C, or D only. Type /bye or /exit to leave quiz mode.";
+
+    if (activeHook === "/review") {
+      lockedModeLabel = "review";
+      lockedModeMessage =
+        "You are still in active review mode. Please answer the current multiple-choice question using A, B, C, or D only. Type /bye or /exit to leave review mode.";
+    } else if (activeHook === "/diagnostic") {
+      lockedModeLabel = "diagnostic";
+      lockedModeMessage =
+        "You are still in active diagnostic mode. Please answer the current multiple-choice question using A, B, C, or D only. Type /bye or /exit to leave diagnostic mode.";
+    }
 
     return res.json({
       success: false,
       engine: "TINA Continuous Learning Engine",
       mode: "QUIZ_MODE_LOCKED",
-      answer: `You are still in active ${lockedMode} mode. Please answer using A, B, C, or D only. Type /bye or /exit to leave this mode.`,
+      lockedMode: lockedModeLabel,
+      answer: lockedModeMessage,
       sourceStatus: "QUIZ_MODE_LOCKED",
       sourcesUsed: [],
       vectorMatches: 0
