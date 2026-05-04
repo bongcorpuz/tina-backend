@@ -2198,7 +2198,7 @@ if (pendingQuiz && !directQuizAnswer) {
         answerText
       });
 
-      await saveTopicState({
+      await saveTopicState(supabase, {
         userId,
         sessionId: conversationId || null,
         topic: topicData.topic,
