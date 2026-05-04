@@ -1855,14 +1855,29 @@ app.post("/ask", authenticate, async (req, res) => {
     const exitCommands = ["/bye", "/exit", "/stop", "/quit", "/reset"];
 
   if (exitCommands.includes(rawQuestion.toLowerCase())) {
+  const activeHook = existingMode?.active_hook || "/ask";
+
   await clearModeState(supabase, userId, conversationId || null);
   await clearPendingQuizAttempts(userId, conversationId || null);
+
+  let answerText = "You are already in normal /ask mode.";
+
+  if (activeHook === "/quiz") {
+    answerText = "Quiz mode ended. You are now back in normal /ask mode.";
+  } else if (activeHook === "/review") {
+    answerText = "Review mode ended. You are now back in normal /ask mode.";
+  } else if (activeHook === "/diagnostic") {
+    answerText = "Diagnostic mode ended. You are now back in normal /ask mode.";
+  } else if (activeHook !== "/ask") {
+    answerText = `Mode ${activeHook} ended. You are now back in normal /ask mode.`;
+  }
 
   return res.json({
     success: true,
     engine: "TINA Mode State System",
     mode: "MODE_CLEARED",
-    answer: "Continuous question mode ended. You are now back in normal /ask mode.",
+    previousMode: activeHook,
+    answer: answerText,
     sourceStatus: "MODE_STATE_CLEARED",
     sourcesUsed: [],
     vectorMatches: 0
