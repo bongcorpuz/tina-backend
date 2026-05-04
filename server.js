@@ -2166,7 +2166,7 @@ if (pendingQuiz && !directQuizAnswer) {
 
     if ((!finalQuestion || finalQuestion.length < 5) && conversationId && userId) {
       try {
-        const lastState = await getLastTopicState(userId, conversationId);
+        const lastState = await getLastTopicState(supabase, userId, conversationId);
         if (lastState?.last_question) {
           finalQuestion = lastState.last_question;
         }
