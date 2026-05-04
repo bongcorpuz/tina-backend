@@ -1869,17 +1869,23 @@ app.post("/ask", authenticate, async (req, res) => {
       }
     }
 
-    if (pendingQuiz && isAssessmentModeActive && !directQuizAnswer && !directCommand) {
-      return res.json({
-        success: false,
-        engine: "TINA Continuous Learning Engine",
-        mode: "INVALID_ANSWER",
-        answer: "Please answer the current multiple-choice question using A, B, C, or D only. Type /bye or /exit to stop.",
-        sourceStatus: "INVALID_QUIZ_ANSWER",
-        sourcesUsed: [],
-        vectorMatches: 0
-      });
-    }
+   if (pendingQuiz && !directQuizAnswer) {
+  const normalizedInput = rawQuestion.toLowerCase();
+  const allowedExitCommands = ["/bye", "/exit", "/stop", "/quit", "/reset"];
+
+  if (!allowedExitCommands.includes(normalizedInput)) {
+    return res.json({
+      success: false,
+      engine: "TINA Continuous Learning Engine",
+      mode: "QUIZ_MODE_LOCKED",
+      answer:
+        "You are still in active quiz mode. Please answer using A, B, C, or D only. Type /bye or /exit to leave quiz mode.",
+      sourceStatus: "QUIZ_MODE_LOCKED",
+      sourcesUsed: [],
+      vectorMatches: 0
+    });
+  }
+}
 
     let effectiveQuestion = rawQuestion;
 
