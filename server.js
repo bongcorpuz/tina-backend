@@ -1663,12 +1663,36 @@ app.get("/conversations/:conversationId/messages", authenticate, async (req, res
 /* ================= INDEX ROUTES ================= */
 
 app.get("/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
-  const started = startIndexingInBackground();
+  const started = reindexController.start();
 
   return res.json({
     success: true,
     engine: "TINA Background Indexing Engine",
     route: "/index-drive",
+    ...started,
+    statusUrl: "/index-status?secret=YOUR_SECRET"
+  });
+});
+
+app.get("/reindex", allowAuthenticatedOrIndexSecret, async (req, res) => {
+  const started = reindexController.start();
+
+  return res.json({
+    success: true,
+    engine: "TINA Background Indexing Engine",
+    route: "/reindex",
+    ...started,
+    statusUrl: "/index-status?secret=YOUR_SECRET"
+  });
+});
+
+app.get("/admin/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
+  const started = reindexController.start();
+
+  return res.json({
+    success: true,
+    engine: "TINA Background Indexing Engine",
+    route: "/admin/index-drive",
     ...started,
     statusUrl: "/index-status?secret=YOUR_SECRET"
   });
@@ -1681,7 +1705,7 @@ app.get("/index-status", allowAuthenticatedOrIndexSecret, async (req, res) => {
     return res.json({
       success: true,
       engine: "TINA Background Indexing Engine",
-      indexing: lastIndexingStatus,
+      indexing: reindexController.getStatus(),
       vectorStore: vectorStats,
       time: new Date().toISOString()
     });
@@ -1691,30 +1715,6 @@ app.get("/index-status", allowAuthenticatedOrIndexSecret, async (req, res) => {
       error: error.message || "Failed to read index status"
     });
   }
-});
-
-app.get("/reindex", allowAuthenticatedOrIndexSecret, async (req, res) => {
-  const started = startIndexingInBackground();
-
-  return res.json({
-    success: true,
-    engine: "TINA Background Indexing Engine",
-    route: "/reindex",
-    ...started,
-    statusUrl: "/index-status?secret=YOUR_SECRET"
-  });
-});
-
-app.get("/admin/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
-  const started = startIndexingInBackground();
-
-  return res.json({
-    success: true,
-    engine: "TINA Background Indexing Engine",
-    route: "/admin/index-drive",
-    ...started,
-    statusUrl: "/index-status?secret=YOUR_SECRET"
-  });
 });
 
 /* ================= DRIVE ROUTES ================= */
