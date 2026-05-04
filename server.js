@@ -81,6 +81,307 @@ import {
   saveReasoningConflicts
 } from "./reasoning-engine.js";
 
+// ==============================
+// FILE: server.js
+// Add these imports near the top
+// ==============================
+
+import {
+  buildAuthorityMetadata,
+  rerankByHierarchy,
+  detectHierarchyConflict,
+  selectTopLegalBases,
+  buildStrictAnswerPrompt
+} from "./authority-engine.js";
+
+
+// ==============================
+// FILE: server.js
+// PATCH 1: index-drive integration
+// Find your /index-drive route and patch the per-file/per-chunk indexing section.
+// Replace only the inner metadata-building/addDocumentToVectorStore part with this pattern.
+// ==============================
+
+// Example patch inside your existing /index-drive loop, after text extraction succeeds:
+
+const authority = buildAuthorityMetadata({
+  fileName: file.name,
+  path: file.path || file.name,
+  text,
+  modifiedTime: file.modifiedTime || null
+});
+
+const baseMetadata = {
+  fileName: file.name,
+  originalSource: file.name,
+  path: file.path || file.name,
+  mimeType: file.mimeType || "application/octet-stream",
+  modifiedTime: file.modifiedTime || null,
+  authorityType: authority.authorityType,
+  authorityLevel: authority.authorityLevel,
+  authorityScore: authority.authorityScore,
+  authorityLabel: authority.authorityLabel,
+  normalizedReference: authority.normalizedReference,
+  normalizedAliases: authority.normalizedAliases,
+  recencyDate: authority.recencyDate
+};
+
+// If your current code chunks text before saving, keep your existing chunker.
+// Example integration with an existing chunks array:
+for (const chunk of chunks) {
+  await addDocumentToVectorStore({
+    text: chunk.text,
+    source: file.name,
+    metadata: {
+      ...baseMetadata,
+      chunkIndex: chunk.chunkIndex,
+      startOffset: chunk.startOffset ?? null,
+      endOffset: chunk.endOffset ?? null
+    }
+  });
+}
+
+// If your current code saves a whole file directly, use:
+await addDocumentToVectorStore({
+  text,
+  source: file.name,
+  metadata: baseMetadata
+});
+
+
+// ==============================
+// FILE: server.js
+// PATCH 2: /ask retrieval integration
+// In your updated /ask route, patch the retrieval section.
+// Replace the evidence-prep part beginning after hybridRetrieve(...) with this.
+// ==============================
+
+const retrieval = await hybridRetrieve({
+  supabase,
+  vectorStore: { smartSearch, searchSimilar },
+  query: finalQuestion,
+  questionType,
+  taxType: topicData.taxType || "",
+  topK: 24
+});
+
+const hierarchyRerankedDocs = rerankByHierarchy(retrieval.results || [], finalQuestion);
+
+let evidence = normalizeRetrievedEvidence(
+  hierarchyRerankedDocs.map((doc) => ({
+    ...doc,
+    authority_tier: doc.authorityLevel ?? doc.authority_tier,
+    metadata: {
+      ...(doc.metadata || {}),
+      authorityTier: doc.authorityLevel ?? doc.metadata?.authorityTier,
+      authorityType: doc.authorityType ?? doc.metadata?.authorityType,
+      authorityScore: doc.authorityScore ?? doc.metadata?.authorityScore,
+      normalizedReference: doc.metadata?.normalizedReference ?? null,
+      normalizedAliases: doc.metadata?.normalizedAliases ?? []
+    }
+  }))
+);
+
+evidence = rankEvidenceByAuthority(evidence);
+
+const hierarchyConflict = detectHierarchyConflict(hierarchyRerankedDocs.slice(0, 5));
+const topLegalBases = selectTopLegalBases(hierarchyRerankedDocs, 2);
+
+const conflicts = detectEvidenceConflicts(evidence);
+if (hierarchyConflict?.conflict) {
+  conflicts.unshift({
+    conflict_topic: "authority_hierarchy",
+    source_a_path:
+      hierarchyConflict.conflictingDocs?.[0]?.path ||
+      hierarchyConflict.conflictingDocs?.[0]?.metadata?.path ||
+      hierarchyConflict.conflictingDocs?.[0]?.source ||
+      null,
+    source_b_path:
+      hierarchyConflict.conflictingDocs?.[1]?.path ||
+      hierarchyConflict.conflictingDocs?.[1]?.metadata?.path ||
+      hierarchyConflict.conflictingDocs?.[1]?.source ||
+      null,
+    source_a_claim: (hierarchyConflict.conflictingDocs?.[0]?.text || "").slice(0, 500),
+    source_b_claim: (hierarchyConflict.conflictingDocs?.[1]?.text || "").slice(0, 500),
+    preferred_source_path: hierarchyConflict.controllingSource || null,
+    conflict_reason: hierarchyConflict.reason || "Higher authority prevails.",
+    resolution_basis: `Controlling authority: ${hierarchyConflict.controllingAuthority || "UNKNOWN"}`
+  });
+}
+
+const topEvidence = evidence.slice(0, 10);
+
+const strictContext = hierarchyRerankedDocs
+  .slice(0, 5)
+  .map((doc, index) =>
+    [
+      `SOURCE ${index + 1}: ${doc.source || doc.originalSource || "Untitled Source"}`,
+      `PATH: ${doc.path || doc.metadata?.path || "Unknown"}`,
+      `AUTHORITY TYPE: ${doc.authorityType || doc.metadata?.authorityType || "SECONDARY"}`,
+      `AUTHORITY LEVEL: ${doc.authorityLevel || doc.metadata?.authorityLevel || 99}`,
+      `AUTHORITY SCORE: ${doc.authorityScore || doc.metadata?.authorityScore || 0}`,
+      `FINAL SCORE: ${doc.finalScore || 0}`,
+      `TEXT:`,
+      doc.text || ""
+    ].join("\n")
+  )
+  .join("\n\n---\n\n");
+
+const fallbackReason =
+  !topEvidence.length
+    ? "No indexed Google Drive/Supabase vector source matched the question."
+    : "Indexed sources were found but evidence strength was insufficient.";
+
+let preliminaryAnswer = "";
+
+if (topEvidence.length > 0) {
+  const strictPrompt = buildStrictAnswerPrompt({
+    hookMode: hookConfig?.mode || "ASK",
+    originalQuestion,
+    cleanQuestion,
+    context: strictContext,
+    topLegalBases,
+    conflict: hierarchyConflict
+  });
+
+  const strictResponse = await openai.chat.completions.create({
+    model: process.env.OPENAI_MODEL || "gpt-4o-mini",
+    temperature: 0,
+    messages: [
+      { role: "system", content: strictPrompt },
+      {
+        role: "user",
+        content: [
+          `Conversation Memory:`,
+          memoryContext || "No prior conversation.",
+          ``,
+          `Topic Data:`,
+          JSON.stringify(topicData || {}),
+          ``,
+          `Question Type: ${questionType}`,
+          `Resolved Question: ${finalQuestion}`
+        ].join("\n")
+      }
+    ]
+  });
+
+  preliminaryAnswer =
+    strictResponse.choices?.[0]?.message?.content?.trim() ||
+    (await synthesizeGroundedAnswer({
+      openai,
+      hookConfig,
+      originalQuestion,
+      cleanQuestion,
+      topicData,
+      questionType,
+      evidence: topEvidence,
+      conflicts,
+      memoryContext
+    }));
+}
+
+const evidenceMap = buildClaimEvidenceMap(preliminaryAnswer, topEvidence);
+
+const supportedClaims = evidenceMap.filter(
+  (item) => item.support_status === "supported" || item.support_status === "partial"
+);
+
+const topConfidence =
+  hierarchyRerankedDocs.length > 0
+    ? Math.max(...hierarchyRerankedDocs.map((item) => Number(item.finalScore || item.score || 0)))
+    : 0;
+
+const shouldFallback =
+  topEvidence.length === 0 ||
+  supportedClaims.length === 0 ||
+  (!retrieval.exactCitation?.matched && topConfidence < 0.25);
+
+
+// ==============================
+// FILE: vector-store.js
+// PATCH 3: make addDocumentToVectorStore preserve hierarchy metadata
+// Replace your addDocumentToVectorStore function body with this pattern
+// only if your current implementation does not already preserve metadata fields.
+// ==============================
+
+export async function addDocumentToVectorStore({ text, source, metadata = {} }) {
+  const content = String(text || "").trim();
+  const docSource = String(source || metadata.fileName || "Unknown Source").trim();
+
+  if (!content) {
+    return {
+      success: false,
+      error: "Document text is required"
+    };
+  }
+
+  const embedding = await getEmbedding(content);
+
+  const payload = {
+    text: content,
+    source: docSource,
+    embedding,
+    metadata: {
+      ...metadata,
+      path: metadata.path || metadata.fileName || docSource,
+      originalSource: metadata.originalSource || docSource,
+      authorityType: metadata.authorityType || "SECONDARY",
+      authorityLevel: Number(metadata.authorityLevel || 9),
+      authorityScore: Number(metadata.authorityScore || 40),
+      authorityLabel: metadata.authorityLabel || "Secondary / Commentary",
+      normalizedReference: metadata.normalizedReference || null,
+      normalizedAliases: Array.isArray(metadata.normalizedAliases)
+        ? metadata.normalizedAliases
+        : [],
+      recencyDate: metadata.recencyDate || metadata.modifiedTime || null
+    }
+  };
+
+  const { data, error } = await supabase
+    .from("tina_vector_store")
+    .insert(payload)
+    .select()
+    .single();
+
+  if (error) {
+    console.error("addDocumentToVectorStore error:", error.message);
+    return {
+      success: false,
+      error: error.message
+    };
+  }
+
+  return {
+    success: true,
+    data
+  };
+}
+
+
+// ==============================
+// FILE: vector-store.js
+// PATCH 4: if smartSearch/searchSimilar strip metadata, preserve it.
+// Apply this mapping right before returning search results.
+// ==============================
+
+const normalizedResults = (data || []).map((row) => ({
+  ...row,
+  metadata: {
+    ...(row.metadata || {}),
+    authorityType: row.metadata?.authorityType || "SECONDARY",
+    authorityLevel: Number(row.metadata?.authorityLevel || 9),
+    authorityScore: Number(row.metadata?.authorityScore || 40),
+    authorityLabel: row.metadata?.authorityLabel || "Secondary / Commentary",
+    normalizedReference: row.metadata?.normalizedReference || null,
+    normalizedAliases: Array.isArray(row.metadata?.normalizedAliases)
+      ? row.metadata.normalizedAliases
+      : [],
+    recencyDate: row.metadata?.recencyDate || row.metadata?.modifiedTime || null
+  }
+}));
+
+return normalizedResults;
+
 /* ================= ENV ================= */
 
 const requiredEnv = [
