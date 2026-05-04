@@ -1854,19 +1854,20 @@ app.post("/ask", authenticate, async (req, res) => {
 
     const exitCommands = ["/bye", "/exit", "/stop", "/quit", "/reset"];
 
-    if (exitCommands.includes(rawQuestion.toLowerCase())) {
-      await clearModeState(supabase, userId, conversationId || null);
+  if (exitCommands.includes(rawQuestion.toLowerCase())) {
+  await clearModeState(supabase, userId, conversationId || null);
+  await clearPendingQuizAttempts(userId, conversationId || null);
 
-      return res.json({
-        success: true,
-        engine: "TINA Mode State System",
-        mode: "MODE_CLEARED",
-        answer: "Continuous question mode ended. You are now back in normal /ask mode.",
-        sourceStatus: "MODE_STATE_CLEARED",
-        sourcesUsed: [],
-        vectorMatches: 0
-      });
-    }
+  return res.json({
+    success: true,
+    engine: "TINA Mode State System",
+    mode: "MODE_CLEARED",
+    answer: "Continuous question mode ended. You are now back in normal /ask mode.",
+    sourceStatus: "MODE_STATE_CLEARED",
+    sourcesUsed: [],
+    vectorMatches: 0
+  });
+}
 
    const existingMode = await getModeState(supabase, userId, conversationId || null);
 
