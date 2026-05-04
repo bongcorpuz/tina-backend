@@ -2410,6 +2410,109 @@ app.post("/ask", authenticate, async (req, res) => {
   }
 });
 
+/* ================= ADMIN FEEDBACK ROUTES ================= */
+
+app.get("/admin/feedback/pending", authenticate, requireAdmin, async (req, res) => {
+  try {
+    const feedback = await listPendingFeedback(supabase);
+
+    return res.json({
+      success: true,
+      engine: "TINA Feedback Learning Engine",
+      total: feedback.length,
+      feedback
+    });
+  } catch (error) {
+    console.error("List pending feedback error:", error);
+    return res.status(500).json({
+      success: false,
+      error: error.message || "Failed to load pending feedback"
+    });
+  }
+});
+
+app.post("/admin/feedback/:id/approve", authenticate, requireAdmin, async (req, res) => {
+  try {
+    const reviewer =
+      req.user?.username ||
+      req.user?.email ||
+      req.user?.id ||
+      "admin";
+
+    const feedback = await approveFeedbackEntry(
+      supabase,
+      req.params.id,
+      reviewer
+    );
+
+    return res.json({
+      success: true,
+      engine: "TINA Feedback Learning Engine",
+      message: "Feedback approved.",
+      feedback
+    });
+  } catch (error) {
+    console.error("Approve feedback error:", error);
+    return res.status(500).json({
+      success: false,
+      error: error.message || "Failed to approve feedback"
+    });
+  }
+});
+
+app.post("/admin/feedback/:id/reject", authenticate, requireAdmin, async (req, res) => {
+  try {
+    const reviewer =
+      req.user?.username ||
+      req.user?.email ||
+      req.user?.id ||
+      "admin";
+
+    const notes = String(req.body?.notes || "").trim();
+
+    const feedback = await rejectFeedbackEntry(
+      supabase,
+      req.params.id,
+      reviewer,
+      notes
+    );
+
+    return res.json({
+      success: true,
+      engine: "TINA Feedback Learning Engine",
+      message: "Feedback rejected.",
+      feedback
+    });
+  } catch (error) {
+    console.error("Reject feedback error:", error);
+    return res.status(500).json({
+      success: false,
+      error: error.message || "Failed to reject feedback"
+    });
+  }
+});
+
+app.post("/admin/feedback/:id/apply", authenticate, requireAdmin, async (req, res) => {
+  try {
+    const result = await applyApprovedFeedbackToKnowledge(
+      supabase,
+      req.params.id
+    );
+
+    return res.json({
+      success: true,
+      engine: "TINA Feedback Learning Engine",
+      message: "Approved feedback queued for knowledge application.",
+      result
+    });
+  } catch (error) {
+    console.error("Apply feedback error:", error);
+    return res.status(500).json({
+      success: false,
+      error: error.message || "Failed to apply approved feedback"
+    });
+  }
+});
 
 /* ================= 404 ================= */
 
