@@ -9,6 +9,10 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
 
+if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+  throw new Error("Missing Supabase environment variables for vector-store.js");
+}
+
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY,
@@ -29,8 +33,12 @@ const VECTOR_TABLE = "tina_vector_store";
 
 /* ================= TEXT / EMBEDDINGS ================= */
 
+function normalizeText(value = "") {
+  return String(value || "").trim();
+}
+
 function chunkText(text, chunkSize = CHUNK_SIZE, overlap = CHUNK_OVERLAP) {
-  const clean = String(text || "").replace(/\s+/g, " ").trim();
+  const clean = normalizeText(String(text || "").replace(/\s+/g, " "));
   if (!clean) return [];
 
   const chunks = [];
@@ -55,9 +63,15 @@ async function embedText(text) {
     throw new Error("OPENAI_API_KEY is missing.");
   }
 
+  const input = normalizeText(text);
+
+  if (!input) {
+    throw new Error("Text for embedding is required.");
+  }
+
   const response = await openai.embeddings.create({
     model: EMBEDDING_MODEL,
-    input: String(text || "").slice(0, 24000)
+    input: input.slice(0, 24000)
   });
 
   return response.data?.[0]?.embedding || [];
@@ -752,7 +766,7 @@ export async function getQuizSourceChunks({
     if (excludeSourcePaths.includes(path)) return false;
     if (excludeChunkIds.includes(chunkId)) return false;
 
-    return String(row.text || "").trim().length >= 300;
+    return normalizeText(row.text).length >= 300;
   });
 
   rows = rows
@@ -821,8 +835,6 @@ export async function getQuizSourceChunks({
     score: row.quizTopicScore
   }));
 }
-
-/* ================= VECTOR STORE STATS ================= */
 
 export async function getVectorStoreStats() {
   const { count, error } = await supabase
