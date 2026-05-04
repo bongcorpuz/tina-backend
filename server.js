@@ -56,7 +56,8 @@ import {
 import {
   loginUser,
   registerUser,
-  authenticate
+  authenticate,
+  requireAdmin
 } from "./auth.js";
 
 import {
