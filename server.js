@@ -88,6 +88,73 @@ import {
   buildStrictAnswerPrompt
 } from "./authority-engine.js";
 
+// FILE: server.js
+// Add these imports near the top
+
+import {
+  createBackgroundReindexController
+} from "./reindex-service.js";
+
+// Add this near app setup / helpers
+const reindexController = createBackgroundReindexController();
+
+// Replace your current /index-drive, /reindex, /admin/index-drive, /index-status routes with these
+
+app.get("/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
+  const started = reindexController.start();
+
+  return res.json({
+    success: true,
+    engine: "TINA Background Indexing Engine",
+    route: "/index-drive",
+    ...started,
+    statusUrl: "/index-status?secret=YOUR_SECRET"
+  });
+});
+
+app.get("/reindex", allowAuthenticatedOrIndexSecret, async (req, res) => {
+  const started = reindexController.start();
+
+  return res.json({
+    success: true,
+    engine: "TINA Background Indexing Engine",
+    route: "/reindex",
+    ...started,
+    statusUrl: "/index-status?secret=YOUR_SECRET"
+  });
+});
+
+app.get("/admin/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
+  const started = reindexController.start();
+
+  return res.json({
+    success: true,
+    engine: "TINA Background Indexing Engine",
+    route: "/admin/index-drive",
+    ...started,
+    statusUrl: "/index-status?secret=YOUR_SECRET"
+  });
+});
+
+app.get("/index-status", allowAuthenticatedOrIndexSecret, async (req, res) => {
+  try {
+    const vectorStats = await getVectorStoreStats();
+
+    return res.json({
+      success: true,
+      engine: "TINA Background Indexing Engine",
+      indexing: reindexController.getStatus(),
+      vectorStore: vectorStats,
+      time: new Date().toISOString()
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      error: error.message || "Failed to read index status"
+    });
+  }
+});
+
 /* ================= ENV ================= */
 
 const requiredEnv = [
