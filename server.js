@@ -108,6 +108,14 @@ import {
 } from "./provision-citation-engine.js";
 
 import {
+  formatLegalBasisBlock,
+  formatSourcesUsedBlock,
+  buildConflictFlagText,
+  buildSupportingRulesText,
+  ensureStructuredAnswerSections
+} from "./citation-formatting-engine.js";
+
+import {
   maybeGenerateCaseAnalysisAnswer
 } from "./case-analysis-engine.js";
 
