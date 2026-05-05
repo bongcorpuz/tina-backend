@@ -2090,9 +2090,6 @@ async function clearPendingQuizAttempts(userId, conversationId = null) {
   }
 }
 
-
-const MAX_VISIBLE_SOURCES = 5;
-
 function shouldHideSourceFromUser(source = {}) {
   const path = String(
     source.path ||
