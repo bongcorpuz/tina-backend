@@ -122,6 +122,31 @@ function buildDocKey(doc = {}) {
   );
 }
 
+function normalizeLooseText(value = "") {
+  return String(value)
+    .toLowerCase()
+    .replace(/[“”"'`]/g, "")
+    .replace(/\brepublic act no\.?\s*/g, "ra ")
+    .replace(/\br\.?\s*a\.?\s*no\.?\s*/g, "ra ")
+    .replace(/\br\.?\s*a\.?\s*/g, "ra ")
+    .replace(/\bnational internal revenue code\b/g, "nirc")
+    .replace(/[^\w\s/-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function hardStripSourceLeakage(text = "") {
+  return String(text || "")
+    .replace(/\n+\s*6\.\s*SOURCES USED[\s\S]*$/i, "")
+    .replace(/\n+\s*SOURCES USED[\s\S]*$/i, "")
+    .replace(/\n+\s*Sources:\s*[\s\S]*$/i, "")
+    .replace(/\n+\s*Source:\s*[\s\S]*$/i, "")
+    .replace(/\n+\s*References:\s*[\s\S]*$/i, "")
+    .replace(/\n+\s*See clickable sources below\.\s*$/i, "")
+    .replace(/\n+\s*No clickable sources available\.\s*$/i, "")
+    .trim();
+}
+
 function mergeRetrievalResults(retrievals = []) {
   const merged = [];
   const seen = new Map();
@@ -144,9 +169,7 @@ function mergeRetrievalResults(retrievals = []) {
       const index = seen.get(key);
       const existing = merged[index];
 
-      const existingScore = Number(
-        existing?.finalScore ?? existing?.score ?? 0
-      );
+      const existingScore = Number(existing?.finalScore ?? existing?.score ?? 0);
       const candidateScore = Number(item?.finalScore ?? item?.score ?? 0);
 
       if (candidateScore > existingScore) {
@@ -188,6 +211,180 @@ function buildNamedLawFallbackText(bestMatch) {
     "",
     "Please upload or index the exact law text and, if available, its implementing rules and regulations."
   ].join("\n");
+}
+
+function extractLegalBasisLines(answerText = "") {
+  const text = String(answerText || "");
+  const match = text.match(
+    /\b2\.\s*LEGAL BASIS\b([\s\S]*?)(?:\n\s*\d+\.\s*[A-Z][A-Z ]+\b|$)/i
+  );
+
+  if (!match) {
+    return [];
+  }
+
+  return match[1]
+    .split("\n")
+    .map((line) => line.replace(/^[\-\d.)\s]+/, "").trim())
+    .filter(Boolean)
+    .slice(0, 8);
+}
+
+function buildAnswerAnchors({
+  answerText = "",
+  finalQuestion = "",
+  namedLawDetection = null,
+  issuance = null
+}) {
+  const anchors = new Set();
+  const normalizedAnswer = normalizeLooseText(answerText);
+  const normalizedQuestion = normalizeLooseText(finalQuestion);
+
+  const commonAnchors = [
+    "nirc",
+    "tax code",
+    "local government code",
+    "value added tax",
+    "vat",
+    "income tax",
+    "excise tax",
+    "documentary stamp tax",
+    "withholding tax",
+    "create law",
+    "train law",
+    "ease of paying taxes",
+    "eopt",
+    "create more"
+  ];
+
+  for (const anchor of commonAnchors) {
+    if (
+      normalizedAnswer.includes(normalizeLooseText(anchor)) ||
+      normalizedQuestion.includes(normalizeLooseText(anchor))
+    ) {
+      anchors.add(normalizeLooseText(anchor));
+    }
+  }
+
+  const raMatches = [
+    ...normalizedAnswer.matchAll(/\bra\s*(\d{4,6})\b/g),
+    ...normalizedQuestion.matchAll(/\bra\s*(\d{4,6})\b/g)
+  ];
+
+  for (const match of raMatches) {
+    const number = match[1];
+    anchors.add(`ra ${number}`);
+  }
+
+  if (namedLawDetection?.bestMatch) {
+    const best = namedLawDetection.bestMatch;
+
+    if (best.canonicalTitle) {
+      anchors.add(normalizeLooseText(best.canonicalTitle));
+    }
+
+    if (best.shortTitle) {
+      anchors.add(normalizeLooseText(best.shortTitle));
+    }
+
+    if (best.republicActNumber) {
+      anchors.add(`ra ${best.republicActNumber}`);
+    }
+
+    for (const alias of best.normalizedAliases || []) {
+      if (alias) {
+        anchors.add(normalizeLooseText(alias));
+      }
+    }
+  }
+
+  if (issuance) {
+    anchors.add(normalizeLooseText(`${issuance.type} ${issuance.number} ${issuance.year}`));
+    anchors.add(normalizeLooseText(`${issuance.type}-${issuance.number}-${issuance.year}`));
+    anchors.add(normalizeLooseText(`${issuance.type} no ${issuance.number}-${issuance.year}`));
+  }
+
+  for (const line of extractLegalBasisLines(answerText)) {
+    const normalized = normalizeLooseText(line);
+    if (normalized.length >= 6) {
+      anchors.add(normalized);
+    }
+
+    const trimmedBeforeParen = normalizeLooseText(line.replace(/\(.*?\)/g, ""));
+    if (trimmedBeforeParen.length >= 6) {
+      anchors.add(trimmedBeforeParen);
+    }
+
+    const raInLine = normalized.match(/\bra\s*(\d{4,6})\b/);
+    if (raInLine) {
+      anchors.add(`ra ${raInLine[1]}`);
+    }
+  }
+
+  return [...anchors]
+    .map((item) => item.trim())
+    .filter((item) => item.length >= 4);
+}
+
+function buildDocHaystack(doc = {}) {
+  return normalizeLooseText(
+    [
+      doc.source,
+      doc.originalSource,
+      doc.path,
+      doc.source_path,
+      doc.title,
+      doc.text?.slice(0, 2500),
+      doc.metadata?.path,
+      doc.metadata?.originalSource,
+      doc.metadata?.originalFileName,
+      doc.metadata?.normalizedReference,
+      ...(doc.metadata?.normalizedAliases || [])
+    ]
+      .filter(Boolean)
+      .join(" ")
+  );
+}
+
+function docMatchesAnchors(doc = {}, anchors = []) {
+  const haystack = buildDocHaystack(doc);
+
+  if (!haystack) {
+    return false;
+  }
+
+  return anchors.some((anchor) => {
+    const normalizedAnchor = normalizeLooseText(anchor);
+    if (!normalizedAnchor || normalizedAnchor.length < 4) {
+      return false;
+    }
+
+    return haystack.includes(normalizedAnchor);
+  });
+}
+
+function selectGroundedDisplayableDocs(displayableDocs = [], options = {}) {
+  const {
+    answerText = "",
+    finalQuestion = "",
+    namedLawDetection = null,
+    issuance = null
+  } = options;
+
+  const anchors = buildAnswerAnchors({
+    answerText,
+    finalQuestion,
+    namedLawDetection,
+    issuance
+  });
+
+  const matchedDocs = displayableDocs.filter((doc) => docMatchesAnchors(doc, anchors));
+
+  if (namedLawDetection?.matched || issuance) {
+    return matchedDocs;
+  }
+
+  return matchedDocs;
 }
 
 export function createAskHandler({ supabase, openai }) {
@@ -1454,51 +1651,6 @@ Quick Recall:
       });
 
       const topEvidence = evidence.slice(0, 10);
-      const topDisplayableEvidence = rankEvidenceByAuthority(
-        normalizeRetrievedEvidence(displayableRankedDocs)
-      ).slice(0, 10);
-
-      const topLegalBases = selectTopLegalBases(displayableRankedDocs, 2);
-
-      const strictContext = internalRankedDocs
-        .slice(0, 5)
-        .map((doc, index) =>
-          [
-            `SOURCE ${index + 1}: ${doc.source || doc.originalSource || "Untitled Source"}`,
-            `PATH: ${doc.path || doc.metadata?.path || "Unknown"}`,
-            `AUTHORITY TYPE: ${
-              doc.authorityType ||
-              doc.authority_type ||
-              doc.metadata?.authorityType ||
-              "SECONDARY"
-            }`,
-            `AUTHORITY LEVEL: ${
-              doc.authorityLevel ||
-              doc.authority_level ||
-              doc.metadata?.authorityLevel ||
-              99
-            }`,
-            `AUTHORITY SCORE: ${
-              doc.authorityScore ||
-              doc.authority_score ||
-              doc.metadata?.authorityScore ||
-              0
-            }`,
-            `FINAL SCORE: ${doc.finalScore || doc.score || 0}`,
-            "TEXT:",
-            doc.text || ""
-          ].join("\n")
-        )
-        .join("\n\n---\n\n");
-
-      const fallbackReason =
-        namedLawDetection.matched &&
-        displayableRankedDocs.length === 0 &&
-        namedLawDetection.bestMatch
-          ? `No exact indexed source matched ${namedLawDetection.bestMatch.shortTitle || namedLawDetection.bestMatch.canonicalTitle}.`
-          : !topEvidence.length
-            ? "No indexed Google Drive/Supabase vector source matched the question."
-            : "Indexed sources were found but evidence strength was insufficient.";
 
       let preliminaryAnswer = "";
 
@@ -1531,6 +1683,37 @@ Quick Recall:
             })
           : { handled: false };
 
+      const strictContext = internalRankedDocs
+        .slice(0, 5)
+        .map((doc, index) =>
+          [
+            `SOURCE ${index + 1}: ${doc.source || doc.originalSource || "Untitled Source"}`,
+            `PATH: ${doc.path || doc.metadata?.path || "Unknown"}`,
+            `AUTHORITY TYPE: ${
+              doc.authorityType ||
+              doc.authority_type ||
+              doc.metadata?.authorityType ||
+              "SECONDARY"
+            }`,
+            `AUTHORITY LEVEL: ${
+              doc.authorityLevel ||
+              doc.authority_level ||
+              doc.metadata?.authorityLevel ||
+              99
+            }`,
+            `AUTHORITY SCORE: ${
+              doc.authorityScore ||
+              doc.authority_score ||
+              doc.metadata?.authorityScore ||
+              0
+            }`,
+            `FINAL SCORE: ${doc.finalScore || doc.score || 0}`,
+            "TEXT:",
+            doc.text || ""
+          ].join("\n")
+        )
+        .join("\n\n---\n\n");
+
       if (provisionModeResult.handled) {
         preliminaryAnswer = provisionModeResult.answer || "";
       } else if (caseModeResult.handled) {
@@ -1538,12 +1721,14 @@ Quick Recall:
       } else if (doctrineModeResult.handled) {
         preliminaryAnswer = doctrineModeResult.answer || "";
       } else if (topEvidence.length > 0) {
+        const topLegalBasesForPrompt = selectTopLegalBases(displayableRankedDocs, 2);
+
         const strictPrompt = buildStrictAnswerPrompt({
           hookMode: hookConfig?.mode || "ASK",
           originalQuestion,
           cleanQuestion,
           context: strictContext,
-          topLegalBases,
+          topLegalBases: topLegalBasesForPrompt,
           conflict: hierarchyConflict
         });
 
@@ -1590,7 +1775,24 @@ Quick Recall:
           }));
       }
 
-      preliminaryAnswer = stripTrailingSourceSection(preliminaryAnswer);
+      preliminaryAnswer = hardStripSourceLeakage(
+        stripTrailingSourceSection(preliminaryAnswer)
+      );
+
+      const groundedDisplayableDocs = selectGroundedDisplayableDocs(
+        displayableRankedDocs,
+        {
+          answerText: preliminaryAnswer,
+          finalQuestion,
+          namedLawDetection,
+          issuance
+        }
+      );
+
+      const finalDisplayableDocs = groundedDisplayableDocs;
+      const topDisplayableEvidence = rankEvidenceByAuthority(
+        normalizeRetrievedEvidence(finalDisplayableDocs)
+      ).slice(0, 10);
 
       const claimSupportMap = buildClaimSupportMap(
         preliminaryAnswer,
@@ -1605,9 +1807,19 @@ Quick Recall:
         minTopScore: 0.25
       });
 
+      const fallbackReason =
+        namedLawDetection.matched &&
+        finalDisplayableDocs.length === 0 &&
+        namedLawDetection.bestMatch
+          ? `No exact indexed source matched ${namedLawDetection.bestMatch.shortTitle || namedLawDetection.bestMatch.canonicalTitle}.`
+          : !topEvidence.length
+            ? "No indexed Google Drive/Supabase vector source matched the question."
+            : "Indexed sources were found but evidence strength was insufficient.";
+
       const shouldFallback =
-        (namedLawDetection.matched && displayableRankedDocs.length === 0) ||
-        topDisplayableEvidence.length === 0 ||
+        (namedLawDetection.matched && finalDisplayableDocs.length === 0) ||
+        (issuance && finalDisplayableDocs.length === 0) ||
+        topEvidence.length === 0 ||
         shouldRejectForWeakLegalBasis({
           validation,
           hasExactCitation: Boolean(mergedRetrieval.exactCitation?.matched)
@@ -1668,7 +1880,7 @@ Quick Recall:
       }
 
       if (hookConfig.mode === "SOURCE_FINDER") {
-        const sourcesUsed = finalizeSourcesForResponse(displayableRankedDocs, {
+        const sourcesUsed = finalizeSourcesForResponse(finalDisplayableDocs, {
           maxItems: MAX_VISIBLE_SOURCES
         });
 
@@ -1773,7 +1985,7 @@ Quick Recall:
         });
       }
 
-      const sourcesUsed = finalizeSourcesForResponse(displayableRankedDocs, {
+      const sourcesUsed = finalizeSourcesForResponse(finalDisplayableDocs, {
         maxItems: MAX_VISIBLE_SOURCES
       });
 
@@ -1789,6 +2001,7 @@ Quick Recall:
       else if (topTier <= 7) confidence = "LIMITED";
       else confidence = "LOW";
 
+      const topLegalBases = selectTopLegalBases(finalDisplayableDocs, 2);
       const legalBasisText = formatLegalBasisBlock(topLegalBases);
       const supportingRulesText = buildSupportingRulesText({
         topLegalBases,
@@ -1813,7 +2026,9 @@ Quick Recall:
         });
       }
 
-      answerText = stripTrailingSourceSection(answerText);
+      answerText = hardStripSourceLeakage(
+        stripTrailingSourceSection(answerText)
+      );
 
       await saveAllMemory(answerText, sourcesUsed, []);
 
@@ -1836,13 +2051,15 @@ Quick Recall:
                   ? `exact_issuance_${hookConfig.mode.toLowerCase()}_reasoned`
                   : `${hookConfig.mode.toLowerCase()}_reasoned_answer`,
         confidence,
-        sourceStatus: "INDEXED_REASONED_SOURCE_USED",
+        sourceStatus: sourcesUsed.length
+          ? "INDEXED_REASONED_SOURCE_USED"
+          : "INDEXED_ANSWER_WITH_NO_DISPLAYABLE_SOURCE",
         questionType,
         topicData,
         originalQuestion,
         resolvedQuestion: finalQuestion,
         sourcesUsed,
-        vectorMatches: displayableRankedDocs.length,
+        vectorMatches: finalDisplayableDocs.length,
         detectedIssuance: issuance || null,
         detectedNamedLaw: namedLawDetection.bestMatch || null,
         reasoningRunId: reasoningRun?.id || null,
