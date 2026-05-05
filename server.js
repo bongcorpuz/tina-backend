@@ -85,7 +85,8 @@ import {
   rerankByHierarchy,
   detectHierarchyConflict,
   selectTopLegalBases,
-  buildStrictAnswerPrompt
+  buildStrictAnswerPrompt,
+  buildAuthorityMetadata
 } from "./authority-engine.js";
 
 import {
