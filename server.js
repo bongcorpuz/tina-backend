@@ -1858,6 +1858,43 @@ async function clearPendingQuizAttempts(userId, conversationId = null) {
 }
 
 
+// REQUIRED IMPORTS TO ADD IN server.js IF NOT YET PRESENT:
+//
+// import {
+//   reconcileDoctrine
+// } from "./doctrinal-engine.js";
+//
+// import {
+//   applySupersessionFilter
+// } from "./supersession-engine.js";
+//
+// import {
+//   buildClaimSupportMap,
+//   validateEvidenceSufficiency,
+//   shouldRejectForWeakLegalBasis,
+//   buildNoSourceReply
+// } from "./legal-validation-engine.js";
+//
+// import {
+//   maybeGenerateCaseAnalysisAnswer
+// } from "./case-analysis-engine.js";
+//
+// import {
+//   maybeGenerateProvisionCitationAnswer
+// } from "./provision-citation-engine.js";
+//
+// import {
+//   maybeGenerateDoctrineAnswer
+// } from "./doctrine-tagging-engine.js";
+//
+// import {
+//   formatLegalBasisBlock,
+//   formatSourcesUsedBlock,
+//   buildConflictFlagText,
+//   buildSupportingRulesText,
+//   ensureStructuredAnswerSections
+// } from "./citation-formatting-engine.js";
+
 /* ================= ASK ROUTE ================= */
 
 app.post("/ask", authenticate, async (req, res) => {
@@ -1881,91 +1918,96 @@ app.post("/ask", authenticate, async (req, res) => {
       });
     }
 
- const existingMode = await getModeState(supabase, userId, conversationId || null);
+    const existingMode = await getModeState(
+      supabase,
+      userId,
+      conversationId || null
+    );
 
-const exitCommands = ["/bye", "/exit", "/stop", "/quit", "/reset"];
+    const exitCommands = ["/bye", "/exit", "/stop", "/quit", "/reset"];
 
-if (exitCommands.includes(rawQuestion.toLowerCase())) {
-  const activeHook = existingMode?.active_hook || "/ask";
+    if (exitCommands.includes(rawQuestion.toLowerCase())) {
+      const activeHook = existingMode?.active_hook || "/ask";
 
-  await clearModeState(supabase, userId, conversationId || null);
-  await clearPendingQuizAttempts(userId, conversationId || null);
+      await clearModeState(supabase, userId, conversationId || null);
+      await clearPendingQuizAttempts(userId, conversationId || null);
 
-  let answerText = "You are already in normal /ask mode.";
+      let answerText = "You are already in normal /ask mode.";
 
-  if (activeHook === "/quiz") {
-    answerText = "Quiz mode ended. You are now back in normal /ask mode.";
-  } else if (activeHook === "/review") {
-    answerText = "Review mode ended. You are now back in normal /ask mode.";
-  } else if (activeHook === "/diagnostic") {
-    answerText = "Diagnostic mode ended. You are now back in normal /ask mode.";
-  } else if (activeHook !== "/ask") {
-    answerText = `Mode ${activeHook} ended. You are now back in normal /ask mode.`;
-  }
+      if (activeHook === "/quiz") {
+        answerText = "Quiz mode ended. You are now back in normal /ask mode.";
+      } else if (activeHook === "/review") {
+        answerText = "Review mode ended. You are now back in normal /ask mode.";
+      } else if (activeHook === "/diagnostic") {
+        answerText = "Diagnostic mode ended. You are now back in normal /ask mode.";
+      } else if (activeHook !== "/ask") {
+        answerText = `Mode ${activeHook} ended. You are now back in normal /ask mode.`;
+      }
 
-  return res.json({
-    success: true,
-    engine: "TINA Mode State System",
-    mode: "MODE_CLEARED",
-    previousMode: activeHook,
-    answer: answerText,
-    sourceStatus: "MODE_STATE_CLEARED",
-    sourcesUsed: [],
-    vectorMatches: 0
-  });
-}
-
-const pendingQuiz = await fetchLatestPendingQuizDirect(
-  userId,
-  conversationId || null
-);
-
-const directQuizAnswer = extractQuizAnswer(rawQuestion);
-const normalizedInput = rawQuestion.toLowerCase();
-const allowedExitCommands = ["/bye", "/exit", "/stop", "/quit", "/reset"];
-
-if (pendingQuiz && directQuizAnswer) {
-  const loopResult = await continueAssessmentLoop({
-    userId,
-    conversationId: conversationId || null,
-    incomingAnswer: rawQuestion
-  });
-
-  if (loopResult.handled) {
-    return res.json(loopResult.response);
-  }
-}
-
-if (pendingQuiz && !directQuizAnswer) {
-  if (!allowedExitCommands.includes(normalizedInput)) {
-    const activeHook = existingMode?.active_hook || "/quiz";
-
-    let lockedModeLabel = "quiz";
-    let lockedModeMessage =
-      "You are still in active quiz mode. Please answer using A, B, C, or D only. Type /bye or /exit to leave quiz mode.";
-
-    if (activeHook === "/review") {
-      lockedModeLabel = "review";
-      lockedModeMessage =
-        "You are still in active review mode. Please answer the current multiple-choice question using A, B, C, or D only. Type /bye or /exit to leave review mode.";
-    } else if (activeHook === "/diagnostic") {
-      lockedModeLabel = "diagnostic";
-      lockedModeMessage =
-        "You are still in active diagnostic mode. Please answer the current multiple-choice question using A, B, C, or D only. Type /bye or /exit to leave diagnostic mode.";
+      return res.json({
+        success: true,
+        engine: "TINA Mode State System",
+        mode: "MODE_CLEARED",
+        previousMode: activeHook,
+        answer: answerText,
+        sourceStatus: "MODE_STATE_CLEARED",
+        sourcesUsed: [],
+        vectorMatches: 0
+      });
     }
 
-    return res.json({
-      success: false,
-      engine: "TINA Continuous Learning Engine",
-      mode: "QUIZ_MODE_LOCKED",
-      lockedMode: lockedModeLabel,
-      answer: lockedModeMessage,
-      sourceStatus: "QUIZ_MODE_LOCKED",
-      sourcesUsed: [],
-      vectorMatches: 0
-    });
-  }
-}
+    const pendingQuiz = await fetchLatestPendingQuizDirect(
+      userId,
+      conversationId || null
+    );
+
+    const directQuizAnswer = extractQuizAnswer(rawQuestion);
+    const normalizedInput = rawQuestion.toLowerCase();
+    const allowedExitCommands = ["/bye", "/exit", "/stop", "/quit", "/reset"];
+
+    if (pendingQuiz && directQuizAnswer) {
+      const loopResult = await continueAssessmentLoop({
+        userId,
+        conversationId: conversationId || null,
+        incomingAnswer: rawQuestion
+      });
+
+      if (loopResult.handled) {
+        return res.json(loopResult.response);
+      }
+    }
+
+    if (pendingQuiz && !directQuizAnswer) {
+      if (!allowedExitCommands.includes(normalizedInput)) {
+        const activeHook = existingMode?.active_hook || "/quiz";
+
+        let lockedModeLabel = "quiz";
+        let lockedModeMessage =
+          "You are still in active quiz mode. Please answer using A, B, C, or D only. Type /bye or /exit to leave quiz mode.";
+
+        if (activeHook === "/review") {
+          lockedModeLabel = "review";
+          lockedModeMessage =
+            "You are still in active review mode. Please answer the current multiple-choice question using A, B, C, or D only. Type /bye or /exit to leave review mode.";
+        } else if (activeHook === "/diagnostic") {
+          lockedModeLabel = "diagnostic";
+          lockedModeMessage =
+            "You are still in active diagnostic mode. Please answer the current multiple-choice question using A, B, C, or D only. Type /bye or /exit to leave diagnostic mode.";
+        }
+
+        return res.json({
+          success: false,
+          engine: "TINA Continuous Learning Engine",
+          mode: "QUIZ_MODE_LOCKED",
+          lockedMode: lockedModeLabel,
+          answer: lockedModeMessage,
+          sourceStatus: "QUIZ_MODE_LOCKED",
+          sourcesUsed: [],
+          vectorMatches: 0
+        });
+      }
+    }
+
     let effectiveQuestion = rawQuestion;
 
     if (
@@ -2038,7 +2080,9 @@ if (pendingQuiz && !directQuizAnswer) {
 
     if (hookConfig.mode === "FEEDBACK") {
       const cleanCorrection = String(correction || "").trim();
-      const cleanFeedbackType = String(feedbackType || "general_feedback").trim();
+      const cleanFeedbackType = String(
+        feedbackType || "general_feedback"
+      ).trim();
 
       if (!cleanCorrection) {
         return res.status(400).json({
@@ -2081,7 +2125,10 @@ if (pendingQuiz && !directQuizAnswer) {
       });
     }
 
-    if (hookConfig.mode === "QUIZ_MASTER" || hookConfig.mode === "ADAPTIVE_QUIZ") {
+    if (
+      hookConfig.mode === "QUIZ_MASTER" ||
+      hookConfig.mode === "ADAPTIVE_QUIZ"
+    ) {
       const questionResult = await generateStoredAssessmentQuestion({
         userId,
         conversationId,
@@ -2097,7 +2144,8 @@ if (pendingQuiz && !directQuizAnswer) {
           error: questionResult.error,
           rawQuiz: questionResult.rawQuiz || null,
           supabaseError: questionResult.supabaseError || null,
-          answer: "TINA failed to generate the next stored multiple-choice question."
+          answer:
+            "TINA failed to generate the next stored multiple-choice question."
         });
       }
 
@@ -2116,7 +2164,9 @@ if (pendingQuiz && !directQuizAnswer) {
         difficulty: questionResult.quiz.difficulty,
         correctAnswerStored: Boolean(questionResult.storedQuiz.correct_answer),
         pendingAnswerStored: questionResult.storedQuiz.user_answer === null,
-        confidence: questionResult.sourceChunks.length ? "GDRIVE_GROUNDED" : "GENERAL_ADAPTIVE",
+        confidence: questionResult.sourceChunks.length
+          ? "GDRIVE_GROUNDED"
+          : "GENERAL_ADAPTIVE",
         sourceStatus: questionResult.sourceChunks.length
           ? "GDRIVE_GROUNDED_QUESTION_READY"
           : "GENERAL_QUESTION_READY",
@@ -2143,7 +2193,9 @@ if (pendingQuiz && !directQuizAnswer) {
           error: questionResult.error,
           rawQuiz: questionResult.rawQuiz || null,
           supabaseError: questionResult.supabaseError || null,
-          answer: teachingText || "TINA failed to generate the reviewer multiple-choice question."
+          answer:
+            teachingText ||
+            "TINA failed to generate the reviewer multiple-choice question."
         });
       }
 
@@ -2162,7 +2214,9 @@ if (pendingQuiz && !directQuizAnswer) {
         difficulty: questionResult.quiz.difficulty,
         correctAnswerStored: Boolean(questionResult.storedQuiz.correct_answer),
         pendingAnswerStored: questionResult.storedQuiz.user_answer === null,
-        confidence: questionResult.sourceChunks.length ? "GDRIVE_GROUNDED" : "GENERAL_ADAPTIVE",
+        confidence: questionResult.sourceChunks.length
+          ? "GDRIVE_GROUNDED"
+          : "GENERAL_ADAPTIVE",
         sourceStatus: questionResult.sourceChunks.length
           ? "GDRIVE_GROUNDED_QUESTION_READY"
           : "GENERAL_QUESTION_READY",
@@ -2188,7 +2242,11 @@ if (pendingQuiz && !directQuizAnswer) {
 
     if ((!finalQuestion || finalQuestion.length < 5) && conversationId && userId) {
       try {
-        const lastState = await getLastTopicState(supabase, userId, conversationId);
+        const lastState = await getLastTopicState(
+          supabase,
+          userId,
+          conversationId
+        );
         if (lastState?.last_question) {
           finalQuestion = lastState.last_question;
         }
@@ -2242,177 +2300,262 @@ if (pendingQuiz && !directQuizAnswer) {
     }
 
     const retrieval = await hybridRetrieve({
-  supabase,
-  vectorStore: { smartSearch, searchSimilar },
-  query: finalQuestion,
-  questionType,
-  taxType: topicData.taxType || "",
-  topK: 24
-});
-
-const hierarchyRerankedDocs = rerankByHierarchy(
-  retrieval.results || [],
-  finalQuestion
-);
-
-let evidence = normalizeRetrievedEvidence(
-  hierarchyRerankedDocs.map((doc) => ({
-    ...doc,
-    authority_tier: doc.authorityLevel ?? doc.authority_tier,
-    metadata: {
-      ...(doc.metadata || {}),
-      authorityTier:
-        doc.authorityLevel ?? doc.metadata?.authorityTier ?? null,
-      authorityType:
-        doc.authorityType ?? doc.metadata?.authorityType ?? null,
-      authorityScore:
-        doc.authorityScore ?? doc.metadata?.authorityScore ?? null,
-      normalizedReference:
-        doc.normalizedReference ??
-        doc.metadata?.normalizedReference ??
-        null,
-      normalizedAliases:
-        doc.normalizedAliases ??
-        doc.metadata?.normalizedAliases ??
-        []
-    }
-  }))
-);
-
-evidence = rankEvidenceByAuthority(evidence);
-
-const hierarchyConflict = detectHierarchyConflict(
-  hierarchyRerankedDocs.slice(0, 5)
-);
-
-const topLegalBases = selectTopLegalBases(
-  hierarchyRerankedDocs,
-  2
-);
-
-const conflicts = detectEvidenceConflicts(evidence);
-
-if (hierarchyConflict?.conflict) {
-  conflicts.unshift({
-    conflict_topic: "authority_hierarchy",
-    source_a_path:
-      hierarchyConflict.conflictingDocs?.[0]?.path ||
-      hierarchyConflict.conflictingDocs?.[0]?.metadata?.path ||
-      hierarchyConflict.conflictingDocs?.[0]?.source ||
-      null,
-    source_b_path:
-      hierarchyConflict.conflictingDocs?.[1]?.path ||
-      hierarchyConflict.conflictingDocs?.[1]?.metadata?.path ||
-      hierarchyConflict.conflictingDocs?.[1]?.source ||
-      null,
-    source_a_claim: (
-      hierarchyConflict.conflictingDocs?.[0]?.text || ""
-    ).slice(0, 500),
-    source_b_claim: (
-      hierarchyConflict.conflictingDocs?.[1]?.text || ""
-    ).slice(0, 500),
-    preferred_source_path: hierarchyConflict.controllingSource || null,
-    conflict_reason:
-      hierarchyConflict.reason || "Higher authority prevails.",
-    resolution_basis: `Controlling authority: ${
-      hierarchyConflict.controllingAuthority || "UNKNOWN"
-    }`
-  });
-}
-
-const topEvidence = evidence.slice(0, 10);
-
-const strictContext = hierarchyRerankedDocs
-  .slice(0, 5)
-  .map((doc, index) =>
-    [
-      `SOURCE ${index + 1}: ${doc.source || doc.originalSource || "Untitled Source"}`,
-      `PATH: ${doc.path || doc.metadata?.path || "Unknown"}`,
-      `AUTHORITY TYPE: ${doc.authorityType || doc.metadata?.authorityType || "SECONDARY"}`,
-      `AUTHORITY LEVEL: ${doc.authorityLevel || doc.metadata?.authorityLevel || 99}`,
-      `AUTHORITY SCORE: ${doc.authorityScore || doc.metadata?.authorityScore || 0}`,
-      `FINAL SCORE: ${doc.finalScore || 0}`,
-      `TEXT:`,
-      doc.text || ""
-    ].join("\n")
-  )
-  .join("\n\n---\n\n");
-
-const fallbackReason =
-  !topEvidence.length
-    ? "No indexed Google Drive/Supabase vector source matched the question."
-    : "Indexed sources were found but evidence strength was insufficient.";
-
-let preliminaryAnswer = "";
-
-if (topEvidence.length > 0) {
-  const strictPrompt = buildStrictAnswerPrompt({
-    hookMode: hookConfig?.mode || "ASK",
-    originalQuestion,
-    cleanQuestion,
-    context: strictContext,
-    topLegalBases,
-    conflict: hierarchyConflict
-  });
-
-  const strictResponse = await openai.chat.completions.create({
-    model: process.env.OPENAI_MODEL || "gpt-4o-mini",
-    temperature: 0,
-    messages: [
-      { role: "system", content: strictPrompt },
-      {
-        role: "user",
-        content: [
-          `Conversation Memory:`,
-          memoryContext || "No prior conversation.",
-          ``,
-          `Topic Data:`,
-          JSON.stringify(topicData || {}),
-          ``,
-          `Question Type: ${questionType}`,
-          `Resolved Question: ${finalQuestion}`
-        ].join("\n")
-      }
-    ]
-  });
-
-  preliminaryAnswer =
-    strictResponse.choices?.[0]?.message?.content?.trim() ||
-    (await synthesizeGroundedAnswer({
-      openai,
-      hookConfig,
-      originalQuestion,
-      cleanQuestion,
-      topicData,
+      supabase,
+      vectorStore: { smartSearch, searchSimilar },
+      query: finalQuestion,
       questionType,
-      evidence: topEvidence,
-      conflicts,
-      memoryContext
-    }));
-}
+      taxType: topicData.taxType || "",
+      topK: 24
+    });
 
-const evidenceMap = buildClaimEvidenceMap(preliminaryAnswer, topEvidence);
+    const hierarchyRerankedDocs = rerankByHierarchy(
+      retrieval.results || [],
+      finalQuestion
+    );
 
-const supportedClaims = evidenceMap.filter(
-  (item) =>
-    item.support_status === "supported" ||
-    item.support_status === "partial"
-);
+    const supersessionResult = applySupersessionFilter(
+      hierarchyRerankedDocs,
+      new Date()
+    );
 
-const topConfidence =
-  hierarchyRerankedDocs.length > 0
-    ? Math.max(
-        ...hierarchyRerankedDocs.map((item) =>
-          Number(item.finalScore || item.score || 0)
-        )
+    const activeRankedDocs =
+      supersessionResult.activeDocs?.length > 0
+        ? supersessionResult.activeDocs
+        : hierarchyRerankedDocs;
+
+    const doctrinalReview = reconcileDoctrine({
+      rankedDocs: activeRankedDocs,
+      maxDocs: 5
+    });
+
+    const hierarchyConflict =
+      doctrinalReview?.hierarchyConflict ||
+      detectHierarchyConflict(activeRankedDocs.slice(0, 5));
+
+    const topLegalBases = selectTopLegalBases(activeRankedDocs, 2);
+
+    let evidence = normalizeRetrievedEvidence(
+      activeRankedDocs.map((doc) => ({
+        ...doc,
+        authority_tier:
+          doc.authorityLevel ??
+          doc.authority_level ??
+          doc.metadata?.authorityLevel ??
+          null,
+        metadata: {
+          ...(doc.metadata || {}),
+          authorityTier:
+            doc.authorityLevel ??
+            doc.authority_level ??
+            doc.metadata?.authorityLevel ??
+            null,
+          authorityType:
+            doc.authorityType ??
+            doc.authority_type ??
+            doc.metadata?.authorityType ??
+            null,
+          authorityScore:
+            doc.authorityScore ??
+            doc.authority_score ??
+            doc.metadata?.authorityScore ??
+            null,
+          normalizedReference:
+            doc.normalizedReference ??
+            doc.normalized_reference ??
+            doc.metadata?.normalizedReference ??
+            null,
+          normalizedAliases:
+            doc.normalizedAliases ??
+            doc.normalized_aliases ??
+            doc.metadata?.normalizedAliases ??
+            [],
+          effectiveFrom:
+            doc.effectiveFrom ??
+            doc.effective_from ??
+            doc.metadata?.effectiveFrom ??
+            null,
+          effectiveTo:
+            doc.effectiveTo ??
+            doc.effective_to ??
+            doc.metadata?.effectiveTo ??
+            null,
+          isSuperseded:
+            typeof doc.isSuperseded === "boolean"
+              ? doc.isSuperseded
+              : typeof doc.is_superseded === "boolean"
+                ? doc.is_superseded
+                : Boolean(doc.metadata?.isSuperseded || false),
+          supersededByReference:
+            doc.supersededByReference ??
+            doc.superseded_by_reference ??
+            doc.metadata?.supersededByReference ??
+            null,
+          repealedByReference:
+            doc.repealedByReference ??
+            doc.repealed_by_reference ??
+            doc.metadata?.repealedByReference ??
+            null,
+          amendedByReference:
+            doc.amendedByReference ??
+            doc.amended_by_reference ??
+            doc.metadata?.amendedByReference ??
+            null
+        }
+      }))
+    );
+
+    evidence = rankEvidenceByAuthority(evidence);
+
+    const conflicts = detectEvidenceConflicts(evidence);
+
+    if (hierarchyConflict?.conflict) {
+      conflicts.unshift({
+        conflict_topic: "authority_hierarchy",
+        source_a_path:
+          hierarchyConflict.conflictingDocs?.[0]?.path ||
+          hierarchyConflict.conflictingDocs?.[0]?.metadata?.path ||
+          hierarchyConflict.conflictingDocs?.[0]?.source ||
+          null,
+        source_b_path:
+          hierarchyConflict.conflictingDocs?.[1]?.path ||
+          hierarchyConflict.conflictingDocs?.[1]?.metadata?.path ||
+          hierarchyConflict.conflictingDocs?.[1]?.source ||
+          null,
+        source_a_claim: (
+          hierarchyConflict.conflictingDocs?.[0]?.text || ""
+        ).slice(0, 500),
+        source_b_claim: (
+          hierarchyConflict.conflictingDocs?.[1]?.text || ""
+        ).slice(0, 500),
+        preferred_source_path: hierarchyConflict.controllingSource || null,
+        conflict_reason:
+          hierarchyConflict.reason || "Higher authority prevails.",
+        resolution_basis: `Controlling authority: ${
+          hierarchyConflict.controllingAuthority || "UNKNOWN"
+        }`
+      });
+    }
+
+    const topEvidence = evidence.slice(0, 10);
+
+    const strictContext = activeRankedDocs
+      .slice(0, 5)
+      .map((doc, index) =>
+        [
+          `SOURCE ${index + 1}: ${doc.source || doc.originalSource || "Untitled Source"}`,
+          `PATH: ${doc.path || doc.metadata?.path || "Unknown"}`,
+          `AUTHORITY TYPE: ${doc.authorityType || doc.authority_type || doc.metadata?.authorityType || "SECONDARY"}`,
+          `AUTHORITY LEVEL: ${doc.authorityLevel || doc.authority_level || doc.metadata?.authorityLevel || 99}`,
+          `AUTHORITY SCORE: ${doc.authorityScore || doc.authority_score || doc.metadata?.authorityScore || 0}`,
+          `FINAL SCORE: ${doc.finalScore || doc.score || 0}`,
+          `TEXT:`,
+          doc.text || ""
+        ].join("\n")
       )
-    : 0;
+      .join("\n\n---\n\n");
 
-const shouldFallback =
-  topEvidence.length === 0 ||
-  supportedClaims.length === 0 ||
-  (!retrieval.exactCitation?.matched && topConfidence < 0.25);
-    
+    const fallbackReason =
+      !topEvidence.length
+        ? "No indexed Google Drive/Supabase vector source matched the question."
+        : "Indexed sources were found but evidence strength was insufficient.";
+
+    let preliminaryAnswer = "";
+
+    const provisionModeResult = await maybeGenerateProvisionCitationAnswer({
+      openai,
+      question: finalQuestion,
+      retrievedResults: activeRankedDocs,
+      model: process.env.OPENAI_MODEL || "gpt-4o-mini"
+    });
+
+    const caseModeResult = !provisionModeResult.handled
+      ? await maybeGenerateCaseAnalysisAnswer({
+          openai,
+          question: finalQuestion,
+          retrievedResults: activeRankedDocs,
+          model: process.env.OPENAI_MODEL || "gpt-4o-mini"
+        })
+      : { handled: false };
+
+    const doctrineModeResult =
+      !provisionModeResult.handled && !caseModeResult.handled
+        ? await maybeGenerateDoctrineAnswer({
+            openai,
+            question: finalQuestion,
+            retrievedResults: activeRankedDocs,
+            model: process.env.OPENAI_MODEL || "gpt-4o-mini"
+          })
+        : { handled: false };
+
+    if (provisionModeResult.handled) {
+      preliminaryAnswer = provisionModeResult.answer || "";
+    } else if (caseModeResult.handled) {
+      preliminaryAnswer = caseModeResult.answer || "";
+    } else if (doctrineModeResult.handled) {
+      preliminaryAnswer = doctrineModeResult.answer || "";
+    } else if (topEvidence.length > 0) {
+      const strictPrompt = buildStrictAnswerPrompt({
+        hookMode: hookConfig?.mode || "ASK",
+        originalQuestion,
+        cleanQuestion,
+        context: strictContext,
+        topLegalBases,
+        conflict: hierarchyConflict
+      });
+
+      const strictResponse = await openai.chat.completions.create({
+        model: process.env.OPENAI_MODEL || "gpt-4o-mini",
+        temperature: 0,
+        messages: [
+          { role: "system", content: strictPrompt },
+          {
+            role: "user",
+            content: [
+              `Conversation Memory:`,
+              memoryContext || "No prior conversation.",
+              ``,
+              `Topic Data:`,
+              JSON.stringify(topicData || {}),
+              ``,
+              `Question Type: ${questionType}`,
+              `Resolved Question: ${finalQuestion}`
+            ].join("\n")
+          }
+        ]
+      });
+
+      preliminaryAnswer =
+        strictResponse.choices?.[0]?.message?.content?.trim() ||
+        (await synthesizeGroundedAnswer({
+          openai,
+          hookConfig,
+          originalQuestion,
+          cleanQuestion,
+          topicData,
+          questionType,
+          evidence: topEvidence,
+          conflicts,
+          memoryContext
+        }));
+    }
+
+    const claimSupportMap = buildClaimSupportMap(preliminaryAnswer, topEvidence);
+
+    const validation = validateEvidenceSufficiency({
+      evidence: activeRankedDocs,
+      claimSupportMap,
+      minEvidenceCount: 1,
+      minSupportedClaims: 1,
+      minTopScore: 0.25
+    });
+
+    const shouldFallback =
+      topEvidence.length === 0 ||
+      shouldRejectForWeakLegalBasis({
+        validation,
+        hasExactCitation: Boolean(retrieval.exactCitation?.matched)
+      });
+
     let reasoningRun = null;
 
     try {
@@ -2426,14 +2569,21 @@ const shouldFallback =
         retrievalStatus: topEvidence.length ? "evidence_found" : "no_evidence",
         reasoningStatus: shouldFallback ? "fallback" : "grounded_answer",
         fallbackUsed: shouldFallback,
-        topConfidence: Number(topConfidence.toFixed(4)),
-        answerSummary: preliminaryAnswer.slice(0, 1000)
+        topConfidence: Number(
+          Math.max(
+            0,
+            ...activeRankedDocs.map((item) =>
+              Number(item.finalScore || item.score || 0)
+            )
+          ).toFixed(4)
+        ),
+        answerSummary: String(preliminaryAnswer || "").slice(0, 1000)
       });
 
       if (reasoningRun?.id) {
         await saveReasoningEvidence(supabase, {
           reasoningRunId: reasoningRun.id,
-          evidence: evidenceMap
+          evidence: claimSupportMap
         });
 
         if (conflicts.length) {
@@ -2543,8 +2693,6 @@ const shouldFallback =
       });
     }
 
-    let answerText = preliminaryAnswer || "No verified answer found in the indexed source.";
-
     const sourcesUsed = uniqueSources(
       topEvidence.map((item) => ({
         source: item.source_title,
@@ -2560,7 +2708,9 @@ const shouldFallback =
       }))
     );
 
-    const topTier = Math.min(...sourcesUsed.map((s) => s.authorityTier || 99));
+    const topTier = sourcesUsed.length
+      ? Math.min(...sourcesUsed.map((s) => s.authorityTier || 99))
+      : 99;
 
     let confidence = "MEDIUM";
     if (issuance) confidence = "HIGH";
@@ -2569,18 +2719,36 @@ const shouldFallback =
     else if (topTier <= 7) confidence = "LIMITED";
     else confidence = "LOW";
 
-    if (!answerText.toLowerCase().includes("sources used:")) {
-      answerText += `\n\nSources Used:\n${sourcesUsed
-        .map((s) => `- ${s.path || s.originalSource || s.source}`)
-        .join("\n")}`;
-    }
+    const legalBasisText = formatLegalBasisBlock(topLegalBases);
+    const supportingRulesText = buildSupportingRulesText({
+      topLegalBases,
+      extraSources: sourcesUsed
+    });
+    const conflictFlagText = buildConflictFlagText(hierarchyConflict);
+    const sourcesUsedText = formatSourcesUsedBlock(sourcesUsed, {
+      maxItems: 8
+    });
 
-    if (!answerText.toLowerCase().includes("confidence:")) {
-      answerText += `\n\nConfidence:\n${confidence}`;
-    }
+    let answerText = preliminaryAnswer || buildNoSourceReply();
 
-    if (conflicts.length && !answerText.toLowerCase().includes("conflict")) {
-      answerText += `\n\nConflict Note:\nPotential source conflict detected. TINA preferred the higher-authority evidence where applicable.`;
+    if (
+      !caseModeResult.handled &&
+      !provisionModeResult.handled &&
+      !doctrineModeResult.handled
+    ) {
+      answerText = ensureStructuredAnswerSections({
+        directAnswer: preliminaryAnswer || buildNoSourceReply(),
+        legalBasis: legalBasisText,
+        supportingRules: supportingRulesText,
+        professionalInsight:
+          issuance || questionType === "issuance"
+            ? "Use the cited issuance and verify the latest amended or superseding BIR issuance before relying on the rule operationally."
+            : "Apply the higher-authority rule first and use lower-authority material only as support.",
+        conflictFlag: conflictFlagText,
+        sourcesUsed: sourcesUsedText
+      });
+    } else if (!String(answerText).toLowerCase().includes("sources used")) {
+      answerText = `${answerText}\n\n${sourcesUsedText}`;
     }
 
     await saveAllMemory(answerText);
@@ -2592,9 +2760,15 @@ const shouldFallback =
       mode: hookConfig.mode,
       hookTitle: hookConfig.title,
       answer: answerText,
-      answerMode: issuance
-        ? `exact_issuance_${hookConfig.mode.toLowerCase()}_reasoned`
-        : `${hookConfig.mode.toLowerCase()}_reasoned_answer`,
+      answerMode: provisionModeResult.handled
+        ? "provision_citation_answer"
+        : caseModeResult.handled
+          ? "case_analysis_answer"
+          : doctrineModeResult.handled
+            ? "doctrine_analysis_answer"
+            : issuance
+              ? `exact_issuance_${hookConfig.mode.toLowerCase()}_reasoned`
+              : `${hookConfig.mode.toLowerCase()}_reasoned_answer`,
       confidence,
       sourceStatus: "INDEXED_REASONED_SOURCE_USED",
       questionType,
@@ -2602,10 +2776,13 @@ const shouldFallback =
       originalQuestion,
       resolvedQuestion: finalQuestion,
       sourcesUsed,
-      vectorMatches: topEvidence.length,
+      vectorMatches: activeRankedDocs.length,
       detectedIssuance: issuance || null,
       reasoningRunId: reasoningRun?.id || null,
-      conflictCount: conflicts.length
+      conflictCount: conflicts.length,
+      hierarchyConflict: Boolean(hierarchyConflict?.conflict),
+      doctrinalConflictCount: doctrinalReview?.doctrinalConflicts?.length || 0,
+      supersededFilteredCount: supersessionResult?.superseded?.length || 0
     });
   } catch (error) {
     console.error("Ask error:", error);
