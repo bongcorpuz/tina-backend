@@ -1878,43 +1878,6 @@ async function clearPendingQuizAttempts(userId, conversationId = null) {
 }
 
 
-// REQUIRED IMPORTS TO ADD IN server.js IF NOT YET PRESENT:
-//
-// import {
-//   reconcileDoctrine
-// } from "./doctrinal-engine.js";
-//
-// import {
-//   applySupersessionFilter
-// } from "./supersession-engine.js";
-//
-// import {
-//   buildClaimSupportMap,
-//   validateEvidenceSufficiency,
-//   shouldRejectForWeakLegalBasis,
-//   buildNoSourceReply
-// } from "./legal-validation-engine.js";
-//
-// import {
-//   maybeGenerateCaseAnalysisAnswer
-// } from "./case-analysis-engine.js";
-//
-// import {
-//   maybeGenerateProvisionCitationAnswer
-// } from "./provision-citation-engine.js";
-//
-// import {
-//   maybeGenerateDoctrineAnswer
-// } from "./doctrine-tagging-engine.js";
-//
-// import {
-//   formatLegalBasisBlock,
-//   formatSourcesUsedBlock,
-//   buildConflictFlagText,
-//   buildSupportingRulesText,
-//   ensureStructuredAnswerSections
-// } from "./citation-formatting-engine.js";
-
 /* ================= ASK ROUTE ================= */
 
 app.post("/ask", authenticate, async (req, res) => {
@@ -2344,6 +2307,22 @@ app.post("/ask", authenticate, async (req, res) => {
       });
     }
 
+    function shouldHideSourceFromUser(source = {}) {
+      const path = String(
+        source.path ||
+          source.source_path ||
+          source.metadata?.path ||
+          source.originalSource ||
+          source.source ||
+          ""
+      ).toLowerCase();
+
+      return (
+        path.includes("07_cpa_notes") ||
+        path.includes("08_review_materials")
+      );
+    }
+
     const retrieval = await hybridRetrieve({
       supabase,
       vectorStore: { smartSearch, searchSimilar },
@@ -2651,7 +2630,7 @@ app.post("/ask", authenticate, async (req, res) => {
     }
 
     if (hookConfig.mode === "SOURCE_FINDER") {
-      const sourcesUsed = topEvidence.map((item) => {
+      const rawSourceFinderSources = topEvidence.map((item) => {
         const fileId =
           item.fileId ||
           item.file_id ||
@@ -2700,6 +2679,10 @@ app.post("/ask", authenticate, async (req, res) => {
           preview: item.text ? item.text.substring(0, 300) : ""
         };
       });
+
+      const sourcesUsed = rawSourceFinderSources.filter(
+        (item) => !shouldHideSourceFromUser(item)
+      );
 
       if (!sourcesUsed.length) {
         return res.json({
@@ -2781,7 +2764,7 @@ app.post("/ask", authenticate, async (req, res) => {
       });
     }
 
-    const sourcesUsed = uniqueSources(
+    const rawSourcesUsed = uniqueSources(
       topEvidence.map((item) => {
         const fileId =
           item.fileId ||
@@ -2835,6 +2818,10 @@ app.post("/ask", authenticate, async (req, res) => {
           }
         };
       })
+    );
+
+    const sourcesUsed = rawSourcesUsed.filter(
+      (item) => !shouldHideSourceFromUser(item)
     );
 
     const topTier = sourcesUsed.length
