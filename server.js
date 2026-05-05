@@ -1327,13 +1327,16 @@ async function continueAssessmentLoop({
     teachingText: ""
   });
 
-  let nextQuestionText = "\nNext question could not be generated. Type the mode command again to continue.";
-  let nextSources = [];
+let nextQuestionText = "\nNext question could not be generated. Type the mode command again to continue.";
+let nextSources = [];
 
-  if (nextQuestion.ok) {
-    nextSources = nextQuestion.sourceChunks || [];
-    nextQuestionText = ["", "Next Question:", nextQuestion.answerText].join("\n");
-  }
+if (nextQuestion.ok) {
+  nextSources = finalizeSourcesForResponse(
+    nextQuestion.sourceChunks || [],
+    pendingQuiz.topic || "VAT"
+  );
+  nextQuestionText = ["", "Next Question:", nextQuestion.answerText].join("\n");
+}
 
   const finalAnswer = [
     isCorrect ? "Correct ✅" : "Incorrect ❌",
