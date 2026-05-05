@@ -188,6 +188,7 @@ function toSafeDbNumeric(value, max = 999999.9999, decimals = 4) {
   return Number(
     Math.min(max, Math.max(0, num)).toFixed(decimals)
   );
+}
 
 function normalizeSourceName(name = "") {
   return String(name)
