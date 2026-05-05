@@ -29,44 +29,54 @@ function lower(value = "") {
 export function detectCaseAnalysisIntent(question = "") {
   const q = lower(question);
 
-  const directCaseSignals = [
-    "case",
-    "jurisprudence",
-    "ruling",
-    "doctrine",
-    "facts",
-    "issue",
-    "application",
-    "cta",
-    "supreme court",
-    "g.r. no.",
-    "court of tax appeals"
-  ];
-
-  const caseFormatSignals = [
-    "facts, issue, ruling",
+  const strongCaseSignals = [
+    "analyze the case",
+    "case analysis",
     "facts issue ruling",
-    "facts -> issue -> ruling",
+    "facts, issue, ruling",
     "facts doctrine application",
-    "case breakdown",
     "break down the case",
-    "discuss one supreme court case",
-    "discuss one case",
-    "present facts",
-    "explain the doctrine"
+    "case breakdown",
+    "discuss the case",
+    "explain the case",
+    "summarize the case",
+    "what happened in the case",
+    "what was the ruling",
+    "what is the doctrine in",
+    "cta case",
+    "g.r. no.",
+    "supreme court case",
+    "court of tax appeals case"
   ];
 
-  const hasDirectCaseSignal = directCaseSignals.some((token) =>
-    q.includes(token)
-  );
+  const caseReferenceSignals = [
+    " v. ",
+    " vs ",
+    " vs. ",
+    "cta",
+    "court of tax appeals",
+    "supreme court",
+    "g.r. no."
+  ];
 
-  const hasCaseFormatSignal = caseFormatSignals.some((token) =>
-    q.includes(token)
-  );
+  const genericTaxExplainSignals = [
+    "what is vat",
+    "explain vat",
+    "what is income tax",
+    "explain income tax",
+    "what is percentage tax",
+    "explain percentage tax",
+    "what is withholding tax",
+    "explain withholding tax"
+  ];
+
+  const hasStrongCaseSignal = strongCaseSignals.some((token) => q.includes(token));
+  const hasCaseReferenceSignal = caseReferenceSignals.some((token) => q.includes(token));
+  const isGenericExplain = genericTaxExplainSignals.some((token) => q.includes(token));
 
   return {
-    isCaseAnalysis: hasDirectCaseSignal || hasCaseFormatSignal,
-    confidence: hasCaseFormatSignal ? "high" : hasDirectCaseSignal ? "medium" : "low"
+    isCaseAnalysis: !isGenericExplain && (hasStrongCaseSignal || hasCaseReferenceSignal),
+    confidence: hasStrongCaseSignal ? "high" : hasCaseReferenceSignal ? "medium" : "low"
   };
 }
 
