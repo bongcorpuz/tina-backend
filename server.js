@@ -88,8 +88,20 @@ import {
   buildStrictAnswerPrompt
 } from "./authority-engine.js";
 
-// FILE: server.js
-// Add these imports near the top
+import {
+  reconcileDoctrine
+} from "./doctrinal-engine.js";
+
+import {
+  applySupersessionFilter
+} from "./supersession-engine.js";
+
+import {
+  buildClaimSupportMap,
+  validateEvidenceSufficiency,
+  shouldRejectForWeakLegalBasis,
+  buildNoSourceReply
+} from "./legal-validation-engine.js";
 
 import {
   createBackgroundReindexController
