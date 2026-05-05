@@ -165,7 +165,12 @@ function buildPossibleSourceKeywords(query = "") {
 
   if (rmcMatch) {
     keywords.push(
-      ...buildIssuanceKeywords("rmc", rmcMatch[1], rmcMatch[2], "revenue memorandum circular")
+      ...buildIssuanceKeywords(
+        "rmc",
+        rmcMatch[1],
+        rmcMatch[2],
+        "revenue memorandum circular"
+      )
     );
   }
 
@@ -175,7 +180,12 @@ function buildPossibleSourceKeywords(query = "") {
 
   if (rmoMatch) {
     keywords.push(
-      ...buildIssuanceKeywords("rmo", rmoMatch[1], rmoMatch[2], "revenue memorandum order")
+      ...buildIssuanceKeywords(
+        "rmo",
+        rmoMatch[1],
+        rmoMatch[2],
+        "revenue memorandum order"
+      )
     );
   }
 
@@ -249,11 +259,25 @@ function getTopicKeywords(topic = "") {
   }
 
   if (q.includes("final")) {
-    return ["final tax", "final withholding", "passive income", "interest income", "royalties", "dividends"];
+    return [
+      "final tax",
+      "final withholding",
+      "passive income",
+      "interest income",
+      "royalties",
+      "dividends"
+    ];
   }
 
   if (q.includes("capital") || q.includes("cgt")) {
-    return ["capital gains tax", "cgt", "capital asset", "sale of shares", "real property", "6%"];
+    return [
+      "capital gains tax",
+      "cgt",
+      "capital asset",
+      "sale of shares",
+      "real property",
+      "6%"
+    ];
   }
 
   if (q.includes("donor")) {
@@ -297,7 +321,14 @@ function getTopicKeywords(topic = "") {
   }
 
   if (q.includes("local") || q.includes("lgu")) {
-    return ["local taxation", "local tax", "business tax", "lgu", "mayor's permit", "local business tax"];
+    return [
+      "local taxation",
+      "local tax",
+      "business tax",
+      "lgu",
+      "mayor's permit",
+      "local business tax"
+    ];
   }
 
   return [String(topic || "").trim()].filter(Boolean);
@@ -379,7 +410,7 @@ function scoreQuizRowForTopic(row, topic = "") {
   return score;
 }
 
-/* ================= AUTHORITY HELPERS ================= */
+/* ================= AUTHORITY + SUPERSESSION HELPERS ================= */
 
 function buildAuthorityFields(text, source, metadata = {}) {
   const authority = buildAuthorityMetadata({
@@ -409,7 +440,11 @@ function buildAuthorityFields(text, source, metadata = {}) {
       metadata.originalSource ||
       source,
     effective_from: metadata.effectiveFrom || null,
-    effective_to: metadata.effectiveTo || null
+    effective_to: metadata.effectiveTo || null,
+    is_superseded: Boolean(metadata.isSuperseded || false),
+    superseded_by_reference: metadata.supersededByReference || null,
+    repealed_by_reference: metadata.repealedByReference || null,
+    amended_by_reference: metadata.amendedByReference || null
   };
 }
 
@@ -435,7 +470,11 @@ function buildStoredMetadata(source, metadata, authorityFields) {
     sourceCategory: authorityFields.source_category,
     documentTitle: authorityFields.document_title,
     effectiveFrom: authorityFields.effective_from,
-    effectiveTo: authorityFields.effective_to
+    effectiveTo: authorityFields.effective_to,
+    isSuperseded: authorityFields.is_superseded,
+    supersededByReference: authorityFields.superseded_by_reference,
+    repealedByReference: authorityFields.repealed_by_reference,
+    amendedByReference: authorityFields.amended_by_reference
   };
 }
 
@@ -469,9 +508,22 @@ function mapRowToResult(row, score = 1) {
       jurisdiction: row.jurisdiction || metadata.jurisdiction || "PH",
       sourceCategory: row.source_category || metadata.sourceCategory || null,
       documentTitle:
-        row.document_title || metadata.documentTitle || metadata.originalFileName || row.source,
+        row.document_title ||
+        metadata.documentTitle ||
+        metadata.originalFileName ||
+        row.source,
       effectiveFrom: row.effective_from || metadata.effectiveFrom || null,
-      effectiveTo: row.effective_to || metadata.effectiveTo || null
+      effectiveTo: row.effective_to || metadata.effectiveTo || null,
+      isSuperseded:
+        typeof row.is_superseded === "boolean"
+          ? row.is_superseded
+          : Boolean(metadata.isSuperseded || false),
+      supersededByReference:
+        row.superseded_by_reference || metadata.supersededByReference || null,
+      repealedByReference:
+        row.repealed_by_reference || metadata.repealedByReference || null,
+      amendedByReference:
+        row.amended_by_reference || metadata.amendedByReference || null
     },
     authorityType: row.authority_type || metadata.authorityType || "SECONDARY",
     authorityLevel: Number(row.authority_level || metadata.authorityLevel || 9),
@@ -486,6 +538,18 @@ function mapRowToResult(row, score = 1) {
         ? metadata.normalizedAliases
         : [],
     recencyDate: row.recency_date || metadata.recencyDate || null,
+    effectiveFrom: row.effective_from || metadata.effectiveFrom || null,
+    effectiveTo: row.effective_to || metadata.effectiveTo || null,
+    isSuperseded:
+      typeof row.is_superseded === "boolean"
+        ? row.is_superseded
+        : Boolean(metadata.isSuperseded || false),
+    supersededByReference:
+      row.superseded_by_reference || metadata.supersededByReference || null,
+    repealedByReference:
+      row.repealed_by_reference || metadata.repealedByReference || null,
+    amendedByReference:
+      row.amended_by_reference || metadata.amendedByReference || null,
     score: row.score ?? score
   };
 }
@@ -500,7 +564,37 @@ function buildSourceIlikeFilters(keyword) {
     `metadata->>originalFileName.ilike.%${normalizedKeyword}%`,
     `metadata->>normalizedSource.ilike.%${normalizedKeyword}%`,
     `metadata->>path.ilike.%${normalizedKeyword}%`,
-    `normalized_reference.ilike.%${normalizedKeyword}%`
+    `normalized_reference.ilike.%${normalizedKeyword}%`,
+    `superseded_by_reference.ilike.%${normalizedKeyword}%`,
+    `repealed_by_reference.ilike.%${normalizedKeyword}%`,
+    `amended_by_reference.ilike.%${normalizedKeyword}%`
+  ].join(",");
+}
+
+function buildSelectColumns() {
+  return [
+    "id",
+    "source",
+    "original_source",
+    "chunk_index",
+    "text",
+    "metadata",
+    "authority_type",
+    "authority_level",
+    "authority_score",
+    "authority_label",
+    "normalized_reference",
+    "normalized_aliases",
+    "recency_date",
+    "jurisdiction",
+    "source_category",
+    "document_title",
+    "effective_from",
+    "effective_to",
+    "is_superseded",
+    "superseded_by_reference",
+    "repealed_by_reference",
+    "amended_by_reference"
   ].join(",");
 }
 
@@ -554,7 +648,7 @@ export async function addDocumentToVectorStore(text, source, metadata = {}) {
 
   const rows = [];
 
-  for (let i = 0; i < chunks.length; i++) {
+  for (let i = 0; i < chunks.length; i += 1) {
     const chunk = chunks[i];
     const embedding = await embedText(chunk);
 
@@ -588,7 +682,11 @@ export async function addDocumentToVectorStore(text, source, metadata = {}) {
       source_category: authorityFields.source_category,
       document_title: authorityFields.document_title,
       effective_from: authorityFields.effective_from,
-      effective_to: authorityFields.effective_to
+      effective_to: authorityFields.effective_to,
+      is_superseded: authorityFields.is_superseded,
+      superseded_by_reference: authorityFields.superseded_by_reference,
+      repealed_by_reference: authorityFields.repealed_by_reference,
+      amended_by_reference: authorityFields.amended_by_reference
     });
   }
 
@@ -641,28 +739,7 @@ export async function searchBySourceName(keyword, topK = 8) {
 
   const { data, error } = await supabase
     .from(VECTOR_TABLE)
-    .select(
-      [
-        "id",
-        "source",
-        "original_source",
-        "chunk_index",
-        "text",
-        "metadata",
-        "authority_type",
-        "authority_level",
-        "authority_score",
-        "authority_label",
-        "normalized_reference",
-        "normalized_aliases",
-        "recency_date",
-        "jurisdiction",
-        "source_category",
-        "document_title",
-        "effective_from",
-        "effective_to"
-      ].join(",")
-    )
+    .select(buildSelectColumns())
     .or(buildSourceIlikeFilters(normalizedKeyword))
     .order("chunk_index", { ascending: true })
     .limit(topK);
@@ -704,28 +781,7 @@ export async function getQuizSourceChunks({
 
   let query = supabase
     .from(VECTOR_TABLE)
-    .select(
-      [
-        "id",
-        "source",
-        "original_source",
-        "chunk_index",
-        "text",
-        "metadata",
-        "authority_type",
-        "authority_level",
-        "authority_score",
-        "authority_label",
-        "normalized_reference",
-        "normalized_aliases",
-        "recency_date",
-        "jurisdiction",
-        "source_category",
-        "document_title",
-        "effective_from",
-        "effective_to"
-      ].join(",")
-    )
+    .select(buildSelectColumns())
     .not("text", "is", null)
     .limit(Math.max(limit * 20, 80));
 
@@ -816,6 +872,18 @@ export async function getQuizSourceChunks({
           ? row.metadata.normalizedAliases
           : [],
       recencyDate: row.recency_date || row.metadata?.recencyDate || null,
+      effectiveFrom: row.effective_from || row.metadata?.effectiveFrom || null,
+      effectiveTo: row.effective_to || row.metadata?.effectiveTo || null,
+      isSuperseded:
+        typeof row.is_superseded === "boolean"
+          ? row.is_superseded
+          : Boolean(row.metadata?.isSuperseded || false),
+      supersededByReference:
+        row.superseded_by_reference || row.metadata?.supersededByReference || null,
+      repealedByReference:
+        row.repealed_by_reference || row.metadata?.repealedByReference || null,
+      amendedByReference:
+        row.amended_by_reference || row.metadata?.amendedByReference || null,
       quizTopic: cleanTopic,
       quizTopicScore: row.quizTopicScore
     },
@@ -832,6 +900,18 @@ export async function getQuizSourceChunks({
         ? row.metadata.normalizedAliases
         : [],
     recencyDate: row.recency_date || row.metadata?.recencyDate || null,
+    effectiveFrom: row.effective_from || row.metadata?.effectiveFrom || null,
+    effectiveTo: row.effective_to || row.metadata?.effectiveTo || null,
+    isSuperseded:
+      typeof row.is_superseded === "boolean"
+        ? row.is_superseded
+        : Boolean(row.metadata?.isSuperseded || false),
+    supersededByReference:
+      row.superseded_by_reference || row.metadata?.supersededByReference || null,
+    repealedByReference:
+      row.repealed_by_reference || row.metadata?.repealedByReference || null,
+    amendedByReference:
+      row.amended_by_reference || row.metadata?.amendedByReference || null,
     score: row.quizTopicScore
   }));
 }
