@@ -25,7 +25,7 @@ const SOURCE_TIER_RULES = [
     tier: 2,
     label: "REVENUE REGULATION",
     weight: 0.95,
-    authorityType: "REVENUE_REGULATION"
+    authorityType: "RR"
   },
   {
     matchers: [
@@ -37,7 +37,7 @@ const SOURCE_TIER_RULES = [
     tier: 3,
     label: "REVENUE MEMORANDUM CIRCULAR",
     weight: 0.9,
-    authorityType: "RMC"
+    authorityType: "BIR_ISSUANCE"
   },
   {
     matchers: [
@@ -49,7 +49,7 @@ const SOURCE_TIER_RULES = [
     tier: 4,
     label: "REVENUE MEMORANDUM ORDER",
     weight: 0.85,
-    authorityType: "RMO"
+    authorityType: "BIR_ISSUANCE"
   },
   {
     matchers: ["05_bir_rulings", "/05_bir_rulings/", "bir ruling", "ruling"],
