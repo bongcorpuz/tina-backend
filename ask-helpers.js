@@ -1,8 +1,11 @@
 // FILE: ask-helpers.js
 
-import { rerankByHierarchy } from "./authority-engine.js";
-
 export const MAX_VISIBLE_SOURCES = 5;
+
+const HIDDEN_FOLDER_PATTERNS = [
+  "07_cpa_notes",
+  "08_review_materials"
+];
 
 export function getUserId(req) {
   return (
@@ -59,9 +62,12 @@ export function getDocPath(doc = {}) {
   return String(
     doc.metadata?.path ||
       doc.path ||
+      doc.source_path ||
       doc.metadata?.originalFileName ||
+      doc.metadata?.originalSource ||
       doc.originalSource ||
       doc.source ||
+      doc.title ||
       ""
   );
 }
@@ -72,6 +78,7 @@ export function getDocOriginalName(doc = {}) {
       doc.metadata?.originalFileName ||
       doc.originalSource ||
       doc.source ||
+      doc.title ||
       ""
   );
 }
@@ -121,77 +128,79 @@ export function formatQuestionBlock({
   parts.push("");
   parts.push("Instruction:");
   parts.push("Answer A, B, C, or D. Type /bye or /exit to stop.");
-  parts.push("");
-
-  if (storedQuiz?.source_title) parts.push(`Source: ${storedQuiz.source_title}`);
-  if (storedQuiz?.source_path) parts.push(`Source Path: ${storedQuiz.source_path}`);
 
   return parts.filter(Boolean).join("\n");
 }
 
 export function shouldHideSourceFromUser(source = {}) {
-  const path = String(
-    source.path ||
-      source.source_path ||
-      source.metadata?.path ||
-      source.originalSource ||
-      source.source ||
-      ""
-  ).toLowerCase();
+  const rawValues = [
+    getDocPath(source),
+    getDocOriginalName(source),
+    source.path,
+    source.source_path,
+    source.source,
+    source.title,
+    source.originalSource
+  ];
 
-  return (
-    path.includes("07_cpa_notes") ||
-    path.includes("08_review_materials")
-  );
+  const haystack = rawValues
+    .filter(Boolean)
+    .map((value) => String(value).toLowerCase())
+    .join(" || ");
+
+  return HIDDEN_FOLDER_PATTERNS.some((pattern) => haystack.includes(pattern));
+}
+
+export function buildGoogleDriveLinks(doc = {}) {
+  const fileId =
+    doc.fileId ||
+    doc.file_id ||
+    doc.metadata?.fileId ||
+    doc.metadata?.file_id ||
+    null;
+
+  const driveViewUrl =
+    doc.driveViewUrl ||
+    doc.drive_view_url ||
+    doc.metadata?.driveViewUrl ||
+    doc.metadata?.drive_view_url ||
+    (fileId ? `https://drive.google.com/file/d/${fileId}/view` : null);
+
+  const driveDownloadUrl =
+    doc.driveDownloadUrl ||
+    doc.drive_download_url ||
+    doc.metadata?.driveDownloadUrl ||
+    doc.metadata?.drive_download_url ||
+    (fileId
+      ? `https://drive.google.com/uc?export=download&id=${fileId}`
+      : null);
+
+  return {
+    fileId,
+    driveViewUrl,
+    driveDownloadUrl
+  };
 }
 
 export function buildSourceResponseItem(item = {}) {
-  const fileId =
-    item.fileId ||
-    item.file_id ||
-    item.metadata?.fileId ||
-    item.metadata?.file_id ||
-    null;
+  const links = buildGoogleDriveLinks(item);
+  const path = getDocPath(item);
+  const originalSource = getDocOriginalName(item);
 
   return {
-    title:
-      item.title ||
-      item.source_title ||
-      item.metadata?.documentTitle ||
-      item.source ||
-      item.originalSource ||
-      "Unknown source",
-    source:
-      item.source ||
-      item.source_title ||
-      item.originalSource ||
-      "Unknown source",
-    originalSource:
-      item.originalSource ||
-      item.metadata?.originalSource ||
-      item.source_title ||
-      item.source ||
-      null,
-    path:
-      item.source_path ||
-      item.path ||
-      item.metadata?.path ||
-      item.originalSource ||
-      item.source ||
-      null,
-    fileId,
-    driveViewUrl:
-      item.driveViewUrl ||
-      item.metadata?.driveViewUrl ||
-      (fileId ? `https://drive.google.com/file/d/${fileId}/view` : null),
-    driveDownloadUrl:
-      item.driveDownloadUrl ||
-      item.metadata?.driveDownloadUrl ||
-      (fileId ? `https://drive.google.com/uc?export=download&id=${fileId}` : null),
+    title: originalSource || item.title || item.source || "Untitled Source",
+    source: item.source || originalSource || path || "Untitled Source",
+    originalSource,
+    path,
+    fileId: links.fileId,
+    driveViewUrl: links.driveViewUrl,
+    driveDownloadUrl: links.driveDownloadUrl,
     text: item.text || "",
-    preview: item.preview || (item.text ? item.text.substring(0, 300) : ""),
-    score: Number(item.finalScore || item.adjustedScore || item.score || 0),
-    adjustedScore: Number(item.finalScore || item.adjustedScore || item.score || 0),
+    preview: item.preview || (item.text ? String(item.text).slice(0, 300) : ""),
+    score: Number(item.score ?? item.adjustedScore ?? item.finalScore ?? 0),
+    adjustedScore: Number(
+      item.adjustedScore ?? item.finalScore ?? item.score ?? 0
+    ),
     authorityType:
       item.authorityType ||
       item.authority_type ||
@@ -201,7 +210,6 @@ export function buildSourceResponseItem(item = {}) {
       item.authorityLevel ||
       item.authority_level ||
       item.metadata?.authorityLevel ||
-      item.authority_tier ||
       null,
     authorityScore:
       item.authorityScore ||
@@ -216,86 +224,43 @@ export function buildSourceResponseItem(item = {}) {
   };
 }
 
-export function finalizeSourcesForResponse(rawSources = [], query = "") {
-  const reranked = rerankByHierarchy(
-    rawSources.map((item) => buildSourceResponseItem(item)),
-    query
-  );
-
+export function uniqueSources(docs = []) {
   const seen = new Set();
 
-  return reranked
-    .filter((item) => !shouldHideSourceFromUser(item))
-    .filter((item) => item.driveViewUrl)
-    .filter((item) => {
-      const key = String(
-        item.fileId ||
-          item.driveViewUrl ||
-          item.path ||
-          item.originalSource ||
-          item.source ||
-          item.title ||
-          ""
-      )
-        .trim()
-        .toLowerCase();
+  return docs
+    .map((doc) => buildSourceResponseItem(doc))
+    .filter((doc) => {
+      const key =
+        doc.fileId ||
+        normalizeForMatch(doc.path) ||
+        normalizeForMatch(doc.originalSource) ||
+        normalizeForMatch(doc.source);
 
       if (!key || seen.has(key)) return false;
+
       seen.add(key);
       return true;
-    })
-    .slice(0, MAX_VISIBLE_SOURCES)
-    .map((item) => ({
-      title: item.title,
-      source: item.source,
-      originalSource: item.originalSource,
-      path: item.path,
-      fileId: item.fileId,
-      driveViewUrl: item.driveViewUrl,
-      driveDownloadUrl: item.driveDownloadUrl,
-      text: item.text,
-      preview: item.preview,
-      score: item.score,
-      adjustedScore: item.adjustedScore,
-      authorityType: item.authorityType,
-      authorityLevel: item.authorityLevel,
-      authorityScore: item.authorityScore,
-      authorityLabel: item.authorityLabel
-    }));
+    });
 }
 
-export function getSourceTier(doc = {}) {
-  const value = `${getDocPath(doc)} ${getDocOriginalName(doc)} ${doc.source || ""}`.toLowerCase();
+export function finalizeSourcesForResponse(
+  rawSources = [],
+  { maxItems = MAX_VISIBLE_SOURCES } = {}
+) {
+  return uniqueSources(rawSources)
+    .filter((item) => !shouldHideSourceFromUser(item))
+    .filter((item) => item.driveViewUrl)
+    .sort((a, b) => {
+      const aLevel = Number(a.authorityLevel ?? 999);
+      const bLevel = Number(b.authorityLevel ?? 999);
 
-  if (value.includes("01_tax_code")) {
-    return { tier: 1, label: "Tax Code / NIRC", weight: 1.0 };
-  }
+      if (aLevel !== bLevel) {
+        return aLevel - bLevel;
+      }
 
-  if (value.includes("02_revenue_regulations")) {
-    return { tier: 2, label: "Revenue Regulations", weight: 0.95 };
-  }
-
-  if (value.includes("03_rmc")) {
-    return { tier: 3, label: "Revenue Memorandum Circulars", weight: 0.9 };
-  }
-
-  if (value.includes("04_rmo")) {
-    return { tier: 4, label: "Revenue Memorandum Orders", weight: 0.85 };
-  }
-
-  if (value.includes("05_bir_rulings")) {
-    return { tier: 5, label: "BIR Rulings", weight: 0.75 };
-  }
-
-  if (value.includes("06_court_cases")) {
-    return { tier: 6, label: "Court Cases", weight: 0.6 };
-  }
-
-  if (value.includes("07_cpa_notes")) {
-    return { tier: 7, label: "CPA Notes / Internal Notes", weight: 0.4 };
-  }
-
-  return { tier: 99, label: "Unclassified Source", weight: 0.5 };
+      return Number(b.adjustedScore ?? b.score ?? 0) - Number(a.adjustedScore ?? a.score ?? 0);
+    })
+    .slice(0, maxItems);
 }
 
 export function classifyQuestion(question = "") {
@@ -427,76 +392,26 @@ export function detectIssuanceQuery(question = "") {
   return null;
 }
 
-export function isExactIssuanceMatch(doc, issuance) {
-  if (!doc || !issuance) return false;
+export function isStructuredAnswer(text = "") {
+  const value = String(text || "").trim();
 
-  const type = String(issuance.type || "").toLowerCase();
-  const number = normalizeIssuanceNumber(issuance.number);
-  const year = normalizeIssuanceYear(issuance.year);
+  if (!value) {
+    return false;
+  }
 
-  const number2 = number.padStart(2, "0");
-  const number3 = number.padStart(3, "0");
-
-  const rawCandidates = [
-    doc.source,
-    doc.originalSource,
-    doc.metadata?.originalSource,
-    doc.metadata?.originalFileName,
-    doc.metadata?.normalizedSource,
-    doc.metadata?.path,
-    doc.path
-  ].filter(Boolean);
-
-  const normalizedCandidates = rawCandidates.map(normalizeForMatch);
-
-  const fullName =
-    type === "rr"
-      ? "revenue-regulation"
-      : type === "rmc"
-        ? "revenue-memorandum-circular"
-        : "revenue-memorandum-order";
-
-  const pluralFullName =
-    type === "rr"
-      ? "revenue-regulations"
-      : type === "rmc"
-        ? "revenue-memorandum-circulars"
-        : "revenue-memorandum-orders";
-
-  const possibleTargets = [
-    `${type}-${number}-${year}`,
-    `${type}-${number2}-${year}`,
-    `${type}-${number3}-${year}`,
-    `${type}_${number}-${year}`,
-    `${type}_${number2}-${year}`,
-    `${type}_${number3}-${year}`,
-    `${type}-${number}_${year}`,
-    `${type}-${number2}_${year}`,
-    `${type}-${number3}_${year}`,
-    `${type}${number}-${year}`,
-    `${type}${number2}-${year}`,
-    `${type}${number3}-${year}`,
-    `${type}${number}_${year}`,
-    `${type}${number2}_${year}`,
-    `${type}${number3}_${year}`,
-    `${type}${number}${year}`,
-    `${type}${number2}${year}`,
-    `${type}${number3}${year}`,
-    `${type}-no-${number}-${year}`,
-    `${type}-no-${number2}-${year}`,
-    `${type}-no-${number3}-${year}`,
-    `${fullName}-${number}-${year}`,
-    `${fullName}-${number2}-${year}`,
-    `${fullName}-${number3}-${year}`,
-    `${fullName}-no-${number}-${year}`,
-    `${fullName}-no-${number2}-${year}`,
-    `${fullName}-no-${number3}-${year}`,
-    `${pluralFullName}-${number}-${year}`,
-    `${pluralFullName}-${number2}-${year}`,
-    `${pluralFullName}-${number3}-${year}`
-  ].map(normalizeForMatch);
-
-  return normalizedCandidates.some((candidate) =>
-    possibleTargets.some((target) => candidate.includes(target))
+  return (
+    /(^|\n)\s*(1\.\s*)?DIRECT ANSWER\b/i.test(value) &&
+    /\bLEGAL BASIS\b/i.test(value) &&
+    /\b(CONFLICT FLAG|PROFESSIONAL INSIGHT|SUPPORTING RULES)\b/i.test(value)
   );
+}
+
+export function stripTrailingSourceSection(text = "") {
+  return String(text || "")
+    .replace(/\n+\s*6\.\s*SOURCES USED[\s\S]*$/i, "")
+    .replace(/\n+\s*SOURCES USED[\s\S]*$/i, "")
+    .replace(/\n+\s*Sources:\s*[\s\S]*$/i, "")
+    .replace(/\n+\s*See clickable sources below\.\s*$/i, "")
+    .replace(/\n+\s*No clickable sources available\.\s*$/i, "")
+    .trim();
 }
