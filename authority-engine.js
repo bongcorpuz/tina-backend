@@ -65,6 +65,234 @@ function padDocNumber(num, len = 2) {
   return String(num || "").replace(/^0+/, "").padStart(len, "0");
 }
 
+function buildBlob({ fileName = "", path = "", text = "" }) {
+  return `${fileName}\n${path}\n${text}`.toLowerCase();
+}
+
+function startsLikeOfficialReviewMaterial(path = "", fileName = "") {
+  const p = lower(path);
+  const f = lower(fileName);
+
+  if (!p.includes("08_review_materials")) return false;
+
+  return (
+    f.includes("bullet notes") ||
+    f.includes("reviewer") ||
+    f.includes("review materials") ||
+    f.includes("handout") ||
+    f.includes("notes")
+  );
+}
+
+function classifyAuthorityFromPath(path = "") {
+  const p = lower(path);
+
+  if (!p) return null;
+
+  if (p.includes("01_tax_code")) return "STATUTE";
+  if (p.includes("02_revenue_regulations")) return "RR";
+  if (p.includes("03_rmc")) return "BIR_ISSUANCE";
+  if (p.includes("04_rmo")) return "BIR_ISSUANCE";
+  if (p.includes("05_bir_rulings")) return "BIR_RULING";
+  if (p.includes("06_court_cases")) return "JURISPRUDENCE";
+  if (p.includes("07_cpa_notes")) return "SECONDARY";
+  if (p.includes("08_review_materials")) return "SECONDARY";
+
+  return null;
+}
+
+function detectOfficialLegalReferenceFromName(input = "") {
+  const raw = compactSpaces(input);
+  const l = lower(raw);
+
+  if (!raw) return null;
+
+  if (
+    l.includes("1987 philippine constitution") ||
+    l.includes("constitution of the philippines")
+  ) {
+    return "CONSTITUTION";
+  }
+
+  if (
+    l.includes("national internal revenue code") ||
+    /\bnirc\b/.test(l) ||
+    /\btax code\b/.test(l)
+  ) {
+    return "STATUTE";
+  }
+
+  if (/\b(?:republic\s+act|ra)\s*(?:no\.?)?\s*\d+\b/i.test(raw)) {
+    return "STATUTE";
+  }
+
+  if (
+    /\b(?:rr|revenue\s+regulation[s]?)\s*(?:no\.?)?\s*\d+[-_ ]\d{2,4}\b/i.test(raw)
+  ) {
+    return "RR";
+  }
+
+  if (
+    /\b(?:rmc|revenue\s+memorandum\s+circular[s]?)\s*(?:no\.?)?\s*\d+[-_ ]\d{2,4}\b/i.test(raw)
+  ) {
+    return "BIR_ISSUANCE";
+  }
+
+  if (
+    /\b(?:rmo|revenue\s+memorandum\s+order[s]?)\s*(?:no\.?)?\s*\d+[-_ ]\d{2,4}\b/i.test(raw) ||
+    /\b(?:rda|revenue\s+delegation\s+authority)\s*(?:no\.?)?\s*\d+[-_ ]\d{2,4}\b/i.test(raw)
+  ) {
+    return "BIR_ISSUANCE";
+  }
+
+  if (
+    /\b(?:bir\s+ruling|ruling)\s*(?:no\.?)?\s*[a-z0-9()-]+\b/i.test(raw)
+  ) {
+    return "BIR_RULING";
+  }
+
+  if (
+    /\bg\.r\.\s*no\.?/i.test(raw) ||
+    l.includes("supreme court") ||
+    l.includes("court of tax appeals") ||
+    l.includes("cta case") ||
+    l.includes("cta en banc") ||
+    l.includes("cta division")
+  ) {
+    return "JURISPRUDENCE";
+  }
+
+  if (
+    l.includes("tax treaty") ||
+    l.includes("international agreement") ||
+    l.includes("convention between")
+  ) {
+    return "TREATY";
+  }
+
+  if (
+    l.includes("ordinance") ||
+    l.includes("city ordinance") ||
+    l.includes("municipal ordinance") ||
+    l.includes("local tax code")
+  ) {
+    return "LGU";
+  }
+
+  return null;
+}
+
+function classifyAuthorityFromFileName(fileName = "", path = "") {
+  if (startsLikeOfficialReviewMaterial(path, fileName)) {
+    return "SECONDARY";
+  }
+
+  return detectOfficialLegalReferenceFromName(fileName);
+}
+
+function classifyAuthorityFromPathAndFileName(fileName = "", path = "") {
+  if (startsLikeOfficialReviewMaterial(path, fileName)) {
+    return "SECONDARY";
+  }
+
+  const combined = `${fileName} ${path}`;
+  return detectOfficialLegalReferenceFromName(combined);
+}
+
+function classifyAuthorityFromTextContent(text = "", fileName = "", path = "") {
+  const blob = lower(text);
+  const file = lower(fileName);
+  const p = lower(path);
+
+  if (!blob) return null;
+
+  if (startsLikeOfficialReviewMaterial(path, fileName)) {
+    return "SECONDARY";
+  }
+
+  if (
+    blob.includes("1987 philippine constitution") ||
+    blob.includes("constitution of the philippines")
+  ) {
+    return "CONSTITUTION";
+  }
+
+  if (
+    blob.includes("national internal revenue code") ||
+    /\bnirc\b/.test(blob)
+  ) {
+    if (
+      file.includes("bullet notes") ||
+      file.includes("review") ||
+      p.includes("07_cpa_notes") ||
+      p.includes("08_review_materials")
+    ) {
+      return null;
+    }
+
+    return "STATUTE";
+  }
+
+  if (
+    blob.includes("tax treaty") ||
+    blob.includes("international agreement") ||
+    blob.includes("convention between")
+  ) {
+    return "TREATY";
+  }
+
+  if (
+    blob.includes("supreme court") ||
+    blob.includes("g.r. no.") ||
+    blob.includes("cta en banc") ||
+    blob.includes("cta division") ||
+    blob.includes("court of tax appeals")
+  ) {
+    return "JURISPRUDENCE";
+  }
+
+  if (
+    /\brr\s*\d+[-_ ]\d{2,4}\b/.test(blob) ||
+    blob.includes("revenue regulation")
+  ) {
+    return "RR";
+  }
+
+  if (
+    /\brmc\s*\d+[-_ ]\d{2,4}\b/.test(blob) ||
+    blob.includes("revenue memorandum circular")
+  ) {
+    return "BIR_ISSUANCE";
+  }
+
+  if (
+    /\brmo\s*\d+[-_ ]\d{2,4}\b/.test(blob) ||
+    /\brda\s*\d+[-_ ]\d{2,4}\b/.test(blob) ||
+    blob.includes("revenue memorandum order") ||
+    blob.includes("revenue delegation authority")
+  ) {
+    return "BIR_ISSUANCE";
+  }
+
+  if (
+    blob.includes("bir ruling") ||
+    /\bruling no\.?\b/.test(blob)
+  ) {
+    return "BIR_RULING";
+  }
+
+  if (
+    blob.includes("ordinance") ||
+    blob.includes("city ordinance") ||
+    blob.includes("municipal ordinance") ||
+    blob.includes("local tax code")
+  ) {
+    return "LGU";
+  }
+
+  return null;
+}
+
 export function normalizeLegalReference(input = "") {
   const raw = compactSpaces(input);
   const l = lower(raw);
@@ -210,7 +438,11 @@ export function classifyAuthorityFromDocument({
   path = "",
   text = ""
 }) {
-  const blob = `${fileName}\n${path}\n${text}`.toLowerCase();
+  const fileType = classifyAuthorityFromFileName(fileName, path);
+  const pathAndFileType = classifyAuthorityFromPathAndFileName(fileName, path);
+  const textType = classifyAuthorityFromTextContent(text, fileName, path);
+  const pathType = classifyAuthorityFromPath(path);
+  const blob = buildBlob({ fileName, path, text });
 
   if (
     blob.includes("1987 philippine constitution") ||
@@ -219,66 +451,20 @@ export function classifyAuthorityFromDocument({
     return "CONSTITUTION";
   }
 
-  if (
-    blob.includes("national internal revenue code") ||
-    /\bnirc\b/.test(blob) ||
-    /\brepublic act\b/.test(blob) ||
-    /\bra\s*no\.?\s*\d+\b/.test(blob) ||
-    /\bra\s*\d+\b/.test(blob)
-  ) {
-    return "STATUTE";
+  if (fileType) {
+    return fileType;
   }
 
-  if (
-    blob.includes("treaty") ||
-    blob.includes("tax treaty") ||
-    blob.includes("international agreement")
-  ) {
-    return "TREATY";
+  if (pathAndFileType) {
+    return pathAndFileType;
   }
 
-  if (
-    blob.includes("supreme court") ||
-    blob.includes("g.r. no.") ||
-    blob.includes("cta en banc") ||
-    blob.includes("court of tax appeals") ||
-    /\bcta\b/.test(blob)
-  ) {
-    return "JURISPRUDENCE";
+  if (textType) {
+    return textType;
   }
 
-  if (
-    /\brr\s*\d+[-_ ]\d{2,4}\b/.test(blob) ||
-    blob.includes("revenue regulation")
-  ) {
-    return "RR";
-  }
-
-  if (
-    /\brmc\s*\d+[-_ ]\d{2,4}\b/.test(blob) ||
-    /\brmo\s*\d+[-_ ]\d{2,4}\b/.test(blob) ||
-    /\brda\s*\d+[-_ ]\d{2,4}\b/.test(blob) ||
-    blob.includes("revenue memorandum circular") ||
-    blob.includes("revenue memorandum order") ||
-    blob.includes("revenue delegation authority")
-  ) {
-    return "BIR_ISSUANCE";
-  }
-
-  if (
-    blob.includes("bir ruling") ||
-    /\bruling no\.?\b/.test(blob)
-  ) {
-    return "BIR_RULING";
-  }
-
-  if (
-    blob.includes("ordinance") ||
-    blob.includes("city ordinance") ||
-    blob.includes("municipal ordinance") ||
-    blob.includes("local tax code")
-  ) {
-    return "LGU";
+  if (pathType) {
+    return pathType;
   }
 
   return "SECONDARY";
@@ -383,8 +569,8 @@ export function rerankByHierarchy(results = [], query = "") {
       const authorityLevel =
         Number(
           doc.authorityLevel ||
-          doc.authority_level ||
-          doc.metadata?.authorityLevel
+            doc.authority_level ||
+            doc.metadata?.authorityLevel
         ) ||
         AUTHORITY_LEVEL[authorityType] ||
         99;
@@ -392,8 +578,8 @@ export function rerankByHierarchy(results = [], query = "") {
       const authorityScore =
         Number(
           doc.authorityScore ||
-          doc.authority_score ||
-          doc.metadata?.authorityScore
+            doc.authority_score ||
+            doc.metadata?.authorityScore
         ) ||
         AUTHORITY_SCORE[authorityType] ||
         0;
