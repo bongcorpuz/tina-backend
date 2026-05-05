@@ -2090,22 +2090,6 @@ async function clearPendingQuizAttempts(userId, conversationId = null) {
   }
 }
 
-function shouldHideSourceFromUser(source = {}) {
-  const path = String(
-    source.path ||
-      source.source_path ||
-      source.metadata?.path ||
-      source.originalSource ||
-      source.source ||
-      ""
-  ).toLowerCase();
-
-  return (
-    path.includes("07_cpa_notes") ||
-    path.includes("08_review_materials")
-  );
-}
-
 function buildSourceResponseItem(item = {}) {
   const fileId =
     item.fileId ||
