@@ -104,6 +104,18 @@ import {
 } from "./legal-validation-engine.js";
 
 import {
+  maybeGenerateProvisionCitationAnswer
+} from "./provision-citation-engine.js";
+
+import {
+  maybeGenerateCaseAnalysisAnswer
+} from "./case-analysis-engine.js";
+
+import {
+  maybeGenerateDoctrineAnswer
+} from "./doctrine-tagging-engine.js";
+
+import {
   createBackgroundReindexController
 } from "./reindex-service.js";
 
