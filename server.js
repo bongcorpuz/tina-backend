@@ -1977,84 +1977,82 @@ app.post("/ask", authenticate, async (req, res) => {
     }
 
     const pendingQuiz = await fetchLatestPendingQuizDirect(
-  userId,
-  conversationId || null
-);
-
-const directQuizAnswer = extractQuizAnswer(rawQuestion);
-const normalizedInput = rawQuestion.toLowerCase();
-const allowedExitCommands = ["/bye", "/exit", "/stop", "/quit", "/reset"];
-
-const activeAssessmentModes = new Set([
-  "/quiz",
-  "/review",
-  "/diagnostic"
-]);
-
-const activeHook = existingMode?.active_hook || null;
-const hasActiveAssessmentMode = activeAssessmentModes.has(activeHook);
-
-if (pendingQuiz && !hasActiveAssessmentMode) {
-  try {
-    await clearPendingQuizAttempts(userId, conversationId || null);
-    console.log(
-      "Cleared stale pending quiz because no active assessment mode exists.",
-      {
-        userId,
-        conversationId: conversationId || null,
-        pendingQuizId: pendingQuiz.id || null
-      }
+      userId,
+      conversationId || null
     );
-  } catch (clearError) {
-    console.error("Failed to clear stale pending quiz:", clearError.message);
-  }
-}
 
-const freshPendingQuiz = hasActiveAssessmentMode
-  ? pendingQuiz
-  : null;
+    const directQuizAnswer = extractQuizAnswer(rawQuestion);
+    const normalizedInput = rawQuestion.toLowerCase();
+    const allowedExitCommands = ["/bye", "/exit", "/stop", "/quit", "/reset"];
 
-if (freshPendingQuiz && directQuizAnswer) {
-  const loopResult = await continueAssessmentLoop({
-    userId,
-    conversationId: conversationId || null,
-    incomingAnswer: rawQuestion
-  });
+    const activeAssessmentModes = new Set([
+      "/quiz",
+      "/review",
+      "/diagnostic"
+    ]);
 
-  if (loopResult.handled) {
-    return res.json(loopResult.response);
-  }
-}
+    const activeHook = existingMode?.active_hook || null;
+    const hasActiveAssessmentMode = activeAssessmentModes.has(activeHook);
 
-if (freshPendingQuiz && !directQuizAnswer) {
-  if (!allowedExitCommands.includes(normalizedInput)) {
-    let lockedModeLabel = "quiz";
-    let lockedModeMessage =
-      "You are still in active quiz mode. Please answer using A, B, C, or D only. Type /bye or /exit to leave quiz mode.";
-
-    if (activeHook === "/review") {
-      lockedModeLabel = "review";
-      lockedModeMessage =
-        "You are still in active review mode. Please answer the current multiple-choice question using A, B, C, or D only. Type /bye or /exit to leave review mode.";
-    } else if (activeHook === "/diagnostic") {
-      lockedModeLabel = "diagnostic";
-      lockedModeMessage =
-        "You are still in active diagnostic mode. Please answer the current multiple-choice question using A, B, C, or D only. Type /bye or /exit to leave diagnostic mode.";
+    if (pendingQuiz && !hasActiveAssessmentMode) {
+      try {
+        await clearPendingQuizAttempts(userId, conversationId || null);
+        console.log(
+          "Cleared stale pending quiz because no active assessment mode exists.",
+          {
+            userId,
+            conversationId: conversationId || null,
+            pendingQuizId: pendingQuiz.id || null
+          }
+        );
+      } catch (clearError) {
+        console.error("Failed to clear stale pending quiz:", clearError.message);
+      }
     }
 
-    return res.json({
-      success: false,
-      engine: "TINA Continuous Learning Engine",
-      mode: "QUIZ_MODE_LOCKED",
-      lockedMode: lockedModeLabel,
-      answer: lockedModeMessage,
-      sourceStatus: "QUIZ_MODE_LOCKED",
-      sourcesUsed: [],
-      vectorMatches: 0
-    });
-  }
-}
-    
+    const freshPendingQuiz = hasActiveAssessmentMode ? pendingQuiz : null;
+
+    if (freshPendingQuiz && directQuizAnswer) {
+      const loopResult = await continueAssessmentLoop({
+        userId,
+        conversationId: conversationId || null,
+        incomingAnswer: rawQuestion
+      });
+
+      if (loopResult.handled) {
+        return res.json(loopResult.response);
+      }
+    }
+
+    if (freshPendingQuiz && !directQuizAnswer) {
+      if (!allowedExitCommands.includes(normalizedInput)) {
+        let lockedModeLabel = "quiz";
+        let lockedModeMessage =
+          "You are still in active quiz mode. Please answer using A, B, C, or D only. Type /bye or /exit to leave quiz mode.";
+
+        if (activeHook === "/review") {
+          lockedModeLabel = "review";
+          lockedModeMessage =
+            "You are still in active review mode. Please answer the current multiple-choice question using A, B, C, or D only. Type /bye or /exit to leave review mode.";
+        } else if (activeHook === "/diagnostic") {
+          lockedModeLabel = "diagnostic";
+          lockedModeMessage =
+            "You are still in active diagnostic mode. Please answer the current multiple-choice question using A, B, C, or D only. Type /bye or /exit to leave diagnostic mode.";
+        }
+
+        return res.json({
+          success: false,
+          engine: "TINA Continuous Learning Engine",
+          mode: "QUIZ_MODE_LOCKED",
+          lockedMode: lockedModeLabel,
+          answer: lockedModeMessage,
+          sourceStatus: "QUIZ_MODE_LOCKED",
+          sourcesUsed: [],
+          vectorMatches: 0
+        });
+      }
+    }
+
     let effectiveQuestion = rawQuestion;
 
     if (
@@ -2603,6 +2601,21 @@ if (freshPendingQuiz && !directQuizAnswer) {
         hasExactCitation: Boolean(retrieval.exactCitation?.matched)
       });
 
+    const safeTopConfidenceRaw =
+      activeRankedDocs.length > 0
+        ? Math.max(
+            0,
+            ...activeRankedDocs.map((item) => {
+              const value = Number(item.finalScore || item.score || 0);
+              return Number.isFinite(value) ? value : 0;
+            })
+          )
+        : 0;
+
+    const safeTopConfidence = Number(
+      Math.min(9999.9999, Math.max(0, safeTopConfidenceRaw)).toFixed(4)
+    );
+
     let reasoningRun = null;
 
     try {
@@ -2616,14 +2629,7 @@ if (freshPendingQuiz && !directQuizAnswer) {
         retrievalStatus: topEvidence.length ? "evidence_found" : "no_evidence",
         reasoningStatus: shouldFallback ? "fallback" : "grounded_answer",
         fallbackUsed: shouldFallback,
-        topConfidence: Number(
-          Math.max(
-            0,
-            ...activeRankedDocs.map((item) =>
-              Number(item.finalScore || item.score || 0)
-            )
-          ).toFixed(4)
-        ),
+        topConfidence: safeTopConfidence,
         answerSummary: String(preliminaryAnswer || "").slice(0, 1000)
       });
 
@@ -2645,20 +2651,55 @@ if (freshPendingQuiz && !directQuizAnswer) {
     }
 
     if (hookConfig.mode === "SOURCE_FINDER") {
-      const sourcesUsed = topEvidence.map((item) => ({
-        title: item.source_title,
-        source: item.source_title,
-        originalSource: item.source_title,
-        path: item.source_path,
-        fileId: null,
-        driveViewUrl: null,
-        driveDownloadUrl: null,
-        score: item.score,
-        adjustedScore: item.score,
-        authorityTier: item.authority_tier,
-        authorityLabel: item.authority_label,
-        preview: item.text ? item.text.substring(0, 300) : ""
-      }));
+      const sourcesUsed = topEvidence.map((item) => {
+        const fileId =
+          item.fileId ||
+          item.file_id ||
+          item.metadata?.fileId ||
+          item.metadata?.file_id ||
+          null;
+
+        return {
+          title:
+            item.source_title ||
+            item.metadata?.documentTitle ||
+            item.source ||
+            item.originalSource ||
+            "Unknown source",
+          source:
+            item.source ||
+            item.source_title ||
+            item.originalSource ||
+            "Unknown source",
+          originalSource:
+            item.originalSource ||
+            item.metadata?.originalSource ||
+            item.source_title ||
+            item.source ||
+            null,
+          path:
+            item.source_path ||
+            item.path ||
+            item.metadata?.path ||
+            item.originalSource ||
+            item.source ||
+            null,
+          fileId,
+          driveViewUrl:
+            item.driveViewUrl ||
+            item.metadata?.driveViewUrl ||
+            (fileId ? `https://drive.google.com/file/d/${fileId}/view` : null),
+          driveDownloadUrl:
+            item.driveDownloadUrl ||
+            item.metadata?.driveDownloadUrl ||
+            (fileId ? `https://drive.google.com/uc?export=download&id=${fileId}` : null),
+          score: item.score,
+          adjustedScore: item.score,
+          authorityTier: item.authority_tier,
+          authorityLabel: item.authority_label,
+          preview: item.text ? item.text.substring(0, 300) : ""
+        };
+      });
 
       if (!sourcesUsed.length) {
         return res.json({
@@ -2741,18 +2782,59 @@ if (freshPendingQuiz && !directQuizAnswer) {
     }
 
     const sourcesUsed = uniqueSources(
-      topEvidence.map((item) => ({
-        source: item.source_title,
-        originalSource: item.source_title,
-        path: item.source_path,
-        text: item.text,
-        score: item.score,
-        adjustedScore: item.score,
-        sourceTier: {
-          tier: item.authority_tier,
-          label: item.authority_label
-        }
-      }))
+      topEvidence.map((item) => {
+        const fileId =
+          item.fileId ||
+          item.file_id ||
+          item.metadata?.fileId ||
+          item.metadata?.file_id ||
+          null;
+
+        return {
+          title:
+            item.source_title ||
+            item.metadata?.documentTitle ||
+            item.source ||
+            item.originalSource ||
+            "Unknown source",
+          source:
+            item.source ||
+            item.source_title ||
+            item.originalSource ||
+            "Unknown source",
+          originalSource:
+            item.originalSource ||
+            item.metadata?.originalSource ||
+            item.source_title ||
+            item.source ||
+            null,
+          path:
+            item.source_path ||
+            item.path ||
+            item.metadata?.path ||
+            item.originalSource ||
+            item.source ||
+            null,
+          fileId,
+          driveViewUrl:
+            item.driveViewUrl ||
+            item.metadata?.driveViewUrl ||
+            (fileId ? `https://drive.google.com/file/d/${fileId}/view` : null),
+          driveDownloadUrl:
+            item.driveDownloadUrl ||
+            item.metadata?.driveDownloadUrl ||
+            (fileId ? `https://drive.google.com/uc?export=download&id=${fileId}` : null),
+          text: item.text,
+          score: item.score,
+          adjustedScore: item.score,
+          authorityTier: item.authority_tier,
+          authorityLabel: item.authority_label,
+          sourceTier: {
+            tier: item.authority_tier,
+            label: item.authority_label
+          }
+        };
+      })
     );
 
     const topTier = sourcesUsed.length
