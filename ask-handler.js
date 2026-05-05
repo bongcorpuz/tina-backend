@@ -6,17 +6,21 @@ import {
   clearModeState,
   isExplicitModeHook
 } from "./mode-state.js";
+
 import { detectTopic } from "./topic-detector.js";
+
 import {
   getLastTopicState,
   saveTopicState,
   extractMemoryHooks,
   saveMemoryHooks
 } from "./memory-hooks.js";
+
 import {
   getConversationMessages,
   saveMessage
 } from "./conversation-memory.js";
+
 import {
   getAdaptiveQuizProfile,
   buildAdaptiveQuizPrompt,
@@ -25,19 +29,23 @@ import {
   getRecentQuizHistory,
   buildQuizExclusionFromHistory
 } from "./adaptive-quiz.js";
+
 import {
   getOrCreateLearnerProfile,
   updateLearnerProfileStats,
   updateTopicMastery
 } from "./learner-profile.js";
+
 import {
   storeFeedbackEntry
 } from "./feedback-learning.js";
+
 import {
   searchSimilar,
   smartSearch,
   getQuizSourceChunks
 } from "./vector-store.js";
+
 import {
   hybridRetrieve,
   normalizeRetrievedEvidence,
@@ -48,40 +56,45 @@ import {
   saveReasoningEvidence,
   saveReasoningConflicts
 } from "./reasoning-engine.js";
+
 import {
   rerankByHierarchy,
   detectHierarchyConflict,
   selectTopLegalBases,
   buildStrictAnswerPrompt
 } from "./authority-engine.js";
-import {
-  reconcileDoctrine
-} from "./doctrinal-engine.js";
-import {
-  applySupersessionFilter
-} from "./supersession-engine.js";
+
+import { reconcileDoctrine } from "./doctrinal-engine.js";
+import { applySupersessionFilter } from "./supersession-engine.js";
+
 import {
   buildClaimSupportMap,
   validateEvidenceSufficiency,
   shouldRejectForWeakLegalBasis,
   buildNoSourceReply
 } from "./legal-validation-engine.js";
+
 import {
   maybeGenerateProvisionCitationAnswer
 } from "./provision-citation-engine.js";
+
 import {
   formatLegalBasisBlock,
   buildConflictFlagText,
   buildSupportingRulesText,
   ensureStructuredAnswerSections
 } from "./citation-formatting-engine.js";
+
 import {
   maybeGenerateCaseAnalysisAnswer
 } from "./case-analysis-engine.js";
+
 import {
   maybeGenerateDoctrineAnswer
 } from "./doctrine-tagging-engine.js";
+
 import {
+  MAX_VISIBLE_SOURCES,
   getUserId,
   toSafeDbNumeric,
   buildMemoryContext,
@@ -89,7 +102,10 @@ import {
   formatQuestionBlock,
   finalizeSourcesForResponse,
   classifyQuestion,
-  detectIssuanceQuery
+  detectIssuanceQuery,
+  shouldHideSourceFromUser,
+  isStructuredAnswer,
+  stripTrailingSourceSection
 } from "./ask-helpers.js";
 
 export function createAskHandler({ supabase, openai }) {
@@ -101,7 +117,12 @@ export function createAskHandler({ supabase, openai }) {
     throw new Error("createAskHandler requires openai");
   }
 
-  async function saveConversationTurn({ conversationId, userId, question, answerText }) {
+  async function saveConversationTurn({
+    conversationId,
+    userId,
+    question,
+    answerText
+  }) {
     if (!conversationId || !userId) return;
 
     await saveMessage(supabase, {
@@ -307,11 +328,7 @@ ${cleanQuestion}
         title: "Default TINA Assistant",
         requires_retrieval: true,
         requires_memory: true,
-        requires_feedback: false,
-        output_format: "short_format",
-        response_template: {
-          sections: ["Short Answer", "Explanation", "Practical Note"]
-        }
+        requires_feedback: false
       },
       "/tax": {
         hook_code: "/tax",
@@ -319,21 +336,7 @@ ${cleanQuestion}
         title: "Big 4 Tax Expert Mode",
         requires_retrieval: true,
         requires_memory: true,
-        requires_feedback: false,
-        output_format: "big4_format",
-        response_template: {
-          sections: [
-            "Executive Answer",
-            "Issue",
-            "Applicable Source / Legal Basis",
-            "Analysis",
-            "Practical Compliance / Audit Implication",
-            "Recommended Action",
-            "Limitations",
-            "Confidence",
-            "Sources Used"
-          ]
-        }
+        requires_feedback: false
       },
       "/review": {
         hook_code: "/review",
@@ -341,18 +344,7 @@ ${cleanQuestion}
         title: "CPALE Tax Reviewer Mode",
         requires_retrieval: false,
         requires_memory: true,
-        requires_feedback: false,
-        output_format: "review_format",
-        response_template: {
-          sections: [
-            "Topic",
-            "Core Concept",
-            "Rule",
-            "Simple Example",
-            "CPALE Trap",
-            "Quick Recall"
-          ]
-        }
+        requires_feedback: false
       },
       "/quiz": {
         hook_code: "/quiz",
@@ -360,11 +352,7 @@ ${cleanQuestion}
         title: "Tax Quiz Mode",
         requires_retrieval: false,
         requires_memory: true,
-        requires_feedback: false,
-        output_format: "quiz_format",
-        response_template: {
-          sections: ["Question", "A", "B", "C", "D", "Instruction"]
-        }
+        requires_feedback: false
       },
       "/diagnostic": {
         hook_code: "/diagnostic",
@@ -372,11 +360,7 @@ ${cleanQuestion}
         title: "Adaptive CPALE Diagnostic Quiz",
         requires_retrieval: false,
         requires_memory: true,
-        requires_feedback: false,
-        output_format: "adaptive_quiz_format",
-        response_template: {
-          sections: ["Question", "Choices", "Instruction"]
-        }
+        requires_feedback: false
       },
       "/progress": {
         hook_code: "/progress",
@@ -384,11 +368,7 @@ ${cleanQuestion}
         title: "Learning Progress Tracker",
         requires_retrieval: false,
         requires_memory: true,
-        requires_feedback: false,
-        output_format: "progress_format",
-        response_template: {
-          sections: ["Profile", "Accuracy", "Weak Topics", "Strong Topics"]
-        }
+        requires_feedback: false
       },
       "/feedback": {
         hook_code: "/feedback",
@@ -396,11 +376,7 @@ ${cleanQuestion}
         title: "Feedback Mode",
         requires_retrieval: false,
         requires_memory: true,
-        requires_feedback: true,
-        output_format: "feedback_format",
-        response_template: {
-          sections: ["Acknowledgement", "Correction Captured", "Learning Note"]
-        }
+        requires_feedback: true
       },
       "/source": {
         hook_code: "/source",
@@ -408,18 +384,7 @@ ${cleanQuestion}
         title: "Source Finder Mode",
         requires_retrieval: true,
         requires_memory: false,
-        requires_feedback: false,
-        output_format: "source_finder_format",
-        response_template: {
-          sections: [
-            "Best Matching Source",
-            "Document / Regulation / Case Title",
-            "Relevant Section or Keyword",
-            "Short Summary",
-            "Confidence",
-            "Sources Used"
-          ]
-        }
+        requires_feedback: false
       }
     };
 
@@ -445,10 +410,10 @@ ${cleanQuestion}
           mode: fallbackConfig.mode,
           requires_retrieval: fallbackConfig.requires_retrieval,
           title: data.title || fallbackConfig.title,
-          requires_memory: data.requires_memory ?? fallbackConfig.requires_memory,
-          requires_feedback: data.requires_feedback ?? fallbackConfig.requires_feedback,
-          output_format: data.output_format || fallbackConfig.output_format,
-          response_template: data.response_template || fallbackConfig.response_template,
+          requires_memory:
+            data.requires_memory ?? fallbackConfig.requires_memory,
+          requires_feedback:
+            data.requires_feedback ?? fallbackConfig.requires_feedback,
           cleanQuestion: cleanQuestion || text,
           originalQuestion: text
         };
@@ -616,7 +581,8 @@ Quick Recall:
           success: false,
           engine: "TINA Continuous Learning Engine",
           mode: "INVALID_ANSWER",
-          answer: "Please answer using letter A, B, C, or D only. Example: A. Type /bye or /exit to stop.",
+          answer:
+            "Please answer using letter A, B, C, or D only. Example: A. Type /bye or /exit to stop.",
           sourceStatus: "INVALID_QUIZ_ANSWER",
           sourcesUsed: [],
           vectorMatches: 0
@@ -718,10 +684,9 @@ Quick Recall:
     let nextSources = [];
 
     if (nextQuestion.ok) {
-      nextSources = finalizeSourcesForResponse(
-        nextQuestion.sourceChunks || [],
-        pendingQuiz.topic || "VAT"
-      );
+      nextSources = finalizeSourcesForResponse(nextQuestion.sourceChunks || [], {
+        maxItems: MAX_VISIBLE_SOURCES
+      });
       nextQuestionText = ["", "Next Question:", nextQuestion.answerText].join("\n");
     }
 
@@ -732,9 +697,6 @@ Quick Recall:
       `Correct Answer: ${correctAnswer}`,
       "",
       `Explanation: ${pendingQuiz.explanation || "No explanation available."}`,
-      "",
-      pendingQuiz.source_title ? `Source: ${pendingQuiz.source_title}` : "",
-      pendingQuiz.source_path ? `Source Path: ${pendingQuiz.source_path}` : "",
       nextQuestionText
     ]
       .filter(Boolean)
@@ -987,9 +949,7 @@ Quick Recall:
 
       if (hookConfig.mode === "FEEDBACK") {
         const cleanCorrection = String(correction || "").trim();
-        const cleanFeedbackType = String(
-          feedbackType || "general_feedback"
-        ).trim();
+        const cleanFeedbackType = String(feedbackType || "general_feedback").trim();
 
         if (!cleanCorrection) {
           return res.status(400).json({
@@ -1058,7 +1018,7 @@ Quick Recall:
 
         const quizSourcesUsed = finalizeSourcesForResponse(
           questionResult.sourceChunks || [],
-          cleanQuestion
+          { maxItems: MAX_VISIBLE_SOURCES }
         );
 
         await saveSimpleHookMemory(questionResult.answerText);
@@ -1113,7 +1073,7 @@ Quick Recall:
 
         const quizSourcesUsed = finalizeSourcesForResponse(
           questionResult.sourceChunks || [],
-          cleanQuestion
+          { maxItems: MAX_VISIBLE_SOURCES }
         );
 
         await saveSimpleHookMemory(questionResult.answerText);
@@ -1159,11 +1119,7 @@ Quick Recall:
 
       if ((!finalQuestion || finalQuestion.length < 5) && conversationId && userId) {
         try {
-          const lastState = await getLastTopicState(
-            supabase,
-            userId,
-            conversationId
-          );
+          const lastState = await getLastTopicState(supabase, userId, conversationId);
 
           if (lastState?.last_question) {
             finalQuestion = lastState.last_question;
@@ -1241,19 +1197,21 @@ Quick Recall:
           ? supersessionResult.activeDocs
           : hierarchyRerankedDocs;
 
+      const internalRankedDocs = activeRankedDocs;
+      const displayableRankedDocs = activeRankedDocs.filter(
+        (doc) => !shouldHideSourceFromUser(doc)
+      );
+
       const doctrinalReview = reconcileDoctrine({
-        rankedDocs: activeRankedDocs,
+        rankedDocs: internalRankedDocs,
         maxDocs: 5
       });
 
       const hierarchyConflict =
-        doctrinalReview?.hierarchyConflict ||
-        detectHierarchyConflict(activeRankedDocs.slice(0, 5));
-
-      const topLegalBases = selectTopLegalBases(activeRankedDocs, 2);
+        detectHierarchyConflict(displayableRankedDocs.slice(0, 5));
 
       let evidence = normalizeRetrievedEvidence(
-        activeRankedDocs.map((doc) => ({
+        internalRankedDocs.map((doc) => ({
           ...doc,
           authority_tier:
             doc.authorityLevel ??
@@ -1324,49 +1282,39 @@ Quick Recall:
 
       evidence = rankEvidenceByAuthority(evidence);
 
-      const conflicts = detectEvidenceConflicts(evidence);
-
-      if (hierarchyConflict?.conflict) {
-        conflicts.unshift({
-          conflict_topic: "authority_hierarchy",
-          source_a_path:
-            hierarchyConflict.conflictingDocs?.[0]?.path ||
-            hierarchyConflict.conflictingDocs?.[0]?.metadata?.path ||
-            hierarchyConflict.conflictingDocs?.[0]?.source ||
-            null,
-          source_b_path:
-            hierarchyConflict.conflictingDocs?.[1]?.path ||
-            hierarchyConflict.conflictingDocs?.[1]?.metadata?.path ||
-            hierarchyConflict.conflictingDocs?.[1]?.source ||
-            null,
-          source_a_claim: (
-            hierarchyConflict.conflictingDocs?.[0]?.text || ""
-          ).slice(0, 500),
-          source_b_claim: (
-            hierarchyConflict.conflictingDocs?.[1]?.text || ""
-          ).slice(0, 500),
-          preferred_source_path: hierarchyConflict.controllingSource || null,
-          conflict_reason:
-            hierarchyConflict.reason || "Higher authority prevails.",
-          resolution_basis: `Controlling authority: ${
-            hierarchyConflict.controllingAuthority || "UNKNOWN"
-          }`
-        });
-      }
-
       const topEvidence = evidence.slice(0, 10);
+      const topDisplayableEvidence = rankEvidenceByAuthority(
+        normalizeRetrievedEvidence(displayableRankedDocs)
+      ).slice(0, 10);
 
-      const strictContext = activeRankedDocs
+      const topLegalBases = selectTopLegalBases(displayableRankedDocs, 2);
+
+      const strictContext = internalRankedDocs
         .slice(0, 5)
         .map((doc, index) =>
           [
             `SOURCE ${index + 1}: ${doc.source || doc.originalSource || "Untitled Source"}`,
             `PATH: ${doc.path || doc.metadata?.path || "Unknown"}`,
-            `AUTHORITY TYPE: ${doc.authorityType || doc.authority_type || doc.metadata?.authorityType || "SECONDARY"}`,
-            `AUTHORITY LEVEL: ${doc.authorityLevel || doc.authority_level || doc.metadata?.authorityLevel || 99}`,
-            `AUTHORITY SCORE: ${doc.authorityScore || doc.authority_score || doc.metadata?.authorityScore || 0}`,
+            `AUTHORITY TYPE: ${
+              doc.authorityType ||
+              doc.authority_type ||
+              doc.metadata?.authorityType ||
+              "SECONDARY"
+            }`,
+            `AUTHORITY LEVEL: ${
+              doc.authorityLevel ||
+              doc.authority_level ||
+              doc.metadata?.authorityLevel ||
+              99
+            }`,
+            `AUTHORITY SCORE: ${
+              doc.authorityScore ||
+              doc.authority_score ||
+              doc.metadata?.authorityScore ||
+              0
+            }`,
             `FINAL SCORE: ${doc.finalScore || doc.score || 0}`,
-            `TEXT:`,
+            "TEXT:",
             doc.text || ""
           ].join("\n")
         )
@@ -1382,25 +1330,28 @@ Quick Recall:
       const provisionModeResult = await maybeGenerateProvisionCitationAnswer({
         openai,
         question: finalQuestion,
-        retrievedResults: activeRankedDocs,
+        retrievedResults: internalRankedDocs,
         model: process.env.OPENAI_MODEL || "gpt-4o-mini"
       });
 
-      const caseModeResult = !provisionModeResult.handled
-        ? await maybeGenerateCaseAnalysisAnswer({
-            openai,
-            question: finalQuestion,
-            retrievedResults: activeRankedDocs,
-            model: process.env.OPENAI_MODEL || "gpt-4o-mini"
-          })
-        : { handled: false };
+      const explicitCaseMode = hookConfig.mode === "CASE_ANALYSIS";
+
+      const caseModeResult =
+        explicitCaseMode && !provisionModeResult.handled
+          ? await maybeGenerateCaseAnalysisAnswer({
+              openai,
+              question: finalQuestion,
+              retrievedResults: internalRankedDocs,
+              model: process.env.OPENAI_MODEL || "gpt-4o-mini"
+            })
+          : { handled: false };
 
       const doctrineModeResult =
         !provisionModeResult.handled && !caseModeResult.handled
           ? await maybeGenerateDoctrineAnswer({
               openai,
               question: finalQuestion,
-              retrievedResults: activeRankedDocs,
+              retrievedResults: internalRankedDocs,
               model: process.env.OPENAI_MODEL || "gpt-4o-mini"
             })
           : { handled: false };
@@ -1429,12 +1380,12 @@ Quick Recall:
             {
               role: "user",
               content: [
-                `Conversation Memory:`,
+                "Conversation Memory:",
                 memoryContext || "No prior conversation.",
-                ``,
-                `Topic Data:`,
+                "",
+                "Topic Data:",
                 JSON.stringify(topicData || {}),
-                ``,
+                "",
                 `Question Type: ${questionType}`,
                 `Resolved Question: ${finalQuestion}`
               ].join("\n")
@@ -1452,15 +1403,20 @@ Quick Recall:
             topicData,
             questionType,
             evidence: topEvidence,
-            conflicts,
+            conflicts: [],
             memoryContext
           }));
       }
 
-      const claimSupportMap = buildClaimSupportMap(preliminaryAnswer, topEvidence);
+      preliminaryAnswer = stripTrailingSourceSection(preliminaryAnswer);
+
+      const claimSupportMap = buildClaimSupportMap(
+        preliminaryAnswer,
+        topDisplayableEvidence
+      );
 
       const validation = validateEvidenceSufficiency({
-        evidence: activeRankedDocs,
+        evidence: displayableRankedDocs,
         claimSupportMap,
         minEvidenceCount: 1,
         minSupportedClaims: 1,
@@ -1468,17 +1424,17 @@ Quick Recall:
       });
 
       const shouldFallback =
-        topEvidence.length === 0 ||
+        topDisplayableEvidence.length === 0 ||
         shouldRejectForWeakLegalBasis({
           validation,
           hasExactCitation: Boolean(retrieval.exactCitation?.matched)
         });
 
       const safeTopConfidenceRaw =
-        activeRankedDocs.length > 0
+        internalRankedDocs.length > 0
           ? Math.max(
               0,
-              ...activeRankedDocs.map((item) => {
+              ...internalRankedDocs.map((item) => {
                 const value = Number(item.finalScore || item.score || 0);
                 return Number.isFinite(value) ? value : 0;
               })
@@ -1513,13 +1469,6 @@ Quick Recall:
             reasoningRunId: reasoningRun.id,
             evidence: claimSupportMap
           });
-
-          if (conflicts.length) {
-            await saveReasoningConflicts(supabase, {
-              reasoningRunId: reasoningRun.id,
-              conflicts
-            });
-          }
         }
       } catch (reasoningError) {
         console.error("Reasoning persistence error:", reasoningError.message, {
@@ -1529,15 +1478,9 @@ Quick Recall:
       }
 
       if (hookConfig.mode === "SOURCE_FINDER") {
-        const rawSourceFinderSources = topEvidence.map((item) => ({
-          ...item,
-          preview: item.text ? item.text.substring(0, 300) : ""
-        }));
-
-        const sourcesUsed = finalizeSourcesForResponse(
-          rawSourceFinderSources,
-          finalQuestion
-        );
+        const sourcesUsed = finalizeSourcesForResponse(displayableRankedDocs, {
+          maxItems: MAX_VISIBLE_SOURCES
+        });
 
         if (!sourcesUsed.length) {
           return res.json({
@@ -1563,8 +1506,7 @@ Quick Recall:
             .map((s, i) =>
               [
                 `${i + 1}. ${s.title}`,
-                `Authority: Level ${s.authorityLevel || 99} - ${s.authorityLabel || "Unknown"}`,
-                `Preview: ${s.preview || ""}`
+                `Authority: Level ${s.authorityLevel || 99} - ${s.authorityLabel || "Unknown"}`
               ].join("\n")
             )
             .join("\n\n");
@@ -1613,19 +1555,18 @@ Quick Recall:
           originalQuestion,
           resolvedQuestion: finalQuestion,
           sourcesUsed: [],
-          vectorMatches: topEvidence.length,
+          vectorMatches: topDisplayableEvidence.length,
           detectedIssuance: issuance || null,
           reasoningRunId: reasoningRun?.id || null
         });
       }
 
-      const sourcesUsed = finalizeSourcesForResponse(
-        topEvidence,
-        finalQuestion
-      );
+      const sourcesUsed = finalizeSourcesForResponse(displayableRankedDocs, {
+        maxItems: MAX_VISIBLE_SOURCES
+      });
 
       const topTier = sourcesUsed.length
-        ? Math.min(...sourcesUsed.map((s) => s.authorityLevel || 99))
+        ? Math.min(...sourcesUsed.map((s) => Number(s.authorityLevel || 99)))
         : 99;
 
       let confidence = "MEDIUM";
@@ -1641,17 +1582,10 @@ Quick Recall:
         extraSources: sourcesUsed
       });
       const conflictFlagText = buildConflictFlagText(hierarchyConflict);
-      const sourcesUsedText = sourcesUsed.length
-        ? "See clickable sources below."
-        : "No clickable sources available.";
 
       let answerText = preliminaryAnswer || buildNoSourceReply();
 
-      if (
-        !caseModeResult.handled &&
-        !provisionModeResult.handled &&
-        !doctrineModeResult.handled
-      ) {
+      if (!isStructuredAnswer(answerText)) {
         answerText = ensureStructuredAnswerSections({
           directAnswer: preliminaryAnswer || buildNoSourceReply(),
           legalBasis: legalBasisText,
@@ -1660,12 +1594,11 @@ Quick Recall:
             issuance || questionType === "issuance"
               ? "Use the cited issuance and verify the latest amended or superseding BIR issuance before relying on the rule operationally."
               : "Apply the higher-authority rule first and use lower-authority material only as support.",
-          conflictFlag: conflictFlagText,
-          sourcesUsed: sourcesUsedText
+          conflictFlag: conflictFlagText
         });
-      } else if (!String(answerText).toLowerCase().includes("sources used")) {
-        answerText = `${answerText}\n\n${sourcesUsedText}`;
       }
+
+      answerText = stripTrailingSourceSection(answerText);
 
       await saveAllMemory(answerText);
 
@@ -1692,10 +1625,10 @@ Quick Recall:
         originalQuestion,
         resolvedQuestion: finalQuestion,
         sourcesUsed,
-        vectorMatches: activeRankedDocs.length,
+        vectorMatches: displayableRankedDocs.length,
         detectedIssuance: issuance || null,
         reasoningRunId: reasoningRun?.id || null,
-        conflictCount: conflicts.length,
+        conflictCount: 0,
         hierarchyConflict: Boolean(hierarchyConflict?.conflict),
         doctrinalConflictCount: doctrinalReview?.doctrinalConflicts?.length || 0,
         supersededFilteredCount: supersessionResult?.superseded?.length || 0
