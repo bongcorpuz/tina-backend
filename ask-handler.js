@@ -121,7 +121,9 @@ export function createAskHandler({ supabase, openai }) {
     conversationId,
     userId,
     question,
-    answerText
+    answerText,
+    sourcesUsed = [],
+    fallbackReferences = []
   }) {
     if (!conversationId || !userId) return;
 
@@ -136,7 +138,9 @@ export function createAskHandler({ supabase, openai }) {
       conversationId,
       userId,
       role: "assistant",
-      content: answerText
+      content: answerText,
+      sourcesUsed,
+      fallbackReferences
     });
 
     const hooks = extractMemoryHooks(question);
@@ -707,7 +711,9 @@ Quick Recall:
         conversationId,
         userId,
         question: incomingAnswer,
-        answerText: finalAnswer
+        answerText: finalAnswer,
+        sourcesUsed: nextSources,
+        fallbackReferences: []
       });
     }
 
@@ -898,7 +904,9 @@ Quick Recall:
           conversationId,
           userId,
           question: originalQuestion,
-          answerText
+          answerText,
+          sourcesUsed: [],
+          fallbackReferences: []
         });
 
         await saveModeState(supabase, {
@@ -1021,7 +1029,24 @@ Quick Recall:
           { maxItems: MAX_VISIBLE_SOURCES }
         );
 
-        await saveSimpleHookMemory(questionResult.answerText);
+        await saveConversationTurn({
+          conversationId,
+          userId,
+          question: originalQuestion,
+          answerText: questionResult.answerText,
+          sourcesUsed: quizSourcesUsed,
+          fallbackReferences: []
+        });
+
+        await saveModeState(supabase, {
+          userId,
+          sessionId: conversationId || null,
+          activeHook: hookConfig.hook_code,
+          activeMode: hookConfig.mode,
+          modeTitle: hookConfig.title,
+          lastQuestion: originalQuestion,
+          lastAnswer: questionResult.answerText
+        });
 
         return res.json({
           success: true,
@@ -1076,7 +1101,24 @@ Quick Recall:
           { maxItems: MAX_VISIBLE_SOURCES }
         );
 
-        await saveSimpleHookMemory(questionResult.answerText);
+        await saveConversationTurn({
+          conversationId,
+          userId,
+          question: originalQuestion,
+          answerText: questionResult.answerText,
+          sourcesUsed: quizSourcesUsed,
+          fallbackReferences: []
+        });
+
+        await saveModeState(supabase, {
+          userId,
+          sessionId: conversationId || null,
+          activeHook: hookConfig.hook_code,
+          activeMode: hookConfig.mode,
+          modeTitle: hookConfig.title,
+          lastQuestion: originalQuestion,
+          lastAnswer: questionResult.answerText
+        });
 
         return res.json({
           success: true,
@@ -1142,14 +1184,16 @@ Quick Recall:
 
       const memoryContext = buildMemoryContext(conversationHistory);
 
-      async function saveAllMemory(answerText) {
+      async function saveAllMemory(answerText, sourcesUsed = [], fallbackReferences = []) {
         if (hookConfig.requires_memory === false) return;
 
         await saveConversationTurn({
           conversationId,
           userId,
           question: originalQuestion,
-          answerText
+          answerText,
+          sourcesUsed,
+          fallbackReferences
         });
 
         await saveTopicState(supabase, {
@@ -1282,6 +1326,16 @@ Quick Recall:
 
       evidence = rankEvidenceByAuthority(evidence);
 
+      const rawConflicts = detectEvidenceConflicts(evidence);
+      const displayableConflicts = rawConflicts.filter((conflict) => {
+        const a = conflict.source_a_path || "";
+        const b = conflict.source_b_path || "";
+        return (
+          !shouldHideSourceFromUser({ path: a }) &&
+          !shouldHideSourceFromUser({ path: b })
+        );
+      });
+
       const topEvidence = evidence.slice(0, 10);
       const topDisplayableEvidence = rankEvidenceByAuthority(
         normalizeRetrievedEvidence(displayableRankedDocs)
@@ -1403,7 +1457,7 @@ Quick Recall:
             topicData,
             questionType,
             evidence: topEvidence,
-            conflicts: [],
+            conflicts: rawConflicts,
             memoryContext
           }));
       }
@@ -1469,6 +1523,13 @@ Quick Recall:
             reasoningRunId: reasoningRun.id,
             evidence: claimSupportMap
           });
+
+          if (displayableConflicts.length) {
+            await saveReasoningConflicts(supabase, {
+              reasoningRunId: reasoningRun.id,
+              conflicts: displayableConflicts
+            });
+          }
         }
       } catch (reasoningError) {
         console.error("Reasoning persistence error:", reasoningError.message, {
@@ -1511,6 +1572,8 @@ Quick Recall:
             )
             .join("\n\n");
 
+        await saveAllMemory(answerText, sourcesUsed, []);
+
         return res.json({
           success: true,
           engine: "TINA Reasoning Engine",
@@ -1538,7 +1601,7 @@ Quick Recall:
                 fallbackReason
               );
 
-        await saveAllMemory(answerText);
+        await saveAllMemory(answerText, [], []);
 
         return res.json({
           success: true,
@@ -1600,7 +1663,7 @@ Quick Recall:
 
       answerText = stripTrailingSourceSection(answerText);
 
-      await saveAllMemory(answerText);
+      await saveAllMemory(answerText, sourcesUsed, []);
 
       return res.json({
         success: true,
@@ -1628,7 +1691,7 @@ Quick Recall:
         vectorMatches: displayableRankedDocs.length,
         detectedIssuance: issuance || null,
         reasoningRunId: reasoningRun?.id || null,
-        conflictCount: 0,
+        conflictCount: displayableConflicts.length,
         hierarchyConflict: Boolean(hierarchyConflict?.conflict),
         doctrinalConflictCount: doctrinalReview?.doctrinalConflicts?.length || 0,
         supersededFilteredCount: supersessionResult?.superseded?.length || 0
