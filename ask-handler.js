@@ -137,6 +137,7 @@ function normalizeLooseText(value = "") {
 
 function hardStripSourceLeakage(text = "") {
   return String(text || "")
+    .replace(/\n+\s*6\.\s*SOURCES[\s\S]*$/i, "")
     .replace(/\n+\s*6\.\s*SOURCES USED[\s\S]*$/i, "")
     .replace(/\n+\s*SOURCES USED[\s\S]*$/i, "")
     .replace(/\n+\s*Sources:\s*[\s\S]*$/i, "")
@@ -145,6 +146,41 @@ function hardStripSourceLeakage(text = "") {
     .replace(/\n+\s*See clickable sources below\.\s*$/i, "")
     .replace(/\n+\s*No clickable sources available\.\s*$/i, "")
     .trim();
+}
+
+function sanitizeConflictFlagSection(text = "") {
+  const value = String(text || "").trim();
+  if (!value) return value;
+
+  const hasConflictSection = /\b5\.\s*CONFLICT FLAG\b/i.test(value);
+  if (!hasConflictSection) {
+    return value;
+  }
+
+  const vagueYesPatterns = [
+    /Conflict Detected:\s*YES[\s\S]*secondary sources may not fully align/i,
+    /Conflict Detected:\s*YES[\s\S]*higher authority prevails/i,
+    /Conflict Detected:\s*YES[\s\S]*subordinate/i,
+    /Conflict Detected:\s*YES[\s\S]*may not fully align/i
+  ];
+
+  const hasSpecificConflictCitations =
+    /Source A:/i.test(value) &&
+    /Source B:/i.test(value) &&
+    /(Section|Sec\.?|Item|Article)\s+/i.test(value);
+
+  const shouldForceNoConflict =
+    !hasSpecificConflictCitations &&
+    vagueYesPatterns.some((pattern) => pattern.test(value));
+
+  if (!shouldForceNoConflict) {
+    return value;
+  }
+
+  return value.replace(
+    /\b5\.\s*CONFLICT FLAG\b[\s\S]*?(?=\n\s*\d+\.\s*[A-Z][A-Z ]+\b|$)/i,
+    "5. CONFLICT FLAG\nConflict Detected: NO"
+  );
 }
 
 function mergeRetrievalResults(retrievals = []) {
@@ -272,8 +308,7 @@ function buildAnswerAnchors({
   ];
 
   for (const match of raMatches) {
-    const number = match[1];
-    anchors.add(`ra ${number}`);
+    anchors.add(`ra ${match[1]}`);
   }
 
   if (namedLawDetection?.bestMatch) {
@@ -299,13 +334,22 @@ function buildAnswerAnchors({
   }
 
   if (issuance) {
-    anchors.add(normalizeLooseText(`${issuance.type} ${issuance.number} ${issuance.year}`));
-    anchors.add(normalizeLooseText(`${issuance.type}-${issuance.number}-${issuance.year}`));
-    anchors.add(normalizeLooseText(`${issuance.type} no ${issuance.number}-${issuance.year}`));
+    anchors.add(
+      normalizeLooseText(`${issuance.type} ${issuance.number} ${issuance.year}`)
+    );
+    anchors.add(
+      normalizeLooseText(`${issuance.type}-${issuance.number}-${issuance.year}`)
+    );
+    anchors.add(
+      normalizeLooseText(
+        `${issuance.type} no ${issuance.number}-${issuance.year}`
+      )
+    );
   }
 
   for (const line of extractLegalBasisLines(answerText)) {
     const normalized = normalizeLooseText(line);
+
     if (normalized.length >= 6) {
       anchors.add(normalized);
     }
@@ -378,13 +422,7 @@ function selectGroundedDisplayableDocs(displayableDocs = [], options = {}) {
     issuance
   });
 
-  const matchedDocs = displayableDocs.filter((doc) => docMatchesAnchors(doc, anchors));
-
-  if (namedLawDetection?.matched || issuance) {
-    return matchedDocs;
-  }
-
-  return matchedDocs;
+  return displayableDocs.filter((doc) => docMatchesAnchors(doc, anchors));
 }
 
 export function createAskHandler({ supabase, openai }) {
@@ -1775,8 +1813,8 @@ Quick Recall:
           }));
       }
 
-      preliminaryAnswer = hardStripSourceLeakage(
-        stripTrailingSourceSection(preliminaryAnswer)
+      preliminaryAnswer = sanitizeConflictFlagSection(
+        hardStripSourceLeakage(stripTrailingSourceSection(preliminaryAnswer))
       );
 
       const groundedDisplayableDocs = selectGroundedDisplayableDocs(
@@ -1800,7 +1838,7 @@ Quick Recall:
       );
 
       const validation = validateEvidenceSufficiency({
-        evidence: displayableRankedDocs,
+        evidence: finalDisplayableDocs,
         claimSupportMap,
         minEvidenceCount: 1,
         minSupportedClaims: 1,
@@ -2026,8 +2064,8 @@ Quick Recall:
         });
       }
 
-      answerText = hardStripSourceLeakage(
-        stripTrailingSourceSection(answerText)
+      answerText = sanitizeConflictFlagSection(
+        hardStripSourceLeakage(stripTrailingSourceSection(answerText))
       );
 
       await saveAllMemory(answerText, sourcesUsed, []);
