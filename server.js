@@ -178,6 +178,17 @@ function getUserId(req) {
   );
 }
 
+function toSafeDbNumeric(value, max = 999999.9999, decimals = 4) {
+  const num = Number(value);
+
+  if (!Number.isFinite(num)) {
+    return 0;
+  }
+
+  return Number(
+    Math.min(max, Math.max(0, num)).toFixed(decimals)
+  );
+
 function normalizeSourceName(name = "") {
   return String(name)
     .toLowerCase()
@@ -2355,6 +2366,11 @@ app.post("/ask", authenticate, async (req, res) => {
         });
       }
 
+      const quizSourcesUsed = finalizeSourcesForResponse(
+        questionResult.sourceChunks || [],
+        cleanQuestion
+      );
+
       await saveSimpleHookMemory(questionResult.answerText);
 
       return res.json({
@@ -2370,14 +2386,14 @@ app.post("/ask", authenticate, async (req, res) => {
         difficulty: questionResult.quiz.difficulty,
         correctAnswerStored: Boolean(questionResult.storedQuiz.correct_answer),
         pendingAnswerStored: questionResult.storedQuiz.user_answer === null,
-        confidence: questionResult.sourceChunks.length
+        confidence: quizSourcesUsed.length
           ? "GDRIVE_GROUNDED"
           : "GENERAL_ADAPTIVE",
-        sourceStatus: questionResult.sourceChunks.length
+        sourceStatus: quizSourcesUsed.length
           ? "GDRIVE_GROUNDED_QUESTION_READY"
           : "GENERAL_QUESTION_READY",
-        sourcesUsed: questionResult.sourceChunks,
-        vectorMatches: questionResult.sourceChunks.length
+        sourcesUsed: quizSourcesUsed,
+        vectorMatches: quizSourcesUsed.length
       });
     }
 
@@ -2405,6 +2421,11 @@ app.post("/ask", authenticate, async (req, res) => {
         });
       }
 
+      const quizSourcesUsed = finalizeSourcesForResponse(
+        questionResult.sourceChunks || [],
+        cleanQuestion
+      );
+
       await saveSimpleHookMemory(questionResult.answerText);
 
       return res.json({
@@ -2420,14 +2441,14 @@ app.post("/ask", authenticate, async (req, res) => {
         difficulty: questionResult.quiz.difficulty,
         correctAnswerStored: Boolean(questionResult.storedQuiz.correct_answer),
         pendingAnswerStored: questionResult.storedQuiz.user_answer === null,
-        confidence: questionResult.sourceChunks.length
+        confidence: quizSourcesUsed.length
           ? "GDRIVE_GROUNDED"
           : "GENERAL_ADAPTIVE",
-        sourceStatus: questionResult.sourceChunks.length
+        sourceStatus: quizSourcesUsed.length
           ? "GDRIVE_GROUNDED_QUESTION_READY"
           : "GENERAL_QUESTION_READY",
-        sourcesUsed: questionResult.sourceChunks,
-        vectorMatches: questionResult.sourceChunks.length
+        sourcesUsed: quizSourcesUsed,
+        vectorMatches: quizSourcesUsed.length
       });
     }
 
@@ -2453,6 +2474,7 @@ app.post("/ask", authenticate, async (req, res) => {
           userId,
           conversationId
         );
+
         if (lastState?.last_question) {
           finalQuestion = lastState.last_question;
         }
@@ -2773,8 +2795,10 @@ app.post("/ask", authenticate, async (req, res) => {
           )
         : 0;
 
-    const safeTopConfidence = Number(
-      Math.min(9999.9999, Math.max(0, safeTopConfidenceRaw)).toFixed(4)
+    const safeTopConfidence = toSafeDbNumeric(
+      safeTopConfidenceRaw,
+      999999.9999,
+      4
     );
 
     let reasoningRun = null;
@@ -2808,7 +2832,10 @@ app.post("/ask", authenticate, async (req, res) => {
         }
       }
     } catch (reasoningError) {
-      console.error("Reasoning persistence error:", reasoningError.message);
+      console.error("Reasoning persistence error:", reasoningError.message, {
+        safeTopConfidenceRaw,
+        safeTopConfidence
+      });
     }
 
     if (hookConfig.mode === "SOURCE_FINDER") {
@@ -2902,12 +2929,8 @@ app.post("/ask", authenticate, async (req, res) => {
       });
     }
 
-    const rawSourcesUsed = topEvidence.map((item) => ({
-      ...item
-    }));
-
     const sourcesUsed = finalizeSourcesForResponse(
-      rawSourcesUsed,
+      topEvidence,
       finalQuestion
     );
 
