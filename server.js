@@ -2090,54 +2090,6 @@ async function clearPendingQuizAttempts(userId, conversationId = null) {
   }
 }
 
-function finalizeSourcesForResponse(rawSources = [], query = "") {
-  const reranked = rerankByHierarchy(
-    rawSources.map((item) => buildSourceResponseItem(item)),
-    query
-  );
-
-  const seen = new Set();
-
-  return reranked
-    .filter((item) => !shouldHideSourceFromUser(item))
-    .filter((item) => item.driveViewUrl)
-    .filter((item) => {
-      const key = String(
-        item.fileId ||
-          item.driveViewUrl ||
-          item.path ||
-          item.originalSource ||
-          item.source ||
-          item.title ||
-          ""
-      )
-        .trim()
-        .toLowerCase();
-
-      if (!key || seen.has(key)) return false;
-      seen.add(key);
-      return true;
-    })
-    .slice(0, MAX_VISIBLE_SOURCES)
-    .map((item) => ({
-      title: item.title,
-      source: item.source,
-      originalSource: item.originalSource,
-      path: item.path,
-      fileId: item.fileId,
-      driveViewUrl: item.driveViewUrl,
-      driveDownloadUrl: item.driveDownloadUrl,
-      text: item.text,
-      preview: item.preview,
-      score: item.score,
-      adjustedScore: item.adjustedScore,
-      authorityType: item.authorityType,
-      authorityLevel: item.authorityLevel,
-      authorityScore: item.authorityScore,
-      authorityLabel: item.authorityLabel
-    }));
-}
-
 /* ================= ASK ROUTE ================= */
 
 app.post("/ask", authenticate, async (req, res) => {
