@@ -7,6 +7,138 @@ const HIDDEN_FOLDER_PATTERNS = [
   "08_review_materials"
 ];
 
+const SOURCE_TIER_RULES = [
+  {
+    matchers: ["01_tax_code", "/01_tax_code/", "tax code", "nirc"],
+    tier: 1,
+    label: "STATUTE",
+    weight: 1.0,
+    authorityType: "STATUTE"
+  },
+  {
+    matchers: [
+      "02_revenue_regulations",
+      "/02_revenue_regulations/",
+      "revenue regulation",
+      "rr"
+    ],
+    tier: 2,
+    label: "REVENUE REGULATION",
+    weight: 0.95,
+    authorityType: "REVENUE_REGULATION"
+  },
+  {
+    matchers: [
+      "03_rmc",
+      "/03_rmc/",
+      "revenue memorandum circular",
+      "rmc"
+    ],
+    tier: 3,
+    label: "REVENUE MEMORANDUM CIRCULAR",
+    weight: 0.9,
+    authorityType: "RMC"
+  },
+  {
+    matchers: [
+      "04_rmo",
+      "/04_rmo/",
+      "revenue memorandum order",
+      "rmo"
+    ],
+    tier: 4,
+    label: "REVENUE MEMORANDUM ORDER",
+    weight: 0.85,
+    authorityType: "RMO"
+  },
+  {
+    matchers: ["05_bir_rulings", "/05_bir_rulings/", "bir ruling", "ruling"],
+    tier: 5,
+    label: "BIR RULING",
+    weight: 0.8,
+    authorityType: "BIR_RULING"
+  },
+  {
+    matchers: [
+      "06_court_cases",
+      "/06_court_cases/",
+      "court case",
+      "cta case",
+      "g.r. no",
+      " v. ",
+      " vs "
+    ],
+    tier: 6,
+    label: "JURISPRUDENCE",
+    weight: 0.75,
+    authorityType: "JURISPRUDENCE"
+  },
+  {
+    matchers: ["07_cpa_notes", "/07_cpa_notes/", "cpa notes"],
+    tier: 7,
+    label: "CPA NOTES",
+    weight: 0.4,
+    authorityType: "SECONDARY"
+  },
+  {
+    matchers: [
+      "08_review_materials",
+      "/08_review_materials/",
+      "review materials",
+      "reviewer",
+      "bullet notes"
+    ],
+    tier: 8,
+    label: "REVIEW MATERIALS",
+    weight: 0.3,
+    authorityType: "SECONDARY"
+  }
+];
+
+function toSearchableText(source = {}) {
+  return [
+    getDocPath(source),
+    getDocOriginalName(source),
+    source.path,
+    source.source_path,
+    source.source,
+    source.title,
+    source.originalSource,
+    source.metadata?.path,
+    source.metadata?.originalSource,
+    source.metadata?.originalFileName
+  ]
+    .filter(Boolean)
+    .map((value) => String(value).toLowerCase())
+    .join(" || ");
+}
+
+export function getSourceTier(source = {}) {
+  const haystack = toSearchableText(source);
+
+  for (const rule of SOURCE_TIER_RULES) {
+    if (
+      rule.matchers.some((matcher) =>
+        haystack.includes(String(matcher).toLowerCase())
+      )
+    ) {
+      return {
+        tier: rule.tier,
+        label: rule.label,
+        weight: rule.weight,
+        authorityType: rule.authorityType
+      };
+    }
+  }
+
+  return {
+    tier: 99,
+    label: "UNKNOWN",
+    weight: 0.1,
+    authorityType: "UNKNOWN"
+  };
+}
+
 export function getUserId(req) {
   return (
     req.user?.id ||
@@ -25,9 +157,7 @@ export function toSafeDbNumeric(value, max = 999999.9999, decimals = 4) {
     return 0;
   }
 
-  return Number(
-    Math.min(max, Math.max(0, num)).toFixed(decimals)
-  );
+  return Number(Math.min(max, Math.max(0, num)).toFixed(decimals));
 }
 
 export function normalizeSourceName(name = "") {
@@ -84,7 +214,9 @@ export function getDocOriginalName(doc = {}) {
 }
 
 export function buildMemoryContext(messages = []) {
-  if (!messages.length) return "No prior conversation.";
+  if (!messages.length) {
+    return "No prior conversation.";
+  }
 
   return messages
     .slice(-10)
@@ -94,8 +226,14 @@ export function buildMemoryContext(messages = []) {
 
 export function extractQuizAnswer(text = "") {
   const cleaned = String(text || "").trim().toUpperCase();
-  if (!cleaned) return null;
-  if (/^[ABCD]$/.test(cleaned)) return cleaned;
+
+  if (!cleaned) {
+    return null;
+  }
+
+  if (/^[ABCD]$/.test(cleaned)) {
+    return cleaned;
+  }
 
   const match = cleaned.match(/^(?:ANSWER\s*[:\-]?\s*)?([ABCD])$/i);
   return match?.[1]?.toUpperCase() || null;
@@ -109,7 +247,10 @@ export function formatQuestionBlock({
 }) {
   const parts = [];
 
-  if (prefix) parts.push(prefix);
+  if (prefix) {
+    parts.push(prefix);
+  }
+
   if (teachingText) {
     parts.push(teachingText);
     parts.push("");
@@ -133,20 +274,7 @@ export function formatQuestionBlock({
 }
 
 export function shouldHideSourceFromUser(source = {}) {
-  const rawValues = [
-    getDocPath(source),
-    getDocOriginalName(source),
-    source.path,
-    source.source_path,
-    source.source,
-    source.title,
-    source.originalSource
-  ];
-
-  const haystack = rawValues
-    .filter(Boolean)
-    .map((value) => String(value).toLowerCase())
-    .join(" || ");
+  const haystack = toSearchableText(source);
 
   return HIDDEN_FOLDER_PATTERNS.some((pattern) => haystack.includes(pattern));
 }
@@ -186,6 +314,7 @@ export function buildSourceResponseItem(item = {}) {
   const links = buildGoogleDriveLinks(item);
   const path = getDocPath(item);
   const originalSource = getDocOriginalName(item);
+  const tierInfo = getSourceTier(item);
 
   return {
     title: originalSource || item.title || item.source || "Untitled Source",
@@ -205,22 +334,22 @@ export function buildSourceResponseItem(item = {}) {
       item.authorityType ||
       item.authority_type ||
       item.metadata?.authorityType ||
-      null,
+      tierInfo.authorityType,
     authorityLevel:
       item.authorityLevel ||
       item.authority_level ||
       item.metadata?.authorityLevel ||
-      null,
+      tierInfo.tier,
     authorityScore:
       item.authorityScore ||
       item.authority_score ||
       item.metadata?.authorityScore ||
-      0,
+      tierInfo.weight,
     authorityLabel:
       item.authorityLabel ||
       item.authority_label ||
       item.metadata?.authorityLabel ||
-      "Unknown"
+      tierInfo.label
   };
 }
 
@@ -236,7 +365,9 @@ export function uniqueSources(docs = []) {
         normalizeForMatch(doc.originalSource) ||
         normalizeForMatch(doc.source);
 
-      if (!key || seen.has(key)) return false;
+      if (!key || seen.has(key)) {
+        return false;
+      }
 
       seen.add(key);
       return true;
@@ -258,7 +389,10 @@ export function finalizeSourcesForResponse(
         return aLevel - bLevel;
       }
 
-      return Number(b.adjustedScore ?? b.score ?? 0) - Number(a.adjustedScore ?? a.score ?? 0);
+      return (
+        Number(b.adjustedScore ?? b.score ?? 0) -
+        Number(a.adjustedScore ?? a.score ?? 0)
+      );
     })
     .slice(0, maxItems);
 }
@@ -361,15 +495,18 @@ export function detectIssuanceQuery(question = "") {
   const patterns = [
     {
       type: "RR",
-      regex: /\b(?:RR|Revenue\s+Regulation[s]?)\s*(?:No\.?)?\s*0*(\d+)[\s\-_]?(\d{2,4})\b/i
+      regex:
+        /\b(?:RR|Revenue\s+Regulation[s]?)\s*(?:No\.?)?\s*0*(\d+)[\s\-_]?(\d{2,4})\b/i
     },
     {
       type: "RMC",
-      regex: /\b(?:RMC|Revenue\s+Memorandum\s+Circular[s]?)\s*(?:No\.?)?\s*0*(\d+)[\s\-_]?(\d{2,4})\b/i
+      regex:
+        /\b(?:RMC|Revenue\s+Memorandum\s+Circular[s]?)\s*(?:No\.?)?\s*0*(\d+)[\s\-_]?(\d{2,4})\b/i
     },
     {
       type: "RMO",
-      regex: /\b(?:RMO|Revenue\s+Memorandum\s+Order[s]?)\s*(?:No\.?)?\s*0*(\d+)[\s\-_]?(\d{2,4})\b/i
+      regex:
+        /\b(?:RMO|Revenue\s+Memorandum\s+Order[s]?)\s*(?:No\.?)?\s*0*(\d+)[\s\-_]?(\d{2,4})\b/i
     }
   ];
 
