@@ -1,4 +1,9 @@
-export async function createConversation(supabase, { userId, title = "New Conversation" }) {
+// FILE: conversation-memory.js
+
+export async function createConversation(
+  supabase,
+  { userId, title = "New Conversation" }
+) {
   const { data, error } = await supabase
     .from("conversations")
     .insert({
@@ -23,7 +28,10 @@ export async function getUserConversations(supabase, userId) {
   return data || [];
 }
 
-export async function getConversationMessages(supabase, { conversationId, userId }) {
+export async function getConversationMessages(
+  supabase,
+  { conversationId, userId }
+) {
   const { data, error } = await supabase
     .from("messages")
     .select("*")
@@ -35,17 +43,35 @@ export async function getConversationMessages(supabase, { conversationId, userId
   return data || [];
 }
 
-export async function saveMessage(supabase, { conversationId, userId, role, content }) {
-  if (!conversationId || !userId || !role || !content) return null;
+export async function saveMessage(
+  supabase,
+  {
+    conversationId,
+    userId,
+    role,
+    content,
+    sourcesUsed = null,
+    fallbackReferences = null
+  }
+) {
+  if (!conversationId || !userId || !role || !content) {
+    return null;
+  }
+
+  const payload = {
+    conversation_id: conversationId,
+    user_id: userId,
+    role,
+    content,
+    sources_used: Array.isArray(sourcesUsed) ? sourcesUsed : null,
+    fallback_references: Array.isArray(fallbackReferences)
+      ? fallbackReferences
+      : null
+  };
 
   const { data, error } = await supabase
     .from("messages")
-    .insert({
-      conversation_id: conversationId,
-      user_id: userId,
-      role,
-      content
-    })
+    .insert(payload)
     .select("*")
     .single();
 
