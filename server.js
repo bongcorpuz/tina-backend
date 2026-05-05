@@ -673,6 +673,7 @@ function uniqueSources(docs = []) {
       const key =
         doc.metadata?.fileId ||
         doc.fileId ||
+        doc.path ||
         doc.source ||
         getDocOriginalName(doc);
 
@@ -689,16 +690,45 @@ function uniqueSources(docs = []) {
 
       return {
         title: originalSource || doc.source || "Untitled Source",
-        source: doc.source,
+        source: doc.source || originalSource || "Untitled Source",
         originalSource,
         path,
-        fileId: links.fileId,
-        driveViewUrl: links.driveViewUrl,
-        driveDownloadUrl: links.driveDownloadUrl,
-        score: doc.score,
-        adjustedScore: doc.adjustedScore,
-        authorityTier: tier?.tier || 99,
-        authorityLabel: tier?.label || "Unclassified Source",
+        fileId:
+          doc.metadata?.fileId ||
+          doc.fileId ||
+          links.fileId ||
+          null,
+        driveViewUrl:
+          doc.driveViewUrl ||
+          doc.metadata?.driveViewUrl ||
+          links.driveViewUrl ||
+          null,
+        driveDownloadUrl:
+          doc.driveDownloadUrl ||
+          doc.metadata?.driveDownloadUrl ||
+          links.driveDownloadUrl ||
+          null,
+        text: doc.text || "",
+        score: Number(doc.score || 0),
+        adjustedScore: Number(doc.adjustedScore || doc.score || 0),
+        authorityTier:
+          doc.authorityTier ||
+          tier?.tier ||
+          99,
+        authorityLabel:
+          doc.authorityLabel ||
+          tier?.label ||
+          "Unclassified Source",
+        sourceTier: {
+          tier:
+            doc.authorityTier ||
+            tier?.tier ||
+            99,
+          label:
+            doc.authorityLabel ||
+            tier?.label ||
+            "Unclassified Source"
+        },
         preview: doc.text ? doc.text.substring(0, 300) : ""
       };
     });
