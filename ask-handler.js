@@ -36,9 +36,7 @@ import {
   updateTopicMastery
 } from "./learner-profile.js";
 
-import {
-  storeFeedbackEntry
-} from "./feedback-learning.js";
+import { storeFeedbackEntry } from "./feedback-learning.js";
 
 import {
   searchSimilar,
@@ -74,9 +72,7 @@ import {
   buildNoSourceReply
 } from "./legal-validation-engine.js";
 
-import {
-  maybeGenerateProvisionCitationAnswer
-} from "./provision-citation-engine.js";
+import { maybeGenerateProvisionCitationAnswer } from "./provision-citation-engine.js";
 
 import {
   formatLegalBasisBlock,
@@ -85,13 +81,14 @@ import {
   ensureStructuredAnswerSections
 } from "./citation-formatting-engine.js";
 
-import {
-  maybeGenerateCaseAnalysisAnswer
-} from "./case-analysis-engine.js";
+import { maybeGenerateCaseAnalysisAnswer } from "./case-analysis-engine.js";
+import { maybeGenerateDoctrineAnswer } from "./doctrine-tagging-engine.js";
 
 import {
-  maybeGenerateDoctrineAnswer
-} from "./doctrine-tagging-engine.js";
+  detectNamedLaw,
+  buildNamedLawSearchQueries,
+  filterDocsForNamedLaw
+} from "./named-law-engine.js";
 
 import {
   MAX_VISIBLE_SOURCES,
@@ -107,6 +104,91 @@ import {
   isStructuredAnswer,
   stripTrailingSourceSection
 } from "./ask-helpers.js";
+
+function buildDocKey(doc = {}) {
+  return (
+    doc.fileId ||
+    doc.file_id ||
+    doc.metadata?.fileId ||
+    doc.metadata?.file_id ||
+    doc.path ||
+    doc.source_path ||
+    doc.metadata?.path ||
+    doc.originalSource ||
+    doc.metadata?.originalSource ||
+    doc.source ||
+    doc.title ||
+    null
+  );
+}
+
+function mergeRetrievalResults(retrievals = []) {
+  const merged = [];
+  const seen = new Map();
+  let exactCitation = null;
+
+  for (const retrieval of retrievals) {
+    if (!exactCitation && retrieval?.exactCitation?.matched) {
+      exactCitation = retrieval.exactCitation;
+    }
+
+    for (const item of retrieval?.results || []) {
+      const key = buildDocKey(item) || `doc-${merged.length}`;
+
+      if (!seen.has(key)) {
+        seen.set(key, merged.length);
+        merged.push(item);
+        continue;
+      }
+
+      const index = seen.get(key);
+      const existing = merged[index];
+
+      const existingScore = Number(
+        existing?.finalScore ?? existing?.score ?? 0
+      );
+      const candidateScore = Number(item?.finalScore ?? item?.score ?? 0);
+
+      if (candidateScore > existingScore) {
+        merged[index] = {
+          ...existing,
+          ...item,
+          finalScore: candidateScore,
+          score: candidateScore
+        };
+      }
+    }
+  }
+
+  return {
+    results: merged,
+    exactCitation
+  };
+}
+
+function buildNamedLawFallbackText(bestMatch) {
+  if (!bestMatch) {
+    return "No exact indexed legal source was found for the named law or act asked.";
+  }
+
+  const title =
+    bestMatch.shortTitle ||
+    bestMatch.canonicalTitle ||
+    `RA ${bestMatch.republicActNumber || ""}`.trim();
+
+  const raText = bestMatch.republicActNumber
+    ? ` (RA ${bestMatch.republicActNumber})`
+    : "";
+
+  return [
+    `TINA recognized the question as referring to ${title}${raText}.`,
+    "",
+    "However, no exact indexed source for that law was found in the current tax library.",
+    "TINA will not present unrelated documents as support.",
+    "",
+    "Please upload or index the exact law text and, if available, its implementing rules and regulations."
+  ].join("\n");
+}
 
 export function createAskHandler({ supabase, openai }) {
   if (!supabase) {
@@ -1173,6 +1255,13 @@ Quick Recall:
 
       const issuance = detectIssuanceQuery(finalQuestion);
       const questionType = classifyQuestion(finalQuestion);
+      const namedLawDetection = detectNamedLaw(finalQuestion);
+      const retrievalQueries = namedLawDetection.matched
+        ? buildNamedLawSearchQueries(finalQuestion, {
+            includeOriginalQuestion: true,
+            maxQueries: 4
+          })
+        : [finalQuestion];
 
       let conversationHistory = [];
       if (conversationId && userId) {
@@ -1217,17 +1306,25 @@ Quick Recall:
         });
       }
 
-      const retrieval = await hybridRetrieve({
-        supabase,
-        vectorStore: { smartSearch, searchSimilar },
-        query: finalQuestion,
-        questionType,
-        taxType: topicData.taxType || "",
-        topK: 24
-      });
+      const retrievals = [];
+
+      for (const query of retrievalQueries) {
+        const retrieval = await hybridRetrieve({
+          supabase,
+          vectorStore: { smartSearch, searchSimilar },
+          query,
+          questionType,
+          taxType: topicData.taxType || "",
+          topK: 12
+        });
+
+        retrievals.push(retrieval);
+      }
+
+      const mergedRetrieval = mergeRetrievalResults(retrievals);
 
       const hierarchyRerankedDocs = rerankByHierarchy(
-        retrieval.results || [],
+        mergedRetrieval.results || [],
         finalQuestion
       );
 
@@ -1241,8 +1338,27 @@ Quick Recall:
           ? supersessionResult.activeDocs
           : hierarchyRerankedDocs;
 
-      const internalRankedDocs = activeRankedDocs;
-      const displayableRankedDocs = activeRankedDocs.filter(
+      const namedLawFiltered = namedLawDetection.matched
+        ? filterDocsForNamedLaw(activeRankedDocs, namedLawDetection, {
+            minScore: 20,
+            hardFilter: false,
+            maxDocs: 12
+          })
+        : {
+            lawMatched: false,
+            bestMatch: null,
+            matchedDocs: activeRankedDocs,
+            discardedDocs: [],
+            scoredDocs: []
+          };
+
+      const namedLawMatchedDocs =
+        namedLawDetection.matched && namedLawFiltered.matchedDocs.length > 0
+          ? namedLawFiltered.matchedDocs
+          : activeRankedDocs;
+
+      const internalRankedDocs = namedLawMatchedDocs;
+      const displayableRankedDocs = namedLawMatchedDocs.filter(
         (doc) => !shouldHideSourceFromUser(doc)
       );
 
@@ -1251,8 +1367,9 @@ Quick Recall:
         maxDocs: 5
       });
 
-      const hierarchyConflict =
-        detectHierarchyConflict(displayableRankedDocs.slice(0, 5));
+      const hierarchyConflict = detectHierarchyConflict(
+        displayableRankedDocs.slice(0, 5)
+      );
 
       let evidence = normalizeRetrievedEvidence(
         internalRankedDocs.map((doc) => ({
@@ -1375,9 +1492,13 @@ Quick Recall:
         .join("\n\n---\n\n");
 
       const fallbackReason =
-        !topEvidence.length
-          ? "No indexed Google Drive/Supabase vector source matched the question."
-          : "Indexed sources were found but evidence strength was insufficient.";
+        namedLawDetection.matched &&
+        displayableRankedDocs.length === 0 &&
+        namedLawDetection.bestMatch
+          ? `No exact indexed source matched ${namedLawDetection.bestMatch.shortTitle || namedLawDetection.bestMatch.canonicalTitle}.`
+          : !topEvidence.length
+            ? "No indexed Google Drive/Supabase vector source matched the question."
+            : "Indexed sources were found but evidence strength was insufficient.";
 
       let preliminaryAnswer = "";
 
@@ -1441,7 +1562,14 @@ Quick Recall:
                 JSON.stringify(topicData || {}),
                 "",
                 `Question Type: ${questionType}`,
-                `Resolved Question: ${finalQuestion}`
+                `Resolved Question: ${finalQuestion}`,
+                namedLawDetection.matched
+                  ? `Detected Named Law: ${
+                      namedLawDetection.bestMatch?.shortTitle ||
+                      namedLawDetection.bestMatch?.canonicalTitle ||
+                      "N/A"
+                    }`
+                  : "Detected Named Law: none"
               ].join("\n")
             }
           ]
@@ -1478,10 +1606,11 @@ Quick Recall:
       });
 
       const shouldFallback =
+        (namedLawDetection.matched && displayableRankedDocs.length === 0) ||
         topDisplayableEvidence.length === 0 ||
         shouldRejectForWeakLegalBasis({
           validation,
-          hasExactCitation: Boolean(retrieval.exactCitation?.matched)
+          hasExactCitation: Boolean(mergedRetrieval.exactCitation?.matched)
         });
 
       const safeTopConfidenceRaw =
@@ -1544,13 +1673,20 @@ Quick Recall:
         });
 
         if (!sourcesUsed.length) {
+          const answerText =
+            namedLawDetection.matched && namedLawDetection.bestMatch
+              ? buildNamedLawFallbackText(namedLawDetection.bestMatch)
+              : "No indexed source found for the requested query.";
+
+          await saveAllMemory(answerText, [], []);
+
           return res.json({
             success: true,
             engine: "TINA Reasoning Engine",
             hook: hookConfig.hook_code,
             mode: hookConfig.mode,
             hookTitle: hookConfig.title,
-            answer: "No indexed source found for the requested query.",
+            answer: answerText,
             answerMode: "source_finder_no_match",
             confidence: "LOW",
             sourceStatus: "NO_INDEXED_SOURCE",
@@ -1593,13 +1729,15 @@ Quick Recall:
 
       if (shouldFallback) {
         const answerText =
-          issuance || questionType === "issuance"
-            ? "No indexed document found or insufficient verified evidence for the requested issuance. TINA will not generate a speculative answer."
-            : await generateGeneralFallbackAnswer(
-                finalQuestion,
-                memoryContext,
-                fallbackReason
-              );
+          namedLawDetection.matched && namedLawDetection.bestMatch
+            ? buildNamedLawFallbackText(namedLawDetection.bestMatch)
+            : issuance || questionType === "issuance"
+              ? "No indexed document found or insufficient verified evidence for the requested issuance. TINA will not generate a speculative answer."
+              : await generateGeneralFallbackAnswer(
+                  finalQuestion,
+                  memoryContext,
+                  fallbackReason
+                );
 
         await saveAllMemory(answerText, [], []);
 
@@ -1610,8 +1748,18 @@ Quick Recall:
           mode: hookConfig.mode,
           hookTitle: hookConfig.title,
           answer: answerText,
-          answerMode: issuance ? "no_exact_issuance_match" : "general_fallback",
-          confidence: issuance ? "LOW" : "GENERAL",
+          answerMode:
+            namedLawDetection.matched && namedLawDetection.bestMatch
+              ? "named_law_exact_source_not_found"
+              : issuance
+                ? "no_exact_issuance_match"
+                : "general_fallback",
+          confidence:
+            namedLawDetection.matched && namedLawDetection.bestMatch
+              ? "LOW"
+              : issuance
+                ? "LOW"
+                : "GENERAL",
           sourceStatus: "FALLBACK_USED",
           questionType,
           topicData,
@@ -1620,6 +1768,7 @@ Quick Recall:
           sourcesUsed: [],
           vectorMatches: topDisplayableEvidence.length,
           detectedIssuance: issuance || null,
+          detectedNamedLaw: namedLawDetection.bestMatch || null,
           reasoningRunId: reasoningRun?.id || null
         });
       }
@@ -1634,6 +1783,7 @@ Quick Recall:
 
       let confidence = "MEDIUM";
       if (issuance) confidence = "HIGH";
+      else if (namedLawDetection.matched) confidence = "HIGH";
       else if (topTier <= 2) confidence = "HIGH";
       else if (topTier <= 4) confidence = "MEDIUM";
       else if (topTier <= 7) confidence = "LIMITED";
@@ -1656,7 +1806,9 @@ Quick Recall:
           professionalInsight:
             issuance || questionType === "issuance"
               ? "Use the cited issuance and verify the latest amended or superseding BIR issuance before relying on the rule operationally."
-              : "Apply the higher-authority rule first and use lower-authority material only as support.",
+              : namedLawDetection.matched
+                ? "For named-law questions, rely first on the exact statute and its IRR before using secondary support."
+                : "Apply the higher-authority rule first and use lower-authority material only as support.",
           conflictFlag: conflictFlagText
         });
       }
@@ -1678,9 +1830,11 @@ Quick Recall:
             ? "case_analysis_answer"
             : doctrineModeResult.handled
               ? "doctrine_analysis_answer"
-              : issuance
-                ? `exact_issuance_${hookConfig.mode.toLowerCase()}_reasoned`
-                : `${hookConfig.mode.toLowerCase()}_reasoned_answer`,
+              : namedLawDetection.matched
+                ? "named_law_reasoned_answer"
+                : issuance
+                  ? `exact_issuance_${hookConfig.mode.toLowerCase()}_reasoned`
+                  : `${hookConfig.mode.toLowerCase()}_reasoned_answer`,
         confidence,
         sourceStatus: "INDEXED_REASONED_SOURCE_USED",
         questionType,
@@ -1690,6 +1844,7 @@ Quick Recall:
         sourcesUsed,
         vectorMatches: displayableRankedDocs.length,
         detectedIssuance: issuance || null,
+        detectedNamedLaw: namedLawDetection.bestMatch || null,
         reasoningRunId: reasoningRun?.id || null,
         conflictCount: displayableConflicts.length,
         hierarchyConflict: Boolean(hierarchyConflict?.conflict),
