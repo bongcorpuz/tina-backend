@@ -50,11 +50,14 @@ function compactSpaces(value = "") {
 
 function normalizeYear(year) {
   const clean = String(year || "").trim();
+
   if (!clean) return "";
+
   if (clean.length === 2) {
     const num = Number(clean);
     return String(num <= 30 ? 2000 + num : 1900 + num);
   }
+
   return clean;
 }
 
@@ -113,14 +116,22 @@ export function normalizeLegalReference(input = "") {
       raw,
       normalized: `RA_${raNo}`,
       type: "STATUTE",
-      aliases: [`ra ${raNo}`, `republic act no. ${raNo}`, `republic act ${raNo}`]
+      aliases: [
+        `ra ${raNo}`,
+        `republic act no. ${raNo}`,
+        `republic act ${raNo}`
+      ]
     };
   }
 
-  const rrMatch = raw.match(/\b(?:rr|revenue\s+regulation[s]?)\s*(?:no\.?)?\s*0*(\d+)[\s\-_]?(\d{2,4})\b/i);
+  const rrMatch = raw.match(
+    /\b(?:rr|revenue\s+regulation[s]?)\s*(?:no\.?)?\s*0*(\d+)[\s\-_]?(\d{2,4})\b/i
+  );
+
   if (rrMatch) {
     const num = String(rrMatch[1]).replace(/^0+/, "");
     const year = normalizeYear(rrMatch[2]);
+
     return {
       raw,
       normalized: `RR_${padDocNumber(num, 2)}-${year}`,
@@ -133,10 +144,14 @@ export function normalizeLegalReference(input = "") {
     };
   }
 
-  const rmcMatch = raw.match(/\b(?:rmc|revenue\s+memorandum\s+circular[s]?)\s*(?:no\.?)?\s*0*(\d+)[\s\-_]?(\d{2,4})\b/i);
+  const rmcMatch = raw.match(
+    /\b(?:rmc|revenue\s+memorandum\s+circular[s]?)\s*(?:no\.?)?\s*0*(\d+)[\s\-_]?(\d{2,4})\b/i
+  );
+
   if (rmcMatch) {
     const num = String(rmcMatch[1]).replace(/^0+/, "");
     const year = normalizeYear(rmcMatch[2]);
+
     return {
       raw,
       normalized: `RMC_${padDocNumber(num, 3)}_${year}`,
@@ -149,10 +164,14 @@ export function normalizeLegalReference(input = "") {
     };
   }
 
-  const rmoMatch = raw.match(/\b(?:rmo|revenue\s+memorandum\s+order[s]?)\s*(?:no\.?)?\s*0*(\d+)[\s\-_]?(\d{2,4})\b/i);
+  const rmoMatch = raw.match(
+    /\b(?:rmo|revenue\s+memorandum\s+order[s]?)\s*(?:no\.?)?\s*0*(\d+)[\s\-_]?(\d{2,4})\b/i
+  );
+
   if (rmoMatch) {
     const num = String(rmoMatch[1]).replace(/^0+/, "");
     const year = normalizeYear(rmoMatch[2]);
+
     return {
       raw,
       normalized: `RMO_${padDocNumber(num, 3)}_${year}`,
@@ -165,7 +184,10 @@ export function normalizeLegalReference(input = "") {
     };
   }
 
-  const rulingMatch = raw.match(/\b(?:bir\s+ruling|ruling)\s*(?:no\.?)?\s*([a-z0-9-]+)\b/i);
+  const rulingMatch = raw.match(
+    /\b(?:bir\s+ruling|ruling)\s*(?:no\.?)?\s*([a-z0-9-]+)\b/i
+  );
+
   if (rulingMatch) {
     return {
       raw,
@@ -284,6 +306,7 @@ export function buildAuthorityMetadata({
 
 export function computeRecencyScore(dateValue) {
   if (!dateValue) return 50;
+
   const date = new Date(dateValue);
   if (Number.isNaN(date.getTime())) return 50;
 
@@ -297,11 +320,13 @@ export function computeRecencyScore(dateValue) {
   if (ageDays <= 365) return 80;
   if (ageDays <= 730) return 70;
   if (ageDays <= 1825) return 60;
+
   return 50;
 }
 
 export function detectCitationIntent(query = "") {
   const normalized = normalizeLegalReference(query);
+
   return {
     normalizedReference: normalized.normalized,
     authorityType: normalized.type,
@@ -320,7 +345,9 @@ function computeCitationMatchBonus(query = "", doc = {}) {
     doc.originalSource,
     doc.metadata?.path,
     doc.metadata?.originalSource,
+    doc.normalizedReference,
     doc.metadata?.normalizedReference,
+    ...(doc.normalizedAliases || []),
     ...(doc.metadata?.normalizedAliases || [])
   ]
     .filter(Boolean)
@@ -342,8 +369,10 @@ export function rerankByHierarchy(results = [], query = "") {
   return results
     .map((doc) => {
       const semanticSimilarity = Number(doc.score || doc.similarity || 0);
+
       const authorityType =
         doc.authorityType ||
+        doc.authority_type ||
         doc.metadata?.authorityType ||
         classifyAuthorityFromDocument({
           fileName: doc.source || doc.originalSource || "",
@@ -351,13 +380,33 @@ export function rerankByHierarchy(results = [], query = "") {
           text: doc.text || ""
         });
 
-      const authorityScore = AUTHORITY_SCORE[authorityType] || 0;
+      const authorityLevel =
+        Number(
+          doc.authorityLevel ||
+          doc.authority_level ||
+          doc.metadata?.authorityLevel
+        ) ||
+        AUTHORITY_LEVEL[authorityType] ||
+        99;
+
+      const authorityScore =
+        Number(
+          doc.authorityScore ||
+          doc.authority_score ||
+          doc.metadata?.authorityScore
+        ) ||
+        AUTHORITY_SCORE[authorityType] ||
+        0;
+
       const recencyScore = computeRecencyScore(
-        doc.modifiedTime ||
-          doc.metadata?.modifiedTime ||
+        doc.recencyDate ||
+          doc.recency_date ||
           doc.metadata?.recencyDate ||
+          doc.modifiedTime ||
+          doc.metadata?.modifiedTime ||
           null
       );
+
       const citationMatchBonus = computeCitationMatchBonus(query, doc);
 
       const finalScore =
@@ -369,7 +418,7 @@ export function rerankByHierarchy(results = [], query = "") {
       return {
         ...doc,
         authorityType,
-        authorityLevel: AUTHORITY_LEVEL[authorityType] || 99,
+        authorityLevel,
         authorityScore,
         recencyScore,
         citationMatchBonus,
@@ -386,11 +435,20 @@ function looksContradictory(a = "", b = "") {
   const x = lower(a);
   const y = lower(b);
 
-  const negTokens = [" not ", " except ", " unless ", " exempt ", " disallowed ", " prohibited "];
+  const negTokens = [
+    " not ",
+    " except ",
+    " unless ",
+    " exempt ",
+    " disallowed ",
+    " prohibited "
+  ];
+
   const xNeg = negTokens.some((t) => x.includes(t.trim()) || x.includes(t));
   const yNeg = negTokens.some((t) => y.includes(t.trim()) || y.includes(t));
 
   if (x === y) return false;
+
   return xNeg !== yNeg;
 }
 
@@ -526,29 +584,8 @@ ${context}
 `.trim();
 }
 
-// INDEXING EXAMPLE:
-// const authority = buildAuthorityMetadata({
-//   fileName: file.name,
-//   path: file.path,
-//   text,
-//   modifiedTime: file.modifiedTime
-// });
-// metadata.authorityType = authority.authorityType;
-// metadata.authorityLevel = authority.authorityLevel;
-// metadata.authorityScore = authority.authorityScore;
-// metadata.normalizedReference = authority.normalizedReference;
-// metadata.normalizedAliases = authority.normalizedAliases;
-// metadata.recencyDate = authority.recencyDate;
-
-// RETRIEVAL EXAMPLE:
-// const reranked = rerankByHierarchy(results, userQuery);
-// const conflict = detectHierarchyConflict(reranked.slice(0, 5));
-// const legalBases = selectTopLegalBases(reranked, 2);
-// const prompt = buildStrictAnswerPrompt({
-//   hookMode: "ASK",
-//   originalQuestion: userQuery,
-//   cleanQuestion: userQuery,
-//   context: reranked.slice(0, 5).map(d => d.text).join("\n\n---\n\n"),
-//   topLegalBases: legalBases,
-//   conflict
-// });
+export {
+  AUTHORITY_LEVEL,
+  AUTHORITY_SCORE,
+  AUTHORITY_LABEL
+};
