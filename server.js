@@ -389,13 +389,33 @@ async function updatePendingQuizAnswerDirect({
 function getSourceTier(doc = {}) {
   const value = `${getDocPath(doc)} ${getDocOriginalName(doc)} ${doc.source || ""}`.toLowerCase();
 
-  if (value.includes("01_tax_code")) return { tier: 1, label: "Tax Code / NIRC", weight: 1.0 };
-  if (value.includes("02_revenue_regulations")) return { tier: 2, label: "Revenue Regulations", weight: 0.95 };
-  if (value.includes("03_rmc")) return { tier: 3, label: "Revenue Memorandum Circulars", weight: 0.9 };
-  if (value.includes("04_rmo")) return { tier: 4, label: "Revenue Memorandum Orders", weight: 0.85 };
-  if (value.includes("05_bir_rulings")) return { tier: 5, label: "BIR Rulings", weight: 0.75 };
-  if (value.includes("06_court_cases")) return { tier: 6, label: "Court Cases", weight: 0.6 };
-  if (value.includes("07_cpa_notes")) return { tier: 7, label: "CPA Notes / Internal Notes", weight: 0.4 };
+  if (value.includes("01_tax_code")) {
+    return { tier: 1, label: "Tax Code / NIRC", weight: 1.0 };
+  }
+
+  if (value.includes("02_revenue_regulations")) {
+    return { tier: 2, label: "Revenue Regulations", weight: 0.95 };
+  }
+
+  if (value.includes("03_rmc")) {
+    return { tier: 3, label: "Revenue Memorandum Circulars", weight: 0.9 };
+  }
+
+  if (value.includes("04_rmo")) {
+    return { tier: 4, label: "Revenue Memorandum Orders", weight: 0.85 };
+  }
+
+  if (value.includes("05_bir_rulings")) {
+    return { tier: 5, label: "BIR Rulings", weight: 0.75 };
+  }
+
+  if (value.includes("06_court_cases")) {
+    return { tier: 6, label: "Court Cases", weight: 0.6 };
+  }
+
+  if (value.includes("07_cpa_notes")) {
+    return { tier: 7, label: "CPA Notes / Internal Notes", weight: 0.4 };
+  }
 
   return { tier: 99, label: "Unclassified Source", weight: 0.5 };
 }
@@ -408,9 +428,18 @@ function classifyQuestion(question = "") {
     q.includes("revenue regulation") ||
     q.includes("revenue memorandum circular") ||
     q.includes("revenue memorandum order")
-  ) return "issuance";
+  ) {
+    return "issuance";
+  }
 
-  if (q.includes("bir ruling") || q.includes("da(") || q.includes("ot-") || q.includes("ruling no")) return "ruling";
+  if (
+    q.includes("bir ruling") ||
+    q.includes("da(") ||
+    q.includes("ot-") ||
+    q.includes("ruling no")
+  ) {
+    return "ruling";
+  }
 
   if (
     q.includes("case") ||
@@ -420,7 +449,9 @@ function classifyQuestion(question = "") {
     q.includes("cta") ||
     q.includes("supreme court") ||
     q.includes("g.r. no")
-  ) return "case";
+  ) {
+    return "case";
+  }
 
   if (
     q.includes("compute") ||
@@ -432,7 +463,9 @@ function classifyQuestion(question = "") {
     q.includes("nolco") ||
     q.includes("withholding") ||
     q.includes("ewt")
-  ) return "tax_computation";
+  ) {
+    return "tax_computation";
+  }
 
   if (
     q.includes("risk") ||
@@ -440,7 +473,9 @@ function classifyQuestion(question = "") {
     q.includes("exposure") ||
     q.includes("assessment") ||
     q.includes("deficiency")
-  ) return "audit_risk";
+  ) {
+    return "audit_risk";
+  }
 
   if (
     q.startsWith("what is") ||
@@ -449,7 +484,9 @@ function classifyQuestion(question = "") {
     q.includes("meaning of") ||
     q.includes("definition of") ||
     q.includes("explain")
-  ) return "concept";
+  ) {
+    return "concept";
+  }
 
   if (
     q.includes("deadline") ||
@@ -459,47 +496,11 @@ function classifyQuestion(question = "") {
     q.includes("rate") ||
     q.includes("threshold") ||
     q.includes("penalty")
-  ) return "compliance";
+  ) {
+    return "compliance";
+  }
 
   return "general";
-}
-
-function isPreferredForQuestion(doc, questionType) {
-  const { tier } = getSourceTier(doc);
-
-  if (questionType === "concept") return tier === 1 || tier === 2 || tier === 3;
-  if (questionType === "compliance") return tier === 1 || tier === 2 || tier === 3 || tier === 4;
-  if (questionType === "tax_computation") return tier === 1 || tier === 2 || tier === 3;
-  if (questionType === "audit_risk") return tier <= 7;
-  if (questionType === "ruling") return tier === 5 || tier === 1 || tier === 2 || tier === 3;
-  if (questionType === "case") return tier === 6;
-  if (questionType === "issuance") return tier === 2 || tier === 3 || tier === 4;
-
-  return true;
-}
-
-function rankDocsByAuthority(docs = []) {
-  return docs
-    .map((doc) => {
-      const sourceTier = getSourceTier(doc);
-      const rawScore = Number(doc.score || 0);
-
-      return {
-        ...doc,
-        sourceTier,
-        rawScore,
-        adjustedScore: rawScore * sourceTier.weight
-      };
-    })
-    .sort((a, b) => {
-      if (b.adjustedScore !== a.adjustedScore) return b.adjustedScore - a.adjustedScore;
-      return a.sourceTier.tier - b.sourceTier.tier;
-    });
-}
-
-function filterDocsByQuestionType(docs = [], questionType = "general") {
-  const preferredDocs = docs.filter((doc) => isPreferredForQuestion(doc, questionType));
-  return preferredDocs.length > 0 ? preferredDocs : docs;
 }
 
 /* ================= ISSUANCE DETECTION ================= */
