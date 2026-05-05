@@ -1969,57 +1969,84 @@ app.post("/ask", authenticate, async (req, res) => {
     }
 
     const pendingQuiz = await fetchLatestPendingQuizDirect(
-      userId,
-      conversationId || null
-    );
+  userId,
+  conversationId || null
+);
 
-    const directQuizAnswer = extractQuizAnswer(rawQuestion);
-    const normalizedInput = rawQuestion.toLowerCase();
-    const allowedExitCommands = ["/bye", "/exit", "/stop", "/quit", "/reset"];
+const directQuizAnswer = extractQuizAnswer(rawQuestion);
+const normalizedInput = rawQuestion.toLowerCase();
+const allowedExitCommands = ["/bye", "/exit", "/stop", "/quit", "/reset"];
 
-    if (pendingQuiz && directQuizAnswer) {
-      const loopResult = await continueAssessmentLoop({
+const activeAssessmentModes = new Set([
+  "/quiz",
+  "/review",
+  "/diagnostic"
+]);
+
+const activeHook = existingMode?.active_hook || null;
+const hasActiveAssessmentMode = activeAssessmentModes.has(activeHook);
+
+if (pendingQuiz && !hasActiveAssessmentMode) {
+  try {
+    await clearPendingQuizAttempts(userId, conversationId || null);
+    console.log(
+      "Cleared stale pending quiz because no active assessment mode exists.",
+      {
         userId,
         conversationId: conversationId || null,
-        incomingAnswer: rawQuestion
-      });
-
-      if (loopResult.handled) {
-        return res.json(loopResult.response);
+        pendingQuizId: pendingQuiz.id || null
       }
+    );
+  } catch (clearError) {
+    console.error("Failed to clear stale pending quiz:", clearError.message);
+  }
+}
+
+const freshPendingQuiz = hasActiveAssessmentMode
+  ? pendingQuiz
+  : null;
+
+if (freshPendingQuiz && directQuizAnswer) {
+  const loopResult = await continueAssessmentLoop({
+    userId,
+    conversationId: conversationId || null,
+    incomingAnswer: rawQuestion
+  });
+
+  if (loopResult.handled) {
+    return res.json(loopResult.response);
+  }
+}
+
+if (freshPendingQuiz && !directQuizAnswer) {
+  if (!allowedExitCommands.includes(normalizedInput)) {
+    let lockedModeLabel = "quiz";
+    let lockedModeMessage =
+      "You are still in active quiz mode. Please answer using A, B, C, or D only. Type /bye or /exit to leave quiz mode.";
+
+    if (activeHook === "/review") {
+      lockedModeLabel = "review";
+      lockedModeMessage =
+        "You are still in active review mode. Please answer the current multiple-choice question using A, B, C, or D only. Type /bye or /exit to leave review mode.";
+    } else if (activeHook === "/diagnostic") {
+      lockedModeLabel = "diagnostic";
+      lockedModeMessage =
+        "You are still in active diagnostic mode. Please answer the current multiple-choice question using A, B, C, or D only. Type /bye or /exit to leave diagnostic mode.";
     }
 
-    if (pendingQuiz && !directQuizAnswer) {
-      if (!allowedExitCommands.includes(normalizedInput)) {
-        const activeHook = existingMode?.active_hook || "/quiz";
-
-        let lockedModeLabel = "quiz";
-        let lockedModeMessage =
-          "You are still in active quiz mode. Please answer using A, B, C, or D only. Type /bye or /exit to leave quiz mode.";
-
-        if (activeHook === "/review") {
-          lockedModeLabel = "review";
-          lockedModeMessage =
-            "You are still in active review mode. Please answer the current multiple-choice question using A, B, C, or D only. Type /bye or /exit to leave review mode.";
-        } else if (activeHook === "/diagnostic") {
-          lockedModeLabel = "diagnostic";
-          lockedModeMessage =
-            "You are still in active diagnostic mode. Please answer the current multiple-choice question using A, B, C, or D only. Type /bye or /exit to leave diagnostic mode.";
-        }
-
-        return res.json({
-          success: false,
-          engine: "TINA Continuous Learning Engine",
-          mode: "QUIZ_MODE_LOCKED",
-          lockedMode: lockedModeLabel,
-          answer: lockedModeMessage,
-          sourceStatus: "QUIZ_MODE_LOCKED",
-          sourcesUsed: [],
-          vectorMatches: 0
-        });
-      }
-    }
-
+    return res.json({
+      success: false,
+      engine: "TINA Continuous Learning Engine",
+      mode: "QUIZ_MODE_LOCKED",
+      lockedMode: lockedModeLabel,
+      answer: lockedModeMessage,
+      sourceStatus: "QUIZ_MODE_LOCKED",
+      sourcesUsed: [],
+      vectorMatches: 0
+    });
+  }
+}
+    
     let effectiveQuestion = rawQuestion;
 
     if (
