@@ -1939,6 +1939,143 @@ async function clearPendingQuizAttempts(userId, conversationId = null) {
 }
 
 
+const MAX_VISIBLE_SOURCES = 5;
+
+function shouldHideSourceFromUser(source = {}) {
+  const path = String(
+    source.path ||
+      source.source_path ||
+      source.metadata?.path ||
+      source.originalSource ||
+      source.source ||
+      ""
+  ).toLowerCase();
+
+  return (
+    path.includes("07_cpa_notes") ||
+    path.includes("08_review_materials")
+  );
+}
+
+function buildSourceResponseItem(item = {}) {
+  const fileId =
+    item.fileId ||
+    item.file_id ||
+    item.metadata?.fileId ||
+    item.metadata?.file_id ||
+    null;
+
+  return {
+    title:
+      item.title ||
+      item.source_title ||
+      item.metadata?.documentTitle ||
+      item.source ||
+      item.originalSource ||
+      "Unknown source",
+    source:
+      item.source ||
+      item.source_title ||
+      item.originalSource ||
+      "Unknown source",
+    originalSource:
+      item.originalSource ||
+      item.metadata?.originalSource ||
+      item.source_title ||
+      item.source ||
+      null,
+    path:
+      item.source_path ||
+      item.path ||
+      item.metadata?.path ||
+      item.originalSource ||
+      item.source ||
+      null,
+    fileId,
+    driveViewUrl:
+      item.driveViewUrl ||
+      item.metadata?.driveViewUrl ||
+      (fileId ? `https://drive.google.com/file/d/${fileId}/view` : null),
+    driveDownloadUrl:
+      item.driveDownloadUrl ||
+      item.metadata?.driveDownloadUrl ||
+      (fileId ? `https://drive.google.com/uc?export=download&id=${fileId}` : null),
+    text: item.text || "",
+    preview: item.preview || (item.text ? item.text.substring(0, 300) : ""),
+    score: Number(item.finalScore || item.adjustedScore || item.score || 0),
+    adjustedScore: Number(item.finalScore || item.adjustedScore || item.score || 0),
+    authorityType:
+      item.authorityType ||
+      item.authority_type ||
+      item.metadata?.authorityType ||
+      null,
+    authorityLevel:
+      item.authorityLevel ||
+      item.authority_level ||
+      item.metadata?.authorityLevel ||
+      item.authority_tier ||
+      null,
+    authorityScore:
+      item.authorityScore ||
+      item.authority_score ||
+      item.metadata?.authorityScore ||
+      0,
+    authorityLabel:
+      item.authorityLabel ||
+      item.authority_label ||
+      item.metadata?.authorityLabel ||
+      "Unknown"
+  };
+}
+
+function finalizeSourcesForResponse(rawSources = [], query = "") {
+  const reranked = rerankByHierarchy(
+    rawSources.map((item) => buildSourceResponseItem(item)),
+    query
+  );
+
+  const seen = new Set();
+
+  return reranked
+    .filter((item) => !shouldHideSourceFromUser(item))
+    .filter((item) => item.driveViewUrl)
+    .filter((item) => {
+      const key = String(
+        item.fileId ||
+          item.driveViewUrl ||
+          item.path ||
+          item.originalSource ||
+          item.source ||
+          item.title ||
+          ""
+      )
+        .trim()
+        .toLowerCase();
+
+      if (!key || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
+    .slice(0, MAX_VISIBLE_SOURCES)
+    .map((item) => ({
+      title: item.title,
+      source: item.source,
+      originalSource: item.originalSource,
+      path: item.path,
+      fileId: item.fileId,
+      driveViewUrl: item.driveViewUrl,
+      driveDownloadUrl: item.driveDownloadUrl,
+      text: item.text,
+      preview: item.preview,
+      score: item.score,
+      adjustedScore: item.adjustedScore,
+      authorityType: item.authorityType,
+      authorityLevel: item.authorityLevel,
+      authorityScore: item.authorityScore,
+      authorityLabel: item.authorityLabel
+    }));
+}
+
 /* ================= ASK ROUTE ================= */
 
 app.post("/ask", authenticate, async (req, res) => {
@@ -2368,22 +2505,6 @@ app.post("/ask", authenticate, async (req, res) => {
       });
     }
 
-    function shouldHideSourceFromUser(source = {}) {
-      const path = String(
-        source.path ||
-          source.source_path ||
-          source.metadata?.path ||
-          source.originalSource ||
-          source.source ||
-          ""
-      ).toLowerCase();
-
-      return (
-        path.includes("07_cpa_notes") ||
-        path.includes("08_review_materials")
-      );
-    }
-
     const retrieval = await hybridRetrieve({
       supabase,
       vectorStore: { smartSearch, searchSimilar },
@@ -2691,58 +2812,14 @@ app.post("/ask", authenticate, async (req, res) => {
     }
 
     if (hookConfig.mode === "SOURCE_FINDER") {
-      const rawSourceFinderSources = topEvidence.map((item) => {
-        const fileId =
-          item.fileId ||
-          item.file_id ||
-          item.metadata?.fileId ||
-          item.metadata?.file_id ||
-          null;
+      const rawSourceFinderSources = topEvidence.map((item) => ({
+        ...item,
+        preview: item.text ? item.text.substring(0, 300) : ""
+      }));
 
-        return {
-          title:
-            item.source_title ||
-            item.metadata?.documentTitle ||
-            item.source ||
-            item.originalSource ||
-            "Unknown source",
-          source:
-            item.source ||
-            item.source_title ||
-            item.originalSource ||
-            "Unknown source",
-          originalSource:
-            item.originalSource ||
-            item.metadata?.originalSource ||
-            item.source_title ||
-            item.source ||
-            null,
-          path:
-            item.source_path ||
-            item.path ||
-            item.metadata?.path ||
-            item.originalSource ||
-            item.source ||
-            null,
-          fileId,
-          driveViewUrl:
-            item.driveViewUrl ||
-            item.metadata?.driveViewUrl ||
-            (fileId ? `https://drive.google.com/file/d/${fileId}/view` : null),
-          driveDownloadUrl:
-            item.driveDownloadUrl ||
-            item.metadata?.driveDownloadUrl ||
-            (fileId ? `https://drive.google.com/uc?export=download&id=${fileId}` : null),
-          score: item.score,
-          adjustedScore: item.score,
-          authorityTier: item.authority_tier,
-          authorityLabel: item.authority_label,
-          preview: item.text ? item.text.substring(0, 300) : ""
-        };
-      });
-
-      const sourcesUsed = rawSourceFinderSources.filter(
-        (item) => !shouldHideSourceFromUser(item)
+      const sourcesUsed = finalizeSourcesForResponse(
+        rawSourceFinderSources,
+        finalQuestion
       );
 
       if (!sourcesUsed.length) {
@@ -2769,7 +2846,7 @@ app.post("/ask", authenticate, async (req, res) => {
           .map((s, i) =>
             [
               `${i + 1}. ${s.title}`,
-              `Authority: Tier ${s.authorityTier} - ${s.authorityLabel}`,
+              `Authority: Level ${s.authorityLevel || 99} - ${s.authorityLabel || "Unknown"}`,
               `Preview: ${s.preview || ""}`
             ].join("\n")
           )
@@ -2825,68 +2902,17 @@ app.post("/ask", authenticate, async (req, res) => {
       });
     }
 
-    const rawSourcesUsed = uniqueSources(
-      topEvidence.map((item) => {
-        const fileId =
-          item.fileId ||
-          item.file_id ||
-          item.metadata?.fileId ||
-          item.metadata?.file_id ||
-          null;
+    const rawSourcesUsed = topEvidence.map((item) => ({
+      ...item
+    }));
 
-        return {
-          title:
-            item.source_title ||
-            item.metadata?.documentTitle ||
-            item.source ||
-            item.originalSource ||
-            "Unknown source",
-          source:
-            item.source ||
-            item.source_title ||
-            item.originalSource ||
-            "Unknown source",
-          originalSource:
-            item.originalSource ||
-            item.metadata?.originalSource ||
-            item.source_title ||
-            item.source ||
-            null,
-          path:
-            item.source_path ||
-            item.path ||
-            item.metadata?.path ||
-            item.originalSource ||
-            item.source ||
-            null,
-          fileId,
-          driveViewUrl:
-            item.driveViewUrl ||
-            item.metadata?.driveViewUrl ||
-            (fileId ? `https://drive.google.com/file/d/${fileId}/view` : null),
-          driveDownloadUrl:
-            item.driveDownloadUrl ||
-            item.metadata?.driveDownloadUrl ||
-            (fileId ? `https://drive.google.com/uc?export=download&id=${fileId}` : null),
-          text: item.text,
-          score: item.score,
-          adjustedScore: item.score,
-          authorityTier: item.authority_tier,
-          authorityLabel: item.authority_label,
-          sourceTier: {
-            tier: item.authority_tier,
-            label: item.authority_label
-          }
-        };
-      })
-    );
-
-    const sourcesUsed = rawSourcesUsed.filter(
-      (item) => !shouldHideSourceFromUser(item)
+    const sourcesUsed = finalizeSourcesForResponse(
+      rawSourcesUsed,
+      finalQuestion
     );
 
     const topTier = sourcesUsed.length
-      ? Math.min(...sourcesUsed.map((s) => s.authorityTier || 99))
+      ? Math.min(...sourcesUsed.map((s) => s.authorityLevel || 99))
       : 99;
 
     let confidence = "MEDIUM";
@@ -2903,7 +2929,7 @@ app.post("/ask", authenticate, async (req, res) => {
     });
     const conflictFlagText = buildConflictFlagText(hierarchyConflict);
     const sourcesUsedText = formatSourcesUsedBlock(sourcesUsed, {
-      maxItems: 8
+      maxItems: 5
     });
 
     let answerText = preliminaryAnswer || buildNoSourceReply();
