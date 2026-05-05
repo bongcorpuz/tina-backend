@@ -1420,6 +1420,21 @@ async function runDriveIndexing() {
         continue;
       }
 
+      const authority = buildAuthorityMetadata({
+        fileName: file.name,
+        path,
+        text,
+        modifiedTime: file.modifiedTime || null
+      });
+
+      const driveViewUrl = file.id
+        ? `https://drive.google.com/file/d/${file.id}/view`
+        : null;
+
+      const driveDownloadUrl = file.id
+        ? `https://drive.google.com/uc?export=download&id=${file.id}`
+        : null;
+
       const result = await addDocumentToVectorStore(text, normalizedSource, {
         fileId: file.id,
         originalFileName: file.name,
@@ -1428,17 +1443,32 @@ async function runDriveIndexing() {
         mimeType: file.mimeType,
         path,
         modifiedTime: file.modifiedTime || null,
-        authorityTier: tierInfo.tier,
-        authorityLabel: tierInfo.label,
-        authorityWeight: tierInfo.weight
+        driveViewUrl,
+        driveDownloadUrl,
+
+        authorityType: authority.authorityType,
+        authorityLevel: authority.authorityLevel,
+        authorityScore: authority.authorityScore,
+        authorityLabel: authority.authorityLabel,
+        normalizedReference: authority.normalizedReference,
+        normalizedAliases: authority.normalizedAliases,
+        recencyDate: authority.recencyDate,
+
+        fallbackAuthorityTier: tierInfo.tier,
+        fallbackAuthorityLabel: tierInfo.label,
+        fallbackAuthorityWeight: tierInfo.weight
       });
 
       indexed.push({
         fileName: file.name,
         normalizedSource,
         path,
-        authorityTier: tierInfo,
         mimeType: file.mimeType,
+        authorityType: authority.authorityType,
+        authorityLevel: authority.authorityLevel,
+        authorityScore: authority.authorityScore,
+        authorityLabel: authority.authorityLabel,
+        fallbackAuthorityTier: tierInfo,
         textLength: text.length,
         chunksAdded: result?.chunksAdded ?? 0,
         status: "Indexed",
