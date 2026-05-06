@@ -365,6 +365,40 @@ function buildCitationCandidates(normalized) {
   );
 }
 
+function escapeIlikeValue(value = "") {
+  return safeString(value).replace(/[%,'"]/g, " ").trim();
+}
+
+function buildExactCitationOrClauses(candidateStrings = []) {
+  const clauses = [];
+
+  for (const value of candidateStrings) {
+    const rawValue = escapeIlikeValue(value);
+    const normalizedValue = escapeIlikeValue(normalizeForMatch(value));
+
+    if (!rawValue && !normalizedValue) continue;
+
+    if (rawValue) {
+      clauses.push(`source.ilike.%${rawValue}%`);
+      clauses.push(`original_source.ilike.%${rawValue}%`);
+      clauses.push(`metadata->>path.ilike.%${rawValue}%`);
+      clauses.push(`metadata->>originalSource.ilike.%${rawValue}%`);
+      clauses.push(`metadata->>originalFileName.ilike.%${rawValue}%`);
+    }
+
+    if (normalizedValue) {
+      clauses.push(`source.ilike.%${normalizedValue}%`);
+      clauses.push(`original_source.ilike.%${normalizedValue}%`);
+      clauses.push(`metadata->>path.ilike.%${normalizedValue}%`);
+      clauses.push(`metadata->>originalSource.ilike.%${normalizedValue}%`);
+      clauses.push(`metadata->>originalFileName.ilike.%${normalizedValue}%`);
+      clauses.push(`normalized_reference.ilike.%${normalizedValue}%`);
+    }
+  }
+
+  return uniqueBy(clauses, (item) => item);
+}
+
 export async function resolveExactCitation(supabase, query) {
   const cleanQuery = safeString(query);
   const normalized = normalizeLegalReference(cleanQuery);
@@ -379,15 +413,20 @@ export async function resolveExactCitation(supabase, query) {
   }
 
   const candidateStrings = buildCitationCandidates(normalized);
+  const sourceOrClauses = buildExactCitationOrClauses(candidateStrings);
 
-  const sourceOrClauses = candidateStrings
-    .map((value) => `source.ilike.%${value}%`)
-    .concat(candidateStrings.map((value) => `path.ilike.%${value}%`))
-    .concat(
-      candidateStrings.map(
-        (value) => `normalized_reference.ilike.%${normalizeForMatch(value)}%`
-      )
-    );
+  if (!sourceOrClauses.length) {
+    return {
+      matched: false,
+      query: cleanQuery,
+      citation: {
+        normalizedReference: normalized.normalized,
+        type: normalized.type,
+        aliases: normalized.aliases || []
+      },
+      documents: []
+    };
+  }
 
   const { data, error } = await supabase
     .from("tina_vector_store")
@@ -404,8 +443,10 @@ export async function resolveExactCitation(supabase, query) {
   const documents = (data || []).filter((doc) => {
     const haystack = [
       doc.source,
-      doc.path,
       doc.original_source,
+      doc.originalSource,
+      doc.path,
+      doc.source_path,
       doc.metadata?.originalSource,
       doc.metadata?.originalFileName,
       doc.metadata?.path,
@@ -421,7 +462,7 @@ export async function resolveExactCitation(supabase, query) {
 
     const aliasHit = candidateStrings
       .map((candidate) => normalizeForMatch(candidate))
-      .some((candidate) => haystack.includes(candidate));
+      .some((candidate) => candidate && haystack.includes(candidate));
 
     const normalizedReference = normalizeForMatch(
       doc.normalizedReference ||
@@ -522,6 +563,8 @@ export async function hybridRetrieve({
     const textBlob = [
       doc.text,
       doc.source,
+      doc.original_source,
+      doc.originalSource,
       doc.path,
       doc.metadata?.path,
       doc.metadata?.originalSource,
