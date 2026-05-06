@@ -457,6 +457,7 @@ function resolveQuestion({
 ========================================================= */
 
 export async function detectTopic({
+  supabase,
   question,
   userId = null,
   sessionId = null
@@ -465,11 +466,8 @@ export async function detectTopic({
   const normalizedQuestion = cleanText(normalizeTaxReference(originalQuestion));
 
   const previousState =
-    userId
-      ? await getLastTopicState(
-          userId,
-          sessionId || null
-        )
+    supabase && userId
+      ? await getLastTopicState(supabase, userId, sessionId || null)
       : null;
 
   const detected = detectTopicByRules(normalizedQuestion);
