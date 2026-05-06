@@ -1,5 +1,13 @@
 // FILE: final-answer-compliance.js
 
+import {
+  applySupersessionFilter,
+  findReplacementForDocument
+} from "./supersession-engine.js";
+
+const MAX_VISIBLE_SOURCES = 5;
+const HIDDEN_SOURCE_PATTERNS = ["07_cpa_notes", "08_review_materials"];
+
 function normalizeText(value = "") {
   return String(value || "")
     .replace(/\r\n/g, "\n")
@@ -240,6 +248,133 @@ function uniqueDocs(docs = []) {
   return result;
 }
 
+function sourcePathOf(doc = {}) {
+  return (
+    doc.path ||
+    doc.source_path ||
+    doc.metadata?.path ||
+    doc.originalSource ||
+    doc.source ||
+    ""
+  );
+}
+
+function sourceTitleOf(doc = {}) {
+  return (
+    doc.title ||
+    doc.source_title ||
+    doc.metadata?.documentTitle ||
+    doc.metadata?.originalFileName ||
+    doc.originalSource ||
+    doc.source ||
+    "Untitled Source"
+  );
+}
+
+function sourceDriveUrlOf(doc = {}) {
+  return (
+    doc.driveViewUrl ||
+    doc.drive_view_url ||
+    doc.metadata?.driveViewUrl ||
+    doc.metadata?.drive_view_url ||
+    null
+  );
+}
+
+function authorityTypeOf(doc = {}) {
+  return normalizeAuthorityType(
+    doc.authorityType ||
+      doc.authority_type ||
+      doc.metadata?.authorityType ||
+      doc.authorityLabel ||
+      doc.authority_label ||
+      ""
+  );
+}
+
+function authorityLevelOf(doc = {}) {
+  const explicit =
+    doc.authorityLevel ??
+    doc.authority_level ??
+    doc.metadata?.authorityLevel ??
+    null;
+
+  return Number.isFinite(Number(explicit)) ? Number(explicit) : 99;
+}
+
+function shouldHideSource(doc = {}) {
+  const haystack = normalizeLooseText(
+    [
+      sourcePathOf(doc),
+      sourceTitleOf(doc)
+    ].join(" ")
+  );
+
+  return HIDDEN_SOURCE_PATTERNS.some((pattern) =>
+    haystack.includes(pattern)
+  );
+}
+
+export function filterVisibleSources(
+  docs = [],
+  { maxItems = MAX_VISIBLE_SOURCES, supersessionResult = null } = {}
+) {
+  const visible = [];
+
+  for (const doc of uniqueDocs(docs)) {
+    if (!doc) continue;
+    if (shouldHideSource(doc)) continue;
+
+    const replacement = findReplacementForDocument(doc, supersessionResult);
+    const sourceToUse = replacement || doc;
+
+    if (shouldHideSource(sourceToUse)) continue;
+
+    const entry = {
+      ...sourceToUse,
+      title: sourceTitleOf(sourceToUse),
+      driveViewUrl: sourceDriveUrlOf(sourceToUse),
+      authorityType: authorityTypeOf(sourceToUse),
+      authorityLevel: authorityLevelOf(sourceToUse),
+      issuanceNumber: inferIssuanceNumber(sourceToUse)
+    };
+
+    visible.push(entry);
+  }
+
+  return uniqueDocs(visible)
+    .sort((a, b) => {
+      const levelDiff = authorityLevelOf(a) - authorityLevelOf(b);
+      if (levelDiff !== 0) return levelDiff;
+      return sourceTitleOf(a).localeCompare(sourceTitleOf(b));
+    })
+    .slice(0, maxItems);
+}
+
+function runSupersessionPreflight({
+  legalBasisDocs = [],
+  sourcesUsed = [],
+  asOfDate = new Date()
+}) {
+  const combinedDocs = uniqueDocs([...legalBasisDocs, ...sourcesUsed]);
+  const supersessionResult = applySupersessionFilter(combinedDocs, asOfDate);
+
+  const resolvedLegalBasisDocs = uniqueDocs(
+    legalBasisDocs.map((doc) => findReplacementForDocument(doc, supersessionResult) || doc)
+  );
+
+  const resolvedSourcesUsed = filterVisibleSources(sourcesUsed, {
+    maxItems: MAX_VISIBLE_SOURCES,
+    supersessionResult
+  });
+
+  return {
+    supersessionResult,
+    resolvedLegalBasisDocs,
+    resolvedSourcesUsed
+  };
+}
+
 function forceConflictDetectedNo() {
   return "Conflict Detected: NO";
 }
@@ -323,13 +458,18 @@ function buildConflictSection({
       hierarchyConflict?.controlling_authority ||
       "Higher authority prevails";
 
+    const recommendedAction =
+      hierarchyConflict?.overrideApplied
+        ? "Recommended Action: Follow the controlling court authority."
+        : "Recommended Action: Follow the higher authority pending clarification.";
+
     return [
       "Conflict Detected: YES",
       `Source A: ${sourceA}, ${sectionA}`,
       `Source B: ${sourceB}, ${sectionB}`,
       `Contradiction: ${normalizeText(contradiction)}`,
       `Controlling Authority: ${controllingAuthority}`,
-      "Recommended Action: Follow the higher authority pending clarification."
+      recommendedAction
     ].join("\n");
   }
 
@@ -419,7 +559,8 @@ function buildSupportingRules({
 
 function buildProfessionalInsight({
   draftAnswer = "",
-  defaultInsight = ""
+  defaultInsight = "",
+  supersessionResult = null
 }) {
   const body =
     getSectionBody(draftAnswer, String.raw`\b4\.\s*PROFESSIONAL INSIGHT\b`) ||
@@ -428,6 +569,10 @@ function buildProfessionalInsight({
 
   if (body) {
     return takeSentences(body, 3);
+  }
+
+  if (supersessionResult?.superseded?.length) {
+    return "One or more indexed sources appeared superseded, so only active controlling sources were retained for the final answer.";
   }
 
   return normalizeText(
@@ -454,6 +599,48 @@ function ensureDashedBullets(lines = []) {
     .join("\n");
 }
 
+function inferAuthorityUsed(legalBasisDocs = [], sourcesUsed = []) {
+  const docs = [...legalBasisDocs, ...sourcesUsed];
+
+  if (!docs.length) {
+    return [];
+  }
+
+  return dedupe(
+    docs
+      .map((doc) => formatDocType(doc))
+      .filter(Boolean)
+      .slice(0, 5)
+  );
+}
+
+function inferConfidenceLevel({
+  legalBasisDocs = [],
+  hierarchyConflict = null,
+  supersessionResult = null
+}) {
+  if (!legalBasisDocs.length) {
+    return "LOW";
+  }
+
+  const bestLevel = Math.min(
+    ...legalBasisDocs.map((doc) => authorityLevelOf(doc))
+  );
+
+  if (hierarchyConflict?.conflict) {
+    return bestLevel <= 4 ? "MEDIUM" : "LOW";
+  }
+
+  if (supersessionResult?.superseded?.length) {
+    return bestLevel <= 4 ? "MEDIUM" : "LOW";
+  }
+
+  if (bestLevel <= 2) return "HIGH";
+  if (bestLevel <= 4) return "HIGH";
+  if (bestLevel <= 8) return "MEDIUM";
+  return "LOW";
+}
+
 export function buildFinalCompliantAnswer({
   draftAnswer = "",
   fallbackAnswer = "",
@@ -462,29 +649,45 @@ export function buildFinalCompliantAnswer({
   sourcesUsed = [],
   conflicts = [],
   hierarchyConflict = null,
-  professionalInsight = ""
+  professionalInsight = "",
+  asOfDate = new Date()
 }) {
   const sanitizedDraft = sanitizeDraftAnswer(draftAnswer);
 
+  const {
+    supersessionResult,
+    resolvedLegalBasisDocs,
+    resolvedSourcesUsed
+  } = runSupersessionPreflight({
+    legalBasisDocs,
+    sourcesUsed,
+    asOfDate
+  });
+
   const finalDirectAnswer = normalizeText(
-    directAnswer || buildDirectAnswer({ draftAnswer: sanitizedDraft, fallbackAnswer })
+    directAnswer ||
+      buildDirectAnswer({
+        draftAnswer: sanitizedDraft,
+        fallbackAnswer
+      })
   );
 
-  const legalBasisLines = buildValidatedLegalBasis(legalBasisDocs);
+  const legalBasisLines = buildValidatedLegalBasis(resolvedLegalBasisDocs);
   const supportingRuleLines = buildSupportingRules({
     draftAnswer: sanitizedDraft,
-    legalBasisDocs
+    legalBasisDocs: resolvedLegalBasisDocs
   });
   const finalInsight = buildProfessionalInsight({
     draftAnswer: sanitizedDraft,
-    defaultInsight: professionalInsight
+    defaultInsight: professionalInsight,
+    supersessionResult
   });
   const finalConflict = buildConflictSection({
     draftAnswer: sanitizedDraft,
     conflicts,
     hierarchyConflict
   });
-  const sourceLines = buildValidatedSources(sourcesUsed);
+  const sourceLines = buildValidatedSources(resolvedSourcesUsed);
 
   return [
     "1. DIRECT ANSWER",
@@ -516,6 +719,41 @@ export function buildFinalCompliantAnswer({
     .trim();
 }
 
+export function buildFinalRoutePayload({
+  answer = "",
+  legalBasisDocs = [],
+  sourcesUsed = [],
+  hierarchyConflict = null,
+  asOfDate = new Date()
+}) {
+  const {
+    supersessionResult,
+    resolvedLegalBasisDocs,
+    resolvedSourcesUsed
+  } = runSupersessionPreflight({
+    legalBasisDocs,
+    sourcesUsed,
+    asOfDate
+  });
+
+  return {
+    answer,
+    sources: resolvedSourcesUsed.slice(0, MAX_VISIBLE_SOURCES).map((doc) => ({
+      title: sourceTitleOf(doc),
+      drive_url: sourceDriveUrlOf(doc),
+      authority_type: authorityTypeOf(doc),
+      issuance_number: inferIssuanceNumber(doc) || null
+    })),
+    authority_used: inferAuthorityUsed(resolvedLegalBasisDocs, resolvedSourcesUsed),
+    confidence_level: inferConfidenceLevel({
+      legalBasisDocs: resolvedLegalBasisDocs,
+      hierarchyConflict,
+      supersessionResult
+    }),
+    supersession_audit: supersessionResult?.auditTrail || []
+  };
+}
+
 export function sanitizeDraftAnswer(text = "") {
   return sanitizeConflictSection(stripInventedSourceSections(text));
 }
@@ -541,7 +779,10 @@ export function sanitizeConflictSection(text = "") {
     /Conflict Detected:\s*YES[\s\S]*may not fully align/i
   ];
 
-  if (!hasSpecificConflict && vagueYesPatterns.some((pattern) => pattern.test(conflictBody))) {
+  if (
+    !hasSpecificConflict &&
+    vagueYesPatterns.some((pattern) => pattern.test(conflictBody))
+  ) {
     return value.replace(
       /(\b5\.\s*CONFLICT FLAG\b|###\s*Conflict flag\b)[\s\S]*?(?=\n\s*(?:\d+\.\s*[A-Z][A-Z ]+\b|###\s+[A-Za-z])|$)/i,
       "5. CONFLICT FLAG\nConflict Detected: NO"
@@ -554,5 +795,7 @@ export function sanitizeConflictSection(text = "") {
 export default {
   sanitizeDraftAnswer,
   sanitizeConflictSection,
-  buildFinalCompliantAnswer
+  buildFinalCompliantAnswer,
+  buildFinalRoutePayload,
+  filterVisibleSources
 };
