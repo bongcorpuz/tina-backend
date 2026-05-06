@@ -24,14 +24,9 @@ import {
 } from "./auth.js";
 
 import {
-  clearVectorStore,
-  addDocumentToVectorStore,
-  getVectorStoreStats
+  getVectorStoreStats,
+  normalizeSourceName
 } from "./vector-store.js";
-
-import {
-  buildAuthorityMetadata
-} from "./authority-engine.js";
 
 import {
   createAskHandler
@@ -39,9 +34,12 @@ import {
 
 import {
   getUserId,
-  normalizeSourceName,
   getSourceTier
 } from "./ask-helpers.js";
+
+import {
+  createBackgroundReindexController
+} from "./reindex-service.js";
 
 /* ================= ENV ================= */
 
@@ -79,6 +77,7 @@ const openai = new OpenAI({
 });
 
 const askHandler = createAskHandler({ supabase, openai });
+const reindexController = createBackgroundReindexController();
 
 /* ================= ADMIN SECRET ================= */
 
@@ -102,196 +101,6 @@ function allowAuthenticatedOrIndexSecret(req, res, next) {
   }
 
   return authenticate(req, res, next);
-}
-
-/* ================= GOOGLE DRIVE INDEXING ================= */
-
-async function runDriveIndexing() {
-  const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
-
-  if (!folderId) {
-    throw new Error("GOOGLE_DRIVE_FOLDER_ID not set");
-  }
-
-  await clearVectorStore();
-
-  const files = await listDriveFiles(folderId);
-  const indexed = [];
-  const failed = [];
-
-  for (const file of files) {
-    try {
-      let text = await extractTextFromFile(file);
-      text = (text || "").replace(/\n+/g, " ").replace(/\s+/g, " ").trim();
-
-      const path = file.path || file.name;
-      const normalizedSource = normalizeSourceName(file.name);
-
-      const tierInfo = getSourceTier({
-        source: file.name,
-        metadata: {
-          path,
-          originalFileName: file.name
-        }
-      });
-
-      if (!text) {
-        failed.push({
-          fileName: file.name,
-          normalizedSource,
-          path,
-          authorityTier: tierInfo,
-          mimeType: file.mimeType,
-          reason: "No readable text"
-        });
-        continue;
-      }
-
-      const authority = buildAuthorityMetadata({
-        fileName: file.name,
-        path,
-        text,
-        modifiedTime: file.modifiedTime || null
-      });
-
-      const driveViewUrl = file.id
-        ? `https://drive.google.com/file/d/${file.id}/view`
-        : null;
-
-      const driveDownloadUrl = file.id
-        ? `https://drive.google.com/uc?export=download&id=${file.id}`
-        : null;
-
-      const result = await addDocumentToVectorStore(text, normalizedSource, {
-        fileId: file.id,
-        originalFileName: file.name,
-        originalSource: file.name,
-        normalizedSource,
-        mimeType: file.mimeType,
-        path,
-        modifiedTime: file.modifiedTime || null,
-        driveViewUrl,
-        driveDownloadUrl,
-
-        authorityType: authority.authorityType,
-        authorityLevel: authority.authorityLevel,
-        authorityScore: authority.authorityScore,
-        authorityLabel: authority.authorityLabel,
-        normalizedReference: authority.normalizedReference,
-        normalizedAliases: authority.normalizedAliases,
-        recencyDate: authority.recencyDate,
-
-        fallbackAuthorityTier: tierInfo.tier,
-        fallbackAuthorityLabel: tierInfo.label,
-        fallbackAuthorityWeight: tierInfo.weight
-      });
-
-      indexed.push({
-        fileName: file.name,
-        normalizedSource,
-        path,
-        mimeType: file.mimeType,
-        authorityType: authority.authorityType,
-        authorityLevel: authority.authorityLevel,
-        authorityScore: authority.authorityScore,
-        authorityLabel: authority.authorityLabel,
-        fallbackAuthorityTier: tierInfo,
-        textLength: text.length,
-        chunksAdded: result?.chunksAdded ?? 0,
-        status: "Indexed",
-        preview: text.substring(0, 200)
-      });
-    } catch (fileError) {
-      console.error(`Failed file: ${file.name}`, fileError);
-
-      failed.push({
-        fileName: file.name,
-        normalizedSource: normalizeSourceName(file.name),
-        path: file.path || file.name,
-        mimeType: file.mimeType,
-        reason: fileError.message || "File indexing failed"
-      });
-    }
-  }
-
-  const stats = await getVectorStoreStats();
-
-  return {
-    totalFilesChecked: files.length,
-    filesIndexed: indexed.length,
-    filesFailed: failed.length,
-    vectorStore: stats,
-    indexed,
-    failed
-  };
-}
-
-/* ================= BACKGROUND INDEXING ================= */
-
-let isIndexingRunning = false;
-
-let lastIndexingStatus = {
-  running: false,
-  startedAt: null,
-  finishedAt: null,
-  success: null,
-  message: "No indexing job has started yet.",
-  error: null,
-  result: null
-};
-
-function startIndexingInBackground() {
-  if (isIndexingRunning) {
-    return {
-      started: false,
-      message: "Indexing is already running."
-    };
-  }
-
-  isIndexingRunning = true;
-
-  lastIndexingStatus = {
-    running: true,
-    startedAt: new Date().toISOString(),
-    finishedAt: null,
-    success: null,
-    message: "Indexing is running in background.",
-    error: null,
-    result: null
-  };
-
-  runDriveIndexing()
-    .then((result) => {
-      lastIndexingStatus = {
-        running: false,
-        startedAt: lastIndexingStatus.startedAt,
-        finishedAt: new Date().toISOString(),
-        success: true,
-        message: "Indexing completed successfully.",
-        error: null,
-        result
-      };
-    })
-    .catch((error) => {
-      console.error("Background indexing error:", error);
-      lastIndexingStatus = {
-        running: false,
-        startedAt: lastIndexingStatus.startedAt,
-        finishedAt: new Date().toISOString(),
-        success: false,
-        message: "Indexing failed.",
-        error: error.message || "Unknown indexing error",
-        result: null
-      };
-    })
-    .finally(() => {
-      isIndexingRunning = false;
-    });
-
-  return {
-    started: true,
-    message: "Indexing started in background."
-  };
 }
 
 /* ================= BASIC ROUTES ================= */
@@ -343,6 +152,7 @@ app.get("/health", async (req, res) => {
       googleServiceAccountJson: Boolean(process.env.GOOGLE_SERVICE_ACCOUNT_JSON),
       oldGoogleKeyFile: Boolean(process.env.GOOGLE_SERVICE_ACCOUNT_KEY_FILE),
       indexSecretEnabled: Boolean(process.env.INDEX_SECRET),
+      indexingRunning: reindexController.isActive(),
       vectorStore: vectorStats,
       time: new Date().toISOString()
     });
@@ -490,7 +300,7 @@ app.get("/conversations/:conversationId/messages", authenticate, async (req, res
 /* ================= INDEX ROUTES ================= */
 
 app.get("/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
-  const started = startIndexingInBackground();
+  const started = reindexController.start();
 
   return res.json({
     success: true,
@@ -502,7 +312,7 @@ app.get("/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
 });
 
 app.get("/reindex", allowAuthenticatedOrIndexSecret, async (req, res) => {
-  const started = startIndexingInBackground();
+  const started = reindexController.start();
 
   return res.json({
     success: true,
@@ -514,7 +324,7 @@ app.get("/reindex", allowAuthenticatedOrIndexSecret, async (req, res) => {
 });
 
 app.get("/admin/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
-  const started = startIndexingInBackground();
+  const started = reindexController.start();
 
   return res.json({
     success: true,
@@ -532,7 +342,7 @@ app.get("/index-status", allowAuthenticatedOrIndexSecret, async (req, res) => {
     return res.json({
       success: true,
       engine: "TINA Background Indexing Engine",
-      indexing: lastIndexingStatus,
+      indexing: reindexController.getStatus(),
       vectorStore: vectorStats,
       time: new Date().toISOString()
     });
@@ -589,29 +399,32 @@ app.get("/read-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
 
     for (const file of files) {
       try {
-        let text = await extractTextFromFile(file);
-        text = (text || "").replace(/\n+/g, " ").replace(/\s+/g, " ").trim();
+        const text = await extractTextFromFile(file);
 
         results.push({
           fileName: file.name,
-          normalizedSource: normalizeSourceName(file.name),
+          normalizedSource: normalizeSourceName(file.path || file.name),
           path: file.path || file.name,
           authorityTier: getSourceTier({
             source: file.name,
             metadata: { path: file.path || file.name }
           }),
           mimeType: file.mimeType,
-          textLength: text.length,
-          textPreview: text.substring(0, 1000)
+          textLength: String(text || "").length,
+          textPreview: String(text || "").substring(0, 1000),
+          driveViewUrl: file.driveViewUrl || null,
+          driveDownloadUrl: file.driveDownloadUrl || null
         });
       } catch (fileError) {
         results.push({
           fileName: file.name,
-          normalizedSource: normalizeSourceName(file.name),
+          normalizedSource: normalizeSourceName(file.path || file.name),
           path: file.path || file.name,
           mimeType: file.mimeType,
           textLength: 0,
-          error: fileError.message || "Failed to read file"
+          error: fileError.message || "Failed to read file",
+          driveViewUrl: file.driveViewUrl || null,
+          driveDownloadUrl: file.driveDownloadUrl || null
         });
       }
     }
