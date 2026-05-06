@@ -147,8 +147,10 @@ function isSecondaryByFolder(path = "", fileName = "") {
   );
 }
 
-function classifyAuthorityFromPath(path = "") {
+function classifyAuthorityFromPath(path = "", fileName = "", text = "") {
   const p = lower(path);
+  const f = lower(fileName);
+  const t = lower(text);
 
   if (!p) return null;
 
@@ -160,9 +162,21 @@ function classifyAuthorityFromPath(path = "") {
   if (p.includes("04_rmo")) return "RMO";
   if (p.includes("05_bir_rulings")) return "BIR_RULING";
   if (p.includes("05b_tax_treaties")) return "TREATY";
-  if (p.includes("06_court_cases")) return "SUPREME_COURT";
+
+  if (p.includes("06_court_cases")) {
+    const courtType = detectCourtTypeFromText(`${fileName} ${path} ${text}`);
+    return courtType || "SUPREME_COURT";
+  }
+
   if (p.includes("07_cpa_notes")) return "SECONDARY";
   if (p.includes("08_review_materials")) return "SECONDARY";
+
+  if (
+    f.includes("constitution") ||
+    t.includes("constitution of the philippines")
+  ) {
+    return "CONSTITUTION";
+  }
 
   return null;
 }
@@ -175,15 +189,16 @@ function detectCourtTypeFromText(input = "") {
 
   if (
     /\bg\.r\.\s*no\.?/i.test(raw) ||
-    /\bsupreme court\b/i.test(raw) ||
-    /\bsc\b/i.test(l)
+    /\bg\.?\s*r\.?\s*no\.?\s*[a-z0-9.-]+\b/i.test(raw) ||
+    /\bsupreme court\b/i.test(raw)
   ) {
     return "SUPREME_COURT";
   }
 
   if (
     /\bcta en banc\b/i.test(raw) ||
-    /\bc\.?t\.?a\.?\s+en\s+banc\b/i.test(raw)
+    /\bc\.?t\.?a\.?\s+en\s+banc\b/i.test(raw) ||
+    /\bcta\s+eb\s+no\.?\s*[a-z0-9.-]+\b/i.test(raw)
   ) {
     return "CTA_EN_BANC";
   }
@@ -312,7 +327,7 @@ function classifyAuthorityFromTextContent(text = "", fileName = "", path = "") {
     return "SECONDARY";
   }
 
-  const courtType = detectCourtTypeFromText(blob);
+  const courtType = detectCourtTypeFromText(`${fileName} ${path} ${blob}`);
   if (courtType) return courtType;
 
   if (
@@ -422,6 +437,58 @@ function extractCAGRNumber(input = "") {
   return match ? match[1].toUpperCase() : "";
 }
 
+function extractProvisionLabel(input = "") {
+  const raw = compactSpaces(input);
+
+  const patterns = [
+    /\bsection\s+(\d+[a-zA-Z-]*)\b/i,
+    /\bsec\.?\s+(\d+[a-zA-Z-]*)\b/i,
+    /\barticle\s+([a-zA-Z0-9-]+)\b/i,
+    /\bart\.?\s+([a-zA-Z0-9-]+)\b/i,
+    /\bitem\s+([a-zA-Z0-9().-]+)\b/i
+  ];
+
+  for (const pattern of patterns) {
+    const match = raw.match(pattern);
+    if (match) {
+      return match[0];
+    }
+  }
+
+  return "";
+}
+
+function extractIssuanceFingerprint(input = "") {
+  const normalized = normalizeLegalReference(input);
+  if (!normalized.type) return "";
+
+  if (["RR", "RMC", "RMO", "RAMO", "STATUTE", "BIR_RULING"].includes(normalized.type)) {
+    return normalized.normalized || "";
+  }
+
+  return "";
+}
+
+function extractTopicSignature(input = "") {
+  return lexicalTopicTokens(input)
+    .filter(
+      (token) =>
+        ![
+          "section",
+          "article",
+          "source",
+          "authority",
+          "court",
+          "decision",
+          "revenue",
+          "memorandum",
+          "regulation",
+          "ruling"
+        ].includes(token)
+    )
+    .slice(0, 12);
+}
+
 export function normalizeLegalReference(input = "") {
   const raw = compactSpaces(input);
   const l = lower(raw);
@@ -524,7 +591,7 @@ export function normalizeLegalReference(input = "") {
   );
   if (rmoMatch) {
     const num = String(rmoMatch[1]).replace(/^0+/, "");
-    const year = normalizeYear(rmoMatch[2]);
+    const year = normalizeYear(rrMatch ? rrMatch[2] : rmoMatch[2]);
 
     return {
       raw,
@@ -619,7 +686,7 @@ export function classifyAuthorityFromDocument({
   const fileType = classifyAuthorityFromFileName(fileName, path);
   const pathAndFileType = classifyAuthorityFromPathAndFileName(fileName, path);
   const textType = classifyAuthorityFromTextContent(text, fileName, path);
-  const pathType = classifyAuthorityFromPath(path);
+  const pathType = classifyAuthorityFromPath(path, fileName, text);
   const blob = buildBlob({ fileName, path, text });
 
   if (
@@ -719,7 +786,7 @@ function computeCitationMatchBonus(query = "", doc = {}) {
   return 0;
 }
 
-function getAuthorityTypeForDoc(doc = {}) {
+export function getAuthorityTypeForDoc(doc = {}) {
   return (
     doc.authorityType ||
     doc.authority_type ||
@@ -732,7 +799,7 @@ function getAuthorityTypeForDoc(doc = {}) {
   );
 }
 
-function getAuthorityLevelForDoc(doc = {}) {
+export function getAuthorityLevelForDoc(doc = {}) {
   const authorityType = getAuthorityTypeForDoc(doc);
 
   return (
@@ -742,7 +809,7 @@ function getAuthorityLevelForDoc(doc = {}) {
   );
 }
 
-function getAuthorityScoreForDoc(doc = {}) {
+export function getAuthorityScoreForDoc(doc = {}) {
   const authorityType = getAuthorityTypeForDoc(doc);
 
   return (
@@ -752,7 +819,7 @@ function getAuthorityScoreForDoc(doc = {}) {
   );
 }
 
-function getControllingPrecedenceForDoc(doc = {}) {
+export function getControllingPrecedenceForDoc(doc = {}) {
   const authorityType = getAuthorityTypeForDoc(doc);
 
   return (
@@ -766,7 +833,7 @@ function getControllingPrecedenceForDoc(doc = {}) {
   );
 }
 
-function hasCourtOverridePriority(aType = "", bType = "") {
+export function hasCourtOverridePriority(aType = "", bType = "") {
   return (
     (COURT_TYPES.has(aType) && BIR_TYPES.has(bType)) ||
     (COURT_TYPES.has(bType) && BIR_TYPES.has(aType))
@@ -834,7 +901,11 @@ function looksContradictory(a = "", b = "") {
     /\bprohibited\b/,
     /\bexcluded\b/,
     /\bsubject to\b/,
-    /\bshall\b/
+    /\bshall not\b/,
+    /\bshall\b/,
+    /\bmay not\b/,
+    /\bmust\b/,
+    /\bmust not\b/
   ];
 
   const xNeg = negPatterns.some((pattern) => pattern.test(x));
@@ -843,6 +914,148 @@ function looksContradictory(a = "", b = "") {
   if (xNeg === yNeg) return false;
 
   return hasMeaningfulTopicOverlap(x, y);
+}
+
+function extractConflictSignals(doc = {}) {
+  const sourceText = compactSpaces(doc.text || "");
+  const combinedRef = compactSpaces(
+    [
+      doc.source,
+      doc.originalSource,
+      doc.path,
+      doc.metadata?.path,
+      doc.metadata?.normalizedReference,
+      doc.normalizedReference
+    ]
+      .filter(Boolean)
+      .join(" ")
+  );
+
+  return {
+    authorityType: getAuthorityTypeForDoc(doc),
+    authorityLevel: getAuthorityLevelForDoc(doc),
+    controllingPrecedence: getControllingPrecedenceForDoc(doc),
+    provisionLabel: extractProvisionLabel(`${combinedRef} ${sourceText}`),
+    issuanceFingerprint: extractIssuanceFingerprint(combinedRef),
+    grNumber: extractGRNumber(combinedRef),
+    ctaCaseNumber: extractCTACaseNumber(combinedRef),
+    caGrNumber: extractCAGRNumber(combinedRef),
+    topicSignature: extractTopicSignature(sourceText),
+    text: sourceText
+  };
+}
+
+function signaturesOverlap(a = [], b = []) {
+  if (!a.length || !b.length) return false;
+  const setB = new Set(b);
+  let hits = 0;
+
+  for (const token of a) {
+    if (setB.has(token)) hits += 1;
+    if (hits >= 2) return true;
+  }
+
+  return false;
+}
+
+export function isGenuineConflict(sourceA = {}, sourceB = {}) {
+  const a = extractConflictSignals(sourceA);
+  const b = extractConflictSignals(sourceB);
+
+  if (!a.text || !b.text) return false;
+  if (a.text === b.text) return false;
+
+  const sameIssuance =
+    a.issuanceFingerprint &&
+    b.issuanceFingerprint &&
+    a.issuanceFingerprint === b.issuanceFingerprint;
+
+  const sameCase =
+    (a.grNumber && a.grNumber === b.grNumber) ||
+    (a.ctaCaseNumber && a.ctaCaseNumber === b.ctaCaseNumber) ||
+    (a.caGrNumber && a.caGrNumber === b.caGrNumber);
+
+  if (sameIssuance || sameCase) {
+    return false;
+  }
+
+  const sameProvision =
+    a.provisionLabel &&
+    b.provisionLabel &&
+    lower(a.provisionLabel) === lower(b.provisionLabel);
+
+  const overlappingTopics =
+    signaturesOverlap(a.topicSignature, b.topicSignature) ||
+    hasMeaningfulTopicOverlap(a.text, b.text);
+
+  if (!sameProvision && !overlappingTopics) {
+    return false;
+  }
+
+  if (!looksContradictory(a.text, b.text)) {
+    return false;
+  }
+
+  const dateOnlyDifference =
+    /\beffective\b|\bdate\b|\bfrom\b|\buntil\b|\bto\b/i.test(a.text) &&
+    /\beffective\b|\bdate\b|\bfrom\b|\buntil\b|\bto\b/i.test(b.text) &&
+    !sameProvision &&
+    !hasMeaningfulTopicOverlap(a.text, b.text);
+
+  if (dateOnlyDifference) {
+    return false;
+  }
+
+  return true;
+}
+
+export function resolveCourtOverride(sourceA = {}, sourceB = {}) {
+  const aType = getAuthorityTypeForDoc(sourceA);
+  const bType = getAuthorityTypeForDoc(sourceB);
+
+  const aIsCourt = COURT_TYPES.has(aType);
+  const bIsCourt = COURT_TYPES.has(bType);
+  const aIsBir = BIR_TYPES.has(aType);
+  const bIsBir = BIR_TYPES.has(bType);
+
+  if (aIsCourt && bIsBir) {
+    return {
+      overrideApplies: true,
+      winningSource: sourceA,
+      overriddenSource: sourceB,
+      winningAuthority: aType,
+      overriddenAuthority: bType,
+      reason: `${AUTHORITY_LABEL[aType] || aType} overrides conflicting ${AUTHORITY_LABEL[bType] || bType}.`
+    };
+  }
+
+  if (bIsCourt && aIsBir) {
+    return {
+      overrideApplies: true,
+      winningSource: sourceB,
+      overriddenSource: sourceA,
+      winningAuthority: bType,
+      overriddenAuthority: aType,
+      reason: `${AUTHORITY_LABEL[bType] || bType} overrides conflicting ${AUTHORITY_LABEL[aType] || aType}.`
+    };
+  }
+
+  const aPrecedence = getControllingPrecedenceForDoc(sourceA);
+  const bPrecedence = getControllingPrecedenceForDoc(sourceB);
+
+  const winningSource = aPrecedence <= bPrecedence ? sourceA : sourceB;
+  const overriddenSource = aPrecedence <= bPrecedence ? sourceB : sourceA;
+  const winningAuthority = getAuthorityTypeForDoc(winningSource);
+  const overriddenAuthority = getAuthorityTypeForDoc(overriddenSource);
+
+  return {
+    overrideApplies: false,
+    winningSource,
+    overriddenSource,
+    winningAuthority,
+    overriddenAuthority,
+    reason: `${AUTHORITY_LABEL[winningAuthority] || winningAuthority} prevails based on controlling authority hierarchy.`
+  };
 }
 
 export function rerankByHierarchy(results = [], query = "") {
@@ -897,7 +1110,10 @@ export function detectHierarchyConflict(topDocs = []) {
       reason: null,
       conflictingDocs: [],
       sourceA: null,
-      sourceB: null
+      sourceB: null,
+      overriddenAuthority: null,
+      overrideApplied: false,
+      auditRecord: null
     };
   }
 
@@ -906,42 +1122,48 @@ export function detectHierarchyConflict(topDocs = []) {
       const a = topDocs[i];
       const b = topDocs[j];
 
-      const aType = getAuthorityTypeForDoc(a);
-      const bType = getAuthorityTypeForDoc(b);
-
-      if (!looksContradictory(a.text || "", b.text || "")) {
+      if (!isGenuineConflict(a, b)) {
         continue;
       }
 
-      const aPrecedence = getControllingPrecedenceForDoc(a);
-      const bPrecedence = getControllingPrecedenceForDoc(b);
+      const override = resolveCourtOverride(a, b);
+      const controlling = override.winningSource;
+      const overridden = override.overriddenSource;
+      const controllingType = override.winningAuthority;
+      const overriddenType = override.overriddenAuthority;
 
-      const controlling = aPrecedence <= bPrecedence ? a : b;
-      const lowerDoc = aPrecedence <= bPrecedence ? b : a;
-      const controllingType = getAuthorityTypeForDoc(controlling);
-      const lowerType = getAuthorityTypeForDoc(lowerDoc);
-
-      let reason = `${lowerType} appears inconsistent with ${controllingType}. Higher authority prevails.`;
-
-      if (hasCourtOverridePriority(aType, bType)) {
-        reason = `${COURT_TYPES.has(aType) ? aType : bType} appears to override a conflicting BIR issuance. Court decision prevails.`;
-      }
-
-      return {
-        conflict: true,
+      const auditRecord = {
+        decisionType: override.overrideApplies ? "COURT_OVERRIDE" : "HIERARCHY_RESOLUTION",
         controllingAuthority: controllingType,
+        overriddenAuthority: overriddenType,
         controllingSource:
           controlling.path ||
           controlling.metadata?.path ||
           controlling.source ||
           controlling.originalSource ||
           null,
-        reason,
+        overriddenSource:
+          overridden.path ||
+          overridden.metadata?.path ||
+          overridden.source ||
+          overridden.originalSource ||
+          null,
+        generatedAt: new Date().toISOString()
+      };
+
+      return {
+        conflict: true,
+        controllingAuthority: controllingType,
+        controllingSource: auditRecord.controllingSource,
+        reason: override.reason,
         conflictingDocs: [a, b],
         sourceA:
           a.path || a.metadata?.path || a.source || a.originalSource || null,
         sourceB:
-          b.path || b.metadata?.path || b.source || b.originalSource || null
+          b.path || b.metadata?.path || b.source || b.originalSource || null,
+        overriddenAuthority: overriddenType,
+        overrideApplied: Boolean(override.overrideApplies),
+        auditRecord
       };
     }
   }
@@ -953,7 +1175,10 @@ export function detectHierarchyConflict(topDocs = []) {
     reason: null,
     conflictingDocs: [],
     sourceA: null,
-    sourceB: null
+    sourceB: null,
+    overriddenAuthority: null,
+    overrideApplied: false,
+    auditRecord: null
   };
 }
 
