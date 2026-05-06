@@ -447,8 +447,8 @@ function buildRouteResponsePayload({
 }
 
 export function createAskHandler({ supabase, openai }) {
-  if (!supabase) {
-    throw new Error("createAskHandler requires supabase");
+  if (!supabase || typeof supabase.from !== "function") {
+    throw new Error("createAskHandler requires a valid supabase client");
   }
 
   if (!openai) {
@@ -1494,6 +1494,7 @@ Quick Recall:
       }
 
       const topicData = await detectTopic({
+        supabase,
         question: cleanQuestion,
         userId,
         sessionId: conversationId || null
