@@ -1,9 +1,15 @@
+// FILE: drive-reader.js
+
 import { google } from "googleapis";
 import pdfParse from "pdf-parse";
 import mammoth from "mammoth";
 
 const SCOPES = ["https://www.googleapis.com/auth/drive.readonly"];
 const FOLDER_MIME = "application/vnd.google-apps.folder";
+
+const GOOGLE_DOC_MIME = "application/vnd.google-apps.document";
+const GOOGLE_SHEET_MIME = "application/vnd.google-apps.spreadsheet";
+const GOOGLE_SLIDE_MIME = "application/vnd.google-apps.presentation";
 
 /* ================= GOOGLE DRIVE AUTH ================= */
 
@@ -15,7 +21,7 @@ let serviceAccount;
 
 try {
   serviceAccount = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON);
-} catch (error) {
+} catch {
   throw new Error("GOOGLE_SERVICE_ACCOUNT_JSON is invalid JSON.");
 }
 
@@ -28,18 +34,42 @@ const drive = google.drive({ version: "v3", auth });
 
 /* ================= HELPERS ================= */
 
+function normalizeText(value = "") {
+  return String(value || "")
+    .replace(/\r\n/g, "\n")
+    .replace(/[ \t]+/g, " ")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
+function safeString(value = "") {
+  return String(value || "").trim();
+}
+
+function isGoogleDocMime(mimeType = "") {
+  return mimeType === GOOGLE_DOC_MIME;
+}
+
+function isGoogleSheetMime(mimeType = "") {
+  return mimeType === GOOGLE_SHEET_MIME;
+}
+
+function isGoogleSlideMime(mimeType = "") {
+  return mimeType === GOOGLE_SLIDE_MIME;
+}
+
 function buildDriveViewUrl(fileId, mimeType = "") {
   if (!fileId) return null;
 
-  if (mimeType === "application/vnd.google-apps.document") {
+  if (isGoogleDocMime(mimeType)) {
     return `https://docs.google.com/document/d/${fileId}/edit`;
   }
 
-  if (mimeType === "application/vnd.google-apps.spreadsheet") {
+  if (isGoogleSheetMime(mimeType)) {
     return `https://docs.google.com/spreadsheets/d/${fileId}/edit`;
   }
 
-  if (mimeType === "application/vnd.google-apps.presentation") {
+  if (isGoogleSlideMime(mimeType)) {
     return `https://docs.google.com/presentation/d/${fileId}/edit`;
   }
 
@@ -49,29 +79,48 @@ function buildDriveViewUrl(fileId, mimeType = "") {
 function buildDriveDownloadUrl(fileId, mimeType = "") {
   if (!fileId) return null;
 
-  if (mimeType === "application/vnd.google-apps.document") {
+  if (isGoogleDocMime(mimeType)) {
     return `https://docs.google.com/document/d/${fileId}/export?format=txt`;
   }
 
-  if (mimeType === "application/vnd.google-apps.spreadsheet") {
+  if (isGoogleSheetMime(mimeType)) {
     return `https://docs.google.com/spreadsheets/d/${fileId}/export?format=csv`;
   }
 
-  if (mimeType === "application/vnd.google-apps.presentation") {
+  if (isGoogleSlideMime(mimeType)) {
     return `https://docs.google.com/presentation/d/${fileId}/export/txt`;
   }
 
   return `https://drive.google.com/uc?export=download&id=${fileId}`;
 }
 
+function buildNormalizedSource(name = "", path = "") {
+  const basis = safeString(path || name);
+
+  return basis
+    .toLowerCase()
+    .replace(/[“”"'`]/g, "")
+    .replace(/\s+/g, "_")
+    .replace(/[\\/]+/g, "/")
+    .replace(/[^a-z0-9._()/-]/g, "")
+    .replace(/_+/g, "_")
+    .replace(/-+/g, "-")
+    .replace(/^[_/-]+|[_/-]+$/g, "");
+}
+
 function enrichDriveFile(file, parentPath = "") {
   const currentPath = parentPath ? `${parentPath}/${file.name}` : file.name;
+  const driveViewUrl = file.webViewLink || buildDriveViewUrl(file.id, file.mimeType);
+  const driveDownloadUrl =
+    file.webContentLink || buildDriveDownloadUrl(file.id, file.mimeType);
 
   return {
     ...file,
     path: currentPath,
-    driveViewUrl: buildDriveViewUrl(file.id, file.mimeType),
-    driveDownloadUrl: buildDriveDownloadUrl(file.id, file.mimeType)
+    originalSource: file.name,
+    normalizedSource: buildNormalizedSource(file.name, currentPath),
+    driveViewUrl,
+    driveDownloadUrl
   };
 }
 
@@ -82,7 +131,18 @@ async function getAllFilesRecursive(folderId, parentPath = "") {
   do {
     const res = await drive.files.list({
       q: `'${folderId}' in parents and trashed=false`,
-      fields: "nextPageToken, files(id, name, mimeType, size, modifiedTime, webViewLink, webContentLink)",
+      fields: [
+        "nextPageToken",
+        "files(",
+        "id,",
+        "name,",
+        "mimeType,",
+        "size,",
+        "modifiedTime,",
+        "webViewLink,",
+        "webContentLink",
+        ")"
+      ].join(""),
       pageSize: 1000,
       pageToken
     });
@@ -96,11 +156,7 @@ async function getAllFilesRecursive(folderId, parentPath = "") {
         const subFiles = await getAllFilesRecursive(file.id, enriched.path);
         results = results.concat(subFiles);
       } else {
-        results.push({
-          ...enriched,
-          driveViewUrl: file.webViewLink || enriched.driveViewUrl,
-          driveDownloadUrl: file.webContentLink || enriched.driveDownloadUrl
-        });
+        results.push(enriched);
       }
     }
 
@@ -135,10 +191,10 @@ async function exportGoogleFile(fileId, mimeType) {
     }
   );
 
-  return Buffer.from(res.data).toString("utf8");
+  return Buffer.from(res.data);
 }
 
-function isTextLikeFile(file, mimeType) {
+function isTextLikeFile(file, mimeType = "") {
   const name = file.name?.toLowerCase() || "";
 
   return (
@@ -150,6 +206,23 @@ function isTextLikeFile(file, mimeType) {
   );
 }
 
+function buildExtractionMetadata(file = {}) {
+  return {
+    fileId: file.id || null,
+    fileName: file.name || "",
+    originalSource: file.originalSource || file.name || "",
+    normalizedSource:
+      file.normalizedSource || buildNormalizedSource(file.name, file.path),
+    path: file.path || file.name || "",
+    mimeType: file.mimeType || "",
+    modifiedTime: file.modifiedTime || null,
+    size: file.size || null,
+    driveViewUrl: file.driveViewUrl || buildDriveViewUrl(file.id, file.mimeType),
+    driveDownloadUrl:
+      file.driveDownloadUrl || buildDriveDownloadUrl(file.id, file.mimeType)
+  };
+}
+
 /* ================= PUBLIC FUNCTIONS ================= */
 
 export async function listDriveFiles(folderId) {
@@ -157,7 +230,7 @@ export async function listDriveFiles(folderId) {
     throw new Error("GOOGLE_DRIVE_FOLDER_ID is missing.");
   }
 
-  return await getAllFilesRecursive(folderId);
+  return getAllFilesRecursive(folderId);
 }
 
 export async function extractTextFromFile(file) {
@@ -168,37 +241,70 @@ export async function extractTextFromFile(file) {
   const mimeType = file.mimeType || "";
   const fileName = file.name?.toLowerCase() || "";
 
-  if (mimeType === "application/vnd.google-apps.document") {
-    return await exportGoogleFile(file.id, "text/plain");
-  }
+  let extractedText = "";
 
-  if (mimeType === "application/vnd.google-apps.spreadsheet") {
-    return await exportGoogleFile(file.id, "text/csv");
-  }
-
-  if (mimeType === "application/vnd.google-apps.presentation") {
-    return await exportGoogleFile(file.id, "text/plain");
-  }
-
-  if (mimeType === "application/pdf" || fileName.endsWith(".pdf")) {
+  if (isGoogleDocMime(mimeType)) {
+    const buffer = await exportGoogleFile(file.id, "text/plain");
+    extractedText = buffer.toString("utf8");
+  } else if (isGoogleSheetMime(mimeType)) {
+    const buffer = await exportGoogleFile(file.id, "text/csv");
+    extractedText = buffer.toString("utf8");
+  } else if (isGoogleSlideMime(mimeType)) {
+    const buffer = await exportGoogleFile(file.id, "text/plain");
+    extractedText = buffer.toString("utf8");
+  } else if (mimeType === "application/pdf" || fileName.endsWith(".pdf")) {
     const buffer = await downloadFileBuffer(file.id);
     const parsed = await pdfParse(buffer);
-    return parsed.text || "";
-  }
-
-  if (
+    extractedText = parsed.text || "";
+  } else if (
     mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
     fileName.endsWith(".docx")
   ) {
     const buffer = await downloadFileBuffer(file.id);
     const result = await mammoth.extractRawText({ buffer });
-    return result.value || "";
-  }
-
-  if (isTextLikeFile(file, mimeType)) {
+    extractedText = result.value || "";
+  } else if (isTextLikeFile(file, mimeType)) {
     const buffer = await downloadFileBuffer(file.id);
-    return buffer.toString("utf8");
+    extractedText = buffer.toString("utf8");
+  } else {
+    extractedText = "";
   }
 
-  return "";
+  return normalizeText(extractedText);
 }
+
+export async function readDriveFile(file) {
+  const text = await extractTextFromFile(file);
+
+  return {
+    ...buildExtractionMetadata(file),
+    text
+  };
+}
+
+export async function listAndReadDriveFiles(folderId) {
+  const files = await listDriveFiles(folderId);
+  const output = [];
+
+  for (const file of files) {
+    try {
+      const record = await readDriveFile(file);
+      output.push(record);
+    } catch (error) {
+      output.push({
+        ...buildExtractionMetadata(file),
+        text: "",
+        extractionError: error.message || "Failed to extract file text"
+      });
+    }
+  }
+
+  return output;
+}
+
+export default {
+  listDriveFiles,
+  extractTextFromFile,
+  readDriveFile,
+  listAndReadDriveFiles
+};
