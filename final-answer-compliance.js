@@ -1,7 +1,7 @@
 // FILE: final-answer-compliance.js
 
 function normalizeText(value = "") {
-  return String(value)
+  return String(value || "")
     .replace(/\r\n/g, "\n")
     .replace(/[ \t]+/g, " ")
     .replace(/\n{3,}/g, "\n\n")
@@ -41,7 +41,7 @@ function stripInventedSourceSections(text = "") {
 function getSectionBody(text = "", headingPattern) {
   const value = normalizeText(text);
   const regex = new RegExp(
-    String.raw`${headingPattern}([\s\S]*?)(?=\n\s*\d+\.\s*[A-Z][A-Z ]+\b|$)`,
+    String.raw`${headingPattern}([\s\S]*?)(?=\n\s*(?:\d+\.\s*[A-Z][A-Z ]+\b|###\s+[A-Za-z][\s\S]*?)|$)`,
     "i"
   );
   const match = value.match(regex);
@@ -71,14 +71,37 @@ function takeSentences(text = "", maxSentences = 4) {
     .join(" ");
 }
 
+function normalizeAuthorityType(value = "") {
+  const raw = String(value || "").toUpperCase().trim();
+  if (!raw) return "";
+
+  if (raw.includes("CONSTITUTION")) return "CONSTITUTION";
+  if (raw.includes("STATUTE")) return "STATUTE";
+  if (raw.includes("TREATY")) return "TREATY";
+  if (raw.includes("SUPREME_COURT")) return "SUPREME_COURT";
+  if (raw.includes("CTA_EN_BANC")) return "CTA_EN_BANC";
+  if (raw.includes("COURT_OF_APPEALS")) return "COURT_OF_APPEALS";
+  if (raw.includes("CTA_DIVISION")) return "CTA_DIVISION";
+  if (raw === "RR" || raw.includes("REVENUE REGULATION")) return "RR";
+  if (raw === "RMC" || raw.includes("REVENUE MEMORANDUM CIRCULAR")) return "RMC";
+  if (raw === "RMO" || raw.includes("REVENUE MEMORANDUM ORDER")) return "RMO";
+  if (raw === "RAMO" || raw.includes("REVENUE AUDIT MEMORANDUM ORDER")) return "RAMO";
+  if (raw.includes("BIR_RULING") || raw.includes("BIR RULING")) return "BIR_RULING";
+  if (raw.includes("LGU")) return "LGU";
+  if (raw.includes("SECONDARY")) return "SECONDARY";
+
+  return raw;
+}
+
 function formatDocType(doc = {}) {
-  const authorityType = String(
+  const authorityType = normalizeAuthorityType(
     doc.authorityType ||
       doc.authority_type ||
       doc.authorityLabel ||
       doc.authority_label ||
+      doc.metadata?.authorityType ||
       ""
-  ).toUpperCase();
+  );
 
   const path = normalizeLooseText(
     doc.path ||
@@ -86,16 +109,23 @@ function formatDocType(doc = {}) {
       doc.originalSource ||
       doc.source ||
       doc.title ||
+      doc.metadata?.path ||
       ""
   );
 
-  if (authorityType === "STATUTE" || path.includes("tax_code")) return "Statute";
-  if (authorityType === "RR" || /\brr\b/.test(path)) return "RR";
-  if (authorityType === "BIR_RULING" || path.includes("bir_rulings")) return "BIR Ruling";
-  if (authorityType === "JURISPRUDENCE" || path.includes("court_cases")) return "Case";
-  if (path.includes("03_rmc") || /\brmc\b/.test(path)) return "RMC";
-  if (path.includes("04_rmo") || /\brmo\b/.test(path)) return "RMO";
-  if (path.includes("02_revenue_regulations")) return "RR";
+  if (authorityType === "CONSTITUTION" || path.includes("00_constitution")) return "Constitution";
+  if (authorityType === "STATUTE" || path.includes("01_tax_code")) return "Statute";
+  if (authorityType === "TREATY" || path.includes("05b_tax_treaties")) return "Treaty";
+  if (authorityType === "SUPREME_COURT") return "Supreme Court";
+  if (authorityType === "CTA_EN_BANC") return "CTA En Banc";
+  if (authorityType === "COURT_OF_APPEALS") return "Court of Appeals";
+  if (authorityType === "CTA_DIVISION") return "CTA Division";
+  if (authorityType === "RR" || path.includes("02_revenue_regulations") || /\brr\b/.test(path)) return "RR";
+  if (authorityType === "RMC" || path.includes("03_rmc") || /\brmc\b/.test(path)) return "RMC";
+  if (authorityType === "RAMO" || path.includes("04b_ramo") || /\bramo\b/.test(path)) return "RAMO";
+  if (authorityType === "RMO" || path.includes("04_rmo") || /\brmo\b/.test(path)) return "RMO";
+  if (authorityType === "BIR_RULING" || path.includes("05_bir_rulings")) return "BIR Ruling";
+  if (authorityType === "LGU") return "LGU";
   return "Source";
 }
 
@@ -106,39 +136,54 @@ function inferIssuanceNumber(doc = {}) {
       doc.source,
       doc.originalSource,
       doc.path,
-      doc.source_path
+      doc.source_path,
+      doc.metadata?.path,
+      doc.metadata?.normalizedReference,
+      doc.normalizedReference
     ]
       .filter(Boolean)
       .join(" ")
   );
 
   const patterns = [
+    /\b(1987 Constitution)\b/i,
     /\b(RA\s*\d{4,6})\b/i,
     /\b(RR\s*(?:No\.?)?\s*\d+\s*[-/]\s*\d{2,4})\b/i,
     /\b(RMC\s*(?:No\.?)?\s*\d+\s*[-/]\s*\d{2,4})\b/i,
     /\b(RMO\s*(?:No\.?)?\s*\d+\s*[-/]\s*\d{2,4})\b/i,
-    /\b(BIR Ruling\s*(?:No\.?)?\s*[\w-]+)\b/i,
-    /\b(CTA Case\s*No\.?\s*[\w.-]+)\b/i,
-    /\b(G\.R\.\s*No\.?\s*[\w.-]+)\b/i
+    /\b(RAMO\s*(?:No\.?)?\s*\d+\s*[-/]\s*\d{2,4})\b/i,
+    /\b(BIR Ruling\s*(?:No\.?)?\s*[\w./()-]+)\b/i,
+    /\b(CTA(?:\s+EB)?\s+No\.?\s*[\w.-]+)\b/i,
+    /\b(G\.R\.\s*No\.?\s*[\w.-]+)\b/i,
+    /\b(CA-G\.R\.\s*[\w.-]+)\b/i
   ];
 
   for (const pattern of patterns) {
     const match = haystack.match(pattern);
     if (match) {
-      return match[1].replace(/\s+/g, " ").trim();
+      return compactNumberSpacing(match[1]);
     }
   }
 
   return "";
 }
 
+function compactNumberSpacing(value = "") {
+  return normalizeText(value).replace(/\s+/g, " ");
+}
+
 function buildShortSubject(doc = {}) {
   const title = normalizeText(
-    doc.title || doc.originalSource || doc.source || doc.path || "Untitled Source"
+    doc.title ||
+      doc.originalSource ||
+      doc.source ||
+      doc.path ||
+      doc.source_path ||
+      "Untitled Source"
   );
 
   return title
-    .replace(/\.(pdf|docx|doc|txt|md)$/i, "")
+    .replace(/\.(pdf|docx|doc|txt|md|csv|json)$/i, "")
     .replace(/[_/]+/g, " ")
     .replace(/\s+/g, " ")
     .trim();
@@ -171,6 +216,7 @@ function buildDocKey(doc = {}) {
   return (
     doc.fileId ||
     doc.file_id ||
+    doc.id ||
     doc.path ||
     doc.source_path ||
     doc.originalSource ||
@@ -203,10 +249,9 @@ function buildConflictSection({
   conflicts = [],
   hierarchyConflict = null
 }) {
-  const draftConflictBody = getSectionBody(
-    draftAnswer,
-    String.raw`\b5\.\s*CONFLICT FLAG\b`
-  );
+  const draftConflictBody =
+    getSectionBody(draftAnswer, String.raw`\b5\.\s*CONFLICT FLAG\b`) ||
+    getSectionBody(draftAnswer, String.raw`###\s*Conflict flag\b`);
 
   const specificConflict =
     Array.isArray(conflicts) &&
@@ -227,6 +272,7 @@ function buildConflictSection({
         conflict.contradiction ||
         conflict.reason ||
         conflict.description ||
+        conflict.conflict_reason ||
         "";
 
       return (
@@ -269,6 +315,7 @@ function buildConflictSection({
       specificConflict.contradiction ||
       specificConflict.reason ||
       specificConflict.description ||
+      specificConflict.conflict_reason ||
       "A specific contradiction was detected.";
 
     const controllingAuthority =
@@ -323,10 +370,10 @@ function buildDirectAnswer({
   draftAnswer = "",
   fallbackAnswer = ""
 }) {
-  const directBody = getSectionBody(
-    draftAnswer,
-    String.raw`\b1\.\s*DIRECT ANSWER\b`
-  );
+  const directBody =
+    getSectionBody(draftAnswer, String.raw`\b1\.\s*DIRECT ANSWER\b`) ||
+    getSectionBody(draftAnswer, String.raw`###\s*Legally defensible conclusion\b`) ||
+    getSectionBody(draftAnswer, String.raw`###\s*Issue\b`);
 
   const candidate = directBody || fallbackAnswer || draftAnswer || "";
   return takeSentences(candidate, 4);
@@ -352,7 +399,7 @@ function buildSupportingRules({
   const inferred = [];
 
   for (const doc of legalBasisDocs.slice(0, 3)) {
-    const snippet = normalizeText(doc.text || doc.preview || "");
+    const snippet = normalizeText(doc.text || doc.preview || doc.excerpt || "");
     if (!snippet) continue;
 
     const sentences = snippet.match(/[^.!?]+[.!?]?/g) || [];
@@ -374,16 +421,19 @@ function buildProfessionalInsight({
   draftAnswer = "",
   defaultInsight = ""
 }) {
-  const body = getSectionBody(
-    draftAnswer,
-    String.raw`\b4\.\s*PROFESSIONAL INSIGHT\b`
-  );
+  const body =
+    getSectionBody(draftAnswer, String.raw`\b4\.\s*PROFESSIONAL INSIGHT\b`) ||
+    getSectionBody(draftAnswer, String.raw`###\s*Recommended action\b`) ||
+    getSectionBody(draftAnswer, String.raw`###\s*Taxpayer risk assessment\b`);
 
   if (body) {
     return takeSentences(body, 3);
   }
 
-  return normalizeText(defaultInsight || "Verify the latest BIR issuance and documentary requirements before implementation.");
+  return normalizeText(
+    defaultInsight ||
+      "Verify the latest BIR issuance and documentary requirements before implementation."
+  );
 }
 
 function buildValidatedLegalBasis(docs = []) {
@@ -396,12 +446,6 @@ function buildValidatedSources(docs = []) {
   return uniqueDocs(docs)
     .slice(0, 5)
     .map(buildSourcesEntry);
-}
-
-function ensureNumberedBullets(lines = []) {
-  return lines
-    .map((line, index) => `${index + 1}. ${cleanBulletPrefix(line)}`)
-    .join("\n");
 }
 
 function ensureDashedBullets(lines = []) {
@@ -444,7 +488,8 @@ export function buildFinalCompliantAnswer({
 
   return [
     "1. DIRECT ANSWER",
-    finalDirectAnswer || "This may require verification against the latest BIR issuance. Please consult the BIR website or a licensed CPA.",
+    finalDirectAnswer ||
+      "This may require verification against the latest BIR issuance. Please consult the BIR website or a licensed CPA.",
     "",
     "2. LEGAL BASIS",
     legalBasisLines.length
@@ -472,19 +517,16 @@ export function buildFinalCompliantAnswer({
 }
 
 export function sanitizeDraftAnswer(text = "") {
-  return sanitizeConflictSection(
-    stripInventedSourceSections(text)
-  );
+  return sanitizeConflictSection(stripInventedSourceSections(text));
 }
 
 export function sanitizeConflictSection(text = "") {
   const value = normalizeText(text);
   if (!value) return value;
 
-  const conflictBody = getSectionBody(
-    value,
-    String.raw`\b5\.\s*CONFLICT FLAG\b`
-  );
+  const conflictBody =
+    getSectionBody(value, String.raw`\b5\.\s*CONFLICT FLAG\b`) ||
+    getSectionBody(value, String.raw`###\s*Conflict flag\b`);
 
   if (!conflictBody) return value;
 
@@ -501,7 +543,7 @@ export function sanitizeConflictSection(text = "") {
 
   if (!hasSpecificConflict && vagueYesPatterns.some((pattern) => pattern.test(conflictBody))) {
     return value.replace(
-      /\b5\.\s*CONFLICT FLAG\b[\s\S]*?(?=\n\s*\d+\.\s*[A-Z][A-Z ]+\b|$)/i,
+      /(\b5\.\s*CONFLICT FLAG\b|###\s*Conflict flag\b)[\s\S]*?(?=\n\s*(?:\d+\.\s*[A-Z][A-Z ]+\b|###\s+[A-Za-z])|$)/i,
       "5. CONFLICT FLAG\nConflict Detected: NO"
     );
   }
