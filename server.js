@@ -466,6 +466,15 @@ app.get("/vector-stats", allowAuthenticatedOrIndexSecret, async (req, res) => {
 
 app.post("/ask", authenticate, askHandler);
 
+/* ================= NOT FOUND ================= */
+
+app.use((req, res) => {
+  return res.status(404).json({
+    success: false,
+    error: "Route not found"
+  });
+});
+
 /* ================= SERVER ================= */
 
 const PORT = Number(process.env.PORT || 10000);
