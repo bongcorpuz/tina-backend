@@ -1,16 +1,12 @@
 // FILE: case-analysis-engine.js
 
-import OpenAI from "openai";
 import {
   rerankByHierarchy,
-  selectTopLegalBases
+  selectTopLegalBases,
+  detectHierarchyConflict
 } from "./authority-engine.js";
-import {
-  reconcileDoctrine
-} from "./doctrinal-engine.js";
-import {
-  applySupersessionFilter
-} from "./supersession-engine.js";
+import { reconcileDoctrine } from "./doctrinal-engine.js";
+import { applySupersessionFilter } from "./supersession-engine.js";
 import {
   buildClaimSupportMap,
   validateEvidenceSufficiency,
@@ -24,6 +20,58 @@ function normalizeText(value = "") {
 
 function lower(value = "") {
   return normalizeText(value).toLowerCase();
+}
+
+function getDocPath(doc = {}) {
+  return (
+    doc.path ||
+    doc.source_path ||
+    doc.metadata?.path ||
+    doc.source ||
+    doc.originalSource ||
+    "Unknown"
+  );
+}
+
+function getAuthorityType(doc = {}) {
+  return (
+    doc.authorityType ||
+    doc.authority_type ||
+    doc.metadata?.authorityType ||
+    "UNKNOWN"
+  );
+}
+
+function getAuthorityLevel(doc = {}) {
+  return Number(
+    doc.authorityLevel ??
+      doc.authority_level ??
+      doc.metadata?.authorityLevel ??
+      99
+  );
+}
+
+function isCourtAuthority(type = "") {
+  return [
+    "SUPREME_COURT",
+    "CTA_EN_BANC",
+    "COURT_OF_APPEALS",
+    "CTA_DIVISION"
+  ].includes(String(type || "").toUpperCase());
+}
+
+function isBIRAuthority(type = "") {
+  return ["RR", "RMC", "RMO", "RAMO", "BIR_RULING"].includes(
+    String(type || "").toUpperCase()
+  );
+}
+
+function buildDisplaySource(doc = {}) {
+  return {
+    source: getDocPath(doc),
+    authorityType: getAuthorityType(doc),
+    authorityLevel: getAuthorityLevel(doc)
+  };
 }
 
 export function detectCaseAnalysisIntent(question = "") {
@@ -46,7 +94,11 @@ export function detectCaseAnalysisIntent(question = "") {
     "cta case",
     "g.r. no.",
     "supreme court case",
-    "court of tax appeals case"
+    "court of tax appeals case",
+    "court position",
+    "bir position",
+    "legally defensible conclusion",
+    "taxpayer risk assessment"
   ];
 
   const caseReferenceSignals = [
@@ -56,7 +108,11 @@ export function detectCaseAnalysisIntent(question = "") {
     "cta",
     "court of tax appeals",
     "supreme court",
-    "g.r. no."
+    "g.r. no.",
+    "g.r no.",
+    "ca-g.r.",
+    "cta en banc",
+    "cta division"
   ];
 
   const genericTaxExplainSignals = [
@@ -82,12 +138,10 @@ export function detectCaseAnalysisIntent(question = "") {
 
 function isLikelyCaseDocument(doc = {}) {
   const blob = [
-    doc.authorityType,
-    doc.authority_type,
+    getAuthorityType(doc),
     doc.source,
     doc.originalSource,
-    doc.path,
-    doc.metadata?.path,
+    getDocPath(doc),
     doc.metadata?.documentTitle,
     doc.text
   ]
@@ -96,10 +150,13 @@ function isLikelyCaseDocument(doc = {}) {
     .toLowerCase();
 
   return (
+    isCourtAuthority(getAuthorityType(doc)) ||
     blob.includes("cta") ||
     blob.includes("court of tax appeals") ||
     blob.includes("supreme court") ||
     blob.includes("g.r. no.") ||
+    blob.includes("g.r no.") ||
+    blob.includes("ca-g.r.") ||
     blob.includes("v. cir") ||
     blob.includes(" vs ") ||
     blob.includes(" v. ")
@@ -109,20 +166,19 @@ function isLikelyCaseDocument(doc = {}) {
 function scoreCaseDoc(doc = {}, query = "") {
   const q = lower(query);
   const text = lower(doc.text || "");
-  const path = lower(
-    doc.path ||
-      doc.metadata?.path ||
-      doc.source ||
-      doc.originalSource ||
-      ""
-  );
+  const path = lower(getDocPath(doc));
+  const authorityType = String(getAuthorityType(doc)).toUpperCase();
 
-  let score = Number(doc.finalScore || doc.score || 0);
+  let score = Number(doc.finalScore || doc.combined_score || doc.score || 0);
 
-  if (isLikelyCaseDocument(doc)) score += 25;
-  if (path.includes("court_cases")) score += 20;
+  if (isLikelyCaseDocument(doc)) score += 30;
+  if (authorityType === "SUPREME_COURT") score += 45;
+  if (authorityType === "CTA_EN_BANC") score += 38;
+  if (authorityType === "COURT_OF_APPEALS") score += 32;
+  if (authorityType === "CTA_DIVISION") score += 26;
+  if (path.includes("court_cases")) score += 18;
   if (path.includes("cta")) score += 10;
-  if (path.includes("supreme court")) score += 10;
+  if (path.includes("supreme court")) score += 14;
 
   const caseTerms = [
     "facts",
@@ -134,7 +190,9 @@ function scoreCaseDoc(doc = {}, query = "") {
     "respondent",
     "court held",
     "the issue",
-    "the ruling"
+    "the ruling",
+    "ratio",
+    "dispositive"
   ];
 
   for (const term of caseTerms) {
@@ -145,11 +203,12 @@ function scoreCaseDoc(doc = {}, query = "") {
   if (q.includes("tax avoidance") && text.includes("tax avoidance")) score += 10;
   if (q.includes("vat") && text.includes("vat")) score += 8;
   if (q.includes("withholding") && text.includes("withholding")) score += 8;
+  if (q.includes("mcit") && text.includes("mcit")) score += 8;
 
   return score;
 }
 
-export function selectTopCaseAuthorities(results = [], query = "", limit = 3) {
+export function selectTopCaseAuthorities(results = [], query = "", limit = 4) {
   return rerankByHierarchy(results, query)
     .filter((doc) => isLikelyCaseDocument(doc))
     .map((doc) => ({
@@ -157,6 +216,12 @@ export function selectTopCaseAuthorities(results = [], query = "", limit = 3) {
       caseScore: scoreCaseDoc(doc, query)
     }))
     .sort((a, b) => b.caseScore - a.caseScore)
+    .slice(0, limit);
+}
+
+function selectRelevantBIRAuthorities(results = [], limit = 3) {
+  return rerankByHierarchy(results)
+    .filter((doc) => isBIRAuthority(getAuthorityType(doc)))
     .slice(0, limit);
 }
 
@@ -181,7 +246,7 @@ function buildCasePrompt({
   question = "",
   strictContext = "",
   topLegalBases = [],
-  doctrineInfo = null
+  hierarchyConflict = null
 }) {
   const legalBasesText =
     topLegalBases.length > 0
@@ -193,40 +258,58 @@ function buildCasePrompt({
           .join("\n\n")
       : "No controlling legal basis found.";
 
-  const conflictText = doctrineInfo?.hasConflict
+  const conflictText = hierarchyConflict?.conflict
     ? [
         "Conflict Detected: YES",
-        doctrineInfo.hierarchyConflict?.controllingAuthority
-          ? `Controlling Authority: ${doctrineInfo.hierarchyConflict.controllingAuthority}`
+        hierarchyConflict.controllingAuthority
+          ? `Controlling Authority: ${hierarchyConflict.controllingAuthority}`
           : null,
-        doctrineInfo.hierarchyConflict?.reason
-          ? `Reason: ${doctrineInfo.hierarchyConflict.reason}`
-          : null
+        hierarchyConflict.reason ? `Reason: ${hierarchyConflict.reason}` : null,
+        hierarchyConflict.sourceA ? `Source A: ${hierarchyConflict.sourceA}` : null,
+        hierarchyConflict.sourceB ? `Source B: ${hierarchyConflict.sourceB}` : null
       ]
           .filter(Boolean)
           .join("\n")
     : "Conflict Detected: NO";
 
   return `
-You are TINA, a Philippine tax research, compliance, education, and audit-risk assistant.
+You are TINA, a Philippine tax researcher, tax analyst, and legal researcher.
 
 STRICT RULES:
 1. Use only the supplied context.
-2. Do not invent case names, facts, issues, doctrines, sections, or holdings.
+2. Do not invent case names, facts, issues, doctrines, sections, GR numbers, CTA case numbers, or holdings.
 3. If the context is insufficient for a proper case breakdown, say so clearly.
-4. Prefer higher-authority legal bases over lower ones.
-5. If a court case is discussed, present it analytically and only from the supplied materials.
-6. Never mention ChatGPT.
+4. Follow this authority order:
+   Constitution > Statute / NIRC / Republic Act > Treaty > Supreme Court > CTA En Banc > Court of Appeals > CTA Division > RR > RMC > RMO > RAMO > BIR Ruling > LGU > Secondary.
+5. If a BIR issuance conflicts with a Supreme Court or CTA En Banc decision, the court decision prevails.
+6. Never use vague conflict language.
+7. Never mention ChatGPT.
 
-RESPONSE FORMAT:
-1. CASE TITLE
-2. FACTS
-3. ISSUE
-4. RULING
-5. DOCTRINE
-6. APPLICATION
-7. LEGAL SIGNIFICANCE
-8. SOURCES USED
+REQUIRED OUTPUT FORMAT:
+
+### Issue
+[One sentence statement of the tax question]
+
+### Applicable law (ranked by authority)
+[Constitution → NIRC → RR → RMC → BIR Ruling → Jurisprudence, only if present in context]
+
+### BIR position
+[What BIR says via RR/RMC/Ruling, with citation from context]
+
+### Court position
+[What SC/CTA/CA has ruled, with case citation from context]
+
+### Conflict flag
+[YES/NO — if YES, explain which prevails and why]
+
+### Legally defensible conclusion
+[The position most supported by the highest authority]
+
+### Taxpayer risk assessment
+[LOW / MEDIUM / HIGH — with basis]
+
+### Recommended action
+[Compliance / protest / ruling request / litigation / documentation, only if supported by context]
 
 QUESTION:
 ${question}
@@ -250,13 +333,17 @@ export async function generateCaseAnalysisAnswer({
 }) {
   const reranked = rerankByHierarchy(retrievedResults, question);
   const { activeDocs } = applySupersessionFilter(reranked);
-  const caseDocs = selectTopCaseAuthorities(activeDocs, question, 3);
+
+  const caseDocs = selectTopCaseAuthorities(activeDocs, question, 4);
+  const birDocs = selectRelevantBIRAuthorities(activeDocs, 3);
   const doctrinalReview = reconcileDoctrine({
     rankedDocs: caseDocs,
-    maxDocs: 3
+    maxDocs: 4
   });
 
-  const topLegalBases = selectTopLegalBases(caseDocs, 2);
+  const conflictDocs = [...caseDocs, ...birDocs];
+  const hierarchyConflict = detectHierarchyConflict(conflictDocs.slice(0, 5));
+  const topLegalBases = selectTopLegalBases(conflictDocs, 3);
 
   if (caseDocs.length === 0) {
     return {
@@ -265,28 +352,40 @@ export async function generateCaseAnalysisAnswer({
       mode: "CASE_ANALYSIS",
       sourcesUsed: [],
       caseDocs: [],
-      validation: null
+      validation: null,
+      doctrinalReview,
+      hierarchyConflict
     };
   }
 
-  const strictContext = caseDocs
-    .map((doc, index) =>
+  const strictContext = [
+    ...caseDocs.map((doc, index) =>
       [
-        `CASE SOURCE ${index + 1}: ${extractCaseTitle(doc)}`,
-        `PATH: ${doc.path || doc.metadata?.path || doc.source || "Unknown"}`,
-        `AUTHORITY TYPE: ${doc.authorityType || doc.metadata?.authorityType || "JURISPRUDENCE"}`,
-        `AUTHORITY LEVEL: ${doc.authorityLevel || doc.metadata?.authorityLevel || 99}`,
+        `COURT SOURCE ${index + 1}: ${extractCaseTitle(doc)}`,
+        `PATH: ${getDocPath(doc)}`,
+        `AUTHORITY TYPE: ${getAuthorityType(doc)}`,
+        `AUTHORITY LEVEL: ${getAuthorityLevel(doc)}`,
+        `TEXT:`,
+        doc.text || ""
+      ].join("\n")
+    ),
+    ...birDocs.map((doc, index) =>
+      [
+        `BIR SOURCE ${index + 1}: ${doc.source || doc.originalSource || "Unknown BIR Source"}`,
+        `PATH: ${getDocPath(doc)}`,
+        `AUTHORITY TYPE: ${getAuthorityType(doc)}`,
+        `AUTHORITY LEVEL: ${getAuthorityLevel(doc)}`,
         `TEXT:`,
         doc.text || ""
       ].join("\n")
     )
-    .join("\n\n---\n\n");
+  ].join("\n\n---\n\n");
 
   const prompt = buildCasePrompt({
     question,
     strictContext,
     topLegalBases,
-    doctrineInfo: doctrinalReview
+    hierarchyConflict
   });
 
   const response = await openai.chat.completions.create({
@@ -294,19 +393,25 @@ export async function generateCaseAnalysisAnswer({
     temperature: 0,
     messages: [
       { role: "system", content: prompt },
-      { role: "user", content: `Analyze this case question strictly from the supplied context:\n${question}` }
+      {
+        role: "user",
+        content: `Analyze this tax case question strictly from the supplied context:\n${question}`
+      }
     ]
   });
 
   let answerText = response.choices?.[0]?.message?.content?.trim() || "";
 
-  const claimSupportMap = buildClaimSupportMap(answerText, caseDocs);
+  const validationEvidence = [...caseDocs, ...birDocs];
+  const claimSupportMap = buildClaimSupportMap(answerText, validationEvidence);
   const validation = validateEvidenceSufficiency({
-    evidence: caseDocs,
+    evidence: validationEvidence,
     claimSupportMap,
     minEvidenceCount: 1,
     minSupportedClaims: 1,
-    minTopScore: 0.2
+    minTopScore: 0.2,
+    query: question,
+    requirePrimaryAuthority: false
   });
 
   if (
@@ -323,19 +428,14 @@ export async function generateCaseAnalysisAnswer({
     success: true,
     answer: answerText,
     mode: "CASE_ANALYSIS",
-    sourcesUsed: caseDocs.map((doc) => ({
-      source:
-        doc.path ||
-        doc.metadata?.path ||
-        doc.source ||
-        doc.originalSource ||
-        "Unknown source",
-      authorityType: doc.authorityType || doc.metadata?.authorityType || null,
-      authorityLevel: doc.authorityLevel || doc.metadata?.authorityLevel || null
-    })),
+    sourcesUsed: [...caseDocs, ...birDocs]
+      .slice(0, 5)
+      .map(buildDisplaySource),
     caseDocs,
+    birDocs,
     validation,
-    doctrinalReview
+    doctrinalReview,
+    hierarchyConflict
   };
 }
 
@@ -354,7 +454,10 @@ export async function maybeGenerateCaseAnalysisAnswer({
       mode: null,
       sourcesUsed: [],
       caseDocs: [],
-      validation: null
+      birDocs: [],
+      validation: null,
+      doctrinalReview: null,
+      hierarchyConflict: null
     };
   }
 
