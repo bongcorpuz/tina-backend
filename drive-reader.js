@@ -109,7 +109,8 @@ function buildNormalizedSource(name = "", path = "") {
 }
 
 function enrichDriveFile(file, parentPath = "") {
-  const currentPath = parentPath ? `${parentPath}/${file.name}` : file.name;
+  const fileName = safeString(file.name);
+  const currentPath = parentPath ? `${parentPath}/${fileName}` : fileName;
   const driveViewUrl = file.webViewLink || buildDriveViewUrl(file.id, file.mimeType);
   const driveDownloadUrl =
     file.webContentLink || buildDriveDownloadUrl(file.id, file.mimeType);
@@ -117,8 +118,8 @@ function enrichDriveFile(file, parentPath = "") {
   return {
     ...file,
     path: currentPath,
-    originalSource: file.name,
-    normalizedSource: buildNormalizedSource(file.name, currentPath),
+    originalSource: fileName,
+    normalizedSource: buildNormalizedSource(fileName, currentPath),
     driveViewUrl,
     driveDownloadUrl
   };
@@ -195,26 +196,27 @@ async function exportGoogleFile(fileId, mimeType) {
 }
 
 function isTextLikeFile(file, mimeType = "") {
-  const name = file.name?.toLowerCase() || "";
+  const name = safeString(file.name).toLowerCase();
 
   return (
     mimeType.startsWith("text/") ||
     name.endsWith(".txt") ||
     name.endsWith(".csv") ||
     name.endsWith(".md") ||
-    name.endsWith(".json")
+    name.endsWith(".json") ||
+    name.endsWith(".log")
   );
 }
 
 function buildExtractionMetadata(file = {}) {
   return {
     fileId: file.id || null,
-    fileName: file.name || "",
-    originalSource: file.originalSource || file.name || "",
+    fileName: safeString(file.name),
+    originalSource: safeString(file.originalSource || file.name),
     normalizedSource:
       file.normalizedSource || buildNormalizedSource(file.name, file.path),
-    path: file.path || file.name || "",
-    mimeType: file.mimeType || "",
+    path: safeString(file.path || file.name),
+    mimeType: safeString(file.mimeType),
     modifiedTime: file.modifiedTime || null,
     size: file.size || null,
     driveViewUrl: file.driveViewUrl || buildDriveViewUrl(file.id, file.mimeType),
@@ -239,7 +241,7 @@ export async function extractTextFromFile(file) {
   }
 
   const mimeType = file.mimeType || "";
-  const fileName = file.name?.toLowerCase() || "";
+  const fileName = safeString(file.name).toLowerCase();
 
   let extractedText = "";
 
