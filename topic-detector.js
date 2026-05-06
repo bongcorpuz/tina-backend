@@ -1,3 +1,5 @@
+// FILE: topic-detector.js
+
 import { getLastTopicState } from "./memory-hooks.js";
 
 /* =========================================================
@@ -6,6 +8,7 @@ import { getLastTopicState } from "./memory-hooks.js";
    - Detect tax topic
    - Detect follow-up questions
    - Resolve short/incomplete questions using prior topic state
+   - Improve routing for named laws, issuances, and case questions
 ========================================================= */
 
 const FOLLOW_UP_TRIGGERS = [
@@ -33,6 +36,63 @@ const FOLLOW_UP_TRIGGERS = [
   "is that"
 ];
 
+const NAMED_LAW_RULES = [
+  {
+    topic: "CREATE Law",
+    taxType: "Income Tax",
+    keywords: [
+      "create law",
+      "create act",
+      "ra 11534",
+      "republic act no 11534",
+      "corporate recovery and tax incentives for enterprises"
+    ]
+  },
+  {
+    topic: "TRAIN Law",
+    taxType: "Tax Reform",
+    keywords: [
+      "train law",
+      "train act",
+      "ra 10963",
+      "republic act no 10963",
+      "tax reform for acceleration and inclusion"
+    ]
+  },
+  {
+    topic: "Tax Code / NIRC",
+    taxType: "Tax Code",
+    keywords: [
+      "nirc",
+      "tax code",
+      "national internal revenue code",
+      "ra 8424",
+      "republic act no 8424"
+    ]
+  },
+  {
+    topic: "EOPT",
+    taxType: "Tax Administration",
+    keywords: [
+      "eopt",
+      "ease of paying taxes",
+      "ease of paying taxes act",
+      "ra 11976",
+      "republic act no 11976"
+    ]
+  },
+  {
+    topic: "CREATE MORE",
+    taxType: "Tax Incentives",
+    keywords: [
+      "create more",
+      "create more act",
+      "ra 12066",
+      "republic act no 12066"
+    ]
+  }
+];
+
 const TAX_TOPIC_RULES = [
   {
     topic: "VAT",
@@ -49,9 +109,7 @@ const TAX_TOPIC_RULES = [
       "sale of services",
       "invoice",
       "official receipt",
-      "or",
       "sales invoice",
-      "2307 vat",
       "rr 16-2005",
       "rr 4-2024",
       "rr 7-2024",
@@ -87,11 +145,11 @@ const TAX_TOPIC_RULES = [
       "1702",
       "1702rt",
       "1702mx",
-      "create law",
       "taxable income",
       "deductible expense",
       "deduction",
-      "allowable deduction"
+      "allowable deduction",
+      "section 34"
     ]
   },
   {
@@ -143,20 +201,65 @@ const TAX_TOPIC_RULES = [
       "bpld",
       "gross receipts"
     ]
+  },
+  {
+    topic: "Tax Remedies",
+    taxType: "Tax Remedies",
+    keywords: [
+      "assessment",
+      "fan",
+      "final assessment notice",
+      "protest",
+      "refund",
+      "claim for refund",
+      "prescriptive period",
+      "prescription",
+      "loa",
+      "letter of authority"
+    ]
+  },
+  {
+    topic: "Court Case / Jurisprudence",
+    taxType: "Jurisprudence",
+    keywords: [
+      "g.r. no",
+      "g.r no",
+      "cta case",
+      "cta en banc",
+      "cta division",
+      "court of appeals",
+      "supreme court",
+      "v. cir",
+      "vs. cir",
+      "case doctrine",
+      "court position"
+    ]
   }
 ];
 
 function cleanText(value = "") {
-  return String(value)
+  return String(value || "")
     .replace(/\s+/g, " ")
     .trim();
 }
 
 function normalizeTaxReference(text = "") {
-  return String(text)
+  return String(text || "")
     .replace(/revenue regulation no\.?/gi, "RR")
     .replace(/revenue regulations no\.?/gi, "RR")
     .replace(/revenue regulation/gi, "RR")
+    .replace(/revenue memorandum circular no\.?/gi, "RMC")
+    .replace(/revenue memorandum circulars? no\.?/gi, "RMC")
+    .replace(/revenue memorandum circular/gi, "RMC")
+    .replace(/revenue memorandum order no\.?/gi, "RMO")
+    .replace(/revenue memorandum orders? no\.?/gi, "RMO")
+    .replace(/revenue memorandum order/gi, "RMO")
+    .replace(/revenue audit memorandum order no\.?/gi, "RAMO")
+    .replace(/revenue audit memorandum orders? no\.?/gi, "RAMO")
+    .replace(/revenue audit memorandum order/gi, "RAMO")
+    .replace(/\brepublic act no\.?/gi, "RA")
+    .replace(/\br\.?\s*a\.?\s*no\.?/gi, "RA")
+    .replace(/\bnational internal revenue code\b/gi, "NIRC")
     .replace(/\brr[\s_-]*(\d{1,3})[\s_-]*(\d{2,4})\b/gi, (_, num, year) => {
       const cleanNum = String(Number(num));
       const cleanYear = year.length === 2 ? `20${year}` : year;
@@ -171,19 +274,82 @@ function normalizeTaxReference(text = "") {
       const cleanNum = String(Number(num));
       const cleanYear = year.length === 2 ? `20${year}` : year;
       return `RMO ${cleanNum}-${cleanYear}`;
+    })
+    .replace(/\bramo[\s_-]*(\d{1,3})[\s_-]*(\d{2,4})\b/gi, (_, num, year) => {
+      const cleanNum = String(Number(num));
+      const cleanYear = year.length === 2 ? `20${year}` : year;
+      return `RAMO ${cleanNum}-${cleanYear}`;
+    })
+    .replace(/\bra[\s_-]*(\d{4,6})\b/gi, (_, num) => {
+      const cleanNum = String(Number(num));
+      return `RA ${cleanNum}`;
     });
+}
+
+function isVeryShortFollowUp(question = "") {
+  const q = question.toLowerCase().trim();
+  return q.length > 0 && q.length <= 24;
 }
 
 function detectFollowUp(question = "") {
   const q = question.toLowerCase().trim();
 
-  if (q.length <= 45) return true;
+  if (!q) {
+    return false;
+  }
+
+  const standaloneNewTopicSignals = [
+    /\bra\s+\d{4,6}\b/i,
+    /\brr\s+\d{1,3}-\d{2,4}\b/i,
+    /\brmc\s+\d{1,3}-\d{2,4}\b/i,
+    /\brmo\s+\d{1,3}-\d{2,4}\b/i,
+    /\bramo\s+\d{1,3}-\d{2,4}\b/i,
+    /\bg\.?\s*r\.?\s*no\.?\s*[a-z0-9.-]+\b/i,
+    /\bcta\s+(?:case|eb)\s+no\.?\s*[a-z0-9.-]+\b/i,
+    /\bcreate law\b/i,
+    /\btrain law\b/i,
+    /\beopt\b/i,
+    /\bcreate more\b/i
+  ];
+
+  if (standaloneNewTopicSignals.some((pattern) => pattern.test(q))) {
+    return false;
+  }
+
+  if (isVeryShortFollowUp(q)) {
+    return true;
+  }
 
   return FOLLOW_UP_TRIGGERS.some((trigger) => q.includes(trigger));
 }
 
+function detectNamedLaw(question = "") {
+  const q = question.toLowerCase();
+
+  for (const rule of NAMED_LAW_RULES) {
+    const matchedKeyword = rule.keywords.find((keyword) =>
+      q.includes(keyword.toLowerCase())
+    );
+
+    if (matchedKeyword) {
+      return {
+        topic: rule.topic,
+        taxType: rule.taxType,
+        matchedKeyword
+      };
+    }
+  }
+
+  return null;
+}
+
 function detectTopicByRules(question = "") {
   const q = question.toLowerCase();
+
+  const namedLaw = detectNamedLaw(q);
+  if (namedLaw) {
+    return namedLaw;
+  }
 
   for (const rule of TAX_TOPIC_RULES) {
     const matchedKeyword = rule.keywords.find((keyword) =>
@@ -206,6 +372,52 @@ function detectTopicByRules(question = "") {
   };
 }
 
+function detectQuestionNature(question = "") {
+  const q = question.toLowerCase();
+
+  if (
+    /\b(rr|rmc|rmo|ramo)\s+\d{1,3}-\d{2,4}\b/i.test(q) ||
+    q.includes("revenue regulation") ||
+    q.includes("revenue memorandum circular") ||
+    q.includes("revenue memorandum order") ||
+    q.includes("revenue audit memorandum order")
+  ) {
+    return "issuance";
+  }
+
+  if (
+    /\bra\s+\d{4,6}\b/i.test(q) ||
+    q.includes("create law") ||
+    q.includes("train law") ||
+    q.includes("eopt") ||
+    q.includes("create more")
+  ) {
+    return "named_law";
+  }
+
+  if (
+    /\bg\.?\s*r\.?\s*no\.?\s*[a-z0-9.-]+\b/i.test(q) ||
+    q.includes("supreme court") ||
+    q.includes("cta") ||
+    q.includes("court of appeals") ||
+    q.includes("case doctrine")
+  ) {
+    return "case";
+  }
+
+  if (
+    q.includes("section ") ||
+    q.includes("sec. ") ||
+    q.includes("sec ") ||
+    q.includes("article ") ||
+    q.includes("art. ")
+  ) {
+    return "provision";
+  }
+
+  return "general";
+}
+
 function buildSubject(question, detected, previousState) {
   if (detected.topic !== "General") {
     return detected.matchedKeyword || detected.topic;
@@ -223,9 +435,14 @@ function resolveQuestion({
   normalizedQuestion,
   isFollowUp,
   detected,
-  previousState
+  previousState,
+  questionNature
 }) {
   if (!isFollowUp || !previousState?.current_subject) {
+    return normalizedQuestion;
+  }
+
+  if (["named_law", "issuance", "case", "provision"].includes(questionNature)) {
     return normalizedQuestion;
   }
 
@@ -247,10 +464,17 @@ export async function detectTopic({
   const originalQuestion = cleanText(question);
   const normalizedQuestion = cleanText(normalizeTaxReference(originalQuestion));
 
-  const previousState = await getLastTopicState(userId, sessionId);
+  const previousState =
+    userId
+      ? await getLastTopicState(
+          userId,
+          sessionId || null
+        )
+      : null;
 
   const detected = detectTopicByRules(normalizedQuestion);
   const isFollowUp = detectFollowUp(normalizedQuestion);
+  const questionNature = detectQuestionNature(normalizedQuestion);
 
   const topic =
     detected.topic !== "General"
@@ -269,7 +493,8 @@ export async function detectTopic({
     normalizedQuestion,
     isFollowUp,
     detected: { topic, taxType },
-    previousState
+    previousState,
+    questionNature
   });
 
   return {
@@ -277,6 +502,7 @@ export async function detectTopic({
     subject,
     taxType,
     isFollowUp,
+    questionNature,
     originalQuestion,
     normalizedQuestion,
     resolvedQuestion,
