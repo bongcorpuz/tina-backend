@@ -48,11 +48,18 @@ function chunkText(text, chunkSize = CHUNK_SIZE, overlap = CHUNK_OVERLAP) {
     const end = Math.min(start + chunkSize, clean.length);
     const chunk = clean.slice(start, end).trim();
 
-    if (chunk) chunks.push(chunk);
-    if (end >= clean.length) break;
+    if (chunk) {
+      chunks.push(chunk);
+    }
+
+    if (end >= clean.length) {
+      break;
+    }
 
     start = Math.max(0, end - overlap);
-    if (start >= end) break;
+    if (start >= end) {
+      break;
+    }
   }
 
   return chunks;
@@ -80,14 +87,16 @@ async function embedText(text) {
 /* ================= NORMALIZATION ================= */
 
 export function normalizeSourceName(name = "") {
-  return String(name)
+  return String(name || "")
     .toLowerCase()
     .replace(/revenue regulation[s]?/g, "rr")
     .replace(/revenue memorandum circular[s]?/g, "rmc")
     .replace(/revenue memorandum order[s]?/g, "rmo")
+    .replace(/revenue audit memorandum order[s]?/g, "ramo")
     .replace(/\brev\.?\s*reg\.?\b/g, "rr")
     .replace(/\brev\.?\s*memo\.?\s*circular\b/g, "rmc")
     .replace(/\brev\.?\s*memo\.?\s*order\b/g, "rmo")
+    .replace(/\brev\.?\s*audit\.?\s*memo\.?\s*order\b/g, "ramo")
     .replace(/\bno\.?\b/g, "")
     .replace(/[_–—]/g, "-")
     .replace(/\s+/g, "_")
@@ -107,10 +116,10 @@ function normalizeForMatch(value = "") {
     .trim();
 }
 
-/* ================= ISSUANCE MATCHING ================= */
+/* ================= ISSUANCE / COURT / STATUTE MATCHING ================= */
 
 function padNumber(num = "") {
-  const n = String(num || "").replace(/^0+/, "");
+  const n = String(num || "").replace(/^0+/, "") || "0";
   return {
     raw: n,
     two: n.padStart(2, "0"),
@@ -119,8 +128,11 @@ function padNumber(num = "") {
 }
 
 function expandYear(year = "") {
-  const y = String(year || "");
-  if (y.length === 2) return [`20${y}`, `19${y}`, y];
+  const y = String(year || "").trim();
+  if (!y) return [];
+  if (y.length === 2) {
+    return [`20${y}`, `19${y}`, y];
+  }
   return [y, y.slice(-2)];
 }
 
@@ -145,14 +157,72 @@ function buildIssuanceKeywords(prefix, num, year, longName) {
   return keywords;
 }
 
+function buildRepublicActKeywords(raNumber = "") {
+  const clean = String(raNumber || "").replace(/\D/g, "");
+  if (!clean) return [];
+
+  return [
+    `ra-${clean}`,
+    `ra ${clean}`,
+    `ra no ${clean}`,
+    `ra no. ${clean}`,
+    `republic act ${clean}`,
+    `republic act no ${clean}`,
+    `republic act no. ${clean}`
+  ];
+}
+
+function buildCourtKeywords(kind = "", ref = "") {
+  const cleanRef = String(ref || "").trim();
+  if (!cleanRef) return [];
+
+  if (kind === "SC") {
+    return [
+      `g.r. no. ${cleanRef}`,
+      `gr no ${cleanRef}`,
+      `gr-${cleanRef}`,
+      `supreme court ${cleanRef}`
+    ];
+  }
+
+  if (kind === "CTA") {
+    return [
+      `cta case no. ${cleanRef}`,
+      `cta eb no. ${cleanRef}`,
+      `cta-${cleanRef}`
+    ];
+  }
+
+  if (kind === "CA") {
+    return [
+      `ca-g.r. ${cleanRef}`,
+      `ca gr ${cleanRef}`,
+      `court of appeals ${cleanRef}`
+    ];
+  }
+
+  return [];
+}
+
 function buildPossibleSourceKeywords(query = "") {
   const q = String(query || "");
   const keywords = [];
 
+  const constitutionMatch = q.match(/\b(1987\s+constitution|1987\s+philippine\s+constitution|philippine\s+constitution)\b/i);
+  if (constitutionMatch) {
+    keywords.push("1987 constitution");
+    keywords.push("1987 philippine constitution");
+    keywords.push("constitution of the philippines");
+  }
+
+  const raMatch = q.match(/\b(?:RA|Republic\s+Act(?:\s+No\.?)?)\s*0*(\d{4,6})\b/i);
+  if (raMatch) {
+    keywords.push(...buildRepublicActKeywords(raMatch[1]));
+  }
+
   const rrMatch = q.match(
     /\b(?:RR|Revenue\s+Regulation[s]?)\s*(?:No\.?)?\s*0*(\d+)\s*[-_ ]?\s*(\d{2,4})\b/i
   );
-
   if (rrMatch) {
     keywords.push(
       ...buildIssuanceKeywords("rr", rrMatch[1], rrMatch[2], "revenue regulation")
@@ -162,7 +232,6 @@ function buildPossibleSourceKeywords(query = "") {
   const rmcMatch = q.match(
     /\b(?:RMC|Revenue\s+Memorandum\s+Circular[s]?)\s*(?:No\.?)?\s*0*(\d+)\s*[-_ ]?\s*(\d{2,4})\b/i
   );
-
   if (rmcMatch) {
     keywords.push(
       ...buildIssuanceKeywords(
@@ -177,7 +246,6 @@ function buildPossibleSourceKeywords(query = "") {
   const rmoMatch = q.match(
     /\b(?:RMO|Revenue\s+Memorandum\s+Order[s]?)\s*(?:No\.?)?\s*0*(\d+)\s*[-_ ]?\s*(\d{2,4})\b/i
   );
-
   if (rmoMatch) {
     keywords.push(
       ...buildIssuanceKeywords(
@@ -189,14 +257,47 @@ function buildPossibleSourceKeywords(query = "") {
     );
   }
 
-  const rulingMatch = q.match(
-    /\b(?:BIR\s*)?Ruling\s*(?:No\.?)?\s*([A-Z0-9()\-]+)\s*[-_ ]?\s*(\d{4})\b/i
+  const ramoMatch = q.match(
+    /\b(?:RAMO|Revenue\s+Audit\s+Memorandum\s+Order[s]?)\s*(?:No\.?)?\s*0*(\d+)\s*[-_ ]?\s*(\d{2,4})\b/i
   );
+  if (ramoMatch) {
+    keywords.push(
+      ...buildIssuanceKeywords(
+        "ramo",
+        ramoMatch[1],
+        ramoMatch[2],
+        "revenue audit memorandum order"
+      )
+    );
+  }
 
+  const rulingMatch = q.match(
+    /\b(?:BIR\s*)?Ruling\s*(?:No\.?)?\s*([A-Z0-9()/. -]+)\s*[-_ ]?\s*(\d{4})\b/i
+  );
   if (rulingMatch) {
-    keywords.push(`ruling-${rulingMatch[1]}-${rulingMatch[2]}`);
-    keywords.push(`bir ruling ${rulingMatch[1]}-${rulingMatch[2]}`);
-    keywords.push(`bir-ruling-${rulingMatch[1]}-${rulingMatch[2]}`);
+    const ref = String(rulingMatch[1]).trim();
+    const year = String(rulingMatch[2]).trim();
+    keywords.push(`ruling-${ref}-${year}`);
+    keywords.push(`bir ruling ${ref}-${year}`);
+    keywords.push(`bir-ruling-${ref}-${year}`);
+    keywords.push(`bir ruling no. ${ref}-${year}`);
+  }
+
+  const grMatch = q.match(/\bg\.?\s*r\.?\s*no\.?\s*([A-Z0-9.-]+)\b/i);
+  if (grMatch) {
+    keywords.push(...buildCourtKeywords("SC", grMatch[1]));
+  }
+
+  const ctaMatch =
+    q.match(/\bcta\s+case\s+no\.?\s*([A-Z0-9.-]+)\b/i) ||
+    q.match(/\bcta\s+eb\s+no\.?\s*([A-Z0-9.-]+)\b/i);
+  if (ctaMatch) {
+    keywords.push(...buildCourtKeywords("CTA", ctaMatch[1]));
+  }
+
+  const caMatch = q.match(/\bca-?g\.?\s*r\.?\s*(?:sp|cv|cr)?\s*no\.?\s*([A-Z0-9.-]+)\b/i);
+  if (caMatch) {
+    keywords.push(...buildCourtKeywords("CA", caMatch[1]));
   }
 
   return [...new Set(keywords.map(normalizeForMatch).filter(Boolean))];
@@ -400,11 +501,15 @@ function scoreQuizRowForTopic(row, topic = "") {
     if (path.includes(b)) score -= 5;
   }
 
-  if (path.includes("01_tax_code")) score += 3;
+  if (path.includes("00_constitution")) score += 2;
+  if (path.includes("01_tax_code")) score += 4;
   if (path.includes("02_revenue_regulations")) score += 4;
   if (path.includes("03_rmc")) score += 3;
   if (path.includes("04_rmo")) score += 2;
+  if (path.includes("04b_ramo")) score += 2;
   if (path.includes("05_bir_rulings")) score += 1;
+  if (path.includes("05b_tax_treaties")) score += 2;
+  if (path.includes("06_court_cases")) score += 3;
   if (path.includes("07_cpa_notes")) score += 1;
 
   return score;
@@ -482,6 +587,11 @@ function buildStoredMetadata(source, metadata, authorityFields) {
 
 function mapRowToResult(row, score = 1) {
   const metadata = row.metadata || {};
+  const authorityType = row.authority_type || metadata.authorityType || "SECONDARY";
+  const authorityLevel = Number(row.authority_level || metadata.authorityLevel || 99);
+  const authorityScore = Number(row.authority_score || metadata.authorityScore || 25);
+  const authorityLabel =
+    row.authority_label || metadata.authorityLabel || "Secondary / Commentary";
 
   return {
     id: row.id,
@@ -492,11 +602,10 @@ function mapRowToResult(row, score = 1) {
     chunkIndex: row.chunk_index,
     metadata: {
       ...metadata,
-      authorityType: row.authority_type || metadata.authorityType || "SECONDARY",
-      authorityLevel: Number(row.authority_level || metadata.authorityLevel || 9),
-      authorityScore: Number(row.authority_score || metadata.authorityScore || 40),
-      authorityLabel:
-        row.authority_label || metadata.authorityLabel || "Secondary / Commentary",
+      authorityType,
+      authorityLevel,
+      authorityScore,
+      authorityLabel,
       normalizedReference:
         row.normalized_reference || metadata.normalizedReference || null,
       normalizedAliases: Array.isArray(row.normalized_aliases)
@@ -525,11 +634,10 @@ function mapRowToResult(row, score = 1) {
       amendedByReference:
         row.amended_by_reference || metadata.amendedByReference || null
     },
-    authorityType: row.authority_type || metadata.authorityType || "SECONDARY",
-    authorityLevel: Number(row.authority_level || metadata.authorityLevel || 9),
-    authorityScore: Number(row.authority_score || metadata.authorityScore || 40),
-    authorityLabel:
-      row.authority_label || metadata.authorityLabel || "Secondary / Commentary",
+    authorityType,
+    authorityLevel,
+    authorityScore,
+    authorityLabel,
     normalizedReference:
       row.normalized_reference || metadata.normalizedReference || null,
     normalizedAliases: Array.isArray(row.normalized_aliases)
@@ -606,7 +714,9 @@ export async function clearVectorStore() {
     .delete()
     .neq("id", "00000000-0000-0000-0000-000000000000");
 
-  if (error) throw error;
+  if (error) {
+    throw error;
+  }
 
   console.log("🧹 Supabase vector store cleared.");
   return true;
@@ -621,7 +731,9 @@ export async function removeSourceFromVectorStore(source) {
     .eq("source", normalizedSource)
     .select("id");
 
-  if (error) throw error;
+  if (error) {
+    throw error;
+  }
 
   return {
     source: normalizedSource,
@@ -733,7 +845,9 @@ export async function searchSimilar(query, topK = 5) {
 }
 
 export async function searchBySourceName(keyword, topK = 8) {
-  if (!keyword) return [];
+  if (!keyword) {
+    return [];
+  }
 
   const normalizedKeyword = normalizeForMatch(keyword);
 
@@ -764,7 +878,7 @@ export async function smartSearch(query, topK = 8) {
     }
   }
 
-  return await searchSimilar(query, topK);
+  return searchSimilar(query, topK);
 }
 
 /* ================= STRICT QUIZ SOURCE RETRIEVAL ================= */
@@ -842,28 +956,61 @@ export async function getQuizSourceChunks({
     })
     .slice(0, limit);
 
-  return rows.map((row) => ({
-    id: row.id,
-    source: row.source,
-    originalSource:
-      row.original_source || row.metadata?.originalSource || row.source,
-    sourceTitle:
-      row.document_title ||
-      row.metadata?.documentTitle ||
-      row.metadata?.originalFileName ||
-      row.original_source ||
-      row.source,
-    sourcePath: row.metadata?.path || row.original_source || row.source,
-    fileId: row.metadata?.fileId || null,
-    chunkIndex: row.chunk_index,
-    text: row.text,
-    metadata: {
-      ...(row.metadata || {}),
-      authorityType: row.authority_type || row.metadata?.authorityType || "SECONDARY",
-      authorityLevel: Number(row.authority_level || row.metadata?.authorityLevel || 9),
-      authorityScore: Number(row.authority_score || row.metadata?.authorityScore || 40),
-      authorityLabel:
-        row.authority_label || row.metadata?.authorityLabel || "Secondary / Commentary",
+  return rows.map((row) => {
+    const authorityType = row.authority_type || row.metadata?.authorityType || "SECONDARY";
+    const authorityLevel = Number(row.authority_level || row.metadata?.authorityLevel || 99);
+    const authorityScore = Number(row.authority_score || row.metadata?.authorityScore || 25);
+    const authorityLabel =
+      row.authority_label || row.metadata?.authorityLabel || "Secondary / Commentary";
+
+    return {
+      id: row.id,
+      source: row.source,
+      originalSource:
+        row.original_source || row.metadata?.originalSource || row.source,
+      sourceTitle:
+        row.document_title ||
+        row.metadata?.documentTitle ||
+        row.metadata?.originalFileName ||
+        row.original_source ||
+        row.source,
+      sourcePath: row.metadata?.path || row.original_source || row.source,
+      fileId: row.metadata?.fileId || null,
+      chunkIndex: row.chunk_index,
+      text: row.text,
+      metadata: {
+        ...(row.metadata || {}),
+        authorityType,
+        authorityLevel,
+        authorityScore,
+        authorityLabel,
+        normalizedReference:
+          row.normalized_reference || row.metadata?.normalizedReference || null,
+        normalizedAliases: Array.isArray(row.normalized_aliases)
+          ? row.normalized_aliases
+          : Array.isArray(row.metadata?.normalizedAliases)
+            ? row.metadata.normalizedAliases
+            : [],
+        recencyDate: row.recency_date || row.metadata?.recencyDate || null,
+        effectiveFrom: row.effective_from || row.metadata?.effectiveFrom || null,
+        effectiveTo: row.effective_to || row.metadata?.effectiveTo || null,
+        isSuperseded:
+          typeof row.is_superseded === "boolean"
+            ? row.is_superseded
+            : Boolean(row.metadata?.isSuperseded || false),
+        supersededByReference:
+          row.superseded_by_reference || row.metadata?.supersededByReference || null,
+        repealedByReference:
+          row.repealed_by_reference || row.metadata?.repealedByReference || null,
+        amendedByReference:
+          row.amended_by_reference || row.metadata?.amendedByReference || null,
+        quizTopic: cleanTopic,
+        quizTopicScore: row.quizTopicScore
+      },
+      authorityType,
+      authorityLevel,
+      authorityScore,
+      authorityLabel,
       normalizedReference:
         row.normalized_reference || row.metadata?.normalizedReference || null,
       normalizedAliases: Array.isArray(row.normalized_aliases)
@@ -884,36 +1031,9 @@ export async function getQuizSourceChunks({
         row.repealed_by_reference || row.metadata?.repealedByReference || null,
       amendedByReference:
         row.amended_by_reference || row.metadata?.amendedByReference || null,
-      quizTopic: cleanTopic,
-      quizTopicScore: row.quizTopicScore
-    },
-    authorityType: row.authority_type || row.metadata?.authorityType || "SECONDARY",
-    authorityLevel: Number(row.authority_level || row.metadata?.authorityLevel || 9),
-    authorityScore: Number(row.authority_score || row.metadata?.authorityScore || 40),
-    authorityLabel:
-      row.authority_label || row.metadata?.authorityLabel || "Secondary / Commentary",
-    normalizedReference:
-      row.normalized_reference || row.metadata?.normalizedReference || null,
-    normalizedAliases: Array.isArray(row.normalized_aliases)
-      ? row.normalized_aliases
-      : Array.isArray(row.metadata?.normalizedAliases)
-        ? row.metadata.normalizedAliases
-        : [],
-    recencyDate: row.recency_date || row.metadata?.recencyDate || null,
-    effectiveFrom: row.effective_from || row.metadata?.effectiveFrom || null,
-    effectiveTo: row.effective_to || row.metadata?.effectiveTo || null,
-    isSuperseded:
-      typeof row.is_superseded === "boolean"
-        ? row.is_superseded
-        : Boolean(row.metadata?.isSuperseded || false),
-    supersededByReference:
-      row.superseded_by_reference || row.metadata?.supersededByReference || null,
-    repealedByReference:
-      row.repealed_by_reference || row.metadata?.repealedByReference || null,
-    amendedByReference:
-      row.amended_by_reference || row.metadata?.amendedByReference || null,
-    score: row.quizTopicScore
-  }));
+      score: row.quizTopicScore
+    };
+  });
 }
 
 export async function getVectorStoreStats() {
