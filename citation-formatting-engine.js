@@ -64,14 +64,21 @@ function sectionOf(source = {}) {
   );
 }
 
+function authorityTypeOf(source = {}) {
+  return (
+    source.authorityType ||
+    source.authority_type ||
+    source.metadata?.authorityType ||
+    null
+  );
+}
+
 function authorityLabelOf(source = {}) {
   return (
     source.authorityLabel ||
     source.authority_label ||
     source.metadata?.authorityLabel ||
-    source.authorityType ||
-    source.authority_type ||
-    source.metadata?.authorityType ||
+    authorityTypeOf(source) ||
     "Unknown authority"
   );
 }
@@ -87,11 +94,34 @@ function excerptOf(source = {}, maxLength = 280) {
   return compactSpaces(String(raw || "")).slice(0, maxLength);
 }
 
+function normalizeAuthorityLabel(value = "") {
+  const raw = compactSpaces(String(value || ""));
+  const upper = raw.toUpperCase();
+
+  if (!raw) return "Unknown authority";
+  if (upper === "CONSTITUTION") return "1987 Constitution";
+  if (upper === "STATUTE") return "Statute";
+  if (upper === "TREATY") return "Tax Treaty";
+  if (upper === "SUPREME_COURT") return "Supreme Court Decision";
+  if (upper === "CTA_EN_BANC") return "CTA En Banc Decision";
+  if (upper === "COURT_OF_APPEALS") return "Court of Appeals Decision";
+  if (upper === "CTA_DIVISION") return "CTA Division Decision";
+  if (upper === "RR") return "Revenue Regulation";
+  if (upper === "RMC") return "Revenue Memorandum Circular";
+  if (upper === "RMO") return "Revenue Memorandum Order";
+  if (upper === "RAMO") return "Revenue Audit Memorandum Order";
+  if (upper === "BIR_RULING") return "BIR Ruling";
+  if (upper === "LGU") return "Local Tax Ordinance";
+  if (upper === "SECONDARY") return "Secondary Material";
+
+  return raw;
+}
+
 function cleanSourceTitle(value = "") {
   return compactSpaces(String(value || ""))
-    .replace(/\.pdf$/i, "")
-    .replace(/\.docx$/i, "")
-    .replace(/_/g, " ")
+    .replace(/\.(pdf|docx|doc|txt|csv|md|json)$/i, "")
+    .replace(/[_]+/g, " ")
+    .replace(/\s+/g, " ")
     .trim();
 }
 
@@ -101,13 +131,77 @@ function cleanSectionLabel(value = "") {
     .trim();
 }
 
+function inferIssuanceNumber(source = {}) {
+  const raw = compactSpaces(
+    [
+      source.issuanceNumber,
+      source.reference,
+      source.normalizedReference,
+      source.metadata?.normalizedReference,
+      source.title,
+      source.sourceTitle,
+      source.source,
+      source.originalSource,
+      source.path,
+      source.metadata?.path
+    ]
+      .filter(Boolean)
+      .join(" ")
+  );
+
+  const patterns = [
+    /\b(RA\s*\d{4,6})\b/i,
+    /\b(RR\s*(?:No\.?)?\s*\d+\s*[-/]\s*\d{2,4})\b/i,
+    /\b(RMC\s*(?:No\.?)?\s*\d+\s*[-/]\s*\d{2,4})\b/i,
+    /\b(RMO\s*(?:No\.?)?\s*\d+\s*[-/]\s*\d{2,4})\b/i,
+    /\b(RAMO\s*(?:No\.?)?\s*\d+\s*[-/]\s*\d{2,4})\b/i,
+    /\b(BIR Ruling\s*(?:No\.?)?\s*[\w./()-]+)\b/i,
+    /\b(G\.R\.\s*No\.?\s*[\w.-]+)\b/i,
+    /\b(CTA(?:\s+EB)?\s+No\.?\s*[\w.-]+)\b/i,
+    /\b(CA-G\.R\.\s*[\w.-]+)\b/i
+  ];
+
+  for (const pattern of patterns) {
+    const match = raw.match(pattern);
+    if (match) {
+      return compactSpaces(match[1]);
+    }
+  }
+
+  return "";
+}
+
+function buildLegalBasisLine(item = {}) {
+  const authorityLabel = normalizeAuthorityLabel(authorityLabelOf(item));
+  const issuanceNumber = inferIssuanceNumber(item);
+  const title = cleanSourceTitle(titleOf(item));
+
+  if (issuanceNumber) {
+    return `[${authorityLabel}] ${issuanceNumber} – ${title}`;
+  }
+
+  return `[${authorityLabel}] ${title}`;
+}
+
+function buildSourceLine(item = {}) {
+  const issuanceNumber = inferIssuanceNumber(item);
+  const title = cleanSourceTitle(titleOf(item));
+
+  if (issuanceNumber) {
+    return `${issuanceNumber} – ${title}`;
+  }
+
+  return title;
+}
+
 export function formatSingleCitation(source = {}) {
   const title = cleanSourceTitle(titleOf(source));
   const path = pathOf(source);
   const section = cleanSectionLabel(sectionOf(source) || "");
-  const authorityLabel = authorityLabelOf(source);
+  const authorityLabel = normalizeAuthorityLabel(authorityLabelOf(source));
+  const issuanceNumber = inferIssuanceNumber(source);
 
-  const lines = [title];
+  const lines = [issuanceNumber ? `${issuanceNumber} – ${title}` : title];
 
   if (section) {
     lines.push(`Provision: ${section}`);
@@ -136,7 +230,7 @@ export function formatProvisionCitationBlock(citations = []) {
 
   return uniqueCitations
     .map((item, index) => {
-      const lines = [`${index + 1}. ${cleanSourceTitle(titleOf(item))}`];
+      const lines = [`${index + 1}. ${buildSourceLine(item)}`];
 
       const section = cleanSectionLabel(sectionOf(item) || "");
       if (section) {
@@ -161,7 +255,8 @@ export function formatProvisionCitationBlock(citations = []) {
 export function formatLegalBasisBlock(legalBases = []) {
   const uniqueBases = uniqueBy(
     safeArray(legalBases),
-    (item) => `${item.authorityType || ""}|${item.source || ""}|${item.excerpt || ""}`
+    (item) =>
+      `${authorityTypeOf(item) || ""}|${titleOf(item) || item.source || ""}|${excerptOf(item, 80)}`
   );
 
   if (!uniqueBases.length) {
@@ -169,18 +264,8 @@ export function formatLegalBasisBlock(legalBases = []) {
   }
 
   return uniqueBases
-    .map((item, index) => {
-      const lines = [
-        `${index + 1}. [${item.authorityLabel || item.authorityType || "Authority"}] ${cleanSourceTitle(item.source || "Unknown source")}`
-      ];
-
-      if (item.excerpt) {
-        lines.push(`Excerpt: ${compactSpaces(String(item.excerpt)).slice(0, 320)}`);
-      }
-
-      return lines.join("\n");
-    })
-    .join("\n\n");
+    .map((item) => `- ${buildLegalBasisLine(item)}`)
+    .join("\n");
 }
 
 export function formatSourcesUsedBlock(sources = [], options = {}) {
@@ -191,21 +276,13 @@ export function formatSourcesUsedBlock(sources = [], options = {}) {
   ).slice(0, maxItems);
 
   if (!uniqueSources.length) {
-    return "Sources Used:\n- None";
+    return "6. SOURCES\n- No displayable validated source available.";
   }
 
-  const lines = ["Sources Used:"];
+  const lines = ["6. SOURCES"];
 
   for (const item of uniqueSources) {
-    const title = cleanSourceTitle(titleOf(item));
-    const path = pathOf(item);
-    const section = cleanSectionLabel(sectionOf(item) || "");
-
-    let line = `- ${title}`;
-    if (section) line += ` | ${section}`;
-    if (path) line += ` | ${path}`;
-
-    lines.push(line);
+    lines.push(`- ${buildSourceLine(item)}`);
   }
 
   return lines.join("\n");
@@ -223,9 +300,9 @@ export function formatCaseCitationBlock(caseSources = []) {
 
   return uniqueCases
     .map((item, index) => {
-      const lines = [`${index + 1}. ${cleanSourceTitle(titleOf(item))}`];
+      const lines = [`${index + 1}. ${buildSourceLine(item)}`];
 
-      const authority = authorityLabelOf(item);
+      const authority = normalizeAuthorityLabel(authorityLabelOf(item));
       if (authority) {
         lines.push(`Authority: ${authority}`);
       }
@@ -255,93 +332,112 @@ export function ensureStructuredAnswerSections({
 }) {
   const sections = [];
 
-  sections.push("DIRECT ANSWER");
+  sections.push("1. DIRECT ANSWER");
   sections.push(directAnswer || "No direct answer available.");
   sections.push("");
 
-  sections.push("LEGAL BASIS");
+  sections.push("2. LEGAL BASIS");
   sections.push(legalBasis || "No legal basis found.");
   sections.push("");
 
-  sections.push("SUPPORTING RULES");
+  sections.push("3. SUPPORTING RULES");
   sections.push(supportingRules || "No supporting rules found.");
   sections.push("");
 
-  sections.push("PROFESSIONAL INSIGHT");
+  sections.push("4. PROFESSIONAL INSIGHT");
   sections.push(professionalInsight || "No additional professional insight.");
   sections.push("");
 
-  sections.push("CONFLICT FLAG");
-  sections.push(conflictFlag || "No conflict detected.");
+  sections.push("5. CONFLICT FLAG");
+  sections.push(conflictFlag || "Conflict Detected: NO");
   sections.push("");
 
-  sections.push(sourcesUsed || "Sources Used:\n- None");
+  sections.push(
+    sourcesUsed || "6. SOURCES\n- No displayable validated source available."
+  );
 
   return sections.join("\n");
 }
 
 export function ensureCaseAnswerSections({
-  caseTitle = "",
-  facts = "",
   issue = "",
-  ruling = "",
-  doctrine = "",
-  application = "",
-  legalSignificance = "",
+  applicableLaw = "",
+  birPosition = "",
+  courtPosition = "",
+  conflictFlag = "",
+  legallyDefensibleConclusion = "",
+  taxpayerRiskAssessment = "",
+  recommendedAction = "",
   sourcesUsed = ""
 }) {
   const sections = [];
 
-  sections.push("CASE TITLE");
-  sections.push(caseTitle || "No identified case title.");
+  sections.push("### Issue");
+  sections.push(issue || "No clear issue identified from the indexed sources.");
   sections.push("");
 
-  sections.push("FACTS");
-  sections.push(facts || "Insufficient facts found in the indexed source.");
+  sections.push("### Applicable law (ranked by authority)");
+  sections.push(applicableLaw || "No applicable ranked authority found.");
   sections.push("");
 
-  sections.push("ISSUE");
-  sections.push(issue || "No clear issue found in the indexed source.");
+  sections.push("### BIR position");
+  sections.push(birPosition || "No clear BIR position found in the indexed sources.");
   sections.push("");
 
-  sections.push("RULING");
-  sections.push(ruling || "No clear ruling found in the indexed source.");
+  sections.push("### Court position");
+  sections.push(courtPosition || "No clear court position found in the indexed sources.");
   sections.push("");
 
-  sections.push("DOCTRINE");
-  sections.push(doctrine || "No clear doctrine found in the indexed source.");
+  sections.push("### Conflict flag");
+  sections.push(conflictFlag || "Conflict Detected: NO");
   sections.push("");
 
-  sections.push("APPLICATION");
-  sections.push(application || "No application analysis available.");
+  sections.push("### Legally defensible conclusion");
+  sections.push(
+    legallyDefensibleConclusion || "No legally defensible conclusion could be formed from the indexed sources."
+  );
   sections.push("");
 
-  sections.push("LEGAL SIGNIFICANCE");
-  sections.push(legalSignificance || "No additional legal significance provided.");
+  sections.push("### Taxpayer risk assessment");
+  sections.push(taxpayerRiskAssessment || "MEDIUM — further source verification may be required.");
   sections.push("");
 
-  sections.push(sourcesUsed || "Sources Used:\n- None");
+  sections.push("### Recommended action");
+  sections.push(recommendedAction || "Verify the latest controlling authority before acting.");
+  sections.push("");
+
+  sections.push(
+    sourcesUsed || "6. SOURCES\n- No displayable validated source available."
+  );
 
   return sections.join("\n");
 }
 
 export function buildConflictFlagText(conflict = null) {
   if (!conflict || !conflict.conflict) {
-    return "No conflict detected.";
+    return "Conflict Detected: NO";
   }
 
   const lines = ["Conflict Detected: YES"];
+
+  if (conflict.sourceA) {
+    lines.push(`Source A: ${conflict.sourceA}`);
+  }
+
+  if (conflict.sourceB) {
+    lines.push(`Source B: ${conflict.sourceB}`);
+  }
+
+  if (conflict.reason) {
+    lines.push(`Contradiction: ${conflict.reason}`);
+  }
 
   if (conflict.controllingAuthority) {
     lines.push(`Controlling Authority: ${conflict.controllingAuthority}`);
   }
 
-  if (conflict.reason) {
-    lines.push(`Reason: ${conflict.reason}`);
-  }
-
   if (conflict.controllingSource) {
-    lines.push(`Controlling Source: ${conflict.controllingSource}`);
+    lines.push(`Recommended Action: Follow ${conflict.controllingSource}`);
   }
 
   return lines.join("\n");
@@ -353,8 +449,13 @@ export function buildSupportingRulesText({
 }) {
   const blocks = [];
 
-  if (safeArray(topLegalBases).length) {
-    blocks.push(formatLegalBasisBlock(topLegalBases));
+  const legalBasisLines = safeArray(topLegalBases)
+    .slice(0, 3)
+    .map((item) => `- ${excerptOf(item, 220)}`)
+    .filter((line) => line !== "- ");
+
+  if (legalBasisLines.length) {
+    blocks.push(legalBasisLines.join("\n"));
   }
 
   const extra = uniqueBy(
@@ -365,19 +466,12 @@ export function buildSupportingRulesText({
   if (extra.length) {
     blocks.push(
       extra
-        .map((item, index) => {
-          const lines = [
-            `${index + 1}. ${cleanSourceTitle(titleOf(item))}`
-          ];
-
+        .map((item) => {
           const excerpt = excerptOf(item, 220);
-          if (excerpt) {
-            lines.push(`Support: ${excerpt}`);
-          }
-
-          return lines.join("\n");
+          return excerpt ? `- ${excerpt}` : null;
         })
-        .join("\n\n")
+        .filter(Boolean)
+        .join("\n")
     );
   }
 
