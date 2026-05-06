@@ -53,6 +53,161 @@ export function normalizeLawText(text = "") {
   );
 }
 
+function detectDocAuthorityType(doc = {}) {
+  const authorityType = normalizeLawText(
+    doc.authorityType ||
+      doc.authority_type ||
+      doc.metadata?.authorityType ||
+      ""
+  );
+
+  const path = normalizeLawText(
+    doc.path ||
+      doc.source_path ||
+      doc.metadata?.path ||
+      doc.originalSource ||
+      doc.metadata?.originalSource ||
+      doc.source ||
+      doc.title ||
+      ""
+  );
+
+  if (authorityType.includes("statute") || path.includes("01 tax code")) {
+    return "STATUTE";
+  }
+
+  if (
+    authorityType === "rr" ||
+    authorityType.includes("revenue regulation") ||
+    path.includes("02 revenue regulations") ||
+    /\brr\b/.test(path)
+  ) {
+    return "RR";
+  }
+
+  if (
+    authorityType === "rmc" ||
+    authorityType.includes("revenue memorandum circular") ||
+    path.includes("03 rmc") ||
+    /\brmc\b/.test(path)
+  ) {
+    return "RMC";
+  }
+
+  if (
+    authorityType === "rmo" ||
+    authorityType.includes("revenue memorandum order") ||
+    path.includes("04 rmo") ||
+    /\brmo\b/.test(path)
+  ) {
+    return "RMO";
+  }
+
+  if (
+    authorityType.includes("bir ruling") ||
+    path.includes("05 bir rulings")
+  ) {
+    return "BIR_RULING";
+  }
+
+  if (
+    authorityType.includes("jurisprudence") ||
+    authorityType.includes("case") ||
+    path.includes("06 court cases")
+  ) {
+    return "JURISPRUDENCE";
+  }
+
+  return "UNKNOWN";
+}
+
+function authorityWeightForNamedLaw(authorityType = "") {
+  switch (String(authorityType || "").toUpperCase()) {
+    case "STATUTE":
+      return 120;
+    case "RR":
+      return 80;
+    case "RMC":
+      return 35;
+    case "RMO":
+      return 30;
+    case "BIR_RULING":
+      return 20;
+    case "JURISPRUDENCE":
+      return 18;
+    default:
+      return 0;
+  }
+}
+
+function buildDocHaystack(doc = {}) {
+  return normalizeLawText(
+    [
+      doc.source,
+      doc.originalSource,
+      doc.path,
+      doc.source_path,
+      doc.title,
+      doc.text?.slice(0, 1600),
+      doc.metadata?.path,
+      doc.metadata?.originalSource,
+      doc.metadata?.originalFileName,
+      doc.metadata?.normalizedReference,
+      ...(doc.metadata?.normalizedAliases || [])
+    ]
+      .filter(Boolean)
+      .join(" ")
+  );
+}
+
+function extractIssuanceRefs(text = "") {
+  const value = normalizeLawText(text);
+  const refs = [];
+
+  const patterns = [
+    { type: "rr", regex: /\brr\s*(?:no\.?\s*)?(\d+)[-/ ]+(\d{2,4})\b/g },
+    { type: "rmc", regex: /\brmc\s*(?:no\.?\s*)?(\d+)[-/ ]+(\d{2,4})\b/g },
+    { type: "rmo", regex: /\brmo\s*(?:no\.?\s*)?(\d+)[-/ ]+(\d{2,4})\b/g }
+  ];
+
+  for (const { type, regex } of patterns) {
+    for (const match of value.matchAll(regex)) {
+      const year = String(match[2]).length === 2 ? `20${match[2]}` : String(match[2]);
+      refs.push(`${type}-${match[1]}-${year}`);
+    }
+  }
+
+  return uniq(refs);
+}
+
+function detectNamedLawSpecificIssuanceProfile(bestMatch = null) {
+  if (!bestMatch) {
+    return {
+      preferredImplementingIssuances: [],
+      restrictedIssuances: []
+    };
+  }
+
+  if (bestMatch.id === "RA-11534") {
+    return {
+      preferredImplementingIssuances: ["rr-5-2021"],
+      restrictedIssuances: ["rmc-99-2021"]
+    };
+  }
+
+  if (bestMatch.id === "RA-12066") {
+    return {
+      preferredImplementingIssuances: ["create-more-irr-2025"],
+      restrictedIssuances: []
+    };
+  }
+
+  return {
+    preferredImplementingIssuances: [],
+    restrictedIssuances: []
+  };
+}
+
 export const NAMED_LAW_REGISTRY = [
   {
     id: "RA-8424",
@@ -76,7 +231,9 @@ export const NAMED_LAW_REGISTRY = [
     ],
     officialSources: [
       `${OFFICIAL_SOURCES.LAWPHIL}/statutes/repacts/ra1997/ra_8424_1997.html`
-    ]
+    ],
+    preferredImplementingQueries: [],
+    restrictedIssuanceNotes: []
   },
   {
     id: "RA-10963",
@@ -100,7 +257,9 @@ export const NAMED_LAW_REGISTRY = [
     officialSources: [
       `${OFFICIAL_SOURCES.LAWPHIL}/statutes/repacts/ra2017/ra_10963_2017.html`,
       `${OFFICIAL_SOURCES.DOF}/ra-10963-train-law-and-veto-message-of-the-president/`
-    ]
+    ],
+    preferredImplementingQueries: [],
+    restrictedIssuanceNotes: []
   },
   {
     id: "RA-11534",
@@ -124,6 +283,15 @@ export const NAMED_LAW_REGISTRY = [
     officialSources: [
       `${OFFICIAL_SOURCES.LAWPHIL}/statutes/repacts/ra2021/ra_11534_2021.html`,
       `${OFFICIAL_SOURCES.FIRB}/download/create-act-ra-11534/`
+    ],
+    preferredImplementingQueries: [
+      "RR 5-2021",
+      "CREATE RR 5-2021",
+      "CREATE implementing rules",
+      "CREATE Law implementing rules"
+    ],
+    restrictedIssuanceNotes: [
+      "RMC 99-2021 covers CIT computation examples under RR 5-2021 Sec. 3(B)/3(D); it is not a generic CREATE implementation circular."
     ]
   },
   {
@@ -148,7 +316,9 @@ export const NAMED_LAW_REGISTRY = [
     officialSources: [
       `${OFFICIAL_SOURCES.LAWPHIL}/statutes/repacts/ra2024/ra_11976_2024.html`,
       `${OFFICIAL_SOURCES.BIR}/EOPT`
-    ]
+    ],
+    preferredImplementingQueries: [],
+    restrictedIssuanceNotes: []
   },
   {
     id: "RA-12023",
@@ -171,12 +341,13 @@ export const NAMED_LAW_REGISTRY = [
     ],
     officialSources: [
       `${OFFICIAL_SOURCES.LAWPHIL}/statutes/repacts/ra2024/ra_12023_2024.html`
-    ]
+    ],
+    preferredImplementingQueries: [],
+    restrictedIssuanceNotes: []
   },
   {
     id: "RA-12066",
-    canonicalTitle:
-      "CREATE MORE Act",
+    canonicalTitle: "CREATE MORE Act",
     shortTitle: "CREATE MORE",
     republicActNumber: "12066",
     category: "tax_incentives",
@@ -196,12 +367,17 @@ export const NAMED_LAW_REGISTRY = [
     officialSources: [
       `${OFFICIAL_SOURCES.LAWPHIL}/statutes/repacts/ra2024/ra_12066_2024.html`,
       `${OFFICIAL_SOURCES.FIRB}/resources/create-more/`
-    ]
+    ],
+    preferredImplementingQueries: [
+      "CREATE MORE IRR",
+      "CREATE MORE Act IRR",
+      "CREATE MORE implementing rules"
+    ],
+    restrictedIssuanceNotes: []
   },
   {
     id: "RA-12079",
-    canonicalTitle:
-      "VAT Refund for Non-Resident Tourists Act",
+    canonicalTitle: "VAT Refund for Non-Resident Tourists Act",
     shortTitle: "Tourist VAT Refund Law",
     republicActNumber: "12079",
     category: "vat",
@@ -219,7 +395,9 @@ export const NAMED_LAW_REGISTRY = [
     ],
     officialSources: [
       `${OFFICIAL_SOURCES.LAWPHIL}/statutes/repacts/ra2024/ra_12079_2024.html`
-    ]
+    ],
+    preferredImplementingQueries: [],
+    restrictedIssuanceNotes: []
   }
 ];
 
@@ -230,9 +408,7 @@ export const NAMED_LAW_INDEX = NAMED_LAW_REGISTRY.map((entry) => ({
       entry.canonicalTitle,
       entry.shortTitle,
       entry.republicActNumber ? `ra ${entry.republicActNumber}` : null,
-      entry.republicActNumber
-        ? `republic act no ${entry.republicActNumber}`
-        : null,
+      entry.republicActNumber ? `republic act no ${entry.republicActNumber}` : null,
       ...(entry.aliases || [])
     ].map(normalizeLawText)
   )
@@ -253,9 +429,7 @@ export function buildGenericRaAliases(raNumber = "") {
 export function extractRepublicActNumbers(text = "") {
   const value = normalizeLawText(text);
   const matches = [
-    ...value.matchAll(
-      /\b(?:ra|republic act(?: no)?)\s*(\d{4,6})\b/g
-    )
+    ...value.matchAll(/\b(?:ra|republic act(?: no)?)\s*(\d{4,6})\b/g)
   ];
 
   return uniq(matches.map((match) => match[1]));
@@ -291,9 +465,7 @@ export function detectNamedLaw(question = "") {
 
     if (
       entry.republicActNumber &&
-      extractRepublicActNumbers(normalizedQuestion).includes(
-        entry.republicActNumber
-      )
+      extractRepublicActNumbers(normalizedQuestion).includes(entry.republicActNumber)
     ) {
       score += 25;
       matchedAliases.push(`ra ${entry.republicActNumber}`);
@@ -341,6 +513,8 @@ export function detectNamedLaw(question = "") {
       aliases: buildGenericRaAliases(raNumber),
       normalizedAliases: buildGenericRaAliases(raNumber).map(normalizeLawText),
       officialSources: [],
+      preferredImplementingQueries: [],
+      restrictedIssuanceNotes: [],
       matchedAliases: buildGenericRaAliases(raNumber),
       score: 15
     }));
@@ -371,6 +545,7 @@ export function buildNamedLawSearchQueries(question = "", options = {}) {
 
     queries.push(best.canonicalTitle);
     if (best.shortTitle) queries.push(best.shortTitle);
+
     if (best.republicActNumber) {
       queries.push(`RA ${best.republicActNumber}`);
       queries.push(`Republic Act No. ${best.republicActNumber}`);
@@ -380,20 +555,8 @@ export function buildNamedLawSearchQueries(question = "", options = {}) {
       queries.push(alias);
     }
 
-    if (
-      best.id === "RA-12066" ||
-      normalizeLawText(best.shortTitle).includes("create more")
-    ) {
-      queries.push("CREATE MORE IRR");
-      queries.push("CREATE MORE Act IRR");
-    }
-
-    if (
-      best.id === "RA-11534" ||
-      normalizeLawText(best.shortTitle).includes("create law")
-    ) {
-      queries.push("CREATE Law IRR");
-      queries.push("CREATE Act IRR");
+    for (const query of best.preferredImplementingQueries || []) {
+      queries.push(query);
     }
   }
 
@@ -403,35 +566,17 @@ export function buildNamedLawSearchQueries(question = "", options = {}) {
 export function scoreDocAgainstNamedLaw(doc = {}, lawMatch = null) {
   if (!lawMatch) return 0;
 
-  const haystack = normalizeLawText(
-    [
-      doc.source,
-      doc.originalSource,
-      doc.path,
-      doc.source_path,
-      doc.title,
-      doc.text?.slice(0, 1200),
-      doc.metadata?.path,
-      doc.metadata?.originalSource,
-      doc.metadata?.originalFileName,
-      doc.metadata?.normalizedReference,
-      ...(doc.metadata?.normalizedAliases || [])
-    ]
-      .filter(Boolean)
-      .join(" ")
-  );
-
+  const haystack = buildDocHaystack(doc);
   if (!haystack) return 0;
 
-  let score = 0;
+  const authorityType = detectDocAuthorityType(doc);
+  let score = authorityWeightForNamedLaw(authorityType);
 
   if (
     lawMatch.republicActNumber &&
-    new RegExp(`\\bra\\s*${escapeRegex(lawMatch.republicActNumber)}\\b`, "i").test(
-      haystack
-    )
+    new RegExp(`\\bra\\s*${escapeRegex(lawMatch.republicActNumber)}\\b`, "i").test(haystack)
   ) {
-    score += 100;
+    score += authorityType === "STATUTE" ? 220 : 90;
   }
 
   if (
@@ -441,42 +586,51 @@ export function scoreDocAgainstNamedLaw(doc = {}, lawMatch = null) {
       "i"
     ).test(haystack)
   ) {
-    score += 100;
+    score += authorityType === "STATUTE" ? 220 : 90;
   }
 
   for (const alias of lawMatch.normalizedAliases || []) {
     if (!alias) continue;
     if (haystack.includes(alias)) {
-      score += alias.startsWith("ra ") ? 20 : 14;
+      score += alias.startsWith("ra ") ? 26 : 16;
     }
   }
 
-  if (
-    lawMatch.shortTitle &&
-    haystack.includes(normalizeLawText(lawMatch.shortTitle))
-  ) {
-    score += 12;
+  if (lawMatch.shortTitle && haystack.includes(normalizeLawText(lawMatch.shortTitle))) {
+    score += 20;
   }
 
-  if (
-    lawMatch.canonicalTitle &&
-    haystack.includes(normalizeLawText(lawMatch.canonicalTitle))
-  ) {
-    score += 16;
+  if (lawMatch.canonicalTitle && haystack.includes(normalizeLawText(lawMatch.canonicalTitle))) {
+    score += 24;
   }
 
-  if (
-    lawMatch.id === "RA-12066" &&
-    /\birr\b/.test(haystack)
-  ) {
-    score += 8;
+  const issuanceRefs = extractIssuanceRefs(haystack);
+  const profile = detectNamedLawSpecificIssuanceProfile(lawMatch);
+
+  for (const preferred of profile.preferredImplementingIssuances) {
+    if (issuanceRefs.includes(preferred)) {
+      score += authorityType === "RR" ? 75 : 20;
+    }
   }
 
-  if (
-    lawMatch.id === "RA-11534" &&
-    /\birr\b/.test(haystack)
-  ) {
-    score += 6;
+  for (const restricted of profile.restrictedIssuances) {
+    if (issuanceRefs.includes(restricted)) {
+      score -= 20;
+    }
+  }
+
+  if (lawMatch.id === "RA-11534") {
+    if (authorityType === "RR" && issuanceRefs.includes("rr-5-2021")) {
+      score += 120;
+    }
+
+    if (authorityType === "RMC" && issuanceRefs.includes("rmc-99-2021")) {
+      score += 10;
+    }
+  }
+
+  if (lawMatch.id === "RA-12066" && /\birr\b/.test(haystack)) {
+    score += authorityType === "RR" || authorityType === "STATUTE" ? 30 : 10;
   }
 
   return score;
@@ -488,35 +642,62 @@ export function filterDocsForNamedLaw(
   options = {}
 ) {
   const {
-    minScore = 20,
-    hardFilter = false,
-    maxDocs = 12
+    minScore = 40,
+    hardFilter = true,
+    maxDocs = 12,
+    requirePrimaryAuthority = true
   } = options;
 
   const bestMatch = lawDetection?.bestMatch || null;
+
   if (!bestMatch) {
     return {
       lawMatched: false,
       bestMatch: null,
       matchedDocs: docs.slice(0, maxDocs),
       discardedDocs: [],
-      scoredDocs: docs.map((doc) => ({ doc, namedLawScore: 0 }))
+      scoredDocs: docs.map((doc) => ({ doc, namedLawScore: 0, authorityType: detectDocAuthorityType(doc) }))
     };
   }
 
   const scoredDocs = docs
-    .map((doc) => ({
-      doc,
-      namedLawScore: scoreDocAgainstNamedLaw(doc, bestMatch)
-    }))
-    .sort((a, b) => b.namedLawScore - a.namedLawScore);
+    .map((doc) => {
+      const authorityType = detectDocAuthorityType(doc);
+      return {
+        doc,
+        authorityType,
+        namedLawScore: scoreDocAgainstNamedLaw(doc, bestMatch)
+      };
+    })
+    .sort((a, b) => {
+      if (b.namedLawScore !== a.namedLawScore) {
+        return b.namedLawScore - a.namedLawScore;
+      }
 
-  const matchedDocs = scoredDocs
-    .filter((item) => item.namedLawScore >= minScore)
-    .map((item) => ({
-      ...item.doc,
-      namedLawScore: item.namedLawScore
-    }));
+      return authorityWeightForNamedLaw(b.authorityType) - authorityWeightForNamedLaw(a.authorityType);
+    });
+
+  const aboveThreshold = scoredDocs.filter((item) => item.namedLawScore >= minScore);
+
+  const primaryDocs = aboveThreshold.filter(
+    (item) => item.authorityType === "STATUTE"
+  );
+
+  const preferredDocs = requirePrimaryAuthority && primaryDocs.length
+    ? [
+        ...primaryDocs,
+        ...aboveThreshold.filter((item) => item.authorityType === "RR"),
+        ...aboveThreshold.filter(
+          (item) => item.authorityType !== "STATUTE" && item.authorityType !== "RR"
+        )
+      ]
+    : aboveThreshold;
+
+  const matchedDocs = preferredDocs.map((item) => ({
+    ...item.doc,
+    namedLawScore: item.namedLawScore,
+    namedLawAuthorityType: item.authorityType
+  }));
 
   const fallbackDocs = hardFilter
     ? []
@@ -524,29 +705,33 @@ export function filterDocsForNamedLaw(
         .filter((item) => item.namedLawScore < minScore)
         .map((item) => ({
           ...item.doc,
-          namedLawScore: item.namedLawScore
+          namedLawScore: item.namedLawScore,
+          namedLawAuthorityType: item.authorityType
         }));
+
+  const finalDocs = matchedDocs.length
+    ? matchedDocs
+    : requirePrimaryAuthority
+      ? []
+      : fallbackDocs;
 
   return {
     lawMatched: true,
     bestMatch,
-    matchedDocs: (matchedDocs.length ? matchedDocs : fallbackDocs).slice(
-      0,
-      maxDocs
-    ),
-    discardedDocs: matchedDocs.length
-      ? fallbackDocs.slice(0, maxDocs)
-      : [],
-    scoredDocs
+    matchedDocs: finalDocs.slice(0, maxDocs),
+    discardedDocs: matchedDocs.length ? fallbackDocs.slice(0, maxDocs) : [],
+    scoredDocs,
+    primaryAuthorityFound: primaryDocs.length > 0
   };
 }
 
 export function buildNamedLawDebugSummary(question = "", docs = []) {
   const detection = detectNamedLaw(question);
   const filtered = filterDocsForNamedLaw(docs, detection, {
-    minScore: 20,
-    hardFilter: false,
-    maxDocs: 5
+    minScore: 40,
+    hardFilter: true,
+    maxDocs: 5,
+    requirePrimaryAuthority: true
   });
 
   return {
@@ -563,6 +748,7 @@ export function buildNamedLawDebugSummary(question = "", docs = []) {
         }
       : null,
     suggestedQueries: buildNamedLawSearchQueries(question),
+    primaryAuthorityFound: filtered.primaryAuthorityFound || false,
     topDocScores: filtered.scoredDocs.slice(0, 5).map((item) => ({
       title:
         item.doc.title ||
@@ -575,6 +761,7 @@ export function buildNamedLawDebugSummary(question = "", docs = []) {
         item.doc.source_path ||
         item.doc.metadata?.path ||
         null,
+      authorityType: item.authorityType,
       namedLawScore: item.namedLawScore
     }))
   };
