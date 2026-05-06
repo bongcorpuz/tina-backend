@@ -84,6 +84,7 @@ import {
 
 import {
   buildFinalCompliantAnswer,
+  buildFinalRoutePayload,
   sanitizeDraftAnswer
 } from "./final-answer-compliance.js";
 
@@ -200,7 +201,7 @@ function buildNamedLawFallbackText(bestMatch) {
   return [
     `TINA recognized the question as referring to ${title}${raText}.`,
     "",
-    "However, no exact indexed source for that law was found in the current tax library.",
+    "However, no exact indexed primary legal source for that law was found in the current tax library.",
     "TINA will not present unrelated documents as support.",
     "",
     "Please upload or index the exact law text and, if available, its implementing rules and regulations."
@@ -428,6 +429,20 @@ function buildFallbackComplianceAnswer({
     conflicts: [],
     hierarchyConflict: null,
     professionalInsight
+  });
+}
+
+function buildRouteResponsePayload({
+  answerText,
+  legalBasisDocs = [],
+  sourcesUsed = [],
+  hierarchyConflict = null
+}) {
+  return buildFinalRoutePayload({
+    answer: answerText,
+    legalBasisDocs,
+    sourcesUsed,
+    hierarchyConflict
   });
 }
 
@@ -1065,6 +1080,7 @@ Quick Recall:
           ? "GDRIVE_GROUNDED_NEXT_QUESTION"
           : "GENERAL_NEXT_QUESTION",
         sourcesUsed: nextSources,
+        sources: nextSources,
         vectorMatches: nextSources.length
       }
     };
@@ -1125,6 +1141,7 @@ Quick Recall:
           answer: answerText,
           sourceStatus: "MODE_STATE_CLEARED",
           sourcesUsed: [],
+          sources: [],
           vectorMatches: 0
         });
       }
@@ -1198,6 +1215,7 @@ Quick Recall:
             answer: lockedModeMessage,
             sourceStatus: "QUIZ_MODE_LOCKED",
             sourcesUsed: [],
+            sources: [],
             vectorMatches: 0
           });
         }
@@ -1271,6 +1289,7 @@ Quick Recall:
           answerMode: "learning_progress",
           sourceStatus: "LEARNING_PROFILE_USED",
           sourcesUsed: [],
+          sources: [],
           vectorMatches: 0
         });
       }
@@ -1316,6 +1335,7 @@ Quick Recall:
           originalQuestion,
           resolvedQuestion: cleanQuestion,
           sourcesUsed: [],
+          sources: [],
           vectorMatches: 0
         });
       }
@@ -1388,6 +1408,7 @@ Quick Recall:
             ? "GDRIVE_GROUNDED_QUESTION_READY"
             : "GENERAL_QUESTION_READY",
           sourcesUsed: quizSourcesUsed,
+          sources: quizSourcesUsed,
           vectorMatches: quizSourcesUsed.length
         });
       }
@@ -1460,6 +1481,7 @@ Quick Recall:
             ? "GDRIVE_GROUNDED_QUESTION_READY"
             : "GENERAL_QUESTION_READY",
           sourcesUsed: quizSourcesUsed,
+          sources: quizSourcesUsed,
           vectorMatches: quizSourcesUsed.length
         });
       }
@@ -1836,6 +1858,11 @@ Quick Recall:
       );
 
       const finalDisplayableDocs = groundedDisplayableDocs;
+      const finalVisibleSources = finalizeSourcesForResponse(finalDisplayableDocs, {
+        maxItems: MAX_VISIBLE_SOURCES,
+        supersessionResult
+      });
+
       const topDisplayableEvidence = rankEvidenceByAuthority(
         normalizeRetrievedEvidence(finalDisplayableDocs)
       ).slice(0, 10);
@@ -1857,14 +1884,15 @@ Quick Recall:
 
       const fallbackReason =
         namedLawDetection.matched &&
-        finalDisplayableDocs.length === 0 &&
+        (!namedLawFiltered.primaryAuthorityFound || finalDisplayableDocs.length === 0) &&
         namedLawDetection.bestMatch
-          ? `No exact indexed source matched ${namedLawDetection.bestMatch.shortTitle || namedLawDetection.bestMatch.canonicalTitle}.`
+          ? `No exact indexed primary source matched ${namedLawDetection.bestMatch.shortTitle || namedLawDetection.bestMatch.canonicalTitle}.`
           : !topEvidence.length
             ? "No indexed Google Drive/Supabase vector source matched the question."
             : "Indexed sources were found but evidence strength was insufficient.";
 
       const shouldFallback =
+        (namedLawDetection.matched && !namedLawFiltered.primaryAuthorityFound) ||
         (namedLawDetection.matched && finalDisplayableDocs.length === 0) ||
         (issuance && finalDisplayableDocs.length === 0) ||
         topEvidence.length === 0 ||
@@ -1934,7 +1962,8 @@ Quick Recall:
 
       if (hookConfig.mode === "SOURCE_FINDER") {
         const sourcesUsed = finalizeSourcesForResponse(finalDisplayableDocs, {
-          maxItems: MAX_VISIBLE_SOURCES
+          maxItems: MAX_VISIBLE_SOURCES,
+          supersessionResult
         });
 
         if (!sourcesUsed.length) {
@@ -1958,6 +1987,7 @@ Quick Recall:
             originalQuestion,
             resolvedQuestion: finalQuestion,
             sourcesUsed: [],
+            sources: [],
             vectorMatches: 0
           });
         }
@@ -1975,6 +2005,13 @@ Quick Recall:
 
         await saveAllMemory(answerText, sourcesUsed, []);
 
+        const routePayload = buildRouteResponsePayload({
+          answerText,
+          legalBasisDocs: sourcesUsed,
+          sourcesUsed,
+          hierarchyConflict: null
+        });
+
         return res.json({
           success: true,
           engine: "TINA Reasoning Engine",
@@ -1983,12 +2020,15 @@ Quick Recall:
           hookTitle: hookConfig.title,
           answer: answerText,
           answerMode: "source_finder_results",
-          confidence: "SOURCE_LIST",
+          confidence: routePayload.confidence_level || "SOURCE_LIST",
           sourceStatus: "INDEXED_SOURCE_LISTED",
           originalQuestion,
           resolvedQuestion: finalQuestion,
-          sourcesUsed,
-          vectorMatches: sourcesUsed.length
+          sourcesUsed: routePayload.sources,
+          sources: routePayload.sources,
+          authorityUsed: routePayload.authority_used,
+          supersessionAudit: routePayload.supersession_audit,
+          vectorMatches: routePayload.sources.length
         });
       }
 
@@ -2017,6 +2057,13 @@ Quick Recall:
 
         await saveAllMemory(answerText, [], []);
 
+        const routePayload = buildRouteResponsePayload({
+          answerText,
+          legalBasisDocs: [],
+          sourcesUsed: [],
+          hierarchyConflict: null
+        });
+
         return res.json({
           success: true,
           engine: "TINA Reasoning Engine",
@@ -2041,7 +2088,10 @@ Quick Recall:
           topicData,
           originalQuestion,
           resolvedQuestion: finalQuestion,
-          sourcesUsed: [],
+          sourcesUsed: routePayload.sources,
+          sources: routePayload.sources,
+          authorityUsed: routePayload.authority_used,
+          supersessionAudit: routePayload.supersession_audit,
           vectorMatches: topDisplayableEvidence.length,
           detectedIssuance: issuance || null,
           detectedNamedLaw: namedLawDetection.bestMatch || null,
@@ -2049,12 +2099,8 @@ Quick Recall:
         });
       }
 
-      const sourcesUsed = finalizeSourcesForResponse(finalDisplayableDocs, {
-        maxItems: MAX_VISIBLE_SOURCES
-      });
-
-      const topTier = sourcesUsed.length
-        ? Math.min(...sourcesUsed.map((s) => Number(s.authorityLevel || 99)))
+      const topTier = finalVisibleSources.length
+        ? Math.min(...finalVisibleSources.map((s) => Number(s.authorityLevel || 99)))
         : 99;
 
       let confidence = "MEDIUM";
@@ -2071,13 +2117,20 @@ Quick Recall:
         draftAnswer: preliminaryAnswer || "",
         fallbackAnswer: buildNoSourceReply(),
         legalBasisDocs: topLegalBases,
-        sourcesUsed,
+        sourcesUsed: finalVisibleSources,
         conflicts: displayableConflicts,
         hierarchyConflict,
         professionalInsight: complianceInsight
       });
 
-      await saveAllMemory(answerText, sourcesUsed, []);
+      await saveAllMemory(answerText, finalVisibleSources, []);
+
+      const routePayload = buildRouteResponsePayload({
+        answerText,
+        legalBasisDocs: topLegalBases,
+        sourcesUsed: finalVisibleSources,
+        hierarchyConflict
+      });
 
       return res.json({
         success: true,
@@ -2097,15 +2150,18 @@ Quick Recall:
                 : issuance
                   ? `exact_issuance_${hookConfig.mode.toLowerCase()}_reasoned`
                   : `${hookConfig.mode.toLowerCase()}_reasoned_answer`,
-        confidence,
-        sourceStatus: sourcesUsed.length
+        confidence: routePayload.confidence_level || confidence,
+        sourceStatus: routePayload.sources.length
           ? "INDEXED_REASONED_SOURCE_USED"
           : "INDEXED_ANSWER_WITH_NO_DISPLAYABLE_SOURCE",
         questionType,
         topicData,
         originalQuestion,
         resolvedQuestion: finalQuestion,
-        sourcesUsed,
+        sourcesUsed: routePayload.sources,
+        sources: routePayload.sources,
+        authorityUsed: routePayload.authority_used,
+        supersessionAudit: routePayload.supersession_audit,
         vectorMatches: finalDisplayableDocs.length,
         detectedIssuance: issuance || null,
         detectedNamedLaw: namedLawDetection.bestMatch || null,
