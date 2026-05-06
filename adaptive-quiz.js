@@ -1,3 +1,5 @@
+// FILE: adaptive-quiz.js
+
 /* ================= TINA SOURCE-GROUNDED ADAPTIVE QUIZ ENGINE ================= */
 
 import {
@@ -22,10 +24,35 @@ const TAX_TOPICS = [
   "Local Taxation"
 ];
 
+/* ================= HELPERS ================= */
+
+function normalizeText(value = "") {
+  return String(value || "").trim();
+}
+
+function lower(value = "") {
+  return normalizeText(value).toLowerCase();
+}
+
+function uniqueStrings(values = []) {
+  return [...new Set(values.map((item) => normalizeText(item)).filter(Boolean))];
+}
+
+function safeInteger(value, fallback = 0) {
+  const num = Number(value);
+  if (!Number.isFinite(num)) return fallback;
+  return Math.max(0, Math.floor(num));
+}
+
+function normalizeDifficulty(value = 1) {
+  const difficulty = safeInteger(value, 1) || 1;
+  return Math.min(Math.max(difficulty, 1), 5);
+}
+
 /* ================= TOPIC DETECTION ================= */
 
 export function detectQuizTopic(text = "") {
-  const q = String(text || "").toLowerCase();
+  const q = lower(text);
 
   if (q.includes("vat") || q.includes("value-added")) return "VAT";
   if (q.includes("withholding") || q.includes("ewt") || q.includes("cwt")) return "Withholding Tax";
@@ -61,14 +88,17 @@ export async function getAdaptiveQuizProfile(
 ) {
   const profile = await getOrCreateLearnerProfile(supabase, userId);
 
+  const detectedTopic = detectQuizTopic(requestedTopic);
+  const cleanRequestedTopic = normalizeText(requestedTopic);
+
   const topic =
-    detectQuizTopic(requestedTopic) ||
-    requestedTopic ||
+    detectedTopic ||
+    cleanRequestedTopic ||
     profile?.last_reviewed_topic ||
     pickRandomTaxTopic();
 
   const mastery = await getTopicMastery(supabase, userId, topic, "");
-  const difficulty = Number(mastery?.difficulty_level || 1);
+  const difficulty = normalizeDifficulty(mastery?.difficulty_level || 1);
 
   return {
     profile,
@@ -192,10 +222,14 @@ export function buildAdaptiveQuizPrompt({
   sourceChunks = [],
   recentQuestions = []
 }) {
+  const safeTopic = normalizeText(topic) || "General Taxation";
+  const safeDifficulty = normalizeDifficulty(difficulty);
   const sourceContext = buildSourceContext(sourceChunks);
 
-  const recentQuestionText = (recentQuestions || [])
-    .map((q, i) => `${i + 1}. ${q.question}`)
+  const recentQuestionText = uniqueStrings(
+    (recentQuestions || []).map((q) => q.question)
+  )
+    .map((question, index) => `${index + 1}. ${question}`)
     .join("\n");
 
   if (!sourceContext) {
@@ -205,13 +239,13 @@ You are TINA, an adaptive CPALE Taxation examiner.
 Create ONE general Philippine taxation multiple-choice question.
 
 Topic:
-${topic}
+${safeTopic}
 
 Learner skill level:
 ${profile?.skill_level || "beginner"}
 
 Difficulty level:
-${difficulty}
+${safeDifficulty}
 
 STRICT RULES:
 - Philippine taxation only.
@@ -230,9 +264,9 @@ ${recentQuestionText || "None"}
 Return this JSON structure only:
 
 {
-  "topic": "${topic}",
+  "topic": "${safeTopic}",
   "subtopic": "",
-  "difficulty": ${difficulty},
+  "difficulty": ${safeDifficulty},
   "question": "Question text here",
   "choices": {
     "A": "Choice A",
@@ -256,13 +290,13 @@ You are TINA, a source-grounded CPALE Taxation examiner for Philippine taxation.
 Your task is to create ONE multiple-choice question strictly from the SOURCE CONTEXT.
 
 Topic:
-${topic}
+${safeTopic}
 
 Learner skill level:
 ${profile?.skill_level || "beginner"}
 
 Difficulty level:
-${difficulty}
+${safeDifficulty}
 
 Difficulty guide:
 1 = basic definition
@@ -295,9 +329,9 @@ STRICT SOURCE-GROUNDED RULES:
 Return this JSON structure only:
 
 {
-  "topic": "${topic}",
+  "topic": "${safeTopic}",
   "subtopic": "",
-  "difficulty": ${difficulty},
+  "difficulty": ${safeDifficulty},
   "question": "Question text here",
   "choices": {
     "A": "Choice A",
@@ -340,9 +374,9 @@ export function safeParseQuizJson(text = "") {
       return null;
     }
 
-    parsed.topic = parsed.topic || "General Taxation";
-    parsed.subtopic = parsed.subtopic || "";
-    parsed.difficulty = Number(parsed.difficulty || 1);
+    parsed.topic = normalizeText(parsed.topic) || "General Taxation";
+    parsed.subtopic = normalizeText(parsed.subtopic);
+    parsed.difficulty = normalizeDifficulty(parsed.difficulty || 1);
     parsed.correctAnswer = String(parsed.correctAnswer).trim().toUpperCase();
 
     if (!["A", "B", "C", "D"].includes(parsed.correctAnswer)) {
@@ -350,11 +384,23 @@ export function safeParseQuizJson(text = "") {
       return null;
     }
 
-    parsed.correctAnswerText = parsed.correctAnswerText || "";
-    parsed.explanation = parsed.explanation || "";
-    parsed.cpaleTrap = parsed.cpaleTrap || "";
-    parsed.sourceSupport = parsed.sourceSupport || "";
-    parsed.validationStatus = parsed.validationStatus || "UNVALIDATED";
+    parsed.correctAnswerText = normalizeText(parsed.correctAnswerText || "");
+    parsed.explanation = normalizeText(parsed.explanation || "");
+    parsed.cpaleTrap = normalizeText(parsed.cpaleTrap || "");
+    parsed.sourceSupport = normalizeText(parsed.sourceSupport || "");
+    parsed.validationStatus = normalizeText(parsed.validationStatus || "UNVALIDATED");
+
+    parsed.choices = {
+      A: normalizeText(parsed.choices.A),
+      B: normalizeText(parsed.choices.B),
+      C: normalizeText(parsed.choices.C),
+      D: normalizeText(parsed.choices.D)
+    };
+
+    if (!parsed.choices.A || !parsed.choices.B || !parsed.choices.C || !parsed.choices.D) {
+      console.error("Quiz JSON invalid choices.");
+      return null;
+    }
 
     return parsed;
   } catch (error) {
@@ -422,10 +468,10 @@ export async function storeUnansweredQuiz(
     user_id: String(userId),
     session_id: sessionId || null,
     mode: mode || "ADAPTIVE_QUIZ",
-    topic: quiz.topic || "General Taxation",
-    subtopic: quiz.subtopic || "",
-    difficulty: Number(quiz.difficulty || 1),
-    question: String(quiz.question || ""),
+    topic: normalizeText(quiz.topic) || "General Taxation",
+    subtopic: normalizeText(quiz.subtopic),
+    difficulty: normalizeDifficulty(quiz.difficulty || 1),
+    question: normalizeText(quiz.question || ""),
     choices,
     correct_answer: String(quiz.correctAnswer || quiz.correct_answer || "")
       .trim()
@@ -479,23 +525,32 @@ export async function storeUnansweredQuiz(
 
 /* ================= RETRIEVE PENDING QUIZ ================= */
 
-export async function getLastUnansweredQuiz(supabase, userId) {
+export async function getLastUnansweredQuiz(supabase, userId, sessionId = null) {
   if (!userId) return null;
 
-  let { data, error } = await supabase
+  let query = supabase
     .from("tina_learning_attempts")
     .select("*")
     .eq("user_id", String(userId))
     .is("user_answer", null)
     .order("created_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
+    .limit(1);
+
+  if (sessionId) {
+    query = query.eq("session_id", sessionId);
+  }
+
+  let { data, error } = await query.maybeSingle();
 
   if (error) {
     console.error("Primary unanswered quiz fetch error:", error.message);
   }
 
   if (data) return data;
+
+  if (sessionId) {
+    return null;
+  }
 
   const fallback = await supabase
     .from("tina_learning_attempts")
@@ -519,10 +574,11 @@ export async function answerLastQuiz(
   supabase,
   {
     userId,
-    userAnswer
+    userAnswer,
+    sessionId = null
   }
 ) {
-  const lastQuiz = await getLastUnansweredQuiz(supabase, userId);
+  const lastQuiz = await getLastUnansweredQuiz(supabase, userId, sessionId);
 
   if (!lastQuiz) {
     return {
