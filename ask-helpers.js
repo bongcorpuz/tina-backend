@@ -1,5 +1,7 @@
 // FILE: ask-helpers.js
 
+import { applySupersessionFilter, findReplacementForDocument } from "./supersession-engine.js";
+
 export const MAX_VISIBLE_SOURCES = 5;
 
 const HIDDEN_FOLDER_PATTERNS = ["07_cpa_notes", "08_review_materials"];
@@ -372,7 +374,8 @@ function inferIssuanceNumber(item = {}) {
       item.path,
       item.source_path,
       item.metadata?.path,
-      item.metadata?.normalizedReference
+      item.metadata?.normalizedReference,
+      item.normalizedReference
     ]
       .filter(Boolean)
       .join(" ")
@@ -399,6 +402,20 @@ function inferIssuanceNumber(item = {}) {
   }
 
   return "";
+}
+
+function buildDocKey(doc = {}) {
+  return (
+    doc.fileId ||
+    doc.file_id ||
+    doc.id ||
+    doc.path ||
+    doc.source_path ||
+    doc.originalSource ||
+    doc.source ||
+    doc.title ||
+    JSON.stringify(doc)
+  );
 }
 
 export function buildSourceResponseItem(item = {}) {
@@ -466,13 +483,32 @@ export function uniqueSources(docs = []) {
     });
 }
 
-export function finalizeSourcesForResponse(
+export function filterVisibleSources(
   rawSources = [],
-  { maxItems = MAX_VISIBLE_SOURCES } = {}
+  {
+    maxItems = MAX_VISIBLE_SOURCES,
+    supersessionResult = null,
+    requireClickable = true
+  } = {}
 ) {
-  return uniqueSources(rawSources)
-    .filter((item) => !shouldHideSourceFromUser(item))
-    .filter((item) => item.driveViewUrl)
+  const visible = [];
+
+  for (const item of uniqueSources(rawSources)) {
+    if (!item) continue;
+    if (shouldHideSourceFromUser(item)) continue;
+
+    const replacement = findReplacementForDocument(item, supersessionResult);
+    const sourceToUse = replacement
+      ? buildSourceResponseItem(replacement)
+      : item;
+
+    if (shouldHideSourceFromUser(sourceToUse)) continue;
+    if (requireClickable && !sourceToUse.driveViewUrl) continue;
+
+    visible.push(sourceToUse);
+  }
+
+  return uniqueSources(visible)
     .sort((a, b) => {
       const aLevel = Number(a.authorityLevel ?? 999);
       const bLevel = Number(b.authorityLevel ?? 999);
@@ -487,6 +523,28 @@ export function finalizeSourcesForResponse(
       );
     })
     .slice(0, maxItems);
+}
+
+export function finalizeSourcesForResponse(
+  rawSources = [],
+  {
+    maxItems = MAX_VISIBLE_SOURCES,
+    supersessionResult = null,
+    requireClickable = true
+  } = {}
+) {
+  const combinedDocs = rawSources.map((item) =>
+    item && typeof item === "object" ? item : {}
+  );
+
+  const effectiveSupersessionResult =
+    supersessionResult || applySupersessionFilter(combinedDocs);
+
+  return filterVisibleSources(rawSources, {
+    maxItems,
+    supersessionResult: effectiveSupersessionResult,
+    requireClickable
+  });
 }
 
 export function classifyQuestion(question = "") {
