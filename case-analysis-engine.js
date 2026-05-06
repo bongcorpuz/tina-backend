@@ -3,7 +3,11 @@
 import {
   rerankByHierarchy,
   selectTopLegalBases,
-  detectHierarchyConflict
+  detectHierarchyConflict,
+  resolveCourtOverride,
+  isGenuineConflict,
+  getAuthorityTypeForDoc,
+  getAuthorityLevelForDoc
 } from "./authority-engine.js";
 import { reconcileDoctrine } from "./doctrinal-engine.js";
 import { applySupersessionFilter } from "./supersession-engine.js";
@@ -38,6 +42,7 @@ function getAuthorityType(doc = {}) {
     doc.authorityType ||
     doc.authority_type ||
     doc.metadata?.authorityType ||
+    getAuthorityTypeForDoc(doc) ||
     "UNKNOWN"
   );
 }
@@ -47,6 +52,7 @@ function getAuthorityLevel(doc = {}) {
     doc.authorityLevel ??
       doc.authority_level ??
       doc.metadata?.authorityLevel ??
+      getAuthorityLevelForDoc(doc) ??
       99
   );
 }
@@ -70,7 +76,8 @@ function buildDisplaySource(doc = {}) {
   return {
     source: getDocPath(doc),
     authorityType: getAuthorityType(doc),
-    authorityLevel: getAuthorityLevel(doc)
+    authorityLevel: getAuthorityLevel(doc),
+    overrideApplied: Boolean(doc.overrideApplied || false)
   };
 }
 
@@ -131,8 +138,13 @@ export function detectCaseAnalysisIntent(question = "") {
   const isGenericExplain = genericTaxExplainSignals.some((token) => q.includes(token));
 
   return {
-    isCaseAnalysis: !isGenericExplain && (hasStrongCaseSignal || hasCaseReferenceSignal),
-    confidence: hasStrongCaseSignal ? "high" : hasCaseReferenceSignal ? "medium" : "low"
+    isCaseAnalysis:
+      !isGenericExplain && (hasStrongCaseSignal || hasCaseReferenceSignal),
+    confidence: hasStrongCaseSignal
+      ? "high"
+      : hasCaseReferenceSignal
+        ? "medium"
+        : "low"
   };
 }
 
@@ -225,6 +237,68 @@ function selectRelevantBIRAuthorities(results = [], limit = 3) {
     .slice(0, limit);
 }
 
+function filterOverriddenBirDocs(caseDocs = [], birDocs = []) {
+  if (!caseDocs.length || !birDocs.length) {
+    return birDocs;
+  }
+
+  return birDocs.filter((birDoc) => {
+    for (const caseDoc of caseDocs) {
+      if (!isGenuineConflict(caseDoc, birDoc)) {
+        continue;
+      }
+
+      const override = resolveCourtOverride(caseDoc, birDoc);
+      if (
+        override?.overrideApplies &&
+        override.overriddenSource === birDoc
+      ) {
+        return false;
+      }
+    }
+
+    return true;
+  });
+}
+
+function buildCourtOverrideAudit(caseDocs = [], birDocs = []) {
+  const records = [];
+
+  for (const caseDoc of caseDocs) {
+    for (const birDoc of birDocs) {
+      if (!isGenuineConflict(caseDoc, birDoc)) {
+        continue;
+      }
+
+      const override = resolveCourtOverride(caseDoc, birDoc);
+      if (override?.overrideApplies) {
+        records.push({
+          controllingAuthority: override.winningAuthority || null,
+          controllingSource: getDocPath(override.winningSource || {}),
+          overriddenAuthority: override.overriddenAuthority || null,
+          overriddenSource: getDocPath(override.overriddenSource || {}),
+          reason: override.reason || "Court override applied."
+        });
+      }
+    }
+  }
+
+  const seen = new Set();
+
+  return records.filter((item) => {
+    const key = [
+      item.controllingAuthority,
+      item.controllingSource,
+      item.overriddenAuthority,
+      item.overriddenSource
+    ].join("|");
+
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
 function extractCaseTitle(doc = {}) {
   const candidates = [
     doc.metadata?.documentTitle,
@@ -246,7 +320,8 @@ function buildCasePrompt({
   question = "",
   strictContext = "",
   topLegalBases = [],
-  hierarchyConflict = null
+  hierarchyConflict = null,
+  overrideAudit = []
 }) {
   const legalBasesText =
     topLegalBases.length > 0
@@ -266,11 +341,30 @@ function buildCasePrompt({
           : null,
         hierarchyConflict.reason ? `Reason: ${hierarchyConflict.reason}` : null,
         hierarchyConflict.sourceA ? `Source A: ${hierarchyConflict.sourceA}` : null,
-        hierarchyConflict.sourceB ? `Source B: ${hierarchyConflict.sourceB}` : null
+        hierarchyConflict.sourceB ? `Source B: ${hierarchyConflict.sourceB}` : null,
+        hierarchyConflict.overrideApplied !== undefined
+          ? `Court Override Applied: ${hierarchyConflict.overrideApplied ? "YES" : "NO"}`
+          : null
       ]
           .filter(Boolean)
           .join("\n")
     : "Conflict Detected: NO";
+
+  const overrideText = overrideAudit.length
+    ? overrideAudit
+        .map(
+          (item, index) =>
+            [
+              `Override ${index + 1}:`,
+              `Controlling Authority: ${item.controllingAuthority || "Unknown"}`,
+              `Controlling Source: ${item.controllingSource || "Unknown"}`,
+              `Overridden Authority: ${item.overriddenAuthority || "Unknown"}`,
+              `Overridden Source: ${item.overriddenSource || "Unknown"}`,
+              `Reason: ${item.reason || "Court override applied."}`
+            ].join("\n")
+        )
+        .join("\n\n")
+    : "No court override audit records.";
 
   return `
 You are TINA, a Philippine tax researcher, tax analyst, and legal researcher.
@@ -281,9 +375,10 @@ STRICT RULES:
 3. If the context is insufficient for a proper case breakdown, say so clearly.
 4. Follow this authority order:
    Constitution > Statute / NIRC / Republic Act > Treaty > Supreme Court > CTA En Banc > Court of Appeals > CTA Division > RR > RMC > RMO > RAMO > BIR Ruling > LGU > Secondary.
-5. If a BIR issuance conflicts with a Supreme Court or CTA En Banc decision, the court decision prevails.
-6. Never use vague conflict language.
-7. Never mention ChatGPT.
+5. If a BIR issuance conflicts with a Supreme Court, CTA En Banc, Court of Appeals, or CTA Division decision, the court decision prevails.
+6. Only flag conflicts for genuine legal contradictions. Do not flag minor wording differences, date differences, or scope differences as conflicts.
+7. Never use vague conflict language.
+8. Never mention ChatGPT.
 
 REQUIRED OUTPUT FORMAT:
 
@@ -320,6 +415,9 @@ ${legalBasesText}
 CONFLICT STATUS:
 ${conflictText}
 
+COURT OVERRIDE AUDIT:
+${overrideText}
+
 CONTEXT:
 ${strictContext}
 `.trim();
@@ -332,18 +430,25 @@ export async function generateCaseAnalysisAnswer({
   model = process.env.OPENAI_MODEL || "gpt-4o-mini"
 }) {
   const reranked = rerankByHierarchy(retrievedResults, question);
-  const { activeDocs } = applySupersessionFilter(reranked);
+  const supersessionResult = applySupersessionFilter(reranked);
+  const activeDocs =
+    supersessionResult?.activeDocs?.length > 0
+      ? supersessionResult.activeDocs
+      : reranked;
 
   const caseDocs = selectTopCaseAuthorities(activeDocs, question, 4);
-  const birDocs = selectRelevantBIRAuthorities(activeDocs, 3);
+  const rawBirDocs = selectRelevantBIRAuthorities(activeDocs, 3);
+  const birDocs = filterOverriddenBirDocs(caseDocs, rawBirDocs);
+
   const doctrinalReview = reconcileDoctrine({
-    rankedDocs: caseDocs,
-    maxDocs: 4
+    rankedDocs: [...caseDocs, ...birDocs],
+    maxDocs: 5
   });
 
   const conflictDocs = [...caseDocs, ...birDocs];
   const hierarchyConflict = detectHierarchyConflict(conflictDocs.slice(0, 5));
   const topLegalBases = selectTopLegalBases(conflictDocs, 3);
+  const overrideAudit = buildCourtOverrideAudit(caseDocs, rawBirDocs);
 
   if (caseDocs.length === 0) {
     return {
@@ -352,9 +457,12 @@ export async function generateCaseAnalysisAnswer({
       mode: "CASE_ANALYSIS",
       sourcesUsed: [],
       caseDocs: [],
+      birDocs: [],
       validation: null,
       doctrinalReview,
-      hierarchyConflict
+      hierarchyConflict,
+      overrideAudit,
+      supersessionResult
     };
   }
 
@@ -385,7 +493,8 @@ export async function generateCaseAnalysisAnswer({
     question,
     strictContext,
     topLegalBases,
-    hierarchyConflict
+    hierarchyConflict,
+    overrideAudit
   });
 
   const response = await openai.chat.completions.create({
@@ -435,7 +544,9 @@ export async function generateCaseAnalysisAnswer({
     birDocs,
     validation,
     doctrinalReview,
-    hierarchyConflict
+    hierarchyConflict,
+    overrideAudit,
+    supersessionResult
   };
 }
 
@@ -457,7 +568,9 @@ export async function maybeGenerateCaseAnalysisAnswer({
       birDocs: [],
       validation: null,
       doctrinalReview: null,
-      hierarchyConflict: null
+      hierarchyConflict: null,
+      overrideAudit: [],
+      supersessionResult: null
     };
   }
 
