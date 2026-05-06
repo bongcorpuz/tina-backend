@@ -73,14 +73,6 @@ import {
 } from "./legal-validation-engine.js";
 
 import { maybeGenerateProvisionCitationAnswer } from "./provision-citation-engine.js";
-
-import {
-  formatLegalBasisBlock,
-  buildConflictFlagText,
-  buildSupportingRulesText,
-  ensureStructuredAnswerSections
-} from "./citation-formatting-engine.js";
-
 import { maybeGenerateCaseAnalysisAnswer } from "./case-analysis-engine.js";
 import { maybeGenerateDoctrineAnswer } from "./doctrine-tagging-engine.js";
 
@@ -89,6 +81,11 @@ import {
   buildNamedLawSearchQueries,
   filterDocsForNamedLaw
 } from "./named-law-engine.js";
+
+import {
+  buildFinalCompliantAnswer,
+  sanitizeDraftAnswer
+} from "./final-answer-compliance.js";
 
 import {
   MAX_VISIBLE_SOURCES,
@@ -101,7 +98,6 @@ import {
   classifyQuestion,
   detectIssuanceQuery,
   shouldHideSourceFromUser,
-  isStructuredAnswer,
   stripTrailingSourceSection
 } from "./ask-helpers.js";
 
@@ -133,54 +129,6 @@ function normalizeLooseText(value = "") {
     .replace(/[^\w\s/-]+/g, " ")
     .replace(/\s+/g, " ")
     .trim();
-}
-
-function hardStripSourceLeakage(text = "") {
-  return String(text || "")
-    .replace(/\n+\s*6\.\s*SOURCES[\s\S]*$/i, "")
-    .replace(/\n+\s*6\.\s*SOURCES USED[\s\S]*$/i, "")
-    .replace(/\n+\s*SOURCES USED[\s\S]*$/i, "")
-    .replace(/\n+\s*Sources:\s*[\s\S]*$/i, "")
-    .replace(/\n+\s*Source:\s*[\s\S]*$/i, "")
-    .replace(/\n+\s*References:\s*[\s\S]*$/i, "")
-    .replace(/\n+\s*See clickable sources below\.\s*$/i, "")
-    .replace(/\n+\s*No clickable sources available\.\s*$/i, "")
-    .trim();
-}
-
-function sanitizeConflictFlagSection(text = "") {
-  const value = String(text || "").trim();
-  if (!value) return value;
-
-  const hasConflictSection = /\b5\.\s*CONFLICT FLAG\b/i.test(value);
-  if (!hasConflictSection) {
-    return value;
-  }
-
-  const vagueYesPatterns = [
-    /Conflict Detected:\s*YES[\s\S]*secondary sources may not fully align/i,
-    /Conflict Detected:\s*YES[\s\S]*higher authority prevails/i,
-    /Conflict Detected:\s*YES[\s\S]*subordinate/i,
-    /Conflict Detected:\s*YES[\s\S]*may not fully align/i
-  ];
-
-  const hasSpecificConflictCitations =
-    /Source A:/i.test(value) &&
-    /Source B:/i.test(value) &&
-    /(Section|Sec\.?|Item|Article)\s+/i.test(value);
-
-  const shouldForceNoConflict =
-    !hasSpecificConflictCitations &&
-    vagueYesPatterns.some((pattern) => pattern.test(value));
-
-  if (!shouldForceNoConflict) {
-    return value;
-  }
-
-  return value.replace(
-    /\b5\.\s*CONFLICT FLAG\b[\s\S]*?(?=\n\s*\d+\.\s*[A-Z][A-Z ]+\b|$)/i,
-    "5. CONFLICT FLAG\nConflict Detected: NO"
-  );
 }
 
 function mergeRetrievalResults(retrievals = []) {
@@ -341,9 +289,7 @@ function buildAnswerAnchors({
       normalizeLooseText(`${issuance.type}-${issuance.number}-${issuance.year}`)
     );
     anchors.add(
-      normalizeLooseText(
-        `${issuance.type} no ${issuance.number}-${issuance.year}`
-      )
+      normalizeLooseText(`${issuance.type} no ${issuance.number}-${issuance.year}`)
     );
   }
 
@@ -423,6 +369,38 @@ function selectGroundedDisplayableDocs(displayableDocs = [], options = {}) {
   });
 
   return displayableDocs.filter((doc) => docMatchesAnchors(doc, anchors));
+}
+
+function buildComplianceInsight({
+  issuance = null,
+  questionType = "",
+  namedLawDetection = null
+}) {
+  if (issuance || questionType === "issuance") {
+    return "Use the cited issuance and verify the latest amended or superseding BIR issuance before relying on the rule operationally.";
+  }
+
+  if (namedLawDetection?.matched) {
+    return "For named-law questions, rely first on the exact statute and its IRR before using secondary support.";
+  }
+
+  return "Apply the higher-authority rule first and use lower-authority material only as support.";
+}
+
+function buildFallbackComplianceAnswer({
+  fallbackText,
+  professionalInsight
+}) {
+  return buildFinalCompliantAnswer({
+    draftAnswer: fallbackText,
+    fallbackAnswer: fallbackText,
+    directAnswer: fallbackText,
+    legalBasisDocs: [],
+    sourcesUsed: [],
+    conflicts: [],
+    hierarchyConflict: null,
+    professionalInsight
+  });
 }
 
 export function createAskHandler({ supabase, openai }) {
@@ -1144,14 +1122,11 @@ Quick Recall:
       if (pendingQuiz && !hasActiveAssessmentMode) {
         try {
           await clearPendingQuizAttempts(userId, conversationId || null);
-          console.log(
-            "Cleared stale pending quiz because no active assessment mode exists.",
-            {
-              userId,
-              conversationId: conversationId || null,
-              pendingQuizId: pendingQuiz.id || null
-            }
-          );
+          console.log("Cleared stale pending quiz because no active assessment mode exists.", {
+            userId,
+            conversationId: conversationId || null,
+            pendingQuizId: pendingQuiz.id || null
+          });
         } catch (clearError) {
           console.error("Failed to clear stale pending quiz:", clearError.message);
         }
@@ -1813,8 +1788,8 @@ Quick Recall:
           }));
       }
 
-      preliminaryAnswer = sanitizeConflictFlagSection(
-        hardStripSourceLeakage(stripTrailingSourceSection(preliminaryAnswer))
+      preliminaryAnswer = sanitizeDraftAnswer(
+        stripTrailingSourceSection(preliminaryAnswer || "")
       );
 
       const groundedDisplayableDocs = selectGroundedDisplayableDocs(
@@ -1977,8 +1952,14 @@ Quick Recall:
         });
       }
 
+      const complianceInsight = buildComplianceInsight({
+        issuance,
+        questionType,
+        namedLawDetection
+      });
+
       if (shouldFallback) {
-        const answerText =
+        const fallbackText =
           namedLawDetection.matched && namedLawDetection.bestMatch
             ? buildNamedLawFallbackText(namedLawDetection.bestMatch)
             : issuance || questionType === "issuance"
@@ -1988,6 +1969,11 @@ Quick Recall:
                   memoryContext,
                   fallbackReason
                 );
+
+        const answerText = buildFallbackComplianceAnswer({
+          fallbackText,
+          professionalInsight: complianceInsight
+        });
 
         await saveAllMemory(answerText, [], []);
 
@@ -2040,33 +2026,16 @@ Quick Recall:
       else confidence = "LOW";
 
       const topLegalBases = selectTopLegalBases(finalDisplayableDocs, 2);
-      const legalBasisText = formatLegalBasisBlock(topLegalBases);
-      const supportingRulesText = buildSupportingRulesText({
-        topLegalBases,
-        extraSources: sourcesUsed
+
+      const answerText = buildFinalCompliantAnswer({
+        draftAnswer: preliminaryAnswer || "",
+        fallbackAnswer: buildNoSourceReply(),
+        legalBasisDocs: topLegalBases,
+        sourcesUsed,
+        conflicts: displayableConflicts,
+        hierarchyConflict,
+        professionalInsight: complianceInsight
       });
-      const conflictFlagText = buildConflictFlagText(hierarchyConflict);
-
-      let answerText = preliminaryAnswer || buildNoSourceReply();
-
-      if (!isStructuredAnswer(answerText)) {
-        answerText = ensureStructuredAnswerSections({
-          directAnswer: preliminaryAnswer || buildNoSourceReply(),
-          legalBasis: legalBasisText,
-          supportingRules: supportingRulesText,
-          professionalInsight:
-            issuance || questionType === "issuance"
-              ? "Use the cited issuance and verify the latest amended or superseding BIR issuance before relying on the rule operationally."
-              : namedLawDetection.matched
-                ? "For named-law questions, rely first on the exact statute and its IRR before using secondary support."
-                : "Apply the higher-authority rule first and use lower-authority material only as support.",
-          conflictFlag: conflictFlagText
-        });
-      }
-
-      answerText = sanitizeConflictFlagSection(
-        hardStripSourceLeakage(stripTrailingSourceSection(answerText))
-      );
 
       await saveAllMemory(answerText, sourcesUsed, []);
 
