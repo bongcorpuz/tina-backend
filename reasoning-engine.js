@@ -5,7 +5,12 @@ import {
   AUTHORITY_LABEL,
   CONTROLLING_PRECEDENCE,
   normalizeLegalReference,
-  classifyAuthorityFromDocument
+  classifyAuthorityFromDocument,
+  resolveCourtOverride,
+  isGenuineConflict,
+  getAuthorityTypeForDoc,
+  getAuthorityLevelForDoc,
+  getControllingPrecedenceForDoc
 } from "./authority-engine.js";
 
 function safeString(value) {
@@ -54,6 +59,7 @@ function getDocPath(doc = {}) {
   return safeString(
     doc.metadata?.path ||
       doc.path ||
+      doc.source_path ||
       doc.metadata?.originalFileName ||
       doc.originalSource ||
       doc.source
@@ -86,6 +92,13 @@ function getAuthorityType(doc = {}) {
     doc.authority_type ||
     doc.authorityType ||
     doc.metadata?.authorityType ||
+    getAuthorityTypeForDoc({
+      source: doc.source || doc.originalSource || "",
+      originalSource: doc.originalSource || "",
+      path: getDocPath(doc),
+      metadata: doc.metadata || {},
+      text: doc.text || ""
+    }) ||
     classifyAuthorityFromDocument({
       fileName: doc.source || doc.originalSource || "",
       path: getDocPath(doc),
@@ -106,8 +119,11 @@ function inferAuthorityTier(doc = {}) {
     return Number(explicitTier);
   }
 
-  const authorityType = getAuthorityType(doc);
-  return AUTHORITY_LEVEL[authorityType] || 99;
+  return getAuthorityLevelForDoc({
+    ...doc,
+    path: getDocPath(doc),
+    metadata: doc.metadata || {}
+  });
 }
 
 function inferControllingPrecedence(doc = {}) {
@@ -120,8 +136,11 @@ function inferControllingPrecedence(doc = {}) {
     return Number(explicit);
   }
 
-  const authorityType = getAuthorityType(doc);
-  return CONTROLLING_PRECEDENCE[authorityType] || 99;
+  return getControllingPrecedenceForDoc({
+    ...doc,
+    path: getDocPath(doc),
+    metadata: doc.metadata || {}
+  });
 }
 
 function authorityWeight(tier = 99) {
@@ -138,21 +157,33 @@ function authorityWeight(tier = 99) {
 
 function inferAuthorityLabel(tier = 99, doc = {}) {
   const authorityType = getAuthorityType(doc);
-  return AUTHORITY_LABEL[authorityType] || AUTHORITY_LABEL.SECONDARY || "Unclassified Source";
+  return (
+    AUTHORITY_LABEL[authorityType] ||
+    AUTHORITY_LABEL.SECONDARY ||
+    "Unclassified Source"
+  );
 }
 
 function inferEvidenceType(doc = {}) {
   const authorityType = getAuthorityType(doc);
 
   if (
-    ["CONSTITUTION", "STATUTE", "TREATY", "SUPREME_COURT", "CTA_EN_BANC", "COURT_OF_APPEALS", "CTA_DIVISION"].includes(
-      authorityType
-    )
+    [
+      "CONSTITUTION",
+      "STATUTE",
+      "TREATY",
+      "SUPREME_COURT",
+      "CTA_EN_BANC",
+      "COURT_OF_APPEALS",
+      "CTA_DIVISION"
+    ].includes(authorityType)
   ) {
     return "primary";
   }
 
-  if (["RR", "RMC", "RMO", "RAMO", "BIR_RULING", "LGU"].includes(authorityType)) {
+  if (
+    ["RR", "RMC", "RMO", "RAMO", "BIR_RULING", "LGU"].includes(authorityType)
+  ) {
     return "interpretive";
   }
 
@@ -222,89 +253,24 @@ function classifyEvidenceTopic(doc = {}) {
   );
 }
 
-function lexicalTopicTokens(text = "") {
-  return lower(text)
-    .replace(/[^a-z0-9\s]/g, " ")
-    .split(/\s+/)
-    .filter((token) => token.length >= 4)
-    .filter(
-      (token) =>
-        ![
-          "shall",
-          "where",
-          "which",
-          "under",
-          "there",
-          "their",
-          "this",
-          "that",
-          "with",
-          "from",
-          "have",
-          "been",
-          "were",
-          "when",
-          "what",
-          "than",
-          "into",
-          "also",
-          "only"
-        ].includes(token)
-    );
-}
-
-function hasMeaningfulTopicOverlap(a = "", b = "") {
-  const setA = new Set(lexicalTopicTokens(a));
-  const setB = new Set(lexicalTopicTokens(b));
-
-  if (!setA.size || !setB.size) return false;
-
-  let hits = 0;
-  for (const token of setA) {
-    if (setB.has(token)) hits += 1;
-    if (hits >= 3) return true;
-  }
-
-  return false;
-}
-
-function looksContradictory(a = "", b = "") {
-  const x = lower(a);
-  const y = lower(b);
-
-  if (!x || !y || x === y) return false;
-
-  const negPatterns = [
-    /\bnot\b/,
-    /\bexcept\b/,
-    /\bunless\b/,
-    /\bexempt\b/,
-    /\bdisallowed\b/,
-    /\bprohibited\b/,
-    /\binvalid\b/,
-    /\bexcluded\b/,
-    /\bsubject to\b/
-  ];
-
-  const xNeg = negPatterns.some((pattern) => pattern.test(x));
-  const yNeg = negPatterns.some((pattern) => pattern.test(y));
-
-  if (xNeg === yNeg) return false;
-
-  return hasMeaningfulTopicOverlap(x, y);
-}
-
 function isCourtAuthority(authorityType = "") {
-  return ["SUPREME_COURT", "CTA_EN_BANC", "COURT_OF_APPEALS", "CTA_DIVISION"].includes(
-    authorityType
-  );
+  return [
+    "SUPREME_COURT",
+    "CTA_EN_BANC",
+    "COURT_OF_APPEALS",
+    "CTA_DIVISION"
+  ].includes(authorityType);
 }
 
 function isBIRAuthority(authorityType = "") {
   return ["RR", "RMC", "RMO", "RAMO", "BIR_RULING"].includes(authorityType);
 }
 
-function buildConflictResolutionBasis(aType = "", bType = "", controllingType = "") {
+function buildConflictResolutionBasis(aType = "", bType = "", override = null) {
+  if (override?.overrideApplies) {
+    return override.reason || "Court decision prevails over conflicting BIR issuance.";
+  }
+
   if (
     (isCourtAuthority(aType) && isBIRAuthority(bType)) ||
     (isCourtAuthority(bType) && isBIRAuthority(aType))
@@ -312,46 +278,70 @@ function buildConflictResolutionBasis(aType = "", bType = "", controllingType = 
     return "Court decision prevails over conflicting BIR issuance.";
   }
 
-  return `Prefer ${controllingType} based on higher controlling authority and verify effective dates.`;
+  return `Prefer ${
+    override?.winningAuthority || aType || bType || "higher authority"
+  } based on controlling authority hierarchy.`;
 }
 
 function compareEvidencePair(a, b) {
   const sameTopic = classifyEvidenceTopic(a) === classifyEvidenceTopic(b);
   if (!sameTopic) return null;
 
+  const docA = a.raw || a;
+  const docB = b.raw || b;
+
   const textA = lower(a.text || a.claim_text || "");
   const textB = lower(b.text || b.claim_text || "");
 
   if (!textA || !textB) return null;
   if (textA === textB) return null;
-  if (!looksContradictory(textA, textB)) return null;
 
-  const aType = getAuthorityType(a.raw || a);
-  const bType = getAuthorityType(b.raw || b);
+  if (!isGenuineConflict(docA, docB)) {
+    return null;
+  }
 
-  const aPrecedence = inferControllingPrecedence(a.raw || a);
-  const bPrecedence = inferControllingPrecedence(b.raw || b);
+  const aType = getAuthorityType(docA);
+  const bType = getAuthorityType(docB);
 
-  const preferred = aPrecedence <= bPrecedence ? a : b;
-  const controllingType = aPrecedence <= bPrecedence ? aType : bType;
+  const override = resolveCourtOverride(docA, docB);
+  const preferred = override?.winningSource
+    ? override.winningSource === docA
+      ? a
+      : b
+    : inferControllingPrecedence(docA) <= inferControllingPrecedence(docB)
+      ? a
+      : b;
+
+  const overridden = preferred === a ? b : a;
 
   return {
     conflict_topic: classifyEvidenceTopic(a),
-    source_a_path: getDocPath(a.raw || a),
-    source_b_path: getDocPath(b.raw || b),
+    source_a_path: getDocPath(docA),
+    source_b_path: getDocPath(docB),
     source_a_claim: safeString(a.text || a.claim_text).slice(0, 500),
     source_b_claim: safeString(b.text || b.claim_text).slice(0, 500),
     source_a_type: aType,
     source_b_type: bType,
     preferred_source_path: getDocPath(preferred.raw || preferred),
-    controlling_authority: controllingType,
-    conflict_reason:
-      isCourtAuthority(aType) && isBIRAuthority(bType)
-        ? "Potential conflict detected between court doctrine and BIR issuance."
-        : isCourtAuthority(bType) && isBIRAuthority(aType)
-          ? "Potential conflict detected between BIR issuance and court doctrine."
-          : "Potential contradiction detected from opposing rule language.",
-    resolution_basis: buildConflictResolutionBasis(aType, bType, controllingType)
+    overridden_source_path: getDocPath(overridden.raw || overridden),
+    controlling_authority:
+      override?.winningAuthority || getAuthorityType(preferred.raw || preferred),
+    overridden_authority:
+      override?.overriddenAuthority || getAuthorityType(overridden.raw || overridden),
+    override_applied: Boolean(override?.overrideApplies),
+    conflict_reason: override?.reason
+      ? override.reason
+      : "Genuine contradiction detected between sources on the same issue.",
+    resolution_basis: buildConflictResolutionBasis(aType, bType, override),
+    audit_record: override
+      ? {
+          overrideApplied: Boolean(override.overrideApplies),
+          winningAuthority: override.winningAuthority || null,
+          overriddenAuthority: override.overriddenAuthority || null,
+          winningSource: getDocPath(override.winningSource || {}),
+          overriddenSource: getDocPath(override.overriddenSource || {})
+        }
+      : null
   };
 }
 
@@ -392,7 +382,12 @@ export async function resolveExactCitation(supabase, query) {
 
   const sourceOrClauses = candidateStrings
     .map((value) => `source.ilike.%${value}%`)
-    .concat(candidateStrings.map((value) => `path.ilike.%${value}%`));
+    .concat(candidateStrings.map((value) => `path.ilike.%${value}%`))
+    .concat(
+      candidateStrings.map(
+        (value) => `normalized_reference.ilike.%${normalizeForMatch(value)}%`
+      )
+    );
 
   const { data, error } = await supabase
     .from("tina_vector_store")
@@ -415,6 +410,7 @@ export async function resolveExactCitation(supabase, query) {
       doc.metadata?.originalFileName,
       doc.metadata?.path,
       doc.normalizedReference,
+      doc.normalized_reference,
       doc.metadata?.normalizedReference,
       ...(doc.normalizedAliases || []),
       ...(doc.metadata?.normalizedAliases || [])
@@ -428,10 +424,17 @@ export async function resolveExactCitation(supabase, query) {
       .some((candidate) => haystack.includes(candidate));
 
     const normalizedReference = normalizeForMatch(
-      doc.normalizedReference || doc.metadata?.normalizedReference || ""
+      doc.normalizedReference ||
+        doc.normalized_reference ||
+        doc.metadata?.normalizedReference ||
+        ""
     );
 
-    return aliasHit || (normalizedNeedle && normalizedReference.includes(normalizeForMatch(normalizedNeedle)));
+    return (
+      aliasHit ||
+      (normalizedNeedle &&
+        normalizedReference.includes(normalizeForMatch(normalizedNeedle)))
+    );
   });
 
   return {
@@ -481,7 +484,9 @@ export async function hybridRetrieve({
 
   let keywordDocs = [];
   {
-    const tokens = tokenize(cleanQuery).filter((token) => token.length >= 3).slice(0, 8);
+    const tokens = tokenize(cleanQuery)
+      .filter((token) => token.length >= 3)
+      .slice(0, 8);
 
     if (tokens.length) {
       const orClause = tokens.map((token) => `text.ilike.%${token}%`).join(",");
@@ -561,7 +566,10 @@ export function normalizeRetrievedEvidence(docs = []) {
   return docs.map((doc) => {
     const authorityTier = inferAuthorityTier(doc);
     const authorityType = getAuthorityType(doc);
-    const rawScore = safeNumber(doc.combined_score || doc.score || doc.keyword_score || 0, 0);
+    const rawScore = safeNumber(
+      doc.combined_score || doc.score || doc.keyword_score || 0,
+      0
+    );
 
     return {
       id: buildDocIdentity(doc),
@@ -570,7 +578,9 @@ export function normalizeRetrievedEvidence(docs = []) {
       text: safeString(doc.text),
       source_path: getDocPath(doc),
       source_title: getDocOriginalName(doc) || safeString(doc.source),
-      section_label: safeString(doc.metadata?.sectionLabel || doc.metadata?.heading || ""),
+      section_label: safeString(
+        doc.metadata?.sectionLabel || doc.metadata?.heading || ""
+      ),
       authority_tier: authorityTier,
       authority_type: authorityType,
       authority_label: inferAuthorityLabel(authorityTier, doc),
@@ -602,7 +612,9 @@ export function detectEvidenceConflicts(evidence = []) {
         conflict.conflict_topic,
         conflict.source_a_path,
         conflict.source_b_path,
-        conflict.preferred_source_path
+        conflict.preferred_source_path,
+        conflict.overridden_source_path,
+        conflict.controlling_authority
       ].join("|")
   );
 }
@@ -619,7 +631,8 @@ export function rankEvidenceByAuthority(evidence = []) {
     const scoreDiff = safeNumber(b.score, 0) - safeNumber(a.score, 0);
     if (scoreDiff !== 0) return scoreDiff;
 
-    const tierDiff = safeNumber(a.authority_tier, 99) - safeNumber(b.authority_tier, 99);
+    const tierDiff =
+      safeNumber(a.authority_tier, 99) - safeNumber(b.authority_tier, 99);
     if (tierDiff !== 0) return tierDiff;
 
     return safeString(a.source_path).localeCompare(safeString(b.source_path));
@@ -788,8 +801,16 @@ ${
             `Source B: ${item.source_b_path || "N/A"} (${item.source_b_type || "Unknown"})`,
             `Reason: ${item.conflict_reason || "Potential contradiction"}`,
             `Preferred Source: ${item.preferred_source_path || "N/A"}`,
+            item.overridden_source_path
+              ? `Overridden Source: ${item.overridden_source_path}`
+              : null,
+            item.override_applied !== undefined
+              ? `Court Override Applied: ${item.override_applied ? "YES" : "NO"}`
+              : null,
             `Resolution Basis: ${item.resolution_basis || "Prefer higher authority"}`
-          ].join("\n")
+          ]
+            .filter(Boolean)
+            .join("\n")
         )
         .join("\n\n")
     : "No explicit conflicts detected."
@@ -890,17 +911,36 @@ export async function saveReasoningConflicts(supabase, payload) {
     return [];
   }
 
-  const rows = conflictItems.map((item) => ({
-    reasoning_run_id: reasoningRunId,
-    conflict_topic: safeString(item.conflict_topic || "") || null,
-    source_a_path: safeString(item.source_a_path || "") || null,
-    source_b_path: safeString(item.source_b_path || "") || null,
-    source_a_claim: safeString(item.source_a_claim || "") || null,
-    source_b_claim: safeString(item.source_b_claim || "") || null,
-    preferred_source_path: safeString(item.preferred_source_path || "") || null,
-    conflict_reason: safeString(item.conflict_reason || "") || null,
-    resolution_basis: safeString(item.resolution_basis || "") || null
-  }));
+  const rows = conflictItems.map((item) => {
+    const resolutionSuffix = [
+      item.override_applied !== undefined
+        ? `override_applied=${item.override_applied ? "yes" : "no"}`
+        : null,
+      item.controlling_authority
+        ? `controlling_authority=${item.controlling_authority}`
+        : null,
+      item.overridden_authority
+        ? `overridden_authority=${item.overridden_authority}`
+        : null
+    ]
+      .filter(Boolean)
+      .join(" | ");
+
+    return {
+      reasoning_run_id: reasoningRunId,
+      conflict_topic: safeString(item.conflict_topic || "") || null,
+      source_a_path: safeString(item.source_a_path || "") || null,
+      source_b_path: safeString(item.source_b_path || "") || null,
+      source_a_claim: safeString(item.source_a_claim || "") || null,
+      source_b_claim: safeString(item.source_b_claim || "") || null,
+      preferred_source_path:
+        safeString(item.preferred_source_path || "") || null,
+      conflict_reason: safeString(item.conflict_reason || "") || null,
+      resolution_basis:
+        safeString(item.resolution_basis || "") +
+          (resolutionSuffix ? ` | ${resolutionSuffix}` : "") || null
+    };
+  });
 
   const { data, error } = await supabase
     .from("tina_source_conflicts")
