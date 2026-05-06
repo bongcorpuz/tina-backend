@@ -12,12 +12,29 @@ function unique(values = []) {
   return [...new Set(values.filter(Boolean))];
 }
 
+function isSupabaseClient(value) {
+  return Boolean(value) && typeof value.from === "function";
+}
+
+function safeLimit(value, fallback = 8, max = 100) {
+  const num = Number(value);
+  if (!Number.isFinite(num)) return fallback;
+  return Math.max(1, Math.min(Math.floor(num), max));
+}
+
 /* =========================================================
    GET LAST TOPIC STATE
 ========================================================= */
 
 export async function getLastTopicState(supabase, userId, sessionId) {
-  if (!supabase) return null;
+  if (!isSupabaseClient(supabase)) {
+    throw new Error(
+      "getLastTopicState requires a valid Supabase client as the first argument."
+    );
+  }
+
+  const cleanUserId = normalizeText(userId);
+  const cleanSessionId = normalizeText(sessionId);
 
   let query = supabase
     .from("tina_topic_state")
@@ -25,12 +42,12 @@ export async function getLastTopicState(supabase, userId, sessionId) {
     .order("updated_at", { ascending: false })
     .limit(1);
 
-  if (sessionId) {
-    query = query.eq("session_id", sessionId);
+  if (cleanSessionId) {
+    query = query.eq("session_id", cleanSessionId);
   }
 
-  if (userId) {
-    query = query.eq("user_id", userId);
+  if (cleanUserId) {
+    query = query.eq("user_id", cleanUserId);
   }
 
   const { data, error } = await query.maybeSingle();
@@ -59,16 +76,19 @@ export async function saveTopicState(
     answer = ""
   }
 ) {
-  if (!supabase || !sessionId) return null;
+  if (!isSupabaseClient(supabase)) return null;
+
+  const cleanSessionId = normalizeText(sessionId);
+  if (!cleanSessionId) return null;
 
   const payload = {
-    user_id: userId || null,
-    session_id: sessionId,
-    current_topic: topic || "general",
-    current_subject: subject || question || "general",
-    current_tax_type: taxType || "general",
-    last_question: question || "",
-    last_answer: answer || "",
+    user_id: normalizeText(userId) || null,
+    session_id: cleanSessionId,
+    current_topic: normalizeText(topic) || "general",
+    current_subject: normalizeText(subject || question) || "general",
+    current_tax_type: normalizeText(taxType) || "general",
+    last_question: normalizeText(question),
+    last_answer: normalizeText(answer),
     updated_at: new Date().toISOString()
   };
 
@@ -103,19 +123,24 @@ export async function saveConversationMemory(
     source = "chat"
   }
 ) {
-  if (!supabase || !content || !role) return null;
+  if (!isSupabaseClient(supabase)) return null;
+
+  const cleanRole = normalizeText(role);
+  const cleanContent = normalizeText(content);
+
+  if (!cleanRole || !cleanContent) return null;
 
   const { data, error } = await supabase
     .from("tina_conversation_memory")
     .insert({
-      user_id: userId || null,
-      session_id: sessionId || null,
-      role,
-      content,
-      topic: topic || "general",
-      subject: subject || "general",
-      tax_type: taxType || "general",
-      source: source || "chat"
+      user_id: normalizeText(userId) || null,
+      session_id: normalizeText(sessionId) || null,
+      role: cleanRole,
+      content: cleanContent,
+      topic: normalizeText(topic) || "general",
+      subject: normalizeText(subject) || "general",
+      tax_type: normalizeText(taxType) || "general",
+      source: normalizeText(source) || "chat"
     })
     .select()
     .maybeSingle();
@@ -138,20 +163,23 @@ export async function getRecentConversationMemory(
   sessionId,
   limit = 8
 ) {
-  if (!supabase) return [];
+  if (!isSupabaseClient(supabase)) return [];
+
+  const cleanUserId = normalizeText(userId);
+  const cleanSessionId = normalizeText(sessionId);
 
   let query = supabase
     .from("tina_conversation_memory")
     .select("role, content, topic, subject, tax_type, created_at")
     .order("created_at", { ascending: false })
-    .limit(limit);
+    .limit(safeLimit(limit, 8, 100));
 
-  if (sessionId) {
-    query = query.eq("session_id", sessionId);
+  if (cleanSessionId) {
+    query = query.eq("session_id", cleanSessionId);
   }
 
-  if (userId) {
-    query = query.eq("user_id", userId);
+  if (cleanUserId) {
+    query = query.eq("user_id", cleanUserId);
   }
 
   const { data, error } = await query;
@@ -179,15 +207,20 @@ export async function saveLongTermMemory(
     source = "chat"
   }
 ) {
-  if (!supabase || !memoryKey || !memoryValue) return null;
+  if (!isSupabaseClient(supabase)) return null;
+
+  const cleanMemoryKey = normalizeText(memoryKey);
+  const cleanMemoryValue = normalizeText(memoryValue);
+
+  if (!cleanMemoryKey || !cleanMemoryValue) return null;
 
   const payload = {
-    user_id: userId || null,
-    memory_type: memoryType || "preference",
-    memory_key: memoryKey,
-    memory_value: memoryValue,
-    confidence,
-    source: source || "chat",
+    user_id: normalizeText(userId) || null,
+    memory_type: normalizeText(memoryType) || "preference",
+    memory_key: cleanMemoryKey,
+    memory_value: cleanMemoryValue,
+    confidence: Number.isFinite(Number(confidence)) ? Number(confidence) : 0.8,
+    source: normalizeText(source) || "chat",
     updated_at: new Date().toISOString()
   };
 
@@ -210,14 +243,17 @@ export async function saveLongTermMemory(
 ========================================================= */
 
 export async function getLongTermMemory(supabase, userId, limit = 10) {
-  if (!supabase || !userId) return [];
+  if (!isSupabaseClient(supabase)) return [];
+
+  const cleanUserId = normalizeText(userId);
+  if (!cleanUserId) return [];
 
   const { data, error } = await supabase
     .from("tina_long_term_memory")
     .select("memory_type, memory_key, memory_value, confidence, updated_at")
-    .eq("user_id", userId)
+    .eq("user_id", cleanUserId)
     .order("updated_at", { ascending: false })
-    .limit(limit);
+    .limit(safeLimit(limit, 10, 100));
 
   if (error) {
     console.error("getLongTermMemory error:", error.message);
@@ -229,7 +265,6 @@ export async function getLongTermMemory(supabase, userId, limit = 10) {
 
 /* =========================================================
    EXTRACT MEMORY HOOKS
-   Required by server.js
 ========================================================= */
 
 export function extractMemoryHooks(text = "") {
@@ -260,15 +295,27 @@ export function extractMemoryHooks(text = "") {
     hooks.push("INCOME_TAX");
   }
 
-  if (value.includes("create law") || value.includes("create act") || /\bra\s*11534\b/i.test(content)) {
+  if (
+    value.includes("create law") ||
+    value.includes("create act") ||
+    /\bra\s*11534\b/i.test(content)
+  ) {
     hooks.push("CREATE_LAW");
   }
 
-  if (value.includes("train law") || value.includes("train act") || /\bra\s*10963\b/i.test(content)) {
+  if (
+    value.includes("train law") ||
+    value.includes("train act") ||
+    /\bra\s*10963\b/i.test(content)
+  ) {
     hooks.push("TRAIN_LAW");
   }
 
-  if (value.includes("eopt") || value.includes("ease of paying taxes") || /\bra\s*11976\b/i.test(content)) {
+  if (
+    value.includes("eopt") ||
+    value.includes("ease of paying taxes") ||
+    /\bra\s*11976\b/i.test(content)
+  ) {
     hooks.push("EOPT");
   }
 
@@ -287,7 +334,10 @@ export function extractMemoryHooks(text = "") {
     hooks.push("RMC");
   }
 
-  if (/\brmo\s*[\d-]+/i.test(content) || value.includes("revenue memorandum order")) {
+  if (
+    /\brmo\s*[\d-]+/i.test(content) ||
+    value.includes("revenue memorandum order")
+  ) {
     hooks.push("RMO");
   }
 
@@ -341,17 +391,19 @@ export function extractMemoryHooks(text = "") {
 
 /* =========================================================
    SAVE MEMORY HOOKS
-   Required by server.js
 ========================================================= */
 
 export async function saveMemoryHooks(supabase, userId, hooks = []) {
-  if (!supabase || !userId || !Array.isArray(hooks) || hooks.length === 0) {
+  if (!isSupabaseClient(supabase)) return [];
+
+  const cleanUserId = normalizeText(userId);
+  if (!cleanUserId || !Array.isArray(hooks) || hooks.length === 0) {
     return [];
   }
 
-  const rows = unique(hooks).map((hook) => ({
-    user_id: String(userId),
-    hook: String(hook),
+  const rows = unique(hooks.map((hook) => normalizeText(hook))).map((hook) => ({
+    user_id: cleanUserId,
+    hook,
     created_at: new Date().toISOString()
   }));
 
@@ -373,15 +425,20 @@ export async function saveMemoryHooks(supabase, userId, hooks = []) {
 ========================================================= */
 
 export async function clearSessionMemory(supabase, userId, sessionId) {
-  if (!supabase || !sessionId) return false;
+  if (!isSupabaseClient(supabase)) return false;
+
+  const cleanSessionId = normalizeText(sessionId);
+  const cleanUserId = normalizeText(userId);
+
+  if (!cleanSessionId) return false;
 
   let query = supabase
     .from("tina_conversation_memory")
     .delete()
-    .eq("session_id", sessionId);
+    .eq("session_id", cleanSessionId);
 
-  if (userId) {
-    query = query.eq("user_id", userId);
+  if (cleanUserId) {
+    query = query.eq("user_id", cleanUserId);
   }
 
   const { error } = await query;
@@ -399,15 +456,20 @@ export async function clearSessionMemory(supabase, userId, sessionId) {
 ========================================================= */
 
 export async function clearTopicState(supabase, userId, sessionId) {
-  if (!supabase || !sessionId) return false;
+  if (!isSupabaseClient(supabase)) return false;
+
+  const cleanSessionId = normalizeText(sessionId);
+  const cleanUserId = normalizeText(userId);
+
+  if (!cleanSessionId) return false;
 
   let query = supabase
     .from("tina_topic_state")
     .delete()
-    .eq("session_id", sessionId);
+    .eq("session_id", cleanSessionId);
 
-  if (userId) {
-    query = query.eq("user_id", userId);
+  if (cleanUserId) {
+    query = query.eq("user_id", cleanUserId);
   }
 
   const { error } = await query;
@@ -425,7 +487,7 @@ export async function clearTopicState(supabase, userId, sessionId) {
 ========================================================= */
 
 export async function memoryHealthCheck(supabase) {
-  if (!supabase) {
+  if (!isSupabaseClient(supabase)) {
     return {
       ok: false,
       error: "Supabase client is required"
