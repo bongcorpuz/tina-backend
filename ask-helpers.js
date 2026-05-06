@@ -148,6 +148,24 @@ function lower(value = "") {
   return normalizeText(value).toLowerCase();
 }
 
+function compactSpaces(value = "") {
+  return normalizeText(value).replace(/\s+/g, " ");
+}
+
+function stripFileExtension(value = "") {
+  return String(value || "").replace(/\.(pdf|docx|doc|txt|csv|md|json)$/i, "");
+}
+
+function cleanDisplayTitle(value = "") {
+  return compactSpaces(
+    stripFileExtension(String(value || ""))
+      .replace(/[\\/]+/g, " ")
+      .replace(/[_]+/g, " ")
+      .replace(/\b(00_constitution|01_tax_code|02_revenue_regulations|03_rmc|04_rmo|04b_ramo|05_bir_rulings|05b_tax_treaties|06_court_cases|07_cpa_notes|08_review_materials)\b/gi, " ")
+      .replace(/\(\d+\)/g, " ")
+  );
+}
+
 function toSearchableText(source = {}) {
   return [
     getDocPath(source),
@@ -157,6 +175,7 @@ function toSearchableText(source = {}) {
     source.source,
     source.title,
     source.originalSource,
+    source.original_source,
     source.metadata?.path,
     source.metadata?.originalSource,
     source.metadata?.originalFileName,
@@ -252,6 +271,7 @@ export function getDocPath(doc = {}) {
       doc.metadata?.originalFileName ||
       doc.metadata?.originalSource ||
       doc.originalSource ||
+      doc.original_source ||
       doc.source ||
       doc.title ||
       ""
@@ -263,6 +283,7 @@ export function getDocOriginalName(doc = {}) {
     doc.metadata?.originalSource ||
       doc.metadata?.originalFileName ||
       doc.originalSource ||
+      doc.original_source ||
       doc.source ||
       doc.title ||
       ""
@@ -366,11 +387,13 @@ export function buildGoogleDriveLinks(doc = {}) {
 }
 
 function inferIssuanceNumber(item = {}) {
-  const haystack = normalizeText(
+  const haystack = compactSpaces(
     [
       item.title,
+      item.source_title,
       item.source,
       item.originalSource,
+      item.original_source,
       item.path,
       item.source_path,
       item.metadata?.path,
@@ -383,6 +406,7 @@ function inferIssuanceNumber(item = {}) {
 
   const patterns = [
     /\b(1987 Constitution)\b/i,
+    /\b(Republic Act No\.?\s*\d{4,6})\b/i,
     /\b(RA\s*\d{4,6})\b/i,
     /\b(RR\s*(?:No\.?)?\s*\d+\s*[-/]\s*\d{2,4})\b/i,
     /\b(RMC\s*(?:No\.?)?\s*\d+\s*[-/]\s*\d{2,4})\b/i,
@@ -397,7 +421,7 @@ function inferIssuanceNumber(item = {}) {
   for (const pattern of patterns) {
     const match = haystack.match(pattern);
     if (match) {
-      return match[1];
+      return compactSpaces(match[1]);
     }
   }
 
@@ -409,9 +433,13 @@ function buildDocKey(doc = {}) {
     doc.fileId ||
     doc.file_id ||
     doc.id ||
+    doc.metadata?.fileId ||
+    doc.metadata?.file_id ||
     doc.path ||
     doc.source_path ||
+    doc.metadata?.path ||
     doc.originalSource ||
+    doc.original_source ||
     doc.source ||
     doc.title ||
     JSON.stringify(doc)
@@ -423,13 +451,24 @@ export function buildSourceResponseItem(item = {}) {
   const path = getDocPath(item);
   const originalSource = getDocOriginalName(item);
   const tierInfo = getSourceTier(item);
+  const title =
+    cleanDisplayTitle(
+      item.title ||
+        item.source_title ||
+        item.metadata?.documentTitle ||
+        item.metadata?.originalFileName ||
+        originalSource ||
+        item.source ||
+        path
+    ) || "Untitled Source";
 
   return {
-    title: originalSource || item.title || item.source || "Untitled Source",
+    title,
     issuanceNumber: inferIssuanceNumber(item),
     source: item.source || originalSource || path || "Untitled Source",
     originalSource,
     path,
+    sourcePath: path,
     fileId: links.fileId,
     driveViewUrl: links.driveViewUrl,
     driveDownloadUrl: links.driveDownloadUrl,
@@ -483,6 +522,16 @@ export function uniqueSources(docs = []) {
     });
 }
 
+function isClickableSource(item = {}) {
+  return Boolean(
+    item.driveViewUrl ||
+      item.fileId ||
+      item.path ||
+      item.sourcePath ||
+      item.originalSource
+  );
+}
+
 export function filterVisibleSources(
   rawSources = [],
   {
@@ -503,7 +552,7 @@ export function filterVisibleSources(
       : item;
 
     if (shouldHideSourceFromUser(sourceToUse)) continue;
-    if (requireClickable && !sourceToUse.driveViewUrl) continue;
+    if (requireClickable && !isClickableSource(sourceToUse)) continue;
 
     visible.push(sourceToUse);
   }
