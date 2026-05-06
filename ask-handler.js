@@ -112,6 +112,7 @@ function buildDocKey(doc = {}) {
     doc.source_path ||
     doc.metadata?.path ||
     doc.originalSource ||
+    doc.original_source ||
     doc.metadata?.originalSource ||
     doc.source ||
     doc.title ||
@@ -127,9 +128,222 @@ function normalizeLooseText(value = "") {
     .replace(/\br\.?\s*a\.?\s*no\.?\s*/g, "ra ")
     .replace(/\br\.?\s*a\.?\s*/g, "ra ")
     .replace(/\bnational internal revenue code\b/g, "nirc")
-    .replace(/[^\w\s/-]+/g, " ")
+    .replace(/[^\w\s/%₱.,()/-]+/g, " ")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function getDocAuthorityType(doc = {}) {
+  return String(
+    doc.authorityType ||
+      doc.authority_type ||
+      doc.metadata?.authorityType ||
+      ""
+  )
+    .trim()
+    .toUpperCase();
+}
+
+function getDocAuthorityLevel(doc = {}) {
+  const value =
+    doc.authorityLevel ??
+    doc.authority_level ??
+    doc.metadata?.authorityLevel ??
+    99;
+
+  return Number.isFinite(Number(value)) ? Number(value) : 99;
+}
+
+function getDocScore(doc = {}) {
+  const value =
+    doc.namedLawScore ??
+    doc.finalScore ??
+    doc.combined_score ??
+    doc.score ??
+    0;
+
+  return Number.isFinite(Number(value)) ? Number(value) : 0;
+}
+
+function mergeUniqueDocs(docs = []) {
+  const results = [];
+  const seen = new Set();
+
+  for (const doc of docs) {
+    if (!doc) continue;
+
+    const key = buildDocKey(doc) || `doc-${results.length}`;
+    if (seen.has(key)) continue;
+
+    seen.add(key);
+    results.push(doc);
+  }
+
+  return results;
+}
+
+function buildDocHaystack(doc = {}) {
+  return normalizeLooseText(
+    [
+      doc.source,
+      doc.originalSource,
+      doc.original_source,
+      doc.path,
+      doc.source_path,
+      doc.title,
+      doc.text?.slice(0, 2500),
+      doc.metadata?.path,
+      doc.metadata?.originalSource,
+      doc.metadata?.originalFileName,
+      doc.metadata?.normalizedReference,
+      ...(doc.metadata?.normalizedAliases || []),
+      ...(doc.normalizedAliases || [])
+    ]
+      .filter(Boolean)
+      .join(" ")
+  );
+}
+
+function docHasNamedLawRaAnchor(doc = {}, namedLawDetection = null) {
+  const raNumber = namedLawDetection?.bestMatch?.republicActNumber;
+  if (!raNumber) return false;
+
+  const haystack = buildDocHaystack(doc);
+  return (
+    haystack.includes(`ra ${raNumber}`) ||
+    haystack.includes(`republic act ${raNumber}`) ||
+    haystack.includes(`republic act no ${raNumber}`)
+  );
+}
+
+function docHasNamedLawTitleAnchor(doc = {}, namedLawDetection = null) {
+  const bestMatch = namedLawDetection?.bestMatch;
+  if (!bestMatch) return false;
+
+  const haystack = buildDocHaystack(doc);
+
+  if (
+    bestMatch.shortTitle &&
+    haystack.includes(normalizeLooseText(bestMatch.shortTitle))
+  ) {
+    return true;
+  }
+
+  if (
+    bestMatch.canonicalTitle &&
+    haystack.includes(normalizeLooseText(bestMatch.canonicalTitle))
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function docMatchesPreferredImplementingQuery(doc = {}, namedLawDetection = null) {
+  const bestMatch = namedLawDetection?.bestMatch;
+  if (!bestMatch) return false;
+
+  const haystack = buildDocHaystack(doc);
+  const queries = Array.isArray(bestMatch.preferredImplementingQueries)
+    ? bestMatch.preferredImplementingQueries
+    : [];
+
+  return queries.some((query) => {
+    const normalized = normalizeLooseText(query);
+    return normalized && haystack.includes(normalized);
+  });
+}
+
+function isNamedLawPrimaryStatute(doc = {}, namedLawDetection = null) {
+  return (
+    getDocAuthorityType(doc) === "STATUTE" &&
+    (docHasNamedLawRaAnchor(doc, namedLawDetection) ||
+      docHasNamedLawTitleAnchor(doc, namedLawDetection))
+  );
+}
+
+function isNamedLawImplementingRR(doc = {}, namedLawDetection = null) {
+  return (
+    getDocAuthorityType(doc) === "RR" &&
+    (docHasNamedLawRaAnchor(doc, namedLawDetection) ||
+      docHasNamedLawTitleAnchor(doc, namedLawDetection) ||
+      docMatchesPreferredImplementingQuery(doc, namedLawDetection))
+  );
+}
+
+function isNamedLawSupportingIssuance(doc = {}, namedLawDetection = null) {
+  const authorityType = getDocAuthorityType(doc);
+
+  return (
+    ["RMC", "RMO", "RAMO", "BIR_RULING"].includes(authorityType) &&
+    (docHasNamedLawRaAnchor(doc, namedLawDetection) ||
+      docHasNamedLawTitleAnchor(doc, namedLawDetection) ||
+      docMatchesPreferredImplementingQuery(doc, namedLawDetection))
+  );
+}
+
+function sortDocsForLegalBasis(docs = []) {
+  return [...docs].sort((a, b) => {
+    const levelDiff = getDocAuthorityLevel(a) - getDocAuthorityLevel(b);
+    if (levelDiff !== 0) return levelDiff;
+
+    return getDocScore(b) - getDocScore(a);
+  });
+}
+
+function selectNamedLawPriorityDocs(
+  docs = [],
+  namedLawDetection = null,
+  maxDocs = 5
+) {
+  if (!namedLawDetection?.matched || !namedLawDetection?.bestMatch) {
+    return sortDocsForLegalBasis(docs).slice(0, maxDocs);
+  }
+
+  const uniqueDocs = mergeUniqueDocs(docs);
+
+  const primaryStatutes = sortDocsForLegalBasis(
+    uniqueDocs.filter((doc) => isNamedLawPrimaryStatute(doc, namedLawDetection))
+  );
+
+  const implementingRRs = sortDocsForLegalBasis(
+    uniqueDocs.filter(
+      (doc) =>
+        !primaryStatutes.includes(doc) &&
+        isNamedLawImplementingRR(doc, namedLawDetection)
+    )
+  );
+
+  const supportingIssuances = sortDocsForLegalBasis(
+    uniqueDocs.filter(
+      (doc) =>
+        !primaryStatutes.includes(doc) &&
+        !implementingRRs.includes(doc) &&
+        isNamedLawSupportingIssuance(doc, namedLawDetection)
+    )
+  );
+
+  const otherAnchoredDocs = sortDocsForLegalBasis(
+    uniqueDocs.filter(
+      (doc) =>
+        !primaryStatutes.includes(doc) &&
+        !implementingRRs.includes(doc) &&
+        !supportingIssuances.includes(doc) &&
+        (docHasNamedLawRaAnchor(doc, namedLawDetection) ||
+          docHasNamedLawTitleAnchor(doc, namedLawDetection))
+    )
+  );
+
+  return mergeUniqueDocs([
+    ...primaryStatutes,
+    ...implementingRRs,
+    ...supportingIssuances,
+    ...otherAnchoredDocs
+  ]).slice(0, maxDocs);
+}
+
+function hasNamedLawPrimaryBasis(docs = [], namedLawDetection = null) {
+  return docs.some((doc) => isNamedLawPrimaryStatute(doc, namedLawDetection));
 }
 
 function mergeRetrievalResults(retrievals = []) {
@@ -340,27 +554,6 @@ function buildAnswerAnchors({
   return [...anchors]
     .map((item) => item.trim())
     .filter((item) => item.length >= 4);
-}
-
-function buildDocHaystack(doc = {}) {
-  return normalizeLooseText(
-    [
-      doc.source,
-      doc.originalSource,
-      doc.path,
-      doc.source_path,
-      doc.title,
-      doc.text?.slice(0, 2500),
-      doc.metadata?.path,
-      doc.metadata?.originalSource,
-      doc.metadata?.originalFileName,
-      doc.metadata?.normalizedReference,
-      ...(doc.metadata?.normalizedAliases || []),
-      ...(doc.normalizedAliases || [])
-    ]
-      .filter(Boolean)
-      .join(" ")
-  );
 }
 
 function docMatchesAnchors(doc = {}, anchors = []) {
@@ -1625,6 +1818,14 @@ Quick Recall:
         (doc) => !shouldHideSourceFromUser(doc)
       );
 
+      const namedLawPriorityDocs = namedLawDetection.matched
+        ? selectNamedLawPriorityDocs(
+            displayableRankedDocs,
+            namedLawDetection,
+            Math.max(MAX_VISIBLE_SOURCES, 6)
+          )
+        : [];
+
       const doctrinalReview = reconcileDoctrine({
         rankedDocs: internalRankedDocs,
         maxDocs: 5
@@ -1790,7 +1991,9 @@ Quick Recall:
       } else if (doctrineModeResult.handled) {
         preliminaryAnswer = doctrineModeResult.answer || "";
       } else if (topEvidence.length > 0) {
-        const topLegalBasesForPrompt = selectTopLegalBases(displayableRankedDocs, 3);
+        const topLegalBasesForPrompt = namedLawDetection.matched
+          ? selectNamedLawPriorityDocs(displayableRankedDocs, namedLawDetection, 3)
+          : selectTopLegalBases(displayableRankedDocs, 3);
 
         const strictPrompt = buildStrictAnswerPrompt({
           hookMode: hookConfig?.mode || "ASK",
@@ -1858,7 +2061,13 @@ Quick Recall:
         }
       );
 
-      const finalDisplayableDocs = groundedDisplayableDocs;
+      const finalDisplayableDocs = namedLawDetection.matched
+        ? mergeUniqueDocs([
+            ...namedLawPriorityDocs,
+            ...groundedDisplayableDocs
+          ]).slice(0, Math.max(MAX_VISIBLE_SOURCES, 8))
+        : groundedDisplayableDocs;
+
       const finalVisibleSources = finalizeSourcesForResponse(finalDisplayableDocs, {
         maxItems: MAX_VISIBLE_SOURCES,
         supersessionResult
@@ -1873,6 +2082,10 @@ Quick Recall:
         topDisplayableEvidence
       );
 
+      const namedLawPrimaryVisible = namedLawDetection.matched
+        ? hasNamedLawPrimaryBasis(finalDisplayableDocs, namedLawDetection)
+        : false;
+
       const validation = validateEvidenceSufficiency({
         evidence: finalDisplayableDocs,
         claimSupportMap,
@@ -1885,7 +2098,7 @@ Quick Recall:
 
       const fallbackReason =
         namedLawDetection.matched &&
-        (!namedLawFiltered.primaryAuthorityFound || finalDisplayableDocs.length === 0) &&
+        (!namedLawFiltered.primaryAuthorityFound || !namedLawPrimaryVisible) &&
         namedLawDetection.bestMatch
           ? `No exact indexed primary source matched ${namedLawDetection.bestMatch.shortTitle || namedLawDetection.bestMatch.canonicalTitle}.`
           : !topEvidence.length
@@ -1894,6 +2107,7 @@ Quick Recall:
 
       const shouldFallback =
         (namedLawDetection.matched && !namedLawFiltered.primaryAuthorityFound) ||
+        (namedLawDetection.matched && !namedLawPrimaryVisible) ||
         (namedLawDetection.matched && finalDisplayableDocs.length === 0) ||
         (issuance && finalDisplayableDocs.length === 0) ||
         topEvidence.length === 0 ||
@@ -1962,7 +2176,11 @@ Quick Recall:
       }
 
       if (hookConfig.mode === "SOURCE_FINDER") {
-        const sourcesUsed = finalizeSourcesForResponse(finalDisplayableDocs, {
+        const sourceFinderDocs = namedLawDetection.matched
+          ? mergeUniqueDocs([...namedLawPriorityDocs, ...finalDisplayableDocs])
+          : finalDisplayableDocs;
+
+        const sourcesUsed = finalizeSourcesForResponse(sourceFinderDocs, {
           maxItems: MAX_VISIBLE_SOURCES,
           supersessionResult
         });
@@ -2112,7 +2330,9 @@ Quick Recall:
       else if (topTier <= 7) confidence = "LIMITED";
       else confidence = "LOW";
 
-      const topLegalBases = selectTopLegalBases(finalDisplayableDocs, 3);
+      const topLegalBases = namedLawDetection.matched
+        ? selectNamedLawPriorityDocs(finalDisplayableDocs, namedLawDetection, 3)
+        : selectTopLegalBases(finalDisplayableDocs, 3);
 
       const answerText = buildFinalCompliantAnswer({
         draftAnswer: preliminaryAnswer || "",
