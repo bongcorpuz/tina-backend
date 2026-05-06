@@ -1,12 +1,42 @@
+// FILE: learner-profile.js
+
 /* ================= TINA LEARNER PROFILE ENGINE ================= */
 
+function normalizeText(value = "") {
+  return String(value || "").trim();
+}
+
+function uniqueStrings(values = []) {
+  return [...new Set(values.map((item) => normalizeText(item)).filter(Boolean))];
+}
+
+function toSafeRatio(value, fallback = 0) {
+  const num = Number(value);
+  if (!Number.isFinite(num)) return fallback;
+  return Math.max(0, Math.min(1, num));
+}
+
+function toSafeInt(value, fallback = 0) {
+  const num = Number(value);
+  if (!Number.isFinite(num)) return fallback;
+  return Math.max(0, Math.floor(num));
+}
+
+function inferSkillLevel({ accuracyRate = 0, totalQuestions = 0 }) {
+  if (accuracyRate >= 0.85 && totalQuestions >= 20) return "cpale_ready";
+  if (accuracyRate >= 0.7 && totalQuestions >= 10) return "advanced";
+  if (accuracyRate >= 0.5 && totalQuestions >= 5) return "intermediate";
+  return "beginner";
+}
+
 export async function getOrCreateLearnerProfile(supabase, userId) {
-  if (!userId) return null;
+  const cleanUserId = normalizeText(userId);
+  if (!supabase || !cleanUserId) return null;
 
   const { data: existing, error: selectError } = await supabase
     .from("tina_learner_profiles")
     .select("*")
-    .eq("user_id", userId)
+    .eq("user_id", cleanUserId)
     .maybeSingle();
 
   if (selectError) {
@@ -19,7 +49,7 @@ export async function getOrCreateLearnerProfile(supabase, userId) {
   const { data, error } = await supabase
     .from("tina_learner_profiles")
     .insert({
-      user_id: userId,
+      user_id: cleanUserId,
       skill_level: "beginner",
       learning_goal: "CPALE",
       preferred_style: "reviewer"
@@ -43,36 +73,46 @@ export async function updateLearnerProfileStats(
     isCorrect
   }
 ) {
-  if (!userId) return null;
+  const cleanUserId = normalizeText(userId);
+  const cleanTopic = normalizeText(topic);
 
-  const profile = await getOrCreateLearnerProfile(supabase, userId);
+  if (!supabase || !cleanUserId) return null;
+
+  const profile = await getOrCreateLearnerProfile(supabase, cleanUserId);
   if (!profile) return null;
 
-  const totalQuestions = Number(profile.total_questions || 0) + 1;
-  const correctAnswers = Number(profile.correct_answers || 0) + (isCorrect ? 1 : 0);
-  const accuracyRate = totalQuestions > 0 ? correctAnswers / totalQuestions : 0;
+  const totalQuestions = toSafeInt(profile.total_questions, 0) + 1;
+  const correctAnswers =
+    toSafeInt(profile.correct_answers, 0) + (isCorrect ? 1 : 0);
+  const accuracyRate =
+    totalQuestions > 0 ? toSafeRatio(correctAnswers / totalQuestions, 0) : 0;
 
-  let skillLevel = profile.skill_level || "beginner";
-
-  if (accuracyRate >= 0.85 && totalQuestions >= 20) skillLevel = "cpale_ready";
-  else if (accuracyRate >= 0.7 && totalQuestions >= 10) skillLevel = "advanced";
-  else if (accuracyRate >= 0.5 && totalQuestions >= 5) skillLevel = "intermediate";
-  else skillLevel = "beginner";
+  const skillLevel = inferSkillLevel({
+    accuracyRate,
+    totalQuestions
+  });
 
   let weakTopics = Array.isArray(profile.weak_topics) ? profile.weak_topics : [];
   let strongTopics = Array.isArray(profile.strong_topics) ? profile.strong_topics : [];
 
-  if (topic) {
-    if (!isCorrect && !weakTopics.includes(topic)) {
-      weakTopics.push(topic);
+  weakTopics = uniqueStrings(weakTopics);
+  strongTopics = uniqueStrings(strongTopics);
+
+  if (cleanTopic) {
+    if (!isCorrect && !weakTopics.includes(cleanTopic)) {
+      weakTopics.push(cleanTopic);
     }
 
-    if (isCorrect && !strongTopics.includes(topic)) {
-      strongTopics.push(topic);
+    if (isCorrect && !strongTopics.includes(cleanTopic)) {
+      strongTopics.push(cleanTopic);
     }
 
     if (isCorrect) {
-      weakTopics = weakTopics.filter((t) => t !== topic);
+      weakTopics = weakTopics.filter((item) => item !== cleanTopic);
+    }
+
+    if (!isCorrect) {
+      strongTopics = strongTopics.filter((item) => item !== cleanTopic);
     }
   }
 
@@ -80,15 +120,15 @@ export async function updateLearnerProfileStats(
     .from("tina_learner_profiles")
     .update({
       skill_level: skillLevel,
-      weak_topics: weakTopics,
-      strong_topics: strongTopics,
+      weak_topics: uniqueStrings(weakTopics),
+      strong_topics: uniqueStrings(strongTopics),
       accuracy_rate: accuracyRate,
       total_questions: totalQuestions,
       correct_answers: correctAnswers,
-      last_reviewed_topic: topic || profile.last_reviewed_topic,
+      last_reviewed_topic: cleanTopic || profile.last_reviewed_topic,
       updated_at: new Date().toISOString()
     })
-    .eq("user_id", userId)
+    .eq("user_id", cleanUserId)
     .select()
     .single();
 
@@ -101,14 +141,18 @@ export async function updateLearnerProfileStats(
 }
 
 export async function getTopicMastery(supabase, userId, topic, subtopic = "") {
-  if (!userId || !topic) return null;
+  const cleanUserId = normalizeText(userId);
+  const cleanTopic = normalizeText(topic);
+  const cleanSubtopic = normalizeText(subtopic);
+
+  if (!supabase || !cleanUserId || !cleanTopic) return null;
 
   const { data, error } = await supabase
     .from("tina_topic_mastery")
     .select("*")
-    .eq("user_id", userId)
-    .eq("topic", topic)
-    .eq("subtopic", subtopic || "")
+    .eq("user_id", cleanUserId)
+    .eq("topic", cleanTopic)
+    .eq("subtopic", cleanSubtopic)
     .maybeSingle();
 
   if (error) {
@@ -128,17 +172,29 @@ export async function updateTopicMastery(
     isCorrect
   }
 ) {
-  if (!userId || !topic) return null;
+  const cleanUserId = normalizeText(userId);
+  const cleanTopic = normalizeText(topic);
+  const cleanSubtopic = normalizeText(subtopic);
 
-  const existing = await getTopicMastery(supabase, userId, topic, subtopic);
+  if (!supabase || !cleanUserId || !cleanTopic) return null;
 
-  const totalAttempts = Number(existing?.total_attempts || 0) + 1;
-  const correctAttempts = Number(existing?.correct_attempts || 0) + (isCorrect ? 1 : 0);
-  const wrongAttempts = Number(existing?.wrong_attempts || 0) + (!isCorrect ? 1 : 0);
+  const existing = await getTopicMastery(
+    supabase,
+    cleanUserId,
+    cleanTopic,
+    cleanSubtopic
+  );
 
-  const masteryScore = totalAttempts > 0 ? correctAttempts / totalAttempts : 0;
+  const totalAttempts = toSafeInt(existing?.total_attempts, 0) + 1;
+  const correctAttempts =
+    toSafeInt(existing?.correct_attempts, 0) + (isCorrect ? 1 : 0);
+  const wrongAttempts =
+    toSafeInt(existing?.wrong_attempts, 0) + (!isCorrect ? 1 : 0);
 
-  let difficultyLevel = Number(existing?.difficulty_level || 1);
+  const masteryScore =
+    totalAttempts > 0 ? toSafeRatio(correctAttempts / totalAttempts, 0) : 0;
+
+  let difficultyLevel = toSafeInt(existing?.difficulty_level, 1) || 1;
 
   if (isCorrect && masteryScore >= 0.75) {
     difficultyLevel = Math.min(difficultyLevel + 1, 5);
@@ -149,9 +205,9 @@ export async function updateTopicMastery(
   }
 
   const payload = {
-    user_id: userId,
-    topic,
-    subtopic: subtopic || "",
+    user_id: cleanUserId,
+    topic: cleanTopic,
+    subtopic: cleanSubtopic,
     mastery_score: masteryScore,
     total_attempts: totalAttempts,
     correct_attempts: correctAttempts,
