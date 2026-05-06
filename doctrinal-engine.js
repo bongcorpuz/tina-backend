@@ -1,4 +1,13 @@
-import { AUTHORITY_LEVEL } from "./authority-engine.js";
+// FILE: doctrinal-engine.js
+
+import {
+  AUTHORITY_LEVEL,
+  getAuthorityTypeForDoc,
+  getAuthorityLevelForDoc,
+  getControllingPrecedenceForDoc,
+  resolveCourtOverride,
+  isGenuineConflict
+} from "./authority-engine.js";
 
 function normalizeText(value = "") {
   return String(value || "").trim();
@@ -11,7 +20,32 @@ function lower(value = "") {
 function authorityLevelOf(doc = {}) {
   return (
     Number(doc.authorityLevel || doc.authority_level || doc.metadata?.authorityLevel) ||
-    AUTHORITY_LEVEL[doc.authorityType || doc.authority_type || doc.metadata?.authorityType] ||
+    getAuthorityLevelForDoc(doc) ||
+    AUTHORITY_LEVEL[
+      doc.authorityType || doc.authority_type || doc.metadata?.authorityType
+    ] ||
+    99
+  );
+}
+
+function authorityTypeOf(doc = {}) {
+  return (
+    doc.authorityType ||
+    doc.authority_type ||
+    doc.metadata?.authorityType ||
+    getAuthorityTypeForDoc(doc) ||
+    "UNKNOWN"
+  );
+}
+
+function controllingPrecedenceOf(doc = {}) {
+  return (
+    Number(
+      doc.controllingPrecedence ||
+        doc.controlling_precedence ||
+        doc.metadata?.controllingPrecedence
+    ) ||
+    getControllingPrecedenceForDoc(doc) ||
     99
   );
 }
@@ -19,9 +53,22 @@ function authorityLevelOf(doc = {}) {
 function sourcePathOf(doc = {}) {
   return (
     doc.path ||
+    doc.source_path ||
     doc.metadata?.path ||
     doc.source ||
     doc.originalSource ||
+    null
+  );
+}
+
+function sourceTitleOf(doc = {}) {
+  return (
+    doc.title ||
+    doc.source_title ||
+    doc.metadata?.documentTitle ||
+    doc.metadata?.originalFileName ||
+    doc.originalSource ||
+    doc.source ||
     null
   );
 }
@@ -31,6 +78,7 @@ function doctrinalTopicOf(doc = {}) {
     doc.topic ||
     doc.metadata?.topic ||
     doc.taxType ||
+    doc.tax_type ||
     doc.metadata?.taxType ||
     doc.subtopic ||
     doc.metadata?.subtopic ||
@@ -40,6 +88,7 @@ function doctrinalTopicOf(doc = {}) {
 
 function hasNegativeSignal(text = "") {
   const value = lower(text);
+
   return [
     " not ",
     " except ",
@@ -48,7 +97,10 @@ function hasNegativeSignal(text = "") {
     " disallowed ",
     " prohibited ",
     " void ",
-    " invalid "
+    " invalid ",
+    " shall not ",
+    " may not ",
+    " must not "
   ].some((token) => value.includes(token.trim()) || value.includes(token));
 }
 
@@ -70,31 +122,53 @@ export function compareDoctrinalPair(a = {}, b = {}) {
 
   const textA = a.text || a.claim_text || "";
   const textB = b.text || b.claim_text || "";
-  if (!looksContradictory(textA, textB)) return null;
 
-  const levelA = authorityLevelOf(a);
-  const levelB = authorityLevelOf(b);
-  const controlling = levelA <= levelB ? a : b;
-  const weaker = levelA <= levelB ? b : a;
+  if (!textA || !textB) return null;
+  if (!looksContradictory(textA, textB)) return null;
+  if (!isGenuineConflict(a, b)) return null;
+
+  const override = resolveCourtOverride(a, b);
+
+  const controlling = override?.winningSource
+    ? override.winningSource
+    : controllingPrecedenceOf(a) <= controllingPrecedenceOf(b)
+      ? a
+      : b;
+
+  const weaker = override?.overriddenSource
+    ? override.overriddenSource
+    : controlling === a
+      ? b
+      : a;
+
+  const controllingAuthority = override?.winningAuthority || authorityTypeOf(controlling);
+  const weakerAuthority = override?.overriddenAuthority || authorityTypeOf(weaker);
 
   return {
     conflict: true,
+    overrideApplied: Boolean(override?.overrideApplies),
     conflictTopic: doctrinalTopicOf(a),
-    controllingAuthority:
-      controlling.authorityType ||
-      controlling.authority_type ||
-      controlling.metadata?.authorityType ||
-      "UNKNOWN",
+    controllingAuthority,
     controllingSource: sourcePathOf(controlling),
-    weakerAuthority:
-      weaker.authorityType ||
-      weaker.authority_type ||
-      weaker.metadata?.authorityType ||
-      "UNKNOWN",
+    controllingTitle: sourceTitleOf(controlling),
+    weakerAuthority,
     weakerSource: sourcePathOf(weaker),
-    reason: `${weaker.authorityType || weaker.metadata?.authorityType || "Lower authority"} appears inconsistent with ${controlling.authorityType || controlling.metadata?.authorityType || "higher authority"}. Higher authority prevails.`,
+    weakerTitle: sourceTitleOf(weaker),
+    reason:
+      override?.reason ||
+      `${weakerAuthority} appears inconsistent with ${controllingAuthority}. Higher authority prevails.`,
+    resolutionBasis: override?.overrideApplies
+      ? "Court override applied."
+      : `Prefer ${controllingAuthority} based on legal hierarchy.`,
     sourceAClaim: normalizeText(textA).slice(0, 500),
-    sourceBClaim: normalizeText(textB).slice(0, 500)
+    sourceBClaim: normalizeText(textB).slice(0, 500),
+    auditRecord: {
+      decisionType: override?.overrideApplies ? "COURT_OVERRIDE" : "HIERARCHY_RESOLUTION",
+      controllingAuthority,
+      weakerAuthority,
+      controllingSource: sourcePathOf(controlling),
+      weakerSource: sourcePathOf(weaker)
+    }
   };
 }
 
@@ -111,11 +185,14 @@ export function detectDoctrinalConflicts(docs = []) {
   }
 
   const seen = new Set();
+
   return conflicts.filter((item) => {
     const key = [
       item.conflictTopic,
       item.controllingSource,
-      item.weakerSource
+      item.weakerSource,
+      item.controllingAuthority,
+      item.weakerAuthority
     ].join("|");
 
     if (seen.has(key)) return false;
@@ -131,20 +208,29 @@ export function detectHierarchyConflict(topDocs = []) {
       controllingAuthority: null,
       controllingSource: null,
       reason: null,
-      conflictingDocs: []
+      conflictingDocs: [],
+      overrideApplied: false,
+      weakerAuthority: null,
+      weakerSource: null,
+      auditRecord: null
     };
   }
 
   for (let i = 0; i < topDocs.length; i += 1) {
     for (let j = i + 1; j < topDocs.length; j += 1) {
       const pair = compareDoctrinalPair(topDocs[i], topDocs[j]);
+
       if (pair?.conflict) {
         return {
           conflict: true,
           controllingAuthority: pair.controllingAuthority,
           controllingSource: pair.controllingSource,
           reason: pair.reason,
-          conflictingDocs: [topDocs[i], topDocs[j]]
+          conflictingDocs: [topDocs[i], topDocs[j]],
+          overrideApplied: Boolean(pair.overrideApplied),
+          weakerAuthority: pair.weakerAuthority,
+          weakerSource: pair.weakerSource,
+          auditRecord: pair.auditRecord || null
         };
       }
     }
@@ -155,7 +241,11 @@ export function detectHierarchyConflict(topDocs = []) {
     controllingAuthority: null,
     controllingSource: null,
     reason: null,
-    conflictingDocs: []
+    conflictingDocs: [],
+    overrideApplied: false,
+    weakerAuthority: null,
+    weakerSource: null,
+    auditRecord: null
   };
 }
 
