@@ -2,29 +2,68 @@
 
 export const MAX_VISIBLE_SOURCES = 5;
 
-const HIDDEN_FOLDER_PATTERNS = [
-  "07_cpa_notes",
-  "08_review_materials"
-];
+const HIDDEN_FOLDER_PATTERNS = ["07_cpa_notes", "08_review_materials"];
 
 const SOURCE_TIER_RULES = [
   {
-    matchers: ["01_tax_code", "/01_tax_code/", "tax code", "nirc"],
+    matchers: ["00_constitution", "/00_constitution/", "1987 constitution", "constitution"],
     tier: 1,
-    label: "STATUTE",
+    label: "1987 Constitution",
     weight: 1.0,
+    authorityType: "CONSTITUTION"
+  },
+  {
+    matchers: ["01_tax_code", "/01_tax_code/", "tax code", "nirc", "republic act", "ra "],
+    tier: 2,
+    label: "Statute / Tax Code / Republic Act",
+    weight: 0.98,
     authorityType: "STATUTE"
+  },
+  {
+    matchers: ["05b_tax_treaties", "/05b_tax_treaties/", "tax treaty", "convention between"],
+    tier: 3,
+    label: "Tax Treaty",
+    weight: 0.96,
+    authorityType: "TREATY"
+  },
+  {
+    matchers: ["supreme court", "g.r. no", "gr no", "gr. no", "sc decision"],
+    tier: 4,
+    label: "Supreme Court Decision",
+    weight: 0.95,
+    authorityType: "SUPREME_COURT"
+  },
+  {
+    matchers: ["cta en banc", "cta eb", "en banc"],
+    tier: 5,
+    label: "CTA En Banc Decision",
+    weight: 0.93,
+    authorityType: "CTA_EN_BANC"
+  },
+  {
+    matchers: ["court of appeals", "ca-g.r.", "ca gr", "ca-g.r"],
+    tier: 6,
+    label: "Court of Appeals Decision",
+    weight: 0.9,
+    authorityType: "COURT_OF_APPEALS"
+  },
+  {
+    matchers: ["cta division", "cta case", "court of tax appeals"],
+    tier: 7,
+    label: "CTA Division Decision",
+    weight: 0.88,
+    authorityType: "CTA_DIVISION"
   },
   {
     matchers: [
       "02_revenue_regulations",
       "/02_revenue_regulations/",
       "revenue regulation",
-      "rr"
+      "rr "
     ],
-    tier: 2,
-    label: "REVENUE REGULATION",
-    weight: 0.95,
+    tier: 8,
+    label: "Revenue Regulation",
+    weight: 0.84,
     authorityType: "RR"
   },
   {
@@ -32,52 +71,56 @@ const SOURCE_TIER_RULES = [
       "03_rmc",
       "/03_rmc/",
       "revenue memorandum circular",
-      "rmc"
+      "rmc "
     ],
-    tier: 3,
-    label: "REVENUE MEMORANDUM CIRCULAR",
-    weight: 0.9,
-    authorityType: "BIR_ISSUANCE"
+    tier: 9,
+    label: "Revenue Memorandum Circular",
+    weight: 0.76,
+    authorityType: "RMC"
   },
   {
     matchers: [
       "04_rmo",
       "/04_rmo/",
       "revenue memorandum order",
-      "rmo"
+      "rmo "
     ],
-    tier: 4,
-    label: "REVENUE MEMORANDUM ORDER",
-    weight: 0.85,
-    authorityType: "BIR_ISSUANCE"
-  },
-  {
-    matchers: ["05_bir_rulings", "/05_bir_rulings/", "bir ruling", "ruling"],
-    tier: 5,
-    label: "BIR RULING",
-    weight: 0.8,
-    authorityType: "BIR_RULING"
+    tier: 10,
+    label: "Revenue Memorandum Order",
+    weight: 0.72,
+    authorityType: "RMO"
   },
   {
     matchers: [
-      "06_court_cases",
-      "/06_court_cases/",
-      "court case",
-      "cta case",
-      "g.r. no",
-      " v. ",
-      " vs "
+      "04b_ramo",
+      "/04b_ramo/",
+      "revenue audit memorandum order",
+      "ramo "
     ],
-    tier: 6,
-    label: "JURISPRUDENCE",
-    weight: 0.75,
-    authorityType: "JURISPRUDENCE"
+    tier: 11,
+    label: "Revenue Audit Memorandum Order",
+    weight: 0.7,
+    authorityType: "RAMO"
+  },
+  {
+    matchers: ["05_bir_rulings", "/05_bir_rulings/", "bir ruling", "ruling no"],
+    tier: 12,
+    label: "BIR Ruling",
+    weight: 0.66,
+    authorityType: "BIR_RULING"
+  },
+  {
+    matchers: ["lgu", "local tax code", "city ordinance", "municipal ordinance", "ordinance"],
+    tier: 13,
+    label: "Local Tax Ordinance",
+    weight: 0.6,
+    authorityType: "LGU"
   },
   {
     matchers: ["07_cpa_notes", "/07_cpa_notes/", "cpa notes"],
-    tier: 7,
-    label: "CPA NOTES",
-    weight: 0.4,
+    tier: 90,
+    label: "CPA Notes",
+    weight: 0.35,
     authorityType: "SECONDARY"
   },
   {
@@ -88,12 +131,20 @@ const SOURCE_TIER_RULES = [
       "reviewer",
       "bullet notes"
     ],
-    tier: 8,
-    label: "REVIEW MATERIALS",
+    tier: 91,
+    label: "Review Materials",
     weight: 0.3,
     authorityType: "SECONDARY"
   }
 ];
+
+function normalizeText(value = "") {
+  return String(value || "").trim();
+}
+
+function lower(value = "") {
+  return normalizeText(value).toLowerCase();
+}
 
 function toSearchableText(source = {}) {
   return [
@@ -106,7 +157,9 @@ function toSearchableText(source = {}) {
     source.originalSource,
     source.metadata?.path,
     source.metadata?.originalSource,
-    source.metadata?.originalFileName
+    source.metadata?.originalFileName,
+    source.metadata?.documentTitle,
+    source.metadata?.normalizedReference
   ]
     .filter(Boolean)
     .map((value) => String(value).toLowerCase())
@@ -133,7 +186,7 @@ export function getSourceTier(source = {}) {
 
   return {
     tier: 99,
-    label: "UNKNOWN",
+    label: "Unknown",
     weight: 0.1,
     authorityType: "UNKNOWN"
   };
@@ -166,6 +219,7 @@ export function normalizeSourceName(name = "") {
     .replace(/revenue regulation[s]?/g, "rr")
     .replace(/revenue memorandum circular[s]?/g, "rmc")
     .replace(/revenue memorandum order[s]?/g, "rmo")
+    .replace(/revenue audit memorandum order[s]?/g, "ramo")
     .replace(/\brev\.?\s*reg\.?\b/g, "rr")
     .replace(/\brev\.?\s*memo\.?\s*circular\b/g, "rmc")
     .replace(/\brev\.?\s*memo\.?\s*order\b/g, "rmo")
@@ -275,7 +329,6 @@ export function formatQuestionBlock({
 
 export function shouldHideSourceFromUser(source = {}) {
   const haystack = toSearchableText(source);
-
   return HIDDEN_FOLDER_PATTERNS.some((pattern) => haystack.includes(pattern));
 }
 
@@ -310,6 +363,44 @@ export function buildGoogleDriveLinks(doc = {}) {
   };
 }
 
+function inferIssuanceNumber(item = {}) {
+  const haystack = normalizeText(
+    [
+      item.title,
+      item.source,
+      item.originalSource,
+      item.path,
+      item.source_path,
+      item.metadata?.path,
+      item.metadata?.normalizedReference
+    ]
+      .filter(Boolean)
+      .join(" ")
+  );
+
+  const patterns = [
+    /\b(1987 Constitution)\b/i,
+    /\b(RA\s*\d{4,6})\b/i,
+    /\b(RR\s*(?:No\.?)?\s*\d+\s*[-/]\s*\d{2,4})\b/i,
+    /\b(RMC\s*(?:No\.?)?\s*\d+\s*[-/]\s*\d{2,4})\b/i,
+    /\b(RMO\s*(?:No\.?)?\s*\d+\s*[-/]\s*\d{2,4})\b/i,
+    /\b(RAMO\s*(?:No\.?)?\s*\d+\s*[-/]\s*\d{2,4})\b/i,
+    /\b(BIR Ruling\s*(?:No\.?)?\s*[\w./()-]+)\b/i,
+    /\b(G\.R\.\s*No\.?\s*[\w.-]+)\b/i,
+    /\b(CTA(?:\s+EB)?\s+No\.?\s*[\w.-]+)\b/i,
+    /\b(CA-G\.R\.\s*[\w.-]+)\b/i
+  ];
+
+  for (const pattern of patterns) {
+    const match = haystack.match(pattern);
+    if (match) {
+      return match[1];
+    }
+  }
+
+  return "";
+}
+
 export function buildSourceResponseItem(item = {}) {
   const links = buildGoogleDriveLinks(item);
   const path = getDocPath(item);
@@ -318,6 +409,7 @@ export function buildSourceResponseItem(item = {}) {
 
   return {
     title: originalSource || item.title || item.source || "Untitled Source",
+    issuanceNumber: inferIssuanceNumber(item),
     source: item.source || originalSource || path || "Untitled Source",
     originalSource,
     path,
@@ -326,9 +418,9 @@ export function buildSourceResponseItem(item = {}) {
     driveDownloadUrl: links.driveDownloadUrl,
     text: item.text || "",
     preview: item.preview || (item.text ? String(item.text).slice(0, 300) : ""),
-    score: Number(item.score ?? item.adjustedScore ?? item.finalScore ?? 0),
+    score: Number(item.score ?? item.adjustedScore ?? item.finalScore ?? item.combined_score ?? 0),
     adjustedScore: Number(
-      item.adjustedScore ?? item.finalScore ?? item.score ?? 0
+      item.adjustedScore ?? item.finalScore ?? item.combined_score ?? item.score ?? 0
     ),
     authorityType:
       item.authorityType ||
@@ -401,10 +493,11 @@ export function classifyQuestion(question = "") {
   const q = String(question || "").toLowerCase();
 
   if (
-    /\b(rr|rmc|rmo)\s*(no\.?)?\s*\d+/i.test(q) ||
+    /\b(rr|rmc|rmo|ramo)\s*(no\.?)?\s*\d+/i.test(q) ||
     q.includes("revenue regulation") ||
     q.includes("revenue memorandum circular") ||
-    q.includes("revenue memorandum order")
+    q.includes("revenue memorandum order") ||
+    q.includes("revenue audit memorandum order")
   ) {
     return "issuance";
   }
@@ -425,7 +518,8 @@ export function classifyQuestion(question = "") {
     q.includes(" vs. ") ||
     q.includes("cta") ||
     q.includes("supreme court") ||
-    q.includes("g.r. no")
+    q.includes("g.r. no") ||
+    q.includes("ca-g.r.")
   ) {
     return "case";
   }
@@ -507,6 +601,11 @@ export function detectIssuanceQuery(question = "") {
       type: "RMO",
       regex:
         /\b(?:RMO|Revenue\s+Memorandum\s+Order[s]?)\s*(?:No\.?)?\s*0*(\d+)[\s\-_]?(\d{2,4})\b/i
+    },
+    {
+      type: "RAMO",
+      regex:
+        /\b(?:RAMO|Revenue\s+Audit\s+Memorandum\s+Order[s]?)\s*(?:No\.?)?\s*0*(\d+)[\s\-_]?(\d{2,4})\b/i
     }
   ];
 
@@ -536,16 +635,23 @@ export function isStructuredAnswer(text = "") {
     return false;
   }
 
-  return (
-    /(^|\n)\s*(1\.\s*)?DIRECT ANSWER\b/i.test(value) &&
-    /\bLEGAL BASIS\b/i.test(value) &&
-    /\b(CONFLICT FLAG|PROFESSIONAL INSIGHT|SUPPORTING RULES)\b/i.test(value)
-  );
+  const hasStandard =
+    /(^|\n)\s*1\.\s*DIRECT ANSWER\b/i.test(value) &&
+    /\b2\.\s*LEGAL BASIS\b/i.test(value) &&
+    /\b5\.\s*CONFLICT FLAG\b/i.test(value);
+
+  const hasCase =
+    /(^|\n)\s*###\s*Issue\b/i.test(value) &&
+    /###\s*Applicable law/i.test(value) &&
+    /###\s*Conflict flag/i.test(value);
+
+  return hasStandard || hasCase;
 }
 
 export function stripTrailingSourceSection(text = "") {
   return String(text || "")
     .replace(/\n+\s*6\.\s*SOURCES USED[\s\S]*$/i, "")
+    .replace(/\n+\s*6\.\s*SOURCES[\s\S]*$/i, "")
     .replace(/\n+\s*SOURCES USED[\s\S]*$/i, "")
     .replace(/\n+\s*Sources:\s*[\s\S]*$/i, "")
     .replace(/\n+\s*See clickable sources below\.\s*$/i, "")
