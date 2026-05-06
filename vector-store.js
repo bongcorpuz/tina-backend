@@ -41,11 +41,14 @@ function chunkText(text, chunkSize = CHUNK_SIZE, overlap = CHUNK_OVERLAP) {
   const clean = normalizeText(String(text || "").replace(/\s+/g, " "));
   if (!clean) return [];
 
+  const safeChunkSize = Math.max(200, Number(chunkSize) || CHUNK_SIZE);
+  const safeOverlap = Math.max(0, Math.min(Number(overlap) || CHUNK_OVERLAP, safeChunkSize - 50));
+
   const chunks = [];
   let start = 0;
 
   while (start < clean.length) {
-    const end = Math.min(start + chunkSize, clean.length);
+    const end = Math.min(start + safeChunkSize, clean.length);
     const chunk = clean.slice(start, end).trim();
 
     if (chunk) {
@@ -56,7 +59,7 @@ function chunkText(text, chunkSize = CHUNK_SIZE, overlap = CHUNK_OVERLAP) {
       break;
     }
 
-    start = Math.max(0, end - overlap);
+    start = Math.max(0, end - safeOverlap);
     if (start >= end) {
       break;
     }
