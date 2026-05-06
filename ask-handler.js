@@ -119,7 +119,7 @@ function buildDocKey(doc = {}) {
 }
 
 function normalizeLooseText(value = "") {
-  return String(value)
+  return String(value || "")
     .toLowerCase()
     .replace(/[“”"'`]/g, "")
     .replace(/\brepublic act no\.?\s*/g, "ra ")
@@ -153,8 +153,18 @@ function mergeRetrievalResults(retrievals = []) {
       const index = seen.get(key);
       const existing = merged[index];
 
-      const existingScore = Number(existing?.finalScore ?? existing?.score ?? 0);
-      const candidateScore = Number(item?.finalScore ?? item?.score ?? 0);
+      const existingScore = Number(
+        existing?.finalScore ??
+          existing?.combined_score ??
+          existing?.score ??
+          0
+      );
+      const candidateScore = Number(
+        item?.finalScore ??
+          item?.combined_score ??
+          item?.score ??
+          0
+      );
 
       if (candidateScore > existingScore) {
         merged[index] = {
@@ -199,15 +209,27 @@ function buildNamedLawFallbackText(bestMatch) {
 
 function extractLegalBasisLines(answerText = "") {
   const text = String(answerText || "");
-  const match = text.match(
+  const standardMatch = text.match(
     /\b2\.\s*LEGAL BASIS\b([\s\S]*?)(?:\n\s*\d+\.\s*[A-Z][A-Z ]+\b|$)/i
   );
 
-  if (!match) {
+  if (standardMatch) {
+    return standardMatch[1]
+      .split("\n")
+      .map((line) => line.replace(/^[\-\d.)\s]+/, "").trim())
+      .filter(Boolean)
+      .slice(0, 8);
+  }
+
+  const caseMatch = text.match(
+    /###\s*Applicable law(?:\s*\(.*?\))?\b([\s\S]*?)(?:\n\s*###\s+[A-Za-z]|$)/i
+  );
+
+  if (!caseMatch) {
     return [];
   }
 
-  return match[1]
+  return caseMatch[1]
     .split("\n")
     .map((line) => line.replace(/^[\-\d.)\s]+/, "").trim())
     .filter(Boolean)
@@ -225,6 +247,8 @@ function buildAnswerAnchors({
   const normalizedQuestion = normalizeLooseText(finalQuestion);
 
   const commonAnchors = [
+    "1987 constitution",
+    "constitution",
     "nirc",
     "tax code",
     "local government code",
@@ -242,11 +266,12 @@ function buildAnswerAnchors({
   ];
 
   for (const anchor of commonAnchors) {
+    const normalizedAnchor = normalizeLooseText(anchor);
     if (
-      normalizedAnswer.includes(normalizeLooseText(anchor)) ||
-      normalizedQuestion.includes(normalizeLooseText(anchor))
+      normalizedAnswer.includes(normalizedAnchor) ||
+      normalizedQuestion.includes(normalizedAnchor)
     ) {
-      anchors.add(normalizeLooseText(anchor));
+      anchors.add(normalizedAnchor);
     }
   }
 
@@ -329,7 +354,8 @@ function buildDocHaystack(doc = {}) {
       doc.metadata?.originalSource,
       doc.metadata?.originalFileName,
       doc.metadata?.normalizedReference,
-      ...(doc.metadata?.normalizedAliases || [])
+      ...(doc.metadata?.normalizedAliases || []),
+      ...(doc.normalizedAliases || [])
     ]
       .filter(Boolean)
       .join(" ")
@@ -368,7 +394,9 @@ function selectGroundedDisplayableDocs(displayableDocs = [], options = {}) {
     issuance
   });
 
-  return displayableDocs.filter((doc) => docMatchesAnchors(doc, anchors));
+  const matched = displayableDocs.filter((doc) => docMatchesAnchors(doc, anchors));
+
+  return matched.length ? matched : displayableDocs.slice(0, MAX_VISIBLE_SOURCES);
 }
 
 function buildComplianceInsight({
@@ -558,7 +586,7 @@ Rules:
 1. Clearly state that this is a general fallback answer.
 2. Do not pretend the answer came from indexed Google Drive sources.
 3. Keep the answer professional and Philippine-tax oriented.
-4. Do not invent specific RR, RMC, RMO, BIR rulings, dates, forms, deadlines, rates, or case citations.
+4. Do not invent specific RR, RMC, RMO, RAMO, BIR rulings, dates, forms, deadlines, rates, or case citations.
 5. For exact issuance questions, do not provide speculative content.
 6. Recommend verification against official NIRC/BIR/CTA/Supreme Court sources.
 `.trim();
@@ -1469,7 +1497,7 @@ Quick Recall:
       const retrievalQueries = namedLawDetection.matched
         ? buildNamedLawSearchQueries(finalQuestion, {
             includeOriginalQuestion: true,
-            maxQueries: 4
+            maxQueries: 6
           })
         : [finalQuestion];
 
@@ -1550,16 +1578,18 @@ Quick Recall:
 
       const namedLawFiltered = namedLawDetection.matched
         ? filterDocsForNamedLaw(activeRankedDocs, namedLawDetection, {
-            minScore: 20,
-            hardFilter: false,
-            maxDocs: 12
+            minScore: 40,
+            hardFilter: true,
+            maxDocs: 12,
+            requirePrimaryAuthority: true
           })
         : {
             lawMatched: false,
             bestMatch: null,
             matchedDocs: activeRankedDocs,
             discardedDocs: [],
-            scoredDocs: []
+            scoredDocs: [],
+            primaryAuthorityFound: false
           };
 
       const namedLawMatchedDocs =
@@ -1674,10 +1704,8 @@ Quick Recall:
         model: process.env.OPENAI_MODEL || "gpt-4o-mini"
       });
 
-      const explicitCaseMode = hookConfig.mode === "CASE_ANALYSIS";
-
       const caseModeResult =
-        explicitCaseMode && !provisionModeResult.handled
+        !provisionModeResult.handled
           ? await maybeGenerateCaseAnalysisAnswer({
               openai,
               question: finalQuestion,
@@ -1720,7 +1748,12 @@ Quick Recall:
               doc.metadata?.authorityScore ||
               0
             }`,
-            `FINAL SCORE: ${doc.finalScore || doc.score || 0}`,
+            `FINAL SCORE: ${
+              doc.finalScore ||
+              doc.combined_score ||
+              doc.score ||
+              0
+            }`,
             "TEXT:",
             doc.text || ""
           ].join("\n")
@@ -1734,7 +1767,7 @@ Quick Recall:
       } else if (doctrineModeResult.handled) {
         preliminaryAnswer = doctrineModeResult.answer || "";
       } else if (topEvidence.length > 0) {
-        const topLegalBasesForPrompt = selectTopLegalBases(displayableRankedDocs, 2);
+        const topLegalBasesForPrompt = selectTopLegalBases(displayableRankedDocs, 3);
 
         const strictPrompt = buildStrictAnswerPrompt({
           hookMode: hookConfig?.mode || "ASK",
@@ -1817,7 +1850,9 @@ Quick Recall:
         claimSupportMap,
         minEvidenceCount: 1,
         minSupportedClaims: 1,
-        minTopScore: 0.25
+        minTopScore: 0.25,
+        query: finalQuestion,
+        requirePrimaryAuthority: Boolean(namedLawDetection?.matched)
       });
 
       const fallbackReason =
@@ -1843,7 +1878,12 @@ Quick Recall:
           ? Math.max(
               0,
               ...internalRankedDocs.map((item) => {
-                const value = Number(item.finalScore || item.score || 0);
+                const value = Number(
+                  item.finalScore ??
+                    item.combined_score ??
+                    item.score ??
+                    0
+                );
                 return Number.isFinite(value) ? value : 0;
               })
             )
@@ -1927,7 +1967,7 @@ Quick Recall:
           sourcesUsed
             .map((s, i) =>
               [
-                `${i + 1}. ${s.title}`,
+                `${i + 1}. ${s.issuanceNumber ? `${s.issuanceNumber} – ` : ""}${s.title}`,
                 `Authority: Level ${s.authorityLevel || 99} - ${s.authorityLabel || "Unknown"}`
               ].join("\n")
             )
@@ -2025,7 +2065,7 @@ Quick Recall:
       else if (topTier <= 7) confidence = "LIMITED";
       else confidence = "LOW";
 
-      const topLegalBases = selectTopLegalBases(finalDisplayableDocs, 2);
+      const topLegalBases = selectTopLegalBases(finalDisplayableDocs, 3);
 
       const answerText = buildFinalCompliantAnswer({
         draftAnswer: preliminaryAnswer || "",
