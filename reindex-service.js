@@ -7,19 +7,57 @@ import {
   getVectorStoreStats,
   normalizeSourceName
 } from "./vector-store.js";
+import { buildAuthorityMetadata } from "./authority-engine.js";
 
-function getSourceTier(doc = {}) {
-  const value = `${doc.metadata?.path || ""} ${doc.metadata?.originalFileName || ""} ${doc.source || ""}`.toLowerCase();
+function normalizeText(value = "") {
+  return String(value || "")
+    .replace(/\r\n/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .replace(/[ \t]+/g, " ")
+    .trim();
+}
 
-  if (value.includes("01_tax_code")) return { tier: 1, label: "Tax Code / NIRC", weight: 1.0 };
-  if (value.includes("02_revenue_regulations")) return { tier: 2, label: "Revenue Regulations", weight: 0.95 };
-  if (value.includes("03_rmc")) return { tier: 3, label: "Revenue Memorandum Circulars", weight: 0.9 };
-  if (value.includes("04_rmo")) return { tier: 4, label: "Revenue Memorandum Orders", weight: 0.85 };
-  if (value.includes("05_bir_rulings")) return { tier: 5, label: "BIR Rulings", weight: 0.75 };
-  if (value.includes("06_court_cases")) return { tier: 6, label: "Court Cases", weight: 0.6 };
-  if (value.includes("07_cpa_notes")) return { tier: 7, label: "CPA Notes / Internal Notes", weight: 0.4 };
+function buildIndexMetadata(file = {}, text = "") {
+  const path = file.path || file.name || "";
+  const originalFileName = file.name || "";
+  const originalSource = file.originalSource || file.name || "";
+  const normalizedSource =
+    file.normalizedSource || normalizeSourceName(path || originalFileName);
 
-  return { tier: 99, label: "Unclassified Source", weight: 0.5 };
+  const authority = buildAuthorityMetadata({
+    fileName: originalFileName,
+    path,
+    text,
+    modifiedTime: file.modifiedTime || null
+  });
+
+  return {
+    fileId: file.id || null,
+    originalFileName,
+    originalSource,
+    normalizedSource,
+    mimeType: file.mimeType || null,
+    path,
+    modifiedTime: file.modifiedTime || null,
+    driveViewUrl: file.driveViewUrl || null,
+    driveDownloadUrl: file.driveDownloadUrl || null,
+    authorityType: authority.authorityType,
+    authorityLevel: authority.authorityLevel,
+    authorityScore: authority.authorityScore,
+    authorityLabel: authority.authorityLabel,
+    normalizedReference: authority.normalizedReference,
+    normalizedAliases: authority.normalizedAliases,
+    recencyDate: authority.recencyDate,
+    jurisdiction: "PH",
+    sourceCategory: "google_drive_index",
+    documentTitle: originalFileName || originalSource || path,
+    effectiveFrom: null,
+    effectiveTo: null,
+    isSuperseded: false,
+    supersededByReference: null,
+    repealedByReference: null,
+    amendedByReference: null
+  };
 }
 
 export async function runDriveReindex() {
@@ -38,61 +76,49 @@ export async function runDriveReindex() {
   for (const file of files) {
     try {
       let text = await extractTextFromFile(file);
-      text = String(text || "").replace(/\n+/g, " ").replace(/\s+/g, " ").trim();
+      text = normalizeText(text);
 
-      const path = file.path || file.name;
-      const normalizedSource = normalizeSourceName(file.name);
-
-      const tierInfo = getSourceTier({
-        source: file.name,
-        metadata: {
-          path,
-          originalFileName: file.name
-        }
-      });
+      const metadata = buildIndexMetadata(file, text);
+      const normalizedSource = metadata.normalizedSource;
 
       if (!text) {
         failed.push({
-          fileName: file.name,
+          fileName: metadata.originalFileName,
           normalizedSource,
-          path,
-          mimeType: file.mimeType,
-          authorityTier: tierInfo,
+          path: metadata.path,
+          mimeType: metadata.mimeType,
+          authorityType: metadata.authorityType,
+          authorityLevel: metadata.authorityLevel,
+          authorityLabel: metadata.authorityLabel,
           reason: "No readable text"
         });
         continue;
       }
 
-      const result = await addDocumentToVectorStore(text, normalizedSource, {
-        fileId: file.id,
-        originalFileName: file.name,
-        originalSource: file.name,
-        normalizedSource,
-        mimeType: file.mimeType,
-        path,
-        modifiedTime: file.modifiedTime || null,
-        authorityTier: tierInfo.tier,
-        authorityLabel: tierInfo.label,
-        authorityWeight: tierInfo.weight
-      });
+      const result = await addDocumentToVectorStore(text, normalizedSource, metadata);
 
       indexed.push({
-        fileName: file.name,
+        fileName: metadata.originalFileName,
         normalizedSource,
-        path,
-        mimeType: file.mimeType,
-        authorityTier: tierInfo,
+        path: metadata.path,
+        mimeType: metadata.mimeType,
+        authorityType: metadata.authorityType,
+        authorityLevel: metadata.authorityLevel,
+        authorityLabel: metadata.authorityLabel,
         textLength: text.length,
         chunksAdded: result?.chunksAdded ?? 0,
         status: "Indexed"
       });
     } catch (error) {
-      console.error(`Reindex failed for file: ${file?.name || "unknown"}`, error);
+      const fallbackName = file?.name || "unknown";
+      const fallbackPath = file?.path || file?.name || "unknown";
+
+      console.error(`Reindex failed for file: ${fallbackName}`, error);
 
       failed.push({
-        fileName: file?.name || "unknown",
-        normalizedSource: normalizeSourceName(file?.name || "unknown"),
-        path: file?.path || file?.name || "unknown",
+        fileName: fallbackName,
+        normalizedSource: normalizeSourceName(fallbackPath || fallbackName),
+        path: fallbackPath,
         mimeType: file?.mimeType || null,
         reason: error.message || "File indexing failed"
       });
