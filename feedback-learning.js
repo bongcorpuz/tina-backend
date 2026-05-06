@@ -32,8 +32,8 @@ export async function storeFeedbackEntry(
 
   const payload = {
     user_id: cleanUserId,
-    session_id: sessionId || null,
-    message_id: messageId || null,
+    session_id: normalizeText(sessionId) || null,
+    message_id: normalizeText(messageId) || null,
     original_question: cleanQuestion || null,
     original_answer: cleanAnswer || null,
     feedback_type: cleanFeedbackType,
@@ -54,12 +54,15 @@ export async function storeFeedbackEntry(
   return data;
 }
 
-export async function listPendingFeedback(supabase) {
+export async function listPendingFeedback(supabase, limit = 100) {
+  const safeLimit = Math.max(1, Math.min(Number(limit) || 100, 500));
+
   const { data, error } = await supabase
     .from("tina_feedback_entries")
     .select("*")
     .eq("status", "pending")
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .limit(safeLimit);
 
   if (error) {
     throw new Error(error.message || "Failed to list pending feedback");
@@ -68,9 +71,15 @@ export async function listPendingFeedback(supabase) {
   return data || [];
 }
 
-export async function approveFeedbackEntry(supabase, feedbackId, reviewer) {
+export async function approveFeedbackEntry(
+  supabase,
+  feedbackId,
+  reviewer,
+  notes = ""
+) {
   const cleanFeedbackId = normalizeText(feedbackId);
   const cleanReviewer = normalizeText(reviewer);
+  const cleanNotes = normalizeText(notes);
 
   if (!cleanFeedbackId) {
     throw new Error("feedbackId is required");
@@ -82,6 +91,7 @@ export async function approveFeedbackEntry(supabase, feedbackId, reviewer) {
 
   const payload = {
     status: "approved",
+    reviewer_notes: cleanNotes || null,
     reviewed_by: cleanReviewer,
     reviewed_at: new Date().toISOString()
   };
