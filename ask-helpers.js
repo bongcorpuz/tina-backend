@@ -1,144 +1,13 @@
 // FILE: ask-helpers.js
 
-import { applySupersessionFilter, findReplacementForDocument } from "./supersession-engine.js";
+import {
+  applySupersessionFilter,
+  findReplacementForDocument
+} from "./supersession-engine.js";
 
 export const MAX_VISIBLE_SOURCES = 5;
 
 const HIDDEN_FOLDER_PATTERNS = ["07_cpa_notes", "08_review_materials"];
-
-const SOURCE_TIER_RULES = [
-  {
-    matchers: ["00_constitution", "/00_constitution/", "1987 constitution", "constitution"],
-    tier: 1,
-    label: "1987 Constitution",
-    weight: 1.0,
-    authorityType: "CONSTITUTION"
-  },
-  {
-    matchers: ["01_tax_code", "/01_tax_code/", "tax code", "nirc", "republic act", "ra "],
-    tier: 2,
-    label: "Statute / Tax Code / Republic Act",
-    weight: 0.98,
-    authorityType: "STATUTE"
-  },
-  {
-    matchers: ["05b_tax_treaties", "/05b_tax_treaties/", "tax treaty", "convention between"],
-    tier: 3,
-    label: "Tax Treaty",
-    weight: 0.96,
-    authorityType: "TREATY"
-  },
-  {
-    matchers: ["supreme court", "g.r. no", "gr no", "gr. no", "sc decision"],
-    tier: 4,
-    label: "Supreme Court Decision",
-    weight: 0.95,
-    authorityType: "SUPREME_COURT"
-  },
-  {
-    matchers: ["cta en banc", "cta eb", "en banc"],
-    tier: 5,
-    label: "CTA En Banc Decision",
-    weight: 0.93,
-    authorityType: "CTA_EN_BANC"
-  },
-  {
-    matchers: ["court of appeals", "ca-g.r.", "ca gr", "ca-g.r"],
-    tier: 6,
-    label: "Court of Appeals Decision",
-    weight: 0.9,
-    authorityType: "COURT_OF_APPEALS"
-  },
-  {
-    matchers: ["cta division", "cta case", "court of tax appeals"],
-    tier: 7,
-    label: "CTA Division Decision",
-    weight: 0.88,
-    authorityType: "CTA_DIVISION"
-  },
-  {
-    matchers: [
-      "02_revenue_regulations",
-      "/02_revenue_regulations/",
-      "revenue regulation",
-      "rr "
-    ],
-    tier: 8,
-    label: "Revenue Regulation",
-    weight: 0.84,
-    authorityType: "RR"
-  },
-  {
-    matchers: [
-      "03_rmc",
-      "/03_rmc/",
-      "revenue memorandum circular",
-      "rmc "
-    ],
-    tier: 9,
-    label: "Revenue Memorandum Circular",
-    weight: 0.76,
-    authorityType: "RMC"
-  },
-  {
-    matchers: [
-      "04_rmo",
-      "/04_rmo/",
-      "revenue memorandum order",
-      "rmo "
-    ],
-    tier: 10,
-    label: "Revenue Memorandum Order",
-    weight: 0.72,
-    authorityType: "RMO"
-  },
-  {
-    matchers: [
-      "04b_ramo",
-      "/04b_ramo/",
-      "revenue audit memorandum order",
-      "ramo "
-    ],
-    tier: 11,
-    label: "Revenue Audit Memorandum Order",
-    weight: 0.7,
-    authorityType: "RAMO"
-  },
-  {
-    matchers: ["05_bir_rulings", "/05_bir_rulings/", "bir ruling", "ruling no"],
-    tier: 12,
-    label: "BIR Ruling",
-    weight: 0.66,
-    authorityType: "BIR_RULING"
-  },
-  {
-    matchers: ["lgu", "local tax code", "city ordinance", "municipal ordinance", "ordinance"],
-    tier: 13,
-    label: "Local Tax Ordinance",
-    weight: 0.6,
-    authorityType: "LGU"
-  },
-  {
-    matchers: ["07_cpa_notes", "/07_cpa_notes/", "cpa notes"],
-    tier: 90,
-    label: "CPA Notes",
-    weight: 0.35,
-    authorityType: "SECONDARY"
-  },
-  {
-    matchers: [
-      "08_review_materials",
-      "/08_review_materials/",
-      "review materials",
-      "reviewer",
-      "bullet notes"
-    ],
-    tier: 91,
-    label: "Review Materials",
-    weight: 0.3,
-    authorityType: "SECONDARY"
-  }
-];
 
 function normalizeText(value = "") {
   return String(value || "").trim();
@@ -156,94 +25,28 @@ function stripFileExtension(value = "") {
   return String(value || "").replace(/\.(pdf|docx|doc|txt|csv|md|json)$/i, "");
 }
 
-function cleanDisplayTitle(value = "") {
+function basename(value = "") {
+  const text = String(value || "");
+  const parts = text.split(/[\\/]/).filter(Boolean);
+  return parts.length ? parts[parts.length - 1] : text;
+}
+
+function cleanFilename(value = "") {
   return compactSpaces(
-    stripFileExtension(String(value || ""))
-      .replace(/[\\/]+/g, " ")
+    stripFileExtension(basename(value))
       .replace(/[_]+/g, " ")
-      .replace(/\b(00_constitution|01_tax_code|02_revenue_regulations|03_rmc|04_rmo|04b_ramo|05_bir_rulings|05b_tax_treaties|06_court_cases|07_cpa_notes|08_review_materials)\b/gi, " ")
       .replace(/\(\d+\)/g, " ")
+      .replace(/\s+/g, " ")
   );
 }
 
-function toSearchableText(source = {}) {
-  return [
-    getDocPath(source),
-    getDocOriginalName(source),
-    source.path,
-    source.source_path,
-    source.source,
-    source.title,
-    source.originalSource,
-    source.original_source,
-    source.metadata?.path,
-    source.metadata?.originalSource,
-    source.metadata?.originalFileName,
-    source.metadata?.documentTitle,
-    source.metadata?.normalizedReference
-  ]
-    .filter(Boolean)
-    .map((value) => String(value).toLowerCase())
-    .join(" || ");
-}
-
-export function getSourceTier(source = {}) {
-  const haystack = toSearchableText(source);
-
-  for (const rule of SOURCE_TIER_RULES) {
-    if (
-      rule.matchers.some((matcher) =>
-        haystack.includes(String(matcher).toLowerCase())
-      )
-    ) {
-      return {
-        tier: rule.tier,
-        label: rule.label,
-        weight: rule.weight,
-        authorityType: rule.authorityType
-      };
-    }
-  }
-
-  return {
-    tier: 99,
-    label: "Unknown",
-    weight: 0.1,
-    authorityType: "UNKNOWN"
-  };
-}
-
-export function getUserId(req) {
-  return (
-    req.user?.id ||
-    req.user?.user_id ||
-    req.user?.sub ||
-    req.user?.username ||
-    req.user?.email ||
-    null
-  );
-}
-
-export function toSafeDbNumeric(value, max = 999999.9999, decimals = 4) {
-  const num = Number(value);
-
-  if (!Number.isFinite(num)) {
-    return 0;
-  }
-
-  return Number(Math.min(max, Math.max(0, num)).toFixed(decimals));
-}
-
-export function normalizeSourceName(name = "") {
+function normalizeSourceName(name = "") {
   return String(name)
     .toLowerCase()
     .replace(/revenue regulation[s]?/g, "rr")
     .replace(/revenue memorandum circular[s]?/g, "rmc")
     .replace(/revenue memorandum order[s]?/g, "rmo")
     .replace(/revenue audit memorandum order[s]?/g, "ramo")
-    .replace(/\brev\.?\s*reg\.?\b/g, "rr")
-    .replace(/\brev\.?\s*memo\.?\s*circular\b/g, "rmc")
-    .replace(/\brev\.?\s*memo\.?\s*order\b/g, "rmo")
     .replace(/\bno\.?\b/g, "")
     .replace(/[_–—]/g, "-")
     .replace(/\s+/g, "_")
@@ -257,8 +60,8 @@ export function normalizeSourceName(name = "") {
 export function normalizeForMatch(value = "") {
   return normalizeSourceName(value)
     .replace(/\.(pdf|docx|doc|txt|csv|md|json)$/i, "")
-    .replace(/[_\s]/g, "-")
     .replace(/[\\/]/g, "-")
+    .replace(/[_\s]/g, "-")
     .replace(/-+/g, "-")
     .trim();
 }
@@ -286,8 +89,254 @@ export function getDocOriginalName(doc = {}) {
       doc.original_source ||
       doc.source ||
       doc.title ||
+      getDocPath(doc) ||
       ""
   );
+}
+
+function getSearchableSourceText(source = {}) {
+  return [
+    getDocPath(source),
+    getDocOriginalName(source),
+    source.path,
+    source.source_path,
+    source.source,
+    source.title,
+    source.originalSource,
+    source.original_source,
+    source.metadata?.path,
+    source.metadata?.originalSource,
+    source.metadata?.originalFileName,
+    source.metadata?.documentTitle,
+    source.metadata?.normalizedReference,
+    source.normalizedReference
+  ]
+    .filter(Boolean)
+    .join(" || ");
+}
+
+function cleanDisplayTitle(doc = {}) {
+  const raw =
+    doc.title ||
+    doc.source_title ||
+    doc.metadata?.documentTitle ||
+    doc.metadata?.originalFileName ||
+    getDocOriginalName(doc) ||
+    getDocPath(doc) ||
+    "Untitled Source";
+
+  return cleanFilename(raw) || "Untitled Source";
+}
+
+function extractIssuanceReference(text = "") {
+  const value = compactSpaces(text);
+
+  const patterns = [
+    {
+      type: "CONSTITUTION",
+      regex: /\b1987 Constitution\b/i,
+      formatter: () => "1987 Constitution"
+    },
+    {
+      type: "STATUTE",
+      regex: /\bRepublic Act No\.?\s*(\d{4,6})\b/i,
+      formatter: (m) => `Republic Act No. ${m[1]}`
+    },
+    {
+      type: "STATUTE",
+      regex: /\bRA\s*(\d{4,6})\b/i,
+      formatter: (m) => `RA No. ${m[1]}`
+    },
+    {
+      type: "RR",
+      regex: /\bRR\s*(?:No\.?)?\s*0*(\d+)\s*[-/]\s*(\d{2,4})\b/i,
+      formatter: (m) => `RR No. ${Number(m[1])}-${normalizeIssuanceYear(m[2])}`
+    },
+    {
+      type: "RMC",
+      regex: /\bRMC\s*(?:No\.?)?\s*0*(\d+)\s*[-/]\s*(\d{2,4})\b/i,
+      formatter: (m) => `RMC No. ${Number(m[1])}-${normalizeIssuanceYear(m[2])}`
+    },
+    {
+      type: "RMO",
+      regex: /\bRMO\s*(?:No\.?)?\s*0*(\d+)\s*[-/]\s*(\d{2,4})\b/i,
+      formatter: (m) => `RMO No. ${Number(m[1])}-${normalizeIssuanceYear(m[2])}`
+    },
+    {
+      type: "RAMO",
+      regex: /\bRAMO\s*(?:No\.?)?\s*0*(\d+)\s*[-/]\s*(\d{2,4})\b/i,
+      formatter: (m) => `RAMO No. ${Number(m[1])}-${normalizeIssuanceYear(m[2])}`
+    },
+    {
+      type: "BIR_RULING",
+      regex: /\bBIR Ruling\s*(?:No\.?)?\s*([A-Za-z0-9./()-]+)\b/i,
+      formatter: (m) => `BIR Ruling No. ${m[1]}`
+    },
+    {
+      type: "SUPREME_COURT",
+      regex: /\bG\.R\.\s*No\.?\s*([A-Za-z0-9.-]+)\b/i,
+      formatter: (m) => `G.R. No. ${m[1]}`
+    },
+    {
+      type: "CTA_EN_BANC",
+      regex: /\bCTA\s+EB\s+No\.?\s*([A-Za-z0-9.-]+)\b/i,
+      formatter: (m) => `CTA EB No. ${m[1]}`
+    },
+    {
+      type: "CTA_DIVISION",
+      regex: /\bCTA\s+No\.?\s*([A-Za-z0-9.-]+)\b/i,
+      formatter: (m) => `CTA No. ${m[1]}`
+    },
+    {
+      type: "COURT_OF_APPEALS",
+      regex: /\bCA-G\.R\.\s*([A-Za-z0-9.-]+)\b/i,
+      formatter: (m) => `CA-G.R. ${m[1]}`
+    }
+  ];
+
+  for (const rule of patterns) {
+    const match = value.match(rule.regex);
+    if (match) {
+      return {
+        authorityType: rule.type,
+        issuanceNumber: compactSpaces(rule.formatter(match))
+      };
+    }
+  }
+
+  return {
+    authorityType: null,
+    issuanceNumber: ""
+  };
+}
+
+function detectAuthorityFromPathOrText(doc = {}) {
+  const path = lower(getDocPath(doc));
+  const original = lower(getDocOriginalName(doc));
+  const title = lower(doc.title || doc.source_title || "");
+  const allText = compactSpaces(
+    [getDocPath(doc), getDocOriginalName(doc), doc.title, doc.source_title]
+      .filter(Boolean)
+      .join(" ")
+  );
+
+  const explicit = extractIssuanceReference(allText);
+  if (explicit.authorityType) {
+    return explicit.authorityType;
+  }
+
+  if (path.includes("00_constitution") || original.includes("constitution")) {
+    return "CONSTITUTION";
+  }
+
+  if (path.includes("01_tax_code")) {
+    return "STATUTE";
+  }
+
+  if (path.includes("02_revenue_regulations")) {
+    return "RR";
+  }
+
+  if (path.includes("03_rmc")) {
+    return "RMC";
+  }
+
+  if (path.includes("04b_ramo")) {
+    return "RAMO";
+  }
+
+  if (path.includes("04_rmo")) {
+    return "RMO";
+  }
+
+  if (path.includes("05_bir_rulings")) {
+    return "BIR_RULING";
+  }
+
+  if (path.includes("05b_tax_treaties")) {
+    return "TREATY";
+  }
+
+  if (path.includes("06_court_cases")) {
+    if (original.includes("supreme court") || title.includes("supreme court")) {
+      return "SUPREME_COURT";
+    }
+    if (original.includes("cta en banc") || title.includes("cta en banc")) {
+      return "CTA_EN_BANC";
+    }
+    if (original.includes("court of appeals") || title.includes("court of appeals")) {
+      return "COURT_OF_APPEALS";
+    }
+    if (original.includes("cta") || title.includes("cta")) {
+      return "CTA_DIVISION";
+    }
+    return "CASE";
+  }
+
+  if (/\brr\s*\d+[-/]\d{2,4}\b/i.test(allText)) return "RR";
+  if (/\brmc\s*\d+[-/]\d{2,4}\b/i.test(allText)) return "RMC";
+  if (/\brmo\s*\d+[-/]\d{2,4}\b/i.test(allText)) return "RMO";
+  if (/\bramo\s*\d+[-/]\d{2,4}\b/i.test(allText)) return "RAMO";
+  if (/\b(republic act|ra)\s*(no\.?)?\s*\d{4,6}\b/i.test(allText)) return "STATUTE";
+
+  return "UNKNOWN";
+}
+
+const AUTHORITY_META = {
+  CONSTITUTION: { level: 1, label: "1987 Constitution", weight: 1.0 },
+  STATUTE: { level: 2, label: "Statute", weight: 0.98 },
+  TREATY: { level: 3, label: "Tax Treaty", weight: 0.96 },
+  SUPREME_COURT: { level: 4, label: "Supreme Court Decision", weight: 0.95 },
+  CTA_EN_BANC: { level: 5, label: "CTA En Banc Decision", weight: 0.93 },
+  COURT_OF_APPEALS: { level: 6, label: "Court of Appeals Decision", weight: 0.91 },
+  CTA_DIVISION: { level: 7, label: "CTA Division Decision", weight: 0.89 },
+  RR: { level: 8, label: "Revenue Regulation", weight: 0.84 },
+  RMC: { level: 9, label: "Revenue Memorandum Circular", weight: 0.78 },
+  RMO: { level: 10, label: "Revenue Memorandum Order", weight: 0.74 },
+  RAMO: { level: 11, label: "Revenue Audit Memorandum Order", weight: 0.72 },
+  BIR_RULING: { level: 12, label: "BIR Ruling", weight: 0.66 },
+  LGU: { level: 13, label: "Local Tax Ordinance", weight: 0.6 },
+  CASE: { level: 20, label: "Case", weight: 0.5 },
+  SECONDARY: { level: 90, label: "Secondary Material", weight: 0.35 },
+  UNKNOWN: { level: 99, label: "Unknown", weight: 0.1 }
+};
+
+export function getSourceTier(source = {}) {
+  const authorityType =
+    source.authorityType ||
+    source.authority_type ||
+    source.metadata?.authorityType ||
+    detectAuthorityFromPathOrText(source);
+
+  const meta = AUTHORITY_META[authorityType] || AUTHORITY_META.UNKNOWN;
+
+  return {
+    tier: meta.level,
+    label: meta.label,
+    weight: meta.weight,
+    authorityType
+  };
+}
+
+export function getUserId(req) {
+  return (
+    req.user?.id ||
+    req.user?.user_id ||
+    req.user?.sub ||
+    req.user?.username ||
+    req.user?.email ||
+    null
+  );
+}
+
+export function toSafeDbNumeric(value, max = 999999.9999, decimals = 4) {
+  const num = Number(value);
+
+  if (!Number.isFinite(num)) {
+    return 0;
+  }
+
+  return Number(Math.min(max, Math.max(0, num)).toFixed(decimals));
 }
 
 export function buildMemoryContext(messages = []) {
@@ -351,7 +400,7 @@ export function formatQuestionBlock({
 }
 
 export function shouldHideSourceFromUser(source = {}) {
-  const haystack = toSearchableText(source);
+  const haystack = lower(getSearchableSourceText(source));
   return HIDDEN_FOLDER_PATTERNS.some((pattern) => haystack.includes(pattern));
 }
 
@@ -387,63 +436,47 @@ export function buildGoogleDriveLinks(doc = {}) {
 }
 
 function inferIssuanceNumber(item = {}) {
-  const haystack = compactSpaces(
-    [
-      item.title,
-      item.source_title,
-      item.source,
-      item.originalSource,
-      item.original_source,
-      item.path,
-      item.source_path,
-      item.metadata?.path,
-      item.metadata?.normalizedReference,
-      item.normalizedReference
-    ]
-      .filter(Boolean)
-      .join(" ")
-  );
+  const text = [
+    item.issuanceNumber,
+    item.title,
+    item.source_title,
+    item.source,
+    item.originalSource,
+    item.original_source,
+    item.path,
+    item.source_path,
+    item.metadata?.path,
+    item.metadata?.normalizedReference,
+    item.normalizedReference
+  ]
+    .filter(Boolean)
+    .join(" ");
 
-  const patterns = [
-    /\b(1987 Constitution)\b/i,
-    /\b(Republic Act No\.?\s*\d{4,6})\b/i,
-    /\b(RA\s*\d{4,6})\b/i,
-    /\b(RR\s*(?:No\.?)?\s*\d+\s*[-/]\s*\d{2,4})\b/i,
-    /\b(RMC\s*(?:No\.?)?\s*\d+\s*[-/]\s*\d{2,4})\b/i,
-    /\b(RMO\s*(?:No\.?)?\s*\d+\s*[-/]\s*\d{2,4})\b/i,
-    /\b(RAMO\s*(?:No\.?)?\s*\d+\s*[-/]\s*\d{2,4})\b/i,
-    /\b(BIR Ruling\s*(?:No\.?)?\s*[\w./()-]+)\b/i,
-    /\b(G\.R\.\s*No\.?\s*[\w.-]+)\b/i,
-    /\b(CTA(?:\s+EB)?\s+No\.?\s*[\w.-]+)\b/i,
-    /\b(CA-G\.R\.\s*[\w.-]+)\b/i
-  ];
-
-  for (const pattern of patterns) {
-    const match = haystack.match(pattern);
-    if (match) {
-      return compactSpaces(match[1]);
-    }
-  }
-
-  return "";
+  return extractIssuanceReference(text).issuanceNumber || "";
 }
 
 function buildDocKey(doc = {}) {
   return (
     doc.fileId ||
     doc.file_id ||
-    doc.id ||
     doc.metadata?.fileId ||
     doc.metadata?.file_id ||
-    doc.path ||
-    doc.source_path ||
-    doc.metadata?.path ||
-    doc.originalSource ||
-    doc.original_source ||
-    doc.source ||
-    doc.title ||
+    normalizeForMatch(doc.issuanceNumber) ||
+    normalizeForMatch(getDocPath(doc)) ||
+    normalizeForMatch(getDocOriginalName(doc)) ||
+    normalizeForMatch(doc.source) ||
     JSON.stringify(doc)
   );
+}
+
+function safeNumber(...values) {
+  for (const value of values) {
+    const num = Number(value);
+    if (Number.isFinite(num)) {
+      return num;
+    }
+  }
+  return 0;
 }
 
 export function buildSourceResponseItem(item = {}) {
@@ -451,20 +484,13 @@ export function buildSourceResponseItem(item = {}) {
   const path = getDocPath(item);
   const originalSource = getDocOriginalName(item);
   const tierInfo = getSourceTier(item);
-  const title =
-    cleanDisplayTitle(
-      item.title ||
-        item.source_title ||
-        item.metadata?.documentTitle ||
-        item.metadata?.originalFileName ||
-        originalSource ||
-        item.source ||
-        path
-    ) || "Untitled Source";
+  const issuanceNumber = inferIssuanceNumber(item);
+  const title = cleanDisplayTitle(item);
 
   return {
     title,
-    issuanceNumber: inferIssuanceNumber(item),
+    issuanceNumber,
+    displayTitle: issuanceNumber || title,
     source: item.source || originalSource || path || "Untitled Source",
     originalSource,
     path,
@@ -474,25 +500,27 @@ export function buildSourceResponseItem(item = {}) {
     driveDownloadUrl: links.driveDownloadUrl,
     text: item.text || "",
     preview: item.preview || (item.text ? String(item.text).slice(0, 300) : ""),
-    score: Number(item.score ?? item.adjustedScore ?? item.finalScore ?? item.combined_score ?? 0),
-    adjustedScore: Number(
-      item.adjustedScore ?? item.finalScore ?? item.combined_score ?? item.score ?? 0
-    ),
+    score: safeNumber(item.score, item.adjustedScore, item.finalScore, item.combined_score),
+    adjustedScore: safeNumber(item.adjustedScore, item.finalScore, item.combined_score, item.score),
     authorityType:
       item.authorityType ||
       item.authority_type ||
       item.metadata?.authorityType ||
       tierInfo.authorityType,
     authorityLevel:
-      item.authorityLevel ||
-      item.authority_level ||
-      item.metadata?.authorityLevel ||
-      tierInfo.tier,
+      safeNumber(
+        item.authorityLevel,
+        item.authority_level,
+        item.metadata?.authorityLevel,
+        tierInfo.tier
+      ) || tierInfo.tier,
     authorityScore:
-      item.authorityScore ||
-      item.authority_score ||
-      item.metadata?.authorityScore ||
-      tierInfo.weight,
+      safeNumber(
+        item.authorityScore,
+        item.authority_score,
+        item.metadata?.authorityScore,
+        tierInfo.weight
+      ) || tierInfo.weight,
     authorityLabel:
       item.authorityLabel ||
       item.authority_label ||
@@ -507,29 +535,17 @@ export function uniqueSources(docs = []) {
   return docs
     .map((doc) => buildSourceResponseItem(doc))
     .filter((doc) => {
-      const key =
-        doc.fileId ||
-        normalizeForMatch(doc.path) ||
-        normalizeForMatch(doc.originalSource) ||
-        normalizeForMatch(doc.source);
-
+      const key = buildDocKey(doc);
       if (!key || seen.has(key)) {
         return false;
       }
-
       seen.add(key);
       return true;
     });
 }
 
 function isClickableSource(item = {}) {
-  return Boolean(
-    item.driveViewUrl ||
-      item.fileId ||
-      item.path ||
-      item.sourcePath ||
-      item.originalSource
-  );
+  return Boolean(item.driveViewUrl || item.fileId);
 }
 
 export function filterVisibleSources(
@@ -687,6 +703,7 @@ export function normalizeIssuanceNumber(num = "") {
 
 export function normalizeIssuanceYear(year = "") {
   const y = String(year || "").trim();
+  if (!y) return "";
   return y.length === 2 ? `20${y}` : y;
 }
 
@@ -697,22 +714,22 @@ export function detectIssuanceQuery(question = "") {
     {
       type: "RR",
       regex:
-        /\b(?:RR|Revenue\s+Regulation[s]?)\s*(?:No\.?)?\s*0*(\d+)[\s\-_]?(\d{2,4})\b/i
+        /\b(?:RR|Revenue\s+Regulation[s]?)\s*(?:No\.?)?\s*0*(\d+)[\s\-_\/]?(\d{2,4})\b/i
     },
     {
       type: "RMC",
       regex:
-        /\b(?:RMC|Revenue\s+Memorandum\s+Circular[s]?)\s*(?:No\.?)?\s*0*(\d+)[\s\-_]?(\d{2,4})\b/i
+        /\b(?:RMC|Revenue\s+Memorandum\s+Circular[s]?)\s*(?:No\.?)?\s*0*(\d+)[\s\-_\/]?(\d{2,4})\b/i
     },
     {
       type: "RMO",
       regex:
-        /\b(?:RMO|Revenue\s+Memorandum\s+Order[s]?)\s*(?:No\.?)?\s*0*(\d+)[\s\-_]?(\d{2,4})\b/i
+        /\b(?:RMO|Revenue\s+Memorandum\s+Order[s]?)\s*(?:No\.?)?\s*0*(\d+)[\s\-_\/]?(\d{2,4})\b/i
     },
     {
       type: "RAMO",
       regex:
-        /\b(?:RAMO|Revenue\s+Audit\s+Memorandum\s+Order[s]?)\s*(?:No\.?)?\s*0*(\d+)[\s\-_]?(\d{2,4})\b/i
+        /\b(?:RAMO|Revenue\s+Audit\s+Memorandum\s+Order[s]?)\s*(?:No\.?)?\s*0*(\d+)[\s\-_\/]?(\d{2,4})\b/i
     }
   ];
 
