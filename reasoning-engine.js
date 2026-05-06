@@ -1,5 +1,13 @@
 // FILE: reasoning-engine.js
 
+import {
+  AUTHORITY_LEVEL,
+  AUTHORITY_LABEL,
+  CONTROLLING_PRECEDENCE,
+  normalizeLegalReference,
+  classifyAuthorityFromDocument
+} from "./authority-engine.js";
+
 function safeString(value) {
   return String(value || "").trim();
 }
@@ -19,6 +27,7 @@ function normalizeSourceName(name = "") {
     .replace(/revenue regulation[s]?/g, "rr")
     .replace(/revenue memorandum circular[s]?/g, "rmc")
     .replace(/revenue memorandum order[s]?/g, "rmo")
+    .replace(/revenue audit memorandum order[s]?/g, "ramo")
     .replace(/\brev\.?\s*reg\.?\b/g, "rr")
     .replace(/\brev\.?\s*memo\.?\s*circular\b/g, "rmc")
     .replace(/\brev\.?\s*memo\.?\s*order\b/g, "rmo")
@@ -72,9 +81,24 @@ function buildDocIdentity(doc = {}) {
   );
 }
 
+function getAuthorityType(doc = {}) {
+  return (
+    doc.authority_type ||
+    doc.authorityType ||
+    doc.metadata?.authorityType ||
+    classifyAuthorityFromDocument({
+      fileName: doc.source || doc.originalSource || "",
+      path: getDocPath(doc),
+      text: doc.text || ""
+    })
+  );
+}
+
 function inferAuthorityTier(doc = {}) {
   const explicitTier =
     doc.authority_tier ??
+    doc.authorityLevel ??
+    doc.metadata?.authorityLevel ??
     doc.metadata?.authorityTier ??
     doc.sourceTier?.tier;
 
@@ -82,45 +106,56 @@ function inferAuthorityTier(doc = {}) {
     return Number(explicitTier);
   }
 
-  const value = `${getDocPath(doc)} ${getDocOriginalName(doc)} ${doc.source || ""}`.toLowerCase();
+  const authorityType = getAuthorityType(doc);
+  return AUTHORITY_LEVEL[authorityType] || 99;
+}
 
-  if (value.includes("01_tax_code")) return 1;
-  if (value.includes("02_revenue_regulations")) return 2;
-  if (value.includes("03_rmc")) return 3;
-  if (value.includes("04_rmo")) return 4;
-  if (value.includes("05_bir_rulings")) return 5;
-  if (value.includes("06_court_cases")) return 6;
-  if (value.includes("07_cpa_notes")) return 7;
+function inferControllingPrecedence(doc = {}) {
+  const explicit =
+    doc.controlling_precedence ??
+    doc.controllingPrecedence ??
+    doc.metadata?.controllingPrecedence;
 
-  return 99;
+  if (Number.isFinite(Number(explicit))) {
+    return Number(explicit);
+  }
+
+  const authorityType = getAuthorityType(doc);
+  return CONTROLLING_PRECEDENCE[authorityType] || 99;
 }
 
 function authorityWeight(tier = 99) {
-  if (tier === 1) return 1.0;
-  if (tier === 2) return 0.95;
-  if (tier === 3) return 0.9;
-  if (tier === 4) return 0.85;
-  if (tier === 5) return 0.75;
-  if (tier === 6) return 0.6;
-  if (tier === 7) return 0.4;
-  return 0.5;
+  if (tier <= 2) return 1.0;
+  if (tier <= 4) return 0.97;
+  if (tier <= 7) return 0.94;
+  if (tier === 8) return 0.9;
+  if (tier === 9) return 0.82;
+  if (tier <= 11) return 0.76;
+  if (tier === 12) return 0.68;
+  if (tier === 13) return 0.62;
+  return 0.35;
 }
 
-function inferAuthorityLabel(tier = 99) {
-  if (tier === 1) return "Tax Code / NIRC";
-  if (tier === 2) return "Revenue Regulations";
-  if (tier === 3) return "Revenue Memorandum Circulars";
-  if (tier === 4) return "Revenue Memorandum Orders";
-  if (tier === 5) return "BIR Rulings";
-  if (tier === 6) return "Court Cases";
-  if (tier === 7) return "CPA Notes / Internal Notes";
-  return "Unclassified Source";
+function inferAuthorityLabel(tier = 99, doc = {}) {
+  const authorityType = getAuthorityType(doc);
+  return AUTHORITY_LABEL[authorityType] || AUTHORITY_LABEL.SECONDARY || "Unclassified Source";
 }
 
 function inferEvidenceType(doc = {}) {
-  const tier = inferAuthorityTier(doc);
-  if (tier <= 4) return "primary";
-  if (tier <= 6) return "interpretive";
+  const authorityType = getAuthorityType(doc);
+
+  if (
+    ["CONSTITUTION", "STATUTE", "TREATY", "SUPREME_COURT", "CTA_EN_BANC", "COURT_OF_APPEALS", "CTA_DIVISION"].includes(
+      authorityType
+    )
+  ) {
+    return "primary";
+  }
+
+  if (["RR", "RMC", "RMO", "RAMO", "BIR_RULING", "LGU"].includes(authorityType)) {
+    return "interpretive";
+  }
+
   return "secondary";
 }
 
@@ -187,6 +222,99 @@ function classifyEvidenceTopic(doc = {}) {
   );
 }
 
+function lexicalTopicTokens(text = "") {
+  return lower(text)
+    .replace(/[^a-z0-9\s]/g, " ")
+    .split(/\s+/)
+    .filter((token) => token.length >= 4)
+    .filter(
+      (token) =>
+        ![
+          "shall",
+          "where",
+          "which",
+          "under",
+          "there",
+          "their",
+          "this",
+          "that",
+          "with",
+          "from",
+          "have",
+          "been",
+          "were",
+          "when",
+          "what",
+          "than",
+          "into",
+          "also",
+          "only"
+        ].includes(token)
+    );
+}
+
+function hasMeaningfulTopicOverlap(a = "", b = "") {
+  const setA = new Set(lexicalTopicTokens(a));
+  const setB = new Set(lexicalTopicTokens(b));
+
+  if (!setA.size || !setB.size) return false;
+
+  let hits = 0;
+  for (const token of setA) {
+    if (setB.has(token)) hits += 1;
+    if (hits >= 3) return true;
+  }
+
+  return false;
+}
+
+function looksContradictory(a = "", b = "") {
+  const x = lower(a);
+  const y = lower(b);
+
+  if (!x || !y || x === y) return false;
+
+  const negPatterns = [
+    /\bnot\b/,
+    /\bexcept\b/,
+    /\bunless\b/,
+    /\bexempt\b/,
+    /\bdisallowed\b/,
+    /\bprohibited\b/,
+    /\binvalid\b/,
+    /\bexcluded\b/,
+    /\bsubject to\b/
+  ];
+
+  const xNeg = negPatterns.some((pattern) => pattern.test(x));
+  const yNeg = negPatterns.some((pattern) => pattern.test(y));
+
+  if (xNeg === yNeg) return false;
+
+  return hasMeaningfulTopicOverlap(x, y);
+}
+
+function isCourtAuthority(authorityType = "") {
+  return ["SUPREME_COURT", "CTA_EN_BANC", "COURT_OF_APPEALS", "CTA_DIVISION"].includes(
+    authorityType
+  );
+}
+
+function isBIRAuthority(authorityType = "") {
+  return ["RR", "RMC", "RMO", "RAMO", "BIR_RULING"].includes(authorityType);
+}
+
+function buildConflictResolutionBasis(aType = "", bType = "", controllingType = "") {
+  if (
+    (isCourtAuthority(aType) && isBIRAuthority(bType)) ||
+    (isCourtAuthority(bType) && isBIRAuthority(aType))
+  ) {
+    return "Court decision prevails over conflicting BIR issuance.";
+  }
+
+  return `Prefer ${controllingType} based on higher controlling authority and verify effective dates.`;
+}
+
 function compareEvidencePair(a, b) {
   const sameTopic = classifyEvidenceTopic(a) === classifyEvidenceTopic(b);
   if (!sameTopic) return null;
@@ -196,26 +324,35 @@ function compareEvidencePair(a, b) {
 
   if (!textA || !textB) return null;
   if (textA === textB) return null;
+  if (!looksContradictory(textA, textB)) return null;
 
-  const negWords = ["not", "except", "unless", "prohibited", "disallowed", "invalid"];
-  const hasNegA = negWords.some((word) => textA.includes(word));
-  const hasNegB = negWords.some((word) => textB.includes(word));
+  const aType = getAuthorityType(a.raw || a);
+  const bType = getAuthorityType(b.raw || b);
 
-  if (hasNegA !== hasNegB) {
-    return {
-      conflict_topic: classifyEvidenceTopic(a),
-      source_a_path: getDocPath(a),
-      source_b_path: getDocPath(b),
-      source_a_claim: safeString(a.text).slice(0, 500),
-      source_b_claim: safeString(b.text).slice(0, 500),
-      preferred_source_path:
-        inferAuthorityTier(a) <= inferAuthorityTier(b) ? getDocPath(a) : getDocPath(b),
-      conflict_reason: "Potential contradiction detected from opposing rule language.",
-      resolution_basis: "Prefer higher-authority source and verify effective dates."
-    };
-  }
+  const aPrecedence = inferControllingPrecedence(a.raw || a);
+  const bPrecedence = inferControllingPrecedence(b.raw || b);
 
-  return null;
+  const preferred = aPrecedence <= bPrecedence ? a : b;
+  const controllingType = aPrecedence <= bPrecedence ? aType : bType;
+
+  return {
+    conflict_topic: classifyEvidenceTopic(a),
+    source_a_path: getDocPath(a.raw || a),
+    source_b_path: getDocPath(b.raw || b),
+    source_a_claim: safeString(a.text || a.claim_text).slice(0, 500),
+    source_b_claim: safeString(b.text || b.claim_text).slice(0, 500),
+    source_a_type: aType,
+    source_b_type: bType,
+    preferred_source_path: getDocPath(preferred.raw || preferred),
+    controlling_authority: controllingType,
+    conflict_reason:
+      isCourtAuthority(aType) && isBIRAuthority(bType)
+        ? "Potential conflict detected between court doctrine and BIR issuance."
+        : isCourtAuthority(bType) && isBIRAuthority(aType)
+          ? "Potential conflict detected between BIR issuance and court doctrine."
+          : "Potential contradiction detected from opposing rule language.",
+    resolution_basis: buildConflictResolutionBasis(aType, bType, controllingType)
+  };
 }
 
 function extractTopClaims(answerDraft = "") {
@@ -226,41 +363,23 @@ function extractTopClaims(answerDraft = "") {
     .slice(0, 12);
 }
 
+function buildCitationCandidates(normalized) {
+  const raw = safeString(normalized.raw);
+  const aliases = Array.isArray(normalized.aliases) ? normalized.aliases : [];
+
+  return uniqueBy(
+    [normalized.normalized, raw, ...aliases]
+      .filter(Boolean)
+      .map((value) => safeString(value)),
+    (value) => value.toLowerCase()
+  );
+}
+
 export async function resolveExactCitation(supabase, query) {
   const cleanQuery = safeString(query);
+  const normalized = normalizeLegalReference(cleanQuery);
 
-  const patterns = [
-    {
-      type: "RR",
-      regex: /\b(?:rr|revenue\s+regulation[s]?)\s*(?:no\.?)?\s*0*(\d+)[\s\-_]?(\d{2,4})\b/i
-    },
-    {
-      type: "RMC",
-      regex: /\b(?:rmc|revenue\s+memorandum\s+circular[s]?)\s*(?:no\.?)?\s*0*(\d+)[\s\-_]?(\d{2,4})\b/i
-    },
-    {
-      type: "RMO",
-      regex: /\b(?:rmo|revenue\s+memorandum\s+order[s]?)\s*(?:no\.?)?\s*0*(\d+)[\s\-_]?(\d{2,4})\b/i
-    }
-  ];
-
-  let matchInfo = null;
-
-  for (const pattern of patterns) {
-    const match = cleanQuery.match(pattern.regex);
-    if (match) {
-      const number = String(match[1]).replace(/^0+/, "") || "0";
-      const year = String(match[2]).length === 2 ? `20${match[2]}` : String(match[2]);
-      matchInfo = {
-        type: pattern.type,
-        number,
-        year
-      };
-      break;
-    }
-  }
-
-  if (!matchInfo) {
+  if (!normalized.type) {
     return {
       matched: false,
       query: cleanQuery,
@@ -269,48 +388,60 @@ export async function resolveExactCitation(supabase, query) {
     };
   }
 
-  const candidateStrings = uniqueBy(
-    [
-      `${matchInfo.type} ${matchInfo.number}-${matchInfo.year}`,
-      `${matchInfo.type} No. ${matchInfo.number}-${matchInfo.year}`,
-      `${matchInfo.type}-${matchInfo.number}-${matchInfo.year}`,
-      `${matchInfo.type}_${matchInfo.number}-${matchInfo.year}`,
-      `${matchInfo.type}${matchInfo.number}-${matchInfo.year}`
-    ],
-    (value) => value
-  );
+  const candidateStrings = buildCitationCandidates(normalized);
+
+  const sourceOrClauses = candidateStrings
+    .map((value) => `source.ilike.%${value}%`)
+    .concat(candidateStrings.map((value) => `path.ilike.%${value}%`));
 
   const { data, error } = await supabase
     .from("tina_vector_store")
     .select("*")
-    .or(candidateStrings.map((value) => `source.ilike.%${value}%`).join(","))
-    .limit(25);
+    .or(sourceOrClauses.join(","))
+    .limit(40);
 
   if (error) {
     throw new Error(`resolveExactCitation failed: ${error.message}`);
   }
 
+  const normalizedNeedle = safeString(normalized.normalized).toLowerCase();
+
   const documents = (data || []).filter((doc) => {
     const haystack = [
       doc.source,
+      doc.path,
       doc.original_source,
       doc.metadata?.originalSource,
       doc.metadata?.originalFileName,
-      doc.metadata?.path
+      doc.metadata?.path,
+      doc.normalizedReference,
+      doc.metadata?.normalizedReference,
+      ...(doc.normalizedAliases || []),
+      ...(doc.metadata?.normalizedAliases || [])
     ]
       .filter(Boolean)
-      .map(normalizeForMatch)
+      .map((value) => normalizeForMatch(String(value)))
       .join(" ");
 
-    return candidateStrings
-      .map(normalizeForMatch)
+    const aliasHit = candidateStrings
+      .map((candidate) => normalizeForMatch(candidate))
       .some((candidate) => haystack.includes(candidate));
+
+    const normalizedReference = normalizeForMatch(
+      doc.normalizedReference || doc.metadata?.normalizedReference || ""
+    );
+
+    return aliasHit || (normalizedNeedle && normalizedReference.includes(normalizeForMatch(normalizedNeedle)));
   });
 
   return {
-    matched: true,
+    matched: documents.length > 0,
     query: cleanQuery,
-    citation: matchInfo,
+    citation: {
+      normalizedReference: normalized.normalized,
+      type: normalized.type,
+      aliases: normalized.aliases || []
+    },
     documents
   };
 }
@@ -386,6 +517,7 @@ export async function hybridRetrieve({
     const textBlob = [
       doc.text,
       doc.source,
+      doc.path,
       doc.metadata?.path,
       doc.metadata?.originalSource,
       doc.metadata?.topic,
@@ -404,6 +536,8 @@ export async function hybridRetrieve({
       score: vectorScore || keywordScore,
       keyword_score: keywordScore,
       authority_tier: tier,
+      authority_type: getAuthorityType(doc),
+      controlling_precedence: inferControllingPrecedence(doc),
       combined_score: combinedScore,
       question_type: questionType
     };
@@ -426,6 +560,7 @@ export async function hybridRetrieve({
 export function normalizeRetrievedEvidence(docs = []) {
   return docs.map((doc) => {
     const authorityTier = inferAuthorityTier(doc);
+    const authorityType = getAuthorityType(doc);
     const rawScore = safeNumber(doc.combined_score || doc.score || doc.keyword_score || 0, 0);
 
     return {
@@ -437,7 +572,9 @@ export function normalizeRetrievedEvidence(docs = []) {
       source_title: getDocOriginalName(doc) || safeString(doc.source),
       section_label: safeString(doc.metadata?.sectionLabel || doc.metadata?.heading || ""),
       authority_tier: authorityTier,
-      authority_label: inferAuthorityLabel(authorityTier),
+      authority_type: authorityType,
+      authority_label: inferAuthorityLabel(authorityTier, doc),
+      controlling_precedence: inferControllingPrecedence(doc),
       evidence_type: inferEvidenceType(doc),
       effective_date: inferEffectiveDate(doc),
       score: rawScore,
@@ -472,6 +609,13 @@ export function detectEvidenceConflicts(evidence = []) {
 
 export function rankEvidenceByAuthority(evidence = []) {
   return [...evidence].sort((a, b) => {
+    const aPrecedence = safeNumber(a.controlling_precedence, 99);
+    const bPrecedence = safeNumber(b.controlling_precedence, 99);
+
+    if (aPrecedence !== bPrecedence) {
+      return aPrecedence - bPrecedence;
+    }
+
     const scoreDiff = safeNumber(b.score, 0) - safeNumber(a.score, 0);
     if (scoreDiff !== 0) return scoreDiff;
 
@@ -512,6 +656,7 @@ export function buildClaimEvidenceMap(answerDraft, evidence = []) {
           source_title: item.source_title || null,
           vector_chunk_id: item.vector_chunk_id || null,
           authority_tier: item.authority_tier ?? null,
+          authority_type: item.authority_type ?? null,
           evidence_score: Number(evidenceScore.toFixed(4))
         };
       })
@@ -524,6 +669,7 @@ export function buildClaimEvidenceMap(answerDraft, evidence = []) {
       source_title: null,
       vector_chunk_id: null,
       authority_tier: null,
+      authority_type: null,
       evidence_score: 0
     };
   });
@@ -547,7 +693,8 @@ export async function synthesizeGroundedAnswer({
       return [
         `SOURCE ${index + 1}: ${item.source_title || "Untitled Source"}`,
         `PATH: ${item.source_path || "Unknown"}`,
-        `AUTHORITY TIER: ${item.authority_tier} - ${item.authority_label}`,
+        `AUTHORITY: ${item.authority_label || "Unknown"} (Tier ${item.authority_tier})`,
+        `CONTROLLING PRECEDENCE: ${item.controlling_precedence ?? 99}`,
         `SECTION: ${item.section_label || "N/A"}`,
         `SCORE: ${item.score}`,
         `TEXT:`,
@@ -557,12 +704,10 @@ export async function synthesizeGroundedAnswer({
     .join("\n\n---\n\n");
 
   const systemPrompt = `
-You are TINA, a Philippine tax research, compliance, education, and audit-risk assistant for Bong Corpuz & Co. CPAs.
+You are TINA (Tax Intelligence and Analysis), an expert Philippine tax researcher and analyst for Bong Corpuz & Co. CPAs.
 
 ACTIVE HOOK MODE:
 ${hookConfig?.mode || "ASK"}
-
-You must follow the ACTIVE HOOK MODE behavior strictly.
 
 CORE BEHAVIOR:
 - precise
@@ -572,60 +717,42 @@ CORE BEHAVIOR:
 - no hallucinations
 - no unsupported legal conclusions
 
-SOURCE AUTHORITY HIERARCHY:
-Tier 1: NIRC / Tax Code
-Tier 2: Revenue Regulations
-Tier 3: Revenue Memorandum Circulars
-Tier 4: Revenue Memorandum Orders
-Tier 5: BIR Rulings
-Tier 6: Court Cases
-Tier 7: CPA Notes / Internal Notes
+AUTHORITY HIERARCHY:
+1. 1987 Constitution
+2. NIRC / Tax Code / Republic Acts amending tax law
+3. Tax Treaties
+4. Supreme Court
+5. CTA En Banc
+6. Court of Appeals
+7. CTA Division
+8. Revenue Regulations
+9. Revenue Memorandum Circulars
+10. Revenue Memorandum Orders
+11. Revenue Audit Memorandum Orders
+12. BIR Rulings
+13. Local Tax Ordinances
+14. Secondary materials
 
 STRICT RULES:
 1. Answer ONLY from the provided CONTEXT when indexed context is available.
 2. Do NOT use general knowledge, assumptions, or memory to add legal bases not shown in CONTEXT.
-3. Do NOT invent RR, RMC, RMO, BIR rulings, dates, sections, rates, forms, thresholds, deadlines, case doctrines, or citations.
+3. Do NOT invent RR, RMC, RMO, RAMO, BIR rulings, dates, sections, rates, forms, thresholds, deadlines, case doctrines, or citations.
 4. If a specific issuance is asked and the exact issuance is not in CONTEXT, say: "No indexed document found for the requested issuance."
-5. Prefer higher authority sources over lower authority sources.
-6. If sources conflict, identify the conflict and prefer the higher authority source.
-7. Use court cases as interpretative authority, not as substitute for statute/regulation unless the question asks about case doctrine.
-8. Use CPA notes only as internal guidance, not primary authority.
-9. Always cite exact filename/path shown in CONTEXT.
-10. Do not mention ChatGPT.
-11. Do not overstate certainty. State limitations clearly.
-12. For computations, show formula only if the formula is found or reasonably derived from the context. If not, state that computation support is insufficient.
-13. For audit-risk questions, separate legal basis, exposure, evidence needed, and recommended next steps.
+5. If a court decision conflicts with a BIR issuance, the court decision prevails.
+6. Prefer higher controlling authority sources over lower authority sources.
+7. Use exact filenames/path shown in CONTEXT only.
+8. Do not mention ChatGPT.
+9. Do not overstate certainty. State limitations clearly.
+10. For computations, show formula only if found or reasonably derived from the context.
+11. Use exact thresholds and dates when visible; do not paraphrase loosely.
 
-MODE-SPECIFIC OUTPUT RULES:
-
-ASK MODE:
-Use:
-Short Answer
-Explanation
-Practical Note
-Confidence
-Sources Used
-
-TAX_EXPERT MODE:
-Use:
-Executive Answer
-Issue
-Applicable Source / Legal Basis
-Analysis
-Practical Compliance / Audit Implication
-Recommended Action
-Limitations
-Confidence
-Sources Used
-
-SOURCE_FINDER MODE:
-Use:
-Best Matching Source
-Document / Regulation / Case Title
-Relevant Section or Keyword
-Short Summary
-Confidence
-Sources Used
+RESPONSE FORMAT:
+1. DIRECT ANSWER
+2. LEGAL BASIS
+3. SUPPORTING RULES
+4. PROFESSIONAL INSIGHT
+5. CONFLICT FLAG
+6. SOURCES
 `.trim();
 
   const userPrompt = `
@@ -657,8 +784,8 @@ ${
         .map((item, index) =>
           [
             `Conflict ${index + 1}: ${item.conflict_topic || "general"}`,
-            `Source A: ${item.source_a_path || "N/A"}`,
-            `Source B: ${item.source_b_path || "N/A"}`,
+            `Source A: ${item.source_a_path || "N/A"} (${item.source_a_type || "Unknown"})`,
+            `Source B: ${item.source_b_path || "N/A"} (${item.source_b_type || "Unknown"})`,
             `Reason: ${item.conflict_reason || "Potential contradiction"}`,
             `Preferred Source: ${item.preferred_source_path || "N/A"}`,
             `Resolution Basis: ${item.resolution_basis || "Prefer higher authority"}`
@@ -672,7 +799,7 @@ CONTEXT:
 ${context}
 
 Instruction:
-Answer strictly using only the CONTEXT. Apply the source hierarchy and the active hook mode.
+Answer strictly using only the CONTEXT. Apply the full source hierarchy and the active hook mode.
 `.trim();
 
   const response = await openai.chat.completions.create({
