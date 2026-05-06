@@ -1,6 +1,11 @@
 // FILE: named-law-engine.js
 
-import { AUTHORITY_LEVEL, classifyAuthorityFromDocument } from "./authority-engine.js";
+import {
+  AUTHORITY_LEVEL,
+  classifyAuthorityFromDocument,
+  resolveCourtOverride,
+  isGenuineConflict
+} from "./authority-engine.js";
 
 const OFFICIAL_SOURCES = {
   LAWPHIL: "https://lawphil.net",
@@ -76,7 +81,7 @@ function buildDocHaystack(doc = {}) {
       doc.path,
       doc.source_path,
       doc.title,
-      doc.text?.slice(0, 2000),
+      doc.text?.slice(0, 2500),
       doc.metadata?.path,
       doc.metadata?.originalSource,
       doc.metadata?.originalFileName,
@@ -105,6 +110,12 @@ function detectDocAuthorityType(doc = {}) {
     path: getDocPath(doc),
     text: doc.text || ""
   });
+}
+
+function isPrimaryAuthorityType(authorityType = "") {
+  return ["CONSTITUTION", "STATUTE", "TREATY"].includes(
+    String(authorityType || "").toUpperCase()
+  );
 }
 
 function authorityWeightForNamedLaw(authorityType = "") {
@@ -158,6 +169,25 @@ function extractIssuanceRefs(text = "") {
       const year = String(match[2]).length === 2 ? `20${match[2]}` : String(match[2]);
       refs.push(`${type}-${String(match[1]).replace(/^0+/, "")}-${year}`);
     }
+  }
+
+  return uniq(refs);
+}
+
+function extractCourtAnchors(text = "") {
+  const value = normalizeLawText(text);
+  const refs = [];
+
+  for (const match of value.matchAll(/\bg\.?\s*r\.?\s*no\.?\s*([a-z0-9.-]+)\b/g)) {
+    refs.push(`gr-${String(match[1]).toUpperCase()}`);
+  }
+
+  for (const match of value.matchAll(/\bcta\s+case\s+no\.?\s*([a-z0-9.-]+)\b/g)) {
+    refs.push(`cta-${String(match[1]).toUpperCase()}`);
+  }
+
+  for (const match of value.matchAll(/\bcta\s+eb\s+no\.?\s*([a-z0-9.-]+)\b/g)) {
+    refs.push(`ctaeb-${String(match[1]).toUpperCase()}`);
   }
 
   return uniq(refs);
