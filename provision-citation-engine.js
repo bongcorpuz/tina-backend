@@ -1,7 +1,13 @@
 // FILE: provision-citation-engine.js
 
-import { classifyAuthorityFromDocument, AUTHORITY_LEVEL } from "./authority-engine.js";
+import {
+  classifyAuthorityFromDocument,
+  AUTHORITY_LEVEL,
+  resolveCourtOverride,
+  isGenuineConflict
+} from "./authority-engine.js";
 import { normalizeLegalReference } from "./authority-engine.js";
+import { applySupersessionFilter } from "./supersession-engine.js";
 
 function normalizeText(value = "") {
   return String(value || "").replace(/\s+/g, " ").trim();
@@ -143,7 +149,8 @@ function buildProvisionMatchBonus(question = "", doc = {}) {
         doc.path,
         doc.source_path,
         doc.metadata?.path,
-        doc.metadata?.normalizedReference
+        doc.metadata?.normalizedReference,
+        doc.normalizedReference
       ]
         .filter(Boolean)
         .join(" ")
@@ -158,7 +165,13 @@ function buildProvisionMatchBonus(question = "", doc = {}) {
 }
 
 function rankProvisionDocs(results = [], question = "") {
-  return [...results].sort((a, b) => {
+  const supersessionResult = applySupersessionFilter(results || []);
+  const activeDocs =
+    supersessionResult?.activeDocs?.length > 0
+      ? supersessionResult.activeDocs
+      : results || [];
+
+  return [...activeDocs].sort((a, b) => {
     const aLevel = getAuthorityLevel(a);
     const bLevel = getAuthorityLevel(b);
 
@@ -173,6 +186,13 @@ function rankProvisionDocs(results = [], question = "") {
 
     const aComposite = aScore + aBonus;
     const bComposite = bScore + bBonus;
+
+    const override = isGenuineConflict(a, b) ? resolveCourtOverride(a, b) : null;
+
+    if (override?.overrideApplies) {
+      if (override.winningSource === a) return -1;
+      if (override.winningSource === b) return 1;
+    }
 
     const courtVsBirA = isCourtAuthority(aType) && isBIRAuthority(bType);
     const courtVsBirB = isCourtAuthority(bType) && isBIRAuthority(aType);
@@ -252,7 +272,7 @@ Your job:
 2. Answer ONLY from the retrieved sources provided.
 3. Follow this authority order:
    Constitution > Statute / NIRC / Republic Act > Treaty > Supreme Court > CTA En Banc > Court of Appeals > CTA Division > RR > RMC > RMO > RAMO > BIR Ruling > LGU > Secondary.
-4. If a court decision conflicts with a BIR issuance, the court decision prevails.
+4. If a court decision genuinely conflicts with a BIR issuance, the court decision prevails.
 5. If a specific section/article/provision is identifiable, cite it clearly.
 6. If no exact provision is visible in the excerpts, do not invent one.
 7. If exact citation is uncertain, say: "Exact provision not fully visible in retrieved text."
@@ -270,6 +290,7 @@ Strict rules:
 - Do not hallucinate section numbers, case numbers, dates, or issuance numbers.
 - Never cite a source for a point it does not actually cover.
 - Do not use vague conflict language.
+- Only flag conflicts for real contradictions, not minor wording differences.
 - If a conflict exists, identify the higher authority that controls.
 `.trim();
 
@@ -301,7 +322,8 @@ ${contextBlock}
 
     return {
       handled: true,
-      answer
+      answer,
+      topDocs
     };
   } catch (error) {
     console.error("maybeGenerateProvisionCitationAnswer error:", error.message);
