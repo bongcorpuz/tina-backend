@@ -33,6 +33,24 @@ function dedupe(values = []) {
   return [...new Set(values.filter(Boolean))];
 }
 
+function compactSpaces(value = "") {
+  return normalizeText(value).replace(/\s+/g, " ");
+}
+
+function stripFileExtension(value = "") {
+  return String(value || "").replace(/\.(pdf|docx|doc|txt|md|csv|json)$/i, "");
+}
+
+function stripFolderPrefixes(value = "") {
+  return String(value || "")
+    .replace(/(^|\/)(00_constitution|01_tax_code|02_revenue_regulations|03_rmc|04_rmo|04b_ramo|05_bir_rulings|05b_tax_treaties|06_court_cases|07_cpa_notes|08_review_materials)(\/|$)/gi, " ")
+    .replace(/\b(19|20)\d{2}\b/g, " ")
+    .replace(/[\\/]+/g, " ")
+    .replace(/[_]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 function stripInventedSourceSections(text = "") {
   return String(text || "")
     .replace(/\n+\s*6\.\s*SOURCES[\s\S]*$/i, "")
@@ -101,174 +119,36 @@ function normalizeAuthorityType(value = "") {
   return raw;
 }
 
-function formatDocType(doc = {}) {
-  const authorityType = normalizeAuthorityType(
-    doc.authorityType ||
-      doc.authority_type ||
-      doc.authorityLabel ||
-      doc.authority_label ||
-      doc.metadata?.authorityType ||
-      ""
-  );
-
-  const path = normalizeLooseText(
-    doc.path ||
-      doc.source_path ||
-      doc.originalSource ||
-      doc.source ||
-      doc.title ||
-      doc.metadata?.path ||
-      ""
-  );
-
-  if (authorityType === "CONSTITUTION" || path.includes("00_constitution")) return "Constitution";
-  if (authorityType === "STATUTE" || path.includes("01_tax_code")) return "Statute";
-  if (authorityType === "TREATY" || path.includes("05b_tax_treaties")) return "Treaty";
-  if (authorityType === "SUPREME_COURT") return "Supreme Court";
-  if (authorityType === "CTA_EN_BANC") return "CTA En Banc";
-  if (authorityType === "COURT_OF_APPEALS") return "Court of Appeals";
-  if (authorityType === "CTA_DIVISION") return "CTA Division";
-  if (authorityType === "RR" || path.includes("02_revenue_regulations") || /\brr\b/.test(path)) return "RR";
-  if (authorityType === "RMC" || path.includes("03_rmc") || /\brmc\b/.test(path)) return "RMC";
-  if (authorityType === "RAMO" || path.includes("04b_ramo") || /\bramo\b/.test(path)) return "RAMO";
-  if (authorityType === "RMO" || path.includes("04_rmo") || /\brmo\b/.test(path)) return "RMO";
-  if (authorityType === "BIR_RULING" || path.includes("05_bir_rulings")) return "BIR Ruling";
-  if (authorityType === "LGU") return "LGU";
-  return "Source";
-}
-
-function inferIssuanceNumber(doc = {}) {
-  const haystack = normalizeText(
-    [
-      doc.title,
-      doc.source,
-      doc.originalSource,
-      doc.path,
-      doc.source_path,
-      doc.metadata?.path,
-      doc.metadata?.normalizedReference,
-      doc.normalizedReference
-    ]
-      .filter(Boolean)
-      .join(" ")
-  );
-
-  const patterns = [
-    /\b(1987 Constitution)\b/i,
-    /\b(RA\s*\d{4,6})\b/i,
-    /\b(RR\s*(?:No\.?)?\s*\d+\s*[-/]\s*\d{2,4})\b/i,
-    /\b(RMC\s*(?:No\.?)?\s*\d+\s*[-/]\s*\d{2,4})\b/i,
-    /\b(RMO\s*(?:No\.?)?\s*\d+\s*[-/]\s*\d{2,4})\b/i,
-    /\b(RAMO\s*(?:No\.?)?\s*\d+\s*[-/]\s*\d{2,4})\b/i,
-    /\b(BIR Ruling\s*(?:No\.?)?\s*[\w./()-]+)\b/i,
-    /\b(CTA(?:\s+EB)?\s+No\.?\s*[\w.-]+)\b/i,
-    /\b(G\.R\.\s*No\.?\s*[\w.-]+)\b/i,
-    /\b(CA-G\.R\.\s*[\w.-]+)\b/i
-  ];
-
-  for (const pattern of patterns) {
-    const match = haystack.match(pattern);
-    if (match) {
-      return compactNumberSpacing(match[1]);
-    }
-  }
-
-  return "";
-}
-
-function compactNumberSpacing(value = "") {
-  return normalizeText(value).replace(/\s+/g, " ");
-}
-
-function buildShortSubject(doc = {}) {
-  const title = normalizeText(
-    doc.title ||
-      doc.originalSource ||
-      doc.source ||
-      doc.path ||
-      doc.source_path ||
-      "Untitled Source"
-  );
-
-  return title
-    .replace(/\.(pdf|docx|doc|txt|md|csv|json)$/i, "")
-    .replace(/[_/]+/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function buildLegalBasisEntry(doc = {}) {
-  const type = formatDocType(doc);
-  const number = inferIssuanceNumber(doc);
-  const subject = buildShortSubject(doc);
-
-  if (number) {
-    return `[${type}] ${number} – ${subject}`;
-  }
-
-  return `[${type}] ${subject}`;
-}
-
-function buildSourcesEntry(doc = {}) {
-  const number = inferIssuanceNumber(doc);
-  const subject = buildShortSubject(doc);
-
-  if (number) {
-    return `${number} – ${subject}`;
-  }
-
-  return subject;
-}
-
-function buildDocKey(doc = {}) {
-  return (
-    doc.fileId ||
-    doc.file_id ||
-    doc.id ||
-    doc.path ||
-    doc.source_path ||
-    doc.originalSource ||
-    doc.source ||
-    doc.title ||
-    JSON.stringify(doc)
-  );
-}
-
-function uniqueDocs(docs = []) {
-  const seen = new Set();
-  const result = [];
-
-  for (const doc of docs) {
-    const key = buildDocKey(doc);
-    if (seen.has(key)) continue;
-    seen.add(key);
-    result.push(doc);
-  }
-
-  return result;
-}
-
 function sourcePathOf(doc = {}) {
   return (
     doc.path ||
     doc.source_path ||
     doc.metadata?.path ||
     doc.originalSource ||
+    doc.original_source ||
     doc.source ||
     ""
   );
 }
 
 function sourceTitleOf(doc = {}) {
-  return (
+  const explicit = normalizeText(
     doc.title ||
-    doc.source_title ||
-    doc.metadata?.documentTitle ||
-    doc.metadata?.originalFileName ||
-    doc.originalSource ||
-    doc.source ||
-    "Untitled Source"
+      doc.source_title ||
+      doc.metadata?.documentTitle ||
+      doc.metadata?.originalFileName ||
+      doc.metadata?.originalSource ||
+      doc.originalSource ||
+      doc.original_source ||
+      doc.source ||
+      ""
   );
+
+  if (explicit) {
+    return compactSpaces(stripFileExtension(stripFolderPrefixes(explicit)) || explicit);
+  }
+
+  return "Untitled Source";
 }
 
 function sourceDriveUrlOf(doc = {}) {
@@ -304,15 +184,187 @@ function authorityLevelOf(doc = {}) {
 
 function shouldHideSource(doc = {}) {
   const haystack = normalizeLooseText(
-    [
-      sourcePathOf(doc),
-      sourceTitleOf(doc)
-    ].join(" ")
+    [sourcePathOf(doc), sourceTitleOf(doc)].join(" ")
   );
 
-  return HIDDEN_SOURCE_PATTERNS.some((pattern) =>
-    haystack.includes(pattern)
+  return HIDDEN_SOURCE_PATTERNS.some((pattern) => haystack.includes(pattern));
+}
+
+function formatDocType(doc = {}) {
+  const authorityType = authorityTypeOf(doc);
+  const path = normalizeLooseText(sourcePathOf(doc));
+
+  if (authorityType === "CONSTITUTION" || path.includes("00_constitution")) return "Constitution";
+  if (authorityType === "STATUTE" || path.includes("01_tax_code")) return "Statute";
+  if (authorityType === "TREATY" || path.includes("05b_tax_treaties")) return "Treaty";
+  if (authorityType === "SUPREME_COURT") return "Supreme Court";
+  if (authorityType === "CTA_EN_BANC") return "CTA En Banc";
+  if (authorityType === "COURT_OF_APPEALS") return "Court of Appeals";
+  if (authorityType === "CTA_DIVISION") return "CTA Division";
+  if (authorityType === "RR" || path.includes("02_revenue_regulations")) return "RR";
+  if (authorityType === "RMC" || path.includes("03_rmc")) return "RMC";
+  if (authorityType === "RAMO" || path.includes("04b_ramo")) return "RAMO";
+  if (authorityType === "RMO" || path.includes("04_rmo")) return "RMO";
+  if (authorityType === "BIR_RULING" || path.includes("05_bir_rulings")) return "BIR Ruling";
+  if (authorityType === "LGU") return "LGU";
+  return "Source";
+}
+
+function inferIssuanceNumber(doc = {}) {
+  const haystack = compactSpaces(
+    [
+      doc.title,
+      doc.source_title,
+      doc.source,
+      doc.originalSource,
+      doc.original_source,
+      doc.path,
+      doc.source_path,
+      doc.metadata?.path,
+      doc.metadata?.normalizedReference,
+      doc.normalizedReference,
+      doc.normalized_reference,
+      doc.metadata?.documentTitle,
+      doc.metadata?.originalFileName
+    ]
+      .filter(Boolean)
+      .join(" ")
   );
+
+  const patterns = [
+    /\b(1987 Constitution)\b/i,
+    /\b(Republic Act No\.?\s*\d{4,6})\b/i,
+    /\b(RA\s*\d{4,6})\b/i,
+    /\b(RR\s*(?:No\.?)?\s*\d+\s*[-/]\s*\d{2,4})\b/i,
+    /\b(RMC\s*(?:No\.?)?\s*\d+\s*[-/]\s*\d{2,4})\b/i,
+    /\b(RMO\s*(?:No\.?)?\s*\d+\s*[-/]\s*\d{2,4})\b/i,
+    /\b(RAMO\s*(?:No\.?)?\s*\d+\s*[-/]\s*\d{2,4})\b/i,
+    /\b(BIR Ruling\s*(?:No\.?)?\s*[\w./()-]+)\b/i,
+    /\b(CTA(?:\s+EB)?\s+No\.?\s*[\w.-]+)\b/i,
+    /\b(G\.R\.\s*No\.?\s*[\w.-]+)\b/i,
+    /\b(CA-G\.R\.\s*[\w.-]+)\b/i
+  ];
+
+  for (const pattern of patterns) {
+    const match = haystack.match(pattern);
+    if (match) {
+      return compactSpaces(match[1]);
+    }
+  }
+
+  return "";
+}
+
+function buildShortSubject(doc = {}) {
+  const explicitTitle = normalizeText(
+    doc.metadata?.documentTitle ||
+      doc.metadata?.originalFileName ||
+      doc.metadata?.originalSource ||
+      doc.title ||
+      doc.source_title ||
+      doc.originalSource ||
+      doc.original_source ||
+      doc.source ||
+      ""
+  );
+
+  const rawPath = normalizeText(sourcePathOf(doc));
+  const basis = explicitTitle || rawPath || "Untitled Source";
+  const issuanceNumber = inferIssuanceNumber(doc);
+
+  let subject = stripFolderPrefixes(stripFileExtension(basis));
+
+  if (issuanceNumber) {
+    const escaped = issuanceNumber.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    subject = subject.replace(new RegExp(`\\b${escaped}\\b`, "i"), "").trim();
+  }
+
+  subject = subject
+    .replace(/\bcopy\b/gi, "")
+    .replace(/\(\d+\)/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (!subject) {
+    subject = stripFolderPrefixes(stripFileExtension(rawPath)) || "Untitled Source";
+  }
+
+  return compactSpaces(subject);
+}
+
+function buildLegalBasisEntry(doc = {}) {
+  const type = formatDocType(doc);
+  const number = inferIssuanceNumber(doc);
+  const subject = buildShortSubject(doc);
+
+  if (number && subject) {
+    return `[${type}] ${number} – ${subject}`;
+  }
+
+  if (number) {
+    return `[${type}] ${number}`;
+  }
+
+  return `[${type}] ${subject}`;
+}
+
+function buildSourcesEntry(doc = {}) {
+  const number = inferIssuanceNumber(doc);
+  const subject = buildShortSubject(doc);
+
+  if (number && subject) {
+    return `${number} – ${subject}`;
+  }
+
+  if (number) {
+    return number;
+  }
+
+  return subject;
+}
+
+function buildDocKey(doc = {}) {
+  return (
+    doc.fileId ||
+    doc.file_id ||
+    doc.id ||
+    doc.metadata?.fileId ||
+    doc.metadata?.file_id ||
+    doc.path ||
+    doc.source_path ||
+    doc.metadata?.path ||
+    doc.originalSource ||
+    doc.original_source ||
+    doc.source ||
+    doc.title ||
+    JSON.stringify(doc)
+  );
+}
+
+function uniqueDocs(docs = []) {
+  const seen = new Set();
+  const result = [];
+
+  for (const doc of docs) {
+    const key = buildDocKey(doc);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    result.push(doc);
+  }
+
+  return result;
+}
+
+function toVisibleSourceEntry(doc = {}) {
+  return {
+    ...doc,
+    title: sourceTitleOf(doc),
+    driveViewUrl: sourceDriveUrlOf(doc),
+    sourcePath: sourcePathOf(doc),
+    authorityType: authorityTypeOf(doc),
+    authorityLevel: authorityLevelOf(doc),
+    issuanceNumber: inferIssuanceNumber(doc)
+  };
 }
 
 export function filterVisibleSources(
@@ -330,16 +382,7 @@ export function filterVisibleSources(
 
     if (shouldHideSource(sourceToUse)) continue;
 
-    const entry = {
-      ...sourceToUse,
-      title: sourceTitleOf(sourceToUse),
-      driveViewUrl: sourceDriveUrlOf(sourceToUse),
-      authorityType: authorityTypeOf(sourceToUse),
-      authorityLevel: authorityLevelOf(sourceToUse),
-      issuanceNumber: inferIssuanceNumber(sourceToUse)
-    };
-
-    visible.push(entry);
+    visible.push(toVisibleSourceEntry(sourceToUse));
   }
 
   return uniqueDocs(visible)
@@ -360,10 +403,15 @@ function runSupersessionPreflight({
   const supersessionResult = applySupersessionFilter(combinedDocs, asOfDate);
 
   const resolvedLegalBasisDocs = uniqueDocs(
-    legalBasisDocs.map((doc) => findReplacementForDocument(doc, supersessionResult) || doc)
+    legalBasisDocs.map(
+      (doc) => findReplacementForDocument(doc, supersessionResult) || doc
+    )
   );
 
-  const resolvedSourcesUsed = filterVisibleSources(sourcesUsed, {
+  const visiblePool =
+    sourcesUsed.length > 0 ? sourcesUsed : resolvedLegalBasisDocs;
+
+  const resolvedSourcesUsed = filterVisibleSources(visiblePool, {
     maxItems: MAX_VISIBLE_SOURCES,
     supersessionResult
   });
@@ -635,7 +683,6 @@ function inferConfidenceLevel({
     return bestLevel <= 4 ? "MEDIUM" : "LOW";
   }
 
-  if (bestLevel <= 2) return "HIGH";
   if (bestLevel <= 4) return "HIGH";
   if (bestLevel <= 8) return "MEDIUM";
   return "LOW";
@@ -673,21 +720,32 @@ export function buildFinalCompliantAnswer({
   );
 
   const legalBasisLines = buildValidatedLegalBasis(resolvedLegalBasisDocs);
+  const visibleSourceDocs =
+    resolvedSourcesUsed.length > 0
+      ? resolvedSourcesUsed
+      : filterVisibleSources(resolvedLegalBasisDocs, {
+          maxItems: MAX_VISIBLE_SOURCES,
+          supersessionResult
+        });
+
   const supportingRuleLines = buildSupportingRules({
     draftAnswer: sanitizedDraft,
     legalBasisDocs: resolvedLegalBasisDocs
   });
+
   const finalInsight = buildProfessionalInsight({
     draftAnswer: sanitizedDraft,
     defaultInsight: professionalInsight,
     supersessionResult
   });
+
   const finalConflict = buildConflictSection({
     draftAnswer: sanitizedDraft,
     conflicts,
     hierarchyConflict
   });
-  const sourceLines = buildValidatedSources(resolvedSourcesUsed);
+
+  const sourceLines = buildValidatedSources(visibleSourceDocs);
 
   return [
     "1. DIRECT ANSWER",
@@ -736,15 +794,28 @@ export function buildFinalRoutePayload({
     asOfDate
   });
 
+  const finalVisibleSources =
+    resolvedSourcesUsed.length > 0
+      ? resolvedSourcesUsed
+      : filterVisibleSources(resolvedLegalBasisDocs, {
+          maxItems: MAX_VISIBLE_SOURCES,
+          supersessionResult
+        });
+
   return {
     answer,
-    sources: resolvedSourcesUsed.slice(0, MAX_VISIBLE_SOURCES).map((doc) => ({
+    sources: finalVisibleSources.slice(0, MAX_VISIBLE_SOURCES).map((doc) => ({
       title: sourceTitleOf(doc),
       drive_url: sourceDriveUrlOf(doc),
+      source_path: sourcePathOf(doc),
       authority_type: authorityTypeOf(doc),
+      authority_level: authorityLevelOf(doc),
       issuance_number: inferIssuanceNumber(doc) || null
     })),
-    authority_used: inferAuthorityUsed(resolvedLegalBasisDocs, resolvedSourcesUsed),
+    authority_used: inferAuthorityUsed(
+      resolvedLegalBasisDocs,
+      finalVisibleSources
+    ),
     confidence_level: inferConfidenceLevel({
       legalBasisDocs: resolvedLegalBasisDocs,
       hierarchyConflict,
