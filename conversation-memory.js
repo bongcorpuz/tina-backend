@@ -4,8 +4,52 @@ function normalizeText(value = "") {
   return String(value || "").trim();
 }
 
+function isPlainObject(value) {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+}
+
+function sanitizeJsonValue(value) {
+  if (
+    value === null ||
+    typeof value === "string" ||
+    typeof value === "number" ||
+    typeof value === "boolean"
+  ) {
+    return value;
+  }
+
+  if (Array.isArray(value)) {
+    return value
+      .map((item) => sanitizeJsonValue(item))
+      .filter((item) => item !== undefined);
+  }
+
+  if (isPlainObject(value)) {
+    const output = {};
+
+    for (const [key, item] of Object.entries(value)) {
+      const sanitized = sanitizeJsonValue(item);
+      if (sanitized !== undefined) {
+        output[key] = sanitized;
+      }
+    }
+
+    return output;
+  }
+
+  return undefined;
+}
+
 function normalizeArray(value) {
-  return Array.isArray(value) ? value : null;
+  if (!Array.isArray(value) || value.length === 0) {
+    return null;
+  }
+
+  const sanitized = value
+    .map((item) => sanitizeJsonValue(item))
+    .filter((item) => item !== undefined);
+
+  return sanitized.length ? sanitized : null;
 }
 
 export async function createConversation(
