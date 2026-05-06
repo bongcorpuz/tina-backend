@@ -17,12 +17,17 @@ function normalizeText(value = "") {
     .trim();
 }
 
+function safeString(value = "") {
+  return String(value || "").trim();
+}
+
 function buildIndexMetadata(file = {}, text = "") {
-  const path = file.path || file.name || "";
-  const originalFileName = file.name || "";
-  const originalSource = file.originalSource || file.name || "";
+  const path = safeString(file.path || file.name || "");
+  const originalFileName = safeString(file.name || "");
+  const originalSource = safeString(file.originalSource || file.name || "");
   const normalizedSource =
-    file.normalizedSource || normalizeSourceName(path || originalFileName);
+    safeString(file.normalizedSource) ||
+    normalizeSourceName(path || originalFileName);
 
   const authority = buildAuthorityMetadata({
     fileName: originalFileName,
@@ -60,6 +65,24 @@ function buildIndexMetadata(file = {}, text = "") {
   };
 }
 
+function buildFailedRecord(file = {}, overrides = {}) {
+  const fallbackName = safeString(file?.name || "unknown");
+  const fallbackPath = safeString(file?.path || file?.name || "unknown");
+
+  return {
+    fileName: overrides.fileName || fallbackName,
+    normalizedSource:
+      overrides.normalizedSource ||
+      normalizeSourceName(fallbackPath || fallbackName),
+    path: overrides.path || fallbackPath,
+    mimeType: overrides.mimeType || file?.mimeType || null,
+    authorityType: overrides.authorityType || null,
+    authorityLevel: overrides.authorityLevel || null,
+    authorityLabel: overrides.authorityLabel || null,
+    reason: overrides.reason || "File indexing failed"
+  };
+}
+
 export async function runDriveReindex() {
   const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
 
@@ -82,16 +105,18 @@ export async function runDriveReindex() {
       const normalizedSource = metadata.normalizedSource;
 
       if (!text) {
-        failed.push({
-          fileName: metadata.originalFileName,
-          normalizedSource,
-          path: metadata.path,
-          mimeType: metadata.mimeType,
-          authorityType: metadata.authorityType,
-          authorityLevel: metadata.authorityLevel,
-          authorityLabel: metadata.authorityLabel,
-          reason: "No readable text"
-        });
+        failed.push(
+          buildFailedRecord(file, {
+            fileName: metadata.originalFileName,
+            normalizedSource,
+            path: metadata.path,
+            mimeType: metadata.mimeType,
+            authorityType: metadata.authorityType,
+            authorityLevel: metadata.authorityLevel,
+            authorityLabel: metadata.authorityLabel,
+            reason: "No readable text"
+          })
+        );
         continue;
       }
 
@@ -110,18 +135,13 @@ export async function runDriveReindex() {
         status: "Indexed"
       });
     } catch (error) {
-      const fallbackName = file?.name || "unknown";
-      const fallbackPath = file?.path || file?.name || "unknown";
+      console.error(`Reindex failed for file: ${file?.name || "unknown"}`, error);
 
-      console.error(`Reindex failed for file: ${fallbackName}`, error);
-
-      failed.push({
-        fileName: fallbackName,
-        normalizedSource: normalizeSourceName(fallbackPath || fallbackName),
-        path: fallbackPath,
-        mimeType: file?.mimeType || null,
-        reason: error.message || "File indexing failed"
-      });
+      failed.push(
+        buildFailedRecord(file, {
+          reason: error?.message || "File indexing failed"
+        })
+      );
     }
   }
 
@@ -168,9 +188,11 @@ export function createBackgroundReindexController() {
 
     isRunning = true;
 
+    const startedAt = new Date().toISOString();
+
     lastStatus = {
       running: true,
-      startedAt: new Date().toISOString(),
+      startedAt,
       finishedAt: null,
       success: null,
       message: "Indexing is running in background.",
@@ -182,7 +204,7 @@ export function createBackgroundReindexController() {
       .then((result) => {
         lastStatus = {
           running: false,
-          startedAt: lastStatus.startedAt,
+          startedAt,
           finishedAt: new Date().toISOString(),
           success: true,
           message: "Indexing completed successfully.",
@@ -195,11 +217,11 @@ export function createBackgroundReindexController() {
 
         lastStatus = {
           running: false,
-          startedAt: lastStatus.startedAt,
+          startedAt,
           finishedAt: new Date().toISOString(),
           success: false,
           message: "Indexing failed.",
-          error: error.message || "Unknown indexing error",
+          error: error?.message || "Unknown indexing error",
           result: null
         };
       })
