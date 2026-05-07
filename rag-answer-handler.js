@@ -2,6 +2,8 @@
 
 import { detectTopic } from "./topic-detector.js";
 
+import { saveModeState } from "./mode-state.js";
+
 import {
   getLastTopicState,
   saveTopicState,
