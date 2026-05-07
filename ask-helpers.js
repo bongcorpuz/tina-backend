@@ -7,7 +7,15 @@ import {
 
 export const MAX_VISIBLE_SOURCES = 5;
 
-const HIDDEN_FOLDER_PATTERNS = ["07_cpa_notes", "08_review_materials"];
+const HIDDEN_FOLDER_PATTERNS = [
+  "07_cpa_notes",
+  "08_review_materials",
+  "internal_notes",
+  "drafts",
+  "working_papers"
+];
+
+const CURRENT_YEAR = new Date().getFullYear();
 
 function normalizeText(value = "") {
   return String(value || "").trim();
@@ -40,8 +48,8 @@ function cleanFilename(value = "") {
   );
 }
 
-function normalizeSourceName(name = "") {
-  return String(name)
+export function normalizeSourceName(name = "") {
+  return String(name || "")
     .toLowerCase()
     .replace(/revenue regulation[s]?/g, "rr")
     .replace(/revenue memorandum circular[s]?/g, "rmc")
@@ -134,9 +142,26 @@ export function normalizeIssuanceNumber(num = "") {
 }
 
 export function normalizeIssuanceYear(year = "") {
-  const y = String(year || "").trim();
-  if (!y) return "";
-  return y.length === 2 ? `20${y}` : y;
+  const raw = String(year || "").trim();
+
+  if (!raw) return "";
+
+  if (/^\d{4}$/.test(raw)) {
+    return raw;
+  }
+
+  if (/^\d{2}$/.test(raw)) {
+    const yy = Number(raw);
+    const currentYY = CURRENT_YEAR % 100;
+
+    if (yy <= currentYY + 1) {
+      return `20${raw}`;
+    }
+
+    return `19${raw}`;
+  }
+
+  return raw;
 }
 
 function extractIssuanceReference(text = "") {
@@ -155,7 +180,7 @@ function extractIssuanceReference(text = "") {
     },
     {
       type: "STATUTE",
-      regex: /\bRA\s*(\d{4,6})\b/i,
+      regex: /\bRA\s*(?:No\.?)?\s*(\d{4,6})\b/i,
       formatter: (m) => `RA No. ${m[1]}`
     },
     {
@@ -232,23 +257,23 @@ function extractIssuanceReferenceFromNormalizedRef(value = "") {
     },
     {
       type: "RR",
-      regex: /\bRR_(\d{1,3})[-_](\d{4})\b/i,
-      formatter: (m) => `RR No. ${Number(m[1])}-${m[2]}`
+      regex: /\bRR_(\d{1,3})[-_](\d{2,4})\b/i,
+      formatter: (m) => `RR No. ${Number(m[1])}-${normalizeIssuanceYear(m[2])}`
     },
     {
       type: "RMC",
-      regex: /\bRMC_(\d{1,3})[-_](\d{4})\b/i,
-      formatter: (m) => `RMC No. ${Number(m[1])}-${m[2]}`
+      regex: /\bRMC_(\d{1,3})[-_](\d{2,4})\b/i,
+      formatter: (m) => `RMC No. ${Number(m[1])}-${normalizeIssuanceYear(m[2])}`
     },
     {
       type: "RMO",
-      regex: /\bRMO_(\d{1,3})[-_](\d{4})\b/i,
-      formatter: (m) => `RMO No. ${Number(m[1])}-${m[2]}`
+      regex: /\bRMO_(\d{1,3})[-_](\d{2,4})\b/i,
+      formatter: (m) => `RMO No. ${Number(m[1])}-${normalizeIssuanceYear(m[2])}`
     },
     {
       type: "RAMO",
-      regex: /\bRAMO_(\d{1,3})[-_](\d{4})\b/i,
-      formatter: (m) => `RAMO No. ${Number(m[1])}-${m[2]}`
+      regex: /\bRAMO_(\d{1,3})[-_](\d{2,4})\b/i,
+      formatter: (m) => `RAMO No. ${Number(m[1])}-${normalizeIssuanceYear(m[2])}`
     },
     {
       type: "BIR_RULING",
@@ -267,6 +292,11 @@ function extractIssuanceReferenceFromNormalizedRef(value = "") {
     },
     {
       type: "CTA_EN_BANC",
+      regex: /\bCTA_EB_([A-Z0-9_()./-]+)\b/i,
+      formatter: (m) => `CTA EB No. ${String(m[1]).replace(/_/g, "-")}`
+    },
+    {
+      type: "CTA_DIVISION",
       regex: /\bCTA_([A-Z0-9_()./-]+)\b/i,
       formatter: (m) => `CTA No. ${String(m[1]).replace(/_/g, "-")}`
     }
@@ -348,15 +378,13 @@ function detectAuthorityFromPathOrText(doc = {}) {
         ""
     ).authorityType;
 
-  if (explicit) {
-    return explicit;
-  }
+  if (explicit) return explicit;
 
   if (path.includes("00_constitution") || original.includes("constitution")) {
     return "CONSTITUTION";
   }
 
-  if (path.includes("01_tax_code")) {
+  if (path.includes("01_tax_code") || path.includes("statute")) {
     return "STATUTE";
   }
 
@@ -411,17 +439,17 @@ function detectAuthorityFromPathOrText(doc = {}) {
 
 const AUTHORITY_META = {
   CONSTITUTION: { level: 1, label: "1987 Constitution", weight: 1.0 },
-  STATUTE: { level: 2, label: "Statute", weight: 0.98 },
-  TREATY: { level: 3, label: "Tax Treaty", weight: 0.96 },
-  SUPREME_COURT: { level: 4, label: "Supreme Court Decision", weight: 0.95 },
-  CTA_EN_BANC: { level: 5, label: "CTA En Banc Decision", weight: 0.93 },
-  COURT_OF_APPEALS: { level: 6, label: "Court of Appeals Decision", weight: 0.91 },
-  CTA_DIVISION: { level: 7, label: "CTA Division Decision", weight: 0.89 },
-  RR: { level: 8, label: "Revenue Regulation", weight: 0.84 },
-  RMC: { level: 9, label: "Revenue Memorandum Circular", weight: 0.78 },
-  RMO: { level: 10, label: "Revenue Memorandum Order", weight: 0.74 },
-  RAMO: { level: 11, label: "Revenue Audit Memorandum Order", weight: 0.72 },
-  BIR_RULING: { level: 12, label: "BIR Ruling", weight: 0.66 },
+  STATUTE: { level: 2, label: "Statute / Tax Code / Republic Act", weight: 0.98 },
+  RR: { level: 3, label: "Revenue Regulation", weight: 0.94 },
+  RMC: { level: 4, label: "Revenue Memorandum Circular", weight: 0.88 },
+  RMO: { level: 5, label: "Revenue Memorandum Order", weight: 0.84 },
+  RAMO: { level: 6, label: "Revenue Audit Memorandum Order", weight: 0.82 },
+  BIR_RULING: { level: 7, label: "BIR Ruling", weight: 0.76 },
+  SUPREME_COURT: { level: 8, label: "Supreme Court Decision", weight: 0.95 },
+  CTA_EN_BANC: { level: 9, label: "CTA En Banc Decision", weight: 0.72 },
+  COURT_OF_APPEALS: { level: 10, label: "Court of Appeals Decision", weight: 0.7 },
+  CTA_DIVISION: { level: 11, label: "CTA Division Decision", weight: 0.68 },
+  TREATY: { level: 12, label: "Tax Treaty", weight: 0.9 },
   LGU: { level: 13, label: "Local Tax Ordinance", weight: 0.6 },
   CASE: { level: 20, label: "Case", weight: 0.5 },
   SECONDARY: { level: 90, label: "Secondary Material", weight: 0.35 },
@@ -439,6 +467,7 @@ export function getSourceTier(source = {}) {
 
   return {
     tier: meta.level,
+    level: meta.level,
     label: meta.label,
     weight: meta.weight,
     authorityType
@@ -458,11 +487,7 @@ export function getUserId(req) {
 
 export function toSafeDbNumeric(value, max = 999999.9999, decimals = 4) {
   const num = Number(value);
-
-  if (!Number.isFinite(num)) {
-    return 0;
-  }
-
+  if (!Number.isFinite(num)) return 0;
   return Number(Math.min(max, Math.max(0, num)).toFixed(decimals));
 }
 
@@ -473,22 +498,17 @@ export function buildMemoryContext(messages = []) {
 
   return messages
     .slice(-10)
-    .map((msg) => `${String(msg.role).toUpperCase()}: ${msg.content}`)
+    .map((msg) => `${String(msg.role || "unknown").toUpperCase()}: ${msg.content || ""}`)
     .join("\n");
 }
 
 export function extractQuizAnswer(text = "") {
   const cleaned = String(text || "").trim().toUpperCase();
 
-  if (!cleaned) {
-    return null;
-  }
+  if (!cleaned) return null;
+  if (/^[ABCD]$/.test(cleaned)) return cleaned;
 
-  if (/^[ABCD]$/.test(cleaned)) {
-    return cleaned;
-  }
-
-  const match = cleaned.match(/^(?:ANSWER\s*[:\-]?\s*)?([ABCD])$/i);
+  const match = cleaned.match(/^(?:ANSWER\s*[:\-]?\s*)?([ABCD])(?:[\s.)-].*)?$/i);
   return match?.[1]?.toUpperCase() || null;
 }
 
@@ -500,25 +520,22 @@ export function formatQuestionBlock({
 }) {
   const parts = [];
 
-  if (prefix) {
-    parts.push(prefix);
-  }
-
+  if (prefix) parts.push(prefix);
   if (teachingText) {
     parts.push(teachingText);
     parts.push("");
   }
 
-  parts.push(`Topic: ${quiz.topic}`);
-  parts.push(`Difficulty: ${quiz.difficulty}`);
+  parts.push(`Topic: ${quiz.topic || "Taxation"}`);
+  parts.push(`Difficulty: ${quiz.difficulty || "medium"}`);
   parts.push("");
   parts.push("Question:");
-  parts.push(quiz.question);
+  parts.push(quiz.question || "");
   parts.push("");
-  parts.push(`A. ${quiz.choices.A}`);
-  parts.push(`B. ${quiz.choices.B}`);
-  parts.push(`C. ${quiz.choices.C}`);
-  parts.push(`D. ${quiz.choices.D}`);
+  parts.push(`A. ${quiz.choices?.A || ""}`);
+  parts.push(`B. ${quiz.choices?.B || ""}`);
+  parts.push(`C. ${quiz.choices?.C || ""}`);
+  parts.push(`D. ${quiz.choices?.D || ""}`);
   parts.push("");
   parts.push("Instruction:");
   parts.push("Answer A, B, C, or D. Type /bye or /exit to stop.");
@@ -551,9 +568,7 @@ export function buildGoogleDriveLinks(doc = {}) {
     doc.drive_download_url ||
     doc.metadata?.driveDownloadUrl ||
     doc.metadata?.drive_download_url ||
-    (fileId
-      ? `https://drive.google.com/uc?export=download&id=${fileId}`
-      : null);
+    (fileId ? `https://drive.google.com/uc?export=download&id=${fileId}` : null);
 
   return {
     fileId,
@@ -579,9 +594,7 @@ function buildDocKey(doc = {}) {
 function safeNumber(...values) {
   for (const value of values) {
     const num = Number(value);
-    if (Number.isFinite(num)) {
-      return num;
-    }
+    if (Number.isFinite(num)) return num;
   }
   return 0;
 }
@@ -643,9 +656,7 @@ export function uniqueSources(docs = []) {
     .map((doc) => buildSourceResponseItem(doc))
     .filter((doc) => {
       const key = buildDocKey(doc);
-      if (!key || seen.has(key)) {
-        return false;
-      }
+      if (!key || seen.has(key)) return false;
       seen.add(key);
       return true;
     });
@@ -670,9 +681,7 @@ export function filterVisibleSources(
     if (shouldHideSourceFromUser(item)) continue;
 
     const replacement = findReplacementForDocument(item, supersessionResult);
-    const sourceToUse = replacement
-      ? buildSourceResponseItem(replacement)
-      : item;
+    const sourceToUse = replacement ? buildSourceResponseItem(replacement) : item;
 
     if (shouldHideSourceFromUser(sourceToUse)) continue;
     if (requireClickable && !isClickableSource(sourceToUse)) continue;
@@ -685,9 +694,7 @@ export function filterVisibleSources(
       const aLevel = Number(a.authorityLevel ?? 999);
       const bLevel = Number(b.authorityLevel ?? 999);
 
-      if (aLevel !== bLevel) {
-        return aLevel - bLevel;
-      }
+      if (aLevel !== bLevel) return aLevel - bLevel;
 
       return (
         Number(b.adjustedScore ?? b.score ?? 0) -
@@ -710,7 +717,7 @@ export function finalizeSourcesForResponse(
   );
 
   const effectiveSupersessionResult =
-    supersessionResult || applySupersessionFilter(combinedDocs);
+    supersessionResult || applySupersessionFilter(combinedDocs, new Date());
 
   return filterVisibleSources(rawSources, {
     maxItems,
@@ -811,22 +818,22 @@ export function detectIssuanceQuery(question = "") {
     {
       type: "RR",
       regex:
-        /\b(?:RR|Revenue\s+Regulation[s]?)\s*(?:No\.?)?\s*0*(\d+)[\s\-_\/]?(\d{2,4})\b/i
+        /\b(?:RR|Revenue\s+Regulation[s]?)\s*(?:No\.?)?\s*0*(\d+)[\s\-_\/]+(\d{2,4})\b/i
     },
     {
       type: "RMC",
       regex:
-        /\b(?:RMC|Revenue\s+Memorandum\s+Circular[s]?)\s*(?:No\.?)?\s*0*(\d+)[\s\-_\/]?(\d{2,4})\b/i
+        /\b(?:RMC|Revenue\s+Memorandum\s+Circular[s]?)\s*(?:No\.?)?\s*0*(\d+)[\s\-_\/]+(\d{2,4})\b/i
     },
     {
       type: "RMO",
       regex:
-        /\b(?:RMO|Revenue\s+Memorandum\s+Order[s]?)\s*(?:No\.?)?\s*0*(\d+)[\s\-_\/]?(\d{2,4})\b/i
+        /\b(?:RMO|Revenue\s+Memorandum\s+Order[s]?)\s*(?:No\.?)?\s*0*(\d+)[\s\-_\/]+(\d{2,4})\b/i
     },
     {
       type: "RAMO",
       regex:
-        /\b(?:RAMO|Revenue\s+Audit\s+Memorandum\s+Order[s]?)\s*(?:No\.?)?\s*0*(\d+)[\s\-_\/]?(\d{2,4})\b/i
+        /\b(?:RAMO|Revenue\s+Audit\s+Memorandum\s+Order[s]?)\s*(?:No\.?)?\s*0*(\d+)[\s\-_\/]+(\d{2,4})\b/i
     }
   ];
 
@@ -841,7 +848,8 @@ export function detectIssuanceQuery(question = "") {
         type: item.type,
         number,
         year,
-        normalized: `${item.type.toLowerCase()}-${number}-${year}`
+        normalized: `${item.type.toLowerCase()}-${number}-${year}`,
+        display: `${item.type} No. ${number}-${year}`
       };
     }
   }
@@ -852,9 +860,7 @@ export function detectIssuanceQuery(question = "") {
 export function isStructuredAnswer(text = "") {
   const value = String(text || "").trim();
 
-  if (!value) {
-    return false;
-  }
+  if (!value) return false;
 
   const hasStandard =
     /(^|\n)\s*1\.\s*DIRECT ANSWER\b/i.test(value) &&
