@@ -7,9 +7,7 @@ import {
   saveMemoryHooks
 } from "./memory-hooks.js";
 
-import {
-  saveMessage
-} from "./conversation-memory.js";
+import { saveMessage } from "./conversation-memory.js";
 
 import {
   getAdaptiveQuizProfile,
@@ -26,9 +24,7 @@ import {
   updateTopicMastery
 } from "./learner-profile.js";
 
-import {
-  getQuizSourceChunks
-} from "./vector-store.js";
+import { getQuizSourceChunks } from "./vector-store.js";
 
 import {
   MAX_VISIBLE_SOURCES,
@@ -37,10 +33,14 @@ import {
   finalizeSourcesForResponse
 } from "./ask-helpers.js";
 
-const DEFAULT_MODEL = process.env.OPENAI_MODEL || "gpt-4o-mini";
+function getModel() {
+  return process.env.OPENAI_MODEL || "gpt-4o-mini";
+}
 
 function isAssessmentHook(hook = "") {
-  return ["/quiz", "/review", "/diagnostic"].includes(String(hook || "").toLowerCase());
+  return ["/quiz", "/review", "/diagnostic"].includes(
+    String(hook || "").toLowerCase()
+  );
 }
 
 function isAssessmentMode(mode = "") {
@@ -190,20 +190,21 @@ export function createAssessmentHandler({ supabase, openai }) {
       };
     }
 
-    return {
-      data: updatedRow,
-      error: null
-    };
+    return { data: updatedRow, error: null };
   }
 
   async function clearPendingQuizAttempts(userId, conversationId = null) {
     if (!userId) return;
 
+    const payload = {
+      user_answer: "CLEARED",
+      is_correct: false,
+      answered_at: new Date().toISOString()
+    };
+
     let query = supabase
       .from("tina_learning_attempts")
-      .update({
-        updated_at: new Date().toISOString()
-      })
+      .update(payload)
       .eq("user_id", String(userId))
       .is("user_answer", null);
 
@@ -256,7 +257,7 @@ Quick Recall:
 `.trim();
 
     const response = await openai.chat.completions.create({
-      model: DEFAULT_MODEL,
+      model: getModel(),
       temperature: 0.3,
       messages: [{ role: "user", content: prompt }]
     });
@@ -301,7 +302,7 @@ Quick Recall:
     });
 
     const response = await openai.chat.completions.create({
-      model: DEFAULT_MODEL,
+      model: getModel(),
       temperature: 0.3,
       messages: [{ role: "user", content: quizPrompt }]
     });
