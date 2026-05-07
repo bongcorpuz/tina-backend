@@ -5,20 +5,25 @@ import { createClient } from "@supabase/supabase-js";
 import "dotenv/config";
 import { buildAuthorityMetadata } from "./authority-engine.js";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-});
+if (!process.env.OPENAI_API_KEY) {
+  throw new Error("Missing OPENAI_API_KEY for vector-store.js");
+}
 
 if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
   throw new Error("Missing Supabase environment variables for vector-store.js");
 }
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY
+});
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY,
   {
     auth: {
-      persistSession: false
+      persistSession: false,
+      autoRefreshToken: false
     }
   }
 );
@@ -28,8 +33,8 @@ const EMBEDDING_MODEL =
 
 const CHUNK_SIZE = Number(process.env.VECTOR_CHUNK_SIZE || 1200);
 const CHUNK_OVERLAP = Number(process.env.VECTOR_CHUNK_OVERLAP || 200);
-
 const VECTOR_TABLE = "tina_vector_store";
+const CURRENT_YEAR = new Date().getFullYear();
 
 /* ================= TEXT / EMBEDDINGS ================= */
 
@@ -37,12 +42,19 @@ function normalizeText(value = "") {
   return String(value || "").trim();
 }
 
+function compactSpaces(value = "") {
+  return normalizeText(value).replace(/\s+/g, " ");
+}
+
 function chunkText(text, chunkSize = CHUNK_SIZE, overlap = CHUNK_OVERLAP) {
-  const clean = normalizeText(String(text || "").replace(/\s+/g, " "));
+  const clean = compactSpaces(text);
   if (!clean) return [];
 
-  const safeChunkSize = Math.max(200, Number(chunkSize) || CHUNK_SIZE);
-  const safeOverlap = Math.max(0, Math.min(Number(overlap) || CHUNK_OVERLAP, safeChunkSize - 50));
+  const safeChunkSize = Math.max(300, Number(chunkSize) || CHUNK_SIZE);
+  const safeOverlap = Math.max(
+    0,
+    Math.min(Number(overlap) || CHUNK_OVERLAP, safeChunkSize - 100)
+  );
 
   const chunks = [];
   let start = 0;
@@ -51,28 +63,19 @@ function chunkText(text, chunkSize = CHUNK_SIZE, overlap = CHUNK_OVERLAP) {
     const end = Math.min(start + safeChunkSize, clean.length);
     const chunk = clean.slice(start, end).trim();
 
-    if (chunk) {
-      chunks.push(chunk);
-    }
+    if (chunk) chunks.push(chunk);
 
-    if (end >= clean.length) {
-      break;
-    }
+    if (end >= clean.length) break;
 
-    start = Math.max(0, end - safeOverlap);
-    if (start >= end) {
-      break;
-    }
+    const nextStart = Math.max(0, end - safeOverlap);
+    if (nextStart <= start) break;
+    start = nextStart;
   }
 
   return chunks;
 }
 
 async function embedText(text) {
-  if (!process.env.OPENAI_API_KEY) {
-    throw new Error("OPENAI_API_KEY is missing.");
-  }
-
   const input = normalizeText(text);
 
   if (!input) {
@@ -84,7 +87,13 @@ async function embedText(text) {
     input: input.slice(0, 24000)
   });
 
-  return response.data?.[0]?.embedding || [];
+  const embedding = response.data?.[0]?.embedding || [];
+
+  if (!embedding.length) {
+    throw new Error("OpenAI returned an empty embedding.");
+  }
+
+  return embedding;
 }
 
 /* ================= NORMALIZATION ================= */
@@ -100,6 +109,7 @@ export function normalizeSourceName(name = "") {
     .replace(/\brev\.?\s*memo\.?\s*circular\b/g, "rmc")
     .replace(/\brev\.?\s*memo\.?\s*order\b/g, "rmo")
     .replace(/\brev\.?\s*audit\.?\s*memo\.?\s*order\b/g, "ramo")
+    .replace(/\brepublic act\b/g, "ra")
     .replace(/\bno\.?\b/g, "")
     .replace(/[_–—]/g, "-")
     .replace(/\s+/g, "_")
@@ -113,10 +123,38 @@ export function normalizeSourceName(name = "") {
 function normalizeForMatch(value = "") {
   return normalizeSourceName(value)
     .replace(/\.(pdf|docx|doc|txt|csv|md|json)$/i, "")
-    .replace(/[_\s]/g, "-")
     .replace(/[\\/]/g, "-")
+    .replace(/[_\s]/g, "-")
     .replace(/-+/g, "-")
     .trim();
+}
+
+function normalizeYear(year = "") {
+  const raw = String(year || "").trim();
+  if (!raw) return "";
+
+  if (/^\d{4}$/.test(raw)) return raw;
+
+  if (/^\d{2}$/.test(raw)) {
+    const yy = Number(raw);
+    const currentYY = CURRENT_YEAR % 100;
+    return yy <= currentYY + 1 ? `20${raw}` : `19${raw}`;
+  }
+
+  return raw;
+}
+
+function expandYear(year = "") {
+  const y = String(year || "").trim();
+  if (!y) return [];
+
+  if (y.length === 2) {
+    const normalized = normalizeYear(y);
+    const alternate = normalized.startsWith("20") ? `19${y}` : `20${y}`;
+    return [...new Set([normalized, alternate, y])];
+  }
+
+  return [...new Set([y, y.slice(-2)])];
 }
 
 /* ================= ISSUANCE / COURT / STATUTE MATCHING ================= */
@@ -128,15 +166,6 @@ function padNumber(num = "") {
     two: n.padStart(2, "0"),
     three: n.padStart(3, "0")
   };
-}
-
-function expandYear(year = "") {
-  const y = String(year || "").trim();
-  if (!y) return [];
-  if (y.length === 2) {
-    return [`20${y}`, `19${y}`, y];
-  }
-  return [y, y.slice(-2)];
 }
 
 function buildIssuanceKeywords(prefix, num, year, longName) {
@@ -211,67 +240,57 @@ function buildPossibleSourceKeywords(query = "") {
   const q = String(query || "");
   const keywords = [];
 
-  const constitutionMatch = q.match(/\b(1987\s+constitution|1987\s+philippine\s+constitution|philippine\s+constitution)\b/i);
-  if (constitutionMatch) {
+  if (
+    /\b(1987\s+constitution|1987\s+philippine\s+constitution|philippine\s+constitution)\b/i.test(
+      q
+    )
+  ) {
     keywords.push("1987 constitution");
     keywords.push("1987 philippine constitution");
     keywords.push("constitution of the philippines");
   }
 
-  const raMatch = q.match(/\b(?:RA|Republic\s+Act(?:\s+No\.?)?)\s*0*(\d{4,6})\b/i);
+  const raMatch = q.match(
+    /\b(?:RA|R\.A\.|Republic\s+Act(?:\s+No\.?)?)\s*0*(\d{4,6})\b/i
+  );
   if (raMatch) {
     keywords.push(...buildRepublicActKeywords(raMatch[1]));
   }
 
-  const rrMatch = q.match(
-    /\b(?:RR|Revenue\s+Regulation[s]?)\s*(?:No\.?)?\s*0*(\d+)\s*[-_ ]?\s*(\d{2,4})\b/i
-  );
-  if (rrMatch) {
-    keywords.push(
-      ...buildIssuanceKeywords("rr", rrMatch[1], rrMatch[2], "revenue regulation")
-    );
-  }
+  const issuancePatterns = [
+    {
+      prefix: "rr",
+      longName: "revenue regulation",
+      regex:
+        /\b(?:RR|Revenue\s+Regulation[s]?)\s*(?:No\.?)?\s*0*(\d+)\s*[-_ /]?\s*(\d{2,4})\b/i
+    },
+    {
+      prefix: "rmc",
+      longName: "revenue memorandum circular",
+      regex:
+        /\b(?:RMC|Revenue\s+Memorandum\s+Circular[s]?)\s*(?:No\.?)?\s*0*(\d+)\s*[-_ /]?\s*(\d{2,4})\b/i
+    },
+    {
+      prefix: "rmo",
+      longName: "revenue memorandum order",
+      regex:
+        /\b(?:RMO|Revenue\s+Memorandum\s+Order[s]?)\s*(?:No\.?)?\s*0*(\d+)\s*[-_ /]?\s*(\d{2,4})\b/i
+    },
+    {
+      prefix: "ramo",
+      longName: "revenue audit memorandum order",
+      regex:
+        /\b(?:RAMO|Revenue\s+Audit\s+Memorandum\s+Order[s]?)\s*(?:No\.?)?\s*0*(\d+)\s*[-_ /]?\s*(\d{2,4})\b/i
+    }
+  ];
 
-  const rmcMatch = q.match(
-    /\b(?:RMC|Revenue\s+Memorandum\s+Circular[s]?)\s*(?:No\.?)?\s*0*(\d+)\s*[-_ ]?\s*(\d{2,4})\b/i
-  );
-  if (rmcMatch) {
-    keywords.push(
-      ...buildIssuanceKeywords(
-        "rmc",
-        rmcMatch[1],
-        rmcMatch[2],
-        "revenue memorandum circular"
-      )
-    );
-  }
-
-  const rmoMatch = q.match(
-    /\b(?:RMO|Revenue\s+Memorandum\s+Order[s]?)\s*(?:No\.?)?\s*0*(\d+)\s*[-_ ]?\s*(\d{2,4})\b/i
-  );
-  if (rmoMatch) {
-    keywords.push(
-      ...buildIssuanceKeywords(
-        "rmo",
-        rmoMatch[1],
-        rmoMatch[2],
-        "revenue memorandum order"
-      )
-    );
-  }
-
-  const ramoMatch = q.match(
-    /\b(?:RAMO|Revenue\s+Audit\s+Memorandum\s+Order[s]?)\s*(?:No\.?)?\s*0*(\d+)\s*[-_ ]?\s*(\d{2,4})\b/i
-  );
-  if (ramoMatch) {
-    keywords.push(
-      ...buildIssuanceKeywords(
-        "ramo",
-        ramoMatch[1],
-        ramoMatch[2],
-        "revenue audit memorandum order"
-      )
-    );
+  for (const item of issuancePatterns) {
+    const match = q.match(item.regex);
+    if (match) {
+      keywords.push(
+        ...buildIssuanceKeywords(item.prefix, match[1], match[2], item.longName)
+      );
+    }
   }
 
   const rulingMatch = q.match(
@@ -294,11 +313,14 @@ function buildPossibleSourceKeywords(query = "") {
   const ctaMatch =
     q.match(/\bcta\s+case\s+no\.?\s*([A-Z0-9.-]+)\b/i) ||
     q.match(/\bcta\s+eb\s+no\.?\s*([A-Z0-9.-]+)\b/i);
+
   if (ctaMatch) {
     keywords.push(...buildCourtKeywords("CTA", ctaMatch[1]));
   }
 
-  const caMatch = q.match(/\bca-?g\.?\s*r\.?\s*(?:sp|cv|cr)?\s*no\.?\s*([A-Z0-9.-]+)\b/i);
+  const caMatch = q.match(
+    /\bca-?g\.?\s*r\.?\s*(?:sp|cv|cr)?\s*no\.?\s*([A-Z0-9.-]+)\b/i
+  );
   if (caMatch) {
     keywords.push(...buildCourtKeywords("CA", caMatch[1]));
   }
@@ -306,12 +328,12 @@ function buildPossibleSourceKeywords(query = "") {
   return [...new Set(keywords.map(normalizeForMatch).filter(Boolean))];
 }
 
-/* ================= STRICT QUIZ TOPIC FILTERING ================= */
+/* ================= QUIZ TOPIC FILTERING ================= */
 
 function getTopicKeywords(topic = "") {
   const q = String(topic || "").toLowerCase();
 
-  if (q.includes("vat") || q.includes("value-added")) {
+  if (q.includes("vat") || q.includes("value-added") || q.includes("value added")) {
     return [
       "vat",
       "value-added tax",
@@ -344,7 +366,12 @@ function getTopicKeywords(topic = "") {
     ];
   }
 
-  if (q.includes("income") || q.includes("rcit") || q.includes("mcit") || q.includes("nolco")) {
+  if (
+    q.includes("income") ||
+    q.includes("rcit") ||
+    q.includes("mcit") ||
+    q.includes("nolco")
+  ) {
     return [
       "income tax",
       "rcit",
@@ -441,7 +468,7 @@ function getTopicKeywords(topic = "") {
 function getTopicNegativeKeywords(topic = "") {
   const q = String(topic || "").toLowerCase();
 
-  if (q.includes("vat") || q.includes("value-added")) {
+  if (q.includes("vat") || q.includes("value-added") || q.includes("value added")) {
     return [
       "estate tax",
       "donor",
@@ -467,7 +494,12 @@ function getTopicNegativeKeywords(topic = "") {
     ];
   }
 
-  if (q.includes("income") || q.includes("rcit") || q.includes("mcit") || q.includes("nolco")) {
+  if (
+    q.includes("income") ||
+    q.includes("rcit") ||
+    q.includes("mcit") ||
+    q.includes("nolco")
+  ) {
     return [
       "estate tax",
       "donor's tax",
@@ -480,8 +512,13 @@ function getTopicNegativeKeywords(topic = "") {
 }
 
 function scoreQuizRowForTopic(row, topic = "") {
-  const text = `${row.text || ""} ${row.source || ""} ${row.original_source || ""} ${JSON.stringify(row.metadata || {})}`.toLowerCase();
-  const path = String(row.metadata?.path || row.original_source || row.source || "").toLowerCase();
+  const text = `${row.text || ""} ${row.source || ""} ${
+    row.original_source || ""
+  } ${JSON.stringify(row.metadata || {})}`.toLowerCase();
+
+  const path = String(
+    row.metadata?.path || row.original_source || row.source || ""
+  ).toLowerCase();
 
   const keywords = getTopicKeywords(topic);
   const negatives = getTopicNegativeKeywords(topic);
@@ -512,7 +549,7 @@ function scoreQuizRowForTopic(row, topic = "") {
   if (path.includes("04b_ramo")) score += 2;
   if (path.includes("05_bir_rulings")) score += 1;
   if (path.includes("05b_tax_treaties")) score += 2;
-  if (path.includes("06_court_cases")) score += 3;
+  if (path.includes("06_court_cases")) score += 2;
   if (path.includes("07_cpa_notes")) score += 1;
 
   return score;
@@ -586,7 +623,34 @@ function buildStoredMetadata(source, metadata, authorityFields) {
   };
 }
 
-/* ================= HELPERS ================= */
+/* ================= ROW MAPPING ================= */
+
+function buildSelectColumns() {
+  return [
+    "id",
+    "source",
+    "original_source",
+    "chunk_index",
+    "text",
+    "metadata",
+    "authority_type",
+    "authority_level",
+    "authority_score",
+    "authority_label",
+    "normalized_reference",
+    "normalized_aliases",
+    "recency_date",
+    "jurisdiction",
+    "source_category",
+    "document_title",
+    "effective_from",
+    "effective_to",
+    "is_superseded",
+    "superseded_by_reference",
+    "repealed_by_reference",
+    "amended_by_reference"
+  ].join(",");
+}
 
 function mapRowToResult(row, score = 1) {
   const metadata = row.metadata || {};
@@ -599,8 +663,7 @@ function mapRowToResult(row, score = 1) {
   return {
     id: row.id,
     source: row.source,
-    originalSource:
-      row.original_source || metadata.originalSource || row.source,
+    originalSource: row.original_source || metadata.originalSource || row.source,
     text: row.text,
     chunkIndex: row.chunk_index,
     metadata: {
@@ -661,52 +724,32 @@ function mapRowToResult(row, score = 1) {
       row.repealed_by_reference || metadata.repealedByReference || null,
     amendedByReference:
       row.amended_by_reference || metadata.amendedByReference || null,
-    score: row.score ?? score
+    score: row.score ?? row.similarity ?? score,
+    finalScore: row.final_score ?? row.score ?? row.similarity ?? score
   };
 }
 
 function buildSourceIlikeFilters(keyword) {
   const normalizedKeyword = normalizeForMatch(keyword);
+  const looseKeyword = String(keyword || "").replace(/-/g, "_");
 
-  return [
-    `source.ilike.%${normalizedKeyword}%`,
-    `original_source.ilike.%${normalizedKeyword}%`,
-    `metadata->>originalSource.ilike.%${normalizedKeyword}%`,
-    `metadata->>originalFileName.ilike.%${normalizedKeyword}%`,
-    `metadata->>normalizedSource.ilike.%${normalizedKeyword}%`,
-    `metadata->>path.ilike.%${normalizedKeyword}%`,
-    `normalized_reference.ilike.%${normalizedKeyword}%`,
-    `superseded_by_reference.ilike.%${normalizedKeyword}%`,
-    `repealed_by_reference.ilike.%${normalizedKeyword}%`,
-    `amended_by_reference.ilike.%${normalizedKeyword}%`
-  ].join(",");
-}
+  const terms = [...new Set([normalizedKeyword, looseKeyword].filter(Boolean))];
 
-function buildSelectColumns() {
-  return [
-    "id",
-    "source",
-    "original_source",
-    "chunk_index",
-    "text",
-    "metadata",
-    "authority_type",
-    "authority_level",
-    "authority_score",
-    "authority_label",
-    "normalized_reference",
-    "normalized_aliases",
-    "recency_date",
-    "jurisdiction",
-    "source_category",
-    "document_title",
-    "effective_from",
-    "effective_to",
-    "is_superseded",
-    "superseded_by_reference",
-    "repealed_by_reference",
-    "amended_by_reference"
-  ].join(",");
+  return terms
+    .flatMap((term) => [
+      `source.ilike.%${term}%`,
+      `original_source.ilike.%${term}%`,
+      `metadata->>originalSource.ilike.%${term}%`,
+      `metadata->>originalFileName.ilike.%${term}%`,
+      `metadata->>normalizedSource.ilike.%${term}%`,
+      `metadata->>path.ilike.%${term}%`,
+      `metadata->>normalizedReference.ilike.%${term}%`,
+      `normalized_reference.ilike.%${term}%`,
+      `superseded_by_reference.ilike.%${term}%`,
+      `repealed_by_reference.ilike.%${term}%`,
+      `amended_by_reference.ilike.%${term}%`
+    ])
+    .join(",");
 }
 
 /* ================= PUBLIC API ================= */
@@ -717,9 +760,7 @@ export async function clearVectorStore() {
     .delete()
     .neq("id", "00000000-0000-0000-0000-000000000000");
 
-  if (error) {
-    throw error;
-  }
+  if (error) throw error;
 
   console.log("🧹 Supabase vector store cleared.");
   return true;
@@ -734,9 +775,7 @@ export async function removeSourceFromVectorStore(source) {
     .eq("source", normalizedSource)
     .select("id");
 
-  if (error) {
-    throw error;
-  }
+  if (error) throw error;
 
   return {
     source: normalizedSource,
@@ -746,9 +785,7 @@ export async function removeSourceFromVectorStore(source) {
 
 export async function addDocumentToVectorStore(text, source, metadata = {}) {
   const chunks = chunkText(text);
-  const normalizedSource = normalizeSourceName(
-    metadata.normalizedSource || source
-  );
+  const normalizedSource = normalizeSourceName(metadata.normalizedSource || source);
 
   if (!chunks.length) {
     return {
@@ -810,7 +847,6 @@ export async function addDocumentToVectorStore(text, source, metadata = {}) {
 
   for (let i = 0; i < rows.length; i += batchSize) {
     const batch = rows.slice(i, i + batchSize);
-
     const { error } = await supabase.from(VECTOR_TABLE).insert(batch);
 
     if (error) {
@@ -832,11 +868,14 @@ export async function addDocumentToVectorStore(text, source, metadata = {}) {
 }
 
 export async function searchSimilar(query, topK = 5) {
-  const queryEmbedding = await embedText(query);
+  const cleanQuery = normalizeText(query);
+  if (!cleanQuery) return [];
+
+  const queryEmbedding = await embedText(cleanQuery);
 
   const { data, error } = await supabase.rpc("match_tina_vectors", {
     query_embedding: queryEmbedding,
-    match_count: topK
+    match_count: Math.max(1, Number(topK) || 5)
   });
 
   if (error) {
@@ -848,18 +887,15 @@ export async function searchSimilar(query, topK = 5) {
 }
 
 export async function searchBySourceName(keyword, topK = 8) {
-  if (!keyword) {
-    return [];
-  }
-
-  const normalizedKeyword = normalizeForMatch(keyword);
+  if (!keyword) return [];
 
   const { data, error } = await supabase
     .from(VECTOR_TABLE)
     .select(buildSelectColumns())
-    .or(buildSourceIlikeFilters(normalizedKeyword))
+    .or(buildSourceIlikeFilters(keyword))
+    .order("authority_level", { ascending: true, nullsFirst: false })
     .order("chunk_index", { ascending: true })
-    .limit(topK);
+    .limit(Math.max(1, Number(topK) || 8));
 
   if (error) {
     console.error("Supabase source-name search error:", error);
@@ -955,22 +991,21 @@ export async function getQuizSourceChunks({
       if (b.quizTopicScore !== a.quizTopicScore) {
         return b.quizTopicScore - a.quizTopicScore;
       }
+
+      const aLevel = Number(a.authority_level || a.metadata?.authorityLevel || 99);
+      const bLevel = Number(b.authority_level || b.metadata?.authorityLevel || 99);
+
+      if (aLevel !== bLevel) return aLevel - bLevel;
+
       return Math.random() - 0.5;
     })
     .slice(0, limit);
 
   return rows.map((row) => {
-    const authorityType = row.authority_type || row.metadata?.authorityType || "SECONDARY";
-    const authorityLevel = Number(row.authority_level || row.metadata?.authorityLevel || 99);
-    const authorityScore = Number(row.authority_score || row.metadata?.authorityScore || 25);
-    const authorityLabel =
-      row.authority_label || row.metadata?.authorityLabel || "Secondary / Commentary";
+    const mapped = mapRowToResult(row, row.quizTopicScore);
 
     return {
-      id: row.id,
-      source: row.source,
-      originalSource:
-        row.original_source || row.metadata?.originalSource || row.source,
+      ...mapped,
       sourceTitle:
         row.document_title ||
         row.metadata?.documentTitle ||
@@ -978,62 +1013,12 @@ export async function getQuizSourceChunks({
         row.original_source ||
         row.source,
       sourcePath: row.metadata?.path || row.original_source || row.source,
-      fileId: row.metadata?.fileId || null,
-      chunkIndex: row.chunk_index,
-      text: row.text,
+      fileId: row.metadata?.fileId || row.metadata?.file_id || null,
       metadata: {
-        ...(row.metadata || {}),
-        authorityType,
-        authorityLevel,
-        authorityScore,
-        authorityLabel,
-        normalizedReference:
-          row.normalized_reference || row.metadata?.normalizedReference || null,
-        normalizedAliases: Array.isArray(row.normalized_aliases)
-          ? row.normalized_aliases
-          : Array.isArray(row.metadata?.normalizedAliases)
-            ? row.metadata.normalizedAliases
-            : [],
-        recencyDate: row.recency_date || row.metadata?.recencyDate || null,
-        effectiveFrom: row.effective_from || row.metadata?.effectiveFrom || null,
-        effectiveTo: row.effective_to || row.metadata?.effectiveTo || null,
-        isSuperseded:
-          typeof row.is_superseded === "boolean"
-            ? row.is_superseded
-            : Boolean(row.metadata?.isSuperseded || false),
-        supersededByReference:
-          row.superseded_by_reference || row.metadata?.supersededByReference || null,
-        repealedByReference:
-          row.repealed_by_reference || row.metadata?.repealedByReference || null,
-        amendedByReference:
-          row.amended_by_reference || row.metadata?.amendedByReference || null,
+        ...mapped.metadata,
         quizTopic: cleanTopic,
         quizTopicScore: row.quizTopicScore
       },
-      authorityType,
-      authorityLevel,
-      authorityScore,
-      authorityLabel,
-      normalizedReference:
-        row.normalized_reference || row.metadata?.normalizedReference || null,
-      normalizedAliases: Array.isArray(row.normalized_aliases)
-        ? row.normalized_aliases
-        : Array.isArray(row.metadata?.normalizedAliases)
-          ? row.metadata.normalizedAliases
-          : [],
-      recencyDate: row.recency_date || row.metadata?.recencyDate || null,
-      effectiveFrom: row.effective_from || row.metadata?.effectiveFrom || null,
-      effectiveTo: row.effective_to || row.metadata?.effectiveTo || null,
-      isSuperseded:
-        typeof row.is_superseded === "boolean"
-          ? row.is_superseded
-          : Boolean(row.metadata?.isSuperseded || false),
-      supersededByReference:
-        row.superseded_by_reference || row.metadata?.supersededByReference || null,
-      repealedByReference:
-        row.repealed_by_reference || row.metadata?.repealedByReference || null,
-      amendedByReference:
-        row.amended_by_reference || row.metadata?.amendedByReference || null,
       score: row.quizTopicScore
     };
   });
