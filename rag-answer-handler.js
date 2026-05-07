@@ -62,9 +62,12 @@ import {
 
 import {
   buildFinalCompliantAnswer,
-  buildFinalRoutePayload,
   sanitizeDraftAnswer
 } from "./final-answer-compliance.js";
+
+import {
+  buildFinalRoutePayload
+} from "./source-visibility-engine.js";
 
 import {
   MAX_VISIBLE_SOURCES,
