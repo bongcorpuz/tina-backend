@@ -1,7 +1,6 @@
 // FILE: rag-answer-handler.js
 
 import { detectTopic } from "./topic-detector.js";
-
 import { saveModeState } from "./mode-state.js";
 
 import {
@@ -39,7 +38,6 @@ import {
 } from "./authority-engine.js";
 
 import { detectHierarchyConflict } from "./conflict-engine.js";
-
 import { reconcileDoctrine } from "./doctrinal-engine.js";
 import { applySupersessionFilter } from "./supersession-engine.js";
 
@@ -66,14 +64,14 @@ import {
 } from "./final-answer-compliance.js";
 
 import {
-  buildFinalRoutePayload
+  buildFinalRoutePayload,
+  filterVisibleSources
 } from "./source-visibility-engine.js";
 
 import {
   MAX_VISIBLE_SOURCES,
   toSafeDbNumeric,
   buildMemoryContext,
-  finalizeSourcesForResponse,
   classifyQuestion,
   detectIssuanceQuery,
   shouldHideSourceFromUser,
@@ -847,13 +845,13 @@ ${cleanQuestion}
           });
 
           await saveModeState(supabase, {
-          userId,
-          sessionId: conversationId || null,
-          activeHook: hookConfig.hook_code,
-          activeMode: hookConfig.mode,
-          modeTitle: hookConfig.title,
-          lastQuestion: originalQuestion,
-          lastAnswer: answerText
+            userId,
+            sessionId: conversationId || null,
+            activeHook: hookConfig.hook_code,
+            activeMode: hookConfig.mode,
+            modeTitle: hookConfig.title,
+            lastQuestion: originalQuestion,
+            lastAnswer: answerText
           });
         }
 
@@ -1112,13 +1110,10 @@ ${cleanQuestion}
             ]).slice(0, Math.max(MAX_VISIBLE_SOURCES, 8))
           : groundedDisplayableDocs;
 
-        const finalVisibleSources = finalizeSourcesForResponse(
-          finalDisplayableDocs,
-          {
-            maxItems: MAX_VISIBLE_SOURCES,
-            supersessionResult
-          }
-        );
+        const finalVisibleSources = filterVisibleSources(finalDisplayableDocs, {
+          maxItems: MAX_VISIBLE_SOURCES,
+          supersessionResult
+        });
 
         const topDisplayableEvidence = rankEvidenceByAuthority(
           normalizeRetrievedEvidence(finalDisplayableDocs)
@@ -1226,7 +1221,7 @@ ${cleanQuestion}
             ? mergeUniqueDocs([...namedLawPriorityDocs, ...finalDisplayableDocs])
             : finalDisplayableDocs;
 
-          const sourcesUsed = finalizeSourcesForResponse(sourceFinderDocs, {
+          const sourcesUsed = filterVisibleSources(sourceFinderDocs, {
             maxItems: MAX_VISIBLE_SOURCES,
             supersessionResult
           });
@@ -1266,7 +1261,7 @@ ${cleanQuestion}
                     s.issuanceNumber ? `${s.issuanceNumber} – ` : ""
                   }${s.title}`,
                   `Authority: Level ${s.authorityLevel || 99} - ${
-                    s.authorityLabel || "Unknown"
+                    s.authorityLabel || s.authorityType || "Unknown"
                   }`
                 ].join("\n")
               )
