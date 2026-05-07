@@ -41,7 +41,7 @@ import {
   createBackgroundReindexController
 } from "./reindex-service.js";
 
-/* ================= ENV ================= */
+/* ================= ENV VALIDATION ================= */
 
 const requiredEnv = [
   "SUPABASE_URL",
@@ -55,19 +55,63 @@ for (const key of requiredEnv) {
   }
 }
 
+const PORT = Number(process.env.PORT || 10000);
+const REQUEST_LIMIT = process.env.REQUEST_LIMIT || "25mb";
+const NODE_ENV = process.env.NODE_ENV || "development";
+const OPENAI_MODEL = process.env.OPENAI_MODEL || "gpt-4o-mini";
+
 /* ================= APP ================= */
 
 const app = express();
 
-app.use(cors({ origin: "*" }));
-app.use(express.json({ limit: "25mb" }));
+/* ================= CORS ================= */
+
+function buildAllowedOrigins() {
+  const raw = process.env.CORS_ORIGIN || process.env.ALLOWED_ORIGINS || "*";
+
+  if (raw === "*") return "*";
+
+  return raw
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+}
+
+const allowedOrigins = buildAllowedOrigins();
+
+app.use(
+  cors({
+    origin(origin, callback) {
+      if (allowedOrigins === "*") {
+        return callback(null, true);
+      }
+
+      if (!origin) {
+        return callback(null, true);
+      }
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error(`CORS blocked origin: ${origin}`));
+    },
+    credentials: true
+  })
+);
+
+app.use(express.json({ limit: REQUEST_LIMIT }));
+app.use(express.urlencoded({ extended: true, limit: REQUEST_LIMIT }));
+
+/* ================= CLIENTS ================= */
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY,
   {
     auth: {
-      persistSession: false
+      persistSession: false,
+      autoRefreshToken: false
     }
   }
 );
@@ -79,13 +123,36 @@ const openai = new OpenAI({
 const askHandler = createAskHandler({ supabase, openai });
 const reindexController = createBackgroundReindexController();
 
-/* ================= ADMIN SECRET ================= */
+/* ================= HELPERS ================= */
 
-function allowAuthenticatedOrIndexSecret(req, res, next) {
-  const providedSecret =
+function maskValue(value, visible = 6) {
+  if (!value) return null;
+  const text = String(value);
+  if (text.length <= visible) return "***";
+  return `${text.slice(0, visible)}...`;
+}
+
+function sendError(res, status, message, extra = {}) {
+  return res.status(status).json({
+    success: false,
+    error: message,
+    ...extra
+  });
+}
+
+function getAdminSecret(req) {
+  return (
     req.query.secret ||
     req.headers["x-index-secret"] ||
-    req.headers["x-admin-secret"];
+    req.headers["x-admin-secret"] ||
+    null
+  );
+}
+
+/* ================= ADMIN SECRET / AUTH ================= */
+
+function allowAuthenticatedOrIndexSecret(req, res, next) {
+  const providedSecret = getAdminSecret(req);
 
   if (
     process.env.INDEX_SECRET &&
@@ -106,13 +173,20 @@ function allowAuthenticatedOrIndexSecret(req, res, next) {
 /* ================= BASIC ROUTES ================= */
 
 app.get("/", (req, res) => {
-  res.send("TINA backend is running. Use /health, /routes, /index-drive?secret=YOUR_SECRET.");
+  return res.json({
+    success: true,
+    name: "TINA Backend",
+    engine: "TINA Philippine Tax Intelligence Engine",
+    message: "Backend is running.",
+    usefulRoutes: ["/health", "/routes", "/ask"]
+  });
 });
 
 app.get("/routes", (req, res) => {
-  res.json({
+  return res.json({
     success: true,
-    engine: "TINA Big 4 Mode",
+    engine: "TINA Philippine Tax Intelligence Engine",
+    modeSupport: ["/ask", "/tax", "/review", "/quiz", "/source", "/feedback"],
     routes: [
       "GET /",
       "GET /health",
@@ -138,29 +212,26 @@ app.get("/health", async (req, res) => {
   try {
     const vectorStats = await getVectorStoreStats();
 
-    res.json({
+    return res.json({
+      success: true,
       status: "ok",
-      engine: "TINA Big 4 Tax Intelligence Engine",
-      openai: Boolean(process.env.OPENAI_API_KEY),
-      openaiModel: process.env.OPENAI_MODEL || "gpt-4o-mini",
-      supabaseUrl: Boolean(process.env.SUPABASE_URL),
-      supabaseServiceRole: Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY),
-      googleDriveFolder: Boolean(process.env.GOOGLE_DRIVE_FOLDER_ID),
-      googleDriveFolderIdPreview: process.env.GOOGLE_DRIVE_FOLDER_ID
-        ? `${process.env.GOOGLE_DRIVE_FOLDER_ID.slice(0, 6)}...`
-        : null,
-      googleServiceAccountJson: Boolean(process.env.GOOGLE_SERVICE_ACCOUNT_JSON),
-      oldGoogleKeyFile: Boolean(process.env.GOOGLE_SERVICE_ACCOUNT_KEY_FILE),
+      environment: NODE_ENV,
+      engine: "TINA Philippine Tax Intelligence Engine",
+      openaiConfigured: Boolean(process.env.OPENAI_API_KEY),
+      openaiModel: OPENAI_MODEL,
+      supabaseConfigured: Boolean(process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY),
+      googleDriveConfigured: Boolean(process.env.GOOGLE_DRIVE_FOLDER_ID),
+      googleDriveFolderIdPreview: maskValue(process.env.GOOGLE_DRIVE_FOLDER_ID),
+      googleServiceAccountJsonConfigured: Boolean(process.env.GOOGLE_SERVICE_ACCOUNT_JSON),
+      oldGoogleKeyFileConfigured: Boolean(process.env.GOOGLE_SERVICE_ACCOUNT_KEY_FILE),
       indexSecretEnabled: Boolean(process.env.INDEX_SECRET),
       indexingRunning: reindexController.isActive(),
       vectorStore: vectorStats,
       time: new Date().toISOString()
     });
   } catch (error) {
-    res.status(500).json({
-      status: "error",
-      error: error.message || "Health check failed"
-    });
+    console.error("Health check error:", error);
+    return sendError(res, 500, error.message || "Health check failed");
   }
 });
 
@@ -168,7 +239,11 @@ app.get("/health", async (req, res) => {
 
 app.post("/register", async (req, res) => {
   try {
-    const { username, password, email, mobile, company } = req.body;
+    const { username, password, email, mobile, company } = req.body || {};
+
+    if (!username || !password) {
+      return sendError(res, 400, "Username and password are required.");
+    }
 
     const user = await registerUser(
       username,
@@ -179,36 +254,38 @@ app.post("/register", async (req, res) => {
       company
     );
 
-    res.status(201).json({
+    return res.status(201).json({
+      success: true,
       message: "Registration successful.",
       user
     });
   } catch (error) {
     console.error("Register error:", error);
-    res.status(400).json({
-      error: error.message || "Registration failed"
-    });
+    return sendError(res, 400, error.message || "Registration failed");
   }
 });
 
 app.post("/login", async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { username, password } = req.body || {};
+
+    if (!username || !password) {
+      return sendError(res, 400, "Username and password are required.");
+    }
 
     const result = await loginUser(username, password);
 
     if (!result) {
-      return res.status(401).json({
-        error: "Invalid credentials"
-      });
+      return sendError(res, 401, "Invalid credentials");
     }
 
-    return res.json(result);
+    return res.json({
+      success: true,
+      ...result
+    });
   } catch (error) {
     console.error("Login error:", error);
-    return res.status(500).json({
-      error: "Login failed"
-    });
+    return sendError(res, 500, "Login failed");
   }
 });
 
@@ -217,12 +294,10 @@ app.post("/login", async (req, res) => {
 app.post("/conversations", authenticate, async (req, res) => {
   try {
     const userId = getUserId(req);
-    const { title } = req.body;
+    const { title } = req.body || {};
 
     if (!userId) {
-      return res.status(401).json({
-        error: "User ID not found in token."
-      });
+      return sendError(res, 401, "User ID not found in token.");
     }
 
     const conversation = await createConversation(supabase, {
@@ -236,10 +311,7 @@ app.post("/conversations", authenticate, async (req, res) => {
     });
   } catch (error) {
     console.error("Create conversation error:", error);
-    return res.status(500).json({
-      success: false,
-      error: error.message || "Failed to create conversation"
-    });
+    return sendError(res, 500, error.message || "Failed to create conversation");
   }
 });
 
@@ -248,9 +320,7 @@ app.get("/conversations", authenticate, async (req, res) => {
     const userId = getUserId(req);
 
     if (!userId) {
-      return res.status(401).json({
-        error: "User ID not found in token."
-      });
+      return sendError(res, 401, "User ID not found in token.");
     }
 
     const conversations = await getUserConversations(supabase, userId);
@@ -261,10 +331,7 @@ app.get("/conversations", authenticate, async (req, res) => {
     });
   } catch (error) {
     console.error("Get conversations error:", error);
-    return res.status(500).json({
-      success: false,
-      error: error.message || "Failed to load conversations"
-    });
+    return sendError(res, 500, error.message || "Failed to load conversations");
   }
 });
 
@@ -274,9 +341,11 @@ app.get("/conversations/:conversationId/messages", authenticate, async (req, res
     const { conversationId } = req.params;
 
     if (!userId) {
-      return res.status(401).json({
-        error: "User ID not found in token."
-      });
+      return sendError(res, 401, "User ID not found in token.");
+    }
+
+    if (!conversationId) {
+      return sendError(res, 400, "Conversation ID is required.");
     }
 
     const messages = await getConversationMessages(supabase, {
@@ -290,49 +359,34 @@ app.get("/conversations/:conversationId/messages", authenticate, async (req, res
     });
   } catch (error) {
     console.error("Get messages error:", error);
-    return res.status(500).json({
-      success: false,
-      error: error.message || "Failed to load messages"
-    });
+    return sendError(res, 500, error.message || "Failed to load messages");
   }
 });
 
 /* ================= INDEX ROUTES ================= */
 
-app.get("/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
+function startIndexingResponse(route) {
   const started = reindexController.start();
 
-  return res.json({
+  return {
     success: true,
     engine: "TINA Background Indexing Engine",
-    route: "/index-drive",
+    route,
     ...started,
     statusUrl: "/index-status?secret=YOUR_SECRET"
-  });
+  };
+}
+
+app.get("/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
+  return res.json(startIndexingResponse("/index-drive"));
 });
 
 app.get("/reindex", allowAuthenticatedOrIndexSecret, async (req, res) => {
-  const started = reindexController.start();
-
-  return res.json({
-    success: true,
-    engine: "TINA Background Indexing Engine",
-    route: "/reindex",
-    ...started,
-    statusUrl: "/index-status?secret=YOUR_SECRET"
-  });
+  return res.json(startIndexingResponse("/reindex"));
 });
 
 app.get("/admin/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
-  const started = reindexController.start();
-
-  return res.json({
-    success: true,
-    engine: "TINA Background Indexing Engine",
-    route: "/admin/index-drive",
-    ...started,
-    statusUrl: "/index-status?secret=YOUR_SECRET"
-  });
+  return res.json(startIndexingResponse("/admin/index-drive"));
 });
 
 app.get("/index-status", allowAuthenticatedOrIndexSecret, async (req, res) => {
@@ -347,10 +401,8 @@ app.get("/index-status", allowAuthenticatedOrIndexSecret, async (req, res) => {
       time: new Date().toISOString()
     });
   } catch (error) {
-    return res.status(500).json({
-      success: false,
-      error: error.message || "Failed to read index status"
-    });
+    console.error("Index status error:", error);
+    return sendError(res, 500, error.message || "Failed to read index status");
   }
 });
 
@@ -361,10 +413,7 @@ app.get("/list", allowAuthenticatedOrIndexSecret, async (req, res) => {
     const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
 
     if (!folderId) {
-      return res.status(400).json({
-        success: false,
-        error: "GOOGLE_DRIVE_FOLDER_ID not set"
-      });
+      return sendError(res, 400, "GOOGLE_DRIVE_FOLDER_ID not set");
     }
 
     const files = await listDriveFiles(folderId);
@@ -376,10 +425,7 @@ app.get("/list", allowAuthenticatedOrIndexSecret, async (req, res) => {
     });
   } catch (error) {
     console.error("List error:", error);
-    return res.status(500).json({
-      success: false,
-      error: error.message || "Failed to list files"
-    });
+    return sendError(res, 500, error.message || "Failed to list files");
   }
 });
 
@@ -388,26 +434,26 @@ app.get("/read-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
     const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
 
     if (!folderId) {
-      return res.status(400).json({
-        success: false,
-        error: "GOOGLE_DRIVE_FOLDER_ID not set"
-      });
+      return sendError(res, 400, "GOOGLE_DRIVE_FOLDER_ID not set");
     }
 
+    const maxFiles = Math.max(1, Number(req.query.limit || 25));
     const files = await listDriveFiles(folderId);
+    const selectedFiles = files.slice(0, maxFiles);
     const results = [];
 
-    for (const file of files) {
+    for (const file of selectedFiles) {
       try {
         const text = await extractTextFromFile(file);
+        const path = file.path || file.name;
 
         results.push({
           fileName: file.name,
-          normalizedSource: normalizeSourceName(file.path || file.name),
-          path: file.path || file.name,
+          normalizedSource: normalizeSourceName(path),
+          path,
           authorityTier: getSourceTier({
             source: file.name,
-            metadata: { path: file.path || file.name }
+            metadata: { path }
           }),
           mimeType: file.mimeType,
           textLength: String(text || "").length,
@@ -416,10 +462,12 @@ app.get("/read-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
           driveDownloadUrl: file.driveDownloadUrl || null
         });
       } catch (fileError) {
+        const path = file.path || file.name;
+
         results.push({
           fileName: file.name,
-          normalizedSource: normalizeSourceName(file.path || file.name),
-          path: file.path || file.name,
+          normalizedSource: normalizeSourceName(path),
+          path,
           mimeType: file.mimeType,
           textLength: 0,
           error: fileError.message || "Failed to read file",
@@ -432,15 +480,14 @@ app.get("/read-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
     return res.json({
       success: true,
       message: "Drive read completed.",
+      totalFilesInFolder: files.length,
       filesRead: results.length,
+      limitApplied: maxFiles,
       files: results
     });
   } catch (error) {
     console.error("Read-drive error:", error);
-    return res.status(500).json({
-      success: false,
-      error: error.message || "Drive read failed"
-    });
+    return sendError(res, 500, error.message || "Drive read failed");
   }
 });
 
@@ -450,15 +497,12 @@ app.get("/vector-stats", allowAuthenticatedOrIndexSecret, async (req, res) => {
 
     return res.json({
       success: true,
-      engine: "TINA Big 4 Tax Intelligence Engine",
+      engine: "TINA Philippine Tax Intelligence Engine",
       vectorStore: vectorStats
     });
   } catch (error) {
     console.error("Vector stats error:", error);
-    return res.status(500).json({
-      success: false,
-      error: error.message || "Failed to read vector stats"
-    });
+    return sendError(res, 500, error.message || "Failed to read vector stats");
   }
 });
 
@@ -469,18 +513,53 @@ app.post("/ask", authenticate, askHandler);
 /* ================= NOT FOUND ================= */
 
 app.use((req, res) => {
-  return res.status(404).json({
-    success: false,
-    error: "Route not found"
+  return sendError(res, 404, "Route not found", {
+    path: req.originalUrl,
+    method: req.method
   });
+});
+
+/* ================= GLOBAL ERROR HANDLER ================= */
+
+app.use((error, req, res, next) => {
+  console.error("Unhandled server error:", error);
+
+  if (res.headersSent) {
+    return next(error);
+  }
+
+  return sendError(
+    res,
+    error.status || 500,
+    NODE_ENV === "production"
+      ? "Internal server error"
+      : error.message || "Internal server error"
+  );
 });
 
 /* ================= SERVER ================= */
 
-const PORT = Number(process.env.PORT || 10000);
-
-app.listen(PORT, () => {
-  console.log(`TINA Big 4 Backend running on port ${PORT}`);
+const server = app.listen(PORT, () => {
+  console.log(`TINA Backend running on port ${PORT}`);
+  console.log(`Environment: ${NODE_ENV}`);
+  console.log(`OpenAI model: ${OPENAI_MODEL}`);
 });
+
+function shutdown(signal) {
+  console.log(`${signal} received. Shutting down TINA backend...`);
+
+  server.close(() => {
+    console.log("HTTP server closed.");
+    process.exit(0);
+  });
+
+  setTimeout(() => {
+    console.error("Forced shutdown after timeout.");
+    process.exit(1);
+  }, 10000);
+}
+
+process.on("SIGTERM", () => shutdown("SIGTERM"));
+process.on("SIGINT", () => shutdown("SIGINT"));
 
 export default app;
