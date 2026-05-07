@@ -841,6 +841,16 @@ ${cleanQuestion}
             question: originalQuestion,
             answer: answerText
           });
+
+          await saveModeState(supabase, {
+          userId,
+          sessionId: conversationId || null,
+          activeHook: hookConfig.hook_code,
+          activeMode: hookConfig.mode,
+          modeTitle: hookConfig.title,
+          lastQuestion: originalQuestion,
+          lastAnswer: answerText
+          });
         }
 
         const retrievals = [];
