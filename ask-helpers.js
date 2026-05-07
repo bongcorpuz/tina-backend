@@ -109,7 +109,8 @@ function getSearchableSourceText(source = {}) {
     source.metadata?.originalFileName,
     source.metadata?.documentTitle,
     source.metadata?.normalizedReference,
-    source.normalizedReference
+    source.normalizedReference,
+    source.normalized_reference
   ]
     .filter(Boolean)
     .join(" || ");
@@ -126,6 +127,16 @@ function cleanDisplayTitle(doc = {}) {
     "Untitled Source";
 
   return cleanFilename(raw) || "Untitled Source";
+}
+
+export function normalizeIssuanceNumber(num = "") {
+  return String(num || "").replace(/^0+/, "") || "0";
+}
+
+export function normalizeIssuanceYear(year = "") {
+  const y = String(year || "").trim();
+  if (!y) return "";
+  return y.length === 2 ? `20${y}` : y;
 }
 
 function extractIssuanceReference(text = "") {
@@ -184,7 +195,7 @@ function extractIssuanceReference(text = "") {
     },
     {
       type: "CTA_DIVISION",
-      regex: /\bCTA\s+No\.?\s*([A-Za-z0-9.-]+)\b/i,
+      regex: /\bCTA(?:\s+Case)?\s+No\.?\s*([A-Za-z0-9.-]+)\b/i,
       formatter: (m) => `CTA No. ${m[1]}`
     },
     {
@@ -210,19 +221,135 @@ function extractIssuanceReference(text = "") {
   };
 }
 
+function extractIssuanceReferenceFromNormalizedRef(value = "") {
+  const ref = String(value || "").trim();
+
+  const patterns = [
+    {
+      type: "STATUTE",
+      regex: /\bRA_(\d{4,6})\b/i,
+      formatter: (m) => `RA No. ${m[1]}`
+    },
+    {
+      type: "RR",
+      regex: /\bRR_(\d{1,3})[-_](\d{4})\b/i,
+      formatter: (m) => `RR No. ${Number(m[1])}-${m[2]}`
+    },
+    {
+      type: "RMC",
+      regex: /\bRMC_(\d{1,3})[-_](\d{4})\b/i,
+      formatter: (m) => `RMC No. ${Number(m[1])}-${m[2]}`
+    },
+    {
+      type: "RMO",
+      regex: /\bRMO_(\d{1,3})[-_](\d{4})\b/i,
+      formatter: (m) => `RMO No. ${Number(m[1])}-${m[2]}`
+    },
+    {
+      type: "RAMO",
+      regex: /\bRAMO_(\d{1,3})[-_](\d{4})\b/i,
+      formatter: (m) => `RAMO No. ${Number(m[1])}-${m[2]}`
+    },
+    {
+      type: "BIR_RULING",
+      regex: /\bBIR_RULING_([A-Z0-9_()./-]+)\b/i,
+      formatter: (m) => `BIR Ruling No. ${String(m[1]).replace(/_/g, "-")}`
+    },
+    {
+      type: "SUPREME_COURT",
+      regex: /\bGR_([A-Z0-9_()./-]+)\b/i,
+      formatter: (m) => `G.R. No. ${String(m[1]).replace(/_/g, "-")}`
+    },
+    {
+      type: "COURT_OF_APPEALS",
+      regex: /\bCA_GR_([A-Z0-9_()./-]+)\b/i,
+      formatter: (m) => `CA-G.R. ${String(m[1]).replace(/_/g, "-")}`
+    },
+    {
+      type: "CTA_EN_BANC",
+      regex: /\bCTA_([A-Z0-9_()./-]+)\b/i,
+      formatter: (m) => `CTA No. ${String(m[1]).replace(/_/g, "-")}`
+    }
+  ];
+
+  for (const rule of patterns) {
+    const match = ref.match(rule.regex);
+    if (match) {
+      return {
+        authorityType: rule.type,
+        issuanceNumber: compactSpaces(rule.formatter(match))
+      };
+    }
+  }
+
+  return {
+    authorityType: null,
+    issuanceNumber: ""
+  };
+}
+
+function inferIssuanceNumber(item = {}) {
+  const text = [
+    item.issuanceNumber,
+    item.title,
+    item.source_title,
+    item.source,
+    item.originalSource,
+    item.original_source,
+    item.path,
+    item.source_path,
+    item.metadata?.path,
+    item.metadata?.normalizedReference,
+    item.normalizedReference,
+    item.normalized_reference
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const direct = extractIssuanceReference(text);
+  if (direct.issuanceNumber) {
+    return direct.issuanceNumber;
+  }
+
+  const normalizedRef =
+    item.normalizedReference ||
+    item.normalized_reference ||
+    item.metadata?.normalizedReference ||
+    "";
+
+  const fromNormalized = extractIssuanceReferenceFromNormalizedRef(normalizedRef);
+  return fromNormalized.issuanceNumber || "";
+}
+
 function detectAuthorityFromPathOrText(doc = {}) {
   const path = lower(getDocPath(doc));
   const original = lower(getDocOriginalName(doc));
   const title = lower(doc.title || doc.source_title || "");
   const allText = compactSpaces(
-    [getDocPath(doc), getDocOriginalName(doc), doc.title, doc.source_title]
+    [
+      getDocPath(doc),
+      getDocOriginalName(doc),
+      doc.title,
+      doc.source_title,
+      doc.metadata?.normalizedReference,
+      doc.normalizedReference,
+      doc.normalized_reference
+    ]
       .filter(Boolean)
       .join(" ")
   );
 
-  const explicit = extractIssuanceReference(allText);
-  if (explicit.authorityType) {
-    return explicit.authorityType;
+  const explicit =
+    extractIssuanceReference(allText).authorityType ||
+    extractIssuanceReferenceFromNormalizedRef(
+      doc.normalizedReference ||
+        doc.normalized_reference ||
+        doc.metadata?.normalizedReference ||
+        ""
+    ).authorityType;
+
+  if (explicit) {
+    return explicit;
   }
 
   if (path.includes("00_constitution") || original.includes("constitution")) {
@@ -435,33 +562,13 @@ export function buildGoogleDriveLinks(doc = {}) {
   };
 }
 
-function inferIssuanceNumber(item = {}) {
-  const text = [
-    item.issuanceNumber,
-    item.title,
-    item.source_title,
-    item.source,
-    item.originalSource,
-    item.original_source,
-    item.path,
-    item.source_path,
-    item.metadata?.path,
-    item.metadata?.normalizedReference,
-    item.normalizedReference
-  ]
-    .filter(Boolean)
-    .join(" ");
-
-  return extractIssuanceReference(text).issuanceNumber || "";
-}
-
 function buildDocKey(doc = {}) {
   return (
     doc.fileId ||
     doc.file_id ||
     doc.metadata?.fileId ||
     doc.metadata?.file_id ||
-    normalizeForMatch(doc.issuanceNumber) ||
+    normalizeForMatch(inferIssuanceNumber(doc)) ||
     normalizeForMatch(getDocPath(doc)) ||
     normalizeForMatch(getDocOriginalName(doc)) ||
     normalizeForMatch(doc.source) ||
@@ -695,16 +802,6 @@ export function classifyQuestion(question = "") {
   }
 
   return "general";
-}
-
-export function normalizeIssuanceNumber(num = "") {
-  return String(num || "").replace(/^0+/, "") || "0";
-}
-
-export function normalizeIssuanceYear(year = "") {
-  const y = String(year || "").trim();
-  if (!y) return "";
-  return y.length === 2 ? `20${y}` : y;
 }
 
 export function detectIssuanceQuery(question = "") {
