@@ -34,10 +34,11 @@ import {
 
 import {
   rerankByHierarchy,
-  detectHierarchyConflict,
   selectTopLegalBases,
   buildStrictAnswerPrompt
 } from "./authority-engine.js";
+
+import { detectHierarchyConflict } from "./conflict-engine.js";
 
 import { reconcileDoctrine } from "./doctrinal-engine.js";
 import { applySupersessionFilter } from "./supersession-engine.js";
