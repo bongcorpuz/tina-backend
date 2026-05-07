@@ -12,13 +12,13 @@ import {
   saveMemoryHooks
 } from "./memory-hooks.js";
 
-import {
-  saveMessage
-} from "./conversation-memory.js";
-
+import { saveMessage } from "./conversation-memory.js";
 import { storeFeedbackEntry } from "./feedback-learning.js";
 
-import { getUserId } from "./ask-helpers.js";
+import {
+  getUserId,
+  extractQuizAnswer
+} from "./ask-helpers.js";
 
 import { createAssessmentHandler } from "./assessment-handler.js";
 import { createRagAnswerHandler } from "./rag-answer-handler.js";
@@ -30,13 +30,11 @@ function isExitCommand(value = "") {
 }
 
 function normalizeHookCommand(value = "") {
-  const text = String(value || "").trim();
-  const firstWord = text.split(/\s+/)[0]?.toLowerCase() || "";
-  return firstWord;
+  return String(value || "").trim().split(/\s+/)[0]?.toLowerCase() || "";
 }
 
 function buildHardcodedHookConfig(hookCode = "/ask") {
-  const hardcodedHooks = {
+  const hooks = {
     "/ask": {
       hook_code: "/ask",
       mode: "ASK",
@@ -103,7 +101,7 @@ function buildHardcodedHookConfig(hookCode = "/ask") {
     }
   };
 
-  return hardcodedHooks[hookCode] || hardcodedHooks["/ask"];
+  return hooks[hookCode] || hooks["/ask"];
 }
 
 async function loadTaxHookConfig({ supabase, rawQuestion = "" }) {
@@ -330,8 +328,7 @@ export function createAskHandler({ supabase, openai }) {
         } else if (activeHook === "/review") {
           answerText = "Review mode ended. You are now back in normal /ask mode.";
         } else if (activeHook === "/diagnostic") {
-          answerText =
-            "Diagnostic mode ended. You are now back in normal /ask mode.";
+          answerText = "Diagnostic mode ended. You are now back in normal /ask mode.";
         } else if (activeHook !== "/ask") {
           answerText = `Mode ${activeHook} ended. You are now back in normal /ask mode.`;
         }
@@ -350,7 +347,8 @@ export function createAskHandler({ supabase, openai }) {
       }
 
       const activeHook = existingMode?.active_hook || null;
-      const hasActiveAssessmentMode = assessmentHandler.isAssessmentHook(activeHook);
+      const hasActiveAssessmentMode =
+        assessmentHandler.isAssessmentHook(activeHook);
 
       const pendingQuiz = await assessmentHandler.fetchLatestPendingQuiz(
         userId,
@@ -364,13 +362,7 @@ export function createAskHandler({ supabase, openai }) {
         );
       }
 
-      const directQuizAnswer = assessmentHandler.isAssessmentHook(activeHook)
-        ? null
-        : null;
-
-      const quizAnswer = String(rawQuestion || "").match(/^\s*([A-Da-d])[\s.)-]*$/)
-        ? rawQuestion
-        : null;
+      const quizAnswer = extractQuizAnswer(rawQuestion);
 
       if (pendingQuiz && hasActiveAssessmentMode && quizAnswer) {
         const loopResult = await assessmentHandler.continueAssessmentLoop({
@@ -441,14 +433,12 @@ export function createAskHandler({ supabase, openai }) {
       }
 
       return ragAnswerHandler.handleRagAnswer({
-        req,
         res,
         userId,
         conversationId,
         hookConfig,
         cleanQuestion: hookConfig.cleanQuestion,
-        originalQuestion: hookConfig.originalQuestion,
-        existingMode
+        originalQuestion: hookConfig.originalQuestion
       });
     } catch (error) {
       console.error("Ask dispatcher error:", error);
