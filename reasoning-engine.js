@@ -1,17 +1,18 @@
 // FILE: reasoning-engine.js
 
 import {
-  AUTHORITY_LEVEL,
   AUTHORITY_LABEL,
-  CONTROLLING_PRECEDENCE,
   normalizeLegalReference,
   classifyAuthorityFromDocument,
-  resolveCourtOverride,
-  isGenuineConflict,
   getAuthorityTypeForDoc,
   getAuthorityLevelForDoc,
   getControllingPrecedenceForDoc
 } from "./authority-engine.js";
+
+import {
+  resolveCourtOverride,
+  isGenuineConflict
+} from "./conflict-engine.js";
 
 function safeString(value) {
   return String(value || "").trim();
@@ -62,6 +63,7 @@ function getDocPath(doc = {}) {
       doc.source_path ||
       doc.metadata?.originalFileName ||
       doc.originalSource ||
+      doc.original_source ||
       doc.source
   );
 }
@@ -71,6 +73,7 @@ function getDocOriginalName(doc = {}) {
     doc.metadata?.originalSource ||
       doc.metadata?.originalFileName ||
       doc.originalSource ||
+      doc.original_source ||
       doc.source
   );
 }
@@ -111,6 +114,7 @@ function inferAuthorityTier(doc = {}) {
   const explicitTier =
     doc.authority_tier ??
     doc.authorityLevel ??
+    doc.authority_level ??
     doc.metadata?.authorityLevel ??
     doc.metadata?.authorityTier ??
     doc.sourceTier?.tier;
@@ -145,18 +149,18 @@ function inferControllingPrecedence(doc = {}) {
 
 function authorityWeight(tier = 99) {
   if (tier <= 2) return 1.0;
-  if (tier <= 4) return 0.97;
+  if (tier <= 3) return 0.97;
   if (tier <= 7) return 0.94;
-  if (tier === 8) return 0.9;
-  if (tier === 9) return 0.82;
-  if (tier <= 11) return 0.76;
-  if (tier === 12) return 0.68;
+  if (tier <= 8) return 0.9;
+  if (tier <= 11) return 0.78;
+  if (tier === 12) return 0.72;
   if (tier === 13) return 0.62;
   return 0.35;
 }
 
 function inferAuthorityLabel(tier = 99, doc = {}) {
   const authorityType = getAuthorityType(doc);
+
   return (
     AUTHORITY_LABEL[authorityType] ||
     AUTHORITY_LABEL.SECONDARY ||
@@ -167,24 +171,23 @@ function inferAuthorityLabel(tier = 99, doc = {}) {
 function inferEvidenceType(doc = {}) {
   const authorityType = getAuthorityType(doc);
 
+  if (["CONSTITUTION", "STATUTE", "TREATY"].includes(authorityType)) {
+    return "primary";
+  }
+
+  if (["RR", "RMC", "RMO", "RAMO", "BIR_RULING", "LGU"].includes(authorityType)) {
+    return "administrative";
+  }
+
   if (
     [
-      "CONSTITUTION",
-      "STATUTE",
-      "TREATY",
       "SUPREME_COURT",
       "CTA_EN_BANC",
       "COURT_OF_APPEALS",
       "CTA_DIVISION"
     ].includes(authorityType)
   ) {
-    return "primary";
-  }
-
-  if (
-    ["RR", "RMC", "RMO", "RAMO", "BIR_RULING", "LGU"].includes(authorityType)
-  ) {
-    return "interpretive";
+    return "jurisprudence";
   }
 
   return "secondary";
@@ -234,6 +237,7 @@ function computeKeywordScore(query = "", text = "") {
   if (!queryTokens.length || !textTokens.size) return 0;
 
   let hits = 0;
+
   for (const token of queryTokens) {
     if (textTokens.has(token)) hits += 1;
   }
@@ -304,6 +308,7 @@ function compareEvidencePair(a, b) {
   const bType = getAuthorityType(docB);
 
   const override = resolveCourtOverride(docA, docB);
+
   const preferred = override?.winningSource
     ? override.winningSource === docA
       ? a
@@ -511,6 +516,7 @@ export async function hybridRetrieve({
   const exactDocs = exact.documents || [];
 
   let metadataDocs = [];
+
   if (taxType) {
     const { data, error } = await supabase
       .from("tina_vector_store")
@@ -524,26 +530,27 @@ export async function hybridRetrieve({
   }
 
   let keywordDocs = [];
-  {
-    const tokens = tokenize(cleanQuery)
-      .filter((token) => token.length >= 3)
-      .slice(0, 8);
 
-    if (tokens.length) {
-      const orClause = tokens.map((token) => `text.ilike.%${token}%`).join(",");
-      const { data, error } = await supabase
-        .from("tina_vector_store")
-        .select("*")
-        .or(orClause)
-        .limit(Math.max(topK, 20));
+  const tokens = tokenize(cleanQuery)
+    .filter((token) => token.length >= 3)
+    .slice(0, 8);
 
-      if (!error) {
-        keywordDocs = data || [];
-      }
+  if (tokens.length) {
+    const orClause = tokens.map((token) => `text.ilike.%${token}%`).join(",");
+
+    const { data, error } = await supabase
+      .from("tina_vector_store")
+      .select("*")
+      .or(orClause)
+      .limit(Math.max(topK, 20));
+
+    if (!error) {
+      keywordDocs = data || [];
     }
   }
 
   let vectorDocs = [];
+
   if (vectorStore?.smartSearch) {
     try {
       vectorDocs = await vectorStore.smartSearch(cleanQuery, topK);
@@ -577,7 +584,14 @@ export async function hybridRetrieve({
     const vectorScore = safeNumber(doc.score, 0);
     const keywordScore = computeKeywordScore(cleanQuery, textBlob);
     const tier = inferAuthorityTier(doc);
-    const combinedScore = Math.max(vectorScore, keywordScore) * authorityWeight(tier);
+    const citationBoost = exactDocs.some((exactDoc) => buildDocIdentity(exactDoc) === buildDocIdentity(doc))
+      ? 1.25
+      : 1;
+
+    const combinedScore =
+      Math.max(vectorScore, keywordScore) *
+      authorityWeight(tier) *
+      citationBoost;
 
     return {
       ...doc,
@@ -595,6 +609,7 @@ export async function hybridRetrieve({
     if (b.combined_score !== a.combined_score) {
       return b.combined_score - a.combined_score;
     }
+
     return inferAuthorityTier(a) - inferAuthorityTier(b);
   });
 
@@ -642,9 +657,7 @@ export function detectEvidenceConflicts(evidence = []) {
   for (let i = 0; i < evidence.length; i += 1) {
     for (let j = i + 1; j < evidence.length; j += 1) {
       const result = compareEvidencePair(evidence[i], evidence[j]);
-      if (result) {
-        conflicts.push(result);
-      }
+      if (result) conflicts.push(result);
     }
   }
 
@@ -664,19 +677,18 @@ export function detectEvidenceConflicts(evidence = []) {
 
 export function rankEvidenceByAuthority(evidence = []) {
   return [...evidence].sort((a, b) => {
-    const aPrecedence = safeNumber(a.controlling_precedence, 99);
-    const bPrecedence = safeNumber(b.controlling_precedence, 99);
+    const aTier = safeNumber(a.authority_tier, 99);
+    const bTier = safeNumber(b.authority_tier, 99);
 
-    if (aPrecedence !== bPrecedence) {
-      return aPrecedence - bPrecedence;
-    }
+    if (aTier !== bTier) return aTier - bTier;
 
     const scoreDiff = safeNumber(b.score, 0) - safeNumber(a.score, 0);
     if (scoreDiff !== 0) return scoreDiff;
 
-    const tierDiff =
-      safeNumber(a.authority_tier, 99) - safeNumber(b.authority_tier, 99);
-    if (tierDiff !== 0) return tierDiff;
+    const aPrecedence = safeNumber(a.controlling_precedence, 99);
+    const bPrecedence = safeNumber(b.controlling_precedence, 99);
+
+    if (aPrecedence !== bPrecedence) return aPrecedence - bPrecedence;
 
     return safeString(a.source_path).localeCompare(safeString(b.source_path));
   });
@@ -718,16 +730,18 @@ export function buildClaimEvidenceMap(answerDraft, evidence = []) {
       })
       .sort((a, b) => b.evidence_score - a.evidence_score);
 
-    return ranked[0] || {
-      claim_text: claim,
-      support_status: "unsupported",
-      source_path: null,
-      source_title: null,
-      vector_chunk_id: null,
-      authority_tier: null,
-      authority_type: null,
-      evidence_score: 0
-    };
+    return (
+      ranked[0] || {
+        claim_text: claim,
+        support_status: "unsupported",
+        source_path: null,
+        source_title: null,
+        vector_chunk_id: null,
+        authority_tier: null,
+        authority_type: null,
+        evidence_score: 0
+      }
+    );
   });
 }
 
@@ -753,7 +767,7 @@ export async function synthesizeGroundedAnswer({
         `CONTROLLING PRECEDENCE: ${item.controlling_precedence ?? 99}`,
         `SECTION: ${item.section_label || "N/A"}`,
         `SCORE: ${item.score}`,
-        `TEXT:`,
+        "TEXT:",
         item.text || ""
       ].join("\n");
     })
@@ -773,29 +787,32 @@ CORE BEHAVIOR:
 - no hallucinations
 - no unsupported legal conclusions
 
-AUTHORITY HIERARCHY:
+RETRIEVAL HIERARCHY:
 1. 1987 Constitution
 2. NIRC / Tax Code / Republic Acts amending tax law
-3. Tax Treaties
-4. Supreme Court
-5. CTA En Banc
-6. Court of Appeals
-7. CTA Division
-8. Revenue Regulations
-9. Revenue Memorandum Circulars
-10. Revenue Memorandum Orders
-11. Revenue Audit Memorandum Orders
-12. BIR Rulings
-13. Local Tax Ordinances
-14. Secondary materials
+3. Revenue Regulations
+4. Revenue Memorandum Circulars
+5. Revenue Memorandum Orders
+6. Revenue Audit Memorandum Orders
+7. BIR Rulings
+8. Supreme Court decisions
+9. CTA En Banc decisions
+10. Court of Appeals decisions
+11. CTA Division decisions
+12. Tax Treaties / LGU ordinances / Secondary materials as applicable
+
+CONFLICT RESOLUTION:
+- Constitution and statutes control administrative issuances.
+- If a court decision genuinely conflicts with a BIR issuance, the court ruling controls.
+- Do not claim a conflict unless the conflict is specific and visible in the provided context.
 
 STRICT RULES:
 1. Answer ONLY from the provided CONTEXT when indexed context is available.
 2. Do NOT use general knowledge, assumptions, or memory to add legal bases not shown in CONTEXT.
 3. Do NOT invent RR, RMC, RMO, RAMO, BIR rulings, dates, sections, rates, forms, thresholds, deadlines, case doctrines, or citations.
 4. If a specific issuance is asked and the exact issuance is not in CONTEXT, say: "No indexed document found for the requested issuance."
-5. If a court decision conflicts with a BIR issuance, the court decision prevails.
-6. Prefer higher controlling authority sources over lower authority sources.
+5. Prefer TINA retrieval hierarchy for source organization.
+6. Use controlling legal precedence only for actual conflict resolution.
 7. Use exact filenames/path shown in CONTEXT only.
 8. Do not mention ChatGPT.
 9. Do not overstate certainty. State limitations clearly.
@@ -863,7 +880,7 @@ CONTEXT:
 ${context}
 
 Instruction:
-Answer strictly using only the CONTEXT. Apply the full source hierarchy and the active hook mode.
+Answer strictly using only the CONTEXT. Apply the TINA hierarchy for source organization and controlling legal precedence only for actual conflicts.
 `.trim();
 
   const response = await openai.chat.completions.create({
@@ -913,9 +930,7 @@ export async function saveReasoningEvidence(supabase, payload) {
   const reasoningRunId = safeString(payload.reasoningRunId);
   const evidenceItems = Array.isArray(payload.evidence) ? payload.evidence : [];
 
-  if (!reasoningRunId || !evidenceItems.length) {
-    return [];
-  }
+  if (!reasoningRunId || !evidenceItems.length) return [];
 
   const rows = evidenceItems.map((item) => ({
     reasoning_run_id: reasoningRunId,
@@ -950,9 +965,7 @@ export async function saveReasoningConflicts(supabase, payload) {
   const reasoningRunId = safeString(payload.reasoningRunId);
   const conflictItems = Array.isArray(payload.conflicts) ? payload.conflicts : [];
 
-  if (!reasoningRunId || !conflictItems.length) {
-    return [];
-  }
+  if (!reasoningRunId || !conflictItems.length) return [];
 
   const rows = conflictItems.map((item) => {
     const resolutionSuffix = [
