@@ -22,6 +22,20 @@ function unique(values = []) {
   return [...new Set(values.filter(Boolean))];
 }
 
+function normalizeYear(year = "") {
+  const raw = String(year || "").trim();
+  if (!raw) return "";
+  if (/^\d{4}$/.test(raw)) return raw;
+
+  if (/^\d{2}$/.test(raw)) {
+    const yy = Number(raw);
+    const currentYY = new Date().getFullYear() % 100;
+    return yy <= currentYY + 1 ? `20${raw}` : `19${raw}`;
+  }
+
+  return raw;
+}
+
 function computeKeywordScore(query = "", text = "") {
   const queryTokens = tokenize(query);
   const textTokens = new Set(tokenize(text));
@@ -120,8 +134,9 @@ function extractIssuanceRefs(text = "") {
 
   for (const { type, regex } of patterns) {
     for (const match of value.matchAll(regex)) {
-      const year = String(match[2]).length === 2 ? `20${match[2]}` : String(match[2]);
-      refs.push(`${type}-${String(match[1]).replace(/^0+/, "")}-${year}`);
+      refs.push(
+        `${type}-${String(match[1]).replace(/^0+/, "")}-${normalizeYear(match[2])}`
+      );
     }
   }
 
@@ -132,8 +147,7 @@ function extractCourtRefs(text = "") {
   const value = normalizeText(text);
   const refs = [];
 
-  const grMatches = [...value.matchAll(/\bg\.?\s*r\.?\s*no\.?\s*([a-z0-9.-]+)\b/gi)];
-  for (const match of grMatches) {
+  for (const match of value.matchAll(/\bg\.?\s*r\.?\s*no\.?\s*([a-z0-9.-]+)\b/gi)) {
     refs.push(`gr-${String(match[1]).toUpperCase()}`);
   }
 
@@ -141,12 +155,12 @@ function extractCourtRefs(text = "") {
     ...value.matchAll(/\bcta\s+case\s+no\.?\s*([a-z0-9.-]+)\b/gi),
     ...value.matchAll(/\bcta\s+eb\s+no\.?\s*([a-z0-9.-]+)\b/gi)
   ];
+
   for (const match of ctaMatches) {
     refs.push(`cta-${String(match[1]).toUpperCase()}`);
   }
 
-  const caMatches = [...value.matchAll(/\bca-?g\.?\s*r\.?\s*(?:sp|cv|cr)?\s*no\.?\s*([a-z0-9.-]+)\b/gi)];
-  for (const match of caMatches) {
+  for (const match of value.matchAll(/\bca-?g\.?\s*r\.?\s*(?:sp|cv|cr)?\s*no\.?\s*([a-z0-9.-]+)\b/gi)) {
     refs.push(`ca-${String(match[1]).toUpperCase()}`);
   }
 
@@ -178,9 +192,7 @@ function extractNamedLawAnchors(text = "") {
   ];
 
   for (const anchor of knownAnchors) {
-    if (value.includes(anchor)) {
-      anchors.push(anchor);
-    }
+    if (value.includes(anchor)) anchors.push(anchor);
   }
 
   if (detection?.bestMatch) {
@@ -191,6 +203,9 @@ function extractNamedLawAnchors(text = "") {
       anchors.push(normalizeLooseText(detection.bestMatch.canonicalTitle));
     }
     for (const alias of detection.bestMatch.aliases || []) {
+      anchors.push(normalizeLooseText(alias));
+    }
+    for (const alias of detection.bestMatch.normalizedAliases || []) {
       anchors.push(normalizeLooseText(alias));
     }
   }
@@ -215,6 +230,8 @@ function normalizeAuthorityType(type = "") {
   if (value === "ramo" || value.includes("revenue audit memorandum order")) return "ramo";
   if (value.includes("bir ruling")) return "bir_ruling";
   if (value.includes("lgu")) return "lgu";
+  if (value.includes("secondary") || value.includes("source")) return "secondary";
+
   return value || "unknown";
 }
 
@@ -239,11 +256,7 @@ function getDocAuthorityType(item = {}) {
 
   const inferred = classifyAuthorityFromDocument({
     fileName: item.source_title || item.source || "",
-    path:
-      item.source_path ||
-      item.path ||
-      item.metadata?.path ||
-      "",
+    path: item.source_path || item.path || item.metadata?.path || "",
     text: item.text || ""
   });
 
@@ -266,27 +279,27 @@ function getDocAuthorityLevel(item = {}) {
   const explicit =
     item.authority_tier ||
     item.authorityLevel ||
+    item.authority_level ||
     item.metadata?.authorityLevel ||
     null;
 
-  if (Number.isFinite(Number(explicit))) {
-    return Number(explicit);
-  }
+  if (Number.isFinite(Number(explicit))) return Number(explicit);
 
   const normalizedType = normalizeAuthorityType(getDocAuthorityType(item));
+
   const mapped = {
     constitution: AUTHORITY_LEVEL.CONSTITUTION,
     statute: AUTHORITY_LEVEL.STATUTE,
-    treaty: AUTHORITY_LEVEL.TREATY,
-    supreme_court: AUTHORITY_LEVEL.SUPREME_COURT,
-    cta_en_banc: AUTHORITY_LEVEL.CTA_EN_BANC,
-    court_of_appeals: AUTHORITY_LEVEL.COURT_OF_APPEALS,
-    cta_division: AUTHORITY_LEVEL.CTA_DIVISION,
     rr: AUTHORITY_LEVEL.RR,
     rmc: AUTHORITY_LEVEL.RMC,
     rmo: AUTHORITY_LEVEL.RMO,
     ramo: AUTHORITY_LEVEL.RAMO,
     bir_ruling: AUTHORITY_LEVEL.BIR_RULING,
+    supreme_court: AUTHORITY_LEVEL.SUPREME_COURT,
+    cta_en_banc: AUTHORITY_LEVEL.CTA_EN_BANC,
+    court_of_appeals: AUTHORITY_LEVEL.COURT_OF_APPEALS,
+    cta_division: AUTHORITY_LEVEL.CTA_DIVISION,
+    treaty: AUTHORITY_LEVEL.TREATY,
     lgu: AUTHORITY_LEVEL.LGU
   };
 
@@ -298,13 +311,18 @@ function buildEvidenceText(item = {}) {
     [
       item.text,
       item.source_title,
+      item.sourceTitle,
       item.source,
       item.path,
+      item.source_path,
       item.metadata?.path,
       item.section_label,
       item.metadata?.documentTitle,
       item.metadata?.originalSource,
+      item.metadata?.originalFileName,
       item.metadata?.normalizedReference,
+      item.normalizedReference,
+      item.normalized_reference,
       ...(item.normalizedAliases || []),
       ...(item.metadata?.normalizedAliases || [])
     ]
@@ -338,27 +356,19 @@ function scoreIdentityMatch(claim = "", item = {}) {
   const claimAnchors = extractNamedLawAnchors(claimText);
 
   for (const ra of claimRaNumbers) {
-    if (identity.raNumbers.includes(ra)) {
-      bonus += 0.6;
-    }
+    if (identity.raNumbers.includes(ra)) bonus += 0.6;
   }
 
   for (const ref of claimIssuances) {
-    if (identity.issuanceRefs.includes(ref)) {
-      bonus += 0.65;
-    }
+    if (identity.issuanceRefs.includes(ref)) bonus += 0.65;
   }
 
   for (const ref of claimCourtRefs) {
-    if (identity.courtRefs.includes(ref)) {
-      bonus += 0.7;
-    }
+    if (identity.courtRefs.includes(ref)) bonus += 0.7;
   }
 
   for (const anchor of claimAnchors) {
-    if (identity.namedLawAnchors.includes(anchor)) {
-      bonus += 0.25;
-    }
+    if (identity.namedLawAnchors.includes(anchor)) bonus += 0.25;
   }
 
   return Math.min(bonus, 1);
@@ -375,36 +385,21 @@ function penaltyForGenericMismatch(claim = "", item = {}) {
 
   let penalty = 0;
 
-  if (claimHasRa && identity.raNumbers.length === 0) {
-    penalty += 0.25;
-  }
-
-  if (claimHasIssuance && identity.issuanceRefs.length === 0) {
-    penalty += 0.3;
-  }
-
-  if (claimHasCourtRef && identity.courtRefs.length === 0) {
-    penalty += 0.35;
-  }
-
-  if (claimHasNamedLaw && identity.namedLawAnchors.length === 0) {
-    penalty += 0.15;
-  }
+  if (claimHasRa && identity.raNumbers.length === 0) penalty += 0.25;
+  if (claimHasIssuance && identity.issuanceRefs.length === 0) penalty += 0.3;
+  if (claimHasCourtRef && identity.courtRefs.length === 0) penalty += 0.35;
+  if (claimHasNamedLaw && identity.namedLawAnchors.length === 0) penalty += 0.15;
 
   return Math.min(penalty, 0.6);
 }
 
 function computeLegalSupportScore(claim = "", item = {}) {
   const combinedText = buildEvidenceText(item);
-
   const keywordScore = computeKeywordScore(claim, combinedText);
   const identityBonus = scoreIdentityMatch(claim, item);
   const mismatchPenalty = penaltyForGenericMismatch(claim, item);
 
-  const rawScore = keywordScore + identityBonus - mismatchPenalty;
-  const boundedScore = Math.max(0, Math.min(rawScore, 1));
-
-  return Number(boundedScore.toFixed(4));
+  return Number(Math.max(0, Math.min(keywordScore + identityBonus - mismatchPenalty, 1)).toFixed(4));
 }
 
 function classifySupportStatus(score = 0, claim = "", item = {}) {
@@ -431,13 +426,8 @@ function classifySupportStatus(score = 0, claim = "", item = {}) {
     return "supported";
   }
 
-  if (score >= 0.72) {
-    return "supported";
-  }
-
-  if (score >= 0.4) {
-    return "partial";
-  }
+  if (score >= 0.72) return "supported";
+  if (score >= 0.4) return "partial";
 
   return "unsupported";
 }
@@ -455,11 +445,12 @@ function extractPrimaryAuthorityHints(text = "") {
   };
 }
 
-function isPrimaryAuthorityType(type = "") {
+function isStatutoryAuthorityType(type = "") {
+  return ["constitution", "statute"].includes(normalizeAuthorityType(type));
+}
+
+function isCourtAuthorityType(type = "") {
   return [
-    "constitution",
-    "statute",
-    "treaty",
     "supreme_court",
     "cta_en_banc",
     "court_of_appeals",
@@ -467,11 +458,27 @@ function isPrimaryAuthorityType(type = "") {
   ].includes(normalizeAuthorityType(type));
 }
 
+function isAdministrativeAuthorityType(type = "") {
+  return ["rr", "rmc", "rmo", "ramo", "bir_ruling"].includes(
+    normalizeAuthorityType(type)
+  );
+}
+
+function isControllingOrUsableAuthorityType(type = "") {
+  return (
+    isStatutoryAuthorityType(type) ||
+    isAdministrativeAuthorityType(type) ||
+    isCourtAuthorityType(type) ||
+    ["treaty", "lgu"].includes(normalizeAuthorityType(type))
+  );
+}
+
 function hasPrimaryAuthorityEvidence(evidence = [], queryHints = {}) {
   const {
     raNumbers = [],
     namedLawAnchors = [],
-    courtRefs = []
+    courtRefs = [],
+    issuanceRefs = []
   } = queryHints;
 
   if (!evidence.length) return false;
@@ -480,38 +487,41 @@ function hasPrimaryAuthorityEvidence(evidence = [], queryHints = {}) {
     const identity = buildEvidenceIdentity(item);
     const authorityType = normalizeAuthorityType(identity.authorityType);
 
-    if (!isPrimaryAuthorityType(authorityType)) {
-      continue;
-    }
-
     const statuteRaMatch =
       authorityType === "statute" &&
       raNumbers.length > 0 &&
       raNumbers.some((ra) => identity.raNumbers.includes(ra));
 
-    if (statuteRaMatch) {
-      return true;
-    }
+    if (statuteRaMatch) return true;
 
     const namedLawStatuteMatch =
       authorityType === "statute" &&
       namedLawAnchors.length > 0 &&
       namedLawAnchors.some((anchor) => identity.namedLawAnchors.includes(anchor));
 
-    if (namedLawStatuteMatch) {
-      return true;
-    }
+    if (namedLawStatuteMatch) return true;
 
     const courtMatch =
-      ["supreme_court", "cta_en_banc", "court_of_appeals", "cta_division"].includes(authorityType) &&
+      isCourtAuthorityType(authorityType) &&
       courtRefs.length > 0 &&
       courtRefs.some((ref) => identity.courtRefs.includes(ref));
 
-    if (courtMatch) {
-      return true;
-    }
+    if (courtMatch) return true;
 
-    if (authorityType === "constitution" && namedLawAnchors.length === 0 && raNumbers.length === 0 && courtRefs.length === 0) {
+    const issuanceMatch =
+      isAdministrativeAuthorityType(authorityType) &&
+      issuanceRefs.length > 0 &&
+      issuanceRefs.some((ref) => identity.issuanceRefs.includes(ref));
+
+    if (issuanceMatch) return true;
+
+    if (
+      authorityType === "constitution" &&
+      !raNumbers.length &&
+      !namedLawAnchors.length &&
+      !courtRefs.length &&
+      !issuanceRefs.length
+    ) {
       return true;
     }
   }
@@ -520,10 +530,9 @@ function hasPrimaryAuthorityEvidence(evidence = [], queryHints = {}) {
 }
 
 function hasAtLeastOneControllingSource(evidence = []) {
-  return evidence.some((item) => {
-    const type = getDocAuthorityType(item);
-    return isPrimaryAuthorityType(type) || ["rr", "rmc", "rmo", "ramo", "bir_ruling"].includes(normalizeAuthorityType(type));
-  });
+  return evidence.some((item) =>
+    isControllingOrUsableAuthorityType(getDocAuthorityType(item))
+  );
 }
 
 export function buildClaimSupportMap(answerText = "", evidence = []) {
@@ -536,8 +545,16 @@ export function buildClaimSupportMap(answerText = "", evidence = []) {
 
         return {
           claimText: claim,
+          claim_text: claim,
           supportStatus: classifySupportStatus(evidenceScore, claim, item),
+          support_status: classifySupportStatus(evidenceScore, claim, item),
           sourcePath:
+            item.source_path ||
+            item.path ||
+            item.metadata?.path ||
+            item.source ||
+            null,
+          source_path:
             item.source_path ||
             item.path ||
             item.metadata?.path ||
@@ -548,17 +565,29 @@ export function buildClaimSupportMap(answerText = "", evidence = []) {
             item.metadata?.documentTitle ||
             item.source ||
             null,
-          vectorChunkId:
-            item.vector_chunk_id ||
-            item.id ||
+          source_title:
+            item.source_title ||
+            item.metadata?.documentTitle ||
+            item.source ||
             null,
+          vectorChunkId: item.vector_chunk_id || item.id || null,
+          vector_chunk_id: item.vector_chunk_id || item.id || null,
           authorityTier:
             item.authority_tier ||
             item.authorityLevel ||
+            item.authority_level ||
+            item.metadata?.authorityLevel ||
+            null,
+          authority_tier:
+            item.authority_tier ||
+            item.authorityLevel ||
+            item.authority_level ||
             item.metadata?.authorityLevel ||
             null,
           authorityType: getDocAuthorityType(item),
-          evidenceScore
+          authority_type: getDocAuthorityType(item),
+          evidenceScore,
+          evidence_score: evidenceScore
         };
       })
       .sort((a, b) => {
@@ -569,16 +598,26 @@ export function buildClaimSupportMap(answerText = "", evidence = []) {
         return getDocAuthorityLevel(a) - getDocAuthorityLevel(b);
       });
 
-    return ranked[0] || {
-      claimText: claim,
-      supportStatus: "unsupported",
-      sourcePath: null,
-      sourceTitle: null,
-      vectorChunkId: null,
-      authorityTier: null,
-      authorityType: null,
-      evidenceScore: 0
-    };
+    return (
+      ranked[0] || {
+        claimText: claim,
+        claim_text: claim,
+        supportStatus: "unsupported",
+        support_status: "unsupported",
+        sourcePath: null,
+        source_path: null,
+        sourceTitle: null,
+        source_title: null,
+        vectorChunkId: null,
+        vector_chunk_id: null,
+        authorityTier: null,
+        authority_tier: null,
+        authorityType: null,
+        authority_type: null,
+        evidenceScore: 0,
+        evidence_score: 0
+      }
+    );
   });
 }
 
@@ -592,7 +631,11 @@ export function validateEvidenceSufficiency({
   requirePrimaryAuthority = false
 }) {
   const supportedClaims = claimSupportMap.filter(
-    (item) => item.supportStatus === "supported" || item.supportStatus === "partial"
+    (item) =>
+      item.supportStatus === "supported" ||
+      item.supportStatus === "partial" ||
+      item.support_status === "supported" ||
+      item.support_status === "partial"
   );
 
   const topScore =
@@ -612,15 +655,19 @@ export function validateEvidenceSufficiency({
 
   const queryHints = extractPrimaryAuthorityHints(query);
   const primaryAuthorityPresent = hasPrimaryAuthorityEvidence(evidence, queryHints);
+
   const hasIdentitySensitiveQuery =
     queryHints.raNumbers.length > 0 ||
     queryHints.namedLawAnchors.length > 0 ||
-    queryHints.courtRefs.length > 0;
+    queryHints.courtRefs.length > 0 ||
+    queryHints.issuanceRefs.length > 0;
 
   const primaryAuthoritySatisfied =
     !requirePrimaryAuthority && !hasIdentitySensitiveQuery
       ? true
       : primaryAuthorityPresent;
+
+  const hasControllingSource = hasAtLeastOneControllingSource(evidence);
 
   return {
     isSufficient:
@@ -628,7 +675,7 @@ export function validateEvidenceSufficiency({
       supportedClaims.length >= minSupportedClaims &&
       topScore >= minTopScore &&
       primaryAuthoritySatisfied &&
-      hasAtLeastOneControllingSource(evidence),
+      hasControllingSource,
     topScore,
     evidenceCount: evidence.length,
     supportedClaimCount: supportedClaims.length,
@@ -637,7 +684,7 @@ export function validateEvidenceSufficiency({
     primaryAuthorityPresent,
     primaryAuthorityRequired:
       requirePrimaryAuthority || hasIdentitySensitiveQuery,
-    hasControllingSource: hasAtLeastOneControllingSource(evidence)
+    hasControllingSource
   };
 }
 
@@ -646,10 +693,7 @@ export function shouldRejectForWeakLegalBasis({
   hasExactCitation = false
 }) {
   if (!validation) return true;
-
-  if (!validation.hasControllingSource) {
-    return true;
-  }
+  if (!validation.hasControllingSource) return true;
 
   if (validation.primaryAuthorityRequired && !validation.primaryAuthorityPresent) {
     return true;
