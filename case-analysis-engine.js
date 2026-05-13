@@ -10,7 +10,8 @@ import {
 import {
   detectHierarchyConflict,
   resolveCourtOverride,
-  isGenuineConflict
+  isGenuineConflict,
+  analyzeConflictPair
 } from "./conflict-engine.js";
 
 import { reconcileDoctrine } from "./doctrinal-engine.js";
@@ -24,7 +25,7 @@ import {
 } from "./legal-validation-engine.js";
 
 function normalizeText(value = "") {
-  return String(value || "").trim();
+  return String(value || "").replace(/\s+/g, " ").trim();
 }
 
 function lower(value = "") {
@@ -186,6 +187,259 @@ function isLikelyCaseDocument(doc = {}) {
   );
 }
 
+function extractCaseTitle(doc = {}) {
+  const candidates = [
+    doc.metadata?.documentTitle,
+    doc.originalSource,
+    doc.source,
+    doc.path,
+    doc.metadata?.path
+  ].filter(Boolean);
+
+  const raw = String(candidates[0] || "Unidentified Case")
+    .replace(/\.pdf$/i, "")
+    .replace(/_/g, " ")
+    .trim();
+
+  return raw || "Unidentified Case";
+}
+
+function extractCaseNamesFromQuestion(question = "") {
+  const q = normalizeText(question);
+  const results = [];
+
+  const vMatch = q.match(
+    /\b([A-Z][A-Za-z0-9&.,'\-\s]{2,80}?)\s+(?:v\.|vs\.?|versus)\s+([A-Z][A-Za-z0-9&.,'\-\s]{2,80}?)(?=[,.;?)]|\s+G\.?R\.?|\s+CTA|\s+in\s+|$)/i
+  );
+
+  if (vMatch) {
+    results.push(normalizeText(`${vMatch[1]} v. ${vMatch[2]}`));
+    results.push(normalizeText(vMatch[1]));
+    results.push(normalizeText(vMatch[2]));
+  }
+
+  const grMatch = q.match(/\bg\.?\s*r\.?\s*no\.?\s*([a-z0-9.-]+)\b/i);
+  if (grMatch) results.push(`g.r. no. ${grMatch[1]}`);
+
+  const ctaMatch =
+    q.match(/\bcta\s+eb\s+no\.?\s*([a-z0-9.-]+)\b/i) ||
+    q.match(/\bcta\s+case\s+no\.?\s*([a-z0-9.-]+)\b/i);
+  if (ctaMatch) results.push(`cta ${ctaMatch[1]}`);
+
+  return [...new Set(results.map((item) => lower(item)).filter(Boolean))];
+}
+
+function tokenizeIssue(text = "") {
+  const stopWords = new Set([
+    "what",
+    "when",
+    "where",
+    "which",
+    "while",
+    "with",
+    "from",
+    "that",
+    "this",
+    "there",
+    "their",
+    "have",
+    "been",
+    "were",
+    "will",
+    "shall",
+    "must",
+    "case",
+    "court",
+    "supreme",
+    "appeals",
+    "tax",
+    "taxes",
+    "taxpayer",
+    "commissioner",
+    "internal",
+    "revenue",
+    "bir",
+    "cir",
+    "cta",
+    "issue",
+    "ruling",
+    "doctrine",
+    "explain",
+    "analyze",
+    "legal",
+    "basis",
+    "under"
+  ]);
+
+  return lower(text)
+    .replace(/[^a-z0-9\s]/g, " ")
+    .split(/\s+/)
+    .map((token) => token.trim())
+    .filter((token) => token.length >= 4 && !stopWords.has(token));
+}
+
+function extractIssueSignals(question = "") {
+  const q = lower(question);
+  const signals = new Set();
+
+  const issueGroups = [
+    {
+      signal: "vat liability",
+      patterns: [
+        /\bvat\b/,
+        /\bvalue added tax\b/,
+        /\boutput vat\b/,
+        /\binput vat\b/,
+        /\bvatable\b/,
+        /\bzero-rated\b/,
+        /\bexempt\b/
+      ]
+    },
+    {
+      signal: "vat refund",
+      patterns: [
+        /\brefund\b/,
+        /\btax credit certificate\b/,
+        /\btcc\b/,
+        /\b120\+30\b/,
+        /\badministrative claim\b/,
+        /\bjudicial claim\b/
+      ]
+    },
+    {
+      signal: "withholding tax",
+      patterns: [
+        /\bwithholding\b/,
+        /\bewt\b/,
+        /\bexpanded withholding\b/,
+        /\bfinal withholding\b/
+      ]
+    },
+    {
+      signal: "income tax",
+      patterns: [
+        /\bincome tax\b/,
+        /\brcit\b/,
+        /\bmcit\b/,
+        /\bnolco\b/,
+        /\bdeductible\b/,
+        /\bnon-deductible\b/
+      ]
+    },
+    {
+      signal: "assessment due process",
+      patterns: [
+        /\bloa\b/,
+        /\bletter of authority\b/,
+        /\bpan\b/,
+        /\bfan\b/,
+        /\bfld\b/,
+        /\bdue process\b/,
+        /\bassessment\b/,
+        /\bprotest\b/
+      ]
+    },
+    {
+      signal: "prescription",
+      patterns: [
+        /\bprescription\b/,
+        /\bprescriptive\b/,
+        /\bstatute of limitations\b/,
+        /\bthree-year\b/,
+        /\bten-year\b/
+      ]
+    },
+    {
+      signal: "tax evasion",
+      patterns: [/\btax evasion\b/, /\bfraud\b/, /\bwillful\b/]
+    },
+    {
+      signal: "tax avoidance",
+      patterns: [/\btax avoidance\b/, /\btax planning\b/, /\bsham\b/]
+    }
+  ];
+
+  for (const group of issueGroups) {
+    if (group.patterns.some((pattern) => pattern.test(q))) {
+      signals.add(group.signal);
+    }
+  }
+
+  for (const token of tokenizeIssue(question)) {
+    signals.add(token);
+  }
+
+  return [...signals];
+}
+
+function buildIssueRelevanceScore(doc = {}, query = "") {
+  const qSignals = extractIssueSignals(query);
+  const qTokens = new Set(tokenizeIssue(query));
+  const text = lower(
+    [
+      doc.text,
+      doc.source,
+      doc.originalSource,
+      getDocPath(doc),
+      doc.metadata?.documentTitle
+    ]
+      .filter(Boolean)
+      .join(" ")
+  );
+
+  let score = 0;
+
+  for (const signal of qSignals) {
+    if (text.includes(signal)) score += 18;
+  }
+
+  for (const token of qTokens) {
+    if (text.includes(token)) score += 4;
+  }
+
+  if (qSignals.includes("vat liability") && qSignals.includes("vat refund")) {
+    score += 0;
+  } else if (qSignals.includes("vat liability")) {
+    if (/\brefund\b|\b120\+30\b|\btcc\b|\badministrative claim\b|\bjudicial claim\b/i.test(text)) {
+      score -= 18;
+    }
+  } else if (qSignals.includes("vat refund")) {
+    if (/\bliability\b|\boutput vat\b|\bvatable sale\b/i.test(text)) {
+      score -= 8;
+    }
+  }
+
+  return score;
+}
+
+function isIssueRelevantCase(doc = {}, query = "", minimumScore = 18) {
+  if (!isLikelyCaseDocument(doc)) return false;
+
+  const caseNameNeedles = extractCaseNamesFromQuestion(query);
+  const haystack = lower(
+    [
+      extractCaseTitle(doc),
+      doc.source,
+      doc.originalSource,
+      getDocPath(doc),
+      doc.metadata?.documentTitle,
+      doc.text
+    ]
+      .filter(Boolean)
+      .join(" ")
+  );
+
+  if (
+    caseNameNeedles.length &&
+    caseNameNeedles.some((needle) => haystack.includes(needle))
+  ) {
+    return true;
+  }
+
+  const relevanceScore = buildIssueRelevanceScore(doc, query);
+  return relevanceScore >= minimumScore;
+}
+
 function scoreCaseDoc(doc = {}, query = "") {
   const q = lower(query);
   const text = lower(doc.text || "");
@@ -195,6 +449,8 @@ function scoreCaseDoc(doc = {}, query = "") {
   let score = Number(doc.finalScore || doc.combined_score || doc.score || 0);
 
   if (isLikelyCaseDocument(doc)) score += 30;
+  if (isIssueRelevantCase(doc, query, 18)) score += 45;
+
   if (authorityType === "SUPREME_COURT") score += 45;
   if (authorityType === "CTA_EN_BANC") score += 38;
   if (authorityType === "COURT_OF_APPEALS") score += 32;
@@ -222,6 +478,9 @@ function scoreCaseDoc(doc = {}, query = "") {
     if (text.includes(term)) score += 2;
   }
 
+  const issueScore = buildIssueRelevanceScore(doc, query);
+  score += issueScore;
+
   if (q.includes("tax evasion") && text.includes("tax evasion")) score += 10;
   if (q.includes("tax avoidance") && text.includes("tax avoidance")) score += 10;
   if (q.includes("vat") && text.includes("vat")) score += 8;
@@ -232,19 +491,42 @@ function scoreCaseDoc(doc = {}, query = "") {
 }
 
 export function selectTopCaseAuthorities(results = [], query = "", limit = 4) {
+  const caseNameNeedles = extractCaseNamesFromQuestion(query);
+  const hasSpecificCaseRequest = caseNameNeedles.length > 0;
+
+  const minimumScore = hasSpecificCaseRequest ? 8 : 18;
+
   return rerankByHierarchy(results, query)
     .filter((doc) => isLikelyCaseDocument(doc))
+    .filter((doc) => isIssueRelevantCase(doc, query, minimumScore))
     .map((doc) => ({
       ...doc,
-      caseScore: scoreCaseDoc(doc, query)
+      caseScore: scoreCaseDoc(doc, query),
+      issueRelevanceScore: buildIssueRelevanceScore(doc, query)
     }))
     .sort((a, b) => b.caseScore - a.caseScore)
     .slice(0, limit);
 }
 
-function selectRelevantBIRAuthorities(results = [], limit = 3) {
-  return rerankByHierarchy(results)
+function selectRelevantBIRAuthorities(results = [], query = "", limit = 3) {
+  const qTokens = new Set(tokenizeIssue(query));
+
+  return rerankByHierarchy(results, query)
     .filter((doc) => isBIRAuthority(getAuthorityType(doc)))
+    .map((doc) => {
+      const text = lower([doc.text, getDocPath(doc), doc.source].filter(Boolean).join(" "));
+      let issueScore = buildIssueRelevanceScore(doc, query);
+
+      for (const token of qTokens) {
+        if (text.includes(token)) issueScore += 2;
+      }
+
+      return {
+        ...doc,
+        issueRelevanceScore: issueScore
+      };
+    })
+    .filter((doc) => doc.issueRelevanceScore >= 8)
     .slice(0, limit);
 }
 
@@ -303,21 +585,40 @@ function buildCourtOverrideAudit(caseDocs = [], birDocs = []) {
   });
 }
 
-function extractCaseTitle(doc = {}) {
-  const candidates = [
-    doc.metadata?.documentTitle,
-    doc.originalSource,
-    doc.source,
-    doc.path,
-    doc.metadata?.path
-  ].filter(Boolean);
+function buildConflictReviewText(docs = []) {
+  const reviews = [];
 
-  const raw = String(candidates[0] || "Unidentified Case")
-    .replace(/\.pdf$/i, "")
-    .replace(/_/g, " ")
-    .trim();
+  for (let i = 0; i < docs.length; i += 1) {
+    for (let j = i + 1; j < docs.length; j += 1) {
+      const review = analyzeConflictPair(docs[i], docs[j]);
 
-  return raw || "Unidentified Case";
+      if (review?.conflict || review?.apparentConflict) {
+        reviews.push(review);
+      }
+    }
+  }
+
+  if (!reviews.length) {
+    return "No direct doctrinal or hierarchy conflict was detected among the issue-relevant authorities.";
+  }
+
+  return reviews
+    .slice(0, 4)
+    .map((item, index) =>
+      [
+        `Conflict Review ${index + 1}:`,
+        `Conflict Type: ${item.conflictType || "N/A"}`,
+        `Doctrinal Conflict: ${item.doctrinalConflict ? "YES" : "NO"}`,
+        `Hierarchy Conflict: ${item.hierarchyConflict ? "YES" : "NO"}`,
+        `Apparent Conflict Only: ${item.apparentConflict ? "YES" : "NO"}`,
+        `Source A: ${item.sourceA}`,
+        `Source B: ${item.sourceB}`,
+        `Exact Issue: ${item.exactIssue || "Not determined"}`,
+        `Distinction Type: ${item.distinctionType || "Not determined"}`,
+        `Resolution Basis: ${item.resolutionBasis || item.reason || "Not determined"}`
+      ].join("\n")
+    )
+    .join("\n\n");
 }
 
 function buildCasePrompt({
@@ -325,7 +626,9 @@ function buildCasePrompt({
   strictContext = "",
   topLegalBases = [],
   hierarchyConflict = null,
-  overrideAudit = []
+  overrideAudit = [],
+  issueRelevantCaseCount = 0,
+  rejectedCaseCount = 0
 }) {
   const legalBasesText =
     topLegalBases.length > 0
@@ -339,7 +642,9 @@ function buildCasePrompt({
 
   const conflictText = hierarchyConflict?.conflict
     ? [
-        "Conflict Detected: YES",
+        `Conflict Type: ${hierarchyConflict.conflictType || "N/A"}`,
+        `Doctrinal Conflict: ${hierarchyConflict.doctrinalConflict ? "YES" : "NO"}`,
+        `Hierarchy Conflict: ${hierarchyConflict.hierarchyConflict ? "YES" : "NO"}`,
         hierarchyConflict.controllingAuthority
           ? `Controlling Authority: ${hierarchyConflict.controllingAuthority}`
           : null,
@@ -352,7 +657,18 @@ function buildCasePrompt({
       ]
         .filter(Boolean)
         .join("\n")
-    : "Conflict Detected: NO";
+    : hierarchyConflict?.apparentConflict
+      ? [
+          "Conflict Type: APPARENT_CONFLICT_ONLY",
+          "Doctrinal Conflict: NO",
+          "Hierarchy Conflict: NO",
+          hierarchyConflict.reason ? `Reason: ${hierarchyConflict.reason}` : null,
+          hierarchyConflict.sourceA ? `Source A: ${hierarchyConflict.sourceA}` : null,
+          hierarchyConflict.sourceB ? `Source B: ${hierarchyConflict.sourceB}` : null
+        ]
+          .filter(Boolean)
+          .join("\n")
+      : "No direct doctrinal or hierarchy conflict detected.";
 
   const overrideText = overrideAudit.length
     ? overrideAudit
@@ -372,42 +688,51 @@ function buildCasePrompt({
   return `
 You are TINA, a Philippine tax researcher, tax analyst, and legal researcher.
 
+CORE RULE:
+Never merely retrieve or enumerate cases.
+Only use cases that are directly relevant to the user's legal issue.
+A case is relevant only if it addresses the same tax type and the same legal question, doctrine, remedy, procedural requirement, evidentiary requirement, or factual setting.
+
 STRICT RULES:
 1. Use only the supplied context.
 2. Do not invent case names, facts, issues, doctrines, sections, GR numbers, CTA case numbers, or holdings.
 3. If the context is insufficient for a proper case breakdown, say so clearly.
-4. Organize retrieved sources using TINA hierarchy:
+4. Do not cite a case merely because it mentions VAT, income tax, withholding tax, or another broad tax type.
+5. For each case cited, explain:
+   - legal issue;
+   - doctrine;
+   - applicability to the user's question.
+6. Exclude unrelated cases and do not mention them as support.
+7. Organize retrieved sources using TINA hierarchy:
    Constitution > Statute / NIRC / Republic Act > Revenue Regulations > RMC > RMO > RAMO > BIR Ruling > Supreme Court > CTA En Banc > Court of Appeals > CTA Division > Treaty / LGU / Secondary.
-5. For actual conflict resolution only: Constitution and statutes control administrative issuances; if a court decision genuinely conflicts with a BIR issuance, the court decision controls.
-6. Only flag conflicts for genuine legal contradictions. Do not flag minor wording differences, date differences, or scope differences as conflicts.
-7. Never use vague conflict language.
-8. Never mention ChatGPT.
+8. For conflict resolution: Constitution and statutes control administrative issuances; if a court decision genuinely conflicts with a BIR issuance, controlling judicial doctrine prevails.
+9. Different procedural, evidentiary, jurisdictional, factual, temporal, or administrative rules are not direct doctrinal conflicts unless they contradict on the same legal issue.
+10. Never use vague conflict language.
+11. Never mention ChatGPT.
+
+CASE RELEVANCE AUDIT:
+Issue-relevant cases selected: ${issueRelevantCaseCount}
+Potential case documents rejected for weak issue relevance: ${rejectedCaseCount}
 
 REQUIRED OUTPUT FORMAT:
 
-### Issue
-[One sentence statement of the tax question]
+A. DIRECT ANSWER
+[Answer the exact legal/tax question immediately.]
 
-### Applicable law (ranked by authority)
-[Only authorities present in context]
+B. CONTROLLING LEGAL BASIS
+[Identify NIRC/statute, RR, RMC/RMO/RAMO, or constitutional basis present in context. Explain whether mandatory, procedural, interpretative, or administrative.]
 
-### BIR position
-[What BIR says via RR/RMC/Ruling, with citation from context]
+C. SUPPORTING JURISPRUDENCE
+[Only issue-relevant cases. For each case: legal issue, doctrine, and applicability. If none, say no directly relevant case was retrieved.]
 
-### Court position
-[What SC/CTA/CA has ruled, with case citation from context]
+D. DOCTRINAL STATUS / CONFLICT ANALYSIS
+[State no conflict, apparent conflict, partial conflict, or direct conflict. If conflict exists, explain exact issue, controlling doctrine, why it prevails, and distinction type.]
 
-### Conflict flag
-[YES/NO — if YES, explain which prevails and why]
+E. HIERARCHY ANALYSIS
+[Explain which authority controls and why under Philippine legal hierarchy.]
 
-### Legally defensible conclusion
-[The position most supported by the highest authority]
-
-### Taxpayer risk assessment
-[LOW / MEDIUM / HIGH — with basis]
-
-### Recommended action
-[Compliance / protest / ruling request / litigation / documentation, only if supported by context]
+F. PRACTICAL APPLICATION
+[Apply to facts. State tax consequence, compliance implication, audit risk, litigation exposure, documentation requirements, possible BIR position, and strongest taxpayer defense.]
 
 QUESTION:
 ${question}
@@ -426,6 +751,17 @@ ${strictContext}
 `.trim();
 }
 
+function countRejectedCases(activeDocs = [], selectedCaseDocs = [], query = "") {
+  const selectedPaths = new Set(selectedCaseDocs.map((doc) => getDocPath(doc)));
+
+  return activeDocs.filter(
+    (doc) =>
+      isLikelyCaseDocument(doc) &&
+      !selectedPaths.has(getDocPath(doc)) &&
+      !isIssueRelevantCase(doc, query, 18)
+  ).length;
+}
+
 export async function generateCaseAnalysisAnswer({
   openai,
   question = "",
@@ -440,7 +776,8 @@ export async function generateCaseAnalysisAnswer({
       : reranked;
 
   const caseDocs = selectTopCaseAuthorities(activeDocs, question, 4);
-  const rawBirDocs = selectRelevantBIRAuthorities(activeDocs, 3);
+  const rejectedCaseCount = countRejectedCases(activeDocs, caseDocs, question);
+  const rawBirDocs = selectRelevantBIRAuthorities(activeDocs, question, 3);
   const birDocs = filterOverriddenBirDocs(caseDocs, rawBirDocs);
 
   const doctrinalReview = reconcileDoctrine({
@@ -452,11 +789,13 @@ export async function generateCaseAnalysisAnswer({
   const hierarchyConflict = detectHierarchyConflict(conflictDocs.slice(0, 5));
   const topLegalBases = selectTopLegalBases(conflictDocs, 3);
   const overrideAudit = buildCourtOverrideAudit(caseDocs, rawBirDocs);
+  const conflictReviewText = buildConflictReviewText(conflictDocs);
 
   if (caseDocs.length === 0) {
     return {
       success: true,
-      answer: buildNoSourceReply(),
+      answer:
+        "A. DIRECT ANSWER\nNo issue-relevant case authority was retrieved from the indexed context.\n\nB. CONTROLLING LEGAL BASIS\nThe indexed context did not retrieve a case directly addressing the user's legal issue.\n\nC. SUPPORTING JURISPRUDENCE\nNo directly issue-relevant case was retrieved. TINA should not cite unrelated jurisprudence merely because it mentions the same tax type.\n\nD. DOCTRINAL STATUS / CONFLICT ANALYSIS\nNo doctrinal conflict can be determined because no issue-relevant case authority was retrieved.\n\nE. HIERARCHY ANALYSIS\nNo hierarchy comparison can be made without a retrieved controlling or supporting authority.\n\nF. PRACTICAL APPLICATION\nVerify against the exact Supreme Court, CTA, NIRC, and BIR authorities before relying on a litigation or audit position.",
       mode: "CASE_ANALYSIS",
       sourcesUsed: [],
       caseDocs: [],
@@ -476,6 +815,7 @@ export async function generateCaseAnalysisAnswer({
         `PATH: ${getDocPath(doc)}`,
         `AUTHORITY TYPE: ${getAuthorityType(doc)}`,
         `AUTHORITY LEVEL: ${getAuthorityLevel(doc)}`,
+        `ISSUE RELEVANCE SCORE: ${doc.issueRelevanceScore ?? buildIssueRelevanceScore(doc, question)}`,
         "TEXT:",
         doc.text || ""
       ].join("\n")
@@ -488,10 +828,13 @@ export async function generateCaseAnalysisAnswer({
         `PATH: ${getDocPath(doc)}`,
         `AUTHORITY TYPE: ${getAuthorityType(doc)}`,
         `AUTHORITY LEVEL: ${getAuthorityLevel(doc)}`,
+        `ISSUE RELEVANCE SCORE: ${doc.issueRelevanceScore ?? buildIssueRelevanceScore(doc, question)}`,
         "TEXT:",
         doc.text || ""
       ].join("\n")
-    )
+    ),
+    "CONFLICT REVIEW:",
+    conflictReviewText
   ].join("\n\n---\n\n");
 
   const prompt = buildCasePrompt({
@@ -499,7 +842,9 @@ export async function generateCaseAnalysisAnswer({
     strictContext,
     topLegalBases,
     hierarchyConflict,
-    overrideAudit
+    overrideAudit,
+    issueRelevantCaseCount: caseDocs.length,
+    rejectedCaseCount
   });
 
   const response = await openai.chat.completions.create({
@@ -509,7 +854,7 @@ export async function generateCaseAnalysisAnswer({
       { role: "system", content: prompt },
       {
         role: "user",
-        content: `Analyze this tax case question strictly from the supplied context:\n${question}`
+        content: `Analyze this Philippine tax case question strictly from the supplied issue-relevant context:\n${question}`
       }
     ]
   });
@@ -550,7 +895,8 @@ export async function generateCaseAnalysisAnswer({
     doctrinalReview,
     hierarchyConflict,
     overrideAudit,
-    supersessionResult
+    supersessionResult,
+    rejectedCaseCount
   };
 }
 
@@ -591,3 +937,10 @@ export async function maybeGenerateCaseAnalysisAnswer({
     intent
   };
 }
+
+export default {
+  detectCaseAnalysisIntent,
+  selectTopCaseAuthorities,
+  generateCaseAnalysisAnswer,
+  maybeGenerateCaseAnalysisAnswer
+};
