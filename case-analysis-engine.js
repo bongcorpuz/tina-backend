@@ -3,14 +3,19 @@
 import {
   rerankByHierarchy,
   selectTopLegalBases,
-  detectHierarchyConflict,
-  resolveCourtOverride,
-  isGenuineConflict,
   getAuthorityTypeForDoc,
   getAuthorityLevelForDoc
 } from "./authority-engine.js";
+
+import {
+  detectHierarchyConflict,
+  resolveCourtOverride,
+  isGenuineConflict
+} from "./conflict-engine.js";
+
 import { reconcileDoctrine } from "./doctrinal-engine.js";
 import { applySupersessionFilter } from "./supersession-engine.js";
+
 import {
   buildClaimSupportMap,
   validateEvidenceSufficiency,
@@ -133,9 +138,15 @@ export function detectCaseAnalysisIntent(question = "") {
     "explain withholding tax"
   ];
 
-  const hasStrongCaseSignal = strongCaseSignals.some((token) => q.includes(token));
-  const hasCaseReferenceSignal = caseReferenceSignals.some((token) => q.includes(token));
-  const isGenericExplain = genericTaxExplainSignals.some((token) => q.includes(token));
+  const hasStrongCaseSignal = strongCaseSignals.some((token) =>
+    q.includes(token)
+  );
+  const hasCaseReferenceSignal = caseReferenceSignals.some((token) =>
+    q.includes(token)
+  );
+  const isGenericExplain = genericTaxExplainSignals.some((token) =>
+    q.includes(token)
+  );
 
   return {
     isCaseAnalysis:
@@ -238,21 +249,15 @@ function selectRelevantBIRAuthorities(results = [], limit = 3) {
 }
 
 function filterOverriddenBirDocs(caseDocs = [], birDocs = []) {
-  if (!caseDocs.length || !birDocs.length) {
-    return birDocs;
-  }
+  if (!caseDocs.length || !birDocs.length) return birDocs;
 
   return birDocs.filter((birDoc) => {
     for (const caseDoc of caseDocs) {
-      if (!isGenuineConflict(caseDoc, birDoc)) {
-        continue;
-      }
+      if (!isGenuineConflict(caseDoc, birDoc)) continue;
 
       const override = resolveCourtOverride(caseDoc, birDoc);
-      if (
-        override?.overrideApplies &&
-        override.overriddenSource === birDoc
-      ) {
+
+      if (override?.overrideApplies && override.overriddenSource === birDoc) {
         return false;
       }
     }
@@ -266,11 +271,10 @@ function buildCourtOverrideAudit(caseDocs = [], birDocs = []) {
 
   for (const caseDoc of caseDocs) {
     for (const birDoc of birDocs) {
-      if (!isGenuineConflict(caseDoc, birDoc)) {
-        continue;
-      }
+      if (!isGenuineConflict(caseDoc, birDoc)) continue;
 
       const override = resolveCourtOverride(caseDoc, birDoc);
+
       if (override?.overrideApplies) {
         records.push({
           controllingAuthority: override.winningAuthority || null,
@@ -346,22 +350,21 @@ function buildCasePrompt({
           ? `Court Override Applied: ${hierarchyConflict.overrideApplied ? "YES" : "NO"}`
           : null
       ]
-          .filter(Boolean)
-          .join("\n")
+        .filter(Boolean)
+        .join("\n")
     : "Conflict Detected: NO";
 
   const overrideText = overrideAudit.length
     ? overrideAudit
-        .map(
-          (item, index) =>
-            [
-              `Override ${index + 1}:`,
-              `Controlling Authority: ${item.controllingAuthority || "Unknown"}`,
-              `Controlling Source: ${item.controllingSource || "Unknown"}`,
-              `Overridden Authority: ${item.overriddenAuthority || "Unknown"}`,
-              `Overridden Source: ${item.overriddenSource || "Unknown"}`,
-              `Reason: ${item.reason || "Court override applied."}`
-            ].join("\n")
+        .map((item, index) =>
+          [
+            `Override ${index + 1}:`,
+            `Controlling Authority: ${item.controllingAuthority || "Unknown"}`,
+            `Controlling Source: ${item.controllingSource || "Unknown"}`,
+            `Overridden Authority: ${item.overriddenAuthority || "Unknown"}`,
+            `Overridden Source: ${item.overriddenSource || "Unknown"}`,
+            `Reason: ${item.reason || "Court override applied."}`
+          ].join("\n")
         )
         .join("\n\n")
     : "No court override audit records.";
@@ -373,9 +376,9 @@ STRICT RULES:
 1. Use only the supplied context.
 2. Do not invent case names, facts, issues, doctrines, sections, GR numbers, CTA case numbers, or holdings.
 3. If the context is insufficient for a proper case breakdown, say so clearly.
-4. Follow this authority order:
-   Constitution > Statute / NIRC / Republic Act > Treaty > Supreme Court > CTA En Banc > Court of Appeals > CTA Division > RR > RMC > RMO > RAMO > BIR Ruling > LGU > Secondary.
-5. If a BIR issuance conflicts with a Supreme Court, CTA En Banc, Court of Appeals, or CTA Division decision, the court decision prevails.
+4. Organize retrieved sources using TINA hierarchy:
+   Constitution > Statute / NIRC / Republic Act > Revenue Regulations > RMC > RMO > RAMO > BIR Ruling > Supreme Court > CTA En Banc > Court of Appeals > CTA Division > Treaty / LGU / Secondary.
+5. For actual conflict resolution only: Constitution and statutes control administrative issuances; if a court decision genuinely conflicts with a BIR issuance, the court decision controls.
 6. Only flag conflicts for genuine legal contradictions. Do not flag minor wording differences, date differences, or scope differences as conflicts.
 7. Never use vague conflict language.
 8. Never mention ChatGPT.
@@ -386,7 +389,7 @@ REQUIRED OUTPUT FORMAT:
 [One sentence statement of the tax question]
 
 ### Applicable law (ranked by authority)
-[Constitution → NIRC → RR → RMC → BIR Ruling → Jurisprudence, only if present in context]
+[Only authorities present in context]
 
 ### BIR position
 [What BIR says via RR/RMC/Ruling, with citation from context]
@@ -473,17 +476,19 @@ export async function generateCaseAnalysisAnswer({
         `PATH: ${getDocPath(doc)}`,
         `AUTHORITY TYPE: ${getAuthorityType(doc)}`,
         `AUTHORITY LEVEL: ${getAuthorityLevel(doc)}`,
-        `TEXT:`,
+        "TEXT:",
         doc.text || ""
       ].join("\n")
     ),
     ...birDocs.map((doc, index) =>
       [
-        `BIR SOURCE ${index + 1}: ${doc.source || doc.originalSource || "Unknown BIR Source"}`,
+        `BIR SOURCE ${index + 1}: ${
+          doc.source || doc.originalSource || "Unknown BIR Source"
+        }`,
         `PATH: ${getDocPath(doc)}`,
         `AUTHORITY TYPE: ${getAuthorityType(doc)}`,
         `AUTHORITY LEVEL: ${getAuthorityLevel(doc)}`,
-        `TEXT:`,
+        "TEXT:",
         doc.text || ""
       ].join("\n")
     )
@@ -513,6 +518,7 @@ export async function generateCaseAnalysisAnswer({
 
   const validationEvidence = [...caseDocs, ...birDocs];
   const claimSupportMap = buildClaimSupportMap(answerText, validationEvidence);
+
   const validation = validateEvidenceSufficiency({
     evidence: validationEvidence,
     claimSupportMap,
@@ -537,9 +543,7 @@ export async function generateCaseAnalysisAnswer({
     success: true,
     answer: answerText,
     mode: "CASE_ANALYSIS",
-    sourcesUsed: [...caseDocs, ...birDocs]
-      .slice(0, 5)
-      .map(buildDisplaySource),
+    sourcesUsed: [...caseDocs, ...birDocs].slice(0, 5).map(buildDisplaySource),
     caseDocs,
     birDocs,
     validation,
