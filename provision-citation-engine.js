@@ -3,12 +3,14 @@
 import {
   classifyAuthorityFromDocument,
   AUTHORITY_LEVEL,
+  AUTHORITY_LABEL,
   normalizeLegalReference
 } from "./authority-engine.js";
 
 import {
   resolveCourtOverride,
-  isGenuineConflict
+  isGenuineConflict,
+  analyzeConflictPair
 } from "./conflict-engine.js";
 
 import { applySupersessionFilter } from "./supersession-engine.js";
@@ -45,7 +47,10 @@ function looksLikeProvisionQuestion(question = "") {
     q.includes("g.r. no") ||
     q.includes("cta") ||
     q.includes("cite") ||
-    q.includes("citation")
+    q.includes("citation") ||
+    q.includes("legal basis") ||
+    q.includes("basis") ||
+    q.includes("authority")
   );
 }
 
@@ -68,10 +73,18 @@ function extractProvisionHint(question = "") {
     return `Article ${articleMatch[1]}`;
   }
 
+  const paragraphMatch =
+    text.match(/\bparagraph\s+([A-Za-z0-9().\-]+)/i) ||
+    text.match(/\bpara\.?\s+([A-Za-z0-9().\-]+)/i);
+
+  if (paragraphMatch) {
+    return `Paragraph ${paragraphMatch[1]}`;
+  }
+
   return "";
 }
 
-function buildSourceSnippet(doc = {}, maxLen = 1400) {
+function buildSourceSnippet(doc = {}, maxLen = 1800) {
   const text = normalizeText(doc.text || doc.content || "");
   if (!text) return "";
   return text.slice(0, maxLen);
@@ -110,6 +123,29 @@ function getAuthorityLevel(doc = {}) {
   return AUTHORITY_LEVEL[authorityType] || 99;
 }
 
+function getSourceTitle(doc = {}) {
+  return (
+    doc.source ||
+    doc.originalSource ||
+    doc.original_source ||
+    doc.metadata?.originalSource ||
+    doc.metadata?.originalFileName ||
+    doc.title ||
+    "Unknown Source"
+  );
+}
+
+function getSourcePath(doc = {}) {
+  return (
+    doc.path ||
+    doc.source_path ||
+    doc.metadata?.path ||
+    doc.metadata?.fileName ||
+    getSourceTitle(doc) ||
+    "Unknown Path"
+  );
+}
+
 function isCourtAuthority(type = "") {
   return ["SUPREME_COURT", "CTA_EN_BANC", "COURT_OF_APPEALS", "CTA_DIVISION"].includes(
     String(type || "").toUpperCase()
@@ -120,6 +156,23 @@ function isBIRAuthority(type = "") {
   return ["RR", "RMC", "RMO", "RAMO", "BIR_RULING"].includes(
     String(type || "").toUpperCase()
   );
+}
+
+function isPrimaryOrControllingAuthority(type = "") {
+  const value = String(type || "").toUpperCase();
+  return [
+    "CONSTITUTION",
+    "STATUTE",
+    "RR",
+    "RMC",
+    "RMO",
+    "RAMO",
+    "BIR_RULING",
+    "SUPREME_COURT",
+    "CTA_EN_BANC",
+    "COURT_OF_APPEALS",
+    "CTA_DIVISION"
+  ].includes(value);
 }
 
 function buildProvisionMatchBonus(question = "", doc = {}) {
@@ -165,6 +218,14 @@ function buildProvisionMatchBonus(question = "", doc = {}) {
     if (normalizedHaystack.includes(String(citationIntent.normalized).toLowerCase())) {
       bonus += 60;
     }
+
+    const aliasHit = (citationIntent.aliases || []).some((alias) =>
+      normalizedHaystack.includes(String(alias).toLowerCase())
+    );
+
+    if (aliasHit) {
+      bonus += 35;
+    }
   }
 
   return bonus;
@@ -190,8 +251,11 @@ function rankProvisionDocs(results = [], question = "") {
     const aBonus = buildProvisionMatchBonus(question, a);
     const bBonus = buildProvisionMatchBonus(question, b);
 
-    const aComposite = aScore + aBonus;
-    const bComposite = bScore + bBonus;
+    const aPrimaryBonus = isPrimaryOrControllingAuthority(aType) ? 20 : 0;
+    const bPrimaryBonus = isPrimaryOrControllingAuthority(bType) ? 20 : 0;
+
+    const aComposite = aScore + aBonus + aPrimaryBonus;
+    const bComposite = bScore + bBonus + bPrimaryBonus;
 
     const override = isGenuineConflict(a, b) ? resolveCourtOverride(a, b) : null;
 
@@ -216,21 +280,11 @@ function rankProvisionDocs(results = [], question = "") {
 function buildContextBlock(docs = []) {
   return docs
     .map((doc, index) => {
-      const source =
-        doc.source ||
-        doc.originalSource ||
-        doc.metadata?.originalSource ||
-        "Unknown Source";
-
-      const path =
-        doc.path ||
-        doc.source_path ||
-        doc.metadata?.path ||
-        doc.metadata?.fileName ||
-        "Unknown Path";
-
+      const source = getSourceTitle(doc);
+      const path = getSourcePath(doc);
       const authorityType = getAuthorityType(doc);
       const authorityLevel = getAuthorityLevel(doc);
+      const authorityLabel = AUTHORITY_LABEL[authorityType] || authorityType;
       const snippet = buildSourceSnippet(doc);
 
       return [
@@ -238,12 +292,93 @@ function buildContextBlock(docs = []) {
         `Title: ${source}`,
         `Path: ${path}`,
         `Authority Type: ${authorityType}`,
+        `Authority Label: ${authorityLabel}`,
         `Authority Level: ${authorityLevel}`,
         `Excerpt:`,
         snippet || "[No excerpt available]"
       ].join("\n");
     })
     .join("\n\n--------------------\n\n");
+}
+
+function buildConflictContext(docs = []) {
+  const conflicts = [];
+
+  for (let i = 0; i < docs.length; i += 1) {
+    for (let j = i + 1; j < docs.length; j += 1) {
+      const analysis = analyzeConflictPair(docs[i], docs[j]);
+
+      if (analysis?.conflict || analysis?.apparentConflict) {
+        conflicts.push(analysis);
+      }
+    }
+  }
+
+  if (!conflicts.length) {
+    return "No direct doctrinal or hierarchy conflict detected from the retrieved provision sources.";
+  }
+
+  return conflicts
+    .slice(0, 3)
+    .map((item, index) =>
+      [
+        `CONFLICT REVIEW ${index + 1}`,
+        `Conflict Type: ${item.conflictType || "N/A"}`,
+        `Doctrinal Conflict: ${item.doctrinalConflict ? "YES" : "NO"}`,
+        `Hierarchy Conflict: ${item.hierarchyConflict ? "YES" : "NO"}`,
+        `Apparent Conflict Only: ${item.apparentConflict ? "YES" : "NO"}`,
+        `Source A: ${item.sourceA}`,
+        `Source B: ${item.sourceB}`,
+        `Exact Issue: ${item.exactIssue || "Not determined"}`,
+        `Distinction Type: ${item.distinctionType || "Not determined"}`,
+        `Resolution Basis: ${item.resolutionBasis || item.reason || "Not determined"}`
+      ].join("\n")
+    )
+    .join("\n\n");
+}
+
+function hasSubstantiveTaxQuestion(question = "") {
+  const q = lower(question);
+
+  return /\b(what is|define|meaning|taxability|taxable|exempt|liable|subject to|vat|income tax|withholding|deductible|expense|revenue|sales|cost|basis|why|how|proper treatment|accounting|bir risk|audit risk|consequence|apply)\b/i.test(
+    q
+  );
+}
+
+function isCitationOnlyQuestion(question = "") {
+  const q = lower(question);
+
+  const citationOnlySignals =
+    /\b(cite|citation|source|legal basis|section|sec\.|article|provision)\b/i.test(q);
+
+  const analyticalSignals =
+    /\b(why|explain|analyze|apply|taxability|proper|risk|consequence|treatment|conflict|define|meaning|what is|how)\b/i.test(q);
+
+  return citationOnlySignals && !analyticalSignals;
+}
+
+function buildPromptModeInstruction(question = "") {
+  if (isCitationOnlyQuestion(question)) {
+    return [
+      "The user appears to be asking for a citation or provision.",
+      "Even so, do not give citation-only output.",
+      "Provide the exact citation if visible, then explain the rule, legal effect, hierarchy, doctrinal status, and practical application in concise form."
+    ].join("\n");
+  }
+
+  if (hasSubstantiveTaxQuestion(question)) {
+    return [
+      "The user is asking a substantive tax/legal question.",
+      "Do not merely list provisions.",
+      "Use the provision as controlling basis, then provide legal analysis, doctrine, hierarchy, and practical application."
+    ].join("\n");
+  }
+
+  return [
+    "Provide a conservative provision-based legal answer.",
+    "Do not invent provisions or cite irrelevant sources.",
+    "Explain the legal relevance of each cited source."
+  ].join("\n");
 }
 
 export async function maybeGenerateProvisionCitationAnswer({
@@ -258,7 +393,7 @@ export async function maybeGenerateProvisionCitationAnswer({
     }
 
     const ranked = rankProvisionDocs(retrievedResults || [], question);
-    const topDocs = ranked.slice(0, 5);
+    const topDocs = ranked.slice(0, 6);
 
     if (!topDocs.length) {
       return { handled: false };
@@ -266,35 +401,76 @@ export async function maybeGenerateProvisionCitationAnswer({
 
     const provisionHint = extractProvisionHint(question);
     const contextBlock = buildContextBlock(topDocs);
+    const conflictContext = buildConflictContext(topDocs);
+    const modeInstruction = buildPromptModeInstruction(question);
 
     const systemPrompt = `
 You are TINA's Provision Citation Engine.
 
-Your job:
-1. Determine whether the user's question is asking for a legal provision, statutory citation, issuance citation, or case-doctrine citation.
-2. Answer ONLY from the retrieved sources provided.
-3. Organize retrieved sources using TINA hierarchy:
-   Constitution > Statute / NIRC / Republic Act > Revenue Regulations > RMC > RMO > RAMO > BIR Ruling > Supreme Court > CTA En Banc > Court of Appeals > CTA Division > Treaty / LGU / Secondary.
-4. For actual conflict resolution only: Constitution and statutes control administrative issuances; if a court decision genuinely conflicts with a BIR issuance, the court decision controls.
-5. If a specific section/article/provision is identifiable, cite it clearly.
-6. If no exact provision is visible in the excerpts, do not invent one.
-7. If exact citation is uncertain, say: "Exact provision not fully visible in retrieved text."
+Your job is not merely to retrieve citations.
+Your job is to give a legally coherent Philippine tax answer anchored on the retrieved provision, issuance, or case authority.
 
-Use exactly this structure:
-1. DIRECT ANSWER
-2. LEGAL BASIS
-3. SUPPORTING RULES
-4. PROFESSIONAL INSIGHT
-5. CONFLICT FLAG
-6. SOURCES
+CORE RULE:
+Never output a citation-only answer.
+Every citation must be legally explained.
+You must synthesize, reconcile, and apply the authority to the user's question.
 
-Strict rules:
+AUTHORITY ORGANIZATION HIERARCHY:
+1. Constitution
+2. NIRC / Tax Code / Republic Act
+3. Revenue Regulations
+4. Revenue Memorandum Circulars
+5. Revenue Memorandum Orders
+6. Revenue Audit Memorandum Orders
+7. BIR Rulings
+8. Supreme Court decisions
+9. CTA En Banc / CTA Division / Court of Appeals decisions
+10. Secondary materials
+
+CONFLICT RESOLUTION RULE:
+- Constitution and statutes control administrative issuances.
+- Revenue Regulations implement statutes but cannot amend them.
+- RMCs, RMOs, RAMOs, and BIR rulings are administrative or interpretative and cannot override the NIRC, RR, or controlling court doctrine.
+- If a court decision genuinely conflicts with a BIR issuance, controlling judicial doctrine prevails.
+- Do not fabricate conflict. Different procedural, evidentiary, jurisdictional, factual, temporal, or administrative rules are not direct doctrinal conflicts unless they contradict on the same legal issue.
+
+MANDATORY OUTPUT FORMAT:
+A. DIRECT ANSWER
+- Answer the exact question immediately.
+- If the question asks for a provision, identify the provision and state what it legally means.
+- Do not merely list citations.
+
+B. CONTROLLING LEGAL BASIS
+- Identify the specific provision, issuance, or case visible in the retrieved context.
+- Explain whether each authority is mandatory, procedural, interpretative, administrative, or jurisprudential.
+- Explain why it governs the question.
+- If no exact provision is visible, state: "Exact provision not fully visible in retrieved text."
+
+C. SUPPORTING JURISPRUDENCE
+- Cite only cases directly relevant to the same legal issue.
+- For each case, state the legal issue, doctrine, and applicability.
+- If no directly relevant case is retrieved, say so. Do not invent or add unrelated jurisprudence.
+
+D. DOCTRINAL STATUS / CONFLICT ANALYSIS
+- State whether no doctrinal conflict, apparent conflict only, partial conflict, or direct conflict exists.
+- If conflict exists, explain exact legal issue, controlling doctrine, why it prevails, and whether the distinction is substantive, procedural, evidentiary, jurisdictional, factual, temporal, or administrative.
+- Never output only "Conflict detected: YES."
+
+E. HIERARCHY ANALYSIS
+- Apply the Philippine hierarchy expressly.
+- Explain which authority controls if there is tension.
+- Lower administrative issuances cannot override statutes or controlling court doctrine.
+
+F. PRACTICAL APPLICATION
+- Apply the rule to the user's facts or question.
+- State tax consequence, compliance implication, audit risk, litigation exposure, documentation requirements, possible BIR position, and strongest taxpayer defense where applicable.
+
+STRICT RULES:
 - Be conservative.
-- Do not hallucinate section numbers, case numbers, dates, or issuance numbers.
+- Do not hallucinate section numbers, case numbers, dates, rates, thresholds, or issuance numbers.
 - Never cite a source for a point it does not actually cover.
-- Do not use vague conflict language.
-- Only flag conflicts for real contradictions, not minor wording differences.
-- If a conflict exists, identify the higher authority that controls.
+- Do not use generic legal summaries.
+- Do not append raw sources. The app will show clickable sources separately.
 `.trim();
 
     const userPrompt = `
@@ -304,8 +480,14 @@ ${question}
 Provision Hint:
 ${provisionHint || "None detected"}
 
+Question Handling Instruction:
+${modeInstruction}
+
 Retrieved Legal Sources:
 ${contextBlock}
+
+Conflict Review:
+${conflictContext}
 `.trim();
 
     const completion = await openai.chat.completions.create({
@@ -333,3 +515,7 @@ ${contextBlock}
     return { handled: false };
   }
 }
+
+export default {
+  maybeGenerateProvisionCitationAnswer
+};
