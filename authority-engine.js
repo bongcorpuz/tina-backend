@@ -162,7 +162,12 @@ export function getDocAliases(doc = {}) {
 
 function buildDocReferenceBlob(doc = {}) {
   return compactSpaces(
-    [getDocSource(doc), getDocPath(doc), getDocNormalizedReference(doc), ...getDocAliases(doc)]
+    [
+      getDocSource(doc),
+      getDocPath(doc),
+      getDocNormalizedReference(doc),
+      ...getDocAliases(doc)
+    ]
       .filter(Boolean)
       .join(" ")
   );
@@ -553,6 +558,99 @@ export function selectTopLegalBases(results = [], maxItems = 2) {
     }));
 }
 
+function buildAuthorityHierarchyText() {
+  return [
+    "1. Constitution",
+    "2. NIRC / Tax Code / Republic Act",
+    "3. Revenue Regulations",
+    "4. Revenue Memorandum Circulars",
+    "5. Revenue Memorandum Orders",
+    "6. Revenue Audit Memorandum Orders",
+    "7. BIR Rulings",
+    "8. Supreme Court decisions",
+    "9. CTA En Banc / CTA Division decisions",
+    "10. Secondary materials"
+  ].join("\n");
+}
+
+function buildControllingPrecedenceText() {
+  return [
+    "For conflict resolution, apply controlling legal precedence as follows:",
+    "1. Constitution controls all.",
+    "2. Statutes control administrative issuances.",
+    "3. A valid Revenue Regulation implements the statute but cannot amend or expand it.",
+    "4. RMCs, RMOs, RAMOs, and BIR rulings are administrative or interpretative; they cannot override the NIRC, RR, or Supreme Court doctrine.",
+    "5. Supreme Court doctrine controls BIR issuances and lower court rulings.",
+    "6. CTA and Court of Appeals rulings may be persuasive or binding only within their proper procedural posture, but cannot override Supreme Court doctrine.",
+    "7. Secondary materials are never controlling authority."
+  ].join("\n");
+}
+
+function buildMandatoryOutputFormatText() {
+  return [
+    "A. DIRECT ANSWER",
+    "- Answer the exact legal/tax question immediately.",
+    "- Define the legal concept precisely.",
+    "- Do not begin with generic background.",
+    "",
+    "B. CONTROLLING LEGAL BASIS",
+    "- Identify the NIRC/statute first when available.",
+    "- Then identify relevant RR.",
+    "- Then identify RMC/RMO/RAMO/BIR ruling only if applicable.",
+    "- State whether each rule is mandatory, procedural, interpretative, or administrative.",
+    "- Explain why each authority governs the issue.",
+    "- If the statute is not in the context, expressly say that the indexed context did not retrieve it.",
+    "",
+    "C. SUPPORTING JURISPRUDENCE",
+    "- Cite only cases directly relevant to the issue.",
+    "- For each case, state: legal issue, doctrine, and applicability.",
+    "- Do not cite VAT refund cases for VAT liability issues unless the distinction is expressly explained.",
+    "- Do not cite unrelated cases merely because they mention the same tax type.",
+    "",
+    "D. DOCTRINAL STATUS / CONFLICT ANALYSIS",
+    "- State one of the following: No doctrinal conflict exists; Partial conflict exists; Direct conflict exists.",
+    "- If conflict exists, explain the exact legal issue in conflict, which doctrine controls, why it controls, whether the distinction is procedural/factual/temporal/jurisdictional, and whether later jurisprudence modified earlier rulings.",
+    "- Never write only: Conflict detected: YES.",
+    "- If cases address different procedural requirements, classify them as complementary, not conflicting.",
+    "",
+    "E. HIERARCHY ANALYSIS",
+    "- Apply Philippine legal hierarchy expressly.",
+    "- Explain which authority prevails if there is tension.",
+    "- Distinguish rule hierarchy from evidence relevance.",
+    "",
+    "F. PRACTICAL APPLICATION",
+    "- Apply the doctrine to the user's facts.",
+    "- State tax consequence, compliance implication, audit risk, litigation exposure, documentation requirements, possible BIR position, and strongest taxpayer defense."
+  ].join("\n");
+}
+
+function buildConflictInstructionText(conflict = null) {
+  if (!conflict?.conflict) {
+    return [
+      "Retrieved Conflict Signal: NO",
+      "Instruction: You must still perform doctrinal status analysis.",
+      "Do not invent a conflict. If authorities address different issues, say they are complementary or distinguishable."
+    ].join("\n");
+  }
+
+  return [
+    "Retrieved Conflict Signal: YES",
+    `Potential Controlling Authority: ${conflict.controllingAuthority || "Unknown"}`,
+    `Preliminary Reason: ${conflict.reason || "Higher authority may prevail."}`,
+    conflict.sourceA ? `Source A: ${conflict.sourceA}` : null,
+    conflict.sourceB ? `Source B: ${conflict.sourceB}` : null,
+    "",
+    "Instruction:",
+    "- Do not merely repeat the conflict signal.",
+    "- Identify the exact legal issue in conflict.",
+    "- Decide whether the conflict is direct, partial, or only apparent.",
+    "- Explain which authority controls under hierarchy and doctrine.",
+    "- Explain whether the distinction is substantive, procedural, evidentiary, jurisdictional, factual, temporal, or administrative."
+  ]
+    .filter(Boolean)
+    .join("\n");
+}
+
 export function buildStrictAnswerPrompt({
   hookMode = "ASK",
   originalQuestion = "",
@@ -568,47 +666,49 @@ export function buildStrictAnswerPrompt({
             (item, index) =>
               `${index + 1}. [${item.authorityLabel || AUTHORITY_LABEL[getAuthorityTypeForDoc(item)] || "Unknown"}] ${
                 item.source || getDocPath(item) || getDocSource(item)
-              }\nExcerpt: ${normalizeText(item.excerpt || item.text || "").slice(0, 280)}`
+              }\nAuthority Type: ${getAuthorityTypeForDoc(item)}\nAuthority Level: ${getAuthorityLevelForDoc(item)}\nControlling Precedence: ${getControllingPrecedenceForDoc(item)}\nExcerpt: ${normalizeText(item.excerpt || item.text || "").slice(0, 500)}`
           )
           .join("\n\n")
-      : "No legal basis found.";
+      : "No controlling legal basis was retrieved from the indexed context.";
 
-  const conflictText = conflict?.conflict
-    ? [
-        "Conflict Detected: YES",
-        `Controlling Authority: ${conflict.controllingAuthority || "Unknown"}`,
-        `Reason: ${conflict.reason || "Higher authority prevails."}`,
-        conflict.sourceA ? `Source A: ${conflict.sourceA}` : null,
-        conflict.sourceB ? `Source B: ${conflict.sourceB}` : null
-      ]
-        .filter(Boolean)
-        .join("\n")
-    : "Conflict Detected: NO";
+  const conflictText = buildConflictInstructionText(conflict);
 
   return `
-You are TINA (Tax Intelligence and Analysis), an expert Philippine tax researcher and analyst.
+You are TINA (Tax Intelligence and Analysis), a Philippine Tax AI operating as a senior tax lawyer, CPA, and legal researcher.
 
 ACTIVE MODE: ${hookMode}
 
-NON-NEGOTIABLE RULES:
-1. Retrieve and organize sources using TINA hierarchy: Constitution, statute, BIR issuances, BIR rulings, then court decisions and secondary materials. For actual conflict resolution, apply controlling legal precedence.
-2. For named-law questions, prefer the exact statute first, then IRR/RR, then clarificatory issuances.
-3. If a court decision conflicts with a BIR issuance, the court decision prevails.
-4. Never invent section numbers, dates, rates, thresholds, or citations.
-5. Never cite a source for a point it does not actually cover.
-6. Use exact statutory thresholds and dates when visible in the provided context.
-7. If the answer requires information not visible in the provided context, say:
-   "This may require verification against the latest BIR issuance. Please consult the BIR website or a licensed CPA."
-8. Do not use vague conflict language.
-9. Do not treat RMC/RMO/RAMO as the primary legal basis when the governing statute is available.
+CORE RULE:
+Never merely retrieve citations.
+You must synthesize, reconcile, and legally analyze authorities using Philippine tax law hierarchy and doctrine.
+Your goal is legally coherent analysis, not source retrieval.
 
-RESPONSE FORMAT:
-1. DIRECT ANSWER
-2. LEGAL BASIS
-3. SUPPORTING RULES
-4. PROFESSIONAL INSIGHT
-5. CONFLICT FLAG
-6. SOURCES
+NON-NEGOTIABLE LEGAL REASONING RULES:
+1. Do not perform citation dumping.
+2. Do not mix unrelated cases.
+3. Do not fabricate doctrinal conflicts.
+4. Do not cite a case unless its legal issue directly supports the answer.
+5. Do not cite a BIR issuance as controlling if the NIRC/statute controls and is available.
+6. Do not let an RMC, RMO, RAMO, or BIR ruling override the NIRC, RR, or Supreme Court doctrine.
+7. If a court decision conflicts with a BIR issuance, explain that controlling judicial doctrine prevails.
+8. Always distinguish:
+   - substantive vs procedural doctrine;
+   - VAT liability vs VAT refund;
+   - administrative remedy vs judicial remedy;
+   - evidentiary requirement vs jurisdictional requirement;
+   - statutory rule vs administrative implementation.
+9. If an authority is not visible in the provided context, do not invent it. Say that the indexed context did not retrieve that authority.
+10. Use exact dates, rates, thresholds, forms, and section numbers only if visible in the context.
+11. If the issue requires latest verification, expressly recommend checking the latest official BIR/NIRC/court source.
+
+PHILIPPINE TAX AUTHORITY HIERARCHY FOR SOURCE ORGANIZATION:
+${buildAuthorityHierarchyText()}
+
+CONTROLLING PRECEDENCE FOR CONFLICT RESOLUTION:
+${buildControllingPrecedenceText()}
+
+MANDATORY RESPONSE FORMAT:
+${buildMandatoryOutputFormatText()}
 
 ORIGINAL QUESTION:
 ${originalQuestion}
@@ -616,13 +716,18 @@ ${originalQuestion}
 CLEAN QUESTION:
 ${cleanQuestion}
 
-TOP LEGAL BASES:
+TOP LEGAL BASES RETRIEVED:
 ${legalBasesText}
 
-CONFLICT STATUS:
+CONFLICT / DOCTRINAL REVIEW INSTRUCTION:
 ${conflictText}
 
-CONTEXT:
+INDEXED CONTEXT:
 ${context}
+
+FINAL INSTRUCTION:
+Return only the final answer.
+Use exactly the A to F headings.
+Do not include a separate raw source list unless the answer itself needs to identify a source as part of legal reasoning.
 `.trim();
 }
