@@ -4,10 +4,13 @@ import {
   AUTHORITY_LEVEL,
   getAuthorityTypeForDoc,
   getAuthorityLevelForDoc,
-  getControllingPrecedenceForDoc,
+  getControllingPrecedenceForDoc
+} from "./authority-engine.js";
+
+import {
   resolveCourtOverride,
   isGenuineConflict
-} from "./authority-engine.js";
+} from "./conflict-engine.js";
 
 function normalizeText(value = "") {
   return String(value || "").trim();
@@ -163,7 +166,9 @@ export function compareDoctrinalPair(a = {}, b = {}) {
     sourceAClaim: normalizeText(textA).slice(0, 500),
     sourceBClaim: normalizeText(textB).slice(0, 500),
     auditRecord: {
-      decisionType: override?.overrideApplies ? "COURT_OVERRIDE" : "HIERARCHY_RESOLUTION",
+      decisionType: override?.overrideApplies
+        ? "COURT_OVERRIDE"
+        : "HIERARCHY_RESOLUTION",
       controllingAuthority,
       weakerAuthority,
       controllingSource: sourcePathOf(controlling),
@@ -178,9 +183,7 @@ export function detectDoctrinalConflicts(docs = []) {
   for (let i = 0; i < docs.length; i += 1) {
     for (let j = i + 1; j < docs.length; j += 1) {
       const result = compareDoctrinalPair(docs[i], docs[j]);
-      if (result) {
-        conflicts.push(result);
-      }
+      if (result) conflicts.push(result);
     }
   }
 
