@@ -80,6 +80,191 @@ import {
 
 const DEFAULT_MODEL = process.env.OPENAI_MODEL || "gpt-4o-mini";
 
+const TINA_MASTER_RESPONSE_STRUCTURE = `
+You are TINA (Tax Intelligence and Analysis), a Philippine Tax AI operating as a senior tax lawyer, CPA, and legal researcher.
+
+CORE RULE:
+Never merely retrieve citations. Synthesize, reconcile, and legally analyze authorities using the Philippine hierarchy of tax laws and jurisprudence.
+
+REQUIRED RESPONSE STRUCTURE FOR EVERY SUBSTANTIVE TAX ANSWER:
+
+A. DIRECT ANSWER
+- Answer the exact legal/tax question immediately.
+- Define the legal concept precisely.
+- Avoid generic summaries.
+
+B. CONTROLLING LEGAL BASIS
+Identify and explain:
+1. NIRC provisions
+2. Relevant Revenue Regulations (RR)
+3. RMCs/RMOs if applicable
+4. Applicable constitutional provisions if relevant
+For each authority, state whether it is mandatory, procedural, interpretative, or administrative, and explain why it governs.
+
+C. SUPPORTING JURISPRUDENCE
+Cite only legally relevant cases directly related to the issue.
+For each case, state: legal issue, doctrine established, and applicability to the present issue.
+Do not enumerate unrelated cases.
+
+D. DOCTRINAL STATUS / CONFLICT ANALYSIS
+Determine whether no doctrinal conflict, partial conflict, or direct conflict exists.
+If conflict exists, explain: exact legal issue in conflict, controlling doctrine, why it prevails, whether distinction is procedural/factual/temporal/jurisdictional, and whether later jurisprudence modified earlier rulings.
+Never output merely "Conflict detected: YES".
+
+E. HIERARCHY ANALYSIS
+Apply Philippine legal hierarchy:
+1. Constitution
+2. NIRC / Tax Code
+3. Revenue Regulations
+4. Revenue Memorandum Circulars
+5. Revenue Memorandum Orders
+6. BIR Rulings
+7. Supreme Court decisions
+8. CTA decisions
+9. Administrative issuances
+If authorities conflict, explain which prevails and why.
+
+F. PRACTICAL APPLICATION
+Apply the doctrine to the user's facts. State: tax consequence, compliance implication, audit risk, litigation exposure, documentation requirements, possible BIR position, and strongest taxpayer defense.
+
+STRICT ANALYTICAL RULES:
+- No citation dumping.
+- Do not mix unrelated cases.
+- Do not fabricate doctrinal conflicts.
+- Always distinguish substantive vs procedural doctrine, VAT refund vs VAT liability, administrative remedy vs judicial remedy, and evidentiary vs jurisdictional requirements.
+- Explain doctrinal evolution chronologically where relevant.
+`.trim();
+
+function truncateForPrompt(value = "", maxChars = 3500) {
+  const text = String(value || "");
+  return text.length > maxChars ? `${text.slice(0, maxChars)}\n...[truncated]` : text;
+}
+
+function formatDocsForMasterAnalysisPrompt(docs = [], maxDocs = 8) {
+  return (docs || [])
+    .slice(0, maxDocs)
+    .map((doc, index) => {
+      const title =
+        doc.source ||
+        doc.originalSource ||
+        doc.original_source ||
+        doc.title ||
+        doc.metadata?.originalSource ||
+        "Untitled Source";
+
+      return [
+        `SOURCE ${index + 1}: ${title}`,
+        `PATH: ${doc.path || doc.source_path || doc.metadata?.path || "Unknown"}`,
+        `AUTHORITY TYPE: ${doc.authorityType || doc.authority_type || doc.metadata?.authorityType || "SECONDARY"}`,
+        `AUTHORITY LEVEL: ${doc.authorityLevel ?? doc.authority_level ?? doc.metadata?.authorityLevel ?? 99}`,
+        `NORMALIZED REFERENCE: ${doc.normalizedReference || doc.normalized_reference || doc.metadata?.normalizedReference || "N/A"}`,
+        `TEXT:`,
+        truncateForPrompt(doc.text || doc.content || "", 3500)
+      ].join("\n");
+    })
+    .join("\n\n---\n\n");
+}
+
+function buildConflictContextForPrompt({ conflicts = [], hierarchyConflict = null }) {
+  const parts = [];
+
+  if (hierarchyConflict?.conflict) {
+    parts.push(
+      [
+        "Hierarchy Conflict Signal:",
+        JSON.stringify(hierarchyConflict, null, 2)
+      ].join("\n")
+    );
+  }
+
+  if (Array.isArray(conflicts) && conflicts.length) {
+    parts.push(
+      [
+        "Evidence Conflict Signals:",
+        JSON.stringify(conflicts.slice(0, 5), null, 2)
+      ].join("\n")
+    );
+  }
+
+  return parts.length ? parts.join("\n\n") : "No detected conflict signal from retrieval. The answer must still independently determine doctrinal status.";
+}
+
+async function enforceTinaMasterAnalysis({
+  openai,
+  model = DEFAULT_MODEL,
+  question,
+  draftAnswer = "",
+  docs = [],
+  conflicts = [],
+  hierarchyConflict = null,
+  namedLawDetection = null,
+  issuance = null,
+  memoryContext = ""
+}) {
+  const cleanDraft = String(draftAnswer || "").trim();
+
+  if (!cleanDraft) return cleanDraft;
+
+  const context = formatDocsForMasterAnalysisPrompt(docs, 8);
+
+  if (!context.trim()) {
+    return cleanDraft;
+  }
+
+  const systemPrompt = [
+    TINA_MASTER_RESPONSE_STRUCTURE,
+    "",
+    "You are now the final tax technical reviewer. Rewrite the draft into the required A-F structure.",
+    "Use only the provided indexed source context and the draft. Do not invent laws, cases, dates, rates, issuances, or citations.",
+    "If a required item is not supported by the provided context, say that no indexed support was retrieved for that item instead of fabricating support.",
+    "Every cited source must be tied to doctrine, rule, hierarchy, or application. No citation dumping.",
+    "Do not append a separate raw source list; the route payload will handle sources."
+  ].join("\n");
+
+  const userPrompt = [
+    "QUESTION:",
+    question,
+    "",
+    "DETECTED CONTEXT:",
+    issuance ? `Issuance Query: ${JSON.stringify(issuance)}` : "Issuance Query: none",
+    namedLawDetection?.matched
+      ? `Named Law: ${namedLawDetection.bestMatch?.shortTitle || namedLawDetection.bestMatch?.canonicalTitle || "matched"}`
+      : "Named Law: none",
+    "",
+    "CONVERSATION MEMORY:",
+    memoryContext || "No prior conversation.",
+    "",
+    "DRAFT ANSWER TO REVIEW:",
+    cleanDraft,
+    "",
+    "INDEXED SOURCE CONTEXT:",
+    context,
+    "",
+    "CONFLICT CONTEXT:",
+    buildConflictContextForPrompt({ conflicts, hierarchyConflict }),
+    "",
+    "OUTPUT REQUIREMENT:",
+    "Return the final answer using exactly these headings:",
+    "A. DIRECT ANSWER",
+    "B. CONTROLLING LEGAL BASIS",
+    "C. SUPPORTING JURISPRUDENCE",
+    "D. DOCTRINAL STATUS / CONFLICT ANALYSIS",
+    "E. HIERARCHY ANALYSIS",
+    "F. PRACTICAL APPLICATION"
+  ].join("\n");
+
+  const response = await openai.chat.completions.create({
+    model,
+    temperature: 0,
+    messages: [
+      { role: "system", content: systemPrompt },
+      { role: "user", content: userPrompt }
+    ]
+  });
+
+  return response.choices?.[0]?.message?.content?.trim() || cleanDraft;
+}
+
 function buildDocKey(doc = {}) {
   return (
     doc.fileId ||
@@ -715,6 +900,8 @@ Rules:
 4. Do not invent specific RR, RMC, RMO, RAMO, BIR rulings, dates, forms, deadlines, rates, or case citations.
 5. For exact issuance questions, do not provide speculative content.
 6. Recommend verification against official NIRC/BIR/CTA/Supreme Court sources.
+7. Use the A-F TINA structure: Direct Answer, Controlling Legal Basis, Supporting Jurisprudence, Doctrinal Status / Conflict Analysis, Hierarchy Analysis, Practical Application.
+8. If indexed authority is absent, expressly state that the controlling authority was not retrieved instead of inventing support.
 `.trim();
 
     const fallbackUserPrompt = `
@@ -1087,6 +1274,21 @@ ${cleanQuestion}
               conflicts: rawConflicts,
               memoryContext
             }));
+        }
+
+        if (preliminaryAnswer && topEvidence.length > 0) {
+          preliminaryAnswer = await enforceTinaMasterAnalysis({
+            openai,
+            model: DEFAULT_MODEL,
+            question: finalQuestion,
+            draftAnswer: preliminaryAnswer,
+            docs: internalRankedDocs,
+            conflicts: displayableConflicts,
+            hierarchyConflict,
+            namedLawDetection,
+            issuance,
+            memoryContext
+          });
         }
 
         preliminaryAnswer = sanitizeDraftAnswer(
