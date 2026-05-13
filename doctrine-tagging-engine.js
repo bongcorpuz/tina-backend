@@ -1,6 +1,12 @@
 // FILE: doctrine-tagging-engine.js
 
-import { rerankByHierarchy } from "./authority-engine.js";
+import {
+  rerankByHierarchy,
+  getAuthorityTypeForDoc,
+  getAuthorityLevelForDoc
+} from "./authority-engine.js";
+
+import { analyzeConflictPair } from "./conflict-engine.js";
 
 const DOCTRINE_LIBRARY = {
   SUBSTANCE_OVER_FORM: {
@@ -110,11 +116,58 @@ const DOCTRINE_LIBRARY = {
       "vat is imposed on sale, barter, exchange, or lease",
       "vat is borne by the end consumer"
     ]
+  },
+  VAT_REFUND_PROCEDURE: {
+    label: "VAT Refund Procedure",
+    aliases: [
+      "vat refund",
+      "input vat refund",
+      "tax credit certificate",
+      "tcc",
+      "120+30",
+      "administrative claim",
+      "judicial claim",
+      "aichi",
+      "san roque"
+    ],
+    concepts: [
+      "vat refund claims require administrative and judicial timing compliance",
+      "120+30 day rule may be jurisdictional",
+      "vat refund substantiation and timing are procedural or jurisdictional"
+    ]
+  },
+  VAT_SUBSTANTIATION: {
+    label: "VAT Substantiation",
+    aliases: [
+      "substantiation",
+      "invoice",
+      "official receipt",
+      "vat invoice",
+      "vat official receipt",
+      "seagate",
+      "invoicing requirement"
+    ],
+    concepts: [
+      "vat claims require proper invoicing and substantiation",
+      "documentary evidence supports entitlement to vat treatment",
+      "substantiation is evidentiary"
+    ]
   }
 };
 
+const ISSUE_DIMENSIONS = {
+  SUBSTANTIVE: "substantive",
+  PROCEDURAL: "procedural",
+  EVIDENTIARY: "evidentiary",
+  JURISDICTIONAL: "jurisdictional",
+  TEMPORAL: "temporal",
+  FACTUAL: "factual",
+  ADMINISTRATIVE: "administrative",
+  GENERAL: "general"
+};
+
 function normalizeText(value = "") {
-  return String(value || "").trim();
+  return String(value || "").replace(/\s+/g, " ").trim();
 }
 
 function lower(value = "") {
@@ -153,8 +206,42 @@ function sourceTitleOf(doc = {}) {
   );
 }
 
+function authorityTypeOf(doc = {}) {
+  return (
+    doc.authorityType ||
+    doc.authority_type ||
+    doc.metadata?.authorityType ||
+    getAuthorityTypeForDoc(doc) ||
+    "UNKNOWN"
+  );
+}
+
+function authorityLevelOf(doc = {}) {
+  return Number(
+    doc.authorityLevel ??
+      doc.authority_level ??
+      doc.metadata?.authorityLevel ??
+      getAuthorityLevelForDoc(doc) ??
+      99
+  );
+}
+
 function doctrineEntries() {
   return Object.entries(DOCTRINE_LIBRARY);
+}
+
+function isCourtAuthority(type = "") {
+  return [
+    "SUPREME_COURT",
+    "CTA_EN_BANC",
+    "COURT_OF_APPEALS",
+    "CTA_DIVISION"
+  ].includes(String(type || "").toUpperCase());
+}
+
+function isLegalAuthority(doc = {}) {
+  const type = authorityTypeOf(doc);
+  return type !== "SECONDARY" && type !== "UNKNOWN";
 }
 
 export function detectDoctrineIntent(question = "") {
@@ -181,7 +268,13 @@ export function detectDoctrineIntent(question = "") {
     "simulation",
     "economic substance",
     "fraud",
-    "intent"
+    "intent",
+    "conflict",
+    "doctrinal status",
+    "doctrinal conflict",
+    "supporting jurisprudence",
+    "jurisprudence",
+    "case doctrine"
   ];
 
   const isDoctrineFocused =
@@ -236,6 +329,187 @@ function buildDocDoctrineText(doc = {}) {
     .join(" ");
 }
 
+function classifyIssueDimensions(text = "") {
+  const value = lower(text);
+  const dimensions = [];
+
+  if (
+    /\b(taxable|liable|subject to|exempt|zero-rated|gross income|deductible|non-deductible|tax base|tax rate|output vat|input vat|income tax|withholding tax|final tax|vat liability|vatable)\b/i.test(value)
+  ) {
+    dimensions.push(ISSUE_DIMENSIONS.SUBSTANTIVE);
+  }
+
+  if (
+    /\b(file|filing|deadline|due date|period|prescriptive|administrative claim|judicial claim|appeal|protest|assessment|loa|pan|fan|return|form|remedy|120\+30)\b/i.test(value)
+  ) {
+    dimensions.push(ISSUE_DIMENSIONS.PROCEDURAL);
+  }
+
+  if (
+    /\b(invoice|receipt|substantiation|documentary|support|proof|evidence|certificate|schedule|reconciliation|records|books|burden of proof)\b/i.test(value)
+  ) {
+    dimensions.push(ISSUE_DIMENSIONS.EVIDENTIARY);
+  }
+
+  if (
+    /\b(jurisdiction|jurisdictional|cta|court has no jurisdiction|condition precedent|exhaustion|120\+30|30-day)\b/i.test(value)
+  ) {
+    dimensions.push(ISSUE_DIMENSIONS.JURISDICTIONAL);
+  }
+
+  if (
+    /\b(effective|effectivity|retroactive|prospective|prior to|after|before|beginning|taxable year|calendar year|transition|transitory|superseded|amended|repealed)\b/i.test(value)
+  ) {
+    dimensions.push(ISSUE_DIMENSIONS.TEMPORAL);
+  }
+
+  if (
+    /\b(facts|factual|depending on|case-to-case|actual|circumstances|evidence shows|transaction structure)\b/i.test(value)
+  ) {
+    dimensions.push(ISSUE_DIMENSIONS.FACTUAL);
+  }
+
+  if (
+    /\b(rmc|rmo|ramo|revenue memorandum|bir ruling|administrative|interpretative|clarificatory|implementing rule|regulation)\b/i.test(value)
+  ) {
+    dimensions.push(ISSUE_DIMENSIONS.ADMINISTRATIVE);
+  }
+
+  return unique(dimensions.length ? dimensions : [ISSUE_DIMENSIONS.GENERAL]);
+}
+
+function dimensionsOverlap(a = [], b = []) {
+  return a.some((item) => b.includes(item));
+}
+
+function extractIssueTokens(text = "") {
+  const stopWords = new Set([
+    "what",
+    "when",
+    "where",
+    "which",
+    "while",
+    "with",
+    "from",
+    "that",
+    "this",
+    "there",
+    "their",
+    "have",
+    "been",
+    "were",
+    "will",
+    "shall",
+    "must",
+    "case",
+    "court",
+    "supreme",
+    "appeals",
+    "tax",
+    "taxes",
+    "taxpayer",
+    "commissioner",
+    "internal",
+    "revenue",
+    "bir",
+    "cir",
+    "cta",
+    "issue",
+    "ruling",
+    "doctrine",
+    "explain",
+    "analyze",
+    "legal",
+    "basis",
+    "under",
+    "value",
+    "added"
+  ]);
+
+  return unique(
+    tokenize(text).filter((token) => token.length >= 4 && !stopWords.has(token))
+  );
+}
+
+function computeIssueApplicabilityScore(question = "", doc = {}) {
+  const text = buildDocDoctrineText(doc);
+  const queryTokens = extractIssueTokens(question);
+  const textTokens = new Set(extractIssueTokens(text));
+  const queryDimensions = classifyIssueDimensions(question);
+  const docDimensions = classifyIssueDimensions(text);
+
+  let tokenHits = 0;
+  for (const token of queryTokens) {
+    if (textTokens.has(token) || lower(text).includes(token)) {
+      tokenHits += 1;
+    }
+  }
+
+  const tokenOverlap = queryTokens.length ? tokenHits / queryTokens.length : 0;
+  const dimensionOverlap = dimensionsOverlap(queryDimensions, docDimensions) ? 1 : 0;
+
+  let penalty = 0;
+
+  const q = lower(question);
+  const t = lower(text);
+
+  if (
+    /\b(vat liability|output vat|vatable|subject to vat|sale of goods|sale of services)\b/i.test(q) &&
+    /\b(vat refund|input vat refund|120\+30|administrative claim|judicial claim|tax credit certificate|tcc)\b/i.test(t)
+  ) {
+    penalty += 0.35;
+  }
+
+  if (
+    /\b(vat refund|input vat refund|120\+30|administrative claim|judicial claim|tax credit certificate|tcc)\b/i.test(q) &&
+    /\b(output vat|vatable|vat liability|subject to vat)\b/i.test(t)
+  ) {
+    penalty += 0.2;
+  }
+
+  return Math.max(
+    0,
+    Number((tokenOverlap * 0.65 + dimensionOverlap * 0.35 - penalty).toFixed(4))
+  );
+}
+
+function classifyApplicability(question = "", doc = {}) {
+  const issueScore = computeIssueApplicabilityScore(question, doc);
+  const queryDimensions = classifyIssueDimensions(question);
+  const docDimensions = classifyIssueDimensions(buildDocDoctrineText(doc));
+  const type = authorityTypeOf(doc);
+
+  if (issueScore >= 0.55) {
+    return {
+      applicability: "DIRECTLY_APPLICABLE",
+      explanation:
+        "The authority addresses the same doctrine and substantially the same legal issue or issue dimension raised by the question."
+    };
+  }
+
+  if (issueScore >= 0.3) {
+    return {
+      applicability: "DISTINGUISHABLE_BUT_RELEVANT",
+      explanation:
+        "The authority is related but must be limited to its own factual, procedural, evidentiary, jurisdictional, temporal, administrative, or substantive context."
+    };
+  }
+
+  if (isCourtAuthority(type)) {
+    return {
+      applicability: "NOT_ISSUE_MATCHED",
+      explanation:
+        "The case may mention a related tax type or doctrine but does not sufficiently match the exact issue. It should not be cited as supporting jurisprudence unless the answer expressly distinguishes it."
+    };
+  }
+
+  return {
+    applicability: "WEAK_SUPPORT",
+    explanation:
+      "The source has weak issue applicability and should be used, if at all, only as background support."
+  };
+}
+
 function scoreDoctrineAgainstDoc(doctrineCode, doc = {}, question = "") {
   const doctrine = DOCTRINE_LIBRARY[doctrineCode];
   if (!doctrine) {
@@ -245,7 +519,10 @@ function scoreDoctrineAgainstDoc(doctrineCode, doc = {}, question = "") {
       score: 0,
       aliasHits: 0,
       conceptHits: 0,
-      queryOverlap: 0
+      queryOverlap: 0,
+      applicabilityScore: 0,
+      applicability: "WEAK_SUPPORT",
+      applicabilityExplanation: "Doctrine code is not in the doctrine library."
     };
   }
 
@@ -253,11 +530,14 @@ function scoreDoctrineAgainstDoc(doctrineCode, doc = {}, question = "") {
   const aliasHits = computePhraseHits(text, doctrine.aliases);
   const conceptHits = computePhraseHits(text, doctrine.concepts);
   const queryOverlap = computeTokenOverlap(question, text);
+  const applicabilityScore = computeIssueApplicabilityScore(question, doc);
+  const applicability = classifyApplicability(question, doc);
 
   const score =
-    aliasHits * 0.5 +
-    conceptHits * 0.3 +
-    queryOverlap * 0.2;
+    aliasHits * 0.35 +
+    conceptHits * 0.2 +
+    queryOverlap * 0.15 +
+    applicabilityScore * 0.3;
 
   return {
     doctrineCode,
@@ -265,7 +545,10 @@ function scoreDoctrineAgainstDoc(doctrineCode, doc = {}, question = "") {
     score: Number(score.toFixed(4)),
     aliasHits,
     conceptHits,
-    queryOverlap: Number(queryOverlap.toFixed(4))
+    queryOverlap: Number(queryOverlap.toFixed(4)),
+    applicabilityScore,
+    applicability: applicability.applicability,
+    applicabilityExplanation: applicability.explanation
   };
 }
 
@@ -288,6 +571,8 @@ export function tagDoctrineCandidates({
       .sort((a, b) => b.score - a.score);
 
     const topDoctrine = doctrineScores[0] || null;
+    const authorityLevel = authorityLevelOf(doc);
+    const authorityBoost = isLegalAuthority(doc) ? Math.max(0, (100 - authorityLevel) / 100) : 0;
 
     return {
       ...doc,
@@ -295,16 +580,28 @@ export function tagDoctrineCandidates({
       topDoctrineCode: topDoctrine?.doctrineCode || null,
       topDoctrineLabel: topDoctrine?.doctrineLabel || null,
       doctrineScore: topDoctrine?.score || 0,
+      doctrineApplicabilityScore: topDoctrine?.applicabilityScore || 0,
+      doctrineApplicability: topDoctrine?.applicability || "WEAK_SUPPORT",
+      doctrineApplicabilityExplanation:
+        topDoctrine?.applicabilityExplanation ||
+        "No doctrine applicability analysis was available.",
       doctrineFinalScore:
-        Number(doc.finalScore || doc.score || 0) * 0.7 +
-        Number(topDoctrine?.score || 0) * 30 * 0.3
+        Number(doc.finalScore || doc.score || 0) * 0.55 +
+        Number(topDoctrine?.score || 0) * 35 * 0.3 +
+        authorityBoost * 15
     };
   });
 
   return {
     intent,
     candidates: tagged
-      .filter((doc) => doc.doctrineScore > 0 || !intent.isDoctrineFocused)
+      .filter((doc) => {
+        if (!intent.isDoctrineFocused) return true;
+        if (!doc.doctrineScore) return false;
+        return ["DIRECTLY_APPLICABLE", "DISTINGUISHABLE_BUT_RELEVANT"].includes(
+          doc.doctrineApplicability
+        );
+      })
       .sort((a, b) => b.doctrineFinalScore - a.doctrineFinalScore)
       .slice(0, limit)
   };
@@ -318,30 +615,88 @@ export function selectTopDoctrineAuthorities({
   const { intent, candidates } = tagDoctrineCandidates({
     question,
     retrievedResults,
-    limit: Math.max(limit * 2, 6)
+    limit: Math.max(limit * 3, 9)
   });
+
+  const top = candidates
+    .filter((doc) => {
+      if (!intent.isDoctrineFocused) return true;
+      return doc.doctrineApplicability !== "NOT_ISSUE_MATCHED";
+    })
+    .slice(0, limit);
 
   return {
     intent,
-    topAuthorities: candidates.slice(0, limit).map((doc) => ({
+    topAuthorities: top.map((doc) => ({
       doctrineCode: doc.topDoctrineCode,
       doctrineLabel: doc.topDoctrineLabel,
       doctrineScore: doc.doctrineScore,
+      doctrineApplicabilityScore: doc.doctrineApplicabilityScore,
+      doctrineApplicability: doc.doctrineApplicability,
+      doctrineApplicabilityExplanation: doc.doctrineApplicabilityExplanation,
       source: sourcePathOf(doc),
       title: sourceTitleOf(doc),
-      authorityType:
-        doc.authorityType ||
-        doc.authority_type ||
-        doc.metadata?.authorityType ||
-        "UNKNOWN",
-      authorityLevel:
-        doc.authorityLevel ||
-        doc.authority_level ||
-        doc.metadata?.authorityLevel ||
-        99,
-      excerpt: normalizeText(doc.text || "").slice(0, 320)
+      authorityType: authorityTypeOf(doc),
+      authorityLevel: authorityLevelOf(doc),
+      excerpt: normalizeText(doc.text || "").slice(0, 420)
     }))
   };
+}
+
+function buildDoctrineConflictReview(authorities = []) {
+  if (!authorities.length || authorities.length < 2) {
+    return "No conflict review available because fewer than two doctrine-tagged authorities were selected.";
+  }
+
+  const reviews = [];
+
+  for (let i = 0; i < authorities.length; i += 1) {
+    for (let j = i + 1; j < authorities.length; j += 1) {
+      const a = authorities[i];
+      const b = authorities[j];
+
+      const review = analyzeConflictPair(
+        {
+          text: a.excerpt,
+          source: a.title,
+          path: a.source,
+          authorityType: a.authorityType,
+          authorityLevel: a.authorityLevel
+        },
+        {
+          text: b.excerpt,
+          source: b.title,
+          path: b.source,
+          authorityType: b.authorityType,
+          authorityLevel: b.authorityLevel
+        }
+      );
+
+      if (review?.conflict || review?.apparentConflict) {
+        reviews.push(review);
+      }
+    }
+  }
+
+  if (!reviews.length) {
+    return "No direct doctrinal conflict detected. If VAT cases address different procedural requirements, such as substantiation, administrative claim timing, or judicial claim timing, they are complementary or distinguishable rather than conflicting.";
+  }
+
+  return reviews
+    .slice(0, 3)
+    .map((item, index) =>
+      [
+        `Conflict Review ${index + 1}:`,
+        `Conflict Type: ${item.conflictType || "N/A"}`,
+        `Doctrinal Conflict: ${item.doctrinalConflict ? "YES" : "NO"}`,
+        `Hierarchy Conflict: ${item.hierarchyConflict ? "YES" : "NO"}`,
+        `Apparent Conflict Only: ${item.apparentConflict ? "YES" : "NO"}`,
+        `Exact Issue: ${item.exactIssue || "Not determined"}`,
+        `Distinction Type: ${item.distinctionType || "Not determined"}`,
+        `Resolution Basis: ${item.resolutionBasis || item.reason || "Not determined"}`
+      ].join("\n")
+    )
+    .join("\n\n");
 }
 
 export function buildDoctrineSummary({
@@ -362,46 +717,82 @@ export function buildDoctrineSummary({
             `${index + 1}. ${item.doctrineLabel || "Untitled Doctrine"}`,
             `Source: ${item.title || item.source || "Unknown source"}`,
             `Authority: ${item.authorityType} (Level ${item.authorityLevel})`,
+            `Applicability: ${item.doctrineApplicability}`,
+            `Applicability Analysis: ${item.doctrineApplicabilityExplanation}`,
+            `Issue Applicability Score: ${item.doctrineApplicabilityScore}`,
             `Excerpt: ${item.excerpt}`
           ].join("\n")
         )
         .join("\n\n")
-    : "No strong doctrine-tagged authority found.";
+    : "No strong issue-applicable doctrine-tagged authority found.";
 
   return {
     intent,
     topAuthorities,
-    summary
+    summary,
+    conflictReview: buildDoctrineConflictReview(topAuthorities)
   };
 }
 
 export function buildDoctrinePrompt({
   question = "",
-  doctrineSummary = ""
+  doctrineSummary = "",
+  conflictReview = ""
 }) {
   return `
 You are TINA, a Philippine tax research and compliance assistant.
 
+CORE RULE:
+Never merely tag a doctrine or enumerate cases.
+You must explain whether the doctrine actually applies to the user's exact legal issue.
+
 STRICT RULES:
 1. Use only the doctrine-tagged indexed authorities below.
-2. Do not invent doctrine names, holdings, or legal tests.
+2. Do not invent doctrine names, holdings, legal tests, case names, dates, or citations.
 3. Prefer higher-authority legal sources.
 4. If doctrine support is weak, say so clearly.
-5. Never mention ChatGPT.
+5. Do not cite a case merely because it mentions the same tax type.
+6. For every doctrine or case used, explain:
+   - legal issue addressed;
+   - doctrine established;
+   - why it applies or does not apply to the present question.
+7. If VAT cases address different procedural requirements, explain the distinction. For example:
+   - substantiation cases concern evidentiary support;
+   - administrative claim timing cases concern procedural compliance;
+   - judicial claim timing cases may concern jurisdiction;
+   - these are complementary, not conflicting, unless they directly contradict on the same legal issue.
+8. Do not fabricate doctrinal conflict.
+9. Never output only "Conflict detected: YES."
+10. Never mention ChatGPT.
 
-RESPONSE FORMAT:
-1. DIRECT ANSWER
-2. DOCTRINE APPLIED
-3. LEGAL BASIS
-4. ANALYSIS
-5. PRACTICAL IMPLICATION
-6. SOURCES USED
+MANDATORY OUTPUT FORMAT:
+
+A. DIRECT ANSWER
+[Answer the exact doctrine/tax question immediately.]
+
+B. CONTROLLING LEGAL BASIS
+[Identify the controlling law, regulation, or authority from the context. Explain whether mandatory, procedural, interpretative, administrative, evidentiary, jurisdictional, or substantive.]
+
+C. SUPPORTING JURISPRUDENCE
+[Only issue-applicable cases. For each: legal issue, doctrine, applicability. If a case is distinguishable, say why.]
+
+D. DOCTRINAL STATUS / CONFLICT ANALYSIS
+[State no conflict, apparent conflict, partial conflict, or direct conflict. Explain whether differences are substantive, procedural, evidentiary, jurisdictional, factual, temporal, or administrative.]
+
+E. HIERARCHY ANALYSIS
+[Explain which authority controls and why under Philippine legal hierarchy.]
+
+F. PRACTICAL APPLICATION
+[Apply to facts. State tax consequence, compliance implication, audit risk, litigation exposure, documentation requirements, possible BIR position, and strongest taxpayer defense where applicable.]
 
 QUESTION:
 ${question}
 
 DOCTRINE-TAGGED AUTHORITIES:
 ${doctrineSummary}
+
+CONFLICT REVIEW:
+${conflictReview}
 `.trim();
 }
 
@@ -411,7 +802,7 @@ export async function maybeGenerateDoctrineAnswer({
   retrievedResults = [],
   model = process.env.OPENAI_MODEL || "gpt-4o-mini"
 }) {
-  const { intent, topAuthorities, summary } = buildDoctrineSummary({
+  const { intent, topAuthorities, summary, conflictReview } = buildDoctrineSummary({
     question,
     retrievedResults,
     limit: 3
@@ -429,7 +820,8 @@ export async function maybeGenerateDoctrineAnswer({
   if (!topAuthorities.length) {
     return {
       handled: true,
-      answer: "I cannot find sufficient doctrine support in the uploaded knowledge base.",
+      answer:
+        "A. DIRECT ANSWER\nI cannot find sufficient issue-applicable doctrine support in the uploaded knowledge base.\n\nB. CONTROLLING LEGAL BASIS\nNo controlling doctrine-tagged authority was retrieved from the indexed sources.\n\nC. SUPPORTING JURISPRUDENCE\nNo issue-applicable case was retrieved. TINA should not cite cases merely because they mention the same tax type.\n\nD. DOCTRINAL STATUS / CONFLICT ANALYSIS\nNo doctrinal conflict can be determined because no issue-applicable authority was retrieved.\n\nE. HIERARCHY ANALYSIS\nNo hierarchy analysis can be completed without a retrieved controlling authority.\n\nF. PRACTICAL APPLICATION\nVerify against the exact NIRC provision, BIR issuance, and Supreme Court or CTA authority before adopting a tax position.",
       intent,
       topAuthorities: []
     };
@@ -437,7 +829,8 @@ export async function maybeGenerateDoctrineAnswer({
 
   const prompt = buildDoctrinePrompt({
     question,
-    doctrineSummary: summary
+    doctrineSummary: summary,
+    conflictReview
   });
 
   const response = await openai.chat.completions.create({
@@ -447,14 +840,14 @@ export async function maybeGenerateDoctrineAnswer({
       { role: "system", content: prompt },
       {
         role: "user",
-        content: `Answer this doctrine-focused tax question strictly from the doctrine-tagged authorities:\n${question}`
+        content: `Answer this doctrine-focused Philippine tax question strictly from the issue-applicable doctrine-tagged authorities:\n${question}`
       }
     ]
   });
 
   const answer =
     response.choices?.[0]?.message?.content?.trim() ||
-    "I cannot find sufficient doctrine support in the uploaded knowledge base.";
+    "A. DIRECT ANSWER\nI cannot find sufficient doctrine support in the uploaded knowledge base.\n\nB. CONTROLLING LEGAL BASIS\nNo controlling indexed authority was retrieved.\n\nC. SUPPORTING JURISPRUDENCE\nNo issue-applicable case was retrieved.\n\nD. DOCTRINAL STATUS / CONFLICT ANALYSIS\nNo doctrinal conflict can be determined.\n\nE. HIERARCHY ANALYSIS\nNo hierarchy analysis can be completed.\n\nF. PRACTICAL APPLICATION\nVerify against official legal sources before relying on the position.";
 
   return {
     handled: true,
@@ -465,5 +858,17 @@ export async function maybeGenerateDoctrineAnswer({
 }
 
 export {
-  DOCTRINE_LIBRARY
+  DOCTRINE_LIBRARY,
+  ISSUE_DIMENSIONS
+};
+
+export default {
+  detectDoctrineIntent,
+  tagDoctrineCandidates,
+  selectTopDoctrineAuthorities,
+  buildDoctrineSummary,
+  buildDoctrinePrompt,
+  maybeGenerateDoctrineAnswer,
+  DOCTRINE_LIBRARY,
+  ISSUE_DIMENSIONS
 };
