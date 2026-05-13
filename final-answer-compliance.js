@@ -29,9 +29,14 @@ function stripInventedSourceSections(text = "") {
     .replace(/\n+\s*Sources:\s*[\s\S]*$/i, "")
     .replace(/\n+\s*Source:\s*[\s\S]*$/i, "")
     .replace(/\n+\s*References:\s*[\s\S]*$/i, "")
+    .replace(/\n+\s*Validated Indexed Sources[\s\S]*$/i, "")
     .replace(/\n+\s*See clickable sources below\.\s*$/i, "")
     .replace(/\n+\s*No clickable sources available\.\s*$/i, "")
     .trim();
+}
+
+function escapeRegex(value = "") {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 function getSectionBody(text = "", headingPattern) {
@@ -46,17 +51,13 @@ function getSectionBody(text = "", headingPattern) {
 }
 
 function getAFSectionBody(text = "", heading) {
-  const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  return getSectionBody(text, escaped);
+  return getSectionBody(text, escapeRegex(heading));
 }
 
 function hasCompleteAFStructure(text = "") {
   const value = normalizeText(text);
   return TINA_AF_HEADINGS.every((heading) => {
-    const pattern = new RegExp(
-      `(^|\\n)\\s*${heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`,
-      "i"
-    );
+    const pattern = new RegExp(`(^|\\n)\\s*${escapeRegex(heading)}\\b`, "i");
     return pattern.test(value);
   });
 }
@@ -64,10 +65,7 @@ function hasCompleteAFStructure(text = "") {
 function hasAnyAFStructure(text = "") {
   const value = normalizeText(text);
   return TINA_AF_HEADINGS.some((heading) => {
-    const pattern = new RegExp(
-      `(^|\\n)\\s*${heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`,
-      "i"
-    );
+    const pattern = new RegExp(`(^|\\n)\\s*${escapeRegex(heading)}\\b`, "i");
     return pattern.test(value);
   });
 }
@@ -143,7 +141,10 @@ function buildControllingLegalBasis({
   const legalBasisLines = buildValidatedLegalBasis(legalBasisDocs);
 
   if (legalBasisLines.length) {
-    return ensureDashedBullets(legalBasisLines);
+    return [
+      "The following indexed authorities were validated as potential legal bases. TINA must still apply them according to hierarchy and issue relevance:",
+      ensureDashedBullets(legalBasisLines)
+    ].join("\n");
   }
 
   return [
@@ -156,11 +157,209 @@ function buildSupportingJurisprudence({ draftAnswer = "" }) {
   const body =
     getAFSectionBody(draftAnswer, "C. SUPPORTING JURISPRUDENCE") ||
     getSectionBody(draftAnswer, String.raw`\b3\.\s*SUPPORTING JURISPRUDENCE\b`) ||
-    getSectionBody(draftAnswer, String.raw`###\s*Jurisprudence\b`);
+    getSectionBody(draftAnswer, String.raw`###\s*Jurisprudence\b`) ||
+    getSectionBody(draftAnswer, String.raw`###\s*Court position\b`);
 
   if (body) return body;
 
   return "No directly issue-matched jurisprudence was retrieved from the indexed context. TINA should not cite unrelated cases merely because they mention the same tax type.";
+}
+
+function normalizeConflictStatus(conflict = {}) {
+  const type = String(
+    conflict.conflictType ||
+      conflict.conflictStatus ||
+      conflict.status ||
+      ""
+  ).toUpperCase();
+
+  if (conflict.apparentConflict || type.includes("APPARENT")) {
+    return "APPARENT_CONFLICT";
+  }
+
+  if (
+    conflict.doctrinalConflict ||
+    type.includes("DOCTRINAL") ||
+    type.includes("DIRECT") ||
+    type.includes("PARTIAL")
+  ) {
+    if (type.includes("DIRECT")) return "DIRECT_CONFLICT";
+    if (type.includes("PARTIAL")) return "PARTIAL_CONFLICT";
+    return "DOCTRINAL_CONFLICT";
+  }
+
+  if (conflict.hierarchyConflict || type.includes("HIERARCHY")) {
+    return "HIERARCHY_CONFLICT";
+  }
+
+  if (conflict.conflict) return "CONFLICT";
+
+  return "NO_CONFLICT";
+}
+
+function hasConflictSignal(conflict = {}) {
+  return (
+    conflict?.conflict ||
+    conflict?.doctrinalConflict ||
+    conflict?.hierarchyConflict ||
+    conflict?.apparentConflict ||
+    conflict?.conflictType ||
+    conflict?.conflictStatus ||
+    conflict?.reason ||
+    conflict?.resolutionBasis ||
+    conflict?.exactIssue
+  );
+}
+
+function pickBestConflict(conflicts = [], hierarchyConflict = null) {
+  const candidates = [];
+
+  if (hierarchyConflict && hasConflictSignal(hierarchyConflict)) {
+    candidates.push({
+      source: "hierarchyConflict",
+      ...hierarchyConflict
+    });
+  }
+
+  for (const conflict of conflicts || []) {
+    if (hasConflictSignal(conflict)) candidates.push(conflict);
+  }
+
+  if (!candidates.length) return null;
+
+  const priority = {
+    DIRECT_CONFLICT: 1,
+    DOCTRINAL_CONFLICT: 2,
+    PARTIAL_CONFLICT: 3,
+    HIERARCHY_CONFLICT: 4,
+    APPARENT_CONFLICT: 5,
+    CONFLICT: 6,
+    NO_CONFLICT: 99
+  };
+
+  return candidates.sort((a, b) => {
+    const aStatus = normalizeConflictStatus(a);
+    const bStatus = normalizeConflictStatus(b);
+    return (priority[aStatus] || 50) - (priority[bStatus] || 50);
+  })[0];
+}
+
+function sourceNameFromConflict(conflict = {}, side = "A") {
+  if (side === "A") {
+    return (
+      conflict.sourceA ||
+      conflict.source_a_path ||
+      conflict.source_a_title ||
+      conflict.controllingSource ||
+      conflict.winningSource ||
+      "Source A"
+    );
+  }
+
+  return (
+    conflict.sourceB ||
+    conflict.source_b_path ||
+    conflict.source_b_title ||
+    conflict.overriddenSource ||
+    conflict.weakerSource ||
+    "Source B"
+  );
+}
+
+function buildConflictExplanationFromMetadata(conflict = {}) {
+  const status = normalizeConflictStatus(conflict);
+  const exactIssue =
+    conflict.exactIssue ||
+    conflict.issue ||
+    conflict.reason ||
+    conflict.contradiction ||
+    "The exact legal issue must be determined from the retrieved authorities.";
+
+  const distinctionType =
+    conflict.distinctionType ||
+    conflict.distinction_type ||
+    conflict.dimension ||
+    "not expressly classified";
+
+  const controllingAuthority =
+    conflict.controllingAuthority ||
+    conflict.controlling_authority ||
+    conflict.winningAuthority ||
+    "the higher controlling authority under Philippine tax hierarchy";
+
+  const controllingSource =
+    conflict.controllingSource ||
+    conflict.controlling_source ||
+    conflict.winningSource ||
+    null;
+
+  const overriddenAuthority =
+    conflict.overriddenAuthority ||
+    conflict.weakerAuthority ||
+    conflict.overridden_authority ||
+    null;
+
+  const resolutionBasis =
+    conflict.resolutionBasis ||
+    conflict.resolution_basis ||
+    conflict.reason ||
+    "Apply the Constitution, statute, valid regulations, and controlling court doctrine in proper hierarchy.";
+
+  if (status === "APPARENT_CONFLICT") {
+    return [
+      "Apparent conflict only.",
+      `Exact issue reviewed: ${normalizeText(exactIssue)}`,
+      `Distinction type: ${distinctionType}.`,
+      "The authorities should be treated as distinguishable or complementary if they address different substantive, procedural, evidentiary, jurisdictional, factual, temporal, or administrative requirements.",
+      "For VAT, cases dealing with substantiation, administrative claim timing, and judicial claim timing are not automatically conflicting; they usually address different procedural or evidentiary requirements."
+    ].join("\n");
+  }
+
+  if (status === "DIRECT_CONFLICT") {
+    return [
+      "Direct conflict exists based on the conflict metadata.",
+      `Exact legal issue in conflict: ${normalizeText(exactIssue)}`,
+      `Source A: ${sourceNameFromConflict(conflict, "A")}`,
+      `Source B: ${sourceNameFromConflict(conflict, "B")}`,
+      `Controlling doctrine/authority: ${controllingAuthority}${controllingSource ? ` (${controllingSource})` : ""}.`,
+      overriddenAuthority ? `Overridden or limited authority: ${overriddenAuthority}.` : null,
+      `Why it controls: ${normalizeText(resolutionBasis)}`,
+      "The answer must explain why the controlling authority prevails and whether later authority validly modified earlier rulings."
+    ]
+      .filter(Boolean)
+      .join("\n");
+  }
+
+  if (status === "PARTIAL_CONFLICT" || status === "DOCTRINAL_CONFLICT") {
+    return [
+      status === "PARTIAL_CONFLICT"
+        ? "Partial doctrinal conflict exists."
+        : "Doctrinal conflict exists.",
+      `Exact issue reviewed: ${normalizeText(exactIssue)}`,
+      `Distinction type: ${distinctionType}.`,
+      `Controlling doctrine/authority: ${controllingAuthority}${controllingSource ? ` (${controllingSource})` : ""}.`,
+      overriddenAuthority ? `Weaker or limited authority: ${overriddenAuthority}.` : null,
+      `Resolution basis: ${normalizeText(resolutionBasis)}`,
+      "The answer must reconcile the authorities rather than merely flag a conflict."
+    ]
+      .filter(Boolean)
+      .join("\n");
+  }
+
+  if (status === "HIERARCHY_CONFLICT" || status === "CONFLICT") {
+    return [
+      "Hierarchy conflict signal exists.",
+      `Exact issue reviewed: ${normalizeText(exactIssue)}`,
+      `Controlling authority: ${controllingAuthority}${controllingSource ? ` (${controllingSource})` : ""}.`,
+      overriddenAuthority ? `Lower or limited authority: ${overriddenAuthority}.` : null,
+      `Resolution basis: ${normalizeText(resolutionBasis)}`,
+      "The conflict must be resolved through Philippine legal hierarchy. Lower administrative issuances cannot amend, expand, or override statutes or controlling judicial doctrine."
+    ]
+      .filter(Boolean)
+      .join("\n");
+  }
+
+  return "No direct doctrinal conflict is detected from the validated indexed sources. If authorities address different procedural, evidentiary, jurisdictional, factual, temporal, administrative, or substantive issues, they should be treated as distinguishable or complementary rather than conflicting.";
 }
 
 function buildDoctrinalStatus({
@@ -175,108 +374,20 @@ function buildDoctrinalStatus({
 
   if (body && !isVagueConflictYes(body)) return body;
 
-  const specificConflict =
-    Array.isArray(conflicts) &&
-    conflicts.find((conflict) => {
-      const aProvision =
-        conflict.source_a_section ||
-        conflict.sourceASection ||
-        conflict.section_a ||
-        conflict.sectionA ||
-        "";
-      const bProvision =
-        conflict.source_b_section ||
-        conflict.sourceBSection ||
-        conflict.section_b ||
-        conflict.sectionB ||
-        "";
-      const contradiction =
-        conflict.contradiction ||
-        conflict.reason ||
-        conflict.description ||
-        conflict.conflict_reason ||
-        "";
+  const bestConflict = pickBestConflict(conflicts, hierarchyConflict);
 
-      return (
-        String(aProvision).trim() &&
-        String(bProvision).trim() &&
-        String(contradiction).trim()
-      );
-    });
-
-  if (specificConflict) {
-    const sourceA =
-      specificConflict.source_a_title ||
-      specificConflict.sourceATitle ||
-      specificConflict.source_a_path ||
-      specificConflict.sourceAPath ||
-      "Source A";
-
-    const sourceB =
-      specificConflict.source_b_title ||
-      specificConflict.sourceBTitle ||
-      specificConflict.source_b_path ||
-      specificConflict.sourceBPath ||
-      "Source B";
-
-    const sectionA =
-      specificConflict.source_a_section ||
-      specificConflict.sourceASection ||
-      specificConflict.section_a ||
-      specificConflict.sectionA ||
-      "Unknown provision";
-
-    const sectionB =
-      specificConflict.source_b_section ||
-      specificConflict.sourceBSection ||
-      specificConflict.section_b ||
-      specificConflict.sectionB ||
-      "Unknown provision";
-
-    const contradiction =
-      specificConflict.contradiction ||
-      specificConflict.reason ||
-      specificConflict.description ||
-      specificConflict.conflict_reason ||
-      "A specific contradiction was detected.";
-
-    const controllingAuthority =
-      hierarchyConflict?.controllingAuthority ||
-      hierarchyConflict?.controlling_authority ||
-      "the higher controlling authority under Philippine tax law hierarchy";
-
-    return [
-      "Partial or direct conflict may exist based on the retrieved evidence.",
-      `Exact issue in conflict: ${normalizeText(contradiction)}`,
-      `Source A: ${sourceA}, ${sectionA}`,
-      `Source B: ${sourceB}, ${sectionB}`,
-      `Controlling doctrine/authority: ${controllingAuthority}.`,
-      "The conflict must be resolved by applying the Constitution, statute, valid regulations, and controlling court doctrine in proper hierarchy. TINA should not merely flag the conflict; it must explain whether the distinction is substantive, procedural, evidentiary, jurisdictional, factual, temporal, or administrative."
-    ].join("\n");
+  if (bestConflict) {
+    return buildConflictExplanationFromMetadata(bestConflict);
   }
 
-  if (hierarchyConflict?.conflict) {
-    return [
-      "Partial or apparent hierarchy conflict exists.",
-      hierarchyConflict.sourceA ? `Source A: ${hierarchyConflict.sourceA}` : null,
-      hierarchyConflict.sourceB ? `Source B: ${hierarchyConflict.sourceB}` : null,
-      hierarchyConflict.reason ? `Issue: ${hierarchyConflict.reason}` : null,
-      hierarchyConflict.controllingAuthority
-        ? `Controlling authority: ${hierarchyConflict.controllingAuthority}.`
-        : "Controlling authority: higher authority prevails under Philippine tax hierarchy.",
-      "The answer must explain why the controlling authority prevails and whether the conflict is direct or merely apparent."
-    ]
-      .filter(Boolean)
-      .join("\n");
-  }
-
-  return "No direct doctrinal conflict is detected from the validated indexed sources. If authorities address different procedural, evidentiary, jurisdictional, factual, or temporal issues, they should be treated as distinguishable or complementary rather than conflicting.";
+  return "No direct doctrinal conflict is detected from the validated indexed sources. If authorities address different procedural, evidentiary, jurisdictional, factual, temporal, administrative, or substantive issues, they should be treated as distinguishable or complementary rather than conflicting.";
 }
 
 function buildHierarchyAnalysis({
   draftAnswer = "",
   legalBasisDocs = [],
-  professionalInsight = ""
+  professionalInsight = "",
+  hierarchyConflict = null
 }) {
   const body =
     getAFSectionBody(draftAnswer, "E. HIERARCHY ANALYSIS") ||
@@ -286,12 +397,28 @@ function buildHierarchyAnalysis({
 
   const legalBasisLines = buildValidatedLegalBasis(legalBasisDocs);
 
+  const conflictInstruction = hierarchyConflict?.conflict || hierarchyConflict?.hierarchyConflict
+    ? [
+        "A hierarchy conflict signal was detected.",
+        hierarchyConflict.controllingAuthority
+          ? `The controlling authority identified is ${hierarchyConflict.controllingAuthority}.`
+          : "The controlling authority must be determined by legal hierarchy.",
+        hierarchyConflict.reason
+          ? `Reason: ${hierarchyConflict.reason}`
+          : "Apply higher authority over lower authority.",
+        "Administrative issuances cannot amend, expand, or override the NIRC, valid statutory rules, or controlling Supreme Court doctrine."
+      ].join("\n")
+    : "";
+
   if (legalBasisLines.length) {
     return [
       "Apply the controlling authority in this order: Constitution, NIRC/statute, Revenue Regulations, RMC/RMO/RAMO, BIR rulings, Supreme Court doctrine, CTA decisions, and secondary materials.",
       "Administrative issuances may implement or interpret the Tax Code, but they cannot amend the statute or override controlling judicial doctrine.",
+      conflictInstruction,
       professionalInsight || "Use lower-authority materials only as support, not as controlling basis."
-    ].join("\n");
+    ]
+      .filter(Boolean)
+      .join("\n");
   }
 
   return "No validated indexed source was available for hierarchy analysis. Verify against the latest official NIRC, BIR issuances, and court rulings.";
@@ -317,7 +444,7 @@ function buildPracticalApplication({
   return normalizeText(
     professionalInsight ||
       fallbackAnswer ||
-      "Verify the latest BIR issuance and documentary requirements before implementation. Assess the tax consequence, compliance requirement, audit risk, possible BIR position, and available taxpayer defense before taking a final position."
+      "Verify the latest BIR issuance and documentary requirements before implementation. Assess the tax consequence, compliance requirement, audit risk, possible BIR position, litigation exposure, documentation requirements, and available taxpayer defense before taking a final position."
   );
 }
 
@@ -362,9 +489,9 @@ function isVagueConflictYes(text = "") {
   const hasSpecificConflict =
     /Source A:/i.test(value) &&
     /Source B:/i.test(value) &&
-    /(Section|Sec\.?|Item|Article|Provision)\s+/i.test(value);
+    /(Section|Sec\.?|Item|Article|Provision|Exact issue|Controlling doctrine|Distinction type|Resolution basis)\s*[:\s]/i.test(value);
 
-  if (hasSpecificConflict) return false;
+  if (hasSpecificConflict && value.length >= 300) return false;
 
   return (
     /secondary sources may not fully align/i.test(value) ||
@@ -382,10 +509,7 @@ function sanitizeConflictSection(text = "") {
     getSectionBody(value, String.raw`\b5\.\s*CONFLICT FLAG\b`) ||
     getSectionBody(value, String.raw`###\s*Conflict flag\b`);
 
-  if (
-    legacyConflictBody &&
-    isVagueConflictYes(legacyConflictBody)
-  ) {
+  if (legacyConflictBody && isVagueConflictYes(legacyConflictBody)) {
     return value.replace(
       /(\b5\.\s*CONFLICT FLAG\b|###\s*Conflict flag\b)[\s\S]*?(?=\n\s*(?:[A-F]\.\s+[A-Z][A-Z /]+\b|\d+\.\s*[A-Z][A-Z ]+\b|###\s+[A-Za-z])|$)/i,
       "D. DOCTRINAL STATUS / CONFLICT ANALYSIS\nNo direct doctrinal conflict is detected from the validated indexed sources. A mere general statement that higher authority prevails is not sufficient to establish a doctrinal conflict."
@@ -418,7 +542,15 @@ function normalizeLegacyHeadingsToAF(text = "") {
     .replace(/(^|\n)\s*3\.\s*SUPPORTING RULES\b/gi, "$1B. CONTROLLING LEGAL BASIS")
     .replace(/(^|\n)\s*3\.\s*SUPPORTING JURISPRUDENCE\b/gi, "$1C. SUPPORTING JURISPRUDENCE")
     .replace(/(^|\n)\s*4\.\s*PROFESSIONAL INSIGHT\b/gi, "$1F. PRACTICAL APPLICATION")
-    .replace(/(^|\n)\s*5\.\s*CONFLICT FLAG\b/gi, "$1D. DOCTRINAL STATUS / CONFLICT ANALYSIS");
+    .replace(/(^|\n)\s*5\.\s*CONFLICT FLAG\b/gi, "$1D. DOCTRINAL STATUS / CONFLICT ANALYSIS")
+    .replace(/^#+\s*Issue\b/gim, "A. DIRECT ANSWER")
+    .replace(/^#+\s*Applicable law.*$/gim, "B. CONTROLLING LEGAL BASIS")
+    .replace(/^#+\s*BIR position\b/gim, "B. CONTROLLING LEGAL BASIS")
+    .replace(/^#+\s*Court position\b/gim, "C. SUPPORTING JURISPRUDENCE")
+    .replace(/^#+\s*Conflict flag\b/gim, "D. DOCTRINAL STATUS / CONFLICT ANALYSIS")
+    .replace(/^#+\s*Legally defensible conclusion\b/gim, "E. HIERARCHY ANALYSIS")
+    .replace(/^#+\s*Taxpayer risk assessment\b/gim, "F. PRACTICAL APPLICATION")
+    .replace(/^#+\s*Recommended action\b/gim, "F. PRACTICAL APPLICATION");
 
   return value;
 }
@@ -459,7 +591,8 @@ function rebuildAFAnswer({
   const hierarchyAnalysis = buildHierarchyAnalysis({
     draftAnswer: sanitizedDraft,
     legalBasisDocs,
-    professionalInsight
+    professionalInsight,
+    hierarchyConflict
   });
 
   const practicalApplication = buildPracticalApplication({
@@ -491,6 +624,30 @@ function rebuildAFAnswer({
   ]
     .join("\n")
     .trim();
+}
+
+function repairMissingAFSections({
+  answer = "",
+  fallbackAnswer = "",
+  directAnswer = "",
+  legalBasisDocs = [],
+  conflicts = [],
+  hierarchyConflict = null,
+  professionalInsight = "",
+  supersessionResult = null
+}) {
+  if (hasCompleteAFStructure(answer)) return answer;
+
+  return rebuildAFAnswer({
+    sanitizedDraft: answer,
+    fallbackAnswer,
+    directAnswer,
+    legalBasisDocs,
+    conflicts,
+    hierarchyConflict,
+    professionalInsight,
+    supersessionResult
+  });
 }
 
 function appendValidatedSourceAppendix(answer = "", docs = []) {
@@ -543,8 +700,8 @@ export function buildFinalCompliantAnswer({
   if (hasCompleteAFStructure(sanitizedDraft)) {
     finalAnswer = sanitizeConflictSection(sanitizedDraft);
   } else if (hasAnyAFStructure(sanitizedDraft)) {
-    finalAnswer = rebuildAFAnswer({
-      sanitizedDraft,
+    finalAnswer = repairMissingAFSections({
+      answer: sanitizedDraft,
       fallbackAnswer,
       directAnswer,
       legalBasisDocs: resolvedLegalBasisDocs,
@@ -565,6 +722,8 @@ export function buildFinalCompliantAnswer({
       supersessionResult
     });
   }
+
+  finalAnswer = sanitizeConflictSection(finalAnswer);
 
   return appendValidatedSourceAppendix(finalAnswer, visibleSourceDocs).trim();
 }
