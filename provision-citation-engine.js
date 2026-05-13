@@ -3,10 +3,14 @@
 import {
   classifyAuthorityFromDocument,
   AUTHORITY_LEVEL,
+  normalizeLegalReference
+} from "./authority-engine.js";
+
+import {
   resolveCourtOverride,
   isGenuineConflict
-} from "./authority-engine.js";
-import { normalizeLegalReference } from "./authority-engine.js";
+} from "./conflict-engine.js";
+
 import { applySupersessionFilter } from "./supersession-engine.js";
 
 function normalizeText(value = "") {
@@ -141,6 +145,7 @@ function buildProvisionMatchBonus(question = "", doc = {}) {
   }
 
   const citationIntent = normalizeLegalReference(question);
+
   if (citationIntent?.normalized) {
     const normalizedHaystack = normalizeText(
       [
@@ -150,7 +155,8 @@ function buildProvisionMatchBonus(question = "", doc = {}) {
         doc.source_path,
         doc.metadata?.path,
         doc.metadata?.normalizedReference,
-        doc.normalizedReference
+        doc.normalizedReference,
+        doc.normalized_reference
       ]
         .filter(Boolean)
         .join(" ")
@@ -197,15 +203,12 @@ function rankProvisionDocs(results = [], question = "") {
     const courtVsBirA = isCourtAuthority(aType) && isBIRAuthority(bType);
     const courtVsBirB = isCourtAuthority(bType) && isBIRAuthority(aType);
 
-    if (courtVsBirA && aComposite >= bComposite * 0.7) {
-      return -1;
-    }
+    if (courtVsBirA && aComposite >= bComposite * 0.7) return -1;
+    if (courtVsBirB && bComposite >= aComposite * 0.7) return 1;
 
-    if (courtVsBirB && bComposite >= aComposite * 0.7) {
-      return 1;
-    }
-
+    if (aBonus !== bBonus) return bBonus - aBonus;
     if (aLevel !== bLevel) return aLevel - bLevel;
+
     return bComposite - aComposite;
   });
 }
@@ -270,9 +273,9 @@ You are TINA's Provision Citation Engine.
 Your job:
 1. Determine whether the user's question is asking for a legal provision, statutory citation, issuance citation, or case-doctrine citation.
 2. Answer ONLY from the retrieved sources provided.
-3. Follow this authority order:
-   Constitution > Statute / NIRC / Republic Act > Treaty > Supreme Court > CTA En Banc > Court of Appeals > CTA Division > RR > RMC > RMO > RAMO > BIR Ruling > LGU > Secondary.
-4. If a court decision genuinely conflicts with a BIR issuance, the court decision prevails.
+3. Organize retrieved sources using TINA hierarchy:
+   Constitution > Statute / NIRC / Republic Act > Revenue Regulations > RMC > RMO > RAMO > BIR Ruling > Supreme Court > CTA En Banc > Court of Appeals > CTA Division > Treaty / LGU / Secondary.
+4. For actual conflict resolution only: Constitution and statutes control administrative issuances; if a court decision genuinely conflicts with a BIR issuance, the court decision controls.
 5. If a specific section/article/provision is identifiable, cite it clearly.
 6. If no exact provision is visible in the excerpts, do not invent one.
 7. If exact citation is uncertain, say: "Exact provision not fully visible in retrieved text."
