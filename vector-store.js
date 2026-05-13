@@ -17,7 +17,7 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
 
-const supabase = createClient(
+const defaultSupabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY,
   {
@@ -36,6 +36,29 @@ const CHUNK_OVERLAP = Number(process.env.VECTOR_CHUNK_OVERLAP || 200);
 const VECTOR_TABLE = "tina_vector_store";
 const CURRENT_YEAR = new Date().getFullYear();
 
+const DEFAULT_TOP_K = 8;
+
+const ISSUE_TYPES = {
+  VAT_REFUND: "VAT_REFUND",
+  VAT_LIABILITY: "VAT_LIABILITY",
+  EVIDENTIARY: "EVIDENTIARY",
+  PROCEDURAL: "PROCEDURAL",
+  WITHHOLDING: "WITHHOLDING",
+  INCOME_TAX: "INCOME_TAX",
+  NAMED_LAW: "NAMED_LAW"
+};
+
+const WEAK_SOURCE_PATTERNS = [
+  "07_cpa_notes",
+  "08_review_materials",
+  "internal_notes",
+  "working_papers",
+  "drafts",
+  "reviewer",
+  "handout",
+  "lecture notes"
+];
+
 /* ================= TEXT / EMBEDDINGS ================= */
 
 function normalizeText(value = "") {
@@ -44,6 +67,10 @@ function normalizeText(value = "") {
 
 function compactSpaces(value = "") {
   return normalizeText(value).replace(/\s+/g, " ");
+}
+
+function lower(value = "") {
+  return compactSpaces(value).toLowerCase();
 }
 
 function chunkText(text, chunkSize = CHUNK_SIZE, overlap = CHUNK_OVERLAP) {
@@ -94,6 +121,34 @@ async function embedText(text) {
   }
 
   return embedding;
+}
+
+/* ================= ARGUMENT NORMALIZATION ================= */
+
+function resolveSupabaseClient(client) {
+  return client && typeof client.from === "function" ? client : defaultSupabase;
+}
+
+function parseSearchArgs(arg1, arg2, defaults = {}) {
+  if (typeof arg1 === "object" && arg1 !== null && !Array.isArray(arg1)) {
+    return {
+      supabaseClient: resolveSupabaseClient(arg1.supabase),
+      query: String(arg1.query || arg1.keyword || ""),
+      keyword: String(arg1.keyword || arg1.query || ""),
+      topK: Math.max(1, Number(arg1.topK || arg1.limit || defaults.topK || DEFAULT_TOP_K)),
+      includeWeakSources: Boolean(arg1.includeWeakSources || false),
+      issueAware: arg1.issueAware !== false
+    };
+  }
+
+  return {
+    supabaseClient: defaultSupabase,
+    query: String(arg1 || ""),
+    keyword: String(arg1 || ""),
+    topK: Math.max(1, Number(arg2 || defaults.topK || DEFAULT_TOP_K)),
+    includeWeakSources: false,
+    issueAware: true
+  };
 }
 
 /* ================= NORMALIZATION ================= */
@@ -155,6 +210,147 @@ function expandYear(year = "") {
   }
 
   return [...new Set([y, y.slice(-2)])];
+}
+
+/* ================= ISSUE / AUTHORITY SIGNALS ================= */
+
+function detectIssueTypes(text = "") {
+  const q = lower(text);
+  const issues = [];
+
+  if (/\b(vat refund|input vat refund|tax credit certificate|tcc|120\+30|administrative claim|judicial claim|unutilized input vat|excess input vat)\b/i.test(q)) {
+    issues.push(ISSUE_TYPES.VAT_REFUND);
+  }
+
+  if (/\b(vat liability|output vat|subject to vat|vatable|sale of goods|sale of services|gross selling price|gross receipts|define vat|what is vat)\b/i.test(q)) {
+    issues.push(ISSUE_TYPES.VAT_LIABILITY);
+  }
+
+  if (/\b(invoice|receipt|substantiation|documentary|proof|evidence|support|invoicing)\b/i.test(q)) {
+    issues.push(ISSUE_TYPES.EVIDENTIARY);
+  }
+
+  if (/\b(jurisdiction|jurisdictional|prescriptive|deadline|due date|filing|appeal|protest|assessment|loa|pan|fan|fld|administrative claim|judicial claim)\b/i.test(q)) {
+    issues.push(ISSUE_TYPES.PROCEDURAL);
+  }
+
+  if (/\b(withholding|ewt|expanded withholding|final withholding|fwt|creditable withholding)\b/i.test(q)) {
+    issues.push(ISSUE_TYPES.WITHHOLDING);
+  }
+
+  if (/\b(income tax|rcit|mcit|nolco|deductible|non-deductible|deduction|gross income|taxable income)\b/i.test(q)) {
+    issues.push(ISSUE_TYPES.INCOME_TAX);
+  }
+
+  if (/\b(create|train|eopt|ease of paying taxes|create more|republic act|ra no)\b/i.test(q)) {
+    issues.push(ISSUE_TYPES.NAMED_LAW);
+  }
+
+  return [...new Set(issues)];
+}
+
+function buildRowSearchBlob(row = {}) {
+  return compactSpaces(
+    [
+      row.text,
+      row.source,
+      row.original_source,
+      row.document_title,
+      row.normalized_reference,
+      row.metadata?.path,
+      row.metadata?.documentTitle,
+      row.metadata?.originalSource,
+      row.metadata?.originalFileName,
+      ...(Array.isArray(row.normalized_aliases) ? row.normalized_aliases : []),
+      ...(Array.isArray(row.metadata?.normalizedAliases)
+        ? row.metadata.normalizedAliases
+        : [])
+    ]
+      .filter(Boolean)
+      .join(" ")
+  );
+}
+
+function isWeakSourceRow(row = {}) {
+  const blob = lower(buildRowSearchBlob(row));
+  return WEAK_SOURCE_PATTERNS.some((pattern) => blob.includes(pattern));
+}
+
+function hasIssueMismatch(queryIssues = [], docIssues = []) {
+  if (!queryIssues.length || !docIssues.length) return false;
+
+  if (queryIssues.includes(ISSUE_TYPES.VAT_LIABILITY) && docIssues.includes(ISSUE_TYPES.VAT_REFUND)) {
+    return true;
+  }
+
+  if (queryIssues.includes(ISSUE_TYPES.VAT_REFUND) && docIssues.includes(ISSUE_TYPES.VAT_LIABILITY)) {
+    return true;
+  }
+
+  return false;
+}
+
+function hasIssueOverlap(queryIssues = [], docIssues = []) {
+  if (!queryIssues.length || !docIssues.length) return true;
+  return queryIssues.some((issue) => docIssues.includes(issue));
+}
+
+function getAuthorityPriority(authorityType = "SECONDARY") {
+  const map = {
+    CONSTITUTION: 100,
+    STATUTE: 98,
+    RR: 94,
+    SUPREME_COURT: 92,
+    TREATY: 86,
+    RMC: 82,
+    RMO: 78,
+    RAMO: 76,
+    BIR_RULING: 68,
+    CTA_EN_BANC: 66,
+    COURT_OF_APPEALS: 62,
+    CTA_DIVISION: 58,
+    LGU: 45,
+    SECONDARY: 5
+  };
+
+  return map[authorityType] ?? 0;
+}
+
+function enrichRowScore(row = {}, query = "", baseScore = 1) {
+  const queryIssues = detectIssueTypes(query);
+  const rowIssues = detectIssueTypes(buildRowSearchBlob(row));
+  const authorityType = row.authority_type || row.metadata?.authorityType || "SECONDARY";
+  const authorityLevel = Number(row.authority_level || row.metadata?.authorityLevel || 99);
+
+  let issueScore = 0;
+
+  if (hasIssueMismatch(queryIssues, rowIssues)) issueScore -= 45;
+  else if (hasIssueOverlap(queryIssues, rowIssues)) issueScore += 25;
+
+  const authorityScore = getAuthorityPriority(authorityType);
+  const weakPenalty = isWeakSourceRow(row) ? -55 : 0;
+  const levelBonus = authorityLevel <= 3 ? 30 : authorityLevel <= 8 ? 18 : authorityLevel <= 11 ? 8 : 0;
+
+  return Number(
+    (
+      Number(baseScore || 0) * 0.4 +
+      authorityScore * 0.35 +
+      issueScore +
+      levelBonus +
+      weakPenalty
+    ).toFixed(4)
+  );
+}
+
+function shouldSuppressRow(row = {}, query = "", includeWeakSources = false) {
+  if (!includeWeakSources && isWeakSourceRow(row)) return true;
+
+  const queryIssues = detectIssueTypes(query);
+  const rowIssues = detectIssueTypes(buildRowSearchBlob(row));
+
+  if (hasIssueMismatch(queryIssues, rowIssues)) return true;
+
+  return false;
 }
 
 /* ================= ISSUANCE / COURT / STATUTE MATCHING ================= */
@@ -550,7 +746,7 @@ function scoreQuizRowForTopic(row, topic = "") {
   if (path.includes("05_bir_rulings")) score += 1;
   if (path.includes("05b_tax_treaties")) score += 2;
   if (path.includes("06_court_cases")) score += 2;
-  if (path.includes("07_cpa_notes")) score += 1;
+  if (path.includes("07_cpa_notes")) score -= 3;
 
   return score;
 }
@@ -652,7 +848,7 @@ function buildSelectColumns() {
   ].join(",");
 }
 
-function mapRowToResult(row, score = 1) {
+function mapRowToResult(row, score = 1, query = "") {
   const metadata = row.metadata || {};
   const authorityType = row.authority_type || metadata.authorityType || "SECONDARY";
   const authorityLevel = Number(row.authority_level || metadata.authorityLevel || 99);
@@ -660,12 +856,17 @@ function mapRowToResult(row, score = 1) {
   const authorityLabel =
     row.authority_label || metadata.authorityLabel || "Secondary / Commentary";
 
+  const issueTypes = detectIssueTypes(buildRowSearchBlob(row));
+  const enrichedScore = enrichRowScore(row, query, row.score ?? row.similarity ?? score);
+
   return {
     id: row.id,
     source: row.source,
     originalSource: row.original_source || metadata.originalSource || row.source,
+    original_source: row.original_source || metadata.originalSource || row.source,
     text: row.text,
     chunkIndex: row.chunk_index,
+    chunk_index: row.chunk_index,
     metadata: {
       ...metadata,
       authorityType,
@@ -698,34 +899,66 @@ function mapRowToResult(row, score = 1) {
       repealedByReference:
         row.repealed_by_reference || metadata.repealedByReference || null,
       amendedByReference:
-        row.amended_by_reference || metadata.amendedByReference || null
+        row.amended_by_reference || metadata.amendedByReference || null,
+      issueTypes,
+      retrievalScore: enrichedScore
     },
     authorityType,
+    authority_type: authorityType,
     authorityLevel,
+    authority_level: authorityLevel,
     authorityScore,
+    authority_score: authorityScore,
     authorityLabel,
+    authority_label: authorityLabel,
     normalizedReference:
+      row.normalized_reference || metadata.normalizedReference || null,
+    normalized_reference:
       row.normalized_reference || metadata.normalizedReference || null,
     normalizedAliases: Array.isArray(row.normalized_aliases)
       ? row.normalized_aliases
       : Array.isArray(metadata.normalizedAliases)
         ? metadata.normalizedAliases
         : [],
+    normalized_aliases: Array.isArray(row.normalized_aliases)
+      ? row.normalized_aliases
+      : Array.isArray(metadata.normalizedAliases)
+        ? metadata.normalizedAliases
+        : [],
     recencyDate: row.recency_date || metadata.recencyDate || null,
+    recency_date: row.recency_date || metadata.recencyDate || null,
     effectiveFrom: row.effective_from || metadata.effectiveFrom || null,
+    effective_from: row.effective_from || metadata.effectiveFrom || null,
     effectiveTo: row.effective_to || metadata.effectiveTo || null,
+    effective_to: row.effective_to || metadata.effectiveTo || null,
     isSuperseded:
+      typeof row.is_superseded === "boolean"
+        ? row.is_superseded
+        : Boolean(metadata.isSuperseded || false),
+    is_superseded:
       typeof row.is_superseded === "boolean"
         ? row.is_superseded
         : Boolean(metadata.isSuperseded || false),
     supersededByReference:
       row.superseded_by_reference || metadata.supersededByReference || null,
+    superseded_by_reference:
+      row.superseded_by_reference || metadata.supersededByReference || null,
     repealedByReference:
+      row.repealed_by_reference || metadata.repealedByReference || null,
+    repealed_by_reference:
       row.repealed_by_reference || metadata.repealedByReference || null,
     amendedByReference:
       row.amended_by_reference || metadata.amendedByReference || null,
+    amended_by_reference:
+      row.amended_by_reference || metadata.amendedByReference || null,
+    issueTypes,
+    issue_types: issueTypes,
     score: row.score ?? row.similarity ?? score,
-    finalScore: row.final_score ?? row.score ?? row.similarity ?? score
+    similarity: row.similarity ?? row.score ?? score,
+    retrievalScore: enrichedScore,
+    retrieval_score: enrichedScore,
+    finalScore: Math.max(Number(row.final_score ?? row.score ?? row.similarity ?? score), enrichedScore),
+    final_score: Math.max(Number(row.final_score ?? row.score ?? row.similarity ?? score), enrichedScore)
   };
 }
 
@@ -752,10 +985,46 @@ function buildSourceIlikeFilters(keyword) {
     .join(",");
 }
 
+function sortResultsForTina(results = [], query = "") {
+  const queryIssues = detectIssueTypes(query);
+
+  return [...results]
+    .filter((row) => !shouldSuppressRow(row, query, false))
+    .map((row) => ({
+      ...row,
+      retrievalScore:
+        row.retrievalScore ?? row.retrieval_score ?? enrichRowScore(row, query, row.score),
+      finalScore:
+        row.finalScore ??
+        row.final_score ??
+        Math.max(Number(row.score || 0), enrichRowScore(row, query, row.score))
+    }))
+    .sort((a, b) => {
+      const aExact = Number(a.citationMatchBonus || a.citation_match_bonus || 0);
+      const bExact = Number(b.citationMatchBonus || b.citation_match_bonus || 0);
+      if (bExact !== aExact) return bExact - aExact;
+
+      const aMismatch = hasIssueMismatch(queryIssues, a.issueTypes || a.issue_types || []) ? 1 : 0;
+      const bMismatch = hasIssueMismatch(queryIssues, b.issueTypes || b.issue_types || []) ? 1 : 0;
+      if (aMismatch !== bMismatch) return aMismatch - bMismatch;
+
+      const aLevel = Number(a.authorityLevel || a.authority_level || a.metadata?.authorityLevel || 99);
+      const bLevel = Number(b.authorityLevel || b.authority_level || b.metadata?.authorityLevel || 99);
+      if (aLevel !== bLevel) return aLevel - bLevel;
+
+      const aScore = Number(a.retrievalScore || a.retrieval_score || a.finalScore || a.score || 0);
+      const bScore = Number(b.retrievalScore || b.retrieval_score || b.finalScore || b.score || 0);
+
+      return bScore - aScore;
+    });
+}
+
 /* ================= PUBLIC API ================= */
 
-export async function clearVectorStore() {
-  const { error } = await supabase
+export async function clearVectorStore(client = defaultSupabase) {
+  const supabaseClient = resolveSupabaseClient(client);
+
+  const { error } = await supabaseClient
     .from(VECTOR_TABLE)
     .delete()
     .neq("id", "00000000-0000-0000-0000-000000000000");
@@ -766,10 +1035,11 @@ export async function clearVectorStore() {
   return true;
 }
 
-export async function removeSourceFromVectorStore(source) {
+export async function removeSourceFromVectorStore(source, client = defaultSupabase) {
+  const supabaseClient = resolveSupabaseClient(client);
   const normalizedSource = normalizeSourceName(source);
 
-  const { data, error } = await supabase
+  const { data, error } = await supabaseClient
     .from(VECTOR_TABLE)
     .delete()
     .eq("source", normalizedSource)
@@ -783,7 +1053,8 @@ export async function removeSourceFromVectorStore(source) {
   };
 }
 
-export async function addDocumentToVectorStore(text, source, metadata = {}) {
+export async function addDocumentToVectorStore(text, source, metadata = {}, client = defaultSupabase) {
+  const supabaseClient = resolveSupabaseClient(client);
   const chunks = chunkText(text);
   const normalizedSource = normalizeSourceName(metadata.normalizedSource || source);
 
@@ -796,7 +1067,7 @@ export async function addDocumentToVectorStore(text, source, metadata = {}) {
     };
   }
 
-  await removeSourceFromVectorStore(normalizedSource);
+  await removeSourceFromVectorStore(normalizedSource, supabaseClient);
 
   const rows = [];
 
@@ -847,7 +1118,7 @@ export async function addDocumentToVectorStore(text, source, metadata = {}) {
 
   for (let i = 0; i < rows.length; i += batchSize) {
     const batch = rows.slice(i, i + batchSize);
-    const { error } = await supabase.from(VECTOR_TABLE).insert(batch);
+    const { error } = await supabaseClient.from(VECTOR_TABLE).insert(batch);
 
     if (error) {
       console.error("Supabase vector insert error:", error);
@@ -867,15 +1138,22 @@ export async function addDocumentToVectorStore(text, source, metadata = {}) {
   };
 }
 
-export async function searchSimilar(query, topK = 5) {
+export async function searchSimilar(arg1, arg2) {
+  const {
+    supabaseClient,
+    query,
+    topK,
+    includeWeakSources
+  } = parseSearchArgs(arg1, arg2, { topK: 5 });
+
   const cleanQuery = normalizeText(query);
   if (!cleanQuery) return [];
 
   const queryEmbedding = await embedText(cleanQuery);
 
-  const { data, error } = await supabase.rpc("match_tina_vectors", {
+  const { data, error } = await supabaseClient.rpc("match_tina_vectors", {
     query_embedding: queryEmbedding,
-    match_count: Math.max(1, Number(topK) || 5)
+    match_count: Math.max(topK * 3, topK)
   });
 
   if (error) {
@@ -883,41 +1161,101 @@ export async function searchSimilar(query, topK = 5) {
     throw error;
   }
 
-  return (data || []).map((row) => mapRowToResult(row, row.score));
+  const mapped = (data || [])
+    .map((row) => mapRowToResult(row, row.score, cleanQuery))
+    .filter((row) => !shouldSuppressRow(row, cleanQuery, includeWeakSources));
+
+  return sortResultsForTina(mapped, cleanQuery).slice(0, topK);
 }
 
-export async function searchBySourceName(keyword, topK = 8) {
+export async function searchBySourceName(arg1, arg2) {
+  const {
+    supabaseClient,
+    keyword,
+    topK,
+    includeWeakSources
+  } = parseSearchArgs(arg1, arg2, { topK: 8 });
+
   if (!keyword) return [];
 
-  const { data, error } = await supabase
+  const { data, error } = await supabaseClient
     .from(VECTOR_TABLE)
     .select(buildSelectColumns())
     .or(buildSourceIlikeFilters(keyword))
     .order("authority_level", { ascending: true, nullsFirst: false })
     .order("chunk_index", { ascending: true })
-    .limit(Math.max(1, Number(topK) || 8));
+    .limit(Math.max(topK * 3, topK));
 
   if (error) {
     console.error("Supabase source-name search error:", error);
     throw error;
   }
 
-  return (data || []).map((row) => mapRowToResult(row, 1));
+  const mapped = (data || [])
+    .map((row) => mapRowToResult(row, 1, keyword))
+    .filter((row) => !shouldSuppressRow(row, keyword, includeWeakSources));
+
+  return sortResultsForTina(mapped, keyword).slice(0, topK);
 }
 
-export async function smartSearch(query, topK = 8) {
-  const keywords = buildPossibleSourceKeywords(query);
+export async function smartSearch(arg1, arg2) {
+  const {
+    supabaseClient,
+    query,
+    topK,
+    includeWeakSources
+  } = parseSearchArgs(arg1, arg2, { topK: 8 });
+
+  const cleanQuery = normalizeText(query);
+  if (!cleanQuery) return [];
+
+  const keywords = buildPossibleSourceKeywords(cleanQuery);
+
+  const exactResults = [];
 
   for (const keyword of keywords) {
-    const exactMatches = await searchBySourceName(keyword, topK);
+    const exactMatches = await searchBySourceName({
+      supabase: supabaseClient,
+      keyword,
+      topK,
+      includeWeakSources
+    });
 
     if (exactMatches.length > 0) {
       console.log(`🎯 Exact source match found in Supabase: ${keyword}`);
-      return exactMatches;
+      exactResults.push(...exactMatches);
     }
   }
 
-  return searchSimilar(query, topK);
+  const semanticResults = await searchSimilar({
+    supabase: supabaseClient,
+    query: cleanQuery,
+    topK: Math.max(topK, DEFAULT_TOP_K),
+    includeWeakSources
+  });
+
+  const merged = [];
+  const seen = new Set();
+
+  for (const item of [...exactResults, ...semanticResults]) {
+    const key =
+      item.id ||
+      item.normalizedReference ||
+      item.normalized_reference ||
+      item.source ||
+      item.originalSource ||
+      JSON.stringify(item);
+
+    if (seen.has(key)) continue;
+
+    seen.add(key);
+    merged.push({
+      ...item,
+      citationMatchBonus: exactResults.includes(item) ? 1 : item.citationMatchBonus || 0
+    });
+  }
+
+  return sortResultsForTina(merged, cleanQuery).slice(0, topK);
 }
 
 /* ================= STRICT QUIZ SOURCE RETRIEVAL ================= */
@@ -926,13 +1264,15 @@ export async function getQuizSourceChunks({
   topic = "",
   excludeSourcePaths = [],
   excludeChunkIds = [],
-  limit = 5
+  limit = 5,
+  supabase: suppliedSupabase = defaultSupabase
 } = {}) {
+  const supabaseClient = resolveSupabaseClient(suppliedSupabase);
   const cleanTopic = String(topic || "").trim();
   const normalizedTopic = normalizeForMatch(cleanTopic);
   const topicKeywords = getTopicKeywords(cleanTopic);
 
-  let query = supabase
+  let query = supabaseClient
     .from(VECTOR_TABLE)
     .select(buildSelectColumns())
     .not("text", "is", null)
@@ -1002,7 +1342,7 @@ export async function getQuizSourceChunks({
     .slice(0, limit);
 
   return rows.map((row) => {
-    const mapped = mapRowToResult(row, row.quizTopicScore);
+    const mapped = mapRowToResult(row, row.quizTopicScore, cleanTopic);
 
     return {
       ...mapped,
@@ -1024,8 +1364,10 @@ export async function getQuizSourceChunks({
   });
 }
 
-export async function getVectorStoreStats() {
-  const { count, error } = await supabase
+export async function getVectorStoreStats(client = defaultSupabase) {
+  const supabaseClient = resolveSupabaseClient(client);
+
+  const { count, error } = await supabaseClient
     .from(VECTOR_TABLE)
     .select("*", { count: "exact", head: true });
 
@@ -1039,7 +1381,7 @@ export async function getVectorStoreStats() {
     };
   }
 
-  const { data: sourceRows, error: sourceError } = await supabase
+  const { data: sourceRows, error: sourceError } = await supabaseClient
     .from(VECTOR_TABLE)
     .select("source")
     .limit(10000);
@@ -1068,3 +1410,15 @@ export async function getVectorStoreStats() {
     chunkOverlap: CHUNK_OVERLAP
   };
 }
+
+export default {
+  clearVectorStore,
+  removeSourceFromVectorStore,
+  addDocumentToVectorStore,
+  searchSimilar,
+  searchBySourceName,
+  smartSearch,
+  getQuizSourceChunks,
+  getVectorStoreStats,
+  normalizeSourceName
+};
