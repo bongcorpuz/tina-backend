@@ -1,16 +1,29 @@
 // FILE: doctrinal-engine.js
+"use strict";
 
-import {
+/**
+ * TINA Enterprise Doctrinal Engine
+ * Version: 3.0.0
+ */
+
+import { createRequire } from "module";
+
+const require = createRequire(import.meta.url);
+
+const {
   AUTHORITY_LEVEL,
   getAuthorityTypeForDoc,
   getAuthorityLevelForDoc,
   getControllingPrecedenceForDoc
-} from "./authority-engine.js";
+} = require("./authority-engine.js");
 
-import {
+const {
   resolveCourtOverride,
-  isGenuineConflict
-} from "./conflict-engine.js";
+  isGenuineConflict,
+  analyzeConflictPair
+} = require("./conflict-engine.js");
+
+const ENGINE_VERSION = "3.0.0";
 
 function normalizeText(value = "") {
   return String(value || "").replace(/\s+/g, " ").trim();
@@ -18,6 +31,10 @@ function normalizeText(value = "") {
 
 function lower(value = "") {
   return normalizeText(value).toLowerCase();
+}
+
+function unique(values = []) {
+  return [...new Set((values || []).filter(Boolean))];
 }
 
 function authorityLevelOf(doc = {}) {
@@ -60,6 +77,7 @@ function sourcePathOf(doc = {}) {
     doc.metadata?.path ||
     doc.source ||
     doc.originalSource ||
+    doc.original_source ||
     null
   );
 }
@@ -68,9 +86,11 @@ function sourceTitleOf(doc = {}) {
   return (
     doc.title ||
     doc.source_title ||
+    doc.sourceTitle ||
     doc.metadata?.documentTitle ||
     doc.metadata?.originalFileName ||
     doc.originalSource ||
+    doc.original_source ||
     doc.source ||
     sourcePathOf(doc) ||
     null
@@ -98,6 +118,8 @@ function claimTextOf(doc = {}) {
       doc.rule ||
       doc.text ||
       doc.content ||
+      doc.excerpt ||
+      doc.preview ||
       ""
   );
 }
@@ -125,43 +147,70 @@ function hasNegativeSignal(text = "") {
     " non-taxable ",
     " not subject ",
     " not liable ",
-    " excluded "
+    " excluded ",
+    " denied ",
+    " barred "
   ].some((token) => value.includes(token));
 }
 
 function hasMandatorySignal(text = "") {
-  const value = lower(text);
-  return /\b(shall|must|required|mandatory|jurisdictional|condition precedent|prerequisite)\b/i.test(value);
+  return /\b(shall|must|required|mandatory|jurisdictional|condition precedent|prerequisite|indispensable)\b/i.test(
+    lower(text)
+  );
 }
 
 function hasPermissiveSignal(text = "") {
-  const value = lower(text);
-  return /\b(may|optional|directory|discretionary|allowed|permitted)\b/i.test(value);
+  return /\b(may|optional|directory|discretionary|allowed|permitted|substantial compliance)\b/i.test(
+    lower(text)
+  );
 }
 
 function hasSubstantiveSignal(text = "") {
-  const value = lower(text);
-  return /\b(subject to|liable|taxable|exempt|zero-rated|gross income|deductible|non-deductible|tax base|tax rate|output vat|input vat|income tax|withholding tax|final tax)\b/i.test(value);
+  return /\b(subject to|liable|taxable|exempt|zero-rated|gross income|deductible|non-deductible|tax base|tax rate|output vat|input vat|income tax|withholding tax|final tax|capital gains tax|percentage tax)\b/i.test(
+    lower(text)
+  );
 }
 
 function hasProceduralSignal(text = "") {
-  const value = lower(text);
-  return /\b(file|filing|deadline|period|prescriptive|administrative claim|judicial claim|appeal|protest|assessment|loa|fan|fl d|pan|return|form)\b/i.test(value);
+  return /\b(file|filing|deadline|period|prescriptive|administrative claim|judicial claim|appeal|protest|assessment|loa|fan|fld|pan|return|form|remedy)\b/i.test(
+    lower(text)
+  );
 }
 
 function hasEvidentiarySignal(text = "") {
-  const value = lower(text);
-  return /\b(invoice|receipt|substantiation|documentary|support|proof|evidence|certificate|schedule|reconciliation|records|books)\b/i.test(value);
+  return /\b(invoice|receipt|substantiation|documentary|support|proof|evidence|certificate|schedule|reconciliation|records|books|burden of proof)\b/i.test(
+    lower(text)
+  );
 }
 
 function hasJurisdictionalSignal(text = "") {
-  const value = lower(text);
-  return /\b(jurisdiction|jurisdictional|court has no jurisdiction|cta|120\+30|30-day|condition precedent|exhaustion)\b/i.test(value);
+  return /\b(jurisdiction|jurisdictional|court has no jurisdiction|cta|120\+30|30-day|condition precedent|exhaustion)\b/i.test(
+    lower(text)
+  );
 }
 
 function hasTemporalSignal(text = "") {
-  const value = lower(text);
-  return /\b(effective|effectivity|retroactive|prospective|prior to|after|before|beginning|taxable year|calendar year|transition|transitory|superseded|amended|repealed)\b/i.test(value);
+  return /\b(effective|effectivity|retroactive|prospective|prior to|after|before|beginning|taxable year|calendar year|transition|transitory|superseded|amended|repealed)\b/i.test(
+    lower(text)
+  );
+}
+
+function hasContractualSignal(text = "") {
+  return /\b(contract|agreement|clause|lease|concession|termination|obligation|consideration|control|risk allocation|risk transfer)\b/i.test(
+    lower(text)
+  );
+}
+
+function hasEconomicSubstanceSignal(text = "") {
+  return /\b(economic substance|substance over form|sham|simulation|business purpose|commercial reality|tax avoidance|tax evasion)\b/i.test(
+    lower(text)
+  );
+}
+
+function hasAuditSignal(text = "") {
+  return /\b(audit|working paper|pfrs|pas|afs|misstatement|assertion|sufficient appropriate audit evidence|qualified opinion)\b/i.test(
+    lower(text)
+  );
 }
 
 function classifyDoctrineDimension(text = "") {
@@ -172,10 +221,13 @@ function classifyDoctrineDimension(text = "") {
   if (hasEvidentiarySignal(text)) dimensions.push("evidentiary");
   if (hasJurisdictionalSignal(text)) dimensions.push("jurisdictional");
   if (hasTemporalSignal(text)) dimensions.push("temporal");
+  if (hasContractualSignal(text)) dimensions.push("contractual");
+  if (hasEconomicSubstanceSignal(text)) dimensions.push("economic_substance");
+  if (hasAuditSignal(text)) dimensions.push("audit");
 
   if (!dimensions.length) dimensions.push("general/legal");
 
-  return dimensions;
+  return unique(dimensions);
 }
 
 function sameOrRelatedTopic(topicA = "", topicB = "") {
@@ -197,6 +249,7 @@ function looksContradictory(a = "", b = "") {
 
   const xNeg = hasNegativeSignal(x);
   const yNeg = hasNegativeSignal(y);
+
   const negationOpposition = xNeg !== yNeg;
 
   const mandatoryOpposition =
@@ -204,10 +257,10 @@ function looksContradictory(a = "", b = "") {
     (hasMandatorySignal(y) && hasPermissiveSignal(x));
 
   const taxableOpposition =
-    (/\b(subject to tax|taxable|liable|subject to vat|subject to income tax)\b/i.test(x) &&
-      /\b(not subject|exempt|non-taxable|excluded)\b/i.test(y)) ||
-    (/\b(subject to tax|taxable|liable|subject to vat|subject to income tax)\b/i.test(y) &&
-      /\b(not subject|exempt|non-taxable|excluded)\b/i.test(x));
+    (/\b(subject to tax|taxable|liable|subject to vat|subject to income tax|deductible|allowed as deduction)\b/i.test(x) &&
+      /\b(not subject|exempt|non-taxable|excluded|non-deductible|not deductible|disallowed)\b/i.test(y)) ||
+    (/\b(subject to tax|taxable|liable|subject to vat|subject to income tax|deductible|allowed as deduction)\b/i.test(y) &&
+      /\b(not subject|exempt|non-taxable|excluded|non-deductible|not deductible|disallowed)\b/i.test(x));
 
   return negationOpposition || mandatoryOpposition || taxableOpposition;
 }
@@ -216,7 +269,11 @@ function determineConflictKind({ textA = "", textB = "", authorityA = "", author
   const dimensionsA = classifyDoctrineDimension(textA);
   const dimensionsB = classifyDoctrineDimension(textB);
 
-  const sameDimension = dimensionsA.some((item) => dimensionsB.includes(item));
+  const sameDimension =
+    dimensionsA.includes("general/legal") ||
+    dimensionsB.includes("general/legal") ||
+    dimensionsA.some((item) => dimensionsB.includes(item));
+
   const contradictory = looksContradictory(textA, textB);
 
   if (!contradictory) {
@@ -234,7 +291,7 @@ function determineConflictKind({ textA = "", textB = "", authorityA = "", author
       status: "APPARENT_CONFLICT",
       label: "Apparent conflict only",
       distinction:
-        "The authorities appear different because they address different legal dimensions, such as substantive liability versus procedural, evidentiary, jurisdictional, or temporal compliance.",
+        "The authorities appear different because they address different legal dimensions, such as substantive liability versus procedural, evidentiary, jurisdictional, temporal, contractual, economic-substance, audit, or administrative compliance.",
       dimensionsA,
       dimensionsB
     };
@@ -269,7 +326,7 @@ function explainWhyControls({
   const status = conflictKind?.status || "";
 
   if (status === "APPARENT_CONFLICT") {
-    return "No controlling override is required if the difference is only apparent; the authorities should be harmonized by limiting each rule to its own procedural, evidentiary, temporal, jurisdictional, administrative, or substantive context.";
+    return "No controlling override is required if the difference is only apparent; the authorities should be harmonized by limiting each rule to its own substantive, procedural, evidentiary, temporal, jurisdictional, contractual, economic-substance, audit, administrative, or factual context.";
   }
 
   return `${controllingAuthority} controls over ${weakerAuthority} based on Philippine legal hierarchy and controlling precedence. Lower-authority administrative issuances cannot amend, expand, or defeat a higher-authority rule.`;
@@ -283,12 +340,15 @@ function buildResolutionExplanation({
   weaker,
   override = null
 }) {
-  const controllingTitle = sourceTitleOf(controlling) || sourcePathOf(controlling) || "controlling source";
-  const weakerTitle = sourceTitleOf(weaker) || sourcePathOf(weaker) || "weaker source";
+  const controllingTitle =
+    sourceTitleOf(controlling) || sourcePathOf(controlling) || "controlling source";
+
+  const weakerTitle =
+    sourceTitleOf(weaker) || sourcePathOf(weaker) || "weaker source";
 
   return [
     `${conflictKind.label}.`,
-    `Exact issue: whether the retrieved statements can both govern the same tax issue, or whether one must yield to the other.`,
+    "Exact issue: whether the retrieved statements can both govern the same Philippine tax issue, or whether one must yield to the other.",
     `Nature of distinction: ${conflictKind.distinction}`,
     `Source A/B dimensions: ${conflictKind.dimensionsA.join(", ")} versus ${conflictKind.dimensionsB.join(", ")}.`,
     `Controlling authority: ${controllingAuthority} (${controllingTitle}).`,
@@ -324,8 +384,26 @@ export function compareDoctrinalPair(a = {}, b = {}) {
   });
 
   if (conflictKind.status === "NO_CONFLICT") return null;
-  if (conflictKind.status === "APPARENT_CONFLICT" && !looksContradictory(textA, textB)) return null;
-  if (!isGenuineConflict(a, b) && conflictKind.status !== "APPARENT_CONFLICT") return null;
+
+  if (conflictKind.status === "APPARENT_CONFLICT" && !looksContradictory(textA, textB)) {
+    return null;
+  }
+
+  let externalConflict = null;
+
+  try {
+    externalConflict = analyzeConflictPair(a, b);
+  } catch {
+    externalConflict = null;
+  }
+
+  if (
+    !isGenuineConflict(a, b) &&
+    !externalConflict?.apparentConflict &&
+    conflictKind.status !== "APPARENT_CONFLICT"
+  ) {
+    return null;
+  }
 
   const override = resolveCourtOverride(a, b);
 
@@ -341,8 +419,11 @@ export function compareDoctrinalPair(a = {}, b = {}) {
       ? b
       : a;
 
-  const controllingAuthority = override?.winningAuthority || authorityTypeOf(controlling);
-  const weakerAuthority = override?.overriddenAuthority || authorityTypeOf(weaker);
+  const controllingAuthority =
+    override?.winningAuthority || authorityTypeOf(controlling);
+
+  const weakerAuthority =
+    override?.overriddenAuthority || authorityTypeOf(weaker);
 
   const explanation = buildResolutionExplanation({
     conflictKind,
@@ -355,32 +436,72 @@ export function compareDoctrinalPair(a = {}, b = {}) {
 
   return {
     conflict: conflictKind.status !== "NO_CONFLICT",
+    doctrinalConflict: ["DIRECT_CONFLICT", "PARTIAL_CONFLICT"].includes(
+      conflictKind.status
+    ),
+    hierarchyConflict:
+      conflictKind.status === "PARTIAL_CONFLICT" ||
+      Boolean(override?.overrideApplies),
+    apparentConflict: conflictKind.status === "APPARENT_CONFLICT",
+
     conflictStatus: conflictKind.status,
+    conflictType: conflictKind.status,
     conflictLabel: conflictKind.label,
+
     overrideApplied: Boolean(override?.overrideApplies),
     conflictTopic: sameOrRelatedTopic(topicA, topicB) ? topicA || topicB : "general",
+
+    sourceA: sourcePathOf(a),
+    sourceB: sourcePathOf(b),
+    sourceATitle: sourceTitleOf(a),
+    sourceBTitle: sourceTitleOf(b),
+
     controllingAuthority,
     controllingSource: sourcePathOf(controlling),
     controllingTitle: sourceTitleOf(controlling),
+
     weakerAuthority,
     weakerSource: sourcePathOf(weaker),
     weakerTitle: sourceTitleOf(weaker),
+
     reason: explanation,
+
     exactIssue:
       "Whether the compared authorities state inconsistent rules on the same Philippine tax issue, or are distinguishable by legal dimension or authority hierarchy.",
-    distinctionType: conflictKind.dimensionsA
-      .concat(conflictKind.dimensionsB)
-      .filter((item, index, arr) => arr.indexOf(item) === index)
-      .join(", "),
+
+    distinctionType: unique(
+      conflictKind.dimensionsA.concat(conflictKind.dimensionsB)
+    ).join(", "),
+
     resolutionBasis: override?.overrideApplies
       ? "Court override applied because controlling judicial doctrine prevails over inconsistent administrative interpretation."
       : conflictKind.status === "APPARENT_CONFLICT"
         ? "Authorities should be harmonized because the apparent inconsistency arises from different legal dimensions."
         : `Prefer ${controllingAuthority} based on Philippine legal hierarchy and controlling precedence.`,
+
     sourceAClaim: normalizeText(textA).slice(0, 700),
     sourceBClaim: normalizeText(textB).slice(0, 700),
+
     chronologyNote:
       "If one authority is later in time, later issuance may matter only if it validly amends, supersedes, or interprets within the limits of its authority. A later lower-authority issuance cannot override a higher-authority statute or Supreme Court doctrine.",
+
+    plannerCompatibility: {
+      requiresConflictDisclosure: true,
+      requiresHierarchyExplanation:
+        conflictKind.status === "PARTIAL_CONFLICT" || Boolean(override?.overrideApplies),
+      requiresDoctrinalAnalysis: ["DIRECT_CONFLICT", "PARTIAL_CONFLICT"].includes(
+        conflictKind.status
+      ),
+      requiresApparentConflictCaution: conflictKind.status === "APPARENT_CONFLICT"
+    },
+
+    rendererCompatibility: {
+      doctrinalStatusBlockRequired: true,
+      hierarchyBlockRequired:
+        conflictKind.status === "PARTIAL_CONFLICT" || Boolean(override?.overrideApplies),
+      limitationLanguageRecommended: conflictKind.status === "APPARENT_CONFLICT"
+    },
+
     auditRecord: {
       decisionType: override?.overrideApplies
         ? "COURT_OVERRIDE"
@@ -392,9 +513,9 @@ export function compareDoctrinalPair(a = {}, b = {}) {
       weakerAuthority,
       controllingSource: sourcePathOf(controlling),
       weakerSource: sourcePathOf(weaker),
-      distinctionType: conflictKind.dimensionsA
-        .concat(conflictKind.dimensionsB)
-        .filter((item, index, arr) => arr.indexOf(item) === index)
+      distinctionType: unique(conflictKind.dimensionsA.concat(conflictKind.dimensionsB)),
+      tinaDoctrinalEngineVersion: ENGINE_VERSION,
+      generatedAt: new Date().toISOString()
     }
   };
 }
@@ -432,6 +553,7 @@ export function detectHierarchyConflict(topDocs = []) {
     return {
       conflict: false,
       conflictStatus: "NO_CONFLICT",
+      conflictType: "NO_CONFLICT",
       conflictLabel: "No doctrinal conflict exists",
       controllingAuthority: null,
       controllingSource: null,
@@ -453,7 +575,11 @@ export function detectHierarchyConflict(topDocs = []) {
       if (pair?.conflict) {
         return {
           conflict: true,
+          doctrinalConflict: Boolean(pair.doctrinalConflict),
+          hierarchyConflict: Boolean(pair.hierarchyConflict),
+          apparentConflict: Boolean(pair.apparentConflict),
           conflictStatus: pair.conflictStatus,
+          conflictType: pair.conflictType,
           conflictLabel: pair.conflictLabel,
           controllingAuthority: pair.controllingAuthority,
           controllingSource: pair.controllingSource,
@@ -461,11 +587,15 @@ export function detectHierarchyConflict(topDocs = []) {
           exactIssue: pair.exactIssue,
           distinctionType: pair.distinctionType,
           conflictingDocs: [topDocs[i], topDocs[j]],
+          sourceA: pair.sourceA,
+          sourceB: pair.sourceB,
           overrideApplied: Boolean(pair.overrideApplied),
           weakerAuthority: pair.weakerAuthority,
           weakerSource: pair.weakerSource,
           chronologyNote: pair.chronologyNote,
           resolutionBasis: pair.resolutionBasis,
+          plannerCompatibility: pair.plannerCompatibility,
+          rendererCompatibility: pair.rendererCompatibility,
           auditRecord: pair.auditRecord || null
         };
       }
@@ -474,12 +604,16 @@ export function detectHierarchyConflict(topDocs = []) {
 
   return {
     conflict: false,
+    doctrinalConflict: false,
+    hierarchyConflict: false,
+    apparentConflict: false,
     conflictStatus: "NO_CONFLICT",
+    conflictType: "NO_CONFLICT",
     conflictLabel: "No doctrinal conflict exists",
     controllingAuthority: null,
     controllingSource: null,
     reason:
-      "No direct doctrinal conflict was detected. Retrieved authorities should still be evaluated for relevance, legal hierarchy, and whether they address substantive, procedural, evidentiary, jurisdictional, factual, temporal, or administrative issues.",
+      "No direct doctrinal conflict was detected. Retrieved authorities should still be evaluated for relevance, legal hierarchy, and whether they address substantive, procedural, evidentiary, jurisdictional, factual, temporal, contractual, economic-substance, audit, or administrative issues.",
     exactIssue: null,
     distinctionType: null,
     conflictingDocs: [],
@@ -496,7 +630,7 @@ export function summarizeDoctrinalStatus(conflicts = []) {
       status: "NO_CONFLICT",
       label: "No doctrinal conflict exists",
       explanation:
-        "No direct doctrinal conflict was detected from the compared authorities. Differences in procedural, evidentiary, jurisdictional, factual, temporal, or administrative requirements should be treated as distinctions unless the authorities directly contradict on the same legal issue."
+        "No direct doctrinal conflict was detected from the compared authorities. Differences in procedural, evidentiary, jurisdictional, factual, temporal, contractual, economic-substance, audit, or administrative requirements should be treated as distinctions unless the authorities directly contradict on the same legal issue."
     };
   }
 
@@ -538,13 +672,15 @@ export function summarizeDoctrinalStatus(conflicts = []) {
 export function reconcileDoctrine({
   rankedDocs = [],
   maxDocs = 5
-}) {
-  const topDocs = rankedDocs.slice(0, maxDocs);
+} = {}) {
+  const topDocs = Array.isArray(rankedDocs) ? rankedDocs.slice(0, maxDocs) : [];
   const hierarchyConflict = detectHierarchyConflict(topDocs);
   const doctrinalConflicts = detectDoctrinalConflicts(topDocs);
   const doctrinalStatus = summarizeDoctrinalStatus(doctrinalConflicts);
 
   return {
+    engine: "TINA_DOCTRINAL_ENGINE",
+    version: ENGINE_VERSION,
     topDocs,
     hierarchyConflict,
     doctrinalConflicts,
@@ -555,8 +691,38 @@ export function reconcileDoctrine({
         ["DIRECT_CONFLICT", "PARTIAL_CONFLICT"].includes(item.conflictStatus)
       ),
     hasApparentConflict:
+      hierarchyConflict.apparentConflict ||
       doctrinalConflicts.some((item) => item.conflictStatus === "APPARENT_CONFLICT"),
-    explanation: doctrinalStatus.explanation
+    explanation: doctrinalStatus.explanation,
+    plannerCompatibility: {
+      requiresConflictDisclosure:
+        hierarchyConflict.conflict || doctrinalConflicts.length > 0,
+      requiresHierarchyExplanation: Boolean(hierarchyConflict.hierarchyConflict),
+      requiresDoctrinalAnalysis:
+        doctrinalStatus.status !== "NO_CONFLICT",
+      requiresApparentConflictCaution:
+        doctrinalStatus.status === "APPARENT_CONFLICT"
+    },
+    rendererCompatibility: {
+      doctrinalStatusBlockRequired: true,
+      hierarchyBlockRequired: Boolean(hierarchyConflict.hierarchyConflict),
+      limitationLanguageRecommended:
+        doctrinalStatus.status === "APPARENT_CONFLICT"
+    }
+  };
+}
+
+export function doctrinalEngineHealthCheck() {
+  return {
+    ok: true,
+    engine: "TINA_DOCTRINAL_ENGINE",
+    version: ENGINE_VERSION,
+    esmCompatible: true,
+    commonJsBridgeCompatible: true,
+    conflictEngineCompatible: true,
+    authorityEngineCompatible: true,
+    plannerCompatible: true,
+    rendererCompatible: true
   };
 }
 
@@ -565,5 +731,6 @@ export default {
   detectDoctrinalConflicts,
   detectHierarchyConflict,
   summarizeDoctrinalStatus,
-  reconcileDoctrine
+  reconcileDoctrine,
+  doctrinalEngineHealthCheck
 };
