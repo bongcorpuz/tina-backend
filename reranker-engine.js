@@ -12,12 +12,15 @@
  * - adaptive-mode-aware reranking
  * - transaction/evidence/audit-aware reranking
  * - jurisprudence-safe reranking
+ * - doctrine-safe reranking
+ * - adaptive orchestration compatibility
  *
  * Compatible with:
  * - query-intent-engine.js
  * - supersession-engine.js
  * - jurisprudence-engine.js
  * - adaptive-response-planner.js
+ * - adaptive-mode-engine.js
  * - ask-handler.js
  * - rag-answer-handler.js
  */
@@ -29,7 +32,16 @@ const {
   getControllingPrecedenceForDoc
 } = require("./authority-engine.js");
 
-const ENGINE_VERSION = "2.1.0";
+const {
+  applySupersessionFilter
+} = require("./supersession-engine.js");
+
+const {
+  analyzeQueryIntent
+} = require("./query-intent-engine.js");
+
+const ENGINE_VERSION = "2.2.0";
+
 const DEFAULT_LIMIT = 12;
 
 const ISSUE_TYPE = Object.freeze({
@@ -80,7 +92,8 @@ function normalizeText(value = "") {
 }
 
 function lower(value = "") {
-  return normalizeText(value).toLowerCase();
+  return normalizeText(value)
+    .toLowerCase();
 }
 
 function unique(values = []) {
@@ -147,147 +160,232 @@ function docText(doc = {}) {
 
 function detectIssueTypes(text = "") {
   const value = lower(text);
+
   const issues = [];
 
   const push = (condition, issue) => {
-    if (condition) issues.push(issue);
+    if (condition) {
+      issues.push(issue);
+    }
   };
 
   push(
-    /\b(vat refund|input vat refund|tax credit certificate|120\+30|administrative claim|judicial claim)\b/i.test(value),
+    /\b(vat refund|input vat refund|tax credit certificate|120\+30|administrative claim|judicial claim)\b/i.test(
+      value
+    ),
     ISSUE_TYPE.VAT_REFUND
   );
 
   push(
-    /\b(vat liability|output vat|subject to vat|vatable|gross receipts)\b/i.test(value),
+    /\b(vat liability|output vat|subject to vat|vatable|gross receipts)\b/i.test(
+      value
+    ),
     ISSUE_TYPE.VAT_LIABILITY
   );
 
   push(
-    /\b(file|filing|deadline|appeal|assessment|loa|pan|fan|return|remedy)\b/i.test(value),
+    /\b(file|filing|deadline|appeal|assessment|loa|pan|fan|return|remedy)\b/i.test(
+      value
+    ),
     ISSUE_TYPE.PROCEDURAL
   );
 
   push(
-    /\b(invoice|receipt|substantiation|documentary|evidence|records|burden of proof)\b/i.test(value),
+    /\b(invoice|receipt|substantiation|documentary|evidence|records|burden of proof)\b/i.test(
+      value
+    ),
     ISSUE_TYPE.EVIDENTIARY
   );
 
   push(
-    /\b(jurisdiction|jurisdictional|cta|condition precedent)\b/i.test(value),
+    /\b(jurisdiction|jurisdictional|cta|condition precedent)\b/i.test(
+      value
+    ),
     ISSUE_TYPE.JURISDICTIONAL
   );
 
   push(
-    /\b(withholding|ewt|expanded withholding|2307|1601)\b/i.test(value),
+    /\b(withholding|ewt|expanded withholding|2307|1601)\b/i.test(
+      value
+    ),
     ISSUE_TYPE.WITHHOLDING
   );
 
   push(
-    /\b(income tax|rcit|mcit|nolco|deductible)\b/i.test(value),
+    /\b(income tax|rcit|mcit|nolco|deductible)\b/i.test(
+      value
+    ),
     ISSUE_TYPE.INCOME_TAX
   );
 
   push(
-    /\b(contract|agreement|lease agreement|concession agreement|clause)\b/i.test(value),
+    /\b(contract|agreement|lease agreement|concession agreement|clause)\b/i.test(
+      value
+    ),
     ISSUE_TYPE.CONTRACT
   );
 
   push(
-    /\b(principal vs agent|gross or net|pass-through|pass through|reimbursement|bundled|inclusive package)\b/i.test(value),
+    /\b(principal vs agent|gross or net|pass-through|pass through|reimbursement|bundled|inclusive package)\b/i.test(
+      value
+    ),
     ISSUE_TYPE.TRANSACTION
   );
 
   push(
-    /\b(economic substance|substance over form|sham|simulation)\b/i.test(value),
+    /\b(economic substance|substance over form|sham|simulation)\b/i.test(
+      value
+    ),
     ISSUE_TYPE.ECONOMIC_SUBSTANCE
   );
 
   push(
-    /\b(principal vs agent|agent|principal)\b/i.test(value),
+    /\b(principal vs agent|agent|principal)\b/i.test(
+      value
+    ),
     ISSUE_TYPE.PRINCIPAL_AGENT
   );
 
   push(
-    /\b(pass-through|pass through)\b/i.test(value),
+    /\b(pass-through|pass through)\b/i.test(
+      value
+    ),
     ISSUE_TYPE.PASS_THROUGH
   );
 
   push(
-    /\b(reimbursement|reimbursable)\b/i.test(value),
+    /\b(reimbursement|reimbursable)\b/i.test(
+      value
+    ),
     ISSUE_TYPE.REIMBURSEMENT
   );
 
   push(
-    /\b(bundled|package|inclusive)\b/i.test(value),
+    /\b(bundled|package|inclusive)\b/i.test(
+      value
+    ),
     ISSUE_TYPE.BUNDLED_TRANSACTION
   );
 
   push(
-    /\b(audit|misstatement|working paper|qualified opinion)\b/i.test(value),
+    /\b(audit|misstatement|working paper|qualified opinion)\b/i.test(
+      value
+    ),
     ISSUE_TYPE.AUDIT
   );
 
   push(
-    /\b(pfrs|pas|financial statements|afs)\b/i.test(value),
+    /\b(pfrs|pas|financial statements|afs)\b/i.test(
+      value
+    ),
     ISSUE_TYPE.PFRS
   );
 
   push(
-    /\b(accounting treatment|classification|presentation|recognition)\b/i.test(value),
+    /\b(accounting treatment|classification|presentation|recognition)\b/i.test(
+      value
+    ),
     ISSUE_TYPE.ACCOUNTING
   );
 
   push(
-    /\b(conflict|hierarchy|prevails|override)\b/i.test(value),
+    /\b(conflict|hierarchy|prevails|override)\b/i.test(
+      value
+    ),
     ISSUE_TYPE.CONFLICT_ANALYSIS
   );
 
   push(
-    /\b(doctrine|jurisprudence|substance over form)\b/i.test(value),
+    /\b(doctrine|jurisprudence|substance over form)\b/i.test(
+      value
+    ),
     ISSUE_TYPE.DOCTRINE
   );
 
   push(
-    /\b(create|train|eopt|create more|republic act|nirc|tax code)\b/i.test(value),
+    /\b(create|train|eopt|create more|republic act|nirc|tax code)\b/i.test(
+      value
+    ),
     ISSUE_TYPE.NAMED_LAW
   );
 
   push(
-    /\b(g\.?\s*r\.?\s*no\.?|cta|supreme court|court of appeals| v\. | vs\.? )\b/i.test(value),
+    /\b(g\.?\s*r\.?\s*no\.?|cta|supreme court|court of appeals| v\. | vs\.? )\b/i.test(
+      value
+    ),
     ISSUE_TYPE.CASE_LAW
   );
 
-  return unique(issues.length ? issues : [ISSUE_TYPE.GENERAL]);
+  return unique(
+    issues.length
+      ? issues
+      : [ISSUE_TYPE.GENERAL]
+  );
 }
 
-function issueOverlap(queryIssues = [], docIssues = []) {
-  if (!queryIssues.length || queryIssues.includes(ISSUE_TYPE.GENERAL)) {
-    return true;
-  }
-
-  if (!docIssues.length || docIssues.includes(ISSUE_TYPE.GENERAL)) {
-    return true;
-  }
-
-  return queryIssues.some((issue) => docIssues.includes(issue));
-}
-
-function issueMismatch(queryIssues = [], docIssues = []) {
-  if (!queryIssues.length || !docIssues.length) return false;
-
+function issueOverlap(
+  queryIssues = [],
+  docIssues = []
+) {
   if (
-    queryIssues.includes(ISSUE_TYPE.VAT_LIABILITY) &&
-    docIssues.includes(ISSUE_TYPE.VAT_REFUND) &&
-    !queryIssues.includes(ISSUE_TYPE.VAT_REFUND)
+    !queryIssues.length ||
+    queryIssues.includes(
+      ISSUE_TYPE.GENERAL
+    )
   ) {
     return true;
   }
 
   if (
-    queryIssues.includes(ISSUE_TYPE.VAT_REFUND) &&
-    docIssues.includes(ISSUE_TYPE.VAT_LIABILITY) &&
-    !queryIssues.includes(ISSUE_TYPE.VAT_LIABILITY)
+    !docIssues.length ||
+    docIssues.includes(
+      ISSUE_TYPE.GENERAL
+    )
+  ) {
+    return true;
+  }
+
+  return queryIssues.some(
+    (issue) =>
+      docIssues.includes(issue)
+  );
+}
+
+function issueMismatch(
+  queryIssues = [],
+  docIssues = []
+) {
+  if (
+    !queryIssues.length ||
+    !docIssues.length
+  ) {
+    return false;
+  }
+
+  if (
+    queryIssues.includes(
+      ISSUE_TYPE.VAT_LIABILITY
+    ) &&
+    docIssues.includes(
+      ISSUE_TYPE.VAT_REFUND
+    ) &&
+    !queryIssues.includes(
+      ISSUE_TYPE.VAT_REFUND
+    )
+  ) {
+    return true;
+  }
+
+  if (
+    queryIssues.includes(
+      ISSUE_TYPE.VAT_REFUND
+    ) &&
+    docIssues.includes(
+      ISSUE_TYPE.VAT_LIABILITY
+    ) &&
+    !queryIssues.includes(
+      ISSUE_TYPE.VAT_LIABILITY
+    )
   ) {
     return true;
   }
@@ -296,7 +394,8 @@ function issueMismatch(queryIssues = [], docIssues = []) {
 }
 
 function authorityWeight(doc = {}) {
-  const type = getAuthorityTypeForDoc(doc);
+  const type =
+    getAuthorityTypeForDoc(doc);
 
   const weights = {
     CONSTITUTION: 100,
@@ -324,75 +423,169 @@ function authorityWeight(doc = {}) {
 }
 
 function authorityPenalty(doc = {}) {
-  const type = getAuthorityTypeForDoc(doc);
-  const text = lower(docText(doc));
+  const type =
+    getAuthorityTypeForDoc(doc);
+
+  const text =
+    lower(docText(doc));
 
   let penalty = 0;
 
-  if (type === "SECONDARY") penalty += 45;
+  if (type === "SECONDARY") {
+    penalty += 45;
+  }
 
-  if (text.includes("07_cpa_notes")) penalty += 35;
-  if (text.includes("08_review_materials")) penalty += 35;
-  if (text.includes("working_papers")) penalty += 35;
-  if (text.includes("drafts")) penalty += 30;
-  if (text.includes("reviewer")) penalty += 25;
-  if (text.includes("handout")) penalty += 25;
-  if (text.includes("lecture notes")) penalty += 25;
+  if (
+    text.includes("07_cpa_notes")
+  ) {
+    penalty += 35;
+  }
+
+  if (
+    text.includes(
+      "08_review_materials"
+    )
+  ) {
+    penalty += 35;
+  }
+
+  if (
+    text.includes("working_papers")
+  ) {
+    penalty += 35;
+  }
+
+  if (text.includes("drafts")) {
+    penalty += 30;
+  }
+
+  if (
+    text.includes("reviewer")
+  ) {
+    penalty += 25;
+  }
+
+  if (
+    text.includes("handout")
+  ) {
+    penalty += 25;
+  }
+
+  if (
+    text.includes(
+      "lecture notes"
+    )
+  ) {
+    penalty += 25;
+  }
 
   return penalty;
 }
 
-function extractExactReferenceSignals(text = "") {
-  const value = normalizeText(text);
+function extractExactReferenceSignals(
+  text = ""
+) {
+  const value =
+    normalizeText(text);
+
   const signals = [];
 
-  const raMatches = value.matchAll(
-    /\b(?:ra|r\.a\.|republic act)\s*(?:no\.?)?\s*(\d{4,6})\b/gi
-  );
+  const raMatches =
+    value.matchAll(
+      /\b(?:ra|r\.a\.|republic act)\s*(?:no\.?)?\s*(\d{4,6})\b/gi
+    );
 
   for (const match of raMatches) {
-    signals.push(`RA_${match[1]}`);
+    signals.push(
+      `RA_${match[1]}`
+    );
   }
 
   const issuancePatterns = [
-    ["RR", /\b(?:rr|revenue regulation[s]?)\s*(?:no\.?)?\s*0*(\d+)[-_/ ]+(\d{2,4})\b/gi],
-    ["RMC", /\b(?:rmc|revenue memorandum circular[s]?)\s*(?:no\.?)?\s*0*(\d+)[-_/ ]+(\d{2,4})\b/gi],
-    ["RMO", /\b(?:rmo|revenue memorandum order[s]?)\s*(?:no\.?)?\s*0*(\d+)[-_/ ]+(\d{2,4})\b/gi],
-    ["RAMO", /\b(?:ramo|revenue audit memorandum order[s]?)\s*(?:no\.?)?\s*0*(\d+)[-_/ ]+(\d{2,4})\b/gi]
+    [
+      "RR",
+      /\b(?:rr|revenue regulation[s]?)\s*(?:no\.?)?\s*0*(\d+)[-_/ ]+(\d{2,4})\b/gi
+    ],
+
+    [
+      "RMC",
+      /\b(?:rmc|revenue memorandum circular[s]?)\s*(?:no\.?)?\s*0*(\d+)[-_/ ]+(\d{2,4})\b/gi
+    ],
+
+    [
+      "RMO",
+      /\b(?:rmo|revenue memorandum order[s]?)\s*(?:no\.?)?\s*0*(\d+)[-_/ ]+(\d{2,4})\b/gi
+    ],
+
+    [
+      "RAMO",
+      /\b(?:ramo|revenue audit memorandum order[s]?)\s*(?:no\.?)?\s*0*(\d+)[-_/ ]+(\d{2,4})\b/gi
+    ]
   ];
 
-  for (const [prefix, regex] of issuancePatterns) {
+  for (const [
+    prefix,
+    regex
+  ] of issuancePatterns) {
     for (const match of value.matchAll(regex)) {
       signals.push(
-        `${prefix}_${String(match[1]).replace(/^0+/, "")}_${match[2]}`
+        `${prefix}_${String(
+          match[1]
+        ).replace(/^0+/, "")}_${match[2]}`
       );
     }
   }
 
-  const grMatches = value.matchAll(
-    /\bg\.?\s*r\.?\s*no\.?\s*([a-z0-9.-]+)\b/gi
-  );
+  const grMatches =
+    value.matchAll(
+      /\bg\.?\s*r\.?\s*no\.?\s*([a-z0-9.-]+)\b/gi
+    );
 
   for (const match of grMatches) {
-    signals.push(`GR_${String(match[1]).toUpperCase()}`);
+    signals.push(
+      `GR_${String(
+        match[1]
+      ).toUpperCase()}`
+    );
   }
 
   return unique(signals);
 }
 
-function exactReferenceBonus(query = "", doc = {}) {
-  const queryRefs = extractExactReferenceSignals(query);
+function exactReferenceBonus(
+  query = "",
+  doc = {}
+) {
+  const queryRefs =
+    extractExactReferenceSignals(
+      query
+    );
 
-  if (!queryRefs.length) return 0;
+  if (!queryRefs.length) {
+    return 0;
+  }
 
-  const haystack = lower(docText(doc)).replace(/[^a-z0-9]+/g, "_");
+  const haystack =
+    lower(docText(doc))
+      .replace(
+        /[^a-z0-9]+/g,
+        "_"
+      );
 
   let bonus = 0;
 
   for (const ref of queryRefs) {
-    const normalizedRef = lower(ref).replace(/[^a-z0-9]+/g, "_");
+    const normalizedRef =
+      lower(ref).replace(
+        /[^a-z0-9]+/g,
+        "_"
+      );
 
-    if (haystack.includes(normalizedRef)) {
+    if (
+      haystack.includes(
+        normalizedRef
+      )
+    ) {
       bonus += 100;
     }
   }
@@ -400,85 +593,160 @@ function exactReferenceBonus(query = "", doc = {}) {
   return bonus;
 }
 
-function issueBonus(query = "", doc = {}) {
-  const queryIssues = detectIssueTypes(query);
-  const docIssues = detectIssueTypes(docText(doc));
+function issueBonus(
+  query = "",
+  doc = {}
+) {
+  const queryIssues =
+    detectIssueTypes(query);
 
-  if (issueMismatch(queryIssues, docIssues)) {
+  const docIssues =
+    detectIssueTypes(
+      docText(doc)
+    );
+
+  if (
+    issueMismatch(
+      queryIssues,
+      docIssues
+    )
+  ) {
     return -80;
   }
 
-  if (issueOverlap(queryIssues, docIssues)) {
+  if (
+    issueOverlap(
+      queryIssues,
+      docIssues
+    )
+  ) {
     return 35;
   }
 
   return 0;
 }
 
-function controllingBonus(doc = {}) {
-  const type = getAuthorityTypeForDoc(doc);
-  const level = getAuthorityLevelForDoc(doc);
-  const precedence = getControllingPrecedenceForDoc(doc);
+function controllingBonus(
+  doc = {}
+) {
+  const type =
+    getAuthorityTypeForDoc(doc);
+
+  const level =
+    getAuthorityLevelForDoc(doc);
+
+  const precedence =
+    getControllingPrecedenceForDoc(
+      doc
+    );
 
   let bonus = 0;
 
   if (
-    ["CONSTITUTION", "STATUTE", "RR", "SUPREME_COURT"].includes(type)
+    [
+      "CONSTITUTION",
+      "STATUTE",
+      "RR",
+      "SUPREME_COURT"
+    ].includes(type)
   ) {
     bonus += 45;
   } else if (
-    ["RMC", "RMO", "RAMO"].includes(type)
+    [
+      "RMC",
+      "RMO",
+      "RAMO"
+    ].includes(type)
   ) {
     bonus += 25;
-  } else if (type === "BIR_RULING") {
+  } else if (
+    type === "BIR_RULING"
+  ) {
     bonus += 15;
   } else if (
-    ["CTA_EN_BANC", "COURT_OF_APPEALS", "CTA_DIVISION"].includes(type)
+    [
+      "CTA_EN_BANC",
+      "COURT_OF_APPEALS",
+      "CTA_DIVISION"
+    ].includes(type)
   ) {
     bonus += 10;
   }
 
-  if (level <= 3) bonus += 30;
-  else if (level <= 8) bonus += 20;
-  else if (level <= 11) bonus += 8;
+  if (level <= 3) {
+    bonus += 30;
+  } else if (level <= 8) {
+    bonus += 20;
+  } else if (level <= 11) {
+    bonus += 8;
+  }
 
-  if (precedence <= 5) bonus += 20;
-  else if (precedence <= 9) bonus += 10;
+  if (precedence <= 5) {
+    bonus += 20;
+  } else if (precedence <= 9) {
+    bonus += 10;
+  }
 
   return bonus;
 }
 
-function semanticScore(doc = {}) {
+function semanticScore(
+  doc = {}
+) {
   return Number(
     doc.score ||
-      doc.similarity ||
-      doc.finalScore ||
-      doc.final_score ||
-      doc.retrievalScore ||
-      doc.retrieval_score ||
-      0
+    doc.similarity ||
+    doc.finalScore ||
+    doc.final_score ||
+    doc.retrievalScore ||
+    doc.retrieval_score ||
+    0
   );
 }
 
-function adaptiveModeBonus(responseMode = RESPONSE_MODE.STANDARD, doc = {}) {
-  const authorityType = getAuthorityTypeForDoc(doc);
-  const text = lower(docText(doc));
+function adaptiveModeBonus(
+  responseMode =
+    RESPONSE_MODE.STANDARD,
+  doc = {}
+) {
+  const authorityType =
+    getAuthorityTypeForDoc(doc);
+
+  const text =
+    lower(docText(doc));
 
   let bonus = 0;
 
-  if (responseMode === RESPONSE_MODE.AUDIT) {
-    if (/\bpfrs\b|\bpas\b|\bfinancial statements\b/i.test(text)) {
+  if (
+    responseMode ===
+    RESPONSE_MODE.AUDIT
+  ) {
+    if (
+      /\bpfrs\b|\bpas\b|\bfinancial statements\b/i.test(
+        text
+      )
+    ) {
       bonus += 35;
     }
   }
 
-  if (responseMode === RESPONSE_MODE.CONTRACT) {
-    if (/\bcontract\b|\bagreement\b|\bclause\b/i.test(text)) {
+  if (
+    responseMode ===
+    RESPONSE_MODE.CONTRACT
+  ) {
+    if (
+      /\bcontract\b|\bagreement\b|\bclause\b/i.test(
+        text
+      )
+    ) {
       bonus += 40;
     }
   }
 
-  if (responseMode === RESPONSE_MODE.TRANSACTION) {
+  if (
+    responseMode ===
+    RESPONSE_MODE.TRANSACTION
+  ) {
     if (
       /\bprincipal\b|\bagent\b|\bpass-through\b|\breimbursement\b|\bgross\b|\bnet\b/i.test(
         text
@@ -488,29 +756,48 @@ function adaptiveModeBonus(responseMode = RESPONSE_MODE.STANDARD, doc = {}) {
     }
   }
 
-  if (responseMode === RESPONSE_MODE.EVIDENCE_HEAVY) {
+  if (
+    responseMode ===
+    RESPONSE_MODE.EVIDENCE_HEAVY
+  ) {
     if (
-      /\binvoice\b|\breceipt\b|\bsubstantiation\b|\bevidence\b/i.test(text)
+      /\binvoice\b|\breceipt\b|\bsubstantiation\b|\bevidence\b/i.test(
+        text
+      )
     ) {
       bonus += 45;
     }
   }
 
   if (
-    responseMode === RESPONSE_MODE.TECHNICAL &&
-    authorityType === "SUPREME_COURT"
+    responseMode ===
+      RESPONSE_MODE.TECHNICAL &&
+    authorityType ===
+      "SUPREME_COURT"
   ) {
     bonus += 40;
+  }
+
+  if (
+    responseMode ===
+      RESPONSE_MODE.LITIGATION &&
+    authorityType ===
+      "SUPREME_COURT"
+  ) {
+    bonus += 50;
   }
 
   return bonus;
 }
 
-function supersessionPenalty(doc = {}) {
+function supersessionPenalty(
+  doc = {}
+) {
   if (
     doc.superseded === true ||
     doc.isSuperseded === true ||
-    doc.metadata?.superseded === true
+    doc.metadata
+      ?.superseded === true
   ) {
     return 120;
   }
@@ -518,20 +805,32 @@ function supersessionPenalty(doc = {}) {
   return 0;
 }
 
-function weakCasePenalty(query = "", doc = {}) {
-  const queryIssues = detectIssueTypes(query);
-  const text = lower(docText(doc));
+function weakCasePenalty(
+  query = "",
+  doc = {}
+) {
+  const queryIssues =
+    detectIssueTypes(query);
+
+  const text =
+    lower(docText(doc));
 
   if (
-    queryIssues.includes(ISSUE_TYPE.VAT_LIABILITY) &&
+    queryIssues.includes(
+      ISSUE_TYPE.VAT_LIABILITY
+    ) &&
     text.includes("refund")
   ) {
     return 50;
   }
 
   if (
-    queryIssues.includes(ISSUE_TYPE.VAT_REFUND) &&
-    text.includes("output vat")
+    queryIssues.includes(
+      ISSUE_TYPE.VAT_REFUND
+    ) &&
+    text.includes(
+      "output vat"
+    )
   ) {
     return 50;
   }
@@ -542,20 +841,36 @@ function weakCasePenalty(query = "", doc = {}) {
 function computeTinaRerankScore({
   query = "",
   doc = {},
-  responseMode = RESPONSE_MODE.STANDARD
+  responseMode =
+    RESPONSE_MODE.STANDARD
 }) {
   const score =
     semanticScore(doc) * 0.25 +
     authorityWeight(doc) * 0.28 +
-    exactReferenceBonus(query, doc) * 0.16 +
-    issueBonus(query, doc) * 0.13 +
-    controllingBonus(doc) * 0.10 +
-    adaptiveModeBonus(responseMode, doc) * 0.08 -
+    exactReferenceBonus(
+      query,
+      doc
+    ) *
+      0.16 +
+    issueBonus(query, doc) *
+      0.13 +
+    controllingBonus(doc) *
+      0.10 +
+    adaptiveModeBonus(
+      responseMode,
+      doc
+    ) *
+      0.08 -
     authorityPenalty(doc) -
     supersessionPenalty(doc) -
-    weakCasePenalty(query, doc);
+    weakCasePenalty(
+      query,
+      doc
+    );
 
-  return Number(score.toFixed(4));
+  return Number(
+    score.toFixed(4)
+  );
 }
 
 function rerankForTina({
@@ -565,100 +880,232 @@ function rerankForTina({
   suppressIssueMismatch = true,
   suppressWeakSecondary = true,
   suppressSuperseded = true,
-  responseMode = RESPONSE_MODE.STANDARD
+  responseMode =
+    RESPONSE_MODE.STANDARD
 } = {}) {
-  const queryIssues = detectIssueTypes(query);
+  const queryIntent =
+    analyzeQueryIntent(query);
 
-  const hierarchyRanked = rerankByHierarchy(
-    uniqueDocs(docs),
-    query
-  );
+  const effectiveMode =
+    responseMode ||
+    queryIntent
+      ?.recommendedMode ||
+    RESPONSE_MODE.STANDARD;
 
-  const ranked = hierarchyRanked
-    .map((doc) => {
-      const docIssues = detectIssueTypes(docText(doc));
+  const queryIssues =
+    detectIssueTypes(query);
 
-      const mismatch = issueMismatch(queryIssues, docIssues);
+  const supersessionResult =
+    applySupersessionFilter(
+      uniqueDocs(docs)
+    );
 
-      const weakSecondary =
-        getAuthorityTypeForDoc(doc) === "SECONDARY" &&
-        authorityPenalty(doc) >= 45;
+  const activeDocs =
+    suppressSuperseded
+      ? (
+          supersessionResult
+            ?.activeDocs ||
+          docs
+        )
+      : docs;
 
-      const superseded =
-        doc.superseded === true ||
-        doc.isSuperseded === true ||
-        doc.metadata?.superseded === true;
+  const hierarchyRanked =
+    rerankByHierarchy(
+      uniqueDocs(activeDocs),
+      query
+    );
 
-      return {
-        ...doc,
+  const ranked =
+    hierarchyRanked
+      .map((doc) => {
+        const docIssues =
+          detectIssueTypes(
+            docText(doc)
+          );
 
-        rerankIssueTypes: docIssues,
+        const mismatch =
+          issueMismatch(
+            queryIssues,
+            docIssues
+          );
 
-        rerankScore: computeTinaRerankScore({
-          query,
-          doc,
-          responseMode
-        }),
+        const weakSecondary =
+          getAuthorityTypeForDoc(
+            doc
+          ) === "SECONDARY" &&
+          authorityPenalty(doc) >=
+            45;
 
-        issueMismatch: mismatch,
-        weakSecondary,
-        superseded
-      };
-    })
-    .filter((doc) => {
-      if (suppressIssueMismatch && doc.issueMismatch) return false;
-      if (suppressWeakSecondary && doc.weakSecondary) return false;
-      if (suppressSuperseded && doc.superseded) return false;
+        const superseded =
+          doc.superseded ===
+            true ||
+          doc.isSuperseded ===
+            true ||
+          doc.metadata
+            ?.superseded ===
+            true;
 
-      return true;
-    })
-    .sort((a, b) => {
-      const aExact = exactReferenceBonus(query, a);
-      const bExact = exactReferenceBonus(query, b);
+        return {
+          ...doc,
 
-      if (bExact !== aExact) {
-        return bExact - aExact;
-      }
+          rerankIssueTypes:
+            docIssues,
 
-      const aLevel = getAuthorityLevelForDoc(a);
-      const bLevel = getAuthorityLevelForDoc(b);
+          rerankScore:
+            computeTinaRerankScore(
+              {
+                query,
+                doc,
+                responseMode:
+                  effectiveMode
+              }
+            ),
 
-      if (aLevel !== bLevel) {
-        return aLevel - bLevel;
-      }
+          issueMismatch:
+            mismatch,
 
-      const aPrecedence = getControllingPrecedenceForDoc(a);
-      const bPrecedence = getControllingPrecedenceForDoc(b);
+          weakSecondary,
 
-      if (aPrecedence !== bPrecedence) {
-        return aPrecedence - bPrecedence;
-      }
+          superseded,
 
-      return b.rerankScore - a.rerankScore;
-    })
-    .slice(0, limit);
+          rerankMetadata: {
+            responseMode:
+              effectiveMode,
+
+            hierarchyAware: true,
+            issueAware: true,
+            supersessionAware: true
+          }
+        };
+      })
+
+      .filter((doc) => {
+        if (
+          suppressIssueMismatch &&
+          doc.issueMismatch
+        ) {
+          return false;
+        }
+
+        if (
+          suppressWeakSecondary &&
+          doc.weakSecondary
+        ) {
+          return false;
+        }
+
+        if (
+          suppressSuperseded &&
+          doc.superseded
+        ) {
+          return false;
+        }
+
+        return true;
+      })
+
+      .sort((a, b) => {
+        const aExact =
+          exactReferenceBonus(
+            query,
+            a
+          );
+
+        const bExact =
+          exactReferenceBonus(
+            query,
+            b
+          );
+
+        if (
+          bExact !== aExact
+        ) {
+          return (
+            bExact - aExact
+          );
+        }
+
+        const aLevel =
+          getAuthorityLevelForDoc(
+            a
+          );
+
+        const bLevel =
+          getAuthorityLevelForDoc(
+            b
+          );
+
+        if (
+          aLevel !== bLevel
+        ) {
+          return (
+            aLevel - bLevel
+          );
+        }
+
+        const aPrecedence =
+          getControllingPrecedenceForDoc(
+            a
+          );
+
+        const bPrecedence =
+          getControllingPrecedenceForDoc(
+            b
+          );
+
+        if (
+          aPrecedence !==
+          bPrecedence
+        ) {
+          return (
+            aPrecedence -
+            bPrecedence
+          );
+        }
+
+        return (
+          b.rerankScore -
+          a.rerankScore
+        );
+      })
+
+      .slice(0, limit);
 
   return {
     results: ranked,
 
+    supersessionResult,
+
     audit: {
-      engine: "TINA_RERANKER_ENGINE",
-      version: ENGINE_VERSION,
+      engine:
+        "TINA_RERANKER_ENGINE",
+
+      version:
+        ENGINE_VERSION,
 
       query,
       queryIssues,
 
-      responseMode,
+      responseMode:
+        effectiveMode,
 
-      inputCount: Array.isArray(docs) ? docs.length : 0,
-      outputCount: ranked.length,
+      inputCount:
+        Array.isArray(docs)
+          ? docs.length
+          : 0,
+
+      outputCount:
+        ranked.length,
 
       suppressIssueMismatch,
       suppressWeakSecondary,
       suppressSuperseded,
 
       policy:
-        "TINA reranker prioritizes controlling authority, exact authority matching, adaptive-mode relevance, issue-matched jurisprudence, and suppresses superseded or weak secondary authorities."
+        "TINA reranker prioritizes controlling authority, exact authority matching, adaptive-mode relevance, issue-matched jurisprudence, and suppresses superseded or weak secondary authorities.",
+
+      generatedAt:
+        new Date().toISOString()
     }
   };
 }
@@ -667,22 +1114,35 @@ function selectControllingAuthorities({
   query = "",
   docs = [],
   limit = 5,
-  responseMode = RESPONSE_MODE.STANDARD
+  responseMode =
+    RESPONSE_MODE.STANDARD
 } = {}) {
-  const { results } = rerankForTina({
-    query,
-    docs,
-    limit: Math.max(limit * 2, 10),
-    suppressIssueMismatch: true,
-    suppressWeakSecondary: true,
-    suppressSuperseded: true,
-    responseMode
-  });
+  const { results } =
+    rerankForTina({
+      query,
+      docs,
+
+      limit:
+        Math.max(
+          limit * 2,
+          10
+        ),
+
+      suppressIssueMismatch: true,
+      suppressWeakSecondary: true,
+      suppressSuperseded: true,
+
+      responseMode
+    });
 
   return results
     .filter(
-      (doc) => getAuthorityTypeForDoc(doc) !== "SECONDARY"
+      (doc) =>
+        getAuthorityTypeForDoc(
+          doc
+        ) !== "SECONDARY"
     )
+
     .slice(0, limit);
 }
 
@@ -690,17 +1150,26 @@ function selectIssueRelevantCases({
   query = "",
   docs = [],
   limit = 4,
-  responseMode = RESPONSE_MODE.TECHNICAL
+  responseMode =
+    RESPONSE_MODE.TECHNICAL
 } = {}) {
-  const { results } = rerankForTina({
-    query,
-    docs,
-    limit: Math.max(limit * 3, 12),
-    suppressIssueMismatch: true,
-    suppressWeakSecondary: true,
-    suppressSuperseded: true,
-    responseMode
-  });
+  const { results } =
+    rerankForTina({
+      query,
+      docs,
+
+      limit:
+        Math.max(
+          limit * 3,
+          12
+        ),
+
+      suppressIssueMismatch: true,
+      suppressWeakSecondary: true,
+      suppressSuperseded: true,
+
+      responseMode
+    });
 
   return results
     .filter((doc) =>
@@ -709,8 +1178,13 @@ function selectIssueRelevantCases({
         "CTA_EN_BANC",
         "COURT_OF_APPEALS",
         "CTA_DIVISION"
-      ].includes(getAuthorityTypeForDoc(doc))
+      ].includes(
+        getAuthorityTypeForDoc(
+          doc
+        )
+      )
     )
+
     .slice(0, limit);
 }
 
@@ -725,5 +1199,6 @@ module.exports = {
   rerankForTina,
 
   selectControllingAuthorities,
+
   selectIssueRelevantCases
 };
