@@ -1,6 +1,34 @@
 // FILE: query-intent-engine.js
+"use strict";
 
-const ISSUE_TYPE = {
+/**
+ * query-intent-engine.js
+ * TINA Query Intent Engine
+ *
+ * Purpose:
+ * Detects:
+ * - tax issue type
+ * - legal dimension
+ * - issuance/case references
+ * - adaptive routing intent
+ * - retrieval prioritization
+ * - evidence sensitivity
+ * - contract / transaction / audit intent
+ * - doctrine/conflict triggers
+ *
+ * Compatible with:
+ * - adaptive-mode-engine.js
+ * - adaptive-response-planner.js
+ * - ask-handler.js
+ * - rag-answer-handler.js
+ * - supersession-engine.js
+ * - reranker-engine.js
+ * - jurisprudence-engine.js
+ */
+
+const ENGINE_VERSION = "2.1.0";
+
+const ISSUE_TYPE = Object.freeze({
   VAT_REFUND: "VAT_REFUND",
   VAT_LIABILITY: "VAT_LIABILITY",
   VAT_SUBSTANTIATION: "VAT_SUBSTANTIATION",
@@ -33,6 +61,18 @@ const ISSUE_TYPE = {
   DOCTRINE: "DOCTRINE",
   CONFLICT_ANALYSIS: "CONFLICT_ANALYSIS",
 
+  CONTRACT: "CONTRACT",
+  TRANSACTION: "TRANSACTION",
+  ECONOMIC_SUBSTANCE: "ECONOMIC_SUBSTANCE",
+  PRINCIPAL_AGENT: "PRINCIPAL_AGENT",
+  PASS_THROUGH: "PASS_THROUGH",
+  REIMBURSEMENT: "REIMBURSEMENT",
+  BUNDLED_TRANSACTION: "BUNDLED_TRANSACTION",
+
+  AUDIT: "AUDIT",
+  ACCOUNTING: "ACCOUNTING",
+  PFRS: "PFRS",
+
   LOCAL_TAX: "LOCAL_TAX",
   DST: "DST",
   PERCENTAGE_TAX: "PERCENTAGE_TAX",
@@ -43,19 +83,21 @@ const ISSUE_TYPE = {
   DONOR_TAX: "DONOR_TAX",
 
   GENERAL_TAX: "GENERAL_TAX"
-};
+});
 
-const RESPONSE_MODE = {
-  STANDARD_TAX: "STANDARD_TAX",
-  PROVISION_CITATION: "PROVISION_CITATION",
-  CASE_ANALYSIS: "CASE_ANALYSIS",
-  DOCTRINE_ANALYSIS: "DOCTRINE_ANALYSIS",
-  CONFLICT_ANALYSIS: "CONFLICT_ANALYSIS",
-  SOURCE_FINDER: "SOURCE_FINDER",
-  FALLBACK: "FALLBACK"
-};
+const RESPONSE_MODE = Object.freeze({
+  QUICK: "QUICK",
+  STANDARD: "STANDARD",
+  TECHNICAL: "TECHNICAL",
+  AUDIT: "AUDIT",
+  LITIGATION: "LITIGATION",
+  CONTRACT: "CONTRACT",
+  TRANSACTION: "TRANSACTION",
+  EVIDENCE_HEAVY: "EVIDENCE_HEAVY",
+  REVIEWER: "REVIEWER"
+});
 
-const LEGAL_DIMENSION = {
+const LEGAL_DIMENSION = Object.freeze({
   SUBSTANTIVE: "substantive",
   PROCEDURAL: "procedural",
   EVIDENTIARY: "evidentiary",
@@ -63,11 +105,17 @@ const LEGAL_DIMENSION = {
   TEMPORAL: "temporal",
   ADMINISTRATIVE: "administrative",
   FACTUAL: "factual",
+  ACCOUNTING: "accounting",
+  CONTRACTUAL: "contractual",
+  ECONOMIC_SUBSTANCE: "economic_substance",
+  AUDIT: "audit",
   GENERAL: "general"
-};
+});
 
 function normalizeText(value = "") {
-  return String(value || "").replace(/\s+/g, " ").trim();
+  return String(value || "")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function lower(value = "") {
@@ -83,7 +131,25 @@ function has(text = "", pattern) {
 }
 
 function scorePattern(text = "", patterns = [], weight = 1) {
-  return patterns.reduce((score, pattern) => score + (has(text, pattern) ? weight : 0), 0);
+  return patterns.reduce(
+    (score, pattern) => score + (has(text, pattern) ? weight : 0),
+    0
+  );
+}
+
+function normalizeYear(year = "") {
+  const raw = String(year || "").trim();
+
+  if (!raw) return "";
+  if (/^\d{4}$/.test(raw)) return raw;
+
+  if (/^\d{2}$/.test(raw)) {
+    const yy = Number(raw);
+    const currentYY = new Date().getFullYear() % 100;
+    return yy <= currentYY + 1 ? `20${raw}` : `19${raw}`;
+  }
+
+  return raw;
 }
 
 function detectIssuanceReference(text = "") {
@@ -110,6 +176,7 @@ function detectIssuanceReference(text = "") {
 
   for (const item of patterns) {
     const match = value.match(item.regex);
+
     if (match) {
       return {
         detected: true,
@@ -121,7 +188,10 @@ function detectIssuanceReference(text = "") {
     }
   }
 
-  const rulingMatch = value.match(/\b(?:bir\s*)?ruling\s*(?:no\.?)?\s*([a-z0-9()/. -]+)\b/i);
+  const rulingMatch = value.match(
+    /\b(?:bir\s*)?ruling\s*(?:no\.?)?\s*([a-z0-9()/. -]+)\b/i
+  );
+
   if (rulingMatch) {
     return {
       detected: true,
@@ -145,6 +215,7 @@ function detectCaseReference(text = "") {
   const value = normalizeText(text);
 
   const gr = value.match(/\bg\.?\s*r\.?\s*no\.?\s*([a-z0-9.-]+)\b/i);
+
   if (gr) {
     return {
       detected: true,
@@ -165,7 +236,10 @@ function detectCaseReference(text = "") {
     };
   }
 
-  const ca = value.match(/\bca-?g\.?\s*r\.?\s*(?:sp|cv|cr)?\s*no\.?\s*([a-z0-9.-]+)\b/i);
+  const ca = value.match(
+    /\bca-?g\.?\s*r\.?\s*(?:sp|cv|cr)?\s*no\.?\s*([a-z0-9.-]+)\b/i
+  );
+
   if (ca) {
     return {
       detected: true,
@@ -174,11 +248,16 @@ function detectCaseReference(text = "") {
     };
   }
 
-  if (/\b[A-Z][A-Za-z0-9&.,'\-\s]{2,60}\s+(?:v\.|vs\.?|versus)\s+[A-Z][A-Za-z0-9&.,'\-\s]{2,60}\b/.test(value)) {
+  const caseName =
+    value.match(
+      /\b[A-Z][A-Za-z0-9&.,'\-\s]{2,60}\s+(?:v\.|vs\.?|versus)\s+[A-Z][A-Za-z0-9&.,'\-\s]{2,60}\b/
+    )?.[0] || null;
+
+  if (caseName) {
     return {
       detected: true,
       court: "CASE_NAME",
-      reference: value.match(/\b[A-Z][A-Za-z0-9&.,'\-\s]{2,60}\s+(?:v\.|vs\.?|versus)\s+[A-Z][A-Za-z0-9&.,'\-\s]{2,60}\b/)?.[0] || null
+      reference: caseName
     };
   }
 
@@ -189,27 +268,11 @@ function detectCaseReference(text = "") {
   };
 }
 
-function normalizeYear(year = "") {
-  const raw = String(year || "").trim();
-  if (!raw) return "";
-
-  if (/^\d{4}$/.test(raw)) return raw;
-
-  if (/^\d{2}$/.test(raw)) {
-    const yy = Number(raw);
-    const currentYY = new Date().getFullYear() % 100;
-    return yy <= currentYY + 1 ? `20${raw}` : `19${raw}`;
-  }
-
-  return raw;
-}
-
 function detectNamedLaw(text = "") {
   const value = lower(text);
-
   const laws = [];
 
-  if (/\b(create law|create act|ra\s*11534|republic act\s*(?:no\.?)?\s*11534)\b/i.test(value)) {
+  if (/\b(create law|create act|ra\s*11534)\b/i.test(value)) {
     laws.push({
       code: "CREATE",
       title: "Corporate Recovery and Tax Incentives for Enterprises Act",
@@ -217,7 +280,7 @@ function detectNamedLaw(text = "") {
     });
   }
 
-  if (/\b(train law|train act|ra\s*10963|republic act\s*(?:no\.?)?\s*10963)\b/i.test(value)) {
+  if (/\b(train law|train act|ra\s*10963)\b/i.test(value)) {
     laws.push({
       code: "TRAIN",
       title: "Tax Reform for Acceleration and Inclusion Act",
@@ -225,7 +288,7 @@ function detectNamedLaw(text = "") {
     });
   }
 
-  if (/\b(eopt|ease of paying taxes|ra\s*11976|republic act\s*(?:no\.?)?\s*11976)\b/i.test(value)) {
+  if (/\b(eopt|ease of paying taxes|ra\s*11976)\b/i.test(value)) {
     laws.push({
       code: "EOPT",
       title: "Ease of Paying Taxes Act",
@@ -233,7 +296,7 @@ function detectNamedLaw(text = "") {
     });
   }
 
-  if (/\b(create more|ra\s*12066|republic act\s*(?:no\.?)?\s*12066)\b/i.test(value)) {
+  if (/\b(create more|ra\s*12066)\b/i.test(value)) {
     laws.push({
       code: "CREATE_MORE",
       title: "CREATE MORE Act",
@@ -241,7 +304,10 @@ function detectNamedLaw(text = "") {
     });
   }
 
-  const raMatch = value.match(/\b(?:ra|r\.a\.|republic act)\s*(?:no\.?)?\s*(\d{4,6})\b/i);
+  const raMatch = value.match(
+    /\b(?:ra|r\.a\.|republic act)\s*(?:no\.?)?\s*(\d{4,6})\b/i
+  );
+
   if (raMatch && !laws.some((law) => law.raNumber === raMatch[1])) {
     laws.push({
       code: `RA_${raMatch[1]}`,
@@ -260,210 +326,136 @@ function detectIssueTypes(question = "") {
   const q = lower(question);
   const issues = [];
 
-  if (scorePattern(q, [
-    /\bvat refund\b/i,
-    /\binput vat refund\b/i,
-    /\bexcess input vat\b/i,
-    /\bunutilized input vat\b/i,
-    /\btax credit certificate\b/i,
-    /\btcc\b/i,
-    /\b120\+30\b/i,
-    /\badministrative claim\b/i,
-    /\bjudicial claim\b/i
-  ]) > 0) {
-    issues.push(ISSUE_TYPE.VAT_REFUND);
-  }
+  const push = (condition, issue) => {
+    if (condition) issues.push(issue);
+  };
 
-  if (scorePattern(q, [
-    /\bvat liability\b/i,
-    /\boutput vat\b/i,
-    /\bsubject to vat\b/i,
-    /\bvatable\b/i,
-    /\bsale of goods\b/i,
-    /\bsale of services\b/i,
-    /\bgross selling price\b/i,
-    /\bgross receipts\b/i
-  ]) > 0) {
-    issues.push(ISSUE_TYPE.VAT_LIABILITY);
-  }
+  push(/\bvat refund\b|\bunutilized input vat\b/i.test(q), ISSUE_TYPE.VAT_REFUND);
 
-  if (scorePattern(q, [
-    /\bvat exempt\b/i,
-    /\bvat-exempt\b/i,
-    /\bexempt from vat\b/i,
-    /\bsection\s*109\b/i,
-    /\b109\b.*\bvat\b/i
-  ]) > 0) {
-    issues.push(ISSUE_TYPE.VAT_EXEMPTION);
-  }
+  push(
+    /\boutput vat\b|\bsubject to vat\b|\bvatable\b/i.test(q),
+    ISSUE_TYPE.VAT_LIABILITY
+  );
 
-  if (scorePattern(q, [
-    /\bzero-rated\b/i,
-    /\bzero rated\b/i,
-    /\bzero-rating\b/i,
-    /\bexport sale\b/i
-  ]) > 0) {
-    issues.push(ISSUE_TYPE.ZERO_RATED_SALES);
-  }
+  push(
+    /\bvat exempt\b|\bexempt from vat\b|\bsection\s*109\b/i.test(q),
+    ISSUE_TYPE.VAT_EXEMPTION
+  );
 
-  if (scorePattern(q, [
-    /\binvoice\b/i,
-    /\breceipt\b/i,
-    /\bsubstantiation\b/i,
-    /\bdocumentary\b/i,
-    /\bproof\b/i,
-    /\bevidence\b/i,
-    /\bbooks\b/i,
-    /\brecords\b/i
-  ]) > 0) {
-    issues.push(ISSUE_TYPE.EVIDENTIARY);
-    if (q.includes("vat")) issues.push(ISSUE_TYPE.VAT_SUBSTANTIATION);
-  }
+  push(
+    /\bzero-rated\b|\bzero rated\b|\bexport sale\b/i.test(q),
+    ISSUE_TYPE.ZERO_RATED_SALES
+  );
 
-  if (scorePattern(q, [
-    /\bincome tax\b/i,
-    /\brcit\b/i,
-    /\bmcit\b/i,
-    /\bnolco\b/i,
-    /\bdeductible\b/i,
-    /\bnon-deductible\b/i,
-    /\bdeduction\b/i,
-    /\bgross income\b/i,
-    /\btaxable income\b/i
-  ]) > 0) {
-    issues.push(ISSUE_TYPE.INCOME_TAX);
-  }
+  push(
+    /\binvoice\b|\breceipt\b|\bsubstantiation\b|\bdocumentary\b|\bevidence\b/i.test(q),
+    ISSUE_TYPE.EVIDENTIARY
+  );
 
-  if (/\brcit\b/i.test(q)) issues.push(ISSUE_TYPE.RCIT);
-  if (/\bmcit\b/i.test(q)) issues.push(ISSUE_TYPE.MCIT);
-  if (/\bnolco\b/i.test(q)) issues.push(ISSUE_TYPE.NOLCO);
+  push(
+    /\bincome tax\b|\brcit\b|\bmcit\b|\bnolco\b/i.test(q),
+    ISSUE_TYPE.INCOME_TAX
+  );
 
-  if (scorePattern(q, [
-    /\bdeductible\b/i,
-    /\bnon-deductible\b/i,
-    /\bnondeductible\b/i,
-    /\bordinary and necessary\b/i,
-    /\bsubstantiated expense\b/i
-  ]) > 0) {
-    issues.push(ISSUE_TYPE.DEDUCTIBILITY);
-  }
+  push(/\brcit\b/i.test(q), ISSUE_TYPE.RCIT);
+  push(/\bmcit\b/i.test(q), ISSUE_TYPE.MCIT);
+  push(/\bnolco\b/i.test(q), ISSUE_TYPE.NOLCO);
 
-  if (scorePattern(q, [
-    /\bwithholding\b/i,
-    /\bewt\b/i,
-    /\bcwt\b/i,
-    /\bfwt\b/i,
-    /\bexpanded withholding\b/i,
-    /\bcreditable withholding\b/i,
-    /\bfinal withholding\b/i,
-    /\b2307\b/i,
-    /\b1601\b/i
-  ]) > 0) {
-    issues.push(ISSUE_TYPE.WITHHOLDING_TAX);
-  }
+  push(
+    /\bdeductible\b|\bnon-deductible\b|\bnondeductible\b/i.test(q),
+    ISSUE_TYPE.DEDUCTIBILITY
+  );
 
-  if (/\bewt\b|expanded withholding/i.test(q)) issues.push(ISSUE_TYPE.EWT);
-  if (/\bcwt\b|creditable withholding/i.test(q)) issues.push(ISSUE_TYPE.CWT);
-  if (/\bfwt\b|final withholding/i.test(q)) issues.push(ISSUE_TYPE.FWT);
+  push(
+    /\bwithholding\b|\bewt\b|\bcwt\b|\bfwt\b/i.test(q),
+    ISSUE_TYPE.WITHHOLDING_TAX
+  );
 
-  if (scorePattern(q, [
-    /\bassessment\b/i,
-    /\bdeficiency tax\b/i,
-    /\bloa\b/i,
-    /\bletter of authority\b/i,
-    /\bpan\b/i,
-    /\bfan\b/i,
-    /\bfld\b/i,
-    /\bprotest\b/i
-  ]) > 0) {
-    issues.push(ISSUE_TYPE.ASSESSMENT);
-  }
+  push(/\bewt\b/i.test(q), ISSUE_TYPE.EWT);
+  push(/\bcwt\b/i.test(q), ISSUE_TYPE.CWT);
+  push(/\bfwt\b/i.test(q), ISSUE_TYPE.FWT);
 
-  if (/\bloa\b|letter of authority/i.test(q)) issues.push(ISSUE_TYPE.LOA);
-  if (/\bpan\b|\bfan\b|\bfld\b|preliminary assessment|final assessment/i.test(q)) issues.push(ISSUE_TYPE.PAN_FAN);
+  push(
+    /\bassessment\b|\bdeficiency tax\b|\bloa\b|\bpan\b|\bfan\b|\bfld\b/i.test(q),
+    ISSUE_TYPE.ASSESSMENT
+  );
 
-  if (scorePattern(q, [
-    /\brefund\b/i,
-    /\bprotest\b/i,
-    /\bappeal\b/i,
-    /\bremedy\b/i,
-    /\bcta\b/i,
-    /\bcourt of tax appeals\b/i
-  ]) > 0) {
-    issues.push(ISSUE_TYPE.TAX_REMEDIES);
-  }
+  push(/\bloa\b|letter of authority/i.test(q), ISSUE_TYPE.LOA);
 
-  if (scorePattern(q, [
-    /\bprescription\b/i,
-    /\bprescriptive\b/i,
-    /\bstatute of limitations\b/i,
-    /\bthree-year\b/i,
-    /\bten-year\b/i
-  ]) > 0) {
-    issues.push(ISSUE_TYPE.PRESCRIPTION);
-  }
+  push(
+    /\brefund\b|\bprotest\b|\bappeal\b|\bcta\b/i.test(q),
+    ISSUE_TYPE.TAX_REMEDIES
+  );
 
-  if (scorePattern(q, [
-    /\bjurisdiction\b/i,
-    /\bjurisdictional\b/i,
-    /\bcondition precedent\b/i,
-    /\bexhaustion\b/i,
-    /\bcourt has no jurisdiction\b/i
-  ]) > 0) {
-    issues.push(ISSUE_TYPE.JURISDICTIONAL);
-  }
+  push(/\bprescription\b|\bthree-year\b|\bten-year\b/i.test(q), ISSUE_TYPE.PRESCRIPTION);
 
-  if (scorePattern(q, [
-    /\bdeadline\b/i,
-    /\bdue date\b/i,
-    /\bfiling\b/i,
-    /\bfile\b/i,
-    /\breturn\b/i,
-    /\bform\b/i,
-    /\bperiod\b/i
-  ]) > 0) {
-    issues.push(ISSUE_TYPE.PROCEDURAL);
-  }
+  push(/\bjurisdiction\b|\bcondition precedent\b/i.test(q), ISSUE_TYPE.JURISDICTIONAL);
 
-  if (scorePattern(q, [
-    /\bdoctrine\b/i,
-    /\bsubstance over form\b/i,
-    /\bbusiness purpose\b/i,
-    /\beconomic substance\b/i,
-    /\btax avoidance\b/i,
-    /\btax evasion\b/i,
-    /\bjurisprudence\b/i
-  ]) > 0) {
-    issues.push(ISSUE_TYPE.DOCTRINE);
-  }
+  push(/\bdeadline\b|\bfiling\b|\bdue date\b/i.test(q), ISSUE_TYPE.PROCEDURAL);
 
-  if (scorePattern(q, [
-    /\bconflict\b/i,
-    /\bconflicting\b/i,
-    /\bprevails\b/i,
-    /\boverride\b/i,
-    /\bhierarchy\b/i,
-    /\bwhich law controls\b/i,
-    /\bwhich authority controls\b/i
-  ]) > 0) {
-    issues.push(ISSUE_TYPE.CONFLICT_ANALYSIS);
-  }
+  push(
+    /\bdoctrine\b|\bsubstance over form\b|\beconomic substance\b/i.test(q),
+    ISSUE_TYPE.DOCTRINE
+  );
+
+  push(
+    /\bconflict\b|\bprevails\b|\boverride\b|\bhierarchy\b/i.test(q),
+    ISSUE_TYPE.CONFLICT_ANALYSIS
+  );
+
+  push(
+    /\bcontract\b|\bagreement\b|\blease agreement\b|\bconcession agreement\b/i.test(q),
+    ISSUE_TYPE.CONTRACT
+  );
+
+  push(
+    /\bprincipal vs agent\b|\bpass-through\b|\breimbursement\b|\bbundled\b|\bgross or net\b/i.test(q),
+    ISSUE_TYPE.TRANSACTION
+  );
+
+  push(
+    /\beconomic substance\b|\bsubstance over form\b|\bsham\b|\bsimulation\b/i.test(q),
+    ISSUE_TYPE.ECONOMIC_SUBSTANCE
+  );
+
+  push(
+    /\bprincipal vs agent\b|\bagent\b|\bprincipal\b/i.test(q),
+    ISSUE_TYPE.PRINCIPAL_AGENT
+  );
+
+  push(/\bpass-through\b|\bpass through\b/i.test(q), ISSUE_TYPE.PASS_THROUGH);
+
+  push(/\breimbursement\b|\breimbursable\b/i.test(q), ISSUE_TYPE.REIMBURSEMENT);
+
+  push(/\bbundled\b|\bpackage\b|\binclusive\b/i.test(q), ISSUE_TYPE.BUNDLED_TRANSACTION);
+
+  push(
+    /\baudit\b|\bqualified opinion\b|\bmisstatement\b|\bworking paper\b/i.test(q),
+    ISSUE_TYPE.AUDIT
+  );
+
+  push(
+    /\bpfrs\b|\bpas\b|\bfinancial statements\b|\bafs\b/i.test(q),
+    ISSUE_TYPE.PFRS
+  );
+
+  push(
+    /\baccounting treatment\b|\bbooked as\b|\bclassification\b/i.test(q),
+    ISSUE_TYPE.ACCOUNTING
+  );
 
   if (detectIssuanceReference(q).detected) issues.push(ISSUE_TYPE.ISSUANCE);
   if (detectCaseReference(question).detected) issues.push(ISSUE_TYPE.CASE_LAW);
   if (detectNamedLaw(question).detected) issues.push(ISSUE_TYPE.NAMED_LAW);
 
-  if (/\blocal tax\b|\blgu\b|\blocal business tax\b|\bmayor/i.test(q)) {
-    issues.push(ISSUE_TYPE.LOCAL_TAX);
-  }
-
-  if (/\bdst\b|documentary stamp/i.test(q)) issues.push(ISSUE_TYPE.DST);
-  if (/\bpercentage tax\b|\b2551\b|\bnon-vat\b|\bnon vat\b/i.test(q)) issues.push(ISSUE_TYPE.PERCENTAGE_TAX);
-  if (/\bexcise tax\b/i.test(q)) issues.push(ISSUE_TYPE.EXCISE_TAX);
-  if (/\bfinal tax\b|passive income|interest income|royalties|dividends/i.test(q)) issues.push(ISSUE_TYPE.FINAL_TAX);
-  if (/\bcgt\b|capital gains tax|sale of shares|real property/i.test(q)) issues.push(ISSUE_TYPE.CGT);
-  if (/\bestate tax\b|gross estate|net estate|decedent/i.test(q)) issues.push(ISSUE_TYPE.ESTATE_TAX);
-  if (/\bdonor'?s tax\b|donor tax|donation|gift/i.test(q)) issues.push(ISSUE_TYPE.DONOR_TAX);
+  push(/\blocal tax\b|\blgu\b/i.test(q), ISSUE_TYPE.LOCAL_TAX);
+  push(/\bdst\b/i.test(q), ISSUE_TYPE.DST);
+  push(/\bpercentage tax\b/i.test(q), ISSUE_TYPE.PERCENTAGE_TAX);
+  push(/\bexcise tax\b/i.test(q), ISSUE_TYPE.EXCISE_TAX);
+  push(/\bfinal tax\b/i.test(q), ISSUE_TYPE.FINAL_TAX);
+  push(/\bcgt\b|capital gains/i.test(q), ISSUE_TYPE.CGT);
+  push(/\bestate tax\b/i.test(q), ISSUE_TYPE.ESTATE_TAX);
+  push(/\bdonor'?s tax\b|\bdonation\b/i.test(q), ISSUE_TYPE.DONOR_TAX);
 
   return unique(issues.length ? issues : [ISSUE_TYPE.GENERAL_TAX]);
 }
@@ -472,183 +464,204 @@ function detectLegalDimensions(question = "") {
   const q = lower(question);
   const dimensions = [];
 
-  if (scorePattern(q, [
-    /\btaxable\b/i,
-    /\bliable\b/i,
-    /\bsubject to\b/i,
-    /\bexempt\b/i,
-    /\bdeductible\b/i,
-    /\bgross income\b/i,
-    /\btax base\b/i,
-    /\btax rate\b/i,
-    /\boutput vat\b/i
-  ]) > 0) {
-    dimensions.push(LEGAL_DIMENSION.SUBSTANTIVE);
-  }
+  const push = (condition, dimension) => {
+    if (condition) dimensions.push(dimension);
+  };
 
-  if (scorePattern(q, [
-    /\bfile\b/i,
-    /\bfiling\b/i,
-    /\bdeadline\b/i,
-    /\bdue date\b/i,
-    /\bperiod\b/i,
-    /\bprotest\b/i,
-    /\bappeal\b/i,
-    /\bassessment\b/i,
-    /\breturn\b/i,
-    /\bform\b/i
-  ]) > 0) {
-    dimensions.push(LEGAL_DIMENSION.PROCEDURAL);
-  }
+  push(
+    /\btaxable\b|\bliable\b|\bsubject to\b|\bdeductible\b/i.test(q),
+    LEGAL_DIMENSION.SUBSTANTIVE
+  );
 
-  if (scorePattern(q, [
-    /\binvoice\b/i,
-    /\breceipt\b/i,
-    /\bsubstantiation\b/i,
-    /\bdocumentary\b/i,
-    /\bproof\b/i,
-    /\bevidence\b/i,
-    /\brecords\b/i,
-    /\bbooks\b/i
-  ]) > 0) {
-    dimensions.push(LEGAL_DIMENSION.EVIDENTIARY);
-  }
+  push(
+    /\bfiling\b|\bdeadline\b|\breturn\b|\bprotest\b|\bappeal\b/i.test(q),
+    LEGAL_DIMENSION.PROCEDURAL
+  );
 
-  if (scorePattern(q, [
-    /\bjurisdiction\b/i,
-    /\bjurisdictional\b/i,
-    /\bcta\b/i,
-    /\bcondition precedent\b/i,
-    /\b120\+30\b/i
-  ]) > 0) {
-    dimensions.push(LEGAL_DIMENSION.JURISDICTIONAL);
-  }
+  push(
+    /\binvoice\b|\breceipt\b|\bsubstantiation\b|\bevidence\b/i.test(q),
+    LEGAL_DIMENSION.EVIDENTIARY
+  );
 
-  if (scorePattern(q, [
-    /\beffective\b/i,
-    /\beffectivity\b/i,
-    /\bretroactive\b/i,
-    /\bprospective\b/i,
-    /\btaxable year\b/i,
-    /\btransition\b/i,
-    /\bsuperseded\b/i,
-    /\bamended\b/i,
-    /\brepealed\b/i
-  ]) > 0) {
-    dimensions.push(LEGAL_DIMENSION.TEMPORAL);
-  }
+  push(
+    /\bjurisdiction\b|\bcondition precedent\b|\b120\+30\b/i.test(q),
+    LEGAL_DIMENSION.JURISDICTIONAL
+  );
 
-  if (scorePattern(q, [
-    /\brmc\b/i,
-    /\brmo\b/i,
-    /\bramo\b/i,
-    /\bbir ruling\b/i,
-    /\badministrative\b/i,
-    /\binterpretative\b/i,
-    /\bclarificatory\b/i
-  ]) > 0) {
-    dimensions.push(LEGAL_DIMENSION.ADMINISTRATIVE);
-  }
+  push(
+    /\beffective\b|\bretroactive\b|\bprospective\b|\bsuperseded\b/i.test(q),
+    LEGAL_DIMENSION.TEMPORAL
+  );
 
-  if (scorePattern(q, [
-    /\bfacts\b/i,
-    /\bfactual\b/i,
-    /\bactual\b/i,
-    /\bcircumstances\b/i,
-    /\btransaction\b/i,
-    /\bdocumentation\b/i
-  ]) > 0) {
-    dimensions.push(LEGAL_DIMENSION.FACTUAL);
-  }
+  push(
+    /\brmc\b|\brmo\b|\bramo\b|\bbir ruling\b/i.test(q),
+    LEGAL_DIMENSION.ADMINISTRATIVE
+  );
+
+  push(
+    /\bfacts\b|\bactual\b|\bcircumstances\b|\btransaction\b/i.test(q),
+    LEGAL_DIMENSION.FACTUAL
+  );
+
+  push(
+    /\baccounting\b|\bpfrs\b|\bpas\b|\bclassification\b/i.test(q),
+    LEGAL_DIMENSION.ACCOUNTING
+  );
+
+  push(
+    /\bcontract\b|\bagreement\b|\bclause\b/i.test(q),
+    LEGAL_DIMENSION.CONTRACTUAL
+  );
+
+  push(
+    /\beconomic substance\b|\bsubstance over form\b/i.test(q),
+    LEGAL_DIMENSION.ECONOMIC_SUBSTANCE
+  );
+
+  push(
+    /\baudit\b|\bmisstatement\b|\bworking paper\b/i.test(q),
+    LEGAL_DIMENSION.AUDIT
+  );
 
   return unique(dimensions.length ? dimensions : [LEGAL_DIMENSION.GENERAL]);
 }
 
-function detectResponseMode(question = "", issueTypes = []) {
+function detectAdaptiveMode(question = "", issueTypes = [], dimensions = []) {
   const q = lower(question);
 
-  if (issueTypes.includes(ISSUE_TYPE.CONFLICT_ANALYSIS)) return RESPONSE_MODE.CONFLICT_ANALYSIS;
-  if (issueTypes.includes(ISSUE_TYPE.DOCTRINE)) return RESPONSE_MODE.DOCTRINE_ANALYSIS;
-  if (issueTypes.includes(ISSUE_TYPE.CASE_LAW)) return RESPONSE_MODE.CASE_ANALYSIS;
+  if (
+    issueTypes.includes(ISSUE_TYPE.AUDIT) ||
+    issueTypes.includes(ISSUE_TYPE.PFRS)
+  ) {
+    return RESPONSE_MODE.AUDIT;
+  }
 
   if (
-    issueTypes.includes(ISSUE_TYPE.ISSUANCE) ||
-    /\b(cite|citation|legal basis|provision|section|sec\.|article|under rr|under rmc|under rmo|under nirc)\b/i.test(q)
+    issueTypes.includes(ISSUE_TYPE.CONTRACT)
   ) {
-    return RESPONSE_MODE.PROVISION_CITATION;
+    return RESPONSE_MODE.CONTRACT;
   }
 
-  if (/\b(source|find source|show source|where is|which file)\b/i.test(q)) {
-    return RESPONSE_MODE.SOURCE_FINDER;
+  if (
+    issueTypes.includes(ISSUE_TYPE.TRANSACTION) ||
+    issueTypes.includes(ISSUE_TYPE.PRINCIPAL_AGENT) ||
+    issueTypes.includes(ISSUE_TYPE.BUNDLED_TRANSACTION)
+  ) {
+    return RESPONSE_MODE.TRANSACTION;
   }
 
-  return RESPONSE_MODE.STANDARD_TAX;
+  if (
+    issueTypes.includes(ISSUE_TYPE.EVIDENTIARY)
+  ) {
+    return RESPONSE_MODE.EVIDENCE_HEAVY;
+  }
+
+  if (
+    issueTypes.includes(ISSUE_TYPE.CONFLICT_ANALYSIS) ||
+    issueTypes.includes(ISSUE_TYPE.DOCTRINE) ||
+    issueTypes.includes(ISSUE_TYPE.CASE_LAW)
+  ) {
+    return RESPONSE_MODE.TECHNICAL;
+  }
+
+  if (
+    issueTypes.includes(ISSUE_TYPE.ASSESSMENT) ||
+    issueTypes.includes(ISSUE_TYPE.TAX_REMEDIES)
+  ) {
+    return RESPONSE_MODE.LITIGATION;
+  }
+
+  if (
+    /\bbrief\b|\bquick\b|\bshort answer\b|\bsimple\b/i.test(q)
+  ) {
+    return RESPONSE_MODE.QUICK;
+  }
+
+  if (
+    /\bcpale\b|\breviewer\b|\bquiz\b|\bexample\b|\blayman\b/i.test(q)
+  ) {
+    return RESPONSE_MODE.REVIEWER;
+  }
+
+  return RESPONSE_MODE.STANDARD;
 }
 
 function detectRiskFlags(question = "", issueTypes = [], dimensions = []) {
   const flags = [];
 
+  const push = (code, message, severity = "MEDIUM") => {
+    flags.push({ code, message, severity });
+  };
+
   if (
     issueTypes.includes(ISSUE_TYPE.VAT_LIABILITY) &&
     issueTypes.includes(ISSUE_TYPE.VAT_REFUND)
   ) {
-    flags.push({
-      code: "VAT_LIABILITY_REFUND_MIXED",
-      message:
-        "Question contains both VAT liability and VAT refund signals. Retrieval must separate substantive liability authorities from refund procedure authorities."
-    });
-  }
-
-  if (
-    issueTypes.includes(ISSUE_TYPE.VAT_REFUND) &&
-    dimensions.includes(LEGAL_DIMENSION.JURISDICTIONAL)
-  ) {
-    flags.push({
-      code: "VAT_REFUND_JURISDICTIONAL",
-      message:
-        "VAT refund question appears jurisdictional. Prioritize administrative and judicial claim timing authorities."
-    });
-  }
-
-  if (
-    issueTypes.includes(ISSUE_TYPE.VAT_LIABILITY) &&
-    dimensions.includes(LEGAL_DIMENSION.EVIDENTIARY)
-  ) {
-    flags.push({
-      code: "VAT_LIABILITY_EVIDENTIARY",
-      message:
-        "VAT liability question includes evidentiary signals. Distinguish taxability from invoicing/substantiation."
-    });
+    push(
+      "VAT_LIABILITY_REFUND_MIXED",
+      "Separate substantive VAT liability authorities from VAT refund procedural authorities.",
+      "HIGH"
+    );
   }
 
   if (
     issueTypes.includes(ISSUE_TYPE.CONFLICT_ANALYSIS)
   ) {
-    flags.push({
-      code: "REQUIRES_CONFLICT_REASONING",
-      message:
-        "Answer must distinguish hierarchy conflict, doctrinal conflict, and apparent conflict."
-    });
+    push(
+      "REQUIRES_CONFLICT_REASONING",
+      "Answer must distinguish hierarchy conflict, doctrinal conflict, and apparent conflict.",
+      "HIGH"
+    );
   }
 
   if (
     issueTypes.includes(ISSUE_TYPE.CASE_LAW)
   ) {
-    flags.push({
-      code: "REQUIRES_ISSUE_RELEVANT_CASES",
-      message:
-        "Only issue-relevant jurisprudence should be retrieved and cited."
-      });
+    push(
+      "ISSUE_MATCHED_JURISPRUDENCE_ONLY",
+      "Only issue-relevant jurisprudence should be cited.",
+      "HIGH"
+    );
   }
 
   if (
-    issueTypes.includes(ISSUE_TYPE.NAMED_LAW)
+    issueTypes.includes(ISSUE_TYPE.EVIDENTIARY)
   ) {
-    flags.push({
-      code: "REQUIRES_PRIMARY_STATUTE",
-      message:
-        "Named-law questions require the exact statute first, then IRR or implementing issuances."
-    });
+    push(
+      "EVIDENCE_DEPENDENT_CONCLUSION",
+      "Strong conclusions should be deferred if evidence is incomplete.",
+      "HIGH"
+    );
+  }
+
+  if (
+    issueTypes.includes(ISSUE_TYPE.TRANSACTION)
+  ) {
+    push(
+      "TRANSACTION_CHARACTERIZATION_REQUIRED",
+      "Transaction characterization and economic substance analysis required.",
+      "HIGH"
+    );
+  }
+
+  if (
+    issueTypes.includes(ISSUE_TYPE.CONTRACT)
+  ) {
+    push(
+      "CONTRACT_INTERPRETATION_REQUIRED",
+      "Contract rights, obligations, consideration, risk allocation, and actual conduct must be analyzed.",
+      "HIGH"
+    );
+  }
+
+  if (
+    issueTypes.includes(ISSUE_TYPE.ECONOMIC_SUBSTANCE)
+  ) {
+    push(
+      "ECONOMIC_SUBSTANCE_REQUIRED",
+      "Legal form versus commercial reality analysis required.",
+      "HIGH"
+    );
   }
 
   return flags;
@@ -659,144 +672,275 @@ function buildRetrievalHints({
   dimensions = [],
   issuance = null,
   caseReference = null,
-  namedLaw = null
+  namedLaw = null,
+  adaptiveMode = RESPONSE_MODE.STANDARD
 }) {
   const includeAuthorityTypes = [];
-  const excludeIssueTypes = [];
   const priorityTerms = [];
+  const retrievalInstructions = [];
 
   if (namedLaw?.detected) {
     includeAuthorityTypes.push("STATUTE", "RR", "RMC", "RMO");
+
     for (const law of namedLaw.laws) {
-      priorityTerms.push(law.raNumber ? `RA ${law.raNumber}` : law.title);
       priorityTerms.push(law.title);
+
+      if (law.raNumber) {
+        priorityTerms.push(`RA ${law.raNumber}`);
+      }
     }
+
+    retrievalInstructions.push(
+      "Retrieve exact statute first before implementing issuances."
+    );
   }
 
   if (issuance?.detected) {
     includeAuthorityTypes.push(issuance.type);
     priorityTerms.push(issuance.reference);
+
+    retrievalInstructions.push(
+      "Retrieve exact issuance before semantic fallback retrieval."
+    );
   }
 
   if (caseReference?.detected) {
-    includeAuthorityTypes.push("SUPREME_COURT", "CTA_EN_BANC", "COURT_OF_APPEALS", "CTA_DIVISION");
+    includeAuthorityTypes.push(
+      "SUPREME_COURT",
+      "CTA_EN_BANC",
+      "COURT_OF_APPEALS",
+      "CTA_DIVISION"
+    );
+
     priorityTerms.push(caseReference.reference);
+
+    retrievalInstructions.push(
+      "Retrieve exact jurisprudence before semantic fallback retrieval."
+    );
   }
 
-  if (issueTypes.includes(ISSUE_TYPE.VAT_REFUND)) {
-    priorityTerms.push("VAT refund", "administrative claim", "judicial claim", "120+30", "unutilized input VAT");
-    excludeIssueTypes.push(ISSUE_TYPE.VAT_LIABILITY);
+  if (issueTypes.includes(ISSUE_TYPE.TRANSACTION)) {
+    retrievalInstructions.push(
+      "Prioritize transaction characterization, principal-agent, gross-vs-net, reimbursement, concession, and bundled transaction authorities."
+    );
   }
 
-  if (issueTypes.includes(ISSUE_TYPE.VAT_LIABILITY)) {
-    priorityTerms.push("output VAT", "subject to VAT", "vatable sales", "gross receipts");
-    excludeIssueTypes.push(ISSUE_TYPE.VAT_REFUND);
+  if (issueTypes.includes(ISSUE_TYPE.EVIDENTIARY)) {
+    retrievalInstructions.push(
+      "Prioritize documentary substantiation and evidentiary burden authorities."
+    );
   }
 
-  if (issueTypes.includes(ISSUE_TYPE.VAT_SUBSTANTIATION)) {
-    priorityTerms.push("invoice", "official receipt", "substantiation", "VAT invoice");
+  if (issueTypes.includes(ISSUE_TYPE.CONFLICT_ANALYSIS)) {
+    retrievalInstructions.push(
+      "Retrieve hierarchy-sensitive and issue-specific authorities only."
+    );
   }
 
-  if (issueTypes.includes(ISSUE_TYPE.WITHHOLDING_TAX)) {
-    priorityTerms.push("withholding tax", "expanded withholding tax", "creditable withholding tax", "BIR Form 2307");
-  }
-
-  if (issueTypes.includes(ISSUE_TYPE.MCIT)) {
-    priorityTerms.push("minimum corporate income tax", "MCIT");
-  }
-
-  if (issueTypes.includes(ISSUE_TYPE.NOLCO)) {
-    priorityTerms.push("net operating loss carry-over", "NOLCO");
-  }
-
-  if (dimensions.includes(LEGAL_DIMENSION.JURISDICTIONAL)) {
-    priorityTerms.push("jurisdictional", "condition precedent", "CTA jurisdiction");
-  }
-
-  if (dimensions.includes(LEGAL_DIMENSION.PROCEDURAL)) {
-    priorityTerms.push("filing", "deadline", "period", "remedy");
-  }
-
-  if (dimensions.includes(LEGAL_DIMENSION.EVIDENTIARY)) {
-    priorityTerms.push("substantiation", "documentary evidence", "burden of proof");
+  if (adaptiveMode === RESPONSE_MODE.AUDIT) {
+    retrievalInstructions.push(
+      "Prioritize PFRS/PAS, disclosure, audit evidence, and accounting classification authorities."
+    );
   }
 
   return {
     includeAuthorityTypes: unique(includeAuthorityTypes),
-    excludeIssueTypes: unique(excludeIssueTypes),
-    priorityTerms: unique(priorityTerms.filter(Boolean))
+    priorityTerms: unique(priorityTerms.filter(Boolean)),
+    retrievalInstructions: unique(retrievalInstructions),
+    adaptiveMode
   };
 }
 
-export function analyzeQueryIntent(question = "") {
+function buildEngineRouting({
+  issueTypes = [],
+  dimensions = [],
+  adaptiveMode = RESPONSE_MODE.STANDARD
+}) {
+  return {
+    needsProvisionCitationEngine:
+      adaptiveMode !== RESPONSE_MODE.QUICK,
+
+    needsJurisprudenceEngine:
+      issueTypes.includes(ISSUE_TYPE.CASE_LAW) ||
+      issueTypes.includes(ISSUE_TYPE.DOCTRINE) ||
+      issueTypes.includes(ISSUE_TYPE.CONFLICT_ANALYSIS),
+
+    needsSupersessionEngine:
+      issueTypes.includes(ISSUE_TYPE.ISSUANCE) ||
+      dimensions.includes(LEGAL_DIMENSION.TEMPORAL),
+
+    needsTransactionCharacterization:
+      issueTypes.includes(ISSUE_TYPE.TRANSACTION),
+
+    needsEconomicSubstance:
+      issueTypes.includes(ISSUE_TYPE.ECONOMIC_SUBSTANCE),
+
+    needsContractInterpretation:
+      issueTypes.includes(ISSUE_TYPE.CONTRACT),
+
+    needsEvidenceEvaluation:
+      issueTypes.includes(ISSUE_TYPE.EVIDENTIARY),
+
+    needsRiskScoring:
+      adaptiveMode !== RESPONSE_MODE.QUICK,
+
+    needsPositionStrength:
+      adaptiveMode !== RESPONSE_MODE.QUICK,
+
+    needsAdaptivePlanner: true,
+    needsAnswerRenderer: true
+  };
+}
+
+function buildConclusionControls(issueTypes = [], adaptiveMode = RESPONSE_MODE.STANDARD) {
+  const evidenceDependent =
+    issueTypes.includes(ISSUE_TYPE.EVIDENTIARY) ||
+    issueTypes.includes(ISSUE_TYPE.TRANSACTION) ||
+    issueTypes.includes(ISSUE_TYPE.CONTRACT);
+
+  return {
+    allowStrongConclusion:
+      !evidenceDependent && adaptiveMode !== RESPONSE_MODE.EVIDENCE_HEAVY,
+
+    requireLimitation:
+      evidenceDependent || adaptiveMode === RESPONSE_MODE.EVIDENCE_HEAVY,
+
+    requiredLanguage:
+      evidenceDependent
+        ? "Based on the available facts, the position is preliminary and subject to verification."
+        : "A direct conclusion may be given if supported by law and evidence."
+  };
+}
+
+function analyzeQueryIntent(question = "", options = {}) {
   const cleanQuestion = normalizeText(question);
+
   const issueTypes = detectIssueTypes(cleanQuestion);
   const legalDimensions = detectLegalDimensions(cleanQuestion);
+
   const issuance = detectIssuanceReference(cleanQuestion);
   const caseReference = detectCaseReference(cleanQuestion);
   const namedLaw = detectNamedLaw(cleanQuestion);
-  const responseMode = detectResponseMode(cleanQuestion, issueTypes);
-  const riskFlags = detectRiskFlags(cleanQuestion, issueTypes, legalDimensions);
+
+  const adaptiveMode = detectAdaptiveMode(
+    cleanQuestion,
+    issueTypes,
+    legalDimensions
+  );
+
+  const riskFlags = detectRiskFlags(
+    cleanQuestion,
+    issueTypes,
+    legalDimensions
+  );
+
   const retrievalHints = buildRetrievalHints({
     issueTypes,
     dimensions: legalDimensions,
     issuance,
     caseReference,
-    namedLaw
+    namedLaw,
+    adaptiveMode
   });
 
+  const engineRouting = buildEngineRouting({
+    issueTypes,
+    dimensions: legalDimensions,
+    adaptiveMode
+  });
+
+  const conclusionControls = buildConclusionControls(
+    issueTypes,
+    adaptiveMode
+  );
+
   return {
+    engine: "TINA_QUERY_INTENT_ENGINE",
+    version: ENGINE_VERSION,
+
     originalQuestion: question,
     normalizedQuestion: cleanQuestion,
-    responseMode,
+
+    adaptiveMode,
+
     issueTypes,
     legalDimensions,
+
     issuance,
     caseReference,
     namedLaw,
+
     riskFlags,
+
     retrievalHints,
+    engineRouting,
+    conclusionControls,
+
     requiresPrimaryAuthority:
-      namedLaw.detected || issuance.detected || caseReference.detected,
+      namedLaw.detected ||
+      issuance.detected ||
+      caseReference.detected,
+
     requiresIssueMatchedCases:
-      issueTypes.includes(ISSUE_TYPE.CASE_LAW) ||
-      responseMode === RESPONSE_MODE.CASE_ANALYSIS,
+      issueTypes.includes(ISSUE_TYPE.CASE_LAW),
+
     requiresConflictAnalysis:
-      issueTypes.includes(ISSUE_TYPE.CONFLICT_ANALYSIS) ||
-      responseMode === RESPONSE_MODE.CONFLICT_ANALYSIS,
+      issueTypes.includes(ISSUE_TYPE.CONFLICT_ANALYSIS),
+
     requiresAFStructure: true,
+
+    orchestrationMetadata: {
+      plannerCompatible: true,
+      rendererCompatible: true,
+      adaptivePipelineCompatible: true,
+      suggestedExecutionOrder: [
+        "query-intent-engine",
+        "reranker-engine",
+        "supersession-engine",
+        "jurisprudence-engine",
+        "adaptive-response-planner",
+        "answer-renderer"
+      ]
+    },
+
     tinaInstruction:
-      "Apply TINA master prompt: answer using A-F structure, hierarchy analysis, issue-relevant jurisprudence only, and no citation dumping."
+      "Apply TINA master prompt: use issue-specific authorities only, hierarchy analysis, evidence-aware reasoning, transaction characterization where required, and no citation dumping."
   };
 }
 
-export function buildIntentSearchQueries(question = "", maxQueries = 6) {
+function buildIntentSearchQueries(question = "", maxQueries = 8) {
   const intent = analyzeQueryIntent(question);
-  const queries = [intent.normalizedQuestion];
 
-  for (const term of intent.retrievalHints.priorityTerms) {
-    if (term) queries.push(`${intent.normalizedQuestion} ${term}`);
+  const queries = [
+    intent.normalizedQuestion
+  ];
+
+  for (const term of intent.retrievalHints.priorityTerms || []) {
+    queries.push(`${intent.normalizedQuestion} ${term}`);
   }
 
-  if (intent.namedLaw.detected) {
+  if (intent.namedLaw?.detected) {
     for (const law of intent.namedLaw.laws) {
-      if (law.raNumber) queries.push(`RA ${law.raNumber} ${law.title}`);
+      if (law.raNumber) {
+        queries.push(`RA ${law.raNumber} ${law.title}`);
+      }
+
       queries.push(law.title);
     }
   }
 
-  if (intent.issuance.detected) {
+  if (intent.issuance?.detected) {
     queries.push(intent.issuance.reference);
   }
 
-  if (intent.caseReference.detected) {
+  if (intent.caseReference?.detected) {
     queries.push(intent.caseReference.reference);
   }
 
   return unique(queries).slice(0, maxQueries);
 }
 
-export function isIssueMismatch(queryIntent = {}, docIssueTypes = []) {
+function isIssueMismatch(queryIntent = {}, docIssueTypes = []) {
   const queryIssues = queryIntent.issueTypes || [];
   const docIssues = docIssueTypes || [];
 
@@ -819,12 +963,13 @@ export function isIssueMismatch(queryIntent = {}, docIssueTypes = []) {
   return false;
 }
 
-export { ISSUE_TYPE, RESPONSE_MODE, LEGAL_DIMENSION };
+module.exports = {
+  ENGINE_VERSION,
 
-export default {
   ISSUE_TYPE,
   RESPONSE_MODE,
   LEGAL_DIMENSION,
+
   analyzeQueryIntent,
   buildIntentSearchQueries,
   isIssueMismatch
