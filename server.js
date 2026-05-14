@@ -28,18 +28,14 @@ import {
   normalizeSourceName
 } from "./vector-store.js";
 
-import {
-  createAskHandler
-} from "./ask-handler.js";
+import { createAskHandler } from "./ask-handler.js";
 
 import {
   getUserId,
   getSourceTier
 } from "./ask-helpers.js";
 
-import {
-  createBackgroundReindexController
-} from "./reindex-service.js";
+import { createBackgroundReindexController } from "./reindex-service.js";
 
 /* ================= ENV VALIDATION ================= */
 
@@ -82,17 +78,9 @@ const allowedOrigins = buildAllowedOrigins();
 app.use(
   cors({
     origin(origin, callback) {
-      if (allowedOrigins === "*") {
-        return callback(null, true);
-      }
-
-      if (!origin) {
-        return callback(null, true);
-      }
-
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
+      if (allowedOrigins === "*") return callback(null, true);
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) return callback(null, true);
 
       return callback(new Error(`CORS blocked origin: ${origin}`));
     },
@@ -149,8 +137,6 @@ function getAdminSecret(req) {
   );
 }
 
-/* ================= ADMIN SECRET / AUTH ================= */
-
 function allowAuthenticatedOrIndexSecret(req, res, next) {
   const providedSecret = getAdminSecret(req);
 
@@ -177,6 +163,7 @@ app.get("/", (req, res) => {
     success: true,
     name: "TINA Backend",
     engine: "TINA Philippine Tax Intelligence Engine",
+    architecture: "Adaptive Tax, Legal, Audit, Evidence, and RAG Orchestration",
     message: "Backend is running.",
     usefulRoutes: ["/health", "/routes", "/ask"]
   });
@@ -186,7 +173,27 @@ app.get("/routes", (req, res) => {
   return res.json({
     success: true,
     engine: "TINA Philippine Tax Intelligence Engine",
-    modeSupport: ["/ask", "/tax", "/review", "/quiz", "/source", "/feedback"],
+    adaptiveSupport: true,
+    modeSupport: [
+      "/ask",
+      "/tax",
+      "/review",
+      "/quiz",
+      "/source",
+      "/feedback"
+    ],
+    adaptiveModules: [
+      "adaptive-mode-engine.js",
+      "query-intent-engine.js",
+      "retrieval-engine.js",
+      "reranker-engine.js",
+      "supersession-engine.js",
+      "jurisprudence-engine.js",
+      "adaptive-response-planner.js",
+      "answer-renderer.js",
+      "rag-answer-handler.js",
+      "ask-handler.js"
+    ],
     routes: [
       "GET /",
       "GET /health",
@@ -217,16 +224,36 @@ app.get("/health", async (req, res) => {
       status: "ok",
       environment: NODE_ENV,
       engine: "TINA Philippine Tax Intelligence Engine",
+      adaptiveArchitectureEnabled: true,
       openaiConfigured: Boolean(process.env.OPENAI_API_KEY),
       openaiModel: OPENAI_MODEL,
-      supabaseConfigured: Boolean(process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY),
+      supabaseConfigured: Boolean(
+        process.env.SUPABASE_URL &&
+          process.env.SUPABASE_SERVICE_ROLE_KEY
+      ),
       googleDriveConfigured: Boolean(process.env.GOOGLE_DRIVE_FOLDER_ID),
-      googleDriveFolderIdPreview: maskValue(process.env.GOOGLE_DRIVE_FOLDER_ID),
-      googleServiceAccountJsonConfigured: Boolean(process.env.GOOGLE_SERVICE_ACCOUNT_JSON),
-      oldGoogleKeyFileConfigured: Boolean(process.env.GOOGLE_SERVICE_ACCOUNT_KEY_FILE),
+      googleDriveFolderIdPreview: maskValue(
+        process.env.GOOGLE_DRIVE_FOLDER_ID
+      ),
+      googleServiceAccountJsonConfigured: Boolean(
+        process.env.GOOGLE_SERVICE_ACCOUNT_JSON
+      ),
+      oldGoogleKeyFileConfigured: Boolean(
+        process.env.GOOGLE_SERVICE_ACCOUNT_KEY_FILE
+      ),
       indexSecretEnabled: Boolean(process.env.INDEX_SECRET),
       indexingRunning: reindexController.isActive(),
       vectorStore: vectorStats,
+      adaptiveStack: {
+        askHandler: true,
+        ragAnswerHandler: true,
+        retrievalEngine: true,
+        rerankerEngine: true,
+        supersessionEngine: true,
+        jurisprudenceEngine: true,
+        adaptivePlanner: true,
+        answerRenderer: true
+      },
       time: new Date().toISOString()
     });
   } catch (error) {
@@ -543,6 +570,7 @@ const server = app.listen(PORT, () => {
   console.log(`TINA Backend running on port ${PORT}`);
   console.log(`Environment: ${NODE_ENV}`);
   console.log(`OpenAI model: ${OPENAI_MODEL}`);
+  console.log("Adaptive TINA orchestration enabled.");
 });
 
 function shutdown(signal) {
