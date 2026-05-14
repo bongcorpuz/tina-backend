@@ -1,17 +1,11 @@
+// FILE: adaptive-mode-engine.js
 "use strict";
 
 /**
- * adaptive-mode-engine.js
- * TINA Adaptive Mode Engine
- *
- * Purpose:
- * Detects and normalizes the proper TINA response mode based on:
- * user intent, tone, factual complexity, legal/audit risk,
- * evidentiary completeness, transaction structure, doctrine needs,
- * and legacy hook mode compatibility.
+ * TINA Enterprise Adaptive Mode Engine
  */
 
-const ENGINE_VERSION = "2.1.0";
+const ENGINE_VERSION = "3.0.0";
 
 const MODES = Object.freeze({
   QUICK: "QUICK_MODE",
@@ -64,14 +58,12 @@ const RESPONSE_STRUCTURES = Object.freeze({
     "B. SHORT BASIS",
     "C. PRACTICAL NOTE"
   ],
-
   STANDARD: [
     "A. DIRECT ANSWER",
     "B. CONTROLLING LEGAL BASIS",
     "C. PRACTICAL APPLICATION",
     "D. TAX / COMPLIANCE RISK"
   ],
-
   TECHNICAL: [
     "A. DIRECT ANSWER",
     "B. CONTROLLING LEGAL BASIS",
@@ -80,7 +72,6 @@ const RESPONSE_STRUCTURES = Object.freeze({
     "E. HIERARCHY ANALYSIS",
     "F. PRACTICAL APPLICATION"
   ],
-
   AUDIT: [
     "A. DIRECT ANSWER",
     "B. KNOWN FACTS AND ASSUMPTIONS",
@@ -90,7 +81,6 @@ const RESPONSE_STRUCTURES = Object.freeze({
     "F. REQUIRED AUDIT EVIDENCE",
     "G. RECOMMENDED AUDIT POSITION"
   ],
-
   LITIGATION: [
     "A. DIRECT ANSWER",
     "B. ISSUE FOR RESOLUTION",
@@ -101,7 +91,6 @@ const RESPONSE_STRUCTURES = Object.freeze({
     "G. DOCTRINAL STATUS / CONFLICT ANALYSIS",
     "H. CONCLUSION"
   ],
-
   TRANSACTION: [
     "A. DIRECT ANSWER",
     "B. LEGAL FORM",
@@ -112,7 +101,6 @@ const RESPONSE_STRUCTURES = Object.freeze({
     "G. BIR / AUDIT RISK",
     "H. DOCUMENTATION REQUIRED"
   ],
-
   CONTRACT: [
     "A. DIRECT ANSWER",
     "B. CONTRACT PARTIES AND OBJECT",
@@ -123,7 +111,6 @@ const RESPONSE_STRUCTURES = Object.freeze({
     "G. DOCUMENTARY GAPS",
     "H. RECOMMENDED POSITION"
   ],
-
   EVIDENCE: [
     "A. DIRECT ANSWER",
     "B. ASSERTED FACTS",
@@ -133,7 +120,6 @@ const RESPONSE_STRUCTURES = Object.freeze({
     "F. AUDIT-SENSITIVE ITEMS",
     "G. CONCLUSION SUBJECT TO VERIFICATION"
   ],
-
   REVIEWER: [
     "A. SIMPLE ANSWER",
     "B. WHY",
@@ -148,7 +134,6 @@ const KEYWORDS = Object.freeze({
     "what is", "define", "meaning", "why", "when", "rate", "deadline",
     "short answer", "simple", "quick", "brief", "explain briefly"
   ],
-
   standardTax: [
     "vat", "withholding", "ewt", "cwt", "income tax", "mcit", "rcit",
     "nolco", "deductible", "deductibility", "bir", "tax payable",
@@ -156,14 +141,12 @@ const KEYWORDS = Object.freeze({
     "input vat", "output vat", "percentage tax", "final tax",
     "tax treatment", "tax consequence", "tax compliance"
   ],
-
   technicalTax: [
     "nirc", "tax code", "revenue regulation", "revenue regulations",
     "rr ", "rmc", "rmo", "ramo", "bir ruling", "section",
     "train", "create", "legal basis", "controlling basis",
     "controlling legal basis", "authority", "hierarchy"
   ],
-
   audit: [
     "audit", "auditor", "afs", "pfrs", "pas", "pfrs for smes",
     "working paper", "gl", "general ledger", "trial balance",
@@ -171,15 +154,13 @@ const KEYWORDS = Object.freeze({
     "substantive", "confirmation", "supporting documents",
     "financial statements", "disclosure", "presentation"
   ],
-
   litigation: [
-    "protest", "assessment", "loa", "fan", "fld", "fl d", "pan",
+    "protest", "assessment", "loa", "fan", "fld", "pan",
     "cta", "supreme court", "court", "warrant", "case", "jurisprudence",
     "defense", "legal defense", "legal position", "doctrine", "conflict",
     "taxpayer defense", "bir position", "due process", "legal consequence",
     "appeal", "litigation", "crime", "liability"
   ],
-
   transaction: [
     "sale vs service", "lease vs concession", "principal vs agent",
     "reimbursement", "pass-through", "pass through", "bundled", "bundle",
@@ -189,21 +170,18 @@ const KEYWORDS = Object.freeze({
     "who should recognize", "booked as sales", "cost of sales",
     "mixed transaction", "financing", "equity", "dfs"
   ],
-
   contract: [
     "contract", "agreement", "lease agreement", "concession agreement",
-    "service agreement", "supplier agreement", "moa", "loa", "terms",
+    "service agreement", "supplier agreement", "moa", "terms",
     "clause", "termination", "consideration", "obligation",
     "rights and obligations", "tax clause", "legal effect"
   ],
-
   doctrine: [
     "doctrine", "doctrinal", "conflict", "conflicting", "prevails",
     "hierarchy", "controlling authority", "legal hierarchy",
     "case doctrine", "jurisprudence", "distinguish", "overruled",
     "superseded", "binding", "persuasive", "controlling doctrine"
   ],
-
   evidence: [
     "invoice", "official receipt", "or", "si", "billing", "contract",
     "bank statement", "board approval", "confirmation", "tax filing",
@@ -211,14 +189,12 @@ const KEYWORDS = Object.freeze({
     "substantiation", "support", "evidence", "schedule",
     "third-party", "third party", "bank records"
   ],
-
   factPattern: [
     "facts", "scenario", "situation", "what happened", "if", "assuming",
     "given", "based on", "reconstruct", "evaluate", "analyze",
     "review and recheck", "risk", "issue", "treatment",
     "actual practice", "unresolved", "ambiguous"
   ],
-
   reviewer: [
     "cpale", "reviewer", "learning", "explain simply", "simple english",
     "layman's", "layman", "taglish", "example", "quiz", "study",
@@ -226,11 +202,8 @@ const KEYWORDS = Object.freeze({
   ]
 });
 
-function normalizeText(input) {
-  return String(input || "")
-    .toLowerCase()
-    .replace(/\s+/g, " ")
-    .trim();
+function normalizeText(input = "") {
+  return String(input || "").toLowerCase().replace(/\s+/g, " ").trim();
 }
 
 function normalizeMode(mode = "") {
@@ -242,11 +215,11 @@ function normalizeMode(mode = "") {
   if (valid.includes(clean)) return clean;
 
   if (clean.includes("AUDIT")) return MODES.AUDIT;
-  if (clean.includes("LITIGATION") || clean.includes("LEGAL_DEFENSE")) return MODES.LITIGATION;
+  if (clean.includes("LITIGATION") || clean.includes("LEGAL_DEFENSE") || clean.includes("LEGAL")) return MODES.LITIGATION;
   if (clean.includes("TRANSACTION")) return MODES.TRANSACTION;
   if (clean.includes("CONTRACT")) return MODES.CONTRACT;
   if (clean.includes("EVIDENCE")) return MODES.EVIDENCE;
-  if (clean.includes("FACT_PATTERN")) return MODES.FACT_PATTERN;
+  if (clean.includes("FACT_PATTERN") || clean.includes("FACT")) return MODES.FACT_PATTERN;
   if (clean.includes("REVIEWER") || clean.includes("LEARNING") || clean.includes("QUIZ")) return MODES.REVIEWER;
   if (clean.includes("TECHNICAL") || clean.includes("DOCTRINE")) return MODES.TECHNICAL_TAX;
   if (clean.includes("QUICK")) return MODES.QUICK;
@@ -273,25 +246,21 @@ function countMatches(text, terms) {
 }
 
 function detectTone(text) {
-  const urgentTerms = [
-    "asap", "urgent", "immediately", "deadline", "need now",
-    "critical", "risk", "legal case", "qualified opinion", "must"
-  ];
-
-  const skepticalTerms = [
-    "are you sure", "recheck", "review", "evaluate", "challenge",
-    "risk", "conflict", "why", "basis", "check", "is it correct"
-  ];
-
-  const simpleTerms = [
-    "simple", "brief", "short", "layman's", "taglish", "easy",
-    "plain english", "laymans"
-  ];
-
   return {
-    urgent: countMatches(text, urgentTerms).score > 0,
-    skeptical: countMatches(text, skepticalTerms).score > 0,
-    simple: countMatches(text, simpleTerms).score > 0
+    urgent: countMatches(text, [
+      "asap", "urgent", "immediately", "deadline", "need now",
+      "critical", "risk", "legal case", "qualified opinion", "must"
+    ]).score > 0,
+
+    skeptical: countMatches(text, [
+      "are you sure", "recheck", "review", "evaluate", "challenge",
+      "risk", "conflict", "why", "basis", "check", "is it correct"
+    ]).score > 0,
+
+    simple: countMatches(text, [
+      "simple", "brief", "short", "layman's", "taglish", "easy",
+      "plain english", "laymans"
+    ]).score > 0
   };
 }
 
@@ -361,7 +330,7 @@ function computeRisk(text, scores, tone) {
   if (tone.urgent) risk += 1;
   if (tone.skeptical) risk += 1;
 
-  if (/\b(no agreement|without agreement|unsupported|no invoice|no receipt|assessment|loa|fan|protest|qualified opinion|tax evasion|sham|simulated)\b/i.test(text)) {
+  if (/\b(no agreement|without agreement|unsupported|no invoice|no receipt|assessment|loa|fan|protest|qualified opinion|tax evasion|sham|simulated|unresolved|ambiguous)\b/i.test(text)) {
     risk += 3;
   }
 
@@ -409,10 +378,7 @@ function selectSecondaryModes(scores, primaryMode) {
 }
 
 function determineResponseStructure(primaryMode, risk, complexity) {
-  if (primaryMode === MODES.QUICK && risk <= 2 && complexity <= 3) {
-    return RESPONSE_STRUCTURES.QUICK;
-  }
-
+  if (primaryMode === MODES.QUICK && risk <= 2 && complexity <= 3) return RESPONSE_STRUCTURES.QUICK;
   if (primaryMode === MODES.REVIEWER) return RESPONSE_STRUCTURES.REVIEWER;
   if (primaryMode === MODES.AUDIT) return RESPONSE_STRUCTURES.AUDIT;
   if (primaryMode === MODES.TRANSACTION) return RESPONSE_STRUCTURES.TRANSACTION;
@@ -420,11 +386,7 @@ function determineResponseStructure(primaryMode, risk, complexity) {
   if (primaryMode === MODES.EVIDENCE) return RESPONSE_STRUCTURES.EVIDENCE;
   if (primaryMode === MODES.LITIGATION) return RESPONSE_STRUCTURES.LITIGATION;
 
-  if (
-    primaryMode === MODES.TECHNICAL_TAX ||
-    primaryMode === MODES.FACT_PATTERN ||
-    risk >= 6
-  ) {
+  if (primaryMode === MODES.TECHNICAL_TAX || primaryMode === MODES.FACT_PATTERN || risk >= 6) {
     return RESPONSE_STRUCTURES.TECHNICAL;
   }
 
@@ -438,30 +400,19 @@ function buildReasoningRequirements(primaryMode, secondaryModes, risk, complexit
   requirements.add("Identify assumed facts when necessary");
   requirements.add("State limitations if facts are incomplete");
 
-  if (
-    risk >= 4 ||
-    complexity >= 4 ||
-    primaryMode === MODES.EVIDENCE ||
-    secondaryModes.includes(MODES.EVIDENCE)
-  ) {
+  if (risk >= 4 || complexity >= 4 || primaryMode === MODES.EVIDENCE || secondaryModes.includes(MODES.EVIDENCE)) {
     requirements.add("Identify missing facts and evidentiary gaps");
     requirements.add("Separate asserted facts from documented facts");
   }
 
-  if (
-    primaryMode === MODES.TRANSACTION ||
-    secondaryModes.includes(MODES.TRANSACTION)
-  ) {
+  if (primaryMode === MODES.TRANSACTION || secondaryModes.includes(MODES.TRANSACTION)) {
     requirements.add("Analyze legal form versus economic substance");
     requirements.add("Analyze flow of money, goods, services, control, risks, and margin");
     requirements.add("Determine principal versus agent where applicable");
     requirements.add("Identify possible alternative characterizations");
   }
 
-  if (
-    primaryMode === MODES.CONTRACT ||
-    secondaryModes.includes(MODES.CONTRACT)
-  ) {
+  if (primaryMode === MODES.CONTRACT || secondaryModes.includes(MODES.CONTRACT)) {
     requirements.add("Identify parties, object, consideration, obligations, risk allocation, billing, tax clauses, and actual practice");
   }
 
@@ -567,8 +518,7 @@ function buildRoutingHints(primaryMode, secondaryModes, risk) {
       primaryMode === MODES.TECHNICAL_TAX ||
       primaryMode === MODES.LITIGATION,
 
-    needsProvisionCitationEngine:
-      primaryMode !== MODES.QUICK,
+    needsProvisionCitationEngine: primaryMode !== MODES.QUICK,
 
     needsEvidenceReview:
       primaryMode === MODES.EVIDENCE ||
@@ -588,9 +538,7 @@ function buildRoutingHints(primaryMode, secondaryModes, risk) {
       primaryMode === MODES.TRANSACTION ||
       secondaryModes.includes(MODES.TRANSACTION),
 
-    needsAssumptionGap:
-      risk >= 4 ||
-      primaryMode !== MODES.QUICK,
+    needsAssumptionGap: risk >= 4 || primaryMode !== MODES.QUICK,
 
     needsRiskScoring:
       risk >= 4 ||
@@ -613,8 +561,7 @@ function buildRoutingHints(primaryMode, secondaryModes, risk) {
       primaryMode === MODES.LITIGATION ||
       risk >= 4,
 
-    needsAnswerRenderer:
-      true
+    needsAnswerRenderer: true
   };
 }
 
@@ -639,11 +586,13 @@ function buildPlannerCompatibilityPayload({
     conclusionRule: preliminaryConclusionRequired
       ? {
           allowStrongConclusion: false,
+          restriction: "PRELIMINARY_CONCLUSION_ONLY",
           requiredLanguage:
             "Based on the available facts, the position is preliminary and subject to verification."
         }
       : {
           allowStrongConclusion: true,
+          restriction: "DIRECT_CONCLUSION_ALLOWED",
           requiredLanguage:
             "A direct conclusion may be given if supported by legal basis and evidence."
         }
@@ -672,37 +621,20 @@ function analyzeAdaptiveMode(userInput, options = {}) {
 
   if (options.userBehavior?.recommendedMode) {
     const behaviorMode = normalizeMode(options.userBehavior.recommendedMode);
-    if (scores[behaviorMode]?.score > 0 || risk < 4) {
-      primaryMode = behaviorMode;
-    }
+    if (scores[behaviorMode]?.score > 0 || risk < 4) primaryMode = behaviorMode;
   }
 
   primaryMode = normalizeMode(primaryMode);
 
   const secondaryModes = selectSecondaryModes(scores, primaryMode).map(normalizeMode);
   const responseStructure = determineResponseStructure(primaryMode, risk, complexity);
-
-  const reasoningRequirements = buildReasoningRequirements(
-    primaryMode,
-    secondaryModes,
-    risk,
-    complexity
-  );
-
+  const reasoningRequirements = buildReasoningRequirements(primaryMode, secondaryModes, risk, complexity);
   const authorityHierarchy = buildAuthorityHierarchyRequired(primaryMode, risk);
   const outputDepth = detectOutputDepth(primaryMode, risk, complexity, tone);
-
-  const preliminaryConclusionRequired = detectPreliminaryConclusionRequired(
-    risk,
-    complexity,
-    primaryMode
-  );
+  const preliminaryConclusionRequired = detectPreliminaryConclusionRequired(risk, complexity, primaryMode);
 
   const confidenceBase = Math.max(...Object.values(scores).map((x) => x.score), 0);
-  const confidence = Math.min(
-    0.95,
-    Math.max(0.45, confidenceBase / 10 + (complexity > 0 ? 0.1 : 0))
-  );
+  const confidence = Math.min(0.95, Math.max(0.45, confidenceBase / 10 + (complexity > 0 ? 0.1 : 0)));
 
   const routingHints = buildRoutingHints(primaryMode, secondaryModes, risk);
 
@@ -750,7 +682,6 @@ function analyzeAdaptiveMode(userInput, options = {}) {
     matchedSignals: buildMatchedSignals(scores),
 
     routingHints,
-
     plannerCompatibility,
 
     orchestrationMetadata: {
@@ -807,6 +738,18 @@ function buildAdaptiveInstruction(modeAnalysis) {
   };
 }
 
+function adaptiveModeHealthCheck() {
+  return {
+    ok: true,
+    engine: "TINA_ADAPTIVE_MODE_ENGINE",
+    version: ENGINE_VERSION,
+    commonJsCompatible: true,
+    plannerCompatible: true,
+    rendererCompatible: true,
+    conclusionGatingCompatible: true
+  };
+}
+
 module.exports = {
   ENGINE_VERSION,
   MODES,
@@ -815,7 +758,10 @@ module.exports = {
   OUTPUT_DEPTH,
   RESPONSE_STRUCTURES,
   KEYWORDS,
+
   normalizeMode,
   analyzeAdaptiveMode,
-  buildAdaptiveInstruction
+  buildAdaptiveInstruction,
+
+  adaptiveModeHealthCheck
 };
