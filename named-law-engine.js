@@ -1,9 +1,21 @@
 // FILE: named-law-engine.js
+"use strict";
+
+/**
+ * TINA Enterprise Named Law Engine
+ * Version: 3.0.0
+ */
 
 import {
   AUTHORITY_LEVEL,
   classifyAuthorityFromDocument
 } from "./authority-engine.js";
+
+const ENGINE_VERSION = "3.0.0";
+
+/* =========================================================
+ * OFFICIAL SOURCES
+ * ========================================================= */
 
 const OFFICIAL_SOURCES = {
   LAWPHIL: "https://lawphil.net",
@@ -12,28 +24,62 @@ const OFFICIAL_SOURCES = {
   DOF: "https://www.dof.gov.ph"
 };
 
+/* =========================================================
+ * HELPERS
+ * ========================================================= */
+
 function uniq(values = []) {
   return [...new Set(values.filter(Boolean))];
 }
 
-function escapeRegex(text = "") {
-  return String(text).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
 function normalizeWhitespace(text = "") {
-  return String(text).replace(/\s+/g, " ").trim();
+  return String(text)
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
-export function normalizeLawText(text = "") {
+function escapeRegex(text = "") {
+  return String(text).replace(
+    /[.*+?^${}()|[\]\\]/g,
+    "\\$&"
+  );
+}
+
+function safeArray(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+/* =========================================================
+ * LAW NORMALIZATION
+ * ========================================================= */
+
+export function normalizeLawText(
+  text = ""
+) {
   return normalizeWhitespace(
     String(text)
       .toLowerCase()
       .replace(/[“”"'`]/g, "")
-      .replace(/\brepublic\s+act\s+no\.?\s*/g, "ra ")
-      .replace(/\br\.?\s*a\.?\s*no\.?\s*/g, "ra ")
-      .replace(/\br\.?\s*a\.?\s*/g, "ra ")
-      .replace(/\bnational internal revenue code\b/g, "nirc")
-      .replace(/\bease of paying taxes act\b/g, "ease of paying taxes")
+      .replace(
+        /\brepublic\s+act\s+no\.?\s*/g,
+        "ra "
+      )
+      .replace(
+        /\br\.?\s*a\.?\s*no\.?\s*/g,
+        "ra "
+      )
+      .replace(
+        /\br\.?\s*a\.?\s*/g,
+        "ra "
+      )
+      .replace(
+        /\bnational internal revenue code\b/g,
+        "nirc"
+      )
+      .replace(
+        /\bease of paying taxes act\b/g,
+        "eopt"
+      )
       .replace(
         /\bcorporate recovery and tax incentives for enterprises act\b/g,
         "create law"
@@ -50,13 +96,29 @@ export function normalizeLawText(text = "") {
         /\btax reform for acceleration and inclusion\b/g,
         "train law"
       )
-      .replace(/\bcreate more act\b/g, "create more")
-      .replace(/\bcreate act\b/g, "create law")
-      .replace(/\beopt act\b/g, "eopt")
-      .replace(/\bthe tax code\b/g, "tax code")
+      .replace(
+        /\bcreate more act\b/g,
+        "create more"
+      )
+      .replace(
+        /\bcreate act\b/g,
+        "create law"
+      )
+      .replace(
+        /\beopt act\b/g,
+        "eopt"
+      )
+      .replace(
+        /\bthe tax code\b/g,
+        "tax code"
+      )
       .replace(/[()\-_,:;]+/g, " ")
   );
 }
+
+/* =========================================================
+ * DOCUMENT HELPERS
+ * ========================================================= */
 
 function getDocPath(doc = {}) {
   return (
@@ -64,14 +126,16 @@ function getDocPath(doc = {}) {
     doc.source_path ||
     doc.metadata?.path ||
     doc.originalSource ||
-    doc.metadata?.originalSource ||
+    doc.original_source ||
     doc.source ||
     doc.title ||
     ""
   );
 }
 
-function getDocOriginalSource(doc = {}) {
+function getDocOriginalSource(
+  doc = {}
+) {
   return (
     doc.originalSource ||
     doc.original_source ||
@@ -83,7 +147,9 @@ function getDocOriginalSource(doc = {}) {
   );
 }
 
-function getDocNormalizedReference(doc = {}) {
+function getDocNormalizedReference(
+  doc = {}
+) {
   return (
     doc.normalizedReference ||
     doc.normalized_reference ||
@@ -94,11 +160,11 @@ function getDocNormalizedReference(doc = {}) {
 
 function getDocAliases(doc = {}) {
   return uniq([
-    ...(Array.isArray(doc.normalizedAliases) ? doc.normalizedAliases : []),
-    ...(Array.isArray(doc.normalized_aliases) ? doc.normalized_aliases : []),
-    ...(Array.isArray(doc.metadata?.normalizedAliases)
-      ? doc.metadata.normalizedAliases
-      : [])
+    ...safeArray(doc.normalizedAliases),
+    ...safeArray(doc.normalized_aliases),
+    ...safeArray(
+      doc.metadata?.normalizedAliases
+    )
   ]);
 }
 
@@ -111,7 +177,8 @@ function buildDocHaystack(doc = {}) {
       doc.path,
       doc.source_path,
       doc.title,
-      doc.text?.slice(0, 3000),
+      doc.text?.slice(0, 5000),
+      doc.content?.slice(0, 5000),
       doc.metadata?.path,
       doc.metadata?.originalSource,
       doc.metadata?.originalFileName,
@@ -125,7 +192,13 @@ function buildDocHaystack(doc = {}) {
   );
 }
 
-function detectDocAuthorityType(doc = {}) {
+/* =========================================================
+ * AUTHORITY DETECTION
+ * ========================================================= */
+
+function detectDocAuthorityType(
+  doc = {}
+) {
   const explicit =
     doc.authorityType ||
     doc.authority_type ||
@@ -137,357 +210,309 @@ function detectDocAuthorityType(doc = {}) {
   }
 
   return classifyAuthorityFromDocument({
-    fileName: doc.source || doc.originalSource || doc.title || "",
+    fileName:
+      doc.source ||
+      doc.originalSource ||
+      doc.title ||
+      "",
+
     path: getDocPath(doc),
-    text: doc.text || ""
+
+    text:
+      doc.text ||
+      doc.content ||
+      ""
   });
 }
 
-function authorityWeightForNamedLaw(authorityType = "") {
-  const type = String(authorityType || "").toUpperCase();
+function authorityWeightForNamedLaw(
+  authorityType = ""
+) {
+  const type = String(
+    authorityType || ""
+  ).toUpperCase();
 
   switch (type) {
     case "CONSTITUTION":
-      return 180;
+      return 200;
+
     case "STATUTE":
-      return 170;
+      return 180;
+
     case "TREATY":
-      return 150;
+      return 160;
+
     case "SUPREME_COURT":
-      return 135;
+      return 145;
+
     case "CTA_EN_BANC":
-      return 128;
+      return 138;
+
     case "COURT_OF_APPEALS":
-      return 124;
+      return 132;
+
     case "CTA_DIVISION":
-      return 118;
+      return 126;
+
     case "RR":
-      return 102;
+      return 110;
+
     case "RMC":
-      return 72;
+      return 80;
+
     case "RMO":
-      return 66;
+      return 72;
+
     case "RAMO":
-      return 62;
+      return 68;
+
     case "BIR_RULING":
-      return 56;
-    case "LGU":
-      return 45;
+      return 60;
+
     default:
       return 0;
   }
 }
 
-function extractIssuanceRefs(text = "") {
+/* =========================================================
+ * ISSUANCE REFERENCES
+ * ========================================================= */
+
+function extractIssuanceRefs(
+  text = ""
+) {
   const value = normalizeLawText(text);
+
   const refs = [];
 
   const patterns = [
-    { type: "rr", regex: /\brr\s*(?:no\.?\s*)?(\d+)[-/ ]+(\d{2,4})\b/g },
-    { type: "rmc", regex: /\brmc\s*(?:no\.?\s*)?(\d+)[-/ ]+(\d{2,4})\b/g },
-    { type: "rmo", regex: /\brmo\s*(?:no\.?\s*)?(\d+)[-/ ]+(\d{2,4})\b/g },
-    { type: "ramo", regex: /\bramo\s*(?:no\.?\s*)?(\d+)[-/ ]+(\d{2,4})\b/g }
+    {
+      type: "rr",
+      regex:
+        /\brr\s*(?:no\.?\s*)?(\d+)[-/ ]+(\d{2,4})\b/g
+    },
+    {
+      type: "rmc",
+      regex:
+        /\brmc\s*(?:no\.?\s*)?(\d+)[-/ ]+(\d{2,4})\b/g
+    },
+    {
+      type: "rmo",
+      regex:
+        /\brmo\s*(?:no\.?\s*)?(\d+)[-/ ]+(\d{2,4})\b/g
+    },
+    {
+      type: "ramo",
+      regex:
+        /\bramo\s*(?:no\.?\s*)?(\d+)[-/ ]+(\d{2,4})\b/g
+    }
   ];
 
-  for (const { type, regex } of patterns) {
-    for (const match of value.matchAll(regex)) {
-      const year = String(match[2]).length === 2 ? `20${match[2]}` : String(match[2]);
-      refs.push(`${type}-${String(match[1]).replace(/^0+/, "")}-${year}`);
+  for (const {
+    type,
+    regex
+  } of patterns) {
+    for (const match of value.matchAll(
+      regex
+    )) {
+      const year =
+        String(match[2]).length === 2
+          ? `20${match[2]}`
+          : String(match[2]);
+
+      refs.push(
+        `${type}-${String(
+          match[1]
+        ).replace(/^0+/, "")}-${year}`
+      );
     }
   }
 
   return uniq(refs);
 }
 
-function extractCourtAnchors(text = "") {
-  const value = normalizeLawText(text);
-  const refs = [];
-
-  for (const match of value.matchAll(/\bg\.?\s*r\.?\s*no\.?\s*([a-z0-9.-]+)\b/g)) {
-    refs.push(`gr-${String(match[1]).toUpperCase()}`);
-  }
-
-  for (const match of value.matchAll(/\bcta\s+case\s+no\.?\s*([a-z0-9.-]+)\b/g)) {
-    refs.push(`cta-${String(match[1]).toUpperCase()}`);
-  }
-
-  for (const match of value.matchAll(/\bcta\s+eb\s+no\.?\s*([a-z0-9.-]+)\b/g)) {
-    refs.push(`ctaeb-${String(match[1]).toUpperCase()}`);
-  }
-
-  return uniq(refs);
-}
-
-function detectNamedLawSpecificIssuanceProfile(bestMatch = null) {
-  if (!bestMatch) {
-    return {
-      preferredImplementingIssuances: [],
-      restrictedIssuances: [],
-      preferredCourtAnchors: []
-    };
-  }
-
-  if (bestMatch.id === "RA-11534") {
-    return {
-      preferredImplementingIssuances: ["rr-5-2021"],
-      restrictedIssuances: ["rmc-99-2021", "rmc-50-2021", "rmc-89-2021"],
-      preferredCourtAnchors: []
-    };
-  }
-
-  if (bestMatch.id === "RA-12066") {
-    return {
-      preferredImplementingIssuances: [],
-      restrictedIssuances: [],
-      preferredCourtAnchors: []
-    };
-  }
-
-  return {
-    preferredImplementingIssuances: [],
-    restrictedIssuances: [],
-    preferredCourtAnchors: []
-  };
-}
+/* =========================================================
+ * NAMED LAW REGISTRY
+ * ========================================================= */
 
 export const NAMED_LAW_REGISTRY = [
   {
     id: "RA-8424",
-    canonicalTitle: "National Internal Revenue Code of 1997",
+
+    canonicalTitle:
+      "National Internal Revenue Code of 1997",
+
     shortTitle: "Tax Code",
+
     republicActNumber: "8424",
+
     category: "tax_code",
+
     enactedOn: "1997-12-11",
+
     authorityType: "STATUTE",
-    authorityLevel: AUTHORITY_LEVEL.STATUTE,
+
+    authorityLevel:
+      AUTHORITY_LEVEL.STATUTE,
+
     aliases: [
       "ra 8424",
-      "republic act no 8424",
-      "republic act 8424",
       "nirc",
-      "nirc 1997",
-      "national internal revenue code",
-      "national internal revenue code of 1997",
       "tax code",
+      "national internal revenue code",
       "philippine tax code"
     ],
+
     officialSources: [
       `${OFFICIAL_SOURCES.LAWPHIL}/statutes/repacts/ra1997/ra_8424_1997.html`
-    ],
-    preferredImplementingQueries: [],
-    restrictedIssuanceNotes: []
-  },
-  {
-    id: "RA-10963",
-    canonicalTitle: "Tax Reform for Acceleration and Inclusion Act",
-    shortTitle: "TRAIN Law",
-    republicActNumber: "10963",
-    category: "tax_reform",
-    enactedOn: "2017-12-19",
-    authorityType: "STATUTE",
-    authorityLevel: AUTHORITY_LEVEL.STATUTE,
-    aliases: [
-      "ra 10963",
-      "republic act no 10963",
-      "republic act 10963",
-      "train",
-      "train law",
-      "train act",
-      "tax reform for acceleration and inclusion",
-      "tax reform for acceleration and inclusion act"
-    ],
-    officialSources: [
-      `${OFFICIAL_SOURCES.LAWPHIL}/statutes/repacts/ra2017/ra_10963_2017.html`,
-      `${OFFICIAL_SOURCES.DOF}/ra-10963-train-law-and-veto-message-of-the-president/`
-    ],
-    preferredImplementingQueries: [],
-    restrictedIssuanceNotes: []
-  },
-  {
-    id: "RA-11534",
-    canonicalTitle: "Corporate Recovery and Tax Incentives for Enterprises Act",
-    shortTitle: "CREATE Law",
-    republicActNumber: "11534",
-    category: "tax_reform",
-    enactedOn: "2021-03-26",
-    authorityType: "STATUTE",
-    authorityLevel: AUTHORITY_LEVEL.STATUTE,
-    aliases: [
-      "ra 11534",
-      "republic act no 11534",
-      "republic act 11534",
-      "create",
-      "create law",
-      "create act",
-      "corporate recovery and tax incentives for enterprises",
-      "corporate recovery and tax incentives for enterprises act"
-    ],
-    officialSources: [
-      `${OFFICIAL_SOURCES.LAWPHIL}/statutes/repacts/ra2021/ra_11534_2021.html`,
-      `${OFFICIAL_SOURCES.FIRB}/download/create-act-ra-11534/`
-    ],
-    preferredImplementingQueries: [
-      "RA 11534",
-      "Republic Act No. 11534",
-      "CREATE Law",
-      "Corporate Recovery and Tax Incentives for Enterprises Act",
-      "RR 5-2021",
-      "CREATE RR 5-2021",
-      "CREATE Law RR 5-2021",
-      "CREATE implementing rules",
-      "CREATE Law implementing rules"
-    ],
-    restrictedIssuanceNotes: [
-      "RMC 99-2021 covers CIT computation examples under RR 5-2021 Sec. 3(B)/3(D); it is not a generic CREATE implementation circular."
     ]
   },
+
+  {
+    id: "RA-10963",
+
+    canonicalTitle:
+      "Tax Reform for Acceleration and Inclusion Act",
+
+    shortTitle: "TRAIN Law",
+
+    republicActNumber: "10963",
+
+    category: "tax_reform",
+
+    enactedOn: "2017-12-19",
+
+    authorityType: "STATUTE",
+
+    authorityLevel:
+      AUTHORITY_LEVEL.STATUTE,
+
+    aliases: [
+      "ra 10963",
+      "train",
+      "train law"
+    ],
+
+    officialSources: [
+      `${OFFICIAL_SOURCES.LAWPHIL}/statutes/repacts/ra2017/ra_10963_2017.html`
+    ]
+  },
+
+  {
+    id: "RA-11534",
+
+    canonicalTitle:
+      "Corporate Recovery and Tax Incentives for Enterprises Act",
+
+    shortTitle: "CREATE Law",
+
+    republicActNumber: "11534",
+
+    category: "tax_reform",
+
+    enactedOn: "2021-03-26",
+
+    authorityType: "STATUTE",
+
+    authorityLevel:
+      AUTHORITY_LEVEL.STATUTE,
+
+    aliases: [
+      "ra 11534",
+      "create",
+      "create law"
+    ],
+
+    officialSources: [
+      `${OFFICIAL_SOURCES.LAWPHIL}/statutes/repacts/ra2021/ra_11534_2021.html`
+    ]
+  },
+
   {
     id: "RA-11976",
-    canonicalTitle: "Ease of Paying Taxes Act",
+
+    canonicalTitle:
+      "Ease of Paying Taxes Act",
+
     shortTitle: "EOPT",
+
     republicActNumber: "11976",
-    category: "tax_administration",
+
+    category:
+      "tax_administration",
+
     enactedOn: "2024-01-05",
+
     authorityType: "STATUTE",
-    authorityLevel: AUTHORITY_LEVEL.STATUTE,
+
+    authorityLevel:
+      AUTHORITY_LEVEL.STATUTE,
+
     aliases: [
       "ra 11976",
-      "republic act no 11976",
-      "republic act 11976",
       "eopt",
-      "eopt law",
-      "eopt act",
-      "ease of paying taxes",
-      "ease of paying taxes act"
+      "ease of paying taxes"
     ],
+
     officialSources: [
-      `${OFFICIAL_SOURCES.LAWPHIL}/statutes/repacts/ra2024/ra_11976_2024.html`,
-      `${OFFICIAL_SOURCES.BIR}/EOPT`
-    ],
-    preferredImplementingQueries: [],
-    restrictedIssuanceNotes: []
-  },
-  {
-    id: "RA-12023",
-    canonicalTitle: "VAT on Digital Services Law",
-    shortTitle: "VAT on Digital Services",
-    republicActNumber: "12023",
-    category: "vat",
-    enactedOn: "2024-10-02",
-    authorityType: "STATUTE",
-    authorityLevel: AUTHORITY_LEVEL.STATUTE,
-    aliases: [
-      "ra 12023",
-      "republic act no 12023",
-      "republic act 12023",
-      "vat on digital services",
-      "digital services vat",
-      "digital services law",
-      "nonresident digital service providers vat",
-      "vat on digital service providers"
-    ],
-    officialSources: [
-      `${OFFICIAL_SOURCES.LAWPHIL}/statutes/repacts/ra2024/ra_12023_2024.html`
-    ],
-    preferredImplementingQueries: [],
-    restrictedIssuanceNotes: []
-  },
-  {
-    id: "RA-12066",
-    canonicalTitle: "CREATE MORE Act",
-    shortTitle: "CREATE MORE",
-    republicActNumber: "12066",
-    category: "tax_incentives",
-    enactedOn: "2024-11-08",
-    authorityType: "STATUTE",
-    authorityLevel: AUTHORITY_LEVEL.STATUTE,
-    aliases: [
-      "ra 12066",
-      "republic act no 12066",
-      "republic act 12066",
-      "create more",
-      "create more act",
-      "create more law",
-      "corporate recovery and tax incentives for enterprises to maximize opportunities for reinvigorating the economy",
-      "corporate recovery and tax incentives for enterprises to maximize opportunities for reinvigorating the economy act"
-    ],
-    officialSources: [
-      `${OFFICIAL_SOURCES.LAWPHIL}/statutes/repacts/ra2024/ra_12066_2024.html`,
-      `${OFFICIAL_SOURCES.FIRB}/resources/create-more/`
-    ],
-    preferredImplementingQueries: [
-      "RA 12066",
-      "Republic Act No. 12066",
-      "CREATE MORE",
-      "CREATE MORE Act",
-      "CREATE MORE IRR",
-      "CREATE MORE Act IRR",
-      "CREATE MORE implementing rules"
-    ],
-    restrictedIssuanceNotes: []
-  },
-  {
-    id: "RA-12079",
-    canonicalTitle: "VAT Refund for Non-Resident Tourists Act",
-    shortTitle: "Tourist VAT Refund Law",
-    republicActNumber: "12079",
-    category: "vat",
-    enactedOn: "2024-12-06",
-    authorityType: "STATUTE",
-    authorityLevel: AUTHORITY_LEVEL.STATUTE,
-    aliases: [
-      "ra 12079",
-      "republic act no 12079",
-      "republic act 12079",
-      "vat refund for non resident tourists",
-      "tourist vat refund law",
-      "non resident tourist vat refund",
-      "vat refund mechanism for non resident tourists"
-    ],
-    officialSources: [
-      `${OFFICIAL_SOURCES.LAWPHIL}/statutes/repacts/ra2024/ra_12079_2024.html`
-    ],
-    preferredImplementingQueries: [],
-    restrictedIssuanceNotes: []
+      `${OFFICIAL_SOURCES.LAWPHIL}/statutes/repacts/ra2024/ra_11976_2024.html`
+    ]
   }
 ];
 
-export const NAMED_LAW_INDEX = NAMED_LAW_REGISTRY.map((entry) => ({
-  ...entry,
-  normalizedAliases: uniq(
-    [
-      entry.canonicalTitle,
-      entry.shortTitle,
-      entry.republicActNumber ? `ra ${entry.republicActNumber}` : null,
-      entry.republicActNumber ? `republic act no ${entry.republicActNumber}` : null,
-      ...(entry.aliases || [])
-    ].map(normalizeLawText)
-  )
-}));
+/* =========================================================
+ * INDEX
+ * ========================================================= */
 
-export function buildGenericRaAliases(raNumber = "") {
-  const clean = String(raNumber).replace(/\D/g, "");
-  if (!clean) return [];
+export const NAMED_LAW_INDEX =
+  NAMED_LAW_REGISTRY.map(
+    (entry) => ({
+      ...entry,
 
-  return uniq([
-    `ra ${clean}`,
-    `ra no ${clean}`,
-    `republic act ${clean}`,
-    `republic act no ${clean}`
-  ]);
-}
+      normalizedAliases: uniq(
+        [
+          entry.canonicalTitle,
+          entry.shortTitle,
 
-export function extractRepublicActNumbers(text = "") {
+          entry.republicActNumber
+            ? `ra ${entry.republicActNumber}`
+            : null,
+
+          ...(entry.aliases || [])
+        ].map(normalizeLawText)
+      )
+    })
+  );
+
+/* =========================================================
+ * EXTRACTION
+ * ========================================================= */
+
+export function extractRepublicActNumbers(
+  text = ""
+) {
   const value = normalizeLawText(text);
+
   const matches = [
-    ...value.matchAll(/\b(?:ra|republic act(?: no)?)\s*(\d{4,6})\b/g)
+    ...value.matchAll(
+      /\b(?:ra|republic act(?: no)?)\s*(\d{4,6})\b/g
+    )
   ];
 
-  return uniq(matches.map((match) => match[1]));
+  return uniq(
+    matches.map((match) => match[1])
+  );
 }
 
-export function detectNamedLaw(question = "") {
-  const normalizedQuestion = normalizeLawText(question);
+/* =========================================================
+ * LAW DETECTION
+ * ========================================================= */
+
+export function detectNamedLaw(
+  question = ""
+) {
+  const normalizedQuestion =
+    normalizeLawText(question);
 
   if (!normalizedQuestion) {
     return {
@@ -500,271 +525,211 @@ export function detectNamedLaw(question = "") {
     };
   }
 
-  const scored = NAMED_LAW_INDEX.map((entry) => {
-    let score = 0;
-    const matchedAliases = [];
+  const scored = NAMED_LAW_INDEX.map(
+    (entry) => {
+      let score = 0;
 
-    for (const alias of entry.normalizedAliases) {
-      if (!alias) continue;
+      const matchedAliases = [];
 
-      const wholeWord = new RegExp(`(^|\\b)${escapeRegex(alias)}(\\b|$)`, "i");
-      if (wholeWord.test(normalizedQuestion)) {
-        matchedAliases.push(alias);
-        score += alias.startsWith("ra ") ? 16 : 12;
+      for (const alias of entry.normalizedAliases) {
+        if (!alias) continue;
+
+        const wholeWord =
+          new RegExp(
+            `(^|\\b)${escapeRegex(
+              alias
+            )}(\\b|$)`,
+            "i"
+          );
+
+        if (
+          wholeWord.test(
+            normalizedQuestion
+          )
+        ) {
+          matchedAliases.push(alias);
+
+          score += alias.startsWith(
+            "ra "
+          )
+            ? 20
+            : 12;
+        }
       }
-    }
 
-    if (
-      entry.republicActNumber &&
-      extractRepublicActNumbers(normalizedQuestion).includes(entry.republicActNumber)
-    ) {
-      score += 40;
-      matchedAliases.push(`ra ${entry.republicActNumber}`);
+      return {
+        ...entry,
+        matchedAliases:
+          uniq(matchedAliases),
+        score
+      };
     }
-
-    if (
-      entry.shortTitle &&
-      normalizeLawText(entry.shortTitle) &&
-      normalizedQuestion.includes(normalizeLawText(entry.shortTitle))
-    ) {
-      score += 10;
-    }
-
-    if (
-      entry.canonicalTitle &&
-      normalizeLawText(entry.canonicalTitle) &&
-      normalizedQuestion.includes(normalizeLawText(entry.canonicalTitle))
-    ) {
-      score += 10;
-    }
-
-    return {
-      ...entry,
-      matchedAliases: uniq(matchedAliases),
-      score
-    };
-  })
-    .filter((item) => item.score > 0)
+  )
+    .filter(
+      (item) => item.score > 0
+    )
     .sort((a, b) => b.score - a.score);
 
-  const genericRaNumbers = extractRepublicActNumbers(normalizedQuestion);
-
-  let exactMatches = scored;
-
-  if (!exactMatches.length && genericRaNumbers.length) {
-    exactMatches = genericRaNumbers.map((raNumber) => ({
-      id: `RA-${raNumber}`,
-      canonicalTitle: `Republic Act No. ${raNumber}`,
-      shortTitle: `RA ${raNumber}`,
-      republicActNumber: raNumber,
-      category: "generic_republic_act",
-      enactedOn: null,
-      authorityType: "STATUTE",
-      authorityLevel: AUTHORITY_LEVEL.STATUTE,
-      aliases: buildGenericRaAliases(raNumber),
-      normalizedAliases: buildGenericRaAliases(raNumber).map(normalizeLawText),
-      officialSources: [],
-      preferredImplementingQueries: [],
-      restrictedIssuanceNotes: [],
-      matchedAliases: buildGenericRaAliases(raNumber),
-      score: 20
-    }));
-  }
-
   return {
-    matched: exactMatches.length > 0,
+    matched: scored.length > 0,
+
     normalizedQuestion,
-    exactMatches,
-    genericRaNumbers,
-    bestMatch: exactMatches[0] || null,
-    allMatches: exactMatches
+
+    exactMatches: scored,
+
+    genericRaNumbers:
+      extractRepublicActNumbers(
+        normalizedQuestion
+      ),
+
+    bestMatch:
+      scored[0] || null,
+
+    allMatches: scored
   };
 }
 
-export function buildNamedLawSearchQueries(question = "", options = {}) {
-  const { includeOriginalQuestion = true, maxQueries = 12 } = options;
-  const detection = detectNamedLaw(question);
+/* =========================================================
+ * SEARCH QUERY BUILDER
+ * ========================================================= */
+
+export function buildNamedLawSearchQueries(
+  question = "",
+  options = {}
+) {
+  const {
+    includeOriginalQuestion = true,
+    maxQueries = 12
+  } = options;
+
+  const detection =
+    detectNamedLaw(question);
 
   const queries = [];
 
-  if (includeOriginalQuestion && question) {
+  if (
+    includeOriginalQuestion &&
+    question
+  ) {
     queries.push(question);
   }
 
   if (detection.bestMatch) {
-    const best = detection.bestMatch;
+    const best =
+      detection.bestMatch;
 
     if (best.republicActNumber) {
-      queries.push(`RA ${best.republicActNumber}`);
-      queries.push(`Republic Act No. ${best.republicActNumber}`);
+      queries.push(
+        `RA ${best.republicActNumber}`
+      );
+
+      queries.push(
+        `Republic Act No. ${best.republicActNumber}`
+      );
     }
 
     queries.push(best.canonicalTitle);
-    if (best.shortTitle) queries.push(best.shortTitle);
+
+    if (best.shortTitle) {
+      queries.push(best.shortTitle);
+    }
 
     for (const alias of best.aliases || []) {
       queries.push(alias);
     }
-
-    for (const query of best.preferredImplementingQueries || []) {
-      queries.push(query);
-    }
   }
 
-  return uniq(queries).slice(0, maxQueries);
-}
-
-function hasExactRaAnchor(doc = {}, lawMatch = null) {
-  if (!lawMatch?.republicActNumber) return false;
-
-  const haystack = buildDocHaystack(doc);
-  const raNumber = escapeRegex(lawMatch.republicActNumber);
-
-  return (
-    new RegExp(`\\bra\\s*${raNumber}\\b`, "i").test(haystack) ||
-    new RegExp(`\\brepublic act(?: no)?\\s*${raNumber}\\b`, "i").test(haystack)
+  return uniq(queries).slice(
+    0,
+    maxQueries
   );
 }
 
-function hasStrongLawTitleAnchor(doc = {}, lawMatch = null) {
-  if (!lawMatch) return false;
+/* =========================================================
+ * SCORING
+ * ========================================================= */
 
-  const haystack = buildDocHaystack(doc);
-
-  if (
-    lawMatch.shortTitle &&
-    haystack.includes(normalizeLawText(lawMatch.shortTitle))
-  ) {
-    return true;
-  }
-
-  if (
-    lawMatch.canonicalTitle &&
-    haystack.includes(normalizeLawText(lawMatch.canonicalTitle))
-  ) {
-    return true;
-  }
-
-  return false;
-}
-
-function hasImplementingAnchor(doc = {}, lawMatch = null) {
-  if (!lawMatch) return false;
-
-  const haystack = buildDocHaystack(doc);
-  const issuanceRefs = extractIssuanceRefs(haystack);
-  const profile = detectNamedLawSpecificIssuanceProfile(lawMatch);
-
-  return profile.preferredImplementingIssuances.some((ref) =>
-    issuanceRefs.includes(ref)
-  );
-}
-
-function hasRestrictedIssuanceAnchor(doc = {}, lawMatch = null) {
-  if (!lawMatch) return false;
-
-  const haystack = buildDocHaystack(doc);
-  const issuanceRefs = extractIssuanceRefs(haystack);
-  const profile = detectNamedLawSpecificIssuanceProfile(lawMatch);
-
-  return profile.restrictedIssuances.some((ref) => issuanceRefs.includes(ref));
-}
-
-export function scoreDocAgainstNamedLaw(doc = {}, lawMatch = null) {
+export function scoreDocAgainstNamedLaw(
+  doc = {},
+  lawMatch = null
+) {
   if (!lawMatch) return 0;
 
-  const haystack = buildDocHaystack(doc);
+  const haystack =
+    buildDocHaystack(doc);
+
   if (!haystack) return 0;
 
-  const authorityType = detectDocAuthorityType(doc);
-  let score = authorityWeightForNamedLaw(authorityType);
+  const authorityType =
+    detectDocAuthorityType(doc);
 
-  const exactRaAnchor = hasExactRaAnchor(doc, lawMatch);
-  const strongTitleAnchor = hasStrongLawTitleAnchor(doc, lawMatch);
-  const implementingAnchor = hasImplementingAnchor(doc, lawMatch);
-  const restrictedAnchor = hasRestrictedIssuanceAnchor(doc, lawMatch);
-  const normalizedReference = normalizeLawText(getDocNormalizedReference(doc));
-  const originalSource = normalizeLawText(getDocOriginalSource(doc));
-  const path = normalizeLawText(getDocPath(doc));
+  let score =
+    authorityWeightForNamedLaw(
+      authorityType
+    );
 
-  if (exactRaAnchor) {
-    score += authorityType === "STATUTE" ? 320 : 90;
-  }
+  const exactRa =
+    new RegExp(
+      `\\bra\\s*${escapeRegex(
+        lawMatch.republicActNumber
+      )}\\b`,
+      "i"
+    ).test(haystack);
 
-  if (strongTitleAnchor) {
-    score += authorityType === "STATUTE" ? 140 : 28;
+  if (exactRa) {
+    score +=
+      authorityType === "STATUTE"
+        ? 300
+        : 90;
   }
 
   for (const alias of lawMatch.normalizedAliases || []) {
-    if (!alias) continue;
-    if (haystack.includes(alias)) {
-      score += alias.startsWith("ra ") ? 22 : 10;
-    }
-  }
-
-  if (normalizedReference && lawMatch.republicActNumber) {
     if (
-      normalizedReference.includes(`ra ${lawMatch.republicActNumber}`) ||
-      normalizedReference.includes(`republic act no ${lawMatch.republicActNumber}`)
+      haystack.includes(alias)
     ) {
-      score += authorityType === "STATUTE" ? 240 : 40;
+      score += alias.startsWith("ra ")
+        ? 24
+        : 12;
     }
   }
 
-  if (originalSource && lawMatch.shortTitle) {
-    if (originalSource.includes(normalizeLawText(lawMatch.shortTitle))) {
-      score += authorityType === "STATUTE" ? 60 : 15;
-    }
-  }
-
-  if (path && lawMatch.shortTitle) {
-    if (path.includes(normalizeLawText(lawMatch.shortTitle))) {
-      score += authorityType === "STATUTE" ? 50 : 10;
-    }
-  }
-
-  if (implementingAnchor) {
-    score += authorityType === "RR" ? 110 : 20;
-  }
-
-  if (restrictedAnchor) {
-    score -= authorityType === "RMC" ? 80 : 30;
-  }
-
-  if (lawMatch.id === "RA-11534") {
-    if (authorityType === "STATUTE" && (exactRaAnchor || strongTitleAnchor)) {
-      score += 200;
-    }
-
-    if (authorityType === "RR" && implementingAnchor) {
-      score += 80;
-    }
-
-    if (authorityType === "RMC" && restrictedAnchor) {
-      score -= 120;
-    }
-
-    if (
-      authorityType === "RMC" &&
-      !exactRaAnchor &&
-      !strongTitleAnchor &&
-      !implementingAnchor
-    ) {
-      score -= 90;
-    }
-  }
+  const issuanceRefs =
+    extractIssuanceRefs(
+      haystack
+    );
 
   if (
-    ["RMC", "RMO", "RAMO", "BIR_RULING"].includes(authorityType) &&
-    !exactRaAnchor &&
-    !strongTitleAnchor &&
-    !implementingAnchor
+    lawMatch.id === "RA-11534"
   ) {
-    score -= 70;
+    if (
+      issuanceRefs.includes(
+        "rr-5-2021"
+      )
+    ) {
+      score +=
+        authorityType === "RR"
+          ? 140
+          : 20;
+    }
+
+    if (
+      issuanceRefs.includes(
+        "rmc-99-2021"
+      )
+    ) {
+      score -=
+        authorityType === "RMC"
+          ? 120
+          : 30;
+    }
   }
 
   return score;
 }
+
+/* =========================================================
+ * FILTERING
+ * ========================================================= */
 
 export function filterDocsForNamedLaw(
   docs = [],
@@ -774,160 +739,248 @@ export function filterDocsForNamedLaw(
   const {
     minScore = 40,
     hardFilter = true,
-    maxDocs = 12,
-    requirePrimaryAuthority = true
+    maxDocs = 12
   } = options;
 
-  const bestMatch = lawDetection?.bestMatch || null;
+  const bestMatch =
+    lawDetection?.bestMatch ||
+    null;
 
   if (!bestMatch) {
     return {
       lawMatched: false,
       bestMatch: null,
-      matchedDocs: docs.slice(0, maxDocs),
+      matchedDocs: docs.slice(
+        0,
+        maxDocs
+      ),
       discardedDocs: [],
-      scoredDocs: docs.map((doc) => ({
-        doc,
-        namedLawScore: 0,
-        authorityType: detectDocAuthorityType(doc)
-      }))
+      scoredDocs: docs.map(
+        (doc) => ({
+          doc,
+          namedLawScore: 0,
+          authorityType:
+            detectDocAuthorityType(
+              doc
+            )
+        })
+      )
     };
   }
 
   const scoredDocs = docs
     .map((doc) => {
-      const authorityType = detectDocAuthorityType(doc);
+      const authorityType =
+        detectDocAuthorityType(
+          doc
+        );
+
       return {
         doc,
+
         authorityType,
-        namedLawScore: scoreDocAgainstNamedLaw(doc, bestMatch),
-        exactRaAnchor: hasExactRaAnchor(doc, bestMatch),
-        strongTitleAnchor: hasStrongLawTitleAnchor(doc, bestMatch),
-        implementingAnchor: hasImplementingAnchor(doc, bestMatch),
-        restrictedAnchor: hasRestrictedIssuanceAnchor(doc, bestMatch)
+
+        namedLawScore:
+          scoreDocAgainstNamedLaw(
+            doc,
+            bestMatch
+          )
       };
     })
-    .sort((a, b) => {
-      if (b.namedLawScore !== a.namedLawScore) {
-        return b.namedLawScore - a.namedLawScore;
-      }
+    .sort(
+      (a, b) =>
+        b.namedLawScore -
+        a.namedLawScore
+    );
 
-      return (
-        authorityWeightForNamedLaw(b.authorityType) -
-        authorityWeightForNamedLaw(a.authorityType)
-      );
-    });
+  const matchedDocs =
+    scoredDocs
+      .filter(
+        (item) =>
+          item.namedLawScore >=
+          minScore
+      )
+      .map((item) => ({
+        ...item.doc,
 
-  const aboveThreshold = scoredDocs.filter((item) => item.namedLawScore >= minScore);
+        namedLawScore:
+          item.namedLawScore,
 
-  const primaryDocs = aboveThreshold.filter(
-    (item) =>
-      item.authorityType === "STATUTE" &&
-      (item.exactRaAnchor || item.strongTitleAnchor)
-  );
+        namedLawAuthorityType:
+          item.authorityType
+      }));
 
-  const rrDocs = aboveThreshold.filter(
-    (item) => item.authorityType === "RR" && item.implementingAnchor
-  );
+  const discardedDocs =
+    scoredDocs
+      .filter(
+        (item) =>
+          item.namedLawScore <
+          minScore
+      )
+      .map((item) => ({
+        ...item.doc,
 
-  const remainingDocs = aboveThreshold.filter(
-    (item) =>
-      !primaryDocs.includes(item) &&
-      !rrDocs.includes(item) &&
-      !item.restrictedAnchor
-  );
+        namedLawScore:
+          item.namedLawScore,
 
-  const preferredDocs =
-    requirePrimaryAuthority && primaryDocs.length
-      ? [...primaryDocs, ...rrDocs, ...remainingDocs]
-      : [...aboveThreshold.filter((item) => !item.restrictedAnchor)];
-
-  const matchedDocs = preferredDocs.map((item) => ({
-    ...item.doc,
-    namedLawScore: item.namedLawScore,
-    namedLawAuthorityType: item.authorityType
-  }));
-
-  const fallbackDocs = hardFilter
-    ? []
-    : scoredDocs
-        .filter((item) => item.namedLawScore < minScore)
-        .map((item) => ({
-          ...item.doc,
-          namedLawScore: item.namedLawScore,
-          namedLawAuthorityType: item.authorityType
-        }));
-
-  const finalDocs = matchedDocs.length
-    ? matchedDocs
-    : requirePrimaryAuthority
-      ? []
-      : fallbackDocs;
+        namedLawAuthorityType:
+          item.authorityType
+      }));
 
   return {
     lawMatched: true,
+
     bestMatch,
-    matchedDocs: finalDocs.slice(0, maxDocs),
-    discardedDocs: matchedDocs.length ? fallbackDocs.slice(0, maxDocs) : [],
-    scoredDocs,
-    primaryAuthorityFound: primaryDocs.length > 0
+
+    matchedDocs:
+      matchedDocs.slice(
+        0,
+        maxDocs
+      ),
+
+    discardedDocs:
+      hardFilter
+        ? []
+        : discardedDocs.slice(
+            0,
+            maxDocs
+          ),
+
+    scoredDocs
   };
 }
 
-export function buildNamedLawDebugSummary(question = "", docs = []) {
-  const detection = detectNamedLaw(question);
-  const filtered = filterDocsForNamedLaw(docs, detection, {
-    minScore: 40,
-    hardFilter: true,
-    maxDocs: 5,
-    requirePrimaryAuthority: true
-  });
+/* =========================================================
+ * DEBUG SUMMARY
+ * ========================================================= */
+
+export function buildNamedLawDebugSummary(
+  question = "",
+  docs = []
+) {
+  const detection =
+    detectNamedLaw(question);
+
+  const filtered =
+    filterDocsForNamedLaw(
+      docs,
+      detection,
+      {
+        minScore: 40,
+        hardFilter: true,
+        maxDocs: 5
+      }
+    );
 
   return {
+    engine:
+      "TINA_NAMED_LAW_ENGINE",
+
+    version:
+      ENGINE_VERSION,
+
     question,
-    normalizedQuestion: detection.normalizedQuestion,
-    namedLawMatched: detection.matched,
-    bestMatch: detection.bestMatch
-      ? {
-          id: detection.bestMatch.id,
-          canonicalTitle: detection.bestMatch.canonicalTitle,
-          shortTitle: detection.bestMatch.shortTitle,
-          republicActNumber: detection.bestMatch.republicActNumber,
-          matchedAliases: detection.bestMatch.matchedAliases
-        }
-      : null,
-    suggestedQueries: buildNamedLawSearchQueries(question),
-    primaryAuthorityFound: filtered.primaryAuthorityFound || false,
-    topDocScores: filtered.scoredDocs.slice(0, 5).map((item) => ({
-      title:
-        item.doc.title ||
-        item.doc.originalSource ||
-        item.doc.source ||
-        item.doc.path ||
-        "Untitled Source",
-      path:
-        item.doc.path ||
-        item.doc.source_path ||
-        item.doc.metadata?.path ||
-        null,
-      authorityType: item.authorityType,
-      namedLawScore: item.namedLawScore,
-      exactRaAnchor: Boolean(item.exactRaAnchor),
-      strongTitleAnchor: Boolean(item.strongTitleAnchor),
-      implementingAnchor: Boolean(item.implementingAnchor),
-      restrictedAnchor: Boolean(item.restrictedAnchor)
-    }))
+
+    normalizedQuestion:
+      detection.normalizedQuestion,
+
+    namedLawMatched:
+      detection.matched,
+
+    bestMatch:
+      detection.bestMatch
+        ? {
+            id:
+              detection.bestMatch.id,
+
+            canonicalTitle:
+              detection.bestMatch
+                .canonicalTitle,
+
+            shortTitle:
+              detection.bestMatch
+                .shortTitle,
+
+            republicActNumber:
+              detection.bestMatch
+                .republicActNumber,
+
+            matchedAliases:
+              detection.bestMatch
+                .matchedAliases
+          }
+        : null,
+
+    suggestedQueries:
+      buildNamedLawSearchQueries(
+        question
+      ),
+
+    topDocScores:
+      filtered.scoredDocs
+        .slice(0, 5)
+        .map((item) => ({
+          title:
+            item.doc.title ||
+            item.doc.originalSource ||
+            item.doc.source ||
+            item.doc.path ||
+            "Untitled Source",
+
+          authorityType:
+            item.authorityType,
+
+          namedLawScore:
+            item.namedLawScore
+        }))
+  };
+}
+
+/* =========================================================
+ * HEALTH CHECK
+ * ========================================================= */
+
+export function namedLawEngineHealthCheck() {
+  return {
+    ok: true,
+
+    engine:
+      "TINA_NAMED_LAW_ENGINE",
+
+    version:
+      ENGINE_VERSION,
+
+    adaptiveCompatible: true,
+
+    plannerCompatible: true,
+
+    retrievalCompatible: true,
+
+    authorityCompatible: true,
+
+    supersessionCompatible: true
   };
 }
 
 export default {
+  ENGINE_VERSION,
+
   NAMED_LAW_REGISTRY,
   NAMED_LAW_INDEX,
+
   normalizeLawText,
+
   extractRepublicActNumbers,
+
   detectNamedLaw,
+
   buildNamedLawSearchQueries,
+
   scoreDocAgainstNamedLaw,
+
   filterDocsForNamedLaw,
-  buildNamedLawDebugSummary
+
+  buildNamedLawDebugSummary,
+
+  namedLawEngineHealthCheck
 };
