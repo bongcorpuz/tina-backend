@@ -1,20 +1,35 @@
 // FILE: reasoning-engine.js
+"use strict";
 
-import {
+/**
+ * TINA Enterprise Reasoning Engine
+ * Version: 3.0.0
+ */
+
+import { createRequire } from "module";
+
+const require = createRequire(import.meta.url);
+
+const {
   AUTHORITY_LABEL,
   normalizeLegalReference,
   classifyAuthorityFromDocument,
   getAuthorityTypeForDoc,
   getAuthorityLevelForDoc,
   getControllingPrecedenceForDoc
-} from "./authority-engine.js";
+} = require("./authority-engine.js");
 
-import {
+const {
   resolveCourtOverride,
-  isGenuineConflict
-} from "./conflict-engine.js";
+  isGenuineConflict,
+  analyzeConflictPair
+} = require("./conflict-engine.js");
 
-function safeString(value) {
+const { applySupersessionFilter } = require("./supersession-engine.js");
+
+const ENGINE_VERSION = "3.0.0";
+
+function safeString(value = "") {
   return String(value || "").trim();
 }
 
@@ -23,7 +38,7 @@ function safeNumber(value, fallback = 0) {
   return Number.isFinite(num) ? num : fallback;
 }
 
-function lower(value) {
+function lower(value = "") {
   return safeString(value).toLowerCase();
 }
 
@@ -56,6 +71,20 @@ function normalizeForMatch(value = "") {
     .trim();
 }
 
+function uniqueBy(items = [], makeKey = (item) => item) {
+  const seen = new Set();
+  const results = [];
+
+  for (const item of items || []) {
+    const key = makeKey(item);
+    if (!key || seen.has(key)) continue;
+    seen.add(key);
+    results.push(item);
+  }
+
+  return results;
+}
+
 function getDocPath(doc = {}) {
   return safeString(
     doc.metadata?.path ||
@@ -70,11 +99,40 @@ function getDocPath(doc = {}) {
 
 function getDocOriginalName(doc = {}) {
   return safeString(
-    doc.metadata?.originalSource ||
+    doc.metadata?.documentTitle ||
+      doc.metadata?.originalSource ||
       doc.metadata?.originalFileName ||
       doc.originalSource ||
       doc.original_source ||
-      doc.source
+      doc.source ||
+      doc.title
+  );
+}
+
+function getDocText(doc = {}) {
+  return safeString(
+    [
+      doc.text,
+      doc.content,
+      doc.excerpt,
+      doc.preview,
+      doc.source,
+      doc.originalSource,
+      doc.original_source,
+      doc.path,
+      doc.source_path,
+      doc.metadata?.path,
+      doc.metadata?.documentTitle,
+      doc.metadata?.originalFileName,
+      doc.metadata?.normalizedReference,
+      ...(Array.isArray(doc.normalizedAliases) ? doc.normalizedAliases : []),
+      ...(Array.isArray(doc.normalized_aliases) ? doc.normalized_aliases : []),
+      ...(Array.isArray(doc.metadata?.normalizedAliases)
+        ? doc.metadata.normalizedAliases
+        : [])
+    ]
+      .filter(Boolean)
+      .join(" ")
   );
 }
 
@@ -84,6 +142,10 @@ function buildDocIdentity(doc = {}) {
     safeString(doc.chunk_id) ||
     safeString(doc.metadata?.chunkId) ||
     safeString(doc.metadata?.fileId) ||
+    safeString(doc.metadata?.file_id) ||
+    safeString(doc.normalizedReference) ||
+    safeString(doc.normalized_reference) ||
+    safeString(doc.metadata?.normalizedReference) ||
     getDocPath(doc) ||
     getDocOriginalName(doc) ||
     safeString(doc.source)
@@ -95,18 +157,13 @@ function getAuthorityType(doc = {}) {
     doc.authority_type ||
     doc.authorityType ||
     doc.metadata?.authorityType ||
-    getAuthorityTypeForDoc({
-      source: doc.source || doc.originalSource || "",
-      originalSource: doc.originalSource || "",
-      path: getDocPath(doc),
-      metadata: doc.metadata || {},
-      text: doc.text || ""
-    }) ||
+    getAuthorityTypeForDoc?.(doc) ||
     classifyAuthorityFromDocument({
-      fileName: doc.source || doc.originalSource || "",
+      fileName: doc.source || doc.originalSource || doc.title || "",
       path: getDocPath(doc),
-      text: doc.text || ""
-    })
+      text: getDocText(doc)
+    }) ||
+    "UNKNOWN"
   );
 }
 
@@ -119,15 +176,15 @@ function inferAuthorityTier(doc = {}) {
     doc.metadata?.authorityTier ??
     doc.sourceTier?.tier;
 
-  if (Number.isFinite(Number(explicitTier))) {
-    return Number(explicitTier);
-  }
+  if (Number.isFinite(Number(explicitTier))) return Number(explicitTier);
 
-  return getAuthorityLevelForDoc({
-    ...doc,
-    path: getDocPath(doc),
-    metadata: doc.metadata || {}
-  });
+  return (
+    getAuthorityLevelForDoc?.({
+      ...doc,
+      path: getDocPath(doc),
+      metadata: doc.metadata || {}
+    }) || 99
+  );
 }
 
 function inferControllingPrecedence(doc = {}) {
@@ -136,15 +193,15 @@ function inferControllingPrecedence(doc = {}) {
     doc.controllingPrecedence ??
     doc.metadata?.controllingPrecedence;
 
-  if (Number.isFinite(Number(explicit))) {
-    return Number(explicit);
-  }
+  if (Number.isFinite(Number(explicit))) return Number(explicit);
 
-  return getControllingPrecedenceForDoc({
-    ...doc,
-    path: getDocPath(doc),
-    metadata: doc.metadata || {}
-  });
+  return (
+    getControllingPrecedenceForDoc?.({
+      ...doc,
+      path: getDocPath(doc),
+      metadata: doc.metadata || {}
+    }) || 99
+  );
 }
 
 function authorityWeight(tier = 99) {
@@ -160,33 +217,17 @@ function authorityWeight(tier = 99) {
 
 function inferAuthorityLabel(tier = 99, doc = {}) {
   const authorityType = getAuthorityType(doc);
-
-  return (
-    AUTHORITY_LABEL[authorityType] ||
-    AUTHORITY_LABEL.SECONDARY ||
-    "Unclassified Source"
-  );
+  return AUTHORITY_LABEL[authorityType] || AUTHORITY_LABEL.SECONDARY || "Unclassified Source";
 }
 
 function inferEvidenceType(doc = {}) {
   const authorityType = getAuthorityType(doc);
 
-  if (["CONSTITUTION", "STATUTE", "TREATY"].includes(authorityType)) {
-    return "primary";
-  }
-
+  if (["CONSTITUTION", "STATUTE", "TREATY"].includes(authorityType)) return "primary";
   if (["RR", "RMC", "RMO", "RAMO", "BIR_RULING", "LGU"].includes(authorityType)) {
     return "administrative";
   }
-
-  if (
-    [
-      "SUPREME_COURT",
-      "CTA_EN_BANC",
-      "COURT_OF_APPEALS",
-      "CTA_DIVISION"
-    ].includes(authorityType)
-  ) {
+  if (["SUPREME_COURT", "CTA_EN_BANC", "COURT_OF_APPEALS", "CTA_DIVISION"].includes(authorityType)) {
     return "jurisprudence";
   }
 
@@ -209,20 +250,6 @@ function inferEffectiveDate(doc = {}) {
   return Number.isNaN(parsed.getTime()) ? null : parsed.toISOString();
 }
 
-function uniqueBy(items = [], makeKey = (item) => item) {
-  const seen = new Set();
-  const results = [];
-
-  for (const item of items) {
-    const key = makeKey(item);
-    if (!key || seen.has(key)) continue;
-    seen.add(key);
-    results.push(item);
-  }
-
-  return results;
-}
-
 function tokenize(text = "") {
   return lower(text)
     .replace(/[^a-z0-9\s-]/g, " ")
@@ -231,7 +258,10 @@ function tokenize(text = "") {
 }
 
 function computeKeywordScore(query = "", text = "") {
-  const queryTokens = tokenize(query);
+  const queryTokens = uniqueBy(tokenize(query), (item) => item).filter(
+    (token) => token.length >= 3
+  );
+
   const textTokens = new Set(tokenize(text));
 
   if (!queryTokens.length || !textTokens.size) return 0;
@@ -239,7 +269,7 @@ function computeKeywordScore(query = "", text = "") {
   let hits = 0;
 
   for (const token of queryTokens) {
-    if (textTokens.has(token)) hits += 1;
+    if (textTokens.has(token) || lower(text).includes(token)) hits += 1;
   }
 
   return hits / queryTokens.length;
@@ -254,20 +284,61 @@ function classifyEvidenceTopic(doc = {}) {
       doc.metadata?.subtopic ||
       doc.subtopic ||
       "general"
-  );
+  ).toLowerCase();
+}
+
+function detectIssueSignals(text = "") {
+  const value = lower(text);
+  const issues = [];
+
+  const push = (condition, issue) => {
+    if (condition) issues.push(issue);
+  };
+
+  push(/\b(vat refund|input vat refund|120\+30|administrative claim|judicial claim|tcc|unutilized input vat)\b/i.test(value), "VAT_REFUND");
+  push(/\b(vat liability|output vat|subject to vat|vatable|gross receipts|sale of goods|sale of services)\b/i.test(value), "VAT_LIABILITY");
+  push(/\b(invoice|receipt|substantiation|documentary|proof|evidence|records)\b/i.test(value), "EVIDENTIARY");
+  push(/\b(filing|deadline|protest|appeal|assessment|loa|pan|fan|prescription)\b/i.test(value), "PROCEDURAL");
+  push(/\b(withholding|ewt|cwt|fwt)\b/i.test(value), "WITHHOLDING");
+  push(/\b(income tax|rcit|mcit|nolco|deductible|gross income)\b/i.test(value), "INCOME_TAX");
+  push(/\b(contract|agreement|lease|concession|clause)\b/i.test(value), "CONTRACT");
+  push(/\b(principal|agent|pass-through|reimbursement|bundled|economic substance)\b/i.test(value), "TRANSACTION");
+  push(/\b(audit|afs|pfrs|pas|misstatement|working paper)\b/i.test(value), "AUDIT");
+
+  return [...new Set(issues)];
+}
+
+function hasIssueMismatch(query = "", doc = {}) {
+  const queryIssues = detectIssueSignals(query);
+  const docIssues = detectIssueSignals(getDocText(doc));
+
+  if (
+    queryIssues.includes("VAT_LIABILITY") &&
+    docIssues.includes("VAT_REFUND") &&
+    !queryIssues.includes("VAT_REFUND")
+  ) {
+    return true;
+  }
+
+  if (
+    queryIssues.includes("VAT_REFUND") &&
+    docIssues.includes("VAT_LIABILITY") &&
+    !queryIssues.includes("VAT_LIABILITY")
+  ) {
+    return true;
+  }
+
+  return false;
 }
 
 function isCourtAuthority(authorityType = "") {
-  return [
-    "SUPREME_COURT",
-    "CTA_EN_BANC",
-    "COURT_OF_APPEALS",
-    "CTA_DIVISION"
-  ].includes(authorityType);
+  return ["SUPREME_COURT", "CTA_EN_BANC", "COURT_OF_APPEALS", "CTA_DIVISION"].includes(
+    String(authorityType || "").toUpperCase()
+  );
 }
 
 function isBIRAuthority(authorityType = "") {
-  return ["RR", "RMC", "RMO", "RAMO", "BIR_RULING"].includes(authorityType);
+  return ["RR", "RMC", "RMO", "RAMO", "BIR_RULING"].includes(String(authorityType || "").toUpperCase());
 }
 
 function buildConflictResolutionBasis(aType = "", bType = "", override = null) {
@@ -279,34 +350,24 @@ function buildConflictResolutionBasis(aType = "", bType = "", override = null) {
     (isCourtAuthority(aType) && isBIRAuthority(bType)) ||
     (isCourtAuthority(bType) && isBIRAuthority(aType))
   ) {
-    return "Court decision prevails over conflicting BIR issuance.";
+    return "Court decision prevails over conflicting BIR issuance if there is a genuine same-issue conflict.";
   }
 
-  return `Prefer ${
-    override?.winningAuthority || aType || bType || "higher authority"
-  } based on controlling authority hierarchy.`;
+  return `Prefer ${override?.winningAuthority || aType || bType || "higher authority"} based on controlling authority hierarchy.`;
 }
 
 function compareEvidencePair(a, b) {
-  const sameTopic = classifyEvidenceTopic(a) === classifyEvidenceTopic(b);
-  if (!sameTopic) return null;
-
   const docA = a.raw || a;
   const docB = b.raw || b;
 
-  const textA = lower(a.text || a.claim_text || "");
-  const textB = lower(b.text || b.claim_text || "");
+  const analysis = analyzeConflictPair(docA, docB);
 
-  if (!textA || !textB) return null;
-  if (textA === textB) return null;
-
-  if (!isGenuineConflict(docA, docB)) {
+  if (!analysis?.conflict && !analysis?.apparentConflict && !isGenuineConflict(docA, docB)) {
     return null;
   }
 
   const aType = getAuthorityType(docA);
   const bType = getAuthorityType(docB);
-
   const override = resolveCourtOverride(docA, docB);
 
   const preferred = override?.winningSource
@@ -320,11 +381,11 @@ function compareEvidencePair(a, b) {
   const overridden = preferred === a ? b : a;
 
   return {
-    conflict_topic: classifyEvidenceTopic(a),
+    conflict_topic: classifyEvidenceTopic(a) || classifyEvidenceTopic(b) || "general",
     source_a_path: getDocPath(docA),
     source_b_path: getDocPath(docB),
-    source_a_claim: safeString(a.text || a.claim_text).slice(0, 500),
-    source_b_claim: safeString(b.text || b.claim_text).slice(0, 500),
+    source_a_claim: safeString(a.text || a.claim_text || getDocText(docA)).slice(0, 500),
+    source_b_claim: safeString(b.text || b.claim_text || getDocText(docB)).slice(0, 500),
     source_a_type: aType,
     source_b_type: bType,
     preferred_source_path: getDocPath(preferred.raw || preferred),
@@ -334,19 +395,26 @@ function compareEvidencePair(a, b) {
     overridden_authority:
       override?.overriddenAuthority || getAuthorityType(overridden.raw || overridden),
     override_applied: Boolean(override?.overrideApplies),
-    conflict_reason: override?.reason
-      ? override.reason
-      : "Genuine contradiction detected between sources on the same issue.",
-    resolution_basis: buildConflictResolutionBasis(aType, bType, override),
-    audit_record: override
-      ? {
-          overrideApplied: Boolean(override.overrideApplies),
-          winningAuthority: override.winningAuthority || null,
-          overriddenAuthority: override.overriddenAuthority || null,
-          winningSource: getDocPath(override.winningSource || {}),
-          overriddenSource: getDocPath(override.overriddenSource || {})
-        }
-      : null
+    conflict_reason:
+      analysis?.reason ||
+      analysis?.resolutionBasis ||
+      override?.reason ||
+      "Potential contradiction detected between sources on the same or related issue.",
+    resolution_basis:
+      analysis?.resolutionBasis || buildConflictResolutionBasis(aType, bType, override),
+    doctrinal_conflict: Boolean(analysis?.doctrinalConflict),
+    hierarchy_conflict: Boolean(analysis?.hierarchyConflict),
+    apparent_conflict: Boolean(analysis?.apparentConflict),
+    distinction_type: analysis?.distinctionType || null,
+    exact_issue: analysis?.exactIssue || null,
+    audit_record: {
+      overrideApplied: Boolean(override?.overrideApplies),
+      winningAuthority: override?.winningAuthority || null,
+      overriddenAuthority: override?.overriddenAuthority || null,
+      winningSource: getDocPath(override?.winningSource || {}),
+      overriddenSource: getDocPath(override?.overriddenSource || {}),
+      analysis
+    }
   };
 }
 
@@ -363,9 +431,7 @@ function buildCitationCandidates(normalized) {
   const aliases = Array.isArray(normalized.aliases) ? normalized.aliases : [];
 
   return uniqueBy(
-    [normalized.normalized, raw, ...aliases]
-      .filter(Boolean)
-      .map((value) => safeString(value)),
+    [normalized.normalized, raw, ...aliases].filter(Boolean).map((value) => safeString(value)),
     (value) => value.toLowerCase()
   );
 }
@@ -389,6 +455,7 @@ function buildExactCitationOrClauses(candidateStrings = []) {
       clauses.push(`metadata->>path.ilike.%${rawValue}%`);
       clauses.push(`metadata->>originalSource.ilike.%${rawValue}%`);
       clauses.push(`metadata->>originalFileName.ilike.%${rawValue}%`);
+      clauses.push(`metadata->>normalizedReference.ilike.%${rawValue}%`);
     }
 
     if (normalizedValue) {
@@ -397,6 +464,7 @@ function buildExactCitationOrClauses(candidateStrings = []) {
       clauses.push(`metadata->>path.ilike.%${normalizedValue}%`);
       clauses.push(`metadata->>originalSource.ilike.%${normalizedValue}%`);
       clauses.push(`metadata->>originalFileName.ilike.%${normalizedValue}%`);
+      clauses.push(`metadata->>normalizedReference.ilike.%${normalizedValue}%`);
       clauses.push(`normalized_reference.ilike.%${normalizedValue}%`);
     }
   }
@@ -408,7 +476,7 @@ export async function resolveExactCitation(supabase, query) {
   const cleanQuery = safeString(query);
   const normalized = normalizeLegalReference(cleanQuery);
 
-  if (!normalized.type) {
+  if (!normalized?.type) {
     return {
       matched: false,
       query: cleanQuery,
@@ -459,6 +527,7 @@ export async function resolveExactCitation(supabase, query) {
       doc.normalized_reference,
       doc.metadata?.normalizedReference,
       ...(doc.normalizedAliases || []),
+      ...(doc.normalized_aliases || []),
       ...(doc.metadata?.normalizedAliases || [])
     ]
       .filter(Boolean)
@@ -495,20 +564,60 @@ export async function resolveExactCitation(supabase, query) {
   };
 }
 
+async function runVectorSearch(vectorStore, cleanQuery, topK, supabase) {
+  if (vectorStore?.smartSearch) {
+    try {
+      const result = await vectorStore.smartSearch({
+        query: cleanQuery,
+        topK,
+        supabase
+      });
+
+      return Array.isArray(result) ? result : result?.results || [];
+    } catch {
+      const result = await vectorStore.smartSearch(cleanQuery, topK);
+      return Array.isArray(result) ? result : result?.results || [];
+    }
+  }
+
+  if (vectorStore?.searchSimilar) {
+    try {
+      const result = await vectorStore.searchSimilar({
+        query: cleanQuery,
+        topK,
+        supabase
+      });
+
+      return Array.isArray(result) ? result : result?.results || [];
+    } catch {
+      const result = await vectorStore.searchSimilar(cleanQuery, topK);
+      return Array.isArray(result) ? result : result?.results || [];
+    }
+  }
+
+  return [];
+}
+
 export async function hybridRetrieve({
   supabase,
   vectorStore,
   query,
   questionType = "general",
   taxType = "",
-  topK = 24
+  topK = 24,
+  adaptiveMode = "STANDARD",
+  adaptiveContext = {}
 }) {
   const cleanQuery = safeString(query);
 
   if (!cleanQuery) {
     return {
       query: cleanQuery,
-      results: []
+      results: [],
+      retrievalMetadata: {
+        engine: "TINA_REASONING_ENGINE",
+        version: ENGINE_VERSION
+      }
     };
   }
 
@@ -524,19 +633,14 @@ export async function hybridRetrieve({
       .or(`metadata->>taxType.eq.${taxType},metadata->>tax_type.eq.${taxType}`)
       .limit(Math.max(topK, 20));
 
-    if (!error) {
-      metadataDocs = data || [];
-    }
+    if (!error) metadataDocs = data || [];
   }
 
   let keywordDocs = [];
-
-  const tokens = tokenize(cleanQuery)
-    .filter((token) => token.length >= 3)
-    .slice(0, 8);
+  const tokens = tokenize(cleanQuery).filter((token) => token.length >= 3).slice(0, 8);
 
   if (tokens.length) {
-    const orClause = tokens.map((token) => `text.ilike.%${token}%`).join(",");
+    const orClause = tokens.map((token) => `text.ilike.%${escapeIlikeValue(token)}%`).join(",");
 
     const { data, error } = await supabase
       .from("tina_vector_store")
@@ -544,79 +648,79 @@ export async function hybridRetrieve({
       .or(orClause)
       .limit(Math.max(topK, 20));
 
-    if (!error) {
-      keywordDocs = data || [];
-    }
+    if (!error) keywordDocs = data || [];
   }
 
-  let vectorDocs = [];
+  const vectorDocs = await runVectorSearch(vectorStore, cleanQuery, topK, supabase);
 
-  if (vectorStore?.smartSearch) {
-    try {
-      vectorDocs = await vectorStore.smartSearch(cleanQuery, topK);
-    } catch {
-      if (vectorStore?.searchSimilar) {
-        vectorDocs = await vectorStore.searchSimilar(cleanQuery, topK);
-      }
-    }
-  }
-
-  const merged = uniqueBy(
-    [...exactDocs, ...metadataDocs, ...keywordDocs, ...(vectorDocs || [])],
-    (doc) => buildDocIdentity(doc)
+  const supersessionResult = applySupersessionFilter(
+    uniqueBy(
+      [...exactDocs, ...metadataDocs, ...keywordDocs, ...(vectorDocs || [])],
+      (doc) => buildDocIdentity(doc)
+    )
   );
 
-  const scored = merged.map((doc) => {
-    const textBlob = [
-      doc.text,
-      doc.source,
-      doc.original_source,
-      doc.originalSource,
-      doc.path,
-      doc.metadata?.path,
-      doc.metadata?.originalSource,
-      doc.metadata?.topic,
-      doc.metadata?.taxType
-    ]
-      .filter(Boolean)
-      .join(" ");
+  const merged = supersessionResult?.activeDocs || [];
 
-    const vectorScore = safeNumber(doc.score, 0);
-    const keywordScore = computeKeywordScore(cleanQuery, textBlob);
-    const tier = inferAuthorityTier(doc);
-    const citationBoost = exactDocs.some((exactDoc) => buildDocIdentity(exactDoc) === buildDocIdentity(doc))
-      ? 1.25
-      : 1;
+  const scored = merged
+    .filter((doc) => !hasIssueMismatch(cleanQuery, doc))
+    .map((doc) => {
+      const textBlob = getDocText(doc);
+      const vectorScore = safeNumber(
+        doc.finalScore ?? doc.final_score ?? doc.retrievalScore ?? doc.score,
+        0
+      );
+      const keywordScore = computeKeywordScore(cleanQuery, textBlob);
+      const tier = inferAuthorityTier(doc);
+      const citationBoost = exactDocs.some(
+        (exactDoc) => buildDocIdentity(exactDoc) === buildDocIdentity(doc)
+      )
+        ? 1.25
+        : 1;
 
-    const combinedScore =
-      Math.max(vectorScore, keywordScore) *
-      authorityWeight(tier) *
-      citationBoost;
+      const combinedScore =
+        Math.max(vectorScore, keywordScore) *
+        authorityWeight(tier) *
+        citationBoost;
 
-    return {
-      ...doc,
-      score: vectorScore || keywordScore,
-      keyword_score: keywordScore,
-      authority_tier: tier,
-      authority_type: getAuthorityType(doc),
-      controlling_precedence: inferControllingPrecedence(doc),
-      combined_score: combinedScore,
-      question_type: questionType
-    };
-  });
+      return {
+        ...doc,
+        score: vectorScore || keywordScore,
+        keyword_score: keywordScore,
+        authority_tier: tier,
+        authority_type: getAuthorityType(doc),
+        controlling_precedence: inferControllingPrecedence(doc),
+        combined_score: combinedScore,
+        question_type: questionType,
+        adaptive_mode: adaptiveMode,
+        reasoning_metadata: {
+          adaptiveContextAware: true,
+          supersessionAware: true,
+          issueMismatchSuppressed: true,
+          tinaReasoningEngineVersion: ENGINE_VERSION
+        }
+      };
+    });
 
   scored.sort((a, b) => {
-    if (b.combined_score !== a.combined_score) {
-      return b.combined_score - a.combined_score;
-    }
-
+    if (b.combined_score !== a.combined_score) return b.combined_score - a.combined_score;
     return inferAuthorityTier(a) - inferAuthorityTier(b);
   });
 
   return {
     query: cleanQuery,
     exactCitation: exact,
-    results: scored.slice(0, topK)
+    supersessionResult,
+    results: scored.slice(0, topK),
+    retrievalMetadata: {
+      engine: "TINA_REASONING_ENGINE",
+      version: ENGINE_VERSION,
+      adaptiveMode,
+      adaptiveContext,
+      exactCitationMatched: Boolean(exact.matched),
+      rawCount: exactDocs.length + metadataDocs.length + keywordDocs.length + vectorDocs.length,
+      finalCount: scored.slice(0, topK).length
+    }
   };
 }
 
@@ -625,7 +729,7 @@ export function normalizeRetrievedEvidence(docs = []) {
     const authorityTier = inferAuthorityTier(doc);
     const authorityType = getAuthorityType(doc);
     const rawScore = safeNumber(
-      doc.combined_score || doc.score || doc.keyword_score || 0,
+      doc.combined_score || doc.score || doc.keyword_score || doc.retrievalScore || 0,
       0
     );
 
@@ -633,12 +737,10 @@ export function normalizeRetrievedEvidence(docs = []) {
       id: buildDocIdentity(doc),
       vector_chunk_id: doc.id || doc.chunk_id || doc.metadata?.chunkId || null,
       topic: classifyEvidenceTopic(doc),
-      text: safeString(doc.text),
+      text: getDocText(doc),
       source_path: getDocPath(doc),
       source_title: getDocOriginalName(doc) || safeString(doc.source),
-      section_label: safeString(
-        doc.metadata?.sectionLabel || doc.metadata?.heading || ""
-      ),
+      section_label: safeString(doc.metadata?.sectionLabel || doc.metadata?.heading || ""),
       authority_tier: authorityTier,
       authority_type: authorityType,
       authority_label: inferAuthorityLabel(authorityTier, doc),
@@ -754,7 +856,10 @@ export async function synthesizeGroundedAnswer({
   questionType,
   evidence = [],
   conflicts = [],
-  memoryContext = ""
+  memoryContext = "",
+  responseMode = "TECHNICAL",
+  adaptiveContext = {},
+  model = process.env.OPENAI_MODEL || "gpt-4o-mini"
 }) {
   const topEvidence = rankEvidenceByAuthority(evidence).slice(0, 10);
 
@@ -764,6 +869,7 @@ export async function synthesizeGroundedAnswer({
         `SOURCE ${index + 1}: ${item.source_title || "Untitled Source"}`,
         `PATH: ${item.source_path || "Unknown"}`,
         `AUTHORITY: ${item.authority_label || "Unknown"} (Tier ${item.authority_tier})`,
+        `AUTHORITY TYPE: ${item.authority_type || "UNKNOWN"}`,
         `CONTROLLING PRECEDENCE: ${item.controlling_precedence ?? 99}`,
         `SECTION: ${item.section_label || "N/A"}`,
         `SCORE: ${item.score}`,
@@ -774,22 +880,27 @@ export async function synthesizeGroundedAnswer({
     .join("\n\n---\n\n");
 
   const systemPrompt = `
-You are TINA (Tax Intelligence and Analysis), an expert Philippine tax researcher and analyst for Bong Corpuz & Co. CPAs.
+You are TINA (Tax Intelligence and Analysis), an expert Philippine tax researcher, analyst, CPA, audit partner, and legal reasoning assistant.
 
 ACTIVE HOOK MODE:
 ${hookConfig?.mode || "ASK"}
+
+ACTIVE RESPONSE MODE:
+${responseMode}
 
 CORE BEHAVIOR:
 - precise
 - source-grounded
 - conservative
 - audit-defensible
+- evidence-aware
+- hierarchy-aware
 - no hallucinations
 - no unsupported legal conclusions
 
 RETRIEVAL HIERARCHY:
 1. 1987 Constitution
-2. NIRC / Tax Code / Republic Acts amending tax law
+2. NIRC / Tax Code / Republic Acts
 3. Revenue Regulations
 4. Revenue Memorandum Circulars
 5. Revenue Memorandum Orders
@@ -801,31 +912,23 @@ RETRIEVAL HIERARCHY:
 11. CTA Division decisions
 12. Tax Treaties / LGU ordinances / Secondary materials as applicable
 
-CONFLICT RESOLUTION:
-- Constitution and statutes control administrative issuances.
-- If a court decision genuinely conflicts with a BIR issuance, the court ruling controls.
-- Do not claim a conflict unless the conflict is specific and visible in the provided context.
-
 STRICT RULES:
 1. Answer ONLY from the provided CONTEXT when indexed context is available.
-2. Do NOT use general knowledge, assumptions, or memory to add legal bases not shown in CONTEXT.
-3. Do NOT invent RR, RMC, RMO, RAMO, BIR rulings, dates, sections, rates, forms, thresholds, deadlines, case doctrines, or citations.
-4. If a specific issuance is asked and the exact issuance is not in CONTEXT, say: "No indexed document found for the requested issuance."
-5. Prefer TINA retrieval hierarchy for source organization.
-6. Use controlling legal precedence only for actual conflict resolution.
-7. Use exact filenames/path shown in CONTEXT only.
-8. Do not mention ChatGPT.
-9. Do not overstate certainty. State limitations clearly.
-10. For computations, show formula only if found or reasonably derived from the context.
-11. Use exact thresholds and dates when visible; do not paraphrase loosely.
+2. Do NOT invent RR, RMC, RMO, RAMO, BIR rulings, dates, sections, rates, forms, thresholds, deadlines, case doctrines, or citations.
+3. If exact authority is not in CONTEXT, state the limitation.
+4. Do not claim a conflict unless the conflict is specific and visible in the provided context.
+5. Different substantive, procedural, evidentiary, jurisdictional, factual, temporal, contractual, economic-substance, audit, transaction, or administrative rules are not direct conflicts unless they contradict on the same legal issue.
+6. Do not mention ChatGPT.
+7. If evidence is incomplete, use preliminary conclusion language.
+8. Do not append raw source lists; the app will display source links separately.
 
-RESPONSE FORMAT:
-1. DIRECT ANSWER
-2. LEGAL BASIS
-3. SUPPORTING RULES
-4. PROFESSIONAL INSIGHT
-5. CONFLICT FLAG
-6. SOURCES
+MANDATORY RESPONSE FORMAT:
+A. DIRECT ANSWER
+B. CONTROLLING LEGAL BASIS
+C. SUPPORTING JURISPRUDENCE
+D. DOCTRINAL STATUS / CONFLICT ANALYSIS
+E. HIERARCHY ANALYSIS
+F. PRACTICAL APPLICATION
 `.trim();
 
   const userPrompt = `
@@ -837,6 +940,12 @@ ${hookConfig?.hook_code || "/ask"}
 
 Mode:
 ${hookConfig?.mode || "ASK"}
+
+Response Mode:
+${responseMode}
+
+Adaptive Context:
+${JSON.stringify(adaptiveContext || {}, null, 2).slice(0, 3000)}
 
 Topic Data:
 ${JSON.stringify(topicData || {})}
@@ -861,13 +970,13 @@ ${
             `Source B: ${item.source_b_path || "N/A"} (${item.source_b_type || "Unknown"})`,
             `Reason: ${item.conflict_reason || "Potential contradiction"}`,
             `Preferred Source: ${item.preferred_source_path || "N/A"}`,
-            item.overridden_source_path
-              ? `Overridden Source: ${item.overridden_source_path}`
-              : null,
+            item.overridden_source_path ? `Overridden Source: ${item.overridden_source_path}` : null,
             item.override_applied !== undefined
               ? `Court Override Applied: ${item.override_applied ? "YES" : "NO"}`
               : null,
-            `Resolution Basis: ${item.resolution_basis || "Prefer higher authority"}`
+            `Resolution Basis: ${item.resolution_basis || "Prefer higher authority"}`,
+            item.exact_issue ? `Exact Issue: ${item.exact_issue}` : null,
+            item.distinction_type ? `Distinction Type: ${item.distinction_type}` : null
           ]
             .filter(Boolean)
             .join("\n")
@@ -884,7 +993,7 @@ Answer strictly using only the CONTEXT. Apply the TINA hierarchy for source orga
 `.trim();
 
   const response = await openai.chat.completions.create({
-    model: process.env.OPENAI_MODEL || "gpt-4o-mini",
+    model,
     temperature: 0,
     messages: [
       { role: "system", content: systemPrompt },
@@ -899,10 +1008,12 @@ export async function saveReasoningRun(supabase, payload) {
   const record = {
     user_id: payload.userId || null,
     session_id: payload.sessionId || null,
+    conversation_id: payload.conversationId || null,
     question: safeString(payload.question),
     normalized_question: safeString(payload.normalizedQuestion || ""),
     question_type: safeString(payload.questionType || ""),
     mode: safeString(payload.mode || ""),
+    adaptive_mode: safeString(payload.adaptiveMode || payload.responseMode || ""),
     retrieval_status: safeString(payload.retrievalStatus || ""),
     reasoning_status: safeString(payload.reasoningStatus || ""),
     fallback_used: Boolean(payload.fallbackUsed),
@@ -910,7 +1021,13 @@ export async function saveReasoningRun(supabase, payload) {
       payload.topConfidence === null || payload.topConfidence === undefined
         ? null
         : Number(payload.topConfidence),
-    answer_summary: safeString(payload.answerSummary || "")
+    answer_summary: safeString(payload.answerSummary || ""),
+    metadata: {
+      engine: "TINA_REASONING_ENGINE",
+      version: ENGINE_VERSION,
+      adaptiveContext: payload.adaptiveContext || null,
+      retrievalMetadata: payload.retrievalMetadata || null
+    }
   };
 
   const { data, error } = await supabase
@@ -919,9 +1036,7 @@ export async function saveReasoningRun(supabase, payload) {
     .select("*")
     .single();
 
-  if (error) {
-    throw new Error(`saveReasoningRun failed: ${error.message}`);
-  }
+  if (error) throw new Error(`saveReasoningRun failed: ${error.message}`);
 
   return data;
 }
@@ -943,6 +1058,7 @@ export async function saveReasoningEvidence(supabase, payload) {
       item.authority_tier === null || item.authority_tier === undefined
         ? null
         : Number(item.authority_tier),
+    authority_type: safeString(item.authority_type || "") || null,
     evidence_score:
       item.evidence_score === null || item.evidence_score === undefined
         ? null
@@ -954,9 +1070,7 @@ export async function saveReasoningEvidence(supabase, payload) {
     .insert(rows)
     .select("*");
 
-  if (error) {
-    throw new Error(`saveReasoningEvidence failed: ${error.message}`);
-  }
+  if (error) throw new Error(`saveReasoningEvidence failed: ${error.message}`);
 
   return data || [];
 }
@@ -977,7 +1091,8 @@ export async function saveReasoningConflicts(supabase, payload) {
         : null,
       item.overridden_authority
         ? `overridden_authority=${item.overridden_authority}`
-        : null
+        : null,
+      item.distinction_type ? `distinction_type=${item.distinction_type}` : null
     ]
       .filter(Boolean)
       .join(" | ");
@@ -989,8 +1104,7 @@ export async function saveReasoningConflicts(supabase, payload) {
       source_b_path: safeString(item.source_b_path || "") || null,
       source_a_claim: safeString(item.source_a_claim || "") || null,
       source_b_claim: safeString(item.source_b_claim || "") || null,
-      preferred_source_path:
-        safeString(item.preferred_source_path || "") || null,
+      preferred_source_path: safeString(item.preferred_source_path || "") || null,
       conflict_reason: safeString(item.conflict_reason || "") || null,
       resolution_basis:
         safeString(item.resolution_basis || "") +
@@ -1003,9 +1117,37 @@ export async function saveReasoningConflicts(supabase, payload) {
     .insert(rows)
     .select("*");
 
-  if (error) {
-    throw new Error(`saveReasoningConflicts failed: ${error.message}`);
-  }
+  if (error) throw new Error(`saveReasoningConflicts failed: ${error.message}`);
 
   return data || [];
 }
+
+export function reasoningEngineHealthCheck() {
+  return {
+    ok: true,
+    engine: "TINA_REASONING_ENGINE",
+    version: ENGINE_VERSION,
+    esmCompatible: true,
+    commonJsBridgeCompatible: true,
+    authorityEngineCompatible: true,
+    conflictEngineCompatible: true,
+    supersessionCompatible: true,
+    adaptiveCompatible: true,
+    plannerCompatible: true,
+    rendererCompatible: true
+  };
+}
+
+export default {
+  resolveExactCitation,
+  hybridRetrieve,
+  normalizeRetrievedEvidence,
+  detectEvidenceConflicts,
+  rankEvidenceByAuthority,
+  buildClaimEvidenceMap,
+  synthesizeGroundedAnswer,
+  saveReasoningRun,
+  saveReasoningEvidence,
+  saveReasoningConflicts,
+  reasoningEngineHealthCheck
+};
