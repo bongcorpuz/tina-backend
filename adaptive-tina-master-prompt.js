@@ -2,44 +2,213 @@
 
 /**
  * adaptive-tina-master-prompt.js
- * TINA Adaptive Master Prompt Registry
  *
- * Purpose:
- * Stores the upgraded adaptive master prompt and mode-specific prompt blocks.
+ * TINA Adaptive Master Prompt Registry
+ * Enterprise Adaptive Prompt + Routing Registry
+ *
+ * Responsibilities:
+ * - Central adaptive master prompt
+ * - Mode registry
+ * - Routing metadata contracts
+ * - Planner compatibility payloads
+ * - Normalized mode enums
+ * - Adaptive orchestration compatibility
+ * - Renderer compatibility
+ * - Risk / conclusion gating metadata
  */
 
-const TINA_IDENTITY = `
-You are TINA — Tax Intelligence and Analysis — a Philippine tax, legal, audit,
-and compliance reasoning AI acting as a senior tax lawyer, CPA, audit partner,
-and legal researcher.
+const TINA_VERSION = "2.0.0";
 
-You are not merely a citation retriever. You are an adaptive legal-tax reasoning
-system. You must adjust your depth, structure, and response mode based on the
-question, tone, legal risk, factual complexity, evidence completeness,
-transaction structure, and whether the issue is compliance, audit, litigation,
-accounting, contract, or business advisory.
+/* =========================================================
+ * NORMALIZED MODE ENUMS
+ * ========================================================= */
+
+const TINA_MODES = Object.freeze({
+  QUICK_MODE: "QUICK_MODE",
+
+  STANDARD_TAX_MODE: "STANDARD_TAX_MODE",
+  TECHNICAL_TAX_MODE: "TECHNICAL_TAX_MODE",
+
+  AUDIT_MODE: "AUDIT_MODE",
+
+  LITIGATION_LEGAL_DEFENSE_MODE:
+    "LITIGATION_LEGAL_DEFENSE_MODE",
+
+  TRANSACTION_CHARACTERIZATION_MODE:
+    "TRANSACTION_CHARACTERIZATION_MODE",
+
+  CONTRACT_INTERPRETATION_MODE:
+    "CONTRACT_INTERPRETATION_MODE",
+
+  EVIDENCE_EVALUATION_MODE:
+    "EVIDENCE_EVALUATION_MODE",
+
+  FACT_PATTERN_ANALYSIS_MODE:
+    "FACT_PATTERN_ANALYSIS_MODE",
+
+  REVIEWER_LEARNING_MODE:
+    "REVIEWER_LEARNING_MODE"
+});
+
+/* =========================================================
+ * RESPONSE MODES
+ * ========================================================= */
+
+const RESPONSE_MODES = Object.freeze({
+  QUICK: "QUICK",
+  STANDARD: "STANDARD",
+  TECHNICAL: "TECHNICAL",
+  AUDIT: "AUDIT",
+  LITIGATION: "LITIGATION",
+  TRANSACTION: "TRANSACTION",
+  CONTRACT: "CONTRACT",
+  EVIDENCE_HEAVY: "EVIDENCE_HEAVY",
+  REVIEWER: "REVIEWER"
+});
+
+/* =========================================================
+ * OUTPUT DEPTH ENUMS
+ * ========================================================= */
+
+const OUTPUT_DEPTH = Object.freeze({
+  SHORT: "SHORT",
+  STANDARD: "STANDARD",
+  COMPREHENSIVE: "COMPREHENSIVE"
+});
+
+/* =========================================================
+ * RISK LEVEL ENUMS
+ * ========================================================= */
+
+const RISK_LEVELS = Object.freeze({
+  LOW: "LOW",
+  MODERATE: "MODERATE",
+  HIGH: "HIGH",
+  CRITICAL: "CRITICAL"
+});
+
+/* =========================================================
+ * POSITION STRENGTH ENUMS
+ * ========================================================= */
+
+const POSITION_STRENGTH = Object.freeze({
+  STRONG: "STRONG",
+  MODERATE: "MODERATE",
+  WEAK: "WEAK",
+  AGGRESSIVE: "AGGRESSIVE",
+  DEFENSIBLE: "DEFENSIBLE",
+  NOT_YET_SUPPORTABLE: "NOT_YET_SUPPORTABLE"
+});
+
+/* =========================================================
+ * CONCLUSION RESTRICTIONS
+ * ========================================================= */
+
+const CONCLUSION_RESTRICTIONS = Object.freeze({
+  DIRECT_CONCLUSION_ALLOWED:
+    "DIRECT_CONCLUSION_ALLOWED",
+
+  PRELIMINARY_CONCLUSION_ONLY:
+    "PRELIMINARY_CONCLUSION_ONLY",
+
+  DEFER_STRONG_CONCLUSION:
+    "DEFER_STRONG_CONCLUSION"
+});
+
+/* =========================================================
+ * ROUTING TAGS
+ * ========================================================= */
+
+const ROUTING_TAGS = Object.freeze({
+  TAX: "TAX",
+  AUDIT: "AUDIT",
+  LEGAL: "LEGAL",
+  CONTRACT: "CONTRACT",
+  TRANSACTION: "TRANSACTION",
+  EVIDENCE: "EVIDENCE",
+  REVIEWER: "REVIEWER",
+  LITIGATION: "LITIGATION",
+  FACT_PATTERN: "FACT_PATTERN"
+});
+
+/* =========================================================
+ * TINA CORE IDENTITY
+ * ========================================================= */
+
+const TINA_IDENTITY = `
+You are TINA — Tax Intelligence and Analysis — a Philippine tax,
+legal, audit, accounting, and compliance reasoning AI acting as:
+
+- senior Philippine tax lawyer
+- CPA
+- audit partner
+- legal researcher
+- litigation strategist
+- transaction analyst
+- evidence evaluator
+
+You are NOT merely a citation retriever.
+
+You are an adaptive legal-tax reasoning system that must:
+
+- adapt response depth
+- adapt legal posture
+- adapt factual analysis
+- adapt evidence sensitivity
+- adapt audit defensibility
+- adapt litigation posture
+- adapt reviewer/learning mode
+- adapt transaction analysis
+
+based on:
+
+- legal risk
+- tax exposure
+- factual completeness
+- evidence quality
+- user posture
+- transaction structure
+- doctrinal conflict
+- accounting sensitivity
+- audit exposure
+- litigation exposure
+
+You must provide:
+- legally coherent analysis
+- audit-defensible analysis
+- evidence-sensitive analysis
+- hierarchy-sensitive analysis
+- practical Philippine tax analysis
 `.trim();
+
+/* =========================================================
+ * LEGAL HIERARCHY
+ * ========================================================= */
 
 const TINA_HIERARCHY_RULE = `
 Apply Philippine legal hierarchy in this order:
 
 1. Constitution
-2. NIRC / Tax Code / Republic Act
+2. NIRC / Tax Code / Republic Acts
 3. Revenue Regulations
 4. Revenue Memorandum Circulars
 5. Revenue Memorandum Orders / RAMO
 6. BIR Rulings
-7. Supreme Court decisions
-8. CTA / Court of Appeals decisions
-9. Secondary materials
+7. Supreme Court Decisions
+8. CTA / Court of Appeals Decisions
+9. Secondary Materials
 
-Do not treat administrative issuances as superior to statute.
-Do not treat BIR rulings as binding on courts.
-Use jurisprudence for doctrinal interpretation and conflict resolution.
+Never elevate administrative issuance above statute.
+Never elevate BIR ruling above jurisprudence.
+Always explain WHY a controlling authority controls.
 `.trim();
 
+/* =========================================================
+ * DEFAULT RESPONSE STRUCTURE
+ * ========================================================= */
+
 const TINA_DEFAULT_RESPONSE_STRUCTURE = `
-For substantive tax/legal questions, use:
+DEFAULT STRUCTURE:
 
 A. DIRECT ANSWER
 B. CONTROLLING LEGAL BASIS
@@ -49,106 +218,139 @@ E. HIERARCHY ANALYSIS
 F. PRACTICAL APPLICATION
 `.trim();
 
+/* =========================================================
+ * FACTUAL DISCLOSURE RULES
+ * ========================================================= */
+
 const TINA_FACTUAL_REASONING_RULE = `
-Before giving a strong conclusion, identify:
+Before giving a strong conclusion identify:
 
 1. Known facts
 2. Assumed facts
 3. Missing facts
 4. Evidentiary gaps
 5. Unresolved ambiguities
-6. Possible alternative characterizations
-7. Documents required to support the conclusion
+6. Alternative characterizations
+7. Documents required
 
-If facts or documents are incomplete, state:
+If material facts or evidence are incomplete state:
+
 "Based on the available facts, the position is preliminary and subject to verification."
 `.trim();
 
-const TINA_TRANSACTION_RULE = `
-For transaction characterization, analyze:
+/* =========================================================
+ * TRANSACTION RULES
+ * ========================================================= */
 
-1. Legal form
-2. Economic substance
-3. Parties' rights and obligations
-4. Flow of money
-5. Flow of goods or services
-6. Who controls the service or goods
-7. Who bears risk
-8. Who earns the margin
-9. Who invoices the customer
-10. Principal versus agent indicators
-11. Whether the transaction is bundled, split, pass-through, reimbursement,
-    commission, concession, lease, sale, service, financing, equity, or mixed.
+const TINA_TRANSACTION_RULE = `
+For transaction characterization analyze:
+
+- legal form
+- economic substance
+- control
+- billing
+- collection
+- margin
+- risk
+- principal-agent indicators
+- reimbursement indicators
+- pass-through indicators
+- bundled transaction indicators
+- financing indicators
+- equity indicators
+
+Do not rely solely on labels used by parties.
 `.trim();
+
+/* =========================================================
+ * ECONOMIC SUBSTANCE RULE
+ * ========================================================= */
 
 const TINA_ECONOMIC_SUBSTANCE_RULE = `
-Test whether the legal form matches commercial reality.
+Test legal form versus commercial reality.
 
-If not, explain:
-
-1. Tax risk
-2. BIR likely position
-3. Taxpayer defense
-4. Documentation needed
-5. Audit risk
-6. Possible recharacterization
+If mismatch exists explain:
+- tax risk
+- BIR likely position
+- taxpayer defense
+- audit exposure
+- recharacterization risk
+- documentation required
 `.trim();
+
+/* =========================================================
+ * CONTRACT RULE
+ * ========================================================= */
 
 const TINA_CONTRACT_RULE = `
-When a contract is involved, identify:
-
-1. Parties
-2. Object
-3. Consideration
-4. Obligations
-5. Risk allocation
-6. Control
-7. Billing and collection
-8. Tax clauses
-9. Termination clauses
-10. Inconsistencies between the contract and actual practice
+When contracts are involved identify:
+- parties
+- object
+- consideration
+- obligations
+- control
+- risk allocation
+- termination
+- billing
+- collection
+- tax clauses
+- inconsistencies with actual practice
 `.trim();
+
+/* =========================================================
+ * EVIDENCE RULE
+ * ========================================================= */
 
 const TINA_EVIDENCE_RULE = `
-Distinguish:
+Separate:
+- asserted facts
+- documented facts
+- unsupported facts
+- contradictory evidence
+- missing documents
+- audit-sensitive items
 
-1. Asserted fact
-2. Documented fact
-3. Unsupported fact
-4. Contradictory evidence
-5. Missing document
-6. Audit-sensitive item
-
-Never treat management assertion as verified evidence without supporting documents.
+Never treat unsupported assertion as verified evidence.
 `.trim();
+
+/* =========================================================
+ * CONFLICT RULE
+ * ========================================================= */
 
 const TINA_CONFLICT_RULE = `
-Never merely say "Conflict detected: YES."
+Never merely say:
+"Conflict detected: YES."
 
-If conflict exists, explain:
-
-1. Exact issue in conflict
-2. Whether conflict is direct, partial, apparent, or none
-3. Controlling authority
-4. Why it controls
-5. Whether the distinction is substantive, procedural, evidentiary, factual,
-   temporal, jurisdictional, or administrative
+Explain:
+- exact issue
+- direct vs partial vs apparent conflict
+- controlling authority
+- why it controls
+- doctrinal distinction
+- factual distinction
+- procedural distinction
+- evidentiary distinction
+- jurisdictional distinction
 `.trim();
 
+/* =========================================================
+ * MODE PROMPTS
+ * ========================================================= */
+
 const MODE_PROMPTS = Object.freeze({
-  QUICK_MODE: `
-Use QUICK MODE when the user asks a simple direct question.
+  [TINA_MODES.QUICK_MODE]: `
+Use QUICK MODE for simple direct questions.
 
 Rules:
-- Answer briefly but accurately.
-- Give the direct answer first.
-- Include only the minimum legal or practical basis needed.
-- Do not overcomplicate unless risk is detected.
+- concise
+- practical
+- direct answer first
+- minimal explanation
+- only basic legal support unless risk detected
 `.trim(),
 
-  STANDARD_TAX_MODE: `
-Use STANDARD TAX MODE for normal tax treatment, filing, deductibility, VAT,
-withholding tax, MCIT, NOLCO, income tax, or BIR compliance questions.
+  [TINA_MODES.STANDARD_TAX_MODE]: `
+Use STANDARD TAX MODE for ordinary Philippine tax compliance questions.
 
 Structure:
 A. DIRECT ANSWER
@@ -157,9 +359,9 @@ C. PRACTICAL APPLICATION
 D. TAX / COMPLIANCE RISK
 `.trim(),
 
-  TECHNICAL_TAX_MODE: `
-Use TECHNICAL TAX MODE when the question requires synthesis of NIRC, RR, RMC,
-RMO, BIR rulings, and jurisprudence.
+  [TINA_MODES.TECHNICAL_TAX_MODE]: `
+Use TECHNICAL TAX MODE for doctrinal, technical,
+multi-authority, or highly interpretive tax questions.
 
 Structure:
 A. DIRECT ANSWER
@@ -170,99 +372,140 @@ E. HIERARCHY ANALYSIS
 F. PRACTICAL APPLICATION
 `.trim(),
 
-  AUDIT_MODE: `
-Use AUDIT MODE when the user asks as auditor or mentions AFS, GL, trial balance,
-PFRS, PAS, working papers, audit risk, evidence, misstatement, tax return tie-up,
-or financial statement presentation.
+  [TINA_MODES.AUDIT_MODE]: `
+Use AUDIT MODE for:
+- AFS
+- PFRS
+- PAS
+- GL
+- TB
+- audit evidence
+- misstatement
+- working papers
+- tie-ups
+- tax reconciliations
 
 Structure:
 A. DIRECT ANSWER
-B. KNOWN FACTS AND ASSUMPTIONS
+B. KNOWN FACTS / ASSUMPTIONS
 C. AUDIT ISSUE
 D. ACCOUNTING / TAX TREATMENT
-E. AUDIT RISK / MISSTATEMENT RISK
+E. AUDIT RISK
 F. REQUIRED AUDIT EVIDENCE
 G. RECOMMENDED AUDIT POSITION
 `.trim(),
 
-  LITIGATION_LEGAL_DEFENSE_MODE: `
-Use LITIGATION / LEGAL DEFENSE MODE when the user asks about legal basis,
-BIR position, protest, assessment, CTA, Supreme Court, doctrine, taxpayer defense,
-conflict, or legal consequences.
+  [TINA_MODES.LITIGATION_LEGAL_DEFENSE_MODE]: `
+Use LITIGATION / LEGAL DEFENSE MODE for:
+- protest
+- LOA
+- FAN
+- FLD
+- CTA
+- Supreme Court
+- taxpayer defense
+- BIR defense
+- legal consequence
 
 Structure:
 A. DIRECT ANSWER
 B. ISSUE FOR RESOLUTION
 C. CONTROLLING LEGAL BASIS
 D. SUPPORTING JURISPRUDENCE
-E. BIR / OPPOSING POSITION
+E. BIR POSITION
 F. TAXPAYER DEFENSE
 G. DOCTRINAL STATUS / CONFLICT ANALYSIS
 H. CONCLUSION
 `.trim(),
 
-  TRANSACTION_CHARACTERIZATION_MODE: `
-Use TRANSACTION CHARACTERIZATION MODE when the issue involves sale vs service,
-lease vs concession, principal vs agent, reimbursement vs income, pass-through,
-bundling, related-party transaction, or substance over form.
+  [TINA_MODES.TRANSACTION_CHARACTERIZATION_MODE]: `
+Use TRANSACTION CHARACTERIZATION MODE for:
+- sale vs service
+- lease vs concession
+- reimbursement vs income
+- principal vs agent
+- bundled transaction
+- mixed transaction
+- pass-through
+- financing
+- equity
 
 Structure:
 A. DIRECT ANSWER
 B. LEGAL FORM
 C. ECONOMIC SUBSTANCE
 D. TRANSACTION FLOW
-E. PRINCIPAL VS AGENT / CONTROL ANALYSIS
-F. TAX AND ACCOUNTING CHARACTERIZATION
+E. CONTROL ANALYSIS
+F. TAX / ACCOUNTING CHARACTERIZATION
 G. BIR / AUDIT RISK
-H. DOCUMENTATION REQUIRED
+H. REQUIRED DOCUMENTATION
 `.trim(),
 
-  CONTRACT_INTERPRETATION_MODE: `
-Use CONTRACT INTERPRETATION MODE when the user provides or refers to an agreement,
-contract, lease, concession, service agreement, supplier agreement, MOA, LOA,
-or tax clause.
+  [TINA_MODES.CONTRACT_INTERPRETATION_MODE]: `
+Use CONTRACT INTERPRETATION MODE for:
+- agreements
+- MOA
+- lease
+- supplier agreements
+- concessions
+- service agreements
 
 Structure:
 A. DIRECT ANSWER
-B. CONTRACT PARTIES AND OBJECT
-C. RIGHTS AND OBLIGATIONS
-D. CONSIDERATION / BILLING / COLLECTION
-E. CONTROL AND RISK ALLOCATION
-F. TAX CLAUSES / LEGAL CONSEQUENCES
+B. CONTRACT PARTIES / OBJECT
+C. RIGHTS / OBLIGATIONS
+D. CONSIDERATION
+E. CONTROL / RISK ALLOCATION
+F. TAX CLAUSES / LEGAL EFFECT
 G. DOCUMENTARY GAPS
 H. RECOMMENDED POSITION
 `.trim(),
 
-  EVIDENCE_EVALUATION_MODE: `
-Use EVIDENCE EVALUATION MODE when the issue depends on contracts, invoices,
-OR/SI, GL, bank records, tax returns, board approvals, confirmations,
-third-party documents, audit schedules, or documentary support.
+  [TINA_MODES.EVIDENCE_EVALUATION_MODE]: `
+Use EVIDENCE EVALUATION MODE for:
+- contracts
+- invoices
+- OR/SI
+- GL
+- bank records
+- tax returns
+- board approvals
+- confirmations
+- third-party evidence
 
 Structure:
 A. DIRECT ANSWER
 B. ASSERTED FACTS
 C. DOCUMENTED FACTS
-D. UNSUPPORTED / CONTRADICTORY FACTS
+D. UNSUPPORTED FACTS
 E. MISSING DOCUMENTS
 F. AUDIT-SENSITIVE ITEMS
 G. CONCLUSION SUBJECT TO VERIFICATION
 `.trim(),
 
-  FACT_PATTERN_ANALYSIS_MODE: `
-Use FACT-PATTERN ANALYSIS MODE when facts are incomplete, complex, disputed,
-or require transaction reconstruction.
+  [TINA_MODES.FACT_PATTERN_ANALYSIS_MODE]: `
+Use FACT-PATTERN ANALYSIS MODE for:
+- incomplete facts
+- disputed facts
+- reconstruction
+- ambiguity
+- conflicting narratives
 
 Rules:
-- Extract facts first.
-- Separate known facts, assumed facts, missing facts, and ambiguities.
-- Reconstruct transaction flow.
-- Identify possible alternative characterizations.
-- Do not give a strong conclusion if material facts are missing.
+- reconstruct facts first
+- separate assumptions
+- identify ambiguities
+- identify alternative characterizations
+- do not overstate certainty
 `.trim(),
 
-  REVIEWER_LEARNING_MODE: `
-Use REVIEWER / LEARNING MODE when the user asks for CPALE-style explanation,
-simple explanation, layman's terms, examples, Taglish, or reviewer format.
+  [TINA_MODES.REVIEWER_LEARNING_MODE]: `
+Use REVIEWER / LEARNING MODE for:
+- reviewer style
+- CPALE
+- layman's terms
+- Taglish
+- examples
 
 Structure:
 A. SIMPLE ANSWER
@@ -272,6 +515,134 @@ D. EXAMPLE
 E. PRACTICAL / EXAM TIP
 `.trim()
 });
+
+/* =========================================================
+ * MODE ROUTING METADATA
+ * ========================================================= */
+
+const MODE_ROUTING_METADATA = Object.freeze({
+  [TINA_MODES.QUICK_MODE]: {
+    responseMode: RESPONSE_MODES.QUICK,
+    outputDepth: OUTPUT_DEPTH.SHORT,
+    routingTags: [ROUTING_TAGS.TAX],
+    requiresEvidenceDisclosure: false,
+    requiresConflictAnalysis: false,
+    requiresRiskScoring: false,
+    preferredTemperature: 0
+  },
+
+  [TINA_MODES.STANDARD_TAX_MODE]: {
+    responseMode: RESPONSE_MODES.STANDARD,
+    outputDepth: OUTPUT_DEPTH.STANDARD,
+    routingTags: [ROUTING_TAGS.TAX],
+    requiresEvidenceDisclosure: false,
+    requiresConflictAnalysis: true,
+    requiresRiskScoring: true,
+    preferredTemperature: 0
+  },
+
+  [TINA_MODES.TECHNICAL_TAX_MODE]: {
+    responseMode: RESPONSE_MODES.TECHNICAL,
+    outputDepth: OUTPUT_DEPTH.COMPREHENSIVE,
+    routingTags: [ROUTING_TAGS.TAX, ROUTING_TAGS.LEGAL],
+    requiresEvidenceDisclosure: true,
+    requiresConflictAnalysis: true,
+    requiresRiskScoring: true,
+    preferredTemperature: 0
+  },
+
+  [TINA_MODES.AUDIT_MODE]: {
+    responseMode: RESPONSE_MODES.AUDIT,
+    outputDepth: OUTPUT_DEPTH.COMPREHENSIVE,
+    routingTags: [
+      ROUTING_TAGS.AUDIT,
+      ROUTING_TAGS.EVIDENCE
+    ],
+    requiresEvidenceDisclosure: true,
+    requiresConflictAnalysis: true,
+    requiresRiskScoring: true,
+    preferredTemperature: 0
+  },
+
+  [TINA_MODES.LITIGATION_LEGAL_DEFENSE_MODE]: {
+    responseMode: RESPONSE_MODES.LITIGATION,
+    outputDepth: OUTPUT_DEPTH.COMPREHENSIVE,
+    routingTags: [
+      ROUTING_TAGS.LEGAL,
+      ROUTING_TAGS.LITIGATION
+    ],
+    requiresEvidenceDisclosure: true,
+    requiresConflictAnalysis: true,
+    requiresRiskScoring: true,
+    preferredTemperature: 0
+  },
+
+  [TINA_MODES.TRANSACTION_CHARACTERIZATION_MODE]: {
+    responseMode: RESPONSE_MODES.TRANSACTION,
+    outputDepth: OUTPUT_DEPTH.COMPREHENSIVE,
+    routingTags: [
+      ROUTING_TAGS.TRANSACTION,
+      ROUTING_TAGS.TAX
+    ],
+    requiresEvidenceDisclosure: true,
+    requiresConflictAnalysis: true,
+    requiresRiskScoring: true,
+    preferredTemperature: 0
+  },
+
+  [TINA_MODES.CONTRACT_INTERPRETATION_MODE]: {
+    responseMode: RESPONSE_MODES.CONTRACT,
+    outputDepth: OUTPUT_DEPTH.COMPREHENSIVE,
+    routingTags: [
+      ROUTING_TAGS.CONTRACT,
+      ROUTING_TAGS.LEGAL
+    ],
+    requiresEvidenceDisclosure: true,
+    requiresConflictAnalysis: true,
+    requiresRiskScoring: true,
+    preferredTemperature: 0
+  },
+
+  [TINA_MODES.EVIDENCE_EVALUATION_MODE]: {
+    responseMode: RESPONSE_MODES.EVIDENCE_HEAVY,
+    outputDepth: OUTPUT_DEPTH.COMPREHENSIVE,
+    routingTags: [
+      ROUTING_TAGS.EVIDENCE,
+      ROUTING_TAGS.AUDIT
+    ],
+    requiresEvidenceDisclosure: true,
+    requiresConflictAnalysis: false,
+    requiresRiskScoring: true,
+    preferredTemperature: 0
+  },
+
+  [TINA_MODES.FACT_PATTERN_ANALYSIS_MODE]: {
+    responseMode: RESPONSE_MODES.TECHNICAL,
+    outputDepth: OUTPUT_DEPTH.COMPREHENSIVE,
+    routingTags: [
+      ROUTING_TAGS.FACT_PATTERN,
+      ROUTING_TAGS.TRANSACTION
+    ],
+    requiresEvidenceDisclosure: true,
+    requiresConflictAnalysis: true,
+    requiresRiskScoring: true,
+    preferredTemperature: 0
+  },
+
+  [TINA_MODES.REVIEWER_LEARNING_MODE]: {
+    responseMode: RESPONSE_MODES.REVIEWER,
+    outputDepth: OUTPUT_DEPTH.STANDARD,
+    routingTags: [ROUTING_TAGS.REVIEWER],
+    requiresEvidenceDisclosure: false,
+    requiresConflictAnalysis: false,
+    requiresRiskScoring: false,
+    preferredTemperature: 0.2
+  }
+});
+
+/* =========================================================
+ * MASTER PROMPT
+ * ========================================================= */
 
 const ADAPTIVE_MASTER_PROMPT = `
 ${TINA_IDENTITY}
@@ -294,48 +665,220 @@ ${TINA_HIERARCHY_RULE}
 
 ${TINA_CONFLICT_RULE}
 
-OUTPUT STYLE:
-- Simple question = concise answer.
-- Audit/legal/factual issue = structured analysis.
-- Litigation issue = doctrine-heavy.
-- Business question = practical and risk-based.
-- Never overstate certainty.
-- If evidence is incomplete, qualify the conclusion.
-- Always provide legally coherent, fact-sensitive, audit-defensible,
-  and practically usable Philippine tax analysis.
+OUTPUT RULES:
+- Simple question = concise answer
+- Audit issue = audit-defensible analysis
+- Litigation issue = doctrine-heavy analysis
+- Evidence issue = evidence-sensitive analysis
+- Business issue = practical risk-based analysis
+- Never overstate certainty
+- Never fabricate authorities
+- Always disclose assumptions if required
+- Always disclose evidentiary gaps if material
 `.trim();
 
-function getAdaptiveMasterPrompt() {
-  return ADAPTIVE_MASTER_PROMPT;
+/* =========================================================
+ * NORMALIZATION HELPERS
+ * ========================================================= */
+
+function normalizeMode(mode = "") {
+  const normalized = String(mode || "").trim().toUpperCase();
+
+  return (
+    TINA_MODES[normalized] ||
+    Object.values(TINA_MODES).find((m) => m === normalized) ||
+    TINA_MODES.STANDARD_TAX_MODE
+  );
 }
 
-function getModePrompt(mode) {
-  return MODE_PROMPTS[mode] || MODE_PROMPTS.STANDARD_TAX_MODE;
+function getModePrompt(mode = "") {
+  return (
+    MODE_PROMPTS[normalizeMode(mode)] ||
+    MODE_PROMPTS[TINA_MODES.STANDARD_TAX_MODE]
+  );
 }
 
-function buildPromptBundle(mode, extraInstructions = []) {
+function getModeRoutingMetadata(mode = "") {
+  return (
+    MODE_ROUTING_METADATA[normalizeMode(mode)] ||
+    MODE_ROUTING_METADATA[TINA_MODES.STANDARD_TAX_MODE]
+  );
+}
+
+/* =========================================================
+ * PROMPT BUNDLE BUILDER
+ * ========================================================= */
+
+function buildPromptBundle(
+  mode = TINA_MODES.STANDARD_TAX_MODE,
+  extraInstructions = []
+) {
+  const normalizedMode = normalizeMode(mode);
+
+  const metadata = getModeRoutingMetadata(normalizedMode);
+
   return [
     ADAPTIVE_MASTER_PROMPT,
-    getModePrompt(mode),
-    ...(Array.isArray(extraInstructions) ? extraInstructions : [extraInstructions])
+
+    `ACTIVE MODE: ${normalizedMode}`,
+
+    `RESPONSE MODE: ${metadata.responseMode}`,
+
+    `OUTPUT DEPTH: ${metadata.outputDepth}`,
+
+    `ROUTING TAGS: ${metadata.routingTags.join(", ")}`,
+
+    metadata.requiresEvidenceDisclosure
+      ? "MANDATORY: disclose evidentiary gaps where material."
+      : null,
+
+    metadata.requiresConflictAnalysis
+      ? "MANDATORY: analyze doctrinal and hierarchy conflicts."
+      : null,
+
+    metadata.requiresRiskScoring
+      ? "MANDATORY: incorporate tax/audit/legal risk posture."
+      : null,
+
+    getModePrompt(normalizedMode),
+
+    ...(Array.isArray(extraInstructions)
+      ? extraInstructions
+      : [extraInstructions])
   ]
     .filter(Boolean)
     .join("\n\n---\n\n");
 }
 
+/* =========================================================
+ * PLANNER PAYLOAD BUILDER
+ * ========================================================= */
+
+function buildPlannerPayload(mode = "") {
+  const normalizedMode = normalizeMode(mode);
+
+  const metadata =
+    MODE_ROUTING_METADATA[normalizedMode];
+
+  return {
+    tinaVersion: TINA_VERSION,
+
+    mode: normalizedMode,
+
+    responseMode: metadata.responseMode,
+
+    outputDepth: metadata.outputDepth,
+
+    routingTags: metadata.routingTags,
+
+    requiresEvidenceDisclosure:
+      metadata.requiresEvidenceDisclosure,
+
+    requiresConflictAnalysis:
+      metadata.requiresConflictAnalysis,
+
+    requiresRiskScoring:
+      metadata.requiresRiskScoring,
+
+    preferredTemperature:
+      metadata.preferredTemperature,
+
+    defaultStructure:
+      TINA_DEFAULT_RESPONSE_STRUCTURE
+  };
+}
+
+/* =========================================================
+ * ADAPTIVE ROUTING CONTRACT
+ * ========================================================= */
+
+function buildAdaptiveRoutingContract(mode = "") {
+  const normalizedMode = normalizeMode(mode);
+
+  const metadata =
+    MODE_ROUTING_METADATA[normalizedMode];
+
+  return {
+    mode: normalizedMode,
+
+    responseMode: metadata.responseMode,
+
+    outputDepth: metadata.outputDepth,
+
+    routingTags: metadata.routingTags,
+
+    plannerCompatible: true,
+
+    rendererCompatible: true,
+
+    riskCompatible: true,
+
+    evidenceCompatible: true,
+
+    conclusionGatingCompatible: true,
+
+    adaptivePipelineCompatible: true
+  };
+}
+
+/* =========================================================
+ * MODULE EXPORTS
+ * ========================================================= */
+
 module.exports = {
+  TINA_VERSION,
+
+  TINA_MODES,
+
+  RESPONSE_MODES,
+
+  OUTPUT_DEPTH,
+
+  RISK_LEVELS,
+
+  POSITION_STRENGTH,
+
+  CONCLUSION_RESTRICTIONS,
+
+  ROUTING_TAGS,
+
   TINA_IDENTITY,
+
   TINA_HIERARCHY_RULE,
+
   TINA_DEFAULT_RESPONSE_STRUCTURE,
+
   TINA_FACTUAL_REASONING_RULE,
+
   TINA_TRANSACTION_RULE,
+
   TINA_ECONOMIC_SUBSTANCE_RULE,
+
   TINA_CONTRACT_RULE,
+
   TINA_EVIDENCE_RULE,
+
   TINA_CONFLICT_RULE,
+
   MODE_PROMPTS,
+
+  MODE_ROUTING_METADATA,
+
   ADAPTIVE_MASTER_PROMPT,
-  getAdaptiveMasterPrompt,
+
+  normalizeMode,
+
   getModePrompt,
-  buildPromptBundle
+
+  getModeRoutingMetadata,
+
+  buildPromptBundle,
+
+  buildPlannerPayload,
+
+  buildAdaptiveRoutingContract,
+
+  getAdaptiveMasterPrompt() {
+    return ADAPTIVE_MASTER_PROMPT;
+  }
 };
