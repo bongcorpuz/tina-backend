@@ -39,10 +39,7 @@ function safeArray(value) {
 }
 
 function stripFileExtension(value = "") {
-  return String(value || "").replace(
-    /\.(pdf|docx|doc|txt|csv|md|json)$/i,
-    ""
-  );
+  return String(value || "").replace(/\.(pdf|docx|doc|txt|csv|md|json)$/i, "");
 }
 
 function basename(value = "") {
@@ -120,13 +117,7 @@ export function getDocOriginalName(doc = {}) {
 
 export function getDocText(doc = {}) {
   return compactSpaces(
-    [
-      doc.text,
-      doc.content,
-      doc.excerpt,
-      doc.preview,
-      doc.summary
-    ]
+    [doc.text, doc.content, doc.excerpt, doc.preview, doc.summary]
       .filter(Boolean)
       .join(" ")
   );
@@ -168,38 +159,25 @@ export function extractIssuanceReference(text = "") {
   const value = compactSpaces(text);
 
   const patterns = [
-    {
-      type: "CONSTITUTION",
-      regex: /\b(?:1987\s+constitution|constitution)\b/i
-    },
+    { type: "CONSTITUTION", regex: /\b(?:1987\s+constitution|constitution)\b/i },
     {
       type: "RR",
-      regex:
-        /\b(?:rr|revenue regulation)\s*(?:no\.?)?\s*(\d+)[-–](\d{2,4})\b/i
+      regex: /\b(?:rr|revenue regulation)\s*(?:no\.?)?\s*(\d+)[-–](\d{2,4})\b/i
     },
     {
       type: "RMC",
-      regex:
-        /\b(?:rmc|revenue memorandum circular)\s*(?:no\.?)?\s*(\d+)[-–](\d{2,4})\b/i
+      regex: /\b(?:rmc|revenue memorandum circular)\s*(?:no\.?)?\s*(\d+)[-–](\d{2,4})\b/i
     },
     {
       type: "RMO",
-      regex:
-        /\b(?:rmo|revenue memorandum order)\s*(?:no\.?)?\s*(\d+)[-–](\d{2,4})\b/i
+      regex: /\b(?:rmo|revenue memorandum order)\s*(?:no\.?)?\s*(\d+)[-–](\d{2,4})\b/i
     },
     {
       type: "RAMO",
-      regex:
-        /\b(?:ramo|revenue audit memorandum order)\s*(?:no\.?)?\s*(\d+)[-–](\d{2,4})\b/i
+      regex: /\b(?:ramo|revenue audit memorandum order)\s*(?:no\.?)?\s*(\d+)[-–](\d{2,4})\b/i
     },
-    {
-      type: "RA",
-      regex: /\b(?:ra|republic act)\s*(?:no\.?)?\s*(\d+)\b/i
-    },
-    {
-      type: "CASE",
-      regex: /\bg\.?\s*r\.?\s*no\.?\s*([\w-]+)\b/i
-    }
+    { type: "RA", regex: /\b(?:ra|republic act)\s*(?:no\.?)?\s*(\d+)\b/i },
+    { type: "CASE", regex: /\bg\.?\s*r\.?\s*no\.?\s*([\w-]+)\b/i }
   ];
 
   for (const pattern of patterns) {
@@ -211,9 +189,7 @@ export function extractIssuanceReference(text = "") {
         type: pattern.type,
         number: normalizeIssuanceNumber(match[1]),
         year: normalizeIssuanceYear(match[2]),
-        normalized: `${pattern.type} ${normalizeIssuanceNumber(
-          match[1]
-        )}-${normalizeIssuanceYear(match[2])}`
+        normalized: `${pattern.type} ${normalizeIssuanceNumber(match[1])}-${normalizeIssuanceYear(match[2])}`
       };
     }
 
@@ -250,6 +226,31 @@ export function extractQuizAnswer(text = "") {
   return null;
 }
 
+export function formatQuestionBlock({ quiz = {}, storedQuiz = null, teachingText = "" } = {}) {
+  const choices = quiz.choices || {};
+
+  const questionText = [
+    teachingText ? String(teachingText).trim() : null,
+    teachingText ? "" : null,
+    `Topic: ${quiz.topic || "Philippine Taxation"}`,
+    `Difficulty: ${quiz.difficulty || 1}`,
+    "",
+    quiz.question || "Question unavailable.",
+    "",
+    `A. ${choices.A || ""}`,
+    `B. ${choices.B || ""}`,
+    `C. ${choices.C || ""}`,
+    `D. ${choices.D || ""}`,
+    "",
+    "Reply with A, B, C, or D only.",
+    storedQuiz?.id ? `Quiz ID: ${storedQuiz.id}` : null
+  ]
+    .filter((line) => line !== null && line !== undefined)
+    .join("\n");
+
+  return questionText.trim();
+}
+
 export function isHiddenSource(doc = {}) {
   const path = lower(getDocPath(doc));
   return HIDDEN_FOLDER_PATTERNS.some((pattern) => path.includes(pattern));
@@ -266,7 +267,8 @@ export function deduplicateSources(docs = []) {
   for (const doc of docs || []) {
     const key =
       normalizeForMatch(getDocPath(doc)) ||
-      normalizeForMatch(getDocOriginalName(doc));
+      normalizeForMatch(getDocOriginalName(doc)) ||
+      String(doc.id || "");
 
     if (!key || seen.has(key)) continue;
 
@@ -280,19 +282,11 @@ export function deduplicateSources(docs = []) {
 export function sortSourcesByScore(docs = []) {
   return [...docs].sort((a, b) => {
     const aScore = Number(
-      a.finalScore ??
-        a.final_score ??
-        a.retrievalScore ??
-        a.score ??
-        0
+      a.finalScore ?? a.final_score ?? a.retrievalScore ?? a.retrieval_score ?? a.score ?? 0
     );
 
     const bScore = Number(
-      b.finalScore ??
-        b.final_score ??
-        b.retrievalScore ??
-        b.score ??
-        0
+      b.finalScore ?? b.final_score ?? b.retrievalScore ?? b.retrieval_score ?? b.score ?? 0
     );
 
     return bScore - aScore;
@@ -303,13 +297,9 @@ export function processSources(docs = []) {
   const supersession = applySupersessionFilter?.(docs || []) || {};
 
   const activeDocs =
-    supersession.activeDocs?.length > 0
-      ? supersession.activeDocs
-      : docs;
+    supersession.activeDocs?.length > 0 ? supersession.activeDocs : docs;
 
-  return sortSourcesByScore(
-    deduplicateSources(filterVisibleSources(activeDocs))
-  );
+  return sortSourcesByScore(deduplicateSources(filterVisibleSources(activeDocs)));
 }
 
 export function buildVisibleSources(docs = []) {
@@ -318,19 +308,39 @@ export function buildVisibleSources(docs = []) {
     .map((doc) => ({
       title: cleanDisplayTitle(doc),
       source: getDocPath(doc),
+      sourcePath: getDocPath(doc),
+      sourceTitle: cleanDisplayTitle(doc),
       excerpt: getDocText(doc).slice(0, 500),
       authorityType:
         doc.authorityType ||
         doc.authority_type ||
         doc.metadata?.authorityType ||
         "UNKNOWN",
+      authorityLevel:
+        doc.authorityLevel ??
+        doc.authority_level ??
+        doc.metadata?.authorityLevel ??
+        null,
       score:
         doc.finalScore ??
         doc.final_score ??
         doc.retrievalScore ??
+        doc.retrieval_score ??
         doc.score ??
-        0
+        0,
+      driveViewUrl:
+        doc.driveViewUrl ||
+        doc.drive_view_url ||
+        doc.metadata?.driveViewUrl ||
+        doc.metadata?.drive_view_url ||
+        null
     }));
+}
+
+export function finalizeSourcesForResponse(docs = [], options = {}) {
+  const maxItems = Number(options.maxItems || MAX_VISIBLE_SOURCES);
+
+  return buildVisibleSources(docs).slice(0, Math.max(1, maxItems));
 }
 
 export function detectQuestionMode(question = "") {
@@ -338,33 +348,27 @@ export function detectQuestionMode(question = "") {
 
   const rules = [
     {
-      regex:
-        /\b(?:audit|afs|pfrs|pas|working paper|misstatement|qualified opinion)\b/i,
+      regex: /\b(?:audit|afs|pfrs|pas|working paper|misstatement|qualified opinion)\b/i,
       mode: "AUDIT"
     },
     {
-      regex:
-        /\b(?:tax|vat|bir|income tax|withholding|mcit|rcit|nolco)\b/i,
+      regex: /\b(?:tax|vat|bir|income tax|withholding|mcit|rcit|nolco)\b/i,
       mode: "TAX"
     },
     {
-      regex:
-        /\b(?:case|litigation|court|jurisprudence|doctrine|g\.?\s*r\.?\s*no)\b/i,
+      regex: /\b(?:case|litigation|court|jurisprudence|doctrine|g\.?\s*r\.?\s*no)\b/i,
       mode: "LITIGATION"
     },
     {
-      regex:
-        /\b(?:reviewer|quiz|exam|cpale|bar exam|recall)\b/i,
+      regex: /\b(?:reviewer|quiz|exam|cpale|bar exam|recall)\b/i,
       mode: "REVIEWER"
     },
     {
-      regex:
-        /\b(?:contract|agreement|transaction|economic substance|evidence)\b/i,
+      regex: /\b(?:contract|agreement|transaction|economic substance|evidence)\b/i,
       mode: "TRANSACTION"
     },
     {
-      regex:
-        /\b(?:business|strategy|financial model|valuation|irr|pricing)\b/i,
+      regex: /\b(?:business|strategy|financial model|valuation|irr|pricing)\b/i,
       mode: "BUSINESS"
     }
   ];
@@ -393,7 +397,8 @@ export function askHelpersHealthCheck() {
     adaptiveCompatible: true,
     rendererCompatible: true,
     plannerCompatible: true,
-    quizCompatible: true
+    quizCompatible: true,
+    assessmentHandlerCompatible: true
   };
 }
 
@@ -409,12 +414,14 @@ export default {
   normalizeIssuanceYear,
   extractIssuanceReference,
   extractQuizAnswer,
+  formatQuestionBlock,
   isHiddenSource,
   filterVisibleSources,
   deduplicateSources,
   sortSourcesByScore,
   processSources,
   buildVisibleSources,
+  finalizeSourcesForResponse,
   detectQuestionMode,
   resolveReplacementSource,
   askHelpersHealthCheck
