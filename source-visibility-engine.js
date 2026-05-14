@@ -1,10 +1,16 @@
 // FILE: source-visibility-engine.js
+"use strict";
 
-import {
+import { createRequire } from "module";
+
+const require = createRequire(import.meta.url);
+
+const {
   applySupersessionFilter,
   findReplacementForDocument
-} from "./supersession-engine.js";
+} = require("./supersession-engine.js");
 
+export const ENGINE_VERSION = "2.2.0";
 export const MAX_VISIBLE_SOURCES = 5;
 
 const HIDDEN_SOURCE_PATTERNS = [
@@ -29,7 +35,8 @@ const CONTROLLING_AUTHORITY_PRIORITY = {
   CTA_DIVISION: 11,
   TREATY: 12,
   LGU: 13,
-  SECONDARY: 99
+  SECONDARY: 99,
+  UNKNOWN: 99
 };
 
 export function normalizeText(value = "") {
@@ -48,6 +55,10 @@ export function normalizeLooseText(value = "") {
     .replace(/\br\.?\s*a\.?\s*no\.?\s*/g, "ra ")
     .replace(/\br\.?\s*a\.?\s*/g, "ra ")
     .replace(/\bnational internal revenue code\b/g, "nirc")
+    .replace(/\brevenue regulation[s]?\b/g, "rr")
+    .replace(/\brevenue memorandum circular[s]?\b/g, "rmc")
+    .replace(/\brevenue memorandum order[s]?\b/g, "rmo")
+    .replace(/\brevenue audit memorandum order[s]?\b/g, "ramo")
     .replace(/[^\w\s/%₱.,()/-]+/g, " ")
     .replace(/\s+/g, " ")
     .trim();
@@ -58,7 +69,7 @@ export function compactSpaces(value = "") {
 }
 
 export function dedupe(values = []) {
-  return [...new Set(values.filter(Boolean))];
+  return [...new Set((values || []).filter(Boolean))];
 }
 
 function stripFileExtension(value = "") {
@@ -137,12 +148,7 @@ export function sourceTitleOf(doc = {}) {
 }
 
 export function sourceDriveUrlOf(doc = {}) {
-  const fileId =
-    doc.fileId ||
-    doc.file_id ||
-    doc.metadata?.fileId ||
-    doc.metadata?.file_id ||
-    null;
+  const fileId = fileIdOf(doc);
 
   return (
     doc.driveViewUrl ||
@@ -154,12 +160,7 @@ export function sourceDriveUrlOf(doc = {}) {
 }
 
 export function sourceDownloadUrlOf(doc = {}) {
-  const fileId =
-    doc.fileId ||
-    doc.file_id ||
-    doc.metadata?.fileId ||
-    doc.metadata?.file_id ||
-    null;
+  const fileId = fileIdOf(doc);
 
   return (
     doc.driveDownloadUrl ||
@@ -181,8 +182,7 @@ export function fileIdOf(doc = {}) {
 }
 
 function hasSupremeCourtSignal(text = "") {
-  return /\bg\.?\s*r\.?\s*no\.?/i.test(text) ||
-    /supreme court/i.test(text);
+  return /\bg\.?\s*r\.?\s*no\.?/i.test(text) || /supreme court/i.test(text);
 }
 
 function hasCtaSignal(text = "") {
@@ -205,10 +205,7 @@ export function authorityTypeOf(doc = {}) {
   const title = normalizeLooseText(sourceRawTitleOf(doc));
   const blob = `${path} ${title}`;
 
-  if (
-    path.includes("00_constitution") ||
-    title.includes("constitution")
-  ) {
+  if (path.includes("00_constitution") || title.includes("constitution")) {
     return "CONSTITUTION";
   }
 
@@ -221,74 +218,48 @@ export function authorityTypeOf(doc = {}) {
     return "STATUTE";
   }
 
-  if (
-    path.includes("02_revenue_regulations") ||
-    /\brr\b/i.test(title)
-  ) {
+  if (path.includes("02_revenue_regulations") || /\brr\b/i.test(title)) {
     return "RR";
   }
 
-  if (
-    path.includes("03_rmc") ||
-    /\brmc\b/i.test(title)
-  ) {
+  if (path.includes("03_rmc") || /\brmc\b/i.test(title)) {
     return "RMC";
   }
 
-  if (
-    path.includes("04b_ramo") ||
-    /\bramo\b/i.test(title)
-  ) {
+  if (path.includes("04b_ramo") || /\bramo\b/i.test(title)) {
     return "RAMO";
   }
 
-  if (
-    path.includes("04_rmo") ||
-    /\brmo\b/i.test(title)
-  ) {
+  if (path.includes("04_rmo") || /\brmo\b/i.test(title)) {
     return "RMO";
   }
 
-  if (
-    path.includes("05_bir_rulings") ||
-    title.includes("bir ruling")
-  ) {
+  if (path.includes("05_bir_rulings") || title.includes("bir ruling")) {
     return "BIR_RULING";
   }
 
-  if (
-    title.includes("supreme court") ||
-    hasSupremeCourtSignal(blob)
-  ) {
+  if (path.includes("05b_tax_treaties") || title.includes("tax treaty")) {
+    return "TREATY";
+  }
+
+  if (title.includes("supreme court") || hasSupremeCourtSignal(blob)) {
     return "SUPREME_COURT";
   }
 
-  if (
-    title.includes("cta en banc") ||
-    /\bcta eb\b/i.test(blob)
-  ) {
+  if (title.includes("cta en banc") || /\bcta eb\b/i.test(blob)) {
     return "CTA_EN_BANC";
   }
 
-  if (
-    title.includes("court of appeals") ||
-    /\bca-g\.r\.\b/i.test(blob)
-  ) {
+  if (title.includes("court of appeals") || /\bca-g\.?r\.?\b/i.test(blob)) {
     return "COURT_OF_APPEALS";
   }
 
-  if (
-    title.includes("cta") ||
-    hasCtaSignal(blob)
-  ) {
+  if (title.includes("cta") || hasCtaSignal(blob)) {
     return "CTA_DIVISION";
   }
 
-  if (
-    path.includes("05b_tax_treaties") ||
-    title.includes("tax treaty")
-  ) {
-    return "TREATY";
+  if (title.includes("ordinance") || title.includes("local tax code")) {
+    return "LGU";
   }
 
   return "SECONDARY";
@@ -307,18 +278,15 @@ export function authorityLevelOf(doc = {}) {
 }
 
 function shouldHideSource(doc = {}) {
-  const haystack = normalizeLooseText([
-    sourcePathOf(doc),
-    sourceTitleOf(doc)
-  ].join(" "));
-
-  return HIDDEN_SOURCE_PATTERNS.some((pattern) =>
-    haystack.includes(pattern)
+  const haystack = normalizeLooseText(
+    [sourcePathOf(doc), sourceTitleOf(doc)].join(" ")
   );
+
+  return HIDDEN_SOURCE_PATTERNS.some((pattern) => haystack.includes(pattern));
 }
 
 function isWeakAuthority(doc = {}) {
-  return ["SECONDARY"].includes(authorityTypeOf(doc));
+  return ["SECONDARY", "UNKNOWN"].includes(authorityTypeOf(doc));
 }
 
 function isControllingAuthority(doc = {}) {
@@ -326,9 +294,7 @@ function isControllingAuthority(doc = {}) {
 }
 
 function isAdministrativeAuthority(doc = {}) {
-  return ["RR", "RMC", "RMO", "RAMO", "BIR_RULING"].includes(
-    authorityTypeOf(doc)
-  );
+  return ["RR", "RMC", "RMO", "RAMO", "BIR_RULING"].includes(authorityTypeOf(doc));
 }
 
 function isCourtAuthority(doc = {}) {
@@ -346,44 +312,53 @@ function isStatutoryAuthority(doc = {}) {
 
 function extractIssueSignals(text = "") {
   const value = normalizeLooseText(text);
-
   const issues = [];
 
-  if (
-    /\b(vat refund|input vat refund|120\+30|administrative claim|judicial claim|tax credit certificate|unutilized input vat)\b/i.test(value)
-  ) {
-    issues.push("VAT_REFUND");
-  }
+  const push = (condition, issue) => {
+    if (condition) issues.push(issue);
+  };
 
-  if (
-    /\b(vat liability|output vat|subject to vat|vatable|sale of goods|sale of services)\b/i.test(value)
-  ) {
-    issues.push("VAT_LIABILITY");
-  }
+  push(
+    /\b(vat refund|input vat refund|120\+30|administrative claim|judicial claim|tax credit certificate|unutilized input vat)\b/i.test(value),
+    "VAT_REFUND"
+  );
 
-  if (
-    /\b(withholding tax|expanded withholding tax|ewt|final withholding tax|fwt)\b/i.test(value)
-  ) {
-    issues.push("WITHHOLDING");
-  }
+  push(
+    /\b(vat liability|output vat|subject to vat|vatable|sale of goods|sale of services)\b/i.test(value),
+    "VAT_LIABILITY"
+  );
 
-  if (
-    /\b(nolco|mcit|rcit|income tax)\b/i.test(value)
-  ) {
-    issues.push("INCOME_TAX");
-  }
+  push(
+    /\b(withholding tax|expanded withholding tax|ewt|final withholding tax|fwt)\b/i.test(value),
+    "WITHHOLDING"
+  );
 
-  if (
-    /\b(substantiation|invoice|receipt|supporting document|evidence)\b/i.test(value)
-  ) {
-    issues.push("SUBSTANTIATION");
-  }
+  push(/\b(nolco|mcit|rcit|income tax)\b/i.test(value), "INCOME_TAX");
 
-  if (
-    /\b(jurisdiction|120\+30|prescriptive|appeal|assessment|fan|pan|loa)\b/i.test(value)
-  ) {
-    issues.push("PROCEDURAL");
-  }
+  push(
+    /\b(substantiation|invoice|receipt|supporting document|evidence|proof)\b/i.test(value),
+    "SUBSTANTIATION"
+  );
+
+  push(
+    /\b(jurisdiction|120\+30|prescriptive|appeal|assessment|fan|pan|loa)\b/i.test(value),
+    "PROCEDURAL"
+  );
+
+  push(
+    /\b(contract|agreement|lease|concession|clause)\b/i.test(value),
+    "CONTRACT"
+  );
+
+  push(
+    /\b(principal|agent|pass-through|reimbursement|bundled|economic substance|substance over form)\b/i.test(value),
+    "TRANSACTION"
+  );
+
+  push(
+    /\b(audit|afs|pfrs|pas|misstatement|working paper)\b/i.test(value),
+    "AUDIT"
+  );
 
   return dedupe(issues);
 }
@@ -393,17 +368,19 @@ function issueOverlap(a = [], b = []) {
 }
 
 function docIssueSignals(doc = {}) {
-  const blob = normalizeLooseText([
-    sourceTitleOf(doc),
-    sourcePathOf(doc),
-    doc.text,
-    doc.excerpt,
-    doc.preview,
-    doc.doctrineApplicability,
-    doc.doctrineApplicabilityExplanation
-  ]
-    .filter(Boolean)
-    .join(" "));
+  const blob = normalizeLooseText(
+    [
+      sourceTitleOf(doc),
+      sourcePathOf(doc),
+      doc.text,
+      doc.excerpt,
+      doc.preview,
+      doc.doctrineApplicability,
+      doc.doctrineApplicabilityExplanation
+    ]
+      .filter(Boolean)
+      .join(" ")
+  );
 
   return extractIssueSignals(blob);
 }
@@ -425,7 +402,8 @@ export function formatDocType(doc = {}) {
     CTA_DIVISION: "CTA Division",
     TREATY: "Treaty",
     LGU: "LGU",
-    SECONDARY: "Secondary Source"
+    SECONDARY: "Secondary Source",
+    UNKNOWN: "Unknown Source"
   };
 
   return labels[type] || "Source";
@@ -478,23 +456,19 @@ export function inferIssuanceNumber(doc = {}) {
     },
     {
       regex: /\b(RR)\s*(?:No\.?)?\s*0*(\d+)\s*[-/_]\s*(\d{2,4})\b/i,
-      value: (m) =>
-        `${m[1].toUpperCase()} No. ${Number(m[2])}-${normalizeYear(m[3])}`
+      value: (m) => `${m[1].toUpperCase()} No. ${Number(m[2])}-${normalizeYear(m[3])}`
     },
     {
       regex: /\b(RMC)\s*(?:No\.?)?\s*0*(\d+)\s*[-/_]\s*(\d{2,4})\b/i,
-      value: (m) =>
-        `${m[1].toUpperCase()} No. ${Number(m[2])}-${normalizeYear(m[3])}`
+      value: (m) => `${m[1].toUpperCase()} No. ${Number(m[2])}-${normalizeYear(m[3])}`
     },
     {
       regex: /\b(RMO)\s*(?:No\.?)?\s*0*(\d+)\s*[-/_]\s*(\d{2,4})\b/i,
-      value: (m) =>
-        `${m[1].toUpperCase()} No. ${Number(m[2])}-${normalizeYear(m[3])}`
+      value: (m) => `${m[1].toUpperCase()} No. ${Number(m[2])}-${normalizeYear(m[3])}`
     },
     {
       regex: /\b(RAMO)\s*(?:No\.?)?\s*0*(\d+)\s*[-/_]\s*(\d{2,4})\b/i,
-      value: (m) =>
-        `${m[1].toUpperCase()} No. ${Number(m[2])}-${normalizeYear(m[3])}`
+      value: (m) => `${m[1].toUpperCase()} No. ${Number(m[2])}-${normalizeYear(m[3])}`
     },
     {
       regex: /\b(BIR Ruling)\s*(?:No\.?)?\s*([\w./()-]+)\b/i,
@@ -542,8 +516,7 @@ export function inferIssuanceNumber(doc = {}) {
     },
     {
       regex: /\bBIR_RULING_([A-Z0-9_./()-]+)\b/i,
-      value: (m) =>
-        `BIR Ruling No. ${String(m[1]).replace(/_/g, "-")}`
+      value: (m) => `BIR Ruling No. ${String(m[1]).replace(/_/g, "-")}`
     }
   ];
 
@@ -588,9 +561,7 @@ export function buildShortSubject(doc = {}) {
     .trim();
 
   if (!subject) {
-    subject =
-      stripFolderPrefixes(stripFileExtension(rawPath)) ||
-      "Untitled Source";
+    subject = stripFolderPrefixes(stripFileExtension(rawPath)) || "Untitled Source";
   }
 
   if (
@@ -665,14 +636,11 @@ function buildIssueMatchedVisiblePool(docs = [], query = "") {
   if (!query) return docs;
 
   const querySignals = extractIssueSignals(query);
-
   if (!querySignals.length) return docs;
 
   return docs.filter((doc) => {
     const docSignals = docIssueSignals(doc);
-
     if (!docSignals.length) return true;
-
     return issueOverlap(querySignals, docSignals);
   });
 }
@@ -699,25 +667,20 @@ function toVisibleSourceEntry(doc = {}) {
 function prioritizeVisibleSources(docs = []) {
   return [...docs].sort((a, b) => {
     const levelDiff = authorityLevelOf(a) - authorityLevelOf(b);
-
     if (levelDiff !== 0) return levelDiff;
 
     const aControl = isControllingAuthority(a) ? 0 : 1;
     const bControl = isControllingAuthority(b) ? 0 : 1;
-
     if (aControl !== bControl) return aControl - bControl;
 
     const aWeak = isWeakAuthority(a) ? 1 : 0;
     const bWeak = isWeakAuthority(b) ? 1 : 0;
-
     if (aWeak !== bWeak) return aWeak - bWeak;
 
     const aNumber = inferIssuanceNumber(a);
     const bNumber = inferIssuanceNumber(b);
 
-    if (aNumber && bNumber) {
-      return aNumber.localeCompare(bNumber);
-    }
+    if (aNumber && bNumber) return aNumber.localeCompare(bNumber);
 
     return sourceTitleOf(a).localeCompare(sourceTitleOf(b));
   });
@@ -733,19 +696,12 @@ export function filterVisibleSources(
 ) {
   const visible = [];
 
-  const issueMatchedDocs = buildIssueMatchedVisiblePool(
-    uniqueDocs(docs),
-    query
-  );
+  const issueMatchedDocs = buildIssueMatchedVisiblePool(uniqueDocs(docs), query);
 
   for (const doc of issueMatchedDocs) {
     if (shouldHideSource(doc)) continue;
 
-    const replacement = findReplacementForDocument(
-      doc,
-      supersessionResult
-    );
-
+    const replacement = findReplacementForDocument(doc, supersessionResult);
     const sourceToUse = replacement || doc;
 
     if (shouldHideSource(sourceToUse)) continue;
@@ -753,8 +709,7 @@ export function filterVisibleSources(
     visible.push(toVisibleSourceEntry(sourceToUse));
   }
 
-  return uniqueDocs(prioritizeVisibleSources(visible))
-    .slice(0, maxItems);
+  return uniqueDocs(prioritizeVisibleSources(visible)).slice(0, maxItems);
 }
 
 export function runSupersessionPreflight({
@@ -763,36 +718,20 @@ export function runSupersessionPreflight({
   asOfDate = new Date(),
   query = ""
 }) {
-  const combinedDocs = uniqueDocs([
-    ...legalBasisDocs,
-    ...sourcesUsed
-  ]);
-
-  const supersessionResult = applySupersessionFilter(
-    combinedDocs,
-    asOfDate
-  );
+  const combinedDocs = uniqueDocs([...legalBasisDocs, ...sourcesUsed]);
+  const supersessionResult = applySupersessionFilter(combinedDocs, asOfDate);
 
   const resolvedLegalBasisDocs = uniqueDocs(
-    legalBasisDocs.map(
-      (doc) =>
-        findReplacementForDocument(doc, supersessionResult) || doc
-    )
+    legalBasisDocs.map((doc) => findReplacementForDocument(doc, supersessionResult) || doc)
   );
 
-  const visiblePool =
-    sourcesUsed.length > 0
-      ? sourcesUsed
-      : resolvedLegalBasisDocs;
+  const visiblePool = sourcesUsed.length > 0 ? sourcesUsed : resolvedLegalBasisDocs;
 
-  const resolvedSourcesUsed = filterVisibleSources(
-    visiblePool,
-    {
-      maxItems: MAX_VISIBLE_SOURCES,
-      supersessionResult,
-      query
-    }
-  );
+  const resolvedSourcesUsed = filterVisibleSources(visiblePool, {
+    maxItems: MAX_VISIBLE_SOURCES,
+    supersessionResult,
+    query
+  });
 
   return {
     supersessionResult,
@@ -801,10 +740,7 @@ export function runSupersessionPreflight({
   };
 }
 
-function inferAuthorityUsed(
-  legalBasisDocs = [],
-  sourcesUsed = []
-) {
+function inferAuthorityUsed(legalBasisDocs = [], sourcesUsed = []) {
   return dedupe(
     [...legalBasisDocs, ...sourcesUsed]
       .map((doc) => formatDocType(doc))
@@ -820,32 +756,13 @@ function inferConfidenceLevel({
 }) {
   if (!legalBasisDocs.length) return "LOW";
 
-  const bestLevel = Math.min(
-    ...legalBasisDocs.map((doc) =>
-      authorityLevelOf(doc)
-    )
-  );
+  const bestLevel = Math.min(...legalBasisDocs.map((doc) => authorityLevelOf(doc)));
+  const hasStatute = legalBasisDocs.some((doc) => isStatutoryAuthority(doc));
+  const hasSupremeCourt = legalBasisDocs.some((doc) => authorityTypeOf(doc) === "SUPREME_COURT");
 
-  const hasStatute = legalBasisDocs.some((doc) =>
-    isStatutoryAuthority(doc)
-  );
-
-  const hasSupremeCourt = legalBasisDocs.some((doc) =>
-    authorityTypeOf(doc) === "SUPREME_COURT"
-  );
-
-  if (hierarchyConflict?.conflict) {
-    return bestLevel <= 8 ? "MEDIUM" : "LOW";
-  }
-
-  if (supersessionResult?.superseded?.length) {
-    return bestLevel <= 8 ? "MEDIUM" : "LOW";
-  }
-
-  if (hasStatute && hasSupremeCourt) {
-    return "HIGH";
-  }
-
+  if (hierarchyConflict?.conflict) return bestLevel <= 8 ? "MEDIUM" : "LOW";
+  if (supersessionResult?.superseded?.length) return bestLevel <= 8 ? "MEDIUM" : "LOW";
+  if (hasStatute && hasSupremeCourt) return "HIGH";
   if (bestLevel <= 3) return "HIGH";
   if (bestLevel <= 7) return "MEDIUM";
   if (bestLevel <= 11) return "LIMITED";
@@ -875,64 +792,74 @@ export function buildFinalRoutePayload({
   const finalVisibleSources =
     resolvedSourcesUsed.length > 0
       ? resolvedSourcesUsed
-      : filterVisibleSources(
-          resolvedLegalBasisDocs,
-          {
-            maxItems: MAX_VISIBLE_SOURCES,
-            supersessionResult,
-            query
-          }
-        );
+      : filterVisibleSources(resolvedLegalBasisDocs, {
+          maxItems: MAX_VISIBLE_SOURCES,
+          supersessionResult,
+          query
+        });
 
   return {
     answer,
-    sources: finalVisibleSources
-      .slice(0, MAX_VISIBLE_SOURCES)
-      .map((doc) => ({
-        title: sourceTitleOf(doc),
-        drive_url: sourceDriveUrlOf(doc),
-        driveViewUrl: sourceDriveUrlOf(doc),
-        drive_download_url: sourceDownloadUrlOf(doc),
-        driveDownloadUrl: sourceDownloadUrlOf(doc),
-        fileId: fileIdOf(doc),
-        source_path: sourcePathOf(doc),
-        sourcePath: sourcePathOf(doc),
-        authority_type: authorityTypeOf(doc),
-        authorityType: authorityTypeOf(doc),
-        authority_level: authorityLevelOf(doc),
-        authorityLevel: authorityLevelOf(doc),
-        issuance_number: inferIssuanceNumber(doc) || null,
-        issuanceNumber: inferIssuanceNumber(doc) || null,
-        is_controlling_authority: isControllingAuthority(doc),
-        isControllingAuthority: isControllingAuthority(doc),
-        is_weak_authority: isWeakAuthority(doc),
-        isWeakAuthority: isWeakAuthority(doc)
-      })),
-    authority_used: inferAuthorityUsed(
-      resolvedLegalBasisDocs,
-      finalVisibleSources
-    ),
+    sources: finalVisibleSources.slice(0, MAX_VISIBLE_SOURCES).map((doc) => ({
+      title: sourceTitleOf(doc),
+      drive_url: sourceDriveUrlOf(doc),
+      driveViewUrl: sourceDriveUrlOf(doc),
+      drive_download_url: sourceDownloadUrlOf(doc),
+      driveDownloadUrl: sourceDownloadUrlOf(doc),
+      fileId: fileIdOf(doc),
+      source_path: sourcePathOf(doc),
+      sourcePath: sourcePathOf(doc),
+      authority_type: authorityTypeOf(doc),
+      authorityType: authorityTypeOf(doc),
+      authority_level: authorityLevelOf(doc),
+      authorityLevel: authorityLevelOf(doc),
+      issuance_number: inferIssuanceNumber(doc) || null,
+      issuanceNumber: inferIssuanceNumber(doc) || null,
+      is_controlling_authority: isControllingAuthority(doc),
+      isControllingAuthority: isControllingAuthority(doc),
+      is_weak_authority: isWeakAuthority(doc),
+      isWeakAuthority: isWeakAuthority(doc)
+    })),
+    authority_used: inferAuthorityUsed(resolvedLegalBasisDocs, finalVisibleSources),
     confidence_level: inferConfidenceLevel({
       legalBasisDocs: resolvedLegalBasisDocs,
       hierarchyConflict,
       supersessionResult
     }),
-    supersession_audit:
-      supersessionResult?.auditTrail || []
+    supersession_audit: supersessionResult?.auditTrail || []
+  };
+}
+
+export function sourceVisibilityHealthCheck() {
+  return {
+    ok: true,
+    engine: "TINA_SOURCE_VISIBILITY_ENGINE",
+    version: ENGINE_VERSION,
+    esmCompatible: true,
+    commonJsSupersessionBridge: true,
+    supersessionCompatible: true,
+    sourceFilteringCompatible: true
   };
 }
 
 export default {
+  ENGINE_VERSION,
   filterVisibleSources,
   runSupersessionPreflight,
   buildFinalRoutePayload,
   sourceTitleOf,
   sourceDriveUrlOf,
+  sourceDownloadUrlOf,
   sourcePathOf,
   authorityTypeOf,
   authorityLevelOf,
   inferIssuanceNumber,
   buildLegalBasisEntry,
   buildSourcesEntry,
-  uniqueDocs
+  uniqueDocs,
+  normalizeText,
+  normalizeLooseText,
+  compactSpaces,
+  dedupe,
+  sourceVisibilityHealthCheck
 };
