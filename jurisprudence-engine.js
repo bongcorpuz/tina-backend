@@ -3,24 +3,28 @@
 
 /**
  * jurisprudence-engine.js
- * TINA Jurisprudence Intelligence Engine
+ * TINA Enterprise Jurisprudence Intelligence Engine
  *
- * Purpose:
+ * PURPOSE
  * - issue-specific jurisprudence selection
  * - doctrinal applicability analysis
  * - hierarchy-aware jurisprudence routing
  * - conflict analysis
  * - doctrine extraction
- * - jurisprudence safety controls
+ * - litigation-grade jurisprudence controls
+ * - adaptive orchestration compatibility
  *
- * Compatible with:
- * - query-intent-engine.js
- * - reranker-engine.js
- * - supersession-engine.js
- * - adaptive-response-planner.js
- * - answer-renderer.js
+ * COMPATIBLE WITH
  * - ask-handler.js
  * - rag-answer-handler.js
+ * - adaptive-response-planner.js
+ * - answer-renderer.js
+ * - reranker-engine.js
+ * - supersession-engine.js
+ * - doctrine-engine.js
+ * - adaptive-mode-engine.js
+ * - risk-scoring-engine.js
+ * - position-strength-engine.js
  */
 
 const {
@@ -48,7 +52,7 @@ const {
   applySupersessionFilter
 } = require("./supersession-engine.js");
 
-const ENGINE_VERSION = "2.1.0";
+const ENGINE_VERSION = "3.0.0";
 
 const COURT_AUTHORITY_TYPES = Object.freeze([
   "SUPREME_COURT",
@@ -61,7 +65,8 @@ const APPLICABILITY_STATUS = Object.freeze({
   DIRECTLY_APPLICABLE: "DIRECTLY_APPLICABLE",
   DISTINGUISHABLE_BUT_RELEVANT: "DISTINGUISHABLE_BUT_RELEVANT",
   BACKGROUND_ONLY: "BACKGROUND_ONLY",
-  NOT_APPLICABLE_ISSUE_MISMATCH: "NOT_APPLICABLE_ISSUE_MISMATCH"
+  NOT_APPLICABLE_ISSUE_MISMATCH:
+    "NOT_APPLICABLE_ISSUE_MISMATCH"
 });
 
 function normalizeText(value = "") {
@@ -76,6 +81,10 @@ function lower(value = "") {
 
 function unique(values = []) {
   return [...new Set(values.filter(Boolean))];
+}
+
+function safeArray(value) {
+  return Array.isArray(value) ? value : [];
 }
 
 function docText(doc = {}) {
@@ -176,9 +185,7 @@ function detectCaseIssueDimensions(text = "") {
   const dimensions = [];
 
   const push = (condition, dimension) => {
-    if (condition) {
-      dimensions.push(dimension);
-    }
+    if (condition) dimensions.push(dimension);
   };
 
   push(
@@ -249,9 +256,7 @@ function detectTaxIssueSignals(text = "") {
   const signals = [];
 
   const push = (condition, issue) => {
-    if (condition) {
-      signals.push(issue);
-    }
+    if (condition) signals.push(issue);
   };
 
   push(
@@ -329,12 +334,10 @@ function detectTaxIssueSignals(text = "") {
 
 function hasIssueMismatch(queryIntent = {}, doc = {}) {
   const queryIssues =
-    queryIntent.issueTypes || [];
+    safeArray(queryIntent.issueTypes);
 
   const docIssues =
-    detectTaxIssueSignals(
-      docText(doc)
-    );
+    detectTaxIssueSignals(docText(doc));
 
   if (
     queryIssues.includes(
@@ -384,13 +387,10 @@ function dimensionsOverlap(a = [], b = []) {
 
 function extractDoctrineSignals(text = "") {
   const value = lower(text);
-
   const doctrines = [];
 
   const push = (condition, doctrine) => {
-    if (condition) {
-      doctrines.push(doctrine);
-    }
+    if (condition) doctrines.push(doctrine);
   };
 
   push(
@@ -440,17 +440,16 @@ function computeCaseApplicabilityScore({
     queryIntent ||
     analyzeQueryIntent(query);
 
-  const text =
-    docText(doc);
+  const text = docText(doc);
 
   const querySignals =
-    intent.issueTypes || [];
+    safeArray(intent.issueTypes);
 
   const docSignals =
     detectTaxIssueSignals(text);
 
   const queryDimensions =
-    intent.legalDimensions || [];
+    safeArray(intent.legalDimensions);
 
   const docDimensions =
     detectCaseIssueDimensions(text);
@@ -497,28 +496,16 @@ function computeCaseApplicabilityScore({
   const type =
     getAuthorityTypeForDoc(doc);
 
-  if (type === "SUPREME_COURT") {
-    score += 30;
-  }
+  if (type === "SUPREME_COURT") score += 30;
+  if (type === "CTA_EN_BANC") score += 18;
+  if (type === "COURT_OF_APPEALS") score += 14;
+  if (type === "CTA_DIVISION") score += 10;
 
-  if (type === "CTA_EN_BANC") {
-    score += 18;
-  }
+  const queryReference =
+    extractCaseReference(query);
 
-  if (type === "COURT_OF_APPEALS") {
-    score += 14;
-  }
-
-  if (type === "CTA_DIVISION") {
-    score += 10;
-  }
-
-  if (
-    extractCaseReference(query)
-  ) {
-    const ref = lower(
-      extractCaseReference(query) || ""
-    );
+  if (queryReference) {
+    const ref = lower(queryReference);
 
     if (
       lower(text).includes(ref) ||
@@ -569,7 +556,7 @@ function classifyApplicability(
         APPLICABILITY_STATUS.DISTINGUISHABLE_BUT_RELEVANT,
 
       explanation:
-        "The case is relevant but must be distinguished based on facts, doctrine, or legal dimension."
+        "The case is relevant but requires factual or doctrinal distinction analysis."
     };
   }
 
@@ -578,7 +565,7 @@ function classifyApplicability(
       APPLICABILITY_STATUS.BACKGROUND_ONLY,
 
     explanation:
-      "The case may mention the same tax type but does not sufficiently address the exact issue."
+      "The case may involve the same tax type but does not directly resolve the issue presented."
   };
 }
 
@@ -642,7 +629,8 @@ function selectIssueRelevantJurisprudence({
   query = "",
   docs = [],
   limit = 4,
-  responseMode = "TECHNICAL"
+  responseMode = "TECHNICAL",
+  adaptiveContext = {}
 } = {}) {
   const queryIntent =
     analyzeQueryIntent(query);
@@ -653,7 +641,7 @@ function selectIssueRelevantJurisprudence({
   const activeDocs =
     supersessionResult.activeDocs || docs;
 
-  const { results: reranked } =
+  const rerankedResult =
     rerankForTina({
       query,
 
@@ -670,8 +658,15 @@ function selectIssueRelevantJurisprudence({
       suppressWeakSecondary: true,
       suppressSuperseded: true,
 
-      responseMode
+      responseMode,
+
+      adaptiveContext
     });
+
+  const reranked =
+    rerankedResult.results ||
+    rerankedResult ||
+    [];
 
   return reranked
     .filter(isCourtAuthority)
@@ -728,7 +723,7 @@ function buildJurisprudenceApplicabilitySummary({
   cases = []
 } = {}) {
   if (!cases.length) {
-    return "No issue-relevant jurisprudence was selected. TINA should not cite cases merely because they mention the same tax type.";
+    return buildNoJurisprudenceText();
   }
 
   return cases
@@ -778,17 +773,25 @@ function analyzeJurisprudenceConflicts({
       j < docs.length;
       j += 1
     ) {
-      const review =
-        analyzeConflictPair(
-          docs[i],
-          docs[j]
-        );
+      try {
+        const review =
+          analyzeConflictPair(
+            docs[i],
+            docs[j]
+          );
 
-      if (
-        review?.conflict ||
-        review?.apparentConflict
-      ) {
-        reviews.push(review);
+        if (
+          review?.conflict ||
+          review?.apparentConflict
+        ) {
+          reviews.push(review);
+        }
+      } catch (error) {
+        reviews.push({
+          conflict: false,
+          apparentConflict: false,
+          error: error.message
+        });
       }
     }
   }
@@ -875,6 +878,49 @@ function buildNoJurisprudenceText() {
   return "No directly issue-relevant jurisprudence was retrieved. TINA should not cite unrelated cases merely because they mention the same tax type.";
 }
 
+function buildJurisprudencePayload({
+  query = "",
+  cases = [],
+  supportingAuthorities = []
+} = {}) {
+  const conflictReview =
+    analyzeJurisprudenceConflicts({
+      cases,
+      supportingAuthorities
+    });
+
+  return {
+    engineVersion: ENGINE_VERSION,
+
+    query,
+
+    cases,
+
+    caseCount: cases.length,
+
+    jurisprudenceConflict:
+      conflictReview.conflict,
+
+    conflictReview,
+
+    applicabilitySummary:
+      buildJurisprudenceApplicabilitySummary({
+        query,
+        cases
+      }),
+
+    promptBlock:
+      buildJurisprudencePromptBlock({
+        query,
+        cases,
+        supportingAuthorities
+      }),
+
+    noJurisprudence:
+      !cases.length
+  };
+}
+
 module.exports = {
   ENGINE_VERSION,
 
@@ -888,5 +934,7 @@ module.exports = {
 
   buildJurisprudencePromptBlock,
 
-  buildNoJurisprudenceText
+  buildNoJurisprudenceText,
+
+  buildJurisprudencePayload
 };
