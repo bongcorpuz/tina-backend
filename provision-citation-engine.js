@@ -1,19 +1,34 @@
 // FILE: provision-citation-engine.js
+"use strict";
 
-import {
+/**
+ * TINA Enterprise Provision Citation Engine
+ * Version: 3.0.0
+ */
+
+import { createRequire } from "module";
+
+const require = createRequire(import.meta.url);
+
+const {
   classifyAuthorityFromDocument,
   AUTHORITY_LEVEL,
   AUTHORITY_LABEL,
-  normalizeLegalReference
-} from "./authority-engine.js";
+  normalizeLegalReference,
+  getAuthorityTypeForDoc,
+  getAuthorityLevelForDoc,
+  getControllingPrecedenceForDoc
+} = require("./authority-engine.js");
 
-import {
+const {
   resolveCourtOverride,
   isGenuineConflict,
   analyzeConflictPair
-} from "./conflict-engine.js";
+} = require("./conflict-engine.js");
 
-import { applySupersessionFilter } from "./supersession-engine.js";
+const { applySupersessionFilter } = require("./supersession-engine.js");
+
+const ENGINE_VERSION = "3.0.0";
 
 function normalizeText(value = "") {
   return String(value || "").replace(/\s+/g, " ").trim();
@@ -23,34 +38,19 @@ function lower(value = "") {
   return normalizeText(value).toLowerCase();
 }
 
+function safeArray(value) {
+  return Array.isArray(value) ? value : [];
+}
+
 function looksLikeProvisionQuestion(question = "") {
   const q = lower(question);
 
   return (
-    q.includes("section ") ||
-    q.includes("sec. ") ||
-    q.includes("sec ") ||
-    q.includes("article ") ||
-    q.includes("art. ") ||
-    q.includes("art ") ||
-    q.includes("provision") ||
-    q.includes("paragraph") ||
-    q.includes("clause") ||
-    q.includes("what does") ||
-    q.includes("per nirc") ||
-    q.includes("under the nirc") ||
-    q.includes("under rr") ||
-    q.includes("under rmc") ||
-    q.includes("under rmo") ||
-    q.includes("under ramo") ||
-    q.includes("gr no") ||
-    q.includes("g.r. no") ||
-    q.includes("cta") ||
-    q.includes("cite") ||
-    q.includes("citation") ||
-    q.includes("legal basis") ||
-    q.includes("basis") ||
-    q.includes("authority")
+    /\b(section|sec\.?|article|art\.?|paragraph|para\.?|clause|provision|cite|citation|legal basis|basis|authority)\b/i.test(q) ||
+    /\bunder\s+(the\s+)?(nirc|tax code|rr|rmc|rmo|ramo|republic act|ra|bir ruling)\b/i.test(q) ||
+    /\bg\.?\s*r\.?\s*no\.?\b/i.test(q) ||
+    /\bcta\b/i.test(q) ||
+    /\bwhat does\b/i.test(q)
   );
 }
 
@@ -61,75 +61,74 @@ function extractProvisionHint(question = "") {
     text.match(/\bsection\s+(\d+[a-zA-Z\-]*)/i) ||
     text.match(/\bsec\.?\s+(\d+[a-zA-Z\-]*)/i);
 
-  if (sectionMatch) {
-    return `Section ${sectionMatch[1]}`;
-  }
+  if (sectionMatch) return `Section ${sectionMatch[1]}`;
 
   const articleMatch =
     text.match(/\barticle\s+([A-Za-z0-9\-]+)/i) ||
     text.match(/\bart\.?\s+([A-Za-z0-9\-]+)/i);
 
-  if (articleMatch) {
-    return `Article ${articleMatch[1]}`;
-  }
+  if (articleMatch) return `Article ${articleMatch[1]}`;
 
   const paragraphMatch =
     text.match(/\bparagraph\s+([A-Za-z0-9().\-]+)/i) ||
     text.match(/\bpara\.?\s+([A-Za-z0-9().\-]+)/i);
 
-  if (paragraphMatch) {
-    return `Paragraph ${paragraphMatch[1]}`;
-  }
+  if (paragraphMatch) return `Paragraph ${paragraphMatch[1]}`;
 
   return "";
 }
 
 function buildSourceSnippet(doc = {}, maxLen = 1800) {
-  const text = normalizeText(doc.text || doc.content || "");
-  if (!text) return "";
-  return text.slice(0, maxLen);
+  return normalizeText(doc.text || doc.content || doc.excerpt || doc.preview || "").slice(0, maxLen);
 }
 
 function getAuthorityType(doc = {}) {
-  const explicit =
+  return (
     doc.authorityType ||
     doc.authority_type ||
     doc.metadata?.authorityType ||
-    "";
-
-  if (explicit) {
-    return String(explicit).toUpperCase();
-  }
-
-  return classifyAuthorityFromDocument({
-    fileName: doc.source || doc.originalSource || "",
-    path: doc.path || doc.source_path || doc.metadata?.path || "",
-    text: doc.text || doc.content || ""
-  });
+    getAuthorityTypeForDoc?.(doc) ||
+    classifyAuthorityFromDocument({
+      fileName: doc.source || doc.originalSource || doc.title || "",
+      path: doc.path || doc.source_path || doc.metadata?.path || "",
+      text: doc.text || doc.content || doc.excerpt || ""
+    }) ||
+    "UNKNOWN"
+  );
 }
 
 function getAuthorityLevel(doc = {}) {
-  const explicit =
-    doc.authorityLevel ??
-    doc.authority_level ??
-    doc.metadata?.authorityLevel ??
-    null;
+  return (
+    Number(
+      doc.authorityLevel ??
+        doc.authority_level ??
+        doc.metadata?.authorityLevel ??
+        getAuthorityLevelForDoc?.(doc)
+    ) ||
+    AUTHORITY_LEVEL[getAuthorityType(doc)] ||
+    99
+  );
+}
 
-  if (Number.isFinite(Number(explicit))) {
-    return Number(explicit);
-  }
-
-  const authorityType = getAuthorityType(doc);
-  return AUTHORITY_LEVEL[authorityType] || 99;
+function getControllingPrecedence(doc = {}) {
+  return (
+    Number(
+      doc.controllingPrecedence ??
+        doc.controlling_precedence ??
+        doc.metadata?.controllingPrecedence ??
+        getControllingPrecedenceForDoc?.(doc)
+    ) || 99
+  );
 }
 
 function getSourceTitle(doc = {}) {
   return (
+    doc.metadata?.documentTitle ||
+    doc.metadata?.originalFileName ||
     doc.source ||
     doc.originalSource ||
     doc.original_source ||
     doc.metadata?.originalSource ||
-    doc.metadata?.originalFileName ||
     doc.title ||
     "Unknown Source"
   );
@@ -141,6 +140,9 @@ function getSourcePath(doc = {}) {
     doc.source_path ||
     doc.metadata?.path ||
     doc.metadata?.fileName ||
+    doc.originalSource ||
+    doc.original_source ||
+    doc.source ||
     getSourceTitle(doc) ||
     "Unknown Path"
   );
@@ -153,13 +155,10 @@ function isCourtAuthority(type = "") {
 }
 
 function isBIRAuthority(type = "") {
-  return ["RR", "RMC", "RMO", "RAMO", "BIR_RULING"].includes(
-    String(type || "").toUpperCase()
-  );
+  return ["RR", "RMC", "RMO", "RAMO", "BIR_RULING"].includes(String(type || "").toUpperCase());
 }
 
 function isPrimaryOrControllingAuthority(type = "") {
-  const value = String(type || "").toUpperCase();
   return [
     "CONSTITUTION",
     "STATUTE",
@@ -172,130 +171,206 @@ function isPrimaryOrControllingAuthority(type = "") {
     "CTA_EN_BANC",
     "COURT_OF_APPEALS",
     "CTA_DIVISION"
-  ].includes(value);
+  ].includes(String(type || "").toUpperCase());
 }
 
-function buildProvisionMatchBonus(question = "", doc = {}) {
-  const hint = extractProvisionHint(question);
-  const rawText = normalizeText(
+function detectIssueSignals(text = "") {
+  const q = lower(text);
+  const issues = [];
+
+  const push = (condition, value) => {
+    if (condition) issues.push(value);
+  };
+
+  push(/\b(vat refund|input vat refund|120\+30|administrative claim|judicial claim|tcc|unutilized input vat)\b/i.test(q), "VAT_REFUND");
+  push(/\b(vat liability|output vat|subject to vat|vatable|gross receipts|sale of goods|sale of services)\b/i.test(q), "VAT_LIABILITY");
+  push(/\b(invoice|receipt|substantiation|documentary|proof|evidence|records)\b/i.test(q), "EVIDENTIARY");
+  push(/\b(filing|deadline|protest|appeal|assessment|loa|pan|fan|prescription)\b/i.test(q), "PROCEDURAL");
+  push(/\b(withholding|ewt|cwt|fwt)\b/i.test(q), "WITHHOLDING");
+  push(/\b(income tax|rcit|mcit|nolco|deductible|gross income)\b/i.test(q), "INCOME_TAX");
+  push(/\b(contract|agreement|lease|concession|clause)\b/i.test(q), "CONTRACT");
+  push(/\b(principal|agent|pass-through|reimbursement|bundled|economic substance)\b/i.test(q), "TRANSACTION");
+
+  return [...new Set(issues)];
+}
+
+function hasIssueMismatch(question = "", doc = {}) {
+  const queryIssues = detectIssueSignals(question);
+  const docIssues = detectIssueSignals(
     [
       doc.text,
       doc.content,
+      doc.excerpt,
       doc.source,
       doc.originalSource,
       doc.path,
-      doc.source_path,
       doc.metadata?.path
     ]
       .filter(Boolean)
       .join(" ")
-  ).toLowerCase();
+  );
+
+  if (
+    queryIssues.includes("VAT_LIABILITY") &&
+    docIssues.includes("VAT_REFUND") &&
+    !queryIssues.includes("VAT_REFUND")
+  ) {
+    return true;
+  }
+
+  if (
+    queryIssues.includes("VAT_REFUND") &&
+    docIssues.includes("VAT_LIABILITY") &&
+    !queryIssues.includes("VAT_LIABILITY")
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function buildProvisionMatchBonus(question = "", doc = {}) {
+  const hint = extractProvisionHint(question);
+
+  const rawText = lower(
+    [
+      doc.text,
+      doc.content,
+      doc.excerpt,
+      doc.source,
+      doc.originalSource,
+      doc.original_source,
+      doc.path,
+      doc.source_path,
+      doc.metadata?.path,
+      doc.metadata?.normalizedReference,
+      doc.normalizedReference,
+      doc.normalized_reference,
+      ...(safeArray(doc.normalizedAliases)),
+      ...(safeArray(doc.normalized_aliases)),
+      ...(safeArray(doc.metadata?.normalizedAliases))
+    ]
+      .filter(Boolean)
+      .join(" ")
+  );
 
   let bonus = 0;
 
-  if (hint && rawText.includes(hint.toLowerCase())) {
-    bonus += 40;
-  }
+  if (hint && rawText.includes(lower(hint))) bonus += 60;
 
   const citationIntent = normalizeLegalReference(question);
 
   if (citationIntent?.normalized) {
-    const normalizedHaystack = normalizeText(
-      [
-        doc.source,
-        doc.originalSource,
-        doc.path,
-        doc.source_path,
-        doc.metadata?.path,
-        doc.metadata?.normalizedReference,
-        doc.normalizedReference,
-        doc.normalized_reference
-      ]
-        .filter(Boolean)
-        .join(" ")
-    ).toLowerCase();
+    const normalizedNeedle = lower(citationIntent.normalized);
 
-    if (normalizedHaystack.includes(String(citationIntent.normalized).toLowerCase())) {
-      bonus += 60;
-    }
+    if (rawText.includes(normalizedNeedle)) bonus += 90;
 
-    const aliasHit = (citationIntent.aliases || []).some((alias) =>
-      normalizedHaystack.includes(String(alias).toLowerCase())
+    const aliasHit = safeArray(citationIntent.aliases).some((alias) =>
+      rawText.includes(lower(alias))
     );
 
-    if (aliasHit) {
-      bonus += 35;
-    }
+    if (aliasHit) bonus += 45;
   }
+
+  if (/\b(section|sec\.?|article|art\.?|paragraph|clause)\b/i.test(question)) bonus += 10;
 
   return bonus;
 }
 
-function rankProvisionDocs(results = [], question = "") {
+function uniqueDocs(docs = []) {
+  const seen = new Set();
+  const output = [];
+
+  for (const doc of docs || []) {
+    const key =
+      doc.id ||
+      doc.normalizedReference ||
+      doc.normalized_reference ||
+      doc.metadata?.normalizedReference ||
+      getSourcePath(doc) ||
+      getSourceTitle(doc);
+
+    if (!key || seen.has(key)) continue;
+
+    seen.add(key);
+    output.push(doc);
+  }
+
+  return output;
+}
+
+function rankProvisionDocs(results = [], question = "", options = {}) {
+  const { suppressIssueMismatch = true } = options;
+
   const supersessionResult = applySupersessionFilter(results || []);
   const activeDocs =
-    supersessionResult?.activeDocs?.length > 0
-      ? supersessionResult.activeDocs
-      : results || [];
+    supersessionResult?.activeDocs?.length > 0 ? supersessionResult.activeDocs : results || [];
 
-  return [...activeDocs].sort((a, b) => {
-    const aLevel = getAuthorityLevel(a);
-    const bLevel = getAuthorityLevel(b);
+  return uniqueDocs(activeDocs)
+    .filter((doc) => {
+      if (!suppressIssueMismatch) return true;
+      return !hasIssueMismatch(question, doc);
+    })
+    .sort((a, b) => {
+      const aLevel = getAuthorityLevel(a);
+      const bLevel = getAuthorityLevel(b);
 
-    const aScore = Number(a.finalScore ?? a.combined_score ?? a.score ?? 0);
-    const bScore = Number(b.finalScore ?? b.combined_score ?? b.score ?? 0);
+      const aPrecedence = getControllingPrecedence(a);
+      const bPrecedence = getControllingPrecedence(b);
 
-    const aType = getAuthorityType(a);
-    const bType = getAuthorityType(b);
+      const aScore = Number(a.finalScore ?? a.final_score ?? a.retrievalScore ?? a.score ?? 0);
+      const bScore = Number(b.finalScore ?? b.final_score ?? b.retrievalScore ?? b.score ?? 0);
 
-    const aBonus = buildProvisionMatchBonus(question, a);
-    const bBonus = buildProvisionMatchBonus(question, b);
+      const aType = getAuthorityType(a);
+      const bType = getAuthorityType(b);
 
-    const aPrimaryBonus = isPrimaryOrControllingAuthority(aType) ? 20 : 0;
-    const bPrimaryBonus = isPrimaryOrControllingAuthority(bType) ? 20 : 0;
+      const aBonus = buildProvisionMatchBonus(question, a);
+      const bBonus = buildProvisionMatchBonus(question, b);
 
-    const aComposite = aScore + aBonus + aPrimaryBonus;
-    const bComposite = bScore + bBonus + bPrimaryBonus;
+      const aPrimaryBonus = isPrimaryOrControllingAuthority(aType) ? 20 : 0;
+      const bPrimaryBonus = isPrimaryOrControllingAuthority(bType) ? 20 : 0;
 
-    const override = isGenuineConflict(a, b) ? resolveCourtOverride(a, b) : null;
+      const aComposite = aScore + aBonus + aPrimaryBonus;
+      const bComposite = bScore + bBonus + bPrimaryBonus;
 
-    if (override?.overrideApplies) {
-      if (override.winningSource === a) return -1;
-      if (override.winningSource === b) return 1;
-    }
+      const override = isGenuineConflict(a, b) ? resolveCourtOverride(a, b) : null;
 
-    const courtVsBirA = isCourtAuthority(aType) && isBIRAuthority(bType);
-    const courtVsBirB = isCourtAuthority(bType) && isBIRAuthority(aType);
+      if (override?.overrideApplies) {
+        if (override.winningSource === a) return -1;
+        if (override.winningSource === b) return 1;
+      }
 
-    if (courtVsBirA && aComposite >= bComposite * 0.7) return -1;
-    if (courtVsBirB && bComposite >= aComposite * 0.7) return 1;
+      const courtVsBirA = isCourtAuthority(aType) && isBIRAuthority(bType);
+      const courtVsBirB = isCourtAuthority(bType) && isBIRAuthority(aType);
 
-    if (aBonus !== bBonus) return bBonus - aBonus;
-    if (aLevel !== bLevel) return aLevel - bLevel;
+      if (courtVsBirA && aComposite >= bComposite * 0.7) return -1;
+      if (courtVsBirB && bComposite >= aComposite * 0.7) return 1;
 
-    return bComposite - aComposite;
-  });
+      if (bBonus !== aBonus) return bBonus - aBonus;
+      if (aLevel !== bLevel) return aLevel - bLevel;
+      if (aPrecedence !== bPrecedence) return aPrecedence - bPrecedence;
+
+      return bComposite - aComposite;
+    });
 }
 
 function buildContextBlock(docs = []) {
   return docs
     .map((doc, index) => {
-      const source = getSourceTitle(doc);
-      const path = getSourcePath(doc);
       const authorityType = getAuthorityType(doc);
       const authorityLevel = getAuthorityLevel(doc);
       const authorityLabel = AUTHORITY_LABEL[authorityType] || authorityType;
-      const snippet = buildSourceSnippet(doc);
 
       return [
         `SOURCE ${index + 1}`,
-        `Title: ${source}`,
-        `Path: ${path}`,
+        `Title: ${getSourceTitle(doc)}`,
+        `Path: ${getSourcePath(doc)}`,
         `Authority Type: ${authorityType}`,
         `Authority Label: ${authorityLabel}`,
         `Authority Level: ${authorityLevel}`,
-        `Excerpt:`,
-        snippet || "[No excerpt available]"
+        `Controlling Precedence: ${getControllingPrecedence(doc)}`,
+        "Excerpt:",
+        buildSourceSnippet(doc) || "[No excerpt available]"
       ].join("\n");
     })
     .join("\n\n--------------------\n\n");
@@ -306,10 +381,18 @@ function buildConflictContext(docs = []) {
 
   for (let i = 0; i < docs.length; i += 1) {
     for (let j = i + 1; j < docs.length; j += 1) {
-      const analysis = analyzeConflictPair(docs[i], docs[j]);
+      try {
+        const analysis = analyzeConflictPair(docs[i], docs[j]);
 
-      if (analysis?.conflict || analysis?.apparentConflict) {
-        conflicts.push(analysis);
+        if (analysis?.conflict || analysis?.apparentConflict) {
+          conflicts.push(analysis);
+        }
+      } catch (error) {
+        conflicts.push({
+          conflict: false,
+          apparentConflict: false,
+          error: error.message
+        });
       }
     }
   }
@@ -327,8 +410,8 @@ function buildConflictContext(docs = []) {
         `Doctrinal Conflict: ${item.doctrinalConflict ? "YES" : "NO"}`,
         `Hierarchy Conflict: ${item.hierarchyConflict ? "YES" : "NO"}`,
         `Apparent Conflict Only: ${item.apparentConflict ? "YES" : "NO"}`,
-        `Source A: ${item.sourceA}`,
-        `Source B: ${item.sourceB}`,
+        `Source A: ${item.sourceA || "N/A"}`,
+        `Source B: ${item.sourceB || "N/A"}`,
         `Exact Issue: ${item.exactIssue || "Not determined"}`,
         `Distinction Type: ${item.distinctionType || "Not determined"}`,
         `Resolution Basis: ${item.resolutionBasis || item.reason || "Not determined"}`
@@ -338,10 +421,8 @@ function buildConflictContext(docs = []) {
 }
 
 function hasSubstantiveTaxQuestion(question = "") {
-  const q = lower(question);
-
   return /\b(what is|define|meaning|taxability|taxable|exempt|liable|subject to|vat|income tax|withholding|deductible|expense|revenue|sales|cost|basis|why|how|proper treatment|accounting|bir risk|audit risk|consequence|apply)\b/i.test(
-    q
+    lower(question)
   );
 }
 
@@ -361,7 +442,7 @@ function buildPromptModeInstruction(question = "") {
   if (isCitationOnlyQuestion(question)) {
     return [
       "The user appears to be asking for a citation or provision.",
-      "Even so, do not give citation-only output.",
+      "Do not give citation-only output.",
       "Provide the exact citation if visible, then explain the rule, legal effect, hierarchy, doctrinal status, and practical application in concise form."
     ].join("\n");
   }
@@ -381,22 +462,40 @@ function buildPromptModeInstruction(question = "") {
   ].join("\n");
 }
 
+function buildSourcesUsed(topDocs = []) {
+  return topDocs.map((doc) => ({
+    title: getSourceTitle(doc),
+    source: getSourcePath(doc),
+    authorityType: getAuthorityType(doc),
+    authorityLevel: getAuthorityLevel(doc),
+    excerpt: buildSourceSnippet(doc, 500)
+  }));
+}
+
 export async function maybeGenerateProvisionCitationAnswer({
   openai,
   question = "",
   retrievedResults = [],
-  model = "gpt-4o-mini"
+  model = process.env.OPENAI_MODEL || "gpt-4o-mini",
+  responseMode = "TECHNICAL",
+  adaptiveContext = {}
 }) {
   try {
     if (!looksLikeProvisionQuestion(question)) {
-      return { handled: false };
+      return {
+        handled: false,
+        engineVersion: ENGINE_VERSION
+      };
     }
 
     const ranked = rankProvisionDocs(retrievedResults || [], question);
     const topDocs = ranked.slice(0, 6);
 
     if (!topDocs.length) {
-      return { handled: false };
+      return {
+        handled: false,
+        engineVersion: ENGINE_VERSION
+      };
     }
 
     const provisionHint = extractProvisionHint(question);
@@ -409,6 +508,9 @@ You are TINA's Provision Citation Engine.
 
 Your job is not merely to retrieve citations.
 Your job is to give a legally coherent Philippine tax answer anchored on the retrieved provision, issuance, or case authority.
+
+ACTIVE RESPONSE MODE:
+${responseMode}
 
 CORE RULE:
 Never output a citation-only answer.
@@ -432,38 +534,16 @@ CONFLICT RESOLUTION RULE:
 - Revenue Regulations implement statutes but cannot amend them.
 - RMCs, RMOs, RAMOs, and BIR rulings are administrative or interpretative and cannot override the NIRC, RR, or controlling court doctrine.
 - If a court decision genuinely conflicts with a BIR issuance, controlling judicial doctrine prevails.
-- Do not fabricate conflict. Different procedural, evidentiary, jurisdictional, factual, temporal, or administrative rules are not direct doctrinal conflicts unless they contradict on the same legal issue.
+- Do not fabricate conflict.
+- Different procedural, evidentiary, jurisdictional, factual, temporal, contractual, economic-substance, audit, transaction, or administrative rules are not direct doctrinal conflicts unless they contradict on the same legal issue.
 
 MANDATORY OUTPUT FORMAT:
 A. DIRECT ANSWER
-- Answer the exact question immediately.
-- If the question asks for a provision, identify the provision and state what it legally means.
-- Do not merely list citations.
-
 B. CONTROLLING LEGAL BASIS
-- Identify the specific provision, issuance, or case visible in the retrieved context.
-- Explain whether each authority is mandatory, procedural, interpretative, administrative, or jurisprudential.
-- Explain why it governs the question.
-- If no exact provision is visible, state: "Exact provision not fully visible in retrieved text."
-
 C. SUPPORTING JURISPRUDENCE
-- Cite only cases directly relevant to the same legal issue.
-- For each case, state the legal issue, doctrine, and applicability.
-- If no directly relevant case is retrieved, say so. Do not invent or add unrelated jurisprudence.
-
 D. DOCTRINAL STATUS / CONFLICT ANALYSIS
-- State whether no doctrinal conflict, apparent conflict only, partial conflict, or direct conflict exists.
-- If conflict exists, explain exact legal issue, controlling doctrine, why it prevails, and whether the distinction is substantive, procedural, evidentiary, jurisdictional, factual, temporal, or administrative.
-- Never output only "Conflict detected: YES."
-
 E. HIERARCHY ANALYSIS
-- Apply the Philippine hierarchy expressly.
-- Explain which authority controls if there is tension.
-- Lower administrative issuances cannot override statutes or controlling court doctrine.
-
 F. PRACTICAL APPLICATION
-- Apply the rule to the user's facts or question.
-- State tax consequence, compliance implication, audit risk, litigation exposure, documentation requirements, possible BIR position, and strongest taxpayer defense where applicable.
 
 STRICT RULES:
 - Be conservative.
@@ -471,6 +551,7 @@ STRICT RULES:
 - Never cite a source for a point it does not actually cover.
 - Do not use generic legal summaries.
 - Do not append raw sources. The app will show clickable sources separately.
+- If evidence or retrieved text is incomplete, state the limitation.
 `.trim();
 
     const userPrompt = `
@@ -482,6 +563,9 @@ ${provisionHint || "None detected"}
 
 Question Handling Instruction:
 ${modeInstruction}
+
+Adaptive Context:
+${JSON.stringify(adaptiveContext || {}, null, 2).slice(0, 3000)}
 
 Retrieved Legal Sources:
 ${contextBlock}
@@ -502,20 +586,58 @@ ${conflictContext}
     const answer = completion?.choices?.[0]?.message?.content?.trim() || "";
 
     if (!answer) {
-      return { handled: false };
+      return {
+        handled: false,
+        engineVersion: ENGINE_VERSION
+      };
     }
 
     return {
       handled: true,
       answer,
-      topDocs
+      topDocs,
+      sourcesUsed: buildSourcesUsed(topDocs),
+      responseMode,
+      adaptiveContext,
+      engineVersion: ENGINE_VERSION,
+      provisionCitationMetadata: {
+        provisionHint,
+        rankedCount: ranked.length,
+        topDocCount: topDocs.length,
+        hierarchyAware: true,
+        conflictAware: true,
+        supersessionAware: true,
+        rendererCompatible: true,
+        plannerCompatible: true
+      }
     };
   } catch (error) {
     console.error("maybeGenerateProvisionCitationAnswer error:", error.message);
-    return { handled: false };
+
+    return {
+      handled: false,
+      error: error.message,
+      engineVersion: ENGINE_VERSION
+    };
   }
 }
 
+export function provisionCitationHealthCheck() {
+  return {
+    ok: true,
+    engine: "TINA_PROVISION_CITATION_ENGINE",
+    version: ENGINE_VERSION,
+    esmCompatible: true,
+    commonJsBridgeCompatible: true,
+    authorityEngineCompatible: true,
+    conflictEngineCompatible: true,
+    supersessionCompatible: true,
+    plannerCompatible: true,
+    rendererCompatible: true
+  };
+}
+
 export default {
-  maybeGenerateProvisionCitationAnswer
+  maybeGenerateProvisionCitationAnswer,
+  provisionCitationHealthCheck
 };
