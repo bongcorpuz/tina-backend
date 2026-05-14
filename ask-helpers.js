@@ -62,6 +62,96 @@ function truncateText(value = "", maxChars = 900) {
   return text.length > maxChars ? `${text.slice(0, maxChars)}...[truncated]` : text;
 }
 
+export function getUserId(req = {}) {
+  return (
+    req.user?.id ||
+    req.user?.userId ||
+    req.user?.user_id ||
+    req.user?.sub ||
+    req.auth?.userId ||
+    req.auth?.user_id ||
+    null
+  );
+}
+
+export function getSourceTier(doc = {}) {
+  const blob = lower(
+    [
+      doc.source,
+      doc.title,
+      doc.path,
+      doc.source_path,
+      doc.originalSource,
+      doc.original_source,
+      doc.metadata?.path,
+      doc.metadata?.originalSource,
+      doc.metadata?.originalFileName,
+      doc.metadata?.authorityType,
+      doc.text,
+      doc.content
+    ]
+      .filter(Boolean)
+      .join(" ")
+  );
+
+  if (blob.includes("constitution")) return 1;
+
+  if (
+    blob.includes("national internal revenue code") ||
+    blob.includes("tax code") ||
+    blob.includes("republic act") ||
+    /\bnirc\b/i.test(blob) ||
+    /\bra\s*\d{4,6}\b/i.test(blob)
+  ) {
+    return 2;
+  }
+
+  if (
+    blob.includes("revenue regulation") ||
+    /\brr\s*\d+[-/]\d{2,4}\b/i.test(blob)
+  ) {
+    return 3;
+  }
+
+  if (
+    blob.includes("revenue memorandum circular") ||
+    /\brmc\s*\d+[-/]\d{2,4}\b/i.test(blob)
+  ) {
+    return 4;
+  }
+
+  if (
+    blob.includes("revenue memorandum order") ||
+    /\brmo\s*\d+[-/]\d{2,4}\b/i.test(blob)
+  ) {
+    return 5;
+  }
+
+  if (
+    blob.includes("revenue audit memorandum order") ||
+    /\bramo\s*\d+[-/]\d{2,4}\b/i.test(blob)
+  ) {
+    return 6;
+  }
+
+  if (blob.includes("bir ruling")) return 7;
+
+  if (
+    blob.includes("supreme court") ||
+    /\bg\.?\s*r\.?\s*no\.?/i.test(blob)
+  ) {
+    return 8;
+  }
+
+  if (blob.includes("cta en banc")) return 9;
+  if (blob.includes("court of appeals")) return 10;
+  if (blob.includes("cta")) return 11;
+  if (blob.includes("tax treaty")) return 12;
+  if (blob.includes("local tax") || blob.includes("ordinance")) return 13;
+
+  return 99;
+}
+
 export function normalizeSourceName(name = "") {
   return String(name || "")
     .toLowerCase()
@@ -165,22 +255,10 @@ export function extractIssuanceReference(text = "") {
 
   const patterns = [
     { type: "CONSTITUTION", regex: /\b(?:1987\s+constitution|constitution)\b/i },
-    {
-      type: "RR",
-      regex: /\b(?:rr|revenue regulation)\s*(?:no\.?)?\s*(\d+)[-–\/](\d{2,4})\b/i
-    },
-    {
-      type: "RMC",
-      regex: /\b(?:rmc|revenue memorandum circular)\s*(?:no\.?)?\s*(\d+)[-–\/](\d{2,4})\b/i
-    },
-    {
-      type: "RMO",
-      regex: /\b(?:rmo|revenue memorandum order)\s*(?:no\.?)?\s*(\d+)[-–\/](\d{2,4})\b/i
-    },
-    {
-      type: "RAMO",
-      regex: /\b(?:ramo|revenue audit memorandum order)\s*(?:no\.?)?\s*(\d+)[-–\/](\d{2,4})\b/i
-    },
+    { type: "RR", regex: /\b(?:rr|revenue regulation)\s*(?:no\.?)?\s*(\d+)[-–\/](\d{2,4})\b/i },
+    { type: "RMC", regex: /\b(?:rmc|revenue memorandum circular)\s*(?:no\.?)?\s*(\d+)[-–\/](\d{2,4})\b/i },
+    { type: "RMO", regex: /\b(?:rmo|revenue memorandum order)\s*(?:no\.?)?\s*(\d+)[-–\/](\d{2,4})\b/i },
+    { type: "RAMO", regex: /\b(?:ramo|revenue audit memorandum order)\s*(?:no\.?)?\s*(\d+)[-–\/](\d{2,4})\b/i },
     { type: "RA", regex: /\b(?:ra|republic act)\s*(?:no\.?)?\s*(\d+)\b/i },
     { type: "CASE", regex: /\bg\.?\s*r\.?\s*no\.?\s*([\w-]+)\b/i }
   ];
@@ -245,30 +323,12 @@ export function detectQuestionMode(question = "") {
   const text = lower(question);
 
   const rules = [
-    {
-      regex: /\b(?:audit|afs|pfrs|pas|working paper|misstatement|qualified opinion)\b/i,
-      mode: "AUDIT"
-    },
-    {
-      regex: /\b(?:tax|vat|bir|income tax|withholding|mcit|rcit|nolco)\b/i,
-      mode: "TAX"
-    },
-    {
-      regex: /\b(?:case|litigation|court|jurisprudence|doctrine|g\.?\s*r\.?\s*no)\b/i,
-      mode: "LITIGATION"
-    },
-    {
-      regex: /\b(?:reviewer|quiz|exam|cpale|bar exam|recall)\b/i,
-      mode: "REVIEWER"
-    },
-    {
-      regex: /\b(?:contract|agreement|transaction|economic substance|evidence)\b/i,
-      mode: "TRANSACTION"
-    },
-    {
-      regex: /\b(?:business|strategy|financial model|valuation|irr|pricing)\b/i,
-      mode: "BUSINESS"
-    }
+    { regex: /\b(?:audit|afs|pfrs|pas|working paper|misstatement|qualified opinion)\b/i, mode: "AUDIT" },
+    { regex: /\b(?:tax|vat|bir|income tax|withholding|mcit|rcit|nolco)\b/i, mode: "TAX" },
+    { regex: /\b(?:case|litigation|court|jurisprudence|doctrine|g\.?\s*r\.?\s*no)\b/i, mode: "LITIGATION" },
+    { regex: /\b(?:reviewer|quiz|exam|cpale|bar exam|recall)\b/i, mode: "REVIEWER" },
+    { regex: /\b(?:contract|agreement|transaction|economic substance|evidence)\b/i, mode: "TRANSACTION" },
+    { regex: /\b(?:business|strategy|financial model|valuation|irr|pricing)\b/i, mode: "BUSINESS" }
   ];
 
   for (const rule of rules) {
@@ -463,7 +523,7 @@ export function buildVisibleSources(docs = []) {
         doc.authorityLevel ??
         doc.authority_level ??
         doc.metadata?.authorityLevel ??
-        null,
+        getSourceTier(doc),
       score:
         doc.finalScore ??
         doc.final_score ??
@@ -497,9 +557,11 @@ export function askHelpersHealthCheck() {
   return {
     ok: true,
     module: "ask-helpers",
-    version: "3.1.0",
+    version: "3.2.0",
     exports: {
       MAX_VISIBLE_SOURCES: true,
+      getUserId: true,
+      getSourceTier: true,
       toSafeDbNumeric: true,
       buildMemoryContext: true,
       classifyQuestion: true,
@@ -513,12 +575,15 @@ export function askHelpersHealthCheck() {
     plannerCompatible: true,
     quizCompatible: true,
     assessmentHandlerCompatible: true,
-    ragAnswerHandlerCompatible: true
+    ragAnswerHandlerCompatible: true,
+    serverCompatible: true
   };
 }
 
 export default {
   MAX_VISIBLE_SOURCES,
+  getUserId,
+  getSourceTier,
   normalizeSourceName,
   normalizeForMatch,
   getDocPath,
