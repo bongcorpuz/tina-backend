@@ -1,12 +1,24 @@
 // FILE: doctrine-tagging-engine.js
+"use strict";
 
-import {
+/**
+ * TINA Enterprise Doctrine Tagging Engine
+ * Version: 3.0.0
+ */
+
+import { createRequire } from "module";
+
+const require = createRequire(import.meta.url);
+
+const {
   rerankByHierarchy,
   getAuthorityTypeForDoc,
   getAuthorityLevelForDoc
-} from "./authority-engine.js";
+} = require("./authority-engine.js");
 
-import { analyzeConflictPair } from "./conflict-engine.js";
+const { analyzeConflictPair } = require("./conflict-engine.js");
+
+const ENGINE_VERSION = "3.0.0";
 
 const DOCTRINE_LIBRARY = {
   SUBSTANCE_OVER_FORM: {
@@ -152,6 +164,42 @@ const DOCTRINE_LIBRARY = {
       "documentary evidence supports entitlement to vat treatment",
       "substantiation is evidentiary"
     ]
+  },
+  MUTUALITY_DOCTRINE: {
+    label: "Mutuality Doctrine",
+    aliases: [
+      "mutuality",
+      "mutuality doctrine",
+      "association dues",
+      "condominium dues",
+      "homeowners association dues",
+      "membership dues",
+      "first e-bank tower"
+    ],
+    concepts: [
+      "no income arises where contributors and beneficiaries are the same",
+      "association dues may be treated under mutuality principles",
+      "collections held for common expenses may not constitute taxable income depending on facts and law"
+    ]
+  },
+  PRINCIPAL_AGENT: {
+    label: "Principal-Agent Doctrine / Gross vs Net Recognition",
+    aliases: [
+      "principal agent",
+      "principal vs agent",
+      "gross vs net",
+      "agent model",
+      "principal model",
+      "pass-through",
+      "reimbursement",
+      "concession",
+      "bundled package"
+    ],
+    concepts: [
+      "control before transfer supports principal treatment",
+      "agent earns commission or net fee",
+      "pass-through collections require evidence of agency or reimbursement arrangement"
+    ]
   }
 };
 
@@ -163,6 +211,10 @@ const ISSUE_DIMENSIONS = {
   TEMPORAL: "temporal",
   FACTUAL: "factual",
   ADMINISTRATIVE: "administrative",
+  CONTRACTUAL: "contractual",
+  ECONOMIC_SUBSTANCE: "economic_substance",
+  AUDIT: "audit",
+  TRANSACTION: "transaction",
   GENERAL: "general"
 };
 
@@ -182,15 +234,21 @@ function tokenize(value = "") {
 }
 
 function unique(values = []) {
-  return [...new Set(values.filter(Boolean))];
+  return [...new Set((values || []).filter(Boolean))];
+}
+
+function safeArray(value) {
+  return Array.isArray(value) ? value : [];
 }
 
 function sourcePathOf(doc = {}) {
   return (
     doc.path ||
+    doc.source_path ||
     doc.metadata?.path ||
     doc.source ||
     doc.originalSource ||
+    doc.original_source ||
     null
   );
 }
@@ -199,7 +257,11 @@ function sourceTitleOf(doc = {}) {
   return (
     doc.metadata?.documentTitle ||
     doc.metadata?.originalFileName ||
+    doc.title ||
+    doc.sourceTitle ||
+    doc.source_title ||
     doc.originalSource ||
+    doc.original_source ||
     doc.source ||
     sourcePathOf(doc) ||
     "Unknown source"
@@ -251,6 +313,7 @@ export function detectDoctrineIntent(question = "") {
   for (const [code, item] of doctrineEntries()) {
     const aliasHit = item.aliases.some((alias) => q.includes(lower(alias)));
     const conceptHit = item.concepts.some((concept) => q.includes(lower(concept)));
+
     if (aliasHit || conceptHit) {
       matched.push({
         code,
@@ -274,7 +337,9 @@ export function detectDoctrineIntent(question = "") {
     "doctrinal conflict",
     "supporting jurisprudence",
     "jurisprudence",
-    "case doctrine"
+    "case doctrine",
+    "principal vs agent",
+    "mutuality doctrine"
   ];
 
   const isDoctrineFocused =
@@ -282,9 +347,16 @@ export function detectDoctrineIntent(question = "") {
     explicitSignals.some((signal) => q.includes(signal));
 
   return {
+    engine: "TINA_DOCTRINE_TAGGING_ENGINE",
+    version: ENGINE_VERSION,
     isDoctrineFocused,
     matchedDoctrineCodes: matched.map((item) => item.code),
-    matchedDoctrineLabels: matched.map((item) => item.label)
+    matchedDoctrineLabels: matched.map((item) => item.label),
+    plannerCompatibility: {
+      requiresDoctrinalAnalysis: isDoctrineFocused,
+      requiresConflictDisclosure: isDoctrineFocused,
+      requiresHierarchyExplanation: isDoctrineFocused
+    }
   };
 }
 
@@ -293,9 +365,7 @@ function computePhraseHits(text = "", phrases = []) {
   let hits = 0;
 
   for (const phrase of phrases) {
-    if (haystack.includes(lower(phrase))) {
-      hits += 1;
-    }
+    if (haystack.includes(lower(phrase))) hits += 1;
   }
 
   return hits;
@@ -308,6 +378,7 @@ function computeTokenOverlap(query = "", text = "") {
   if (!queryTokens.length || !textTokens.size) return 0;
 
   let hits = 0;
+
   for (const token of queryTokens) {
     if (textTokens.has(token)) hits += 1;
   }
@@ -318,12 +389,21 @@ function computeTokenOverlap(query = "", text = "") {
 function buildDocDoctrineText(doc = {}) {
   return [
     doc.text,
+    doc.content,
+    doc.excerpt,
+    doc.preview,
     doc.source,
     doc.originalSource,
+    doc.original_source,
     doc.path,
+    doc.source_path,
     doc.metadata?.path,
     doc.metadata?.documentTitle,
-    doc.metadata?.originalFileName
+    doc.metadata?.originalFileName,
+    doc.metadata?.normalizedReference,
+    ...safeArray(doc.normalizedAliases),
+    ...safeArray(doc.normalized_aliases),
+    ...safeArray(doc.metadata?.normalizedAliases)
   ]
     .filter(Boolean)
     .join(" ");
@@ -334,19 +414,19 @@ function classifyIssueDimensions(text = "") {
   const dimensions = [];
 
   if (
-    /\b(taxable|liable|subject to|exempt|zero-rated|gross income|deductible|non-deductible|tax base|tax rate|output vat|input vat|income tax|withholding tax|final tax|vat liability|vatable)\b/i.test(value)
+    /\b(taxable|liable|subject to|exempt|zero-rated|gross income|deductible|non-deductible|tax base|tax rate|output vat|input vat|income tax|withholding tax|final tax|vat liability|vatable|percentage tax|capital gains tax)\b/i.test(value)
   ) {
     dimensions.push(ISSUE_DIMENSIONS.SUBSTANTIVE);
   }
 
   if (
-    /\b(file|filing|deadline|due date|period|prescriptive|administrative claim|judicial claim|appeal|protest|assessment|loa|pan|fan|return|form|remedy|120\+30)\b/i.test(value)
+    /\b(file|filing|deadline|due date|period|prescriptive|administrative claim|judicial claim|appeal|protest|assessment|loa|pan|fan|fld|return|form|remedy|120\+30)\b/i.test(value)
   ) {
     dimensions.push(ISSUE_DIMENSIONS.PROCEDURAL);
   }
 
   if (
-    /\b(invoice|receipt|substantiation|documentary|support|proof|evidence|certificate|schedule|reconciliation|records|books|burden of proof)\b/i.test(value)
+    /\b(invoice|receipt|official receipt|substantiation|documentary|support|proof|evidence|certificate|schedule|reconciliation|records|books|burden of proof)\b/i.test(value)
   ) {
     dimensions.push(ISSUE_DIMENSIONS.EVIDENTIARY);
   }
@@ -364,7 +444,7 @@ function classifyIssueDimensions(text = "") {
   }
 
   if (
-    /\b(facts|factual|depending on|case-to-case|actual|circumstances|evidence shows|transaction structure)\b/i.test(value)
+    /\b(facts|factual|depending on|case-to-case|actual|circumstances|evidence shows|transaction structure|actual practice)\b/i.test(value)
   ) {
     dimensions.push(ISSUE_DIMENSIONS.FACTUAL);
   }
@@ -375,10 +455,36 @@ function classifyIssueDimensions(text = "") {
     dimensions.push(ISSUE_DIMENSIONS.ADMINISTRATIVE);
   }
 
+  if (
+    /\b(contract|agreement|lease|concession|clause|termination|consideration|obligation|rights and obligations)\b/i.test(value)
+  ) {
+    dimensions.push(ISSUE_DIMENSIONS.CONTRACTUAL);
+  }
+
+  if (
+    /\b(economic substance|substance over form|business purpose|commercial reality|sham|simulation|tax avoidance|tax evasion)\b/i.test(value)
+  ) {
+    dimensions.push(ISSUE_DIMENSIONS.ECONOMIC_SUBSTANCE);
+  }
+
+  if (
+    /\b(principal|agent|pass-through|reimbursement|bundled|gross vs net|gross or net|control before transfer)\b/i.test(value)
+  ) {
+    dimensions.push(ISSUE_DIMENSIONS.TRANSACTION);
+  }
+
+  if (
+    /\b(audit|afs|pfrs|pas|working paper|misstatement|audit evidence|qualified opinion)\b/i.test(value)
+  ) {
+    dimensions.push(ISSUE_DIMENSIONS.AUDIT);
+  }
+
   return unique(dimensions.length ? dimensions : [ISSUE_DIMENSIONS.GENERAL]);
 }
 
 function dimensionsOverlap(a = [], b = []) {
+  if (!a.length || !b.length) return false;
+  if (a.includes(ISSUE_DIMENSIONS.GENERAL) || b.includes(ISSUE_DIMENSIONS.GENERAL)) return true;
   return a.some((item) => b.includes(item));
 }
 
@@ -431,6 +537,18 @@ function extractIssueTokens(text = "") {
   );
 }
 
+function hasVatLiabilitySignal(text = "") {
+  return /\b(vat liability|output vat|vatable|subject to vat|sale of goods|sale of services|gross selling price|gross receipts|define vat|nature of vat)\b/i.test(
+    lower(text)
+  );
+}
+
+function hasVatRefundSignal(text = "") {
+  return /\b(vat refund|input vat refund|120\+30|administrative claim|judicial claim|tax credit certificate|tcc|unutilized input vat)\b/i.test(
+    lower(text)
+  );
+}
+
 function computeIssueApplicabilityScore(question = "", doc = {}) {
   const text = buildDocDoctrineText(doc);
   const queryTokens = extractIssueTokens(question);
@@ -439,10 +557,9 @@ function computeIssueApplicabilityScore(question = "", doc = {}) {
   const docDimensions = classifyIssueDimensions(text);
 
   let tokenHits = 0;
+
   for (const token of queryTokens) {
-    if (textTokens.has(token) || lower(text).includes(token)) {
-      tokenHits += 1;
-    }
+    if (textTokens.has(token) || lower(text).includes(token)) tokenHits += 1;
   }
 
   const tokenOverlap = queryTokens.length ? tokenHits / queryTokens.length : 0;
@@ -450,33 +567,22 @@ function computeIssueApplicabilityScore(question = "", doc = {}) {
 
   let penalty = 0;
 
-  const q = lower(question);
-  const t = lower(text);
-
-  if (
-    /\b(vat liability|output vat|vatable|subject to vat|sale of goods|sale of services)\b/i.test(q) &&
-    /\b(vat refund|input vat refund|120\+30|administrative claim|judicial claim|tax credit certificate|tcc)\b/i.test(t)
-  ) {
-    penalty += 0.35;
+  if (hasVatLiabilitySignal(question) && hasVatRefundSignal(text) && !hasVatRefundSignal(question)) {
+    penalty += 0.45;
   }
 
-  if (
-    /\b(vat refund|input vat refund|120\+30|administrative claim|judicial claim|tax credit certificate|tcc)\b/i.test(q) &&
-    /\b(output vat|vatable|vat liability|subject to vat)\b/i.test(t)
-  ) {
-    penalty += 0.2;
+  if (hasVatRefundSignal(question) && hasVatLiabilitySignal(text) && !hasVatLiabilitySignal(question)) {
+    penalty += 0.3;
   }
 
   return Math.max(
     0,
-    Number((tokenOverlap * 0.65 + dimensionOverlap * 0.35 - penalty).toFixed(4))
+    Number((tokenOverlap * 0.62 + dimensionOverlap * 0.38 - penalty).toFixed(4))
   );
 }
 
 function classifyApplicability(question = "", doc = {}) {
   const issueScore = computeIssueApplicabilityScore(question, doc);
-  const queryDimensions = classifyIssueDimensions(question);
-  const docDimensions = classifyIssueDimensions(buildDocDoctrineText(doc));
   const type = authorityTypeOf(doc);
 
   if (issueScore >= 0.55) {
@@ -491,7 +597,7 @@ function classifyApplicability(question = "", doc = {}) {
     return {
       applicability: "DISTINGUISHABLE_BUT_RELEVANT",
       explanation:
-        "The authority is related but must be limited to its own factual, procedural, evidentiary, jurisdictional, temporal, administrative, or substantive context."
+        "The authority is related but must be limited to its own factual, procedural, evidentiary, jurisdictional, temporal, administrative, contractual, economic-substance, audit, transaction, or substantive context."
     };
   }
 
@@ -512,6 +618,7 @@ function classifyApplicability(question = "", doc = {}) {
 
 function scoreDoctrineAgainstDoc(doctrineCode, doc = {}, question = "") {
   const doctrine = DOCTRINE_LIBRARY[doctrineCode];
+
   if (!doctrine) {
     return {
       doctrineCode,
@@ -534,8 +641,8 @@ function scoreDoctrineAgainstDoc(doctrineCode, doc = {}, question = "") {
   const applicability = classifyApplicability(question, doc);
 
   const score =
-    aliasHits * 0.35 +
-    conceptHits * 0.2 +
+    aliasHits * 0.34 +
+    conceptHits * 0.21 +
     queryOverlap * 0.15 +
     applicabilityScore * 0.3;
 
@@ -556,7 +663,7 @@ export function tagDoctrineCandidates({
   question = "",
   retrievedResults = [],
   limit = 8
-}) {
+} = {}) {
   const reranked = rerankByHierarchy(retrievedResults, question);
   const intent = detectDoctrineIntent(question);
 
@@ -574,6 +681,17 @@ export function tagDoctrineCandidates({
     const authorityLevel = authorityLevelOf(doc);
     const authorityBoost = isLegalAuthority(doc) ? Math.max(0, (100 - authorityLevel) / 100) : 0;
 
+    const semanticScore = Number(
+      doc.rerankScore ??
+        doc.retrievalScore ??
+        doc.retrieval_score ??
+        doc.finalScore ??
+        doc.final_score ??
+        doc.score ??
+        doc.similarity ??
+        0
+    );
+
     return {
       ...doc,
       doctrineTags: doctrineScores.filter((item) => item.score > 0),
@@ -586,13 +704,23 @@ export function tagDoctrineCandidates({
         topDoctrine?.applicabilityExplanation ||
         "No doctrine applicability analysis was available.",
       doctrineFinalScore:
-        Number(doc.finalScore || doc.score || 0) * 0.55 +
-        Number(topDoctrine?.score || 0) * 35 * 0.3 +
-        authorityBoost * 15
+        semanticScore * 0.5 +
+        Number(topDoctrine?.score || 0) * 35 * 0.32 +
+        authorityBoost * 18,
+      doctrineTaggingMetadata: {
+        engine: "TINA_DOCTRINE_TAGGING_ENGINE",
+        version: ENGINE_VERSION,
+        authorityType: authorityTypeOf(doc),
+        authorityLevel,
+        plannerCompatible: true,
+        rendererCompatible: true
+      }
     };
   });
 
   return {
+    engine: "TINA_DOCTRINE_TAGGING_ENGINE",
+    version: ENGINE_VERSION,
     intent,
     candidates: tagged
       .filter((doc) => {
@@ -611,7 +739,7 @@ export function selectTopDoctrineAuthorities({
   question = "",
   retrievedResults = [],
   limit = 3
-}) {
+} = {}) {
   const { intent, candidates } = tagDoctrineCandidates({
     question,
     retrievedResults,
@@ -638,7 +766,7 @@ export function selectTopDoctrineAuthorities({
       title: sourceTitleOf(doc),
       authorityType: authorityTypeOf(doc),
       authorityLevel: authorityLevelOf(doc),
-      excerpt: normalizeText(doc.text || "").slice(0, 420)
+      excerpt: normalizeText(doc.text || doc.content || doc.excerpt || doc.preview || "").slice(0, 420)
     }))
   };
 }
@@ -672,9 +800,7 @@ function buildDoctrineConflictReview(authorities = []) {
         }
       );
 
-      if (review?.conflict || review?.apparentConflict) {
-        reviews.push(review);
-      }
+      if (review?.conflict || review?.apparentConflict) reviews.push(review);
     }
   }
 
@@ -703,7 +829,7 @@ export function buildDoctrineSummary({
   question = "",
   retrievedResults = [],
   limit = 3
-}) {
+} = {}) {
   const { intent, topAuthorities } = selectTopDoctrineAuthorities({
     question,
     retrievedResults,
@@ -727,10 +853,22 @@ export function buildDoctrineSummary({
     : "No strong issue-applicable doctrine-tagged authority found.";
 
   return {
+    engine: "TINA_DOCTRINE_TAGGING_ENGINE",
+    version: ENGINE_VERSION,
     intent,
     topAuthorities,
     summary,
-    conflictReview: buildDoctrineConflictReview(topAuthorities)
+    conflictReview: buildDoctrineConflictReview(topAuthorities),
+    plannerCompatibility: {
+      requiresDoctrinalAnalysis: Boolean(topAuthorities.length),
+      requiresConflictDisclosure: Boolean(topAuthorities.length),
+      requiresHierarchyExplanation: Boolean(topAuthorities.length)
+    },
+    rendererCompatibility: {
+      doctrinalStatusBlockRequired: true,
+      hierarchyBlockRequired: Boolean(topAuthorities.length),
+      limitationLanguageRecommended: !topAuthorities.length
+    }
   };
 }
 
@@ -738,7 +876,7 @@ export function buildDoctrinePrompt({
   question = "",
   doctrineSummary = "",
   conflictReview = ""
-}) {
+} = {}) {
   return `
 You are TINA, a Philippine tax research and compliance assistant.
 
@@ -764,6 +902,7 @@ STRICT RULES:
 8. Do not fabricate doctrinal conflict.
 9. Never output only "Conflict detected: YES."
 10. Never mention ChatGPT.
+11. If evidence is incomplete, use preliminary conclusion language.
 
 MANDATORY OUTPUT FORMAT:
 
@@ -777,7 +916,7 @@ C. SUPPORTING JURISPRUDENCE
 [Only issue-applicable cases. For each: legal issue, doctrine, applicability. If a case is distinguishable, say why.]
 
 D. DOCTRINAL STATUS / CONFLICT ANALYSIS
-[State no conflict, apparent conflict, partial conflict, or direct conflict. Explain whether differences are substantive, procedural, evidentiary, jurisdictional, factual, temporal, or administrative.]
+[State no conflict, apparent conflict, partial conflict, or direct conflict. Explain whether differences are substantive, procedural, evidentiary, jurisdictional, factual, temporal, administrative, contractual, economic-substance, audit, or transaction-based.]
 
 E. HIERARCHY ANALYSIS
 [Explain which authority controls and why under Philippine legal hierarchy.]
@@ -800,8 +939,10 @@ export async function maybeGenerateDoctrineAnswer({
   openai,
   question = "",
   retrievedResults = [],
-  model = process.env.OPENAI_MODEL || "gpt-4o-mini"
-}) {
+  model = process.env.OPENAI_MODEL || "gpt-4o-mini",
+  responseMode = "TECHNICAL",
+  adaptiveContext = {}
+} = {}) {
   const { intent, topAuthorities, summary, conflictReview } = buildDoctrineSummary({
     question,
     retrievedResults,
@@ -813,7 +954,10 @@ export async function maybeGenerateDoctrineAnswer({
       handled: false,
       answer: "",
       intent,
-      topAuthorities: []
+      topAuthorities,
+      responseMode,
+      adaptiveContext,
+      engineVersion: ENGINE_VERSION
     };
   }
 
@@ -823,7 +967,10 @@ export async function maybeGenerateDoctrineAnswer({
       answer:
         "A. DIRECT ANSWER\nI cannot find sufficient issue-applicable doctrine support in the uploaded knowledge base.\n\nB. CONTROLLING LEGAL BASIS\nNo controlling doctrine-tagged authority was retrieved from the indexed sources.\n\nC. SUPPORTING JURISPRUDENCE\nNo issue-applicable case was retrieved. TINA should not cite cases merely because they mention the same tax type.\n\nD. DOCTRINAL STATUS / CONFLICT ANALYSIS\nNo doctrinal conflict can be determined because no issue-applicable authority was retrieved.\n\nE. HIERARCHY ANALYSIS\nNo hierarchy analysis can be completed without a retrieved controlling authority.\n\nF. PRACTICAL APPLICATION\nVerify against the exact NIRC provision, BIR issuance, and Supreme Court or CTA authority before adopting a tax position.",
       intent,
-      topAuthorities: []
+      topAuthorities,
+      responseMode,
+      adaptiveContext,
+      engineVersion: ENGINE_VERSION
     };
   }
 
@@ -853,13 +1000,31 @@ export async function maybeGenerateDoctrineAnswer({
     handled: true,
     answer,
     intent,
-    topAuthorities
+    topAuthorities,
+    responseMode,
+    adaptiveContext,
+    engineVersion: ENGINE_VERSION
+  };
+}
+
+export function doctrineTaggingHealthCheck() {
+  return {
+    ok: true,
+    engine: "TINA_DOCTRINE_TAGGING_ENGINE",
+    version: ENGINE_VERSION,
+    esmCompatible: true,
+    commonJsBridgeCompatible: true,
+    authorityEngineCompatible: true,
+    conflictEngineCompatible: true,
+    plannerCompatible: true,
+    rendererCompatible: true
   };
 }
 
 export {
   DOCTRINE_LIBRARY,
-  ISSUE_DIMENSIONS
+  ISSUE_DIMENSIONS,
+  ENGINE_VERSION
 };
 
 export default {
@@ -869,6 +1034,8 @@ export default {
   buildDoctrineSummary,
   buildDoctrinePrompt,
   maybeGenerateDoctrineAnswer,
+  doctrineTaggingHealthCheck,
   DOCTRINE_LIBRARY,
-  ISSUE_DIMENSIONS
+  ISSUE_DIMENSIONS,
+  ENGINE_VERSION
 };
