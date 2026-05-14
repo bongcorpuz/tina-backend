@@ -22,10 +22,6 @@ const HIDDEN_FOLDER_PATTERNS = [
   "working_papers"
 ];
 
-/* =========================================================
- * BASIC HELPERS
- * =======================================================*/
-
 function normalizeText(value = "") {
   return String(value || "").trim();
 }
@@ -52,7 +48,6 @@ function stripFileExtension(value = "") {
 function basename(value = "") {
   const text = String(value || "");
   const parts = text.split(/[\\/]/).filter(Boolean);
-
   return parts.length ? parts[parts.length - 1] : text;
 }
 
@@ -64,10 +59,6 @@ function cleanFilename(value = "") {
       .replace(/\s+/g, " ")
   );
 }
-
-/* =========================================================
- * SOURCE NORMALIZATION
- * =======================================================*/
 
 export function normalizeSourceName(name = "") {
   return String(name || "")
@@ -97,10 +88,6 @@ export function normalizeForMatch(value = "") {
     .replace(/-+/g, "-")
     .trim();
 }
-
-/* =========================================================
- * DOCUMENT HELPERS
- * =======================================================*/
 
 export function getDocPath(doc = {}) {
   return String(
@@ -158,10 +145,6 @@ export function cleanDisplayTitle(doc = {}) {
   return cleanFilename(raw) || "Untitled Source";
 }
 
-/* =========================================================
- * ISSUANCE NORMALIZATION
- * =======================================================*/
-
 export function normalizeIssuanceNumber(num = "") {
   return String(num || "").replace(/^0+/, "") || "0";
 }
@@ -170,15 +153,11 @@ export function normalizeIssuanceYear(year = "") {
   const raw = String(year || "").trim();
 
   if (!raw) return "";
-
-  if (/^\d{4}$/.test(raw)) {
-    return raw;
-  }
+  if (/^\d{4}$/.test(raw)) return raw;
 
   if (/^\d{2}$/.test(raw)) {
     const yy = Number(raw);
     const currentYY = CURRENT_YEAR % 100;
-
     return yy <= currentYY + 1 ? `20${raw}` : `19${raw}`;
   }
 
@@ -225,15 +204,9 @@ export function extractIssuanceReference(text = "") {
 
   for (const pattern of patterns) {
     const match = value.match(pattern.regex);
-
     if (!match) continue;
 
-    if (
-      pattern.type === "RR" ||
-      pattern.type === "RMC" ||
-      pattern.type === "RMO" ||
-      pattern.type === "RAMO"
-    ) {
+    if (["RR", "RMC", "RMO", "RAMO"].includes(pattern.type)) {
       return {
         type: pattern.type,
         number: normalizeIssuanceNumber(match[1]),
@@ -253,25 +226,38 @@ export function extractIssuanceReference(text = "") {
   return null;
 }
 
-/* =========================================================
- * SOURCE VISIBILITY
- * =======================================================*/
+export function extractQuizAnswer(text = "") {
+  const value = String(text || "").trim();
+
+  if (!value) return null;
+
+  const direct = value.match(/^[A-D]$/i);
+  if (direct) return direct[0].toUpperCase();
+
+  const patterns = [
+    /\banswer\s*(?:is|:)?\s*([A-D])\b/i,
+    /\bmy\s*answer\s*(?:is|:)?\s*([A-D])\b/i,
+    /\boption\s*([A-D])\b/i,
+    /\bchoice\s*([A-D])\b/i,
+    /\b([A-D])\s*[\).:-]/i
+  ];
+
+  for (const pattern of patterns) {
+    const match = value.match(pattern);
+    if (match?.[1]) return match[1].toUpperCase();
+  }
+
+  return null;
+}
 
 export function isHiddenSource(doc = {}) {
   const path = lower(getDocPath(doc));
-
-  return HIDDEN_FOLDER_PATTERNS.some((pattern) =>
-    path.includes(pattern)
-  );
+  return HIDDEN_FOLDER_PATTERNS.some((pattern) => path.includes(pattern));
 }
 
 export function filterVisibleSources(docs = []) {
   return safeArray(docs).filter((doc) => !isHiddenSource(doc));
 }
-
-/* =========================================================
- * SOURCE DEDUP
- * =======================================================*/
 
 export function deduplicateSources(docs = []) {
   const seen = new Set();
@@ -290,10 +276,6 @@ export function deduplicateSources(docs = []) {
 
   return output;
 }
-
-/* =========================================================
- * SOURCE RANKING
- * =======================================================*/
 
 export function sortSourcesByScore(docs = []) {
   return [...docs].sort((a, b) => {
@@ -317,13 +299,8 @@ export function sortSourcesByScore(docs = []) {
   });
 }
 
-/* =========================================================
- * SOURCE PROCESSING
- * =======================================================*/
-
 export function processSources(docs = []) {
-  const supersession =
-    applySupersessionFilter?.(docs || []) || {};
+  const supersession = applySupersessionFilter?.(docs || []) || {};
 
   const activeDocs =
     supersession.activeDocs?.length > 0
@@ -331,15 +308,9 @@ export function processSources(docs = []) {
       : docs;
 
   return sortSourcesByScore(
-    deduplicateSources(
-      filterVisibleSources(activeDocs)
-    )
+    deduplicateSources(filterVisibleSources(activeDocs))
   );
 }
-
-/* =========================================================
- * SOURCE OUTPUT
- * =======================================================*/
 
 export function buildVisibleSources(docs = []) {
   return processSources(docs)
@@ -361,10 +332,6 @@ export function buildVisibleSources(docs = []) {
         0
     }));
 }
-
-/* =========================================================
- * MODE DETECTION
- * =======================================================*/
 
 export function detectQuestionMode(question = "") {
   const text = lower(question);
@@ -403,35 +370,19 @@ export function detectQuestionMode(question = "") {
   ];
 
   for (const rule of rules) {
-    if (rule.regex.test(text)) {
-      return rule.mode;
-    }
+    if (rule.regex.test(text)) return rule.mode;
   }
 
   return "GENERAL";
 }
 
-/* =========================================================
- * REPLACEMENT SOURCE SUPPORT
- * =======================================================*/
-
-export async function resolveReplacementSource(
-  source,
-  supersessionData = null
-) {
+export async function resolveReplacementSource(source, supersessionData = null) {
   try {
-    return await findReplacementForDocument(
-      source,
-      supersessionData
-    );
+    return await findReplacementForDocument(source, supersessionData);
   } catch {
     return null;
   }
 }
-
-/* =========================================================
- * HEALTH CHECK
- * =======================================================*/
 
 export function askHelpersHealthCheck() {
   return {
@@ -441,7 +392,8 @@ export function askHelpersHealthCheck() {
     supersessionCompatible: true,
     adaptiveCompatible: true,
     rendererCompatible: true,
-    plannerCompatible: true
+    plannerCompatible: true,
+    quizCompatible: true
   };
 }
 
@@ -456,6 +408,8 @@ export default {
   normalizeIssuanceNumber,
   normalizeIssuanceYear,
   extractIssuanceReference,
+  extractQuizAnswer,
+  isHiddenSource,
   filterVisibleSources,
   deduplicateSources,
   sortSourcesByScore,
