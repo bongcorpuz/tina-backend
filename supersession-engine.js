@@ -1,39 +1,87 @@
 // FILE: supersession-engine.js
+"use strict";
 
-import {
+/**
+ * supersession-engine.js
+ * TINA Supersession / Authority Validity Engine
+ *
+ * Purpose:
+ * - determine whether authorities are superseded
+ * - determine controlling version
+ * - determine historical vs current validity
+ * - prevent obsolete authority usage
+ * - produce audit trail for renderer/planner
+ *
+ * Compatible with:
+ * - authority-engine.js
+ * - query-intent-engine.js
+ * - reranker-engine.js
+ * - jurisprudence-engine.js
+ * - adaptive-response-planner.js
+ * - answer-renderer.js
+ * - ask-handler.js
+ */
+
+const {
   AUTHORITY_LEVEL,
   getAuthorityTypeForDoc,
   getAuthorityLevelForDoc,
   getControllingPrecedenceForDoc
-} from "./authority-engine.js";
+} = require("./authority-engine.js");
+
+const ENGINE_VERSION = "2.1.0";
+
+const SUPERSESSION_STATUS = Object.freeze({
+  ACTIVE: "ACTIVE",
+  SUPERSEDED: "SUPERSEDED",
+  REPEALED: "REPEALED",
+  AMENDED: "AMENDED",
+  EXPIRED: "EXPIRED",
+  HISTORICAL: "HISTORICAL",
+  FUTURE_EFFECTIVE: "FUTURE_EFFECTIVE",
+  UNKNOWN: "UNKNOWN"
+});
 
 function normalizeText(value = "") {
-  return String(value || "").replace(/\s+/g, " ").trim();
+  return String(value || "")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function lower(value = "") {
   return normalizeText(value).toLowerCase();
 }
 
-function toDate(value) {
-  if (!value) return null;
-  const d = new Date(value);
-  return Number.isNaN(d.getTime()) ? null : d;
-}
-
 function unique(values = []) {
   return [...new Set(values.filter(Boolean))];
 }
 
+function toDate(value) {
+  if (!value) return null;
+
+  const date = new Date(value);
+
+  return Number.isNaN(date.getTime())
+    ? null
+    : date;
+}
+
 function normalizeYear(year = "") {
   const raw = String(year || "").trim();
+
   if (!raw) return "";
-  if (/^\d{4}$/.test(raw)) return raw;
+
+  if (/^\d{4}$/.test(raw)) {
+    return raw;
+  }
 
   if (/^\d{2}$/.test(raw)) {
     const yy = Number(raw);
     const currentYY = new Date().getFullYear() % 100;
-    return yy <= currentYY + 1 ? `20${raw}` : `19${raw}`;
+
+    return yy <= currentYY + 1
+      ? `20${raw}`
+      : `19${raw}`;
   }
 
   return raw;
@@ -62,7 +110,10 @@ function normalizeIssuanceReference(value = "") {
   const text = normalizeRef(value);
 
   const ra = text.match(/\bra\s*(\d{4,6})\b/i);
-  if (ra) return `RA_${ra[1]}`;
+
+  if (ra) {
+    return `RA_${ra[1]}`;
+  }
 
   const patterns = [
     ["RR", /\brr\s*0*(\d+)\s*[-/ ]\s*(\d{2,4})\b/i],
@@ -73,23 +124,33 @@ function normalizeIssuanceReference(value = "") {
 
   for (const [prefix, regex] of patterns) {
     const match = text.match(regex);
+
     if (match) {
       return `${prefix}_${Number(match[1])}_${normalizeYear(match[2])}`;
     }
   }
 
   const gr = text.match(/\bg\.?\s*r\.?\s*no\.?\s*([a-z0-9.-]+)\b/i);
-  if (gr) return `GR_${String(gr[1]).toUpperCase()}`;
+
+  if (gr) {
+    return `GR_${String(gr[1]).toUpperCase()}`;
+  }
 
   const cta =
     text.match(/\bcta\s+case\s+([a-z0-9.-]+)\b/i) ||
     text.match(/\bcta\s+eb\s+([a-z0-9.-]+)\b/i);
 
-  if (cta) return `CTA_${String(cta[1]).toUpperCase()}`;
+  if (cta) {
+    return `CTA_${String(cta[1]).toUpperCase()}`;
+  }
 
   const ruling = text.match(/\bbir ruling\s*([a-z0-9()/. -]+)\b/i);
+
   if (ruling) {
-    return `BIR_RULING_${String(ruling[1]).trim().toUpperCase().replace(/[^A-Z0-9]+/g, "_")}`;
+    return `BIR_RULING_${String(ruling[1])
+      .trim()
+      .toUpperCase()
+      .replace(/[^A-Z0-9]+/g, "_")}`;
   }
 
   return text.toUpperCase().replace(/[^A-Z0-9]+/g, "_");
@@ -97,10 +158,16 @@ function normalizeIssuanceReference(value = "") {
 
 function authorityLevelOf(doc = {}) {
   return (
-    Number(doc.authorityLevel || doc.authority_level || doc.metadata?.authorityLevel) ||
+    Number(
+      doc.authorityLevel ||
+      doc.authority_level ||
+      doc.metadata?.authorityLevel
+    ) ||
     getAuthorityLevelForDoc(doc) ||
     AUTHORITY_LEVEL[
-      doc.authorityType || doc.authority_type || doc.metadata?.authorityType
+      doc.authorityType ||
+      doc.authority_type ||
+      doc.metadata?.authorityType
     ] ||
     99
   );
@@ -120,8 +187,8 @@ function controllingPrecedenceOf(doc = {}) {
   return (
     Number(
       doc.controllingPrecedence ||
-        doc.controlling_precedence ||
-        doc.metadata?.controllingPrecedence
+      doc.controlling_precedence ||
+      doc.metadata?.controllingPrecedence
     ) ||
     getControllingPrecedenceForDoc(doc) ||
     99
@@ -169,13 +236,21 @@ function docKey(doc = {}) {
       ""
   );
 
-  return key ? normalizeIssuanceReference(key) : "";
+  return key
+    ? normalizeIssuanceReference(key)
+    : "";
 }
 
 function normalizedAliasesOf(doc = {}) {
   const aliases = [
-    ...(Array.isArray(doc.normalizedAliases) ? doc.normalizedAliases : []),
-    ...(Array.isArray(doc.normalized_aliases) ? doc.normalized_aliases : []),
+    ...(Array.isArray(doc.normalizedAliases)
+      ? doc.normalizedAliases
+      : []),
+
+    ...(Array.isArray(doc.normalized_aliases)
+      ? doc.normalized_aliases
+      : []),
+
     ...(Array.isArray(doc.metadata?.normalizedAliases)
       ? doc.metadata.normalizedAliases
       : [])
@@ -191,12 +266,14 @@ function normalizedAliasesOf(doc = {}) {
 function referenceCandidatesOf(doc = {}) {
   return unique([
     docKey(doc),
+
     normalizeIssuanceReference(docPath(doc) || ""),
     normalizeIssuanceReference(docTitle(doc) || ""),
     normalizeIssuanceReference(doc.source || ""),
     normalizeIssuanceReference(doc.originalSource || ""),
     normalizeIssuanceReference(doc.original_source || ""),
-    ...(normalizedAliasesOf(doc).map(normalizeIssuanceReference))
+
+    ...normalizedAliasesOf(doc).map(normalizeIssuanceReference)
   ]).filter(Boolean);
 }
 
@@ -222,15 +299,6 @@ function effectiveToOf(doc = {}) {
       doc.metadata?.effectiveTo ||
       doc.metadata?.effective_to ||
       null
-  );
-}
-
-function isExplicitlySuperseded(doc = {}) {
-  return Boolean(
-    doc.isSuperseded ||
-      doc.is_superseded ||
-      doc.metadata?.isSuperseded ||
-      doc.metadata?.is_superseded
   );
 }
 
@@ -265,10 +333,17 @@ function amendedByOf(doc = {}) {
 }
 
 function supersedesOf(doc = {}) {
-  const raw = doc.supersedes || doc.metadata?.supersedes || [];
+  const raw =
+    doc.supersedes ||
+    doc.metadata?.supersedes ||
+    [];
 
   if (Array.isArray(raw)) {
-    return unique(raw.map((item) => normalizeText(item)));
+    return unique(
+      raw
+        .map((item) => normalizeText(item))
+        .filter(Boolean)
+    );
   }
 
   if (typeof raw === "string") {
@@ -291,127 +366,131 @@ function replacementRefsOf(doc = {}) {
   ]).filter(Boolean);
 }
 
+function isExplicitlySuperseded(doc = {}) {
+  return Boolean(
+    doc.isSuperseded ||
+      doc.is_superseded ||
+      doc.metadata?.isSuperseded ||
+      doc.metadata?.is_superseded
+  );
+}
+
+function isAdministrativeIssuance(doc = {}) {
+  return [
+    "RR",
+    "RMC",
+    "RMO",
+    "RAMO",
+    "BIR_RULING"
+  ].includes(authorityTypeOf(doc));
+}
+
 function matchesReference(doc = {}, reference = "") {
   const needle = normalizeIssuanceReference(reference);
+
   if (!needle) return false;
 
   const candidates = referenceCandidatesOf(doc);
 
   return candidates.some((candidate) => {
     if (!candidate) return false;
-    return candidate === needle || candidate.includes(needle) || needle.includes(candidate);
+
+    return (
+      candidate === needle ||
+      candidate.includes(needle) ||
+      needle.includes(candidate)
+    );
   });
-}
-
-function hasExplicitReplacementLink(olderDoc = {}, newerDoc = {}) {
-  const olderRefs = referenceCandidatesOf(olderDoc);
-  const newerRefs = referenceCandidatesOf(newerDoc);
-
-  if (!olderRefs.length && !newerRefs.length) return false;
-
-  const newerSupersedes = supersedesOf(newerDoc).map(normalizeIssuanceReference);
-
-  for (const olderRef of olderRefs) {
-    if (newerSupersedes.some((item) => item === olderRef || item.includes(olderRef))) {
-      return true;
-    }
-  }
-
-  for (const replacementRef of replacementRefsOf(olderDoc)) {
-    if (matchesReference(newerDoc, replacementRef)) return true;
-  }
-
-  return false;
-}
-
-function isAdministrativeIssuance(doc = {}) {
-  return ["RR", "RMC", "RMO", "RAMO", "BIR_RULING"].includes(authorityTypeOf(doc));
-}
-
-function isSameAuthorityFamily(a = {}, b = {}) {
-  const aType = authorityTypeOf(a);
-  const bType = authorityTypeOf(b);
-
-  if (aType === bType) return true;
-
-  if (isAdministrativeIssuance(a) && isAdministrativeIssuance(b)) {
-    const aRefs = referenceCandidatesOf(a);
-    const bRefs = referenceCandidatesOf(b);
-    return aRefs.some((ref) => bRefs.includes(ref));
-  }
-
-  return false;
 }
 
 function isDocumentEffective(doc = {}, asOfDate = new Date()) {
   const asOf = toDate(asOfDate) || new Date();
+
   const from = effectiveFromOf(doc);
   const to = effectiveToOf(doc);
 
-  if (from && from > asOf) return false;
-  if (to && to < asOf) return false;
-  if (isExplicitlySuperseded(doc)) return false;
+  if (from && from > asOf) {
+    return false;
+  }
+
+  if (to && to < asOf) {
+    return false;
+  }
+
+  if (isExplicitlySuperseded(doc)) {
+    return false;
+  }
 
   return true;
+}
+
+function isHistoricalDocument(doc = {}, asOfDate = new Date()) {
+  return !isDocumentEffective(doc, asOfDate);
+}
+
+function determineSupersessionStatus(doc = {}, asOfDate = new Date()) {
+  const from = effectiveFromOf(doc);
+  const to = effectiveToOf(doc);
+
+  const asOf = toDate(asOfDate) || new Date();
+
+  if (isExplicitlySuperseded(doc)) {
+    return SUPERSESSION_STATUS.SUPERSEDED;
+  }
+
+  if (repealedByOf(doc)) {
+    return SUPERSESSION_STATUS.REPEALED;
+  }
+
+  if (amendedByOf(doc)) {
+    return SUPERSESSION_STATUS.AMENDED;
+  }
+
+  if (from && from > asOf) {
+    return SUPERSESSION_STATUS.FUTURE_EFFECTIVE;
+  }
+
+  if (to && to < asOf) {
+    return SUPERSESSION_STATUS.EXPIRED;
+  }
+
+  return SUPERSESSION_STATUS.ACTIVE;
 }
 
 function compareVersionPriority(a = {}, b = {}) {
   const precedenceA = controllingPrecedenceOf(a);
   const precedenceB = controllingPrecedenceOf(b);
-  if (precedenceA !== precedenceB) return precedenceA - precedenceB;
+
+  if (precedenceA !== precedenceB) {
+    return precedenceA - precedenceB;
+  }
 
   const levelA = authorityLevelOf(a);
   const levelB = authorityLevelOf(b);
-  if (levelA !== levelB) return levelA - levelB;
+
+  if (levelA !== levelB) {
+    return levelA - levelB;
+  }
 
   const fromA = effectiveFromOf(a)?.getTime() || 0;
   const fromB = effectiveFromOf(b)?.getTime() || 0;
-  if (fromA !== fromB) return fromB - fromA;
 
-  const typeA = authorityTypeOf(a);
-  const typeB = authorityTypeOf(b);
-  if (typeA !== typeB) return String(typeA).localeCompare(String(typeB));
+  if (fromA !== fromB) {
+    return fromB - fromA;
+  }
 
-  return String(docPath(a) || "").localeCompare(String(docPath(b) || ""));
-}
-
-function buildAuditRecord({
-  doc,
-  replacedBy = null,
-  reason = "",
-  status = "SUPERSEDED"
-}) {
-  return {
-    status,
-    document: docPath(doc),
-    documentTitle: docTitle(doc),
-    authorityType: authorityTypeOf(doc),
-    authorityLevel: authorityLevelOf(doc),
-    normalizedReference: docKey(doc),
-    effectiveFrom: effectiveFromOf(doc)?.toISOString() || null,
-    effectiveTo: effectiveToOf(doc)?.toISOString() || null,
-    replacedBy: replacedBy ? docPath(replacedBy) : null,
-    replacedByTitle: replacedBy ? docTitle(replacedBy) : null,
-    replacedByAuthorityType: replacedBy ? authorityTypeOf(replacedBy) : null,
-    replacedByAuthorityLevel: replacedBy ? authorityLevelOf(replacedBy) : null,
-    reason
-  };
-}
-
-export function isDocumentCurrentlyEffective(doc = {}, asOfDate = new Date()) {
-  return isDocumentEffective(doc, asOfDate);
-}
-
-export function filterEffectiveDocuments(docs = [], asOfDate = new Date()) {
-  return (Array.isArray(docs) ? docs : []).filter((doc) =>
-    isDocumentEffective(doc, asOfDate)
+  return String(docPath(a) || "").localeCompare(
+    String(docPath(b) || "")
   );
 }
 
-export function chooseLatestControllingVersion(docs = []) {
-  if (!Array.isArray(docs) || docs.length === 0) return null;
+function chooseLatestControllingVersion(docs = []) {
+  if (!Array.isArray(docs) || !docs.length) {
+    return null;
+  }
 
-  return [...docs].sort(compareVersionPriority)[0] || null;
+  return [...docs]
+    .sort(compareVersionPriority)[0] || null;
 }
 
 function groupDocumentsForSupersession(docs = []) {
@@ -419,10 +498,17 @@ function groupDocumentsForSupersession(docs = []) {
 
   for (const doc of docs || []) {
     const refs = referenceCandidatesOf(doc);
-    const keys = refs.length ? refs : [normalizeIssuanceReference(docPath(doc) || "")].filter(Boolean);
+
+    const keys = refs.length
+      ? refs
+      : [normalizeIssuanceReference(docPath(doc) || "")]
+          .filter(Boolean);
 
     for (const key of keys) {
-      if (!groups.has(key)) groups.set(key, []);
+      if (!groups.has(key)) {
+        groups.set(key, []);
+      }
+
       groups.get(key).push(doc);
     }
   }
@@ -430,185 +516,319 @@ function groupDocumentsForSupersession(docs = []) {
   return groups;
 }
 
-function findExplicitReplacement(doc = {}, docs = []) {
-  const replacementRefs = replacementRefsOf(doc);
+function hasExplicitReplacementLink(olderDoc = {}, newerDoc = {}) {
+  const olderRefs = referenceCandidatesOf(olderDoc);
 
-  if (!replacementRefs.length) return null;
+  const newerSupersedes = supersedesOf(newerDoc)
+    .map(normalizeIssuanceReference);
 
-  const candidates = docs.filter((candidate) => {
-    if (candidate === doc) return false;
-    return replacementRefs.some((ref) => matchesReference(candidate, ref));
-  });
+  for (const olderRef of olderRefs) {
+    if (
+      newerSupersedes.some(
+        (item) =>
+          item === olderRef ||
+          item.includes(olderRef)
+      )
+    ) {
+      return true;
+    }
+  }
 
-  if (!candidates.length) return null;
+  for (const replacementRef of replacementRefsOf(olderDoc)) {
+    if (matchesReference(newerDoc, replacementRef)) {
+      return true;
+    }
+  }
 
-  return chooseLatestControllingVersion(candidates);
+  return false;
 }
 
-function isPastEffectiveTo(doc = {}, asOfDate = new Date()) {
-  const asOf = toDate(asOfDate) || new Date();
-  const to = effectiveToOf(doc);
+function buildAuditRecord({
+  doc,
+  replacedBy = null,
+  reason = "",
+  status = SUPERSESSION_STATUS.SUPERSEDED
+}) {
+  return {
+    status,
 
-  return Boolean(to && to < asOf);
+    document: docPath(doc),
+    documentTitle: docTitle(doc),
+
+    authorityType: authorityTypeOf(doc),
+    authorityLevel: authorityLevelOf(doc),
+
+    normalizedReference: docKey(doc),
+
+    effectiveFrom:
+      effectiveFromOf(doc)?.toISOString() || null,
+
+    effectiveTo:
+      effectiveToOf(doc)?.toISOString() || null,
+
+    replacedBy:
+      replacedBy
+        ? docPath(replacedBy)
+        : null,
+
+    replacedByTitle:
+      replacedBy
+        ? docTitle(replacedBy)
+        : null,
+
+    replacedByAuthorityType:
+      replacedBy
+        ? authorityTypeOf(replacedBy)
+        : null,
+
+    replacedByAuthorityLevel:
+      replacedBy
+        ? authorityLevelOf(replacedBy)
+        : null,
+
+    reason
+  };
 }
 
-export function detectSupersededDocuments(docs = [], asOfDate = new Date()) {
-  const allDocs = Array.isArray(docs) ? docs : [];
+function detectSupersededDocuments(
+  docs = [],
+  asOfDate = new Date()
+) {
+  const allDocs = Array.isArray(docs)
+    ? docs
+    : [];
+
   const groups = groupDocumentsForSupersession(allDocs);
+
   const superseded = [];
   const seen = new Set();
-
-  for (const doc of allDocs) {
-    const explicitReplacement = findExplicitReplacement(doc, allDocs);
-    const explicitlySuperseded = isExplicitlySuperseded(doc);
-    const expired = isPastEffectiveTo(doc, asOfDate);
-
-    if (!explicitlySuperseded && !expired && !explicitReplacement) continue;
-
-    const replacement = explicitReplacement || null;
-
-    const reason = explicitlySuperseded
-      ? "Source is explicitly marked as superseded."
-      : expired
-        ? "Source is outside its effective period as of the query date."
-        : "Source is explicitly amended, repealed, or superseded by another indexed source.";
-
-    const key = [docPath(doc), docKey(doc), docPath(replacement || {}), reason].join("|");
-    if (seen.has(key)) continue;
-    seen.add(key);
-
-    superseded.push({
-      doc,
-      replacedBy: replacement,
-      reason,
-      auditRecord: buildAuditRecord({
-        doc,
-        replacedBy: replacement,
-        reason
-      })
-    });
-  }
 
   for (const [, items] of groups) {
     if (items.length < 2) continue;
 
-    const effectiveItems = items.filter((doc) => isDocumentEffective(doc, asOfDate));
-    const controlling = chooseLatestControllingVersion(
-      effectiveItems.length ? effectiveItems : items
-    );
+    const controlling =
+      chooseLatestControllingVersion(items);
 
     for (const item of items) {
-      if (!controlling || item === controlling) continue;
+      if (item === controlling) continue;
 
-      const explicitLink = hasExplicitReplacementLink(item, controlling);
-      const sameFamily = isSameAuthorityFamily(item, controlling);
-      const weakerOrOlder =
-        compareVersionPriority(controlling, item) < 0 &&
+      const explicitLink =
+        hasExplicitReplacementLink(
+          item,
+          controlling
+        );
+
+      const inactive =
         !isDocumentEffective(item, asOfDate);
 
-      if (!explicitLink && !sameFamily && !weakerOrOlder) continue;
-
-      if (!explicitLink && isDocumentEffective(item, asOfDate)) continue;
+      if (!explicitLink && !inactive) {
+        continue;
+      }
 
       const reason = explicitLink
-        ? "Source is explicitly replaced by a controlling indexed source."
-        : sameFamily
-          ? "Older or weaker version appears superseded within the same authority family."
-          : "Older or inactive version appears superseded by a newer controlling source.";
+        ? "Source is explicitly superseded, amended, repealed, or replaced by a controlling indexed authority."
+        : "Older or inactive authority version detected.";
 
-      const key = [docPath(item), docKey(item), docPath(controlling), reason].join("|");
+      const key = [
+        docPath(item),
+        docKey(item),
+        docPath(controlling),
+        reason
+      ].join("|");
+
       if (seen.has(key)) continue;
+
       seen.add(key);
 
       superseded.push({
         doc: item,
         replacedBy: controlling,
         reason,
+
         auditRecord: buildAuditRecord({
           doc: item,
           replacedBy: controlling,
-          reason
+          reason,
+          status: determineSupersessionStatus(
+            item,
+            asOfDate
+          )
         })
       });
     }
   }
 
+  for (const doc of allDocs) {
+    const status =
+      determineSupersessionStatus(
+        doc,
+        asOfDate
+      );
+
+    if (
+      status === SUPERSESSION_STATUS.ACTIVE
+    ) {
+      continue;
+    }
+
+    const key = [
+      docPath(doc),
+      docKey(doc),
+      status
+    ].join("|");
+
+    if (seen.has(key)) continue;
+
+    seen.add(key);
+
+    superseded.push({
+      doc,
+      replacedBy: null,
+
+      reason:
+        status === SUPERSESSION_STATUS.EXPIRED
+          ? "Source is outside its effective period."
+          : status === SUPERSESSION_STATUS.REPEALED
+            ? "Source is repealed."
+            : status === SUPERSESSION_STATUS.AMENDED
+              ? "Source is amended."
+              : status === SUPERSESSION_STATUS.FUTURE_EFFECTIVE
+                ? "Source is not yet effective."
+                : "Source is superseded or inactive.",
+
+      auditRecord: buildAuditRecord({
+        doc,
+        replacedBy: null,
+        reason: status,
+        status
+      })
+    });
+  }
+
   return superseded;
 }
 
-export function applySupersessionFilter(docs = [], asOfDate = new Date()) {
-  const inputDocs = Array.isArray(docs) ? docs : [];
-  const superseded = detectSupersededDocuments(inputDocs, asOfDate);
-  const supersededSet = new Set(superseded.map((item) => item.doc));
+function applySupersessionFilter(
+  docs = [],
+  asOfDate = new Date()
+) {
+  const inputDocs = Array.isArray(docs)
+    ? docs
+    : [];
 
-  const effectiveDocs = inputDocs.filter((doc) => isDocumentEffective(doc, asOfDate));
-  const activeDocs = effectiveDocs.filter((doc) => !supersededSet.has(doc));
+  const superseded =
+    detectSupersededDocuments(
+      inputDocs,
+      asOfDate
+    );
 
-  const replacedMap = new Map();
+  const supersededSet =
+    new Set(
+      superseded.map((item) => item.doc)
+    );
 
-  for (const item of superseded) {
-    const sourceKeys = unique([
-      docPath(item.doc),
-      docKey(item.doc),
-      ...referenceCandidatesOf(item.doc)
-    ]).filter(Boolean);
+  const effectiveDocs =
+    inputDocs.filter((doc) =>
+      isDocumentEffective(doc, asOfDate)
+    );
 
-    for (const sourceKey of sourceKeys) {
-      replacedMap.set(sourceKey, item);
-    }
-  }
+  const activeDocs =
+    effectiveDocs.filter(
+      (doc) => !supersededSet.has(doc)
+    );
 
   return {
     effectiveDocs,
-    superseded,
     activeDocs,
-    auditTrail: superseded.map((item) => item.auditRecord || buildAuditRecord({
-      doc: item.doc,
-      replacedBy: item.replacedBy,
-      reason: item.reason
-    })),
-    replacedMap,
-    hasSupersededSources: superseded.length > 0,
-    activeCount: activeDocs.length,
-    supersededCount: superseded.length
+    superseded,
+
+    hasSupersededSources:
+      superseded.length > 0,
+
+    activeCount:
+      activeDocs.length,
+
+    supersededCount:
+      superseded.length,
+
+    auditTrail:
+      superseded.map(
+        (item) => item.auditRecord
+      ),
+
+    plannerCompatibility: {
+      requiresSupersessionDisclosure:
+        superseded.length > 0,
+
+      warning:
+        superseded.length > 0
+          ? "One or more authorities were superseded, repealed, amended, expired, or inactive."
+          : null
+    }
   };
 }
 
-export function findReplacementForDocument(doc = {}, supersessionResult = null) {
-  if (!supersessionResult?.superseded?.length) return null;
+function buildSupersessionWarning(
+  supersessionResult = null
+) {
+  if (
+    !supersessionResult?.superseded?.length
+  ) {
+    return "";
+  }
 
-  const path = docPath(doc);
-  const key = docKey(doc);
-  const refs = referenceCandidatesOf(doc);
+  return [
+    "Supersession Warning:",
+    "One or more indexed authorities were superseded, repealed, amended, expired, or otherwise inactive as of the query date.",
+    "TINA should prioritize active controlling authorities and should not rely on obsolete administrative issuances unless the discussion is historical."
+  ].join(" ");
+}
 
-  const matched = supersessionResult.superseded.find((item) => {
-    if (item.doc === doc) return true;
-    if (path && docPath(item.doc) === path) return true;
-    if (key && docKey(item.doc) === key) return true;
+function findReplacementForDocument(
+  doc = {},
+  supersessionResult = null
+) {
+  if (
+    !supersessionResult?.superseded?.length
+  ) {
+    return null;
+  }
 
-    const itemRefs = referenceCandidatesOf(item.doc);
-    return refs.some((ref) => itemRefs.includes(ref));
-  });
+  const refs =
+    referenceCandidatesOf(doc);
+
+  const matched =
+    supersessionResult.superseded.find(
+      (item) => {
+        const itemRefs =
+          referenceCandidatesOf(item.doc);
+
+        return refs.some((ref) =>
+          itemRefs.includes(ref)
+        );
+      }
+    );
 
   return matched?.replacedBy || null;
 }
 
-export function buildSupersessionWarning(supersessionResult = null) {
-  if (!supersessionResult?.superseded?.length) return "";
+module.exports = {
+  ENGINE_VERSION,
 
-  return [
-    "Supersession Warning:",
-    "One or more indexed sources were superseded, repealed, amended, expired, or otherwise inactive as of the query date.",
-    "TINA should rely on active controlling sources and should not treat superseded administrative issuances as controlling authority unless the answer is historical."
-  ].join(" ");
-}
+  SUPERSESSION_STATUS,
 
-export default {
-  isDocumentCurrentlyEffective,
-  filterEffectiveDocuments,
+  isDocumentEffective,
+  isHistoricalDocument,
+
+  determineSupersessionStatus,
+
   chooseLatestControllingVersion,
+
   detectSupersededDocuments,
+
   applySupersessionFilter,
+
   findReplacementForDocument,
+
   buildSupersessionWarning
 };
