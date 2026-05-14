@@ -66,7 +66,7 @@ function normalizeForMatch(value = "") {
   return normalizeSourceName(value)
     .replace(/\.(pdf|docx|doc|txt|csv|md|json)$/i, "")
     .replace(/[_\s]/g, "-")
-    .replace(/[\\/]/g, "-")
+    .replace(/[^a-z0-9._()/-]/g, "")
     .replace(/-+/g, "-")
     .trim();
 }
