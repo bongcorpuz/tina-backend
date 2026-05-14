@@ -55,7 +55,7 @@ function normalizeSourceName(name = "") {
     .replace(/\bno\.?\b/g, "")
     .replace(/[_–—]/g, "-")
     .replace(/\s+/g, "_")
-    .replace(/[^a-z0-9._()/-]/g, "")
+    .replace(/[^a-z0-9._()\/-]/g, "")
     .replace(/[\\/]+/g, "/")
     .replace(/_+/g, "_")
     .replace(/-+/g, "-")
