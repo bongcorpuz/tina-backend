@@ -57,6 +57,11 @@ function cleanFilename(value = "") {
   );
 }
 
+function truncateText(value = "", maxChars = 900) {
+  const text = String(value || "");
+  return text.length > maxChars ? `${text.slice(0, maxChars)}...[truncated]` : text;
+}
+
 export function normalizeSourceName(name = "") {
   return String(name || "")
     .toLowerCase()
@@ -162,19 +167,19 @@ export function extractIssuanceReference(text = "") {
     { type: "CONSTITUTION", regex: /\b(?:1987\s+constitution|constitution)\b/i },
     {
       type: "RR",
-      regex: /\b(?:rr|revenue regulation)\s*(?:no\.?)?\s*(\d+)[-–](\d{2,4})\b/i
+      regex: /\b(?:rr|revenue regulation)\s*(?:no\.?)?\s*(\d+)[-–\/](\d{2,4})\b/i
     },
     {
       type: "RMC",
-      regex: /\b(?:rmc|revenue memorandum circular)\s*(?:no\.?)?\s*(\d+)[-–](\d{2,4})\b/i
+      regex: /\b(?:rmc|revenue memorandum circular)\s*(?:no\.?)?\s*(\d+)[-–\/](\d{2,4})\b/i
     },
     {
       type: "RMO",
-      regex: /\b(?:rmo|revenue memorandum order)\s*(?:no\.?)?\s*(\d+)[-–](\d{2,4})\b/i
+      regex: /\b(?:rmo|revenue memorandum order)\s*(?:no\.?)?\s*(\d+)[-–\/](\d{2,4})\b/i
     },
     {
       type: "RAMO",
-      regex: /\b(?:ramo|revenue audit memorandum order)\s*(?:no\.?)?\s*(\d+)[-–](\d{2,4})\b/i
+      regex: /\b(?:ramo|revenue audit memorandum order)\s*(?:no\.?)?\s*(\d+)[-–\/](\d{2,4})\b/i
     },
     { type: "RA", regex: /\b(?:ra|republic act)\s*(?:no\.?)?\s*(\d+)\b/i },
     { type: "CASE", regex: /\bg\.?\s*r\.?\s*no\.?\s*([\w-]+)\b/i }
@@ -200,6 +205,134 @@ export function extractIssuanceReference(text = "") {
   }
 
   return null;
+}
+
+export function detectIssuanceQuery(question = "") {
+  return extractIssuanceReference(question);
+}
+
+export function classifyQuestion(question = "") {
+  const text = lower(question);
+
+  if (/\b(?:rr|rmc|rmo|ramo|revenue regulation|revenue memorandum|bir ruling|ra|republic act|nirc|tax code|g\.?\s*r\.?\s*no)\b/i.test(text)) {
+    return "issuance";
+  }
+
+  if (/\b(?:vat|output vat|input vat|withholding|ewt|cwt|income tax|mcit|rcit|nolco|dst|percentage tax|excise)\b/i.test(text)) {
+    return "tax";
+  }
+
+  if (/\b(?:audit|afs|pfrs|pas|working paper|misstatement|qualified opinion|materiality|evidence)\b/i.test(text)) {
+    return "audit";
+  }
+
+  if (/\b(?:case|litigation|court|jurisprudence|doctrine|cta|supreme court|protest|assessment)\b/i.test(text)) {
+    return "legal";
+  }
+
+  if (/\b(?:contract|agreement|lease|concession|principal|agent|economic substance|transaction)\b/i.test(text)) {
+    return "transaction";
+  }
+
+  if (/\b(?:quiz|reviewer|cpale|exam|bar)\b/i.test(text)) {
+    return "reviewer";
+  }
+
+  return "general";
+}
+
+export function detectQuestionMode(question = "") {
+  const text = lower(question);
+
+  const rules = [
+    {
+      regex: /\b(?:audit|afs|pfrs|pas|working paper|misstatement|qualified opinion)\b/i,
+      mode: "AUDIT"
+    },
+    {
+      regex: /\b(?:tax|vat|bir|income tax|withholding|mcit|rcit|nolco)\b/i,
+      mode: "TAX"
+    },
+    {
+      regex: /\b(?:case|litigation|court|jurisprudence|doctrine|g\.?\s*r\.?\s*no)\b/i,
+      mode: "LITIGATION"
+    },
+    {
+      regex: /\b(?:reviewer|quiz|exam|cpale|bar exam|recall)\b/i,
+      mode: "REVIEWER"
+    },
+    {
+      regex: /\b(?:contract|agreement|transaction|economic substance|evidence)\b/i,
+      mode: "TRANSACTION"
+    },
+    {
+      regex: /\b(?:business|strategy|financial model|valuation|irr|pricing)\b/i,
+      mode: "BUSINESS"
+    }
+  ];
+
+  for (const rule of rules) {
+    if (rule.regex.test(text)) return rule.mode;
+  }
+
+  return "GENERAL";
+}
+
+export function buildMemoryContext(messages = [], maxItems = 8) {
+  const items = safeArray(messages)
+    .slice(-Math.max(1, Number(maxItems) || 8))
+    .map((message) => {
+      const role = message.role || message.message_role || "unknown";
+      const content =
+        message.content ||
+        message.message ||
+        message.text ||
+        message.body ||
+        "";
+
+      if (!content) return null;
+
+      return `${String(role).toUpperCase()}: ${truncateText(content, 900)}`;
+    })
+    .filter(Boolean);
+
+  return items.length ? items.join("\n\n") : "No prior conversation.";
+}
+
+export function toSafeDbNumeric(value, max = 999999.9999, decimals = 4) {
+  const number = Number(value);
+
+  if (!Number.isFinite(number)) return 0;
+
+  const capped = Math.max(
+    Math.min(number, Number(max) || 999999.9999),
+    -Math.abs(Number(max) || 999999.9999)
+  );
+
+  return Number(capped.toFixed(Number(decimals) || 4));
+}
+
+export function shouldHideSourceFromUser(doc = {}) {
+  return isHiddenSource(doc);
+}
+
+export function stripTrailingSourceSection(answer = "") {
+  const text = String(answer || "").trim();
+
+  if (!text) return "";
+
+  const patterns = [
+    /\n+\s*(?:sources|source list|references|validated indexed sources)\s*:?\s*\n[\s\S]*$/i,
+    /\n+\s*#{1,6}\s*(?:sources|references|validated indexed sources)\s*\n[\s\S]*$/i
+  ];
+
+  let output = text;
+
+  for (const pattern of patterns) {
+    output = output.replace(pattern, "").trim();
+  }
+
+  return output;
 }
 
 export function extractQuizAnswer(text = "") {
@@ -280,13 +413,23 @@ export function deduplicateSources(docs = []) {
 }
 
 export function sortSourcesByScore(docs = []) {
-  return [...docs].sort((a, b) => {
+  return [...safeArray(docs)].sort((a, b) => {
     const aScore = Number(
-      a.finalScore ?? a.final_score ?? a.retrievalScore ?? a.retrieval_score ?? a.score ?? 0
+      a.finalScore ??
+        a.final_score ??
+        a.retrievalScore ??
+        a.retrieval_score ??
+        a.score ??
+        0
     );
 
     const bScore = Number(
-      b.finalScore ?? b.final_score ?? b.retrievalScore ?? b.retrieval_score ?? b.score ?? 0
+      b.finalScore ??
+        b.final_score ??
+        b.retrievalScore ??
+        b.retrieval_score ??
+        b.score ??
+        0
     );
 
     return bScore - aScore;
@@ -339,45 +482,7 @@ export function buildVisibleSources(docs = []) {
 
 export function finalizeSourcesForResponse(docs = [], options = {}) {
   const maxItems = Number(options.maxItems || MAX_VISIBLE_SOURCES);
-
   return buildVisibleSources(docs).slice(0, Math.max(1, maxItems));
-}
-
-export function detectQuestionMode(question = "") {
-  const text = lower(question);
-
-  const rules = [
-    {
-      regex: /\b(?:audit|afs|pfrs|pas|working paper|misstatement|qualified opinion)\b/i,
-      mode: "AUDIT"
-    },
-    {
-      regex: /\b(?:tax|vat|bir|income tax|withholding|mcit|rcit|nolco)\b/i,
-      mode: "TAX"
-    },
-    {
-      regex: /\b(?:case|litigation|court|jurisprudence|doctrine|g\.?\s*r\.?\s*no)\b/i,
-      mode: "LITIGATION"
-    },
-    {
-      regex: /\b(?:reviewer|quiz|exam|cpale|bar exam|recall)\b/i,
-      mode: "REVIEWER"
-    },
-    {
-      regex: /\b(?:contract|agreement|transaction|economic substance|evidence)\b/i,
-      mode: "TRANSACTION"
-    },
-    {
-      regex: /\b(?:business|strategy|financial model|valuation|irr|pricing)\b/i,
-      mode: "BUSINESS"
-    }
-  ];
-
-  for (const rule of rules) {
-    if (rule.regex.test(text)) return rule.mode;
-  }
-
-  return "GENERAL";
 }
 
 export async function resolveReplacementSource(source, supersessionData = null) {
@@ -392,13 +497,23 @@ export function askHelpersHealthCheck() {
   return {
     ok: true,
     module: "ask-helpers",
-    version: "3.0.0",
+    version: "3.1.0",
+    exports: {
+      MAX_VISIBLE_SOURCES: true,
+      toSafeDbNumeric: true,
+      buildMemoryContext: true,
+      classifyQuestion: true,
+      detectIssuanceQuery: true,
+      shouldHideSourceFromUser: true,
+      stripTrailingSourceSection: true
+    },
     supersessionCompatible: true,
     adaptiveCompatible: true,
     rendererCompatible: true,
     plannerCompatible: true,
     quizCompatible: true,
-    assessmentHandlerCompatible: true
+    assessmentHandlerCompatible: true,
+    ragAnswerHandlerCompatible: true
   };
 }
 
@@ -413,6 +528,13 @@ export default {
   normalizeIssuanceNumber,
   normalizeIssuanceYear,
   extractIssuanceReference,
+  detectIssuanceQuery,
+  classifyQuestion,
+  detectQuestionMode,
+  buildMemoryContext,
+  toSafeDbNumeric,
+  shouldHideSourceFromUser,
+  stripTrailingSourceSection,
   extractQuizAnswer,
   formatQuestionBlock,
   isHiddenSource,
@@ -422,7 +544,6 @@ export default {
   processSources,
   buildVisibleSources,
   finalizeSourcesForResponse,
-  detectQuestionMode,
   resolveReplacementSource,
   askHelpersHealthCheck
 };
