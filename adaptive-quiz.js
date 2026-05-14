@@ -1,4 +1,5 @@
 // FILE: adaptive-quiz.js
+"use strict";
 
 /* ================= TINA SOURCE-GROUNDED ADAPTIVE QUIZ ENGINE ================= */
 
@@ -8,6 +9,8 @@ import {
   getTopicMastery,
   updateTopicMastery
 } from "./learner-profile.js";
+
+const ENGINE_VERSION = "3.0.0";
 
 const TAX_TOPICS = [
   "Income Tax",
@@ -49,19 +52,37 @@ function normalizeDifficulty(value = 1) {
   return Math.min(Math.max(difficulty, 1), 5);
 }
 
+function isSupabaseClient(value) {
+  return Boolean(value) && typeof value.from === "function";
+}
+
+function safeJson(value, fallback = {}) {
+  if (!value) return fallback;
+  if (typeof value === "object") return value;
+
+  try {
+    return JSON.parse(value);
+  } catch {
+    return fallback;
+  }
+}
+
+function normalizeChoiceLetter(value = "") {
+  return String(value || "")
+    .replace(/[^A-Da-d]/g, "")
+    .trim()
+    .toUpperCase()
+    .slice(0, 1);
+}
+
 /* ================= TOPIC DETECTION ================= */
 
 export function detectQuizTopic(text = "") {
   const q = lower(text);
 
-  if (q.includes("vat") || q.includes("value-added")) return "VAT";
+  if (q.includes("vat") || q.includes("value-added") || q.includes("value added")) return "VAT";
   if (q.includes("withholding") || q.includes("ewt") || q.includes("cwt")) return "Withholding Tax";
-  if (
-    q.includes("income tax") ||
-    q.includes("rcit") ||
-    q.includes("mcit") ||
-    q.includes("nolco")
-  ) return "Income Tax";
+  if (q.includes("income tax") || q.includes("rcit") || q.includes("mcit") || q.includes("nolco")) return "Income Tax";
   if (q.includes("percentage tax")) return "Percentage Tax";
   if (q.includes("final tax")) return "Final Tax";
   if (q.includes("capital gains") || q.includes("cgt")) return "Capital Gains Tax";
@@ -86,6 +107,15 @@ export async function getAdaptiveQuizProfile(
   userId,
   requestedTopic = ""
 ) {
+  if (!isSupabaseClient(supabase) || !userId) {
+    return {
+      profile: null,
+      topic: detectQuizTopic(requestedTopic) || normalizeText(requestedTopic) || pickRandomTaxTopic(),
+      subtopic: "",
+      difficulty: 1
+    };
+  }
+
   const profile = await getOrCreateLearnerProfile(supabase, userId);
 
   const detectedTopic = detectQuizTopic(requestedTopic);
@@ -116,16 +146,16 @@ export async function getRecentQuizHistory(
     userId,
     topic = "",
     limit = 20
-  }
+  } = {}
 ) {
-  if (!userId) return [];
+  if (!isSupabaseClient(supabase) || !userId) return [];
 
   let query = supabase
     .from("tina_learning_attempts")
-    .select("id, topic, subtopic, question, source_path, chunk_index, created_at")
+    .select("id, topic, subtopic, question, source_path, chunk_index, source_metadata, created_at")
     .eq("user_id", String(userId))
     .order("created_at", { ascending: false })
-    .limit(limit);
+    .limit(Math.max(1, Math.min(safeInteger(limit, 20), 100)));
 
   if (topic) {
     query = query.eq("topic", topic);
@@ -150,8 +180,16 @@ export function buildQuizExclusionFromHistory(history = []) {
       excludeSourcePaths.push(item.source_path);
     }
 
-    if (item.id && !excludeChunkIds.includes(String(item.id))) {
-      excludeChunkIds.push(String(item.id));
+    const metadata = safeJson(item.source_metadata, {});
+    const sourceChunkId = metadata.sourceChunkId || metadata.chunkId || null;
+
+    if (sourceChunkId && !excludeChunkIds.includes(String(sourceChunkId))) {
+      excludeChunkIds.push(String(sourceChunkId));
+    }
+
+    if (item.chunk_index != null && item.source_path) {
+      const compoundKey = `${item.source_path}::${item.chunk_index}`;
+      if (!excludeChunkIds.includes(compoundKey)) excludeChunkIds.push(compoundKey);
     }
   }
 
@@ -166,43 +204,79 @@ export function buildQuizExclusionFromHistory(history = []) {
 function normalizeSourceChunk(sourceChunk = null) {
   if (!sourceChunk) return null;
 
+  const metadata = sourceChunk.metadata || {};
+
   return {
-    source_file_id: sourceChunk.fileId || sourceChunk.metadata?.fileId || null,
+    source_file_id:
+      sourceChunk.fileId ||
+      sourceChunk.file_id ||
+      metadata.fileId ||
+      metadata.file_id ||
+      null,
+
     source_title:
       sourceChunk.sourceTitle ||
-      sourceChunk.metadata?.originalFileName ||
+      sourceChunk.title ||
+      metadata.documentTitle ||
+      metadata.originalFileName ||
       sourceChunk.originalSource ||
+      sourceChunk.original_source ||
       sourceChunk.source ||
       null,
+
     source_path:
       sourceChunk.sourcePath ||
-      sourceChunk.metadata?.path ||
+      sourceChunk.path ||
+      sourceChunk.source_path ||
+      metadata.path ||
       sourceChunk.originalSource ||
+      sourceChunk.original_source ||
       sourceChunk.source ||
       null,
+
     chunk_index:
       typeof sourceChunk.chunkIndex === "number"
         ? sourceChunk.chunkIndex
         : sourceChunk.chunk_index ?? null,
-    source_excerpt: String(sourceChunk.text || "").slice(0, 1500),
-    source_metadata: sourceChunk.metadata || {}
+
+    source_excerpt: String(
+      sourceChunk.text ||
+        sourceChunk.content ||
+        sourceChunk.excerpt ||
+        sourceChunk.preview ||
+        ""
+    ).slice(0, 1500),
+
+    source_metadata: {
+      ...metadata,
+      sourceChunkId: sourceChunk.id || metadata.sourceChunkId || null,
+      authorityType: sourceChunk.authorityType || sourceChunk.authority_type || metadata.authorityType || null,
+      authorityLevel: sourceChunk.authorityLevel || sourceChunk.authority_level || metadata.authorityLevel || null,
+      normalizedReference:
+        sourceChunk.normalizedReference ||
+        sourceChunk.normalized_reference ||
+        metadata.normalizedReference ||
+        null,
+      tinaAdaptiveQuizVersion: ENGINE_VERSION
+    }
   };
 }
 
 function buildSourceContext(sourceChunks = []) {
-  if (!Array.isArray(sourceChunks) || sourceChunks.length === 0) {
-    return "";
-  }
+  if (!Array.isArray(sourceChunks) || sourceChunks.length === 0) return "";
 
   return sourceChunks
     .map((chunk, index) => {
+      const text = String(chunk.text || chunk.content || chunk.excerpt || chunk.preview || "").slice(0, 3000);
+
       return `
 SOURCE ${index + 1}
-Title: ${chunk.sourceTitle || chunk.originalSource || chunk.source || "Untitled"}
-Path: ${chunk.sourcePath || chunk.metadata?.path || "No path"}
+Title: ${chunk.sourceTitle || chunk.title || chunk.originalSource || chunk.original_source || chunk.source || "Untitled"}
+Path: ${chunk.sourcePath || chunk.path || chunk.source_path || chunk.metadata?.path || "No path"}
+Authority Type: ${chunk.authorityType || chunk.authority_type || chunk.metadata?.authorityType || "N/A"}
 Chunk Index: ${chunk.chunkIndex ?? chunk.chunk_index ?? "N/A"}
 Text:
-${String(chunk.text || "").slice(0, 3000)}
+${text}
       `.trim();
     })
     .join("\n\n---\n\n");
@@ -210,7 +284,18 @@ ${String(chunk.text || "").slice(0, 3000)}
 
 function pickPrimarySourceChunk(sourceChunks = []) {
   if (!Array.isArray(sourceChunks) || sourceChunks.length === 0) return null;
-  return sourceChunks[0] || null;
+
+  return [...sourceChunks].sort((a, b) => {
+    const aLevel = Number(a.authorityLevel || a.authority_level || a.metadata?.authorityLevel || 99);
+    const bLevel = Number(b.authorityLevel || b.authority_level || b.metadata?.authorityLevel || 99);
+
+    if (aLevel !== bLevel) return aLevel - bLevel;
+
+    const aScore = Number(a.finalScore || a.retrievalScore || a.score || 0);
+    const bScore = Number(b.finalScore || b.retrievalScore || b.score || 0);
+
+    return bScore - aScore;
+  })[0];
 }
 
 /* ================= SOURCE-GROUNDED PROMPT ================= */
@@ -229,6 +314,7 @@ export function buildAdaptiveQuizPrompt({
   const recentQuestionText = uniqueStrings(
     (recentQuestions || []).map((q) => q.question)
   )
+    .slice(0, 10)
     .map((question, index) => `${index + 1}. ${question}`)
     .join("\n");
 
@@ -377,14 +463,14 @@ export function safeParseQuizJson(text = "") {
     parsed.topic = normalizeText(parsed.topic) || "General Taxation";
     parsed.subtopic = normalizeText(parsed.subtopic);
     parsed.difficulty = normalizeDifficulty(parsed.difficulty || 1);
-    parsed.correctAnswer = String(parsed.correctAnswer).trim().toUpperCase();
+    parsed.correctAnswer = normalizeChoiceLetter(parsed.correctAnswer);
 
     if (!["A", "B", "C", "D"].includes(parsed.correctAnswer)) {
       console.error("Quiz JSON invalid correctAnswer.");
       return null;
     }
 
-    parsed.correctAnswerText = normalizeText(parsed.correctAnswerText || "");
+    parsed.correctAnswerText = normalizeText(parsed.correctAnswerText || parsed.choices[parsed.correctAnswer] || "");
     parsed.explanation = normalizeText(parsed.explanation || "");
     parsed.cpaleTrap = normalizeText(parsed.cpaleTrap || "");
     parsed.sourceSupport = normalizeText(parsed.sourceSupport || "");
@@ -400,6 +486,10 @@ export function safeParseQuizJson(text = "") {
     if (!parsed.choices.A || !parsed.choices.B || !parsed.choices.C || !parsed.choices.D) {
       console.error("Quiz JSON invalid choices.");
       return null;
+    }
+
+    if (!parsed.correctAnswerText) {
+      parsed.correctAnswerText = parsed.choices[parsed.correctAnswer];
     }
 
     return parsed;
@@ -419,8 +509,15 @@ export async function storeUnansweredQuiz(
     quiz,
     mode = "ADAPTIVE_QUIZ",
     sourceChunks = []
-  }
+  } = {}
 ) {
+  if (!isSupabaseClient(supabase)) {
+    return {
+      saveFailed: true,
+      error: "Invalid Supabase client"
+    };
+  }
+
   if (!userId || !quiz) {
     console.error("STORE QUIZ FAILED: missing userId or quiz", { userId, quiz });
     return {
@@ -447,14 +544,16 @@ export async function storeUnansweredQuiz(
     }
   }
 
+  const correctAnswer = normalizeChoiceLetter(quiz.correctAnswer || quiz.correct_answer);
   const primarySource = normalizeSourceChunk(pickPrimarySourceChunk(sourceChunks));
 
   const sourceMetadata = {
     ...(primarySource?.source_metadata || {}),
-    correctAnswerText: quiz.correctAnswerText || "",
+    correctAnswerText: quiz.correctAnswerText || choices?.[correctAnswer] || "",
     cpaleTrap: quiz.cpaleTrap || "",
     sourceSupport: quiz.sourceSupport || "",
-    validationStatus: quiz.validationStatus || "UNVALIDATED"
+    validationStatus: quiz.validationStatus || "UNVALIDATED",
+    tinaAdaptiveQuizVersion: ENGINE_VERSION
   };
 
   const explanationParts = [
@@ -473,9 +572,7 @@ export async function storeUnansweredQuiz(
     difficulty: normalizeDifficulty(quiz.difficulty || 1),
     question: normalizeText(quiz.question || ""),
     choices,
-    correct_answer: String(quiz.correctAnswer || quiz.correct_answer || "")
-      .trim()
-      .toUpperCase(),
+    correct_answer: correctAnswer,
     user_answer: null,
     is_correct: null,
     explanation: explanationParts.join("\n"),
@@ -526,7 +623,7 @@ export async function storeUnansweredQuiz(
 /* ================= RETRIEVE PENDING QUIZ ================= */
 
 export async function getLastUnansweredQuiz(supabase, userId, sessionId = null) {
-  if (!userId) return null;
+  if (!isSupabaseClient(supabase) || !userId) return null;
 
   let query = supabase
     .from("tina_learning_attempts")
@@ -540,32 +637,14 @@ export async function getLastUnansweredQuiz(supabase, userId, sessionId = null) 
     query = query.eq("session_id", sessionId);
   }
 
-  let { data, error } = await query.maybeSingle();
+  const { data, error } = await query.maybeSingle();
 
   if (error) {
     console.error("Primary unanswered quiz fetch error:", error.message);
-  }
-
-  if (data) return data;
-
-  if (sessionId) {
     return null;
   }
 
-  const fallback = await supabase
-    .from("tina_learning_attempts")
-    .select("*")
-    .is("user_answer", null)
-    .order("created_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
-
-  if (fallback.error) {
-    console.error("Fallback unanswered quiz fetch error:", fallback.error.message);
-    return null;
-  }
-
-  return fallback.data || null;
+  return data || null;
 }
 
 /* ================= ANSWER CHECKER ================= */
@@ -576,7 +655,7 @@ export async function answerLastQuiz(
     userId,
     userAnswer,
     sessionId = null
-  }
+  } = {}
 ) {
   const lastQuiz = await getLastUnansweredQuiz(supabase, userId, sessionId);
 
@@ -587,15 +666,17 @@ export async function answerLastQuiz(
     };
   }
 
-  const cleanAnswer = String(userAnswer || "")
-    .replace(/[^A-Da-d]/g, "")
-    .trim()
-    .toUpperCase();
+  const cleanAnswer = normalizeChoiceLetter(userAnswer);
+  const correctAnswer = normalizeChoiceLetter(lastQuiz.correct_answer);
 
-  const correctAnswer = String(lastQuiz.correct_answer || "")
-    .replace(/[^A-Da-d]/g, "")
-    .trim()
-    .toUpperCase();
+  if (!cleanAnswer) {
+    return {
+      found: true,
+      invalidAnswer: true,
+      message: "Please answer with A, B, C, or D only.",
+      attempt: lastQuiz
+    };
+  }
 
   const isCorrect = cleanAnswer === correctAnswer;
 
@@ -647,5 +728,18 @@ export async function answerLastQuiz(
     sourcePath: lastQuiz.source_path || null,
     sourceExcerpt: lastQuiz.source_excerpt || null,
     sourceMetadata: lastQuiz.source_metadata || null
+  };
+}
+
+/* ================= HEALTH CHECK ================= */
+
+export function adaptiveQuizHealthCheck() {
+  return {
+    ok: true,
+    engine: "TINA_SOURCE_GROUNDED_ADAPTIVE_QUIZ_ENGINE",
+    version: ENGINE_VERSION,
+    esmCompatible: true,
+    sourceGroundedCompatible: true,
+    learnerProfileCompatible: true
   };
 }
