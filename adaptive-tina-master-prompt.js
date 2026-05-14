@@ -1,10 +1,9 @@
+// FILE: adaptive-tina-master-prompt.js
 "use strict";
 
 /**
- * adaptive-tina-master-prompt.js
- *
- * Enterprise Adaptive Prompt Registry
- * TINA v2 Adaptive Orchestration Layer
+ * TINA Enterprise Adaptive Prompt Registry
+ * TINA v3 Adaptive Orchestration Layer
  *
  * Central source of truth for:
  * - adaptive modes
@@ -17,11 +16,7 @@
  * - engine compatibility
  */
 
-/* =========================================================
- * VERSION
- * ========================================================= */
-
-const TINA_VERSION = "2.1.0";
+const TINA_VERSION = "3.0.0";
 
 /* =========================================================
  * LEGACY MODE ALIASES
@@ -29,19 +24,12 @@ const TINA_VERSION = "2.1.0";
 
 const LEGACY_MODE_ALIASES = Object.freeze({
   ASK: "STANDARD_TAX_MODE",
-
   TAX_EXPERT: "TECHNICAL_TAX_MODE",
-
   TAX_REVIEWER: "REVIEWER_LEARNING_MODE",
-
   QUIZ_MASTER: "REVIEWER_LEARNING_MODE",
-
   ADAPTIVE_QUIZ: "REVIEWER_LEARNING_MODE",
-
   SOURCE_FINDER: "STANDARD_TAX_MODE",
-
   FEEDBACK: "STANDARD_TAX_MODE",
-
   LEARNING_PROGRESS: "REVIEWER_LEARNING_MODE"
 });
 
@@ -106,11 +94,15 @@ const RESPONSE_MODES = Object.freeze({
  * ========================================================= */
 
 const OUTPUT_DEPTH = Object.freeze({
-  SHORT: "SHORT",
+  CONCISE: "CONCISE",
 
   STANDARD: "STANDARD",
 
-  COMPREHENSIVE: "COMPREHENSIVE"
+  STRUCTURED: "STRUCTURED",
+
+  COMPREHENSIVE: "COMPREHENSIVE",
+
+  SIMPLE: "SIMPLE"
 });
 
 /* =========================================================
@@ -124,8 +116,11 @@ const CONCLUSION_RESTRICTIONS = Object.freeze({
   PRELIMINARY_CONCLUSION_ONLY:
     "PRELIMINARY_CONCLUSION_ONLY",
 
-  DEFER_STRONG_CONCLUSION:
-    "DEFER_STRONG_CONCLUSION"
+  DEFER_CONCLUSION:
+    "DEFER_CONCLUSION",
+
+  USE_QUALIFIED_CONCLUSION:
+    "USE_QUALIFIED_CONCLUSION"
 });
 
 /* =========================================================
@@ -179,11 +174,11 @@ Apply Philippine hierarchy:
 1. Constitution
 2. NIRC / Republic Act
 3. Revenue Regulations
-4. RMC
-5. RMO / RAMO
+4. Revenue Memorandum Circulars
+5. Revenue Memorandum Orders / RAMO
 6. BIR Rulings
 7. Supreme Court
-8. CTA / CA
+8. CTA / Court of Appeals
 9. Secondary materials
 
 Never elevate lower authority above higher authority.
@@ -225,6 +220,23 @@ Explain:
 `.trim();
 
 /* =========================================================
+ * RESPONSE RULE
+ * ========================================================= */
+
+const TINA_RESPONSE_RULE = `
+OUTPUT RULES:
+- concise for simple questions
+- structured for audit/legal issues
+- doctrine-heavy for litigation
+- evidence-sensitive for factual disputes
+- practical for business strategy
+- never overstate certainty
+- never fabricate authorities
+- never provide strong conclusion when evidence is incomplete
+- distinguish legal conclusion, accounting treatment, audit risk, and evidentiary status
+`.trim();
+
+/* =========================================================
  * MASTER PROMPT
  * ========================================================= */
 
@@ -237,14 +249,7 @@ ${TINA_FACTUAL_REASONING_RULE}
 
 ${TINA_CONFLICT_RULE}
 
-OUTPUT RULES:
-- concise for simple questions
-- structured for audit/legal issues
-- doctrine-heavy for litigation
-- evidence-sensitive for factual disputes
-- practical for business strategy
-- never overstate certainty
-- never fabricate authorities
+${TINA_RESPONSE_RULE}
 `.trim();
 
 /* =========================================================
@@ -263,24 +268,29 @@ Use standard Philippine tax analysis.
 
   TECHNICAL_TAX_MODE: `
 Use technical doctrinal tax analysis.
+Apply hierarchy analysis.
 `.trim(),
 
   AUDIT_MODE: `
 Use audit-defensible analysis.
+
 Focus on:
 - evidence
 - accounting
 - PFRS
 - misstatement risk
+- audit defensibility
 `.trim(),
 
   LITIGATION_LEGAL_DEFENSE_MODE: `
 Use litigation-grade legal analysis.
+
 Focus on:
 - doctrine
 - hierarchy
 - taxpayer defense
 - BIR position
+- conflict analysis
 `.trim(),
 
   TRANSACTION_CHARACTERIZATION_MODE: `
@@ -290,6 +300,7 @@ Focus on:
 - control
 - principal-agent
 - bundled analysis
+- reimbursement/pass-through analysis
 `.trim(),
 
   CONTRACT_INTERPRETATION_MODE: `
@@ -299,6 +310,7 @@ Focus on:
 - consideration
 - risk allocation
 - tax clauses
+- actual practice versus written terms
 `.trim(),
 
   EVIDENCE_EVALUATION_MODE: `
@@ -307,6 +319,7 @@ Focus on:
 - unsupported facts
 - contradictions
 - audit-sensitive items
+- evidentiary gaps
 `.trim(),
 
   FACT_PATTERN_ANALYSIS_MODE: `
@@ -315,11 +328,13 @@ Focus on:
 - ambiguity
 - assumptions
 - missing facts
+- unresolved issues
 `.trim(),
 
   REVIEWER_LEARNING_MODE: `
 Use simple reviewer-style explanation.
 Use examples and layman's terms.
+Avoid excessive legal drafting.
 `.trim()
 });
 
@@ -328,10 +343,17 @@ Use examples and layman's terms.
  * ========================================================= */
 
 const RESPONSE_STRUCTURES = Object.freeze({
+  QUICK: [
+    "A. DIRECT ANSWER",
+    "B. SHORT BASIS",
+    "C. PRACTICAL NOTE"
+  ],
+
   STANDARD: [
     "A. DIRECT ANSWER",
     "B. CONTROLLING LEGAL BASIS",
-    "C. PRACTICAL APPLICATION"
+    "C. PRACTICAL APPLICATION",
+    "D. TAX / COMPLIANCE RISK"
   ],
 
   TECHNICAL: [
@@ -362,6 +384,46 @@ const RESPONSE_STRUCTURES = Object.freeze({
     "F. TAXPAYER DEFENSE",
     "G. DOCTRINAL STATUS / CONFLICT ANALYSIS",
     "H. CONCLUSION"
+  ],
+
+  TRANSACTION: [
+    "A. DIRECT ANSWER",
+    "B. LEGAL FORM",
+    "C. ECONOMIC SUBSTANCE",
+    "D. TRANSACTION FLOW",
+    "E. PRINCIPAL VS AGENT / CONTROL ANALYSIS",
+    "F. TAX AND ACCOUNTING CHARACTERIZATION",
+    "G. BIR / AUDIT RISK",
+    "H. DOCUMENTATION REQUIRED"
+  ],
+
+  CONTRACT: [
+    "A. DIRECT ANSWER",
+    "B. CONTRACT PARTIES AND OBJECT",
+    "C. RIGHTS AND OBLIGATIONS",
+    "D. CONSIDERATION / BILLING / COLLECTION",
+    "E. CONTROL AND RISK ALLOCATION",
+    "F. TAX CLAUSES / LEGAL CONSEQUENCES",
+    "G. DOCUMENTARY GAPS",
+    "H. RECOMMENDED POSITION"
+  ],
+
+  EVIDENCE_HEAVY: [
+    "A. DIRECT ANSWER",
+    "B. ASSERTED FACTS",
+    "C. DOCUMENTED FACTS",
+    "D. UNSUPPORTED / CONTRADICTORY FACTS",
+    "E. MISSING DOCUMENTS",
+    "F. AUDIT-SENSITIVE ITEMS",
+    "G. CONCLUSION SUBJECT TO VERIFICATION"
+  ],
+
+  REVIEWER: [
+    "A. SIMPLE ANSWER",
+    "B. WHY",
+    "C. BASIC LEGAL BASIS",
+    "D. EXAMPLE",
+    "E. PRACTICAL / EXAM TIP"
   ]
 });
 
@@ -372,8 +434,8 @@ const RESPONSE_STRUCTURES = Object.freeze({
 const MODE_ROUTING_METADATA = Object.freeze({
   QUICK_MODE: {
     responseMode: RESPONSE_MODES.QUICK,
-    outputDepth: OUTPUT_DEPTH.SHORT,
-    structure: RESPONSE_STRUCTURES.STANDARD,
+    outputDepth: OUTPUT_DEPTH.CONCISE,
+    structure: RESPONSE_STRUCTURES.QUICK,
     requiresEvidenceDisclosure: false,
     requiresConflictAnalysis: false,
     requiresRiskScoring: false,
@@ -418,6 +480,56 @@ const MODE_ROUTING_METADATA = Object.freeze({
     requiresConflictAnalysis: true,
     requiresRiskScoring: true,
     requiresConclusionGating: true
+  },
+
+  TRANSACTION_CHARACTERIZATION_MODE: {
+    responseMode: RESPONSE_MODES.TRANSACTION,
+    outputDepth: OUTPUT_DEPTH.STRUCTURED,
+    structure: RESPONSE_STRUCTURES.TRANSACTION,
+    requiresEvidenceDisclosure: true,
+    requiresConflictAnalysis: true,
+    requiresRiskScoring: true,
+    requiresConclusionGating: true
+  },
+
+  CONTRACT_INTERPRETATION_MODE: {
+    responseMode: RESPONSE_MODES.CONTRACT,
+    outputDepth: OUTPUT_DEPTH.STRUCTURED,
+    structure: RESPONSE_STRUCTURES.CONTRACT,
+    requiresEvidenceDisclosure: true,
+    requiresConflictAnalysis: true,
+    requiresRiskScoring: true,
+    requiresConclusionGating: true
+  },
+
+  EVIDENCE_EVALUATION_MODE: {
+    responseMode: RESPONSE_MODES.EVIDENCE_HEAVY,
+    outputDepth: OUTPUT_DEPTH.STRUCTURED,
+    structure: RESPONSE_STRUCTURES.EVIDENCE_HEAVY,
+    requiresEvidenceDisclosure: true,
+    requiresConflictAnalysis: false,
+    requiresRiskScoring: true,
+    requiresConclusionGating: true
+  },
+
+  FACT_PATTERN_ANALYSIS_MODE: {
+    responseMode: RESPONSE_MODES.TECHNICAL,
+    outputDepth: OUTPUT_DEPTH.STRUCTURED,
+    structure: RESPONSE_STRUCTURES.TECHNICAL,
+    requiresEvidenceDisclosure: true,
+    requiresConflictAnalysis: true,
+    requiresRiskScoring: true,
+    requiresConclusionGating: true
+  },
+
+  REVIEWER_LEARNING_MODE: {
+    responseMode: RESPONSE_MODES.REVIEWER,
+    outputDepth: OUTPUT_DEPTH.SIMPLE,
+    structure: RESPONSE_STRUCTURES.REVIEWER,
+    requiresEvidenceDisclosure: false,
+    requiresConflictAnalysis: false,
+    requiresRiskScoring: false,
+    requiresConclusionGating: false
   }
 });
 
@@ -436,6 +548,32 @@ function normalizeMode(mode = "") {
 
   if (TINA_MODES[clean]) {
     return clean;
+  }
+
+  if (clean.includes("AUDIT")) return TINA_MODES.AUDIT_MODE;
+  if (clean.includes("LITIGATION") || clean.includes("LEGAL")) {
+    return TINA_MODES.LITIGATION_LEGAL_DEFENSE_MODE;
+  }
+  if (clean.includes("TRANSACTION")) {
+    return TINA_MODES.TRANSACTION_CHARACTERIZATION_MODE;
+  }
+  if (clean.includes("CONTRACT")) {
+    return TINA_MODES.CONTRACT_INTERPRETATION_MODE;
+  }
+  if (clean.includes("EVIDENCE")) {
+    return TINA_MODES.EVIDENCE_EVALUATION_MODE;
+  }
+  if (clean.includes("FACT")) {
+    return TINA_MODES.FACT_PATTERN_ANALYSIS_MODE;
+  }
+  if (clean.includes("REVIEW") || clean.includes("QUIZ")) {
+    return TINA_MODES.REVIEWER_LEARNING_MODE;
+  }
+  if (clean.includes("TECHNICAL") || clean.includes("DOCTRINE")) {
+    return TINA_MODES.TECHNICAL_TAX_MODE;
+  }
+  if (clean.includes("QUICK")) {
+    return TINA_MODES.QUICK_MODE;
   }
 
   return TINA_MODES.STANDARD_TAX_MODE;
@@ -542,7 +680,23 @@ function buildPlannerPayload(mode = "") {
       metadata.requiresRiskScoring,
 
     requiresConclusionGating:
-      metadata.requiresConclusionGating
+      metadata.requiresConclusionGating,
+
+    conclusionRule: metadata.requiresConclusionGating
+      ? {
+          allowStrongConclusion: false,
+          restriction:
+            CONCLUSION_RESTRICTIONS.PRELIMINARY_CONCLUSION_ONLY,
+          requiredLanguage:
+            "Based on the available facts, the position is preliminary and subject to verification."
+        }
+      : {
+          allowStrongConclusion: true,
+          restriction:
+            CONCLUSION_RESTRICTIONS.DIRECT_CONCLUSION_ALLOWED,
+          requiredLanguage:
+            "A direct conclusion may be given if supported by legal basis and evidence."
+        }
   };
 }
 
@@ -567,6 +721,23 @@ function buildAdaptiveRoutingContract(mode = "") {
 
     conclusionGatingCompatible: true,
 
+    orchestrationCompatible: true,
+
+    adaptivePipelineCompatible: true
+  };
+}
+
+/* =========================================================
+ * HEALTH CHECK
+ * ========================================================= */
+
+function adaptiveMasterPromptHealthCheck() {
+  return {
+    ok: true,
+    engine: "TINA_ADAPTIVE_MASTER_PROMPT_REGISTRY",
+    version: TINA_VERSION,
+    plannerCompatible: true,
+    rendererCompatible: true,
     orchestrationCompatible: true
   };
 }
@@ -596,6 +767,8 @@ module.exports = {
 
   TINA_CONFLICT_RULE,
 
+  TINA_RESPONSE_RULE,
+
   ADAPTIVE_MASTER_PROMPT,
 
   MODE_PROMPTS,
@@ -615,6 +788,8 @@ module.exports = {
   buildPlannerPayload,
 
   buildAdaptiveRoutingContract,
+
+  adaptiveMasterPromptHealthCheck,
 
   getAdaptiveMasterPrompt() {
     return ADAPTIVE_MASTER_PROMPT;
