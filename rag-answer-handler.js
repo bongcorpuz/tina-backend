@@ -1,4 +1,33 @@
 // FILE: rag-answer-handler.js
+"use strict";
+
+/**
+ * rag-answer-handler.js
+ * TINA Adaptive RAG Answer Handler
+ *
+ * Central answer-generation layer compatible with:
+ * - patched ask-handler.js
+ * - adaptive-mode-engine.js
+ * - adaptive-response-planner.js
+ * - query-intent-engine.js
+ * - retrieval-engine.js
+ * - reranker-engine.js
+ * - supersession-engine.js
+ * - jurisprudence-engine.js
+ * - answer-renderer.js
+ *
+ * Main responsibilities:
+ * - receive adaptiveContext from ask-handler.js
+ * - perform authority-aware retrieval
+ * - enforce supersession filtering
+ * - apply jurisprudence/conflict discipline
+ * - generate grounded answer
+ * - apply conclusion gating
+ * - delegate final formatting to answer-renderer.js
+ * - persist final rendered answer
+ */
+
+import { createRequire } from "module";
 
 import { detectTopic } from "./topic-detector.js";
 import { saveModeState } from "./mode-state.js";
@@ -21,7 +50,6 @@ import {
 } from "./vector-store.js";
 
 import {
-  hybridRetrieve,
   normalizeRetrievedEvidence,
   detectEvidenceConflicts,
   rankEvidenceByAuthority,
@@ -30,16 +58,6 @@ import {
   saveReasoningEvidence,
   saveReasoningConflicts
 } from "./reasoning-engine.js";
-
-import {
-  rerankByHierarchy,
-  selectTopLegalBases,
-  buildStrictAnswerPrompt
-} from "./authority-engine.js";
-
-import { detectHierarchyConflict } from "./conflict-engine.js";
-import { reconcileDoctrine } from "./doctrinal-engine.js";
-import { applySupersessionFilter } from "./supersession-engine.js";
 
 import {
   buildClaimSupportMap,
@@ -78,28 +96,51 @@ import {
   stripTrailingSourceSection
 } from "./ask-helpers.js";
 
+const require = createRequire(import.meta.url);
+
+const {
+  rerankByHierarchy,
+  selectTopLegalBases,
+  buildStrictAnswerPrompt,
+  getAuthorityTypeForDoc,
+  getAuthorityLevelForDoc
+} = require("./authority-engine.js");
+
+const { detectHierarchyConflict } = require("./conflict-engine.js");
+const { applySupersessionFilter } = require("./supersession-engine.js");
+const { hybridRetrieve } = require("./retrieval-engine.js");
+const { rerankForTina } = require("./reranker-engine.js");
+
+const {
+  selectIssueRelevantJurisprudence,
+  buildJurisprudencePromptBlock,
+  buildNoJurisprudenceText
+} = require("./jurisprudence-engine.js");
+
+const {
+  renderAdaptiveAnswer,
+  buildRenderedAnswer
+} = require("./answer-renderer.js");
+
 const DEFAULT_MODEL = process.env.OPENAI_MODEL || "gpt-4o-mini";
 
-const ANSWER_RENDERER_PATH = "./answer-renderer.js";
-
-const TINA_AF_HEADINGS = [
+const TINA_AF_HEADINGS = Object.freeze([
   "A. DIRECT ANSWER",
   "B. CONTROLLING LEGAL BASIS",
   "C. SUPPORTING JURISPRUDENCE",
   "D. DOCTRINAL STATUS / CONFLICT ANALYSIS",
   "E. HIERARCHY ANALYSIS",
   "F. PRACTICAL APPLICATION"
-];
+]);
 
 const FALLBACK_TINA_STRUCTURE = `
 You are TINA — Tax Intelligence and Analysis — a Philippine tax, legal, audit,
-and compliance reasoning AI acting as a senior tax lawyer, CPA, audit partner,
-and legal researcher.
+accounting, and compliance reasoning AI.
 
 You are not a citation retriever. You must synthesize law, facts, evidence,
-hierarchy, doctrine, risks, assumptions, and practical application.
+legal hierarchy, doctrine, risk, assumptions, and practical application.
 
-DEFAULT STRUCTURE FOR SUBSTANTIVE TAX / LEGAL QUESTIONS:
+Default substantive structure:
 A. DIRECT ANSWER
 B. CONTROLLING LEGAL BASIS
 C. SUPPORTING JURISPRUDENCE
@@ -107,28 +148,21 @@ D. DOCTRINAL STATUS / CONFLICT ANALYSIS
 E. HIERARCHY ANALYSIS
 F. PRACTICAL APPLICATION
 
-STRICT RULES:
-- Do not fabricate laws, cases, GR numbers, rates, deadlines, or issuances.
+Strict rules:
+- Do not fabricate laws, cases, GR numbers, rates, deadlines, dates, or issuances.
 - Do not cite unrelated cases.
 - Do not merely say "Conflict detected: YES."
 - Explain exact conflict, controlling authority, and why it controls.
-- If facts or documents are incomplete, say the position is preliminary and subject to verification.
+- If facts or documents are incomplete, state that the position is preliminary and subject to verification.
 - Separate tax treatment, accounting treatment, audit risk, litigation exposure, and documentation requirements.
 `.trim();
 
-const rendererCache = {
-  loaded: false,
-  module: null
-};
-
-function hasCompleteAFStructure(text = "") {
-  const value = String(text || "");
-  return TINA_AF_HEADINGS.every((heading) =>
-    new RegExp(
-      `(^|\\n)\\s*${heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`,
-      "i"
-    ).test(value)
-  );
+function normalizeText(value = "") {
+  return String(value || "")
+    .replace(/\r\n/g, "\n")
+    .replace(/[ \t]+/g, " ")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
 }
 
 function truncateForPrompt(value = "", maxChars = 3500) {
@@ -136,819 +170,157 @@ function truncateForPrompt(value = "", maxChars = 3500) {
   return text.length > maxChars ? `${text.slice(0, maxChars)}\n...[truncated]` : text;
 }
 
-function normalizeLooseText(value = "") {
-  return String(value || "")
-    .toLowerCase()
-    .replace(/[“”"'`]/g, "")
-    .replace(/\brepublic act no\.?\s*/g, "ra ")
-    .replace(/\br\.?\s*a\.?\s*no\.?\s*/g, "ra ")
-    .replace(/\br\.?\s*a\.?\s*/g, "ra ")
-    .replace(/\bnational internal revenue code\b/g, "nirc")
-    .replace(/[^\w\s/%₱.,()/-]+/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
+function safeArray(value) {
+  return Array.isArray(value) ? value : [];
 }
 
 function buildDocKey(doc = {}) {
   return (
     doc.fileId ||
     doc.file_id ||
+    doc.id ||
     doc.metadata?.fileId ||
     doc.metadata?.file_id ||
+    doc.normalizedReference ||
+    doc.normalized_reference ||
+    doc.metadata?.normalizedReference ||
     doc.path ||
     doc.source_path ||
     doc.metadata?.path ||
     doc.originalSource ||
     doc.original_source ||
-    doc.metadata?.originalSource ||
     doc.source ||
     doc.title ||
-    null
+    JSON.stringify(doc)
   );
 }
 
 function mergeUniqueDocs(docs = []) {
-  const results = [];
   const seen = new Set();
+  const output = [];
 
   for (const doc of docs || []) {
     if (!doc) continue;
-    const key = buildDocKey(doc) || `doc-${results.length}`;
+
+    const key = buildDocKey(doc);
 
     if (seen.has(key)) continue;
 
     seen.add(key);
-    results.push(doc);
+    output.push(doc);
   }
 
-  return results;
+  return output;
 }
 
-function getDocAuthorityType(doc = {}) {
-  return String(
-    doc.authorityType ||
-      doc.authority_type ||
-      doc.metadata?.authorityType ||
-      ""
-  )
-    .trim()
-    .toUpperCase();
+function docTitle(doc = {}) {
+  return (
+    doc.title ||
+    doc.source ||
+    doc.originalSource ||
+    doc.original_source ||
+    doc.metadata?.documentTitle ||
+    doc.metadata?.originalFileName ||
+    doc.path ||
+    doc.source_path ||
+    "Untitled Source"
+  );
 }
 
-function getDocAuthorityLevel(doc = {}) {
+function docPath(doc = {}) {
+  return (
+    doc.path ||
+    doc.source_path ||
+    doc.metadata?.path ||
+    doc.source ||
+    doc.originalSource ||
+    doc.original_source ||
+    "Unknown path"
+  );
+}
+
+function getScore(doc = {}) {
   const value =
-    doc.authorityLevel ??
-    doc.authority_level ??
-    doc.metadata?.authorityLevel ??
-    99;
-
-  return Number.isFinite(Number(value)) ? Number(value) : 99;
-}
-
-function getDocScore(doc = {}) {
-  const value =
-    doc.namedLawScore ??
+    doc.rerankScore ??
     doc.finalScore ??
     doc.combined_score ??
     doc.score ??
+    doc.similarity ??
     0;
 
   return Number.isFinite(Number(value)) ? Number(value) : 0;
 }
 
-function sortDocsForLegalBasis(docs = []) {
+function sortByAuthorityAndScore(docs = []) {
   return [...docs].sort((a, b) => {
-    const levelDiff = getDocAuthorityLevel(a) - getDocAuthorityLevel(b);
-    if (levelDiff !== 0) return levelDiff;
-    return getDocScore(b) - getDocScore(a);
+    const levelA = getAuthorityLevelForDoc(a);
+    const levelB = getAuthorityLevelForDoc(b);
+
+    if (levelA !== levelB) return levelA - levelB;
+
+    return getScore(b) - getScore(a);
   });
-}
-
-function buildDocHaystack(doc = {}) {
-  return normalizeLooseText(
-    [
-      doc.source,
-      doc.originalSource,
-      doc.original_source,
-      doc.path,
-      doc.source_path,
-      doc.title,
-      doc.text?.slice(0, 2500),
-      doc.metadata?.path,
-      doc.metadata?.originalSource,
-      doc.metadata?.originalFileName,
-      doc.metadata?.normalizedReference,
-      ...(doc.metadata?.normalizedAliases || []),
-      ...(doc.normalizedAliases || [])
-    ]
-      .filter(Boolean)
-      .join(" ")
-  );
-}
-
-function docHasNamedLawRaAnchor(doc = {}, namedLawDetection = null) {
-  const raNumber = namedLawDetection?.bestMatch?.republicActNumber;
-  if (!raNumber) return false;
-
-  const haystack = buildDocHaystack(doc);
-
-  return (
-    haystack.includes(`ra ${raNumber}`) ||
-    haystack.includes(`republic act ${raNumber}`) ||
-    haystack.includes(`republic act no ${raNumber}`)
-  );
-}
-
-function docHasNamedLawTitleAnchor(doc = {}, namedLawDetection = null) {
-  const bestMatch = namedLawDetection?.bestMatch;
-  if (!bestMatch) return false;
-
-  const haystack = buildDocHaystack(doc);
-
-  return Boolean(
-    (bestMatch.shortTitle &&
-      haystack.includes(normalizeLooseText(bestMatch.shortTitle))) ||
-      (bestMatch.canonicalTitle &&
-        haystack.includes(normalizeLooseText(bestMatch.canonicalTitle)))
-  );
-}
-
-function docMatchesPreferredImplementingQuery(doc = {}, namedLawDetection = null) {
-  const bestMatch = namedLawDetection?.bestMatch;
-  if (!bestMatch) return false;
-
-  const haystack = buildDocHaystack(doc);
-  const queries = Array.isArray(bestMatch.preferredImplementingQueries)
-    ? bestMatch.preferredImplementingQueries
-    : [];
-
-  return queries.some((query) => {
-    const normalized = normalizeLooseText(query);
-    return normalized && haystack.includes(normalized);
-  });
-}
-
-function isNamedLawPrimaryStatute(doc = {}, namedLawDetection = null) {
-  return (
-    getDocAuthorityType(doc) === "STATUTE" &&
-    (docHasNamedLawRaAnchor(doc, namedLawDetection) ||
-      docHasNamedLawTitleAnchor(doc, namedLawDetection))
-  );
-}
-
-function isNamedLawImplementingRR(doc = {}, namedLawDetection = null) {
-  return (
-    ["RR", "REVENUE_REGULATION"].includes(getDocAuthorityType(doc)) &&
-    (docHasNamedLawRaAnchor(doc, namedLawDetection) ||
-      docHasNamedLawTitleAnchor(doc, namedLawDetection) ||
-      docMatchesPreferredImplementingQuery(doc, namedLawDetection))
-  );
-}
-
-function isNamedLawSupportingIssuance(doc = {}, namedLawDetection = null) {
-  const authorityType = getDocAuthorityType(doc);
-
-  return (
-    ["RMC", "RMO", "RAMO", "BIR_RULING"].includes(authorityType) &&
-    (docHasNamedLawRaAnchor(doc, namedLawDetection) ||
-      docHasNamedLawTitleAnchor(doc, namedLawDetection) ||
-      docMatchesPreferredImplementingQuery(doc, namedLawDetection))
-  );
-}
-
-function selectNamedLawPriorityDocs(docs = [], namedLawDetection = null, maxDocs = 5) {
-  if (!namedLawDetection?.matched || !namedLawDetection?.bestMatch) {
-    return sortDocsForLegalBasis(docs).slice(0, maxDocs);
-  }
-
-  const uniqueDocs = mergeUniqueDocs(docs);
-
-  const primaryStatutes = sortDocsForLegalBasis(
-    uniqueDocs.filter((doc) => isNamedLawPrimaryStatute(doc, namedLawDetection))
-  );
-
-  const implementingRRs = sortDocsForLegalBasis(
-    uniqueDocs.filter(
-      (doc) =>
-        !primaryStatutes.includes(doc) &&
-        isNamedLawImplementingRR(doc, namedLawDetection)
-    )
-  );
-
-  const supportingIssuances = sortDocsForLegalBasis(
-    uniqueDocs.filter(
-      (doc) =>
-        !primaryStatutes.includes(doc) &&
-        !implementingRRs.includes(doc) &&
-        isNamedLawSupportingIssuance(doc, namedLawDetection)
-    )
-  );
-
-  const otherAnchoredDocs = sortDocsForLegalBasis(
-    uniqueDocs.filter(
-      (doc) =>
-        !primaryStatutes.includes(doc) &&
-        !implementingRRs.includes(doc) &&
-        !supportingIssuances.includes(doc) &&
-        (docHasNamedLawRaAnchor(doc, namedLawDetection) ||
-          docHasNamedLawTitleAnchor(doc, namedLawDetection))
-    )
-  );
-
-  return mergeUniqueDocs([
-    ...primaryStatutes,
-    ...implementingRRs,
-    ...supportingIssuances,
-    ...otherAnchoredDocs
-  ]).slice(0, maxDocs);
-}
-
-function hasNamedLawPrimaryBasis(docs = [], namedLawDetection = null) {
-  return docs.some((doc) => isNamedLawPrimaryStatute(doc, namedLawDetection));
-}
-
-function mergeRetrievalResults(retrievals = []) {
-  const merged = [];
-  const seen = new Map();
-  let exactCitation = null;
-
-  for (const retrieval of retrievals) {
-    if (!exactCitation && retrieval?.exactCitation?.matched) {
-      exactCitation = retrieval.exactCitation;
-    }
-
-    for (const item of retrieval?.results || []) {
-      const key = buildDocKey(item) || `doc-${merged.length}`;
-
-      if (!seen.has(key)) {
-        seen.set(key, merged.length);
-        merged.push(item);
-        continue;
-      }
-
-      const index = seen.get(key);
-      const existing = merged[index];
-
-      const existingScore = Number(
-        existing?.finalScore ??
-          existing?.combined_score ??
-          existing?.score ??
-          0
-      );
-
-      const candidateScore = Number(
-        item?.finalScore ??
-          item?.combined_score ??
-          item?.score ??
-          0
-      );
-
-      if (candidateScore > existingScore) {
-        merged[index] = {
-          ...existing,
-          ...item,
-          finalScore: candidateScore,
-          score: candidateScore
-        };
-      }
-    }
-  }
-
-  return { results: merged, exactCitation };
-}
-
-function buildEvidenceMetadata(doc = {}) {
-  return {
-    ...(doc.metadata || {}),
-    authorityTier:
-      doc.authorityLevel ??
-      doc.authority_level ??
-      doc.metadata?.authorityLevel ??
-      null,
-    authorityType:
-      doc.authorityType ??
-      doc.authority_type ??
-      doc.metadata?.authorityType ??
-      null,
-    authorityScore:
-      doc.authorityScore ??
-      doc.authority_score ??
-      doc.metadata?.authorityScore ??
-      null,
-    normalizedReference:
-      doc.normalizedReference ??
-      doc.normalized_reference ??
-      doc.metadata?.normalizedReference ??
-      null,
-    normalizedAliases:
-      doc.normalizedAliases ??
-      doc.normalized_aliases ??
-      doc.metadata?.normalizedAliases ??
-      [],
-    effectiveFrom:
-      doc.effectiveFrom ??
-      doc.effective_from ??
-      doc.metadata?.effectiveFrom ??
-      null,
-    effectiveTo:
-      doc.effectiveTo ??
-      doc.effective_to ??
-      doc.metadata?.effectiveTo ??
-      null,
-    isSuperseded:
-      typeof doc.isSuperseded === "boolean"
-        ? doc.isSuperseded
-        : typeof doc.is_superseded === "boolean"
-          ? doc.is_superseded
-          : Boolean(doc.metadata?.isSuperseded || false),
-    supersededByReference:
-      doc.supersededByReference ??
-      doc.superseded_by_reference ??
-      doc.metadata?.supersededByReference ??
-      null,
-    repealedByReference:
-      doc.repealedByReference ??
-      doc.repealed_by_reference ??
-      doc.metadata?.repealedByReference ??
-      null,
-    amendedByReference:
-      doc.amendedByReference ??
-      doc.amended_by_reference ??
-      doc.metadata?.amendedByReference ??
-      null
-  };
 }
 
 function formatDocsForPrompt(docs = [], maxDocs = 8) {
-  return (docs || [])
+  return safeArray(docs)
     .slice(0, maxDocs)
     .map((doc, index) => {
-      const title =
-        doc.source ||
-        doc.originalSource ||
-        doc.original_source ||
-        doc.title ||
-        doc.metadata?.originalSource ||
-        "Untitled Source";
-
       return [
-        `SOURCE ${index + 1}: ${title}`,
-        `PATH: ${doc.path || doc.source_path || doc.metadata?.path || "Unknown"}`,
-        `AUTHORITY TYPE: ${doc.authorityType || doc.authority_type || doc.metadata?.authorityType || "SECONDARY"}`,
-        `AUTHORITY LEVEL: ${doc.authorityLevel ?? doc.authority_level ?? doc.metadata?.authorityLevel ?? 99}`,
-        `NORMALIZED REFERENCE: ${doc.normalizedReference || doc.normalized_reference || doc.metadata?.normalizedReference || "N/A"}`,
+        `SOURCE ${index + 1}: ${docTitle(doc)}`,
+        `PATH: ${docPath(doc)}`,
+        `AUTHORITY TYPE: ${getAuthorityTypeForDoc(doc) || "UNKNOWN"}`,
+        `AUTHORITY LEVEL: ${getAuthorityLevelForDoc(doc) || 99}`,
+        `SCORE: ${getScore(doc)}`,
         "TEXT:",
-        truncateForPrompt(doc.text || doc.content || doc.excerpt || "", 3500)
+        truncateForPrompt(doc.text || doc.content || doc.excerpt || doc.preview || "", 3500)
       ].join("\n");
     })
     .join("\n\n---\n\n");
 }
 
-function buildConflictContextForPrompt({
-  conflicts = [],
-  hierarchyConflict = null,
-  doctrinalReview = null
-}) {
-  const parts = [];
-
-  if (hierarchyConflict) {
-    parts.push(
-      [
-        "Hierarchy / Conflict Engine Review:",
-        JSON.stringify(
-          {
-            conflict: Boolean(hierarchyConflict.conflict),
-            conflictType: hierarchyConflict.conflictType || null,
-            doctrinalConflict: Boolean(hierarchyConflict.doctrinalConflict),
-            hierarchyConflict: Boolean(hierarchyConflict.hierarchyConflict),
-            apparentConflict: Boolean(hierarchyConflict.apparentConflict),
-            exactIssue: hierarchyConflict.exactIssue || null,
-            distinctionType: hierarchyConflict.distinctionType || null,
-            controllingAuthority: hierarchyConflict.controllingAuthority || null,
-            controllingSource: hierarchyConflict.controllingSource || null,
-            overriddenAuthority: hierarchyConflict.overriddenAuthority || null,
-            reason: hierarchyConflict.reason || null,
-            resolutionBasis: hierarchyConflict.resolutionBasis || null,
-            overrideApplied: Boolean(hierarchyConflict.overrideApplied)
-          },
-          null,
-          2
-        )
-      ].join("\n")
-    );
-  }
-
-  if (doctrinalReview) {
-    parts.push(
-      [
-        "Doctrinal Engine Review:",
-        JSON.stringify(
-          {
-            hasConflict: Boolean(doctrinalReview.hasConflict),
-            hasApparentConflict: Boolean(doctrinalReview.hasApparentConflict),
-            doctrinalStatus: doctrinalReview.doctrinalStatus || null,
-            explanation: doctrinalReview.explanation || null,
-            doctrinalConflictCount:
-              doctrinalReview.doctrinalConflicts?.length || 0
-          },
-          null,
-          2
-        )
-      ].join("\n")
-    );
-  }
-
-  if (Array.isArray(conflicts) && conflicts.length) {
-    parts.push(
-      [
-        "Evidence Conflict Signals:",
-        JSON.stringify(conflicts.slice(0, 5), null, 2)
-      ].join("\n")
-    );
-  }
-
-  return parts.length
-    ? parts.join("\n\n")
-    : "No detected conflict signal from retrieval. The answer must still independently determine doctrinal status.";
-}
-
-function buildNamedLawFallbackText(bestMatch) {
-  if (!bestMatch) {
-    return "No exact indexed legal source was found for the named law or act asked.";
-  }
-
-  const title =
-    bestMatch.shortTitle ||
-    bestMatch.canonicalTitle ||
-    `RA ${bestMatch.republicActNumber || ""}`.trim();
-
-  const raText = bestMatch.republicActNumber
-    ? ` (RA ${bestMatch.republicActNumber})`
-    : "";
-
-  return [
-    `TINA recognized the question as referring to ${title}${raText}.`,
-    "",
-    "However, no exact indexed primary legal source for that law was found in the current tax library.",
-    "TINA will not present unrelated documents as support.",
-    "",
-    "Please upload or index the exact law text and, if available, its implementing rules and regulations."
-  ].join("\n");
-}
-
-function extractLegalBasisLines(answerText = "") {
-  const text = String(answerText || "");
-
-  const afMatch = text.match(
-    /\bB\.\s*CONTROLLING LEGAL BASIS\b([\s\S]*?)(?:\n\s*[C-F]\.\s+[A-Z][A-Z /]+\b|$)/i
-  );
-
-  if (afMatch) {
-    return afMatch[1]
-      .split("\n")
-      .map((line) => line.replace(/^[\-\d.)\s]+/, "").trim())
-      .filter(Boolean)
-      .slice(0, 10);
-  }
-
-  return [];
-}
-
-function buildAnswerAnchors({
-  answerText = "",
-  finalQuestion = "",
-  namedLawDetection = null,
-  issuance = null
-}) {
-  const anchors = new Set();
-  const normalizedAnswer = normalizeLooseText(answerText);
-  const normalizedQuestion = normalizeLooseText(finalQuestion);
-
-  const commonAnchors = [
-    "1987 constitution",
-    "constitution",
-    "nirc",
-    "tax code",
-    "local government code",
-    "value added tax",
-    "vat",
-    "income tax",
-    "excise tax",
-    "documentary stamp tax",
-    "withholding tax",
-    "create law",
-    "train law",
-    "ease of paying taxes",
-    "eopt",
-    "create more"
-  ];
-
-  for (const anchor of commonAnchors) {
-    const normalizedAnchor = normalizeLooseText(anchor);
-
-    if (
-      normalizedAnswer.includes(normalizedAnchor) ||
-      normalizedQuestion.includes(normalizedAnchor)
-    ) {
-      anchors.add(normalizedAnchor);
-    }
-  }
-
-  const raMatches = [
-    ...normalizedAnswer.matchAll(/\bra\s*(\d{4,6})\b/g),
-    ...normalizedQuestion.matchAll(/\bra\s*(\d{4,6})\b/g)
-  ];
-
-  for (const match of raMatches) {
-    anchors.add(`ra ${match[1]}`);
-  }
-
-  if (namedLawDetection?.bestMatch) {
-    const best = namedLawDetection.bestMatch;
-
-    if (best.canonicalTitle) anchors.add(normalizeLooseText(best.canonicalTitle));
-    if (best.shortTitle) anchors.add(normalizeLooseText(best.shortTitle));
-    if (best.republicActNumber) anchors.add(`ra ${best.republicActNumber}`);
-
-    for (const alias of best.normalizedAliases || []) {
-      if (alias) anchors.add(normalizeLooseText(alias));
-    }
-  }
-
-  if (issuance) {
-    anchors.add(normalizeLooseText(`${issuance.type} ${issuance.number} ${issuance.year}`));
-    anchors.add(normalizeLooseText(`${issuance.type}-${issuance.number}-${issuance.year}`));
-    anchors.add(normalizeLooseText(`${issuance.type} no ${issuance.number}-${issuance.year}`));
-  }
-
-  for (const line of extractLegalBasisLines(answerText)) {
-    const normalized = normalizeLooseText(line);
-
-    if (normalized.length >= 6) anchors.add(normalized);
-
-    const trimmedBeforeParen = normalizeLooseText(line.replace(/\(.*?\)/g, ""));
-    if (trimmedBeforeParen.length >= 6) anchors.add(trimmedBeforeParen);
-
-    const raInLine = normalized.match(/\bra\s*(\d{4,6})\b/);
-    if (raInLine) anchors.add(`ra ${raInLine[1]}`);
-  }
-
-  return [...anchors].map((item) => item.trim()).filter((item) => item.length >= 4);
-}
-
-function docMatchesAnchors(doc = {}, anchors = []) {
-  const haystack = buildDocHaystack(doc);
-  if (!haystack) return false;
-
-  return anchors.some((anchor) => {
-    const normalizedAnchor = normalizeLooseText(anchor);
-    if (!normalizedAnchor || normalizedAnchor.length < 4) return false;
-    return haystack.includes(normalizedAnchor);
-  });
-}
-
-function selectGroundedDisplayableDocs(displayableDocs = [], options = {}) {
-  const {
-    answerText = "",
-    finalQuestion = "",
-    namedLawDetection = null,
-    issuance = null
-  } = options;
-
-  const anchors = buildAnswerAnchors({
-    answerText,
-    finalQuestion,
-    namedLawDetection,
-    issuance
-  });
-
-  const matched = displayableDocs.filter((doc) => docMatchesAnchors(doc, anchors));
-
-  return matched.length ? matched : displayableDocs.slice(0, MAX_VISIBLE_SOURCES);
-}
-
-function buildComplianceInsight({
-  issuance = null,
-  questionType = "",
-  namedLawDetection = null,
-  doctrinalReview = null,
-  hierarchyConflict = null,
-  adaptiveState = null
-}) {
-  const notes = [];
-
-  if (adaptiveState?.riskScore?.overallRisk?.level) {
-    notes.push(`Adaptive risk level: ${adaptiveState.riskScore.overallRisk.level}.`);
-  }
-
-  if (adaptiveState?.positionStrength?.positionStrength) {
-    notes.push(`Position strength: ${adaptiveState.positionStrength.positionStrength}.`);
-  }
-
-  if (adaptiveState?.assumptionGap?.mustDiscloseBeforeConclusion) {
-    notes.push("Assumptions, gaps, and limitations must be disclosed before a strong conclusion.");
-  }
-
-  if (hierarchyConflict?.apparentConflict) {
-    notes.push(
-      "An apparent conflict was detected; verify whether the authorities are distinguishable by issue, procedure, evidence, jurisdiction, timing, or facts."
-    );
-  }
-
-  if (hierarchyConflict?.conflict) {
-    notes.push(
-      "A hierarchy or doctrinal conflict signal was detected; apply the controlling authority expressly and document why lower authority does not control."
-    );
-  }
-
-  if (doctrinalReview?.hasApparentConflict) {
-    notes.push("Some authorities may be complementary or distinguishable rather than directly conflicting.");
-  }
-
-  if (issuance || questionType === "issuance") {
-    return [
-      "Use the cited issuance and verify the latest amended or superseding BIR issuance before relying on the rule operationally.",
-      ...notes
-    ].join(" ");
-  }
-
-  if (namedLawDetection?.matched) {
-    return [
-      "For named-law questions, rely first on the exact statute and its IRR before using secondary support.",
-      ...notes
-    ].join(" ");
-  }
-
-  return [
-    "Apply the higher-authority rule first and use lower-authority material only as support.",
-    ...notes
-  ].join(" ");
-}
-
-function buildRouteResponsePayload({
-  answerText,
-  legalBasisDocs = [],
-  sourcesUsed = [],
-  hierarchyConflict = null
-}) {
-  return buildFinalRoutePayload({
-    answer: answerText,
-    legalBasisDocs,
-    sourcesUsed,
-    hierarchyConflict
-  });
-}
-
-function mergeConflictSignals({
-  rawConflicts = [],
-  displayableConflicts = [],
-  hierarchyConflict = null,
-  doctrinalReview = null,
-  provisionModeResult = null,
-  caseModeResult = null,
-  doctrineModeResult = null
-}) {
-  const merged = [];
-
-  for (const item of displayableConflicts || []) merged.push(item);
-
-  for (const item of rawConflicts || []) {
-    if (!displayableConflicts.includes(item)) merged.push(item);
-  }
-
-  if (hierarchyConflict?.conflict || hierarchyConflict?.apparentConflict) {
-    merged.push({
-      source: "conflict-engine",
-      conflictType: hierarchyConflict.conflictType || null,
-      doctrinalConflict: Boolean(hierarchyConflict.doctrinalConflict),
-      hierarchyConflict: Boolean(hierarchyConflict.hierarchyConflict),
-      apparentConflict: Boolean(hierarchyConflict.apparentConflict),
-      exactIssue: hierarchyConflict.exactIssue || null,
-      distinctionType: hierarchyConflict.distinctionType || null,
-      controllingAuthority: hierarchyConflict.controllingAuthority || null,
-      controllingSource: hierarchyConflict.controllingSource || null,
-      overriddenAuthority: hierarchyConflict.overriddenAuthority || null,
-      reason: hierarchyConflict.reason || null,
-      resolutionBasis: hierarchyConflict.resolutionBasis || null
-    });
-  }
-
-  for (const item of doctrinalReview?.doctrinalConflicts || []) {
-    merged.push({
-      source: "doctrinal-engine",
-      conflictType: item.conflictStatus || null,
-      conflictLabel: item.conflictLabel || null,
-      doctrinalConflict: ["DIRECT_CONFLICT", "PARTIAL_CONFLICT"].includes(item.conflictStatus),
-      apparentConflict: item.conflictStatus === "APPARENT_CONFLICT",
-      exactIssue: item.exactIssue || null,
-      distinctionType: item.distinctionType || null,
-      controllingAuthority: item.controllingAuthority || null,
-      controllingSource: item.controllingSource || null,
-      weakerAuthority: item.weakerAuthority || null,
-      weakerSource: item.weakerSource || null,
-      reason: item.reason || null,
-      resolutionBasis: item.resolutionBasis || null
-    });
-  }
-
-  for (const result of [provisionModeResult, caseModeResult, doctrineModeResult]) {
-    if (!result) continue;
-
-    if (result.hierarchyConflict?.conflict || result.hierarchyConflict?.apparentConflict) {
-      merged.push({
-        source: `${result.mode || "specialized"}-hierarchy-conflict`,
-        ...result.hierarchyConflict
-      });
-    }
-
-    if (Array.isArray(result.doctrinalReview?.doctrinalConflicts)) {
-      for (const item of result.doctrinalReview.doctrinalConflicts) {
-        merged.push({
-          source: `${result.mode || "specialized"}-doctrinal-review`,
-          ...item
-        });
-      }
-    }
-
-    if (Array.isArray(result.overrideAudit)) {
-      for (const item of result.overrideAudit) {
-        merged.push({
-          source: `${result.mode || "specialized"}-override-audit`,
-          ...item
-        });
-      }
-    }
-  }
-
-  const seen = new Set();
-
-  return merged.filter((item) => {
-    const key = JSON.stringify({
-      source: item.source || null,
-      type: item.conflictType || item.conflictStatus || null,
-      a: item.sourceA || item.source_a_path || item.controllingSource || null,
-      b: item.sourceB || item.source_b_path || item.overriddenSource || item.weakerSource || null,
-      issue: item.exactIssue || item.reason || null
-    });
-
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
-}
-
-function buildAnswerMode({
-  hookConfig,
-  provisionModeResult,
-  caseModeResult,
-  doctrineModeResult,
-  namedLawDetection,
-  issuance,
-  adaptiveState
-}) {
-  if (adaptiveState?.responsePlan?.responseMode) {
-    return `adaptive_${String(adaptiveState.responsePlan.responseMode).toLowerCase()}_reasoned_answer`;
-  }
-
-  if (provisionModeResult?.handled) return "provision_citation_reasoned_answer";
-  if (caseModeResult?.handled) return "case_analysis_reasoned_answer";
-  if (doctrineModeResult?.handled) return "doctrine_analysis_reasoned_answer";
-  if (namedLawDetection?.matched) return "named_law_reasoned_answer";
-  if (issuance) return `exact_issuance_${hookConfig.mode.toLowerCase()}_reasoned`;
-
-  return `${hookConfig.mode.toLowerCase()}_reasoned_answer`;
-}
-
-function getSpecializedDocs({
-  provisionModeResult,
-  caseModeResult,
-  doctrineModeResult
-}) {
-  if (provisionModeResult?.handled && Array.isArray(provisionModeResult.topDocs)) {
-    return provisionModeResult.topDocs;
-  }
-
-  if (caseModeResult?.handled) {
-    return mergeUniqueDocs([
-      ...(caseModeResult.caseDocs || []),
-      ...(caseModeResult.birDocs || [])
-    ]);
-  }
-
-  if (doctrineModeResult?.handled && Array.isArray(doctrineModeResult.topAuthorities)) {
-    return doctrineModeResult.topAuthorities.map((item) => ({
-      source: item.title || item.source,
-      path: item.source,
-      text: item.excerpt,
-      authorityType: item.authorityType,
-      authorityLevel: item.authorityLevel,
-      doctrineLabel: item.doctrineLabel,
-      doctrineApplicability: item.doctrineApplicability,
-      doctrineApplicabilityExplanation: item.doctrineApplicabilityExplanation
-    }));
-  }
-
-  return [];
+function buildEvidenceMetadata(doc = {}) {
+  return {
+    ...(doc.metadata || {}),
+    authorityType:
+      doc.authorityType ||
+      doc.authority_type ||
+      doc.metadata?.authorityType ||
+      getAuthorityTypeForDoc(doc),
+    authorityLevel:
+      doc.authorityLevel ||
+      doc.authority_level ||
+      doc.metadata?.authorityLevel ||
+      getAuthorityLevelForDoc(doc),
+    normalizedReference:
+      doc.normalizedReference ||
+      doc.normalized_reference ||
+      doc.metadata?.normalizedReference ||
+      null,
+    effectiveFrom:
+      doc.effectiveFrom ||
+      doc.effective_from ||
+      doc.metadata?.effectiveFrom ||
+      null,
+    effectiveTo:
+      doc.effectiveTo ||
+      doc.effective_to ||
+      doc.metadata?.effectiveTo ||
+      null,
+    isSuperseded:
+      Boolean(
+        doc.isSuperseded ||
+          doc.is_superseded ||
+          doc.superseded ||
+          doc.metadata?.isSuperseded ||
+          doc.metadata?.superseded
+      ),
+    supersededByReference:
+      doc.supersededByReference ||
+      doc.superseded_by_reference ||
+      doc.metadata?.supersededByReference ||
+      null
+  };
 }
 
 function buildAdaptiveState({ adaptiveContext = null, adaptivePromptBundle = null }) {
@@ -973,58 +345,25 @@ function buildAdaptiveState({ adaptiveContext = null, adaptivePromptBundle = nul
   };
 }
 
-function getAdaptivePlannerInstructions(adaptiveState) {
-  const instructions = [];
-
-  if (adaptiveState?.adaptivePromptBundle) {
-    instructions.push(adaptiveState.adaptivePromptBundle);
-  } else {
-    instructions.push(FALLBACK_TINA_STRUCTURE);
-  }
-
-  if (adaptiveState?.responsePlan?.plannerInstruction?.length) {
-    instructions.push(
-      [
-        "ADAPTIVE RESPONSE PLAN:",
-        ...adaptiveState.responsePlan.plannerInstruction.map((item) => `- ${item}`)
-      ].join("\n")
-    );
-  }
-
-  if (adaptiveState?.assumptionGap?.mandatoryDisclosure?.length) {
-    instructions.push(
-      [
-        "MANDATORY DISCLOSURE BEFORE STRONG CONCLUSION:",
-        JSON.stringify(adaptiveState.assumptionGap.mandatoryDisclosure, null, 2)
-      ].join("\n")
-    );
-  }
-
-  if (adaptiveState?.riskScore?.recommendedResponseControls?.length) {
-    instructions.push(
-      [
-        "RISK-BASED RESPONSE CONTROLS:",
-        ...adaptiveState.riskScore.recommendedResponseControls.map((item) => `- ${item}`)
-      ].join("\n")
-    );
-  }
-
-  if (adaptiveState?.positionStrength?.conclusionLanguage) {
-    instructions.push(
-      `POSITION-STRENGTH CONCLUSION LANGUAGE:\n${adaptiveState.positionStrength.conclusionLanguage}`
-    );
-  }
-
-  return instructions.filter(Boolean).join("\n\n---\n\n");
+function getResponseMode(adaptiveState = {}, hookConfig = {}) {
+  return (
+    adaptiveState?.responsePlan?.responseMode ||
+    adaptiveState?.adaptiveMode?.responseMode ||
+    adaptiveState?.queryIntent?.adaptiveMode ||
+    hookConfig?.adaptiveResponseMode ||
+    "STANDARD"
+  );
 }
 
 function getConclusionRestriction(adaptiveState = {}) {
   const riskRestriction = adaptiveState?.riskScore?.conclusionRestriction || null;
   const positionAction = adaptiveState?.positionStrength?.conclusionAction || null;
   const gapStrength = adaptiveState?.assumptionGap?.conclusionStrength || null;
+  const plannerRestriction = adaptiveState?.responsePlan?.conclusionRule?.restriction || null;
 
   if (
     riskRestriction === "DEFER_STRONG_CONCLUSION" ||
+    plannerRestriction === "DEFER_STRONG_CONCLUSION" ||
     positionAction === "DEFER_CONCLUSION" ||
     gapStrength === "DEFER_CONCLUSION"
   ) {
@@ -1033,6 +372,7 @@ function getConclusionRestriction(adaptiveState = {}) {
 
   if (
     riskRestriction === "PRELIMINARY_CONCLUSION_ONLY" ||
+    plannerRestriction === "PRELIMINARY_CONCLUSION_ONLY" ||
     positionAction === "USE_QUALIFIED_CONCLUSION" ||
     positionAction === "DISCLOSE_AGGRESSIVE_POSITION" ||
     gapStrength === "PRELIMINARY_CONCLUSION_ONLY"
@@ -1073,30 +413,39 @@ function buildConclusionRestrictionInstruction(adaptiveState = {}) {
 function buildAdaptiveContextForPrompt(adaptiveState = {}) {
   return JSON.stringify(
     {
-      userBehavior: adaptiveState.userBehavior
-        ? {
-            inferredRole: adaptiveState.userBehavior.inferredRole,
-            responsePosture: adaptiveState.userBehavior.responsePosture,
-            recommendedMode: adaptiveState.userBehavior.recommendedMode
-          }
-        : null,
       adaptiveMode: adaptiveState.adaptiveMode
         ? {
             primaryMode: adaptiveState.adaptiveMode.primaryMode,
             secondaryModes: adaptiveState.adaptiveMode.secondaryModes,
             riskLevel: adaptiveState.adaptiveMode.riskLevel,
             complexityLevel: adaptiveState.adaptiveMode.complexityLevel,
-            outputDepth: adaptiveState.adaptiveMode.outputDepth,
             responseStructure: adaptiveState.adaptiveMode.responseStructure
+          }
+        : null,
+      queryIntent: adaptiveState.queryIntent
+        ? {
+            detectedIntent: adaptiveState.queryIntent.detectedIntent,
+            adaptiveMode: adaptiveState.queryIntent.adaptiveMode,
+            issueTypes: adaptiveState.queryIntent.issueTypes,
+            legalDimensions: adaptiveState.queryIntent.legalDimensions,
+            retrievalStrategy: adaptiveState.queryIntent.retrievalStrategy,
+            needsSupersessionCheck: adaptiveState.queryIntent.needsSupersessionCheck,
+            needsJurisprudence: adaptiveState.queryIntent.needsJurisprudence
           }
         : null,
       factPattern: adaptiveState.factPattern
         ? {
             knownFacts: adaptiveState.factPattern.knownFacts,
             unresolvedFacts: adaptiveState.factPattern.unresolvedFacts,
-            alternativeCharacterizations: adaptiveState.factPattern.alternativeCharacterizations,
             documentsRequired: adaptiveState.factPattern.documentsRequired,
             factCompleteness: adaptiveState.factPattern.factCompleteness
+          }
+        : null,
+      contractInterpretation: adaptiveState.contractInterpretation
+        ? {
+            riskLevel: adaptiveState.contractInterpretation.riskLevel,
+            documentaryGaps: adaptiveState.contractInterpretation.documentaryGaps,
+            preliminaryInterpretation: adaptiveState.contractInterpretation.preliminaryInterpretation
           }
         : null,
       transactionCharacterization: adaptiveState.transactionCharacterization
@@ -1125,7 +474,8 @@ function buildAdaptiveContextForPrompt(adaptiveState = {}) {
         ? {
             riskLevel: adaptiveState.assumptionGap.riskLevel,
             conclusionStrength: adaptiveState.assumptionGap.conclusionStrength,
-            mandatoryDisclosure: adaptiveState.assumptionGap.mandatoryDisclosure
+            mandatoryDisclosure: adaptiveState.assumptionGap.mandatoryDisclosure,
+            mustDiscloseBeforeConclusion: adaptiveState.assumptionGap.mustDiscloseBeforeConclusion
           }
         : null,
       riskScore: adaptiveState.riskScore
@@ -1157,42 +507,269 @@ function buildAdaptiveContextForPrompt(adaptiveState = {}) {
   );
 }
 
+function buildAdaptivePlannerInstructions(adaptiveState = {}) {
+  const instructions = [];
+
+  instructions.push(adaptiveState.adaptivePromptBundle || FALLBACK_TINA_STRUCTURE);
+
+  if (safeArray(adaptiveState?.responsePlan?.plannerInstruction).length) {
+    instructions.push(
+      [
+        "ADAPTIVE RESPONSE PLAN:",
+        ...adaptiveState.responsePlan.plannerInstruction.map((item) => `- ${item}`)
+      ].join("\n")
+    );
+  }
+
+  if (safeArray(adaptiveState?.assumptionGap?.mandatoryDisclosure).length) {
+    instructions.push(
+      [
+        "MANDATORY DISCLOSURES:",
+        JSON.stringify(adaptiveState.assumptionGap.mandatoryDisclosure, null, 2)
+      ].join("\n")
+    );
+  }
+
+  if (safeArray(adaptiveState?.riskScore?.recommendedResponseControls).length) {
+    instructions.push(
+      [
+        "RISK-BASED CONTROLS:",
+        ...adaptiveState.riskScore.recommendedResponseControls.map((item) => `- ${item}`)
+      ].join("\n")
+    );
+  }
+
+  if (adaptiveState?.positionStrength?.conclusionLanguage) {
+    instructions.push(
+      `POSITION-STRENGTH CONTROL:\n${adaptiveState.positionStrength.conclusionLanguage}`
+    );
+  }
+
+  instructions.push(buildConclusionRestrictionInstruction(adaptiveState));
+
+  return instructions.filter(Boolean).join("\n\n---\n\n");
+}
+
+function buildConflictContextForPrompt({
+  hierarchyConflict = null,
+  jurisprudenceBlock = "",
+  conflicts = []
+}) {
+  return [
+    hierarchyConflict
+      ? [
+          "HIERARCHY / CONFLICT REVIEW:",
+          JSON.stringify(
+            {
+              conflict: Boolean(hierarchyConflict.conflict),
+              conflictType: hierarchyConflict.conflictType || null,
+              doctrinalConflict: Boolean(hierarchyConflict.doctrinalConflict),
+              hierarchyConflict: Boolean(hierarchyConflict.hierarchyConflict),
+              apparentConflict: Boolean(hierarchyConflict.apparentConflict),
+              exactIssue: hierarchyConflict.exactIssue || null,
+              distinctionType: hierarchyConflict.distinctionType || null,
+              controllingAuthority: hierarchyConflict.controllingAuthority || null,
+              controllingSource: hierarchyConflict.controllingSource || null,
+              overriddenAuthority: hierarchyConflict.overriddenAuthority || null,
+              reason: hierarchyConflict.reason || null,
+              resolutionBasis: hierarchyConflict.resolutionBasis || null
+            },
+            null,
+            2
+          )
+        ].join("\n")
+      : "HIERARCHY / CONFLICT REVIEW: No conflict metadata.",
+    jurisprudenceBlock || buildNoJurisprudenceText(),
+    safeArray(conflicts).length
+      ? `EVIDENCE CONFLICT SIGNALS:\n${JSON.stringify(conflicts.slice(0, 5), null, 2)}`
+      : "EVIDENCE CONFLICT SIGNALS: None detected."
+  ].join("\n\n");
+}
+
+function buildComplianceInsight({
+  issuance = null,
+  questionType = "",
+  namedLawDetection = null,
+  hierarchyConflict = null,
+  adaptiveState = null
+}) {
+  const notes = [];
+
+  if (adaptiveState?.riskScore?.overallRisk?.level) {
+    notes.push(`Adaptive risk level: ${adaptiveState.riskScore.overallRisk.level}.`);
+  }
+
+  if (adaptiveState?.positionStrength?.positionStrength) {
+    notes.push(`Position strength: ${adaptiveState.positionStrength.positionStrength}.`);
+  }
+
+  if (adaptiveState?.assumptionGap?.mustDiscloseBeforeConclusion) {
+    notes.push("Assumptions, evidentiary gaps, ambiguities, and limitations must be disclosed before any strong conclusion.");
+  }
+
+  if (hierarchyConflict?.conflict) {
+    notes.push("A hierarchy or doctrinal conflict signal was detected; explain controlling authority and why it controls.");
+  } else if (hierarchyConflict?.apparentConflict) {
+    notes.push("An apparent conflict was detected; verify whether the authorities are distinguishable by issue or facts.");
+  }
+
+  if (issuance || questionType === "issuance") {
+    notes.unshift("Verify latest amended or superseding BIR issuance before operational reliance.");
+  }
+
+  if (namedLawDetection?.matched) {
+    notes.unshift("For named-law questions, rely first on the exact statute and its IRR before secondary materials.");
+  }
+
+  return notes.length
+    ? notes.join(" ")
+    : "Apply the higher-authority rule first and use lower-authority material only as support.";
+}
+
+function mergeConflictSignals({
+  rawConflicts = [],
+  displayableConflicts = [],
+  hierarchyConflict = null
+}) {
+  const merged = [];
+
+  for (const item of displayableConflicts || []) merged.push(item);
+
+  for (const item of rawConflicts || []) {
+    if (!displayableConflicts.includes(item)) merged.push(item);
+  }
+
+  if (hierarchyConflict?.conflict || hierarchyConflict?.apparentConflict) {
+    merged.push({
+      source: "conflict-engine",
+      conflictType: hierarchyConflict.conflictType || null,
+      doctrinalConflict: Boolean(hierarchyConflict.doctrinalConflict),
+      hierarchyConflict: Boolean(hierarchyConflict.hierarchyConflict),
+      apparentConflict: Boolean(hierarchyConflict.apparentConflict),
+      exactIssue: hierarchyConflict.exactIssue || null,
+      distinctionType: hierarchyConflict.distinctionType || null,
+      controllingAuthority: hierarchyConflict.controllingAuthority || null,
+      controllingSource: hierarchyConflict.controllingSource || null,
+      reason: hierarchyConflict.reason || null,
+      resolutionBasis: hierarchyConflict.resolutionBasis || null
+    });
+  }
+
+  const seen = new Set();
+
+  return merged.filter((item) => {
+    const key = JSON.stringify({
+      source: item.source || null,
+      type: item.conflictType || item.conflictStatus || null,
+      a: item.sourceA || item.source_a_path || item.controllingSource || null,
+      b: item.sourceB || item.source_b_path || item.overriddenSource || null,
+      issue: item.exactIssue || item.reason || null
+    });
+
+    if (seen.has(key)) return false;
+
+    seen.add(key);
+    return true;
+  });
+}
+
+function buildRouteResponsePayload({
+  answerText,
+  legalBasisDocs = [],
+  sourcesUsed = [],
+  hierarchyConflict = null
+}) {
+  return buildFinalRoutePayload({
+    answer: answerText,
+    legalBasisDocs,
+    sourcesUsed,
+    hierarchyConflict
+  });
+}
+
+function buildAnswerMode({
+  hookConfig,
+  provisionModeResult,
+  caseModeResult,
+  doctrineModeResult,
+  namedLawDetection,
+  issuance,
+  adaptiveState
+}) {
+  if (adaptiveState?.responsePlan?.responseMode) {
+    return `adaptive_${String(adaptiveState.responsePlan.responseMode).toLowerCase()}_reasoned_answer`;
+  }
+
+  if (provisionModeResult?.handled) return "provision_citation_reasoned_answer";
+  if (caseModeResult?.handled) return "case_analysis_reasoned_answer";
+  if (doctrineModeResult?.handled) return "doctrine_analysis_reasoned_answer";
+  if (namedLawDetection?.matched) return "named_law_reasoned_answer";
+  if (issuance) return `exact_issuance_${String(hookConfig.mode || "ask").toLowerCase()}_reasoned`;
+
+  return `${String(hookConfig.mode || "ask").toLowerCase()}_reasoned_answer`;
+}
+
+function getSpecializedDocs({
+  provisionModeResult,
+  caseModeResult,
+  doctrineModeResult
+}) {
+  if (provisionModeResult?.handled && Array.isArray(provisionModeResult.topDocs)) {
+    return provisionModeResult.topDocs;
+  }
+
+  if (caseModeResult?.handled) {
+    return mergeUniqueDocs([
+      ...(caseModeResult.caseDocs || []),
+      ...(caseModeResult.birDocs || [])
+    ]);
+  }
+
+  if (doctrineModeResult?.handled && Array.isArray(doctrineModeResult.topAuthorities)) {
+    return doctrineModeResult.topAuthorities.map((item) => ({
+      source: item.title || item.source,
+      path: item.source,
+      text: item.excerpt,
+      authorityType: item.authorityType,
+      authorityLevel: item.authorityLevel,
+      doctrineLabel: item.doctrineLabel,
+      doctrineApplicability: item.doctrineApplicability,
+      doctrineApplicabilityExplanation: item.doctrineApplicabilityExplanation
+    }));
+  }
+
+  return [];
+}
+
 async function enforceAdaptiveFinalAnalysis({
   openai,
   model = DEFAULT_MODEL,
   question,
   draftAnswer = "",
   docs = [],
-  conflicts = [],
   hierarchyConflict = null,
-  doctrinalReview = null,
-  namedLawDetection = null,
-  issuance = null,
+  jurisprudenceBlock = "",
+  conflicts = [],
   memoryContext = "",
   adaptiveState = {}
 }) {
-  const cleanDraft = String(draftAnswer || "").trim();
+  const cleanDraft = normalizeText(draftAnswer);
+
   if (!cleanDraft) return cleanDraft;
 
   const sourceContext = formatDocsForPrompt(docs, 8);
+
   if (!sourceContext.trim()) return cleanDraft;
 
-  const alreadyCompleteAF = hasCompleteAFStructure(cleanDraft);
-  const adaptiveInstructions = getAdaptivePlannerInstructions(adaptiveState);
-  const conclusionInstruction = buildConclusionRestrictionInstruction(adaptiveState);
-
   const systemPrompt = [
-    adaptiveInstructions || FALLBACK_TINA_STRUCTURE,
+    buildAdaptivePlannerInstructions(adaptiveState),
     "",
-    alreadyCompleteAF
-      ? "You are the final adaptive TINA technical reviewer. Preserve the current structure if it matches the response plan. Improve legal coherence, factual discipline, evidence limits, conflict analysis, and hierarchy analysis."
-      : "You are the final adaptive TINA technical reviewer. Rewrite the draft using the adaptive response plan.",
-    conclusionInstruction,
+    "You are the final adaptive TINA technical reviewer.",
+    "Rewrite or refine the draft so it follows the adaptive response plan, authority hierarchy, evidence limits, and conclusion gating.",
     "Use only the provided indexed source context, adaptive context, conflict metadata, and draft.",
     "Do not invent laws, cases, dates, rates, issuances, section numbers, GR numbers, or citations.",
-    "If a required item is not supported by provided context, say no indexed support was retrieved for that item.",
-    "Every cited source must be tied to doctrine, rule, hierarchy, evidence, or application.",
-    "Do not append a separate raw source list; route payload handles sources."
+    "If a required authority is not provided, state that no indexed support was retrieved.",
+    "Do not append a raw source list; the API route payload handles sources."
   ].join("\n");
 
   const userPrompt = [
@@ -1205,23 +782,17 @@ async function enforceAdaptiveFinalAnalysis({
     "ADAPTIVE CONTEXT:",
     buildAdaptiveContextForPrompt(adaptiveState),
     "",
-    "DETECTED QUERY CONTEXT:",
-    issuance ? `Issuance Query: ${JSON.stringify(issuance)}` : "Issuance Query: none",
-    namedLawDetection?.matched
-      ? `Named Law: ${namedLawDetection.bestMatch?.shortTitle || namedLawDetection.bestMatch?.canonicalTitle || "matched"}`
-      : "Named Law: none",
-    "",
-    "DRAFT ANSWER TO REVIEW:",
+    "DRAFT ANSWER:",
     cleanDraft,
     "",
     "INDEXED SOURCE CONTEXT:",
     sourceContext,
     "",
-    "CONFLICT / DOCTRINE CONTEXT:",
+    "CONFLICT / JURISPRUDENCE CONTEXT:",
     buildConflictContextForPrompt({
-      conflicts,
       hierarchyConflict,
-      doctrinalReview
+      jurisprudenceBlock,
+      conflicts
     }),
     "",
     "OUTPUT REQUIREMENT:",
@@ -1240,77 +811,6 @@ async function enforceAdaptiveFinalAnalysis({
   });
 
   return response.choices?.[0]?.message?.content?.trim() || cleanDraft;
-}
-
-async function loadAnswerRenderer() {
-  if (rendererCache.loaded) return rendererCache.module;
-
-  try {
-    rendererCache.module = await import(ANSWER_RENDERER_PATH);
-  } catch (error) {
-    console.warn("answer-renderer.js not loaded; fallback renderer will be used:", error?.message || error);
-    rendererCache.module = null;
-  }
-
-  rendererCache.loaded = true;
-  return rendererCache.module;
-}
-
-async function renderAdaptiveAnswer({
-  draftAnswer,
-  fallbackAnswer,
-  adaptiveState,
-  legalBasisDocs,
-  sourcesUsed,
-  conflicts,
-  hierarchyConflict,
-  professionalInsight,
-  routePayload
-}) {
-  const renderer = await loadAnswerRenderer();
-
-  const renderFn =
-    renderer?.renderAdaptiveAnswer ||
-    renderer?.renderAnswer ||
-    renderer?.buildRenderedAnswer ||
-    null;
-
-  if (typeof renderFn === "function") {
-    try {
-      const rendered = await renderFn({
-        draftAnswer,
-        fallbackAnswer,
-        adaptiveContext: adaptiveState,
-        responsePlan: adaptiveState?.responsePlan || null,
-        assumptionGap: adaptiveState?.assumptionGap || null,
-        riskScore: adaptiveState?.riskScore || null,
-        positionStrength: adaptiveState?.positionStrength || null,
-        legalBasisDocs,
-        sourcesUsed,
-        conflicts,
-        hierarchyConflict,
-        professionalInsight,
-        routePayload
-      });
-
-      if (typeof rendered === "string") return rendered;
-      if (rendered?.answer) return rendered.answer;
-      if (rendered?.answerText) return rendered.answerText;
-      if (rendered?.markdown) return rendered.markdown;
-    } catch (error) {
-      console.warn("Adaptive answer renderer failed; fallback renderer used:", error?.message || error);
-    }
-  }
-
-  return buildFinalCompliantAnswer({
-    draftAnswer,
-    fallbackAnswer,
-    legalBasisDocs,
-    sourcesUsed,
-    conflicts,
-    hierarchyConflict,
-    professionalInsight
-  });
 }
 
 async function persistAnswerRendering({
@@ -1345,6 +845,7 @@ async function persistAnswerRendering({
       confidence_statement: routePayload?.confidence_level || null,
       renderer_payload: {
         adaptiveMode: adaptiveState?.adaptiveMode || null,
+        queryIntent: adaptiveState?.queryIntent || null,
         responsePlan: adaptiveState?.responsePlan || null,
         riskScore: adaptiveState?.riskScore || null,
         positionStrength: adaptiveState?.positionStrength || null,
@@ -1388,6 +889,90 @@ function buildFallbackComplianceAnswer({
   });
 }
 
+function buildNamedLawFallbackText(bestMatch) {
+  if (!bestMatch) {
+    return "No exact indexed legal source was found for the named law or act asked.";
+  }
+
+  const title =
+    bestMatch.shortTitle ||
+    bestMatch.canonicalTitle ||
+    `RA ${bestMatch.republicActNumber || ""}`.trim();
+
+  const raText = bestMatch.republicActNumber
+    ? ` (RA ${bestMatch.republicActNumber})`
+    : "";
+
+  return [
+    `TINA recognized the question as referring to ${title}${raText}.`,
+    "",
+    "However, no exact indexed primary legal source for that law was found in the current tax library.",
+    "TINA will not present unrelated documents as support.",
+    "",
+    "Please upload or index the exact law text and, if available, its implementing rules and regulations."
+  ].join("\n");
+}
+
+function selectGroundedDisplayableDocs(docs = [], maxItems = MAX_VISIBLE_SOURCES) {
+  return sortByAuthorityAndScore(docs)
+    .filter((doc) => !shouldHideSourceFromUser(doc))
+    .slice(0, maxItems);
+}
+
+function normalizeRendererResult(rendered) {
+  if (typeof rendered === "string") return rendered;
+  if (rendered?.answer) return rendered.answer;
+  if (rendered?.answerText) return rendered.answerText;
+  if (rendered?.markdown) return rendered.markdown;
+  return "";
+}
+
+function renderFinalAnswer({
+  preliminaryAnswer,
+  fallbackAnswer,
+  adaptiveState,
+  topLegalBases,
+  finalVisibleSources,
+  mergedConflictSignals,
+  hierarchyConflict,
+  professionalInsight,
+  routePayload
+}) {
+  try {
+    const rendered = renderAdaptiveAnswer({
+      draftAnswer: preliminaryAnswer,
+      fallbackAnswer,
+      adaptiveContext: adaptiveState,
+      responsePlan: adaptiveState?.responsePlan || null,
+      assumptionGap: adaptiveState?.assumptionGap || null,
+      riskScore: adaptiveState?.riskScore || null,
+      positionStrength: adaptiveState?.positionStrength || null,
+      legalBasisDocs: topLegalBases,
+      sourcesUsed: finalVisibleSources,
+      conflicts: mergedConflictSignals,
+      hierarchyConflict,
+      professionalInsight,
+      routePayload
+    });
+
+    const normalized = normalizeRendererResult(rendered);
+
+    if (normalized) return normalized;
+  } catch (error) {
+    console.warn("answer-renderer.js failed; fallback compliance renderer used:", error?.message || error);
+  }
+
+  return buildFinalCompliantAnswer({
+    draftAnswer: preliminaryAnswer,
+    fallbackAnswer,
+    legalBasisDocs: topLegalBases,
+    sourcesUsed: finalVisibleSources,
+    conflicts: mergedConflictSignals,
+    hierarchyConflict,
+    professionalInsight
+  });
+}
+
 export function createRagAnswerHandler({ supabase, openai }) {
   if (!supabase || typeof supabase.from !== "function") {
     throw new Error("createRagAnswerHandler requires a valid Supabase client.");
@@ -1425,6 +1010,48 @@ export function createRagAnswerHandler({ supabase, openai }) {
 
     const hooks = extractMemoryHooks(question);
     await saveMemoryHooks(supabase, userId, hooks);
+  }
+
+  async function saveAllMemory({
+    conversationId,
+    userId,
+    hookConfig,
+    topicData,
+    originalQuestion,
+    answerText,
+    sourcesUsed = [],
+    fallbackReferences = []
+  }) {
+    if (hookConfig.requires_memory === false) return;
+
+    await saveConversationTurn({
+      conversationId,
+      userId,
+      question: originalQuestion,
+      answerText,
+      sourcesUsed,
+      fallbackReferences
+    });
+
+    await saveTopicState(supabase, {
+      userId,
+      sessionId: conversationId || null,
+      topic: topicData.topic,
+      subject: topicData.subject,
+      taxType: topicData.taxType,
+      question: originalQuestion,
+      answer: answerText
+    });
+
+    await saveModeState(supabase, {
+      userId,
+      sessionId: conversationId || null,
+      activeHook: hookConfig.hook_code,
+      activeMode: hookConfig.mode,
+      modeTitle: hookConfig.title,
+      lastQuestion: originalQuestion,
+      lastAnswer: answerText
+    });
   }
 
   async function generateGeneralFallbackAnswer(
@@ -1516,11 +1143,7 @@ export function createRagAnswerHandler({ supabase, openai }) {
 
         let finalQuestion = topicData.resolvedQuestion || cleanQuestion;
 
-        if (
-          (!finalQuestion || finalQuestion.length < 5) &&
-          conversationId &&
-          userId
-        ) {
+        if ((!finalQuestion || finalQuestion.length < 5) && conversationId && userId) {
           try {
             const lastState = await getLastTopicState(
               supabase,
@@ -1532,13 +1155,14 @@ export function createRagAnswerHandler({ supabase, openai }) {
               finalQuestion = lastState.last_question;
             }
           } catch (error) {
-            console.error("Topic fallback error:", error.message);
+            console.warn("Topic fallback error:", error.message);
           }
         }
 
         const issuance = detectIssuanceQuery(finalQuestion);
         const questionType = classifyQuestion(finalQuestion);
         const namedLawDetection = detectNamedLaw(finalQuestion);
+        const responseMode = getResponseMode(adaptiveState, hookConfig);
 
         const retrievalQueries = namedLawDetection.matched
           ? buildNamedLawSearchQueries(finalQuestion, {
@@ -1558,43 +1182,6 @@ export function createRagAnswerHandler({ supabase, openai }) {
 
         const memoryContext = buildMemoryContext(conversationHistory);
 
-        async function saveAllMemory(
-          answerText,
-          sourcesUsed = [],
-          fallbackReferences = []
-        ) {
-          if (hookConfig.requires_memory === false) return;
-
-          await saveConversationTurn({
-            conversationId,
-            userId,
-            question: originalQuestion,
-            answerText,
-            sourcesUsed,
-            fallbackReferences
-          });
-
-          await saveTopicState(supabase, {
-            userId,
-            sessionId: conversationId || null,
-            topic: topicData.topic,
-            subject: topicData.subject,
-            taxType: topicData.taxType,
-            question: originalQuestion,
-            answer: answerText
-          });
-
-          await saveModeState(supabase, {
-            userId,
-            sessionId: conversationId || null,
-            activeHook: hookConfig.hook_code,
-            activeMode: hookConfig.mode,
-            modeTitle: hookConfig.title,
-            lastQuestion: originalQuestion,
-            lastAnswer: answerText
-          });
-        }
-
         const retrievals = [];
 
         for (const query of retrievalQueries) {
@@ -1607,28 +1194,38 @@ export function createRagAnswerHandler({ supabase, openai }) {
             topK:
               adaptiveState?.responsePlan?.responseDepth === "COMPREHENSIVE"
                 ? 16
-                : 12
+                : 12,
+            adaptiveMode: responseMode
           });
 
           retrievals.push(retrieval);
         }
 
-        const mergedRetrieval = mergeRetrievalResults(retrievals);
+        const mergedDocs = mergeUniqueDocs(
+          retrievals.flatMap((retrieval) => retrieval.results || [])
+        );
 
-        const hierarchyRerankedDocs = rerankByHierarchy(
-          mergedRetrieval.results || [],
+        const reranked = rerankForTina({
+          query: finalQuestion,
+          docs: mergedDocs,
+          limit: 16,
+          responseMode,
+          suppressIssueMismatch: true,
+          suppressWeakSecondary: true,
+          suppressSuperseded: true
+        });
+
+        const hierarchyRankedDocs = rerankByHierarchy(
+          reranked.results || mergedDocs,
           finalQuestion
         );
 
-        const supersessionResult = applySupersessionFilter(
-          hierarchyRerankedDocs,
-          new Date()
-        );
+        const supersessionResult = applySupersessionFilter(hierarchyRankedDocs, new Date());
 
         const activeRankedDocs =
           supersessionResult.activeDocs?.length > 0
             ? supersessionResult.activeDocs
-            : hierarchyRerankedDocs;
+            : hierarchyRankedDocs;
 
         const namedLawFiltered = namedLawDetection.matched
           ? filterDocsForNamedLaw(activeRankedDocs, namedLawDetection, {
@@ -1646,33 +1243,29 @@ export function createRagAnswerHandler({ supabase, openai }) {
               primaryAuthorityFound: false
             };
 
-        const namedLawMatchedDocs =
+        const internalRankedDocs =
           namedLawDetection.matched && namedLawFiltered.matchedDocs.length > 0
             ? namedLawFiltered.matchedDocs
             : activeRankedDocs;
 
-        const internalRankedDocs = namedLawMatchedDocs;
-
-        const displayableRankedDocs = namedLawMatchedDocs.filter(
+        const displayableRankedDocs = internalRankedDocs.filter(
           (doc) => !shouldHideSourceFromUser(doc)
         );
 
-        const namedLawPriorityDocs = namedLawDetection.matched
-          ? selectNamedLawPriorityDocs(
-              displayableRankedDocs,
-              namedLawDetection,
-              Math.max(MAX_VISIBLE_SOURCES, 6)
-            )
-          : [];
+        const hierarchyConflict = detectHierarchyConflict(displayableRankedDocs.slice(0, 6));
 
-        const doctrinalReview = reconcileDoctrine({
-          rankedDocs: internalRankedDocs,
-          maxDocs: 5
+        const jurisprudenceCases = selectIssueRelevantJurisprudence({
+          query: finalQuestion,
+          docs: internalRankedDocs,
+          limit: 4,
+          responseMode
         });
 
-        const hierarchyConflict = detectHierarchyConflict(
-          displayableRankedDocs.slice(0, 5)
-        );
+        const jurisprudenceBlock = buildJurisprudencePromptBlock({
+          query: finalQuestion,
+          cases: jurisprudenceCases,
+          supportingAuthorities: displayableRankedDocs.slice(0, 6)
+        });
 
         let evidence = normalizeRetrievedEvidence(
           internalRankedDocs.map((doc) => ({
@@ -1739,10 +1332,11 @@ export function createRagAnswerHandler({ supabase, openai }) {
 
         const strictDocsForContext = mergeUniqueDocs([
           ...specializedDocs,
+          ...jurisprudenceCases,
           ...internalRankedDocs
         ]);
 
-        const strictContext = formatDocsForPrompt(strictDocsForContext, 6);
+        const strictContext = formatDocsForPrompt(strictDocsForContext, 8);
 
         if (provisionModeResult.handled) {
           preliminaryAnswer = provisionModeResult.answer || "";
@@ -1751,13 +1345,7 @@ export function createRagAnswerHandler({ supabase, openai }) {
         } else if (doctrineModeResult.handled) {
           preliminaryAnswer = doctrineModeResult.answer || "";
         } else if (topEvidence.length > 0) {
-          const topLegalBasesForPrompt = namedLawDetection.matched
-            ? selectNamedLawPriorityDocs(
-                displayableRankedDocs,
-                namedLawDetection,
-                3
-              )
-            : selectTopLegalBases(displayableRankedDocs, 3);
+          const topLegalBasesForPrompt = selectTopLegalBases(displayableRankedDocs, 4);
 
           const strictPrompt = [
             adaptiveState?.adaptivePromptBundle || "",
@@ -1769,8 +1357,7 @@ export function createRagAnswerHandler({ supabase, openai }) {
               topLegalBases: topLegalBasesForPrompt,
               conflict: hierarchyConflict
             }),
-            getAdaptivePlannerInstructions(adaptiveState),
-            buildConclusionRestrictionInstruction(adaptiveState)
+            buildAdaptivePlannerInstructions(adaptiveState)
           ]
             .filter(Boolean)
             .join("\n\n---\n\n");
@@ -1791,19 +1378,12 @@ export function createRagAnswerHandler({ supabase, openai }) {
                   "",
                   `Question Type: ${questionType}`,
                   `Resolved Question: ${finalQuestion}`,
-                  namedLawDetection.matched
-                    ? `Detected Named Law: ${
-                        namedLawDetection.bestMatch?.shortTitle ||
-                        namedLawDetection.bestMatch?.canonicalTitle ||
-                        "N/A"
-                      }`
-                    : "Detected Named Law: none",
                   "",
                   "Adaptive Context:",
                   buildAdaptiveContextForPrompt(adaptiveState),
                   "",
-                  "Doctrinal Review:",
-                  JSON.stringify(doctrinalReview || {}, null, 2),
+                  "Jurisprudence Review:",
+                  jurisprudenceBlock,
                   "",
                   "Hierarchy Conflict Review:",
                   JSON.stringify(hierarchyConflict || {}, null, 2)
@@ -1830,11 +1410,7 @@ export function createRagAnswerHandler({ supabase, openai }) {
         const mergedConflictSignals = mergeConflictSignals({
           rawConflicts,
           displayableConflicts,
-          hierarchyConflict,
-          doctrinalReview,
-          provisionModeResult,
-          caseModeResult,
-          doctrineModeResult
+          hierarchyConflict
         });
 
         if (preliminaryAnswer && topEvidence.length > 0) {
@@ -1844,11 +1420,9 @@ export function createRagAnswerHandler({ supabase, openai }) {
             question: finalQuestion,
             draftAnswer: preliminaryAnswer,
             docs: strictDocsForContext,
-            conflicts: mergedConflictSignals,
             hierarchyConflict,
-            doctrinalReview,
-            namedLawDetection,
-            issuance,
+            jurisprudenceBlock,
+            conflicts: mergedConflictSignals,
             memoryContext,
             adaptiveState
           });
@@ -1858,26 +1432,14 @@ export function createRagAnswerHandler({ supabase, openai }) {
           stripTrailingSourceSection(preliminaryAnswer || "")
         );
 
-        const groundedDisplayableDocs = selectGroundedDisplayableDocs(
-          displayableRankedDocs,
-          {
-            answerText: preliminaryAnswer,
-            finalQuestion,
-            namedLawDetection,
-            issuance
-          }
+        const finalDisplayableDocs = selectGroundedDisplayableDocs(
+          mergeUniqueDocs([
+            ...specializedDocs,
+            ...jurisprudenceCases,
+            ...displayableRankedDocs
+          ]),
+          Math.max(MAX_VISIBLE_SOURCES, 8)
         );
-
-        const finalDisplayableDocs = namedLawDetection.matched
-          ? mergeUniqueDocs([
-              ...namedLawPriorityDocs,
-              ...specializedDocs,
-              ...groundedDisplayableDocs
-            ]).slice(0, Math.max(MAX_VISIBLE_SOURCES, 8))
-          : mergeUniqueDocs([
-              ...specializedDocs,
-              ...groundedDisplayableDocs
-            ]).slice(0, Math.max(MAX_VISIBLE_SOURCES, 8));
 
         const finalVisibleSources = filterVisibleSources(finalDisplayableDocs, {
           maxItems: MAX_VISIBLE_SOURCES,
@@ -1893,10 +1455,6 @@ export function createRagAnswerHandler({ supabase, openai }) {
           topDisplayableEvidence
         );
 
-        const namedLawPrimaryVisible = namedLawDetection.matched
-          ? hasNamedLawPrimaryBasis(finalDisplayableDocs, namedLawDetection)
-          : false;
-
         const validation = validateEvidenceSufficiency({
           evidence: finalDisplayableDocs,
           claimSupportMap,
@@ -1907,40 +1465,21 @@ export function createRagAnswerHandler({ supabase, openai }) {
           requirePrimaryAuthority: Boolean(namedLawDetection?.matched)
         });
 
-        const fallbackReason =
-          namedLawDetection.matched &&
-          (!namedLawFiltered.primaryAuthorityFound || !namedLawPrimaryVisible) &&
-          namedLawDetection.bestMatch
-            ? `No exact indexed primary source matched ${
-                namedLawDetection.bestMatch.shortTitle ||
-                namedLawDetection.bestMatch.canonicalTitle
-              }.`
-            : !topEvidence.length
-              ? "No indexed Google Drive/Supabase vector source matched the question."
-              : "Indexed sources were found but evidence strength was insufficient.";
-
         const shouldFallback =
           (namedLawDetection.matched && !namedLawFiltered.primaryAuthorityFound) ||
-          (namedLawDetection.matched && !namedLawPrimaryVisible) ||
           (namedLawDetection.matched && finalDisplayableDocs.length === 0) ||
           (issuance && finalDisplayableDocs.length === 0) ||
           topEvidence.length === 0 ||
           shouldRejectForWeakLegalBasis({
             validation,
-            hasExactCitation: Boolean(mergedRetrieval.exactCitation?.matched)
+            hasExactCitation: Boolean(
+              retrievals.some((retrieval) => retrieval?.exactCitation?.matched)
+            )
           });
 
         const safeTopConfidenceRaw =
           internalRankedDocs.length > 0
-            ? Math.max(
-                0,
-                ...internalRankedDocs.map((item) => {
-                  const value = Number(
-                    item.finalScore ?? item.combined_score ?? item.score ?? 0
-                  );
-                  return Number.isFinite(value) ? value : 0;
-                })
-              )
+            ? Math.max(0, ...internalRankedDocs.map((item) => getScore(item)))
             : 0;
 
         const safeTopConfidence = toSafeDbNumeric(
@@ -1980,69 +1519,52 @@ export function createRagAnswerHandler({ supabase, openai }) {
             }
           }
         } catch (reasoningError) {
-          console.error("Reasoning persistence error:", reasoningError.message);
+          console.warn("Reasoning persistence error:", reasoningError.message);
         }
 
+        const complianceInsight = buildComplianceInsight({
+          issuance,
+          questionType,
+          namedLawDetection,
+          hierarchyConflict,
+          adaptiveState
+        });
+
         if (hookConfig.mode === "SOURCE_FINDER") {
-          const sourceFinderDocs = namedLawDetection.matched
-            ? mergeUniqueDocs([
-                ...namedLawPriorityDocs,
-                ...specializedDocs,
-                ...finalDisplayableDocs
-              ])
-            : mergeUniqueDocs([...specializedDocs, ...finalDisplayableDocs]);
+          const sourcesUsed = filterVisibleSources(
+            finalDisplayableDocs,
+            {
+              maxItems: MAX_VISIBLE_SOURCES,
+              supersessionResult
+            }
+          );
 
-          const sourcesUsed = filterVisibleSources(sourceFinderDocs, {
-            maxItems: MAX_VISIBLE_SOURCES,
-            supersessionResult
-          });
+          const answerText = sourcesUsed.length
+            ? [
+                "Source Finder Results",
+                "",
+                ...sourcesUsed.map((source, index) =>
+                  [
+                    `${index + 1}. ${source.issuanceNumber ? `${source.issuanceNumber} – ` : ""}${source.title}`,
+                    `Authority: Level ${source.authorityLevel || 99} - ${
+                      source.authorityLabel || source.authorityType || "Unknown"
+                    }`
+                  ].join("\n")
+                )
+              ].join("\n\n")
+            : namedLawDetection.matched
+              ? buildNamedLawFallbackText(namedLawDetection.bestMatch)
+              : "No indexed source found for the requested query.";
 
-          if (!sourcesUsed.length) {
-            const answerText =
-              namedLawDetection.matched && namedLawDetection.bestMatch
-                ? buildNamedLawFallbackText(namedLawDetection.bestMatch)
-                : "No indexed source found for the requested query.";
-
-            await saveAllMemory(answerText, [], []);
-
-            return res.json({
-              success: true,
-              engine: "TINA Adaptive Reasoning Engine",
-              hook: hookConfig.hook_code,
-              mode: hookConfig.mode,
-              hookTitle: hookConfig.title,
-              answer: answerText,
-              answerMode: "source_finder_no_match",
-              confidence: "LOW",
-              sourceStatus: "NO_INDEXED_SOURCE",
-              originalQuestion,
-              resolvedQuestion: finalQuestion,
-              sourcesUsed: [],
-              sources: [],
-              vectorMatches: 0,
-              adaptive: {
-                enabled: adaptiveState.enabled,
-                responseMode: adaptiveState?.responsePlan?.responseMode || null,
-                riskLevel: adaptiveState?.riskScore?.overallRisk?.level || null,
-                positionStrength: adaptiveState?.positionStrength?.positionStrength || null
-              }
-            });
-          }
-
-          const answerText =
-            "Source Finder Results\n\n" +
+          await saveAllMemory({
+            conversationId,
+            userId,
+            hookConfig,
+            topicData,
+            originalQuestion,
+            answerText,
             sourcesUsed
-              .map((s, i) =>
-                [
-                  `${i + 1}. ${s.issuanceNumber ? `${s.issuanceNumber} – ` : ""}${s.title}`,
-                  `Authority: Level ${s.authorityLevel || 99} - ${
-                    s.authorityLabel || s.authorityType || "Unknown"
-                  }`
-                ].join("\n")
-              )
-              .join("\n\n");
-
-          await saveAllMemory(answerText, sourcesUsed, []);
+          });
 
           const routePayload = buildRouteResponsePayload({
             answerText,
@@ -2068,9 +1590,9 @@ export function createRagAnswerHandler({ supabase, openai }) {
             mode: hookConfig.mode,
             hookTitle: hookConfig.title,
             answer: answerText,
-            answerMode: "source_finder_results",
-            confidence: routePayload.confidence_level || "SOURCE_LIST",
-            sourceStatus: "INDEXED_SOURCE_LISTED",
+            answerMode: sourcesUsed.length ? "source_finder_results" : "source_finder_no_match",
+            confidence: sourcesUsed.length ? "SOURCE_LIST" : "LOW",
+            sourceStatus: sourcesUsed.length ? "INDEXED_SOURCE_LISTED" : "NO_INDEXED_SOURCE",
             originalQuestion,
             resolvedQuestion: finalQuestion,
             sourcesUsed: routePayload.sources,
@@ -2087,16 +1609,17 @@ export function createRagAnswerHandler({ supabase, openai }) {
           });
         }
 
-        const complianceInsight = buildComplianceInsight({
-          issuance,
-          questionType,
-          namedLawDetection,
-          doctrinalReview,
-          hierarchyConflict,
-          adaptiveState
-        });
-
         if (shouldFallback) {
+          const fallbackReason =
+            namedLawDetection.matched && namedLawDetection.bestMatch
+              ? `No exact indexed primary source matched ${
+                  namedLawDetection.bestMatch.shortTitle ||
+                  namedLawDetection.bestMatch.canonicalTitle
+                }.`
+              : issuance || questionType === "issuance"
+                ? "No indexed document found or insufficient verified evidence for the requested issuance."
+                : "Indexed sources were absent or insufficient.";
+
           const fallbackText =
             namedLawDetection.matched && namedLawDetection.bestMatch
               ? buildNamedLawFallbackText(namedLawDetection.bestMatch)
@@ -2115,7 +1638,15 @@ export function createRagAnswerHandler({ supabase, openai }) {
             adaptiveState
           });
 
-          await saveAllMemory(answerText, [], []);
+          await saveAllMemory({
+            conversationId,
+            userId,
+            hookConfig,
+            topicData,
+            originalQuestion,
+            answerText,
+            sourcesUsed: []
+          });
 
           const routePayload = buildRouteResponsePayload({
             answerText,
@@ -2151,12 +1682,7 @@ export function createRagAnswerHandler({ supabase, openai }) {
                 : issuance
                   ? "no_exact_issuance_match"
                   : "adaptive_general_fallback",
-            confidence:
-              namedLawDetection.matched && namedLawDetection.bestMatch
-                ? "LOW"
-                : issuance
-                  ? "LOW"
-                  : "GENERAL",
+            confidence: issuance || namedLawDetection.matched ? "LOW" : "GENERAL",
             sourceStatus: "FALLBACK_USED",
             questionType,
             topicData,
@@ -2174,7 +1700,6 @@ export function createRagAnswerHandler({ supabase, openai }) {
             doctrinalConflict: Boolean(hierarchyConflict?.doctrinalConflict),
             hierarchyConflict: Boolean(hierarchyConflict?.hierarchyConflict),
             apparentConflict: Boolean(hierarchyConflict?.apparentConflict),
-            doctrinalStatus: doctrinalReview?.doctrinalStatus || null,
             adaptive: {
               enabled: adaptiveState.enabled,
               responseMode: adaptiveState?.responsePlan?.responseMode || null,
@@ -2188,22 +1713,7 @@ export function createRagAnswerHandler({ supabase, openai }) {
           });
         }
 
-        const topTier = finalVisibleSources.length
-          ? Math.min(...finalVisibleSources.map((s) => Number(s.authorityLevel || 99)))
-          : 99;
-
-        let confidence = "MEDIUM";
-
-        if (issuance) confidence = "HIGH";
-        else if (namedLawDetection.matched) confidence = "HIGH";
-        else if (topTier <= 2) confidence = "HIGH";
-        else if (topTier <= 4) confidence = "MEDIUM";
-        else if (topTier <= 7) confidence = "LIMITED";
-        else confidence = "LOW";
-
-        const topLegalBases = namedLawDetection.matched
-          ? selectNamedLawPriorityDocs(finalDisplayableDocs, namedLawDetection, 3)
-          : selectTopLegalBases(finalDisplayableDocs, 3);
+        const topLegalBases = selectTopLegalBases(finalDisplayableDocs, 4);
 
         const preliminaryRoutePayload = buildRouteResponsePayload({
           answerText: preliminaryAnswer,
@@ -2212,19 +1722,27 @@ export function createRagAnswerHandler({ supabase, openai }) {
           hierarchyConflict
         });
 
-        const answerText = await renderAdaptiveAnswer({
-          draftAnswer: preliminaryAnswer || "",
+        const answerText = renderFinalAnswer({
+          preliminaryAnswer,
           fallbackAnswer: buildNoSourceReply(),
           adaptiveState,
-          legalBasisDocs: topLegalBases,
-          sourcesUsed: finalVisibleSources,
-          conflicts: mergedConflictSignals,
+          topLegalBases,
+          finalVisibleSources,
+          mergedConflictSignals,
           hierarchyConflict,
           professionalInsight: complianceInsight,
           routePayload: preliminaryRoutePayload
         });
 
-        await saveAllMemory(answerText, finalVisibleSources, []);
+        await saveAllMemory({
+          conversationId,
+          userId,
+          hookConfig,
+          topicData,
+          originalQuestion,
+          answerText,
+          sourcesUsed: finalVisibleSources
+        });
 
         const routePayload = buildRouteResponsePayload({
           answerText,
@@ -2263,7 +1781,7 @@ export function createRagAnswerHandler({ supabase, openai }) {
             issuance,
             adaptiveState
           }),
-          confidence: routePayload.confidence_level || confidence,
+          confidence: routePayload.confidence_level || "MEDIUM",
           sourceStatus: routePayload.sources.length
             ? "INDEXED_ADAPTIVE_REASONED_SOURCE_USED"
             : "INDEXED_ADAPTIVE_ANSWER_WITH_NO_DISPLAYABLE_SOURCE",
@@ -2284,8 +1802,6 @@ export function createRagAnswerHandler({ supabase, openai }) {
           doctrinalConflict: Boolean(hierarchyConflict?.doctrinalConflict),
           hierarchyConflict: Boolean(hierarchyConflict?.hierarchyConflict),
           apparentConflict: Boolean(hierarchyConflict?.apparentConflict),
-          doctrinalStatus: doctrinalReview?.doctrinalStatus || null,
-          doctrinalConflictCount: doctrinalReview?.doctrinalConflicts?.length || 0,
           supersededFilteredCount: supersessionResult?.superseded?.length || 0,
           adaptive: {
             enabled: adaptiveState.enabled,
