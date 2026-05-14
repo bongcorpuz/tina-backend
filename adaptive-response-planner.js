@@ -1,14 +1,11 @@
+// FILE: adaptive-response-planner.js
 "use strict";
 
 /**
- * adaptive-response-planner.js
- * TINA Adaptive Response Planner
- *
- * Purpose:
- * Builds the response format depending on detected mode:
- * quick, standard, technical, audit, litigation, contract,
- * transaction, or evidence-heavy.
+ * TINA Enterprise Adaptive Response Planner
  */
+
+const ENGINE_VERSION = "3.0.0";
 
 const RESPONSE_MODE = Object.freeze({
   QUICK: "QUICK",
@@ -26,7 +23,8 @@ const RESPONSE_DEPTH = Object.freeze({
   CONCISE: "CONCISE",
   STANDARD: "STANDARD",
   STRUCTURED: "STRUCTURED",
-  COMPREHENSIVE: "COMPREHENSIVE"
+  COMPREHENSIVE: "COMPREHENSIVE",
+  SIMPLE: "SIMPLE"
 });
 
 function normalizeMode(mode) {
@@ -34,12 +32,13 @@ function normalizeMode(mode) {
 
   if (value.includes("QUICK")) return RESPONSE_MODE.QUICK;
   if (value.includes("AUDIT")) return RESPONSE_MODE.AUDIT;
-  if (value.includes("LITIGATION") || value.includes("LEGAL_DEFENSE")) return RESPONSE_MODE.LITIGATION;
+  if (value.includes("LITIGATION") || value.includes("LEGAL_DEFENSE") || value.includes("LEGAL")) return RESPONSE_MODE.LITIGATION;
   if (value.includes("CONTRACT")) return RESPONSE_MODE.CONTRACT;
   if (value.includes("TRANSACTION")) return RESPONSE_MODE.TRANSACTION;
   if (value.includes("EVIDENCE")) return RESPONSE_MODE.EVIDENCE_HEAVY;
   if (value.includes("TECHNICAL") || value.includes("DOCTRINE")) return RESPONSE_MODE.TECHNICAL;
-  if (value.includes("REVIEWER") || value.includes("LEARNING")) return RESPONSE_MODE.REVIEWER;
+  if (value.includes("REVIEWER") || value.includes("LEARNING") || value.includes("QUIZ")) return RESPONSE_MODE.REVIEWER;
+  if (value.includes("STANDARD")) return RESPONSE_MODE.STANDARD;
 
   return RESPONSE_MODE.STANDARD;
 }
@@ -129,22 +128,34 @@ const RESPONSE_TEMPLATES = Object.freeze({
   ]
 });
 
-function determineDepth(mode, context = {}) {
-  const risk = String(context.riskLevel || "").toUpperCase();
-  const complexity = String(context.complexityLevel || "").toUpperCase();
+function normalizeArray(value) {
+  if (!value) return [];
+  return Array.isArray(value) ? value : [value];
+}
 
+function safeObject(value) {
+  return value && typeof value === "object" && !Array.isArray(value) ? value : {};
+}
+
+function determineDepth(mode, context = {}) {
+  const risk = String(context.riskLevel || context.risk_level || "").toUpperCase();
+  const complexity = String(context.complexityLevel || context.complexity_level || "").toUpperCase();
+
+  if (mode === RESPONSE_MODE.REVIEWER) return RESPONSE_DEPTH.SIMPLE;
   if (mode === RESPONSE_MODE.QUICK) return RESPONSE_DEPTH.CONCISE;
   if (risk === "CRITICAL" || risk === "HIGH") return RESPONSE_DEPTH.COMPREHENSIVE;
   if (complexity === "HIGH") return RESPONSE_DEPTH.COMPREHENSIVE;
 
-  if ([
-    RESPONSE_MODE.AUDIT,
-    RESPONSE_MODE.LITIGATION,
-    RESPONSE_MODE.CONTRACT,
-    RESPONSE_MODE.TRANSACTION,
-    RESPONSE_MODE.EVIDENCE_HEAVY,
-    RESPONSE_MODE.TECHNICAL
-  ].includes(mode)) {
+  if (
+    [
+      RESPONSE_MODE.AUDIT,
+      RESPONSE_MODE.LITIGATION,
+      RESPONSE_MODE.CONTRACT,
+      RESPONSE_MODE.TRANSACTION,
+      RESPONSE_MODE.EVIDENCE_HEAVY,
+      RESPONSE_MODE.TECHNICAL
+    ].includes(mode)
+  ) {
     return RESPONSE_DEPTH.STRUCTURED;
   }
 
@@ -152,58 +163,77 @@ function determineDepth(mode, context = {}) {
 }
 
 function mustIncludeLimitations(context = {}) {
+  const conclusionStrength = String(
+    context.conclusionStrength ||
+      context.conclusionRestriction ||
+      context.conclusionAction ||
+      context.positionStrength?.conclusionAction ||
+      context.riskScore?.conclusionRestriction ||
+      ""
+  ).toUpperCase();
+
   return Boolean(
     context.limitationStatementRequired ||
-    context.mustDiscloseBeforeConclusion ||
-    context.requiresVerification ||
-    context.conclusionStrength === "PRELIMINARY_CONCLUSION_ONLY" ||
-    context.conclusionStrength === "DEFER_CONCLUSION" ||
-    ["HIGH", "CRITICAL"].includes(String(context.riskLevel || "").toUpperCase())
+      context.mustIncludeLimitation ||
+      context.mustDiscloseBeforeConclusion ||
+      context.requiresVerification ||
+      context.assumptionGap?.mustDiscloseBeforeConclusion ||
+      conclusionStrength === "PRELIMINARY_CONCLUSION_ONLY" ||
+      conclusionStrength === "DEFER_CONCLUSION" ||
+      conclusionStrength === "USE_QUALIFIED_CONCLUSION" ||
+      ["HIGH", "CRITICAL"].includes(String(context.riskLevel || "").toUpperCase())
   );
 }
 
 function buildPreConclusionBlocks(context = {}) {
   const blocks = [];
 
-  if (context.mandatoryDisclosure?.length) {
-    blocks.push({
-      heading: "PRELIMINARY DISCLOSURES BEFORE CONCLUSION",
-      source: "assumption-gap-engine",
-      items: context.mandatoryDisclosure
-    });
-  }
+  const addBlock = (heading, source, items) => {
+    const normalizedItems = normalizeArray(items).filter(Boolean);
+    if (!normalizedItems.length) return;
 
-  if (context.knownFacts?.length) {
     blocks.push({
-      heading: "KNOWN FACTS",
-      source: "fact-pattern-engine",
-      items: context.knownFacts
+      heading,
+      source,
+      items: normalizedItems
     });
-  }
+  };
 
-  if (context.unresolvedFacts?.length) {
-    blocks.push({
-      heading: "UNRESOLVED FACTS",
-      source: "fact-pattern-engine",
-      items: context.unresolvedFacts
-    });
-  }
+  addBlock(
+    "PRELIMINARY DISCLOSURES BEFORE CONCLUSION",
+    "assumption-gap-engine",
+    context.mandatoryDisclosure || context.assumptionGap?.mandatoryDisclosure
+  );
 
-  if (context.documentaryGaps?.length) {
-    blocks.push({
-      heading: "DOCUMENTARY GAPS",
-      source: "contract-interpretation-engine",
-      items: context.documentaryGaps
-    });
-  }
+  addBlock(
+    "KNOWN FACTS",
+    "fact-pattern-engine",
+    context.knownFacts || context.factPattern?.knownFacts || context.factPattern?.facts
+  );
 
-  if (context.evidenceCoverage?.length) {
-    blocks.push({
-      heading: "EVIDENCE STATUS",
-      source: "evidence-evaluation-engine",
-      items: context.evidenceCoverage
-    });
-  }
+  addBlock(
+    "UNRESOLVED FACTS",
+    "fact-pattern-engine",
+    context.unresolvedFacts || context.factPattern?.unresolvedFacts
+  );
+
+  addBlock(
+    "DOCUMENTARY GAPS",
+    "contract-interpretation-engine",
+    context.documentaryGaps || context.contractInterpretation?.documentaryGaps
+  );
+
+  addBlock(
+    "EVIDENCE STATUS",
+    "evidence-evaluation-engine",
+    context.evidenceCoverage || context.evidenceEvaluation?.evidenceCoverage
+  );
+
+  addBlock(
+    "RISK FLAGS",
+    "risk-scoring-engine",
+    context.riskFlags || context.riskScore?.riskFlags
+  );
 
   return blocks;
 }
@@ -212,9 +242,9 @@ function buildAuthorityInstruction(mode) {
   if ([RESPONSE_MODE.TECHNICAL, RESPONSE_MODE.LITIGATION].includes(mode)) {
     return [
       "Apply Philippine legal hierarchy.",
-      "Use NIRC / Tax Code and Republic Acts before administrative issuances.",
-      "Use Revenue Regulations before RMCs/RMOs.",
-      "Use jurisprudence for doctrine and legal interpretation.",
+      "Use Constitution, NIRC / Tax Code and Republic Acts before administrative issuances.",
+      "Use Revenue Regulations before RMCs/RMOs/RAMOs.",
+      "Use jurisprudence only when it is issue-relevant.",
       "Do not merely say conflict exists; explain exact conflict, controlling authority, and why it controls."
     ];
   }
@@ -295,11 +325,19 @@ function buildModeSpecificRules(mode) {
 }
 
 function buildConclusionRule(context = {}) {
-  const strength = context.conclusionStrength;
+  const strength = String(
+    context.conclusionStrength ||
+      context.conclusionRestriction ||
+      context.conclusionAction ||
+      context.positionStrength?.conclusionAction ||
+      context.riskScore?.conclusionRestriction ||
+      ""
+  ).toUpperCase();
 
   if (strength === "DEFER_CONCLUSION") {
     return {
       allowStrongConclusion: false,
+      restriction: "DEFER_CONCLUSION",
       requiredLanguage:
         "Do not give a definitive conclusion. State what must be verified first."
     };
@@ -307,10 +345,12 @@ function buildConclusionRule(context = {}) {
 
   if (
     strength === "PRELIMINARY_CONCLUSION_ONLY" ||
+    strength === "USE_QUALIFIED_CONCLUSION" ||
     mustIncludeLimitations(context)
   ) {
     return {
       allowStrongConclusion: false,
+      restriction: "PRELIMINARY_CONCLUSION_ONLY",
       requiredLanguage:
         "Use preliminary language: Based on the available facts, the position is preliminary and subject to verification."
     };
@@ -318,39 +358,72 @@ function buildConclusionRule(context = {}) {
 
   return {
     allowStrongConclusion: true,
+    restriction: "DIRECT_CONCLUSION_ALLOWED",
     requiredLanguage:
       "A direct conclusion may be given if supported by legal basis and evidence."
+  };
+}
+
+function buildRendererContract({
+  mode,
+  depth,
+  template,
+  conclusionRule,
+  limitationRequired
+}) {
+  return {
+    responseMode: mode,
+    responseDepth: depth,
+    sections: template,
+    conclusionRule,
+    mustIncludeLimitation: limitationRequired,
+    preserveHeadings: true,
+    requireStructuredOutput: true,
+    sanitizeVagueConflictFlags: true
   };
 }
 
 function planAdaptiveResponse(input = {}) {
   const detectedMode =
     input.primaryMode ||
+    input.normalizedMode ||
     input.modeAnalysis?.primaryMode ||
+    input.modeAnalysis?.normalizedMode ||
+    input.modeAnalysis?.responseMode ||
     input.mode ||
     RESPONSE_MODE.STANDARD;
 
   const mode = normalizeMode(detectedMode);
 
   const context = {
-    ...input,
-    ...(input.modeAnalysis || {}),
-    ...(input.factPattern || {}),
-    ...(input.evidenceEvaluation || {}),
-    ...(input.contractInterpretation || {}),
-    ...(input.transactionCharacterization || {}),
-    ...(input.economicSubstance || {}),
-    ...(input.assumptionGap || {})
+    ...safeObject(input),
+    ...safeObject(input.modeAnalysis),
+    ...safeObject(input.factPattern),
+    ...safeObject(input.evidenceEvaluation),
+    ...safeObject(input.contractInterpretation),
+    ...safeObject(input.transactionCharacterization),
+    ...safeObject(input.economicSubstance),
+    ...safeObject(input.assumptionGap),
+    ...safeObject(input.riskScore),
+    ...safeObject(input.positionStrength)
   };
 
   const depth = determineDepth(mode, context);
   const template = RESPONSE_TEMPLATES[mode] || RESPONSE_TEMPLATES[RESPONSE_MODE.STANDARD];
-
   const conclusionRule = buildConclusionRule(context);
+  const limitationRequired = mustIncludeLimitations(context);
+
+  const rendererContract = buildRendererContract({
+    mode,
+    depth,
+    template,
+    conclusionRule,
+    limitationRequired
+  });
 
   return {
     engine: "TINA_ADAPTIVE_RESPONSE_PLANNER",
-    version: "1.0.0",
+    version: ENGINE_VERSION,
 
     responseMode: mode,
     responseDepth: depth,
@@ -361,11 +434,12 @@ function planAdaptiveResponse(input = {}) {
     modeSpecificRules: buildModeSpecificRules(mode),
     conclusionRule,
 
-    mustIncludeLimitation: mustIncludeLimitations(context),
-    limitationStatement:
-      mustIncludeLimitations(context)
-        ? "Based on the available facts, the position is preliminary and subject to verification."
-        : null,
+    mustIncludeLimitation: limitationRequired,
+    limitationStatement: limitationRequired
+      ? "Based on the available facts, the position is preliminary and subject to verification."
+      : null,
+
+    rendererContract,
 
     formattingRules: [
       "Use clear section headings.",
@@ -382,7 +456,15 @@ function planAdaptiveResponse(input = {}) {
       ...buildAuthorityInstruction(mode),
       ...buildModeSpecificRules(mode),
       conclusionRule.requiredLanguage
-    ]
+    ],
+
+    orchestrationMetadata: {
+      plannerCompatible: true,
+      rendererCompatible: true,
+      conclusionGatingCompatible: true,
+      adaptivePipelineCompatible: true,
+      tinaAdaptiveResponsePlannerVersion: ENGINE_VERSION
+    }
   };
 }
 
@@ -405,10 +487,26 @@ function buildResponsePlannerInstruction(plan) {
   };
 }
 
+function adaptiveResponsePlannerHealthCheck() {
+  return {
+    ok: true,
+    engine: "TINA_ADAPTIVE_RESPONSE_PLANNER",
+    version: ENGINE_VERSION,
+    commonJsCompatible: true,
+    rendererCompatible: true,
+    conclusionGatingCompatible: true
+  };
+}
+
 module.exports = {
+  ENGINE_VERSION,
   RESPONSE_MODE,
   RESPONSE_DEPTH,
   RESPONSE_TEMPLATES,
+
+  normalizeMode,
   planAdaptiveResponse,
-  buildResponsePlannerInstruction
+  buildResponsePlannerInstruction,
+
+  adaptiveResponsePlannerHealthCheck
 };
