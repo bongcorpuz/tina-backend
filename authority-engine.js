@@ -3,16 +3,17 @@
 
 /**
  * TINA AUTHORITY ENGINE
- * Version: 2.4.0
+ * Version: 2.4.1
  *
  * Patch:
+ * - Preserves CommonJS export format.
  * - Aligned with vector-store.js authority metadata usage.
- * - Improved classification order to avoid court-misclassification.
- * - Improved issuance, statute, treaty, court, and secondary detection.
- * - Preserved CommonJS export format for compatibility.
+ * - Distinguishes authority level from controlling precedence.
+ * - Avoids misclassifying BIR issuances as court cases merely because they mention cases.
+ * - Strengthens exact RR/RMC/RMO/RAMO/RA/GR normalization.
  */
 
-const ENGINE_VERSION = "2.4.0";
+const ENGINE_VERSION = "2.4.1";
 
 const AUTHORITY_LEVEL = Object.freeze({
   CONSTITUTION: 1,
@@ -102,9 +103,7 @@ const BIR_TYPES = new Set([
 ]);
 
 function normalizeText(value = "") {
-  return String(value || "")
-    .replace(/\s+/g, " ")
-    .trim();
+  return String(value || "").replace(/\s+/g, " ").trim();
 }
 
 function compactSpaces(value = "") {
@@ -120,16 +119,12 @@ function safeArray(value) {
 }
 
 function basename(value = "") {
-  const parts = String(value || "")
-    .split(/[\\/]/)
-    .filter(Boolean);
-
+  const parts = String(value || "").split(/[\\/]/).filter(Boolean);
   return parts.length ? parts[parts.length - 1] : String(value || "");
 }
 
 function normalizeYear(year = "") {
   const raw = String(year || "").trim();
-
   if (!raw) return "";
   if (/^\d{4}$/.test(raw)) return raw;
 
@@ -227,31 +222,19 @@ function isSecondaryMaterial(path = "", fileName = "") {
 function detectCourtType(text = "") {
   const raw = compactSpaces(text);
 
-  if (
-    /\bcta\s+en\s+banc\b/i.test(raw) ||
-    /\bcta\s+eb\b/i.test(raw)
-  ) {
+  if (/\bcta\s+en\s+banc\b/i.test(raw) || /\bcta\s+eb\b/i.test(raw)) {
     return "CTA_EN_BANC";
   }
 
-  if (
-    /\bcourt\s+of\s+appeals\b/i.test(raw) ||
-    /\bca-?g\.?\s*r\.?\b/i.test(raw)
-  ) {
+  if (/\bcourt\s+of\s+appeals\b/i.test(raw) || /\bca-?g\.?\s*r\.?\b/i.test(raw)) {
     return "COURT_OF_APPEALS";
   }
 
-  if (
-    /\bcta\s+case\s+no\.?\b/i.test(raw) ||
-    /\bcta\s+division\b/i.test(raw)
-  ) {
+  if (/\bcta\s+case\s+no\.?\b/i.test(raw) || /\bcta\s+division\b/i.test(raw)) {
     return "CTA_DIVISION";
   }
 
-  if (
-    /\bg\.?\s*r\.?\s*no\.?\s*[a-z0-9.-]+\b/i.test(raw) ||
-    /\bsupreme\s+court\b/i.test(raw)
-  ) {
+  if (/\bg\.?\s*r\.?\s*no\.?\s*[a-z0-9.-]+\b/i.test(raw) || /\bsupreme\s+court\b/i.test(raw)) {
     return "SUPREME_COURT";
   }
 
@@ -262,86 +245,99 @@ function detectCourtType(text = "") {
   return null;
 }
 
-function classifyAuthorityFromDocument({
-  fileName = "",
-  path = "",
-  text = ""
-}) {
-  if (isSecondaryMaterial(path, fileName)) {
-    return "SECONDARY";
-  }
+function classifyAuthorityFromDocument({ fileName = "", path = "", text = "" }) {
+  if (isSecondaryMaterial(path, fileName)) return "SECONDARY";
 
-  const blob = lower(`${fileName}\n${path}\n${text}`);
+  const headerBlob = lower(`${fileName}\n${path}`);
+  const fullBlob = lower(`${fileName}\n${path}\n${text}`);
 
   if (
-    blob.includes("constitution of the philippines") ||
-    blob.includes("1987 philippine constitution") ||
-    /\b1987\s+constitution\b/i.test(blob)
+    fullBlob.includes("constitution of the philippines") ||
+    fullBlob.includes("1987 philippine constitution") ||
+    /\b1987\s+constitution\b/i.test(fullBlob)
   ) {
     return "CONSTITUTION";
   }
 
   if (
-    blob.includes("national internal revenue code") ||
-    /\bnirc\b/.test(blob) ||
-    /\btax code\b/.test(blob) ||
-    /\brepublic act\b/.test(blob) ||
-    /\bra\s*\d{4,6}\b/.test(blob)
+    headerBlob.includes("national internal revenue code") ||
+    /\bnirc\b/.test(headerBlob) ||
+    /\btax code\b/.test(headerBlob) ||
+    /\brepublic act\b/.test(headerBlob) ||
+    /\bra\s*\d{4,6}\b/.test(headerBlob)
   ) {
     return "STATUTE";
   }
 
-  if (
-    /\brr\s*\d+[-/ ]\d{2,4}\b/i.test(blob) ||
-    /\brevenue regulation[s]?\b/i.test(blob)
-  ) {
+  if (/\brr\s*\d+[-/ _]\d{2,4}\b/i.test(headerBlob) || /\brevenue regulation[s]?\b/i.test(headerBlob)) {
     return "RR";
   }
 
-  if (
-    /\brmc\s*\d+[-/ ]\d{2,4}\b/i.test(blob) ||
-    /\brevenue memorandum circular[s]?\b/i.test(blob)
-  ) {
+  if (/\brmc\s*\d+[-/ _]\d{2,4}\b/i.test(headerBlob) || /\brevenue memorandum circular[s]?\b/i.test(headerBlob)) {
     return "RMC";
   }
 
-  if (
-    /\brmo\s*\d+[-/ ]\d{2,4}\b/i.test(blob) ||
-    /\brevenue memorandum order[s]?\b/i.test(blob)
-  ) {
+  if (/\brmo\s*\d+[-/ _]\d{2,4}\b/i.test(headerBlob) || /\brevenue memorandum order[s]?\b/i.test(headerBlob)) {
     return "RMO";
   }
 
-  if (
-    /\bramo\s*\d+[-/ ]\d{2,4}\b/i.test(blob) ||
-    /\brevenue audit memorandum order[s]?\b/i.test(blob)
-  ) {
+  if (/\bramo\s*\d+[-/ _]\d{2,4}\b/i.test(headerBlob) || /\brevenue audit memorandum order[s]?\b/i.test(headerBlob)) {
     return "RAMO";
   }
 
-  if (
-    /\bbir ruling\b/i.test(blob) ||
-    /\bruling no\.?\b/i.test(blob)
-  ) {
+  if (/\bbir ruling\b/i.test(headerBlob) || /\bruling no\.?\b/i.test(headerBlob)) {
     return "BIR_RULING";
   }
 
   if (
-    /\btax treaty\b/i.test(blob) ||
-    /\binternational tax agreement\b/i.test(blob) ||
-    /\bdouble taxation agreement\b/i.test(blob)
+    /\btax treaty\b/i.test(headerBlob) ||
+    /\binternational tax agreement\b/i.test(headerBlob) ||
+    /\bdouble taxation agreement\b/i.test(headerBlob)
   ) {
     return "TREATY";
   }
 
-  const courtType = detectCourtType(blob);
+  const courtType = detectCourtType(headerBlob);
   if (courtType) return courtType;
 
   if (
-    /\bord(inance)?\b/i.test(blob) ||
-    /\blocal tax code\b/i.test(blob) ||
-    /\blocal business tax\b/i.test(blob)
+    fullBlob.includes("national internal revenue code") ||
+    /\bnirc\b/.test(fullBlob) ||
+    /\btax code\b/.test(fullBlob) ||
+    /\brepublic act\b/.test(fullBlob) ||
+    /\bra\s*\d{4,6}\b/.test(fullBlob)
   ) {
+    return "STATUTE";
+  }
+
+  if (/\brr\s*\d+[-/ _]\d{2,4}\b/i.test(fullBlob) || /\brevenue regulation[s]?\b/i.test(fullBlob)) {
+    return "RR";
+  }
+
+  if (/\brmc\s*\d+[-/ _]\d{2,4}\b/i.test(fullBlob) || /\brevenue memorandum circular[s]?\b/i.test(fullBlob)) {
+    return "RMC";
+  }
+
+  if (/\brmo\s*\d+[-/ _]\d{2,4}\b/i.test(fullBlob) || /\brevenue memorandum order[s]?\b/i.test(fullBlob)) {
+    return "RMO";
+  }
+
+  if (/\bramo\s*\d+[-/ _]\d{2,4}\b/i.test(fullBlob) || /\brevenue audit memorandum order[s]?\b/i.test(fullBlob)) {
+    return "RAMO";
+  }
+
+  if (/\bbir ruling\b/i.test(fullBlob) || /\bruling no\.?\b/i.test(fullBlob)) {
+    return "BIR_RULING";
+  }
+
+  const fullCourtType = detectCourtType(fullBlob);
+  if (fullCourtType) return fullCourtType;
+
+  if (/\btax treaty\b/i.test(fullBlob) || /\bdouble taxation agreement\b/i.test(fullBlob)) {
+    return "TREATY";
+  }
+
+  if (/\bord(inance)?\b/i.test(fullBlob) || /\blocal tax code\b/i.test(fullBlob) || /\blocal business tax\b/i.test(fullBlob)) {
     return "LGU";
   }
 
@@ -367,17 +363,11 @@ function normalizeLegalReference(input = "") {
       raw,
       normalized: "1987_PHILIPPINE_CONSTITUTION",
       type: "CONSTITUTION",
-      aliases: [
-        "constitution",
-        "1987 constitution",
-        "1987 philippine constitution"
-      ]
+      aliases: ["constitution", "1987 constitution", "1987 philippine constitution"]
     };
   }
 
-  const raMatch = raw.match(
-    /\b(?:republic act|ra|r\.a\.)\s*(?:no\.?)?\s*0*(\d{4,6})\b/i
-  );
+  const raMatch = raw.match(/\b(?:republic act|ra|r\.a\.)\s*(?:no\.?)?\s*0*(\d{4,6})\b/i);
 
   if (raMatch) {
     const num = String(raMatch[1]).replace(/^0+/, "");
@@ -386,11 +376,7 @@ function normalizeLegalReference(input = "") {
       raw,
       normalized: `RA_${num}`,
       type: "STATUTE",
-      aliases: [
-        `ra ${num}`,
-        `ra no ${num}`,
-        `republic act no ${num}`
-      ]
+      aliases: [`ra ${num}`, `ra no ${num}`, `republic act no ${num}`]
     };
   }
 
@@ -412,11 +398,7 @@ function normalizeLegalReference(input = "") {
         raw,
         normalized: `${type}_${num}_${year}`,
         type,
-        aliases: [
-          `${type} ${num}-${year}`,
-          `${type} No. ${num}-${year}`,
-          raw
-        ]
+        aliases: [`${type} ${num}-${year}`, `${type} No. ${num}-${year}`, raw]
       };
     }
   }
@@ -430,11 +412,7 @@ function normalizeLegalReference(input = "") {
       raw,
       normalized: `GR_${ref.replace(/[^A-Z0-9]+/g, "_")}`,
       type: "SUPREME_COURT",
-      aliases: [
-        `G.R. No. ${ref}`,
-        `GR No. ${ref}`,
-        raw
-      ]
+      aliases: [`G.R. No. ${ref}`, `GR No. ${ref}`, raw]
     };
   }
 
@@ -448,18 +426,8 @@ function normalizeLegalReference(input = "") {
   };
 }
 
-function buildAuthorityMetadata({
-  fileName = "",
-  path = "",
-  text = "",
-  modifiedTime = null
-}) {
-  const authorityType = classifyAuthorityFromDocument({
-    fileName,
-    path,
-    text
-  });
-
+function buildAuthorityMetadata({ fileName = "", path = "", text = "", modifiedTime = null }) {
+  const authorityType = classifyAuthorityFromDocument({ fileName, path, text });
   const normalized = normalizeLegalReference(`${fileName} ${path}`);
 
   return {
@@ -493,11 +461,7 @@ function getAuthorityLevelForDoc(doc = {}) {
   const type = getAuthorityTypeForDoc(doc);
 
   return (
-    Number(
-      doc.authorityLevel ||
-        doc.authority_level ||
-        doc.metadata?.authorityLevel
-    ) ||
+    Number(doc.authorityLevel || doc.authority_level || doc.metadata?.authorityLevel) ||
     AUTHORITY_LEVEL[type] ||
     99
   );
@@ -507,11 +471,7 @@ function getAuthorityScoreForDoc(doc = {}) {
   const type = getAuthorityTypeForDoc(doc);
 
   return (
-    Number(
-      doc.authorityScore ||
-        doc.authority_score ||
-        doc.metadata?.authorityScore
-    ) ||
+    Number(doc.authorityScore || doc.authority_score || doc.metadata?.authorityScore) ||
     AUTHORITY_SCORE[type] ||
     0
   );
@@ -521,11 +481,7 @@ function getControllingPrecedenceForDoc(doc = {}) {
   const type = getAuthorityTypeForDoc(doc);
 
   return (
-    Number(
-      doc.controllingPrecedence ||
-        doc.controlling_precedence ||
-        doc.metadata?.controllingPrecedence
-    ) ||
+    Number(doc.controllingPrecedence || doc.controlling_precedence || doc.metadata?.controllingPrecedence) ||
     CONTROLLING_PRECEDENCE[type] ||
     99
   );
@@ -550,7 +506,6 @@ function computeAuthorityPriorityBonus(doc = {}) {
 function computeIssueMatchBonus(query = "", doc = {}) {
   const q = lower(query);
   const blob = lower(buildAuthorityBlob(doc));
-
   let score = 0;
 
   const issueAnchors = [
@@ -577,9 +532,7 @@ function computeIssueMatchBonus(query = "", doc = {}) {
   ];
 
   for (const anchor of issueAnchors) {
-    if (q.includes(anchor) && blob.includes(anchor)) {
-      score += 14;
-    }
+    if (q.includes(anchor) && blob.includes(anchor)) score += 14;
   }
 
   return score;
@@ -593,6 +546,7 @@ function rerankByHierarchy(results = [], query = "") {
       const authorityScore = getAuthorityScoreForDoc(doc);
       const issueMatchBonus = computeIssueMatchBonus(query, doc);
       const authorityPriorityBonus = computeAuthorityPriorityBonus(doc);
+      const controllingPrecedence = getControllingPrecedenceForDoc(doc);
 
       const finalScore =
         semanticScore * 0.32 +
@@ -603,14 +557,15 @@ function rerankByHierarchy(results = [], query = "") {
       return {
         ...doc,
         authorityType,
-        authority_level: getAuthorityLevelForDoc(doc),
+        authority_type: authorityType,
         authorityLevel: getAuthorityLevelForDoc(doc),
+        authority_level: getAuthorityLevelForDoc(doc),
         authorityScore,
         authority_score: authorityScore,
         authorityLabel: AUTHORITY_LABEL[authorityType] || authorityType,
         authority_label: AUTHORITY_LABEL[authorityType] || authorityType,
-        controllingPrecedence: getControllingPrecedenceForDoc(doc),
-        controlling_precedence: getControllingPrecedenceForDoc(doc),
+        controllingPrecedence,
+        controlling_precedence: controllingPrecedence,
         issueMatchBonus,
         authorityPriorityBonus,
         finalScore,
@@ -634,9 +589,7 @@ function selectTopLegalBases(results = [], maxItems = 3) {
     .map((doc) => ({
       ...doc,
       source: getDocPath(doc) || getDocSource(doc),
-      excerpt: normalizeText(
-        doc.text || doc.content || doc.excerpt || ""
-      ).slice(0, 700)
+      excerpt: normalizeText(doc.text || doc.content || doc.excerpt || "").slice(0, 700)
     }));
 }
 
@@ -749,39 +702,30 @@ function authorityEngineHealthCheck() {
 
 module.exports = {
   ENGINE_VERSION,
-
   AUTHORITY_LEVEL,
   AUTHORITY_SCORE,
   AUTHORITY_LABEL,
   CONTROLLING_PRECEDENCE,
-
   COURT_TYPES,
   BIR_TYPES,
-
   normalizeText,
   compactSpaces,
   lower,
-
   getDocPath,
   getDocSource,
   getDocNormalizedReference,
   getDocAliases,
-
   normalizeLegalReference,
   classifyAuthorityFromDocument,
   buildAuthorityMetadata,
-
   getAuthorityTypeForDoc,
   getAuthorityLevelForDoc,
   getAuthorityScoreForDoc,
   getControllingPrecedenceForDoc,
-
   rerankByHierarchy,
   selectTopLegalBases,
-
   buildAuthorityHierarchyText,
   buildControllingPrecedenceText,
   buildStrictAnswerPrompt,
-
   authorityEngineHealthCheck
 };
