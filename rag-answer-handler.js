@@ -113,9 +113,7 @@ import {
   buildNoJurisprudenceText
 } from "./jurisprudence-engine.js";
 
-import {
-  renderAdaptiveAnswer
-} from "./answer-renderer.js";
+import answerRenderer from "./answer-renderer.js";
 
 const TINA_AF_HEADINGS = Object.freeze([
   "A. DIRECT ANSWER",
@@ -932,21 +930,28 @@ function renderFinalAnswer({
   routePayload
 }) {
   try {
-    const rendered = renderAdaptiveAnswer({
-      draftAnswer: preliminaryAnswer,
-      fallbackAnswer,
-      adaptiveContext: adaptiveState,
-      responsePlan: adaptiveState?.responsePlan || null,
-      assumptionGap: adaptiveState?.assumptionGap || null,
-      riskScore: adaptiveState?.riskScore || null,
-      positionStrength: adaptiveState?.positionStrength || null,
-      legalBasisDocs: topLegalBases,
-      sourcesUsed: finalVisibleSources,
-      conflicts: mergedConflictSignals,
-      hierarchyConflict,
-      professionalInsight,
-      routePayload
-    });
+   const rendered =
+  typeof answerRenderer?.renderAdaptiveAnswer === "function"
+    ? answerRenderer.renderAdaptiveAnswer({
+        draftAnswer: preliminaryAnswer,
+        fallbackAnswer,
+        adaptiveContext: adaptiveState,
+        responsePlan: adaptiveState?.responsePlan || null,
+        assumptionGap: adaptiveState?.assumptionGap || null,
+        riskScore: adaptiveState?.riskScore || null,
+        positionStrength: adaptiveState?.positionStrength || null,
+        legalBasisDocs: topLegalBases,
+        sourcesUsed: finalVisibleSources,
+        conflicts: mergedConflictSignals,
+        hierarchyConflict,
+        professionalInsight,
+        routePayload
+      })
+    : {
+        answer: preliminaryAnswer || fallbackAnswer || "",
+        sources: finalVisibleSources || [],
+        conflicts: mergedConflictSignals || []
+      };
 
     const normalized = normalizeRendererResult(rendered);
 
