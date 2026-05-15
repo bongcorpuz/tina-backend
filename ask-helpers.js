@@ -1,14 +1,10 @@
 // FILE: ask-helpers.js
 "use strict";
 
-import { createRequire } from "module";
-
-const require = createRequire(import.meta.url);
-
-const {
+import {
   applySupersessionFilter,
   findReplacementForDocument
-} = require("./supersession-engine.js");
+} from "./supersession-engine.js";
 
 export const MAX_VISIBLE_SOURCES = 5;
 
@@ -62,9 +58,7 @@ function cleanFilename(value = "") {
 
 function truncateText(value = "", maxChars = 900) {
   const text = String(value || "");
-  return text.length > maxChars
-    ? `${text.slice(0, maxChars)}...[truncated]`
-    : text;
+  return text.length > maxChars ? `${text.slice(0, maxChars)}...[truncated]` : text;
 }
 
 export function getUserId(req = {}) {
@@ -168,7 +162,6 @@ export function normalizeIssuanceNumber(num = "") {
 
 export function normalizeIssuanceYear(year = "") {
   const raw = String(year || "").trim();
-
   if (!raw) return "";
   if (/^\d{4}$/.test(raw)) return raw;
 
@@ -233,10 +226,11 @@ export function extractIssuanceReference(text = "") {
     }
 
     if (pattern.type === "RA") {
+      const number = String(match[1]).replace(/^0+/, "");
       return {
         type: "RA",
-        number: String(match[1]).replace(/^0+/, ""),
-        normalized: `RA ${String(match[1]).replace(/^0+/, "")}`
+        number,
+        normalized: `RA ${number}`
       };
     }
 
@@ -256,33 +250,23 @@ export function detectIssuanceQuery(question = "") {
 export function classifyQuestion(question = "") {
   const text = lower(question);
 
-  if (
-    /\b(?:rr|rmc|rmo|ramo|revenue regulation|revenue memorandum|bir ruling|ra|republic act|nirc|tax code|g\.?\s*r\.?\s*no|cta)\b/i.test(text)
-  ) {
+  if (/\b(?:rr|rmc|rmo|ramo|revenue regulation|revenue memorandum|bir ruling|ra|republic act|nirc|tax code|g\.?\s*r\.?\s*no|cta)\b/i.test(text)) {
     return "issuance";
   }
 
-  if (
-    /\b(?:vat|output vat|input vat|withholding|ewt|cwt|income tax|mcit|rcit|nolco|dst|percentage tax|excise)\b/i.test(text)
-  ) {
+  if (/\b(?:vat|output vat|input vat|withholding|ewt|cwt|income tax|mcit|rcit|nolco|dst|percentage tax|excise)\b/i.test(text)) {
     return "tax";
   }
 
-  if (
-    /\b(?:audit|afs|pfrs|pas|working paper|misstatement|qualified opinion|materiality|evidence|supporting document)\b/i.test(text)
-  ) {
+  if (/\b(?:audit|afs|pfrs|pas|working paper|misstatement|qualified opinion|materiality|evidence|supporting document)\b/i.test(text)) {
     return "audit";
   }
 
-  if (
-    /\b(?:case|litigation|court|jurisprudence|doctrine|cta|supreme court|protest|assessment|loa|pan|fan|fld)\b/i.test(text)
-  ) {
+  if (/\b(?:case|litigation|court|jurisprudence|doctrine|cta|supreme court|protest|assessment|loa|pan|fan|fld)\b/i.test(text)) {
     return "legal";
   }
 
-  if (
-    /\b(?:contract|agreement|lease|concession|principal|agent|economic substance|transaction|pass-through|reimbursement|bundled)\b/i.test(text)
-  ) {
+  if (/\b(?:contract|agreement|lease|concession|principal|agent|economic substance|transaction|pass-through|reimbursement|bundled)\b/i.test(text)) {
     return "transaction";
   }
 
@@ -297,30 +281,12 @@ export function detectQuestionMode(question = "") {
   const text = lower(question);
 
   const rules = [
-    {
-      regex: /\b(?:audit|afs|pfrs|pas|working paper|misstatement|qualified opinion)\b/i,
-      mode: "AUDIT"
-    },
-    {
-      regex: /\b(?:tax|vat|bir|income tax|withholding|mcit|rcit|nolco)\b/i,
-      mode: "TAX"
-    },
-    {
-      regex: /\b(?:case|litigation|court|jurisprudence|doctrine|g\.?\s*r\.?\s*no)\b/i,
-      mode: "LITIGATION"
-    },
-    {
-      regex: /\b(?:reviewer|quiz|exam|cpale|bar exam|recall)\b/i,
-      mode: "REVIEWER"
-    },
-    {
-      regex: /\b(?:contract|agreement|transaction|economic substance|evidence|principal|agent|reimbursement|pass-through)\b/i,
-      mode: "TRANSACTION"
-    },
-    {
-      regex: /\b(?:business|strategy|financial model|valuation|irr|pricing)\b/i,
-      mode: "BUSINESS"
-    }
+    { regex: /\b(?:audit|afs|pfrs|pas|working paper|misstatement|qualified opinion)\b/i, mode: "AUDIT" },
+    { regex: /\b(?:tax|vat|bir|income tax|withholding|mcit|rcit|nolco)\b/i, mode: "TAX" },
+    { regex: /\b(?:case|litigation|court|jurisprudence|doctrine|g\.?\s*r\.?\s*no)\b/i, mode: "LITIGATION" },
+    { regex: /\b(?:reviewer|quiz|exam|cpale|bar exam|recall)\b/i, mode: "REVIEWER" },
+    { regex: /\b(?:contract|agreement|transaction|economic substance|evidence|principal|agent|reimbursement|pass-through)\b/i, mode: "TRANSACTION" },
+    { regex: /\b(?:business|strategy|financial model|valuation|irr|pricing)\b/i, mode: "BUSINESS" }
   ];
 
   for (const rule of rules) {
@@ -337,9 +303,7 @@ export function getSourceTier(doc = {}) {
     doc.metadata?.authorityLevel ??
     null;
 
-  if (Number.isFinite(Number(explicit))) {
-    return Number(explicit);
-  }
+  if (Number.isFinite(Number(explicit))) return Number(explicit);
 
   const type = String(
     doc.authorityType ||
@@ -352,15 +316,15 @@ export function getSourceTier(doc = {}) {
     CONSTITUTION: 1,
     STATUTE: 2,
     RR: 3,
-    RMC: 4,
-    RMO: 5,
-    RAMO: 6,
-    BIR_RULING: 7,
-    SUPREME_COURT: 8,
-    CTA_EN_BANC: 9,
-    COURT_OF_APPEALS: 10,
-    CTA_DIVISION: 11,
-    TREATY: 12,
+    SUPREME_COURT: 4,
+    TREATY: 5,
+    RMC: 6,
+    RMO: 7,
+    RAMO: 8,
+    BIR_RULING: 9,
+    CTA_EN_BANC: 10,
+    COURT_OF_APPEALS: 11,
+    CTA_DIVISION: 12,
     LGU: 13,
     SECONDARY: 99,
     UNKNOWN: 99
@@ -388,58 +352,17 @@ export function getSourceTier(doc = {}) {
   );
 
   if (blob.includes("constitution")) return 1;
-
-  if (
-    blob.includes("national internal revenue code") ||
-    blob.includes("tax code") ||
-    blob.includes("republic act") ||
-    /\bnirc\b/i.test(blob) ||
-    /\bra\s*\d{4,6}\b/i.test(blob)
-  ) {
-    return 2;
-  }
-
-  if (
-    blob.includes("revenue regulation") ||
-    /\brr\s*\d+[-/]\d{2,4}\b/i.test(blob)
-  ) {
-    return 3;
-  }
-
-  if (
-    blob.includes("revenue memorandum circular") ||
-    /\brmc\s*\d+[-/]\d{2,4}\b/i.test(blob)
-  ) {
-    return 4;
-  }
-
-  if (
-    blob.includes("revenue memorandum order") ||
-    /\brmo\s*\d+[-/]\d{2,4}\b/i.test(blob)
-  ) {
-    return 5;
-  }
-
-  if (
-    blob.includes("revenue audit memorandum order") ||
-    /\bramo\s*\d+[-/]\d{2,4}\b/i.test(blob)
-  ) {
-    return 6;
-  }
-
-  if (blob.includes("bir ruling")) return 7;
-
-  if (
-    blob.includes("supreme court") ||
-    /\bg\.?\s*r\.?\s*no\.?/i.test(blob)
-  ) {
-    return 8;
-  }
-
-  if (blob.includes("cta en banc")) return 9;
-  if (blob.includes("court of appeals")) return 10;
-  if (blob.includes("cta")) return 11;
-  if (blob.includes("tax treaty")) return 12;
+  if (blob.includes("national internal revenue code") || blob.includes("tax code") || blob.includes("republic act") || /\bnirc\b/i.test(blob) || /\bra\s*\d{4,6}\b/i.test(blob)) return 2;
+  if (blob.includes("revenue regulation") || /\brr\s*\d+[-/]\d{2,4}\b/i.test(blob)) return 3;
+  if (blob.includes("supreme court") || /\bg\.?\s*r\.?\s*no\.?/i.test(blob)) return 4;
+  if (blob.includes("tax treaty")) return 5;
+  if (blob.includes("revenue memorandum circular") || /\brmc\s*\d+[-/]\d{2,4}\b/i.test(blob)) return 6;
+  if (blob.includes("revenue memorandum order") || /\brmo\s*\d+[-/]\d{2,4}\b/i.test(blob)) return 7;
+  if (blob.includes("revenue audit memorandum order") || /\bramo\s*\d+[-/]\d{2,4}\b/i.test(blob)) return 8;
+  if (blob.includes("bir ruling")) return 9;
+  if (blob.includes("cta en banc")) return 10;
+  if (blob.includes("court of appeals")) return 11;
+  if (blob.includes("cta")) return 12;
   if (blob.includes("local tax") || blob.includes("ordinance")) return 13;
 
   return 99;
@@ -692,27 +615,10 @@ export function askHelpersHealthCheck() {
   return {
     ok: true,
     module: "ask-helpers",
-    version: "3.3.0",
-    alignedWithVectorStoreVersion: "2.3.0",
-    exports: {
-      MAX_VISIBLE_SOURCES: true,
-      getUserId: true,
-      getSourceTier: true,
-      normalizeSourceName: true,
-      normalizeForMatch: true,
-      toSafeDbNumeric: true,
-      buildMemoryContext: true,
-      classifyQuestion: true,
-      detectIssuanceQuery: true,
-      shouldHideSourceFromUser: true,
-      stripTrailingSourceSection: true
-    },
+    version: "3.4.0",
+    esmCompatible: true,
     supersessionCompatible: true,
     adaptiveCompatible: true,
-    rendererCompatible: true,
-    plannerCompatible: true,
-    quizCompatible: true,
-    assessmentHandlerCompatible: true,
     ragAnswerHandlerCompatible: true,
     serverCompatible: true,
     vectorStoreCompatible: true
