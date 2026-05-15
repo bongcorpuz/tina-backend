@@ -4,30 +4,9 @@
 /**
  * rag-answer-handler.js
  * TINA Adaptive RAG Answer Handler
- *
- * Central answer-generation layer compatible with:
- * - patched ask-handler.js
- * - adaptive-mode-engine.js
- * - adaptive-response-planner.js
- * - query-intent-engine.js
- * - retrieval-engine.js
- * - reranker-engine.js
- * - supersession-engine.js
- * - jurisprudence-engine.js
- * - answer-renderer.js
- *
- * Main responsibilities:
- * - receive adaptiveContext from ask-handler.js
- * - perform authority-aware retrieval
- * - enforce supersession filtering
- * - apply jurisprudence/conflict discipline
- * - generate grounded answer
- * - apply conclusion gating
- * - delegate final formatting to answer-renderer.js
- * - persist final rendered answer
+ * Version: 3.2.0
+ * Fully ESM Compatible
  */
-
-import { createRequire } from "module";
 
 import { detectTopic } from "./topic-detector.js";
 import { saveModeState } from "./mode-state.js";
@@ -66,9 +45,17 @@ import {
   buildNoSourceReply
 } from "./legal-validation-engine.js";
 
-import { maybeGenerateProvisionCitationAnswer } from "./provision-citation-engine.js";
-import { maybeGenerateCaseAnalysisAnswer } from "./case-analysis-engine.js";
-import { maybeGenerateDoctrineAnswer } from "./doctrine-tagging-engine.js";
+import {
+  maybeGenerateProvisionCitationAnswer
+} from "./provision-citation-engine.js";
+
+import {
+  maybeGenerateCaseAnalysisAnswer
+} from "./case-analysis-engine.js";
+
+import {
+  maybeGenerateDoctrineAnswer
+} from "./doctrine-tagging-engine.js";
 
 import {
   detectNamedLaw,
@@ -96,33 +83,40 @@ import {
   stripTrailingSourceSection
 } from "./ask-helpers.js";
 
-const require = createRequire(import.meta.url);
-
-const {
+import {
   rerankByHierarchy,
   selectTopLegalBases,
   buildStrictAnswerPrompt,
   getAuthorityTypeForDoc,
   getAuthorityLevelForDoc
-} = require("./authority-engine.js");
+} from "./authority-engine.js";
 
-const { detectHierarchyConflict } = require("./conflict-engine.js");
-const { applySupersessionFilter } = require("./supersession-engine.js");
-const { hybridRetrieve } = require("./retrieval-engine.js");
-const { rerankForTina } = require("./reranker-engine.js");
+import {
+  detectHierarchyConflict
+} from "./conflict-engine.js";
 
-const {
+import {
+  applySupersessionFilter
+} from "./supersession-engine.js";
+
+import {
+  hybridRetrieve
+} from "./retrieval-engine.js";
+
+import {
+  rerankForTina
+} from "./reranker-engine.js";
+
+import {
   selectIssueRelevantJurisprudence,
   buildJurisprudencePromptBlock,
   buildNoJurisprudenceText
-} = require("./jurisprudence-engine.js");
+} from "./jurisprudence-engine.js";
 
-const {
+import {
   renderAdaptiveAnswer,
   buildRenderedAnswer
-} = require("./answer-renderer.js");
-
-const DEFAULT_MODEL = process.env.OPENAI_MODEL || "gpt-4o-mini";
+} from "./answer-renderer.js";
 
 const TINA_AF_HEADINGS = Object.freeze([
   "A. DIRECT ANSWER",
