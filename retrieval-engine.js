@@ -3,20 +3,29 @@
 
 /**
  * TINA Enterprise Retrieval Orchestration Engine
+ * Version: 3.1.0
  */
 
-const {
+import {
   rerankByHierarchy,
   getAuthorityTypeForDoc,
   getAuthorityLevelForDoc,
   getControllingPrecedenceForDoc
-} = require("./authority-engine.js");
+} from "./authority-engine.js";
 
-const { applySupersessionFilter } = require("./supersession-engine.js");
-const { analyzeQueryIntent } = require("./query-intent-engine.js");
-const { rerankForTina } = require("./reranker-engine.js");
+import {
+  applySupersessionFilter
+} from "./supersession-engine.js";
 
-const ENGINE_VERSION = "3.0.0";
+import {
+  analyzeQueryIntent
+} from "./query-intent-engine.js";
+
+import {
+  rerankForTina
+} from "./reranker-engine.js";
+
+const ENGINE_VERSION = "3.1.0";
 
 const DEFAULT_TOP_K = 12;
 const DEFAULT_POOL_K = 36;
@@ -142,9 +151,9 @@ function docText(doc = {}) {
       doc.metadata?.documentTitle,
       doc.metadata?.originalFileName,
       doc.metadata?.normalizedReference,
-      ...(doc.normalizedAliases || []),
-      ...(doc.normalized_aliases || []),
-      ...(doc.metadata?.normalizedAliases || [])
+      ...(Array.isArray(doc.normalizedAliases) ? doc.normalizedAliases : []),
+      ...(Array.isArray(doc.normalized_aliases) ? doc.normalized_aliases : []),
+      ...(Array.isArray(doc.metadata?.normalizedAliases) ? doc.metadata.normalizedAliases : [])
     ]
       .filter(Boolean)
       .join(" ")
@@ -699,7 +708,6 @@ async function hybridRetrieve({
     ...retrieval,
     questionType,
     taxType,
-
     exactCitation: {
       matched: Boolean(retrieval.audit?.exactCitationMatched),
       query
@@ -712,7 +720,7 @@ function retrievalEngineHealthCheck() {
     ok: true,
     engine: "TINA_RETRIEVAL_ENGINE",
     version: ENGINE_VERSION,
-    commonJsCompatible: true,
+    esmCompatible: true,
     adaptiveCompatible: true,
     rerankerCompatible: true,
     supersessionCompatible: true,
@@ -720,16 +728,24 @@ function retrievalEngineHealthCheck() {
   };
 }
 
-module.exports = {
+export {
   ENGINE_VERSION,
-
   normalizeMode,
   detectIssueType,
   detectDocIssueType,
   computeRetrievalScore,
-
   retrieveForTina,
   hybridRetrieve,
+  retrievalEngineHealthCheck
+};
 
+export default {
+  ENGINE_VERSION,
+  normalizeMode,
+  detectIssueType,
+  detectDocIssueType,
+  computeRetrievalScore,
+  retrieveForTina,
+  hybridRetrieve,
   retrievalEngineHealthCheck
 };
