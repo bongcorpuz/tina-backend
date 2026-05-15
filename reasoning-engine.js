@@ -3,31 +3,29 @@
 
 /**
  * TINA Enterprise Reasoning Engine
- * Version: 3.0.0
+ * Version: 3.1.0
  */
 
-import { createRequire } from "module";
-
-const require = createRequire(import.meta.url);
-
-const {
+import {
   AUTHORITY_LABEL,
   normalizeLegalReference,
   classifyAuthorityFromDocument,
   getAuthorityTypeForDoc,
   getAuthorityLevelForDoc,
   getControllingPrecedenceForDoc
-} = require("./authority-engine.js");
+} from "./authority-engine.js";
 
-const {
+import {
   resolveCourtOverride,
   isGenuineConflict,
   analyzeConflictPair
-} = require("./conflict-engine.js");
+} from "./conflict-engine.js";
 
-const { applySupersessionFilter } = require("./supersession-engine.js");
+import {
+  applySupersessionFilter
+} from "./supersession-engine.js";
 
-const ENGINE_VERSION = "3.0.0";
+const ENGINE_VERSION = "3.1.0";
 
 function safeString(value = "") {
   return String(value || "").trim();
@@ -1128,7 +1126,6 @@ export function reasoningEngineHealthCheck() {
     engine: "TINA_REASONING_ENGINE",
     version: ENGINE_VERSION,
     esmCompatible: true,
-    commonJsBridgeCompatible: true,
     authorityEngineCompatible: true,
     conflictEngineCompatible: true,
     supersessionCompatible: true,
