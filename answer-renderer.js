@@ -1042,3 +1042,11 @@ module.exports = {
 
   assertStructure
 };
+
+export {
+  renderAdaptiveAnswer
+};
+
+export default {
+  renderAdaptiveAnswer
+};
