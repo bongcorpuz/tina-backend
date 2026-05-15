@@ -1009,44 +1009,47 @@ function assertStructure(
   };
 }
 
-module.exports = {
-  ENGINE_VERSION,
-
-  TINA_AF_HEADINGS,
-
-  FALLBACK_TEMPLATES,
-
-  normalizeText,
-
-  stripRawSourceSections,
-
-  hasHeading,
-
-  hasStructure,
-
-  hasCompleteAFStructure,
-
-  repairStructure,
-
-  sanitizeConflictLanguage,
-
-  protectHeadingSpacing,
-
-  renderAdaptiveAnswer,
-
-  renderTinaAnswer,
-
-  renderTinaJsonPayload,
-
-  assertAFStructure,
-
-  assertStructure
-};
-
 export {
   renderAdaptiveAnswer
 };
 
 export default {
   renderAdaptiveAnswer
+};
+export {
+  ENGINE_VERSION,
+  TINA_AF_HEADINGS,
+  FALLBACK_TEMPLATES,
+  normalizeText,
+  stripRawSourceSections,
+  hasHeading,
+  hasStructure,
+  hasCompleteAFStructure,
+  repairStructure,
+  sanitizeConflictLanguage,
+  protectHeadingSpacing,
+  renderAdaptiveAnswer,
+  renderTinaAnswer,
+  renderTinaJsonPayload,
+  assertAFStructure,
+  assertStructure
+};
+
+export default {
+  ENGINE_VERSION,
+  TINA_AF_HEADINGS,
+  FALLBACK_TEMPLATES,
+  normalizeText,
+  stripRawSourceSections,
+  hasHeading,
+  hasStructure,
+  hasCompleteAFStructure,
+  repairStructure,
+  sanitizeConflictLanguage,
+  protectHeadingSpacing,
+  renderAdaptiveAnswer,
+  renderTinaAnswer,
+  renderTinaJsonPayload,
+  assertAFStructure,
+  assertStructure
 };
