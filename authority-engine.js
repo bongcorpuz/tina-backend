@@ -3,17 +3,17 @@
 
 /**
  * TINA AUTHORITY ENGINE
- * Version: 2.4.1
+ * Version: 2.4.2
  *
- * Patch:
- * - Preserves CommonJS export format.
+ * ESM Patch:
+ * - Converted from CommonJS module.exports to native ES Module exports.
  * - Aligned with vector-store.js authority metadata usage.
  * - Distinguishes authority level from controlling precedence.
  * - Avoids misclassifying BIR issuances as court cases merely because they mention cases.
  * - Strengthens exact RR/RMC/RMO/RAMO/RA/GR normalization.
  */
 
-const ENGINE_VERSION = "2.4.1";
+const ENGINE_VERSION = "2.4.2";
 
 const AUTHORITY_LEVEL = Object.freeze({
   CONSTITUTION: 1,
@@ -125,6 +125,7 @@ function basename(value = "") {
 
 function normalizeYear(year = "") {
   const raw = String(year || "").trim();
+
   if (!raw) return "";
   if (/^\d{4}$/.test(raw)) return raw;
 
@@ -547,6 +548,7 @@ function rerankByHierarchy(results = [], query = "") {
       const issueMatchBonus = computeIssueMatchBonus(query, doc);
       const authorityPriorityBonus = computeAuthorityPriorityBonus(doc);
       const controllingPrecedence = getControllingPrecedenceForDoc(doc);
+      const authorityLevel = getAuthorityLevelForDoc(doc);
 
       const finalScore =
         semanticScore * 0.32 +
@@ -558,8 +560,8 @@ function rerankByHierarchy(results = [], query = "") {
         ...doc,
         authorityType,
         authority_type: authorityType,
-        authorityLevel: getAuthorityLevelForDoc(doc),
-        authority_level: getAuthorityLevelForDoc(doc),
+        authorityLevel,
+        authority_level: authorityLevel,
         authorityScore,
         authority_score: authorityScore,
         authorityLabel: AUTHORITY_LABEL[authorityType] || authorityType,
@@ -690,7 +692,7 @@ function authorityEngineHealthCheck() {
     ok: true,
     engine: "TINA_AUTHORITY_ENGINE",
     version: ENGINE_VERSION,
-    commonJsCompatible: true,
+    esmCompatible: true,
     vectorStoreCompatible: true,
     adaptiveCompatible: true,
     plannerCompatible: true,
@@ -699,3 +701,63 @@ function authorityEngineHealthCheck() {
     rendererCompatible: true
   };
 }
+
+export {
+  ENGINE_VERSION,
+  AUTHORITY_LEVEL,
+  AUTHORITY_SCORE,
+  AUTHORITY_LABEL,
+  CONTROLLING_PRECEDENCE,
+  COURT_TYPES,
+  BIR_TYPES,
+  normalizeText,
+  compactSpaces,
+  lower,
+  getDocPath,
+  getDocSource,
+  getDocNormalizedReference,
+  getDocAliases,
+  normalizeLegalReference,
+  classifyAuthorityFromDocument,
+  buildAuthorityMetadata,
+  getAuthorityTypeForDoc,
+  getAuthorityLevelForDoc,
+  getAuthorityScoreForDoc,
+  getControllingPrecedenceForDoc,
+  rerankByHierarchy,
+  selectTopLegalBases,
+  buildAuthorityHierarchyText,
+  buildControllingPrecedenceText,
+  buildStrictAnswerPrompt,
+  authorityEngineHealthCheck
+};
+
+export default {
+  ENGINE_VERSION,
+  AUTHORITY_LEVEL,
+  AUTHORITY_SCORE,
+  AUTHORITY_LABEL,
+  CONTROLLING_PRECEDENCE,
+  COURT_TYPES,
+  BIR_TYPES,
+  normalizeText,
+  compactSpaces,
+  lower,
+  getDocPath,
+  getDocSource,
+  getDocNormalizedReference,
+  getDocAliases,
+  normalizeLegalReference,
+  classifyAuthorityFromDocument,
+  buildAuthorityMetadata,
+  getAuthorityTypeForDoc,
+  getAuthorityLevelForDoc,
+  getAuthorityScoreForDoc,
+  getControllingPrecedenceForDoc,
+  rerankByHierarchy,
+  selectTopLegalBases,
+  buildAuthorityHierarchyText,
+  buildControllingPrecedenceText,
+  buildStrictAnswerPrompt,
+  authorityEngineHealthCheck
+};
