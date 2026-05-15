@@ -115,6 +115,10 @@ import {
 
 import answerRenderer from "./answer-renderer.js";
 
+const DEFAULT_MODEL = process.env.OPENAI_MODEL || "gpt-4o-mini";
+
+const TINA_AF_HEADINGS = Object.freeze([
+
 const TINA_AF_HEADINGS = Object.freeze([
   "A. DIRECT ANSWER",
   "B. CONTROLLING LEGAL BASIS",
