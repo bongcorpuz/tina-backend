@@ -3,7 +3,7 @@
 
 /**
  * TINA Conflict Engine
- * Version: 2.4.0
+ * Version: 2.4.1
  */
 
 import {
@@ -20,7 +20,7 @@ import {
   getControllingPrecedenceForDoc
 } from "./authority-engine.js";
 
-const ENGINE_VERSION = "2.4.0";
+const ENGINE_VERSION = "2.4.1";
 
 const CONFLICT_TYPE = Object.freeze({
   NONE: "NO_CONFLICT",
@@ -29,10 +29,6 @@ const CONFLICT_TYPE = Object.freeze({
   MIXED: "MIXED_HIERARCHY_AND_DOCTRINAL_CONFLICT",
   APPARENT: "APPARENT_CONFLICT_ONLY"
 });
-
-function safeString(value = "") {
-  return String(value || "").trim();
-}
 
 function getDocText(doc = {}) {
   return compactSpaces(
@@ -77,9 +73,7 @@ function issueSignals(doc = {}) {
 function hasIssueOverlap(a = {}, b = {}) {
   const aSignals = issueSignals(a);
   const bSignals = issueSignals(b);
-
   if (!aSignals.length || !bSignals.length) return false;
-
   return aSignals.some((signal) => bSignals.includes(signal));
 }
 
@@ -140,21 +134,13 @@ function buildSourceLabel(doc = {}) {
 
 function isGenuineConflict(a = {}, b = {}) {
   if (!a || !b) return false;
-
-  if (hasDifferentVatDoctrine(a, b)) {
-    return false;
-  }
-
-  if (!hasIssueOverlap(a, b)) {
-    return false;
-  }
+  if (hasDifferentVatDoctrine(a, b)) return false;
+  if (!hasIssueOverlap(a, b)) return false;
 
   const aType = getAuthorityType(a);
   const bType = getAuthorityType(b);
 
-  if (aType === "UNKNOWN" || bType === "UNKNOWN") {
-    return false;
-  }
+  if (aType === "UNKNOWN" || bType === "UNKNOWN") return false;
 
   const aText = lower(getDocText(a));
   const bText = lower(getDocText(b));
@@ -173,15 +159,10 @@ function isGenuineConflict(a = {}, b = {}) {
     "valid"
   ];
 
-  const hasContradictoryLanguage =
+  return (
     contradictionWords.some((word) => aText.includes(word)) &&
-    contradictionWords.some((word) => bText.includes(word));
-
-  if (!hasContradictoryLanguage) {
-    return false;
-  }
-
-  return true;
+    contradictionWords.some((word) => bText.includes(word))
+  );
 }
 
 function resolveCourtOverride(a = {}, b = {}) {
@@ -257,11 +238,8 @@ function analyzeConflictPair(a = {}, b = {}) {
   const apparentConflict = hasIssueOverlap(a, b);
   const genuineConflict = isGenuineConflict(a, b);
   const vatDoctrineMismatch = hasDifferentVatDoctrine(a, b);
-  const hierarchyConflict =
-    genuineConflict && getPrecedence(a) !== getPrecedence(b);
-
-  const doctrinalConflict =
-    genuineConflict && sameAuthorityFamily(a, b);
+  const hierarchyConflict = genuineConflict && getPrecedence(a) !== getPrecedence(b);
+  const doctrinalConflict = genuineConflict && sameAuthorityFamily(a, b);
 
   let conflictType = CONFLICT_TYPE.NONE;
   let distinctionType = null;
@@ -309,13 +287,57 @@ function analyzeConflictPair(a = {}, b = {}) {
   };
 }
 
+function detectHierarchyConflict(docs = []) {
+  const list = Array.isArray(docs) ? docs.filter(Boolean) : [];
+
+  if (list.length < 2) {
+    return {
+      conflict: false,
+      apparentConflict: false,
+      hierarchyConflict: false,
+      doctrinalConflict: false,
+      conflictType: CONFLICT_TYPE.NONE,
+      reason: "Insufficient authorities for hierarchy conflict analysis."
+    };
+  }
+
+  for (let i = 0; i < list.length; i += 1) {
+    for (let j = i + 1; j < list.length; j += 1) {
+      const review = analyzeConflictPair(list[i], list[j]);
+
+      if (review?.conflict || review?.apparentConflict) {
+        const override = review.conflict ? resolveCourtOverride(list[i], list[j]) : null;
+
+        return {
+          ...review,
+          controllingAuthority: override?.winningAuthority || null,
+          controllingSource: override?.winningSource || null,
+          overriddenAuthority: override?.overriddenAuthority || null,
+          overriddenSource: override?.overriddenSource || null,
+          overrideApplied: Boolean(override?.overrideApplies)
+        };
+      }
+    }
+  }
+
+  return {
+    conflict: false,
+    apparentConflict: false,
+    hierarchyConflict: false,
+    doctrinalConflict: false,
+    conflictType: CONFLICT_TYPE.NONE,
+    reason: "No direct hierarchy or doctrinal conflict detected."
+  };
+}
+
 function conflictEngineHealthCheck() {
   return {
     ok: true,
     engine: "TINA_CONFLICT_ENGINE",
     version: ENGINE_VERSION,
     esmCompatible: true,
-    authorityEngineCompatible: true
+    authorityEngineCompatible: true,
+    hierarchyConflictExport: true
   };
 }
 
@@ -325,6 +347,7 @@ export {
   isGenuineConflict,
   resolveCourtOverride,
   analyzeConflictPair,
+  detectHierarchyConflict,
   conflictEngineHealthCheck
 };
 
@@ -334,5 +357,6 @@ export default {
   isGenuineConflict,
   resolveCourtOverride,
   analyzeConflictPair,
+  detectHierarchyConflict,
   conflictEngineHealthCheck
 };
