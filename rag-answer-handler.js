@@ -114,8 +114,7 @@ import {
 } from "./jurisprudence-engine.js";
 
 import {
-  renderAdaptiveAnswer,
-  buildRenderedAnswer
+  renderAdaptiveAnswer
 } from "./answer-renderer.js";
 
 const TINA_AF_HEADINGS = Object.freeze([
