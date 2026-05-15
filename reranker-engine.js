@@ -3,19 +3,25 @@
 
 /**
  * TINA Enterprise Reranker Engine
+ * Version: 3.1.0
  */
 
-const {
+import {
   rerankByHierarchy,
   getAuthorityTypeForDoc,
   getAuthorityLevelForDoc,
   getControllingPrecedenceForDoc
-} = require("./authority-engine.js");
+} from "./authority-engine.js";
 
-const { applySupersessionFilter } = require("./supersession-engine.js");
-const { analyzeQueryIntent } = require("./query-intent-engine.js");
+import {
+  applySupersessionFilter
+} from "./supersession-engine.js";
 
-const ENGINE_VERSION = "3.0.0";
+import {
+  analyzeQueryIntent
+} from "./query-intent-engine.js";
+
+const ENGINE_VERSION = "3.1.0";
 const DEFAULT_LIMIT = 12;
 
 const ISSUE_TYPE = Object.freeze({
@@ -153,9 +159,9 @@ function docText(doc = {}) {
       doc.metadata?.documentTitle,
       doc.metadata?.originalFileName,
       doc.metadata?.normalizedReference,
-      ...(doc.normalizedAliases || []),
-      ...(doc.normalized_aliases || []),
-      ...(doc.metadata?.normalizedAliases || [])
+      ...(Array.isArray(doc.normalizedAliases) ? doc.normalizedAliases : []),
+      ...(Array.isArray(doc.normalized_aliases) ? doc.normalized_aliases : []),
+      ...(Array.isArray(doc.metadata?.normalizedAliases) ? doc.metadata.normalizedAliases : [])
     ]
       .filter(Boolean)
       .join(" ")
@@ -579,25 +585,35 @@ function rerankerHealthCheck() {
     ok: true,
     engine: "TINA_RERANKER_ENGINE",
     version: ENGINE_VERSION,
-    commonJsCompatible: true,
+    esmCompatible: true,
     adaptiveCompatible: true,
     jurisprudenceCompatible: true,
     supersessionCompatible: true
   };
 }
 
-module.exports = {
+export {
   ENGINE_VERSION,
   ISSUE_TYPE,
   RESPONSE_MODE,
-
   normalizeMode,
   detectIssueTypes,
   computeTinaRerankScore,
-
   rerankForTina,
   selectControllingAuthorities,
   selectIssueRelevantCases,
+  rerankerHealthCheck
+};
 
+export default {
+  ENGINE_VERSION,
+  ISSUE_TYPE,
+  RESPONSE_MODE,
+  normalizeMode,
+  detectIssueTypes,
+  computeTinaRerankScore,
+  rerankForTina,
+  selectControllingAuthorities,
+  selectIssueRelevantCases,
   rerankerHealthCheck
 };
