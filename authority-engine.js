@@ -699,33 +699,3 @@ function authorityEngineHealthCheck() {
     rendererCompatible: true
   };
 }
-
-module.exports = {
-  ENGINE_VERSION,
-  AUTHORITY_LEVEL,
-  AUTHORITY_SCORE,
-  AUTHORITY_LABEL,
-  CONTROLLING_PRECEDENCE,
-  COURT_TYPES,
-  BIR_TYPES,
-  normalizeText,
-  compactSpaces,
-  lower,
-  getDocPath,
-  getDocSource,
-  getDocNormalizedReference,
-  getDocAliases,
-  normalizeLegalReference,
-  classifyAuthorityFromDocument,
-  buildAuthorityMetadata,
-  getAuthorityTypeForDoc,
-  getAuthorityLevelForDoc,
-  getAuthorityScoreForDoc,
-  getControllingPrecedenceForDoc,
-  rerankByHierarchy,
-  selectTopLegalBases,
-  buildAuthorityHierarchyText,
-  buildControllingPrecedenceText,
-  buildStrictAnswerPrompt,
-  authorityEngineHealthCheck
-};
