@@ -1010,13 +1010,6 @@ function assertStructure(
 }
 
 export {
-  renderAdaptiveAnswer
-};
-
-export default {
-  renderAdaptiveAnswer
-};
-export {
   ENGINE_VERSION,
   TINA_AF_HEADINGS,
   FALLBACK_TEMPLATES,
