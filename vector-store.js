@@ -5,14 +5,10 @@ import OpenAI from "openai";
 import { createClient } from "@supabase/supabase-js";
 import crypto from "crypto";
 
-import { createRequire } from "module";
-
-const require = createRequire(import.meta.url);
-
-const {
+import {
   rerankByHierarchy,
   buildAuthorityMetadata
-} = require("./authority-engine.js");
+} from "./authority-engine.js";
 
 /* =========================================================
    CONFIG
