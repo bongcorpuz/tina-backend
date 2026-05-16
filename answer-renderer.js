@@ -4,6 +4,7 @@
 /**
  * answer-renderer.js
  * TINA Enterprise Adaptive Answer Renderer
+ * Version: 4.0.0
  *
  * PURPOSE
  * - final adaptive rendering layer
@@ -15,20 +16,10 @@
  * - hierarchy-aware rendering
  * - supersession disclosure rendering
  * - planner contract enforcement
- *
- * COMPATIBLE WITH
- * - ask-handler.js
- * - rag-answer-handler.js
- * - adaptive-mode-engine.js
- * - adaptive-response-planner.js
- * - assumption-gap-engine.js
- * - risk-scoring-engine.js
- * - position-strength-engine.js
- * - jurisprudence-engine.js
- * - supersession-engine.js
+ * - conflict-language gating
  */
 
-const ENGINE_VERSION = "3.0.0";
+const ENGINE_VERSION = "4.0.0";
 
 const TINA_AF_HEADINGS = Object.freeze([
   "A. DIRECT ANSWER",
@@ -127,24 +118,17 @@ function normalizeText(value = "") {
 
 function normalizeArray(value) {
   if (!value) return [];
-  return Array.isArray(value)
-    ? value
-    : [value];
+  return Array.isArray(value) ? value : [value];
 }
 
 function escapeRegex(value = "") {
-  return String(value).replace(
-    /[.*+?^${}()|[\]\\]/g,
-    "\\$&"
-  );
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 function itemToText(item) {
   if (!item) return "";
 
-  if (typeof item === "string") {
-    return item;
-  }
+  if (typeof item === "string") return item;
 
   if (typeof item === "object") {
     return (
@@ -163,141 +147,61 @@ function itemToText(item) {
   return String(item);
 }
 
-function stripRawSourceSections(
-  text = ""
-) {
+function stripRawSourceSections(text = "") {
   return normalizeText(text)
-    .replace(
-      /\n+\s*Sources Used[\s\S]*$/i,
-      ""
-    )
-    .replace(
-      /\n+\s*Sources:[\s\S]*$/i,
-      ""
-    )
-    .replace(
-      /\n+\s*References:[\s\S]*$/i,
-      ""
-    )
-    .replace(
-      /\n+\s*Validated Indexed Sources[\s\S]*$/i,
-      ""
-    )
-    .replace(
-      /\n+\s*Authority Used[\s\S]*$/i,
-      ""
-    )
-    .replace(
-      /\n+\s*Supersession Audit[\s\S]*$/i,
-      ""
-    )
+    .replace(/\n+\s*Sources Used[\s\S]*$/i, "")
+    .replace(/\n+\s*Sources:[\s\S]*$/i, "")
+    .replace(/\n+\s*References:[\s\S]*$/i, "")
+    .replace(/\n+\s*Validated Indexed Sources[\s\S]*$/i, "")
+    .replace(/\n+\s*Authority Used[\s\S]*$/i, "")
+    .replace(/\n+\s*Supersession Audit[\s\S]*$/i, "")
     .trim();
 }
 
-function hasHeading(
-  text = "",
-  heading = ""
-) {
-  return new RegExp(
-    `(^|\\n)\\s*${escapeRegex(
-      heading
-    )}\\b`,
-    "i"
-  ).test(String(text || ""));
+function hasHeading(text = "", heading = "") {
+  return new RegExp(`(^|\\n)\\s*${escapeRegex(heading)}\\b`, "i").test(String(text || ""));
 }
 
-function hasStructure(
-  text = "",
-  headings = TINA_AF_HEADINGS
-) {
-  return headings.every((heading) =>
-    hasHeading(text, heading)
-  );
+function hasStructure(text = "", headings = TINA_AF_HEADINGS) {
+  return headings.every((heading) => hasHeading(text, heading));
 }
 
-function hasCompleteAFStructure(
-  text = ""
-) {
-  return hasStructure(
-    text,
-    TINA_AF_HEADINGS
-  );
+function hasCompleteAFStructure(text = "") {
+  return hasStructure(text, TINA_AF_HEADINGS);
 }
 
-function getSectionBody(
-  text = "",
-  heading = "",
-  headings = TINA_AF_HEADINGS
-) {
-  const source =
-    normalizeText(text);
-
-  const index =
-    headings.indexOf(heading);
+function getSectionBody(text = "", heading = "", headings = TINA_AF_HEADINGS) {
+  const source = normalizeText(text);
+  const index = headings.indexOf(heading);
 
   if (index < 0) return "";
 
-  const current =
-    escapeRegex(heading);
+  const current = escapeRegex(heading);
 
-  const nextHeadings =
-    headings
-      .slice(index + 1)
-      .map(escapeRegex)
-      .join("|");
+  const nextHeadings = headings
+    .slice(index + 1)
+    .map(escapeRegex)
+    .join("|");
 
   const regex = nextHeadings
-    ? new RegExp(
-        `${current}\\s*([\\s\\S]*?)(?=\\n\\s*(?:${nextHeadings})\\b|$)`,
-        "i"
-      )
-    : new RegExp(
-        `${current}\\s*([\\s\\S]*)$`,
-        "i"
-      );
+    ? new RegExp(`${current}\\s*([\\s\\S]*?)(?=\\n\\s*(?:${nextHeadings})\\b|$)`, "i")
+    : new RegExp(`${current}\\s*([\\s\\S]*)$`, "i");
 
-  const match =
-    source.match(regex);
+  const match = source.match(regex);
 
-  return normalizeText(
-    match?.[1] || ""
-  );
+  return normalizeText(match?.[1] || "");
 }
 
-function normalizeLegacyHeadings(
-  text = ""
-) {
+function normalizeLegacyHeadings(text = "") {
   return normalizeText(text)
-    .replace(
-      /(^|\n)\s*1\.\s*DIRECT ANSWER\b/gi,
-      "$1A. DIRECT ANSWER"
-    )
-
-    .replace(
-      /(^|\n)\s*2\.\s*LEGAL BASIS\b/gi,
-      "$1B. CONTROLLING LEGAL BASIS"
-    )
-
-    .replace(
-      /(^|\n)\s*3\.\s*SUPPORTING JURISPRUDENCE\b/gi,
-      "$1C. SUPPORTING JURISPRUDENCE"
-    )
-
-    .replace(
-      /(^|\n)\s*4\.\s*PROFESSIONAL INSIGHT\b/gi,
-      "$1F. PRACTICAL APPLICATION"
-    )
-
-    .replace(
-      /(^|\n)\s*5\.\s*CONFLICT FLAG\b/gi,
-      "$1D. DOCTRINAL STATUS / CONFLICT ANALYSIS"
-    );
+    .replace(/(^|\n)\s*1\.\s*DIRECT ANSWER\b/gi, "$1A. DIRECT ANSWER")
+    .replace(/(^|\n)\s*2\.\s*LEGAL BASIS\b/gi, "$1B. CONTROLLING LEGAL BASIS")
+    .replace(/(^|\n)\s*3\.\s*SUPPORTING JURISPRUDENCE\b/gi, "$1C. SUPPORTING JURISPRUDENCE")
+    .replace(/(^|\n)\s*4\.\s*PROFESSIONAL INSIGHT\b/gi, "$1F. PRACTICAL APPLICATION")
+    .replace(/(^|\n)\s*5\.\s*CONFLICT FLAG\b/gi, "$1D. DOCTRINAL STATUS / CONFLICT ANALYSIS");
 }
 
-function defaultBodyForHeading(
-  heading = "",
-  responseMode = "TECHNICAL"
-) {
+function defaultBodyForHeading(heading = "", responseMode = "TECHNICAL") {
   const defaults = {
     "A. DIRECT ANSWER":
       "No direct answer was rendered. Verify the controlling authority, facts, and supporting evidence before relying on the position.",
@@ -309,7 +213,7 @@ function defaultBodyForHeading(
       "No issue-relevant jurisprudence was rendered. TINA should not cite unrelated cases merely because they mention the same tax type.",
 
     "D. DOCTRINAL STATUS / CONFLICT ANALYSIS":
-      "No direct doctrinal conflict was rendered. Authorities addressing different substantive, procedural, evidentiary, jurisdictional, temporal, or factual issues should be treated as distinguishable rather than conflicting.",
+      "No doctrinal conflict should be asserted unless conflict metadata confirms the same exact issue, same legal dimension, opposite holding, conflict type, and hierarchy-based resolution.",
 
     "E. HIERARCHY ANALYSIS":
       "Apply Philippine legal hierarchy. Lower authorities cannot override higher authorities.",
@@ -320,485 +224,396 @@ function defaultBodyForHeading(
 
   return (
     defaults[heading] ||
-    `No ${heading
-      .replace(/^[A-Z]\.\s*/, "")
-      .toLowerCase()} was rendered.`
+    `No ${heading.replace(/^[A-Z]\.\s*/, "").toLowerCase()} was rendered.`
   );
 }
 
-function repairStructure(
-  answer = "",
-  headings = TINA_AF_HEADINGS,
-  responseMode = "TECHNICAL"
-) {
-  const clean =
-    normalizeLegacyHeadings(
-      stripRawSourceSections(
-        answer
-      )
-    );
+function repairStructure(answer = "", headings = TINA_AF_HEADINGS, responseMode = "TECHNICAL") {
+  const clean = normalizeLegacyHeadings(stripRawSourceSections(answer));
 
-  if (
-    hasStructure(clean, headings)
-  ) {
-    return clean;
-  }
+  if (hasStructure(clean, headings)) return clean;
 
-  const sections =
-    headings.map((heading) => {
-      const body =
-        getSectionBody(
-          clean,
-          heading,
-          headings
-        ) ||
-        defaultBodyForHeading(
-          heading,
-          responseMode
-        );
+  const sections = headings.map((heading) => {
+    const body =
+      getSectionBody(clean, heading, headings) ||
+      defaultBodyForHeading(heading, responseMode);
 
-      return `${heading}\n${body}`;
-    });
+    return `${heading}\n${body}`;
+  });
 
-  if (
-    !headings.some((heading) =>
-      hasHeading(clean, heading)
-    )
-  ) {
-    sections[0] =
-      `${headings[0]}\n${
-        clean ||
-        defaultBodyForHeading(
-          headings[0],
-          responseMode
-        )
-      }`;
+  if (!headings.some((heading) => hasHeading(clean, heading))) {
+    sections[0] = `${headings[0]}\n${clean || defaultBodyForHeading(headings[0], responseMode)}`;
   }
 
   return sections.join("\n\n").trim();
 }
 
-function sanitizeConflictLanguage(
-  answer = "",
-  headings = TINA_AF_HEADINGS
-) {
-  const clean =
-    normalizeText(answer);
-
-  const conflictHeading =
-    headings.find((heading) =>
-      /DOCTRINAL STATUS|CONFLICT ANALYSIS/i.test(
-        heading
-      )
-    ) ||
-    "D. DOCTRINAL STATUS / CONFLICT ANALYSIS";
-
-  const body = getSectionBody(
-    clean,
-    conflictHeading,
-    headings
-  );
-
-  if (!body) {
-    return clean;
-  }
-
-  const vagueConflict =
-    /Conflict Detected:\s*YES/i.test(
-      body
-    ) &&
-    !/(exact issue|controlling doctrine|controlling authority|distinction type|resolution basis|substantive|procedural|evidentiary|jurisdictional|temporal|factual|administrative)/i.test(
-      body
-    );
-
-  if (!vagueConflict) {
-    return clean;
-  }
-
-  return clean.replace(
-    new RegExp(
-      `(${escapeRegex(
-        conflictHeading
-      )}\\b)[\\s\\S]*?(?=\\n\\s*[A-Z]\\.\\s|$)`,
-      "i"
-    ),
-
-    [
-      conflictHeading,
-
-      "A vague conflict flag was removed. No doctrinal conflict should be asserted unless the exact issue, controlling doctrine, hierarchy basis, and resolution analysis are specifically identified."
-    ].join("\n")
+function getConflictMetadata(input = {}) {
+  return (
+    input.conflict ||
+    input.conflictReview ||
+    input.jurisprudenceConflict ||
+    input.jurisprudencePayload?.conflictReview ||
+    input.jurisprudencePayload?.jurisprudenceConflict ||
+    input.adaptiveContext?.conflict ||
+    input.adaptiveContext?.conflictReview ||
+    input.responsePlan?.conflict ||
+    input.responsePlan?.conflictReview ||
+    null
   );
 }
 
-function protectHeadingSpacing(
-  answer = "",
-  headings = TINA_AF_HEADINGS
-) {
-  let clean =
-    normalizeText(answer);
+function conflictMetadataIsComplete(conflict = null) {
+  if (!conflict || typeof conflict !== "object") return false;
 
-  for (const heading of headings) {
-    const pattern =
-      new RegExp(
-        `\\s*${escapeRegex(
-          heading
-        )}\\s*`,
-        "gi"
-      );
+  const hasTrueConflict = conflict.conflict === true;
+  const hasConflictType = Boolean(conflict.conflictType || conflict.type);
+  const hasExactIssue = Boolean(conflict.exactIssue || conflict.sameIssueGate?.sameIssues?.length);
+  const hasExactDimension = Boolean(
+    conflict.exactLegalDimension ||
+      conflict.sameIssueGate?.sameDimensions?.length ||
+      conflict.legalDimension
+  );
 
-    clean = clean.replace(
-      pattern,
-      `\n\n${heading}\n`
-    );
-  }
+  const hasResolution = Boolean(
+    conflict.resolutionBasis ||
+      conflict.reason ||
+      conflict.winningAuthority ||
+      conflict.controllingAuthority ||
+      conflict.controllingSource
+  );
 
-  return clean
-    .replace(/^\n+/, "")
-    .replace(/\n{3,}/g, "\n\n")
-    .trim();
+  const sameIssuePassed =
+    conflict.sameIssueGate?.passed === true ||
+    Boolean(conflict.exactIssue);
+
+  const oppositeHoldingPassed =
+    conflict.oppositeHoldingGate?.passed === true ||
+    Boolean(conflict.oppositeHolding || conflict.oppositeHoldings);
+
+  return (
+    hasTrueConflict &&
+    hasConflictType &&
+    hasExactIssue &&
+    hasExactDimension &&
+    hasResolution &&
+    sameIssuePassed &&
+    oppositeHoldingPassed
+  );
 }
 
-function renderList(items = []) {
-  const normalized =
-    normalizeArray(items)
-      .map(itemToText)
-      .filter(Boolean);
-
-  if (!normalized.length) {
-    return "";
+function buildConflictMetadataBlock(conflict = null) {
+  if (!conflictMetadataIsComplete(conflict)) {
+    return [
+      "No direct doctrinal conflict is asserted.",
+      "A conflict label requires complete metadata showing:",
+      "1. same exact legal issue;",
+      "2. same legal dimension;",
+      "3. opposite holding;",
+      "4. conflict type;",
+      "5. controlling authority or hierarchy-based resolution.",
+      "Authorities involving different substantive, procedural, evidentiary, jurisdictional, temporal, factual, or contractual issues should be treated as distinguishable, not conflicting."
+    ].join("\n");
   }
 
-  return normalized
-    .map(
-      (item, index) =>
-        `${index + 1}. ${item}`
-    )
-    .join("\n");
-}
+  const exactIssue =
+    conflict.exactIssue ||
+    conflict.sameIssueGate?.sameIssues?.join(", ") ||
+    "Not specified";
 
-function renderSources(
-  sources = []
-) {
-  if (
-    !Array.isArray(sources) ||
-    !sources.length
-  ) {
-    return "";
-  }
+  const exactDimension =
+    conflict.exactLegalDimension ||
+    conflict.sameIssueGate?.sameDimensions?.join(", ") ||
+    conflict.legalDimension ||
+    "Not specified";
 
-  const lines =
-    sources.slice(0, 8).map(
-      (source, index) => {
-        const title =
-          source.issuanceNumber ||
-          source.issuance_number
-            ? `${
-                source.issuanceNumber ||
-                source.issuance_number
-              } – ${
-                source.title ||
-                "Untitled Source"
-              }`
-            : source.title ||
-              source.source ||
-              source.sourcePath ||
-              source.path ||
-              "Untitled Source";
+  const conflictType = conflict.conflictType || conflict.type || "DOCTRINAL_CONFLICT";
 
-        const authority =
-          source.authorityType ||
-          source.authority_type ||
-          source.authorityLabel ||
-          "Source";
+  const resolution =
+    conflict.resolutionBasis ||
+    conflict.reason ||
+    "Hierarchy-based resolution required.";
 
-        return `${index + 1}. ${title} (${authority})`;
-      }
-    );
+  const controllingAuthority =
+    conflict.controllingAuthority ||
+    conflict.winningAuthority ||
+    conflict.winningSource?.authorityType ||
+    conflict.winningSource?.authorityLabel ||
+    "Not clearly identified";
 
   return [
-    "",
-    "VALIDATED INDEXED SOURCES",
-    ...lines
+    "Conflict Detected: YES",
+    `Conflict Type: ${conflictType}`,
+    `Exact Issue: ${exactIssue}`,
+    `Exact Legal Dimension: ${exactDimension}`,
+    `Controlling Authority: ${controllingAuthority}`,
+    `Resolution Basis: ${resolution}`
   ].join("\n");
 }
 
-function renderSupersessionAudit(
-  supersessionAudit = null
-) {
-  if (
-    !supersessionAudit
-      ?.auditTrail?.length
-  ) {
-    return "";
-  }
-
-  const lines =
-    supersessionAudit.auditTrail
-      .slice(0, 5)
-
-      .map((item, index) => {
-        return [
-          `${index + 1}. ${item.documentTitle || item.document}`,
-
-          `Status: ${item.status}`,
-
-          item.replacedByTitle
-            ? `Replaced By: ${item.replacedByTitle}`
-            : null,
-
-          item.reason
-            ? `Reason: ${item.reason}`
-            : null
-        ]
-          .filter(Boolean)
-          .join("\n");
-      });
-
-  return [
-    "",
-    "SUPERSESSION AUDIT",
-    ...lines
-  ].join("\n\n");
+function findConflictHeading(headings = TINA_AF_HEADINGS) {
+  return (
+    headings.find((heading) =>
+      /DOCTRINAL STATUS|CONFLICT ANALYSIS|CONFLICT/i.test(heading)
+    ) || "D. DOCTRINAL STATUS / CONFLICT ANALYSIS"
+  );
 }
 
-function renderRiskBlock(
-  riskBlock = null
-) {
+function replaceSection(text = "", heading = "", headings = TINA_AF_HEADINGS, replacementBody = "") {
+  const clean = normalizeText(text);
+  const index = headings.indexOf(heading);
+
+  if (index < 0 || !hasHeading(clean, heading)) return clean;
+
+  const current = escapeRegex(heading);
+  const nextHeadings = headings
+    .slice(index + 1)
+    .map(escapeRegex)
+    .join("|");
+
+  const regex = nextHeadings
+    ? new RegExp(`(${current}\\b)[\\s\\S]*?(?=\\n\\s*(?:${nextHeadings})\\b|$)`, "i")
+    : new RegExp(`(${current}\\b)[\\s\\S]*$`, "i");
+
+  return clean.replace(regex, `${heading}\n${replacementBody}`);
+}
+
+function containsVagueConflictLanguage(text = "") {
+  const body = normalizeText(text);
+
+  return (
+    /\bconflict\s+detected\s*:\s*yes\b/i.test(body) ||
+    /\bconflict\s*:\s*yes\b/i.test(body) ||
+    /\bdoctrinal conflict\b/i.test(body) ||
+    /\bthere is a conflict\b/i.test(body) ||
+    /\bconflicting authorities\b/i.test(body) ||
+    /\bconflict exists\b/i.test(body)
+  );
+}
+
+function hasConflictSpecifics(text = "") {
+  const body = normalizeText(text);
+
+  return (
+    /\bexact issue\b/i.test(body) &&
+    /\b(exact legal dimension|legal dimension)\b/i.test(body) &&
+    /\b(controlling authority|controlling doctrine|winning authority|hierarchy)\b/i.test(body) &&
+    /\b(resolution basis|why it controls|basis for resolution)\b/i.test(body)
+  );
+}
+
+function sanitizeConflictLanguage(answer = "", headings = TINA_AF_HEADINGS, conflictMetadata = null) {
+  const clean = normalizeText(answer);
+  const conflictHeading = findConflictHeading(headings);
+  const body = getSectionBody(clean, conflictHeading, headings);
+
+  if (!body) return clean;
+
+  const metadataComplete = conflictMetadataIsComplete(conflictMetadata);
+  const vagueConflict = containsVagueConflictLanguage(body) && !hasConflictSpecifics(body);
+
+  if (metadataComplete) {
+    return replaceSection(
+      clean,
+      conflictHeading,
+      headings,
+      buildConflictMetadataBlock(conflictMetadata)
+    );
+  }
+
+  if (!metadataComplete && (vagueConflict || containsVagueConflictLanguage(body))) {
+    return replaceSection(
+      clean,
+      conflictHeading,
+      headings,
+      buildConflictMetadataBlock(null)
+    );
+  }
+
+  return clean;
+}
+
+function protectHeadingSpacing(answer = "", headings = TINA_AF_HEADINGS) {
+  let clean = normalizeText(answer);
+
+  for (const heading of headings) {
+    const pattern = new RegExp(`\\s*${escapeRegex(heading)}\\s*`, "gi");
+    clean = clean.replace(pattern, `\n\n${heading}\n`);
+  }
+
+  return clean.replace(/^\n+/, "").replace(/\n{3,}/g, "\n\n").trim();
+}
+
+function renderList(items = []) {
+  const normalized = normalizeArray(items).map(itemToText).filter(Boolean);
+
+  if (!normalized.length) return "";
+
+  return normalized.map((item, index) => `${index + 1}. ${item}`).join("\n");
+}
+
+function renderSources(sources = []) {
+  if (!Array.isArray(sources) || !sources.length) return "";
+
+  const lines = sources.slice(0, 8).map((source, index) => {
+    const title =
+      source.issuanceNumber || source.issuance_number
+        ? `${source.issuanceNumber || source.issuance_number} – ${source.title || "Untitled Source"}`
+        : source.title ||
+          source.source ||
+          source.sourcePath ||
+          source.path ||
+          "Untitled Source";
+
+    const authority =
+      source.authorityType ||
+      source.authority_type ||
+      source.authorityLabel ||
+      "Source";
+
+    return `${index + 1}. ${title} (${authority})`;
+  });
+
+  return ["", "VALIDATED INDEXED SOURCES", ...lines].join("\n");
+}
+
+function renderSupersessionAudit(supersessionAudit = null) {
+  if (!supersessionAudit?.auditTrail?.length) return "";
+
+  const lines = supersessionAudit.auditTrail.slice(0, 5).map((item, index) => {
+    return [
+      `${index + 1}. ${item.documentTitle || item.document}`,
+      `Status: ${item.status}`,
+      item.replacedByTitle ? `Replaced By: ${item.replacedByTitle}` : null,
+      item.reason ? `Reason: ${item.reason}` : null
+    ]
+      .filter(Boolean)
+      .join("\n");
+  });
+
+  return ["", "SUPERSESSION AUDIT", ...lines].join("\n\n");
+}
+
+function renderRiskBlock(riskBlock = null) {
   if (!riskBlock) return "";
 
   const lines = [];
 
   if (riskBlock.overallRisk) {
     const risk =
-      typeof riskBlock.overallRisk ===
-      "object"
+      typeof riskBlock.overallRisk === "object"
         ? `${riskBlock.overallRisk.level || ""}${
-            riskBlock.overallRisk
-              .score != null
-              ? ` (${riskBlock.overallRisk.score})`
-              : ""
+            riskBlock.overallRisk.score != null ? ` (${riskBlock.overallRisk.score})` : ""
           }`.trim()
-        : String(
-            riskBlock.overallRisk
-          );
+        : String(riskBlock.overallRisk);
 
-    if (risk) {
-      lines.push(
-        `Overall Risk: ${risk}`
-      );
-    }
+    if (risk) lines.push(`Overall Risk: ${risk}`);
   }
 
-  if (
-    riskBlock.taxpayerDefensibility
-  ) {
-    lines.push(
-      `Taxpayer Defensibility: ${riskBlock.taxpayerDefensibility}`
-    );
+  if (riskBlock.taxpayerDefensibility) {
+    lines.push(`Taxpayer Defensibility: ${riskBlock.taxpayerDefensibility}`);
   }
 
-  if (
-    riskBlock.positionStrength
-  ) {
-    lines.push(
-      `Position Strength: ${riskBlock.positionStrength}`
-    );
+  if (riskBlock.positionStrength) {
+    lines.push(`Position Strength: ${riskBlock.positionStrength}`);
   }
 
-  if (
-    riskBlock.conclusionRestriction
-  ) {
-    lines.push(
-      `Conclusion Restriction: ${riskBlock.conclusionRestriction}`
-    );
+  if (riskBlock.conclusionRestriction) {
+    lines.push(`Conclusion Restriction: ${riskBlock.conclusionRestriction}`);
   }
 
-  return lines.length
-    ? `RISK AND POSITION CONTROL\n${lines.join("\n")}`
-    : "";
+  return lines.length ? `RISK AND POSITION CONTROL\n${lines.join("\n")}` : "";
 }
 
-function getResponsePlan(
-  input = {}
-) {
-  return (
-    input.responsePlan ||
-    input.adaptiveContext
-      ?.responsePlan ||
-    {}
-  );
+function getResponsePlan(input = {}) {
+  return input.responsePlan || input.adaptiveContext?.responsePlan || {};
 }
 
-function getRendererContract(
-  input = {}
-) {
+function getRendererContract(input = {}) {
   return (
     input.rendererContract ||
-    input.responsePlan
-      ?.rendererContract ||
-    input.adaptiveContext
-      ?.rendererContract ||
+    input.responsePlan?.rendererContract ||
+    input.adaptiveContext?.rendererContract ||
     {}
   );
 }
 
-function getResponseModeFromInput(
-  input = {}
-) {
-  const plan =
-    getResponsePlan(input);
+function getResponseModeFromInput(input = {}) {
+  const plan = getResponsePlan(input);
+  const contract = getRendererContract(input);
 
-  const contract =
-    getRendererContract(input);
-
-  return (
-    contract.responseMode ||
-    plan.responseMode ||
-    input.responseMode ||
-    "TECHNICAL"
-  );
+  return contract.responseMode || plan.responseMode || input.responseMode || "TECHNICAL";
 }
 
-function getHeadingsFromInput(
-  input = {}
-) {
-  const plan =
-    getResponsePlan(input);
-
-  const contract =
-    getRendererContract(input);
+function getHeadingsFromInput(input = {}) {
+  const plan = getResponsePlan(input);
+  const contract = getRendererContract(input);
 
   return normalizeArray(
     contract.sections ||
       plan.responseTemplate ||
-      FALLBACK_TEMPLATES[
-        getResponseModeFromInput(
-          input
-        )
-      ] ||
+      FALLBACK_TEMPLATES[getResponseModeFromInput(input)] ||
       TINA_AF_HEADINGS
   ).filter(Boolean);
 }
 
-function getLimitationStatement(
-  input = {}
-) {
+function getLimitationStatement(input = {}) {
   return (
     input.limitationStatement ||
-    input.assumptionGap
-      ?.limitationStatement ||
-    input.positionStrength
-      ?.limitationStatement ||
+    input.assumptionGap?.limitationStatement ||
+    input.positionStrength?.limitationStatement ||
     "Based on the available facts, the position is preliminary and subject to verification."
   );
 }
 
-function shouldApplyLimitation(
-  input = {}
-) {
+function shouldApplyLimitation(input = {}) {
   return Boolean(
     input.mustIncludeLimitation ||
-      input.assumptionGap
-        ?.mustDiscloseBeforeConclusion ||
-      input.positionStrength
-        ?.conclusionAction ===
-        "DEFER_CONCLUSION" ||
-      input.positionStrength
-        ?.conclusionAction ===
-        "USE_QUALIFIED_CONCLUSION" ||
-      input.riskScore
-        ?.conclusionRestriction ===
-        "PRELIMINARY_CONCLUSION_ONLY"
+      input.assumptionGap?.mustDiscloseBeforeConclusion ||
+      input.positionStrength?.conclusionAction === "DEFER_CONCLUSION" ||
+      input.positionStrength?.conclusionAction === "USE_QUALIFIED_CONCLUSION" ||
+      input.riskScore?.conclusionRestriction === "PRELIMINARY_CONCLUSION_ONLY"
   );
 }
 
-function applyLimitation(
-  answer = "",
-  input = {}
-) {
-  if (
-    !shouldApplyLimitation(
-      input
-    )
-  ) {
-    return answer;
-  }
+function applyLimitation(answer = "", input = {}) {
+  if (!shouldApplyLimitation(input)) return answer;
 
-  const limitation =
-    getLimitationStatement(
-      input
-    );
+  const limitation = getLimitationStatement(input);
 
-  if (
-    answer.includes("LIMITATION")
-  ) {
-    return answer;
-  }
+  if (answer.includes("LIMITATION")) return answer;
 
   return `${answer}\n\nLIMITATION\n${limitation}`;
 }
 
-function applyRiskBlock(
-  answer = "",
-  input = {}
-) {
-  const rendered =
-    renderRiskBlock(
-      input.riskBlock ||
-        input.riskScore
-    );
+function applyRiskBlock(answer = "", input = {}) {
+  const rendered = renderRiskBlock(input.riskBlock || input.riskScore);
 
-  if (!rendered) {
-    return answer;
-  }
+  if (!rendered) return answer;
 
-  if (
-    answer.includes(
-      "RISK AND POSITION CONTROL"
-    )
-  ) {
-    return answer;
-  }
+  if (answer.includes("RISK AND POSITION CONTROL")) return answer;
 
   return `${answer}\n\n${rendered}`;
 }
 
-function applySupersessionAudit(
-  answer = "",
-  input = {}
-) {
-  const rendered =
-    renderSupersessionAudit(
-      input.supersessionAudit ||
-        input.supersessionResult
-    );
+function applySupersessionAudit(answer = "", input = {}) {
+  const rendered = renderSupersessionAudit(input.supersessionAudit || input.supersessionResult);
 
-  if (!rendered) {
-    return answer;
-  }
+  if (!rendered) return answer;
 
-  if (
-    answer.includes(
-      "SUPERSESSION AUDIT"
-    )
-  ) {
-    return answer;
-  }
+  if (answer.includes("SUPERSESSION AUDIT")) return answer;
 
   return `${answer}\n${rendered}`;
 }
 
-function renderAdaptiveAnswer(
-  input = {}
-) {
-  const responseMode =
-    getResponseModeFromInput(
-      input
-    );
+function applyConflictMetadata(answer = "", input = {}, headings = TINA_AF_HEADINGS) {
+  const conflict = getConflictMetadata(input);
+  return sanitizeConflictLanguage(answer, headings, conflict);
+}
 
-  const headings =
-    getHeadingsFromInput(input);
+function renderAdaptiveAnswer(input = {}) {
+  const responseMode = getResponseModeFromInput(input);
+  const headings = getHeadingsFromInput(input);
 
   const rawAnswer =
     input.answer ||
@@ -806,46 +621,19 @@ function renderAdaptiveAnswer(
     input.fallbackAnswer ||
     "";
 
-  let rendered =
-    repairStructure(
-      rawAnswer,
-      headings,
-      responseMode
-    );
+  let rendered = repairStructure(rawAnswer, headings, responseMode);
 
-  rendered =
-    sanitizeConflictLanguage(
-      rendered,
-      headings
-    );
+  rendered = applyConflictMetadata(rendered, input, headings);
 
-  rendered =
-    protectHeadingSpacing(
-      rendered,
-      headings
-    );
+  rendered = protectHeadingSpacing(rendered, headings);
 
-  rendered =
-    applyLimitation(
-      rendered,
-      input
-    );
+  rendered = applyLimitation(rendered, input);
 
-  rendered =
-    applyRiskBlock(
-      rendered,
-      input
-    );
+  rendered = applyRiskBlock(rendered, input);
 
-  rendered =
-    applySupersessionAudit(
-      rendered,
-      input
-    );
+  rendered = applySupersessionAudit(rendered, input);
 
-  return normalizeText(
-    rendered
-  );
+  return normalizeText(rendered);
 }
 
 function renderTinaAnswer({
@@ -857,26 +645,29 @@ function renderTinaAnswer({
   assumptionGap = null,
   riskScore = null,
   positionStrength = null,
-  supersessionAudit = null
+  supersessionAudit = null,
+  conflict = null,
+  conflictReview = null,
+  jurisprudencePayload = null
 } = {}) {
-  let rendered =
-    renderAdaptiveAnswer({
-      answer,
-      adaptiveContext,
-      responsePlan,
-      assumptionGap,
-      riskScore,
-      positionStrength,
-      supersessionAudit
-    });
+  let rendered = renderAdaptiveAnswer({
+    answer,
+    adaptiveContext,
+    responsePlan,
+    assumptionGap,
+    riskScore,
+    positionStrength,
+    supersessionAudit,
+    conflict,
+    conflictReview,
+    jurisprudencePayload
+  });
 
   if (includeSources) {
-    const sourceBlock =
-      renderSources(sources);
+    const sourceBlock = renderSources(sources);
 
     if (sourceBlock) {
-      rendered =
-        `${rendered}\n${sourceBlock}`;
+      rendered = `${rendered}\n${sourceBlock}`;
     }
   }
 
@@ -893,119 +684,77 @@ function renderTinaJsonPayload({
   assumptionGap = null,
   riskScore = null,
   positionStrength = null,
-  supersessionAudit = null
+  supersessionAudit = null,
+  conflict = null,
+  conflictReview = null,
+  jurisprudencePayload = null
 } = {}) {
-  const renderedAnswer =
-    renderTinaAnswer({
-      answer,
-      sources,
-      includeSources:
-        includeSourcesInAnswer,
+  const renderedAnswer = renderTinaAnswer({
+    answer,
+    sources,
+    includeSources: includeSourcesInAnswer,
+    adaptiveContext,
+    responsePlan,
+    assumptionGap,
+    riskScore,
+    positionStrength,
+    supersessionAudit,
+    conflict,
+    conflictReview,
+    jurisprudencePayload
+  });
 
-      adaptiveContext,
-      responsePlan,
-      assumptionGap,
-      riskScore,
-      positionStrength,
-      supersessionAudit
-    });
+  const headings = getHeadingsFromInput({
+    adaptiveContext,
+    responsePlan
+  });
 
-  const headings =
-    getHeadingsFromInput({
-      adaptiveContext,
-      responsePlan
-    });
+  const conflictMeta = conflict || conflictReview || jurisprudencePayload?.conflictReview || null;
 
   return {
     success: true,
 
-    answer:
-      renderedAnswer,
+    answer: renderedAnswer,
 
     sources,
 
     metadata: {
       ...metadata,
 
-      renderer:
-        "answer-renderer.js",
+      renderer: "answer-renderer.js",
 
-      rendererVersion:
-        ENGINE_VERSION,
+      rendererVersion: ENGINE_VERSION,
 
-      structurePreserved:
-        hasStructure(
-          renderedAnswer,
-          headings
-        ),
+      structurePreserved: hasStructure(renderedAnswer, headings),
 
-      afStructurePreserved:
-        hasCompleteAFStructure(
-          renderedAnswer
-        ),
+      afStructurePreserved: hasCompleteAFStructure(renderedAnswer),
 
-      sourceCount:
-        Array.isArray(sources)
-          ? sources.length
-          : 0
+      sourceCount: Array.isArray(sources) ? sources.length : 0,
+
+      conflictLanguageGated: true,
+
+      conflictMetadataComplete: conflictMetadataIsComplete(conflictMeta)
     }
   };
 }
 
-function assertAFStructure(
-  answer = ""
-) {
-  const clean =
-    renderTinaAnswer({
-      answer
-    });
+function assertAFStructure(answer = "") {
+  const clean = renderTinaAnswer({ answer });
 
   return {
-    ok:
-      hasCompleteAFStructure(
-        clean
-      ),
-
+    ok: hasCompleteAFStructure(clean),
     answer: clean,
-
-    missingHeadings:
-      TINA_AF_HEADINGS.filter(
-        (heading) =>
-          !hasHeading(
-            clean,
-            heading
-          )
-      )
+    missingHeadings: TINA_AF_HEADINGS.filter((heading) => !hasHeading(clean, heading))
   };
 }
 
-function assertStructure(
-  answer = "",
-  headings = TINA_AF_HEADINGS
-) {
-  const clean =
-    repairStructure(
-      answer,
-      headings
-    );
+function assertStructure(answer = "", headings = TINA_AF_HEADINGS) {
+  const clean = repairStructure(answer, headings);
 
   return {
-    ok:
-      hasStructure(
-        clean,
-        headings
-      ),
-
+    ok: hasStructure(clean, headings),
     answer: clean,
-
-    missingHeadings:
-      headings.filter(
-        (heading) =>
-          !hasHeading(
-            clean,
-            heading
-          )
-      )
+    missingHeadings: headings.filter((heading) => !hasHeading(clean, heading))
   };
 }
 
@@ -1019,6 +768,8 @@ export {
   hasStructure,
   hasCompleteAFStructure,
   repairStructure,
+  conflictMetadataIsComplete,
+  buildConflictMetadataBlock,
   sanitizeConflictLanguage,
   protectHeadingSpacing,
   renderAdaptiveAnswer,
@@ -1038,6 +789,8 @@ export default {
   hasStructure,
   hasCompleteAFStructure,
   repairStructure,
+  conflictMetadataIsComplete,
+  buildConflictMetadataBlock,
   sanitizeConflictLanguage,
   protectHeadingSpacing,
   renderAdaptiveAnswer,
