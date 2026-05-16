@@ -8,6 +8,7 @@ import {
 
 export const MAX_VISIBLE_SOURCES = 5;
 
+const ENGINE_VERSION = "4.0.0";
 const CURRENT_YEAR = new Date().getFullYear();
 
 const HIDDEN_FOLDER_PATTERNS = [
@@ -34,7 +35,12 @@ function lower(value = "") {
 }
 
 function safeArray(value) {
-  return Array.isArray(value) ? value : [];
+  if (!value) return [];
+  return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
+}
+
+function unique(values = []) {
+  return [...new Set((values || []).filter(Boolean))];
 }
 
 function stripFileExtension(value = "") {
@@ -59,6 +65,61 @@ function cleanFilename(value = "") {
 function truncateText(value = "", maxChars = 900) {
   const text = String(value || "");
   return text.length > maxChars ? `${text.slice(0, maxChars)}...[truncated]` : text;
+}
+
+function normalizeIssue(value = "") {
+  const raw = String(value || "").trim().toUpperCase().replace(/[\s-]+/g, "_");
+
+  const aliases = {
+    VAT: "VAT_LIABILITY",
+    OUTPUT_VAT: "VAT_LIABILITY",
+    VAT_DEFINITION: "VAT_LIABILITY",
+    DEFINITION: "VAT_LIABILITY",
+    REFUND: "VAT_REFUND",
+    INPUT_VAT: "VAT_REFUND",
+    INPUT_VAT_REFUND: "VAT_REFUND",
+    TAX_REFUND: "VAT_REFUND",
+    EWT: "WITHHOLDING",
+    CWT: "WITHHOLDING",
+    FWT: "WITHHOLDING",
+    WITHHOLDING_TAX: "WITHHOLDING",
+    RCIT: "INCOME_TAX",
+    MCIT: "INCOME_TAX",
+    NOLCO: "INCOME_TAX",
+    CHARACTERIZATION: "TRANSACTION",
+    PRINCIPAL_AGENT: "TRANSACTION",
+    PRINCIPAL_VS_AGENT: "TRANSACTION",
+    PASS_THROUGH: "TRANSACTION",
+    REIMBURSEMENT: "TRANSACTION",
+    AGREEMENT: "CONTRACT",
+    ACCOUNTING_TAX: "ACCOUNTING"
+  };
+
+  return aliases[raw] || raw || null;
+}
+
+function normalizeAuthority(value = "") {
+  const raw = String(value || "").trim().toUpperCase().replace(/[\s-]+/g, "_");
+
+  const aliases = {
+    NIRC: "STATUTE",
+    TAX_CODE: "STATUTE",
+    LAW: "STATUTE",
+    RA: "STATUTE",
+    REPUBLIC_ACT: "STATUTE",
+    REVENUE_REGULATION: "RR",
+    REVENUE_MEMORANDUM_CIRCULAR: "RMC",
+    REVENUE_MEMORANDUM_ORDER: "RMO",
+    REVENUE_AUDIT_MEMORANDUM_ORDER: "RAMO",
+    SC: "SUPREME_COURT",
+    CASE: "SUPREME_COURT",
+    JURISPRUDENCE: "SUPREME_COURT",
+    CTA: "CTA_DIVISION",
+    BIR_RULINGS: "BIR_RULING",
+    IFRS: "PFRS"
+  };
+
+  return aliases[raw] || raw || null;
 }
 
 export function getUserId(req = {}) {
@@ -109,6 +170,7 @@ export function getDocPath(doc = {}) {
     doc.metadata?.path ||
       doc.path ||
       doc.source_path ||
+      doc.sourcePath ||
       doc.metadata?.originalFileName ||
       doc.metadata?.originalSource ||
       doc.originalSource ||
@@ -136,7 +198,22 @@ export function getDocOriginalName(doc = {}) {
 
 export function getDocText(doc = {}) {
   return compactSpaces(
-    [doc.text, doc.content, doc.excerpt, doc.preview, doc.summary]
+    [
+      doc.text,
+      doc.content,
+      doc.excerpt,
+      doc.preview,
+      doc.summary,
+      doc.source,
+      doc.originalSource,
+      doc.original_source,
+      doc.path,
+      doc.source_path,
+      doc.metadata?.path,
+      doc.metadata?.documentTitle,
+      doc.metadata?.originalFileName,
+      doc.metadata?.normalizedReference
+    ]
       .filter(Boolean)
       .join(" ")
   );
@@ -146,6 +223,7 @@ export function cleanDisplayTitle(doc = {}) {
   const raw =
     doc.title ||
     doc.source_title ||
+    doc.sourceTitle ||
     doc.document_title ||
     doc.metadata?.documentTitle ||
     doc.metadata?.originalFileName ||
@@ -296,42 +374,16 @@ export function detectQuestionMode(question = "") {
   return "GENERAL";
 }
 
-export function getSourceTier(doc = {}) {
-  const explicit =
-    doc.authorityLevel ??
-    doc.authority_level ??
-    doc.metadata?.authorityLevel ??
-    null;
-
-  if (Number.isFinite(Number(explicit))) return Number(explicit);
-
-  const type = String(
+export function getAuthorityType(doc = {}) {
+  return String(
     doc.authorityType ||
       doc.authority_type ||
       doc.metadata?.authorityType ||
       ""
-  ).toUpperCase();
+  ).toUpperCase() || inferAuthorityType(doc);
+}
 
-  const typeMap = {
-    CONSTITUTION: 1,
-    STATUTE: 2,
-    RR: 3,
-    SUPREME_COURT: 4,
-    TREATY: 5,
-    RMC: 6,
-    RMO: 7,
-    RAMO: 8,
-    BIR_RULING: 9,
-    CTA_EN_BANC: 10,
-    COURT_OF_APPEALS: 11,
-    CTA_DIVISION: 12,
-    LGU: 13,
-    SECONDARY: 99,
-    UNKNOWN: 99
-  };
-
-  if (typeMap[type]) return typeMap[type];
-
+function inferAuthorityType(doc = {}) {
   const blob = lower(
     [
       doc.source,
@@ -351,21 +403,113 @@ export function getSourceTier(doc = {}) {
       .join(" ")
   );
 
-  if (blob.includes("constitution")) return 1;
-  if (blob.includes("national internal revenue code") || blob.includes("tax code") || blob.includes("republic act") || /\bnirc\b/i.test(blob) || /\bra\s*\d{4,6}\b/i.test(blob)) return 2;
-  if (blob.includes("revenue regulation") || /\brr\s*\d+[-/]\d{2,4}\b/i.test(blob)) return 3;
-  if (blob.includes("supreme court") || /\bg\.?\s*r\.?\s*no\.?/i.test(blob)) return 4;
-  if (blob.includes("tax treaty")) return 5;
-  if (blob.includes("revenue memorandum circular") || /\brmc\s*\d+[-/]\d{2,4}\b/i.test(blob)) return 6;
-  if (blob.includes("revenue memorandum order") || /\brmo\s*\d+[-/]\d{2,4}\b/i.test(blob)) return 7;
-  if (blob.includes("revenue audit memorandum order") || /\bramo\s*\d+[-/]\d{2,4}\b/i.test(blob)) return 8;
-  if (blob.includes("bir ruling")) return 9;
-  if (blob.includes("cta en banc")) return 10;
-  if (blob.includes("court of appeals")) return 11;
-  if (blob.includes("cta")) return 12;
-  if (blob.includes("local tax") || blob.includes("ordinance")) return 13;
+  if (blob.includes("constitution")) return "CONSTITUTION";
+  if (blob.includes("national internal revenue code") || blob.includes("tax code") || blob.includes("republic act") || /\bnirc\b/i.test(blob) || /\bra\s*\d{4,6}\b/i.test(blob)) return "STATUTE";
+  if (blob.includes("revenue regulation") || /\brr\s*\d+[-/]\d{2,4}\b/i.test(blob)) return "RR";
+  if (blob.includes("supreme court") || /\bg\.?\s*r\.?\s*no\.?/i.test(blob)) return "SUPREME_COURT";
+  if (blob.includes("tax treaty")) return "TREATY";
+  if (blob.includes("revenue memorandum circular") || /\brmc\s*\d+[-/]\d{2,4}\b/i.test(blob)) return "RMC";
+  if (blob.includes("revenue memorandum order") || /\brmo\s*\d+[-/]\d{2,4}\b/i.test(blob)) return "RMO";
+  if (blob.includes("revenue audit memorandum order") || /\bramo\s*\d+[-/]\d{2,4}\b/i.test(blob)) return "RAMO";
+  if (blob.includes("bir ruling")) return "BIR_RULING";
+  if (blob.includes("cta en banc")) return "CTA_EN_BANC";
+  if (blob.includes("court of appeals")) return "COURT_OF_APPEALS";
+  if (blob.includes("cta")) return "CTA_DIVISION";
+  if (blob.includes("local tax") || blob.includes("ordinance")) return "LGU";
+  if (blob.includes("pfrs")) return "PFRS";
+  if (blob.includes("pas ")) return "PAS";
+  if (blob.includes("psa ")) return "PSA";
 
-  return 99;
+  return "UNKNOWN";
+}
+
+export function getSourceTier(doc = {}) {
+  const explicit =
+    doc.authorityLevel ??
+    doc.authority_level ??
+    doc.metadata?.authorityLevel ??
+    null;
+
+  if (Number.isFinite(Number(explicit))) return Number(explicit);
+
+  const type = getAuthorityType(doc);
+
+  const typeMap = {
+    CONSTITUTION: 1,
+    STATUTE: 2,
+    SUPREME_COURT: 3,
+    RR: 4,
+    TREATY: 5,
+    RMC: 6,
+    RMO: 7,
+    RAMO: 8,
+    BIR_RULING: 9,
+    CTA_EN_BANC: 10,
+    COURT_OF_APPEALS: 11,
+    CTA_DIVISION: 12,
+    LGU: 13,
+    PFRS: 14,
+    PAS: 14,
+    PSA: 15,
+    SECONDARY: 99,
+    UNKNOWN: 99
+  };
+
+  return typeMap[type] || 99;
+}
+
+export function getControllingPrecedence(doc = {}) {
+  const explicit =
+    doc.controllingPrecedence ??
+    doc.controlling_precedence ??
+    doc.metadata?.controllingPrecedence ??
+    null;
+
+  if (Number.isFinite(Number(explicit))) return Number(explicit);
+  return getSourceTier(doc);
+}
+
+export function isTargetAuthorityMatched(doc = {}, issueClassification = null) {
+  if (doc.targetAuthorityMatch === true) return true;
+  if (doc.issueClassificationMatch?.targetAuthorityMatch === true) return true;
+
+  const targetAuthorities = unique([
+    ...safeArray(issueClassification?.targetAuthorities).map(normalizeAuthority),
+    ...safeArray(issueClassification?.target_authorities).map(normalizeAuthority)
+  ]).filter(Boolean);
+
+  if (!targetAuthorities.length) return false;
+
+  return targetAuthorities.includes(getAuthorityType(doc));
+}
+
+export function isIssueMatched(doc = {}) {
+  if (doc.issueMismatch === true || doc.issueClassificationMatch?.issueMismatch === true) return false;
+  if (doc.issueClassificationMatch?.matched === true) return true;
+  if (doc.issueClassificationMatch?.compatible === true) return true;
+  if (doc.issueClassificationMatch?.issueOverlap === true) return true;
+  if (doc.issueClassificationMatch?.targetAuthorityMatch === true) return true;
+  return null;
+}
+
+export function isIssueMismatched(doc = {}) {
+  return doc.issueMismatch === true || doc.issueClassificationMatch?.issueMismatch === true;
+}
+
+export function getFinalScore(doc = {}) {
+  const score =
+    doc.finalScore ??
+    doc.final_score ??
+    doc.rerankScore ??
+    doc.rerank_score ??
+    doc.retrievalScore ??
+    doc.retrieval_score ??
+    doc.combined_score ??
+    doc.score ??
+    doc.similarity ??
+    0;
+
+  return Number.isFinite(Number(score)) ? Number(score) : 0;
 }
 
 export function buildMemoryContext(messages = [], maxItems = 8) {
@@ -422,11 +566,13 @@ export function isHiddenSource(doc = {}) {
 }
 
 export function shouldHideSourceFromUser(doc = {}) {
-  return isHiddenSource(doc);
+  if (isHiddenSource(doc)) return true;
+  if (isIssueMismatched(doc)) return true;
+  return false;
 }
 
 export function filterVisibleSources(docs = []) {
-  return safeArray(docs).filter((doc) => !isHiddenSource(doc));
+  return safeArray(docs).filter((doc) => !shouldHideSourceFromUser(doc));
 }
 
 export function deduplicateSources(docs = []) {
@@ -448,43 +594,44 @@ export function deduplicateSources(docs = []) {
   return output;
 }
 
-export function sortSourcesByScore(docs = []) {
+export function sortSourcesByScore(docs = [], options = {}) {
+  const issueClassification = options.issueClassification || null;
+
   return [...safeArray(docs)].sort((a, b) => {
+    const targetDiff =
+      Number(isTargetAuthorityMatched(b, issueClassification)) -
+      Number(isTargetAuthorityMatched(a, issueClassification));
+
+    if (targetDiff !== 0) return targetDiff;
+
+    const aIssue = isIssueMatched(a);
+    const bIssue = isIssueMatched(b);
+
+    if (aIssue !== bIssue) {
+      return Number(bIssue === true) - Number(aIssue === true);
+    }
+
+    const aPrecedence = getControllingPrecedence(a);
+    const bPrecedence = getControllingPrecedence(b);
+
+    if (aPrecedence !== bPrecedence) return aPrecedence - bPrecedence;
+
     const aTier = getSourceTier(a);
     const bTier = getSourceTier(b);
 
     if (aTier !== bTier) return aTier - bTier;
 
-    const aScore = Number(
-      a.finalScore ??
-        a.final_score ??
-        a.retrievalScore ??
-        a.retrieval_score ??
-        a.score ??
-        0
-    );
-
-    const bScore = Number(
-      b.finalScore ??
-        b.final_score ??
-        b.retrievalScore ??
-        b.retrieval_score ??
-        b.score ??
-        0
-    );
-
-    return bScore - aScore;
+    return getFinalScore(b) - getFinalScore(a);
   });
 }
 
-export function processSources(docs = []) {
-  let supersession = {};
+export function processSources(docs = [], options = {}) {
+  let supersession = options.supersessionResult || {};
 
   try {
-    supersession =
-      typeof applySupersessionFilter === "function"
-        ? applySupersessionFilter(docs || [], new Date())
-        : {};
+    if (!supersession?.activeDocs && typeof applySupersessionFilter === "function") {
+      supersession = applySupersessionFilter(docs || [], new Date()) || {};
+    }
   } catch {
     supersession = {};
   }
@@ -492,35 +639,30 @@ export function processSources(docs = []) {
   const activeDocs =
     supersession.activeDocs?.length > 0 ? supersession.activeDocs : docs;
 
-  return sortSourcesByScore(deduplicateSources(filterVisibleSources(activeDocs)));
+  return sortSourcesByScore(
+    deduplicateSources(filterVisibleSources(activeDocs)),
+    options
+  );
 }
 
-export function buildVisibleSources(docs = []) {
-  return processSources(docs)
-    .slice(0, MAX_VISIBLE_SOURCES)
+export function buildVisibleSources(docs = [], options = {}) {
+  const issueClassification = options.issueClassification || null;
+
+  return processSources(docs, options)
+    .slice(0, Number(options.maxItems || MAX_VISIBLE_SOURCES))
     .map((doc) => ({
       title: cleanDisplayTitle(doc),
       source: getDocPath(doc),
       sourcePath: getDocPath(doc),
       sourceTitle: cleanDisplayTitle(doc),
       excerpt: getDocText(doc).slice(0, 500),
-      authorityType:
-        doc.authorityType ||
-        doc.authority_type ||
-        doc.metadata?.authorityType ||
-        "UNKNOWN",
-      authorityLevel:
-        doc.authorityLevel ??
-        doc.authority_level ??
-        doc.metadata?.authorityLevel ??
-        getSourceTier(doc),
-      score:
-        doc.finalScore ??
-        doc.final_score ??
-        doc.retrievalScore ??
-        doc.retrieval_score ??
-        doc.score ??
-        0,
+      authorityType: getAuthorityType(doc),
+      authorityLevel: getSourceTier(doc),
+      controllingPrecedence: getControllingPrecedence(doc),
+      score: getFinalScore(doc),
+      issueClassificationMatch: doc.issueClassificationMatch || null,
+      targetAuthorityMatch: isTargetAuthorityMatched(doc, issueClassification),
+      issueMismatch: isIssueMismatched(doc),
       driveViewUrl:
         doc.driveViewUrl ||
         doc.drive_view_url ||
@@ -532,7 +674,10 @@ export function buildVisibleSources(docs = []) {
 
 export function finalizeSourcesForResponse(docs = [], options = {}) {
   const maxItems = Number(options.maxItems || MAX_VISIBLE_SOURCES);
-  return buildVisibleSources(docs).slice(0, Math.max(1, maxItems));
+  return buildVisibleSources(docs, {
+    ...options,
+    maxItems: Math.max(1, maxItems)
+  });
 }
 
 export function stripTrailingSourceSection(answer = "") {
@@ -615,13 +760,17 @@ export function askHelpersHealthCheck() {
   return {
     ok: true,
     module: "ask-helpers",
-    version: "3.4.0",
+    version: ENGINE_VERSION,
     esmCompatible: true,
     supersessionCompatible: true,
     adaptiveCompatible: true,
     ragAnswerHandlerCompatible: true,
     serverCompatible: true,
-    vectorStoreCompatible: true
+    vectorStoreCompatible: true,
+    issueClassificationMatchAware: true,
+    targetAuthorityAware: true,
+    controllingPrecedenceAware: true,
+    hidesIssueMismatchedSources: true
   };
 }
 
@@ -629,6 +778,9 @@ export default {
   MAX_VISIBLE_SOURCES,
   getUserId,
   getSourceTier,
+  getAuthorityType,
+  getControllingPrecedence,
+  getFinalScore,
   normalizeSourceName,
   normalizeForMatch,
   getDocPath,
@@ -643,6 +795,9 @@ export default {
   detectQuestionMode,
   buildMemoryContext,
   toSafeDbNumeric,
+  isIssueMatched,
+  isIssueMismatched,
+  isTargetAuthorityMatched,
   shouldHideSourceFromUser,
   stripTrailingSourceSection,
   extractQuizAnswer,
