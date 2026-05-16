@@ -8,8 +8,15 @@ import {
 
 export const MAX_VISIBLE_SOURCES = 5;
 
-const ENGINE_VERSION = "4.0.0";
+const ENGINE_VERSION = "5.0.0";
 const CURRENT_YEAR = new Date().getFullYear();
+
+const MAX_MEMORY_ITEM_CHARS = 700;
+const MAX_MEMORY_ITEMS = 6;
+const MAX_VISIBLE_EXCERPT_CHARS = 420;
+const MAX_SOURCE_TITLE_CHARS = 220;
+const MAX_SOURCE_PATH_CHARS = 360;
+const MAX_DOC_TEXT_CHARS = 1600;
 
 const HIDDEN_FOLDER_PATTERNS = [
   "07_cpa_notes",
@@ -43,6 +50,13 @@ function unique(values = []) {
   return [...new Set((values || []).filter(Boolean))];
 }
 
+function trimText(value = "", maxChars = 900) {
+  const text = compactSpaces(value);
+  if (!text) return "";
+  if (text.length <= maxChars) return text;
+  return `${text.slice(0, maxChars).trim()} ...[trimmed]`;
+}
+
 function stripFileExtension(value = "") {
   return String(value || "").replace(/\.(pdf|docx|doc|txt|csv|md|json)$/i, "");
 }
@@ -62,9 +76,8 @@ function cleanFilename(value = "") {
   );
 }
 
-function truncateText(value = "", maxChars = 900) {
-  const text = String(value || "");
-  return text.length > maxChars ? `${text.slice(0, maxChars)}...[truncated]` : text;
+function truncateText(value = "", maxChars = MAX_MEMORY_ITEM_CHARS) {
+  return trimText(value, maxChars);
 }
 
 function normalizeIssue(value = "") {
@@ -167,10 +180,13 @@ export function normalizeForMatch(value = "") {
 
 export function getDocPath(doc = {}) {
   return String(
-    doc.metadata?.path ||
-      doc.path ||
+    doc.sourcePath ||
       doc.source_path ||
-      doc.sourcePath ||
+      doc.metadata?.path ||
+      doc.path ||
+      doc.url ||
+      doc.sourceUrl ||
+      doc.source_url ||
       doc.metadata?.originalFileName ||
       doc.metadata?.originalSource ||
       doc.originalSource ||
@@ -196,14 +212,16 @@ export function getDocOriginalName(doc = {}) {
   );
 }
 
-export function getDocText(doc = {}) {
-  return compactSpaces(
+export function getDocText(doc = {}, maxChars = MAX_DOC_TEXT_CHARS) {
+  return trimText(
     [
       doc.text,
       doc.content,
       doc.excerpt,
       doc.preview,
       doc.summary,
+      doc.doctrineSummary,
+      doc.caseApplicabilityExplanation,
       doc.source,
       doc.originalSource,
       doc.original_source,
@@ -215,7 +233,8 @@ export function getDocText(doc = {}) {
       doc.metadata?.normalizedReference
     ]
       .filter(Boolean)
-      .join(" ")
+      .join(" "),
+    maxChars
   );
 }
 
@@ -231,7 +250,7 @@ export function cleanDisplayTitle(doc = {}) {
     getDocPath(doc) ||
     "Untitled Source";
 
-  return cleanFilename(raw) || "Untitled Source";
+  return trimText(cleanFilename(raw) || "Untitled Source", MAX_SOURCE_TITLE_CHARS);
 }
 
 export function normalizeIssuanceNumber(num = "") {
@@ -473,9 +492,14 @@ export function isTargetAuthorityMatched(doc = {}, issueClassification = null) {
   if (doc.targetAuthorityMatch === true) return true;
   if (doc.issueClassificationMatch?.targetAuthorityMatch === true) return true;
 
+  const source =
+    issueClassification?.orchestrationClassification ||
+    issueClassification ||
+    {};
+
   const targetAuthorities = unique([
-    ...safeArray(issueClassification?.targetAuthorities).map(normalizeAuthority),
-    ...safeArray(issueClassification?.target_authorities).map(normalizeAuthority)
+    ...safeArray(source?.targetAuthorities).map(normalizeAuthority),
+    ...safeArray(source?.target_authorities).map(normalizeAuthority)
   ]).filter(Boolean);
 
   if (!targetAuthorities.length) return false;
@@ -512,9 +536,9 @@ export function getFinalScore(doc = {}) {
   return Number.isFinite(Number(score)) ? Number(score) : 0;
 }
 
-export function buildMemoryContext(messages = [], maxItems = 8) {
+export function buildMemoryContext(messages = [], maxItems = MAX_MEMORY_ITEMS) {
   const items = safeArray(messages)
-    .slice(-Math.max(1, Number(maxItems) || 8))
+    .slice(-Math.max(1, Number(maxItems) || MAX_MEMORY_ITEMS))
     .map((message) => {
       const role = message.role || message.message_role || "unknown";
       const content =
@@ -526,11 +550,24 @@ export function buildMemoryContext(messages = [], maxItems = 8) {
 
       if (!content) return null;
 
-      return `${String(role).toUpperCase()}: ${truncateText(content, 900)}`;
+      return `${String(role).toUpperCase()}: ${truncateText(content, MAX_MEMORY_ITEM_CHARS)}`;
     })
     .filter(Boolean);
 
   return items.length ? items.join("\n\n") : "No prior conversation.";
+}
+
+export function buildCompactConversationHistory(messages = [], maxItems = MAX_MEMORY_ITEMS) {
+  return safeArray(messages)
+    .slice(-Math.max(1, Number(maxItems) || MAX_MEMORY_ITEMS))
+    .map((message) => ({
+      role: message.role || message.message_role || "user",
+      content: truncateText(
+        message.content || message.message || message.text || message.body || "",
+        MAX_MEMORY_ITEM_CHARS
+      )
+    }))
+    .filter((item) => item.content);
 }
 
 export function toSafeDbNumeric(value, max = 999999.9999, decimals = 4) {
@@ -583,6 +620,7 @@ export function deduplicateSources(docs = []) {
     const key =
       normalizeForMatch(getDocPath(doc)) ||
       normalizeForMatch(getDocOriginalName(doc)) ||
+      normalizeForMatch(doc.citation || doc.normalizedReference || doc.normalized_reference || "") ||
       String(doc.id || "");
 
     if (!key || seen.has(key)) continue;
@@ -651,11 +689,20 @@ export function buildVisibleSources(docs = [], options = {}) {
   return processSources(docs, options)
     .slice(0, Number(options.maxItems || MAX_VISIBLE_SOURCES))
     .map((doc) => ({
-      title: cleanDisplayTitle(doc),
-      source: getDocPath(doc),
-      sourcePath: getDocPath(doc),
-      sourceTitle: cleanDisplayTitle(doc),
-      excerpt: getDocText(doc).slice(0, 500),
+      title: trimText(cleanDisplayTitle(doc), MAX_SOURCE_TITLE_CHARS),
+      source: trimText(getDocPath(doc), MAX_SOURCE_PATH_CHARS),
+      sourcePath: trimText(getDocPath(doc), MAX_SOURCE_PATH_CHARS),
+      sourceTitle: trimText(cleanDisplayTitle(doc), MAX_SOURCE_TITLE_CHARS),
+      citation: trimText(
+        doc.citation ||
+          doc.reference ||
+          doc.normalizedReference ||
+          doc.normalized_reference ||
+          doc.metadata?.normalizedReference ||
+          "",
+        260
+      ),
+      excerpt: trimText(getDocText(doc, MAX_VISIBLE_EXCERPT_CHARS), MAX_VISIBLE_EXCERPT_CHARS),
       authorityType: getAuthorityType(doc),
       authorityLevel: getSourceTier(doc),
       controllingPrecedence: getControllingPrecedence(doc),
@@ -666,9 +713,14 @@ export function buildVisibleSources(docs = [], options = {}) {
       driveViewUrl:
         doc.driveViewUrl ||
         doc.drive_view_url ||
+        doc.url ||
+        doc.sourceUrl ||
+        doc.source_url ||
         doc.metadata?.driveViewUrl ||
         doc.metadata?.drive_view_url ||
-        null
+        null,
+      contextOrchestrationSafe: true,
+      compactSource: true
     }));
 }
 
@@ -676,8 +728,40 @@ export function finalizeSourcesForResponse(docs = [], options = {}) {
   const maxItems = Number(options.maxItems || MAX_VISIBLE_SOURCES);
   return buildVisibleSources(docs, {
     ...options,
-    maxItems: Math.max(1, maxItems)
+    maxItems: Math.max(1, Math.min(maxItems, MAX_VISIBLE_SOURCES))
   });
+}
+
+export function buildSourcesForOpenAI(docs = [], options = {}) {
+  const maxItems = Number(options.maxItems || 6);
+
+  return processSources(docs, options)
+    .slice(0, Math.max(1, maxItems))
+    .map((doc) => ({
+      title: trimText(cleanDisplayTitle(doc), MAX_SOURCE_TITLE_CHARS),
+      authorityType: getAuthorityType(doc),
+      citation:
+        doc.citation ||
+        doc.reference ||
+        doc.normalizedReference ||
+        doc.normalized_reference ||
+        doc.metadata?.normalizedReference ||
+        "",
+      url:
+        doc.url ||
+        doc.driveViewUrl ||
+        doc.drive_view_url ||
+        doc.sourceUrl ||
+        doc.source_url ||
+        doc.metadata?.driveViewUrl ||
+        "",
+      text: getDocText(doc, Number(options.maxTextChars || 1800)),
+      content: getDocText(doc, Number(options.maxTextChars || 1800)),
+      score: getFinalScore(doc),
+      issueClassificationMatch: doc.issueClassificationMatch || null,
+      targetAuthorityMatch: isTargetAuthorityMatched(doc, options.issueClassification),
+      controllingPrecedence: getControllingPrecedence(doc)
+    }));
 }
 
 export function stripTrailingSourceSection(answer = "") {
@@ -697,6 +781,20 @@ export function stripTrailingSourceSection(answer = "") {
   }
 
   return output;
+}
+
+export function stripDebugAndRawContext(answer = "") {
+  return String(answer || "")
+    .replace(/\n+\s*DEBUG(?:\s+OBJECT)?[\s\S]*$/i, "")
+    .replace(/\n+\s*RAW\s+CONTEXT[\s\S]*$/i, "")
+    .replace(/\n+\s*FULL\s+ENGINE\s+OUTPUT[\s\S]*$/i, "")
+    .replace(/\n+\s*RETRIEVAL\s+PAYLOAD[\s\S]*$/i, "")
+    .replace(/\n+\s*JSON\s+DUMP[\s\S]*$/i, "")
+    .trim();
+}
+
+export function sanitizeAnswerForDisplay(answer = "") {
+  return stripDebugAndRawContext(stripTrailingSourceSection(answer));
 }
 
 export function extractQuizAnswer(text = "") {
@@ -756,6 +854,49 @@ export async function resolveReplacementSource(source, supersessionData = null) 
   }
 }
 
+export function buildContextOrchestrationPayload({
+  question = "",
+  messages = [],
+  sources = [],
+  issueClassification = null,
+  queryIntent = null,
+  adaptiveContext = {},
+  maxSources = 6
+} = {}) {
+  return {
+    userQuery: question,
+    conversationHistory: buildCompactConversationHistory(messages),
+    retrievedSources: buildSourcesForOpenAI(sources, {
+      issueClassification,
+      maxItems: maxSources
+    }),
+    classification:
+      issueClassification?.orchestrationClassification ||
+      issueClassification ||
+      {},
+    intent:
+      queryIntent?.orchestrationIntent ||
+      queryIntent?.intentFlags ||
+      queryIntent ||
+      {},
+    adaptiveContext: {
+      activeHook: adaptiveContext.activeHook || null,
+      activeMode: adaptiveContext.activeMode || null,
+      responseMode:
+        adaptiveContext.adaptiveResponseMode ||
+        adaptiveContext.responsePlan?.responseMode ||
+        null
+    },
+    contextPolicy: {
+      compactSourcesOnly: true,
+      compactHistoryOnly: true,
+      preventRawFullDocumentInjection: true,
+      preventFullDebugObjectInjection: true,
+      preventFullEngineOutputInjection: true
+    }
+  };
+}
+
 export function askHelpersHealthCheck() {
   return {
     ok: true,
@@ -767,10 +908,16 @@ export function askHelpersHealthCheck() {
     ragAnswerHandlerCompatible: true,
     serverCompatible: true,
     vectorStoreCompatible: true,
+    contextOrchestrationCompatible: true,
+    compactMemoryContextEnabled: true,
+    compactSourceOutputEnabled: true,
+    openAICompactSourceBuilderReady: true,
     issueClassificationMatchAware: true,
     targetAuthorityAware: true,
     controllingPrecedenceAware: true,
-    hidesIssueMismatchedSources: true
+    hidesIssueMismatchedSources: true,
+    rawFullDocumentInjectionPrevented: true,
+    debugOutputSuppressed: true
   };
 }
 
@@ -794,12 +941,17 @@ export default {
   classifyQuestion,
   detectQuestionMode,
   buildMemoryContext,
+  buildCompactConversationHistory,
+  buildContextOrchestrationPayload,
+  buildSourcesForOpenAI,
   toSafeDbNumeric,
   isIssueMatched,
   isIssueMismatched,
   isTargetAuthorityMatched,
   shouldHideSourceFromUser,
   stripTrailingSourceSection,
+  stripDebugAndRawContext,
+  sanitizeAnswerForDisplay,
   extractQuizAnswer,
   formatQuestionBlock,
   isHiddenSource,
