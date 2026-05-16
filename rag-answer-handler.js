@@ -3,25 +3,9 @@
 
 /**
  * TINA Enterprise RAG Answer Handler
- * Version: 6.0.0
+ * Version: 7.0.0
  *
- * PURPOSE
- * ------------------------------------------------------------------
- * - Main RAG answer orchestration layer
- * - Connects:
- *      context-orchestration-engine.js
- *      adaptive-response-planner.js
- *      adaptive-tina-master-prompt.js
- *      answer-renderer.js
- *      final-answer-compliance.js
- * - Prevents:
- *      raw source injection
- *      oversized context payloads
- *      full debug object leakage
- *      full engine output injection
- *      uncapped retrieval
- *      hallucinated doctrinal conflicts
- * - Uses compact orchestration-safe context only
+ * Uses context-orchestration-engine.js only for OpenAI calls.
  */
 
 import OpenAI from "openai";
@@ -45,7 +29,7 @@ import {
 } from "./answer-renderer.js";
 
 import {
-  enforceFinalAnswerCompliance
+  buildFinalCompliantAnswer
 } from "./final-answer-compliance.js";
 
 import {
@@ -55,657 +39,424 @@ import {
   buildCompactConversationHistory
 } from "./ask-helpers.js";
 
-const ENGINE_VERSION = "6.0.0";
+const ENGINE_VERSION = "7.0.0";
 
 const DEFAULT_MODEL =
   process.env.OPENAI_MODEL ||
   process.env.DEFAULT_OPENAI_MODEL ||
-  "gpt-5";
-
-const DEFAULT_TEMPERATURE = 0.15;
-
-const DEFAULT_MAX_COMPLETION_TOKENS = 1800;
-
-const HARD_MAX_COMPLETION_TOKENS = 3200;
+  "gpt-4o-mini";
 
 const HARD_MAX_SOURCES = 8;
 
 const DEFAULT_SYSTEM_GUARDRAILS = `
 You are TINA.
 
-STRICT RULES:
-- Never fabricate authorities.
-- Never fabricate jurisprudence.
-- Never fabricate RR/RMC/RMO numbers.
-- Never say conflict exists unless conflict metadata supports it.
-- Never inject raw retrieval objects.
-- Never inject full source text.
-- Never inject raw JSON payloads.
-- Never inject debug objects.
-- Never inject full engine outputs.
-- Use issue-matched authorities only.
-- Use concise source summaries only.
+Rules:
+- Use only compact orchestration context.
+- Do not inject raw retrieval objects.
+- Do not inject full source text.
+- Do not inject debug JSON.
+- Do not invent authorities, cases, or issuance numbers.
+- Do not say "Conflict Detected: YES" unless complete conflict metadata exists.
+- Use issue-matched and target-authority-matched sources only.
 `.trim();
-
-function normalizeText(value = "") {
-  return String(value || "").trim();
-}
-
-function safeObject(value) {
-  return value && typeof value === "object" && !Array.isArray(value)
-    ? value
-    : {};
-}
 
 function safeArray(value) {
   if (!value) return [];
-  return Array.isArray(value)
-    ? value.filter(Boolean)
-    : [value].filter(Boolean);
+  return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
 }
 
-function unique(values = []) {
-  return [...new Set((values || []).filter(Boolean))];
+function safeObject(value) {
+  return value && typeof value === "object" && !Array.isArray(value) ? value : {};
 }
 
-function clamp(number, min, max) {
-  const value = Number(number);
-
-  if (!Number.isFinite(value)) return min;
-
-  return Math.max(min, Math.min(max, value));
+function normalizeText(value = "") {
+  return String(value || "").replace(/\s+/g, " ").trim();
 }
 
-function compactSpaces(value = "") {
-  return normalizeText(value).replace(/\s+/g, " ");
-}
-
-function trimText(value = "", max = 1200) {
-  const text = compactSpaces(value);
-
+function trimText(value = "", max = 2000) {
+  const text = normalizeText(value);
   if (!text) return "";
-
   if (text.length <= max) return text;
-
   return `${text.slice(0, max).trim()} ...[trimmed]`;
 }
 
-function buildSystemPrompt({
-  plannerInstruction = null,
-  orchestrationContract = null,
-  extraSystemPrompt = ""
-} = {}) {
-  const sections = [
-    DEFAULT_SYSTEM_GUARDRAILS
-  ];
-
-  if (orchestrationContract?.masterPrompt) {
-    sections.push(orchestrationContract.masterPrompt);
-  }
-
-  if (plannerInstruction?.instruction?.length) {
-    sections.push(
-      plannerInstruction.instruction.join("\n")
-    );
-  }
-
-  if (extraSystemPrompt) {
-    sections.push(extraSystemPrompt);
-  }
-
-  return sections
-    .filter(Boolean)
-    .join("\n\n---\n\n");
-}
-
-function buildCompactUserPayload({
-  question = "",
-  retrievedSources = [],
-  conversationHistory = [],
-  issueClassification = {},
-  orchestrationIntent = {},
-  responsePlan = {},
-  adaptiveContext = {}
-} = {}) {
-  return {
-    userQuestion: trimText(question, 5000),
-
-    issueClassification: {
-      primaryIssue:
-        issueClassification.primaryIssue || null,
-
-      subIssue:
-        issueClassification.subIssue || null,
-
-      retrievalStrategy:
-        issueClassification.retrievalStrategy || null,
-
-      targetAuthorities:
-        safeArray(issueClassification.targetAuthorities).slice(0, 10)
-    },
-
-    orchestrationIntent: {
-      requiresLegalAnalysis:
-        orchestrationIntent.requiresLegalAnalysis || false,
-
-      requiresEvidenceEvaluation:
-        orchestrationIntent.requiresEvidenceEvaluation || false,
-
-      requiresTransactionCharacterization:
-        orchestrationIntent.requiresTransactionCharacterization || false,
-
-      requiresContractInterpretation:
-        orchestrationIntent.requiresContractInterpretation || false,
-
-      requiresEconomicSubstance:
-        orchestrationIntent.requiresEconomicSubstance || false
-    },
-
-    responsePlan: {
-      responseMode:
-        responsePlan.responseMode || null,
-
-      orchestrationMode:
-        responsePlan.orchestrationMode || null,
-
-      responseDepth:
-        responsePlan.responseDepth || null
-    },
-
-    adaptiveContext: {
-      activeMode:
-        adaptiveContext.activeMode || null,
-
-      activeHook:
-        adaptiveContext.activeHook || null
-    },
-
-    conversationHistory:
-      safeArray(conversationHistory).slice(-6),
-
-    retrievedSources:
-      safeArray(retrievedSources).slice(0, HARD_MAX_SOURCES)
-  };
-}
-
-function buildMessages({
-  systemPrompt = "",
-  userPayload = {}
-} = {}) {
-  return [
-    {
-      role: "system",
-      content: systemPrompt
-    },
-
-    {
-      role: "user",
-      content: JSON.stringify(userPayload)
-    }
-  ];
-}
-
-function extractCompletionText(response = {}) {
-  try {
-    if (typeof response.output_text === "string") {
-      return response.output_text;
-    }
-
-    if (Array.isArray(response.output)) {
-      return response.output
-        .flatMap((item) =>
-          safeArray(item.content)
-        )
-        .map((item) => item.text || "")
-        .join("\n");
-    }
-
-    if (response.choices?.length) {
-      return response.choices
-        .map((choice) =>
-          choice?.message?.content || ""
-        )
-        .join("\n");
-    }
-
-    return "";
-  } catch {
-    return "";
-  }
-}
-
-function buildOpenAIClient({
-  apiKey = process.env.OPENAI_API_KEY
-} = {}) {
+function buildOpenAIClient({ apiKey = process.env.OPENAI_API_KEY } = {}) {
   if (!apiKey) {
-    throw new Error(
-      "Missing OPENAI_API_KEY environment variable."
-    );
+    throw new Error("Missing OPENAI_API_KEY environment variable.");
   }
 
   return new OpenAI({ apiKey });
 }
 
-function sanitizeRetrievedSources(
-  sources = [],
+function normalizeIssueClassification({
+  issueClassification = null,
+  queryIntent = null,
+  retrievalResult = null,
+  adaptiveContext = null
+} = {}) {
+  return (
+    issueClassification?.orchestrationClassification ||
+    issueClassification ||
+    retrievalResult?.issueClassification?.orchestrationClassification ||
+    retrievalResult?.issueClassification ||
+    queryIntent?.issueClassification?.orchestrationClassification ||
+    queryIntent?.issueClassification ||
+    adaptiveContext?.issueClassification?.orchestrationClassification ||
+    adaptiveContext?.issueClassification ||
+    {}
+  );
+}
+
+function normalizeIntent({
+  queryIntent = null,
+  orchestrationIntent = null,
+  adaptiveContext = null
+} = {}) {
+  return (
+    orchestrationIntent ||
+    queryIntent?.orchestrationIntent ||
+    queryIntent?.intentFlags ||
+    queryIntent ||
+    adaptiveContext?.orchestrationIntent ||
+    {}
+  );
+}
+
+function normalizeRetrievedSources({
+  retrievedSources = [],
+  retrievalResult = null,
   issueClassification = {}
-) {
-  return finalizeSourcesForResponse(
-    safeArray(sources).slice(0, HARD_MAX_SOURCES),
-    {
-      issueClassification,
-      maxItems: HARD_MAX_SOURCES
-    }
-  );
+} = {}) {
+  const rawSources =
+    retrievedSources?.length
+      ? retrievedSources
+      : retrievalResult?.retrievedSources ||
+        retrievalResult?.sources ||
+        retrievalResult?.results ||
+        retrievalResult?.matches ||
+        [];
+
+  return finalizeSourcesForResponse(safeArray(rawSources).slice(0, HARD_MAX_SOURCES), {
+    issueClassification,
+    maxItems: HARD_MAX_SOURCES
+  });
 }
 
-function sanitizeConversationHistory(
-  history = []
-) {
-  return buildCompactConversationHistory(
-    history,
-    6
-  );
+function normalizeConversationHistory(history = []) {
+  return buildCompactConversationHistory(safeArray(history), 6);
 }
 
-function buildPlanner({
+function buildResponsePlan({
   question = "",
   issueClassification = {},
-  orchestrationIntent = {},
+  intent = {},
   adaptiveContext = {}
 } = {}) {
   return planAdaptiveResponse({
     question,
     issueClassification,
-    orchestrationIntent,
+    orchestrationIntent: intent,
+    queryIntent: intent,
     adaptiveContext
   });
 }
 
 function buildPromptContract({
   responsePlan = {},
-  orchestrationMode = null
+  extraInstructions = []
 } = {}) {
   return buildContextOrchestrationPromptContract(
-    responsePlan.responseMode ||
-      "STANDARD_TAX_MODE",
+    responsePlan.responseMode || "STANDARD_TAX_MODE",
     {
       orchestrationMode:
-        orchestrationMode ||
-        responsePlan.orchestrationMode
+        responsePlan.orchestrationMode ||
+        responsePlan.contextMode ||
+        "STANDARD_TAX",
+      extraInstructions
     }
   );
 }
 
-function buildTokenPolicy({
-  responsePlan = {}
+function buildPlannerSystemPrompt({
+  responsePlan = {},
+  orchestrationContract = {},
+  extraSystemPrompt = ""
 } = {}) {
-  const policy =
-    responsePlan.contextBudgetPolicy || {};
-
-  return {
-    maxCompletionTokens: clamp(
-      policy.maxCompletionTokens ||
-        DEFAULT_MAX_COMPLETION_TOKENS,
-      300,
-      HARD_MAX_COMPLETION_TOKENS
-    ),
-
-    maxPromptTokens: clamp(
-      policy.maxPromptTokens || 9000,
-      1000,
-      15000
-    )
-  };
-}
-
-function buildCompletionRequest({
-  model = DEFAULT_MODEL,
-  messages = [],
-  temperature = DEFAULT_TEMPERATURE,
-  tokenPolicy = {}
-} = {}) {
-  return {
-    model,
-
-    input: messages,
-
-    temperature,
-
-    max_output_tokens:
-      tokenPolicy.maxCompletionTokens
-  };
-}
-
-async function executeOpenAICompletion({
-  openai,
-  requestPayload = {}
-} = {}) {
-  if (!openai) {
-    throw new Error(
-      "OpenAI client is required."
-    );
-  }
+  let plannerInstruction = null;
 
   try {
-    const response =
-      await openai.responses.create(
-        requestPayload
-      );
-
-    return {
-      success: true,
-      raw: response,
-      answer: extractCompletionText(response)
-    };
-  } catch (error) {
-    return {
-      success: false,
-      error,
-      answer: "",
-      raw: null
-    };
+    plannerInstruction = buildResponsePlannerInstruction(responsePlan);
+  } catch {
+    plannerInstruction = null;
   }
+
+  return [
+    DEFAULT_SYSTEM_GUARDRAILS,
+    orchestrationContract?.masterPrompt || "",
+    plannerInstruction?.instruction?.join("\n") || "",
+    extraSystemPrompt || ""
+  ]
+    .filter(Boolean)
+    .join("\n\n---\n\n");
+}
+
+function buildCompactSourcesForOpenAI({
+  sources = [],
+  issueClassification = {},
+  responsePlan = {}
+} = {}) {
+  const maxItems =
+    responsePlan?.contextBudgetPolicy?.maxSources ||
+    responsePlan?.rendererContract?.contextBudgetPolicy?.maxSources ||
+    6;
+
+  return buildSourcesForOpenAI(sources, {
+    issueClassification,
+    maxItems: Math.min(maxItems, HARD_MAX_SOURCES),
+    maxTextChars:
+      responsePlan?.contextBudgetPolicy?.maxSourceChars ||
+      responsePlan?.rendererContract?.contextBudgetPolicy?.maxSourceChars ||
+      1600
+  });
+}
+
+function buildOrchestrationPayload({
+  question = "",
+  sources = [],
+  conversationHistory = [],
+  issueClassification = {},
+  intent = {},
+  adaptiveContext = {},
+  responsePlan = {},
+  orchestrationContract = {},
+  model = DEFAULT_MODEL,
+  extraSystemPrompt = ""
+} = {}) {
+  const systemPrompt = buildPlannerSystemPrompt({
+    responsePlan,
+    orchestrationContract,
+    extraSystemPrompt
+  });
+
+  const compactSources = buildCompactSourcesForOpenAI({
+    sources,
+    issueClassification,
+    responsePlan
+  });
+
+  return {
+    openai: null,
+    userQuery: question,
+    systemPrompt,
+    masterPrompt: orchestrationContract?.masterPrompt || "",
+    retrievedSources: compactSources,
+    classification: issueClassification,
+    intent,
+    conversationHistory,
+    model,
+    adaptiveContext,
+    responsePlan
+  };
+}
+
+function extractAnswerFromOpenAIResult(result = {}) {
+  return (
+    result.answer ||
+    result.text ||
+    result.output_text ||
+    result.completion?.choices?.[0]?.message?.content ||
+    result.raw?.choices?.[0]?.message?.content ||
+    ""
+  );
 }
 
 function buildFallbackAnswer({
-  question = "",
   responsePlan = {},
   error = null
 } = {}) {
   const restriction =
-    responsePlan?.conclusionRule
-      ?.requiredLanguage ||
+    responsePlan?.conclusionRule?.requiredLanguage ||
     "Based on the available facts, the position is preliminary and subject to verification.";
 
-  return `
-A. DIRECT ANSWER
+  return [
+    "A. DIRECT ANSWER",
+    "TINA could not complete the optimized RAG response due to a processing limitation.",
+    "",
+    "B. SYSTEM LIMITATION",
+    trimText(error?.message || "The orchestration-safe OpenAI call failed.", 600),
+    "",
+    "C. PRELIMINARY POSITION",
+    restriction,
+    "",
+    "D. NEXT STEP",
+    "- Retry with a narrower issue.",
+    "- Reduce attached facts or source scope.",
+    "- Re-run issue-specific retrieval."
+  ].join("\n");
+}
 
-TINA could not complete a fully optimized response due to a processing limitation.
+function applyFinalCompliance({
+  answer = "",
+  fallbackAnswer = "",
+  responsePlan = {},
+  orchestrationContract = {},
+  sources = [],
+  issueClassification = {},
+  adaptiveContext = {},
+  question = "",
+  jurisprudencePayload = null,
+  hierarchyConflict = null,
+  conflicts = [],
+  metadata = {}
+} = {}) {
+  const compliantAnswer = buildFinalCompliantAnswer({
+    draftAnswer: answer,
+    fallbackAnswer,
+    legalBasisDocs: sources,
+    sourcesUsed: sources,
+    hierarchyConflict,
+    conflicts,
+    jurisprudencePayload,
+    query: question,
+    issueClassification,
+    mode:
+      responsePlan?.responseMode ||
+      orchestrationContract?.responseMode ||
+      null,
+    orchestrationMode:
+      responsePlan?.orchestrationMode ||
+      orchestrationContract?.orchestrationMode ||
+      null,
+    responseMode:
+      responsePlan?.responseMode ||
+      null,
+    contextMode:
+      responsePlan?.contextMode ||
+      responsePlan?.orchestrationMode ||
+      null
+  });
 
-B. SYSTEM LIMITATION
+  const cleanAnswer = sanitizeAnswerForDisplay(compliantAnswer);
 
-The orchestration layer prevented unsafe oversized context injection or invalid payload construction.
-
-C. PRELIMINARY POSITION
-
-${restriction}
-
-D. NEXT STEP
-
-Retry with:
-- narrower issue scope;
-- fewer attached facts;
-- or issue-specific retrieval.
-`.trim();
+  return renderTinaJsonPayload({
+    answer: cleanAnswer,
+    sources,
+    includeSourcesInAnswer: false,
+    adaptiveContext,
+    responsePlan,
+    issueClassification,
+    jurisprudencePayload,
+    hierarchyConflict,
+    orchestrationMode:
+      responsePlan?.orchestrationMode ||
+      responsePlan?.contextMode ||
+      null,
+    contextMode:
+      responsePlan?.contextMode ||
+      responsePlan?.orchestrationMode ||
+      null,
+    metadata: {
+      ...metadata,
+      finalComplianceApplied: true,
+      finalAnswerComplianceEngine: "final-answer-compliance.js",
+      rendererEngine: "answer-renderer.js",
+      ragAnswerHandlerVersion: ENGINE_VERSION
+    }
+  });
 }
 
 function buildSafeMetadata({
   responsePlan = {},
   orchestrationContract = {},
-  retrievedSources = [],
-  issueClassification = {}
-} = {}) {
-  return {
-    ragAnswerHandlerVersion:
-      ENGINE_VERSION,
-
-    responseMode:
-      responsePlan.responseMode,
-
-    orchestrationMode:
-      responsePlan.orchestrationMode,
-
-    responseDepth:
-      responsePlan.responseDepth,
-
-    contextOrchestrationCompatible:
-      true,
-
-    rendererCompatible:
-      true,
-
-    finalComplianceCompatible:
-      true,
-
-    issueClassificationAware:
-      true,
-
-    issueClassificationMatchAware:
-      true,
-
-    targetAuthorityAware:
-      true,
-
-    sourceCount:
-      safeArray(retrievedSources).length,
-
-    primaryIssue:
-      issueClassification.primaryIssue ||
-      null,
-
-    targetAuthorities:
-      safeArray(
-        issueClassification.targetAuthorities
-      ),
-
-    rawSourceInjectionPrevented:
-      true,
-
-    fullDebugObjectInjectionPrevented:
-      true,
-
-    fullEngineOutputInjectionPrevented:
-      true,
-
-    compactPromptCompatible:
-      true,
-
-    orchestrationContractVersion:
-      orchestrationContract.version ||
-      null
-  };
-}
-
-async function runOpenAIWithPlanner({
-  question = "",
-  retrievedSources = [],
-  conversationHistory = [],
+  sources = [],
   issueClassification = {},
-  orchestrationIntent = {},
-  adaptiveContext = {},
-  extraSystemPrompt = "",
-  model = DEFAULT_MODEL,
-  temperature = DEFAULT_TEMPERATURE,
-  openai = null
-} = {}) {
-  const responsePlan =
-    buildPlanner({
-      question,
-      issueClassification,
-      orchestrationIntent,
-      adaptiveContext
-    });
-
-  const plannerInstruction =
-    buildResponsePlannerInstruction(
-      responsePlan
-    );
-
-  const orchestrationContract =
-    buildPromptContract({
-      responsePlan,
-      orchestrationMode:
-        responsePlan.orchestrationMode
-    });
-
-  const tokenPolicy =
-    buildTokenPolicy({
-      responsePlan
-    });
-
-  const sanitizedSources =
-    sanitizeRetrievedSources(
-      retrievedSources,
-      issueClassification
-    );
-
-  const sanitizedHistory =
-    sanitizeConversationHistory(
-      conversationHistory
-    );
-
-  const userPayload =
-    buildCompactUserPayload({
-      question,
-      retrievedSources:
-        buildSourcesForOpenAI(
-          sanitizedSources,
-          {
-            issueClassification,
-            maxItems:
-              tokenPolicy.maxPromptTokens > 9000
-                ? 8
-                : 5
-          }
-        ),
-
-      conversationHistory:
-        sanitizedHistory,
-
-      issueClassification,
-
-      orchestrationIntent,
-
-      responsePlan,
-
-      adaptiveContext
-    });
-
-  const systemPrompt =
-    buildSystemPrompt({
-      plannerInstruction,
-      orchestrationContract,
-      extraSystemPrompt
-    });
-
-  const messages =
-    buildMessages({
-      systemPrompt,
-      userPayload
-    });
-
-  const requestPayload =
-    buildCompletionRequest({
-      model,
-      messages,
-      temperature,
-      tokenPolicy
-    });
-
-  const completionResult =
-    await executeOpenAICompletion({
-      openai,
-      requestPayload
-    });
-
-  if (!completionResult.success) {
-    return {
-      success: false,
-      answer: buildFallbackAnswer({
-        question,
-        responsePlan,
-        error: completionResult.error
-      }),
-      error: completionResult.error,
-      responsePlan,
-      orchestrationContract,
-      retrievedSources:
-        sanitizedSources
-    };
-  }
-
-  return {
-    success: true,
-    answer:
-      completionResult.answer || "",
-    raw:
-      completionResult.raw || null,
-    responsePlan,
-    orchestrationContract,
-    retrievedSources:
-      sanitizedSources
-  };
-}
-
-function applyComplianceAndRender({
-  answer = "",
-  responsePlan = {},
-  orchestrationContract = {},
-  retrievedSources = [],
-  issueClassification = {},
-  adaptiveContext = {},
+  orchestration = null,
   metadata = {}
 } = {}) {
-  const complianceResult =
-    enforceFinalAnswerCompliance({
-      answer,
-
-      responseMode:
-        responsePlan.responseMode,
-
-      orchestrationMode:
-        responsePlan.orchestrationMode,
-
-      rendererContract:
-        orchestrationContract.rendererContract,
-
-      responsePlan,
-
-      issueClassification,
-
-      adaptiveContext
-    });
-
-  const compliantAnswer =
-    sanitizeAnswerForDisplay(
-      complianceResult.answer ||
-        answer
-    );
-
-  return renderTinaJsonPayload({
-    answer:
-      compliantAnswer,
-
-    sources:
-      retrievedSources,
-
-    includeSourcesInAnswer:
-      true,
-
-    adaptiveContext,
-
-    responsePlan,
-
-    issueClassification,
-
+  return {
+    ...metadata,
+    ragAnswerHandlerVersion: ENGINE_VERSION,
+    contextOrchestrationCompatible: true,
+    usesOrchestrationOnly: true,
+    directOpenAICallDisabled: true,
+    rawSourceInjectionPrevented: true,
+    fullDebugObjectInjectionPrevented: true,
+    fullEngineOutputInjectionPrevented: true,
+    compactSourcesOnly: true,
+    responseMode:
+      responsePlan?.responseMode ||
+      orchestrationContract?.responseMode ||
+      null,
     orchestrationMode:
-      responsePlan.orchestrationMode,
+      responsePlan?.orchestrationMode ||
+      responsePlan?.contextMode ||
+      orchestrationContract?.orchestrationMode ||
+      null,
+    responseDepth:
+      responsePlan?.responseDepth ||
+      null,
+    primaryIssue:
+      issueClassification?.primaryIssue ||
+      null,
+    targetAuthorities:
+      safeArray(issueClassification?.targetAuthorities),
+    sourceCount:
+      safeArray(sources).length,
+    estimatedInputTokens:
+      orchestration?.estimatedInputTokens ||
+      orchestration?.diagnostics?.estimatedInputTokens ||
+      null,
+    wasTrimmed:
+      orchestration?.wasTrimmed ||
+      false
+  };
+}
 
-    contextMode:
-      responsePlan.contextMode,
+async function executeOrchestratedAnswer({
+  openai = null,
+  question = "",
+  sources = [],
+  conversationHistory = [],
+  issueClassification = {},
+  intent = {},
+  adaptiveContext = {},
+  responsePlan = {},
+  orchestrationContract = {},
+  model = DEFAULT_MODEL,
+  temperature = null,
+  extraSystemPrompt = ""
+} = {}) {
+  const resolvedOpenAI = openai || buildOpenAIClient();
 
-    metadata: {
-      ...metadata,
-
-      complianceApplied:
-        true,
-
-      complianceVersion:
-        complianceResult.version ||
-        null
-    }
+  const payload = buildOrchestrationPayload({
+    question,
+    sources,
+    conversationHistory,
+    issueClassification,
+    intent,
+    adaptiveContext,
+    responsePlan,
+    orchestrationContract,
+    model,
+    extraSystemPrompt
   });
+
+  payload.openai = resolvedOpenAI;
+
+  const result = await callOpenAIWithOrchestration({
+    ...payload,
+    temperature:
+      temperature ??
+      responsePlan?.contextBudgetPolicy?.temperature ??
+      responsePlan?.rendererContract?.contextBudgetPolicy?.temperature
+  });
+
+  return {
+    raw: result,
+    answer: extractAnswerFromOpenAIResult(result),
+    orchestration: result.orchestration || result.orchestrationContext || null
+  };
 }
 
 export async function generateRagAnswer({
@@ -716,62 +467,96 @@ export async function generateRagAnswer({
   orchestrationIntent = {},
   adaptiveContext = {},
   model = DEFAULT_MODEL,
-  temperature = DEFAULT_TEMPERATURE,
+  temperature = null,
   extraSystemPrompt = "",
-  metadata = {}
+  metadata = {},
+  openai = null,
+  jurisprudencePayload = null,
+  hierarchyConflict = null,
+  conflicts = []
 } = {}) {
-  const openai =
-    buildOpenAIClient();
+  const finalIssueClassification =
+    issueClassification?.orchestrationClassification ||
+    issueClassification ||
+    {};
 
-  const result =
-    await runOpenAIWithPlanner({
+  const finalIntent = normalizeIntent({
+    orchestrationIntent,
+    adaptiveContext
+  });
+
+  const responsePlan = buildResponsePlan({
+    question,
+    issueClassification: finalIssueClassification,
+    intent: finalIntent,
+    adaptiveContext
+  });
+
+  const orchestrationContract = buildPromptContract({
+    responsePlan
+  });
+
+  const sources = normalizeRetrievedSources({
+    retrievedSources,
+    issueClassification: finalIssueClassification
+  });
+
+  const history = normalizeConversationHistory(conversationHistory);
+
+  let execution;
+
+  try {
+    execution = await executeOrchestratedAnswer({
+      openai,
       question,
-      retrievedSources,
-      conversationHistory,
-      issueClassification,
-      orchestrationIntent,
+      sources,
+      conversationHistory: history,
+      issueClassification: finalIssueClassification,
+      intent: finalIntent,
       adaptiveContext,
+      responsePlan,
+      orchestrationContract,
       model,
       temperature,
-      extraSystemPrompt,
-      openai
+      extraSystemPrompt
     });
+  } catch (error) {
+    execution = {
+      raw: null,
+      answer: buildFallbackAnswer({
+        responsePlan,
+        error
+      }),
+      orchestration: null,
+      error
+    };
+  }
 
-  const safeMetadata =
-    buildSafeMetadata({
-      responsePlan:
-        result.responsePlan,
+  const safeMetadata = buildSafeMetadata({
+    responsePlan,
+    orchestrationContract,
+    sources,
+    issueClassification: finalIssueClassification,
+    orchestration: execution.orchestration,
+    metadata
+  });
 
-      orchestrationContract:
-        result.orchestrationContract,
-
-      retrievedSources:
-        result.retrievedSources,
-
-      issueClassification
-    });
-
-  return applyComplianceAndRender({
-    answer:
-      result.answer,
-
-    responsePlan:
-      result.responsePlan,
-
-    orchestrationContract:
-      result.orchestrationContract,
-
-    retrievedSources:
-      result.retrievedSources,
-
-    issueClassification,
-
+  return applyFinalCompliance({
+    answer: execution.answer,
+    fallbackAnswer: buildFallbackAnswer({
+      responsePlan,
+      error: execution.error
+    }),
+    responsePlan,
+    orchestrationContract,
+    sources,
+    issueClassification: finalIssueClassification,
     adaptiveContext,
-
-    metadata: {
-      ...metadata,
-      ...safeMetadata
-    }
+    question,
+    jurisprudencePayload,
+    hierarchyConflict,
+    conflicts,
+    metadata: safeMetadata
   });
 }
 
@@ -783,72 +568,30 @@ export async function generateRagAnswerWithContextOrchestration({
   orchestrationIntent = {},
   adaptiveContext = {},
   model = DEFAULT_MODEL,
-  temperature = DEFAULT_TEMPERATURE,
-  metadata = {}
+  temperature = null,
+  metadata = {},
+  openai = null,
+  jurisprudencePayload = null,
+  hierarchyConflict = null,
+  conflicts = []
 } = {}) {
-  const orchestrationContext =
-    await buildOpenAIContext({
-      question,
-      retrievedSources,
-      conversationHistory,
-      issueClassification,
-      orchestrationIntent,
-      adaptiveContext
-    });
-
-  const openaiResult =
-    await callOpenAIWithOrchestration({
-      orchestrationContext,
-      model,
-      temperature
-    });
-
-  const responsePlan =
-    orchestrationContext.responsePlan ||
-    buildPlanner({
-      question,
-      issueClassification,
-      orchestrationIntent,
-      adaptiveContext
-    });
-
-  const orchestrationContract =
-    buildPromptContract({
-      responsePlan,
-      orchestrationMode:
-        responsePlan.orchestrationMode
-    });
-
-  const safeMetadata =
-    buildSafeMetadata({
-      responsePlan,
-      orchestrationContract,
-      retrievedSources,
-      issueClassification
-    });
-
-  const answer =
-    openaiResult?.answer ||
-    openaiResult?.text ||
-    openaiResult?.output_text ||
-    extractCompletionText(openaiResult?.raw || openaiResult || {}) ||
-    "";
-
-  return applyComplianceAndRender({
-    answer,
-    responsePlan,
-    orchestrationContract,
-    retrievedSources: sanitizeRetrievedSources(
-      retrievedSources,
-      issueClassification
-    ),
+  return generateRagAnswer({
+    question,
+    retrievedSources,
+    conversationHistory,
     issueClassification,
+    orchestrationIntent,
     adaptiveContext,
+    model,
+    temperature,
     metadata: {
       ...metadata,
-      ...safeMetadata,
       usedContextOrchestrationEngine: true
-    }
+    },
+    openai,
+    jurisprudencePayload,
+    hierarchyConflict,
+    conflicts
   });
 }
 
@@ -858,16 +601,6 @@ export function createRagAnswerHandler({
   contextOrchestration = null,
   openaiModel = DEFAULT_MODEL
 } = {}) {
-  const resolvedOpenAI =
-    openai ||
-    buildOpenAIClient();
-
-  const orchestration =
-    contextOrchestration || {
-      buildOpenAIContext,
-      callOpenAIWithOrchestration
-    };
-
   async function handleRagAnswer({
     res = null,
     userId = null,
@@ -876,138 +609,100 @@ export function createRagAnswerHandler({
     originalQuestion = "",
     hookConfig = {},
     adaptiveContext = {},
-    contextOrchestration: routeContextOrchestration = null,
     openaiModel: routeOpenAIModel = null,
     orchestrationMetadata = {},
     retrievedSources = [],
     retrievalResult = null,
     conversationHistory = [],
     issueClassification = null,
-    queryIntent = null
+    queryIntent = null,
+    orchestrationIntent = null,
+    jurisprudencePayload = null,
+    hierarchyConflict = null,
+    conflicts = [],
+    extraSystemPrompt = ""
   } = {}) {
     try {
-      const question =
-        cleanQuestion ||
-        originalQuestion ||
-        "";
+      const question = cleanQuestion || originalQuestion || "";
 
-      const finalIssueClassification =
-        issueClassification ||
-        retrievalResult?.issueClassification ||
-        queryIntent?.issueClassification ||
-        adaptiveContext?.issueClassification ||
-        {};
+      const finalIssueClassification = normalizeIssueClassification({
+        issueClassification,
+        queryIntent,
+        retrievalResult,
+        adaptiveContext
+      });
 
-      const finalOrchestrationIntent =
-        queryIntent?.orchestrationIntent ||
-        queryIntent?.intentFlags ||
-        adaptiveContext?.orchestrationIntent ||
-        {};
+      const finalIntent = normalizeIntent({
+        queryIntent,
+        orchestrationIntent,
+        adaptiveContext
+      });
 
-      const finalRetrievedSources =
-        retrievedSources?.length
-          ? retrievedSources
-          : retrievalResult?.retrievedSources ||
-            retrievalResult?.results ||
-            [];
+      const finalSources = normalizeRetrievedSources({
+        retrievedSources,
+        retrievalResult,
+        issueClassification: finalIssueClassification
+      });
 
       const finalAdaptiveContext = {
-        ...adaptiveContext,
+        ...safeObject(adaptiveContext),
         hookConfig: {
-          hook_code: hookConfig.hook_code,
-          mode: hookConfig.mode,
-          title: hookConfig.title
+          hook_code: hookConfig?.hook_code || null,
+          mode: hookConfig?.mode || null,
+          title: hookConfig?.title || null
         },
-        orchestrationMetadata
+        orchestrationMetadata: {
+          ...safeObject(orchestrationMetadata),
+          routeUsesOrchestrationOnly: true
+        }
       };
 
-      const effectiveOrchestration =
-        routeContextOrchestration ||
-        orchestration;
-
-      let result;
-
-      if (
-        effectiveOrchestration?.callOpenAIWithOrchestration &&
-        effectiveOrchestration?.buildOpenAIContext
-      ) {
-        result =
-          await generateRagAnswerWithContextOrchestration({
-            question,
-            retrievedSources:
-              finalRetrievedSources,
-            conversationHistory,
-            issueClassification:
-              finalIssueClassification,
-            orchestrationIntent:
-              finalOrchestrationIntent,
-            adaptiveContext:
-              finalAdaptiveContext,
-            model:
-              routeOpenAIModel ||
-              openaiModel,
-            metadata: {
-              userId,
-              conversationId,
-              hook: hookConfig.hook_code,
-              mode: hookConfig.mode,
-              ...orchestrationMetadata
-            }
-          });
-      } else {
-        result =
-          await generateRagAnswer({
-            question,
-            retrievedSources:
-              finalRetrievedSources,
-            conversationHistory,
-            issueClassification:
-              finalIssueClassification,
-            orchestrationIntent:
-              finalOrchestrationIntent,
-            adaptiveContext:
-              finalAdaptiveContext,
-            model:
-              routeOpenAIModel ||
-              openaiModel,
-            metadata: {
-              userId,
-              conversationId,
-              hook: hookConfig.hook_code,
-              mode: hookConfig.mode,
-              ...orchestrationMetadata
-            }
-          });
-      }
+      const result = await generateRagAnswer({
+        question,
+        retrievedSources: finalSources,
+        conversationHistory,
+        issueClassification: finalIssueClassification,
+        orchestrationIntent: finalIntent,
+        adaptiveContext: finalAdaptiveContext,
+        model: routeOpenAIModel || openaiModel,
+        temperature: null,
+        extraSystemPrompt,
+        metadata: {
+          userId,
+          conversationId,
+          hook: hookConfig?.hook_code || null,
+          mode: hookConfig?.mode || null,
+          ...safeObject(orchestrationMetadata)
+        },
+        openai,
+        jurisprudencePayload,
+        hierarchyConflict,
+        conflicts
+      });
 
       const payload = {
         success: true,
         engine: "TINA_RAG_ANSWER_HANDLER",
         version: ENGINE_VERSION,
-        hook: hookConfig.hook_code,
-        mode: hookConfig.mode,
-        hookTitle: hookConfig.title,
+        hook: hookConfig?.hook_code || null,
+        mode: hookConfig?.mode || null,
+        hookTitle: hookConfig?.title || null,
         answer: result.answer,
         sources: result.sources || [],
         sourcesUsed: result.sources || [],
-        vectorMatches:
-          result.sources?.length || 0,
-        sourceStatus:
-          result.sources?.length
-            ? "ISSUE_MATCHED_CONTEXT_USED"
-            : "NO_VISIBLE_SOURCE",
+        vectorMatches: safeArray(result.sources).length,
+        sourceStatus: safeArray(result.sources).length
+          ? "ISSUE_MATCHED_CONTEXT_USED"
+          : "NO_VISIBLE_SOURCE",
         metadata: {
-          ...(result.metadata || {}),
-          ragAnswerHandlerVersion:
-            ENGINE_VERSION,
-          contextOrchestrationCompatible:
-            true,
-          rawSourceInjectionPrevented:
-            true,
-          fullDebugObjectInjectionPrevented:
-            true,
-          fullEngineOutputInjectionPrevented:
-            true
+          ...safeObject(result.metadata),
+          ragAnswerHandlerVersion: ENGINE_VERSION,
+          contextOrchestrationCompatible: true,
+          usesOrchestrationOnly: true,
+          directOpenAICallDisabled: true,
+          rawSourceInjectionPrevented: true,
+          fullDebugObjectInjectionPrevented: true,
+          fullEngineOutputInjectionPrevented: true
         }
       };
 
@@ -1031,14 +726,12 @@ export function createRagAnswerHandler({
         vectorMatches: 0,
         sourceStatus: "RAG_HANDLER_ERROR",
         metadata: {
-          contextOrchestrationCompatible:
-            true,
-          rawSourceInjectionPrevented:
-            true,
-          fullDebugObjectInjectionPrevented:
-            true,
-          fullEngineOutputInjectionPrevented:
-            true
+          contextOrchestrationCompatible: true,
+          usesOrchestrationOnly: true,
+          directOpenAICallDisabled: true,
+          rawSourceInjectionPrevented: true,
+          fullDebugObjectInjectionPrevented: true,
+          fullEngineOutputInjectionPrevented: true
         }
       };
 
@@ -1061,6 +754,8 @@ export function ragAnswerHandlerHealthCheck() {
     engine: "TINA_RAG_ANSWER_HANDLER",
     version: ENGINE_VERSION,
     contextOrchestrationCompatible: true,
+    usesOrchestrationOnly: true,
+    directOpenAICallDisabled: true,
     plannerCompatible: true,
     adaptiveMasterPromptCompatible: true,
     rendererCompatible: true,
@@ -1068,8 +763,7 @@ export function ragAnswerHandlerHealthCheck() {
     compactSourcesOnly: true,
     rawSourceInjectionPrevented: true,
     fullDebugObjectInjectionPrevented: true,
-    fullEngineOutputInjectionPrevented: true,
-    directOversizedOpenAICallPrevented: true
+    fullEngineOutputInjectionPrevented: true
   };
 }
 
