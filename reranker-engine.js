@@ -3,13 +3,15 @@
 
 /**
  * TINA Enterprise Reranker Engine
- * Version: 4.0.0
+ * Version: 4.1.0
  *
- * Purpose:
- * - Rerank retrieved documents after vector / keyword retrieval.
- * - Penalize issue-mismatched cases.
- * - Boost authorities matching the classified issue.
- * - Prioritize controlling legal authority, exact citations, issue-fit, and adaptive mode.
+ * Integrated with:
+ * - main-tax-engine-classification.js
+ * - issue-classification-engine.js
+ * - retrieval-engine.js
+ * - authority-engine.js
+ * - supersession-engine.js
+ * - query-intent-engine.js
  */
 
 import {
@@ -20,10 +22,9 @@ import {
 } from "./authority-engine.js";
 
 import { applySupersessionFilter } from "./supersession-engine.js";
-
 import { analyzeQueryIntent } from "./query-intent-engine.js";
 
-const ENGINE_VERSION = "4.0.0";
+const ENGINE_VERSION = "4.1.0";
 const DEFAULT_LIMIT = 12;
 
 const ISSUE_TYPE = Object.freeze({
@@ -64,6 +65,22 @@ const RESPONSE_MODE = Object.freeze({
   REVIEWER: "REVIEWER"
 });
 
+const DOMAIN_AUTHORITY_PROFILE = Object.freeze({
+  VAT: ["STATUTE", "RR", "SUPREME_COURT", "RMC"],
+  CIT: ["STATUTE", "RR", "SUPREME_COURT", "RMC"],
+  IIT: ["STATUTE", "RR", "RMC"],
+  WHT: ["STATUTE", "RR", "RMC", "BIR_RULING"],
+  EST: ["STATUTE", "RR", "RMC"],
+  PCT: ["STATUTE", "RR", "RMC"],
+  EXC: ["STATUTE", "RR", "RMC"],
+  PRE: ["STATUTE", "SUPREME_COURT", "CTA_EN_BANC", "CTA_DIVISION", "RR", "RMC"],
+  DIS: ["STATUTE", "SUPREME_COURT", "CTA_EN_BANC", "CTA_DIVISION", "RR"],
+  LGT: ["STATUTE", "SUPREME_COURT", "LGU"],
+  CUS: ["STATUTE", "BOC_ISSUANCE", "SUPREME_COURT", "CTA_EN_BANC"],
+  SPC: ["RR", "STATUTE", "RMC", "OECD_GUIDANCE"],
+  CON: ["CONSTITUTION", "SUPREME_COURT"]
+});
+
 const ISSUE_AUTHORITY_PROFILE = Object.freeze({
   VAT_LIABILITY: ["STATUTE", "RR", "SUPREME_COURT", "RMC"],
   VAT_REFUND: ["STATUTE", "RR", "SUPREME_COURT", "CTA_EN_BANC", "CTA_DIVISION"],
@@ -99,6 +116,11 @@ function lower(value = "") {
 
 function unique(values = []) {
   return [...new Set((values || []).filter(Boolean))];
+}
+
+function arrayify(value) {
+  if (!value) return [];
+  return Array.isArray(value) ? value : [value];
 }
 
 function normalizeMode(mode = RESPONSE_MODE.STANDARD) {
@@ -153,6 +175,9 @@ function docText(doc = {}) {
       doc.metadata?.documentTitle,
       doc.metadata?.originalFileName,
       doc.metadata?.normalizedReference,
+      doc.metadata?.authorityType,
+      doc.authorityType,
+      doc.authority_type,
       ...(Array.isArray(doc.normalizedAliases) ? doc.normalizedAliases : []),
       ...(Array.isArray(doc.normalized_aliases) ? doc.normalized_aliases : []),
       ...(Array.isArray(doc.metadata?.normalizedAliases) ? doc.metadata.normalizedAliases : [])
@@ -204,7 +229,7 @@ function detectIssueTypes(text = "") {
   };
 
   push(/\b(vat refund|input vat refund|tax credit certificate|tcc|120\+30|administrative claim|judicial claim|unutilized input vat|excess input vat)\b/i.test(value), ISSUE_TYPE.VAT_REFUND);
-  push(/\b(vat liability|output vat|subject to vat|vatable|gross receipts|sale of goods|sale of services|define vat|what is vat)\b/i.test(value), ISSUE_TYPE.VAT_LIABILITY);
+  push(/\b(vat liability|output vat|subject to vat|vatable|gross receipts|sale of goods|sale of services|define vat|what is vat|value[- ]added tax)\b/i.test(value), ISSUE_TYPE.VAT_LIABILITY);
   push(/\b(file|filing|deadline|appeal|assessment|loa|pan|fan|return|remedy|protest|prescription)\b/i.test(value), ISSUE_TYPE.PROCEDURAL);
   push(/\b(invoice|receipt|substantiation|documentary|evidence|records|burden of proof|supporting document)\b/i.test(value), ISSUE_TYPE.EVIDENTIARY);
   push(/\b(jurisdiction|jurisdictional|cta|condition precedent)\b/i.test(value), ISSUE_TYPE.JURISDICTIONAL);
@@ -236,7 +261,10 @@ function normalizeIssue(value = "") {
   const aliases = {
     VAT: ISSUE_TYPE.VAT_LIABILITY,
     OUTPUT_VAT: ISSUE_TYPE.VAT_LIABILITY,
+    OUTPUT_TAX: ISSUE_TYPE.VAT_LIABILITY,
+    INPUT_VAT: ISSUE_TYPE.VAT_REFUND,
     INPUT_VAT_REFUND: ISSUE_TYPE.VAT_REFUND,
+    VAT_REFUNDS: ISSUE_TYPE.VAT_REFUND,
     REFUND: ISSUE_TYPE.VAT_REFUND,
     TAX_REFUND: ISSUE_TYPE.VAT_REFUND,
     REMEDIES: ISSUE_TYPE.PROCEDURAL,
@@ -246,6 +274,10 @@ function normalizeIssue(value = "") {
     EWT: ISSUE_TYPE.WITHHOLDING,
     CWT: ISSUE_TYPE.WITHHOLDING,
     FWT: ISSUE_TYPE.WITHHOLDING,
+    WHT: ISSUE_TYPE.WITHHOLDING,
+    WITHHOLDING_TAX: ISSUE_TYPE.WITHHOLDING,
+    CIT: ISSUE_TYPE.INCOME_TAX,
+    IIT: ISSUE_TYPE.INCOME_TAX,
     RCIT: ISSUE_TYPE.INCOME_TAX,
     MCIT: ISSUE_TYPE.INCOME_TAX,
     NOLCO: ISSUE_TYPE.INCOME_TAX,
@@ -266,7 +298,37 @@ function normalizeIssue(value = "") {
   if (aliases[raw]) return aliases[raw];
   if (Object.values(ISSUE_TYPE).includes(raw)) return raw;
 
-  return null;
+  return raw;
+}
+
+function normalizeDomain(value = "") {
+  const raw = String(value || "").trim().toUpperCase().replace(/[\s-]+/g, "_");
+  if (!raw) return null;
+
+  const aliases = {
+    VALUE_ADDED_TAX: "VAT",
+    CORPORATE_INCOME_TAX: "CIT",
+    INCOME_TAX: "CIT",
+    INDIVIDUAL_INCOME_TAX: "IIT",
+    WITHHOLDING: "WHT",
+    WITHHOLDING_TAX: "WHT",
+    ESTATE_TAX: "EST",
+    DONOR_TAX: "EST",
+    PERCENTAGE_TAX: "PCT",
+    EXCISE_TAX: "EXC",
+    PRESCRIPTION: "PRE",
+    ASSESSMENT: "PRE",
+    DISPUTE: "DIS",
+    DISPUTE_RESOLUTION: "DIS",
+    LOCAL_TAX: "LGT",
+    CUSTOMS: "CUS",
+    CUSTOMS_TARIFF: "CUS",
+    TRANSFER_PRICING: "SPC",
+    SPECIAL_TAX_REGIMES: "SPC",
+    CONSTITUTIONAL_TAX: "CON"
+  };
+
+  return aliases[raw] || raw;
 }
 
 function normalizeAuthority(value = "") {
@@ -274,10 +336,13 @@ function normalizeAuthority(value = "") {
   if (!raw) return null;
 
   const aliases = {
+    CONSTITUTION: "CONSTITUTION",
     NIRC: "STATUTE",
     TAX_CODE: "STATUTE",
     LAW: "STATUTE",
     STATUTORY: "STATUTE",
+    REPUBLIC_ACT: "STATUTE",
+    RA: "STATUTE",
     REVENUE_REGULATION: "RR",
     REVENUE_REGULATIONS: "RR",
     REVENUE_MEMORANDUM_CIRCULAR: "RMC",
@@ -292,27 +357,28 @@ function normalizeAuthority(value = "") {
     CTA_CASE: "CTA_DIVISION",
     CTA_EN_BANC_DECISION: "CTA_EN_BANC",
     BIR_RULING: "BIR_RULING",
+    LGU_ISSUANCE: "LGU",
+    BOC_ISSUANCE: "BOC_ISSUANCE",
+    TAX_TREATY: "TAX_TREATY",
+    OECD_GUIDANCE: "OECD_GUIDANCE",
     PFRS_FOR_SMES: "PFRS",
     IFRS: "PFRS",
     PAS: "PAS",
-    PSA: "PSA"
+    PSA: "PSA",
+    SECONDARY_SOURCE: "SECONDARY"
   };
 
   return aliases[raw] || raw;
 }
 
-function arrayify(value) {
-  if (!value) return [];
-  if (Array.isArray(value)) return value;
-  return [value];
-}
-
 function extractIssueClassification({
   query = "",
   queryIntent = {},
-  adaptiveContext = {}
+  adaptiveContext = {},
+  issueClassification = null
 } = {}) {
   const candidate =
+    issueClassification ||
     queryIntent?.issueClassification ||
     queryIntent?.classification ||
     queryIntent?.taxIssueClassification ||
@@ -322,48 +388,108 @@ function extractIssueClassification({
     adaptiveContext?.responsePlan?.issueClassification ||
     {};
 
+  const taxDomainClassification =
+    candidate.taxDomainClassification ||
+    candidate.tax_domain_classification ||
+    queryIntent?.taxDomainClassification ||
+    adaptiveContext?.taxDomainClassification ||
+    adaptiveContext?.responsePlan?.taxDomainClassification ||
+    null;
+
   const detected = detectIssueTypes(query);
+
+  const primaryDomain =
+    normalizeDomain(candidate.primaryDomain) ||
+    normalizeDomain(candidate.primary_domain) ||
+    normalizeDomain(taxDomainClassification?.primaryDomain) ||
+    normalizeDomain(taxDomainClassification?.primary_domain) ||
+    null;
 
   const primaryIssue =
     normalizeIssue(candidate.primaryIssue) ||
     normalizeIssue(candidate.primary_issue) ||
     normalizeIssue(candidate.issueType) ||
     normalizeIssue(candidate.issue_type) ||
+    normalizeIssue(taxDomainClassification?.primaryIssue) ||
+    normalizeIssue(taxDomainClassification?.primary_issue) ||
+    normalizeIssue(taxDomainClassification?.primarySubIssue) ||
+    normalizeIssue(taxDomainClassification?.primary_sub_issue) ||
     normalizeIssue(queryIntent?.primaryIssue) ||
     normalizeIssue(adaptiveContext?.primaryIssue) ||
     detected[0] ||
     ISSUE_TYPE.GENERAL;
 
   const subIssues = unique([
-    ...arrayify(candidate.subIssue).map(normalizeIssue),
+    primaryIssue,
+    normalizeIssue(candidate.subIssue),
+    normalizeIssue(candidate.sub_issue),
+    normalizeIssue(taxDomainClassification?.primarySubIssue),
+    normalizeIssue(taxDomainClassification?.primary_sub_issue),
     ...arrayify(candidate.subIssues).map(normalizeIssue),
-    ...arrayify(candidate.sub_issue).map(normalizeIssue),
     ...arrayify(candidate.sub_issues).map(normalizeIssue),
+    ...arrayify(taxDomainClassification?.subIssues).map(normalizeIssue),
+    ...arrayify(taxDomainClassification?.sub_issues).map(normalizeIssue),
     ...arrayify(queryIntent?.subIssue).map(normalizeIssue),
     ...arrayify(queryIntent?.subIssues).map(normalizeIssue),
     ...detected
   ]).filter(Boolean);
 
+  const targetAuthorities = unique([
+    ...arrayify(candidate.targetAuthorities).map(normalizeAuthority),
+    ...arrayify(candidate.target_authorities).map(normalizeAuthority),
+    ...arrayify(taxDomainClassification?.targetAuthorities).map(normalizeAuthority),
+    ...arrayify(taxDomainClassification?.target_authorities).map(normalizeAuthority),
+    ...arrayify(queryIntent?.targetAuthorities).map(normalizeAuthority),
+    ...arrayify(adaptiveContext?.targetAuthorities).map(normalizeAuthority),
+    ...(primaryDomain && DOMAIN_AUTHORITY_PROFILE[primaryDomain]
+      ? DOMAIN_AUTHORITY_PROFILE[primaryDomain]
+      : []),
+    ...(ISSUE_AUTHORITY_PROFILE[primaryIssue] || [])
+  ]).filter(Boolean);
+
+  const legalDimensions = unique([
+    ...arrayify(candidate.legalDimensions).map((item) => String(item || "").toUpperCase()),
+    ...arrayify(candidate.legal_dimension).map((item) => String(item || "").toUpperCase()),
+    ...arrayify(taxDomainClassification?.legalDimensions).map((item) => String(item || "").toUpperCase()),
+    ...arrayify(queryIntent?.legalDimensions).map((item) => String(item || "").toUpperCase())
+  ]).filter(Boolean);
+
   const retrievalStrategy =
     candidate.retrievalStrategy ||
     candidate.retrieval_strategy ||
+    taxDomainClassification?.retrievalStrategy ||
+    taxDomainClassification?.retrieval_strategy ||
     queryIntent?.retrievalStrategy ||
     adaptiveContext?.retrievalStrategy ||
     "ISSUE_AUTHORITY_RERANK";
 
-  const targetAuthorities = unique([
-    ...arrayify(candidate.targetAuthorities).map(normalizeAuthority),
-    ...arrayify(candidate.target_authorities).map(normalizeAuthority),
-    ...arrayify(queryIntent?.targetAuthorities).map(normalizeAuthority),
-    ...arrayify(adaptiveContext?.targetAuthorities).map(normalizeAuthority),
-    ...(ISSUE_AUTHORITY_PROFILE[primaryIssue] || [])
+  const boostTerms = unique([
+    primaryDomain,
+    primaryIssue,
+    ...subIssues,
+    ...arrayify(candidate.keyTerms),
+    ...arrayify(candidate.key_terms),
+    ...arrayify(taxDomainClassification?.retrievalHints?.boostTerms),
+    ...arrayify(taxDomainClassification?.retrieval_hints?.boost_terms)
   ]).filter(Boolean);
 
   return {
+    ...candidate,
+    primaryDomain,
     primaryIssue,
+    subIssue:
+      candidate.subIssue ||
+      candidate.sub_issue ||
+      taxDomainClassification?.primarySubIssue ||
+      taxDomainClassification?.primary_sub_issue ||
+      subIssues[0] ||
+      primaryIssue,
     subIssues: unique(subIssues.length ? subIssues : [primaryIssue]),
+    legalDimensions,
     retrievalStrategy,
-    targetAuthorities
+    targetAuthorities,
+    taxDomainClassification,
+    boostTerms
   };
 }
 
@@ -425,8 +551,11 @@ function authorityWeight(doc = {}) {
   const weights = {
     CONSTITUTION: 100,
     STATUTE: 98,
+    NIRC: 98,
+    TAX_CODE: 98,
     SUPREME_COURT: 97,
     RR: 95,
+    TAX_TREATY: 90,
     TREATY: 90,
     RMC: 84,
     RMO: 80,
@@ -439,6 +568,8 @@ function authorityWeight(doc = {}) {
     PAS: 58,
     PSA: 52,
     LGU: 45,
+    BOC_ISSUANCE: 44,
+    OECD_GUIDANCE: 20,
     SECONDARY: 5,
     UNKNOWN: 0
   };
@@ -465,6 +596,39 @@ function authorityPenalty(doc = {}) {
   return penalty;
 }
 
+function domainBonus(issueClassification = {}, doc = {}) {
+  const primaryDomain = normalizeDomain(issueClassification.primaryDomain);
+  if (!primaryDomain) return 0;
+
+  const authorityType = getAuthorityTypeForDoc(doc);
+  const text = lower(docText(doc));
+  let bonus = 0;
+
+  if (DOMAIN_AUTHORITY_PROFILE[primaryDomain]?.includes(authorityType)) bonus += 45;
+
+  const domainTerms = {
+    VAT: ["vat", "value-added tax", "output vat", "input vat"],
+    CIT: ["corporate income tax", "income tax", "rcit", "mcit", "nolco"],
+    IIT: ["individual income tax", "compensation", "self-employed"],
+    WHT: ["withholding", "ewt", "cwt", "fwt"],
+    EST: ["estate tax", "donor tax", "donation"],
+    PCT: ["percentage tax"],
+    EXC: ["excise tax"],
+    PRE: ["prescription", "assessment", "loa", "pan", "fan"],
+    DIS: ["protest", "appeal", "cta", "dispute"],
+    LGT: ["local business tax", "real property tax", "lgu"],
+    CUS: ["customs", "tariff", "import duty"],
+    SPC: ["transfer pricing", "peza", "create incentives"],
+    CON: ["constitution", "due process", "equal protection"]
+  };
+
+  for (const term of domainTerms[primaryDomain] || []) {
+    if (text.includes(term)) bonus += 12;
+  }
+
+  return bonus;
+}
+
 function classifiedIssueBonus(issueClassification = {}, doc = {}) {
   const authorityType = getAuthorityTypeForDoc(doc);
   const docIssues = detectIssueTypes(docText(doc));
@@ -475,15 +639,21 @@ function classifiedIssueBonus(issueClassification = {}, doc = {}) {
   let bonus = 0;
 
   if (targetAuthorities.includes(authorityType)) bonus += 75;
-
   if (docIssues.includes(primaryIssue)) bonus += 80;
 
   const subIssueHits = classifiedIssues.filter((issue) => docIssues.includes(issue)).length;
   bonus += subIssueHits * 25;
 
   if (issueOverlap(classifiedIssues, docIssues)) bonus += 35;
-
   if (issueMismatch(classifiedIssues, docIssues)) bonus -= 140;
+
+  bonus += domainBonus(issueClassification, doc);
+
+  const text = lower(docText(doc));
+  for (const term of arrayify(issueClassification.boostTerms)) {
+    const normalized = lower(String(term).replace(/_/g, " "));
+    if (normalized.length >= 3 && text.includes(normalized)) bonus += 8;
+  }
 
   return bonus;
 }
@@ -714,7 +884,9 @@ function rerankForTina({
   adaptiveContext = {},
   issueClassification = null
 } = {}) {
-  const queryIntent = analyzeQueryIntent(query);
+  const queryIntent = analyzeQueryIntent(query, {
+    issueClassification
+  });
 
   const effectiveMode = normalizeMode(
     responseMode ||
@@ -724,13 +896,12 @@ function rerankForTina({
       RESPONSE_MODE.STANDARD
   );
 
-  const effectiveIssueClassification =
-    issueClassification ||
-    extractIssueClassification({
-      query,
-      queryIntent,
-      adaptiveContext
-    });
+  const effectiveIssueClassification = extractIssueClassification({
+    query,
+    queryIntent,
+    adaptiveContext,
+    issueClassification
+  });
 
   const queryIssues = unique([
     effectiveIssueClassification.primaryIssue,
@@ -769,6 +940,8 @@ function rerankForTina({
       const targetAuthorityMatch =
         effectiveIssueClassification.targetAuthorities?.includes(authorityType) || false;
 
+      const domainAwareBonus = domainBonus(effectiveIssueClassification, doc);
+
       return {
         ...doc,
         rerankIssueTypes: docIssues,
@@ -777,26 +950,35 @@ function rerankForTina({
         weakSecondary,
         superseded,
         targetAuthorityMatch,
+        domainAwareBonus,
+        primaryDomain: effectiveIssueClassification.primaryDomain || null,
         citationMatchBonus: exactReferenceBonus(query, doc),
         issueClassificationMatch: {
+          primaryDomain: effectiveIssueClassification.primaryDomain || null,
           primaryIssue: effectiveIssueClassification.primaryIssue,
+          subIssue: effectiveIssueClassification.subIssue || null,
           subIssues: effectiveIssueClassification.subIssues,
+          legalDimensions: effectiveIssueClassification.legalDimensions || [],
           retrievalStrategy: effectiveIssueClassification.retrievalStrategy,
           targetAuthorities: effectiveIssueClassification.targetAuthorities,
           matchedAuthorityType: authorityType,
           targetAuthorityMatch,
           issueOverlap: issueOverlap(queryIssues, docIssues),
-          issueMismatch: mismatch
+          issueMismatch: mismatch,
+          taxDomainClassification:
+            effectiveIssueClassification.taxDomainClassification || null
         },
         rerankMetadata: {
           responseMode: effectiveMode,
           hierarchyAware: true,
           issueAware: true,
+          domainAware: true,
           classifiedIssueAware: true,
           exactAuthorityAware: true,
           targetAuthorityAware: true,
           supersessionAware: true,
           adaptiveContextAware: true,
+          mainTaxEngineClassificationCompatible: true,
           tinaRerankerVersion: ENGINE_VERSION
         }
       };
@@ -815,6 +997,10 @@ function rerankForTina({
       const aExact = Number(a.citationMatchBonus || 0);
       const bExact = Number(b.citationMatchBonus || 0);
       if (bExact !== aExact) return bExact - aExact;
+
+      const aDomain = Number(a.domainAwareBonus || 0);
+      const bDomain = Number(b.domainAwareBonus || 0);
+      if (bDomain !== aDomain) return bDomain - aDomain;
 
       const aLevel = getAuthorityLevelForDoc(a);
       const bLevel = getAuthorityLevelForDoc(b);
@@ -837,6 +1023,7 @@ function rerankForTina({
       engine: "TINA_RERANKER_ENGINE",
       version: ENGINE_VERSION,
       query,
+      primaryDomain: effectiveIssueClassification.primaryDomain || null,
       queryIssues,
       responseMode: effectiveMode,
       inputCount: Array.isArray(docs) ? docs.length : 0,
@@ -846,8 +1033,10 @@ function rerankForTina({
       suppressIssueMismatch,
       suppressWeakSecondary,
       suppressSuperseded,
+      domainAware: true,
+      mainTaxEngineClassificationCompatible: true,
       policy:
-        "TINA reranker prioritizes controlling authority, exact authority matching, classified-issue relevance, target-authority matching, adaptive-mode relevance, issue-matched jurisprudence, and penalizes superseded, weak secondary, or issue-mismatched cases.",
+        "TINA reranker prioritizes controlling authority, exact authority matching, domain-aware classified-issue relevance, target-authority matching, adaptive-mode relevance, issue-matched jurisprudence, and penalizes superseded, weak secondary, or issue-mismatched cases.",
       generatedAt: new Date().toISOString()
     }
   };
@@ -918,6 +1107,8 @@ function rerankerHealthCheck() {
     jurisprudenceCompatible: true,
     supersessionCompatible: true,
     issueClassificationCompatible: true,
+    mainTaxEngineClassificationCompatible: true,
+    domainAware: true,
     targetAuthorityAware: true
   };
 }
