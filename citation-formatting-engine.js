@@ -3,16 +3,19 @@
 
 /**
  * TINA Enterprise Citation Formatting Engine
- * Version: 4.0.0
+ * Version: 4.1.0
  *
- * Patch:
- * - Prioritizes issueClassificationMatch and targetAuthorityMatch.
- * - Uses controllingPrecedence when available.
- * - Blocks vague conflict text unless metadata is complete.
- * - Prevents issue-mismatched authorities from appearing first.
+ * Purpose:
+ * - Show only cited, relevant, non-duplicated sources
+ * - Prioritize issueClassificationMatch, targetAuthorityMatch, and controllingPrecedence
+ * - Prevent vague conflict text unless metadata is complete
+ * - Prevent full source text / debug objects from reaching final output
+ * - Support context-orchestration-engine.js
  */
 
-const ENGINE_VERSION = "4.0.0";
+const ENGINE_VERSION = "4.1.0";
+const MAX_CITATIONS = 5;
+const MAX_EXCERPT_CHARS = 280;
 
 function normalizeText(value = "") {
   return String(value || "").trim();
@@ -22,9 +25,16 @@ function compactSpaces(value = "") {
   return normalizeText(value).replace(/\s+/g, " ");
 }
 
+function trimText(value = "", max = 500) {
+  const text = compactSpaces(value);
+  if (!text) return "";
+  if (text.length <= max) return text;
+  return `${text.slice(0, max).trim()} ...[trimmed]`;
+}
+
 function safeArray(value) {
   if (!value) return [];
-  return Array.isArray(value) ? value : [value];
+  return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
 }
 
 function uniqueBy(items = [], getKey = (item) => item) {
@@ -43,7 +53,6 @@ function uniqueBy(items = [], getKey = (item) => item) {
 
 function normalizeYear(year = "") {
   const raw = String(year || "").trim();
-
   if (!raw) return "";
   if (/^\d{4}$/.test(raw)) return raw;
 
@@ -79,9 +88,12 @@ function titleOf(source = {}) {
 
 function pathOf(source = {}) {
   return (
-    source.path ||
     source.sourcePath ||
     source.source_path ||
+    source.path ||
+    source.url ||
+    source.sourceUrl ||
+    source.source_url ||
     source.metadata?.path ||
     source.originalSource ||
     source.original_source ||
@@ -104,12 +116,33 @@ function sectionOf(source = {}) {
 }
 
 function authorityTypeOf(source = {}) {
-  return (
+  const raw =
     source.authorityType ||
     source.authority_type ||
     source.metadata?.authorityType ||
-    null
-  );
+    null;
+
+  if (!raw) return null;
+
+  const value = String(raw).trim().toUpperCase().replace(/[\s-]+/g, "_");
+
+  const aliases = {
+    NIRC: "STATUTE",
+    TAX_CODE: "STATUTE",
+    REPUBLIC_ACT: "STATUTE",
+    REVENUE_REGULATION: "RR",
+    REVENUE_REGULATIONS: "RR",
+    REVENUE_MEMORANDUM_CIRCULAR: "RMC",
+    REVENUE_MEMORANDUM_ORDER: "RMO",
+    REVENUE_AUDIT_MEMORANDUM_ORDER: "RAMO",
+    SC: "SUPREME_COURT",
+    CASE: "SUPREME_COURT",
+    CASE_LAW: "SUPREME_COURT",
+    CTA: "CTA_DIVISION",
+    SECONDARY_SOURCE: "SECONDARY"
+  };
+
+  return aliases[value] || value;
 }
 
 function authorityLabelOf(source = {}) {
@@ -145,8 +178,12 @@ function driveViewUrlOf(source = {}) {
   return (
     source.driveViewUrl ||
     source.drive_view_url ||
+    source.url ||
+    source.sourceUrl ||
+    source.source_url ||
     source.metadata?.driveViewUrl ||
     source.metadata?.drive_view_url ||
+    source.metadata?.url ||
     null
   );
 }
@@ -155,22 +192,25 @@ function fileIdOf(source = {}) {
   return (
     source.fileId ||
     source.file_id ||
+    source.id ||
     source.metadata?.fileId ||
     source.metadata?.file_id ||
     null
   );
 }
 
-function excerptOf(source = {}, maxLength = 280) {
+function excerptOf(source = {}, maxLength = MAX_EXCERPT_CHARS) {
   const raw =
     source.excerpt ||
     source.preview ||
     source.text ||
     source.content ||
+    source.doctrineSummary ||
+    source.caseApplicabilityExplanation ||
     source.metadata?.excerpt ||
     "";
 
-  return compactSpaces(String(raw || "")).slice(0, maxLength);
+  return trimText(raw, maxLength);
 }
 
 function normalizeAuthorityLabel(value = "") {
@@ -183,6 +223,7 @@ function normalizeAuthorityLabel(value = "") {
     CONSTITUTION: "1987 Constitution",
     STATUTE: "Statute / Tax Code / Republic Act",
     TREATY: "Tax Treaty",
+    TAX_TREATY: "Tax Treaty",
     SUPREME_COURT: "Supreme Court Decision",
     CTA_EN_BANC: "CTA En Banc Decision",
     COURT_OF_APPEALS: "Court of Appeals Decision",
@@ -204,15 +245,18 @@ function normalizeAuthorityLabel(value = "") {
 }
 
 function cleanSourceTitle(value = "") {
-  return compactSpaces(String(value || ""))
-    .replace(/\.(pdf|docx|doc|txt|csv|md|json)$/i, "")
-    .replace(/[_]+/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
+  return trimText(
+    compactSpaces(String(value || ""))
+      .replace(/\.(pdf|docx|doc|txt|csv|md|json)$/i, "")
+      .replace(/[_]+/g, " ")
+      .replace(/\s+/g, " ")
+      .trim(),
+    260
+  );
 }
 
 function cleanSectionLabel(value = "") {
-  return compactSpaces(String(value || "")).trim();
+  return trimText(value, 160);
 }
 
 function inferIssuanceNumber(source = {}) {
@@ -222,9 +266,11 @@ function inferIssuanceNumber(source = {}) {
       source.issuance_number,
       source.displayTitle,
       source.reference,
+      source.citation,
       source.normalizedReference,
       source.normalized_reference,
       source.metadata?.normalizedReference,
+      source.metadata?.citation,
       source.title,
       source.sourceTitle,
       source.source_title,
@@ -311,6 +357,10 @@ function issueClassificationMatched(item = {}) {
   return null;
 }
 
+function isWeakAuthority(item = {}) {
+  return ["SECONDARY", "UNKNOWN", null].includes(authorityTypeOf(item));
+}
+
 function citationScore(item = {}) {
   const base = Number(
     item.rerankScore ||
@@ -327,9 +377,7 @@ function citationScore(item = {}) {
   const issueBonus = issueMatch === true ? 70 : issueMatch === false ? -150 : 0;
   const exactBonus = inferIssuanceNumber(item) ? 25 : 0;
   const sectionBonus = sectionOf(item) ? 20 : 0;
-  const weakPenalty = ["SECONDARY", "UNKNOWN"].includes(String(authorityTypeOf(item) || "").toUpperCase())
-    ? -100
-    : 0;
+  const weakPenalty = isWeakAuthority(item) ? -100 : 0;
 
   return (
     base +
@@ -342,9 +390,28 @@ function citationScore(item = {}) {
   );
 }
 
+function buildCitationKey(item = {}) {
+  return compactSpaces(
+    [
+      authorityTypeOf(item),
+      inferIssuanceNumber(item),
+      titleOf(item),
+      pathOf(item),
+      sectionOf(item),
+      driveViewUrlOf(item),
+      fileIdOf(item)
+    ]
+      .filter(Boolean)
+      .join("|")
+      .toLowerCase()
+  );
+}
+
 function sortCitationAuthorities(items = []) {
   return [...safeArray(items)]
     .filter((item) => item)
+    .filter((item) => item.issueMismatch !== true)
+    .filter((item) => item.issueClassificationMatch?.issueMismatch !== true)
     .sort((a, b) => {
       const targetDiff = Number(targetAuthorityMatched(b)) - Number(targetAuthorityMatched(a));
       if (targetDiff !== 0) return targetDiff;
@@ -364,6 +431,16 @@ function sortCitationAuthorities(items = []) {
 
       return cleanSourceTitle(titleOf(a)).localeCompare(cleanSourceTitle(titleOf(b)));
     });
+}
+
+function selectDisplayableCitations(items = [], options = {}) {
+  const maxItems = Number(options.maxItems || MAX_CITATIONS);
+  const allowWeak = Boolean(options.allowWeak || false);
+
+  return sortCitationAuthorities(
+    uniqueBy(items, buildCitationKey)
+      .filter((item) => allowWeak || !isWeakAuthority(item))
+  ).slice(0, maxItems);
 }
 
 function buildLegalBasisLine(item = {}) {
@@ -391,9 +468,32 @@ function buildSourceLine(item = {}) {
   return issuanceNumber || title;
 }
 
-/* =========================================================
- * TINA STRUCTURED CITATIONS
- * ========================================================= */
+export function extractCitedSourceKeys(answerText = "") {
+  const text = String(answerText || "");
+  const keys = [];
+
+  const patterns = [
+    /\bRR\s*No\.?\s*\d+[-/]\d{2,4}\b/gi,
+    /\bRMC\s*No\.?\s*\d+[-/]\d{2,4}\b/gi,
+    /\bRMO\s*No\.?\s*\d+[-/]\d{2,4}\b/gi,
+    /\bRAMO\s*No\.?\s*\d+[-/]\d{2,4}\b/gi,
+    /\bRA\s*No\.?\s*\d{4,6}\b/gi,
+    /\bRepublic Act\s*No\.?\s*\d{4,6}\b/gi,
+    /\bG\.R\.\s*No\.?\s*[\w.-]+\b/gi,
+    /\bCTA\s*(?:EB)?\s*No\.?\s*[\w.-]+\b/gi,
+    /\bBIR Ruling\s*No\.?\s*[\w./()-]+\b/gi,
+    /\bNIRC\b/gi,
+    /\bTax Code\b/gi
+  ];
+
+  for (const regex of patterns) {
+    for (const match of text.matchAll(regex)) {
+      keys.push(match[0]);
+    }
+  }
+
+  return uniqueBy(keys.map(compactSpaces), (item) => item.toLowerCase());
+}
 
 export function formatSingleCitation(source = {}) {
   const title = cleanSourceTitle(titleOf(source));
@@ -416,30 +516,25 @@ export function formatSingleCitation(source = {}) {
   lines.push(`Authority Level: ${authorityLevel}`);
   lines.push(`Controlling Precedence: ${controllingPrecedence}`);
 
-  if (targetAuthorityMatched(source)) {
-    lines.push("Target Authority Match: YES");
-  }
+  if (targetAuthorityMatched(source)) lines.push("Target Authority Match: YES");
+  if (issueClassificationMatched(source) === true) lines.push("Issue Classification Match: YES");
 
-  if (issueClassificationMatched(source) === true) {
-    lines.push("Issue Classification Match: YES");
-  }
-
-  if (path) lines.push(`Source Path: ${path}`);
-  if (driveViewUrl) lines.push(`Drive View URL: ${driveViewUrl}`);
+  if (path) lines.push(`Source Path: ${trimText(path, 260)}`);
+  if (driveViewUrl) lines.push(`Drive View URL: ${trimText(driveViewUrl, 260)}`);
   if (fileId) lines.push(`File ID: ${fileId}`);
 
   return lines.join("\n");
 }
 
-export function formatProvisionCitationBlock(citations = []) {
-  const uniqueCitations = uniqueBy(
-    citations,
-    (item) => `${titleOf(item)}|${pathOf(item)}|${sectionOf(item)}`
-  );
+export function formatProvisionCitationBlock(citations = [], options = {}) {
+  const selected = selectDisplayableCitations(citations, {
+    maxItems: options.maxItems || MAX_CITATIONS,
+    allowWeak: options.allowWeak || false
+  });
 
-  if (!uniqueCitations.length) return "No exact provision citation found.";
+  if (!selected.length) return "No exact provision citation found.";
 
-  return sortCitationAuthorities(uniqueCitations)
+  return selected
     .map((item, index) => {
       const lines = [`${index + 1}. ${buildSourceLine(item)}`];
 
@@ -454,51 +549,48 @@ export function formatProvisionCitationBlock(citations = []) {
       if (targetAuthorityMatched(item)) lines.push("Target Authority Match: YES");
       if (issueClassificationMatched(item) === true) lines.push("Issue Classification Match: YES");
 
-      const excerpt = excerptOf(item, 320);
+      const excerpt = excerptOf(item, 260);
       if (excerpt) lines.push(`Excerpt: ${excerpt}`);
 
       const path = pathOf(item);
-      if (path) lines.push(`Source Path: ${path}`);
+      if (options.includePaths && path) lines.push(`Source Path: ${trimText(path, 260)}`);
 
       return lines.join("\n");
     })
     .join("\n\n");
 }
 
-export function formatLegalBasisBlock(legalBases = []) {
-  const uniqueBases = uniqueBy(
-    legalBases,
-    (item) =>
-      `${authorityTypeOf(item) || ""}|${titleOf(item) || item.source || ""}|${pathOf(item) || ""}|${excerptOf(item, 80)}`
-  );
+export function formatLegalBasisBlock(legalBases = [], options = {}) {
+  const selected = selectDisplayableCitations(legalBases, {
+    maxItems: options.maxItems || MAX_CITATIONS,
+    allowWeak: options.allowWeak || false
+  });
 
-  if (!uniqueBases.length) return "No legal basis found.";
+  if (!selected.length) return "No legal basis found.";
 
-  return sortCitationAuthorities(uniqueBases)
+  return selected
     .map((item) => `- ${buildLegalBasisLine(item)}`)
     .join("\n");
 }
 
 export function formatSourcesUsedBlock(sources = [], options = {}) {
-  const maxItems = Number(options.maxItems || 8);
+  const maxItems = Number(options.maxItems || MAX_CITATIONS);
   const includePaths = Boolean(options.includePaths || false);
   const includeAuthorityLevels = Boolean(options.includeAuthorityLevels !== false);
   const includeMatchMetadata = Boolean(options.includeMatchMetadata || false);
 
-  const uniqueSources = sortCitationAuthorities(
-    uniqueBy(
-      sources,
-      (item) => `${titleOf(item)}|${pathOf(item)}|${driveViewUrlOf(item) || ""}`
-    )
-  ).slice(0, maxItems);
+  const selected = selectDisplayableCitations(sources, {
+    maxItems,
+    allowWeak: options.allowWeak || false
+  });
 
-  if (!uniqueSources.length) {
-    return "6. SOURCES\n- No displayable validated source available.";
+  if (!selected.length) {
+    return "8. SOURCES\n- No displayable validated source available.";
   }
 
-  const lines = ["6. SOURCES"];
+  const lines = ["8. SOURCES"];
 
-  for (const item of uniqueSources) {
+  for (const item of selected) {
     const sourceLine = buildSourceLine(item);
     const authority = normalizeAuthorityLabel(authorityLabelOf(item));
     const authorityLevel = authorityLevelOf(item);
@@ -516,22 +608,22 @@ export function formatSourcesUsedBlock(sources = [], options = {}) {
       if (issueClassificationMatched(item) === true) lines.push("  Issue Classification Match: YES");
     }
 
-    if (includePaths && pathOf(item)) lines.push(`  Path: ${pathOf(item)}`);
-    if (driveViewUrl) lines.push(`  Link: ${driveViewUrl}`);
+    if (includePaths && pathOf(item)) lines.push(`  Path: ${trimText(pathOf(item), 260)}`);
+    if (driveViewUrl) lines.push(`  Link: ${trimText(driveViewUrl, 260)}`);
   }
 
   return lines.join("\n");
 }
 
-export function formatCaseCitationBlock(caseSources = []) {
-  const uniqueCases = uniqueBy(
-    caseSources,
-    (item) => `${titleOf(item)}|${pathOf(item)}`
-  );
+export function formatCaseCitationBlock(caseSources = [], options = {}) {
+  const selected = selectDisplayableCitations(caseSources, {
+    maxItems: options.maxItems || MAX_CITATIONS,
+    allowWeak: false
+  });
 
-  if (!uniqueCases.length) return "No case citation found.";
+  if (!selected.length) return "No case citation found.";
 
-  return sortCitationAuthorities(uniqueCases)
+  return selected
     .map((item, index) => {
       const lines = [`${index + 1}. ${buildSourceLine(item)}`];
 
@@ -546,20 +638,16 @@ export function formatCaseCitationBlock(caseSources = []) {
       if (item.caseRole) lines.push(`Case Role: ${item.caseRole}`);
       if (item.caseApplicability) lines.push(`Case Applicability: ${item.caseApplicability}`);
 
-      const excerpt = excerptOf(item, 320);
+      const excerpt = excerptOf(item, 260);
       if (excerpt) lines.push(`Case Excerpt: ${excerpt}`);
 
       const path = pathOf(item);
-      if (path) lines.push(`Source Path: ${path}`);
+      if (options.includePaths && path) lines.push(`Source Path: ${trimText(path, 260)}`);
 
       return lines.join("\n");
     })
     .join("\n\n");
 }
-
-/* =========================================================
- * TINA STRUCTURED RESPONSE BUILDERS
- * ========================================================= */
 
 export function ensureStructuredAnswerSections({
   directAnswer = "",
@@ -643,15 +731,11 @@ export function ensureCaseAnswerSections({
     "### Recommended action",
     recommendedAction || "Verify the latest controlling authority before acting.",
     "",
-    sourcesUsed || "6. SOURCES\n- No displayable validated source available."
+    sourcesUsed || "8. SOURCES\n- No displayable validated source available."
   ]
     .filter(Boolean)
     .join("\n");
 }
-
-/* =========================================================
- * CONFLICT TEXT
- * ========================================================= */
 
 function conflictMetadataIsComplete(conflict = null) {
   if (!conflict || typeof conflict !== "object") return false;
@@ -706,30 +790,24 @@ export function buildConflictFlagText(conflict = null) {
 
   const lines = [
     "Conflict Detected: YES",
-    `Conflict Type: ${conflict.conflictType || conflict.type}`,
-    `Exact Issue: ${conflict.exactIssue || conflict.sameIssueGate?.sameIssues?.join(", ")}`,
-    `Exact Legal Dimension: ${
+    `Conflict Type: ${trimText(conflict.conflictType || conflict.type, 120)}`,
+    `Exact Issue: ${trimText(conflict.exactIssue || conflict.sameIssueGate?.sameIssues?.join(", "), 220)}`,
+    `Exact Legal Dimension: ${trimText(
       conflict.exactLegalDimension ||
-      conflict.sameIssueGate?.sameDimensions?.join(", ") ||
-      conflict.legalDimension
-    }`
+        conflict.sameIssueGate?.sameDimensions?.join(", ") ||
+        conflict.legalDimension,
+      220
+    )}`
   ];
 
-  if (conflict.sourceA) lines.push(`Source A: ${JSON.stringify(conflict.sourceA)}`);
-  if (conflict.sourceB) lines.push(`Source B: ${JSON.stringify(conflict.sourceB)}`);
-
-  if (conflict.reason) lines.push(`Reason: ${conflict.reason}`);
-  if (conflict.resolutionBasis) lines.push(`Resolution Basis: ${conflict.resolutionBasis}`);
-  if (conflict.controllingAuthority) lines.push(`Controlling Authority: ${conflict.controllingAuthority}`);
-  if (conflict.controllingSource) lines.push(`Recommended Action: Follow ${JSON.stringify(conflict.controllingSource)}`);
-  if (conflict.distinctionType) lines.push(`Distinction Type: ${conflict.distinctionType}`);
+  if (conflict.reason) lines.push(`Reason: ${trimText(conflict.reason, 700)}`);
+  if (conflict.resolutionBasis) lines.push(`Resolution Basis: ${trimText(conflict.resolutionBasis, 700)}`);
+  if (conflict.controllingAuthority) lines.push(`Controlling Authority: ${trimText(conflict.controllingAuthority, 160)}`);
+  if (conflict.controllingSource) lines.push(`Recommended Action: Follow ${trimText(titleOf(conflict.controllingSource), 220)}`);
+  if (conflict.distinctionType) lines.push(`Distinction Type: ${trimText(conflict.distinctionType, 220)}`);
 
   return lines.join("\n");
 }
-
-/* =========================================================
- * SUPPORTING RULES
- * ========================================================= */
 
 export function buildSupportingRulesText({
   topLegalBases = [],
@@ -737,8 +815,10 @@ export function buildSupportingRulesText({
 }) {
   const blocks = [];
 
-  const legalBasisLines = sortCitationAuthorities(safeArray(topLegalBases))
-    .slice(0, 3)
+  const legalBasisLines = selectDisplayableCitations(topLegalBases, {
+    maxItems: 3,
+    allowWeak: false
+  })
     .map((item) => {
       const excerpt = excerptOf(item, 220);
       return excerpt ? `- ${excerpt}` : null;
@@ -747,9 +827,10 @@ export function buildSupportingRulesText({
 
   if (legalBasisLines.length) blocks.push(legalBasisLines.join("\n"));
 
-  const extra = sortCitationAuthorities(
-    uniqueBy(safeArray(extraSources), (item) => `${titleOf(item)}|${pathOf(item)}`)
-  ).slice(0, 3);
+  const extra = selectDisplayableCitations(extraSources, {
+    maxItems: 3,
+    allowWeak: false
+  });
 
   if (extra.length) {
     blocks.push(
@@ -766,10 +847,6 @@ export function buildSupportingRulesText({
   return blocks.filter(Boolean).join("\n\n") || "No supporting rules found.";
 }
 
-/* =========================================================
- * HEALTH CHECK
- * ========================================================= */
-
 export function citationFormattingHealthCheck() {
   return {
     ok: true,
@@ -781,7 +858,13 @@ export function citationFormattingHealthCheck() {
     auditCompatible: true,
     issueClassificationMatchAware: true,
     targetAuthorityMatchAware: true,
-    conflictMetadataGated: true
+    controllingPrecedenceAware: true,
+    conflictMetadataGated: true,
+    contextOrchestrationCompatible: true,
+    nonDuplicatedSourcesReady: true,
+    citedRelevantSourcesOnly: true,
+    rawFullTextInjectionPrevented: true,
+    compactCitationOutput: true
   };
 }
 
@@ -795,5 +878,6 @@ export default {
   ensureCaseAnswerSections,
   buildConflictFlagText,
   buildSupportingRulesText,
+  extractCitedSourceKeys,
   citationFormattingHealthCheck
 };
