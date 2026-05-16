@@ -135,13 +135,6 @@ function unique(values = []) {
   return [...new Set((values || []).filter(Boolean))];
 }
 
-function hasAny(text = "", patterns = []) {
-  return patterns.some((pattern) => {
-    if (pattern instanceof RegExp) return pattern.test(text);
-    return text.includes(String(pattern).toLowerCase());
-  });
-}
-
 function normalizeYear(year = "") {
   const raw = String(year || "").trim();
   if (!raw) return "";
@@ -417,6 +410,7 @@ function detectSubIssue(question = "", primaryIssue = PRIMARY_ISSUE.GENERAL_TAX,
   const q = lower(question);
 
   if (primaryIssue === PRIMARY_ISSUE.VAT_REFUND) return "VAT_REFUND/SECTION_112";
+
   if (primaryIssue === PRIMARY_ISSUE.VAT_LIABILITY) {
     if (/\bdefine vat|what is vat|nature of vat\b/i.test(q)) return "VAT_LIABILITY/NATURE_SCOPE";
     if (/\boutput vat\b/i.test(q)) return "VAT_LIABILITY/OUTPUT_VAT";
@@ -500,22 +494,10 @@ function detectLegalDimensions(question = "", primaryIssue = PRIMARY_ISSUE.GENER
     dimensions.push(LEGAL_DIMENSION.EVIDENTIARY);
   }
 
-  if (primaryIssue === PRIMARY_ISSUE.JURISDICTIONAL) {
-    dimensions.push(LEGAL_DIMENSION.JURISDICTIONAL);
-  }
-
-  if (primaryIssue === PRIMARY_ISSUE.CONTRACT) {
-    dimensions.push(LEGAL_DIMENSION.CONTRACTUAL);
-  }
-
-  if (primaryIssue === PRIMARY_ISSUE.TRANSACTION) {
-    dimensions.push(LEGAL_DIMENSION.TRANSACTION, LEGAL_DIMENSION.FACTUAL);
-  }
-
-  if (primaryIssue === PRIMARY_ISSUE.ECONOMIC_SUBSTANCE) {
-    dimensions.push(LEGAL_DIMENSION.ECONOMIC_SUBSTANCE, LEGAL_DIMENSION.FACTUAL);
-  }
-
+  if (primaryIssue === PRIMARY_ISSUE.JURISDICTIONAL) dimensions.push(LEGAL_DIMENSION.JURISDICTIONAL);
+  if (primaryIssue === PRIMARY_ISSUE.CONTRACT) dimensions.push(LEGAL_DIMENSION.CONTRACTUAL);
+  if (primaryIssue === PRIMARY_ISSUE.TRANSACTION) dimensions.push(LEGAL_DIMENSION.TRANSACTION, LEGAL_DIMENSION.FACTUAL);
+  if (primaryIssue === PRIMARY_ISSUE.ECONOMIC_SUBSTANCE) dimensions.push(LEGAL_DIMENSION.ECONOMIC_SUBSTANCE, LEGAL_DIMENSION.FACTUAL);
   if (primaryIssue === PRIMARY_ISSUE.ACCOUNTING) dimensions.push(LEGAL_DIMENSION.ACCOUNTING);
   if (primaryIssue === PRIMARY_ISSUE.AUDIT) dimensions.push(LEGAL_DIMENSION.AUDIT);
 
@@ -542,7 +524,7 @@ function detectQueryIntent(question = "", primaryIssue = PRIMARY_ISSUE.GENERAL_T
   return QUERY_INTENT.ADVISORY;
 }
 
-function buildLegalQuestionPresented({ question = "", primaryIssue, subIssue, domains = [] }) {
+function buildLegalQuestionPresented({ question = "", primaryIssue }) {
   const templates = {
     [PRIMARY_ISSUE.VAT_LIABILITY]: "Whether the transaction, person, sale, service, or receipt is subject to VAT and what VAT rule controls.",
     [PRIMARY_ISSUE.VAT_REFUND]: "Whether the taxpayer may claim input VAT refund or tax credit and what procedural, jurisdictional, and substantiation requirements apply.",
@@ -566,7 +548,7 @@ function buildLegalQuestionPresented({ question = "", primaryIssue, subIssue, do
   return templates[primaryIssue] || normalizeText(question) || "What Philippine tax rule governs the user's issue?";
 }
 
-function buildTargetAuthorities({ primaryIssue, subIssue, domains = [], exactAuthority }) {
+function buildTargetAuthorities({ primaryIssue, subIssue, exactAuthority }) {
   const groups = {
     constitution: [],
     nirc: [],
@@ -671,25 +653,22 @@ function buildTargetAuthorities({ primaryIssue, subIssue, domains = [], exactAut
   for (const key of Object.keys(groups)) groups[key] = unique(groups[key]);
 
   const flat = unique([
-    ...groups.constitution.length ? [AUTHORITY_TYPE.CONSTITUTION] : [],
-    ...groups.nirc.length ? [AUTHORITY_TYPE.STATUTE] : [],
-    ...groups.supremeCourt.length ? [AUTHORITY_TYPE.SUPREME_COURT] : [],
-    ...groups.ctaEnBanc.length ? [AUTHORITY_TYPE.CTA_EN_BANC] : [],
-    ...groups.ctaDivision.length ? [AUTHORITY_TYPE.CTA_DIVISION] : [],
-    ...groups.rr.length ? [AUTHORITY_TYPE.RR] : [],
-    ...groups.rmc.length ? [AUTHORITY_TYPE.RMC] : [],
-    ...groups.rmo.length ? [AUTHORITY_TYPE.RMO] : [],
-    ...groups.ramo.length ? [AUTHORITY_TYPE.RAMO] : [],
-    ...groups.birRulings.length ? [AUTHORITY_TYPE.BIR_RULING] : [],
-    ...groups.pfrs.length ? [AUTHORITY_TYPE.PFRS] : [],
-    ...groups.pas.length ? [AUTHORITY_TYPE.PAS] : [],
-    ...groups.psa.length ? [AUTHORITY_TYPE.PSA] : []
+    ...(groups.constitution.length ? [AUTHORITY_TYPE.CONSTITUTION] : []),
+    ...(groups.nirc.length ? [AUTHORITY_TYPE.STATUTE] : []),
+    ...(groups.supremeCourt.length ? [AUTHORITY_TYPE.SUPREME_COURT] : []),
+    ...(groups.ctaEnBanc.length ? [AUTHORITY_TYPE.CTA_EN_BANC] : []),
+    ...(groups.ctaDivision.length ? [AUTHORITY_TYPE.CTA_DIVISION] : []),
+    ...(groups.rr.length ? [AUTHORITY_TYPE.RR] : []),
+    ...(groups.rmc.length ? [AUTHORITY_TYPE.RMC] : []),
+    ...(groups.rmo.length ? [AUTHORITY_TYPE.RMO] : []),
+    ...(groups.ramo.length ? [AUTHORITY_TYPE.RAMO] : []),
+    ...(groups.birRulings.length ? [AUTHORITY_TYPE.BIR_RULING] : []),
+    ...(groups.pfrs.length ? [AUTHORITY_TYPE.PFRS] : []),
+    ...(groups.pas.length ? [AUTHORITY_TYPE.PAS] : []),
+    ...(groups.psa.length ? [AUTHORITY_TYPE.PSA] : [])
   ]);
 
-  return {
-    groups,
-    flat
-  };
+  return { groups, flat };
 }
 
 function buildKeyTerms({ question = "", primaryIssue, subIssue, domains = [], exactAuthority }) {
@@ -871,6 +850,7 @@ function classifyTaxIssue(question = "") {
   const normalizedQuestion = normalizeText(question);
   const exactAuthority = detectExactAuthority(normalizedQuestion);
   const domains = detectTaxDomain(normalizedQuestion);
+
   const primaryIssue = exactAuthority.detected
     ? normalizeAuthority(exactAuthority.type) === "SUPREME_COURT" || normalizeAuthority(exactAuthority.type) === "CTA_DIVISION"
       ? PRIMARY_ISSUE.CASE_LAW
@@ -925,7 +905,7 @@ function classifyTaxIssue(question = "") {
   const doctrinalAnalysisRequired = shouldRequireDoctrinalAnalysis(primaryIssue, normalizedQuestion);
   const potentialConflictCheck = shouldRunConflictCheck(primaryIssue, normalizedQuestion);
 
-  return {
+  const classification = {
     engine: "TINA_ISSUE_CLASSIFICATION_ENGINE",
     version: ENGINE_VERSION,
     originalQuery: question,
@@ -998,6 +978,8 @@ function classifyTaxIssue(question = "") {
       requireOppositeHoldingGate: true
     }
   };
+
+  return enrichIssueClassification(classification, normalizedQuestion);
 }
 
 function buildIssueClassificationSearchQueries(classification = {}, maxQueries = 8) {
@@ -1116,7 +1098,8 @@ function issueClassificationEngineHealthCheck() {
     jurisprudenceFilteringReady: true,
     conflictGateReady: true,
     transactionCharacterizationReady: true,
-    factPatternReady: true
+    factPatternReady: true,
+    mainTaxEngineClassificationIntegrated: true
   };
 }
 
