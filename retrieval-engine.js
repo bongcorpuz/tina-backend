@@ -3,7 +3,11 @@
 
 /**
  * TINA Enterprise Retrieval Orchestration Engine
- * Version: 3.1.0
+ * Version: 3.2.0
+ *
+ * Integrated with:
+ * - issue-classification-engine.js
+ * - query-intent-engine.js
  */
 
 import {
@@ -22,10 +26,16 @@ import {
 } from "./query-intent-engine.js";
 
 import {
+  classifyTaxIssue,
+  buildIssueClassificationSearchQueries,
+  isIssueClassificationCompatibleWithDoc
+} from "./issue-classification-engine.js";
+
+import {
   rerankForTina
 } from "./reranker-engine.js";
 
-const ENGINE_VERSION = "3.1.0";
+const ENGINE_VERSION = "3.2.0";
 
 const DEFAULT_TOP_K = 12;
 const DEFAULT_POOL_K = 36;
@@ -59,12 +69,26 @@ const MODE_ALIASES = Object.freeze({
   SOURCE_FINDER: "STANDARD"
 });
 
+const AUTHORITY_GROUP_TO_TYPES = Object.freeze({
+  constitution: ["CONSTITUTION"],
+  nirc: ["STATUTE", "NIRC", "TAX_CODE"],
+  supremeCourt: ["SUPREME_COURT"],
+  ctaEnBanc: ["CTA_EN_BANC"],
+  rr: ["RR"],
+  rmc: ["RMC"],
+  birRulings: ["BIR_RULING"]
+});
+
 function normalizeText(value = "") {
   return String(value || "").replace(/\s+/g, " ").trim();
 }
 
 function lower(value = "") {
   return normalizeText(value).toLowerCase();
+}
+
+function unique(values = []) {
+  return [...new Set(values.filter(Boolean))];
 }
 
 function normalizeMode(mode = "STANDARD") {
@@ -98,6 +122,45 @@ function normalizeMode(mode = "STANDARD") {
   if (value.includes("QUICK")) return "QUICK";
 
   return "STANDARD";
+}
+
+function safeIssueClassification(query = "", existingClassification = null) {
+  if (existingClassification?.primaryIssue) return existingClassification;
+
+  try {
+    return classifyTaxIssue(query);
+  } catch (error) {
+    return {
+      primaryIssue: "GENERAL_TAX",
+      subIssue: "GENERAL_TAX/GENERAL",
+      retrievalStrategy: "mixed",
+      targetAuthorities: {
+        constitution: [],
+        nirc: [],
+        supremeCourt: [],
+        ctaEnBanc: [],
+        rr: [],
+        rmc: [],
+        birRulings: []
+      },
+      keyTerms: ["GENERAL_TAX"],
+      taxDomains: ["GENERAL_TAX"],
+      legalQuestionPresented: "What Philippine tax rule governs the user's issue?",
+      factSensitivity: "moderate",
+      exactAuthority: {
+        detected: false,
+        type: null,
+        reference: null
+      },
+      retrievalControls: {
+        issueFirst: true,
+        suppressIssueMismatchedCases: true,
+        suppressVatRefundCasesUnlessRefundIssue: false,
+        requirePrimaryAuthorityForDefinitions: false
+      },
+      classificationError: error?.message || "Issue classification failed."
+    };
+  }
 }
 
 function uniqueDocs(docs = []) {
@@ -151,6 +214,9 @@ function docText(doc = {}) {
       doc.metadata?.documentTitle,
       doc.metadata?.originalFileName,
       doc.metadata?.normalizedReference,
+      doc.metadata?.authorityType,
+      doc.authorityType,
+      doc.authority_type,
       ...(Array.isArray(doc.normalizedAliases) ? doc.normalizedAliases : []),
       ...(Array.isArray(doc.normalized_aliases) ? doc.normalized_aliases : []),
       ...(Array.isArray(doc.metadata?.normalizedAliases) ? doc.metadata.normalizedAliases : [])
@@ -186,7 +252,7 @@ function detectIssueType(query = "") {
   push(/\b(g\.?\s*r\.?\s*no\.?|cta|supreme court|court of appeals|jurisprudence|case)\b/i.test(q), "CASE_LAW");
   push(/\b(rr|rmc|rmo|ramo|revenue regulation|revenue memorandum circular|revenue memorandum order)\s*(?:no\.?)?\s*\d+/i.test(q), "ISSUANCE");
 
-  return [...new Set(issues)];
+  return unique(issues);
 }
 
 function detectDocIssueType(doc = {}) {
@@ -226,6 +292,8 @@ function authorityWeight(doc = {}) {
   const weights = {
     CONSTITUTION: 100,
     STATUTE: 98,
+    NIRC: 98,
+    TAX_CODE: 98,
     SUPREME_COURT: 97,
     RR: 95,
     TREATY: 90,
@@ -269,7 +337,7 @@ function extractExactReferenceSignals(text = "") {
     signals.push(`GR_${String(match[1]).toUpperCase()}`);
   }
 
-  return [...new Set(signals)];
+  return unique(signals);
 }
 
 function exactReferenceBonus(query = "", doc = {}) {
@@ -288,9 +356,124 @@ function exactReferenceBonus(query = "", doc = {}) {
   return bonus;
 }
 
-function issueWeight(query = "", doc = {}) {
+function flattenTargetAuthorities(targetAuthorities = {}) {
+  const items = [];
+
+  for (const [group, values] of Object.entries(targetAuthorities || {})) {
+    for (const value of Array.isArray(values) ? values : []) {
+      items.push({
+        group,
+        value,
+        authorityTypes: AUTHORITY_GROUP_TO_TYPES[group] || []
+      });
+    }
+  }
+
+  return items;
+}
+
+function targetAuthorityBonus(classification = {}, doc = {}) {
+  const targets = flattenTargetAuthorities(classification.targetAuthorities || {});
+  if (!targets.length) return 0;
+
+  const haystack = lower(docText(doc));
+  const docType = getAuthorityTypeForDoc(doc);
+  let bonus = 0;
+
+  for (const target of targets) {
+    const targetText = lower(target.value);
+
+    if (target.authorityTypes.includes(docType)) bonus += 20;
+    if (targetText && haystack.includes(targetText)) bonus += 55;
+
+    const simplified = targetText
+      .replace(/\bsections?\b/g, "")
+      .replace(/\bno\.?\b/g, "")
+      .replace(/[^a-z0-9]+/g, " ")
+      .trim();
+
+    if (simplified && haystack.includes(simplified)) bonus += 25;
+  }
+
+  return bonus;
+}
+
+function issueClassificationBonus(query = "", classification = {}, doc = {}) {
+  if (!classification?.primaryIssue) return 0;
+
+  const compatible = isIssueClassificationCompatibleWithDoc(classification, doc);
+  if (!compatible) return -120;
+
+  const haystack = lower(docText(doc));
+  let bonus = 0;
+
+  if (classification.primaryIssue && haystack.includes(lower(classification.primaryIssue.replace(/_/g, " ")))) {
+    bonus += 15;
+  }
+
+  if (classification.subIssue) {
+    for (const part of String(classification.subIssue).split(/[\/_]/g)) {
+      const term = lower(part);
+      if (term.length >= 3 && haystack.includes(term)) bonus += 10;
+    }
+  }
+
+  for (const term of classification.keyTerms || []) {
+    const normalized = lower(String(term).replace(/_/g, " "));
+    if (normalized && haystack.includes(normalized)) bonus += 8;
+  }
+
+  for (const role of classification.caseRoleFilters || []) {
+    const normalized = lower(role);
+    if (normalized && haystack.includes(normalized)) bonus += 10;
+  }
+
+  bonus += targetAuthorityBonus(classification, doc);
+
+  if (classification.retrievalControls?.suppressVatRefundCasesUnlessRefundIssue) {
+    if (/\bvat refund\b|\bsection 112\b|\b120\+30\b|\bunutilized input vat\b|\bexcess input vat\b/i.test(haystack)) {
+      bonus -= 95;
+    }
+  }
+
+  if (classification.primaryIssue === "DEFINITION") {
+    const docType = getAuthorityTypeForDoc(doc);
+
+    if (["STATUTE", "NIRC", "TAX_CODE", "RR", "SUPREME_COURT"].includes(docType)) {
+      bonus += 35;
+    }
+
+    if (/\bdefinition\b|\bnature\b|\bscope\b|\bimposed\b|\btaxable transaction\b/i.test(haystack)) {
+      bonus += 20;
+    }
+
+    if (/\brefund\b|\bprescription\b|\bcta jurisdiction\b|\badministrative claim\b|\bjudicial claim\b/i.test(haystack)) {
+      bonus -= 60;
+    }
+  }
+
+  if (classification.primaryIssue === "REFUND") {
+    if (/\brefund\b|\bsection 112\b|\badministrative claim\b|\bjudicial claim\b|\b120\+30\b/i.test(haystack)) {
+      bonus += 45;
+    }
+  }
+
+  if (classification.primaryIssue === "CHARACTERIZATION") {
+    if (/\bprincipal\b|\bagent\b|\breimbursement\b|\bpass-through\b|\beconomic substance\b|\bsubstance over form\b|\bcontract\b|\bagreement\b/i.test(haystack)) {
+      bonus += 45;
+    }
+  }
+
+  return bonus;
+}
+
+function issueWeight(query = "", doc = {}, classification = null) {
   const queryIssues = detectIssueType(query);
   const docIssues = detectDocIssueType(doc);
+
+  if (classification && !isIssueClassificationCompatibleWithDoc(classification, doc)) {
+    return -120;
+  }
 
   if (hasIssueMismatch(queryIssues, docIssues)) return -60;
   if (hasIssueOverlap(queryIssues, docIssues)) return 35;
@@ -302,34 +485,52 @@ function weakSourcePenalty(doc = {}) {
   return isHiddenOrWeakSource(doc) ? -75 : 0;
 }
 
-function adaptiveModeBonus({ mode = "STANDARD", doc = {} }) {
+function adaptiveModeBonus({ mode = "STANDARD", doc = {}, classification = null }) {
   const normalizedMode = normalizeMode(mode);
   const authority = getAuthorityTypeForDoc(doc);
   const text = lower(docText(doc));
 
-  if (normalizedMode === "LITIGATION" && authority === "SUPREME_COURT") return 55;
-  if (normalizedMode === "TECHNICAL" && authority === "SUPREME_COURT") return 42;
+  let bonus = 0;
+
+  if (normalizedMode === "LITIGATION" && authority === "SUPREME_COURT") bonus += 55;
+  if (normalizedMode === "TECHNICAL" && authority === "SUPREME_COURT") bonus += 42;
 
   if (normalizedMode === "AUDIT") {
-    if (/\bpfrs\b|\bpas\b|\bfinancial statements\b|\bafs\b|\baudit\b/i.test(text)) return 45;
-    if (["STATUTE", "RR", "RMC"].includes(authority)) return 25;
+    if (/\bpfrs\b|\bpas\b|\bfinancial statements\b|\bafs\b|\baudit\b/i.test(text)) bonus += 45;
+    if (["STATUTE", "RR", "RMC"].includes(authority)) bonus += 25;
   }
 
   if (normalizedMode === "TRANSACTION") {
-    if (/\bprincipal\b|\bagent\b|\breimbursement\b|\bpass-through\b|\bgross\b|\bnet\b|\beconomic substance\b|\bbundled\b/i.test(text)) return 50;
-    if (authority === "RR") return 28;
+    if (/\bprincipal\b|\bagent\b|\breimbursement\b|\bpass-through\b|\bgross\b|\bnet\b|\beconomic substance\b|\bbundled\b/i.test(text)) bonus += 50;
+    if (authority === "RR") bonus += 28;
   }
 
   if (normalizedMode === "CONTRACT") {
-    if (/\bcontract\b|\bagreement\b|\bclause\b|\blease\b|\bconcession\b/i.test(text)) return 48;
-    if (authority === "SUPREME_COURT") return 24;
+    if (/\bcontract\b|\bagreement\b|\bclause\b|\blease\b|\bconcession\b/i.test(text)) bonus += 48;
+    if (authority === "SUPREME_COURT") bonus += 24;
   }
 
   if (normalizedMode === "EVIDENCE_HEAVY") {
-    if (/\binvoice\b|\breceipt\b|\bsubstantiation\b|\bevidence\b|\bproof\b/i.test(text)) return 50;
+    if (/\binvoice\b|\breceipt\b|\bsubstantiation\b|\bevidence\b|\bproof\b/i.test(text)) bonus += 50;
   }
 
-  return 0;
+  if (classification?.retrievalStrategy === "foundational") {
+    if (["STATUTE", "NIRC", "TAX_CODE", "RR", "SUPREME_COURT"].includes(authority)) bonus += 30;
+  }
+
+  if (classification?.retrievalStrategy === "procedural") {
+    if (["STATUTE", "RR", "RMC", "RMO", "SUPREME_COURT", "CTA_EN_BANC"].includes(authority)) bonus += 24;
+  }
+
+  if (classification?.retrievalStrategy === "jurisprudential") {
+    if (["SUPREME_COURT", "CTA_EN_BANC", "CTA_DIVISION", "COURT_OF_APPEALS"].includes(authority)) bonus += 35;
+  }
+
+  if (classification?.retrievalStrategy === "fact-driven") {
+    if (/\bfacts\b|\btransaction\b|\bcontract\b|\bactual\b|\bevidence\b|\bsubstance\b/i.test(text)) bonus += 28;
+  }
+
+  return bonus;
 }
 
 function isSupersededDoc(doc = {}) {
@@ -343,7 +544,12 @@ function isSupersededDoc(doc = {}) {
   );
 }
 
-function computeRetrievalScore({ query = "", doc = {}, adaptiveMode = "STANDARD" }) {
+function computeRetrievalScore({
+  query = "",
+  doc = {},
+  adaptiveMode = "STANDARD",
+  issueClassification = null
+}) {
   const baseScore = Number(
     doc.rerankScore ??
       doc.retrievalScore ??
@@ -357,7 +563,8 @@ function computeRetrievalScore({ query = "", doc = {}, adaptiveMode = "STANDARD"
   );
 
   const hierarchyScore = authorityWeight(doc);
-  const issueScore = issueWeight(query, doc);
+  const issueScore = issueWeight(query, doc, issueClassification);
+  const classificationScore = issueClassificationBonus(query, issueClassification, doc);
   const weakPenalty = weakSourcePenalty(doc);
   const citationBonus = exactReferenceBonus(query, doc);
 
@@ -369,16 +576,18 @@ function computeRetrievalScore({ query = "", doc = {}, adaptiveMode = "STANDARD"
 
   const modeBonus = adaptiveModeBonus({
     mode: adaptiveMode,
-    doc
+    doc,
+    classification: issueClassification
   });
 
   const supersessionPenalty = isSupersededDoc(doc) ? -150 : 0;
 
   return Number(
     (
-      baseScore * 0.28 +
-      hierarchyScore * 0.30 +
-      citationBonus * 0.20 +
+      baseScore * 0.24 +
+      hierarchyScore * 0.28 +
+      citationBonus * 0.18 +
+      classificationScore +
       issueScore +
       levelBonus +
       precedenceBonus +
@@ -389,7 +598,7 @@ function computeRetrievalScore({ query = "", doc = {}, adaptiveMode = "STANDARD"
   );
 }
 
-function filterRetrievalNoise(query = "", docs = []) {
+function filterRetrievalNoise(query = "", docs = [], issueClassification = null) {
   const queryIssues = detectIssueType(query);
 
   return uniqueDocs(docs).filter((doc) => {
@@ -401,8 +610,32 @@ function filterRetrievalNoise(query = "", docs = []) {
     if (authorityType === "SECONDARY" && isHiddenOrWeakSource(doc)) return false;
     if (hasIssueMismatch(queryIssues, docIssues)) return false;
 
+    if (
+      issueClassification?.retrievalControls?.suppressIssueMismatchedCases &&
+      !isIssueClassificationCompatibleWithDoc(issueClassification, doc)
+    ) {
+      return false;
+    }
+
     return true;
   });
+}
+
+function buildIssueSpecificQueries(query = "", queryIntent = {}, maxQueries = 8) {
+  const classification = queryIntent.issueClassification || safeIssueClassification(query);
+  const issueQueries = buildIssueClassificationSearchQueries(classification, maxQueries);
+
+  const queries = [
+    query,
+    classification.legalQuestionPresented,
+    ...issueQueries
+  ];
+
+  for (const term of queryIntent?.retrievalHints?.priorityTerms || []) {
+    queries.push(`${classification.legalQuestionPresented || query} ${term}`);
+  }
+
+  return unique(queries).slice(0, maxQueries);
 }
 
 async function callRetriever(fn, { supabase, query, poolK }) {
@@ -472,7 +705,9 @@ function buildRetrievalAudit({
   exactCitationMatched = false,
   retrievalStrategy = null,
   usedReranker = false,
-  supersededCount = 0
+  supersededCount = 0,
+  issueClassification = null,
+  retrievalQueries = []
 }) {
   return {
     engine: "TINA_RETRIEVAL_ENGINE",
@@ -481,6 +716,21 @@ function buildRetrievalAudit({
     queryIssues,
     adaptiveMode: normalizeMode(adaptiveMode),
     retrievalStrategy,
+
+    issueClassification: issueClassification
+      ? {
+          primaryIssue: issueClassification.primaryIssue,
+          subIssue: issueClassification.subIssue,
+          retrievalStrategy: issueClassification.retrievalStrategy,
+          legalQuestionPresented: issueClassification.legalQuestionPresented,
+          factSensitivity: issueClassification.factSensitivity,
+          targetAuthorities: issueClassification.targetAuthorities,
+          excludedAuthorities: issueClassification.excludedAuthorities,
+          caseRoleFilters: issueClassification.caseRoleFilters
+        }
+      : null,
+
+    retrievalQueries,
 
     rawCount,
     filteredCount,
@@ -492,7 +742,7 @@ function buildRetrievalAudit({
     usedReranker,
 
     retrievalPolicy:
-      "Hierarchy-first, exact-citation-aware, issue-matched retrieval. Secondary notes, superseded authorities, and issue-mismatched cases are suppressed before final legal synthesis.",
+      "Issue-first, hierarchy-first, exact-citation-aware retrieval. Documents are filtered and scored using primaryIssue, subIssue, retrievalStrategy, targetAuthorities, authority hierarchy, supersession status, and issue compatibility.",
 
     warning:
       finalCount === 0
@@ -511,7 +761,8 @@ async function retrieveForTina({
   poolK = DEFAULT_POOL_K,
   asOfDate = new Date(),
   adaptiveMode = "STANDARD",
-  adaptiveContext = {}
+  adaptiveContext = {},
+  issueClassification = null
 }) {
   const normalizedMode = normalizeMode(adaptiveMode);
 
@@ -520,10 +771,12 @@ async function retrieveForTina({
       results: [],
       supersessionResult: null,
       queryIntent: null,
+      issueClassification: null,
       retrievalMetadata: {
         adaptiveMode: normalizedMode,
         hierarchyAware: true,
         issueFiltered: true,
+        issueFirst: true,
         supersessionFiltered: false,
         exactCitationAware: true,
         rerankerAware: true
@@ -536,7 +789,10 @@ async function retrieveForTina({
     };
   }
 
-  const queryIntent = analyzeQueryIntent(query);
+  const classification = safeIssueClassification(query, issueClassification || adaptiveContext?.queryIntent?.issueClassification);
+  const queryIntent = analyzeQueryIntent(query, {
+    issueClassification: classification
+  });
 
   const effectiveMode = normalizeMode(
     adaptiveMode ||
@@ -546,15 +802,22 @@ async function retrieveForTina({
       "STANDARD"
   );
 
-  const rawResults = await runVectorRetrieval({
-    vectorStore,
-    supabase,
-    query,
-    poolK
-  });
+  const retrievalQueries = buildIssueSpecificQueries(query, queryIntent, 8);
+  const rawResultBatches = [];
 
-  const uniqueRaw = uniqueDocs(rawResults);
-  const filtered = filterRetrievalNoise(query, uniqueRaw);
+  for (const retrievalQuery of retrievalQueries) {
+    const batch = await runVectorRetrieval({
+      vectorStore,
+      supabase,
+      query: retrievalQuery,
+      poolK
+    });
+
+    rawResultBatches.push(...batch);
+  }
+
+  const uniqueRaw = uniqueDocs(rawResultBatches);
+  const filtered = filterRetrievalNoise(query, uniqueRaw, classification);
   const supersessionResult = applySupersessionFilter(filtered, asOfDate);
 
   const activeDocs =
@@ -568,13 +831,17 @@ async function retrieveForTina({
     const retrievalScore = computeRetrievalScore({
       query,
       doc,
-      adaptiveMode: effectiveMode
+      adaptiveMode: effectiveMode,
+      issueClassification: classification
     });
 
     return {
       ...doc,
       citationMatchBonus,
       retrievalIssueType: detectDocIssueType(doc),
+      issueClassificationMatch: isIssueClassificationCompatibleWithDoc(classification, doc),
+      issueClassificationBonus: issueClassificationBonus(query, classification, doc),
+      targetAuthorityBonus: targetAuthorityBonus(classification, doc),
       retrievalScore,
       finalScore: Math.max(Number(doc.finalScore || doc.final_score || 0), retrievalScore),
       retrievalMetadata: {
@@ -583,6 +850,12 @@ async function retrieveForTina({
         exactCitationAware: true,
         hierarchyAware: true,
         issueAware: true,
+        issueFirst: true,
+        primaryIssue: classification.primaryIssue,
+        subIssue: classification.subIssue,
+        retrievalStrategy: classification.retrievalStrategy,
+        legalQuestionPresented: classification.legalQuestionPresented,
+        targetAuthorities: classification.targetAuthorities,
         supersessionAware: true,
         rerankerAware: true,
         tinaRetrievalEngineVersion: ENGINE_VERSION
@@ -598,7 +871,11 @@ async function retrieveForTina({
     suppressWeakSecondary: true,
     suppressSuperseded: true,
     responseMode: effectiveMode,
-    adaptiveContext
+    adaptiveContext: {
+      ...adaptiveContext,
+      queryIntent,
+      issueClassification: classification
+    }
   });
 
   const reranked = Array.isArray(rerankedPayload?.results)
@@ -610,7 +887,8 @@ async function retrieveForTina({
       const retrievalScore = computeRetrievalScore({
         query,
         doc,
-        adaptiveMode: effectiveMode
+        adaptiveMode: effectiveMode,
+        issueClassification: classification
       });
 
       return {
@@ -627,6 +905,16 @@ async function retrieveForTina({
       const bExact = Number(b.citationMatchBonus || 0);
 
       if (bExact !== aExact) return bExact - aExact;
+
+      const aTarget = Number(a.targetAuthorityBonus || 0);
+      const bTarget = Number(b.targetAuthorityBonus || 0);
+
+      if (bTarget !== aTarget) return bTarget - aTarget;
+
+      const aIssue = Number(a.issueClassificationBonus || 0);
+      const bIssue = Number(b.issueClassificationBonus || 0);
+
+      if (bIssue !== aIssue) return bIssue - aIssue;
 
       const aLevel = getAuthorityLevelForDoc(a);
       const bLevel = getAuthorityLevelForDoc(b);
@@ -650,17 +938,24 @@ async function retrieveForTina({
     results: ranked,
     supersessionResult,
     queryIntent,
+    issueClassification: classification,
 
     retrievalMetadata: {
       adaptiveMode: effectiveMode,
       hierarchyAware: true,
       issueFiltered: true,
+      issueFirst: true,
+      primaryIssue: classification.primaryIssue,
+      subIssue: classification.subIssue,
+      legalQuestionPresented: classification.legalQuestionPresented,
+      targetAuthorities: classification.targetAuthorities,
       supersessionFiltered: true,
       exactCitationAware: true,
       rerankerAware: true,
       retrievalStrategy:
         queryIntent?.retrievalStrategy ||
-        "AUTHORITY_HIERARCHY_SEMANTIC"
+        classification?.retrievalStrategy ||
+        "ISSUE_AUTHORITY_HIERARCHY_SEMANTIC"
     },
 
     audit: buildRetrievalAudit({
@@ -674,9 +969,12 @@ async function retrieveForTina({
       exactCitationMatched,
       retrievalStrategy:
         queryIntent?.retrievalStrategy ||
-        "AUTHORITY_HIERARCHY_SEMANTIC",
+        classification?.retrievalStrategy ||
+        "ISSUE_AUTHORITY_HIERARCHY_SEMANTIC",
       usedReranker: Boolean(reranked.length),
-      supersededCount: supersessionResult?.supersededCount || supersessionResult?.superseded?.length || 0
+      supersededCount: supersessionResult?.supersededCount || supersessionResult?.superseded?.length || 0,
+      issueClassification: classification,
+      retrievalQueries
     })
   };
 }
@@ -691,7 +989,8 @@ async function hybridRetrieve({
   poolK = DEFAULT_POOL_K,
   asOfDate = new Date(),
   adaptiveMode = "STANDARD",
-  adaptiveContext = {}
+  adaptiveContext = {},
+  issueClassification = null
 }) {
   const retrieval = await retrieveForTina({
     supabase,
@@ -701,7 +1000,8 @@ async function hybridRetrieve({
     poolK,
     asOfDate,
     adaptiveMode,
-    adaptiveContext
+    adaptiveContext,
+    issueClassification
   });
 
   return {
@@ -724,7 +1024,10 @@ function retrievalEngineHealthCheck() {
     adaptiveCompatible: true,
     rerankerCompatible: true,
     supersessionCompatible: true,
-    exactCitationAware: true
+    exactCitationAware: true,
+    issueClassificationCompatible: true,
+    issueFirstRetrievalReady: true,
+    targetAuthorityAware: true
   };
 }
 
