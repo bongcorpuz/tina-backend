@@ -2,14 +2,15 @@
 "use strict";
 
 /**
- * jurisprudence-engine.js
  * TINA Enterprise Jurisprudence Intelligence Engine
- * Version: 4.0.0
+ * Version: 4.1.0
  *
  * Purpose:
- * - Select only issue-relevant jurisprudence.
- * - Filter cases by legal issue, legal dimension, case role, and applicability.
- * - Prevent TINA from citing cases merely because they mention the same tax topic.
+ * - Select only directly issue-relevant jurisprudence.
+ * - Prevent citation dumping.
+ * - Prevent unrelated VAT/tax cases from being injected into OpenAI.
+ * - Return compact case summaries only.
+ * - Support context-orchestration-engine.js.
  */
 
 import {
@@ -20,7 +21,6 @@ import {
 } from "./authority-engine.js";
 
 import { analyzeConflictPair } from "./conflict-engine.js";
-
 import { rerankForTina } from "./reranker-engine.js";
 
 import {
@@ -31,7 +31,13 @@ import {
 
 import { applySupersessionFilter } from "./supersession-engine.js";
 
-const ENGINE_VERSION = "4.0.0";
+const ENGINE_VERSION = "4.1.0";
+
+const MAX_CASES = 4;
+const MAX_CASE_SUMMARY_CHARS = 900;
+const MAX_EXCERPT_CHARS = 650;
+const MAX_EXPLANATION_CHARS = 700;
+const MAX_PROMPT_BLOCK_CHARS = 4500;
 
 const COURT_AUTHORITY_TYPES = Object.freeze([
   "SUPREME_COURT",
@@ -72,7 +78,7 @@ const LOCAL_ISSUE = Object.freeze({
   TRANSACTION: ISSUE_TYPE?.TRANSACTION || "TRANSACTION",
   CONTRACT: ISSUE_TYPE?.CONTRACT || "CONTRACT",
   ACCOUNTING: ISSUE_TYPE?.ACCOUNTING || "ACCOUNTING",
-  GENERAL: ISSUE_TYPE?.GENERAL || "GENERAL"
+  GENERAL: ISSUE_TYPE?.GENERAL_TAX || "GENERAL"
 });
 
 const LOCAL_DIMENSION = Object.freeze({
@@ -104,6 +110,13 @@ function safeArray(value) {
   return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
 }
 
+function trimText(value = "", max = MAX_CASE_SUMMARY_CHARS) {
+  const text = normalizeText(value);
+  if (!text) return "";
+  if (text.length <= max) return text;
+  return `${text.slice(0, max).trim()} ...[trimmed]`;
+}
+
 function docText(doc = {}) {
   return normalizeText(
     [
@@ -131,13 +144,16 @@ function docText(doc = {}) {
 
 function sourcePathOf(doc = {}) {
   return (
+    doc.url ||
+    doc.sourceUrl ||
+    doc.source_url ||
     doc.path ||
     doc.source_path ||
     doc.metadata?.path ||
     doc.source ||
     doc.originalSource ||
     doc.original_source ||
-    "Unknown source"
+    ""
   );
 }
 
@@ -149,7 +165,22 @@ function sourceTitleOf(doc = {}) {
     doc.source ||
     doc.originalSource ||
     doc.original_source ||
-    sourcePathOf(doc)
+    sourcePathOf(doc) ||
+    "Untitled Case"
+  );
+}
+
+function sourceCitationOf(doc = {}) {
+  return (
+    doc.citation ||
+    doc.reference ||
+    doc.normalizedReference ||
+    doc.metadata?.citation ||
+    doc.metadata?.reference ||
+    doc.metadata?.normalizedReference ||
+    extractCaseReference(docText(doc)) ||
+    extractCaseReference(sourceTitleOf(doc)) ||
+    sourceTitleOf(doc)
   );
 }
 
@@ -263,15 +294,16 @@ function normalizeIssue(value = "") {
 
 function normalizeDimension(value = "") {
   const raw = String(value || "").trim().toUpperCase().replace(/[\s-]+/g, "_");
-
   const known = Object.values(LOCAL_DIMENSION);
   if (known.includes(raw)) return raw;
-
   return null;
 }
 
-function extractIssueProfile({ query = "", queryIntent = {}, adaptiveContext = {} } = {}) {
+function extractIssueProfile({ query = "", queryIntent = {}, adaptiveContext = {}, issueClassification = null } = {}) {
   const classification =
+    issueClassification?.orchestrationClassification ||
+    issueClassification ||
+    queryIntent?.issueClassification?.orchestrationClassification ||
     queryIntent?.issueClassification ||
     queryIntent?.classification ||
     queryIntent?.taxIssueClassification ||
@@ -351,41 +383,31 @@ function hasIssueMismatch(issueProfile = {}, doc = {}) {
     queryIssues.includes(LOCAL_ISSUE.VAT_LIABILITY) &&
     docIssues.includes(LOCAL_ISSUE.VAT_REFUND) &&
     !queryIssues.includes(LOCAL_ISSUE.VAT_REFUND)
-  ) {
-    return true;
-  }
+  ) return true;
 
   if (
     queryIssues.includes(LOCAL_ISSUE.VAT_REFUND) &&
     docIssues.includes(LOCAL_ISSUE.VAT_LIABILITY) &&
     !queryIssues.includes(LOCAL_ISSUE.VAT_LIABILITY)
-  ) {
-    return true;
-  }
+  ) return true;
 
   if (
     queryIssues.includes(LOCAL_ISSUE.WITHHOLDING_TAX) &&
     (docIssues.includes(LOCAL_ISSUE.VAT_REFUND) || docIssues.includes(LOCAL_ISSUE.VAT_LIABILITY)) &&
     !queryIssues.includes(LOCAL_ISSUE.VAT_LIABILITY)
-  ) {
-    return true;
-  }
+  ) return true;
 
   if (
     queryIssues.includes(LOCAL_ISSUE.INCOME_TAX) &&
     docIssues.includes(LOCAL_ISSUE.VAT_REFUND) &&
     !queryIssues.includes(LOCAL_ISSUE.VAT_REFUND)
-  ) {
-    return true;
-  }
+  ) return true;
 
   if (
     queryIssues.includes(LOCAL_ISSUE.CONTRACT) &&
     docIssues.includes(LOCAL_ISSUE.VAT_REFUND) &&
     !queryIssues.includes(LOCAL_ISSUE.VAT_REFUND)
-  ) {
-    return true;
-  }
+  ) return true;
 
   return false;
 }
@@ -413,8 +435,9 @@ function extractDoctrineSignals(text = "") {
 
 function classifyCaseRole({ issueProfile = {}, doc = {} } = {}) {
   const authorityType = getAuthorityTypeForDoc(doc);
-  const docIssues = detectTaxIssueSignals(docText(doc));
-  const docDimensions = detectCaseIssueDimensions(docText(doc));
+  const text = docText(doc);
+  const docIssues = detectTaxIssueSignals(text);
+  const docDimensions = detectCaseIssueDimensions(text);
 
   const issueMatch = hasIssueOverlap(issueProfile.issueTypes, docIssues);
   const dimensionMatch = hasDimensionOverlap(issueProfile.legalDimensions, docDimensions);
@@ -501,12 +524,12 @@ function computeCaseApplicabilityScore({ query = "", queryIntent = null, issuePr
   if (role === CASE_ROLE.CONTROLLING) score += 35;
   if (role === CASE_ROLE.PERSUASIVE) score += 24;
   if (role === CASE_ROLE.DISTINGUISHING) score += 8;
-  if (role === CASE_ROLE.PROCEDURAL_ONLY) score -= 20;
-  if (role === CASE_ROLE.EVIDENTIARY_ONLY) score -= 14;
-  if (role === CASE_ROLE.BACKGROUND) score -= 35;
-  if (role === CASE_ROLE.EXCLUDED) score -= 120;
+  if (role === CASE_ROLE.PROCEDURAL_ONLY) score -= 35;
+  if (role === CASE_ROLE.EVIDENTIARY_ONLY) score -= 28;
+  if (role === CASE_ROLE.BACKGROUND) score -= 60;
+  if (role === CASE_ROLE.EXCLUDED) score -= 150;
 
-  if (hasIssueMismatch(profile, doc)) score -= 150;
+  if (hasIssueMismatch(profile, doc)) score -= 200;
 
   const queryReference = extractCaseReference(query);
 
@@ -514,7 +537,7 @@ function computeCaseApplicabilityScore({ query = "", queryIntent = null, issuePr
     const ref = lower(queryReference);
 
     if (lower(text).includes(ref) || lower(sourceTitleOf(doc)).includes(ref)) {
-      score += 80;
+      score += 90;
     }
   }
 
@@ -538,7 +561,7 @@ function classifyApplicability(score = 0, issueProfile = {}, doc = {}) {
       status: APPLICABILITY_STATUS.NOT_APPLICABLE_ROLE_MISMATCH,
       role,
       explanation:
-        "The case may mention the same tax type but resolves only a procedural or evidentiary point, not the controlling issue."
+        "The case mentions a related tax type but resolves only a procedural or evidentiary point, not the controlling issue."
     };
   }
 
@@ -547,7 +570,7 @@ function classifyApplicability(score = 0, issueProfile = {}, doc = {}) {
       status: APPLICABILITY_STATUS.DIRECTLY_APPLICABLE,
       role,
       explanation:
-        "The case is controlling because it matches the legal issue and legal dimension and comes from the highest applicable court authority."
+        "The case directly matches the legal issue and legal dimension and comes from the highest applicable court authority."
     };
   }
 
@@ -556,11 +579,11 @@ function classifyApplicability(score = 0, issueProfile = {}, doc = {}) {
       status: APPLICABILITY_STATUS.PERSUASIVE_AUTHORITY,
       role,
       explanation:
-        "The case is persuasive because it matches the issue and legal dimension but is not the highest controlling authority."
+        "The case matches the issue and legal dimension but is not the highest controlling authority."
     };
   }
 
-  if (role === CASE_ROLE.DISTINGUISHING && score >= 45) {
+  if (role === CASE_ROLE.DISTINGUISHING && score >= 55) {
     return {
       status: APPLICABILITY_STATUS.DISTINGUISHABLE_BUT_RELEVANT,
       role,
@@ -609,24 +632,67 @@ function enrichCaseMetadata({ query = "", queryIntent = null, issueProfile = nul
   };
 }
 
+function sanitizeCaseSummary(doc = {}) {
+  const text = docText(doc);
+
+  return {
+    title: trimText(sourceTitleOf(doc), 220),
+    citation: trimText(sourceCitationOf(doc), 260),
+    url: trimText(sourcePathOf(doc), 320),
+    authorityType: getAuthorityTypeForDoc(doc),
+    authorityLevel: getAuthorityLevelForDoc(doc),
+    controllingPrecedence: getControllingPrecedenceForDoc(doc),
+
+    caseReference:
+      doc.caseReference ||
+      extractCaseReference(text) ||
+      extractCaseReference(sourceTitleOf(doc)) ||
+      null,
+
+    caseRole: doc.caseRole || CASE_ROLE.BACKGROUND,
+    caseApplicability: doc.caseApplicability || APPLICABILITY_STATUS.BACKGROUND_ONLY,
+    caseApplicabilityScore: Number(doc.caseApplicabilityScore || 0),
+    caseApplicabilityExplanation: trimText(doc.caseApplicabilityExplanation, MAX_EXPLANATION_CHARS),
+
+    issueSignals: safeArray(doc.caseIssueSignals || detectTaxIssueSignals(text)),
+    legalDimensions: safeArray(doc.caseLegalDimensions || detectCaseIssueDimensions(text)),
+    doctrineSignals: safeArray(doc.doctrineSignals || extractDoctrineSignals(text)),
+
+    excerpt: trimText(
+      doc.excerpt ||
+        doc.preview ||
+        doc.text ||
+        doc.content ||
+        "",
+      MAX_EXCERPT_CHARS
+    ),
+
+    useInstruction:
+      doc.caseApplicability === APPLICABILITY_STATUS.DIRECTLY_APPLICABLE ||
+      doc.caseApplicability === APPLICABILITY_STATUS.PERSUASIVE_AUTHORITY
+        ? "May be used as supporting jurisprudence if aligned with the final legal issue."
+        : "Use only for distinction, not as controlling authority."
+  };
+}
+
 function selectIssueRelevantJurisprudence({
   query = "",
   docs = [],
-  limit = 4,
+  limit = MAX_CASES,
   responseMode = "TECHNICAL",
   adaptiveContext = {},
   issueClassification = null,
-  includeDistinguishable = true,
+  includeDistinguishable = false,
   includeBackground = false
 } = {}) {
   const queryIntent = analyzeQueryIntent(query);
 
   const issueProfile =
-    issueClassification ||
     extractIssueProfile({
       query,
       queryIntent,
-      adaptiveContext
+      adaptiveContext,
+      issueClassification
     });
 
   const supersessionResult = applySupersessionFilter(docs);
@@ -636,7 +702,7 @@ function selectIssueRelevantJurisprudence({
     query,
     docs: rerankByHierarchy(activeDocs, query),
     limit: Math.max(limit * 5, 20),
-    suppressIssueMismatch: false,
+    suppressIssueMismatch: true,
     suppressWeakSecondary: true,
     suppressSuperseded: true,
     responseMode,
@@ -644,11 +710,16 @@ function selectIssueRelevantJurisprudence({
     issueClassification: {
       primaryIssue: issueProfile.primaryIssue,
       subIssues: issueProfile.issueTypes,
+      legalDimensions: issueProfile.legalDimensions,
       retrievalStrategy: issueProfile.retrievalStrategy
     }
   });
 
-  const reranked = rerankedResult.results || rerankedResult || [];
+  const reranked = Array.isArray(rerankedResult?.results)
+    ? rerankedResult.results
+    : Array.isArray(rerankedResult)
+      ? rerankedResult
+      : [];
 
   const allowedApplicability = [
     APPLICABILITY_STATUS.DIRECTLY_APPLICABLE,
@@ -663,7 +734,7 @@ function selectIssueRelevantJurisprudence({
     allowedApplicability.push(APPLICABILITY_STATUS.BACKGROUND_ONLY);
   }
 
-  return reranked
+  const selected = reranked
     .filter(isCourtAuthority)
     .map((doc) =>
       enrichCaseMetadata({
@@ -675,6 +746,7 @@ function selectIssueRelevantJurisprudence({
     )
     .filter((doc) => allowedApplicability.includes(doc.caseApplicability))
     .filter((doc) => doc.caseRole !== CASE_ROLE.EXCLUDED)
+    .filter((doc) => !hasIssueMismatch(issueProfile, doc))
     .sort((a, b) => {
       const rolePriority = {
         [CASE_ROLE.CONTROLLING]: 1,
@@ -702,33 +774,51 @@ function selectIssueRelevantJurisprudence({
 
       return getAuthorityLevelForDoc(a) - getAuthorityLevelForDoc(b);
     })
-    .slice(0, limit);
+    .slice(0, Math.min(limit, MAX_CASES));
+
+  return selected.map(sanitizeCaseSummary);
 }
 
 function buildNoJurisprudenceText() {
-  return "No directly issue-relevant jurisprudence was retrieved. TINA should not cite unrelated cases merely because they mention the same tax type or keyword.";
+  return "No directly issue-relevant jurisprudence was retrieved. Do not cite unrelated cases merely because they mention the same tax type or keyword.";
 }
 
 function buildJurisprudenceApplicabilitySummary({ query = "", cases = [] } = {}) {
   if (!cases.length) return buildNoJurisprudenceText();
 
-  return cases
-    .map((doc, index) =>
-      [
-        `${index + 1}. ${sourceTitleOf(doc)}`,
-        `Authority: ${getAuthorityTypeForDoc(doc)} / Level ${getAuthorityLevelForDoc(doc)}`,
-        `Case Reference: ${doc.caseReference || "Not clearly extracted"}`,
-        `Case Role: ${doc.caseRole || "Not classified"}`,
-        `Applicability: ${doc.caseApplicability}`,
-        `Applicability Score: ${doc.caseApplicabilityScore}`,
-        `Applicability Analysis: ${doc.caseApplicabilityExplanation}`,
-        `Issue Signals: ${(doc.caseIssueSignals || []).join(", ") || "N/A"}`,
-        `Legal Dimensions: ${(doc.caseLegalDimensions || []).join(", ") || "N/A"}`,
-        `Doctrine Signals: ${(doc.doctrineSignals || []).join(", ") || "N/A"}`,
-        `Excerpt: ${normalizeText(doc.text || doc.excerpt || doc.content || "").slice(0, 600)}`
-      ].join("\n")
-    )
-    .join("\n\n");
+  return trimText(
+    cases
+      .map((doc, index) =>
+        [
+          `${index + 1}. ${doc.title || sourceTitleOf(doc)}`,
+          `Authority: ${doc.authorityType || getAuthorityTypeForDoc(doc)}`,
+          `Case Reference: ${doc.caseReference || "Not clearly extracted"}`,
+          `Case Role: ${doc.caseRole || "Not classified"}`,
+          `Applicability: ${doc.caseApplicability || "Not classified"}`,
+          `Applicability Score: ${doc.caseApplicabilityScore || 0}`,
+          `Applicability Analysis: ${doc.caseApplicabilityExplanation || ""}`,
+          `Issue Signals: ${(doc.issueSignals || doc.caseIssueSignals || []).join(", ") || "N/A"}`,
+          `Legal Dimensions: ${(doc.legalDimensions || doc.caseLegalDimensions || []).join(", ") || "N/A"}`,
+          `Doctrine Signals: ${(doc.doctrineSignals || []).join(", ") || "N/A"}`,
+          `Excerpt: ${trimText(doc.excerpt || doc.text || doc.content || "", MAX_EXCERPT_CHARS)}`
+        ].join("\n")
+      )
+      .join("\n\n"),
+    MAX_PROMPT_BLOCK_CHARS
+  );
+}
+
+function sanitizeConflictReview(review = {}) {
+  return {
+    conflict: Boolean(review.conflict),
+    apparentConflict: Boolean(review.apparentConflict),
+    conflictType: review.conflictType || null,
+    doctrinalConflict: Boolean(review.doctrinalConflict),
+    hierarchyConflict: Boolean(review.hierarchyConflict),
+    exactIssue: trimText(review.exactIssue, 300),
+    distinctionType: trimText(review.distinctionType, 300),
+    resolutionBasis: trimText(review.resolutionBasis || review.reason, 700)
+  };
 }
 
 function analyzeJurisprudenceConflicts({ cases = [], supportingAuthorities = [] } = {}) {
@@ -740,12 +830,14 @@ function analyzeJurisprudenceConflicts({ cases = [], supportingAuthorities = [] 
       try {
         const review = analyzeConflictPair(docs[i], docs[j]);
 
-        if (review?.conflict || review?.apparentConflict) reviews.push(review);
+        if (review?.conflict || review?.apparentConflict) {
+          reviews.push(sanitizeConflictReview(review));
+        }
       } catch (error) {
         reviews.push({
           conflict: false,
           apparentConflict: false,
-          error: error.message
+          error: trimText(error.message, 300)
         });
       }
     }
@@ -762,22 +854,25 @@ function analyzeJurisprudenceConflicts({ cases = [], supportingAuthorities = [] 
 
   return {
     conflict: reviews.some((item) => item.conflict),
-    explanation: reviews
-      .slice(0, 3)
-      .map((item, index) =>
-        [
-          `Conflict Review ${index + 1}:`,
-          `Conflict Type: ${item.conflictType || "N/A"}`,
-          `Doctrinal Conflict: ${item.doctrinalConflict ? "YES" : "NO"}`,
-          `Hierarchy Conflict: ${item.hierarchyConflict ? "YES" : "NO"}`,
-          `Apparent Conflict Only: ${item.apparentConflict ? "YES" : "NO"}`,
-          `Exact Issue: ${item.exactIssue || "Not determined"}`,
-          `Distinction Type: ${item.distinctionType || "Not determined"}`,
-          `Resolution Basis: ${item.resolutionBasis || item.reason || "Not determined"}`
-        ].join("\n")
-      )
-      .join("\n\n"),
-    reviews
+    explanation: trimText(
+      reviews
+        .slice(0, 3)
+        .map((item, index) =>
+          [
+            `Conflict Review ${index + 1}:`,
+            `Conflict Type: ${item.conflictType || "N/A"}`,
+            `Doctrinal Conflict: ${item.doctrinalConflict ? "YES" : "NO"}`,
+            `Hierarchy Conflict: ${item.hierarchyConflict ? "YES" : "NO"}`,
+            `Apparent Conflict Only: ${item.apparentConflict ? "YES" : "NO"}`,
+            `Exact Issue: ${item.exactIssue || "Not determined"}`,
+            `Distinction Type: ${item.distinctionType || "Not determined"}`,
+            `Resolution Basis: ${item.resolutionBasis || "Not determined"}`
+          ].join("\n")
+        )
+        .join("\n\n"),
+      MAX_PROMPT_BLOCK_CHARS
+    ),
+    reviews: reviews.slice(0, 3)
   };
 }
 
@@ -796,16 +891,19 @@ function buildJurisprudencePromptBlock({
     supportingAuthorities
   });
 
-  return [
-    "JURISPRUDENCE APPLICABILITY REVIEW",
-    summary,
-    "",
-    "JURISPRUDENCE CONFLICT REVIEW",
-    conflictReview.explanation,
-    "",
-    "JURISPRUDENCE USE RULE",
-    "Use DIRECTLY_APPLICABLE and PERSUASIVE_AUTHORITY cases as legal support. Use DISTINGUISHABLE_BUT_RELEVANT cases only to explain distinctions. Do not cite BACKGROUND_ONLY or issue-mismatched cases as controlling authority."
-  ].join("\n");
+  return trimText(
+    [
+      "JURISPRUDENCE APPLICABILITY REVIEW",
+      summary,
+      "",
+      "JURISPRUDENCE CONFLICT REVIEW",
+      conflictReview.explanation,
+      "",
+      "JURISPRUDENCE USE RULE",
+      "Use DIRECTLY_APPLICABLE and PERSUASIVE_AUTHORITY cases as legal support. Use DISTINGUISHABLE_BUT_RELEVANT cases only to explain distinctions. Do not cite BACKGROUND_ONLY or issue-mismatched cases as controlling authority."
+    ].join("\n"),
+    MAX_PROMPT_BLOCK_CHARS
+  );
 }
 
 function buildJurisprudencePayload({
@@ -813,28 +911,56 @@ function buildJurisprudencePayload({
   cases = [],
   supportingAuthorities = []
 } = {}) {
+  const cleanCases = safeArray(cases)
+    .map((item) => {
+      if (item?.caseApplicability && item?.title && item?.excerpt !== undefined) {
+        return item;
+      }
+      return sanitizeCaseSummary(item);
+    })
+    .filter((item) =>
+      [
+        APPLICABILITY_STATUS.DIRECTLY_APPLICABLE,
+        APPLICABILITY_STATUS.PERSUASIVE_AUTHORITY,
+        APPLICABILITY_STATUS.DISTINGUISHABLE_BUT_RELEVANT
+      ].includes(item.caseApplicability)
+    )
+    .slice(0, MAX_CASES);
+
   const conflictReview = analyzeJurisprudenceConflicts({
-    cases,
+    cases: cleanCases,
     supportingAuthorities
   });
 
   return {
+    engine: "TINA_JURISPRUDENCE_ENGINE",
     engineVersion: ENGINE_VERSION,
     query,
-    cases,
-    caseCount: cases.length,
+
+    cases: cleanCases,
+    directlyRelevantCases: cleanCases,
+    caseCount: cleanCases.length,
+
     jurisprudenceConflict: conflictReview.conflict,
     conflictReview,
+
     applicabilitySummary: buildJurisprudenceApplicabilitySummary({
       query,
-      cases
+      cases: cleanCases
     }),
+
     promptBlock: buildJurisprudencePromptBlock({
       query,
-      cases,
+      cases: cleanCases,
       supportingAuthorities
     }),
-    noJurisprudence: !cases.length
+
+    noJurisprudence: !cleanCases.length,
+
+    contextOrchestrationSafe: true,
+    directlyRelevantOnly: true,
+    rawFullCaseInjectionPrevented: true,
+    compactCaseSummaryOnly: true
   };
 }
 
@@ -851,7 +977,12 @@ function jurisprudenceEngineHealthCheck() {
     supersessionCompatible: true,
     issueFilteringCompatible: true,
     caseRoleFilteringCompatible: true,
-    applicabilityFilteringCompatible: true
+    applicabilityFilteringCompatible: true,
+    contextOrchestrationCompatible: true,
+    directlyRelevantOnly: true,
+    compactCaseSummaryOnly: true,
+    rawFullCaseInjectionPrevented: true,
+    unrelatedTaxCaseSuppressionReady: true
   };
 }
 
