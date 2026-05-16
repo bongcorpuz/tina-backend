@@ -3,7 +3,14 @@
 
 /**
  * TINA Ask Handler
- * Version: 5.1.0
+ * Version: 5.2.0
+ *
+ * Purpose:
+ * Route-level dispatcher for /ask, /tax, /review, /quiz, /source, /feedback.
+ *
+ * Important:
+ * This file does NOT directly call OpenAI.
+ * It passes a sanitized, orchestration-aware payload to rag-answer-handler.js.
  */
 
 import {
@@ -31,7 +38,7 @@ import {
   estimateMessagesTokens as defaultEstimateMessagesTokens
 } from "./context-orchestration-engine.js";
 
-const ENGINE_VERSION = "5.1.0";
+const ENGINE_VERSION = "5.2.0";
 
 const EXIT_COMMANDS = ["/bye", "/exit", "/stop", "/quit", "/reset"];
 
@@ -103,7 +110,6 @@ function getForcedHook(req) {
   if (!forced) return null;
 
   const normalized = normalizeLower(forced);
-
   return ALLOWED_HOOKS.includes(normalized) ? normalized : null;
 }
 
@@ -213,6 +219,27 @@ function buildContextOrchestration(input = {}) {
   };
 }
 
+function buildCompactExistingMode(existingMode = null) {
+  if (!existingMode) return null;
+
+  return {
+    active_hook: existingMode.active_hook || null,
+    active_mode: existingMode.active_mode || null,
+    mode_title: existingMode.mode_title || null
+  };
+}
+
+function buildCompactPendingQuiz(pendingQuiz = null) {
+  if (!pendingQuiz) return false;
+
+  return {
+    exists: true,
+    id: pendingQuiz.id || null,
+    hook: pendingQuiz.hook || pendingQuiz.active_hook || null,
+    status: pendingQuiz.status || null
+  };
+}
+
 async function loadTaxHookConfig({
   supabase,
   rawQuestion = "",
@@ -255,11 +282,8 @@ async function loadTaxHookConfig({
     if (data) {
       return {
         ...fallbackConfig,
-        ...data,
-
         hook_code: fallbackConfig.hook_code,
         mode: fallbackConfig.mode,
-
         requires_retrieval: isRagRoutedHook(fallbackConfig.hook_code),
 
         requires_memory:
@@ -302,7 +326,7 @@ async function loadTaxHookConfig({
 function buildAdaptiveContextForHook({
   hookConfig,
   existingMode = null,
-  pendingQuiz = false,
+  pendingQuiz = null,
   contextOrchestrationEnabled = true
 }) {
   const mode = hookConfig.mode;
@@ -324,8 +348,8 @@ function buildAdaptiveContextForHook({
 
     activeHook: hookConfig.hook_code,
     activeMode: mode,
-    existingMode,
-    pendingQuiz: Boolean(pendingQuiz),
+    existingMode: buildCompactExistingMode(existingMode),
+    pendingQuiz: buildCompactPendingQuiz(pendingQuiz),
 
     adaptiveResponseMode: responseMode,
 
@@ -381,10 +405,37 @@ function buildAdaptiveContextForHook({
       contextBudgetPolicy: {
         useContextOrchestrationEngine: true,
         preventRawFullDocumentInjection: true,
+        preventFullDebugObjectInjection: true,
+        preventFullEngineOutputInjection: true,
         compressSourcesBeforeOpenAI: true,
-        finalTrimBeforeOpenAI: true
+        finalTrimBeforeOpenAI: true,
+        onlyPassCompactMetadata: true
       }
     }
+  };
+}
+
+function buildCompactOrchestrationMetadata(extra = {}) {
+  return {
+    askHandlerVersion: ENGINE_VERSION,
+
+    issueClassificationEnabled: true,
+    adaptivePipelineEnabled: true,
+    sourceOrderingPolicyEnabled: true,
+    strictConflictDisplayEnabled: true,
+    targetAuthorityAware: true,
+    issueClassificationMatchAware: true,
+
+    contextOrchestrationEnabled: true,
+    openAIContextBudgetingEnabled: true,
+    finalTrimBeforeOpenAIEnabled: true,
+    compressSourcesBeforeOpenAI: true,
+    preventRawFullDocumentInjection: true,
+    preventFullDebugObjectInjection: true,
+    preventFullEngineOutputInjection: true,
+
+    routeHook: extra.routeHook || null,
+    routeMode: extra.routeMode || null
   };
 }
 
@@ -783,20 +834,11 @@ export function createAskHandler({
         contextOrchestration: resolvedContextOrchestration,
         openaiModel,
 
-        orchestrationMetadata: {
-          askHandlerVersion: ENGINE_VERSION,
-
-          issueClassificationEnabled: true,
-          adaptivePipelineEnabled: true,
-          sourceOrderingPolicyEnabled: true,
-          strictConflictDisplayEnabled: true,
-          targetAuthorityAware: true,
-          issueClassificationMatchAware: true,
-
-          contextOrchestrationEnabled: true,
-          openAIContextBudgetingEnabled: true,
-          finalTrimBeforeOpenAIEnabled: true
-        }
+        orchestrationMetadata:
+          buildCompactOrchestrationMetadata({
+            routeHook: hookConfig.hook_code,
+            routeMode: hookConfig.mode
+          })
       };
 
       if (
@@ -807,8 +849,17 @@ export function createAskHandler({
           ...commonRagPayload,
 
           hookConfig: {
-            ...hookConfig,
-            requires_retrieval: true
+            hook_code: hookConfig.hook_code,
+            mode: hookConfig.mode,
+            title: hookConfig.title,
+            requires_retrieval: true,
+            requires_memory: Boolean(hookConfig.requires_memory),
+            requires_feedback: Boolean(hookConfig.requires_feedback),
+            adaptiveResponseMode: hookConfig.adaptiveResponseMode,
+            cleanQuestion: hookConfig.cleanQuestion,
+            originalQuestion: hookConfig.originalQuestion,
+            forcedHookApplied: Boolean(hookConfig.forcedHookApplied),
+            engineVersion: ENGINE_VERSION
           }
         });
       }
@@ -818,7 +869,13 @@ export function createAskHandler({
 
         hookConfig: {
           ...buildHardcodedHookConfig("/ask"),
-          requires_retrieval: true
+          requires_retrieval: true,
+          cleanQuestion:
+            hookConfig.cleanQuestion ||
+            hookConfig.originalQuestion,
+          originalQuestion:
+            hookConfig.originalQuestion,
+          engineVersion: ENGINE_VERSION
         }
       });
     } catch (error) {
@@ -860,6 +917,10 @@ export function askHandlerHealthCheck() {
     sourceOrderingPolicyPassedDownstream: true,
     conflictDisplayPolicyPassedDownstream: true,
     contextOrchestrationPassedDownstream: true,
+
+    rawFullDocumentInjectionPreventedAtRouteLayer: true,
+    fullDebugObjectInjectionPreventedAtRouteLayer: true,
+    fullEngineOutputInjectionPreventedAtRouteLayer: true,
 
     forcedHookCompatible: true,
     routeModeCompatible: true
