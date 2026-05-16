@@ -3,13 +3,14 @@
 
 /**
  * TINA Final Answer Compliance Engine
- * Version: 3.0.0
+ * Version: 4.0.0
  *
- * Patch:
- * - Accepts conflict, conflictReview, hierarchyConflict, and jurisprudencePayload.
- * - Blocks “Conflict Detected: YES” unless conflict metadata is complete.
- * - Passes issueClassification into source visibility / supersession preflight.
- * - Preserves issueClassificationMatch and targetAuthorityMatch-driven source ordering.
+ * Purpose:
+ * - Align final answer format with context-orchestration-engine.js mode
+ * - Support FAST_DEFINITION, STANDARD_TAX, LEGAL_ANALYSIS, COMPLEX_ADVISORY
+ * - Prevent vague conflict labels
+ * - Prevent invented source sections
+ * - Keep final sources validated, visible, issue-matched, and non-duplicated
  */
 
 import {
@@ -24,7 +25,16 @@ import {
   MAX_VISIBLE_SOURCES
 } from "./source-visibility-engine.js";
 
-const ENGINE_VERSION = "3.0.0";
+const ENGINE_VERSION = "4.0.0";
+
+const RESPONSE_MODE = Object.freeze({
+  FAST_DEFINITION: "FAST_DEFINITION",
+  STANDARD_TAX: "STANDARD_TAX",
+  LEGAL_ANALYSIS: "LEGAL_ANALYSIS",
+  COMPLEX_ADVISORY: "COMPLEX_ADVISORY",
+  EMERGENCY_TRIM: "EMERGENCY_TRIM",
+  DEFAULT_AF: "DEFAULT_AF"
+});
 
 const TINA_AF_HEADINGS = Object.freeze([
   "A. DIRECT ANSWER",
@@ -35,10 +45,63 @@ const TINA_AF_HEADINGS = Object.freeze([
   "F. PRACTICAL APPLICATION"
 ]);
 
+function safeArray(value) {
+  if (!value) return [];
+  return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
+}
+
+function compactText(value = "") {
+  return normalizeText(value || "").replace(/\s+/g, " ").trim();
+}
+
+function trimText(value = "", max = 1200) {
+  const text = compactText(value);
+  if (!text) return "";
+  if (text.length <= max) return text;
+  return `${text.slice(0, max).trim()} ...[trimmed]`;
+}
+
+function escapeRegex(value = "") {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function normalizeMode(mode = "") {
+  const raw = String(mode || "").trim().toUpperCase();
+
+  if (Object.values(RESPONSE_MODE).includes(raw)) return raw;
+
+  if (raw.includes("FAST") || raw.includes("QUICK") || raw.includes("DEFINITION")) {
+    return RESPONSE_MODE.FAST_DEFINITION;
+  }
+
+  if (raw.includes("LEGAL") || raw.includes("DOCTRINE") || raw.includes("JURISPRUDENCE")) {
+    return RESPONSE_MODE.LEGAL_ANALYSIS;
+  }
+
+  if (
+    raw.includes("COMPLEX") ||
+    raw.includes("ADVISORY") ||
+    raw.includes("AUDIT") ||
+    raw.includes("RISK") ||
+    raw.includes("CONTRACT") ||
+    raw.includes("TRANSACTION") ||
+    raw.includes("EVIDENCE")
+  ) {
+    return RESPONSE_MODE.COMPLEX_ADVISORY;
+  }
+
+  if (raw.includes("STANDARD") || raw.includes("TAX")) {
+    return RESPONSE_MODE.STANDARD_TAX;
+  }
+
+  return RESPONSE_MODE.DEFAULT_AF;
+}
+
 function stripInventedSourceSections(text = "") {
   return String(text || "")
     .replace(/\n+\s*6\.\s*SOURCES[\s\S]*$/i, "")
     .replace(/\n+\s*6\.\s*SOURCES USED[\s\S]*$/i, "")
+    .replace(/\n+\s*8\.\s*SOURCES[\s\S]*$/i, "")
     .replace(/\n+\s*SOURCES USED[\s\S]*$/i, "")
     .replace(/\n+\s*Sources:\s*[\s\S]*$/i, "")
     .replace(/\n+\s*Source:\s*[\s\S]*$/i, "")
@@ -49,15 +112,6 @@ function stripInventedSourceSections(text = "") {
     .replace(/\n+\s*See clickable sources below\.\s*$/i, "")
     .replace(/\n+\s*No clickable sources available\.\s*$/i, "")
     .trim();
-}
-
-function escapeRegex(value = "") {
-  return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-function safeArray(value) {
-  if (!value) return [];
-  return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
 }
 
 function getSectionBody(text = "", headingPattern) {
@@ -101,6 +155,13 @@ function cleanBulletPrefix(line = "") {
   return String(line).replace(/^[\-\u2022*\d.)\s]+/, "").trim();
 }
 
+function ensureDashedBullets(lines = []) {
+  return lines
+    .filter(Boolean)
+    .map((line) => `- ${cleanBulletPrefix(line)}`)
+    .join("\n");
+}
+
 function takeSentences(text = "", maxSentences = 4) {
   const cleaned = normalizeText(text);
   if (!cleaned) return "";
@@ -112,13 +173,6 @@ function takeSentences(text = "", maxSentences = 4) {
     .filter(Boolean)
     .slice(0, maxSentences)
     .join(" ");
-}
-
-function ensureDashedBullets(lines = []) {
-  return lines
-    .filter(Boolean)
-    .map((line) => `- ${cleanBulletPrefix(line)}`)
-    .join("\n");
 }
 
 function containsExplicitRuleLikeValue(text = "") {
@@ -183,6 +237,22 @@ function conflictMetadataIsComplete(conflict = null) {
   );
 }
 
+function hasConflictSignal(conflict = {}) {
+  return Boolean(
+    conflict?.conflict ||
+      conflict?.doctrinalConflict ||
+      conflict?.hierarchyConflict ||
+      conflict?.apparentConflict ||
+      conflict?.conflictType ||
+      conflict?.conflictStatus ||
+      conflict?.reason ||
+      conflict?.resolutionBasis ||
+      conflict?.exactIssue ||
+      conflict?.sameIssueGate ||
+      conflict?.oppositeHoldingGate
+  );
+}
+
 function normalizeConflictStatus(conflict = {}) {
   if (!conflictMetadataIsComplete(conflict)) {
     if (conflict?.apparentConflict || conflict?.distinctionType) return "APPARENT_OR_DISTINGUISHABLE";
@@ -202,22 +272,6 @@ function normalizeConflictStatus(conflict = {}) {
   if (type.includes("MIXED")) return "MIXED_CONFLICT";
 
   return conflict.conflict === true ? "CONFLICT" : "NO_CONFLICT";
-}
-
-function hasConflictSignal(conflict = {}) {
-  return Boolean(
-    conflict?.conflict ||
-      conflict?.doctrinalConflict ||
-      conflict?.hierarchyConflict ||
-      conflict?.apparentConflict ||
-      conflict?.conflictType ||
-      conflict?.conflictStatus ||
-      conflict?.reason ||
-      conflict?.resolutionBasis ||
-      conflict?.exactIssue ||
-      conflict?.sameIssueGate ||
-      conflict?.oppositeHoldingGate
-  );
 }
 
 function collectConflictCandidates({
@@ -305,11 +359,11 @@ function sourceNameFromConflict(conflict = {}, side = "A") {
 
   return (
     conflict.sourceB ||
-    conflict.source_b_path ||
-    conflict.source_b_title ||
-    conflict.overriddenSource ||
-    conflict.weakerSource ||
-    "Source B"
+      conflict.source_b_path ||
+      conflict.source_b_title ||
+      conflict.overriddenSource ||
+      conflict.weakerSource ||
+      "Source B"
   );
 }
 
@@ -317,17 +371,17 @@ function buildConflictExplanationFromMetadata(conflict = {}) {
   if (!conflictMetadataIsComplete(conflict)) {
     if (conflict?.apparentConflict || conflict?.distinctionType) {
       return [
-        "No direct doctrinal conflict is asserted.",
+        "Conflict Detected: NO",
         "The retrieved authorities may appear related, but the metadata does not establish the required same exact issue, same legal dimension, and opposite holding.",
-        conflict.distinctionType ? `Distinction type: ${conflict.distinctionType}.` : null,
-        conflict.reason ? `Reason: ${conflict.reason}` : null,
+        conflict.distinctionType ? `Distinction type: ${trimText(conflict.distinctionType, 300)}` : null,
+        conflict.reason ? `Reason: ${trimText(conflict.reason, 700)}` : null,
         "Treat the authorities as distinguishable or complementary unless a complete same-issue opposite-holding conflict is established."
       ]
         .filter(Boolean)
         .join("\n");
     }
 
-    return "No direct doctrinal conflict is detected from the validated indexed sources. A conflict label requires complete metadata showing the same exact issue, same legal dimension, opposite holding, conflict type, and hierarchy-based resolution.";
+    return "Conflict Detected: NO\nNo direct doctrinal conflict is detected from the validated indexed sources.";
   }
 
   const status = normalizeConflictStatus(conflict);
@@ -349,12 +403,6 @@ function buildConflictExplanationFromMetadata(conflict = {}) {
     conflict.winningAuthority ||
     "the higher controlling authority under Philippine tax hierarchy";
 
-  const controllingSource =
-    conflict.controllingSource ||
-    conflict.controlling_source ||
-    conflict.winningSource ||
-    null;
-
   const overriddenAuthority =
     conflict.overriddenAuthority ||
     conflict.weakerAuthority ||
@@ -368,21 +416,15 @@ function buildConflictExplanationFromMetadata(conflict = {}) {
     "Apply the Constitution, statute, valid regulations, and controlling court doctrine in proper hierarchy.";
 
   return [
-    status === "DIRECT_CONFLICT"
-      ? "Direct conflict exists based on complete conflict metadata."
-      : status === "DOCTRINAL_CONFLICT"
-        ? "Doctrinal conflict exists based on complete conflict metadata."
-        : status === "HIERARCHY_CONFLICT"
-          ? "Hierarchy conflict exists based on complete conflict metadata."
-          : "Conflict exists based on complete conflict metadata.",
-    `Exact legal issue in conflict: ${normalizeText(exactIssue)}`,
-    `Exact legal dimension: ${normalizeText(exactLegalDimension)}`,
-    `Source A: ${sourceNameFromConflict(conflict, "A")}`,
-    `Source B: ${sourceNameFromConflict(conflict, "B")}`,
-    `Controlling doctrine/authority: ${controllingAuthority}${controllingSource ? ` (${JSON.stringify(controllingSource)})` : ""}.`,
-    overriddenAuthority ? `Overridden or limited authority: ${overriddenAuthority}.` : null,
-    `Why it controls: ${normalizeText(resolutionBasis)}`,
-    "The answer must explain why the controlling authority prevails and whether later authority validly modified earlier authority."
+    "Conflict Detected: YES",
+    `Conflict Type: ${status}`,
+    `Exact legal issue in conflict: ${trimText(exactIssue, 300)}`,
+    `Exact legal dimension: ${trimText(exactLegalDimension, 300)}`,
+    `Source A: ${trimText(sourceNameFromConflict(conflict, "A"), 260)}`,
+    `Source B: ${trimText(sourceNameFromConflict(conflict, "B"), 260)}`,
+    `Controlling doctrine/authority: ${trimText(controllingAuthority, 260)}`,
+    overriddenAuthority ? `Overridden or limited authority: ${trimText(overriddenAuthority, 260)}` : null,
+    `Why it controls: ${trimText(resolutionBasis, 900)}`
   ]
     .filter(Boolean)
     .join("\n");
@@ -407,9 +449,7 @@ function sanitizeConflictSection(text = "", conflictMetadata = null) {
   const value = normalizeText(text);
   if (!value) return value;
 
-  const replacement = conflictMetadataIsComplete(conflictMetadata)
-    ? buildConflictExplanationFromMetadata(conflictMetadata)
-    : "No direct doctrinal conflict is detected from the validated indexed sources. A conflict label requires complete metadata showing the same exact issue, same legal dimension, opposite holding, conflict type, and hierarchy-based resolution.";
+  const replacement = buildConflictExplanationFromMetadata(conflictMetadata || {});
 
   const legacyConflictBody =
     getSectionBody(value, String.raw`\b5\.\s*CONFLICT FLAG\b`) ||
@@ -480,16 +520,10 @@ function buildControllingLegalBasis({ draftAnswer = "", legalBasisDocs = [] }) {
   const legalBasisLines = buildValidatedLegalBasis(legalBasisDocs);
 
   if (legalBasisLines.length) {
-    return [
-      "The following indexed authorities were validated as potential legal bases. Apply them according to hierarchy and classified-issue relevance:",
-      ensureDashedBullets(legalBasisLines)
-    ].join("\n");
+    return ensureDashedBullets(legalBasisLines);
   }
 
-  return [
-    "- No validated indexed controlling legal basis was available.",
-    "- Verify against the latest NIRC, BIR issuance, or court authority before operational reliance."
-  ].join("\n");
+  return "- No validated indexed controlling legal basis was available.";
 }
 
 function buildSupportingJurisprudence({ draftAnswer = "", jurisprudencePayload = null }) {
@@ -501,11 +535,23 @@ function buildSupportingJurisprudence({ draftAnswer = "", jurisprudencePayload =
 
   if (body) return body;
 
-  if (jurisprudencePayload?.noJurisprudence) {
-    return "No directly issue-matched jurisprudence was retrieved from the indexed context. Do not cite unrelated cases merely because they mention the same tax type.";
+  const cases = safeArray(
+    jurisprudencePayload?.directlyRelevantCases ||
+      jurisprudencePayload?.cases ||
+      []
+  ).slice(0, 4);
+
+  if (jurisprudencePayload?.noJurisprudence || !cases.length) {
+    return "No directly issue-matched jurisprudence was retrieved from the indexed context.";
   }
 
-  return "No directly issue-matched jurisprudence was retrieved from the indexed context. Do not cite unrelated cases merely because they mention the same tax type.";
+  return ensureDashedBullets(
+    cases.map((item) => {
+      const title = item.title || item.caseReference || item.citation || "Relevant case";
+      const role = item.caseRole || item.caseApplicability || "supporting jurisprudence";
+      return `${title} — ${role}`;
+    })
+  );
 }
 
 function buildDoctrinalStatus({
@@ -533,9 +579,7 @@ function buildDoctrinalStatus({
     return body;
   }
 
-  if (bestConflict) return buildConflictExplanationFromMetadata(bestConflict);
-
-  return "No direct doctrinal conflict is detected from the validated indexed sources. If authorities address different procedural, evidentiary, jurisdictional, factual, temporal, administrative, contractual, economic-substance, audit, or substantive issues, they should be treated as distinguishable or complementary rather than conflicting.";
+  return buildConflictExplanationFromMetadata(bestConflict || {});
 }
 
 function buildHierarchyAnalysis({
@@ -561,8 +605,7 @@ function buildHierarchyAnalysis({
             : "The controlling authority must be determined by legal hierarchy.",
           hierarchyConflict.reason
             ? `Reason: ${hierarchyConflict.reason}`
-            : "Apply higher authority over lower authority.",
-          "Administrative issuances cannot amend, expand, or override the NIRC, valid statutory rules, or controlling Supreme Court doctrine."
+            : "Apply higher authority over lower authority."
         ].join("\n")
       : "";
 
@@ -577,7 +620,7 @@ function buildHierarchyAnalysis({
       .join("\n");
   }
 
-  return "No validated indexed source was available for hierarchy analysis. Verify against the latest official NIRC, BIR issuances, and court rulings.";
+  return "No validated indexed source was available for hierarchy analysis.";
 }
 
 function buildPracticalApplication({
@@ -600,7 +643,7 @@ function buildPracticalApplication({
   return normalizeText(
     professionalInsight ||
       fallbackAnswer ||
-      "Verify the latest BIR issuance and documentary requirements before implementation. Assess the tax consequence, compliance requirement, audit risk, possible BIR position, litigation exposure, documentation requirements, and available taxpayer defense before taking a final position."
+      "Verify the latest BIR issuance and documentary requirements before implementation."
   );
 }
 
@@ -616,7 +659,7 @@ function buildSupportingRules({ draftAnswer = "", legalBasisDocs = [] }) {
   const inferred = [];
 
   for (const doc of legalBasisDocs.slice(0, 3)) {
-    const snippet = normalizeText(doc.text || doc.preview || doc.excerpt || "");
+    const snippet = normalizeText(doc.text || doc.preview || doc.excerpt || doc.content || "");
     if (!snippet) continue;
 
     const sentences = snippet.match(/[^.!?]+[.!?]?/g) || [];
@@ -742,33 +785,138 @@ function appendValidatedSourceAppendix(answer = "", docs = []) {
   ].join("\n");
 }
 
-export function buildFinalCompliantAnswer({
-  draftAnswer = "",
+function buildFastDefinitionAnswer({
+  sanitizedDraft = "",
+  fallbackAnswer = "",
+  directAnswer = "",
+  legalBasisDocs = []
+}) {
+  const answer = takeSentences(
+    directAnswer ||
+      buildDirectAnswer({
+        draftAnswer: sanitizedDraft,
+        fallbackAnswer
+      }),
+    3
+  );
+
+  const basis = buildValidatedLegalBasis(legalBasisDocs).slice(0, 3);
+
+  return [
+    "Direct Answer",
+    answer || "No direct answer could be formed from the indexed sources.",
+    "",
+    "Legal Basis",
+    basis.length ? ensureDashedBullets(basis) : "- No validated indexed legal basis was retrieved."
+  ].join("\n");
+}
+
+function buildStandardTaxAnswer({
+  sanitizedDraft = "",
   fallbackAnswer = "",
   directAnswer = "",
   legalBasisDocs = [],
-  sourcesUsed = [],
-  conflicts = [],
-  hierarchyConflict = null,
-  conflict = null,
-  conflictReview = null,
   jurisprudencePayload = null,
+  professionalInsight = ""
+}) {
+  const supportingRules = buildSupportingRules({
+    draftAnswer: sanitizedDraft,
+    legalBasisDocs
+  });
+
+  return [
+    "Direct Answer",
+    directAnswer ||
+      buildDirectAnswer({
+        draftAnswer: sanitizedDraft,
+        fallbackAnswer
+      }) ||
+      "No direct answer could be formed from the indexed sources.",
+    "",
+    "Legal Basis",
+    buildControllingLegalBasis({
+      draftAnswer: sanitizedDraft,
+      legalBasisDocs
+    }),
+    "",
+    "Supporting Rules",
+    Array.isArray(supportingRules)
+      ? ensureDashedBullets(supportingRules)
+      : supportingRules || "No supporting rule was extracted.",
+    "",
+    "Practical Note",
+    professionalInsight ||
+      buildPracticalApplication({
+        draftAnswer: sanitizedDraft,
+        fallbackAnswer
+      }),
+    "",
+    "Jurisprudence",
+    buildSupportingJurisprudence({
+      draftAnswer: sanitizedDraft,
+      jurisprudencePayload
+    })
+  ].join("\n");
+}
+
+function buildComplexAdvisoryAnswer({
+  sanitizedDraft = "",
+  fallbackAnswer = "",
+  directAnswer = "",
+  legalBasisDocs = [],
   professionalInsight = "",
+  issueClassification = null,
+  supersessionResult = null
+}) {
+  const factSensitivity =
+    issueClassification?.factSensitivity ||
+    issueClassification?.orchestrationClassification?.factSensitivity ||
+    "moderate";
+
+  return [
+    "Executive Answer",
+    directAnswer ||
+      buildDirectAnswer({
+        draftAnswer: sanitizedDraft,
+        fallbackAnswer
+      }) ||
+      "The conclusion depends on the final facts and supporting documents.",
+    "",
+    "Controlling Basis",
+    buildControllingLegalBasis({
+      draftAnswer: sanitizedDraft,
+      legalBasisDocs
+    }),
+    "",
+    "Assumptions / Fact Sensitivity",
+    `Fact sensitivity: ${factSensitivity}. The conclusion should be confirmed against the actual contracts, invoices, receipts, accounting entries, and transaction flow.`,
+    "",
+    "Risk / Practical Application",
+    buildPracticalApplication({
+      draftAnswer: sanitizedDraft,
+      fallbackAnswer,
+      professionalInsight,
+      supersessionResult
+    }),
+    "",
+    "Recommended Documentation",
+    ensureDashedBullets([
+      "Executed contract or agreement",
+      "Invoices, receipts, billing statements, and official BIR documents",
+      "General ledger entries and reconciliations",
+      "Proof of actual transaction flow and payment flow",
+      "Management explanation supporting the tax position"
+    ])
+  ].join("\n");
+}
+
+function resolveVisibleSources({
+  legalBasisDocs = [],
+  sourcesUsed = [],
   asOfDate = new Date(),
   query = "",
   issueClassification = null
 }) {
-  const bestConflict = pickBestConflict({
-    conflicts,
-    hierarchyConflict,
-    conflict,
-    conflictReview,
-    jurisprudencePayload
-  });
-
-  const rawSanitizedDraft = sanitizeDraftAnswer(draftAnswer, bestConflict);
-  const sanitizedDraft = normalizeLegacyHeadingsToAF(rawSanitizedDraft);
-
   const {
     supersessionResult,
     resolvedLegalBasisDocs,
@@ -791,47 +939,137 @@ export function buildFinalCompliantAnswer({
           issueClassification
         });
 
+  return {
+    supersessionResult,
+    resolvedLegalBasisDocs,
+    resolvedSourcesUsed,
+    visibleSourceDocs
+  };
+}
+
+export function sanitizeDraftAnswer(text = "", conflictMetadata = null) {
+  return sanitizeConflictSection(stripInventedSourceSections(text), conflictMetadata);
+}
+
+export function buildFinalCompliantAnswer({
+  draftAnswer = "",
+  fallbackAnswer = "",
+  directAnswer = "",
+  legalBasisDocs = [],
+  sourcesUsed = [],
+  conflicts = [],
+  hierarchyConflict = null,
+  conflict = null,
+  conflictReview = null,
+  jurisprudencePayload = null,
+  professionalInsight = "",
+  asOfDate = new Date(),
+  query = "",
+  issueClassification = null,
+
+  mode = null,
+  orchestrationMode = null,
+  responseMode = null,
+  contextMode = null
+}) {
+  const finalMode = normalizeMode(
+    mode ||
+      orchestrationMode ||
+      responseMode ||
+      contextMode ||
+      issueClassification?.responseMode ||
+      issueClassification?.orchestrationClassification?.mode ||
+      RESPONSE_MODE.DEFAULT_AF
+  );
+
+  const bestConflict = pickBestConflict({
+    conflicts,
+    hierarchyConflict,
+    conflict,
+    conflictReview,
+    jurisprudencePayload
+  });
+
+  const rawSanitizedDraft = sanitizeDraftAnswer(draftAnswer, bestConflict);
+  const sanitizedDraft = normalizeLegacyHeadingsToAF(rawSanitizedDraft);
+
+  const {
+    supersessionResult,
+    resolvedLegalBasisDocs,
+    visibleSourceDocs
+  } = resolveVisibleSources({
+    legalBasisDocs,
+    sourcesUsed,
+    asOfDate,
+    query,
+    issueClassification
+  });
+
   let finalAnswer;
 
-  if (hasCompleteAFStructure(sanitizedDraft)) {
-    finalAnswer = sanitizeConflictSection(sanitizedDraft, bestConflict);
-  } else if (hasAnyAFStructure(sanitizedDraft)) {
-    finalAnswer = repairMissingAFSections({
-      answer: sanitizedDraft,
+  if (finalMode === RESPONSE_MODE.FAST_DEFINITION || finalMode === RESPONSE_MODE.EMERGENCY_TRIM) {
+    finalAnswer = buildFastDefinitionAnswer({
+      sanitizedDraft,
       fallbackAnswer,
       directAnswer,
-      legalBasisDocs: resolvedLegalBasisDocs,
-      conflicts,
-      hierarchyConflict,
-      conflict,
-      conflictReview,
-      jurisprudencePayload,
-      professionalInsight,
-      supersessionResult
+      legalBasisDocs: resolvedLegalBasisDocs
     });
-  } else {
-    finalAnswer = rebuildAFAnswer({
+  } else if (finalMode === RESPONSE_MODE.STANDARD_TAX) {
+    finalAnswer = buildStandardTaxAnswer({
       sanitizedDraft,
       fallbackAnswer,
       directAnswer,
       legalBasisDocs: resolvedLegalBasisDocs,
-      conflicts,
-      hierarchyConflict,
-      conflict,
-      conflictReview,
       jurisprudencePayload,
+      professionalInsight
+    });
+  } else if (finalMode === RESPONSE_MODE.COMPLEX_ADVISORY) {
+    finalAnswer = buildComplexAdvisoryAnswer({
+      sanitizedDraft,
+      fallbackAnswer,
+      directAnswer,
+      legalBasisDocs: resolvedLegalBasisDocs,
       professionalInsight,
+      issueClassification,
       supersessionResult
     });
+  } else {
+    if (hasCompleteAFStructure(sanitizedDraft)) {
+      finalAnswer = sanitizeConflictSection(sanitizedDraft, bestConflict);
+    } else if (hasAnyAFStructure(sanitizedDraft)) {
+      finalAnswer = repairMissingAFSections({
+        answer: sanitizedDraft,
+        fallbackAnswer,
+        directAnswer,
+        legalBasisDocs: resolvedLegalBasisDocs,
+        conflicts,
+        hierarchyConflict,
+        conflict,
+        conflictReview,
+        jurisprudencePayload,
+        professionalInsight,
+        supersessionResult
+      });
+    } else {
+      finalAnswer = rebuildAFAnswer({
+        sanitizedDraft,
+        fallbackAnswer,
+        directAnswer,
+        legalBasisDocs: resolvedLegalBasisDocs,
+        conflicts,
+        hierarchyConflict,
+        conflict,
+        conflictReview,
+        jurisprudencePayload,
+        professionalInsight,
+        supersessionResult
+      });
+    }
   }
 
   finalAnswer = sanitizeConflictSection(finalAnswer, bestConflict);
 
   return appendValidatedSourceAppendix(finalAnswer, visibleSourceDocs).trim();
-}
-
-export function sanitizeDraftAnswer(text = "", conflictMetadata = null) {
-  return sanitizeConflictSection(stripInventedSourceSections(text), conflictMetadata);
 }
 
 export function finalAnswerComplianceHealthCheck() {
@@ -840,27 +1078,35 @@ export function finalAnswerComplianceHealthCheck() {
     engine: "TINA_FINAL_ANSWER_COMPLIANCE",
     version: ENGINE_VERSION,
     afStructureCompatible: true,
+    modeAwareFormatting: true,
+    supportedModes: Object.values(RESPONSE_MODE),
     conflictSanitizerCompatible: true,
     conflictMetadataCompleteGate: true,
     supersessionPreflightCompatible: true,
     issueClassificationCompatible: true,
     sourceVisibilityCompatible: true,
-    jurisprudencePayloadCompatible: true
+    jurisprudencePayloadCompatible: true,
+    contextOrchestrationCompatible: true,
+    compactFinalAnswerOutput: true
   };
 }
 
 export {
+  ENGINE_VERSION,
+  RESPONSE_MODE,
   TINA_AF_HEADINGS,
   hasCompleteAFStructure,
   hasAnyAFStructure,
   sanitizeConflictSection,
   buildSupportingRules,
-  conflictMetadataIsComplete
+  conflictMetadataIsComplete,
+  normalizeMode
 };
 
 export default {
   sanitizeDraftAnswer,
   sanitizeConflictSection,
   buildFinalCompliantAnswer,
-  finalAnswerComplianceHealthCheck
+  finalAnswerComplianceHealthCheck,
+  normalizeMode
 };
