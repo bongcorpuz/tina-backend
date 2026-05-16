@@ -3,12 +3,15 @@
 
 /**
  * TINA Source Visibility Engine
- * Version: 3.0.0
+ * Version: 3.1.0
  *
- * Patch:
- * - Uses issueClassificationMatch and targetAuthorityMatch from reranker.
- * - Prioritizes exact issue-matched and target-authority-matched sources.
- * - Prevents final citations from showing weak or issue-mismatched authorities first.
+ * Integrated with:
+ * - main-tax-engine-classification.js
+ * - issue-classification-engine.js
+ * - retrieval-engine.js
+ * - reranker-engine.js
+ * - rag-answer-handler.js
+ * - answer-renderer.js
  */
 
 import {
@@ -16,7 +19,7 @@ import {
   findReplacementForDocument
 } from "./supersession-engine.js";
 
-export const ENGINE_VERSION = "3.0.0";
+export const ENGINE_VERSION = "3.1.0";
 export const MAX_VISIBLE_SOURCES = 5;
 
 const HIDDEN_SOURCE_PATTERNS = [
@@ -30,8 +33,11 @@ const HIDDEN_SOURCE_PATTERNS = [
 const CONTROLLING_AUTHORITY_PRIORITY = {
   CONSTITUTION: 1,
   STATUTE: 2,
+  NIRC: 2,
+  TAX_CODE: 2,
   SUPREME_COURT: 3,
   RR: 4,
+  TAX_TREATY: 5,
   TREATY: 5,
   RMC: 6,
   RMO: 7,
@@ -41,11 +47,29 @@ const CONTROLLING_AUTHORITY_PRIORITY = {
   COURT_OF_APPEALS: 11,
   CTA_DIVISION: 12,
   LGU: 13,
+  BOC_ISSUANCE: 13,
   PFRS: 14,
   PAS: 15,
   PSA: 16,
+  OECD_GUIDANCE: 30,
   SECONDARY: 98,
   UNKNOWN: 99
+};
+
+const DOMAIN_KEYWORDS = {
+  VAT: ["vat", "value added tax", "value-added tax", "output vat", "input vat", "zero rated", "zero-rated"],
+  CIT: ["corporate income tax", "income tax", "rcit", "mcit", "nolco", "deduction", "taxable income"],
+  IIT: ["individual income tax", "compensation", "self employed", "self-employed", "8%", "graduated rates"],
+  WHT: ["withholding", "withholding tax", "ewt", "cwt", "fwt", "2307", "1601"],
+  EST: ["estate tax", "donor tax", "donation", "gross estate", "net estate"],
+  PCT: ["percentage tax", "2551q", "non-vat"],
+  EXC: ["excise tax", "sin tax", "petroleum", "sweetened beverage"],
+  PRE: ["prescription", "assessment", "loa", "pan", "fan", "fdda", "waiver"],
+  DIS: ["protest", "appeal", "cta", "refund", "compromise", "abatement"],
+  LGT: ["local business tax", "real property tax", "lgu", "local tax"],
+  CUS: ["customs", "tariff", "import duty", "cmta", "boc"],
+  SPC: ["transfer pricing", "peza", "create incentives", "tax treaty", "oecd"],
+  CON: ["constitution", "due process", "equal protection", "uniformity", "equity"]
 };
 
 export function normalizeText(value = "") {
@@ -79,6 +103,11 @@ export function compactSpaces(value = "") {
 
 export function dedupe(values = []) {
   return [...new Set((values || []).filter(Boolean))];
+}
+
+function safeArray(value) {
+  if (!value) return [];
+  return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
 }
 
 function stripFileExtension(value = "") {
@@ -165,7 +194,12 @@ function sourceSearchBlob(doc = {}) {
       doc.excerpt,
       doc.preview,
       doc.doctrineApplicability,
-      doc.doctrineApplicabilityExplanation
+      doc.doctrineApplicabilityExplanation,
+      doc.primaryDomain,
+      doc.primary_domain,
+      doc.retrievalMetadata?.primaryDomain,
+      doc.issueClassificationMatch?.primaryDomain,
+      doc.metadata?.primaryDomain
     ]
       .filter(Boolean)
       .join(" ")
@@ -224,6 +258,30 @@ function hasCtaSignal(text = "") {
   return /\bcta\b/i.test(text);
 }
 
+function normalizeAuthority(value = "") {
+  const raw = String(value || "").trim().toUpperCase().replace(/[\s-]+/g, "_");
+  const aliases = {
+    NIRC: "STATUTE",
+    TAX_CODE: "STATUTE",
+    REPUBLIC_ACT: "STATUTE",
+    REVENUE_REGULATION: "RR",
+    REVENUE_REGULATIONS: "RR",
+    REVENUE_MEMORANDUM_CIRCULAR: "RMC",
+    REVENUE_MEMORANDUM_ORDER: "RMO",
+    REVENUE_AUDIT_MEMORANDUM_ORDER: "RAMO",
+    SUPREME_COURT_DECISION: "SUPREME_COURT",
+    SC: "SUPREME_COURT",
+    CASE_LAW: "SUPREME_COURT",
+    CTA: "CTA_DIVISION",
+    LGU_ISSUANCE: "LGU",
+    BOC: "BOC_ISSUANCE",
+    TREATY: "TAX_TREATY",
+    SECONDARY_SOURCE: "SECONDARY"
+  };
+
+  return aliases[raw] || raw || null;
+}
+
 export function authorityTypeOf(doc = {}) {
   const raw = String(
     doc.authorityType ||
@@ -234,7 +292,7 @@ export function authorityTypeOf(doc = {}) {
     .trim()
     .toUpperCase();
 
-  if (raw) return raw;
+  if (raw) return normalizeAuthority(raw) || raw;
 
   const path = normalizeLooseText(sourcePathOf(doc));
   const title = normalizeLooseText(sourceRawTitleOf(doc));
@@ -256,7 +314,7 @@ export function authorityTypeOf(doc = {}) {
   if (path.includes("04b_ramo") || /\bramo\b/i.test(title)) return "RAMO";
   if (path.includes("04_rmo") || /\brmo\b/i.test(title)) return "RMO";
   if (path.includes("05_bir_rulings") || title.includes("bir ruling")) return "BIR_RULING";
-  if (path.includes("05b_tax_treaties") || title.includes("tax treaty")) return "TREATY";
+  if (path.includes("05b_tax_treaties") || title.includes("tax treaty")) return "TAX_TREATY";
 
   if (title.includes("supreme court") || hasSupremeCourtSignal(blob)) return "SUPREME_COURT";
   if (title.includes("cta en banc") || /\bcta eb\b/i.test(blob)) return "CTA_EN_BANC";
@@ -268,6 +326,8 @@ export function authorityTypeOf(doc = {}) {
   if (title.includes("psa")) return "PSA";
 
   if (title.includes("ordinance") || title.includes("local tax code")) return "LGU";
+  if (title.includes("boc") || title.includes("customs")) return "BOC_ISSUANCE";
+  if (title.includes("oecd")) return "OECD_GUIDANCE";
 
   return "SECONDARY";
 }
@@ -326,6 +386,83 @@ export function isStatutoryAuthority(doc = {}) {
   return ["CONSTITUTION", "STATUTE"].includes(authorityTypeOf(doc));
 }
 
+function normalizeDomain(value = "") {
+  const raw = String(value || "").trim().toUpperCase().replace(/[\s-]+/g, "_");
+
+  const aliases = {
+    VALUE_ADDED_TAX: "VAT",
+    CORPORATE_INCOME_TAX: "CIT",
+    INCOME_TAX: "CIT",
+    INDIVIDUAL_INCOME_TAX: "IIT",
+    WITHHOLDING: "WHT",
+    WITHHOLDING_TAX: "WHT",
+    ESTATE_TAX: "EST",
+    DONOR_TAX: "EST",
+    PERCENTAGE_TAX: "PCT",
+    EXCISE_TAX: "EXC",
+    PRESCRIPTION: "PRE",
+    ASSESSMENT: "PRE",
+    DISPUTE: "DIS",
+    DISPUTE_RESOLUTION: "DIS",
+    LOCAL_TAX: "LGT",
+    CUSTOMS: "CUS",
+    CUSTOMS_TARIFF: "CUS",
+    TRANSFER_PRICING: "SPC",
+    SPECIAL_TAX_REGIMES: "SPC",
+    CONSTITUTIONAL_TAX: "CON"
+  };
+
+  return aliases[raw] || raw || null;
+}
+
+function getTaxDomainClassification(issueClassification = null) {
+  return (
+    issueClassification?.taxDomainClassification ||
+    issueClassification?.tax_domain_classification ||
+    null
+  );
+}
+
+function getPrimaryDomain(issueClassification = null) {
+  const taxDomainClassification = getTaxDomainClassification(issueClassification);
+
+  return normalizeDomain(
+    issueClassification?.primaryDomain ||
+      issueClassification?.primary_domain ||
+      taxDomainClassification?.primaryDomain ||
+      taxDomainClassification?.primary_domain ||
+      safeArray(issueClassification?.taxDomains)[0] ||
+      safeArray(issueClassification?.tax_domains)[0] ||
+      null
+  );
+}
+
+function docPrimaryDomain(doc = {}) {
+  return normalizeDomain(
+    doc.primaryDomain ||
+      doc.primary_domain ||
+      doc.retrievalMetadata?.primaryDomain ||
+      doc.issueClassificationMatch?.primaryDomain ||
+      doc.metadata?.primaryDomain ||
+      null
+  );
+}
+
+function docDomainMatched(doc = {}, issueClassification = null) {
+  const expected = getPrimaryDomain(issueClassification);
+  if (!expected) return null;
+
+  const explicit = docPrimaryDomain(doc);
+  if (explicit) return explicit === expected;
+
+  const haystack = normalizeLooseText(sourceSearchBlob(doc));
+  const keywords = DOMAIN_KEYWORDS[expected] || [];
+
+  if (!keywords.length) return null;
+
+  return keywords.some((term) => haystack.includes(normalizeLooseText(term)));
+}
+
 function extractIssueSignals(text = "") {
   const value = normalizeLooseText(text);
   const issues = [];
@@ -380,6 +517,7 @@ function normalizeIssue(value = "") {
     RCIT: "INCOME_TAX",
     MCIT: "INCOME_TAX",
     NOLCO: "INCOME_TAX",
+    CIT: "INCOME_TAX",
     PRINCIPAL_AGENT: "TRANSACTION",
     PRINCIPAL_VS_AGENT: "TRANSACTION",
     GROSS_NET: "TRANSACTION",
@@ -391,35 +529,51 @@ function normalizeIssue(value = "") {
   return aliases[raw] || raw || null;
 }
 
+function normalizeTargetAuthorities(values = []) {
+  return dedupe(safeArray(values).map(normalizeAuthority).filter(Boolean));
+}
+
 function normalizeIssueClassification(issueClassification = null, query = "") {
   const source = issueClassification || {};
+  const taxDomainClassification = getTaxDomainClassification(source);
+  const queryIssues = extractIssueSignals(query).map(normalizeIssue).filter(Boolean);
 
-  const queryIssues = extractIssueSignals(query).map(normalizeIssue);
+  const primaryDomain = getPrimaryDomain(source);
 
   const primaryIssue =
     normalizeIssue(source.primaryIssue) ||
     normalizeIssue(source.primary_issue) ||
     normalizeIssue(source.issueType) ||
     normalizeIssue(source.issue_type) ||
+    normalizeIssue(taxDomainClassification?.primaryIssue) ||
+    normalizeIssue(taxDomainClassification?.primarySubIssue) ||
     queryIssues[0] ||
     null;
 
   const subIssues = dedupe([
     primaryIssue,
-    ...((Array.isArray(source.subIssues) ? source.subIssues : []).map(normalizeIssue)),
-    ...((Array.isArray(source.subIssue) ? source.subIssue : []).map(normalizeIssue)),
+    normalizeIssue(source.subIssue),
+    normalizeIssue(source.sub_issue),
+    normalizeIssue(taxDomainClassification?.primarySubIssue),
+    ...safeArray(source.subIssues).map(normalizeIssue),
+    ...safeArray(source.sub_issues).map(normalizeIssue),
+    ...safeArray(taxDomainClassification?.subIssues).map(normalizeIssue),
     ...queryIssues
   ]).filter(Boolean);
 
-  const targetAuthorities = dedupe([
-    ...((Array.isArray(source.targetAuthorities) ? source.targetAuthorities : [])),
-    ...((Array.isArray(source.target_authorities) ? source.target_authorities : []))
-  ]).filter(Boolean);
+  const targetAuthorities = normalizeTargetAuthorities([
+    ...safeArray(source.targetAuthorities),
+    ...safeArray(source.target_authorities),
+    ...safeArray(taxDomainClassification?.targetAuthorities),
+    ...safeArray(taxDomainClassification?.target_authorities)
+  ]);
 
   return {
+    primaryDomain,
     primaryIssue,
     subIssues,
     targetAuthorities,
+    taxDomainClassification,
     raw: source
   };
 }
@@ -453,25 +607,30 @@ function buildIssueMatchedVisiblePool(docs = [], query = "", issueClassification
   const unique = uniqueDocs(docs);
   const profile = normalizeIssueClassification(issueClassification, query);
 
-  if (!query && !profile.primaryIssue) return unique;
+  if (!query && !profile.primaryIssue && !profile.primaryDomain) return unique;
 
   return unique.filter((doc) => {
     if (doc.issueMismatch === true) return false;
     if (doc.issueClassificationMatch?.issueMismatch === true) return false;
 
+    const domainMatch = docDomainMatched(doc, issueClassification);
     const explicitMatch = docIssueClassificationMatched(doc);
+
     if (explicitMatch === true) return true;
     if (explicitMatch === false) return false;
 
-    const querySignals = profile.subIssues.length ? profile.subIssues : extractIssueSignals(query).map(normalizeIssue);
-    if (!querySignals.length) return true;
+    const querySignals = profile.subIssues.length ? profile.subIssues : extractIssueSignals(query).map(normalizeIssue).filter(Boolean);
+    const docSignals = docIssueSignals(doc).map(normalizeIssue).filter(Boolean);
 
-    const docSignals = docIssueSignals(doc).map(normalizeIssue);
-    if (!docSignals.length) return true;
+    if (querySignals.length && docSignals.length) {
+      if (issueMismatch(querySignals, docSignals)) return false;
+      if (issueOverlap(querySignals, docSignals)) return true;
+    }
 
-    if (issueMismatch(querySignals, docSignals)) return false;
+    if (domainMatch === true) return true;
+    if (domainMatch === false && querySignals.length) return false;
 
-    return issueOverlap(querySignals, docSignals);
+    return true;
   });
 }
 
@@ -481,8 +640,11 @@ export function formatDocType(doc = {}) {
   const labels = {
     CONSTITUTION: "Constitution",
     STATUTE: "Statute",
+    NIRC: "Statute",
+    TAX_CODE: "Statute",
     SUPREME_COURT: "Supreme Court",
     RR: "RR",
+    TAX_TREATY: "Tax Treaty",
     TREATY: "Treaty",
     RMC: "RMC",
     RMO: "RMO",
@@ -492,9 +654,11 @@ export function formatDocType(doc = {}) {
     COURT_OF_APPEALS: "Court of Appeals",
     CTA_DIVISION: "CTA Division",
     LGU: "LGU",
+    BOC_ISSUANCE: "BOC Issuance",
     PFRS: "PFRS",
     PAS: "PAS",
     PSA: "PSA",
+    OECD_GUIDANCE: "OECD Guidance",
     SECONDARY: "Secondary Source",
     UNKNOWN: "Unknown Source"
   };
@@ -682,6 +846,15 @@ function toVisibleSourceEntry(doc = {}, issueClassification = null) {
     authorityLevel: authorityLevelOf(doc),
     controllingPrecedence: controllingPrecedenceOf(doc),
     issuanceNumber: inferIssuanceNumber(doc),
+    primaryDomain:
+      docPrimaryDomain(doc) ||
+      getPrimaryDomain(issueClassification) ||
+      null,
+    taxDomainClassification:
+      doc.taxDomainClassification ||
+      issueClassification?.taxDomainClassification ||
+      null,
+    domainMatch: docDomainMatched(doc, issueClassification),
     issueClassificationMatch: doc.issueClassificationMatch || null,
     targetAuthorityMatch: docTargetAuthorityMatched(doc, issueClassification),
     isControllingAuthority: isControllingAuthority(doc),
@@ -707,6 +880,8 @@ function sourceScore(doc = {}, issueClassification = null) {
   const precedence = controllingPrecedenceOf(doc);
   const controlBonus = isControllingAuthority(doc) ? 35 : 0;
   const targetBonus = docTargetAuthorityMatched(doc, issueClassification) ? 60 : 0;
+  const domainMatch = docDomainMatched(doc, issueClassification);
+  const domainBonus = domainMatch === true ? 45 : domainMatch === false ? -35 : 0;
   const issueMatch = docIssueClassificationMatched(doc);
   const issueBonus = issueMatch === true ? 55 : issueMatch === false ? -120 : 0;
   const weakPenalty = isWeakAuthority(doc) ? -70 : 0;
@@ -718,6 +893,7 @@ function sourceScore(doc = {}, issueClassification = null) {
     base +
     controlBonus +
     targetBonus +
+    domainBonus +
     issueBonus +
     exactBonus +
     weakPenalty +
@@ -728,6 +904,11 @@ function sourceScore(doc = {}, issueClassification = null) {
 
 function prioritizeVisibleSources(docs = [], issueClassification = null) {
   return [...docs].sort((a, b) => {
+    const domainDiff =
+      Number(docDomainMatched(b, issueClassification) === true) -
+      Number(docDomainMatched(a, issueClassification) === true);
+    if (domainDiff !== 0) return domainDiff;
+
     const targetDiff =
       Number(docTargetAuthorityMatched(b, issueClassification)) -
       Number(docTargetAuthorityMatched(a, issueClassification));
@@ -849,11 +1030,12 @@ function inferConfidenceLevel({
   const hasTargetAuthority = issueMatchedDocs.some((doc) =>
     docTargetAuthorityMatched(doc, issueClassification)
   );
+  const hasDomainMatch = issueMatchedDocs.some((doc) => docDomainMatched(doc, issueClassification) === true);
 
   if (hierarchyConflict?.conflict) return bestPrecedence <= 9 ? "MEDIUM" : "LOW";
   if (supersessionResult?.superseded?.length) return bestPrecedence <= 9 ? "MEDIUM" : "LOW";
-  if (hasStatute && hasSupremeCourt && hasTargetAuthority) return "HIGH";
-  if (bestPrecedence <= 3 && hasTargetAuthority) return "HIGH";
+  if (hasStatute && hasSupremeCourt && hasTargetAuthority && hasDomainMatch) return "HIGH";
+  if (bestPrecedence <= 3 && hasTargetAuthority && hasDomainMatch) return "HIGH";
   if (bestPrecedence <= 6) return "MEDIUM";
   if (bestPrecedence <= 12) return "LIMITED";
 
@@ -910,6 +1092,12 @@ export function buildFinalRoutePayload({
       controllingPrecedence: controllingPrecedenceOf(doc),
       issuance_number: inferIssuanceNumber(doc) || null,
       issuanceNumber: inferIssuanceNumber(doc) || null,
+      primaryDomain: doc.primaryDomain || getPrimaryDomain(issueClassification) || null,
+      taxDomainClassification:
+        doc.taxDomainClassification ||
+        issueClassification?.taxDomainClassification ||
+        null,
+      domainMatch: docDomainMatched(doc, issueClassification),
       issueClassificationMatch: doc.issueClassificationMatch || null,
       targetAuthorityMatch: docTargetAuthorityMatched(doc, issueClassification),
       is_controlling_authority: isControllingAuthority(doc),
@@ -929,8 +1117,13 @@ export function buildFinalRoutePayload({
     source_visibility_metadata: {
       engineVersion: ENGINE_VERSION,
       issueClassificationAware: true,
+      taxDomainClassificationAware: true,
+      primaryDomainAware: true,
+      domainAwareSourceOrdering: true,
       targetAuthorityAware: true,
-      issueClassification: issueClassification || null
+      issueClassification: issueClassification || null,
+      taxDomainClassification: issueClassification?.taxDomainClassification || null,
+      primaryDomain: getPrimaryDomain(issueClassification) || null
     }
   };
 }
@@ -945,6 +1138,9 @@ export function sourceVisibilityHealthCheck() {
     sourceFilteringCompatible: true,
     issueMismatchGuardCompatible: true,
     issueClassificationMatchAware: true,
+    taxDomainClassificationAware: true,
+    primaryDomainAware: true,
+    domainAwareSourceOrdering: true,
     targetAuthorityMatchAware: true
   };
 }
