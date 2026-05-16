@@ -44,6 +44,13 @@ import { ragAnswerHandlerHealthCheck } from "./rag-answer-handler.js";
 import { adaptiveModeHealthCheck } from "./adaptive-mode-engine.js";
 import { adaptiveResponsePlannerHealthCheck } from "./adaptive-response-planner.js";
 
+import {
+  buildOpenAIContext,
+  callOpenAIWithOrchestration,
+  estimateTokens,
+  estimateMessagesTokens
+} from "./context-orchestration-engine.js";
+
 /* ================= ENV VALIDATION ================= */
 
 const requiredEnv = [
@@ -62,7 +69,7 @@ const PORT = Number(process.env.PORT || 10000);
 const REQUEST_LIMIT = process.env.REQUEST_LIMIT || "25mb";
 const NODE_ENV = process.env.NODE_ENV || "development";
 const OPENAI_MODEL = process.env.OPENAI_MODEL || "gpt-4o-mini";
-const SERVER_VERSION = "4.0.0";
+const SERVER_VERSION = "4.1.0";
 
 /* ================= APP ================= */
 
@@ -114,7 +121,25 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
 
-const askHandler = createAskHandler({ supabase, openai });
+/*
+  Context orchestration is injected into ask-handler.js.
+  The actual OpenAI call should be routed through callOpenAIWithOrchestration()
+  inside ask-handler.js or rag-answer-handler.js.
+*/
+const contextOrchestration = {
+  buildOpenAIContext,
+  callOpenAIWithOrchestration,
+  estimateTokens,
+  estimateMessagesTokens
+};
+
+const askHandler = createAskHandler({
+  supabase,
+  openai,
+  contextOrchestration,
+  openaiModel: OPENAI_MODEL
+});
+
 const reindexController = createBackgroundReindexController();
 
 /* ================= HELPERS ================= */
@@ -173,6 +198,17 @@ function attachForcedHook(hookCode) {
   };
 }
 
+function contextOrchestrationHealthCheck() {
+  return {
+    loaded: true,
+    buildOpenAIContext: typeof buildOpenAIContext === "function",
+    callOpenAIWithOrchestration: typeof callOpenAIWithOrchestration === "function",
+    estimateTokens: typeof estimateTokens === "function",
+    estimateMessagesTokens: typeof estimateMessagesTokens === "function",
+    defaultModel: OPENAI_MODEL
+  };
+}
+
 /* ================= BASIC ROUTES ================= */
 
 app.get("/", (req, res) => {
@@ -181,9 +217,19 @@ app.get("/", (req, res) => {
     name: "TINA Backend",
     version: SERVER_VERSION,
     engine: "TINA Philippine Tax Intelligence Engine",
-    architecture: "Adaptive Tax, Legal, Audit, Evidence, and RAG Orchestration",
+    architecture: "Adaptive Tax, Legal, Audit, Evidence, RAG, and Context Orchestration",
+    contextOrchestrationEnabled: true,
     message: "Backend is running.",
-    usefulRoutes: ["/health", "/routes", "/ask", "/tax", "/review", "/quiz", "/source", "/feedback"]
+    usefulRoutes: [
+      "/health",
+      "/routes",
+      "/ask",
+      "/tax",
+      "/review",
+      "/quiz",
+      "/source",
+      "/feedback"
+    ]
   });
 });
 
@@ -194,8 +240,10 @@ app.get("/routes", (req, res) => {
     engine: "TINA Philippine Tax Intelligence Engine",
     adaptiveSupport: true,
     issueClassificationPipeline: true,
+    contextOrchestrationEnabled: true,
     modeSupport: ["/ask", "/tax", "/review", "/quiz", "/source", "/feedback"],
     adaptiveModules: [
+      "context-orchestration-engine.js",
       "issue-classification-engine.js",
       "query-intent-engine.js",
       "adaptive-mode-engine.js",
@@ -251,6 +299,7 @@ app.get("/health", async (req, res) => {
       engine: "TINA Philippine Tax Intelligence Engine",
       adaptiveArchitectureEnabled: true,
       issueClassificationEnabled: true,
+      contextOrchestrationEnabled: true,
       openaiConfigured: Boolean(process.env.OPENAI_API_KEY),
       openaiModel: OPENAI_MODEL,
       supabaseConfigured: Boolean(
@@ -267,6 +316,7 @@ app.get("/health", async (req, res) => {
       adaptiveStack: {
         server: true,
         askHandler: true,
+        contextOrchestration: contextOrchestrationHealthCheck(),
         ragAnswerHandler: ragAnswerHandlerHealthCheck(),
         issueClassificationEngine: issueClassificationEngineHealthCheck(),
         queryIntentEngine: queryIntentEngineHealthCheck(),
@@ -590,6 +640,7 @@ const server = app.listen(PORT, () => {
   console.log(`OpenAI model: ${OPENAI_MODEL}`);
   console.log(`Server version: ${SERVER_VERSION}`);
   console.log("Adaptive TINA orchestration enabled.");
+  console.log("Context orchestration engine wired into ask-handler dependency injection.");
   console.log("Issue-classified RAG routes enabled: /ask /tax /review /quiz /source /feedback");
 });
 
