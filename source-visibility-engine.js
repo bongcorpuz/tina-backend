@@ -3,15 +3,13 @@
 
 /**
  * TINA Source Visibility Engine
- * Version: 3.1.0
+ * Version: 3.2.0
  *
- * Integrated with:
- * - main-tax-engine-classification.js
- * - issue-classification-engine.js
- * - retrieval-engine.js
- * - reranker-engine.js
- * - rag-answer-handler.js
- * - answer-renderer.js
+ * Purpose:
+ * - Show only cited, relevant, non-duplicated sources
+ * - Suppress hidden/internal/weak/unmatched sources
+ * - Support context-orchestration-engine.js
+ * - Prevent raw full text or full debug objects from being exposed downstream
  */
 
 import {
@@ -19,7 +17,7 @@ import {
   findReplacementForDocument
 } from "./supersession-engine.js";
 
-export const ENGINE_VERSION = "3.1.0";
+export const ENGINE_VERSION = "3.2.0";
 export const MAX_VISIBLE_SOURCES = 5;
 
 const HIDDEN_SOURCE_PATTERNS = [
@@ -110,6 +108,13 @@ function safeArray(value) {
   return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
 }
 
+function trimText(value = "", max = 500) {
+  const text = compactSpaces(value);
+  if (!text) return "";
+  if (text.length <= max) return text;
+  return `${text.slice(0, max).trim()} ...[trimmed]`;
+}
+
 function stripFileExtension(value = "") {
   return String(value || "").replace(/\.(pdf|docx|doc|txt|md|csv|json)$/i, "");
 }
@@ -147,9 +152,12 @@ function stripFolderPrefixes(value = "") {
 
 export function sourcePathOf(doc = {}) {
   return (
-    doc.path ||
     doc.sourcePath ||
     doc.source_path ||
+    doc.path ||
+    doc.url ||
+    doc.sourceUrl ||
+    doc.source_url ||
     doc.metadata?.path ||
     doc.originalSource ||
     doc.original_source ||
@@ -210,7 +218,7 @@ export function sourceTitleOf(doc = {}) {
   const explicit = sourceRawTitleOf(doc);
 
   if (explicit) {
-    return compactSpaces(stripFileExtension(stripFolderPrefixes(explicit)) || explicit);
+    return trimText(stripFileExtension(stripFolderPrefixes(explicit)) || explicit, 240);
   }
 
   return "Untitled Source";
@@ -220,6 +228,7 @@ export function fileIdOf(doc = {}) {
   return (
     doc.fileId ||
     doc.file_id ||
+    doc.id ||
     doc.metadata?.fileId ||
     doc.metadata?.file_id ||
     null
@@ -232,8 +241,12 @@ export function sourceDriveUrlOf(doc = {}) {
   return (
     doc.driveViewUrl ||
     doc.drive_view_url ||
+    doc.url ||
+    doc.sourceUrl ||
+    doc.source_url ||
     doc.metadata?.driveViewUrl ||
     doc.metadata?.drive_view_url ||
+    doc.metadata?.url ||
     (fileId ? `https://drive.google.com/file/d/${fileId}/view` : null)
   );
 }
@@ -305,9 +318,7 @@ export function authorityTypeOf(doc = {}) {
     /\b(?:republic act|ra)\s*(?:no)?\s*\d{4,6}\b/i.test(blob) ||
     title.includes("tax code") ||
     title.includes("nirc")
-  ) {
-    return "STATUTE";
-  }
+  ) return "STATUTE";
 
   if (path.includes("02_revenue_regulations") || /\brr\b/i.test(title)) return "RR";
   if (path.includes("03_rmc") || /\brmc\b/i.test(title)) return "RMC";
@@ -324,7 +335,6 @@ export function authorityTypeOf(doc = {}) {
   if (title.includes("pfrs")) return "PFRS";
   if (title.includes("pas")) return "PAS";
   if (title.includes("psa")) return "PSA";
-
   if (title.includes("ordinance") || title.includes("local tax code")) return "LGU";
   if (title.includes("boc") || title.includes("customs")) return "BOC_ISSUANCE";
   if (title.includes("oecd")) return "OECD_GUIDANCE";
@@ -409,7 +419,9 @@ function normalizeDomain(value = "") {
     CUSTOMS_TARIFF: "CUS",
     TRANSFER_PRICING: "SPC",
     SPECIAL_TAX_REGIMES: "SPC",
-    CONSTITUTIONAL_TAX: "CON"
+    CONSTITUTIONAL_TAX: "CON",
+    ACCOUNTING_AUDIT: "PFRS",
+    CONTRACT_TRANSACTION: "TRANSACTION"
   };
 
   return aliases[raw] || raw || null;
@@ -534,7 +546,11 @@ function normalizeTargetAuthorities(values = []) {
 }
 
 function normalizeIssueClassification(issueClassification = null, query = "") {
-  const source = issueClassification || {};
+  const source =
+    issueClassification?.orchestrationClassification ||
+    issueClassification ||
+    {};
+
   const taxDomainClassification = getTaxDomainClassification(source);
   const queryIssues = extractIssueSignals(query).map(normalizeIssue).filter(Boolean);
 
@@ -573,8 +589,7 @@ function normalizeIssueClassification(issueClassification = null, query = "") {
     primaryIssue,
     subIssues,
     targetAuthorities,
-    taxDomainClassification,
-    raw: source
+    taxDomainClassification
   };
 }
 
@@ -619,7 +634,10 @@ function buildIssueMatchedVisiblePool(docs = [], query = "", issueClassification
     if (explicitMatch === true) return true;
     if (explicitMatch === false) return false;
 
-    const querySignals = profile.subIssues.length ? profile.subIssues : extractIssueSignals(query).map(normalizeIssue).filter(Boolean);
+    const querySignals = profile.subIssues.length
+      ? profile.subIssues
+      : extractIssueSignals(query).map(normalizeIssue).filter(Boolean);
+
     const docSignals = docIssueSignals(doc).map(normalizeIssue).filter(Boolean);
 
     if (querySignals.length && docSignals.length) {
@@ -777,7 +795,7 @@ export function buildShortSubject(doc = {}) {
     return "";
   }
 
-  return compactSpaces(subject);
+  return trimText(subject, 240);
 }
 
 export function buildLegalBasisEntry(doc = {}) {
@@ -800,20 +818,29 @@ export function buildSourcesEntry(doc = {}) {
 }
 
 function buildDocKey(doc = {}) {
-  return (
-    fileIdOf(doc) ||
-    doc.id ||
+  const number = inferIssuanceNumber(doc);
+  const normalizedReference =
     doc.normalizedReference ||
     doc.normalized_reference ||
+    doc.citation ||
+    doc.reference ||
     doc.metadata?.normalizedReference ||
-    sourcePathOf(doc) ||
-    sourceTitleOf(doc) ||
-    JSON.stringify({
-      title: sourceTitleOf(doc),
-      path: sourcePathOf(doc),
-      authorityType: authorityTypeOf(doc),
-      issuanceNumber: inferIssuanceNumber(doc)
-    })
+    doc.metadata?.citation ||
+    doc.metadata?.reference ||
+    "";
+
+  return normalizeLooseText(
+    [
+      fileIdOf(doc),
+      doc.id,
+      number,
+      normalizedReference,
+      sourcePathOf(doc),
+      sourceTitleOf(doc),
+      authorityTypeOf(doc)
+    ]
+      .filter(Boolean)
+      .join("|")
   );
 }
 
@@ -825,7 +852,7 @@ export function uniqueDocs(docs = []) {
     if (!doc) continue;
 
     const key = buildDocKey(doc);
-    if (seen.has(key)) continue;
+    if (!key || seen.has(key)) continue;
 
     seen.add(key);
     result.push(doc);
@@ -834,34 +861,93 @@ export function uniqueDocs(docs = []) {
   return result;
 }
 
+function isCitedOrUsed(doc = {}, citedSourceKeys = []) {
+  if (!citedSourceKeys.length) return true;
+
+  const keyBlob = normalizeLooseText(
+    [
+      buildDocKey(doc),
+      sourceTitleOf(doc),
+      sourcePathOf(doc),
+      inferIssuanceNumber(doc),
+      doc.citation,
+      doc.reference,
+      doc.normalizedReference,
+      doc.metadata?.citation,
+      doc.metadata?.reference,
+      doc.metadata?.normalizedReference
+    ]
+      .filter(Boolean)
+      .join(" ")
+  );
+
+  return citedSourceKeys.some((key) => keyBlob.includes(normalizeLooseText(key)));
+}
+
 function toVisibleSourceEntry(doc = {}, issueClassification = null) {
   return {
-    ...doc,
     title: sourceTitleOf(doc),
+    citation:
+      doc.citation ||
+      doc.reference ||
+      doc.normalizedReference ||
+      doc.metadata?.citation ||
+      doc.metadata?.reference ||
+      inferIssuanceNumber(doc) ||
+      sourceTitleOf(doc),
+
+    drive_url: sourceDriveUrlOf(doc),
     driveViewUrl: sourceDriveUrlOf(doc),
+    drive_download_url: sourceDownloadUrlOf(doc),
     driveDownloadUrl: sourceDownloadUrlOf(doc),
+
     fileId: fileIdOf(doc),
+    source_path: sourcePathOf(doc),
     sourcePath: sourcePathOf(doc),
+
+    authority_type: authorityTypeOf(doc),
     authorityType: authorityTypeOf(doc),
+    authority_level: authorityLevelOf(doc),
     authorityLevel: authorityLevelOf(doc),
+    controlling_precedence: controllingPrecedenceOf(doc),
     controllingPrecedence: controllingPrecedenceOf(doc),
-    issuanceNumber: inferIssuanceNumber(doc),
+
+    issuance_number: inferIssuanceNumber(doc) || null,
+    issuanceNumber: inferIssuanceNumber(doc) || null,
+
+    legalBasisEntry: buildLegalBasisEntry(doc),
+    sourcesEntry: buildSourcesEntry(doc),
+
     primaryDomain:
       docPrimaryDomain(doc) ||
       getPrimaryDomain(issueClassification) ||
       null,
-    taxDomainClassification:
-      doc.taxDomainClassification ||
-      issueClassification?.taxDomainClassification ||
-      null,
+
     domainMatch: docDomainMatched(doc, issueClassification),
     issueClassificationMatch: doc.issueClassificationMatch || null,
     targetAuthorityMatch: docTargetAuthorityMatched(doc, issueClassification),
+
+    is_controlling_authority: isControllingAuthority(doc),
     isControllingAuthority: isControllingAuthority(doc),
+    is_administrative_authority: isAdministrativeAuthority(doc),
     isAdministrativeAuthority: isAdministrativeAuthority(doc),
+    is_court_authority: isCourtAuthority(doc),
     isCourtAuthority: isCourtAuthority(doc),
+    is_statutory_authority: isStatutoryAuthority(doc),
     isStatutoryAuthority: isStatutoryAuthority(doc),
-    isWeakAuthority: isWeakAuthority(doc)
+    is_weak_authority: isWeakAuthority(doc),
+    isWeakAuthority: isWeakAuthority(doc),
+
+    score:
+      Number(
+        doc.finalScore ||
+          doc.final_score ||
+          doc.rerankScore ||
+          doc.retrievalScore ||
+          doc.score ||
+          doc.similarity ||
+          0
+      ) || 0
   };
 }
 
@@ -942,10 +1028,13 @@ export function filterVisibleSources(
     maxItems = MAX_VISIBLE_SOURCES,
     supersessionResult = null,
     query = "",
-    issueClassification = null
+    issueClassification = null,
+    citedSourceKeys = [],
+    requireCited = false
   } = {}
 ) {
   const visible = [];
+
   const issueMatchedDocs = buildIssueMatchedVisiblePool(
     uniqueDocs(docs),
     query,
@@ -961,6 +1050,7 @@ export function filterVisibleSources(
     if (shouldHideSource(sourceToUse)) continue;
     if (sourceToUse.issueMismatch === true) continue;
     if (sourceToUse.issueClassificationMatch?.issueMismatch === true) continue;
+    if (requireCited && !isCitedOrUsed(sourceToUse, citedSourceKeys)) continue;
 
     visible.push(toVisibleSourceEntry(sourceToUse, issueClassification));
   }
@@ -973,7 +1063,8 @@ export function runSupersessionPreflight({
   sourcesUsed = [],
   asOfDate = new Date(),
   query = "",
-  issueClassification = null
+  issueClassification = null,
+  citedSourceKeys = []
 }) {
   const combinedDocs = uniqueDocs([...legalBasisDocs, ...sourcesUsed]);
   const supersessionResult = applySupersessionFilter(combinedDocs, asOfDate);
@@ -988,7 +1079,9 @@ export function runSupersessionPreflight({
     maxItems: MAX_VISIBLE_SOURCES,
     supersessionResult,
     query,
-    issueClassification
+    issueClassification,
+    citedSourceKeys,
+    requireCited: citedSourceKeys.length > 0
   });
 
   return {
@@ -1049,7 +1142,8 @@ export function buildFinalRoutePayload({
   hierarchyConflict = null,
   asOfDate = new Date(),
   query = "",
-  issueClassification = null
+  issueClassification = null,
+  citedSourceKeys = []
 }) {
   const {
     supersessionResult,
@@ -1060,7 +1154,8 @@ export function buildFinalRoutePayload({
     sourcesUsed,
     asOfDate,
     query,
-    issueClassification
+    issueClassification,
+    citedSourceKeys
   });
 
   const finalVisibleSources =
@@ -1070,42 +1165,21 @@ export function buildFinalRoutePayload({
           maxItems: MAX_VISIBLE_SOURCES,
           supersessionResult,
           query,
-          issueClassification
+          issueClassification,
+          citedSourceKeys,
+          requireCited: citedSourceKeys.length > 0
         });
+
+  const sources = uniqueDocs(finalVisibleSources)
+    .slice(0, MAX_VISIBLE_SOURCES)
+    .map((doc) => toVisibleSourceEntry(doc, issueClassification));
 
   return {
     answer,
-    sources: finalVisibleSources.slice(0, MAX_VISIBLE_SOURCES).map((doc) => ({
-      title: sourceTitleOf(doc),
-      drive_url: sourceDriveUrlOf(doc),
-      driveViewUrl: sourceDriveUrlOf(doc),
-      drive_download_url: sourceDownloadUrlOf(doc),
-      driveDownloadUrl: sourceDownloadUrlOf(doc),
-      fileId: fileIdOf(doc),
-      source_path: sourcePathOf(doc),
-      sourcePath: sourcePathOf(doc),
-      authority_type: authorityTypeOf(doc),
-      authorityType: authorityTypeOf(doc),
-      authority_level: authorityLevelOf(doc),
-      authorityLevel: authorityLevelOf(doc),
-      controlling_precedence: controllingPrecedenceOf(doc),
-      controllingPrecedence: controllingPrecedenceOf(doc),
-      issuance_number: inferIssuanceNumber(doc) || null,
-      issuanceNumber: inferIssuanceNumber(doc) || null,
-      primaryDomain: doc.primaryDomain || getPrimaryDomain(issueClassification) || null,
-      taxDomainClassification:
-        doc.taxDomainClassification ||
-        issueClassification?.taxDomainClassification ||
-        null,
-      domainMatch: docDomainMatched(doc, issueClassification),
-      issueClassificationMatch: doc.issueClassificationMatch || null,
-      targetAuthorityMatch: docTargetAuthorityMatched(doc, issueClassification),
-      is_controlling_authority: isControllingAuthority(doc),
-      isControllingAuthority: isControllingAuthority(doc),
-      is_weak_authority: isWeakAuthority(doc),
-      isWeakAuthority: isWeakAuthority(doc)
-    })),
-    authority_used: inferAuthorityUsed(resolvedLegalBasisDocs, finalVisibleSources),
+    sources,
+
+    authority_used: inferAuthorityUsed(resolvedLegalBasisDocs, sources),
+
     confidence_level: inferConfidenceLevel({
       legalBasisDocs: resolvedLegalBasisDocs,
       hierarchyConflict,
@@ -1113,7 +1187,9 @@ export function buildFinalRoutePayload({
       query,
       issueClassification
     }),
-    supersession_audit: supersessionResult?.auditTrail || [],
+
+    supersession_audit: safeArray(supersessionResult?.auditTrail).slice(0, 10),
+
     source_visibility_metadata: {
       engineVersion: ENGINE_VERSION,
       issueClassificationAware: true,
@@ -1121,8 +1197,12 @@ export function buildFinalRoutePayload({
       primaryDomainAware: true,
       domainAwareSourceOrdering: true,
       targetAuthorityAware: true,
-      issueClassification: issueClassification || null,
-      taxDomainClassification: issueClassification?.taxDomainClassification || null,
+      citedSourceFilteringEnabled: citedSourceKeys.length > 0,
+      nonDuplicatedSources: true,
+      compactVisibleSourcesOnly: true,
+      rawFullTextHidden: true,
+      contextOrchestrationCompatible: true,
+      sourceCount: sources.length,
       primaryDomain: getPrimaryDomain(issueClassification) || null
     }
   };
@@ -1141,7 +1221,12 @@ export function sourceVisibilityHealthCheck() {
     taxDomainClassificationAware: true,
     primaryDomainAware: true,
     domainAwareSourceOrdering: true,
-    targetAuthorityMatchAware: true
+    targetAuthorityMatchAware: true,
+    contextOrchestrationCompatible: true,
+    citedSourceFilteringReady: true,
+    nonDuplicatedSourcesReady: true,
+    compactVisibleSourcesOnly: true,
+    rawFullTextHidden: true
   };
 }
 
