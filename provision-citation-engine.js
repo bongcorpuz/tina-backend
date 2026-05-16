@@ -3,12 +3,13 @@
 
 /**
  * TINA Enterprise Provision Citation Engine
- * Version: 4.0.0
+ * Version: 4.1.0
  *
  * Patch:
  * - Uses issueClassification to retrieve/rank exact NIRC/RR/RMC/RMO/RAMO provisions.
- * - Penalizes provisions that match broad keywords but not the classified issue.
- * - Prioritizes exact provision / issuance references and controlling precedence.
+ * - Emits structured issueClassificationMatch for source/citation downstream.
+ * - Emits targetAuthorityMatch consistently.
+ * - Penalizes issue-mismatched provisions even if they share broad keywords.
  */
 
 import {
@@ -29,7 +30,7 @@ import {
 
 import { applySupersessionFilter } from "./supersession-engine.js";
 
-const ENGINE_VERSION = "4.0.0";
+const ENGINE_VERSION = "4.1.0";
 
 const PRIMARY_PROVISION_TYPES = Object.freeze([
   "CONSTITUTION",
@@ -47,6 +48,24 @@ const COURT_TYPES = Object.freeze([
   "COURT_OF_APPEALS",
   "CTA_DIVISION"
 ]);
+
+const AUTHORITY_ALIASES = Object.freeze({
+  NIRC: "STATUTE",
+  TAX_CODE: "STATUTE",
+  LAW: "STATUTE",
+  STATUTE: "STATUTE",
+  REVENUE_REGULATION: "RR",
+  REVENUE_REGULATIONS: "RR",
+  REVENUE_MEMORANDUM_CIRCULAR: "RMC",
+  REVENUE_MEMORANDUM_ORDER: "RMO",
+  REVENUE_AUDIT_MEMORANDUM_ORDER: "RAMO",
+  BIR_RULINGS: "BIR_RULING",
+  SC: "SUPREME_COURT",
+  CASE: "SUPREME_COURT",
+  JURISPRUDENCE: "SUPREME_COURT",
+  CTA: "CTA_DIVISION",
+  IFRS: "PFRS"
+});
 
 function normalizeText(value = "") {
   return String(value || "").replace(/\s+/g, " ").trim();
@@ -87,7 +106,9 @@ function normalizeIssue(value = "") {
     GROSS_NET: "TRANSACTION",
     PASS_THROUGH: "TRANSACTION",
     REIMBURSEMENT: "TRANSACTION",
-    AGREEMENT: "CONTRACT"
+    AGREEMENT: "CONTRACT",
+    DEFINITION: "VAT_LIABILITY",
+    CHARACTERIZATION: "TRANSACTION"
   };
 
   return aliases[raw] || raw || null;
@@ -95,6 +116,34 @@ function normalizeIssue(value = "") {
 
 function normalizeDimension(value = "") {
   return String(value || "").trim().toUpperCase().replace(/[\s-]+/g, "_") || null;
+}
+
+function normalizeAuthority(value = "") {
+  const raw = String(value || "").trim().toUpperCase().replace(/[\s-]+/g, "_");
+  return AUTHORITY_ALIASES[raw] || raw || null;
+}
+
+function normalizeTargetAuthorities(targetAuthorities = null) {
+  if (!targetAuthorities) return [];
+
+  if (Array.isArray(targetAuthorities)) {
+    return unique(targetAuthorities.map(normalizeAuthority).filter(Boolean));
+  }
+
+  if (typeof targetAuthorities === "object") {
+    const output = [];
+
+    for (const value of Object.values(targetAuthorities)) {
+      for (const item of safeArray(value)) {
+        const normalized = normalizeAuthority(item);
+        if (normalized) output.push(normalized);
+      }
+    }
+
+    return unique(output);
+  }
+
+  return [];
 }
 
 function normalizeIssueClassification(issueClassification = null, question = "", adaptiveContext = {}) {
@@ -132,9 +181,9 @@ function normalizeIssueClassification(issueClassification = null, question = "",
   ]).filter(Boolean);
 
   const targetAuthorities = unique([
-    ...safeArray(source.targetAuthorities),
-    ...safeArray(source.target_authorities)
-  ]).filter(Boolean);
+    ...normalizeTargetAuthorities(source.targetAuthorities),
+    ...normalizeTargetAuthorities(source.target_authorities)
+  ]);
 
   return {
     primaryIssue,
@@ -335,6 +384,17 @@ function detectLegalDimensions(text = "") {
   return unique(dimensions.length ? dimensions : ["GENERAL"]);
 }
 
+function hasIssueOverlap(queryIssues = [], docIssues = []) {
+  if (!queryIssues.length || !docIssues.length) return true;
+  return queryIssues.some((issue) => docIssues.includes(issue));
+}
+
+function hasDimensionOverlap(queryDimensions = [], docDimensions = []) {
+  if (!queryDimensions.length || queryDimensions.includes("GENERAL")) return true;
+  if (!docDimensions.length || docDimensions.includes("GENERAL")) return true;
+  return queryDimensions.some((dimension) => docDimensions.includes(dimension));
+}
+
 function hasIssueMismatch(issueClassification = {}, doc = {}, question = "") {
   const profile = normalizeIssueClassification(issueClassification, question);
   const docIssues = detectIssueSignals(getDocBlob(doc)).map(normalizeIssue);
@@ -373,6 +433,49 @@ function hasIssueMismatch(issueClassification = {}, doc = {}, question = "") {
   return false;
 }
 
+function targetAuthorityMatched(profile = {}, doc = {}) {
+  const authorityType = getAuthorityType(doc);
+  return safeArray(profile.targetAuthorities).includes(authorityType);
+}
+
+function buildStructuredIssueClassificationMatch(question = "", doc = {}, issueClassification = null) {
+  const profile = normalizeIssueClassification(issueClassification, question);
+  const docIssues = detectIssueSignals(getDocBlob(doc)).map(normalizeIssue);
+  const docDimensions = detectLegalDimensions(getDocBlob(doc)).map(normalizeDimension);
+  const queryIssues = safeArray(profile.subIssues).map(normalizeIssue).filter(Boolean);
+  const queryDimensions = safeArray(profile.legalDimensions).map(normalizeDimension).filter(Boolean);
+
+  const issueMismatch = hasIssueMismatch(profile, doc, question);
+  const issueOverlap = hasIssueOverlap(queryIssues, docIssues);
+  const dimensionOverlap = hasDimensionOverlap(queryDimensions, docDimensions);
+  const targetAuthorityMatch = targetAuthorityMatched(profile, doc);
+
+  const matched =
+    !issueMismatch &&
+    (
+      targetAuthorityMatch ||
+      (issueOverlap && dimensionOverlap) ||
+      !docIssues.length
+    );
+
+  return {
+    matched,
+    compatible: matched,
+    issueOverlap,
+    dimensionOverlap,
+    issueMismatch,
+    targetAuthorityMatch,
+    primaryIssue: profile.primaryIssue,
+    subIssues: profile.subIssues,
+    legalDimensions: profile.legalDimensions,
+    retrievalStrategy: profile.retrievalStrategy,
+    targetAuthorities: profile.targetAuthorities,
+    docIssues,
+    docDimensions,
+    docAuthorityType: getAuthorityType(doc)
+  };
+}
+
 function buildProvisionMatchBonus(question = "", doc = {}) {
   const hint = extractProvisionHint(question);
   const rawText = getDocBlob(doc);
@@ -402,29 +505,16 @@ function buildProvisionMatchBonus(question = "", doc = {}) {
 
 function buildIssueClassificationBonus(question = "", doc = {}, issueClassification = null) {
   const profile = normalizeIssueClassification(issueClassification, question);
-  const docIssues = detectIssueSignals(getDocBlob(doc)).map(normalizeIssue);
-  const docDimensions = detectLegalDimensions(getDocBlob(doc)).map(normalizeDimension);
+  const match = buildStructuredIssueClassificationMatch(question, doc, profile);
   const authorityType = getAuthorityType(doc);
 
   let bonus = 0;
 
-  if (docIssues.includes(profile.primaryIssue)) bonus += 75;
-
-  for (const issue of profile.subIssues || []) {
-    if (docIssues.includes(normalizeIssue(issue))) bonus += 25;
-  }
-
-  if (profile.legalDimensions?.length) {
-    for (const dimension of profile.legalDimensions) {
-      if (docDimensions.includes(normalizeDimension(dimension))) bonus += 15;
-    }
-  }
-
-  if (profile.targetAuthorities?.includes(authorityType)) bonus += 40;
-
+  if (match.issueMismatch) bonus -= 150;
+  if (match.issueOverlap) bonus += 75;
+  if (match.dimensionOverlap) bonus += 20;
+  if (match.targetAuthorityMatch) bonus += 50;
   if (PRIMARY_PROVISION_TYPES.includes(authorityType)) bonus += 25;
-
-  if (hasIssueMismatch(profile, doc, question)) bonus -= 150;
 
   return bonus;
 }
@@ -467,14 +557,19 @@ function rankProvisionDocs(results = [], question = "", options = {}) {
     .filter((doc) => {
       const type = getAuthorityType(doc);
       if (!isPrimaryOrControllingAuthority(type)) return false;
-      if (!suppressIssueMismatch) return true;
-      return !hasIssueMismatch(profile, doc, question);
+
+      const match = buildStructuredIssueClassificationMatch(question, doc, profile);
+
+      if (suppressIssueMismatch && match.issueMismatch) return false;
+
+      return match.matched || buildProvisionMatchBonus(question, doc) > 0;
     })
     .map((doc) => {
       const authorityType = getAuthorityType(doc);
       const rawScore = Number(doc.finalScore ?? doc.final_score ?? doc.retrievalScore ?? doc.score ?? 0);
       const provisionBonus = buildProvisionMatchBonus(question, doc);
       const issueBonus = buildIssueClassificationBonus(question, doc, profile);
+      const issueClassificationMatch = buildStructuredIssueClassificationMatch(question, doc, profile);
       const primaryBonus = isPrimaryOrControllingAuthority(authorityType) ? 20 : 0;
       const precedence = getControllingPrecedence(doc);
       const hierarchyBonus = Math.max(0, 100 - precedence);
@@ -489,31 +584,35 @@ function rankProvisionDocs(results = [], question = "", options = {}) {
       return {
         ...doc,
         issueClassificationMatch: {
+          ...issueClassificationMatch,
           profile,
-          docIssues: detectIssueSignals(getDocBlob(doc)).map(normalizeIssue),
-          docDimensions: detectLegalDimensions(getDocBlob(doc)).map(normalizeDimension),
           provisionBonus,
-          issueBonus,
-          matched: issueBonus > 0 && !hasIssueMismatch(profile, doc, question)
+          issueBonus
         },
+        targetAuthorityMatch: issueClassificationMatch.targetAuthorityMatch,
+        issueMismatch: issueClassificationMatch.issueMismatch,
         provisionCompositeScore: compositeScore
       };
     })
     .filter((doc) => {
-      const bonus = doc.issueClassificationMatch?.issueBonus || 0;
-      const provisionBonus = doc.issueClassificationMatch?.provisionBonus || 0;
-      return bonus > 0 || provisionBonus > 0;
+      const match = doc.issueClassificationMatch || {};
+      const bonus = match.issueBonus || 0;
+      const provisionBonus = match.provisionBonus || 0;
+
+      if (match.issueMismatch) return false;
+
+      return match.matched || bonus > 0 || provisionBonus > 0;
     })
     .sort((a, b) => {
-      const aType = getAuthorityType(a);
-      const bType = getAuthorityType(b);
-
       const override = isGenuineConflict(a, b) ? resolveCourtOverride(a, b) : null;
 
       if (override?.overrideApplies) {
         if (override.winningSource === a) return -1;
         if (override.winningSource === b) return 1;
       }
+
+      const targetDiff = Number(b.targetAuthorityMatch === true) - Number(a.targetAuthorityMatch === true);
+      if (targetDiff !== 0) return targetDiff;
 
       const aProvisionBonus = a.issueClassificationMatch?.provisionBonus || 0;
       const bProvisionBonus = b.issueClassificationMatch?.provisionBonus || 0;
@@ -524,12 +623,6 @@ function rankProvisionDocs(results = [], question = "", options = {}) {
       const bPrecedence = getControllingPrecedence(b);
 
       if (aPrecedence !== bPrecedence) return aPrecedence - bPrecedence;
-
-      const courtVsBirA = isCourtAuthority(aType) && isBIRAuthority(bType);
-      const courtVsBirB = isCourtAuthority(bType) && isBIRAuthority(aType);
-
-      if (courtVsBirA && a.provisionCompositeScore >= b.provisionCompositeScore * 0.75) return -1;
-      if (courtVsBirB && b.provisionCompositeScore >= a.provisionCompositeScore * 0.75) return 1;
 
       const aLevel = getAuthorityLevel(a);
       const bLevel = getAuthorityLevel(b);
@@ -555,6 +648,7 @@ function buildContextBlock(docs = []) {
         `Authority Label: ${authorityLabel}`,
         `Authority Level: ${authorityLevel}`,
         `Controlling Precedence: ${getControllingPrecedence(doc)}`,
+        `Target Authority Match: ${doc.targetAuthorityMatch ? "YES" : "NO"}`,
         `Issue Classification Match: ${JSON.stringify(doc.issueClassificationMatch || {})}`,
         "Excerpt:",
         buildSourceSnippet(doc) || "[No excerpt available]"
@@ -593,6 +687,7 @@ function buildConflictContext(docs = []) {
     .map((item, index) =>
       [
         `CONFLICT REVIEW ${index + 1}`,
+        `Conflict: ${item.conflict ? "YES" : "NO"}`,
         `Conflict Type: ${item.conflictType || "N/A"}`,
         `Doctrinal Conflict: ${item.doctrinalConflict ? "YES" : "NO"}`,
         `Hierarchy Conflict: ${item.hierarchyConflict ? "YES" : "NO"}`,
@@ -656,6 +751,7 @@ function buildSourcesUsed(topDocs = []) {
     authorityLevel: getAuthorityLevel(doc),
     controllingPrecedence: getControllingPrecedence(doc),
     issueClassificationMatch: doc.issueClassificationMatch || null,
+    targetAuthorityMatch: doc.targetAuthorityMatch === true,
     excerpt: buildSourceSnippet(doc, 500)
   }));
 }
@@ -738,6 +834,7 @@ CONFLICT RESOLUTION RULE:
 - If a court decision genuinely conflicts with a BIR issuance, controlling judicial doctrine prevails.
 - Do not fabricate conflict.
 - Different procedural, evidentiary, jurisdictional, factual, temporal, contractual, economic-substance, audit, transaction, or administrative rules are not direct doctrinal conflicts unless they contradict on the same legal issue.
+- Do not say "Conflict Detected: YES" unless conflict metadata confirms conflict === true, same issue, same legal dimension, and opposite holding.
 
 MANDATORY OUTPUT FORMAT:
 A. DIRECT ANSWER
@@ -814,6 +911,8 @@ ${conflictContext}
         supersessionAware: true,
         issueClassificationAware: true,
         exactProvisionAware: true,
+        targetAuthorityAware: true,
+        structuredIssueClassificationMatch: true,
         rendererCompatible: true,
         plannerCompatible: true
       }
@@ -839,6 +938,8 @@ export function provisionCitationHealthCheck() {
     conflictEngineCompatible: true,
     supersessionCompatible: true,
     issueClassificationCompatible: true,
+    targetAuthorityAware: true,
+    structuredIssueClassificationMatch: true,
     plannerCompatible: true,
     rendererCompatible: true
   };
