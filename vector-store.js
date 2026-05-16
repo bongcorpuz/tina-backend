@@ -5,9 +5,7 @@ import OpenAI from "openai";
 import { createClient } from "@supabase/supabase-js";
 import "dotenv/config";
 
-import {
-  buildAuthorityMetadata
-} from "./authority-engine.js";
+import { buildAuthorityMetadata } from "./authority-engine.js";
 
 if (!process.env.OPENAI_API_KEY) {
   throw new Error("Missing OPENAI_API_KEY for vector-store.js");
@@ -17,7 +15,7 @@ if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
   throw new Error("Missing Supabase environment variables for vector-store.js");
 }
 
-const ENGINE_VERSION = "2.4.1";
+const ENGINE_VERSION = "2.5.0";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
@@ -34,14 +32,18 @@ const defaultSupabase = createClient(
   }
 );
 
-const EMBEDDING_MODEL =
-  process.env.OPENAI_EMBEDDING_MODEL || "text-embedding-3-small";
+const EMBEDDING_MODEL = process.env.OPENAI_EMBEDDING_MODEL || "text-embedding-3-small";
 
 const CHUNK_SIZE = Number(process.env.VECTOR_CHUNK_SIZE || 1200);
 const CHUNK_OVERLAP = Number(process.env.VECTOR_CHUNK_OVERLAP || 200);
 const VECTOR_TABLE = process.env.VECTOR_TABLE || "tina_vector_store";
 const CURRENT_YEAR = new Date().getFullYear();
-const DEFAULT_TOP_K = 8;
+
+const DEFAULT_TOP_K = Number(process.env.VECTOR_DEFAULT_TOP_K || 8);
+const MAX_TOP_K = Number(process.env.VECTOR_MAX_TOP_K || 12);
+const MAX_MATCH_COUNT = Number(process.env.VECTOR_MAX_MATCH_COUNT || 36);
+const MAX_RETURN_TEXT_CHARS = Number(process.env.VECTOR_MAX_RETURN_TEXT_CHARS || 2800);
+const MAX_EMBED_INPUT_CHARS = Number(process.env.VECTOR_MAX_EMBED_INPUT_CHARS || 24000);
 
 const ISSUE_TYPES = Object.freeze({
   VAT_REFUND: "VAT_REFUND",
@@ -85,6 +87,25 @@ function safeArray(value) {
   return Array.isArray(value) ? value : [];
 }
 
+function clampTopK(value = DEFAULT_TOP_K) {
+  const parsed = Number(value || DEFAULT_TOP_K);
+  if (!Number.isFinite(parsed)) return DEFAULT_TOP_K;
+  return Math.max(1, Math.min(parsed, MAX_TOP_K));
+}
+
+function clampMatchCount(value = DEFAULT_TOP_K) {
+  const parsed = Number(value || DEFAULT_TOP_K);
+  if (!Number.isFinite(parsed)) return DEFAULT_TOP_K;
+  return Math.max(1, Math.min(parsed, MAX_MATCH_COUNT));
+}
+
+function trimReturnText(value = "", maxChars = MAX_RETURN_TEXT_CHARS) {
+  const text = compactSpaces(value);
+  if (!text) return "";
+  if (text.length <= maxChars) return text;
+  return `${text.slice(0, maxChars).trim()} ...[trimmed for context budget]`;
+}
+
 function chunkText(text, chunkSize = CHUNK_SIZE, overlap = CHUNK_OVERLAP) {
   const clean = compactSpaces(text);
   if (!clean) return [];
@@ -123,7 +144,7 @@ async function embedText(text) {
 
   const response = await openai.embeddings.create({
     model: EMBEDDING_MODEL,
-    input: input.slice(0, 24000)
+    input: input.slice(0, MAX_EMBED_INPUT_CHARS)
   });
 
   const embedding = response.data?.[0]?.embedding || [];
@@ -145,7 +166,7 @@ function parseSearchArgs(arg1, arg2, defaults = {}) {
       supabaseClient: resolveSupabaseClient(arg1.supabase || arg1.supabaseClient),
       query: String(arg1.query || arg1.keyword || ""),
       keyword: String(arg1.keyword || arg1.query || ""),
-      topK: Math.max(1, Number(arg1.topK || arg1.limit || defaults.topK || DEFAULT_TOP_K)),
+      topK: clampTopK(arg1.topK || arg1.limit || defaults.topK || DEFAULT_TOP_K),
       includeWeakSources: Boolean(arg1.includeWeakSources || false)
     };
   }
@@ -154,7 +175,7 @@ function parseSearchArgs(arg1, arg2, defaults = {}) {
     supabaseClient: defaultSupabase,
     query: String(arg1 || ""),
     keyword: String(arg1 || ""),
-    topK: Math.max(1, Number(arg2 || defaults.topK || DEFAULT_TOP_K)),
+    topK: clampTopK(arg2 || defaults.topK || DEFAULT_TOP_K),
     includeWeakSources: false
   };
 }
@@ -274,17 +295,13 @@ function hasIssueMismatch(queryIssues = [], docIssues = []) {
     queryIssues.includes(ISSUE_TYPES.VAT_LIABILITY) &&
     docIssues.includes(ISSUE_TYPES.VAT_REFUND) &&
     !queryIssues.includes(ISSUE_TYPES.VAT_REFUND)
-  ) {
-    return true;
-  }
+  ) return true;
 
   if (
     queryIssues.includes(ISSUE_TYPES.VAT_REFUND) &&
     docIssues.includes(ISSUE_TYPES.VAT_LIABILITY) &&
     !queryIssues.includes(ISSUE_TYPES.VAT_LIABILITY)
-  ) {
-    return true;
-  }
+  ) return true;
 
   return false;
 }
@@ -553,6 +570,9 @@ function mapRowToResult(row, score = 1, query = "") {
   const authorityLabel = row.authority_label || metadata.authorityLabel || "Secondary / Commentary";
   const controllingPrecedence = Number(row.controlling_precedence || metadata.controllingPrecedence || authorityLevel || 99);
 
+  const rawText = row.text || "";
+  const trimmedText = trimReturnText(rawText);
+
   const issueTypes = detectIssueTypes(buildRowSearchBlob(row));
   const citationMatchBonus = Number(row.citationMatchBonus || row.citation_match_bonus || 0);
   const enrichedScore = enrichRowScore({ ...row, citationMatchBonus }, query, row.score ?? row.similarity ?? score);
@@ -562,13 +582,22 @@ function mapRowToResult(row, score = 1, query = "") {
     source: row.source,
     originalSource: row.original_source || metadata.originalSource || row.source,
     original_source: row.original_source || metadata.originalSource || row.source,
-    text: row.text,
-    content: row.text,
-    excerpt: row.text,
+
+    text: trimmedText,
+    content: trimmedText,
+    excerpt: trimmedText,
+
     chunkIndex: row.chunk_index,
     chunk_index: row.chunk_index,
+
     metadata: {
-      ...metadata,
+      originalSource: metadata.originalSource || row.original_source || row.source,
+      originalFileName: metadata.originalFileName || metadata.fileName || row.document_title || row.source,
+      normalizedSource: metadata.normalizedSource || normalizeSourceName(row.source),
+      path: metadata.path || row.original_source || row.source,
+      fileId: metadata.fileId || metadata.file_id || null,
+      driveViewUrl: metadata.driveViewUrl || metadata.drive_view_url || null,
+
       authorityType,
       authorityLevel,
       authorityScore,
@@ -590,11 +619,17 @@ function mapRowToResult(row, score = 1, query = "") {
       supersededByReference: row.superseded_by_reference || metadata.supersededByReference || null,
       repealedByReference: row.repealed_by_reference || metadata.repealedByReference || null,
       amendedByReference: row.amended_by_reference || metadata.amendedByReference || null,
+
       issueTypes,
       retrievalScore: enrichedScore,
       citationMatchBonus,
-      tinaVectorStoreVersion: ENGINE_VERSION
+      tinaVectorStoreVersion: ENGINE_VERSION,
+      compactOutput: true,
+      originalTextLength: String(rawText || "").length,
+      returnedTextLength: trimmedText.length,
+      maxReturnTextChars: MAX_RETURN_TEXT_CHARS
     },
+
     authorityType,
     authority_type: authorityType,
     authorityLevel,
@@ -605,8 +640,10 @@ function mapRowToResult(row, score = 1, query = "") {
     authority_label: authorityLabel,
     controllingPrecedence,
     controlling_precedence: controllingPrecedence,
+
     normalizedReference: row.normalized_reference || metadata.normalizedReference || null,
     normalized_reference: row.normalized_reference || metadata.normalizedReference || null,
+
     normalizedAliases: Array.isArray(row.normalized_aliases)
       ? row.normalized_aliases
       : Array.isArray(metadata.normalizedAliases)
@@ -617,12 +654,14 @@ function mapRowToResult(row, score = 1, query = "") {
       : Array.isArray(metadata.normalizedAliases)
         ? metadata.normalizedAliases
         : [],
+
     recencyDate: row.recency_date || metadata.recencyDate || null,
     recency_date: row.recency_date || metadata.recencyDate || null,
     effectiveFrom: row.effective_from || metadata.effectiveFrom || null,
     effective_from: row.effective_from || metadata.effectiveFrom || null,
     effectiveTo: row.effective_to || metadata.effectiveTo || null,
     effective_to: row.effective_to || metadata.effectiveTo || null,
+
     isSuperseded: typeof row.is_superseded === "boolean" ? row.is_superseded : Boolean(metadata.isSuperseded || false),
     is_superseded: typeof row.is_superseded === "boolean" ? row.is_superseded : Boolean(metadata.isSuperseded || false),
     supersededByReference: row.superseded_by_reference || metadata.supersededByReference || null,
@@ -631,16 +670,20 @@ function mapRowToResult(row, score = 1, query = "") {
     repealed_by_reference: row.repealed_by_reference || metadata.repealedByReference || null,
     amendedByReference: row.amended_by_reference || metadata.amendedByReference || null,
     amended_by_reference: row.amended_by_reference || null,
+
     issueTypes,
     issue_types: issueTypes,
     citationMatchBonus,
     citation_match_bonus: citationMatchBonus,
+
     score: row.score ?? row.similarity ?? score,
     similarity: row.similarity ?? row.score ?? score,
     retrievalScore: enrichedScore,
     retrieval_score: enrichedScore,
     finalScore: Math.max(Number(row.final_score ?? row.score ?? row.similarity ?? score), enrichedScore),
-    final_score: Math.max(Number(row.final_score ?? row.score ?? row.similarity ?? score), enrichedScore)
+    final_score: Math.max(Number(row.final_score ?? row.score ?? row.similarity ?? score), enrichedScore),
+
+    compactOutput: true
   };
 }
 
@@ -699,6 +742,31 @@ function sortResultsForTina(results = [], query = "") {
 
       return bScore - aScore;
     });
+}
+
+function uniqueResults(results = []) {
+  const seen = new Set();
+  const output = [];
+
+  for (const item of results) {
+    const key = [
+      item.id,
+      item.normalizedReference,
+      item.normalized_reference,
+      item.source,
+      item.originalSource,
+      item.chunkIndex,
+      item.chunk_index
+    ]
+      .filter(Boolean)
+      .join("|");
+
+    if (!key || seen.has(key)) continue;
+    seen.add(key);
+    output.push(item);
+  }
+
+  return output;
 }
 
 export async function clearVectorStore(client = defaultSupabase) {
@@ -817,11 +885,14 @@ export async function searchSimilar(arg1, arg2) {
   const cleanQuery = normalizeText(query);
   if (!cleanQuery) return [];
 
+  const safeTopK = clampTopK(topK);
+  const matchCount = clampMatchCount(Math.max(safeTopK * 3, safeTopK));
+
   const queryEmbedding = await embedText(cleanQuery);
 
   const { data, error } = await supabaseClient.rpc("match_tina_vectors", {
     query_embedding: queryEmbedding,
-    match_count: Math.max(topK * 3, topK)
+    match_count: matchCount
   });
 
   if (error) {
@@ -833,7 +904,7 @@ export async function searchSimilar(arg1, arg2) {
     .map((row) => mapRowToResult(row, row.score, cleanQuery))
     .filter((row) => !shouldSuppressRow(row, cleanQuery, includeWeakSources));
 
-  return sortResultsForTina(mapped, cleanQuery).slice(0, topK);
+  return uniqueResults(sortResultsForTina(mapped, cleanQuery)).slice(0, safeTopK);
 }
 
 export async function searchBySourceName(arg1, arg2) {
@@ -842,13 +913,16 @@ export async function searchBySourceName(arg1, arg2) {
 
   if (!keyword) return [];
 
+  const safeTopK = clampTopK(topK);
+  const limit = clampMatchCount(Math.max(safeTopK * 3, safeTopK));
+
   const { data, error } = await supabaseClient
     .from(VECTOR_TABLE)
     .select(buildSelectColumns())
     .or(buildSourceIlikeFilters(keyword))
     .order("authority_level", { ascending: true, nullsFirst: false })
     .order("chunk_index", { ascending: true })
-    .limit(Math.max(topK * 3, topK));
+    .limit(limit);
 
   if (error) {
     console.error("Supabase source-name search error:", error);
@@ -866,7 +940,7 @@ export async function searchBySourceName(arg1, arg2) {
       retrieval_score: enrichRowScore({ ...row, citationMatchBonus: 1 }, keyword, row.score)
     }));
 
-  return sortResultsForTina(mapped, keyword).slice(0, topK);
+  return uniqueResults(sortResultsForTina(mapped, keyword)).slice(0, safeTopK);
 }
 
 export async function smartSearch(arg1, arg2) {
@@ -876,14 +950,15 @@ export async function smartSearch(arg1, arg2) {
   const cleanQuery = normalizeText(query);
   if (!cleanQuery) return [];
 
+  const safeTopK = clampTopK(topK);
   const keywords = buildPossibleSourceKeywords(cleanQuery);
   const exactResults = [];
 
-  for (const keyword of keywords) {
+  for (const keyword of keywords.slice(0, 6)) {
     const exactMatches = await searchBySourceName({
       supabase: supabaseClient,
       keyword,
-      topK,
+      topK: safeTopK,
       includeWeakSources
     });
 
@@ -893,7 +968,7 @@ export async function smartSearch(arg1, arg2) {
   const semanticResults = await searchSimilar({
     supabase: supabaseClient,
     query: cleanQuery,
-    topK: Math.max(topK, DEFAULT_TOP_K),
+    topK: Math.max(safeTopK, DEFAULT_TOP_K),
     includeWeakSources
   });
 
@@ -902,21 +977,25 @@ export async function smartSearch(arg1, arg2) {
   const prioritized = exactResults.length ? [...exactResults, ...semanticResults] : [...semanticResults];
 
   for (const item of prioritized) {
-    const key =
-      item.id ||
-      item.normalizedReference ||
-      item.normalized_reference ||
-      item.source ||
-      item.originalSource ||
-      JSON.stringify(item);
+    const key = [
+      item.id,
+      item.normalizedReference,
+      item.normalized_reference,
+      item.source,
+      item.originalSource,
+      item.chunkIndex,
+      item.chunk_index
+    ]
+      .filter(Boolean)
+      .join("|");
 
-    if (seen.has(key)) continue;
+    if (!key || seen.has(key)) continue;
 
     seen.add(key);
     merged.push(item);
   }
 
-  return sortResultsForTina(merged, cleanQuery).slice(0, topK);
+  return uniqueResults(sortResultsForTina(merged, cleanQuery)).slice(0, safeTopK);
 }
 
 export async function getQuizSourceChunks({
@@ -928,11 +1007,12 @@ export async function getQuizSourceChunks({
 } = {}) {
   const supabaseClient = resolveSupabaseClient(suppliedSupabase);
   const cleanTopic = String(topic || "").trim();
+  const safeLimit = clampTopK(limit);
 
   const rows = await smartSearch({
     supabase: supabaseClient,
     query: cleanTopic || "Philippine taxation",
-    topK: Math.max(limit * 3, 10),
+    topK: Math.max(safeLimit * 2, 6),
     includeWeakSources: false
   });
 
@@ -946,9 +1026,12 @@ export async function getQuizSourceChunks({
 
       return normalizeText(row.text).length >= 200;
     })
-    .slice(0, limit)
+    .slice(0, safeLimit)
     .map((row) => ({
       ...row,
+      text: trimReturnText(row.text),
+      content: trimReturnText(row.content || row.text),
+      excerpt: trimReturnText(row.excerpt || row.text),
       sourceTitle:
         row.document_title ||
         row.metadata?.documentTitle ||
@@ -956,7 +1039,8 @@ export async function getQuizSourceChunks({
         row.original_source ||
         row.source,
       sourcePath: row.metadata?.path || row.original_source || row.source,
-      fileId: row.metadata?.fileId || row.metadata?.file_id || null
+      fileId: row.metadata?.fileId || row.metadata?.file_id || null,
+      compactOutput: true
     }));
 }
 
@@ -1004,6 +1088,9 @@ export async function getVectorStoreStats(client = defaultSupabase) {
     embeddingModel: EMBEDDING_MODEL,
     chunkSize: CHUNK_SIZE,
     chunkOverlap: CHUNK_OVERLAP,
+    maxTopK: MAX_TOP_K,
+    maxMatchCount: MAX_MATCH_COUNT,
+    maxReturnTextChars: MAX_RETURN_TEXT_CHARS,
     vectorTable: VECTOR_TABLE,
     engineVersion: ENGINE_VERSION
   };
@@ -1020,7 +1107,14 @@ export function vectorStoreHealthCheck() {
     exactCitationPriority: true,
     issueMismatchSuppression: true,
     controllingPrecedenceAware: true,
-    adaptiveRetrievalCompatible: true
+    adaptiveRetrievalCompatible: true,
+    contextOrchestrationCompatible: true,
+    retrievalLimitsEnabled: true,
+    oversizedChunkReturnPrevented: true,
+    compactOutput: true,
+    maxTopK: MAX_TOP_K,
+    maxMatchCount: MAX_MATCH_COUNT,
+    maxReturnTextChars: MAX_RETURN_TEXT_CHARS
   };
 }
 
