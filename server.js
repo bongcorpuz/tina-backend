@@ -1,4 +1,5 @@
 // FILE: server.js
+"use strict";
 
 import "dotenv/config";
 import express from "express";
@@ -47,8 +48,7 @@ import { adaptiveResponsePlannerHealthCheck } from "./adaptive-response-planner.
 import {
   buildOpenAIContext,
   callOpenAIWithOrchestration,
-  estimateTokens,
-  estimateMessagesTokens
+  contextOrchestrationHealthCheck as engineContextOrchestrationHealthCheck
 } from "./context-orchestration-engine.js";
 
 /* ================= ENV VALIDATION ================= */
@@ -69,7 +69,7 @@ const PORT = Number(process.env.PORT || 10000);
 const REQUEST_LIMIT = process.env.REQUEST_LIMIT || "25mb";
 const NODE_ENV = process.env.NODE_ENV || "development";
 const OPENAI_MODEL = process.env.OPENAI_MODEL || "gpt-4o-mini";
-const SERVER_VERSION = "4.1.0";
+const SERVER_VERSION = "5.0.0";
 
 /* ================= APP ================= */
 
@@ -122,15 +122,13 @@ const openai = new OpenAI({
 });
 
 /*
-  Context orchestration is injected into ask-handler.js.
-  The actual OpenAI call should be routed through callOpenAIWithOrchestration()
-  inside ask-handler.js or rag-answer-handler.js.
+  SERVER RULE:
+  server.js must not assemble OpenAI prompts.
+  server.js only injects OpenAI client and context orchestration into ask-handler.js.
 */
 const contextOrchestration = {
   buildOpenAIContext,
-  callOpenAIWithOrchestration,
-  estimateTokens,
-  estimateMessagesTokens
+  callOpenAIWithOrchestration
 };
 
 const askHandler = createAskHandler({
@@ -198,14 +196,29 @@ function attachForcedHook(hookCode) {
   };
 }
 
-function contextOrchestrationHealthCheck() {
+function localContextOrchestrationHealthCheck() {
+  let engineHealth = null;
+
+  try {
+    engineHealth =
+      typeof engineContextOrchestrationHealthCheck === "function"
+        ? engineContextOrchestrationHealthCheck()
+        : null;
+  } catch (error) {
+    engineHealth = {
+      ok: false,
+      error: error.message
+    };
+  }
+
   return {
     loaded: true,
     buildOpenAIContext: typeof buildOpenAIContext === "function",
     callOpenAIWithOrchestration: typeof callOpenAIWithOrchestration === "function",
-    estimateTokens: typeof estimateTokens === "function",
-    estimateMessagesTokens: typeof estimateMessagesTokens === "function",
-    defaultModel: OPENAI_MODEL
+    defaultModel: OPENAI_MODEL,
+    serverUsesDirectPromptAssembly: false,
+    serverUsesDependencyInjectionOnly: true,
+    engineHealth
   };
 }
 
@@ -217,8 +230,10 @@ app.get("/", (req, res) => {
     name: "TINA Backend",
     version: SERVER_VERSION,
     engine: "TINA Philippine Tax Intelligence Engine",
-    architecture: "Adaptive Tax, Legal, Audit, Evidence, RAG, and Context Orchestration",
+    architecture:
+      "Adaptive Tax, Legal, Audit, Evidence, RAG, and Context Orchestration",
     contextOrchestrationEnabled: true,
+    serverUsesDirectPromptAssembly: false,
     message: "Backend is running.",
     usefulRoutes: [
       "/health",
@@ -241,6 +256,7 @@ app.get("/routes", (req, res) => {
     adaptiveSupport: true,
     issueClassificationPipeline: true,
     contextOrchestrationEnabled: true,
+    serverUsesDirectPromptAssembly: false,
     modeSupport: ["/ask", "/tax", "/review", "/quiz", "/source", "/feedback"],
     adaptiveModules: [
       "context-orchestration-engine.js",
@@ -259,6 +275,7 @@ app.get("/routes", (req, res) => {
       "final-answer-compliance.js",
       "answer-renderer.js",
       "rag-answer-handler.js",
+      "assessment-handler.js",
       "ask-handler.js"
     ],
     routes: [
@@ -300,6 +317,7 @@ app.get("/health", async (req, res) => {
       adaptiveArchitectureEnabled: true,
       issueClassificationEnabled: true,
       contextOrchestrationEnabled: true,
+      serverUsesDirectPromptAssembly: false,
       openaiConfigured: Boolean(process.env.OPENAI_API_KEY),
       openaiModel: OPENAI_MODEL,
       supabaseConfigured: Boolean(
@@ -316,7 +334,7 @@ app.get("/health", async (req, res) => {
       adaptiveStack: {
         server: true,
         askHandler: true,
-        contextOrchestration: contextOrchestrationHealthCheck(),
+        contextOrchestration: localContextOrchestrationHealthCheck(),
         ragAnswerHandler: ragAnswerHandlerHealthCheck(),
         issueClassificationEngine: issueClassificationEngineHealthCheck(),
         queryIntentEngine: queryIntentEngineHealthCheck(),
@@ -639,8 +657,8 @@ const server = app.listen(PORT, () => {
   console.log(`Environment: ${NODE_ENV}`);
   console.log(`OpenAI model: ${OPENAI_MODEL}`);
   console.log(`Server version: ${SERVER_VERSION}`);
-  console.log("Adaptive TINA orchestration enabled.");
   console.log("Context orchestration engine wired into ask-handler dependency injection.");
+  console.log("server.js direct OpenAI prompt assembly: DISABLED.");
   console.log("Issue-classified RAG routes enabled: /ask /tax /review /quiz /source /feedback");
 });
 
