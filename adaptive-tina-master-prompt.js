@@ -799,7 +799,7 @@ function adaptiveMasterPromptHealthCheck() {
   };
 }
 
-module.exports = {
+export {
   TINA_VERSION,
 
   LEGACY_MODE_ALIASES,
@@ -831,9 +831,56 @@ module.exports = {
   buildPlannerPayload,
   buildAdaptiveRoutingContract,
   buildContextOrchestrationPromptContract,
-  adaptiveMasterPromptHealthCheck,
+  adaptiveMasterPromptHealthCheck
+};
 
-  getAdaptiveMasterPrompt() {
-    return ADAPTIVE_MASTER_PROMPT;
-  }
+export function getAdaptiveMasterPrompt() {
+  return ADAPTIVE_MASTER_PROMPT;
+}
+
+export function buildAdaptivePromptContract(mode = "STANDARD_TAX_MODE", options = {}) {
+  return buildContextOrchestrationPromptContract(mode, options);
+}
+
+export function buildSystemPromptOnly(mode = "STANDARD_TAX_MODE", options = {}) {
+  const contract = buildContextOrchestrationPromptContract(mode, options);
+  return contract.masterPrompt || ADAPTIVE_MASTER_PROMPT;
+}
+
+export default {
+  TINA_VERSION,
+
+  LEGACY_MODE_ALIASES,
+  TINA_MODES,
+  RESPONSE_MODES,
+  ORCHESTRATION_MODES,
+  OUTPUT_DEPTH,
+  CONCLUSION_RESTRICTIONS,
+
+  TINA_IDENTITY,
+  TINA_HIERARCHY_RULE,
+  TINA_CONTEXT_ORCHESTRATION_RULE,
+  TINA_FACTUAL_REASONING_RULE,
+  TINA_CONFLICT_RULE,
+  TINA_RESPONSE_RULE,
+  ADAPTIVE_MASTER_PROMPT,
+
+  MODE_PROMPTS,
+  RESPONSE_STRUCTURES,
+  ORCHESTRATION_STRUCTURES,
+  MODE_ROUTING_METADATA,
+
+  normalizeMode,
+  normalizeOrchestrationMode,
+  getModePrompt,
+  getModeRoutingMetadata,
+  getContextBudgetPolicy,
+  buildPromptBundle,
+  buildPlannerPayload,
+  buildAdaptiveRoutingContract,
+  buildContextOrchestrationPromptContract,
+  buildAdaptivePromptContract,
+  buildSystemPromptOnly,
+  adaptiveMasterPromptHealthCheck,
+  getAdaptiveMasterPrompt
 };
