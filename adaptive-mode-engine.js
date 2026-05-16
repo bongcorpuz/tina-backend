@@ -3,9 +3,10 @@
 
 /**
  * TINA Enterprise Adaptive Mode Engine
+ * Version: 4.0.0
  */
 
-const ENGINE_VERSION = "3.0.0";
+const ENGINE_VERSION = "4.0.0";
 
 const MODES = Object.freeze({
   QUICK: "QUICK_MODE",
@@ -33,7 +34,7 @@ const LEGACY_MODE_ALIASES = Object.freeze({
 
 const RESPONSE_MODE_MAP = Object.freeze({
   [MODES.QUICK]: "QUICK",
-  [MODES.STANDARD_TAX]: "STANDARD",
+  [MODES.STANDARD_TAX]: "TECHNICAL",
   [MODES.TECHNICAL_TAX]: "TECHNICAL",
   [MODES.AUDIT]: "AUDIT",
   [MODES.LITIGATION]: "LITIGATION",
@@ -52,26 +53,23 @@ const OUTPUT_DEPTH = Object.freeze({
   SIMPLE: "SIMPLE"
 });
 
+const TECHNICAL_STRUCTURE = Object.freeze([
+  "A. DIRECT ANSWER",
+  "B. CONTROLLING LEGAL BASIS",
+  "C. SUPPORTING JURISPRUDENCE",
+  "D. DOCTRINAL STATUS / CONFLICT ANALYSIS",
+  "E. HIERARCHY ANALYSIS",
+  "F. PRACTICAL APPLICATION"
+]);
+
 const RESPONSE_STRUCTURES = Object.freeze({
   QUICK: [
     "A. DIRECT ANSWER",
     "B. SHORT BASIS",
     "C. PRACTICAL NOTE"
   ],
-  STANDARD: [
-    "A. DIRECT ANSWER",
-    "B. CONTROLLING LEGAL BASIS",
-    "C. PRACTICAL APPLICATION",
-    "D. TAX / COMPLIANCE RISK"
-  ],
-  TECHNICAL: [
-    "A. DIRECT ANSWER",
-    "B. CONTROLLING LEGAL BASIS",
-    "C. SUPPORTING JURISPRUDENCE",
-    "D. DOCTRINAL STATUS / CONFLICT ANALYSIS",
-    "E. HIERARCHY ANALYSIS",
-    "F. PRACTICAL APPLICATION"
-  ],
+  STANDARD: TECHNICAL_STRUCTURE,
+  TECHNICAL: TECHNICAL_STRUCTURE,
   AUDIT: [
     "A. DIRECT ANSWER",
     "B. KNOWN FACTS AND ASSUMPTIONS",
@@ -159,7 +157,7 @@ const KEYWORDS = Object.freeze({
     "cta", "supreme court", "court", "warrant", "case", "jurisprudence",
     "defense", "legal defense", "legal position", "doctrine", "conflict",
     "taxpayer defense", "bir position", "due process", "legal consequence",
-    "appeal", "litigation", "crime", "liability"
+    "appeal", "litigation", "liability"
   ],
   transaction: [
     "sale vs service", "lease vs concession", "principal vs agent",
@@ -206,6 +204,15 @@ function normalizeText(input = "") {
   return String(input || "").toLowerCase().replace(/\s+/g, " ").trim();
 }
 
+function safeArray(value) {
+  if (!value) return [];
+  return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
+}
+
+function unique(values = []) {
+  return [...new Set((values || []).filter(Boolean))];
+}
+
 function normalizeMode(mode = "") {
   const clean = String(mode || "").trim().toUpperCase();
 
@@ -225,6 +232,136 @@ function normalizeMode(mode = "") {
   if (clean.includes("QUICK")) return MODES.QUICK;
 
   return MODES.STANDARD_TAX;
+}
+
+function normalizeIssue(value = "") {
+  const raw = String(value || "").trim().toUpperCase().replace(/[\s-]+/g, "_");
+
+  const aliases = {
+    VAT: "VAT_LIABILITY",
+    OUTPUT_VAT: "VAT_LIABILITY",
+    VAT_DEFINITION: "VAT_LIABILITY",
+    DEFINITION: "VAT_LIABILITY",
+    REFUND: "VAT_REFUND",
+    INPUT_VAT: "VAT_REFUND",
+    INPUT_VAT_REFUND: "VAT_REFUND",
+    TAX_REFUND: "VAT_REFUND",
+    EWT: "WITHHOLDING",
+    CWT: "WITHHOLDING",
+    FWT: "WITHHOLDING",
+    WITHHOLDING_TAX: "WITHHOLDING",
+    RCIT: "INCOME_TAX",
+    MCIT: "INCOME_TAX",
+    NOLCO: "INCOME_TAX",
+    CHARACTERIZATION: "TRANSACTION",
+    PRINCIPAL_AGENT: "TRANSACTION",
+    PRINCIPAL_VS_AGENT: "TRANSACTION",
+    PASS_THROUGH: "TRANSACTION",
+    REIMBURSEMENT: "TRANSACTION",
+    AGREEMENT: "CONTRACT",
+    ACCOUNTING_TAX: "ACCOUNTING"
+  };
+
+  return aliases[raw] || raw || null;
+}
+
+function normalizeAuthority(value = "") {
+  const raw = String(value || "").trim().toUpperCase().replace(/[\s-]+/g, "_");
+
+  const aliases = {
+    NIRC: "STATUTE",
+    TAX_CODE: "STATUTE",
+    LAW: "STATUTE",
+    RA: "STATUTE",
+    REPUBLIC_ACT: "STATUTE",
+    REVENUE_REGULATION: "RR",
+    REVENUE_MEMORANDUM_CIRCULAR: "RMC",
+    REVENUE_MEMORANDUM_ORDER: "RMO",
+    REVENUE_AUDIT_MEMORANDUM_ORDER: "RAMO",
+    SC: "SUPREME_COURT",
+    CASE: "SUPREME_COURT",
+    JURISPRUDENCE: "SUPREME_COURT",
+    CTA: "CTA_DIVISION",
+    BIR_RULINGS: "BIR_RULING",
+    IFRS: "PFRS"
+  };
+
+  return aliases[raw] || raw || null;
+}
+
+function getIssueClassification(options = {}) {
+  const source =
+    options.issueClassification ||
+    options.queryIntent?.issueClassification ||
+    options.adaptiveContext?.issueClassification ||
+    options.modeAnalysis?.issueClassification ||
+    {};
+
+  const primaryIssue =
+    normalizeIssue(source.primaryIssue) ||
+    normalizeIssue(source.primary_issue) ||
+    normalizeIssue(source.issueType) ||
+    normalizeIssue(source.issue_type) ||
+    null;
+
+  const subIssues = unique([
+    primaryIssue,
+    ...safeArray(source.subIssues).map(normalizeIssue),
+    ...safeArray(source.subIssue).map(normalizeIssue),
+    ...safeArray(source.sub_issues).map(normalizeIssue),
+    ...safeArray(source.sub_issue).map(normalizeIssue)
+  ]).filter(Boolean);
+
+  return {
+    ...source,
+    primaryIssue,
+    subIssue: source.subIssue || source.sub_issue || subIssues[0] || primaryIssue,
+    subIssues,
+    legalDimensions: unique([
+      ...safeArray(source.legalDimensions),
+      ...safeArray(source.legalDimension),
+      ...safeArray(source.legal_dimensions),
+      ...safeArray(source.legal_dimension)
+    ]),
+    retrievalStrategy:
+      source.retrievalStrategy ||
+      source.retrieval_strategy ||
+      null,
+    targetAuthorities: unique([
+      ...safeArray(source.targetAuthorities).map(normalizeAuthority),
+      ...safeArray(source.target_authorities).map(normalizeAuthority)
+    ]).filter(Boolean),
+    factSensitivity:
+      source.factSensitivity ||
+      source.fact_sensitivity ||
+      null,
+    factPatternRequired:
+      source.factPatternRequired ||
+      source.fact_pattern_required ||
+      false,
+    transactionCharacterizationRequired:
+      source.transactionCharacterizationRequired ||
+      source.transaction_characterization_required ||
+      false
+  };
+}
+
+function modeFromIssueClassification(issueClassification = {}) {
+  const primary = issueClassification.primaryIssue;
+  const dimensions = safeArray(issueClassification.legalDimensions).map((item) =>
+    String(item).toUpperCase()
+  );
+
+  if (!primary) return null;
+
+  if (primary === "AUDIT" || primary === "ACCOUNTING") return MODES.AUDIT;
+  if (primary === "CONTRACT") return MODES.CONTRACT;
+  if (["TRANSACTION", "ECONOMIC_SUBSTANCE"].includes(primary)) return MODES.TRANSACTION;
+  if (["ASSESSMENT", "CASE_LAW", "DOCTRINE"].includes(primary)) return MODES.LITIGATION;
+  if (dimensions.includes("EVIDENTIARY") || issueClassification.factSensitivity === "high") return MODES.EVIDENCE;
+  if (["VAT_LIABILITY", "VAT_REFUND", "INCOME_TAX", "WITHHOLDING"].includes(primary)) return MODES.TECHNICAL_TAX;
+
+  return null;
 }
 
 function countMatches(text, terms) {
@@ -287,7 +424,6 @@ function scoreModes(text) {
 
 function applyHookBias(scores, hookConfig = {}) {
   const hookMode = normalizeMode(hookConfig.mode || hookConfig.hook_code || "");
-
   if (!scores[hookMode]) return scores;
 
   const patched = { ...scores };
@@ -301,7 +437,38 @@ function applyHookBias(scores, hookConfig = {}) {
   return patched;
 }
 
-function computeComplexity(text, scores) {
+function applyIssueClassificationBias(scores, issueClassification = {}) {
+  const issueMode = modeFromIssueClassification(issueClassification);
+  if (!issueMode || !scores[issueMode]) return scores;
+
+  const patched = { ...scores };
+
+  patched[issueMode] = {
+    ...patched[issueMode],
+    score: patched[issueMode].score + 5,
+    matched: [...patched[issueMode].matched, `issue:${issueClassification.primaryIssue}`]
+  };
+
+  if (issueClassification.transactionCharacterizationRequired && scores[MODES.TRANSACTION]) {
+    patched[MODES.TRANSACTION] = {
+      ...patched[MODES.TRANSACTION],
+      score: patched[MODES.TRANSACTION].score + 3,
+      matched: [...patched[MODES.TRANSACTION].matched, "issue:transactionCharacterizationRequired"]
+    };
+  }
+
+  if (issueClassification.factPatternRequired && scores[MODES.FACT_PATTERN]) {
+    patched[MODES.FACT_PATTERN] = {
+      ...patched[MODES.FACT_PATTERN],
+      score: patched[MODES.FACT_PATTERN].score + 2,
+      matched: [...patched[MODES.FACT_PATTERN].matched, "issue:factPatternRequired"]
+    };
+  }
+
+  return patched;
+}
+
+function computeComplexity(text, scores, issueClassification = {}) {
   let complexity = 0;
 
   if (text.length > 250) complexity += 2;
@@ -313,10 +480,15 @@ function computeComplexity(text, scores) {
   if (activeModes >= 3) complexity += 2;
   if (activeModes >= 5) complexity += 2;
 
+  if (issueClassification.complexityFlag === "complex") complexity += 2;
+  if (issueClassification.complexityFlag === "multi-issue") complexity += 3;
+  if (issueClassification.factSensitivity === "high") complexity += 2;
+  if (issueClassification.factPatternRequired) complexity += 2;
+
   return Math.min(complexity, 10);
 }
 
-function computeRisk(text, scores, tone) {
+function computeRisk(text, scores, tone, issueClassification = {}) {
   let risk = 0;
 
   if (scores[MODES.LITIGATION].score > 0) risk += 3;
@@ -334,10 +506,23 @@ function computeRisk(text, scores, tone) {
     risk += 3;
   }
 
+  if (issueClassification.factSensitivity === "high") risk += 2;
+  if (issueClassification.transactionCharacterizationRequired) risk += 2;
+  if (issueClassification.primaryIssue === "ASSESSMENT") risk += 2;
+  if (issueClassification.primaryIssue === "VAT_REFUND") risk += 1;
+
   return Math.min(risk, 10);
 }
 
-function selectPrimaryMode(scores, complexity, risk, tone) {
+function selectPrimaryMode(scores, complexity, risk, tone, issueClassification = {}) {
+  const issueMode = modeFromIssueClassification(issueClassification);
+
+  if (issueMode && issueMode !== MODES.QUICK) {
+    if (risk >= 4 || complexity >= 4 || issueClassification.primaryIssue !== "GENERAL_TAX") {
+      return issueMode;
+    }
+  }
+
   const weighted = Object.entries(scores).map(([mode, data]) => {
     let score = data.score;
 
@@ -386,19 +571,17 @@ function determineResponseStructure(primaryMode, risk, complexity) {
   if (primaryMode === MODES.EVIDENCE) return RESPONSE_STRUCTURES.EVIDENCE;
   if (primaryMode === MODES.LITIGATION) return RESPONSE_STRUCTURES.LITIGATION;
 
-  if (primaryMode === MODES.TECHNICAL_TAX || primaryMode === MODES.FACT_PATTERN || risk >= 6) {
-    return RESPONSE_STRUCTURES.TECHNICAL;
-  }
-
-  return RESPONSE_STRUCTURES.STANDARD;
+  return RESPONSE_STRUCTURES.TECHNICAL;
 }
 
-function buildReasoningRequirements(primaryMode, secondaryModes, risk, complexity) {
+function buildReasoningRequirements(primaryMode, secondaryModes, risk, complexity, issueClassification = {}) {
   const requirements = new Set();
 
   requirements.add("Identify known facts");
   requirements.add("Identify assumed facts when necessary");
   requirements.add("State limitations if facts are incomplete");
+  requirements.add("Use issueClassification to control legal basis, jurisprudence, doctrine, and sources");
+  requirements.add("Do not cite issue-mismatched authorities");
 
   if (risk >= 4 || complexity >= 4 || primaryMode === MODES.EVIDENCE || secondaryModes.includes(MODES.EVIDENCE)) {
     requirements.add("Identify missing facts and evidentiary gaps");
@@ -422,7 +605,7 @@ function buildReasoningRequirements(primaryMode, secondaryModes, risk, complexit
     secondaryModes.includes(MODES.TECHNICAL_TAX)
   ) {
     requirements.add("Apply Philippine legal hierarchy");
-    requirements.add("Explain direct, partial, apparent, or no conflict");
+    requirements.add("Explain direct, partial, apparent, or no conflict only after strict conflict gates");
     requirements.add("Explain why the controlling authority prevails");
   }
 
@@ -431,34 +614,39 @@ function buildReasoningRequirements(primaryMode, secondaryModes, risk, complexit
     requirements.add("List audit evidence required before final conclusion");
   }
 
+  if (issueClassification.primaryIssue) {
+    requirements.add(`Classified issue controls answer: ${issueClassification.primaryIssue}`);
+  }
+
   return Array.from(requirements);
 }
 
-function buildAuthorityHierarchyRequired(primaryMode, risk) {
-  const doctrineHeavy =
-    primaryMode === MODES.LITIGATION ||
-    primaryMode === MODES.TECHNICAL_TAX ||
-    risk >= 6;
+function buildAuthorityHierarchyRequired(primaryMode, risk, issueClassification = {}) {
+  const targetAuthorities = safeArray(issueClassification.targetAuthorities);
 
-  if (!doctrineHeavy) {
-    return [
-      "NIRC / Tax Code / Republic Act",
-      "Revenue Regulations",
-      "RMC / RMO when applicable",
-      "Relevant jurisprudence when necessary"
-    ];
-  }
-
-  return [
+  const base = [
     "Constitution",
     "NIRC / Tax Code / Republic Act",
+    "Supreme Court decisions",
     "Revenue Regulations",
     "Revenue Memorandum Circulars",
     "Revenue Memorandum Orders / RAMO",
     "BIR Rulings",
-    "Supreme Court decisions",
     "CTA / Court of Appeals decisions",
     "Secondary materials"
+  ];
+
+  if (targetAuthorities.length) {
+    return unique([...targetAuthorities, ...base]);
+  }
+
+  if (primaryMode === MODES.LITIGATION || primaryMode === MODES.TECHNICAL_TAX || risk >= 6) return base;
+
+  return [
+    "NIRC / Tax Code / Republic Act",
+    "Revenue Regulations",
+    "RMC / RMO when applicable",
+    "Relevant jurisprudence when necessary"
   ];
 }
 
@@ -467,24 +655,28 @@ function detectOutputDepth(primaryMode, risk, complexity, tone) {
   if (primaryMode === MODES.QUICK && risk <= 2 && complexity <= 3) return OUTPUT_DEPTH.CONCISE;
   if (risk >= 7 || complexity >= 7) return OUTPUT_DEPTH.COMPREHENSIVE;
 
-  if (
-    primaryMode === MODES.LITIGATION ||
-    primaryMode === MODES.TECHNICAL_TAX ||
-    primaryMode === MODES.TRANSACTION ||
-    primaryMode === MODES.CONTRACT ||
-    primaryMode === MODES.AUDIT ||
-    primaryMode === MODES.EVIDENCE
-  ) {
+  if ([
+    MODES.LITIGATION,
+    MODES.TECHNICAL_TAX,
+    MODES.TRANSACTION,
+    MODES.CONTRACT,
+    MODES.AUDIT,
+    MODES.EVIDENCE,
+    MODES.FACT_PATTERN
+  ].includes(primaryMode)) {
     return OUTPUT_DEPTH.STRUCTURED;
   }
 
   return OUTPUT_DEPTH.STANDARD;
 }
 
-function detectPreliminaryConclusionRequired(risk, complexity, primaryMode) {
+function detectPreliminaryConclusionRequired(risk, complexity, primaryMode, issueClassification = {}) {
   return (
     risk >= 4 ||
     complexity >= 5 ||
+    issueClassification.factSensitivity === "high" ||
+    issueClassification.factPatternRequired ||
+    issueClassification.transactionCharacterizationRequired ||
     primaryMode === MODES.TRANSACTION ||
     primaryMode === MODES.CONTRACT ||
     primaryMode === MODES.EVIDENCE ||
@@ -507,20 +699,23 @@ function complexityLabel(complexity) {
   return "LOW";
 }
 
-function buildRoutingHints(primaryMode, secondaryModes, risk) {
+function buildRoutingHints(primaryMode, secondaryModes, risk, issueClassification = {}) {
   return {
     needsDoctrineEngine:
+      issueClassification.doctrinalAnalysisRequired === true ||
       primaryMode === MODES.TECHNICAL_TAX ||
       primaryMode === MODES.LITIGATION ||
       secondaryModes.includes(MODES.TECHNICAL_TAX),
 
     needsJurisprudenceEngine:
+      issueClassification.doctrinalAnalysisRequired === true ||
       primaryMode === MODES.TECHNICAL_TAX ||
       primaryMode === MODES.LITIGATION,
 
     needsProvisionCitationEngine: primaryMode !== MODES.QUICK,
 
     needsEvidenceReview:
+      issueClassification.factPatternRequired === true ||
       primaryMode === MODES.EVIDENCE ||
       primaryMode === MODES.AUDIT ||
       secondaryModes.includes(MODES.EVIDENCE) ||
@@ -531,12 +726,14 @@ function buildRoutingHints(primaryMode, secondaryModes, risk) {
       secondaryModes.includes(MODES.CONTRACT),
 
     needsTransactionCharacterization:
+      issueClassification.transactionCharacterizationRequired === true ||
       primaryMode === MODES.TRANSACTION ||
       secondaryModes.includes(MODES.TRANSACTION),
 
     needsEconomicSubstance:
       primaryMode === MODES.TRANSACTION ||
-      secondaryModes.includes(MODES.TRANSACTION),
+      secondaryModes.includes(MODES.TRANSACTION) ||
+      issueClassification.primaryIssue === "ECONOMIC_SUBSTANCE",
 
     needsAssumptionGap: risk >= 4 || primaryMode !== MODES.QUICK,
 
@@ -561,7 +758,32 @@ function buildRoutingHints(primaryMode, secondaryModes, risk) {
       primaryMode === MODES.LITIGATION ||
       risk >= 4,
 
-    needsAnswerRenderer: true
+    needsAnswerRenderer: true,
+    issueClassificationAware: true,
+    targetAuthorityAware: true,
+    strictConflictGateRequired: true
+  };
+}
+
+function buildSourceOrderingPolicy(issueClassification = {}) {
+  return {
+    useIssueClassificationMatch: true,
+    useTargetAuthorityMatch: true,
+    useControllingPrecedence: true,
+    hideIssueMismatchedSources: true,
+    primaryIssue: issueClassification.primaryIssue || null,
+    subIssues: issueClassification.subIssues || [],
+    targetAuthorities: issueClassification.targetAuthorities || []
+  };
+}
+
+function buildConflictDisplayPolicy() {
+  return {
+    displayConflictYesOnlyWhenConflictTrue: true,
+    requireCompleteConflictMetadata: true,
+    requireSameIssueGate: true,
+    requireOppositeHoldingGate: true,
+    blockVagueConflictLanguage: true
   };
 }
 
@@ -572,17 +794,21 @@ function buildPlannerCompatibilityPayload({
   complexity,
   outputDepth,
   responseStructure,
-  preliminaryConclusionRequired
+  preliminaryConclusionRequired,
+  issueClassification
 }) {
   return {
     normalizedMode: primaryMode,
-    responseMode: RESPONSE_MODE_MAP[primaryMode] || "STANDARD",
+    responseMode: RESPONSE_MODE_MAP[primaryMode] || "TECHNICAL",
     responseDepth: outputDepth,
     responseTemplate: responseStructure,
     secondaryModes,
     riskLevel: riskLabel(risk),
     complexityLevel: complexityLabel(complexity),
     mustIncludeLimitation: preliminaryConclusionRequired,
+    issueClassification,
+    sourceOrderingPolicy: buildSourceOrderingPolicy(issueClassification),
+    conflictDisplayPolicy: buildConflictDisplayPolicy(),
     conclusionRule: preliminaryConclusionRequired
       ? {
           allowStrongConclusion: false,
@@ -594,7 +820,7 @@ function buildPlannerCompatibilityPayload({
           allowStrongConclusion: true,
           restriction: "DIRECT_CONCLUSION_ALLOWED",
           requiredLanguage:
-            "A direct conclusion may be given if supported by legal basis and evidence."
+            "A direct conclusion may be given if supported by issue-matched legal basis and evidence."
         }
   };
 }
@@ -610,14 +836,16 @@ function buildMatchedSignals(scores) {
 function analyzeAdaptiveMode(userInput, options = {}) {
   const text = normalizeText(userInput);
   const tone = detectTone(text);
+  const issueClassification = getIssueClassification(options);
 
   let scores = scoreModes(text);
   scores = applyHookBias(scores, options.hookConfig || {});
+  scores = applyIssueClassificationBias(scores, issueClassification);
 
-  const complexity = computeComplexity(text, scores);
-  const risk = computeRisk(text, scores, tone);
+  const complexity = computeComplexity(text, scores, issueClassification);
+  const risk = computeRisk(text, scores, tone, issueClassification);
 
-  let primaryMode = selectPrimaryMode(scores, complexity, risk, tone);
+  let primaryMode = selectPrimaryMode(scores, complexity, risk, tone, issueClassification);
 
   if (options.userBehavior?.recommendedMode) {
     const behaviorMode = normalizeMode(options.userBehavior.recommendedMode);
@@ -628,15 +856,37 @@ function analyzeAdaptiveMode(userInput, options = {}) {
 
   const secondaryModes = selectSecondaryModes(scores, primaryMode).map(normalizeMode);
   const responseStructure = determineResponseStructure(primaryMode, risk, complexity);
-  const reasoningRequirements = buildReasoningRequirements(primaryMode, secondaryModes, risk, complexity);
-  const authorityHierarchy = buildAuthorityHierarchyRequired(primaryMode, risk);
+
+  const reasoningRequirements = buildReasoningRequirements(
+    primaryMode,
+    secondaryModes,
+    risk,
+    complexity,
+    issueClassification
+  );
+
+  const authorityHierarchy = buildAuthorityHierarchyRequired(
+    primaryMode,
+    risk,
+    issueClassification
+  );
+
   const outputDepth = detectOutputDepth(primaryMode, risk, complexity, tone);
-  const preliminaryConclusionRequired = detectPreliminaryConclusionRequired(risk, complexity, primaryMode);
+
+  const preliminaryConclusionRequired = detectPreliminaryConclusionRequired(
+    risk,
+    complexity,
+    primaryMode,
+    issueClassification
+  );
 
   const confidenceBase = Math.max(...Object.values(scores).map((x) => x.score), 0);
-  const confidence = Math.min(0.95, Math.max(0.45, confidenceBase / 10 + (complexity > 0 ? 0.1 : 0)));
+  const confidence = Math.min(
+    0.95,
+    Math.max(0.45, confidenceBase / 10 + (complexity > 0 ? 0.1 : 0))
+  );
 
-  const routingHints = buildRoutingHints(primaryMode, secondaryModes, risk);
+  const routingHints = buildRoutingHints(primaryMode, secondaryModes, risk, issueClassification);
 
   const plannerCompatibility = buildPlannerCompatibilityPayload({
     primaryMode,
@@ -645,7 +895,8 @@ function analyzeAdaptiveMode(userInput, options = {}) {
     complexity,
     outputDepth,
     responseStructure,
-    preliminaryConclusionRequired
+    preliminaryConclusionRequired,
+    issueClassification
   });
 
   return {
@@ -655,6 +906,8 @@ function analyzeAdaptiveMode(userInput, options = {}) {
     primaryMode,
     secondaryModes,
     normalizedMode: primaryMode,
+
+    issueClassification,
 
     confidence: Number(confidence.toFixed(2)),
 
@@ -672,6 +925,9 @@ function analyzeAdaptiveMode(userInput, options = {}) {
 
     reasoningRequirements,
     authorityHierarchy,
+
+    sourceOrderingPolicy: buildSourceOrderingPolicy(issueClassification),
+    conflictDisplayPolicy: buildConflictDisplayPolicy(),
 
     preliminaryConclusionRequired,
     limitationStatementRequired: preliminaryConclusionRequired,
@@ -691,10 +947,16 @@ function analyzeAdaptiveMode(userInput, options = {}) {
       evidenceCompatible: true,
       conclusionGatingCompatible: true,
       adaptivePipelineCompatible: true,
+      issueClassificationCompatible: true,
+      issueClassificationMatchAware: true,
+      targetAuthorityAware: true,
+      sourceOrderingPolicyReady: true,
+      conflictDisplayPolicyReady: true,
       suggestedExecutionOrder: [
         "user-behavior-engine",
-        "adaptive-mode-engine",
+        "issue-classification-engine",
         "query-intent-engine",
+        "adaptive-mode-engine",
         "fact-pattern-engine",
         "contract-interpretation-engine",
         "transaction-characterization-engine",
@@ -718,14 +980,20 @@ function buildAdaptiveInstruction(modeAnalysis) {
   return {
     systemInstruction: [
       `Use ${modeAnalysis.primaryMode}.`,
-      `Response mode: ${modeAnalysis.responseMode || "STANDARD"}.`,
+      `Response mode: ${modeAnalysis.responseMode || "TECHNICAL"}.`,
       `Output depth: ${modeAnalysis.outputDepth}.`,
       `Risk level: ${modeAnalysis.riskLevel}.`,
       `Complexity level: ${modeAnalysis.complexityLevel}.`,
+      modeAnalysis.issueClassification?.primaryIssue
+        ? `Classified issue: ${modeAnalysis.issueClassification.primaryIssue}.`
+        : null,
       "Follow the response structure exactly unless the user requests a different format.",
       ...(modeAnalysis.responseStructure || []).map((x) => `Section required: ${x}`),
       ...(modeAnalysis.reasoningRequirements || []).map((x) => `Reasoning requirement: ${x}`),
       "Apply legal hierarchy where relevant.",
+      "Use issueClassificationMatch and targetAuthorityMatch to control source priority.",
+      "Do not cite or display issue-mismatched sources.",
+      "Do not say Conflict Detected: YES unless complete conflict metadata exists.",
       modeAnalysis.limitationStatementRequired
         ? `Include limitation statement: ${modeAnalysis.limitationStatement}`
         : "Do not overstate certainty."
@@ -734,6 +1002,9 @@ function buildAdaptiveInstruction(modeAnalysis) {
     structure: modeAnalysis.responseStructure || [],
     routingHints: modeAnalysis.routingHints || {},
     plannerCompatibility: modeAnalysis.plannerCompatibility || null,
+    sourceOrderingPolicy: modeAnalysis.sourceOrderingPolicy || null,
+    conflictDisplayPolicy: modeAnalysis.conflictDisplayPolicy || null,
+    issueClassification: modeAnalysis.issueClassification || null,
     orchestrationMetadata: modeAnalysis.orchestrationMetadata || null
   };
 }
@@ -743,14 +1014,20 @@ function adaptiveModeHealthCheck() {
     ok: true,
     engine: "TINA_ADAPTIVE_MODE_ENGINE",
     version: ENGINE_VERSION,
-    commonJsCompatible: true,
+    esmCompatible: true,
+    commonJsCompatible: false,
     plannerCompatible: true,
     rendererCompatible: true,
-    conclusionGatingCompatible: true
+    conclusionGatingCompatible: true,
+    issueClassificationCompatible: true,
+    issueClassificationMatchAware: true,
+    targetAuthorityAware: true,
+    sourceOrderingPolicyReady: true,
+    conflictDisplayPolicyReady: true
   };
 }
 
-module.exports = {
+export {
   ENGINE_VERSION,
   MODES,
   LEGACY_MODE_ALIASES,
@@ -758,10 +1035,24 @@ module.exports = {
   OUTPUT_DEPTH,
   RESPONSE_STRUCTURES,
   KEYWORDS,
-
   normalizeMode,
+  getIssueClassification,
   analyzeAdaptiveMode,
   buildAdaptiveInstruction,
+  adaptiveModeHealthCheck
+};
 
+export default {
+  ENGINE_VERSION,
+  MODES,
+  LEGACY_MODE_ALIASES,
+  RESPONSE_MODE_MAP,
+  OUTPUT_DEPTH,
+  RESPONSE_STRUCTURES,
+  KEYWORDS,
+  normalizeMode,
+  getIssueClassification,
+  analyzeAdaptiveMode,
+  buildAdaptiveInstruction,
   adaptiveModeHealthCheck
 };
