@@ -3,10 +3,16 @@
 
 /**
  * TINA Enterprise Citation Formatting Engine
- * Version: 3.0.0
+ * Version: 4.0.0
+ *
+ * Patch:
+ * - Prioritizes issueClassificationMatch and targetAuthorityMatch.
+ * - Uses controllingPrecedence when available.
+ * - Blocks vague conflict text unless metadata is complete.
+ * - Prevents issue-mismatched authorities from appearing first.
  */
 
-const ENGINE_VERSION = "3.0.0";
+const ENGINE_VERSION = "4.0.0";
 
 function normalizeText(value = "") {
   return String(value || "").trim();
@@ -17,7 +23,8 @@ function compactSpaces(value = "") {
 }
 
 function safeArray(value) {
-  return Array.isArray(value) ? value : [];
+  if (!value) return [];
+  return Array.isArray(value) ? value : [value];
 }
 
 function uniqueBy(items = [], getKey = (item) => item) {
@@ -26,9 +33,7 @@ function uniqueBy(items = [], getKey = (item) => item) {
 
   for (const item of safeArray(items)) {
     const key = getKey(item);
-
     if (!key || seen.has(key)) continue;
-
     seen.add(key);
     output.push(item);
   }
@@ -40,24 +45,19 @@ function normalizeYear(year = "") {
   const raw = String(year || "").trim();
 
   if (!raw) return "";
-
   if (/^\d{4}$/.test(raw)) return raw;
 
   if (/^\d{2}$/.test(raw)) {
     const yy = Number(raw);
     const currentYY = new Date().getFullYear() % 100;
-
-    return yy <= currentYY + 1
-      ? `20${raw}`
-      : `19${raw}`;
+    return yy <= currentYY + 1 ? `20${raw}` : `19${raw}`;
   }
 
   return raw;
 }
 
 function normalizeIssuanceNumber(num = "") {
-  return String(num || "")
-    .replace(/^0+/, "") || "0";
+  return String(num || "").replace(/^0+/, "") || "0";
 }
 
 function titleOf(source = {}) {
@@ -131,6 +131,16 @@ function authorityLevelOf(source = {}) {
   );
 }
 
+function controllingPrecedenceOf(source = {}) {
+  return Number(
+    source.controllingPrecedence ??
+      source.controlling_precedence ??
+      source.metadata?.controllingPrecedence ??
+      authorityLevelOf(source) ??
+      99
+  );
+}
+
 function driveViewUrlOf(source = {}) {
   return (
     source.driveViewUrl ||
@@ -160,8 +170,7 @@ function excerptOf(source = {}, maxLength = 280) {
     source.metadata?.excerpt ||
     "";
 
-  return compactSpaces(String(raw || ""))
-    .slice(0, maxLength);
+  return compactSpaces(String(raw || "")).slice(0, maxLength);
 }
 
 function normalizeAuthorityLabel(value = "") {
@@ -170,63 +179,28 @@ function normalizeAuthorityLabel(value = "") {
 
   if (!raw) return "Unknown authority";
 
-  if (upper === "CONSTITUTION") {
-    return "1987 Constitution";
-  }
+  const labels = {
+    CONSTITUTION: "1987 Constitution",
+    STATUTE: "Statute / Tax Code / Republic Act",
+    TREATY: "Tax Treaty",
+    SUPREME_COURT: "Supreme Court Decision",
+    CTA_EN_BANC: "CTA En Banc Decision",
+    COURT_OF_APPEALS: "Court of Appeals Decision",
+    CTA_DIVISION: "CTA Division Decision",
+    RR: "Revenue Regulation",
+    RMC: "Revenue Memorandum Circular",
+    RMO: "Revenue Memorandum Order",
+    RAMO: "Revenue Audit Memorandum Order",
+    BIR_RULING: "BIR Ruling",
+    LGU: "Local Tax Ordinance",
+    PFRS: "Philippine Financial Reporting Standards",
+    PAS: "Philippine Accounting Standards",
+    PSA: "Philippine Standards on Auditing",
+    SECONDARY: "Secondary Material",
+    UNKNOWN: "Unknown Authority"
+  };
 
-  if (upper === "STATUTE") {
-    return "Statute / Tax Code / Republic Act";
-  }
-
-  if (upper === "TREATY") {
-    return "Tax Treaty";
-  }
-
-  if (upper === "SUPREME_COURT") {
-    return "Supreme Court Decision";
-  }
-
-  if (upper === "CTA_EN_BANC") {
-    return "CTA En Banc Decision";
-  }
-
-  if (upper === "COURT_OF_APPEALS") {
-    return "Court of Appeals Decision";
-  }
-
-  if (upper === "CTA_DIVISION") {
-    return "CTA Division Decision";
-  }
-
-  if (upper === "RR") {
-    return "Revenue Regulation";
-  }
-
-  if (upper === "RMC") {
-    return "Revenue Memorandum Circular";
-  }
-
-  if (upper === "RMO") {
-    return "Revenue Memorandum Order";
-  }
-
-  if (upper === "RAMO") {
-    return "Revenue Audit Memorandum Order";
-  }
-
-  if (upper === "BIR_RULING") {
-    return "BIR Ruling";
-  }
-
-  if (upper === "LGU") {
-    return "Local Tax Ordinance";
-  }
-
-  if (upper === "SECONDARY") {
-    return "Secondary Material";
-  }
-
-  return raw;
+  return labels[upper] || raw;
 }
 
 function cleanSourceTitle(value = "") {
@@ -245,6 +219,7 @@ function inferIssuanceNumber(source = {}) {
   const raw = compactSpaces(
     [
       source.issuanceNumber,
+      source.issuance_number,
       source.displayTitle,
       source.reference,
       source.normalizedReference,
@@ -268,118 +243,148 @@ function inferIssuanceNumber(source = {}) {
       regex: /\b(?:Republic Act|RA)\s*(?:No\.?)?\s*0*(\d{4,6})\b/i,
       formatter: (m) => `RA No. ${m[1]}`
     },
-
     {
       regex: /\bRR\s*(?:No\.?)?\s*0*(\d+)\s*[-/_]\s*(\d{2,4})\b/i,
-      formatter: (m) =>
-        `RR No. ${normalizeIssuanceNumber(m[1])}-${normalizeYear(m[2])}`
+      formatter: (m) => `RR No. ${normalizeIssuanceNumber(m[1])}-${normalizeYear(m[2])}`
     },
-
     {
       regex: /\bRMC\s*(?:No\.?)?\s*0*(\d+)\s*[-/_]\s*(\d{2,4})\b/i,
-      formatter: (m) =>
-        `RMC No. ${normalizeIssuanceNumber(m[1])}-${normalizeYear(m[2])}`
+      formatter: (m) => `RMC No. ${normalizeIssuanceNumber(m[1])}-${normalizeYear(m[2])}`
     },
-
     {
       regex: /\bRMO\s*(?:No\.?)?\s*0*(\d+)\s*[-/_]\s*(\d{2,4})\b/i,
-      formatter: (m) =>
-        `RMO No. ${normalizeIssuanceNumber(m[1])}-${normalizeYear(m[2])}`
+      formatter: (m) => `RMO No. ${normalizeIssuanceNumber(m[1])}-${normalizeYear(m[2])}`
     },
-
     {
       regex: /\bRAMO\s*(?:No\.?)?\s*0*(\d+)\s*[-/_]\s*(\d{2,4})\b/i,
-      formatter: (m) =>
-        `RAMO No. ${normalizeIssuanceNumber(m[1])}-${normalizeYear(m[2])}`
+      formatter: (m) => `RAMO No. ${normalizeIssuanceNumber(m[1])}-${normalizeYear(m[2])}`
     },
-
     {
       regex: /\bBIR Ruling\s*(?:No\.?)?\s*([\w./()-]+)\b/i,
-      formatter: (m) =>
-        `BIR Ruling No. ${m[1]}`
+      formatter: (m) => `BIR Ruling No. ${m[1]}`
     },
-
     {
       regex: /\bG\.R\.\s*No\.?\s*([\w.-]+)\b/i,
-      formatter: (m) =>
-        `G.R. No. ${m[1]}`
+      formatter: (m) => `G.R. No. ${m[1]}`
     },
-
     {
       regex: /\bCTA\s+EB\s+No\.?\s*([\w.-]+)\b/i,
-      formatter: (m) =>
-        `CTA EB No. ${m[1]}`
+      formatter: (m) => `CTA EB No. ${m[1]}`
     },
-
     {
       regex: /\bCTA(?:\s+Case)?\s+No\.?\s*([\w.-]+)\b/i,
-      formatter: (m) =>
-        `CTA No. ${m[1]}`
+      formatter: (m) => `CTA No. ${m[1]}`
     },
-
     {
       regex: /\bCA-G\.R\.\s*([\w.-]+)\b/i,
-      formatter: (m) =>
-        `CA-G.R. ${m[1]}`
+      formatter: (m) => `CA-G.R. ${m[1]}`
     }
   ];
 
   for (const item of patterns) {
     const match = raw.match(item.regex);
-
-    if (match) {
-      return compactSpaces(
-        item.formatter(match)
-      );
-    }
+    if (match) return compactSpaces(item.formatter(match));
   }
 
   return "";
 }
 
+function targetAuthorityMatched(item = {}) {
+  return Boolean(
+    item.targetAuthorityMatch === true ||
+      item.issueClassificationMatch?.targetAuthorityMatch === true
+  );
+}
+
+function issueClassificationMatched(item = {}) {
+  if (item.issueMismatch === true) return false;
+  if (item.issueClassificationMatch?.issueMismatch === true) return false;
+
+  const match = item.issueClassificationMatch;
+
+  if (!match || typeof match !== "object") return null;
+
+  if (match.issueOverlap === true) return true;
+  if (match.matched === true) return true;
+  if (match.targetAuthorityMatch === true) return true;
+
+  return null;
+}
+
+function citationScore(item = {}) {
+  const base = Number(
+    item.rerankScore ||
+      item.finalScore ||
+      item.final_score ||
+      item.retrievalScore ||
+      item.score ||
+      item.similarity ||
+      0
+  );
+
+  const targetBonus = targetAuthorityMatched(item) ? 80 : 0;
+  const issueMatch = issueClassificationMatched(item);
+  const issueBonus = issueMatch === true ? 70 : issueMatch === false ? -150 : 0;
+  const exactBonus = inferIssuanceNumber(item) ? 25 : 0;
+  const sectionBonus = sectionOf(item) ? 20 : 0;
+  const weakPenalty = ["SECONDARY", "UNKNOWN"].includes(String(authorityTypeOf(item) || "").toUpperCase())
+    ? -100
+    : 0;
+
+  return (
+    base +
+    targetBonus +
+    issueBonus +
+    exactBonus +
+    sectionBonus +
+    weakPenalty -
+    controllingPrecedenceOf(item)
+  );
+}
+
+function sortCitationAuthorities(items = []) {
+  return [...safeArray(items)]
+    .filter((item) => item)
+    .sort((a, b) => {
+      const targetDiff = Number(targetAuthorityMatched(b)) - Number(targetAuthorityMatched(a));
+      if (targetDiff !== 0) return targetDiff;
+
+      const aIssue = issueClassificationMatched(a);
+      const bIssue = issueClassificationMatched(b);
+
+      if (aIssue !== bIssue) {
+        return Number(bIssue === true) - Number(aIssue === true);
+      }
+
+      const precedenceDiff = controllingPrecedenceOf(a) - controllingPrecedenceOf(b);
+      if (precedenceDiff !== 0) return precedenceDiff;
+
+      const scoreDiff = citationScore(b) - citationScore(a);
+      if (scoreDiff !== 0) return scoreDiff;
+
+      return cleanSourceTitle(titleOf(a)).localeCompare(cleanSourceTitle(titleOf(b)));
+    });
+}
+
 function buildLegalBasisLine(item = {}) {
-  const authorityLabel =
-    normalizeAuthorityLabel(
-      authorityLabelOf(item)
-    );
+  const authorityLabel = normalizeAuthorityLabel(authorityLabelOf(item));
+  const issuanceNumber = inferIssuanceNumber(item);
+  const title = cleanSourceTitle(titleOf(item));
 
-  const issuanceNumber =
-    inferIssuanceNumber(item);
-
-  const title =
-    cleanSourceTitle(
-      titleOf(item)
-    );
-
-  if (
-    issuanceNumber &&
-    title &&
-    !title.includes(issuanceNumber)
-  ) {
+  if (issuanceNumber && title && !title.includes(issuanceNumber)) {
     return `[${authorityLabel}] ${issuanceNumber} – ${title}`;
   }
 
-  if (issuanceNumber) {
-    return `[${authorityLabel}] ${issuanceNumber}`;
-  }
+  if (issuanceNumber) return `[${authorityLabel}] ${issuanceNumber}`;
 
   return `[${authorityLabel}] ${title}`;
 }
 
 function buildSourceLine(item = {}) {
-  const issuanceNumber =
-    inferIssuanceNumber(item);
+  const issuanceNumber = inferIssuanceNumber(item);
+  const title = cleanSourceTitle(titleOf(item));
 
-  const title =
-    cleanSourceTitle(
-      titleOf(item)
-    );
-
-  if (
-    issuanceNumber &&
-    title &&
-    !title.includes(issuanceNumber)
-  ) {
+  if (issuanceNumber && title && !title.includes(issuanceNumber)) {
     return `${issuanceNumber} – ${title}`;
   }
 
@@ -390,193 +395,102 @@ function buildSourceLine(item = {}) {
  * TINA STRUCTURED CITATIONS
  * ========================================================= */
 
-export function formatSingleCitation(
-  source = {}
-) {
-  const title =
-    cleanSourceTitle(
-      titleOf(source)
-    );
-
-  const path =
-    pathOf(source);
-
-  const section =
-    cleanSectionLabel(
-      sectionOf(source) || ""
-    );
-
-  const authorityLabel =
-    normalizeAuthorityLabel(
-      authorityLabelOf(source)
-    );
-
-  const authorityLevel =
-    authorityLevelOf(source);
-
-  const issuanceNumber =
-    inferIssuanceNumber(source);
-
-  const driveViewUrl =
-    driveViewUrlOf(source);
-
-  const fileId =
-    fileIdOf(source);
+export function formatSingleCitation(source = {}) {
+  const title = cleanSourceTitle(titleOf(source));
+  const path = pathOf(source);
+  const section = cleanSectionLabel(sectionOf(source) || "");
+  const authorityLabel = normalizeAuthorityLabel(authorityLabelOf(source));
+  const authorityLevel = authorityLevelOf(source);
+  const controllingPrecedence = controllingPrecedenceOf(source);
+  const issuanceNumber = inferIssuanceNumber(source);
+  const driveViewUrl = driveViewUrlOf(source);
+  const fileId = fileIdOf(source);
 
   const lines = [
-    issuanceNumber
-      ? `${issuanceNumber} – ${title}`
-      : title
+    issuanceNumber ? `${issuanceNumber} – ${title}` : title
   ];
 
-  if (section) {
-    lines.push(
-      `Provision: ${section}`
-    );
+  if (section) lines.push(`Provision: ${section}`);
+  if (authorityLabel) lines.push(`Authority: ${authorityLabel}`);
+
+  lines.push(`Authority Level: ${authorityLevel}`);
+  lines.push(`Controlling Precedence: ${controllingPrecedence}`);
+
+  if (targetAuthorityMatched(source)) {
+    lines.push("Target Authority Match: YES");
   }
 
-  if (authorityLabel) {
-    lines.push(
-      `Authority: ${authorityLabel}`
-    );
+  if (issueClassificationMatched(source) === true) {
+    lines.push("Issue Classification Match: YES");
   }
 
-  lines.push(
-    `Authority Level: ${authorityLevel}`
-  );
-
-  if (path) {
-    lines.push(
-      `Source Path: ${path}`
-    );
-  }
-
-  if (driveViewUrl) {
-    lines.push(
-      `Drive View URL: ${driveViewUrl}`
-    );
-  }
-
-  if (fileId) {
-    lines.push(
-      `File ID: ${fileId}`
-    );
-  }
+  if (path) lines.push(`Source Path: ${path}`);
+  if (driveViewUrl) lines.push(`Drive View URL: ${driveViewUrl}`);
+  if (fileId) lines.push(`File ID: ${fileId}`);
 
   return lines.join("\n");
 }
 
-export function formatProvisionCitationBlock(
-  citations = []
-) {
-  const uniqueCitations =
-    uniqueBy(
-      citations,
-      (item) =>
-        `${titleOf(item)}|${pathOf(item)}|${sectionOf(item)}`
-    );
+export function formatProvisionCitationBlock(citations = []) {
+  const uniqueCitations = uniqueBy(
+    citations,
+    (item) => `${titleOf(item)}|${pathOf(item)}|${sectionOf(item)}`
+  );
 
-  if (!uniqueCitations.length) {
-    return "No exact provision citation found.";
-  }
+  if (!uniqueCitations.length) return "No exact provision citation found.";
 
-  return uniqueCitations
+  return sortCitationAuthorities(uniqueCitations)
     .map((item, index) => {
-      const lines = [
-        `${index + 1}. ${buildSourceLine(item)}`
-      ];
+      const lines = [`${index + 1}. ${buildSourceLine(item)}`];
 
-      const section =
-        cleanSectionLabel(
-          sectionOf(item) || ""
-        );
+      const section = cleanSectionLabel(sectionOf(item) || "");
+      if (section) lines.push(`Provision: ${section}`);
 
-      if (section) {
-        lines.push(
-          `Provision: ${section}`
-        );
-      }
+      const authority = normalizeAuthorityLabel(authorityLabelOf(item));
+      if (authority) lines.push(`Authority: ${authority}`);
 
-      const excerpt =
-        excerptOf(item, 320);
+      lines.push(`Controlling Precedence: ${controllingPrecedenceOf(item)}`);
 
-      if (excerpt) {
-        lines.push(
-          `Excerpt: ${excerpt}`
-        );
-      }
+      if (targetAuthorityMatched(item)) lines.push("Target Authority Match: YES");
+      if (issueClassificationMatched(item) === true) lines.push("Issue Classification Match: YES");
 
-      const path =
-        pathOf(item);
+      const excerpt = excerptOf(item, 320);
+      if (excerpt) lines.push(`Excerpt: ${excerpt}`);
 
-      if (path) {
-        lines.push(
-          `Source Path: ${path}`
-        );
-      }
+      const path = pathOf(item);
+      if (path) lines.push(`Source Path: ${path}`);
 
       return lines.join("\n");
     })
     .join("\n\n");
 }
 
-export function formatLegalBasisBlock(
-  legalBases = []
-) {
-  const uniqueBases =
-    uniqueBy(
-      legalBases,
-      (item) =>
-        `${authorityTypeOf(item) || ""}|${titleOf(item) || item.source || ""}|${pathOf(item) || ""}|${excerptOf(item, 80)}`
-    );
+export function formatLegalBasisBlock(legalBases = []) {
+  const uniqueBases = uniqueBy(
+    legalBases,
+    (item) =>
+      `${authorityTypeOf(item) || ""}|${titleOf(item) || item.source || ""}|${pathOf(item) || ""}|${excerptOf(item, 80)}`
+  );
 
-  if (!uniqueBases.length) {
-    return "No legal basis found.";
-  }
+  if (!uniqueBases.length) return "No legal basis found.";
 
-  return uniqueBases
-    .sort(
-      (a, b) =>
-        authorityLevelOf(a) -
-        authorityLevelOf(b)
-    )
-    .map(
-      (item) =>
-        `- ${buildLegalBasisLine(item)}`
-    )
+  return sortCitationAuthorities(uniqueBases)
+    .map((item) => `- ${buildLegalBasisLine(item)}`)
     .join("\n");
 }
 
-export function formatSourcesUsedBlock(
-  sources = [],
-  options = {}
-) {
-  const maxItems = Number(
-    options.maxItems || 8
-  );
+export function formatSourcesUsedBlock(sources = [], options = {}) {
+  const maxItems = Number(options.maxItems || 8);
+  const includePaths = Boolean(options.includePaths || false);
+  const includeAuthorityLevels = Boolean(options.includeAuthorityLevels !== false);
+  const includeMatchMetadata = Boolean(options.includeMatchMetadata || false);
 
-  const includePaths = Boolean(
-    options.includePaths || false
-  );
-
-  const includeAuthorityLevels =
-    Boolean(
-      options.includeAuthorityLevels !==
-        false
-    );
-
-  const uniqueSources =
+  const uniqueSources = sortCitationAuthorities(
     uniqueBy(
       sources,
-      (item) =>
-        `${titleOf(item)}|${pathOf(item)}|${driveViewUrlOf(item) || ""}`
+      (item) => `${titleOf(item)}|${pathOf(item)}|${driveViewUrlOf(item) || ""}`
     )
-      .sort(
-        (a, b) =>
-          authorityLevelOf(a) -
-          authorityLevelOf(b)
-      )
-      .slice(0, maxItems);
+  ).slice(0, maxItems);
 
   if (!uniqueSources.length) {
     return "6. SOURCES\n- No displayable validated source available.";
@@ -585,100 +499,58 @@ export function formatSourcesUsedBlock(
   const lines = ["6. SOURCES"];
 
   for (const item of uniqueSources) {
-    const sourceLine =
-      buildSourceLine(item);
-
-    const authority =
-      normalizeAuthorityLabel(
-        authorityLabelOf(item)
-      );
-
-    const authorityLevel =
-      authorityLevelOf(item);
-
-    const driveViewUrl =
-      driveViewUrlOf(item);
+    const sourceLine = buildSourceLine(item);
+    const authority = normalizeAuthorityLabel(authorityLabelOf(item));
+    const authorityLevel = authorityLevelOf(item);
+    const precedence = controllingPrecedenceOf(item);
+    const driveViewUrl = driveViewUrlOf(item);
 
     lines.push(
       `- ${sourceLine}${authority ? ` [${authority}]` : ""}${
-        includeAuthorityLevels
-          ? ` [Level ${authorityLevel}]`
-          : ""
+        includeAuthorityLevels ? ` [Level ${authorityLevel}; Precedence ${precedence}]` : ""
       }`
     );
 
-    if (
-      includePaths &&
-      pathOf(item)
-    ) {
-      lines.push(
-        `  Path: ${pathOf(item)}`
-      );
+    if (includeMatchMetadata) {
+      if (targetAuthorityMatched(item)) lines.push("  Target Authority Match: YES");
+      if (issueClassificationMatched(item) === true) lines.push("  Issue Classification Match: YES");
     }
 
-    if (driveViewUrl) {
-      lines.push(
-        `  Link: ${driveViewUrl}`
-      );
-    }
+    if (includePaths && pathOf(item)) lines.push(`  Path: ${pathOf(item)}`);
+    if (driveViewUrl) lines.push(`  Link: ${driveViewUrl}`);
   }
 
   return lines.join("\n");
 }
 
-export function formatCaseCitationBlock(
-  caseSources = []
-) {
-  const uniqueCases =
-    uniqueBy(
-      caseSources,
-      (item) =>
-        `${titleOf(item)}|${pathOf(item)}`
-    );
+export function formatCaseCitationBlock(caseSources = []) {
+  const uniqueCases = uniqueBy(
+    caseSources,
+    (item) => `${titleOf(item)}|${pathOf(item)}`
+  );
 
-  if (!uniqueCases.length) {
-    return "No case citation found.";
-  }
+  if (!uniqueCases.length) return "No case citation found.";
 
-  return uniqueCases
-    .sort(
-      (a, b) =>
-        authorityLevelOf(a) -
-        authorityLevelOf(b)
-    )
+  return sortCitationAuthorities(uniqueCases)
     .map((item, index) => {
-      const lines = [
-        `${index + 1}. ${buildSourceLine(item)}`
-      ];
+      const lines = [`${index + 1}. ${buildSourceLine(item)}`];
 
-      const authority =
-        normalizeAuthorityLabel(
-          authorityLabelOf(item)
-        );
+      const authority = normalizeAuthorityLabel(authorityLabelOf(item));
+      if (authority) lines.push(`Authority: ${authority}`);
 
-      if (authority) {
-        lines.push(
-          `Authority: ${authority}`
-        );
-      }
+      lines.push(`Controlling Precedence: ${controllingPrecedenceOf(item)}`);
 
-      const excerpt =
-        excerptOf(item, 320);
+      if (targetAuthorityMatched(item)) lines.push("Target Authority Match: YES");
+      if (issueClassificationMatched(item) === true) lines.push("Issue Classification Match: YES");
 
-      if (excerpt) {
-        lines.push(
-          `Case Excerpt: ${excerpt}`
-        );
-      }
+      if (item.caseRole) lines.push(`Case Role: ${item.caseRole}`);
+      if (item.caseApplicability) lines.push(`Case Applicability: ${item.caseApplicability}`);
 
-      const path =
-        pathOf(item);
+      const excerpt = excerptOf(item, 320);
+      if (excerpt) lines.push(`Case Excerpt: ${excerpt}`);
 
-      if (path) {
-        lines.push(
-          `Source Path: ${path}`
-        );
-      }
+      const path = pathOf(item);
+      if (path) lines.push(`Source Path: ${path}`);
 
       return lines.join("\n");
     })
@@ -703,43 +575,25 @@ export function ensureStructuredAnswerSections({
     "1. DIRECT ANSWER",
     directAnswer || "No direct answer available.",
     "",
-
-    assumptions
-      ? "2. ASSUMPTIONS / FACTUAL LIMITATIONS"
-      : null,
-
+    assumptions ? "2. ASSUMPTIONS / FACTUAL LIMITATIONS" : null,
     assumptions || null,
-
     "",
-
-    evidentiaryGaps
-      ? "3. EVIDENTIARY GAPS"
-      : null,
-
+    evidentiaryGaps ? "3. EVIDENTIARY GAPS" : null,
     evidentiaryGaps || null,
-
     "",
-
     "4. LEGAL BASIS",
     legalBasis || "No legal basis found.",
     "",
-
     "5. SUPPORTING RULES",
     supportingRules || "No supporting rules found.",
     "",
-
     "6. PROFESSIONAL INSIGHT",
-    professionalInsight ||
-      "No additional professional insight.",
+    professionalInsight || "No additional professional insight.",
     "",
-
     "7. CONFLICT FLAG",
-    conflictFlag ||
-      "Conflict Detected: NO",
+    conflictFlag || "Conflict Detected: NO",
     "",
-
-    sourcesUsed ||
-      "8. SOURCES\n- No displayable validated source available."
+    sourcesUsed || "8. SOURCES\n- No displayable validated source available."
   ]
     .filter(Boolean)
     .join("\n");
@@ -760,63 +614,36 @@ export function ensureCaseAnswerSections({
 }) {
   return [
     "### Issue",
-    issue ||
-      "No clear issue identified from the indexed sources.",
+    issue || "No clear issue identified from the indexed sources.",
     "",
-
-    assumptions
-      ? "### Assumptions / factual limitations"
-      : null,
-
+    assumptions ? "### Assumptions / factual limitations" : null,
     assumptions || null,
-
     "",
-
-    evidentiaryGaps
-      ? "### Evidentiary gaps"
-      : null,
-
+    evidentiaryGaps ? "### Evidentiary gaps" : null,
     evidentiaryGaps || null,
-
     "",
-
     "### Applicable law (ranked by authority)",
-    applicableLaw ||
-      "No applicable ranked authority found.",
+    applicableLaw || "No applicable ranked authority found.",
     "",
-
     "### BIR position",
-    birPosition ||
-      "No clear BIR position found in the indexed sources.",
+    birPosition || "No clear BIR position found in the indexed sources.",
     "",
-
     "### Court position",
-    courtPosition ||
-      "No clear court position found in the indexed sources.",
+    courtPosition || "No clear court position found in the indexed sources.",
     "",
-
     "### Conflict flag",
-    conflictFlag ||
-      "Conflict Detected: NO",
+    conflictFlag || "Conflict Detected: NO",
     "",
-
     "### Legally defensible conclusion",
-    legallyDefensibleConclusion ||
-      "No legally defensible conclusion could be formed from the indexed sources.",
+    legallyDefensibleConclusion || "No legally defensible conclusion could be formed from the indexed sources.",
     "",
-
     "### Taxpayer risk assessment",
-    taxpayerRiskAssessment ||
-      "MEDIUM — further source verification may be required.",
+    taxpayerRiskAssessment || "MEDIUM — further source verification may be required.",
     "",
-
     "### Recommended action",
-    recommendedAction ||
-      "Verify the latest controlling authority before acting.",
+    recommendedAction || "Verify the latest controlling authority before acting.",
     "",
-
-    sourcesUsed ||
-      "6. SOURCES\n- No displayable validated source available."
+    sourcesUsed || "6. SOURCES\n- No displayable validated source available."
   ]
     .filter(Boolean)
     .join("\n");
@@ -826,61 +653,76 @@ export function ensureCaseAnswerSections({
  * CONFLICT TEXT
  * ========================================================= */
 
-export function buildConflictFlagText(
-  conflict = null
-) {
-  if (
-    !conflict ||
-    !conflict.conflict
-  ) {
+function conflictMetadataIsComplete(conflict = null) {
+  if (!conflict || typeof conflict !== "object") return false;
+
+  const hasTrueConflict = conflict.conflict === true;
+  const hasConflictType = Boolean(conflict.conflictType || conflict.type);
+  const hasExactIssue = Boolean(conflict.exactIssue || conflict.sameIssueGate?.sameIssues?.length);
+  const hasExactDimension = Boolean(
+    conflict.exactLegalDimension ||
+      conflict.sameIssueGate?.sameDimensions?.length ||
+      conflict.legalDimension
+  );
+
+  const sameIssuePassed =
+    conflict.sameIssueGate?.passed === true ||
+    Boolean(conflict.exactIssue);
+
+  const oppositeHoldingPassed =
+    conflict.oppositeHoldingGate?.passed === true ||
+    Boolean(conflict.oppositeHolding || conflict.oppositeHoldings);
+
+  const hasResolution = Boolean(
+    conflict.resolutionBasis ||
+      conflict.reason ||
+      conflict.winningAuthority ||
+      conflict.controllingAuthority ||
+      conflict.controllingSource
+  );
+
+  return (
+    hasTrueConflict &&
+    hasConflictType &&
+    hasExactIssue &&
+    hasExactDimension &&
+    sameIssuePassed &&
+    oppositeHoldingPassed &&
+    hasResolution
+  );
+}
+
+export function buildConflictFlagText(conflict = null) {
+  if (!conflict || !conflict.conflict) {
     return "Conflict Detected: NO";
   }
 
+  if (!conflictMetadataIsComplete(conflict)) {
+    return [
+      "Conflict Detected: NO",
+      "Note: A possible or apparent conflict was not elevated to doctrinal conflict because complete same-issue, same-dimension, opposite-holding, and hierarchy-resolution metadata was not provided."
+    ].join("\n");
+  }
+
   const lines = [
-    "Conflict Detected: YES"
+    "Conflict Detected: YES",
+    `Conflict Type: ${conflict.conflictType || conflict.type}`,
+    `Exact Issue: ${conflict.exactIssue || conflict.sameIssueGate?.sameIssues?.join(", ")}`,
+    `Exact Legal Dimension: ${
+      conflict.exactLegalDimension ||
+      conflict.sameIssueGate?.sameDimensions?.join(", ") ||
+      conflict.legalDimension
+    }`
   ];
 
-  if (conflict.sourceA) {
-    lines.push(
-      `Source A: ${conflict.sourceA}`
-    );
-  }
+  if (conflict.sourceA) lines.push(`Source A: ${JSON.stringify(conflict.sourceA)}`);
+  if (conflict.sourceB) lines.push(`Source B: ${JSON.stringify(conflict.sourceB)}`);
 
-  if (conflict.sourceB) {
-    lines.push(
-      `Source B: ${conflict.sourceB}`
-    );
-  }
-
-  if (conflict.reason) {
-    lines.push(
-      `Reason: ${conflict.reason}`
-    );
-  }
-
-  if (
-    conflict.controllingAuthority
-  ) {
-    lines.push(
-      `Controlling Authority: ${conflict.controllingAuthority}`
-    );
-  }
-
-  if (
-    conflict.controllingSource
-  ) {
-    lines.push(
-      `Recommended Action: Follow ${conflict.controllingSource}`
-    );
-  }
-
-  if (
-    conflict.distinctionType
-  ) {
-    lines.push(
-      `Distinction Type: ${conflict.distinctionType}`
-    );
-  }
+  if (conflict.reason) lines.push(`Reason: ${conflict.reason}`);
+  if (conflict.resolutionBasis) lines.push(`Resolution Basis: ${conflict.resolutionBasis}`);
+  if (conflict.controllingAuthority) lines.push(`Controlling Authority: ${conflict.controllingAuthority}`);
+  if (conflict.controllingSource) lines.push(`Recommended Action: Follow ${JSON.stringify(conflict.controllingSource)}`);
+  if (conflict.distinctionType) lines.push(`Distinction Type: ${conflict.distinctionType}`);
 
   return lines.join("\n");
 }
@@ -895,53 +737,33 @@ export function buildSupportingRulesText({
 }) {
   const blocks = [];
 
-  const legalBasisLines =
-    safeArray(topLegalBases)
-      .slice(0, 3)
-      .map((item) => {
-        const excerpt =
-          excerptOf(item, 220);
+  const legalBasisLines = sortCitationAuthorities(safeArray(topLegalBases))
+    .slice(0, 3)
+    .map((item) => {
+      const excerpt = excerptOf(item, 220);
+      return excerpt ? `- ${excerpt}` : null;
+    })
+    .filter(Boolean);
 
-        return excerpt
-          ? `- ${excerpt}`
-          : null;
-      })
-      .filter(Boolean);
+  if (legalBasisLines.length) blocks.push(legalBasisLines.join("\n"));
 
-  if (legalBasisLines.length) {
-    blocks.push(
-      legalBasisLines.join("\n")
-    );
-  }
-
-  const extra = uniqueBy(
-    safeArray(extraSources),
-    (item) =>
-      `${titleOf(item)}|${pathOf(item)}`
+  const extra = sortCitationAuthorities(
+    uniqueBy(safeArray(extraSources), (item) => `${titleOf(item)}|${pathOf(item)}`)
   ).slice(0, 3);
 
   if (extra.length) {
     blocks.push(
       extra
         .map((item) => {
-          const excerpt =
-            excerptOf(item, 220);
-
-          return excerpt
-            ? `- ${excerpt}`
-            : null;
+          const excerpt = excerptOf(item, 220);
+          return excerpt ? `- ${excerpt}` : null;
         })
         .filter(Boolean)
         .join("\n")
     );
   }
 
-  return (
-    blocks
-      .filter(Boolean)
-      .join("\n\n") ||
-    "No supporting rules found."
-  );
+  return blocks.filter(Boolean).join("\n\n") || "No supporting rules found.";
 }
 
 /* =========================================================
@@ -951,14 +773,15 @@ export function buildSupportingRulesText({
 export function citationFormattingHealthCheck() {
   return {
     ok: true,
-    engine:
-      "TINA_CITATION_FORMATTING_ENGINE",
-    version:
-      ENGINE_VERSION,
+    engine: "TINA_CITATION_FORMATTING_ENGINE",
+    version: ENGINE_VERSION,
     adaptiveCompatible: true,
     rendererCompatible: true,
     litigationCompatible: true,
-    auditCompatible: true
+    auditCompatible: true,
+    issueClassificationMatchAware: true,
+    targetAuthorityMatchAware: true,
+    conflictMetadataGated: true
   };
 }
 
