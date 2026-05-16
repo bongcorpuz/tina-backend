@@ -3,7 +3,14 @@
 
 /**
  * TINA Enterprise Reasoning Engine
- * Version: 3.1.0
+ * Version: 4.0.0
+ *
+ * Patch:
+ * - Complements patched issue-classified RAG pipeline.
+ * - Preserves structured issueClassificationMatch and targetAuthorityMatch.
+ * - Suppresses issue-mismatched evidence.
+ * - Uses complete conflict gates before treating conflict as doctrinal.
+ * - Keeps legacy hybridRetrieve export for compatibility, but issue-aware.
  */
 
 import {
@@ -21,11 +28,9 @@ import {
   analyzeConflictPair
 } from "./conflict-engine.js";
 
-import {
-  applySupersessionFilter
-} from "./supersession-engine.js";
+import { applySupersessionFilter } from "./supersession-engine.js";
 
-const ENGINE_VERSION = "3.1.0";
+const ENGINE_VERSION = "4.0.0";
 
 function safeString(value = "") {
   return String(value || "").trim();
@@ -36,8 +41,86 @@ function safeNumber(value, fallback = 0) {
   return Number.isFinite(num) ? num : fallback;
 }
 
+function safeArray(value) {
+  if (!value) return [];
+  return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
+}
+
+function unique(values = []) {
+  return [...new Set((values || []).filter(Boolean))];
+}
+
 function lower(value = "") {
   return safeString(value).toLowerCase();
+}
+
+function normalizeIssue(value = "") {
+  const raw = String(value || "").trim().toUpperCase().replace(/[\s-]+/g, "_");
+
+  const aliases = {
+    VAT: "VAT_LIABILITY",
+    OUTPUT_VAT: "VAT_LIABILITY",
+    INPUT_VAT: "VAT_REFUND",
+    INPUT_VAT_REFUND: "VAT_REFUND",
+    TAX_REFUND: "VAT_REFUND",
+    REFUND: "VAT_REFUND",
+    EWT: "WITHHOLDING",
+    CWT: "WITHHOLDING",
+    FWT: "WITHHOLDING",
+    WITHHOLDING_TAX: "WITHHOLDING",
+    RCIT: "INCOME_TAX",
+    MCIT: "INCOME_TAX",
+    NOLCO: "INCOME_TAX",
+    PRINCIPAL_AGENT: "TRANSACTION",
+    PRINCIPAL_VS_AGENT: "TRANSACTION",
+    GROSS_NET: "TRANSACTION",
+    PASS_THROUGH: "TRANSACTION",
+    REIMBURSEMENT: "TRANSACTION",
+    AGREEMENT: "CONTRACT",
+    ECONOMIC_SUBSTANCE_ANALYSIS: "ECONOMIC_SUBSTANCE"
+  };
+
+  return aliases[raw] || raw || null;
+}
+
+function normalizeDimension(value = "") {
+  const raw = String(value || "").trim().toUpperCase().replace(/[\s-]+/g, "_");
+
+  const aliases = {
+    SUBSTANCE: "SUBSTANTIVE",
+    PROCEDURE: "PROCEDURAL",
+    PROOF: "EVIDENTIARY",
+    EVIDENCE: "EVIDENTIARY",
+    JURISDICTION: "JURISDICTIONAL",
+    FACT: "FACTUAL",
+    FACTS: "FACTUAL",
+    CONTRACT: "CONTRACTUAL",
+    TRANSACTION_CHARACTERIZATION: "TRANSACTION"
+  };
+
+  return aliases[raw] || raw || null;
+}
+
+function normalizeAuthority(value = "") {
+  const raw = String(value || "").trim().toUpperCase().replace(/[\s-]+/g, "_");
+
+  const aliases = {
+    NIRC: "STATUTE",
+    TAX_CODE: "STATUTE",
+    LAW: "STATUTE",
+    REVENUE_REGULATION: "RR",
+    REVENUE_MEMORANDUM_CIRCULAR: "RMC",
+    REVENUE_MEMORANDUM_ORDER: "RMO",
+    REVENUE_AUDIT_MEMORANDUM_ORDER: "RAMO",
+    BIR_RULINGS: "BIR_RULING",
+    SC: "SUPREME_COURT",
+    CASE: "SUPREME_COURT",
+    JURISPRUDENCE: "SUPREME_COURT",
+    CTA: "CTA_DIVISION",
+    IFRS: "PFRS"
+  };
+
+  return aliases[raw] || raw || null;
 }
 
 function normalizeSourceName(name = "") {
@@ -53,7 +136,7 @@ function normalizeSourceName(name = "") {
     .replace(/\bno\.?\b/g, "")
     .replace(/[_–—]/g, "-")
     .replace(/\s+/g, "_")
-    .replace(/[^a-z0-9._()\/-]/g, "")
+    .replace(/[^a-z0-9._()/-]/g, "")
     .replace(/[\\/]+/g, "/")
     .replace(/_+/g, "_")
     .replace(/-+/g, "-")
@@ -88,6 +171,7 @@ function getDocPath(doc = {}) {
     doc.metadata?.path ||
       doc.path ||
       doc.source_path ||
+      doc.sourcePath ||
       doc.metadata?.originalFileName ||
       doc.originalSource ||
       doc.original_source ||
@@ -123,6 +207,9 @@ function getDocText(doc = {}) {
       doc.metadata?.documentTitle,
       doc.metadata?.originalFileName,
       doc.metadata?.normalizedReference,
+      doc.doctrineLabel,
+      doc.doctrineApplicability,
+      doc.doctrineApplicabilityExplanation,
       ...(Array.isArray(doc.normalizedAliases) ? doc.normalizedAliases : []),
       ...(Array.isArray(doc.normalized_aliases) ? doc.normalized_aliases : []),
       ...(Array.isArray(doc.metadata?.normalizedAliases)
@@ -168,6 +255,7 @@ function getAuthorityType(doc = {}) {
 function inferAuthorityTier(doc = {}) {
   const explicitTier =
     doc.authority_tier ??
+    doc.authorityTier ??
     doc.authorityLevel ??
     doc.authority_level ??
     doc.metadata?.authorityLevel ??
@@ -198,7 +286,7 @@ function inferControllingPrecedence(doc = {}) {
       ...doc,
       path: getDocPath(doc),
       metadata: doc.metadata || {}
-    }) || 99
+    }) || inferAuthorityTier(doc) || 99
   );
 }
 
@@ -293,40 +381,187 @@ function detectIssueSignals(text = "") {
     if (condition) issues.push(issue);
   };
 
-  push(/\b(vat refund|input vat refund|120\+30|administrative claim|judicial claim|tcc|unutilized input vat)\b/i.test(value), "VAT_REFUND");
-  push(/\b(vat liability|output vat|subject to vat|vatable|gross receipts|sale of goods|sale of services)\b/i.test(value), "VAT_LIABILITY");
-  push(/\b(invoice|receipt|substantiation|documentary|proof|evidence|records)\b/i.test(value), "EVIDENTIARY");
-  push(/\b(filing|deadline|protest|appeal|assessment|loa|pan|fan|prescription)\b/i.test(value), "PROCEDURAL");
-  push(/\b(withholding|ewt|cwt|fwt)\b/i.test(value), "WITHHOLDING");
-  push(/\b(income tax|rcit|mcit|nolco|deductible|gross income)\b/i.test(value), "INCOME_TAX");
+  push(/\b(vat refund|input vat refund|120\+30|administrative claim|judicial claim|tcc|tax credit certificate|unutilized input vat|excess input vat)\b/i.test(value), "VAT_REFUND");
+  push(/\b(vat liability|output vat|subject to vat|vatable|gross receipts|sale of goods|sale of services|value-added tax|value added tax)\b/i.test(value), "VAT_LIABILITY");
+  push(/\b(invoice|receipt|official receipt|substantiation|documentary|proof|evidence|records|burden of proof)\b/i.test(value), "EVIDENTIARY");
+  push(/\b(filing|deadline|protest|appeal|assessment|loa|pan|fan|prescription|remedy)\b/i.test(value), "PROCEDURAL");
+  push(/\b(withholding|ewt|cwt|fwt|expanded withholding|final withholding)\b/i.test(value), "WITHHOLDING");
+  push(/\b(income tax|rcit|mcit|nolco|deductible|non-deductible|gross income|taxable income)\b/i.test(value), "INCOME_TAX");
   push(/\b(contract|agreement|lease|concession|clause)\b/i.test(value), "CONTRACT");
-  push(/\b(principal|agent|pass-through|reimbursement|bundled|economic substance)\b/i.test(value), "TRANSACTION");
-  push(/\b(audit|afs|pfrs|pas|misstatement|working paper)\b/i.test(value), "AUDIT");
+  push(/\b(principal|agent|pass-through|reimbursement|bundled|gross vs net|economic substance|substance over form)\b/i.test(value), "TRANSACTION");
+  push(/\b(audit|afs|pfrs|pas|misstatement|working paper|financial statements)\b/i.test(value), "AUDIT");
 
-  return [...new Set(issues)];
+  return unique(issues);
 }
 
-function hasIssueMismatch(query = "", doc = {}) {
-  const queryIssues = detectIssueSignals(query);
-  const docIssues = detectIssueSignals(getDocText(doc));
+function classifyIssueDimensions(text = "") {
+  const value = lower(text);
+  const dimensions = [];
+
+  const push = (condition, dimension) => {
+    if (condition) dimensions.push(dimension);
+  };
+
+  push(/\b(taxable|liable|subject to|exempt|zero-rated|gross income|deductible|non-deductible|tax base|tax rate|output vat|input vat|income tax|withholding tax|final tax|vatable|sales|revenue)\b/i.test(value), "SUBSTANTIVE");
+  push(/\b(file|filing|deadline|due date|period|prescriptive|administrative claim|judicial claim|appeal|protest|assessment|loa|pan|fan|fld|return|form|remedy|120\+30)\b/i.test(value), "PROCEDURAL");
+  push(/\b(invoice|receipt|substantiation|documentary|support|proof|evidence|certificate|schedule|reconciliation|records|books|burden of proof)\b/i.test(value), "EVIDENTIARY");
+  push(/\b(jurisdiction|jurisdictional|cta|court has no jurisdiction|condition precedent|exhaustion|120\+30|30-day)\b/i.test(value), "JURISDICTIONAL");
+  push(/\b(effective|effectivity|retroactive|prospective|prior to|after|before|beginning|taxable year|calendar year|transition|transitory|superseded|amended|repealed)\b/i.test(value), "TEMPORAL");
+  push(/\b(rmc|rmo|ramo|revenue memorandum|bir ruling|administrative|interpretative|clarificatory|implementing rule|regulation)\b/i.test(value), "ADMINISTRATIVE");
+  push(/\b(facts|factual|depending on|case-to-case|actual|circumstances|transaction structure|documentation)\b/i.test(value), "FACTUAL");
+  push(/\b(contract|agreement|clause|lease|concession)\b/i.test(value), "CONTRACTUAL");
+  push(/\b(economic substance|substance over form|sham|simulation|business purpose)\b/i.test(value), "ECONOMIC_SUBSTANCE");
+
+  return unique(dimensions.length ? dimensions : ["GENERAL"]);
+}
+
+function dimensionsOverlap(a = [], b = []) {
+  if (!a.length || !b.length) return true;
+  if (a.includes("GENERAL") || b.includes("GENERAL")) return true;
+  return a.some((item) => b.includes(item));
+}
+
+function issueOverlap(a = [], b = []) {
+  if (!a.length || !b.length) return true;
+  if (a.includes("GENERAL") || b.includes("GENERAL")) return true;
+  return a.some((item) => b.includes(item));
+}
+
+function normalizeIssueClassification(issueClassification = null, query = "") {
+  const source = issueClassification || {};
+  const fallbackIssues = detectIssueSignals(query).map(normalizeIssue);
+
+  const primaryIssue =
+    normalizeIssue(source.primaryIssue) ||
+    normalizeIssue(source.primary_issue) ||
+    normalizeIssue(source.issueType) ||
+    normalizeIssue(source.issue_type) ||
+    fallbackIssues[0] ||
+    "GENERAL";
+
+  const subIssues = unique([
+    primaryIssue,
+    ...safeArray(source.subIssues).map(normalizeIssue),
+    ...safeArray(source.subIssue).map(normalizeIssue),
+    ...safeArray(source.sub_issues).map(normalizeIssue),
+    ...safeArray(source.sub_issue).map(normalizeIssue),
+    ...fallbackIssues
+  ]).filter(Boolean);
+
+  const legalDimensions = unique([
+    ...safeArray(source.legalDimensions).map(normalizeDimension),
+    ...safeArray(source.legalDimension).map(normalizeDimension),
+    ...safeArray(source.legal_dimensions).map(normalizeDimension),
+    ...safeArray(source.legal_dimension).map(normalizeDimension),
+    ...classifyIssueDimensions(query).map(normalizeDimension)
+  ]).filter(Boolean);
+
+  const targetAuthorities = unique([
+    ...safeArray(source.targetAuthorities).map(normalizeAuthority),
+    ...safeArray(source.target_authorities).map(normalizeAuthority)
+  ]).filter(Boolean);
+
+  return {
+    primaryIssue,
+    subIssues,
+    legalDimensions,
+    retrievalStrategy:
+      source.retrievalStrategy ||
+      source.retrieval_strategy ||
+      "REASONING_ENGINE_ISSUE_CLASSIFIED",
+    targetAuthorities,
+    raw: source
+  };
+}
+
+function targetAuthorityMatched(profile = {}, doc = {}) {
+  if (!safeArray(profile.targetAuthorities).length) return false;
+  return profile.targetAuthorities.includes(getAuthorityType(doc));
+}
+
+function hasIssueMismatchByProfile(profile = {}, doc = {}) {
+  const text = getDocText(doc);
 
   if (
-    queryIssues.includes("VAT_LIABILITY") &&
-    docIssues.includes("VAT_REFUND") &&
-    !queryIssues.includes("VAT_REFUND")
+    profile.primaryIssue === "VAT_LIABILITY" &&
+    /\b(vat refund|input vat refund|120\+30|administrative claim|judicial claim|tcc|unutilized input vat|excess input vat)\b/i.test(text)
   ) {
     return true;
   }
 
   if (
-    queryIssues.includes("VAT_REFUND") &&
-    docIssues.includes("VAT_LIABILITY") &&
-    !queryIssues.includes("VAT_LIABILITY")
+    profile.primaryIssue === "VAT_REFUND" &&
+    /\b(vat liability|output vat|subject to vat|vatable|gross receipts|sale of goods|sale of services|value-added tax)\b/i.test(text)
+  ) {
+    return true;
+  }
+
+  if (
+    profile.primaryIssue === "WITHHOLDING" &&
+    /\b(vat refund|input vat refund|vat liability|output vat|vatable)\b/i.test(text)
   ) {
     return true;
   }
 
   return false;
+}
+
+function buildIssueClassificationMatch(query = "", doc = {}, issueClassification = null) {
+  if (doc.issueClassificationMatch && typeof doc.issueClassificationMatch === "object") {
+    return {
+      ...doc.issueClassificationMatch,
+      targetAuthorityMatch:
+        doc.issueClassificationMatch.targetAuthorityMatch === true ||
+        doc.targetAuthorityMatch === true,
+      issueMismatch:
+        doc.issueClassificationMatch.issueMismatch === true ||
+        doc.issueMismatch === true
+    };
+  }
+
+  const profile = normalizeIssueClassification(issueClassification, query);
+  const text = getDocText(doc);
+  const docIssues = detectIssueSignals(text).map(normalizeIssue);
+  const docDimensions = classifyIssueDimensions(text).map(normalizeDimension);
+
+  const queryIssues = safeArray(profile.subIssues).map(normalizeIssue).filter(Boolean);
+  const queryDimensions = safeArray(profile.legalDimensions).map(normalizeDimension).filter(Boolean);
+
+  const issueMismatch =
+    doc.issueMismatch === true ||
+    hasIssueMismatchByProfile(profile, doc);
+
+  const issueOverlapValue = issueOverlap(queryIssues, docIssues);
+  const dimensionOverlap = dimensionsOverlap(queryDimensions, docDimensions);
+  const targetAuthorityMatch =
+    doc.targetAuthorityMatch === true ||
+    targetAuthorityMatched(profile, doc);
+
+  const matched =
+    !issueMismatch &&
+    (targetAuthorityMatch || issueOverlapValue || dimensionOverlap || !docIssues.length);
+
+  return {
+    matched,
+    compatible: matched,
+    issueOverlap: issueOverlapValue,
+    dimensionOverlap,
+    issueMismatch,
+    targetAuthorityMatch,
+    primaryIssue: profile.primaryIssue,
+    subIssues: profile.subIssues,
+    legalDimensions: profile.legalDimensions,
+    retrievalStrategy: profile.retrievalStrategy,
+    targetAuthorities: profile.targetAuthorities,
+    docIssues,
+    docDimensions,
+    docAuthorityType: getAuthorityType(doc)
+  };
+}
+
+function hasIssueMismatch(query = "", doc = {}, issueClassification = null) {
+  const match = buildIssueClassificationMatch(query, doc, issueClassification);
+  return match.issueMismatch === true;
 }
 
 function isCourtAuthority(authorityType = "") {
@@ -339,6 +574,54 @@ function isBIRAuthority(authorityType = "") {
   return ["RR", "RMC", "RMO", "RAMO", "BIR_RULING"].includes(String(authorityType || "").toUpperCase());
 }
 
+function conflictMetadataIsComplete(conflict = null) {
+  if (!conflict || typeof conflict !== "object") return false;
+
+  const hasTrueConflict = conflict.conflict === true;
+  const hasConflictType = Boolean(conflict.conflictType || conflict.type);
+
+  const hasExactIssue = Boolean(
+    conflict.exactIssue ||
+      conflict.exact_issue ||
+      conflict.sameIssueGate?.sameIssues?.length
+  );
+
+  const hasExactDimension = Boolean(
+    conflict.exactLegalDimension ||
+      conflict.exact_legal_dimension ||
+      conflict.sameIssueGate?.sameDimensions?.length ||
+      conflict.legalDimension
+  );
+
+  const sameIssuePassed =
+    conflict.sameIssueGate?.passed === true ||
+    Boolean(conflict.exactIssue || conflict.exact_issue);
+
+  const oppositeHoldingPassed =
+    conflict.oppositeHoldingGate?.passed === true ||
+    Boolean(conflict.oppositeHolding || conflict.oppositeHoldings);
+
+  const hasResolution = Boolean(
+    conflict.resolutionBasis ||
+      conflict.resolution_basis ||
+      conflict.reason ||
+      conflict.winningAuthority ||
+      conflict.controllingAuthority ||
+      conflict.controlling_authority ||
+      conflict.controllingSource
+  );
+
+  return (
+    hasTrueConflict &&
+    hasConflictType &&
+    hasExactIssue &&
+    hasExactDimension &&
+    sameIssuePassed &&
+    oppositeHoldingPassed &&
+    hasResolution
+  );
+}
+
 function buildConflictResolutionBasis(aType = "", bType = "", override = null) {
   if (override?.overrideApplies) {
     return override.reason || "Court decision prevails over conflicting BIR issuance.";
@@ -348,15 +631,21 @@ function buildConflictResolutionBasis(aType = "", bType = "", override = null) {
     (isCourtAuthority(aType) && isBIRAuthority(bType)) ||
     (isCourtAuthority(bType) && isBIRAuthority(aType))
   ) {
-    return "Court decision prevails over conflicting BIR issuance if there is a genuine same-issue conflict.";
+    return "Court decision prevails over conflicting BIR issuance only if there is a genuine same-issue opposite-holding conflict.";
   }
 
   return `Prefer ${override?.winningAuthority || aType || bType || "higher authority"} based on controlling authority hierarchy.`;
 }
 
-function compareEvidencePair(a, b) {
+function compareEvidencePair(a, b, issueClassification = null) {
   const docA = a.raw || a;
   const docB = b.raw || b;
+
+  const matchA = buildIssueClassificationMatch("", docA, issueClassification);
+  const matchB = buildIssueClassificationMatch("", docB, issueClassification);
+
+  if (matchA.issueMismatch || matchB.issueMismatch) return null;
+  if (!matchA.matched || !matchB.matched) return null;
 
   const analysis = analyzeConflictPair(docA, docB);
 
@@ -378,7 +667,10 @@ function compareEvidencePair(a, b) {
 
   const overridden = preferred === a ? b : a;
 
+  const completeConflict = conflictMetadataIsComplete(analysis);
+
   return {
+    conflict: completeConflict,
     conflict_topic: classifyEvidenceTopic(a) || classifyEvidenceTopic(b) || "general",
     source_a_path: getDocPath(docA),
     source_b_path: getDocPath(docB),
@@ -397,21 +689,30 @@ function compareEvidencePair(a, b) {
       analysis?.reason ||
       analysis?.resolutionBasis ||
       override?.reason ||
-      "Potential contradiction detected between sources on the same or related issue.",
+      "Potential contradiction signal detected; verify same issue and opposite holding before treating as conflict.",
     resolution_basis:
       analysis?.resolutionBasis || buildConflictResolutionBasis(aType, bType, override),
-    doctrinal_conflict: Boolean(analysis?.doctrinalConflict),
-    hierarchy_conflict: Boolean(analysis?.hierarchyConflict),
-    apparent_conflict: Boolean(analysis?.apparentConflict),
+    doctrinal_conflict: completeConflict && Boolean(analysis?.doctrinalConflict),
+    hierarchy_conflict: completeConflict && Boolean(analysis?.hierarchyConflict),
+    apparent_conflict: !completeConflict && Boolean(analysis?.apparentConflict),
     distinction_type: analysis?.distinctionType || null,
     exact_issue: analysis?.exactIssue || null,
+    exact_legal_dimension: analysis?.exactLegalDimension || null,
+    sameIssueGate: analysis?.sameIssueGate || null,
+    oppositeHoldingGate: analysis?.oppositeHoldingGate || null,
+    issueClassificationMatchA: matchA,
+    issueClassificationMatchB: matchB,
+    targetAuthorityMatchA: matchA.targetAuthorityMatch,
+    targetAuthorityMatchB: matchB.targetAuthorityMatch,
     audit_record: {
+      completeConflict,
       overrideApplied: Boolean(override?.overrideApplies),
       winningAuthority: override?.winningAuthority || null,
       overriddenAuthority: override?.overriddenAuthority || null,
       winningSource: getDocPath(override?.winningSource || {}),
       overriddenSource: getDocPath(override?.overriddenSource || {}),
-      analysis
+      analysis,
+      tinaReasoningEngineVersion: ENGINE_VERSION
     }
   };
 }
@@ -604,7 +905,14 @@ export async function hybridRetrieve({
   taxType = "",
   topK = 24,
   adaptiveMode = "STANDARD",
-  adaptiveContext = {}
+  adaptiveContext = {},
+  issueClassification = null,
+  primaryIssue = null,
+  subIssue = null,
+  subIssues = [],
+  legalDimensions = [],
+  retrievalStrategy = null,
+  targetAuthorities = []
 }) {
   const cleanQuery = safeString(query);
 
@@ -618,6 +926,40 @@ export async function hybridRetrieve({
       }
     };
   }
+
+  const profile = normalizeIssueClassification(
+    {
+      ...(issueClassification || {}),
+      primaryIssue:
+        primaryIssue ||
+        issueClassification?.primaryIssue ||
+        issueClassification?.primary_issue,
+      subIssue:
+        subIssue ||
+        issueClassification?.subIssue ||
+        issueClassification?.sub_issue,
+      subIssues: unique([
+        ...safeArray(subIssues),
+        ...safeArray(issueClassification?.subIssues),
+        ...safeArray(issueClassification?.sub_issues)
+      ]),
+      legalDimensions: unique([
+        ...safeArray(legalDimensions),
+        ...safeArray(issueClassification?.legalDimensions),
+        ...safeArray(issueClassification?.legal_dimensions)
+      ]),
+      retrievalStrategy:
+        retrievalStrategy ||
+        issueClassification?.retrievalStrategy ||
+        issueClassification?.retrieval_strategy,
+      targetAuthorities: unique([
+        ...safeArray(targetAuthorities),
+        ...safeArray(issueClassification?.targetAuthorities),
+        ...safeArray(issueClassification?.target_authorities)
+      ])
+    },
+    cleanQuery
+  );
 
   const exact = await resolveExactCitation(supabase, cleanQuery);
   const exactDocs = exact.documents || [];
@@ -661,7 +1003,16 @@ export async function hybridRetrieve({
   const merged = supersessionResult?.activeDocs || [];
 
   const scored = merged
-    .filter((doc) => !hasIssueMismatch(cleanQuery, doc))
+    .map((doc) => {
+      const issueClassificationMatch = buildIssueClassificationMatch(cleanQuery, doc, profile);
+      return {
+        ...doc,
+        issueClassificationMatch,
+        targetAuthorityMatch: issueClassificationMatch.targetAuthorityMatch,
+        issueMismatch: issueClassificationMatch.issueMismatch
+      };
+    })
+    .filter((doc) => !doc.issueMismatch)
     .map((doc) => {
       const textBlob = getDocText(doc);
       const vectorScore = safeNumber(
@@ -670,16 +1021,23 @@ export async function hybridRetrieve({
       );
       const keywordScore = computeKeywordScore(cleanQuery, textBlob);
       const tier = inferAuthorityTier(doc);
+      const precedence = inferControllingPrecedence(doc);
       const citationBoost = exactDocs.some(
         (exactDoc) => buildDocIdentity(exactDoc) === buildDocIdentity(doc)
       )
         ? 1.25
         : 1;
 
+      const issueBonus = doc.issueClassificationMatch?.matched ? 0.25 : 0;
+      const targetBonus = doc.targetAuthorityMatch ? 0.25 : 0;
+
       const combinedScore =
-        Math.max(vectorScore, keywordScore) *
-        authorityWeight(tier) *
-        citationBoost;
+        (Math.max(vectorScore, keywordScore) *
+          authorityWeight(tier) *
+          citationBoost) +
+        issueBonus +
+        targetBonus -
+        precedence * 0.002;
 
       return {
         ...doc,
@@ -687,21 +1045,37 @@ export async function hybridRetrieve({
         keyword_score: keywordScore,
         authority_tier: tier,
         authority_type: getAuthorityType(doc),
-        controlling_precedence: inferControllingPrecedence(doc),
-        combined_score: combinedScore,
+        controlling_precedence: precedence,
+        combined_score: Number(combinedScore.toFixed(6)),
         question_type: questionType,
         adaptive_mode: adaptiveMode,
         reasoning_metadata: {
           adaptiveContextAware: true,
           supersessionAware: true,
           issueMismatchSuppressed: true,
-          tinaReasoningEngineVersion: ENGINE_VERSION
+          issueClassificationAware: true,
+          targetAuthorityAware: true,
+          controllingPrecedenceAware: true,
+          tinaReasoningEngineVersion: ENGINE_VERSION,
+          issueClassification: profile
         }
       };
     });
 
   scored.sort((a, b) => {
+    const targetDiff = Number(b.targetAuthorityMatch === true) - Number(a.targetAuthorityMatch === true);
+    if (targetDiff !== 0) return targetDiff;
+
+    const issueDiff =
+      Number(b.issueClassificationMatch?.matched === true) -
+      Number(a.issueClassificationMatch?.matched === true);
+    if (issueDiff !== 0) return issueDiff;
+
     if (b.combined_score !== a.combined_score) return b.combined_score - a.combined_score;
+
+    const precedenceDiff = inferControllingPrecedence(a) - inferControllingPrecedence(b);
+    if (precedenceDiff !== 0) return precedenceDiff;
+
     return inferAuthorityTier(a) - inferAuthorityTier(b);
   });
 
@@ -709,54 +1083,90 @@ export async function hybridRetrieve({
     query: cleanQuery,
     exactCitation: exact,
     supersessionResult,
+    issueClassification: profile,
     results: scored.slice(0, topK),
     retrievalMetadata: {
       engine: "TINA_REASONING_ENGINE",
       version: ENGINE_VERSION,
       adaptiveMode,
       adaptiveContext,
+      issueClassification: profile,
       exactCitationMatched: Boolean(exact.matched),
       rawCount: exactDocs.length + metadataDocs.length + keywordDocs.length + vectorDocs.length,
-      finalCount: scored.slice(0, topK).length
+      finalCount: scored.slice(0, topK).length,
+      issueClassificationAware: true,
+      targetAuthorityAware: true
     }
   };
 }
 
-export function normalizeRetrievedEvidence(docs = []) {
-  return docs.map((doc) => {
-    const authorityTier = inferAuthorityTier(doc);
-    const authorityType = getAuthorityType(doc);
-    const rawScore = safeNumber(
-      doc.combined_score || doc.score || doc.keyword_score || doc.retrievalScore || 0,
-      0
-    );
+export function normalizeRetrievedEvidence(docs = [], options = {}) {
+  const issueClassification =
+    options.issueClassification ||
+    options.adaptiveContext?.issueClassification ||
+    null;
 
-    return {
-      id: buildDocIdentity(doc),
-      vector_chunk_id: doc.id || doc.chunk_id || doc.metadata?.chunkId || null,
-      topic: classifyEvidenceTopic(doc),
-      text: getDocText(doc),
-      source_path: getDocPath(doc),
-      source_title: getDocOriginalName(doc) || safeString(doc.source),
-      section_label: safeString(doc.metadata?.sectionLabel || doc.metadata?.heading || ""),
-      authority_tier: authorityTier,
-      authority_type: authorityType,
-      authority_label: inferAuthorityLabel(authorityTier, doc),
-      controlling_precedence: inferControllingPrecedence(doc),
-      evidence_type: inferEvidenceType(doc),
-      effective_date: inferEffectiveDate(doc),
-      score: rawScore,
-      raw: doc
-    };
-  });
+  return docs
+    .map((doc) => {
+      const authorityTier = inferAuthorityTier(doc);
+      const authorityType = getAuthorityType(doc);
+      const rawScore = safeNumber(
+        doc.combined_score ||
+          doc.score ||
+          doc.keyword_score ||
+          doc.retrievalScore ||
+          doc.finalScore ||
+          doc.final_score ||
+          0,
+        0
+      );
+
+      const issueClassificationMatch = buildIssueClassificationMatch(
+        "",
+        doc,
+        issueClassification || doc.issueClassificationMatch?.profile || null
+      );
+
+      return {
+        id: buildDocIdentity(doc),
+        vector_chunk_id: doc.id || doc.chunk_id || doc.metadata?.chunkId || null,
+        topic: classifyEvidenceTopic(doc),
+        text: getDocText(doc),
+        source_path: getDocPath(doc),
+        source_title: getDocOriginalName(doc) || safeString(doc.source),
+        section_label: safeString(doc.metadata?.sectionLabel || doc.metadata?.heading || ""),
+        authority_tier: authorityTier,
+        authority_type: authorityType,
+        authority_label: inferAuthorityLabel(authorityTier, doc),
+        controlling_precedence: inferControllingPrecedence(doc),
+        evidence_type: inferEvidenceType(doc),
+        effective_date: inferEffectiveDate(doc),
+        score: rawScore,
+        issueClassificationMatch,
+        targetAuthorityMatch:
+          doc.targetAuthorityMatch === true ||
+          issueClassificationMatch.targetAuthorityMatch === true,
+        issueMismatch:
+          doc.issueMismatch === true ||
+          issueClassificationMatch.issueMismatch === true,
+        raw: doc
+      };
+    })
+    .filter((item) => !item.issueMismatch);
 }
 
-export function detectEvidenceConflicts(evidence = []) {
+export function detectEvidenceConflicts(evidence = [], options = {}) {
+  const issueClassification =
+    options.issueClassification ||
+    options.adaptiveContext?.issueClassification ||
+    null;
+
+  const cleanEvidence = safeArray(evidence).filter((item) => !item.issueMismatch);
   const conflicts = [];
 
-  for (let i = 0; i < evidence.length; i += 1) {
-    for (let j = i + 1; j < evidence.length; j += 1) {
-      const result = compareEvidencePair(evidence[i], evidence[j]);
+  for (let i = 0; i < cleanEvidence.length; i += 1) {
+    for (let j = i + 1; j < cleanEvidence.length; j += 1) {
+      const result = compareEvidencePair(cleanEvidence[i], cleanEvidence[j], issueClassification);
       if (result) conflicts.push(result);
     }
   }
@@ -770,28 +1180,40 @@ export function detectEvidenceConflicts(evidence = []) {
         conflict.source_b_path,
         conflict.preferred_source_path,
         conflict.overridden_source_path,
-        conflict.controlling_authority
+        conflict.controlling_authority,
+        conflict.exact_issue,
+        conflict.exact_legal_dimension
       ].join("|")
   );
 }
 
 export function rankEvidenceByAuthority(evidence = []) {
-  return [...evidence].sort((a, b) => {
-    const aTier = safeNumber(a.authority_tier, 99);
-    const bTier = safeNumber(b.authority_tier, 99);
+  return [...safeArray(evidence)]
+    .filter((item) => !item.issueMismatch)
+    .sort((a, b) => {
+      const targetDiff = Number(b.targetAuthorityMatch === true) - Number(a.targetAuthorityMatch === true);
+      if (targetDiff !== 0) return targetDiff;
 
-    if (aTier !== bTier) return aTier - bTier;
+      const issueDiff =
+        Number(b.issueClassificationMatch?.matched === true) -
+        Number(a.issueClassificationMatch?.matched === true);
+      if (issueDiff !== 0) return issueDiff;
 
-    const scoreDiff = safeNumber(b.score, 0) - safeNumber(a.score, 0);
-    if (scoreDiff !== 0) return scoreDiff;
+      const aPrecedence = safeNumber(a.controlling_precedence, 99);
+      const bPrecedence = safeNumber(b.controlling_precedence, 99);
 
-    const aPrecedence = safeNumber(a.controlling_precedence, 99);
-    const bPrecedence = safeNumber(b.controlling_precedence, 99);
+      if (aPrecedence !== bPrecedence) return aPrecedence - bPrecedence;
 
-    if (aPrecedence !== bPrecedence) return aPrecedence - bPrecedence;
+      const aTier = safeNumber(a.authority_tier, 99);
+      const bTier = safeNumber(b.authority_tier, 99);
 
-    return safeString(a.source_path).localeCompare(safeString(b.source_path));
-  });
+      if (aTier !== bTier) return aTier - bTier;
+
+      const scoreDiff = safeNumber(b.score, 0) - safeNumber(a.score, 0);
+      if (scoreDiff !== 0) return scoreDiff;
+
+      return safeString(a.source_path).localeCompare(safeString(b.source_path));
+    });
 }
 
 export function buildClaimEvidenceMap(answerDraft, evidence = []) {
@@ -799,6 +1221,7 @@ export function buildClaimEvidenceMap(answerDraft, evidence = []) {
 
   return claims.map((claim) => {
     const ranked = evidence
+      .filter((item) => !item.issueMismatch)
       .map((item) => {
         const combinedText = [
           item.text,
@@ -811,13 +1234,16 @@ export function buildClaimEvidenceMap(answerDraft, evidence = []) {
           .join(" ");
 
         const evidenceScore = computeKeywordScore(claim, combinedText);
+        const issueBoost = item.issueClassificationMatch?.matched ? 0.15 : 0;
+        const targetBoost = item.targetAuthorityMatch ? 0.15 : 0;
+        const finalScore = Math.min(1, evidenceScore + issueBoost + targetBoost);
 
         return {
           claim_text: claim,
           support_status:
-            evidenceScore >= 0.55
+            finalScore >= 0.55
               ? "supported"
-              : evidenceScore >= 0.25
+              : finalScore >= 0.25
                 ? "partial"
                 : "unsupported",
           source_path: item.source_path || null,
@@ -825,10 +1251,21 @@ export function buildClaimEvidenceMap(answerDraft, evidence = []) {
           vector_chunk_id: item.vector_chunk_id || null,
           authority_tier: item.authority_tier ?? null,
           authority_type: item.authority_type ?? null,
-          evidence_score: Number(evidenceScore.toFixed(4))
+          controlling_precedence: item.controlling_precedence ?? null,
+          evidence_score: Number(finalScore.toFixed(4)),
+          issueClassificationMatch: item.issueClassificationMatch || null,
+          targetAuthorityMatch: item.targetAuthorityMatch === true
         };
       })
-      .sort((a, b) => b.evidence_score - a.evidence_score);
+      .sort((a, b) => {
+        if (b.targetAuthorityMatch !== a.targetAuthorityMatch) {
+          return Number(b.targetAuthorityMatch) - Number(a.targetAuthorityMatch);
+        }
+
+        if (b.evidence_score !== a.evidence_score) return b.evidence_score - a.evidence_score;
+
+        return safeNumber(a.controlling_precedence, 99) - safeNumber(b.controlling_precedence, 99);
+      });
 
     return (
       ranked[0] || {
@@ -839,7 +1276,10 @@ export function buildClaimEvidenceMap(answerDraft, evidence = []) {
         vector_chunk_id: null,
         authority_tier: null,
         authority_type: null,
-        evidence_score: 0
+        controlling_precedence: null,
+        evidence_score: 0,
+        issueClassificationMatch: null,
+        targetAuthorityMatch: false
       }
     );
   });
@@ -857,9 +1297,18 @@ export async function synthesizeGroundedAnswer({
   memoryContext = "",
   responseMode = "TECHNICAL",
   adaptiveContext = {},
+  issueClassification = null,
   model = process.env.OPENAI_MODEL || "gpt-4o-mini"
 }) {
-  const topEvidence = rankEvidenceByAuthority(evidence).slice(0, 10);
+  const profile =
+    issueClassification ||
+    adaptiveContext?.issueClassification ||
+    adaptiveContext?.queryIntent?.issueClassification ||
+    null;
+
+  const topEvidence = rankEvidenceByAuthority(
+    normalizeRetrievedEvidence(evidence, { issueClassification: profile })
+  ).slice(0, 10);
 
   const context = topEvidence
     .map((item, index) => {
@@ -869,6 +1318,8 @@ export async function synthesizeGroundedAnswer({
         `AUTHORITY: ${item.authority_label || "Unknown"} (Tier ${item.authority_tier})`,
         `AUTHORITY TYPE: ${item.authority_type || "UNKNOWN"}`,
         `CONTROLLING PRECEDENCE: ${item.controlling_precedence ?? 99}`,
+        `TARGET AUTHORITY MATCH: ${item.targetAuthorityMatch ? "YES" : "NO"}`,
+        `ISSUE CLASSIFICATION MATCH: ${JSON.stringify(item.issueClassificationMatch || {})}`,
         `SECTION: ${item.section_label || "N/A"}`,
         `SCORE: ${item.score}`,
         "TEXT:",
@@ -876,6 +1327,8 @@ export async function synthesizeGroundedAnswer({
       ].join("\n");
     })
     .join("\n\n---\n\n");
+
+  const completeConflicts = safeArray(conflicts).filter((item) => item.conflict === true);
 
   const systemPrompt = `
 You are TINA (Tax Intelligence and Analysis), an expert Philippine tax researcher, analyst, CPA, audit partner, and legal reasoning assistant.
@@ -893,32 +1346,21 @@ CORE BEHAVIOR:
 - audit-defensible
 - evidence-aware
 - hierarchy-aware
+- issue-classification-aware
 - no hallucinations
 - no unsupported legal conclusions
-
-RETRIEVAL HIERARCHY:
-1. 1987 Constitution
-2. NIRC / Tax Code / Republic Acts
-3. Revenue Regulations
-4. Revenue Memorandum Circulars
-5. Revenue Memorandum Orders
-6. Revenue Audit Memorandum Orders
-7. BIR Rulings
-8. Supreme Court decisions
-9. CTA En Banc decisions
-10. Court of Appeals decisions
-11. CTA Division decisions
-12. Tax Treaties / LGU ordinances / Secondary materials as applicable
 
 STRICT RULES:
 1. Answer ONLY from the provided CONTEXT when indexed context is available.
 2. Do NOT invent RR, RMC, RMO, RAMO, BIR rulings, dates, sections, rates, forms, thresholds, deadlines, case doctrines, or citations.
 3. If exact authority is not in CONTEXT, state the limitation.
-4. Do not claim a conflict unless the conflict is specific and visible in the provided context.
+4. Do not claim a conflict unless conflict metadata shows conflict === true, same issue, same legal dimension, and opposite holding.
 5. Different substantive, procedural, evidentiary, jurisdictional, factual, temporal, contractual, economic-substance, audit, transaction, or administrative rules are not direct conflicts unless they contradict on the same legal issue.
-6. Do not mention ChatGPT.
-7. If evidence is incomplete, use preliminary conclusion language.
-8. Do not append raw source lists; the app will display source links separately.
+6. Do not cite issue-mismatched authorities.
+7. Prefer sources with issueClassificationMatch.matched === true and targetAuthorityMatch === true.
+8. Do not mention ChatGPT.
+9. If evidence is incomplete, use preliminary conclusion language.
+10. Do not append raw source lists; the app will display source links separately.
 
 MANDATORY RESPONSE FORMAT:
 A. DIRECT ANSWER
@@ -942,6 +1384,9 @@ ${hookConfig?.mode || "ASK"}
 Response Mode:
 ${responseMode}
 
+Issue Classification:
+${JSON.stringify(profile || {}, null, 2)}
+
 Adaptive Context:
 ${JSON.stringify(adaptiveContext || {}, null, 2).slice(0, 3000)}
 
@@ -959,11 +1404,12 @@ ${questionType}
 
 Conflicts:
 ${
-  conflicts.length
-    ? conflicts
+  completeConflicts.length
+    ? completeConflicts
         .map((item, index) =>
           [
             `Conflict ${index + 1}: ${item.conflict_topic || "general"}`,
+            `Conflict: ${item.conflict ? "YES" : "NO"}`,
             `Source A: ${item.source_a_path || "N/A"} (${item.source_a_type || "Unknown"})`,
             `Source B: ${item.source_b_path || "N/A"} (${item.source_b_type || "Unknown"})`,
             `Reason: ${item.conflict_reason || "Potential contradiction"}`,
@@ -974,20 +1420,21 @@ ${
               : null,
             `Resolution Basis: ${item.resolution_basis || "Prefer higher authority"}`,
             item.exact_issue ? `Exact Issue: ${item.exact_issue}` : null,
+            item.exact_legal_dimension ? `Exact Legal Dimension: ${item.exact_legal_dimension}` : null,
             item.distinction_type ? `Distinction Type: ${item.distinction_type}` : null
           ]
             .filter(Boolean)
             .join("\n")
         )
         .join("\n\n")
-    : "No explicit conflicts detected."
+    : "No complete same-issue opposite-holding conflict detected."
 }
 
 CONTEXT:
 ${context}
 
 Instruction:
-Answer strictly using only the CONTEXT. Apply the TINA hierarchy for source organization and controlling legal precedence only for actual conflicts.
+Answer strictly using only the CONTEXT. Apply TINA hierarchy only to issue-matched authorities and only declare conflict where complete conflict metadata exists.
 `.trim();
 
   const response = await openai.chat.completions.create({
@@ -1024,6 +1471,7 @@ export async function saveReasoningRun(supabase, payload) {
       engine: "TINA_REASONING_ENGINE",
       version: ENGINE_VERSION,
       adaptiveContext: payload.adaptiveContext || null,
+      issueClassification: payload.issueClassification || null,
       retrievalMetadata: payload.retrievalMetadata || null
     }
   };
@@ -1047,16 +1495,16 @@ export async function saveReasoningEvidence(supabase, payload) {
 
   const rows = evidenceItems.map((item) => ({
     reasoning_run_id: reasoningRunId,
-    claim_text: safeString(item.claim_text),
-    support_status: safeString(item.support_status || "unsupported"),
-    source_path: safeString(item.source_path || "") || null,
-    source_title: safeString(item.source_title || "") || null,
-    vector_chunk_id: item.vector_chunk_id || null,
+    claim_text: safeString(item.claim_text || item.claimText),
+    support_status: safeString(item.support_status || item.supportStatus || "unsupported"),
+    source_path: safeString(item.source_path || item.sourcePath || "") || null,
+    source_title: safeString(item.source_title || item.sourceTitle || "") || null,
+    vector_chunk_id: item.vector_chunk_id || item.vectorChunkId || null,
     authority_tier:
       item.authority_tier === null || item.authority_tier === undefined
         ? null
         : Number(item.authority_tier),
-    authority_type: safeString(item.authority_type || "") || null,
+    authority_type: safeString(item.authority_type || item.authorityType || "") || null,
     evidence_score:
       item.evidence_score === null || item.evidence_score === undefined
         ? null
@@ -1081,6 +1529,7 @@ export async function saveReasoningConflicts(supabase, payload) {
 
   const rows = conflictItems.map((item) => {
     const resolutionSuffix = [
+      item.conflict !== undefined ? `conflict=${item.conflict ? "yes" : "no"}` : null,
       item.override_applied !== undefined
         ? `override_applied=${item.override_applied ? "yes" : "no"}`
         : null,
@@ -1090,7 +1539,9 @@ export async function saveReasoningConflicts(supabase, payload) {
       item.overridden_authority
         ? `overridden_authority=${item.overridden_authority}`
         : null,
-      item.distinction_type ? `distinction_type=${item.distinction_type}` : null
+      item.distinction_type ? `distinction_type=${item.distinction_type}` : null,
+      item.exact_issue ? `exact_issue=${item.exact_issue}` : null,
+      item.exact_legal_dimension ? `exact_legal_dimension=${item.exact_legal_dimension}` : null
     ]
       .filter(Boolean)
       .join(" | ");
@@ -1131,9 +1582,21 @@ export function reasoningEngineHealthCheck() {
     supersessionCompatible: true,
     adaptiveCompatible: true,
     plannerCompatible: true,
-    rendererCompatible: true
+    rendererCompatible: true,
+    issueClassificationCompatible: true,
+    issueClassificationMatchAware: true,
+    targetAuthorityAware: true,
+    controllingPrecedenceAware: true,
+    completeConflictGateAware: true
   };
 }
+
+export {
+  ENGINE_VERSION,
+  normalizeIssueClassification,
+  buildIssueClassificationMatch,
+  conflictMetadataIsComplete
+};
 
 export default {
   resolveExactCitation,
