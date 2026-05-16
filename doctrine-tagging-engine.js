@@ -3,26 +3,31 @@
 
 /**
  * TINA Enterprise Doctrine Tagging Engine
- * Version: 3.0.0
+ * Version: 4.0.0
+ *
+ * Patch:
+ * - Uses issueClassification before doctrine selection.
+ * - Blocks unrelated doctrines even if broad keywords overlap.
+ * - Emits issueClassificationMatch and targetAuthorityMatch downstream.
+ * - Removes CommonJS bridge for cleaner ESM compatibility.
  */
 
-import { createRequire } from "module";
-
-const require = createRequire(import.meta.url);
-
-const {
+import {
   rerankByHierarchy,
   getAuthorityTypeForDoc,
-  getAuthorityLevelForDoc
-} = require("./authority-engine.js");
+  getAuthorityLevelForDoc,
+  getControllingPrecedenceForDoc
+} from "./authority-engine.js";
 
-const { analyzeConflictPair } = require("./conflict-engine.js");
+import { analyzeConflictPair } from "./conflict-engine.js";
 
-const ENGINE_VERSION = "3.0.0";
+const ENGINE_VERSION = "4.0.0";
 
 const DOCTRINE_LIBRARY = {
   SUBSTANCE_OVER_FORM: {
     label: "Substance Over Form",
+    issueFamilies: ["TRANSACTION", "ECONOMIC_SUBSTANCE", "DOCTRINE"],
+    dimensions: ["FACTUAL", "ECONOMIC_SUBSTANCE", "TRANSACTION"],
     aliases: [
       "substance over form",
       "economic substance",
@@ -37,8 +42,11 @@ const DOCTRINE_LIBRARY = {
       "sham arrangements should not control"
     ]
   },
+
   BUSINESS_PURPOSE_TEST: {
     label: "Business Purpose Test",
+    issueFamilies: ["TRANSACTION", "ECONOMIC_SUBSTANCE", "DOCTRINE"],
+    dimensions: ["FACTUAL", "ECONOMIC_SUBSTANCE"],
     aliases: [
       "business purpose",
       "business purpose test",
@@ -52,8 +60,11 @@ const DOCTRINE_LIBRARY = {
       "lack of commercial purpose may indicate avoidance or evasion risk"
     ]
   },
+
   SIMULATION: {
     label: "Simulation of Transactions",
+    issueFamilies: ["TRANSACTION", "ECONOMIC_SUBSTANCE", "DOCTRINE"],
+    dimensions: ["FACTUAL", "ECONOMIC_SUBSTANCE"],
     aliases: [
       "simulation",
       "simulated transaction",
@@ -69,8 +80,11 @@ const DOCTRINE_LIBRARY = {
       "simulated acts may conceal true tax consequences"
     ]
   },
+
   FRAUD_INTENT: {
     label: "Fraud / Intent",
+    issueFamilies: ["DOCTRINE", "ASSESSMENT", "INCOME_TAX"],
+    dimensions: ["FACTUAL", "EVIDENTIARY"],
     aliases: [
       "fraud",
       "fraudulent intent",
@@ -86,8 +100,11 @@ const DOCTRINE_LIBRARY = {
       "bad faith may distinguish evasion from avoidance"
     ]
   },
+
   ECONOMIC_SUBSTANCE: {
     label: "Economic Substance",
+    issueFamilies: ["TRANSACTION", "ECONOMIC_SUBSTANCE", "DOCTRINE"],
+    dimensions: ["FACTUAL", "ECONOMIC_SUBSTANCE", "TRANSACTION"],
     aliases: [
       "economic substance",
       "real economic effect",
@@ -99,8 +116,11 @@ const DOCTRINE_LIBRARY = {
       "mere formal compliance may be insufficient"
     ]
   },
+
   TAX_AVOIDANCE_VS_EVASION: {
     label: "Tax Avoidance vs Tax Evasion",
+    issueFamilies: ["DOCTRINE", "ASSESSMENT", "INCOME_TAX"],
+    dimensions: ["FACTUAL", "EVIDENTIARY", "ECONOMIC_SUBSTANCE"],
     aliases: [
       "tax avoidance",
       "tax evasion",
@@ -114,8 +134,11 @@ const DOCTRINE_LIBRARY = {
       "fraud, deceit, or sham may turn the arrangement into evasion"
     ]
   },
+
   VAT_NATURE: {
     label: "Nature of VAT",
+    issueFamilies: ["VAT_LIABILITY"],
+    dimensions: ["SUBSTANTIVE"],
     aliases: [
       "vat",
       "value-added tax",
@@ -129,8 +152,11 @@ const DOCTRINE_LIBRARY = {
       "vat is borne by the end consumer"
     ]
   },
+
   VAT_REFUND_PROCEDURE: {
     label: "VAT Refund Procedure",
+    issueFamilies: ["VAT_REFUND"],
+    dimensions: ["PROCEDURAL", "JURISDICTIONAL", "EVIDENTIARY"],
     aliases: [
       "vat refund",
       "input vat refund",
@@ -148,8 +174,11 @@ const DOCTRINE_LIBRARY = {
       "vat refund substantiation and timing are procedural or jurisdictional"
     ]
   },
+
   VAT_SUBSTANTIATION: {
     label: "VAT Substantiation",
+    issueFamilies: ["VAT_REFUND", "EVIDENTIARY"],
+    dimensions: ["EVIDENTIARY"],
     aliases: [
       "substantiation",
       "invoice",
@@ -165,8 +194,11 @@ const DOCTRINE_LIBRARY = {
       "substantiation is evidentiary"
     ]
   },
+
   MUTUALITY_DOCTRINE: {
     label: "Mutuality Doctrine",
+    issueFamilies: ["INCOME_TAX", "VAT_LIABILITY", "DOCTRINE"],
+    dimensions: ["SUBSTANTIVE"],
     aliases: [
       "mutuality",
       "mutuality doctrine",
@@ -182,8 +214,11 @@ const DOCTRINE_LIBRARY = {
       "collections held for common expenses may not constitute taxable income depending on facts and law"
     ]
   },
+
   PRINCIPAL_AGENT: {
     label: "Principal-Agent Doctrine / Gross vs Net Recognition",
+    issueFamilies: ["TRANSACTION", "PRINCIPAL_AGENT", "PASS_THROUGH", "REIMBURSEMENT", "ACCOUNTING"],
+    dimensions: ["TRANSACTION", "FACTUAL", "CONTRACTUAL"],
     aliases: [
       "principal agent",
       "principal vs agent",
@@ -204,18 +239,18 @@ const DOCTRINE_LIBRARY = {
 };
 
 const ISSUE_DIMENSIONS = {
-  SUBSTANTIVE: "substantive",
-  PROCEDURAL: "procedural",
-  EVIDENTIARY: "evidentiary",
-  JURISDICTIONAL: "jurisdictional",
-  TEMPORAL: "temporal",
-  FACTUAL: "factual",
-  ADMINISTRATIVE: "administrative",
-  CONTRACTUAL: "contractual",
-  ECONOMIC_SUBSTANCE: "economic_substance",
-  AUDIT: "audit",
-  TRANSACTION: "transaction",
-  GENERAL: "general"
+  SUBSTANTIVE: "SUBSTANTIVE",
+  PROCEDURAL: "PROCEDURAL",
+  EVIDENTIARY: "EVIDENTIARY",
+  JURISDICTIONAL: "JURISDICTIONAL",
+  TEMPORAL: "TEMPORAL",
+  FACTUAL: "FACTUAL",
+  ADMINISTRATIVE: "ADMINISTRATIVE",
+  CONTRACTUAL: "CONTRACTUAL",
+  ECONOMIC_SUBSTANCE: "ECONOMIC_SUBSTANCE",
+  AUDIT: "AUDIT",
+  TRANSACTION: "TRANSACTION",
+  GENERAL: "GENERAL"
 };
 
 function normalizeText(value = "") {
@@ -238,7 +273,116 @@ function unique(values = []) {
 }
 
 function safeArray(value) {
-  return Array.isArray(value) ? value : [];
+  if (!value) return [];
+  return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
+}
+
+function normalizeIssue(value = "") {
+  const raw = String(value || "").trim().toUpperCase().replace(/[\s-]+/g, "_");
+
+  const aliases = {
+    VAT: "VAT_LIABILITY",
+    OUTPUT_VAT: "VAT_LIABILITY",
+    INPUT_VAT: "VAT_REFUND",
+    INPUT_VAT_REFUND: "VAT_REFUND",
+    TAX_REFUND: "VAT_REFUND",
+    REFUND: "VAT_REFUND",
+    EWT: "WITHHOLDING",
+    CWT: "WITHHOLDING",
+    FWT: "WITHHOLDING",
+    WITHHOLDING_TAX: "WITHHOLDING",
+    RCIT: "INCOME_TAX",
+    MCIT: "INCOME_TAX",
+    NOLCO: "INCOME_TAX",
+    PRINCIPAL_AGENT: "PRINCIPAL_AGENT",
+    PRINCIPAL_VS_AGENT: "PRINCIPAL_AGENT",
+    GROSS_NET: "PRINCIPAL_AGENT",
+    PASS_THROUGH: "PASS_THROUGH",
+    REIMBURSEMENT: "REIMBURSEMENT",
+    AGREEMENT: "CONTRACT",
+    ECONOMIC_SUBSTANCE_ANALYSIS: "ECONOMIC_SUBSTANCE"
+  };
+
+  return aliases[raw] || raw || null;
+}
+
+function normalizeDimension(value = "") {
+  const raw = String(value || "").trim().toUpperCase().replace(/[\s-]+/g, "_");
+  return ISSUE_DIMENSIONS[raw] || raw || null;
+}
+
+function normalizeAuthority(value = "") {
+  const raw = String(value || "").trim().toUpperCase().replace(/[\s-]+/g, "_");
+
+  const aliases = {
+    NIRC: "STATUTE",
+    TAX_CODE: "STATUTE",
+    LAW: "STATUTE",
+    REVENUE_REGULATION: "RR",
+    REVENUE_MEMORANDUM_CIRCULAR: "RMC",
+    REVENUE_MEMORANDUM_ORDER: "RMO",
+    REVENUE_AUDIT_MEMORANDUM_ORDER: "RAMO",
+    SC: "SUPREME_COURT",
+    CASE: "SUPREME_COURT",
+    JURISPRUDENCE: "SUPREME_COURT",
+    CTA: "CTA_DIVISION",
+    BIR_RULINGS: "BIR_RULING"
+  };
+
+  return aliases[raw] || raw || null;
+}
+
+function normalizeIssueClassification(issueClassification = null, question = "", adaptiveContext = {}) {
+  const source =
+    issueClassification ||
+    adaptiveContext?.issueClassification ||
+    adaptiveContext?.queryIntent?.issueClassification ||
+    adaptiveContext?.responsePlan?.issueClassification ||
+    {};
+
+  const fallbackIssues = detectIssueSignals(question).map(normalizeIssue);
+
+  const primaryIssue =
+    normalizeIssue(source.primaryIssue) ||
+    normalizeIssue(source.primary_issue) ||
+    normalizeIssue(source.issueType) ||
+    normalizeIssue(source.issue_type) ||
+    fallbackIssues[0] ||
+    "GENERAL";
+
+  const subIssues = unique([
+    primaryIssue,
+    ...safeArray(source.subIssues).map(normalizeIssue),
+    ...safeArray(source.subIssue).map(normalizeIssue),
+    ...safeArray(source.sub_issues).map(normalizeIssue),
+    ...safeArray(source.sub_issue).map(normalizeIssue),
+    ...fallbackIssues
+  ]).filter(Boolean);
+
+  const legalDimensions = unique([
+    ...safeArray(source.legalDimensions).map(normalizeDimension),
+    ...safeArray(source.legalDimension).map(normalizeDimension),
+    ...safeArray(source.legal_dimensions).map(normalizeDimension),
+    ...safeArray(source.legal_dimension).map(normalizeDimension),
+    ...classifyIssueDimensions(question).map(normalizeDimension)
+  ]).filter(Boolean);
+
+  const targetAuthorities = unique([
+    ...safeArray(source.targetAuthorities).map(normalizeAuthority),
+    ...safeArray(source.target_authorities).map(normalizeAuthority)
+  ]).filter(Boolean);
+
+  return {
+    primaryIssue,
+    subIssues,
+    legalDimensions,
+    retrievalStrategy:
+      source.retrievalStrategy ||
+      source.retrieval_strategy ||
+      "DOCTRINE_ISSUE_CLASSIFIED_SELECTION",
+    targetAuthorities,
+    raw: source
+  };
 }
 
 function sourcePathOf(doc = {}) {
@@ -288,6 +432,17 @@ function authorityLevelOf(doc = {}) {
   );
 }
 
+function controllingPrecedenceOf(doc = {}) {
+  return Number(
+    doc.controllingPrecedence ??
+      doc.controlling_precedence ??
+      doc.metadata?.controllingPrecedence ??
+      getControllingPrecedenceForDoc(doc) ??
+      authorityLevelOf(doc) ??
+      99
+  );
+}
+
 function doctrineEntries() {
   return Object.entries(DOCTRINE_LIBRARY);
 }
@@ -306,15 +461,40 @@ function isLegalAuthority(doc = {}) {
   return type !== "SECONDARY" && type !== "UNKNOWN";
 }
 
-export function detectDoctrineIntent(question = "") {
+function detectIssueSignals(text = "") {
+  const q = lower(text);
+  const issues = [];
+
+  const push = (condition, value) => {
+    if (condition) issues.push(value);
+  };
+
+  push(/\b(vat refund|input vat refund|120\+30|administrative claim|judicial claim|tcc|tax credit certificate|unutilized input vat|excess input vat|claim for refund)\b/i.test(q), "VAT_REFUND");
+  push(/\b(vat liability|output vat|vatable|subject to vat|value-added tax|value added tax|sale of goods|sale of services|gross receipts|gross selling price|nature of vat)\b/i.test(q), "VAT_LIABILITY");
+  push(/\b(withholding|ewt|cwt|fwt|expanded withholding|final withholding)\b/i.test(q), "WITHHOLDING");
+  push(/\b(income tax|rcit|mcit|nolco|deductible|non-deductible|taxable income|gross income)\b/i.test(q), "INCOME_TAX");
+  push(/\b(invoice|receipt|official receipt|substantiation|documentary|proof|evidence|burden of proof)\b/i.test(q), "EVIDENTIARY");
+  push(/\b(jurisdiction|deadline|filing|prescription|appeal|protest|assessment|loa|pan|fan|remedy|120\+30)\b/i.test(q), "PROCEDURAL");
+  push(/\b(contract|agreement|lease|concession|clause)\b/i.test(q), "CONTRACT");
+  push(/\b(principal|agent|pass-through|pass through|reimbursement|reimbursable|bundled|gross vs net|gross or net)\b/i.test(q), "PRINCIPAL_AGENT");
+  push(/\b(economic substance|substance over form|business purpose|sham|simulation|tax avoidance|tax evasion)\b/i.test(q), "ECONOMIC_SUBSTANCE");
+  push(/\b(audit|afs|pfrs|pas|misstatement|working paper|financial statements)\b/i.test(q), "AUDIT");
+  push(/\b(mutuality|association dues|condominium dues|membership dues|homeowners association)\b/i.test(q), "DOCTRINE");
+
+  return unique(issues);
+}
+
+export function detectDoctrineIntent(question = "", issueClassification = null, adaptiveContext = {}) {
   const q = lower(question);
+  const profile = normalizeIssueClassification(issueClassification, question, adaptiveContext);
   const matched = [];
 
   for (const [code, item] of doctrineEntries()) {
     const aliasHit = item.aliases.some((alias) => q.includes(lower(alias)));
     const conceptHit = item.concepts.some((concept) => q.includes(lower(concept)));
+    const issueHit = item.issueFamilies.some((issue) => profile.subIssues.includes(normalizeIssue(issue)));
 
-    if (aliasHit || conceptHit) {
+    if (aliasHit || conceptHit || issueHit) {
       matched.push({
         code,
         label: item.label
@@ -344,14 +524,16 @@ export function detectDoctrineIntent(question = "") {
 
   const isDoctrineFocused =
     matched.length > 0 ||
-    explicitSignals.some((signal) => q.includes(signal));
+    explicitSignals.some((signal) => q.includes(signal)) ||
+    ["DOCTRINE", "ECONOMIC_SUBSTANCE", "PRINCIPAL_AGENT", "TRANSACTION"].includes(profile.primaryIssue);
 
   return {
     engine: "TINA_DOCTRINE_TAGGING_ENGINE",
     version: ENGINE_VERSION,
     isDoctrineFocused,
-    matchedDoctrineCodes: matched.map((item) => item.code),
-    matchedDoctrineLabels: matched.map((item) => item.label),
+    matchedDoctrineCodes: unique(matched.map((item) => item.code)),
+    matchedDoctrineLabels: unique(matched.map((item) => item.label)),
+    issueClassification: profile,
     plannerCompatibility: {
       requiresDoctrinalAnalysis: isDoctrineFocused,
       requiresConflictDisclosure: isDoctrineFocused,
@@ -413,79 +595,92 @@ function classifyIssueDimensions(text = "") {
   const value = lower(text);
   const dimensions = [];
 
-  if (
-    /\b(taxable|liable|subject to|exempt|zero-rated|gross income|deductible|non-deductible|tax base|tax rate|output vat|input vat|income tax|withholding tax|final tax|vat liability|vatable|percentage tax|capital gains tax)\b/i.test(value)
-  ) {
-    dimensions.push(ISSUE_DIMENSIONS.SUBSTANTIVE);
-  }
+  const push = (condition, dimension) => {
+    if (condition) dimensions.push(dimension);
+  };
 
-  if (
-    /\b(file|filing|deadline|due date|period|prescriptive|administrative claim|judicial claim|appeal|protest|assessment|loa|pan|fan|fld|return|form|remedy|120\+30)\b/i.test(value)
-  ) {
-    dimensions.push(ISSUE_DIMENSIONS.PROCEDURAL);
-  }
-
-  if (
-    /\b(invoice|receipt|official receipt|substantiation|documentary|support|proof|evidence|certificate|schedule|reconciliation|records|books|burden of proof)\b/i.test(value)
-  ) {
-    dimensions.push(ISSUE_DIMENSIONS.EVIDENTIARY);
-  }
-
-  if (
-    /\b(jurisdiction|jurisdictional|cta|court has no jurisdiction|condition precedent|exhaustion|120\+30|30-day)\b/i.test(value)
-  ) {
-    dimensions.push(ISSUE_DIMENSIONS.JURISDICTIONAL);
-  }
-
-  if (
-    /\b(effective|effectivity|retroactive|prospective|prior to|after|before|beginning|taxable year|calendar year|transition|transitory|superseded|amended|repealed)\b/i.test(value)
-  ) {
-    dimensions.push(ISSUE_DIMENSIONS.TEMPORAL);
-  }
-
-  if (
-    /\b(facts|factual|depending on|case-to-case|actual|circumstances|evidence shows|transaction structure|actual practice)\b/i.test(value)
-  ) {
-    dimensions.push(ISSUE_DIMENSIONS.FACTUAL);
-  }
-
-  if (
-    /\b(rmc|rmo|ramo|revenue memorandum|bir ruling|administrative|interpretative|clarificatory|implementing rule|regulation)\b/i.test(value)
-  ) {
-    dimensions.push(ISSUE_DIMENSIONS.ADMINISTRATIVE);
-  }
-
-  if (
-    /\b(contract|agreement|lease|concession|clause|termination|consideration|obligation|rights and obligations)\b/i.test(value)
-  ) {
-    dimensions.push(ISSUE_DIMENSIONS.CONTRACTUAL);
-  }
-
-  if (
-    /\b(economic substance|substance over form|business purpose|commercial reality|sham|simulation|tax avoidance|tax evasion)\b/i.test(value)
-  ) {
-    dimensions.push(ISSUE_DIMENSIONS.ECONOMIC_SUBSTANCE);
-  }
-
-  if (
-    /\b(principal|agent|pass-through|reimbursement|bundled|gross vs net|gross or net|control before transfer)\b/i.test(value)
-  ) {
-    dimensions.push(ISSUE_DIMENSIONS.TRANSACTION);
-  }
-
-  if (
-    /\b(audit|afs|pfrs|pas|working paper|misstatement|audit evidence|qualified opinion)\b/i.test(value)
-  ) {
-    dimensions.push(ISSUE_DIMENSIONS.AUDIT);
-  }
+  push(/\b(taxable|liable|subject to|exempt|zero-rated|gross income|deductible|non-deductible|tax base|tax rate|output vat|input vat|income tax|withholding tax|final tax|vat liability|vatable|percentage tax|capital gains tax)\b/i.test(value), ISSUE_DIMENSIONS.SUBSTANTIVE);
+  push(/\b(file|filing|deadline|due date|period|prescriptive|administrative claim|judicial claim|appeal|protest|assessment|loa|pan|fan|fld|return|form|remedy|120\+30)\b/i.test(value), ISSUE_DIMENSIONS.PROCEDURAL);
+  push(/\b(invoice|receipt|official receipt|substantiation|documentary|support|proof|evidence|certificate|schedule|reconciliation|records|books|burden of proof)\b/i.test(value), ISSUE_DIMENSIONS.EVIDENTIARY);
+  push(/\b(jurisdiction|jurisdictional|cta|court has no jurisdiction|condition precedent|exhaustion|120\+30|30-day)\b/i.test(value), ISSUE_DIMENSIONS.JURISDICTIONAL);
+  push(/\b(effective|effectivity|retroactive|prospective|prior to|after|before|beginning|taxable year|calendar year|transition|transitory|superseded|amended|repealed)\b/i.test(value), ISSUE_DIMENSIONS.TEMPORAL);
+  push(/\b(facts|factual|depending on|case-to-case|actual|circumstances|evidence shows|transaction structure|actual practice)\b/i.test(value), ISSUE_DIMENSIONS.FACTUAL);
+  push(/\b(rmc|rmo|ramo|revenue memorandum|bir ruling|administrative|interpretative|clarificatory|implementing rule|regulation)\b/i.test(value), ISSUE_DIMENSIONS.ADMINISTRATIVE);
+  push(/\b(contract|agreement|lease|concession|clause|termination|consideration|obligation|rights and obligations)\b/i.test(value), ISSUE_DIMENSIONS.CONTRACTUAL);
+  push(/\b(economic substance|substance over form|business purpose|commercial reality|sham|simulation|tax avoidance|tax evasion)\b/i.test(value), ISSUE_DIMENSIONS.ECONOMIC_SUBSTANCE);
+  push(/\b(principal|agent|pass-through|reimbursement|bundled|gross vs net|gross or net|control before transfer)\b/i.test(value), ISSUE_DIMENSIONS.TRANSACTION);
+  push(/\b(audit|afs|pfrs|pas|working paper|misstatement|audit evidence|qualified opinion)\b/i.test(value), ISSUE_DIMENSIONS.AUDIT);
 
   return unique(dimensions.length ? dimensions : [ISSUE_DIMENSIONS.GENERAL]);
 }
 
 function dimensionsOverlap(a = [], b = []) {
-  if (!a.length || !b.length) return false;
+  if (!a.length || !b.length) return true;
   if (a.includes(ISSUE_DIMENSIONS.GENERAL) || b.includes(ISSUE_DIMENSIONS.GENERAL)) return true;
   return a.some((item) => b.includes(item));
+}
+
+function issueOverlap(a = [], b = []) {
+  if (!a.length || !b.length) return true;
+  if (a.includes("GENERAL") || b.includes("GENERAL")) return true;
+  return a.some((item) => b.includes(item));
+}
+
+function hasVatLiabilitySignal(text = "") {
+  return /\b(vat liability|output vat|vatable|subject to vat|sale of goods|sale of services|gross selling price|gross receipts|define vat|nature of vat)\b/i.test(
+    lower(text)
+  );
+}
+
+function hasVatRefundSignal(text = "") {
+  return /\b(vat refund|input vat refund|120\+30|administrative claim|judicial claim|tax credit certificate|tcc|unutilized input vat)\b/i.test(
+    lower(text)
+  );
+}
+
+function hasIssueMismatch(profile = {}, doc = {}, question = "") {
+  const text = buildDocDoctrineText(doc);
+
+  if (
+    profile.primaryIssue === "VAT_LIABILITY" &&
+    hasVatRefundSignal(text) &&
+    !hasVatRefundSignal(question)
+  ) {
+    return true;
+  }
+
+  if (
+    profile.primaryIssue === "VAT_REFUND" &&
+    hasVatLiabilitySignal(text) &&
+    !hasVatLiabilitySignal(question)
+  ) {
+    return true;
+  }
+
+  if (
+    profile.primaryIssue === "WITHHOLDING" &&
+    (hasVatRefundSignal(text) || hasVatLiabilitySignal(text))
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function doctrineCompatibleWithIssue(doctrineCode = "", profile = {}) {
+  const doctrine = DOCTRINE_LIBRARY[doctrineCode];
+  if (!doctrine) return false;
+
+  if (profile.primaryIssue === "GENERAL") return true;
+
+  return doctrine.issueFamilies.some((issue) =>
+    safeArray(profile.subIssues).includes(normalizeIssue(issue))
+  );
+}
+
+function targetAuthorityMatched(profile = {}, doc = {}) {
+  if (!safeArray(profile.targetAuthorities).length) return false;
+  return profile.targetAuthorities.includes(authorityTypeOf(doc));
 }
 
 function extractIssueTokens(text = "") {
@@ -537,24 +732,16 @@ function extractIssueTokens(text = "") {
   );
 }
 
-function hasVatLiabilitySignal(text = "") {
-  return /\b(vat liability|output vat|vatable|subject to vat|sale of goods|sale of services|gross selling price|gross receipts|define vat|nature of vat)\b/i.test(
-    lower(text)
-  );
-}
-
-function hasVatRefundSignal(text = "") {
-  return /\b(vat refund|input vat refund|120\+30|administrative claim|judicial claim|tax credit certificate|tcc|unutilized input vat)\b/i.test(
-    lower(text)
-  );
-}
-
-function computeIssueApplicabilityScore(question = "", doc = {}) {
+function computeIssueApplicabilityScore(question = "", doc = {}, issueClassification = null) {
+  const profile = normalizeIssueClassification(issueClassification, question);
   const text = buildDocDoctrineText(doc);
   const queryTokens = extractIssueTokens(question);
   const textTokens = new Set(extractIssueTokens(text));
-  const queryDimensions = classifyIssueDimensions(question);
+  const queryDimensions = profile.legalDimensions.length
+    ? profile.legalDimensions
+    : classifyIssueDimensions(question);
   const docDimensions = classifyIssueDimensions(text);
+  const docIssues = detectIssueSignals(text).map(normalizeIssue);
 
   let tokenHits = 0;
 
@@ -563,37 +750,88 @@ function computeIssueApplicabilityScore(question = "", doc = {}) {
   }
 
   const tokenOverlap = queryTokens.length ? tokenHits / queryTokens.length : 0;
-  const dimensionOverlap = dimensionsOverlap(queryDimensions, docDimensions) ? 1 : 0;
+  const dimensionHit = dimensionsOverlap(queryDimensions, docDimensions) ? 1 : 0;
+  const issueHit = issueOverlap(profile.subIssues, docIssues) ? 1 : 0;
+  const targetHit = targetAuthorityMatched(profile, doc) ? 1 : 0;
 
   let penalty = 0;
 
-  if (hasVatLiabilitySignal(question) && hasVatRefundSignal(text) && !hasVatRefundSignal(question)) {
-    penalty += 0.45;
-  }
-
-  if (hasVatRefundSignal(question) && hasVatLiabilitySignal(text) && !hasVatLiabilitySignal(question)) {
-    penalty += 0.3;
-  }
+  if (hasIssueMismatch(profile, doc, question)) penalty += 0.6;
 
   return Math.max(
     0,
-    Number((tokenOverlap * 0.62 + dimensionOverlap * 0.38 - penalty).toFixed(4))
+    Number(
+      (
+        tokenOverlap * 0.32 +
+        dimensionHit * 0.24 +
+        issueHit * 0.34 +
+        targetHit * 0.1 -
+        penalty
+      ).toFixed(4)
+    )
   );
 }
 
-function classifyApplicability(question = "", doc = {}) {
-  const issueScore = computeIssueApplicabilityScore(question, doc);
+function buildIssueClassificationMatch(question = "", doc = {}, issueClassification = null, doctrineCode = null) {
+  const profile = normalizeIssueClassification(issueClassification, question);
+  const text = buildDocDoctrineText(doc);
+  const docIssues = detectIssueSignals(text).map(normalizeIssue);
+  const docDimensions = classifyIssueDimensions(text).map(normalizeDimension);
+  const issueMismatch = hasIssueMismatch(profile, doc, question);
+  const issueOverlapValue = issueOverlap(profile.subIssues, docIssues);
+  const dimensionOverlap = dimensionsOverlap(profile.legalDimensions, docDimensions);
+  const targetAuthorityMatch = targetAuthorityMatched(profile, doc);
+  const doctrineIssueCompatible = doctrineCode
+    ? doctrineCompatibleWithIssue(doctrineCode, profile)
+    : true;
+
+  const matched =
+    !issueMismatch &&
+    doctrineIssueCompatible &&
+    (targetAuthorityMatch || issueOverlapValue || dimensionOverlap || !docIssues.length);
+
+  return {
+    matched,
+    compatible: matched,
+    issueOverlap: issueOverlapValue,
+    dimensionOverlap,
+    issueMismatch,
+    targetAuthorityMatch,
+    doctrineIssueCompatible,
+    primaryIssue: profile.primaryIssue,
+    subIssues: profile.subIssues,
+    legalDimensions: profile.legalDimensions,
+    retrievalStrategy: profile.retrievalStrategy,
+    targetAuthorities: profile.targetAuthorities,
+    docIssues,
+    docDimensions,
+    docAuthorityType: authorityTypeOf(doc),
+    doctrineCode
+  };
+}
+
+function classifyApplicability(question = "", doc = {}, issueClassification = null, doctrineCode = null) {
+  const issueScore = computeIssueApplicabilityScore(question, doc, issueClassification);
+  const match = buildIssueClassificationMatch(question, doc, issueClassification, doctrineCode);
   const type = authorityTypeOf(doc);
 
-  if (issueScore >= 0.55) {
+  if (match.issueMismatch || !match.doctrineIssueCompatible) {
     return {
-      applicability: "DIRECTLY_APPLICABLE",
+      applicability: "NOT_ISSUE_MATCHED",
       explanation:
-        "The authority addresses the same doctrine and substantially the same legal issue or issue dimension raised by the question."
+        "The doctrine or authority does not match the classified legal issue. It should not be cited as supporting authority."
     };
   }
 
-  if (issueScore >= 0.3) {
+  if (issueScore >= 0.6 && match.matched) {
+    return {
+      applicability: "DIRECTLY_APPLICABLE",
+      explanation:
+        "The authority addresses the same doctrine and the same classified legal issue or issue dimension raised by the question."
+    };
+  }
+
+  if (issueScore >= 0.35 && match.matched) {
     return {
       applicability: "DISTINGUISHABLE_BUT_RELEVANT",
       explanation:
@@ -605,7 +843,7 @@ function classifyApplicability(question = "", doc = {}) {
     return {
       applicability: "NOT_ISSUE_MATCHED",
       explanation:
-        "The case may mention a related tax type or doctrine but does not sufficiently match the exact issue. It should not be cited as supporting jurisprudence unless the answer expressly distinguishes it."
+        "The case may mention a related tax type or doctrine but does not sufficiently match the classified issue."
     };
   }
 
@@ -616,7 +854,7 @@ function classifyApplicability(question = "", doc = {}) {
   };
 }
 
-function scoreDoctrineAgainstDoc(doctrineCode, doc = {}, question = "") {
+function scoreDoctrineAgainstDoc(doctrineCode, doc = {}, question = "", issueClassification = null) {
   const doctrine = DOCTRINE_LIBRARY[doctrineCode];
 
   if (!doctrine) {
@@ -637,49 +875,61 @@ function scoreDoctrineAgainstDoc(doctrineCode, doc = {}, question = "") {
   const aliasHits = computePhraseHits(text, doctrine.aliases);
   const conceptHits = computePhraseHits(text, doctrine.concepts);
   const queryOverlap = computeTokenOverlap(question, text);
-  const applicabilityScore = computeIssueApplicabilityScore(question, doc);
-  const applicability = classifyApplicability(question, doc);
+  const applicabilityScore = computeIssueApplicabilityScore(question, doc, issueClassification);
+  const applicability = classifyApplicability(question, doc, issueClassification, doctrineCode);
+  const match = buildIssueClassificationMatch(question, doc, issueClassification, doctrineCode);
+
+  const compatibilityPenalty =
+    applicability.applicability === "NOT_ISSUE_MATCHED" ? 2.0 : 0;
 
   const score =
-    aliasHits * 0.34 +
-    conceptHits * 0.21 +
-    queryOverlap * 0.15 +
-    applicabilityScore * 0.3;
+    aliasHits * 0.28 +
+    conceptHits * 0.18 +
+    queryOverlap * 0.12 +
+    applicabilityScore * 0.42 -
+    compatibilityPenalty;
 
   return {
     doctrineCode,
     doctrineLabel: doctrine.label,
-    score: Number(score.toFixed(4)),
+    score: Number(Math.max(0, score).toFixed(4)),
     aliasHits,
     conceptHits,
     queryOverlap: Number(queryOverlap.toFixed(4)),
     applicabilityScore,
     applicability: applicability.applicability,
-    applicabilityExplanation: applicability.explanation
+    applicabilityExplanation: applicability.explanation,
+    issueClassificationMatch: match
   };
 }
 
 export function tagDoctrineCandidates({
   question = "",
   retrievedResults = [],
-  limit = 8
+  limit = 8,
+  issueClassification = null,
+  adaptiveContext = {}
 } = {}) {
+  const profile = normalizeIssueClassification(issueClassification, question, adaptiveContext);
   const reranked = rerankByHierarchy(retrievedResults, question);
-  const intent = detectDoctrineIntent(question);
+  const intent = detectDoctrineIntent(question, profile, adaptiveContext);
 
   const activeDoctrineCodes =
     intent.matchedDoctrineCodes.length > 0
       ? intent.matchedDoctrineCodes
-      : doctrineEntries().map(([code]) => code);
+      : doctrineEntries()
+          .filter(([code]) => doctrineCompatibleWithIssue(code, profile))
+          .map(([code]) => code);
 
   const tagged = reranked.map((doc) => {
     const doctrineScores = activeDoctrineCodes
-      .map((code) => scoreDoctrineAgainstDoc(code, doc, question))
+      .map((code) => scoreDoctrineAgainstDoc(code, doc, question, profile))
       .sort((a, b) => b.score - a.score);
 
     const topDoctrine = doctrineScores[0] || null;
     const authorityLevel = authorityLevelOf(doc);
     const authorityBoost = isLegalAuthority(doc) ? Math.max(0, (100 - authorityLevel) / 100) : 0;
+    const targetAuthorityMatch = targetAuthorityMatched(profile, doc);
 
     const semanticScore = Number(
       doc.rerankScore ??
@@ -703,15 +953,25 @@ export function tagDoctrineCandidates({
       doctrineApplicabilityExplanation:
         topDoctrine?.applicabilityExplanation ||
         "No doctrine applicability analysis was available.",
+      issueClassificationMatch:
+        topDoctrine?.issueClassificationMatch ||
+        buildIssueClassificationMatch(question, doc, profile, topDoctrine?.doctrineCode),
+      targetAuthorityMatch,
       doctrineFinalScore:
-        semanticScore * 0.5 +
-        Number(topDoctrine?.score || 0) * 35 * 0.32 +
-        authorityBoost * 18,
+        semanticScore * 0.35 +
+        Number(topDoctrine?.score || 0) * 35 * 0.38 +
+        authorityBoost * 18 +
+        (targetAuthorityMatch ? 20 : 0) -
+        controllingPrecedenceOf(doc) * 0.2,
       doctrineTaggingMetadata: {
         engine: "TINA_DOCTRINE_TAGGING_ENGINE",
         version: ENGINE_VERSION,
         authorityType: authorityTypeOf(doc),
         authorityLevel,
+        controllingPrecedence: controllingPrecedenceOf(doc),
+        issueClassification: profile,
+        issueClassificationAware: true,
+        targetAuthorityAware: true,
         plannerCompatible: true,
         rendererCompatible: true
       }
@@ -722,15 +982,27 @@ export function tagDoctrineCandidates({
     engine: "TINA_DOCTRINE_TAGGING_ENGINE",
     version: ENGINE_VERSION,
     intent,
+    issueClassification: profile,
     candidates: tagged
       .filter((doc) => {
-        if (!intent.isDoctrineFocused) return true;
+        if (doc.issueClassificationMatch?.issueMismatch) return false;
+        if (!intent.isDoctrineFocused) return doc.issueClassificationMatch?.matched !== false;
         if (!doc.doctrineScore) return false;
+
         return ["DIRECTLY_APPLICABLE", "DISTINGUISHABLE_BUT_RELEVANT"].includes(
           doc.doctrineApplicability
         );
       })
-      .sort((a, b) => b.doctrineFinalScore - a.doctrineFinalScore)
+      .sort((a, b) => {
+        const targetDiff = Number(b.targetAuthorityMatch === true) - Number(a.targetAuthorityMatch === true);
+        if (targetDiff !== 0) return targetDiff;
+
+        const aPrecedence = controllingPrecedenceOf(a);
+        const bPrecedence = controllingPrecedenceOf(b);
+        if (aPrecedence !== bPrecedence) return aPrecedence - bPrecedence;
+
+        return b.doctrineFinalScore - a.doctrineFinalScore;
+      })
       .slice(0, limit)
   };
 }
@@ -738,16 +1010,21 @@ export function tagDoctrineCandidates({
 export function selectTopDoctrineAuthorities({
   question = "",
   retrievedResults = [],
-  limit = 3
+  limit = 3,
+  issueClassification = null,
+  adaptiveContext = {}
 } = {}) {
-  const { intent, candidates } = tagDoctrineCandidates({
+  const { intent, candidates, issueClassification: profile } = tagDoctrineCandidates({
     question,
     retrievedResults,
-    limit: Math.max(limit * 3, 9)
+    limit: Math.max(limit * 3, 9),
+    issueClassification,
+    adaptiveContext
   });
 
   const top = candidates
     .filter((doc) => {
+      if (doc.issueClassificationMatch?.issueMismatch) return false;
       if (!intent.isDoctrineFocused) return true;
       return doc.doctrineApplicability !== "NOT_ISSUE_MATCHED";
     })
@@ -755,6 +1032,7 @@ export function selectTopDoctrineAuthorities({
 
   return {
     intent,
+    issueClassification: profile,
     topAuthorities: top.map((doc) => ({
       doctrineCode: doc.topDoctrineCode,
       doctrineLabel: doc.topDoctrineLabel,
@@ -762,10 +1040,13 @@ export function selectTopDoctrineAuthorities({
       doctrineApplicabilityScore: doc.doctrineApplicabilityScore,
       doctrineApplicability: doc.doctrineApplicability,
       doctrineApplicabilityExplanation: doc.doctrineApplicabilityExplanation,
+      issueClassificationMatch: doc.issueClassificationMatch || null,
+      targetAuthorityMatch: doc.targetAuthorityMatch === true,
       source: sourcePathOf(doc),
       title: sourceTitleOf(doc),
       authorityType: authorityTypeOf(doc),
       authorityLevel: authorityLevelOf(doc),
+      controllingPrecedence: controllingPrecedenceOf(doc),
       excerpt: normalizeText(doc.text || doc.content || doc.excerpt || doc.preview || "").slice(0, 420)
     }))
   };
@@ -805,7 +1086,7 @@ function buildDoctrineConflictReview(authorities = []) {
   }
 
   if (!reviews.length) {
-    return "No direct doctrinal conflict detected. If VAT cases address different procedural requirements, such as substantiation, administrative claim timing, or judicial claim timing, they are complementary or distinguishable rather than conflicting.";
+    return "No direct doctrinal conflict detected. Authorities addressing different substantive, procedural, evidentiary, jurisdictional, factual, temporal, administrative, contractual, economic-substance, audit, or transaction issues are distinguishable rather than conflicting.";
   }
 
   return reviews
@@ -813,11 +1094,13 @@ function buildDoctrineConflictReview(authorities = []) {
     .map((item, index) =>
       [
         `Conflict Review ${index + 1}:`,
+        `Conflict: ${item.conflict ? "YES" : "NO"}`,
         `Conflict Type: ${item.conflictType || "N/A"}`,
         `Doctrinal Conflict: ${item.doctrinalConflict ? "YES" : "NO"}`,
         `Hierarchy Conflict: ${item.hierarchyConflict ? "YES" : "NO"}`,
         `Apparent Conflict Only: ${item.apparentConflict ? "YES" : "NO"}`,
         `Exact Issue: ${item.exactIssue || "Not determined"}`,
+        `Exact Legal Dimension: ${item.exactLegalDimension || "Not determined"}`,
         `Distinction Type: ${item.distinctionType || "Not determined"}`,
         `Resolution Basis: ${item.resolutionBasis || item.reason || "Not determined"}`
       ].join("\n")
@@ -828,12 +1111,16 @@ function buildDoctrineConflictReview(authorities = []) {
 export function buildDoctrineSummary({
   question = "",
   retrievedResults = [],
-  limit = 3
+  limit = 3,
+  issueClassification = null,
+  adaptiveContext = {}
 } = {}) {
-  const { intent, topAuthorities } = selectTopDoctrineAuthorities({
+  const { intent, topAuthorities, issueClassification: profile } = selectTopDoctrineAuthorities({
     question,
     retrievedResults,
-    limit
+    limit,
+    issueClassification,
+    adaptiveContext
   });
 
   const summary = topAuthorities.length
@@ -842,10 +1129,12 @@ export function buildDoctrineSummary({
           [
             `${index + 1}. ${item.doctrineLabel || "Untitled Doctrine"}`,
             `Source: ${item.title || item.source || "Unknown source"}`,
-            `Authority: ${item.authorityType} (Level ${item.authorityLevel})`,
+            `Authority: ${item.authorityType} (Level ${item.authorityLevel}; Precedence ${item.controllingPrecedence})`,
+            `Target Authority Match: ${item.targetAuthorityMatch ? "YES" : "NO"}`,
             `Applicability: ${item.doctrineApplicability}`,
             `Applicability Analysis: ${item.doctrineApplicabilityExplanation}`,
             `Issue Applicability Score: ${item.doctrineApplicabilityScore}`,
+            `Issue Classification Match: ${JSON.stringify(item.issueClassificationMatch || {})}`,
             `Excerpt: ${item.excerpt}`
           ].join("\n")
         )
@@ -856,6 +1145,7 @@ export function buildDoctrineSummary({
     engine: "TINA_DOCTRINE_TAGGING_ENGINE",
     version: ENGINE_VERSION,
     intent,
+    issueClassification: profile,
     topAuthorities,
     summary,
     conflictReview: buildDoctrineConflictReview(topAuthorities),
@@ -875,54 +1165,42 @@ export function buildDoctrineSummary({
 export function buildDoctrinePrompt({
   question = "",
   doctrineSummary = "",
-  conflictReview = ""
+  conflictReview = "",
+  issueClassification = null
 } = {}) {
   return `
 You are TINA, a Philippine tax research and compliance assistant.
 
 CORE RULE:
 Never merely tag a doctrine or enumerate cases.
-You must explain whether the doctrine actually applies to the user's exact legal issue.
+Use only doctrines and authorities that match the classified legal issue.
+
+ISSUE CLASSIFICATION:
+${JSON.stringify(issueClassification || {}, null, 2)}
 
 STRICT RULES:
 1. Use only the doctrine-tagged indexed authorities below.
 2. Do not invent doctrine names, holdings, legal tests, case names, dates, or citations.
 3. Prefer higher-authority legal sources.
 4. If doctrine support is weak, say so clearly.
-5. Do not cite a case merely because it mentions the same tax type.
+5. Do not cite a doctrine or case merely because it mentions the same tax type.
 6. For every doctrine or case used, explain:
    - legal issue addressed;
    - doctrine established;
-   - why it applies or does not apply to the present question.
-7. If VAT cases address different procedural requirements, explain the distinction. For example:
-   - substantiation cases concern evidentiary support;
-   - administrative claim timing cases concern procedural compliance;
-   - judicial claim timing cases may concern jurisdiction;
-   - these are complementary, not conflicting, unless they directly contradict on the same legal issue.
-8. Do not fabricate doctrinal conflict.
-9. Never output only "Conflict detected: YES."
-10. Never mention ChatGPT.
-11. If evidence is incomplete, use preliminary conclusion language.
+   - why it applies or does not apply to the classified issue.
+7. Do not fabricate doctrinal conflict.
+8. Never output only "Conflict detected: YES."
+9. Do not say "Conflict Detected: YES" unless conflict metadata confirms conflict === true, same issue, same legal dimension, and opposite holding.
+10. If evidence is incomplete, use preliminary conclusion language.
 
 MANDATORY OUTPUT FORMAT:
 
 A. DIRECT ANSWER
-[Answer the exact doctrine/tax question immediately.]
-
 B. CONTROLLING LEGAL BASIS
-[Identify the controlling law, regulation, or authority from the context. Explain whether mandatory, procedural, interpretative, administrative, evidentiary, jurisdictional, or substantive.]
-
 C. SUPPORTING JURISPRUDENCE
-[Only issue-applicable cases. For each: legal issue, doctrine, applicability. If a case is distinguishable, say why.]
-
 D. DOCTRINAL STATUS / CONFLICT ANALYSIS
-[State no conflict, apparent conflict, partial conflict, or direct conflict. Explain whether differences are substantive, procedural, evidentiary, jurisdictional, factual, temporal, administrative, contractual, economic-substance, audit, or transaction-based.]
-
 E. HIERARCHY ANALYSIS
-[Explain which authority controls and why under Philippine legal hierarchy.]
-
 F. PRACTICAL APPLICATION
-[Apply to facts. State tax consequence, compliance implication, audit risk, litigation exposure, documentation requirements, possible BIR position, and strongest taxpayer defense where applicable.]
 
 QUESTION:
 ${question}
@@ -941,12 +1219,21 @@ export async function maybeGenerateDoctrineAnswer({
   retrievedResults = [],
   model = process.env.OPENAI_MODEL || "gpt-4o-mini",
   responseMode = "TECHNICAL",
-  adaptiveContext = {}
+  adaptiveContext = {},
+  issueClassification = null
 } = {}) {
-  const { intent, topAuthorities, summary, conflictReview } = buildDoctrineSummary({
+  const {
+    intent,
+    topAuthorities,
+    summary,
+    conflictReview,
+    issueClassification: profile
+  } = buildDoctrineSummary({
     question,
     retrievedResults,
-    limit: 3
+    limit: 3,
+    issueClassification,
+    adaptiveContext
   });
 
   if (!intent.isDoctrineFocused) {
@@ -957,6 +1244,7 @@ export async function maybeGenerateDoctrineAnswer({
       topAuthorities,
       responseMode,
       adaptiveContext,
+      issueClassification: profile,
       engineVersion: ENGINE_VERSION
     };
   }
@@ -970,6 +1258,7 @@ export async function maybeGenerateDoctrineAnswer({
       topAuthorities,
       responseMode,
       adaptiveContext,
+      issueClassification: profile,
       engineVersion: ENGINE_VERSION
     };
   }
@@ -977,7 +1266,8 @@ export async function maybeGenerateDoctrineAnswer({
   const prompt = buildDoctrinePrompt({
     question,
     doctrineSummary: summary,
-    conflictReview
+    conflictReview,
+    issueClassification: profile
   });
 
   const response = await openai.chat.completions.create({
@@ -1003,6 +1293,7 @@ export async function maybeGenerateDoctrineAnswer({
     topAuthorities,
     responseMode,
     adaptiveContext,
+    issueClassification: profile,
     engineVersion: ENGINE_VERSION
   };
 }
@@ -1013,11 +1304,13 @@ export function doctrineTaggingHealthCheck() {
     engine: "TINA_DOCTRINE_TAGGING_ENGINE",
     version: ENGINE_VERSION,
     esmCompatible: true,
-    commonJsBridgeCompatible: true,
     authorityEngineCompatible: true,
     conflictEngineCompatible: true,
     plannerCompatible: true,
-    rendererCompatible: true
+    rendererCompatible: true,
+    issueClassificationCompatible: true,
+    targetAuthorityAware: true,
+    unrelatedDoctrineBlocked: true
   };
 }
 
