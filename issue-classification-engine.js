@@ -3,33 +3,34 @@
 
 /**
  * TINA Issue Classification Engine
- * Version: 4.0.0
+ * Version: 4.1.0
+ *
+ * Purpose:
+ * - Classify Philippine tax issues before retrieval
+ * - Return clean primaryIssue, subIssue, retrievalStrategy, targetAuthorities
+ * - Support context-orchestration-engine.js with compact orchestrationClassification
  */
 
 import { enrichIssueClassification } from "./main-tax-engine-classification.js";
 
-const ENGINE_VERSION = "4.0.0";
+const ENGINE_VERSION = "4.1.0";
 
 const PRIMARY_ISSUE = Object.freeze({
   VAT_LIABILITY: "VAT_LIABILITY",
   VAT_REFUND: "VAT_REFUND",
   VAT_EXEMPTION: "VAT_EXEMPTION",
   ZERO_RATED_SALES: "ZERO_RATED_SALES",
-
   INCOME_TAX: "INCOME_TAX",
   WITHHOLDING: "WITHHOLDING",
   ASSESSMENT: "ASSESSMENT",
   PROCEDURAL: "PROCEDURAL",
   EVIDENTIARY: "EVIDENTIARY",
   JURISDICTIONAL: "JURISDICTIONAL",
-
   TRANSACTION: "TRANSACTION",
   CONTRACT: "CONTRACT",
   ECONOMIC_SUBSTANCE: "ECONOMIC_SUBSTANCE",
-
   ACCOUNTING: "ACCOUNTING",
   AUDIT: "AUDIT",
-
   DOCTRINE: "DOCTRINE",
   CASE_LAW: "CASE_LAW",
   ISSUANCE: "ISSUANCE",
@@ -201,13 +202,11 @@ function normalizeAuthority(value = "") {
     LAW: "STATUTE",
     RA: "STATUTE",
     REPUBLIC_ACT: "STATUTE",
-
     REVENUE_REGULATION: "RR",
     REVENUE_REGULATIONS: "RR",
     REVENUE_MEMORANDUM_CIRCULAR: "RMC",
     REVENUE_MEMORANDUM_ORDER: "RMO",
     REVENUE_AUDIT_MEMORANDUM_ORDER: "RAMO",
-
     SC: "SUPREME_COURT",
     CASE: "SUPREME_COURT",
     JURISPRUDENCE: "SUPREME_COURT",
@@ -335,78 +334,27 @@ function detectTaxDomain(question = "") {
 function detectPrimaryIssue(question = "") {
   const q = lower(question);
 
-  if (/\b(vat refund|input vat refund|tax credit certificate|tcc|excess input vat|unutilized input vat|section 112|120[-+ ]?30|administrative claim|judicial claim)\b/i.test(q)) {
-    return PRIMARY_ISSUE.VAT_REFUND;
-  }
-
-  if (/\b(vat exempt|exempt from vat|section 109|zero[- ]rated|zero rated)\b/i.test(q)) {
-    return /\bzero[- ]rated|zero rated\b/i.test(q)
-      ? PRIMARY_ISSUE.ZERO_RATED_SALES
-      : PRIMARY_ISSUE.VAT_EXEMPTION;
-  }
-
-  if (/\b(vat|output vat|vatable|value[- ]added tax|gross receipts|gross selling price|sale of goods|sale of services|define vat|what is vat|nature of vat)\b/i.test(q)) {
-    return PRIMARY_ISSUE.VAT_LIABILITY;
-  }
-
-  if (/\b(withholding|ewt|cwt|fwt|final withholding|expanded withholding|2307|1601)\b/i.test(q)) {
-    return PRIMARY_ISSUE.WITHHOLDING;
-  }
-
-  if (/\b(income tax|rcit|mcit|nolco|deductible|non[- ]deductible|taxable income|gross income|deduction)\b/i.test(q)) {
-    return PRIMARY_ISSUE.INCOME_TAX;
-  }
-
-  if (/\b(loa|letter of authority|pan|fan|fld|assessment|deficiency tax|protest|appeal|prescription|prescriptive|collection period|waiver)\b/i.test(q)) {
-    return PRIMARY_ISSUE.ASSESSMENT;
-  }
-
-  if (/\b(invoice|receipt|official receipt|substantiation|evidence|proof|documentary|supporting document|burden of proof)\b/i.test(q)) {
-    return PRIMARY_ISSUE.EVIDENTIARY;
-  }
-
-  if (/\b(jurisdiction|jurisdictional|cta|court of tax appeals|condition precedent)\b/i.test(q)) {
-    return PRIMARY_ISSUE.JURISDICTIONAL;
-  }
-
-  if (/\b(contract|agreement|lease agreement|concession agreement|clause|rights and obligations)\b/i.test(q)) {
-    return PRIMARY_ISSUE.CONTRACT;
-  }
-
-  if (/\b(principal|agent|pass[- ]through|reimbursement|reimbursable|concession|service vs sale|sale vs service|classification|characterization|economic substance|substance over form|bundled|package|gross or net|gross vs net|dfs|deposit for future subscription|liability vs equity)\b/i.test(q)) {
-    return PRIMARY_ISSUE.TRANSACTION;
-  }
-
-  if (/\b(economic substance|substance over form|business purpose|sham|simulation|tax avoidance|tax evasion)\b/i.test(q)) {
-    return PRIMARY_ISSUE.ECONOMIC_SUBSTANCE;
-  }
-
-  if (/\bpfrs\b|\bpas\b|\bafs\b|\baccounting treatment\b|\bbook\b|\bjournal entry\b|\baudit\b|\bmisstatement\b|\bworking paper\b/i.test(q)) {
-    return /\baudit\b|\bworking paper\b|\bmisstatement\b/i.test(q)
-      ? PRIMARY_ISSUE.AUDIT
-      : PRIMARY_ISSUE.ACCOUNTING;
-  }
-
-  if (/\b(rr|rmc|rmo|ramo|revenue regulation|revenue memorandum|bir ruling)\s*(?:no\.?)?\s*\d+/i.test(q)) {
-    return PRIMARY_ISSUE.ISSUANCE;
-  }
-
-  if (/\bg\.?\s*r\.?\s*no\.?|\bcta\b|\bsupreme court\b|\bjurisprudence\b|\bcase law\b/i.test(q)) {
-    return PRIMARY_ISSUE.CASE_LAW;
-  }
-
-  if (/\bdoctrine\b|\bconflict\b|\bprevails\b|\boverride\b|\bhierarchy\b/i.test(q)) {
-    return PRIMARY_ISSUE.DOCTRINE;
-  }
-
-  if (/\bfile\b|\bfiling\b|\bpayment\b|\bregistration\b|\bdeadline\b|\bdue date\b|\bform\b|\breturn\b|\bsubmit\b|\bcompliance\b/i.test(q)) {
-    return PRIMARY_ISSUE.PROCEDURAL;
-  }
+  if (/\b(vat refund|input vat refund|tax credit certificate|tcc|excess input vat|unutilized input vat|section 112|120[-+ ]?30|administrative claim|judicial claim)\b/i.test(q)) return PRIMARY_ISSUE.VAT_REFUND;
+  if (/\b(vat exempt|exempt from vat|section 109|zero[- ]rated|zero rated)\b/i.test(q)) return /\bzero[- ]rated|zero rated\b/i.test(q) ? PRIMARY_ISSUE.ZERO_RATED_SALES : PRIMARY_ISSUE.VAT_EXEMPTION;
+  if (/\b(vat|output vat|vatable|value[- ]added tax|gross receipts|gross selling price|sale of goods|sale of services|define vat|what is vat|nature of vat)\b/i.test(q)) return PRIMARY_ISSUE.VAT_LIABILITY;
+  if (/\b(withholding|ewt|cwt|fwt|final withholding|expanded withholding|2307|1601)\b/i.test(q)) return PRIMARY_ISSUE.WITHHOLDING;
+  if (/\b(income tax|rcit|mcit|nolco|deductible|non[- ]deductible|taxable income|gross income|deduction)\b/i.test(q)) return PRIMARY_ISSUE.INCOME_TAX;
+  if (/\b(loa|letter of authority|pan|fan|fld|assessment|deficiency tax|protest|appeal|prescription|prescriptive|collection period|waiver)\b/i.test(q)) return PRIMARY_ISSUE.ASSESSMENT;
+  if (/\b(invoice|receipt|official receipt|substantiation|evidence|proof|documentary|supporting document|burden of proof)\b/i.test(q)) return PRIMARY_ISSUE.EVIDENTIARY;
+  if (/\b(jurisdiction|jurisdictional|cta|court of tax appeals|condition precedent)\b/i.test(q)) return PRIMARY_ISSUE.JURISDICTIONAL;
+  if (/\b(contract|agreement|lease agreement|concession agreement|clause|rights and obligations)\b/i.test(q)) return PRIMARY_ISSUE.CONTRACT;
+  if (/\b(principal|agent|pass[- ]through|reimbursement|reimbursable|concession|service vs sale|sale vs service|classification|characterization|economic substance|substance over form|bundled|package|gross or net|gross vs net|dfs|deposit for future subscription|liability vs equity)\b/i.test(q)) return PRIMARY_ISSUE.TRANSACTION;
+  if (/\b(economic substance|substance over form|business purpose|sham|simulation|tax avoidance|tax evasion)\b/i.test(q)) return PRIMARY_ISSUE.ECONOMIC_SUBSTANCE;
+  if (/\bpfrs\b|\bpas\b|\bafs\b|\baccounting treatment\b|\bbook\b|\bjournal entry\b|\baudit\b|\bmisstatement\b|\bworking paper\b/i.test(q)) return /\baudit\b|\bworking paper\b|\bmisstatement\b/i.test(q) ? PRIMARY_ISSUE.AUDIT : PRIMARY_ISSUE.ACCOUNTING;
+  if (/\b(rr|rmc|rmo|ramo|revenue regulation|revenue memorandum|bir ruling)\s*(?:no\.?)?\s*\d+/i.test(q)) return PRIMARY_ISSUE.ISSUANCE;
+  if (/\bg\.?\s*r\.?\s*no\.?|\bcta\b|\bsupreme court\b|\bjurisprudence\b|\bcase law\b/i.test(q)) return PRIMARY_ISSUE.CASE_LAW;
+  if (/\bdoctrine\b|\bconflict\b|\bprevails\b|\boverride\b|\bhierarchy\b/i.test(q)) return PRIMARY_ISSUE.DOCTRINE;
+  if (/\bfile\b|\bfiling\b|\bpayment\b|\bregistration\b|\bdeadline\b|\bdue date\b|\bform\b|\breturn\b|\bsubmit\b|\bcompliance\b/i.test(q)) return PRIMARY_ISSUE.PROCEDURAL;
 
   return PRIMARY_ISSUE.GENERAL_TAX;
 }
 
-function detectSubIssue(question = "", primaryIssue = PRIMARY_ISSUE.GENERAL_TAX, domains = []) {
+function detectSubIssue(question = "", primaryIssue = PRIMARY_ISSUE.GENERAL_TAX) {
   const q = lower(question);
 
   if (primaryIssue === PRIMARY_ISSUE.VAT_REFUND) return "VAT_REFUND/SECTION_112";
@@ -476,24 +424,9 @@ function detectLegalDimensions(question = "", primaryIssue = PRIMARY_ISSUE.GENER
     if (condition) dimensions.push(dimension);
   };
 
-  if ([
-    PRIMARY_ISSUE.VAT_LIABILITY,
-    PRIMARY_ISSUE.VAT_EXEMPTION,
-    PRIMARY_ISSUE.ZERO_RATED_SALES,
-    PRIMARY_ISSUE.INCOME_TAX,
-    PRIMARY_ISSUE.WITHHOLDING
-  ].includes(primaryIssue)) {
-    dimensions.push(LEGAL_DIMENSION.SUBSTANTIVE);
-  }
-
-  if ([PRIMARY_ISSUE.VAT_REFUND, PRIMARY_ISSUE.PROCEDURAL, PRIMARY_ISSUE.ASSESSMENT].includes(primaryIssue)) {
-    dimensions.push(LEGAL_DIMENSION.PROCEDURAL);
-  }
-
-  if ([PRIMARY_ISSUE.EVIDENTIARY, PRIMARY_ISSUE.VAT_REFUND].includes(primaryIssue)) {
-    dimensions.push(LEGAL_DIMENSION.EVIDENTIARY);
-  }
-
+  if ([PRIMARY_ISSUE.VAT_LIABILITY, PRIMARY_ISSUE.VAT_EXEMPTION, PRIMARY_ISSUE.ZERO_RATED_SALES, PRIMARY_ISSUE.INCOME_TAX, PRIMARY_ISSUE.WITHHOLDING].includes(primaryIssue)) dimensions.push(LEGAL_DIMENSION.SUBSTANTIVE);
+  if ([PRIMARY_ISSUE.VAT_REFUND, PRIMARY_ISSUE.PROCEDURAL, PRIMARY_ISSUE.ASSESSMENT].includes(primaryIssue)) dimensions.push(LEGAL_DIMENSION.PROCEDURAL);
+  if ([PRIMARY_ISSUE.EVIDENTIARY, PRIMARY_ISSUE.VAT_REFUND].includes(primaryIssue)) dimensions.push(LEGAL_DIMENSION.EVIDENTIARY);
   if (primaryIssue === PRIMARY_ISSUE.JURISDICTIONAL) dimensions.push(LEGAL_DIMENSION.JURISDICTIONAL);
   if (primaryIssue === PRIMARY_ISSUE.CONTRACT) dimensions.push(LEGAL_DIMENSION.CONTRACTUAL);
   if (primaryIssue === PRIMARY_ISSUE.TRANSACTION) dimensions.push(LEGAL_DIMENSION.TRANSACTION, LEGAL_DIMENSION.FACTUAL);
@@ -583,16 +516,7 @@ function buildTargetAuthorities({ primaryIssue, subIssue, exactAuthority }) {
   if ([PRIMARY_ISSUE.VAT_LIABILITY, PRIMARY_ISSUE.VAT_EXEMPTION, PRIMARY_ISSUE.ZERO_RATED_SALES].includes(primaryIssue)) {
     add("nirc", "NIRC Sections 105 to 115");
     add("rr", "RR No. 16-2005");
-
-    if (primaryIssue === PRIMARY_ISSUE.VAT_LIABILITY) {
-      add("nirc", "NIRC Sections 105, 106, 107, 108");
-      add("supremeCourt", "VAT nature and scope cases");
-    }
-
-    if (primaryIssue === PRIMARY_ISSUE.VAT_EXEMPTION) {
-      add("nirc", "NIRC Section 109");
-      add("supremeCourt", "VAT exemption jurisprudence");
-    }
+    if (primaryIssue === PRIMARY_ISSUE.VAT_EXEMPTION) add("nirc", "NIRC Section 109");
   }
 
   if (primaryIssue === PRIMARY_ISSUE.VAT_REFUND) {
@@ -600,9 +524,6 @@ function buildTargetAuthorities({ primaryIssue, subIssue, exactAuthority }) {
     add("rr", "RR No. 16-2005 VAT refund provisions");
     add("supremeCourt", "Aichi");
     add("supremeCourt", "San Roque");
-    add("supremeCourt", "CIR v. Mirant");
-    add("supremeCourt", "CIR v. Team Energy");
-    add("ctaEnBanc", "CTA En Banc VAT refund cases");
   }
 
   if (primaryIssue === PRIMARY_ISSUE.INCOME_TAX) {
@@ -713,14 +634,8 @@ function detectComplexity({ question = "", primaryIssue, domains = [], keyTerms 
   if (domains.length > 1) score += 2;
   if (keyTerms.length >= 6) score += 1;
   if (question.length > 220) score += 1;
-
-  if ([PRIMARY_ISSUE.TRANSACTION, PRIMARY_ISSUE.CONTRACT, PRIMARY_ISSUE.ASSESSMENT, PRIMARY_ISSUE.ECONOMIC_SUBSTANCE].includes(primaryIssue)) {
-    score += 2;
-  }
-
-  if (/\bconflict|prevails|hierarchy|doctrine|jurisprudence|contract|agreement|actual facts|audit risk|legal consequence\b/i.test(q)) {
-    score += 2;
-  }
+  if ([PRIMARY_ISSUE.TRANSACTION, PRIMARY_ISSUE.CONTRACT, PRIMARY_ISSUE.ASSESSMENT, PRIMARY_ISSUE.ECONOMIC_SUBSTANCE].includes(primaryIssue)) score += 2;
+  if (/\bconflict|prevails|hierarchy|doctrine|jurisprudence|contract|agreement|actual facts|audit risk|legal consequence\b/i.test(q)) score += 2;
 
   if (score >= 4) return COMPLEXITY.MULTI_ISSUE;
   if (score === 3) return COMPLEXITY.COMPLEX;
@@ -731,17 +646,11 @@ function detectComplexity({ question = "", primaryIssue, domains = [], keyTerms 
 function detectFactSensitivity(primaryIssue, subIssue, question = "") {
   const q = lower(question);
 
-  if (primaryIssue === PRIMARY_ISSUE.VAT_LIABILITY && /\bwhat is|define|meaning|nature\b/i.test(q)) {
-    return FACT_SENSITIVITY.LOW;
-  }
+  if (primaryIssue === PRIMARY_ISSUE.VAT_LIABILITY && /\bwhat is|define|meaning|nature\b/i.test(q)) return FACT_SENSITIVITY.LOW;
 
-  if ([PRIMARY_ISSUE.TRANSACTION, PRIMARY_ISSUE.CONTRACT, PRIMARY_ISSUE.EVIDENTIARY, PRIMARY_ISSUE.ACCOUNTING, PRIMARY_ISSUE.AUDIT, PRIMARY_ISSUE.ASSESSMENT, PRIMARY_ISSUE.ECONOMIC_SUBSTANCE].includes(primaryIssue)) {
-    return FACT_SENSITIVITY.HIGH;
-  }
+  if ([PRIMARY_ISSUE.TRANSACTION, PRIMARY_ISSUE.CONTRACT, PRIMARY_ISSUE.EVIDENTIARY, PRIMARY_ISSUE.ACCOUNTING, PRIMARY_ISSUE.AUDIT, PRIMARY_ISSUE.ASSESSMENT, PRIMARY_ISSUE.ECONOMIC_SUBSTANCE].includes(primaryIssue)) return FACT_SENSITIVITY.HIGH;
 
-  if (/\bcontract|agreement|invoice|receipt|actual|facts|scenario|transaction|booked|audit|supporting document\b/i.test(q)) {
-    return FACT_SENSITIVITY.HIGH;
-  }
+  if (/\bcontract|agreement|invoice|receipt|actual|facts|scenario|transaction|booked|audit|supporting document\b/i.test(q)) return FACT_SENSITIVITY.HIGH;
 
   return FACT_SENSITIVITY.MODERATE;
 }
@@ -803,13 +712,9 @@ function detectMischaracterizationRisk(primaryIssue, subIssue, question = "") {
 
   if ([PRIMARY_ISSUE.TRANSACTION, PRIMARY_ISSUE.CONTRACT, PRIMARY_ISSUE.ECONOMIC_SUBSTANCE].includes(primaryIssue)) return "high";
 
-  if (/\breimbursement|pass[- ]through|principal|agent|concession|lease|bundled|package|economic substance|substance over form|dfs\b/i.test(q)) {
-    return "high";
-  }
+  if (/\breimbursement|pass[- ]through|principal|agent|concession|lease|bundled|package|economic substance|substance over form|dfs\b/i.test(q)) return "high";
 
-  if ([PRIMARY_ISSUE.VAT_EXEMPTION, PRIMARY_ISSUE.WITHHOLDING, PRIMARY_ISSUE.ACCOUNTING].includes(primaryIssue)) {
-    return "moderate";
-  }
+  if ([PRIMARY_ISSUE.VAT_EXEMPTION, PRIMARY_ISSUE.WITHHOLDING, PRIMARY_ISSUE.ACCOUNTING].includes(primaryIssue)) return "moderate";
 
   return "low";
 }
@@ -846,6 +751,38 @@ function shouldRunConflictCheck(primaryIssue, question = "") {
   );
 }
 
+function buildOrchestrationClassification(classification = {}) {
+  return {
+    primaryIssue: classification.primaryIssue || PRIMARY_ISSUE.GENERAL_TAX,
+    subIssue: classification.subIssue || `${classification.primaryIssue || PRIMARY_ISSUE.GENERAL_TAX}/GENERAL`,
+    subIssues: safeArray(classification.subIssues),
+    retrievalStrategy: classification.retrievalStrategy || RETRIEVAL_STRATEGY.MIXED,
+    targetAuthorities: safeArray(classification.targetAuthorities),
+    legalDimensions: safeArray(classification.legalDimensions),
+    taxDomains: safeArray(classification.taxDomains),
+    complexity: classification.complexityFlag || COMPLEXITY.MODERATE,
+    factSensitivity: classification.factSensitivity || FACT_SENSITIVITY.MODERATE,
+    exactAuthority: classification.exactAuthority || {
+      detected: false,
+      type: null,
+      reference: null
+    },
+    flags: {
+      transactionCharacterizationRequired: Boolean(classification.transactionCharacterizationRequired),
+      factPatternRequired: Boolean(classification.factPatternRequired),
+      doctrinalAnalysisRequired: Boolean(classification.doctrinalAnalysisRequired),
+      potentialConflictCheck: Boolean(classification.potentialConflictCheck)
+    },
+    contextPolicy: {
+      useContextOrchestrationEngine: true,
+      preventRawFullDocumentInjection: true,
+      preventFullDebugObjectInjection: true,
+      preventFullEngineOutputInjection: true,
+      passCompactClassificationOnly: true
+    }
+  };
+}
+
 function classifyTaxIssue(question = "") {
   const normalizedQuestion = normalizeText(question);
   const exactAuthority = detectExactAuthority(normalizedQuestion);
@@ -857,7 +794,7 @@ function classifyTaxIssue(question = "") {
       : PRIMARY_ISSUE.ISSUANCE
     : detectPrimaryIssue(normalizedQuestion);
 
-  const subIssue = detectSubIssue(normalizedQuestion, primaryIssue, domains);
+  const subIssue = detectSubIssue(normalizedQuestion, primaryIssue);
   const legalDimensions = detectLegalDimensions(normalizedQuestion, primaryIssue);
   const queryIntent = detectQueryIntent(normalizedQuestion, primaryIssue);
 
@@ -925,6 +862,7 @@ function classifyTaxIssue(question = "") {
 
     keyTerms,
     complexityFlag,
+    complexity: complexityFlag,
     factSensitivity,
     retrievalStrategy,
 
@@ -979,7 +917,12 @@ function classifyTaxIssue(question = "") {
     }
   };
 
-  return enrichIssueClassification(classification, normalizedQuestion);
+  const enriched = enrichIssueClassification(classification, normalizedQuestion);
+
+  return {
+    ...enriched,
+    orchestrationClassification: buildOrchestrationClassification(enriched)
+  };
 }
 
 function buildIssueClassificationSearchQueries(classification = {}, maxQueries = 8) {
@@ -1099,7 +1042,14 @@ function issueClassificationEngineHealthCheck() {
     conflictGateReady: true,
     transactionCharacterizationReady: true,
     factPatternReady: true,
-    mainTaxEngineClassificationIntegrated: true
+    mainTaxEngineClassificationIntegrated: true,
+    contextOrchestrationCompatible: true,
+    orchestrationClassificationReady: true,
+    compactClassificationReady: true,
+    passesPrimaryIssue: true,
+    passesSubIssue: true,
+    passesRetrievalStrategy: true,
+    passesTargetAuthorities: true
   };
 }
 
@@ -1121,6 +1071,7 @@ export {
   detectPrimaryIssue,
   detectSubIssue,
   detectLegalDimensions,
+  buildOrchestrationClassification,
   classifyTaxIssue,
   buildIssueClassificationSearchQueries,
   isIssueClassificationCompatibleWithDoc,
@@ -1145,6 +1096,7 @@ export default {
   detectPrimaryIssue,
   detectSubIssue,
   detectLegalDimensions,
+  buildOrchestrationClassification,
   classifyTaxIssue,
   buildIssueClassificationSearchQueries,
   isIssueClassificationCompatibleWithDoc,
