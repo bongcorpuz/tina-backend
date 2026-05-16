@@ -3,24 +3,17 @@
 
 /**
  * TINA Enterprise Adaptive Prompt Registry
- * TINA v3 Adaptive Orchestration Layer
+ * Version: 4.0.0
  *
- * Central source of truth for:
- * - adaptive modes
- * - planner contracts
- * - renderer contracts
- * - routing metadata
- * - normalized enums
- * - orchestration compatibility
- * - conclusion gating contracts
- * - engine compatibility
+ * Purpose:
+ * - Central prompt registry
+ * - Mode normalization
+ * - Context orchestration compatibility
+ * - Planner / renderer / final-compliance contracts
+ * - Compact prompt-bundle generation
  */
 
-const TINA_VERSION = "3.0.0";
-
-/* =========================================================
- * LEGACY MODE ALIASES
- * ========================================================= */
+const TINA_VERSION = "4.0.0";
 
 const LEGACY_MODE_ALIASES = Object.freeze({
   ASK: "STANDARD_TAX_MODE",
@@ -33,217 +26,154 @@ const LEGACY_MODE_ALIASES = Object.freeze({
   LEARNING_PROGRESS: "REVIEWER_LEARNING_MODE"
 });
 
-/* =========================================================
- * NORMALIZED MODES
- * ========================================================= */
-
 const TINA_MODES = Object.freeze({
   QUICK_MODE: "QUICK_MODE",
-
   STANDARD_TAX_MODE: "STANDARD_TAX_MODE",
-
   TECHNICAL_TAX_MODE: "TECHNICAL_TAX_MODE",
-
   AUDIT_MODE: "AUDIT_MODE",
-
-  LITIGATION_LEGAL_DEFENSE_MODE:
-    "LITIGATION_LEGAL_DEFENSE_MODE",
-
-  TRANSACTION_CHARACTERIZATION_MODE:
-    "TRANSACTION_CHARACTERIZATION_MODE",
-
-  CONTRACT_INTERPRETATION_MODE:
-    "CONTRACT_INTERPRETATION_MODE",
-
-  EVIDENCE_EVALUATION_MODE:
-    "EVIDENCE_EVALUATION_MODE",
-
-  FACT_PATTERN_ANALYSIS_MODE:
-    "FACT_PATTERN_ANALYSIS_MODE",
-
-  REVIEWER_LEARNING_MODE:
-    "REVIEWER_LEARNING_MODE"
+  LITIGATION_LEGAL_DEFENSE_MODE: "LITIGATION_LEGAL_DEFENSE_MODE",
+  TRANSACTION_CHARACTERIZATION_MODE: "TRANSACTION_CHARACTERIZATION_MODE",
+  CONTRACT_INTERPRETATION_MODE: "CONTRACT_INTERPRETATION_MODE",
+  EVIDENCE_EVALUATION_MODE: "EVIDENCE_EVALUATION_MODE",
+  FACT_PATTERN_ANALYSIS_MODE: "FACT_PATTERN_ANALYSIS_MODE",
+  REVIEWER_LEARNING_MODE: "REVIEWER_LEARNING_MODE"
 });
-
-/* =========================================================
- * RESPONSE MODES
- * ========================================================= */
 
 const RESPONSE_MODES = Object.freeze({
   QUICK: "QUICK",
-
   STANDARD: "STANDARD",
-
   TECHNICAL: "TECHNICAL",
-
   AUDIT: "AUDIT",
-
   LITIGATION: "LITIGATION",
-
   TRANSACTION: "TRANSACTION",
-
   CONTRACT: "CONTRACT",
-
   EVIDENCE_HEAVY: "EVIDENCE_HEAVY",
-
   REVIEWER: "REVIEWER"
 });
 
-/* =========================================================
- * OUTPUT DEPTH
- * ========================================================= */
+const ORCHESTRATION_MODES = Object.freeze({
+  FAST_DEFINITION: "FAST_DEFINITION",
+  STANDARD_TAX: "STANDARD_TAX",
+  LEGAL_ANALYSIS: "LEGAL_ANALYSIS",
+  COMPLEX_ADVISORY: "COMPLEX_ADVISORY",
+  EMERGENCY_TRIM: "EMERGENCY_TRIM"
+});
 
 const OUTPUT_DEPTH = Object.freeze({
   CONCISE: "CONCISE",
-
   STANDARD: "STANDARD",
-
   STRUCTURED: "STRUCTURED",
-
   COMPREHENSIVE: "COMPREHENSIVE",
-
   SIMPLE: "SIMPLE"
 });
 
-/* =========================================================
- * CONCLUSION GATING
- * ========================================================= */
-
 const CONCLUSION_RESTRICTIONS = Object.freeze({
-  DIRECT_CONCLUSION_ALLOWED:
-    "DIRECT_CONCLUSION_ALLOWED",
-
-  PRELIMINARY_CONCLUSION_ONLY:
-    "PRELIMINARY_CONCLUSION_ONLY",
-
-  DEFER_CONCLUSION:
-    "DEFER_CONCLUSION",
-
-  USE_QUALIFIED_CONCLUSION:
-    "USE_QUALIFIED_CONCLUSION"
+  DIRECT_CONCLUSION_ALLOWED: "DIRECT_CONCLUSION_ALLOWED",
+  PRELIMINARY_CONCLUSION_ONLY: "PRELIMINARY_CONCLUSION_ONLY",
+  DEFER_CONCLUSION: "DEFER_CONCLUSION",
+  USE_QUALIFIED_CONCLUSION: "USE_QUALIFIED_CONCLUSION"
 });
-
-/* =========================================================
- * CORE IDENTITY
- * ========================================================= */
 
 const TINA_IDENTITY = `
 You are TINA — Tax Intelligence and Analysis.
 
-You are:
-- Philippine tax lawyer
-- CPA
-- audit partner
-- legal researcher
-- litigation strategist
-- transaction analyst
-- evidence evaluator
+You are a Philippine tax, legal, audit, accounting, and compliance reasoning system.
 
-You are NOT merely a citation retriever.
+You are not merely a citation retriever.
 
-You are an adaptive legal-tax reasoning system.
-
-You must adapt:
-- legal posture
-- audit posture
-- litigation posture
-- evidence sensitivity
-- transaction analysis
-- response structure
-- conclusion strength
-
-based on:
-- factual completeness
-- evidence quality
-- legal hierarchy
-- doctrinal conflict
-- tax exposure
-- audit exposure
-- litigation exposure
-- transaction complexity
-- user posture
+You must:
+- classify the issue before answering;
+- apply Philippine legal hierarchy;
+- use only issue-relevant authorities;
+- distinguish legal, accounting, audit, evidentiary, and practical conclusions;
+- disclose assumptions, limitations, and evidentiary gaps when facts are incomplete;
+- avoid overclaiming certainty;
+- avoid fabricating authorities.
 `.trim();
-
-/* =========================================================
- * HIERARCHY RULE
- * ========================================================= */
 
 const TINA_HIERARCHY_RULE = `
-Apply Philippine hierarchy:
+Apply Philippine legal hierarchy correctly:
 
 1. Constitution
-2. NIRC / Republic Act
-3. Revenue Regulations
-4. Revenue Memorandum Circulars
-5. Revenue Memorandum Orders / RAMO
-6. BIR Rulings
-7. Supreme Court
-8. CTA / Court of Appeals
-9. Secondary materials
+2. NIRC / Tax Code / Republic Acts
+3. Supreme Court doctrine
+4. Revenue Regulations
+5. RMCs, RMOs, RAMOs
+6. BIR rulings
+7. CTA / Court of Appeals decisions
+8. Secondary materials
 
-Never elevate lower authority above higher authority.
+Never elevate a lower authority over a higher authority.
+Administrative issuances cannot amend the law or override controlling jurisprudence.
 `.trim();
 
-/* =========================================================
- * FACTUAL RULE
- * ========================================================= */
+const TINA_CONTEXT_ORCHESTRATION_RULE = `
+Context orchestration rules:
+
+- Use only the compact context prepared by the orchestration layer.
+- Do not request, reproduce, or rely on raw retrieval objects.
+- Do not inject full source text, full debug objects, full engine outputs, embeddings, metadata dumps, or raw JSON payloads.
+- Use only compact retrievedSources containing title, authorityType, citation/url, content/text, and score.
+- Prefer issueClassificationMatch, targetAuthorityMatch, and controllingPrecedence.
+- Do not cite issue-mismatched sources.
+- Do not display duplicate sources.
+- Use the assigned token budget and response mode.
+- If context is insufficient, say so plainly.
+`.trim();
 
 const TINA_FACTUAL_REASONING_RULE = `
-Before strong conclusion disclose:
-- known facts
-- assumptions
-- missing facts
-- evidentiary gaps
-- unresolved ambiguities
-- alternative characterization
+Before giving a strong conclusion, check:
 
-If incomplete:
+- known facts;
+- assumptions;
+- missing facts;
+- unresolved ambiguities;
+- documentary support;
+- evidence gaps;
+- alternative characterization.
+
+If facts or evidence are incomplete, use qualified language:
+
 "Based on the available facts, the position is preliminary and subject to verification."
 `.trim();
 
-/* =========================================================
- * CONFLICT RULE
- * ========================================================= */
-
 const TINA_CONFLICT_RULE = `
 Never merely say:
+
 "Conflict detected: YES."
 
-Explain:
-- exact issue
-- direct vs partial vs apparent conflict
-- controlling authority
-- why it controls
-- doctrinal distinction
-- evidentiary distinction
-- factual distinction
-`.trim();
+A conflict may be stated only when metadata supports:
+- same exact legal issue;
+- same legal dimension;
+- opposite holding;
+- conflict type;
+- controlling authority;
+- hierarchy-based resolution.
 
-/* =========================================================
- * RESPONSE RULE
- * ========================================================= */
+If these are not complete, say no direct doctrinal conflict is established and explain whether the authorities are distinguishable, procedural, evidentiary, factual, temporal, or merely background.
+`.trim();
 
 const TINA_RESPONSE_RULE = `
-OUTPUT RULES:
-- concise for simple questions
-- structured for audit/legal issues
-- doctrine-heavy for litigation
-- evidence-sensitive for factual disputes
-- practical for business strategy
-- never overstate certainty
-- never fabricate authorities
-- never provide strong conclusion when evidence is incomplete
-- distinguish legal conclusion, accounting treatment, audit risk, and evidentiary status
-`.trim();
+Output rules:
 
-/* =========================================================
- * MASTER PROMPT
- * ========================================================= */
+- Answer directly first unless evidence gaps require preliminary disclosure.
+- Use concise format for simple questions.
+- Use structured format for tax, audit, legal, factual, transaction, and risk questions.
+- Use doctrine-heavy format only for legal conflict, litigation, or jurisprudence questions.
+- Use evidence-sensitive format for factual disputes and audit-sensitive issues.
+- Use reviewer-style format only for CPALE/reviewer mode.
+- Never overstate certainty.
+- Never fabricate authorities.
+- Never cite unrelated cases just because they mention the same tax type.
+- Never include raw context, debug JSON, retrieval payloads, or full engine outputs.
+`.trim();
 
 const ADAPTIVE_MASTER_PROMPT = `
 ${TINA_IDENTITY}
 
 ${TINA_HIERARCHY_RULE}
+
+${TINA_CONTEXT_ORCHESTRATION_RULE}
 
 ${TINA_FACTUAL_REASONING_RULE}
 
@@ -252,95 +182,110 @@ ${TINA_CONFLICT_RULE}
 ${TINA_RESPONSE_RULE}
 `.trim();
 
-/* =========================================================
- * MODE PROMPTS
- * ========================================================= */
-
 const MODE_PROMPTS = Object.freeze({
   QUICK_MODE: `
-Direct concise answer.
-Minimal explanation.
+Use direct, concise answer.
+No unnecessary doctrinal discussion.
+Use only the most important legal basis.
 `.trim(),
 
   STANDARD_TAX_MODE: `
 Use standard Philippine tax analysis.
+Explain the rule, legal basis, and practical implication.
+Keep the answer proportionate to the question.
 `.trim(),
 
   TECHNICAL_TAX_MODE: `
-Use technical doctrinal tax analysis.
-Apply hierarchy analysis.
+Use technical Philippine tax analysis.
+Apply hierarchy, controlling legal basis, relevant regulations, and directly applicable jurisprudence.
+Explain doctrinal status only if relevant.
 `.trim(),
 
   AUDIT_MODE: `
 Use audit-defensible analysis.
 
 Focus on:
-- evidence
-- accounting
-- PFRS
-- misstatement risk
-- audit defensibility
+- evidence;
+- accounting treatment;
+- tax consequence;
+- PFRS/PAS/PSA implications;
+- misstatement risk;
+- audit defensibility;
+- required audit procedures.
 `.trim(),
 
   LITIGATION_LEGAL_DEFENSE_MODE: `
 Use litigation-grade legal analysis.
 
 Focus on:
-- doctrine
-- hierarchy
-- taxpayer defense
-- BIR position
-- conflict analysis
+- issue framing;
+- controlling law;
+- directly applicable jurisprudence;
+- BIR/opposing position;
+- taxpayer defense;
+- hierarchy and conflict analysis;
+- defensible conclusion.
 `.trim(),
 
   TRANSACTION_CHARACTERIZATION_MODE: `
+Use transaction characterization analysis.
+
 Focus on:
-- legal form
-- economic substance
-- control
-- principal-agent
-- bundled analysis
-- reimbursement/pass-through analysis
+- legal form;
+- economic substance;
+- control;
+- risk allocation;
+- money flow;
+- principal-agent analysis;
+- reimbursement/pass-through treatment;
+- tax and accounting characterization.
 `.trim(),
 
   CONTRACT_INTERPRETATION_MODE: `
+Use contract interpretation analysis.
+
 Focus on:
-- contractual rights
-- obligations
-- consideration
-- risk allocation
-- tax clauses
-- actual practice versus written terms
+- parties;
+- object;
+- rights and obligations;
+- consideration;
+- billing and collection;
+- control and risk allocation;
+- tax clauses;
+- actual practice versus written terms.
 `.trim(),
 
   EVIDENCE_EVALUATION_MODE: `
+Use evidence-sensitive analysis.
+
 Focus on:
-- documentary support
-- unsupported facts
-- contradictions
-- audit-sensitive items
-- evidentiary gaps
+- asserted facts;
+- documented facts;
+- unsupported facts;
+- contradictory facts;
+- missing documents;
+- audit-sensitive items;
+- conclusion subject to verification.
 `.trim(),
 
   FACT_PATTERN_ANALYSIS_MODE: `
+Use fact-pattern analysis.
+
 Focus on:
-- reconstruction
-- ambiguity
-- assumptions
-- missing facts
-- unresolved issues
+- transaction reconstruction;
+- factual ambiguity;
+- assumptions;
+- missing facts;
+- unresolved issues;
+- alternative characterization.
 `.trim(),
 
   REVIEWER_LEARNING_MODE: `
 Use simple reviewer-style explanation.
 Use examples and layman's terms.
-Avoid excessive legal drafting.
+Avoid excessive legal drafting unless requested.
 `.trim()
 });
-
-/* =========================================================
- * RESPONSE STRUCTURES
- * ========================================================= */
 
 const RESPONSE_STRUCTURES = Object.freeze({
   QUICK: [
@@ -427,13 +372,40 @@ const RESPONSE_STRUCTURES = Object.freeze({
   ]
 });
 
-/* =========================================================
- * ROUTING METADATA
- * ========================================================= */
+const ORCHESTRATION_STRUCTURES = Object.freeze({
+  FAST_DEFINITION: [
+    "Direct Answer",
+    "Legal Basis"
+  ],
+
+  STANDARD_TAX: [
+    "Direct Answer",
+    "Legal Basis",
+    "Supporting Rules",
+    "Practical Note",
+    "Jurisprudence"
+  ],
+
+  LEGAL_ANALYSIS: RESPONSE_STRUCTURES.TECHNICAL,
+
+  COMPLEX_ADVISORY: [
+    "Executive Answer",
+    "Controlling Basis",
+    "Assumptions / Fact Sensitivity",
+    "Risk / Practical Application",
+    "Recommended Documentation"
+  ],
+
+  EMERGENCY_TRIM: [
+    "Direct Answer",
+    "Limited Basis"
+  ]
+});
 
 const MODE_ROUTING_METADATA = Object.freeze({
   QUICK_MODE: {
     responseMode: RESPONSE_MODES.QUICK,
+    orchestrationMode: ORCHESTRATION_MODES.FAST_DEFINITION,
     outputDepth: OUTPUT_DEPTH.CONCISE,
     structure: RESPONSE_STRUCTURES.QUICK,
     requiresEvidenceDisclosure: false,
@@ -444,6 +416,7 @@ const MODE_ROUTING_METADATA = Object.freeze({
 
   STANDARD_TAX_MODE: {
     responseMode: RESPONSE_MODES.STANDARD,
+    orchestrationMode: ORCHESTRATION_MODES.STANDARD_TAX,
     outputDepth: OUTPUT_DEPTH.STANDARD,
     structure: RESPONSE_STRUCTURES.STANDARD,
     requiresEvidenceDisclosure: false,
@@ -454,6 +427,7 @@ const MODE_ROUTING_METADATA = Object.freeze({
 
   TECHNICAL_TAX_MODE: {
     responseMode: RESPONSE_MODES.TECHNICAL,
+    orchestrationMode: ORCHESTRATION_MODES.LEGAL_ANALYSIS,
     outputDepth: OUTPUT_DEPTH.COMPREHENSIVE,
     structure: RESPONSE_STRUCTURES.TECHNICAL,
     requiresEvidenceDisclosure: true,
@@ -464,6 +438,7 @@ const MODE_ROUTING_METADATA = Object.freeze({
 
   AUDIT_MODE: {
     responseMode: RESPONSE_MODES.AUDIT,
+    orchestrationMode: ORCHESTRATION_MODES.COMPLEX_ADVISORY,
     outputDepth: OUTPUT_DEPTH.COMPREHENSIVE,
     structure: RESPONSE_STRUCTURES.AUDIT,
     requiresEvidenceDisclosure: true,
@@ -474,6 +449,7 @@ const MODE_ROUTING_METADATA = Object.freeze({
 
   LITIGATION_LEGAL_DEFENSE_MODE: {
     responseMode: RESPONSE_MODES.LITIGATION,
+    orchestrationMode: ORCHESTRATION_MODES.LEGAL_ANALYSIS,
     outputDepth: OUTPUT_DEPTH.COMPREHENSIVE,
     structure: RESPONSE_STRUCTURES.LITIGATION,
     requiresEvidenceDisclosure: true,
@@ -484,6 +460,7 @@ const MODE_ROUTING_METADATA = Object.freeze({
 
   TRANSACTION_CHARACTERIZATION_MODE: {
     responseMode: RESPONSE_MODES.TRANSACTION,
+    orchestrationMode: ORCHESTRATION_MODES.COMPLEX_ADVISORY,
     outputDepth: OUTPUT_DEPTH.STRUCTURED,
     structure: RESPONSE_STRUCTURES.TRANSACTION,
     requiresEvidenceDisclosure: true,
@@ -494,6 +471,7 @@ const MODE_ROUTING_METADATA = Object.freeze({
 
   CONTRACT_INTERPRETATION_MODE: {
     responseMode: RESPONSE_MODES.CONTRACT,
+    orchestrationMode: ORCHESTRATION_MODES.COMPLEX_ADVISORY,
     outputDepth: OUTPUT_DEPTH.STRUCTURED,
     structure: RESPONSE_STRUCTURES.CONTRACT,
     requiresEvidenceDisclosure: true,
@@ -504,6 +482,7 @@ const MODE_ROUTING_METADATA = Object.freeze({
 
   EVIDENCE_EVALUATION_MODE: {
     responseMode: RESPONSE_MODES.EVIDENCE_HEAVY,
+    orchestrationMode: ORCHESTRATION_MODES.COMPLEX_ADVISORY,
     outputDepth: OUTPUT_DEPTH.STRUCTURED,
     structure: RESPONSE_STRUCTURES.EVIDENCE_HEAVY,
     requiresEvidenceDisclosure: true,
@@ -514,6 +493,7 @@ const MODE_ROUTING_METADATA = Object.freeze({
 
   FACT_PATTERN_ANALYSIS_MODE: {
     responseMode: RESPONSE_MODES.TECHNICAL,
+    orchestrationMode: ORCHESTRATION_MODES.COMPLEX_ADVISORY,
     outputDepth: OUTPUT_DEPTH.STRUCTURED,
     structure: RESPONSE_STRUCTURES.TECHNICAL,
     requiresEvidenceDisclosure: true,
@@ -524,6 +504,7 @@ const MODE_ROUTING_METADATA = Object.freeze({
 
   REVIEWER_LEARNING_MODE: {
     responseMode: RESPONSE_MODES.REVIEWER,
+    orchestrationMode: ORCHESTRATION_MODES.FAST_DEFINITION,
     outputDepth: OUTPUT_DEPTH.SIMPLE,
     structure: RESPONSE_STRUCTURES.REVIEWER,
     requiresEvidenceDisclosure: false,
@@ -533,90 +514,113 @@ const MODE_ROUTING_METADATA = Object.freeze({
   }
 });
 
-/* =========================================================
- * NORMALIZER
- * ========================================================= */
-
 function normalizeMode(mode = "") {
-  const clean = String(mode || "")
-    .trim()
-    .toUpperCase();
+  const clean = String(mode || "").trim().toUpperCase();
 
-  if (LEGACY_MODE_ALIASES[clean]) {
-    return LEGACY_MODE_ALIASES[clean];
-  }
-
-  if (TINA_MODES[clean]) {
-    return clean;
-  }
+  if (LEGACY_MODE_ALIASES[clean]) return LEGACY_MODE_ALIASES[clean];
+  if (TINA_MODES[clean]) return clean;
 
   if (clean.includes("AUDIT")) return TINA_MODES.AUDIT_MODE;
-  if (clean.includes("LITIGATION") || clean.includes("LEGAL")) {
-    return TINA_MODES.LITIGATION_LEGAL_DEFENSE_MODE;
-  }
-  if (clean.includes("TRANSACTION")) {
-    return TINA_MODES.TRANSACTION_CHARACTERIZATION_MODE;
-  }
-  if (clean.includes("CONTRACT")) {
-    return TINA_MODES.CONTRACT_INTERPRETATION_MODE;
-  }
-  if (clean.includes("EVIDENCE")) {
-    return TINA_MODES.EVIDENCE_EVALUATION_MODE;
-  }
-  if (clean.includes("FACT")) {
-    return TINA_MODES.FACT_PATTERN_ANALYSIS_MODE;
-  }
-  if (clean.includes("REVIEW") || clean.includes("QUIZ")) {
-    return TINA_MODES.REVIEWER_LEARNING_MODE;
-  }
-  if (clean.includes("TECHNICAL") || clean.includes("DOCTRINE")) {
-    return TINA_MODES.TECHNICAL_TAX_MODE;
-  }
-  if (clean.includes("QUICK")) {
-    return TINA_MODES.QUICK_MODE;
-  }
+  if (clean.includes("LITIGATION") || clean.includes("LEGAL")) return TINA_MODES.LITIGATION_LEGAL_DEFENSE_MODE;
+  if (clean.includes("TRANSACTION")) return TINA_MODES.TRANSACTION_CHARACTERIZATION_MODE;
+  if (clean.includes("CONTRACT")) return TINA_MODES.CONTRACT_INTERPRETATION_MODE;
+  if (clean.includes("EVIDENCE")) return TINA_MODES.EVIDENCE_EVALUATION_MODE;
+  if (clean.includes("FACT")) return TINA_MODES.FACT_PATTERN_ANALYSIS_MODE;
+  if (clean.includes("REVIEW") || clean.includes("QUIZ")) return TINA_MODES.REVIEWER_LEARNING_MODE;
+  if (clean.includes("TECHNICAL") || clean.includes("DOCTRINE")) return TINA_MODES.TECHNICAL_TAX_MODE;
+  if (clean.includes("QUICK") || clean.includes("FAST")) return TINA_MODES.QUICK_MODE;
 
   return TINA_MODES.STANDARD_TAX_MODE;
 }
 
-/* =========================================================
- * MODE PROMPT
- * ========================================================= */
+function normalizeOrchestrationMode(mode = "") {
+  const clean = String(mode || "").trim().toUpperCase();
+
+  if (ORCHESTRATION_MODES[clean]) return clean;
+  if (Object.values(ORCHESTRATION_MODES).includes(clean)) return clean;
+
+  if (clean.includes("EMERGENCY")) return ORCHESTRATION_MODES.EMERGENCY_TRIM;
+  if (clean.includes("FAST") || clean.includes("QUICK") || clean.includes("DEFINITION")) return ORCHESTRATION_MODES.FAST_DEFINITION;
+  if (clean.includes("COMPLEX") || clean.includes("ADVISORY") || clean.includes("AUDIT") || clean.includes("CONTRACT") || clean.includes("TRANSACTION") || clean.includes("EVIDENCE") || clean.includes("RISK")) return ORCHESTRATION_MODES.COMPLEX_ADVISORY;
+  if (clean.includes("LEGAL") || clean.includes("DOCTRINE") || clean.includes("JURISPRUDENCE") || clean.includes("LITIGATION")) return ORCHESTRATION_MODES.LEGAL_ANALYSIS;
+  if (clean.includes("STANDARD") || clean.includes("TAX")) return ORCHESTRATION_MODES.STANDARD_TAX;
+
+  return ORCHESTRATION_MODES.STANDARD_TAX;
+}
 
 function getModePrompt(mode = "") {
   const normalized = normalizeMode(mode);
-
-  return (
-    MODE_PROMPTS[normalized] ||
-    MODE_PROMPTS.STANDARD_TAX_MODE
-  );
+  return MODE_PROMPTS[normalized] || MODE_PROMPTS.STANDARD_TAX_MODE;
 }
-
-/* =========================================================
- * ROUTING METADATA
- * ========================================================= */
 
 function getModeRoutingMetadata(mode = "") {
   const normalized = normalizeMode(mode);
-
-  return (
-    MODE_ROUTING_METADATA[normalized] ||
-    MODE_ROUTING_METADATA.STANDARD_TAX_MODE
-  );
+  return MODE_ROUTING_METADATA[normalized] || MODE_ROUTING_METADATA.STANDARD_TAX_MODE;
 }
 
-/* =========================================================
- * PROMPT BUNDLE
- * ========================================================= */
+function getContextBudgetPolicy(orchestrationMode = ORCHESTRATION_MODES.STANDARD_TAX) {
+  const mode = normalizeOrchestrationMode(orchestrationMode);
 
-function buildPromptBundle(
-  mode = "STANDARD_TAX_MODE",
-  extraInstructions = []
-) {
+  const policies = {
+    FAST_DEFINITION: {
+      maxSources: 3,
+      maxSourceChars: 900,
+      maxPromptTokens: 4500,
+      maxCompletionTokens: 900
+    },
+
+    STANDARD_TAX: {
+      maxSources: 5,
+      maxSourceChars: 1400,
+      maxPromptTokens: 7000,
+      maxCompletionTokens: 1600
+    },
+
+    LEGAL_ANALYSIS: {
+      maxSources: 6,
+      maxSourceChars: 1800,
+      maxPromptTokens: 9500,
+      maxCompletionTokens: 2200
+    },
+
+    COMPLEX_ADVISORY: {
+      maxSources: 8,
+      maxSourceChars: 1800,
+      maxPromptTokens: 11000,
+      maxCompletionTokens: 2600
+    },
+
+    EMERGENCY_TRIM: {
+      maxSources: 2,
+      maxSourceChars: 600,
+      maxPromptTokens: 3000,
+      maxCompletionTokens: 700
+    }
+  };
+
+  return {
+    ...policies[mode],
+    useContextOrchestrationEngine: true,
+    compressSourcesBeforeOpenAI: true,
+    finalTrimBeforeOpenAI: true,
+    preventRawFullDocumentInjection: true,
+    preventFullDebugObjectInjection: true,
+    preventFullEngineOutputInjection: true,
+    compactSourceOnly: true
+  };
+}
+
+function buildPromptBundle(mode = "STANDARD_TAX_MODE", extraInstructions = [], options = {}) {
   const normalized = normalizeMode(mode);
+  const metadata = getModeRoutingMetadata(normalized);
 
-  const metadata =
-    getModeRoutingMetadata(normalized);
+  const orchestrationMode = normalizeOrchestrationMode(
+    options.orchestrationMode ||
+      options.contextMode ||
+      metadata.orchestrationMode
+  );
+
+  const contextBudgetPolicy = getContextBudgetPolicy(orchestrationMode);
 
   return [
     ADAPTIVE_MASTER_PROMPT,
@@ -625,14 +629,18 @@ function buildPromptBundle(
 
     `RESPONSE MODE: ${metadata.responseMode}`,
 
+    `ORCHESTRATION MODE: ${orchestrationMode}`,
+
     `OUTPUT DEPTH: ${metadata.outputDepth}`,
+
+    `CONTEXT POLICY: Use compact retrievedSources only. Max sources: ${contextBudgetPolicy.maxSources}. Max source chars each: ${contextBudgetPolicy.maxSourceChars}.`,
 
     metadata.requiresEvidenceDisclosure
       ? "MANDATORY: disclose evidentiary gaps."
       : null,
 
     metadata.requiresConflictAnalysis
-      ? "MANDATORY: explain doctrinal conflicts."
+      ? "MANDATORY: explain doctrinal conflicts only when complete conflict metadata exists."
       : null,
 
     metadata.requiresConclusionGating
@@ -649,87 +657,129 @@ function buildPromptBundle(
     .join("\n\n---\n\n");
 }
 
-/* =========================================================
- * PLANNER PAYLOAD
- * ========================================================= */
-
-function buildPlannerPayload(mode = "") {
+function buildPlannerPayload(mode = "", options = {}) {
   const normalized = normalizeMode(mode);
+  const metadata = getModeRoutingMetadata(normalized);
 
-  const metadata =
-    getModeRoutingMetadata(normalized);
+  const orchestrationMode = normalizeOrchestrationMode(
+    options.orchestrationMode ||
+      options.contextMode ||
+      metadata.orchestrationMode
+  );
+
+  const contextBudgetPolicy = getContextBudgetPolicy(orchestrationMode);
 
   return {
     tinaVersion: TINA_VERSION,
-
     normalizedMode: normalized,
-
     responseMode: metadata.responseMode,
-
+    orchestrationMode,
+    contextMode: orchestrationMode,
     outputDepth: metadata.outputDepth,
-
     structure: metadata.structure,
+    orchestrationStructure:
+      ORCHESTRATION_STRUCTURES[orchestrationMode] ||
+      ORCHESTRATION_STRUCTURES.STANDARD_TAX,
 
-    requiresEvidenceDisclosure:
-      metadata.requiresEvidenceDisclosure,
-
-    requiresConflictAnalysis:
-      metadata.requiresConflictAnalysis,
-
-    requiresRiskScoring:
-      metadata.requiresRiskScoring,
-
-    requiresConclusionGating:
-      metadata.requiresConclusionGating,
+    requiresEvidenceDisclosure: metadata.requiresEvidenceDisclosure,
+    requiresConflictAnalysis: metadata.requiresConflictAnalysis,
+    requiresRiskScoring: metadata.requiresRiskScoring,
+    requiresConclusionGating: metadata.requiresConclusionGating,
 
     conclusionRule: metadata.requiresConclusionGating
       ? {
           allowStrongConclusion: false,
-          restriction:
-            CONCLUSION_RESTRICTIONS.PRELIMINARY_CONCLUSION_ONLY,
+          restriction: CONCLUSION_RESTRICTIONS.PRELIMINARY_CONCLUSION_ONLY,
           requiredLanguage:
             "Based on the available facts, the position is preliminary and subject to verification."
         }
       : {
           allowStrongConclusion: true,
-          restriction:
-            CONCLUSION_RESTRICTIONS.DIRECT_CONCLUSION_ALLOWED,
+          restriction: CONCLUSION_RESTRICTIONS.DIRECT_CONCLUSION_ALLOWED,
           requiredLanguage:
-            "A direct conclusion may be given if supported by legal basis and evidence."
-        }
+            "A direct conclusion may be given if supported by issue-matched legal basis and evidence."
+        },
+
+    sourceOrderingPolicy: {
+      useIssueClassificationMatch: true,
+      useTargetAuthorityMatch: true,
+      useControllingPrecedence: true,
+      hideIssueMismatchedSources: true,
+      showOnlyCitedRelevantNonDuplicatedSources: true
+    },
+
+    conflictDisplayPolicy: {
+      displayConflictYesOnlyWhenConflictTrue: true,
+      requireCompleteConflictMetadata: true,
+      requireSameIssueGate: true,
+      requireOppositeHoldingGate: true,
+      blockVagueConflictLanguage: true
+    },
+
+    contextBudgetPolicy
   };
 }
 
-/* =========================================================
- * ROUTING CONTRACT
- * ========================================================= */
-
-function buildAdaptiveRoutingContract(mode = "") {
-  const planner =
-    buildPlannerPayload(mode);
+function buildAdaptiveRoutingContract(mode = "", options = {}) {
+  const planner = buildPlannerPayload(mode, options);
 
   return {
     ...planner,
-
     plannerCompatible: true,
-
     rendererCompatible: true,
-
+    finalAnswerComplianceCompatible: true,
     riskCompatible: true,
-
     evidenceCompatible: true,
-
     conclusionGatingCompatible: true,
-
     orchestrationCompatible: true,
-
-    adaptivePipelineCompatible: true
+    contextOrchestrationCompatible: true,
+    adaptivePipelineCompatible: true,
+    compactPromptCompatible: true,
+    rawFullDocumentInjectionPrevented: true,
+    fullDebugObjectInjectionPrevented: true,
+    fullEngineOutputInjectionPrevented: true
   };
 }
 
-/* =========================================================
- * HEALTH CHECK
- * ========================================================= */
+function buildContextOrchestrationPromptContract(mode = "", options = {}) {
+  const contract = buildAdaptiveRoutingContract(mode, options);
+
+  return {
+    engine: "TINA_ADAPTIVE_MASTER_PROMPT_REGISTRY",
+    version: TINA_VERSION,
+    activeMode: contract.normalizedMode,
+    responseMode: contract.responseMode,
+    orchestrationMode: contract.orchestrationMode,
+    contextMode: contract.contextMode,
+    outputDepth: contract.outputDepth,
+    structure: contract.structure,
+    orchestrationStructure: contract.orchestrationStructure,
+    masterPrompt: buildPromptBundle(contract.normalizedMode, options.extraInstructions || [], {
+      orchestrationMode: contract.orchestrationMode
+    }),
+    plannerPayload: contract,
+    contextBudgetPolicy: contract.contextBudgetPolicy,
+    rendererContract: {
+      responseMode: contract.responseMode,
+      orchestrationMode: contract.orchestrationMode,
+      contextMode: contract.contextMode,
+      responseDepth: contract.outputDepth,
+      sections: contract.structure,
+      sourceOrderingPolicy: contract.sourceOrderingPolicy,
+      conflictDisplayPolicy: contract.conflictDisplayPolicy,
+      conclusionRule: contract.conclusionRule
+    },
+    contextPolicy: {
+      useContextOrchestrationEngine: true,
+      compactSourcesOnly: true,
+      compactIntentOnly: true,
+      compactClassificationOnly: true,
+      preventRawFullDocumentInjection: true,
+      preventFullDebugObjectInjection: true,
+      preventFullEngineOutputInjection: true
+    }
+  };
+}
 
 function adaptiveMasterPromptHealthCheck() {
   return {
@@ -738,57 +788,49 @@ function adaptiveMasterPromptHealthCheck() {
     version: TINA_VERSION,
     plannerCompatible: true,
     rendererCompatible: true,
-    orchestrationCompatible: true
+    finalAnswerComplianceCompatible: true,
+    orchestrationCompatible: true,
+    contextOrchestrationCompatible: true,
+    compactPromptCompatible: true,
+    contextBudgetPolicyReady: true,
+    rawFullDocumentInjectionPrevented: true,
+    fullDebugObjectInjectionPrevented: true,
+    fullEngineOutputInjectionPrevented: true
   };
 }
-
-/* =========================================================
- * EXPORTS
- * ========================================================= */
 
 module.exports = {
   TINA_VERSION,
 
   LEGACY_MODE_ALIASES,
-
   TINA_MODES,
-
   RESPONSE_MODES,
-
+  ORCHESTRATION_MODES,
   OUTPUT_DEPTH,
-
   CONCLUSION_RESTRICTIONS,
 
   TINA_IDENTITY,
-
   TINA_HIERARCHY_RULE,
-
+  TINA_CONTEXT_ORCHESTRATION_RULE,
   TINA_FACTUAL_REASONING_RULE,
-
   TINA_CONFLICT_RULE,
-
   TINA_RESPONSE_RULE,
-
   ADAPTIVE_MASTER_PROMPT,
 
   MODE_PROMPTS,
-
   RESPONSE_STRUCTURES,
-
+  ORCHESTRATION_STRUCTURES,
   MODE_ROUTING_METADATA,
 
   normalizeMode,
-
+  normalizeOrchestrationMode,
   getModePrompt,
-
   getModeRoutingMetadata,
-
+  getContextBudgetPolicy,
   buildPromptBundle,
-
   buildPlannerPayload,
-
   buildAdaptiveRoutingContract,
-
+  buildContextOrchestrationPromptContract,
   adaptiveMasterPromptHealthCheck,
 
   getAdaptiveMasterPrompt() {
