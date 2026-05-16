@@ -3,10 +3,17 @@
 
 /**
  * TINA Enterprise Adaptive Answer Renderer
- * Version: 4.1.0
+ * Version: 4.2.0
+ *
+ * Integrated with:
+ * - main-tax-engine-classification.js
+ * - issue-classification-engine.js
+ * - retrieval-engine.js
+ * - reranker-engine.js
+ * - rag-answer-handler.js
  */
 
-const ENGINE_VERSION = "4.1.0";
+const ENGINE_VERSION = "4.2.0";
 
 const TINA_AF_HEADINGS = Object.freeze([
   "A. DIRECT ANSWER",
@@ -93,32 +100,15 @@ function normalizeText(value = "") {
 
 function normalizeArray(value) {
   if (!value) return [];
-  return Array.isArray(value) ? value : [value];
+  return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
+}
+
+function unique(values = []) {
+  return [...new Set((values || []).filter(Boolean))];
 }
 
 function escapeRegex(value = "") {
   return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-function itemToText(item) {
-  if (!item) return "";
-  if (typeof item === "string") return item;
-
-  if (typeof item === "object") {
-    return (
-      item.fact ||
-      item.document ||
-      item.issue ||
-      item.description ||
-      item.text ||
-      item.clause ||
-      item.heading ||
-      item.requiredLanguage ||
-      JSON.stringify(item)
-    );
-  }
-
-  return String(item);
 }
 
 function stripRawSourceSections(text = "") {
@@ -395,6 +385,38 @@ function sourceScore(source = {}) {
   return Number(source.finalScore || source.final_score || source.rerankScore || source.retrievalScore || source.score || 0);
 }
 
+function getTaxDomainClassification(input = {}) {
+  return (
+    input.taxDomainClassification ||
+    input.tax_domain_classification ||
+    input.issueClassification?.taxDomainClassification ||
+    input.issueClassification?.tax_domain_classification ||
+    input.adaptiveContext?.taxDomainClassification ||
+    input.adaptiveContext?.issueClassification?.taxDomainClassification ||
+    input.adaptiveContext?.queryIntent?.taxDomainClassification ||
+    input.responsePlan?.taxDomainClassification ||
+    input.metadata?.taxDomainClassification ||
+    null
+  );
+}
+
+function getPrimaryDomain(input = {}) {
+  const taxDomainClassification = getTaxDomainClassification(input);
+
+  return (
+    input.primaryDomain ||
+    input.primary_domain ||
+    input.issueClassification?.primaryDomain ||
+    input.issueClassification?.primary_domain ||
+    taxDomainClassification?.primaryDomain ||
+    taxDomainClassification?.primary_domain ||
+    input.adaptiveContext?.issueClassification?.primaryDomain ||
+    input.adaptiveContext?.queryIntent?.primaryDomain ||
+    input.metadata?.primaryDomain ||
+    null
+  );
+}
+
 function isIssueMatched(source = {}) {
   if (source.issueMismatch === true || source.issueClassificationMatch?.issueMismatch === true) return false;
   if (source.issueClassificationMatch?.matched === true) return true;
@@ -407,8 +429,28 @@ function isTargetAuthorityMatched(source = {}) {
   return source.targetAuthorityMatch === true || source.issueClassificationMatch?.targetAuthorityMatch === true;
 }
 
-function sortVisibleSources(sources = []) {
+function isPrimaryDomainMatched(source = {}, input = {}) {
+  const expectedDomain = getPrimaryDomain(input);
+  if (!expectedDomain) return null;
+
+  const sourceDomain =
+    source.primaryDomain ||
+    source.primary_domain ||
+    source.retrievalMetadata?.primaryDomain ||
+    source.issueClassificationMatch?.primaryDomain ||
+    source.metadata?.primaryDomain ||
+    null;
+
+  if (!sourceDomain) return null;
+
+  return String(sourceDomain).toUpperCase() === String(expectedDomain).toUpperCase();
+}
+
+function sortVisibleSources(sources = [], input = {}) {
   return [...normalizeArray(sources)].sort((a, b) => {
+    const domainDiff = Number(isPrimaryDomainMatched(b, input) === true) - Number(isPrimaryDomainMatched(a, input) === true);
+    if (domainDiff !== 0) return domainDiff;
+
     const targetDiff = Number(isTargetAuthorityMatched(b)) - Number(isTargetAuthorityMatched(a));
     if (targetDiff !== 0) return targetDiff;
 
@@ -423,8 +465,8 @@ function sortVisibleSources(sources = []) {
   });
 }
 
-function renderSources(sources = []) {
-  const visible = sortVisibleSources(sources)
+function renderSources(sources = [], input = {}) {
+  const visible = sortVisibleSources(sources, input)
     .filter((source) => source.issueMismatch !== true && source.issueClassificationMatch?.issueMismatch !== true)
     .slice(0, 8);
 
@@ -438,6 +480,7 @@ function renderSources(sources = []) {
 
     const authority = sourceAuthorityType(source);
     const matchFlags = [
+      isPrimaryDomainMatched(source, input) === true ? "Domain Match" : null,
       isTargetAuthorityMatched(source) ? "Target Authority Match" : null,
       isIssueMatched(source) === true ? "Issue Match" : null
     ].filter(Boolean);
@@ -482,6 +525,39 @@ function renderRiskBlock(riskBlock = null) {
   if (riskBlock.conclusionRestriction) lines.push(`Conclusion Restriction: ${riskBlock.conclusionRestriction}`);
 
   return lines.length ? `RISK AND POSITION CONTROL\n${lines.join("\n")}` : "";
+}
+
+function renderClassificationBlock(input = {}) {
+  const issueClassification = getIssueClassification(input);
+  if (!issueClassification) return "";
+
+  const taxDomainClassification = getTaxDomainClassification(input);
+  const lines = [];
+
+  const primaryDomain = getPrimaryDomain(input);
+  const primaryDomainName =
+    taxDomainClassification?.primaryDomainName ||
+    taxDomainClassification?.primary_domain_name ||
+    null;
+
+  if (primaryDomain) {
+    lines.push(`Tax Domain: ${primaryDomain}${primaryDomainName ? ` — ${primaryDomainName}` : ""}`);
+  }
+
+  if (issueClassification.primaryIssue) lines.push(`Primary Issue: ${issueClassification.primaryIssue}`);
+  if (issueClassification.subIssue) lines.push(`Sub-Issue: ${issueClassification.subIssue}`);
+
+  if (issueClassification.retrievalStrategy || taxDomainClassification?.retrievalStrategy) {
+    lines.push(`Retrieval Strategy: ${issueClassification.retrievalStrategy || taxDomainClassification.retrievalStrategy}`);
+  }
+
+  if (normalizeArray(issueClassification.targetAuthorities).length) {
+    lines.push(`Target Authorities: ${normalizeArray(issueClassification.targetAuthorities).join(", ")}`);
+  }
+
+  if (!lines.length) return "";
+
+  return `CLASSIFICATION CONTROL\n${lines.join("\n")}`;
 }
 
 function getResponsePlan(input = {}) {
@@ -553,6 +629,19 @@ function applyRiskBlock(answer = "", input = {}) {
   return `${answer}\n\n${rendered}`;
 }
 
+function applyClassificationBlock(answer = "", input = {}) {
+  const shouldShow =
+    input.includeClassificationBlock === true ||
+    input.responsePlan?.includeClassificationBlock === true ||
+    input.adaptiveContext?.responsePlan?.includeClassificationBlock === true;
+
+  if (!shouldShow) return answer;
+
+  const rendered = renderClassificationBlock(input);
+  if (!rendered || answer.includes("CLASSIFICATION CONTROL")) return answer;
+  return `${rendered}\n\n${answer}`;
+}
+
 function applySupersessionAudit(answer = "", input = {}) {
   const rendered = renderSupersessionAudit(input.supersessionAudit || input.supersessionResult);
   if (!rendered || answer.includes("SUPERSESSION AUDIT")) return answer;
@@ -573,6 +662,7 @@ function renderAdaptiveAnswer(input = {}) {
   rendered = protectHeadingSpacing(rendered, headings);
   rendered = applyLimitation(rendered, input);
   rendered = applyRiskBlock(rendered, input);
+  rendered = applyClassificationBlock(rendered, input);
   rendered = applySupersessionAudit(rendered, input);
 
   return normalizeText(rendered);
@@ -593,8 +683,26 @@ function renderTinaAnswer({
   conflictReview = null,
   hierarchyConflict = null,
   jurisprudencePayload = null,
-  issueClassification = null
+  issueClassification = null,
+  taxDomainClassification = null,
+  primaryDomain = null,
+  includeClassificationBlock = false
 } = {}) {
+  const effectiveIssueClassification =
+    issueClassification ||
+    getIssueClassification({
+      adaptiveContext,
+      responsePlan
+    });
+
+  const effectiveTaxDomainClassification =
+    taxDomainClassification ||
+    getTaxDomainClassification({
+      issueClassification: effectiveIssueClassification,
+      adaptiveContext,
+      responsePlan
+    });
+
   let rendered = renderAdaptiveAnswer({
     answer,
     adaptiveContext,
@@ -608,11 +716,19 @@ function renderTinaAnswer({
     conflictReview,
     hierarchyConflict,
     jurisprudencePayload,
-    issueClassification
+    issueClassification: effectiveIssueClassification,
+    taxDomainClassification: effectiveTaxDomainClassification,
+    primaryDomain,
+    includeClassificationBlock
   });
 
   if (includeSources) {
-    const sourceBlock = renderSources(sources);
+    const sourceBlock = renderSources(sources, {
+      issueClassification: effectiveIssueClassification,
+      taxDomainClassification: effectiveTaxDomainClassification,
+      primaryDomain
+    });
+
     if (sourceBlock) rendered = `${rendered}\n${sourceBlock}`;
   }
 
@@ -635,7 +751,9 @@ function renderTinaJsonPayload({
   conflictReview = null,
   hierarchyConflict = null,
   jurisprudencePayload = null,
-  issueClassification = null
+  issueClassification = null,
+  taxDomainClassification = null,
+  primaryDomain = null
 } = {}) {
   const effectiveIssueClassification =
     issueClassification ||
@@ -645,7 +763,30 @@ function renderTinaJsonPayload({
       metadata
     });
 
-  const sortedSources = sortVisibleSources(sources).filter(
+  const effectiveTaxDomainClassification =
+    taxDomainClassification ||
+    getTaxDomainClassification({
+      issueClassification: effectiveIssueClassification,
+      adaptiveContext,
+      responsePlan,
+      metadata
+    });
+
+  const effectivePrimaryDomain =
+    primaryDomain ||
+    getPrimaryDomain({
+      issueClassification: effectiveIssueClassification,
+      taxDomainClassification: effectiveTaxDomainClassification,
+      adaptiveContext,
+      responsePlan,
+      metadata
+    });
+
+  const sortedSources = sortVisibleSources(sources, {
+    issueClassification: effectiveIssueClassification,
+    taxDomainClassification: effectiveTaxDomainClassification,
+    primaryDomain: effectivePrimaryDomain
+  }).filter(
     (source) => source.issueMismatch !== true && source.issueClassificationMatch?.issueMismatch !== true
   );
 
@@ -664,7 +805,9 @@ function renderTinaJsonPayload({
     conflictReview,
     hierarchyConflict,
     jurisprudencePayload,
-    issueClassification: effectiveIssueClassification
+    issueClassification: effectiveIssueClassification,
+    taxDomainClassification: effectiveTaxDomainClassification,
+    primaryDomain: effectivePrimaryDomain
   });
 
   const headings = getHeadingsFromInput({ adaptiveContext, responsePlan });
@@ -689,10 +832,14 @@ function renderTinaJsonPayload({
       sourceCount: sortedSources.length,
       conflictLanguageGated: true,
       conflictMetadataComplete: conflictMetadataIsComplete(conflictMeta),
+      primaryDomain: effectivePrimaryDomain,
+      taxDomainClassification: effectiveTaxDomainClassification,
+      taxDomainClassificationAware: true,
       issueClassification: effectiveIssueClassification,
       issueClassificationAware: true,
       issueClassificationMatchAware: true,
-      targetAuthorityAware: true
+      targetAuthorityAware: true,
+      domainAwareSourceOrdering: true
     }
   };
 }
@@ -717,6 +864,22 @@ function assertStructure(answer = "", headings = TINA_AF_HEADINGS) {
   };
 }
 
+function answerRendererHealthCheck() {
+  return {
+    ok: true,
+    engine: "TINA_ANSWER_RENDERER",
+    version: ENGINE_VERSION,
+    esmCompatible: true,
+    adaptiveCompatible: true,
+    issueClassificationAware: true,
+    taxDomainClassificationAware: true,
+    primaryDomainAware: true,
+    conflictMetadataGated: true,
+    domainAwareSourceOrdering: true,
+    ragAnswerHandlerCompatible: true
+  };
+}
+
 export {
   ENGINE_VERSION,
   TINA_AF_HEADINGS,
@@ -735,7 +898,8 @@ export {
   renderTinaAnswer,
   renderTinaJsonPayload,
   assertAFStructure,
-  assertStructure
+  assertStructure,
+  answerRendererHealthCheck
 };
 
 export default {
@@ -756,5 +920,6 @@ export default {
   renderTinaAnswer,
   renderTinaJsonPayload,
   assertAFStructure,
-  assertStructure
+  assertStructure,
+  answerRendererHealthCheck
 };
