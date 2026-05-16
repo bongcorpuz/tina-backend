@@ -3,14 +3,14 @@
 
 /**
  * TINA Final Answer Compliance Engine
- * Version: 4.0.0
+ * Version: 5.0.0
  *
- * Purpose:
- * - Align final answer format with context-orchestration-engine.js mode
- * - Support FAST_DEFINITION, STANDARD_TAX, LEGAL_ANALYSIS, COMPLEX_ADVISORY
- * - Prevent vague conflict labels
- * - Prevent invented source sections
- * - Keep final sources validated, visible, issue-matched, and non-duplicated
+ * Final gate only:
+ * - no OpenAI calls
+ * - no prompt assembly
+ * - no retrieval
+ * - no token budgeting
+ * - only validates, repairs, sanitizes, and gates final answer output
  */
 
 import {
@@ -25,7 +25,7 @@ import {
   MAX_VISIBLE_SOURCES
 } from "./source-visibility-engine.js";
 
-const ENGINE_VERSION = "4.0.0";
+const ENGINE_VERSION = "5.0.0";
 
 const RESPONSE_MODE = Object.freeze({
   FAST_DEFINITION: "FAST_DEFINITION",
@@ -57,8 +57,7 @@ function compactText(value = "") {
 function trimText(value = "", max = 1200) {
   const text = compactText(value);
   if (!text) return "";
-  if (text.length <= max) return text;
-  return `${text.slice(0, max).trim()} ...[trimmed]`;
+  return text.length <= max ? text : `${text.slice(0, max).trim()} ...[trimmed]`;
 }
 
 function escapeRegex(value = "") {
@@ -69,15 +68,8 @@ function normalizeMode(mode = "") {
   const raw = String(mode || "").trim().toUpperCase();
 
   if (Object.values(RESPONSE_MODE).includes(raw)) return raw;
-
-  if (raw.includes("FAST") || raw.includes("QUICK") || raw.includes("DEFINITION")) {
-    return RESPONSE_MODE.FAST_DEFINITION;
-  }
-
-  if (raw.includes("LEGAL") || raw.includes("DOCTRINE") || raw.includes("JURISPRUDENCE")) {
-    return RESPONSE_MODE.LEGAL_ANALYSIS;
-  }
-
+  if (raw.includes("FAST") || raw.includes("QUICK") || raw.includes("DEFINITION")) return RESPONSE_MODE.FAST_DEFINITION;
+  if (raw.includes("LEGAL") || raw.includes("DOCTRINE") || raw.includes("JURISPRUDENCE")) return RESPONSE_MODE.LEGAL_ANALYSIS;
   if (
     raw.includes("COMPLEX") ||
     raw.includes("ADVISORY") ||
@@ -86,13 +78,8 @@ function normalizeMode(mode = "") {
     raw.includes("CONTRACT") ||
     raw.includes("TRANSACTION") ||
     raw.includes("EVIDENCE")
-  ) {
-    return RESPONSE_MODE.COMPLEX_ADVISORY;
-  }
-
-  if (raw.includes("STANDARD") || raw.includes("TAX")) {
-    return RESPONSE_MODE.STANDARD_TAX;
-  }
+  ) return RESPONSE_MODE.COMPLEX_ADVISORY;
+  if (raw.includes("STANDARD") || raw.includes("TAX")) return RESPONSE_MODE.STANDARD_TAX;
 
   return RESPONSE_MODE.DEFAULT_AF;
 }
@@ -109,24 +96,25 @@ function stripInventedSourceSections(text = "") {
     .replace(/\n+\s*Validated Indexed Sources[\s\S]*$/i, "")
     .replace(/\n+\s*Authority Used[\s\S]*$/i, "")
     .replace(/\n+\s*Supersession Audit[\s\S]*$/i, "")
-    .replace(/\n+\s*See clickable sources below\.\s*$/i, "")
-    .replace(/\n+\s*No clickable sources available\.\s*$/i, "")
+    .replace(/\n+\s*CLASSIFICATION CONTROL[\s\S]*$/i, "")
+    .replace(/\n+\s*DEBUG[\s\S]*$/i, "")
+    .replace(/\n+\s*RAW CONTEXT[\s\S]*$/i, "")
+    .replace(/\n+\s*RETRIEVAL PAYLOAD[\s\S]*$/i, "")
+    .replace(/\n+\s*JSON DUMP[\s\S]*$/i, "")
     .trim();
 }
 
-function getSectionBody(text = "", headingPattern) {
+function getSectionBody(text = "", headingPattern = "") {
   const value = normalizeText(text);
-
   const regex = new RegExp(
     `${headingPattern}\\s*([\\s\\S]*?)(?=\\n\\s*(?:[A-H]\\.\\s+[A-Z][A-Z /()&-]+\\b|\\d+\\.\\s*[A-Z][A-Z /()&-]+\\b|###\\s+[A-Za-z])|$)`,
     "i"
   );
 
-  const match = value.match(regex);
-  return match?.[1]?.trim() || "";
+  return value.match(regex)?.[1]?.trim() || "";
 }
 
-function getAFSectionBody(text = "", heading) {
+function getAFSectionBody(text = "", heading = "") {
   return getSectionBody(text, escapeRegex(heading));
 }
 
@@ -156,7 +144,7 @@ function cleanBulletPrefix(line = "") {
 }
 
 function ensureDashedBullets(lines = []) {
-  return lines
+  return safeArray(lines)
     .filter(Boolean)
     .map((line) => `- ${cleanBulletPrefix(line)}`)
     .join("\n");
@@ -166,9 +154,7 @@ function takeSentences(text = "", maxSentences = 4) {
   const cleaned = normalizeText(text);
   if (!cleaned) return "";
 
-  const parts = cleaned.match(/[^.!?]+[.!?]?/g) || [cleaned];
-
-  return parts
+  return (cleaned.match(/[^.!?]+[.!?]?/g) || [cleaned])
     .map((part) => part.trim())
     .filter(Boolean)
     .slice(0, maxSentences)
@@ -186,54 +172,32 @@ function containsExplicitRuleLikeValue(text = "") {
 }
 
 function buildValidatedLegalBasis(docs = []) {
-  return uniqueDocs(docs).slice(0, 5).map(buildLegalBasisEntry);
+  return uniqueDocs(docs).slice(0, MAX_VISIBLE_SOURCES).map(buildLegalBasisEntry);
 }
 
 function buildValidatedSources(docs = []) {
-  return uniqueDocs(docs).slice(0, 5).map(buildSourcesEntry);
+  return uniqueDocs(docs).slice(0, MAX_VISIBLE_SOURCES).map(buildSourcesEntry);
 }
 
 function conflictMetadataIsComplete(conflict = null) {
   if (!conflict || typeof conflict !== "object") return false;
 
-  const hasTrueConflict = conflict.conflict === true;
-  const hasConflictType = Boolean(conflict.conflictType || conflict.type);
-
-  const hasExactIssue = Boolean(
-    conflict.exactIssue ||
-      conflict.sameIssueGate?.sameIssues?.length
-  );
-
-  const hasExactDimension = Boolean(
-    conflict.exactLegalDimension ||
-      conflict.sameIssueGate?.sameDimensions?.length ||
-      conflict.legalDimension
-  );
-
-  const sameIssuePassed =
-    conflict.sameIssueGate?.passed === true ||
-    Boolean(conflict.exactIssue);
-
-  const oppositeHoldingPassed =
-    conflict.oppositeHoldingGate?.passed === true ||
-    Boolean(conflict.oppositeHolding || conflict.oppositeHoldings);
-
-  const hasResolution = Boolean(
-    conflict.resolutionBasis ||
-      conflict.reason ||
-      conflict.winningAuthority ||
-      conflict.controllingAuthority ||
-      conflict.controllingSource
-  );
-
-  return (
-    hasTrueConflict &&
-    hasConflictType &&
-    hasExactIssue &&
-    hasExactDimension &&
-    sameIssuePassed &&
-    oppositeHoldingPassed &&
-    hasResolution
+  return Boolean(
+    conflict.conflict === true &&
+      (conflict.conflictType || conflict.type) &&
+      (conflict.exactIssue || conflict.sameIssueGate?.sameIssues?.length) &&
+      (conflict.exactLegalDimension ||
+        conflict.sameIssueGate?.sameDimensions?.length ||
+        conflict.legalDimension) &&
+      (conflict.sameIssueGate?.passed === true || conflict.exactIssue) &&
+      (conflict.oppositeHoldingGate?.passed === true ||
+        conflict.oppositeHolding ||
+        conflict.oppositeHoldings) &&
+      (conflict.resolutionBasis ||
+        conflict.reason ||
+        conflict.winningAuthority ||
+        conflict.controllingAuthority ||
+        conflict.controllingSource)
   );
 }
 
@@ -255,7 +219,10 @@ function hasConflictSignal(conflict = {}) {
 
 function normalizeConflictStatus(conflict = {}) {
   if (!conflictMetadataIsComplete(conflict)) {
-    if (conflict?.apparentConflict || conflict?.distinctionType) return "APPARENT_OR_DISTINGUISHABLE";
+    if (conflict?.apparentConflict || conflict?.distinctionType) {
+      return "APPARENT_OR_DISTINGUISHABLE";
+    }
+
     return "NO_CONFLICT";
   }
 
@@ -324,8 +291,7 @@ function pickBestConflict({
   const complete = candidates.filter(conflictMetadataIsComplete);
 
   if (!complete.length) {
-    const apparent = candidates.find((item) => item.apparentConflict || item.distinctionType);
-    return apparent || null;
+    return candidates.find((item) => item.apparentConflict || item.distinctionType) || null;
   }
 
   const priority = {
@@ -359,11 +325,11 @@ function sourceNameFromConflict(conflict = {}, side = "A") {
 
   return (
     conflict.sourceB ||
-      conflict.source_b_path ||
-      conflict.source_b_title ||
-      conflict.overriddenSource ||
-      conflict.weakerSource ||
-      "Source B"
+    conflict.source_b_path ||
+    conflict.source_b_title ||
+    conflict.overriddenSource ||
+    conflict.weakerSource ||
+    "Source B"
   );
 }
 
@@ -373,7 +339,9 @@ function buildConflictExplanationFromMetadata(conflict = {}) {
       return [
         "Conflict Detected: NO",
         "The retrieved authorities may appear related, but the metadata does not establish the required same exact issue, same legal dimension, and opposite holding.",
-        conflict.distinctionType ? `Distinction type: ${trimText(conflict.distinctionType, 300)}` : null,
+        conflict.distinctionType
+          ? `Distinction type: ${trimText(conflict.distinctionType, 300)}`
+          : null,
         conflict.reason ? `Reason: ${trimText(conflict.reason, 700)}` : null,
         "Treat the authorities as distinguishable or complementary unless a complete same-issue opposite-holding conflict is established."
       ]
@@ -423,7 +391,9 @@ function buildConflictExplanationFromMetadata(conflict = {}) {
     `Source A: ${trimText(sourceNameFromConflict(conflict, "A"), 260)}`,
     `Source B: ${trimText(sourceNameFromConflict(conflict, "B"), 260)}`,
     `Controlling doctrine/authority: ${trimText(controllingAuthority, 260)}`,
-    overriddenAuthority ? `Overridden or limited authority: ${trimText(overriddenAuthority, 260)}` : null,
+    overriddenAuthority
+      ? `Overridden or limited authority: ${trimText(overriddenAuthority, 260)}`
+      : null,
     `Why it controls: ${trimText(resolutionBasis, 900)}`
   ]
     .filter(Boolean)
@@ -440,9 +410,7 @@ function isVagueConflictYes(text = "") {
     /Source B:/i.test(value) &&
     /(Exact issue|Exact legal dimension|Controlling doctrine|Controlling authority|Resolution basis)\s*[:\s]/i.test(value);
 
-  if (hasSpecificConflict && value.length >= 300) return false;
-
-  return true;
+  return !(hasSpecificConflict && value.length >= 300);
 }
 
 function sanitizeConflictSection(text = "", conflictMetadata = null) {
@@ -469,7 +437,8 @@ function sanitizeConflictSection(text = "", conflictMetadata = null) {
 
   if (
     afConflictBody &&
-    (/Conflict Detected:\s*YES/i.test(afConflictBody) || isVagueConflictYes(afConflictBody)) &&
+    (/Conflict Detected:\s*YES/i.test(afConflictBody) ||
+      isVagueConflictYes(afConflictBody)) &&
     !conflictMetadataIsComplete(conflictMetadata)
   ) {
     return value.replace(
@@ -506,8 +475,7 @@ function buildDirectAnswer({ draftAnswer = "", fallbackAnswer = "" }) {
     getSectionBody(draftAnswer, String.raw`###\s*Legally defensible conclusion\b`) ||
     getSectionBody(draftAnswer, String.raw`###\s*Issue\b`);
 
-  const candidate = directBody || fallbackAnswer || draftAnswer || "";
-  return takeSentences(candidate, 4);
+  return takeSentences(directBody || fallbackAnswer || draftAnswer || "", 4);
 }
 
 function buildControllingLegalBasis({ draftAnswer = "", legalBasisDocs = [] }) {
@@ -519,14 +487,15 @@ function buildControllingLegalBasis({ draftAnswer = "", legalBasisDocs = [] }) {
 
   const legalBasisLines = buildValidatedLegalBasis(legalBasisDocs);
 
-  if (legalBasisLines.length) {
-    return ensureDashedBullets(legalBasisLines);
-  }
-
-  return "- No validated indexed controlling legal basis was available.";
+  return legalBasisLines.length
+    ? ensureDashedBullets(legalBasisLines)
+    : "- No validated indexed controlling legal basis was available.";
 }
 
-function buildSupportingJurisprudence({ draftAnswer = "", jurisprudencePayload = null }) {
+function buildSupportingJurisprudence({
+  draftAnswer = "",
+  jurisprudencePayload = null
+}) {
   const body =
     getAFSectionBody(draftAnswer, "C. SUPPORTING JURISPRUDENCE") ||
     getSectionBody(draftAnswer, String.raw`\b3\.\s*SUPPORTING JURISPRUDENCE\b`) ||
@@ -659,7 +628,14 @@ function buildSupportingRules({ draftAnswer = "", legalBasisDocs = [] }) {
   const inferred = [];
 
   for (const doc of legalBasisDocs.slice(0, 3)) {
-    const snippet = normalizeText(doc.text || doc.preview || doc.excerpt || doc.content || "");
+    const snippet = normalizeText(
+      doc.text ||
+        doc.preview ||
+        doc.excerpt ||
+        doc.content ||
+        ""
+    );
+
     if (!snippet) continue;
 
     const sentences = snippet.match(/[^.!?]+[.!?]?/g) || [];
@@ -707,10 +683,16 @@ function rebuildAFAnswer({
       "This requires verification against the latest BIR issuance, NIRC provision, or controlling court authority.",
     "",
     "B. CONTROLLING LEGAL BASIS",
-    buildControllingLegalBasis({ draftAnswer: sanitizedDraft, legalBasisDocs }),
+    buildControllingLegalBasis({
+      draftAnswer: sanitizedDraft,
+      legalBasisDocs
+    }),
     "",
     "C. SUPPORTING JURISPRUDENCE",
-    buildSupportingJurisprudence({ draftAnswer: sanitizedDraft, jurisprudencePayload }),
+    buildSupportingJurisprudence({
+      draftAnswer: sanitizedDraft,
+      jurisprudencePayload
+    }),
     "",
     "D. DOCTRINAL STATUS / CONFLICT ANALYSIS",
     buildDoctrinalStatus({
@@ -807,7 +789,9 @@ function buildFastDefinitionAnswer({
     answer || "No direct answer could be formed from the indexed sources.",
     "",
     "Legal Basis",
-    basis.length ? ensureDashedBullets(basis) : "- No validated indexed legal basis was retrieved."
+    basis.length
+      ? ensureDashedBullets(basis)
+      : "- No validated indexed legal basis was retrieved."
   ].join("\n");
 }
 
@@ -948,7 +932,10 @@ function resolveVisibleSources({
 }
 
 export function sanitizeDraftAnswer(text = "", conflictMetadata = null) {
-  return sanitizeConflictSection(stripInventedSourceSections(text), conflictMetadata);
+  return sanitizeConflictSection(
+    stripInventedSourceSections(text),
+    conflictMetadata
+  );
 }
 
 export function buildFinalCompliantAnswer({
@@ -966,7 +953,6 @@ export function buildFinalCompliantAnswer({
   asOfDate = new Date(),
   query = "",
   issueClassification = null,
-
   mode = null,
   orchestrationMode = null,
   responseMode = null,
@@ -1007,7 +993,10 @@ export function buildFinalCompliantAnswer({
 
   let finalAnswer;
 
-  if (finalMode === RESPONSE_MODE.FAST_DEFINITION || finalMode === RESPONSE_MODE.EMERGENCY_TRIM) {
+  if (
+    finalMode === RESPONSE_MODE.FAST_DEFINITION ||
+    finalMode === RESPONSE_MODE.EMERGENCY_TRIM
+  ) {
     finalAnswer = buildFastDefinitionAnswer({
       sanitizedDraft,
       fallbackAnswer,
@@ -1072,11 +1061,70 @@ export function buildFinalCompliantAnswer({
   return appendValidatedSourceAppendix(finalAnswer, visibleSourceDocs).trim();
 }
 
+/**
+ * Compatibility wrapper for older modules.
+ * Keeps final-answer-compliance.js as final gate only.
+ */
+export function enforceFinalAnswerCompliance({
+  answer = "",
+  draftAnswer = "",
+  fallbackAnswer = "",
+  responseMode = null,
+  orchestrationMode = null,
+  contextMode = null,
+  mode = null,
+  legalBasisDocs = [],
+  sourcesUsed = [],
+  issueClassification = null,
+  conflicts = [],
+  hierarchyConflict = null,
+  conflict = null,
+  conflictReview = null,
+  jurisprudencePayload = null,
+  professionalInsight = "",
+  query = "",
+  asOfDate = new Date()
+} = {}) {
+  const finalAnswer = buildFinalCompliantAnswer({
+    draftAnswer: draftAnswer || answer,
+    fallbackAnswer,
+    legalBasisDocs,
+    sourcesUsed,
+    conflicts,
+    hierarchyConflict,
+    conflict,
+    conflictReview,
+    jurisprudencePayload,
+    professionalInsight,
+    asOfDate,
+    query,
+    issueClassification,
+    mode,
+    orchestrationMode,
+    responseMode,
+    contextMode
+  });
+
+  return {
+    success: true,
+    answer: finalAnswer,
+    version: ENGINE_VERSION,
+    finalGateOnly: true,
+    noOpenAICalls: true,
+    noPromptAssembly: true,
+    noRetrieval: true
+  };
+}
+
 export function finalAnswerComplianceHealthCheck() {
   return {
     ok: true,
     engine: "TINA_FINAL_ANSWER_COMPLIANCE",
     version: ENGINE_VERSION,
+    finalGateOnly: true,
+    noOpenAICalls: true,
+    noPromptAssembly: true,
+    noRetrieval: true,
     afStructureCompatible: true,
     modeAwareFormatting: true,
     supportedModes: Object.values(RESPONSE_MODE),
@@ -1107,6 +1155,7 @@ export default {
   sanitizeDraftAnswer,
   sanitizeConflictSection,
   buildFinalCompliantAnswer,
+  enforceFinalAnswerCompliance,
   finalAnswerComplianceHealthCheck,
   normalizeMode
 };
