@@ -3,12 +3,9 @@
 
 /**
  * TINA Assessment Handler
- * Version: 3.1.0
+ * Version: 4.0.0
  *
- * Purpose:
- * - Handle /quiz, /review, /diagnostic, and learning progress
- * - Route assessment OpenAI calls through context-orchestration-engine.js
- * - Prevent oversized quiz/review prompts
+ * Uses context-orchestration-engine.js only for all OpenAI calls.
  */
 
 import { saveModeState } from "./mode-state.js";
@@ -45,16 +42,29 @@ import {
 } from "./ask-helpers.js";
 
 import {
-  buildOpenAIContext as defaultBuildOpenAIContext,
-  callOpenAIWithOrchestration as defaultCallOpenAIWithOrchestration,
-  estimateTokens as defaultEstimateTokens,
-  estimateMessagesTokens as defaultEstimateMessagesTokens
+  callOpenAIWithOrchestration as defaultCallOpenAIWithOrchestration
 } from "./context-orchestration-engine.js";
 
-const ENGINE_VERSION = "3.1.0";
+const ENGINE_VERSION = "4.0.0";
 
 function getModel(openaiModel = null) {
   return openaiModel || process.env.OPENAI_MODEL || "gpt-4o-mini";
+}
+
+function safeArray(value) {
+  if (!value) return [];
+  return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
+}
+
+function normalizeText(value = "") {
+  return String(value || "").replace(/\s+/g, " ").trim();
+}
+
+function trimText(value = "", max = 1800) {
+  const text = normalizeText(value);
+  if (!text) return "";
+  if (text.length <= max) return text;
+  return `${text.slice(0, max).trim()} ...[trimmed]`;
 }
 
 function isAssessmentHook(hook = "") {
@@ -67,23 +77,6 @@ function isAssessmentMode(mode = "") {
   return ["QUIZ_MASTER", "TAX_REVIEWER", "ADAPTIVE_QUIZ"].includes(
     String(mode || "").toUpperCase()
   );
-}
-
-function normalizeArray(value) {
-  if (Array.isArray(value)) return value;
-  if (!value) return [];
-  return [value];
-}
-
-function normalizeText(value = "") {
-  return String(value || "").replace(/\s+/g, " ").trim();
-}
-
-function trimText(value = "", max = 2500) {
-  const text = normalizeText(value);
-  if (!text) return "";
-  if (text.length <= max) return text;
-  return `${text.slice(0, max).trim()} ...[trimmed]`;
 }
 
 function compactSourceChunk(chunk = {}) {
@@ -103,7 +96,7 @@ function compactSourceChunk(chunk = {}) {
       chunk.authorityType ||
       chunk.authority_type ||
       chunk.metadata?.authorityType ||
-      "Source",
+      "UNKNOWN",
 
     citation:
       chunk.citation ||
@@ -111,7 +104,6 @@ function compactSourceChunk(chunk = {}) {
       chunk.normalizedReference ||
       chunk.normalized_reference ||
       chunk.metadata?.normalizedReference ||
-      chunk.source ||
       "",
 
     url:
@@ -127,7 +119,7 @@ function compactSourceChunk(chunk = {}) {
         chunk.excerpt ||
         chunk.preview ||
         "",
-      1800
+      1200
     ),
 
     score:
@@ -143,10 +135,10 @@ function compactSourceChunk(chunk = {}) {
 }
 
 function compactQuizHistory(history = []) {
-  return normalizeArray(history).slice(0, 8).map((item) => ({
+  return safeArray(history).slice(0, 8).map((item) => ({
     topic: item.topic || null,
     subtopic: item.subtopic || null,
-    question: trimText(item.question || item.quiz_question || "", 300),
+    question: trimText(item.question || item.quiz_question || "", 280),
     correctAnswer: item.correct_answer || null,
     isCorrect: item.is_correct ?? null
   }));
@@ -183,22 +175,21 @@ function buildAssessmentModeConfig(mode = "QUIZ_MASTER") {
 
 function buildContextOrchestration(input = {}) {
   return {
-    buildOpenAIContext:
-      input?.buildOpenAIContext ||
-      defaultBuildOpenAIContext,
-
     callOpenAIWithOrchestration:
       input?.callOpenAIWithOrchestration ||
-      defaultCallOpenAIWithOrchestration,
-
-    estimateTokens:
-      input?.estimateTokens ||
-      defaultEstimateTokens,
-
-    estimateMessagesTokens:
-      input?.estimateMessagesTokens ||
-      defaultEstimateMessagesTokens
+      defaultCallOpenAIWithOrchestration
   };
+}
+
+function extractOpenAIText(result = {}) {
+  return (
+    result.answer ||
+    result.text ||
+    result.output_text ||
+    result.completion?.choices?.[0]?.message?.content ||
+    result.raw?.choices?.[0]?.message?.content ||
+    ""
+  ).trim();
 }
 
 export function createAssessmentHandler({
@@ -232,14 +223,14 @@ export function createAssessmentHandler({
       userQuery,
       systemPrompt,
       masterPrompt,
-      retrievedSources,
+      retrievedSources: safeArray(retrievedSources).map(compactSourceChunk),
       classification,
       intent,
-      conversationHistory,
+      conversationHistory: safeArray(conversationHistory).slice(-6),
       model
     });
 
-    return result.completion?.choices?.[0]?.message?.content?.trim() || "";
+    return extractOpenAIText(result);
   }
 
   async function saveConversationTurn({
@@ -371,7 +362,9 @@ export function createAssessmentHandler({
   async function buildReviewTeachingBlock(topic = "") {
     const cleanTopic = String(topic || "Philippine taxation").trim();
 
-    const systemPrompt = `
+    return await callAssessmentOpenAI({
+      userQuery: `Teach this CPALE taxation topic briefly and clearly: ${cleanTopic}`,
+      systemPrompt: `
 You are TINA, a CPALE taxation reviewer.
 
 Rules:
@@ -380,9 +373,9 @@ Rules:
 - Do not write a long memo.
 - Do not create a practice question in this block.
 - Do not ask for a free-text answer.
-`.trim();
-
-    const masterPrompt = `
+- Use compact reviewer format only.
+`.trim(),
+      masterPrompt: `
 Output format exactly:
 
 Topic:
@@ -402,12 +395,7 @@ CPALE Trap:
 
 Quick Recall:
 [memory aid]
-`.trim();
-
-    return await callAssessmentOpenAI({
-      userQuery: `Teach this CPALE taxation topic briefly and clearly: ${cleanTopic}`,
-      systemPrompt,
-      masterPrompt,
+`.trim(),
       retrievedSources: [],
       classification: {
         primaryIssue: "REVIEWER",
@@ -417,11 +405,10 @@ Quick Recall:
       },
       intent: {
         intent: "TAX_REVIEW_TEACHING",
+        requiresSimpleDefinition: true,
         requiresLegalAnalysis: false,
         requiresRiskAnalysis: false,
-        requiresFactPatternAnalysis: false,
-        requiresSourceOnly: false,
-        requiresSimpleDefinition: true
+        requiresFactPatternAnalysis: false
       }
     });
   }
@@ -449,12 +436,12 @@ Quick Recall:
 
     const sourceChunks = await getQuizSourceChunks({
       topic: quizProfile.topic,
-      excludeSourcePaths: normalizeArray(exclusions.excludeSourcePaths),
-      excludeChunkIds: normalizeArray(exclusions.excludeChunkIds),
+      excludeSourcePaths: safeArray(exclusions.excludeSourcePaths),
+      excludeChunkIds: safeArray(exclusions.excludeChunkIds),
       limit: 3
     });
 
-    const compactSources = normalizeArray(sourceChunks).map(compactSourceChunk);
+    const compactSources = safeArray(sourceChunks).map(compactSourceChunk);
     const compactHistory = compactQuizHistory(recentHistory);
 
     const quizPrompt = buildAdaptiveQuizPrompt({
@@ -473,8 +460,9 @@ You are TINA's CPALE Philippine Tax Quiz Generator.
 Generate exactly one multiple-choice question in valid JSON only.
 No markdown.
 No explanations outside JSON.
-Use the provided compact source excerpts only when available.
+Use the compact source excerpts only when available.
 Avoid repeating recent questions.
+Do not include raw source text or debug data.
 `.trim(),
       masterPrompt: `
 Required JSON shape:
@@ -502,12 +490,11 @@ Required JSON shape:
       },
       intent: {
         intent: "GENERATE_MULTIPLE_CHOICE_TAX_QUIZ",
+        requiresSimpleDefinition: false,
         requiresLegalAnalysis: false,
         requiresRiskAnalysis: false,
         requiresFactPatternAnalysis: false,
-        requiresEvidenceEvaluation: false,
-        requiresSourceOnly: false,
-        requiresSimpleDefinition: false
+        requiresEvidenceEvaluation: false
       }
     });
 
@@ -517,7 +504,6 @@ Required JSON shape:
       return {
         ok: false,
         error: "Unable to generate valid multiple-choice question JSON.",
-        rawQuiz,
         sourceChunks: compactSources
       };
     }
@@ -535,7 +521,6 @@ Required JSON shape:
         ok: false,
         error: "Question was generated but could not be saved.",
         supabaseError: storedQuiz?.error || null,
-        rawQuiz,
         quiz,
         sourceChunks: compactSources
       };
@@ -717,7 +702,8 @@ Required JSON shape:
         sourcesUsed: nextSources,
         sources: nextSources,
         vectorMatches: nextSources.length,
-        contextOrchestrationEnabled: true
+        contextOrchestrationEnabled: true,
+        directOpenAICallDisabled: true
       }
     };
   }
@@ -789,7 +775,8 @@ Required JSON shape:
         sourcesUsed: [],
         sources: [],
         vectorMatches: 0,
-        contextOrchestrationEnabled: true
+        contextOrchestrationEnabled: true,
+        directOpenAICallDisabled: true
       }
     };
   }
@@ -828,7 +815,6 @@ Required JSON shape:
           mode: hookConfig.mode,
           hookTitle: hookConfig.title,
           error: questionResult.error,
-          rawQuiz: questionResult.rawQuiz || null,
           supabaseError: questionResult.supabaseError || null,
           answer:
             teachingText ||
@@ -837,7 +823,8 @@ Required JSON shape:
           sourcesUsed: [],
           sources: [],
           vectorMatches: 0,
-          contextOrchestrationEnabled: true
+          contextOrchestrationEnabled: true,
+          directOpenAICallDisabled: true
         }
       };
     }
@@ -893,7 +880,8 @@ Required JSON shape:
         sourcesUsed: quizSourcesUsed,
         sources: quizSourcesUsed,
         vectorMatches: quizSourcesUsed.length,
-        contextOrchestrationEnabled: true
+        contextOrchestrationEnabled: true,
+        directOpenAICallDisabled: true
       }
     };
   }
@@ -923,7 +911,8 @@ Required JSON shape:
       sourcesUsed: [],
       sources: [],
       vectorMatches: 0,
-      contextOrchestrationEnabled: true
+      contextOrchestrationEnabled: true,
+      directOpenAICallDisabled: true
     };
   }
 
@@ -945,8 +934,10 @@ export function assessmentHandlerHealthCheck() {
     engine: "TINA_ASSESSMENT_HANDLER",
     version: ENGINE_VERSION,
     contextOrchestrationCompatible: true,
+    usesOrchestrationOnly: true,
     directOpenAICallPrevented: true,
     compactQuizSourcesEnabled: true,
+    rawQuizLeakagePrevented: true,
     oversizedPromptProtectionEnabled: true
   };
 }
