@@ -6,6 +6,8 @@
  * Version: 4.0.0
  */
 
+import { enrichIssueClassification } from "./main-tax-engine-classification.js";
+
 const ENGINE_VERSION = "4.0.0";
 
 const PRIMARY_ISSUE = Object.freeze({
