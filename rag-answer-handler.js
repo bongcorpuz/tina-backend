@@ -2,19 +2,8 @@
 "use strict";
 
 /**
- * rag-answer-handler.js
  * TINA Adaptive RAG Answer Handler
- * Version: 4.0.0
- *
- * Main patch:
- * - Runs issue classification BEFORE retrieval.
- * - Passes issueClassification downstream to:
- *   - retrieval-engine.js
- *   - reranker-engine.js
- *   - jurisprudence-engine.js
- *   - conflict-engine.js context
- *   - answer-renderer.js
- * - Prevents answer generation from relying only on generic keyword/topic similarity.
+ * Version: 4.1.0
  */
 
 import { detectTopic } from "./topic-detector.js";
@@ -22,9 +11,9 @@ import { saveModeState } from "./mode-state.js";
 
 import {
   getLastTopicState,
-  saveTopicState,
   extractMemoryHooks,
-  saveMemoryHooks
+  saveMemoryHooks,
+  saveTopicState
 } from "./memory-hooks.js";
 
 import {
@@ -54,17 +43,9 @@ import {
   buildNoSourceReply
 } from "./legal-validation-engine.js";
 
-import {
-  maybeGenerateProvisionCitationAnswer
-} from "./provision-citation-engine.js";
-
-import {
-  maybeGenerateCaseAnalysisAnswer
-} from "./case-analysis-engine.js";
-
-import {
-  maybeGenerateDoctrineAnswer
-} from "./doctrine-tagging-engine.js";
+import { maybeGenerateProvisionCitationAnswer } from "./provision-citation-engine.js";
+import { maybeGenerateCaseAnalysisAnswer } from "./case-analysis-engine.js";
+import { maybeGenerateDoctrineAnswer } from "./doctrine-tagging-engine.js";
 
 import {
   detectNamedLaw,
@@ -100,36 +81,23 @@ import {
   getAuthorityLevelForDoc
 } from "./authority-engine.js";
 
-import {
-  detectHierarchyConflict
-} from "./conflict-engine.js";
-
-import {
-  applySupersessionFilter
-} from "./supersession-engine.js";
-
-import {
-  hybridRetrieve
-} from "./retrieval-engine.js";
-
-import {
-  rerankForTina
-} from "./reranker-engine.js";
+import { detectHierarchyConflict } from "./conflict-engine.js";
+import { applySupersessionFilter } from "./supersession-engine.js";
+import { hybridRetrieve } from "./retrieval-engine.js";
+import { rerankForTina } from "./reranker-engine.js";
 
 import {
   selectIssueRelevantJurisprudence,
   buildJurisprudencePromptBlock,
+  buildJurisprudencePayload,
   buildNoJurisprudenceText
 } from "./jurisprudence-engine.js";
 
-import {
-  analyzeQueryIntent
-} from "./query-intent-engine.js";
-
+import { analyzeQueryIntent } from "./query-intent-engine.js";
 import * as IssueClassificationEngine from "./issue-classification-engine.js";
-
 import answerRenderer from "./answer-renderer.js";
 
+const ENGINE_VERSION = "4.1.0";
 const DEFAULT_MODEL = process.env.OPENAI_MODEL || "gpt-4o-mini";
 
 const TINA_AF_HEADINGS = Object.freeze([
@@ -145,9 +113,6 @@ const FALLBACK_TINA_STRUCTURE = `
 You are TINA — Tax Intelligence and Analysis — a Philippine tax, legal, audit,
 accounting, and compliance reasoning AI.
 
-You are not a citation retriever. You must synthesize law, facts, evidence,
-legal hierarchy, doctrine, risk, assumptions, and practical application.
-
 Default substantive structure:
 A. DIRECT ANSWER
 B. CONTROLLING LEGAL BASIS
@@ -158,11 +123,10 @@ F. PRACTICAL APPLICATION
 
 Strict rules:
 - Do not fabricate laws, cases, GR numbers, rates, deadlines, dates, or issuances.
-- Do not cite unrelated cases.
-- Do not merely say "Conflict detected: YES."
-- Explain exact conflict, controlling authority, and why it controls only if complete conflict metadata exists.
+- Do not cite unrelated cases or unrelated provisions.
+- Do not say "Conflict detected: YES" unless complete conflict metadata exists.
+- Explain exact conflict, controlling authority, and why it controls only if same-issue and opposite-holding gates passed.
 - If facts or documents are incomplete, state that the position is preliminary and subject to verification.
-- Separate tax treatment, accounting treatment, audit risk, litigation exposure, and documentation requirements.
 `.trim();
 
 function normalizeText(value = "") {
@@ -180,7 +144,7 @@ function truncateForPrompt(value = "", maxChars = 3500) {
 
 function safeArray(value) {
   if (!value) return [];
-  return Array.isArray(value) ? value : [value];
+  return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
 }
 
 function unique(values = []) {
@@ -214,10 +178,8 @@ function mergeUniqueDocs(docs = []) {
 
   for (const doc of docs || []) {
     if (!doc) continue;
-
     const key = buildDocKey(doc);
     if (seen.has(key)) continue;
-
     seen.add(key);
     output.push(doc);
   }
@@ -264,11 +226,29 @@ function getScore(doc = {}) {
   return Number.isFinite(Number(value)) ? Number(value) : 0;
 }
 
+function isIssueMatched(doc = {}) {
+  if (doc.issueMismatch === true || doc.issueClassificationMatch?.issueMismatch === true) return false;
+  if (doc.issueClassificationMatch?.matched === true) return true;
+  if (doc.issueClassificationMatch?.issueOverlap === true) return true;
+  if (doc.issueClassificationMatch?.targetAuthorityMatch === true) return true;
+  return null;
+}
+
+function isTargetAuthorityMatched(doc = {}) {
+  return doc.targetAuthorityMatch === true || doc.issueClassificationMatch?.targetAuthorityMatch === true;
+}
+
 function sortByAuthorityAndScore(docs = []) {
   return [...docs].sort((a, b) => {
+    const targetDiff = Number(isTargetAuthorityMatched(b)) - Number(isTargetAuthorityMatched(a));
+    if (targetDiff !== 0) return targetDiff;
+
+    const aIssue = isIssueMatched(a);
+    const bIssue = isIssueMatched(b);
+    if (aIssue !== bIssue) return Number(bIssue === true) - Number(aIssue === true);
+
     const levelA = getAuthorityLevelForDoc(a);
     const levelB = getAuthorityLevelForDoc(b);
-
     if (levelA !== levelB) return levelA - levelB;
 
     return getScore(b) - getScore(a);
@@ -284,6 +264,8 @@ function formatDocsForPrompt(docs = [], maxDocs = 8) {
         `PATH: ${docPath(doc)}`,
         `AUTHORITY TYPE: ${getAuthorityTypeForDoc(doc) || "UNKNOWN"}`,
         `AUTHORITY LEVEL: ${getAuthorityLevelForDoc(doc) || 99}`,
+        `TARGET AUTHORITY MATCH: ${isTargetAuthorityMatched(doc) ? "YES" : "NO"}`,
+        `ISSUE CLASSIFICATION MATCH: ${JSON.stringify(doc.issueClassificationMatch || null)}`,
         `SCORE: ${getScore(doc)}`,
         "TEXT:",
         truncateForPrompt(doc.text || doc.content || doc.excerpt || doc.preview || "", 3500)
@@ -305,6 +287,9 @@ function buildEvidenceMetadata(doc = {}) {
       doc.authority_level ||
       doc.metadata?.authorityLevel ||
       getAuthorityLevelForDoc(doc),
+    issueClassificationMatch: doc.issueClassificationMatch || null,
+    targetAuthorityMatch: doc.targetAuthorityMatch === true,
+    issueMismatch: doc.issueMismatch === true,
     normalizedReference:
       doc.normalizedReference ||
       doc.normalized_reference ||
@@ -320,14 +305,13 @@ function buildEvidenceMetadata(doc = {}) {
       doc.effective_to ||
       doc.metadata?.effectiveTo ||
       null,
-    isSuperseded:
-      Boolean(
-        doc.isSuperseded ||
-          doc.is_superseded ||
-          doc.superseded ||
-          doc.metadata?.isSuperseded ||
-          doc.metadata?.superseded
-      ),
+    isSuperseded: Boolean(
+      doc.isSuperseded ||
+        doc.is_superseded ||
+        doc.superseded ||
+        doc.metadata?.isSuperseded ||
+        doc.metadata?.superseded
+    ),
     supersededByReference:
       doc.supersededByReference ||
       doc.superseded_by_reference ||
@@ -349,6 +333,7 @@ function normalizeIssueClassification(raw = {}, fallbackQueryIntent = null) {
     "GENERAL";
 
   const subIssues = unique([
+    primaryIssue,
     ...safeArray(raw.subIssues),
     ...safeArray(raw.subIssue),
     ...safeArray(raw.sub_issues),
@@ -373,6 +358,7 @@ function normalizeIssueClassification(raw = {}, fallbackQueryIntent = null) {
 
   return {
     primaryIssue,
+    subIssue: raw.subIssue || raw.sub_issue || subIssues[0] || primaryIssue,
     subIssues,
     legalDimensions,
     retrievalStrategy:
@@ -418,22 +404,16 @@ function callPossibleIssueClassifier({ question = "", queryIntent = {}, adaptive
         queryIntent,
         adaptiveContext
       });
-
-      if (result && typeof result === "object") {
-        return result;
-      }
+      if (result && typeof result === "object") return result;
     } catch (error) {
       console.warn("issue-classification-engine candidate failed:", error?.message || error);
     }
 
     try {
       const result = fn(question);
-
-      if (result && typeof result === "object") {
-        return result;
-      }
+      if (result && typeof result === "object") return result;
     } catch {
-      // ignore second calling convention failure
+      // ignore
     }
   }
 
@@ -491,24 +471,18 @@ function fallbackIssueClassification(question = "", queryIntent = {}) {
     targetAuthorities.push("PFRS", "PAS", "PSA");
   }
 
-  return normalizeIssueClassification(
-    {
-      primaryIssue,
-      subIssues,
-      legalDimensions,
-      retrievalStrategy: "FALLBACK_ISSUE_CLASSIFIED_RETRIEVAL",
-      targetAuthorities,
-      issueConfidence: "FALLBACK_RULE_BASED"
-    },
-    queryIntent
-  );
+  return normalizeIssueClassification({
+    primaryIssue,
+    subIssues,
+    legalDimensions,
+    retrievalStrategy: "FALLBACK_ISSUE_CLASSIFIED_RETRIEVAL",
+    targetAuthorities,
+    issueConfidence: "FALLBACK_RULE_BASED"
+  }, queryIntent);
 }
 
 function classifyIssueBeforeRetrieval({ question = "", adaptiveContext = {} } = {}) {
-  const queryIntent =
-    adaptiveContext?.queryIntent ||
-    analyzeQueryIntent(question) ||
-    {};
+  const queryIntent = adaptiveContext?.queryIntent || analyzeQueryIntent(question) || {};
 
   const engineResult = callPossibleIssueClassifier({
     question,
@@ -516,10 +490,7 @@ function classifyIssueBeforeRetrieval({ question = "", adaptiveContext = {} } = 
     adaptiveContext
   });
 
-  if (engineResult) {
-    return normalizeIssueClassification(engineResult, queryIntent);
-  }
-
+  if (engineResult) return normalizeIssueClassification(engineResult, queryIntent);
   return fallbackIssueClassification(question, queryIntent);
 }
 
@@ -531,6 +502,7 @@ function enrichAdaptiveStateWithIssueClassification(adaptiveState = {}, issueCla
       ...(adaptiveState.queryIntent || {}),
       issueClassification,
       primaryIssue: issueClassification.primaryIssue,
+      subIssue: issueClassification.subIssue,
       subIssues: issueClassification.subIssues,
       legalDimensions: issueClassification.legalDimensions,
       retrievalStrategy:
@@ -540,7 +512,21 @@ function enrichAdaptiveStateWithIssueClassification(adaptiveState = {}, issueCla
     },
     responsePlan: {
       ...(adaptiveState.responsePlan || {}),
-      issueClassification
+      issueClassification,
+      sourceOrderingPolicy: {
+        ...(adaptiveState.responsePlan?.sourceOrderingPolicy || {}),
+        useIssueClassificationMatch: true,
+        useTargetAuthorityMatch: true,
+        useControllingPrecedence: true,
+        hideIssueMismatchedSources: true
+      },
+      conflictDisplayPolicy: {
+        ...(adaptiveState.responsePlan?.conflictDisplayPolicy || {}),
+        displayConflictYesOnlyWhenConflictTrue: true,
+        requireCompleteConflictMetadata: true,
+        requireSameIssueGate: true,
+        requireOppositeHoldingGate: true
+      }
     }
   };
 }
@@ -627,59 +613,24 @@ function buildConclusionRestrictionInstruction(adaptiveState = {}) {
     ].join("\n");
   }
 
-  return [
-    "CONCLUSION GATING:",
-    "A direct conclusion is allowed only if supported by retrieved authority and evidence."
-  ].join("\n");
+  return "CONCLUSION GATING:\nA direct conclusion is allowed only if supported by retrieved authority and evidence.";
 }
 
 function buildAdaptiveContextForPrompt(adaptiveState = {}) {
-  return JSON.stringify(
-    {
-      issueClassification: adaptiveState.issueClassification || null,
-      adaptiveMode: adaptiveState.adaptiveMode
-        ? {
-            primaryMode: adaptiveState.adaptiveMode.primaryMode,
-            secondaryModes: adaptiveState.adaptiveMode.secondaryModes,
-            riskLevel: adaptiveState.adaptiveMode.riskLevel,
-            complexityLevel: adaptiveState.adaptiveMode.complexityLevel,
-            responseStructure: adaptiveState.adaptiveMode.responseStructure
-          }
-        : null,
-      queryIntent: adaptiveState.queryIntent
-        ? {
-            detectedIntent: adaptiveState.queryIntent.detectedIntent,
-            adaptiveMode: adaptiveState.queryIntent.adaptiveMode,
-            issueTypes: adaptiveState.queryIntent.issueTypes,
-            legalDimensions: adaptiveState.queryIntent.legalDimensions,
-            retrievalStrategy: adaptiveState.queryIntent.retrievalStrategy,
-            targetAuthorities: adaptiveState.queryIntent.targetAuthorities,
-            primaryIssue: adaptiveState.queryIntent.primaryIssue,
-            subIssues: adaptiveState.queryIntent.subIssues,
-            needsSupersessionCheck: adaptiveState.queryIntent.needsSupersessionCheck,
-            needsJurisprudence: adaptiveState.queryIntent.needsJurisprudence
-          }
-        : null,
-      factPattern: adaptiveState.factPattern
-        ? {
-            knownFacts: adaptiveState.factPattern.knownFacts,
-            unresolvedFacts: adaptiveState.factPattern.unresolvedFacts,
-            documentsRequired: adaptiveState.factPattern.documentsRequired,
-            factCompleteness: adaptiveState.factPattern.factCompleteness
-          }
-        : null,
-      contractInterpretation: adaptiveState.contractInterpretation || null,
-      transactionCharacterization: adaptiveState.transactionCharacterization || null,
-      economicSubstance: adaptiveState.economicSubstance || null,
-      evidenceEvaluation: adaptiveState.evidenceEvaluation || null,
-      assumptionGap: adaptiveState.assumptionGap || null,
-      riskScore: adaptiveState.riskScore || null,
-      positionStrength: adaptiveState.positionStrength || null,
-      responsePlan: adaptiveState.responsePlan || null
-    },
-    null,
-    2
-  );
+  return JSON.stringify({
+    issueClassification: adaptiveState.issueClassification || null,
+    adaptiveMode: adaptiveState.adaptiveMode || null,
+    queryIntent: adaptiveState.queryIntent || null,
+    factPattern: adaptiveState.factPattern || null,
+    contractInterpretation: adaptiveState.contractInterpretation || null,
+    transactionCharacterization: adaptiveState.transactionCharacterization || null,
+    economicSubstance: adaptiveState.economicSubstance || null,
+    evidenceEvaluation: adaptiveState.evidenceEvaluation || null,
+    assumptionGap: adaptiveState.assumptionGap || null,
+    riskScore: adaptiveState.riskScore || null,
+    positionStrength: adaptiveState.positionStrength || null,
+    responsePlan: adaptiveState.responsePlan || null
+  }, null, 2);
 }
 
 function buildAdaptivePlannerInstructions(adaptiveState = {}) {
@@ -688,53 +639,39 @@ function buildAdaptivePlannerInstructions(adaptiveState = {}) {
   instructions.push(adaptiveState.adaptivePromptBundle || FALLBACK_TINA_STRUCTURE);
 
   if (adaptiveState.issueClassification) {
-    instructions.push(
-      [
-        "ISSUE CLASSIFICATION CONTROL:",
-        JSON.stringify(adaptiveState.issueClassification, null, 2),
-        "",
-        "Use the classified issue to control retrieval interpretation, legal basis selection, jurisprudence relevance, and conflict analysis.",
-        "Do not cite a case merely because it mentions the same tax type. The case must match the classified legal issue, legal dimension, and applicability."
-      ].join("\n")
-    );
+    instructions.push([
+      "ISSUE CLASSIFICATION CONTROL:",
+      JSON.stringify(adaptiveState.issueClassification, null, 2),
+      "",
+      "Use the classified issue to control retrieval interpretation, legal basis selection, jurisprudence relevance, doctrine selection, source visibility, and conflict analysis.",
+      "Do not cite a case, provision, or doctrine merely because it mentions the same tax type."
+    ].join("\n"));
   }
 
   if (safeArray(adaptiveState?.responsePlan?.plannerInstruction).length) {
-    instructions.push(
-      [
-        "ADAPTIVE RESPONSE PLAN:",
-        ...adaptiveState.responsePlan.plannerInstruction.map((item) => `- ${item}`)
-      ].join("\n")
-    );
-  }
-
-  if (safeArray(adaptiveState?.assumptionGap?.mandatoryDisclosure).length) {
-    instructions.push(
-      [
-        "MANDATORY DISCLOSURES:",
-        JSON.stringify(adaptiveState.assumptionGap.mandatoryDisclosure, null, 2)
-      ].join("\n")
-    );
-  }
-
-  if (safeArray(adaptiveState?.riskScore?.recommendedResponseControls).length) {
-    instructions.push(
-      [
-        "RISK-BASED CONTROLS:",
-        ...adaptiveState.riskScore.recommendedResponseControls.map((item) => `- ${item}`)
-      ].join("\n")
-    );
-  }
-
-  if (adaptiveState?.positionStrength?.conclusionLanguage) {
-    instructions.push(
-      `POSITION-STRENGTH CONTROL:\n${adaptiveState.positionStrength.conclusionLanguage}`
-    );
+    instructions.push([
+      "ADAPTIVE RESPONSE PLAN:",
+      ...adaptiveState.responsePlan.plannerInstruction.map((item) => `- ${item}`)
+    ].join("\n"));
   }
 
   instructions.push(buildConclusionRestrictionInstruction(adaptiveState));
 
   return instructions.filter(Boolean).join("\n\n---\n\n");
+}
+
+function conflictMetadataIsComplete(conflict = null) {
+  if (!conflict || typeof conflict !== "object") return false;
+
+  const hasTrueConflict = conflict.conflict === true;
+  const hasConflictType = Boolean(conflict.conflictType || conflict.type);
+  const hasExactIssue = Boolean(conflict.exactIssue || conflict.exact_issue || conflict.sameIssueGate?.sameIssues?.length);
+  const hasExactDimension = Boolean(conflict.exactLegalDimension || conflict.exact_legal_dimension || conflict.sameIssueGate?.sameDimensions?.length || conflict.legalDimension);
+  const sameIssuePassed = conflict.sameIssueGate?.passed === true || Boolean(conflict.exactIssue || conflict.exact_issue);
+  const oppositeHoldingPassed = conflict.oppositeHoldingGate?.passed === true || Boolean(conflict.oppositeHolding || conflict.oppositeHoldings);
+  const hasResolution = Boolean(conflict.resolutionBasis || conflict.resolution_basis || conflict.reason || conflict.winningAuthority || conflict.controllingAuthority || conflict.controllingSource);
+
+  return hasTrueConflict && hasConflictType && hasExactIssue && hasExactDimension && sameIssuePassed && oppositeHoldingPassed && hasResolution;
 }
 
 function buildConflictContextForPrompt({
@@ -743,43 +680,38 @@ function buildConflictContextForPrompt({
   conflicts = [],
   issueClassification = null
 }) {
+  const completeConflicts = safeArray(conflicts).filter(conflictMetadataIsComplete);
+
   return [
     issueClassification
-      ? [
-          "ISSUE CLASSIFICATION USED:",
-          JSON.stringify(issueClassification, null, 2)
-        ].join("\n")
+      ? `ISSUE CLASSIFICATION USED:\n${JSON.stringify(issueClassification, null, 2)}`
       : "ISSUE CLASSIFICATION USED: None.",
     hierarchyConflict
       ? [
           "HIERARCHY / CONFLICT REVIEW:",
-          JSON.stringify(
-            {
-              conflict: Boolean(hierarchyConflict.conflict),
-              conflictType: hierarchyConflict.conflictType || null,
-              doctrinalConflict: Boolean(hierarchyConflict.doctrinalConflict),
-              hierarchyConflict: Boolean(hierarchyConflict.hierarchyConflict),
-              apparentConflict: Boolean(hierarchyConflict.apparentConflict),
-              exactIssue: hierarchyConflict.exactIssue || null,
-              exactLegalDimension: hierarchyConflict.exactLegalDimension || null,
-              distinctionType: hierarchyConflict.distinctionType || null,
-              sameIssueGate: hierarchyConflict.sameIssueGate || null,
-              oppositeHoldingGate: hierarchyConflict.oppositeHoldingGate || null,
-              controllingAuthority: hierarchyConflict.controllingAuthority || null,
-              controllingSource: hierarchyConflict.controllingSource || null,
-              overriddenAuthority: hierarchyConflict.overriddenAuthority || null,
-              reason: hierarchyConflict.reason || null,
-              resolutionBasis: hierarchyConflict.resolutionBasis || null
-            },
-            null,
-            2
-          )
+          JSON.stringify({
+            conflict: Boolean(hierarchyConflict.conflict),
+            conflictType: hierarchyConflict.conflictType || null,
+            doctrinalConflict: Boolean(hierarchyConflict.doctrinalConflict),
+            hierarchyConflict: Boolean(hierarchyConflict.hierarchyConflict),
+            apparentConflict: Boolean(hierarchyConflict.apparentConflict),
+            exactIssue: hierarchyConflict.exactIssue || null,
+            exactLegalDimension: hierarchyConflict.exactLegalDimension || null,
+            distinctionType: hierarchyConflict.distinctionType || null,
+            sameIssueGate: hierarchyConflict.sameIssueGate || null,
+            oppositeHoldingGate: hierarchyConflict.oppositeHoldingGate || null,
+            controllingAuthority: hierarchyConflict.controllingAuthority || null,
+            controllingSource: hierarchyConflict.controllingSource || null,
+            overriddenAuthority: hierarchyConflict.overriddenAuthority || null,
+            reason: hierarchyConflict.reason || null,
+            resolutionBasis: hierarchyConflict.resolutionBasis || null
+          }, null, 2)
         ].join("\n")
       : "HIERARCHY / CONFLICT REVIEW: No conflict metadata.",
     jurisprudenceBlock || buildNoJurisprudenceText(),
-    safeArray(conflicts).length
-      ? `EVIDENCE CONFLICT SIGNALS:\n${JSON.stringify(conflicts.slice(0, 5), null, 2)}`
-      : "EVIDENCE CONFLICT SIGNALS: None detected."
+    completeConflicts.length
+      ? `COMPLETE EVIDENCE CONFLICTS:\n${JSON.stringify(completeConflicts.slice(0, 5), null, 2)}`
+      : "COMPLETE EVIDENCE CONFLICTS: None detected."
   ].join("\n\n");
 }
 
@@ -808,7 +740,7 @@ function buildComplianceInsight({
     notes.push("Assumptions, evidentiary gaps, ambiguities, and limitations must be disclosed before any strong conclusion.");
   }
 
-  if (hierarchyConflict?.conflict) {
+  if (hierarchyConflict?.conflict && conflictMetadataIsComplete(hierarchyConflict)) {
     notes.push("A complete same-issue opposite-holding conflict was detected; explain controlling authority and why it controls.");
   } else if (hierarchyConflict?.apparentConflict) {
     notes.push("An apparent conflict was detected; treat it as distinguishable unless same-issue and opposite-holding gates are complete.");
@@ -822,9 +754,7 @@ function buildComplianceInsight({
     notes.unshift("For named-law questions, rely first on the exact statute and its IRR before secondary materials.");
   }
 
-  return notes.length
-    ? notes.join(" ")
-    : "Apply the higher-authority rule first and use lower-authority material only as support.";
+  return notes.length ? notes.join(" ") : "Apply the higher-authority rule first and use lower-authority material only as support.";
 }
 
 function mergeConflictSignals({
@@ -872,7 +802,6 @@ function mergeConflictSignals({
     });
 
     if (seen.has(key)) return false;
-
     seen.add(key);
     return true;
   });
@@ -882,13 +811,17 @@ function buildRouteResponsePayload({
   answerText,
   legalBasisDocs = [],
   sourcesUsed = [],
-  hierarchyConflict = null
+  hierarchyConflict = null,
+  query = "",
+  issueClassification = null
 }) {
   return buildFinalRoutePayload({
     answer: answerText,
     legalBasisDocs,
     sourcesUsed,
-    hierarchyConflict
+    hierarchyConflict,
+    query,
+    issueClassification
   });
 }
 
@@ -909,10 +842,6 @@ function buildAnswerMode({
     return `${mode}_${String(adaptiveState.issueClassification.primaryIssue).toLowerCase()}_reasoned_answer`;
   }
 
-  if (adaptiveState?.responsePlan?.responseMode) {
-    return `adaptive_${String(adaptiveState.responsePlan.responseMode).toLowerCase()}_reasoned_answer`;
-  }
-
   if (provisionModeResult?.handled) return "provision_citation_reasoned_answer";
   if (caseModeResult?.handled) return "case_analysis_reasoned_answer";
   if (doctrineModeResult?.handled) return "doctrine_analysis_reasoned_answer";
@@ -922,20 +851,13 @@ function buildAnswerMode({
   return `${String(hookConfig.mode || "ask").toLowerCase()}_reasoned_answer`;
 }
 
-function getSpecializedDocs({
-  provisionModeResult,
-  caseModeResult,
-  doctrineModeResult
-}) {
+function getSpecializedDocs({ provisionModeResult, caseModeResult, doctrineModeResult }) {
   if (provisionModeResult?.handled && Array.isArray(provisionModeResult.topDocs)) {
     return provisionModeResult.topDocs;
   }
 
   if (caseModeResult?.handled) {
-    return mergeUniqueDocs([
-      ...(caseModeResult.caseDocs || []),
-      ...(caseModeResult.birDocs || [])
-    ]);
+    return mergeUniqueDocs([...(caseModeResult.caseDocs || []), ...(caseModeResult.birDocs || [])]);
   }
 
   if (doctrineModeResult?.handled && Array.isArray(doctrineModeResult.topAuthorities)) {
@@ -945,6 +867,9 @@ function getSpecializedDocs({
       text: item.excerpt,
       authorityType: item.authorityType,
       authorityLevel: item.authorityLevel,
+      controllingPrecedence: item.controllingPrecedence,
+      issueClassificationMatch: item.issueClassificationMatch || null,
+      targetAuthorityMatch: item.targetAuthorityMatch === true,
       doctrineLabel: item.doctrineLabel,
       doctrineApplicability: item.doctrineApplicability,
       doctrineApplicabilityExplanation: item.doctrineApplicabilityExplanation
@@ -962,16 +887,15 @@ async function enforceAdaptiveFinalAnalysis({
   docs = [],
   hierarchyConflict = null,
   jurisprudenceBlock = "",
+  jurisprudencePayload = null,
   conflicts = [],
   memoryContext = "",
   adaptiveState = {}
 }) {
   const cleanDraft = normalizeText(draftAnswer);
-
   if (!cleanDraft) return cleanDraft;
 
   const sourceContext = formatDocsForPrompt(docs, 8);
-
   if (!sourceContext.trim()) return cleanDraft;
 
   const systemPrompt = [
@@ -981,9 +905,8 @@ async function enforceAdaptiveFinalAnalysis({
     "Rewrite or refine the draft so it follows the adaptive response plan, issue classification, authority hierarchy, evidence limits, and conclusion gating.",
     "Use only the provided indexed source context, adaptive context, conflict metadata, and draft.",
     "Do not invent laws, cases, dates, rates, issuances, section numbers, GR numbers, or citations.",
-    "If a required authority is not provided, state that no indexed support was retrieved.",
     "Do not append a raw source list; the API route payload handles sources.",
-    "Do not say 'Conflict detected: YES' unless conflict metadata confirms same issue, same dimension, opposite holding, conflict type, and resolution basis."
+    "Do not say 'Conflict detected: YES' unless complete conflict metadata confirms same issue, same dimension, opposite holding, conflict type, and resolution basis."
   ].join("\n");
 
   const userPrompt = [
@@ -1009,6 +932,9 @@ async function enforceAdaptiveFinalAnalysis({
       conflicts,
       issueClassification: adaptiveState.issueClassification
     }),
+    "",
+    "JURISPRUDENCE PAYLOAD:",
+    JSON.stringify(jurisprudencePayload || null, null, 2),
     "",
     "OUTPUT REQUIREMENT:",
     adaptiveState?.responsePlan?.responseTemplate?.length
@@ -1038,7 +964,9 @@ async function persistAnswerRendering({
   routePayload,
   finalVisibleSources,
   limitationStatement = null,
-  hierarchyConflict = null
+  hierarchyConflict = null,
+  conflictReview = null,
+  jurisprudencePayload = null
 }) {
   try {
     const { error } = await supabase.from("tina_answer_renderings").insert({
@@ -1060,6 +988,7 @@ async function persistAnswerRendering({
       limitation_statement: limitationStatement,
       confidence_statement: routePayload?.confidence_level || null,
       renderer_payload: {
+        engineVersion: ENGINE_VERSION,
         issueClassification: adaptiveState?.issueClassification || null,
         adaptiveMode: adaptiveState?.adaptiveMode || null,
         queryIntent: adaptiveState?.queryIntent || null,
@@ -1067,23 +996,21 @@ async function persistAnswerRendering({
         riskScore: adaptiveState?.riskScore || null,
         positionStrength: adaptiveState?.positionStrength || null,
         assumptionGap: adaptiveState?.assumptionGap || null,
-        hierarchyConflict: hierarchyConflict || null
+        hierarchyConflict: hierarchyConflict || null,
+        conflictReview: conflictReview || null,
+        jurisprudencePayload: jurisprudencePayload || null,
+        sourceOrderingPolicy: adaptiveState?.responsePlan?.sourceOrderingPolicy || null,
+        conflictDisplayPolicy: adaptiveState?.responsePlan?.conflictDisplayPolicy || null
       }
     });
 
-    if (error) {
-      console.warn("tina_answer_renderings insert skipped:", error.message);
-    }
+    if (error) console.warn("tina_answer_renderings insert skipped:", error.message);
   } catch (error) {
     console.warn("tina_answer_renderings insert failed:", error?.message || error);
   }
 }
 
-function buildFallbackComplianceAnswer({
-  fallbackText,
-  professionalInsight,
-  adaptiveState
-}) {
+function buildFallbackComplianceAnswer({ fallbackText, professionalInsight, adaptiveState }) {
   const limitation =
     adaptiveState?.assumptionGap?.limitationStatement ||
     adaptiveState?.responsePlan?.limitationStatement ||
@@ -1102,28 +1029,28 @@ function buildFallbackComplianceAnswer({
   return buildFinalCompliantAnswer({
     draftAnswer: `${fallbackText}${issueNote}${adaptiveNote}`,
     fallbackAnswer: fallbackText,
-    directAnswer: "",
     legalBasisDocs: [],
     sourcesUsed: [],
     conflicts: [],
     hierarchyConflict: null,
-    professionalInsight
+    conflict: null,
+    conflictReview: null,
+    jurisprudencePayload: null,
+    professionalInsight,
+    query: adaptiveState?.queryIntent?.legalQuestionPresented || "",
+    issueClassification: adaptiveState?.issueClassification || null
   });
 }
 
 function buildNamedLawFallbackText(bestMatch) {
-  if (!bestMatch) {
-    return "No exact indexed legal source was found for the named law or act asked.";
-  }
+  if (!bestMatch) return "No exact indexed legal source was found for the named law or act asked.";
 
   const title =
     bestMatch.shortTitle ||
     bestMatch.canonicalTitle ||
     `RA ${bestMatch.republicActNumber || ""}`.trim();
 
-  const raText = bestMatch.republicActNumber
-    ? ` (RA ${bestMatch.republicActNumber})`
-    : "";
+  const raText = bestMatch.republicActNumber ? ` (RA ${bestMatch.republicActNumber})` : "";
 
   return [
     `TINA recognized the question as referring to ${title}${raText}.`,
@@ -1138,6 +1065,7 @@ function buildNamedLawFallbackText(bestMatch) {
 function selectGroundedDisplayableDocs(docs = [], maxItems = MAX_VISIBLE_SOURCES) {
   return sortByAuthorityAndScore(docs)
     .filter((doc) => !shouldHideSourceFromUser(doc))
+    .filter((doc) => doc.issueMismatch !== true && doc.issueClassificationMatch?.issueMismatch !== true)
     .slice(0, maxItems);
 }
 
@@ -1157,15 +1085,17 @@ function renderFinalAnswer({
   finalVisibleSources,
   mergedConflictSignals,
   hierarchyConflict,
+  jurisprudencePayload,
   professionalInsight,
   routePayload
 }) {
   try {
     const rendered =
-      typeof answerRenderer?.renderAdaptiveAnswer === "function"
-        ? answerRenderer.renderAdaptiveAnswer({
-            draftAnswer: preliminaryAnswer,
-            fallbackAnswer,
+      typeof answerRenderer?.renderTinaAnswer === "function"
+        ? answerRenderer.renderTinaAnswer({
+            answer: preliminaryAnswer,
+            sources: finalVisibleSources || [],
+            includeSources: false,
             adaptiveContext: adaptiveState,
             responsePlan: adaptiveState?.responsePlan || null,
             assumptionGap: adaptiveState?.assumptionGap || null,
@@ -1177,18 +1107,14 @@ function renderFinalAnswer({
             hierarchyConflict,
             conflict: hierarchyConflict,
             conflictReview: hierarchyConflict,
+            jurisprudencePayload,
             issueClassification: adaptiveState?.issueClassification || null,
             professionalInsight,
             routePayload
           })
-        : {
-            answer: preliminaryAnswer || fallbackAnswer || "",
-            sources: finalVisibleSources || [],
-            conflicts: mergedConflictSignals || []
-          };
+        : "";
 
     const normalized = normalizeRendererResult(rendered);
-
     if (normalized) return normalized;
   } catch (error) {
     console.warn("answer-renderer.js failed; fallback compliance renderer used:", error?.message || error);
@@ -1201,7 +1127,12 @@ function renderFinalAnswer({
     sourcesUsed: finalVisibleSources,
     conflicts: mergedConflictSignals,
     hierarchyConflict,
-    professionalInsight
+    conflict: hierarchyConflict,
+    conflictReview: hierarchyConflict,
+    jurisprudencePayload,
+    professionalInsight,
+    query: adaptiveState?.queryIntent?.legalQuestionPresented || "",
+    issueClassification: adaptiveState?.issueClassification || null
   });
 }
 
@@ -1377,15 +1308,8 @@ export function createRagAnswerHandler({ supabase, openai }) {
 
         if ((!finalQuestion || finalQuestion.length < 5) && conversationId && userId) {
           try {
-            const lastState = await getLastTopicState(
-              supabase,
-              userId,
-              conversationId
-            );
-
-            if (lastState?.last_question) {
-              finalQuestion = lastState.last_question;
-            }
+            const lastState = await getLastTopicState(supabase, userId, conversationId);
+            if (lastState?.last_question) finalQuestion = lastState.last_question;
           } catch (error) {
             console.warn("Topic fallback error:", error.message);
           }
@@ -1396,10 +1320,7 @@ export function createRagAnswerHandler({ supabase, openai }) {
           adaptiveContext: adaptiveState
         });
 
-        adaptiveState = enrichAdaptiveStateWithIssueClassification(
-          adaptiveState,
-          issueClassification
-        );
+        adaptiveState = enrichAdaptiveStateWithIssueClassification(adaptiveState, issueClassification);
 
         const issuance = detectIssuanceQuery(finalQuestion);
         const questionType = classifyQuestion(finalQuestion);
@@ -1408,12 +1329,8 @@ export function createRagAnswerHandler({ supabase, openai }) {
 
         const issueQueries = unique([
           finalQuestion,
-          issueClassification.primaryIssue
-            ? `${finalQuestion} ${issueClassification.primaryIssue}`
-            : null,
-          ...safeArray(issueClassification.subIssues).map(
-            (issue) => `${finalQuestion} ${issue}`
-          )
+          issueClassification.primaryIssue ? `${finalQuestion} ${issueClassification.primaryIssue}` : null,
+          ...safeArray(issueClassification.subIssues).map((issue) => `${finalQuestion} ${issue}`)
         ]).filter(Boolean);
 
         const retrievalQueries = namedLawDetection.matched
@@ -1435,7 +1352,6 @@ export function createRagAnswerHandler({ supabase, openai }) {
         }
 
         const memoryContext = buildMemoryContext(conversationHistory);
-
         const retrievals = [];
 
         for (const query of retrievalQueries) {
@@ -1445,14 +1361,12 @@ export function createRagAnswerHandler({ supabase, openai }) {
             query,
             questionType,
             taxType: topicData.taxType || "",
-            topK:
-              adaptiveState?.responsePlan?.responseDepth === "COMPREHENSIVE"
-                ? 16
-                : 12,
+            topK: adaptiveState?.responsePlan?.responseDepth === "COMPREHENSIVE" ? 16 : 12,
             adaptiveMode: responseMode,
+            adaptiveContext: adaptiveState,
             issueClassification,
             primaryIssue: issueClassification.primaryIssue,
-            subIssue: issueClassification.subIssues,
+            subIssue: issueClassification.subIssue,
             subIssues: issueClassification.subIssues,
             legalDimensions: issueClassification.legalDimensions,
             retrievalStrategy: issueClassification.retrievalStrategy,
@@ -1462,9 +1376,7 @@ export function createRagAnswerHandler({ supabase, openai }) {
           retrievals.push(retrieval);
         }
 
-        const mergedDocs = mergeUniqueDocs(
-          retrievals.flatMap((retrieval) => retrieval.results || [])
-        );
+        const mergedDocs = mergeUniqueDocs(retrievals.flatMap((retrieval) => retrieval.results || []));
 
         const reranked = rerankForTina({
           query: finalQuestion,
@@ -1478,11 +1390,7 @@ export function createRagAnswerHandler({ supabase, openai }) {
           suppressSuperseded: true
         });
 
-        const hierarchyRankedDocs = rerankByHierarchy(
-          reranked.results || mergedDocs,
-          finalQuestion
-        );
-
+        const hierarchyRankedDocs = rerankByHierarchy(reranked.results || mergedDocs, finalQuestion);
         const supersessionResult = applySupersessionFilter(hierarchyRankedDocs, new Date());
 
         const activeRankedDocs =
@@ -1511,16 +1419,13 @@ export function createRagAnswerHandler({ supabase, openai }) {
             ? namedLawFiltered.matchedDocs
             : activeRankedDocs;
 
-        const displayableRankedDocs = internalRankedDocs.filter(
-          (doc) => !shouldHideSourceFromUser(doc)
-        );
+        const displayableRankedDocs = internalRankedDocs
+          .filter((doc) => !shouldHideSourceFromUser(doc))
+          .filter((doc) => doc.issueMismatch !== true && doc.issueClassificationMatch?.issueMismatch !== true);
 
-        const hierarchyConflict = detectHierarchyConflict(
-          displayableRankedDocs.slice(0, 6),
-          {
-            issueClassification
-          }
-        );
+        const hierarchyConflict = detectHierarchyConflict(displayableRankedDocs.slice(0, 6), {
+          issueClassification
+        });
 
         const jurisprudenceCases = selectIssueRelevantJurisprudence({
           query: finalQuestion,
@@ -1531,10 +1436,18 @@ export function createRagAnswerHandler({ supabase, openai }) {
           issueClassification
         });
 
+        const jurisprudencePayload = buildJurisprudencePayload({
+          query: finalQuestion,
+          cases: jurisprudenceCases,
+          supportingAuthorities: displayableRankedDocs.slice(0, 6),
+          issueClassification
+        });
+
         const jurisprudenceBlock = buildJurisprudencePromptBlock({
           query: finalQuestion,
           cases: jurisprudenceCases,
-          supportingAuthorities: displayableRankedDocs.slice(0, 6)
+          supportingAuthorities: displayableRankedDocs.slice(0, 6),
+          issueClassification
         });
 
         let evidence = normalizeRetrievedEvidence(
@@ -1545,17 +1458,26 @@ export function createRagAnswerHandler({ supabase, openai }) {
               doc.authority_level ??
               doc.metadata?.authorityLevel ??
               null,
-            issueClassification,
+            issueClassificationMatch: doc.issueClassificationMatch || null,
+            targetAuthorityMatch: doc.targetAuthorityMatch === true,
+            issueMismatch: doc.issueMismatch === true,
             metadata: {
               ...buildEvidenceMetadata(doc),
               issueClassification
             }
-          }))
+          })),
+          {
+            issueClassification,
+            adaptiveContext: adaptiveState
+          }
         );
 
         evidence = rankEvidenceByAuthority(evidence);
 
-        const rawConflicts = detectEvidenceConflicts(evidence);
+        const rawConflicts = detectEvidenceConflicts(evidence, {
+          issueClassification,
+          adaptiveContext: adaptiveState
+        });
 
         const displayableConflicts = rawConflicts.filter((conflict) => {
           const a = conflict.source_a_path || "";
@@ -1576,6 +1498,8 @@ export function createRagAnswerHandler({ supabase, openai }) {
           question: finalQuestion,
           retrievedResults: internalRankedDocs,
           model: DEFAULT_MODEL,
+          responseMode,
+          adaptiveContext: adaptiveState,
           issueClassification
         });
 
@@ -1586,6 +1510,8 @@ export function createRagAnswerHandler({ supabase, openai }) {
                 question: finalQuestion,
                 retrievedResults: internalRankedDocs,
                 model: DEFAULT_MODEL,
+                responseMode,
+                adaptiveContext: adaptiveState,
                 issueClassification,
                 jurisprudenceCases
               })
@@ -1598,6 +1524,8 @@ export function createRagAnswerHandler({ supabase, openai }) {
                 question: finalQuestion,
                 retrievedResults: internalRankedDocs,
                 model: DEFAULT_MODEL,
+                responseMode,
+                adaptiveContext: adaptiveState,
                 issueClassification
               })
             : { handled: false };
@@ -1633,12 +1561,11 @@ export function createRagAnswerHandler({ supabase, openai }) {
               cleanQuestion,
               context: strictContext,
               topLegalBases: topLegalBasesForPrompt,
-              conflict: hierarchyConflict
+              conflict: hierarchyConflict,
+              issueClassification
             }),
             buildAdaptivePlannerInstructions(adaptiveState)
-          ]
-            .filter(Boolean)
-            .join("\n\n---\n\n");
+          ].filter(Boolean).join("\n\n---\n\n");
 
           const strictResponse = await openai.chat.completions.create({
             model: DEFAULT_MODEL,
@@ -1685,6 +1612,8 @@ export function createRagAnswerHandler({ supabase, openai }) {
               evidence: topEvidence,
               conflicts: rawConflicts,
               memoryContext,
+              responseMode,
+              adaptiveContext: adaptiveState,
               issueClassification
             }));
         }
@@ -1704,15 +1633,14 @@ export function createRagAnswerHandler({ supabase, openai }) {
             docs: strictDocsForContext,
             hierarchyConflict,
             jurisprudenceBlock,
+            jurisprudencePayload,
             conflicts: mergedConflictSignals,
             memoryContext,
             adaptiveState
           });
         }
 
-        preliminaryAnswer = sanitizeDraftAnswer(
-          stripTrailingSourceSection(preliminaryAnswer || "")
-        );
+        preliminaryAnswer = sanitizeDraftAnswer(stripTrailingSourceSection(preliminaryAnswer || ""), hierarchyConflict);
 
         const finalDisplayableDocs = selectGroundedDisplayableDocs(
           mergeUniqueDocs([
@@ -1725,17 +1653,22 @@ export function createRagAnswerHandler({ supabase, openai }) {
 
         const finalVisibleSources = filterVisibleSources(finalDisplayableDocs, {
           maxItems: MAX_VISIBLE_SOURCES,
-          supersessionResult
+          supersessionResult,
+          query: finalQuestion,
+          issueClassification
         });
 
         const topDisplayableEvidence = rankEvidenceByAuthority(
-          normalizeRetrievedEvidence(finalDisplayableDocs)
+          normalizeRetrievedEvidence(finalDisplayableDocs, {
+            issueClassification,
+            adaptiveContext: adaptiveState
+          })
         ).slice(0, 10);
 
-        const claimSupportMap = buildClaimSupportMap(
-          preliminaryAnswer,
-          topDisplayableEvidence
-        );
+        const claimSupportMap = buildClaimSupportMap(preliminaryAnswer, topDisplayableEvidence, {
+          issueClassification,
+          adaptiveContext: adaptiveState
+        });
 
         const validation = validateEvidenceSufficiency({
           evidence: finalDisplayableDocs,
@@ -1744,7 +1677,13 @@ export function createRagAnswerHandler({ supabase, openai }) {
           minSupportedClaims: 1,
           minTopScore: 0.25,
           query: finalQuestion,
-          requirePrimaryAuthority: Boolean(namedLawDetection?.matched)
+          requirePrimaryAuthority: Boolean(namedLawDetection?.matched),
+          answerText: preliminaryAnswer,
+          issueClassification,
+          conflict: hierarchyConflict,
+          conflictReview: hierarchyConflict,
+          hierarchyConflict,
+          jurisprudencePayload
         });
 
         const shouldFallback =
@@ -1754,9 +1693,7 @@ export function createRagAnswerHandler({ supabase, openai }) {
           topEvidence.length === 0 ||
           shouldRejectForWeakLegalBasis({
             validation,
-            hasExactCitation: Boolean(
-              retrievals.some((retrieval) => retrieval?.exactCitation?.matched)
-            )
+            hasExactCitation: Boolean(retrievals.some((retrieval) => retrieval?.exactCitation?.matched))
           });
 
         const safeTopConfidenceRaw =
@@ -1764,11 +1701,7 @@ export function createRagAnswerHandler({ supabase, openai }) {
             ? Math.max(0, ...internalRankedDocs.map((item) => getScore(item)))
             : 0;
 
-        const safeTopConfidence = toSafeDbNumeric(
-          safeTopConfidenceRaw,
-          999999.9999,
-          4
-        );
+        const safeTopConfidence = toSafeDbNumeric(safeTopConfidenceRaw, 999999.9999, 4);
 
         let reasoningRun = null;
 
@@ -1780,11 +1713,18 @@ export function createRagAnswerHandler({ supabase, openai }) {
             normalizedQuestion: finalQuestion,
             questionType,
             mode: hookConfig.mode,
+            adaptiveMode: responseMode,
             retrievalStatus: topEvidence.length ? "evidence_found" : "no_evidence",
             reasoningStatus: shouldFallback ? "fallback" : "grounded_answer",
             fallbackUsed: shouldFallback,
             topConfidence: safeTopConfidence,
-            answerSummary: String(preliminaryAnswer || "").slice(0, 1000)
+            answerSummary: String(preliminaryAnswer || "").slice(0, 1000),
+            adaptiveContext: adaptiveState,
+            issueClassification,
+            retrievalMetadata: {
+              retrievalQueries,
+              retrievals: retrievals.map((item) => item.retrievalMetadata || item.audit || null)
+            }
           });
 
           if (reasoningRun?.id) {
@@ -1813,13 +1753,12 @@ export function createRagAnswerHandler({ supabase, openai }) {
         });
 
         if (hookConfig.mode === "SOURCE_FINDER") {
-          const sourcesUsed = filterVisibleSources(
-            finalDisplayableDocs,
-            {
-              maxItems: MAX_VISIBLE_SOURCES,
-              supersessionResult
-            }
-          );
+          const sourcesUsed = filterVisibleSources(finalDisplayableDocs, {
+            maxItems: MAX_VISIBLE_SOURCES,
+            supersessionResult,
+            query: finalQuestion,
+            issueClassification
+          });
 
           const answerText = sourcesUsed.length
             ? [
@@ -1830,9 +1769,9 @@ export function createRagAnswerHandler({ supabase, openai }) {
                 ...sourcesUsed.map((source, index) =>
                   [
                     `${index + 1}. ${source.issuanceNumber ? `${source.issuanceNumber} – ` : ""}${source.title}`,
-                    `Authority: Level ${source.authorityLevel || 99} - ${
-                      source.authorityLabel || source.authorityType || "Unknown"
-                    }`
+                    `Authority: Level ${source.authorityLevel || 99} - ${source.authorityLabel || source.authorityType || "Unknown"}`,
+                    `Target Authority Match: ${source.targetAuthorityMatch ? "YES" : "NO"}`,
+                    `Issue Match: ${source.issueClassificationMatch?.matched ? "YES" : "NO"}`
                   ].join("\n")
                 )
               ].join("\n\n")
@@ -1854,7 +1793,9 @@ export function createRagAnswerHandler({ supabase, openai }) {
             answerText,
             legalBasisDocs: sourcesUsed,
             sourcesUsed,
-            hierarchyConflict: null
+            hierarchyConflict: null,
+            query: finalQuestion,
+            issueClassification
           });
 
           await persistAnswerRendering({
@@ -1865,12 +1806,15 @@ export function createRagAnswerHandler({ supabase, openai }) {
             answerText,
             routePayload,
             finalVisibleSources: sourcesUsed,
-            hierarchyConflict: null
+            hierarchyConflict: null,
+            conflictReview: null,
+            jurisprudencePayload
           });
 
           return res.json({
             success: true,
             engine: "TINA Adaptive Reasoning Engine",
+            handlerVersion: ENGINE_VERSION,
             hook: hookConfig.hook_code,
             mode: hookConfig.mode,
             hookTitle: hookConfig.title,
@@ -1885,23 +1829,14 @@ export function createRagAnswerHandler({ supabase, openai }) {
             sources: routePayload.sources,
             authorityUsed: routePayload.authority_used,
             supersessionAudit: routePayload.supersession_audit,
-            vectorMatches: routePayload.sources.length,
-            adaptive: {
-              enabled: adaptiveState.enabled,
-              responseMode: adaptiveState?.responsePlan?.responseMode || null,
-              riskLevel: adaptiveState?.riskScore?.overallRisk?.level || null,
-              positionStrength: adaptiveState?.positionStrength?.positionStrength || null
-            }
+            vectorMatches: routePayload.sources.length
           });
         }
 
         if (shouldFallback) {
           const fallbackReason =
             namedLawDetection.matched && namedLawDetection.bestMatch
-              ? `No exact indexed primary source matched ${
-                  namedLawDetection.bestMatch.shortTitle ||
-                  namedLawDetection.bestMatch.canonicalTitle
-                }.`
+              ? `No exact indexed primary source matched ${namedLawDetection.bestMatch.shortTitle || namedLawDetection.bestMatch.canonicalTitle}.`
               : issuance || questionType === "issuance"
                 ? "No indexed document found or insufficient verified evidence for the requested issuance."
                 : "Indexed sources were absent or insufficient.";
@@ -1911,12 +1846,7 @@ export function createRagAnswerHandler({ supabase, openai }) {
               ? buildNamedLawFallbackText(namedLawDetection.bestMatch)
               : issuance || questionType === "issuance"
                 ? "No indexed document found or insufficient verified evidence for the requested issuance. TINA will not generate a speculative answer."
-                : await generateGeneralFallbackAnswer(
-                    finalQuestion,
-                    memoryContext,
-                    adaptiveState,
-                    fallbackReason
-                  );
+                : await generateGeneralFallbackAnswer(finalQuestion, memoryContext, adaptiveState, fallbackReason);
 
           const answerText = buildFallbackComplianceAnswer({
             fallbackText,
@@ -1938,7 +1868,9 @@ export function createRagAnswerHandler({ supabase, openai }) {
             answerText,
             legalBasisDocs: [],
             sourcesUsed: [],
-            hierarchyConflict: null
+            hierarchyConflict: null,
+            query: finalQuestion,
+            issueClassification
           });
 
           await persistAnswerRendering({
@@ -1953,12 +1885,15 @@ export function createRagAnswerHandler({ supabase, openai }) {
               adaptiveState?.assumptionGap?.limitationStatement ||
               adaptiveState?.responsePlan?.limitationStatement ||
               null,
-            hierarchyConflict: null
+            hierarchyConflict: null,
+            conflictReview: null,
+            jurisprudencePayload
           });
 
           return res.json({
             success: true,
             engine: "TINA Adaptive Reasoning Engine",
+            handlerVersion: ENGINE_VERSION,
             hook: hookConfig.hook_code,
             mode: hookConfig.mode,
             hookTitle: hookConfig.title,
@@ -1976,6 +1911,7 @@ export function createRagAnswerHandler({ supabase, openai }) {
             originalQuestion,
             resolvedQuestion: finalQuestion,
             issueClassification,
+            validation,
             sourcesUsed: routePayload.sources,
             sources: routePayload.sources,
             authorityUsed: routePayload.authority_used,
@@ -1983,21 +1919,7 @@ export function createRagAnswerHandler({ supabase, openai }) {
             vectorMatches: topDisplayableEvidence.length,
             detectedIssuance: issuance || null,
             detectedNamedLaw: namedLawDetection.bestMatch || null,
-            reasoningRunId: reasoningRun?.id || null,
-            conflictType: hierarchyConflict?.conflictType || null,
-            doctrinalConflict: Boolean(hierarchyConflict?.doctrinalConflict),
-            hierarchyConflict: Boolean(hierarchyConflict?.hierarchyConflict),
-            apparentConflict: Boolean(hierarchyConflict?.apparentConflict),
-            adaptive: {
-              enabled: adaptiveState.enabled,
-              responseMode: adaptiveState?.responsePlan?.responseMode || null,
-              responseDepth: adaptiveState?.responsePlan?.responseDepth || null,
-              riskLevel: adaptiveState?.riskScore?.overallRisk?.level || null,
-              positionStrength: adaptiveState?.positionStrength?.positionStrength || null,
-              conclusionRestriction: getConclusionRestriction(adaptiveState),
-              mustDiscloseBeforeConclusion:
-                adaptiveState?.assumptionGap?.mustDiscloseBeforeConclusion || false
-            }
+            reasoningRunId: reasoningRun?.id || null
           });
         }
 
@@ -2007,7 +1929,9 @@ export function createRagAnswerHandler({ supabase, openai }) {
           answerText: preliminaryAnswer,
           legalBasisDocs: topLegalBases,
           sourcesUsed: finalVisibleSources,
-          hierarchyConflict
+          hierarchyConflict,
+          query: finalQuestion,
+          issueClassification
         });
 
         const answerText = renderFinalAnswer({
@@ -2018,6 +1942,7 @@ export function createRagAnswerHandler({ supabase, openai }) {
           finalVisibleSources,
           mergedConflictSignals,
           hierarchyConflict,
+          jurisprudencePayload,
           professionalInsight: complianceInsight,
           routePayload: preliminaryRoutePayload
         });
@@ -2036,7 +1961,9 @@ export function createRagAnswerHandler({ supabase, openai }) {
           answerText,
           legalBasisDocs: topLegalBases,
           sourcesUsed: finalVisibleSources,
-          hierarchyConflict
+          hierarchyConflict,
+          query: finalQuestion,
+          issueClassification
         });
 
         await persistAnswerRendering({
@@ -2051,12 +1978,15 @@ export function createRagAnswerHandler({ supabase, openai }) {
             adaptiveState?.assumptionGap?.limitationStatement ||
             adaptiveState?.responsePlan?.limitationStatement ||
             null,
-          hierarchyConflict
+          hierarchyConflict,
+          conflictReview: hierarchyConflict,
+          jurisprudencePayload
         });
 
         return res.json({
           success: true,
           engine: "TINA Adaptive Reasoning Engine",
+          handlerVersion: ENGINE_VERSION,
           hook: hookConfig.hook_code,
           mode: hookConfig.mode,
           hookTitle: hookConfig.title,
@@ -2079,6 +2009,7 @@ export function createRagAnswerHandler({ supabase, openai }) {
           originalQuestion,
           resolvedQuestion: finalQuestion,
           issueClassification,
+          validation,
           sourcesUsed: routePayload.sources,
           sources: routePayload.sources,
           authorityUsed: routePayload.authority_used,
@@ -2092,6 +2023,7 @@ export function createRagAnswerHandler({ supabase, openai }) {
           doctrinalConflict: Boolean(hierarchyConflict?.doctrinalConflict),
           hierarchyConflict: Boolean(hierarchyConflict?.hierarchyConflict),
           apparentConflict: Boolean(hierarchyConflict?.apparentConflict),
+          conflictMetadataComplete: conflictMetadataIsComplete(hierarchyConflict),
           supersededFilteredCount: supersessionResult?.superseded?.length || 0,
           adaptive: {
             enabled: adaptiveState.enabled,
@@ -2114,9 +2046,30 @@ export function createRagAnswerHandler({ supabase, openai }) {
 
         return res.status(500).json({
           success: false,
-          error: error.message || "RAG answer failed"
+          error: error.message || "RAG answer failed",
+          handlerVersion: ENGINE_VERSION
         });
       }
     }
   };
 }
+
+export function ragAnswerHandlerHealthCheck() {
+  return {
+    ok: true,
+    engine: "TINA_RAG_ANSWER_HANDLER",
+    version: ENGINE_VERSION,
+    issueClassificationBeforeRetrieval: true,
+    issueClassificationMatchAware: true,
+    targetAuthorityAware: true,
+    conflictMetadataGated: true,
+    sourceVisibilityCompatible: true,
+    finalComplianceCompatible: true,
+    answerRendererCompatible: true
+  };
+}
+
+export default {
+  createRagAnswerHandler,
+  ragAnswerHandlerHealthCheck
+};
