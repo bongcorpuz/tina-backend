@@ -3,15 +3,7 @@
 
 /**
  * TINA Enterprise Retrieval Orchestration Engine
- * Version: 4.1.0
- *
- * Integrated with:
- * - issue-classification-engine.js
- * - main-tax-engine-classification.js
- * - query-intent-engine.js
- * - authority-engine.js
- * - supersession-engine.js
- * - reranker-engine.js
+ * Version: 4.2.0
  */
 
 import {
@@ -32,10 +24,15 @@ import {
 
 import { rerankForTina } from "./reranker-engine.js";
 
-const ENGINE_VERSION = "4.1.0";
+const ENGINE_VERSION = "4.2.0";
 
 const DEFAULT_TOP_K = 12;
 const DEFAULT_POOL_K = 36;
+
+const MAX_SOURCE_TEXT_CHARS = 3500;
+const MAX_SOURCE_TITLE_CHARS = 240;
+const MAX_SOURCE_CITATION_CHARS = 240;
+const MAX_SOURCE_URL_CHARS = 500;
 
 const HIDDEN_OR_WEAK_PATTERNS = [
   "07_cpa_notes",
@@ -103,6 +100,13 @@ function unique(values = []) {
 function safeArray(value) {
   if (!value) return [];
   return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
+}
+
+function trimString(value = "", max = 1000) {
+  const text = normalizeText(value);
+  if (!text) return "";
+  if (text.length <= max) return text;
+  return `${text.slice(0, max).trim()} ...[trimmed]`;
 }
 
 function normalizeMode(mode = "STANDARD") {
@@ -314,8 +318,147 @@ function docText(doc = {}) {
   );
 }
 
+function extractBestTitle(doc = {}) {
+  return trimString(
+    doc.title ||
+      doc.documentTitle ||
+      doc.document_title ||
+      doc.metadata?.documentTitle ||
+      doc.metadata?.document_title ||
+      doc.metadata?.originalFileName ||
+      doc.metadata?.original_file_name ||
+      doc.originalSource ||
+      doc.original_source ||
+      doc.source ||
+      doc.fileName ||
+      doc.filename ||
+      "Untitled Source",
+    MAX_SOURCE_TITLE_CHARS
+  );
+}
+
+function extractBestCitation(doc = {}) {
+  return trimString(
+    doc.citation ||
+      doc.citationText ||
+      doc.citation_text ||
+      doc.reference ||
+      doc.referenceText ||
+      doc.reference_text ||
+      doc.normalizedReference ||
+      doc.normalized_reference ||
+      doc.metadata?.normalizedReference ||
+      doc.metadata?.normalized_reference ||
+      doc.metadata?.citation ||
+      doc.metadata?.reference ||
+      doc.grNumber ||
+      doc.gr_number ||
+      doc.caseNumber ||
+      doc.case_number ||
+      "",
+    MAX_SOURCE_CITATION_CHARS
+  );
+}
+
+function extractBestUrl(doc = {}) {
+  return trimString(
+    doc.url ||
+      doc.link ||
+      doc.href ||
+      doc.sourceUrl ||
+      doc.source_url ||
+      doc.driveViewUrl ||
+      doc.drive_view_url ||
+      doc.metadata?.url ||
+      doc.metadata?.sourceUrl ||
+      doc.metadata?.source_url ||
+      doc.metadata?.driveViewUrl ||
+      "",
+    MAX_SOURCE_URL_CHARS
+  );
+}
+
+function extractBestContent(doc = {}) {
+  return trimString(
+    doc.text ||
+      doc.content ||
+      doc.excerpt ||
+      doc.preview ||
+      doc.chunkText ||
+      doc.chunk_text ||
+      doc.pageContent ||
+      doc.page_content ||
+      "",
+    MAX_SOURCE_TEXT_CHARS
+  );
+}
+
 function detectDocIssueType(doc = {}) {
   return detectIssueType(docText(doc));
+}
+
+function isSupersededDoc(doc = {}) {
+  return Boolean(
+    doc.superseded === true ||
+      doc.isSuperseded === true ||
+      doc.is_superseded === true ||
+      doc.metadata?.superseded === true ||
+      doc.metadata?.isSuperseded === true ||
+      doc.metadata?.is_superseded === true
+  );
+}
+
+function sanitizeRetrievedSource(doc = {}) {
+  const authorityType = getAuthorityTypeForDoc(doc);
+  const authorityLevel = getAuthorityLevelForDoc(doc);
+  const controllingPrecedence = getControllingPrecedenceForDoc(doc);
+
+  const content = extractBestContent(doc);
+
+  return {
+    id:
+      doc.id ||
+      doc.fileId ||
+      doc.file_id ||
+      doc.metadata?.fileId ||
+      doc.metadata?.file_id ||
+      null,
+
+    title: extractBestTitle(doc),
+    authorityType,
+    authorityLevel,
+    controllingPrecedence,
+
+    citation: extractBestCitation(doc),
+    url: extractBestUrl(doc),
+
+    text: content,
+    content,
+
+    score: Number(
+      doc.finalScore ||
+        doc.final_score ||
+        doc.retrievalScore ||
+        doc.retrieval_score ||
+        doc.rerankScore ||
+        doc.rerank_score ||
+        doc.score ||
+        doc.similarity ||
+        0
+    ),
+
+    issueClassificationMatch: doc.issueClassificationMatch || null,
+    targetAuthorityMatch: doc.targetAuthorityMatch === true,
+    retrievalIssueType: safeArray(doc.retrievalIssueType || doc.retrieval_issue_type),
+    superseded: isSupersededDoc(doc),
+
+    metadata: {
+      sourceType: authorityType,
+      retrievalEngineVersion: ENGINE_VERSION,
+      issueMismatch: doc.issueMismatch === true,
+      exactCitationMatched: Number(doc.citationMatchBonus || 0) > 0
+    }
+  };
 }
 
 function normalizeExternalIssueClassification({
@@ -853,17 +996,6 @@ function adaptiveModeBonus({ mode = "STANDARD", doc = {}, classification = null 
   return bonus;
 }
 
-function isSupersededDoc(doc = {}) {
-  return Boolean(
-    doc.superseded === true ||
-      doc.isSuperseded === true ||
-      doc.is_superseded === true ||
-      doc.metadata?.superseded === true ||
-      doc.metadata?.isSuperseded === true ||
-      doc.metadata?.is_superseded === true
-  );
-}
-
 function computeRetrievalScore({
   query = "",
   doc = {},
@@ -1059,20 +1191,7 @@ function buildRetrievalAudit({
           retrievalStrategy: issueClassification.retrievalStrategy,
           legalQuestionPresented: issueClassification.legalQuestionPresented,
           factSensitivity: issueClassification.factSensitivity,
-          targetAuthorities: issueClassification.targetAuthorities,
-          excludedAuthorities: issueClassification.excludedAuthorities,
-          caseRoleFilters: issueClassification.caseRoleFilters,
-          taxDomainClassification: issueClassification.taxDomainClassification
-            ? {
-                primaryDomain: issueClassification.taxDomainClassification.primaryDomain,
-                primaryDomainName: issueClassification.taxDomainClassification.primaryDomainName,
-                primaryIssue: issueClassification.taxDomainClassification.primaryIssue,
-                primarySubIssue: issueClassification.taxDomainClassification.primarySubIssue,
-                subIssues: issueClassification.taxDomainClassification.subIssues,
-                retrievalStrategy: issueClassification.taxDomainClassification.retrievalStrategy,
-                confidence: issueClassification.taxDomainClassification.confidence
-              }
-            : null
+          targetAuthorities: issueClassification.targetAuthorities
         }
       : null,
     retrievalQueries,
@@ -1084,7 +1203,7 @@ function buildRetrievalAudit({
     exactCitationMatched,
     usedReranker,
     retrievalPolicy:
-      "Domain-aware, issue-first, hierarchy-first, exact-citation-aware retrieval using primaryDomain, primaryIssue, subIssues, legalDimensions, retrievalStrategy, targetAuthorities, authority hierarchy, supersession status, and issue compatibility.",
+      "Domain-aware, issue-first, hierarchy-first, exact-citation-aware retrieval using compact sanitized source output.",
     warning:
       finalCount === 0
         ? "No issue-matched controlling authority was retrieved."
@@ -1116,6 +1235,7 @@ async function retrieveForTina({
   if (!query || !String(query).trim()) {
     return {
       results: [],
+      retrievedSources: [],
       supersessionResult: null,
       queryIntent: null,
       issueClassification: null,
@@ -1128,7 +1248,8 @@ async function retrieveForTina({
         supersessionFiltered: false,
         exactCitationAware: true,
         rerankerAware: true,
-        targetAuthorityAware: true
+        targetAuthorityAware: true,
+        compactSourceOutput: true
       },
       audit: buildRetrievalAudit({
         query,
@@ -1324,8 +1445,11 @@ async function retrieveForTina({
     (doc) => Number(doc.citationMatchBonus || 0) > 0
   );
 
+  const cleanedResults = ranked.map((doc) => sanitizeRetrievedSource(doc));
+
   return {
-    results: ranked,
+    results: cleanedResults,
+    retrievedSources: cleanedResults,
     supersessionResult,
     queryIntent,
     issueClassification: classification,
@@ -1347,6 +1471,8 @@ async function retrieveForTina({
       supersessionFiltered: true,
       exactCitationAware: true,
       rerankerAware: true,
+      compactSourceOutput: true,
+      rawFullDocumentInjectionPrevented: true,
       retrievalStrategy:
         queryIntent?.retrievalStrategy ||
         classification?.retrievalStrategy ||
@@ -1358,7 +1484,7 @@ async function retrieveForTina({
       rawCount: uniqueRaw.length,
       filteredCount: filtered.length,
       activeCount: activeDocs.length,
-      finalCount: ranked.length,
+      finalCount: cleanedResults.length,
       queryIssues: classification.subIssues || detectIssueType(query),
       adaptiveMode: effectiveMode,
       exactCitationMatched,
@@ -1443,7 +1569,20 @@ function retrievalEngineHealthCheck() {
     issueFirstRetrievalReady: true,
     targetAuthorityAware: true,
     structuredIssueClassificationMatch: true,
-    ragAnswerHandlerCompatible: true
+    ragAnswerHandlerCompatible: true,
+    contextOrchestrationCompatible: true,
+    compactSourceOutput: true,
+    rawFullDocumentInjectionPrevented: true,
+    returnsRetrievedSources: true,
+    sourceFields: [
+      "title",
+      "authorityType",
+      "citation",
+      "url",
+      "text",
+      "content",
+      "score"
+    ]
   };
 }
 
@@ -1453,6 +1592,7 @@ export {
   detectIssueType,
   detectDocIssueType,
   computeRetrievalScore,
+  sanitizeRetrievedSource,
   retrieveForTina,
   hybridRetrieve,
   retrievalEngineHealthCheck
@@ -1464,6 +1604,7 @@ export default {
   detectIssueType,
   detectDocIssueType,
   computeRetrievalScore,
+  sanitizeRetrievedSource,
   retrieveForTina,
   hybridRetrieve,
   retrievalEngineHealthCheck
