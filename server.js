@@ -32,10 +32,17 @@ import { createAskHandler } from "./ask-handler.js";
 
 import {
   getUserId,
-  getSourceTier
+  getSourceTier,
+  askHelpersHealthCheck
 } from "./ask-helpers.js";
 
 import { createBackgroundReindexController } from "./reindex-service.js";
+
+import { queryIntentEngineHealthCheck } from "./query-intent-engine.js";
+import { issueClassificationEngineHealthCheck } from "./issue-classification-engine.js";
+import { ragAnswerHandlerHealthCheck } from "./rag-answer-handler.js";
+import { adaptiveModeHealthCheck } from "./adaptive-mode-engine.js";
+import { adaptiveResponsePlannerHealthCheck } from "./adaptive-response-planner.js";
 
 /* ================= ENV VALIDATION ================= */
 
@@ -55,6 +62,7 @@ const PORT = Number(process.env.PORT || 10000);
 const REQUEST_LIMIT = process.env.REQUEST_LIMIT || "25mb";
 const NODE_ENV = process.env.NODE_ENV || "development";
 const OPENAI_MODEL = process.env.OPENAI_MODEL || "gpt-4o-mini";
+const SERVER_VERSION = "4.0.0";
 
 /* ================= APP ================= */
 
@@ -64,7 +72,6 @@ const app = express();
 
 function buildAllowedOrigins() {
   const raw = process.env.CORS_ORIGIN || process.env.ALLOWED_ORIGINS || "*";
-
   if (raw === "*") return "*";
 
   return raw
@@ -81,7 +88,6 @@ app.use(
       if (allowedOrigins === "*") return callback(null, true);
       if (!origin) return callback(null, true);
       if (allowedOrigins.includes(origin)) return callback(null, true);
-
       return callback(new Error(`CORS blocked origin: ${origin}`));
     },
     credentials: true
@@ -156,40 +162,53 @@ function allowAuthenticatedOrIndexSecret(req, res, next) {
   return authenticate(req, res, next);
 }
 
+function attachForcedHook(hookCode) {
+  return (req, res, next) => {
+    req.body = {
+      ...(req.body || {}),
+      hook: req.body?.hook || hookCode,
+      forcedHook: hookCode
+    };
+    return next();
+  };
+}
+
 /* ================= BASIC ROUTES ================= */
 
 app.get("/", (req, res) => {
   return res.json({
     success: true,
     name: "TINA Backend",
+    version: SERVER_VERSION,
     engine: "TINA Philippine Tax Intelligence Engine",
     architecture: "Adaptive Tax, Legal, Audit, Evidence, and RAG Orchestration",
     message: "Backend is running.",
-    usefulRoutes: ["/health", "/routes", "/ask"]
+    usefulRoutes: ["/health", "/routes", "/ask", "/tax", "/review", "/quiz", "/source", "/feedback"]
   });
 });
 
 app.get("/routes", (req, res) => {
   return res.json({
     success: true,
+    version: SERVER_VERSION,
     engine: "TINA Philippine Tax Intelligence Engine",
     adaptiveSupport: true,
-    modeSupport: [
-      "/ask",
-      "/tax",
-      "/review",
-      "/quiz",
-      "/source",
-      "/feedback"
-    ],
+    issueClassificationPipeline: true,
+    modeSupport: ["/ask", "/tax", "/review", "/quiz", "/source", "/feedback"],
     adaptiveModules: [
-      "adaptive-mode-engine.js",
+      "issue-classification-engine.js",
       "query-intent-engine.js",
+      "adaptive-mode-engine.js",
+      "adaptive-response-planner.js",
       "retrieval-engine.js",
       "reranker-engine.js",
       "supersession-engine.js",
+      "provision-citation-engine.js",
       "jurisprudence-engine.js",
-      "adaptive-response-planner.js",
+      "doctrine-tagging-engine.js",
+      "conflict-engine.js",
+      "legal-validation-engine.js",
+      "final-answer-compliance.js",
       "answer-renderer.js",
       "rag-answer-handler.js",
       "ask-handler.js"
@@ -210,7 +229,12 @@ app.get("/routes", (req, res) => {
       "GET /reindex?secret=YOUR_SECRET",
       "GET /admin/index-drive?secret=YOUR_SECRET",
       "GET /vector-stats?secret=YOUR_SECRET",
-      "POST /ask"
+      "POST /ask",
+      "POST /tax",
+      "POST /review",
+      "POST /quiz",
+      "POST /source",
+      "POST /feedback"
     ]
   });
 });
@@ -222,9 +246,11 @@ app.get("/health", async (req, res) => {
     return res.json({
       success: true,
       status: "ok",
+      version: SERVER_VERSION,
       environment: NODE_ENV,
       engine: "TINA Philippine Tax Intelligence Engine",
       adaptiveArchitectureEnabled: true,
+      issueClassificationEnabled: true,
       openaiConfigured: Boolean(process.env.OPENAI_API_KEY),
       openaiModel: OPENAI_MODEL,
       supabaseConfigured: Boolean(
@@ -232,27 +258,29 @@ app.get("/health", async (req, res) => {
           process.env.SUPABASE_SERVICE_ROLE_KEY
       ),
       googleDriveConfigured: Boolean(process.env.GOOGLE_DRIVE_FOLDER_ID),
-      googleDriveFolderIdPreview: maskValue(
-        process.env.GOOGLE_DRIVE_FOLDER_ID
-      ),
-      googleServiceAccountJsonConfigured: Boolean(
-        process.env.GOOGLE_SERVICE_ACCOUNT_JSON
-      ),
-      oldGoogleKeyFileConfigured: Boolean(
-        process.env.GOOGLE_SERVICE_ACCOUNT_KEY_FILE
-      ),
+      googleDriveFolderIdPreview: maskValue(process.env.GOOGLE_DRIVE_FOLDER_ID),
+      googleServiceAccountJsonConfigured: Boolean(process.env.GOOGLE_SERVICE_ACCOUNT_JSON),
+      oldGoogleKeyFileConfigured: Boolean(process.env.GOOGLE_SERVICE_ACCOUNT_KEY_FILE),
       indexSecretEnabled: Boolean(process.env.INDEX_SECRET),
       indexingRunning: reindexController.isActive(),
       vectorStore: vectorStats,
       adaptiveStack: {
+        server: true,
         askHandler: true,
-        ragAnswerHandler: true,
-        retrievalEngine: true,
-        rerankerEngine: true,
-        supersessionEngine: true,
-        jurisprudenceEngine: true,
-        adaptivePlanner: true,
-        answerRenderer: true
+        ragAnswerHandler: ragAnswerHandlerHealthCheck(),
+        issueClassificationEngine: issueClassificationEngineHealthCheck(),
+        queryIntentEngine: queryIntentEngineHealthCheck(),
+        adaptiveModeEngine: adaptiveModeHealthCheck(),
+        adaptiveResponsePlanner: adaptiveResponsePlannerHealthCheck(),
+        askHelpers: askHelpersHealthCheck()
+      },
+      routeModes: {
+        ask: true,
+        tax: true,
+        review: true,
+        quiz: true,
+        source: true,
+        feedback: true
       },
       time: new Date().toISOString()
     });
@@ -323,9 +351,7 @@ app.post("/conversations", authenticate, async (req, res) => {
     const userId = getUserId(req);
     const { title } = req.body || {};
 
-    if (!userId) {
-      return sendError(res, 401, "User ID not found in token.");
-    }
+    if (!userId) return sendError(res, 401, "User ID not found in token.");
 
     const conversation = await createConversation(supabase, {
       userId,
@@ -346,9 +372,7 @@ app.get("/conversations", authenticate, async (req, res) => {
   try {
     const userId = getUserId(req);
 
-    if (!userId) {
-      return sendError(res, 401, "User ID not found in token.");
-    }
+    if (!userId) return sendError(res, 401, "User ID not found in token.");
 
     const conversations = await getUserConversations(supabase, userId);
 
@@ -367,13 +391,8 @@ app.get("/conversations/:conversationId/messages", authenticate, async (req, res
     const userId = getUserId(req);
     const { conversationId } = req.params;
 
-    if (!userId) {
-      return sendError(res, 401, "User ID not found in token.");
-    }
-
-    if (!conversationId) {
-      return sendError(res, 400, "Conversation ID is required.");
-    }
+    if (!userId) return sendError(res, 401, "User ID not found in token.");
+    if (!conversationId) return sendError(res, 400, "Conversation ID is required.");
 
     const messages = await getConversationMessages(supabase, {
       conversationId,
@@ -439,9 +458,7 @@ app.get("/list", allowAuthenticatedOrIndexSecret, async (req, res) => {
   try {
     const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
 
-    if (!folderId) {
-      return sendError(res, 400, "GOOGLE_DRIVE_FOLDER_ID not set");
-    }
+    if (!folderId) return sendError(res, 400, "GOOGLE_DRIVE_FOLDER_ID not set");
 
     const files = await listDriveFiles(folderId);
 
@@ -460,9 +477,7 @@ app.get("/read-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
   try {
     const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
 
-    if (!folderId) {
-      return sendError(res, 400, "GOOGLE_DRIVE_FOLDER_ID not set");
-    }
+    if (!folderId) return sendError(res, 400, "GOOGLE_DRIVE_FOLDER_ID not set");
 
     const maxFiles = Math.max(1, Number(req.query.limit || 25));
     const files = await listDriveFiles(folderId);
@@ -533,9 +548,14 @@ app.get("/vector-stats", allowAuthenticatedOrIndexSecret, async (req, res) => {
   }
 });
 
-/* ================= ASK ROUTE ================= */
+/* ================= ASK / MODE ROUTES ================= */
 
-app.post("/ask", authenticate, askHandler);
+app.post("/ask", authenticate, attachForcedHook("/ask"), askHandler);
+app.post("/tax", authenticate, attachForcedHook("/tax"), askHandler);
+app.post("/review", authenticate, attachForcedHook("/review"), askHandler);
+app.post("/quiz", authenticate, attachForcedHook("/quiz"), askHandler);
+app.post("/source", authenticate, attachForcedHook("/source"), askHandler);
+app.post("/feedback", authenticate, attachForcedHook("/feedback"), askHandler);
 
 /* ================= NOT FOUND ================= */
 
@@ -551,9 +571,7 @@ app.use((req, res) => {
 app.use((error, req, res, next) => {
   console.error("Unhandled server error:", error);
 
-  if (res.headersSent) {
-    return next(error);
-  }
+  if (res.headersSent) return next(error);
 
   return sendError(
     res,
@@ -570,7 +588,9 @@ const server = app.listen(PORT, () => {
   console.log(`TINA Backend running on port ${PORT}`);
   console.log(`Environment: ${NODE_ENV}`);
   console.log(`OpenAI model: ${OPENAI_MODEL}`);
+  console.log(`Server version: ${SERVER_VERSION}`);
   console.log("Adaptive TINA orchestration enabled.");
+  console.log("Issue-classified RAG routes enabled: /ask /tax /review /quiz /source /feedback");
 });
 
 function shutdown(signal) {
