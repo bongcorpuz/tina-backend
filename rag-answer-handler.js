@@ -3,7 +3,15 @@
 
 /**
  * TINA Adaptive RAG Answer Handler
- * Version: 4.1.0
+ * Version: 4.2.0
+ *
+ * Integrated with:
+ * - main-tax-engine-classification.js
+ * - issue-classification-engine.js
+ * - retrieval-engine.js
+ * - reranker-engine.js
+ * - adaptive-response-planner.js
+ * - answer-renderer.js
  */
 
 import { detectTopic } from "./topic-detector.js";
@@ -97,7 +105,7 @@ import { analyzeQueryIntent } from "./query-intent-engine.js";
 import * as IssueClassificationEngine from "./issue-classification-engine.js";
 import answerRenderer from "./answer-renderer.js";
 
-const ENGINE_VERSION = "4.1.0";
+const ENGINE_VERSION = "4.2.0";
 const DEFAULT_MODEL = process.env.OPENAI_MODEL || "gpt-4o-mini";
 
 const TINA_AF_HEADINGS = Object.freeze([
@@ -290,6 +298,11 @@ function buildEvidenceMetadata(doc = {}) {
     issueClassificationMatch: doc.issueClassificationMatch || null,
     targetAuthorityMatch: doc.targetAuthorityMatch === true,
     issueMismatch: doc.issueMismatch === true,
+    primaryDomain:
+      doc.primaryDomain ||
+      doc.retrievalMetadata?.primaryDomain ||
+      doc.issueClassificationMatch?.primaryDomain ||
+      null,
     normalizedReference:
       doc.normalizedReference ||
       doc.normalized_reference ||
@@ -322,22 +335,45 @@ function buildEvidenceMetadata(doc = {}) {
 
 function normalizeIssueClassification(raw = {}, fallbackQueryIntent = null) {
   const queryIntent = fallbackQueryIntent || {};
+  const taxDomainClassification =
+    raw.taxDomainClassification ||
+    raw.tax_domain_classification ||
+    queryIntent.taxDomainClassification ||
+    queryIntent.tax_domain_classification ||
+    null;
+
+  const primaryDomain =
+    raw.primaryDomain ||
+    raw.primary_domain ||
+    taxDomainClassification?.primaryDomain ||
+    taxDomainClassification?.primary_domain ||
+    safeArray(raw.taxDomains)[0] ||
+    safeArray(raw.tax_domains)[0] ||
+    null;
 
   const primaryIssue =
     raw.primaryIssue ||
     raw.primary_issue ||
     raw.issueType ||
     raw.issue_type ||
+    taxDomainClassification?.primaryIssue ||
+    taxDomainClassification?.primary_issue ||
+    taxDomainClassification?.primarySubIssue ||
+    taxDomainClassification?.primary_sub_issue ||
     queryIntent.primaryIssue ||
     safeArray(queryIntent.issueTypes)[0] ||
     "GENERAL";
 
   const subIssues = unique([
     primaryIssue,
+    raw.subIssue,
+    raw.sub_issue,
+    taxDomainClassification?.primarySubIssue,
+    taxDomainClassification?.primary_sub_issue,
     ...safeArray(raw.subIssues),
-    ...safeArray(raw.subIssue),
     ...safeArray(raw.sub_issues),
-    ...safeArray(raw.sub_issue),
+    ...safeArray(taxDomainClassification?.subIssues),
+    ...safeArray(taxDomainClassification?.sub_issues),
     ...safeArray(queryIntent.subIssues),
     ...safeArray(queryIntent.issueTypes)
   ]);
@@ -345,6 +381,8 @@ function normalizeIssueClassification(raw = {}, fallbackQueryIntent = null) {
   const targetAuthorities = unique([
     ...safeArray(raw.targetAuthorities),
     ...safeArray(raw.target_authorities),
+    ...safeArray(taxDomainClassification?.targetAuthorities),
+    ...safeArray(taxDomainClassification?.target_authorities),
     ...safeArray(queryIntent.targetAuthorities)
   ]);
 
@@ -353,23 +391,48 @@ function normalizeIssueClassification(raw = {}, fallbackQueryIntent = null) {
     ...safeArray(raw.legalDimension),
     ...safeArray(raw.legal_dimensions),
     ...safeArray(raw.legal_dimension),
+    ...safeArray(taxDomainClassification?.legalDimensions),
+    ...safeArray(taxDomainClassification?.legal_dimension),
     ...safeArray(queryIntent.legalDimensions)
   ]);
 
-  return {
+  const keyTerms = unique([
+    ...safeArray(raw.keyTerms),
+    ...safeArray(raw.key_terms),
+    ...safeArray(taxDomainClassification?.retrievalHints?.boostTerms),
+    ...safeArray(taxDomainClassification?.retrieval_hints?.boost_terms),
+    primaryDomain,
     primaryIssue,
-    subIssue: raw.subIssue || raw.sub_issue || subIssues[0] || primaryIssue,
+    ...subIssues
+  ]);
+
+  return {
+    ...raw,
+    primaryDomain,
+    primaryIssue,
+    subIssue:
+      raw.subIssue ||
+      raw.sub_issue ||
+      taxDomainClassification?.primarySubIssue ||
+      taxDomainClassification?.primary_sub_issue ||
+      subIssues[0] ||
+      primaryIssue,
     subIssues,
     legalDimensions,
     retrievalStrategy:
       raw.retrievalStrategy ||
       raw.retrieval_strategy ||
+      taxDomainClassification?.retrievalStrategy ||
+      taxDomainClassification?.retrieval_strategy ||
       queryIntent.retrievalStrategy ||
       "ISSUE_CLASSIFIED_RETRIEVAL",
     targetAuthorities,
+    keyTerms,
+    taxDomainClassification,
     issueConfidence:
       raw.issueConfidence ||
       raw.confidence ||
+      taxDomainClassification?.confidence ||
       queryIntent.confidence ||
       null,
     issueRationale:
@@ -423,6 +486,7 @@ function callPossibleIssueClassifier({ question = "", queryIntent = {}, adaptive
 function fallbackIssueClassification(question = "", queryIntent = {}) {
   const q = String(question || "").toLowerCase();
 
+  let primaryDomain = null;
   let primaryIssue = "GENERAL";
   const subIssues = [];
   const legalDimensions = [];
@@ -433,22 +497,26 @@ function fallbackIssueClassification(question = "", queryIntent = {}) {
   };
 
   if (/\b(vat refund|input vat refund|tcc|unutilized input vat|excess input vat|administrative claim|judicial claim|120\+30)\b/i.test(q)) {
+    primaryDomain = "VAT";
     primaryIssue = "VAT_REFUND";
     add(subIssues, "VAT_REFUND");
     add(legalDimensions, "PROCEDURAL");
     add(legalDimensions, "EVIDENTIARY");
     targetAuthorities.push("STATUTE", "RR", "SUPREME_COURT", "CTA_EN_BANC", "CTA_DIVISION");
   } else if (/\b(vat|output vat|vatable|subject to vat|value-added tax|gross receipts)\b/i.test(q)) {
+    primaryDomain = "VAT";
     primaryIssue = "VAT_LIABILITY";
     add(subIssues, "VAT_LIABILITY");
     add(legalDimensions, "SUBSTANTIVE");
     targetAuthorities.push("STATUTE", "RR", "SUPREME_COURT", "RMC");
   } else if (/\b(withholding|ewt|cwt|fwt|2307|1601)\b/i.test(q)) {
+    primaryDomain = "WHT";
     primaryIssue = "WITHHOLDING";
     add(subIssues, "WITHHOLDING");
     add(legalDimensions, "SUBSTANTIVE");
     targetAuthorities.push("STATUTE", "RR", "RMC", "BIR_RULING");
   } else if (/\b(income tax|rcit|mcit|nolco|deductible|non-deductible|taxable income)\b/i.test(q)) {
+    primaryDomain = "CIT";
     primaryIssue = "INCOME_TAX";
     add(subIssues, "INCOME_TAX");
     add(legalDimensions, "SUBSTANTIVE");
@@ -472,6 +540,7 @@ function fallbackIssueClassification(question = "", queryIntent = {}) {
   }
 
   return normalizeIssueClassification({
+    primaryDomain,
     primaryIssue,
     subIssues,
     legalDimensions,
@@ -498,9 +567,12 @@ function enrichAdaptiveStateWithIssueClassification(adaptiveState = {}, issueCla
   return {
     ...adaptiveState,
     issueClassification,
+    taxDomainClassification: issueClassification.taxDomainClassification || null,
     queryIntent: {
       ...(adaptiveState.queryIntent || {}),
       issueClassification,
+      taxDomainClassification: issueClassification.taxDomainClassification || null,
+      primaryDomain: issueClassification.primaryDomain,
       primaryIssue: issueClassification.primaryIssue,
       subIssue: issueClassification.subIssue,
       subIssues: issueClassification.subIssues,
@@ -513,12 +585,14 @@ function enrichAdaptiveStateWithIssueClassification(adaptiveState = {}, issueCla
     responsePlan: {
       ...(adaptiveState.responsePlan || {}),
       issueClassification,
+      taxDomainClassification: issueClassification.taxDomainClassification || null,
       sourceOrderingPolicy: {
         ...(adaptiveState.responsePlan?.sourceOrderingPolicy || {}),
         useIssueClassificationMatch: true,
         useTargetAuthorityMatch: true,
         useControllingPrecedence: true,
-        hideIssueMismatchedSources: true
+        hideIssueMismatchedSources: true,
+        usePrimaryDomainMatch: true
       },
       conflictDisplayPolicy: {
         ...(adaptiveState.responsePlan?.conflictDisplayPolicy || {}),
@@ -541,6 +615,7 @@ function buildAdaptiveState({ adaptiveContext = null, adaptivePromptBundle = nul
     adaptiveMode: context.adaptiveMode || null,
     queryIntent: context.queryIntent || null,
     issueClassification: context.issueClassification || null,
+    taxDomainClassification: context.taxDomainClassification || null,
     factPattern: context.factPattern || null,
     contractInterpretation: context.contractInterpretation || null,
     transactionCharacterization: context.transactionCharacterization || null,
@@ -619,6 +694,10 @@ function buildConclusionRestrictionInstruction(adaptiveState = {}) {
 function buildAdaptiveContextForPrompt(adaptiveState = {}) {
   return JSON.stringify({
     issueClassification: adaptiveState.issueClassification || null,
+    taxDomainClassification:
+      adaptiveState.taxDomainClassification ||
+      adaptiveState.issueClassification?.taxDomainClassification ||
+      null,
     adaptiveMode: adaptiveState.adaptiveMode || null,
     queryIntent: adaptiveState.queryIntent || null,
     factPattern: adaptiveState.factPattern || null,
@@ -640,11 +719,24 @@ function buildAdaptivePlannerInstructions(adaptiveState = {}) {
 
   if (adaptiveState.issueClassification) {
     instructions.push([
-      "ISSUE CLASSIFICATION CONTROL:",
-      JSON.stringify(adaptiveState.issueClassification, null, 2),
+      "ISSUE AND TAX DOMAIN CLASSIFICATION CONTROL:",
+      JSON.stringify({
+        primaryDomain: adaptiveState.issueClassification.primaryDomain || null,
+        primaryIssue: adaptiveState.issueClassification.primaryIssue || null,
+        subIssue: adaptiveState.issueClassification.subIssue || null,
+        subIssues: adaptiveState.issueClassification.subIssues || [],
+        legalDimensions: adaptiveState.issueClassification.legalDimensions || [],
+        retrievalStrategy: adaptiveState.issueClassification.retrievalStrategy || null,
+        targetAuthorities: adaptiveState.issueClassification.targetAuthorities || [],
+        taxDomainClassification:
+          adaptiveState.issueClassification.taxDomainClassification ||
+          adaptiveState.taxDomainClassification ||
+          null
+      }, null, 2),
       "",
-      "Use the classified issue to control retrieval interpretation, legal basis selection, jurisprudence relevance, doctrine selection, source visibility, and conflict analysis.",
-      "Do not cite a case, provision, or doctrine merely because it mentions the same tax type."
+      "Use the classified tax domain and issue to control retrieval interpretation, legal basis selection, jurisprudence relevance, doctrine selection, source visibility, and conflict analysis.",
+      "Do not cite a case, provision, or doctrine merely because it mentions the same tax type.",
+      "Prefer sources matching both the tax domain and the exact issue/sub-issue."
     ].join("\n"));
   }
 
@@ -686,6 +778,9 @@ function buildConflictContextForPrompt({
     issueClassification
       ? `ISSUE CLASSIFICATION USED:\n${JSON.stringify(issueClassification, null, 2)}`
       : "ISSUE CLASSIFICATION USED: None.",
+    issueClassification?.taxDomainClassification
+      ? `TAX DOMAIN CLASSIFICATION USED:\n${JSON.stringify(issueClassification.taxDomainClassification, null, 2)}`
+      : "TAX DOMAIN CLASSIFICATION USED: None.",
     hierarchyConflict
       ? [
           "HIERARCHY / CONFLICT REVIEW:",
@@ -723,6 +818,10 @@ function buildComplianceInsight({
   adaptiveState = null
 }) {
   const notes = [];
+
+  if (adaptiveState?.issueClassification?.primaryDomain) {
+    notes.push(`Classified tax domain: ${adaptiveState.issueClassification.primaryDomain}.`);
+  }
 
   if (adaptiveState?.issueClassification?.primaryIssue) {
     notes.push(`Classified issue: ${adaptiveState.issueClassification.primaryIssue}.`);
@@ -834,12 +933,16 @@ function buildAnswerMode({
   issuance,
   adaptiveState
 }) {
+  const domainPart = adaptiveState?.issueClassification?.primaryDomain
+    ? `${String(adaptiveState.issueClassification.primaryDomain).toLowerCase()}_`
+    : "";
+
   if (adaptiveState?.issueClassification?.primaryIssue) {
     const mode = adaptiveState?.responsePlan?.responseMode
       ? `adaptive_${String(adaptiveState.responsePlan.responseMode).toLowerCase()}`
       : String(hookConfig.mode || "ask").toLowerCase();
 
-    return `${mode}_${String(adaptiveState.issueClassification.primaryIssue).toLowerCase()}_reasoned_answer`;
+    return `${mode}_${domainPart}${String(adaptiveState.issueClassification.primaryIssue).toLowerCase()}_reasoned_answer`;
   }
 
   if (provisionModeResult?.handled) return "provision_citation_reasoned_answer";
@@ -902,7 +1005,7 @@ async function enforceAdaptiveFinalAnalysis({
     buildAdaptivePlannerInstructions(adaptiveState),
     "",
     "You are the final adaptive TINA technical reviewer.",
-    "Rewrite or refine the draft so it follows the adaptive response plan, issue classification, authority hierarchy, evidence limits, and conclusion gating.",
+    "Rewrite or refine the draft so it follows the adaptive response plan, tax-domain classification, issue classification, authority hierarchy, evidence limits, and conclusion gating.",
     "Use only the provided indexed source context, adaptive context, conflict metadata, and draft.",
     "Do not invent laws, cases, dates, rates, issuances, section numbers, GR numbers, or citations.",
     "Do not append a raw source list; the API route payload handles sources.",
@@ -990,6 +1093,10 @@ async function persistAnswerRendering({
       renderer_payload: {
         engineVersion: ENGINE_VERSION,
         issueClassification: adaptiveState?.issueClassification || null,
+        taxDomainClassification:
+          adaptiveState?.taxDomainClassification ||
+          adaptiveState?.issueClassification?.taxDomainClassification ||
+          null,
         adaptiveMode: adaptiveState?.adaptiveMode || null,
         queryIntent: adaptiveState?.queryIntent || null,
         responsePlan: adaptiveState?.responsePlan || null,
@@ -1023,7 +1130,12 @@ function buildFallbackComplianceAnswer({ fallbackText, professionalInsight, adap
       : "";
 
   const issueNote = adaptiveState?.issueClassification?.primaryIssue
-    ? `\n\nClassified Issue: ${adaptiveState.issueClassification.primaryIssue}`
+    ? [
+        "",
+        "",
+        `Classified Domain: ${adaptiveState.issueClassification.primaryDomain || "N/A"}`,
+        `Classified Issue: ${adaptiveState.issueClassification.primaryIssue}`
+      ].join("\n")
     : "";
 
   return buildFinalCompliantAnswer({
@@ -1109,6 +1221,10 @@ function renderFinalAnswer({
             conflictReview: hierarchyConflict,
             jurisprudencePayload,
             issueClassification: adaptiveState?.issueClassification || null,
+            taxDomainClassification:
+              adaptiveState?.taxDomainClassification ||
+              adaptiveState?.issueClassification?.taxDomainClassification ||
+              null,
             professionalInsight,
             routePayload
           })
@@ -1233,7 +1349,7 @@ export function createRagAnswerHandler({ supabase, openai }) {
       "3. Do not invent specific RR, RMC, RMO, RAMO, BIR rulings, dates, forms, deadlines, rates, case names, GR numbers, or case citations.",
       "4. For exact issuance questions, do not provide speculative content.",
       "5. Recommend verification against official NIRC/BIR/CTA/Supreme Court sources.",
-      "6. Follow the adaptive response plan and issue classification if available.",
+      "6. Follow the adaptive response plan, tax-domain classification, and issue classification if available.",
       buildConclusionRestrictionInstruction(adaptiveState)
     ].join("\n");
 
@@ -1329,8 +1445,11 @@ export function createRagAnswerHandler({ supabase, openai }) {
 
         const issueQueries = unique([
           finalQuestion,
+          issueClassification.primaryDomain ? `${finalQuestion} ${issueClassification.primaryDomain}` : null,
           issueClassification.primaryIssue ? `${finalQuestion} ${issueClassification.primaryIssue}` : null,
-          ...safeArray(issueClassification.subIssues).map((issue) => `${finalQuestion} ${issue}`)
+          issueClassification.subIssue ? `${finalQuestion} ${issueClassification.subIssue}` : null,
+          ...safeArray(issueClassification.subIssues).map((issue) => `${finalQuestion} ${issue}`),
+          ...safeArray(issueClassification.keyTerms).map((term) => `${finalQuestion} ${term}`)
         ]).filter(Boolean);
 
         const retrievalQueries = namedLawDetection.matched
@@ -1339,7 +1458,7 @@ export function createRagAnswerHandler({ supabase, openai }) {
               maxQueries: 6
             })
           : issueQueries.length
-            ? issueQueries.slice(0, 4)
+            ? issueQueries.slice(0, 6)
             : [finalQuestion];
 
         let conversationHistory = [];
@@ -1365,6 +1484,7 @@ export function createRagAnswerHandler({ supabase, openai }) {
             adaptiveMode: responseMode,
             adaptiveContext: adaptiveState,
             issueClassification,
+            primaryDomain: issueClassification.primaryDomain,
             primaryIssue: issueClassification.primaryIssue,
             subIssue: issueClassification.subIssue,
             subIssues: issueClassification.subIssues,
@@ -1463,7 +1583,8 @@ export function createRagAnswerHandler({ supabase, openai }) {
             issueMismatch: doc.issueMismatch === true,
             metadata: {
               ...buildEvidenceMetadata(doc),
-              issueClassification
+              issueClassification,
+              taxDomainClassification: issueClassification.taxDomainClassification || null
             }
           })),
           {
@@ -1586,6 +1707,9 @@ export function createRagAnswerHandler({ supabase, openai }) {
                   "",
                   "Issue Classification:",
                   JSON.stringify(issueClassification, null, 2),
+                  "",
+                  "Tax Domain Classification:",
+                  JSON.stringify(issueClassification.taxDomainClassification || null, null, 2),
                   "",
                   "Adaptive Context:",
                   buildAdaptiveContextForPrompt(adaptiveState),
@@ -1723,7 +1847,8 @@ export function createRagAnswerHandler({ supabase, openai }) {
             issueClassification,
             retrievalMetadata: {
               retrievalQueries,
-              retrievals: retrievals.map((item) => item.retrievalMetadata || item.audit || null)
+              retrievals: retrievals.map((item) => item.retrievalMetadata || item.audit || null),
+              taxDomainClassification: issueClassification.taxDomainClassification || null
             }
           });
 
@@ -1764,6 +1889,7 @@ export function createRagAnswerHandler({ supabase, openai }) {
             ? [
                 "Source Finder Results",
                 "",
+                `Classified Domain: ${issueClassification.primaryDomain || "N/A"}`,
                 `Classified Issue: ${issueClassification.primaryIssue}`,
                 "",
                 ...sourcesUsed.map((source, index) =>
@@ -1825,6 +1951,7 @@ export function createRagAnswerHandler({ supabase, openai }) {
             originalQuestion,
             resolvedQuestion: finalQuestion,
             issueClassification,
+            taxDomainClassification: issueClassification.taxDomainClassification || null,
             sourcesUsed: routePayload.sources,
             sources: routePayload.sources,
             authorityUsed: routePayload.authority_used,
@@ -1911,6 +2038,7 @@ export function createRagAnswerHandler({ supabase, openai }) {
             originalQuestion,
             resolvedQuestion: finalQuestion,
             issueClassification,
+            taxDomainClassification: issueClassification.taxDomainClassification || null,
             validation,
             sourcesUsed: routePayload.sources,
             sources: routePayload.sources,
@@ -2009,6 +2137,7 @@ export function createRagAnswerHandler({ supabase, openai }) {
           originalQuestion,
           resolvedQuestion: finalQuestion,
           issueClassification,
+          taxDomainClassification: issueClassification.taxDomainClassification || null,
           validation,
           sourcesUsed: routePayload.sources,
           sources: routePayload.sources,
@@ -2030,6 +2159,8 @@ export function createRagAnswerHandler({ supabase, openai }) {
             responseMode: adaptiveState?.responsePlan?.responseMode || null,
             responseDepth: adaptiveState?.responsePlan?.responseDepth || null,
             adaptivePrimaryMode: adaptiveState?.adaptiveMode?.primaryMode || null,
+            primaryDomain: issueClassification.primaryDomain || null,
+            primaryIssue: issueClassification.primaryIssue || null,
             riskLevel: adaptiveState?.riskScore?.overallRisk?.level || null,
             positionStrength: adaptiveState?.positionStrength?.positionStrength || null,
             conclusionRestriction: getConclusionRestriction(adaptiveState),
@@ -2060,6 +2191,8 @@ export function ragAnswerHandlerHealthCheck() {
     engine: "TINA_RAG_ANSWER_HANDLER",
     version: ENGINE_VERSION,
     issueClassificationBeforeRetrieval: true,
+    taxDomainClassificationAware: true,
+    primaryDomainAware: true,
     issueClassificationMatchAware: true,
     targetAuthorityAware: true,
     conflictMetadataGated: true,
