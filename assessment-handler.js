@@ -1,4 +1,15 @@
 // FILE: assessment-handler.js
+"use strict";
+
+/**
+ * TINA Assessment Handler
+ * Version: 3.1.0
+ *
+ * Purpose:
+ * - Handle /quiz, /review, /diagnostic, and learning progress
+ * - Route assessment OpenAI calls through context-orchestration-engine.js
+ * - Prevent oversized quiz/review prompts
+ */
 
 import { saveModeState } from "./mode-state.js";
 
@@ -33,8 +44,17 @@ import {
   finalizeSourcesForResponse
 } from "./ask-helpers.js";
 
-function getModel() {
-  return process.env.OPENAI_MODEL || "gpt-4o-mini";
+import {
+  buildOpenAIContext as defaultBuildOpenAIContext,
+  callOpenAIWithOrchestration as defaultCallOpenAIWithOrchestration,
+  estimateTokens as defaultEstimateTokens,
+  estimateMessagesTokens as defaultEstimateMessagesTokens
+} from "./context-orchestration-engine.js";
+
+const ENGINE_VERSION = "3.1.0";
+
+function getModel(openaiModel = null) {
+  return openaiModel || process.env.OPENAI_MODEL || "gpt-4o-mini";
 }
 
 function isAssessmentHook(hook = "") {
@@ -53,6 +73,83 @@ function normalizeArray(value) {
   if (Array.isArray(value)) return value;
   if (!value) return [];
   return [value];
+}
+
+function normalizeText(value = "") {
+  return String(value || "").replace(/\s+/g, " ").trim();
+}
+
+function trimText(value = "", max = 2500) {
+  const text = normalizeText(value);
+  if (!text) return "";
+  if (text.length <= max) return text;
+  return `${text.slice(0, max).trim()} ...[trimmed]`;
+}
+
+function compactSourceChunk(chunk = {}) {
+  return {
+    title:
+      chunk.title ||
+      chunk.sourceTitle ||
+      chunk.document_title ||
+      chunk.metadata?.documentTitle ||
+      chunk.metadata?.originalFileName ||
+      chunk.originalSource ||
+      chunk.original_source ||
+      chunk.source ||
+      "Quiz Source",
+
+    authorityType:
+      chunk.authorityType ||
+      chunk.authority_type ||
+      chunk.metadata?.authorityType ||
+      "Source",
+
+    citation:
+      chunk.citation ||
+      chunk.reference ||
+      chunk.normalizedReference ||
+      chunk.normalized_reference ||
+      chunk.metadata?.normalizedReference ||
+      chunk.source ||
+      "",
+
+    url:
+      chunk.url ||
+      chunk.driveViewUrl ||
+      chunk.drive_view_url ||
+      chunk.metadata?.driveViewUrl ||
+      "",
+
+    text: trimText(
+      chunk.text ||
+        chunk.content ||
+        chunk.excerpt ||
+        chunk.preview ||
+        "",
+      1800
+    ),
+
+    score:
+      Number(
+        chunk.finalScore ||
+          chunk.final_score ||
+          chunk.retrievalScore ||
+          chunk.score ||
+          chunk.similarity ||
+          0
+      ) || 0
+  };
+}
+
+function compactQuizHistory(history = []) {
+  return normalizeArray(history).slice(0, 8).map((item) => ({
+    topic: item.topic || null,
+    subtopic: item.subtopic || null,
+    question: trimText(item.question || item.quiz_question || "", 300),
+    correctAnswer: item.correct_answer || null,
+    isCorrect: item.is_correct ?? null
+  }));
 }
 
 function buildAssessmentModeConfig(mode = "QUIZ_MASTER") {
@@ -84,13 +181,65 @@ function buildAssessmentModeConfig(mode = "QUIZ_MASTER") {
   };
 }
 
-export function createAssessmentHandler({ supabase, openai }) {
+function buildContextOrchestration(input = {}) {
+  return {
+    buildOpenAIContext:
+      input?.buildOpenAIContext ||
+      defaultBuildOpenAIContext,
+
+    callOpenAIWithOrchestration:
+      input?.callOpenAIWithOrchestration ||
+      defaultCallOpenAIWithOrchestration,
+
+    estimateTokens:
+      input?.estimateTokens ||
+      defaultEstimateTokens,
+
+    estimateMessagesTokens:
+      input?.estimateMessagesTokens ||
+      defaultEstimateMessagesTokens
+  };
+}
+
+export function createAssessmentHandler({
+  supabase,
+  openai,
+  contextOrchestration = null,
+  openaiModel = process.env.OPENAI_MODEL || "gpt-4o-mini"
+}) {
   if (!supabase || typeof supabase.from !== "function") {
     throw new Error("createAssessmentHandler requires a valid Supabase client.");
   }
 
   if (!openai) {
     throw new Error("createAssessmentHandler requires a valid OpenAI client.");
+  }
+
+  const orchestration = buildContextOrchestration(contextOrchestration || {});
+  const model = getModel(openaiModel);
+
+  async function callAssessmentOpenAI({
+    userQuery = "",
+    systemPrompt = "",
+    masterPrompt = "",
+    retrievedSources = [],
+    classification = {},
+    intent = {},
+    conversationHistory = []
+  }) {
+    const result = await orchestration.callOpenAIWithOrchestration({
+      openai,
+      userQuery,
+      systemPrompt,
+      masterPrompt,
+      retrievedSources,
+      classification,
+      intent,
+      conversationHistory,
+      model
+    });
+
+    return result.completion?.choices?.[0]?.message?.content?.trim() || "";
   }
 
   async function saveConversationTurn({
@@ -222,19 +371,18 @@ export function createAssessmentHandler({ supabase, openai }) {
   async function buildReviewTeachingBlock(topic = "") {
     const cleanTopic = String(topic || "Philippine taxation").trim();
 
-    const prompt = `
+    const systemPrompt = `
 You are TINA, a CPALE taxation reviewer.
 
-Teach this topic briefly and clearly:
-${cleanTopic}
-
 Rules:
-- Philippine taxation context only
-- concise, useful, exam-oriented
-- no long memo
-- no practice question
-- no free-text answer request
+- Philippine taxation context only.
+- Be concise, useful, and exam-oriented.
+- Do not write a long memo.
+- Do not create a practice question in this block.
+- Do not ask for a free-text answer.
+`.trim();
 
+    const masterPrompt = `
 Output format exactly:
 
 Topic:
@@ -256,13 +404,26 @@ Quick Recall:
 [memory aid]
 `.trim();
 
-    const response = await openai.chat.completions.create({
-      model: getModel(),
-      temperature: 0.3,
-      messages: [{ role: "user", content: prompt }]
+    return await callAssessmentOpenAI({
+      userQuery: `Teach this CPALE taxation topic briefly and clearly: ${cleanTopic}`,
+      systemPrompt,
+      masterPrompt,
+      retrievedSources: [],
+      classification: {
+        primaryIssue: "REVIEWER",
+        subIssue: "CPALE_REVIEW",
+        retrievalStrategy: "NO_RETRIEVAL_TEACHING_BLOCK",
+        targetAuthorities: []
+      },
+      intent: {
+        intent: "TAX_REVIEW_TEACHING",
+        requiresLegalAnalysis: false,
+        requiresRiskAnalysis: false,
+        requiresFactPatternAnalysis: false,
+        requiresSourceOnly: false,
+        requiresSimpleDefinition: true
+      }
     });
-
-    return response.choices?.[0]?.message?.content?.trim() || "";
   }
 
   async function generateStoredAssessmentQuestion({
@@ -293,21 +454,63 @@ Quick Recall:
       limit: 3
     });
 
+    const compactSources = normalizeArray(sourceChunks).map(compactSourceChunk);
+    const compactHistory = compactQuizHistory(recentHistory);
+
     const quizPrompt = buildAdaptiveQuizPrompt({
       topic: quizProfile.topic,
       difficulty: quizProfile.difficulty,
       profile: quizProfile.profile,
-      sourceChunks,
-      recentQuestions: recentHistory
+      sourceChunks: compactSources,
+      recentQuestions: compactHistory
     });
 
-    const response = await openai.chat.completions.create({
-      model: getModel(),
-      temperature: 0.3,
-      messages: [{ role: "user", content: quizPrompt }]
+    const rawQuiz = await callAssessmentOpenAI({
+      userQuery: quizPrompt,
+      systemPrompt: `
+You are TINA's CPALE Philippine Tax Quiz Generator.
+
+Generate exactly one multiple-choice question in valid JSON only.
+No markdown.
+No explanations outside JSON.
+Use the provided compact source excerpts only when available.
+Avoid repeating recent questions.
+`.trim(),
+      masterPrompt: `
+Required JSON shape:
+{
+  "topic": "string",
+  "subtopic": "string",
+  "difficulty": "easy|moderate|hard",
+  "question": "string",
+  "choices": {
+    "A": "string",
+    "B": "string",
+    "C": "string",
+    "D": "string"
+  },
+  "correctAnswer": "A|B|C|D",
+  "explanation": "string"
+}
+`.trim(),
+      retrievedSources: compactSources,
+      classification: {
+        primaryIssue: "QUIZ",
+        subIssue: "CPALE_TAX_QUESTION",
+        retrievalStrategy: "COMPACT_SOURCE_GROUNDED_QUIZ",
+        targetAuthorities: compactSources.map((s) => s.authorityType).filter(Boolean)
+      },
+      intent: {
+        intent: "GENERATE_MULTIPLE_CHOICE_TAX_QUIZ",
+        requiresLegalAnalysis: false,
+        requiresRiskAnalysis: false,
+        requiresFactPatternAnalysis: false,
+        requiresEvidenceEvaluation: false,
+        requiresSourceOnly: false,
+        requiresSimpleDefinition: false
+      }
     });
 
-    const rawQuiz = response.choices?.[0]?.message?.content?.trim() || "";
     const quiz = safeParseQuizJson(rawQuiz);
 
     if (!quiz) {
@@ -315,7 +518,7 @@ Quick Recall:
         ok: false,
         error: "Unable to generate valid multiple-choice question JSON.",
         rawQuiz,
-        sourceChunks
+        sourceChunks: compactSources
       };
     }
 
@@ -324,7 +527,7 @@ Quick Recall:
       sessionId: conversationId || null,
       quiz,
       mode: hookConfig.mode,
-      sourceChunks
+      sourceChunks: compactSources
     });
 
     if (!storedQuiz || storedQuiz.saveFailed) {
@@ -334,7 +537,7 @@ Quick Recall:
         supabaseError: storedQuiz?.error || null,
         rawQuiz,
         quiz,
-        sourceChunks
+        sourceChunks: compactSources
       };
     }
 
@@ -348,7 +551,7 @@ Quick Recall:
       ok: true,
       quiz,
       storedQuiz,
-      sourceChunks,
+      sourceChunks: compactSources,
       answerText
     };
   }
@@ -378,7 +581,8 @@ Quick Recall:
           sourceStatus: "INVALID_QUIZ_ANSWER",
           sourcesUsed: [],
           sources: [],
-          vectorMatches: 0
+          vectorMatches: 0,
+          contextOrchestrationEnabled: true
         }
       };
     }
@@ -399,7 +603,8 @@ Quick Recall:
           sourceStatus: "INVALID_PENDING_QUIZ_DATA",
           sourcesUsed: [],
           sources: [],
-          vectorMatches: 0
+          vectorMatches: 0,
+          contextOrchestrationEnabled: true
         }
       };
     }
@@ -424,7 +629,8 @@ Quick Recall:
           sourceStatus: "QUIZ_UPDATE_FAILED",
           sourcesUsed: [],
           sources: [],
-          vectorMatches: 0
+          vectorMatches: 0,
+          contextOrchestrationEnabled: true
         }
       };
     }
@@ -510,7 +716,8 @@ Quick Recall:
           : "GENERAL_NEXT_QUESTION",
         sourcesUsed: nextSources,
         sources: nextSources,
-        vectorMatches: nextSources.length
+        vectorMatches: nextSources.length,
+        contextOrchestrationEnabled: true
       }
     };
   }
@@ -581,7 +788,8 @@ Quick Recall:
         sourceStatus: "LEARNING_PROFILE_USED",
         sourcesUsed: [],
         sources: [],
-        vectorMatches: 0
+        vectorMatches: 0,
+        contextOrchestrationEnabled: true
       }
     };
   }
@@ -628,7 +836,8 @@ Quick Recall:
           sourceStatus: "QUIZ_GENERATION_FAILED",
           sourcesUsed: [],
           sources: [],
-          vectorMatches: 0
+          vectorMatches: 0,
+          contextOrchestrationEnabled: true
         }
       };
     }
@@ -683,7 +892,8 @@ Quick Recall:
           : "GENERAL_QUESTION_READY",
         sourcesUsed: quizSourcesUsed,
         sources: quizSourcesUsed,
-        vectorMatches: quizSourcesUsed.length
+        vectorMatches: quizSourcesUsed.length,
+        contextOrchestrationEnabled: true
       }
     };
   }
@@ -712,7 +922,8 @@ Quick Recall:
       sourceStatus: "QUIZ_MODE_LOCKED",
       sourcesUsed: [],
       sources: [],
-      vectorMatches: 0
+      vectorMatches: 0,
+      contextOrchestrationEnabled: true
     };
   }
 
@@ -727,3 +938,20 @@ Quick Recall:
     buildAssessmentLockedResponse
   };
 }
+
+export function assessmentHandlerHealthCheck() {
+  return {
+    ok: true,
+    engine: "TINA_ASSESSMENT_HANDLER",
+    version: ENGINE_VERSION,
+    contextOrchestrationCompatible: true,
+    directOpenAICallPrevented: true,
+    compactQuizSourcesEnabled: true,
+    oversizedPromptProtectionEnabled: true
+  };
+}
+
+export default {
+  createAssessmentHandler,
+  assessmentHandlerHealthCheck
+};
