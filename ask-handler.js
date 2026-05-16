@@ -3,7 +3,7 @@
 
 /**
  * TINA Ask Handler
- * Version: 4.1.0
+ * Version: 5.0.0
  */
 
 import {
@@ -24,7 +24,7 @@ import { extractQuizAnswer } from "./ask-helpers.js";
 import { createAssessmentHandler } from "./assessment-handler.js";
 import { createRagAnswerHandler } from "./rag-answer-handler.js";
 
-const ENGINE_VERSION = "4.1.0";
+const ENGINE_VERSION = "5.0.0";
 
 const EXIT_COMMANDS = ["/bye", "/exit", "/stop", "/quit", "/reset"];
 
@@ -89,6 +89,21 @@ function getConversationId(req) {
     req?.headers?.["x-conversation-id"] ||
     null
   );
+}
+
+function getForcedHook(req) {
+  const forced =
+    req?.body?.forcedHook ||
+    req?.body?.hook ||
+    null;
+
+  if (!forced) return null;
+
+  const normalized = normalizeLower(forced);
+
+  return ALLOWED_HOOKS.includes(normalized)
+    ? normalized
+    : null;
 }
 
 function buildHardcodedHookConfig(hookCode = "/ask") {
@@ -177,17 +192,29 @@ function buildHardcodedHookConfig(hookCode = "/ask") {
   return hooks[hookCode] || hooks["/ask"];
 }
 
-async function loadTaxHookConfig({ supabase, rawQuestion = "" }) {
+async function loadTaxHookConfig({
+  supabase,
+  rawQuestion = "",
+  forcedHook = null
+}) {
   const text = normalizeText(rawQuestion);
 
   let hookCode = "/ask";
   let cleanQuestion = text;
 
-  const firstWord = normalizeHookCommand(text);
+  if (forcedHook && ALLOWED_HOOKS.includes(forcedHook)) {
+    hookCode = forcedHook;
 
-  if (ALLOWED_HOOKS.includes(firstWord)) {
-    hookCode = firstWord;
-    cleanQuestion = text.slice(firstWord.length).trim();
+    if (normalizeHookCommand(text) === forcedHook) {
+      cleanQuestion = text.slice(forcedHook.length).trim();
+    }
+  } else {
+    const firstWord = normalizeHookCommand(text);
+
+    if (ALLOWED_HOOKS.includes(firstWord)) {
+      hookCode = firstWord;
+      cleanQuestion = text.slice(firstWord.length).trim();
+    }
   }
 
   const fallbackConfig = buildHardcodedHookConfig(hookCode);
@@ -208,18 +235,34 @@ async function loadTaxHookConfig({ supabase, rawQuestion = "" }) {
       return {
         ...fallbackConfig,
         ...data,
+
         hook_code: fallbackConfig.hook_code,
         mode: fallbackConfig.mode,
-        requires_retrieval: isRagRoutedHook(fallbackConfig.hook_code),
-        requires_memory: data.requires_memory ?? fallbackConfig.requires_memory,
-        requires_feedback: data.requires_feedback ?? fallbackConfig.requires_feedback,
-        title: data.title || fallbackConfig.title,
+
+        requires_retrieval:
+          isRagRoutedHook(fallbackConfig.hook_code),
+
+        requires_memory:
+          data.requires_memory ??
+          fallbackConfig.requires_memory,
+
+        requires_feedback:
+          data.requires_feedback ??
+          fallbackConfig.requires_feedback,
+
+        title:
+          data.title ||
+          fallbackConfig.title,
+
         adaptiveResponseMode:
           data.adaptiveResponseMode ||
           data.adaptive_response_mode ||
           fallbackConfig.adaptiveResponseMode,
+
         cleanQuestion: cleanQuestion || text,
         originalQuestion: text,
+
+        forcedHookApplied: Boolean(forcedHook),
         engineVersion: ENGINE_VERSION
       };
     }
@@ -231,6 +274,7 @@ async function loadTaxHookConfig({ supabase, rawQuestion = "" }) {
     ...fallbackConfig,
     cleanQuestion: cleanQuestion || text,
     originalQuestion: text,
+    forcedHookApplied: Boolean(forcedHook),
     engineVersion: ENGINE_VERSION
   };
 }
@@ -256,6 +300,7 @@ function buildAdaptiveContextForHook({
 
   return {
     askHandlerVersion: ENGINE_VERSION,
+
     activeHook: hookConfig.hook_code,
     activeMode: mode,
     existingMode,
@@ -271,15 +316,27 @@ function buildAdaptiveContextForHook({
       taxExpertMode: mode === "TAX_EXPERT"
     },
 
+    orchestration: {
+      issueClassificationEnabled: true,
+      adaptiveRoutingEnabled: true,
+      targetAuthorityAware: true,
+      issueClassificationMatchAware: true,
+      strictConflictGateEnabled: true,
+      doctrinalValidationEnabled: true
+    },
+
     responsePlan: {
       responseMode,
+
       responseDepth:
         mode === "TAX_EXPERT"
           ? "COMPREHENSIVE"
           : mode === "SOURCE_FINDER"
             ? "SOURCE_ONLY"
             : "STANDARD",
+
       mustUseRagPipeline: true,
+
       hookCode: hookConfig.hook_code,
       hookMode: mode,
 
@@ -310,8 +367,11 @@ export function createAskHandler({ supabase, openai }) {
     throw new Error("createAskHandler requires OpenAI client.");
   }
 
-  const assessmentHandler = createAssessmentHandler({ supabase, openai });
-  const ragAnswerHandler = createRagAnswerHandler({ supabase, openai });
+  const assessmentHandler =
+    createAssessmentHandler({ supabase, openai });
+
+  const ragAnswerHandler =
+    createRagAnswerHandler({ supabase, openai });
 
   async function saveConversationTurn({
     conversationId,
@@ -340,7 +400,12 @@ export function createAskHandler({ supabase, openai }) {
     });
 
     const hooks = extractMemoryHooks(question);
-    await saveMemoryHooks(supabase, userId, hooks);
+
+    await saveMemoryHooks(
+      supabase,
+      userId,
+      hooks
+    );
   }
 
   async function handleFeedback({
@@ -350,8 +415,13 @@ export function createAskHandler({ supabase, openai }) {
     feedbackType,
     hookConfig
   }) {
-    const cleanCorrection = normalizeText(correction);
-    const cleanFeedbackType = normalizeText(feedbackType || "general_feedback");
+    const cleanCorrection =
+      normalizeText(correction);
+
+    const cleanFeedbackType =
+      normalizeText(
+        feedbackType || "general_feedback"
+      );
 
     if (!cleanCorrection) {
       return {
@@ -359,28 +429,32 @@ export function createAskHandler({ supabase, openai }) {
         body: {
           success: false,
           error: "Feedback correction is required.",
-          hint: "Send { question, conversationId, correction, feedbackType }"
+          hint:
+            "Send { question, conversationId, correction, feedbackType }"
         }
       };
     }
 
-    const feedbackResult = await storeFeedbackEntry(supabase, {
-      userId,
-      sessionId: conversationId || null,
-      conversationId: conversationId || null,
-      originalQuestion: hookConfig.originalQuestion,
-      originalAnswer: "",
-      feedbackType: cleanFeedbackType,
-      userCorrection: cleanCorrection,
-      detectedMode: hookConfig.mode,
-      adaptiveMode: hookConfig.mode,
-      plannerMode: hookConfig.mode,
-      metadata: {
-        hookCode: hookConfig.hook_code,
-        hookTitle: hookConfig.title,
-        askHandlerVersion: ENGINE_VERSION
-      }
-    });
+    const feedbackResult =
+      await storeFeedbackEntry(supabase, {
+        userId,
+        sessionId: conversationId || null,
+        conversationId: conversationId || null,
+        originalQuestion: hookConfig.originalQuestion,
+        originalAnswer: "",
+        feedbackType: cleanFeedbackType,
+        userCorrection: cleanCorrection,
+        detectedMode: hookConfig.mode,
+        adaptiveMode: hookConfig.mode,
+        plannerMode: hookConfig.mode,
+
+        metadata: {
+          hookCode: hookConfig.hook_code,
+          hookTitle: hookConfig.title,
+          askHandlerVersion: ENGINE_VERSION,
+          issueClassificationAware: true
+        }
+      });
 
     const answerText =
       "Feedback received and stored for review. Thank you. TINA will only learn from this after validation.";
@@ -433,25 +507,35 @@ export function createAskHandler({ supabase, openai }) {
     conversationId,
     existingMode
   }) {
-    const activeHook = existingMode?.active_hook || "/ask";
+    const activeHook =
+      existingMode?.active_hook || "/ask";
 
-    await clearModeState(supabase, userId, conversationId || null);
+    await clearModeState(
+      supabase,
+      userId,
+      conversationId || null
+    );
 
     await assessmentHandler.clearPendingQuizAttempts(
       userId,
       conversationId || null
     );
 
-    let answerText = "You are already in normal /ask mode.";
+    let answerText =
+      "You are already in normal /ask mode.";
 
     if (activeHook === "/quiz") {
-      answerText = "Quiz mode ended. You are now back in normal /ask mode.";
+      answerText =
+        "Quiz mode ended. You are now back in normal /ask mode.";
     } else if (activeHook === "/review") {
-      answerText = "Review mode ended. You are now back in normal /ask mode.";
+      answerText =
+        "Review mode ended. You are now back in normal /ask mode.";
     } else if (activeHook === "/diagnostic") {
-      answerText = "Diagnostic mode ended. You are now back in normal /ask mode.";
+      answerText =
+        "Diagnostic mode ended. You are now back in normal /ask mode.";
     } else if (activeHook !== "/ask") {
-      answerText = `Mode ${activeHook} ended. You are now back in normal /ask mode.`;
+      answerText =
+        `Mode ${activeHook} ended. You are now back in normal /ask mode.`;
     }
 
     return {
@@ -477,16 +561,23 @@ export function createAskHandler({ supabase, openai }) {
       } = req.body || {};
 
       const userId = getUserId(req);
-      const conversationId = getConversationId(req);
+
+      const conversationId =
+        getConversationId(req);
+
+      const forcedHook =
+        getForcedHook(req);
 
       if (!userId) {
         return res.status(401).json({
           success: false,
-          error: "User ID not found in token. Cannot proceed."
+          error:
+            "User ID not found in token. Cannot proceed."
         });
       }
 
-      const rawQuestion = normalizeText(question);
+      const rawQuestion =
+        normalizeText(question);
 
       if (!rawQuestion) {
         return res.status(400).json({
@@ -495,130 +586,210 @@ export function createAskHandler({ supabase, openai }) {
         });
       }
 
-      const existingMode = await getModeState(
-        supabase,
-        userId,
-        conversationId || null
-      );
+      const existingMode =
+        await getModeState(
+          supabase,
+          userId,
+          conversationId || null
+        );
 
       if (isExitCommand(rawQuestion)) {
-        const cleared = await clearActiveMode({
-          userId,
-          conversationId,
-          existingMode
-        });
+        const cleared =
+          await clearActiveMode({
+            userId,
+            conversationId,
+            existingMode
+          });
 
         return res.json(cleared);
       }
 
-      const activeHook = existingMode?.active_hook || null;
+      const activeHook =
+        existingMode?.active_hook || null;
+
       const hasActiveAssessmentMode =
-        assessmentHandler.isAssessmentHook(activeHook);
+        assessmentHandler.isAssessmentHook(
+          activeHook
+        );
 
-      const pendingQuiz = await assessmentHandler.fetchLatestPendingQuiz(
-        userId,
-        conversationId || null
-      );
+      const pendingQuiz =
+        await assessmentHandler.fetchLatestPendingQuiz(
+          userId,
+          conversationId || null
+        );
 
-      if (pendingQuiz && !hasActiveAssessmentMode) {
+      if (
+        pendingQuiz &&
+        !hasActiveAssessmentMode
+      ) {
         await assessmentHandler.clearPendingQuizAttempts(
           userId,
           conversationId || null
         );
       }
 
-      const quizAnswer = extractQuizAnswer(rawQuestion);
+      const quizAnswer =
+        extractQuizAnswer(rawQuestion);
 
-      if (pendingQuiz && hasActiveAssessmentMode && quizAnswer) {
-        const loopResult = await assessmentHandler.continueAssessmentLoop({
-          userId,
-          conversationId: conversationId || null,
-          incomingAnswer: rawQuestion
-        });
+      if (
+        pendingQuiz &&
+        hasActiveAssessmentMode &&
+        quizAnswer
+      ) {
+        const loopResult =
+          await assessmentHandler.continueAssessmentLoop({
+            userId,
+            conversationId:
+              conversationId || null,
+            incomingAnswer: rawQuestion
+          });
 
         if (loopResult.handled) {
-          return res.json(loopResult.response);
+          return res.json(
+            loopResult.response
+          );
         }
       }
 
-      if (pendingQuiz && hasActiveAssessmentMode && !quizAnswer) {
+      if (
+        pendingQuiz &&
+        hasActiveAssessmentMode &&
+        !quizAnswer
+      ) {
         return res.json(
-          assessmentHandler.buildAssessmentLockedResponse(activeHook)
+          assessmentHandler.buildAssessmentLockedResponse(
+            activeHook
+          )
         );
       }
 
-      let effectiveQuestion = rawQuestion;
+      let effectiveQuestion =
+        rawQuestion;
 
       if (
+        !forcedHook &&
         existingMode?.active_hook &&
         existingMode.active_hook !== "/ask" &&
         !isExplicitModeHook(rawQuestion)
       ) {
-        effectiveQuestion = `${existingMode.active_hook} ${rawQuestion}`;
+        effectiveQuestion =
+          `${existingMode.active_hook} ${rawQuestion}`;
       }
 
-      const hookConfig = await loadTaxHookConfig({
-        supabase,
-        rawQuestion: effectiveQuestion
-      });
-
-      if (hookConfig.mode === "LEARNING_PROGRESS") {
-        const result = await assessmentHandler.handleLearningProgress({
-          userId,
-          conversationId,
-          hookConfig,
-          originalQuestion: hookConfig.originalQuestion
+      const hookConfig =
+        await loadTaxHookConfig({
+          supabase,
+          rawQuestion: effectiveQuestion,
+          forcedHook
         });
 
-        return res.json(result.response);
-      }
+      if (
+        hookConfig.mode ===
+        "LEARNING_PROGRESS"
+      ) {
+        const result =
+          await assessmentHandler.handleLearningProgress({
+            userId,
+            conversationId,
+            hookConfig,
+            originalQuestion:
+              hookConfig.originalQuestion
+          });
 
-      if (hookConfig.mode === "FEEDBACK") {
-        const result = await handleFeedback({
-          userId,
-          conversationId,
-          correction,
-          feedbackType,
-          hookConfig
-        });
-
-        return res.status(result.status).json(result.body);
+        return res.json(
+          result.response
+        );
       }
 
       if (
-        SPECIAL_ASSESSMENT_HOOKS.has(hookConfig.hook_code) ||
-        (
-          assessmentHandler.isAssessmentMode(hookConfig.mode) &&
-          !isRagRoutedHook(hookConfig.hook_code)
-        )
+        hookConfig.mode === "FEEDBACK"
       ) {
-        const result = await assessmentHandler.handleAssessmentCommand({
-          userId,
-          conversationId,
-          hookConfig,
-          cleanQuestion: hookConfig.cleanQuestion,
-          originalQuestion: hookConfig.originalQuestion
-        });
+        const result =
+          await handleFeedback({
+            userId,
+            conversationId,
+            correction,
+            feedbackType,
+            hookConfig
+          });
 
-        return res.json(result.response);
+        return res
+          .status(result.status)
+          .json(result.body);
       }
 
-      if (isRagRoutedHook(hookConfig.hook_code) || hookConfig.requires_retrieval) {
+      if (
+        SPECIAL_ASSESSMENT_HOOKS.has(
+          hookConfig.hook_code
+        ) ||
+        (
+          assessmentHandler.isAssessmentMode(
+            hookConfig.mode
+          ) &&
+          !isRagRoutedHook(
+            hookConfig.hook_code
+          )
+        )
+      ) {
+        const result =
+          await assessmentHandler.handleAssessmentCommand({
+            userId,
+            conversationId,
+            hookConfig,
+            cleanQuestion:
+              hookConfig.cleanQuestion,
+            originalQuestion:
+              hookConfig.originalQuestion
+          });
+
+        return res.json(
+          result.response
+        );
+      }
+
+      const adaptiveContext =
+        buildAdaptiveContextForHook({
+          hookConfig,
+          existingMode,
+          pendingQuiz
+        });
+
+      if (
+        isRagRoutedHook(
+          hookConfig.hook_code
+        ) ||
+        hookConfig.requires_retrieval
+      ) {
         return ragAnswerHandler.handleRagAnswer({
           res,
           userId,
           conversationId,
+
           hookConfig: {
             ...hookConfig,
             requires_retrieval: true
           },
-          cleanQuestion: hookConfig.cleanQuestion || hookConfig.originalQuestion,
-          originalQuestion: hookConfig.originalQuestion,
-          adaptiveContext: buildAdaptiveContextForHook({
-            hookConfig,
-            existingMode,
-            pendingQuiz
-          })
+
+          cleanQuestion:
+            hookConfig.cleanQuestion ||
+            hookConfig.originalQuestion,
+
+          originalQuestion:
+            hookConfig.originalQuestion,
+
+          adaptiveContext,
+
+          orchestrationMetadata: {
+            askHandlerVersion:
+              ENGINE_VERSION,
+
+            issueClassificationEnabled: true,
+            adaptivePipelineEnabled: true,
+            sourceOrderingPolicyEnabled: true,
+            strictConflictDisplayEnabled: true,
+            targetAuthorityAware: true,
+            issueClassificationMatchAware: true
+          }
         });
       }
 
@@ -626,23 +797,40 @@ export function createAskHandler({ supabase, openai }) {
         res,
         userId,
         conversationId,
-        hookConfig: buildHardcodedHookConfig("/ask"),
-        cleanQuestion: hookConfig.cleanQuestion || hookConfig.originalQuestion,
-        originalQuestion: hookConfig.originalQuestion,
-        adaptiveContext: buildAdaptiveContextForHook({
-          hookConfig: buildHardcodedHookConfig("/ask"),
-          existingMode,
-          pendingQuiz
-        })
+
+        hookConfig:
+          buildHardcodedHookConfig("/ask"),
+
+        cleanQuestion:
+          hookConfig.cleanQuestion ||
+          hookConfig.originalQuestion,
+
+        originalQuestion:
+          hookConfig.originalQuestion,
+
+        adaptiveContext,
+
+        orchestrationMetadata: {
+          askHandlerVersion:
+            ENGINE_VERSION,
+
+          issueClassificationEnabled: true,
+          adaptivePipelineEnabled: true
+        }
       });
     } catch (error) {
-      console.error("Ask dispatcher error:", error);
+      console.error(
+        "Ask dispatcher error:",
+        error
+      );
 
       return res.status(500).json({
         success: false,
-        error: error.message || "Ask failed",
+        error:
+          error.message || "Ask failed",
         engine: "TINA Ask Handler",
-        askHandlerVersion: ENGINE_VERSION
+        askHandlerVersion:
+          ENGINE_VERSION
       });
     }
   };
@@ -653,14 +841,34 @@ export function askHandlerHealthCheck() {
     ok: true,
     engine: "TINA_ASK_HANDLER",
     version: ENGINE_VERSION,
+
     adaptiveCompatible: true,
     assessmentCompatible: true,
     ragCompatible: true,
     feedbackCompatible: true,
     modeStateCompatible: true,
-    ragRoutedHooks: [...RAG_ROUTED_HOOKS],
-    assessmentHooks: [...SPECIAL_ASSESSMENT_HOOKS],
+
+    issueClassificationCompatible: true,
+    targetAuthorityAware: true,
+    strictConflictDisplayCompatible: true,
+
+    ragRoutedHooks: [
+      ...RAG_ROUTED_HOOKS
+    ],
+
+    assessmentHooks: [
+      ...SPECIAL_ASSESSMENT_HOOKS
+    ],
+
     sourceOrderingPolicyPassedDownstream: true,
-    conflictDisplayPolicyPassedDownstream: true
+    conflictDisplayPolicyPassedDownstream: true,
+
+    forcedHookCompatible: true,
+    routeModeCompatible: true
   };
 }
+
+export default {
+  createAskHandler,
+  askHandlerHealthCheck
+};
