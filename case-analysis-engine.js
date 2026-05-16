@@ -3,8 +3,12 @@
 
 /**
  * TINA Enterprise Case Analysis Engine
- * Version: 3.2.0
- * Fully ESM Compatible
+ * Version: 4.0.0
+ *
+ * Patch:
+ * - Uses issueClassification to prevent unrelated jurisprudence from being cited.
+ * - Filters cases by classified issue, legal dimension, case role, and applicability.
+ * - Treats generic keyword/topic similarity as insufficient.
  */
 
 import {
@@ -21,18 +25,16 @@ import {
   analyzeConflictPair
 } from "./conflict-engine.js";
 
-import {
-  applySupersessionFilter
-} from "./supersession-engine.js";
+import { applySupersessionFilter } from "./supersession-engine.js";
 
 import {
   selectIssueRelevantJurisprudence,
-  buildJurisprudencePayload
+  buildJurisprudencePayload,
+  CASE_ROLE,
+  APPLICABILITY_STATUS
 } from "./jurisprudence-engine.js";
 
-import {
-  reconcileDoctrine
-} from "./doctrinal-engine.js";
+import { reconcileDoctrine } from "./doctrinal-engine.js";
 
 import {
   buildClaimSupportMap,
@@ -41,7 +43,22 @@ import {
   buildNoSourceReply
 } from "./legal-validation-engine.js";
 
-const ENGINE_VERSION = "3.2.0";
+const ENGINE_VERSION = "4.0.0";
+
+const COURT_TYPES = Object.freeze([
+  "SUPREME_COURT",
+  "CTA_EN_BANC",
+  "COURT_OF_APPEALS",
+  "CTA_DIVISION"
+]);
+
+const BIR_TYPES = Object.freeze([
+  "RR",
+  "RMC",
+  "RMO",
+  "RAMO",
+  "BIR_RULING"
+]);
 
 function normalizeText(value = "") {
   return String(value || "").replace(/\s+/g, " ").trim();
@@ -52,7 +69,12 @@ function lower(value = "") {
 }
 
 function safeArray(value) {
-  return Array.isArray(value) ? value : [];
+  if (!value) return [];
+  return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
+}
+
+function unique(values = []) {
+  return [...new Set((values || []).filter(Boolean))];
 }
 
 function getDocPath(doc = {}) {
@@ -108,18 +130,11 @@ function getAuthorityLevel(doc = {}) {
 }
 
 function isCourtAuthority(type = "") {
-  return [
-    "SUPREME_COURT",
-    "CTA_EN_BANC",
-    "COURT_OF_APPEALS",
-    "CTA_DIVISION"
-  ].includes(String(type || "").toUpperCase());
+  return COURT_TYPES.includes(String(type || "").toUpperCase());
 }
 
 function isBIRAuthority(type = "") {
-  return ["RR", "RMC", "RMO", "RAMO", "BIR_RULING"].includes(
-    String(type || "").toUpperCase()
-  );
+  return BIR_TYPES.includes(String(type || "").toUpperCase());
 }
 
 function buildDisplaySource(doc = {}) {
@@ -134,7 +149,96 @@ function buildDisplaySource(doc = {}) {
       doc.source ||
       doc.originalSource ||
       null,
+    caseRole: doc.caseRole || null,
+    caseApplicability: doc.caseApplicability || null,
+    issueClassificationMatch: doc.issueClassificationMatch || null,
     overrideApplied: Boolean(doc.overrideApplied || false)
+  };
+}
+
+function normalizeIssue(value = "") {
+  const raw = String(value || "").trim().toUpperCase().replace(/[\s-]+/g, "_");
+
+  const aliases = {
+    VAT: "VAT_LIABILITY",
+    OUTPUT_VAT: "VAT_LIABILITY",
+    INPUT_VAT: "VAT_REFUND",
+    INPUT_VAT_REFUND: "VAT_REFUND",
+    TAX_REFUND: "VAT_REFUND",
+    REFUND: "VAT_REFUND",
+    EWT: "WITHHOLDING",
+    CWT: "WITHHOLDING",
+    FWT: "WITHHOLDING",
+    WITHHOLDING_TAX: "WITHHOLDING",
+    RCIT: "INCOME_TAX",
+    MCIT: "INCOME_TAX",
+    NOLCO: "INCOME_TAX",
+    PRINCIPAL_AGENT: "TRANSACTION",
+    PRINCIPAL_VS_AGENT: "TRANSACTION",
+    GROSS_NET: "TRANSACTION",
+    PASS_THROUGH: "TRANSACTION",
+    REIMBURSEMENT: "TRANSACTION",
+    AGREEMENT: "CONTRACT"
+  };
+
+  return aliases[raw] || raw || null;
+}
+
+function normalizeDimension(value = "") {
+  return String(value || "").trim().toUpperCase().replace(/[\s-]+/g, "_") || null;
+}
+
+function normalizeIssueClassification(issueClassification = null, question = "", adaptiveContext = {}) {
+  const source =
+    issueClassification ||
+    adaptiveContext?.issueClassification ||
+    adaptiveContext?.queryIntent?.issueClassification ||
+    adaptiveContext?.responsePlan?.issueClassification ||
+    {};
+
+  const fallbackSignals = extractIssueSignals(question).map((item) =>
+    normalizeIssue(item.replace(/\s+/g, "_"))
+  );
+
+  const primaryIssue =
+    normalizeIssue(source.primaryIssue) ||
+    normalizeIssue(source.primary_issue) ||
+    normalizeIssue(source.issueType) ||
+    normalizeIssue(source.issue_type) ||
+    fallbackSignals[0] ||
+    "GENERAL";
+
+  const subIssues = unique([
+    primaryIssue,
+    ...safeArray(source.subIssues).map(normalizeIssue),
+    ...safeArray(source.subIssue).map(normalizeIssue),
+    ...safeArray(source.sub_issues).map(normalizeIssue),
+    ...safeArray(source.sub_issue).map(normalizeIssue),
+    ...fallbackSignals
+  ]).filter(Boolean);
+
+  const legalDimensions = unique([
+    ...safeArray(source.legalDimensions).map(normalizeDimension),
+    ...safeArray(source.legalDimension).map(normalizeDimension),
+    ...safeArray(source.legal_dimensions).map(normalizeDimension),
+    ...safeArray(source.legal_dimension).map(normalizeDimension)
+  ]).filter(Boolean);
+
+  const targetAuthorities = unique([
+    ...safeArray(source.targetAuthorities),
+    ...safeArray(source.target_authorities)
+  ]).filter(Boolean);
+
+  return {
+    primaryIssue,
+    subIssues,
+    legalDimensions,
+    retrievalStrategy:
+      source.retrievalStrategy ||
+      source.retrieval_strategy ||
+      "CASE_ANALYSIS_ISSUE_CLASSIFIED",
+    targetAuthorities,
+    raw: source
   };
 }
 
@@ -333,43 +437,39 @@ function extractIssueSignals(question = "") {
 
   const issueGroups = [
     {
-      signal: "vat liability",
+      signal: "VAT_LIABILITY",
       patterns: [/\bvat\b/, /\bvalue added tax\b/, /\boutput vat\b/, /\bvatable\b/, /\bzero-rated\b/, /\bexempt\b/]
     },
     {
-      signal: "vat refund",
+      signal: "VAT_REFUND",
       patterns: [/\brefund\b/, /\btax credit certificate\b/, /\btcc\b/, /\b120\+30\b/, /\badministrative claim\b/, /\bjudicial claim\b/, /\bunutilized input vat\b/]
     },
     {
-      signal: "withholding tax",
+      signal: "WITHHOLDING",
       patterns: [/\bwithholding\b/, /\bewt\b/, /\bexpanded withholding\b/, /\bfinal withholding\b/]
     },
     {
-      signal: "income tax",
+      signal: "INCOME_TAX",
       patterns: [/\bincome tax\b/, /\brcit\b/, /\bmcit\b/, /\bnolco\b/, /\bdeductible\b/, /\bnon-deductible\b/]
     },
     {
-      signal: "assessment due process",
+      signal: "ASSESSMENT",
       patterns: [/\bloa\b/, /\bletter of authority\b/, /\bpan\b/, /\bfan\b/, /\bfld\b/, /\bdue process\b/, /\bassessment\b/, /\bprotest\b/]
     },
     {
-      signal: "prescription",
+      signal: "PROCEDURAL",
       patterns: [/\bprescription\b/, /\bprescriptive\b/, /\bstatute of limitations\b/, /\bthree-year\b/, /\bten-year\b/]
     },
     {
-      signal: "tax evasion",
-      patterns: [/\btax evasion\b/, /\bfraud\b/, /\bwillful\b/]
+      signal: "DOCTRINE",
+      patterns: [/\btax evasion\b/, /\bfraud\b/, /\bwillful\b/, /\btax avoidance\b/, /\btax planning\b/, /\bsham\b/]
     },
     {
-      signal: "tax avoidance",
-      patterns: [/\btax avoidance\b/, /\btax planning\b/, /\bsham\b/]
-    },
-    {
-      signal: "contract",
+      signal: "CONTRACT",
       patterns: [/\bcontract\b/, /\bagreement\b/, /\blease\b/, /\bconcession\b/]
     },
     {
-      signal: "transaction characterization",
+      signal: "TRANSACTION",
       patterns: [/\bprincipal\b/, /\bagent\b/, /\bpass-through\b/, /\breimbursement\b/, /\bbundled\b/, /\beconomic substance\b/]
     }
   ];
@@ -380,45 +480,41 @@ function extractIssueSignals(question = "") {
     }
   }
 
-  for (const token of tokenizeIssue(question)) {
-    signals.add(token);
-  }
-
   return [...signals];
 }
 
-function buildIssueRelevanceScore(doc = {}, query = "") {
-  const qSignals = extractIssueSignals(query);
-  const qTokens = new Set(tokenizeIssue(query));
-  const text = lower(getDocText(doc));
-
-  let score = 0;
-
-  for (const signal of qSignals) {
-    if (text.includes(signal)) score += 18;
-  }
-
-  for (const token of qTokens) {
-    if (text.includes(token)) score += 4;
-  }
-
-  if (qSignals.includes("vat liability") && !qSignals.includes("vat refund")) {
-    if (/\brefund\b|\b120\+30\b|\btcc\b|\badministrative claim\b|\bjudicial claim\b/i.test(text)) {
-      score -= 30;
-    }
-  }
-
-  if (qSignals.includes("vat refund") && !qSignals.includes("vat liability")) {
-    if (/\bliability\b|\boutput vat\b|\bvatable sale\b/i.test(text)) {
-      score -= 12;
-    }
-  }
-
-  return score;
+function detectDocIssueSignals(doc = {}) {
+  return extractIssueSignals(getDocText(doc));
 }
 
-function isIssueRelevantCase(doc = {}, query = "", minimumScore = 18) {
-  if (!isLikelyCaseDocument(doc)) return false;
+function detectDocLegalDimensions(doc = {}) {
+  const text = lower(getDocText(doc));
+  const dimensions = [];
+
+  const push = (condition, dimension) => {
+    if (condition) dimensions.push(dimension);
+  };
+
+  push(/\b(taxable|liable|subject to|exempt|zero-rated|deductible|output vat|income tax|withholding tax|gross income|gross receipts)\b/i.test(text), "SUBSTANTIVE");
+  push(/\b(file|filing|deadline|period|administrative claim|judicial claim|appeal|assessment|loa|pan|fan|return|remedy|protest|prescription)\b/i.test(text), "PROCEDURAL");
+  push(/\b(invoice|receipt|substantiation|documentary|proof|evidence|burden of proof|records|supporting documents)\b/i.test(text), "EVIDENTIARY");
+  push(/\b(jurisdiction|jurisdictional|cta|condition precedent|120\+30)\b/i.test(text), "JURISDICTIONAL");
+  push(/\b(effective|retroactive|prospective|transition|amended|repealed|superseded)\b/i.test(text), "TEMPORAL");
+  push(/\b(transaction|actual circumstances|facts|factual|actual facts)\b/i.test(text), "FACTUAL");
+  push(/\b(contract|agreement|clause|lease|concession)\b/i.test(text), "CONTRACTUAL");
+  push(/\b(economic substance|substance over form|sham|simulation)\b/i.test(text), "ECONOMIC_SUBSTANCE");
+
+  return unique(dimensions.length ? dimensions : ["GENERAL"]);
+}
+
+function caseMatchesIssueClassification(doc = {}, issueClassification = {}, query = "") {
+  if (!isLikelyCaseDocument(doc)) {
+    return {
+      matched: false,
+      reason: "Document is not a court authority or recognizable case document.",
+      score: 0
+    };
+  }
 
   const caseNameNeedles = extractCaseNamesFromQuestion(query);
   const haystack = lower(
@@ -442,18 +538,99 @@ function isIssueRelevantCase(doc = {}, query = "", minimumScore = 18) {
     caseNameNeedles.length &&
     caseNameNeedles.some((needle) => haystack.includes(needle))
   ) {
-    return true;
+    return {
+      matched: true,
+      reason: "Specific case name or case reference requested by the user.",
+      score: 100
+    };
   }
 
-  const relevanceScore = buildIssueRelevanceScore(doc, query);
-  return relevanceScore >= minimumScore;
+  const profile = normalizeIssueClassification(issueClassification, query);
+  const docIssues = detectDocIssueSignals(doc).map(normalizeIssue);
+  const docDimensions = detectDocLegalDimensions(doc).map(normalizeDimension);
+
+  const issueMatch =
+    profile.primaryIssue === "GENERAL" ||
+    docIssues.includes(profile.primaryIssue) ||
+    safeArray(profile.subIssues).some((issue) => docIssues.includes(normalizeIssue(issue)));
+
+  const dimensionMatch =
+    !safeArray(profile.legalDimensions).length ||
+    profile.legalDimensions.includes("GENERAL") ||
+    docDimensions.includes("GENERAL") ||
+    safeArray(profile.legalDimensions).some((dimension) =>
+      docDimensions.includes(normalizeDimension(dimension))
+    );
+
+  let score = 0;
+
+  if (issueMatch) score += 55;
+  if (dimensionMatch) score += 30;
+  if (docIssues.includes(profile.primaryIssue)) score += 25;
+
+  if (
+    profile.primaryIssue === "VAT_LIABILITY" &&
+    docIssues.includes("VAT_REFUND") &&
+    !profile.subIssues.includes("VAT_REFUND")
+  ) {
+    score -= 90;
+  }
+
+  if (
+    profile.primaryIssue === "VAT_REFUND" &&
+    docIssues.includes("VAT_LIABILITY") &&
+    !profile.subIssues.includes("VAT_LIABILITY")
+  ) {
+    score -= 70;
+  }
+
+  if (
+    profile.primaryIssue === "WITHHOLDING" &&
+    (docIssues.includes("VAT_REFUND") || docIssues.includes("VAT_LIABILITY"))
+  ) {
+    score -= 70;
+  }
+
+  const matched = issueMatch && dimensionMatch && score >= 55;
+
+  return {
+    matched,
+    reason: matched
+      ? "Case matches the classified legal issue and legal dimension."
+      : "Case does not sufficiently match the classified issue and legal dimension.",
+    score,
+    profile,
+    docIssues,
+    docDimensions,
+    issueMatch,
+    dimensionMatch
+  };
 }
 
-function scoreCaseDoc(doc = {}, query = "") {
-  const q = lower(query);
+function buildIssueRelevanceScore(doc = {}, query = "", issueClassification = null) {
+  const match = caseMatchesIssueClassification(doc, issueClassification, query);
+  const qTokens = new Set(tokenizeIssue(query));
+  const text = lower(getDocText(doc));
+
+  let score = match.score;
+
+  for (const token of qTokens) {
+    if (text.includes(token)) score += 2;
+  }
+
+  return score;
+}
+
+function isIssueRelevantCase(doc = {}, query = "", minimumScore = 55, issueClassification = null) {
+  const match = caseMatchesIssueClassification(doc, issueClassification, query);
+  return match.matched && match.score >= minimumScore;
+}
+
+function scoreCaseDoc(doc = {}, query = "", issueClassification = null) {
   const text = lower(getDocText(doc));
   const path = lower(getDocPath(doc));
   const authorityType = String(getAuthorityType(doc)).toUpperCase();
+  const issueMatch = caseMatchesIssueClassification(doc, issueClassification, query);
 
   let score = Number(
     doc.rerankScore ||
@@ -465,7 +642,7 @@ function scoreCaseDoc(doc = {}, query = "") {
   );
 
   if (isLikelyCaseDocument(doc)) score += 30;
-  if (isIssueRelevantCase(doc, query, 18)) score += 45;
+  if (issueMatch.matched) score += issueMatch.score;
 
   if (authorityType === "SUPREME_COURT") score += 45;
   if (authorityType === "CTA_EN_BANC") score += 38;
@@ -494,42 +671,49 @@ function scoreCaseDoc(doc = {}, query = "") {
     if (text.includes(term)) score += 2;
   }
 
-  score += buildIssueRelevanceScore(doc, query);
-
-  if (q.includes("tax evasion") && text.includes("tax evasion")) score += 10;
-  if (q.includes("tax avoidance") && text.includes("tax avoidance")) score += 10;
-  if (q.includes("vat") && text.includes("vat")) score += 8;
-  if (q.includes("withholding") && text.includes("withholding")) score += 8;
-  if (q.includes("mcit") && text.includes("mcit")) score += 8;
-
   return score;
 }
 
-function selectTopCaseAuthorities(results = [], query = "", limit = 4) {
+function selectTopCaseAuthorities(results = [], query = "", limit = 4, issueClassification = null) {
   const caseNameNeedles = extractCaseNamesFromQuestion(query);
   const hasSpecificCaseRequest = caseNameNeedles.length > 0;
-  const minimumScore = hasSpecificCaseRequest ? 8 : 18;
+  const minimumScore = hasSpecificCaseRequest ? 35 : 55;
 
   return rerankByHierarchy(results, query)
     .filter((doc) => isLikelyCaseDocument(doc))
-    .filter((doc) => isIssueRelevantCase(doc, query, minimumScore))
-    .map((doc) => ({
-      ...doc,
-      caseScore: scoreCaseDoc(doc, query),
-      issueRelevanceScore: buildIssueRelevanceScore(doc, query)
-    }))
+    .map((doc) => {
+      const classificationMatch = caseMatchesIssueClassification(doc, issueClassification, query);
+
+      return {
+        ...doc,
+        issueClassificationMatch: classificationMatch,
+        caseScore: scoreCaseDoc(doc, query, issueClassification),
+        issueRelevanceScore: buildIssueRelevanceScore(doc, query, issueClassification)
+      };
+    })
+    .filter((doc) => doc.issueClassificationMatch?.matched)
+    .filter((doc) => Number(doc.issueRelevanceScore || 0) >= minimumScore)
     .sort((a, b) => b.caseScore - a.caseScore)
     .slice(0, limit);
 }
 
-function selectRelevantBIRAuthorities(results = [], query = "", limit = 3) {
+function selectRelevantBIRAuthorities(results = [], query = "", limit = 3, issueClassification = null) {
   const qTokens = new Set(tokenizeIssue(query));
+  const profile = normalizeIssueClassification(issueClassification, query);
 
   return rerankByHierarchy(results, query)
     .filter((doc) => isBIRAuthority(getAuthorityType(doc)))
     .map((doc) => {
       const text = lower(getDocText(doc));
-      let issueScore = buildIssueRelevanceScore(doc, query);
+      const docIssues = detectDocIssueSignals(doc).map(normalizeIssue);
+
+      let issueScore = 0;
+
+      if (docIssues.includes(profile.primaryIssue)) issueScore += 45;
+
+      for (const issue of safeArray(profile.subIssues)) {
+        if (docIssues.includes(normalizeIssue(issue))) issueScore += 18;
+      }
 
       for (const token of qTokens) {
         if (text.includes(token)) issueScore += 2;
@@ -537,10 +721,15 @@ function selectRelevantBIRAuthorities(results = [], query = "", limit = 3) {
 
       return {
         ...doc,
-        issueRelevanceScore: issueScore
+        issueRelevanceScore: issueScore,
+        issueClassificationMatch: {
+          matched: issueScore >= 18,
+          profile,
+          docIssues
+        }
       };
     })
-    .filter((doc) => doc.issueRelevanceScore >= 8)
+    .filter((doc) => doc.issueRelevanceScore >= 18)
     .slice(0, limit);
 }
 
@@ -625,9 +814,8 @@ function buildConflictReviewText(docs = []) {
         `Doctrinal Conflict: ${item.doctrinalConflict ? "YES" : "NO"}`,
         `Hierarchy Conflict: ${item.hierarchyConflict ? "YES" : "NO"}`,
         `Apparent Conflict Only: ${item.apparentConflict ? "YES" : "NO"}`,
-        `Source A: ${JSON.stringify(item.sourceA || {})}`,
-        `Source B: ${JSON.stringify(item.sourceB || {})}`,
         `Exact Issue: ${item.exactIssue || "Not determined"}`,
+        `Exact Legal Dimension: ${item.exactLegalDimension || "Not determined"}`,
         `Distinction Type: ${item.distinctionType || "Not determined"}`,
         `Resolution Basis: ${item.resolutionBasis || item.reason || "Not determined"}`
       ].join("\n")
@@ -642,6 +830,7 @@ function buildCasePrompt({
   hierarchyConflict = null,
   overrideAudit = [],
   jurisprudencePayload = null,
+  issueClassification = null,
   issueRelevantCaseCount = 0,
   rejectedCaseCount = 0
 }) {
@@ -660,26 +849,21 @@ function buildCasePrompt({
         `Conflict Type: ${hierarchyConflict.conflictType || "N/A"}`,
         `Doctrinal Conflict: ${hierarchyConflict.doctrinalConflict ? "YES" : "NO"}`,
         `Hierarchy Conflict: ${hierarchyConflict.hierarchyConflict ? "YES" : "NO"}`,
+        `Exact Issue: ${hierarchyConflict.exactIssue || "N/A"}`,
+        `Exact Legal Dimension: ${hierarchyConflict.exactLegalDimension || "N/A"}`,
         hierarchyConflict.controllingAuthority
           ? `Controlling Authority: ${hierarchyConflict.controllingAuthority}`
           : null,
-        hierarchyConflict.reason ? `Reason: ${hierarchyConflict.reason}` : null,
-        hierarchyConflict.sourceA ? `Source A: ${JSON.stringify(hierarchyConflict.sourceA)}` : null,
-        hierarchyConflict.sourceB ? `Source B: ${JSON.stringify(hierarchyConflict.sourceB)}` : null,
-        hierarchyConflict.overrideApplied !== undefined
-          ? `Court Override Applied: ${hierarchyConflict.overrideApplied ? "YES" : "NO"}`
-          : null
+        hierarchyConflict.reason ? `Reason: ${hierarchyConflict.reason}` : null
       ]
         .filter(Boolean)
         .join("\n")
     : hierarchyConflict?.apparentConflict
       ? [
-          "Conflict Type: APPARENT_CONFLICT_ONLY",
+          "Conflict Type: APPARENT_OR_DISTINGUISHABLE_ONLY",
           "Doctrinal Conflict: NO",
           "Hierarchy Conflict: NO",
-          hierarchyConflict.reason ? `Reason: ${hierarchyConflict.reason}` : null,
-          hierarchyConflict.sourceA ? `Source A: ${JSON.stringify(hierarchyConflict.sourceA)}` : null,
-          hierarchyConflict.sourceB ? `Source B: ${JSON.stringify(hierarchyConflict.sourceB)}` : null
+          hierarchyConflict.reason ? `Reason: ${hierarchyConflict.reason}` : null
         ]
           .filter(Boolean)
           .join("\n")
@@ -705,8 +889,10 @@ You are TINA, a Philippine tax researcher, tax analyst, and legal researcher.
 
 CORE RULE:
 Never merely retrieve or enumerate cases.
-Only use cases that are directly relevant to the user's legal issue.
-A case is relevant only if it addresses the same tax type and the same legal question, doctrine, remedy, procedural requirement, evidentiary requirement, or factual setting.
+Only use cases that match the classified legal issue, legal dimension, case role, and applicability.
+
+ISSUE CLASSIFICATION:
+${JSON.stringify(issueClassification || {}, null, 2)}
 
 STRICT RULES:
 1. Use only the supplied context.
@@ -716,7 +902,8 @@ STRICT RULES:
 5. For each case cited, explain:
    - legal issue;
    - doctrine;
-   - applicability to the user's question.
+   - case role;
+   - applicability to the user's classified issue.
 6. Exclude unrelated cases and do not mention them as support.
 7. Organize retrieved sources using TINA hierarchy.
 8. If a court decision genuinely conflicts with a BIR issuance, controlling judicial doctrine prevails.
@@ -726,10 +913,9 @@ STRICT RULES:
 
 CASE RELEVANCE AUDIT:
 Issue-relevant cases selected: ${issueRelevantCaseCount}
-Potential case documents rejected for weak issue relevance: ${rejectedCaseCount}
+Potential case documents rejected for weak classified-issue relevance: ${rejectedCaseCount}
 
 REQUIRED OUTPUT FORMAT:
-
 A. DIRECT ANSWER
 B. CONTROLLING LEGAL BASIS
 C. SUPPORTING JURISPRUDENCE
@@ -757,15 +943,16 @@ ${strictContext}
 `.trim();
 }
 
-function countRejectedCases(activeDocs = [], selectedCaseDocs = [], query = "") {
+function countRejectedCases(activeDocs = [], selectedCaseDocs = [], query = "", issueClassification = null) {
   const selectedPaths = new Set(selectedCaseDocs.map((doc) => getDocPath(doc)));
 
-  return activeDocs.filter(
-    (doc) =>
-      isLikelyCaseDocument(doc) &&
-      !selectedPaths.has(getDocPath(doc)) &&
-      !isIssueRelevantCase(doc, query, 18)
-  ).length;
+  return activeDocs.filter((doc) => {
+    if (!isLikelyCaseDocument(doc)) return false;
+    if (selectedPaths.has(getDocPath(doc))) return false;
+
+    const match = caseMatchesIssueClassification(doc, issueClassification, query);
+    return !match.matched;
+  }).length;
 }
 
 async function generateCaseAnalysisAnswer({
@@ -774,8 +961,16 @@ async function generateCaseAnalysisAnswer({
   retrievedResults = [],
   model = process.env.OPENAI_MODEL || "gpt-4o-mini",
   responseMode = "TECHNICAL",
-  adaptiveContext = {}
+  adaptiveContext = {},
+  issueClassification = null,
+  jurisprudenceCases: preselectedJurisprudenceCases = []
 }) {
+  const effectiveIssueClassification = normalizeIssueClassification(
+    issueClassification,
+    question,
+    adaptiveContext
+  );
+
   const reranked = rerankByHierarchy(safeArray(retrievedResults), question);
   const supersessionResult = applySupersessionFilter(reranked);
 
@@ -784,21 +979,53 @@ async function generateCaseAnalysisAnswer({
       ? supersessionResult.activeDocs
       : reranked;
 
-  const jurisprudenceCases = selectIssueRelevantJurisprudence({
-    query: question,
-    docs: activeDocs,
-    limit: 4,
-    responseMode,
-    adaptiveContext
+  const jurisprudenceCases =
+    safeArray(preselectedJurisprudenceCases).length > 0
+      ? safeArray(preselectedJurisprudenceCases)
+      : selectIssueRelevantJurisprudence({
+          query: question,
+          docs: activeDocs,
+          limit: 4,
+          responseMode,
+          adaptiveContext,
+          issueClassification: effectiveIssueClassification,
+          includeDistinguishable: true,
+          includeBackground: false
+        });
+
+  const filteredJurisprudenceCases = jurisprudenceCases.filter((doc) => {
+    if (
+      [
+        APPLICABILITY_STATUS.DIRECTLY_APPLICABLE,
+        APPLICABILITY_STATUS.PERSUASIVE_AUTHORITY,
+        APPLICABILITY_STATUS.DISTINGUISHABLE_BUT_RELEVANT
+      ].includes(doc.caseApplicability)
+    ) {
+      return true;
+    }
+
+    return caseMatchesIssueClassification(doc, effectiveIssueClassification, question).matched;
   });
 
   const caseDocs =
-    jurisprudenceCases.length > 0
-      ? jurisprudenceCases
-      : selectTopCaseAuthorities(activeDocs, question, 4);
+    filteredJurisprudenceCases.length > 0
+      ? filteredJurisprudenceCases
+      : selectTopCaseAuthorities(activeDocs, question, 4, effectiveIssueClassification);
 
-  const rejectedCaseCount = countRejectedCases(activeDocs, caseDocs, question);
-  const rawBirDocs = selectRelevantBIRAuthorities(activeDocs, question, 3);
+  const rejectedCaseCount = countRejectedCases(
+    activeDocs,
+    caseDocs,
+    question,
+    effectiveIssueClassification
+  );
+
+  const rawBirDocs = selectRelevantBIRAuthorities(
+    activeDocs,
+    question,
+    3,
+    effectiveIssueClassification
+  );
+
   const birDocs = filterOverriddenBirDocs(caseDocs, rawBirDocs);
 
   const jurisprudencePayload = buildJurisprudencePayload({
@@ -814,6 +1041,7 @@ async function generateCaseAnalysisAnswer({
 
   const conflictDocs = [...caseDocs, ...birDocs];
   const hierarchyConflict = detectHierarchyConflict(conflictDocs.slice(0, 5));
+
   const topLegalBases = selectTopLegalBases(conflictDocs, 3);
   const overrideAudit = buildCourtOverrideAudit(caseDocs, rawBirDocs);
   const conflictReviewText = buildConflictReviewText(conflictDocs);
@@ -822,7 +1050,7 @@ async function generateCaseAnalysisAnswer({
     return {
       success: true,
       answer:
-        "A. DIRECT ANSWER\nNo issue-relevant case authority was retrieved from the indexed context.\n\nB. CONTROLLING LEGAL BASIS\nThe indexed context did not retrieve a case directly addressing the user's legal issue.\n\nC. SUPPORTING JURISPRUDENCE\nNo directly issue-relevant case was retrieved. TINA should not cite unrelated jurisprudence merely because it mentions the same tax type.\n\nD. DOCTRINAL STATUS / CONFLICT ANALYSIS\nNo doctrinal conflict can be determined because no issue-relevant case authority was retrieved.\n\nE. HIERARCHY ANALYSIS\nNo hierarchy comparison can be made without a retrieved controlling or supporting authority.\n\nF. PRACTICAL APPLICATION\nVerify against the exact Supreme Court, CTA, NIRC, and BIR authorities before relying on a litigation or audit position.",
+        "A. DIRECT ANSWER\nNo issue-relevant case authority was retrieved from the indexed context.\n\nB. CONTROLLING LEGAL BASIS\nThe indexed context did not retrieve a case directly addressing the classified legal issue.\n\nC. SUPPORTING JURISPRUDENCE\nNo directly issue-relevant case was retrieved. TINA should not cite unrelated jurisprudence merely because it mentions the same tax type.\n\nD. DOCTRINAL STATUS / CONFLICT ANALYSIS\nNo doctrinal conflict can be determined because no issue-relevant case authority was retrieved.\n\nE. HIERARCHY ANALYSIS\nNo hierarchy comparison can be made without a retrieved controlling or supporting authority.\n\nF. PRACTICAL APPLICATION\nVerify against the exact Supreme Court, CTA, NIRC, and BIR authorities before relying on a litigation or audit position.",
       mode: "CASE_ANALYSIS",
       sourcesUsed: [],
       caseDocs: [],
@@ -833,6 +1061,7 @@ async function generateCaseAnalysisAnswer({
       overrideAudit,
       supersessionResult,
       jurisprudencePayload,
+      issueClassification: effectiveIssueClassification,
       rejectedCaseCount,
       engineVersion: ENGINE_VERSION
     };
@@ -845,9 +1074,10 @@ async function generateCaseAnalysisAnswer({
         `PATH: ${getDocPath(doc)}`,
         `AUTHORITY TYPE: ${getAuthorityType(doc)}`,
         `AUTHORITY LEVEL: ${getAuthorityLevel(doc)}`,
-        `ISSUE RELEVANCE SCORE: ${doc.issueRelevanceScore ?? doc.caseApplicabilityScore ?? buildIssueRelevanceScore(doc, question)}`,
+        `CASE ROLE: ${doc.caseRole || CASE_ROLE?.PERSUASIVE || "N/A"}`,
         `CASE APPLICABILITY: ${doc.caseApplicability || "N/A"}`,
         `CASE APPLICABILITY EXPLANATION: ${doc.caseApplicabilityExplanation || "N/A"}`,
+        `ISSUE CLASSIFICATION MATCH: ${JSON.stringify(doc.issueClassificationMatch || caseMatchesIssueClassification(doc, effectiveIssueClassification, question))}`,
         "TEXT:",
         getDocText(doc)
       ].join("\n")
@@ -858,7 +1088,7 @@ async function generateCaseAnalysisAnswer({
         `PATH: ${getDocPath(doc)}`,
         `AUTHORITY TYPE: ${getAuthorityType(doc)}`,
         `AUTHORITY LEVEL: ${getAuthorityLevel(doc)}`,
-        `ISSUE RELEVANCE SCORE: ${doc.issueRelevanceScore ?? buildIssueRelevanceScore(doc, question)}`,
+        `ISSUE CLASSIFICATION MATCH: ${JSON.stringify(doc.issueClassificationMatch || {})}`,
         "TEXT:",
         getDocText(doc)
       ].join("\n")
@@ -874,6 +1104,7 @@ async function generateCaseAnalysisAnswer({
     hierarchyConflict,
     overrideAudit,
     jurisprudencePayload,
+    issueClassification: effectiveIssueClassification,
     issueRelevantCaseCount: caseDocs.length,
     rejectedCaseCount
   });
@@ -885,7 +1116,7 @@ async function generateCaseAnalysisAnswer({
       { role: "system", content: prompt },
       {
         role: "user",
-        content: `Analyze this Philippine tax case question strictly from the supplied issue-relevant context:\n${question}`
+        content: `Analyze this Philippine tax case question strictly from the supplied classified-issue-relevant context:\n${question}`
       }
     ]
   });
@@ -929,6 +1160,7 @@ async function generateCaseAnalysisAnswer({
     overrideAudit,
     supersessionResult,
     jurisprudencePayload,
+    issueClassification: effectiveIssueClassification,
     rejectedCaseCount,
     engineVersion: ENGINE_VERSION
   };
@@ -940,7 +1172,9 @@ async function maybeGenerateCaseAnalysisAnswer({
   retrievedResults = [],
   model = process.env.OPENAI_MODEL || "gpt-4o-mini",
   responseMode = "TECHNICAL",
-  adaptiveContext = {}
+  adaptiveContext = {},
+  issueClassification = null,
+  jurisprudenceCases = []
 }) {
   const intent = detectCaseAnalysisIntent(question);
 
@@ -958,6 +1192,10 @@ async function maybeGenerateCaseAnalysisAnswer({
       overrideAudit: [],
       supersessionResult: null,
       jurisprudencePayload: null,
+      issueClassification:
+        issueClassification ||
+        adaptiveContext?.issueClassification ||
+        null,
       engineVersion: ENGINE_VERSION
     };
   }
@@ -968,7 +1206,9 @@ async function maybeGenerateCaseAnalysisAnswer({
     retrievedResults,
     model,
     responseMode,
-    adaptiveContext
+    adaptiveContext,
+    issueClassification,
+    jurisprudenceCases
   });
 
   return {
@@ -989,7 +1229,9 @@ function caseAnalysisHealthCheck() {
     conflictEngineCompatible: true,
     legalValidationCompatible: true,
     doctrinalEngineCompatible: true,
-    ragAnswerHandlerCompatible: true
+    ragAnswerHandlerCompatible: true,
+    issueClassificationCompatible: true,
+    unrelatedJurisprudenceBlocked: true
   };
 }
 
@@ -997,6 +1239,7 @@ export {
   ENGINE_VERSION,
   detectCaseAnalysisIntent,
   selectTopCaseAuthorities,
+  caseMatchesIssueClassification,
   generateCaseAnalysisAnswer,
   maybeGenerateCaseAnalysisAnswer,
   caseAnalysisHealthCheck
@@ -1006,6 +1249,7 @@ export default {
   ENGINE_VERSION,
   detectCaseAnalysisIntent,
   selectTopCaseAuthorities,
+  caseMatchesIssueClassification,
   generateCaseAnalysisAnswer,
   maybeGenerateCaseAnalysisAnswer,
   caseAnalysisHealthCheck
