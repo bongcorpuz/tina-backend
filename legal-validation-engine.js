@@ -3,27 +3,37 @@
 
 /**
  * TINA Legal Validation Engine
- * Version: 3.0.1
+ * Version: 4.0.0
  *
  * Patch:
- * - Fixed CommonJS compatibility with authority-engine.js.
- * - Keeps this file as ES Module.
- * - Strengthens legal-source validation, A-F structure validation,
- *   authority hierarchy checks, unsupported citation detection,
- *   and VAT issue-mismatch detection.
+ * - Full ESM compatibility with patched authority-engine.js.
+ * - Uses issueClassification, issueClassificationMatch, targetAuthorityMatch.
+ * - Validates source sufficiency using controllingPrecedence.
+ * - Blocks issue-mismatched authorities and vague conflict language.
+ * - Complements patched RAG, retrieval, reranker, jurisprudence, doctrine,
+ *   citation, source visibility, and final answer compliance engines.
  */
 
-import { createRequire } from "module";
 import { detectNamedLaw } from "./named-law-engine.js";
 
-const require = createRequire(import.meta.url);
-
-const {
+import {
   classifyAuthorityFromDocument,
-  AUTHORITY_LEVEL = {}
-} = require("./authority-engine.js");
+  AUTHORITY_LEVEL,
+  getAuthorityTypeForDoc,
+  getAuthorityLevelForDoc,
+  getControllingPrecedenceForDoc
+} from "./authority-engine.js";
 
-const ENGINE_VERSION = "3.0.1";
+const ENGINE_VERSION = "4.0.0";
+
+const REQUIRED_AF_HEADINGS = Object.freeze([
+  "A. DIRECT ANSWER",
+  "B. CONTROLLING LEGAL BASIS",
+  "C. SUPPORTING JURISPRUDENCE",
+  "D. DOCTRINAL STATUS / CONFLICT ANALYSIS",
+  "E. HIERARCHY ANALYSIS",
+  "F. PRACTICAL APPLICATION"
+]);
 
 function normalizeText(value = "") {
   return String(value || "").replace(/\s+/g, " ").trim();
@@ -33,6 +43,15 @@ function lower(value = "") {
   return normalizeText(value).toLowerCase();
 }
 
+function safeArray(value) {
+  if (!value) return [];
+  return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
+}
+
+function unique(values = []) {
+  return [...new Set((values || []).filter(Boolean))];
+}
+
 function tokenize(text = "") {
   return lower(text)
     .replace(/[^a-z0-9\s/%₱().:-]/g, " ")
@@ -40,8 +59,21 @@ function tokenize(text = "") {
     .filter(Boolean);
 }
 
-function unique(values = []) {
-  return [...new Set(values.filter(Boolean))];
+function normalizeLooseText(value = "") {
+  return normalizeText(value)
+    .toLowerCase()
+    .replace(/[“”"'`]/g, "")
+    .replace(/\brepublic act no\.?\s*/g, "ra ")
+    .replace(/\br\.?\s*a\.?\s*no\.?\s*/g, "ra ")
+    .replace(/\br\.?\s*a\.?\s*/g, "ra ")
+    .replace(/\bnational internal revenue code\b/g, "nirc")
+    .replace(/\brevenue regulation[s]?\b/g, "rr")
+    .replace(/\brevenue memorandum circular[s]?\b/g, "rmc")
+    .replace(/\brevenue memorandum order[s]?\b/g, "rmo")
+    .replace(/\brevenue audit memorandum order[s]?\b/g, "ramo")
+    .replace(/[^\w\s/%₱().:-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function normalizeYear(year = "") {
@@ -58,6 +90,121 @@ function normalizeYear(year = "") {
   return raw;
 }
 
+function normalizeIssue(value = "") {
+  const raw = String(value || "").trim().toUpperCase().replace(/[\s-]+/g, "_");
+
+  const aliases = {
+    VAT: "VAT_LIABILITY",
+    OUTPUT_VAT: "VAT_LIABILITY",
+    INPUT_VAT: "VAT_REFUND",
+    INPUT_VAT_REFUND: "VAT_REFUND",
+    TAX_REFUND: "VAT_REFUND",
+    REFUND: "VAT_REFUND",
+    EWT: "WITHHOLDING",
+    CWT: "WITHHOLDING",
+    FWT: "WITHHOLDING",
+    WITHHOLDING_TAX: "WITHHOLDING",
+    RCIT: "INCOME_TAX",
+    MCIT: "INCOME_TAX",
+    NOLCO: "INCOME_TAX",
+    PRINCIPAL_AGENT: "TRANSACTION",
+    PRINCIPAL_VS_AGENT: "TRANSACTION",
+    GROSS_NET: "TRANSACTION",
+    PASS_THROUGH: "TRANSACTION",
+    REIMBURSEMENT: "TRANSACTION",
+    AGREEMENT: "CONTRACT",
+    ECONOMIC_SUBSTANCE_ANALYSIS: "ECONOMIC_SUBSTANCE"
+  };
+
+  return aliases[raw] || raw || null;
+}
+
+function normalizeDimension(value = "") {
+  const raw = String(value || "").trim().toUpperCase().replace(/[\s-]+/g, "_");
+
+  const aliases = {
+    SUBSTANCE: "SUBSTANTIVE",
+    PROCEDURE: "PROCEDURAL",
+    PROOF: "EVIDENTIARY",
+    EVIDENCE: "EVIDENTIARY",
+    JURISDICTION: "JURISDICTIONAL",
+    FACT: "FACTUAL",
+    FACTS: "FACTUAL",
+    CONTRACT: "CONTRACTUAL"
+  };
+
+  return aliases[raw] || raw || null;
+}
+
+function normalizeAuthorityType(type = "") {
+  const raw = String(type || "").trim().toUpperCase().replace(/[\s-]+/g, "_");
+
+  const aliases = {
+    NIRC: "STATUTE",
+    TAX_CODE: "STATUTE",
+    LAW: "STATUTE",
+    REVENUE_REGULATION: "RR",
+    REVENUE_MEMORANDUM_CIRCULAR: "RMC",
+    REVENUE_MEMORANDUM_ORDER: "RMO",
+    REVENUE_AUDIT_MEMORANDUM_ORDER: "RAMO",
+    BIR_RULINGS: "BIR_RULING",
+    SC: "SUPREME_COURT",
+    CASE: "SUPREME_COURT",
+    JURISPRUDENCE: "SUPREME_COURT",
+    CTA: "CTA_DIVISION",
+    IFRS: "PFRS"
+  };
+
+  return aliases[raw] || raw || "UNKNOWN";
+}
+
+function normalizeIssueClassification(issueClassification = null, query = "") {
+  const source = issueClassification || {};
+  const fallbackIssues = detectIssueSignals(query).map(normalizeIssue);
+
+  const primaryIssue =
+    normalizeIssue(source.primaryIssue) ||
+    normalizeIssue(source.primary_issue) ||
+    normalizeIssue(source.issueType) ||
+    normalizeIssue(source.issue_type) ||
+    fallbackIssues[0] ||
+    "GENERAL";
+
+  const subIssues = unique([
+    primaryIssue,
+    ...safeArray(source.subIssues).map(normalizeIssue),
+    ...safeArray(source.subIssue).map(normalizeIssue),
+    ...safeArray(source.sub_issues).map(normalizeIssue),
+    ...safeArray(source.sub_issue).map(normalizeIssue),
+    ...fallbackIssues
+  ]).filter(Boolean);
+
+  const legalDimensions = unique([
+    ...safeArray(source.legalDimensions).map(normalizeDimension),
+    ...safeArray(source.legalDimension).map(normalizeDimension),
+    ...safeArray(source.legal_dimensions).map(normalizeDimension),
+    ...safeArray(source.legal_dimension).map(normalizeDimension),
+    ...classifyIssueDimensions(query).map(normalizeDimension)
+  ]).filter(Boolean);
+
+  const targetAuthorities = unique([
+    ...safeArray(source.targetAuthorities).map(normalizeAuthorityType),
+    ...safeArray(source.target_authorities).map(normalizeAuthorityType)
+  ]).filter(Boolean);
+
+  return {
+    primaryIssue,
+    subIssues,
+    legalDimensions,
+    retrievalStrategy:
+      source.retrievalStrategy ||
+      source.retrieval_strategy ||
+      "LEGAL_VALIDATION_ISSUE_CLASSIFIED",
+    targetAuthorities,
+    raw: source
+  };
+}
+
 function computeKeywordScore(query = "", text = "") {
   const queryTokens = tokenize(query);
   const textTokens = new Set(tokenize(text));
@@ -65,24 +212,12 @@ function computeKeywordScore(query = "", text = "") {
   if (!queryTokens.length || !textTokens.size) return 0;
 
   let hits = 0;
+
   for (const token of queryTokens) {
     if (textTokens.has(token)) hits += 1;
   }
 
   return hits / queryTokens.length;
-}
-
-function normalizeLooseText(value = "") {
-  return normalizeText(value)
-    .toLowerCase()
-    .replace(/[“”"'`]/g, "")
-    .replace(/\brepublic act no\.?\s*/g, "ra ")
-    .replace(/\br\.?\s*a\.?\s*no\.?\s*/g, "ra ")
-    .replace(/\br\.?\s*a\.?\s*/g, "ra ")
-    .replace(/\bnational internal revenue code\b/g, "nirc")
-    .replace(/[^\w\s/%₱().:-]+/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
 }
 
 function isStructuralLine(line = "") {
@@ -115,14 +250,15 @@ function isStructuralLine(line = "") {
     /^source:?$/i,
     /^references:?$/i,
     /^conflict detected:\s*(yes|no)$/i,
+    /^conflict type:/i,
+    /^exact issue:/i,
+    /^exact legal dimension:/i,
     /^controlling authority:/i,
+    /^resolution basis:/i,
     /^recommended action:/i,
     /^source a:/i,
     /^source b:/i,
-    /^contradiction:/i,
-    /^exact issue/i,
-    /^distinction type/i,
-    /^resolution basis/i,
+    /^distinction type:/i,
     /^\-\s*\[(constitution|statute|treaty|supreme court|cta en banc|court of appeals|cta division|rr|rmc|rmo|ramo|bir ruling|case|source)\]/i
   ].some((pattern) => pattern.test(value));
 }
@@ -229,13 +365,8 @@ function extractNamedLawAnchors(text = "") {
   }
 
   if (detection?.bestMatch) {
-    if (detection.bestMatch.shortTitle) {
-      anchors.push(normalizeLooseText(detection.bestMatch.shortTitle));
-    }
-
-    if (detection.bestMatch.canonicalTitle) {
-      anchors.push(normalizeLooseText(detection.bestMatch.canonicalTitle));
-    }
+    if (detection.bestMatch.shortTitle) anchors.push(normalizeLooseText(detection.bestMatch.shortTitle));
+    if (detection.bestMatch.canonicalTitle) anchors.push(normalizeLooseText(detection.bestMatch.canonicalTitle));
 
     for (const alias of detection.bestMatch.aliases || []) {
       anchors.push(normalizeLooseText(alias));
@@ -249,48 +380,19 @@ function extractNamedLawAnchors(text = "") {
   return unique(anchors);
 }
 
-function normalizeAuthorityType(type = "") {
-  const value = normalizeLooseText(type);
-
-  if (!value) return "unknown";
-  if (value.includes("constitution")) return "constitution";
-  if (value.includes("statute")) return "statute";
-  if (value.includes("tax code")) return "statute";
-  if (value.includes("republic act")) return "statute";
-  if (value.includes("treaty")) return "treaty";
-  if (value.includes("supreme court")) return "supreme_court";
-  if (value.includes("cta en banc")) return "cta_en_banc";
-  if (value.includes("court of appeals")) return "court_of_appeals";
-  if (value.includes("cta division")) return "cta_division";
-  if (value === "rr" || value.includes("revenue regulation")) return "rr";
-  if (value === "rmc" || value.includes("revenue memorandum circular")) return "rmc";
-  if (value === "rmo" || value.includes("revenue memorandum order")) return "rmo";
-  if (value === "ramo" || value.includes("revenue audit memorandum order")) return "ramo";
-  if (value.includes("bir ruling")) return "bir_ruling";
-  if (value.includes("lgu")) return "lgu";
-  if (value.includes("secondary") || value.includes("source")) return "secondary";
-
-  return value || "unknown";
-}
-
 function getDocAuthorityType(item = {}) {
-  const path = normalizeLooseText(
-    item.source_path ||
-      item.path ||
-      item.metadata?.path ||
-      item.source ||
-      item.source_title ||
-      ""
-  );
-
-  const explicit = normalizeAuthorityType(
+  const explicit =
+    item.authorityType ||
     item.authority_type ||
-      item.authorityType ||
-      item.metadata?.authorityType ||
-      ""
-  );
+    item.metadata?.authorityType ||
+    "";
 
-  if (explicit !== "unknown") return explicit;
+  if (explicit) return normalizeAuthorityType(explicit);
+
+  if (typeof getAuthorityTypeForDoc === "function") {
+    const inferred = getAuthorityTypeForDoc(item);
+    if (inferred) return normalizeAuthorityType(inferred);
+  }
 
   if (typeof classifyAuthorityFromDocument === "function") {
     const inferred = classifyAuthorityFromDocument({
@@ -302,17 +404,7 @@ function getDocAuthorityType(item = {}) {
     if (inferred) return normalizeAuthorityType(inferred);
   }
 
-  if (path.includes("00_constitution")) return "constitution";
-  if (path.includes("01_tax_code")) return "statute";
-  if (path.includes("02_revenue_regulations")) return "rr";
-  if (path.includes("03_rmc")) return "rmc";
-  if (path.includes("04b_ramo")) return "ramo";
-  if (path.includes("04_rmo")) return "rmo";
-  if (path.includes("05_bir_rulings")) return "bir_ruling";
-  if (path.includes("05b_tax_treaties")) return "treaty";
-  if (path.includes("06_court_cases")) return "supreme_court";
-
-  return "unknown";
+  return "UNKNOWN";
 }
 
 function getDocAuthorityLevel(item = {}) {
@@ -326,27 +418,29 @@ function getDocAuthorityLevel(item = {}) {
 
   if (Number.isFinite(Number(explicit))) return Number(explicit);
 
-  const normalizedType = normalizeAuthorityType(getDocAuthorityType(item));
+  if (typeof getAuthorityLevelForDoc === "function") {
+    const inferred = getAuthorityLevelForDoc(item);
+    if (Number.isFinite(Number(inferred))) return Number(inferred);
+  }
 
-  const mapped = {
-    constitution: AUTHORITY_LEVEL.CONSTITUTION || 1,
-    statute: AUTHORITY_LEVEL.STATUTE || 2,
-    rr: AUTHORITY_LEVEL.RR || 3,
-    rmc: AUTHORITY_LEVEL.RMC || 4,
-    rmo: AUTHORITY_LEVEL.RMO || 5,
-    ramo: AUTHORITY_LEVEL.RAMO || 6,
-    bir_ruling: AUTHORITY_LEVEL.BIR_RULING || 7,
-    supreme_court: AUTHORITY_LEVEL.SUPREME_COURT || 8,
-    cta_en_banc: AUTHORITY_LEVEL.CTA_EN_BANC || 9,
-    court_of_appeals: AUTHORITY_LEVEL.COURT_OF_APPEALS || 10,
-    cta_division: AUTHORITY_LEVEL.CTA_DIVISION || 11,
-    treaty: AUTHORITY_LEVEL.TREATY || 12,
-    lgu: AUTHORITY_LEVEL.LGU || 13,
-    secondary: AUTHORITY_LEVEL.SECONDARY || 99,
-    unknown: AUTHORITY_LEVEL.UNKNOWN || 99
-  };
+  return AUTHORITY_LEVEL[getDocAuthorityType(item)] || 99;
+}
 
-  return mapped[normalizedType] || 99;
+function getDocControllingPrecedence(item = {}) {
+  const explicit =
+    item.controllingPrecedence ||
+    item.controlling_precedence ||
+    item.metadata?.controllingPrecedence ||
+    null;
+
+  if (Number.isFinite(Number(explicit))) return Number(explicit);
+
+  if (typeof getControllingPrecedenceForDoc === "function") {
+    const inferred = getControllingPrecedenceForDoc(item);
+    if (Number.isFinite(Number(inferred))) return Number(inferred);
+  }
+
+  return getDocAuthorityLevel(item) || 99;
 }
 
 function buildEvidenceText(item = {}) {
@@ -386,11 +480,169 @@ function buildEvidenceIdentity(item = {}) {
   return {
     authorityType: getDocAuthorityType(item),
     authorityLevel: getDocAuthorityLevel(item),
+    controllingPrecedence: getDocControllingPrecedence(item),
     raNumbers: extractRaNumbers(combinedText),
     issuanceRefs: extractIssuanceRefs(combinedText),
     courtRefs: extractCourtRefs(combinedText),
     namedLawAnchors: extractNamedLawAnchors(combinedText),
     text: combinedText
+  };
+}
+
+function detectIssueSignals(text = "") {
+  const value = lower(text);
+  const issues = [];
+
+  const push = (condition, issue) => {
+    if (condition) issues.push(issue);
+  };
+
+  push(/\b(vat refund|input vat refund|tax credit certificate|tcc|120\+30|administrative claim|judicial claim|excess input vat|unutilized input vat)\b/i.test(value), "VAT_REFUND");
+  push(/\b(vat liability|output vat|subject to vat|vatable|sale of goods|sale of services|lease of goods|gross selling price|gross receipts|value-added tax|value added tax)\b/i.test(value), "VAT_LIABILITY");
+  push(/\b(withholding|ewt|expanded withholding|cwt|fwt|final withholding)\b/i.test(value), "WITHHOLDING");
+  push(/\b(income tax|rcit|mcit|nolco|deductible|non-deductible|taxable income|gross income)\b/i.test(value), "INCOME_TAX");
+  push(/\b(invoice|receipt|official receipt|substantiation|documentary|proof|evidence|burden of proof|supporting document)\b/i.test(value), "EVIDENTIARY");
+  push(/\b(jurisdiction|deadline|filing|prescription|appeal|protest|assessment|loa|pan|fan|remedy|120\+30)\b/i.test(value), "PROCEDURAL");
+  push(/\b(contract|agreement|lease|concession|clause)\b/i.test(value), "CONTRACT");
+  push(/\b(principal|agent|pass-through|reimbursement|bundled|gross vs net|gross or net|economic substance|substance over form)\b/i.test(value), "TRANSACTION");
+  push(/\b(pfrs|pas|afs|financial statements|audit|misstatement|working paper)\b/i.test(value), "AUDIT");
+
+  return unique(issues);
+}
+
+function classifyIssueDimensions(text = "") {
+  const value = lower(text);
+  const dimensions = [];
+
+  const push = (condition, dimension) => {
+    if (condition) dimensions.push(dimension);
+  };
+
+  push(/\b(taxable|liable|subject to|exempt|zero-rated|gross income|deductible|non-deductible|tax base|tax rate|output vat|input vat|income tax|withholding tax|final tax|capital gains tax|documentary stamp tax|percentage tax|vatable|sales|revenue)\b/i.test(value), "SUBSTANTIVE");
+  push(/\b(file|filing|deadline|due date|period|prescriptive|administrative claim|judicial claim|appeal|protest|assessment|loa|pan|fan|fld|return|form|remedy|120\+30)\b/i.test(value), "PROCEDURAL");
+  push(/\b(invoice|receipt|substantiation|documentary|support|proof|evidence|certificate|schedule|reconciliation|records|books|burden of proof)\b/i.test(value), "EVIDENTIARY");
+  push(/\b(jurisdiction|jurisdictional|cta|court has no jurisdiction|condition precedent|exhaustion|120\+30|30-day)\b/i.test(value), "JURISDICTIONAL");
+  push(/\b(effective|effectivity|retroactive|prospective|prior to|after|before|beginning|taxable year|calendar year|transition|transitory|superseded|amended|repealed)\b/i.test(value), "TEMPORAL");
+  push(/\b(rmc|rmo|ramo|revenue memorandum|bir ruling|administrative|interpretative|clarificatory|implementing rule|regulation)\b/i.test(value), "ADMINISTRATIVE");
+  push(/\b(facts|factual|depending on|case-to-case|actual|circumstances|transaction structure|documentation)\b/i.test(value), "FACTUAL");
+  push(/\b(contract|agreement|clause|lease|concession)\b/i.test(value), "CONTRACTUAL");
+  push(/\b(economic substance|substance over form|sham|simulation|business purpose)\b/i.test(value), "ECONOMIC_SUBSTANCE");
+
+  return unique(dimensions.length ? dimensions : ["GENERAL"]);
+}
+
+function dimensionsOverlap(a = [], b = []) {
+  if (!a.length || !b.length) return true;
+  if (a.includes("GENERAL") || b.includes("GENERAL")) return true;
+  return a.some((item) => b.includes(item));
+}
+
+function issueOverlap(a = [], b = []) {
+  if (!a.length || !b.length) return true;
+  if (a.includes("GENERAL") || b.includes("GENERAL")) return true;
+  return a.some((item) => b.includes(item));
+}
+
+function isVatRefundText(text = "") {
+  const value = lower(text);
+  return /\b(vat refund|input vat refund|tax credit certificate|tcc|120\+30|administrative claim|judicial claim|excess input vat|unutilized input vat)\b/i.test(value);
+}
+
+function isVatLiabilityText(text = "") {
+  const value = lower(text);
+  return /\b(vat liability|output vat|subject to vat|vatable|sale of goods|sale of services|lease of goods|gross selling price|gross receipts)\b/i.test(value);
+}
+
+function hasIssueMismatch(profile = {}, evidenceText = "") {
+  if (
+    profile.primaryIssue === "VAT_LIABILITY" &&
+    isVatRefundText(evidenceText)
+  ) {
+    return true;
+  }
+
+  if (
+    profile.primaryIssue === "VAT_REFUND" &&
+    isVatLiabilityText(evidenceText)
+  ) {
+    return true;
+  }
+
+  if (
+    profile.primaryIssue === "WITHHOLDING" &&
+    (isVatRefundText(evidenceText) || isVatLiabilityText(evidenceText))
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function targetAuthorityMatched(profile = {}, item = {}) {
+  if (!safeArray(profile.targetAuthorities).length) return false;
+  return profile.targetAuthorities.includes(getDocAuthorityType(item));
+}
+
+function getStructuredIssueClassificationMatch(item = {}, profile = {}, claim = "") {
+  const existing = item.issueClassificationMatch;
+
+  if (existing && typeof existing === "object") {
+    return {
+      ...existing,
+      targetAuthorityMatch:
+        existing.targetAuthorityMatch === true ||
+        item.targetAuthorityMatch === true ||
+        targetAuthorityMatched(profile, item),
+      issueMismatch:
+        existing.issueMismatch === true ||
+        item.issueMismatch === true
+    };
+  }
+
+  const evidenceText = buildEvidenceText(item);
+  const docIssues = detectIssueSignals(evidenceText).map(normalizeIssue);
+  const docDimensions = classifyIssueDimensions(evidenceText).map(normalizeDimension);
+  const claimIssues = detectIssueSignals(claim).map(normalizeIssue);
+  const queryIssues = unique([
+    ...safeArray(profile.subIssues).map(normalizeIssue),
+    ...claimIssues
+  ]).filter(Boolean);
+
+  const claimDimensions = classifyIssueDimensions(claim).map(normalizeDimension);
+  const queryDimensions = unique([
+    ...safeArray(profile.legalDimensions).map(normalizeDimension),
+    ...claimDimensions
+  ]).filter(Boolean);
+
+  const issueMismatch =
+    item.issueMismatch === true ||
+    hasIssueMismatch(profile, evidenceText);
+
+  const issueOverlapValue = issueOverlap(queryIssues, docIssues);
+  const dimensionOverlap = dimensionsOverlap(queryDimensions, docDimensions);
+  const targetAuthorityMatch =
+    item.targetAuthorityMatch === true ||
+    targetAuthorityMatched(profile, item);
+
+  const matched =
+    !issueMismatch &&
+    (targetAuthorityMatch || issueOverlapValue || dimensionOverlap || !docIssues.length);
+
+  return {
+    matched,
+    compatible: matched,
+    issueOverlap: issueOverlapValue,
+    dimensionOverlap,
+    issueMismatch,
+    targetAuthorityMatch,
+    primaryIssue: profile.primaryIssue,
+    subIssues: profile.subIssues,
+    legalDimensions: profile.legalDimensions,
+    retrievalStrategy: profile.retrievalStrategy,
+    targetAuthorities: profile.targetAuthorities,
+    docIssues,
+    docDimensions,
+    docAuthorityType: getDocAuthorityType(item)
   };
 }
 
@@ -443,86 +695,35 @@ function penaltyForGenericMismatch(claim = "", item = {}) {
   return Math.min(penalty, 0.6);
 }
 
-function classifyIssueDimensions(text = "") {
-  const value = lower(text);
-  const dimensions = [];
-
-  if (/\b(taxable|liable|subject to|exempt|zero-rated|gross income|deductible|non-deductible|tax base|tax rate|output vat|input vat|income tax|withholding tax|final tax|capital gains tax|documentary stamp tax|percentage tax|vatable|sales|revenue)\b/i.test(value)) {
-    dimensions.push("substantive");
-  }
-
-  if (/\b(file|filing|deadline|due date|period|prescriptive|administrative claim|judicial claim|appeal|protest|assessment|loa|pan|fan|fld|return|form|remedy|120\+30)\b/i.test(value)) {
-    dimensions.push("procedural");
-  }
-
-  if (/\b(invoice|receipt|substantiation|documentary|support|proof|evidence|certificate|schedule|reconciliation|records|books|burden of proof)\b/i.test(value)) {
-    dimensions.push("evidentiary");
-  }
-
-  if (/\b(jurisdiction|jurisdictional|cta|court has no jurisdiction|condition precedent|exhaustion|120\+30|30-day)\b/i.test(value)) {
-    dimensions.push("jurisdictional");
-  }
-
-  if (/\b(effective|effectivity|retroactive|prospective|prior to|after|before|beginning|taxable year|calendar year|transition|transitory|superseded|amended|repealed)\b/i.test(value)) {
-    dimensions.push("temporal");
-  }
-
-  if (/\b(rmc|rmo|ramo|revenue memorandum|bir ruling|administrative|interpretative|clarificatory|implementing rule|regulation)\b/i.test(value)) {
-    dimensions.push("administrative");
-  }
-
-  if (/\b(facts|factual|depending on|case-to-case|actual|circumstances|transaction structure|documentation)\b/i.test(value)) {
-    dimensions.push("factual");
-  }
-
-  return unique(dimensions.length ? dimensions : ["general"]);
-}
-
-function dimensionsOverlap(a = [], b = []) {
-  if (!a.length || !b.length) return false;
-  if (a.includes("general") || b.includes("general")) return true;
-  return a.some((item) => b.includes(item));
-}
-
-function isVatRefundText(text = "") {
-  const value = lower(text);
-  return /\b(vat refund|input vat refund|tax credit certificate|tcc|120\+30|administrative claim|judicial claim|excess input vat|unutilized input vat)\b/i.test(value);
-}
-
-function isVatLiabilityText(text = "") {
-  const value = lower(text);
-  return /\b(vat liability|output vat|subject to vat|vatable|sale of goods|sale of services|lease of goods|gross selling price|gross receipts)\b/i.test(value);
-}
-
-function computeIssueMatchScore(claim = "", item = {}) {
+function computeIssueMatchScore(claim = "", item = {}, issueClassification = null) {
+  const profile = normalizeIssueClassification(issueClassification, claim);
   const evidenceText = buildEvidenceText(item);
+  const match = getStructuredIssueClassificationMatch(item, profile, claim);
+
+  if (match.issueMismatch) return 0;
+
   const claimDimensions = classifyIssueDimensions(claim);
   const evidenceDimensions = classifyIssueDimensions(evidenceText);
 
-  let score = dimensionsOverlap(claimDimensions, evidenceDimensions) ? 0.25 : 0;
+  let score = dimensionsOverlap(claimDimensions, evidenceDimensions) ? 0.22 : 0;
 
-  const claimTokens = unique(
-    tokenize(claim).filter((token) => token.length >= 4)
-  );
-  const evidenceTokens = new Set(
-    tokenize(evidenceText).filter((token) => token.length >= 4)
-  );
+  const claimTokens = unique(tokenize(claim).filter((token) => token.length >= 4));
+  const evidenceTokens = new Set(tokenize(evidenceText).filter((token) => token.length >= 4));
 
   if (claimTokens.length) {
     let hits = 0;
+
     for (const token of claimTokens) {
       if (evidenceTokens.has(token)) hits += 1;
     }
-    score += Math.min(0.45, hits / claimTokens.length);
+
+    score += Math.min(0.38, hits / claimTokens.length);
   }
 
-  if (isVatLiabilityText(claim) && isVatRefundText(evidenceText)) {
-    score -= 0.35;
-  }
-
-  if (isVatRefundText(claim) && isVatLiabilityText(evidenceText)) {
-    score -= 0.2;
-  }
+  if (match.issueOverlap) score += 0.2;
+  if (match.dimensionOverlap) score += 0.1;
+  if (match.targetAuthorityMatch) score += 0.18;
+  if (match.matched) score += 0.12;
 
   return Number(Math.max(0, Math.min(score, 1)).toFixed(4));
 }
@@ -531,42 +732,57 @@ function computeAuthorityWeight(item = {}) {
   const type = normalizeAuthorityType(getDocAuthorityType(item));
 
   const weights = {
-    constitution: 0.35,
-    statute: 0.34,
-    rr: 0.28,
-    rmc: 0.2,
-    rmo: 0.18,
-    ramo: 0.17,
-    bir_ruling: 0.14,
-    supreme_court: 0.32,
-    cta_en_banc: 0.2,
-    court_of_appeals: 0.18,
-    cta_division: 0.16,
-    treaty: 0.25,
-    lgu: 0.12,
-    secondary: 0,
-    unknown: 0
+    CONSTITUTION: 0.36,
+    STATUTE: 0.35,
+    SUPREME_COURT: 0.34,
+    RR: 0.3,
+    TREATY: 0.25,
+    RMC: 0.22,
+    RMO: 0.19,
+    RAMO: 0.18,
+    BIR_RULING: 0.14,
+    CTA_EN_BANC: 0.21,
+    COURT_OF_APPEALS: 0.18,
+    CTA_DIVISION: 0.16,
+    LGU: 0.12,
+    PFRS: 0.16,
+    PAS: 0.16,
+    PSA: 0.14,
+    SECONDARY: 0,
+    UNKNOWN: 0
   };
 
   return weights[type] ?? 0;
 }
 
-function computeLegalSupportScore(claim = "", item = {}) {
+function computeLegalSupportScore(claim = "", item = {}, issueClassification = null) {
   const combinedText = buildEvidenceText(item);
+  const match = getStructuredIssueClassificationMatch(
+    item,
+    normalizeIssueClassification(issueClassification, claim),
+    claim
+  );
+
+  if (match.issueMismatch) return 0;
+
   const keywordScore = computeKeywordScore(claim, combinedText);
   const identityBonus = scoreIdentityMatch(claim, item);
-  const issueScore = computeIssueMatchScore(claim, item);
+  const issueScore = computeIssueMatchScore(claim, item, issueClassification);
   const authorityWeight = computeAuthorityWeight(item);
   const mismatchPenalty = penaltyForGenericMismatch(claim, item);
+  const targetBonus = match.targetAuthorityMatch ? 0.12 : 0;
+  const issueBonus = match.matched ? 0.1 : 0;
 
   return Number(
     Math.max(
       0,
       Math.min(
-        keywordScore * 0.3 +
-          identityBonus * 0.25 +
-          issueScore * 0.3 +
-          authorityWeight -
+        keywordScore * 0.22 +
+          identityBonus * 0.2 +
+          issueScore * 0.34 +
+          authorityWeight +
+          targetBonus +
+          issueBonus -
           mismatchPenalty,
         1
       )
@@ -618,20 +834,20 @@ function extractPrimaryAuthorityHints(text = "") {
 }
 
 function isStatutoryAuthorityType(type = "") {
-  return ["constitution", "statute"].includes(normalizeAuthorityType(type));
+  return ["CONSTITUTION", "STATUTE"].includes(normalizeAuthorityType(type));
 }
 
 function isCourtAuthorityType(type = "") {
   return [
-    "supreme_court",
-    "cta_en_banc",
-    "court_of_appeals",
-    "cta_division"
+    "SUPREME_COURT",
+    "CTA_EN_BANC",
+    "COURT_OF_APPEALS",
+    "CTA_DIVISION"
   ].includes(normalizeAuthorityType(type));
 }
 
 function isAdministrativeAuthorityType(type = "") {
-  return ["rr", "rmc", "rmo", "ramo", "bir_ruling"].includes(
+  return ["RR", "RMC", "RMO", "RAMO", "BIR_RULING"].includes(
     normalizeAuthorityType(type)
   );
 }
@@ -641,7 +857,7 @@ function isControllingOrUsableAuthorityType(type = "") {
     isStatutoryAuthorityType(type) ||
     isAdministrativeAuthorityType(type) ||
     isCourtAuthorityType(type) ||
-    ["treaty", "lgu"].includes(normalizeAuthorityType(type))
+    ["TREATY", "LGU", "PFRS", "PAS", "PSA"].includes(normalizeAuthorityType(type))
   );
 }
 
@@ -660,14 +876,14 @@ function hasPrimaryAuthorityEvidence(evidence = [], queryHints = {}) {
     const authorityType = normalizeAuthorityType(identity.authorityType);
 
     const statuteRaMatch =
-      authorityType === "statute" &&
+      authorityType === "STATUTE" &&
       raNumbers.length > 0 &&
       raNumbers.some((ra) => identity.raNumbers.includes(ra));
 
     if (statuteRaMatch) return true;
 
     const namedLawStatuteMatch =
-      authorityType === "statute" &&
+      authorityType === "STATUTE" &&
       namedLawAnchors.length > 0 &&
       namedLawAnchors.some((anchor) => identity.namedLawAnchors.includes(anchor));
 
@@ -688,7 +904,7 @@ function hasPrimaryAuthorityEvidence(evidence = [], queryHints = {}) {
     if (issuanceMatch) return true;
 
     if (
-      authorityType === "constitution" &&
+      authorityType === "CONSTITUTION" &&
       !raNumbers.length &&
       !namedLawAnchors.length &&
       !courtRefs.length &&
@@ -710,7 +926,7 @@ function hasAtLeastOneControllingSource(evidence = []) {
 function hasHighAuthoritySource(evidence = []) {
   return evidence.some((item) => {
     const type = normalizeAuthorityType(getDocAuthorityType(item));
-    return ["constitution", "statute", "rr", "supreme_court"].includes(type);
+    return ["CONSTITUTION", "STATUTE", "RR", "SUPREME_COURT"].includes(type);
   });
 }
 
@@ -719,22 +935,36 @@ function hasOnlyWeakAuthority(evidence = []) {
 
   return evidence.every((item) => {
     const type = normalizeAuthorityType(getDocAuthorityType(item));
-    return ["secondary", "unknown", "bir_ruling", "cta_division", "lgu"].includes(type);
+    return ["SECONDARY", "UNKNOWN", "BIR_RULING", "CTA_DIVISION", "LGU"].includes(type);
+  });
+}
+
+function hasIssueMatchedEvidence(evidence = [], issueClassification = null, query = "") {
+  const profile = normalizeIssueClassification(issueClassification, query);
+
+  if (!evidence.length) return false;
+
+  return evidence.some((item) => {
+    const match = getStructuredIssueClassificationMatch(item, profile, query);
+    return match.matched && !match.issueMismatch;
+  });
+}
+
+function hasTargetAuthorityEvidence(evidence = [], issueClassification = null, query = "") {
+  const profile = normalizeIssueClassification(issueClassification, query);
+
+  if (!safeArray(profile.targetAuthorities).length) return false;
+
+  return evidence.some((item) => {
+    const match = getStructuredIssueClassificationMatch(item, profile, query);
+    return match.targetAuthorityMatch && !match.issueMismatch;
   });
 }
 
 function answerHasAFStructure(answerText = "") {
   const value = String(answerText || "");
-  const headings = [
-    "A. DIRECT ANSWER",
-    "B. CONTROLLING LEGAL BASIS",
-    "C. SUPPORTING JURISPRUDENCE",
-    "D. DOCTRINAL STATUS / CONFLICT ANALYSIS",
-    "E. HIERARCHY ANALYSIS",
-    "F. PRACTICAL APPLICATION"
-  ];
 
-  return headings.every((heading) =>
+  return REQUIRED_AF_HEADINGS.every((heading) =>
     new RegExp(
       `(^|\\n)\\s*${heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`,
       "i"
@@ -742,8 +972,55 @@ function answerHasAFStructure(answerText = "") {
   );
 }
 
-function answerHasVagueConflictYes(answerText = "") {
+function conflictMetadataIsComplete(conflict = null) {
+  if (!conflict || typeof conflict !== "object") return false;
+
+  const hasTrueConflict = conflict.conflict === true;
+  const hasConflictType = Boolean(conflict.conflictType || conflict.type);
+
+  const hasExactIssue = Boolean(
+    conflict.exactIssue ||
+      conflict.sameIssueGate?.sameIssues?.length
+  );
+
+  const hasExactDimension = Boolean(
+    conflict.exactLegalDimension ||
+      conflict.sameIssueGate?.sameDimensions?.length ||
+      conflict.legalDimension
+  );
+
+  const sameIssuePassed =
+    conflict.sameIssueGate?.passed === true ||
+    Boolean(conflict.exactIssue);
+
+  const oppositeHoldingPassed =
+    conflict.oppositeHoldingGate?.passed === true ||
+    Boolean(conflict.oppositeHolding || conflict.oppositeHoldings);
+
+  const hasResolution = Boolean(
+    conflict.resolutionBasis ||
+      conflict.reason ||
+      conflict.winningAuthority ||
+      conflict.controllingAuthority ||
+      conflict.controllingSource
+  );
+
+  return (
+    hasTrueConflict &&
+    hasConflictType &&
+    hasExactIssue &&
+    hasExactDimension &&
+    sameIssuePassed &&
+    oppositeHoldingPassed &&
+    hasResolution
+  );
+}
+
+function answerHasVagueConflictYes(answerText = "", conflictMetadata = null) {
+  if (conflictMetadataIsComplete(conflictMetadata)) return false;
+
   const value = String(answerText || "");
+
   const match =
     value.match(/D\.\s*DOCTRINAL STATUS\s*\/\s*CONFLICT ANALYSIS([\s\S]*?)(?=\n\s*E\.\s*HIERARCHY ANALYSIS|$)/i) ||
     value.match(/(?:5\.\s*CONFLICT FLAG|###\s*Conflict flag)([\s\S]*?)(?=\n\s*(?:6\.|###|[A-F]\.)|$)/i);
@@ -755,7 +1032,7 @@ function answerHasVagueConflictYes(answerText = "") {
   if (!/Conflict Detected:\s*YES/i.test(body)) return false;
 
   const hasReasoning =
-    /(exact issue|controlling doctrine|controlling authority|distinction type|resolution basis|why it controls|procedural|substantive|evidentiary|jurisdictional|temporal|factual|administrative)/i.test(body) &&
+    /(exact issue|exact legal dimension|controlling doctrine|controlling authority|resolution basis|why it controls|same-issue|opposite-holding|procedural|substantive|evidentiary|jurisdictional|temporal|factual|administrative)/i.test(body) &&
     body.length >= 250;
 
   return !hasReasoning;
@@ -800,9 +1077,29 @@ function answerHasUnsupportedSpecifics(answerText = "", evidence = []) {
   };
 }
 
-function detectIssueMismatchRisk(query = "", evidence = []) {
-  const queryIsVatLiability = isVatLiabilityText(query);
-  const queryIsVatRefund = isVatRefundText(query);
+function detectIssueMismatchRisk(query = "", evidence = [], issueClassification = null) {
+  const profile = normalizeIssueClassification(issueClassification, query);
+
+  const evidenceMatches = evidence.map((item) =>
+    getStructuredIssueClassificationMatch(item, profile, query)
+  );
+
+  const hasExplicitMismatch = evidenceMatches.some((item) => item.issueMismatch);
+  const hasValidMatch = evidenceMatches.some((item) => item.matched && !item.issueMismatch);
+
+  if (hasExplicitMismatch && !hasValidMatch) {
+    return {
+      hasIssueMismatchRisk: true,
+      reason:
+        "The evidence appears mismatched against the classified legal issue and no valid issue-matched authority was found."
+    };
+  }
+
+  const queryIsVatLiability =
+    profile.primaryIssue === "VAT_LIABILITY" || isVatLiabilityText(query);
+
+  const queryIsVatRefund =
+    profile.primaryIssue === "VAT_REFUND" || isVatRefundText(query);
 
   const evidenceTexts = evidence.map(buildEvidenceText);
 
@@ -836,22 +1133,44 @@ function detectIssueMismatchRisk(query = "", evidence = []) {
   };
 }
 
-export function buildClaimSupportMap(answerText = "", evidence = []) {
+function getFinalScore(item = {}) {
+  return Number(
+    item.finalScore ||
+      item.final_score ||
+      item.rerankScore ||
+      item.retrievalScore ||
+      item.score ||
+      item.similarity ||
+      0
+  );
+}
+
+export function buildClaimSupportMap(answerText = "", evidence = [], options = {}) {
+  const issueClassification =
+    options.issueClassification ||
+    options.adaptiveContext?.issueClassification ||
+    null;
+
   const claims = extractClaims(answerText);
+  const profile = normalizeIssueClassification(issueClassification, answerText);
 
   return claims.map((claim) => {
     const ranked = evidence
       .map((item) => {
-        const evidenceScore = computeLegalSupportScore(claim, item);
-        const issueScore = computeIssueMatchScore(claim, item);
+        const issueClassificationMatch = getStructuredIssueClassificationMatch(item, profile, claim);
+        const evidenceScore = computeLegalSupportScore(claim, item, profile);
+        const issueScore = computeIssueMatchScore(claim, item, profile);
         const authorityType = getDocAuthorityType(item);
         const authorityLevel = getDocAuthorityLevel(item);
+        const controllingPrecedence = getDocControllingPrecedence(item);
 
         return {
           claimText: claim,
           claim_text: claim,
+
           supportStatus: classifySupportStatus(evidenceScore, claim, item),
           support_status: classifySupportStatus(evidenceScore, claim, item),
+
           sourcePath:
             item.source_path ||
             item.path ||
@@ -864,6 +1183,7 @@ export function buildClaimSupportMap(answerText = "", evidence = []) {
             item.metadata?.path ||
             item.source ||
             null,
+
           sourceTitle:
             item.source_title ||
             item.sourceTitle ||
@@ -876,8 +1196,10 @@ export function buildClaimSupportMap(answerText = "", evidence = []) {
             item.metadata?.documentTitle ||
             item.source ||
             null,
+
           vectorChunkId: item.vector_chunk_id || item.id || null,
           vector_chunk_id: item.vector_chunk_id || item.id || null,
+
           authorityTier:
             item.authority_tier ||
             item.authorityLevel ||
@@ -890,20 +1212,39 @@ export function buildClaimSupportMap(answerText = "", evidence = []) {
             item.authority_level ||
             item.metadata?.authorityLevel ||
             authorityLevel,
+
           authorityType,
           authority_type: authorityType,
           authorityLevel,
           authority_level: authorityLevel,
+          controllingPrecedence,
+          controlling_precedence: controllingPrecedence,
+
           evidenceScore,
           evidence_score: evidenceScore,
           issueMatchScore: issueScore,
-          issue_match_score: issueScore
+          issue_match_score: issueScore,
+
+          issueClassificationMatch,
+          targetAuthorityMatch: issueClassificationMatch.targetAuthorityMatch,
+          issueMismatch: issueClassificationMatch.issueMismatch
         };
       })
+      .filter((item) => !item.issueMismatch)
       .sort((a, b) => {
+        const targetDiff =
+          Number(b.targetAuthorityMatch === true) - Number(a.targetAuthorityMatch === true);
+
+        if (targetDiff !== 0) return targetDiff;
+
         if (b.evidenceScore !== a.evidenceScore) {
           return b.evidenceScore - a.evidenceScore;
         }
+
+        const precedenceDiff =
+          Number(a.controllingPrecedence || 99) - Number(b.controllingPrecedence || 99);
+
+        if (precedenceDiff !== 0) return precedenceDiff;
 
         return Number(a.authorityLevel || 99) - Number(b.authorityLevel || 99);
       });
@@ -926,10 +1267,15 @@ export function buildClaimSupportMap(answerText = "", evidence = []) {
         authority_type: null,
         authorityLevel: null,
         authority_level: null,
+        controllingPrecedence: null,
+        controlling_precedence: null,
         evidenceScore: 0,
         evidence_score: 0,
         issueMatchScore: 0,
-        issue_match_score: 0
+        issue_match_score: 0,
+        issueClassificationMatch: null,
+        targetAuthorityMatch: false,
+        issueMismatch: false
       }
     );
   });
@@ -943,8 +1289,20 @@ export function validateEvidenceSufficiency({
   minTopScore = 0.25,
   query = "",
   requirePrimaryAuthority = false,
-  answerText = ""
+  answerText = "",
+  issueClassification = null,
+  conflict = null,
+  conflictReview = null,
+  hierarchyConflict = null,
+  jurisprudencePayload = null
 }) {
+  const profile = normalizeIssueClassification(issueClassification, query);
+
+  const cleanEvidence = safeArray(evidence).filter((item) => {
+    const match = getStructuredIssueClassificationMatch(item, profile, query);
+    return !match.issueMismatch;
+  });
+
   const supportedClaims = claimSupportMap.filter(
     (item) =>
       item.supportStatus === "supported" ||
@@ -954,26 +1312,18 @@ export function validateEvidenceSufficiency({
   );
 
   const issueMatchedClaims = claimSupportMap.filter(
-    (item) => Number(item.issueMatchScore || item.issue_match_score || 0) >= 0.25
+    (item) =>
+      Number(item.issueMatchScore || item.issue_match_score || 0) >= 0.25 &&
+      item.issueMismatch !== true
   );
 
   const topScore =
-    evidence.length > 0
-      ? Math.max(
-          ...evidence.map((item) =>
-            Number(
-              item.finalScore ||
-                item.score ||
-                item.evidenceScore ||
-                item.evidence_score ||
-                0
-            )
-          )
-        )
+    cleanEvidence.length > 0
+      ? Math.max(...cleanEvidence.map((item) => getFinalScore(item)))
       : 0;
 
   const queryHints = extractPrimaryAuthorityHints(query);
-  const primaryAuthorityPresent = hasPrimaryAuthorityEvidence(evidence, queryHints);
+  const primaryAuthorityPresent = hasPrimaryAuthorityEvidence(cleanEvidence, queryHints);
 
   const hasIdentitySensitiveQuery =
     queryHints.raNumbers.length > 0 ||
@@ -986,15 +1336,28 @@ export function validateEvidenceSufficiency({
       ? true
       : primaryAuthorityPresent;
 
-  const hasControllingSource = hasAtLeastOneControllingSource(evidence);
-  const highAuthorityPresent = hasHighAuthoritySource(evidence);
-  const onlyWeakAuthority = hasOnlyWeakAuthority(evidence);
+  const hasControllingSource = hasAtLeastOneControllingSource(cleanEvidence);
+  const highAuthorityPresent = hasHighAuthoritySource(cleanEvidence);
+  const onlyWeakAuthority = hasOnlyWeakAuthority(cleanEvidence);
+  const issueMatchedEvidencePresent = hasIssueMatchedEvidence(cleanEvidence, profile, query);
+  const targetAuthorityEvidencePresent = hasTargetAuthorityEvidence(cleanEvidence, profile, query);
 
   const structureSatisfied = answerText ? answerHasAFStructure(answerText) : true;
-  const vagueConflictYes = answerText ? answerHasVagueConflictYes(answerText) : false;
+
+  const conflictMetadata =
+    conflict ||
+    conflictReview ||
+    hierarchyConflict ||
+    jurisprudencePayload?.conflictReview ||
+    jurisprudencePayload?.jurisprudenceConflict ||
+    null;
+
+  const vagueConflictYes = answerText
+    ? answerHasVagueConflictYes(answerText, conflictMetadata)
+    : false;
 
   const unsupportedSpecifics = answerText
-    ? answerHasUnsupportedSpecifics(answerText, evidence)
+    ? answerHasUnsupportedSpecifics(answerText, cleanEvidence)
     : {
         hasUnsupportedSpecifics: false,
         unsupportedRa: [],
@@ -1002,20 +1365,27 @@ export function validateEvidenceSufficiency({
         unsupportedCourt: []
       };
 
-  const issueMismatchRisk = detectIssueMismatchRisk(query, evidence);
+  const issueMismatchRisk = detectIssueMismatchRisk(query, cleanEvidence, profile);
 
   const issueMatchSatisfied =
     claimSupportMap.length === 0 ||
     issueMatchedClaims.length >= Math.min(1, claimSupportMap.length);
 
+  const targetAuthoritySatisfied =
+    !safeArray(profile.targetAuthorities).length ||
+    targetAuthorityEvidencePresent ||
+    issueMatchedEvidencePresent;
+
   const isSufficient =
-    evidence.length >= minEvidenceCount &&
+    cleanEvidence.length >= minEvidenceCount &&
     supportedClaims.length >= minSupportedClaims &&
     topScore >= minTopScore &&
     primaryAuthoritySatisfied &&
     hasControllingSource &&
     !onlyWeakAuthority &&
     issueMatchSatisfied &&
+    targetAuthoritySatisfied &&
+    issueMatchedEvidencePresent &&
     !issueMismatchRisk.hasIssueMismatchRisk &&
     !vagueConflictYes &&
     !unsupportedSpecifics.hasUnsupportedSpecifics &&
@@ -1024,7 +1394,8 @@ export function validateEvidenceSufficiency({
   return {
     isSufficient,
     topScore,
-    evidenceCount: evidence.length,
+    evidenceCount: cleanEvidence.length,
+    originalEvidenceCount: safeArray(evidence).length,
     supportedClaimCount: supportedClaims.length,
     issueMatchedClaimCount: issueMatchedClaims.length,
     supportedClaims,
@@ -1036,19 +1407,26 @@ export function validateEvidenceSufficiency({
     hasControllingSource,
     highAuthorityPresent,
     onlyWeakAuthority,
+    issueMatchedEvidencePresent,
+    targetAuthorityEvidencePresent,
+    targetAuthoritySatisfied,
     structureSatisfied,
     vagueConflictYes,
     unsupportedSpecifics,
     issueMismatchRisk,
     issueMatchSatisfied,
+    conflictMetadataComplete: conflictMetadataIsComplete(conflictMetadata),
+    issueClassification: profile,
     rejectionReasons: [
-      evidence.length < minEvidenceCount ? "INSUFFICIENT_EVIDENCE_COUNT" : null,
+      cleanEvidence.length < minEvidenceCount ? "INSUFFICIENT_EVIDENCE_COUNT" : null,
       supportedClaims.length < minSupportedClaims ? "INSUFFICIENT_SUPPORTED_CLAIMS" : null,
       topScore < minTopScore ? "LOW_TOP_SCORE" : null,
       !primaryAuthoritySatisfied ? "PRIMARY_AUTHORITY_NOT_PRESENT" : null,
       !hasControllingSource ? "NO_CONTROLLING_OR_USABLE_AUTHORITY" : null,
       onlyWeakAuthority ? "ONLY_WEAK_AUTHORITY_AVAILABLE" : null,
       !issueMatchSatisfied ? "CLAIMS_NOT_ISSUE_MATCHED" : null,
+      !issueMatchedEvidencePresent ? "NO_ISSUE_MATCHED_EVIDENCE" : null,
+      !targetAuthoritySatisfied ? "TARGET_AUTHORITY_NOT_PRESENT" : null,
       issueMismatchRisk.hasIssueMismatchRisk ? "ISSUE_MISMATCH_RISK" : null,
       vagueConflictYes ? "VAGUE_CONFLICT_ANALYSIS" : null,
       unsupportedSpecifics.hasUnsupportedSpecifics ? "UNSUPPORTED_SPECIFIC_CITATION" : null,
@@ -1068,6 +1446,8 @@ export function shouldRejectForWeakLegalBasis({
   if (validation.vagueConflictYes) return true;
   if (validation.unsupportedSpecifics?.hasUnsupportedSpecifics) return true;
   if (validation.structureSatisfied === false) return true;
+  if (validation.issueMatchedEvidencePresent === false) return true;
+  if (validation.targetAuthoritySatisfied === false) return true;
 
   if (validation.primaryAuthorityRequired && !validation.primaryAuthorityPresent) {
     return true;
@@ -1076,7 +1456,8 @@ export function shouldRejectForWeakLegalBasis({
   if (
     hasExactCitation &&
     validation.primaryAuthorityPresent &&
-    !validation.issueMismatchRisk?.hasIssueMismatchRisk
+    !validation.issueMismatchRisk?.hasIssueMismatchRisk &&
+    validation.issueMatchedEvidencePresent
   ) {
     return false;
   }
@@ -1111,13 +1492,27 @@ export function legalValidationEngineHealthCheck() {
     ok: true,
     engine: "TINA_LEGAL_VALIDATION_ENGINE",
     version: ENGINE_VERSION,
+    esmCompatible: true,
+    commonJsBridgeCompatible: false,
     authorityCompatible: true,
     namedLawCompatible: true,
     adaptiveCompatible: true,
     evidenceCompatible: true,
-    structureCompatible: true
+    structureCompatible: true,
+    issueClassificationCompatible: true,
+    issueClassificationMatchAware: true,
+    targetAuthorityAware: true,
+    controllingPrecedenceAware: true,
+    conflictMetadataAware: true
   };
 }
+
+export {
+  ENGINE_VERSION,
+  REQUIRED_AF_HEADINGS,
+  normalizeIssueClassification,
+  conflictMetadataIsComplete
+};
 
 export default {
   ENGINE_VERSION,
