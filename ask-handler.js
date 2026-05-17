@@ -3,9 +3,9 @@
 
 /**
  * TINA Ask Handler
- * Version: 7.0.0
+ * Version: 7.2.0
  *
- * ORCHESTRATION-FIRST ROUTE CONTROLLER
+ * TPM-conscious orchestration route controller.
  *
  * Correct flow:
  * ask-handler.js
@@ -14,13 +14,6 @@
  * → retrieval-engine.js
  * → rag-answer-handler.js
  * → context-orchestration-engine.js
- *
- * This file does NOT:
- * - call OpenAI directly
- * - assemble prompts
- * - estimate tokens
- * - inject raw retrieval payloads
- * - inject raw engine objects
  */
 
 import {
@@ -38,17 +31,9 @@ import {
 import { saveMessage } from "./conversation-memory.js";
 import { storeFeedbackEntry } from "./feedback-learning.js";
 
-import {
-  extractQuizAnswer
-} from "./ask-helpers.js";
-
-import {
-  createAssessmentHandler
-} from "./assessment-handler.js";
-
-import {
-  generateRagAnswer
-} from "./rag-answer-handler.js";
+import { extractQuizAnswer } from "./ask-helpers.js";
+import { createAssessmentHandler } from "./assessment-handler.js";
+import { generateRagAnswer } from "./rag-answer-handler.js";
 
 import {
   buildOpenAIContext as defaultBuildOpenAIContext,
@@ -59,7 +44,7 @@ import * as QueryIntentEngine from "./query-intent-engine.js";
 import * as IssueClassificationEngine from "./issue-classification-engine.js";
 import * as RetrievalEngine from "./retrieval-engine.js";
 
-const ENGINE_VERSION = "7.0.0";
+const ENGINE_VERSION = "7.2.0";
 
 const EXIT_COMMANDS = ["/bye", "/exit", "/stop", "/quit", "/reset"];
 
@@ -86,9 +71,19 @@ const SPECIAL_ASSESSMENT_HOOKS = new Set([
   "/diagnostic"
 ]);
 
-const DEFAULT_RETRIEVAL_LIMIT = 6;
+const DEFAULT_RETRIEVAL_LIMIT = 5;
 const SIMPLE_RETRIEVAL_LIMIT = 3;
+const SOURCE_MODE_RETRIEVAL_LIMIT = 8;
 const MAX_RETRIEVAL_LIMIT = 8;
+
+const MAX_SOURCE_TEXT_CHARS_SIMPLE = 1200;
+const MAX_SOURCE_TEXT_CHARS_STANDARD = 2200;
+const MAX_SOURCE_TEXT_CHARS_SOURCE_MODE = 2800;
+
+const QUERY_INTENT_TIMEOUT_MS = 8000;
+const ISSUE_CLASSIFICATION_TIMEOUT_MS = 10000;
+const RETRIEVAL_TIMEOUT_MS = 18000;
+const RAG_TIMEOUT_MS = 45000;
 
 function normalizeText(value = "") {
   return String(value || "").trim();
@@ -121,6 +116,27 @@ function safeArray(value) {
   return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
 }
 
+function compactString(value = "", maxChars = 2000) {
+  const text = normalizeText(value).replace(/\s+/g, " ");
+  if (!text) return "";
+  return text.length > maxChars ? `${text.slice(0, maxChars)}...` : text;
+}
+
+function timeoutAfter(ms, label = "Operation") {
+  return new Promise((_, reject) => {
+    setTimeout(() => {
+      reject(new Error(`${label} timed out after ${ms}ms.`));
+    }, ms);
+  });
+}
+
+async function withTimeout(promise, ms, label) {
+  return Promise.race([
+    promise,
+    timeoutAfter(ms, label)
+  ]);
+}
+
 function getUserId(req) {
   return (
     req?.user?.id ||
@@ -147,6 +163,22 @@ function getForcedHook(req) {
 
   const normalized = normalizeLower(forced);
   return ALLOWED_HOOKS.includes(normalized) ? normalized : null;
+}
+
+function isSimpleDefinitionQuestion(question = "") {
+  const q = normalizeLower(question);
+
+  return (
+    q.length <= 160 &&
+    /^(what is|define|meaning of|ano ang|ano ibig sabihin ng)\b/i.test(q) &&
+    !/\b(analyze|risk|audit|contract|jurisprudence|doctrine|conflict|case|legal consequence|assessment|substance|evidence|compare|reconcile|compute|calculate)\b/i.test(q)
+  );
+}
+
+function isComplexReasoningQuestion(question = "") {
+  const q = normalizeLower(question);
+
+  return /\b(analyze|evaluate|risk|audit|contract|jurisprudence|doctrine|conflict|legal basis|legal consequence|assessment|substance|evidence|compare|reconcile|position|defend|explain why|case law)\b/i.test(q);
 }
 
 function buildHardcodedHookConfig(hookCode = "/ask") {
@@ -237,13 +269,9 @@ function buildHardcodedHookConfig(hookCode = "/ask") {
 
 function buildContextOrchestration(input = {}) {
   return {
-    buildOpenAIContext:
-      input.buildOpenAIContext ||
-      defaultBuildOpenAIContext,
-
+    buildOpenAIContext: input.buildOpenAIContext || defaultBuildOpenAIContext,
     callOpenAIWithOrchestration:
-      input.callOpenAIWithOrchestration ||
-      defaultCallOpenAIWithOrchestration
+      input.callOpenAIWithOrchestration || defaultCallOpenAIWithOrchestration
   };
 }
 
@@ -329,27 +357,15 @@ async function loadTaxHookConfig({
         hook_code: fallbackConfig.hook_code,
         mode: fallbackConfig.mode,
         requires_retrieval: isRagRoutedHook(fallbackConfig.hook_code),
-
-        requires_memory:
-          data.requires_memory ??
-          fallbackConfig.requires_memory,
-
-        requires_feedback:
-          data.requires_feedback ??
-          fallbackConfig.requires_feedback,
-
-        title:
-          data.title ||
-          fallbackConfig.title,
-
+        requires_memory: data.requires_memory ?? fallbackConfig.requires_memory,
+        requires_feedback: data.requires_feedback ?? fallbackConfig.requires_feedback,
+        title: data.title || fallbackConfig.title,
         adaptiveResponseMode:
           data.adaptiveResponseMode ||
           data.adaptive_response_mode ||
           fallbackConfig.adaptiveResponseMode,
-
         cleanQuestion: cleanQuestion || text,
         originalQuestion: text,
-
         forcedHookApplied: Boolean(forcedHook),
         engineVersion: ENGINE_VERSION
       };
@@ -413,7 +429,9 @@ function buildAdaptiveContextForHook({
       retrievalThird: true,
       ragFourth: true,
       contextOrchestrationFinal: true,
-      contextOrchestrationEnabled: Boolean(contextOrchestrationEnabled)
+      contextOrchestrationEnabled: Boolean(contextOrchestrationEnabled),
+      tpmConscious: true,
+      compactContextOnly: true
     },
 
     responsePlan: {
@@ -453,7 +471,9 @@ function buildAdaptiveContextForHook({
         preventFullEngineOutputInjection: true,
         compressSourcesBeforeOpenAI: true,
         finalTrimBeforeOpenAI: true,
-        onlyPassCompactMetadata: true
+        onlyPassCompactMetadata: true,
+        maxVisibleSources: MAX_RETRIEVAL_LIMIT,
+        tpmConscious: true
       }
     }
   };
@@ -480,23 +500,12 @@ function buildCompactOrchestrationMetadata(extra = {}) {
     openAIContextBudgetingEnabled: true,
     finalTrimBeforeOpenAIEnabled: true,
     compressSourcesBeforeOpenAI: true,
+    tpmConscious: true,
 
     routeHook: extra.routeHook || null,
     routeMode: extra.routeMode || null,
-
-    retrievalSourceCount:
-      Number(extra.retrievalSourceCount || 0)
+    retrievalSourceCount: Number(extra.retrievalSourceCount || 0)
   };
-}
-
-function isSimpleDefinitionQuestion(question = "") {
-  const q = normalizeLower(question);
-
-  return (
-    q.length <= 160 &&
-    /^(what is|define|meaning of|ano ang)\b/i.test(q) &&
-    !/\b(analyze|risk|audit|contract|jurisprudence|doctrine|conflict|case|legal consequence|assessment|substance|evidence|compare)\b/i.test(q)
-  );
 }
 
 function findFunction(moduleObject = {}, candidateNames = []) {
@@ -508,6 +517,17 @@ function findFunction(moduleObject = {}, candidateNames = []) {
 
   if (typeof moduleObject.default === "function") {
     return moduleObject.default;
+  }
+
+  if (
+    moduleObject.default &&
+    typeof moduleObject.default === "object"
+  ) {
+    for (const name of candidateNames) {
+      if (typeof moduleObject.default[name] === "function") {
+        return moduleObject.default[name];
+      }
+    }
   }
 
   return null;
@@ -531,7 +551,9 @@ async function runQueryIntentEngine({
     return {
       intent: "GENERAL_TAX_QUERY",
       requiresSimpleDefinition: isSimpleDefinitionQuestion(question),
-      requiresLegalAnalysis: hookConfig.mode === "TAX_EXPERT",
+      requiresLegalAnalysis:
+        hookConfig.mode === "TAX_EXPERT" ||
+        isComplexReasoningQuestion(question),
       routeHook: hookConfig.hook_code,
       routeMode: hookConfig.mode,
       fallbackIntentUsed: true
@@ -539,13 +561,17 @@ async function runQueryIntentEngine({
   }
 
   try {
-    const result = await fn({
-      question,
-      query: question,
-      userQuery: question,
-      hookConfig,
-      adaptiveContext
-    });
+    const result = await withTimeout(
+      fn({
+        question,
+        query: question,
+        userQuery: question,
+        hookConfig,
+        adaptiveContext
+      }),
+      QUERY_INTENT_TIMEOUT_MS,
+      "Query intent engine"
+    );
 
     return safeObject(result);
   } catch (error) {
@@ -554,13 +580,144 @@ async function runQueryIntentEngine({
     return {
       intent: "GENERAL_TAX_QUERY",
       requiresSimpleDefinition: isSimpleDefinitionQuestion(question),
-      requiresLegalAnalysis: hookConfig.mode === "TAX_EXPERT",
+      requiresLegalAnalysis:
+        hookConfig.mode === "TAX_EXPERT" ||
+        isComplexReasoningQuestion(question),
       routeHook: hookConfig.hook_code,
       routeMode: hookConfig.mode,
       fallbackIntentUsed: true,
       error: error.message
     };
   }
+}
+
+function buildFallbackIssueClassification({
+  question = "",
+  queryIntent = {},
+  hookConfig = {}
+} = {}) {
+  const q = normalizeLower(question);
+
+  let primaryIssue = "GENERAL_TAX";
+  let subIssue = "GENERAL_TAX_QUERY";
+  let targetAuthorities = ["NIRC", "RR", "RMC"];
+
+  if (/\bvat\b|value[-\s]?added tax/i.test(q)) {
+    primaryIssue = "VAT_LIABILITY";
+    subIssue = isSimpleDefinitionQuestion(question)
+      ? "VAT_DEFINITION"
+      : "VAT_GENERAL_RULE";
+    targetAuthorities = ["NIRC", "RR"];
+  } else if (/\bzero[-\s]?rated|zero rating|0%\s*vat/i.test(q)) {
+    primaryIssue = "VAT_LIABILITY";
+    subIssue = "VAT_ZERO_RATING";
+    targetAuthorities = ["NIRC", "RR", "RMC"];
+  } else if (/\binput tax|input vat|refund|tax credit certificate|tcc\b/i.test(q)) {
+    primaryIssue = "VAT_LIABILITY";
+    subIssue = "VAT_INPUT_TAX_REFUND_CREDIT";
+    targetAuthorities = ["NIRC", "RR", "RMC", "JURISPRUDENCE"];
+  } else if (/\bwithholding|ewt|cwt|fwt\b/i.test(q)) {
+    primaryIssue = "WITHHOLDING";
+    subIssue = "WITHHOLDING_TAX";
+    targetAuthorities = ["NIRC", "RR", "RMC"];
+  } else if (/\bincome tax|rcit|mcit|nolco\b/i.test(q)) {
+    primaryIssue = "INCOME_TAX";
+    subIssue = "CORPORATE_INCOME_TAX";
+    targetAuthorities = ["NIRC", "RR", "RMC"];
+  } else if (/\bcapital gains tax|cgt|documentary stamp|dst\b/i.test(q)) {
+    primaryIssue = "PROPERTY_AND_TRANSFER_TAX";
+    subIssue = "CGT_DST";
+    targetAuthorities = ["NIRC", "RR", "RMC"];
+  }
+
+  const simple = Boolean(
+    queryIntent?.requiresSimpleDefinition ||
+      isSimpleDefinitionQuestion(question)
+  );
+
+  const complex = Boolean(
+    queryIntent?.requiresLegalAnalysis ||
+      isComplexReasoningQuestion(question) ||
+      hookConfig.mode === "TAX_EXPERT"
+  );
+
+  return {
+    primaryIssue,
+    subIssue,
+    retrievalStrategy: simple
+      ? "FAST_DEFINITION_PRIMARY_AUTHORITY"
+      : complex
+        ? "ISSUE_AUTHORITY_HIERARCHY_WITH_JURISPRUDENCE"
+        : "ISSUE_AUTHORITY_HIERARCHY_SEMANTIC",
+    targetAuthorities,
+    responseMode: simple
+      ? "FAST_DEFINITION"
+      : complex
+        ? "LEGAL_ANALYSIS"
+        : "STANDARD_TAX",
+    orchestrationMode: simple
+      ? "FAST_DEFINITION"
+      : complex
+        ? "LEGAL_ANALYSIS"
+        : "STANDARD_TAX",
+    complexity: simple ? "simple" : complex ? "complex" : "standard",
+    fallbackClassificationUsed: true
+  };
+}
+
+function normalizeIssueClassificationResult(result = {}, fallbackInput = {}) {
+  const fallback = buildFallbackIssueClassification(fallbackInput);
+
+  const source =
+    result?.orchestrationClassification ||
+    result?.issueClassification ||
+    result?.classification ||
+    result ||
+    {};
+
+  return {
+    ...fallback,
+    ...safeObject(source),
+
+    primaryIssue:
+      source.primaryIssue ||
+      source.primary_issue ||
+      source.domain ||
+      fallback.primaryIssue,
+
+    subIssue:
+      source.subIssue ||
+      source.sub_issue ||
+      source.issueType ||
+      fallback.subIssue,
+
+    retrievalStrategy:
+      source.retrievalStrategy ||
+      source.retrieval_strategy ||
+      fallback.retrievalStrategy,
+
+    targetAuthorities:
+      safeArray(
+        source.targetAuthorities ||
+          source.target_authorities ||
+          fallback.targetAuthorities
+      ),
+
+    responseMode:
+      source.responseMode ||
+      source.response_mode ||
+      fallback.responseMode,
+
+    orchestrationMode:
+      source.orchestrationMode ||
+      source.orchestration_mode ||
+      source.contextMode ||
+      fallback.orchestrationMode,
+
+    complexity:
+      source.complexity ||
+      fallback.complexity
+  };
 }
 
 async function runIssueClassificationEngine({
@@ -587,15 +744,19 @@ async function runIssueClassificationEngine({
   }
 
   try {
-    const result = await fn({
-      question,
-      query: question,
-      userQuery: question,
-      queryIntent,
-      intent: queryIntent,
-      hookConfig,
-      adaptiveContext
-    });
+    const result = await withTimeout(
+      fn({
+        question,
+        query: question,
+        userQuery: question,
+        queryIntent,
+        intent: queryIntent,
+        hookConfig,
+        adaptiveContext
+      }),
+      ISSUE_CLASSIFICATION_TIMEOUT_MS,
+      "Issue classification engine"
+    );
 
     return normalizeIssueClassificationResult(result, {
       question,
@@ -616,97 +777,33 @@ async function runIssueClassificationEngine({
   }
 }
 
-function buildFallbackIssueClassification({
-  question = "",
-  queryIntent = {},
-  hookConfig = {}
-} = {}) {
-  const q = normalizeLower(question);
-
-  let primaryIssue = "GENERAL_TAX";
-  let subIssue = "GENERAL_TAX_QUERY";
-  let targetAuthorities = ["NIRC", "RR", "RMC"];
-
-  if (/\bvat\b|value[-\s]?added tax/i.test(q)) {
-    primaryIssue = "VAT_LIABILITY";
-    subIssue = isSimpleDefinitionQuestion(question)
-      ? "VAT_DEFINITION"
-      : "VAT_GENERAL_RULE";
-    targetAuthorities = ["NIRC", "RR"];
-  } else if (/\bwithholding|ewt|cwt|fwt\b/i.test(q)) {
-    primaryIssue = "WITHHOLDING";
-    subIssue = "WITHHOLDING_TAX";
-    targetAuthorities = ["NIRC", "RR"];
-  } else if (/\bincome tax|rcit|mcit|nolco\b/i.test(q)) {
-    primaryIssue = "INCOME_TAX";
-    subIssue = "CORPORATE_INCOME_TAX";
-    targetAuthorities = ["NIRC", "RR", "RMC"];
+function getSourceTextLimit({
+  question,
+  hookConfig,
+  issueClassification
+}) {
+  if (
+    issueClassification?.orchestrationMode === "FAST_DEFINITION" ||
+    isSimpleDefinitionQuestion(question)
+  ) {
+    return MAX_SOURCE_TEXT_CHARS_SIMPLE;
   }
 
-  const simple = Boolean(
-    queryIntent?.requiresSimpleDefinition ||
-      isSimpleDefinitionQuestion(question)
-  );
+  if (hookConfig?.mode === "SOURCE_FINDER") {
+    return MAX_SOURCE_TEXT_CHARS_SOURCE_MODE;
+  }
 
-  return {
-    primaryIssue,
-    subIssue,
-    retrievalStrategy: simple
-      ? "FAST_DEFINITION_PRIMARY_AUTHORITY"
-      : "ISSUE_AUTHORITY_HIERARCHY_SEMANTIC",
-    targetAuthorities,
-    responseMode:
-      simple
-        ? "FAST_DEFINITION"
-        : hookConfig.mode === "TAX_EXPERT"
-          ? "LEGAL_ANALYSIS"
-          : "STANDARD_TAX",
-    orchestrationMode:
-      simple
-        ? "FAST_DEFINITION"
-        : hookConfig.mode === "TAX_EXPERT"
-          ? "LEGAL_ANALYSIS"
-          : "STANDARD_TAX",
-    complexity: simple ? "simple" : "standard",
-    fallbackClassificationUsed: true
-  };
+  return MAX_SOURCE_TEXT_CHARS_STANDARD;
 }
 
-function normalizeIssueClassificationResult(result = {}, fallbackInput = {}) {
-  const source =
-    result?.orchestrationClassification ||
-    result?.issueClassification ||
-    result?.classification ||
-    result ||
-    {};
-
-  return {
-    ...buildFallbackIssueClassification(fallbackInput),
-    ...safeObject(source),
-    primaryIssue:
-      source.primaryIssue ||
-      source.primary_issue ||
-      source.domain ||
-      buildFallbackIssueClassification(fallbackInput).primaryIssue,
-    subIssue:
-      source.subIssue ||
-      source.sub_issue ||
-      source.issueType ||
-      buildFallbackIssueClassification(fallbackInput).subIssue,
-    retrievalStrategy:
-      source.retrievalStrategy ||
-      source.retrieval_strategy ||
-      buildFallbackIssueClassification(fallbackInput).retrievalStrategy,
-    targetAuthorities:
-      safeArray(
-        source.targetAuthorities ||
-          source.target_authorities ||
-          buildFallbackIssueClassification(fallbackInput).targetAuthorities
-      )
-  };
-}
-
-function normalizeRetrievedSources(result = {}) {
+function normalizeRetrievedSources(
+  result = {},
+  {
+    question = "",
+    hookConfig = {},
+    issueClassification = {}
+  } = {}
+) {
   const raw =
     result?.retrievedSources ||
     result?.sources ||
@@ -716,94 +813,140 @@ function normalizeRetrievedSources(result = {}) {
     result?.data ||
     [];
 
-  return safeArray(raw)
-    .map((source, index) => ({
-      title:
-        source.title ||
-        source.sourceTitle ||
-        source.source_title ||
-        source.documentTitle ||
-        source.document_title ||
-        source.source ||
-        source.path ||
-        `Source ${index + 1}`,
+  const textLimit = getSourceTextLimit({
+    question,
+    hookConfig,
+    issueClassification
+  });
 
-      authorityType:
-        source.authorityType ||
-        source.authority_type ||
-        source.type ||
-        source.category ||
-        source.metadata?.authorityType ||
-        "UNKNOWN",
-
-      citation:
-        source.citation ||
-        source.reference ||
-        source.normalizedReference ||
-        source.normalized_reference ||
-        source.url ||
-        source.driveViewUrl ||
-        "",
-
-      url:
-        source.url ||
-        source.driveViewUrl ||
-        source.drive_view_url ||
-        source.sourceUrl ||
-        "",
-
-      text:
+  const normalized = safeArray(raw)
+    .map((source, index) => {
+      const text =
         source.text ||
         source.content ||
         source.chunkText ||
+        source.chunk_text ||
         source.excerpt ||
         source.preview ||
         source.pageContent ||
         source.summary ||
-        "",
+        "";
 
-      content:
-        source.content ||
-        source.text ||
-        source.chunkText ||
-        source.excerpt ||
-        source.preview ||
-        "",
+      return {
+        title:
+          source.title ||
+          source.sourceTitle ||
+          source.source_title ||
+          source.documentTitle ||
+          source.document_title ||
+          source.source ||
+          source.path ||
+          `Source ${index + 1}`,
 
-      score:
-        Number(
-          source.finalScore ??
-            source.final_score ??
-            source.rerankScore ??
-            source.retrievalScore ??
-            source.score ??
-            source.similarity ??
-            0
-        ) || 0,
+        authorityType:
+          source.authorityType ||
+          source.authority_type ||
+          source.type ||
+          source.category ||
+          source.metadata?.authorityType ||
+          source.metadata?.authority_type ||
+          "UNKNOWN",
 
-      controllingPrecedence:
-        Number(
-          source.controllingPrecedence ??
-            source.controlling_precedence ??
-            source.authorityLevel ??
-            source.authority_level ??
-            99
-        ) || 99,
+        citation:
+          source.citation ||
+          source.reference ||
+          source.normalizedReference ||
+          source.normalized_reference ||
+          source.url ||
+          source.driveViewUrl ||
+          "",
 
-      issueClassificationMatch:
-        source.issueClassificationMatch || null,
+        url:
+          source.url ||
+          source.driveViewUrl ||
+          source.drive_view_url ||
+          source.sourceUrl ||
+          "",
 
-      targetAuthorityMatch:
-        source.targetAuthorityMatch === true ||
-        source.issueClassificationMatch?.targetAuthorityMatch === true,
+        text: compactString(text, textLimit),
+        content: compactString(text, textLimit),
 
-      issueMismatch:
-        source.issueMismatch === true ||
-        source.issueClassificationMatch?.issueMismatch === true
-    }))
+        score:
+          Number(
+            source.finalScore ??
+              source.final_score ??
+              source.rerankScore ??
+              source.rerank_score ??
+              source.retrievalScore ??
+              source.retrieval_score ??
+              source.score ??
+              source.similarity ??
+              0
+          ) || 0,
+
+        controllingPrecedence:
+          Number(
+            source.controllingPrecedence ??
+              source.controlling_precedence ??
+              source.authorityLevel ??
+              source.authority_level ??
+              99
+          ) || 99,
+
+        issueClassificationMatch:
+          source.issueClassificationMatch ||
+          source.issue_classification_match ||
+          null,
+
+        targetAuthorityMatch:
+          source.targetAuthorityMatch === true ||
+          source.target_authority_match === true ||
+          source.issueClassificationMatch?.targetAuthorityMatch === true,
+
+        issueMismatch:
+          source.issueMismatch === true ||
+          source.issue_mismatch === true ||
+          source.issueClassificationMatch?.issueMismatch === true,
+
+        superseded:
+          source.superseded === true ||
+          source.isSuperseded === true ||
+          source.is_superseded === true,
+
+        hidden:
+          source.hidden === true ||
+          source.isHidden === true ||
+          source.is_hidden === true
+      };
+    })
     .filter((source) => source.text || source.content)
     .filter((source) => !source.issueMismatch)
-    .slice(0, MAX_RETRIEVAL_LIMIT);
+    .filter((source) => !source.hidden)
+    .sort((a, b) => {
+      if (a.superseded !== b.superseded) return a.superseded ? 1 : -1;
+      if (a.targetAuthorityMatch !== b.targetAuthorityMatch) {
+        return a.targetAuthorityMatch ? -1 : 1;
+      }
+      if (a.controllingPrecedence !== b.controllingPrecedence) {
+        return a.controllingPrecedence - b.controllingPrecedence;
+      }
+      return b.score - a.score;
+    });
+
+  const deduped = [];
+  const seen = new Set();
+
+  for (const source of normalized) {
+    const key = normalizeLower(
+      `${source.title}|${source.citation}|${source.url}`
+    );
+
+    if (seen.has(key)) continue;
+    seen.add(key);
+    deduped.push(source);
+  }
+
+  return deduped.slice(0, MAX_RETRIEVAL_LIMIT);
 }
 
 async function runRetrievalEngine({
@@ -835,34 +978,46 @@ async function runRetrievalEngine({
   }
 
   const limit =
-    issueClassification?.orchestrationMode === "FAST_DEFINITION" ||
-    queryIntent?.requiresSimpleDefinition ||
-    isSimpleDefinitionQuestion(question)
-      ? SIMPLE_RETRIEVAL_LIMIT
-      : DEFAULT_RETRIEVAL_LIMIT;
+    hookConfig?.mode === "SOURCE_FINDER"
+      ? SOURCE_MODE_RETRIEVAL_LIMIT
+      : issueClassification?.orchestrationMode === "FAST_DEFINITION" ||
+          queryIntent?.requiresSimpleDefinition ||
+          isSimpleDefinitionQuestion(question)
+        ? SIMPLE_RETRIEVAL_LIMIT
+        : DEFAULT_RETRIEVAL_LIMIT;
 
   try {
-    const result = await fn({
-      question,
-      query: question,
-      userQuery: question,
-      intent: queryIntent,
-      queryIntent,
-      issueClassification,
-      primaryIssue: issueClassification.primaryIssue,
-      subIssue: issueClassification.subIssue,
-      retrievalStrategy: issueClassification.retrievalStrategy,
-      targetAuthorities: issueClassification.targetAuthorities,
-      hookConfig,
-      adaptiveContext,
-      supabase,
-      limit,
-      maxResults: limit
-    });
+    const result = await withTimeout(
+      fn({
+        question,
+        query: question,
+        userQuery: question,
+        intent: queryIntent,
+        queryIntent,
+        issueClassification,
+        primaryIssue: issueClassification.primaryIssue,
+        subIssue: issueClassification.subIssue,
+        retrievalStrategy: issueClassification.retrievalStrategy,
+        targetAuthorities: issueClassification.targetAuthorities,
+        hookConfig,
+        adaptiveContext,
+        supabase,
+        limit,
+        maxResults: limit,
+        maxSources: limit,
+        tpmConscious: true
+      }),
+      RETRIEVAL_TIMEOUT_MS,
+      "Retrieval engine"
+    );
 
     return {
       ...safeObject(result),
-      retrievedSources: normalizeRetrievedSources(result),
+      retrievedSources: normalizeRetrievedSources(result, {
+        question,
+        hookConfig,
+        issueClassification
+      }),
       retrievalLimit: limit,
       retrievalEngineCalled: true
     };
@@ -873,8 +1028,9 @@ async function runRetrievalEngine({
       retrievedSources: [],
       retrievalError: error.message,
       retrievalEngineCalled: true,
+      retrievalLimit: limit,
       retrievalMetadata: {
-        reason: "Retrieval engine threw an error."
+        reason: "Retrieval engine failed or timed out."
       }
     };
   }
@@ -908,7 +1064,11 @@ async function buildRagPipelineContext({
     supabase
   });
 
-  const retrievedSources = normalizeRetrievedSources(retrievalResult);
+  const retrievedSources = normalizeRetrievedSources(retrievalResult, {
+    question,
+    hookConfig,
+    issueClassification
+  });
 
   return {
     queryIntent,
@@ -916,3 +1076,568 @@ async function buildRagPipelineContext({
     retrievalResult: {
       ...safeObject(retrievalResult),
       retrievedSources
+    },
+    retrievedSources
+  };
+}
+
+export function createAskHandler({
+  supabase,
+  openai,
+  contextOrchestration = null,
+  openaiModel = process.env.OPENAI_MODEL || "gpt-4o-mini"
+}) {
+  if (!supabase || typeof supabase.from !== "function") {
+    throw new Error("createAskHandler requires a valid Supabase client.");
+  }
+
+  if (!openai) {
+    throw new Error("createAskHandler requires OpenAI client.");
+  }
+
+  const resolvedContextOrchestration =
+    buildContextOrchestration(contextOrchestration || {});
+
+  const assessmentHandler =
+    createAssessmentHandler({
+      supabase,
+      openai,
+      contextOrchestration: resolvedContextOrchestration,
+      openaiModel
+    });
+
+  async function saveConversationTurn({
+    conversationId,
+    userId,
+    question,
+    answerText,
+    sourcesUsed = [],
+    fallbackReferences = []
+  }) {
+    if (!conversationId || !userId) return;
+
+    try {
+      await saveMessage(supabase, {
+        conversationId,
+        userId,
+        role: "user",
+        content: question
+      });
+
+      await saveMessage(supabase, {
+        conversationId,
+        userId,
+        role: "assistant",
+        content: answerText,
+        sourcesUsed,
+        fallbackReferences
+      });
+
+      const hooks = extractMemoryHooks(question);
+
+      await saveMemoryHooks(
+        supabase,
+        userId,
+        hooks
+      );
+    } catch (error) {
+      console.error("Conversation save skipped:", error.message);
+    }
+  }
+
+  async function handleFeedback({
+    userId,
+    conversationId,
+    correction,
+    feedbackType,
+    hookConfig
+  }) {
+    const cleanCorrection = normalizeText(correction);
+    const cleanFeedbackType = normalizeText(feedbackType || "general_feedback");
+
+    if (!cleanCorrection) {
+      return {
+        status: 400,
+        body: {
+          success: false,
+          error: "Feedback correction is required.",
+          hint: "Send { question, conversationId, correction, feedbackType }"
+        }
+      };
+    }
+
+    const feedbackResult =
+      await storeFeedbackEntry(supabase, {
+        userId,
+        sessionId: conversationId || null,
+        conversationId: conversationId || null,
+        originalQuestion: hookConfig.originalQuestion,
+        originalAnswer: "",
+        feedbackType: cleanFeedbackType,
+        userCorrection: cleanCorrection,
+        detectedMode: hookConfig.mode,
+        adaptiveMode: hookConfig.mode,
+        plannerMode: hookConfig.mode,
+
+        metadata: {
+          hookCode: hookConfig.hook_code,
+          hookTitle: hookConfig.title,
+          askHandlerVersion: ENGINE_VERSION,
+          issueClassificationAware: true,
+          contextOrchestrationAware: true,
+          tpmConscious: true
+        }
+      });
+
+    const answerText =
+      "Feedback received and stored for review. Thank you. TINA will only learn from this after validation.";
+
+    await saveConversationTurn({
+      conversationId,
+      userId,
+      question: hookConfig.originalQuestion,
+      answerText,
+      sourcesUsed: [],
+      fallbackReferences: []
+    });
+
+    await saveModeState(supabase, {
+      userId,
+      sessionId: conversationId || null,
+      activeHook: hookConfig.hook_code,
+      activeMode: hookConfig.mode,
+      modeTitle: hookConfig.title,
+      lastQuestion: hookConfig.originalQuestion,
+      lastAnswer: answerText
+    });
+
+    return {
+      status: 200,
+      body: {
+        success: true,
+        engine: "TINA Feedback Learning Engine",
+        hook: hookConfig.hook_code,
+        mode: hookConfig.mode,
+        hookTitle: hookConfig.title,
+        answer: answerText,
+        answerMode: "feedback_stored_for_review",
+        confidence: "N/A",
+        sourceStatus: "FEEDBACK_STORED",
+        feedbackId: feedbackResult?.id || null,
+        feedbackType: cleanFeedbackType,
+        originalQuestion: hookConfig.originalQuestion,
+        resolvedQuestion: hookConfig.cleanQuestion,
+        sourcesUsed: [],
+        sources: [],
+        vectorMatches: 0,
+        askHandlerVersion: ENGINE_VERSION,
+        contextOrchestrationEnabled: true
+      }
+    };
+  }
+
+  async function clearActiveMode({
+    userId,
+    conversationId,
+    existingMode
+  }) {
+    const activeHook = existingMode?.active_hook || "/ask";
+
+    await clearModeState(supabase, userId, conversationId || null);
+
+    await assessmentHandler.clearPendingQuizAttempts(
+      userId,
+      conversationId || null
+    );
+
+    let answerText = "You are already in normal /ask mode.";
+
+    if (activeHook === "/quiz") {
+      answerText = "Quiz mode ended. You are now back in normal /ask mode.";
+    } else if (activeHook === "/review") {
+      answerText = "Review mode ended. You are now back in normal /ask mode.";
+    } else if (activeHook === "/diagnostic") {
+      answerText = "Diagnostic mode ended. You are now back in normal /ask mode.";
+    } else if (activeHook !== "/ask") {
+      answerText = `Mode ${activeHook} ended. You are now back in normal /ask mode.`;
+    }
+
+    return {
+      success: true,
+      engine: "TINA Mode State System",
+      mode: "MODE_CLEARED",
+      previousMode: activeHook,
+      answer: answerText,
+      sourceStatus: "MODE_STATE_CLEARED",
+      sourcesUsed: [],
+      sources: [],
+      vectorMatches: 0,
+      askHandlerVersion: ENGINE_VERSION,
+      contextOrchestrationEnabled: true
+    };
+  }
+
+  async function handleRagRoute({
+    res,
+    userId,
+    conversationId,
+    hookConfig,
+    adaptiveContext,
+    orchestrationMetadata
+  }) {
+    const question = hookConfig.cleanQuestion || hookConfig.originalQuestion;
+
+    const pipeline = await buildRagPipelineContext({
+      question,
+      hookConfig,
+      adaptiveContext,
+      supabase
+    });
+
+    const ragInput = {
+      question,
+      retrievedSources: pipeline.retrievedSources,
+      retrievalResult: pipeline.retrievalResult,
+      conversationHistory: [],
+      issueClassification: pipeline.issueClassification,
+      queryIntent: pipeline.queryIntent,
+
+      orchestrationIntent: {
+        ...safeObject(pipeline.queryIntent),
+        routeHook: hookConfig.hook_code,
+        routeMode: hookConfig.mode,
+        responseMode: hookConfig.adaptiveResponseMode || null,
+        tpmConscious: true
+      },
+
+      adaptiveContext: {
+        ...safeObject(adaptiveContext),
+        issueClassification: pipeline.issueClassification,
+        queryIntent: pipeline.queryIntent,
+        retrievalMetadata: {
+          retrievalEngineCalled: Boolean(pipeline.retrievalResult?.retrievalEngineCalled),
+          retrievalLimit: pipeline.retrievalResult?.retrievalLimit || null,
+          retrievalError: pipeline.retrievalResult?.retrievalError || null,
+          retrievalEngineMissing: Boolean(pipeline.retrievalResult?.retrievalEngineMissing),
+          sourceCount: pipeline.retrievedSources.length
+        }
+      },
+
+      model: openaiModel,
+
+      metadata: {
+        userId,
+        conversationId,
+        hook: hookConfig.hook_code,
+        mode: hookConfig.mode,
+        ...safeObject(orchestrationMetadata),
+        queryIntentEngineCalled: true,
+        issueClassificationEngineCalled: true,
+        retrievalEngineCalled: true,
+        retrievalSourceCount: pipeline.retrievedSources.length,
+        primaryIssue: pipeline.issueClassification.primaryIssue || null,
+        subIssue: pipeline.issueClassification.subIssue || null,
+        retrievalStrategy: pipeline.issueClassification.retrievalStrategy || null,
+        targetAuthorities: pipeline.issueClassification.targetAuthorities || [],
+        tpmConscious: true
+      },
+
+      openai,
+      contextOrchestration: resolvedContextOrchestration
+    };
+
+    let result;
+
+    try {
+      result = await withTimeout(
+        generateRagAnswer(ragInput),
+        RAG_TIMEOUT_MS,
+        "RAG answer generation"
+      );
+    } catch (error) {
+      console.error("RAG answer generation failed:", error.message);
+
+      result = {
+        answer:
+          "I could not complete the full sourced answer because the retrieval or answer-generation process failed or timed out. Please try again with a narrower question.",
+        sources: [],
+        metadata: {
+          ragError: error.message,
+          fallbackAnswerUsed: true
+        }
+      };
+    }
+
+    const resultSources = safeArray(result.sources);
+
+    const payload = {
+      success: true,
+      engine: "TINA_ASK_HANDLER",
+      version: ENGINE_VERSION,
+      hook: hookConfig.hook_code,
+      mode: hookConfig.mode,
+      hookTitle: hookConfig.title,
+      answer: result.answer || "",
+      sources: resultSources,
+      sourcesUsed: resultSources,
+      vectorMatches: resultSources.length,
+      sourceStatus: resultSources.length
+        ? "ISSUE_MATCHED_CONTEXT_USED"
+        : pipeline.retrievedSources.length
+          ? "RETRIEVED_CONTEXT_USED_NO_VISIBLE_SOURCES"
+          : "NO_VISIBLE_SOURCE",
+      metadata: {
+        ...safeObject(result.metadata),
+        askHandlerVersion: ENGINE_VERSION,
+        correctFlowEnabled: true,
+        queryIntentEngineCalled: true,
+        issueClassificationEngineCalled: true,
+        retrievalEngineCalled: true,
+        retrievalSourceCount: pipeline.retrievedSources.length,
+        orchestrationFirstArchitecture: true,
+        routeControllerOnly: true,
+        noDirectOpenAICall: true,
+        noPromptAssembly: true,
+        noTokenEstimation: true,
+        noRawRetrievalPayloadInjection: true,
+        noRawEngineObjectInjection: true,
+        tpmConscious: true
+      }
+    };
+
+    await saveConversationTurn({
+      conversationId,
+      userId,
+      question: hookConfig.originalQuestion,
+      answerText: payload.answer,
+      sourcesUsed: payload.sourcesUsed,
+      fallbackReferences: []
+    });
+
+    await saveModeState(supabase, {
+      userId,
+      sessionId: conversationId || null,
+      activeHook: hookConfig.hook_code,
+      activeMode: hookConfig.mode,
+      modeTitle: hookConfig.title,
+      lastQuestion: hookConfig.originalQuestion,
+      lastAnswer: payload.answer
+    });
+
+    return res.json(payload);
+  }
+
+  return async function handleAsk(req, res) {
+    try {
+      const { question, correction, feedbackType } = req.body || {};
+
+      const userId = getUserId(req);
+      const conversationId = getConversationId(req);
+      const forcedHook = getForcedHook(req);
+
+      if (!userId) {
+        return res.status(401).json({
+          success: false,
+          error: "User ID not found in token. Cannot proceed."
+        });
+      }
+
+      const rawQuestion = normalizeText(question);
+
+      if (!rawQuestion) {
+        return res.status(400).json({
+          success: false,
+          error: "Question required"
+        });
+      }
+
+      const existingMode =
+        await getModeState(supabase, userId, conversationId || null);
+
+      if (isExitCommand(rawQuestion)) {
+        const cleared =
+          await clearActiveMode({
+            userId,
+            conversationId,
+            existingMode
+          });
+
+        return res.json(cleared);
+      }
+
+      const activeHook = existingMode?.active_hook || null;
+      const hasActiveAssessmentMode = assessmentHandler.isAssessmentHook(activeHook);
+
+      const pendingQuiz =
+        await assessmentHandler.fetchLatestPendingQuiz(
+          userId,
+          conversationId || null
+        );
+
+      if (pendingQuiz && !hasActiveAssessmentMode) {
+        await assessmentHandler.clearPendingQuizAttempts(
+          userId,
+          conversationId || null
+        );
+      }
+
+      const quizAnswer = extractQuizAnswer(rawQuestion);
+
+      if (pendingQuiz && hasActiveAssessmentMode && quizAnswer) {
+        const loopResult =
+          await assessmentHandler.continueAssessmentLoop({
+            userId,
+            conversationId: conversationId || null,
+            incomingAnswer: rawQuestion
+          });
+
+        if (loopResult.handled) {
+          return res.json(loopResult.response);
+        }
+      }
+
+      if (pendingQuiz && hasActiveAssessmentMode && !quizAnswer) {
+        return res.json(
+          assessmentHandler.buildAssessmentLockedResponse(activeHook)
+        );
+      }
+
+      let effectiveQuestion = rawQuestion;
+
+      if (
+        !forcedHook &&
+        existingMode?.active_hook &&
+        existingMode.active_hook !== "/ask" &&
+        !isExplicitModeHook(rawQuestion)
+      ) {
+        effectiveQuestion = `${existingMode.active_hook} ${rawQuestion}`;
+      }
+
+      const hookConfig =
+        await loadTaxHookConfig({
+          supabase,
+          rawQuestion: effectiveQuestion,
+          forcedHook
+        });
+
+      const compactHookConfig = buildCompactHookConfig(hookConfig);
+
+      if (compactHookConfig.mode === "LEARNING_PROGRESS") {
+        const result =
+          await assessmentHandler.handleLearningProgress({
+            userId,
+            conversationId,
+            hookConfig: compactHookConfig,
+            originalQuestion: compactHookConfig.originalQuestion
+          });
+
+        return res.json(result.response);
+      }
+
+      if (compactHookConfig.mode === "FEEDBACK") {
+        const result =
+          await handleFeedback({
+            userId,
+            conversationId,
+            correction,
+            feedbackType,
+            hookConfig: compactHookConfig
+          });
+
+        return res.status(result.status).json(result.body);
+      }
+
+      if (
+        SPECIAL_ASSESSMENT_HOOKS.has(compactHookConfig.hook_code) ||
+        (
+          assessmentHandler.isAssessmentMode(compactHookConfig.mode) &&
+          !isRagRoutedHook(compactHookConfig.hook_code)
+        )
+      ) {
+        const result =
+          await assessmentHandler.handleAssessmentCommand({
+            userId,
+            conversationId,
+            hookConfig: compactHookConfig,
+            cleanQuestion: compactHookConfig.cleanQuestion,
+            originalQuestion: compactHookConfig.originalQuestion
+          });
+
+        return res.json(result.response);
+      }
+
+      const adaptiveContext =
+        buildAdaptiveContextForHook({
+          hookConfig: compactHookConfig,
+          existingMode,
+          pendingQuiz,
+          contextOrchestrationEnabled: true
+        });
+
+      const orchestrationMetadata =
+        buildCompactOrchestrationMetadata({
+          routeHook: compactHookConfig.hook_code,
+          routeMode: compactHookConfig.mode
+        });
+
+      return handleRagRoute({
+        res,
+        userId,
+        conversationId,
+        hookConfig: compactHookConfig,
+        adaptiveContext,
+        orchestrationMetadata
+      });
+    } catch (error) {
+      console.error("Ask dispatcher error:", error);
+
+      return res.status(500).json({
+        success: false,
+        error: error.message || "Ask failed",
+        engine: "TINA Ask Handler",
+        askHandlerVersion: ENGINE_VERSION,
+        contextOrchestrationEnabled: true,
+        orchestrationFirstArchitecture: true,
+        tpmConscious: true
+      });
+    }
+  };
+}
+
+export function askHandlerHealthCheck() {
+  return {
+    ok: true,
+    engine: "TINA_ASK_HANDLER",
+    version: ENGINE_VERSION,
+    correctFlowEnabled: true,
+    flow: [
+      "query-intent-engine.js",
+      "issue-classification-engine.js",
+      "retrieval-engine.js",
+      "rag-answer-handler.js",
+      "context-orchestration-engine.js"
+    ],
+    orchestrationFirstArchitecture: true,
+    routeControllerOnly: true,
+    noDirectOpenAICall: true,
+    noPromptAssembly: true,
+    noTokenEstimation: true,
+    noRawRetrievalPayloadInjection: true,
+    noRawEngineObjectInjection: true,
+    retrievalBeforeRag: true,
+    emptySourcesBugFixed: true,
+    timeoutProtected: true,
+    tpmConscious: true,
+    compactSourcesOnly: true,
+    adaptiveCompatible: true,
+    assessmentCompatible: true,
+    ragCompatible: true,
+    feedbackCompatible: true,
+    modeStateCompatible: true
+  };
+}
+
+export default {
+  createAskHandler,
+  askHandlerHealthCheck
+};
