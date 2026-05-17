@@ -3,18 +3,18 @@
 
 /**
  * TINA RAG Answer Handler
- * Version: 8.0.0
+ * Version: 8.1.0
  *
  * Boundary rule:
  * - no giant prompt assembly
  * - no raw retrieval injection
  * - no raw engine-object injection
  * - calls context-orchestration-engine.js only
- * - receives answer, then applies final compliance and rendering
+ * - exposes orchestration errors safely for debugging
  */
 
 import {
-  callOpenAIWithOrchestration
+  callOpenAIWithOrchestration as defaultCallOpenAIWithOrchestration
 } from "./context-orchestration-engine.js";
 
 import {
@@ -31,7 +31,7 @@ import {
   buildCompactConversationHistory
 } from "./ask-helpers.js";
 
-const ENGINE_VERSION = "8.0.0";
+const ENGINE_VERSION = "8.1.0";
 
 const DEFAULT_MODEL =
   process.env.OPENAI_MODEL ||
@@ -58,7 +58,30 @@ function normalizeText(value = "") {
 function trimText(value = "", max = 1200) {
   const text = normalizeText(value);
   if (!text) return "";
-  return text.length <= max ? text : `${text.slice(0, max).trim()} ...[trimmed]`;
+  if (text.length <= max) return text;
+  return `${text.slice(0, max).trim()} ...[trimmed]`;
+}
+
+function serializeError(error = null) {
+  if (!error) {
+    return {
+      exists: false,
+      name: null,
+      message: null,
+      code: null,
+      status: null,
+      type: null
+    };
+  }
+
+  return {
+    exists: true,
+    name: error.name || "Error",
+    message: trimText(error.message || String(error), 900),
+    code: error.code || error.error?.code || null,
+    status: error.status || error.response?.status || null,
+    type: error.type || error.error?.type || null
+  };
 }
 
 function pickText(source = {}) {
@@ -232,6 +255,7 @@ function buildCompactClassification(issueClassification = {}) {
     retrievalStrategy: issueClassification.retrievalStrategy || null,
     targetAuthorities: safeArray(issueClassification.targetAuthorities).slice(0, 10),
     responseMode: issueClassification.responseMode || null,
+    orchestrationMode: issueClassification.orchestrationMode || null,
     factSensitivity: issueClassification.factSensitivity || null
   };
 }
@@ -296,23 +320,37 @@ function extractOrchestrationMetadata(result = {}) {
   );
 }
 
-function buildFallbackAnswer({ error = null } = {}) {
+function buildFallbackAnswer({
+  error = null,
+  sources = [],
+  issueClassification = {}
+} = {}) {
+  const safeError = serializeError(error);
+
   return [
     "A. DIRECT ANSWER",
     "TINA could not complete the RAG response due to a processing limitation.",
     "",
     "B. SYSTEM LIMITATION",
-    trimText(error?.message || "The orchestration-safe OpenAI call failed.", 600),
+    safeError.exists
+      ? `Actual error: ${safeError.message}`
+      : "Actual error: No orchestration error object was returned.",
     "",
-    "C. NEXT STEP",
-    "- Retry with a narrower issue.",
-    "- Reduce attached facts or source scope.",
-    "- Re-run issue-specific retrieval."
+    "C. CONTEXT STATUS",
+    `Retrieved sources passed to RAG: ${safeArray(sources).length}`,
+    `Primary issue: ${issueClassification?.primaryIssue || "Not classified"}`,
+    `Sub-issue: ${issueClassification?.subIssue || "Not classified"}`,
+    "",
+    "D. NEXT STEP",
+    "- Check the orchestrationError metadata.",
+    "- Verify that retrieval-engine.js returned clean retrievedSources.",
+    "- For TPM errors, reduce source count, source characters, conversation history, and max completion tokens."
   ].join("\n");
 }
 
 async function callOrchestrationOnly({
   openai = null,
+  contextOrchestration = null,
   question = "",
   sources = [],
   conversationHistory = [],
@@ -322,7 +360,11 @@ async function callOrchestrationOnly({
   model = DEFAULT_MODEL,
   temperature = null
 } = {}) {
-  return await callOpenAIWithOrchestration({
+  const caller =
+    contextOrchestration?.callOpenAIWithOrchestration ||
+    defaultCallOpenAIWithOrchestration;
+
+  return await caller({
     openai,
     userQuery: question,
     retrievedSources: sources,
@@ -340,8 +382,11 @@ function buildSafeMetadata({
   sources = [],
   issueClassification = {},
   intent = {},
-  orchestration = {}
+  orchestration = {},
+  error = null
 } = {}) {
+  const safeError = serializeError(error);
+
   return {
     ...safeObject(metadata),
 
@@ -362,6 +407,7 @@ function buildSafeMetadata({
     sourceCount: safeArray(sources).length,
 
     intent: intent?.intent || intent?.type || null,
+
     orchestrationMode:
       orchestration?.mode ||
       orchestration?.orchestrationMode ||
@@ -373,9 +419,29 @@ function buildSafeMetadata({
       orchestration?.diagnostics?.estimatedInputTokens ||
       null,
 
+    maxCompletionTokens:
+      orchestration?.maxCompletionTokens ||
+      orchestration?.diagnostics?.maxCompletionTokens ||
+      null,
+
     wasTrimmed:
       orchestration?.wasTrimmed ||
-      false
+      orchestration?.diagnostics?.finalTrimApplied ||
+      false,
+
+    orchestrationError:
+      safeError.exists ? safeError : null,
+
+    orchestrationErrorMessage:
+      safeError.exists ? safeError.message : null,
+
+    failedInsideRagHandler:
+      safeError.exists,
+
+    debugHint:
+      safeError.exists
+        ? "This error came from callOpenAIWithOrchestration() or its downstream OpenAI call."
+        : null
   };
 }
 
@@ -457,6 +523,7 @@ export async function generateRagAnswer({
   temperature = null,
   metadata = {},
   openai = null,
+  contextOrchestration = null,
   jurisprudencePayload = null,
   hierarchyConflict = null,
   conflicts = []
@@ -485,6 +552,7 @@ export async function generateRagAnswer({
   try {
     const result = await callOrchestrationOnly({
       openai,
+      contextOrchestration,
       question,
       sources,
       conversationHistory: history,
@@ -497,10 +565,42 @@ export async function generateRagAnswer({
 
     answer = extractAnswerFromOpenAIResult(result);
     orchestration = extractOrchestrationMetadata(result);
+
+    if (!answer) {
+      throw new Error("OpenAI orchestration returned an empty answer.");
+    }
   } catch (err) {
     error = err;
-    answer = buildFallbackAnswer({ error: err });
-    orchestration = {};
+
+    orchestration = {
+      mode: "EMERGENCY_TRIM",
+      contextMode: "EMERGENCY_TRIM",
+      orchestrationMode: "EMERGENCY_TRIM",
+      errorMessage: err?.message || "Unknown orchestration error",
+      wasTrimmed: true,
+      diagnostics: {
+        ragHandlerCaughtError: true,
+        errorMessage: err?.message || "Unknown orchestration error",
+        sourceCount: sources.length
+      }
+    };
+
+    answer = buildFallbackAnswer({
+      error: err,
+      sources,
+      issueClassification: finalIssueClassification
+    });
+
+    console.error("RAG orchestration error:", {
+      message: err?.message,
+      name: err?.name,
+      code: err?.code,
+      status: err?.status,
+      type: err?.type,
+      sourceCount: sources.length,
+      primaryIssue: finalIssueClassification?.primaryIssue || null,
+      subIssue: finalIssueClassification?.subIssue || null
+    });
   }
 
   const safeMetadata = buildSafeMetadata({
@@ -508,12 +608,17 @@ export async function generateRagAnswer({
     sources,
     issueClassification: finalIssueClassification,
     intent: finalIntent,
-    orchestration
+    orchestration,
+    error
   });
 
   return applyFinalGateAndRender({
     answer,
-    fallbackAnswer: buildFallbackAnswer({ error }),
+    fallbackAnswer: buildFallbackAnswer({
+      error,
+      sources,
+      issueClassification: finalIssueClassification
+    }),
     sources,
     issueClassification: finalIssueClassification,
     adaptiveContext,
@@ -540,15 +645,18 @@ export async function generateSimpleRagAnswer({
   question = "",
   retrievedSources = [],
   openai = null,
+  contextOrchestration = null,
   model = DEFAULT_MODEL
 } = {}) {
   return generateRagAnswer({
     question,
     retrievedSources,
     openai,
+    contextOrchestration,
     model,
     issueClassification: {
       primaryIssue: "GENERAL_TAX",
+      subIssue: "GENERAL_DEFINITION",
       responseMode: "FAST_DEFINITION",
       orchestrationMode: "FAST_DEFINITION"
     },
@@ -575,6 +683,10 @@ export function ragAnswerHandlerHealthCheck() {
     rawEngineObjectInjectionPrevented: true,
     fullDebugObjectInjectionPrevented: true,
     fullEngineOutputInjectionPrevented: true,
+
+    exposesOrchestrationErrorsSafely: true,
+    orchestrationErrorMetadataEnabled: true,
+    emergencyTrimFallbackEnabled: true,
 
     compactSourcesOnly: true,
     compactMetadataOnly: true,
