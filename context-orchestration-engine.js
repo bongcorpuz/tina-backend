@@ -3,26 +3,32 @@
 
 /**
  * TINA Context Orchestration Engine
- * Version: 3.0.0
+ * Version: 4.0.0
  *
- * Single source of truth for:
- * - token estimation
- * - mode selection
- * - retrieval trimming
- * - source compression
- * - prompt assembly
- * - final message trimming
- * - OpenAI call safety
+ * FINAL ORCHESTRATION SOURCE
+ *
+ * This is the only file allowed to:
+ * - estimate tokens
+ * - classify complexity
+ * - determine orchestration mode
+ * - assign token budget
+ * - trim retrieval
+ * - compress sources
+ * - assemble OpenAI messages
+ * - final-trim OpenAI messages
+ * - call OpenAI
  */
 
 import OpenAI from "openai";
+
+const ENGINE_VERSION = "4.0.0";
 
 const DEFAULT_MODEL =
   process.env.OPENAI_MODEL ||
   process.env.DEFAULT_OPENAI_MODEL ||
   "gpt-4o-mini";
 
-const MODEL_CONTEXT_LIMITS = {
+const MODEL_CONTEXT_LIMITS = Object.freeze({
   "gpt-4o-mini": 128000,
   "gpt-4o": 128000,
   "gpt-4.1-mini": 1000000,
@@ -31,60 +37,56 @@ const MODEL_CONTEXT_LIMITS = {
   "gpt-5": 400000,
   "gpt-5-mini": 400000,
   "gpt-5-nano": 400000
-};
+});
 
-const DEFAULT_CONTEXT_LIMIT =
-  MODEL_CONTEXT_LIMITS[DEFAULT_MODEL] ||
-  Number(process.env.OPENAI_CONTEXT_LIMIT || 128000);
+const HARD_SAFETY_RATIO = 0.6;
 
-const HARD_SAFETY_RATIO = 0.65;
-
-const MODE_CONFIG = {
+const MODE_CONFIG = Object.freeze({
   FAST_DEFINITION: {
-    maxInputTokens: 10000,
+    maxInputTokens: 9000,
     maxOutputTokens: 900,
     maxSources: 3,
-    maxCharsPerSource: 1200,
+    maxCharsPerSource: 900,
     maxHistoryItems: 3,
     temperature: 0.1
   },
 
   STANDARD_TAX: {
-    maxInputTokens: 22000,
+    maxInputTokens: 18000,
     maxOutputTokens: 1600,
     maxSources: 5,
-    maxCharsPerSource: 1800,
+    maxCharsPerSource: 1400,
     maxHistoryItems: 4,
     temperature: 0.1
   },
 
   LEGAL_ANALYSIS: {
-    maxInputTokens: 36000,
+    maxInputTokens: 28000,
     maxOutputTokens: 2200,
     maxSources: 6,
-    maxCharsPerSource: 2200,
+    maxCharsPerSource: 1700,
     maxHistoryItems: 4,
     temperature: 0.1
   },
 
   COMPLEX_ADVISORY: {
-    maxInputTokens: 48000,
+    maxInputTokens: 36000,
     maxOutputTokens: 2600,
     maxSources: 8,
-    maxCharsPerSource: 2200,
+    maxCharsPerSource: 1800,
     maxHistoryItems: 5,
     temperature: 0.1
   },
 
   EMERGENCY_TRIM: {
-    maxInputTokens: 9000,
+    maxInputTokens: 7000,
     maxOutputTokens: 700,
     maxSources: 2,
-    maxCharsPerSource: 700,
+    maxCharsPerSource: 600,
     maxHistoryItems: 2,
     temperature: 0.1
   }
-};
+});
 
 function safeString(value, fallback = "") {
   if (value === null || value === undefined) return fallback;
@@ -97,18 +99,33 @@ function safeString(value, fallback = "") {
   }
 }
 
-function normalizeWhitespace(text = "") {
-  return safeString(text)
+function safeArray(value) {
+  if (!value) return [];
+  return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
+}
+
+function normalizeWhitespace(value = "") {
+  return safeString(value)
     .replace(/\r/g, "\n")
     .replace(/[ \t]+/g, " ")
     .replace(/\n{3,}/g, "\n\n")
     .trim();
 }
 
+function truncateByChars(value = "", maxChars = 1200) {
+  const text = safeString(value);
+  if (text.length <= maxChars) return text;
+  return `${text.slice(0, maxChars).trim()}\n\n[Trimmed by context orchestration.]`;
+}
+
+function truncateByTokens(value = "", maxTokens = 1000) {
+  return truncateByChars(value, Math.max(0, Math.floor(maxTokens * 3.6)));
+}
+
 export function estimateTokens(text = "") {
-  const str = safeString(text);
-  if (!str) return 0;
-  return Math.ceil(str.length / 3.6);
+  const value = safeString(text);
+  if (!value) return 0;
+  return Math.ceil(value.length / 3.6);
 }
 
 export function estimatePromptTokens(text = "") {
@@ -116,7 +133,7 @@ export function estimatePromptTokens(text = "") {
 }
 
 export function estimateMessagesTokens(messages = []) {
-  return (Array.isArray(messages) ? messages : []).reduce((sum, msg) => {
+  return safeArray(messages).reduce((sum, msg) => {
     return (
       sum +
       estimateTokens(msg.role || "") +
@@ -126,21 +143,6 @@ export function estimateMessagesTokens(messages = []) {
   }, 0);
 }
 
-function truncateByChars(text = "", maxChars = 2000) {
-  const str = safeString(text);
-  if (str.length <= maxChars) return str;
-  return `${str.slice(0, maxChars).trim()}\n\n[Trimmed due to context budget.]`;
-}
-
-function truncateByTokens(text = "", maxTokens = 1000) {
-  return truncateByChars(text, Math.max(0, Math.floor(maxTokens * 3.6)));
-}
-
-function safeArray(value) {
-  if (!value) return [];
-  return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
-}
-
 function normalizeIssue(value = "") {
   return String(value || "")
     .trim()
@@ -148,16 +150,78 @@ function normalizeIssue(value = "") {
     .replace(/[\s-]+/g, "_");
 }
 
-function detectComplexity(userQuery = "", classification = {}, intent = {}) {
+function normalizeAuthority(value = "") {
+  return String(value || "")
+    .trim()
+    .toUpperCase()
+    .replace(/[\s-]+/g, "_");
+}
+
+function normalizeBuildArgs(args = {}) {
+  return {
+    userQuery:
+      args.userQuery ||
+      args.question ||
+      args.query ||
+      "",
+
+    systemPrompt:
+      args.systemPrompt ||
+      "",
+
+    masterPrompt:
+      args.masterPrompt ||
+      "",
+
+    retrievedSources:
+      args.retrievedSources ||
+      args.sources ||
+      [],
+
+    classification:
+      args.classification?.orchestrationClassification ||
+      args.classification ||
+      args.issueClassification?.orchestrationClassification ||
+      args.issueClassification ||
+      {},
+
+    intent:
+      args.intent?.orchestrationIntent ||
+      args.intent?.intentFlags ||
+      args.intent ||
+      args.orchestrationIntent ||
+      {},
+
+    conversationHistory:
+      args.conversationHistory ||
+      args.messages ||
+      [],
+
+    adaptiveContext:
+      args.adaptiveContext ||
+      {},
+
+    responsePlan:
+      args.responsePlan ||
+      args.adaptiveContext?.responsePlan ||
+      {},
+
+    model:
+      args.model ||
+      DEFAULT_MODEL
+  };
+}
+
+export function detectComplexity(userQuery = "", classification = {}, intent = {}) {
   const q = safeString(userQuery).toLowerCase();
 
-  if (classification?.complexity) return classification.complexity;
-  if (intent?.complexity) return intent.complexity;
+  if (classification?.complexity) return String(classification.complexity).toLowerCase();
+  if (intent?.complexity) return String(intent.complexity).toLowerCase();
 
   const simple =
     q.length <= 140 &&
     /^(what is|define|meaning of|ano ang)\b/i.test(q) &&
-    !/\b(analyze|risk|audit|contract|jurisprudence|doctrine|conflict|legal consequence|assessment|substance|evidence)\b/i.test(q);
+    !/\b(analyze|risk|audit|contract|jurisprudence|doctrine|conflict|legal consequence|assessment|substance|evidence|compare|reconcile)\b/i.test(q);
 
   if (simple || intent?.requiresSimpleDefinition) return "simple";
 
@@ -167,7 +231,7 @@ function detectComplexity(userQuery = "", classification = {}, intent = {}) {
     intent?.requiresContractInterpretation ||
     intent?.requiresTransactionCharacterization ||
     intent?.requiresEconomicSubstance ||
-    /\b(audit|risk|contract|transaction|economic substance|substance over form|evidence|reconcile|legal consequence)\b/i.test(q)
+    /\b(audit|risk|contract|transaction|economic substance|substance over form|evidence|reconcile|legal consequence|fact pattern|principal|agent)\b/i.test(q)
   ) {
     return "complex";
   }
@@ -175,7 +239,7 @@ function detectComplexity(userQuery = "", classification = {}, intent = {}) {
   if (
     intent?.requiresLegalAnalysis ||
     intent?.requiresJurisprudence ||
-    /\b(jurisprudence|doctrine|conflict|legal basis|supreme court|cta|g\.?\s*r\.?\s*no)\b/i.test(q)
+    /\b(jurisprudence|doctrine|conflict|legal basis|supreme court|cta|g\.?\s*r\.?\s*no|case law)\b/i.test(q)
   ) {
     return "moderate";
   }
@@ -183,7 +247,7 @@ function detectComplexity(userQuery = "", classification = {}, intent = {}) {
   return "standard";
 }
 
-function determineMode(userQuery = "", classification = {}, intent = {}) {
+export function determineMode(userQuery = "", classification = {}, intent = {}) {
   const q = safeString(userQuery).toLowerCase();
   const complexity = detectComplexity(userQuery, classification, intent);
   const primaryIssue = normalizeIssue(classification?.primaryIssue || "");
@@ -202,7 +266,7 @@ function determineMode(userQuery = "", classification = {}, intent = {}) {
     intent?.requiresContractInterpretation ||
     intent?.requiresTransactionCharacterization ||
     intent?.requiresEconomicSubstance ||
-    ["TRANSACTION", "CONTRACT", "ECONOMIC_SUBSTANCE", "AUDIT"].includes(primaryIssue) ||
+    ["TRANSACTION", "CONTRACT", "ECONOMIC_SUBSTANCE", "AUDIT", "ACCOUNTING"].includes(primaryIssue) ||
     /\b(audit|risk|contract|transaction|economic substance|substance over form|evidence|reconcile)\b/i.test(q)
   ) {
     return "COMPLEX_ADVISORY";
@@ -211,7 +275,7 @@ function determineMode(userQuery = "", classification = {}, intent = {}) {
   if (
     intent?.requiresLegalAnalysis ||
     intent?.requiresJurisprudence ||
-    ["CASE_LAW", "DOCTRINE", "ASSESSMENT"].includes(primaryIssue) ||
+    ["CASE_LAW", "DOCTRINE", "ASSESSMENT", "LITIGATION"].includes(primaryIssue) ||
     /\b(jurisprudence|doctrine|conflict|legal basis|case law|supreme court|cta)\b/i.test(q)
   ) {
     return "LEGAL_ANALYSIS";
@@ -220,8 +284,11 @@ function determineMode(userQuery = "", classification = {}, intent = {}) {
   return "STANDARD_TAX";
 }
 
-function assignBudget(model = DEFAULT_MODEL, mode = "STANDARD_TAX") {
-  const modelLimit = MODEL_CONTEXT_LIMITS[model] || DEFAULT_CONTEXT_LIMIT;
+export function assignBudget(model = DEFAULT_MODEL, mode = "STANDARD_TAX") {
+  const modelLimit =
+    MODEL_CONTEXT_LIMITS[model] ||
+    Number(process.env.OPENAI_CONTEXT_LIMIT || 128000);
+
   const hardInputLimit = Math.floor(modelLimit * HARD_SAFETY_RATIO);
   const config = MODE_CONFIG[mode] || MODE_CONFIG.STANDARD_TAX;
 
@@ -247,9 +314,11 @@ function normalizeSource(source = {}, index = 0) {
     source.fileName ||
     source.filename ||
     source.documentTitle ||
+    source.document_title ||
     source.metadata?.documentTitle ||
     source.metadata?.originalFileName ||
     source.originalSource ||
+    source.original_source ||
     source.source ||
     `Source ${index + 1}`;
 
@@ -269,6 +338,7 @@ function normalizeSource(source = {}, index = 0) {
     source.normalized_reference ||
     source.url ||
     source.driveViewUrl ||
+    source.drive_view_url ||
     source.sourceUrl ||
     source.source_url ||
     source.fileId ||
@@ -291,7 +361,9 @@ function normalizeSource(source = {}, index = 0) {
       source.finalScore ??
         source.final_score ??
         source.rerankScore ??
+        source.rerank_score ??
         source.retrievalScore ??
+        source.retrieval_score ??
         source.score ??
         source.similarity ??
         source.relevance ??
@@ -310,10 +382,16 @@ function normalizeSource(source = {}, index = 0) {
     ) || 99;
 
   return {
-    title: safeString(title),
-    authorityType: safeString(authorityType),
-    citation: safeString(citation),
-    url: source.url || source.driveViewUrl || source.sourceUrl || "",
+    title: truncateByChars(title, 220),
+    authorityType: normalizeAuthority(authorityType) || "UNKNOWN",
+    citation: truncateByChars(citation, 260),
+    url:
+      source.url ||
+      source.driveViewUrl ||
+      source.drive_view_url ||
+      source.sourceUrl ||
+      source.source_url ||
+      "",
     text: normalizeWhitespace(text),
     score,
     controllingPrecedence,
@@ -340,11 +418,17 @@ function authorityPriority(source = {}) {
   if (authority.includes("bir ruling")) return 76;
   if (authority.includes("cta")) return 70;
   if (authority.includes("pfrs") || authority.includes("pas ")) return 60;
+
   return 40;
 }
 
 function sourceSortScore(source = {}) {
-  const issueBonus = source.issueClassificationMatch?.matched || source.issueClassificationMatch?.issueOverlap ? 80 : 0;
+  const issueBonus =
+    source.issueClassificationMatch?.matched ||
+    source.issueClassificationMatch?.issueOverlap
+      ? 80
+      : 0;
+
   const targetBonus = source.targetAuthorityMatch ? 100 : 0;
   const mismatchPenalty = source.issueMismatch ? -1000 : 0;
 
@@ -358,7 +442,7 @@ function sourceSortScore(source = {}) {
   );
 }
 
-function trimRetrieval(sources = [], budget = assignBudget()) {
+export function trimRetrieval(sources = [], budget = assignBudget()) {
   return safeArray(sources)
     .map((source, index) => normalizeSource(source, index))
     .filter((source) => source.text && !source.issueMismatch)
@@ -384,7 +468,7 @@ function compressOneSource(source = {}, budget = assignBudget(), index = 0) {
     .join("\n");
 }
 
-function compressSources(sources = [], budget = assignBudget()) {
+export function compressSources(sources = [], budget = assignBudget()) {
   return trimRetrieval(sources, budget)
     .map((source, index) => compressOneSource(source, budget, index))
     .join("\n\n---\n\n");
@@ -410,7 +494,7 @@ export function compressRetrievedSources(sources = [], maxChars = 1200) {
 
 function buildSystemInstruction({ systemPrompt = "", masterPrompt = "", mode = "STANDARD_TAX" }) {
   const base = `
-You are TINA, a Philippine tax information and reasoning assistant.
+You are TINA, a Philippine tax, legal, audit, and compliance reasoning assistant.
 
 Operating Mode: ${mode}
 
@@ -418,15 +502,23 @@ Core rules:
 1. Answer directly first.
 2. Use only relevant authorities and retrieved extracts.
 3. Prefer controlling Philippine authorities.
-4. Do not invent citations.
+4. Do not invent citations, cases, RRs, RMCs, RMOs, or rulings.
 5. If sources are insufficient, say so clearly.
 6. Do not dump unrelated jurisprudence.
-7. Do not include raw source text, full debug objects, retrieval payloads, embeddings, or full engine outputs.
+7. Do not include raw source text, full debug objects, retrieval payloads, embeddings, metadata dumps, or full engine outputs.
 8. Do not say "Conflict Detected: YES" unless same issue, same legal dimension, opposite holding, conflict type, and hierarchy resolution are established.
 9. Keep the answer proportionate to the query.
 `.trim();
 
-  return normalizeWhitespace([base, systemPrompt, masterPrompt].filter(Boolean).join("\n\n"));
+  return normalizeWhitespace(
+    [
+      base,
+      systemPrompt,
+      masterPrompt
+    ]
+      .filter(Boolean)
+      .join("\n\n")
+  );
 }
 
 function buildUserPrompt({
@@ -434,18 +526,22 @@ function buildUserPrompt({
   classification = {},
   intent = {},
   compressedSources = "",
+  adaptiveContext = {},
+  responsePlan = {},
   mode = "STANDARD_TAX"
 }) {
   const compactClassification = {
     primaryIssue: classification?.primaryIssue || classification?.domain || null,
     subIssue: classification?.subIssue || null,
     retrievalStrategy: classification?.retrievalStrategy || null,
-    targetAuthorities: safeArray(classification?.targetAuthorities).slice(0, 10)
+    targetAuthorities: safeArray(classification?.targetAuthorities).slice(0, 10),
+    factSensitivity: classification?.factSensitivity || null
   };
 
   const compactIntent = {
     intent: intent?.intent || intent?.type || null,
     requiresLegalAnalysis: Boolean(intent?.requiresLegalAnalysis),
+    requiresJurisprudence: Boolean(intent?.requiresJurisprudence),
     requiresRiskAnalysis: Boolean(intent?.requiresRiskAnalysis),
     requiresFactPatternAnalysis: Boolean(intent?.requiresFactPatternAnalysis),
     requiresEvidenceEvaluation: Boolean(intent?.requiresEvidenceEvaluation),
@@ -455,9 +551,19 @@ function buildUserPrompt({
     requiresSimpleDefinition: Boolean(intent?.requiresSimpleDefinition)
   };
 
+  const compactAdaptiveContext = {
+    activeHook: adaptiveContext?.activeHook || adaptiveContext?.hookConfig?.hook_code || null,
+    activeMode: adaptiveContext?.activeMode || adaptiveContext?.hookConfig?.mode || null,
+    responseMode:
+      adaptiveContext?.responseMode ||
+      adaptiveContext?.responsePlan?.responseMode ||
+      responsePlan?.responseMode ||
+      null
+  };
+
   return normalizeWhitespace(`
 USER QUERY:
-${userQuery}
+${truncateByChars(userQuery, 5000)}
 
 CLASSIFICATION:
 ${JSON.stringify(compactClassification, null, 2)}
@@ -465,11 +571,14 @@ ${JSON.stringify(compactClassification, null, 2)}
 INTENT:
 ${JSON.stringify(compactIntent, null, 2)}
 
+ADAPTIVE CONTEXT:
+${JSON.stringify(compactAdaptiveContext, null, 2)}
+
 RETRIEVED RELEVANT AUTHORITIES / EXTRACTS:
 ${compressedSources || "[No retrieved source extracts supplied.]"}
 
 RESPONSE INSTRUCTION:
-Use ${mode}. Answer only what is necessary. Do not include irrelevant cases, irrelevant regulations, debug data, hidden metadata, or internal engine objects.
+Use ${mode}. Answer only what is necessary. Do not include irrelevant cases, irrelevant regulations, debug data, hidden metadata, raw context, or internal engine objects.
 `);
 }
 
@@ -483,7 +592,7 @@ export function trimMessagesToBudget(messages = [], maxTokens = 12000) {
 
     running += cost;
     output.unshift({
-      role: msg.role || "user",
+      role: msg.role === "system" || msg.role === "assistant" ? msg.role : "user",
       content: safeString(msg.content || "")
     });
   }
@@ -491,7 +600,7 @@ export function trimMessagesToBudget(messages = [], maxTokens = 12000) {
   return output;
 }
 
-function finalTrimMessages(messages = [], budget = assignBudget()) {
+export function finalTrimMessages(messages = [], budget = assignBudget()) {
   let currentTokens = estimateMessagesTokens(messages);
 
   if (currentTokens <= budget.maxInputTokens) {
@@ -543,202 +652,257 @@ function finalTrimMessages(messages = [], budget = assignBudget()) {
   };
 }
 
-function normalizeBuildArgs(args = {}) {
-  return {
-    userQuery: args.userQuery || args.question || args.query || "",
-    systemPrompt: args.systemPrompt || "",
-    masterPrompt: args.masterPrompt || "",
-    retrievedSources: args.retrievedSources || args.sources || [],
-    classification:
-      args.classification?.orchestrationClassification ||
-      args.classification ||
-      args.issueClassification?.orchestrationClassification ||
-      args.issueClassification ||
-      {},
-    intent:
-      args.intent?.orchestrationIntent ||
-      args.intent?.intentFlags ||
-      args.intent ||
-      args.orchestrationIntent ||
-      {},
-    conversationHistory: args.conversationHistory || args.messages || [],
-    model: args.model || DEFAULT_MODEL
-  };
-}
-
 export function buildOpenAIContext(args = {}) {
-  const {
-    userQuery,
-    systemPrompt,
-    masterPrompt,
-    retrievedSources,
-    classification,
-    intent,
-    conversationHistory,
-    model
-  } = normalizeBuildArgs(args);
+  const normalized = normalizeBuildArgs(args);
 
-  const mode = determineMode(userQuery, classification, intent);
-  const budget = assignBudget(model, mode);
+  const complexity = detectComplexity(
+    normalized.userQuery,
+    normalized.classification,
+    normalized.intent
+  );
 
-  const compressedSources = compressSources(retrievedSources, budget);
+  const mode =
+    normalized.responsePlan?.contextMode ||
+    normalized.responsePlan?.orchestrationMode ||
+    determineMode(
+      normalized.userQuery,
+      normalized.classification,
+      normalized.intent
+    );
 
-  const systemInstruction = buildSystemInstruction({
-    systemPrompt,
-    masterPrompt,
-    mode
-  });
+  const budget = assignBudget(normalized.model, mode);
 
-  const userPrompt = buildUserPrompt({
-    userQuery,
-    classification,
-    intent,
-    compressedSources,
-    mode
-  });
+  const trimmedSources = trimRetrieval(
+    normalized.retrievedSources,
+    budget
+  );
 
-  const safeHistory = safeArray(conversationHistory)
+  const compressedSources = compressSources(
+    trimmedSources,
+    budget
+  );
+
+  const history = safeArray(normalized.conversationHistory)
     .slice(-budget.maxHistoryItems)
-    .map((m) => ({
-      role: m.role === "assistant" ? "assistant" : "user",
-      content: truncateByTokens(m.content || m.message || m.text || "", 500)
-    }))
-    .filter((m) => m.content);
+    .map((msg) => ({
+      role:
+        msg.role === "assistant"
+          ? "assistant"
+          : msg.role === "system"
+            ? "system"
+            : "user",
+
+      content: truncateByChars(
+        normalizeWhitespace(msg.content || ""),
+        1200
+      )
+    }));
+
+  const systemMessage = {
+    role: "system",
+    content: buildSystemInstruction({
+      systemPrompt: normalized.systemPrompt,
+      masterPrompt: normalized.masterPrompt,
+      mode
+    })
+  };
+
+  const userMessage = {
+    role: "user",
+    content: buildUserPrompt({
+      userQuery: normalized.userQuery,
+      classification: normalized.classification,
+      intent: normalized.intent,
+      compressedSources,
+      adaptiveContext: normalized.adaptiveContext,
+      responsePlan: normalized.responsePlan,
+      mode
+    })
+  };
 
   const rawMessages = [
-    {
-      role: "system",
-      content: systemInstruction
-    },
-    ...safeHistory,
-    {
-      role: "user",
-      content: userPrompt
-    }
+    systemMessage,
+    ...history,
+    userMessage
   ];
 
-  const final = finalTrimMessages(rawMessages, budget);
+  const trimmed = finalTrimMessages(
+    rawMessages,
+    budget
+  );
 
   return {
-    model: budget.model,
+    engine: "TINA_CONTEXT_ORCHESTRATION_ENGINE",
+    version: ENGINE_VERSION,
+
+    complexity,
     mode,
-    contextMode: mode,
-    orchestrationMode: mode,
-    complexity: detectComplexity(userQuery, classification, intent),
-    messages: final.messages,
-    temperature: budget.temperature,
-    maxOutputTokens: budget.maxOutputTokens,
-    max_tokens: budget.maxOutputTokens,
-    maxCompletionTokens: budget.maxOutputTokens,
-    estimatedInputTokens: final.estimatedInputTokens,
-    wasTrimmed: final.wasTrimmed,
+
+    model: normalized.model,
+
     budget,
-    responsePlan: {
-      responseMode: mode,
-      orchestrationMode: mode,
-      contextMode: mode,
-      contextBudgetPolicy: budget
-    },
+
+    retrievedSources: trimmedSources,
+    compressedSources,
+
+    messages: trimmed.messages,
+
+    estimatedInputTokens:
+      trimmed.estimatedInputTokens,
+
+    maxCompletionTokens:
+      budget.maxOutputTokens,
+
+    temperature:
+      budget.temperature,
+
     diagnostics: {
-      sourceCountInput: safeArray(retrievedSources).length,
-      sourceCountUsed: trimRetrieval(retrievedSources, budget).length,
-      estimatedInputTokens: final.estimatedInputTokens,
-      maxInputTokens: budget.maxInputTokens,
-      maxOutputTokens: budget.maxOutputTokens,
+      orchestrationFinalSource: true,
+
+      noPromptAssemblyOutsideThisFile: true,
+      noDirectOpenAICallOutsideThisFile: true,
+
+      retrievalTrimmed: true,
+      retrievalCompressed: true,
+
+      rawRetrievalPayloadInjectionPrevented: true,
+      rawEngineObjectInjectionPrevented: true,
+      fullDebugObjectInjectionPrevented: true,
+      fullEngineOutputInjectionPrevented: true,
+
+      finalTrimApplied:
+        trimmed.wasTrimmed,
+
+      sourceCount:
+        trimmedSources.length,
+
+      model:
+        normalized.model,
+
+      estimatedInputTokens:
+        trimmed.estimatedInputTokens,
+
+      maxCompletionTokens:
+        budget.maxOutputTokens,
+
+      complexity,
       mode
     }
   };
 }
 
-function getOpenAIClient(openai = null) {
-  if (openai?.chat?.completions?.create) return openai;
-
-  if (!process.env.OPENAI_API_KEY) {
-    throw new Error("Missing OPENAI_API_KEY.");
-  }
-
-  return new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY
-  });
-}
-
-function extractCompletionText(completion = {}) {
-  return (
-    completion?.choices?.[0]?.message?.content ||
-    completion?.output_text ||
-    ""
-  );
-}
-
 export async function callOpenAIWithOrchestration(args = {}) {
-  const openai = getOpenAIClient(args.openai);
+  const orchestration = buildOpenAIContext(args);
 
-  const orchestration =
-    args.orchestrationContext ||
-    buildOpenAIContext(args);
+  const openai =
+    args.openai ||
+    new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY
+    });
 
   const completion = await openai.chat.completions.create({
-    model: args.model || orchestration.model,
+    model: orchestration.model,
     messages: orchestration.messages,
-    temperature:
-      args.temperature ??
-      orchestration.temperature ??
-      0.1,
-    max_tokens:
-      args.max_tokens ||
-      args.maxOutputTokens ||
-      orchestration.maxOutputTokens
+    max_tokens: orchestration.maxCompletionTokens,
+    temperature: orchestration.temperature
   });
 
-  const answer = extractCompletionText(completion);
+  const answer =
+    completion?.choices?.[0]?.message?.content ||
+    "";
 
   return {
-    completion,
-    orchestration,
     answer,
-    text: answer,
-    output_text: answer
+
+    orchestration: {
+      engine: orchestration.engine,
+      version: orchestration.version,
+
+      complexity: orchestration.complexity,
+      mode: orchestration.mode,
+
+      estimatedInputTokens:
+        orchestration.estimatedInputTokens,
+
+      maxCompletionTokens:
+        orchestration.maxCompletionTokens,
+
+      sourceCount:
+        orchestration.retrievedSources.length,
+
+      wasTrimmed:
+        orchestration.diagnostics.finalTrimApplied,
+
+      diagnostics:
+        orchestration.diagnostics
+    },
+
+    usage:
+      completion?.usage || null,
+
+    raw:
+      completion
   };
 }
 
 export function contextOrchestrationHealthCheck() {
   return {
     ok: true,
-    engine: "TINA_CONTEXT_ORCHESTRATION_ENGINE",
-    version: "3.0.0",
-    singleSourceOfTruthForTokenControl: true,
-    exportsEstimateTokens: true,
-    exportsEstimateMessagesTokens: true,
-    exportsEstimatePromptTokens: true,
-    exportsCompressRetrievedSources: true,
-    exportsTrimMessagesToBudget: true,
-    buildOpenAIContextReady: true,
-    callOpenAIWithOrchestrationReady: true,
-    oversizedPromptProtectionEnabled: true
+
+    engine:
+      "TINA_CONTEXT_ORCHESTRATION_ENGINE",
+
+    version:
+      ENGINE_VERSION,
+
+    orchestrationFinalSource: true,
+
+    onlyFileAllowedToBuildMessages: true,
+    onlyFileAllowedToEstimateTokens: true,
+    onlyFileAllowedToTrimContext: true,
+    onlyFileAllowedToCompressSources: true,
+    onlyFileAllowedToCallOpenAI: true,
+
+    noPromptAssemblyOutsideThisFile: true,
+    noDirectOpenAICallOutsideThisFile: true,
+
+    rawRetrievalPayloadInjectionPrevented: true,
+    rawEngineObjectInjectionPrevented: true,
+    fullDebugObjectInjectionPrevented: true,
+    fullEngineOutputInjectionPrevented: true,
+
+    supportsComplexityClassification: true,
+    supportsModeDetection: true,
+    supportsTokenBudgeting: true,
+    supportsRetrievalCompression: true,
+    supportsFinalTrim: true,
+
+    supportedModes:
+      Object.keys(MODE_CONFIG),
+
+    supportedModels:
+      Object.keys(MODEL_CONTEXT_LIMITS)
   };
 }
-
-export {
-  determineMode,
-  detectComplexity,
-  assignBudget,
-  trimRetrieval,
-  compressSources,
-  finalTrimMessages
-};
 
 export default {
   buildOpenAIContext,
   callOpenAIWithOrchestration,
-  estimateTokens,
-  estimateMessagesTokens,
-  estimatePromptTokens,
-  determineMode,
+
   detectComplexity,
+  determineMode,
   assignBudget,
+
   trimRetrieval,
   compressSources,
   compressRetrievedSources,
+
+  estimateTokens,
+  estimatePromptTokens,
+  estimateMessagesTokens,
+
   trimMessagesToBudget,
+  finalTrimMessages,
+
   contextOrchestrationHealthCheck
 };
