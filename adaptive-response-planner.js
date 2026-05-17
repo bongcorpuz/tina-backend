@@ -2,17 +2,18 @@
 "use strict";
 
 /**
- * TINA Enterprise Adaptive Response Planner
- * Version: 5.0.0
+ * TINA Adaptive Response Planner
+ * Version: 6.0.0
  *
- * Purpose:
- * - Select final response mode and section contract
- * - Support context-orchestration-engine.js
- * - Pass compact orchestration metadata downstream
- * - Prevent raw source/debug/full engine output instructions
+ * Role:
+ * - response architecture planner ONLY
+ * - no OpenAI calls
+ * - no prompt assembly
+ * - no source injection
+ * - no raw engine output injection
  */
 
-const ENGINE_VERSION = "5.0.0";
+const ENGINE_VERSION = "6.0.0";
 
 const RESPONSE_MODE = Object.freeze({
   QUICK: "QUICK",
@@ -51,36 +52,6 @@ const TECHNICAL_TEMPLATE = Object.freeze([
   "F. PRACTICAL APPLICATION"
 ]);
 
-const ORCHESTRATION_TEMPLATES = Object.freeze({
-  [ORCHESTRATION_MODE.FAST_DEFINITION]: [
-    "Direct Answer",
-    "Legal Basis"
-  ],
-
-  [ORCHESTRATION_MODE.STANDARD_TAX]: [
-    "Direct Answer",
-    "Legal Basis",
-    "Supporting Rules",
-    "Practical Note",
-    "Jurisprudence"
-  ],
-
-  [ORCHESTRATION_MODE.LEGAL_ANALYSIS]: TECHNICAL_TEMPLATE,
-
-  [ORCHESTRATION_MODE.COMPLEX_ADVISORY]: [
-    "Executive Answer",
-    "Controlling Basis",
-    "Assumptions / Fact Sensitivity",
-    "Risk / Practical Application",
-    "Recommended Documentation"
-  ],
-
-  [ORCHESTRATION_MODE.EMERGENCY_TRIM]: [
-    "Direct Answer",
-    "Limited Basis"
-  ]
-});
-
 const RESPONSE_TEMPLATES = Object.freeze({
   [RESPONSE_MODE.QUICK]: [
     "A. DIRECT ANSWER",
@@ -88,7 +59,13 @@ const RESPONSE_TEMPLATES = Object.freeze({
     "C. PRACTICAL NOTE"
   ],
 
-  [RESPONSE_MODE.STANDARD]: TECHNICAL_TEMPLATE,
+  [RESPONSE_MODE.STANDARD]: [
+    "A. DIRECT ANSWER",
+    "B. CONTROLLING LEGAL BASIS",
+    "C. PRACTICAL APPLICATION",
+    "D. TAX / COMPLIANCE RISK"
+  ],
+
   [RESPONSE_MODE.TECHNICAL]: TECHNICAL_TEMPLATE,
 
   [RESPONSE_MODE.AUDIT]: [
@@ -153,51 +130,47 @@ const RESPONSE_TEMPLATES = Object.freeze({
   ]
 });
 
-function normalizeText(value = "") {
-  return String(value || "").replace(/\s+/g, " ").trim();
-}
+const ORCHESTRATION_TEMPLATES = Object.freeze({
+  [ORCHESTRATION_MODE.FAST_DEFINITION]: [
+    "Direct Answer",
+    "Legal Basis"
+  ],
 
-function safeObject(value) {
-  return value && typeof value === "object" && !Array.isArray(value) ? value : {};
-}
+  [ORCHESTRATION_MODE.STANDARD_TAX]: [
+    "Direct Answer",
+    "Legal Basis",
+    "Supporting Rules",
+    "Practical Note",
+    "Jurisprudence"
+  ],
+
+  [ORCHESTRATION_MODE.LEGAL_ANALYSIS]: TECHNICAL_TEMPLATE,
+
+  [ORCHESTRATION_MODE.COMPLEX_ADVISORY]: [
+    "Executive Answer",
+    "Controlling Basis",
+    "Assumptions / Fact Sensitivity",
+    "Risk / Practical Application",
+    "Recommended Documentation"
+  ],
+
+  [ORCHESTRATION_MODE.EMERGENCY_TRIM]: [
+    "Direct Answer",
+    "Limited Basis"
+  ]
+});
 
 function safeArray(value) {
   if (!value) return [];
   return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
 }
 
+function safeObject(value) {
+  return value && typeof value === "object" && !Array.isArray(value) ? value : {};
+}
+
 function unique(values = []) {
-  return [...new Set((values || []).filter(Boolean))];
-}
-
-function normalizeMode(mode) {
-  const value = String(mode || "").toUpperCase();
-
-  if (value.includes("FAST") || value.includes("QUICK")) return RESPONSE_MODE.QUICK;
-  if (value.includes("AUDIT")) return RESPONSE_MODE.AUDIT;
-  if (value.includes("LITIGATION") || value.includes("LEGAL_DEFENSE") || value.includes("LEGAL")) return RESPONSE_MODE.LITIGATION;
-  if (value.includes("CONTRACT")) return RESPONSE_MODE.CONTRACT;
-  if (value.includes("TRANSACTION")) return RESPONSE_MODE.TRANSACTION;
-  if (value.includes("EVIDENCE")) return RESPONSE_MODE.EVIDENCE_HEAVY;
-  if (value.includes("TECHNICAL") || value.includes("DOCTRINE")) return RESPONSE_MODE.TECHNICAL;
-  if (value.includes("REVIEWER") || value.includes("LEARNING") || value.includes("QUIZ")) return RESPONSE_MODE.REVIEWER;
-  if (value.includes("STANDARD")) return RESPONSE_MODE.STANDARD;
-
-  return RESPONSE_MODE.STANDARD;
-}
-
-function normalizeOrchestrationMode(mode = "") {
-  const value = String(mode || "").toUpperCase();
-
-  if (Object.values(ORCHESTRATION_MODE).includes(value)) return value;
-
-  if (value.includes("EMERGENCY")) return ORCHESTRATION_MODE.EMERGENCY_TRIM;
-  if (value.includes("FAST") || value.includes("QUICK") || value.includes("DEFINITION")) return ORCHESTRATION_MODE.FAST_DEFINITION;
-  if (value.includes("COMPLEX") || value.includes("ADVISORY") || value.includes("AUDIT") || value.includes("CONTRACT") || value.includes("TRANSACTION") || value.includes("EVIDENCE") || value.includes("RISK")) return ORCHESTRATION_MODE.COMPLEX_ADVISORY;
-  if (value.includes("LEGAL") || value.includes("DOCTRINE") || value.includes("JURISPRUDENCE") || value.includes("LITIGATION")) return ORCHESTRATION_MODE.LEGAL_ANALYSIS;
-  if (value.includes("STANDARD") || value.includes("TAX")) return ORCHESTRATION_MODE.STANDARD_TAX;
-
-  return null;
+  return [...new Set(safeArray(values).filter(Boolean))];
 }
 
 function normalizeIssue(value = "") {
@@ -248,11 +221,55 @@ function normalizeAuthority(value = "") {
     CASE: "SUPREME_COURT",
     JURISPRUDENCE: "SUPREME_COURT",
     CTA: "CTA_DIVISION",
+    BIR_RULING: "BIR_RULING",
     BIR_RULINGS: "BIR_RULING",
     IFRS: "PFRS"
   };
 
   return aliases[raw] || raw || null;
+}
+
+function normalizeMode(mode = "") {
+  const value = String(mode || "").toUpperCase();
+
+  if (Object.values(RESPONSE_MODE).includes(value)) return value;
+  if (value.includes("FAST") || value.includes("QUICK")) return RESPONSE_MODE.QUICK;
+  if (value.includes("AUDIT")) return RESPONSE_MODE.AUDIT;
+  if (value.includes("LITIGATION") || value.includes("LEGAL_DEFENSE") || value.includes("LEGAL")) return RESPONSE_MODE.LITIGATION;
+  if (value.includes("CONTRACT")) return RESPONSE_MODE.CONTRACT;
+  if (value.includes("TRANSACTION")) return RESPONSE_MODE.TRANSACTION;
+  if (value.includes("EVIDENCE")) return RESPONSE_MODE.EVIDENCE_HEAVY;
+  if (value.includes("TECHNICAL") || value.includes("DOCTRINE")) return RESPONSE_MODE.TECHNICAL;
+  if (value.includes("REVIEWER") || value.includes("LEARNING") || value.includes("QUIZ")) return RESPONSE_MODE.REVIEWER;
+  if (value.includes("STANDARD")) return RESPONSE_MODE.STANDARD;
+
+  return RESPONSE_MODE.STANDARD;
+}
+
+function normalizeOrchestrationMode(mode = "") {
+  const value = String(mode || "").toUpperCase();
+
+  if (Object.values(ORCHESTRATION_MODE).includes(value)) return value;
+  if (value.includes("EMERGENCY")) return ORCHESTRATION_MODE.EMERGENCY_TRIM;
+  if (value.includes("FAST") || value.includes("QUICK") || value.includes("DEFINITION")) return ORCHESTRATION_MODE.FAST_DEFINITION;
+  if (
+    value.includes("COMPLEX") ||
+    value.includes("ADVISORY") ||
+    value.includes("AUDIT") ||
+    value.includes("CONTRACT") ||
+    value.includes("TRANSACTION") ||
+    value.includes("EVIDENCE") ||
+    value.includes("RISK")
+  ) return ORCHESTRATION_MODE.COMPLEX_ADVISORY;
+  if (
+    value.includes("LEGAL") ||
+    value.includes("DOCTRINE") ||
+    value.includes("JURISPRUDENCE") ||
+    value.includes("LITIGATION")
+  ) return ORCHESTRATION_MODE.LEGAL_ANALYSIS;
+  if (value.includes("STANDARD") || value.includes("TAX")) return ORCHESTRATION_MODE.STANDARD_TAX;
+
+  return null;
 }
 
 function getIssueClassification(input = {}) {
@@ -329,14 +346,20 @@ function getOrchestrationIntent(input = {}) {
 
 function determineModeFromIssue(issueClassification = {}, fallbackMode = RESPONSE_MODE.STANDARD) {
   const primary = issueClassification.primaryIssue;
-  const dimensions = safeArray(issueClassification.legalDimensions).map((item) => String(item).toUpperCase());
+  const dimensions = safeArray(issueClassification.legalDimensions).map((item) =>
+    String(item).toUpperCase()
+  );
 
   if (primary === "AUDIT" || primary === "ACCOUNTING") return RESPONSE_MODE.AUDIT;
   if (primary === "CONTRACT") return RESPONSE_MODE.CONTRACT;
   if (["TRANSACTION", "ECONOMIC_SUBSTANCE"].includes(primary)) return RESPONSE_MODE.TRANSACTION;
   if (["ASSESSMENT", "CASE_LAW", "DOCTRINE"].includes(primary)) return RESPONSE_MODE.LITIGATION;
-  if (dimensions.includes("EVIDENTIARY") || issueClassification.factSensitivity === "high") return RESPONSE_MODE.EVIDENCE_HEAVY;
-  if (["VAT_LIABILITY", "VAT_REFUND", "INCOME_TAX", "WITHHOLDING"].includes(primary)) return RESPONSE_MODE.TECHNICAL;
+  if (dimensions.includes("EVIDENTIARY") || issueClassification.factSensitivity === "high") {
+    return RESPONSE_MODE.EVIDENCE_HEAVY;
+  }
+  if (["VAT_LIABILITY", "VAT_REFUND", "INCOME_TAX", "WITHHOLDING"].includes(primary)) {
+    return RESPONSE_MODE.TECHNICAL;
+  }
 
   return fallbackMode;
 }
@@ -346,7 +369,7 @@ function determineOrchestrationMode({
   responseMode = RESPONSE_MODE.STANDARD,
   issueClassification = {},
   intent = {}
-}) {
+} = {}) {
   const explicit =
     normalizeOrchestrationMode(input.orchestrationMode) ||
     normalizeOrchestrationMode(input.contextMode) ||
@@ -385,8 +408,20 @@ function determineOrchestrationMode({
 }
 
 function determineDepth(mode, context = {}, issueClassification = {}, orchestrationMode = null) {
-  const risk = String(context.riskLevel || context.risk_level || context.riskScore?.overallRisk?.level || "").toUpperCase();
-  const complexity = String(context.complexityLevel || context.complexity_level || issueClassification.complexityFlag || issueClassification.complexity || "").toUpperCase();
+  const risk = String(
+    context.riskLevel ||
+      context.risk_level ||
+      context.riskScore?.overallRisk?.level ||
+      ""
+  ).toUpperCase();
+
+  const complexity = String(
+    context.complexityLevel ||
+      context.complexity_level ||
+      issueClassification.complexityFlag ||
+      issueClassification.complexity ||
+      ""
+  ).toUpperCase();
 
   if (orchestrationMode === ORCHESTRATION_MODE.EMERGENCY_TRIM) return RESPONSE_DEPTH.CONCISE;
   if (orchestrationMode === ORCHESTRATION_MODE.FAST_DEFINITION) return RESPONSE_DEPTH.CONCISE;
@@ -395,16 +430,20 @@ function determineDepth(mode, context = {}, issueClassification = {}, orchestrat
   if (mode === RESPONSE_MODE.REVIEWER) return RESPONSE_DEPTH.SIMPLE;
   if (mode === RESPONSE_MODE.QUICK) return RESPONSE_DEPTH.CONCISE;
   if (risk === "CRITICAL" || risk === "HIGH") return RESPONSE_DEPTH.COMPREHENSIVE;
-  if (complexity === "HIGH" || complexity === "COMPLEX" || complexity === "MULTI_ISSUE") return RESPONSE_DEPTH.COMPREHENSIVE;
+  if (complexity === "HIGH" || complexity === "COMPLEX" || complexity === "MULTI_ISSUE") {
+    return RESPONSE_DEPTH.COMPREHENSIVE;
+  }
 
-  if ([
-    RESPONSE_MODE.AUDIT,
-    RESPONSE_MODE.LITIGATION,
-    RESPONSE_MODE.CONTRACT,
-    RESPONSE_MODE.TRANSACTION,
-    RESPONSE_MODE.EVIDENCE_HEAVY,
-    RESPONSE_MODE.TECHNICAL
-  ].includes(mode)) {
+  if (
+    [
+      RESPONSE_MODE.AUDIT,
+      RESPONSE_MODE.LITIGATION,
+      RESPONSE_MODE.CONTRACT,
+      RESPONSE_MODE.TRANSACTION,
+      RESPONSE_MODE.EVIDENCE_HEAVY,
+      RESPONSE_MODE.TECHNICAL
+    ].includes(mode)
+  ) {
     return RESPONSE_DEPTH.STRUCTURED;
   }
 
@@ -433,7 +472,9 @@ function mustIncludeLimitations(context = {}, issueClassification = {}) {
       conclusionStrength === "PRELIMINARY_CONCLUSION_ONLY" ||
       conclusionStrength === "DEFER_CONCLUSION" ||
       conclusionStrength === "USE_QUALIFIED_CONCLUSION" ||
-      ["HIGH", "CRITICAL"].includes(String(context.riskLevel || context.riskScore?.overallRisk?.level || "").toUpperCase())
+      ["HIGH", "CRITICAL"].includes(
+        String(context.riskLevel || context.riskScore?.overallRisk?.level || "").toUpperCase()
+      )
   );
 }
 
@@ -441,120 +482,63 @@ function buildPreConclusionBlocks(context = {}) {
   const blocks = [];
 
   const addBlock = (heading, source, items) => {
-    const normalizedItems = safeArray(items).filter(Boolean).slice(0, 8);
+    const normalizedItems = safeArray(items)
+      .map((item) => {
+        if (typeof item === "string") return item;
+        if (item?.text) return item.text;
+        if (item?.description) return item.description;
+        if (item?.label) return item.label;
+        return null;
+      })
+      .filter(Boolean)
+      .slice(0, 8);
+
     if (!normalizedItems.length) return;
-    blocks.push({ heading, source, items: normalizedItems });
+
+    blocks.push({
+      heading,
+      source,
+      items: normalizedItems
+    });
   };
 
-  addBlock("PRELIMINARY DISCLOSURES BEFORE CONCLUSION", "assumption-gap-engine", context.mandatoryDisclosure || context.assumptionGap?.mandatoryDisclosure);
-  addBlock("KNOWN FACTS", "fact-pattern-engine", context.knownFacts || context.factPattern?.knownFacts || context.factPattern?.facts);
-  addBlock("UNRESOLVED FACTS", "fact-pattern-engine", context.unresolvedFacts || context.factPattern?.unresolvedFacts);
-  addBlock("DOCUMENTARY GAPS", "contract-interpretation-engine", context.documentaryGaps || context.contractInterpretation?.documentaryGaps);
-  addBlock("EVIDENCE STATUS", "evidence-evaluation-engine", context.evidenceCoverage || context.evidenceEvaluation?.evidenceCoverage);
-  addBlock("RISK FLAGS", "risk-scoring-engine", context.riskFlags || context.riskScore?.riskFlags);
+  addBlock(
+    "PRELIMINARY DISCLOSURES BEFORE CONCLUSION",
+    "assumption-gap-engine",
+    context.mandatoryDisclosure || context.assumptionGap?.mandatoryDisclosure
+  );
+
+  addBlock(
+    "KNOWN FACTS",
+    "fact-pattern-engine",
+    context.knownFacts || context.factPattern?.knownFacts || context.factPattern?.facts
+  );
+
+  addBlock(
+    "UNRESOLVED FACTS",
+    "fact-pattern-engine",
+    context.unresolvedFacts || context.factPattern?.unresolvedFacts
+  );
+
+  addBlock(
+    "DOCUMENTARY GAPS",
+    "contract-interpretation-engine",
+    context.documentaryGaps || context.contractInterpretation?.documentaryGaps
+  );
+
+  addBlock(
+    "EVIDENCE STATUS",
+    "evidence-evaluation-engine",
+    context.evidenceCoverage || context.evidenceEvaluation?.evidenceCoverage
+  );
+
+  addBlock(
+    "RISK FLAGS",
+    "risk-scoring-engine",
+    context.riskFlags || context.riskScore?.riskFlags
+  );
 
   return blocks;
-}
-
-function buildAuthorityInstruction(mode, issueClassification = {}) {
-  const base = [
-    "Apply Philippine legal hierarchy.",
-    "Use Constitution, NIRC / Tax Code, Republic Acts, and controlling Supreme Court doctrine before administrative issuances.",
-    "Use Revenue Regulations before RMCs, RMOs, RAMOs, and BIR rulings.",
-    "Use jurisprudence only when it is directly issue-relevant.",
-    "Prefer authorities matching issueClassificationMatch and targetAuthorityMatch."
-  ];
-
-  if ([RESPONSE_MODE.TECHNICAL, RESPONSE_MODE.LITIGATION].includes(mode)) {
-    base.push("Do not merely say conflict exists; explain exact issue, opposite holding, controlling authority, and why it controls.");
-  }
-
-  if (issueClassification.primaryIssue) {
-    base.push(`Classified issue controls authority selection: ${issueClassification.primaryIssue}.`);
-  }
-
-  if (issueClassification.targetAuthorities?.length) {
-    base.push(`Preferred target authorities: ${issueClassification.targetAuthorities.join(", ")}.`);
-  }
-
-  return base;
-}
-
-function buildModeSpecificRules(mode) {
-  const commonIssueRules = [
-    "Do not cite provisions, cases, or doctrines that are issue-mismatched.",
-    "Do not attach doctrines merely because they mention the same broad tax type.",
-    "Do not display issue-mismatched sources.",
-    "Do not inject raw retrieval objects, raw source text, debug JSON, or full engine outputs."
-  ];
-
-  switch (mode) {
-    case RESPONSE_MODE.AUDIT:
-      return [
-        ...commonIssueRules,
-        "Identify possible misstatement risk.",
-        "Separate accounting treatment from tax treatment.",
-        "State required audit evidence before final audit conclusion.",
-        "Do not rely only on management representation."
-      ];
-
-    case RESPONSE_MODE.LITIGATION:
-      return [
-        ...commonIssueRules,
-        "Frame the legal issue precisely.",
-        "Present BIR or opposing position fairly.",
-        "Present taxpayer defense separately.",
-        "Explain doctrinal conflict only if complete conflict metadata exists."
-      ];
-
-    case RESPONSE_MODE.CONTRACT:
-      return [
-        ...commonIssueRules,
-        "Identify parties, object, consideration, rights, obligations, control, risk, billing, tax clauses, and termination.",
-        "Compare contract label against actual conduct.",
-        "Flag missing or ambiguous clauses."
-      ];
-
-    case RESPONSE_MODE.TRANSACTION:
-      return [
-        ...commonIssueRules,
-        "Analyze legal form versus economic substance.",
-        "Trace money flow, service/goods flow, control, risk, margin, and invoicing.",
-        "Resolve sale, service, lease, agency, reimbursement, concession, pass-through, financing, equity, or mixed characterization."
-      ];
-
-    case RESPONSE_MODE.EVIDENCE_HEAVY:
-      return [
-        ...commonIssueRules,
-        "Separate asserted facts, documented facts, unsupported facts, and contradictory evidence.",
-        "Identify missing documents and audit-sensitive items.",
-        "Use preliminary conclusion language if evidence is incomplete."
-      ];
-
-    case RESPONSE_MODE.TECHNICAL:
-      return [
-        ...commonIssueRules,
-        "Synthesize law, regulations, rulings, and jurisprudence.",
-        "Explain hierarchy and doctrinal status.",
-        "Avoid unsupported broad legal conclusions."
-      ];
-
-    case RESPONSE_MODE.REVIEWER:
-      return [
-        "Use simple explanation.",
-        "Give example when useful.",
-        "Avoid excessive legal drafting unless requested.",
-        "Do not inject raw source text or debug objects."
-      ];
-
-    default:
-      return [
-        ...commonIssueRules,
-        "Answer directly.",
-        "Use practical, risk-based explanation.",
-        "Do not overstate certainty."
-      ];
-  }
 }
 
 function buildConclusionRule(context = {}, issueClassification = {}) {
@@ -583,14 +567,16 @@ function buildConclusionRule(context = {}, issueClassification = {}) {
     return {
       allowStrongConclusion: false,
       restriction: "PRELIMINARY_CONCLUSION_ONLY",
-      requiredLanguage: "Use preliminary language: Based on the available facts, the position is preliminary and subject to verification."
+      requiredLanguage:
+        "Use preliminary language: Based on the available facts, the position is preliminary and subject to verification."
     };
   }
 
   return {
     allowStrongConclusion: true,
     restriction: "DIRECT_CONCLUSION_ALLOWED",
-    requiredLanguage: "A direct conclusion may be given if supported by issue-matched legal basis and evidence."
+    requiredLanguage:
+      "A direct conclusion may be given if supported by issue-matched legal basis and evidence."
   };
 }
 
@@ -618,7 +604,7 @@ function buildConflictDisplayPolicy() {
   };
 }
 
-function buildContextBudgetPolicy(orchestrationMode) {
+function buildContextBudgetPolicy(orchestrationMode = ORCHESTRATION_MODE.STANDARD_TAX) {
   const policies = {
     [ORCHESTRATION_MODE.FAST_DEFINITION]: {
       maxSources: 3,
@@ -626,24 +612,28 @@ function buildContextBudgetPolicy(orchestrationMode) {
       maxPromptTokens: 4500,
       maxCompletionTokens: 900
     },
+
     [ORCHESTRATION_MODE.STANDARD_TAX]: {
       maxSources: 5,
       maxSourceChars: 1400,
       maxPromptTokens: 7000,
       maxCompletionTokens: 1600
     },
+
     [ORCHESTRATION_MODE.LEGAL_ANALYSIS]: {
       maxSources: 6,
       maxSourceChars: 1800,
       maxPromptTokens: 9500,
       maxCompletionTokens: 2200
     },
+
     [ORCHESTRATION_MODE.COMPLEX_ADVISORY]: {
       maxSources: 8,
       maxSourceChars: 1800,
       maxPromptTokens: 11000,
       maxCompletionTokens: 2600
     },
+
     [ORCHESTRATION_MODE.EMERGENCY_TRIM]: {
       maxSources: 2,
       maxSourceChars: 600,
@@ -733,7 +723,12 @@ function planAdaptiveResponse(input = {}) {
     orchestrationIntent: intent
   };
 
-  const depth = determineDepth(mode, context, issueClassification, orchestrationMode);
+  const depth = determineDepth(
+    mode,
+    context,
+    issueClassification,
+    orchestrationMode
+  );
 
   const template =
     ORCHESTRATION_TEMPLATES[orchestrationMode] ||
@@ -768,86 +763,59 @@ function planAdaptiveResponse(input = {}) {
     orchestrationIntent: intent,
 
     preConclusionBlocks: buildPreConclusionBlocks(context),
-    authorityInstructions: buildAuthorityInstruction(mode, issueClassification),
-    modeSpecificRules: buildModeSpecificRules(mode),
     conclusionRule,
-
-    sourceOrderingPolicy: buildSourceOrderingPolicy(issueClassification),
-    conflictDisplayPolicy: buildConflictDisplayPolicy(),
-    contextBudgetPolicy,
-
     mustIncludeLimitation: limitationRequired,
     limitationStatement: limitationRequired
       ? "Based on the available facts, the position is preliminary and subject to verification."
       : null,
 
+    sourceOrderingPolicy: buildSourceOrderingPolicy(issueClassification),
+    conflictDisplayPolicy: buildConflictDisplayPolicy(),
+    contextBudgetPolicy,
     rendererContract,
 
-    formattingRules: [
-      "Use clear section headings.",
-      "Give the direct answer first unless evidence gaps require preliminary disclosure first.",
-      "Do not mix legal conclusion, accounting treatment, and audit risk without labels.",
-      "Do not say 'Conflict detected: YES' without complete conflict metadata.",
-      "For high-risk answers, include assumptions, missing documents, evidentiary gaps, and limitations.",
-      "Cite issue-matched and target-authority-matched sources first.",
-      "Do not include raw source dumps, debug JSON, full engine objects, or retrieval payloads."
-    ],
-
-    plannerInstruction: [
-      `Use ${orchestrationMode} orchestration mode.`,
-      `Use ${mode} response format.`,
-      `Use ${depth} response depth.`,
-      `Classified issue: ${issueClassification.primaryIssue}.`,
-      ...template.map((section) => `Required section: ${section}`),
-      ...buildAuthorityInstruction(mode, issueClassification),
-      ...buildModeSpecificRules(mode),
-      conclusionRule.requiredLanguage,
-      "Use only compact source summaries prepared by the context orchestration engine."
-    ],
+    plannerContract: {
+      responseMode: mode,
+      orchestrationMode,
+      contextMode: orchestrationMode,
+      responseDepth: depth,
+      requiredSections: template,
+      conclusionRule,
+      mustIncludeLimitation: limitationRequired,
+      sourceOrderingPolicy: buildSourceOrderingPolicy(issueClassification),
+      conflictDisplayPolicy: buildConflictDisplayPolicy(),
+      contextBudgetPolicy,
+      issueClassification
+    },
 
     orchestrationMetadata: {
-      plannerCompatible: true,
+      plannerOnly: true,
+      noPromptAssembly: true,
+      noOpenAICalls: true,
+      noSourceInjection: true,
+      noRawEngineOutputInjection: true,
       rendererCompatible: true,
       finalAnswerComplianceCompatible: true,
       contextOrchestrationCompatible: true,
       contextMode: orchestrationMode,
       responseMode: mode,
-      conclusionGatingCompatible: true,
-      adaptivePipelineCompatible: true,
-      issueClassificationCompatible: true,
-      issueClassificationMatchAware: true,
-      targetAuthorityAware: true,
-      sourceVisibilityCompatible: true,
-      conflictMetadataGateCompatible: true,
-      rawFullDocumentInjectionPrevented: true,
-      fullDebugObjectInjectionPrevented: true,
-      fullEngineOutputInjectionPrevented: true,
+      responseDepth: depth,
       tinaAdaptiveResponsePlannerVersion: ENGINE_VERSION
     }
   };
 }
 
-function buildResponsePlannerInstruction(plan) {
+/**
+ * Compatibility wrapper.
+ * Returns a compact planner instruction object, but does not assemble prompts.
+ */
+function buildResponsePlannerInstruction(plan = {}) {
   if (!plan || plan.engine !== "TINA_ADAPTIVE_RESPONSE_PLANNER") {
     throw new Error("Invalid adaptive response plan supplied.");
   }
 
   return {
-    instruction: [
-      "Use the adaptive response plan as the final answer format controller.",
-      "Follow the required sections unless the user specifically requested a shorter format.",
-      "Apply mode-specific rules before drafting.",
-      "Respect conclusion restrictions.",
-      "Include limitation language where required.",
-      "Use issueClassification to control legal basis, jurisprudence, doctrine, source ordering, and conflict analysis.",
-      "Do not display issue-mismatched sources.",
-      "Do not say Conflict Detected: YES unless conflict metadata is complete.",
-      "Do not inject raw source text, raw retrieval payloads, debug JSON, or full engine outputs.",
-      `Orchestration mode: ${plan.orchestrationMode}.`,
-      `Response mode: ${plan.responseMode}.`,
-      `Response depth: ${plan.responseDepth}.`,
-      `Classified issue: ${plan.issueClassification?.primaryIssue || "GENERAL_TAX"}.`
-    ],
+    instruction: [],
     plan: {
       responseMode: plan.responseMode,
       orchestrationMode: plan.orchestrationMode,
@@ -861,7 +829,9 @@ function buildResponsePlannerInstruction(plan) {
       contextBudgetPolicy: plan.contextBudgetPolicy,
       issueClassification: plan.issueClassification,
       orchestrationMetadata: plan.orchestrationMetadata
-    }
+    },
+    plannerOnly: true,
+    noPromptAssembly: true
   };
 }
 
@@ -870,8 +840,12 @@ function adaptiveResponsePlannerHealthCheck() {
     ok: true,
     engine: "TINA_ADAPTIVE_RESPONSE_PLANNER",
     version: ENGINE_VERSION,
+    responseArchitecturePlannerOnly: true,
+    noOpenAICalls: true,
+    noPromptAssembly: true,
+    noSourceInjection: true,
+    noRawEngineObjectInjection: true,
     esmCompatible: true,
-    commonJsCompatible: false,
     rendererCompatible: true,
     finalAnswerComplianceCompatible: true,
     contextOrchestrationCompatible: true,
@@ -879,14 +853,9 @@ function adaptiveResponsePlannerHealthCheck() {
     supportedOrchestrationModes: Object.values(ORCHESTRATION_MODE),
     conclusionGatingCompatible: true,
     issueClassificationCompatible: true,
-    issueClassificationMatchAware: true,
-    targetAuthorityAware: true,
     sourceOrderingPolicyReady: true,
     conflictDisplayPolicyReady: true,
-    contextBudgetPolicyReady: true,
-    rawFullDocumentInjectionPrevented: true,
-    fullDebugObjectInjectionPrevented: true,
-    fullEngineOutputInjectionPrevented: true
+    contextBudgetPolicyReady: true
   };
 }
 
