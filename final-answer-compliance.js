@@ -3,14 +3,17 @@
 
 /**
  * TINA Final Answer Compliance Engine
- * Version: 5.0.0
+ * Version: 5.1.0
  *
  * Final gate only:
  * - no OpenAI calls
  * - no prompt assembly
  * - no retrieval
  * - no token budgeting
- * - only validates, repairs, sanitizes, and gates final answer output
+ *
+ * Key patch:
+ * - preserves system/orchestration fallback answers
+ * - does not reformat fallback into legal-basis templates
  */
 
 import {
@@ -25,7 +28,7 @@ import {
   MAX_VISIBLE_SOURCES
 } from "./source-visibility-engine.js";
 
-const ENGINE_VERSION = "5.0.0";
+const ENGINE_VERSION = "5.1.0";
 
 const RESPONSE_MODE = Object.freeze({
   FAST_DEFINITION: "FAST_DEFINITION",
@@ -102,6 +105,42 @@ function stripInventedSourceSections(text = "") {
     .replace(/\n+\s*RETRIEVAL PAYLOAD[\s\S]*$/i, "")
     .replace(/\n+\s*JSON DUMP[\s\S]*$/i, "")
     .trim();
+}
+
+function isSystemFallbackAnswer(text = "") {
+  const value = normalizeText(text);
+
+  return Boolean(
+    /\bTINA could not complete\b/i.test(value) ||
+    /\bSYSTEM LIMITATION\b/i.test(value) ||
+    /\bActual error:/i.test(value) ||
+    /\borchestration-safe OpenAI call failed\b/i.test(value) ||
+    /\bprocessing limitation\b/i.test(value) ||
+    /\bRAG response due to a processing limitation\b/i.test(value)
+  );
+}
+
+function preserveSystemFallbackAnswer({
+  draftAnswer = "",
+  fallbackAnswer = "",
+  sourcesUsed = [],
+  legalBasisDocs = []
+} = {}) {
+  const preferred =
+    normalizeText(draftAnswer) ||
+    normalizeText(fallbackAnswer) ||
+    "TINA could not complete the response due to a processing limitation.";
+
+  const clean = stripInventedSourceSections(preferred);
+
+  const sourceDocs = uniqueDocs([
+    ...safeArray(sourcesUsed),
+    ...safeArray(legalBasisDocs)
+  ]).slice(0, MAX_VISIBLE_SOURCES);
+
+  if (!sourceDocs.length) return clean;
+
+  return appendValidatedSourceAppendix(clean, sourceDocs);
 }
 
 function getSectionBody(text = "", headingPattern = "") {
@@ -958,6 +997,19 @@ export function buildFinalCompliantAnswer({
   responseMode = null,
   contextMode = null
 }) {
+  if (
+    isSystemFallbackAnswer(draftAnswer) ||
+    isSystemFallbackAnswer(fallbackAnswer) ||
+    normalizeMode(orchestrationMode || contextMode || mode) === RESPONSE_MODE.EMERGENCY_TRIM
+  ) {
+    return preserveSystemFallbackAnswer({
+      draftAnswer,
+      fallbackAnswer,
+      sourcesUsed,
+      legalBasisDocs
+    }).trim();
+  }
+
   const finalMode = normalizeMode(
     mode ||
       orchestrationMode ||
@@ -1110,6 +1162,7 @@ export function enforceFinalAnswerCompliance({
     answer: finalAnswer,
     version: ENGINE_VERSION,
     finalGateOnly: true,
+    fallbackPreservationEnabled: true,
     noOpenAICalls: true,
     noPromptAssembly: true,
     noRetrieval: true
@@ -1125,6 +1178,8 @@ export function finalAnswerComplianceHealthCheck() {
     noOpenAICalls: true,
     noPromptAssembly: true,
     noRetrieval: true,
+    fallbackPreservationEnabled: true,
+    fallbackReformattingPrevented: true,
     afStructureCompatible: true,
     modeAwareFormatting: true,
     supportedModes: Object.values(RESPONSE_MODE),
@@ -1145,6 +1200,8 @@ export {
   TINA_AF_HEADINGS,
   hasCompleteAFStructure,
   hasAnyAFStructure,
+  isSystemFallbackAnswer,
+  preserveSystemFallbackAnswer,
   sanitizeConflictSection,
   buildSupportingRules,
   conflictMetadataIsComplete,
@@ -1157,5 +1214,7 @@ export default {
   buildFinalCompliantAnswer,
   enforceFinalAnswerCompliance,
   finalAnswerComplianceHealthCheck,
+  isSystemFallbackAnswer,
+  preserveSystemFallbackAnswer,
   normalizeMode
 };
