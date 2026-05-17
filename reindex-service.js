@@ -3,17 +3,37 @@
 
 /**
  * TINA Reindex Service
- * Version: 3.1.0
+ * Version: 4.0.0
  *
- * Patch:
- * - Fixed CommonJS compatibility with authority-engine.js.
- * - Preserves ES Module imports for Drive and vector-store.
- * - Adds safer metadata handling for TINA authority hierarchy.
+ * Role:
+ * - Google Drive tax-library reindexing
+ * - file reading via drive-reader.js
+ * - metadata normalization
+ * - authority metadata preservation
+ * - normalized reference preservation
+ * - source/chunk hashing metadata
+ * - vector-store persistence handoff
+ *
+ * Boundary:
+ * - No OpenAI answer calls
+ * - No answer generation
+ * - No retrieval policy
+ * - No reranking
+ * - No legal reasoning
+ * - No citation rendering
  */
 
 import { createRequire } from "module";
+import { createHash } from "crypto";
 
-import { listDriveFiles, extractTextFromFile } from "./drive-reader.js";
+import {
+  listDriveFiles,
+  extractTextFromFile,
+  readDriveFile,
+  normalizeDriveFileMetadata,
+  inferAuthorityTypeFromPath,
+  inferNormalizedReference
+} from "./drive-reader.js";
 
 import {
   clearVectorStore,
@@ -26,6 +46,98 @@ const require = createRequire(import.meta.url);
 
 const { buildAuthorityMetadata } = require("./authority-engine.js");
 
+const ENGINE_VERSION = "4.0.0";
+
+const MAX_INDEX_TEXT_CHARS = Number(
+  process.env.REINDEX_MAX_INDEX_TEXT_CHARS || 900000
+);
+
+const MAX_INDEX_EXCERPT_CHARS = Number(
+  process.env.REINDEX_MAX_EXCERPT_CHARS || 1800
+);
+
+const INDEX_CHUNK_SIZE = Number(
+  process.env.REINDEX_CHUNK_SIZE || 1200
+);
+
+const INDEX_CHUNK_OVERLAP = Number(
+  process.env.REINDEX_CHUNK_OVERLAP || 200
+);
+
+const TAX_LIBRARY_FOLDERS = Object.freeze([
+  "01_TAX_CODE",
+  "02_REVENUE_REGULATIONS",
+  "03_RMC",
+  "04_RMO",
+  "05_BIR_RULINGS",
+  "06_COURT_CASES",
+  "07_CPA_NOTES",
+  "08_REVIEW_MATERIALS"
+]);
+
+const INDEXED_AUTHORITY_FOLDERS = Object.freeze([
+  "01_TAX_CODE",
+  "02_REVENUE_REGULATIONS",
+  "03_RMC",
+  "04_RMO",
+  "05_BIR_RULINGS",
+  "06_COURT_CASES"
+]);
+
+const REVIEW_FOLDERS = Object.freeze([
+  "07_CPA_NOTES",
+  "08_REVIEW_MATERIALS"
+]);
+
+const FOLDER_AUTHORITY_MAP = Object.freeze({
+  "01_TAX_CODE": "STATUTE",
+  "02_REVENUE_REGULATIONS": "RR",
+  "03_RMC": "RMC",
+  "04_RMO": "RMO",
+  "05_BIR_RULINGS": "BIR_RULING",
+  "06_COURT_CASES": "JURISPRUDENCE",
+  "07_CPA_NOTES": "CPA_NOTES",
+  "08_REVIEW_MATERIALS": "REVIEW_MATERIALS"
+});
+
+const AUTHORITY_LEVELS = Object.freeze({
+  CONSTITUTION: 1,
+  STATUTE: 2,
+  NIRC: 2,
+  TAX_CODE: 2,
+  REPUBLIC_ACT: 2,
+  CMTA: 2,
+  LGC: 2,
+  TAX_TREATY: 3,
+  TREATY: 3,
+  SUPREME_COURT_EN_BANC: 4,
+  SUPREME_COURT: 5,
+  JURISPRUDENCE: 5,
+  CTA_EN_BANC: 6,
+  CTA_DIVISION: 7,
+  RR: 8,
+  RMC: 9,
+  RMO: 9,
+  RAMO: 9,
+  BIR_RULING: 10,
+  ADMINISTRATIVE_GUIDANCE: 11,
+  BOC_ISSUANCE: 11,
+  LGU_ORDINANCE: 11,
+  OECD: 12,
+  FOREIGN_AUTHORITY: 12,
+  PFRS: 13,
+  PAS: 13,
+  PSA: 13,
+  CPA_NOTES: 14,
+  REVIEW_MATERIALS: 14,
+  SECONDARY: 14,
+  UNKNOWN: 99
+});
+
+function safeString(value = "") {
+  return String(value || "").trim();
+}
+
 function normalizeText(value = "") {
   return String(value || "")
     .replace(/\r\n/g, "\n")
@@ -34,8 +146,35 @@ function normalizeText(value = "") {
     .trim();
 }
 
-function safeString(value = "") {
-  return String(value || "").trim();
+function compactSpaces(value = "") {
+  return safeString(value).replace(/\s+/g, " ").trim();
+}
+
+function lower(value = "") {
+  return compactSpaces(value).toLowerCase();
+}
+
+function unique(values = []) {
+  return [...new Set((values || []).filter(Boolean))];
+}
+
+function truncateText(value = "", maxChars = MAX_INDEX_TEXT_CHARS) {
+  const text = normalizeText(value);
+  if (!maxChars || text.length <= maxChars) return text;
+  return text.slice(0, maxChars).trim();
+}
+
+function makeExcerpt(value = "", maxChars = MAX_INDEX_EXCERPT_CHARS) {
+  const text = compactSpaces(value);
+  if (!text) return "";
+  if (text.length <= maxChars) return text;
+  return `${text.slice(0, maxChars).trim()} ...[trimmed for context budget]`;
+}
+
+function hashContent(value = "") {
+  return createHash("sha256")
+    .update(String(value || ""), "utf8")
+    .digest("hex");
 }
 
 function safeNormalizeSourceName(value = "") {
@@ -51,85 +190,411 @@ function safeNormalizeSourceName(value = "") {
     .trim();
 }
 
-function buildFallbackAuthorityMetadata({ fileName = "", path = "", text = "" }) {
-  const blob = `${fileName} ${path} ${text.slice(0, 1000)}`.toLowerCase();
+function normalizeAuthorityType(type = "") {
+  const raw = safeString(type).toUpperCase();
 
-  let authorityType = "SECONDARY";
-  let authorityLevel = 99;
-  let authorityScore = 0;
-  let authorityLabel = "Secondary Material";
+  const aliases = {
+    NIRC: "STATUTE",
+    TAX_CODE: "STATUTE",
+    REPUBLIC_ACT: "STATUTE",
+    RA: "STATUTE",
+    TREATY: "TAX_TREATY",
+    CASE_LAW: "JURISPRUDENCE",
+    COURT_CASES: "JURISPRUDENCE",
+    REVENUE_REGULATION: "RR",
+    REVENUE_REGULATIONS: "RR",
+    REVENUE_MEMORANDUM_CIRCULAR: "RMC",
+    REVENUE_MEMORANDUM_ORDER: "RMO",
+    REVENUE_AUDIT_MEMORANDUM_ORDER: "RAMO",
+    RULING: "BIR_RULING",
+    CPA_NOTE: "CPA_NOTES",
+    REVIEW: "REVIEW_MATERIALS",
+    SECONDARY_MATERIAL: "SECONDARY"
+  };
 
-  if (blob.includes("constitution")) {
-    authorityType = "CONSTITUTION";
-    authorityLevel = 1;
-    authorityScore = 100;
-    authorityLabel = "1987 Constitution";
-  } else if (
-    blob.includes("national internal revenue code") ||
-    /\bnirc\b/.test(blob) ||
-    /\btax code\b/.test(blob) ||
-    /\brepublic act\b/.test(blob) ||
-    /\bra\s+\d{4,6}\b/.test(blob)
-  ) {
-    authorityType = "STATUTE";
-    authorityLevel = 2;
-    authorityScore = 98;
-    authorityLabel = "Statute / NIRC / Republic Act";
-  } else if (/\brr\s*\d+[-/]\d{2,4}\b/i.test(blob) || blob.includes("revenue regulation")) {
-    authorityType = "RR";
-    authorityLevel = 3;
-    authorityScore = 95;
-    authorityLabel = "Revenue Regulation";
-  } else if (/\brmc\s*\d+[-/]\d{2,4}\b/i.test(blob) || blob.includes("revenue memorandum circular")) {
-    authorityType = "RMC";
-    authorityLevel = 4;
-    authorityScore = 86;
-    authorityLabel = "Revenue Memorandum Circular";
-  } else if (/\brmo\s*\d+[-/]\d{2,4}\b/i.test(blob) || blob.includes("revenue memorandum order")) {
-    authorityType = "RMO";
-    authorityLevel = 5;
-    authorityScore = 82;
-    authorityLabel = "Revenue Memorandum Order";
-  } else if (/\bramo\s*\d+[-/]\d{2,4}\b/i.test(blob) || blob.includes("revenue audit memorandum order")) {
-    authorityType = "RAMO";
-    authorityLevel = 6;
-    authorityScore = 80;
-    authorityLabel = "Revenue Audit Memorandum Order";
-  } else if (blob.includes("bir ruling")) {
-    authorityType = "BIR_RULING";
-    authorityLevel = 7;
-    authorityScore = 72;
-    authorityLabel = "BIR Ruling";
-  } else if (/\bg\.?\s*r\.?\s*no\.?\s*[a-z0-9.-]+\b/i.test(blob) || blob.includes("supreme court")) {
-    authorityType = "SUPREME_COURT";
-    authorityLevel = 8;
-    authorityScore = 97;
-    authorityLabel = "Supreme Court Decision";
+  return aliases[raw] || raw || "UNKNOWN";
+}
+
+function authorityLevelOf(type = "UNKNOWN") {
+  const normalized = normalizeAuthorityType(type);
+  return Number(AUTHORITY_LEVELS[normalized] || AUTHORITY_LEVELS.UNKNOWN);
+}
+
+function getFolderNameFromPath(path = "") {
+  const normalized = safeString(path).toUpperCase();
+
+  for (const folder of TAX_LIBRARY_FOLDERS) {
+    if (normalized.includes(folder)) return folder;
   }
+
+  return null;
+}
+
+function getSourceLibrary(folderName = "") {
+  if (INDEXED_AUTHORITY_FOLDERS.includes(folderName)) {
+    return "TAX_AUTHORITY_LIBRARY";
+  }
+
+  if (REVIEW_FOLDERS.includes(folderName)) {
+    return "TAX_REVIEW_LIBRARY";
+  }
+
+  return "GENERAL_DRIVE_LIBRARY";
+}
+
+function isReviewMaterial(folderPath = "") {
+  const folderName = getFolderNameFromPath(folderPath);
+  return REVIEW_FOLDERS.includes(folderName);
+}
+
+function inferAuthorityType(file = {}, textPreview = "") {
+  const folderPath = safeString(
+    file.folderPath ||
+      file.folder_path ||
+      file.path ||
+      file.metadata?.folderPath ||
+      file.metadata?.path ||
+      file.name ||
+      file.fileName ||
+      ""
+  );
+
+  const fileName = safeString(file.fileName || file.name || file.documentTitle || "");
+
+  if (typeof inferAuthorityTypeFromPath === "function") {
+    const inferred = inferAuthorityTypeFromPath(folderPath, fileName, textPreview);
+    if (inferred && inferred !== "UNKNOWN") return normalizeAuthorityType(inferred);
+  }
+
+  const folderName = getFolderNameFromPath(`${folderPath} ${fileName}`);
+  if (folderName && FOLDER_AUTHORITY_MAP[folderName]) {
+    return FOLDER_AUTHORITY_MAP[folderName];
+  }
+
+  const blob = lower(`${folderPath} ${fileName} ${textPreview.slice(0, 2000)}`);
+
+  if (/\bconstitution|1987 philippine constitution/i.test(blob)) return "CONSTITUTION";
+  if (/\b(cmta|customs modernization and tariff act)\b/i.test(blob)) return "CMTA";
+  if (/\b(local government code|lgc)\b/i.test(blob)) return "LGC";
+  if (/\b(nirc|tax code|national internal revenue code)\b/i.test(blob)) return "STATUTE";
+  if (/\b(ra|r\.a\.|republic act)\s*(no\.?)?\s*\d{4,6}\b/i.test(blob)) return "STATUTE";
+  if (/\btax treaty|double tax agreement|dta\b/i.test(blob)) return "TAX_TREATY";
+
+  if (/\brr\b|revenue regulation/i.test(blob)) return "RR";
+  if (/\brmc\b|revenue memorandum circular/i.test(blob)) return "RMC";
+  if (/\bramo\b|revenue audit memorandum order/i.test(blob)) return "RAMO";
+  if (/\brmo\b|revenue memorandum order/i.test(blob)) return "RMO";
+  if (/bir ruling|b\.i\.r\. ruling/i.test(blob)) return "BIR_RULING";
+
+  if (/supreme court en banc/i.test(blob)) return "SUPREME_COURT_EN_BANC";
+  if (/\bg\.?\s*r\.?\s*no\.?\b|supreme court/i.test(blob)) return "SUPREME_COURT";
+  if (/cta en banc|cta eb/i.test(blob)) return "CTA_EN_BANC";
+  if (/\bcta\b|court of tax appeals/i.test(blob)) return "CTA_DIVISION";
+
+  if (/\bboc\b|customs memorandum|customs administrative order/i.test(blob)) {
+    return "BOC_ISSUANCE";
+  }
+
+  if (/lgu ordinance|local tax ordinance|revenue ordinance/i.test(blob)) {
+    return "LGU_ORDINANCE";
+  }
+
+  if (/\bpfrs\b|philippine financial reporting standards/i.test(blob)) return "PFRS";
+  if (/\bpas\b|philippine accounting standard/i.test(blob)) return "PAS";
+  if (/\bpsa\b|philippine standards on auditing/i.test(blob)) return "PSA";
+  if (/\boecd\b/i.test(blob)) return "OECD";
+  if (/foreign authority|irs|hmrc|ato|singapore iras/i.test(blob)) return "FOREIGN_AUTHORITY";
+
+  if (/cpa notes|review materials|reviewer|handout|lecture/i.test(blob)) {
+    return "SECONDARY";
+  }
+
+  return "UNKNOWN";
+}
+
+function normalizeYear(year = "") {
+  const raw = safeString(year);
+  if (!raw) return "";
+  if (/^\d{4}$/.test(raw)) return raw;
+
+  if (/^\d{2}$/.test(raw)) {
+    const yy = Number(raw);
+    const currentYY = new Date().getFullYear() % 100;
+    return yy <= currentYY + 1 ? `20${raw}` : `19${raw}`;
+  }
+
+  return raw;
+}
+
+function padNumber(num = "") {
+  const n = safeString(num).replace(/^0+/, "") || "0";
+
+  return {
+    raw: n,
+    two: n.padStart(2, "0"),
+    three: n.padStart(3, "0")
+  };
+}
+
+function buildIssuanceReference(prefix, num, year) {
+  const padded = padNumber(num);
+  const normalizedYear = normalizeYear(year);
+
+  if (!prefix || !padded.raw || !normalizedYear) return "";
+
+  return `${prefix.toUpperCase()} ${padded.raw}-${normalizedYear}`;
+}
+
+function buildSectionReference(code, section = "") {
+  const cleanSection = safeString(section).replace(/\s+/g, "");
+  if (!code || !cleanSection) return "";
+  return `${code.toUpperCase()} Sec. ${cleanSection}`;
+}
+
+function inferNormalizedReferenceFallback({
+  fileName = "",
+  folderPath = "",
+  text = ""
+} = {}) {
+  const sample = `${fileName}\n${folderPath}\n${normalizeText(text).slice(0, 3000)}`;
+
+  const nircSection = sample.match(
+    /\b(?:NIRC|National\s+Internal\s+Revenue\s+Code)?\s*(?:Sec\.?|Section)\s*([0-9]{1,3}[A-Z]?(?:\([A-Z0-9]+\))?)\b/i
+  );
+  if (nircSection) return buildSectionReference("NIRC", nircSection[1]);
+
+  const cmtaSection = sample.match(
+    /\b(?:CMTA|Customs\s+Modernization\s+and\s+Tariff\s+Act)\s*(?:Sec\.?|Section)\s*([0-9]{1,4}[A-Z]?(?:\([A-Z0-9]+\))?)\b/i
+  );
+  if (cmtaSection) return buildSectionReference("CMTA", cmtaSection[1]);
+
+  const lgcSection = sample.match(
+    /\b(?:LGC|Local\s+Government\s+Code)\s*(?:Sec\.?|Section)\s*([0-9]{1,4}[A-Z]?(?:\([A-Z0-9]+\))?)\b/i
+  );
+  if (lgcSection) return buildSectionReference("LGC", lgcSection[1]);
+
+  const issuancePatterns = [
+    {
+      prefix: "RR",
+      regex: /\b(?:RR|Revenue\s+Regulation[s]?)\s*(?:No\.?)?\s*0*(\d+)\s*[-_ /]?\s*(\d{2,4})\b/i
+    },
+    {
+      prefix: "RMC",
+      regex: /\b(?:RMC|Revenue\s+Memorandum\s+Circular[s]?)\s*(?:No\.?)?\s*0*(\d+)\s*[-_ /]?\s*(\d{2,4})\b/i
+    },
+    {
+      prefix: "RMO",
+      regex: /\b(?:RMO|Revenue\s+Memorandum\s+Order[s]?)\s*(?:No\.?)?\s*0*(\d+)\s*[-_ /]?\s*(\d{2,4})\b/i
+    },
+    {
+      prefix: "RAMO",
+      regex: /\b(?:RAMO|Revenue\s+Audit\s+Memorandum\s+Order[s]?)\s*(?:No\.?)?\s*0*(\d+)\s*[-_ /]?\s*(\d{2,4})\b/i
+    }
+  ];
+
+  for (const item of issuancePatterns) {
+    const match = sample.match(item.regex);
+    if (match) return buildIssuanceReference(item.prefix, match[1], match[2]);
+  }
+
+  const birRuling = sample.match(
+    /\b(?:BIR\s+Ruling|Ruling)\s*(?:No\.?)?\s*([A-Z0-9-]+)\b/i
+  );
+  if (birRuling) return `BIR Ruling ${birRuling[1]}`;
+
+  const grNo = sample.match(/\bG\.?\s*R\.?\s*No\.?\s*([A-Z0-9.-]+)\b/i);
+  if (grNo) return `G.R. No. ${grNo[1]}`;
+
+  const ctaEb = sample.match(
+    /\bCTA\s*(?:EB|En\s+Banc)\s*(?:No\.?)?\s*([A-Z0-9.-]+)\b/i
+  );
+  if (ctaEb) return `CTA EB No. ${ctaEb[1]}`;
+
+  const ctaCase = sample.match(
+    /\bCTA\s*(?:Case)?\s*(?:No\.?)?\s*([A-Z0-9.-]+)\b/i
+  );
+  if (ctaCase) return `CTA Case No. ${ctaCase[1]}`;
+
+  const ra = sample.match(
+    /\b(?:RA|R\.A\.|Republic\s+Act)\s*(?:No\.?)?\s*0*(\d{4,6})\b/i
+  );
+  if (ra) return `RA ${ra[1]}`;
+
+  return safeNormalizeSourceName(fileName || folderPath);
+}
+
+function inferNormalizedReferenceSafe({
+  fileName = "",
+  folderPath = "",
+  text = ""
+} = {}) {
+  try {
+    if (typeof inferNormalizedReference === "function") {
+      const inferred = inferNormalizedReference({
+        fileName,
+        folderPath,
+        text
+      });
+
+      if (inferred) return inferred;
+    }
+  } catch {
+    // fallback below
+  }
+
+  return inferNormalizedReferenceFallback({
+    fileName,
+    folderPath,
+    text
+  });
+}
+
+function inferPossibleTaxDomains(input = {}) {
+  const blob = lower(
+    [
+      input.fileName,
+      input.documentTitle,
+      input.folderPath,
+      input.folderName,
+      input.normalizedReference,
+      input.text
+    ].filter(Boolean).join(" ")
+  );
+
+  const domains = [];
+
+  if (/\bvat|value[- ]added tax|input vat|output vat|zero[- ]rated|2550q|2550m\b/i.test(blob)) domains.push("VAT");
+  if (/\bcit|corporate income tax|rcit|mcit|nolco|regular corporate income tax\b/i.test(blob)) domains.push("CIT");
+  if (/\biit|individual income tax|compensation income|self-employed|professional income\b/i.test(blob)) domains.push("IIT");
+  if (/\bwht|withholding tax|ewt|cwt|fwt|expanded withholding|creditable withholding\b/i.test(blob)) domains.push("WHT");
+  if (/\bestate tax|estate\b/i.test(blob)) domains.push("EST");
+  if (/\bpercentage tax|pct\b/i.test(blob)) domains.push("PCT");
+  if (/\bexcise tax|excise\b/i.test(blob)) domains.push("EXC");
+  if (/\bassessment|loa|pan|fan|flda|preliminary assessment|final assessment\b/i.test(blob)) domains.push("PRE");
+  if (/\bprotest|appeal|cta|dispute|refund litigation\b/i.test(blob)) domains.push("DIS");
+  if (/\blocal business tax|real property tax|lgu|local tax\b/i.test(blob)) domains.push("LGT");
+  if (/\bcustoms|tariff|import duties|boc\b/i.test(blob)) domains.push("CUS");
+  if (/\bstamp tax|documentary stamp|dst\b/i.test(blob)) domains.push("SPC");
+  if (/\bcontract|lease|agreement|concession\b/i.test(blob)) domains.push("CON");
+
+  return unique(domains);
+}
+
+function inferPossibleSubIssues(input = {}) {
+  const blob = lower(
+    [
+      input.fileName,
+      input.documentTitle,
+      input.folderPath,
+      input.folderName,
+      input.normalizedReference,
+      input.text
+    ].filter(Boolean).join(" ")
+  );
+
+  const subIssues = [];
+
+  if (/\bdefine vat|what is vat|nature of vat|scope of vat|sec\.?\s*105\b/i.test(blob)) subIssues.push("DEFINITION");
+  if (/\brefund|tax credit|tcc|sec\.?\s*112|120-day|30-day|administrative claim|judicial claim\b/i.test(blob)) subIssues.push("REFUND_CREDIT");
+  if (/\bzero[- ]rated|export sales|cross-border|destination principle|peza|create\b/i.test(blob)) subIssues.push("ZERO_RATING");
+  if (/\binput tax|input vat|creditable input|substantiation|sec\.?\s*110\b/i.test(blob)) subIssues.push("INPUT_TAX");
+  if (/\bexempt|sec\.?\s*109|vat exempt|non-vat\b/i.test(blob)) subIssues.push("EXEMPTION");
+  if (/\boutput vat|output tax|gross receipts|gross selling price|sec\.?\s*106|sec\.?\s*108\b/i.test(blob)) subIssues.push("OUTPUT_TAX");
+  if (/\bregistration|threshold|cor|sec\.?\s*236\b/i.test(blob)) subIssues.push("REGISTRATION");
+  if (/\b2550m|2550q|vat return|slsp|filing|deadline\b/i.test(blob)) subIssues.push("COMPLIANCE");
+  if (/\bwithholding vat|wvat|sec\.?\s*114\(c\)|government money payment\b/i.test(blob)) subIssues.push("WITHHOLDING_VAT");
+  if (/\btransitional input|beginning inventory|sec\.?\s*111\b/i.test(blob)) subIssues.push("TRANSITIONAL_INPUT_TAX");
+  if (/\bdeemed sale|sec\.?\s*106\(b\)|retirement|cessation\b/i.test(blob)) subIssues.push("DEEMED_SALE");
+
+  return unique(subIssues);
+}
+
+function chunkTextForIndexing(text = "", chunkSize = INDEX_CHUNK_SIZE, overlap = INDEX_CHUNK_OVERLAP) {
+  const clean = normalizeText(text);
+  if (!clean) return [];
+
+  const safeChunkSize = Math.max(400, Number(chunkSize) || INDEX_CHUNK_SIZE);
+  const safeOverlap = Math.max(
+    0,
+    Math.min(Number(overlap) || INDEX_CHUNK_OVERLAP, safeChunkSize - 150)
+  );
+
+  const paragraphs = clean
+    .split(/\n{2,}/)
+    .map((part) => normalizeText(part))
+    .filter((part) => part.length >= 20);
+
+  const chunks = [];
+  let current = "";
+
+  for (const paragraph of paragraphs) {
+    if (!current) {
+      current = paragraph;
+      continue;
+    }
+
+    if ((current.length + paragraph.length + 2) <= safeChunkSize) {
+      current = `${current}\n\n${paragraph}`;
+    } else {
+      chunks.push(current);
+      const carry = current.slice(Math.max(0, current.length - safeOverlap));
+      current = carry ? `${carry}\n\n${paragraph}` : paragraph;
+    }
+  }
+
+  if (current) chunks.push(current);
+
+  return chunks
+    .map((chunk) => normalizeText(chunk))
+    .filter((chunk) => chunk.length >= 80);
+}
+
+function buildFallbackAuthorityMetadata({ fileName = "", path = "", text = "" }) {
+  const authorityType = inferAuthorityType(
+    {
+      fileName,
+      name: fileName,
+      folderPath: path,
+      path
+    },
+    text.slice(0, 3000)
+  );
 
   return {
     authorityType,
-    authorityLevel,
-    authorityScore,
-    authorityLabel,
-    normalizedReference: null,
+    authorityLevel: authorityLevelOf(authorityType),
+    authorityScore: authorityType === "UNKNOWN" ? 0 : 70,
+    authorityLabel: authorityType,
+    controllingPrecedence: authorityLevelOf(authorityType),
+    normalizedReference: inferNormalizedReferenceSafe({
+      fileName,
+      folderPath: path,
+      text
+    }),
     normalizedAliases: [],
     recencyDate: null
   };
 }
 
-function safeBuildAuthorityMetadata({ fileName = "", path = "", text = "", modifiedTime = null }) {
+function safeBuildAuthorityMetadata({
+  fileName = "",
+  path = "",
+  text = "",
+  modifiedTime = null
+}) {
   try {
     if (typeof buildAuthorityMetadata === "function") {
-      return buildAuthorityMetadata({
+      const authority = buildAuthorityMetadata({
         fileName,
         path,
         text,
         modifiedTime
       });
+
+      if (authority) return authority;
     }
   } catch (error) {
-    console.warn("Authority metadata fallback used:", error?.message || error);
+    console.warn("Authority metadata fallback used:", error?.message || "Unknown authority metadata error");
   }
 
   return buildFallbackAuthorityMetadata({
@@ -139,75 +604,501 @@ function safeBuildAuthorityMetadata({ fileName = "", path = "", text = "", modif
   });
 }
 
-function buildIndexMetadata(file = {}, text = "") {
-  const path = safeString(file.path || file.name || "");
-  const originalFileName = safeString(file.name || "");
-  const originalSource = safeString(file.originalSource || file.name || "");
-  const normalizedSource =
-    safeString(file.normalizedSource) ||
-    safeNormalizeSourceName(path || originalFileName || originalSource);
+export function normalizeIndexedMetadata(file = {}, text = "") {
+  const compactText = truncateText(text);
+  const textPreview = compactText.slice(0, 4000);
+
+  let driveMetadata = {};
+  try {
+    driveMetadata =
+      typeof normalizeDriveFileMetadata === "function"
+        ? normalizeDriveFileMetadata(file, file.path ? "" : "")
+        : file;
+  } catch {
+    driveMetadata = file;
+  }
+
+  const fileId = driveMetadata.fileId || driveMetadata.file_id || driveMetadata.id || file.id || null;
+  const fileName = safeString(
+    driveMetadata.fileName ||
+      driveMetadata.file_name ||
+      driveMetadata.name ||
+      file.name ||
+      "unknown"
+  );
+
+  const documentTitle = safeString(
+    driveMetadata.documentTitle ||
+      driveMetadata.document_title ||
+      file.documentTitle ||
+      fileName
+  );
+
+  const folderPath = safeString(
+    driveMetadata.folderPath ||
+      driveMetadata.folder_path ||
+      driveMetadata.path ||
+      file.path ||
+      fileName
+  );
+
+  const folderName =
+    driveMetadata.folderName ||
+    driveMetadata.folder_name ||
+    getFolderNameFromPath(folderPath);
+
+  const authorityFromDrive =
+    driveMetadata.authorityType ||
+    driveMetadata.authority_type ||
+    null;
+
+  const inferredAuthorityType =
+    authorityFromDrive && authorityFromDrive !== "UNKNOWN"
+      ? normalizeAuthorityType(authorityFromDrive)
+      : inferAuthorityType(
+          {
+            ...file,
+            fileName,
+            name: fileName,
+            documentTitle,
+            folderPath,
+            path: folderPath
+          },
+          textPreview
+        );
 
   const authority = safeBuildAuthorityMetadata({
-    fileName: originalFileName,
-    path,
-    text,
-    modifiedTime: file.modifiedTime || null
+    fileName,
+    path: folderPath,
+    text: textPreview,
+    modifiedTime: file.modifiedTime || driveMetadata.modifiedTime || null
   });
 
+  const authorityType =
+    inferredAuthorityType !== "UNKNOWN"
+      ? inferredAuthorityType
+      : normalizeAuthorityType(authority.authorityType || "UNKNOWN");
+
+  const authorityLevel =
+    Number(authority.authorityLevel || authorityLevelOf(authorityType)) ||
+    authorityLevelOf(authorityType);
+
+  const normalizedReference =
+    driveMetadata.normalizedReference ||
+    driveMetadata.normalized_reference ||
+    authority.normalizedReference ||
+    inferNormalizedReferenceSafe({
+      fileName,
+      folderPath,
+      text: textPreview
+    });
+
+  const possibleTaxDomain = unique([
+    ...(Array.isArray(driveMetadata.possibleTaxDomain) ? driveMetadata.possibleTaxDomain : []),
+    ...(Array.isArray(driveMetadata.possibleTaxDomains) ? driveMetadata.possibleTaxDomains : []),
+    ...inferPossibleTaxDomains({
+      fileName,
+      documentTitle,
+      folderPath,
+      folderName,
+      normalizedReference,
+      text: textPreview
+    })
+  ]);
+
+  const possibleSubIssues = unique([
+    ...(Array.isArray(driveMetadata.possibleSubIssues) ? driveMetadata.possibleSubIssues : []),
+    ...inferPossibleSubIssues({
+      fileName,
+      documentTitle,
+      folderPath,
+      folderName,
+      normalizedReference,
+      text: textPreview
+    })
+  ]);
+
+  const normalizedSource =
+    safeString(driveMetadata.normalizedSource || driveMetadata.normalized_source) ||
+    safeNormalizeSourceName(folderPath || fileName);
+
+  const sourceHash = hashContent(
+    [
+      fileId,
+      normalizedSource,
+      folderPath,
+      fileName,
+      file.modifiedTime || driveMetadata.modifiedTime || "",
+      compactText.length,
+      compactText.slice(0, 2000)
+    ].join("|")
+  );
+
   return {
-    fileId: file.id || null,
-    originalFileName,
-    originalSource,
+    fileId,
+    file_id: fileId,
+
+    documentTitle,
+    document_title: documentTitle,
+
+    fileName,
+    file_name: fileName,
+
+    originalFileName: fileName,
+    original_file_name: fileName,
+    originalSource: fileName,
+    original_source: fileName,
+
     normalizedSource,
-    mimeType: file.mimeType || null,
-    path,
-    modifiedTime: file.modifiedTime || null,
-    driveViewUrl: file.driveViewUrl || null,
-    driveDownloadUrl: file.driveDownloadUrl || null,
+    normalized_source: normalizedSource,
 
-    authorityType: authority.authorityType || "SECONDARY",
-    authorityLevel: authority.authorityLevel || 99,
-    authorityScore: authority.authorityScore || 0,
-    authorityLabel: authority.authorityLabel || "Secondary Material",
-    controllingPrecedence: authority.controllingPrecedence || null,
+    mimeType: driveMetadata.mimeType || driveMetadata.mime_type || file.mimeType || null,
+    mime_type: driveMetadata.mimeType || driveMetadata.mime_type || file.mimeType || null,
 
-    normalizedReference: authority.normalizedReference || null,
+    driveViewUrl:
+      driveMetadata.driveViewUrl ||
+      driveMetadata.drive_view_url ||
+      driveMetadata.webViewLink ||
+      file.driveViewUrl ||
+      file.webViewLink ||
+      null,
+    drive_view_url:
+      driveMetadata.driveViewUrl ||
+      driveMetadata.drive_view_url ||
+      driveMetadata.webViewLink ||
+      file.driveViewUrl ||
+      file.webViewLink ||
+      null,
+    webViewLink:
+      driveMetadata.webViewLink ||
+      driveMetadata.web_view_link ||
+      driveMetadata.driveViewUrl ||
+      file.webViewLink ||
+      file.driveViewUrl ||
+      null,
+
+    driveDownloadUrl:
+      driveMetadata.driveDownloadUrl ||
+      driveMetadata.drive_download_url ||
+      file.driveDownloadUrl ||
+      file.webContentLink ||
+      null,
+    drive_download_url:
+      driveMetadata.driveDownloadUrl ||
+      driveMetadata.drive_download_url ||
+      file.driveDownloadUrl ||
+      file.webContentLink ||
+      null,
+
+    folderId: driveMetadata.folderId || driveMetadata.folder_id || file.folderId || null,
+    folder_id: driveMetadata.folderId || driveMetadata.folder_id || file.folderId || null,
+
+    folderName,
+    folder_name: folderName,
+
+    folderPath,
+    folder_path: folderPath,
+    path: folderPath,
+
+    parentFolderIds:
+      driveMetadata.parentFolderIds ||
+      driveMetadata.parent_folder_ids ||
+      file.parents ||
+      [],
+    parent_folder_ids:
+      driveMetadata.parentFolderIds ||
+      driveMetadata.parent_folder_ids ||
+      file.parents ||
+      [],
+
+    authorityType,
+    authority_type: authorityType,
+    authorityLevel,
+    authority_level: authorityLevel,
+    authorityScore: authority.authorityScore || (authorityType === "UNKNOWN" ? 0 : 70),
+    authority_score: authority.authorityScore || (authorityType === "UNKNOWN" ? 0 : 70),
+    authorityLabel: authority.authorityLabel || authorityType,
+    authority_label: authority.authorityLabel || authorityType,
+    controllingPrecedence:
+      authority.controllingPrecedence ||
+      authorityLevelOf(authorityType),
+    controlling_precedence:
+      authority.controllingPrecedence ||
+      authorityLevelOf(authorityType),
+
+    normalizedReference,
+    normalized_reference: normalizedReference,
     normalizedAliases: Array.isArray(authority.normalizedAliases)
       ? authority.normalizedAliases
       : [],
+    normalized_aliases: Array.isArray(authority.normalizedAliases)
+      ? authority.normalizedAliases
+      : [],
 
-    recencyDate: authority.recencyDate || file.modifiedTime || null,
+    taxDomain: possibleTaxDomain[0] || null,
+    tax_domain: possibleTaxDomain[0] || null,
+    possibleTaxDomain,
+    possible_tax_domain: possibleTaxDomain,
+    possibleTaxDomains: possibleTaxDomain,
+    possible_tax_domains: possibleTaxDomain,
+    possibleSubIssues,
+    possible_sub_issues: possibleSubIssues,
+
+    sourceLibrary: driveMetadata.sourceLibrary || getSourceLibrary(folderName),
+    source_library: driveMetadata.sourceLibrary || getSourceLibrary(folderName),
+    isTaxLibraryFile:
+      typeof driveMetadata.isTaxLibraryFile === "boolean"
+        ? driveMetadata.isTaxLibraryFile
+        : Boolean(folderName),
+    is_tax_library_file:
+      typeof driveMetadata.isTaxLibraryFile === "boolean"
+        ? driveMetadata.isTaxLibraryFile
+        : Boolean(folderName),
+    isReviewMaterial:
+      typeof driveMetadata.isReviewMaterial === "boolean"
+        ? driveMetadata.isReviewMaterial
+        : isReviewMaterial(folderPath),
+    is_review_material:
+      typeof driveMetadata.isReviewMaterial === "boolean"
+        ? driveMetadata.isReviewMaterial
+        : isReviewMaterial(folderPath),
+
+    createdTime: driveMetadata.createdTime || driveMetadata.created_time || file.createdTime || null,
+    created_time: driveMetadata.createdTime || driveMetadata.created_time || file.createdTime || null,
+    modifiedTime: driveMetadata.modifiedTime || driveMetadata.modified_time || file.modifiedTime || null,
+    modified_time: driveMetadata.modifiedTime || driveMetadata.modified_time || file.modifiedTime || null,
+
+    size: driveMetadata.size || file.size || null,
+
+    recencyDate: authority.recencyDate || driveMetadata.modifiedTime || file.modifiedTime || null,
+    recency_date: authority.recencyDate || driveMetadata.modifiedTime || file.modifiedTime || null,
+
     jurisdiction: "PH",
     sourceCategory: "google_drive_index",
-    documentTitle: originalFileName || originalSource || path,
+    source_category: "google_drive_index",
 
-    effectiveFrom: null,
-    effectiveTo: null,
-    isSuperseded: false,
-    supersededByReference: null,
-    repealedByReference: null,
-    amendedByReference: null,
+    effectiveFrom: authority.effectiveFrom || null,
+    effective_from: authority.effectiveFrom || null,
+    effectiveTo: authority.effectiveTo || null,
+    effective_to: authority.effectiveTo || null,
+
+    isSuperseded: Boolean(authority.isSuperseded || false),
+    is_superseded: Boolean(authority.isSuperseded || false),
+    supersededByReference: authority.supersededByReference || null,
+    superseded_by_reference: authority.supersededByReference || null,
+    repealedByReference: authority.repealedByReference || null,
+    repealed_by_reference: authority.repealedByReference || null,
+    amendedByReference: authority.amendedByReference || null,
+    amended_by_reference: authority.amendedByReference || null,
+
+    sourceHash,
+    source_hash: sourceHash,
+    isActive: true,
+    is_active: true,
+
+    indexedAt: new Date().toISOString(),
+    indexed_at: new Date().toISOString(),
 
     tinaIndexedAt: new Date().toISOString(),
-    tinaReindexServiceVersion: "3.1.0"
+    tinaReindexServiceVersion: ENGINE_VERSION,
+    tina_reindex_service_version: ENGINE_VERSION
+  };
+}
+
+function buildIndexChunks(text = "", metadata = {}) {
+  const chunks = chunkTextForIndexing(text);
+
+  return chunks.map((chunkText, index) => {
+    const chunkHash = hashContent(
+      [
+        metadata.fileId,
+        metadata.normalizedSource,
+        metadata.sourceHash,
+        index,
+        chunkText
+      ].join("|")
+    );
+
+    return {
+      chunkId: `${metadata.fileId || metadata.normalizedSource || "source"}:${index}:${chunkHash.slice(0, 12)}`,
+      chunk_id: `${metadata.fileId || metadata.normalizedSource || "source"}:${index}:${chunkHash.slice(0, 12)}`,
+      chunkIndex: index,
+      chunk_index: index,
+      chunkText,
+      chunk_text: chunkText,
+      text: chunkText,
+      content: chunkText,
+      excerpt: makeExcerpt(chunkText),
+      chunkHash,
+      chunk_hash: chunkHash
+    };
+  });
+}
+
+export function buildIndexedChunkPayload(chunk = {}, metadata = {}) {
+  return {
+    source: metadata.normalizedSource,
+    original_source: metadata.originalSource || metadata.fileName,
+    chunk_index: chunk.chunkIndex,
+    text: chunk.text,
+    metadata: {
+      ...metadata,
+
+      chunkId: chunk.chunkId,
+      chunkIndex: chunk.chunkIndex,
+      chunkHash: chunk.chunkHash,
+      chunkTextLength: chunk.text.length,
+      chunkExcerpt: chunk.excerpt,
+
+      fileId: metadata.fileId,
+      fileName: metadata.fileName,
+      documentTitle: metadata.documentTitle,
+      mimeType: metadata.mimeType,
+
+      driveViewUrl: metadata.driveViewUrl,
+      webViewLink: metadata.webViewLink,
+
+      folderId: metadata.folderId,
+      folderName: metadata.folderName,
+      folderPath: metadata.folderPath,
+      parentFolderIds: metadata.parentFolderIds,
+
+      authorityType: metadata.authorityType,
+      authorityLevel: metadata.authorityLevel,
+      controllingPrecedence: metadata.controllingPrecedence,
+      normalizedReference: metadata.normalizedReference,
+
+      taxDomain: metadata.taxDomain,
+      possibleTaxDomain: metadata.possibleTaxDomain,
+      possibleTaxDomains: metadata.possibleTaxDomains,
+      possibleSubIssues: metadata.possibleSubIssues,
+
+      sourceLibrary: metadata.sourceLibrary,
+      sourceHash: metadata.sourceHash,
+      chunkHash: chunk.chunkHash,
+      indexedAt: metadata.indexedAt,
+      isActive: true,
+
+      compactIndexedMetadata: true
+    }
   };
 }
 
 function buildFailedRecord(file = {}, overrides = {}) {
-  const fallbackName = safeString(file?.name || "unknown");
-  const fallbackPath = safeString(file?.path || file?.name || "unknown");
+  const fallbackName = safeString(file?.name || file?.fileName || "unknown");
+  const fallbackPath = safeString(file?.path || file?.folderPath || fallbackName);
+  const folderName = getFolderNameFromPath(fallbackPath);
 
   return {
+    fileId: file?.id || file?.fileId || null,
     fileName: overrides.fileName || fallbackName,
+    documentTitle: overrides.documentTitle || fallbackName,
     normalizedSource:
       overrides.normalizedSource ||
       safeNormalizeSourceName(fallbackPath || fallbackName),
+    folderName: overrides.folderName || folderName,
+    folderPath: overrides.folderPath || fallbackPath,
     path: overrides.path || fallbackPath,
     mimeType: overrides.mimeType || file?.mimeType || null,
     authorityType: overrides.authorityType || null,
     authorityLevel: overrides.authorityLevel || null,
     authorityLabel: overrides.authorityLabel || null,
-    reason: overrides.reason || "File indexing failed"
+    normalizedReference: overrides.normalizedReference || null,
+    possibleTaxDomain: overrides.possibleTaxDomain || [],
+    possibleSubIssues: overrides.possibleSubIssues || [],
+    reason: overrides.reason || "File indexing failed",
+    status: "Failed"
+  };
+}
+
+async function readFileForIndexing(file = {}) {
+  if (typeof readDriveFile === "function") {
+    const record = await readDriveFile(file);
+
+    return {
+      file: {
+        ...file,
+        ...record
+      },
+      text: normalizeText(record.text || record.content || ""),
+      readRecord: record
+    };
+  }
+
+  const text = normalizeText(await extractTextFromFile(file));
+
+  return {
+    file,
+    text,
+    readRecord: null
+  };
+}
+
+export async function shouldReindexFile(file = {}, existingMetadata = null) {
+  if (!existingMetadata) return true;
+
+  const currentModified = safeString(file.modifiedTime || file.modified_time || "");
+  const previousModified = safeString(
+    existingMetadata.modifiedTime ||
+      existingMetadata.modified_time ||
+      existingMetadata.metadata?.modifiedTime ||
+      ""
+  );
+
+  if (currentModified && previousModified && currentModified !== previousModified) {
+    return true;
+  }
+
+  const currentFileId = safeString(file.id || file.fileId || "");
+  const previousFileId = safeString(
+    existingMetadata.fileId ||
+      existingMetadata.file_id ||
+      existingMetadata.metadata?.fileId ||
+      ""
+  );
+
+  return currentFileId && previousFileId && currentFileId !== previousFileId;
+}
+
+export async function deactivateOldChunks() {
+  return {
+    supported: false,
+    strategy: "vector_store_replace_by_source",
+    message:
+      "Current architecture uses addDocumentToVectorStore(), which removes and replaces chunks per normalized source."
+  };
+}
+
+export async function upsertIndexedChunks(text = "", metadata = {}) {
+  const chunks = buildIndexChunks(text, metadata);
+
+  const result = await addDocumentToVectorStore(
+    text,
+    metadata.normalizedSource,
+    {
+      ...metadata,
+      indexedChunks: chunks.map((chunk) => ({
+        chunkId: chunk.chunkId,
+        chunkIndex: chunk.chunkIndex,
+        chunkHash: chunk.chunkHash,
+        excerpt: chunk.excerpt
+      })),
+      chunkCount: chunks.length,
+      chunk_count: chunks.length,
+      compactIndexedMetadata: true
+    }
+  );
+
+  return {
+    ...result,
+    chunkCount: chunks.length,
+    chunk_count: chunks.length,
+    chunks: chunks.map((chunk) => ({
+      chunkId: chunk.chunkId,
+      chunkIndex: chunk.chunkIndex,
+      chunkHash: chunk.chunkHash,
+      textLength: chunk.text.length
+    }))
   };
 }
 
@@ -223,52 +1114,66 @@ export async function runDriveReindex() {
   const files = await listDriveFiles(folderId);
   const indexed = [];
   const failed = [];
+  const skipped = [];
 
   for (const file of files || []) {
     try {
-      let text = await extractTextFromFile(file);
-      text = normalizeText(text);
+      const { file: readableFile, text } = await readFileForIndexing(file);
+      const cleanText = truncateText(normalizeText(text));
 
-      const metadata = buildIndexMetadata(file, text);
+      const metadata = normalizeIndexedMetadata(readableFile, cleanText);
       const normalizedSource = metadata.normalizedSource;
 
-      if (!text) {
+      if (!cleanText) {
         failed.push(
-          buildFailedRecord(file, {
-            fileName: metadata.originalFileName,
+          buildFailedRecord(readableFile, {
+            fileName: metadata.fileName,
+            documentTitle: metadata.documentTitle,
             normalizedSource,
+            folderName: metadata.folderName,
+            folderPath: metadata.folderPath,
             path: metadata.path,
             mimeType: metadata.mimeType,
             authorityType: metadata.authorityType,
             authorityLevel: metadata.authorityLevel,
             authorityLabel: metadata.authorityLabel,
+            normalizedReference: metadata.normalizedReference,
+            possibleTaxDomain: metadata.possibleTaxDomain,
+            possibleSubIssues: metadata.possibleSubIssues,
             reason: "No readable text"
           })
         );
         continue;
       }
 
-      const result = await addDocumentToVectorStore(
-        text,
-        normalizedSource,
-        metadata
-      );
+      const indexResult = await upsertIndexedChunks(cleanText, metadata);
 
       indexed.push({
-        fileName: metadata.originalFileName,
+        fileId: metadata.fileId,
+        fileName: metadata.fileName,
+        documentTitle: metadata.documentTitle,
         normalizedSource,
-        path: metadata.path,
+        normalizedReference: metadata.normalizedReference,
+        folderName: metadata.folderName,
+        folderPath: metadata.folderPath,
+        sourceLibrary: metadata.sourceLibrary,
         mimeType: metadata.mimeType,
         authorityType: metadata.authorityType,
         authorityLevel: metadata.authorityLevel,
         authorityLabel: metadata.authorityLabel,
-        normalizedReference: metadata.normalizedReference,
-        textLength: text.length,
-        chunksAdded: result?.chunksAdded ?? 0,
+        controllingPrecedence: metadata.controllingPrecedence,
+        possibleTaxDomain: metadata.possibleTaxDomain,
+        possibleSubIssues: metadata.possibleSubIssues,
+        sourceHash: metadata.sourceHash,
+        textLength: cleanText.length,
+        chunkCount: indexResult?.chunkCount ?? indexResult?.chunksAdded ?? 0,
+        chunksAdded: indexResult?.chunksAdded ?? 0,
         status: "Indexed"
       });
     } catch (error) {
-      console.error(`Reindex failed for file: ${file?.name || "unknown"}`, error);
+      console.error(
+        `Reindex failed for file: ${file?.name || file?.fileName || "unknown"} — ${error?.message || "Unknown error"}`
+      );
 
       failed.push(
         buildFailedRecord(file, {
@@ -284,9 +1189,13 @@ export async function runDriveReindex() {
     totalFilesChecked: Array.isArray(files) ? files.length : 0,
     filesIndexed: indexed.length,
     filesFailed: failed.length,
+    filesSkipped: skipped.length,
     vectorStore: stats,
     indexed,
-    failed
+    failed,
+    skipped,
+    reindexServiceVersion: ENGINE_VERSION,
+    indexedAt: new Date().toISOString()
   };
 }
 
@@ -320,7 +1229,6 @@ export function createBackgroundReindexController() {
     }
 
     isRunning = true;
-
     const startedAt = new Date().toISOString();
 
     lastStatus = {
@@ -346,7 +1254,7 @@ export function createBackgroundReindexController() {
         };
       })
       .catch((error) => {
-        console.error("Background reindex error:", error);
+        console.error("Background reindex error:", error?.message || error);
 
         lastStatus = {
           running: false,
@@ -379,16 +1287,54 @@ export function reindexServiceHealthCheck() {
   return {
     ok: true,
     module: "reindex-service",
-    version: "3.1.0",
+    engine: "TINA_REINDEX_SERVICE",
+    version: ENGINE_VERSION,
+
     driveReaderCompatible: true,
     vectorStoreCompatible: true,
     authorityEngineCompatible: true,
-    backgroundControllerCompatible: true
+    backgroundControllerCompatible: true,
+
+    supportsFolderTraversal: true,
+    supportsFileReading: true,
+    supportsMetadataNormalization: true,
+    supportsAuthorityTypeInference: true,
+    supportsNormalizedReferenceExtraction: true,
+    supportsChunkHashing: true,
+    supportsSourceHashing: true,
+    supportsSupabasePersistenceHandoff: true,
+    supportsStaleChunkCleanupBySourceReplacement: true,
+    supportsDuplicatePreventionMetadata: true,
+
+    googleDriveFolders: TAX_LIBRARY_FOLDERS,
+    indexedAuthorityFolders: INDEXED_AUTHORITY_FOLDERS,
+    reviewFolders: REVIEW_FOLDERS,
+
+    noOpenAIAnswerCalls: true,
+    noAnswerGeneration: true,
+    noRetrievalPolicyDuplication: true,
+    noFullDocumentLogging: true,
+
+    maxIndexTextChars: MAX_INDEX_TEXT_CHARS,
+    chunkSize: INDEX_CHUNK_SIZE,
+    chunkOverlap: INDEX_CHUNK_OVERLAP
   };
 }
 
 export default {
   runDriveReindex,
   createBackgroundReindexController,
-  reindexServiceHealthCheck
+  reindexServiceHealthCheck,
+
+  normalizeIndexedMetadata,
+  inferAuthorityType,
+  inferNormalizedReferenceSafe,
+  inferPossibleTaxDomains,
+  inferPossibleSubIssues,
+  chunkTextForIndexing,
+  hashContent,
+  shouldReindexFile,
+  buildIndexedChunkPayload,
+  deactivateOldChunks,
+  upsertIndexedChunks
 };
