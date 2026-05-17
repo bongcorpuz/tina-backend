@@ -3,14 +3,23 @@
 
 /**
  * TINA Ask Handler
- * Version: 5.2.0
+ * Version: 6.0.0
  *
- * Purpose:
- * Route-level dispatcher for /ask, /tax, /review, /quiz, /source, /feedback.
+ * ORCHESTRATION-FIRST ROUTE CONTROLLER ONLY
  *
- * Important:
- * This file does NOT directly call OpenAI.
- * It passes a sanitized, orchestration-aware payload to rag-answer-handler.js.
+ * This file:
+ * - dispatches /ask, /tax, /review, /quiz, /source, /feedback
+ * - manages mode state
+ * - routes assessment commands
+ * - passes compact metadata to rag-answer-handler.js
+ *
+ * This file does NOT:
+ * - call OpenAI directly
+ * - assemble prompts
+ * - estimate tokens
+ * - inject raw retrieval payloads
+ * - inject raw engine objects
+ * - inject full debug objects
  */
 
 import {
@@ -27,18 +36,25 @@ import {
 
 import { saveMessage } from "./conversation-memory.js";
 import { storeFeedbackEntry } from "./feedback-learning.js";
-import { extractQuizAnswer } from "./ask-helpers.js";
-import { createAssessmentHandler } from "./assessment-handler.js";
-import { createRagAnswerHandler } from "./rag-answer-handler.js";
+
+import {
+  extractQuizAnswer
+} from "./ask-helpers.js";
+
+import {
+  createAssessmentHandler
+} from "./assessment-handler.js";
+
+import {
+  generateRagAnswer
+} from "./rag-answer-handler.js";
 
 import {
   buildOpenAIContext as defaultBuildOpenAIContext,
-  callOpenAIWithOrchestration as defaultCallOpenAIWithOrchestration,
-  estimateTokens as defaultEstimateTokens,
-  estimateMessagesTokens as defaultEstimateMessagesTokens
+  callOpenAIWithOrchestration as defaultCallOpenAIWithOrchestration
 } from "./context-orchestration-engine.js";
 
-const ENGINE_VERSION = "5.2.0";
+const ENGINE_VERSION = "6.0.0";
 
 const EXIT_COMMANDS = ["/bye", "/exit", "/stop", "/quit", "/reset"];
 
@@ -83,6 +99,17 @@ function normalizeHookCommand(value = "") {
 
 function isRagRoutedHook(hookCode = "") {
   return RAG_ROUTED_HOOKS.has(String(hookCode || "").toLowerCase());
+}
+
+function safeObject(value) {
+  return value && typeof value === "object" && !Array.isArray(value)
+    ? value
+    : {};
+}
+
+function safeArray(value) {
+  if (!value) return [];
+  return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
 }
 
 function getUserId(req) {
@@ -207,15 +234,7 @@ function buildContextOrchestration(input = {}) {
 
     callOpenAIWithOrchestration:
       input.callOpenAIWithOrchestration ||
-      defaultCallOpenAIWithOrchestration,
-
-    estimateTokens:
-      input.estimateTokens ||
-      defaultEstimateTokens,
-
-    estimateMessagesTokens:
-      input.estimateMessagesTokens ||
-      defaultEstimateMessagesTokens
+      defaultCallOpenAIWithOrchestration
   };
 }
 
@@ -237,6 +256,22 @@ function buildCompactPendingQuiz(pendingQuiz = null) {
     id: pendingQuiz.id || null,
     hook: pendingQuiz.hook || pendingQuiz.active_hook || null,
     status: pendingQuiz.status || null
+  };
+}
+
+function buildCompactHookConfig(hookConfig = {}) {
+  return {
+    hook_code: hookConfig.hook_code || "/ask",
+    mode: hookConfig.mode || "ASK",
+    title: hookConfig.title || "Default TINA Assistant",
+    requires_retrieval: Boolean(hookConfig.requires_retrieval),
+    requires_memory: Boolean(hookConfig.requires_memory),
+    requires_feedback: Boolean(hookConfig.requires_feedback),
+    adaptiveResponseMode: hookConfig.adaptiveResponseMode || "STANDARD",
+    cleanQuestion: hookConfig.cleanQuestion || "",
+    originalQuestion: hookConfig.originalQuestion || "",
+    forcedHookApplied: Boolean(hookConfig.forcedHookApplied),
+    engineVersion: ENGINE_VERSION
   };
 }
 
@@ -348,6 +383,7 @@ function buildAdaptiveContextForHook({
 
     activeHook: hookConfig.hook_code,
     activeMode: mode,
+
     existingMode: buildCompactExistingMode(existingMode),
     pendingQuiz: buildCompactPendingQuiz(pendingQuiz),
 
@@ -419,6 +455,14 @@ function buildCompactOrchestrationMetadata(extra = {}) {
   return {
     askHandlerVersion: ENGINE_VERSION,
 
+    orchestrationFirstArchitecture: true,
+    routeControllerOnly: true,
+    noDirectOpenAICall: true,
+    noPromptAssembly: true,
+    noTokenEstimation: true,
+    noRawRetrievalPayloadInjection: true,
+    noRawEngineObjectInjection: true,
+
     issueClassificationEnabled: true,
     adaptivePipelineEnabled: true,
     sourceOrderingPolicyEnabled: true,
@@ -458,14 +502,6 @@ export function createAskHandler({
 
   const assessmentHandler =
     createAssessmentHandler({
-      supabase,
-      openai,
-      contextOrchestration: resolvedContextOrchestration,
-      openaiModel
-    });
-
-  const ragAnswerHandler =
-    createRagAnswerHandler({
       supabase,
       openai,
       contextOrchestration: resolvedContextOrchestration,
@@ -649,6 +685,93 @@ export function createAskHandler({
     };
   }
 
+  async function handleRagRoute({
+    res,
+    userId,
+    conversationId,
+    hookConfig,
+    adaptiveContext,
+    orchestrationMetadata
+  }) {
+    const result = await generateRagAnswer({
+      question:
+        hookConfig.cleanQuestion ||
+        hookConfig.originalQuestion,
+
+      conversationHistory: [],
+
+      issueClassification: {},
+
+      orchestrationIntent: {
+        routeHook: hookConfig.hook_code,
+        routeMode: hookConfig.mode,
+        responseMode: hookConfig.adaptiveResponseMode || null
+      },
+
+      adaptiveContext,
+
+      model: openaiModel,
+
+      metadata: {
+        userId,
+        conversationId,
+        hook: hookConfig.hook_code,
+        mode: hookConfig.mode,
+        ...safeObject(orchestrationMetadata)
+      },
+
+      openai
+    });
+
+    const payload = {
+      success: true,
+      engine: "TINA_ASK_HANDLER",
+      version: ENGINE_VERSION,
+      hook: hookConfig.hook_code,
+      mode: hookConfig.mode,
+      hookTitle: hookConfig.title,
+      answer: result.answer,
+      sources: result.sources || [],
+      sourcesUsed: result.sources || [],
+      vectorMatches: safeArray(result.sources).length,
+      sourceStatus: safeArray(result.sources).length
+        ? "ISSUE_MATCHED_CONTEXT_USED"
+        : "NO_VISIBLE_SOURCE",
+      metadata: {
+        ...safeObject(result.metadata),
+        askHandlerVersion: ENGINE_VERSION,
+        orchestrationFirstArchitecture: true,
+        routeControllerOnly: true,
+        noDirectOpenAICall: true,
+        noPromptAssembly: true,
+        noTokenEstimation: true,
+        noRawRetrievalPayloadInjection: true,
+        noRawEngineObjectInjection: true
+      }
+    };
+
+    await saveConversationTurn({
+      conversationId,
+      userId,
+      question: hookConfig.originalQuestion,
+      answerText: payload.answer,
+      sourcesUsed: payload.sourcesUsed,
+      fallbackReferences: []
+    });
+
+    await saveModeState(supabase, {
+      userId,
+      sessionId: conversationId || null,
+      activeHook: hookConfig.hook_code,
+      activeMode: hookConfig.mode,
+      modeTitle: hookConfig.title,
+      lastQuestion: hookConfig.originalQuestion,
+      lastAnswer: payload.answer
+    });
+
+    return res.json(payload);
+  }
+
   return async function handleAsk(req, res) {
     try {
       const {
@@ -763,26 +886,29 @@ export function createAskHandler({
           forcedHook
         });
 
-      if (hookConfig.mode === "LEARNING_PROGRESS") {
+      const compactHookConfig =
+        buildCompactHookConfig(hookConfig);
+
+      if (compactHookConfig.mode === "LEARNING_PROGRESS") {
         const result =
           await assessmentHandler.handleLearningProgress({
             userId,
             conversationId,
-            hookConfig,
-            originalQuestion: hookConfig.originalQuestion
+            hookConfig: compactHookConfig,
+            originalQuestion: compactHookConfig.originalQuestion
           });
 
         return res.json(result.response);
       }
 
-      if (hookConfig.mode === "FEEDBACK") {
+      if (compactHookConfig.mode === "FEEDBACK") {
         const result =
           await handleFeedback({
             userId,
             conversationId,
             correction,
             feedbackType,
-            hookConfig
+            hookConfig: compactHookConfig
           });
 
         return res
@@ -791,19 +917,19 @@ export function createAskHandler({
       }
 
       if (
-        SPECIAL_ASSESSMENT_HOOKS.has(hookConfig.hook_code) ||
+        SPECIAL_ASSESSMENT_HOOKS.has(compactHookConfig.hook_code) ||
         (
-          assessmentHandler.isAssessmentMode(hookConfig.mode) &&
-          !isRagRoutedHook(hookConfig.hook_code)
+          assessmentHandler.isAssessmentMode(compactHookConfig.mode) &&
+          !isRagRoutedHook(compactHookConfig.hook_code)
         )
       ) {
         const result =
           await assessmentHandler.handleAssessmentCommand({
             userId,
             conversationId,
-            hookConfig,
-            cleanQuestion: hookConfig.cleanQuestion,
-            originalQuestion: hookConfig.originalQuestion
+            hookConfig: compactHookConfig,
+            cleanQuestion: compactHookConfig.cleanQuestion,
+            originalQuestion: compactHookConfig.originalQuestion
           });
 
         return res.json(result.response);
@@ -811,72 +937,46 @@ export function createAskHandler({
 
       const adaptiveContext =
         buildAdaptiveContextForHook({
-          hookConfig,
+          hookConfig: compactHookConfig,
           existingMode,
           pendingQuiz,
           contextOrchestrationEnabled: true
         });
 
-      const commonRagPayload = {
-        res,
-        userId,
-        conversationId,
-
-        cleanQuestion:
-          hookConfig.cleanQuestion ||
-          hookConfig.originalQuestion,
-
-        originalQuestion:
-          hookConfig.originalQuestion,
-
-        adaptiveContext,
-
-        contextOrchestration: resolvedContextOrchestration,
-        openaiModel,
-
-        orchestrationMetadata:
-          buildCompactOrchestrationMetadata({
-            routeHook: hookConfig.hook_code,
-            routeMode: hookConfig.mode
-          })
-      };
+      const orchestrationMetadata =
+        buildCompactOrchestrationMetadata({
+          routeHook: compactHookConfig.hook_code,
+          routeMode: compactHookConfig.mode
+        });
 
       if (
-        isRagRoutedHook(hookConfig.hook_code) ||
-        hookConfig.requires_retrieval
+        isRagRoutedHook(compactHookConfig.hook_code) ||
+        compactHookConfig.requires_retrieval
       ) {
-        return ragAnswerHandler.handleRagAnswer({
-          ...commonRagPayload,
-
-          hookConfig: {
-            hook_code: hookConfig.hook_code,
-            mode: hookConfig.mode,
-            title: hookConfig.title,
-            requires_retrieval: true,
-            requires_memory: Boolean(hookConfig.requires_memory),
-            requires_feedback: Boolean(hookConfig.requires_feedback),
-            adaptiveResponseMode: hookConfig.adaptiveResponseMode,
-            cleanQuestion: hookConfig.cleanQuestion,
-            originalQuestion: hookConfig.originalQuestion,
-            forcedHookApplied: Boolean(hookConfig.forcedHookApplied),
-            engineVersion: ENGINE_VERSION
-          }
+        return handleRagRoute({
+          res,
+          userId,
+          conversationId,
+          hookConfig: compactHookConfig,
+          adaptiveContext,
+          orchestrationMetadata
         });
       }
 
-      return ragAnswerHandler.handleRagAnswer({
-        ...commonRagPayload,
-
-        hookConfig: {
+      return handleRagRoute({
+        res,
+        userId,
+        conversationId,
+        hookConfig: buildCompactHookConfig({
           ...buildHardcodedHookConfig("/ask"),
-          requires_retrieval: true,
           cleanQuestion:
-            hookConfig.cleanQuestion ||
-            hookConfig.originalQuestion,
+            compactHookConfig.cleanQuestion ||
+            compactHookConfig.originalQuestion,
           originalQuestion:
-            hookConfig.originalQuestion,
-          engineVersion: ENGINE_VERSION
-        }
+            compactHookConfig.originalQuestion
+        }),
+        adaptiveContext,
+        orchestrationMetadata
       });
     } catch (error) {
       console.error("Ask dispatcher error:", error);
@@ -886,7 +986,8 @@ export function createAskHandler({
         error: error.message || "Ask failed",
         engine: "TINA Ask Handler",
         askHandlerVersion: ENGINE_VERSION,
-        contextOrchestrationEnabled: true
+        contextOrchestrationEnabled: true,
+        orchestrationFirstArchitecture: true
       });
     }
   };
@@ -897,6 +998,15 @@ export function askHandlerHealthCheck() {
     ok: true,
     engine: "TINA_ASK_HANDLER",
     version: ENGINE_VERSION,
+
+    orchestrationFirstArchitecture: true,
+    routeControllerOnly: true,
+
+    noDirectOpenAICall: true,
+    noPromptAssembly: true,
+    noTokenEstimation: true,
+    noRawRetrievalPayloadInjection: true,
+    noRawEngineObjectInjection: true,
 
     adaptiveCompatible: true,
     assessmentCompatible: true,
@@ -917,10 +1027,6 @@ export function askHandlerHealthCheck() {
     sourceOrderingPolicyPassedDownstream: true,
     conflictDisplayPolicyPassedDownstream: true,
     contextOrchestrationPassedDownstream: true,
-
-    rawFullDocumentInjectionPreventedAtRouteLayer: true,
-    fullDebugObjectInjectionPreventedAtRouteLayer: true,
-    fullEngineOutputInjectionPreventedAtRouteLayer: true,
 
     forcedHookCompatible: true,
     routeModeCompatible: true
