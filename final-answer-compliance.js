@@ -2284,5 +2284,5 @@ export default {
   preserveSystemFallbackAnswer,
   normalizeMode
 };
-function isSecondaryOrReviewSource(source = {}) {
+
   const type = authorityTypeOf(source);
