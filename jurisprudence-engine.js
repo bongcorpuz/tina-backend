@@ -3,7 +3,7 @@
 
 /**
  * TINA Enterprise Jurisprudence Intelligence Engine
- * Version: 4.1.0
+ * Version: 4.2.0
  *
  * Purpose:
  * - Select only directly issue-relevant jurisprudence.
@@ -11,6 +11,13 @@
  * - Prevent unrelated VAT/tax cases from being injected into OpenAI.
  * - Return compact case summaries only.
  * - Support context-orchestration-engine.js.
+ *
+ * This file must NOT:
+ * - retrieve sources,
+ * - call OpenAI,
+ * - render final answers,
+ * - fabricate case doctrine,
+ * - inject full case text into prompts.
  */
 
 import {
@@ -31,7 +38,7 @@ import {
 
 import { applySupersessionFilter } from "./supersession-engine.js";
 
-const ENGINE_VERSION = "4.1.0";
+const ENGINE_VERSION = "4.2.0";
 
 const MAX_CASES = 4;
 const MAX_CASE_SUMMARY_CHARS = 900;
@@ -39,12 +46,28 @@ const MAX_EXCERPT_CHARS = 650;
 const MAX_EXPLANATION_CHARS = 700;
 const MAX_PROMPT_BLOCK_CHARS = 4500;
 
+/**
+ * Master Prompt court hierarchy:
+ * 4 Supreme Court En Banc
+ * 5 Supreme Court Division
+ * 6 CTA En Banc
+ * 7 CTA Division / Court of Appeals
+ */
 const COURT_AUTHORITY_TYPES = Object.freeze([
+  "SUPREME_COURT_EN_BANC",
   "SUPREME_COURT",
   "CTA_EN_BANC",
   "COURT_OF_APPEALS",
   "CTA_DIVISION"
 ]);
+
+const COURT_ROLE_PRIORITY = Object.freeze({
+  SUPREME_COURT_EN_BANC: 1,
+  SUPREME_COURT: 2,
+  CTA_EN_BANC: 3,
+  COURT_OF_APPEALS: 4,
+  CTA_DIVISION: 5
+});
 
 const APPLICABILITY_STATUS = Object.freeze({
   DIRECTLY_APPLICABLE: "DIRECTLY_APPLICABLE",
@@ -68,6 +91,8 @@ const CASE_ROLE = Object.freeze({
 const LOCAL_ISSUE = Object.freeze({
   VAT_REFUND: ISSUE_TYPE?.VAT_REFUND || "VAT_REFUND",
   VAT_LIABILITY: ISSUE_TYPE?.VAT_LIABILITY || "VAT_LIABILITY",
+  VAT_ZERO_RATING: ISSUE_TYPE?.VAT_ZERO_RATING || "VAT_ZERO_RATING",
+  VAT_EXEMPTION: ISSUE_TYPE?.VAT_EXEMPTION || "VAT_EXEMPTION",
   PROCEDURAL: ISSUE_TYPE?.PROCEDURAL || "PROCEDURAL",
   EVIDENTIARY: ISSUE_TYPE?.EVIDENTIARY || "EVIDENTIARY",
   JURISDICTIONAL: ISSUE_TYPE?.JURISDICTIONAL || "JURISDICTIONAL",
@@ -78,7 +103,7 @@ const LOCAL_ISSUE = Object.freeze({
   TRANSACTION: ISSUE_TYPE?.TRANSACTION || "TRANSACTION",
   CONTRACT: ISSUE_TYPE?.CONTRACT || "CONTRACT",
   ACCOUNTING: ISSUE_TYPE?.ACCOUNTING || "ACCOUNTING",
-  GENERAL: ISSUE_TYPE?.GENERAL_TAX || "GENERAL"
+  GENERAL: ISSUE_TYPE?.GENERAL_TAX || ISSUE_TYPE?.GENERAL || "GENERAL"
 });
 
 const LOCAL_DIMENSION = Object.freeze({
@@ -115,6 +140,36 @@ function trimText(value = "", max = MAX_CASE_SUMMARY_CHARS) {
   if (!text) return "";
   if (text.length <= max) return text;
   return `${text.slice(0, max).trim()} ...[trimmed]`;
+}
+
+function normalizeAuthorityType(value = "") {
+  const raw = String(value || "UNKNOWN").trim().toUpperCase().replace(/[\s-]+/g, "_");
+
+  const aliases = {
+    SUPREME_COURT_EN_BANC: "SUPREME_COURT_EN_BANC",
+    SUPREME_COURT: "SUPREME_COURT",
+    SC: "SUPREME_COURT",
+    CASE: "SUPREME_COURT",
+    CASE_LAW: "SUPREME_COURT",
+    JURISPRUDENCE: "SUPREME_COURT",
+    CTA_EN_BANC: "CTA_EN_BANC",
+    CTA: "CTA_DIVISION",
+    CTA_DIVISION: "CTA_DIVISION",
+    COURT_OF_APPEALS: "COURT_OF_APPEALS",
+    CA: "COURT_OF_APPEALS"
+  };
+
+  return aliases[raw] || raw || "UNKNOWN";
+}
+
+function authorityTypeOf(doc = {}) {
+  return normalizeAuthorityType(
+    doc.authorityType ||
+      doc.authority_type ||
+      doc.metadata?.authorityType ||
+      getAuthorityTypeForDoc(doc) ||
+      "UNKNOWN"
+  );
 }
 
 function docText(doc = {}) {
@@ -170,6 +225,30 @@ function sourceTitleOf(doc = {}) {
   );
 }
 
+function extractCaseReference(text = "") {
+  const value = normalizeText(text);
+
+  const gr = value.match(/\bg\.?\s*r\.?\s*no\.?\s*([a-z0-9.-]+)\b/i);
+  if (gr) return `G.R. No. ${gr[1]}`;
+
+  const cta =
+    value.match(/\bcta\s+case\s+no\.?\s*([a-z0-9.-]+)\b/i) ||
+    value.match(/\bcta\s+eb\s+no\.?\s*([a-z0-9.-]+)\b/i) ||
+    value.match(/\bcta\s+en\s+banc\s+no\.?\s*([a-z0-9.-]+)\b/i);
+  if (cta) return `CTA No. ${cta[1]}`;
+
+  const ca = value.match(/\bca-?g\.?\s*r\.?\s*(?:sp|cv|cr)?\s*no\.?\s*([a-z0-9.-]+)\b/i);
+  if (ca) return `CA-G.R. ${ca[1]}`;
+
+  const caseName = value.match(
+    /\b([A-Z][A-Za-z0-9&.,'\-\s]{2,80}?)\s+(?:v\.|vs\.?|versus)\s+([A-Z][A-Za-z0-9&.,'\-\s]{2,80}?)(?=[,.;?)]|\s+G\.?R\.?|\s+CTA|\s+CA-G\.?R\.?|$)/i
+  );
+
+  if (caseName) return normalizeText(`${caseName[1]} v. ${caseName[2]}`);
+
+  return null;
+}
+
 function sourceCitationOf(doc = {}) {
   return (
     doc.citation ||
@@ -185,30 +264,7 @@ function sourceCitationOf(doc = {}) {
 }
 
 function isCourtAuthority(doc = {}) {
-  return COURT_AUTHORITY_TYPES.includes(getAuthorityTypeForDoc(doc));
-}
-
-function extractCaseReference(text = "") {
-  const value = normalizeText(text);
-
-  const gr = value.match(/\bg\.?\s*r\.?\s*no\.?\s*([a-z0-9.-]+)\b/i);
-  if (gr) return `G.R. No. ${gr[1]}`;
-
-  const cta =
-    value.match(/\bcta\s+case\s+no\.?\s*([a-z0-9.-]+)\b/i) ||
-    value.match(/\bcta\s+eb\s+no\.?\s*([a-z0-9.-]+)\b/i);
-  if (cta) return `CTA ${cta[1]}`;
-
-  const ca = value.match(/\bca-?g\.?\s*r\.?\s*(?:sp|cv|cr)?\s*no\.?\s*([a-z0-9.-]+)\b/i);
-  if (ca) return `CA-G.R. ${ca[1]}`;
-
-  const caseName = value.match(
-    /\b([A-Z][A-Za-z0-9&.,'\-\s]{2,80}?)\s+(?:v\.|vs\.?|versus)\s+([A-Z][A-Za-z0-9&.,'\-\s]{2,80}?)(?=[,.;?)]|\s+G\.?R\.?|\s+CTA|\s+CA-G\.?R\.?|$)/i
-  );
-
-  if (caseName) return normalizeText(`${caseName[1]} v. ${caseName[2]}`);
-
-  return null;
+  return COURT_AUTHORITY_TYPES.includes(authorityTypeOf(doc));
 }
 
 function detectCaseIssueDimensions(text = "") {
@@ -219,8 +275,8 @@ function detectCaseIssueDimensions(text = "") {
     if (condition) dimensions.push(dimension);
   };
 
-  push(/\b(taxable|liable|subject to|exempt|zero-rated|deductible|output vat|income tax|withholding tax|gross income|gross receipts)\b/i.test(value), LOCAL_DIMENSION.SUBSTANTIVE);
-  push(/\b(file|filing|deadline|period|administrative claim|judicial claim|appeal|assessment|loa|pan|fan|return|remedy|protest|prescription)\b/i.test(value), LOCAL_DIMENSION.PROCEDURAL);
+  push(/\b(taxable|liable|subject to|exempt|zero-rated|zero rated|deductible|output vat|income tax|withholding tax|gross income|gross receipts)\b/i.test(value), LOCAL_DIMENSION.SUBSTANTIVE);
+  push(/\b(file|filing|deadline|period|administrative claim|judicial claim|appeal|assessment|loa|pan|fan|fdda|return|remedy|protest|prescription)\b/i.test(value), LOCAL_DIMENSION.PROCEDURAL);
   push(/\b(invoice|receipt|substantiation|documentary|proof|evidence|burden of proof|records|supporting documents)\b/i.test(value), LOCAL_DIMENSION.EVIDENTIARY);
   push(/\b(jurisdiction|jurisdictional|cta|condition precedent|120\+30)\b/i.test(value), LOCAL_DIMENSION.JURISDICTIONAL);
   push(/\b(effective|retroactive|prospective|transition|amended|repealed|superseded)\b/i.test(value), LOCAL_DIMENSION.TEMPORAL);
@@ -240,10 +296,12 @@ function detectTaxIssueSignals(text = "") {
   };
 
   push(/\b(vat refund|input vat refund|tax credit certificate|tcc|120\+30|administrative claim|judicial claim|unutilized input vat|excess input vat|claim for refund)\b/i.test(value), LOCAL_ISSUE.VAT_REFUND);
-  push(/\b(vat liability|output vat|subject to vat|vatable|gross receipts|sale of goods|sale of services|define vat|value-added tax)\b/i.test(value), LOCAL_ISSUE.VAT_LIABILITY);
+  push(/\b(vat liability|output vat|subject to vat|vatable|gross receipts|sale of goods|sale of services|define vat|value-added tax|value added tax)\b/i.test(value), LOCAL_ISSUE.VAT_LIABILITY);
+  push(/\b(zero-rated|zero rated|zero rating|export sales)\b/i.test(value), LOCAL_ISSUE.VAT_ZERO_RATING);
+  push(/\b(vat exempt|vat-exempt|exemption|tax exempt)\b/i.test(value), LOCAL_ISSUE.VAT_EXEMPTION);
   push(/\b(invoice|receipt|substantiation|documentary|proof|evidence|burden of proof|supporting document)\b/i.test(value), LOCAL_ISSUE.EVIDENTIARY);
   push(/\b(jurisdiction|jurisdictional|condition precedent|cta)\b/i.test(value), LOCAL_ISSUE.JURISDICTIONAL);
-  push(/\b(assessment|loa|pan|fan|protest|appeal|prescription|deficiency tax)\b/i.test(value), LOCAL_ISSUE.ASSESSMENT);
+  push(/\b(assessment|loa|pan|fan|fdda|protest|appeal|prescription|deficiency tax)\b/i.test(value), LOCAL_ISSUE.ASSESSMENT);
   push(/\b(withholding|ewt|expanded withholding|cwt|fwt|withholding tax)\b/i.test(value), LOCAL_ISSUE.WITHHOLDING_TAX);
   push(/\b(income tax|rcit|mcit|nolco|deductible|non-deductible|taxable income|gross income)\b/i.test(value), LOCAL_ISSUE.INCOME_TAX);
   push(/\b(substance over form|economic substance|tax avoidance|tax evasion|lifeblood doctrine|strictissimi juris|mutuality)\b/i.test(value), LOCAL_ISSUE.DOCTRINE);
@@ -264,6 +322,10 @@ function normalizeIssue(value = "") {
     INPUT_VAT_REFUND: LOCAL_ISSUE.VAT_REFUND,
     TAX_REFUND: LOCAL_ISSUE.VAT_REFUND,
     REFUND: LOCAL_ISSUE.VAT_REFUND,
+    ZERO_RATING: LOCAL_ISSUE.VAT_ZERO_RATING,
+    VAT_ZERO_RATING: LOCAL_ISSUE.VAT_ZERO_RATING,
+    EXEMPTION: LOCAL_ISSUE.VAT_EXEMPTION,
+    VAT_EXEMPTION: LOCAL_ISSUE.VAT_EXEMPTION,
     PROCEDURE: LOCAL_ISSUE.PROCEDURAL,
     REMEDY: LOCAL_ISSUE.PROCEDURAL,
     REMEDIES: LOCAL_ISSUE.PROCEDURAL,
@@ -299,7 +361,12 @@ function normalizeDimension(value = "") {
   return null;
 }
 
-function extractIssueProfile({ query = "", queryIntent = {}, adaptiveContext = {}, issueClassification = null } = {}) {
+function extractIssueProfile({
+  query = "",
+  queryIntent = {},
+  adaptiveContext = {},
+  issueClassification = null
+} = {}) {
   const classification =
     issueClassification?.orchestrationClassification ||
     issueClassification ||
@@ -327,6 +394,8 @@ function extractIssueProfile({ query = "", queryIntent = {}, adaptiveContext = {
     primaryIssue,
     ...safeArray(classification.subIssue).map(normalizeIssue),
     ...safeArray(classification.subIssues).map(normalizeIssue),
+    ...safeArray(classification.sub_issue).map(normalizeIssue),
+    ...safeArray(classification.sub_issues).map(normalizeIssue),
     ...safeArray(queryIntent?.issueTypes).map(normalizeIssue),
     ...safeArray(queryIntent?.subIssue).map(normalizeIssue),
     ...safeArray(queryIntent?.subIssues).map(normalizeIssue),
@@ -336,6 +405,8 @@ function extractIssueProfile({ query = "", queryIntent = {}, adaptiveContext = {
   const legalDimensions = unique([
     ...safeArray(classification.legalDimension).map(normalizeDimension),
     ...safeArray(classification.legalDimensions).map(normalizeDimension),
+    ...safeArray(classification.legal_dimension).map(normalizeDimension),
+    ...safeArray(classification.legal_dimensions).map(normalizeDimension),
     ...safeArray(queryIntent?.legalDimensions).map(normalizeDimension),
     ...detectedDimensions
   ]).filter(Boolean);
@@ -348,7 +419,9 @@ function extractIssueProfile({ query = "", queryIntent = {}, adaptiveContext = {
       classification.retrievalStrategy ||
       classification.retrieval_strategy ||
       queryIntent?.retrievalStrategy ||
-      "ISSUE_ROLE_APPLICABILITY_CASE_FILTER"
+      "ISSUE_ROLE_APPLICABILITY_CASE_FILTER",
+    masterPromptAuthorityHierarchyApplied: true,
+    courtAuthorityNotSubordinatedToBIRIssuances: true
   };
 }
 
@@ -429,12 +502,13 @@ function extractDoctrineSignals(text = "") {
   push(/\blifeblood doctrine\b/i.test(value), "LIFEBLOOD_DOCTRINE");
   push(/\bclaim for refund\b/i.test(value), "TAX_REFUND_STRICT_PROOF");
   push(/\bburden of proof\b/i.test(value), "BURDEN_OF_PROOF");
+  push(/\bstare decisis\b/i.test(value), "STARE_DECISIS");
 
   return unique(doctrines);
 }
 
 function classifyCaseRole({ issueProfile = {}, doc = {} } = {}) {
-  const authorityType = getAuthorityTypeForDoc(doc);
+  const authorityType = authorityTypeOf(doc);
   const text = docText(doc);
   const docIssues = detectTaxIssueSignals(text);
   const docDimensions = detectCaseIssueDimensions(text);
@@ -445,7 +519,11 @@ function classifyCaseRole({ issueProfile = {}, doc = {} } = {}) {
 
   if (mismatch) return CASE_ROLE.EXCLUDED;
 
-  if (authorityType === "SUPREME_COURT" && issueMatch && dimensionMatch) {
+  if (
+    ["SUPREME_COURT_EN_BANC", "SUPREME_COURT"].includes(authorityType) &&
+    issueMatch &&
+    dimensionMatch
+  ) {
     return CASE_ROLE.CONTROLLING;
   }
 
@@ -468,8 +546,21 @@ function classifyCaseRole({ issueProfile = {}, doc = {} } = {}) {
   return CASE_ROLE.EXCLUDED;
 }
 
-function computeCaseApplicabilityScore({ query = "", queryIntent = null, issueProfile = null, doc = {} }) {
-  const intent = queryIntent || analyzeQueryIntent(query);
+function safeAnalyzeQueryIntent(query = "") {
+  try {
+    return analyzeQueryIntent(query) || {};
+  } catch {
+    return {};
+  }
+}
+
+function computeCaseApplicabilityScore({
+  query = "",
+  queryIntent = null,
+  issueProfile = null,
+  doc = {}
+}) {
+  const intent = queryIntent || safeAnalyzeQueryIntent(query);
   const profile =
     issueProfile ||
     extractIssueProfile({
@@ -514,10 +605,11 @@ function computeCaseApplicabilityScore({ query = "", queryIntent = null, issuePr
     if (docBlob.includes(token)) score += 1.5;
   }
 
-  const type = getAuthorityTypeForDoc(doc);
+  const type = authorityTypeOf(doc);
 
+  if (type === "SUPREME_COURT_EN_BANC") score += 45;
   if (type === "SUPREME_COURT") score += 35;
-  if (type === "CTA_EN_BANC") score += 20;
+  if (type === "CTA_EN_BANC") score += 22;
   if (type === "COURT_OF_APPEALS") score += 14;
   if (type === "CTA_DIVISION") score += 10;
 
@@ -600,8 +692,13 @@ function classifyApplicability(score = 0, issueProfile = {}, doc = {}) {
   };
 }
 
-function enrichCaseMetadata({ query = "", queryIntent = null, issueProfile = null, doc = {} }) {
-  const intent = queryIntent || analyzeQueryIntent(query);
+function enrichCaseMetadata({
+  query = "",
+  queryIntent = null,
+  issueProfile = null,
+  doc = {}
+}) {
+  const intent = queryIntent || safeAnalyzeQueryIntent(query);
   const profile =
     issueProfile ||
     extractIssueProfile({
@@ -620,6 +717,7 @@ function enrichCaseMetadata({ query = "", queryIntent = null, issueProfile = nul
 
   return {
     ...doc,
+    authorityType: authorityTypeOf(doc),
     caseReference: extractCaseReference(docText(doc)) || extractCaseReference(sourceTitleOf(doc)),
     caseRole: applicability.role,
     caseApplicabilityScore: applicabilityScore,
@@ -628,20 +726,25 @@ function enrichCaseMetadata({ query = "", queryIntent = null, issueProfile = nul
     caseIssueSignals: detectTaxIssueSignals(docText(doc)),
     caseLegalDimensions: detectCaseIssueDimensions(docText(doc)),
     doctrineSignals: extractDoctrineSignals(docText(doc)),
-    issueProfileUsed: profile
+    issueProfileUsed: profile,
+    masterPromptAuthorityHierarchyApplied: true,
+    courtAuthorityNotSubordinatedToBIRIssuances: true,
+    directlyRelevantOnly: true
   };
 }
 
 function sanitizeCaseSummary(doc = {}) {
   const text = docText(doc);
+  const type = authorityTypeOf(doc);
 
   return {
     title: trimText(sourceTitleOf(doc), 220),
     citation: trimText(sourceCitationOf(doc), 260),
     url: trimText(sourcePathOf(doc), 320),
-    authorityType: getAuthorityTypeForDoc(doc),
+    authorityType: type,
     authorityLevel: getAuthorityLevelForDoc(doc),
     controllingPrecedence: getControllingPrecedenceForDoc(doc),
+    courtRolePriority: COURT_ROLE_PRIORITY[type] || 99,
 
     caseReference:
       doc.caseReference ||
@@ -671,8 +774,21 @@ function sanitizeCaseSummary(doc = {}) {
       doc.caseApplicability === APPLICABILITY_STATUS.DIRECTLY_APPLICABLE ||
       doc.caseApplicability === APPLICABILITY_STATUS.PERSUASIVE_AUTHORITY
         ? "May be used as supporting jurisprudence if aligned with the final legal issue."
-        : "Use only for distinction, not as controlling authority."
+        : "Use only for distinction, not as controlling authority.",
+
+    masterPromptAuthorityHierarchyApplied: true,
+    courtAuthorityNotSubordinatedToBIRIssuances: true,
+    rawFullCaseInjectionPrevented: true
   };
+}
+
+function safeSupersessionActiveDocs(docs = []) {
+  try {
+    const result = applySupersessionFilter(docs);
+    return result?.activeDocs || docs;
+  } catch {
+    return docs;
+  }
 }
 
 function selectIssueRelevantJurisprudence({
@@ -685,7 +801,7 @@ function selectIssueRelevantJurisprudence({
   includeDistinguishable = false,
   includeBackground = false
 } = {}) {
-  const queryIntent = analyzeQueryIntent(query);
+  const queryIntent = safeAnalyzeQueryIntent(query);
 
   const issueProfile =
     extractIssueProfile({
@@ -695,8 +811,7 @@ function selectIssueRelevantJurisprudence({
       issueClassification
     });
 
-  const supersessionResult = applySupersessionFilter(docs);
-  const activeDocs = supersessionResult.activeDocs || docs;
+  const activeDocs = safeSupersessionActiveDocs(docs);
 
   const rerankedResult = rerankForTina({
     query,
@@ -711,7 +826,8 @@ function selectIssueRelevantJurisprudence({
       primaryIssue: issueProfile.primaryIssue,
       subIssues: issueProfile.issueTypes,
       legalDimensions: issueProfile.legalDimensions,
-      retrievalStrategy: issueProfile.retrievalStrategy
+      retrievalStrategy: issueProfile.retrievalStrategy,
+      targetAuthorities: COURT_AUTHORITY_TYPES
     }
   });
 
@@ -763,6 +879,10 @@ function selectIssueRelevantJurisprudence({
 
       if (aRole !== bRole) return aRole - bRole;
 
+      const aCourtPriority = COURT_ROLE_PRIORITY[authorityTypeOf(a)] || 99;
+      const bCourtPriority = COURT_ROLE_PRIORITY[authorityTypeOf(b)] || 99;
+      if (aCourtPriority !== bCourtPriority) return aCourtPriority - bCourtPriority;
+
       if (b.caseApplicabilityScore !== a.caseApplicabilityScore) {
         return b.caseApplicabilityScore - a.caseApplicabilityScore;
       }
@@ -791,7 +911,7 @@ function buildJurisprudenceApplicabilitySummary({ query = "", cases = [] } = {})
       .map((doc, index) =>
         [
           `${index + 1}. ${doc.title || sourceTitleOf(doc)}`,
-          `Authority: ${doc.authorityType || getAuthorityTypeForDoc(doc)}`,
+          `Authority: ${doc.authorityType || authorityTypeOf(doc)}`,
           `Case Reference: ${doc.caseReference || "Not clearly extracted"}`,
           `Case Role: ${doc.caseRole || "Not classified"}`,
           `Applicability: ${doc.caseApplicability || "Not classified"}`,
@@ -815,9 +935,21 @@ function sanitizeConflictReview(review = {}) {
     conflictType: review.conflictType || null,
     doctrinalConflict: Boolean(review.doctrinalConflict),
     hierarchyConflict: Boolean(review.hierarchyConflict),
+    sameExactIssue: review.sameExactIssue === true,
+    sameLegalDimension: review.sameLegalDimension === true,
+    oppositeHoldingOrRule: review.oppositeHoldingOrRule === true,
     exactIssue: trimText(review.exactIssue, 300),
+    exactLegalDimension: trimText(review.exactLegalDimension, 300),
     distinctionType: trimText(review.distinctionType, 300),
-    resolutionBasis: trimText(review.resolutionBasis || review.reason, 700)
+    hierarchyAnalysis: trimText(review.hierarchyAnalysis, 700),
+    conflictResolutionBasis: trimText(review.conflictResolutionBasis || review.resolutionBasis || review.reason, 700),
+    resolutionBasis: trimText(review.resolutionBasis || review.reason, 700),
+    conflictLabelMayBeDisplayed:
+      review.sameExactIssue === true &&
+      review.sameLegalDimension === true &&
+      review.oppositeHoldingOrRule === true &&
+      Boolean(review.hierarchyAnalysis) &&
+      Boolean(review.conflictResolutionBasis || review.resolutionBasis)
   };
 }
 
@@ -848,12 +980,14 @@ function analyzeJurisprudenceConflicts({ cases = [], supportingAuthorities = [] 
       conflict: false,
       explanation:
         "No direct doctrinal conflict detected. Cases may address different substantive, procedural, evidentiary, jurisdictional, factual, contractual, or temporal issues and should be treated as distinguishable rather than conflicting.",
-      reviews: []
+      reviews: [],
+      masterPromptAuthorityHierarchyApplied: true,
+      courtAuthorityNotSubordinatedToBIRIssuances: true
     };
   }
 
   return {
-    conflict: reviews.some((item) => item.conflict),
+    conflict: reviews.some((item) => item.conflict && item.conflictLabelMayBeDisplayed),
     explanation: trimText(
       reviews
         .slice(0, 3)
@@ -864,15 +998,22 @@ function analyzeJurisprudenceConflicts({ cases = [], supportingAuthorities = [] 
             `Doctrinal Conflict: ${item.doctrinalConflict ? "YES" : "NO"}`,
             `Hierarchy Conflict: ${item.hierarchyConflict ? "YES" : "NO"}`,
             `Apparent Conflict Only: ${item.apparentConflict ? "YES" : "NO"}`,
+            `Same Exact Issue: ${item.sameExactIssue ? "YES" : "NO"}`,
+            `Same Legal Dimension: ${item.sameLegalDimension ? "YES" : "NO"}`,
+            `Opposite Holding/Rule: ${item.oppositeHoldingOrRule ? "YES" : "NO"}`,
             `Exact Issue: ${item.exactIssue || "Not determined"}`,
+            `Exact Legal Dimension: ${item.exactLegalDimension || "Not determined"}`,
             `Distinction Type: ${item.distinctionType || "Not determined"}`,
-            `Resolution Basis: ${item.resolutionBasis || "Not determined"}`
+            `Hierarchy Analysis: ${item.hierarchyAnalysis || "Not determined"}`,
+            `Resolution Basis: ${item.conflictResolutionBasis || item.resolutionBasis || "Not determined"}`
           ].join("\n")
         )
         .join("\n\n"),
       MAX_PROMPT_BLOCK_CHARS
     ),
-    reviews: reviews.slice(0, 3)
+    reviews: reviews.slice(0, 3),
+    masterPromptAuthorityHierarchyApplied: true,
+    courtAuthorityNotSubordinatedToBIRIssuances: true
   };
 }
 
@@ -900,7 +1041,7 @@ function buildJurisprudencePromptBlock({
       conflictReview.explanation,
       "",
       "JURISPRUDENCE USE RULE",
-      "Use DIRECTLY_APPLICABLE and PERSUASIVE_AUTHORITY cases as legal support. Use DISTINGUISHABLE_BUT_RELEVANT cases only to explain distinctions. Do not cite BACKGROUND_ONLY or issue-mismatched cases as controlling authority."
+      "Use DIRECTLY_APPLICABLE and PERSUASIVE_AUTHORITY cases as legal support. Use DISTINGUISHABLE_BUT_RELEVANT cases only to explain distinctions. Do not cite BACKGROUND_ONLY or issue-mismatched cases as controlling authority. Do not state Conflict Detected: YES unless sameExactIssue, sameLegalDimension, oppositeHoldingOrRule, hierarchyAnalysis, and conflictResolutionBasis are all present."
     ].join("\n"),
     MAX_PROMPT_BLOCK_CHARS
   );
@@ -960,7 +1101,10 @@ function buildJurisprudencePayload({
     contextOrchestrationSafe: true,
     directlyRelevantOnly: true,
     rawFullCaseInjectionPrevented: true,
-    compactCaseSummaryOnly: true
+    compactCaseSummaryOnly: true,
+    masterPromptAuthorityHierarchyApplied: true,
+    courtAuthorityNotSubordinatedToBIRIssuances: true,
+    conflictMetadataCompatible: true
   };
 }
 
@@ -982,7 +1126,14 @@ function jurisprudenceEngineHealthCheck() {
     directlyRelevantOnly: true,
     compactCaseSummaryOnly: true,
     rawFullCaseInjectionPrevented: true,
-    unrelatedTaxCaseSuppressionReady: true
+    unrelatedTaxCaseSuppressionReady: true,
+    supremeCourtEnBancPriorityEnabled: true,
+    conflictMetadataCompatible: true,
+    masterPromptAuthorityHierarchyApplied: true,
+    courtAuthorityNotSubordinatedToBIRIssuances: true,
+    noRetrieval: true,
+    noOpenAI: true,
+    noRendering: true
   };
 }
 
