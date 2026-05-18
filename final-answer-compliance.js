@@ -3,7 +3,7 @@
 
 /**
  * TINA Final Answer Compliance Engine
- * Version: 6.0.0
+ * Version: 6.1.0
  *
  * Final compliance gate only:
  * - no OpenAI calls
@@ -21,13 +21,6 @@
  * - hidden/review-source leakage checks
  * - raw/debug payload cleanup
  * - compact final-output safeguards
- *
- * Does not own:
- * - retrieval
- * - answer drafting
- * - tax classification
- * - authority legal analysis
- * - citation formatting replacement
  */
 
 import {
@@ -42,7 +35,7 @@ import {
   MAX_VISIBLE_SOURCES
 } from "./source-visibility-engine.js";
 
-const ENGINE_VERSION = "6.0.0";
+const ENGINE_VERSION = "6.1.0";
 
 const RESPONSE_MODE = Object.freeze({
   FAST_DEFINITION: "FAST_DEFINITION",
@@ -90,6 +83,23 @@ const LEGACY_TINA_AF_HEADINGS = Object.freeze([
 
 const TINA_AF_HEADINGS = DEFAULT_AF_HEADINGS;
 
+/**
+ * Master Prompt hierarchy:
+ * 1. Constitution
+ * 2. NIRC / CMTA / LGC / primary statutes
+ * 3. Tax Treaties
+ * 4. Supreme Court En Banc
+ * 5. Supreme Court Division
+ * 6. CTA En Banc
+ * 7. CTA Division
+ * 8. Revenue Regulations
+ * 9. RMC / RMO / RAMO
+ * 10. BIR Rulings
+ * 11. LGU / BOC issuances
+ * 12. PFRS / PAS / PSA when accounting applies
+ * 13. OECD / foreign persuasive authorities
+ * 14. CPA reviewer notes / secondary materials
+ */
 const AUTHORITY_HIERARCHY = Object.freeze({
   CONSTITUTION: 1,
 
@@ -110,8 +120,10 @@ const AUTHORITY_HIERARCHY = Object.freeze({
   JURISPRUDENCE: 5,
 
   CTA_EN_BANC: 6,
+
   CTA_DIVISION: 7,
   CTA: 7,
+  COURT_OF_APPEALS: 7,
 
   RR: 8,
   REVENUE_REGULATION: 8,
@@ -125,17 +137,20 @@ const AUTHORITY_HIERARCHY = Object.freeze({
   ADMINISTRATIVE_GUIDANCE: 11,
   TECHNICAL_GUIDANCE: 11,
   BOC_ISSUANCE: 11,
+  LGU: 11,
   LGU_ORDINANCE: 11,
   FIRB_ISSUANCE: 11,
   PEZA_ISSUANCE: 11,
+  PEZA_MEMO: 11,
   SEC_GUIDANCE: 11,
 
-  OECD: 12,
-  FOREIGN_AUTHORITY: 12,
+  PFRS: 12,
+  PAS: 12,
+  PSA: 12,
 
-  PFRS: 13,
-  PAS: 13,
-  PSA: 13,
+  OECD: 13,
+  OECD_GUIDANCE: 13,
+  FOREIGN_AUTHORITY: 13,
 
   CPA_NOTES: 14,
   REVIEW_MATERIALS: 14,
@@ -143,6 +158,24 @@ const AUTHORITY_HIERARCHY = Object.freeze({
 
   UNKNOWN: 99
 });
+
+const COURT_AUTHORITY_TYPES = new Set([
+  "SUPREME_COURT_EN_BANC",
+  "SUPREME_COURT",
+  "SC",
+  "CTA_EN_BANC",
+  "CTA_DIVISION",
+  "COURT_OF_APPEALS"
+]);
+
+const BIR_ISSUANCE_TYPES = new Set([
+  "RR",
+  "REVENUE_REGULATION",
+  "RMC",
+  "RMO",
+  "RAMO",
+  "BIR_RULING"
+]);
 
 const REVIEW_SOURCE_FOLDER_PATTERNS = Object.freeze([
   "07_CPA_NOTES",
@@ -174,8 +207,9 @@ const RAW_DEBUG_PATTERNS = Object.freeze([
   /\bdeveloper message\b[\s\S]*$/gi,
   /\bCLASSIFICATION CONTROL\b[\s\S]*$/gi,
   /\bSUPERCESSION AUDIT\b[\s\S]*$/gi,
+  /\bSUPERSESSION AUDIT\b[\s\S]*$/gi,
   /\bSUPERCESSION\b[\s\S]*$/gi,
-  /\bSupersession Audit\b[\s\S]*$/gi
+  /\bSUPERSESSION\b[\s\S]*$/gi
 ]);
 
 const CITATION_PATTERNS = Object.freeze([
@@ -206,7 +240,7 @@ const CITATION_PATTERNS = Object.freeze([
   },
   {
     type: "NIRC",
-    regex: /\b(?:NIRC|Tax Code|National Internal Revenue Code)?\s*(?:Sec\.?|Section)\s*([0-9]{1,3}[A-Z]?(?:\([A-Z0-9]+\))?)\s*,?\s*(?:NIRC|Tax Code)?\b/gi,
+    regex: /\b(?:NIRC|Tax Code|National Internal Revenue Code)?\s*(?:Sec\.?|Section)\s*([0-9]{1,4}[A-Z]?(?:\([A-Z0-9]+\))?)\s*,?\s*(?:NIRC|Tax Code)?\b/gi,
     normalize: (m) => `NIRC Sec. ${m[1]}`
   },
   {
@@ -244,6 +278,10 @@ const CITATION_PATTERNS = Object.freeze([
 function safeArray(value) {
   if (!value) return [];
   return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
+}
+
+function safeObject(value) {
+  return value && typeof value === "object" && !Array.isArray(value) ? value : {};
 }
 
 function compactText(value = "") {
@@ -299,23 +337,48 @@ function normalizeAuthorityCode(value = "") {
     .replace(/[\s-]+/g, "_");
 
   const aliases = {
+    CONSTITUTION: "CONSTITUTION",
+
     TAX_CODE: "STATUTE",
     NIRC: "STATUTE",
     RA: "STATUTE",
     REPUBLIC_ACT: "STATUTE",
     NATIONAL_INTERNAL_REVENUE_CODE: "STATUTE",
+    CMTA: "CMTA",
+    LGC: "LGC",
+
     TREATY: "TAX_TREATY",
+    TAX_TREATY: "TAX_TREATY",
+
+    SUPREME_COURT_EN_BANC: "SUPREME_COURT_EN_BANC",
     SC: "SUPREME_COURT",
     CASE_LAW: "SUPREME_COURT",
     COURT_CASES: "SUPREME_COURT",
+    JURISPRUDENCE: "SUPREME_COURT",
+
     CTA: "CTA_DIVISION",
+    CTA_EN_BANC: "CTA_EN_BANC",
+    CTA_DIVISION: "CTA_DIVISION",
+    COURT_OF_APPEALS: "COURT_OF_APPEALS",
+
     REVENUE_REGULATION: "RR",
     REVENUE_REGULATIONS: "RR",
     REVENUE_MEMORANDUM_CIRCULAR: "RMC",
     REVENUE_MEMORANDUM_ORDER: "RMO",
     REVENUE_AUDIT_MEMORANDUM_ORDER: "RAMO",
+
     BIR_RULINGS: "BIR_RULING",
     RULING: "BIR_RULING",
+
+    LGU_ISSUANCE: "LGU",
+    BOC: "BOC_ISSUANCE",
+    FIRB: "FIRB_ISSUANCE",
+    PEZA: "PEZA_ISSUANCE",
+    PEZA_MEMO: "PEZA_ISSUANCE",
+    SEC: "SEC_GUIDANCE",
+
+    OECD: "OECD_GUIDANCE",
+
     SECONDARY_SOURCE: "SECONDARY",
     CPA_NOTE: "CPA_NOTES",
     REVIEW: "REVIEW_MATERIALS",
@@ -448,12 +511,12 @@ function isReviewMode(context = {}) {
       context.issueClassification?.requiresReviewMode === true ||
       context.issueClassification?.queryIntent?.requiresReviewMode === true ||
       context.issueClassification?.queryIntent?.requiresQuizMode === true ||
-      ["TAX_REVIEWER", "REVIEW_MODE", "QUIZ_MODE", "LEARNING_MODE", "ASSESSMENT"].includes(mode) ||
+      ["TAX_REVIEWER", "REVIEW_MODE", "QUIZ_MODE", "LEARNING_MODE", "ASSESSMENT", "REVIEWER"].includes(mode) ||
       query.includes("/review")
   );
 }
 
-  function isSecondaryOrReviewSource(source = {}) {
+function isSecondaryOrReviewSource(source = {}) {
   const type = authorityTypeOf(source);
   const path = sourcePathOf(source);
   const title = sourceTitleOf(source);
@@ -533,6 +596,10 @@ function extractSourceCitations(sources = []) {
       source.normalized_reference ||
       source.metadata?.normalizedReference ||
       source.metadata?.normalized_reference ||
+      source.issuanceNumber ||
+      source.issuance_number ||
+      source.citation ||
+      source.reference ||
       normalizeAuthorityReference(sourceReferenceBlob(source));
 
     const normalized = normalizeAuthorityReference(normalizedReference);
@@ -740,17 +807,22 @@ function conflictMetadataIsComplete(conflict = null) {
 
   return Boolean(
     conflict.conflict === true &&
-      (conflict.conflictType || conflict.type) &&
-      (conflict.exactIssue || conflict.sameIssueGate?.sameIssues?.length) &&
+      (conflict.conflictType || conflict.type || conflict.conflictStatus) &&
+      (conflict.exactIssue || conflict.sameIssueGate?.sameIssues?.length || conflict.sameExactIssue === true) &&
       (conflict.exactLegalDimension ||
         conflict.sameIssueGate?.sameDimensions?.length ||
-        conflict.legalDimension) &&
-      (conflict.sameIssueGate?.passed === true || conflict.exactIssue) &&
+        conflict.legalDimension ||
+        conflict.sameLegalDimension === true) &&
+      (conflict.sameIssueGate?.passed === true || conflict.exactIssue || conflict.sameExactIssue === true) &&
       (conflict.oppositeHoldingGate?.passed === true ||
         conflict.oppositeHolding ||
-        conflict.oppositeHoldings) &&
+        conflict.oppositeHoldings ||
+        conflict.oppositeHoldingOrRule === true) &&
       (conflict.resolutionBasis ||
+        conflict.resolution_basis ||
         conflict.reason ||
+        conflict.hierarchyAnalysis ||
+        conflict.conflictResolutionBasis ||
         conflict.winningAuthority ||
         conflict.controllingAuthority ||
         conflict.controllingSource)
@@ -767,6 +839,7 @@ function hasConflictSignal(conflict = {}) {
       conflict?.conflictStatus ||
       conflict?.reason ||
       conflict?.resolutionBasis ||
+      conflict?.conflictResolutionBasis ||
       conflict?.exactIssue ||
       conflict?.sameIssueGate ||
       conflict?.oppositeHoldingGate
@@ -913,7 +986,6 @@ function buildConflictExplanationFromMetadata(conflict = {}) {
         .join("\n");
     }
 
-    
     return "Conflict Detected: NO\nNo direct doctrinal conflict is detected from the validated indexed sources.";
   }
 
@@ -945,6 +1017,7 @@ function buildConflictExplanationFromMetadata(conflict = {}) {
   const resolutionBasis =
     conflict.resolutionBasis ||
     conflict.resolution_basis ||
+    conflict.conflictResolutionBasis ||
     conflict.reason ||
     "Apply the Constitution, statute, valid regulations, and controlling court doctrine in proper hierarchy.";
 
@@ -1284,18 +1357,6 @@ function buildDoctrinalStatus({
   return buildConflictExplanationFromMetadata(bestConflict || {});
 }
 
-function buildHierarchyComplianceNote({ legalBasisDocs = [] }) {
-  if (!safeArray(legalBasisDocs).length) {
-    return "No validated indexed source was available for hierarchy validation.";
-  }
-
-  return [
-    "Authority hierarchy was checked for display consistency.",
-    "Administrative issuances may implement or interpret statutes, but they should not be presented as overriding the Constitution, NIRC/statutes, treaties, or controlling court doctrine.",
-    "Secondary materials are not controlling law and should be used only when review mode permits them."
-  ].join(" ");
-}
-
 function buildPracticalApplication({
   draftAnswer = "",
   fallbackAnswer = "",
@@ -1317,7 +1378,7 @@ function buildPracticalApplication({
   return normalizeText(
     professionalInsight ||
       fallbackAnswer ||
-      "Verify the latest BIR issuance, controlling authority, and documentary requirements before implementation."
+      "Verify the latest indexed authority, controlling court doctrine, BIR issuance, and documentary requirements before implementation."
   );
 }
 
@@ -1395,38 +1456,9 @@ function rebuildAFAnswer({
     .trim();
 }
 
-function repairMissingAFSections({
-  answer = "",
-  fallbackAnswer = "",
-  directAnswer = "",
-  legalBasisDocs = [],
-  conflicts = [],
-  hierarchyConflict = null,
-  conflict = null,
-  conflictReview = null,
-  jurisprudencePayload = null,
-  professionalInsight = "",
-  supersessionResult = null,
-  authorityValidation = null,
-  conflictValidation = null
-}) {
-  if (hasCompleteAFStructure(answer)) return answer;
-
-  return rebuildAFAnswer({
-    sanitizedDraft: answer,
-    fallbackAnswer,
-    directAnswer,
-    legalBasisDocs,
-    conflicts,
-    hierarchyConflict,
-    conflict,
-    conflictReview,
-    jurisprudencePayload,
-    professionalInsight,
-    supersessionResult,
-    authorityValidation,
-    conflictValidation
-  });
+function repairMissingAFSections(args = {}) {
+  if (hasCompleteAFStructure(args.answer)) return args.answer;
+  return rebuildAFAnswer({ ...args, sanitizedDraft: args.answer });
 }
 
 function buildFastDefinitionAnswer({
@@ -1689,16 +1721,8 @@ function validateSourceGrounding({
   };
 }
 
-function validateCitationSupport({
-  answer = "",
-  sources = [],
-  context = {}
-} = {}) {
-  return validateSourceGrounding({
-    answer,
-    sources,
-    context
-  });
+function validateCitationSupport(args = {}) {
+  return validateSourceGrounding(args);
 }
 
 function enforceAuthorityHierarchyDisplay({
@@ -1720,35 +1744,27 @@ function enforceAuthorityHierarchyDisplay({
   );
 
   if (secondaryControlling.length) {
-    warnings.push(
-      "Secondary/review materials must not be presented as controlling legal basis."
-    );
+    warnings.push("Secondary/review materials must not be presented as controlling legal basis.");
   }
 
   const answerText = normalizeLooseText(answer);
 
   if (
     /\b(rmc|rmo|ramo|bir ruling)\b/i.test(answerText) &&
-    /\boverrides?\s+(the\s+)?(nirc|tax code|statute|supreme court|constitution)\b/i.test(answerText)
+    /\boverrides?\s+(the\s+)?(nirc|tax code|statute|supreme court|constitution|cta)\b/i.test(answerText)
   ) {
-    warnings.push(
-      "Administrative issuances must not be presented as overriding statutes, the Constitution, or controlling court doctrine."
-    );
+    warnings.push("Administrative issuances must not be presented as overriding statutes, the Constitution, or controlling court doctrine.");
   }
 
-  if (
-    /\bcta\b/i.test(answerText) &&
-    /\boverrides?\s+(the\s+)?supreme court\b/i.test(answerText)
-  ) {
-    warnings.push(
-      "CTA decisions must not be presented as overriding Supreme Court decisions."
-    );
+  if (/\bcta\b/i.test(answerText) && /\boverrides?\s+(the\s+)?supreme court\b/i.test(answerText)) {
+    warnings.push("CTA decisions must not be presented as overriding Supreme Court decisions.");
   }
 
   return {
     valid: warnings.length === 0,
     warnings,
-    checkedSources: visibleSources.length
+    checkedSources: visibleSources.length,
+    masterPromptAuthorityHierarchyApplied: true
   };
 }
 
@@ -1852,7 +1868,9 @@ function finalizeCompliance({
       structureValidation,
       sourceGroundingValidation,
       hierarchyValidation,
-      conflictValidation
+      conflictValidation,
+      masterPromptAuthorityHierarchyApplied: true,
+      courtAuthorityNotSubordinatedToBIRIssuances: true
     },
     sourceStatus: {
       hasVisibleSources: visibleSources.length > 0,
@@ -2098,7 +2116,9 @@ function buildFinalCompliantAnswer({
         : "INDEXED_SOURCE_NOT_FOUND",
     authorityValidation: {
       hierarchyValidation: compliant.metadata.hierarchyValidation,
-      sourceGroundingValidation: compliant.metadata.sourceGroundingValidation
+      sourceGroundingValidation: compliant.metadata.sourceGroundingValidation,
+      masterPromptAuthorityHierarchyApplied: true,
+      courtAuthorityNotSubordinatedToBIRIssuances: true
     },
     conflictValidation: conflictCheck
   };
@@ -2106,64 +2126,33 @@ function buildFinalCompliantAnswer({
   return returnObject ? finalResult : finalResult.answer;
 }
 
-/**
- * Compatibility wrapper for older modules.
- * Keeps final-answer-compliance.js as final gate only.
- */
-function enforceFinalAnswerCompliance({
-  answer = "",
-  draftAnswer = "",
-  fallbackAnswer = "",
-  responseMode = null,
-  orchestrationMode = null,
-  contextMode = null,
-  mode = null,
-  legalBasisDocs = [],
-  sourcesUsed = [],
-  sources = [],
-  retrievedSources = [],
-  citations = [],
-  legalBasis = [],
-  issueClassification = null,
-  conflicts = [],
-  hierarchyConflict = null,
-  conflict = null,
-  conflictReview = null,
-  jurisprudencePayload = null,
-  authorityValidation = null,
-  conflictValidation = null,
-  professionalInsight = "",
-  query = "",
-  asOfDate = new Date(),
-  requiredAnswerSections = null,
-  answerStructure = null
-} = {}) {
+function enforceFinalAnswerCompliance(args = {}) {
   const finalResult = buildFinalCompliantAnswer({
-    draftAnswer: draftAnswer || answer,
-    fallbackAnswer,
-    legalBasisDocs,
-    sourcesUsed,
-    sources,
-    retrievedSources,
-    citations,
-    legalBasis,
-    conflicts,
-    hierarchyConflict,
-    conflict,
-    conflictReview,
-    jurisprudencePayload,
-    authorityValidation,
-    conflictValidation,
-    professionalInsight,
-    asOfDate,
-    query,
-    issueClassification,
-    mode,
-    orchestrationMode,
-    responseMode,
-    contextMode,
-    requiredAnswerSections,
-    answerStructure,
+    draftAnswer: args.draftAnswer || args.answer,
+    fallbackAnswer: args.fallbackAnswer,
+    legalBasisDocs: args.legalBasisDocs,
+    sourcesUsed: args.sourcesUsed,
+    sources: args.sources,
+    retrievedSources: args.retrievedSources,
+    citations: args.citations,
+    legalBasis: args.legalBasis,
+    conflicts: args.conflicts,
+    hierarchyConflict: args.hierarchyConflict,
+    conflict: args.conflict,
+    conflictReview: args.conflictReview,
+    jurisprudencePayload: args.jurisprudencePayload,
+    authorityValidation: args.authorityValidation,
+    conflictValidation: args.conflictValidation,
+    professionalInsight: args.professionalInsight,
+    asOfDate: args.asOfDate || new Date(),
+    query: args.query,
+    issueClassification: args.issueClassification,
+    mode: args.mode,
+    orchestrationMode: args.orchestrationMode,
+    responseMode: args.responseMode,
+    contextMode: args.contextMode,
+    requiredAnswerSections: args.requiredAnswerSections,
+    answerStructure: args.answerStructure,
     returnObject: true
   });
 
@@ -2196,38 +2185,33 @@ function finalAnswerComplianceHealthCheck() {
     ok: true,
     engine: "TINA_FINAL_ANSWER_COMPLIANCE",
     version: ENGINE_VERSION,
-
     finalGateOnly: true,
     noOpenAICalls: true,
     noPromptAssembly: true,
     noRetrieval: true,
     noReranking: true,
     noNewLegalAnalysisGeneration: true,
-
     fallbackPreservationEnabled: true,
     fallbackReformattingPrevented: true,
-
     defaultAFStructureCompatible: true,
     simpleDefinitionStructureCompatible: true,
     auditFactPatternStructureCompatible: true,
     taxEngineRequiredSectionsAware: true,
-
     sourceGroundingValidationEnabled: true,
     citationSupportValidationEnabled: true,
     authorityHierarchyDisplayValidationEnabled: true,
     hiddenSourceLeakagePreventionEnabled: true,
     reviewSourceSuppressionEnabled: true,
     rawDebugLeakageSanitizerEnabled: true,
-
     conflictSanitizerCompatible: true,
     conflictMetadataCompleteGate: true,
-
     supersessionPreflightCompatible: true,
     issueClassificationCompatible: true,
     sourceVisibilityCompatible: true,
     jurisprudencePayloadCompatible: true,
     contextOrchestrationCompatible: true,
-
+    masterPromptAuthorityHierarchyApplied: true,
+    courtAuthorityNotSubordinatedToBIRIssuances: true,
     compactFinalAnswerOutput: true
   };
 }
@@ -2239,12 +2223,10 @@ export {
   DEFAULT_AF_HEADINGS,
   SIMPLE_DEFINITION_HEADINGS,
   AUDIT_FACT_PATTERN_HEADINGS,
-
   buildFinalCompliantAnswer,
   enforceFinalAnswerCompliance,
   finalAnswerComplianceHealthCheck,
   sanitizeDraftAnswer,
-
   hasCompleteAFStructure,
   hasAnyAFStructure,
   hasRequiredStructure,
@@ -2271,7 +2253,6 @@ export default {
   buildFinalCompliantAnswer,
   enforceFinalAnswerCompliance,
   finalAnswerComplianceHealthCheck,
-
   validateFinalAnswerStructure,
   validateSourceGrounding,
   validateCitationSupport,
@@ -2279,7 +2260,6 @@ export default {
   enforceAuthorityHierarchyDisplay,
   ensureIndexedSourceLimitation,
   buildComplianceWarnings,
-
   isSystemFallbackAnswer,
   preserveSystemFallbackAnswer,
   normalizeMode
