@@ -1,60 +1,45 @@
-// FILE: final-answer-compliance.js
+// FILE: answer-renderer.js
 "use strict";
 
 /**
- * TINA Final Answer Compliance Engine
+ * TINA Answer Renderer
  * Version: 6.0.0
  *
- * Final compliance gate only:
+ * Rendering-only layer:
  * - no OpenAI calls
  * - no prompt assembly
  * - no retrieval
  * - no reranking
- * - no new legal analysis generation
+ * - no legal reasoning generation
+ * - no citation-engine replacement
+ * - no final-answer-compliance replacement
  *
  * Owns:
- * - final answer structure validation
- * - source-grounding validation
- * - citation consistency checks
- * - authority hierarchy display sanity checks
- * - conflict-label compliance
- * - hidden/review-source leakage checks
- * - raw/debug payload cleanup
- * - compact final-output safeguards
- *
- * Does not own:
- * - retrieval
- * - answer drafting
- * - tax classification
- * - authority legal analysis
- * - citation formatting replacement
+ * - final answer presentation
+ * - section formatting
+ * - heading normalization
+ * - authority/source presentation
+ * - reviewer-mode presentation
+ * - audit/fact-pattern presentation
+ * - compact readable output
  */
-
-import {
-  runSupersessionPreflight,
-  filterVisibleSources,
-  buildLegalBasisEntry,
-  buildSourcesEntry,
-  uniqueDocs,
-  dedupe,
-  normalizeText,
-  normalizeLooseText,
-  MAX_VISIBLE_SOURCES
-} from "./source-visibility-engine.js";
 
 const ENGINE_VERSION = "6.0.0";
 
-const RESPONSE_MODE = Object.freeze({
+const ORCHESTRATION_MODES = Object.freeze({
   FAST_DEFINITION: "FAST_DEFINITION",
   STANDARD_TAX: "STANDARD_TAX",
   LEGAL_ANALYSIS: "LEGAL_ANALYSIS",
   COMPLEX_ADVISORY: "COMPLEX_ADVISORY",
   EMERGENCY_TRIM: "EMERGENCY_TRIM",
-  DEFAULT_AF: "DEFAULT_AF",
-  AUDIT_FACT_PATTERN: "AUDIT_FACT_PATTERN"
+  REVIEWER: "REVIEWER",
+  REVIEW_MODE: "REVIEW_MODE",
+  QUIZ_MODE: "QUIZ_MODE",
+  AUDIT_FACT_PATTERN: "AUDIT_FACT_PATTERN",
+  FACT_PATTERN: "FACT_PATTERN"
 });
 
-const DEFAULT_AF_HEADINGS = Object.freeze([
+const STANDARD_LEGAL_HEADINGS = Object.freeze([
   "A. DIRECT ANSWER",
   "B. CONTROLLING LEGAL BASIS",
   "C. SUPPORTING RULES / ADMINISTRATIVE ISSUANCES",
@@ -63,7 +48,7 @@ const DEFAULT_AF_HEADINGS = Object.freeze([
   "F. PRACTICAL NOTE / APPLICATION"
 ]);
 
-const SIMPLE_DEFINITION_HEADINGS = Object.freeze([
+const SIMPLE_HEADINGS = Object.freeze([
   "A. DIRECT ANSWER",
   "B. CONTROLLING LEGAL BASIS",
   "C. PRACTICAL NOTE"
@@ -79,6 +64,14 @@ const AUDIT_FACT_PATTERN_HEADINGS = Object.freeze([
   "G. PRACTICAL POSITION"
 ]);
 
+const REVIEWER_HEADINGS = Object.freeze([
+  "A. QUESTION",
+  "B. SUGGESTED ANSWER",
+  "C. CONTROLLING BASIS",
+  "D. MEMORY AID / DOCTRINE",
+  "E. TRAP / DISTINCTION"
+]);
+
 const LEGACY_TINA_AF_HEADINGS = Object.freeze([
   "A. DIRECT ANSWER",
   "B. CONTROLLING LEGAL BASIS",
@@ -88,11 +81,96 @@ const LEGACY_TINA_AF_HEADINGS = Object.freeze([
   "F. PRACTICAL APPLICATION"
 ]);
 
-const TINA_AF_HEADINGS = DEFAULT_AF_HEADINGS;
+const TINA_AF_HEADINGS = STANDARD_LEGAL_HEADINGS;
 
-const AUTHORITY_HIERARCHY = Object.freeze({
+const FALLBACK_TEMPLATES = Object.freeze({
+  FAST_DEFINITION: SIMPLE_HEADINGS,
+  STANDARD_TAX: STANDARD_LEGAL_HEADINGS,
+  LEGAL_ANALYSIS: STANDARD_LEGAL_HEADINGS,
+  COMPLEX_ADVISORY: AUDIT_FACT_PATTERN_HEADINGS,
+  EMERGENCY_TRIM: [
+    "A. DIRECT ANSWER",
+    "B. LIMITED BASIS"
+  ],
+  REVIEWER: REVIEWER_HEADINGS,
+  REVIEW_MODE: REVIEWER_HEADINGS,
+  QUIZ_MODE: REVIEWER_HEADINGS,
+  AUDIT_FACT_PATTERN: AUDIT_FACT_PATTERN_HEADINGS,
+  FACT_PATTERN: AUDIT_FACT_PATTERN_HEADINGS,
+
+  QUICK: SIMPLE_HEADINGS,
+  STANDARD: STANDARD_LEGAL_HEADINGS,
+  TECHNICAL: STANDARD_LEGAL_HEADINGS,
+  AUDIT: AUDIT_FACT_PATTERN_HEADINGS,
+  LITIGATION: [
+    "A. DIRECT ANSWER",
+    "B. ISSUE FOR RESOLUTION",
+    "C. CONTROLLING LEGAL BASIS",
+    "D. SUPPORTING JURISPRUDENCE",
+    "E. BIR / OPPOSING POSITION",
+    "F. TAXPAYER DEFENSE",
+    "G. DOCTRINAL STATUS / CONFLICT ANALYSIS",
+    "H. CONCLUSION"
+  ],
+  CONTRACT: [
+    "A. DIRECT ANSWER",
+    "B. CONTRACT PARTIES AND OBJECT",
+    "C. RIGHTS AND OBLIGATIONS",
+    "D. CONSIDERATION / BILLING / COLLECTION",
+    "E. CONTROL AND RISK ALLOCATION",
+    "F. TAX CLAUSES / LEGAL CONSEQUENCES",
+    "G. DOCUMENTARY GAPS",
+    "H. RECOMMENDED POSITION"
+  ],
+  TRANSACTION: [
+    "A. DIRECT ANSWER",
+    "B. LEGAL FORM",
+    "C. ECONOMIC SUBSTANCE",
+    "D. TRANSACTION FLOW",
+    "E. PRINCIPAL VS AGENT / CONTROL ANALYSIS",
+    "F. TAX AND ACCOUNTING CHARACTERIZATION",
+    "G. BIR / AUDIT RISK",
+    "H. DOCUMENTATION REQUIRED"
+  ],
+  EVIDENCE_HEAVY: [
+    "A. DIRECT ANSWER",
+    "B. ASSERTED FACTS",
+    "C. DOCUMENTED FACTS",
+    "D. UNSUPPORTED / CONTRADICTORY FACTS",
+    "E. MISSING DOCUMENTS",
+    "F. AUDIT-SENSITIVE ITEMS",
+    "G. CONCLUSION SUBJECT TO VERIFICATION"
+  ]
+});
+
+const AUTHORITY_GROUP_ORDER = Object.freeze([
+  "CONTROLLING",
+  "STATUTES",
+  "TREATIES",
+  "JURISPRUDENCE",
+  "REGULATIONS",
+  "ADMINISTRATIVE",
+  "BIR_RULINGS",
+  "TECHNICAL",
+  "REVIEWER_MATERIALS",
+  "OTHER"
+]);
+
+const AUTHORITY_GROUP_LABELS = Object.freeze({
+  CONTROLLING: "Controlling Authorities",
+  STATUTES: "Statutes / Tax Code / Republic Acts",
+  TREATIES: "Tax Treaties",
+  JURISPRUDENCE: "Supporting Jurisprudence",
+  REGULATIONS: "Revenue Regulations",
+  ADMINISTRATIVE: "Administrative Issuances",
+  BIR_RULINGS: "BIR Rulings",
+  TECHNICAL: "Technical / Persuasive Authorities",
+  REVIEWER_MATERIALS: "Reviewer / Secondary Materials",
+  OTHER: "Other Sources"
+});
+
+const AUTHORITY_PRECEDENCE = Object.freeze({
   CONSTITUTION: 1,
-
   STATUTE: 2,
   NIRC: 2,
   TAX_CODE: 2,
@@ -100,51 +178,36 @@ const AUTHORITY_HIERARCHY = Object.freeze({
   RA: 2,
   CMTA: 2,
   LGC: 2,
-
   TAX_TREATY: 3,
   TREATY: 3,
-
   SUPREME_COURT_EN_BANC: 4,
   SUPREME_COURT: 5,
   SC: 5,
   JURISPRUDENCE: 5,
-
   CTA_EN_BANC: 6,
   CTA_DIVISION: 7,
   CTA: 7,
-
   RR: 8,
-  REVENUE_REGULATION: 8,
-
   RMC: 9,
   RMO: 9,
   RAMO: 9,
-
   BIR_RULING: 10,
-
   ADMINISTRATIVE_GUIDANCE: 11,
   TECHNICAL_GUIDANCE: 11,
   BOC_ISSUANCE: 11,
   LGU_ORDINANCE: 11,
-  FIRB_ISSUANCE: 11,
-  PEZA_ISSUANCE: 11,
-  SEC_GUIDANCE: 11,
-
   OECD: 12,
   FOREIGN_AUTHORITY: 12,
-
   PFRS: 13,
   PAS: 13,
   PSA: 13,
-
   CPA_NOTES: 14,
   REVIEW_MATERIALS: 14,
   SECONDARY: 14,
-
   UNKNOWN: 99
 });
 
-const REVIEW_SOURCE_FOLDER_PATTERNS = Object.freeze([
+const REVIEW_FOLDER_PATTERNS = Object.freeze([
   "07_CPA_NOTES",
   "08_REVIEW_MATERIALS",
   "CPA_NOTES",
@@ -154,7 +217,7 @@ const REVIEW_SOURCE_FOLDER_PATTERNS = Object.freeze([
   "cpa notes"
 ]);
 
-const RAW_DEBUG_PATTERNS = Object.freeze([
+const RAW_PAYLOAD_PATTERNS = Object.freeze([
   /```json[\s\S]*?```/gi,
   /\braw retrieval payload\b[\s\S]*$/gi,
   /\bretrieval payload\b[\s\S]*$/gi,
@@ -165,117 +228,36 @@ const RAW_DEBUG_PATTERNS = Object.freeze([
   /\bquery_embedding\b[\s\S]*$/gi,
   /\bmetadata\s*:\s*\{[\s\S]*?\}\s*$/gi,
   /\bsupabase row\b[\s\S]*$/gi,
-  /\bgoogle service account\b[\s\S]*$/gi,
-  /\bapi[_-]?key\b[\s\S]*$/gi,
-  /\bsecret\b[\s\S]*$/gi,
-  /\baccess_token\b[\s\S]*$/gi,
-  /\brefresh_token\b[\s\S]*$/gi,
-  /\bsystem prompt\b[\s\S]*$/gi,
-  /\bdeveloper message\b[\s\S]*$/gi,
   /\bCLASSIFICATION CONTROL\b[\s\S]*$/gi,
-  /\bSUPERCESSION AUDIT\b[\s\S]*$/gi,
-  /\bSUPERCESSION\b[\s\S]*$/gi,
-  /\bSupersession Audit\b[\s\S]*$/gi
+  /\bSupersession Audit\b[\s\S]*$/gi,
+  /\bSYSTEM PROMPT\b[\s\S]*$/gi,
+  /\bDEVELOPER MESSAGE\b[\s\S]*$/gi,
+  /\bAPI_KEY\b[\s\S]*$/gi,
+  /\baccess_token\b[\s\S]*$/gi,
+  /\brefresh_token\b[\s\S]*$/gi
 ]);
 
-const CITATION_PATTERNS = Object.freeze([
-  {
-    type: "RR",
-    regex: /\b(?:RR|Revenue Regulations?)\s*(?:No\.?)?\s*0*(\d+)[-/_ ]+(\d{2,4})\b/gi,
-    normalize: (m) => `RR ${stripLeadingZeros(m[1])}-${normalizeYear(m[2])}`
-  },
-  {
-    type: "RMC",
-    regex: /\b(?:RMC|Revenue Memorandum Circulars?)\s*(?:No\.?)?\s*0*(\d+)[-/_ ]+(\d{2,4})\b/gi,
-    normalize: (m) => `RMC ${stripLeadingZeros(m[1])}-${normalizeYear(m[2])}`
-  },
-  {
-    type: "RMO",
-    regex: /\b(?:RMO|Revenue Memorandum Orders?)\s*(?:No\.?)?\s*0*(\d+)[-/_ ]+(\d{2,4})\b/gi,
-    normalize: (m) => `RMO ${stripLeadingZeros(m[1])}-${normalizeYear(m[2])}`
-  },
-  {
-    type: "RAMO",
-    regex: /\b(?:RAMO|Revenue Audit Memorandum Orders?)\s*(?:No\.?)?\s*0*(\d+)[-/_ ]+(\d{2,4})\b/gi,
-    normalize: (m) => `RAMO ${stripLeadingZeros(m[1])}-${normalizeYear(m[2])}`
-  },
-  {
-    type: "RA",
-    regex: /\b(?:RA|R\.A\.|Republic Act)\s*(?:No\.?)?\s*0*(\d{4,6})\b/gi,
-    normalize: (m) => `RA ${m[1]}`
-  },
-  {
-    type: "NIRC",
-    regex: /\b(?:NIRC|Tax Code|National Internal Revenue Code)?\s*(?:Sec\.?|Section)\s*([0-9]{1,3}[A-Z]?(?:\([A-Z0-9]+\))?)\s*,?\s*(?:NIRC|Tax Code)?\b/gi,
-    normalize: (m) => `NIRC Sec. ${m[1]}`
-  },
-  {
-    type: "CMTA",
-    regex: /\b(?:CMTA|Customs Modernization and Tariff Act)?\s*(?:Sec\.?|Section)\s*([0-9]{1,4}[A-Z]?(?:\([A-Z0-9]+\))?)\s*,?\s*(?:CMTA)?\b/gi,
-    normalize: (m) => `CMTA Sec. ${m[1]}`
-  },
-  {
-    type: "LGC",
-    regex: /\b(?:LGC|Local Government Code)?\s*(?:Sec\.?|Section)\s*([0-9]{1,4}[A-Z]?(?:\([A-Z0-9]+\))?)\s*,?\s*(?:LGC)?\b/gi,
-    normalize: (m) => `LGC Sec. ${m[1]}`
-  },
-  {
-    type: "BIR_RULING",
-    regex: /\bBIR\s+Ruling\s*(?:No\.?)?\s*([\w./()-]+)\b/gi,
-    normalize: (m) => `BIR Ruling ${m[1]}`
-  },
-  {
-    type: "SUPREME_COURT",
-    regex: /\bG\.?\s*R\.?\s*No\.?\s*([\w.-]+)\b/gi,
-    normalize: (m) => `G.R. No. ${m[1]}`
-  },
-  {
-    type: "CTA_EN_BANC",
-    regex: /\bCTA\s*(?:EB|En Banc)\s*(?:No\.?)?\s*([\w.-]+)\b/gi,
-    normalize: (m) => `CTA EB No. ${m[1]}`
-  },
-  {
-    type: "CTA_DIVISION",
-    regex: /\bCTA\s*(?:Case)?\s*(?:No\.?)?\s*([\w.-]+)\b/gi,
-    normalize: (m) => `CTA Case No. ${m[1]}`
-  }
-]);
+const MAX_VISIBLE_SOURCES = 5;
+const MAX_SOURCE_TITLE_CHARS = 220;
+const MAX_SOURCE_LINE_CHARS = 320;
+const MAX_SECTION_BODY_CHARS = 3500;
+const MAX_RENDERED_CHARS = 16000;
+
+function normalizeText(value = "") {
+  return String(value || "")
+    .replace(/\r\n/g, "\n")
+    .replace(/[ \t]+/g, " ")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
+function compactSpaces(value = "") {
+  return normalizeText(value).replace(/\s+/g, " ").trim();
+}
 
 function safeArray(value) {
   if (!value) return [];
   return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
-}
-
-function compactText(value = "") {
-  return normalizeText(value || "").replace(/\s+/g, " ").trim();
-}
-
-function trimText(value = "", max = 1200) {
-  const text = compactText(value);
-  if (!text) return "";
-  return text.length <= max ? text : `${text.slice(0, max).trim()} ...[trimmed]`;
-}
-
-function escapeRegex(value = "") {
-  return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-function stripLeadingZeros(value = "") {
-  return String(value || "").replace(/^0+/, "") || "0";
-}
-
-function normalizeYear(year = "") {
-  const raw = String(year || "").trim();
-  if (!raw) return "";
-  if (/^\d{4}$/.test(raw)) return raw;
-
-  if (/^\d{2}$/.test(raw)) {
-    const yy = Number(raw);
-    const currentYY = new Date().getFullYear() % 100;
-    return yy <= currentYY + 1 ? `20${raw}` : `19${raw}`;
-  }
-
-  return raw;
 }
 
 function uniqueBy(items = [], getKey = (item) => item) {
@@ -292,6 +274,22 @@ function uniqueBy(items = [], getKey = (item) => item) {
   return output;
 }
 
+function trimText(value = "", max = 1000) {
+  const text = compactSpaces(value);
+  if (!text) return "";
+  return text.length <= max ? text : `${text.slice(0, max).trim()} ...[trimmed]`;
+}
+
+function trimBlock(value = "", max = MAX_SECTION_BODY_CHARS) {
+  const text = normalizeText(value);
+  if (!text) return "";
+  return text.length <= max ? text : `${text.slice(0, max).trim()}\n...[trimmed for readability]`;
+}
+
+function escapeRegex(value = "") {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 function normalizeAuthorityCode(value = "") {
   const raw = String(value || "")
     .trim()
@@ -299,41 +297,40 @@ function normalizeAuthorityCode(value = "") {
     .replace(/[\s-]+/g, "_");
 
   const aliases = {
-    TAX_CODE: "STATUTE",
     NIRC: "STATUTE",
-    RA: "STATUTE",
+    TAX_CODE: "STATUTE",
     REPUBLIC_ACT: "STATUTE",
-    NATIONAL_INTERNAL_REVENUE_CODE: "STATUTE",
-    TREATY: "TAX_TREATY",
-    SC: "SUPREME_COURT",
+    RA: "STATUTE",
     CASE_LAW: "SUPREME_COURT",
     COURT_CASES: "SUPREME_COURT",
+    SC: "SUPREME_COURT",
     CTA: "CTA_DIVISION",
     REVENUE_REGULATION: "RR",
     REVENUE_REGULATIONS: "RR",
     REVENUE_MEMORANDUM_CIRCULAR: "RMC",
     REVENUE_MEMORANDUM_ORDER: "RMO",
     REVENUE_AUDIT_MEMORANDUM_ORDER: "RAMO",
-    BIR_RULINGS: "BIR_RULING",
     RULING: "BIR_RULING",
-    SECONDARY_SOURCE: "SECONDARY",
+    BIR_RULINGS: "BIR_RULING",
     CPA_NOTE: "CPA_NOTES",
     REVIEW: "REVIEW_MATERIALS",
-    REVIEWER: "REVIEW_MATERIALS"
+    REVIEWER: "REVIEW_MATERIALS",
+    SECONDARY_SOURCE: "SECONDARY"
   };
 
   return aliases[raw] || raw || "UNKNOWN";
 }
 
 function authorityTypeOf(source = {}) {
-  const raw =
+  return normalizeAuthorityCode(
     source.authorityType ||
-    source.authority_type ||
-    source.metadata?.authorityType ||
-    source.metadata?.authority_type ||
-    null;
-
-  return raw ? normalizeAuthorityCode(raw) : "UNKNOWN";
+      source.authority_type ||
+      source.authorityLabel ||
+      source.authority_label ||
+      source.metadata?.authorityType ||
+      source.metadata?.authority_type ||
+      "UNKNOWN"
+  );
 }
 
 function authorityLevelOf(source = {}) {
@@ -346,11 +343,10 @@ function authorityLevelOf(source = {}) {
 
   if (Number.isFinite(explicit) && explicit > 0) return explicit;
 
-  const type = authorityTypeOf(source);
-  return Number(AUTHORITY_HIERARCHY[type] || AUTHORITY_HIERARCHY.UNKNOWN);
+  return Number(AUTHORITY_PRECEDENCE[authorityTypeOf(source)] || AUTHORITY_PRECEDENCE.UNKNOWN);
 }
 
-function controllingPrecedenceOf(source = {}) {
+function sourcePrecedence(source = {}) {
   const explicit = Number(
     source.controllingPrecedence ??
       source.controlling_precedence ??
@@ -361,6 +357,20 @@ function controllingPrecedenceOf(source = {}) {
   if (Number.isFinite(explicit) && explicit > 0) return explicit;
 
   return authorityLevelOf(source);
+}
+
+function sourceScore(source = {}) {
+  return Number(
+    source.finalScore ||
+      source.final_score ||
+      source.rerankScore ||
+      source.rerank_score ||
+      source.retrievalScore ||
+      source.retrieval_score ||
+      source.score ||
+      source.similarity ||
+      0
+  );
 }
 
 function sourceTitleOf(source = {}) {
@@ -378,7 +388,7 @@ function sourceTitleOf(source = {}) {
     source.source ||
     source.path ||
     source.metadata?.path ||
-    "Unknown source"
+    "Untitled Source"
   );
 }
 
@@ -399,70 +409,51 @@ function sourcePathOf(source = {}) {
   );
 }
 
-function sourceReferenceBlob(source = {}) {
-  return compactText(
-    [
-      source.normalizedReference,
-      source.normalized_reference,
-      source.citation,
-      source.reference,
-      source.title,
-      source.documentTitle,
-      source.document_title,
-      source.sourceTitle,
-      source.source_title,
-      source.originalSource,
-      source.original_source,
-      source.source,
-      source.path,
-      source.metadata?.normalizedReference,
-      source.metadata?.normalized_reference,
-      source.metadata?.citation,
-      source.metadata?.documentTitle,
-      source.metadata?.originalFileName,
-      source.metadata?.path
-    ]
-      .filter(Boolean)
-      .join(" ")
+function sourceReferenceOf(source = {}) {
+  return (
+    source.citation ||
+    source.reference ||
+    source.normalizedReference ||
+    source.normalized_reference ||
+    source.metadata?.normalizedReference ||
+    source.metadata?.normalized_reference ||
+    source.issuanceNumber ||
+    source.issuance_number ||
+    ""
   );
 }
 
-function isReviewMode(context = {}) {
-  const mode = String(
-    context.mode ||
-      context.responseMode ||
-      context.orchestrationMode ||
-      context.contextMode ||
-      context.issueClassification?.responseMode ||
-      context.issueClassification?.orchestrationMode ||
-      context.issueClassification?.queryIntent?.intent ||
-      ""
-  ).toUpperCase();
+function sourceUrlOf(source = {}) {
+  return (
+    source.url ||
+    source.driveViewUrl ||
+    source.drive_view_url ||
+    source.sourceUrl ||
+    source.source_url ||
+    source.metadata?.url ||
+    source.metadata?.driveViewUrl ||
+    source.metadata?.drive_view_url ||
+    ""
+  );
+}
 
-  const query = String(context.query || context.originalQuery || "").toLowerCase();
+function isIssueMatched(source = {}) {
+  if (source.issueMismatch === true || source.issueClassificationMatch?.issueMismatch === true) return false;
+  if (source.issueClassificationMatch === true) return true;
+  if (source.issue_classification_match === true) return true;
+  if (source.issueClassificationMatch?.matched === true) return true;
+  if (source.issueClassificationMatch?.issueOverlap === true) return true;
+  if (source.issueClassificationMatch?.targetAuthorityMatch === true) return true;
+  if (source.metadata?.issueClassificationMatch === true) return true;
+  return null;
+}
 
+function isTargetAuthorityMatched(source = {}) {
   return Boolean(
-    context.reviewMode === true ||
-      context.requiresReviewMode === true ||
-      context.requiresQuizMode === true ||
-      context.issueClassification?.requiresReviewMode === true ||
-      context.issueClassification?.queryIntent?.requiresReviewMode === true ||
-      context.issueClassification?.queryIntent?.requiresQuizMode === true ||
-      ["TAX_REVIEWER", "REVIEW_MODE", "QUIZ_MODE", "LEARNING_MODE", "ASSESSMENT"].includes(mode) ||
-      query.includes("/review")
-  );
-}
-
-function isSecondaryOrReviewSource(source = {}) {
-  const type = authorityTypeOf(source);
-  const path = sourcePathOf(source);
-  const title = sourceTitleOf(source);
-
-  if (["CPA_NOTES", "REVIEW_MATERIALS", "SECONDARY"].includes(type)) return true;
-
-  const blob = `${path} ${title}`.toUpperCase();
-  return REVIEW_SOURCE_FOLDER_PATTERNS.some((pattern) =>
-    blob.includes(String(pattern).toUpperCase())
+    source.targetAuthorityMatch === true ||
+      source.target_authority_match === true ||
+      source.issueClassificationMatch?.targetAuthorityMatch === true ||
+      source.metadata?.targetAuthorityMatch === true
   );
 }
 
@@ -479,578 +470,434 @@ function isHiddenSource(source = {}) {
   );
 }
 
-function sourceAllowed(source = {}, context = {}) {
+function isReviewOrSecondarySource(source = {}) {
+  const type = authorityTypeOf(source);
+  if (["CPA_NOTES", "REVIEW_MATERIALS", "SECONDARY"].includes(type)) return true;
+
+  const blob = `${sourcePathOf(source)} ${sourceTitleOf(source)}`.toUpperCase();
+  return REVIEW_FOLDER_PATTERNS.some((pattern) =>
+    blob.includes(String(pattern).toUpperCase())
+  );
+}
+
+function isReviewMode(input = {}) {
+  const mode = String(
+    input.mode ||
+      input.contextMode ||
+      input.orchestrationMode ||
+      input.responseMode ||
+      input.metadata?.mode ||
+      input.metadata?.orchestrationMode ||
+      input.issueClassification?.responseMode ||
+      input.issueClassification?.orchestrationMode ||
+      input.issueClassification?.queryIntent?.intent ||
+      ""
+  ).toUpperCase();
+
+  const query = String(input.query || input.originalQuery || "").toLowerCase();
+
+  return Boolean(
+    input.reviewMode === true ||
+      input.reviewerMode === true ||
+      input.requiresReviewMode === true ||
+      input.requiresQuizMode === true ||
+      input.issueClassification?.requiresReviewMode === true ||
+      input.issueClassification?.queryIntent?.requiresReviewMode === true ||
+      input.issueClassification?.queryIntent?.requiresQuizMode === true ||
+      ["TAX_REVIEWER", "REVIEW_MODE", "REVIEWER", "QUIZ_MODE", "LEARNING_MODE", "ASSESSMENT"].includes(mode) ||
+      query.includes("/review")
+  );
+}
+
+function sourceAllowed(source = {}, input = {}) {
   if (!source) return false;
-  if (isHiddenSource(source) && !context.includeHiddenSources) return false;
-  if (isSecondaryOrReviewSource(source) && !isReviewMode(context)) return false;
+  if (isHiddenSource(source) && !input.includeHiddenSources) return false;
+  if (isReviewOrSecondarySource(source) && !isReviewMode(input)) return false;
   if (source.issueMismatch === true) return false;
   if (source.issueClassificationMatch?.issueMismatch === true) return false;
   return true;
 }
 
-function normalizeAuthorityReference(value = "") {
-  const raw = compactText(value);
-  if (!raw) return "";
-
-  for (const pattern of CITATION_PATTERNS) {
-    pattern.regex.lastIndex = 0;
-    const match = pattern.regex.exec(raw);
-    if (match) return compactText(pattern.normalize(match));
-  }
-
-  return compactText(raw)
-    .replace(/\.(pdf|docx|doc|txt|csv|md|json)$/i, "")
-    .replace(/[_]+/g, " ")
+function normalizeSourceKey(source = {}) {
+  return [
+    source.fileId,
+    source.file_id,
+    source.id,
+    source.citation,
+    source.reference,
+    source.normalizedReference,
+    source.normalized_reference,
+    source.title,
+    source.documentTitle,
+    source.document_title,
+    source.source,
+    source.sourcePath,
+    source.source_path,
+    source.path,
+    source.url
+  ]
+    .filter(Boolean)
+    .join("|")
+    .toLowerCase()
     .replace(/\s+/g, " ")
     .trim();
 }
 
-function extractCitationsFromText(text = "") {
-  const output = [];
-  const value = String(text || "");
+function dedupeSources(sources = []) {
+  return uniqueBy(safeArray(sources), normalizeSourceKey);
+}
 
-  for (const pattern of CITATION_PATTERNS) {
-    pattern.regex.lastIndex = 0;
+function sortVisibleSources(sources = [], input = {}) {
+  return dedupeSources(sources)
+    .filter((source) => sourceAllowed(source, input))
+    .sort((a, b) => {
+      const targetDiff = Number(isTargetAuthorityMatched(b)) - Number(isTargetAuthorityMatched(a));
+      if (targetDiff !== 0) return targetDiff;
 
-    for (const match of value.matchAll(pattern.regex)) {
-      output.push({
-        type: pattern.type,
-        raw: match[0],
-        normalized: compactText(pattern.normalize(match))
-      });
+      const aIssue = isIssueMatched(a);
+      const bIssue = isIssueMatched(b);
+      if (aIssue !== bIssue) return Number(bIssue === true) - Number(aIssue === true);
+
+      const precedenceDiff = sourcePrecedence(a) - sourcePrecedence(b);
+      if (precedenceDiff !== 0) return precedenceDiff;
+
+      const levelDiff = authorityLevelOf(a) - authorityLevelOf(b);
+      if (levelDiff !== 0) return levelDiff;
+
+      return sourceScore(b) - sourceScore(a);
+    });
+}
+function compactSource(source = {}) {
+  const title = trimText(sourceTitleOf(source), MAX_SOURCE_TITLE_CHARS);
+  const citation = trimText(sourceReferenceOf(source), MAX_SOURCE_LINE_CHARS);
+  const url = trimText(sourceUrlOf(source), MAX_SOURCE_LINE_CHARS);
+  const type = authorityTypeOf(source);
+
+  return {
+    title,
+    citation,
+    url,
+    authorityType: type,
+    authorityLevel: authorityLevelOf(source),
+    controllingPrecedence: sourcePrecedence(source),
+    score: sourceScore(source),
+    issueClassificationMatch: isIssueMatched(source),
+    targetAuthorityMatch: isTargetAuthorityMatched(source),
+    reviewMaterial: isReviewOrSecondarySource(source)
+  };
+}
+
+function authorityGroupOf(source = {}, role = "") {
+  const type = authorityTypeOf(source);
+  const normalizedRole = String(role || "").toUpperCase();
+
+  if (
+    normalizedRole === "CONTROLLING" ||
+    source.isControllingAuthority === true ||
+    source.controlling === true ||
+    source.metadata?.isControllingAuthority === true
+  ) {
+    return "CONTROLLING";
+  }
+
+  if (["CONSTITUTION", "STATUTE", "NIRC", "TAX_CODE", "REPUBLIC_ACT", "RA", "CMTA", "LGC"].includes(type)) {
+    return "STATUTES";
+  }
+
+  if (["TAX_TREATY", "TREATY"].includes(type)) return "TREATIES";
+
+  if ([
+    "SUPREME_COURT_EN_BANC",
+    "SUPREME_COURT",
+    "SC",
+    "JURISPRUDENCE",
+    "CTA_EN_BANC",
+    "CTA_DIVISION",
+    "CTA"
+  ].includes(type)) {
+    return "JURISPRUDENCE";
+  }
+
+  if (type === "RR") return "REGULATIONS";
+  if (["RMC", "RMO", "RAMO", "ADMINISTRATIVE_GUIDANCE", "BOC_ISSUANCE", "LGU_ORDINANCE"].includes(type)) return "ADMINISTRATIVE";
+  if (type === "BIR_RULING") return "BIR_RULINGS";
+  if (["OECD", "FOREIGN_AUTHORITY", "PFRS", "PAS", "PSA", "TECHNICAL_GUIDANCE"].includes(type)) return "TECHNICAL";
+  if (["CPA_NOTES", "REVIEW_MATERIALS", "SECONDARY"].includes(type)) return "REVIEWER_MATERIALS";
+
+  return "OTHER";
+}
+
+function groupSourcesByAuthority(sources = [], input = {}) {
+  const groups = {};
+
+  for (const source of sortVisibleSources(sources, input)) {
+    const role =
+      source.citationRole ||
+      source.citation_role ||
+      source.authorityRole ||
+      source.authority_role ||
+      "";
+
+    const group = authorityGroupOf(source, role);
+
+    if (!groups[group]) {
+      groups[group] = {
+        code: group,
+        label: AUTHORITY_GROUP_LABELS[group] || group,
+        items: []
+      };
     }
+
+    groups[group].items.push(source);
   }
 
-  return uniqueBy(output, (item) => `${item.type}|${item.normalized}`.toLowerCase());
+  return AUTHORITY_GROUP_ORDER
+    .filter((code) => groups[code]?.items?.length)
+    .map((code) => groups[code]);
 }
 
-function extractSourceCitations(sources = []) {
-  const output = [];
+function formatSourceLine(source = {}, options = {}) {
+  const compact = compactSource(source);
+  const parts = [];
 
-  for (const source of safeArray(sources)) {
-    const normalizedReference =
-      source.normalizedReference ||
-      source.normalized_reference ||
-      source.metadata?.normalizedReference ||
-      source.metadata?.normalized_reference ||
-      normalizeAuthorityReference(sourceReferenceBlob(source));
-
-    const normalized = normalizeAuthorityReference(normalizedReference);
-
-    if (normalized) {
-      output.push({
-        type: authorityTypeOf(source),
-        raw: normalizedReference,
-        normalized,
-        source
-      });
-    }
-
-    for (const citation of extractCitationsFromText(sourceReferenceBlob(source))) {
-      output.push({
-        ...citation,
-        source
-      });
-    }
+  if (compact.citation) {
+    parts.push(compact.citation);
   }
 
-  return uniqueBy(output, (item) => `${item.type}|${item.normalized}`.toLowerCase());
-}
-
-function citationSupportedBySources(citation = {}, sources = []) {
-  const target = normalizeAuthorityReference(citation.normalized || citation.raw || "");
-  if (!target) return false;
-
-  const targetLoose = normalizeLooseText(target);
-
-  return extractSourceCitations(sources).some((sourceCitation) => {
-    const sourceNorm = normalizeAuthorityReference(sourceCitation.normalized || sourceCitation.raw || "");
-    const sourceLoose = normalizeLooseText(sourceNorm);
-
-    return (
-      sourceLoose === targetLoose ||
-      sourceLoose.includes(targetLoose) ||
-      targetLoose.includes(sourceLoose)
-    );
-  });
-}
-
-function hasRetrievedSources(context = {}) {
-  return Boolean(
-    safeArray(context.legalBasisDocs).length ||
-      safeArray(context.sourcesUsed).length ||
-      safeArray(context.sources).length ||
-      safeArray(context.retrievedSources).length ||
-      safeArray(context.citations).length ||
-      safeArray(context.legalBasis).length
-  );
-}
-
-function allCandidateSources(context = {}) {
-  return uniqueDocs([
-    ...safeArray(context.legalBasisDocs),
-    ...safeArray(context.sourcesUsed),
-    ...safeArray(context.sources),
-    ...safeArray(context.retrievedSources),
-    ...safeArray(context.citations),
-    ...safeArray(context.legalBasis)
-  ]);
-}
-
-function visibleCandidateSources(context = {}) {
-  return allCandidateSources(context).filter((source) => sourceAllowed(source, context));
-}
-
-function getSectionBody(text = "", headingPattern = "") {
-  const value = normalizeText(text);
-  const regex = new RegExp(
-    `${headingPattern}\\s*([\\s\\S]*?)(?=\\n\\s*(?:[A-H]\\.\\s+[A-Z][A-Z /()&-]+\\b|\\d+\\.\\s*[A-Z][A-Z /()&-]+\\b|###\\s+[A-Za-z])|$)`,
-    "i"
-  );
-
-  return value.match(regex)?.[1]?.trim() || "";
-}
-
-function getAFSectionBody(text = "", heading = "") {
-  return getSectionBody(text, escapeRegex(heading));
-}
-
-function hasHeading(text = "", heading = "") {
-  return new RegExp(`(^|\\n)\\s*${escapeRegex(heading)}\\b`, "i").test(
-    normalizeText(text)
-  );
-}
-
-function normalizeMode(value = "") {
-  const raw = String(value || "").trim().toUpperCase();
-
-  if (!raw) return RESPONSE_MODE.DEFAULT_AF;
-
-  const normalized = raw
-    .replace(/[\s-]+/g, "_")
-    .replace(/[^\w]/g, "");
-
-  return RESPONSE_MODE[normalized] || normalized || RESPONSE_MODE.DEFAULT_AF;
-}
-
-function requiredSectionsFromContext(context = {}) {
-  const rawSections =
-    context.requiredAnswerSections ||
-    context.answerStructure ||
-    context.issueClassification?.requiredAnswerSections ||
-    context.issueClassification?.answerStructure ||
-    context.issueClassification?.taxDomainClassification?.requiredAnswerSections ||
-    context.issueClassification?.taxDomainClassification?.answerStructure ||
-    null;
-
-  if (Array.isArray(rawSections) && rawSections.length) {
-    return rawSections.map((item) => String(item).trim()).filter(Boolean);
+  if (compact.title && !compact.citation.includes(compact.title)) {
+    parts.push(compact.title);
   }
 
-  const mode = normalizeMode(
-    context.mode ||
-      context.orchestrationMode ||
-      context.responseMode ||
-      context.contextMode ||
-      context.issueClassification?.responseMode ||
-      context.issueClassification?.orchestrationMode
-  );
+  const base = parts.length ? parts.join(" – ") : compact.title || "Untitled source";
+  const type = compact.authorityType && compact.authorityType !== "UNKNOWN"
+    ? ` [${compact.authorityType}]`
+    : "";
 
-  if (mode === RESPONSE_MODE.FAST_DEFINITION) return SIMPLE_DEFINITION_HEADINGS;
-  if (mode === RESPONSE_MODE.COMPLEX_ADVISORY || mode === RESPONSE_MODE.AUDIT_FACT_PATTERN) {
-    return AUDIT_FACT_PATTERN_HEADINGS;
+  const matchTag = options.includeMatchTags
+    ? compact.targetAuthorityMatch
+      ? " [Target authority match]"
+      : compact.issueClassificationMatch === true
+        ? " [Issue match]"
+        : ""
+    : "";
+
+  return trimText(`${base}${type}${matchTag}`, MAX_SOURCE_LINE_CHARS);
+}
+
+export function renderAuthorityList(sources = [], options = {}) {
+  const input = options.context || options;
+  const maxItems = Number(options.maxItems || MAX_VISIBLE_SOURCES);
+  const grouped = options.grouped !== false;
+
+  const visible = sortVisibleSources(sources, input).slice(0, maxItems);
+
+  if (!visible.length) {
+    return options.emptyText || "Indexed source not found.";
   }
 
-  return DEFAULT_AF_HEADINGS;
+  if (!grouped) {
+    return visible.map((source) => `- ${formatSourceLine(source, options)}`).join("\n");
+  }
+
+  const groups = groupSourcesByAuthority(visible, input);
+
+  return groups
+    .map((group) => {
+      const lines = [group.label];
+
+      for (const source of group.items.slice(0, maxItems)) {
+        lines.push(`- ${formatSourceLine(source, options)}`);
+      }
+
+      return lines.join("\n");
+    })
+    .join("\n\n");
 }
 
-function hasRequiredStructure(text = "", sections = DEFAULT_AF_HEADINGS) {
-  const answer = normalizeText(text);
-  const required = safeArray(sections);
+export function renderPracticalNote(value = "", options = {}) {
+  const text = normalizeText(value);
 
-  if (!required.length) return true;
+  if (!text) {
+    return options.emptyText || "Verify the latest controlling authority and supporting documents before relying on the position.";
+  }
 
-  return required.every((heading) => hasHeading(answer, heading));
+  const lines = splitSentencesOrBullets(text).slice(0, options.maxItems || 5);
+
+  return lines.length <= 1
+    ? trimBlock(lines[0] || text, 1200)
+    : lines.map((line) => `- ${trimText(line, 500)}`).join("\n");
 }
 
-function hasCompleteAFStructure(text = "") {
-  return hasRequiredStructure(text, DEFAULT_AF_HEADINGS);
-}
+function splitSentencesOrBullets(text = "") {
+  const clean = normalizeText(text);
+  if (!clean) return [];
 
-function hasAnyAFStructure(text = "") {
-  const all = uniqueBy([
-    ...DEFAULT_AF_HEADINGS,
-    ...SIMPLE_DEFINITION_HEADINGS,
-    ...AUDIT_FACT_PATTERN_HEADINGS,
-    ...LEGACY_TINA_AF_HEADINGS
-  ]);
-
-  return all.some((heading) => hasHeading(text, heading));
-}
-
-function splitNonEmptyLines(text = "") {
-  return normalizeText(text)
+  const lines = clean
     .split("\n")
-    .map((line) => line.trim())
+    .map((line) => line.replace(/^[\-\u2022*\d.)\s]+/, "").trim())
+    .filter(Boolean);
+
+  if (lines.length > 1) return lines;
+
+  return (clean.match(/[^.!?]+[.!?]?/g) || [clean])
+    .map((part) => part.trim())
     .filter(Boolean);
 }
 
-function cleanBulletPrefix(line = "") {
-  return String(line).replace(/^[\-\u2022*\d.)\s]+/, "").trim();
-}
+function sectionBodyFromObject(input = {}, heading = "") {
+  const key = heading
+    .replace(/^[A-Z]\.\s*/, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "");
 
-function ensureDashedBullets(lines = []) {
-  return safeArray(lines)
-    .filter(Boolean)
-    .map((line) => `- ${cleanBulletPrefix(line)}`)
-    .join("\n");
-}
+  const candidates = [
+    input.sections?.[heading],
+    input.sections?.[key],
+    input.sectionMap?.[heading],
+    input.sectionMap?.[key],
+    input.answerSections?.[heading],
+    input.answerSections?.[key],
+    input.structuredAnswer?.[heading],
+    input.structuredAnswer?.[key],
+    input.taxEngineAnswer?.sections?.[heading],
+    input.taxEngineAnswer?.sections?.[key],
+    input.responsePlan?.sections?.[heading],
+    input.responsePlan?.sections?.[key]
+  ];
 
-function takeSentences(text = "", maxSentences = 4) {
-  const cleaned = normalizeText(text);
-  if (!cleaned) return "";
-
-  return (cleaned.match(/[^.!?]+[.!?]?/g) || [cleaned])
-    .map((part) => part.trim())
-    .filter(Boolean)
-    .slice(0, maxSentences)
-    .join(" ");
-}
-
-function containsExplicitRuleLikeValue(text = "") {
-  const value = normalizeLooseText(text);
-
-  return (
-    /\b\d+(\.\d+)?%\b/.test(value) ||
-    /\b₱\s*\d[\d,]*(\.\d+)?\b/i.test(value) ||
-    /\b(net taxable income|total assets|deadline|due date|rate|threshold|effective|shall|must|required|subject to|exempt|deductible)\b/i.test(value)
-  );
-}
-
-function buildValidatedLegalBasis(docs = []) {
-  return uniqueDocs(docs).slice(0, MAX_VISIBLE_SOURCES).map(buildLegalBasisEntry);
-}
-
-function buildValidatedSources(docs = []) {
-  return uniqueDocs(docs).slice(0, MAX_VISIBLE_SOURCES).map(buildSourcesEntry);
-}
-
-function conflictMetadataIsComplete(conflict = null) {
-  if (!conflict || typeof conflict !== "object") return false;
-
-  return Boolean(
-    conflict.conflict === true &&
-      (conflict.conflictType || conflict.type) &&
-      (conflict.exactIssue || conflict.sameIssueGate?.sameIssues?.length) &&
-      (conflict.exactLegalDimension ||
-        conflict.sameIssueGate?.sameDimensions?.length ||
-        conflict.legalDimension) &&
-      (conflict.sameIssueGate?.passed === true || conflict.exactIssue) &&
-      (conflict.oppositeHoldingGate?.passed === true ||
-        conflict.oppositeHolding ||
-        conflict.oppositeHoldings) &&
-      (conflict.resolutionBasis ||
-        conflict.reason ||
-        conflict.winningAuthority ||
-        conflict.controllingAuthority ||
-        conflict.controllingSource)
-  );
-}
-
-function hasConflictSignal(conflict = {}) {
-  return Boolean(
-    conflict?.conflict ||
-      conflict?.doctrinalConflict ||
-      conflict?.hierarchyConflict ||
-      conflict?.apparentConflict ||
-      conflict?.conflictType ||
-      conflict?.conflictStatus ||
-      conflict?.reason ||
-      conflict?.resolutionBasis ||
-      conflict?.exactIssue ||
-      conflict?.sameIssueGate ||
-      conflict?.oppositeHoldingGate
-  );
-}
-
-function normalizeConflictStatus(conflict = {}) {
-  if (!conflictMetadataIsComplete(conflict)) {
-    if (conflict?.apparentConflict || conflict?.distinctionType) {
-      return "APPARENT_OR_DISTINGUISHABLE";
-    }
-
-    return "NO_CONFLICT";
+  for (const item of candidates) {
+    if (typeof item === "string" && normalizeText(item)) return normalizeText(item);
+    if (Array.isArray(item) && item.length) return item.map(String).join("\n");
   }
 
-  const type = String(
-    conflict.conflictType ||
-      conflict.conflictStatus ||
-      conflict.status ||
-      ""
-  ).toUpperCase();
-
-  if (type.includes("DIRECT")) return "DIRECT_CONFLICT";
-  if (type.includes("DOCTRINAL")) return "DOCTRINAL_CONFLICT";
-  if (type.includes("HIERARCHY")) return "HIERARCHY_CONFLICT";
-  if (type.includes("MIXED")) return "MIXED_CONFLICT";
-
-  return conflict.conflict === true ? "CONFLICT" : "NO_CONFLICT";
+  return "";
 }
 
-function collectConflictCandidates({
-  conflicts = [],
-  hierarchyConflict = null,
-  conflict = null,
-  conflictReview = null,
-  jurisprudencePayload = null,
-  authorityValidation = null,
-  conflictValidation = null
-} = {}) {
-  const candidates = [];
+function defaultBodyForHeading(heading = "", input = {}) {
+  const normalized = heading.replace(/^[A-Z]\.\s*/, "").toUpperCase();
 
-  for (const item of [
-    conflict,
-    conflictReview,
-    hierarchyConflict,
-    conflictValidation,
-    authorityValidation?.conflict,
-    jurisprudencePayload?.conflictReview,
-    jurisprudencePayload?.jurisprudenceConflict
-  ]) {
-    if (item && typeof item === "object" && hasConflictSignal(item)) {
-      candidates.push(item);
-    }
-  }
-
-  for (const item of safeArray(conflicts)) {
-    if (item && typeof item === "object" && hasConflictSignal(item)) {
-      candidates.push(item);
-    }
-  }
-
-  return candidates;
-}
-
-function pickBestConflict({
-  conflicts = [],
-  hierarchyConflict = null,
-  conflict = null,
-  conflictReview = null,
-  jurisprudencePayload = null,
-  authorityValidation = null,
-  conflictValidation = null
-} = {}) {
-  const candidates = collectConflictCandidates({
-    conflicts,
-    hierarchyConflict,
-    conflict,
-    conflictReview,
-    jurisprudencePayload,
-    authorityValidation,
-    conflictValidation
-  });
-
-  if (!candidates.length) return null;
-
-  const complete = candidates.filter(conflictMetadataIsComplete);
-
-  if (!complete.length) {
-    return candidates.find((item) => item.apparentConflict || item.distinctionType) || null;
-  }
-
-  const priority = {
-    MIXED_CONFLICT: 1,
-    DIRECT_CONFLICT: 2,
-    DOCTRINAL_CONFLICT: 3,
-    HIERARCHY_CONFLICT: 4,
-    CONFLICT: 5,
-    APPARENT_OR_DISTINGUISHABLE: 50,
-    NO_CONFLICT: 99
-  };
-
-  return complete.sort((a, b) => {
-    const aStatus = normalizeConflictStatus(a);
-    const bStatus = normalizeConflictStatus(b);
-    return (priority[aStatus] || 50) - (priority[bStatus] || 50);
-  })[0];
-}
-
-function sourceNameFromConflict(conflict = {}, side = "A") {
-  if (side === "A") {
+  if (/DIRECT ANSWER|EXECUTIVE ANSWER|SUGGESTED ANSWER|QUESTION/.test(normalized)) {
     return (
-      conflict.sourceA ||
-      conflict.source_a_path ||
-      conflict.source_a_title ||
-      conflict.controllingSource ||
-      conflict.winningSource ||
-      "Source A"
+      input.directAnswer ||
+      input.suggestedAnswer ||
+      input.question ||
+      input.fallbackAnswer ||
+      "No direct answer was rendered."
     );
   }
 
-  return (
-    conflict.sourceB ||
-    conflict.source_b_path ||
-    conflict.source_b_title ||
-    conflict.overriddenSource ||
-    conflict.weakerSource ||
-    "Source B"
-  );
-}
+  if (/CONTROLLING LEGAL BASIS|LEGAL BASIS|CONTROLLING BASIS|SHORT BASIS|LIMITED BASIS/.test(normalized)) {
+    const sources = [
+      ...safeArray(input.controllingAuthorities),
+      ...safeArray(input.legalBasis),
+      ...safeArray(input.legalBasisDocs),
+      ...safeArray(input.citations)
+    ];
 
-function buildConflictExplanationFromMetadata(conflict = {}) {
-  if (!conflictMetadataIsComplete(conflict)) {
-    if (conflict?.apparentConflict || conflict?.distinctionType) {
-      return [
-        "Conflict Detected: NO",
-        "The retrieved authorities may appear related, but the metadata does not establish the required same exact issue, same legal dimension, and opposite holding.",
-        conflict.distinctionType
-          ? `Distinction type: ${trimText(conflict.distinctionType, 300)}`
-          : null,
-        conflict.reason ? `Reason: ${trimText(conflict.reason, 700)}` : null,
-        "Treat the authorities as distinguishable or complementary unless a complete same-issue opposite-holding conflict is established."
-      ]
-
-        .filter(Boolean)
-        .join("\n");
-    }
-
-    return "Conflict Detected: NO\nNo direct doctrinal conflict is detected from the validated indexed sources.";
+    return sources.length
+      ? renderAuthorityList(sources, { ...input, grouped: true })
+      : "Indexed source not found.";
   }
 
-  const status = normalizeConflictStatus(conflict);
+  if (/SUPPORTING RULES|ADMINISTRATIVE ISSUANCES|SUPPORTING AUTHORITIES/.test(normalized)) {
+    const sources = [
+      ...safeArray(input.supportingAuthorities),
+      ...safeArray(input.adminAuthorities),
+      ...safeArray(input.legalBasisDocs)
+    ];
 
-  const exactIssue =
-    conflict.exactIssue ||
-    conflict.sameIssueGate?.sameIssues?.join(", ") ||
-    "The exact legal issue must be determined from the retrieved authorities.";
+    return sources.length
+      ? renderAuthorityList(sources, { ...input, grouped: true })
+      : "Indexed source not found.";
+  }
 
-  const exactLegalDimension =
-    conflict.exactLegalDimension ||
-    conflict.sameIssueGate?.sameDimensions?.join(", ") ||
-    conflict.legalDimension ||
-    "Not expressly classified";
+  if (/SUPPORTING JURISPRUDENCE|JURISPRUDENCE|COURT POSITION/.test(normalized)) {
+    const sources = [
+      ...safeArray(input.supportingJurisprudence),
+      ...safeArray(input.jurisprudencePayload?.directlyRelevantCases),
+      ...safeArray(input.jurisprudencePayload?.cases)
+    ];
 
-  const controllingAuthority =
-    conflict.controllingAuthority ||
-    conflict.controlling_authority ||
-    conflict.winningAuthority ||
-    "the higher controlling authority under Philippine tax hierarchy";
+    return sources.length
+      ? renderAuthorityList(sources, { ...input, grouped: true })
+      : "No directly issue-matched jurisprudence was retrieved from the indexed context.";
+  }
 
-  const overriddenAuthority =
-    conflict.overriddenAuthority ||
-    conflict.weakerAuthority ||
-    conflict.overridden_authority ||
-    null;
+  if (/CONFLICT|DOCTRINAL STATUS/.test(normalized)) {
+    return renderConflictAnalysis(getConflictMetadata(input), input);
+  }
 
-  const resolutionBasis =
-    conflict.resolutionBasis ||
-    conflict.resolution_basis ||
-    conflict.reason ||
-    "Apply the Constitution, statute, valid regulations, and controlling court doctrine in proper hierarchy.";
-
-  return [
-    "Conflict Detected: YES",
-    `Conflict Type: ${status}`,
-    `Exact legal issue in conflict: ${trimText(exactIssue, 300)}`,
-    `Exact legal dimension: ${trimText(exactLegalDimension, 300)}`,
-    `Source A: ${trimText(sourceNameFromConflict(conflict, "A"), 260)}`,
-    `Source B: ${trimText(sourceNameFromConflict(conflict, "B"), 260)}`,
-    `Controlling doctrine/authority: ${trimText(controllingAuthority, 260)}`,
-    overriddenAuthority
-      ? `Overridden or limited authority: ${trimText(overriddenAuthority, 260)}`
-      : null,
-    `Why it controls: ${trimText(resolutionBasis, 900)}`
-  ]
-    .filter(Boolean)
-    .join("\n");
-}
-
-function isVagueConflictYes(text = "") {
-  const value = normalizeText(text);
-
-  if (!/Conflict Detected:\s*YES/i.test(value)) return false;
-
-  const hasSpecificConflict =
-    /Source A:/i.test(value) &&
-    /Source B:/i.test(value) &&
-    /(Exact issue|Exact legal dimension|Controlling doctrine|Controlling authority|Resolution basis|Why it controls)\s*[:\s]/i.test(value);
-
-  return !(hasSpecificConflict && value.length >= 300);
-}
-
-function validateConflictLabel({
-  answer = "",
-  conflicts = [],
-  hierarchyConflict = null,
-  conflict = null,
-  conflictReview = null,
-  jurisprudencePayload = null,
-  authorityValidation = null,
-  conflictValidation = null
-} = {}) {
-  const bestConflict = pickBestConflict({
-    conflicts,
-    hierarchyConflict,
-    conflict,
-    conflictReview,
-    jurisprudencePayload,
-    authorityValidation,
-    conflictValidation
-  });
-
-  const hasYes = /Conflict Detected:\s*YES/i.test(answer);
-  const complete = conflictMetadataIsComplete(bestConflict);
-
-  return {
-    valid: !hasYes || complete,
-    hasConflictYes: hasYes,
-    completeConflictMetadata: complete,
-    normalizedStatus: normalizeConflictStatus(bestConflict || {}),
-    bestConflict,
-    warning:
-      hasYes && !complete
-        ? "Conflict label downgraded because same-issue, same-dimension, opposite-holding, and hierarchy-resolution metadata was incomplete."
-        : null
-  };
-}
-
-function sanitizeConflictSection(text = "", conflictMetadata = null) {
-  const value = normalizeText(text);
-  if (!value) return value;
-
-  const replacement = buildConflictExplanationFromMetadata(conflictMetadata || {});
-
-  const legacyConflictBody =
-    getSectionBody(value, String.raw`\b5\.\s*CONFLICT FLAG\b`) ||
-    getSectionBody(value, String.raw`###\s*Conflict flag\b`);
-
-  if (legacyConflictBody && isVagueConflictYes(legacyConflictBody)) {
-    return value.replace(
-      /(\b5\.\s*CONFLICT FLAG\b|###\s*Conflict flag\b)[\s\S]*?(?=\n\s*(?:[A-H]\.\s+[A-Z][A-Z /()&-]+\b|\d+\.\s*[A-Z][A-Z /()&-]+\b|###\s+[A-Za-z])|$)/i,
-      `E. DOCTRINAL STATUS / CONFLICT ANALYSIS\n${replacement}`
+  if (/PRACTICAL NOTE|PRACTICAL APPLICATION|PRACTICAL POSITION|RECOMMENDED POSITION|CONCLUSION/.test(normalized)) {
+    return renderPracticalNote(
+      input.practicalNote ||
+        input.professionalInsight ||
+        input.recommendedAction ||
+        input.fallbackAnswer ||
+        "",
+      input
     );
   }
 
-  const modernConflictBody =
-    getAFSectionBody(value, "E. DOCTRINAL STATUS / CONFLICT ANALYSIS") ||
-    getAFSectionBody(value, "D. DOCTRINAL STATUS / CONFLICT ANALYSIS");
-
-  if (
-    modernConflictBody &&
-    (/Conflict Detected:\s*YES/i.test(modernConflictBody) ||
-      isVagueConflictYes(modernConflictBody)) &&
-    !conflictMetadataIsComplete(conflictMetadata)
-  ) {
-    return value.replace(
-      /([D-E]\.\s*DOCTRINAL STATUS\s*\/\s*CONFLICT ANALYSIS\b)[\s\S]*?(?=\n\s*(?:[F-G]\.\s*[A-Z][A-Z /()&-]+|E\.\s*HIERARCHY ANALYSIS\b|F\.\s*PRACTICAL|$))/i,
-      `$1\n${replacement}\n`
-    );
+  if (/AUDIT|TAX RISK|RISK/.test(normalized)) {
+    return renderAuditRisk(input.auditRisk || input.taxRisk || input.riskNotes || "", input);
   }
 
-  return value;
+  if (/DOCUMENTARY GAPS|MISSING DOCUMENTS|DOCUMENTATION REQUIRED|REQUIRED AUDIT EVIDENCE/.test(normalized)) {
+    return renderDocumentaryGaps(input.documentaryGaps || input.missingDocuments || input.requiredDocuments || [], input);
+  }
+
+  if (/MEMORY AID|DOCTRINE/.test(normalized)) {
+    return renderReviewerNote(input.memoryAid || input.doctrineSummary || "", input);
+  }
+
+  if (/TRAP|DISTINCTION/.test(normalized)) {
+    return renderReviewerNote(input.trap || input.distinction || input.distinctionNote || "", input);
+  }
+
+  return `No ${heading.replace(/^[A-Z]\.\s*/, "").toLowerCase()} was rendered.`;
 }
 
-function normalizeLegacyHeadingsToAF(text = "") {
+function getSectionBody(text = "", heading = "", headings = TINA_AF_HEADINGS) {
+  const source = normalizeText(text);
+  const index = headings.indexOf(heading);
+  if (index < 0) return "";
+
+  const current = escapeRegex(heading);
+  const next = headings.slice(index + 1).map(escapeRegex).join("|");
+
+  const regex = next
+    ? new RegExp(`${current}\\s*([\\s\\S]*?)(?=\\n\\s*(?:${next})\\b|$)`, "i")
+    : new RegExp(`${current}\\s*([\\s\\S]*)$`, "i");
+
+  return normalizeText(source.match(regex)?.[1] || "");
+}
+
+function hasHeading(text = "", heading = "") {
+  return new RegExp(`(^|\\n)\\s*${escapeRegex(heading)}\\b`, "i").test(String(text || ""));
+}
+
+function hasStructure(text = "", headings = TINA_AF_HEADINGS) {
+  return safeArray(headings).every((heading) => hasHeading(text, heading));
+}
+
+function hasCompleteAFStructure(text = "") {
+  return hasStructure(text, TINA_AF_HEADINGS);
+}
+
+function hasAnyKnownHeading(text = "") {
+  const headings = uniqueBy([
+    ...STANDARD_LEGAL_HEADINGS,
+    ...SIMPLE_HEADINGS,
+    ...AUDIT_FACT_PATTERN_HEADINGS,
+    ...REVIEWER_HEADINGS,
+    ...LEGACY_TINA_AF_HEADINGS
+  ]);
+
+  return headings.some((heading) => hasHeading(text, heading));
+}
+
+function normalizeLegacyHeadings(text = "") {
   return normalizeText(text)
     .replace(/(^|\n)\s*1\.\s*DIRECT ANSWER\b/gi, "$1A. DIRECT ANSWER")
     .replace(/(^|\n)\s*2\.\s*LEGAL BASIS\b/gi, "$1B. CONTROLLING LEGAL BASIS")
@@ -1068,16 +915,76 @@ function normalizeLegacyHeadingsToAF(text = "") {
     .replace(/^#+\s*Recommended action\b/gim, "F. PRACTICAL NOTE / APPLICATION");
 }
 
-function stripInventedSourceSections(text = "") {
-  return String(text || "")
-    .replace(/\n+\s*6\.\s*SOURCES[\s\S]*$/i, "")
-    .replace(/\n+\s*6\.\s*SOURCES USED[\s\S]*$/i, "")
-    .replace(/\n+\s*8\.\s*SOURCES[\s\S]*$/i, "")
-    .replace(/\n+\s*SOURCES USED[\s\S]*$/i, "")
-    .replace(/\n+\s*Source\(s\):\s*[\s\S]*$/i, "")
-    .replace(/\n+\s*Sources:\s*[\s\S]*$/i, "")
-    .replace(/\n+\s*Source:\s*[\s\S]*$/i, "")
-    .replace(/\n+\s*References:\s*[\s\S]*$/i, "")
+function normalizeOrchestrationMode(value = "") {
+  const raw = String(value || "").trim().toUpperCase();
+  if (Object.values(ORCHESTRATION_MODES).includes(raw)) return raw;
+  if (raw.includes("FAST") || raw.includes("QUICK") || raw.includes("DEFINITION")) return "FAST_DEFINITION";
+  if (raw.includes("REVIEW") || raw.includes("QUIZ") || raw.includes("LEARNING")) return "REVIEWER";
+  if (raw.includes("LEGAL") || raw.includes("DOCTRINE") || raw.includes("JURISPRUDENCE")) return "LEGAL_ANALYSIS";
+  if (raw.includes("AUDIT") || raw.includes("FACT") || raw.includes("CONTRACT") || raw.includes("TRANSACTION") || raw.includes("EVIDENCE") || raw.includes("RISK")) return "COMPLEX_ADVISORY";
+  if (raw.includes("COMPLEX") || raw.includes("ADVISORY")) return "COMPLEX_ADVISORY";
+  if (raw.includes("EMERGENCY")) return "EMERGENCY_TRIM";
+  if (raw.includes("STANDARD") || raw.includes("TAX")) return "STANDARD_TAX";
+  return null;
+}
+
+function getResponseModeFromInput(input = {}) {
+  return (
+    normalizeOrchestrationMode(
+      input.orchestrationMode ||
+        input.contextMode ||
+        input.mode ||
+        input.metadata?.orchestrationMode ||
+        input.metadata?.mode ||
+        input.responsePlan?.contextMode ||
+        input.responsePlan?.orchestrationMode ||
+        input.issueClassification?.responseMode ||
+        input.issueClassification?.orchestrationMode ||
+        ""
+    ) ||
+    input.responsePlan?.rendererContract?.responseMode ||
+    input.responsePlan?.responseMode ||
+    input.responseMode ||
+    "LEGAL_ANALYSIS"
+  );
+}
+
+function getHeadingsFromInput(input = {}) {
+  const mode = getResponseModeFromInput(input);
+
+  const custom =
+    input.requiredAnswerSections ||
+    input.answerStructure ||
+    input.rendererContract?.sections ||
+    input.responsePlan?.rendererContract?.sections ||
+    input.responsePlan?.responseTemplate ||
+    input.issueClassification?.requiredAnswerSections ||
+    input.issueClassification?.answerStructure ||
+    input.issueClassification?.taxDomainClassification?.requiredAnswerSections ||
+    input.issueClassification?.taxDomainClassification?.answerStructure ||
+    null;
+
+  if (Array.isArray(custom) && custom.length) {
+    return custom.map((item) => String(item).trim()).filter(Boolean);
+  }
+
+  return safeArray(
+    FALLBACK_TEMPLATES[mode] ||
+      FALLBACK_TEMPLATES.LEGAL_ANALYSIS
+  );
+}
+
+export function sanitizeRenderedPayload(text = "") {
+  let output = String(text || "");
+
+  for (const pattern of RAW_PAYLOAD_PATTERNS) {
+    output = output.replace(pattern, "");
+  }
+
+  return normalizeText(output)
+    .replace(/\n+\s*Sources Used[\s\S]*$/i, "")
+    .replace(/\n+\s*Sources:[\s\S]*$/i, "")
+    .replace(/\n+\s*References:[\s\S]*$/i, "")
     .replace(/\n+\s*Validated Indexed Sources[\s\S]*$/i, "")
     .replace(/\n+\s*Authority Used[\s\S]*$/i, "")
     .replace(/\n+\s*Supersession Audit[\s\S]*$/i, "")
@@ -1089,1193 +996,729 @@ function stripInventedSourceSections(text = "") {
     .trim();
 }
 
-function sanitizeRawDebugLeakage(text = "") {
-  let output = String(text || "");
+function stripRawSourceSections(text = "") {
+  return sanitizeRenderedPayload(text);
+}
 
-  for (const pattern of RAW_DEBUG_PATTERNS) {
-    output = output.replace(pattern, "");
+export function renderSection(heading = "", body = "", options = {}) {
+  const cleanHeading = normalizeText(heading);
+  const cleanBody = trimBlock(body || defaultBodyForHeading(cleanHeading, options));
+
+  if (!cleanHeading) return cleanBody;
+  if (!cleanBody && options.skipEmptySections) return "";
+
+  return `${cleanHeading}\n${cleanBody || defaultBodyForHeading(cleanHeading, options)}`.trim();
+}
+
+function repairStructure(answer = "", headings = TINA_AF_HEADINGS, input = {}) {
+  const clean = normalizeLegacyHeadings(stripRawSourceSections(answer));
+  const selectedHeadings = safeArray(headings).length ? safeArray(headings) : TINA_AF_HEADINGS;
+
+  if (hasStructure(clean, selectedHeadings)) {
+    return selectedHeadings
+      .map((heading) => {
+        const body =
+          getSectionBody(clean, heading, selectedHeadings) ||
+          sectionBodyFromObject(input, heading) ||
+          defaultBodyForHeading(heading, input);
+
+        return renderSection(heading, body, input);
+      })
+      .filter(Boolean)
+      .join("\n\n");
   }
 
-  return stripInventedSourceSections(output)
-    .replace(/\n{3,}/g, "\n\n")
+  const hasAnyHeading = hasAnyKnownHeading(clean);
+
+  return selectedHeadings
+    .map((heading, index) => {
+      const body =
+        getSectionBody(clean, heading, selectedHeadings) ||
+        sectionBodyFromObject(input, heading) ||
+        (!hasAnyHeading && index === 0 ? clean : "") ||
+        defaultBodyForHeading(heading, input);
+
+      return renderSection(heading, body, input);
+    })
+    .filter(Boolean)
+    .join("\n\n")
     .trim();
 }
 
-function isSystemFallbackAnswer(text = "") {
-  const value = normalizeText(text);
+function conflictMetadataIsComplete(conflict = null) {
+  if (!conflict || typeof conflict !== "object") return false;
 
   return Boolean(
-    /\bTINA could not complete\b/i.test(value) ||
-    /\bSYSTEM LIMITATION\b/i.test(value) ||
-    /\bActual error:/i.test(value) ||
-    /\borchestration-safe OpenAI call failed\b/i.test(value) ||
-    /\bprocessing limitation\b/i.test(value) ||
-    /\bRAG response due to a processing limitation\b/i.test(value)
+    conflict.conflict === true &&
+      (conflict.conflictType || conflict.type) &&
+      (conflict.exactIssue || conflict.exact_issue || conflict.sameIssueGate?.sameIssues?.length) &&
+      (conflict.exactLegalDimension || conflict.exact_legal_dimension || conflict.sameIssueGate?.sameDimensions?.length || conflict.legalDimension) &&
+      (conflict.sameIssueGate?.passed === true || conflict.exactIssue || conflict.exact_issue) &&
+      (conflict.oppositeHoldingGate?.passed === true || conflict.oppositeHolding || conflict.oppositeHoldings) &&
+      (conflict.resolutionBasis || conflict.resolution_basis || conflict.reason || conflict.controllingAuthority || conflict.controlling_authority || conflict.controllingSource)
   );
 }
 
-function appendValidatedSourceAppendix(answer = "", docs = []) {
-  const sourceLines = buildValidatedSources(docs);
-
-  if (!sourceLines.length) return answer;
+function buildConflictMetadataBlock(conflict = null) {
+  if (!conflictMetadataIsComplete(conflict)) {
+    return [
+      "Conflict Detected: NO",
+      "No direct doctrinal conflict is established by the available conflict metadata.",
+      "Treat related authorities as distinguishable or complementary unless same-issue, same-dimension, opposite-holding, and hierarchy-resolution metadata is complete."
+    ].join("\n");
+  }
 
   return [
-    answer.trim(),
-    "",
-    "Validated Indexed Sources",
-    ensureDashedBullets(sourceLines)
+    "Conflict Detected: YES",
+    `Conflict Type: ${trimText(conflict.conflictType || conflict.type || "DOCTRINAL_CONFLICT", 160)}`,
+    `Exact Issue: ${trimText(conflict.exactIssue || conflict.exact_issue || conflict.sameIssueGate?.sameIssues?.join(", ") || "Not specified", 260)}`,
+    `Exact Legal Dimension: ${trimText(conflict.exactLegalDimension || conflict.exact_legal_dimension || conflict.sameIssueGate?.sameDimensions?.join(", ") || conflict.legalDimension || "Not specified", 260)}`,
+    `Controlling Authority: ${trimText(conflict.controllingAuthority || conflict.controlling_authority || conflict.winningAuthority || "Not clearly identified", 260)}`,
+    `Resolution Basis: ${trimText(conflict.resolutionBasis || conflict.resolution_basis || conflict.reason || "Hierarchy-based resolution required.", 700)}`
   ].join("\n");
 }
 
-function preserveSystemFallbackAnswer({
-  draftAnswer = "",
-  fallbackAnswer = "",
-  sourcesUsed = [],
-  legalBasisDocs = []
-} = {}) {
-  const preferred =
-    normalizeText(draftAnswer) ||
-    normalizeText(fallbackAnswer) ||
-    "TINA could not complete the response due to a processing limitation.";
-
-  const clean = sanitizeRawDebugLeakage(preferred);
-
-  const sourceDocs = uniqueDocs([
-    ...safeArray(sourcesUsed),
-    ...safeArray(legalBasisDocs)
-  ]).slice(0, MAX_VISIBLE_SOURCES);
-
-  if (!sourceDocs.length) return clean;
-
-  return appendValidatedSourceAppendix(clean, sourceDocs);
+function getConflictMetadata(input = {}) {
+  return (
+    input.conflict ||
+    input.conflictReview ||
+    input.hierarchyConflict ||
+    input.conflictValidation?.bestConflict ||
+    input.jurisprudenceConflict ||
+    input.jurisprudencePayload?.conflictReview ||
+    input.jurisprudencePayload?.jurisprudenceConflict ||
+    input.adaptiveContext?.conflict ||
+    input.adaptiveContext?.conflictReview ||
+    input.responsePlan?.conflict ||
+    null
+  );
 }
 
-function buildDirectAnswer({ draftAnswer = "", fallbackAnswer = "" }) {
-  const directBody =
-    getAFSectionBody(draftAnswer, "A. DIRECT ANSWER") ||
-    getSectionBody(draftAnswer, String.raw`\b1\.\s*DIRECT ANSWER\b`) ||
-    getSectionBody(draftAnswer, String.raw`###\s*Legally defensible conclusion\b`) ||
-    getSectionBody(draftAnswer, String.raw`###\s*Issue\b`);
-
-  return takeSentences(directBody || fallbackAnswer || draftAnswer || "", 4);
+function containsConflictLanguage(text = "") {
+  return /\b(conflict\s+detected\s*:\s*yes|doctrinal conflict|conflicting authorities|conflict exists)\b/i.test(normalizeText(text));
 }
 
-function buildControllingLegalBasis({ draftAnswer = "", legalBasisDocs = [] }) {
-  const body =
-    getAFSectionBody(draftAnswer, "B. CONTROLLING LEGAL BASIS") ||
-    getSectionBody(draftAnswer, String.raw`\b2\.\s*LEGAL BASIS\b`);
-
-  if (body && !/No legal basis was rendered|No legal basis exists/i.test(body)) {
-    return body;
+export function renderConflictAnalysis(conflict = null, options = {}) {
+  if (conflictMetadataIsComplete(conflict)) {
+    return buildConflictMetadataBlock(conflict);
   }
 
-  const legalBasisLines = buildValidatedLegalBasis(legalBasisDocs);
+  if (conflict?.apparentConflict || conflict?.distinctionType) {
+    return [
+      "Conflict Detected: NO",
+      "The retrieved authorities may be related, but a direct doctrinal conflict is not established.",
+      conflict.distinctionType ? `Distinction: ${trimText(conflict.distinctionType, 260)}` : null,
+      conflict.reason ? `Reason: ${trimText(conflict.reason, 600)}` : null
+    ]
+      .filter(Boolean)
+      .join("\n");
+  }
 
-  return legalBasisLines.length
-    ? ensureDashedBullets(legalBasisLines)
-    : "- Indexed source not found.";
+  return options.emptyText ||
+    "Conflict Detected: NO\nNo direct doctrinal conflict is established by the available metadata.";
 }
 
-function buildSupportingRules({ draftAnswer = "", legalBasisDocs = [] }) {
-  const body =
-    getAFSectionBody(draftAnswer, "C. SUPPORTING RULES / ADMINISTRATIVE ISSUANCES") ||
-    getSectionBody(draftAnswer, String.raw`\b3\.\s*SUPPORTING RULES\b`);
+function replaceSection(text = "", heading = "", headings = TINA_AF_HEADINGS, replacementBody = "") {
+  const index = headings.indexOf(heading);
+  if (index < 0 || !hasHeading(text, heading)) return text;
 
-  const lines = splitNonEmptyLines(body)
-    .map(cleanBulletPrefix)
-    .filter(Boolean)
-    .filter((line) => !/No supporting rules were rendered|No supporting rule exists/i.test(line));
+  const current = escapeRegex(heading);
+  const next = headings.slice(index + 1).map(escapeRegex).join("|");
 
-  if (lines.length) return lines;
+  const regex = next
+    ? new RegExp(`(${current}\\b)[\\s\\S]*?(?=\\n\\s*(?:${next})\\b|$)`, "i")
+    : new RegExp(`(${current}\\b)[\\s\\S]*$`, "i");
 
-  const inferred = [];
+  return normalizeText(text).replace(regex, `${heading}\n${replacementBody}`);
+}
 
-  for (const doc of legalBasisDocs.slice(0, 3)) {
-    const snippet = normalizeText(
-      doc.text ||
-        doc.preview ||
-        doc.excerpt ||
-        doc.content ||
-        ""
+function sanitizeConflictLanguage(answer = "", headings = TINA_AF_HEADINGS, conflictMetadata = null) {
+  const conflictHeading = headings.find((heading) => /CONFLICT|DOCTRINAL STATUS/i.test(heading));
+  const clean = normalizeText(answer);
+
+  if (!conflictHeading) {
+    if (!containsConflictLanguage(clean)) return clean;
+    return conflictMetadataIsComplete(conflictMetadata)
+      ? `${clean}\n\nDOCTRINAL STATUS\n${buildConflictMetadataBlock(conflictMetadata)}`
+      : clean.replace(/Conflict Detected:\s*YES/gi, "Conflict Detected: NO");
+  }
+
+  const body = getSectionBody(clean, conflictHeading, headings);
+
+  if (conflictMetadataIsComplete(conflictMetadata)) {
+    return replaceSection(clean, conflictHeading, headings, buildConflictMetadataBlock(conflictMetadata));
+  }
+
+  if (containsConflictLanguage(body) || !body) {
+    return replaceSection(clean, conflictHeading, headings, renderConflictAnalysis(conflictMetadata));
+  }
+
+  return clean;
+}
+
+function protectHeadingSpacing(answer = "", headings = TINA_AF_HEADINGS) {
+  let clean = normalizeText(answer);
+
+  for (const heading of headings) {
+    clean = clean.replace(
+      new RegExp(`\\s*${escapeRegex(heading)}\\s*`, "gi"),
+      `\n\n${heading}\n`
     );
-
-    if (!snippet) continue;
-
-    const sentences = snippet.match(/[^.!?]+[.!?]?/g) || [];
-
-    for (const sentence of sentences) {
-      const trimmed = normalizeText(sentence);
-
-      if (trimmed && containsExplicitRuleLikeValue(trimmed)) {
-        inferred.push(trimmed);
-      }
-
-      if (inferred.length >= 4) break;
-    }
-
-    if (inferred.length >= 4) break;
   }
 
-  return dedupe(inferred).slice(0, 4);
+  return clean.replace(/^\n+/, "").replace(/\n{3,}/g, "\n\n").trim();
 }
 
-function buildSupportingJurisprudence({
-  draftAnswer = "",
-  jurisprudencePayload = null
-}) {
-  const body =
-    getAFSectionBody(draftAnswer, "D. SUPPORTING JURISPRUDENCE") ||
-    getAFSectionBody(draftAnswer, "C. SUPPORTING JURISPRUDENCE") ||
-    getSectionBody(draftAnswer, String.raw`\b3\.\s*SUPPORTING JURISPRUDENCE\b`) ||
-    getSectionBody(draftAnswer, String.raw`###\s*Jurisprudence\b`) ||
-    getSectionBody(draftAnswer, String.raw`###\s*Court position\b`);
+function compactRenderedOutput(answer = "", maxChars = MAX_RENDERED_CHARS) {
+  const clean = normalizeText(answer);
 
-  if (body && !/No supporting jurisprudence was rendered/i.test(body)) return body;
+  if (!clean) return "";
+  if (clean.length <= maxChars) return clean;
 
-  const cases = safeArray(
-    jurisprudencePayload?.directlyRelevantCases ||
-      jurisprudencePayload?.cases ||
-      []
-  ).slice(0, 4);
+  return `${clean.slice(0, maxChars).trim()}\n\n...[trimmed for readable output]`;
+}
 
-  if (jurisprudencePayload?.noJurisprudence || !cases.length) {
-    return "No directly issue-matched jurisprudence was retrieved from the indexed context.";
+export function renderAuditRisk(value = "", options = {}) {
+  const input = typeof value === "object" && value !== null ? value : null;
+
+  const raw =
+    input?.summary ||
+    input?.riskSummary ||
+    input?.risk ||
+    input?.auditRisk ||
+    value ||
+    "";
+
+  const lines = Array.isArray(raw)
+    ? raw
+    : splitSentencesOrBullets(String(raw));
+
+  const fallback = [
+    "Tax and audit risk depend on the strength of supporting documents, consistency of accounting entries, and alignment with BIR filings.",
+    "Confirm the actual transaction flow before finalizing the position."
+  ];
+
+  return (lines.length ? lines : fallback)
+    .slice(0, options.maxItems || 5)
+    .map((line) => `- ${trimText(line, 500)}`)
+    .join("\n");
+}
+
+export function renderDocumentaryGaps(value = [], options = {}) {
+  const raw = Array.isArray(value)
+    ? value
+    : typeof value === "string"
+      ? splitSentencesOrBullets(value)
+      : [
+          ...safeArray(value?.missingDocuments),
+          ...safeArray(value?.documentaryGaps),
+          ...safeArray(value?.requiredDocuments)
+        ];
+
+  const fallback = [
+    "Executed contract or agreement",
+    "Invoices, official receipts, billing statements, and BIR-compliant supporting documents",
+    "General ledger entries and account reconciliations",
+    "Proof of actual payment and transaction flow",
+    "Management explanation supporting the tax position"
+  ];
+
+  return (raw.length ? raw : fallback)
+    .slice(0, options.maxItems || 6)
+    .map((line) => `- ${trimText(line, 500)}`)
+    .join("\n");
+}
+
+export function renderReviewerNote(value = "", options = {}) {
+  const text = normalizeText(value);
+
+  if (!text) {
+    return options.emptyText || "Use this only as a reviewer aid. Confirm the controlling legal basis before relying on it.";
   }
 
-  return ensureDashedBullets(
-    cases.map((item) => {
-      const title = item.title || item.caseReference || item.citation || "Relevant case";
-      const role = item.caseRole || item.caseApplicability || "supporting jurisprudence";
-      return `${title} — ${role}`;
-    })
-  );
+  return splitSentencesOrBullets(text)
+    .slice(0, options.maxItems || 5)
+    .map((line) => `- ${trimText(line, 420)}`)
+    .join("\n");
 }
 
-function buildDoctrinalStatus({
-  draftAnswer = "",
-  conflicts = [],
-  hierarchyConflict = null,
-  conflict = null,
-  conflictReview = null,
-  jurisprudencePayload = null,
-  authorityValidation = null,
-  conflictValidation = null
-}) {
-  const body =
-    getAFSectionBody(draftAnswer, "E. DOCTRINAL STATUS / CONFLICT ANALYSIS") ||
-    getAFSectionBody(draftAnswer, "D. DOCTRINAL STATUS / CONFLICT ANALYSIS") ||
-    getSectionBody(draftAnswer, String.raw`\b5\.\s*CONFLICT FLAG\b`) ||
-    getSectionBody(draftAnswer, String.raw`###\s*Conflict flag\b`);
+export function renderReviewerMode(input = {}) {
+  const headings = REVIEWER_HEADINGS;
+  const answer =
+    input.answer ||
+    input.draftAnswer ||
+    input.finalAnswer ||
+    input.fallbackAnswer ||
+    "";
 
-  const bestConflict = pickBestConflict({
-    conflicts,
-    hierarchyConflict,
-    conflict,
-    conflictReview,
-    jurisprudencePayload,
-    authorityValidation,
-    conflictValidation
+  const reviewerInput = {
+    ...input,
+    reviewerMode: true,
+    reviewMode: true
+  };
+
+  let rendered = repairStructure(answer, headings, reviewerInput);
+
+  rendered = sanitizeConflictLanguage(rendered, headings, getConflictMetadata(reviewerInput));
+  rendered = protectHeadingSpacing(rendered, headings);
+
+  return compactRenderedOutput(rendered);
+}
+
+function renderFactPatternMode(input = {}) {
+  const headings = AUDIT_FACT_PATTERN_HEADINGS;
+  const answer =
+    input.answer ||
+    input.draftAnswer ||
+    input.finalAnswer ||
+    input.fallbackAnswer ||
+    "";
+
+  let rendered = repairStructure(answer, headings, input);
+
+  rendered = sanitizeConflictLanguage(rendered, headings, getConflictMetadata(input));
+  rendered = protectHeadingSpacing(rendered, headings);
+
+  return compactRenderedOutput(rendered);
+}
+
+function buildFinalMarkdown(input = {}) {
+  const mode = getResponseModeFromInput(input);
+  const headings = getHeadingsFromInput(input);
+
+  if (
+    mode === "REVIEWER" ||
+    mode === "REVIEW_MODE" ||
+    mode === "QUIZ_MODE" ||
+    isReviewMode(input)
+  ) {
+    return renderReviewerMode(input);
+  }
+
+  if (
+    mode === "COMPLEX_ADVISORY" ||
+    mode === "AUDIT_FACT_PATTERN" ||
+    mode === "FACT_PATTERN"
+  ) {
+    return renderFactPatternMode(input);
+  }
+
+  const rawAnswer =
+    input.answer ||
+    input.draftAnswer ||
+    input.finalAnswer ||
+    input.fallbackAnswer ||
+    "";
+
+  let rendered = repairStructure(rawAnswer, headings, input);
+
+  rendered = sanitizeConflictLanguage(rendered, headings, getConflictMetadata(input));
+  rendered = protectHeadingSpacing(rendered, headings);
+
+  return compactRenderedOutput(rendered);
+}
+
+function appendSourceAppendix(rendered = "", sources = [], input = {}) {
+  if (!input.includeSources && !input.includeSourcesInAnswer) return rendered;
+
+  const visible = sortVisibleSources(sources, input).slice(0, MAX_VISIBLE_SOURCES);
+  if (!visible.length) return rendered;
+
+  const sourceBlock = renderAuthorityList(visible, {
+    ...input,
+    grouped: true,
+    includeMatchTags: input.includeMatchTags === true
   });
 
-  if (body && !isVagueConflictYes(body) && !/Conflict Detected:\s*YES/i.test(body)) {
-    return body;
-  }
-
-  return buildConflictExplanationFromMetadata(bestConflict || {});
+  return `${rendered.trim()}\n\nVALIDATED INDEXED SOURCES\n${sourceBlock}`.trim();
 }
 
-function buildHierarchyComplianceNote({ legalBasisDocs = [] }) {
-  if (!safeArray(legalBasisDocs).length) {
-    return "No validated indexed source was available for hierarchy validation.";
-  }
-
+function collectInputSources(input = {}) {
   return [
-    "Authority hierarchy was checked for display consistency.",
-    "Administrative issuances may implement or interpret statutes, but they should not be presented as overriding the Constitution, NIRC/statutes, treaties, or controlling court doctrine.",
-    "Secondary materials are not controlling law and should be used only when review mode permits them."
-  ].join(" ");
+    ...safeArray(input.sources),
+    ...safeArray(input.sourcesUsed),
+    ...safeArray(input.retrievedSources),
+    ...safeArray(input.legalBasis),
+    ...safeArray(input.legalBasisDocs),
+    ...safeArray(input.citations),
+    ...safeArray(input.controllingAuthorities),
+    ...safeArray(input.supportingAuthorities),
+    ...safeArray(input.supportingJurisprudence)
+  ];
 }
 
-function buildPracticalApplication({
-  draftAnswer = "",
-  fallbackAnswer = "",
-  professionalInsight = "",
-  supersessionResult = null
-}) {
-  const body =
-    getAFSectionBody(draftAnswer, "F. PRACTICAL NOTE / APPLICATION") ||
-    getAFSectionBody(draftAnswer, "F. PRACTICAL APPLICATION") ||
-    getSectionBody(draftAnswer, String.raw`###\s*Recommended action\b`) ||
-    getSectionBody(draftAnswer, String.raw`###\s*Taxpayer risk assessment\b`);
+function renderAdaptiveAnswer(input = {}) {
+  const sources = collectInputSources(input);
+  const rendered = buildFinalMarkdown(input);
 
-  if (body) return body;
-
-  if (supersessionResult?.superseded?.length) {
-    return "One or more indexed sources appeared superseded, so only active controlling sources were retained. Verify the latest BIR issuance and maintain supporting documentation before implementation.";
-  }
-
-  return normalizeText(
-    professionalInsight ||
-      fallbackAnswer ||
-      "Verify the latest BIR issuance, controlling authority, and documentary requirements before implementation."
-  );
+  return appendSourceAppendix(rendered, sources, input);
 }
 
-function rebuildAFAnswer({
-  sanitizedDraft = "",
-  fallbackAnswer = "",
-  directAnswer = "",
-  legalBasisDocs = [],
-  conflicts = [],
-  hierarchyConflict = null,
-  conflict = null,
-  conflictReview = null,
-  jurisprudencePayload = null,
-  professionalInsight = "",
-  supersessionResult = null,
-  authorityValidation = null,
-  conflictValidation = null
-}) {
-  const finalDirectAnswer = normalizeText(
-    directAnswer ||
-      buildDirectAnswer({
-        draftAnswer: sanitizedDraft,
-        fallbackAnswer
-      })
-  );
-
-  const supportingRules = buildSupportingRules({
-    draftAnswer: sanitizedDraft,
-    legalBasisDocs
-  });
-
-  return [
-    "A. DIRECT ANSWER",
-    finalDirectAnswer ||
-      "This requires verification against the latest indexed BIR issuance, NIRC provision, or controlling court authority.",
-    "",
-    "B. CONTROLLING LEGAL BASIS",
-    buildControllingLegalBasis({
-      draftAnswer: sanitizedDraft,
-      legalBasisDocs
-    }),
-    "",
-    "C. SUPPORTING RULES / ADMINISTRATIVE ISSUANCES",
-    Array.isArray(supportingRules) && supportingRules.length
-      ? ensureDashedBullets(supportingRules)
-      : "Indexed source not found.",
-    "",
-    "D. SUPPORTING JURISPRUDENCE",
-
-    buildSupportingJurisprudence({
-      draftAnswer: sanitizedDraft,
-      jurisprudencePayload
-    }),
-    "",
-    "E. DOCTRINAL STATUS / CONFLICT ANALYSIS",
-    buildDoctrinalStatus({
-      draftAnswer: sanitizedDraft,
-      conflicts,
-      hierarchyConflict,
-      conflict,
-      conflictReview,
-      jurisprudencePayload,
-      authorityValidation,
-      conflictValidation
-    }),
-    "",
-    "F. PRACTICAL NOTE / APPLICATION",
-    buildPracticalApplication({
-      draftAnswer: sanitizedDraft,
-      fallbackAnswer,
-      professionalInsight,
-      supersessionResult
-    })
-  ]
-    .join("\n")
-    .trim();
-}
-
-function repairMissingAFSections({
+function renderTinaAnswer({
   answer = "",
+  finalAnswer = "",
+  draftAnswer = "",
   fallbackAnswer = "",
   directAnswer = "",
+  sources = [],
+  sourcesUsed = [],
+  retrievedSources = [],
+  legalBasis = [],
   legalBasisDocs = [],
-  conflicts = [],
-  hierarchyConflict = null,
+  citations = [],
+  controllingAuthorities = [],
+  supportingAuthorities = [],
+  supportingJurisprudence = [],
+  includeSources = false,
+  includeSourcesInAnswer = false,
+  adaptiveContext = null,
+  responsePlan = null,
+  supersessionAudit = null,
+  supersessionResult = null,
   conflict = null,
   conflictReview = null,
+  hierarchyConflict = null,
+  conflictValidation = null,
   jurisprudencePayload = null,
-  professionalInsight = "",
-  supersessionResult = null,
-  authorityValidation = null,
-  conflictValidation = null
-}) {
-  if (hasCompleteAFStructure(answer)) return answer;
-
-  return rebuildAFAnswer({
-    sanitizedDraft: answer,
+  issueClassification = null,
+  taxDomainClassification = null,
+  primaryDomain = null,
+  orchestrationMode = null,
+  contextMode = null,
+  mode = null,
+  responseMode = null,
+  metadata = {},
+  reviewMode = false,
+  reviewerMode = false,
+  query = ""
+} = {}) {
+  return renderAdaptiveAnswer({
+    answer: answer || finalAnswer || draftAnswer,
+    finalAnswer,
+    draftAnswer,
     fallbackAnswer,
     directAnswer,
+    sources,
+    sourcesUsed,
+    retrievedSources,
+    legalBasis,
     legalBasisDocs,
-    conflicts,
-    hierarchyConflict,
+    citations,
+    controllingAuthorities,
+    supportingAuthorities,
+    supportingJurisprudence,
+    includeSources,
+    includeSourcesInAnswer,
+    adaptiveContext,
+    responsePlan,
+    supersessionAudit,
+    supersessionResult,
     conflict,
     conflictReview,
-    jurisprudencePayload,
-    professionalInsight,
-    supersessionResult,
-    authorityValidation,
-    conflictValidation
-  });
-}
-
-function buildFastDefinitionAnswer({
-  sanitizedDraft = "",
-  fallbackAnswer = "",
-  directAnswer = "",
-  legalBasisDocs = []
-}) {
-  const answer = takeSentences(
-    directAnswer ||
-      buildDirectAnswer({
-        draftAnswer: sanitizedDraft,
-        fallbackAnswer
-      }),
-    3
-  );
-
-  const basis = buildValidatedLegalBasis(legalBasisDocs).slice(0, 3);
-
-  return [
-    "A. DIRECT ANSWER",
-    answer || "No direct answer could be formed from the indexed sources.",
-    "",
-    "B. CONTROLLING LEGAL BASIS",
-    basis.length
-      ? ensureDashedBullets(basis)
-      : "- Indexed source not found.",
-    "",
-    "C. PRACTICAL NOTE",
-    "Verify the latest indexed authority before relying on the answer."
-  ].join("\n");
-}
-
-function buildStandardTaxAnswer({
-  sanitizedDraft = "",
-  fallbackAnswer = "",
-  directAnswer = "",
-  legalBasisDocs = [],
-  jurisprudencePayload = null,
-  professionalInsight = ""
-}) {
-  const supportingRules = buildSupportingRules({
-    draftAnswer: sanitizedDraft,
-    legalBasisDocs
-  });
-
-  return [
-    "A. DIRECT ANSWER",
-    directAnswer ||
-      buildDirectAnswer({
-        draftAnswer: sanitizedDraft,
-        fallbackAnswer
-      }) ||
-      "No direct answer could be formed from the indexed sources.",
-    "",
-    "B. CONTROLLING LEGAL BASIS",
-    buildControllingLegalBasis({
-      draftAnswer: sanitizedDraft,
-      legalBasisDocs
-    }),
-    "",
-    "C. SUPPORTING RULES / ADMINISTRATIVE ISSUANCES",
-    Array.isArray(supportingRules) && supportingRules.length
-      ? ensureDashedBullets(supportingRules)
-      : "Indexed source not found.",
-    "",
-    "D. SUPPORTING JURISPRUDENCE",
-    buildSupportingJurisprudence({
-      draftAnswer: sanitizedDraft,
-      jurisprudencePayload
-    }),
-    "",
-    "E. DOCTRINAL STATUS / CONFLICT ANALYSIS",
-    "Conflict Detected: NO\nNo direct doctrinal conflict is detected from the validated indexed sources.",
-    "",
-    "F. PRACTICAL NOTE / APPLICATION",
-    professionalInsight ||
-      buildPracticalApplication({
-        draftAnswer: sanitizedDraft,
-        fallbackAnswer
-      })
-  ].join("\n");
-}
-
-function buildComplexAdvisoryAnswer({
-  sanitizedDraft = "",
-  fallbackAnswer = "",
-  directAnswer = "",
-  legalBasisDocs = [],
-  professionalInsight = "",
-  issueClassification = null,
-  supersessionResult = null
-}) {
-  const factSensitivity =
-    issueClassification?.factSensitivity ||
-    issueClassification?.orchestrationClassification?.factSensitivity ||
-    "moderate";
-
-  return [
-    "A. DIRECT ANSWER",
-    directAnswer ||
-      buildDirectAnswer({
-        draftAnswer: sanitizedDraft,
-        fallbackAnswer
-      }) ||
-      "The conclusion depends on the final facts and supporting documents.",
-    "",
-    "B. FACTS / ASSUMPTIONS",
-    `Fact sensitivity: ${factSensitivity}. The conclusion should be confirmed against the actual contracts, invoices, receipts, accounting entries, and transaction flow.`,
-    "",
-    "C. CONTROLLING LEGAL BASIS",
-    buildControllingLegalBasis({
-      draftAnswer: sanitizedDraft,
-      legalBasisDocs
-    }),
-    "",
-    "D. ANALYSIS",
-    buildPracticalApplication({
-      draftAnswer: sanitizedDraft,
-      fallbackAnswer,
-      professionalInsight,
-      supersessionResult
-    }),
-    "",
-    "E. AUDIT / TAX RISK",
-    "Tax risk depends on the strength of documents, consistency of accounting records, BIR filings, and transaction substance.",
-    "",
-    "F. DOCUMENTARY GAPS",
-    ensureDashedBullets([
-      "Executed contract or agreement",
-      "Invoices, receipts, billing statements, and official BIR documents",
-      "General ledger entries and reconciliations",
-      "Proof of actual transaction flow and payment flow",
-      "Management explanation supporting the tax position"
-    ]),
-    "",
-    "G. PRACTICAL POSITION",
-    "Finalize the position only after confirming the controlling authorities and documentary support."
-  ].join("\n");
-}
-
-function resolveVisibleSources({
-  legalBasisDocs = [],
-  sourcesUsed = [],
-  sources = [],
-  retrievedSources = [],
-  citations = [],
-  legalBasis = [],
-  asOfDate = new Date(),
-  query = "",
-  issueClassification = null,
-  context = {}
-}) {
-  const rawLegalBasisDocs = uniqueDocs([
-    ...safeArray(legalBasisDocs),
-    ...safeArray(legalBasis),
-    ...safeArray(citations)
-  ]);
-
-  const rawSourcesUsed = uniqueDocs([
-    ...safeArray(sourcesUsed),
-    ...safeArray(sources),
-    ...safeArray(retrievedSources)
-  ]);
-
-  const {
-    supersessionResult,
-    resolvedLegalBasisDocs,
-    resolvedSourcesUsed
-  } = runSupersessionPreflight({
-    legalBasisDocs: rawLegalBasisDocs,
-    sourcesUsed: rawSourcesUsed,
-    asOfDate,
-    query,
-    issueClassification
-  });
-
-  const visibleLegalBasisDocs = filterVisibleSources(resolvedLegalBasisDocs, {
-    maxItems: MAX_VISIBLE_SOURCES,
-    supersessionResult,
-    query,
-    issueClassification
-  }).filter((source) => sourceAllowed(source, context));
-
-  const visibleSourceDocs =
-    resolvedSourcesUsed.length > 0
-      ? filterVisibleSources(resolvedSourcesUsed, {
-          maxItems: MAX_VISIBLE_SOURCES,
-          supersessionResult,
-          query,
-          issueClassification
-        }).filter((source) => sourceAllowed(source, context))
-      : visibleLegalBasisDocs;
-
-  return {
-    supersessionResult,
-    resolvedLegalBasisDocs: visibleLegalBasisDocs,
-    resolvedSourcesUsed: visibleSourceDocs,
-    visibleSourceDocs
-  };
-}
-
-function validateFinalAnswerStructure({
-  answer = "",
-  requiredSections = null,
-  context = {}
-} = {}) {
-  const sections = requiredSections || requiredSectionsFromContext(context);
-  const missingSections = safeArray(sections).filter(
-    (heading) => !hasHeading(answer, heading)
-  );
-
-  return {
-    valid: missingSections.length === 0,
-    requiredSections: sections,
-    missingSections,
-    hasAnyKnownStructure: hasAnyAFStructure(answer),
-    warning: missingSections.length
-      ? `Missing required answer sections: ${missingSections.join(", ")}`
-      : null
-  };
-}
-
-function validateSourceGrounding({
-  answer = "",
-  sources = [],
-  context = {}
-} = {}) {
-  const visibleSources = safeArray(sources).filter((source) =>
-    sourceAllowed(source, context)
-  );
-
-  const cited = extractCitationsFromText(answer);
-  const unsupportedCitations = cited.filter(
-    (citation) => !citationSupportedBySources(citation, visibleSources)
-  );
-
-  const hasSources = visibleSources.length > 0;
-  const saysNoLegalBasisRendered =
-    /No legal basis was rendered|No supporting rules were rendered|No legal basis exists|No supporting rules exist/i.test(
-      answer
-    );
-
-  return {
-    valid:
-      unsupportedCitations.length === 0 &&
-      !(hasSources && saysNoLegalBasisRendered),
-    hasSources,
-    citationCount: cited.length,
-    unsupportedCitations,
-    saysNoLegalBasisRendered,
-    warning:
-      unsupportedCitations.length > 0
-        ? `Unsupported citations detected: ${unsupportedCitations
-            .map((item) => item.normalized)
-            .join(", ")}`
-        : hasSources && saysNoLegalBasisRendered
-          ? "Answer contains no-legal-basis fallback language despite available indexed sources."
-          : null
-  };
-}
-
-function validateCitationSupport({
-  answer = "",
-  sources = [],
-  context = {}
-} = {}) {
-  return validateSourceGrounding({
-    answer,
-    sources,
-    context
-  });
-}
-
-function enforceAuthorityHierarchyDisplay({
-  answer = "",
-  sources = [],
-  context = {}
-} = {}) {
-  const warnings = [];
-  const visibleSources = safeArray(sources).filter((source) =>
-    sourceAllowed(source, context)
-  );
-
-  const secondaryControlling = visibleSources.filter(
-    (source) =>
-      isSecondaryOrReviewSource(source) &&
-      /controlling|legal basis|controlling basis/i.test(
-        `${source.citationRole || ""} ${source.authorityRole || ""} ${source.section || ""}`
-      )
-  );
-
-  if (secondaryControlling.length) {
-    warnings.push(
-      "Secondary/review materials must not be presented as controlling legal basis."
-    );
-  }
-
-  const answerText = normalizeLooseText(answer);
-
-  if (
-    /\b(rmc|rmo|ramo|bir ruling)\b/i.test(answerText) &&
-    /\boverrides?\s+(the\s+)?(nirc|tax code|statute|supreme court|constitution)\b/i.test(answerText)
-  ) {
-    warnings.push(
-      "Administrative issuances must not be presented as overriding statutes, the Constitution, or controlling court doctrine."
-    );
-  }
-
-  if (
-    /\bcta\b/i.test(answerText) &&
-    /\boverrides?\s+(the\s+)?supreme court\b/i.test(answerText)
-  ) {
-    warnings.push(
-      "CTA decisions must not be presented as overriding Supreme Court decisions."
-    );
-  }
-
-  return {
-    valid: warnings.length === 0,
-    warnings,
-    checkedSources: visibleSources.length
-  };
-}
-
-function ensureIndexedSourceLimitation({
-  answer = "",
-  sources = [],
-  context = {}
-} = {}) {
-  const hasSources = safeArray(sources).some((source) =>
-    sourceAllowed(source, context)
-  );
-
-  let output = normalizeText(answer);
-
-  output = output
-    .replace(/No legal basis was rendered\./gi, hasSources ? "Indexed source requires verification." : "Indexed source not found.")
-    .replace(/No supporting rules were rendered\./gi, hasSources ? "Indexed source requires verification." : "Indexed source not found.")
-    .replace(/No legal basis exists\./gi, "Indexed source not found.")
-    .replace(/No supporting rules exist\./gi, "Indexed source not found.");
-
-  if (!hasSources && !/Indexed source not found/i.test(output)) {
-    output = `${output}\n\nIndexed source not found.`;
-  }
-
-  return output.trim();
-}
-
-function buildComplianceWarnings({
-  structureValidation = {},
-  sourceGroundingValidation = {},
-  conflictValidation = {},
-  hierarchyValidation = {},
-  hiddenSourceWarnings = []
-} = {}) {
-  return [
-    structureValidation.warning,
-    sourceGroundingValidation.warning,
-    conflictValidation.warning,
-    ...(hierarchyValidation.warnings || []),
-    ...safeArray(hiddenSourceWarnings)
-  ].filter(Boolean);
-}
-
-function sanitizeDraftAnswer(text = "", conflictMetadata = null) {
-  return sanitizeConflictSection(
-    sanitizeRawDebugLeakage(text),
-    conflictMetadata
-  );
-}
-
-function finalizeCompliance({
-  answer = "",
-  visibleSources = [],
-  context = {},
-  conflictValidation = {},
-  requiredSections = null
-} = {}) {
-  let output = sanitizeRawDebugLeakage(answer);
-  output = sanitizeConflictSection(output, conflictValidation.bestConflict || null);
-  output = ensureIndexedSourceLimitation({
-    answer: output,
-    sources: visibleSources,
-    context
-  });
-
-  const structureValidation = validateFinalAnswerStructure({
-    answer: output,
-    requiredSections,
-    context
-  });
-
-  const sourceGroundingValidation = validateSourceGrounding({
-    answer: output,
-
-    sources: visibleSources,
-    context
-  });
-
-  const hierarchyValidation = enforceAuthorityHierarchyDisplay({
-    answer: output,
-    sources: visibleSources,
-    context
-  });
-
-  const warnings = buildComplianceWarnings({
-    structureValidation,
-    sourceGroundingValidation,
+    hierarchyConflict,
     conflictValidation,
-    hierarchyValidation
-  });
-
-  return {
-    answer: output,
-    finalAnswer: output,
-    complianceStatus: warnings.length ? "PASSED_WITH_WARNINGS" : "PASSED",
-    warnings,
-    metadata: {
-      finalAnswerComplianceVersion: ENGINE_VERSION,
-      finalGateOnly: true,
-      noOpenAICalls: true,
-      noRetrieval: true,
-      structureValidation,
-      sourceGroundingValidation,
-      hierarchyValidation,
-      conflictValidation
-    },
-    sourceStatus: {
-      hasVisibleSources: visibleSources.length > 0,
-      visibleSourceCount: visibleSources.length,
-      indexedSourceLimitation:
-        visibleSources.length === 0 ? "Indexed source not found." : null
-    }
-  };
-}
-
-function buildFinalCompliantAnswer({
-  draftAnswer = "",
-  fallbackAnswer = "",
-  directAnswer = "",
-  legalBasisDocs = [],
-  sourcesUsed = [],
-  sources = [],
-  retrievedSources = [],
-  citations = [],
-  legalBasis = [],
-  conflicts = [],
-  hierarchyConflict = null,
-  conflict = null,
-  conflictReview = null,
-  jurisprudencePayload = null,
-  authorityValidation = null,
-  conflictValidation = null,
-  professionalInsight = "",
-  asOfDate = new Date(),
-  query = "",
-  issueClassification = null,
-  mode = null,
-  orchestrationMode = null,
-  responseMode = null,
-  contextMode = null,
-  requiredAnswerSections = null,
-  answerStructure = null,
-  returnObject = false,
-  reviewMode = false,
-  includeHiddenSources = false
-} = {}) {
-  const context = {
-    query,
-    originalQuery: query,
+    jurisprudencePayload,
     issueClassification,
-    mode,
+    taxDomainClassification,
+    primaryDomain,
     orchestrationMode,
-    responseMode,
     contextMode,
-    requiredAnswerSections,
-    answerStructure,
+    mode,
+    responseMode,
+    metadata,
     reviewMode,
-    includeHiddenSources
-  };
-
-  if (
-    isSystemFallbackAnswer(draftAnswer) ||
-    isSystemFallbackAnswer(fallbackAnswer) ||
-    normalizeMode(orchestrationMode || contextMode || mode) === RESPONSE_MODE.EMERGENCY_TRIM
-  ) {
-    const fallbackFinal = preserveSystemFallbackAnswer({
-      draftAnswer,
-      fallbackAnswer,
-      sourcesUsed,
-      legalBasisDocs
-    }).trim();
-
-    const result = finalizeCompliance({
-      answer: fallbackFinal,
-      visibleSources: visibleCandidateSources({
-        ...context,
-        legalBasisDocs,
-        sourcesUsed,
-        sources,
-        retrievedSources,
-        citations,
-        legalBasis
-      }),
-      context,
-      conflictValidation: validateConflictLabel({
-        answer: fallbackFinal,
-        conflicts,
-        hierarchyConflict,
-        conflict,
-        conflictReview,
-        jurisprudencePayload,
-        authorityValidation,
-        conflictValidation
-      }),
-      requiredSections: requiredAnswerSections || answerStructure || null
-    });
-
-    return returnObject ? result : result.answer;
-  }
-
-  const finalMode = normalizeMode(
-    mode ||
-      orchestrationMode ||
-      responseMode ||
-      contextMode ||
-      issueClassification?.responseMode ||
-      issueClassification?.orchestrationClassification?.mode ||
-      RESPONSE_MODE.DEFAULT_AF
-  );
-
-  const bestConflict = pickBestConflict({
-    conflicts,
-    hierarchyConflict,
-    conflict,
-    conflictReview,
-    jurisprudencePayload,
-    authorityValidation,
-    conflictValidation
-  });
-
-  const rawSanitizedDraft = sanitizeDraftAnswer(draftAnswer, bestConflict);
-  const sanitizedDraft = normalizeLegacyHeadingsToAF(rawSanitizedDraft);
-
-  const {
-    supersessionResult,
-    resolvedLegalBasisDocs,
-    visibleSourceDocs
-  } = resolveVisibleSources({
-    legalBasisDocs,
-    sourcesUsed,
-    sources,
-    retrievedSources,
-    citations,
-    legalBasis,
-    asOfDate,
-    query,
-    issueClassification,
-    context
-  });
-
-  let finalAnswer;
-
-  if (
-    finalMode === RESPONSE_MODE.FAST_DEFINITION ||
-    finalMode === RESPONSE_MODE.EMERGENCY_TRIM
-  ) {
-    finalAnswer = buildFastDefinitionAnswer({
-      sanitizedDraft,
-      fallbackAnswer,
-      directAnswer,
-      legalBasisDocs: resolvedLegalBasisDocs
-    });
-  } else if (finalMode === RESPONSE_MODE.STANDARD_TAX) {
-    finalAnswer = buildStandardTaxAnswer({
-      sanitizedDraft,
-      fallbackAnswer,
-      directAnswer,
-      legalBasisDocs: resolvedLegalBasisDocs,
-      jurisprudencePayload,
-      professionalInsight
-    });
-  } else if (
-    finalMode === RESPONSE_MODE.COMPLEX_ADVISORY ||
-    finalMode === RESPONSE_MODE.AUDIT_FACT_PATTERN
-  ) {
-    finalAnswer = buildComplexAdvisoryAnswer({
-      sanitizedDraft,
-      fallbackAnswer,
-      directAnswer,
-      legalBasisDocs: resolvedLegalBasisDocs,
-      professionalInsight,
-      issueClassification,
-      supersessionResult
-    });
-  } else {
-    if (hasRequiredStructure(sanitizedDraft, requiredSectionsFromContext(context))) {
-      finalAnswer = sanitizeConflictSection(sanitizedDraft, bestConflict);
-    } else if (hasAnyAFStructure(sanitizedDraft)) {
-      finalAnswer = repairMissingAFSections({
-        answer: sanitizedDraft,
-        fallbackAnswer,
-        directAnswer,
-        legalBasisDocs: resolvedLegalBasisDocs,
-        conflicts,
-        hierarchyConflict,
-        conflict,
-        conflictReview,
-        jurisprudencePayload,
-        professionalInsight,
-        supersessionResult,
-        authorityValidation,
-        conflictValidation
-      });
-    } else {
-      finalAnswer = rebuildAFAnswer({
-        sanitizedDraft,
-        fallbackAnswer,
-        directAnswer,
-        legalBasisDocs: resolvedLegalBasisDocs,
-        conflicts,
-        hierarchyConflict,
-        conflict,
-        conflictReview,
-        jurisprudencePayload,
-        professionalInsight,
-        supersessionResult,
-        authorityValidation,
-        conflictValidation
-      });
-    }
-  }
-
-  const conflictCheck = validateConflictLabel({
-    answer: finalAnswer,
-    conflicts,
-    hierarchyConflict,
-    conflict,
-    conflictReview,
-    jurisprudencePayload,
-    authorityValidation,
-    conflictValidation
-  });
-
-  const compliant = finalizeCompliance({
-    answer: finalAnswer,
-    visibleSources: visibleSourceDocs,
-    context,
-    conflictValidation: conflictCheck,
-    requiredSections: requiredAnswerSections || answerStructure || null
-  });
-
-  const finalWithSources = appendValidatedSourceAppendix(
-    compliant.answer,
-    visibleSourceDocs
-  );
-
-  const finalResult = {
-    ...compliant,
-    answer: finalWithSources.trim(),
-    finalAnswer: finalWithSources.trim(),
-    sources: visibleSourceDocs,
-    sourcesUsed: visibleSourceDocs,
-    legalBasis: resolvedLegalBasisDocs,
-    citations: extractCitationsFromText(finalWithSources),
-    confidence:
-      visibleSourceDocs.length > 0
-        ? "SOURCE_GROUNDED"
-        : "INDEXED_SOURCE_NOT_FOUND",
-    authorityValidation: {
-      hierarchyValidation: compliant.metadata.hierarchyValidation,
-      sourceGroundingValidation: compliant.metadata.sourceGroundingValidation
-    },
-    conflictValidation: conflictCheck
-  };
-
-  return returnObject ? finalResult : finalResult.answer;
+    reviewerMode,
+    query
+  }).trim();
 }
 
-/**
- * Compatibility wrapper for older modules.
- * Keeps final-answer-compliance.js as final gate only.
- */
-function enforceFinalAnswerCompliance({
+function renderTinaJsonPayload({
   answer = "",
+  finalAnswer = "",
   draftAnswer = "",
   fallbackAnswer = "",
-  responseMode = null,
+  directAnswer = "",
+  sources = [],
+  sourcesUsed = [],
+  retrievedSources = [],
+  legalBasis = [],
+  legalBasisDocs = [],
+  citations = [],
+  controllingAuthorities = [],
+  supportingAuthorities = [],
+  supportingJurisprudence = [],
+  metadata = {},
+  includeSourcesInAnswer = false,
+  includeSources = false,
+  adaptiveContext = null,
+  responsePlan = null,
+  supersessionAudit = null,
+  supersessionResult = null,
+  conflict = null,
+  conflictReview = null,
+  hierarchyConflict = null,
+  conflictValidation = null,
+  jurisprudencePayload = null,
+  issueClassification = null,
+  taxDomainClassification = null,
+  primaryDomain = null,
   orchestrationMode = null,
   contextMode = null,
   mode = null,
-  legalBasisDocs = [],
-  sourcesUsed = [],
-  sources = [],
-  retrievedSources = [],
-  citations = [],
-  legalBasis = [],
-  issueClassification = null,
-  conflicts = [],
-  hierarchyConflict = null,
-  conflict = null,
-  conflictReview = null,
-  jurisprudencePayload = null,
-  authorityValidation = null,
-  conflictValidation = null,
-  professionalInsight = "",
-  query = "",
-  asOfDate = new Date(),
-  requiredAnswerSections = null,
-  answerStructure = null
+  responseMode = null,
+  reviewMode = false,
+  reviewerMode = false,
+  query = ""
 } = {}) {
-  const finalResult = buildFinalCompliantAnswer({
-    draftAnswer: draftAnswer || answer,
+  const input = {
+    answer,
+    finalAnswer,
+    draftAnswer,
     fallbackAnswer,
-    legalBasisDocs,
-    sourcesUsed,
+    directAnswer,
     sources,
+    sourcesUsed,
     retrievedSources,
-    citations,
     legalBasis,
-    conflicts,
-    hierarchyConflict,
+    legalBasisDocs,
+    citations,
+    controllingAuthorities,
+    supportingAuthorities,
+    supportingJurisprudence,
+    metadata,
+    includeSourcesInAnswer,
+    includeSources,
+    adaptiveContext,
+    responsePlan,
+    supersessionAudit,
+    supersessionResult,
     conflict,
     conflictReview,
-    jurisprudencePayload,
-    authorityValidation,
+    hierarchyConflict,
     conflictValidation,
-    professionalInsight,
-    asOfDate,
-    query,
+    jurisprudencePayload,
     issueClassification,
-    mode,
+    taxDomainClassification,
+    primaryDomain,
     orchestrationMode,
-    responseMode,
     contextMode,
-    requiredAnswerSections,
-    answerStructure,
-    returnObject: true
+    mode,
+    responseMode,
+    reviewMode,
+    reviewerMode,
+    query
+  };
+
+  const effectiveMode =
+    normalizeOrchestrationMode(orchestrationMode || contextMode || mode || responseMode || metadata?.orchestrationMode || metadata?.mode || "") ||
+    getResponseModeFromInput(input);
+
+  const sortedSources = sortVisibleSources(collectInputSources(input), input)
+    .slice(0, MAX_VISIBLE_SOURCES)
+    .map(compactSource);
+
+  const renderedAnswer = renderTinaAnswer({
+    ...input,
+    orchestrationMode: effectiveMode,
+    sources: sortedSources
   });
+
+  const headings = getHeadingsFromInput({
+    ...input,
+    orchestrationMode: effectiveMode
+  });
+
+  const conflictMeta = getConflictMetadata(input);
 
   return {
     success: true,
-    answer: finalResult.answer,
-    finalAnswer: finalResult.finalAnswer,
-    sources: finalResult.sources,
-    sourcesUsed: finalResult.sourcesUsed,
-    citations: finalResult.citations,
-    legalBasis: finalResult.legalBasis,
-    complianceStatus: finalResult.complianceStatus,
-    warnings: finalResult.warnings,
-    metadata: finalResult.metadata,
-    confidence: finalResult.confidence,
-    sourceStatus: finalResult.sourceStatus,
-    authorityValidation: finalResult.authorityValidation,
-    conflictValidation: finalResult.conflictValidation,
-    version: ENGINE_VERSION,
-    finalGateOnly: true,
-    fallbackPreservationEnabled: true,
-    noOpenAICalls: true,
-    noPromptAssembly: true,
-    noRetrieval: true
+    answer: renderedAnswer,
+    finalAnswer: renderedAnswer,
+    sources: sortedSources,
+    sourcesUsed: sortedSources,
+    metadata: {
+      ...metadata,
+      renderer: "answer-renderer.js",
+      rendererVersion: ENGINE_VERSION,
+      formattingOnly: true,
+      noOpenAICalls: true,
+      noPromptAssembly: true,
+      noRetrieval: true,
+      noReranking: true,
+      noLegalReasoningGeneration: true,
+
+      orchestrationMode: effectiveMode,
+      responseMode: effectiveMode,
+
+      contextOrchestrationCompatible: true,
+      adaptiveResponseCompatible: true,
+      taxEngineStructureAware: true,
+      reviewerModeAware: true,
+      auditFactPatternAware: true,
+      sourceVisibilityCompatible: true,
+
+      structurePreserved: hasStructure(renderedAnswer, headings),
+      afStructurePreserved: hasCompleteAFStructure(renderedAnswer),
+      sourceCount: sortedSources.length,
+      compactSourcesOnly: true,
+      rawSourceInjectionPrevented: true,
+      debugOutputSuppressed: true,
+      conflictLanguageGated: true,
+      conflictMetadataComplete: conflictMetadataIsComplete(conflictMeta),
+      issueClassificationAware: true,
+      targetAuthorityAware: true
+    }
   };
 }
 
-function finalAnswerComplianceHealthCheck() {
+function assertAFStructure(answer = "") {
+  const clean = renderTinaAnswer({
+    answer,
+    orchestrationMode: "LEGAL_ANALYSIS"
+  });
+
+  return {
+    ok: hasCompleteAFStructure(clean),
+    answer: clean,
+    missingHeadings: TINA_AF_HEADINGS.filter((heading) => !hasHeading(clean, heading))
+  };
+}
+
+function assertStructure(answer = "", headings = TINA_AF_HEADINGS) {
+  const clean = repairStructure(answer, headings);
+
+  return {
+    ok: hasStructure(clean, headings),
+    answer: clean,
+    missingHeadings: headings.filter((heading) => !hasHeading(clean, heading))
+  };
+}
+
+function answerRendererHealthCheck() {
   return {
     ok: true,
-    engine: "TINA_FINAL_ANSWER_COMPLIANCE",
+    engine: "TINA_ANSWER_RENDERER",
     version: ENGINE_VERSION,
 
-    finalGateOnly: true,
+    formattingOnly: true,
     noOpenAICalls: true,
     noPromptAssembly: true,
     noRetrieval: true,
     noReranking: true,
-    noNewLegalAnalysisGeneration: true,
+    noLegalReasoningGeneration: true,
 
-    fallbackPreservationEnabled: true,
-    fallbackReformattingPrevented: true,
-
-    defaultAFStructureCompatible: true,
-    simpleDefinitionStructureCompatible: true,
-    auditFactPatternStructureCompatible: true,
-    taxEngineRequiredSectionsAware: true,
-
-    sourceGroundingValidationEnabled: true,
-    citationSupportValidationEnabled: true,
-    authorityHierarchyDisplayValidationEnabled: true,
-    hiddenSourceLeakagePreventionEnabled: true,
-    reviewSourceSuppressionEnabled: true,
-    rawDebugLeakageSanitizerEnabled: true,
-
-    conflictSanitizerCompatible: true,
-    conflictMetadataCompleteGate: true,
-
-    supersessionPreflightCompatible: true,
-    issueClassificationCompatible: true,
-    sourceVisibilityCompatible: true,
-    jurisprudencePayloadCompatible: true,
+    esmCompatible: true,
     contextOrchestrationCompatible: true,
+    ragAnswerHandlerCompatible: true,
+    finalAnswerComplianceCompatible: true,
+    citationFormattingCompatible: true,
+    sourceVisibilityCompatible: true,
+    adaptiveResponseCompatible: true,
+    taxEngineCompatible: true,
 
-    compactFinalAnswerOutput: true
+    supportsStandardLegalStructure: true,
+    supportsSimpleStructure: true,
+    supportsAuditFactPatternStructure: true,
+    supportsReviewerStructure: true,
+    supportsCustomTaxEngineSections: true,
+
+    supportsSectionRendering: true,
+    supportsAuthorityListRendering: true,
+    supportsPracticalNoteRendering: true,
+    supportsConflictRendering: true,
+    supportsReviewerMode: true,
+    supportsAuditRiskRendering: true,
+    supportsDocumentaryGapRendering: true,
+
+    compactSourcesOnly: true,
+    rawSourceInjectionPrevented: true,
+    debugOutputSuppressed: true,
+    conflictLanguageGated: true,
+    hiddenSourceSuppressionAware: true,
+    reviewMaterialSuppressionAware: true
   };
 }
 
 export {
   ENGINE_VERSION,
-  RESPONSE_MODE,
+  ORCHESTRATION_MODES,
   TINA_AF_HEADINGS,
-  DEFAULT_AF_HEADINGS,
-  SIMPLE_DEFINITION_HEADINGS,
+  STANDARD_LEGAL_HEADINGS,
+  SIMPLE_HEADINGS,
   AUDIT_FACT_PATTERN_HEADINGS,
+  REVIEWER_HEADINGS,
+  FALLBACK_TEMPLATES,
+
+  normalizeText,
+  sanitizeRenderedPayload,
+  stripRawSourceSections,
+  hasHeading,
+  hasStructure,
   hasCompleteAFStructure,
-  hasAnyAFStructure,
-  hasRequiredStructure,
-  isSystemFallbackAnswer,
-  preserveSystemFallbackAnswer,
-  sanitizeConflictSection,
-  sanitizeRawDebugLeakage,
-  buildSupportingRules,
+  repairStructure,
   conflictMetadataIsComplete,
-  normalizeMode,
-  validateFinalAnswerStructure,
-  validateSourceGrounding,
-  validateCitationSupport,
-  validateConflictLabel,
-  enforceAuthorityHierarchyDisplay,
-  ensureIndexedSourceLimitation,
-  buildComplianceWarnings
+  buildConflictMetadataBlock,
+  sanitizeConflictLanguage,
+  protectHeadingSpacing,
+
+  renderSection,
+  renderAuthorityList,
+  renderPracticalNote,
+  renderConflictAnalysis,
+  renderReviewerMode,
+  renderAuditRisk,
+  renderDocumentaryGaps,
+  renderReviewerNote,
+  compactRenderedOutput,
+  buildFinalMarkdown,
+
+  renderAdaptiveAnswer,
+  renderTinaAnswer,
+  renderTinaJsonPayload,
+  assertAFStructure,
+  assertStructure,
+  normalizeOrchestrationMode,
+  answerRendererHealthCheck
 };
 
 export default {
-  sanitizeDraftAnswer,
-  sanitizeConflictSection,
-  sanitizeRawDebugLeakage,
-  buildFinalCompliantAnswer,
-  enforceFinalAnswerCompliance,
-  finalAnswerComplianceHealthCheck,
+  ENGINE_VERSION,
+  ORCHESTRATION_MODES,
+  TINA_AF_HEADINGS,
+  STANDARD_LEGAL_HEADINGS,
+  SIMPLE_HEADINGS,
+  AUDIT_FACT_PATTERN_HEADINGS,
+  REVIEWER_HEADINGS,
+  FALLBACK_TEMPLATES,
 
-  validateFinalAnswerStructure,
-  validateSourceGrounding,
-  validateCitationSupport,
-  validateConflictLabel,
-  enforceAuthorityHierarchyDisplay,
-  ensureIndexedSourceLimitation,
-  buildComplianceWarnings,
-  isSystemFallbackAnswer,
-  preserveSystemFallbackAnswer,
-  normalizeMode
+  normalizeText,
+  sanitizeRenderedPayload,
+  stripRawSourceSections,
+  hasHeading,
+  hasStructure,
+  hasCompleteAFStructure,
+  repairStructure,
+  conflictMetadataIsComplete,
+  buildConflictMetadataBlock,
+  sanitizeConflictLanguage,
+  protectHeadingSpacing,
+
+  renderSection,
+  renderAuthorityList,
+  renderPracticalNote,
+  renderConflictAnalysis,
+  renderReviewerMode,
+  renderAuditRisk,
+  renderDocumentaryGaps,
+  renderReviewerNote,
+  compactRenderedOutput,
+  buildFinalMarkdown,
+
+  renderAdaptiveAnswer,
+  renderTinaAnswer,
+  renderTinaJsonPayload,
+  assertAFStructure,
+  assertStructure,
+  normalizeOrchestrationMode,
+  answerRendererHealthCheck
 };
