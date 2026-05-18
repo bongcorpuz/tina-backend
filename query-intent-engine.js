@@ -718,7 +718,10 @@ function detectToneAndPosture(question = "", commandInfo = {}) {
     userTone = USER_TONE.URGENT;
   } else if (/\b(fix|patch|provide|create|rewrite|analyze|evaluate|check|make it|must)\b/i.test(q)) {
     userTone = USER_TONE.DIRECTIVE;
-  } else if (/\b(error|not working|wrong|why is this|confused|i don't understand|??)\b/i.test(q)) {
+  } else if (
+  /\b(error|not working|wrong|why is this|confused|i don't understand)\b/i.test(q) ||
+  q.includes("??")
+) {    
     userTone = USER_TONE.CONFUSED;
   } else if (/\b(are you sure|cannot be|contest|challenge|prove|rebut|attack)\b/i.test(q)) {
     userTone = USER_TONE.ADVERSARIAL;
