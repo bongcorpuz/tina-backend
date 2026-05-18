@@ -453,6 +453,8 @@ function isReviewMode(context = {}) {
   );
 }
 
+  function isSecondaryOrReviewSource(source = {}) {
+  const type = authorityTypeOf(source);
   const path = sourcePathOf(source);
   const title = sourceTitleOf(source);
 
