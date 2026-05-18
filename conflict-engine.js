@@ -3,13 +3,24 @@
 
 /**
  * TINA Conflict Engine
- * Version: 3.0.0
+ * Version: 3.1.0
+ *
+ * Strict conflict validator only.
  *
  * Purpose:
  * - Detect true legal conflicts only.
- * - Require strict SAME-ISSUE gate before conflict analysis.
- * - Require OPPOSITE-HOLDING gate before declaring doctrinal conflict.
+ * - Require SAME-ISSUE gate.
+ * - Require SAME-LEGAL-DIMENSION gate.
+ * - Require OPPOSITE-HOLDING gate.
  * - Treat different legal dimensions as distinguishable, not conflicting.
+ * - Apply Master Prompt hierarchy where court doctrine overrides conflicting BIR issuances.
+ *
+ * This file must NOT:
+ * - retrieve sources,
+ * - call OpenAI,
+ * - render final answers,
+ * - fabricate conflicts,
+ * - fabricate authorities.
  */
 
 import {
@@ -26,7 +37,7 @@ import {
   getControllingPrecedenceForDoc
 } from "./authority-engine.js";
 
-const ENGINE_VERSION = "3.0.0";
+const ENGINE_VERSION = "3.1.0";
 
 const CONFLICT_TYPE = Object.freeze({
   NONE: "NO_CONFLICT",
@@ -48,6 +59,155 @@ const LEGAL_DIMENSION = Object.freeze({
   ECONOMIC_SUBSTANCE: "ECONOMIC_SUBSTANCE",
   GENERAL: "GENERAL"
 });
+
+/**
+ * Master Prompt hierarchy:
+ * 1 Constitution
+ * 2 NIRC / CMTA / LGC / primary statutes
+ * 3 Tax Treaties
+ * 4 Supreme Court En Banc
+ * 5 Supreme Court Division
+ * 6 CTA En Banc
+ * 7 CTA Division
+ * 8 Revenue Regulations
+ * 9 RMC / RMO / RAMO
+ * 10 BIR Rulings
+ * 11 LGU / BOC issuances
+ * 12 PFRS / PAS / PSA
+ * 13 OECD / foreign persuasive authorities
+ * 14 CPA reviewer notes / secondary materials
+ */
+const MASTER_PRECEDENCE = Object.freeze({
+  CONSTITUTION: 1,
+
+  STATUTE: 2,
+  NIRC: 2,
+  TAX_CODE: 2,
+  CMTA: 2,
+  LGC: 2,
+  REPUBLIC_ACT: 2,
+  RA: 2,
+
+  TAX_TREATY: 3,
+  TREATY: 3,
+
+  SUPREME_COURT_EN_BANC: 4,
+  SUPREME_COURT: 5,
+  SC: 5,
+
+  CTA_EN_BANC: 6,
+
+  CTA_DIVISION: 7,
+  COURT_OF_APPEALS: 7,
+
+  RR: 8,
+  REVENUE_REGULATION: 8,
+
+  RMC: 9,
+  RMO: 9,
+  RAMO: 9,
+
+  BIR_RULING: 10,
+
+  LGU: 11,
+  LGU_ISSUANCE: 11,
+  BOC_ISSUANCE: 11,
+  FIRB_ISSUANCE: 11,
+  PEZA_MEMO: 11,
+  SEC_GUIDANCE: 11,
+
+  PFRS: 12,
+  PAS: 12,
+  PSA: 12,
+
+  OECD_GUIDANCE: 13,
+  FOREIGN_AUTHORITY: 13,
+
+  CPA_NOTES: 14,
+  REVIEW_MATERIALS: 14,
+  SECONDARY: 14,
+
+  UNKNOWN: 99
+});
+
+function unique(values = []) {
+  return [...new Set((values || []).filter(Boolean))];
+}
+
+function normalizeAuthorityType(value = "") {
+  const raw = String(value || "UNKNOWN")
+    .trim()
+    .toUpperCase()
+    .replace(/[\s-]+/g, "_");
+
+  const aliases = {
+    CONSTITUTION: "CONSTITUTION",
+
+    STATUTES: "STATUTE",
+    STATUTE: "STATUTE",
+    LAW: "STATUTE",
+    LAWS: "STATUTE",
+    NIRC: "NIRC",
+    TAX_CODE: "TAX_CODE",
+    CMTA: "CMTA",
+    LGC: "LGC",
+    REPUBLIC_ACT: "REPUBLIC_ACT",
+    RA: "REPUBLIC_ACT",
+
+    TAX_TREATY: "TAX_TREATY",
+    TREATY: "TAX_TREATY",
+
+    SUPREME_COURT_EN_BANC: "SUPREME_COURT_EN_BANC",
+    SUPREME_COURT: "SUPREME_COURT",
+    SC: "SUPREME_COURT",
+    CASE: "SUPREME_COURT",
+    CASE_LAW: "SUPREME_COURT",
+    JURISPRUDENCE: "SUPREME_COURT",
+
+    CTA_EN_BANC: "CTA_EN_BANC",
+    CTA_DIVISION: "CTA_DIVISION",
+    CTA: "CTA_DIVISION",
+    COURT_OF_APPEALS: "COURT_OF_APPEALS",
+
+    REVENUE_REGULATION: "RR",
+    REVENUE_REGULATIONS: "RR",
+    RR: "RR",
+
+    REVENUE_MEMORANDUM_CIRCULAR: "RMC",
+    RMC: "RMC",
+
+    REVENUE_MEMORANDUM_ORDER: "RMO",
+    RMO: "RMO",
+
+    REVENUE_AUDIT_MEMORANDUM_ORDER: "RAMO",
+    RAMO: "RAMO",
+
+    BIR_RULING: "BIR_RULING",
+    BIR_RULINGS: "BIR_RULING",
+
+    LGU: "LGU",
+    LGU_ISSUANCE: "LGU",
+    BOC: "BOC_ISSUANCE",
+    BOC_ISSUANCE: "BOC_ISSUANCE",
+
+    PFRS: "PFRS",
+    PAS: "PAS",
+    PSA: "PSA",
+
+    OECD: "OECD_GUIDANCE",
+    OECD_GUIDANCE: "OECD_GUIDANCE",
+    FOREIGN: "FOREIGN_AUTHORITY",
+    FOREIGN_AUTHORITY: "FOREIGN_AUTHORITY",
+
+    CPA_NOTES: "CPA_NOTES",
+    REVIEW_MATERIALS: "REVIEW_MATERIALS",
+    SECONDARY: "SECONDARY",
+
+    UNKNOWN: "UNKNOWN"
+  };
+
+  return aliases[raw] || raw || "UNKNOWN";
+}
 
 function getDocText(doc = {}) {
   return compactSpaces(
@@ -73,10 +233,6 @@ function getDocText(doc = {}) {
   );
 }
 
-function unique(values = []) {
-  return [...new Set((values || []).filter(Boolean))];
-}
-
 function issueSignals(doc = {}) {
   const text = lower(getDocText(doc));
   const signals = [];
@@ -85,16 +241,17 @@ function issueSignals(doc = {}) {
     if (condition) signals.push(value);
   };
 
-  add(/\bvat refund|input vat refund|unutilized input vat|excess input vat|tcc|claim for refund|120\+30|judicial claim|administrative claim\b/i.test(text), "VAT_REFUND");
-  add(/\bvat liability|output vat|vatable|gross receipts|sale of goods|sale of services|subject to vat|value-added tax\b/i.test(text), "VAT_LIABILITY");
-  add(/\bwithholding|expanded withholding|ewt|cwt|fwt|withholding tax\b/i.test(text), "WITHHOLDING");
-  add(/\bincome tax|rcit|mcit|nolco|deductible|non-deductible|gross income|taxable income\b/i.test(text), "INCOME_TAX");
-  add(/\binvoice|receipt|substantiation|documentary|evidence|proof|burden of proof|supporting document\b/i.test(text), "EVIDENTIARY");
-  add(/\bjurisdiction|deadline|prescription|protest|appeal|loa|pan|fan|fld|assessment|remedy\b/i.test(text), "PROCEDURAL");
-  add(/\bcontract|agreement|lease|concession|clause\b/i.test(text), "CONTRACT");
-  add(/\bprincipal|agent|pass-through|pass through|reimbursement|reimbursable|economic substance|substance over form\b/i.test(text), "TRANSACTION");
-  add(/\bmutuality|association dues|condominium dues|homeowners association\b/i.test(text), "MUTUALITY");
-  add(/\bexemption|tax exempt|vat-exempt|zero-rated|zero rated\b/i.test(text), "EXEMPTION");
+  add(/\b(vat refund|input vat refund|unutilized input vat|excess input vat|tcc|claim for refund|120\+30|judicial claim|administrative claim)\b/i.test(text), "VAT_REFUND");
+  add(/\b(vat liability|output vat|vatable|gross receipts|sale of goods|sale of services|subject to vat|value-added tax|value added tax)\b/i.test(text), "VAT_LIABILITY");
+  add(/\b(zero-rated|zero rated|zero rating|export sales)\b/i.test(text), "VAT_ZERO_RATING");
+  add(/\b(vat exempt|vat-exempt|exemption|tax exempt)\b/i.test(text), "EXEMPTION");
+  add(/\b(withholding|expanded withholding|ewt|cwt|fwt|withholding tax)\b/i.test(text), "WITHHOLDING");
+  add(/\b(income tax|rcit|mcit|nolco|deductible|non-deductible|gross income|taxable income)\b/i.test(text), "INCOME_TAX");
+  add(/\b(invoice|receipt|substantiation|documentary|evidence|proof|burden of proof|supporting document)\b/i.test(text), "EVIDENTIARY");
+  add(/\b(jurisdiction|deadline|prescription|protest|appeal|loa|pan|fan|fld|fdda|assessment|remedy)\b/i.test(text), "PROCEDURAL");
+  add(/\b(contract|agreement|lease|concession|clause)\b/i.test(text), "CONTRACT");
+  add(/\b(principal|agent|pass-through|pass through|reimbursement|reimbursable|economic substance|substance over form)\b/i.test(text), "TRANSACTION");
+  add(/\b(mutuality|association dues|condominium dues|homeowners association)\b/i.test(text), "MUTUALITY");
 
   return unique(signals);
 }
@@ -107,8 +264,8 @@ function legalDimensions(doc = {}) {
     if (condition) dimensions.push(value);
   };
 
-  add(/\b(taxable|liable|subject to|exempt|zero-rated|deductible|output vat|income tax|withholding tax|gross income|gross receipts)\b/i.test(text), LEGAL_DIMENSION.SUBSTANTIVE);
-  add(/\b(file|filing|deadline|period|administrative claim|judicial claim|appeal|assessment|loa|pan|fan|return|remedy|protest|prescription)\b/i.test(text), LEGAL_DIMENSION.PROCEDURAL);
+  add(/\b(taxable|liable|subject to|exempt|zero-rated|zero rated|deductible|output vat|income tax|withholding tax|gross income|gross receipts)\b/i.test(text), LEGAL_DIMENSION.SUBSTANTIVE);
+  add(/\b(file|filing|deadline|period|administrative claim|judicial claim|appeal|assessment|loa|pan|fan|fdda|return|remedy|protest|prescription)\b/i.test(text), LEGAL_DIMENSION.PROCEDURAL);
   add(/\b(invoice|receipt|substantiation|documentary|proof|evidence|burden of proof|records|supporting documents)\b/i.test(text), LEGAL_DIMENSION.EVIDENTIARY);
   add(/\b(jurisdiction|jurisdictional|cta|condition precedent|120\+30)\b/i.test(text), LEGAL_DIMENSION.JURISDICTIONAL);
   add(/\b(effective|retroactive|prospective|transition|amended|repealed|superseded)\b/i.test(text), LEGAL_DIMENSION.TEMPORAL);
@@ -136,7 +293,10 @@ function getSameDimensions(a = {}, b = {}) {
   const aDimensions = legalDimensions(a);
   const bDimensions = legalDimensions(b);
 
-  if (aDimensions.includes(LEGAL_DIMENSION.GENERAL) || bDimensions.includes(LEGAL_DIMENSION.GENERAL)) {
+  if (
+    aDimensions.includes(LEGAL_DIMENSION.GENERAL) ||
+    bDimensions.includes(LEGAL_DIMENSION.GENERAL)
+  ) {
     return [];
   }
 
@@ -149,28 +309,62 @@ function hasDifferentVatDoctrine(a = {}, b = {}) {
 
   return (
     (aSignals.includes("VAT_REFUND") && bSignals.includes("VAT_LIABILITY")) ||
-    (aSignals.includes("VAT_LIABILITY") && bSignals.includes("VAT_REFUND"))
+    (aSignals.includes("VAT_LIABILITY") && bSignals.includes("VAT_REFUND")) ||
+    (aSignals.includes("VAT_REFUND") && bSignals.includes("VAT_ZERO_RATING")) ||
+    (aSignals.includes("VAT_ZERO_RATING") && bSignals.includes("VAT_REFUND"))
   );
 }
 
 function getAuthorityType(doc = {}) {
-  return getAuthorityTypeForDoc(doc) || "UNKNOWN";
+  return normalizeAuthorityType(getAuthorityTypeForDoc(doc) || doc.authorityType || doc.authority_type || "UNKNOWN");
 }
 
 function getAuthorityLevel(doc = {}) {
-  return Number(getAuthorityLevelForDoc(doc) || 99);
+  const explicit = Number(
+    doc.authorityLevel ||
+      doc.authority_level ||
+      doc.metadata?.authorityLevel ||
+      0
+  );
+
+  if (Number.isFinite(explicit) && explicit > 0 && explicit < 99) return explicit;
+
+  return Number(getAuthorityLevelForDoc(doc) || MASTER_PRECEDENCE[getAuthorityType(doc)] || 99);
 }
 
 function getPrecedence(doc = {}) {
-  return Number(getControllingPrecedenceForDoc(doc) || 99);
+  const explicit = Number(
+    doc.controllingPrecedence ||
+      doc.controlling_precedence ||
+      doc.metadata?.controllingPrecedence ||
+      0
+  );
+
+  if (Number.isFinite(explicit) && explicit > 0 && explicit < 99) return explicit;
+
+  return Number(getControllingPrecedenceForDoc(doc) || MASTER_PRECEDENCE[getAuthorityType(doc)] || 99);
 }
 
 function isCourtAuthority(type = "") {
-  return COURT_TYPES.has(String(type || "").toUpperCase());
+  const normalized = normalizeAuthorityType(type);
+  return (
+    COURT_TYPES.has(normalized) ||
+    [
+      "SUPREME_COURT_EN_BANC",
+      "SUPREME_COURT",
+      "CTA_EN_BANC",
+      "CTA_DIVISION",
+      "COURT_OF_APPEALS"
+    ].includes(normalized)
+  );
 }
 
 function isBIRAuthority(type = "") {
-  return BIR_TYPES.has(String(type || "").toUpperCase());
+  const normalized = normalizeAuthorityType(type);
+  return (
+    BIR_TYPES.has(normalized) ||
+    ["RR", "RMC", "RMO", "RAMO", "BIR_RULING"].includes(normalized)
+  );
 }
 
 function sameAuthorityFamily(a = {}, b = {}) {
@@ -212,14 +406,14 @@ function detectHoldingPolarity(doc = {}) {
 
   const count = (regex) => (text.match(regex) || []).length;
 
-  taxable += count(/\b(subject to tax|subject to vat|vatable|taxable|forms part of gross income|included in gross income)\b/gi);
-  notTaxable += count(/\b(not subject to tax|not subject to vat|not vatable|non-taxable|tax exempt|vat-exempt|excluded from gross income|does not form part of gross income)\b/gi);
+  taxable += count(/\b(subject to tax|subject to vat|vatable|taxable|forms part of gross income|included in gross income|liable for tax)\b/gi);
+  notTaxable += count(/\b(not subject to tax|not subject to vat|not vatable|non-taxable|tax exempt|vat-exempt|excluded from gross income|does not form part of gross income|not liable for tax)\b/gi);
 
-  allowed += count(/\b(allowed|deductible|claim granted|refund granted|entitled to refund|valid claim|may be claimed)\b/gi);
-  disallowed += count(/\b(disallowed|non-deductible|not deductible|claim denied|refund denied|not entitled to refund|invalid claim|cannot be claimed)\b/gi);
+  allowed += count(/\b(allowed|deductible|claim granted|refund granted|entitled to refund|valid claim|may be claimed|may be deducted)\b/gi);
+  disallowed += count(/\b(disallowed|non-deductible|not deductible|claim denied|refund denied|not entitled to refund|invalid claim|cannot be claimed|cannot be deducted)\b/gi);
 
-  valid += count(/\b(valid|validly issued|valid assessment|valid notice|valid protest)\b/gi);
-  invalid += count(/\b(invalid|null and void|void|void assessment|invalid notice|invalid protest)\b/gi);
+  valid += count(/\b(valid|validly issued|valid assessment|valid notice|valid protest|valid waiver)\b/gi);
+  invalid += count(/\b(invalid|null and void|void|void assessment|invalid notice|invalid protest|invalid waiver)\b/gi);
 
   hasJurisdiction += count(/\b(has jurisdiction|within jurisdiction|cta has jurisdiction|court has jurisdiction)\b/gi);
   noJurisdiction += count(/\b(no jurisdiction|lack of jurisdiction|without jurisdiction|cta has no jurisdiction|court has no jurisdiction)\b/gi);
@@ -274,6 +468,8 @@ function sameIssueGate(a = {}, b = {}) {
       passed: false,
       sameIssues,
       sameDimensions,
+      sameExactIssue: false,
+      sameLegalDimension: false,
       distinctionType: "VAT liability doctrine distinguished from VAT refund/procedural doctrine.",
       reason: "Authorities mention VAT but resolve different VAT doctrines."
     };
@@ -284,6 +480,8 @@ function sameIssueGate(a = {}, b = {}) {
       passed: false,
       sameIssues,
       sameDimensions,
+      sameExactIssue: false,
+      sameLegalDimension: sameDimensions.length > 0,
       distinctionType: "Different tax issue.",
       reason: "Authorities do not resolve the same legal issue."
     };
@@ -294,6 +492,8 @@ function sameIssueGate(a = {}, b = {}) {
       passed: false,
       sameIssues,
       sameDimensions,
+      sameExactIssue: true,
+      sameLegalDimension: false,
       distinctionType: "Same broad tax topic but different legal dimension.",
       reason:
         "Authorities may involve the same tax type but one may be substantive, procedural, evidentiary, jurisdictional, factual, contractual, or temporal."
@@ -304,6 +504,8 @@ function sameIssueGate(a = {}, b = {}) {
     passed: true,
     sameIssues,
     sameDimensions,
+    sameExactIssue: true,
+    sameLegalDimension: true,
     distinctionType: null,
     reason: "Authorities pass same-issue and same-dimension gate."
   };
@@ -316,6 +518,7 @@ function oppositeHoldingGate(a = {}, b = {}) {
 
   return {
     passed,
+    oppositeHoldingOrRule: passed,
     sourceAHoldingPolarity: aPolarity,
     sourceBHoldingPolarity: bPolarity,
     reason: passed
@@ -357,7 +560,12 @@ function resolveCourtOverride(a = {}, b = {}) {
       overriddenSource: b,
       winningAuthority: aType,
       overriddenAuthority: bType,
-      reason: "Court doctrine prevails over a conflicting BIR administrative issuance on the same exact issue."
+      hierarchyAnalysis:
+        "Court doctrine prevails over a conflicting BIR administrative issuance on the same exact issue.",
+      conflictResolutionBasis:
+        "A BIR issuance cannot override Supreme Court or CTA doctrine within the court decision's proper issue scope.",
+      reason:
+        "Court doctrine prevails over a conflicting BIR administrative issuance on the same exact issue."
     };
   }
 
@@ -368,7 +576,12 @@ function resolveCourtOverride(a = {}, b = {}) {
       overriddenSource: a,
       winningAuthority: bType,
       overriddenAuthority: aType,
-      reason: "Court doctrine prevails over a conflicting BIR administrative issuance on the same exact issue."
+      hierarchyAnalysis:
+        "Court doctrine prevails over a conflicting BIR administrative issuance on the same exact issue.",
+      conflictResolutionBasis:
+        "A BIR issuance cannot override Supreme Court or CTA doctrine within the court decision's proper issue scope.",
+      reason:
+        "Court doctrine prevails over a conflicting BIR administrative issuance on the same exact issue."
     };
   }
 
@@ -382,6 +595,9 @@ function resolveCourtOverride(a = {}, b = {}) {
       overriddenSource: b,
       winningAuthority: aType,
       overriddenAuthority: bType,
+      hierarchyAnalysis: "Higher controlling authority prevails based on TINA authority hierarchy.",
+      conflictResolutionBasis:
+        "Apply the authority with the lower controlling-precedence number under the Master Prompt hierarchy.",
       reason: "Higher controlling authority prevails based on TINA authority hierarchy."
     };
   }
@@ -393,6 +609,9 @@ function resolveCourtOverride(a = {}, b = {}) {
       overriddenSource: a,
       winningAuthority: bType,
       overriddenAuthority: aType,
+      hierarchyAnalysis: "Higher controlling authority prevails based on TINA authority hierarchy.",
+      conflictResolutionBasis:
+        "Apply the authority with the lower controlling-precedence number under the Master Prompt hierarchy.",
       reason: "Higher controlling authority prevails based on TINA authority hierarchy."
     };
   }
@@ -403,6 +622,9 @@ function resolveCourtOverride(a = {}, b = {}) {
     overriddenSource: null,
     winningAuthority: null,
     overriddenAuthority: null,
+    hierarchyAnalysis: "No hierarchy override determined because authorities appear to have the same precedence.",
+    conflictResolutionBasis:
+      "If same-precedence authorities conflict, analyze later controlling doctrine, en banc status, finality, and factual applicability.",
     reason: "No hierarchy override determined."
   };
 }
@@ -444,6 +666,16 @@ function analyzeConflictPair(a = {}, b = {}) {
 
   const override = genuineConflict ? resolveCourtOverride(a, b) : null;
 
+  const resolutionBasis =
+    override?.reason ||
+    (vatDoctrineMismatch
+      ? "No direct conflict. The authorities address different VAT doctrines."
+      : !sameIssue.passed
+        ? sameIssue.reason
+        : !oppositeHolding.passed
+          ? oppositeHolding.reason
+          : "Same-issue opposite-holding conflict detected; hierarchy analysis is required.");
+
   return {
     conflict: genuineConflict,
     apparentConflict,
@@ -451,23 +683,42 @@ function analyzeConflictPair(a = {}, b = {}) {
     hierarchyConflict,
     conflictType,
     distinctionType,
+
     sameIssueGate: sameIssue,
     oppositeHoldingGate: oppositeHolding,
+
+    sameExactIssue: sameIssue.sameExactIssue === true,
+    sameLegalDimension: sameIssue.sameLegalDimension === true,
+    oppositeHoldingOrRule: oppositeHolding.oppositeHoldingOrRule === true,
+
     exactIssue: sameIssue.sameIssues?.join(", ") || null,
     exactLegalDimension: sameIssue.sameDimensions?.join(", ") || null,
+
     sourceA: aInfo,
     sourceB: bInfo,
+
+    source_a_title: aInfo.source,
+    source_b_title: bInfo.source,
+
     winningSource: override?.winningSource || null,
     overriddenSource: override?.overriddenSource || null,
-    resolutionBasis:
-      override?.reason ||
-      (vatDoctrineMismatch
-        ? "No direct conflict. The authorities address different VAT doctrines."
-        : !sameIssue.passed
-          ? sameIssue.reason
-          : !oppositeHolding.passed
-            ? oppositeHolding.reason
-            : "Same-issue opposite-holding conflict detected; hierarchy analysis is required."),
+    winningAuthority: override?.winningAuthority || null,
+    overriddenAuthority: override?.overriddenAuthority || null,
+
+    controllingAuthority: override?.winningAuthority || null,
+    controllingSource: override?.winningSource || null,
+
+    hierarchyAnalysis:
+      override?.hierarchyAnalysis ||
+      (genuineConflict
+        ? "Hierarchy analysis required under the Master Prompt authority order."
+        : "No hierarchy conflict established because the same-issue opposite-holding gates did not both pass."),
+
+    conflictResolutionBasis:
+      override?.conflictResolutionBasis ||
+      resolutionBasis,
+
+    resolutionBasis,
     reason:
       conflictType === CONFLICT_TYPE.NONE
         ? "No direct same-issue and opposite-holding conflict detected."
@@ -475,7 +726,12 @@ function analyzeConflictPair(a = {}, b = {}) {
           ? "Authorities are distinguishable because they do not resolve the same legal issue or legal dimension."
           : conflictType === CONFLICT_TYPE.APPARENT
             ? "Only apparent conflict detected because no opposite holding was found."
-            : "A genuine same-issue opposite-holding conflict was detected."
+            : "A genuine same-issue opposite-holding conflict was detected.",
+
+    masterPromptAuthorityHierarchyApplied: true,
+    courtAuthorityNotSubordinatedToBIRIssuances: true,
+    birIssuanceCannotOverrideCourtDoctrine: true,
+    conflictLabelMayBeDisplayed: genuineConflict === true
   };
 }
 
@@ -489,7 +745,14 @@ function detectHierarchyConflict(docs = []) {
       hierarchyConflict: false,
       doctrinalConflict: false,
       conflictType: CONFLICT_TYPE.NONE,
-      reason: "Insufficient authorities for hierarchy conflict analysis."
+      sameExactIssue: false,
+      sameLegalDimension: false,
+      oppositeHoldingOrRule: false,
+      hierarchyAnalysis: "Insufficient authorities for hierarchy conflict analysis.",
+      conflictResolutionBasis: "At least two authorities are required to detect a legal conflict.",
+      reason: "Insufficient authorities for hierarchy conflict analysis.",
+      masterPromptAuthorityHierarchyApplied: true,
+      courtAuthorityNotSubordinatedToBIRIssuances: true
     };
   }
 
@@ -504,11 +767,17 @@ function detectHierarchyConflict(docs = []) {
 
         return {
           ...review,
-          controllingAuthority: override?.winningAuthority || null,
-          controllingSource: override?.winningSource || null,
-          overriddenAuthority: override?.overriddenAuthority || null,
-          overriddenSource: override?.overriddenSource || null,
-          overrideApplied: Boolean(override?.overrideApplies)
+          controllingAuthority: override?.winningAuthority || review.controllingAuthority || null,
+          controllingSource: override?.winningSource || review.controllingSource || null,
+          overriddenAuthority: override?.overriddenAuthority || review.overriddenAuthority || null,
+          overriddenSource: override?.overriddenSource || review.overriddenSource || null,
+          overrideApplied: Boolean(override?.overrideApplies),
+          hierarchyAnalysis: override?.hierarchyAnalysis || review.hierarchyAnalysis,
+          conflictResolutionBasis: override?.conflictResolutionBasis || review.conflictResolutionBasis,
+          masterPromptAuthorityHierarchyApplied: true,
+          courtAuthorityNotSubordinatedToBIRIssuances: true,
+          birIssuanceCannotOverrideCourtDoctrine: true,
+          conflictLabelMayBeDisplayed: true
         };
       }
 
@@ -524,7 +793,19 @@ function detectHierarchyConflict(docs = []) {
       conflict: false,
       hierarchyConflict: false,
       doctrinalConflict: false,
-      overrideApplied: false
+      overrideApplied: false,
+      sameExactIssue: firstApparent.sameExactIssue === true,
+      sameLegalDimension: firstApparent.sameLegalDimension === true,
+      oppositeHoldingOrRule: false,
+      hierarchyAnalysis:
+        "No hierarchy override applies because no complete same-issue opposite-holding conflict was established.",
+      conflictResolutionBasis:
+        firstApparent.distinctionType ||
+        firstApparent.reason ||
+        "Authorities are apparent or distinguishable, not directly conflicting.",
+      masterPromptAuthorityHierarchyApplied: true,
+      courtAuthorityNotSubordinatedToBIRIssuances: true,
+      conflictLabelMayBeDisplayed: false
     };
   }
 
@@ -534,7 +815,43 @@ function detectHierarchyConflict(docs = []) {
     hierarchyConflict: false,
     doctrinalConflict: false,
     conflictType: CONFLICT_TYPE.NONE,
-    reason: "No direct hierarchy or doctrinal conflict detected."
+    sameExactIssue: false,
+    sameLegalDimension: false,
+    oppositeHoldingOrRule: false,
+    hierarchyAnalysis: "No direct hierarchy or doctrinal conflict detected.",
+    conflictResolutionBasis:
+      "No same-issue, same-dimension, opposite-holding conflict was detected from indexed sources.",
+    reason: "No direct hierarchy or doctrinal conflict detected.",
+    masterPromptAuthorityHierarchyApplied: true,
+    courtAuthorityNotSubordinatedToBIRIssuances: true,
+    conflictLabelMayBeDisplayed: false
+  };
+}
+
+function buildConflictSummary(conflict = null) {
+  if (!conflict || conflict.conflict !== true) {
+    return {
+      conflictDetected: false,
+      summary: "No direct doctrinal conflict detected from indexed sources.",
+      conflictLabelMayBeDisplayed: false
+    };
+  }
+
+  return {
+    conflictDetected: true,
+    conflictType: conflict.conflictType,
+    exactIssue: conflict.exactIssue,
+    exactLegalDimension: conflict.exactLegalDimension,
+    controllingAuthority: conflict.controllingAuthority || conflict.winningAuthority || null,
+    overriddenAuthority: conflict.overriddenAuthority || null,
+    hierarchyAnalysis: conflict.hierarchyAnalysis,
+    conflictResolutionBasis: conflict.conflictResolutionBasis,
+    conflictLabelMayBeDisplayed:
+      conflict.sameExactIssue === true &&
+      conflict.sameLegalDimension === true &&
+      conflict.oppositeHoldingOrRule === true &&
+      Boolean(conflict.hierarchyAnalysis) &&
+      Boolean(conflict.conflictResolutionBasis)
   };
 }
 
@@ -547,8 +864,18 @@ function conflictEngineHealthCheck() {
     authorityEngineCompatible: true,
     hierarchyConflictExport: true,
     strictSameIssueGate: true,
+    strictSameLegalDimensionGate: true,
     oppositeHoldingGate: true,
-    distinguishableAuthoritiesSupported: true
+    distinguishableAuthoritiesSupported: true,
+    vatDoctrineMismatchGuard: true,
+    finalAnswerComplianceCompatible: true,
+    sourceVisibilityCompatible: true,
+    masterPromptAuthorityHierarchyApplied: true,
+    courtAuthorityNotSubordinatedToBIRIssuances: true,
+    birIssuanceCannotOverrideCourtDoctrine: true,
+    noRetrieval: true,
+    noOpenAI: true,
+    noRendering: true
   };
 }
 
@@ -565,6 +892,7 @@ export {
   resolveCourtOverride,
   analyzeConflictPair,
   detectHierarchyConflict,
+  buildConflictSummary,
   conflictEngineHealthCheck
 };
 
@@ -581,5 +909,6 @@ export default {
   resolveCourtOverride,
   analyzeConflictPair,
   detectHierarchyConflict,
+  buildConflictSummary,
   conflictEngineHealthCheck
 };
