@@ -621,6 +621,18 @@ function hasHeading(text = "", heading = "") {
   );
 }
 
+function normalizeMode(value = "") {
+  const raw = String(value || "").trim().toUpperCase();
+
+  if (!raw) return RESPONSE_MODE.DEFAULT_AF;
+
+  const normalized = raw
+    .replace(/[\s-]+/g, "_")
+    .replace(/[^\w]/g, "");
+
+  return RESPONSE_MODE[normalized] || normalized || RESPONSE_MODE.DEFAULT_AF;
+}
+
 function requiredSectionsFromContext(context = {}) {
   const rawSections =
     context.requiredAnswerSections ||
@@ -897,6 +909,7 @@ function buildConflictExplanationFromMetadata(conflict = {}) {
         conflict.reason ? `Reason: ${trimText(conflict.reason, 700)}` : null,
         "Treat the authorities as distinguishable or complementary unless a complete same-issue opposite-holding conflict is established."
       ]
+
         .filter(Boolean)
         .join("\n");
     }
@@ -965,7 +978,7 @@ function isVagueConflictYes(text = "") {
   return !(hasSpecificConflict && value.length >= 300);
 }
 
-export function validateConflictLabel({
+function validateConflictLabel({
   answer = "",
   conflicts = [],
   hierarchyConflict = null,
@@ -1076,7 +1089,7 @@ function stripInventedSourceSections(text = "") {
     .trim();
 }
 
-export function sanitizeRawDebugLeakage(text = "") {
+function sanitizeRawDebugLeakage(text = "") {
   let output = String(text || "");
 
   for (const pattern of RAW_DEBUG_PATTERNS) {
@@ -1353,6 +1366,7 @@ function rebuildAFAnswer({
       : "Indexed source not found.",
     "",
     "D. SUPPORTING JURISPRUDENCE",
+
     buildSupportingJurisprudence({
       draftAnswer: sanitizedDraft,
       jurisprudencePayload
@@ -1616,7 +1630,7 @@ function resolveVisibleSources({
   };
 }
 
-export function validateFinalAnswerStructure({
+function validateFinalAnswerStructure({
   answer = "",
   requiredSections = null,
   context = {}
@@ -1637,7 +1651,7 @@ export function validateFinalAnswerStructure({
   };
 }
 
-export function validateSourceGrounding({
+function validateSourceGrounding({
   answer = "",
   sources = [],
   context = {}
@@ -1676,7 +1690,7 @@ export function validateSourceGrounding({
   };
 }
 
-export function validateCitationSupport({
+function validateCitationSupport({
   answer = "",
   sources = [],
   context = {}
@@ -1688,7 +1702,7 @@ export function validateCitationSupport({
   });
 }
 
-export function enforceAuthorityHierarchyDisplay({
+function enforceAuthorityHierarchyDisplay({
   answer = "",
   sources = [],
   context = {}
@@ -1739,7 +1753,7 @@ export function enforceAuthorityHierarchyDisplay({
   };
 }
 
-export function ensureIndexedSourceLimitation({
+function ensureIndexedSourceLimitation({
   answer = "",
   sources = [],
   context = {}
@@ -1763,7 +1777,7 @@ export function ensureIndexedSourceLimitation({
   return output.trim();
 }
 
-export function buildComplianceWarnings({
+function buildComplianceWarnings({
   structureValidation = {},
   sourceGroundingValidation = {},
   conflictValidation = {},
@@ -1779,7 +1793,7 @@ export function buildComplianceWarnings({
   ].filter(Boolean);
 }
 
-export function sanitizeDraftAnswer(text = "", conflictMetadata = null) {
+function sanitizeDraftAnswer(text = "", conflictMetadata = null) {
   return sanitizeConflictSection(
     sanitizeRawDebugLeakage(text),
     conflictMetadata
@@ -1809,6 +1823,7 @@ function finalizeCompliance({
 
   const sourceGroundingValidation = validateSourceGrounding({
     answer: output,
+
     sources: visibleSources,
     context
   });
@@ -1850,7 +1865,7 @@ function finalizeCompliance({
   };
 }
 
-export function buildFinalCompliantAnswer({
+function buildFinalCompliantAnswer({
   draftAnswer = "",
   fallbackAnswer = "",
   directAnswer = "",
@@ -2097,7 +2112,7 @@ export function buildFinalCompliantAnswer({
  * Compatibility wrapper for older modules.
  * Keeps final-answer-compliance.js as final gate only.
  */
-export function enforceFinalAnswerCompliance({
+function enforceFinalAnswerCompliance({
   answer = "",
   draftAnswer = "",
   fallbackAnswer = "",
@@ -2178,7 +2193,7 @@ export function enforceFinalAnswerCompliance({
   };
 }
 
-export function finalAnswerComplianceHealthCheck() {
+function finalAnswerComplianceHealthCheck() {
   return {
     ok: true,
     engine: "TINA_FINAL_ANSWER_COMPLIANCE",
@@ -2260,7 +2275,6 @@ export default {
   enforceAuthorityHierarchyDisplay,
   ensureIndexedSourceLimitation,
   buildComplianceWarnings,
-
   isSystemFallbackAnswer,
   preserveSystemFallbackAnswer,
   normalizeMode
