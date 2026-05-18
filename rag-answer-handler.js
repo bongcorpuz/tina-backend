@@ -3,7 +3,7 @@
 
 /**
  * TINA RAG Answer Handler
- * Version: 8.3.0
+ * Version: 8.4.0
  *
  * Constitutional role:
  * - Consume retrieved/validated sources.
@@ -38,7 +38,7 @@ import {
   buildCompactConversationHistory
 } from "./ask-helpers.js";
 
-const ENGINE_VERSION = "8.3.0";
+const ENGINE_VERSION = "8.4.0";
 
 const DEFAULT_MODEL =
   process.env.OPENAI_MODEL ||
@@ -75,6 +75,23 @@ const SUPPORTED_TAX_DOMAINS = Object.freeze([
   "CON"
 ]);
 
+/**
+ * Master Prompt controlling hierarchy:
+ * 1. Constitution
+ * 2. NIRC / CMTA / LGC / primary statutes
+ * 3. Tax Treaties
+ * 4. Supreme Court En Banc
+ * 5. Supreme Court Division
+ * 6. CTA En Banc
+ * 7. CTA Division
+ * 8. Revenue Regulations
+ * 9. RMC / RMO / RAMO
+ * 10. BIR Rulings
+ * 11. LGU / BOC issuances
+ * 12. PFRS / PAS / PSA, when accounting applies
+ * 13. OECD / foreign persuasive authorities
+ * 14. CPA reviewer notes / secondary materials
+ */
 const AUTHORITY_PRECEDENCE = Object.freeze({
   CONSTITUTION: 1,
 
@@ -84,40 +101,44 @@ const AUTHORITY_PRECEDENCE = Object.freeze({
   CMTA: 2,
   LGC: 2,
   REPUBLIC_ACT: 2,
+  RA: 2,
 
   TAX_TREATY: 3,
+  TREATY: 3,
 
-  RR: 4,
-  REVENUE_REGULATION: 4,
+  SUPREME_COURT_EN_BANC: 4,
+  SUPREME_COURT: 5,
+  SC: 5,
 
-  RMC: 5,
-  RMO: 5,
-  RAMO: 5,
+  CTA_EN_BANC: 6,
+  CTA_DIVISION: 7,
+  COURT_OF_APPEALS: 7,
 
-  BIR_RULING: 6,
+  RR: 8,
+  REVENUE_REGULATION: 8,
 
-  SUPREME_COURT_EN_BANC: 7,
-  SUPREME_COURT: 8,
+  RMC: 9,
+  RMO: 9,
+  RAMO: 9,
 
-  CTA_EN_BANC: 9,
-  CTA_DIVISION: 10,
-  COURT_OF_APPEALS: 10,
+  BIR_RULING: 10,
 
   BOC_ISSUANCE: 11,
   FIRB_ISSUANCE: 11,
   PEZA_MEMO: 11,
   SEC_GUIDANCE: 11,
-  PFRS: 11,
-  PAS: 11,
-  PSA: 11,
   LGU: 11,
 
-  OECD_GUIDANCE: 12,
-  FOREIGN_AUTHORITY: 12,
+  PFRS: 12,
+  PAS: 12,
+  PSA: 12,
 
-  SECONDARY: 13,
-  CPA_NOTES: 13,
-  REVIEW_MATERIALS: 13,
+  OECD_GUIDANCE: 13,
+  FOREIGN_AUTHORITY: 13,
+
+  SECONDARY: 14,
+  CPA_NOTES: 14,
+  REVIEW_MATERIALS: 14,
 
   UNKNOWN: 99
 });
@@ -130,7 +151,16 @@ const PRIMARY_AUTHORITY_TYPES = new Set([
   "CMTA",
   "LGC",
   "REPUBLIC_ACT",
+  "RA",
   "TAX_TREATY"
+]);
+
+const JURISPRUDENCE_TYPES = new Set([
+  "SUPREME_COURT_EN_BANC",
+  "SUPREME_COURT",
+  "CTA_EN_BANC",
+  "CTA_DIVISION",
+  "COURT_OF_APPEALS"
 ]);
 
 const ADMIN_AUTHORITY_TYPES = new Set([
@@ -147,12 +177,18 @@ const ADMIN_AUTHORITY_TYPES = new Set([
   "LGU"
 ]);
 
-const JURISPRUDENCE_TYPES = new Set([
-  "SUPREME_COURT_EN_BANC",
-  "SUPREME_COURT",
-  "CTA_EN_BANC",
-  "CTA_DIVISION",
-  "COURT_OF_APPEALS"
+const ACCOUNTING_AUTHORITY_TYPES = new Set([
+  "PFRS",
+  "PAS",
+  "PSA"
+]);
+
+const SECONDARY_AUTHORITY_TYPES = new Set([
+  "SECONDARY",
+  "CPA_NOTES",
+  "REVIEW_MATERIALS",
+  "OECD_GUIDANCE",
+  "FOREIGN_AUTHORITY"
 ]);
 
 function safeArray(value) {
@@ -228,6 +264,18 @@ function normalizeAuthorityType(value = "") {
     TAX_TREATY: "TAX_TREATY",
     TREATY: "TAX_TREATY",
 
+    SUPREME_COURT_EN_BANC: "SUPREME_COURT_EN_BANC",
+    SUPREME_COURT: "SUPREME_COURT",
+    SC: "SUPREME_COURT",
+    CASE: "SUPREME_COURT",
+    CASE_LAW: "SUPREME_COURT",
+    JURISPRUDENCE: "SUPREME_COURT",
+
+    CTA_EN_BANC: "CTA_EN_BANC",
+    CTA_DIVISION: "CTA_DIVISION",
+    COURT_OF_APPEALS: "COURT_OF_APPEALS",
+    CA: "COURT_OF_APPEALS",
+
     REVENUE_REGULATION: "RR",
     REVENUE_REGULATIONS: "RR",
     RR: "RR",
@@ -243,18 +291,6 @@ function normalizeAuthorityType(value = "") {
 
     BIR_RULING: "BIR_RULING",
     BIR_RULINGS: "BIR_RULING",
-
-    SUPREME_COURT_EN_BANC: "SUPREME_COURT_EN_BANC",
-    SUPREME_COURT: "SUPREME_COURT",
-    SC: "SUPREME_COURT",
-    CASE: "SUPREME_COURT",
-    CASE_LAW: "SUPREME_COURT",
-    JURISPRUDENCE: "SUPREME_COURT",
-
-    CTA_EN_BANC: "CTA_EN_BANC",
-    CTA_DIVISION: "CTA_DIVISION",
-    COURT_OF_APPEALS: "COURT_OF_APPEALS",
-    CA: "COURT_OF_APPEALS",
 
     BOC: "BOC_ISSUANCE",
     BOC_ISSUANCE: "BOC_ISSUANCE",
@@ -309,6 +345,7 @@ function getAuthorityPrecedence(source = {}) {
       source.authority_type ||
       source.metadata?.authorityType ||
       source.metadata?.authority_type ||
+      source.metadata?.sourceType ||
       "UNKNOWN"
   );
 
@@ -472,6 +509,8 @@ function compactSource(source = {}, index = 0) {
       controllingPrecedence: precedence,
       compactedBy: "rag-answer-handler.js",
       ragAnswerHandlerVersion: ENGINE_VERSION,
+      masterPromptAuthorityHierarchyApplied: true,
+      courtAuthorityNotSubordinatedToBIRIssuances: true,
       rawFullDocumentInjectionPrevented: true
     }
   };
@@ -738,26 +777,32 @@ function normalizeTaxEngineMetadata({
 
 function classifyAuthorityBuckets(sources = []) {
   const controlling = [];
-  const supportingRules = [];
   const jurisprudence = [];
+  const supportingRules = [];
+  const accountingAuthorities = [];
   const persuasive = [];
 
   for (const source of safeArray(sources)) {
     const type = normalizeAuthorityType(source.authorityType);
     const precedence = Number(source.controllingPrecedence || getAuthorityPrecedence(source));
 
-    if (precedence <= 3 || PRIMARY_AUTHORITY_TYPES.has(type)) {
+    if (PRIMARY_AUTHORITY_TYPES.has(type) || precedence <= 3) {
       controlling.push(source);
       continue;
     }
 
-    if (ADMIN_AUTHORITY_TYPES.has(type)) {
+    if (JURISPRUDENCE_TYPES.has(type) || (precedence >= 4 && precedence <= 7)) {
+      jurisprudence.push(source);
+      continue;
+    }
+
+    if (ADMIN_AUTHORITY_TYPES.has(type) || (precedence >= 8 && precedence <= 11)) {
       supportingRules.push(source);
       continue;
     }
 
-    if (JURISPRUDENCE_TYPES.has(type)) {
-      jurisprudence.push(source);
+    if (ACCOUNTING_AUTHORITY_TYPES.has(type) || precedence === 12) {
+      accountingAuthorities.push(source);
       continue;
     }
 
@@ -766,8 +811,9 @@ function classifyAuthorityBuckets(sources = []) {
 
   return {
     controlling: sortSourcesByAuthority(controlling).slice(0, HARD_MAX_AUTHORITY_ITEMS),
-    supportingRules: sortSourcesByAuthority(supportingRules).slice(0, HARD_MAX_AUTHORITY_ITEMS),
     jurisprudence: sortSourcesByAuthority(jurisprudence).slice(0, HARD_MAX_AUTHORITY_ITEMS),
+    supportingRules: sortSourcesByAuthority(supportingRules).slice(0, HARD_MAX_AUTHORITY_ITEMS),
+    accountingAuthorities: sortSourcesByAuthority(accountingAuthorities).slice(0, HARD_MAX_AUTHORITY_ITEMS),
     persuasive: sortSourcesByAuthority(persuasive).slice(0, HARD_MAX_AUTHORITY_ITEMS)
   };
 }
@@ -794,8 +840,9 @@ function buildAuthorityPacket({
     hasSupportingJurisprudence: buckets.jurisprudence.length > 0,
 
     controllingAuthorities: buckets.controlling,
-    supportingRules: buckets.supportingRules,
     supportingJurisprudence: buckets.jurisprudence,
+    supportingRules: buckets.supportingRules,
+    accountingAuthorities: buckets.accountingAuthorities,
     persuasiveAuthorities: buckets.persuasive,
 
     taxEngineDeclaredAuthorities: {
@@ -810,7 +857,11 @@ function buildAuthorityPacket({
     retrievalStrategy:
       issueClassification.retrievalStrategy ||
       taxEngineMetadata.retrievalStrategy ||
-      null
+      null,
+
+    masterPromptAuthorityHierarchyApplied: true,
+    courtAuthorityNotSubordinatedToBIRIssuances: true,
+    noFabricatedAuthorities: true
   };
 }
 
@@ -848,7 +899,8 @@ function buildCompactClassification(issueClassification = {}, taxEngineMetadata 
     answerTemplate: taxEngineMetadata.answerTemplate,
     doctrinalRules: taxEngineMetadata.doctrinalRules,
     conflictRules: taxEngineMetadata.conflictRules,
-    legalValidationRules: taxEngineMetadata.legalValidationRules
+    legalValidationRules: taxEngineMetadata.legalValidationRules,
+    masterPromptAuthorityHierarchyApplied: true
   };
 }
 
@@ -963,7 +1015,6 @@ function answerLooksWeakOrUngrounded(answer = "", sources = []) {
     text.includes("controlling legal basis");
 
   if (sources.length > 0 && !hasRequiredStructure) return true;
-
   if (sources.length === 0 && !text.includes("indexed source not found")) return true;
 
   return false;
@@ -1011,12 +1062,12 @@ function buildSourceGroundedFallbackAnswer({
   const sections = buildRequiredAnswerSections(taxEngineMetadata);
 
   const controlling = safeArray(authorityPacket.controllingAuthorities);
-  const supportingRules = safeArray(authorityPacket.supportingRules);
   const jurisprudence = safeArray(authorityPacket.supportingJurisprudence);
+  const supportingRules = safeArray(authorityPacket.supportingRules);
 
   const directAnswer =
     sources.length > 0
-      ? "Based on the indexed authorities retrieved by TINA, the answer must be anchored only on the controlling and supporting sources listed below."
+      ? "Based on the indexed authorities retrieved by TINA, the answer must be anchored only on the validated sources listed below."
       : "Indexed source not found.";
 
   const controllingText =
@@ -1041,7 +1092,7 @@ function buildSourceGroundedFallbackAnswer({
 
   const practicalText =
     sources.length > 0
-      ? `Apply the retrieved authorities according to hierarchy. Primary issue: ${issueClassification.primaryIssue || "Not classified"}. Sub-issue: ${issueClassification.subIssue || "Not classified"}.`
+      ? `Apply the retrieved authorities according to the Master Prompt hierarchy. Primary issue: ${issueClassification.primaryIssue || "Not classified"}. Sub-issue: ${issueClassification.subIssue || "Not classified"}.`
       : "Re-run retrieval or verify that the relevant Google Drive authority has been indexed.";
 
   const bodyBySection = new Map([
@@ -1145,6 +1196,9 @@ function buildSafeMetadata({
     fullDebugObjectInjectionPrevented: true,
     fullEngineOutputInjectionPrevented: true,
     compactSourcesOnly: true,
+
+    masterPromptAuthorityHierarchyApplied: true,
+    courtAuthorityNotSubordinatedToBIRIssuances: true,
 
     primaryIssue: issueClassification?.primaryIssue || null,
     subIssue: issueClassification?.subIssue || null,
@@ -1392,7 +1446,8 @@ export async function generateRagAnswer({
         sourceCount: sources.length,
         hasIndexedAuthority: authorityPacket.hasIndexedAuthority === true,
         primaryIssue: finalIssueClassification?.primaryIssue || null,
-        subIssue: finalIssueClassification?.subIssue || null
+        subIssue: finalIssueClassification?.subIssue || null,
+        masterPromptAuthorityHierarchyApplied: true
       }
     };
 
@@ -1496,6 +1551,8 @@ export function ragAnswerHandlerHealthCheck() {
     sourceGroundingFirst: true,
     indexedAuthorityAware: true,
     authorityHierarchyAware: true,
+    masterPromptAuthorityHierarchyApplied: true,
+    courtAuthorityNotSubordinatedToBIRIssuances: true,
     taxEngineCompatible: true,
     supportedTaxDomains: SUPPORTED_TAX_DOMAINS,
 
