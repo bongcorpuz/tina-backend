@@ -3,7 +3,7 @@
 
 /**
  * TINA Enterprise Retrieval Orchestration Engine
- * Version: 4.4.0
+ * Version: 4.5.0
  *
  * Constitutional role:
  * - Retrieve and rank issue-specific, authority-grounded sources.
@@ -38,7 +38,7 @@ import {
 
 import { rerankForTina } from "./reranker-engine.js";
 
-const ENGINE_VERSION = "4.4.0";
+const ENGINE_VERSION = "4.5.0";
 
 const DEFAULT_TOP_K = 12;
 const DEFAULT_POOL_K = 36;
@@ -47,6 +47,82 @@ const MAX_SOURCE_TEXT_CHARS = 3500;
 const MAX_SOURCE_TITLE_CHARS = 240;
 const MAX_SOURCE_CITATION_CHARS = 240;
 const MAX_SOURCE_URL_CHARS = 500;
+
+/**
+ * MASTER PROMPT CONTROLLING HIERARCHY:
+ * 1. Constitution
+ * 2. NIRC / CMTA / LGC / primary statutes
+ * 3. Tax Treaties
+ * 4. Supreme Court En Banc
+ * 5. Supreme Court Division
+ * 6. CTA En Banc
+ * 7. CTA Division
+ * 8. Revenue Regulations
+ * 9. RMC / RMO / RAMO
+ * 10. BIR Rulings
+ * 11. LGU / BOC issuances
+ * 12. PFRS / PAS / PSA
+ * 13. OECD / foreign persuasive authorities
+ * 14. CPA reviewer notes / secondary materials
+ */
+const AUTHORITY_WEIGHT = Object.freeze({
+  CONSTITUTION: 140,
+
+  STATUTE: 135,
+  NIRC: 135,
+  TAX_CODE: 135,
+  CMTA: 135,
+  LGC: 135,
+  REPUBLIC_ACT: 135,
+  RA: 135,
+
+  TAX_TREATY: 130,
+
+  SUPREME_COURT_EN_BANC: 125,
+  SUPREME_COURT: 120,
+
+  CTA_EN_BANC: 112,
+  CTA_DIVISION: 106,
+  COURT_OF_APPEALS: 104,
+
+  RR: 96,
+  REVENUE_REGULATION: 96,
+
+  RMC: 88,
+  RMO: 86,
+  RAMO: 86,
+
+  BIR_RULING: 78,
+
+  LGU: 70,
+  BOC_ISSUANCE: 70,
+  FIRB_ISSUANCE: 70,
+  PEZA_MEMO: 70,
+
+  PFRS: 62,
+  PAS: 62,
+  PSA: 58,
+
+  OECD_GUIDANCE: 45,
+  FOREIGN_AUTHORITY: 45,
+
+  SECONDARY: 10,
+  CPA_NOTES: 10,
+  REVIEW_MATERIALS: 10,
+
+  UNKNOWN: 0
+});
+
+const GOOGLE_DRIVE_FOLDER_AUTHORITY = Object.freeze({
+  "01_tax_code": "STATUTE",
+  "02_revenue_regulations": "RR",
+  "03_rmc": "RMC",
+  "04_rmo": "RMO",
+  "05_bir_rulings": "BIR_RULING",
+  "06_court_cases": "SUPREME_COURT",
+  "07_cpa_notes": "SECONDARY",
+  "08_review_materials": "SECONDARY"
+});
 
 const HIDDEN_OR_WEAK_PATTERNS = [
   "07_cpa_notes",
@@ -87,14 +163,15 @@ const MODE_ALIASES = Object.freeze({
 const AUTHORITY_GROUP_TO_TYPES = Object.freeze({
   constitution: ["CONSTITUTION"],
   nirc: ["STATUTE", "NIRC", "TAX_CODE"],
-  statute: ["STATUTE", "NIRC", "TAX_CODE"],
+  statute: ["STATUTE", "NIRC", "TAX_CODE", "CMTA", "LGC", "REPUBLIC_ACT"],
   taxCode: ["STATUTE", "NIRC", "TAX_CODE"],
-  republicAct: ["STATUTE"],
+  republicAct: ["REPUBLIC_ACT", "STATUTE"],
   taxTreaty: ["TAX_TREATY"],
   treaty: ["TAX_TREATY"],
+  supremeCourtEnBanc: ["SUPREME_COURT_EN_BANC"],
   supremeCourt: ["SUPREME_COURT"],
-  jurisprudence: ["SUPREME_COURT"],
-  cases: ["SUPREME_COURT"],
+  jurisprudence: ["SUPREME_COURT", "CTA_EN_BANC", "CTA_DIVISION"],
+  cases: ["SUPREME_COURT", "CTA_EN_BANC", "CTA_DIVISION"],
   ctaEnBanc: ["CTA_EN_BANC"],
   ctaDivision: ["CTA_DIVISION"],
   courtOfAppeals: ["COURT_OF_APPEALS"],
@@ -110,6 +187,7 @@ const AUTHORITY_GROUP_TO_TYPES = Object.freeze({
   pfrs: ["PFRS"],
   pas: ["PAS"],
   psa: ["PSA"],
+  oecd: ["OECD_GUIDANCE"],
   cpaNotes: ["SECONDARY"],
   reviewMaterials: ["SECONDARY"]
 });
@@ -265,13 +343,20 @@ function normalizeAuthority(value = "") {
 
   const aliases = {
     CONSTITUTION: "CONSTITUTION",
+
     NIRC: "STATUTE",
     TAX_CODE: "STATUTE",
     LAW: "STATUTE",
     RA: "STATUTE",
     REPUBLIC_ACT: "STATUTE",
     STATUTE: "STATUTE",
+    CMTA: "STATUTE",
+    LGC: "STATUTE",
 
+    TREATY: "TAX_TREATY",
+    TAX_TREATY: "TAX_TREATY",
+
+    SUPREME_COURT_EN_BANC: "SUPREME_COURT_EN_BANC",
     SUPREME_COURT: "SUPREME_COURT",
     SC: "SUPREME_COURT",
     CASE: "SUPREME_COURT",
@@ -304,9 +389,6 @@ function normalizeAuthority(value = "") {
 
     BOC: "BOC_ISSUANCE",
     BOC_ISSUANCE: "BOC_ISSUANCE",
-
-    TREATY: "TAX_TREATY",
-    TAX_TREATY: "TAX_TREATY",
 
     OECD: "OECD_GUIDANCE",
     OECD_GUIDANCE: "OECD_GUIDANCE",
@@ -444,6 +526,7 @@ function userRequestedJurisprudence(query = "", classification = {}) {
   return (
     /\b(case|jurisprudence|supreme court|g\.?\s*r\.?|seagate|aichi|toshiba|doctrine|ruling)\b/i.test(q) ||
     targetTypes.includes("SUPREME_COURT") ||
+    targetTypes.includes("SUPREME_COURT_EN_BANC") ||
     targetTypes.includes("CTA_EN_BANC") ||
     targetTypes.includes("CTA_DIVISION") ||
     classification?.retrievalControls?.shouldUseJurisprudence === true ||
@@ -575,6 +658,16 @@ function isSupersededDoc(doc = {}) {
   );
 }
 
+function getGoogleDriveFolderAuthority(doc = {}) {
+  const haystack = lower(docText(doc));
+
+  for (const [folder, authorityType] of Object.entries(GOOGLE_DRIVE_FOLDER_AUTHORITY)) {
+    if (haystack.includes(folder)) return authorityType;
+  }
+
+  return null;
+}
+
 function isHiddenOrWeakSource(doc = {}) {
   const haystack = lower(docText(doc));
   return HIDDEN_OR_WEAK_PATTERNS.some((pattern) => haystack.includes(pattern));
@@ -595,8 +688,23 @@ function isGoogleDriveIndexedSource(doc = {}) {
   );
 }
 
+function getNormalizedDocAuthorityType(doc = {}) {
+  const folderAuthority = getGoogleDriveFolderAuthority(doc);
+
+  const explicitAuthority = normalizeAuthority(
+    doc.authorityType ||
+      doc.authority_type ||
+      doc.metadata?.authorityType ||
+      doc.metadata?.authority_type ||
+      doc.metadata?.sourceType ||
+      ""
+  );
+
+  return explicitAuthority || folderAuthority || getAuthorityTypeForDoc(doc) || "UNKNOWN";
+}
+
 function sanitizeRetrievedSource(doc = {}) {
-  const authorityType = getAuthorityTypeForDoc(doc);
+  const authorityType = getNormalizedDocAuthorityType(doc);
   const authorityLevel = getAuthorityLevelForDoc(doc);
   const controllingPrecedence = getControllingPrecedenceForDoc(doc);
   const content = extractBestContent(doc);
@@ -648,9 +756,29 @@ function sanitizeRetrievedSource(doc = {}) {
       exactCitationMatched: Number(doc.citationMatchBonus || 0) > 0,
       retrievalPhase: doc.retrievalPhase || null,
       googleDriveIndexed: isGoogleDriveIndexedSource(doc),
+      googleDriveFolderAuthority: getGoogleDriveFolderAuthority(doc),
       rawFullDocumentInjectionPrevented: true
     }
   };
+}
+
+function isVatDefinitionClassification(classification = {}, query = "") {
+  const issues = unique([
+    normalizeIssue(classification.primaryIssue),
+    normalizeIssue(classification.subIssue),
+    ...safeArray(classification.subIssues).map(normalizeIssue),
+    ...detectIssueType(query).map(normalizeIssue)
+  ]).filter(Boolean);
+
+  const strategy = lower(classification.retrievalStrategy || "");
+  const q = lower(query);
+
+  return (
+    issues.includes("VAT_DEFINITION") ||
+    (issues.includes("VAT_LIABILITY") &&
+      /\b(define|definition|what is)\b.*\b(vat|value-added tax|value added tax)\b/i.test(q)) ||
+    strategy.includes("vat_definition")
+  );
 }
 
 function normalizeExternalIssueClassification({
@@ -887,31 +1015,12 @@ function normalizeExternalIssueClassification({
     provisional.targetAuthorities = unique([
       "STATUTE",
       "RR",
-      ...(userRequestedJurisprudence(query, provisional) ? ["SUPREME_COURT"] : []),
+      ...(userRequestedJurisprudence(query, provisional) ? ["SUPREME_COURT", "CTA_EN_BANC"] : []),
       ...provisional.targetAuthorities
     ]);
   }
 
   return provisional;
-}
-
-function isVatDefinitionClassification(classification = {}, query = "") {
-  const issues = unique([
-    normalizeIssue(classification.primaryIssue),
-    normalizeIssue(classification.subIssue),
-    ...safeArray(classification.subIssues).map(normalizeIssue),
-    ...detectIssueType(query).map(normalizeIssue)
-  ]).filter(Boolean);
-
-  const strategy = lower(classification.retrievalStrategy || "");
-  const q = lower(query);
-
-  return (
-    issues.includes("VAT_DEFINITION") ||
-    (issues.includes("VAT_LIABILITY") &&
-      /\b(define|definition|what is)\b.*\b(vat|value-added tax|value added tax)\b/i.test(q)) ||
-    strategy.includes("vat_definition")
-  );
 }
 
 function safeIssueClassification(query = "", existingClassification = null, extras = {}) {
@@ -995,34 +1104,8 @@ function hasIssueOverlap(queryIssues = [], docIssues = []) {
 }
 
 function authorityWeight(doc = {}) {
-  const type = getAuthorityTypeForDoc(doc);
-
-  const weights = {
-    CONSTITUTION: 100,
-    STATUTE: 98,
-    NIRC: 98,
-    TAX_CODE: 98,
-    RR: 90,
-    RMC: 78,
-    RMO: 76,
-    RAMO: 74,
-    BIR_RULING: 66,
-    SUPREME_COURT: 64,
-    CTA_EN_BANC: 52,
-    CTA_DIVISION: 46,
-    COURT_OF_APPEALS: 42,
-    TAX_TREATY: 88,
-    PFRS: 38,
-    PAS: 38,
-    PSA: 34,
-    LGU: 32,
-    BOC_ISSUANCE: 32,
-    OECD_GUIDANCE: 20,
-    SECONDARY: 5,
-    UNKNOWN: 0
-  };
-
-  return weights[type] ?? 0;
+  const type = getNormalizedDocAuthorityType(doc);
+  return AUTHORITY_WEIGHT[type] ?? AUTHORITY_WEIGHT.UNKNOWN;
 }
 
 function extractExactReferenceSignals(text = "") {
@@ -1087,7 +1170,7 @@ function exactReferenceBonus(query = "", doc = {}, classification = null) {
 function docTargetAuthorityMatch(classification = {}, doc = {}) {
   const targets = normalizeTargetAuthorities(classification.targetAuthorities);
   if (!targets.length) return false;
-  return targets.includes(getAuthorityTypeForDoc(doc));
+  return targets.includes(getNormalizedDocAuthorityType(doc));
 }
 
 function issueClassificationCompatible(classification = {}, doc = {}) {
@@ -1139,7 +1222,7 @@ function buildIssueClassificationMatch(query = "", classification = {}, doc = {}
     targetAuthorities: classification.targetAuthorities || [],
     authoritySearchTerms: classification.authoritySearchTerms || [],
     docIssues,
-    docAuthorityType: getAuthorityTypeForDoc(doc)
+    docAuthorityType: getNormalizedDocAuthorityType(doc)
   };
 }
 
@@ -1209,26 +1292,26 @@ function weakSourcePenalty(doc = {}, allowReviewMaterials = false) {
 
 function adaptiveModeBonus({ mode = "STANDARD", doc = {}, classification = null }) {
   const normalizedMode = normalizeMode(mode);
-  const authority = getAuthorityTypeForDoc(doc);
+  const authority = getNormalizedDocAuthorityType(doc);
   const text = lower(docText(doc));
   let bonus = 0;
 
-  if (normalizedMode === "LITIGATION" && authority === "SUPREME_COURT") bonus += 55;
-  if (normalizedMode === "TECHNICAL" && authority === "SUPREME_COURT") bonus += 42;
+  if (normalizedMode === "LITIGATION" && ["SUPREME_COURT", "SUPREME_COURT_EN_BANC", "CTA_EN_BANC"].includes(authority)) bonus += 55;
+  if (normalizedMode === "TECHNICAL" && ["SUPREME_COURT", "SUPREME_COURT_EN_BANC", "CTA_EN_BANC"].includes(authority)) bonus += 42;
 
   if (normalizedMode === "AUDIT") {
     if (/\bpfrs\b|\bpas\b|\bfinancial statements\b|\bafs\b|\baudit\b/i.test(text)) bonus += 45;
-    if (["STATUTE", "RR", "RMC"].includes(authority)) bonus += 25;
+    if (["STATUTE", "RR", "RMC", "SUPREME_COURT", "CTA_EN_BANC"].includes(authority)) bonus += 25;
   }
 
   if (normalizedMode === "TRANSACTION") {
     if (/\bprincipal\b|\bagent\b|\breimbursement\b|\bpass-through\b|\bgross\b|\bnet\b|\beconomic substance\b|\bbundled\b/i.test(text)) bonus += 50;
-    if (authority === "RR") bonus += 28;
+    if (["STATUTE", "RR", "SUPREME_COURT", "CTA_EN_BANC"].includes(authority)) bonus += 28;
   }
 
   if (normalizedMode === "CONTRACT") {
     if (/\bcontract\b|\bagreement\b|\bclause\b|\blease\b|\bconcession\b/i.test(text)) bonus += 48;
-    if (authority === "SUPREME_COURT") bonus += 24;
+    if (["SUPREME_COURT", "SUPREME_COURT_EN_BANC", "CTA_EN_BANC"].includes(authority)) bonus += 24;
   }
 
   if (normalizedMode === "EVIDENCE_HEAVY") {
@@ -1239,15 +1322,15 @@ function adaptiveModeBonus({ mode = "STANDARD", doc = {}, classification = null 
     const strategy = lower(classification.retrievalStrategy);
 
     if (strategy.includes("foundational") || strategy.includes("definition")) {
-      if (["STATUTE", "NIRC", "TAX_CODE", "RR", "SUPREME_COURT"].includes(authority)) bonus += 30;
+      if (["STATUTE", "NIRC", "TAX_CODE", "RR", "SUPREME_COURT", "SUPREME_COURT_EN_BANC"].includes(authority)) bonus += 30;
     }
 
     if (strategy.includes("procedural")) {
-      if (["STATUTE", "RR", "RMC", "RMO", "SUPREME_COURT", "CTA_EN_BANC"].includes(authority)) bonus += 24;
+      if (["STATUTE", "RR", "RMC", "RMO", "SUPREME_COURT", "SUPREME_COURT_EN_BANC", "CTA_EN_BANC"].includes(authority)) bonus += 24;
     }
 
     if (strategy.includes("jurisprudential")) {
-      if (["SUPREME_COURT", "CTA_EN_BANC", "CTA_DIVISION", "COURT_OF_APPEALS"].includes(authority)) bonus += 35;
+      if (["SUPREME_COURT", "SUPREME_COURT_EN_BANC", "CTA_EN_BANC", "CTA_DIVISION", "COURT_OF_APPEALS"].includes(authority)) bonus += 35;
     }
 
     if (strategy.includes("fact") || strategy.includes("transaction") || strategy.includes("substance")) {
@@ -1285,8 +1368,8 @@ function computeRetrievalScore({
   const level = getAuthorityLevelForDoc(doc);
   const precedence = getControllingPrecedenceForDoc(doc);
 
-  const levelBonus = level <= 3 ? 38 : level <= 8 ? 24 : level <= 12 ? 10 : 0;
-  const precedenceBonus = precedence <= 5 ? 24 : precedence <= 9 ? 12 : 0;
+  const levelBonus = level <= 3 ? 38 : level <= 7 ? 24 : level <= 12 ? 10 : 0;
+  const precedenceBonus = precedence <= 7 ? 24 : precedence <= 12 ? 12 : 0;
   const driveBonus = isGoogleDriveIndexedSource(doc) ? 18 : 0;
 
   const phaseBonus =
@@ -1414,15 +1497,10 @@ async function collectCandidateDocs({
           targetAuthorities: issueClassification?.targetAuthorities
         });
 
-        if (Array.isArray(result)) {
-          candidates.push(...result);
-        } else if (Array.isArray(result?.documents)) {
-          candidates.push(...result.documents);
-        } else if (Array.isArray(result?.sources)) {
-          candidates.push(...result.sources);
-        } else if (Array.isArray(result?.matches)) {
-          candidates.push(...result.matches);
-        }
+        if (Array.isArray(result)) candidates.push(...result);
+        else if (Array.isArray(result?.documents)) candidates.push(...result.documents);
+        else if (Array.isArray(result?.sources)) candidates.push(...result.sources);
+        else if (Array.isArray(result?.matches)) candidates.push(...result.matches);
       } catch {
         // Retrieval failures are intentionally not converted into fabricated sources.
       }
@@ -1512,7 +1590,8 @@ async function retrieveRelevantSources(options = {}) {
       exactAuthorityMatch: issueClassificationMatch.exactAuthorityMatch,
       citationMatchBonus: exactReferenceBonus(query, doc, issueClassification),
       retrievalIssueType: issueClassificationMatch.docIssues,
-      retrievalEngineVersion: ENGINE_VERSION
+      retrievalEngineVersion: ENGINE_VERSION,
+      googleDriveFolderAuthority: getGoogleDriveFolderAuthority(doc)
     };
   });
 
@@ -1540,6 +1619,9 @@ async function retrieveRelevantSources(options = {}) {
       candidateCount: candidates.length,
       returnedCount: sanitized.length,
       indexedSourcePreferred: true,
+      masterPromptAuthorityHierarchyApplied: true,
+      courtAuthorityNotSubordinatedToBIRIssuances: true,
+      reviewerSourcesExcludedUnlessReviewMode: !allowReviewMaterials,
       rawFullDocumentInjectionPrevented: true,
       noFabricatedAuthorities: true
     },
