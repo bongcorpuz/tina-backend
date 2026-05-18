@@ -3,11 +3,20 @@
 
 /**
  * TINA Supersession / Authority Validity Engine
- * Version: 3.1.0
+ * Version: 3.2.0
  *
- * ESM Patch:
- * - Converted from CommonJS require/module.exports to native ES Module imports/exports.
- * - Compatible with patched authority-engine.js and ask-helpers.js.
+ * Constitutional role:
+ * - Determine whether an indexed authority is active, superseded, repealed,
+ *   amended, expired, future-effective, or historical.
+ * - Preserve Master Prompt hierarchy.
+ * - Prevent lower authorities from superseding higher authorities.
+ *
+ * This file must NOT:
+ * - retrieve sources,
+ * - call OpenAI,
+ * - render answers,
+ * - fabricate replacements,
+ * - infer supersession without textual or metadata support.
  */
 
 import {
@@ -17,7 +26,7 @@ import {
   getControllingPrecedenceForDoc
 } from "./authority-engine.js";
 
-const ENGINE_VERSION = "3.1.0";
+const ENGINE_VERSION = "3.2.0";
 
 const SUPERSESSION_STATUS = Object.freeze({
   ACTIVE: "ACTIVE",
@@ -30,12 +39,113 @@ const SUPERSESSION_STATUS = Object.freeze({
   UNKNOWN: "UNKNOWN"
 });
 
+/**
+ * Master Prompt hierarchy:
+ * 1. Constitution
+ * 2. NIRC / CMTA / LGC / primary statutes
+ * 3. Tax Treaties
+ * 4. Supreme Court En Banc
+ * 5. Supreme Court Division
+ * 6. CTA En Banc
+ * 7. CTA Division
+ * 8. Revenue Regulations
+ * 9. RMC / RMO / RAMO
+ * 10. BIR Rulings
+ * 11. LGU / BOC issuances
+ * 12. PFRS / PAS / PSA when accounting applies
+ * 13. OECD / foreign persuasive authorities
+ * 14. CPA reviewer notes / secondary materials
+ */
+const MASTER_PRECEDENCE = Object.freeze({
+  CONSTITUTION: 1,
+
+  STATUTE: 2,
+  NIRC: 2,
+  TAX_CODE: 2,
+  CMTA: 2,
+  LGC: 2,
+  REPUBLIC_ACT: 2,
+  RA: 2,
+
+  TAX_TREATY: 3,
+  TREATY: 3,
+
+  SUPREME_COURT_EN_BANC: 4,
+  SUPREME_COURT: 5,
+  SC: 5,
+
+  CTA_EN_BANC: 6,
+  CTA_DIVISION: 7,
+  COURT_OF_APPEALS: 7,
+
+  RR: 8,
+  REVENUE_REGULATION: 8,
+
+  RMC: 9,
+  RMO: 9,
+  RAMO: 9,
+
+  BIR_RULING: 10,
+
+  LGU: 11,
+  LGU_ISSUANCE: 11,
+  BOC_ISSUANCE: 11,
+  FIRB_ISSUANCE: 11,
+  PEZA_MEMO: 11,
+  SEC_GUIDANCE: 11,
+
+  PFRS: 12,
+  PAS: 12,
+  PSA: 12,
+
+  OECD_GUIDANCE: 13,
+  FOREIGN_AUTHORITY: 13,
+
+  SECONDARY: 14,
+  CPA_NOTES: 14,
+  REVIEW_MATERIALS: 14,
+
+  UNKNOWN: 99
+});
+
+const COURT_TYPES = new Set([
+  "SUPREME_COURT_EN_BANC",
+  "SUPREME_COURT",
+  "CTA_EN_BANC",
+  "CTA_DIVISION",
+  "COURT_OF_APPEALS"
+]);
+
+const BIR_ISSUANCE_TYPES = new Set([
+  "RR",
+  "RMC",
+  "RMO",
+  "RAMO",
+  "BIR_RULING"
+]);
+
+const PRIMARY_TYPES = new Set([
+  "CONSTITUTION",
+  "STATUTE",
+  "NIRC",
+  "TAX_CODE",
+  "CMTA",
+  "LGC",
+  "REPUBLIC_ACT",
+  "RA",
+  "TAX_TREATY"
+]);
+
 function normalizeText(value = "") {
   return String(value || "").replace(/\s+/g, " ").trim();
 }
 
+function lower(value = "") {
+  return normalizeText(value).toLowerCase();
+}
+
 function safeArray(value) {
-  return Array.isArray(value) ? value : [];
+  return Array.isArray(value) ? value.filter(Boolean) : [];
 }
 
 function toDate(value) {
@@ -58,6 +168,82 @@ function normalizeYear(year = "") {
   return raw;
 }
 
+function unique(values = []) {
+  return [...new Set(safeArray(values).filter(Boolean))];
+}
+
+function normalizeAuthorityType(value = "") {
+  const raw = String(value || "UNKNOWN")
+    .trim()
+    .toUpperCase()
+    .replace(/[\s-]+/g, "_");
+
+  const aliases = {
+    CONSTITUTION: "CONSTITUTION",
+
+    STATUTES: "STATUTE",
+    STATUTE: "STATUTE",
+    LAW: "STATUTE",
+    LAWS: "STATUTE",
+    NIRC: "NIRC",
+    TAX_CODE: "TAX_CODE",
+    CMTA: "CMTA",
+    LGC: "LGC",
+    REPUBLIC_ACT: "REPUBLIC_ACT",
+    RA: "REPUBLIC_ACT",
+
+    TAX_TREATY: "TAX_TREATY",
+    TREATY: "TAX_TREATY",
+
+    SUPREME_COURT_EN_BANC: "SUPREME_COURT_EN_BANC",
+    SUPREME_COURT: "SUPREME_COURT",
+    SC: "SUPREME_COURT",
+    CASE: "SUPREME_COURT",
+    CASE_LAW: "SUPREME_COURT",
+
+    CTA_EN_BANC: "CTA_EN_BANC",
+    CTA_DIVISION: "CTA_DIVISION",
+    COURT_OF_APPEALS: "COURT_OF_APPEALS",
+
+    REVENUE_REGULATION: "RR",
+    REVENUE_REGULATIONS: "RR",
+    RR: "RR",
+
+    REVENUE_MEMORANDUM_CIRCULAR: "RMC",
+    RMC: "RMC",
+
+    REVENUE_MEMORANDUM_ORDER: "RMO",
+    RMO: "RMO",
+
+    REVENUE_AUDIT_MEMORANDUM_ORDER: "RAMO",
+    RAMO: "RAMO",
+
+    BIR_RULING: "BIR_RULING",
+    BIR_RULINGS: "BIR_RULING",
+
+    LGU: "LGU",
+    LGU_ISSUANCE: "LGU",
+    BOC: "BOC_ISSUANCE",
+    BOC_ISSUANCE: "BOC_ISSUANCE",
+
+    PFRS: "PFRS",
+    PAS: "PAS",
+    PSA: "PSA",
+
+    OECD: "OECD_GUIDANCE",
+    OECD_GUIDANCE: "OECD_GUIDANCE",
+    FOREIGN_AUTHORITY: "FOREIGN_AUTHORITY",
+
+    CPA_NOTES: "SECONDARY",
+    REVIEW_MATERIALS: "SECONDARY",
+    SECONDARY: "SECONDARY",
+
+    UNKNOWN: "UNKNOWN"
+  };
+
+  return aliases[raw] || raw || "UNKNOWN";
+}
+
 function normalizeRef(value = "") {
   return normalizeText(value)
     .toLowerCase()
@@ -75,10 +261,6 @@ function normalizeRef(value = "") {
     .replace(/[^\w\s./()-]+/g, " ")
     .replace(/\s+/g, " ")
     .trim();
-}
-
-function unique(values = []) {
-  return [...new Set(values.filter(Boolean))];
 }
 
 function normalizeIssuanceReference(value = "") {
@@ -104,7 +286,8 @@ function normalizeIssuanceReference(value = "") {
 
   const cta =
     text.match(/\bcta\s+case\s+([a-z0-9.-]+)\b/i) ||
-    text.match(/\bcta\s+eb\s+([a-z0-9.-]+)\b/i);
+    text.match(/\bcta\s+eb\s+([a-z0-9.-]+)\b/i) ||
+    text.match(/\bcta\s+en\s+banc\s+([a-z0-9.-]+)\b/i);
 
   if (cta) return `CTA_${String(cta[1]).toUpperCase()}`;
 
@@ -119,34 +302,54 @@ function normalizeIssuanceReference(value = "") {
   return text.toUpperCase().replace(/[^A-Z0-9]+/g, "_");
 }
 
+function authorityTypeOf(doc = {}) {
+  return normalizeAuthorityType(
+    doc.authorityType ||
+      doc.authority_type ||
+      doc.metadata?.authorityType ||
+      getAuthorityTypeForDoc(doc) ||
+      "UNKNOWN"
+  );
+}
+
 function authorityLevelOf(doc = {}) {
+  const explicit = Number(
+    doc.authorityLevel ||
+      doc.authority_level ||
+      doc.metadata?.authorityLevel ||
+      0
+  );
+
+  if (Number.isFinite(explicit) && explicit > 0 && explicit < 99) {
+    return explicit;
+  }
+
+  const type = authorityTypeOf(doc);
+
   return (
-    Number(doc.authorityLevel || doc.authority_level || doc.metadata?.authorityLevel) ||
+    MASTER_PRECEDENCE[type] ||
     getAuthorityLevelForDoc(doc) ||
-    AUTHORITY_LEVEL[
-      doc.authorityType || doc.authority_type || doc.metadata?.authorityType
-    ] ||
+    AUTHORITY_LEVEL[type] ||
     99
   );
 }
 
-function authorityTypeOf(doc = {}) {
-  return (
-    doc.authorityType ||
-    doc.authority_type ||
-    doc.metadata?.authorityType ||
-    getAuthorityTypeForDoc(doc) ||
-    "UNKNOWN"
-  );
-}
-
 function controllingPrecedenceOf(doc = {}) {
+  const explicit = Number(
+    doc.controllingPrecedence ||
+      doc.controlling_precedence ||
+      doc.metadata?.controllingPrecedence ||
+      0
+  );
+
+  if (Number.isFinite(explicit) && explicit > 0 && explicit < 99) {
+    return explicit;
+  }
+
+  const type = authorityTypeOf(doc);
+
   return (
-    Number(
-      doc.controllingPrecedence ||
-        doc.controlling_precedence ||
-        doc.metadata?.controllingPrecedence
-    ) ||
+    MASTER_PRECEDENCE[type] ||
     getControllingPrecedenceForDoc(doc) ||
     99
   );
@@ -342,6 +545,41 @@ function determineSupersessionStatus(doc = {}, asOfDate = new Date()) {
   return SUPERSESSION_STATUS.ACTIVE;
 }
 
+function canReplaceAuthority(olderDoc = {}, newerDoc = {}) {
+  const olderType = authorityTypeOf(olderDoc);
+  const newerType = authorityTypeOf(newerDoc);
+
+  const olderPrecedence = controllingPrecedenceOf(olderDoc);
+  const newerPrecedence = controllingPrecedenceOf(newerDoc);
+
+  if (olderDoc === newerDoc) return false;
+
+  if (BIR_ISSUANCE_TYPES.has(newerType) && (PRIMARY_TYPES.has(olderType) || COURT_TYPES.has(olderType))) {
+    return false;
+  }
+
+  if (BIR_ISSUANCE_TYPES.has(newerType) && olderPrecedence < newerPrecedence) {
+    return false;
+  }
+
+  if (newerPrecedence > olderPrecedence && !hasSameAuthorityFamily(olderDoc, newerDoc)) {
+    return false;
+  }
+
+  return true;
+}
+
+function hasSameAuthorityFamily(a = {}, b = {}) {
+  const typeA = authorityTypeOf(a);
+  const typeB = authorityTypeOf(b);
+
+  if (typeA === typeB) return true;
+  if (BIR_ISSUANCE_TYPES.has(typeA) && BIR_ISSUANCE_TYPES.has(typeB)) return true;
+  if (COURT_TYPES.has(typeA) && COURT_TYPES.has(typeB)) return true;
+
+  return false;
+}
+
 function compareVersionPriority(a = {}, b = {}) {
   const precedenceA = controllingPrecedenceOf(a);
   const precedenceB = controllingPrecedenceOf(b);
@@ -385,6 +623,8 @@ function groupDocumentsForSupersession(docs = []) {
 }
 
 function hasExplicitReplacementLink(olderDoc = {}, newerDoc = {}) {
+  if (!canReplaceAuthority(olderDoc, newerDoc)) return false;
+
   const olderRefs = referenceCandidatesOf(olderDoc);
   const newerSupersedes = supersedesOf(newerDoc).map(normalizeIssuanceReference);
 
@@ -413,6 +653,7 @@ function buildAuditRecord({
     documentTitle: docTitle(doc),
     authorityType: authorityTypeOf(doc),
     authorityLevel: authorityLevelOf(doc),
+    controllingPrecedence: controllingPrecedenceOf(doc),
     normalizedReference: docKey(doc),
     effectiveFrom: effectiveFromOf(doc)?.toISOString() || null,
     effectiveTo: effectiveToOf(doc)?.toISOString() || null,
@@ -420,7 +661,11 @@ function buildAuditRecord({
     replacedByTitle: replacedBy ? docTitle(replacedBy) : null,
     replacedByAuthorityType: replacedBy ? authorityTypeOf(replacedBy) : null,
     replacedByAuthorityLevel: replacedBy ? authorityLevelOf(replacedBy) : null,
-    reason
+    replacedByControllingPrecedence: replacedBy ? controllingPrecedenceOf(replacedBy) : null,
+    reason,
+    masterPromptAuthorityHierarchyApplied: true,
+    lowerAuthorityCannotSupersedeHigherAuthority: true,
+    birIssuanceCannotOverrideCourtDoctrine: true
   };
 }
 
@@ -434,6 +679,7 @@ function detectSupersededDocuments(docs = [], asOfDate = new Date()) {
     if (items.length < 2) continue;
 
     const controlling = chooseLatestControllingVersion(items);
+    if (!controlling) continue;
 
     for (const item of items) {
       if (item === controlling) continue;
@@ -442,9 +688,10 @@ function detectSupersededDocuments(docs = [], asOfDate = new Date()) {
       const inactive = !isDocumentEffective(item, asOfDate);
 
       if (!explicitLink && !inactive) continue;
+      if (!canReplaceAuthority(item, controlling) && explicitLink) continue;
 
       const reason = explicitLink
-        ? "Source is explicitly superseded, amended, repealed, or replaced by a controlling indexed authority."
+        ? "Source is explicitly superseded, amended, repealed, or replaced by an indexed authority of equal or higher valid authority level."
         : "Older or inactive authority version detected.";
 
       const key = [docPath(item), docKey(item), docPath(controlling), reason].join("|");
@@ -453,11 +700,11 @@ function detectSupersededDocuments(docs = [], asOfDate = new Date()) {
 
       superseded.push({
         doc: item,
-        replacedBy: controlling,
+        replacedBy: explicitLink ? controlling : null,
         reason,
         auditRecord: buildAuditRecord({
           doc: item,
-          replacedBy: controlling,
+          replacedBy: explicitLink ? controlling : null,
           reason,
           status: determineSupersessionStatus(item, asOfDate)
         })
@@ -519,13 +766,16 @@ function applySupersessionFilter(docs = [], asOfDate = new Date()) {
       requiresSupersessionDisclosure: superseded.length > 0,
       warning:
         superseded.length > 0
-          ? "One or more authorities were superseded, repealed, amended, expired, or inactive."
+          ? "One or more authorities were superseded, repealed, amended, expired, future-effective, or inactive."
           : null
     },
     adaptiveMetadata: {
       engineVersion: ENGINE_VERSION,
       litigationRisk: superseded.length > 0 ? "HIGH" : "LOW",
-      requiresDisclosure: superseded.length > 0
+      requiresDisclosure: superseded.length > 0,
+      masterPromptAuthorityHierarchyApplied: true,
+      lowerAuthorityCannotSupersedeHigherAuthority: true,
+      birIssuanceCannotOverrideCourtDoctrine: true
     }
   };
 }
@@ -535,8 +785,9 @@ function buildSupersessionWarning(supersessionResult = null) {
 
   return [
     "Supersession Warning:",
-    "One or more indexed authorities were superseded, repealed, amended, expired, or otherwise inactive as of the query date.",
-    "TINA should prioritize active controlling authorities and should not rely on obsolete administrative issuances unless the discussion is historical."
+    "One or more indexed authorities were superseded, repealed, amended, expired, future-effective, or otherwise inactive as of the query date.",
+    "TINA should prioritize active controlling authorities and should not rely on obsolete authorities unless the discussion is historical.",
+    "A lower authority must not be treated as superseding a higher authority."
   ].join(" ");
 }
 
@@ -564,7 +815,10 @@ function buildSupersessionPayload({ docs = [], asOfDate = new Date() } = {}) {
     auditTrail: result.auditTrail,
     warning: buildSupersessionWarning(result),
     plannerCompatibility: result.plannerCompatibility,
-    adaptiveMetadata: result.adaptiveMetadata
+    adaptiveMetadata: result.adaptiveMetadata,
+    masterPromptAuthorityHierarchyApplied: true,
+    lowerAuthorityCannotSupersedeHigherAuthority: true,
+    birIssuanceCannotOverrideCourtDoctrine: true
   };
 }
 
@@ -575,7 +829,13 @@ function supersessionEngineHealthCheck() {
     version: ENGINE_VERSION,
     esmCompatible: true,
     authorityEngineCompatible: true,
-    ragCompatible: true
+    ragCompatible: true,
+    masterPromptAuthorityHierarchyApplied: true,
+    lowerAuthorityCannotSupersedeHigherAuthority: true,
+    birIssuanceCannotOverrideCourtDoctrine: true,
+    noRetrieval: true,
+    noOpenAI: true,
+    noRendering: true
   };
 }
 
