@@ -3,13 +3,20 @@
 
 /**
  * TINA Source Visibility Engine
- * Version: 3.2.0
+ * Version: 3.3.0
  *
- * Purpose:
- * - Show only cited, relevant, non-duplicated sources
- * - Suppress hidden/internal/weak/unmatched sources
- * - Support context-orchestration-engine.js
- * - Prevent raw full text or full debug objects from being exposed downstream
+ * Constitutional role:
+ * - Show only cited, relevant, non-duplicated, non-hidden sources.
+ * - Suppress hidden/internal/weak/unmatched/reviewer sources outside reviewer mode.
+ * - Resolve superseded sources through supersession-engine.js.
+ * - Prevent raw full text or full debug objects from being exposed downstream.
+ *
+ * This file must NOT:
+ * - retrieve sources,
+ * - call OpenAI,
+ * - create legal reasoning,
+ * - fabricate authorities,
+ * - override final answer compliance.
  */
 
 import {
@@ -17,44 +24,99 @@ import {
   findReplacementForDocument
 } from "./supersession-engine.js";
 
-export const ENGINE_VERSION = "3.2.0";
+export const ENGINE_VERSION = "3.3.0";
 export const MAX_VISIBLE_SOURCES = 5;
 
-const HIDDEN_SOURCE_PATTERNS = [
+/**
+ * Master Prompt hierarchy:
+ * 1. Constitution
+ * 2. NIRC / CMTA / LGC / primary statutes
+ * 3. Tax Treaties
+ * 4. Supreme Court En Banc
+ * 5. Supreme Court Division
+ * 6. CTA En Banc
+ * 7. CTA Division
+ * 8. Revenue Regulations
+ * 9. RMC / RMO / RAMO
+ * 10. BIR Rulings
+ * 11. LGU / BOC issuances
+ * 12. PFRS / PAS / PSA, when accounting applies
+ * 13. OECD / foreign persuasive authorities
+ * 14. CPA reviewer notes / secondary materials
+ */
+const CONTROLLING_AUTHORITY_PRIORITY = Object.freeze({
+  CONSTITUTION: 1,
+
+  STATUTE: 2,
+  NIRC: 2,
+  TAX_CODE: 2,
+  CMTA: 2,
+  LGC: 2,
+  REPUBLIC_ACT: 2,
+  RA: 2,
+
+  TAX_TREATY: 3,
+  TREATY: 3,
+
+  SUPREME_COURT_EN_BANC: 4,
+  SUPREME_COURT: 5,
+  SC: 5,
+
+  CTA_EN_BANC: 6,
+
+  CTA_DIVISION: 7,
+  COURT_OF_APPEALS: 7,
+
+  RR: 8,
+  REVENUE_REGULATION: 8,
+
+  RMC: 9,
+  RMO: 9,
+  RAMO: 9,
+
+  BIR_RULING: 10,
+
+  LGU: 11,
+  LGU_ISSUANCE: 11,
+  BOC_ISSUANCE: 11,
+  FIRB_ISSUANCE: 11,
+  PEZA_MEMO: 11,
+  SEC_GUIDANCE: 11,
+
+  PFRS: 12,
+  PAS: 12,
+  PSA: 12,
+
+  OECD_GUIDANCE: 13,
+  FOREIGN_AUTHORITY: 13,
+
+  SECONDARY: 14,
+  CPA_NOTES: 14,
+  REVIEW_MATERIALS: 14,
+
+  UNKNOWN: 99
+});
+
+const HIDDEN_SOURCE_PATTERNS = Object.freeze([
   "07_cpa_notes",
   "08_review_materials",
   "internal_notes",
   "drafts",
-  "working_papers"
-];
+  "working_papers",
+  "reviewer",
+  "lecture notes",
+  "handout"
+]);
 
-const CONTROLLING_AUTHORITY_PRIORITY = {
-  CONSTITUTION: 1,
-  STATUTE: 2,
-  NIRC: 2,
-  TAX_CODE: 2,
-  SUPREME_COURT: 3,
-  RR: 4,
-  TAX_TREATY: 5,
-  TREATY: 5,
-  RMC: 6,
-  RMO: 7,
-  RAMO: 8,
-  BIR_RULING: 9,
-  CTA_EN_BANC: 10,
-  COURT_OF_APPEALS: 11,
-  CTA_DIVISION: 12,
-  LGU: 13,
-  BOC_ISSUANCE: 13,
-  PFRS: 14,
-  PAS: 15,
-  PSA: 16,
-  OECD_GUIDANCE: 30,
-  SECONDARY: 98,
-  UNKNOWN: 99
-};
+const REVIEW_MODE_MARKERS = Object.freeze([
+  "REVIEWER",
+  "TAX_REVIEWER",
+  "REVIEW",
+  "QUIZ",
+  "ASSESSMENT"
+]);
 
-const DOMAIN_KEYWORDS = {
+const DOMAIN_KEYWORDS = Object.freeze({
   VAT: ["vat", "value added tax", "value-added tax", "output vat", "input vat", "zero rated", "zero-rated"],
   CIT: ["corporate income tax", "income tax", "rcit", "mcit", "nolco", "deduction", "taxable income"],
   IIT: ["individual income tax", "compensation", "self employed", "self-employed", "8%", "graduated rates"],
@@ -67,8 +129,10 @@ const DOMAIN_KEYWORDS = {
   LGT: ["local business tax", "real property tax", "lgu", "local tax"],
   CUS: ["customs", "tariff", "import duty", "cmta", "boc"],
   SPC: ["transfer pricing", "peza", "create incentives", "tax treaty", "oecd"],
-  CON: ["constitution", "due process", "equal protection", "uniformity", "equity"]
-};
+  CON: ["constitution", "due process", "equal protection", "uniformity", "equity"],
+  PFRS: ["pfrs", "pas", "psa", "financial statements", "audit", "afs"],
+  TRANSACTION: ["contract", "principal", "agent", "reimbursement", "pass-through", "bundled", "economic substance"]
+});
 
 export function normalizeText(value = "") {
   return String(value || "")
@@ -263,8 +327,17 @@ export function sourceDownloadUrlOf(doc = {}) {
   );
 }
 
+function hasSupremeCourtEnBancSignal(text = "") {
+  return /\bsupreme\s+court\s+en\s+banc\b/i.test(text) ||
+    (/\ben\s+banc\b/i.test(text) && /\bsupreme\s+court\b/i.test(text));
+}
+
 function hasSupremeCourtSignal(text = "") {
   return /\bg\.?\s*r\.?\s*no\.?/i.test(text) || /supreme court/i.test(text);
+}
+
+function hasCtaEnBancSignal(text = "") {
+  return /\bcta\s+en\s+banc\b/i.test(text) || /\bcta\s+eb\b/i.test(text);
 }
 
 function hasCtaSignal(text = "") {
@@ -273,23 +346,77 @@ function hasCtaSignal(text = "") {
 
 function normalizeAuthority(value = "") {
   const raw = String(value || "").trim().toUpperCase().replace(/[\s-]+/g, "_");
+
   const aliases = {
-    NIRC: "STATUTE",
-    TAX_CODE: "STATUTE",
-    REPUBLIC_ACT: "STATUTE",
-    REVENUE_REGULATION: "RR",
-    REVENUE_REGULATIONS: "RR",
-    REVENUE_MEMORANDUM_CIRCULAR: "RMC",
-    REVENUE_MEMORANDUM_ORDER: "RMO",
-    REVENUE_AUDIT_MEMORANDUM_ORDER: "RAMO",
+    CONSTITUTION: "CONSTITUTION",
+
+    STATUTE: "STATUTE",
+    STATUTES: "STATUTE",
+    NIRC: "NIRC",
+    TAX_CODE: "TAX_CODE",
+    REPUBLIC_ACT: "REPUBLIC_ACT",
+    RA: "REPUBLIC_ACT",
+    CMTA: "CMTA",
+    LGC: "LGC",
+
+    TAX_TREATY: "TAX_TREATY",
+    TREATY: "TAX_TREATY",
+
+    SUPREME_COURT_EN_BANC: "SUPREME_COURT_EN_BANC",
     SUPREME_COURT_DECISION: "SUPREME_COURT",
+    SUPREME_COURT: "SUPREME_COURT",
     SC: "SUPREME_COURT",
     CASE_LAW: "SUPREME_COURT",
+    JURISPRUDENCE: "SUPREME_COURT",
+
+    CTA_EN_BANC: "CTA_EN_BANC",
     CTA: "CTA_DIVISION",
+    CTA_DIVISION: "CTA_DIVISION",
+    COURT_OF_APPEALS: "COURT_OF_APPEALS",
+    CA: "COURT_OF_APPEALS",
+
+    REVENUE_REGULATION: "RR",
+    REVENUE_REGULATIONS: "RR",
+    RR: "RR",
+
+    REVENUE_MEMORANDUM_CIRCULAR: "RMC",
+    RMC: "RMC",
+
+    REVENUE_MEMORANDUM_ORDER: "RMO",
+    RMO: "RMO",
+
+    REVENUE_AUDIT_MEMORANDUM_ORDER: "RAMO",
+    RAMO: "RAMO",
+
+    BIR_RULING: "BIR_RULING",
+    BIR_RULINGS: "BIR_RULING",
+
     LGU_ISSUANCE: "LGU",
+    LGU: "LGU",
     BOC: "BOC_ISSUANCE",
-    TREATY: "TAX_TREATY",
-    SECONDARY_SOURCE: "SECONDARY"
+    BOC_ISSUANCE: "BOC_ISSUANCE",
+    FIRB: "FIRB_ISSUANCE",
+    FIRB_ISSUANCE: "FIRB_ISSUANCE",
+    PEZA: "PEZA_MEMO",
+    PEZA_MEMO: "PEZA_MEMO",
+    SEC: "SEC_GUIDANCE",
+    SEC_GUIDANCE: "SEC_GUIDANCE",
+
+    PFRS: "PFRS",
+    PAS: "PAS",
+    PSA: "PSA",
+
+    OECD: "OECD_GUIDANCE",
+    OECD_GUIDANCE: "OECD_GUIDANCE",
+    FOREIGN_AUTHORITY: "FOREIGN_AUTHORITY",
+    FOREIGN: "FOREIGN_AUTHORITY",
+
+    CPA_NOTES: "CPA_NOTES",
+    REVIEW_MATERIALS: "REVIEW_MATERIALS",
+    SECONDARY_SOURCE: "SECONDARY",
+    SECONDARY: "SECONDARY",
+
+    UNKNOWN: "UNKNOWN"
   };
 
   return aliases[raw] || raw || null;
@@ -313,6 +440,14 @@ export function authorityTypeOf(doc = {}) {
 
   if (path.includes("00_constitution") || title.includes("constitution")) return "CONSTITUTION";
 
+  if (path.includes("06_court_cases") && hasSupremeCourtEnBancSignal(blob)) return "SUPREME_COURT_EN_BANC";
+  if (hasSupremeCourtEnBancSignal(blob)) return "SUPREME_COURT_EN_BANC";
+  if (path.includes("06_court_cases") && hasSupremeCourtSignal(blob)) return "SUPREME_COURT";
+  if (title.includes("supreme court") || hasSupremeCourtSignal(blob)) return "SUPREME_COURT";
+  if (title.includes("cta en banc") || hasCtaEnBancSignal(blob)) return "CTA_EN_BANC";
+  if (title.includes("court of appeals") || /\bca-g\.?r\.?\b/i.test(blob)) return "COURT_OF_APPEALS";
+  if (title.includes("cta") || hasCtaSignal(blob)) return "CTA_DIVISION";
+
   if (
     path.includes("01_tax_code") ||
     /\b(?:republic act|ra)\s*(?:no)?\s*\d{4,6}\b/i.test(blob) ||
@@ -320,17 +455,12 @@ export function authorityTypeOf(doc = {}) {
     title.includes("nirc")
   ) return "STATUTE";
 
+  if (path.includes("05b_tax_treaties") || title.includes("tax treaty") || title.includes("double tax")) return "TAX_TREATY";
   if (path.includes("02_revenue_regulations") || /\brr\b/i.test(title)) return "RR";
   if (path.includes("03_rmc") || /\brmc\b/i.test(title)) return "RMC";
   if (path.includes("04b_ramo") || /\bramo\b/i.test(title)) return "RAMO";
   if (path.includes("04_rmo") || /\brmo\b/i.test(title)) return "RMO";
   if (path.includes("05_bir_rulings") || title.includes("bir ruling")) return "BIR_RULING";
-  if (path.includes("05b_tax_treaties") || title.includes("tax treaty")) return "TAX_TREATY";
-
-  if (title.includes("supreme court") || hasSupremeCourtSignal(blob)) return "SUPREME_COURT";
-  if (title.includes("cta en banc") || /\bcta eb\b/i.test(blob)) return "CTA_EN_BANC";
-  if (title.includes("court of appeals") || /\bca-g\.?r\.?\b/i.test(blob)) return "COURT_OF_APPEALS";
-  if (title.includes("cta") || hasCtaSignal(blob)) return "CTA_DIVISION";
 
   if (title.includes("pfrs")) return "PFRS";
   if (title.includes("pas")) return "PAS";
@@ -338,6 +468,7 @@ export function authorityTypeOf(doc = {}) {
   if (title.includes("ordinance") || title.includes("local tax code")) return "LGU";
   if (title.includes("boc") || title.includes("customs")) return "BOC_ISSUANCE";
   if (title.includes("oecd")) return "OECD_GUIDANCE";
+  if (title.includes("foreign")) return "FOREIGN_AUTHORITY";
 
   return "SECONDARY";
 }
@@ -349,7 +480,7 @@ export function authorityLevelOf(doc = {}) {
     doc.metadata?.authorityLevel ??
     null;
 
-  if (Number.isFinite(Number(explicit))) return Number(explicit);
+  if (Number.isFinite(Number(explicit)) && Number(explicit) > 0) return Number(explicit);
 
   return CONTROLLING_AUTHORITY_PRIORITY[authorityTypeOf(doc)] || 99;
 }
@@ -361,22 +492,50 @@ export function controllingPrecedenceOf(doc = {}) {
     doc.metadata?.controllingPrecedence ??
     null;
 
-  if (Number.isFinite(Number(explicit))) return Number(explicit);
+  if (Number.isFinite(Number(explicit)) && Number(explicit) > 0) return Number(explicit);
 
   return CONTROLLING_AUTHORITY_PRIORITY[authorityTypeOf(doc)] || 99;
 }
 
-export function shouldHideSource(doc = {}) {
+function isReviewMode(issueClassification = null) {
+  const source =
+    issueClassification?.orchestrationClassification ||
+    issueClassification ||
+    {};
+
+  const values = [
+    source.responseMode,
+    source.orchestrationMode,
+    source.mode,
+    source.intent,
+    source.primaryIssue,
+    source.subIssue,
+    source.taxDomainClassification?.responseMode,
+    source.taxDomainClassification?.mode
+  ]
+    .filter(Boolean)
+    .map((item) => String(item).toUpperCase());
+
+  return values.some((value) =>
+    REVIEW_MODE_MARKERS.some((marker) => value.includes(marker))
+  );
+}
+
+export function shouldHideSource(doc = {}, issueClassification = null) {
   const haystack = normalizeLooseText([sourcePathOf(doc), sourceTitleOf(doc)].join(" "));
-  return HIDDEN_SOURCE_PATTERNS.some((pattern) => haystack.includes(pattern));
+  const hiddenByPath = HIDDEN_SOURCE_PATTERNS.some((pattern) => haystack.includes(pattern));
+
+  if (!hiddenByPath) return false;
+
+  return !isReviewMode(issueClassification);
 }
 
 export function isWeakAuthority(doc = {}) {
-  return ["SECONDARY", "UNKNOWN"].includes(authorityTypeOf(doc));
+  return ["SECONDARY", "UNKNOWN", "CPA_NOTES", "REVIEW_MATERIALS"].includes(authorityTypeOf(doc));
 }
 
 export function isControllingAuthority(doc = {}) {
-  return controllingPrecedenceOf(doc) <= 9;
+  return controllingPrecedenceOf(doc) <= 7;
 }
 
 export function isAdministrativeAuthority(doc = {}) {
@@ -385,6 +544,7 @@ export function isAdministrativeAuthority(doc = {}) {
 
 export function isCourtAuthority(doc = {}) {
   return [
+    "SUPREME_COURT_EN_BANC",
     "SUPREME_COURT",
     "CTA_EN_BANC",
     "COURT_OF_APPEALS",
@@ -393,7 +553,17 @@ export function isCourtAuthority(doc = {}) {
 }
 
 export function isStatutoryAuthority(doc = {}) {
-  return ["CONSTITUTION", "STATUTE"].includes(authorityTypeOf(doc));
+  return [
+    "CONSTITUTION",
+    "STATUTE",
+    "NIRC",
+    "TAX_CODE",
+    "CMTA",
+    "LGC",
+    "REPUBLIC_ACT",
+    "RA",
+    "TAX_TREATY"
+  ].includes(authorityTypeOf(doc));
 }
 
 function normalizeDomain(value = "") {
@@ -485,6 +655,8 @@ function extractIssueSignals(text = "") {
 
   push(/\b(vat refund|input vat refund|120\+30|administrative claim|judicial claim|tax credit certificate|unutilized input vat)\b/i.test(value), "VAT_REFUND");
   push(/\b(vat liability|output vat|subject to vat|vatable|sale of goods|sale of services|value added tax)\b/i.test(value), "VAT_LIABILITY");
+  push(/\b(zero rated|zero-rated|zero rating|export sales)\b/i.test(value), "VAT_ZERO_RATING");
+  push(/\b(vat exempt|exemption|section 109)\b/i.test(value), "VAT_EXEMPTION");
   push(/\b(withholding tax|expanded withholding tax|withholding|ewt|final withholding tax|fwt|cwt)\b/i.test(value), "WITHHOLDING");
   push(/\b(nolco|mcit|rcit|income tax|taxable income|gross income)\b/i.test(value), "INCOME_TAX");
   push(/\b(substantiation|invoice|receipt|supporting document|evidence|proof|burden of proof)\b/i.test(value), "EVIDENTIARY");
@@ -522,6 +694,10 @@ function normalizeIssue(value = "") {
     INPUT_VAT_REFUND: "VAT_REFUND",
     TAX_REFUND: "VAT_REFUND",
     REFUND: "VAT_REFUND",
+    ZERO_RATING: "VAT_ZERO_RATING",
+    VAT_ZERO_RATING: "VAT_ZERO_RATING",
+    EXEMPTION: "VAT_EXEMPTION",
+    VAT_EXEMPTION: "VAT_EXEMPTION",
     EWT: "WITHHOLDING",
     CWT: "WITHHOLDING",
     FWT: "WITHHOLDING",
@@ -658,25 +834,34 @@ export function formatDocType(doc = {}) {
   const labels = {
     CONSTITUTION: "Constitution",
     STATUTE: "Statute",
-    NIRC: "Statute",
-    TAX_CODE: "Statute",
-    SUPREME_COURT: "Supreme Court",
-    RR: "RR",
+    NIRC: "NIRC",
+    TAX_CODE: "Tax Code",
+    CMTA: "CMTA",
+    LGC: "LGC",
+    REPUBLIC_ACT: "Republic Act",
     TAX_TREATY: "Tax Treaty",
-    TREATY: "Treaty",
+    SUPREME_COURT_EN_BANC: "Supreme Court En Banc",
+    SUPREME_COURT: "Supreme Court",
+    CTA_EN_BANC: "CTA En Banc",
+    COURT_OF_APPEALS: "Court of Appeals",
+    CTA_DIVISION: "CTA Division",
+    RR: "RR",
     RMC: "RMC",
     RMO: "RMO",
     RAMO: "RAMO",
     BIR_RULING: "BIR Ruling",
-    CTA_EN_BANC: "CTA En Banc",
-    COURT_OF_APPEALS: "Court of Appeals",
-    CTA_DIVISION: "CTA Division",
     LGU: "LGU",
     BOC_ISSUANCE: "BOC Issuance",
+    FIRB_ISSUANCE: "FIRB Issuance",
+    PEZA_MEMO: "PEZA Issuance",
+    SEC_GUIDANCE: "SEC Guidance",
     PFRS: "PFRS",
     PAS: "PAS",
     PSA: "PSA",
     OECD_GUIDANCE: "OECD Guidance",
+    FOREIGN_AUTHORITY: "Foreign Authority",
+    CPA_NOTES: "CPA Notes",
+    REVIEW_MATERIALS: "Review Materials",
     SECONDARY: "Secondary Source",
     UNKNOWN: "Unknown Source"
   };
@@ -725,7 +910,7 @@ export function inferIssuanceNumber(doc = {}) {
     { regex: /\b(RMO)\s*(?:No\.?)?\s*0*(\d+)\s*[-/_]\s*(\d{2,4})\b/i, value: (m) => `${m[1].toUpperCase()} No. ${Number(m[2])}-${normalizeYear(m[3])}` },
     { regex: /\b(RAMO)\s*(?:No\.?)?\s*0*(\d+)\s*[-/_]\s*(\d{2,4})\b/i, value: (m) => `${m[1].toUpperCase()} No. ${Number(m[2])}-${normalizeYear(m[3])}` },
     { regex: /\b(BIR Ruling)\s*(?:No\.?)?\s*([\w./()-]+)\b/i, value: (m) => `${m[1]} No. ${m[2]}` },
-    { regex: /\b(CTA(?:\s+EB)?\s+No\.?\s*[\w.-]+)\b/i, value: (m) => compactSpaces(m[1]) },
+    { regex: /\b(CTA(?:\s+EB| En Banc)?\s+No\.?\s*[\w.-]+)\b/i, value: (m) => compactSpaces(m[1]) },
     { regex: /\b(G\.R\.\s*No\.?\s*[\w.-]+)\b/i, value: (m) => compactSpaces(m[1]) },
     { regex: /\b(CA-G\.R\.\s*[\w.-]+)\b/i, value: (m) => compactSpaces(m[1]) }
   ];
@@ -786,13 +971,6 @@ export function buildShortSubject(doc = {}) {
 
   if (!subject) {
     subject = stripFolderPrefixes(stripFileExtension(rawPath)) || "Untitled Source";
-  }
-
-  if (
-    authorityTypeOf(doc) === "STATUTE" &&
-    /^(ra no\.?\s*\d+|republic act no\.?\s*\d+)$/i.test(subject)
-  ) {
-    return "";
   }
 
   return trimText(subject, 240);
@@ -938,6 +1116,10 @@ function toVisibleSourceEntry(doc = {}, issueClassification = null) {
     is_weak_authority: isWeakAuthority(doc),
     isWeakAuthority: isWeakAuthority(doc),
 
+    masterPromptAuthorityHierarchyApplied: true,
+    courtAuthorityNotSubordinatedToBIRIssuances: true,
+    rawFullTextHidden: true,
+
     score:
       Number(
         doc.finalScore ||
@@ -964,13 +1146,15 @@ function sourceScore(doc = {}, issueClassification = null) {
     ) || 0;
 
   const precedence = controllingPrecedenceOf(doc);
-  const controlBonus = isControllingAuthority(doc) ? 35 : 0;
+  const controlBonus = isControllingAuthority(doc) ? 45 : 0;
+  const courtBonus = isCourtAuthority(doc) ? 35 : 0;
+  const statutoryBonus = isStatutoryAuthority(doc) ? 35 : 0;
   const targetBonus = docTargetAuthorityMatched(doc, issueClassification) ? 60 : 0;
   const domainMatch = docDomainMatched(doc, issueClassification);
   const domainBonus = domainMatch === true ? 45 : domainMatch === false ? -35 : 0;
   const issueMatch = docIssueClassificationMatched(doc);
   const issueBonus = issueMatch === true ? 55 : issueMatch === false ? -120 : 0;
-  const weakPenalty = isWeakAuthority(doc) ? -70 : 0;
+  const weakPenalty = isWeakAuthority(doc) ? -90 : 0;
   const exactBonus = inferIssuanceNumber(doc) ? 20 : 0;
   const mismatchPenalty =
     doc.issueMismatch === true || doc.issueClassificationMatch?.issueMismatch === true ? -150 : 0;
@@ -978,6 +1162,8 @@ function sourceScore(doc = {}, issueClassification = null) {
   return (
     base +
     controlBonus +
+    courtBonus +
+    statutoryBonus +
     targetBonus +
     domainBonus +
     issueBonus +
@@ -1042,14 +1228,15 @@ export function filterVisibleSources(
   );
 
   for (const doc of issueMatchedDocs) {
-    if (shouldHideSource(doc)) continue;
+    if (shouldHideSource(doc, issueClassification)) continue;
 
     const replacement = findReplacementForDocument(doc, supersessionResult);
     const sourceToUse = replacement || doc;
 
-    if (shouldHideSource(sourceToUse)) continue;
+    if (shouldHideSource(sourceToUse, issueClassification)) continue;
     if (sourceToUse.issueMismatch === true) continue;
     if (sourceToUse.issueClassificationMatch?.issueMismatch === true) continue;
+    if (isWeakAuthority(sourceToUse) && !isReviewMode(issueClassification)) continue;
     if (requireCited && !isCitedOrUsed(sourceToUse, citedSourceKeys)) continue;
 
     visible.push(toVisibleSourceEntry(sourceToUse, issueClassification));
@@ -1119,17 +1306,17 @@ function inferConfidenceLevel({
 
   const bestPrecedence = Math.min(...issueMatchedDocs.map((doc) => controllingPrecedenceOf(doc)));
   const hasStatute = issueMatchedDocs.some((doc) => isStatutoryAuthority(doc));
-  const hasSupremeCourt = issueMatchedDocs.some((doc) => authorityTypeOf(doc) === "SUPREME_COURT");
+  const hasCourt = issueMatchedDocs.some((doc) => isCourtAuthority(doc));
   const hasTargetAuthority = issueMatchedDocs.some((doc) =>
     docTargetAuthorityMatched(doc, issueClassification)
   );
   const hasDomainMatch = issueMatchedDocs.some((doc) => docDomainMatched(doc, issueClassification) === true);
 
-  if (hierarchyConflict?.conflict) return bestPrecedence <= 9 ? "MEDIUM" : "LOW";
-  if (supersessionResult?.superseded?.length) return bestPrecedence <= 9 ? "MEDIUM" : "LOW";
-  if (hasStatute && hasSupremeCourt && hasTargetAuthority && hasDomainMatch) return "HIGH";
+  if (hierarchyConflict?.conflict) return bestPrecedence <= 7 ? "MEDIUM" : "LOW";
+  if (supersessionResult?.superseded?.length) return bestPrecedence <= 7 ? "MEDIUM" : "LOW";
+  if (hasStatute && hasCourt && hasTargetAuthority && hasDomainMatch) return "HIGH";
   if (bestPrecedence <= 3 && hasTargetAuthority && hasDomainMatch) return "HIGH";
-  if (bestPrecedence <= 6) return "MEDIUM";
+  if (bestPrecedence <= 7) return "MEDIUM";
   if (bestPrecedence <= 12) return "LIMITED";
 
   return "LOW";
@@ -1177,9 +1364,7 @@ export function buildFinalRoutePayload({
   return {
     answer,
     sources,
-
     authority_used: inferAuthorityUsed(resolvedLegalBasisDocs, sources),
-
     confidence_level: inferConfidenceLevel({
       legalBasisDocs: resolvedLegalBasisDocs,
       hierarchyConflict,
@@ -1187,9 +1372,7 @@ export function buildFinalRoutePayload({
       query,
       issueClassification
     }),
-
     supersession_audit: safeArray(supersessionResult?.auditTrail).slice(0, 10),
-
     source_visibility_metadata: {
       engineVersion: ENGINE_VERSION,
       issueClassificationAware: true,
@@ -1202,6 +1385,9 @@ export function buildFinalRoutePayload({
       compactVisibleSourcesOnly: true,
       rawFullTextHidden: true,
       contextOrchestrationCompatible: true,
+      masterPromptAuthorityHierarchyApplied: true,
+      courtAuthorityNotSubordinatedToBIRIssuances: true,
+      reviewerSourcesExcludedUnlessReviewMode: true,
       sourceCount: sources.length,
       primaryDomain: getPrimaryDomain(issueClassification) || null
     }
@@ -1226,7 +1412,10 @@ export function sourceVisibilityHealthCheck() {
     citedSourceFilteringReady: true,
     nonDuplicatedSourcesReady: true,
     compactVisibleSourcesOnly: true,
-    rawFullTextHidden: true
+    rawFullTextHidden: true,
+    masterPromptAuthorityHierarchyApplied: true,
+    courtAuthorityNotSubordinatedToBIRIssuances: true,
+    reviewerSourcesExcludedUnlessReviewMode: true
   };
 }
 
