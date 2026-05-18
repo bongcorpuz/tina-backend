@@ -3,17 +3,29 @@
 
 /**
  * TINA Ask Handler
- * Version: 7.2.0
+ * Version: 8.0.0
  *
- * TPM-conscious orchestration route controller.
+ * Role:
+ * - Route controller only
+ * - Slash command interceptor
+ * - Mode-state preserver
+ * - Retrieved-source preserver
+ * - Query-intent-aware dispatcher
  *
- * Correct flow:
+ * Correct normal RAG flow:
  * ask-handler.js
  * → query-intent-engine.js
  * → issue-classification-engine.js
  * → retrieval-engine.js
  * → rag-answer-handler.js
  * → context-orchestration-engine.js
+ *
+ * Boundary:
+ * - Does not perform legal reasoning
+ * - Does not rank sources
+ * - Does not render final answers
+ * - Does not assemble OpenAI prompts
+ * - Does not call OpenAI directly
  */
 
 import {
@@ -44,7 +56,7 @@ import * as QueryIntentEngine from "./query-intent-engine.js";
 import * as IssueClassificationEngine from "./issue-classification-engine.js";
 import * as RetrievalEngine from "./retrieval-engine.js";
 
-const ENGINE_VERSION = "7.2.0";
+const ENGINE_VERSION = "8.0.0";
 
 const EXIT_COMMANDS = ["/bye", "/exit", "/stop", "/quit", "/reset"];
 
@@ -53,16 +65,27 @@ const ALLOWED_HOOKS = [
   "/tax",
   "/review",
   "/quiz",
+  "/case",
+  "/source",
   "/diagnostic",
   "/progress",
-  "/feedback",
-  "/source"
+  "/feedback"
 ];
 
-const RAG_ROUTED_HOOKS = new Set([
+const NORMAL_RAG_ROUTED_HOOKS = new Set([
   "/ask",
-  "/tax",
-  "/review",
+  "/tax"
+]);
+
+const REVIEW_ROUTED_HOOKS = new Set([
+  "/review"
+]);
+
+const CASE_ROUTED_HOOKS = new Set([
+  "/case"
+]);
+
+const SOURCE_ROUTED_HOOKS = new Set([
   "/source"
 ]);
 
@@ -71,13 +94,24 @@ const SPECIAL_ASSESSMENT_HOOKS = new Set([
   "/diagnostic"
 ]);
 
+const RAG_ROUTED_HOOKS = new Set([
+  ...NORMAL_RAG_ROUTED_HOOKS,
+  ...REVIEW_ROUTED_HOOKS,
+  ...CASE_ROUTED_HOOKS,
+  ...SOURCE_ROUTED_HOOKS
+]);
+
 const DEFAULT_RETRIEVAL_LIMIT = 5;
 const SIMPLE_RETRIEVAL_LIMIT = 3;
 const SOURCE_MODE_RETRIEVAL_LIMIT = 8;
+const CASE_MODE_RETRIEVAL_LIMIT = 8;
+const REVIEW_MODE_RETRIEVAL_LIMIT = 6;
 const MAX_RETRIEVAL_LIMIT = 8;
 
 const MAX_SOURCE_TEXT_CHARS_SIMPLE = 1200;
 const MAX_SOURCE_TEXT_CHARS_STANDARD = 2200;
+const MAX_SOURCE_TEXT_CHARS_REVIEW_MODE = 2400;
+const MAX_SOURCE_TEXT_CHARS_CASE_MODE = 2600;
 const MAX_SOURCE_TEXT_CHARS_SOURCE_MODE = 2800;
 
 const QUERY_INTENT_TIMEOUT_MS = 8000;
@@ -101,8 +135,28 @@ function normalizeHookCommand(value = "") {
   return normalizeLower(value).split(/\s+/)[0] || "";
 }
 
+function isAllowedHook(hookCode = "") {
+  return ALLOWED_HOOKS.includes(normalizeLower(hookCode));
+}
+
+function isNormalRagHook(hookCode = "") {
+  return NORMAL_RAG_ROUTED_HOOKS.has(normalizeLower(hookCode));
+}
+
+function isReviewRoutedHook(hookCode = "") {
+  return REVIEW_ROUTED_HOOKS.has(normalizeLower(hookCode));
+}
+
+function isCaseRoutedHook(hookCode = "") {
+  return CASE_ROUTED_HOOKS.has(normalizeLower(hookCode));
+}
+
+function isSourceRoutedHook(hookCode = "") {
+  return SOURCE_ROUTED_HOOKS.has(normalizeLower(hookCode));
+}
+
 function isRagRoutedHook(hookCode = "") {
-  return RAG_ROUTED_HOOKS.has(String(hookCode || "").toLowerCase());
+  return RAG_ROUTED_HOOKS.has(normalizeLower(hookCode));
 }
 
 function safeObject(value) {
@@ -162,7 +216,23 @@ function getForcedHook(req) {
   if (!forced) return null;
 
   const normalized = normalizeLower(forced);
-  return ALLOWED_HOOKS.includes(normalized) ? normalized : null;
+  return isAllowedHook(normalized) ? normalized : null;
+}
+
+function detectExplicitSlashCommand(rawQuestion = "") {
+  const firstWord = normalizeHookCommand(rawQuestion);
+  return isAllowedHook(firstWord) ? firstWord : null;
+}
+
+function stripExplicitHook(rawQuestion = "", hookCode = "") {
+  const text = normalizeText(rawQuestion);
+  const hook = normalizeLower(hookCode);
+
+  if (!hook || normalizeHookCommand(text) !== hook) {
+    return text;
+  }
+
+  return text.slice(hook.length).trim();
 }
 
 function isSimpleDefinitionQuestion(question = "") {
@@ -171,7 +241,7 @@ function isSimpleDefinitionQuestion(question = "") {
   return (
     q.length <= 160 &&
     /^(what is|define|meaning of|ano ang|ano ibig sabihin ng)\b/i.test(q) &&
-    !/\b(analyze|risk|audit|contract|jurisprudence|doctrine|conflict|case|legal consequence|assessment|substance|evidence|compare|reconcile|compute|calculate)\b/i.test(q)
+    !/\b(analyze|risk|audit|contract|jurisprudence|doctrine|conflict|case|legal consequence|assessment|substance|evidence|compare|reconcile|compute|calculate|explain|discuss|review|quiz|source)\b/i.test(q)
   );
 }
 
@@ -187,80 +257,109 @@ function buildHardcodedHookConfig(hookCode = "/ask") {
       hook_code: "/ask",
       mode: "ASK",
       title: "Default TINA Assistant",
+      routeKind: "NORMAL_RAG",
       requires_retrieval: true,
       requires_memory: true,
       requires_feedback: false,
-      adaptiveResponseMode: "STANDARD"
+      adaptiveResponseMode: "STANDARD",
+      orchestrationMode: "STANDARD_TAX"
     },
 
     "/tax": {
       hook_code: "/tax",
       mode: "TAX_EXPERT",
       title: "Big 4 Tax Expert Mode",
+      routeKind: "NORMAL_RAG",
       requires_retrieval: true,
       requires_memory: true,
       requires_feedback: false,
-      adaptiveResponseMode: "TECHNICAL"
+      adaptiveResponseMode: "TECHNICAL",
+      orchestrationMode: "LEGAL_ANALYSIS"
     },
 
     "/review": {
       hook_code: "/review",
       mode: "TAX_REVIEWER",
       title: "CPALE Tax Reviewer Mode",
+      routeKind: "REVIEWER_RAG",
       requires_retrieval: true,
       requires_memory: true,
       requires_feedback: false,
-      adaptiveResponseMode: "REVIEWER"
+      adaptiveResponseMode: "REVIEWER",
+      orchestrationMode: "REVIEWER"
     },
 
     "/quiz": {
       hook_code: "/quiz",
       mode: "QUIZ_MASTER",
       title: "Tax Quiz Mode",
+      routeKind: "ASSESSMENT",
       requires_retrieval: false,
       requires_memory: true,
       requires_feedback: false,
-      adaptiveResponseMode: "REVIEWER"
+      adaptiveResponseMode: "QUIZ",
+      orchestrationMode: "QUIZ"
     },
 
-    "/diagnostic": {
-      hook_code: "/diagnostic",
-      mode: "ADAPTIVE_QUIZ",
-      title: "Adaptive CPALE Diagnostic Quiz",
-      requires_retrieval: false,
+    "/case": {
+      hook_code: "/case",
+      mode: "CASE_ANALYSIS",
+      title: "Jurisprudence and Case Analysis Mode",
+      routeKind: "CASE_RAG",
+      requires_retrieval: true,
       requires_memory: true,
       requires_feedback: false,
-      adaptiveResponseMode: "REVIEWER"
-    },
-
-    "/progress": {
-      hook_code: "/progress",
-      mode: "LEARNING_PROGRESS",
-      title: "Learning Progress Tracker",
-      requires_retrieval: false,
-      requires_memory: true,
-      requires_feedback: false,
-      adaptiveResponseMode: "STANDARD"
-    },
-
-    "/feedback": {
-      hook_code: "/feedback",
-      mode: "FEEDBACK",
-      title: "Feedback Mode",
-      requires_retrieval: false,
-      requires_memory: true,
-      requires_feedback: true,
-      adaptiveResponseMode: "STANDARD"
+      adaptiveResponseMode: "CASE_ANALYSIS",
+      orchestrationMode: "CASE_ANALYSIS"
     },
 
     "/source": {
       hook_code: "/source",
       mode: "SOURCE_FINDER",
       title: "Source Finder Mode",
+      routeKind: "SOURCE_RAG",
       requires_retrieval: true,
       requires_memory: false,
       requires_feedback: false,
-      adaptiveResponseMode: "STANDARD"
+      adaptiveResponseMode: "SOURCE",
+      orchestrationMode: "SOURCE_LOOKUP",
+      forceSourceVisibility: true
+    },
+
+    "/diagnostic": {
+      hook_code: "/diagnostic",
+      mode: "ADAPTIVE_QUIZ",
+      title: "Adaptive CPALE Diagnostic Quiz",
+      routeKind: "ASSESSMENT",
+      requires_retrieval: false,
+      requires_memory: true,
+      requires_feedback: false,
+      adaptiveResponseMode: "QUIZ",
+      orchestrationMode: "QUIZ"
+    },
+
+    "/progress": {
+      hook_code: "/progress",
+      mode: "LEARNING_PROGRESS",
+      title: "Learning Progress Tracker",
+      routeKind: "UTILITY",
+      requires_retrieval: false,
+      requires_memory: true,
+      requires_feedback: false,
+      adaptiveResponseMode: "STANDARD",
+      orchestrationMode: "UTILITY"
+    },
+
+    "/feedback": {
+      hook_code: "/feedback",
+      mode: "FEEDBACK",
+      title: "Feedback Mode",
+      routeKind: "FEEDBACK",
+      requires_retrieval: false,
+      requires_memory: true,
+      requires_feedback: true,
+      adaptiveResponseMode: "STANDARD",
+      orchestrationMode: "UTILITY"
     }
   };
 
@@ -301,13 +400,17 @@ function buildCompactHookConfig(hookConfig = {}) {
     hook_code: hookConfig.hook_code || "/ask",
     mode: hookConfig.mode || "ASK",
     title: hookConfig.title || "Default TINA Assistant",
+    routeKind: hookConfig.routeKind || "NORMAL_RAG",
     requires_retrieval: Boolean(hookConfig.requires_retrieval),
     requires_memory: Boolean(hookConfig.requires_memory),
     requires_feedback: Boolean(hookConfig.requires_feedback),
     adaptiveResponseMode: hookConfig.adaptiveResponseMode || "STANDARD",
+    orchestrationMode: hookConfig.orchestrationMode || "STANDARD_TAX",
+    forceSourceVisibility: Boolean(hookConfig.forceSourceVisibility),
     cleanQuestion: hookConfig.cleanQuestion || "",
     originalQuestion: hookConfig.originalQuestion || "",
     forcedHookApplied: Boolean(hookConfig.forcedHookApplied),
+    explicitSlashCommandApplied: Boolean(hookConfig.explicitSlashCommandApplied),
     engineVersion: ENGINE_VERSION
   };
 }
@@ -318,23 +421,17 @@ async function loadTaxHookConfig({
   forcedHook = null
 }) {
   const text = normalizeText(rawQuestion);
+  const explicitHook = detectExplicitSlashCommand(text);
 
   let hookCode = "/ask";
   let cleanQuestion = text;
 
-  if (forcedHook && ALLOWED_HOOKS.includes(forcedHook)) {
+  if (forcedHook && isAllowedHook(forcedHook)) {
     hookCode = forcedHook;
-
-    if (normalizeHookCommand(text) === forcedHook) {
-      cleanQuestion = text.slice(forcedHook.length).trim();
-    }
-  } else {
-    const firstWord = normalizeHookCommand(text);
-
-    if (ALLOWED_HOOKS.includes(firstWord)) {
-      hookCode = firstWord;
-      cleanQuestion = text.slice(firstWord.length).trim();
-    }
+    cleanQuestion = stripExplicitHook(text, forcedHook);
+  } else if (explicitHook) {
+    hookCode = explicitHook;
+    cleanQuestion = stripExplicitHook(text, explicitHook);
   }
 
   const fallbackConfig = buildHardcodedHookConfig(hookCode);
@@ -356,7 +453,8 @@ async function loadTaxHookConfig({
         ...fallbackConfig,
         hook_code: fallbackConfig.hook_code,
         mode: fallbackConfig.mode,
-        requires_retrieval: isRagRoutedHook(fallbackConfig.hook_code),
+        routeKind: fallbackConfig.routeKind,
+        requires_retrieval: fallbackConfig.requires_retrieval,
         requires_memory: data.requires_memory ?? fallbackConfig.requires_memory,
         requires_feedback: data.requires_feedback ?? fallbackConfig.requires_feedback,
         title: data.title || fallbackConfig.title,
@@ -364,9 +462,18 @@ async function loadTaxHookConfig({
           data.adaptiveResponseMode ||
           data.adaptive_response_mode ||
           fallbackConfig.adaptiveResponseMode,
+        orchestrationMode:
+          data.orchestrationMode ||
+          data.orchestration_mode ||
+          fallbackConfig.orchestrationMode,
+        forceSourceVisibility:
+          fallbackConfig.forceSourceVisibility === true ||
+          data.forceSourceVisibility === true ||
+          data.force_source_visibility === true,
         cleanQuestion: cleanQuestion || text,
         originalQuestion: text,
         forcedHookApplied: Boolean(forcedHook),
+        explicitSlashCommandApplied: Boolean(explicitHook),
         engineVersion: ENGINE_VERSION
       };
     }
@@ -379,6 +486,7 @@ async function loadTaxHookConfig({
     cleanQuestion: cleanQuestion || text,
     originalQuestion: text,
     forcedHookApplied: Boolean(forcedHook),
+    explicitSlashCommandApplied: Boolean(explicitHook),
     engineVersion: ENGINE_VERSION
   };
 }
@@ -390,40 +498,45 @@ function buildAdaptiveContextForHook({
   contextOrchestrationEnabled = true
 }) {
   const mode = hookConfig.mode;
-
-  const responseModeByHook = {
-    ASK: "STANDARD",
-    TAX_EXPERT: "TECHNICAL",
-    TAX_REVIEWER: "REVIEWER",
-    SOURCE_FINDER: "STANDARD"
-  };
+  const hookCode = hookConfig.hook_code;
 
   const responseMode =
     hookConfig.adaptiveResponseMode ||
-    responseModeByHook[mode] ||
     "STANDARD";
+
+  const orchestrationMode =
+    hookConfig.orchestrationMode ||
+    "STANDARD_TAX";
 
   return {
     askHandlerVersion: ENGINE_VERSION,
 
-    activeHook: hookConfig.hook_code,
+    activeHook: hookCode,
     activeMode: mode,
+    routeKind: hookConfig.routeKind,
 
     existingMode: buildCompactExistingMode(existingMode),
     pendingQuiz: buildCompactPendingQuiz(pendingQuiz),
 
     adaptiveResponseMode: responseMode,
+    responseMode,
+    orchestrationMode,
 
     adaptiveMode: {
       primaryMode: mode,
       responseMode,
-      sourceMode: mode === "SOURCE_FINDER",
-      reviewerMode: mode === "TAX_REVIEWER",
-      taxExpertMode: mode === "TAX_EXPERT"
+      orchestrationMode,
+      sourceMode: hookCode === "/source",
+      reviewerMode: hookCode === "/review",
+      quizMode: hookCode === "/quiz",
+      caseMode: hookCode === "/case",
+      taxExpertMode: hookCode === "/tax",
+      normalAskMode: hookCode === "/ask"
     },
 
     orchestration: {
       correctFlowEnabled: true,
+      explicitSlashCommandInterception: true,
       queryIntentFirst: true,
       issueClassificationSecond: true,
       retrievalThird: true,
@@ -436,18 +549,30 @@ function buildAdaptiveContextForHook({
 
     responsePlan: {
       responseMode,
+      orchestrationMode,
 
       responseDepth:
-        mode === "TAX_EXPERT"
+        hookCode === "/tax"
           ? "COMPREHENSIVE"
-          : mode === "SOURCE_FINDER"
+          : hookCode === "/source"
             ? "SOURCE_ONLY"
-            : "STANDARD",
+            : hookCode === "/review"
+              ? "REVIEWER"
+              : hookCode === "/case"
+                ? "CASE_ANALYSIS"
+                : "STANDARD",
 
-      mustUseRagPipeline: true,
+      mustUseRagPipeline: isRagRoutedHook(hookCode),
 
-      hookCode: hookConfig.hook_code,
+      hookCode,
       hookMode: mode,
+      routeKind: hookConfig.routeKind,
+
+      requiresQuizMode: hookCode === "/quiz",
+      requiresReviewMode: hookCode === "/review",
+      requiresSimpleDefinition: false,
+      requiresSourceVisibility: hookCode === "/source",
+      requiresCaseAnalysis: hookCode === "/case",
 
       sourceOrderingPolicy: {
         useIssueClassificationMatch: true,
@@ -485,9 +610,17 @@ function buildCompactOrchestrationMetadata(extra = {}) {
 
     orchestrationFirstArchitecture: true,
     routeControllerOnly: true,
+    slashCommandInterceptor: true,
+    modeStatePreserver: true,
+    retrievedSourcePreserver: true,
+    queryIntentAwareDispatcher: true,
+
     noDirectOpenAICall: true,
     noPromptAssembly: true,
     noTokenEstimation: true,
+    noLegalReasoningInsideAskHandler: true,
+    noSourceRankingInsideAskHandler: true,
+    noRenderingInsideAskHandler: true,
     noRawRetrievalPayloadInjection: true,
     noRawEngineObjectInjection: true,
 
@@ -504,6 +637,7 @@ function buildCompactOrchestrationMetadata(extra = {}) {
 
     routeHook: extra.routeHook || null,
     routeMode: extra.routeMode || null,
+    routeKind: extra.routeKind || null,
     retrievalSourceCount: Number(extra.retrievalSourceCount || 0)
   };
 }
@@ -533,6 +667,95 @@ function findFunction(moduleObject = {}, candidateNames = []) {
   return null;
 }
 
+async function invokeFlexible(fn, positionalValue, objectValue) {
+  try {
+    return await fn(positionalValue, objectValue);
+  } catch (firstError) {
+    try {
+      return await fn(objectValue);
+    } catch {
+      throw firstError;
+    }
+  }
+}
+
+function normalizeQueryIntentForHook(queryIntent = {}, hookConfig = {}) {
+  const hookCode = hookConfig.hook_code;
+
+  const forced = {
+    responseMode:
+      hookCode === "/review"
+        ? "REVIEWER"
+        : hookCode === "/quiz"
+          ? "QUIZ"
+          : hookCode === "/case"
+            ? "CASE_ANALYSIS"
+            : hookCode === "/source"
+              ? "SOURCE"
+              : queryIntent.responseMode || hookConfig.adaptiveResponseMode || "STANDARD",
+
+    orchestrationMode:
+      hookCode === "/review"
+        ? "REVIEWER"
+        : hookCode === "/quiz"
+          ? "QUIZ"
+          : hookCode === "/case"
+            ? "CASE_ANALYSIS"
+            : hookCode === "/source"
+              ? "SOURCE_LOOKUP"
+              : queryIntent.orchestrationMode || hookConfig.orchestrationMode || "STANDARD_TAX",
+
+    requiresQuizMode:
+      hookCode === "/quiz" || Boolean(queryIntent.requiresQuizMode),
+
+    requiresReviewMode:
+      hookCode === "/review" || Boolean(queryIntent.requiresReviewMode),
+
+    requiresSimpleDefinition:
+      hookCode === "/ask" && Boolean(queryIntent.requiresSimpleDefinition),
+
+    requiresSourceVisibility:
+      hookCode === "/source" || Boolean(queryIntent.requiresSourceVisibility),
+
+    requiresCaseMode:
+      hookCode === "/case" || Boolean(queryIntent.requiresCaseMode),
+
+    isNaturalConversation:
+      Boolean(queryIntent.isNaturalConversation),
+
+    isFollowUp:
+      Boolean(queryIntent.isFollowUp)
+  };
+
+  return {
+    ...safeObject(queryIntent),
+    ...forced,
+
+    commandMode:
+      queryIntent.commandMode ||
+      (
+        hookCode === "/review"
+          ? "REVIEW"
+          : hookCode === "/quiz"
+            ? "QUIZ"
+            : hookCode === "/case"
+              ? "CASE"
+              : hookCode === "/source"
+                ? "SOURCE"
+                : "ASK"
+      ),
+
+    primaryCommand:
+      queryIntent.primaryCommand ||
+      hookCode.replace("/", ""),
+
+    detectedCommands:
+      safeArray(queryIntent.detectedCommands).length
+        ? queryIntent.detectedCommands
+        : [hookCode.replace("/", "")]
+  };
+}
+
 async function runQueryIntentEngine({
   question,
   hookConfig,
@@ -548,8 +771,10 @@ async function runQueryIntentEngine({
   ]);
 
   if (!fn) {
-    return {
-      intent: "GENERAL_TAX_QUERY",
+    return normalizeQueryIntentForHook({
+      rawQuery: question,
+      normalizedQuery: question,
+      intentType: "GENERAL_TAX_QUERY",
       requiresSimpleDefinition: isSimpleDefinitionQuestion(question),
       requiresLegalAnalysis:
         hookConfig.mode === "TAX_EXPERT" ||
@@ -557,28 +782,36 @@ async function runQueryIntentEngine({
       routeHook: hookConfig.hook_code,
       routeMode: hookConfig.mode,
       fallbackIntentUsed: true
-    };
+    }, hookConfig);
   }
 
   try {
     const result = await withTimeout(
-      fn({
+      invokeFlexible(
+        fn,
         question,
-        query: question,
-        userQuery: question,
-        hookConfig,
-        adaptiveContext
-      }),
+        {
+          question,
+          query: question,
+          userQuery: question,
+          hookConfig,
+          adaptiveContext,
+          forcedHook: hookConfig.hook_code,
+          command: hookConfig.hook_code
+        }
+      ),
       QUERY_INTENT_TIMEOUT_MS,
       "Query intent engine"
     );
 
-    return safeObject(result);
+    return normalizeQueryIntentForHook(safeObject(result), hookConfig);
   } catch (error) {
     console.error("Query intent engine failed:", error.message);
 
-    return {
-      intent: "GENERAL_TAX_QUERY",
+    return normalizeQueryIntentForHook({
+      rawQuery: question,
+      normalizedQuery: question,
+      intentType: "GENERAL_TAX_QUERY",
       requiresSimpleDefinition: isSimpleDefinitionQuestion(question),
       requiresLegalAnalysis:
         hookConfig.mode === "TAX_EXPERT" ||
@@ -587,7 +820,7 @@ async function runQueryIntentEngine({
       routeMode: hookConfig.mode,
       fallbackIntentUsed: true,
       error: error.message
-    };
+    }, hookConfig);
   }
 }
 
@@ -603,63 +836,86 @@ function buildFallbackIssueClassification({
   let targetAuthorities = ["NIRC", "RR", "RMC"];
 
   if (/\bvat\b|value[-\s]?added tax/i.test(q)) {
-    primaryIssue = "VAT_LIABILITY";
+    primaryIssue = "VAT";
     subIssue = isSimpleDefinitionQuestion(question)
       ? "VAT_DEFINITION"
       : "VAT_GENERAL_RULE";
-    targetAuthorities = ["NIRC", "RR"];
+    targetAuthorities = ["NIRC Secs. 105-108", "RR 16-2005"];
   } else if (/\bzero[-\s]?rated|zero rating|0%\s*vat/i.test(q)) {
-    primaryIssue = "VAT_LIABILITY";
+    primaryIssue = "VAT";
     subIssue = "VAT_ZERO_RATING";
-    targetAuthorities = ["NIRC", "RR", "RMC"];
+    targetAuthorities = ["NIRC", "RR", "RMC", "JURISPRUDENCE"];
   } else if (/\binput tax|input vat|refund|tax credit certificate|tcc\b/i.test(q)) {
-    primaryIssue = "VAT_LIABILITY";
+    primaryIssue = "VAT";
     subIssue = "VAT_INPUT_TAX_REFUND_CREDIT";
     targetAuthorities = ["NIRC", "RR", "RMC", "JURISPRUDENCE"];
   } else if (/\bwithholding|ewt|cwt|fwt\b/i.test(q)) {
-    primaryIssue = "WITHHOLDING";
+    primaryIssue = "WHT";
     subIssue = "WITHHOLDING_TAX";
     targetAuthorities = ["NIRC", "RR", "RMC"];
   } else if (/\bincome tax|rcit|mcit|nolco\b/i.test(q)) {
-    primaryIssue = "INCOME_TAX";
+    primaryIssue = "CIT";
     subIssue = "CORPORATE_INCOME_TAX";
     targetAuthorities = ["NIRC", "RR", "RMC"];
   } else if (/\bcapital gains tax|cgt|documentary stamp|dst\b/i.test(q)) {
-    primaryIssue = "PROPERTY_AND_TRANSFER_TAX";
+    primaryIssue = "CIT";
     subIssue = "CGT_DST";
     targetAuthorities = ["NIRC", "RR", "RMC"];
+  } else if (/\bcase|jurisprudence|supreme court|cta|g\.?\s*r\.?\s*no\b/i.test(q)) {
+    primaryIssue = "CASE_LAW";
+    subIssue = "JURISPRUDENCE_ANALYSIS";
+    targetAuthorities = ["SUPREME_COURT", "CTA_EN_BANC", "CTA_DIVISION"];
   }
 
   const simple = Boolean(
     queryIntent?.requiresSimpleDefinition ||
-      isSimpleDefinitionQuestion(question)
+    isSimpleDefinitionQuestion(question)
   );
 
   const complex = Boolean(
     queryIntent?.requiresLegalAnalysis ||
-      isComplexReasoningQuestion(question) ||
-      hookConfig.mode === "TAX_EXPERT"
+    queryIntent?.needsJurisprudence ||
+    queryIntent?.needsConflictAnalysis ||
+    queryIntent?.needsFactPatternAnalysis ||
+    isComplexReasoningQuestion(question) ||
+    hookConfig.mode === "TAX_EXPERT" ||
+    hookConfig.hook_code === "/case"
   );
 
   return {
     primaryIssue,
     subIssue,
-    retrievalStrategy: simple
-      ? "FAST_DEFINITION_PRIMARY_AUTHORITY"
-      : complex
-        ? "ISSUE_AUTHORITY_HIERARCHY_WITH_JURISPRUDENCE"
-        : "ISSUE_AUTHORITY_HIERARCHY_SEMANTIC",
+    retrievalStrategy:
+      hookConfig.hook_code === "/source"
+        ? "SOURCE_FINDER_AUTHORITY_FIRST"
+        : hookConfig.hook_code === "/case"
+          ? "JURISPRUDENCE_CASE_AUTHORITY_FIRST"
+          : simple
+            ? "FAST_DEFINITION_PRIMARY_AUTHORITY"
+            : complex
+              ? "ISSUE_AUTHORITY_HIERARCHY_WITH_JURISPRUDENCE"
+              : "ISSUE_AUTHORITY_HIERARCHY_SEMANTIC",
     targetAuthorities,
-    responseMode: simple
-      ? "FAST_DEFINITION"
-      : complex
-        ? "LEGAL_ANALYSIS"
-        : "STANDARD_TAX",
-    orchestrationMode: simple
-      ? "FAST_DEFINITION"
-      : complex
-        ? "LEGAL_ANALYSIS"
-        : "STANDARD_TAX",
+    responseMode:
+      queryIntent.responseMode ||
+      hookConfig.adaptiveResponseMode ||
+      (
+        simple
+          ? "SIMPLE_DEFINITION"
+          : complex
+            ? "LEGAL_ANALYSIS"
+            : "STANDARD"
+      ),
+    orchestrationMode:
+      queryIntent.orchestrationMode ||
+      hookConfig.orchestrationMode ||
+      (
+        simple
+          ? "FAST_DEFINITION"
+          : complex
+            ? "LEGAL_ANALYSIS"
+            : "STANDARD_TAX"
+      ),
     complexity: simple ? "simple" : complex ? "complex" : "standard",
     fallbackClassificationUsed: true
   };
@@ -683,6 +939,7 @@ function normalizeIssueClassificationResult(result = {}, fallbackInput = {}) {
       source.primaryIssue ||
       source.primary_issue ||
       source.domain ||
+      source.domainCode ||
       fallback.primaryIssue,
 
     subIssue:
@@ -745,15 +1002,19 @@ async function runIssueClassificationEngine({
 
   try {
     const result = await withTimeout(
-      fn({
+      invokeFlexible(
+        fn,
         question,
-        query: question,
-        userQuery: question,
-        queryIntent,
-        intent: queryIntent,
-        hookConfig,
-        adaptiveContext
-      }),
+        {
+          question,
+          query: question,
+          userQuery: question,
+          queryIntent,
+          intent: queryIntent,
+          hookConfig,
+          adaptiveContext
+        }
+      ),
       ISSUE_CLASSIFICATION_TIMEOUT_MS,
       "Issue classification engine"
     );
@@ -780,17 +1041,27 @@ async function runIssueClassificationEngine({
 function getSourceTextLimit({
   question,
   hookConfig,
-  issueClassification
+  issueClassification,
+  queryIntent
 }) {
   if (
     issueClassification?.orchestrationMode === "FAST_DEFINITION" ||
+    queryIntent?.requiresSimpleDefinition ||
     isSimpleDefinitionQuestion(question)
   ) {
     return MAX_SOURCE_TEXT_CHARS_SIMPLE;
   }
 
-  if (hookConfig?.mode === "SOURCE_FINDER") {
+  if (hookConfig?.hook_code === "/source" || hookConfig?.mode === "SOURCE_FINDER") {
     return MAX_SOURCE_TEXT_CHARS_SOURCE_MODE;
+  }
+
+  if (hookConfig?.hook_code === "/case" || hookConfig?.mode === "CASE_ANALYSIS") {
+    return MAX_SOURCE_TEXT_CHARS_CASE_MODE;
+  }
+
+  if (hookConfig?.hook_code === "/review" || hookConfig?.mode === "TAX_REVIEWER") {
+    return MAX_SOURCE_TEXT_CHARS_REVIEW_MODE;
   }
 
   return MAX_SOURCE_TEXT_CHARS_STANDARD;
@@ -801,7 +1072,8 @@ function normalizeRetrievedSources(
   {
     question = "",
     hookConfig = {},
-    issueClassification = {}
+    issueClassification = {},
+    queryIntent = {}
   } = {}
 ) {
   const raw =
@@ -816,7 +1088,8 @@ function normalizeRetrievedSources(
   const textLimit = getSourceTextLimit({
     question,
     hookConfig,
-    issueClassification
+    issueClassification,
+    queryIntent
   });
 
   const normalized = safeArray(raw)
@@ -833,6 +1106,8 @@ function normalizeRetrievedSources(
         "";
 
       return {
+        ...safeObject(source),
+
         title:
           source.title ||
           source.sourceTitle ||
@@ -949,6 +1224,35 @@ function normalizeRetrievedSources(
   return deduped.slice(0, MAX_RETRIEVAL_LIMIT);
 }
 
+function resolveRetrievalLimit({
+  question,
+  hookConfig,
+  issueClassification,
+  queryIntent
+}) {
+  if (hookConfig?.hook_code === "/source") {
+    return SOURCE_MODE_RETRIEVAL_LIMIT;
+  }
+
+  if (hookConfig?.hook_code === "/case") {
+    return CASE_MODE_RETRIEVAL_LIMIT;
+  }
+
+  if (hookConfig?.hook_code === "/review") {
+    return REVIEW_MODE_RETRIEVAL_LIMIT;
+  }
+
+  if (
+    issueClassification?.orchestrationMode === "FAST_DEFINITION" ||
+    queryIntent?.requiresSimpleDefinition ||
+    isSimpleDefinitionQuestion(question)
+  ) {
+    return SIMPLE_RETRIEVAL_LIMIT;
+  }
+
+  return DEFAULT_RETRIEVAL_LIMIT;
+}
+
 async function runRetrievalEngine({
   question,
   queryIntent,
@@ -977,47 +1281,76 @@ async function runRetrievalEngine({
     };
   }
 
-  const limit =
-    hookConfig?.mode === "SOURCE_FINDER"
-      ? SOURCE_MODE_RETRIEVAL_LIMIT
-      : issueClassification?.orchestrationMode === "FAST_DEFINITION" ||
-          queryIntent?.requiresSimpleDefinition ||
-          isSimpleDefinitionQuestion(question)
-        ? SIMPLE_RETRIEVAL_LIMIT
-        : DEFAULT_RETRIEVAL_LIMIT;
+  const limit = resolveRetrievalLimit({
+    question,
+    hookConfig,
+    issueClassification,
+    queryIntent
+  });
 
   try {
     const result = await withTimeout(
-      fn({
+      invokeFlexible(
+        fn,
         question,
-        query: question,
-        userQuery: question,
-        intent: queryIntent,
-        queryIntent,
-        issueClassification,
-        primaryIssue: issueClassification.primaryIssue,
-        subIssue: issueClassification.subIssue,
-        retrievalStrategy: issueClassification.retrievalStrategy,
-        targetAuthorities: issueClassification.targetAuthorities,
-        hookConfig,
-        adaptiveContext,
-        supabase,
-        limit,
-        maxResults: limit,
-        maxSources: limit,
-        tpmConscious: true
-      }),
+        {
+          question,
+          query: question,
+          userQuery: question,
+
+          intent: queryIntent,
+          queryIntent,
+
+          issueClassification,
+          primaryIssue: issueClassification.primaryIssue,
+          subIssue: issueClassification.subIssue,
+          retrievalStrategy: issueClassification.retrievalStrategy,
+          targetAuthorities: issueClassification.targetAuthorities,
+
+          responseMode: queryIntent.responseMode,
+          orchestrationMode: queryIntent.orchestrationMode,
+          requiresQuizMode: queryIntent.requiresQuizMode,
+          requiresReviewMode: queryIntent.requiresReviewMode,
+          requiresSimpleDefinition: queryIntent.requiresSimpleDefinition,
+          requiresSourceVisibility: queryIntent.requiresSourceVisibility,
+          isNaturalConversation: queryIntent.isNaturalConversation,
+          isFollowUp: queryIntent.isFollowUp,
+
+          hookConfig,
+          adaptiveContext,
+          supabase,
+
+          forceSourceVisibility:
+            hookConfig.forceSourceVisibility === true ||
+            queryIntent.requiresSourceVisibility === true ||
+            hookConfig.hook_code === "/source",
+
+          caseMode:
+            hookConfig.hook_code === "/case",
+
+          reviewerMode:
+            hookConfig.hook_code === "/review",
+
+          limit,
+          maxResults: limit,
+          maxSources: limit,
+          tpmConscious: true
+        }
+      ),
       RETRIEVAL_TIMEOUT_MS,
       "Retrieval engine"
     );
 
+    const retrievedSources = normalizeRetrievedSources(result, {
+      question,
+      hookConfig,
+      issueClassification,
+      queryIntent
+    });
+
     return {
       ...safeObject(result),
-      retrievedSources: normalizeRetrievedSources(result, {
-        question,
-        hookConfig,
-        issueClassification
-      }),
+      retrievedSources,
       retrievalLimit: limit,
       retrievalEngineCalled: true
     };
@@ -1064,11 +1397,7 @@ async function buildRagPipelineContext({
     supabase
   });
 
-  const retrievedSources = normalizeRetrievedSources(retrievalResult, {
-    question,
-    hookConfig,
-    issueClassification
-  });
+  const retrievedSources = safeArray(retrievalResult?.retrievedSources);
 
   return {
     queryIntent,
@@ -1078,6 +1407,61 @@ async function buildRagPipelineContext({
       retrievedSources
     },
     retrievedSources
+  };
+}
+
+function buildRagOrchestrationIntent({
+  queryIntent = {},
+  hookConfig = {},
+  pipeline = {}
+}) {
+  return {
+    ...safeObject(queryIntent),
+
+    routeHook: hookConfig.hook_code,
+    routeMode: hookConfig.mode,
+    routeKind: hookConfig.routeKind,
+
+    responseMode:
+      queryIntent.responseMode ||
+      hookConfig.adaptiveResponseMode ||
+      "STANDARD",
+
+    orchestrationMode:
+      queryIntent.orchestrationMode ||
+      hookConfig.orchestrationMode ||
+      "STANDARD_TAX",
+
+    requiresQuizMode:
+      hookConfig.hook_code === "/quiz" ||
+      Boolean(queryIntent.requiresQuizMode),
+
+    requiresReviewMode:
+      hookConfig.hook_code === "/review" ||
+      Boolean(queryIntent.requiresReviewMode),
+
+    requiresSimpleDefinition:
+      Boolean(queryIntent.requiresSimpleDefinition),
+
+    requiresSourceVisibility:
+      hookConfig.hook_code === "/source" ||
+      hookConfig.forceSourceVisibility === true ||
+      Boolean(queryIntent.requiresSourceVisibility),
+
+    requiresCaseMode:
+      hookConfig.hook_code === "/case" ||
+      Boolean(queryIntent.requiresCaseMode),
+
+    isNaturalConversation:
+      Boolean(queryIntent.isNaturalConversation),
+
+    isFollowUp:
+      Boolean(queryIntent.isFollowUp),
+
+    retrievedSourceCount:
+      safeArray(pipeline.retrievedSources).length,
+
+    tpmConscious: true
   };
 }
 
@@ -1256,6 +1640,10 @@ export function createAskHandler({
       answerText = "Quiz mode ended. You are now back in normal /ask mode.";
     } else if (activeHook === "/review") {
       answerText = "Review mode ended. You are now back in normal /ask mode.";
+    } else if (activeHook === "/case") {
+      answerText = "Case analysis mode ended. You are now back in normal /ask mode.";
+    } else if (activeHook === "/source") {
+      answerText = "Source finder mode ended. You are now back in normal /ask mode.";
     } else if (activeHook === "/diagnostic") {
       answerText = "Diagnostic mode ended. You are now back in normal /ask mode.";
     } else if (activeHook !== "/ask") {
@@ -1294,24 +1682,53 @@ export function createAskHandler({
       supabase
     });
 
+    const preservedRetrievedSources = safeArray(pipeline.retrievedSources);
+
+    const orchestrationIntent = buildRagOrchestrationIntent({
+      queryIntent: pipeline.queryIntent,
+      hookConfig,
+      pipeline: {
+        ...pipeline,
+        retrievedSources: preservedRetrievedSources
+      }
+    });
+
     const ragInput = {
       question,
-      retrievedSources: pipeline.retrievedSources,
-      retrievalResult: pipeline.retrievalResult,
+
+      retrievedSources: preservedRetrievedSources,
+      sources: preservedRetrievedSources,
+      retrievalResult: {
+        ...safeObject(pipeline.retrievalResult),
+        retrievedSources: preservedRetrievedSources
+      },
+
       conversationHistory: [],
+
       issueClassification: pipeline.issueClassification,
       queryIntent: pipeline.queryIntent,
 
-      orchestrationIntent: {
-        ...safeObject(pipeline.queryIntent),
-        routeHook: hookConfig.hook_code,
-        routeMode: hookConfig.mode,
-        responseMode: hookConfig.adaptiveResponseMode || null,
-        tpmConscious: true
-      },
+      responseMode: orchestrationIntent.responseMode,
+      orchestrationMode: orchestrationIntent.orchestrationMode,
+      requiresQuizMode: orchestrationIntent.requiresQuizMode,
+      requiresReviewMode: orchestrationIntent.requiresReviewMode,
+      requiresSimpleDefinition: orchestrationIntent.requiresSimpleDefinition,
+      requiresSourceVisibility: orchestrationIntent.requiresSourceVisibility,
+      isNaturalConversation: orchestrationIntent.isNaturalConversation,
+      isFollowUp: orchestrationIntent.isFollowUp,
+
+      orchestrationIntent,
 
       adaptiveContext: {
         ...safeObject(adaptiveContext),
+        responseMode: orchestrationIntent.responseMode,
+        orchestrationMode: orchestrationIntent.orchestrationMode,
+        requiresQuizMode: orchestrationIntent.requiresQuizMode,
+        requiresReviewMode: orchestrationIntent.requiresReviewMode,
+        requiresSimpleDefinition: orchestrationIntent.requiresSimpleDefinition,
+        requiresSourceVisibility: orchestrationIntent.requiresSourceVisibility,
+        isNaturalConversation: orchestrationIntent.isNaturalConversation,
+        isFollowUp: orchestrationIntent.isFollowUp,
         issueClassification: pipeline.issueClassification,
         queryIntent: pipeline.queryIntent,
         retrievalMetadata: {
@@ -1319,7 +1736,8 @@ export function createAskHandler({
           retrievalLimit: pipeline.retrievalResult?.retrievalLimit || null,
           retrievalError: pipeline.retrievalResult?.retrievalError || null,
           retrievalEngineMissing: Boolean(pipeline.retrievalResult?.retrievalEngineMissing),
-          sourceCount: pipeline.retrievedSources.length
+          sourceCount: preservedRetrievedSources.length,
+          retrievedSourcesPreservedBeforeGenerateRagAnswer: true
         }
       },
 
@@ -1330,15 +1748,31 @@ export function createAskHandler({
         conversationId,
         hook: hookConfig.hook_code,
         mode: hookConfig.mode,
+        routeKind: hookConfig.routeKind,
+
         ...safeObject(orchestrationMetadata),
+
         queryIntentEngineCalled: true,
         issueClassificationEngineCalled: true,
         retrievalEngineCalled: true,
-        retrievalSourceCount: pipeline.retrievedSources.length,
+
+        retrievalSourceCount: preservedRetrievedSources.length,
+        retrievedSourcesPreservedBeforeGenerateRagAnswer: true,
+
         primaryIssue: pipeline.issueClassification.primaryIssue || null,
         subIssue: pipeline.issueClassification.subIssue || null,
         retrievalStrategy: pipeline.issueClassification.retrievalStrategy || null,
         targetAuthorities: pipeline.issueClassification.targetAuthorities || [],
+
+        responseMode: orchestrationIntent.responseMode,
+        orchestrationMode: orchestrationIntent.orchestrationMode,
+        requiresQuizMode: orchestrationIntent.requiresQuizMode,
+        requiresReviewMode: orchestrationIntent.requiresReviewMode,
+        requiresSimpleDefinition: orchestrationIntent.requiresSimpleDefinition,
+        requiresSourceVisibility: orchestrationIntent.requiresSourceVisibility,
+        isNaturalConversation: orchestrationIntent.isNaturalConversation,
+        isFollowUp: orchestrationIntent.isFollowUp,
+
         tpmConscious: true
       },
 
@@ -1376,26 +1810,47 @@ export function createAskHandler({
       version: ENGINE_VERSION,
       hook: hookConfig.hook_code,
       mode: hookConfig.mode,
+      routeKind: hookConfig.routeKind,
       hookTitle: hookConfig.title,
+
       answer: result.answer || "",
+
       sources: resultSources,
       sourcesUsed: resultSources,
       vectorMatches: resultSources.length,
+
+      retrievedSourceCount: preservedRetrievedSources.length,
+
       sourceStatus: resultSources.length
         ? "ISSUE_MATCHED_CONTEXT_USED"
-        : pipeline.retrievedSources.length
+        : preservedRetrievedSources.length
           ? "RETRIEVED_CONTEXT_USED_NO_VISIBLE_SOURCES"
           : "NO_VISIBLE_SOURCE",
+
+      responseMode: orchestrationIntent.responseMode,
+      orchestrationMode: orchestrationIntent.orchestrationMode,
+
       metadata: {
         ...safeObject(result.metadata),
+
         askHandlerVersion: ENGINE_VERSION,
+
         correctFlowEnabled: true,
+        explicitSlashCommandInterception: true,
+
         queryIntentEngineCalled: true,
         issueClassificationEngineCalled: true,
         retrievalEngineCalled: true,
-        retrievalSourceCount: pipeline.retrievedSources.length,
-        orchestrationFirstArchitecture: true,
+
+        retrievalSourceCount: preservedRetrievedSources.length,
+        retrievedSourcesPreservedBeforeGenerateRagAnswer: true,
+
         routeControllerOnly: true,
+        noLegalReasoningInsideAskHandler: true,
+        noSourceRankingInsideAskHandler: true,
+        noRenderingInsideAskHandler: true,
+
+        orchestrationFirstArchitecture: true,
         noDirectOpenAICall: true,
         noPromptAssembly: true,
         noTokenEstimation: true,
@@ -1465,6 +1920,7 @@ export function createAskHandler({
         return res.json(cleared);
       }
 
+      const explicitHook = detectExplicitSlashCommand(rawQuestion);
       const activeHook = existingMode?.active_hook || null;
       const hasActiveAssessmentMode = assessmentHandler.isAssessmentHook(activeHook);
 
@@ -1483,7 +1939,7 @@ export function createAskHandler({
 
       const quizAnswer = extractQuizAnswer(rawQuestion);
 
-      if (pendingQuiz && hasActiveAssessmentMode && quizAnswer) {
+      if (pendingQuiz && hasActiveAssessmentMode && quizAnswer && !explicitHook) {
         const loopResult =
           await assessmentHandler.continueAssessmentLoop({
             userId,
@@ -1496,7 +1952,7 @@ export function createAskHandler({
         }
       }
 
-      if (pendingQuiz && hasActiveAssessmentMode && !quizAnswer) {
+      if (pendingQuiz && hasActiveAssessmentMode && !quizAnswer && !explicitHook) {
         return res.json(
           assessmentHandler.buildAssessmentLockedResponse(activeHook)
         );
@@ -1506,6 +1962,7 @@ export function createAskHandler({
 
       if (
         !forcedHook &&
+        !explicitHook &&
         existingMode?.active_hook &&
         existingMode.active_hook !== "/ask" &&
         !isExplicitModeHook(rawQuestion)
@@ -1577,7 +2034,8 @@ export function createAskHandler({
       const orchestrationMetadata =
         buildCompactOrchestrationMetadata({
           routeHook: compactHookConfig.hook_code,
-          routeMode: compactHookConfig.mode
+          routeMode: compactHookConfig.mode,
+          routeKind: compactHookConfig.routeKind
         });
 
       return handleRagRoute({
@@ -1598,6 +2056,8 @@ export function createAskHandler({
         askHandlerVersion: ENGINE_VERSION,
         contextOrchestrationEnabled: true,
         orchestrationFirstArchitecture: true,
+        routeControllerOnly: true,
+        slashCommandInterceptor: true,
         tpmConscious: true
       });
     }
@@ -1609,26 +2069,54 @@ export function askHandlerHealthCheck() {
     ok: true,
     engine: "TINA_ASK_HANDLER",
     version: ENGINE_VERSION,
+
     correctFlowEnabled: true,
+
     flow: [
+      "slash-command-interception",
       "query-intent-engine.js",
       "issue-classification-engine.js",
       "retrieval-engine.js",
       "rag-answer-handler.js",
       "context-orchestration-engine.js"
     ],
+
+    allowedHooks: ALLOWED_HOOKS,
+    normalRagRoutedHooks: [...NORMAL_RAG_ROUTED_HOOKS],
+    reviewRoutedHooks: [...REVIEW_ROUTED_HOOKS],
+    caseRoutedHooks: [...CASE_ROUTED_HOOKS],
+    sourceRoutedHooks: [...SOURCE_ROUTED_HOOKS],
+    specialAssessmentHooks: [...SPECIAL_ASSESSMENT_HOOKS],
+
+    slashCommandInterceptionBeforeNormalRag: true,
+    quizSeparatedFromRag: true,
+    reviewSeparatedFromOrdinaryAFLegalFlow: true,
+    caseModeSupported: true,
+    sourceModeForcesSourceVisibility: true,
+
     orchestrationFirstArchitecture: true,
     routeControllerOnly: true,
+    modeStatePreserver: true,
+    retrievedSourcePreserver: true,
+    queryIntentAwareDispatcher: true,
+
     noDirectOpenAICall: true,
     noPromptAssembly: true,
     noTokenEstimation: true,
+    noLegalReasoningInsideAskHandler: true,
+    noSourceRankingInsideAskHandler: true,
+    noRenderingInsideAskHandler: true,
     noRawRetrievalPayloadInjection: true,
     noRawEngineObjectInjection: true,
+
     retrievalBeforeRag: true,
-    emptySourcesBugFixed: true,
+    retrievedSourcesPreservedBeforeGenerateRagAnswer: true,
+    queryIntentModeFlagsPassedToRag: true,
+
     timeoutProtected: true,
     tpmConscious: true,
     compactSourcesOnly: true,
+
     adaptiveCompatible: true,
     assessmentCompatible: true,
     ragCompatible: true,
