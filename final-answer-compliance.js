@@ -2284,5 +2284,3 @@ export default {
   preserveSystemFallbackAnswer,
   normalizeMode
 };
-
-  const type = authorityTypeOf(source);
