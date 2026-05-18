@@ -1,6 +1,23 @@
 // FILE: authority-utils.js
 "use strict";
 
+/**
+ * TINA Authority Utilities
+ * Version: 3.2.0
+ *
+ * Constitutional role:
+ * - Classify authority type from document metadata, file path, filename, and text.
+ * - Normalize legal references.
+ * - Build compact authority metadata.
+ * - Preserve Master Prompt hierarchy from authority-constants.js.
+ *
+ * This file must NOT:
+ * - retrieve sources,
+ * - call OpenAI,
+ * - render final answers,
+ * - fabricate authorities.
+ */
+
 import {
   ENGINE_VERSION,
   AUTHORITY_LEVEL,
@@ -22,7 +39,7 @@ export function lower(value = "") {
 }
 
 function safeArray(value) {
-  return Array.isArray(value) ? value : [];
+  return Array.isArray(value) ? value.filter(Boolean) : [];
 }
 
 function basename(value = "") {
@@ -44,11 +61,17 @@ function normalizeYear(year = "") {
   return raw;
 }
 
+function unique(values = []) {
+  return [...new Set(safeArray(values))];
+}
+
 export function getDocPath(doc = {}) {
   return (
     doc.path ||
     doc.source_path ||
     doc.metadata?.path ||
+    doc.metadata?.sourcePath ||
+    doc.metadata?.source_path ||
     doc.originalSource ||
     doc.original_source ||
     doc.metadata?.originalSource ||
@@ -65,6 +88,7 @@ export function getDocSource(doc = {}) {
     doc.original_source ||
     doc.metadata?.originalSource ||
     doc.metadata?.originalFileName ||
+    doc.metadata?.documentTitle ||
     doc.title ||
     basename(getDocPath(doc)) ||
     "Unknown source"
@@ -76,6 +100,7 @@ export function getDocNormalizedReference(doc = {}) {
     doc.normalizedReference ||
     doc.normalized_reference ||
     doc.metadata?.normalizedReference ||
+    doc.metadata?.normalized_reference ||
     ""
   );
 }
@@ -84,7 +109,8 @@ export function getDocAliases(doc = {}) {
   return [
     ...safeArray(doc.normalizedAliases),
     ...safeArray(doc.normalized_aliases),
-    ...safeArray(doc.metadata?.normalizedAliases)
+    ...safeArray(doc.metadata?.normalizedAliases),
+    ...safeArray(doc.metadata?.normalized_aliases)
   ].filter(Boolean);
 }
 
@@ -98,6 +124,7 @@ function buildAuthorityBlob(doc = {}) {
       doc.authorityType,
       doc.authority_type,
       doc.metadata?.authorityType,
+      doc.metadata?.sourceType,
       doc.text,
       doc.content,
       doc.excerpt,
@@ -120,19 +147,48 @@ function isSecondaryMaterial(path = "", fileName = "") {
     p.includes("working_papers") ||
     f.includes("reviewer") ||
     f.includes("lecture") ||
-    f.includes("notes") ||
     f.includes("handout") ||
     f.includes("working paper")
   );
 }
 
+function getGoogleDriveFolderAuthority(path = "", fileName = "") {
+  const blob = lower(`${path} ${fileName}`);
+
+  if (blob.includes("01_tax_code")) return "STATUTE";
+  if (blob.includes("02_revenue_regulations")) return "RR";
+  if (blob.includes("03_rmc")) return "RMC";
+  if (blob.includes("04_rmo")) return "RMO";
+  if (blob.includes("05_bir_rulings")) return "BIR_RULING";
+  if (blob.includes("06_court_cases")) return null;
+  if (blob.includes("07_cpa_notes")) return "SECONDARY";
+  if (blob.includes("08_review_materials")) return "SECONDARY";
+
+  return null;
+}
+
 function detectCourtType(text = "") {
   const raw = compactSpaces(text);
 
-  if (/\bcta\s+en\s+banc\b/i.test(raw) || /\bcta\s+eb\b/i.test(raw)) return "CTA_EN_BANC";
-  if (/\bcourt\s+of\s+appeals\b/i.test(raw) || /\bca-?g\.?\s*r\.?\b/i.test(raw)) return "COURT_OF_APPEALS";
-  if (/\bcta\s+case\s+no\.?\b/i.test(raw) || /\bcta\s+division\b/i.test(raw)) return "CTA_DIVISION";
-  if (/\bg\.?\s*r\.?\s*no\.?\s*[a-z0-9.-]+\b/i.test(raw) || /\bsupreme\s+court\b/i.test(raw)) return "SUPREME_COURT";
+  if (/\bsupreme\s+court\s+en\s+banc\b/i.test(raw) || /\ben\s+banc\b/i.test(raw) && /\bsupreme\s+court\b/i.test(raw)) {
+    return "SUPREME_COURT_EN_BANC";
+  }
+
+  if (/\bcta\s+en\s+banc\b/i.test(raw) || /\bcta\s+eb\b/i.test(raw)) {
+    return "CTA_EN_BANC";
+  }
+
+  if (/\bcourt\s+of\s+appeals\b/i.test(raw) || /\bca-?g\.?\s*r\.?\b/i.test(raw)) {
+    return "COURT_OF_APPEALS";
+  }
+
+  if (/\bcta\s+case\s+no\.?\b/i.test(raw) || /\bcta\s+division\b/i.test(raw)) {
+    return "CTA_DIVISION";
+  }
+
+  if (/\bg\.?\s*r\.?\s*no\.?\s*[a-z0-9.-]+\b/i.test(raw) || /\bsupreme\s+court\b/i.test(raw)) {
+    return "SUPREME_COURT";
+  }
 
   return null;
 }
@@ -141,49 +197,223 @@ function normalizeAuthorityType(value = "") {
   const raw = String(value || "").trim().toUpperCase().replace(/[\s-]+/g, "_");
 
   const aliases = {
+    CONSTITUTION: "CONSTITUTION",
+
     NIRC: "STATUTE",
     TAX_CODE: "STATUTE",
+    LAW: "STATUTE",
+    STATUTORY: "STATUTE",
+    STATUTE: "STATUTE",
     REPUBLIC_ACT: "STATUTE",
     RA: "STATUTE",
+    CMTA: "STATUTE",
+    LGC: "STATUTE",
+
     TAX_TREATY: "TAX_TREATY",
     TREATY: "TAX_TREATY",
+
+    SUPREME_COURT_EN_BANC: "SUPREME_COURT_EN_BANC",
+    SUPREME_COURT: "SUPREME_COURT",
+    SC: "SUPREME_COURT",
+    CASE: "SUPREME_COURT",
+    CASE_LAW: "SUPREME_COURT",
+    JURISPRUDENCE: "SUPREME_COURT",
+
+    CTA: "CTA_DIVISION",
+    CTA_EN_BANC: "CTA_EN_BANC",
+    CTA_DIVISION: "CTA_DIVISION",
+    COURT_OF_APPEALS: "COURT_OF_APPEALS",
+    CA: "COURT_OF_APPEALS",
+
+    REVENUE_REGULATION: "RR",
+    REVENUE_REGULATIONS: "RR",
+    RR: "RR",
+
+    REVENUE_MEMORANDUM_CIRCULAR: "RMC",
+    RMC: "RMC",
+
+    REVENUE_MEMORANDUM_ORDER: "RMO",
+    RMO: "RMO",
+
+    REVENUE_AUDIT_MEMORANDUM_ORDER: "RAMO",
+    RAMO: "RAMO",
+
+    BIR_RULING: "BIR_RULING",
+    BIR_RULINGS: "BIR_RULING",
+
+    LGU: "LGU",
+    LGU_ISSUANCE: "LGU",
     BOC: "BOC_ISSUANCE",
     CUSTOMS: "BOC_ISSUANCE",
-    OECD: "OECD_GUIDANCE"
+    BOC_ISSUANCE: "BOC_ISSUANCE",
+
+    FIRB: "FIRB_ISSUANCE",
+    FIRB_ISSUANCE: "FIRB_ISSUANCE",
+    PEZA: "PEZA_MEMO",
+    PEZA_MEMO: "PEZA_MEMO",
+    SEC: "SEC_GUIDANCE",
+    SEC_GUIDANCE: "SEC_GUIDANCE",
+
+    OECD: "OECD_GUIDANCE",
+    OECD_GUIDANCE: "OECD_GUIDANCE",
+    FOREIGN: "FOREIGN_AUTHORITY",
+    FOREIGN_AUTHORITY: "FOREIGN_AUTHORITY",
+
+    PFRS_FOR_SMES: "PFRS",
+    IFRS: "PFRS",
+    PFRS: "PFRS",
+    PAS: "PAS",
+    PSA: "PSA",
+
+    CPA_NOTES: "SECONDARY",
+    REVIEW_MATERIALS: "SECONDARY",
+    SECONDARY_SOURCE: "SECONDARY",
+    SECONDARY: "SECONDARY",
+
+    UNKNOWN: "UNKNOWN"
   };
 
   return aliases[raw] || raw || "UNKNOWN";
 }
 
 export function classifyAuthorityFromDocument({ fileName = "", path = "", text = "" }) {
+  const folderAuthority = getGoogleDriveFolderAuthority(path, fileName);
+
   if (isSecondaryMaterial(path, fileName)) return "SECONDARY";
 
   const fullBlob = lower(`${fileName}\n${path}\n${text}`);
+  const headerBlob = lower(`${fileName}\n${path}`);
 
-  if (fullBlob.includes("constitution of the philippines") || /\b1987\s+constitution\b/i.test(fullBlob)) return "CONSTITUTION";
+  if (
+    fullBlob.includes("constitution of the philippines") ||
+    /\b1987\s+constitution\b/i.test(fullBlob)
+  ) {
+    return "CONSTITUTION";
+  }
 
-  if (/\bnirc\b/.test(fullBlob) || /\btax code\b/.test(fullBlob) || /\brepublic act\b/.test(fullBlob) || /\bra\s*\d{4,6}\b/.test(fullBlob)) return "STATUTE";
-
-  if (/\brevenue regulation\b/i.test(fullBlob) || /\brr\s*\d+[-/_ ]\d+\b/i.test(fullBlob)) return "RR";
-  if (/\brevenue memorandum circular\b/i.test(fullBlob) || /\brmc\s*\d+[-/_ ]\d+\b/i.test(fullBlob)) return "RMC";
-  if (/\brevenue memorandum order\b/i.test(fullBlob) || /\brmo\s*\d+[-/_ ]\d+\b/i.test(fullBlob)) return "RMO";
-  if (/\brevenue audit memorandum order\b/i.test(fullBlob) || /\bramo\s*\d+[-/_ ]\d+\b/i.test(fullBlob)) return "RAMO";
-  if (/\bbir ruling\b/i.test(fullBlob) || /\bruling no\.?\b/i.test(fullBlob)) return "BIR_RULING";
-
-  if (/\btax treaty\b/i.test(fullBlob) || /\bdouble taxation agreement\b/i.test(fullBlob) || /\bdta\b/i.test(fullBlob)) return "TAX_TREATY";
-
-  if (/\bcmta\b/i.test(fullBlob) || /\bbureau of customs\b/i.test(fullBlob) || /\bboc\b/i.test(fullBlob) || /\bcustoms memorandum\b/i.test(fullBlob) || /\btariff\b/i.test(fullBlob)) return "BOC_ISSUANCE";
-
-  if (/\boecd\b/i.test(fullBlob) || /\btransfer pricing guidelines\b/i.test(fullBlob)) return "OECD_GUIDANCE";
-
-  if (/\bpfrs\b/i.test(fullBlob) || /\bphilippine financial reporting standards\b/i.test(fullBlob)) return "PFRS";
-  if (/\bpas\b/i.test(fullBlob) || /\bphilippine accounting standards\b/i.test(fullBlob)) return "PAS";
-  if (/\bpsa\b/i.test(fullBlob) || /\bphilippine standards on auditing\b/i.test(fullBlob)) return "PSA";
-
-  const courtType = detectCourtType(fullBlob);
+  const courtType = detectCourtType(`${fileName}\n${path}\n${text}`);
   if (courtType) return courtType;
 
-  if (/\blocal tax code\b/i.test(fullBlob) || /\blocal business tax\b/i.test(fullBlob)) return "LGU";
+  if (
+    /\btax treaty\b/i.test(fullBlob) ||
+    /\bdouble taxation agreement\b/i.test(fullBlob) ||
+    /\bdouble tax(?:ation)? treaty\b/i.test(fullBlob) ||
+    /\bphilippines[-\s]+[a-z]+ tax treaty\b/i.test(fullBlob)
+  ) {
+    return "TAX_TREATY";
+  }
+
+  if (
+    /\bnirc\b/i.test(fullBlob) ||
+    /\bnational internal revenue code\b/i.test(fullBlob) ||
+    /\btax code\b/i.test(fullBlob) ||
+    /\bcmta\b/i.test(fullBlob) ||
+    /\bcustoms modernization and tariff act\b/i.test(fullBlob) ||
+    /\blocal government code\b/i.test(fullBlob) ||
+    /\brepublic act\b/i.test(fullBlob) ||
+    /\bra\s*\d{4,6}\b/i.test(fullBlob)
+  ) {
+    return "STATUTE";
+  }
+
+  if (
+    /\brevenue regulation\b/i.test(fullBlob) ||
+    /\brevenue regulations\b/i.test(fullBlob) ||
+    /\brr\s*(?:no\.?)?\s*\d+[-/_ ]\d+\b/i.test(fullBlob)
+  ) {
+    return "RR";
+  }
+
+  if (
+    /\brevenue memorandum circular\b/i.test(fullBlob) ||
+    /\brmc\s*(?:no\.?)?\s*\d+[-/_ ]\d+\b/i.test(fullBlob)
+  ) {
+    return "RMC";
+  }
+
+  if (
+    /\brevenue memorandum order\b/i.test(fullBlob) ||
+    /\brmo\s*(?:no\.?)?\s*\d+[-/_ ]\d+\b/i.test(fullBlob)
+  ) {
+    return "RMO";
+  }
+
+  if (
+    /\brevenue audit memorandum order\b/i.test(fullBlob) ||
+    /\bramo\s*(?:no\.?)?\s*\d+[-/_ ]\d+\b/i.test(fullBlob)
+  ) {
+    return "RAMO";
+  }
+
+  if (
+    /\bbir ruling\b/i.test(fullBlob) ||
+    /\bruling no\.?\b/i.test(fullBlob)
+  ) {
+    return "BIR_RULING";
+  }
+
+  if (
+    /\blocal tax code\b/i.test(fullBlob) ||
+    /\blocal business tax\b/i.test(fullBlob) ||
+    /\blgu ordinance\b/i.test(fullBlob) ||
+    /\btax ordinance\b/i.test(fullBlob)
+  ) {
+    return "LGU";
+  }
+
+  if (
+    /\bcmta\b/i.test(headerBlob) ||
+    /\bbureau of customs\b/i.test(fullBlob) ||
+    /\bboc\b/i.test(headerBlob) ||
+    /\bcustoms memorandum\b/i.test(fullBlob) ||
+    /\btariff\b/i.test(fullBlob)
+  ) {
+    return "BOC_ISSUANCE";
+  }
+
+  if (
+    /\bfirb\b/i.test(fullBlob) ||
+    /\bfiscal incentives review board\b/i.test(fullBlob)
+  ) {
+    return "FIRB_ISSUANCE";
+  }
+
+  if (
+    /\bpeza\b/i.test(fullBlob) ||
+    /\bphilippine economic zone authority\b/i.test(fullBlob)
+  ) {
+    return "PEZA_MEMO";
+  }
+
+  if (
+    /\boecd\b/i.test(fullBlob) ||
+    /\btransfer pricing guidelines\b/i.test(fullBlob)
+  ) {
+    return "OECD_GUIDANCE";
+  }
+
+  if (
+    /\bpfrs\b/i.test(fullBlob) ||
+    /\bphilippine financial reporting standards\b/i.test(fullBlob)
+  ) {
+    return "PFRS";
+  }
+
+  if (
+    /\bpas\b/i.test(fullBlob) ||
+    /\bphilippine accounting standards\b/i.test(fullBlob)
+  ) {
+    return "PAS";
+  }
+
+  if (
+    /\bpsa\b/i.test(fullBlob) ||
+    /\bphilippine standards on auditing\b/i.test(fullBlob)
+  ) {
+    return "PSA";
+  }
+
+  if (folderAuthority) return folderAuthority;
 
   return "SECONDARY";
 }
@@ -208,11 +438,25 @@ export function normalizeLegalReference(input = "") {
       raw,
       normalized: `RA_${num}`,
       type: "STATUTE",
-      aliases: [`RA ${num}`, `Republic Act No. ${num}`]
+      aliases: [`RA ${num}`, `R.A. No. ${num}`, `Republic Act No. ${num}`]
     };
   }
 
-  if (/\btax treaty\b|\bdouble taxation agreement\b|\bdta\b/i.test(raw)) {
+  const nircSectionMatch = raw.match(/\b(?:nirc|tax code)?\s*(?:sec\.?|section)\s*0*(\d{1,4}[a-z]?)\b/i);
+
+  if (nircSectionMatch) {
+    const section = String(nircSectionMatch[1]).toUpperCase();
+    return {
+      raw,
+      normalized: `NIRC_SEC_${section}`,
+      type: "STATUTE",
+      aliases: [`NIRC Sec. ${section}`, `Tax Code Sec. ${section}`, `Section ${section}`]
+    };
+  }
+
+  if (
+    /\btax treaty\b|\bdouble taxation agreement\b|\bdouble tax(?:ation)? treaty\b/i.test(raw)
+  ) {
     return {
       raw,
       normalized: raw.toUpperCase().replace(/[^A-Z0-9]+/g, "_"),
@@ -256,6 +500,17 @@ export function normalizeLegalReference(input = "") {
     };
   }
 
+  const ctaEbMatch = raw.match(/\bcta\s+en\s+banc\b.*?(?:case\s+no\.?|no\.?)?\s*([a-z0-9.-]+)?/i);
+
+  if (ctaEbMatch) {
+    return {
+      raw,
+      normalized: raw.toUpperCase().replace(/[^A-Z0-9]+/g, "_"),
+      type: "CTA_EN_BANC",
+      aliases: [raw]
+    };
+  }
+
   const courtType = detectCourtType(raw);
 
   return {
@@ -274,18 +529,26 @@ export function buildAuthorityMetadata({
 }) {
   const authorityType = classifyAuthorityFromDocument({ fileName, path, text });
   const normalized = normalizeLegalReference(`${fileName} ${path}`);
+  const normalizedAuthorityType = normalizeAuthorityType(authorityType);
 
   return {
-    authorityType,
-    authorityLevel: AUTHORITY_LEVEL[authorityType] || 99,
-    authorityScore: AUTHORITY_SCORE[authorityType] || 0,
-    authorityLabel: AUTHORITY_LABEL[authorityType] || authorityType,
-    controllingPrecedence: CONTROLLING_PRECEDENCE[authorityType] || 99,
+    authorityType: normalizedAuthorityType,
+    authorityLevel: AUTHORITY_LEVEL[normalizedAuthorityType] || 99,
+    authorityScore: AUTHORITY_SCORE[normalizedAuthorityType] || 0,
+    authorityLabel: AUTHORITY_LABEL[normalizedAuthorityType] || normalizedAuthorityType,
+    controllingPrecedence: CONTROLLING_PRECEDENCE[normalizedAuthorityType] || 99,
     normalizedReference: normalized.normalized || null,
-    normalizedAliases: normalized.aliases || [],
+    normalizedAliases: unique([
+      ...(normalized.aliases || []),
+      fileName,
+      basename(path)
+    ]).filter(Boolean),
     modifiedTime,
     recencyDate: modifiedTime || null,
-    tinaAuthorityEngineVersion: ENGINE_VERSION
+    tinaAuthorityEngineVersion: ENGINE_VERSION,
+    masterPromptAuthorityHierarchyApplied: true,
+    courtAuthorityNotSubordinatedToBIRIssuances: true,
+    reviewerSourcesNeverControlling: normalizedAuthorityType === "SECONDARY"
   };
 }
 
@@ -294,6 +557,7 @@ export function getAuthorityTypeForDoc(doc = {}) {
     doc.authorityType ||
     doc.authority_type ||
     doc.metadata?.authorityType ||
+    doc.metadata?.sourceType ||
     null;
 
   if (explicit) return normalizeAuthorityType(explicit);
@@ -307,17 +571,56 @@ export function getAuthorityTypeForDoc(doc = {}) {
 
 export function getAuthorityLevelForDoc(doc = {}) {
   const type = getAuthorityTypeForDoc(doc);
-  return Number(doc.authorityLevel || doc.authority_level || doc.metadata?.authorityLevel) || AUTHORITY_LEVEL[type] || 99;
+
+  const explicit = Number(
+    doc.authorityLevel ||
+      doc.authority_level ||
+      doc.metadata?.authorityLevel ||
+      doc.metadata?.authority_level ||
+      0
+  );
+
+  if (Number.isFinite(explicit) && explicit > 0 && explicit < 99) {
+    return explicit;
+  }
+
+  return AUTHORITY_LEVEL[type] || 99;
 }
 
 export function getAuthorityScoreForDoc(doc = {}) {
   const type = getAuthorityTypeForDoc(doc);
-  return Number(doc.authorityScore || doc.authority_score || doc.metadata?.authorityScore) || AUTHORITY_SCORE[type] || 0;
+
+  const explicit = Number(
+    doc.authorityScore ||
+      doc.authority_score ||
+      doc.metadata?.authorityScore ||
+      doc.metadata?.authority_score ||
+      0
+  );
+
+  if (Number.isFinite(explicit) && explicit > 0) {
+    return explicit;
+  }
+
+  return AUTHORITY_SCORE[type] || 0;
 }
 
 export function getControllingPrecedenceForDoc(doc = {}) {
   const type = getAuthorityTypeForDoc(doc);
-  return Number(doc.controllingPrecedence || doc.controlling_precedence || doc.metadata?.controllingPrecedence) || CONTROLLING_PRECEDENCE[type] || 99;
+
+  const explicit = Number(
+    doc.controllingPrecedence ||
+      doc.controlling_precedence ||
+      doc.metadata?.controllingPrecedence ||
+      doc.metadata?.controlling_precedence ||
+      0
+  );
+
+  if (Number.isFinite(explicit) && explicit > 0 && explicit < 99) {
+    return explicit;
+  }
+
+  return CONTROLLING_PRECEDENCE[type] || 99;
 }
 
 export function computeIssueMatchBonus(query = "", doc = {}) {
@@ -327,7 +630,13 @@ export function computeIssueMatchBonus(query = "", doc = {}) {
 
   const issueAnchors = [
     "vat",
+    "value-added tax",
+    "output vat",
+    "input vat",
     "withholding",
+    "ewt",
+    "cwt",
+    "fwt",
     "income tax",
     "mcit",
     "nolco",
@@ -341,6 +650,8 @@ export function computeIssueMatchBonus(query = "", doc = {}) {
     "agent",
     "audit",
     "pfrs",
+    "pas",
+    "psa",
     "economic substance",
     "assessment",
     "protest",
@@ -349,7 +660,10 @@ export function computeIssueMatchBonus(query = "", doc = {}) {
     "customs",
     "tariff",
     "treaty",
-    "transfer pricing"
+    "transfer pricing",
+    "create",
+    "train",
+    "eopt"
   ];
 
   for (const anchor of issueAnchors) {
@@ -362,11 +676,95 @@ export function computeIssueMatchBonus(query = "", doc = {}) {
 export function computeAuthorityPriorityBonus(doc = {}) {
   const precedence = getControllingPrecedenceForDoc(doc);
 
-  if (precedence <= 2) return 65;
-  if (precedence <= 4) return 52;
-  if (precedence <= 8) return 26;
+  if (precedence <= 2) return 70;
+  if (precedence === 3) return 62;
+  if (precedence <= 5) return 56;
+  if (precedence <= 7) return 46;
+  if (precedence <= 10) return 24;
   if (precedence <= 12) return 12;
-  if (precedence >= 98) return -60;
+  if (precedence >= 14 && precedence < 99) return -30;
+  if (precedence >= 99) return -60;
 
   return 0;
 }
+
+export function isCourtAuthorityDoc(doc = {}) {
+  const type = getAuthorityTypeForDoc(doc);
+
+  return [
+    "SUPREME_COURT_EN_BANC",
+    "SUPREME_COURT",
+    "CTA_EN_BANC",
+    "COURT_OF_APPEALS",
+    "CTA_DIVISION"
+  ].includes(type);
+}
+
+export function isBirIssuanceDoc(doc = {}) {
+  const type = getAuthorityTypeForDoc(doc);
+
+  return [
+    "RR",
+    "RMC",
+    "RMO",
+    "RAMO",
+    "BIR_RULING"
+  ].includes(type);
+}
+
+export function isSecondaryAuthorityDoc(doc = {}) {
+  const type = getAuthorityTypeForDoc(doc);
+
+  return [
+    "SECONDARY",
+    "CPA_NOTES",
+    "REVIEW_MATERIALS",
+    "UNKNOWN"
+  ].includes(type);
+}
+
+export function buildAuthoritySafetyFlags(doc = {}) {
+  const type = getAuthorityTypeForDoc(doc);
+
+  return {
+    authorityType: type,
+    authorityLevel: getAuthorityLevelForDoc(doc),
+    authorityScore: getAuthorityScoreForDoc(doc),
+    controllingPrecedence: getControllingPrecedenceForDoc(doc),
+    masterPromptAuthorityHierarchyApplied: true,
+    courtAuthority: isCourtAuthorityDoc(doc),
+    birIssuance: isBirIssuanceDoc(doc),
+    secondaryAuthority: isSecondaryAuthorityDoc(doc),
+    courtAuthorityNotSubordinatedToBIRIssuances: true,
+    birIssuanceCannotOverrideCourtDoctrine: isBirIssuanceDoc(doc),
+    reviewerSourcesNeverControlling: isSecondaryAuthorityDoc(doc)
+  };
+}
+
+export default {
+  normalizeText,
+  compactSpaces,
+  lower,
+
+  getDocPath,
+  getDocSource,
+  getDocNormalizedReference,
+  getDocAliases,
+
+  classifyAuthorityFromDocument,
+  normalizeLegalReference,
+  buildAuthorityMetadata,
+
+  getAuthorityTypeForDoc,
+  getAuthorityLevelForDoc,
+  getAuthorityScoreForDoc,
+  getControllingPrecedenceForDoc,
+
+  computeIssueMatchBonus,
+  computeAuthorityPriorityBonus,
+
+  isCourtAuthorityDoc,
+  isBirIssuanceDoc,
+  isSecondaryAuthorityDoc,
+  buildAuthoritySafetyFlags
+};
