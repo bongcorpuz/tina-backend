@@ -3,7 +3,7 @@
 
 /**
  * TINA Context Orchestration Engine
- * Version: 4.1.0
+ * Version: 4.2.0
  *
  * FINAL ORCHESTRATION SOURCE
  *
@@ -28,7 +28,7 @@
 
 import OpenAI from "openai";
 
-const ENGINE_VERSION = "4.1.0";
+const ENGINE_VERSION = "4.2.0";
 
 const DEFAULT_MODEL =
   process.env.OPENAI_MODEL ||
@@ -111,6 +111,23 @@ const SUPPORTED_TAX_DOMAINS = Object.freeze([
   "CON"
 ]);
 
+/**
+ * Master Prompt authority hierarchy:
+ * 1. Constitution
+ * 2. NIRC / CMTA / LGC / primary statutes
+ * 3. Tax Treaties
+ * 4. Supreme Court En Banc
+ * 5. Supreme Court Division
+ * 6. CTA En Banc
+ * 7. CTA Division
+ * 8. Revenue Regulations
+ * 9. RMC / RMO / RAMO
+ * 10. BIR Rulings
+ * 11. LGU / BOC issuances
+ * 12. PFRS / PAS / PSA, when accounting issues apply
+ * 13. OECD / foreign persuasive authorities
+ * 14. CPA reviewer notes / secondary materials
+ */
 const AUTHORITY_PRECEDENCE = Object.freeze({
   CONSTITUTION: 1,
 
@@ -131,6 +148,7 @@ const AUTHORITY_PRECEDENCE = Object.freeze({
 
   CTA_EN_BANC: 6,
   CTA_DIVISION: 7,
+  COURT_OF_APPEALS: 7,
 
   RR: 8,
   REVENUE_REGULATION: 8,
@@ -146,30 +164,31 @@ const AUTHORITY_PRECEDENCE = Object.freeze({
   FIRB_ISSUANCE: 11,
   PEZA_MEMO: 11,
   SEC_GUIDANCE: 11,
-  PFRS: 11,
-  PAS: 11,
-  PSA: 11,
   LGU: 11,
 
-  OECD_GUIDANCE: 12,
-  FOREIGN_AUTHORITY: 12,
+  PFRS: 12,
+  PAS: 12,
+  PSA: 12,
 
-  CPA_NOTES: 13,
-  REVIEW_MATERIALS: 13,
-  SECONDARY: 13,
+  OECD_GUIDANCE: 13,
+  FOREIGN_AUTHORITY: 13,
+
+  CPA_NOTES: 14,
+  REVIEW_MATERIALS: 14,
+  SECONDARY: 14,
 
   UNKNOWN: 99
 });
 
 const GOOGLE_DRIVE_AUTHORITY_FOLDER_PRIORITY = Object.freeze({
-  "01_tax_code": 1,
+  "01_tax_code": 2,
   "02_revenue_regulations": 8,
   "03_rmc": 9,
   "04_rmo": 9,
   "05_bir_rulings": 10,
   "06_court_cases": 5,
-  "07_cpa_notes": 13,
-  "08_review_materials": 13
+  "07_cpa_notes": 14,
+  "08_review_materials": 14
 });
 
 const EXCLUDED_NON_REVIEW_FOLDERS = Object.freeze([
@@ -185,6 +204,26 @@ const REVIEW_MODE_MARKERS = Object.freeze([
   "ASSESSMENT"
 ]);
 
+const CONTROLLING_TYPES = new Set([
+  "CONSTITUTION",
+  "STATUTE",
+  "NIRC",
+  "TAX_CODE",
+  "CMTA",
+  "LGC",
+  "REPUBLIC_ACT",
+  "RA",
+  "TAX_TREATY"
+]);
+
+const JURISPRUDENCE_TYPES = new Set([
+  "SUPREME_COURT_EN_BANC",
+  "SUPREME_COURT",
+  "CTA_EN_BANC",
+  "CTA_DIVISION",
+  "COURT_OF_APPEALS"
+]);
+
 const ADMIN_TYPES = new Set([
   "RR",
   "RMC",
@@ -198,24 +237,10 @@ const ADMIN_TYPES = new Set([
   "LGU"
 ]);
 
-const JURISPRUDENCE_TYPES = new Set([
-  "SUPREME_COURT_EN_BANC",
-  "SUPREME_COURT",
-  "CTA_EN_BANC",
-  "CTA_DIVISION",
-  "COURT_OF_APPEALS"
-]);
-
-const CONTROLLING_TYPES = new Set([
-  "CONSTITUTION",
-  "STATUTE",
-  "NIRC",
-  "TAX_CODE",
-  "CMTA",
-  "LGC",
-  "REPUBLIC_ACT",
-  "RA",
-  "TAX_TREATY"
+const ACCOUNTING_TYPES = new Set([
+  "PFRS",
+  "PAS",
+  "PSA"
 ]);
 
 function safeString(value, fallback = "") {
@@ -239,7 +264,7 @@ function safeObject(value) {
 }
 
 function unique(values = []) {
-  return [...new Set((values || []).filter(Boolean))];
+  return [...new Set(safeArray(values).filter(Boolean))];
 }
 
 function normalizeWhitespace(value = "") {
@@ -432,7 +457,10 @@ function normalizeBuildArgs(args = {}) {
 
     model:
       args.model ||
-      DEFAULT_MODEL
+      DEFAULT_MODEL,
+
+    temperature:
+      args.temperature
   };
 }
 
@@ -515,7 +543,7 @@ function isExcludedReviewSource(source = {}) {
 function isPreferredIndexedGoogleDriveSource(source = {}) {
   const folderPriority = getGoogleDriveFolderPriority(source);
   if (!folderPriority) return false;
-  return folderPriority <= 10;
+  return folderPriority <= 11;
 }
 
 function getAuthorityPrecedence(source = {}) {
@@ -752,7 +780,9 @@ function normalizeSource(source = {}, index = 0) {
         source.retrievalPhase ||
         source.retrieval_phase ||
         source.metadata?.retrievalPhase ||
-        null
+        null,
+      contextOrchestrationEngineVersion: ENGINE_VERSION,
+      masterPromptAuthorityHierarchyApplied: true
     }
   };
 }
@@ -774,7 +804,7 @@ function dedupeSources(sources = []) {
   const seen = new Set();
   const output = [];
 
-  for (const source of sources) {
+  for (const source of safeArray(sources)) {
     const key = sourceIdentity(source) || `${source.title}|${source.text}`.slice(0, 240);
     if (seen.has(key)) continue;
     seen.add(key);
@@ -786,17 +816,22 @@ function dedupeSources(sources = []) {
 
 function sourceAuthorityBucket(source = {}) {
   const type = normalizeAuthority(source.authorityType);
+  const precedence = Number(source.controllingPrecedence || 99);
 
-  if (CONTROLLING_TYPES.has(type) || Number(source.controllingPrecedence || 99) <= 3) {
+  if (CONTROLLING_TYPES.has(type) || precedence <= 3) {
     return "CONTROLLING";
   }
 
-  if (JURISPRUDENCE_TYPES.has(type)) {
+  if (JURISPRUDENCE_TYPES.has(type) || (precedence >= 4 && precedence <= 7)) {
     return "JURISPRUDENCE";
   }
 
-  if (ADMIN_TYPES.has(type)) {
+  if (ADMIN_TYPES.has(type) || (precedence >= 8 && precedence <= 11)) {
     return "ADMIN";
+  }
+
+  if (ACCOUNTING_TYPES.has(type) || precedence === 12) {
+    return "ACCOUNTING";
   }
 
   if (type === "CPA_NOTES" || type === "REVIEW_MATERIALS" || type === "SECONDARY") {
@@ -810,24 +845,24 @@ function authorityPriority(source = {}) {
   const type = normalizeAuthority(source.authorityType);
   const precedence = Number(source.controllingPrecedence || AUTHORITY_PRECEDENCE[type] || 99);
 
-  if (precedence <= 13) {
-    return 130 - precedence * 7;
+  if (precedence <= 14) {
+    return 150 - precedence * 7;
   }
 
   const authority = `${source.title} ${source.authorityType} ${source.citation}`.toLowerCase();
 
-  if (authority.includes("constitution")) return 125;
-  if (authority.includes("nirc") || authority.includes("tax code") || authority.includes("statute")) return 116;
-  if (authority.includes("treaty")) return 110;
-  if (authority.includes("supreme court") || authority.includes("g.r.") || authority.includes("gr no")) return 104;
-  if (authority.includes("cta en banc")) return 98;
-  if (authority.includes("cta")) return 90;
-  if (authority.includes("revenue regulation") || /\brr\b/.test(authority)) return 84;
-  if (authority.includes("revenue memorandum circular") || /\brmc\b/.test(authority)) return 76;
-  if (authority.includes("revenue memorandum order") || /\brmo\b/.test(authority)) return 74;
-  if (authority.includes("ramo")) return 72;
-  if (authority.includes("bir ruling")) return 68;
-  if (authority.includes("pfrs") || authority.includes("pas ")) return 50;
+  if (authority.includes("constitution")) return 145;
+  if (authority.includes("nirc") || authority.includes("tax code") || authority.includes("statute")) return 136;
+  if (authority.includes("treaty")) return 129;
+  if (authority.includes("supreme court") || authority.includes("g.r.") || authority.includes("gr no")) return 122;
+  if (authority.includes("cta en banc")) return 108;
+  if (authority.includes("cta")) return 101;
+  if (authority.includes("revenue regulation") || /\brr\b/.test(authority)) return 94;
+  if (authority.includes("revenue memorandum circular") || /\brmc\b/.test(authority)) return 87;
+  if (authority.includes("revenue memorandum order") || /\brmo\b/.test(authority)) return 87;
+  if (authority.includes("ramo")) return 87;
+  if (authority.includes("bir ruling")) return 80;
+  if (authority.includes("pfrs") || authority.includes("pas ")) return 66;
 
   return 35;
 }
@@ -916,7 +951,8 @@ function preserveAuthorityCriticalSources(sources = [], budget = assignBudget(),
       source.doctrinallyImportant ||
       bucket === "CONTROLLING" ||
       bucket === "JURISPRUDENCE" ||
-      bucket === "ADMIN";
+      bucket === "ADMIN" ||
+      bucket === "ACCOUNTING";
 
     if (isCritical) critical.push(source);
     else ordinary.push(source);
@@ -931,19 +967,21 @@ function preserveAuthorityCriticalSources(sources = [], budget = assignBudget(),
     output.push(source);
   };
 
-  const controlling = critical.filter((source) => sourceAuthorityBucket(source) === "CONTROLLING");
   const targetMatched = critical.filter((source) => source.targetAuthorityMatch || matchesTargetAuthority(source, classification));
-  const issueMatched = critical.filter((source) => source.issueMatched || source.issueClassificationMatch?.matched);
-  const admin = critical.filter((source) => sourceAuthorityBucket(source) === "ADMIN");
+  const controlling = critical.filter((source) => sourceAuthorityBucket(source) === "CONTROLLING");
   const jurisprudence = critical.filter((source) => sourceAuthorityBucket(source) === "JURISPRUDENCE");
+  const admin = critical.filter((source) => sourceAuthorityBucket(source) === "ADMIN");
+  const accounting = critical.filter((source) => sourceAuthorityBucket(source) === "ACCOUNTING");
+  const issueMatched = critical.filter((source) => source.issueMatched || source.issueClassificationMatch?.matched);
   const doctrinal = critical.filter((source) => source.doctrinallyImportant);
 
   [
     ...targetMatched,
     ...controlling,
-    ...issueMatched,
-    ...admin,
     ...jurisprudence,
+    ...admin,
+    ...accounting,
+    ...issueMatched,
     ...doctrinal,
     ...critical,
     ...ordinary
@@ -959,7 +997,7 @@ function filterSourcesForMode(sources = [], { adaptiveContext = {}, classificati
     intent
   });
 
-  return sources.filter((source) => {
+  return safeArray(sources).filter((source) => {
     if (!source.text) return false;
     if (source.issueMismatch) return false;
     if (source.superseded) return false;
@@ -1080,8 +1118,10 @@ export function trimRetrieval(sources = [], budget = assignBudget(), options = {
 }
 
 function getCompactExcerpt(source = {}, budget = assignBudget()) {
+  const bucket = sourceAuthorityBucket(source);
+
   const maxChars =
-    sourceAuthorityBucket(source) === "SECONDARY"
+    bucket === "SECONDARY"
       ? Math.floor(budget.maxCharsPerSource * 0.45)
       : budget.maxCharsPerSource;
 
@@ -1095,7 +1135,7 @@ function compressOneSource(source = {}, budget = assignBudget(), index = 0) {
     `SOURCE ${index + 1}`,
     `Title: ${source.title}`,
     `Authority Type: ${source.authorityType}`,
-    `Authority Precedence: ${source.controllingPrecedence}`,
+    `Master Prompt Authority Precedence: ${source.controllingPrecedence}`,
     source.citation ? `Citation/Link: ${source.citation}` : null,
     source.url && source.url !== source.citation ? `URL: ${source.url}` : null,
     `Score: ${source.score}`,
@@ -1148,6 +1188,7 @@ function buildAuthorityPreservationSummary(sources = []) {
     controlling: 0,
     jurisprudence: 0,
     administrative: 0,
+    accounting: 0,
     secondary: 0,
     targetAuthorityMatches: 0,
     issueMatches: 0,
@@ -1155,12 +1196,13 @@ function buildAuthorityPreservationSummary(sources = []) {
     indexedGoogleDriveAuthorities: 0
   };
 
-  for (const source of sources) {
+  for (const source of safeArray(sources)) {
     const bucket = sourceAuthorityBucket(source);
 
     if (bucket === "CONTROLLING") buckets.controlling += 1;
     if (bucket === "JURISPRUDENCE") buckets.jurisprudence += 1;
     if (bucket === "ADMIN") buckets.administrative += 1;
+    if (bucket === "ACCOUNTING") buckets.accounting += 1;
     if (bucket === "SECONDARY") buckets.secondary += 1;
 
     if (source.targetAuthorityMatch) buckets.targetAuthorityMatches += 1;
@@ -1304,15 +1346,18 @@ Operating Mode: ${mode}
 
 Authority and source-grounding rules:
 1. Answer from retrieved indexed sources first. Do not use general model knowledge as the primary legal basis when retrieved authorities exist.
-2. Preserve the legal hierarchy: Constitution; statutes/NIRC/CMTA/LGC/Republic Acts; tax treaties; Supreme Court; CTA; Revenue Regulations; RMC/RMO/RAMO; BIR rulings; administrative guidance; persuasive/secondary materials.
-3. Administrative issuances cannot override statutes, treaties, or Supreme Court decisions.
-4. Do not invent citations, provisions, cases, RRs, RMCs, RMOs, rulings, or doctrinal conflicts.
-5. If no indexed authority is available for a requested section, say exactly: "Indexed source not found."
-6. Do not say "No legal basis was rendered" or "No supporting rules were rendered."
-7. Do not dump unrelated jurisprudence.
-8. Do not include raw source text, full debug objects, retrieval payloads, embeddings, hidden metadata, or full engine outputs.
-9. Do not state "Conflict Detected: YES" unless the same exact issue, same legal dimension, opposite holding/rule, hierarchy analysis, and conflict-resolution basis are all present.
-10. Keep the answer proportionate to the query and follow the tax-engine answer structure when supplied.
+2. Follow this binding hierarchy: Constitution; NIRC/CMTA/LGC/primary statutes; Tax Treaties; Supreme Court En Banc; Supreme Court Division; CTA En Banc; CTA Division; Revenue Regulations; RMC/RMO/RAMO; BIR Rulings; LGU/BOC issuances; PFRS/PAS/PSA when accounting applies; OECD/foreign persuasive authorities; CPA reviewer notes/secondary materials only when allowed.
+3. Never elevate RMCs over statutes, BIR rulings over Supreme Court, reviewer notes over statutes, or persuasive materials over controlling authorities.
+4. Administrative issuances cannot override statutes, tax treaties, the Constitution, Supreme Court decisions, or CTA decisions within their proper doctrinal scope.
+5. Apply the mandatory cross-reference sequence for every tax issue: anchor on the specific statute/NIRC provision; identify implementing RR; check RMC/RMO/RAMO for BIR position and overreach; check BIR rulings for analogous facts; check Supreme Court/CTA jurisprudence for override or doctrine; map any true conflict; conclude with ranked citations.
+6. Apply interpretation rules: tax impositions are strictly construed against the government; tax exemptions are strictly construed against the taxpayer; ambiguity on imposition favors the taxpayer; ambiguity on exemption favors the BIR; BIR interpretations carry weight but are subject to judicial review; stare decisis applies.
+7. Do not invent citations, provisions, cases, RRs, RMCs, RMOs, rulings, or doctrinal conflicts.
+8. If no indexed authority is available for a requested section, say exactly: "Indexed source not found."
+9. Do not say "No legal basis was rendered" or "No supporting rules were rendered."
+10. Do not dump unrelated jurisprudence.
+11. Do not include raw source text, full debug objects, retrieval payloads, embeddings, hidden metadata, or full engine outputs.
+12. Do not state "Conflict Detected: YES" unless the same exact issue, same legal dimension, opposite holding/rule, hierarchy analysis, and conflict-resolution basis are all present.
+13. Keep the answer proportionate to the query and follow the tax-engine answer structure when supplied.
 
 Expected answer structure unless a tax-engine template overrides it:
 A. DIRECT ANSWER
@@ -1417,10 +1462,10 @@ SOURCE GROUNDING / AUTHORITY PRESERVATION:
 ${JSON.stringify(compactGrounding, null, 2)}
 
 RETRIEVED RELEVANT AUTHORITIES / EXTRACTS:
-${compressedSources || "[No retrieved source extracts supplied.]"}
+${compressedSources || "[No retrieved source extracts supplied. Use exactly: Indexed source not found. Do not invent authority.]"}
 
 RESPONSE INSTRUCTION:
-Use ${mode}. Use retrieved sources first. Preserve controlling authorities in the answer. If an expected authority section has no indexed support, state "Indexed source not found." Do not include irrelevant cases, irrelevant regulations, debug data, hidden metadata, raw context, or internal engine objects.
+Use ${mode}. Use retrieved sources first. Preserve controlling authorities in the answer. Apply the Master Prompt hierarchy. If an expected authority section has no indexed support, state "Indexed source not found." Do not include irrelevant cases, irrelevant regulations, debug data, hidden metadata, raw context, or internal engine objects.
 `);
 }
 
@@ -1606,72 +1651,48 @@ export function buildOpenAIContext(args = {}) {
   return {
     engine: "TINA_CONTEXT_ORCHESTRATION_ENGINE",
     version: ENGINE_VERSION,
-
     complexity,
     mode,
-
     model: normalized.model,
     budget,
-
     retrievedSources: trimmedSources,
     compressedSources,
-
     authoritySummary,
     taxEngineContext,
     sanitizedConflicts,
-
     messages: trimmed.messages,
-
-    estimatedInputTokens:
-      trimmed.estimatedInputTokens,
-
-    maxCompletionTokens:
-      budget.maxOutputTokens,
-
-    temperature:
-      budget.temperature,
-
+    estimatedInputTokens: trimmed.estimatedInputTokens,
+    maxCompletionTokens: budget.maxOutputTokens,
+    temperature: normalized.temperature ?? budget.temperature,
     diagnostics: {
       orchestrationFinalSource: true,
-
       noPromptAssemblyOutsideThisFile: true,
       noDirectOpenAICallOutsideThisFile: true,
       noDuplicateRetrieval: true,
       noDuplicateReranking: true,
-
       authorityPreservationEnabled: true,
+      masterPromptAuthorityHierarchyApplied: true,
+      courtAuthorityNotSubordinatedToBIRIssuances: true,
+      mandatoryCrossReferenceSequenceEnabled: true,
+      interpretationRulesEnabled: true,
       googleDriveHierarchyAware: true,
       reviewMaterialsExcludedUnlessReviewMode: true,
       targetAuthorityMatchPreserved: true,
       issueClassificationMatchPreserved: true,
       controllingAuthoritiesPreservedFirst: true,
       doctrinalSourcesPreserved: true,
-
       retrievalTrimmed: true,
       retrievalCompressed: true,
-
       rawRetrievalPayloadInjectionPrevented: true,
       rawEngineObjectInjectionPrevented: true,
       fullDebugObjectInjectionPrevented: true,
       fullEngineOutputInjectionPrevented: true,
-
-      finalTrimApplied:
-        trimmed.wasTrimmed,
-
-      sourceCount:
-        trimmedSources.length,
-
+      finalTrimApplied: trimmed.wasTrimmed,
+      sourceCount: trimmedSources.length,
       authoritySummary,
-
-      model:
-        normalized.model,
-
-      estimatedInputTokens:
-        trimmed.estimatedInputTokens,
-
-      maxCompletionTokens:
-        budget.maxOutputTokens,
-
+      model: normalized.model,
+      estimatedInputTokens: trimmed.estimatedInputTokens,
+      maxCompletionTokens: budget.maxOutputTokens,
       complexity,
       mode
     }
@@ -1687,6 +1708,10 @@ export async function callOpenAIWithOrchestration(args = {}) {
       apiKey: process.env.OPENAI_API_KEY
     });
 
+  if (!process.env.OPENAI_API_KEY && !args.openai) {
+    throw new Error("OPENAI_API_KEY is missing and no OpenAI client was supplied.");
+  }
+
   const completion = await openai.chat.completions.create({
     model: orchestration.model,
     messages: orchestration.messages,
@@ -1700,119 +1725,81 @@ export async function callOpenAIWithOrchestration(args = {}) {
 
   return {
     answer,
-
     orchestration: {
       engine: orchestration.engine,
       version: orchestration.version,
-
       complexity: orchestration.complexity,
       mode: orchestration.mode,
-
-      estimatedInputTokens:
-        orchestration.estimatedInputTokens,
-
-      maxCompletionTokens:
-        orchestration.maxCompletionTokens,
-
-      sourceCount:
-        orchestration.retrievedSources.length,
-
-      wasTrimmed:
-        orchestration.diagnostics.finalTrimApplied,
-
-      authoritySummary:
-        orchestration.authoritySummary,
-
-      taxEngineContext:
-        orchestration.taxEngineContext,
-
-      sanitizedConflicts:
-        orchestration.sanitizedConflicts,
-
-      diagnostics:
-        orchestration.diagnostics
+      estimatedInputTokens: orchestration.estimatedInputTokens,
+      maxCompletionTokens: orchestration.maxCompletionTokens,
+      sourceCount: orchestration.retrievedSources.length,
+      wasTrimmed: orchestration.diagnostics.finalTrimApplied,
+      authoritySummary: orchestration.authoritySummary,
+      taxEngineContext: orchestration.taxEngineContext,
+      sanitizedConflicts: orchestration.sanitizedConflicts,
+      diagnostics: orchestration.diagnostics
     },
-
-    usage:
-      completion?.usage || null,
-
-    raw:
-      completion
+    usage: completion?.usage || null,
+    raw: completion
   };
 }
 
 export function contextOrchestrationHealthCheck() {
   return {
     ok: true,
-
-    engine:
-      "TINA_CONTEXT_ORCHESTRATION_ENGINE",
-
-    version:
-      ENGINE_VERSION,
-
+    engine: "TINA_CONTEXT_ORCHESTRATION_ENGINE",
+    version: ENGINE_VERSION,
     orchestrationFinalSource: true,
-
     onlyFileAllowedToBuildMessages: true,
     onlyFileAllowedToEstimateTokens: true,
     onlyFileAllowedToTrimContext: true,
     onlyFileAllowedToCompressSources: true,
     onlyFileAllowedToCallOpenAI: true,
-
     noPromptAssemblyOutsideThisFile: true,
     noDirectOpenAICallOutsideThisFile: true,
     noDuplicateRetrieval: true,
     noDuplicateReranking: true,
-
     authorityPreservationEnabled: true,
     authorityHierarchyAware: true,
+    masterPromptAuthorityHierarchyApplied: true,
+    courtAuthorityNotSubordinatedToBIRIssuances: true,
+    mandatoryCrossReferenceSequenceEnabled: true,
+    interpretationRulesEnabled: true,
     googleDriveHierarchyAware: true,
     targetAuthorityMatchPreserved: true,
     issueClassificationMatchPreserved: true,
     controllingAuthoritiesPreservedFirst: true,
     doctrinalSourcesPreserved: true,
     reviewMaterialsExcludedUnlessReviewMode: true,
-
     taxEngineCompatible: true,
     supportedTaxDomains: SUPPORTED_TAX_DOMAINS,
-
     rawRetrievalPayloadInjectionPrevented: true,
     rawEngineObjectInjectionPrevented: true,
     fullDebugObjectInjectionPrevented: true,
     fullEngineOutputInjectionPrevented: true,
-
     supportsComplexityClassification: true,
     supportsModeDetection: true,
     supportsTokenBudgeting: true,
     supportsRetrievalCompression: true,
     supportsFinalTrim: true,
-
-    supportedModes:
-      Object.keys(MODE_CONFIG),
-
-    supportedModels:
-      Object.keys(MODEL_CONTEXT_LIMITS)
+    supportedModes: Object.keys(MODE_CONFIG),
+    supportedModels: Object.keys(MODEL_CONTEXT_LIMITS)
   };
 }
 
 export default {
   buildOpenAIContext,
   callOpenAIWithOrchestration,
-
   detectComplexity,
   determineMode,
   assignBudget,
-
   trimRetrieval,
   compressSources,
   compressRetrievedSources,
-
   estimateTokens,
   estimatePromptTokens,
   estimateMessagesTokens,
-
   trimMessagesToBudget,
   finalTrimMessages,
-
   contextOrchestrationHealthCheck
 };
