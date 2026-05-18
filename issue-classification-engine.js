@@ -3,47 +3,60 @@
 
 /**
  * TINA Issue Classification Engine
- * Version: 5.0.0
+ * Version: 6.0.0
  *
- * Purpose:
- * - Classify Philippine tax issues before retrieval
- * - Route every query into tax domain, sub-issue, retrieval strategy, and target authorities
- * - Preserve queryIntent flags
- * - Return compact downstream-compatible classification objects
+ * Role:
+ * - Legal/tax issue detector only
+ * - Classifies primary issue, sub-issue, retrieval strategy, and target authorities
+ * - Passes compact metadata downstream to retrieval-engine.js and rag-answer-handler.js
  *
  * Boundary:
+ * - Does not answer
+ * - Does not retrieve
  * - Does not call OpenAI
- * - Does not retrieve sources
- * - Does not generate final answers
- * - Does not duplicate RAG, context orchestration, or answer rendering
+ * - Does not render
+ * - Does not rank retrieved sources
+ * - Does not replace tax-engines
  */
 
 import { enrichIssueClassification } from "./main-tax-engine-classification.js";
 
-const ENGINE_VERSION = "5.0.0";
+const ENGINE_VERSION = "6.0.0";
 
 const PRIMARY_ISSUE = Object.freeze({
   VAT: "VAT",
   CIT: "CIT",
   IIT: "IIT",
   WHT: "WHT",
-  EST: "EST",
   PCT: "PCT",
   EXC: "EXC",
-  PRE: "PRE",
-  DIS: "DIS",
+  DST: "DST",
+  CGT: "CGT",
+  EST: "EST",
   LGT: "LGT",
+  RPT: "RPT",
   CUS: "CUS",
   SPC: "SPC",
+  PRE: "PRE",
+  DIS: "DIS",
   CON: "CON",
 
   VAT_LIABILITY: "VAT_LIABILITY",
   VAT_REFUND: "VAT_REFUND",
   VAT_EXEMPTION: "VAT_EXEMPTION",
   ZERO_RATED_SALES: "ZERO_RATED_SALES",
+  INPUT_TAX: "INPUT_TAX",
+  OUTPUT_TAX: "OUTPUT_TAX",
+
   INCOME_TAX: "INCOME_TAX",
   WITHHOLDING: "WITHHOLDING",
+  DEDUCTIONS: "DEDUCTIONS",
+  EXEMPTIONS: "EXEMPTIONS",
+
+  TAX_REFUND_CREDIT: "TAX_REFUND_CREDIT",
   ASSESSMENT: "ASSESSMENT",
+  PRESCRIPTION: "PRESCRIPTION",
+
   PROCEDURAL: "PROCEDURAL",
   EVIDENTIARY: "EVIDENTIARY",
   JURISDICTIONAL: "JURISDICTIONAL",
@@ -77,6 +90,8 @@ const LEGACY_PRIMARY_ISSUE = Object.freeze({
 
 const QUERY_INTENT = Object.freeze({
   DEFINITION: "definition",
+  OVERVIEW: "overview",
+  ANALYSIS: "analysis",
   COMPLIANCE: "compliance",
   DISPUTE: "dispute",
   PLANNING: "planning",
@@ -100,6 +115,7 @@ const FACT_SENSITIVITY = Object.freeze({
 });
 
 const RETRIEVAL_STRATEGY = Object.freeze({
+  FAST_DEFINITION: "FAST_DEFINITION_PRIMARY_AUTHORITY",
   FOUNDATIONAL: "ISSUE_FOUNDATIONAL_AUTHORITY_FIRST",
   PROCEDURAL: "ISSUE_PROCEDURAL_AUTHORITY_FIRST",
   JURISPRUDENTIAL: "ISSUE_JURISPRUDENCE_FIRST",
@@ -107,7 +123,8 @@ const RETRIEVAL_STRATEGY = Object.freeze({
   FACT_DRIVEN: "ISSUE_FACT_DRIVEN_AUTHORITY_FIRST",
   EXACT_AUTHORITY: "EXACT_AUTHORITY_FIRST_THEN_ISSUE_SEMANTIC",
   EVIDENCE_DRIVEN: "ISSUE_EVIDENCE_AUTHORITY_FIRST",
-  COMPUTATION: "ISSUE_COMPUTATION_AUTHORITY_FIRST"
+  COMPUTATION: "ISSUE_COMPUTATION_AUTHORITY_FIRST",
+  SOURCE_FINDER: "SOURCE_FINDER_AUTHORITY_FIRST"
 });
 
 const LEGAL_DIMENSION = Object.freeze({
@@ -160,560 +177,13 @@ const STANDARD_REQUIRED_ANSWER_SECTIONS = Object.freeze([
   "F. PRACTICAL NOTE / APPLICATION"
 ]);
 
-const DOMAIN_CONFIGS = Object.freeze({
-  VAT: {
-    domainCode: "VAT",
-    domainName: "Value-Added Tax",
-    keywords: [
-      /\bvat\b/i,
-      /\bvalue[- ]added tax\b/i,
-      /\binput tax\b/i,
-      /\boutput tax\b/i,
-      /\bzero[- ]rated\b/i,
-      /\bvat[- ]exempt\b/i,
-      /\bsection 112\b/i
-    ],
-    defaultSubIssue: "COMPLIANCE",
-    subIssues: {
-      DEFINITION: {
-        keywords: [/\bwhat is vat\b/i, /\bdefine vat\b/i, /\bnature of vat\b/i, /\bmeaning of vat\b/i],
-        retrievalStrategy: "VAT_DEFINITION_AUTHORITY_FIRST",
-        controllingAuthorities: ["NIRC Secs. 105–108"],
-        supportingAuthorities: ["RR 16-2005"],
-        supportingJurisprudence: ["CIR v. Seagate Technology", "CIR v. Aichi Forging", "CIR v. Toshiba"],
-        targetAuthorities: ["NIRC Secs. 105–108", "RR 16-2005"]
-      },
-      ZERO_RATING: {
-        keywords: [/\bzero[- ]rated\b/i, /\b0% vat\b/i, /\bzero rating\b/i],
-        retrievalStrategy: "VAT_ZERO_RATING_AUTHORITY_FIRST",
-        controllingAuthorities: ["NIRC Sec. 106(A)(2)", "NIRC Sec. 108(B)"],
-        supportingAuthorities: ["RR 16-2005", "Revenue regulations on VAT zero-rating"],
-        supportingJurisprudence: ["Supreme Court VAT zero-rating jurisprudence"]
-      },
-      INPUT_TAX: {
-        keywords: [/\binput vat\b/i, /\binput tax\b/i, /\bcreditable input\b/i],
-        retrievalStrategy: "VAT_INPUT_TAX_AUTHORITY_FIRST",
-        controllingAuthorities: ["NIRC Sec. 110"],
-        supportingAuthorities: ["RR 16-2005"]
-      },
-      OUTPUT_TAX: {
-        keywords: [/\boutput vat\b/i, /\boutput tax\b/i, /\bvat payable\b/i],
-        retrievalStrategy: "VAT_OUTPUT_TAX_AUTHORITY_FIRST",
-        controllingAuthorities: ["NIRC Secs. 106–108"],
-        supportingAuthorities: ["RR 16-2005"]
-      },
-      REFUND_CREDIT: {
-        keywords: [/\bvat refund\b/i, /\btax credit certificate\b/i, /\btcc\b/i, /\bsection 112\b/i, /\bunutilized input\b/i, /\bexcess input\b/i],
-        retrievalStrategy: "VAT_REFUND_PROCEDURAL_FIRST",
-        controllingAuthorities: ["NIRC Sec. 112"],
-        supportingAuthorities: ["RR 16-2005 VAT refund provisions"],
-        supportingJurisprudence: ["CIR v. Aichi Forging", "CIR v. San Roque Power", "CIR v. Mirant"]
-      },
-      EXEMPTION: {
-        keywords: [/\bvat exempt\b/i, /\bexempt from vat\b/i, /\bsection 109\b/i],
-        retrievalStrategy: "VAT_EXEMPTION_AUTHORITY_FIRST",
-        controllingAuthorities: ["NIRC Sec. 109"],
-        supportingAuthorities: ["RR 16-2005 VAT exemption provisions"]
-      },
-      REGISTRATION: {
-        keywords: [/\bvat registration\b/i, /\bregister as vat\b/i, /\bthreshold\b/i],
-        retrievalStrategy: "VAT_REGISTRATION_COMPLIANCE_FIRST",
-        controllingAuthorities: ["NIRC Sec. 236"],
-        supportingAuthorities: ["VAT registration regulations and BIR issuances"]
-      },
-      COMPLIANCE: {
-        keywords: [/\bvat return\b/i, /\b2550q\b/i, /\bslsp\b/i, /\bvat filing\b/i, /\bvat invoice\b/i],
-        retrievalStrategy: "VAT_COMPLIANCE_ADMIN_FIRST",
-        controllingAuthorities: ["NIRC VAT filing and invoicing provisions"],
-        supportingAuthorities: ["RR 16-2005", "EOPT VAT invoicing rules"]
-      },
-      TRANSITIONAL_INPUT_TAX: {
-        keywords: [/\btransitional input tax\b/i],
-        retrievalStrategy: "VAT_TRANSITIONAL_INPUT_TAX_AUTHORITY_FIRST",
-        controllingAuthorities: ["NIRC Sec. 111"],
-        supportingAuthorities: ["RR 16-2005"]
-      },
-      DEEMED_SALE: {
-        keywords: [/\bdeemed sale\b/i, /\btransactions deemed sale\b/i],
-        retrievalStrategy: "VAT_DEEMED_SALE_AUTHORITY_FIRST",
-        controllingAuthorities: ["NIRC Sec. 106(B)"],
-        supportingAuthorities: ["RR 16-2005"]
-      }
-    }
-  },
-
-  CIT: {
-    domainCode: "CIT",
-    domainName: "Corporate Income Tax",
-    keywords: [/\bcit\b/i, /\brcit\b/i, /\bmcit\b/i, /\bnolco\b/i, /\bcorporate income tax\b/i, /\bdeduction\b/i],
-    defaultSubIssue: "RCIT",
-    subIssues: {
-      RCIT: {
-        keywords: [/\brcit\b/i, /\bregular corporate income tax\b/i],
-        retrievalStrategy: "CIT_RCIT_STATUTE_FIRST",
-        controllingAuthorities: ["NIRC Sec. 27(A)", "CREATE Act"],
-        supportingAuthorities: ["Applicable income tax regulations"]
-      },
-      MCIT: {
-        keywords: [/\bmcit\b/i, /\bminimum corporate income tax\b/i],
-        retrievalStrategy: "CIT_MCIT_STATUTE_FIRST",
-        controllingAuthorities: ["NIRC Sec. 27(E)", "CREATE Act"],
-        supportingAuthorities: ["RR 9-1998", "RMC 4-2014"]
-      },
-      NOLCO: {
-        keywords: [/\bnolco\b/i, /\bnet operating loss carry[- ]over\b/i],
-        retrievalStrategy: "CIT_NOLCO_STATUTE_FIRST",
-        controllingAuthorities: ["NIRC Sec. 34(D)(3)"],
-        supportingAuthorities: ["RR 25-2020 where applicable", "Relevant NOLCO regulations"]
-      },
-      DEDUCTIONS: {
-        keywords: [/\bdeductible\b/i, /\bdeduction\b/i, /\bnon[- ]deductible\b/i, /\bsubstantiation\b/i],
-        retrievalStrategy: "CIT_DEDUCTIONS_STATUTE_RR_FIRST",
-        controllingAuthorities: ["NIRC Sec. 34"],
-        supportingAuthorities: ["Applicable substantiation regulations"]
-      },
-      IMPROPERLY_ACCUMULATED_EARNINGS: {
-        keywords: [/\biaet\b/i, /\bimproperly accumulated\b/i],
-        retrievalStrategy: "CIT_IAET_STATUTE_FIRST",
-        controllingAuthorities: ["NIRC IAET provisions where applicable"],
-        supportingAuthorities: ["Related BIR issuances"]
-      },
-      RELATED_PARTY: {
-        keywords: [/\brelated party\b/i, /\btransfer pricing\b/i, /\barm'?s length\b/i],
-        retrievalStrategy: "CIT_RELATED_PARTY_TP_FIRST",
-        controllingAuthorities: ["NIRC related-party and anti-avoidance provisions"],
-        supportingAuthorities: ["RR 19-2020", "Transfer pricing documentation rules"]
-      },
-      TAX_TREATY: {
-        keywords: [/\btax treaty\b/i, /\btreaty relief\b/i, /\btrc\b/i, /\bdta\b/i],
-        retrievalStrategy: "CIT_TAX_TREATY_FIRST",
-        controllingAuthorities: ["Applicable tax treaty", "NIRC treaty provisions"],
-        supportingAuthorities: ["BIR treaty relief issuances"]
-      },
-      DEFERRED_TAX: {
-        keywords: [/\bdeferred tax\b/i, /\bdta\b/i, /\bdtl\b/i, /\btemporary difference\b/i],
-        retrievalStrategy: "CIT_DEFERRED_TAX_PFRS_TAX_FIRST",
-        controllingAuthorities: ["PAS 12", "Related NIRC provisions"],
-        supportingAuthorities: ["PFRS/PAS guidance"]
-      },
-      CREATE_INCENTIVES: {
-        keywords: [/\bcreate\b/i, /\bincentive\b/i, /\btax holiday\b/i, /\bscit\b/i],
-        retrievalStrategy: "CIT_CREATE_INCENTIVES_STATUTE_FIRST",
-        controllingAuthorities: ["CREATE Act", "NIRC incentive provisions"],
-        supportingAuthorities: ["FIRB and BIR implementing issuances"]
-      }
-    }
-  },
-
-  IIT: {
-    domainCode: "IIT",
-    domainName: "Individual Income Tax",
-    keywords: [/\bindividual income tax\b/i, /\bcompensation income\b/i, /\bmixed income\b/i, /\bself[- ]employed\b/i, /\bfringe benefit\b/i],
-    defaultSubIssue: "COMPENSATION",
-    subIssues: {
-      COMPENSATION: {
-        keywords: [/\bcompensation\b/i, /\bsalary\b/i, /\bwage\b/i],
-        retrievalStrategy: "IIT_COMPENSATION_STATUTE_FIRST",
-        controllingAuthorities: ["NIRC Sec. 24", "NIRC compensation tax provisions"],
-        supportingAuthorities: ["RR 2-98", "BIR compensation withholding issuances"]
-      },
-      SELF_EMPLOYED: {
-        keywords: [/\bself[- ]employed\b/i, /\bprofessional income\b/i],
-        retrievalStrategy: "IIT_SELF_EMPLOYED_STATUTE_FIRST",
-        controllingAuthorities: ["NIRC Sec. 24"],
-        supportingAuthorities: ["Graduated/8% income tax rules"]
-      },
-      MIXED_INCOME: {
-        keywords: [/\bmixed income\b/i],
-        retrievalStrategy: "IIT_MIXED_INCOME_STATUTE_FIRST",
-        controllingAuthorities: ["NIRC Sec. 24"],
-        supportingAuthorities: ["TRAIN Law and related BIR issuances"]
-      },
-      FRINGE_BENEFITS: {
-        keywords: [/\bfringe benefit\b/i, /\bfbt\b/i],
-        retrievalStrategy: "IIT_FRINGE_BENEFIT_STATUTE_FIRST",
-        controllingAuthorities: ["NIRC Sec. 33"],
-        supportingAuthorities: ["Fringe benefit tax regulations"]
-      },
-      DE_MINIMIS: {
-        keywords: [/\bde minimis\b/i],
-        retrievalStrategy: "IIT_DE_MINIMIS_RR_FIRST",
-        controllingAuthorities: ["NIRC compensation tax provisions"],
-        supportingAuthorities: ["RR 2-98", "De minimis benefits issuances"]
-      },
-      CAPITAL_GAINS: {
-        keywords: [/\bcapital gains\b/i, /\bcgt\b/i, /\bsale of shares\b/i, /\bsale of real property\b/i],
-        retrievalStrategy: "IIT_CAPITAL_GAINS_STATUTE_FIRST",
-        controllingAuthorities: ["NIRC capital gains tax provisions"],
-        supportingAuthorities: ["Relevant CGT regulations"]
-      }
-    }
-  },
-
-  WHT: {
-    domainCode: "WHT",
-    domainName: "Withholding Tax",
-    keywords: [/\bwithholding\b/i, /\bewt\b/i, /\bcwt\b/i, /\bfwt\b/i, /\b2307\b/i, /\b1601\b/i],
-    defaultSubIssue: "CREDITABLE_WHT",
-    subIssues: {
-      CREDITABLE_WHT: {
-        keywords: [/\bewt\b/i, /\bcwt\b/i, /\bcreditable\b/i, /\bexpanded withholding\b/i, /\b2307\b/i],
-        retrievalStrategy: "WHT_EWT_RR_FIRST",
-        controllingAuthorities: ["NIRC Secs. 57–58"],
-        supportingAuthorities: ["RR 2-98", "RR 11-2018", "RR 14-2018"]
-      },
-      FINAL_WHT: {
-        keywords: [/\bfwt\b/i, /\bfinal withholding\b/i, /\bfinal tax\b/i],
-        retrievalStrategy: "WHT_FINAL_WHT_STATUTE_RR_FIRST",
-        controllingAuthorities: ["NIRC final withholding tax provisions"],
-        supportingAuthorities: ["RR 2-98"]
-      },
-      COMPENSATION_WHT: {
-        keywords: [/\bcompensation withholding\b/i, /\bwithholding on compensation\b/i, /\b1601c\b/i],
-        retrievalStrategy: "WHT_COMPENSATION_RR_FIRST",
-        controllingAuthorities: ["NIRC withholding on compensation provisions"],
-        supportingAuthorities: ["RR 2-98", "TRAIN withholding tables"]
-      },
-      WITHHOLDING_AGENT_LIABILITY: {
-        keywords: [/\bwithholding agent\b/i, /\bliability of withholding agent\b/i, /\bfailure to withhold\b/i],
-        retrievalStrategy: "WHT_AGENT_LIABILITY_STATUTE_FIRST",
-        controllingAuthorities: ["NIRC Secs. 57–58", "NIRC penalty provisions"],
-        supportingAuthorities: ["RR 2-98"],
-        supportingJurisprudence: ["Supreme Court withholding agent liability cases"]
-      },
-      TREATY_WHT: {
-        keywords: [/\btreaty withholding\b/i, /\btax treaty\b/i, /\bnonresident\b/i, /\bnrfc\b/i],
-        retrievalStrategy: "WHT_TREATY_FIRST",
-        controllingAuthorities: ["Applicable tax treaty", "NIRC withholding provisions"],
-        supportingAuthorities: ["BIR treaty relief issuances"]
-      }
-    }
-  }
-});
-
-const DOMAIN_CONFIGS_PART_2 = Object.freeze({
-  EST: {
-    domainCode: "EST",
-    domainName: "Estate and Donor's Tax",
-    keywords: [/\bestate tax\b/i, /\bdonor'?s tax\b/i, /\bdonor tax\b/i, /\bgift tax\b/i],
-    defaultSubIssue: "ESTATE_TAX",
-    subIssues: {
-      ESTATE_TAX: {
-        keywords: [/\bestate tax\b/i, /\bdecedent\b/i, /\bgross estate\b/i],
-        retrievalStrategy: "EST_ESTATE_TAX_STATUTE_FIRST",
-        controllingAuthorities: ["NIRC estate tax provisions"],
-        supportingAuthorities: ["Estate tax regulations and BIR issuances"]
-      },
-      DONOR_TAX: {
-        keywords: [/\bdonor'?s tax\b/i, /\bdonor tax\b/i, /\bgift\b/i, /\bdonation\b/i],
-        retrievalStrategy: "EST_DONOR_TAX_STATUTE_FIRST",
-        controllingAuthorities: ["NIRC donor's tax provisions"],
-        supportingAuthorities: ["Donor's tax regulations and BIR issuances"]
-      },
-      EXEMPTIONS: {
-        keywords: [/\bexempt\b/i, /\bdeduction\b/i, /\bstandard deduction\b/i],
-        retrievalStrategy: "EST_EXEMPTIONS_DEDUCTIONS_FIRST",
-        controllingAuthorities: ["NIRC estate and donor's tax exemption/deduction provisions"],
-        supportingAuthorities: ["Applicable estate/donor's tax regulations"]
-      }
-    }
-  },
-
-  PCT: {
-    domainCode: "PCT",
-    domainName: "Percentage Tax",
-    keywords: [/\bpercentage tax\b/i, /\b2551q\b/i, /\bnon[- ]vat\b/i],
-    defaultSubIssue: "PERCENTAGE_TAX",
-    subIssues: {
-      PERCENTAGE_TAX: {
-        keywords: [/\bpercentage tax\b/i, /\b2551q\b/i],
-        retrievalStrategy: "PCT_STATUTE_RR_FIRST",
-        controllingAuthorities: ["NIRC percentage tax provisions"],
-        supportingAuthorities: ["Percentage tax regulations"]
-      },
-      NON_VAT_TAXPAYER: {
-        keywords: [/\bnon[- ]vat\b/i, /\bnon vat\b/i],
-        retrievalStrategy: "PCT_NON_VAT_AUTHORITY_FIRST",
-        controllingAuthorities: ["NIRC percentage tax provisions"],
-        supportingAuthorities: ["BIR non-VAT taxpayer regulations"]
-      },
-      COMPLIANCE: {
-        keywords: [/\bfile\b/i, /\bfiling\b/i, /\bdue date\b/i, /\breturn\b/i],
-        retrievalStrategy: "PCT_COMPLIANCE_ADMIN_FIRST",
-        controllingAuthorities: ["NIRC percentage tax provisions"],
-        supportingAuthorities: ["BIR filing issuances"]
-      }
-    }
-  },
-
-  EXC: {
-    domainCode: "EXC",
-    domainName: "Excise Tax",
-    keywords: [/\bexcise tax\b/i, /\bexcise\b/i, /\bsin tax\b/i],
-    defaultSubIssue: "EXCISE_TAX",
-    subIssues: {
-      EXCISE_TAX: {
-        keywords: [/\bexcise tax\b/i, /\bexcise\b/i],
-        retrievalStrategy: "EXC_STATUTE_FIRST",
-        controllingAuthorities: ["NIRC excise tax provisions"],
-        supportingAuthorities: ["Excise tax regulations and BIR issuances"]
-      },
-      EXEMPTION: {
-        keywords: [/\bexempt\b/i, /\bexemption\b/i],
-        retrievalStrategy: "EXC_EXEMPTION_AUTHORITY_FIRST",
-        controllingAuthorities: ["NIRC excise tax exemption provisions"],
-        supportingAuthorities: ["Applicable excise tax issuances"]
-      },
-      COMPLIANCE: {
-        keywords: [/\breturn\b/i, /\bfiling\b/i, /\bstamp\b/i, /\bmarking\b/i],
-        retrievalStrategy: "EXC_COMPLIANCE_ADMIN_FIRST",
-        controllingAuthorities: ["NIRC excise tax administrative provisions"],
-        supportingAuthorities: ["BIR excise tax compliance issuances"]
-      }
-    }
-  },
-
-  PRE: {
-    domainCode: "PRE",
-    domainName: "Prescription and Assessment",
-    keywords: [/\bprescription\b/i, /\bprescriptive\b/i, /\bloa\b/i, /\bpan\b/i, /\bfan\b/i, /\bfdda\b/i, /\bwaiver\b/i, /\bdue process\b/i, /\bassessment\b/i],
-    defaultSubIssue: "PRESCRIPTION",
-    subIssues: {
-      PRESCRIPTION: {
-        keywords: [/\bprescription\b/i, /\bprescriptive\b/i, /\bthree years\b/i, /\bten years\b/i],
-        retrievalStrategy: "PRE_PRESCRIPTION_STATUTE_JURISPRUDENCE_FIRST",
-        controllingAuthorities: ["NIRC Secs. 203 and 222"],
-        supportingAuthorities: ["Assessment prescription regulations"],
-        supportingJurisprudence: ["Supreme Court prescription cases"]
-      },
-      LOA_VALIDITY: {
-        keywords: [/\bloa\b/i, /\bletter of authority\b/i],
-        retrievalStrategy: "PRE_LOA_VALIDITY_JURISPRUDENCE_FIRST",
-        controllingAuthorities: ["NIRC assessment provisions"],
-        supportingAuthorities: ["BIR audit and LOA issuances"],
-        supportingJurisprudence: ["Medicard Philippines", "Revenue audit LOA jurisprudence"]
-      },
-      PAN_FAN: {
-        keywords: [/\bpan\b/i, /\bfan\b/i, /\bfld\b/i, /\bformal letter of demand\b/i],
-        retrievalStrategy: "PRE_PAN_FAN_DUE_PROCESS_FIRST",
-        controllingAuthorities: ["NIRC Sec. 228"],
-        supportingAuthorities: ["RR 18-2013"],
-        supportingJurisprudence: ["CIR v. Metro Star Superama", "CIR v. Enron Subic Power"]
-      },
-      FDDA: {
-        keywords: [/\bfdda\b/i, /\bfinal decision on disputed assessment\b/i],
-        retrievalStrategy: "PRE_FDDA_PROCEDURAL_FIRST",
-        controllingAuthorities: ["NIRC Sec. 228"],
-        supportingAuthorities: ["RR 18-2013"],
-        supportingJurisprudence: ["CTA and Supreme Court FDDA jurisprudence"]
-      },
-      WAIVER: {
-        keywords: [/\bwaiver\b/i, /\bstatute of limitations\b/i],
-        retrievalStrategy: "PRE_WAIVER_VALIDITY_JURISPRUDENCE_FIRST",
-        controllingAuthorities: ["NIRC Secs. 203 and 222"],
-        supportingAuthorities: ["BIR waiver issuances"],
-        supportingJurisprudence: ["Supreme Court waiver validity cases"]
-      },
-      DUE_PROCESS: {
-        keywords: [/\bdue process\b/i, /\bdenial of due process\b/i],
-        retrievalStrategy: "PRE_DUE_PROCESS_JURISPRUDENCE_FIRST",
-        controllingAuthorities: ["NIRC Sec. 228", "Constitutional due process"],
-        supportingAuthorities: ["RR 18-2013"],
-        supportingJurisprudence: ["CIR v. Metro Star Superama", "CIR v. Enron Subic Power"]
-      }
-    }
-  },
-
-  DIS: {
-    domainCode: "DIS",
-    domainName: "Tax Dispute Resolution",
-    keywords: [/\bprotest\b/i, /\bcta appeal\b/i, /\bappeal to cta\b/i, /\bcompromise\b/i, /\brefund claim\b/i, /\bcriminal tax\b/i],
-    defaultSubIssue: "PROTEST",
-    subIssues: {
-      PROTEST: {
-        keywords: [/\bprotest\b/i, /\bdisputed assessment\b/i],
-        retrievalStrategy: "DIS_PROTEST_PROCEDURAL_FIRST",
-        controllingAuthorities: ["NIRC Secs. 228–229"],
-        supportingAuthorities: ["RR 18-2013"],
-        supportingJurisprudence: ["CIR v. First Express Pawnshop"]
-      },
-      CTA_APPEAL: {
-        keywords: [/\bcta appeal\b/i, /\bcourt of tax appeals\b/i, /\b30 days\b/i],
-        retrievalStrategy: "DIS_CTA_APPEAL_JURISDICTION_FIRST",
-        controllingAuthorities: ["NIRC Sec. 228", "RA 1125 as amended"],
-        supportingAuthorities: ["CTA procedural rules"],
-        supportingJurisprudence: ["Supreme Court and CTA appeal-period jurisprudence"]
-      },
-      REFUND: {
-        keywords: [/\brefund\b/i, /\btax refund\b/i, /\bclaim for refund\b/i],
-        retrievalStrategy: "DIS_REFUND_PROCEDURAL_FIRST",
-        controllingAuthorities: ["NIRC Sec. 229", "Applicable special refund provisions"],
-        supportingAuthorities: ["Refund regulations"],
-        supportingJurisprudence: ["Supreme Court tax refund jurisprudence"]
-      },
-      COMPROMISE: {
-        keywords: [/\bcompromise\b/i, /\babate\b/i, /\babatement\b/i],
-        retrievalStrategy: "DIS_COMPROMISE_ADMIN_FIRST",
-        controllingAuthorities: ["NIRC Sec. 204"],
-        supportingAuthorities: ["BIR compromise and abatement issuances"]
-      },
-      CRIMINAL_TAX_CASE: {
-        keywords: [/\bcriminal tax\b/i, /\btax evasion\b/i, /\bwillful failure\b/i],
-        retrievalStrategy: "DIS_CRIMINAL_TAX_CASE_AUTHORITY_FIRST",
-        controllingAuthorities: ["NIRC criminal penalty provisions"],
-        supportingAuthorities: ["DOJ/BIR tax enforcement issuances"],
-        supportingJurisprudence: ["Criminal tax jurisprudence"]
-      }
-    }
-  },
-
-  LGT: {
-    domainCode: "LGT",
-    domainName: "Local Government Taxation",
-    keywords: [/\blocal business tax\b/i, /\blbt\b/i, /\breal property tax\b/i, /\brpt\b/i, /\blocal franchise tax\b/i, /\blgu\b/i],
-    defaultSubIssue: "BUSINESS_TAX",
-    subIssues: {
-      BUSINESS_TAX: {
-        keywords: [/\blocal business tax\b/i, /\blbt\b/i, /\bmayor'?s permit\b/i],
-        retrievalStrategy: "LGT_BUSINESS_TAX_LGC_FIRST",
-        controllingAuthorities: ["Local Government Code local business tax provisions"],
-        supportingAuthorities: ["LGU ordinances where available"]
-      },
-      REAL_PROPERTY_TAX: {
-        keywords: [/\breal property tax\b/i, /\brpt\b/i, /\bassessed value\b/i],
-        retrievalStrategy: "LGT_RPT_LGC_FIRST",
-        controllingAuthorities: ["Local Government Code real property tax provisions"],
-        supportingAuthorities: ["Local assessment rules"]
-      },
-      LOCAL_FRANCHISE_TAX: {
-        keywords: [/\blocal franchise tax\b/i, /\bfranchise tax\b/i],
-        retrievalStrategy: "LGT_FRANCHISE_TAX_LGC_FIRST",
-        controllingAuthorities: ["Local Government Code franchise tax provisions"],
-        supportingAuthorities: ["LGU ordinances and jurisprudence"]
-      },
-      EXEMPTIONS: {
-        keywords: [/\bexempt\b/i, /\btax exemption\b/i],
-        retrievalStrategy: "LGT_EXEMPTION_LGC_JURISPRUDENCE_FIRST",
-        controllingAuthorities: ["Local Government Code exemption provisions"],
-        supportingJurisprudence: ["Supreme Court local tax exemption jurisprudence"]
-      }
-    }
-  },
-
-  CUS: {
-    domainCode: "CUS",
-    domainName: "Customs and Tariff",
-    keywords: [/\bcustoms\b/i, /\btariff\b/i, /\bimport duty\b/i, /\bcustoms valuation\b/i, /\bpost[- ]clearance audit\b/i],
-    defaultSubIssue: "CUSTOMS_VALUATION",
-    subIssues: {
-      CUSTOMS_VALUATION: {
-        keywords: [/\bcustoms valuation\b/i, /\btransaction value\b/i],
-        retrievalStrategy: "CUS_VALUATION_CMTA_FIRST",
-        controllingAuthorities: ["CMTA customs valuation provisions"],
-        supportingAuthorities: ["BOC customs valuation issuances"]
-      },
-      TARIFF_CLASSIFICATION: {
-        keywords: [/\btariff classification\b/i, /\bahtn\b/i, /\bhs code\b/i],
-        retrievalStrategy: "CUS_TARIFF_CLASSIFICATION_FIRST",
-        controllingAuthorities: ["CMTA tariff classification provisions", "AHTN"],
-        supportingAuthorities: ["BOC tariff classification rulings"]
-      },
-      POST_CLEARANCE_AUDIT: {
-        keywords: [/\bpost[- ]clearance audit\b/i, /\bpca\b/i],
-        retrievalStrategy: "CUS_POST_CLEARANCE_AUDIT_FIRST",
-        controllingAuthorities: ["CMTA post-clearance audit provisions"],
-        supportingAuthorities: ["BOC post-clearance audit issuances"]
-      },
-      CUSTOMS_EXEMPTION: {
-        keywords: [/\bcustoms exemption\b/i, /\bduty exempt\b/i],
-        retrievalStrategy: "CUS_EXEMPTION_CMTA_FIRST",
-        controllingAuthorities: ["CMTA exemption provisions"],
-        supportingAuthorities: ["BOC exemption issuances"]
-      }
-    }
-  },
-
-  SPC: {
-    domainCode: "SPC",
-    domainName: "Transfer Pricing and Special Regimes",
-    keywords: [/\btransfer pricing\b/i, /\bpeza\b/i, /\bcreate incentives\b/i, /\bjoint venture\b/i, /\bfirb\b/i, /\barm'?s length\b/i],
-    defaultSubIssue: "TRANSFER_PRICING",
-    subIssues: {
-      TRANSFER_PRICING: {
-        keywords: [/\btransfer pricing\b/i, /\barm'?s length\b/i, /\btpd\b/i],
-        retrievalStrategy: "SPC_TRANSFER_PRICING_FIRST",
-        controllingAuthorities: ["NIRC related-party and anti-avoidance provisions"],
-        supportingAuthorities: ["RR 19-2020", "Transfer pricing documentation rules", "OECD persuasive guidance where appropriate"]
-      },
-      PEZA: {
-        keywords: [/\bpeza\b/i, /\beconomic zone\b/i],
-        retrievalStrategy: "SPC_PEZA_SPECIAL_REGIME_FIRST",
-        controllingAuthorities: ["PEZA law", "CREATE Act"],
-        supportingAuthorities: ["PEZA, FIRB, and BIR issuances"]
-      },
-      CREATE_INCENTIVES: {
-        keywords: [/\bcreate\b/i, /\bincentive\b/i, /\btax holiday\b/i, /\bscit\b/i],
-        retrievalStrategy: "SPC_CREATE_INCENTIVES_FIRST",
-        controllingAuthorities: ["CREATE Act"],
-        supportingAuthorities: ["FIRB and BIR implementing issuances"]
-      },
-      JOINT_VENTURE: {
-        keywords: [/\bjoint venture\b/i, /\bjv\b/i, /\bunincorporated joint venture\b/i],
-        retrievalStrategy: "SPC_JOINT_VENTURE_CHARACTERIZATION_FIRST",
-        controllingAuthorities: ["NIRC joint venture and income tax provisions"],
-        supportingAuthorities: ["BIR rulings and regulations on joint ventures"]
-      }
-    }
-  },
-
-  CON: {
-    domainCode: "CON",
-    domainName: "Constitutional Tax Issues",
-    keywords: [/\bdue process\b/i, /\bequal protection\b/i, /\buniformity\b/i, /\bconstitutional\b/i, /\bretroactive\b/i, /\btax exemption\b/i],
-    defaultSubIssue: "DUE_PROCESS",
-    subIssues: {
-      DUE_PROCESS: {
-        keywords: [/\bdue process\b/i, /\bnotice\b/i, /\bhearing\b/i],
-        retrievalStrategy: "CON_DUE_PROCESS_CONSTITUTION_JURISPRUDENCE_FIRST",
-        controllingAuthorities: ["Constitutional due process clause"],
-        supportingJurisprudence: ["Supreme Court due process tax cases"]
-      },
-      EQUAL_PROTECTION: {
-        keywords: [/\bequal protection\b/i],
-        retrievalStrategy: "CON_EQUAL_PROTECTION_JURISPRUDENCE_FIRST",
-        controllingAuthorities: ["Constitutional equal protection clause"],
-        supportingJurisprudence: ["Supreme Court equal protection tax cases"]
-      },
-      UNIFORMITY: {
-        keywords: [/\buniformity\b/i, /\buniform and equitable\b/i],
-        retrievalStrategy: "CON_UNIFORMITY_JURISPRUDENCE_FIRST",
-        controllingAuthorities: ["Constitutional uniformity rule"],
-        supportingJurisprudence: ["Supreme Court tax uniformity cases"]
-      },
-      RETROACTIVITY: {
-        keywords: [/\bretroactive\b/i, /\bprospective\b/i, /\bvested rights\b/i],
-        retrievalStrategy: "CON_RETROACTIVITY_JURISPRUDENCE_FIRST",
-        controllingAuthorities: ["Constitutional due process principles"],
-        supportingAuthorities: ["NIRC/BIR rules on retroactivity"],
-        supportingJurisprudence: ["Supreme Court retroactivity tax cases"]
-      },
-      TAX_EXEMPTION: {
-        keywords: [/\btax exemption\b/i, /\bstrictissimi juris\b/i],
-        retrievalStrategy: "CON_TAX_EXEMPTION_JURISPRUDENCE_FIRST",
-        controllingAuthorities: ["Constitutional and statutory tax exemption rules"],
-        supportingJurisprudence: ["Supreme Court tax exemption jurisprudence"]
-      }
-    }
-  }
-});
-
-const ALL_DOMAIN_CONFIGS = Object.freeze({
-  ...DOMAIN_CONFIGS,
-  ...DOMAIN_CONFIGS_PART_2
-});
-
 function normalizeText(value = "") {
-  return String(value || "").replace(/\s+/g, " ").trim();
+  return String(value || "")
+    .replace(/\u00A0/g, " ")
+    .replace(/[“”]/g, '"')
+    .replace(/[‘’]/g, "'")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function lower(value = "") {
@@ -727,6 +197,19 @@ function safeArray(value) {
 
 function unique(values = []) {
   return [...new Set((values || []).filter(Boolean))];
+}
+
+function normalizeQuery(value = "") {
+  const rawQuery = String(value || "");
+  const normalizedQuery = normalizeText(rawQuery)
+    .replace(/^\/(ask|tax|review|quiz|case|source)\s+/i, "")
+    .trim();
+
+  return {
+    rawQuery,
+    normalizedQuery,
+    lowerQuery: lower(normalizedQuery)
+  };
 }
 
 function normalizeYear(year = "") {
@@ -747,63 +230,57 @@ function normalizeIssue(value = "") {
   const raw = String(value || "").trim().toUpperCase().replace(/[\s-]+/g, "_");
 
   const aliases = {
-    VAT: "VAT",
     VALUE_ADDED_TAX: "VAT",
     VAT_LIABILITY: "VAT",
-    VAT_REFUND: "VAT",
-    VAT_EXEMPTION: "VAT",
+    OUTPUT_VAT: "VAT",
+    INPUT_VAT: "VAT",
     ZERO_RATED_SALES: "VAT",
 
-    CIT: "CIT",
     CORPORATE_INCOME_TAX: "CIT",
     INCOME_TAX: "CIT",
     RCIT: "CIT",
     MCIT: "CIT",
     NOLCO: "CIT",
 
-    IIT: "IIT",
     INDIVIDUAL_INCOME_TAX: "IIT",
 
-    WHT: "WHT",
     WITHHOLDING: "WHT",
     WITHHOLDING_TAX: "WHT",
     EWT: "WHT",
     CWT: "WHT",
     FWT: "WHT",
 
+    PERCENTAGE_TAX: "PCT",
+    EXCISE_TAX: "EXC",
+    DOCUMENTARY_STAMP_TAX: "DST",
+    CAPITAL_GAINS_TAX: "CGT",
+
     ESTATE_TAX: "EST",
     DONOR_TAX: "EST",
     DONORS_TAX: "EST",
 
-    PERCENTAGE_TAX: "PCT",
-    PCT: "PCT",
+    LOCAL_BUSINESS_TAX: "LGT",
+    LOCAL_GOVERNMENT_TAX: "LGT",
+    REAL_PROPERTY_TAX: "RPT",
 
-    EXCISE_TAX: "EXC",
-    EXC: "EXC",
+    CUSTOMS: "CUS",
+    CUSTOMS_DUTIES: "CUS",
+    TARIFF: "CUS",
+
+    PEZA: "SPC",
+    INCENTIVES: "SPC",
+    CREATE_INCENTIVES: "SPC",
+    TRANSFER_PRICING: "SPC",
 
     PRESCRIPTION: "PRE",
     ASSESSMENT: "PRE",
-    DUE_PROCESS: "PRE",
-    LOA: "PRE",
-    PAN_FAN: "PRE",
+    TAX_ASSESSMENT: "PRE",
 
     DISPUTE_RESOLUTION: "DIS",
     PROTEST: "DIS",
     CTA_APPEAL: "DIS",
 
-    LOCAL_TAX: "LGT",
-    LOCAL_GOVERNMENT_TAX: "LGT",
-    REAL_PROPERTY_TAX: "LGT",
-
-    CUSTOMS: "CUS",
-    TARIFF: "CUS",
-
-    TRANSFER_PRICING: "SPC",
-    PEZA: "SPC",
-    SPECIAL_REGIME: "SPC",
-
     CONSTITUTIONAL: "CON",
-
     GENERAL_TAX: "GENERAL_TAX"
   };
 
@@ -860,6 +337,452 @@ function normalizeDimension(value = "") {
 
   return aliases[raw] || raw || null;
 }
+
+function regexAny(text = "", patterns = []) {
+  return patterns.some((pattern) => pattern.test(text));
+}
+
+function detectDefinitionPattern(question = "", queryIntent = {}) {
+  const q = lower(question);
+
+  return Boolean(
+    queryIntent?.requiresSimpleDefinition ||
+      queryIntent?.intentType === "SIMPLE_DEFINITION" ||
+      (
+        /\b(what is|define|meaning of|ano ang|ano ibig sabihin|nature of)\b/i.test(q) &&
+        !/\b(explain|discuss|analyze|risk|case|jurisprudence|compare|compute|review|quiz|source)\b/i.test(q)
+      )
+  );
+}
+
+function detectOverviewPattern(question = "", queryIntent = {}) {
+  const q = lower(question);
+
+  return Boolean(
+    queryIntent?.intentType === "EXPLANATION" ||
+      queryIntent?.intentType === "DISCUSSION" ||
+      /\b(explain|discuss|overview|walk me through|tell me about|summarize)\b/i.test(q)
+  );
+}
+
+function detectRiskPattern(question = "", queryIntent = {}) {
+  const q = lower(question);
+
+  return Boolean(
+    queryIntent?.needsRiskAnalysis ||
+      queryIntent?.requiresAuditRiskAnalysis ||
+      /\b(risk|exposure|audit risk|tax risk|deficiency|penalty|assessment exposure|disallowance|position strength)\b/i.test(q)
+  );
+}
+
+function detectSourcePattern(question = "", queryIntent = {}) {
+  const q = lower(question);
+
+  return Boolean(
+    queryIntent?.requiresSourceVisibility ||
+      queryIntent?.requiresSourceInventory ||
+      /\b(source|sources|legal basis|authority|authorities|citation|citations|basis only|source only|show sources)\b/i.test(q)
+  );
+}
+
+function detectCasePattern(question = "", queryIntent = {}) {
+  const q = lower(question);
+
+  return Boolean(
+    queryIntent?.requiresCaseMode ||
+      queryIntent?.needsJurisprudence ||
+      /\b(case|jurisprudence|supreme court|cta|g\.?\s*r\.?\s*no\.?|doctrine|holding)\b/i.test(q)
+  );
+}
+
+const DEFINITION_AUTHORITY_MAP = Object.freeze({
+  VAT_DEFINITION: {
+    primaryIssue: "VAT_LIABILITY",
+    domainCode: "VAT",
+    domainName: "Value-Added Tax",
+    targetAuthorities: ["NIRC Sec. 105", "NIRC Sec. 106", "NIRC Sec. 108", "RR 16-2005"],
+    controllingAuthorities: ["NIRC Sec. 105", "NIRC Sec. 106", "NIRC Sec. 108"],
+    supportingAuthorities: ["RR 16-2005"],
+    supportingJurisprudence: ["CIR v. Seagate Technology", "CIR v. Aichi Forging", "CIR v. Toshiba"]
+  },
+
+  INCOME_TAX_DEFINITION: {
+    primaryIssue: "INCOME_TAX",
+    domainCode: "CIT",
+    domainName: "Income Tax",
+    targetAuthorities: ["NIRC Sec. 23", "NIRC Sec. 24", "NIRC Sec. 27", "NIRC Sec. 31", "NIRC Sec. 32", "NIRC Sec. 34"],
+    controllingAuthorities: ["NIRC Sec. 23", "NIRC Sec. 24", "NIRC Sec. 27", "NIRC Sec. 31", "NIRC Sec. 32", "NIRC Sec. 34"],
+    supportingAuthorities: []
+  },
+
+  WITHHOLDING_TAX_DEFINITION: {
+    primaryIssue: "WITHHOLDING",
+    domainCode: "WHT",
+    domainName: "Withholding Tax",
+    targetAuthorities: ["NIRC Sec. 57", "NIRC Sec. 58", "RR 2-98"],
+    controllingAuthorities: ["NIRC Sec. 57", "NIRC Sec. 58"],
+    supportingAuthorities: ["RR 2-98"]
+  },
+
+  PERCENTAGE_TAX_DEFINITION: {
+    primaryIssue: "PCT",
+    domainCode: "PCT",
+    domainName: "Percentage Tax",
+    targetAuthorities: ["NIRC Sec. 116", "NIRC Sec. 117", "NIRC Sec. 118", "NIRC Sec. 119", "NIRC Sec. 120", "NIRC Sec. 121", "NIRC Sec. 122"],
+    controllingAuthorities: ["NIRC Secs. 116-127"],
+    supportingAuthorities: []
+  },
+
+  EXCISE_TAX_DEFINITION: {
+    primaryIssue: "EXC",
+    domainCode: "EXC",
+    domainName: "Excise Tax",
+    targetAuthorities: ["NIRC Title VI", "NIRC Secs. 129-172"],
+    controllingAuthorities: ["NIRC Title VI", "NIRC Secs. 129-172"],
+    supportingAuthorities: []
+  },
+
+  DST_DEFINITION: {
+    primaryIssue: "DST",
+    domainCode: "DST",
+    domainName: "Documentary Stamp Tax",
+    targetAuthorities: ["NIRC Title VII", "NIRC Secs. 173-201"],
+    controllingAuthorities: ["NIRC Title VII", "NIRC Secs. 173-201"],
+    supportingAuthorities: []
+  },
+
+  CGT_DEFINITION: {
+    primaryIssue: "CGT",
+    domainCode: "CGT",
+    domainName: "Capital Gains Tax",
+    targetAuthorities: ["NIRC Sec. 24(C)", "NIRC Sec. 24(D)", "NIRC Sec. 27(D)(2)", "NIRC Sec. 28(A)(7)", "NIRC Sec. 28(B)(5)"],
+    controllingAuthorities: ["NIRC Sec. 24(C)", "NIRC Sec. 24(D)", "NIRC Sec. 27(D)(2)", "NIRC Sec. 28(A)(7)", "NIRC Sec. 28(B)(5)"],
+    supportingAuthorities: []
+  },
+
+  DONOR_TAX_DEFINITION: {
+    primaryIssue: "EST",
+    domainCode: "EST",
+    domainName: "Donor's Tax",
+    targetAuthorities: ["NIRC Title III", "NIRC Secs. 98-104"],
+    controllingAuthorities: ["NIRC Title III", "NIRC Secs. 98-104"],
+    supportingAuthorities: []
+  },
+
+  ESTATE_TAX_DEFINITION: {
+    primaryIssue: "EST",
+    domainCode: "EST",
+    domainName: "Estate Tax",
+    targetAuthorities: ["NIRC Title III", "NIRC Secs. 84-97"],
+    controllingAuthorities: ["NIRC Title III", "NIRC Secs. 84-97"],
+    supportingAuthorities: []
+  },
+
+  LOCAL_BUSINESS_TAX_DEFINITION: {
+    primaryIssue: "LGT",
+    domainCode: "LGT",
+    domainName: "Local Business Tax",
+    targetAuthorities: ["Local Government Code Sec. 143", "Local Government Code Sec. 151"],
+    controllingAuthorities: ["Local Government Code Sec. 143", "Local Government Code Sec. 151"],
+    supportingAuthorities: ["Applicable LGU ordinance"]
+  },
+
+  REAL_PROPERTY_TAX_DEFINITION: {
+    primaryIssue: "RPT",
+    domainCode: "LGT",
+    domainName: "Real Property Tax",
+    targetAuthorities: ["Local Government Code Sec. 197", "Local Government Code Sec. 198", "Local Government Code Sec. 199", "Local Government Code Sec. 232"],
+    controllingAuthorities: ["Local Government Code Sec. 197", "Local Government Code Sec. 198", "Local Government Code Sec. 199", "Local Government Code Sec. 232"],
+    supportingAuthorities: ["Applicable LGU real property tax ordinance"]
+  },
+
+  CUSTOMS_DUTIES_DEFINITION: {
+    primaryIssue: "CUS",
+    domainCode: "CUS",
+    domainName: "Customs Duties",
+    targetAuthorities: ["CMTA", "CMTA customs valuation provisions", "CMTA tariff classification provisions"],
+    controllingAuthorities: ["CMTA"],
+    supportingAuthorities: ["BOC issuances where applicable"]
+  },
+
+  PEZA_INCENTIVES_DEFINITION: {
+    primaryIssue: "SPC",
+    domainCode: "SPC",
+    domainName: "PEZA / Fiscal Incentives",
+    targetAuthorities: ["CREATE Act", "NIRC incentive provisions", "FIRB issuances", "PEZA law"],
+    controllingAuthorities: ["CREATE Act", "NIRC incentive provisions", "PEZA law"],
+    supportingAuthorities: ["FIRB issuances", "PEZA issuances"]
+  },
+
+  TAX_REFUND_CREDIT_DEFINITION: {
+    primaryIssue: "TAX_REFUND_CREDIT",
+    domainCode: "DIS",
+    domainName: "Tax Refunds and Credits",
+    targetAuthorities: ["NIRC Sec. 112", "NIRC Sec. 204", "NIRC Sec. 229"],
+    controllingAuthorities: ["NIRC Sec. 112", "NIRC Sec. 204", "NIRC Sec. 229"],
+    supportingAuthorities: ["Refund regulations"],
+    supportingJurisprudence: ["CIR v. Aichi Forging", "CIR v. San Roque Power"]
+  },
+
+  ASSESSMENT_PRESCRIPTION_DEFINITION: {
+    primaryIssue: "ASSESSMENT",
+    domainCode: "PRE",
+    domainName: "Tax Assessment and Prescription",
+    targetAuthorities: ["NIRC Sec. 203", "NIRC Sec. 222", "NIRC Sec. 228", "RR 18-2013"],
+    controllingAuthorities: ["NIRC Sec. 203", "NIRC Sec. 222", "NIRC Sec. 228"],
+    supportingAuthorities: ["RR 18-2013"],
+    supportingJurisprudence: ["CIR v. Metro Star Superama", "CIR v. Enron Subic Power"]
+  },
+
+  DEDUCTIONS_DEFINITION: {
+    primaryIssue: "DEDUCTIONS",
+    domainCode: "CIT",
+    domainName: "Deductions",
+    targetAuthorities: ["NIRC Sec. 34", "NIRC Sec. 34(A)", "NIRC Sec. 34(B)", "NIRC Sec. 34(C)", "NIRC Sec. 34(D)", "NIRC Sec. 34(E)", "NIRC Sec. 34(F)", "NIRC Sec. 34(G)", "NIRC Sec. 34(H)", "NIRC Sec. 34(J)", "NIRC Sec. 34(K)"],
+    controllingAuthorities: ["NIRC Sec. 34"],
+    supportingAuthorities: ["Applicable substantiation regulations"]
+  },
+
+  EXEMPTIONS_DEFINITION: {
+    primaryIssue: "EXEMPTIONS",
+    domainCode: "CON",
+    domainName: "Tax Exemptions",
+    targetAuthorities: ["NIRC exemption provisions", "1987 Constitution tax exemption principles", "Supreme Court tax exemption jurisprudence"],
+    controllingAuthorities: ["Applicable statutory exemption provision"],
+    supportingJurisprudence: ["Supreme Court tax exemption jurisprudence"]
+  },
+
+  INPUT_TAX_DEFINITION: {
+    primaryIssue: "INPUT_TAX",
+    domainCode: "VAT",
+    domainName: "Input Tax",
+    targetAuthorities: ["NIRC Sec. 110", "NIRC Sec. 112", "RR 16-2005"],
+    controllingAuthorities: ["NIRC Sec. 110", "NIRC Sec. 112"],
+    supportingAuthorities: ["RR 16-2005"]
+  },
+
+  OUTPUT_TAX_DEFINITION: {
+    primaryIssue: "OUTPUT_TAX",
+    domainCode: "VAT",
+    domainName: "Output Tax",
+    targetAuthorities: ["NIRC Sec. 106", "NIRC Sec. 107", "NIRC Sec. 108", "RR 16-2005"],
+    controllingAuthorities: ["NIRC Sec. 106", "NIRC Sec. 107", "NIRC Sec. 108"],
+    supportingAuthorities: ["RR 16-2005"]
+  },
+
+  ZERO_RATING_DEFINITION: {
+    primaryIssue: "ZERO_RATED_SALES",
+    domainCode: "VAT",
+    domainName: "VAT Zero-Rating",
+    targetAuthorities: ["NIRC Sec. 106(A)(2)", "NIRC Sec. 108(B)", "RR 16-2005"],
+    controllingAuthorities: ["NIRC Sec. 106(A)(2)", "NIRC Sec. 108(B)"],
+    supportingAuthorities: ["RR 16-2005"],
+    supportingJurisprudence: ["CIR v. Seagate Technology", "CIR v. Aichi Forging"]
+  }
+});
+
+const DOMAIN_DETECTORS = Object.freeze([
+  {
+    domainCode: "VAT",
+    primaryIssue: "VAT_LIABILITY",
+    domainName: "Value-Added Tax",
+    defaultSubIssue: "VAT_OVERVIEW",
+    patterns: [/\bvat\b/i, /\bvalue[- ]added tax\b/i],
+    definitionKey: "VAT_DEFINITION"
+  },
+  {
+    domainCode: "VAT",
+    primaryIssue: "INPUT_TAX",
+    domainName: "Input Tax",
+    defaultSubIssue: "INPUT_TAX",
+    patterns: [/\binput tax\b/i, /\binput vat\b/i, /\bcreditable input\b/i],
+    definitionKey: "INPUT_TAX_DEFINITION"
+  },
+  {
+    domainCode: "VAT",
+    primaryIssue: "OUTPUT_TAX",
+    domainName: "Output Tax",
+    defaultSubIssue: "OUTPUT_TAX",
+    patterns: [/\boutput tax\b/i, /\boutput vat\b/i, /\bvat payable\b/i],
+    definitionKey: "OUTPUT_TAX_DEFINITION"
+  },
+  {
+    domainCode: "VAT",
+    primaryIssue: "ZERO_RATED_SALES",
+    domainName: "VAT Zero-Rating",
+    defaultSubIssue: "ZERO_RATING",
+    patterns: [/\bzero[- ]rated\b/i, /\bzero rating\b/i, /\b0%\s*vat\b/i],
+    definitionKey: "ZERO_RATING_DEFINITION"
+  },
+  {
+    domainCode: "VAT",
+    primaryIssue: "VAT_REFUND",
+    domainName: "VAT Refund / Credit",
+    defaultSubIssue: "REFUND_CREDIT",
+    patterns: [/\bvat refund\b/i, /\bunutilized input\b/i, /\bexcess input\b/i, /\bsection 112\b/i, /\bsec\.?\s*112\b/i],
+    definitionKey: "TAX_REFUND_CREDIT_DEFINITION"
+  },
+  {
+    domainCode: "CIT",
+    primaryIssue: "INCOME_TAX",
+    domainName: "Income Tax",
+    defaultSubIssue: "INCOME_TAX_OVERVIEW",
+    patterns: [/\bincome tax\b/i, /\bcorporate income tax\b/i, /\bcit\b/i, /\brcit\b/i, /\bmcit\b/i, /\bnolco\b/i],
+    definitionKey: "INCOME_TAX_DEFINITION"
+  },
+  {
+    domainCode: "WHT",
+    primaryIssue: "WITHHOLDING",
+    domainName: "Withholding Tax",
+    defaultSubIssue: "WITHHOLDING_TAX",
+    patterns: [/\bwithholding tax\b/i, /\bwithholding\b/i, /\bewt\b/i, /\bcwt\b/i, /\bfwt\b/i, /\b2307\b/i],
+    definitionKey: "WITHHOLDING_TAX_DEFINITION"
+  },
+  {
+    domainCode: "PCT",
+    primaryIssue: "PCT",
+    domainName: "Percentage Tax",
+    defaultSubIssue: "PERCENTAGE_TAX",
+    patterns: [/\bpercentage tax\b/i, /\b2551q\b/i, /\bnon[- ]vat\b/i],
+    definitionKey: "PERCENTAGE_TAX_DEFINITION"
+  },
+  {
+    domainCode: "EXC",
+    primaryIssue: "EXC",
+    domainName: "Excise Tax",
+    defaultSubIssue: "EXCISE_TAX",
+    patterns: [/\bexcise tax\b/i, /\bexcise\b/i, /\bsin tax\b/i],
+    definitionKey: "EXCISE_TAX_DEFINITION"
+  },
+  {
+    domainCode: "DST",
+    primaryIssue: "DST",
+    domainName: "Documentary Stamp Tax",
+    defaultSubIssue: "DST",
+    patterns: [/\bdocumentary stamp tax\b/i, /\bdst\b/i],
+    definitionKey: "DST_DEFINITION"
+  },
+  {
+    domainCode: "CGT",
+    primaryIssue: "CGT",
+    domainName: "Capital Gains Tax",
+    defaultSubIssue: "CGT",
+    patterns: [/\bcapital gains tax\b/i, /\bcgt\b/i],
+    definitionKey: "CGT_DEFINITION"
+  },
+  {
+    domainCode: "EST",
+    primaryIssue: "EST",
+    domainName: "Estate Tax",
+    defaultSubIssue: "ESTATE_TAX",
+    patterns: [/\bestate tax\b/i, /\bgross estate\b/i, /\bdecedent\b/i],
+    definitionKey: "ESTATE_TAX_DEFINITION"
+  },
+  {
+    domainCode: "EST",
+    primaryIssue: "EST",
+    domainName: "Donor's Tax",
+    defaultSubIssue: "DONOR_TAX",
+    patterns: [/\bdonor'?s tax\b/i, /\bdonor tax\b/i, /\bdonation\b/i, /\bgift tax\b/i],
+    definitionKey: "DONOR_TAX_DEFINITION"
+  },
+  {
+    domainCode: "LGT",
+    primaryIssue: "LGT",
+    domainName: "Local Business Tax",
+    defaultSubIssue: "LOCAL_BUSINESS_TAX",
+    patterns: [/\blocal business tax\b/i, /\blbt\b/i, /\bmayor'?s permit\b/i],
+    definitionKey: "LOCAL_BUSINESS_TAX_DEFINITION"
+  },
+  {
+    domainCode: "LGT",
+    primaryIssue: "RPT",
+    domainName: "Real Property Tax",
+    defaultSubIssue: "REAL_PROPERTY_TAX",
+    patterns: [/\breal property tax\b/i, /\brpt\b/i],
+    definitionKey: "REAL_PROPERTY_TAX_DEFINITION"
+  },
+  {
+    domainCode: "CUS",
+    primaryIssue: "CUS",
+    domainName: "Customs Duties",
+    defaultSubIssue: "CUSTOMS_DUTIES",
+    patterns: [/\bcustoms\b/i, /\btariff\b/i, /\bimport dut(y|ies)\b/i, /\bcmta\b/i],
+    definitionKey: "CUSTOMS_DUTIES_DEFINITION"
+  },
+  {
+    domainCode: "SPC",
+    primaryIssue: "SPC",
+    domainName: "PEZA / Incentives",
+    defaultSubIssue: "PEZA_INCENTIVES",
+    patterns: [/\bpeza\b/i, /\bincentives?\b/i, /\bcreate incentives\b/i, /\bfirb\b/i, /\bscit\b/i],
+    definitionKey: "PEZA_INCENTIVES_DEFINITION"
+  },
+  {
+    domainCode: "DIS",
+    primaryIssue: "TAX_REFUND_CREDIT",
+    domainName: "Tax Refunds and Credits",
+    defaultSubIssue: "TAX_REFUND_CREDIT",
+    patterns: [/\btax refund\b/i, /\bclaim for refund\b/i, /\btax credit\b/i, /\btcc\b/i],
+    definitionKey: "TAX_REFUND_CREDIT_DEFINITION"
+  },
+  {
+    domainCode: "PRE",
+    primaryIssue: "ASSESSMENT",
+    domainName: "Tax Assessment and Prescription",
+    defaultSubIssue: "ASSESSMENT_PRESCRIPTION",
+    patterns: [/\bassessment\b/i, /\bprescription\b/i, /\bprescriptive\b/i, /\bloa\b/i, /\bpan\b/i, /\bfan\b/i, /\bfdda\b/i, /\bwaiver\b/i],
+    definitionKey: "ASSESSMENT_PRESCRIPTION_DEFINITION"
+  },
+  {
+    domainCode: "CIT",
+    primaryIssue: "DEDUCTIONS",
+    domainName: "Deductions",
+    defaultSubIssue: "DEDUCTIONS",
+    patterns: [/\bdeduction\b/i, /\bdeductible\b/i, /\bnon[- ]deductible\b/i, /\bsubstantiation\b/i],
+    definitionKey: "DEDUCTIONS_DEFINITION"
+  },
+  {
+    domainCode: "CON",
+    primaryIssue: "EXEMPTIONS",
+    domainName: "Tax Exemptions",
+    defaultSubIssue: "EXEMPTIONS",
+    patterns: [/\btax exemption\b/i, /\bexemptions?\b/i, /\bstrictissimi juris\b/i],
+    definitionKey: "EXEMPTIONS_DEFINITION"
+  }
+]);
+
+const ISSUE_SPECIFIC_TARGETS = Object.freeze({
+  VAT_OVERVIEW: ["NIRC Sec. 105", "NIRC Sec. 106", "NIRC Sec. 107", "NIRC Sec. 108", "RR 16-2005"],
+  VAT_RISK_ANALYSIS: ["NIRC Sec. 105", "NIRC Sec. 106", "NIRC Sec. 108", "NIRC Sec. 113", "NIRC Sec. 114", "RR 16-2005"],
+  VAT_EXEMPTION: ["NIRC Sec. 109", "RR 16-2005"],
+  INPUT_TAX: ["NIRC Sec. 110", "NIRC Sec. 112", "RR 16-2005"],
+  OUTPUT_TAX: ["NIRC Sec. 106", "NIRC Sec. 107", "NIRC Sec. 108", "RR 16-2005"],
+  ZERO_RATING: ["NIRC Sec. 106(A)(2)", "NIRC Sec. 108(B)", "RR 16-2005"],
+  REFUND_CREDIT: ["NIRC Sec. 112", "RR 16-2005", "CIR v. Aichi Forging", "CIR v. San Roque Power"],
+
+  INCOME_TAX_OVERVIEW: ["NIRC Sec. 23", "NIRC Sec. 24", "NIRC Sec. 27", "NIRC Sec. 31", "NIRC Sec. 32", "NIRC Sec. 34"],
+  RCIT: ["NIRC Sec. 27(A)", "CREATE Act"],
+  MCIT: ["NIRC Sec. 27(E)", "CREATE Act"],
+  NOLCO: ["NIRC Sec. 34(D)(3)"],
+  DEDUCTIONS: ["NIRC Sec. 34", "NIRC Sec. 34(A)", "NIRC Sec. 34(K)"],
+
+  WITHHOLDING_TAX: ["NIRC Sec. 57", "NIRC Sec. 58", "RR 2-98"],
+  EWT: ["NIRC Sec. 57", "NIRC Sec. 58", "RR 2-98"],
+  FWT: ["NIRC final withholding tax provisions", "RR 2-98"],
+  COMPENSATION_WHT: ["NIRC withholding on compensation provisions", "RR 2-98"],
+
+  ASSESSMENT_PRESCRIPTION: ["NIRC Sec. 203", "NIRC Sec. 222", "NIRC Sec. 228", "RR 18-2013"],
+  LOA_VALIDITY: ["NIRC assessment provisions", "BIR audit and LOA issuances", "Medicard Philippines"],
+  PAN_FAN: ["NIRC Sec. 228", "RR 18-2013", "CIR v. Metro Star Superama", "CIR v. Enron Subic Power"],
+  FDDA: ["NIRC Sec. 228", "RR 18-2013"],
+  WAIVER: ["NIRC Sec. 203", "NIRC Sec. 222", "BIR waiver issuances"],
+
+  LOCAL_BUSINESS_TAX: ["Local Government Code Sec. 143", "Local Government Code Sec. 151"],
+  REAL_PROPERTY_TAX: ["Local Government Code Sec. 197", "Local Government Code Sec. 198", "Local Government Code Sec. 199", "Local Government Code Sec. 232"],
+  CUSTOMS_DUTIES: ["CMTA", "BOC issuances"],
+  PEZA_INCENTIVES: ["CREATE Act", "NIRC incentive provisions", "PEZA law", "FIRB issuances"]
+});
 
 function detectExactAuthority(question = "") {
   const value = normalizeText(question);
@@ -941,93 +864,84 @@ function detectExactAuthority(question = "") {
   };
 }
 
-function scoreDomain(question = "", domainConfig = {}) {
-  const q = normalizeText(question);
+function scoreDomain(question = "", detector = {}) {
   let score = 0;
-
-  for (const pattern of safeArray(domainConfig.keywords)) {
-    if (pattern.test(q)) score += 8;
+  for (const pattern of safeArray(detector.patterns)) {
+    if (pattern.test(question)) score += 20;
   }
-
-  for (const [subIssue, config] of Object.entries(domainConfig.subIssues || {})) {
-    for (const pattern of safeArray(config.keywords)) {
-      if (pattern.test(q)) score += 12;
-    }
-    if (q.toUpperCase().includes(subIssue)) score += 6;
-  }
-
   return score;
 }
 
 function detectTaxDomain(question = "", queryIntent = {}) {
-  const scores = Object.values(ALL_DOMAIN_CONFIGS)
-    .map((domain) => ({
-      domainCode: domain.domainCode,
-      score: scoreDomain(question, domain)
+  const q = normalizeText(question);
+  const scores = DOMAIN_DETECTORS
+    .map((detector) => ({
+      domainCode: detector.domainCode,
+      primaryIssue: detector.primaryIssue,
+      domainName: detector.domainName,
+      defaultSubIssue: detector.defaultSubIssue,
+      definitionKey: detector.definitionKey,
+      score: scoreDomain(q, detector)
     }))
-    .filter((item) => item.score > 0)
-    .sort((a, b) => b.score - a.score);
+    .filter((item) => item.score > 0);
 
-  if (queryIntent?.domainCode && ALL_DOMAIN_CONFIGS[queryIntent.domainCode]) {
+  if (queryIntent?.domainCode) {
     scores.unshift({
-      domainCode: queryIntent.domainCode,
+      domainCode: normalizeIssue(queryIntent.domainCode),
+      primaryIssue: normalizeIssue(queryIntent.primaryIssue || queryIntent.domainCode),
+      domainName: queryIntent.domainName || queryIntent.domainCode,
+      defaultSubIssue: queryIntent.subIssue || "GENERAL",
+      definitionKey: null,
       score: 999
     });
   }
 
-  if (queryIntent?.primaryDomain && ALL_DOMAIN_CONFIGS[queryIntent.primaryDomain]) {
-    scores.unshift({
-      domainCode: queryIntent.primaryDomain,
-      score: 995
-    });
-  }
-
-  return unique(scores.map((item) => item.domainCode)).slice(0, 4);
-}
-
-function detectSubIssueForDomain(question = "", domainConfig = {}, queryIntent = {}) {
-  if (queryIntent?.subIssue && domainConfig.subIssues?.[queryIntent.subIssue]) {
-    return {
-      subIssue: queryIntent.subIssue,
-      confidenceBoost: 25
-    };
-  }
-
-  const scored = Object.entries(domainConfig.subIssues || {})
-    .map(([subIssue, config]) => {
-      let score = 0;
-      for (const pattern of safeArray(config.keywords)) {
-        if (pattern.test(question)) score += 20;
-      }
-      if (question.toUpperCase().includes(subIssue)) score += 8;
-      return { subIssue, score };
-    })
-    .filter((item) => item.score > 0)
-    .sort((a, b) => b.score - a.score);
-
-  if (scored.length) {
-    return {
-      subIssue: scored[0].subIssue,
-      confidenceBoost: scored[0].score
-    };
-  }
-
-  return {
-    subIssue: domainConfig.defaultSubIssue,
-    confidenceBoost: 0
-  };
+  return scores
+    .sort((a, b) => b.score - a.score)
+    .filter((item, index, arr) => arr.findIndex((x) => x.domainCode === item.domainCode && x.primaryIssue === item.primaryIssue) === index)
+    .slice(0, 4);
 }
 
 function detectPrimaryIssue(question = "", queryIntent = {}) {
   const domains = detectTaxDomain(question, queryIntent);
-  return domains[0] || "GENERAL_TAX";
+  return domains[0]?.primaryIssue || "GENERAL_TAX";
 }
 
 function detectSubIssue(question = "", primaryIssue = "GENERAL_TAX", queryIntent = {}) {
-  const domainConfig = ALL_DOMAIN_CONFIGS[primaryIssue];
-  if (!domainConfig) return "GENERAL";
+  const q = lower(question);
 
-  return detectSubIssueForDomain(question, domainConfig, queryIntent).subIssue;
+  if (queryIntent?.subIssue) return queryIntent.subIssue;
+
+  if (detectDefinitionPattern(question, queryIntent)) {
+    const detector = detectTaxDomain(question, queryIntent)[0];
+    return detector?.definitionKey?.replace("_DEFINITION", "") || `${primaryIssue}_DEFINITION`;
+  }
+
+  if (primaryIssue === "VAT_LIABILITY" && detectOverviewPattern(question, queryIntent)) return "VAT_OVERVIEW";
+  if (primaryIssue === "VAT_LIABILITY" && detectRiskPattern(question, queryIntent)) return "VAT_RISK_ANALYSIS";
+  if (/\bvat exempt|exempt from vat|section 109|sec\.?\s*109\b/i.test(q)) return "VAT_EXEMPTION";
+  if (/\bzero[- ]rated|zero rating|0%\s*vat\b/i.test(q)) return "ZERO_RATING";
+  if (/\binput tax|input vat|creditable input\b/i.test(q)) return "INPUT_TAX";
+  if (/\boutput tax|output vat|vat payable\b/i.test(q)) return "OUTPUT_TAX";
+  if (/\bvat refund|section 112|sec\.?\s*112|unutilized input|excess input|tcc\b/i.test(q)) return "REFUND_CREDIT";
+
+  if (/\brcit|regular corporate income tax\b/i.test(q)) return "RCIT";
+  if (/\bmcit|minimum corporate income tax\b/i.test(q)) return "MCIT";
+  if (/\bnolco|net operating loss\b/i.test(q)) return "NOLCO";
+  if (/\bdeductible|deduction|non[- ]deductible|substantiation\b/i.test(q)) return "DEDUCTIONS";
+
+  if (/\bewt|expanded withholding|creditable withholding|cwt|2307\b/i.test(q)) return "EWT";
+  if (/\bfwt|final withholding|final tax\b/i.test(q)) return "FWT";
+  if (/\bcompensation withholding|1601c|withholding on compensation\b/i.test(q)) return "COMPENSATION_WHT";
+
+  if (/\bloa|letter of authority\b/i.test(q)) return "LOA_VALIDITY";
+  if (/\bpan|fan|formal letter of demand|fld\b/i.test(q)) return "PAN_FAN";
+  if (/\bfdda|final decision on disputed assessment\b/i.test(q)) return "FDDA";
+  if (/\bwaiver|statute of limitations\b/i.test(q)) return "WAIVER";
+  if (/\bprescription|prescriptive\b/i.test(q)) return "ASSESSMENT_PRESCRIPTION";
+
+  const detector = detectTaxDomain(question, queryIntent)[0];
+  return detector?.defaultSubIssue || "GENERAL";
 }
 
 function detectLegalDimensions(question = "", primaryIssue = "GENERAL_TAX", subIssue = "GENERAL") {
@@ -1038,8 +952,8 @@ function detectLegalDimensions(question = "", primaryIssue = "GENERAL_TAX", subI
     if (condition) dimensions.push(dimension);
   };
 
-  push(["VAT", "CIT", "IIT", "WHT", "EST", "PCT", "EXC", "LGT", "CUS", "SPC"].includes(primaryIssue), LEGAL_DIMENSION.SUBSTANTIVE);
-  push(["PRE", "DIS"].includes(primaryIssue), LEGAL_DIMENSION.PROCEDURAL);
+  push(["VAT_LIABILITY", "VAT_REFUND", "VAT_EXEMPTION", "ZERO_RATED_SALES", "INPUT_TAX", "OUTPUT_TAX", "INCOME_TAX", "WITHHOLDING", "PCT", "EXC", "DST", "CGT", "EST", "LGT", "RPT", "CUS", "SPC", "DEDUCTIONS", "EXEMPTIONS"].includes(primaryIssue), LEGAL_DIMENSION.SUBSTANTIVE);
+  push(["PRE", "DIS", "ASSESSMENT", "PRESCRIPTION", "TAX_REFUND_CREDIT"].includes(primaryIssue), LEGAL_DIMENSION.PROCEDURAL);
   push(primaryIssue === "CON", LEGAL_DIMENSION.CONSTITUTIONAL);
 
   push(/\bdeadline|due date|filing|appeal|protest|prescription|assessment|return|form|registration\b/i.test(q), LEGAL_DIMENSION.PROCEDURAL);
@@ -1052,8 +966,8 @@ function detectLegalDimensions(question = "", primaryIssue = "GENERAL_TAX", subI
   push(/\beconomic substance|substance over form|sham|simulation\b/i.test(q), LEGAL_DIMENSION.ECONOMIC_SUBSTANCE);
   push(/\bcompute|computation|calculate|how much|tax due|tax payable\b/i.test(q), LEGAL_DIMENSION.COMPUTATIONAL);
 
-  if (subIssue.includes("DUE_PROCESS")) dimensions.push(LEGAL_DIMENSION.CONSTITUTIONAL);
-  if (subIssue.includes("PROTEST") || subIssue.includes("CTA") || subIssue.includes("FDDA")) dimensions.push(LEGAL_DIMENSION.PROCEDURAL);
+  if (/DUE_PROCESS/i.test(subIssue)) dimensions.push(LEGAL_DIMENSION.CONSTITUTIONAL);
+  if (/PROTEST|CTA|FDDA|PAN_FAN|LOA|WAIVER/i.test(subIssue)) dimensions.push(LEGAL_DIMENSION.PROCEDURAL);
 
   return unique(dimensions.length ? dimensions : [LEGAL_DIMENSION.GENERAL]);
 }
@@ -1062,11 +976,12 @@ function detectQueryIntent(question = "", primaryIssue = "GENERAL_TAX", queryInt
   const q = lower(question);
 
   if (queryIntent?.intent) return queryIntent.intent;
-  if (queryIntent?.requiresSourceInventory) return QUERY_INTENT.SOURCE_INVENTORY;
+  if (queryIntent?.requiresSourceInventory || queryIntent?.requiresSourceVisibility || detectSourcePattern(question, queryIntent)) return QUERY_INTENT.SOURCE_INVENTORY;
   if (queryIntent?.requiresComputation || /\bcompute|calculate|how much|tax due|tax payable\b/i.test(q)) return QUERY_INTENT.COMPUTATION;
-  if (queryIntent?.reviewMode || queryIntent?.assessmentMode) return QUERY_INTENT.REVIEW;
-  if (/\bwhat is\b|\bdefine\b|\bmeaning\b|\bnature of\b|\bscope of\b/i.test(q)) return QUERY_INTENT.DEFINITION;
-  if (["PRE", "DIS"].includes(primaryIssue)) return QUERY_INTENT.DISPUTE;
+  if (queryIntent?.reviewMode || queryIntent?.assessmentMode || queryIntent?.requiresReviewMode) return QUERY_INTENT.REVIEW;
+  if (detectDefinitionPattern(question, queryIntent)) return QUERY_INTENT.DEFINITION;
+  if (detectOverviewPattern(question, queryIntent)) return QUERY_INTENT.OVERVIEW;
+  if (["PRE", "DIS", "ASSESSMENT", "PRESCRIPTION"].includes(primaryIssue)) return QUERY_INTENT.DISPUTE;
   if (/\bcan we\b|\bshould we\b|\bis it better\b|\bstructure\b|\bplanning\b|\btax efficient\b/i.test(q)) return QUERY_INTENT.PLANNING;
   if (/\bfile|filing|payment|return|registration|deadline|due date|submit|comply\b/i.test(q)) return QUERY_INTENT.COMPLIANCE;
 
@@ -1074,33 +989,63 @@ function detectQueryIntent(question = "", primaryIssue = "GENERAL_TAX", queryInt
 }
 
 function buildLegalQuestionPresented({ question = "", primaryIssue, subIssue, domainName }) {
-  const templates = {
-    VAT: `What Value-Added Tax rule governs the ${subIssue || "classified VAT issue"}?`,
-    CIT: `What Corporate Income Tax rule governs the ${subIssue || "classified CIT issue"}?`,
-    IIT: `What Individual Income Tax rule governs the ${subIssue || "classified IIT issue"}?`,
-    WHT: `What withholding tax rule governs the ${subIssue || "classified WHT issue"}?`,
-    EST: `What estate or donor's tax rule governs the ${subIssue || "classified EST issue"}?`,
-    PCT: `What percentage tax rule governs the ${subIssue || "classified PCT issue"}?`,
-    EXC: `What excise tax rule governs the ${subIssue || "classified EXC issue"}?`,
-    PRE: `What prescription, assessment, or due process rule governs the ${subIssue || "classified PRE issue"}?`,
-    DIS: `What tax dispute or remedy rule governs the ${subIssue || "classified DIS issue"}?`,
-    LGT: `What local government taxation rule governs the ${subIssue || "classified LGT issue"}?`,
-    CUS: `What customs or tariff rule governs the ${subIssue || "classified CUS issue"}?`,
-    SPC: `What transfer pricing or special regime rule governs the ${subIssue || "classified SPC issue"}?`,
-    CON: `What constitutional tax rule governs the ${subIssue || "classified CON issue"}?`
-  };
+  if (detectDefinitionPattern(question)) {
+    return `What is the controlling legal definition or foundational rule for ${domainName || primaryIssue}?`;
+  }
 
-  return templates[primaryIssue] || normalizeText(question) || `What Philippine tax rule governs the issue under ${domainName || "the classified domain"}?`;
+  if (detectOverviewPattern(question)) {
+    return `What is the governing legal framework for ${domainName || primaryIssue}, including its main statutory and regulatory basis?`;
+  }
+
+  if (detectRiskPattern(question)) {
+    return `What tax risk or exposure arises under ${domainName || primaryIssue}, considering the classified issue ${subIssue}?`;
+  }
+
+  return normalizeText(question) || `What Philippine tax rule governs ${domainName || primaryIssue} / ${subIssue}?`;
 }
 
-function buildAuthoritiesFromConfig(domainConfig = {}, subIssue = "GENERAL", exactAuthority = {}) {
-  const subConfig = domainConfig.subIssues?.[subIssue] || {};
-  const controllingAuthorities = unique(safeArray(subConfig.controllingAuthorities));
-  const supportingAuthorities = unique(safeArray(subConfig.supportingAuthorities));
-  const supportingJurisprudence = unique(safeArray(subConfig.supportingJurisprudence));
+function getDefinitionAuthorityFor(question = "", detector = null, primaryIssue = "", subIssue = "") {
+  if (!detectDefinitionPattern(question)) return null;
+
+  const definitionKey =
+    detector?.definitionKey ||
+    `${subIssue}_DEFINITION` ||
+    `${primaryIssue}_DEFINITION`;
+
+  return DEFINITION_AUTHORITY_MAP[definitionKey] || null;
+}
+
+function buildAuthorities({ question = "", detector = null, primaryIssue, subIssue, exactAuthority }) {
+  const definitionAuthorities = getDefinitionAuthorityFor(question, detector, primaryIssue, subIssue);
+
+  let controllingAuthorities = [];
+  let supportingAuthorities = [];
+  let supportingJurisprudence = [];
+
+  if (definitionAuthorities) {
+    controllingAuthorities = safeArray(definitionAuthorities.controllingAuthorities);
+    supportingAuthorities = safeArray(definitionAuthorities.supportingAuthorities);
+    supportingJurisprudence = safeArray(definitionAuthorities.supportingJurisprudence);
+  } else {
+    const issueTargets = safeArray(ISSUE_SPECIFIC_TARGETS[subIssue]);
+    controllingAuthorities = issueTargets.filter((item) =>
+      /\bNIRC\b|\bCMTA\b|\bLocal Government Code\b|\bCREATE\b|\bPEZA law\b|\b1987 Constitution\b/i.test(item)
+    );
+    supportingAuthorities = issueTargets.filter((item) =>
+      /\bRR\b|\bRMC\b|\bRMO\b|\bFIRB\b|\bBOC\b|\bLGU\b/i.test(item)
+    );
+    supportingJurisprudence = issueTargets.filter((item) =>
+      /\bCIR v\.|\bSupreme Court\b|\bCTA\b|\bG\.R\./i.test(item)
+    );
+
+    if (!issueTargets.length) {
+      controllingAuthorities = ["Applicable NIRC / primary statute provisions"];
+      supportingAuthorities = ["Applicable Revenue Regulations / BIR issuances"];
+    }
+  }
 
   if (exactAuthority?.detected && exactAuthority.reference) {
-    if (exactAuthority.type === "SUPREME_COURT" || exactAuthority.type === "CTA_DIVISION") {
+    if (["SUPREME_COURT", "CTA_DIVISION", "CTA_EN_BANC"].includes(exactAuthority.type)) {
       supportingJurisprudence.unshift(exactAuthority.reference);
     } else if (["RR", "RMC", "RMO", "RAMO", "BIR_RULING"].includes(exactAuthority.type)) {
       supportingAuthorities.unshift(exactAuthority.reference);
@@ -1123,75 +1068,53 @@ function buildAuthoritiesFromConfig(domainConfig = {}, subIssue = "GENERAL", exa
   };
 }
 
-function buildTargetAuthorities({ primaryIssue, subIssue, exactAuthority }) {
-  const domainConfig = ALL_DOMAIN_CONFIGS[primaryIssue];
-  if (!domainConfig) {
-    return {
-      groups: {},
-      flat: exactAuthority?.reference ? [exactAuthority.reference] : []
-    };
-  }
-
-  const authoritySet = buildAuthoritiesFromConfig(domainConfig, subIssue, exactAuthority);
-
-  return {
-    groups: {
-      controllingAuthorities: authoritySet.controllingAuthorities,
-      supportingAuthorities: authoritySet.supportingAuthorities,
-      supportingJurisprudence: authoritySet.supportingJurisprudence
-    },
-    flat: authoritySet.targetAuthorities
-  };
+function detectRetrievalStrategy({ question = "", queryIntent = {}, primaryIssue, subIssue, exactAuthority }) {
+  if (exactAuthority?.detected) return RETRIEVAL_STRATEGY.EXACT_AUTHORITY;
+  if (detectSourcePattern(question, queryIntent)) return RETRIEVAL_STRATEGY.SOURCE_FINDER;
+  if (detectDefinitionPattern(question, queryIntent)) return RETRIEVAL_STRATEGY.FAST_DEFINITION;
+  if (detectCasePattern(question, queryIntent)) return RETRIEVAL_STRATEGY.JURISPRUDENTIAL;
+  if (detectRiskPattern(question, queryIntent)) return RETRIEVAL_STRATEGY.FACT_DRIVEN;
+  if (/\bcompute|calculate|how much|tax due|tax payable\b/i.test(question)) return RETRIEVAL_STRATEGY.COMPUTATION;
+  if (["PRE", "DIS", "ASSESSMENT", "PRESCRIPTION", "TAX_REFUND_CREDIT"].includes(primaryIssue)) return RETRIEVAL_STRATEGY.PROCEDURAL;
+  if (["CUS", "LGT", "RPT"].includes(primaryIssue)) return RETRIEVAL_STRATEGY.PROCEDURAL;
+  if (["SPC"].includes(primaryIssue)) return RETRIEVAL_STRATEGY.FACT_DRIVEN;
+  return RETRIEVAL_STRATEGY.MIXED;
 }
 
-function buildKeyTerms({ question = "", primaryIssue, subIssue, domains = [], exactAuthority }) {
-  const terms = [primaryIssue, subIssue, ...domains];
-
-  if (exactAuthority?.reference) terms.push(exactAuthority.reference);
-
-  const domainConfig = ALL_DOMAIN_CONFIGS[primaryIssue];
-  const subConfig = domainConfig?.subIssues?.[subIssue];
-
-  for (const pattern of safeArray(domainConfig?.keywords)) {
-    if (pattern.test(question)) terms.push(domainConfig.domainName);
-  }
-
-  for (const pattern of safeArray(subConfig?.keywords)) {
-    if (pattern.test(question)) terms.push(subIssue);
-  }
-
-  const q = lower(question);
-  const patterns = [
-    ["legal basis", /\blegal basis\b/i],
-    ["jurisprudence", /\bjurisprudence|case|supreme court|cta\b/i],
-    ["computation", /\bcompute|calculate|tax due|tax payable\b/i],
-    ["audit risk", /\baudit risk|misstatement|working paper\b/i],
-    ["source inventory", /\blist sources|source inventory|authorities\b/i],
-    ["conflict analysis", /\bconflict|prevails|override|hierarchy\b/i],
-    ["fact pattern", /\bfacts|scenario|actual transaction\b/i],
-    ["contract interpretation", /\bcontract|agreement|clause\b/i]
-  ];
-
-  for (const [term, regex] of patterns) {
-    if (regex.test(q)) terms.push(term);
-  }
-
-  return unique(terms);
+function detectResponseMode({ question = "", queryIntent = {}, complexity }) {
+  if (queryIntent?.responseMode) return queryIntent.responseMode;
+  if (detectDefinitionPattern(question, queryIntent)) return "FAST_DEFINITION";
+  if (detectSourcePattern(question, queryIntent)) return "SOURCE";
+  if (queryIntent?.requiresReviewMode) return "REVIEWER";
+  if (queryIntent?.requiresQuizMode) return "QUIZ";
+  if (/\bcompute|calculate|how much|tax due|tax payable\b/i.test(question)) return "COMPUTATION";
+  if (detectRiskPattern(question, queryIntent)) return "AUDIT_RISK";
+  if (detectCasePattern(question, queryIntent)) return "CASE_ANALYSIS";
+  if (complexity === COMPLEXITY.COMPLEX || complexity === COMPLEXITY.MULTI_ISSUE) return "TECHNICAL";
+  return "STANDARD";
 }
 
-function detectComplexity({ question = "", primaryIssue, domains = [], keyTerms = [], queryIntent = {} }) {
+function detectOrchestrationMode({ question = "", queryIntent = {}, responseMode, complexity }) {
+  if (queryIntent?.orchestrationMode) return queryIntent.orchestrationMode;
+  if (responseMode === "FAST_DEFINITION") return "FAST_DEFINITION";
+  if (responseMode === "SOURCE") return "SOURCE_LOOKUP";
+  if (responseMode === "REVIEWER") return "REVIEWER";
+  if (responseMode === "QUIZ") return "QUIZ";
+  if (responseMode === "CASE_ANALYSIS") return "CASE_ANALYSIS";
+  if (responseMode === "AUDIT_RISK" || detectRiskPattern(question, queryIntent)) return "COMPLEX_ADVISORY";
+  if (detectCasePattern(question, queryIntent)) return "LEGAL_ANALYSIS";
+  if (complexity === COMPLEXITY.COMPLEX || complexity === COMPLEXITY.MULTI_ISSUE) return "LEGAL_ANALYSIS";
+  return "STANDARD_TAX";
+}
+
+function detectComplexity({ question = "", domains = [], queryIntent = {} }) {
   let score = 0;
   const q = lower(question);
 
   if (domains.length > 1) score += 2;
-  if (keyTerms.length >= 6) score += 1;
   if (question.length > 220) score += 1;
-  if (["PRE", "DIS", "SPC", "CON", "CUS"].includes(primaryIssue)) score += 1;
   if (queryIntent?.requiresFactPatternAnalysis || queryIntent?.requiresAuditRisk || queryIntent?.requiresComputation) score += 1;
-
-  if (/\bconflict|prevails|hierarchy|doctrine|jurisprudence|contract|agreement|actual facts|audit risk|legal consequence|economic substance\b/i.test(q)) {
-    score += 2;
-  }
+  if (/\bconflict|prevails|hierarchy|doctrine|jurisprudence|contract|agreement|actual facts|audit risk|legal consequence|economic substance\b/i.test(q)) score += 2;
 
   if (score >= 4) return COMPLEXITY.MULTI_ISSUE;
   if (score === 3) return COMPLEXITY.COMPLEX;
@@ -1202,10 +1125,10 @@ function detectComplexity({ question = "", primaryIssue, domains = [], keyTerms 
 function detectFactSensitivity(primaryIssue, subIssue, question = "") {
   const q = lower(question);
 
-  if (/\bwhat is|define|meaning|nature\b/i.test(q)) return FACT_SENSITIVITY.LOW;
+  if (detectDefinitionPattern(question)) return FACT_SENSITIVITY.LOW;
 
   if (
-    ["PRE", "DIS", "SPC", "CUS"].includes(primaryIssue) ||
+    ["PRE", "DIS", "SPC", "CUS", "ASSESSMENT", "PRESCRIPTION"].includes(primaryIssue) ||
     /\bcontract|agreement|invoice|receipt|actual|facts|scenario|transaction|booked|audit|supporting document|economic substance|substance over form\b/i.test(q)
   ) {
     return FACT_SENSITIVITY.HIGH;
@@ -1214,44 +1137,27 @@ function detectFactSensitivity(primaryIssue, subIssue, question = "") {
   return FACT_SENSITIVITY.MODERATE;
 }
 
-function detectRetrievalStrategy({ primaryIssue, subIssue, exactAuthority, factSensitivity }) {
-  if (exactAuthority?.detected) return RETRIEVAL_STRATEGY.EXACT_AUTHORITY;
+function buildKeyTerms({ question = "", primaryIssue, subIssue, domains = [], exactAuthority }) {
+  const terms = [primaryIssue, subIssue, ...domains.map((d) => d.domainCode || d)];
 
-  const domainConfig = ALL_DOMAIN_CONFIGS[primaryIssue];
-  const subConfig = domainConfig?.subIssues?.[subIssue];
+  if (exactAuthority?.reference) terms.push(exactAuthority.reference);
+  if (detectDefinitionPattern(question)) terms.push("definition", "foundational rule", "primary authority");
+  if (detectOverviewPattern(question)) terms.push("overview", "framework");
+  if (detectRiskPattern(question)) terms.push("risk analysis", "exposure");
+  if (detectSourcePattern(question)) terms.push("source inventory", "authorities");
+  if (detectCasePattern(question)) terms.push("jurisprudence", "case law");
 
-  if (subConfig?.retrievalStrategy) return subConfig.retrievalStrategy;
-
-  if (["PRE", "DIS", "CON"].includes(primaryIssue)) return RETRIEVAL_STRATEGY.JURISPRUDENTIAL;
-  if (["CUS", "LGT", "PCT", "EXC"].includes(primaryIssue)) return RETRIEVAL_STRATEGY.PROCEDURAL;
-  if (["SPC"].includes(primaryIssue)) return RETRIEVAL_STRATEGY.FACT_DRIVEN;
-  if (factSensitivity === FACT_SENSITIVITY.HIGH) return RETRIEVAL_STRATEGY.FACT_DRIVEN;
-
-  return RETRIEVAL_STRATEGY.MIXED;
-}
-
-function detectCaseRoleFilters(primaryIssue, subIssue, domains = []) {
-  const filters = [];
-
-  if (["PRE", "DIS", "CON"].includes(primaryIssue)) filters.push("jurisprudence", "procedural", "due process", "hierarchy");
-  if (primaryIssue === "VAT") filters.push("VAT", subIssue);
-  if (primaryIssue === "CIT") filters.push("income tax", subIssue);
-  if (primaryIssue === "WHT") filters.push("withholding tax", subIssue);
-  if (primaryIssue === "SPC") filters.push("special regime", "transfer pricing", "incentives");
-  if (primaryIssue === "CUS") filters.push("customs", "tariff", "CMTA");
-  if (domains.length) filters.push(...domains);
-
-  return unique(filters);
+  return unique(terms);
 }
 
 function buildExcludedAuthorities(primaryIssue, subIssue) {
   const exclusions = [];
 
-  if (!(primaryIssue === "VAT" && subIssue === "REFUND_CREDIT")) {
+  if (!(primaryIssue === "VAT_REFUND" || subIssue === "REFUND_CREDIT")) {
     exclusions.push("VAT refund cases unless the issue involves Section 112 or input VAT refund");
   }
 
-  if (!["PRE", "DIS", "CON"].includes(primaryIssue)) {
+  if (!["PRE", "DIS", "CON", "ASSESSMENT", "PRESCRIPTION"].includes(primaryIssue)) {
     exclusions.push("procedural protest, CTA jurisdiction, or constitutional due process cases unless directly relevant");
   }
 
@@ -1260,6 +1166,19 @@ function buildExcludedAuthorities(primaryIssue, subIssue) {
   }
 
   return unique(exclusions);
+}
+
+function detectCaseRoleFilters(primaryIssue, subIssue, domains = []) {
+  const filters = [];
+
+  if (["PRE", "DIS", "CON", "ASSESSMENT", "PRESCRIPTION"].includes(primaryIssue)) filters.push("jurisprudence", "procedural", "due process", "hierarchy");
+  if (primaryIssue.includes("VAT") || domains.some((d) => d.domainCode === "VAT")) filters.push("VAT", subIssue);
+  if (primaryIssue === "INCOME_TAX" || domains.some((d) => d.domainCode === "CIT")) filters.push("income tax", subIssue);
+  if (primaryIssue === "WITHHOLDING" || domains.some((d) => d.domainCode === "WHT")) filters.push("withholding tax", subIssue);
+  if (primaryIssue === "SPC") filters.push("special regime", "transfer pricing", "incentives");
+  if (primaryIssue === "CUS") filters.push("customs", "tariff", "CMTA");
+
+  return unique(filters);
 }
 
 function detectMischaracterizationRisk(primaryIssue, subIssue, question = "") {
@@ -1271,62 +1190,60 @@ function detectMischaracterizationRisk(primaryIssue, subIssue, question = "") {
     return "high";
   }
 
-  if (["VAT", "WHT", "CIT"].includes(primaryIssue)) return "moderate";
+  if (["VAT_LIABILITY", "VAT_REFUND", "WITHHOLDING", "INCOME_TAX", "DEDUCTIONS"].includes(primaryIssue)) return "moderate";
 
   return "low";
 }
 
-function shouldRequireTransactionCharacterization(primaryIssue, question = "") {
-  return (
-    ["SPC"].includes(primaryIssue) ||
-    /\breimbursement|pass[- ]through|principal|agent|concession|lease|bundled|package|economic substance|substance over form|joint venture|related party\b/i.test(question)
-  );
+function buildHierarchyFlags({ question = "", queryIntent = {}, primaryIssue, subIssue }) {
+  const needsConflict =
+    queryIntent?.needsConflictAnalysis ||
+    queryIntent?.requiresConflictAnalysis ||
+    /\bconflict|contradict|prevails|override|hierarchy|versus|vs\.?\b/i.test(question);
+
+  const needsJurisprudence =
+    queryIntent?.needsJurisprudence ||
+    detectCasePattern(question, queryIntent) ||
+    needsConflict;
+
+  return {
+    preserveAuthorityHierarchy: true,
+    requiresHierarchyValidation: true,
+    requiresSupersessionCheck: true,
+    requiresConflictValidation: true,
+    requiresProvisionLevelGrounding: detectDefinitionPattern(question, queryIntent) || /\bsection|sec\.?|nirc|rr|rmc|rmo|legal basis\b/i.test(question),
+    requiresJurisprudence: Boolean(needsJurisprudence),
+    requiresConflictAnalysis: Boolean(needsConflict),
+    antiHallucinationLevel: needsConflict ? "STRICT_MAX" : "STRICT",
+    mustNotInventAuthorities: true,
+    mustSayIndexedSourceNotFound: true,
+    mustPreserveUncertainty: true,
+    authorityHierarchy: [
+      "CONSTITUTION",
+      "NIRC_CMTA_LGC_PRIMARY_STATUTES",
+      "TAX_TREATIES",
+      "SUPREME_COURT_EN_BANC",
+      "SUPREME_COURT_DIVISION",
+      "CTA_EN_BANC",
+      "CTA_DIVISION",
+      "REVENUE_REGULATIONS",
+      "RMC_RMO_RAMO",
+      "BIR_RULINGS",
+      "LGU_BOC_ISSUANCES",
+      "PFRS_PAS_PSA_WHEN_ACCOUNTING_APPLIES",
+      "OECD_FOREIGN_PERSUASIVE",
+      "CPA_REVIEWER_NOTES_SECONDARY_MATERIALS"
+    ]
+  };
 }
 
-function shouldRequireFactPattern(primaryIssue, factSensitivity) {
-  return (
-    factSensitivity === FACT_SENSITIVITY.HIGH ||
-    ["PRE", "DIS", "SPC", "CUS", "LGT"].includes(primaryIssue)
-  );
-}
-
-function shouldRequireDoctrinalAnalysis(primaryIssue, question = "") {
-  return (
-    ["PRE", "DIS", "CON"].includes(primaryIssue) ||
-    /\bdoctrine|jurisprudence|case|conflict|prevails|hierarchy\b/i.test(question)
-  );
-}
-
-function shouldRunConflictCheck(primaryIssue, question = "") {
-  return (
-    /\bconflict|contradict|prevails|override|hierarchy|versus|vs\.?\b/i.test(question) ||
-    ["PRE", "DIS", "CON"].includes(primaryIssue)
-  );
-}
-
-function detectResponseMode(complexity, queryIntent = {}) {
-  if (queryIntent?.requiresSimpleDefinition || complexity === COMPLEXITY.SIMPLE) return "FAST_DEFINITION";
-  if (queryIntent?.requiresComputation) return "COMPUTATION";
-  if (queryIntent?.requiresAuditRisk) return "AUDIT_RISK";
-  if (queryIntent?.requiresSourceInventory) return "SOURCE_INVENTORY";
-  if (complexity === COMPLEXITY.MULTI_ISSUE || complexity === COMPLEXITY.COMPLEX) return "TECHNICAL";
-  return "STANDARD";
-}
-
-function detectOrchestrationMode(complexity, flags = {}) {
-  if (flags.requiresFactPatternAnalysis || flags.requiresAuditRiskAnalysis) return "COMPLEX_ADVISORY";
-  if (flags.requiresJurisprudence || flags.requiresConflictAnalysis) return "LEGAL_ANALYSIS";
-  if (complexity === COMPLEXITY.SIMPLE) return "FAST_DEFINITION";
-  return "STANDARD_TAX";
-}
-
-function computeConfidence(domainScore = 0, subIssueBoost = 0, exactAuthority = {}) {
+function computeConfidence({ domainScore = 0, exactAuthority = {}, isDefinition = false, targetAuthorities = [] }) {
   let confidence = 0.45;
 
-  if (domainScore >= 8) confidence += 0.2;
-  if (domainScore >= 20) confidence += 0.15;
-  if (subIssueBoost >= 20) confidence += 0.15;
-  if (exactAuthority?.detected) confidence += 0.1;
+  if (domainScore >= 20) confidence += 0.25;
+  if (exactAuthority?.detected) confidence += 0.12;
+  if (isDefinition) confidence += 0.1;
+  if (targetAuthorities.length >= 2) confidence += 0.08;
 
   return Math.min(0.98, Number(confidence.toFixed(2)));
 }
@@ -1335,33 +1252,55 @@ function buildOrchestrationClassification(classification = {}) {
   return {
     primaryIssue: classification.primaryIssue || "GENERAL_TAX",
     subIssue: classification.subIssue || "GENERAL",
-    domainCode: classification.domainCode || classification.primaryIssue || null,
+    domainCode: classification.domainCode || null,
     domainName: classification.domainName || null,
     subIssues: safeArray(classification.subIssues),
+
     retrievalStrategy: classification.retrievalStrategy || RETRIEVAL_STRATEGY.MIXED,
     targetAuthorities: safeArray(classification.targetAuthorities),
     controllingAuthorities: safeArray(classification.controllingAuthorities),
     supportingAuthorities: safeArray(classification.supportingAuthorities),
     supportingJurisprudence: safeArray(classification.supportingJurisprudence),
-    requiredAnswerSections: safeArray(classification.requiredAnswerSections),
+
     legalDimensions: safeArray(classification.legalDimensions),
     taxDomains: safeArray(classification.taxDomains),
-    issueComplexity: classification.issueComplexity || classification.complexity || COMPLEXITY.MODERATE,
-    complexity: classification.complexity || COMPLEXITY.MODERATE,
+
     responseMode: classification.responseMode || "STANDARD",
     orchestrationMode: classification.orchestrationMode || "STANDARD_TAX",
-    doctrinalMode: classification.doctrinalMode || "NONE",
+
+    complexity: classification.complexity || COMPLEXITY.MODERATE,
+    issueComplexity: classification.issueComplexity || classification.complexity || COMPLEXITY.MODERATE,
+    factSensitivity: classification.factSensitivity || FACT_SENSITIVITY.MODERATE,
+
     requiresLegalBasis: Boolean(classification.requiresLegalBasis),
+    requiresProvisionLevelGrounding: Boolean(classification.requiresProvisionLevelGrounding),
     requiresJurisprudence: Boolean(classification.requiresJurisprudence),
     requiresComputation: Boolean(classification.requiresComputation),
     requiresAuditRiskAnalysis: Boolean(classification.requiresAuditRiskAnalysis),
     requiresFactPatternAnalysis: Boolean(classification.requiresFactPatternAnalysis),
     requiresSourceInventory: Boolean(classification.requiresSourceInventory),
     requiresConflictAnalysis: Boolean(classification.requiresConflictAnalysis),
+
+    preserveAuthorityHierarchy: true,
+    requiresHierarchyValidation: true,
+    requiresSupersessionCheck: true,
+    requiresConflictValidation: true,
+
+    antiHallucinationLevel: classification.antiHallucinationLevel || "STRICT",
+    mustNotInventAuthorities: true,
+    mustSayIndexedSourceNotFound: true,
+    mustPreserveUncertainty: true,
+
     tpmProfile: classification.tpmProfile || "standard",
     confidence: classification.confidence || 0,
     fallbackClassificationUsed: Boolean(classification.fallbackClassificationUsed),
-    exactAuthority: classification.exactAuthority || { detected: false, type: null, reference: null },
+
+    exactAuthority: classification.exactAuthority || {
+      detected: false,
+      type: null,
+      reference: null
+    },
+
     contextPolicy: {
       useContextOrchestrationEngine: true,
       preventRawFullDocumentInjection: true,
@@ -1373,185 +1312,219 @@ function buildOrchestrationClassification(classification = {}) {
 }
 
 function classifyTaxIssue(question = "", queryIntent = {}) {
-  const normalizedQuestion = normalizeText(question);
-  const exactAuthority = detectExactAuthority(normalizedQuestion);
+  const { rawQuery, normalizedQuery } = normalizeQuery(question);
+  const exactAuthority = detectExactAuthority(normalizedQuery);
 
-  const detectedDomains = detectTaxDomain(normalizedQuestion, queryIntent);
-  const primaryIssue = detectedDomains[0] || "GENERAL_TAX";
-  const domainConfig = ALL_DOMAIN_CONFIGS[primaryIssue];
+  const detectedDomains = detectTaxDomain(normalizedQuery, queryIntent);
+  const detector = detectedDomains[0] || null;
 
-  const domainScores = Object.values(ALL_DOMAIN_CONFIGS)
-    .map((domain) => ({
-      domainCode: domain.domainCode,
-      score: scoreDomain(normalizedQuestion, domain)
-    }))
-    .sort((a, b) => b.score - a.score);
+  const primaryIssue =
+    queryIntent?.primaryIssue ||
+    detector?.primaryIssue ||
+    "GENERAL_TAX";
 
-  const domainScore = domainScores.find((item) => item.domainCode === primaryIssue)?.score || 0;
+  const domainCode =
+    queryIntent?.domainCode ||
+    detector?.domainCode ||
+    normalizeIssue(primaryIssue) ||
+    "GENERAL_TAX";
 
-  const subIssueResult = domainConfig
-    ? detectSubIssueForDomain(normalizedQuestion, domainConfig, queryIntent)
-    : { subIssue: "GENERAL", confidenceBoost: 0 };
+  const domainName =
+    queryIntent?.domainName ||
+    detector?.domainName ||
+    "General Philippine Tax";
 
-  const subIssue = subIssueResult.subIssue;
-  const legalDimensions = detectLegalDimensions(normalizedQuestion, primaryIssue, subIssue);
-  const finalQueryIntent = detectQueryIntent(normalizedQuestion, primaryIssue, queryIntent);
+  const subIssue = detectSubIssue(normalizedQuery, primaryIssue, queryIntent);
+  const legalDimensions = detectLegalDimensions(normalizedQuery, primaryIssue, subIssue);
+  const finalQueryIntent = detectQueryIntent(normalizedQuery, primaryIssue, queryIntent);
 
-  const authorityTargets = buildTargetAuthorities({
+  const authoritySet = buildAuthorities({
+    question: normalizedQuery,
+    detector,
     primaryIssue,
     subIssue,
     exactAuthority
   });
 
-  const keyTerms = buildKeyTerms({
-    question: normalizedQuestion,
-    primaryIssue,
-    subIssue,
+  const complexity = detectComplexity({
+    question: normalizedQuery,
     domains: detectedDomains,
-    exactAuthority
-  });
-
-  const complexityFlag = detectComplexity({
-    question: normalizedQuestion,
-    primaryIssue,
-    domains: detectedDomains,
-    keyTerms,
     queryIntent
   });
 
-  const factSensitivity = detectFactSensitivity(primaryIssue, subIssue, normalizedQuestion);
+  const factSensitivity = detectFactSensitivity(primaryIssue, subIssue, normalizedQuery);
 
   const retrievalStrategy = detectRetrievalStrategy({
+    question: normalizedQuery,
+    queryIntent,
     primaryIssue,
     subIssue,
-    exactAuthority,
-    factSensitivity
+    exactAuthority
+  });
+
+  const responseMode = detectResponseMode({
+    question: normalizedQuery,
+    queryIntent,
+    complexity
+  });
+
+  const orchestrationMode = detectOrchestrationMode({
+    question: normalizedQuery,
+    queryIntent,
+    responseMode,
+    complexity
+  });
+
+  const hierarchyFlags = buildHierarchyFlags({
+    question: normalizedQuery,
+    queryIntent,
+    primaryIssue,
+    subIssue
   });
 
   const flags = {
     requiresLegalBasis:
-      queryIntent?.requiresLegalBasis === true ||
-      /\blegal basis|basis|authority|source\b/i.test(normalizedQuestion),
+      true,
+
+    requiresProvisionLevelGrounding:
+      hierarchyFlags.requiresProvisionLevelGrounding,
 
     requiresJurisprudence:
-      queryIntent?.requiresJurisprudence === true ||
-      /\bjurisprudence|case|supreme court|cta|g\.?\s*r\.?\s*no\b/i.test(normalizedQuestion),
+      hierarchyFlags.requiresJurisprudence,
 
     requiresComputation:
       queryIntent?.requiresComputation === true ||
-      /\bcompute|calculate|how much|tax due|tax payable|amount\b/i.test(normalizedQuestion),
+      /\bcompute|calculate|how much|tax due|tax payable|amount\b/i.test(normalizedQuery),
 
     requiresAuditRiskAnalysis:
       queryIntent?.requiresAuditRisk === true ||
       queryIntent?.requiresAuditRiskAnalysis === true ||
-      /\baudit risk|misstatement|working paper|afs|pfrs|pas\b/i.test(normalizedQuestion),
+      detectRiskPattern(normalizedQuery, queryIntent),
 
     requiresFactPatternAnalysis:
       queryIntent?.requiresFactPatternAnalysis === true ||
-      shouldRequireFactPattern(primaryIssue, factSensitivity),
+      factSensitivity === FACT_SENSITIVITY.HIGH,
 
     requiresSourceInventory:
       queryIntent?.requiresSourceInventory === true ||
-      /\blist.*source|source inventory|what authorities|complete list of authorities\b/i.test(normalizedQuestion),
+      queryIntent?.requiresSourceVisibility === true ||
+      detectSourcePattern(normalizedQuery, queryIntent),
 
     requiresConflictAnalysis:
-      queryIntent?.requiresConflictAnalysis === true ||
-      shouldRunConflictCheck(primaryIssue, normalizedQuestion)
+      hierarchyFlags.requiresConflictAnalysis
   };
 
-  const transactionCharacterizationRequired =
-    shouldRequireTransactionCharacterization(primaryIssue, normalizedQuestion);
-
-  const doctrinalAnalysisRequired =
-    shouldRequireDoctrinalAnalysis(primaryIssue, normalizedQuestion) ||
-    flags.requiresJurisprudence ||
-    flags.requiresConflictAnalysis;
-
-  const responseMode = detectResponseMode(complexityFlag, {
-    ...queryIntent,
-    ...flags
+  const confidence = computeConfidence({
+    domainScore: detector?.score || 0,
+    exactAuthority,
+    isDefinition: detectDefinitionPattern(normalizedQuery, queryIntent),
+    targetAuthorities: authoritySet.targetAuthorities
   });
 
-  const orchestrationMode = detectOrchestrationMode(complexityFlag, {
-    ...flags,
-    requiresJurisprudence: flags.requiresJurisprudence,
-    requiresConflictAnalysis: flags.requiresConflictAnalysis
-  });
-
-  const confidence = computeConfidence(domainScore, subIssueResult.confidenceBoost, exactAuthority);
-  const fallbackClassificationUsed = confidence < 0.55 || !domainConfig;
-
-  const legalQuestionPresented = buildLegalQuestionPresented({
-    question: normalizedQuestion,
+  const keyTerms = buildKeyTerms({
+    question: normalizedQuery,
     primaryIssue,
     subIssue,
-    domainName: domainConfig?.domainName
+    domains: detectedDomains,
+    exactAuthority
   });
 
   const classification = {
     engine: "TINA_ISSUE_CLASSIFICATION_ENGINE",
     version: ENGINE_VERSION,
-    originalQuery: question,
-    normalizedQuery: normalizedQuestion,
+
+    originalQuery: rawQuery,
+    normalizedQuery,
 
     primaryIssue,
     subIssue,
-    domainCode: domainConfig?.domainCode || primaryIssue,
-    domainName: domainConfig?.domainName || "General Philippine Tax",
+    domainCode,
+    domainName,
 
     subIssues: unique([subIssue]),
 
     queryIntent: finalQueryIntent,
     preservedQueryIntent: queryIntent || {},
 
-    legalQuestionPresented,
+    legalQuestionPresented: buildLegalQuestionPresented({
+      question: normalizedQuery,
+      primaryIssue,
+      subIssue,
+      domainName
+    }),
+
     legalDimensions,
 
-    taxDomains: detectedDomains,
-    candidateDomains: domainScores.slice(0, 4),
+    taxDomains: unique(detectedDomains.map((d) => d.domainCode)),
+    candidateDomains: detectedDomains,
 
-    targetAuthorities: authorityTargets.flat,
-    targetAuthorityGroups: authorityTargets.groups,
-    controllingAuthorities: authorityTargets.groups.controllingAuthorities || [],
-    supportingAuthorities: authorityTargets.groups.supportingAuthorities || [],
-    supportingJurisprudence: authorityTargets.groups.supportingJurisprudence || [],
+    targetAuthorities: authoritySet.targetAuthorities,
+    targetAuthorityGroups: {
+      controllingAuthorities: authoritySet.controllingAuthorities,
+      supportingAuthorities: authoritySet.supportingAuthorities,
+      supportingJurisprudence: authoritySet.supportingJurisprudence
+    },
+    controllingAuthorities: authoritySet.controllingAuthorities,
+    supportingAuthorities: authoritySet.supportingAuthorities,
+    supportingJurisprudence: authoritySet.supportingJurisprudence,
 
     requiredAnswerSections: STANDARD_REQUIRED_ANSWER_SECTIONS,
 
     keyTerms,
-    complexityFlag,
-    complexity: complexityFlag,
-    issueComplexity: complexityFlag,
+    complexity,
+    complexityFlag: complexity,
+    issueComplexity: complexity,
     factSensitivity,
-    retrievalStrategy,
 
+    retrievalStrategy,
     responseMode,
     orchestrationMode,
-    doctrinalMode: doctrinalAnalysisRequired ? "DOCTRINAL_ANALYSIS_REQUIRED" : "NONE",
+
+    doctrinalMode:
+      flags.requiresJurisprudence || flags.requiresConflictAnalysis
+        ? "DOCTRINAL_ANALYSIS_REQUIRED"
+        : "NONE",
 
     ...flags,
+    ...hierarchyFlags,
 
-    transactionCharacterizationRequired,
+    transactionCharacterizationRequired:
+      /\breimbursement|pass[- ]through|principal|agent|concession|lease|bundled|package|economic substance|substance over form|joint venture|related party\b/i.test(normalizedQuery),
+
     factPatternRequired: flags.requiresFactPatternAnalysis,
-    doctrinalAnalysisRequired,
+
+    doctrinalAnalysisRequired:
+      flags.requiresJurisprudence || flags.requiresConflictAnalysis,
+
     potentialConflictCheck: flags.requiresConflictAnalysis,
 
     caseRoleFilters: detectCaseRoleFilters(primaryIssue, subIssue, detectedDomains),
     excludedAuthorities: buildExcludedAuthorities(primaryIssue, subIssue),
-    mischaracterizationRisk: detectMischaracterizationRisk(primaryIssue, subIssue, normalizedQuestion),
+    mischaracterizationRisk: detectMischaracterizationRisk(primaryIssue, subIssue, normalizedQuery),
 
     exactAuthority,
 
     confidence,
-    fallbackClassificationUsed,
-    tpmProfile: queryIntent?.tpmProfile || (complexityFlag === COMPLEXITY.SIMPLE ? "light" : complexityFlag === COMPLEXITY.MULTI_ISSUE ? "expanded" : "standard"),
+    fallbackClassificationUsed:
+      confidence < 0.55 || primaryIssue === "GENERAL_TAX",
+
+    tpmProfile:
+      queryIntent?.tpmProfile ||
+      (
+        complexity === COMPLEXITY.SIMPLE
+          ? "light"
+          : complexity === COMPLEXITY.MULTI_ISSUE
+            ? "expanded"
+            : "standard"
+      ),
 
     retrievalControls: {
       issueFirst: true,
       suppressIssueMismatchedCases: true,
-      suppressUnrelatedProceduralCases: !["PRE", "DIS"].includes(primaryIssue),
+      suppressUnrelatedProceduralCases:
+        !["PRE", "DIS", "ASSESSMENT", "PRESCRIPTION"].includes(primaryIssue),
       suppressVatRefundCasesUnlessRefundIssue:
-        primaryIssue === "VAT" && subIssue !== "REFUND_CREDIT",
+        !(primaryIssue === "VAT_REFUND" || subIssue === "REFUND_CREDIT"),
       requirePrimaryAuthorityForDefinitions:
         finalQueryIntent === QUERY_INTENT.DEFINITION,
       requireFactDisclosureBeforeConclusion: flags.requiresFactPatternAnalysis,
@@ -1564,9 +1537,10 @@ function classifyTaxIssue(question = "", queryIntent = {}) {
     downstreamRouting: {
       useRetrievalEngine: true,
       useRerankerEngine: true,
-      useJurisprudenceEngine: doctrinalAnalysisRequired,
+      useJurisprudenceEngine: flags.requiresJurisprudence,
       useConflictEngine: flags.requiresConflictAnalysis,
-      useTransactionCharacterizationEngine: transactionCharacterizationRequired,
+      useTransactionCharacterizationEngine:
+        /\breimbursement|pass[- ]through|principal|agent|concession|lease|bundled|package|economic substance|substance over form|joint venture|related party\b/i.test(normalizedQuery),
       useFactPatternEngine: flags.requiresFactPatternAnalysis,
       useEvidenceEvaluationEngine:
         flags.requiresFactPatternAnalysis ||
@@ -1590,12 +1564,48 @@ function classifyTaxIssue(question = "", queryIntent = {}) {
     }
   };
 
-  const enriched = enrichIssueClassification(classification, normalizedQuestion);
+  let enriched = classification;
+
+  try {
+    enriched = enrichIssueClassification(classification, normalizedQuery) || classification;
+  } catch (error) {
+    enriched = {
+      ...classification,
+      enrichmentError: error?.message || "main-tax-engine-classification enrichment failed"
+    };
+  }
 
   return {
     ...enriched,
     orchestrationClassification: buildOrchestrationClassification(enriched)
   };
+}
+
+function classifyIssue(question = "", queryIntent = {}) {
+  return classifyTaxIssue(question, queryIntent);
+}
+
+function classifyQueryIssue(question = "", queryIntent = {}) {
+  return classifyTaxIssue(question, queryIntent);
+}
+
+function runIssueClassification(question = "", queryIntent = {}) {
+  if (typeof question === "object" && question !== null) {
+    return classifyTaxIssue(
+      question.question || question.query || question.userQuery || "",
+      question.queryIntent || question.intent || queryIntent || {}
+    );
+  }
+
+  return classifyTaxIssue(question, queryIntent);
+}
+
+function issueClassificationEngine(question = "", queryIntent = {}) {
+  return runIssueClassification(question, queryIntent);
+}
+
+function classify(question = "", queryIntent = {}) {
+  return runIssueClassification(question, queryIntent);
 }
 
 function buildIssueClassificationSearchQueries(classification = {}, maxQueries = 8) {
@@ -1644,15 +1654,19 @@ function detectDocIssues(doc = {}) {
 
   const issues = [];
 
-  for (const [domainCode, config] of Object.entries(ALL_DOMAIN_CONFIGS)) {
-    for (const pattern of safeArray(config.keywords)) {
-      if (pattern.test(haystack)) issues.push(domainCode);
+  for (const detector of DOMAIN_DETECTORS) {
+    if (regexAny(haystack, detector.patterns)) {
+      issues.push(detector.domainCode, detector.primaryIssue, detector.defaultSubIssue);
+    }
+  }
+
+  for (const [subIssue, authorities] of Object.entries(ISSUE_SPECIFIC_TARGETS)) {
+    if (haystack.includes(subIssue.toLowerCase().replace(/_/g, " "))) {
+      issues.push(subIssue);
     }
 
-    for (const [subIssue, subConfig] of Object.entries(config.subIssues || {})) {
-      for (const pattern of safeArray(subConfig.keywords)) {
-        if (pattern.test(haystack)) issues.push(domainCode, subIssue);
-      }
+    for (const authority of safeArray(authorities)) {
+      if (haystack.includes(lower(authority))) issues.push(subIssue);
     }
   }
 
@@ -1661,20 +1675,23 @@ function detectDocIssues(doc = {}) {
 
 function isIssueClassificationCompatibleWithDoc(classification = {}, doc = {}) {
   const docIssues = detectDocIssues(doc);
+
   const primary = classification.primaryIssue || classification.domainCode;
+  const domainCode = classification.domainCode;
   const subIssue = classification.subIssue;
   const subIssues = safeArray(classification.subIssues);
 
   if (!docIssues.length) return true;
 
   if (docIssues.includes(primary)) return true;
+  if (domainCode && docIssues.includes(domainCode)) return true;
   if (subIssue && docIssues.includes(subIssue)) return true;
   if (subIssues.some((issue) => docIssues.includes(issue))) return true;
 
   if (primary === "GENERAL_TAX") return true;
 
   if (
-    primary === "VAT" &&
+    primary !== "VAT_REFUND" &&
     subIssue !== "REFUND_CREDIT" &&
     docIssues.includes("REFUND_CREDIT")
   ) {
@@ -1690,11 +1707,27 @@ function issueClassificationEngineHealthCheck() {
     engine: "TINA_ISSUE_CLASSIFICATION_ENGINE",
     version: ENGINE_VERSION,
     esmCompatible: true,
+
+    role: "legal_tax_issue_detector_only",
+
     noOpenAICalls: true,
     noRetrieval: true,
     noAnswerGeneration: true,
-    allTaxDomainsSupported: true,
-    supportedDomains: Object.keys(ALL_DOMAIN_CONFIGS),
+    noRendering: true,
+
+    definitionPatternReady: true,
+    overviewPatternReady: true,
+    riskPatternReady: true,
+    sourcePatternReady: true,
+    casePatternReady: true,
+
+    definitionAuthorityMapReady: true,
+    preciseTargetAuthoritiesReady: true,
+
+    allRequestedDomainsSupported: true,
+
+    supportedDomains: unique(DOMAIN_DETECTORS.map((d) => d.domainCode)),
+
     issueFirstRetrievalReady: true,
     domainCodeReady: true,
     domainNameReady: true,
@@ -1704,20 +1737,31 @@ function issueClassificationEngineHealthCheck() {
     supportingAuthoritiesReady: true,
     supportingJurisprudenceReady: true,
     legalDimensionsReady: true,
+
+    hierarchyFlagsReady: true,
+    supersessionFlagsReady: true,
+    conflictValidationFlagsReady: true,
+    antiHallucinationFlagsReady: true,
+
     sourceOrderingPolicyReady: true,
     conflictDisplayPolicyReady: true,
     jurisprudenceFilteringReady: true,
     conflictGateReady: true,
-    transactionCharacterizationReady: true,
-    factPatternReady: true,
+
     mainTaxEngineClassificationIntegrated: true,
     contextOrchestrationCompatible: true,
     orchestrationClassificationReady: true,
     compactClassificationReady: true,
-    passesPrimaryIssue: true,
-    passesSubIssue: true,
-    passesRetrievalStrategy: true,
-    passesTargetAuthorities: true
+
+    compatibilityWrappersReady: true,
+    exports: [
+      "classifyTaxIssue",
+      "classifyIssue",
+      "classifyQueryIssue",
+      "runIssueClassification",
+      "issueClassificationEngine",
+      "classify"
+    ]
   };
 }
 
@@ -1731,16 +1775,27 @@ export {
   RETRIEVAL_STRATEGY,
   LEGAL_DIMENSION,
   AUTHORITY_TYPE,
+
   normalizeIssue,
   normalizeAuthority,
   normalizeDimension,
+  normalizeQuery,
+
   detectExactAuthority,
   detectTaxDomain,
   detectPrimaryIssue,
   detectSubIssue,
   detectLegalDimensions,
+
   buildOrchestrationClassification,
+
   classifyTaxIssue,
+  classifyIssue,
+  classifyQueryIssue,
+  runIssueClassification,
+  issueClassificationEngine,
+  classify,
+
   buildIssueClassificationSearchQueries,
   isIssueClassificationCompatibleWithDoc,
   issueClassificationEngineHealthCheck
@@ -1756,16 +1811,27 @@ export default {
   RETRIEVAL_STRATEGY,
   LEGAL_DIMENSION,
   AUTHORITY_TYPE,
+
   normalizeIssue,
   normalizeAuthority,
   normalizeDimension,
+  normalizeQuery,
+
   detectExactAuthority,
   detectTaxDomain,
   detectPrimaryIssue,
   detectSubIssue,
   detectLegalDimensions,
+
   buildOrchestrationClassification,
+
   classifyTaxIssue,
+  classifyIssue,
+  classifyQueryIssue,
+  runIssueClassification,
+  issueClassificationEngine,
+  classify,
+
   buildIssueClassificationSearchQueries,
   isIssueClassificationCompatibleWithDoc,
   issueClassificationEngineHealthCheck
