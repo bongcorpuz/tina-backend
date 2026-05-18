@@ -3,16 +3,21 @@
 
 /**
  * TINA RAG Answer Handler
- * Version: 8.2.0
+ * Version: 8.3.0
  *
- * Boundary rule:
- * - no duplicate retrieval
- * - no direct standalone OpenAI call
- * - no giant prompt assembly
- * - no raw full-document injection
- * - calls context-orchestration-engine.js only
- * - preserves answer-renderer.js, citation-formatting-engine.js,
- *   and final-answer-compliance.js downstream compatibility
+ * Constitutional role:
+ * - Consume retrieved/validated sources.
+ * - Delegate all model-context assembly and OpenAI calls to context-orchestration-engine.js.
+ * - Preserve source grounding, tax-engine metadata, and authority packets.
+ * - Apply final compliance and renderer compatibility.
+ *
+ * This file must NOT:
+ * - perform retrieval,
+ * - perform vector search,
+ * - call OpenAI directly,
+ * - inject raw full documents,
+ * - fabricate authorities,
+ * - render citations independently from the renderer/compliance layer.
  */
 
 import {
@@ -33,7 +38,7 @@ import {
   buildCompactConversationHistory
 } from "./ask-helpers.js";
 
-const ENGINE_VERSION = "8.2.0";
+const ENGINE_VERSION = "8.3.0";
 
 const DEFAULT_MODEL =
   process.env.OPENAI_MODEL ||
@@ -72,23 +77,32 @@ const SUPPORTED_TAX_DOMAINS = Object.freeze([
 
 const AUTHORITY_PRECEDENCE = Object.freeze({
   CONSTITUTION: 1,
+
   STATUTE: 2,
   NIRC: 2,
   TAX_CODE: 2,
   CMTA: 2,
   LGC: 2,
   REPUBLIC_ACT: 2,
+
   TAX_TREATY: 3,
-  SUPREME_COURT_EN_BANC: 4,
-  SUPREME_COURT: 5,
-  CTA_EN_BANC: 6,
-  CTA_DIVISION: 7,
-  RR: 8,
-  REVENUE_REGULATION: 8,
-  RMC: 9,
-  RMO: 9,
-  RAMO: 9,
-  BIR_RULING: 10,
+
+  RR: 4,
+  REVENUE_REGULATION: 4,
+
+  RMC: 5,
+  RMO: 5,
+  RAMO: 5,
+
+  BIR_RULING: 6,
+
+  SUPREME_COURT_EN_BANC: 7,
+  SUPREME_COURT: 8,
+
+  CTA_EN_BANC: 9,
+  CTA_DIVISION: 10,
+  COURT_OF_APPEALS: 10,
+
   BOC_ISSUANCE: 11,
   FIRB_ISSUANCE: 11,
   PEZA_MEMO: 11,
@@ -97,13 +111,27 @@ const AUTHORITY_PRECEDENCE = Object.freeze({
   PAS: 11,
   PSA: 11,
   LGU: 11,
+
   OECD_GUIDANCE: 12,
   FOREIGN_AUTHORITY: 12,
+
   SECONDARY: 13,
   CPA_NOTES: 13,
   REVIEW_MATERIALS: 13,
+
   UNKNOWN: 99
 });
+
+const PRIMARY_AUTHORITY_TYPES = new Set([
+  "CONSTITUTION",
+  "STATUTE",
+  "NIRC",
+  "TAX_CODE",
+  "CMTA",
+  "LGC",
+  "REPUBLIC_ACT",
+  "TAX_TREATY"
+]);
 
 const ADMIN_AUTHORITY_TYPES = new Set([
   "RR",
@@ -145,7 +173,7 @@ function lower(value = "") {
 }
 
 function unique(values = []) {
-  return [...new Set((values || []).filter(Boolean))];
+  return [...new Set(safeArray(values).filter(Boolean))];
 }
 
 function trimText(value = "", max = 1200) {
@@ -182,6 +210,7 @@ function normalizeAuthorityType(value = "") {
 
   const aliases = {
     CONSTITUTION: "CONSTITUTION",
+
     STATUTES: "STATUTE",
     STATUTE: "STATUTE",
     LAW: "STATUTE",
@@ -195,28 +224,38 @@ function normalizeAuthorityType(value = "") {
     LOCAL_GOVERNMENT_CODE: "LGC",
     REPUBLIC_ACT: "REPUBLIC_ACT",
     RA: "REPUBLIC_ACT",
+
     TAX_TREATY: "TAX_TREATY",
     TREATY: "TAX_TREATY",
+
+    REVENUE_REGULATION: "RR",
+    REVENUE_REGULATIONS: "RR",
+    RR: "RR",
+
+    REVENUE_MEMORANDUM_CIRCULAR: "RMC",
+    RMC: "RMC",
+
+    REVENUE_MEMORANDUM_ORDER: "RMO",
+    RMO: "RMO",
+
+    REVENUE_AUDIT_MEMORANDUM_ORDER: "RAMO",
+    RAMO: "RAMO",
+
+    BIR_RULING: "BIR_RULING",
+    BIR_RULINGS: "BIR_RULING",
+
     SUPREME_COURT_EN_BANC: "SUPREME_COURT_EN_BANC",
     SUPREME_COURT: "SUPREME_COURT",
     SC: "SUPREME_COURT",
     CASE: "SUPREME_COURT",
+    CASE_LAW: "SUPREME_COURT",
     JURISPRUDENCE: "SUPREME_COURT",
+
     CTA_EN_BANC: "CTA_EN_BANC",
     CTA_DIVISION: "CTA_DIVISION",
     COURT_OF_APPEALS: "COURT_OF_APPEALS",
     CA: "COURT_OF_APPEALS",
-    REVENUE_REGULATION: "RR",
-    REVENUE_REGULATIONS: "RR",
-    RR: "RR",
-    REVENUE_MEMORANDUM_CIRCULAR: "RMC",
-    RMC: "RMC",
-    REVENUE_MEMORANDUM_ORDER: "RMO",
-    RMO: "RMO",
-    REVENUE_AUDIT_MEMORANDUM_ORDER: "RAMO",
-    RAMO: "RAMO",
-    BIR_RULING: "BIR_RULING",
-    BIR_RULINGS: "BIR_RULING",
+
     BOC: "BOC_ISSUANCE",
     BOC_ISSUANCE: "BOC_ISSUANCE",
     FIRB: "FIRB_ISSUANCE",
@@ -225,18 +264,23 @@ function normalizeAuthorityType(value = "") {
     PEZA_MEMO: "PEZA_MEMO",
     SEC: "SEC_GUIDANCE",
     SEC_GUIDANCE: "SEC_GUIDANCE",
+
     PFRS: "PFRS",
     PAS: "PAS",
     PSA: "PSA",
+
     LGU: "LGU",
     LGU_ISSUANCE: "LGU",
+
     OECD: "OECD_GUIDANCE",
     OECD_GUIDANCE: "OECD_GUIDANCE",
     FOREIGN: "FOREIGN_AUTHORITY",
     FOREIGN_AUTHORITY: "FOREIGN_AUTHORITY",
+
     CPA_NOTES: "CPA_NOTES",
     REVIEW_MATERIALS: "REVIEW_MATERIALS",
     SECONDARY: "SECONDARY",
+
     UNKNOWN: "UNKNOWN"
   };
 
@@ -345,6 +389,7 @@ function compactSource(source = {}, index = 0) {
       source.authorityLabel ||
       source.authority_label ||
       source.metadata?.authorityType ||
+      source.metadata?.sourceType ||
       "UNKNOWN"
   );
 
@@ -412,7 +457,9 @@ function compactSource(source = {}, index = 0) {
     superseded:
       source.superseded === true ||
       source.isSuperseded === true ||
-      source.is_superseded === true,
+      source.is_superseded === true ||
+      source.metadata?.superseded === true ||
+      source.metadata?.isSuperseded === true,
 
     retrievalPhase:
       source.retrievalPhase ||
@@ -420,6 +467,7 @@ function compactSource(source = {}, index = 0) {
       null,
 
     metadata: {
+      ...(source.metadata || {}),
       sourceType: authorityType,
       controllingPrecedence: precedence,
       compactedBy: "rag-answer-handler.js",
@@ -446,7 +494,7 @@ function dedupeSources(sources = []) {
   const seen = new Set();
   const output = [];
 
-  for (const source of sources) {
+  for (const source of safeArray(sources)) {
     const key = sourceKey(source) || JSON.stringify(source).slice(0, 200);
     if (seen.has(key)) continue;
     seen.add(key);
@@ -457,7 +505,7 @@ function dedupeSources(sources = []) {
 }
 
 function sortSourcesByAuthority(sources = []) {
-  return [...sources].sort((a, b) => {
+  return [...safeArray(sources)].sort((a, b) => {
     const aExact = Number(a.exactAuthorityMatch === true);
     const bExact = Number(b.exactAuthorityMatch === true);
     if (bExact !== aExact) return bExact - aExact;
@@ -508,6 +556,15 @@ function normalizeIntent({
   );
 }
 
+function safeFinalizeSourcesForResponse(rawSources = [], options = {}) {
+  try {
+    const finalized = finalizeSourcesForResponse(rawSources, options);
+    return Array.isArray(finalized) ? finalized : rawSources;
+  } catch {
+    return rawSources;
+  }
+}
+
 function normalizeRetrievedSources({
   retrievedSources = [],
   retrievalResult = null,
@@ -524,7 +581,7 @@ function normalizeRetrievedSources({
             []
         );
 
-  const visibleSources = finalizeSourcesForResponse(
+  const visibleSources = safeFinalizeSourcesForResponse(
     rawSources.slice(0, HARD_MAX_SOURCES * 2),
     {
       issueClassification,
@@ -534,22 +591,32 @@ function normalizeRetrievedSources({
 
   return sortSourcesByAuthority(
     dedupeSources(
-      visibleSources
+      safeArray(visibleSources)
         .map(compactSource)
         .filter((source) => !source.issueMismatch)
         .filter((source) => !source.superseded)
+        .filter((source) => source.text || source.citation || source.title)
     )
   ).slice(0, HARD_MAX_SOURCES);
 }
 
 function normalizeConversationHistory(history = []) {
-  return buildCompactConversationHistory(
-    safeArray(history).slice(-HARD_MAX_HISTORY_ITEMS),
-    HARD_MAX_HISTORY_ITEMS
-  ).map((item) => ({
-    role: item.role === "assistant" ? "assistant" : "user",
-    content: trimText(item.content || "", 700)
-  }));
+  try {
+    return buildCompactConversationHistory(
+      safeArray(history).slice(-HARD_MAX_HISTORY_ITEMS),
+      HARD_MAX_HISTORY_ITEMS
+    ).map((item) => ({
+      role: item.role === "assistant" ? "assistant" : "user",
+      content: trimText(item.content || "", 700)
+    }));
+  } catch {
+    return safeArray(history)
+      .slice(-HARD_MAX_HISTORY_ITEMS)
+      .map((item) => ({
+        role: item?.role === "assistant" ? "assistant" : "user",
+        content: trimText(item?.content || "", 700)
+      }));
+  }
 }
 
 function normalizeTaxEngineMetadata({
@@ -675,22 +742,22 @@ function classifyAuthorityBuckets(sources = []) {
   const jurisprudence = [];
   const persuasive = [];
 
-  for (const source of sources) {
+  for (const source of safeArray(sources)) {
     const type = normalizeAuthorityType(source.authorityType);
     const precedence = Number(source.controllingPrecedence || getAuthorityPrecedence(source));
 
-    if (precedence <= 3 || ["CONSTITUTION", "STATUTE", "NIRC", "TAX_CODE", "CMTA", "LGC", "REPUBLIC_ACT", "TAX_TREATY"].includes(type)) {
+    if (precedence <= 3 || PRIMARY_AUTHORITY_TYPES.has(type)) {
       controlling.push(source);
-      continue;
-    }
-
-    if (JURISPRUDENCE_TYPES.has(type)) {
-      jurisprudence.push(source);
       continue;
     }
 
     if (ADMIN_AUTHORITY_TYPES.has(type)) {
       supportingRules.push(source);
+      continue;
+    }
+
+    if (JURISPRUDENCE_TYPES.has(type)) {
+      jurisprudence.push(source);
       continue;
     }
 
@@ -839,7 +906,8 @@ function buildSourceGroundingInstructions({
     prohibitedPhrases: [
       "No legal basis was rendered",
       "No supporting rules were rendered",
-      "No legal basis exists"
+      "No legal basis exists",
+      "No legal basis is available"
     ],
     requiredReplacementWhenEmpty: "Indexed source not found.",
     requiredAnswerSections: buildRequiredAnswerSections(taxEngineMetadata),
@@ -850,12 +918,15 @@ function buildSourceGroundingInstructions({
 }
 
 function extractAnswerFromOpenAIResult(result = {}) {
+  if (typeof result === "string") return result;
+
   return (
     result.answer ||
     result.text ||
     result.output_text ||
     result.completion?.choices?.[0]?.message?.content ||
     result.raw?.choices?.[0]?.message?.content ||
+    result.response?.choices?.[0]?.message?.content ||
     ""
   );
 }
@@ -865,6 +936,7 @@ function extractOrchestrationMetadata(result = {}) {
     result.orchestration ||
     result.orchestrationContext ||
     result.context ||
+    result.metadata?.orchestration ||
     {}
   );
 }
@@ -890,9 +962,9 @@ function answerLooksWeakOrUngrounded(answer = "", sources = []) {
     text.includes("direct answer") &&
     text.includes("controlling legal basis");
 
-  if (sources.length > 0 && !hasRequiredStructure) {
-    return true;
-  }
+  if (sources.length > 0 && !hasRequiredStructure) return true;
+
+  if (sources.length === 0 && !text.includes("indexed source not found")) return true;
 
   return false;
 }
@@ -901,10 +973,9 @@ function conflictCanBeDisplayed({
   hierarchyConflict = null,
   conflicts = []
 } = {}) {
-  const conflictItems = safeArray(conflicts);
   const candidates = [
     hierarchyConflict,
-    ...conflictItems
+    ...safeArray(conflicts)
   ].filter(Boolean);
 
   if (!candidates.length) return false;
@@ -922,9 +993,7 @@ function conflictCanBeDisplayed({
 }
 
 function sanitizeConflictLanguage(answer = "", { hierarchyConflict = null, conflicts = [] } = {}) {
-  if (conflictCanBeDisplayed({ hierarchyConflict, conflicts })) {
-    return answer;
-  }
+  if (conflictCanBeDisplayed({ hierarchyConflict, conflicts })) return answer;
 
   return String(answer || "")
     .replace(/Conflict Detected:\s*YES/gi, "Conflict Status: No direct conflict established from indexed sources")
@@ -932,7 +1001,6 @@ function sanitizeConflictLanguage(answer = "", { hierarchyConflict = null, confl
 }
 
 function buildSourceGroundedFallbackAnswer({
-  question = "",
   sources = [],
   issueClassification = {},
   authorityPacket = {},
@@ -948,7 +1016,7 @@ function buildSourceGroundedFallbackAnswer({
 
   const directAnswer =
     sources.length > 0
-      ? "Based on the indexed authorities retrieved by TINA, the answer must be anchored on the controlling and supporting sources listed below. The final legal conclusion should not go beyond those indexed sources."
+      ? "Based on the indexed authorities retrieved by TINA, the answer must be anchored only on the controlling and supporting sources listed below."
       : "Indexed source not found.";
 
   const controllingText =
@@ -1026,11 +1094,18 @@ async function callOrchestrationOnly({
     contextOrchestration?.callOpenAIWithOrchestration ||
     defaultCallOpenAIWithOrchestration;
 
+  if (typeof caller !== "function") {
+    throw new TypeError("callOpenAIWithOrchestration is not available.");
+  }
+
   return await caller({
     openai,
     userQuery: question,
+    question,
     retrievedSources: sources,
+    sources,
     classification: buildCompactClassification(issueClassification, taxEngineMetadata),
+    issueClassification: buildCompactClassification(issueClassification, taxEngineMetadata),
     intent: buildCompactIntent(intent),
     conversationHistory,
     adaptiveContext: buildCompactAdaptiveContext(adaptiveContext),
@@ -1111,17 +1186,11 @@ function buildSafeMetadata({
       orchestration?.diagnostics?.finalTrimApplied ||
       false,
 
-    orchestrationError:
-      safeError.exists ? safeError : null,
+    orchestrationError: safeError.exists ? safeError : null,
+    orchestrationErrorMessage: safeError.exists ? safeError.message : null,
+    failedInsideRagHandler: safeError.exists,
 
-    orchestrationErrorMessage:
-      safeError.exists ? safeError.message : null,
-
-    failedInsideRagHandler:
-      safeError.exists,
-
-    indexedSourceNotFound:
-      safeArray(sources).length === 0,
+    indexedSourceNotFound: safeArray(sources).length === 0,
 
     debugHint:
       safeError.exists
@@ -1150,32 +1219,41 @@ function applyFinalGateAndRender({
     conflicts
   });
 
-  const compliantAnswer = buildFinalCompliantAnswer({
-    draftAnswer: guardedAnswer,
-    fallbackAnswer,
-    legalBasisDocs: sources,
-    sourcesUsed: sources,
-    hierarchyConflict,
-    conflicts,
-    jurisprudencePayload,
-    query: question,
-    issueClassification,
-    authorityPacket,
-    taxEngineMetadata,
-    orchestrationMode:
-      orchestration?.mode ||
-      orchestration?.orchestrationMode ||
-      orchestration?.contextMode ||
-      issueClassification?.orchestrationMode ||
-      null,
-    responseMode:
-      issueClassification?.responseMode ||
-      null,
-    contextMode:
-      orchestration?.contextMode ||
-      orchestration?.mode ||
-      null
-  });
+  let compliantAnswer = guardedAnswer;
+
+  try {
+    compliantAnswer = buildFinalCompliantAnswer({
+      draftAnswer: guardedAnswer,
+      answer: guardedAnswer,
+      fallbackAnswer,
+      legalBasisDocs: sources,
+      sourcesUsed: sources,
+      retrievedSources: sources,
+      hierarchyConflict,
+      conflicts,
+      jurisprudencePayload,
+      query: question,
+      question,
+      issueClassification,
+      authorityPacket,
+      taxEngineMetadata,
+      orchestrationMode:
+        orchestration?.mode ||
+        orchestration?.orchestrationMode ||
+        orchestration?.contextMode ||
+        issueClassification?.orchestrationMode ||
+        null,
+      responseMode:
+        issueClassification?.responseMode ||
+        null,
+      contextMode:
+        orchestration?.contextMode ||
+        orchestration?.mode ||
+        null
+    });
+  } catch {
+    compliantAnswer = fallbackAnswer || guardedAnswer || "Indexed source not found.";
+  }
 
   const cleanAnswer = sanitizeAnswerForDisplay(
     sanitizeConflictLanguage(compliantAnswer, {
@@ -1187,6 +1265,7 @@ function applyFinalGateAndRender({
   return renderTinaJsonPayload({
     answer: cleanAnswer,
     sources,
+    retrievedSources: sources,
     includeSourcesInAnswer: false,
     adaptiveContext,
     issueClassification,
@@ -1270,7 +1349,6 @@ export async function generateRagAnswer({
   let error = null;
 
   const fallbackAnswer = buildSourceGroundedFallbackAnswer({
-    question,
     sources,
     issueClassification: finalIssueClassification,
     authorityPacket,
@@ -1297,13 +1375,7 @@ export async function generateRagAnswer({
     orchestration = extractOrchestrationMetadata(result);
 
     if (answerLooksWeakOrUngrounded(answer, sources)) {
-      answer = buildSourceGroundedFallbackAnswer({
-        question,
-        sources,
-        issueClassification: finalIssueClassification,
-        authorityPacket,
-        taxEngineMetadata
-      });
+      answer = fallbackAnswer;
     }
   } catch (err) {
     error = err;
@@ -1325,7 +1397,6 @@ export async function generateRagAnswer({
     };
 
     answer = buildSourceGroundedFallbackAnswer({
-      question,
       sources,
       issueClassification: finalIssueClassification,
       authorityPacket,
