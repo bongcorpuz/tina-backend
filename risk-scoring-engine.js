@@ -486,7 +486,7 @@ function buildRiskScoringInstruction(result) {
   };
 }
 
-module.exports = {
+export {
   RISK_LEVEL,
   DEFENSIBILITY_LEVEL,
   SCORE_BUCKET,

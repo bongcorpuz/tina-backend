@@ -512,7 +512,7 @@ function buildTransactionCharacterizationInstruction(result) {
   };
 }
 
-module.exports = {
+export {
   CHARACTERIZATION_TYPES,
   CONFIDENCE,
   RISK_LEVEL,

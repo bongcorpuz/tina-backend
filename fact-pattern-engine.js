@@ -499,7 +499,7 @@ function buildFactPatternInstruction(factPattern) {
   };
 }
 
-module.exports = {
+export {
   FACT_CONFIDENCE,
   FACT_STATUS,
   ISSUE_TYPES,

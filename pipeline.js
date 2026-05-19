@@ -12,8 +12,6 @@
 
 "use strict";
 
-import { createRequire } from "module";
-
 import { classify }                               from "./issue-classification-engine.js";
 import {
   getModeRoutingMetadata,
@@ -31,13 +29,10 @@ import {
 import { callOpenAIWithOrchestration }            from "./context-orchestration-engine.js";
 import { renderTinaAnswer }                       from "./answer-renderer.js";
 import { enforceFinalAnswerCompliance }           from "./final-answer-compliance.js";
-
-// CJS engines — imported via createRequire because they use module.exports
-const _require = createRequire(import.meta.url);
-const { analyzeFactPattern }                      = _require("./fact-pattern-engine.js");
-const { characterizeTransaction }                 = _require("./transaction-characterization-engine.js");
-const { evaluateEvidence }                        = _require("./evidence-evaluation-engine.js");
-const { scoreRisk }                               = _require("./risk-scoring-engine.js");
+import { analyzeFactPattern }                     from "./fact-pattern-engine.js";
+import { characterizeTransaction }                from "./transaction-characterization-engine.js";
+import { evaluateEvidence }                       from "./evidence-evaluation-engine.js";
+import { scoreRisk }                              from "./risk-scoring-engine.js";
 
 const PIPELINE_VERSION = "1.0.0";
 

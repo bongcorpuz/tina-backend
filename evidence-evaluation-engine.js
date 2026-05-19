@@ -575,7 +575,7 @@ function buildEvidenceEvaluationInstruction(result) {
   };
 }
 
-module.exports = {
+export {
   EVIDENCE_STATUS,
   EVIDENCE_STRENGTH,
   RISK_LEVEL,
