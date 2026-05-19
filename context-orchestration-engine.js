@@ -1737,6 +1737,27 @@ D. FIX — Recommended resolution
 E. PREVENTION — How to prevent recurrence
 Be precise. Reference file paths and function names exactly.
 `.trim();
+  } else if (mode === "SENIOR_COUNSEL_MEMO" || mode === "LITIGATION_MEMO") {
+    modeInstruction = `
+SENIOR COUNSEL MEMO FORMAT:
+Do not use standard A-F legal/tax format.
+Use this 7-section litigation-grade memo structure:
+RULING
+LEGAL BASIS
+ANALYSIS
+QUALIFICATIONS
+OPEN ISSUES
+RECOMMENDED ACTION
+POSITION STRENGTH
+All seven sections are mandatory.
+RULING: State the definitive legal position in one to three sentences.
+LEGAL BASIS: Cite the controlling NIRC provision first, then implementing regulation (RR), then directly applicable Supreme Court or CTA decision.
+ANALYSIS: Apply the controlling authority to the specific facts or scenario presented.
+QUALIFICATIONS: State material factual or evidentiary assumptions that affect the conclusion.
+OPEN ISSUES: Identify unresolved legal or factual questions. If none, state "None identified on presented facts."
+RECOMMENDED ACTION: State the defensible tax position and the concrete next step.
+POSITION STRENGTH: Rate STRONG / MODERATE / WEAK / INDEFENSIBLE with a one-sentence justification.
+`.trim();
   } else if (modeFlags.isAudit || mode === "COMPLEX_ADVISORY" || mode === "AUDIT_FACT_PATTERN") {
     modeInstruction = `
 AUDIT MODE FORMAT:

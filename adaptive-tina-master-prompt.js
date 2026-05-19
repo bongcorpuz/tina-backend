@@ -122,7 +122,8 @@ export const PROHIBITED_PHRASES = Object.freeze([
   "you may want to consider",
   "it is important to note",
   "please note that",
-  "it should be noted"
+  "it should be noted",
+  "you should consult"
 ]);
 
 export function enforceProhibitedPhrases(text = "") {
