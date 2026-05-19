@@ -3,21 +3,21 @@
 
 /**
  * TINA RAG Answer Handler
- * Version: 8.4.0
+ * Version: 9.0.0
  *
- * Constitutional role:
- * - Consume retrieved/validated sources.
- * - Delegate all model-context assembly and OpenAI calls to context-orchestration-engine.js.
- * - Preserve source grounding, tax-engine metadata, and authority packets.
- * - Apply final compliance and renderer compatibility.
+ * Role:
+ * - Consume retrieved/validated sources from retrieval-engine.js / ask-handler.js.
+ * - Pass compact sources to context-orchestration-engine.js.
+ * - Preserve source grounding, issue classification, tax-engine metadata, and authority packets.
+ * - Apply final compliance only when the route requires standard legal/tax answer format.
  *
- * This file must NOT:
- * - perform retrieval,
- * - perform vector search,
- * - call OpenAI directly,
- * - inject raw full documents,
- * - fabricate authorities,
- * - render citations independently from the renderer/compliance layer.
+ * Boundary:
+ * - Does not retrieve.
+ * - Does not perform vector search.
+ * - Does not call OpenAI directly.
+ * - Does not inject raw full documents.
+ * - Does not fabricate authorities.
+ * - Does not force A–F format for quiz/reviewer modes.
  */
 
 import {
@@ -38,7 +38,7 @@ import {
   buildCompactConversationHistory
 } from "./ask-helpers.js";
 
-const ENGINE_VERSION = "8.4.0";
+const ENGINE_VERSION = "9.0.0";
 
 const DEFAULT_MODEL =
   process.env.OPENAI_MODEL ||
@@ -50,13 +50,45 @@ const HARD_MAX_SOURCE_CHARS = 1400;
 const HARD_MAX_HISTORY_ITEMS = 6;
 const HARD_MAX_AUTHORITY_ITEMS = 6;
 
-const REQUIRED_STANDARD_SECTIONS = Object.freeze([
+const STANDARD_SECTIONS = Object.freeze([
   "A. DIRECT ANSWER",
   "B. CONTROLLING LEGAL BASIS",
   "C. SUPPORTING RULES / ADMINISTRATIVE ISSUANCES",
   "D. SUPPORTING JURISPRUDENCE",
   "E. DOCTRINAL STATUS / CONFLICT ANALYSIS",
   "F. PRACTICAL NOTE / APPLICATION"
+]);
+
+const REVIEWER_SECTIONS = Object.freeze([
+  "Concept",
+  "Rule",
+  "Memory Aid",
+  "Common Trap",
+  "Example",
+  "Quick Check"
+]);
+
+const QUIZ_SECTIONS = Object.freeze([
+  "Question",
+  "Choices",
+  "Answer Key",
+  "Explanation"
+]);
+
+const CASE_SECTIONS = Object.freeze([
+  "Case Identified",
+  "Issue",
+  "Ruling / Holding",
+  "Doctrine",
+  "Application",
+  "Status / Limits"
+]);
+
+const SOURCE_SECTIONS = Object.freeze([
+  "Sources Found",
+  "Controlling Authorities",
+  "Supporting Authorities",
+  "Notes"
 ]);
 
 const SUPPORTED_TAX_DOMAINS = Object.freeze([
@@ -75,26 +107,8 @@ const SUPPORTED_TAX_DOMAINS = Object.freeze([
   "CON"
 ]);
 
-/**
- * Master Prompt controlling hierarchy:
- * 1. Constitution
- * 2. NIRC / CMTA / LGC / primary statutes
- * 3. Tax Treaties
- * 4. Supreme Court En Banc
- * 5. Supreme Court Division
- * 6. CTA En Banc
- * 7. CTA Division
- * 8. Revenue Regulations
- * 9. RMC / RMO / RAMO
- * 10. BIR Rulings
- * 11. LGU / BOC issuances
- * 12. PFRS / PAS / PSA, when accounting applies
- * 13. OECD / foreign persuasive authorities
- * 14. CPA reviewer notes / secondary materials
- */
 const AUTHORITY_PRECEDENCE = Object.freeze({
   CONSTITUTION: 1,
-
   STATUTE: 2,
   NIRC: 2,
   TAX_CODE: 2,
@@ -102,44 +116,33 @@ const AUTHORITY_PRECEDENCE = Object.freeze({
   LGC: 2,
   REPUBLIC_ACT: 2,
   RA: 2,
-
   TAX_TREATY: 3,
   TREATY: 3,
-
   SUPREME_COURT_EN_BANC: 4,
   SUPREME_COURT: 5,
   SC: 5,
-
   CTA_EN_BANC: 6,
   CTA_DIVISION: 7,
   COURT_OF_APPEALS: 7,
-
   RR: 8,
   REVENUE_REGULATION: 8,
-
   RMC: 9,
   RMO: 9,
   RAMO: 9,
-
   BIR_RULING: 10,
-
   BOC_ISSUANCE: 11,
   FIRB_ISSUANCE: 11,
   PEZA_MEMO: 11,
   SEC_GUIDANCE: 11,
   LGU: 11,
-
   PFRS: 12,
   PAS: 12,
   PSA: 12,
-
   OECD_GUIDANCE: 13,
   FOREIGN_AUTHORITY: 13,
-
   SECONDARY: 14,
   CPA_NOTES: 14,
   REVIEW_MATERIALS: 14,
-
   UNKNOWN: 99
 });
 
@@ -181,14 +184,6 @@ const ACCOUNTING_AUTHORITY_TYPES = new Set([
   "PFRS",
   "PAS",
   "PSA"
-]);
-
-const SECONDARY_AUTHORITY_TYPES = new Set([
-  "SECONDARY",
-  "CPA_NOTES",
-  "REVIEW_MATERIALS",
-  "OECD_GUIDANCE",
-  "FOREIGN_AUTHORITY"
 ]);
 
 function safeArray(value) {
@@ -246,7 +241,6 @@ function normalizeAuthorityType(value = "") {
 
   const aliases = {
     CONSTITUTION: "CONSTITUTION",
-
     STATUTES: "STATUTE",
     STATUTE: "STATUTE",
     LAW: "STATUTE",
@@ -260,38 +254,29 @@ function normalizeAuthorityType(value = "") {
     LOCAL_GOVERNMENT_CODE: "LGC",
     REPUBLIC_ACT: "REPUBLIC_ACT",
     RA: "REPUBLIC_ACT",
-
     TAX_TREATY: "TAX_TREATY",
     TREATY: "TAX_TREATY",
-
     SUPREME_COURT_EN_BANC: "SUPREME_COURT_EN_BANC",
     SUPREME_COURT: "SUPREME_COURT",
     SC: "SUPREME_COURT",
     CASE: "SUPREME_COURT",
     CASE_LAW: "SUPREME_COURT",
     JURISPRUDENCE: "SUPREME_COURT",
-
     CTA_EN_BANC: "CTA_EN_BANC",
     CTA_DIVISION: "CTA_DIVISION",
     COURT_OF_APPEALS: "COURT_OF_APPEALS",
     CA: "COURT_OF_APPEALS",
-
     REVENUE_REGULATION: "RR",
     REVENUE_REGULATIONS: "RR",
     RR: "RR",
-
     REVENUE_MEMORANDUM_CIRCULAR: "RMC",
     RMC: "RMC",
-
     REVENUE_MEMORANDUM_ORDER: "RMO",
     RMO: "RMO",
-
     REVENUE_AUDIT_MEMORANDUM_ORDER: "RAMO",
     RAMO: "RAMO",
-
     BIR_RULING: "BIR_RULING",
     BIR_RULINGS: "BIR_RULING",
-
     BOC: "BOC_ISSUANCE",
     BOC_ISSUANCE: "BOC_ISSUANCE",
     FIRB: "FIRB_ISSUANCE",
@@ -300,23 +285,18 @@ function normalizeAuthorityType(value = "") {
     PEZA_MEMO: "PEZA_MEMO",
     SEC: "SEC_GUIDANCE",
     SEC_GUIDANCE: "SEC_GUIDANCE",
-
     PFRS: "PFRS",
     PAS: "PAS",
     PSA: "PSA",
-
     LGU: "LGU",
     LGU_ISSUANCE: "LGU",
-
     OECD: "OECD_GUIDANCE",
     OECD_GUIDANCE: "OECD_GUIDANCE",
     FOREIGN: "FOREIGN_AUTHORITY",
     FOREIGN_AUTHORITY: "FOREIGN_AUTHORITY",
-
     CPA_NOTES: "CPA_NOTES",
     REVIEW_MATERIALS: "REVIEW_MATERIALS",
     SECONDARY: "SECONDARY",
-
     UNKNOWN: "UNKNOWN"
   };
 
@@ -336,9 +316,7 @@ function getAuthorityPrecedence(source = {}) {
       0
   );
 
-  if (Number.isFinite(explicit) && explicit > 0 && explicit < 99) {
-    return explicit;
-  }
+  if (Number.isFinite(explicit) && explicit > 0 && explicit < 99) return explicit;
 
   const authorityType = normalizeAuthorityType(
     source.authorityType ||
@@ -484,8 +462,7 @@ function compactSource(source = {}, index = 0) {
       source.issueClassificationMatch?.exactAuthorityMatch === true ||
       source.metadata?.exactCitationMatched === true,
 
-    issueClassificationMatch:
-      source.issueClassificationMatch || null,
+    issueClassificationMatch: source.issueClassificationMatch || null,
 
     issueMismatch:
       source.issueMismatch === true ||
@@ -500,7 +477,9 @@ function compactSource(source = {}, index = 0) {
 
     retrievalPhase:
       source.retrievalPhase ||
+      source.retrievalLayer ||
       source.metadata?.retrievalPhase ||
+      source.metadata?.retrievalLayer ||
       null,
 
     metadata: {
@@ -509,6 +488,7 @@ function compactSource(source = {}, index = 0) {
       controllingPrecedence: precedence,
       compactedBy: "rag-answer-handler.js",
       ragAnswerHandlerVersion: ENGINE_VERSION,
+      issueClassificationMatchPreserved: Boolean(source.issueClassificationMatch),
       masterPromptAuthorityHierarchyApplied: true,
       courtAuthorityNotSubordinatedToBIRIssuances: true,
       rawFullDocumentInjectionPrevented: true
@@ -593,6 +573,89 @@ function normalizeIntent({
     adaptiveContext?.orchestrationIntent ||
     {}
   );
+}
+
+function deriveModeFlags({
+  intent = {},
+  issueClassification = {},
+  adaptiveContext = {},
+  metadata = {}
+} = {}) {
+  const hook = lower(
+    intent.routeHook ||
+      intent.primaryCommand ||
+      adaptiveContext.activeHook ||
+      adaptiveContext.responsePlan?.hookCode ||
+      metadata.hook ||
+      ""
+  );
+
+  const responseMode = String(
+    intent.responseMode ||
+      adaptiveContext.responseMode ||
+      adaptiveContext.responsePlan?.responseMode ||
+      issueClassification.responseMode ||
+      metadata.responseMode ||
+      ""
+  ).toUpperCase();
+
+  const orchestrationMode = String(
+    intent.orchestrationMode ||
+      adaptiveContext.orchestrationMode ||
+      adaptiveContext.responsePlan?.orchestrationMode ||
+      issueClassification.orchestrationMode ||
+      metadata.orchestrationMode ||
+      ""
+  ).toUpperCase();
+
+  const commandMode = String(intent.commandMode || "").toUpperCase();
+
+  const isQuiz =
+    hook === "/quiz" ||
+    responseMode === "QUIZ" ||
+    orchestrationMode === "QUIZ" ||
+    commandMode === "QUIZ" ||
+    intent.requiresQuizMode === true;
+
+  const isReview =
+    hook === "/review" ||
+    responseMode === "REVIEWER" ||
+    orchestrationMode === "REVIEWER" ||
+    commandMode === "REVIEW" ||
+    intent.requiresReviewMode === true;
+
+  const isCase =
+    hook === "/case" ||
+    responseMode === "CASE_ANALYSIS" ||
+    orchestrationMode === "CASE_ANALYSIS" ||
+    commandMode === "CASE" ||
+    intent.requiresCaseMode === true;
+
+  const isSource =
+    hook === "/source" ||
+    responseMode === "SOURCE" ||
+    orchestrationMode === "SOURCE_LOOKUP" ||
+    commandMode === "SOURCE" ||
+    intent.requiresSourceVisibility === true;
+
+  const isStandardLegal = !isQuiz && !isReview && !isSource;
+
+  return {
+    hook,
+    responseMode,
+    orchestrationMode,
+    commandMode,
+    isQuiz,
+    isReview,
+    isCase,
+    isSource,
+    isStandardLegal,
+    shouldApplyFinalCompliance: isStandardLegal,
+    shouldRequireAFStructure: isStandardLegal && !isCase,
+    shouldUseReviewerFormat: isReview,
+    shouldUseQuizFormat: isQuiz,
+    shouldUseSourceFormat: isSource
+  };
 }
 
 function safeFinalizeSourcesForResponse(rawSources = [], options = {}) {
@@ -865,41 +928,58 @@ function buildAuthorityPacket({
   };
 }
 
-function buildRequiredAnswerSections(taxEngineMetadata = {}) {
+function buildRequiredAnswerSections(taxEngineMetadata = {}, modeFlags = {}) {
+  if (modeFlags.shouldUseReviewerFormat) return [...REVIEWER_SECTIONS];
+  if (modeFlags.shouldUseQuizFormat) return [...QUIZ_SECTIONS];
+  if (modeFlags.shouldUseSourceFormat) return [...SOURCE_SECTIONS];
+  if (modeFlags.isCase) return [...CASE_SECTIONS];
+
   const fromTaxEngine = safeArray(taxEngineMetadata.requiredAnswerSections)
     .map(normalizeText)
     .filter(Boolean);
 
   if (fromTaxEngine.length) return fromTaxEngine;
 
-  return [...REQUIRED_STANDARD_SECTIONS];
+  return [...STANDARD_SECTIONS];
 }
 
-function buildCompactClassification(issueClassification = {}, taxEngineMetadata = {}) {
+function buildCompactClassification(issueClassification = {}, taxEngineMetadata = {}, modeFlags = {}) {
   return {
     primaryIssue: issueClassification.primaryIssue || null,
     subIssue: issueClassification.subIssue || null,
     domainCode: taxEngineMetadata.domainCode || issueClassification.domainCode || null,
     domainName: taxEngineMetadata.domainName || issueClassification.domainName || null,
+
     retrievalStrategy:
       issueClassification.retrievalStrategy ||
       taxEngineMetadata.retrievalStrategy ||
       null,
+
     targetAuthorities: safeArray(
       issueClassification.targetAuthorities ||
         taxEngineMetadata.targetAuthorities
     ).slice(0, 12),
+
     controllingAuthorities: safeArray(taxEngineMetadata.controllingAuthorities).slice(0, HARD_MAX_AUTHORITY_ITEMS),
     supportingAuthorities: safeArray(taxEngineMetadata.supportingAuthorities).slice(0, HARD_MAX_AUTHORITY_ITEMS),
     supportingJurisprudence: safeArray(taxEngineMetadata.supportingJurisprudence).slice(0, HARD_MAX_AUTHORITY_ITEMS),
-    requiredAnswerSections: buildRequiredAnswerSections(taxEngineMetadata),
-    responseMode: issueClassification.responseMode || null,
-    orchestrationMode: issueClassification.orchestrationMode || null,
+
+    requiredAnswerSections: buildRequiredAnswerSections(taxEngineMetadata, modeFlags),
+
+    responseMode: issueClassification.responseMode || modeFlags.responseMode || null,
+    orchestrationMode: issueClassification.orchestrationMode || modeFlags.orchestrationMode || null,
     factSensitivity: issueClassification.factSensitivity || null,
+
     answerTemplate: taxEngineMetadata.answerTemplate,
     doctrinalRules: taxEngineMetadata.doctrinalRules,
     conflictRules: taxEngineMetadata.conflictRules,
     legalValidationRules: taxEngineMetadata.legalValidationRules,
+
+    forceStandardAFStructure: modeFlags.shouldRequireAFStructure === true,
+    reviewerMode: modeFlags.isReview === true,
+    quizMode: modeFlags.isQuiz === true,
+    sourceMode: modeFlags.isSource === true,
+
     masterPromptAuthorityHierarchyApplied: true
   };
 }
@@ -907,6 +987,12 @@ function buildCompactClassification(issueClassification = {}, taxEngineMetadata 
 function buildCompactIntent(intent = {}) {
   return {
     intent: intent.intent || intent.type || null,
+    responseMode: intent.responseMode || null,
+    orchestrationMode: intent.orchestrationMode || null,
+
+    requiresQuizMode: Boolean(intent.requiresQuizMode),
+    requiresReviewMode: Boolean(intent.requiresReviewMode),
+    requiresSourceVisibility: Boolean(intent.requiresSourceVisibility),
     requiresSimpleDefinition: Boolean(intent.requiresSimpleDefinition),
     requiresLegalAnalysis: Boolean(intent.requiresLegalAnalysis),
     requiresJurisprudence: Boolean(intent.requiresJurisprudence),
@@ -919,7 +1005,7 @@ function buildCompactIntent(intent = {}) {
   };
 }
 
-function buildCompactAdaptiveContext(adaptiveContext = {}) {
+function buildCompactAdaptiveContext(adaptiveContext = {}, modeFlags = {}) {
   return {
     activeMode:
       adaptiveContext.activeMode ||
@@ -935,36 +1021,72 @@ function buildCompactAdaptiveContext(adaptiveContext = {}) {
     responseMode:
       adaptiveContext.responseMode ||
       adaptiveContext.responsePlan?.responseMode ||
+      modeFlags.responseMode ||
       null,
 
     orchestrationMode:
       adaptiveContext.orchestrationMode ||
       adaptiveContext.responsePlan?.orchestrationMode ||
+      modeFlags.orchestrationMode ||
       null,
 
-    taxEngineMetadata: adaptiveContext.taxEngineMetadata || adaptiveContext.tax_engine_metadata || null
+    taxEngineMetadata: adaptiveContext.taxEngineMetadata || adaptiveContext.tax_engine_metadata || null,
+
+    reviewerMode: modeFlags.isReview === true,
+    quizMode: modeFlags.isQuiz === true,
+    sourceMode: modeFlags.isSource === true,
+    standardLegalMode: modeFlags.isStandardLegal === true
   };
 }
 
 function buildSourceGroundingInstructions({
   authorityPacket = {},
-  taxEngineMetadata = {}
+  taxEngineMetadata = {},
+  modeFlags = {}
 } = {}) {
   return {
     mustUseRetrievedSourcesFirst: true,
     mustNotUseGeneralKnowledgeAsPrimaryBasis: true,
     mustNotInventAuthorities: true,
-    mustSayIndexedSourceNotFoundWhenNoAuthority: true,
-    prohibitedPhrases: [
+
+    mustSayIndexedSourceNotFoundWhenNoAuthority:
+      authorityPacket.sourceCount === 0,
+
+    doNotSayIndexedSourceNotFoundWhenSourcesExist:
+      authorityPacket.sourceCount > 0,
+
+    prohibitedPhrasesWhenSourcesExist: [
+      "Indexed source not found.",
       "No legal basis was rendered",
       "No supporting rules were rendered",
       "No legal basis exists",
       "No legal basis is available"
     ],
+
     requiredReplacementWhenEmpty: "Indexed source not found.",
-    requiredAnswerSections: buildRequiredAnswerSections(taxEngineMetadata),
+
+    requiredAnswerSections: buildRequiredAnswerSections(taxEngineMetadata, modeFlags),
+
+    forceStandardAFStructure: modeFlags.shouldRequireAFStructure === true,
+
+    reviewerFormat:
+      modeFlags.isReview
+        ? REVIEWER_SECTIONS
+        : null,
+
+    quizFormat:
+      modeFlags.isQuiz
+        ? QUIZ_SECTIONS
+        : null,
+
+    sourceFinderFormat:
+      modeFlags.isSource
+        ? SOURCE_SECTIONS
+        : null,
+
     conflictDisplayRule:
       "Do not state 'Conflict Detected: YES' unless the same exact issue, same legal dimension, opposite holding/rule, hierarchy analysis, and conflict-resolution basis are all present.",
+
     authorityPacket
   };
 }
@@ -993,31 +1115,39 @@ function extractOrchestrationMetadata(result = {}) {
   );
 }
 
-function answerLooksWeakOrUngrounded(answer = "", sources = []) {
+function answerContainsFalseNoSourceClaim(answer = "", sources = []) {
+  const text = lower(answer);
+  if (!sources.length) return false;
+
+  return (
+    text.includes("indexed source not found") ||
+    text.includes("no legal basis was rendered") ||
+    text.includes("no supporting rules were rendered") ||
+    text.includes("no legal basis exists") ||
+    text.includes("no legal basis is available")
+  );
+}
+
+function answerLooksWeakOrUngrounded(answer = "", sources = [], modeFlags = {}) {
   const text = lower(answer);
 
   if (!normalizeText(answer)) return true;
 
-  if (
-    sources.length > 0 &&
-    (
-      text.includes("no legal basis was rendered") ||
-      text.includes("no supporting rules were rendered") ||
-      text.includes("no legal basis exists") ||
-      text.includes("no legal basis is available")
-    )
-  ) {
-    return true;
+  if (answerContainsFalseNoSourceClaim(answer, sources)) return true;
+
+  if (sources.length === 0) {
+    return !text.includes("indexed source not found");
+  }
+
+  if (!modeFlags.shouldRequireAFStructure) {
+    return false;
   }
 
   const hasRequiredStructure =
     text.includes("direct answer") &&
     text.includes("controlling legal basis");
 
-  if (sources.length > 0 && !hasRequiredStructure) return true;
-  if (sources.length === 0 && !text.includes("indexed source not found")) return true;
-
-  return false;
+  return sources.length > 0 && !hasRequiredStructure;
 }
 
 function conflictCanBeDisplayed({
@@ -1051,7 +1181,106 @@ function sanitizeConflictLanguage(answer = "", { hierarchyConflict = null, confl
     .replace(/Conflict detected:\s*YES/gi, "Conflict status: No direct conflict established from indexed sources");
 }
 
-function buildSourceGroundedFallbackAnswer({
+function removeFalseNoSourceClaims(answer = "", sources = []) {
+  if (!sources.length) return answer;
+
+  return String(answer || "")
+    .replace(/Indexed source not found\.?/gi, "")
+    .replace(/No legal basis was rendered\.?/gi, "")
+    .replace(/No supporting rules were rendered\.?/gi, "")
+    .replace(/No legal basis exists\.?/gi, "")
+    .replace(/No legal basis is available\.?/gi, "")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
+function buildReviewerFallbackAnswer({
+  sources = [],
+  issueClassification = {},
+  authorityPacket = {}
+} = {}) {
+  const controlling = safeArray(authorityPacket.controllingAuthorities);
+  const supporting = safeArray(authorityPacket.supportingRules);
+
+  return [
+    "Concept",
+    issueClassification.subIssue || issueClassification.primaryIssue || "Tax concept identified from retrieved indexed sources.",
+    "",
+    "Rule",
+    controlling.length
+      ? controlling.map(formatSourceLine).join("\n")
+      : sources.length
+        ? sources.slice(0, 3).map(formatSourceLine).join("\n")
+        : "Indexed source not found.",
+    "",
+    "Memory Aid",
+    "Start with the controlling statute, then confirm with regulations, then check jurisprudence only when doctrine or conflict is relevant.",
+    "",
+    "Common Trap",
+    "Do not rely on reviewer notes or general explanations over the NIRC, primary statute, Revenue Regulations, or controlling jurisprudence.",
+    "",
+    "Example",
+    supporting.length
+      ? supporting.slice(0, 2).map(formatSourceLine).join("\n")
+      : "Use the retrieved authority above as the example anchor.",
+    "",
+    "Quick Check",
+    "Can you identify the controlling authority, supporting rule, and whether jurisprudence is actually needed?"
+  ].join("\n");
+}
+
+function buildQuizFallbackAnswer({
+  sources = [],
+  issueClassification = {}
+} = {}) {
+  const topic = issueClassification.subIssue || issueClassification.primaryIssue || "Philippine taxation";
+
+  return [
+    "Question",
+    `Which authority should be checked first when answering a question on ${topic}?`,
+    "",
+    "Choices",
+    "A. Reviewer notes",
+    "B. General internet explanation",
+    "C. Controlling statute or primary authority",
+    "D. Unverified summary",
+    "",
+    "Answer Key",
+    "C. Controlling statute or primary authority",
+    "",
+    "Explanation",
+    sources.length
+      ? "The retrieved indexed sources must be prioritized according to TINA's authority hierarchy."
+      : "Indexed source not found."
+  ].join("\n");
+}
+
+function buildSourceFinderFallbackAnswer({
+  sources = [],
+  authorityPacket = {}
+} = {}) {
+  if (!sources.length) return "Indexed source not found.";
+
+  const controlling = safeArray(authorityPacket.controllingAuthorities);
+  const rules = safeArray(authorityPacket.supportingRules);
+  const cases = safeArray(authorityPacket.supportingJurisprudence);
+
+  return [
+    "Sources Found",
+    sources.map(formatSourceLine).join("\n"),
+    "",
+    "Controlling Authorities",
+    controlling.length ? controlling.map(formatSourceLine).join("\n") : "No controlling authority separately identified from retrieved sources.",
+    "",
+    "Supporting Authorities",
+    [...rules, ...cases].length ? [...rules, ...cases].map(formatSourceLine).join("\n") : "No separate supporting authority identified from retrieved sources.",
+    "",
+    "Notes",
+    "Sources are listed according to retrieved metadata and TINA's authority hierarchy."
+  ].join("\n");
+}
+
+function buildStandardFallbackAnswer({
   sources = [],
   issueClassification = {},
   authorityPacket = {},
@@ -1059,7 +1288,9 @@ function buildSourceGroundedFallbackAnswer({
   error = null
 } = {}) {
   const safeError = serializeError(error);
-  const sections = buildRequiredAnswerSections(taxEngineMetadata);
+  const sections = buildRequiredAnswerSections(taxEngineMetadata, {
+    shouldRequireAFStructure: true
+  });
 
   const controlling = safeArray(authorityPacket.controllingAuthorities);
   const jurisprudence = safeArray(authorityPacket.supportingJurisprudence);
@@ -1073,17 +1304,23 @@ function buildSourceGroundedFallbackAnswer({
   const controllingText =
     controlling.length > 0
       ? controlling.map(formatSourceLine).join("\n")
-      : "Indexed source not found.";
+      : sources.length > 0
+        ? "No separate controlling statute was identified from the retrieved sources."
+        : "Indexed source not found.";
 
   const supportingRulesText =
     supportingRules.length > 0
       ? supportingRules.map(formatSourceLine).join("\n")
-      : "Indexed source not found.";
+      : sources.length > 0
+        ? "No separate administrative issuance was identified from the retrieved sources."
+        : "Indexed source not found.";
 
   const jurisprudenceText =
     jurisprudence.length > 0
       ? jurisprudence.map(formatSourceLine).join("\n")
-      : "Indexed source not found.";
+      : sources.length > 0
+        ? "No separate jurisprudence was identified from the retrieved sources."
+        : "Indexed source not found.";
 
   const doctrinalText =
     sources.length > 0
@@ -1106,12 +1343,12 @@ function buildSourceGroundedFallbackAnswer({
 
   const answer = sections
     .map((section) => {
-      const normalized = REQUIRED_STANDARD_SECTIONS.find((item) =>
+      const normalized = STANDARD_SECTIONS.find((item) =>
         lower(section).includes(lower(item.replace(/^[A-F]\.\s*/, "")))
       );
 
       const heading = normalized || section;
-      const body = bodyBySection.get(normalized || section) || "Indexed source not found.";
+      const body = bodyBySection.get(normalized || section) || (sources.length ? "No separate item identified from retrieved sources." : "Indexed source not found.");
 
       return `${heading}\n${body}`;
     })
@@ -1127,6 +1364,35 @@ function buildSourceGroundedFallbackAnswer({
   ].join("\n");
 }
 
+function buildSourceGroundedFallbackAnswer({
+  sources = [],
+  issueClassification = {},
+  authorityPacket = {},
+  taxEngineMetadata = {},
+  modeFlags = {},
+  error = null
+} = {}) {
+  if (modeFlags.isReview) {
+    return buildReviewerFallbackAnswer({ sources, issueClassification, authorityPacket });
+  }
+
+  if (modeFlags.isQuiz) {
+    return buildQuizFallbackAnswer({ sources, issueClassification });
+  }
+
+  if (modeFlags.isSource) {
+    return buildSourceFinderFallbackAnswer({ sources, authorityPacket });
+  }
+
+  return buildStandardFallbackAnswer({
+    sources,
+    issueClassification,
+    authorityPacket,
+    taxEngineMetadata,
+    error
+  });
+}
+
 async function callOrchestrationOnly({
   openai = null,
   contextOrchestration = null,
@@ -1138,6 +1404,7 @@ async function callOrchestrationOnly({
   adaptiveContext = {},
   authorityPacket = {},
   taxEngineMetadata = {},
+  modeFlags = {},
   model = DEFAULT_MODEL,
   temperature = null
 } = {}) {
@@ -1153,18 +1420,34 @@ async function callOrchestrationOnly({
     openai,
     userQuery: question,
     question,
+
     retrievedSources: sources,
     sources,
-    classification: buildCompactClassification(issueClassification, taxEngineMetadata),
-    issueClassification: buildCompactClassification(issueClassification, taxEngineMetadata),
+
+    classification: buildCompactClassification(issueClassification, taxEngineMetadata, modeFlags),
+    issueClassification: buildCompactClassification(issueClassification, taxEngineMetadata, modeFlags),
+
     intent: buildCompactIntent(intent),
     conversationHistory,
-    adaptiveContext: buildCompactAdaptiveContext(adaptiveContext),
+
+    adaptiveContext: buildCompactAdaptiveContext(adaptiveContext, modeFlags),
+
     authorityPacket,
+
     sourceGroundingInstructions: buildSourceGroundingInstructions({
       authorityPacket,
-      taxEngineMetadata
+      taxEngineMetadata,
+      modeFlags
     }),
+
+    responseMode: modeFlags.responseMode || intent.responseMode || issueClassification.responseMode || null,
+    orchestrationMode: modeFlags.orchestrationMode || intent.orchestrationMode || issueClassification.orchestrationMode || null,
+
+    forceStandardAFStructure: modeFlags.shouldRequireAFStructure === true,
+    reviewerMode: modeFlags.isReview === true,
+    quizMode: modeFlags.isQuiz === true,
+    sourceMode: modeFlags.isSource === true,
+
     model,
     temperature
   });
@@ -1178,7 +1461,8 @@ function buildSafeMetadata({
   orchestration = {},
   error = null,
   authorityPacket = {},
-  taxEngineMetadata = {}
+  taxEngineMetadata = {},
+  modeFlags = {}
 } = {}) {
   const safeError = serializeError(error);
 
@@ -1188,6 +1472,10 @@ function buildSafeMetadata({
     ragAnswerHandlerVersion: ENGINE_VERSION,
     usesOrchestrationOnly: true,
     directOpenAICallDisabled: true,
+
+    receivesSourcesFromRetrieval: true,
+    passesSourcesToContextOrchestration: true,
+    retrievedSourcesPreserved: true,
 
     noDuplicateRetrieval: true,
     noGiantPromptAssembly: true,
@@ -1217,13 +1505,24 @@ function buildSafeMetadata({
     hasSupportingRules: authorityPacket.hasSupportingRules === true,
     hasSupportingJurisprudence: authorityPacket.hasSupportingJurisprudence === true,
 
+    indexedSourceNotFound: safeArray(sources).length === 0,
+    doNotGenerateIndexedSourceNotFoundWhenSourcesExist: safeArray(sources).length > 0,
+
     intent: intent?.intent || intent?.type || null,
 
+    responseMode: modeFlags.responseMode || null,
     orchestrationMode:
+      modeFlags.orchestrationMode ||
       orchestration?.mode ||
       orchestration?.orchestrationMode ||
       orchestration?.contextMode ||
       null,
+
+    reviewerMode: modeFlags.isReview === true,
+    quizMode: modeFlags.isQuiz === true,
+    sourceMode: modeFlags.isSource === true,
+    standardLegalMode: modeFlags.isStandardLegal === true,
+    finalComplianceApplied: modeFlags.shouldApplyFinalCompliance === true,
 
     estimatedInputTokens:
       orchestration?.estimatedInputTokens ||
@@ -1243,8 +1542,6 @@ function buildSafeMetadata({
     orchestrationError: safeError.exists ? safeError : null,
     orchestrationErrorMessage: safeError.exists ? safeError.message : null,
     failedInsideRagHandler: safeError.exists,
-
-    indexedSourceNotFound: safeArray(sources).length === 0,
 
     debugHint:
       safeError.exists
@@ -1266,51 +1563,61 @@ function applyFinalGateAndRender({
   orchestration = {},
   metadata = {},
   authorityPacket = {},
-  taxEngineMetadata = {}
+  taxEngineMetadata = {},
+  modeFlags = {}
 } = {}) {
-  const guardedAnswer = sanitizeConflictLanguage(answer, {
-    hierarchyConflict,
-    conflicts
-  });
+  const guardedAnswer = sanitizeConflictLanguage(
+    removeFalseNoSourceClaims(answer, sources),
+    { hierarchyConflict, conflicts }
+  );
 
-  let compliantAnswer = guardedAnswer;
+  let finalAnswer = guardedAnswer;
 
-  try {
-    compliantAnswer = buildFinalCompliantAnswer({
-      draftAnswer: guardedAnswer,
-      answer: guardedAnswer,
-      fallbackAnswer,
-      legalBasisDocs: sources,
-      sourcesUsed: sources,
-      retrievedSources: sources,
-      hierarchyConflict,
-      conflicts,
-      jurisprudencePayload,
-      query: question,
-      question,
-      issueClassification,
-      authorityPacket,
-      taxEngineMetadata,
-      orchestrationMode:
-        orchestration?.mode ||
-        orchestration?.orchestrationMode ||
-        orchestration?.contextMode ||
-        issueClassification?.orchestrationMode ||
-        null,
-      responseMode:
-        issueClassification?.responseMode ||
-        null,
-      contextMode:
-        orchestration?.contextMode ||
-        orchestration?.mode ||
-        null
-    });
-  } catch {
-    compliantAnswer = fallbackAnswer || guardedAnswer || "Indexed source not found.";
+  if (modeFlags.shouldApplyFinalCompliance) {
+    try {
+      finalAnswer = buildFinalCompliantAnswer({
+        draftAnswer: guardedAnswer,
+        answer: guardedAnswer,
+        fallbackAnswer,
+        legalBasisDocs: sources,
+        sourcesUsed: sources,
+        retrievedSources: sources,
+        hierarchyConflict,
+        conflicts,
+        jurisprudencePayload,
+        query: question,
+        question,
+        issueClassification,
+        authorityPacket,
+        taxEngineMetadata,
+        orchestrationMode:
+          orchestration?.mode ||
+          orchestration?.orchestrationMode ||
+          orchestration?.contextMode ||
+          issueClassification?.orchestrationMode ||
+          null,
+        responseMode:
+          issueClassification?.responseMode ||
+          modeFlags.responseMode ||
+          null,
+        contextMode:
+          orchestration?.contextMode ||
+          orchestration?.mode ||
+          null
+      });
+    } catch {
+      finalAnswer = fallbackAnswer || guardedAnswer || (sources.length ? "" : "Indexed source not found.");
+    }
+  } else {
+    finalAnswer = guardedAnswer || fallbackAnswer || (sources.length ? "" : "Indexed source not found.");
+  }
+
+  if (sources.length > 0) {
+    finalAnswer = removeFalseNoSourceClaims(finalAnswer, sources);
   }
 
   const cleanAnswer = sanitizeAnswerForDisplay(
-    sanitizeConflictLanguage(compliantAnswer, {
+    sanitizeConflictLanguage(finalAnswer, {
       hierarchyConflict,
       conflicts
     })
@@ -1326,6 +1633,7 @@ function applyFinalGateAndRender({
     jurisprudencePayload,
     hierarchyConflict,
     orchestrationMode:
+      modeFlags.orchestrationMode ||
       orchestration?.mode ||
       orchestration?.orchestrationMode ||
       orchestration?.contextMode ||
@@ -1338,8 +1646,12 @@ function applyFinalGateAndRender({
       ...metadata,
       authorityPacket,
       taxEngineMetadata,
+      modeFlags,
       finalGateApplied: true,
-      finalAnswerComplianceEngine: "final-answer-compliance.js",
+      finalAnswerComplianceEngine:
+        modeFlags.shouldApplyFinalCompliance
+          ? "final-answer-compliance.js"
+          : "bypassed_for_non_AF_mode",
       rendererEngine: "answer-renderer.js",
       ragAnswerHandlerVersion: ENGINE_VERSION
     }
@@ -1377,6 +1689,13 @@ export async function generateRagAnswer({
     adaptiveContext
   });
 
+  const modeFlags = deriveModeFlags({
+    intent: finalIntent,
+    issueClassification: finalIssueClassification,
+    adaptiveContext,
+    metadata
+  });
+
   const taxEngineMetadata = normalizeTaxEngineMetadata({
     issueClassification: finalIssueClassification,
     adaptiveContext,
@@ -1406,7 +1725,8 @@ export async function generateRagAnswer({
     sources,
     issueClassification: finalIssueClassification,
     authorityPacket,
-    taxEngineMetadata
+    taxEngineMetadata,
+    modeFlags
   });
 
   try {
@@ -1421,6 +1741,7 @@ export async function generateRagAnswer({
       adaptiveContext,
       authorityPacket,
       taxEngineMetadata,
+      modeFlags,
       model,
       temperature
     });
@@ -1428,8 +1749,12 @@ export async function generateRagAnswer({
     answer = extractAnswerFromOpenAIResult(result);
     orchestration = extractOrchestrationMetadata(result);
 
-    if (answerLooksWeakOrUngrounded(answer, sources)) {
+    if (answerLooksWeakOrUngrounded(answer, sources, modeFlags)) {
       answer = fallbackAnswer;
+    }
+
+    if (sources.length > 0) {
+      answer = removeFalseNoSourceClaims(answer, sources);
     }
   } catch (err) {
     error = err;
@@ -1456,8 +1781,13 @@ export async function generateRagAnswer({
       issueClassification: finalIssueClassification,
       authorityPacket,
       taxEngineMetadata,
+      modeFlags,
       error: err
     });
+
+    if (sources.length > 0) {
+      answer = removeFalseNoSourceClaims(answer, sources);
+    }
 
     console.error("RAG orchestration error:", {
       message: err?.message,
@@ -1480,7 +1810,8 @@ export async function generateRagAnswer({
     orchestration,
     error,
     authorityPacket,
-    taxEngineMetadata
+    taxEngineMetadata,
+    modeFlags
   });
 
   return applyFinalGateAndRender({
@@ -1496,7 +1827,8 @@ export async function generateRagAnswer({
     orchestration,
     metadata: safeMetadata,
     authorityPacket,
-    taxEngineMetadata
+    taxEngineMetadata,
+    modeFlags
   });
 }
 
@@ -1544,20 +1876,31 @@ export function ragAnswerHandlerHealthCheck() {
     engine: "TINA_RAG_ANSWER_HANDLER",
     version: ENGINE_VERSION,
 
+    receivesSourcesFromRetrieval: true,
+    passesSourcesToContextOrchestration: true,
+    retrievedSourcesPreserved: true,
+
     orchestrationOnly: true,
     directOpenAICallDisabled: true,
     duplicateRetrievalDisabled: true,
 
     sourceGroundingFirst: true,
     indexedAuthorityAware: true,
+    noIndexedSourceNotFoundWhenSourcesExist: true,
+
     authorityHierarchyAware: true,
     masterPromptAuthorityHierarchyApplied: true,
     courtAuthorityNotSubordinatedToBIRIssuances: true,
+
     taxEngineCompatible: true,
     supportedTaxDomains: SUPPORTED_TAX_DOMAINS,
 
+    afFormatBypassedForReview: true,
+    afFormatBypassedForQuiz: true,
+    reviewerFormatSupported: REVIEWER_SECTIONS,
+    quizFormatSupported: QUIZ_SECTIONS,
+
     weakUngroundedAnswerGuardEnabled: true,
-    indexedSourceNotFoundFallbackEnabled: true,
     prohibitedNoLegalBasisRenderedGuardEnabled: true,
     conflictDisplayGuardEnabled: true,
 
@@ -1567,17 +1910,12 @@ export function ragAnswerHandlerHealthCheck() {
     fullDebugObjectInjectionPrevented: true,
     fullEngineOutputInjectionPrevented: true,
 
-    exposesOrchestrationErrorsSafely: true,
-    orchestrationErrorMetadataEnabled: true,
-    emergencyTrimFallbackEnabled: true,
-
     compactSourcesOnly: true,
     compactMetadataOnly: true,
 
     contextOrchestrationCompatible: true,
     finalAnswerComplianceCompatible: true,
     answerRendererCompatible: true,
-    citationFormattingCompatible: true,
 
     esmCompatible: true
   };
