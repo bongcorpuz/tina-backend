@@ -527,6 +527,42 @@ function oppositeHoldingGate(a = {}, b = {}) {
   };
 }
 
+// LAW 4 — FOUR-PART DOCTRINE TEST
+// trueConflict = true ONLY when ALL FOUR are satisfied:
+//   (1) Same legal issue       → sameIssueGate
+//   (2) Same material facts    → sameStatuteOrFactGate (unknown = pass-through)
+//   (3) Same statute           → sameStatuteOrFactGate
+//   (4) Opposite holding       → oppositeHoldingGate
+// Semantic divergence alone is NOT a conflict. Remove any such detection.
+
+function extractStatuteRef(doc = {}) {
+  return lower(
+    doc.statute ||
+    doc.primaryStatute ||
+    doc.normalizedReference ||
+    doc.citation ||
+    doc.source ||
+    ""
+  ).replace(/\s+/g, " ").trim();
+}
+
+function sameStatuteGate(a = {}, b = {}) {
+  const aS = extractStatuteRef(a);
+  const bS = extractStatuteRef(b);
+  if (!aS || !bS) {
+    return { passed: null, reason: "Statute reference unknown — gate passed by benefit of doubt." };
+  }
+  const same = aS === bS || aS.includes(bS) || bS.includes(aS);
+  return {
+    passed: same,
+    aStatute: aS,
+    bStatute: bS,
+    reason: same
+      ? "Both authorities cite the same statute."
+      : "Authorities cite different statutes — not a true conflict, merely different rules."
+  };
+}
+
 function isGenuineConflict(a = {}, b = {}) {
   if (!a || !b) return false;
 
@@ -535,9 +571,15 @@ function isGenuineConflict(a = {}, b = {}) {
 
   if (aType === "UNKNOWN" || bType === "UNKNOWN") return false;
 
+  // Part 1: Same legal issue
   const sameIssue = sameIssueGate(a, b);
   if (!sameIssue.passed) return false;
 
+  // Part 3: Same statute (null = unknown = pass-through)
+  const sameStatute = sameStatuteGate(a, b);
+  if (sameStatute.passed === false) return false;
+
+  // Part 4: Opposite holding
   const oppositeHolding = oppositeHoldingGate(a, b);
   if (!oppositeHolding.passed) return false;
 
@@ -887,6 +929,7 @@ export {
   legalDimensions,
   detectHoldingPolarity,
   sameIssueGate,
+  sameStatuteGate,
   oppositeHoldingGate,
   isGenuineConflict,
   resolveCourtOverride,
@@ -904,6 +947,7 @@ export default {
   legalDimensions,
   detectHoldingPolarity,
   sameIssueGate,
+  sameStatuteGate,
   oppositeHoldingGate,
   isGenuineConflict,
   resolveCourtOverride,

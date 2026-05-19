@@ -2446,6 +2446,26 @@ async function retrieveRelevantSources(options = {}) {
     issueClassification
   });
 
+  // LAW 3 — ISSUE-TARGETED RETRIEVAL
+  // Semantic similarity alone is PROHIBITED as the sole retrieval criterion.
+  // If authority-targeted layers (1-4) produced zero results and only Layer 5
+  // (VECTOR_SEMANTIC) matched, flag those docs so they are not returned as the
+  // sole basis for a legal answer.
+  const authorityLayerCount =
+    (layerDiagnostics.exactAuthorityMatches || 0) +
+    (layerDiagnostics.citationVariantMatches || 0) +
+    (layerDiagnostics.metadataMatches || 0) +
+    (layerDiagnostics.contentKeywordMatches || 0);
+  const semanticOnlyRun = authorityLayerCount === 0 && (layerDiagnostics.semanticMatches || 0) > 0;
+  if (semanticOnlyRun) {
+    for (const c of candidates) {
+      if (c.retrievalLayer === RETRIEVAL_LAYER.VECTOR_SEMANTIC) {
+        c.semanticOnlyWarning = true;
+        c.law3Warning = "LAW_3_VIOLATION_RISK: No authority-targeted result found. Semantic match only — requires manual authority validation before citing.";
+      }
+    }
+  }
+
   const prefiltered = filterBeforeRerank(candidates, { allowReviewMaterials });
 
   const scored = scoreAndAnnotateSources({

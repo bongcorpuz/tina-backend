@@ -2,6 +2,33 @@
 // TINA Main Tax Engine Classification Orchestrator
 // ESM-compatible | Production-safe | Backward-compatible
 
+// ── Tax-Engine Domain Integration Bridge ──────────────────────────────────────
+// Imports fully-populated domain-configs from tax-engines/ and merges them
+// into the live domain registry so issue classification uses authoritative data.
+// Only the VAT domain-config is currently implemented; other domain stubs are
+// skipped until populated. Add new imports here as each domain is built out.
+
+import { VAT_DOMAIN } from "./tax-engines/VAT/domain-config.js";
+
+// Build the merged domain map: inline TAX_DOMAINS entries are overridden by
+// authoritative tax-engine configs wherever both exist.
+function buildMergedDomainRegistry(inlineDomains, ...engineConfigs) {
+  const merged = { ...inlineDomains };
+  for (const cfg of engineConfigs) {
+    if (cfg && cfg.code) {
+      merged[cfg.code] = {
+        ...merged[cfg.code],
+        ...cfg,
+        subIssues: {
+          ...(merged[cfg.code]?.subIssues || {}),
+          ...(cfg.subIssues || {})
+        }
+      };
+    }
+  }
+  return Object.freeze(merged);
+}
+
 export const MAIN_TAX_ENGINE_VERSION = "1.0.0";
 
 export const TAX_AUTHORITY_HIERARCHY = Object.freeze([
@@ -23,7 +50,8 @@ export const TAX_AUTHORITY_HIERARCHY = Object.freeze([
   "SECONDARY_SOURCE"
 ]);
 
-export const TAX_DOMAINS = Object.freeze({
+// Inline fallback definitions — overridden by tax-engines/ domain-configs via buildMergedDomainRegistry()
+const _INLINE_TAX_DOMAINS = {
   VAT: {
     code: "VAT",
     name: "Value-Added Tax",
@@ -237,7 +265,12 @@ export const TAX_DOMAINS = Object.freeze({
       LOCAL_AUTONOMY: ["local autonomy", "power to tax"]
     }
   }
-});
+};
+
+// Merge inline defaults with authoritative tax-engine domain configs.
+// VAT_DOMAIN from tax-engines/VAT/domain-config.js overrides the inline VAT entry.
+// Add new domain imports to this call when each domain-config is populated.
+export const TAX_DOMAINS = buildMergedDomainRegistry(_INLINE_TAX_DOMAINS, VAT_DOMAIN);
 
 const LEGAL_DIMENSION_RULES = Object.freeze({
   substantive: [

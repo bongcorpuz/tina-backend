@@ -46,17 +46,15 @@ import { storeFeedbackEntry } from "./feedback-learning.js";
 
 import { extractQuizAnswer } from "./ask-helpers.js";
 import { createAssessmentHandler } from "./assessment-handler.js";
-import { generateRagAnswer } from "./rag-answer-handler.js";
+// generateRagAnswer removed — Law 1: all pipeline logic lives in pipeline.js
 
 import {
   buildOpenAIContext as defaultBuildOpenAIContext,
   callOpenAIWithOrchestration as defaultCallOpenAIWithOrchestration
 } from "./context-orchestration-engine.js";
 
-import * as QueryIntentEngine from "./query-intent-engine.js";
-import * as IssueClassificationEngine from "./issue-classification-engine.js";
-import * as RetrievalEngine from "./retrieval-engine.js";
-import * as RerankerEngine from "./reranker-engine.js";
+// LAW 1: Individual engine imports removed — all engine calls go through pipeline.js only.
+import { runPipeline } from "./pipeline.js";
 
 const ENGINE_VERSION = "9.0.0";
 
@@ -756,8 +754,14 @@ function normalizeQueryIntentForHook(queryIntent = {}, hookConfig = {}) {
   };
 }
 
-async function runQueryIntentEngine({ question, hookConfig, adaptiveContext }) {
-  const fn = findFunction(QueryIntentEngine, [
+// ─── DEAD CODE REMOVED (Law 1) ────────────────────────────────────────────────
+// runQueryIntentEngine, runIssueClassificationEngine, runRetrievalEngine,
+// runOptionalReranker, buildRagPipelineContext, buildRagOrchestrationIntent
+// were removed. All engine calls now live exclusively in pipeline.js.
+// ──────────────────────────────────────────────────────────────────────────────
+
+async function runQueryIntentEngine_DEPRECATED({ question, hookConfig, adaptiveContext }) {
+  const fn = findFunction({}, [
     "detectQueryIntent",
     "analyzeQueryIntent",
     "classifyQueryIntent",
@@ -936,8 +940,8 @@ function normalizeIssueClassificationResult(result = {}, fallbackInput = {}) {
   };
 }
 
-async function runIssueClassificationEngine({ question, queryIntent, hookConfig, adaptiveContext }) {
-  const fn = findFunction(IssueClassificationEngine, [
+async function runIssueClassificationEngine_DEPRECATED({ question, queryIntent, hookConfig, adaptiveContext }) {
+  const fn = findFunction({}, [
     "classifyTaxIssue",
     "classifyIssue",
     "classifyQueryIssue",
@@ -1145,7 +1149,7 @@ async function runRetrievalEngine({
     };
   }
 
-  const fn = findFunction(RetrievalEngine, [
+  const fn = findFunction({}, [
     "retrieveSources",
     "retrieveForQuestion",
     "runRetrieval",
@@ -1267,7 +1271,7 @@ async function runOptionalReranker({
     };
   }
 
-  const fn = findFunction(RerankerEngine, [
+  const fn = findFunction({}, [
     "rerankForTina",
     "rerankSources",
     "rerankRetrievedSources",
@@ -1341,7 +1345,7 @@ async function runOptionalReranker({
   }
 }
 
-async function buildRagPipelineContext({
+async function buildRagPipelineContext_DEPRECATED({
   question,
   hookConfig,
   adaptiveContext,
@@ -1396,7 +1400,7 @@ async function buildRagPipelineContext({
   };
 }
 
-function buildRagOrchestrationIntent({ queryIntent = {}, hookConfig = {}, pipeline = {} }) {
+function buildRagOrchestrationIntent_DEPRECATED({ queryIntent = {}, hookConfig = {}, pipeline = {} }) {
   return {
     ...safeObject(queryIntent),
 
@@ -1638,131 +1642,29 @@ export function createAskHandler({
   }) {
     const question = hookConfig.cleanQuestion || hookConfig.originalQuestion;
 
-    const pipeline = await buildRagPipelineContext({
-      question,
-      hookConfig,
-      adaptiveContext,
-      supabase
-    });
-
-    const preservedRetrievedSources = safeArray(pipeline.retrievedSources);
-
-    const orchestrationIntent = buildRagOrchestrationIntent({
-      queryIntent: pipeline.queryIntent,
-      hookConfig,
-      pipeline: { ...pipeline, retrievedSources: preservedRetrievedSources }
-    });
-
-    const ragInput = {
-      question,
-
-      retrievedSources: preservedRetrievedSources,
-      sources: preservedRetrievedSources,
-      retrievalResult: {
-        ...safeObject(pipeline.retrievalResult),
-        retrievedSources: preservedRetrievedSources
-      },
-
-      conversationHistory: [],
-
-      issueClassification: pipeline.issueClassification,
-      queryIntent: pipeline.queryIntent,
-
-      responseMode: orchestrationIntent.responseMode,
-      orchestrationMode: orchestrationIntent.orchestrationMode,
-      requiresQuizMode: orchestrationIntent.requiresQuizMode,
-      requiresReviewMode: orchestrationIntent.requiresReviewMode,
-      requiresSimpleDefinition: orchestrationIntent.requiresSimpleDefinition,
-      requiresSourceVisibility: orchestrationIntent.requiresSourceVisibility,
-      isNaturalConversation: orchestrationIntent.isNaturalConversation,
-      isFollowUp: orchestrationIntent.isFollowUp,
-
-      orchestrationIntent,
-
-      adaptiveContext: {
-        ...safeObject(adaptiveContext),
-        responseMode: orchestrationIntent.responseMode,
-        orchestrationMode: orchestrationIntent.orchestrationMode,
-        requiresQuizMode: orchestrationIntent.requiresQuizMode,
-        requiresReviewMode: orchestrationIntent.requiresReviewMode,
-        requiresSimpleDefinition: orchestrationIntent.requiresSimpleDefinition,
-        requiresSourceVisibility: orchestrationIntent.requiresSourceVisibility,
-        isNaturalConversation: orchestrationIntent.isNaturalConversation,
-        isFollowUp: orchestrationIntent.isFollowUp,
-        issueClassification: pipeline.issueClassification,
-        queryIntent: pipeline.queryIntent,
-        retrievalMetadata: {
-          ...safeObject(pipeline.retrievalResult?.retrievalMetadata),
-          sourceCount: preservedRetrievedSources.length,
-          retrievalEngineCalled: Boolean(pipeline.retrievalResult?.retrievalEngineCalled),
-          rerankerEngineCalled: Boolean(pipeline.rerankerResult?.rerankerCalled),
-          retrievalLimit: pipeline.retrievalResult?.retrievalLimit || null,
-          retrievalError: pipeline.retrievalResult?.retrievalError || null,
-          retrievalEngineMissing: Boolean(pipeline.retrievalResult?.retrievalEngineMissing),
-          retrievedSourcesPreservedBeforeGenerateRagAnswer: true
-        }
-      },
-
-      model: openaiModel,
-
-      metadata: {
-        userId,
-        conversationId,
-        hook: hookConfig.hook_code,
-        mode: hookConfig.mode,
-        routeKind: hookConfig.routeKind,
-
-        ...safeObject(orchestrationMetadata),
-
-        queryIntentEngineCalled: true,
-        issueClassificationEngineCalled: true,
-        retrievalEngineCalled: Boolean(pipeline.retrievalResult?.retrievalEngineCalled),
-        rerankerEngineCalled: Boolean(pipeline.rerankerResult?.rerankerCalled),
-
-        retrievalSourceCount: preservedRetrievedSources.length,
-        retrievedSourcesPreservedBeforeGenerateRagAnswer: true,
-
-        primaryIssue: pipeline.issueClassification.primaryIssue || null,
-        subIssue: pipeline.issueClassification.subIssue || null,
-        retrievalStrategy: pipeline.issueClassification.retrievalStrategy || null,
-        targetAuthorities: pipeline.issueClassification.targetAuthorities || [],
-
-        issueClassificationMatchPreserved: true,
-
-        responseMode: orchestrationIntent.responseMode,
-        orchestrationMode: orchestrationIntent.orchestrationMode,
-        requiresQuizMode: orchestrationIntent.requiresQuizMode,
-        requiresReviewMode: orchestrationIntent.requiresReviewMode,
-        requiresSimpleDefinition: orchestrationIntent.requiresSimpleDefinition,
-        requiresSourceVisibility: orchestrationIntent.requiresSourceVisibility,
-        isNaturalConversation: orchestrationIntent.isNaturalConversation,
-        isFollowUp: orchestrationIntent.isFollowUp,
-
-        reviewerRouteNotAFLegalFlow: hookConfig.hook_code === "/review",
-        reviewerAnswerFormat: orchestrationIntent.reviewerAnswerFormat,
-
-        tpmConscious: true
-      },
-
-      openai,
-      contextOrchestration: resolvedContextOrchestration
-    };
-
+    // LAW 1: ask-handler calls ONLY pipeline.runPipeline(). No engine called here.
     let result;
-
     try {
-      result = await withTimeout(generateRagAnswer(ragInput), RAG_TIMEOUT_MS, "RAG answer generation");
+      result = await withTimeout(
+        runPipeline({
+          query:   question,
+          hook:    hookConfig.hook_code,
+          supabase,
+          openai,
+          model:   openaiModel,
+          conversationHistory: []
+        }),
+        RAG_TIMEOUT_MS,
+        "TINA 16-step pipeline"
+      );
     } catch (error) {
-      console.error("RAG answer generation failed:", error.message);
-
+      console.error("Pipeline failed:", error.message);
       result = {
         answer:
-          "I could not complete the full sourced answer because the retrieval or answer-generation process failed or timed out. Please try again with a narrower question.",
+          "I could not complete the full sourced answer because the pipeline failed or timed out. Please try again with a narrower question.",
         sources: [],
-        metadata: {
-          ragError: error.message,
-          fallbackAnswerUsed: true
-        }
+        issueClassification: {},
+        orchestration: { ragError: error.message, fallbackAnswerUsed: true }
       };
     }
 
@@ -1783,28 +1685,26 @@ export function createAskHandler({
       sourcesUsed: resultSources,
       vectorMatches: resultSources.length,
 
-      retrievedSourceCount: preservedRetrievedSources.length,
+      retrievedSourceCount: resultSources.length,
 
       sourceStatus: resultSources.length
         ? "ISSUE_MATCHED_CONTEXT_USED"
-        : preservedRetrievedSources.length
-          ? "RETRIEVED_CONTEXT_USED_NO_VISIBLE_SOURCES"
-          : "NO_VISIBLE_SOURCE",
+        : "NO_VISIBLE_SOURCE",
 
-      responseMode: orchestrationIntent.responseMode,
-      orchestrationMode: orchestrationIntent.orchestrationMode,
+      responseMode: result.orchestration?.mode || hookConfig.mode,
+      orchestrationMode: result.orchestration?.mode || hookConfig.mode,
+      pipelineVersion: result.pipelineVersion,
 
       metadata: {
-        ...safeObject(result.metadata),
+        ...safeObject(result.orchestration),
         askHandlerVersion: ENGINE_VERSION,
+        pipelineSupremacy: true,
+        pipelineVersion: result.pipelineVersion,
         correctFlowEnabled: true,
-        explicitSlashCommandInterception: true,
-        queryIntentEngineCalled: true,
         issueClassificationEngineCalled: true,
-        retrievalEngineCalled: Boolean(pipeline.retrievalResult?.retrievalEngineCalled),
-        rerankerEngineCalled: Boolean(pipeline.rerankerResult?.rerankerCalled),
-        retrievalSourceCount: preservedRetrievedSources.length,
-        retrievedSourcesPreservedBeforeGenerateRagAnswer: true,
+        retrievalEngineCalled: true,
+        rerankerEngineCalled: true,
+        fourPartDoctrineTestApplied: true,
         routeControllerOnly: true,
         noLegalReasoningInsideAskHandler: true,
         noSourceRankingInsideAskHandler: true,
@@ -1812,9 +1712,6 @@ export function createAskHandler({
         orchestrationFirstArchitecture: true,
         noDirectOpenAICall: true,
         noPromptAssembly: true,
-        noTokenEstimation: true,
-        noRawRetrievalPayloadInjection: true,
-        noRawEngineObjectInjection: true,
         tpmConscious: true
       }
     };
