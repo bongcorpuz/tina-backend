@@ -405,10 +405,10 @@ const DEFINITION_AUTHORITY_MAP = Object.freeze({
     primaryIssue: "VAT_LIABILITY",
     domainCode: "VAT",
     domainName: "Value-Added Tax",
-    targetAuthorities: ["NIRC Sec. 105", "NIRC Sec. 106", "NIRC Sec. 108", "RR 16-2005"],
-    controllingAuthorities: ["NIRC Sec. 105", "NIRC Sec. 106", "NIRC Sec. 108"],
+    targetAuthorities: ["NIRC Sec. 105", "NIRC Sec. 106", "NIRC Sec. 107", "NIRC Sec. 108", "RR 16-2005", "CIR v. Seagate Technology (GR No. 153866)"],
+    controllingAuthorities: ["NIRC Sec. 105", "NIRC Sec. 106", "NIRC Sec. 107", "NIRC Sec. 108"],
     supportingAuthorities: ["RR 16-2005"],
-    supportingJurisprudence: []
+    supportingJurisprudence: ["CIR v. Seagate Technology (GR No. 153866)", "CIR v. Aichi Forging Company of Asia (GR No. 184823)"]
   },
 
   INCOME_TAX_DEFINITION: {
@@ -495,10 +495,10 @@ const DEFINITION_AUTHORITY_MAP = Object.freeze({
     primaryIssue: "LGT",
     domainCode: "LGT",
     domainName: "Local Business Tax",
-    targetAuthorities: ["Local Government Code Sec. 143", "Local Government Code Sec. 151"],
+    targetAuthorities: ["Local Government Code Sec. 143", "Local Government Code Sec. 151", "City of Manila v. Coca-Cola Bottlers Philippines (G.R. No. 180845)"],
     controllingAuthorities: ["Local Government Code Sec. 143", "Local Government Code Sec. 151"],
     supportingAuthorities: ["Applicable LGU ordinance"],
-    supportingJurisprudence: []
+    supportingJurisprudence: ["City of Manila v. Coca-Cola Bottlers Philippines (G.R. No. 180845)"]
   },
 
   REAL_PROPERTY_TAX_DEFINITION: {
@@ -546,8 +546,8 @@ const DEFINITION_AUTHORITY_MAP = Object.freeze({
     domainCode: "PRE",
     domainName: "Tax Assessment and Prescription",
     targetAuthorities: ["NIRC Sec. 203", "NIRC Sec. 222", "NIRC Sec. 228", "RR 18-2013"],
-    controllingAuthorities: ["NIRC Sec. 203", "NIRC Sec. 222", "NIRC Sec. 228"],
-    supportingAuthorities: ["RR 18-2013"],
+    controllingAuthorities: ["NIRC Sec. 203"],
+    supportingAuthorities: ["NIRC Sec. 222", "NIRC Sec. 228", "RR 18-2013"],
     supportingJurisprudence: ["CIR v. Metro Star Superama", "CIR v. Enron Subic Power"]
   },
 
@@ -774,7 +774,7 @@ const DOMAIN_DETECTORS = Object.freeze([
 ]);
 
 const ISSUE_SPECIFIC_TARGETS = Object.freeze({
-  VAT_OVERVIEW: ["NIRC Sec. 105", "NIRC Sec. 106", "NIRC Sec. 107", "NIRC Sec. 108", "RR 16-2005"],
+  VAT_OVERVIEW: ["NIRC Sec. 105", "NIRC Sec. 106", "NIRC Sec. 107", "NIRC Sec. 108", "RR 16-2005", "CIR v. Seagate Technology (GR No. 153866)"],
   VAT_RISK_ANALYSIS: ["NIRC Sec. 105", "NIRC Sec. 106", "NIRC Sec. 108", "NIRC Sec. 113", "NIRC Sec. 114", "RR 16-2005"],
   VAT_EXEMPTION: ["NIRC Sec. 109", "RR 16-2005"],
   INPUT_TAX: ["NIRC Sec. 110", "NIRC Sec. 112", "RR 16-2005"],
@@ -783,8 +783,8 @@ const ISSUE_SPECIFIC_TARGETS = Object.freeze({
   REFUND_CREDIT: ["NIRC Sec. 112", "RR 16-2005", "CIR v. Aichi Forging", "CIR v. San Roque Power"],
 
   INCOME_TAX_OVERVIEW: ["NIRC Sec. 23", "NIRC Sec. 24", "NIRC Sec. 27", "NIRC Sec. 31", "NIRC Sec. 32", "NIRC Sec. 34"],
-  RCIT: ["NIRC Sec. 27(A)", "CREATE Act"],
-  MCIT: ["NIRC Sec. 27(E)", "CREATE Act"],
+  RCIT: ["NIRC Sec. 27(A)", "CREATE Act", "RR 9-1998"],
+  MCIT: ["NIRC Sec. 27(E)", "RR 9-1998", "CREATE Act"],
   NOLCO: ["NIRC Sec. 34(D)(3)"],
   DEDUCTIONS: ["NIRC Sec. 34", "NIRC Sec. 34(A)", "NIRC Sec. 34(K)"],
 
@@ -793,13 +793,13 @@ const ISSUE_SPECIFIC_TARGETS = Object.freeze({
   FWT: ["NIRC final withholding tax provisions", "RR 2-98"],
   COMPENSATION_WHT: ["NIRC withholding on compensation provisions", "RR 2-98"],
 
-  ASSESSMENT_PRESCRIPTION: ["NIRC Sec. 203", "NIRC Sec. 222", "NIRC Sec. 228", "RR 18-2013"],
+  ASSESSMENT_PRESCRIPTION: ["NIRC Sec. 203", "NIRC Sec. 222", "NIRC Sec. 228", "RR 18-2013", "CIR v. Aznar (GR No. L-20569)", "CIR v. BF Goodrich Philippines (GR No. L-28508)", "CIR v. Bohol Land Transportation (G.R. No. L-13099)"],
   LOA_VALIDITY: ["NIRC assessment provisions", "BIR audit and LOA issuances", "Medicard Philippines"],
   PAN_FAN: ["NIRC Sec. 228", "RR 18-2013", "CIR v. Metro Star Superama", "CIR v. Enron Subic Power"],
   FDDA: ["NIRC Sec. 228", "RR 18-2013"],
   WAIVER: ["NIRC Sec. 203", "NIRC Sec. 222", "BIR waiver issuances"],
 
-  LOCAL_BUSINESS_TAX: ["Local Government Code Sec. 143", "Local Government Code Sec. 151"],
+  LOCAL_BUSINESS_TAX: ["Local Government Code Sec. 143", "Local Government Code Sec. 151", "City of Manila v. Coca-Cola Bottlers Philippines (G.R. No. 180845)"],
   REAL_PROPERTY_TAX: ["Local Government Code Sec. 197", "Local Government Code Sec. 198", "Local Government Code Sec. 199", "Local Government Code Sec. 232"],
   CUSTOMS_DUTIES: ["CMTA", "BOC issuances"],
   PEZA_INCENTIVES: ["CREATE Act", "NIRC incentive provisions", "PEZA law", "FIRB issuances"]
@@ -958,7 +958,7 @@ function detectSubIssue(question = "", primaryIssue = "GENERAL_TAX", queryIntent
   if (/\bcompensation withholding|1601c|withholding on compensation\b/i.test(q)) return "COMPENSATION_WHT";
 
   if (/\bloa|letter of authority\b/i.test(q)) return "LOA_VALIDITY";
-  if (/\bpan|fan|formal letter of demand|fld\b/i.test(q)) return "PAN_FAN";
+  if (/\bpan\b|\bfan\b|formal letter of demand|\bfld\b|preliminary assessment notice|void.*assessment|assessment.*void|no.*preliminary.*notice|without.*pan\b/i.test(q)) return "PAN_FAN";
   if (/\bfdda|final decision on disputed assessment\b/i.test(q)) return "FDDA";
   if (/\bwaiver|statute of limitations\b/i.test(q)) return "WAIVER";
   if (/\bprescription|prescriptive\b/i.test(q)) return "ASSESSMENT_PRESCRIPTION";
@@ -1255,7 +1255,16 @@ function buildHierarchyFlags({ question = "", queryIntent = {}, primaryIssue, su
   const needsJurisprudence =
     queryIntent?.needsJurisprudence ||
     detectCasePattern(question, queryIntent) ||
-    needsConflict;
+    needsConflict ||
+    subIssue === "VAT_DEFINITION" ||
+    subIssue === "VAT_OVERVIEW" ||
+    /\bbar exam\b|\breviewer\b|\breview mode\b|\bcpale\b|\bdiagnostic\b/i.test(question) ||
+    subIssue === "ASSESSMENT_PRESCRIPTION" ||
+    subIssue === "LOA_VALIDITY" ||
+    subIssue === "PAN_FAN" ||
+    subIssue === "REFUND_CREDIT" ||
+    subIssue === "LOCAL_BUSINESS_TAX" ||
+    /\bCREATE act\b|\bTRAIN act\b|\bRA 11534\b|\bRA 10963\b|\bcreate law\b|\btrain law\b/i.test(question);
 
   return {
     preserveAuthorityHierarchy: true,
@@ -1767,6 +1776,75 @@ function isIssueClassificationCompatibleWithDoc(classification = {}, doc = {}) {
   return false;
 }
 
+// ─── PATCH B — OpenAI-backed issue classification (Steps 1-2, gpt-4o-mini) ───
+const CLASSIFICATION_SYSTEM_PROMPT = `You are TINA's Issue Classification Engine for Philippine taxation.
+Return ONLY valid JSON. No prose. No markdown. No code fences.
+
+{
+  "primaryIssue": "VAT|CIT|IIT|WHT|ESTATE|DONORS|PERCENTAGE|EXCISE|PRESCRIPTION|DISPUTE|LOCAL_TAX|CUSTOMS|TRANSFER_PRICING|CONSTITUTIONAL|GENERAL",
+  "subIssue": "specific sub-issue within the primary domain",
+  "queryIntent": "definition|compliance|dispute|planning|advisory|audit|refund|characterization|multi_issue",
+  "targetAuthorities": {
+    "tier1": ["NIRC/Constitution/RA provisions directly on point"],
+    "tier2": ["Tax Treaties if relevant"],
+    "tier3": ["Supreme Court / CTA cases directly on point"],
+    "tier4": ["Revenue Regulations directly on point"],
+    "tier5": ["RMC/RMO/BIR Rulings directly on point"]
+  },
+  "keyTerms": ["key Philippine tax terms extracted from the query"],
+  "complexityFlag": "simple|moderate|complex|multi_issue",
+  "transactionCharacterizationRequired": false,
+  "factPatternRequired": false
+}`;
+
+export async function classifyWithOpenAI(question = "", openai = null) {
+  if (!openai || !question) {
+    return {
+      success: false,
+      error: "Requires openai client and question.",
+      result: null,
+      metadata: { model: "gpt-4o-mini" }
+    };
+  }
+
+  try {
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        { role: "system", content: CLASSIFICATION_SYSTEM_PROMPT },
+        { role: "user",   content: String(question || "").trim() }
+      ],
+      response_format: { type: "json_object" },
+      temperature: 0
+    });
+
+    const raw = JSON.parse(response.choices[0]?.message?.content || "{}");
+
+    return {
+      success: true,
+      result: {
+        primaryIssue:   raw.primaryIssue  || "GENERAL",
+        subIssue:       raw.subIssue      || "",
+        queryIntent:    raw.queryIntent   || "advisory",
+        targetAuthorities: {
+          tier1: Array.isArray(raw.targetAuthorities?.tier1) ? raw.targetAuthorities.tier1 : [],
+          tier2: Array.isArray(raw.targetAuthorities?.tier2) ? raw.targetAuthorities.tier2 : [],
+          tier3: Array.isArray(raw.targetAuthorities?.tier3) ? raw.targetAuthorities.tier3 : [],
+          tier4: Array.isArray(raw.targetAuthorities?.tier4) ? raw.targetAuthorities.tier4 : [],
+          tier5: Array.isArray(raw.targetAuthorities?.tier5) ? raw.targetAuthorities.tier5 : []
+        },
+        keyTerms:      Array.isArray(raw.keyTerms) ? raw.keyTerms : [],
+        complexityFlag: raw.complexityFlag || "moderate",
+        transactionCharacterizationRequired: Boolean(raw.transactionCharacterizationRequired),
+        factPatternRequired: Boolean(raw.factPatternRequired)
+      },
+      metadata: { model: "gpt-4o-mini", tokens: response.usage?.total_tokens || 0 }
+    };
+  } catch (err) {
+    return { success: false, error: err.message, result: null, metadata: { model: "gpt-4o-mini" } };
+  }
+}
+
 function issueClassificationEngineHealthCheck() {
   return {
     ok: true,
@@ -1879,7 +1957,8 @@ export {
 
   buildIssueClassificationSearchQueries,
   isIssueClassificationCompatibleWithDoc,
-  issueClassificationEngineHealthCheck
+  issueClassificationEngineHealthCheck,
+  CLASSIFICATION_SYSTEM_PROMPT
 };
 
 export default {
@@ -1915,5 +1994,7 @@ export default {
 
   buildIssueClassificationSearchQueries,
   isIssueClassificationCompatibleWithDoc,
-  issueClassificationEngineHealthCheck
+  issueClassificationEngineHealthCheck,
+  CLASSIFICATION_SYSTEM_PROMPT,
+  classifyWithOpenAI
 };

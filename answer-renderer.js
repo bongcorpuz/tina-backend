@@ -20,7 +20,8 @@ const ORCHESTRATION_MODES = Object.freeze({
   STANDARD_TAX: "STANDARD_TAX",
   LEGAL_ANALYSIS: "LEGAL_ANALYSIS",
   COMPLEX_ADVISORY: "COMPLEX_ADVISORY",
-  EMERGENCY_TRIM: "EMERGENCY_TRIM"
+  EMERGENCY_TRIM: "EMERGENCY_TRIM",
+  SENIOR_COUNSEL_MEMO: "SENIOR_COUNSEL_MEMO"
 });
 
 const TINA_AF_HEADINGS = Object.freeze([
@@ -48,12 +49,27 @@ const COMPLEX_ADVISORY_HEADINGS = Object.freeze([
   "G. PRACTICAL POSITION"
 ]);
 
+// Senior Tax Counsel Memo — for LITIGATION, TECHNICAL, ADVISORY modes
+const SENIOR_COUNSEL_MEMO_HEADINGS = Object.freeze([
+  "RULING",
+  "LEGAL BASIS",
+  "ANALYSIS",
+  "QUALIFICATIONS",
+  "OPEN ISSUES",
+  "RECOMMENDED ACTION",
+  "POSITION STRENGTH"
+]);
+
+const POSITION_STRENGTH_VALUES = Object.freeze(["STRONG", "MODERATE", "WEAK", "INDEFENSIBLE"]);
+
 const FALLBACK_TEMPLATES = Object.freeze({
   FAST_DEFINITION: FAST_DEFINITION_HEADINGS,
   STANDARD_TAX: TINA_AF_HEADINGS,
   LEGAL_ANALYSIS: TINA_AF_HEADINGS,
   COMPLEX_ADVISORY: COMPLEX_ADVISORY_HEADINGS,
   EMERGENCY_TRIM: FAST_DEFINITION_HEADINGS,
+  SENIOR_COUNSEL_MEMO: SENIOR_COUNSEL_MEMO_HEADINGS,
+  LITIGATION_MEMO: SENIOR_COUNSEL_MEMO_HEADINGS,
 
   QUICK: FAST_DEFINITION_HEADINGS,
   STANDARD: TINA_AF_HEADINGS,
@@ -260,6 +276,25 @@ function getSectionBody(text = "", heading = "", headings = TINA_AF_HEADINGS) {
   return normalizeText(source.match(regex)?.[1] || "");
 }
 
+function hasPositionStrength(text = "") {
+  return /\bPOSITION STRENGTH\s*:/i.test(normalizeText(text));
+}
+
+function enforcePositionStrength(text = "") {
+  const clean = normalizeText(text);
+  if (!hasPositionStrength(clean)) return clean;
+  return clean.replace(
+    /POSITION STRENGTH\s*:\s*([^\n]*)/gi,
+    (match, value) => {
+      const upper = value.trim().toUpperCase();
+      const valid = POSITION_STRENGTH_VALUES.find((v) => upper.includes(v));
+      return valid
+        ? `POSITION STRENGTH: ${valid} — ${value.trim().replace(new RegExp(`^${valid}\\s*—?\\s*`, "i"), "")}`
+        : match;
+    }
+  );
+}
+
 function normalizeLegacyHeadings(text = "") {
   return normalizeText(text)
     .replace(/(^|\n)\s*1\.\s*DIRECT ANSWER\b/gi, "$1A. DIRECT ANSWER")
@@ -281,6 +316,7 @@ function normalizeOrchestrationMode(value = "") {
   const raw = String(value || "").trim().toUpperCase();
 
   if (Object.values(ORCHESTRATION_MODES).includes(raw)) return raw;
+  if (raw.includes("SENIOR_COUNSEL") || raw.includes("LITIGATION_MEMO") || raw.includes("COUNSEL_MEMO")) return "SENIOR_COUNSEL_MEMO";
   if (raw.includes("FAST") || raw.includes("QUICK") || raw.includes("DEFINITION")) return "FAST_DEFINITION";
   if (raw.includes("LEGAL") || raw.includes("DOCTRINE") || raw.includes("JURISPRUDENCE")) return "LEGAL_ANALYSIS";
   if (raw.includes("COMPLEX") || raw.includes("AUDIT") || raw.includes("CONTRACT") || raw.includes("TRANSACTION") || raw.includes("EVIDENCE") || raw.includes("RISK")) return "COMPLEX_ADVISORY";
@@ -346,7 +382,16 @@ function defaultBodyForHeading(heading = "") {
       "Verify the latest indexed authority, controlling doctrine, and supporting documents before relying on the position.",
 
     "F. PRACTICAL APPLICATION":
-      "Verify the latest indexed authority, controlling doctrine, and supporting documents before relying on the position."
+      "Verify the latest indexed authority, controlling doctrine, and supporting documents before relying on the position.",
+
+    // Senior Tax Counsel Memo headings
+    "RULING":             "Indexed source not found.",
+    "LEGAL BASIS":        "Indexed source not found.",
+    "ANALYSIS":           "Indexed source not found.",
+    "QUALIFICATIONS":     "No conditions that change the ruling have been identified.",
+    "OPEN ISSUES":        "No unresolved doctrinal issues identified.",
+    "RECOMMENDED ACTION": "Indexed source not found.",
+    "POSITION STRENGTH":  "MODERATE — Position requires verification against current indexed authority."
   };
 
   return defaults[heading] || "Indexed source not found.";
@@ -701,6 +746,9 @@ function renderAdaptiveAnswer(input = {}) {
   let rendered = repairStructure(rawAnswer, headings);
   rendered = sanitizeConflictLanguage(rendered, headings, getConflictMetadata(input));
   rendered = protectHeadingSpacing(rendered, headings);
+  if (headings === SENIOR_COUNSEL_MEMO_HEADINGS || headings.includes("POSITION STRENGTH")) {
+    rendered = enforcePositionStrength(rendered);
+  }
 
   rendered = rendered
     .replace(/No legal basis was rendered\./gi, "Indexed source not found.")
@@ -915,7 +963,9 @@ function answerRendererHealthCheck() {
     finalAnswerComplianceCompatible: true,
     masterPromptAuthorityHierarchyApplied: true,
     courtAuthorityNotSubordinatedToBIRIssuances: true,
-    indexedSourceNotFoundFallbackEnabled: true
+    indexedSourceNotFoundFallbackEnabled: true,
+    seniorCounselMemoFormatSupported: true,
+    positionStrengthEnforced: true
   };
 }
 
@@ -925,12 +975,16 @@ export {
   TINA_AF_HEADINGS,
   FAST_DEFINITION_HEADINGS,
   COMPLEX_ADVISORY_HEADINGS,
+  SENIOR_COUNSEL_MEMO_HEADINGS,
+  POSITION_STRENGTH_VALUES,
   FALLBACK_TEMPLATES,
   normalizeText,
   stripRawSourceSections,
   hasHeading,
   hasStructure,
   hasCompleteAFStructure,
+  hasPositionStrength,
+  enforcePositionStrength,
   repairStructure,
   conflictMetadataIsComplete,
   buildConflictMetadataBlock,
@@ -951,12 +1005,16 @@ export default {
   TINA_AF_HEADINGS,
   FAST_DEFINITION_HEADINGS,
   COMPLEX_ADVISORY_HEADINGS,
+  SENIOR_COUNSEL_MEMO_HEADINGS,
+  POSITION_STRENGTH_VALUES,
   FALLBACK_TEMPLATES,
   normalizeText,
   stripRawSourceSections,
   hasHeading,
   hasStructure,
   hasCompleteAFStructure,
+  hasPositionStrength,
+  enforcePositionStrength,
   repairStructure,
   conflictMetadataIsComplete,
   buildConflictMetadataBlock,

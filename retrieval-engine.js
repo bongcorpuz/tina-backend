@@ -2161,9 +2161,48 @@ async function callSearchCallable({ callable, query, layer, poolK, issueClassifi
   }
 }
 
+// LAW E — Supabase match_documents RPC with mandatory authority_names filter.
+// Never retrieve without the authority_names filter when authorityFilter is supplied.
+async function supabaseAuthoritySearch({
+  supabase,
+  query,
+  authorityFilter = [],
+  embedding = null,
+  poolK = DEFAULT_POOL_K,
+  layer = RETRIEVAL_LAYER.EXACT_NORMALIZED_AUTHORITY
+}) {
+  if (!supabase || typeof supabase.rpc !== "function") return [];
+  if (!Array.isArray(authorityFilter) || authorityFilter.length === 0) return [];
+
+  try {
+    const { data, error } = await supabase.rpc("match_documents", {
+      query_embedding: embedding,
+      match_count:     poolK,
+      filter:          { authority_names: authorityFilter }
+    });
+
+    if (error) {
+      console.warn(`[RETRIEVAL_ENGINE] supabaseAuthoritySearch RPC error: ${error.message}`);
+      return [];
+    }
+
+    return (data || []).map((doc) => ({
+      ...doc,
+      retrievalLayer:       layer,
+      retrievalPhase:       layer,
+      matchedRetrievalQuery: query,
+      authorityFilterApplied: true
+    }));
+  } catch (err) {
+    console.warn(`[RETRIEVAL_ENGINE] supabaseAuthoritySearch exception: ${err.message}`);
+    return [];
+  }
+}
+
 async function supabaseFallbackSearch({
   supabase,
   query,
+  authorityFilter = [],
   poolK = DEFAULT_POOL_K,
   layer = RETRIEVAL_LAYER.SUPABASE_FALLBACK
 }) {
@@ -2176,7 +2215,7 @@ async function supabaseFallbackSearch({
 
   for (const table of tables) {
     try {
-      const { data, error } = await supabase
+      let q = supabase
         .from(table)
         .select("*")
         .or(
@@ -2192,11 +2231,18 @@ async function supabaseFallbackSearch({
         )
         .limit(poolK);
 
+      // Apply authority_names metadata filter when provided (LAW E)
+      if (Array.isArray(authorityFilter) && authorityFilter.length > 0) {
+        q = q.filter("authority_name", "in", `(${authorityFilter.map(a => `"${a}"`).join(",")})`);
+      }
+
+      const { data, error } = await q;
+
       if (!error && Array.isArray(data) && data.length) {
         return data.map((doc) => ({
           ...doc,
-          retrievalLayer: layer,
-          retrievalPhase: layer,
+          retrievalLayer:       layer,
+          retrievalPhase:       layer,
           matchedRetrievalQuery: search
         }));
       }
@@ -2225,7 +2271,9 @@ async function collectCandidateDocs({
   supabase = null,
   documents = [],
   poolK = DEFAULT_POOL_K,
-  issueClassification = null
+  issueClassification = null,
+  authorityFilter = [],
+  embedding = null
 } = {}) {
   const candidates = [];
   const diagnostics = {
@@ -2240,6 +2288,20 @@ async function collectCandidateDocs({
 
   for (const doc of safeArray(documents)) {
     candidates.push(annotateDocLayer(doc, RETRIEVAL_LAYER.PROVIDED_DOCUMENTS, "provided"));
+  }
+
+  // LAW E — authority_names filter applied first when authorityFilter is supplied
+  if (Array.isArray(authorityFilter) && authorityFilter.length > 0) {
+    const authorityResults = await supabaseAuthoritySearch({
+      supabase,
+      query,
+      authorityFilter,
+      embedding,
+      poolK,
+      layer: RETRIEVAL_LAYER.EXACT_NORMALIZED_AUTHORITY
+    });
+    candidates.push(...authorityResults);
+    diagnostics.exactAuthorityMatches += authorityResults.length;
   }
 
   const callable = vectorSearch || searchFn;
@@ -2435,15 +2497,27 @@ async function retrieveRelevantSources(options = {}) {
   const poolK = Number(options.poolK || options.candidateLimit || DEFAULT_POOL_K);
   const querySet = buildRetrievalQuerySet(query, issueClassification);
 
+  // PATCH 4 — authorityFilter passed from pipeline Step 5 (LAW E)
+  const authorityFilter = safeArray(
+    options.authorityFilter ||
+    options.controllingAuthorities ||
+    options.targetAuthorities ||
+    issueClassification?.controllingAuthorities ||
+    issueClassification?.targetAuthorities ||
+    []
+  ).filter(Boolean);
+
   const { candidates, layerDiagnostics } = await collectCandidateDocs({
     query,
     querySet,
-    vectorSearch: options.vectorSearch,
-    searchFn: options.searchFn,
-    supabase: options.supabase,
-    documents: options.documents || options.sources || options.retrievedSources || [],
+    vectorSearch:    options.vectorSearch,
+    searchFn:        options.searchFn,
+    supabase:        options.supabase,
+    documents:       options.documents || options.sources || options.retrievedSources || [],
     poolK,
-    issueClassification
+    issueClassification,
+    authorityFilter,
+    embedding:       options.embedding || null
   });
 
   // LAW 3 — ISSUE-TARGETED RETRIEVAL

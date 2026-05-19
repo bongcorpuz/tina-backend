@@ -29,7 +29,8 @@ import {
   normalizeSourceName
 } from "./vector-store.js";
 
-import { createAskHandler } from "./ask-handler.js";
+import { createAskHandler, askHandlerHealthCheck } from "./ask-handler.js";
+import { assessmentHandlerHealthCheck } from "./assessment-handler.js";
 
 import {
   getUserId,
@@ -44,6 +45,14 @@ import { issueClassificationEngineHealthCheck } from "./issue-classification-eng
 import { ragAnswerHandlerHealthCheck } from "./rag-answer-handler.js";
 import { adaptiveModeHealthCheck } from "./adaptive-mode-engine.js";
 import { adaptiveResponsePlannerHealthCheck } from "./adaptive-response-planner.js";
+import { pipelineHealthCheck } from "./pipeline.js";
+import { finalAnswerComplianceHealthCheck } from "./final-answer-compliance.js";
+import { adaptiveMasterPromptHealthCheck } from "./adaptive-tina-master-prompt.js";
+import { legalValidationEngineHealthCheck } from "./legal-validation-engine.js";
+import { jurisprudenceEngineHealthCheck } from "./jurisprudence-engine.js";
+import { conflictEngineHealthCheck } from "./conflict-engine.js";
+import { answerRendererHealthCheck } from "./answer-renderer.js";
+import { feedbackLearningHealthCheck } from "./feedback-learning.js";
 
 import {
   buildOpenAIContext,
@@ -242,7 +251,13 @@ app.get("/", (req, res) => {
       "/tax",
       "/review",
       "/quiz",
+      "/diagnostic",
       "/source",
+      "/audit",
+      "/case",
+      "/debug",
+      "/patch",
+      "/progress",
       "/feedback"
     ]
   });
@@ -257,7 +272,7 @@ app.get("/routes", (req, res) => {
     issueClassificationPipeline: true,
     contextOrchestrationEnabled: true,
     serverUsesDirectPromptAssembly: false,
-    modeSupport: ["/ask", "/tax", "/review", "/quiz", "/source", "/feedback"],
+    modeSupport: ["/ask", "/tax", "/review", "/quiz", "/diagnostic", "/source", "/audit", "/case", "/debug", "/patch", "/progress", "/feedback"],
     adaptiveModules: [
       "context-orchestration-engine.js",
       "issue-classification-engine.js",
@@ -298,7 +313,13 @@ app.get("/routes", (req, res) => {
       "POST /tax",
       "POST /review",
       "POST /quiz",
+      "POST /diagnostic",
       "POST /source",
+      "POST /audit",
+      "POST /case",
+      "POST /debug",
+      "POST /patch",
+      "POST /progress",
       "POST /feedback"
     ]
   });
@@ -333,21 +354,36 @@ app.get("/health", async (req, res) => {
       vectorStore: vectorStats,
       adaptiveStack: {
         server: true,
-        askHandler: true,
+        pipeline: pipelineHealthCheck(),
+        askHandler: askHandlerHealthCheck(),
         contextOrchestration: localContextOrchestrationHealthCheck(),
         ragAnswerHandler: ragAnswerHandlerHealthCheck(),
         issueClassificationEngine: issueClassificationEngineHealthCheck(),
         queryIntentEngine: queryIntentEngineHealthCheck(),
         adaptiveModeEngine: adaptiveModeHealthCheck(),
         adaptiveResponsePlanner: adaptiveResponsePlannerHealthCheck(),
-        askHelpers: askHelpersHealthCheck()
+        askHelpers: askHelpersHealthCheck(),
+        finalAnswerCompliance: finalAnswerComplianceHealthCheck(),
+        adaptiveMasterPrompt: adaptiveMasterPromptHealthCheck(),
+        legalValidationEngine: legalValidationEngineHealthCheck(),
+        jurisprudenceEngine: jurisprudenceEngineHealthCheck(),
+        conflictEngine: conflictEngineHealthCheck(),
+        answerRenderer: answerRendererHealthCheck(),
+        assessmentHandler: assessmentHandlerHealthCheck(),
+        feedbackLearning: feedbackLearningHealthCheck()
       },
       routeModes: {
         ask: true,
         tax: true,
         review: true,
         quiz: true,
+        diagnostic: true,
         source: true,
+        audit: true,
+        case: true,
+        debug: true,
+        patch: true,
+        progress: true,
         feedback: true
       },
       time: new Date().toISOString()
@@ -618,12 +654,18 @@ app.get("/vector-stats", allowAuthenticatedOrIndexSecret, async (req, res) => {
 
 /* ================= ASK / MODE ROUTES ================= */
 
-app.post("/ask", authenticate, attachForcedHook("/ask"), askHandler);
-app.post("/tax", authenticate, attachForcedHook("/tax"), askHandler);
-app.post("/review", authenticate, attachForcedHook("/review"), askHandler);
-app.post("/quiz", authenticate, attachForcedHook("/quiz"), askHandler);
-app.post("/source", authenticate, attachForcedHook("/source"), askHandler);
-app.post("/feedback", authenticate, attachForcedHook("/feedback"), askHandler);
+app.post("/ask",        authenticate, attachForcedHook("/ask"),        askHandler);
+app.post("/tax",        authenticate, attachForcedHook("/tax"),        askHandler);
+app.post("/review",    authenticate, attachForcedHook("/review"),    askHandler);
+app.post("/quiz",      authenticate, attachForcedHook("/quiz"),      askHandler);
+app.post("/diagnostic", authenticate, attachForcedHook("/diagnostic"), askHandler);
+app.post("/source",    authenticate, attachForcedHook("/source"),    askHandler);
+app.post("/audit",     authenticate, attachForcedHook("/audit"),     askHandler);
+app.post("/case",      authenticate, attachForcedHook("/case"),      askHandler);
+app.post("/debug",     authenticate, attachForcedHook("/debug"),     askHandler);
+app.post("/patch",     authenticate, attachForcedHook("/patch"),     askHandler);
+app.post("/progress",  authenticate, attachForcedHook("/progress"),  askHandler);
+app.post("/feedback",  authenticate, attachForcedHook("/feedback"),  askHandler);
 
 /* ================= NOT FOUND ================= */
 
@@ -659,7 +701,7 @@ const server = app.listen(PORT, () => {
   console.log(`Server version: ${SERVER_VERSION}`);
   console.log("Context orchestration engine wired into ask-handler dependency injection.");
   console.log("server.js direct OpenAI prompt assembly: DISABLED.");
-  console.log("Issue-classified RAG routes enabled: /ask /tax /review /quiz /source /feedback");
+  console.log("Issue-classified RAG routes enabled: /ask /tax /review /quiz /diagnostic /source /audit /case /debug /patch /progress /feedback");
 });
 
 function shutdown(signal) {

@@ -41,7 +41,7 @@ import {
   saveMemoryHooks
 } from "./memory-hooks.js";
 
-import { saveMessage } from "./conversation-memory.js";
+import { saveMessage, getHistory } from "./conversation-memory.js";
 import { storeFeedbackEntry } from "./feedback-learning.js";
 
 import { extractQuizAnswer } from "./ask-helpers.js";
@@ -318,7 +318,7 @@ function buildHardcodedHookConfig(hookCode = "/ask") {
 
     "/debug": {
       hook_code: "/debug",
-      mode: "DEBUGGING_MODE",
+      mode: "DEBUG_MODE",
       title: "Debugging Mode",
       routeKind: "NORMAL_RAG",
       requires_retrieval: false,
@@ -681,34 +681,42 @@ function normalizeQueryIntentForHook(queryIntent = {}, hookConfig = {}) {
         ? "REVIEWER"
         : hookCode === "/quiz"
           ? "QUIZ"
-          : hookCode === "/case"
-            ? "CASE_ANALYSIS"
-            : hookCode === "/source"
-              ? "SOURCE"
-              : hookCode === "/audit"
-                ? "AUDIT"
-                : hookCode === "/debug"
-                  ? "DEBUGGING"
-                  : hookCode === "/patch"
-                    ? "CODE"
-                    : queryIntent.responseMode || hookConfig.adaptiveResponseMode || "STANDARD",
+          : hookCode === "/diagnostic"
+            ? "QUIZ"
+            : hookCode === "/tax"
+              ? "SENIOR_COUNSEL_MEMO"
+              : hookCode === "/case"
+                ? "CASE_ANALYSIS"
+                : hookCode === "/source"
+                  ? "SOURCE"
+                  : hookCode === "/audit"
+                    ? "AUDIT"
+                    : hookCode === "/debug"
+                      ? "DEBUGGING"
+                      : hookCode === "/patch"
+                        ? "CODE"
+                        : queryIntent.responseMode || hookConfig.adaptiveResponseMode || "STANDARD",
 
     orchestrationMode:
       hookCode === "/review"
         ? "REVIEWER"
         : hookCode === "/quiz"
           ? "QUIZ"
-          : hookCode === "/case"
-            ? "CASE_ANALYSIS"
-            : hookCode === "/source"
-              ? "SOURCE_LOOKUP"
-              : hookCode === "/audit"
-                ? "COMPLEX_ADVISORY"
-                : hookCode === "/debug"
-                  ? "DEBUGGING"
-                  : hookCode === "/patch"
-                    ? "CODE_PATCH"
-                    : queryIntent.orchestrationMode || hookConfig.orchestrationMode || "STANDARD_TAX",
+          : hookCode === "/diagnostic"
+            ? "QUIZ"
+            : hookCode === "/tax"
+              ? "SENIOR_COUNSEL_MEMO"
+              : hookCode === "/case"
+                ? "CASE_ANALYSIS"
+                : hookCode === "/source"
+                  ? "SOURCE_LOOKUP"
+                  : hookCode === "/audit"
+                    ? "COMPLEX_ADVISORY"
+                    : hookCode === "/debug"
+                      ? "DEBUGGING"
+                      : hookCode === "/patch"
+                        ? "CODE_PATCH"
+                        : queryIntent.orchestrationMode || hookConfig.orchestrationMode || "STANDARD_TAX",
 
     requiresQuizMode: hookCode === "/quiz" || Boolean(queryIntent.requiresQuizMode),
     requiresReviewMode: hookCode === "/review" || Boolean(queryIntent.requiresReviewMode),
@@ -741,7 +749,11 @@ function normalizeQueryIntentForHook(queryIntent = {}, hookConfig = {}) {
                     ? "DEBUG"
                     : hookCode === "/patch"
                       ? "PATCH"
-                      : "ASK"
+                      : hookCode === "/progress"
+                        ? "PROGRESS"
+                        : hookCode === "/feedback"
+                          ? "FEEDBACK"
+                          : "ASK"
       ),
 
     primaryCommand:
@@ -1519,9 +1531,10 @@ export function createAskHandler({
     }
   }
 
-  async function handleFeedback({ userId, conversationId, correction, feedbackType, hookConfig }) {
+  async function handleFeedback({ userId, conversationId, correction, feedbackType, originalAnswer, hookConfig }) {
     const cleanCorrection = normalizeText(correction);
     const cleanFeedbackType = normalizeText(feedbackType || "general_feedback");
+    const cleanOriginalAnswer = normalizeText(originalAnswer);
 
     if (!cleanCorrection) {
       return {
@@ -1529,7 +1542,8 @@ export function createAskHandler({
         body: {
           success: false,
           error: "Feedback correction is required.",
-          hint: "Send { question, conversationId, correction, feedbackType }"
+          hint: "Send { question, conversationId, correction, feedbackType, originalAnswer }",
+          validFeedbackTypes: ["general_feedback", "factual_correction", "legal_correction", "citation_correction", "hallucination_report", "doctrinal_conflict", "evidence_gap", "rendering_issue", "mode_routing_issue", "tax_position_issue"]
         }
       };
     }
@@ -1539,7 +1553,7 @@ export function createAskHandler({
       sessionId: conversationId || null,
       conversationId: conversationId || null,
       originalQuestion: hookConfig.originalQuestion,
-      originalAnswer: "",
+      originalAnswer: cleanOriginalAnswer,
       feedbackType: cleanFeedbackType,
       userCorrection: cleanCorrection,
       detectedMode: hookConfig.mode,
@@ -1643,6 +1657,9 @@ export function createAskHandler({
     const question = hookConfig.cleanQuestion || hookConfig.originalQuestion;
 
     // LAW 1: ask-handler calls ONLY pipeline.runPipeline(). No engine called here.
+    const priorMessages = conversationId
+      ? await getHistory(supabase, conversationId, 20).catch(() => [])
+      : [];
     let result;
     try {
       result = await withTimeout(
@@ -1652,7 +1669,7 @@ export function createAskHandler({
           supabase,
           openai,
           model:   openaiModel,
-          conversationHistory: []
+          conversationHistory: priorMessages
         }),
         RAG_TIMEOUT_MS,
         "TINA 16-step pipeline"
@@ -1740,7 +1757,7 @@ export function createAskHandler({
 
   return async function handleAsk(req, res) {
     try {
-      const { question, correction, feedbackType } = req.body || {};
+      const { question, correction, feedbackType, originalAnswer } = req.body || {};
       const userId = getUserId(req);
       const conversationId = getConversationId(req);
       const forcedHook = getForcedHook(req);
@@ -1830,6 +1847,7 @@ export function createAskHandler({
           conversationId,
           correction,
           feedbackType,
+          originalAnswer,
           hookConfig: compactHookConfig
         });
 

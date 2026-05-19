@@ -140,10 +140,24 @@ export async function runPipeline({
   trace.steps.push({ step: 1, name: "issueClassification", done: true });
 
   // ── Step 2: Sub-Prompt / Mode Routing ────────────────────────────────────
+  // Hook takes precedence over issue-classification mode for explicit route modes.
+  const HOOK_MODE_MAP = {
+    "/case":       "CASE_ANALYSIS",
+    "/audit":      "COMPLEX_ADVISORY",
+    "/review":     "REVIEWER_MODE",
+    "/quiz":       "QUIZ_MODE",
+    "/diagnostic": "QUIZ_MODE",
+    "/source":     "SOURCE_LOOKUP",
+    "/tax":        "SENIOR_COUNSEL_MEMO",
+    "/patch":      "CODE_PATCH_MODE",
+    "/debug":      "DEBUG_MODE",
+    "/progress":   "UTILITY",
+    "/feedback":   "UTILITY"
+  };
   const primaryIssue   = ctx.issueClassification?.primaryIssue || "GENERAL_TAX";
   ctx.routingMetadata  = getModeRoutingMetadata(primaryIssue);
-  ctx.mode             = modeOverride || ctx.routingMetadata?.mode || "STANDARD_TAX_MODE";
-  trace.steps.push({ step: 2, name: "subPromptRouting", mode: ctx.mode, done: true });
+  ctx.mode             = modeOverride || HOOK_MODE_MAP[hook] || ctx.routingMetadata?.mode || "STANDARD_TAX_MODE";
+  trace.steps.push({ step: 2, name: "subPromptRouting", mode: ctx.mode, hook, done: true });
 
   // ── Step 3: Authority Ranking (by Source Hierarchy — Law 2) ──────────────
   const rawTargets     = ctx.issueClassification?.targetAuthorities || [];
@@ -177,11 +191,12 @@ export async function runPipeline({
   trace.steps.push({ step: 5, name: "retrieval", chunksFound: ctx.retrievedChunks?.length ?? 0, done: true });
 
   // ── Step 6: Reranker ──────────────────────────────────────────────────────
-  ctx.rerankedChunks = rerankForTina({
+  const rerankResult = rerankForTina({
     docs:               ctx.retrievedChunks,
     query,
     issueClassification: ctx.issueClassification
   });
+  ctx.rerankedChunks = rerankResult?.results || rerankResult?.sources || rerankResult?.retrievedSources || [];
   trace.steps.push({ step: 6, name: "reranker", done: true });
 
   // ── Step 7: Fact Pattern Reconstruction (conditional) ────────────────────
@@ -278,7 +293,8 @@ export async function runPipeline({
     conflictAnalysis:     ctx.conflictAnalysis,
     systemPrompt:         ctx.promptContract?.masterPrompt,
     conversationHistory,
-    mode:                 ctx.mode
+    mode:                 ctx.mode,
+    adaptiveContext:      { activeHook: hook, orchestrationMode: ctx.mode }
   });
   ctx.rawAnswer    = openAiResult?.answer || "";
   ctx.orchestration = openAiResult?.orchestration || {};

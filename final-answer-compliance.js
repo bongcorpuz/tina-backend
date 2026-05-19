@@ -35,6 +35,8 @@ import {
   MAX_VISIBLE_SOURCES
 } from "./source-visibility-engine.js";
 
+import { enforceProhibitedPhrases } from "./adaptive-tina-master-prompt.js";
+
 const ENGINE_VERSION = "6.1.0";
 
 const RESPONSE_MODE = Object.freeze({
@@ -1848,12 +1850,20 @@ function finalizeCompliance({
     context
   });
 
+  const prohibitedPhraseCheck = enforceProhibitedPhrases(output);
+
   const warnings = buildComplianceWarnings({
     structureValidation,
     sourceGroundingValidation,
     conflictValidation,
     hierarchyValidation
   });
+
+  if (!prohibitedPhraseCheck.passed) {
+    warnings.push(
+      `PROHIBITED_PHRASES_DETECTED: ${prohibitedPhraseCheck.violations.join(", ")}`
+    );
+  }
 
   return {
     answer: output,
@@ -1869,6 +1879,7 @@ function finalizeCompliance({
       sourceGroundingValidation,
       hierarchyValidation,
       conflictValidation,
+      prohibitedPhraseCheck,
       masterPromptAuthorityHierarchyApplied: true,
       courtAuthorityNotSubordinatedToBIRIssuances: true
     },

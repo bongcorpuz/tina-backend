@@ -3,9 +3,9 @@
 
 /**
  * TINA Conflict Engine
- * Version: 3.1.0
+ * Version: 3.2.0
  *
- * Strict conflict validator only.
+ * Strict conflict validator + async OpenAI Four-Part Doctrine Test (LAW F).
  *
  * Purpose:
  * - Detect true legal conflicts only.
@@ -14,13 +14,14 @@
  * - Require OPPOSITE-HOLDING gate.
  * - Treat different legal dimensions as distinguishable, not conflicting.
  * - Apply Master Prompt hierarchy where court doctrine overrides conflicting BIR issuances.
+ * - Run OpenAI Four-Part Doctrine Test via fourPartDoctrineTestWithOpenAI() — LAW F.
  *
  * This file must NOT:
  * - retrieve sources,
- * - call OpenAI,
  * - render final answers,
  * - fabricate conflicts,
- * - fabricate authorities.
+ * - fabricate authorities,
+ * - use cosine / embedding distance for conflict detection (LAW F).
  */
 
 import {
@@ -37,7 +38,7 @@ import {
   getControllingPrecedenceForDoc
 } from "./authority-engine.js";
 
-const ENGINE_VERSION = "3.1.0";
+const ENGINE_VERSION = "3.2.0";
 
 const CONFLICT_TYPE = Object.freeze({
   NONE: "NO_CONFLICT",
@@ -916,8 +917,137 @@ function conflictEngineHealthCheck() {
     courtAuthorityNotSubordinatedToBIRIssuances: true,
     birIssuanceCannotOverrideCourtDoctrine: true,
     noRetrieval: true,
-    noOpenAI: true,
-    noRendering: true
+    noRendering: true,
+    openAiFourPartTestSupported: true,
+    fourPartDoctrineTestLLMExport: true,
+    noCosineSimilarityConflictDetection: true
+  };
+}
+
+// ─── LAW F — OpenAI Four-Part Doctrine Test ───────────────────────────────────
+// Accepts HoldingObject[]. Calls OpenAI JSON. Returns { trueConflict, conflictBasis,
+// controllingAuthority, recommendation }. No cosine / embedding distance used.
+
+function buildDoctrineTestPrompt(a, b) {
+  return `You are TINA's Doctrinal Conflict Analyzer for Philippine taxation.
+Apply the Four-Part Doctrine Test to the two authority objects provided.
+Return ONLY valid JSON. No prose. No explanation outside the JSON.
+
+AUTHORITY A:
+- Name: ${a.authorityName || a.source || "Unknown"}
+- Issue: ${a.issue || "Not specified"}
+- Material Facts: ${a.materialFacts || "Not specified"}
+- Holding: ${a.holding || "Not specified"}
+- Statutory Basis: ${a.statutoryBasis || a.statute || "Not specified"}
+- Tier: ${a.tier || "Unknown"}
+
+AUTHORITY B:
+- Name: ${b.authorityName || b.source || "Unknown"}
+- Issue: ${b.issue || "Not specified"}
+- Material Facts: ${b.materialFacts || "Not specified"}
+- Holding: ${b.holding || "Not specified"}
+- Statutory Basis: ${b.statutoryBasis || b.statute || "Not specified"}
+- Tier: ${b.tier || "Unknown"}
+
+FOUR-PART DOCTRINE TEST — trueConflict = true ONLY when ALL FOUR pass:
+1. Same legal issue
+2. Same material facts (null/unknown = pass-through, does NOT block)
+3. Same statute
+4. Opposite holding
+
+{
+  "sameIssue":       { "result": boolean, "analysis": "one sentence" },
+  "sameFacts":       { "result": boolean | null, "analysis": "one sentence — null if facts unknown" },
+  "sameStatute":     { "result": boolean, "analysis": "one sentence" },
+  "oppositeHolding": { "result": boolean, "analysis": "one sentence" },
+  "trueConflict": boolean,
+  "conflictBasis": "exact issue and provision where conflict exists, or null",
+  "controllingAuthority": "name of the higher-tier authority that prevails, or null",
+  "controllingAuthorityReason": "why the controlling authority prevails under Philippine hierarchy",
+  "recommendation": "apply controlling authority | distinguish | flag for review"
+}`.trim();
+}
+
+export async function fourPartDoctrineTestWithOpenAI(holdingObjects = [], openai = null) {
+  if (!openai || !Array.isArray(holdingObjects) || holdingObjects.length < 2) {
+    return {
+      success: false,
+      error: "Requires openai client and at least 2 HoldingObjects.",
+      result: null,
+      metadata: { pairs: 0, trueConflicts: 0 }
+    };
+  }
+
+  const pairs = [];
+  const trueConflicts = [];
+
+  for (let i = 0; i < holdingObjects.length; i++) {
+    for (let j = i + 1; j < holdingObjects.length; j++) {
+      const a = holdingObjects[i];
+      const b = holdingObjects[j];
+
+      try {
+        const response = await openai.chat.completions.create({
+          model: "gpt-4o",
+          messages: [{ role: "user", content: buildDoctrineTestPrompt(a, b) }],
+          response_format: { type: "json_object" },
+          temperature: 0
+        });
+
+        const raw = JSON.parse(response.choices[0]?.message?.content || "{}");
+        // Support both new { result, analysis } schema and legacy flat-boolean schema
+        const pairResult = {
+          authorityA: a.authorityName || a.source || "Unknown",
+          authorityB: b.authorityName || b.source || "Unknown",
+          trueConflict: raw.trueConflict === true,
+          parts: {
+            sameIssue:       raw.sameIssue?.result       ?? raw.part1_sameIssue       ?? null,
+            sameFacts:       raw.sameFacts?.result       ?? raw.part2_sameFacts       ?? null,
+            sameStatute:     raw.sameStatute?.result     ?? raw.part3_sameStatute     ?? null,
+            oppositeHolding: raw.oppositeHolding?.result ?? raw.part4_oppositeHolding ?? null
+          },
+          analysis: {
+            sameIssue:       raw.sameIssue?.analysis       || null,
+            sameFacts:       raw.sameFacts?.analysis       || null,
+            sameStatute:     raw.sameStatute?.analysis     || null,
+            oppositeHolding: raw.oppositeHolding?.analysis || null
+          },
+          conflictBasis:            raw.conflictBasis            || null,
+          controllingAuthority:     raw.controllingAuthority     || null,
+          controllingAuthorityReason: raw.controllingAuthorityReason || null,
+          recommendation:           raw.recommendation           || null
+        };
+
+        pairs.push(pairResult);
+        if (pairResult.trueConflict) trueConflicts.push(pairResult);
+      } catch (err) {
+        console.error(`[CONFLICT_ENGINE] fourPartDoctrineTestWithOpenAI pair error: ${err.message}`);
+        pairs.push({
+          authorityA: a.authorityName || a.source || "Unknown",
+          authorityB: b.authorityName || b.source || "Unknown",
+          trueConflict: false,
+          error: err.message
+        });
+      }
+    }
+  }
+
+  const first = trueConflicts[0] || null;
+
+  return {
+    success: true,
+    result: {
+      trueConflict:        trueConflicts.length > 0,
+      conflictBasis:       first?.conflictBasis || null,
+      controllingAuthority: first?.controllingAuthority || null,
+      recommendation:      first?.recommendation ||
+        "No true conflict detected — apply the higher-tier authority by hierarchy."
+    },
+    metadata: {
+      pairs:        pairs.length,
+      trueConflicts: trueConflicts.length,
+      allPairs:     pairs
+    }
   };
 }
 
@@ -954,5 +1084,6 @@ export default {
   analyzeConflictPair,
   detectHierarchyConflict,
   buildConflictSummary,
-  conflictEngineHealthCheck
+  conflictEngineHealthCheck,
+  fourPartDoctrineTestWithOpenAI
 };

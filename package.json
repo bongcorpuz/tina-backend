@@ -12,7 +12,10 @@
     "start": "node server.js",
     "start:prod": "NODE_ENV=production node server.js",
     "dev": "node --watch server.js",
-    "check": "node --check server.js"
+    "check": "node --check server.js",
+    "check:supabase": "node scripts/check-supabase.js",
+    "generate:jwt": "node -e \"console.log(require('crypto').randomBytes(64).toString('hex'))\"",
+    "lint:imports": "node --check pipeline.js conflict-engine.js conversation-memory.js retrieval-engine.js reranker-engine.js adaptive-tina-master-prompt.js"
   },
   "dependencies": {
     "@google-cloud/vision": "^4.3.2",

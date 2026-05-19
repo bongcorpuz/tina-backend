@@ -66,6 +66,40 @@ const RESPONSE_MODE = Object.freeze({
   REVIEWER: "REVIEWER"
 });
 
+// PATCH 6 — Tier boost multipliers applied on top of base score.
+// Superseded authorities receive score = 0 (excluded from top results).
+const TIER_BOOST = Object.freeze({
+  CONSTITUTION:          0.35,
+  STATUTE:               0.35,
+  NIRC:                  0.35,
+  TAX_CODE:              0.35,
+  CMTA:                  0.35,
+  LGC:                   0.35,
+  REPUBLIC_ACT:          0.35,
+  RA:                    0.35,
+  TAX_TREATY:            0.30,
+  SUPREME_COURT_EN_BANC: 0.25,
+  SUPREME_COURT:         0.25,
+  CTA_EN_BANC:           0.15,
+  CTA_DIVISION:          0.15,
+  COURT_OF_APPEALS:      0.15,
+  RR:                    0.10,
+  REVENUE_REGULATION:    0.10,
+  RMC:                   0.00,
+  RMO:                   0.00,
+  RAMO:                  0.00,
+  BIR_RULING:            -0.02,
+  PFRS:                  -0.03,
+  PAS:                   -0.03,
+  PSA:                   -0.03,
+  OECD_GUIDANCE:         -0.04,
+  FOREIGN_AUTHORITY:     -0.04,
+  SECONDARY:             -0.05,
+  CPA_NOTES:             -0.05,
+  REVIEW_MATERIALS:      -0.05,
+  UNKNOWN:               -0.05
+});
+
 /**
  * Master Prompt hierarchy:
  * 1 Constitution
@@ -1008,12 +1042,20 @@ function weakCasePenalty(query = "", doc = {}, issueClassification = {}) {
   return penalty;
 }
 
+function tierBoostForDoc(doc = {}) {
+  const type = safeAuthorityType(doc);
+  return TIER_BOOST[type] ?? TIER_BOOST.UNKNOWN;
+}
+
 function computeTinaRerankScore({
   query = "",
   doc = {},
   responseMode = RESPONSE_MODE.STANDARD,
   issueClassification = null
 }) {
+  // Superseded authorities are excluded — score = 0 (LAW 2 / PATCH 6)
+  if (isSupersededDoc(doc)) return 0;
+
   const classification =
     issueClassification ||
     extractIssueClassification({
@@ -1022,7 +1064,7 @@ function computeTinaRerankScore({
       adaptiveContext: {}
     });
 
-  const score =
+  const base =
     semanticScore(doc) * 0.20 +
     authorityWeight(doc) * 0.25 +
     exactReferenceBonus(query, doc) * 0.18 +
@@ -1031,9 +1073,12 @@ function computeTinaRerankScore({
     controllingBonus(doc) * 0.07 +
     adaptiveModeBonus(responseMode, doc) * 0.04 -
     authorityPenalty(doc) -
-    supersessionPenalty(doc) -
     weakCasePenalty(query, doc, classification) -
     classifiedIssuePenalty(classification, doc);
+
+  // PATCH 6 — tier boost multiplier applied after base score
+  const boost = tierBoostForDoc(doc);
+  const score = base + base * boost;
 
   return Number(score.toFixed(4));
 }

@@ -291,11 +291,90 @@ export function buildConversationMemoryContext(messages = [], maxChars = 6000) {
   return text.length > maxChars ? `${text.slice(-maxChars)}\n...[recent memory truncated]` : text;
 }
 
+// ─── Named exports required by pipeline.js (PATCH 3) ─────────────────────────
+
+/**
+ * getHistory(supabase, sessionId, n)
+ * Returns the last n messages for a session/conversation, ordered oldest-first.
+ */
+export async function getHistory(supabase, sessionId, n = 10) {
+  if (!isSupabaseClient(supabase)) return [];
+
+  const cleanId = normalizeText(sessionId);
+  if (!cleanId) return [];
+
+  const limit = Math.max(1, Math.min(Math.floor(Number(n) || 10), 200));
+
+  const { data, error } = await supabase
+    .from("messages")
+    .select("*")
+    .eq("conversation_id", cleanId)
+    .order("created_at", { ascending: false })
+    .limit(limit);
+
+  if (error) {
+    console.error(`[CONVERSATION_MEMORY] getHistory error: ${error.message}`);
+    return [];
+  }
+
+  return (data || []).reverse();
+}
+
+/**
+ * addMessage(supabase, conversationId, role, content, metadata, turnNumber)
+ * Inserts a single message row with optional turn_number.
+ * Returns the inserted row or null on failure.
+ */
+export async function addMessage(
+  supabase,
+  conversationId,
+  role,
+  content,
+  metadata = {},
+  turnNumber = null
+) {
+  if (!isSupabaseClient(supabase)) return null;
+
+  const cleanConversationId = normalizeText(conversationId);
+  const cleanRole           = normalizeText(role);
+  const cleanContent        = normalizeText(content);
+
+  if (!cleanConversationId || !cleanRole || !cleanContent) return null;
+
+  const payload = {
+    conversation_id: cleanConversationId,
+    role:            cleanRole,
+    content:         cleanContent,
+    metadata:        sanitizeJsonValue(metadata) || {}
+  };
+
+  if (turnNumber !== null && Number.isFinite(Number(turnNumber))) {
+    payload.turn_number = Math.floor(Number(turnNumber));
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from("messages")
+      .insert(payload)
+      .select("*")
+      .single();
+
+    if (error) throw error;
+    return data;
+  } catch (err) {
+    console.error(`[CONVERSATION_MEMORY] addMessage error: ${err.message}`);
+    return null;
+  }
+}
+
 export function conversationMemoryHealthCheck() {
   return {
     ok: true,
     engine: "TINA_CONVERSATION_MEMORY",
     version: ENGINE_VERSION,
-    adaptiveMetadataCompatible: true
+    adaptiveMetadataCompatible: true,
+    getHistoryExport: true,
+    addMessageExport: true,
+    turnNumberSupported: true
   };
 }

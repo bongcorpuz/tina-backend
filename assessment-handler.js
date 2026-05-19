@@ -724,16 +724,22 @@ Required JSON shape:
       ? profile.strong_topics
       : [];
 
+    const lastUpdated = profile?.updated_at
+      ? new Date(profile.updated_at).toLocaleDateString("en-PH", { year: "numeric", month: "short", day: "numeric" })
+      : "Unknown";
+
     const answerText = profile
       ? [
           "Learning Progress",
           "",
           `Skill Level: ${profile.skill_level || "beginner"}`,
           `Learning Goal: ${profile.learning_goal || "CPALE"}`,
+          `Preferred Style: ${profile.preferred_style || "reviewer"}`,
           `Total Questions: ${profile.total_questions || 0}`,
           `Correct Answers: ${profile.correct_answers || 0}`,
           `Accuracy Rate: ${Math.round(Number(profile.accuracy_rate || 0) * 100)}%`,
           `Last Reviewed Topic: ${profile.last_reviewed_topic || "None"}`,
+          `Last Updated: ${lastUpdated}`,
           "",
           `Weak Topics: ${weakTopics.join(", ") || "None yet"}`,
           `Strong Topics: ${strongTopics.join(", ") || "None yet"}`

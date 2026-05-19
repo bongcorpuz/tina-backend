@@ -64,7 +64,7 @@ const MODE_CONFIG = Object.freeze({
     maxOutputTokens: 1800,
     maxSources: 6,
     maxCharsPerSource: 1200,
-    maxHistoryItems: 4,
+    maxHistoryItems: 20,
     temperature: 0.2
   },
 
@@ -82,7 +82,7 @@ const MODE_CONFIG = Object.freeze({
     maxOutputTokens: 2200,
     maxSources: 8,
     maxCharsPerSource: 1600,
-    maxHistoryItems: 4,
+    maxHistoryItems: 20,
     temperature: 0.1
   },
 
@@ -100,7 +100,7 @@ const MODE_CONFIG = Object.freeze({
     maxOutputTokens: 1600,
     maxSources: 6,
     maxCharsPerSource: 1350,
-    maxHistoryItems: 4,
+    maxHistoryItems: 20,
     temperature: 0.1
   },
 
@@ -109,7 +109,7 @@ const MODE_CONFIG = Object.freeze({
     maxOutputTokens: 2200,
     maxSources: 8,
     maxCharsPerSource: 1600,
-    maxHistoryItems: 4,
+    maxHistoryItems: 20,
     temperature: 0.1
   },
 
@@ -118,7 +118,25 @@ const MODE_CONFIG = Object.freeze({
     maxOutputTokens: 2600,
     maxSources: 10,
     maxCharsPerSource: 1650,
-    maxHistoryItems: 5,
+    maxHistoryItems: 20,
+    temperature: 0.1
+  },
+
+  CODE_PATCH_MODE: {
+    maxInputTokens: 20000,
+    maxOutputTokens: 2000,
+    maxSources: 6,
+    maxCharsPerSource: 1200,
+    maxHistoryItems: 4,
+    temperature: 0.1
+  },
+
+  DEBUG_MODE: {
+    maxInputTokens: 20000,
+    maxOutputTokens: 2000,
+    maxSources: 6,
+    maxCharsPerSource: 1200,
+    maxHistoryItems: 4,
     temperature: 0.1
   },
 
@@ -240,6 +258,25 @@ const CASE_MODE_MARKERS = Object.freeze([
   "CASE",
   "CASE_ANALYSIS",
   "JURISPRUDENCE"
+]);
+
+const AUDIT_MODE_MARKERS = Object.freeze([
+  "AUDIT",
+  "AUDIT_MODE",
+  "COMPLEX_ADVISORY",
+  "AUDIT_FACT_PATTERN"
+]);
+
+const CODE_PATCH_MODE_MARKERS = Object.freeze([
+  "PATCH",
+  "CODE_PATCH",
+  "CODE_PATCH_MODE"
+]);
+
+const DEBUG_MODE_MARKERS = Object.freeze([
+  "DEBUG",
+  "DEBUG_MODE",
+  "DIAGNOSTIC_DEEP"
 ]);
 
 const CONTROLLING_TYPES = new Set([
@@ -614,7 +651,20 @@ function detectModeFlags({ adaptiveContext = {}, classification = {}, intent = {
     hook === "/case" ||
     markerIncluded(values, CASE_MODE_MARKERS);
 
-  const isNonAFMode = isQuiz || isReviewer || isSource;
+  const isAudit =
+    args.auditMode === true ||
+    hook === "/audit" ||
+    markerIncluded(values, AUDIT_MODE_MARKERS);
+
+  const isPatch =
+    hook === "/patch" ||
+    markerIncluded(values, CODE_PATCH_MODE_MARKERS);
+
+  const isDebug =
+    hook === "/debug" ||
+    markerIncluded(values, DEBUG_MODE_MARKERS);
+
+  const isNonAFMode = isQuiz || isReviewer || isSource || isAudit || isPatch || isDebug;
 
   return {
     isQuiz,
@@ -622,6 +672,9 @@ function detectModeFlags({ adaptiveContext = {}, classification = {}, intent = {
     isReview: isReviewer,
     isSource,
     isCase,
+    isAudit,
+    isPatch,
+    isDebug,
     isNonAFMode,
     isStandardLegal: !isNonAFMode,
     shouldForceAFStructure:
@@ -698,9 +751,11 @@ function resolveExplicitMode({ adaptiveContext = {}, classification = {}, intent
     LEGAL_ANALYSIS: "LEGAL_ANALYSIS",
     COMPLEX_ADVISORY: "COMPLEX_ADVISORY",
     AUDIT: "COMPLEX_ADVISORY",
-    DEBUGGING: "COMPLEX_ADVISORY",
-    CODE: "COMPLEX_ADVISORY",
-    CODE_PATCH: "COMPLEX_ADVISORY"
+    DEBUGGING: "DEBUG_MODE",
+    DEBUG: "DEBUG_MODE",
+    CODE: "CODE_PATCH_MODE",
+    CODE_PATCH: "CODE_PATCH_MODE",
+    PATCH: "CODE_PATCH_MODE"
   };
 
   return aliases[raw] || (MODE_CONFIG[raw] ? raw : null);
@@ -1588,6 +1643,11 @@ Authority and source-grounding rules:
 8. Do not dump unrelated jurisprudence.
 9. Do not include raw source text, full debug objects, retrieval payloads, embeddings, hidden metadata, or full engine outputs.
 10. Do not state "Conflict Detected: YES" unless the same exact issue, same legal dimension, opposite holding/rule, hierarchy analysis, and conflict-resolution basis are all present.
+11. MCIT GUARD: When addressing MCIT (Sec. 27(E) NIRC), do not import NOLCO or net operating loss carry-forward rules into the analysis. MCIT and NOLCO are legally distinct mechanisms operating on different tax bases; mixing them is a fatal accuracy error. When explaining MCIT, always distinguish it from RCIT (Sec. 27(A) NIRC): MCIT applies when it exceeds the RCIT for the taxable year, starting from the 4th taxable year following the year of commencement of business operations; RCIT applies whenever RCIT exceeds MCIT. State which applies and when.
+12. PRESCRIPTION HIERARCHY: For tax assessment prescription, state Sec. 203 NIRC (3-year general rule) as the primary rule first. State Sec. 222(a) NIRC (10-year rule, applicable only to fraudulent or false returns) as a named exception — never present both periods as co-equal alternatives.
+13. OECD LABELING: OECD Guidelines and all foreign tax authority materials are persuasive only, never controlling in Philippine tax law. Explicitly label them as "persuasive authority" when cited. Any transfer pricing or OECD-cited analysis must first anchor on the applicable domestic provision (e.g., Sec. 50 NIRC, RR 2-2013) before OECD materials are referenced or applied.
+14. SECTION A ANCHOR: The Direct Answer section (Section A) must open with the controlling NIRC provision before any other citation, case, or regulation. The statute is always named first in the answer. Do not open Section A with a case name, RMC, or secondary authority.
+15. NON-DEFINITIONAL CASE EXCLUSION: For definition-type queries ("What is VAT?", "What is MCIT?", "What is withholding tax?"), do not cite transactional or fact-specific cases (e.g., CIR v. McDonald's Realty, Dizon Farms v. CIR) as the primary or lead authority. Definitional cases must directly address the definition, scope, or essential elements of the tax. Cite transactional cases only in Section D (Supporting Jurisprudence) and only when directly on point.
 `.trim();
 
   let modeInstruction = "";
@@ -1604,7 +1664,7 @@ Answer Key
 Explanation
 Reviewer Trap
 Source Anchor
-Keep the answer educational, concise, and source-grounded where retrieved authorities exist.
+Source Anchor is MANDATORY. Always end with "Source Anchor: [cite the controlling NIRC provision, RR, or case]". If no source was retrieved, state: "Source Anchor: Indexed source not found. Answer based on [applicable NIRC provision] per Philippine tax law framework." Never omit the Source Anchor.
 `.trim();
   } else if (modeFlags.isReviewer || mode === "REVIEWER_MODE") {
     modeInstruction = `
@@ -1613,11 +1673,13 @@ Do not use A-F legal answer format.
 Use CPA/bar reviewer teaching style.
 Use this structure unless the user asked otherwise:
 Concept
+Legal Basis
 Rule
 Memory Aid
 Common Trap
 Example
 Quick Check
+Legal Basis is MANDATORY. Always state "Legal Basis: [cite the controlling NIRC provision, RR, or case]". If no source was retrieved, state: "Legal Basis: [applicable NIRC provision] per Philippine tax law framework." Never omit the Legal Basis.
 Prioritize learning clarity while preserving legal hierarchy.
 Reviewer materials may support learning, but they must never override controlling law, regulations, or jurisprudence.
 `.trim();
@@ -1632,7 +1694,8 @@ Controlling Authorities
 Supporting Rules / Issuances
 Supporting Jurisprudence
 Notes
-Do not generate substantive analysis beyond source identification unless necessary.
+Do not generate substantive analysis. Source identification only.
+If no indexed sources were retrieved, state: "No indexed sources found for this query. Applicable Philippine tax framework: [cite the controlling NIRC provision or statute if known]." Never fabricate a source citation.
 `.trim();
   } else if (modeFlags.isCase || mode === "CASE_ANALYSIS") {
     modeInstruction = `
@@ -1646,6 +1709,54 @@ Doctrine
 Application
 Status / Limits
 Do not force generic A-F tax format unless the user asks for full tax application.
+If no case was retrieved from the indexed sources, state: "No indexed case found for this query. Based on Philippine tax jurisprudence: [cite the applicable Supreme Court or CTA ruling if known]." Never fabricate a GR number, case name, date, or holding.
+`.trim();
+  } else if (modeFlags.isPatch || mode === "CODE_PATCH_MODE") {
+    modeInstruction = `
+CODE PATCH MODE FORMAT:
+Do not use standard legal/tax A-F format.
+This is a code patch request for TINA's backend system.
+Structure your response as:
+A. ISSUE — What is broken or needs changing
+B. ROOT CAUSE — Why it is broken
+C. PATCH — Exact code change (file path, function, what to add/modify/remove)
+D. VERIFICATION — How to confirm the patch works
+E. RISKS — What else might break
+Be precise. Reference file paths and function names exactly. Never fabricate method signatures or parameter names.
+`.trim();
+  } else if (modeFlags.isDebug || mode === "DEBUG_MODE") {
+    modeInstruction = `
+DEBUG MODE FORMAT:
+Do not use standard legal/tax A-F format.
+This is a diagnostic request for TINA's backend system.
+Structure your response as:
+A. SYMPTOM — What behavior is observed
+B. PROBABLE CAUSE — Most likely root cause
+C. DIAGNOSIS STEPS — How to confirm the cause
+D. FIX — Recommended resolution
+E. PREVENTION — How to prevent recurrence
+Be precise. Reference file paths and function names exactly.
+`.trim();
+  } else if (modeFlags.isAudit || mode === "COMPLEX_ADVISORY" || mode === "AUDIT_FACT_PATTERN") {
+    modeInstruction = `
+AUDIT MODE FORMAT:
+Do not use standard A-F legal answer format.
+Use this 7-section audit and evidence evaluation structure:
+A. DIRECT ANSWER
+B. FACTS / ASSUMPTIONS
+C. CONTROLLING LEGAL BASIS
+D. ANALYSIS
+E. AUDIT / TAX RISK
+F. DOCUMENTARY GAPS
+G. PRACTICAL POSITION
+All seven sections are mandatory.
+B: State key facts presented and flag any factual gaps affecting the conclusion.
+C: Cite the specific NIRC provision, RR, RMC, or case controlling this transaction or position.
+D: Apply the controlling authority to the stated facts.
+E: Assess the actual audit exposure specific to this position — BIR risk level, prescription, documentary defects.
+F: List the specific documents required to support this position (contracts, invoices, BIR filings, entries).
+G: State the recommended tax position and any caveats.
+Never omit E. AUDIT / TAX RISK or F. DOCUMENTARY GAPS. Never use generic boilerplate for E, F, or G.
 `.trim();
   } else {
     modeInstruction = `
@@ -1759,9 +1870,15 @@ function buildUserPrompt({
   } else if (modeFlags.isReviewer || mode === "REVIEWER_MODE") {
     responseInstruction = "Use REVIEWER_MODE. Do not use A-F legal answer format. Produce Concept, Rule, Memory Aid, Common Trap, Example, and Quick Check.";
   } else if (modeFlags.isSource || mode === "SOURCE_LOOKUP") {
-    responseInstruction = "Use SOURCE_LOOKUP. Do not use A-F legal answer format. List sources by authority hierarchy.";
+    responseInstruction = "Use SOURCE_LOOKUP. Do not use A-F legal answer format. List sources by authority hierarchy. If no indexed sources were retrieved, state: 'No indexed sources found. Cite the applicable Philippine tax statute only.' Never fabricate a source citation.";
   } else if (modeFlags.isCase || mode === "CASE_ANALYSIS") {
-    responseInstruction = "Use CASE_ANALYSIS. Focus on case, issue, ruling, doctrine, application, and status/limits.";
+    responseInstruction = "Use CASE_ANALYSIS. Focus on case, issue, ruling, doctrine, application, and status/limits. If no case was retrieved, state: 'No indexed case found. Cite the applicable Philippine Supreme Court or CTA ruling only if known.' Never fabricate a GR number, case name, or holding.";
+  } else if (modeFlags.isPatch || mode === "CODE_PATCH_MODE") {
+    responseInstruction = "Use CODE_PATCH_MODE. Do not use A-F legal format. Produce: A. ISSUE, B. ROOT CAUSE, C. PATCH (exact file path, function, change), D. VERIFICATION, E. RISKS. Never fabricate method signatures or parameter names.";
+  } else if (modeFlags.isDebug || mode === "DEBUG_MODE") {
+    responseInstruction = "Use DEBUG_MODE. Do not use A-F legal format. Produce: A. SYMPTOM, B. PROBABLE CAUSE, C. DIAGNOSIS STEPS, D. FIX, E. PREVENTION. Reference file paths and function names exactly.";
+  } else if (modeFlags.isAudit || mode === "COMPLEX_ADVISORY" || mode === "AUDIT_FACT_PATTERN") {
+    responseInstruction = "Use AUDIT_FACT_PATTERN. Produce all 7 mandatory sections: A. DIRECT ANSWER, B. FACTS / ASSUMPTIONS, C. CONTROLLING LEGAL BASIS, D. ANALYSIS, E. AUDIT / TAX RISK, F. DOCUMENTARY GAPS, G. PRACTICAL POSITION. Sections E, F, and G must be specific to this query — do not use generic boilerplate.";
   } else {
     responseInstruction = 'Use standard legal/tax format. If an expected authority section has no indexed support, state "Indexed source not found."';
   }
