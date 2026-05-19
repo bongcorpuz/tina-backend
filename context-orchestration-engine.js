@@ -3,7 +3,7 @@
 
 /**
  * TINA Context Orchestration Engine
- * Version: 4.2.0
+ * Version: 5.0.0
  *
  * FINAL ORCHESTRATION SOURCE
  *
@@ -23,12 +23,13 @@
  * - does not rerank by calling reranker
  * - does not generate final answer outside OpenAI orchestration
  * - does not bypass tax-engine metadata
- * - preserves controlling authorities before weak sources
+ * - preserves QUIZ_MODE and REVIEWER_MODE
+ * - does not force A-F legal answer structure for quiz/reviewer routes
  */
 
 import OpenAI from "openai";
 
-const ENGINE_VERSION = "4.2.0";
+const ENGINE_VERSION = "5.0.0";
 
 const DEFAULT_MODEL =
   process.env.OPENAI_MODEL ||
@@ -49,6 +50,42 @@ const MODEL_CONTEXT_LIMITS = Object.freeze({
 const HARD_SAFETY_RATIO = 0.6;
 
 const MODE_CONFIG = Object.freeze({
+  QUIZ_MODE: {
+    maxInputTokens: 12000,
+    maxOutputTokens: 1400,
+    maxSources: 5,
+    maxCharsPerSource: 1000,
+    maxHistoryItems: 4,
+    temperature: 0.2
+  },
+
+  REVIEWER_MODE: {
+    maxInputTokens: 18000,
+    maxOutputTokens: 1800,
+    maxSources: 6,
+    maxCharsPerSource: 1200,
+    maxHistoryItems: 4,
+    temperature: 0.2
+  },
+
+  SOURCE_LOOKUP: {
+    maxInputTokens: 14000,
+    maxOutputTokens: 1200,
+    maxSources: 8,
+    maxCharsPerSource: 1100,
+    maxHistoryItems: 3,
+    temperature: 0.1
+  },
+
+  CASE_ANALYSIS: {
+    maxInputTokens: 26000,
+    maxOutputTokens: 2200,
+    maxSources: 8,
+    maxCharsPerSource: 1600,
+    maxHistoryItems: 4,
+    temperature: 0.1
+  },
+
   FAST_DEFINITION: {
     maxInputTokens: 9000,
     maxOutputTokens: 900,
@@ -111,23 +148,6 @@ const SUPPORTED_TAX_DOMAINS = Object.freeze([
   "CON"
 ]);
 
-/**
- * Master Prompt authority hierarchy:
- * 1. Constitution
- * 2. NIRC / CMTA / LGC / primary statutes
- * 3. Tax Treaties
- * 4. Supreme Court En Banc
- * 5. Supreme Court Division
- * 6. CTA En Banc
- * 7. CTA Division
- * 8. Revenue Regulations
- * 9. RMC / RMO / RAMO
- * 10. BIR Rulings
- * 11. LGU / BOC issuances
- * 12. PFRS / PAS / PSA, when accounting issues apply
- * 13. OECD / foreign persuasive authorities
- * 14. CPA reviewer notes / secondary materials
- */
 const AUTHORITY_PRECEDENCE = Object.freeze({
   CONSTITUTION: 1,
 
@@ -200,8 +220,26 @@ const REVIEW_MODE_MARKERS = Object.freeze([
   "TAX_REVIEWER",
   "REVIEWER",
   "REVIEW",
+  "REVIEWER_MODE"
+]);
+
+const QUIZ_MODE_MARKERS = Object.freeze([
   "QUIZ",
-  "ASSESSMENT"
+  "QUIZ_MODE",
+  "ASSESSMENT",
+  "DIAGNOSTIC"
+]);
+
+const SOURCE_MODE_MARKERS = Object.freeze([
+  "SOURCE",
+  "SOURCE_LOOKUP",
+  "SOURCE_FINDER"
+]);
+
+const CASE_MODE_MARKERS = Object.freeze([
+  "CASE",
+  "CASE_ANALYSIS",
+  "JURISPRUDENCE"
 ]);
 
 const CONTROLLING_TYPES = new Set([
@@ -279,6 +317,10 @@ function lower(value = "") {
   return normalizeWhitespace(value).toLowerCase();
 }
 
+function upper(value = "") {
+  return normalizeWhitespace(value).toUpperCase();
+}
+
 function truncateByChars(value = "", maxChars = 1200) {
   const text = safeString(value);
   if (text.length <= maxChars) return text;
@@ -325,7 +367,6 @@ function normalizeAuthority(value = "") {
 
   const aliases = {
     CONSTITUTION: "CONSTITUTION",
-
     STATUTES: "STATUTE",
     STATUTE: "STATUTE",
     LAW: "STATUTE",
@@ -339,37 +380,28 @@ function normalizeAuthority(value = "") {
     LOCAL_GOVERNMENT_CODE: "LGC",
     REPUBLIC_ACT: "REPUBLIC_ACT",
     RA: "REPUBLIC_ACT",
-
     TAX_TREATY: "TAX_TREATY",
     TREATY: "TAX_TREATY",
-
     SUPREME_COURT_EN_BANC: "SUPREME_COURT_EN_BANC",
     SUPREME_COURT: "SUPREME_COURT",
     SC: "SUPREME_COURT",
     CASE: "SUPREME_COURT",
     CASE_LAW: "SUPREME_COURT",
     JURISPRUDENCE: "SUPREME_COURT",
-
     CTA_EN_BANC: "CTA_EN_BANC",
     CTA_DIVISION: "CTA_DIVISION",
     COURT_OF_APPEALS: "COURT_OF_APPEALS",
-
     REVENUE_REGULATION: "RR",
     REVENUE_REGULATIONS: "RR",
     RR: "RR",
-
     REVENUE_MEMORANDUM_CIRCULAR: "RMC",
     RMC: "RMC",
-
     REVENUE_MEMORANDUM_ORDER: "RMO",
     RMO: "RMO",
-
     REVENUE_AUDIT_MEMORANDUM_ORDER: "RAMO",
     RAMO: "RAMO",
-
     BIR_RULING: "BIR_RULING",
     BIR_RULINGS: "BIR_RULING",
-
     BOC: "BOC_ISSUANCE",
     BOC_ISSUANCE: "BOC_ISSUANCE",
     FIRB: "FIRB_ISSUANCE",
@@ -378,17 +410,14 @@ function normalizeAuthority(value = "") {
     PEZA_MEMO: "PEZA_MEMO",
     SEC: "SEC_GUIDANCE",
     SEC_GUIDANCE: "SEC_GUIDANCE",
-
     PFRS: "PFRS",
     PAS: "PAS",
     PSA: "PSA",
     LGU: "LGU",
-
     OECD: "OECD_GUIDANCE",
     OECD_GUIDANCE: "OECD_GUIDANCE",
     FOREIGN: "FOREIGN_AUTHORITY",
     FOREIGN_AUTHORITY: "FOREIGN_AUTHORITY",
-
     CPA_NOTES: "CPA_NOTES",
     REVIEW_MATERIALS: "REVIEW_MATERIALS",
     SECONDARY: "SECONDARY",
@@ -399,6 +428,9 @@ function normalizeAuthority(value = "") {
 }
 
 function normalizeBuildArgs(args = {}) {
+  const adaptiveContext = args.adaptiveContext || {};
+  const responsePlan = args.responsePlan || adaptiveContext?.responsePlan || {};
+
   return {
     userQuery:
       args.userQuery ||
@@ -446,14 +478,43 @@ function normalizeBuildArgs(args = {}) {
       args.messages ||
       [],
 
-    adaptiveContext:
-      args.adaptiveContext ||
-      {},
+    adaptiveContext,
 
-    responsePlan:
-      args.responsePlan ||
-      args.adaptiveContext?.responsePlan ||
-      {},
+    responsePlan,
+
+    explicitResponseMode:
+      args.responseMode ||
+      responsePlan.responseMode ||
+      adaptiveContext.responseMode ||
+      adaptiveContext.responsePlan?.responseMode ||
+      null,
+
+    explicitOrchestrationMode:
+      args.orchestrationMode ||
+      responsePlan.orchestrationMode ||
+      responsePlan.contextMode ||
+      adaptiveContext.orchestrationMode ||
+      adaptiveContext.responsePlan?.orchestrationMode ||
+      null,
+
+    forceStandardAFStructure:
+      args.forceStandardAFStructure === true ||
+      responsePlan.forceStandardAFStructure === true,
+
+    reviewerMode:
+      args.reviewerMode === true ||
+      responsePlan.reviewerMode === true ||
+      adaptiveContext.reviewerMode === true,
+
+    quizMode:
+      args.quizMode === true ||
+      responsePlan.quizMode === true ||
+      adaptiveContext.quizMode === true,
+
+    sourceMode:
+      args.sourceMode === true ||
+      responsePlan.sourceMode === true ||
+      adaptiveContext.sourceMode === true,
 
     model:
       args.model ||
@@ -464,36 +525,185 @@ function normalizeBuildArgs(args = {}) {
   };
 }
 
-function isReviewMode({ adaptiveContext = {}, classification = {}, intent = {} } = {}) {
-  const values = [
+function collectModeValues({ adaptiveContext = {}, classification = {}, intent = {}, responsePlan = {}, args = {} } = {}) {
+  return [
+    args.explicitResponseMode,
+    args.explicitOrchestrationMode,
+    args.reviewerMode ? "REVIEWER_MODE" : null,
+    args.quizMode ? "QUIZ_MODE" : null,
+    args.sourceMode ? "SOURCE_LOOKUP" : null,
+
     adaptiveContext?.activeMode,
     adaptiveContext?.mode,
     adaptiveContext?.hookConfig?.mode,
     adaptiveContext?.activeHook,
     adaptiveContext?.hookConfig?.hook_code,
     adaptiveContext?.responseMode,
+    adaptiveContext?.orchestrationMode,
     adaptiveContext?.responsePlan?.responseMode,
+    adaptiveContext?.responsePlan?.orchestrationMode,
+
+    responsePlan?.responseMode,
+    responsePlan?.orchestrationMode,
+    responsePlan?.contextMode,
+
     classification?.responseMode,
     classification?.orchestrationMode,
+    classification?.mode,
+
     intent?.mode,
-    intent?.intent
+    intent?.intent,
+    intent?.responseMode,
+    intent?.orchestrationMode,
+    intent?.commandMode,
+    intent?.primaryCommand,
+    intent?.routeHook
   ]
     .filter(Boolean)
     .map((value) => String(value).toUpperCase());
+}
 
-  if (
+function markerIncluded(values = [], markers = []) {
+  return values.some((value) =>
+    markers.some((marker) => value.includes(marker))
+  );
+}
+
+function detectModeFlags({ adaptiveContext = {}, classification = {}, intent = {}, responsePlan = {}, args = {} } = {}) {
+  const values = collectModeValues({
+    adaptiveContext,
+    classification,
+    intent,
+    responsePlan,
+    args
+  });
+
+  const hook = lower(
+    adaptiveContext?.activeHook ||
+      adaptiveContext?.hookConfig?.hook_code ||
+      intent?.routeHook ||
+      intent?.primaryCommand ||
+      ""
+  );
+
+  const isQuiz =
+    args.quizMode === true ||
     adaptiveContext?.assessmentMode === true ||
     adaptiveContext?.adaptiveQuizMode === true ||
     intent?.assessmentMode === true ||
     intent?.adaptiveQuizMode === true ||
-    intent?.explicitlyRequestedReviewMaterials === true
-  ) {
-    return true;
-  }
+    intent?.requiresQuizMode === true ||
+    hook === "/quiz" ||
+    markerIncluded(values, QUIZ_MODE_MARKERS);
 
-  return values.some((value) =>
-    REVIEW_MODE_MARKERS.some((marker) => value.includes(marker))
-  );
+  const isReviewer =
+    args.reviewerMode === true ||
+    intent?.requiresReviewMode === true ||
+    intent?.explicitlyRequestedReviewMaterials === true ||
+    hook === "/review" ||
+    markerIncluded(values, REVIEW_MODE_MARKERS);
+
+  const isSource =
+    args.sourceMode === true ||
+    intent?.requiresSourceVisibility === true ||
+    hook === "/source" ||
+    markerIncluded(values, SOURCE_MODE_MARKERS);
+
+  const isCase =
+    intent?.requiresCaseMode === true ||
+    hook === "/case" ||
+    markerIncluded(values, CASE_MODE_MARKERS);
+
+  const isNonAFMode = isQuiz || isReviewer || isSource;
+
+  return {
+    isQuiz,
+    isReviewer,
+    isReview: isReviewer,
+    isSource,
+    isCase,
+    isNonAFMode,
+    isStandardLegal: !isNonAFMode,
+    shouldForceAFStructure:
+      !isNonAFMode &&
+      args.forceStandardAFStructure === true,
+
+    modeValues: values
+  };
+}
+
+function isReviewMode({ adaptiveContext = {}, classification = {}, intent = {}, responsePlan = {}, args = {} } = {}) {
+  return detectModeFlags({
+    adaptiveContext,
+    classification,
+    intent,
+    responsePlan,
+    args
+  }).isReviewer || detectModeFlags({
+    adaptiveContext,
+    classification,
+    intent,
+    responsePlan,
+    args
+  }).isQuiz;
+}
+
+function resolveExplicitMode({ adaptiveContext = {}, classification = {}, intent = {}, responsePlan = {}, args = {} } = {}) {
+  const flags = detectModeFlags({
+    adaptiveContext,
+    classification,
+    intent,
+    responsePlan,
+    args
+  });
+
+  if (flags.isQuiz) return "QUIZ_MODE";
+  if (flags.isReviewer) return "REVIEWER_MODE";
+  if (flags.isSource) return "SOURCE_LOOKUP";
+  if (flags.isCase) return "CASE_ANALYSIS";
+
+  const explicit =
+    args.explicitOrchestrationMode ||
+    args.explicitResponseMode ||
+    responsePlan?.contextMode ||
+    responsePlan?.orchestrationMode ||
+    responsePlan?.responseMode ||
+    adaptiveContext?.orchestrationMode ||
+    adaptiveContext?.responsePlan?.orchestrationMode ||
+    adaptiveContext?.responseMode ||
+    classification?.orchestrationMode ||
+    classification?.responseMode ||
+    intent?.orchestrationMode ||
+    intent?.responseMode ||
+    null;
+
+  if (!explicit) return null;
+
+  const raw = String(explicit).trim().toUpperCase();
+
+  const aliases = {
+    QUIZ: "QUIZ_MODE",
+    ASSESSMENT: "QUIZ_MODE",
+    DIAGNOSTIC: "QUIZ_MODE",
+    REVIEW: "REVIEWER_MODE",
+    REVIEWER: "REVIEWER_MODE",
+    TAX_REVIEWER: "REVIEWER_MODE",
+    SOURCE: "SOURCE_LOOKUP",
+    SOURCE_FINDER: "SOURCE_LOOKUP",
+    CASE: "CASE_ANALYSIS",
+    JURISPRUDENCE: "CASE_ANALYSIS",
+    FAST_DEFINITION: "FAST_DEFINITION",
+    STANDARD: "STANDARD_TAX",
+    STANDARD_TAX: "STANDARD_TAX",
+    LEGAL_ANALYSIS: "LEGAL_ANALYSIS",
+    COMPLEX_ADVISORY: "COMPLEX_ADVISORY",
+    AUDIT: "COMPLEX_ADVISORY",
+    DEBUGGING: "COMPLEX_ADVISORY",
+    CODE: "COMPLEX_ADVISORY",
+    CODE_PATCH: "COMPLEX_ADVISORY"
+  };
+
+  return aliases[raw] || (MODE_CONFIG[raw] ? raw : null);
 }
 
 function sourceHaystack(source = {}) {
@@ -753,7 +963,10 @@ function normalizeSource(source = {}, index = 0) {
     retrievalPhase:
       source.retrievalPhase ||
       source.retrieval_phase ||
+      source.retrievalLayer ||
+      source.retrieval_layer ||
       source.metadata?.retrievalPhase ||
+      source.metadata?.retrievalLayer ||
       null,
 
     sourcePriority:
@@ -767,6 +980,7 @@ function normalizeSource(source = {}, index = 0) {
     excludedReviewSource: isExcludedReviewSource(source),
 
     metadata: {
+      ...(source.metadata || {}),
       authorityType,
       controllingPrecedence,
       sourceVisible,
@@ -779,9 +993,13 @@ function normalizeSource(source = {}, index = 0) {
       retrievalPhase:
         source.retrievalPhase ||
         source.retrieval_phase ||
+        source.retrievalLayer ||
+        source.retrieval_layer ||
         source.metadata?.retrievalPhase ||
+        source.metadata?.retrievalLayer ||
         null,
       contextOrchestrationEngineVersion: ENGINE_VERSION,
+      issueClassificationMatchPreserved: Boolean(issueClassificationMatch),
       masterPromptAuthorityHierarchyApplied: true
     }
   };
@@ -818,25 +1036,11 @@ function sourceAuthorityBucket(source = {}) {
   const type = normalizeAuthority(source.authorityType);
   const precedence = Number(source.controllingPrecedence || 99);
 
-  if (CONTROLLING_TYPES.has(type) || precedence <= 3) {
-    return "CONTROLLING";
-  }
-
-  if (JURISPRUDENCE_TYPES.has(type) || (precedence >= 4 && precedence <= 7)) {
-    return "JURISPRUDENCE";
-  }
-
-  if (ADMIN_TYPES.has(type) || (precedence >= 8 && precedence <= 11)) {
-    return "ADMIN";
-  }
-
-  if (ACCOUNTING_TYPES.has(type) || precedence === 12) {
-    return "ACCOUNTING";
-  }
-
-  if (type === "CPA_NOTES" || type === "REVIEW_MATERIALS" || type === "SECONDARY") {
-    return "SECONDARY";
-  }
+  if (CONTROLLING_TYPES.has(type) || precedence <= 3) return "CONTROLLING";
+  if (JURISPRUDENCE_TYPES.has(type) || (precedence >= 4 && precedence <= 7)) return "JURISPRUDENCE";
+  if (ADMIN_TYPES.has(type) || (precedence >= 8 && precedence <= 11)) return "ADMIN";
+  if (ACCOUNTING_TYPES.has(type) || precedence === 12) return "ACCOUNTING";
+  if (type === "CPA_NOTES" || type === "REVIEW_MATERIALS" || type === "SECONDARY") return "SECONDARY";
 
   return "OTHER";
 }
@@ -845,9 +1049,7 @@ function authorityPriority(source = {}) {
   const type = normalizeAuthority(source.authorityType);
   const precedence = Number(source.controllingPrecedence || AUTHORITY_PRECEDENCE[type] || 99);
 
-  if (precedence <= 14) {
-    return 150 - precedence * 7;
-  }
+  if (precedence <= 14) return 150 - precedence * 7;
 
   const authority = `${source.title} ${source.authorityType} ${source.citation}`.toLowerCase();
 
@@ -930,6 +1132,27 @@ function sourceSortScore(source = {}, classification = {}) {
   );
 }
 
+export function assignBudget(model = DEFAULT_MODEL, mode = "STANDARD_TAX") {
+  const modelLimit =
+    MODEL_CONTEXT_LIMITS[model] ||
+    Number(process.env.OPENAI_CONTEXT_LIMIT || 128000);
+
+  const hardInputLimit = Math.floor(modelLimit * HARD_SAFETY_RATIO);
+  const config = MODE_CONFIG[mode] || MODE_CONFIG.STANDARD_TAX;
+
+  return {
+    model,
+    modelLimit,
+    mode,
+    maxInputTokens: Math.min(config.maxInputTokens, hardInputLimit),
+    maxOutputTokens: config.maxOutputTokens,
+    maxSources: config.maxSources,
+    maxCharsPerSource: config.maxCharsPerSource,
+    maxHistoryItems: config.maxHistoryItems,
+    temperature: config.temperature
+  };
+}
+
 function preserveAuthorityCriticalSources(sources = [], budget = assignBudget(), classification = {}) {
   const normalized = dedupeSources(sources);
 
@@ -990,12 +1213,15 @@ function preserveAuthorityCriticalSources(sources = [], budget = assignBudget(),
   return output;
 }
 
-function filterSourcesForMode(sources = [], { adaptiveContext = {}, classification = {}, intent = {} } = {}) {
-  const allowReviewSources = isReviewMode({
-    adaptiveContext,
-    classification,
-    intent
-  });
+function filterSourcesForMode(sources = [], { adaptiveContext = {}, classification = {}, intent = {}, modeFlags = {} } = {}) {
+  const allowReviewSources =
+    modeFlags.isReviewer ||
+    modeFlags.isQuiz ||
+    isReviewMode({
+      adaptiveContext,
+      classification,
+      intent
+    });
 
   return safeArray(sources).filter((source) => {
     if (!source.text) return false;
@@ -1010,6 +1236,7 @@ function filterSourcesForMode(sources = [], { adaptiveContext = {}, classificati
 export function detectComplexity(userQuery = "", classification = {}, intent = {}) {
   const q = safeString(userQuery).toLowerCase();
 
+  if (intent?.requiresQuizMode || intent?.requiresReviewMode) return "review";
   if (classification?.complexity) return String(classification.complexity).toLowerCase();
   if (intent?.complexity) return String(intent.complexity).toLowerCase();
 
@@ -1042,7 +1269,31 @@ export function detectComplexity(userQuery = "", classification = {}, intent = {
   return "standard";
 }
 
-export function determineMode(userQuery = "", classification = {}, intent = {}) {
+export function determineMode(userQuery = "", classification = {}, intent = {}, extra = {}) {
+  const adaptiveContext = extra.adaptiveContext || {};
+  const responsePlan = extra.responsePlan || adaptiveContext.responsePlan || {};
+  const explicitArgs = {
+    explicitResponseMode: extra.responseMode || null,
+    explicitOrchestrationMode: extra.orchestrationMode || null,
+    reviewerMode: extra.reviewerMode === true,
+    quizMode: extra.quizMode === true,
+    sourceMode: extra.sourceMode === true,
+    forceStandardAFStructure: extra.forceStandardAFStructure === true
+  };
+
+  const explicitMode = resolveExplicitMode({
+    adaptiveContext,
+    classification,
+    intent,
+    responsePlan,
+    args: explicitArgs
+  });
+
+  if (explicitMode === "QUIZ_MODE") return "QUIZ_MODE";
+  if (explicitMode === "REVIEWER_MODE") return "REVIEWER_MODE";
+  if (explicitMode === "SOURCE_LOOKUP") return "SOURCE_LOOKUP";
+  if (explicitMode === "CASE_ANALYSIS") return "CASE_ANALYSIS";
+
   const q = safeString(userQuery).toLowerCase();
   const complexity = detectComplexity(userQuery, classification, intent);
   const primaryIssue = normalizeIssue(classification?.primaryIssue || "");
@@ -1079,31 +1330,11 @@ export function determineMode(userQuery = "", classification = {}, intent = {}) 
   return "STANDARD_TAX";
 }
 
-export function assignBudget(model = DEFAULT_MODEL, mode = "STANDARD_TAX") {
-  const modelLimit =
-    MODEL_CONTEXT_LIMITS[model] ||
-    Number(process.env.OPENAI_CONTEXT_LIMIT || 128000);
-
-  const hardInputLimit = Math.floor(modelLimit * HARD_SAFETY_RATIO);
-  const config = MODE_CONFIG[mode] || MODE_CONFIG.STANDARD_TAX;
-
-  return {
-    model,
-    modelLimit,
-    mode,
-    maxInputTokens: Math.min(config.maxInputTokens, hardInputLimit),
-    maxOutputTokens: config.maxOutputTokens,
-    maxSources: config.maxSources,
-    maxCharsPerSource: config.maxCharsPerSource,
-    maxHistoryItems: config.maxHistoryItems,
-    temperature: config.temperature
-  };
-}
-
 export function trimRetrieval(sources = [], budget = assignBudget(), options = {}) {
   const classification = options.classification || {};
   const intent = options.intent || {};
   const adaptiveContext = options.adaptiveContext || {};
+  const modeFlags = options.modeFlags || {};
 
   const normalizedSources = safeArray(sources)
     .map((source, index) => normalizeSource(source, index));
@@ -1111,7 +1342,8 @@ export function trimRetrieval(sources = [], budget = assignBudget(), options = {
   const filtered = filterSourcesForMode(normalizedSources, {
     adaptiveContext,
     classification,
-    intent
+    intent,
+    modeFlags
   });
 
   return preserveAuthorityCriticalSources(filtered, budget, classification);
@@ -1337,9 +1569,10 @@ function buildSystemInstruction({
   systemPrompt = "",
   masterPrompt = "",
   mode = "STANDARD_TAX",
-  taxEngineContext = {}
+  taxEngineContext = {},
+  modeFlags = {}
 }) {
-  const base = `
+  const baseAuthorityRules = `
 You are TINA, a Philippine tax, legal, audit, and compliance reasoning assistant.
 
 Operating Mode: ${mode}
@@ -1349,15 +1582,75 @@ Authority and source-grounding rules:
 2. Follow this binding hierarchy: Constitution; NIRC/CMTA/LGC/primary statutes; Tax Treaties; Supreme Court En Banc; Supreme Court Division; CTA En Banc; CTA Division; Revenue Regulations; RMC/RMO/RAMO; BIR Rulings; LGU/BOC issuances; PFRS/PAS/PSA when accounting applies; OECD/foreign persuasive authorities; CPA reviewer notes/secondary materials only when allowed.
 3. Never elevate RMCs over statutes, BIR rulings over Supreme Court, reviewer notes over statutes, or persuasive materials over controlling authorities.
 4. Administrative issuances cannot override statutes, tax treaties, the Constitution, Supreme Court decisions, or CTA decisions within their proper doctrinal scope.
-5. Apply the mandatory cross-reference sequence for every tax issue: anchor on the specific statute/NIRC provision; identify implementing RR; check RMC/RMO/RAMO for BIR position and overreach; check BIR rulings for analogous facts; check Supreme Court/CTA jurisprudence for override or doctrine; map any true conflict; conclude with ranked citations.
-6. Apply interpretation rules: tax impositions are strictly construed against the government; tax exemptions are strictly construed against the taxpayer; ambiguity on imposition favors the taxpayer; ambiguity on exemption favors the BIR; BIR interpretations carry weight but are subject to judicial review; stare decisis applies.
-7. Do not invent citations, provisions, cases, RRs, RMCs, RMOs, rulings, or doctrinal conflicts.
-8. If no indexed authority is available for a requested section, say exactly: "Indexed source not found."
-9. Do not say "No legal basis was rendered" or "No supporting rules were rendered."
-10. Do not dump unrelated jurisprudence.
-11. Do not include raw source text, full debug objects, retrieval payloads, embeddings, hidden metadata, or full engine outputs.
-12. Do not state "Conflict Detected: YES" unless the same exact issue, same legal dimension, opposite holding/rule, hierarchy analysis, and conflict-resolution basis are all present.
-13. Keep the answer proportionate to the query and follow the tax-engine answer structure when supplied.
+5. Do not invent citations, provisions, cases, RRs, RMCs, RMOs, rulings, or doctrinal conflicts.
+6. If no indexed authority is available for a requested section, say exactly: "Indexed source not found."
+7. Do not say "No legal basis was rendered" or "No supporting rules were rendered."
+8. Do not dump unrelated jurisprudence.
+9. Do not include raw source text, full debug objects, retrieval payloads, embeddings, hidden metadata, or full engine outputs.
+10. Do not state "Conflict Detected: YES" unless the same exact issue, same legal dimension, opposite holding/rule, hierarchy analysis, and conflict-resolution basis are all present.
+`.trim();
+
+  let modeInstruction = "";
+
+  if (modeFlags.isQuiz || mode === "QUIZ_MODE") {
+    modeInstruction = `
+QUIZ MODE FORMAT:
+Do not use A-F legal answer format.
+Generate assessment-style output only.
+Use this structure unless the user asked otherwise:
+Question
+Choices
+Answer Key
+Explanation
+Reviewer Trap
+Source Anchor
+Keep the answer educational, concise, and source-grounded where retrieved authorities exist.
+`.trim();
+  } else if (modeFlags.isReviewer || mode === "REVIEWER_MODE") {
+    modeInstruction = `
+REVIEWER MODE FORMAT:
+Do not use A-F legal answer format.
+Use CPA/bar reviewer teaching style.
+Use this structure unless the user asked otherwise:
+Concept
+Rule
+Memory Aid
+Common Trap
+Example
+Quick Check
+Prioritize learning clarity while preserving legal hierarchy.
+Reviewer materials may support learning, but they must never override controlling law, regulations, or jurisprudence.
+`.trim();
+  } else if (modeFlags.isSource || mode === "SOURCE_LOOKUP") {
+    modeInstruction = `
+SOURCE LOOKUP MODE FORMAT:
+Do not use A-F legal answer format.
+List retrieved authorities by hierarchy.
+Use this structure:
+Sources Found
+Controlling Authorities
+Supporting Rules / Issuances
+Supporting Jurisprudence
+Notes
+Do not generate substantive analysis beyond source identification unless necessary.
+`.trim();
+  } else if (modeFlags.isCase || mode === "CASE_ANALYSIS") {
+    modeInstruction = `
+CASE ANALYSIS MODE FORMAT:
+Use jurisprudence-focused structure:
+Case Identified
+Facts / Context
+Issue
+Ruling / Holding
+Doctrine
+Application
+Status / Limits
+Do not force generic A-F tax format unless the user asks for full tax application.
+`.trim();
+  } else {
+    modeInstruction = `
+STANDARD LEGAL/TAX FORMAT:
+Apply the mandatory cross-reference sequence for every tax issue: anchor on the specific statute/NIRC provision; identify implementing RR; check RMC/RMO/RAMO for BIR position and overreach; check BIR rulings for analogous facts; check Supreme Court/CTA jurisprudence for override or doctrine; map any true conflict; conclude with ranked citations.
 
 Expected answer structure unless a tax-engine template overrides it:
 A. DIRECT ANSWER
@@ -1366,14 +1659,14 @@ C. SUPPORTING RULES / ADMINISTRATIVE ISSUANCES
 D. SUPPORTING JURISPRUDENCE
 E. DOCTRINAL STATUS / CONFLICT ANALYSIS
 F. PRACTICAL NOTE / APPLICATION
-
-Tax-engine context:
-${JSON.stringify(taxEngineContext, null, 2)}
 `.trim();
+  }
 
   return normalizeWhitespace(
     [
-      base,
+      baseAuthorityRules,
+      modeInstruction,
+      `Tax-engine context:\n${JSON.stringify(taxEngineContext, null, 2)}`,
       systemPrompt,
       masterPrompt
     ]
@@ -1393,7 +1686,8 @@ function buildUserPrompt({
   authoritySummary = {},
   taxEngineContext = {},
   sourceGroundingInstructions = {},
-  authorityPacket = {}
+  authorityPacket = {},
+  modeFlags = {}
 }) {
   const compactClassification = {
     primaryIssue: classification?.primaryIssue || classification?.domain || null,
@@ -1408,6 +1702,10 @@ function buildUserPrompt({
 
   const compactIntent = {
     intent: intent?.intent || intent?.type || null,
+    responseMode: intent?.responseMode || null,
+    orchestrationMode: intent?.orchestrationMode || null,
+    requiresQuizMode: Boolean(intent?.requiresQuizMode),
+    requiresReviewMode: Boolean(intent?.requiresReviewMode),
     requiresLegalAnalysis: Boolean(intent?.requiresLegalAnalysis),
     requiresJurisprudence: Boolean(intent?.requiresJurisprudence),
     requiresRiskAnalysis: Boolean(intent?.requiresRiskAnalysis),
@@ -1426,6 +1724,11 @@ function buildUserPrompt({
       adaptiveContext?.responseMode ||
       adaptiveContext?.responsePlan?.responseMode ||
       responsePlan?.responseMode ||
+      null,
+    orchestrationMode:
+      adaptiveContext?.orchestrationMode ||
+      adaptiveContext?.responsePlan?.orchestrationMode ||
+      responsePlan?.orchestrationMode ||
       null
   };
 
@@ -1433,6 +1736,10 @@ function buildUserPrompt({
     mustUseRetrievedSourcesFirst:
       sourceGroundingInstructions?.mustUseRetrievedSourcesFirst !== false,
     mustNotInventAuthorities: true,
+    mustSayIndexedSourceNotFoundWhenNoAuthority:
+      sourceGroundingInstructions?.mustSayIndexedSourceNotFoundWhenNoAuthority !== false,
+    doNotSayIndexedSourceNotFoundWhenSourcesExist:
+      sourceGroundingInstructions?.doNotSayIndexedSourceNotFoundWhenSourcesExist === true,
     requiredReplacementWhenEmpty:
       sourceGroundingInstructions?.requiredReplacementWhenEmpty ||
       "Indexed source not found.",
@@ -1444,6 +1751,20 @@ function buildUserPrompt({
       hasSupportingJurisprudence: authorityPacket?.hasSupportingJurisprudence ?? authoritySummary.jurisprudence > 0
     }
   };
+
+  let responseInstruction = "";
+
+  if (modeFlags.isQuiz || mode === "QUIZ_MODE") {
+    responseInstruction = "Use QUIZ_MODE. Do not use A-F legal answer format. Produce Question, Choices, Answer Key, Explanation, Reviewer Trap, and Source Anchor.";
+  } else if (modeFlags.isReviewer || mode === "REVIEWER_MODE") {
+    responseInstruction = "Use REVIEWER_MODE. Do not use A-F legal answer format. Produce Concept, Rule, Memory Aid, Common Trap, Example, and Quick Check.";
+  } else if (modeFlags.isSource || mode === "SOURCE_LOOKUP") {
+    responseInstruction = "Use SOURCE_LOOKUP. Do not use A-F legal answer format. List sources by authority hierarchy.";
+  } else if (modeFlags.isCase || mode === "CASE_ANALYSIS") {
+    responseInstruction = "Use CASE_ANALYSIS. Focus on case, issue, ruling, doctrine, application, and status/limits.";
+  } else {
+    responseInstruction = 'Use standard legal/tax format. If an expected authority section has no indexed support, state "Indexed source not found."';
+  }
 
   return normalizeWhitespace(`
 USER QUERY:
@@ -1465,7 +1786,8 @@ RETRIEVED RELEVANT AUTHORITIES / EXTRACTS:
 ${compressedSources || "[No retrieved source extracts supplied. Use exactly: Indexed source not found. Do not invent authority.]"}
 
 RESPONSE INSTRUCTION:
-Use ${mode}. Use retrieved sources first. Preserve controlling authorities in the answer. Apply the Master Prompt hierarchy. If an expected authority section has no indexed support, state "Indexed source not found." Do not include irrelevant cases, irrelevant regulations, debug data, hidden metadata, raw context, or internal engine objects.
+${responseInstruction}
+Use retrieved sources first. Preserve controlling authorities. Apply the Master Prompt hierarchy. Do not include irrelevant cases, irrelevant regulations, debug data, hidden metadata, raw context, or internal engine objects.
 `);
 }
 
@@ -1542,6 +1864,14 @@ export function finalTrimMessages(messages = [], budget = assignBudget()) {
 export function buildOpenAIContext(args = {}) {
   const normalized = normalizeBuildArgs(args);
 
+  const modeFlags = detectModeFlags({
+    adaptiveContext: normalized.adaptiveContext,
+    classification: normalized.classification,
+    intent: normalized.intent,
+    responsePlan: normalized.responsePlan,
+    args: normalized
+  });
+
   const complexity = detectComplexity(
     normalized.userQuery,
     normalized.classification,
@@ -1549,12 +1879,27 @@ export function buildOpenAIContext(args = {}) {
   );
 
   const mode =
-    normalized.responsePlan?.contextMode ||
-    normalized.responsePlan?.orchestrationMode ||
+    resolveExplicitMode({
+      adaptiveContext: normalized.adaptiveContext,
+      classification: normalized.classification,
+      intent: normalized.intent,
+      responsePlan: normalized.responsePlan,
+      args: normalized
+    }) ||
     determineMode(
       normalized.userQuery,
       normalized.classification,
-      normalized.intent
+      normalized.intent,
+      {
+        adaptiveContext: normalized.adaptiveContext,
+        responsePlan: normalized.responsePlan,
+        responseMode: normalized.explicitResponseMode,
+        orchestrationMode: normalized.explicitOrchestrationMode,
+        reviewerMode: normalized.reviewerMode,
+        quizMode: normalized.quizMode,
+        sourceMode: normalized.sourceMode,
+        forceStandardAFStructure: normalized.forceStandardAFStructure
+      }
     );
 
   const budget = assignBudget(normalized.model, mode);
@@ -1571,7 +1916,8 @@ export function buildOpenAIContext(args = {}) {
     {
       classification: normalized.classification,
       intent: normalized.intent,
-      adaptiveContext: normalized.adaptiveContext
+      adaptiveContext: normalized.adaptiveContext,
+      modeFlags
     }
   );
 
@@ -1581,7 +1927,8 @@ export function buildOpenAIContext(args = {}) {
     {
       classification: normalized.classification,
       intent: normalized.intent,
-      adaptiveContext: normalized.adaptiveContext
+      adaptiveContext: normalized.adaptiveContext,
+      modeFlags
     }
   );
 
@@ -1609,7 +1956,8 @@ export function buildOpenAIContext(args = {}) {
       systemPrompt: normalized.systemPrompt,
       masterPrompt: normalized.masterPrompt,
       mode,
-      taxEngineContext
+      taxEngineContext,
+      modeFlags
     })
   };
 
@@ -1626,7 +1974,8 @@ export function buildOpenAIContext(args = {}) {
       authoritySummary,
       taxEngineContext,
       sourceGroundingInstructions: normalized.sourceGroundingInstructions,
-      authorityPacket: normalized.authorityPacket
+      authorityPacket: normalized.authorityPacket,
+      modeFlags
     })
   };
 
@@ -1636,10 +1985,7 @@ export function buildOpenAIContext(args = {}) {
     userMessage
   ];
 
-  const trimmed = finalTrimMessages(
-    rawMessages,
-    budget
-  );
+  const trimmed = finalTrimMessages(rawMessages, budget);
 
   const sanitizedConflicts = sanitizeConflictMetadata(
     normalized.classification?.conflicts ||
@@ -1653,6 +1999,7 @@ export function buildOpenAIContext(args = {}) {
     version: ENGINE_VERSION,
     complexity,
     mode,
+    modeFlags,
     model: normalized.model,
     budget,
     retrievedSources: trimmedSources,
@@ -1673,10 +2020,10 @@ export function buildOpenAIContext(args = {}) {
       authorityPreservationEnabled: true,
       masterPromptAuthorityHierarchyApplied: true,
       courtAuthorityNotSubordinatedToBIRIssuances: true,
-      mandatoryCrossReferenceSequenceEnabled: true,
+      mandatoryCrossReferenceSequenceEnabled: !modeFlags.isQuiz && !modeFlags.isReviewer,
       interpretationRulesEnabled: true,
       googleDriveHierarchyAware: true,
-      reviewMaterialsExcludedUnlessReviewMode: true,
+      reviewMaterialsExcludedUnlessReviewMode: !modeFlags.isQuiz && !modeFlags.isReviewer,
       targetAuthorityMatchPreserved: true,
       issueClassificationMatchPreserved: true,
       controllingAuthoritiesPreservedFirst: true,
@@ -1694,7 +2041,13 @@ export function buildOpenAIContext(args = {}) {
       estimatedInputTokens: trimmed.estimatedInputTokens,
       maxCompletionTokens: budget.maxOutputTokens,
       complexity,
-      mode
+      mode,
+      quizModePreserved: mode === "QUIZ_MODE",
+      reviewerModePreserved: mode === "REVIEWER_MODE",
+      reviewOrQuizNotConvertedToFastDefinition:
+        !(modeFlags.isQuiz || modeFlags.isReviewer) || !["FAST_DEFINITION"].includes(mode),
+      afInstructionsSuppressedForReviewQuiz:
+        modeFlags.isQuiz || modeFlags.isReviewer
     }
   };
 }
@@ -1730,6 +2083,7 @@ export async function callOpenAIWithOrchestration(args = {}) {
       version: orchestration.version,
       complexity: orchestration.complexity,
       mode: orchestration.mode,
+      modeFlags: orchestration.modeFlags,
       estimatedInputTokens: orchestration.estimatedInputTokens,
       maxCompletionTokens: orchestration.maxCompletionTokens,
       sourceCount: orchestration.retrievedSources.length,
@@ -1749,39 +2103,53 @@ export function contextOrchestrationHealthCheck() {
     ok: true,
     engine: "TINA_CONTEXT_ORCHESTRATION_ENGINE",
     version: ENGINE_VERSION,
+
     orchestrationFinalSource: true,
     onlyFileAllowedToBuildMessages: true,
     onlyFileAllowedToEstimateTokens: true,
     onlyFileAllowedToTrimContext: true,
     onlyFileAllowedToCompressSources: true,
     onlyFileAllowedToCallOpenAI: true,
+
+    preserveQuizMode: true,
+    preserveReviewerMode: true,
+    reviewQuizNeverConvertedToFastDefinition: true,
+    afInstructionsSuppressedForQuiz: true,
+    afInstructionsSuppressedForReviewer: true,
+
     noPromptAssemblyOutsideThisFile: true,
     noDirectOpenAICallOutsideThisFile: true,
     noDuplicateRetrieval: true,
     noDuplicateReranking: true,
+
     authorityPreservationEnabled: true,
     authorityHierarchyAware: true,
     masterPromptAuthorityHierarchyApplied: true,
     courtAuthorityNotSubordinatedToBIRIssuances: true,
-    mandatoryCrossReferenceSequenceEnabled: true,
+    mandatoryCrossReferenceSequenceEnabledForLegalModes: true,
     interpretationRulesEnabled: true,
     googleDriveHierarchyAware: true,
+
     targetAuthorityMatchPreserved: true,
     issueClassificationMatchPreserved: true,
     controllingAuthoritiesPreservedFirst: true,
     doctrinalSourcesPreserved: true,
     reviewMaterialsExcludedUnlessReviewMode: true,
+
     taxEngineCompatible: true,
     supportedTaxDomains: SUPPORTED_TAX_DOMAINS,
+
     rawRetrievalPayloadInjectionPrevented: true,
     rawEngineObjectInjectionPrevented: true,
     fullDebugObjectInjectionPrevented: true,
     fullEngineOutputInjectionPrevented: true,
+
     supportsComplexityClassification: true,
     supportsModeDetection: true,
     supportsTokenBudgeting: true,
     supportsRetrievalCompression: true,
     supportsFinalTrim: true,
+
     supportedModes: Object.keys(MODE_CONFIG),
     supportedModels: Object.keys(MODEL_CONTEXT_LIMITS)
   };
