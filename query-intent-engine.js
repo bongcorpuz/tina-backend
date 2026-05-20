@@ -170,10 +170,17 @@ const INTENT = Object.freeze({
 
 const COMMAND_MODE = Object.freeze({
   ASK: "ASK",
+  TAX: "TAX",
   QUIZ: "QUIZ",
+  DIAGNOSTIC: "DIAGNOSTIC",
   REVIEW: "REVIEW",
   CASE: "CASE",
   SOURCE: "SOURCE",
+  AUDIT: "AUDIT",
+  DEBUG: "DEBUG",
+  PATCH: "PATCH",
+  PROGRESS: "PROGRESS",
+  FEEDBACK: "FEEDBACK",
   NONE: "NONE"
 });
 
@@ -219,13 +226,21 @@ const ORCHESTRATION_MODE = Object.freeze({
   FAST_DEFINITION: "FAST_DEFINITION",
   STANDARD_TAX: "STANDARD_TAX",
   SOURCE_LOOKUP: "SOURCE_LOOKUP",
+  REVIEWER_MODE: "REVIEWER_MODE",
   REVIEWER: "REVIEWER",
+  QUIZ_MODE: "QUIZ_MODE",
   QUIZ: "QUIZ",
+  DIAGNOSTIC_QUIZ_MODE: "DIAGNOSTIC_QUIZ_MODE",
   CASE_ANALYSIS: "CASE_ANALYSIS",
   LEGAL_ANALYSIS: "LEGAL_ANALYSIS",
   COMPLEX_ADVISORY: "COMPLEX_ADVISORY",
+  SENIOR_COUNSEL_MEMO: "SENIOR_COUNSEL_MEMO",
+  DEBUG_MODE: "DEBUG_MODE",
+  CODE_PATCH_MODE: "CODE_PATCH_MODE",
   CODE_PATCH: "CODE_PATCH",
   DEBUGGING: "DEBUGGING",
+  LEARNING_PROGRESS_MODE: "LEARNING_PROGRESS_MODE",
+  FEEDBACK_CAPTURE_MODE: "FEEDBACK_CAPTURE_MODE",
   ARCHITECTURE: "ARCHITECTURE",
   EMERGENCY_TRIM: "EMERGENCY_TRIM"
 });
@@ -295,10 +310,17 @@ const SUPPORTED_TAX_DOMAINS = Object.freeze([
 
 const COMMAND_PATTERNS = Object.freeze({
   ask: /^\/ask(?:\s+|$)/i,
+  tax: /^\/tax(?:\s+|$)/i,
   quiz: /^\/quiz(?:\s+|$)/i,
+  diagnostic: /^\/diagnostic(?:\s+|$)/i,
   review: /^\/review(?:\s+|$)/i,
   case: /^\/case(?:\s+|$)/i,
-  source: /^\/source(?:\s+|$)/i
+  source: /^\/source(?:\s+|$)/i,
+  audit: /^\/audit(?:\s+|$)/i,
+  debug: /^\/debug(?:\s+|$)/i,
+  patch: /^\/patch(?:\s+|$)/i,
+  progress: /^\/progress(?:\s+|$)/i,
+  feedback: /^\/feedback(?:\s+|$)/i
 });
 
 const SOURCE_FOLDER_POLICY = Object.freeze({
@@ -479,10 +501,17 @@ function detectCommands(query = "", options = {}) {
 
   const commandModeMap = {
     ask: COMMAND_MODE.ASK,
+    tax: COMMAND_MODE.TAX,
     quiz: COMMAND_MODE.QUIZ,
+    diagnostic: COMMAND_MODE.DIAGNOSTIC,
     review: COMMAND_MODE.REVIEW,
     case: COMMAND_MODE.CASE,
-    source: COMMAND_MODE.SOURCE
+    source: COMMAND_MODE.SOURCE,
+    audit: COMMAND_MODE.AUDIT,
+    debug: COMMAND_MODE.DEBUG,
+    patch: COMMAND_MODE.PATCH,
+    progress: COMMAND_MODE.PROGRESS,
+    feedback: COMMAND_MODE.FEEDBACK
   };
 
   return {

@@ -2182,17 +2182,30 @@ function buildFinalCompliantAnswer({
 
 function enforceFinalAnswerCompliance(args = {}) {
   // Non-A-F modes must pass through without reformatting.
+  // These modes own their own output structure; A-F enforcement must not touch them.
   const rawMode = String(args.mode || args.orchestrationMode || "").toUpperCase();
   if (
     rawMode === "QUIZ_MODE" ||
     rawMode === "QUIZ" ||
+    rawMode === "DIAGNOSTIC_QUIZ_MODE" ||
+    rawMode === "DIAGNOSTIC" ||
     rawMode === "REVIEWER_MODE" ||
     rawMode === "REVIEWER" ||
     rawMode === "CASE_ANALYSIS" ||
     rawMode === "CASE" ||
     rawMode === "SOURCE_LOOKUP" ||
     rawMode === "SOURCE" ||
-    rawMode === "SOURCE_FINDER"
+    rawMode === "SOURCE_FINDER" ||
+    rawMode === "DEBUG_MODE" ||
+    rawMode === "DEBUG" ||
+    rawMode === "DEBUGGING" ||
+    rawMode === "CODE_PATCH_MODE" ||
+    rawMode === "CODE_PATCH" ||
+    rawMode === "LEARNING_PROGRESS_MODE" ||
+    rawMode === "LEARNING_PROGRESS" ||
+    rawMode === "FEEDBACK_CAPTURE_MODE" ||
+    rawMode === "FEEDBACK_CAPTURE" ||
+    rawMode === "FEEDBACK"
   ) {
     const passthrough = args.draftAnswer || args.answer || "";
     return {

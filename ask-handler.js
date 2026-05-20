@@ -586,11 +586,15 @@ function buildAdaptiveContextForHook({
       sourceMode: hookCode === "/source",
       reviewerMode: hookCode === "/review",
       quizMode: hookCode === "/quiz",
+      diagnosticMode: hookCode === "/diagnostic",
       caseMode: hookCode === "/case",
       taxExpertMode: hookCode === "/tax",
+      seniorCounselMode: hookCode === "/tax",
       auditMode: hookCode === "/audit",
       debugMode: hookCode === "/debug",
       patchMode: hookCode === "/patch",
+      progressMode: hookCode === "/progress",
+      feedbackMode: hookCode === "/feedback",
       normalAskMode: hookCode === "/ask"
     },
 
@@ -636,13 +640,18 @@ function buildAdaptiveContextForHook({
       routeKind: hookConfig.routeKind,
 
       requiresQuizMode: hookCode === "/quiz",
+      requiresDiagnosticMode: hookCode === "/diagnostic",
       requiresReviewMode: hookCode === "/review",
       requiresSimpleDefinition: false,
       requiresSourceVisibility: hookCode === "/source",
       requiresCaseAnalysis: hookCode === "/case",
       requiresAuditMode: hookCode === "/audit",
+      requiresSeniorCounselMemo: hookCode === "/tax",
       requiresDebuggingMode: hookCode === "/debug",
+      requiresDebugMode: hookCode === "/debug",
       requiresCodePatch: hookCode === "/patch",
+      requiresProgressMode: hookCode === "/progress",
+      requiresFeedbackMode: hookCode === "/feedback",
 
       reviewerAnswerFormat:
         hookCode === "/review"
@@ -1543,6 +1552,43 @@ export function createAskHandler({
     const cleanOriginalAnswer = normalizeText(originalAnswer);
 
     if (!cleanCorrection) {
+      // Sticky mode: user sent plain text while in /feedback mode.
+      // If there's a cleanQuestion (from sticky mode prepend), respond with a mode warning
+      // rather than a 400 error — the user may have forgotten they're in feedback mode.
+      const plainTextQuestion = normalizeText(hookConfig.cleanQuestion || "");
+      if (plainTextQuestion) {
+        const modeWarningAnswer = [
+          "**You are currently in Feedback Mode.**",
+          "",
+          `Your message: _"${plainTextQuestion}"_`,
+          "",
+          "To submit feedback on a previous answer, include what needs to be corrected.",
+          "",
+          `To answer _"${plainTextQuestion}"_ normally, type:`,
+          `> /ask ${plainTextQuestion}`,
+          "",
+          "To exit Feedback Mode, type **/bye** or **/reset**."
+        ].join("\n");
+
+        return {
+          status: 200,
+          body: {
+            success: true,
+            engine: "TINA Feedback Learning Engine",
+            hook: hookConfig.hook_code,
+            mode: hookConfig.mode,
+            answer: modeWarningAnswer,
+            answerMode: "feedback_mode_active_warning",
+            sourceStatus: "FEEDBACK_MODE_ACTIVE",
+            sources: [],
+            sourcesUsed: [],
+            vectorMatches: 0,
+            askHandlerVersion: ENGINE_VERSION,
+            contextOrchestrationEnabled: true
+          }
+        };
+      }
+
       return {
         status: 400,
         body: {
@@ -1707,6 +1753,16 @@ export function createAskHandler({
     const resultSources = safeArray(result.sources || result.sourcesUsed);
     const resultSourceCards = safeArray(result.sourceCards);
 
+    console.log("TINA MODE DOWNSTREAM DEBUG:", {
+      responseMode: result.responseMode || result.orchestration?.mode || hookConfig.mode,
+      orchestrationMode: result.orchestrationMode || result.orchestration?.mode || hookConfig.mode,
+      commandMode: hookConfig.mode,
+      retrievedSourceCount: resultSources.length,
+      sourceCardCount: resultSourceCards.length,
+      finalComplianceApplied: Boolean(result.answer),
+      rendererMode: result.mode || hookConfig.mode
+    });
+
     const payload = {
       success: true,
       engine: "TINA_ASK_HANDLER",
@@ -1732,6 +1788,21 @@ export function createAskHandler({
       responseMode: result.responseMode || result.orchestration?.mode || hookConfig.mode,
       orchestrationMode: result.orchestrationMode || result.orchestration?.mode || hookConfig.mode,
       pipelineVersion: result.pipelineVersion,
+
+      activeHook: hookConfig.hook_code,
+      activeMode: hookConfig.mode,
+      commandMode: hookConfig.mode,
+      requiresQuizMode: hookConfig.hook_code === "/quiz",
+      requiresDiagnosticMode: hookConfig.hook_code === "/diagnostic",
+      requiresReviewMode: hookConfig.hook_code === "/review",
+      requiresSourceVisibility: hookConfig.hook_code === "/source" || Boolean(hookConfig.forceSourceVisibility),
+      requiresCaseAnalysis: hookConfig.hook_code === "/case",
+      requiresAuditMode: hookConfig.hook_code === "/audit",
+      requiresSeniorCounselMemo: hookConfig.hook_code === "/tax",
+      requiresDebugMode: hookConfig.hook_code === "/debug",
+      requiresCodePatch: hookConfig.hook_code === "/patch",
+      requiresProgressMode: hookConfig.hook_code === "/progress",
+      requiresFeedbackMode: hookConfig.hook_code === "/feedback",
 
       metadata: {
         ...safeObject(result.orchestration),
@@ -1847,6 +1918,24 @@ export function createAskHandler({
         supabase,
         rawQuestion: effectiveQuestion,
         forcedHook
+      });
+
+      console.log("TINA MODE ROUTE DEBUG:", {
+        userId,
+        sessionId: conversationId,
+        rawQuestion: rawQuestion.slice(0, 80),
+        cleanQuestion: (hookConfig?.cleanQuestion || "").slice(0, 80),
+        detectedCommand: explicitHook,
+        activeHookBefore: existingMode?.active_hook || null,
+        activeModeBefore: existingMode?.active_mode || null,
+        selectedHook: hookConfig?.hook_code,
+        selectedMode: hookConfig?.mode,
+        commandMode: hookConfig?.mode,
+        responseMode: hookConfig?.orchestrationMode,
+        orchestrationMode: hookConfig?.orchestrationMode,
+        isStickyMode: Boolean(!forcedHook && !explicitHook && existingMode?.active_hook && existingMode.active_hook !== "/ask"),
+        explicitCommandOverride: Boolean(explicitHook),
+        exitCommandDetected: false
       });
 
       const compactHookConfig = buildCompactHookConfig(hookConfig);

@@ -627,10 +627,13 @@ function detectModeFlags({ adaptiveContext = {}, classification = {}, intent = {
     args.quizMode === true ||
     adaptiveContext?.assessmentMode === true ||
     adaptiveContext?.adaptiveQuizMode === true ||
+    adaptiveContext?.diagnosticMode === true ||
     intent?.assessmentMode === true ||
     intent?.adaptiveQuizMode === true ||
     intent?.requiresQuizMode === true ||
+    intent?.requiresDiagnosticMode === true ||
     hook === "/quiz" ||
+    hook === "/diagnostic" ||
     markerIncluded(values, QUIZ_MODE_MARKERS);
 
   const isReviewer =
@@ -710,10 +713,14 @@ function resolveExplicitMode({ adaptiveContext = {}, classification = {}, intent
     args
   });
 
-  if (flags.isQuiz) return "QUIZ_MODE";
+  // Mode priority: most restrictive/specialized modes first so they are never downgraded.
+  if (flags.isQuiz) return "QUIZ_MODE";       // covers /quiz and /diagnostic
   if (flags.isReviewer) return "REVIEWER_MODE";
   if (flags.isSource) return "SOURCE_LOOKUP";
   if (flags.isCase) return "CASE_ANALYSIS";
+  if (flags.isDebug) return "DEBUG_MODE";
+  if (flags.isPatch) return "CODE_PATCH_MODE";
+  if (flags.isAudit) return "COMPLEX_ADVISORY";
 
   const explicit =
     args.explicitOrchestrationMode ||
@@ -735,27 +742,58 @@ function resolveExplicitMode({ adaptiveContext = {}, classification = {}, intent
   const raw = String(explicit).trim().toUpperCase();
 
   const aliases = {
+    // Quiz / Diagnostic (highest priority — must not be downgraded)
     QUIZ: "QUIZ_MODE",
     ASSESSMENT: "QUIZ_MODE",
     DIAGNOSTIC: "QUIZ_MODE",
+    DIAGNOSTIC_QUIZ_MODE: "QUIZ_MODE",
+    ADAPTIVE_QUIZ: "QUIZ_MODE",
+
+    // Reviewer
     REVIEW: "REVIEWER_MODE",
     REVIEWER: "REVIEWER_MODE",
     TAX_REVIEWER: "REVIEWER_MODE",
+
+    // Feedback / Progress (utility modes — no legal format)
+    FEEDBACK: "FEEDBACK_CAPTURE_MODE",
+    FEEDBACK_CAPTURE: "FEEDBACK_CAPTURE_MODE",
+    FEEDBACK_CAPTURE_MODE: "FEEDBACK_CAPTURE_MODE",
+    PROGRESS: "LEARNING_PROGRESS_MODE",
+    LEARNING_PROGRESS: "LEARNING_PROGRESS_MODE",
+    LEARNING_PROGRESS_MODE: "LEARNING_PROGRESS_MODE",
+
+    // Source
     SOURCE: "SOURCE_LOOKUP",
     SOURCE_FINDER: "SOURCE_LOOKUP",
+
+    // Case
     CASE: "CASE_ANALYSIS",
     JURISPRUDENCE: "CASE_ANALYSIS",
-    FAST_DEFINITION: "FAST_DEFINITION",
-    STANDARD: "STANDARD_TAX",
-    STANDARD_TAX: "STANDARD_TAX",
-    LEGAL_ANALYSIS: "LEGAL_ANALYSIS",
-    COMPLEX_ADVISORY: "COMPLEX_ADVISORY",
-    AUDIT: "COMPLEX_ADVISORY",
+
+    // Debug / Code Patch
     DEBUGGING: "DEBUG_MODE",
     DEBUG: "DEBUG_MODE",
     CODE: "CODE_PATCH_MODE",
     CODE_PATCH: "CODE_PATCH_MODE",
-    PATCH: "CODE_PATCH_MODE"
+    PATCH: "CODE_PATCH_MODE",
+
+    // Audit / Advisory
+    AUDIT: "COMPLEX_ADVISORY",
+    AUDIT_MODE: "COMPLEX_ADVISORY",
+    COMPLEX_ADVISORY: "COMPLEX_ADVISORY",
+
+    // Senior Counsel Memo
+    TAX_EXPERT: "SENIOR_COUNSEL_MEMO",
+    TAX: "SENIOR_COUNSEL_MEMO",
+    SENIOR_COUNSEL: "SENIOR_COUNSEL_MEMO",
+    SENIOR_COUNSEL_MEMO: "SENIOR_COUNSEL_MEMO",
+    LITIGATION_MEMO: "SENIOR_COUNSEL_MEMO",
+
+    // Standard modes (lowest priority)
+    FAST_DEFINITION: "FAST_DEFINITION",
+    STANDARD: "STANDARD_TAX",
+    STANDARD_TAX: "STANDARD_TAX",
+    LEGAL_ANALYSIS: "LEGAL_ANALYSIS"
   };
 
   return aliases[raw] || (MODE_CONFIG[raw] ? raw : null);
@@ -1348,6 +1386,12 @@ export function determineMode(userQuery = "", classification = {}, intent = {}, 
   if (explicitMode === "REVIEWER_MODE") return "REVIEWER_MODE";
   if (explicitMode === "SOURCE_LOOKUP") return "SOURCE_LOOKUP";
   if (explicitMode === "CASE_ANALYSIS") return "CASE_ANALYSIS";
+  if (explicitMode === "DEBUG_MODE") return "DEBUG_MODE";
+  if (explicitMode === "CODE_PATCH_MODE") return "CODE_PATCH_MODE";
+  if (explicitMode === "COMPLEX_ADVISORY") return "COMPLEX_ADVISORY";
+  if (explicitMode === "SENIOR_COUNSEL_MEMO") return "SENIOR_COUNSEL_MEMO";
+  if (explicitMode === "FEEDBACK_CAPTURE_MODE") return "FEEDBACK_CAPTURE_MODE";
+  if (explicitMode === "LEARNING_PROGRESS_MODE") return "LEARNING_PROGRESS_MODE";
 
   const q = safeString(userQuery).toLowerCase();
   const complexity = detectComplexity(userQuery, classification, intent);
@@ -1793,6 +1837,30 @@ E: Assess the actual audit exposure specific to this position — BIR risk level
 F: List the specific documents required to support this position (contracts, invoices, BIR filings, entries).
 G: State the recommended tax position and any caveats.
 Never omit E. AUDIT / TAX RISK or F. DOCUMENTARY GAPS. Never use generic boilerplate for E, F, or G.
+`.trim();
+  } else if (mode === "FEEDBACK_CAPTURE_MODE" || mode === "FEEDBACK_CAPTURE" || mode === "FEEDBACK") {
+    modeInstruction = `
+FEEDBACK CAPTURE MODE FORMAT:
+Do not answer as a tax question.
+Acknowledge that feedback mode is active.
+If the user provided correction text, confirm it has been stored for review.
+Structure:
+Feedback Received
+Status
+Next Steps
+Do not generate legal analysis, sourced answers, or A-F structured output.
+`.trim();
+  } else if (mode === "LEARNING_PROGRESS_MODE" || mode === "LEARNING_PROGRESS" || mode === "PROGRESS") {
+    modeInstruction = `
+LEARNING PROGRESS MODE FORMAT:
+Do not answer as a tax question.
+Display the learner's progress profile.
+Structure:
+Mastery Score
+Weak Topics
+Quiz History Summary
+Recommended Next Review
+Do not generate legal analysis or A-F structured output.
 `.trim();
   } else if (mode === "FAST_DEFINITION") {
     modeInstruction = `

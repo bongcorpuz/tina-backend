@@ -22,9 +22,13 @@ const HOOK_TO_LEGACY_MODE = Object.freeze({
   "/review": "TAX_REVIEWER",
   "/quiz": "QUIZ_MASTER",
   "/diagnostic": "TAX_REVIEWER",
+  "/source": "SOURCE_FINDER",
+  "/audit": "AUDIT_MODE",
+  "/case": "CASE_ANALYSIS",
+  "/debug": "DEBUG_MODE",
+  "/patch": "CODE_PATCH_MODE",
   "/progress": "LEARNING_PROGRESS",
-  "/feedback": "FEEDBACK",
-  "/source": "SOURCE_FINDER"
+  "/feedback": "FEEDBACK"
 });
 
 function normalizeText(value = "") {
@@ -236,9 +240,13 @@ export function isExplicitModeHook(text = "") {
     "/review",
     "/quiz",
     "/diagnostic",
+    "/source",
+    "/audit",
+    "/case",
+    "/debug",
+    "/patch",
     "/progress",
     "/feedback",
-    "/source",
     "/bye",
     "/exit",
     "/stop",
