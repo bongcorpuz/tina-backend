@@ -167,61 +167,39 @@ export async function saveModeState(
 
   const existing = await getModeState(supabase, userId, sessionId);
 
-  // Remove mode_metadata from payload if schema hasn't been migrated yet.
-  function withoutMissingCol(p, colName) {
-    const { [colName]: _dropped, ...rest } = p;
-    return rest;
+  // Strip any column from payload that the schema cache reports as missing.
+  // Handles gradual migrations where new columns haven't been added yet.
+  function extractMissingCol(errMsg = "") {
+    const m = errMsg.match(/'([^']+)'\s+column/) || errMsg.match(/column\s+'([^']+)'/);
+    return m?.[1] ?? null;
   }
 
-  if (existing?.id) {
-    let { data, error } = await supabase
-      .from("tina_mode_state")
-      .update(payload)
-      .eq("id", existing.id)
-      .select()
-      .single();
-
-    if (error?.message?.includes("mode_metadata")) {
-      const retry = await supabase
-        .from("tina_mode_state")
-        .update(withoutMissingCol(payload, "mode_metadata"))
-        .eq("id", existing.id)
-        .select()
-        .single();
-      if (retry.error) console.error("Update mode state error:", retry.error.message);
-      return retry.data ?? null;
+  async function upsertWithColumnFallback(operation) {
+    let p = { ...payload };
+    for (let attempt = 0; attempt < 6; attempt++) {
+      const { data, error } = await operation(p);
+      if (!error) return data;
+      const missing = extractMissingCol(error.message);
+      if (!missing || !(missing in p)) {
+        console.error("Mode state upsert error:", error.message);
+        return null;
+      }
+      console.warn(`Mode state: column '${missing}' not in schema — retrying without it`);
+      const { [missing]: _dropped, ...rest } = p;
+      p = rest;
     }
-
-    if (error) {
-      console.error("Update mode state error:", error.message);
-      return null;
-    }
-
-    return data;
-  }
-
-  let { data, error } = await supabase
-    .from("tina_mode_state")
-    .insert(payload)
-    .select()
-    .single();
-
-  if (error?.message?.includes("mode_metadata")) {
-    const retry = await supabase
-      .from("tina_mode_state")
-      .insert(withoutMissingCol(payload, "mode_metadata"))
-      .select()
-      .single();
-    if (retry.error) console.error("Insert mode state error:", retry.error.message);
-    return retry.data ?? null;
-  }
-
-  if (error) {
-    console.error("Insert mode state error:", error.message);
     return null;
   }
 
-  return data;
+  if (existing?.id) {
+    return upsertWithColumnFallback(p =>
+      supabase.from("tina_mode_state").update(p).eq("id", existing.id).select().single()
+    );
+  }
+
+  return upsertWithColumnFallback(p =>
+    supabase.from("tina_mode_state").insert(p).select().single()
+  );
 }
 
 export async function clearModeState(supabase, userId, sessionId = null) {

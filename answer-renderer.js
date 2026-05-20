@@ -307,7 +307,7 @@ function normalizeLegacyHeadings(text = "") {
     .replace(/(^|\n)\s*E\.\s*HIERARCHY ANALYSIS\b/gi, "$1E. DOCTRINAL STATUS / CONFLICT ANALYSIS")
     .replace(/(^|\n)\s*F\.\s*PRACTICAL APPLICATION\b/gi, "$1F. PRACTICAL NOTE / APPLICATION")
     .replace(/(^|\n)\s*B\.\s*LEGAL BASIS\b/gi, "$1B. CONTROLLING LEGAL BASIS")
-    .replace(/(^|\n)\s*C\.\s*SUPPORTING RULES\b/gi, "$1C. SUPPORTING RULES / ADMINISTRATIVE ISSUANCES")
+    .replace(/(^|\n)\s*C\.\s*SUPPORTING RULES(?:\s*\/\s*ADMINISTRATIVE\s+ISSUANCES)?\b/gi, "$1C. SUPPORTING RULES / ADMINISTRATIVE ISSUANCES")
     .replace(/(^|\n)\s*C\.\s*SUPPORTING JURISPRUDENCE\b/gi, "$1D. SUPPORTING JURISPRUDENCE")
     .replace(/(^|\n)\s*D\.\s*DOCTRINAL STATUS \/ CONFLICT ANALYSIS\b/gi, "$1E. DOCTRINAL STATUS / CONFLICT ANALYSIS");
 }

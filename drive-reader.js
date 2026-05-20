@@ -746,20 +746,7 @@ async function getAllFilesRecursive(folderId, parentPath = "") {
   do {
     const res = await drive.files.list({
       q: `'${folderId}' in parents and trashed=false`,
-      fields: [
-        "nextPageToken",
-        "files(",
-        "id,",
-        "name,",
-        "mimeType,",
-        "size,",
-        "parents,",
-        "modifiedTime,",
-        "createdTime,",
-        "webViewLink,",
-        "webContentLink",
-        ")"
-      ].join(""),
+      fields: "nextPageToken,files(id,name,mimeType,size,parents,modifiedTime,createdTime,webViewLink,webContentLink)",
       pageSize: 1000,
       pageToken,
       supportsAllDrives: true,
