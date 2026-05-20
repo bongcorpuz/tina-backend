@@ -47,6 +47,7 @@ import { storeFeedbackEntry } from "./feedback-learning.js";
 import { extractQuizAnswer } from "./ask-helpers.js";
 import { createAssessmentHandler } from "./assessment-handler.js";
 import { createLearningHandler, parseLearningCommand } from "./learning/session-engine.js";
+import { resolveSlashCommand } from "./command-resolver.js";
 // generateRagAnswer removed — Law 1: all pipeline logic lives in pipeline.js
 
 import {
@@ -490,15 +491,35 @@ async function loadTaxHookConfig({ supabase, rawQuestion = "", forcedHook = null
   const forcedIsGenericDefault = forcedHook === "/ask";
   const explicitOverridesDefault = forcedIsGenericDefault && explicitHook && explicitHook !== "/ask";
 
+  // Fuzzy resolution: fires only when no exact command was found and text starts with /
+  // e.g., /quizz → /quiz, /revieu → /review, /sourc → /source
+  let fuzzyHookResult = null;
+  if (!explicitHook && !forcedHook) {
+    const firstWord = normalizeHookCommand(text);
+    if (firstWord.startsWith("/")) {
+      try {
+        const candidate = resolveSlashCommand(firstWord);
+        if (candidate.ok) fuzzyHookResult = candidate;
+      } catch (err) {
+        console.warn("[TINA ROUTE] Command resolver error (non-fatal):", err?.message);
+      }
+    }
+  }
+  const fuzzyHook = fuzzyHookResult?.commandKey || null;
+
   if (forcedHook && isAllowedHook(forcedHook) && !explicitOverridesDefault) {
     hookCode = forcedHook;
     cleanQuestion = stripExplicitHook(text, forcedHook);
   } else if (explicitHook) {
     hookCode = explicitHook;
     cleanQuestion = stripExplicitHook(text, explicitHook);
+  } else if (fuzzyHook) {
+    hookCode = fuzzyHook;
+    // Strip the (misspelled) command prefix — everything after the first word is the payload
+    cleanQuestion = text.replace(/^\S+\s*/, "").trim() || text;
   }
 
-  console.log(`[TINA ROUTE] forcedHook=${forcedHook} explicitHook=${explicitHook} resolved hookCode=${hookCode}`);
+  console.log(`[TINA ROUTE] forcedHook=${forcedHook} explicitHook=${explicitHook} fuzzyHook=${fuzzyHook}(${fuzzyHookResult?.matchType || "-"}) resolved hookCode=${hookCode}`);
 
   const fallbackConfig = buildHardcodedHookConfig(hookCode);
 
