@@ -28,6 +28,7 @@ import "dotenv/config";
 import { google } from "googleapis";
 import pdfParse from "pdf-parse";
 import mammoth from "mammoth";
+import { convertWithMarkitdown } from "./document-conversion-service.js";
 
 const ENGINE_VERSION = "4.0.0";
 
@@ -585,9 +586,13 @@ function isSupportedFile(file = {}) {
     isGoogleSlideMime(mimeType) ||
     mimeType === "application/pdf" ||
     mimeType === DOCX_MIME ||
+    mimeType === XLSX_MIME ||
+    mimeType === PPTX_MIME ||
     isTextLikeFile(file, mimeType) ||
     name.endsWith(".pdf") ||
     name.endsWith(".docx") ||
+    name.endsWith(".xlsx") ||
+    name.endsWith(".pptx") ||
     name.endsWith(".txt") ||
     name.endsWith(".csv") ||
     name.endsWith(".md") ||
@@ -608,8 +613,8 @@ function classifyExtractionType(file = {}) {
   if (mimeType === "application/pdf" || fileName.endsWith(".pdf")) return "pdf_text";
   if (mimeType === DOCX_MIME || fileName.endsWith(".docx")) return "docx_text";
   if (isTextLikeFile(file, mimeType)) return "plain_text";
-  if (mimeType === XLSX_MIME || fileName.endsWith(".xlsx")) return "unsupported_xlsx";
-  if (mimeType === PPTX_MIME || fileName.endsWith(".pptx")) return "unsupported_pptx";
+  if (mimeType === XLSX_MIME || fileName.endsWith(".xlsx")) return "markitdown_xlsx";
+  if (mimeType === PPTX_MIME || fileName.endsWith(".pptx")) return "markitdown_pptx";
 
   return "unsupported";
 }
@@ -924,6 +929,12 @@ export async function extractTextFromFile(file) {
     const buffer = await downloadFileBuffer(fileId);
     const result = await mammoth.extractRawText({ buffer });
     extractedText = result.value || "";
+  } else if (mimeType === XLSX_MIME || fileName.endsWith(".xlsx")) {
+    const buffer = await downloadFileBuffer(fileId);
+    extractedText = await convertWithMarkitdown(buffer, "xlsx");
+  } else if (mimeType === PPTX_MIME || fileName.endsWith(".pptx")) {
+    const buffer = await downloadFileBuffer(fileId);
+    extractedText = await convertWithMarkitdown(buffer, "pptx");
   } else if (isTextLikeFile(file, mimeType)) {
     const buffer = await downloadFileBuffer(fileId);
     extractedText = buffer.toString("utf8");
