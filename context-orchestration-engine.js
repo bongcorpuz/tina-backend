@@ -1684,9 +1684,9 @@ Source Anchor is MANDATORY. Always end with "Source Anchor: [cite the controllin
   } else if (modeFlags.isReviewer || mode === "REVIEWER_MODE") {
     modeInstruction = `
 REVIEWER MODE FORMAT:
-Do not use A-F legal answer format.
+ABSOLUTE FORMAT OVERRIDE: You MUST NOT use A-F legal answer format under any circumstances in REVIEWER MODE. Do not revert to A-F format regardless of the question type.
 Use CPA/bar reviewer teaching style.
-Use this structure unless the user asked otherwise:
+Use this structure exactly:
 Concept
 Legal Basis
 Rule

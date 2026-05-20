@@ -216,7 +216,9 @@ export function createAssessmentHandler({
     retrievedSources = [],
     classification = {},
     intent = {},
-    conversationHistory = []
+    conversationHistory = [],
+    quizMode = false,
+    adaptiveContext = {}
   }) {
     const result = await orchestration.callOpenAIWithOrchestration({
       openai,
@@ -227,7 +229,9 @@ export function createAssessmentHandler({
       classification,
       intent,
       conversationHistory: safeArray(conversationHistory).slice(-6),
-      model
+      model,
+      quizMode,
+      adaptiveContext
     });
 
     return extractOpenAIText(result);
@@ -495,7 +499,9 @@ Required JSON shape:
         requiresRiskAnalysis: false,
         requiresFactPatternAnalysis: false,
         requiresEvidenceEvaluation: false
-      }
+      },
+      quizMode: true,
+      adaptiveContext: { activeHook: "/quiz", quizMode: true, orchestrationMode: "QUIZ" }
     });
 
     const quiz = safeParseQuizJson(rawQuiz);

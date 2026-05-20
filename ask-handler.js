@@ -1622,14 +1622,14 @@ export function createAskHandler({
     await clearModeState(supabase, userId, conversationId || null);
     await assessmentHandler.clearPendingQuizAttempts(userId, conversationId || null);
 
-    let answerText = "You are already in normal /ask mode.";
+    let answerText = "Session ended. Thank you for using TINA. Type any question or a mode hook (e.g. /ask, /quiz, /review) to start a new session.";
 
-    if (activeHook === "/quiz") answerText = "Quiz mode ended. You are now back in normal /ask mode.";
-    else if (activeHook === "/review") answerText = "Review mode ended. You are now back in normal /ask mode.";
-    else if (activeHook === "/case") answerText = "Case analysis mode ended. You are now back in normal /ask mode.";
-    else if (activeHook === "/source") answerText = "Source finder mode ended. You are now back in normal /ask mode.";
-    else if (activeHook === "/diagnostic") answerText = "Diagnostic mode ended. You are now back in normal /ask mode.";
-    else if (activeHook !== "/ask") answerText = `Mode ${activeHook} ended. You are now back in normal /ask mode.`;
+    if (activeHook === "/quiz") answerText = "Quiz session ended. Your progress has been saved. Type /quiz to start a new quiz or /ask to continue with a regular question.";
+    else if (activeHook === "/review") answerText = "Review session ended. Type /review to start a new review session or /ask to continue with a regular question.";
+    else if (activeHook === "/case") answerText = "Case analysis session ended. Type /case to start a new case analysis or /ask to continue with a regular question.";
+    else if (activeHook === "/source") answerText = "Source finder session ended. Type /source to look up another source or /ask to continue with a regular question.";
+    else if (activeHook === "/diagnostic") answerText = "Diagnostic session ended. Type /diagnostic to start a new diagnostic or /ask to continue with a regular question.";
+    else if (activeHook !== "/ask") answerText = `${activeHook} session ended. Type /ask to continue with a regular question.`;
 
     return {
       success: true,

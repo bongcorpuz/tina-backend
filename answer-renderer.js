@@ -236,6 +236,7 @@ function stripRawSourceSections(text = "") {
   return normalizeText(text)
     .replace(/\n+\s*Sources Used[\s\S]*$/i, "")
     .replace(/\n+\s*Sources:[\s\S]*$/i, "")
+    .replace(/\n+\*{0,2}Sources\*{0,2}\s*\n[\s\S]*$/i, "")
     .replace(/\n+\s*References:[\s\S]*$/i, "")
     .replace(/\n+\s*Validated Indexed Sources[\s\S]*$/i, "")
     .replace(/\n+\s*Authority Used[\s\S]*$/i, "")
@@ -804,12 +805,13 @@ function renderTinaAnswer({
       .map(compactSource);
 
     if (visible.length) {
-      const sourceLines = visible.map(
-        (s, i) =>
-          `${i + 1}. ${s.citation ? `${s.citation} – ` : ""}${s.title} (${s.authorityType})`
-      );
+      const sourceLines = visible.map((s, i) => {
+        const label = `${s.citation ? `${s.citation} – ` : ""}${s.title}`;
+        const linked = s.url ? `[${label}](${s.url})` : label;
+        return `${i + 1}. ${linked} (${s.authorityType})`;
+      });
 
-      rendered = `${rendered}\n\nVALIDATED INDEXED SOURCES\n${sourceLines.join("\n")}`;
+      rendered = `${rendered}\n\n**Sources**\n${sourceLines.join("\n")}`;
     }
   }
 
