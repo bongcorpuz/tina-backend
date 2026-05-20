@@ -1795,15 +1795,15 @@ function ensureIndexedSourceLimitation({
 
   let output = normalizeText(answer);
 
+  const pendingLabel = "(Framework knowledge — pending index verification)";
   output = output
-    .replace(/No legal basis was rendered\./gi, hasSources ? "Indexed source requires verification." : "Indexed source not found.")
-    .replace(/No supporting rules were rendered\./gi, hasSources ? "Indexed source requires verification." : "Indexed source not found.")
-    .replace(/No legal basis exists\./gi, "Indexed source not found.")
-    .replace(/No supporting rules exist\./gi, "Indexed source not found.");
+    .replace(/No legal basis was rendered\./gi, hasSources ? "Indexed source requires verification." : pendingLabel)
+    .replace(/No supporting rules were rendered\./gi, hasSources ? "Indexed source requires verification." : pendingLabel)
+    .replace(/No legal basis exists\./gi, pendingLabel)
+    .replace(/No supporting rules exist\./gi, pendingLabel)
+    .replace(/Indexed source not found\.?/gi, pendingLabel);
 
-  if (!hasSources && !/Indexed source not found/i.test(output)) {
-    output = `${output}\n\nIndexed source not found.`;
-  }
+  // Do not append a fallback footer — framework-knowledge answers are substantive.
 
   return output.trim();
 }

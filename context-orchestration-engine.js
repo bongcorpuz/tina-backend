@@ -1638,7 +1638,7 @@ Authority and source-grounding rules:
 3. Never elevate RMCs over statutes, BIR rulings over Supreme Court, reviewer notes over statutes, or persuasive materials over controlling authorities.
 4. Administrative issuances cannot override statutes, tax treaties, the Constitution, Supreme Court decisions, or CTA decisions within their proper doctrinal scope.
 5. Do not invent citations, provisions, cases, RRs, RMCs, RMOs, rulings, or doctrinal conflicts.
-6. If no indexed authority is available for a requested section, say exactly: "Indexed source not found."
+6. If no indexed authority is available for a requested section, answer from your Philippine tax law training knowledge — NIRC provisions, implementing regulations (RR/RMC/RMO), and Supreme Court/CTA jurisprudence. Label every section that relies on training knowledge with: "(Framework knowledge — pending index verification)". Do not say "Indexed source not found." Do not fabricate specific GR numbers, docket references, or citation details you are uncertain of.
 7. Do not say "No legal basis was rendered" or "No supporting rules were rendered."
 8. Do not dump unrelated jurisprudence.
 9. Do not include raw source text, full debug objects, retrieval payloads, embeddings, hidden metadata, or full engine outputs.
@@ -1901,7 +1901,7 @@ function buildUserPrompt({
   } else if (modeFlags.isAudit || mode === "COMPLEX_ADVISORY" || mode === "AUDIT_FACT_PATTERN") {
     responseInstruction = "Use AUDIT_FACT_PATTERN. Produce all 7 mandatory sections: A. DIRECT ANSWER, B. FACTS / ASSUMPTIONS, C. CONTROLLING LEGAL BASIS, D. ANALYSIS, E. AUDIT / TAX RISK, F. DOCUMENTARY GAPS, G. PRACTICAL POSITION. Sections E, F, and G must be specific to this query — do not use generic boilerplate.";
   } else {
-    responseInstruction = 'Use standard legal/tax format. If an expected authority section has no indexed support, state "Indexed source not found."';
+    responseInstruction = 'Use standard A-F legal/tax format: A. DIRECT ANSWER, B. CONTROLLING LEGAL BASIS, C. SUPPORTING RULES / ADMINISTRATIVE ISSUANCES, D. SUPPORTING JURISPRUDENCE, E. DOCTRINAL STATUS / CONFLICT ANALYSIS, F. PRACTICAL NOTE / APPLICATION. When no indexed source was retrieved, answer each section from Philippine tax law framework knowledge and label every such section "(Framework knowledge — pending index verification)". Do not output "Indexed source not found." Do not fabricate GR numbers or citation details you are uncertain of.';
   }
 
   return normalizeWhitespace(`
@@ -1921,7 +1921,7 @@ SOURCE GROUNDING / AUTHORITY PRESERVATION:
 ${JSON.stringify(compactGrounding, null, 2)}
 
 RETRIEVED RELEVANT AUTHORITIES / EXTRACTS:
-${compressedSources || "[No retrieved source extracts supplied. Use exactly: Indexed source not found. Do not invent authority.]"}
+${compressedSources || "[No retrieved source extracts supplied. Answer using your Philippine tax law training knowledge: cite NIRC provisions, implementing regulations (RR/RMC/RMO), and Supreme Court/CTA jurisprudence directly relevant to the query. Label every section that relies on training knowledge as '(Framework knowledge — pending index verification)'. Do not output 'Indexed source not found.' Do not fabricate GR numbers, docket numbers, or RR/RMC numbers you are not certain of.]"}
 
 RESPONSE INSTRUCTION:
 ${responseInstruction}
