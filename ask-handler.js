@@ -526,7 +526,7 @@ async function loadTaxHookConfig({ supabase, rawQuestion = "", forcedHook = null
           fallbackConfig.forceSourceVisibility === true ||
           data.forceSourceVisibility === true ||
           data.force_source_visibility === true,
-        cleanQuestion: cleanQuestion || text,
+        cleanQuestion: cleanQuestion,
         originalQuestion: text,
         forcedHookApplied: Boolean(forcedHook),
         explicitSlashCommandApplied: Boolean(explicitHook),
@@ -539,7 +539,7 @@ async function loadTaxHookConfig({ supabase, rawQuestion = "", forcedHook = null
 
   return {
     ...fallbackConfig,
-    cleanQuestion: cleanQuestion || text,
+    cleanQuestion: cleanQuestion,
     originalQuestion: text,
     forcedHookApplied: Boolean(forcedHook),
     explicitSlashCommandApplied: Boolean(explicitHook),
@@ -1874,18 +1874,38 @@ export function createAskHandler({
           !isReviewRoutedHook(compactHookConfig.hook_code)
         )
       ) {
-        // /quiz with no topic — prompt for a topic immediately
-        if (
-          compactHookConfig.hook_code === "/quiz" &&
-          !compactHookConfig.cleanQuestion
-        ) {
+        // /quiz or /review with no topic — prompt for a topic immediately
+        const rawClean = (compactHookConfig.cleanQuestion || "").trim();
+        const isNoTopic =
+          !rawClean ||
+          rawClean === "/quiz" ||
+          rawClean === "/review" ||
+          rawClean === "/diagnostic";
+
+        if (compactHookConfig.hook_code === "/quiz" && isNoTopic) {
           return res.json({
             success: true,
             engine: "TINA Ask Handler",
             version: ENGINE_VERSION,
             hook: "/quiz",
             mode: "QUIZ_MASTER",
-            answer: "What topic would you like to be quizzed on?\n\nExamples:\n/quiz VAT\n/quiz income tax\n/quiz withholding tax\n/quiz estate tax\n/quiz local taxes",
+            answer:
+              "What topic would you like to be quizzed on?\n\nExamples:\n/quiz VAT\n/quiz income tax\n/quiz withholding tax\n/quiz estate tax\n/quiz local taxes",
+            sources: [],
+            sourcesUsed: [],
+            vectorMatches: 0
+          });
+        }
+
+        if (compactHookConfig.hook_code === "/review" && isNoTopic) {
+          return res.json({
+            success: true,
+            engine: "TINA Ask Handler",
+            version: ENGINE_VERSION,
+            hook: "/review",
+            mode: "TAX_REVIEWER",
+            answer:
+              "What topic would you like me to review with you?\n\nExamples:\n/review VAT\n/review income tax\n/review withholding tax\n/review estate tax\n/review local taxes",
             sources: [],
             sourcesUsed: [],
             vectorMatches: 0
