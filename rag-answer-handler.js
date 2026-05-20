@@ -1623,6 +1623,26 @@ function applyFinalGateAndRender({
     })
   );
 
+  // Quiz and reviewer modes must never go through renderTinaJsonPayload's A-F structure repair.
+  // Return the clean answer directly with metadata — the assessment handler controls the format.
+  if (modeFlags.isQuiz || modeFlags.isReview) {
+    return {
+      success: true,
+      answer: cleanAnswer,
+      sources: sources.slice(0, 5),
+      metadata: {
+        ...metadata,
+        authorityPacket,
+        taxEngineMetadata,
+        modeFlags,
+        finalGateApplied: false,
+        finalAnswerComplianceEngine: "bypassed_for_quiz_review_mode",
+        rendererEngine: "raw_passthrough",
+        ragAnswerHandlerVersion: ENGINE_VERSION
+      }
+    };
+  }
+
   return renderTinaJsonPayload({
     answer: cleanAnswer,
     sources,

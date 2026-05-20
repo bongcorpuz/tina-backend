@@ -2154,6 +2154,38 @@ function buildFinalCompliantAnswer({
 }
 
 function enforceFinalAnswerCompliance(args = {}) {
+  // Quiz and reviewer modes must never be reformatted into A-F structure.
+  const rawMode = String(args.mode || args.orchestrationMode || "").toUpperCase();
+  if (
+    rawMode === "QUIZ_MODE" ||
+    rawMode === "QUIZ" ||
+    rawMode === "REVIEWER_MODE" ||
+    rawMode === "REVIEWER"
+  ) {
+    const passthrough = args.draftAnswer || args.answer || "";
+    return {
+      success: true,
+      answer: passthrough,
+      finalAnswer: passthrough,
+      sources: args.sources || [],
+      sourcesUsed: args.sourcesUsed || [],
+      citations: [],
+      legalBasis: [],
+      complianceStatus: "BYPASSED_NON_AF_MODE",
+      warnings: [],
+      metadata: { bypassReason: "quiz_or_reviewer_mode_no_AF_enforcement" },
+      confidence: "BYPASS",
+      sourceStatus: "BYPASS",
+      authorityValidation: null,
+      conflictValidation: null,
+      version: ENGINE_VERSION,
+      finalGateOnly: true,
+      noOpenAICalls: true,
+      noPromptAssembly: true,
+      noRetrieval: true
+    };
+  }
+
   const finalResult = buildFinalCompliantAnswer({
     draftAnswer: args.draftAnswer || args.answer,
     fallbackAnswer: args.fallbackAnswer,

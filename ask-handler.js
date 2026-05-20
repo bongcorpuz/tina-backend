@@ -83,9 +83,7 @@ const NORMAL_RAG_ROUTED_HOOKS = new Set([
   "/patch"
 ]);
 
-const REVIEW_ROUTED_HOOKS = new Set([
-  "/review"
-]);
+const REVIEW_ROUTED_HOOKS = new Set([]);
 
 const CASE_ROUTED_HOOKS = new Set([
   "/case"
@@ -97,6 +95,7 @@ const SOURCE_ROUTED_HOOKS = new Set([
 
 const SPECIAL_ASSESSMENT_HOOKS = new Set([
   "/quiz",
+  "/review",
   "/diagnostic"
 ]);
 
@@ -1875,13 +1874,60 @@ export function createAskHandler({
           !isReviewRoutedHook(compactHookConfig.hook_code)
         )
       ) {
-        const result = await assessmentHandler.handleAssessmentCommand({
-          userId,
-          conversationId,
-          hookConfig: compactHookConfig,
-          cleanQuestion: compactHookConfig.cleanQuestion,
-          originalQuestion: compactHookConfig.originalQuestion
-        });
+        // /quiz with no topic — prompt for a topic immediately
+        if (
+          compactHookConfig.hook_code === "/quiz" &&
+          !compactHookConfig.cleanQuestion
+        ) {
+          return res.json({
+            success: true,
+            engine: "TINA Ask Handler",
+            version: ENGINE_VERSION,
+            hook: "/quiz",
+            mode: "QUIZ_MASTER",
+            answer: "What topic would you like to be quizzed on?\n\nExamples:\n/quiz VAT\n/quiz income tax\n/quiz withholding tax\n/quiz estate tax\n/quiz local taxes",
+            sources: [],
+            sourcesUsed: [],
+            vectorMatches: 0
+          });
+        }
+
+        let result;
+        try {
+          result = await assessmentHandler.handleAssessmentCommand({
+            userId,
+            conversationId,
+            hookConfig: compactHookConfig,
+            cleanQuestion: compactHookConfig.cleanQuestion,
+            originalQuestion: compactHookConfig.originalQuestion
+          });
+        } catch (assessmentError) {
+          console.error("Assessment handler error:", assessmentError.message);
+          return res.json({
+            success: false,
+            engine: "TINA Ask Handler",
+            hook: compactHookConfig.hook_code,
+            mode: compactHookConfig.mode,
+            answer: "TINA encountered an error generating the assessment question. Please try again or type /ask to switch to normal mode.",
+            sources: [],
+            sourcesUsed: [],
+            vectorMatches: 0,
+            error: assessmentError.message
+          });
+        }
+
+        if (!result || !result.handled || !result.response) {
+          return res.json({
+            success: false,
+            engine: "TINA Ask Handler",
+            hook: compactHookConfig.hook_code,
+            mode: compactHookConfig.mode,
+            answer: "TINA could not handle this assessment command. Please try again.",
+            sources: [],
+            sourcesUsed: [],
+            vectorMatches: 0
+          });
+        }
 
         return res.json(result.response);
       }

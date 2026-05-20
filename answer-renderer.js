@@ -780,24 +780,33 @@ function renderTinaAnswer({
   mode = null,
   metadata = {}
 } = {}) {
-  let rendered = renderAdaptiveAnswer({
-    answer,
-    adaptiveContext,
-    responsePlan,
-    supersessionAudit,
-    supersessionResult,
-    conflict,
-    conflictReview,
-    hierarchyConflict,
-    jurisprudencePayload,
-    issueClassification,
-    taxDomainClassification,
-    primaryDomain,
-    orchestrationMode,
-    contextMode,
-    mode,
-    metadata
-  });
+  const resolvedMode = String(mode || orchestrationMode || contextMode || "").toUpperCase();
+  const isQuizMode = resolvedMode === "QUIZ_MODE" || resolvedMode === "QUIZ";
+  const isReviewerMode = resolvedMode === "REVIEWER_MODE" || resolvedMode === "REVIEWER";
+
+  let rendered;
+  if (isQuizMode || isReviewerMode) {
+    rendered = normalizeText(stripRawSourceSections(answer));
+  } else {
+    rendered = renderAdaptiveAnswer({
+      answer,
+      adaptiveContext,
+      responsePlan,
+      supersessionAudit,
+      supersessionResult,
+      conflict,
+      conflictReview,
+      hierarchyConflict,
+      jurisprudencePayload,
+      issueClassification,
+      taxDomainClassification,
+      primaryDomain,
+      orchestrationMode,
+      contextMode,
+      mode,
+      metadata
+    });
+  }
 
   if (includeSources) {
     const visible = sortVisibleSources(sources)

@@ -1665,23 +1665,23 @@ QUARANTINED CASE → PERMITTED ISSUE ONLY — PROHIBITED FOR ALL OTHER ISSUES:
 IF NO DIRECTLY ON-POINT CASE EXISTS FOR THE SPECIFIC ISSUE ASKED, STATE: "No directly controlling Philippine Supreme Court or CTA decision on this precise issue has been cited." DO NOT substitute an unrelated case to fill the section.
 `.trim();
 
+  // For QUIZ_MODE, bypass all legal authority rules — the assessment handler owns the prompt.
+  // The 18 base rules confuse the model into producing A-F format instead of quiz JSON.
+  if (modeFlags.isQuiz || mode === "QUIZ_MODE") {
+    return normalizeWhitespace(
+      [
+        `You are TINA's CPALE Philippine Tax Quiz Generator. QUIZ MODE ONLY.`,
+        systemPrompt,
+        masterPrompt
+      ]
+        .filter(Boolean)
+        .join("\n\n")
+    );
+  }
+
   let modeInstruction = "";
 
-  if (modeFlags.isQuiz || mode === "QUIZ_MODE") {
-    modeInstruction = `
-QUIZ MODE FORMAT:
-Do not use A-F legal answer format.
-Generate assessment-style output only.
-Use this structure unless the user asked otherwise:
-Question
-Choices
-Answer Key
-Explanation
-Reviewer Trap
-Source Anchor
-Source Anchor is MANDATORY. Always end with "Source Anchor: [cite the controlling NIRC provision, RR, or case]". If no source was retrieved, state: "Source Anchor: Indexed source not found. Answer based on [applicable NIRC provision] per Philippine tax law framework." Never omit the Source Anchor.
-`.trim();
-  } else if (modeFlags.isReviewer || mode === "REVIEWER_MODE") {
+  if (modeFlags.isReviewer || mode === "REVIEWER_MODE") {
     modeInstruction = `
 REVIEWER MODE FORMAT:
 ABSOLUTE FORMAT OVERRIDE: You MUST NOT use A-F legal answer format under any circumstances in REVIEWER MODE. Do not revert to A-F format regardless of the question type.
