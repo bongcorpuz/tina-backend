@@ -173,16 +173,27 @@ export async function runPipeline({
   // Semantic similarity alone is PROHIBITED as the sole retrieval criterion.
   // retrieval-engine.js Layer 1 (EXACT_NORMALIZED_AUTHORITY) runs first;
   // Layer 5 (VECTOR_SEMANTIC) only fires after all authority-targeted layers.
+  // Per-step timeout: Supabase free-tier cold starts can hang without rejecting.
+  // After 15 s, fall through with empty chunks so the pipeline still completes.
   const controllingAuthorities = rawTargets;
-  ctx.retrievedChunks = await retrieveRelevantSources({
-    query,
-    supabase,
-    issueClassification:  ctx.issueClassification,
-    targetAuthorities:    controllingAuthorities,
-    controllingAuthorities,
-    topK:   12,
-    poolK:  48
-  });
+  const RETRIEVAL_STEP_TIMEOUT_MS = 15000;
+  ctx.retrievedChunks = await Promise.race([
+    retrieveRelevantSources({
+      query,
+      supabase,
+      issueClassification:  ctx.issueClassification,
+      targetAuthorities:    controllingAuthorities,
+      controllingAuthorities,
+      topK:   12,
+      poolK:  48
+    }),
+    new Promise(resolve =>
+      setTimeout(() => {
+        trace.warnings.push({ step: 5, warning: "Retrieval timed out after 15 s — proceeding with empty chunks" });
+        resolve([]);
+      }, RETRIEVAL_STEP_TIMEOUT_MS)
+    )
+  ]);
   trace.steps.push({ step: 5, name: "retrieval", chunksFound: ctx.retrievedChunks?.length ?? 0, done: true });
 
   // ── Step 6: Reranker ──────────────────────────────────────────────────────

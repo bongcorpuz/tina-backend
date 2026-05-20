@@ -167,13 +167,30 @@ export async function saveModeState(
 
   const existing = await getModeState(supabase, userId, sessionId);
 
+  // Remove mode_metadata from payload if schema hasn't been migrated yet.
+  function withoutMissingCol(p, colName) {
+    const { [colName]: _dropped, ...rest } = p;
+    return rest;
+  }
+
   if (existing?.id) {
-    const { data, error } = await supabase
+    let { data, error } = await supabase
       .from("tina_mode_state")
       .update(payload)
       .eq("id", existing.id)
       .select()
       .single();
+
+    if (error?.message?.includes("mode_metadata")) {
+      const retry = await supabase
+        .from("tina_mode_state")
+        .update(withoutMissingCol(payload, "mode_metadata"))
+        .eq("id", existing.id)
+        .select()
+        .single();
+      if (retry.error) console.error("Update mode state error:", retry.error.message);
+      return retry.data ?? null;
+    }
 
     if (error) {
       console.error("Update mode state error:", error.message);
@@ -183,11 +200,21 @@ export async function saveModeState(
     return data;
   }
 
-  const { data, error } = await supabase
+  let { data, error } = await supabase
     .from("tina_mode_state")
     .insert(payload)
     .select()
     .single();
+
+  if (error?.message?.includes("mode_metadata")) {
+    const retry = await supabase
+      .from("tina_mode_state")
+      .insert(withoutMissingCol(payload, "mode_metadata"))
+      .select()
+      .single();
+    if (retry.error) console.error("Insert mode state error:", retry.error.message);
+    return retry.data ?? null;
+  }
 
   if (error) {
     console.error("Insert mode state error:", error.message);

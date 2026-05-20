@@ -126,7 +126,7 @@ const QUERY_INTENT_TIMEOUT_MS = 8000;
 const ISSUE_CLASSIFICATION_TIMEOUT_MS = 10000;
 const RETRIEVAL_TIMEOUT_MS = 18000;
 const RERANK_TIMEOUT_MS = 12000;
-const RAG_TIMEOUT_MS = 45000;
+const RAG_TIMEOUT_MS = 90000;
 
 function normalizeText(value = "") {
   return String(value || "").trim();
