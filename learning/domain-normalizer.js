@@ -1,9 +1,10 @@
 // FILE: learning/domain-normalizer.js
 "use strict";
 
-const ENGINE_VERSION = "1.0.0";
+const ENGINE_VERSION = "1.1.0";
 
-// Canonical domain definitions with subtopics, labels, and default authorities
+// ─── domain definitions ─────────────────────────────────────────────────────
+
 const DOMAINS = Object.freeze({
   VAT: {
     key: "VAT",
@@ -141,16 +142,16 @@ const DOMAINS = Object.freeze({
       "OVERSEAS_DISPATCH", "STT", "BANKS_NON_BANKS", "IPT", "FILING_PAYMENT", "VAT_ELECTION"
     ],
     subtopicLabels: {
-      SEC116:          "Percentage Tax — Section 116 General Rule",
-      OPTION_8PCT:     "Percentage Tax — 8% Flat Rate Option",
-      COMMON_CARRIERS: "Percentage Tax — Common Carriers",
-      FRANCHISE_TAX:   "Percentage Tax — Franchise Tax",
+      SEC116:           "Percentage Tax — Section 116 General Rule",
+      OPTION_8PCT:      "Percentage Tax — 8% Flat Rate Option",
+      COMMON_CARRIERS:  "Percentage Tax — Common Carriers",
+      FRANCHISE_TAX:    "Percentage Tax — Franchise Tax",
       OVERSEAS_DISPATCH:"Percentage Tax — Overseas Dispatch / Communication",
-      STT:             "Percentage Tax — Stock Transaction Tax (STT)",
-      BANKS_NON_BANKS: "Percentage Tax — Banks and Non-Banks",
-      IPT:             "Percentage Tax — International Air/Shipping",
-      FILING_PAYMENT:  "Percentage Tax — Filing and Payment",
-      VAT_ELECTION:    "Percentage Tax — VAT vs. Non-VAT Election"
+      STT:              "Percentage Tax — Stock Transaction Tax (STT)",
+      BANKS_NON_BANKS:  "Percentage Tax — Banks and Non-Banks",
+      IPT:              "Percentage Tax — International Air/Shipping",
+      FILING_PAYMENT:   "Percentage Tax — Filing and Payment",
+      VAT_ELECTION:     "Percentage Tax — VAT vs. Non-VAT Election"
     },
     searchKeywords: ["percentage tax", "section 116", "3%", "3 percent", "8%", "8 percent", "common carrier", "franchise tax", "stock transaction tax", "stt", "banks percentage", "ipt", "overseas dispatch", "rr 8-2018"],
     authorities: ["NIRC Sec. 116-127", "TRAIN Act RA 10963", "CREATE Act RA 11534"]
@@ -190,16 +191,16 @@ const DOMAINS = Object.freeze({
       "TOLLING_INTERRUPTION", "AMENDED_RETURN", "JEOPARDY_ASSESSMENT"
     ],
     subtopicLabels: {
-      PRESCRIPTION_3YR:      "Prescription — 3-Year General Rule (Sec. 203)",
-      PRESCRIPTION_10YR:     "Prescription — 10-Year Exception (Sec. 222(a))",
-      WAIVER_VALIDITY:       "Prescription — Waiver of Prescriptive Period",
-      LOA_LN:                "Prescription — Letter of Authority / Letter Notice",
-      PAN_FAN_FDDA:          "Prescription — PAN, FAN, FDDA Due Process",
-      METRO_STAR_DOCTRINE:   "Prescription — Metro Star Doctrine (No PAN = Void)",
+      PRESCRIPTION_3YR:       "Prescription — 3-Year General Rule (Sec. 203)",
+      PRESCRIPTION_10YR:      "Prescription — 10-Year Exception (Sec. 222(a))",
+      WAIVER_VALIDITY:        "Prescription — Waiver of Prescriptive Period",
+      LOA_LN:                 "Prescription — Letter of Authority / Letter Notice",
+      PAN_FAN_FDDA:           "Prescription — PAN, FAN, FDDA Due Process",
+      METRO_STAR_DOCTRINE:    "Prescription — Metro Star Doctrine (No PAN = Void)",
       COLLECTION_PRESCRIPTION:"Prescription — Prescription for Collection",
-      TOLLING_INTERRUPTION:  "Prescription — Tolling and Interruption",
-      AMENDED_RETURN:        "Prescription — Effect of Amended Return",
-      JEOPARDY_ASSESSMENT:   "Prescription — Jeopardy Assessment"
+      TOLLING_INTERRUPTION:   "Prescription — Tolling and Interruption",
+      AMENDED_RETURN:         "Prescription — Effect of Amended Return",
+      JEOPARDY_ASSESSMENT:    "Prescription — Jeopardy Assessment"
     },
     searchKeywords: ["prescription", "assessment prescription", "3 year", "10 year", "section 203", "section 222", "waiver", "loa", "letter of authority", "pan", "pre-assessment notice", "fan", "final assessment notice", "fdda", "metro star", "jeopardy", "amended return", "tolling"],
     authorities: ["NIRC Sec. 203", "NIRC Sec. 222", "CIR v. Metro Star Superama GR 185371", "RMO 20-90"]
@@ -215,118 +216,370 @@ const DOMAINS = Object.freeze({
       "REFUND_CLAIMS", "INJUNCTION", "CRIMINAL_TAX"
     ],
     subtopicLabels: {
-      PROTEST:                       "Tax Dispute — Filing a Protest",
+      PROTEST:                        "Tax Dispute — Filing a Protest",
       RECONSIDERATION_REINVESTIGATION:"Tax Dispute — Reconsideration vs. Reinvestigation",
-      INACTION:                      "Tax Dispute — BIR Inaction",
-      CTA_DIVISION:                  "Tax Dispute — CTA Division",
-      CTA_EN_BANC:                   "Tax Dispute — CTA En Banc",
-      SUPREME_COURT:                 "Tax Dispute — Supreme Court Review",
-      COMPROMISE_ABATEMENT:          "Tax Dispute — Compromise and Abatement",
-      TAX_AMNESTY:                   "Tax Dispute — Tax Amnesty",
-      REFUND_CLAIMS:                 "Tax Dispute — Refund and Tax Credit",
-      INJUNCTION:                    "Tax Dispute — Injunction",
-      CRIMINAL_TAX:                  "Tax Dispute — Criminal Tax Cases"
+      INACTION:                       "Tax Dispute — BIR Inaction",
+      CTA_DIVISION:                   "Tax Dispute — CTA Division",
+      CTA_EN_BANC:                    "Tax Dispute — CTA En Banc",
+      SUPREME_COURT:                  "Tax Dispute — Supreme Court Review",
+      COMPROMISE_ABATEMENT:           "Tax Dispute — Compromise and Abatement",
+      TAX_AMNESTY:                    "Tax Dispute — Tax Amnesty",
+      REFUND_CLAIMS:                  "Tax Dispute — Refund and Tax Credit",
+      INJUNCTION:                     "Tax Dispute — Injunction",
+      CRIMINAL_TAX:                   "Tax Dispute — Criminal Tax Cases"
     },
     searchKeywords: ["protest", "reconsideration", "reinvestigation", "cta", "court of tax appeals", "compromise", "abatement", "tax amnesty", "refund", "injunction", "criminal tax", "inaction", "appeal", "section 228", "section 229", "section 204", "ra 1125", "ra 9282"],
     authorities: ["NIRC Sec. 204", "NIRC Sec. 228-248", "RA 1125 CTA Charter", "RA 9282"]
   }
 });
 
+// ─── normalization helpers ───────────────────────────────────────────────────
+
+function normalizeInput(text = "") {
+  return String(text || "")
+    .toLowerCase()
+    .replace(/'/g, "")         // remove apostrophes
+    .replace(/[^\w\s]/g, " ") // punctuation → space
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function levenshtein(a, b) {
+  const m = a.length, n = b.length;
+  if (m === 0) return n;
+  if (n === 0) return m;
+  const row = Array.from({ length: n + 1 }, (_, i) => i);
+  for (let i = 1; i <= m; i++) {
+    let prev = row[0];
+    row[0] = i;
+    for (let j = 1; j <= n; j++) {
+      const temp = row[j];
+      row[j] = a[i - 1] === b[j - 1] ? prev : 1 + Math.min(prev, row[j], row[j - 1]);
+      prev = temp;
+    }
+  }
+  return row[n];
+}
+
+function stringSimilarity(a, b) {
+  if (!a || !b) return 0;
+  if (a === b) return 1;
+  return 1 - levenshtein(a, b) / Math.max(a.length, b.length);
+}
+
+function tokenOverlap(inputTokens, aliasTokens) {
+  if (!inputTokens.length || !aliasTokens.length) return 0;
+  const aliasSet = new Set(aliasTokens.filter(t => t.length > 1));
+  const matches = inputTokens.filter(t => t.length > 1 && aliasSet.has(t)).length;
+  return matches / Math.max(inputTokens.length, aliasTokens.length, 1);
+}
+
+// ─── alias map ───────────────────────────────────────────────────────────────
+// Keys are normalized (lowercase, no apostrophes, no punctuation, collapsed spaces).
+// loa / pan / fan / fdda route to TAX_DISPUTE (they are subtopics within Prescription
+// but as top-level domain selectors they belong to the dispute/remedies flow).
+
 const DOMAIN_ALIAS_MAP = new Map([
-  // VAT aliases
-  ["vat", "VAT"], ["value added tax", "VAT"], ["value-added tax", "VAT"],
-  ["output vat", "VAT"], ["input vat", "VAT"], ["vat refund", "VAT"],
-  ["vat exemption", "VAT"], ["zero rated", "VAT"], ["zero rating", "VAT"],
-  ["zero-rated", "VAT"], ["sec 105", "VAT"], ["section 105", "VAT"],
+  // VAT
+  ["vat",                  "VAT"],
+  ["value added tax",      "VAT"],
+  ["value added",          "VAT"],
+  ["valueadded tax",       "VAT"],
+  ["vatable",              "VAT"],
+  ["output vat",           "VAT"],
+  ["input vat",            "VAT"],
+  ["vat refund",           "VAT"],
+  ["vat exemption",        "VAT"],
+  ["zero rated",           "VAT"],
+  ["zero rating",          "VAT"],
+  ["sec 105",              "VAT"],
+  ["section 105",          "VAT"],
 
-  // Income Tax aliases
-  ["income tax", "INCOME_TAX"], ["income taxation", "INCOME_TAX"],
-  ["corporate income tax", "INCOME_TAX"], ["individual income tax", "INCOME_TAX"],
-  ["cit", "INCOME_TAX"], ["iit", "INCOME_TAX"], ["rcit", "INCOME_TAX"],
-  ["mcit", "INCOME_TAX"], ["nolco", "INCOME_TAX"], ["individual tax", "INCOME_TAX"],
-  ["corporate tax", "INCOME_TAX"], ["fringe benefit", "INCOME_TAX"],
-  ["osd", "INCOME_TAX"], ["compensation income", "INCOME_TAX"],
-  ["passive income tax", "INCOME_TAX"], ["capital gains tax", "INCOME_TAX"],
-  ["cgt", "INCOME_TAX"], ["transfer pricing", "INCOME_TAX"],
+  // Income Tax — exact and typo aliases
+  ["income tax",                "INCOME_TAX"],
+  ["income taxation",           "INCOME_TAX"],
+  ["incame tax",                "INCOME_TAX"],  // typo
+  ["incom tax",                 "INCOME_TAX"],  // typo
+  ["income",                    "INCOME_TAX"],
+  ["corporate income tax",      "INCOME_TAX"],
+  ["individual income tax",     "INCOME_TAX"],
+  ["cit",                       "INCOME_TAX"],
+  ["iit",                       "INCOME_TAX"],
+  ["rcit",                      "INCOME_TAX"],
+  ["mcit",                      "INCOME_TAX"],
+  ["nolco",                     "INCOME_TAX"],
+  ["individual tax",            "INCOME_TAX"],
+  ["corporate tax",             "INCOME_TAX"],
+  ["fringe benefit",            "INCOME_TAX"],
+  ["osd",                       "INCOME_TAX"],
+  ["compensation income",       "INCOME_TAX"],
+  ["passive income tax",        "INCOME_TAX"],
+  ["capital gains tax",         "INCOME_TAX"],
+  ["cgt",                       "INCOME_TAX"],
+  ["transfer pricing",          "INCOME_TAX"],
 
-  // Withholding Tax aliases
-  ["withholding tax", "WITHHOLDING_TAX"], ["withholding", "WITHHOLDING_TAX"],
-  ["ewt", "WITHHOLDING_TAX"], ["cwt", "WITHHOLDING_TAX"], ["fwt", "WITHHOLDING_TAX"],
-  ["expanded withholding", "WITHHOLDING_TAX"], ["final withholding", "WITHHOLDING_TAX"],
-  ["creditable withholding", "WITHHOLDING_TAX"], ["final tax", "WITHHOLDING_TAX"],
-  ["fringe benefit tax", "WITHHOLDING_TAX"], ["fbt", "WITHHOLDING_TAX"],
-  ["withholding agent", "WITHHOLDING_TAX"], ["government withholding", "WITHHOLDING_TAX"],
-  ["2307", "WITHHOLDING_TAX"], ["2306", "WITHHOLDING_TAX"],
+  // Withholding Tax — exact and typo aliases
+  ["withholding tax",               "WITHHOLDING_TAX"],
+  ["withholding",                   "WITHHOLDING_TAX"],
+  ["witholding tax",                "WITHHOLDING_TAX"],  // typo (one h)
+  ["witholding",                    "WITHHOLDING_TAX"],  // typo
+  ["expanded withholding tax",      "WITHHOLDING_TAX"],
+  ["creditable withholding tax",    "WITHHOLDING_TAX"],
+  ["final withholding tax",         "WITHHOLDING_TAX"],
+  ["compensation withholding tax",  "WITHHOLDING_TAX"],
+  ["expanded withholding",          "WITHHOLDING_TAX"],
+  ["final withholding",             "WITHHOLDING_TAX"],
+  ["creditable withholding",        "WITHHOLDING_TAX"],
+  ["wht",                           "WITHHOLDING_TAX"],
+  ["ewt",                           "WITHHOLDING_TAX"],
+  ["cwt",                           "WITHHOLDING_TAX"],
+  ["fwt",                           "WITHHOLDING_TAX"],
+  ["final tax",                     "WITHHOLDING_TAX"],
+  ["fringe benefit tax",            "WITHHOLDING_TAX"],
+  ["fbt",                           "WITHHOLDING_TAX"],
+  ["withholding agent",             "WITHHOLDING_TAX"],
+  ["government withholding",        "WITHHOLDING_TAX"],
+  ["2307",                          "WITHHOLDING_TAX"],
+  ["2306",                          "WITHHOLDING_TAX"],
 
-  // Estate Tax aliases
-  ["estate tax", "ESTATE_TAX"], ["estate taxation", "ESTATE_TAX"],
-  ["gross estate", "ESTATE_TAX"], ["estate deduction", "ESTATE_TAX"],
-  ["estate amnesty", "ESTATE_TAX"], ["conjugal", "ESTATE_TAX"],
-  ["acp", "ESTATE_TAX"], ["cpg", "ESTATE_TAX"],
-  ["succession", "ESTATE_TAX"], ["inheritance", "ESTATE_TAX"],
+  // Estate Tax — exact and typo aliases
+  ["estate tax",       "ESTATE_TAX"],
+  ["estate taxation",  "ESTATE_TAX"],
+  ["estat tax",        "ESTATE_TAX"],  // typo
+  ["estte tax",        "ESTATE_TAX"],  // typo
+  ["estate",           "ESTATE_TAX"],
+  ["gross estate",     "ESTATE_TAX"],
+  ["estate deduction", "ESTATE_TAX"],
+  ["estate amnesty",   "ESTATE_TAX"],
+  ["conjugal",         "ESTATE_TAX"],
+  ["acp",              "ESTATE_TAX"],
+  ["cpg",              "ESTATE_TAX"],
+  ["succession",       "ESTATE_TAX"],
+  ["inheritance",      "ESTATE_TAX"],
 
-  // Donor's Tax aliases
-  ["donor's tax", "DONORS_TAX"], ["donors tax", "DONORS_TAX"],
-  ["donation tax", "DONORS_TAX"], ["gift tax", "DONORS_TAX"],
-  ["donor tax", "DONORS_TAX"], ["exempt donation", "DONORS_TAX"],
-  ["donation", "DONORS_TAX"], ["donor", "DONORS_TAX"],
+  // Donor's Tax — exact and typo aliases (apostrophe stripped by normalizeInput)
+  ["donors tax",     "DONORS_TAX"],
+  ["donors tax",     "DONORS_TAX"],
+  ["donor tax",      "DONORS_TAX"],
+  ["donrs tax",      "DONORS_TAX"],  // typo
+  ["donr tax",       "DONORS_TAX"],  // typo
+  ["donation tax",   "DONORS_TAX"],
+  ["gift tax",       "DONORS_TAX"],
+  ["exempt donation","DONORS_TAX"],
+  ["donation",       "DONORS_TAX"],
+  ["donor",          "DONORS_TAX"],
 
-  // Percentage Tax aliases
-  ["percentage tax", "PERCENTAGE_TAX"], ["section 116", "PERCENTAGE_TAX"],
-  ["sec 116", "PERCENTAGE_TAX"], ["8% option", "PERCENTAGE_TAX"],
-  ["8 percent option", "PERCENTAGE_TAX"], ["common carrier", "PERCENTAGE_TAX"],
-  ["franchise tax", "PERCENTAGE_TAX"], ["overseas dispatch", "PERCENTAGE_TAX"],
-  ["stt", "PERCENTAGE_TAX"], ["stock transaction tax", "PERCENTAGE_TAX"],
-  ["banks percentage", "PERCENTAGE_TAX"], ["ipt", "PERCENTAGE_TAX"],
+  // Percentage Tax — exact and alias variants
+  ["percentage tax",    "PERCENTAGE_TAX"],
+  ["percent tax",       "PERCENTAGE_TAX"],  // alias
+  ["perc tax",          "PERCENTAGE_TAX"],  // alias
+  ["pct tax",           "PERCENTAGE_TAX"],  // alias
+  ["percentage",        "PERCENTAGE_TAX"],
+  ["3 percent tax",     "PERCENTAGE_TAX"],
+  ["section 116",       "PERCENTAGE_TAX"],
+  ["sec 116",           "PERCENTAGE_TAX"],
+  ["8 percent option",  "PERCENTAGE_TAX"],
+  ["common carrier",    "PERCENTAGE_TAX"],
+  ["franchise tax",     "PERCENTAGE_TAX"],
+  ["overseas dispatch", "PERCENTAGE_TAX"],
+  ["stt",               "PERCENTAGE_TAX"],
+  ["stock transaction tax", "PERCENTAGE_TAX"],
+  ["banks percentage",  "PERCENTAGE_TAX"],
+  ["ipt",               "PERCENTAGE_TAX"],
 
-  // Excise Tax aliases
-  ["excise tax", "EXCISE_TAX"], ["sin tax", "EXCISE_TAX"],
-  ["tobacco tax", "EXCISE_TAX"], ["alcohol tax", "EXCISE_TAX"],
-  ["petroleum tax", "EXCISE_TAX"], ["automobile excise", "EXCISE_TAX"],
-  ["sweetened beverages", "EXCISE_TAX"], ["mineral products", "EXCISE_TAX"],
-  ["cosmetic procedure", "EXCISE_TAX"], ["excise", "EXCISE_TAX"],
+  // Excise Tax — exact and typo aliases
+  ["excise tax",        "EXCISE_TAX"],
+  ["excse tax",         "EXCISE_TAX"],  // typo
+  ["exise tax",         "EXCISE_TAX"],  // typo
+  ["excise",            "EXCISE_TAX"],
+  ["excise duty",       "EXCISE_TAX"],
+  ["sin tax",           "EXCISE_TAX"],
+  ["tobacco tax",       "EXCISE_TAX"],
+  ["alcohol tax",       "EXCISE_TAX"],
+  ["petroleum tax",     "EXCISE_TAX"],
+  ["automobile excise", "EXCISE_TAX"],
+  ["sweetened beverages","EXCISE_TAX"],
+  ["mineral products",  "EXCISE_TAX"],
+  ["cosmetic procedure","EXCISE_TAX"],
 
-  // Prescription aliases
-  ["prescription", "PRESCRIPTION"], ["assessment prescription", "PRESCRIPTION"],
-  ["prescription and assessment", "PRESCRIPTION"], ["prescriptive period", "PRESCRIPTION"],
-  ["3-year prescription", "PRESCRIPTION"], ["10-year prescription", "PRESCRIPTION"],
-  ["waiver", "PRESCRIPTION"], ["loa", "PRESCRIPTION"],
-  ["letter of authority", "PRESCRIPTION"], ["pan", "PRESCRIPTION"],
-  ["pre-assessment notice", "PRESCRIPTION"], ["fan", "PRESCRIPTION"],
-  ["fdda", "PRESCRIPTION"], ["metro star", "PRESCRIPTION"],
-  ["jeopardy assessment", "PRESCRIPTION"], ["amended return prescription", "PRESCRIPTION"],
-  ["tolling", "PRESCRIPTION"],
+  // Prescription — exact and typo aliases
+  ["prescription",                "PRESCRIPTION"],
+  ["prescrption",                 "PRESCRIPTION"],  // typo
+  ["prescriptikons",              "PRESCRIPTION"],  // typo
+  ["presciption",                 "PRESCRIPTION"],  // typo
+  ["prescriptive period",         "PRESCRIPTION"],
+  ["prescriptive periods",        "PRESCRIPTION"],
+  ["prescription period",         "PRESCRIPTION"],
+  ["assessment period",           "PRESCRIPTION"],
+  ["collection period",           "PRESCRIPTION"],
+  ["statute of limitations",      "PRESCRIPTION"],
+  ["assessment prescription",     "PRESCRIPTION"],
+  ["prescription and assessment", "PRESCRIPTION"],
+  ["3 year prescription",         "PRESCRIPTION"],
+  ["10 year prescription",        "PRESCRIPTION"],
+  ["waiver",                      "PRESCRIPTION"],
+  ["metro star",                  "PRESCRIPTION"],
+  ["jeopardy assessment",         "PRESCRIPTION"],
+  ["amended return prescription", "PRESCRIPTION"],
+  ["tolling",                     "PRESCRIPTION"],
 
-  // Tax Dispute aliases
-  ["tax dispute", "TAX_DISPUTE"], ["tax remedies", "TAX_DISPUTE"],
-  ["tax litigation", "TAX_DISPUTE"], ["protest", "TAX_DISPUTE"],
-  ["reconsideration", "TAX_DISPUTE"], ["reinvestigation", "TAX_DISPUTE"],
-  ["cta", "TAX_DISPUTE"], ["court of tax appeals", "TAX_DISPUTE"],
-  ["compromise", "TAX_DISPUTE"], ["abatement", "TAX_DISPUTE"],
-  ["tax amnesty", "TAX_DISPUTE"], ["refund claim", "TAX_DISPUTE"],
-  ["injunction", "TAX_DISPUTE"], ["criminal tax", "TAX_DISPUTE"],
-  ["inaction", "TAX_DISPUTE"], ["appeal tax", "TAX_DISPUTE"]
+  // Tax Dispute — includes loa/pan/fan/fdda moved from Prescription
+  // (those are Prescription subtopics but as domain selectors they mean Tax Dispute)
+  ["tax dispute",            "TAX_DISPUTE"],
+  ["tax remedies",           "TAX_DISPUTE"],
+  ["tax litigation",         "TAX_DISPUTE"],
+  ["protest",                "TAX_DISPUTE"],
+  ["tax protest",            "TAX_DISPUTE"],
+  ["assessment protest",     "TAX_DISPUTE"],
+  ["deficiency assessment",  "TAX_DISPUTE"],
+  ["reconsideration",        "TAX_DISPUTE"],
+  ["reinvestigation",        "TAX_DISPUTE"],
+  ["cta",                    "TAX_DISPUTE"],
+  ["court of tax appeals",   "TAX_DISPUTE"],
+  ["compromise",             "TAX_DISPUTE"],
+  ["abatement",              "TAX_DISPUTE"],
+  ["tax amnesty",            "TAX_DISPUTE"],
+  ["refund claim",           "TAX_DISPUTE"],
+  ["injunction",             "TAX_DISPUTE"],
+  ["criminal tax",           "TAX_DISPUTE"],
+  ["inaction",               "TAX_DISPUTE"],
+  ["appeal",                 "TAX_DISPUTE"],
+  ["appeal tax",             "TAX_DISPUTE"],
+  ["loa",                    "TAX_DISPUTE"],
+  ["letter of authority",    "TAX_DISPUTE"],
+  ["pan",                    "TAX_DISPUTE"],
+  ["pre assessment notice",  "TAX_DISPUTE"],
+  ["fan",                    "TAX_DISPUTE"],
+  ["fdda",                   "TAX_DISPUTE"],
+  ["flad",                   "TAX_DISPUTE"]
 ]);
 
-export function normalizeTaxDomain(text = "") {
-  if (!text) return null;
+// ─── hard guards ─────────────────────────────────────────────────────────────
+// Applied after alias matching fails. Disambiguates look-alike pairs:
+// prescription vs percentage, estate vs excise.
+// Checked in order — first match wins.
 
-  const lower = String(text).toLowerCase().trim().replace(/\s+/g, " ");
+const HARD_GUARDS = [
+  // prescription/prescriptive must win over percentage
+  { pattern: /\bprescript/i,                                           domainKey: "PRESCRIPTION"    },
+  // percent/perc/pct must win over prescription
+  { pattern: /\bperc(?:ent(?:age)?)?\b|\bpct\b/i,                    domainKey: "PERCENTAGE_TAX"  },
+  // estate/estat/estte must win over excise
+  { pattern: /\bestat(?:e)?\b/i,                                       domainKey: "ESTATE_TAX"      },
+  // excise/excse must win over estate
+  { pattern: /\bexci?s/i,                                              domainKey: "EXCISE_TAX"      },
+  // donor variants
+  { pattern: /\bdonr?s?\b|\bdonation\b|\bgift\s+tax\b/i,              domainKey: "DONORS_TAX"      },
+  // income typos and short codes
+  { pattern: /\binc[ao]?m[e]?\b|\brcit\b|\bmcit\b/i,                 domainKey: "INCOME_TAX"      },
+  // withholding and abbreviations
+  { pattern: /\bwith?h?olding\b|\bwht\b|\bewt\b|\bcwt\b|\bfwt\b/i,   domainKey: "WITHHOLDING_TAX" },
+  // dispute/protest/appeal/loa/pan/fan
+  { pattern: /\bloa\b|\bpan\b|\bfan\b|\bflad\b|\bprotest\b|\bappeal\b|\bdispute\b/i, domainKey: "TAX_DISPUTE" }
+];
 
-  // Direct key match first
-  const upperKey = lower.toUpperCase().replace(/\s+/g, "_").replace(/-/g, "_");
-  if (DOMAINS[upperKey]) return upperKey;
+// ─── fuzzy matching settings ─────────────────────────────────────────────────
 
-  // Exact alias match
-  if (DOMAIN_ALIAS_MAP.has(lower)) return DOMAIN_ALIAS_MAP.get(lower);
+const FUZZY_THRESHOLD = 0.62;
+const SIM_WEIGHT      = 0.65;
+const TOKEN_WEIGHT    = 0.35;
 
-  // Partial match — scan alias map for contained token
-  for (const [alias, domain] of DOMAIN_ALIAS_MAP.entries()) {
-    if (lower.includes(alias) || alias.includes(lower)) return domain;
+// ─── resolveTaxDomain ────────────────────────────────────────────────────────
+
+export function resolveTaxDomain(input = "") {
+  const originalInput = String(input || "").trim();
+  const normalizedInput = normalizeInput(originalInput);
+
+  if (!normalizedInput) {
+    return { ok: false, canonicalDomain: null, domainKey: null, confidence: 0, matchType: "none", originalInput, normalizedInput, reason: "empty input" };
   }
 
-  return null;
+  // 1. Direct domain key match (e.g. "VAT", "INCOME_TAX", "income_tax")
+  const upperKey = normalizedInput.toUpperCase().replace(/\s+/g, "_");
+  if (DOMAINS[upperKey]) {
+    return { ok: true, canonicalDomain: DOMAINS[upperKey].label, domainKey: upperKey, confidence: 1.0, matchType: "exact", originalInput, normalizedInput };
+  }
+
+  // 2a. Exact alias match on normalizedInput (apostrophes/punctuation stripped)
+  if (DOMAIN_ALIAS_MAP.has(normalizedInput)) {
+    const domainKey = DOMAIN_ALIAS_MAP.get(normalizedInput);
+    return { ok: true, canonicalDomain: DOMAINS[domainKey].label, domainKey, confidence: 1.0, matchType: "alias", originalInput, normalizedInput };
+  }
+
+  // 2b. Exact alias match on raw lowercase (catches hyphenated keys like "pre-assessment notice")
+  const lowerRaw = originalInput.toLowerCase().replace(/\s+/g, " ").trim();
+  if (DOMAIN_ALIAS_MAP.has(lowerRaw)) {
+    const domainKey = DOMAIN_ALIAS_MAP.get(lowerRaw);
+    return { ok: true, canonicalDomain: DOMAINS[domainKey].label, domainKey, confidence: 1.0, matchType: "alias", originalInput, normalizedInput };
+  }
+
+  // 3. Hard guards — pattern-based disambiguation for ambiguous pairs
+  for (const guard of HARD_GUARDS) {
+    if (guard.pattern.test(normalizedInput)) {
+      const { domainKey } = guard;
+      return { ok: true, canonicalDomain: DOMAINS[domainKey].label, domainKey, confidence: 0.90, matchType: "alias", originalInput, normalizedInput, reason: "hard guard" };
+    }
+  }
+
+  // 4. Fuzzy matching — Levenshtein + token overlap scored across all aliases
+  const inputTokens = normalizedInput.split(" ").filter(t => t.length > 1);
+  let bestDomainKey = null;
+  let bestScore = 0;
+
+  for (const [domainKey, domain] of Object.entries(DOMAINS)) {
+    let bestAliasSim = stringSimilarity(normalizedInput, normalizeInput(domain.label));
+
+    const fullLabelSim = stringSimilarity(normalizedInput, normalizeInput(domain.fullLabel));
+    if (fullLabelSim > bestAliasSim) bestAliasSim = fullLabelSim;
+
+    for (const [alias, dk] of DOMAIN_ALIAS_MAP.entries()) {
+      if (dk !== domainKey) continue;
+      const sim = stringSimilarity(normalizedInput, alias);
+      if (sim > bestAliasSim) bestAliasSim = sim;
+    }
+
+    const labelTokens = normalizeInput(domain.label).split(" ").filter(t => t.length > 1);
+    const tokOverlap  = tokenOverlap(inputTokens, labelTokens);
+    const combined    = SIM_WEIGHT * bestAliasSim + TOKEN_WEIGHT * tokOverlap;
+
+    if (combined > bestScore) {
+      bestScore = combined;
+      bestDomainKey = domainKey;
+    }
+  }
+
+  if (bestDomainKey && bestScore >= FUZZY_THRESHOLD) {
+    return {
+      ok: true,
+      canonicalDomain: DOMAINS[bestDomainKey].label,
+      domainKey: bestDomainKey,
+      confidence: Math.round(bestScore * 100) / 100,
+      matchType: "fuzzy",
+      originalInput,
+      normalizedInput
+    };
+  }
+
+  return {
+    ok: false,
+    canonicalDomain: null,
+    domainKey: null,
+    confidence: Math.round(bestScore * 100) / 100,
+    matchType: "none",
+    originalInput,
+    normalizedInput,
+    reason: `best fuzzy confidence ${bestScore.toFixed(2)} below threshold ${FUZZY_THRESHOLD}`
+  };
 }
+
+// ─── backward-compatible wrapper ────────────────────────────────────────────
+
+export function normalizeTaxDomain(text = "") {
+  const result = resolveTaxDomain(text);
+  return result.ok ? result.domainKey : null;
+}
+
+// ─── existing exports (unchanged) ───────────────────────────────────────────
 
 export function getDomainConfig(domainKey = "") {
   return DOMAINS[String(domainKey).toUpperCase()] || null;
@@ -353,10 +606,9 @@ export function getDomainAuthorities(domainKey = "") {
 }
 
 export function buildDomainMenuText(hookCode = "/quiz") {
-  const cmd = hookCode === "/review" ? "/review" : "/quiz";
-  const action = hookCode === "/review" ? "review" : "quiz";
-
-  const lines = [
+  const cmd    = hookCode === "/review" ? "/review" : "/quiz";
+  const action = hookCode === "/review" ? "review"  : "quiz";
+  return [
     `Choose a Philippine tax domain to ${action}:`,
     "",
     `${cmd} VAT`,
@@ -370,9 +622,35 @@ export function buildDomainMenuText(hookCode = "/quiz") {
     `${cmd} Tax Dispute`,
     "",
     `Example: **${cmd} VAT** or **${cmd} Income Tax**`
+  ].join("\n");
+}
+
+// ─── test runner (call explicitly; not invoked at module load) ───────────────
+
+export function runDomainResolverTests() {
+  const cases = [
+    ["VAT",              "VAT",             "VAT"],
+    ["value added tax",  "VAT",             "VAT"],
+    ["incame tax",       "Income Tax",      "INCOME_TAX"],
+    ["witholding tax",   "Withholding Tax", "WITHHOLDING_TAX"],
+    ["estat tax",        "Estate Tax",      "ESTATE_TAX"],
+    ["donrs tax",        "Donor's Tax",     "DONORS_TAX"],
+    ["percent tax",      "Percentage Tax",  "PERCENTAGE_TAX"],
+    ["excse tax",        "Excise Tax",      "EXCISE_TAX"],
+    ["prescriptikons",   "Prescription",    "PRESCRIPTION"],
+    ["loa",              "Tax Dispute",     "TAX_DISPUTE"],
+    ["pan",              "Tax Dispute",     "TAX_DISPUTE"],
+    ["fan",              "Tax Dispute",     "TAX_DISPUTE"]
   ];
 
-  return lines.join("\n");
+  const results = cases.map(([input, expectedLabel, expectedKey]) => {
+    const r    = resolveTaxDomain(input);
+    const pass = r.domainKey === expectedKey;
+    return { input, expectedLabel, expectedKey, actual: r.canonicalDomain, domainKey: r.domainKey, matchType: r.matchType, confidence: r.confidence, pass };
+  });
+
+  const passed = results.filter(r => r.pass).length;
+  return { passed, total: cases.length, allPass: passed === cases.length, results };
 }
 
 export function domainNormalizerHealthCheck() {
@@ -381,6 +659,9 @@ export function domainNormalizerHealthCheck() {
     engine: "TINA_DOMAIN_NORMALIZER",
     version: ENGINE_VERSION,
     domainCount: Object.keys(DOMAINS).length,
-    aliasCount: DOMAIN_ALIAS_MAP.size
+    aliasCount: DOMAIN_ALIAS_MAP.size,
+    hardGuardCount: HARD_GUARDS.length,
+    fuzzyEnabled: true,
+    fuzzyThreshold: FUZZY_THRESHOLD
   };
 }

@@ -30,6 +30,7 @@ import {
 import { finalizeSourcesForResponse, extractQuizAnswer } from "../ask-helpers.js";
 import {
   normalizeTaxDomain,
+  resolveTaxDomain,
   buildDomainMenuText,
   getDomainConfig,
   getDomainSubtopics
@@ -153,11 +154,21 @@ export function parseLearningCommand(rawQuestion = "", hookCode = "") {
 
   // Strip the hook from the front if present
   const stripped = text.replace(/^\/(quiz|review)\s*/i, "").trim();
-
-  const domain = stripped ? normalizeTaxDomain(stripped) : null;
   const mode = hook === "/review" ? "REVIEW" : "QUIZ";
 
-  return { isLearningCommand: true, domain, domainText: stripped, mode };
+  if (!stripped) {
+    return { isLearningCommand: true, domain: null, domainText: null, mode };
+  }
+
+  const resolution = resolveTaxDomain(stripped);
+
+  return {
+    isLearningCommand: true,
+    domain: resolution.ok ? resolution.domainKey : null,
+    domainText: stripped,
+    mode,
+    resolution
+  };
 }
 
 // ─── factory ─────────────────────────────────────────────────────────────────
