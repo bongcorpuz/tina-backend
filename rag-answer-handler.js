@@ -1630,6 +1630,7 @@ function applyFinalGateAndRender({
       success: true,
       answer: cleanAnswer,
       sources: sources.slice(0, 5),
+      sourceCards: sources.slice(0, 5),
       metadata: {
         ...metadata,
         authorityPacket,

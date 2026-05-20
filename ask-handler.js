@@ -46,6 +46,7 @@ import { storeFeedbackEntry } from "./feedback-learning.js";
 
 import { extractQuizAnswer } from "./ask-helpers.js";
 import { createAssessmentHandler } from "./assessment-handler.js";
+import { createLearningHandler, parseLearningCommand } from "./learning/session-engine.js";
 // generateRagAnswer removed — Law 1: all pipeline logic lives in pipeline.js
 
 import {
@@ -1519,6 +1520,13 @@ export function createAskHandler({
     openaiModel
   });
 
+  const learningHandler = createLearningHandler({
+    supabase,
+    openai,
+    contextOrchestration: resolvedContextOrchestration,
+    openaiModel
+  });
+
   async function saveConversationTurn({
     conversationId,
     userId,
@@ -1972,44 +1980,54 @@ export function createAskHandler({
           !isReviewRoutedHook(compactHookConfig.hook_code)
         )
       ) {
-        // /quiz or /review with no topic — prompt for a topic immediately
-        const rawClean = (compactHookConfig.cleanQuestion || "").trim();
-        const isNoTopic =
-          !rawClean ||
-          rawClean === "/quiz" ||
-          rawClean === "/review" ||
-          rawClean === "/diagnostic";
+        // /quiz and /review → learning system (domain-normalizer + session-engine)
+        // /diagnostic → assessment handler (legacy adaptive quiz)
+        const isLearningHook =
+          compactHookConfig.hook_code === "/quiz" ||
+          compactHookConfig.hook_code === "/review";
 
-        if (compactHookConfig.hook_code === "/quiz" && isNoTopic) {
-          return res.json({
-            success: true,
-            engine: "TINA Ask Handler",
-            version: ENGINE_VERSION,
-            hook: "/quiz",
-            mode: "QUIZ_MASTER",
-            answer:
-              "What topic would you like to be quizzed on?\n\nExamples:\n/quiz VAT\n/quiz income tax\n/quiz withholding tax\n/quiz estate tax\n/quiz local taxes",
-            sources: [],
-            sourcesUsed: [],
-            vectorMatches: 0
-          });
+        if (isLearningHook) {
+          let learningResult;
+          try {
+            learningResult = await learningHandler.handleLearningCommand({
+              userId,
+              conversationId,
+              hookConfig: compactHookConfig,
+              cleanQuestion: compactHookConfig.cleanQuestion,
+              originalQuestion: compactHookConfig.originalQuestion
+            });
+          } catch (learningError) {
+            console.error("Learning handler error:", learningError.message);
+            return res.json({
+              success: false,
+              engine: "TINA Learning System",
+              hook: compactHookConfig.hook_code,
+              mode: compactHookConfig.mode,
+              answer: "TINA encountered an error in the learning system. Please try again.",
+              sources: [],
+              sourcesUsed: [],
+              vectorMatches: 0,
+              error: learningError.message
+            });
+          }
+
+          if (!learningResult || !learningResult.handled || !learningResult.response) {
+            return res.json({
+              success: false,
+              engine: "TINA Learning System",
+              hook: compactHookConfig.hook_code,
+              mode: compactHookConfig.mode,
+              answer: "TINA could not handle this learning command. Please try again.",
+              sources: [],
+              sourcesUsed: [],
+              vectorMatches: 0
+            });
+          }
+
+          return res.json(learningResult.response);
         }
 
-        if (compactHookConfig.hook_code === "/review" && isNoTopic) {
-          return res.json({
-            success: true,
-            engine: "TINA Ask Handler",
-            version: ENGINE_VERSION,
-            hook: "/review",
-            mode: "TAX_REVIEWER",
-            answer:
-              "What topic would you like me to review with you?\n\nExamples:\n/review VAT\n/review income tax\n/review withholding tax\n/review estate tax\n/review local taxes",
-            sources: [],
-            sourcesUsed: [],
-            vectorMatches: 0
-          });
-        }
-
+        // /diagnostic → existing assessment handler
         let result;
         try {
           result = await assessmentHandler.handleAssessmentCommand({

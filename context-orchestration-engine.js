@@ -1875,7 +1875,7 @@ D. PRACTICAL NOTE
 Section rules:
 - A. DIRECT ANSWER: State the statutory definition concisely in two to four sentences. Lead with the specific NIRC provision (e.g., "Under Section 105, NIRC..."). No case citations in this section.
 - B. CONTROLLING LEGAL BASIS: Cite only the primary statute. One to three sentences. State what the statute provides, not what cases say about it.
-- C. ADMINISTRATIVE ISSUANCE: Cite the key implementing regulation (RR or RMC) that operationalizes the provision. One to two sentences. Label with "(Framework knowledge — pending index verification)" if not found in retrieved sources.
+- C. ADMINISTRATIVE ISSUANCE: Cite the key implementing regulation (RR or RMC) that operationalizes the provision. One to two sentences. If the specific regulation is not in the retrieved sources, state it from your training knowledge — DO NOT label with "(Framework knowledge — pending index verification)" when any retrieved sources were provided to this prompt. Reserve that label only for answers where the retrieved sources block above was empty.
 - D. PRACTICAL NOTE: State one practical compliance implication directly derived from the definition. No conflict analysis. No jurisprudential survey.
 
 ABSOLUTE PROHIBITIONS for FAST_DEFINITION:

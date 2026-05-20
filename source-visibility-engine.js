@@ -1120,6 +1120,16 @@ function toVisibleSourceEntry(doc = {}, issueClassification = null) {
     courtAuthorityNotSubordinatedToBIRIssuances: true,
     rawFullTextHidden: true,
 
+    excerpt: String(
+      doc.text ||
+        doc.content ||
+        doc.excerpt ||
+        doc.preview ||
+        doc.chunkText ||
+        doc.chunk_text ||
+        ""
+    ).slice(0, 600),
+
     score:
       Number(
         doc.finalScore ||
@@ -1364,6 +1374,7 @@ export function buildFinalRoutePayload({
   return {
     answer,
     sources,
+    sourceCards: sources,
     authority_used: inferAuthorityUsed(resolvedLegalBasisDocs, sources),
     confidence_level: inferConfidenceLevel({
       legalBasisDocs: resolvedLegalBasisDocs,

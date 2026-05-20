@@ -922,6 +922,7 @@ function renderTinaJsonPayload({
     success: true,
     answer: renderedAnswer,
     sources: sortedSources,
+    sourceCards: sortedSources,
     metadata: {
       ...metadata,
       renderer: "answer-renderer.js",

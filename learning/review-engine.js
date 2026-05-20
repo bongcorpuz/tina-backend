@@ -1,0 +1,244 @@
+// FILE: learning/review-engine.js
+"use strict";
+
+import { getQuizSourceChunks } from "../vector-store.js";
+import { buildRetrievalHints } from "./question-bank-router.js";
+import { getSubtopicLabel, getDomainAuthorities } from "./domain-normalizer.js";
+
+const ENGINE_VERSION = "1.0.0";
+
+function safeArray(value) {
+  if (!value) return [];
+  return Array.isArray(value) ? value.filter(Boolean) : [];
+}
+
+function normalizeText(value = "") {
+  return String(value || "").replace(/\s+/g, " ").trim();
+}
+
+function trimText(value = "", max = 1400) {
+  const text = normalizeText(value);
+  return text.length <= max ? text : `${text.slice(0, max).trim()} ...[trimmed]`;
+}
+
+function compactSourceChunk(chunk = {}) {
+  return {
+    title:
+      chunk.title ||
+      chunk.sourceTitle ||
+      chunk.document_title ||
+      chunk.metadata?.documentTitle ||
+      chunk.metadata?.originalFileName ||
+      chunk.originalSource ||
+      chunk.original_source ||
+      chunk.source ||
+      "Source",
+
+    authorityType:
+      chunk.authorityType || chunk.authority_type || chunk.metadata?.authorityType || "UNKNOWN",
+
+    citation:
+      chunk.citation ||
+      chunk.reference ||
+      chunk.normalizedReference ||
+      chunk.normalized_reference ||
+      chunk.metadata?.normalizedReference ||
+      "",
+
+    url:
+      chunk.url || chunk.driveViewUrl || chunk.drive_view_url || chunk.metadata?.driveViewUrl || "",
+
+    text: trimText(
+      chunk.text || chunk.content || chunk.excerpt || chunk.preview || "", 1400
+    ),
+
+    score:
+      Number(chunk.finalScore || chunk.final_score || chunk.retrievalScore || chunk.score || chunk.similarity || 0) || 0
+  };
+}
+
+function buildReviewPrompt({ domain, subtopic, subtopicLabel, sourceChunks, authorities }) {
+  const sourceContext = safeArray(sourceChunks)
+    .map((chunk, i) => {
+      const text = String(chunk.text || chunk.content || "").slice(0, 2500);
+      return `SOURCE ${i + 1}\nTitle: ${chunk.title || "Untitled"}\nAuthority: ${chunk.authorityType || "UNKNOWN"}\nCitation: ${chunk.citation || "N/A"}\nText:\n${text}`;
+    })
+    .join("\n\n---\n\n");
+
+  const authoritiesText = safeArray(authorities).join(", ");
+
+  if (!sourceContext) {
+    return `
+You are TINA, a professional Philippine Tax CPA Reviewer and CPALE coach.
+
+Create a comprehensive reviewer entry on: **${subtopicLabel}**
+
+Domain: ${domain}
+Subtopic: ${subtopic}
+Key Authorities: ${authoritiesText || "NIRC, RR, Supreme Court"}
+
+STRICT RULES:
+- Philippine taxation only. NIRC, RR, RMC, Supreme Court, CTA only.
+- Do not fabricate specific GR numbers, dates, or rates unless certain.
+- Follow the exact output format below.
+- Write at the level of a CPALE/BAR exam reviewer.
+- Include one mini MCQ at the end with correct answer indicated.
+- If no specific indexed source is available, state principles from training knowledge without fabricating citations.
+
+OUTPUT FORMAT (use exactly these section headers):
+
+Topic:
+${subtopicLabel}
+
+Core Concept:
+[2-4 sentence explanation of the core rule or principle]
+
+Legal Basis:
+[Cite the primary NIRC section, RR, RMC, or Supreme Court case — only cite authorities you are certain of]
+
+Doctrine:
+[Key doctrinal rule or leading case with citation — if uncertain of GR number, state the case name and principle without fabricating the number]
+
+Practical Example:
+[One concrete, exam-style fact pattern showing the rule in action]
+
+CPA Tip:
+[One exam strategy or common trap for this subtopic]
+
+Mini Question:
+[One MCQ with 4 choices: A, B, C, D — indicate the correct answer and a one-sentence explanation]
+`.trim();
+  }
+
+  return `
+You are TINA, a professional Philippine Tax CPA Reviewer and CPALE coach.
+
+Create a comprehensive reviewer entry on: **${subtopicLabel}**
+
+Domain: ${domain}
+Subtopic: ${subtopic}
+
+SOURCE CONTEXT (use this as primary authority):
+${sourceContext}
+
+STRICT RULES:
+- Base your answer primarily on SOURCE CONTEXT.
+- Do not fabricate legal bases, rates, or citations not found in SOURCE CONTEXT.
+- Philippine taxation only.
+- Follow the exact output format below.
+- Write at the level of a CPALE/BAR exam reviewer.
+- Include one mini MCQ at the end grounded in SOURCE CONTEXT.
+
+OUTPUT FORMAT (use exactly these section headers):
+
+Topic:
+${subtopicLabel}
+
+Core Concept:
+[2-4 sentence explanation from SOURCE CONTEXT]
+
+Legal Basis:
+[Cite the primary NIRC section, RR, or case from SOURCE CONTEXT]
+
+Doctrine:
+[Key doctrinal rule from SOURCE CONTEXT]
+
+Practical Example:
+[One concrete, exam-style fact pattern based on SOURCE CONTEXT]
+
+CPA Tip:
+[One exam strategy or CPALE trap derived from SOURCE CONTEXT]
+
+Mini Question:
+[One MCQ with 4 choices: A, B, C, D — indicate the correct answer (e.g., "Correct Answer: B") and a one-sentence explanation grounded in SOURCE CONTEXT]
+`.trim();
+}
+
+export async function generateReviewMaterial({
+  domain,
+  subtopic,
+  sessionLearning = {},
+  callOpenAI,
+  supabase
+}) {
+  const subtopicLabel = getSubtopicLabel(domain, subtopic);
+  const authorities = getDomainAuthorities(domain);
+  const hints = buildRetrievalHints(domain, subtopic);
+
+  let sourceChunks = [];
+  try {
+    sourceChunks = await Promise.race([
+      getQuizSourceChunks({
+        topic: hints.primaryQuery,
+        excludeSourcePaths: [],
+        excludeChunkIds: [],
+        limit: 3
+      }),
+      new Promise((_, rej) => setTimeout(() => rej(new Error("source timeout")), 5000))
+    ]);
+  } catch (err) {
+    console.error("[REVIEW ENGINE] Source retrieval failed (training-knowledge fallback):", err?.message);
+    sourceChunks = [];
+  }
+
+  const compactSources = safeArray(sourceChunks).map(compactSourceChunk);
+
+  const reviewPrompt = buildReviewPrompt({
+    domain,
+    subtopic,
+    subtopicLabel,
+    sourceChunks: compactSources,
+    authorities
+  });
+
+  const rawReview = await callOpenAI({
+    userQuery: reviewPrompt,
+    systemPrompt: `
+You are TINA, a CPALE Philippine Tax Reviewer.
+Follow the required output format exactly. All section headers are mandatory.
+Philippine taxation only. Authority-grounded. No fabricated citations.
+Write at CPALE/BAR exam difficulty level.
+`.trim(),
+    masterPrompt: `Follow the output format exactly. All sections required.`,
+    retrievedSources: compactSources,
+    classification: {
+      primaryIssue: domain,
+      subIssue: subtopic,
+      retrievalStrategy: compactSources.length ? "SOURCE_GROUNDED_REVIEW" : "TRAINING_KNOWLEDGE_REVIEW",
+      targetAuthorities: hints.targetAuthorities
+    },
+    intent: {
+      intent: "GENERATE_REVIEW_MATERIAL",
+      requiresReviewMode: true,
+      reviewDomain: domain,
+      reviewSubtopic: subtopic
+    },
+    quizMode: false,
+    adaptiveContext: { activeHook: "/review", reviewMode: true, orchestrationMode: "REVIEWER" }
+  });
+
+  const sourceLines = compactSources.length
+    ? "\n\nSources Used:\n" +
+      compactSources
+        .map((s) => `• ${s.citation || s.title || "Indexed Authority"} [${s.authorityType}]`)
+        .join("\n")
+    : "";
+
+  return {
+    ok: Boolean(rawReview),
+    reviewText: (normalizeText(rawReview) + sourceLines).trim(),
+    sourceChunks: compactSources,
+    subtopicLabel
+  };
+}
+
+export function reviewEngineHealthCheck() {
+  return {
+    ok: true,
+    engine: "TINA_REVIEW_ENGINE",
+    version: ENGINE_VERSION,
+    sourceGrounded: true,
+    subtopicAware: true,
+    professionalFormat: true
+  };
+}
