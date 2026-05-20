@@ -746,6 +746,13 @@ function issueMismatch(queryIssues = [], docIssues = []) {
   ) return true;
 
   if (
+    queryIssues.includes(ISSUE_TYPE.VAT_DEFINITION) &&
+    (docIssues.includes(ISSUE_TYPE.VAT_REFUND) || docIssues.includes(ISSUE_TYPE.VAT_ZERO_RATING)) &&
+    !queryIssues.includes(ISSUE_TYPE.VAT_REFUND) &&
+    !queryIssues.includes(ISSUE_TYPE.VAT_ZERO_RATING)
+  ) return true;
+
+  if (
     queryIssues.includes(ISSUE_TYPE.WITHHOLDING) &&
     (docIssues.includes(ISSUE_TYPE.VAT_REFUND) || docIssues.includes(ISSUE_TYPE.VAT_LIABILITY)) &&
     !queryIssues.includes(ISSUE_TYPE.VAT_LIABILITY)
@@ -1029,6 +1036,17 @@ function weakCasePenalty(query = "", doc = {}, issueClassification = {}) {
     /\brefund\b|\bclaim for refund\b|\bunutilized input vat\b|\btcc\b/.test(text)
   ) {
     penalty += 100;
+  }
+
+  // VAT_DEFINITION: demote refund/zero-rating content and named contaminating cases
+  if (queryIssues.includes(ISSUE_TYPE.VAT_DEFINITION)) {
+    if (/\brefund\b|\bunutilized\b|\bexcess input\b|\bsec\.?\s*112\b|\b120\+30\b|\badministrative claim\b|\bjudicial claim\b/.test(text)) penalty += 140;
+    if (/\bzero[- ]rated\b|\bzero rating\b|\beffectively zero\b/.test(text) && !/(define|definition|what is|sale of goods|sale of services|course of trade)/i.test(text)) penalty += 90;
+    if (/\baichi\b/i.test(text)) penalty += 180;
+    if (/\bsan roque\b/i.test(text)) penalty += 180;
+    if (/\btoshiba\b/i.test(text)) penalty += 160;
+    if (/\bseagate\b/i.test(text)) penalty += 160;
+    if (/\bmirant\b/i.test(text)) penalty += 160;
   }
 
   if (

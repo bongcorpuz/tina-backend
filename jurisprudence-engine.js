@@ -89,6 +89,7 @@ const CASE_ROLE = Object.freeze({
 });
 
 const LOCAL_ISSUE = Object.freeze({
+  VAT_DEFINITION: ISSUE_TYPE?.VAT_DEFINITION || "VAT_DEFINITION",
   VAT_REFUND: ISSUE_TYPE?.VAT_REFUND || "VAT_REFUND",
   VAT_LIABILITY: ISSUE_TYPE?.VAT_LIABILITY || "VAT_LIABILITY",
   VAT_ZERO_RATING: ISSUE_TYPE?.VAT_ZERO_RATING || "VAT_ZERO_RATING",
@@ -295,6 +296,7 @@ function detectTaxIssueSignals(text = "") {
     if (condition) signals.push(issue);
   };
 
+  push(/\b(define vat|definition of vat|what is vat|what is value-added tax|nature of vat|meaning of vat)\b/i.test(value), LOCAL_ISSUE.VAT_DEFINITION);
   push(/\b(vat refund|input vat refund|tax credit certificate|tcc|120\+30|administrative claim|judicial claim|unutilized input vat|excess input vat|claim for refund)\b/i.test(value), LOCAL_ISSUE.VAT_REFUND);
   push(/\b(vat liability|output vat|subject to vat|vatable|gross receipts|sale of goods|sale of services|define vat|value-added tax|value added tax)\b/i.test(value), LOCAL_ISSUE.VAT_LIABILITY);
   push(/\b(zero-rated|zero rated|zero rating|export sales)\b/i.test(value), LOCAL_ISSUE.VAT_ZERO_RATING);
@@ -453,6 +455,13 @@ function hasIssueMismatch(issueProfile = {}, doc = {}) {
   const docIssues = detectTaxIssueSignals(docText(doc));
 
   if (
+    queryIssues.includes(LOCAL_ISSUE.VAT_DEFINITION) &&
+    (docIssues.includes(LOCAL_ISSUE.VAT_REFUND) || docIssues.includes(LOCAL_ISSUE.VAT_ZERO_RATING)) &&
+    !queryIssues.includes(LOCAL_ISSUE.VAT_REFUND) &&
+    !queryIssues.includes(LOCAL_ISSUE.VAT_ZERO_RATING)
+  ) return true;
+
+  if (
     queryIssues.includes(LOCAL_ISSUE.VAT_LIABILITY) &&
     docIssues.includes(LOCAL_ISSUE.VAT_REFUND) &&
     !queryIssues.includes(LOCAL_ISSUE.VAT_REFUND)
@@ -518,6 +527,16 @@ function classifyCaseRole({ issueProfile = {}, doc = {} } = {}) {
   const mismatch = hasIssueMismatch(issueProfile, doc);
 
   if (mismatch) return CASE_ROLE.EXCLUDED;
+
+  // Doctrinal category gate: VAT_DEFINITION must not include refund/zero-rating procedure cases
+  if (
+    issueProfile.primaryIssue === LOCAL_ISSUE.VAT_DEFINITION &&
+    docIssues.some((di) => [LOCAL_ISSUE.VAT_REFUND, LOCAL_ISSUE.VAT_ZERO_RATING].includes(di)) &&
+    !docIssues.includes(LOCAL_ISSUE.VAT_DEFINITION) &&
+    !docIssues.includes(LOCAL_ISSUE.VAT_LIABILITY)
+  ) {
+    return CASE_ROLE.EXCLUDED;
+  }
 
   if (
     ["SUPREME_COURT_EN_BANC", "SUPREME_COURT"].includes(authorityType) &&

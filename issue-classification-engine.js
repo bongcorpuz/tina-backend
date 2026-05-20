@@ -405,10 +405,10 @@ const DEFINITION_AUTHORITY_MAP = Object.freeze({
     primaryIssue: "VAT_LIABILITY",
     domainCode: "VAT",
     domainName: "Value-Added Tax",
-    targetAuthorities: ["NIRC Sec. 105", "NIRC Sec. 106", "NIRC Sec. 107", "NIRC Sec. 108", "RR 16-2005", "CIR v. Seagate Technology (GR No. 153866)"],
+    targetAuthorities: ["NIRC Sec. 105", "NIRC Sec. 106", "NIRC Sec. 107", "NIRC Sec. 108", "RR 16-2005"],
     controllingAuthorities: ["NIRC Sec. 105", "NIRC Sec. 106", "NIRC Sec. 107", "NIRC Sec. 108"],
     supportingAuthorities: ["RR 16-2005"],
-    supportingJurisprudence: ["CIR v. Seagate Technology (GR No. 153866)", "CIR v. Aichi Forging Company of Asia (GR No. 184823)"]
+    supportingJurisprudence: []
   },
 
   INCOME_TAX_DEFINITION: {
@@ -1208,6 +1208,18 @@ function buildExcludedAuthorities(primaryIssue, subIssue) {
     exclusions.push("VAT refund cases unless the issue involves Section 112 or input VAT refund");
   }
 
+  if (subIssue === "VAT_DEFINITION") {
+    exclusions.push(
+      "CIR v. Aichi Forging — refund / 120-day doctrine, not applicable to VAT definition",
+      "CIR v. San Roque Power — refund / 120+30 rule, not applicable to VAT definition",
+      "CIR v. Toshiba — zero-rating doctrine, not applicable to VAT definition",
+      "CIR v. Seagate Technology — zero-rating, not applicable to VAT definition",
+      "CIR v. Mirant — refund procedure, not applicable to VAT definition",
+      "NIRC Sec. 112 — VAT refund provision, not a definitional authority",
+      "All VAT refund jurisprudence and zero-rating procedure cases"
+    );
+  }
+
   if (!["PRE", "DIS", "CON", "ASSESSMENT", "PRESCRIPTION"].includes(primaryIssue)) {
     exclusions.push("procedural protest, CTA jurisdiction, or constitutional due process cases unless directly relevant");
   }
@@ -1597,6 +1609,8 @@ function classifyTaxIssue(question = "", queryIntent = {}) {
         !["PRE", "DIS", "ASSESSMENT", "PRESCRIPTION"].includes(primaryIssue),
       suppressVatRefundCasesUnlessRefundIssue:
         !(primaryIssue === "VAT_REFUND" || subIssue === "REFUND_CREDIT"),
+      suppressVatRefundJurisprudenceForDefinition:
+        subIssue === "VAT_DEFINITION",
       requirePrimaryAuthorityForDefinitions:
         finalQueryIntent === QUERY_INTENT.DEFINITION,
       requireFactDisclosureBeforeConclusion: flags.requiresFactPatternAnalysis,

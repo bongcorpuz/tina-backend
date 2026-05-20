@@ -1993,15 +1993,25 @@ function buildFinalCompliantAnswer({
     return returnObject ? result : result.answer;
   }
 
-  const finalMode = normalizeMode(
+  const explicitMode =
     mode ||
-      orchestrationMode ||
-      responseMode ||
-      contextMode ||
-      issueClassification?.responseMode ||
-      issueClassification?.orchestrationClassification?.mode ||
-      RESPONSE_MODE.DEFAULT_AF
-  );
+    orchestrationMode ||
+    responseMode ||
+    contextMode ||
+    issueClassification?.responseMode ||
+    issueClassification?.orchestrationClassification?.mode;
+
+  const subIssueGatedMode =
+    !explicitMode &&
+    (
+      issueClassification?.subIssue === "VAT_DEFINITION" ||
+      String(issueClassification?.retrievalStrategy || "").includes("FAST_DEFINITION") ||
+      String(issueClassification?.retrievalStrategy || "").includes("VAT_DEFINITION")
+    )
+      ? RESPONSE_MODE.FAST_DEFINITION
+      : null;
+
+  const finalMode = normalizeMode(explicitMode || subIssueGatedMode || RESPONSE_MODE.DEFAULT_AF);
 
   const bestConflict = pickBestConflict({
     conflicts,

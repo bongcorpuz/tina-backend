@@ -1989,6 +1989,16 @@ function normalizeExternalIssueClassification({
   };
 
   if (isVatDefinitionClassification(provisional, query)) {
+    const VAT_DEF_EXCLUDED_PATTERNS = [
+      "aichi", "san roque", "toshiba", "seagate", "mirant",
+      "unutilized input", "excess input", "120+30", "120 day", "30 day",
+      "claim for refund", "sec. 112", "section 112", "refund"
+    ];
+    const isExcludedForVatDef = (term) => {
+      const t = lower(term);
+      return VAT_DEF_EXCLUDED_PATTERNS.some((excluded) => t.includes(excluded));
+    };
+
     provisional.primaryIssue = "VAT_DEFINITION";
     provisional.domainCode = "VAT";
     provisional.subIssue = "VAT_DEFINITION";
@@ -2000,14 +2010,23 @@ function normalizeExternalIssueClassification({
       "NIRC Sec. 108",
       "RR 16-2005",
       ...provisional.authoritySearchTerms
-    ]);
+    ]).filter((term) => !isExcludedForVatDef(term));
     provisional.targetAuthorities = unique([
       "NIRC Sec. 105",
       "NIRC Sec. 106",
       "NIRC Sec. 108",
       "RR 16-2005",
       ...provisional.targetAuthorities
-    ]);
+    ]).filter((term) => !isExcludedForVatDef(term));
+    provisional.retrievalControls = {
+      ...(provisional.retrievalControls || {}),
+      suppressVatRefundCasesUnlessRefundIssue: true,
+      suppressVatRefundJurisprudenceForDefinition: true,
+      requirePrimaryAuthorityForDefinitions: true,
+      useIssueClassificationMatch: true,
+      useTargetAuthorityMatch: true,
+      useControllingPrecedence: true
+    };
   }
 
   return provisional;
