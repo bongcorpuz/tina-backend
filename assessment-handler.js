@@ -424,26 +424,60 @@ Quick Recall:
     requestedTopic,
     teachingText = ""
   }) {
-    const quizProfile = await getAdaptiveQuizProfile(
-      supabase,
-      userId,
-      requestedTopic
-    );
+    let quizProfile;
+    try {
+      quizProfile = await getAdaptiveQuizProfile(supabase, userId, requestedTopic);
+    } catch (profileErr) {
+      console.error("[QUIZ PROFILE] getAdaptiveQuizProfile failed:", profileErr?.message);
+      quizProfile = {
+        profile: null,
+        topic: requestedTopic || "VAT",
+        subtopic: "",
+        difficulty: 1
+      };
+    }
 
-    const recentHistory = await getRecentQuizHistory(supabase, {
-      userId,
-      topic: quizProfile.topic,
-      limit: 20
-    });
+    let recentHistory = [];
+    try {
+      recentHistory = await getRecentQuizHistory(supabase, {
+        userId,
+        topic: quizProfile.topic,
+        limit: 20
+      });
+    } catch (histErr) {
+      console.error("[QUIZ HISTORY] getRecentQuizHistory failed:", histErr?.message);
+    }
 
     const exclusions = buildQuizExclusionFromHistory(recentHistory);
 
-    const sourceChunks = await getQuizSourceChunks({
-      topic: quizProfile.topic,
-      excludeSourcePaths: safeArray(exclusions.excludeSourcePaths),
-      excludeChunkIds: safeArray(exclusions.excludeChunkIds),
-      limit: 3
-    });
+    // BUG-043: Wrap source retrieval in a 5-second timeout.
+    // The metadata JSON ilike queries in smartSearch cause Postgres statement
+    // timeouts (code 57014). If retrieval fails, quiz generation continues with
+    // an empty source list — topic context is sufficient for quiz generation.
+    let sourceChunks = [];
+    try {
+      sourceChunks = await Promise.race([
+        getQuizSourceChunks({
+          topic: quizProfile.topic,
+          excludeSourcePaths: safeArray(exclusions.excludeSourcePaths),
+          excludeChunkIds: safeArray(exclusions.excludeChunkIds),
+          limit: 3
+        }),
+        new Promise((_, reject) =>
+          setTimeout(
+            () => reject(Object.assign(new Error("Quiz source retrieval timed out"), { code: "QUIZ_SOURCE_TIMEOUT" })),
+            5000
+          )
+        )
+      ]);
+    } catch (sourceErr) {
+      console.error("[QUIZ SOURCE] Retrieval failed — continuing with topic-only quiz:", {
+        message: sourceErr?.message,
+        code: sourceErr?.code,
+        topic: quizProfile.topic
+      });
+      sourceChunks = [];
+    }
 
     const compactSources = safeArray(sourceChunks).map(compactSourceChunk);
     const compactHistory = compactQuizHistory(recentHistory);
@@ -514,36 +548,46 @@ Required JSON shape:
       };
     }
 
-    const storedQuiz = await storeUnansweredQuiz(supabase, {
-      userId,
-      sessionId: conversationId || null,
-      quiz,
-      mode: hookConfig.mode,
-      sourceChunks: compactSources
-    });
-
-    if (!storedQuiz || storedQuiz.saveFailed) {
-      return {
-        ok: false,
-        error: "Question was generated but could not be saved.",
-        supabaseError: storedQuiz?.error || null,
-        quiz,
-        sourceChunks: compactSources
-      };
+    let storedQuiz = null;
+    try {
+      storedQuiz = await Promise.race([
+        storeUnansweredQuiz(supabase, {
+          userId,
+          sessionId: conversationId || null,
+          quiz,
+          mode: hookConfig.mode,
+          sourceChunks: compactSources
+        }),
+        new Promise((_, reject) =>
+          setTimeout(
+            () => reject(Object.assign(new Error("storeUnansweredQuiz timed out"), { code: "QUIZ_STORE_TIMEOUT" })),
+            5000
+          )
+        )
+      ]);
+    } catch (storeErr) {
+      console.error("[QUIZ STORE] storeUnansweredQuiz failed — returning untracked quiz:", {
+        message: storeErr?.message,
+        code: storeErr?.code
+      });
+      storedQuiz = null;
     }
 
+    // Even if storage failed, return the quiz text so the user sees the question.
+    // Answers can't be tracked for this question, but that is better than an error.
     const answerText = formatQuestionBlock({
       quiz,
-      storedQuiz,
+      storedQuiz: storedQuiz || { id: null, correct_answer: quiz.correctAnswer },
       teachingText
     });
 
     return {
       ok: true,
       quiz,
-      storedQuiz,
+      storedQuiz: storedQuiz || { id: null, correct_answer: quiz.correctAnswer },
       sourceChunks: compactSources,
-      answerText
+      answerText,
+      saveFailed: !storedQuiz || Boolean(storedQuiz?.saveFailed)
     };
   }
 
@@ -809,15 +853,60 @@ Required JSON shape:
         ? await buildReviewTeachingBlock(cleanQuestion)
         : "";
 
-    const questionResult = await generateStoredAssessmentQuestion({
-      userId,
-      conversationId,
-      hookConfig,
-      requestedTopic: cleanQuestion,
-      teachingText
-    });
+    let questionResult;
+    try {
+      questionResult = await generateStoredAssessmentQuestion({
+        userId,
+        conversationId,
+        hookConfig,
+        requestedTopic: cleanQuestion,
+        teachingText
+      });
+    } catch (genError) {
+      console.error("ASSESSMENT GENERATION ERROR:", {
+        message: genError?.message,
+        stack: genError?.stack,
+        code: genError?.code,
+        details: genError?.details,
+        hint: genError?.hint,
+        topic: cleanQuestion,
+        hookCode: hookConfig.hook_code,
+        mode: hookConfig.mode
+      });
+
+      return {
+        handled: true,
+        response: {
+          success: false,
+          engine: "TINA Continuous Learning Engine",
+          hook: hookConfig.hook_code,
+          mode: hookConfig.mode,
+          hookTitle: hookConfig.title,
+          error: genError?.message || "Assessment generation failed",
+          answer:
+            teachingText ||
+            `TINA encountered an error generating the quiz question for "${cleanQuestion || "the requested topic"}". Please try again.`,
+          sourceStatus: "QUIZ_GENERATION_ERROR",
+          sourcesUsed: [],
+          sources: [],
+          vectorMatches: 0,
+          contextOrchestrationEnabled: true,
+          directOpenAICallDisabled: true
+        }
+      };
+    }
 
     if (!questionResult.ok) {
+      console.error("ASSESSMENT GENERATION ERROR:", {
+        message: questionResult.error,
+        code: questionResult.supabaseError?.code,
+        details: questionResult.supabaseError?.message,
+        hint: questionResult.supabaseError?.hint,
+        topic: cleanQuestion,
+        hookCode: hookConfig.hook_code,
+        mode: hookConfig.mode
+      });
+
       return {
         handled: true,
         response: {
@@ -830,7 +919,7 @@ Required JSON shape:
           supabaseError: questionResult.supabaseError || null,
           answer:
             teachingText ||
-            "TINA failed to generate the next stored multiple-choice question.",
+            `TINA could not generate a quiz question for "${cleanQuestion || "the requested topic"}". Please try again or pick a different topic.`,
           sourceStatus: "QUIZ_GENERATION_FAILED",
           sourcesUsed: [],
           sources: [],
@@ -846,24 +935,32 @@ Required JSON shape:
       { maxItems: MAX_VISIBLE_SOURCES }
     );
 
-    await saveConversationTurn({
-      conversationId,
-      userId,
-      question: originalQuestion,
-      answerText: questionResult.answerText,
-      sourcesUsed: quizSourcesUsed,
-      fallbackReferences: []
-    });
+    try {
+      await saveConversationTurn({
+        conversationId,
+        userId,
+        question: originalQuestion,
+        answerText: questionResult.answerText,
+        sourcesUsed: quizSourcesUsed,
+        fallbackReferences: []
+      });
+    } catch (saveErr) {
+      console.error("[QUIZ] saveConversationTurn failed (non-fatal):", saveErr?.message);
+    }
 
-    await saveModeState(supabase, {
-      userId,
-      sessionId: conversationId || null,
-      activeHook: hookConfig.hook_code,
-      activeMode: hookConfig.mode,
-      modeTitle: hookConfig.title,
-      lastQuestion: originalQuestion,
-      lastAnswer: questionResult.answerText
-    });
+    try {
+      await saveModeState(supabase, {
+        userId,
+        sessionId: conversationId || null,
+        activeHook: hookConfig.hook_code,
+        activeMode: hookConfig.mode,
+        modeTitle: hookConfig.title,
+        lastQuestion: originalQuestion,
+        lastAnswer: questionResult.answerText
+      });
+    } catch (modeErr) {
+      console.error("[QUIZ] saveModeState failed (non-fatal):", modeErr?.message);
+    }
 
     return {
       handled: true,

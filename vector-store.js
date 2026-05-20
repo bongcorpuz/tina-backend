@@ -1720,6 +1720,65 @@ export async function smartSearch(arg1, arg2) {
   return searchIndexedSources(arg1, arg2);
 }
 
+// Lightweight quiz source query — uses only indexed columns, no metadata JSON extraction.
+// Avoids the metadata->>field ilike pattern that causes Postgres statement timeouts (code 57014).
+export async function getQuizSourceChunksLight({
+  topic = "",
+  limit = 3,
+  supabase: suppliedSupabase = defaultSupabase
+} = {}) {
+  const supabaseClient = resolveSupabaseClient(suppliedSupabase);
+  const cleanTopic = String(topic || "").trim().toLowerCase();
+  if (!cleanTopic) return [];
+
+  const safeLimit = Math.min(Math.max(1, Math.floor(Number(limit) || 3)), 5);
+  const pattern = `%${cleanTopic}%`;
+
+  const { data, error } = await supabaseClient
+    .from(VECTOR_TABLE)
+    .select(
+      "id,source,original_source,document_title,authority_type,authority_level,normalized_reference,chunk_index,text,metadata"
+    )
+    .or(`source.ilike.${pattern},document_title.ilike.${pattern}`)
+    .order("authority_level", { ascending: true, nullsFirst: false })
+    .limit(safeLimit);
+
+  if (error) {
+    console.error("[QUIZ LIGHT SEARCH] Supabase error:", { message: error.message, code: error.code });
+    return [];
+  }
+
+  return (data || []).map((row) => {
+    const meta = row.metadata || {};
+    const driveViewUrl = meta.driveViewUrl || meta.drive_view_url || meta.url || null;
+    return {
+      id: row.id,
+      source: row.source,
+      original_source: row.original_source,
+      title: row.document_title || row.original_source || row.source || "Quiz Source",
+      document_title: row.document_title,
+      authorityType: row.authority_type || "UNKNOWN",
+      authority_type: row.authority_type,
+      authority_level: row.authority_level,
+      citation: row.normalized_reference || "",
+      normalized_reference: row.normalized_reference,
+      chunk_index: row.chunk_index,
+      url: driveViewUrl || "",
+      driveViewUrl: driveViewUrl || "",
+      drive_view_url: driveViewUrl || "",
+      text: trimReturnText(row.text || ""),
+      content: trimReturnText(row.text || ""),
+      excerpt: trimReturnText(row.text || ""),
+      metadata: meta,
+      score: 0.7,
+      sourceTitle: row.document_title || row.original_source || row.source,
+      sourcePath: meta.path || row.original_source || row.source,
+      fileId: meta.fileId || meta.file_id || null,
+      compactOutput: true
+    };
+  });
+}
+
 export async function getQuizSourceChunks({
   topic = "",
   excludeSourcePaths = [],
@@ -1731,27 +1790,43 @@ export async function getQuizSourceChunks({
   const cleanTopic = String(topic || "").trim();
   const safeLimit = clampTopK(limit);
 
-  const rows = await smartSearch({
-    supabase: supabaseClient,
-    query: cleanTopic || "Philippine taxation",
-    topK: Math.max(safeLimit * 2, 6),
-    includeWeakSources: true,
-    includeReviewSources: true,
-    reviewMode: true
+  // Fast path: simple indexed-column query — avoids metadata JSON scan timeout
+  const lightResults = await getQuizSourceChunksLight({
+    topic: cleanTopic,
+    limit: safeLimit,
+    supabase: supabaseClient
   });
 
-  return rows
-    .filter((row) => {
-      const path = row.metadata?.path || row.original_source || row.source || "";
+  const applyExclusions = (rows) =>
+    rows.filter((row) => {
+      const path = row.sourcePath || row.metadata?.path || row.original_source || row.source || "";
       const chunkId = String(row.id || "");
-
       if (excludeSourcePaths.includes(path)) return false;
       if (excludeChunkIds.includes(chunkId)) return false;
+      return (row.text || "").trim().length >= 50;
+    });
 
-      return normalizeText(row.text).length >= 200;
-    })
-    .slice(0, safeLimit)
-    .map((row) => ({
+  const filtered = applyExclusions(lightResults).slice(0, safeLimit);
+
+  // If light query returned enough, use it directly
+  if (filtered.length >= Math.min(safeLimit, 2)) {
+    return filtered;
+  }
+
+  // Fall back to smartSearch only when light query returns too little
+  try {
+    const rows = await smartSearch({
+      supabase: supabaseClient,
+      query: cleanTopic || "Philippine taxation",
+      topK: Math.max(safeLimit * 2, 6),
+      includeWeakSources: true,
+      includeReviewSources: true,
+      reviewMode: true
+    });
+
+    const fallbackFiltered = applyExclusions(rows).slice(0, safeLimit);
+
+    return fallbackFiltered.map((row) => ({
       ...row,
       text: trimReturnText(row.text),
       content: trimReturnText(row.content || row.text),
@@ -1767,6 +1842,10 @@ export async function getQuizSourceChunks({
       fileId: row.metadata?.fileId || row.metadata?.file_id || null,
       compactOutput: true
     }));
+  } catch (fallbackError) {
+    console.error("[QUIZ SOURCE CHUNKS] smartSearch fallback failed:", fallbackError?.message);
+    return filtered;
+  }
 }
 
 export async function getVectorStoreStats(client = defaultSupabase) {
@@ -1882,6 +1961,7 @@ export default {
   smartSearch,
 
   getQuizSourceChunks,
+  getQuizSourceChunksLight,
   getVectorStoreStats,
 
   normalizeSourceName,
