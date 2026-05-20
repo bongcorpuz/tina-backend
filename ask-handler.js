@@ -1675,13 +1675,26 @@ export function createAskHandler({
         "TINA 16-step pipeline"
       );
     } catch (error) {
-      console.error("Pipeline failed:", error.message);
+      console.error("Pipeline failed:", {
+        name:    error?.name || error?.constructor?.name,
+        message: error?.message,
+        status:  error?.status,
+        code:    error?.code,
+        type:    error?.type,
+        stack:   error?.stack?.split("\n").slice(0, 10).join("\n")
+      });
       result = {
         answer:
           "I could not complete the full sourced answer because the pipeline failed or timed out. Please try again with a narrower question.",
         sources: [],
         issueClassification: {},
-        orchestration: { ragError: error.message, fallbackAnswerUsed: true }
+        orchestration: {
+          ragError:           error.message,
+          ragErrorName:       error?.name || error?.constructor?.name,
+          ragErrorStatus:     error?.status,
+          ragErrorCode:       error?.code,
+          fallbackAnswerUsed: true
+        }
       };
     }
 

@@ -277,20 +277,27 @@ export async function runPipeline({
   trace.steps.push({ step: 13, name: "masterPromptBuilt", done: true });
 
   // ── Step 14: OpenAI Completion ────────────────────────────────────────────
-  const openAiResult = await callOpenAIWithOrchestration({
-    openai,
-    model,
-    query,
-    userQuery:            query,
-    retrievedSources:     ctx.rerankedChunks || [],
-    issueClassification:  ctx.issueClassification,
-    taxDomainClassification: ctx.routingMetadata,
-    conflictAnalysis:     ctx.conflictAnalysis,
-    systemPrompt:         ctx.promptContract?.masterPrompt,
-    conversationHistory,
-    mode:                 ctx.mode,
-    adaptiveContext:      { activeHook: hook, orchestrationMode: ctx.mode }
-  });
+  let openAiResult;
+  try {
+    openAiResult = await callOpenAIWithOrchestration({
+      openai,
+      model,
+      query,
+      userQuery:            query,
+      retrievedSources:     ctx.rerankedChunks || [],
+      issueClassification:  ctx.issueClassification,
+      taxDomainClassification: ctx.routingMetadata,
+      conflictAnalysis:     ctx.conflictAnalysis,
+      systemPrompt:         ctx.promptContract?.masterPrompt,
+      conversationHistory,
+      mode:                 ctx.mode,
+      adaptiveContext:      { activeHook: hook, orchestrationMode: ctx.mode }
+    });
+  } catch (e) {
+    const label = `OpenAI step-14 error [${e?.name || e?.constructor?.name}] status=${e?.status} code=${e?.code}: ${e?.message}`;
+    trace.warnings.push({ step: 14, warning: label });
+    throw new Error(label);
+  }
   ctx.rawAnswer    = openAiResult?.answer || "";
   ctx.orchestration = openAiResult?.orchestration || {};
   trace.steps.push({ step: 14, name: "openAiCompletion", done: true });
