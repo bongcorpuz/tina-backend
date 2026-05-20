@@ -1794,6 +1794,29 @@ F: List the specific documents required to support this position (contracts, inv
 G: State the recommended tax position and any caveats.
 Never omit E. AUDIT / TAX RISK or F. DOCUMENTARY GAPS. Never use generic boilerplate for E, F, or G.
 `.trim();
+  } else if (mode === "FAST_DEFINITION") {
+    modeInstruction = `
+FAST DEFINITION FORMAT — MANDATORY:
+This is a definitional or conceptual query. You MUST NOT use the full A-F structure.
+Use this exact 4-section structure and no other:
+A. DIRECT ANSWER
+B. CONTROLLING LEGAL BASIS
+C. ADMINISTRATIVE ISSUANCE
+D. PRACTICAL NOTE
+
+Section rules:
+- A. DIRECT ANSWER: State the statutory definition concisely in two to four sentences. Lead with the specific NIRC provision (e.g., "Under Section 105, NIRC..."). No case citations in this section.
+- B. CONTROLLING LEGAL BASIS: Cite only the primary statute. One to three sentences. State what the statute provides, not what cases say about it.
+- C. ADMINISTRATIVE ISSUANCE: Cite the key implementing regulation (RR or RMC) that operationalizes the provision. One to two sentences. Label with "(Framework knowledge — pending index verification)" if not found in retrieved sources.
+- D. PRACTICAL NOTE: State one practical compliance implication directly derived from the definition. No conflict analysis. No jurisprudential survey.
+
+ABSOLUTE PROHIBITIONS for FAST_DEFINITION:
+- Do NOT add Section E (Doctrinal Status / Conflict Analysis).
+- Do NOT add Section F (Practical Note / Application) from the standard A-F format.
+- Do NOT add any additional sections beyond D.
+- Do NOT include a jurisprudential conflict analysis or case law survey.
+- Four sections only: A, B, C, D.
+`.trim();
   } else {
     modeInstruction = `
 STANDARD LEGAL/TAX FORMAT:

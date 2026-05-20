@@ -65,7 +65,8 @@ const DEFAULT_AF_HEADINGS = Object.freeze([
 const SIMPLE_DEFINITION_HEADINGS = Object.freeze([
   "A. DIRECT ANSWER",
   "B. CONTROLLING LEGAL BASIS",
-  "C. PRACTICAL NOTE"
+  "C. ADMINISTRATIVE ISSUANCE",
+  "D. PRACTICAL NOTE"
 ]);
 
 const AUDIT_FACT_PATTERN_HEADINGS = Object.freeze([
@@ -1496,6 +1497,17 @@ function buildFastDefinitionAnswer({
 
   const basis = buildValidatedLegalBasis(legalBasisDocs).slice(0, 3);
 
+  const adminIssuance =
+    getAFSectionBody(sanitizedDraft, "C. ADMINISTRATIVE ISSUANCE") ||
+    getAFSectionBody(sanitizedDraft, "C. SUPPORTING RULES / ADMINISTRATIVE ISSUANCES") ||
+    "";
+
+  const practicalNote =
+    getAFSectionBody(sanitizedDraft, "D. PRACTICAL NOTE") ||
+    getAFSectionBody(sanitizedDraft, "F. PRACTICAL NOTE / APPLICATION") ||
+    getAFSectionBody(sanitizedDraft, "C. PRACTICAL NOTE") ||
+    "";
+
   return [
     "A. DIRECT ANSWER",
     answer || "No direct answer could be formed from the indexed sources.",
@@ -1505,8 +1517,11 @@ function buildFastDefinitionAnswer({
       ? ensureDashedBullets(basis)
       : "- Indexed source not found.",
     "",
-    "C. PRACTICAL NOTE",
-    "Verify the latest indexed authority before relying on the answer."
+    "C. ADMINISTRATIVE ISSUANCE",
+    adminIssuance || "Implementing regulations applicable to this provision are pending index verification.",
+    "",
+    "D. PRACTICAL NOTE",
+    practicalNote || "Verify the latest indexed authority before relying on the answer."
   ].join("\n");
 }
 

@@ -38,7 +38,8 @@ const TINA_AF_HEADINGS = Object.freeze([
 const FAST_DEFINITION_HEADINGS = Object.freeze([
   "A. DIRECT ANSWER",
   "B. CONTROLLING LEGAL BASIS",
-  "C. PRACTICAL NOTE"
+  "C. ADMINISTRATIVE ISSUANCE",
+  "D. PRACTICAL NOTE"
 ]);
 
 const COMPLEX_ADVISORY_HEADINGS = Object.freeze([
@@ -393,8 +394,10 @@ function defaultBodyForHeading(heading = "") {
     "B. SHORT BASIS": "Indexed source not found.",
     "B. LIMITED BASIS": "Indexed source not found.",
 
+    "C. ADMINISTRATIVE ISSUANCE": "Implementing regulations applicable to this provision are pending index verification.",
     "C. SUPPORTING RULES / ADMINISTRATIVE ISSUANCES": "Indexed source not found.",
     "C. SUPPORTING RULES": "Indexed source not found.",
+    "D. PRACTICAL NOTE": "Verify the latest indexed authority before relying on the answer.",
     "D. SUPPORTING JURISPRUDENCE": "Indexed source not found.",
 
     "E. DOCTRINAL STATUS / CONFLICT ANALYSIS":

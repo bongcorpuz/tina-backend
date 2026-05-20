@@ -313,6 +313,21 @@ export async function runPipeline({
   ctx.orchestration = openAiResult?.orchestration || {};
   trace.steps.push({ step: 14, name: "openAiCompletion", done: true });
 
+  // Refine rendering mode from the orchestration engine's determineMode() result.
+  // ctx.mode (Step 2) reflects only the hook type (e.g. "STANDARD_TAX_MODE" for /ask).
+  // The orchestration engine analyzes query intent and returns a specific rendering
+  // mode: FAST_DEFINITION for "what is VAT?", LEGAL_ANALYSIS for doctrinal queries, etc.
+  // Specialized hook modes (QUIZ_MODE, REVIEWER_MODE, etc.) are pinned and must not
+  // be overridden by orchestration inference.
+  const PINNED_HOOK_MODES = new Set([
+    "QUIZ_MODE", "REVIEWER_MODE", "CASE_ANALYSIS", "SOURCE_LOOKUP", "SENIOR_COUNSEL_MEMO"
+  ]);
+  const orchestrationRefinedMode = ctx.orchestration?.mode;
+  if (orchestrationRefinedMode && !PINNED_HOOK_MODES.has(ctx.mode)) {
+    console.log(`[TINA MODE] Refining ctx.mode from '${ctx.mode}' → '${orchestrationRefinedMode}' (orchestration)`);
+    ctx.mode = orchestrationRefinedMode;
+  }
+
   // ── Step 15: Format Answer ────────────────────────────────────────────────
   ctx.formattedAnswer = renderTinaAnswer({
     answer:              ctx.rawAnswer,
