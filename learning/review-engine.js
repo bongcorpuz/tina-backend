@@ -80,33 +80,41 @@ Key Authorities: ${authoritiesText || "NIRC, RR, Supreme Court"}
 STRICT RULES:
 - Philippine taxation only. NIRC, RR, RMC, Supreme Court, CTA only.
 - Do not fabricate specific GR numbers, dates, or rates unless certain.
-- Follow the exact output format below.
+- Output must use the EXACT markdown section headers shown below — no plain text headers.
 - Write at the level of a CPALE/BAR exam reviewer.
 - Include one mini MCQ at the end with correct answer indicated.
 - If no specific indexed source is available, state principles from training knowledge without fabricating citations.
 
-OUTPUT FORMAT (use exactly these section headers):
+OUTPUT FORMAT (use exactly these markdown headers, including the # symbols):
 
-Topic:
-${subtopicLabel}
+# ${subtopicLabel}
 
-Core Concept:
+## Core Concept
 [2-4 sentence explanation of the core rule or principle]
 
-Legal Basis:
+## Legal Basis
 [Cite the primary NIRC section, RR, RMC, or Supreme Court case — only cite authorities you are certain of]
 
-Doctrine:
+## Doctrine
 [Key doctrinal rule or leading case with citation — if uncertain of GR number, state the case name and principle without fabricating the number]
 
-Practical Example:
+## Practical Example
 [One concrete, exam-style fact pattern showing the rule in action]
 
-CPA Tip:
+## CPA / Bar Tip
 [One exam strategy or common trap for this subtopic]
 
-Mini Question:
-[One MCQ with 4 choices: A, B, C, D — indicate the correct answer and a one-sentence explanation]
+## Mini Question
+[One MCQ with 4 choices: A, B, C, D]
+
+## Correct Answer
+[State the correct letter and option text]
+
+## Explanation
+[One-sentence explanation of why the correct answer is correct]
+
+## Why the Other Choices Are Wrong
+[Brief note for each incorrect choice A–D]
 `.trim();
   }
 
@@ -125,32 +133,40 @@ STRICT RULES:
 - Base your answer primarily on SOURCE CONTEXT.
 - Do not fabricate legal bases, rates, or citations not found in SOURCE CONTEXT.
 - Philippine taxation only.
-- Follow the exact output format below.
+- Output must use the EXACT markdown section headers shown below — no plain text headers.
 - Write at the level of a CPALE/BAR exam reviewer.
 - Include one mini MCQ at the end grounded in SOURCE CONTEXT.
 
-OUTPUT FORMAT (use exactly these section headers):
+OUTPUT FORMAT (use exactly these markdown headers, including the # symbols):
 
-Topic:
-${subtopicLabel}
+# ${subtopicLabel}
 
-Core Concept:
+## Core Concept
 [2-4 sentence explanation from SOURCE CONTEXT]
 
-Legal Basis:
+## Legal Basis
 [Cite the primary NIRC section, RR, or case from SOURCE CONTEXT]
 
-Doctrine:
+## Doctrine
 [Key doctrinal rule from SOURCE CONTEXT]
 
-Practical Example:
+## Practical Example
 [One concrete, exam-style fact pattern based on SOURCE CONTEXT]
 
-CPA Tip:
+## CPA / Bar Tip
 [One exam strategy or CPALE trap derived from SOURCE CONTEXT]
 
-Mini Question:
-[One MCQ with 4 choices: A, B, C, D — indicate the correct answer (e.g., "Correct Answer: B") and a one-sentence explanation grounded in SOURCE CONTEXT]
+## Mini Question
+[One MCQ with 4 choices: A, B, C, D]
+
+## Correct Answer
+[State the correct letter and option text]
+
+## Explanation
+[One-sentence explanation grounded in SOURCE CONTEXT]
+
+## Why the Other Choices Are Wrong
+[Brief note for each incorrect choice A–D]
 `.trim();
 }
 
@@ -195,11 +211,12 @@ export async function generateReviewMaterial({
     userQuery: reviewPrompt,
     systemPrompt: `
 You are TINA, a CPALE Philippine Tax Reviewer.
-Follow the required output format exactly. All section headers are mandatory.
+Output must use markdown formatting: use # for the topic title and ## for every section header.
+All section headers are mandatory. Do NOT use plain-text headers — always include the # or ## prefix.
 Philippine taxation only. Authority-grounded. No fabricated citations.
 Write at CPALE/BAR exam difficulty level.
 `.trim(),
-    masterPrompt: `Follow the output format exactly. All sections required.`,
+    masterPrompt: `Follow the markdown output format exactly. All ## sections required. Use # and ## headers.`,
     retrievedSources: compactSources,
     classification: {
       primaryIssue: domain,
@@ -218,15 +235,15 @@ Write at CPALE/BAR exam difficulty level.
   });
 
   const sourceLines = compactSources.length
-    ? "\n\nSources Used:\n" +
+    ? "\n\n---\n\n**Sources Used:**\n" +
       compactSources
-        .map((s) => `• ${s.citation || s.title || "Indexed Authority"} [${s.authorityType}]`)
+        .map((s) => `- ${s.citation || s.title || "Indexed Authority"} *(${s.authorityType})*`)
         .join("\n")
     : "";
 
   return {
     ok: Boolean(rawReview),
-    reviewText: (normalizeText(rawReview) + sourceLines).trim(),
+    reviewText: (String(rawReview || "").trim() + sourceLines).trim(),
     sourceChunks: compactSources,
     subtopicLabel
   };
