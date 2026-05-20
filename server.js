@@ -201,6 +201,7 @@ function attachForcedHook(hookCode) {
       hook: req.body?.hook || hookCode,
       forcedHook: hookCode
     };
+    console.log(`[TINA API BODY] route=${hookCode} forcedHook=${req.body.forcedHook} question=${String(req.body.question || "").slice(0, 60)}`);
     return next();
   };
 }

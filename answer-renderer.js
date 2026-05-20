@@ -21,7 +21,9 @@ const ORCHESTRATION_MODES = Object.freeze({
   LEGAL_ANALYSIS: "LEGAL_ANALYSIS",
   COMPLEX_ADVISORY: "COMPLEX_ADVISORY",
   EMERGENCY_TRIM: "EMERGENCY_TRIM",
-  SENIOR_COUNSEL_MEMO: "SENIOR_COUNSEL_MEMO"
+  SENIOR_COUNSEL_MEMO: "SENIOR_COUNSEL_MEMO",
+  CASE_ANALYSIS: "CASE_ANALYSIS",
+  SOURCE_LOOKUP: "SOURCE_LOOKUP"
 });
 
 const TINA_AF_HEADINGS = Object.freeze([
@@ -134,6 +136,23 @@ const FALLBACK_TEMPLATES = Object.freeze({
     "C. BASIC LEGAL BASIS",
     "D. EXAMPLE",
     "E. PRACTICAL / EXAM TIP"
+  ],
+
+  CASE_ANALYSIS: [
+    "CASE NAME / CITATION",
+    "FACTS",
+    "ISSUE",
+    "RULING",
+    "DOCTRINE / RATIO",
+    "APPLICATION",
+    "LIMITATIONS / DISTINGUISHING FACTORS"
+  ],
+
+  SOURCE_LOOKUP: [
+    "SOURCES FOUND",
+    "CONTROLLING AUTHORITIES",
+    "SECONDARY SOURCES",
+    "RETRIEVAL NOTES"
   ]
 });
 
@@ -318,6 +337,8 @@ function normalizeOrchestrationMode(value = "") {
 
   if (Object.values(ORCHESTRATION_MODES).includes(raw)) return raw;
   if (raw.includes("SENIOR_COUNSEL") || raw.includes("LITIGATION_MEMO") || raw.includes("COUNSEL_MEMO")) return "SENIOR_COUNSEL_MEMO";
+  if (raw.includes("CASE_ANALYSIS") || raw === "CASE") return "CASE_ANALYSIS";
+  if (raw.includes("SOURCE_LOOKUP") || raw === "SOURCE" || raw === "SOURCE_FINDER") return "SOURCE_LOOKUP";
   if (raw.includes("FAST") || raw.includes("QUICK") || raw.includes("DEFINITION")) return "FAST_DEFINITION";
   if (raw.includes("LEGAL") || raw.includes("DOCTRINE") || raw.includes("JURISPRUDENCE")) return "LEGAL_ANALYSIS";
   if (raw.includes("COMPLEX") || raw.includes("AUDIT") || raw.includes("CONTRACT") || raw.includes("TRANSACTION") || raw.includes("EVIDENCE") || raw.includes("RISK")) return "COMPLEX_ADVISORY";
@@ -783,9 +804,11 @@ function renderTinaAnswer({
   const resolvedMode = String(mode || orchestrationMode || contextMode || "").toUpperCase();
   const isQuizMode = resolvedMode === "QUIZ_MODE" || resolvedMode === "QUIZ";
   const isReviewerMode = resolvedMode === "REVIEWER_MODE" || resolvedMode === "REVIEWER";
+  const isCaseMode = resolvedMode === "CASE_ANALYSIS" || resolvedMode === "CASE";
+  const isSourceMode = resolvedMode === "SOURCE_LOOKUP" || resolvedMode === "SOURCE" || resolvedMode === "SOURCE_FINDER";
 
   let rendered;
-  if (isQuizMode || isReviewerMode) {
+  if (isQuizMode || isReviewerMode || isCaseMode || isSourceMode) {
     rendered = normalizeText(stripRawSourceSections(answer));
   } else {
     rendered = renderAdaptiveAnswer({

@@ -48,7 +48,9 @@ const RESPONSE_MODE = Object.freeze({
   DEFAULT_AF: "DEFAULT_AF",
   AUDIT_FACT_PATTERN: "AUDIT_FACT_PATTERN",
   SENIOR_COUNSEL_MEMO: "SENIOR_COUNSEL_MEMO",
-  LITIGATION_MEMO: "SENIOR_COUNSEL_MEMO"
+  LITIGATION_MEMO: "SENIOR_COUNSEL_MEMO",
+  CASE_ANALYSIS: "CASE_ANALYSIS",
+  SOURCE_LOOKUP: "SOURCE_LOOKUP"
 });
 
 const DEFAULT_AF_HEADINGS = Object.freeze([
@@ -2164,13 +2166,18 @@ function buildFinalCompliantAnswer({
 }
 
 function enforceFinalAnswerCompliance(args = {}) {
-  // Quiz and reviewer modes must never be reformatted into A-F structure.
+  // Non-A-F modes must pass through without reformatting.
   const rawMode = String(args.mode || args.orchestrationMode || "").toUpperCase();
   if (
     rawMode === "QUIZ_MODE" ||
     rawMode === "QUIZ" ||
     rawMode === "REVIEWER_MODE" ||
-    rawMode === "REVIEWER"
+    rawMode === "REVIEWER" ||
+    rawMode === "CASE_ANALYSIS" ||
+    rawMode === "CASE" ||
+    rawMode === "SOURCE_LOOKUP" ||
+    rawMode === "SOURCE" ||
+    rawMode === "SOURCE_FINDER"
   ) {
     const passthrough = args.draftAnswer || args.answer || "";
     return {
@@ -2183,7 +2190,7 @@ function enforceFinalAnswerCompliance(args = {}) {
       legalBasis: [],
       complianceStatus: "BYPASSED_NON_AF_MODE",
       warnings: [],
-      metadata: { bypassReason: "quiz_or_reviewer_mode_no_AF_enforcement" },
+      metadata: { bypassReason: `${rawMode.toLowerCase()}_no_AF_enforcement` },
       confidence: "BYPASS",
       sourceStatus: "BYPASS",
       authorityValidation: null,

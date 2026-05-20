@@ -484,13 +484,20 @@ async function loadTaxHookConfig({ supabase, rawQuestion = "", forcedHook = null
   let hookCode = "/ask";
   let cleanQuestion = text;
 
-  if (forcedHook && isAllowedHook(forcedHook)) {
+  // BUG-042: When forcedHook is the generic /ask default and the user explicitly
+  // typed a slash command (e.g. /quiz), the explicit command must win.
+  const forcedIsGenericDefault = forcedHook === "/ask";
+  const explicitOverridesDefault = forcedIsGenericDefault && explicitHook && explicitHook !== "/ask";
+
+  if (forcedHook && isAllowedHook(forcedHook) && !explicitOverridesDefault) {
     hookCode = forcedHook;
     cleanQuestion = stripExplicitHook(text, forcedHook);
   } else if (explicitHook) {
     hookCode = explicitHook;
     cleanQuestion = stripExplicitHook(text, explicitHook);
   }
+
+  console.log(`[TINA ROUTE] forcedHook=${forcedHook} explicitHook=${explicitHook} resolved hookCode=${hookCode}`);
 
   const fallbackConfig = buildHardcodedHookConfig(hookCode);
 
