@@ -10,14 +10,10 @@
  * - Keeps this file as ES Module.
  */
 
-import { createRequire } from "module";
-
-const require = createRequire(import.meta.url);
-
-const {
-  AUTHORITY_LEVEL = {},
+import {
+  AUTHORITY_LEVEL,
   classifyAuthorityFromDocument
-} = require("./authority-engine.js");
+} from "./authority-engine.js";
 
 const ENGINE_VERSION = "3.0.1";
 

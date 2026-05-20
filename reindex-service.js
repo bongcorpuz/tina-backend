@@ -23,7 +23,6 @@
  * - No citation rendering
  */
 
-import { createRequire } from "module";
 import { createHash } from "crypto";
 
 import {
@@ -42,9 +41,7 @@ import {
   normalizeSourceName
 } from "./vector-store.js";
 
-const require = createRequire(import.meta.url);
-
-const { buildAuthorityMetadata } = require("./authority-engine.js");
+import { buildAuthorityMetadata } from "./authority-engine.js";
 
 const ENGINE_VERSION = "4.0.0";
 
