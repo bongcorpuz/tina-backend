@@ -336,14 +336,54 @@ export async function runPipeline({
   });
   trace.steps.push({ step: 16, name: "finalAnswerCompliance", done: true });
 
+  // Build normalized source cards for frontend rendering.
+  // Each card has the URL fields the frontend normalizeSources() needs.
+  const sourceCards = (ctx.rerankedChunks || [])
+    .filter((c) => c.title || c.document_title || c.source || c.originalSource)
+    .slice(0, 5)
+    .map((c) => {
+      const meta = c.metadata || {};
+      const url =
+        c.driveViewUrl ||
+        c.drive_view_url ||
+        c.url ||
+        meta.driveViewUrl ||
+        meta.drive_view_url ||
+        meta.url ||
+        meta.sourceUrl ||
+        "";
+      return {
+        title:
+          c.title ||
+          c.document_title ||
+          c.documentTitle ||
+          c.originalSource ||
+          c.source ||
+          "Source",
+        citation:
+          c.normalizedReference ||
+          c.normalized_reference ||
+          c.citation ||
+          "",
+        authorityType: c.authorityType || c.authority_type || "UNKNOWN",
+        driveViewUrl: url,
+        url,
+        excerpt: String(c.text || c.content || "").slice(0, 300)
+      };
+    });
+
   return {
     answer:              compliantResult?.finalAnswer || compliantResult?.answer || ctx.formattedAnswer,
     sources:             ctx.rerankedChunks || [],
+    sourcesUsed:         ctx.rerankedChunks || [],
+    sourceCards,
     issueClassification: ctx.issueClassification,
     conflictAnalysis:    ctx.conflictAnalysis,
     riskScore:           ctx.riskScore,
     orchestration:       ctx.orchestration,
     mode:                ctx.mode,
+    orchestrationMode:   ctx.mode,
+    responseMode:        ctx.mode,
     pipelineVersion:     PIPELINE_VERSION,
     trace
   };

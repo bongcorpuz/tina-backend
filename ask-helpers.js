@@ -1014,11 +1014,29 @@ export function extractQuizAnswer(text = "") {
 export function formatQuestionBlock({ quiz = {}, storedQuiz = null, teachingText = "" } = {}) {
   const choices = quiz.choices || {};
 
+  // Difficulty label for display
+  const difficultyLabels = { 1: "Basic", 2: "Standard", 3: "Applied", 4: "Analytical", 5: "Advanced" };
+  const diffNum = Number(quiz.difficulty) || 1;
+  const diffLabel = difficultyLabels[diffNum] || String(diffNum);
+
+  // Source anchor — only show when source-grounded (not GENERAL_FALLBACK)
+  const isSourceGrounded =
+    quiz.sourceSupport &&
+    !quiz.sourceSupport.includes("GENERAL_FALLBACK") &&
+    !quiz.sourceSupport.includes("NO_INDEXED_SOURCE");
+
+  const sourceAnchorLine = isSourceGrounded
+    ? `Source Anchor: ${quiz.sourceSupport}`
+    : null;
+
+  // CPALE trap — only if present
+  const trapLine = quiz.cpaleTrap ? `Reviewer Trap: ${quiz.cpaleTrap}` : null;
+
   const questionText = [
     teachingText ? String(teachingText).trim() : null,
     teachingText ? "" : null,
     `Topic: ${quiz.topic || "Philippine Taxation"}`,
-    `Difficulty: ${quiz.difficulty || 1}`,
+    `Difficulty: ${diffLabel}`,
     "",
     quiz.question || "Question unavailable.",
     "",
@@ -1027,8 +1045,10 @@ export function formatQuestionBlock({ quiz = {}, storedQuiz = null, teachingText
     `C. ${choices.C || ""}`,
     `D. ${choices.D || ""}`,
     "",
-    "Reply with A, B, C, or D only.",
-    storedQuiz?.id ? `Quiz ID: ${storedQuiz.id}` : null
+    trapLine,
+    sourceAnchorLine,
+    "",
+    "Reply with A, B, C, or D only."
   ]
     .filter((line) => line !== null && line !== undefined)
     .join("\n");

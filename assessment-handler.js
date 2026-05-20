@@ -487,7 +487,8 @@ Quick Recall:
       difficulty: quizProfile.difficulty,
       profile: quizProfile.profile,
       sourceChunks: compactSources,
-      recentQuestions: compactHistory
+      recentQuestions: compactHistory,
+      excludeQuestionFingerprints: safeArray(exclusions.excludeQuestionFingerprints)
     });
 
     const rawQuiz = await callAssessmentOpenAI({

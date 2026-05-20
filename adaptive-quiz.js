@@ -145,20 +145,22 @@ export async function getRecentQuizHistory(
   {
     userId,
     topic = "",
-    limit = 20
+    limit = 50
   } = {}
 ) {
   if (!isSupabaseClient(supabase) || !userId) return [];
 
+  // Fetch across all sessions for cross-session deduplication.
+  // Limit 50 by default so fingerprint exclusion is effective.
   let query = supabase
     .from("tina_learning_attempts")
     .select("id, topic, subtopic, question, source_path, chunk_index, source_metadata, created_at")
     .eq("user_id", String(userId))
     .order("created_at", { ascending: false })
-    .limit(Math.max(1, Math.min(safeInteger(limit, 20), 100)));
+    .limit(Math.max(1, Math.min(safeInteger(limit, 50), 200)));
 
   if (topic) {
-    query = query.eq("topic", topic);
+    query = query.ilike("topic", `%${topic}%`);
   }
 
   const { data, error } = await query;
@@ -174,6 +176,7 @@ export async function getRecentQuizHistory(
 export function buildQuizExclusionFromHistory(history = []) {
   const excludeSourcePaths = [];
   const excludeChunkIds = [];
+  const excludeQuestionFingerprints = [];
 
   for (const item of history || []) {
     if (item.source_path && !excludeSourcePaths.includes(item.source_path)) {
@@ -191,11 +194,21 @@ export function buildQuizExclusionFromHistory(history = []) {
       const compoundKey = `${item.source_path}::${item.chunk_index}`;
       if (!excludeChunkIds.includes(compoundKey)) excludeChunkIds.push(compoundKey);
     }
+
+    // Question text fingerprint — prevents repeating same wording across sessions
+    const qText = normalizeText(item.question || item.quiz_question || "");
+    if (qText) {
+      const fingerprint = qText.toLowerCase().replace(/\s+/g, " ").slice(0, 120);
+      if (!excludeQuestionFingerprints.includes(fingerprint)) {
+        excludeQuestionFingerprints.push(fingerprint);
+      }
+    }
   }
 
   return {
     excludeSourcePaths,
-    excludeChunkIds
+    excludeChunkIds,
+    excludeQuestionFingerprints
   };
 }
 
@@ -305,16 +318,23 @@ export function buildAdaptiveQuizPrompt({
   difficulty,
   profile,
   sourceChunks = [],
-  recentQuestions = []
+  recentQuestions = [],
+  excludeQuestionFingerprints = []
 }) {
   const safeTopic = normalizeText(topic) || "General Taxation";
   const safeDifficulty = normalizeDifficulty(difficulty);
   const sourceContext = buildSourceContext(sourceChunks);
 
-  const recentQuestionText = uniqueStrings(
+  // Combine recentQuestions text with fingerprints for a stronger deduplication signal
+  const recentTexts = uniqueStrings(
     (recentQuestions || []).map((q) => q.question)
-  )
-    .slice(0, 10)
+  ).slice(0, 10);
+
+  const fingerprintTexts = uniqueStrings(excludeQuestionFingerprints || []).slice(0, 30);
+
+  const allExcludedTexts = uniqueStrings([...recentTexts, ...fingerprintTexts]);
+
+  const recentQuestionText = allExcludedTexts
     .map((question, index) => `${index + 1}. ${question}`)
     .join("\n");
 
@@ -435,6 +455,40 @@ Return this JSON structure only:
 `.trim();
 }
 
+/* ================= SERVER-SIDE ANSWER SHUFFLER ================= */
+
+// Fisher-Yates shuffle of quiz choices so the correct answer
+// is not always in position A (which GPT defaults to despite prompt instructions).
+function shuffleQuizChoices(quiz) {
+  if (!quiz || typeof quiz.choices !== "object") return quiz;
+
+  const letters = ["A", "B", "C", "D"];
+  const correctText = quiz.choices[quiz.correctAnswer];
+  if (!correctText) return quiz;
+
+  // Collect all 4 values and shuffle them
+  const values = letters.map((l) => quiz.choices[l]).filter(Boolean);
+  for (let i = values.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [values[i], values[j]] = [values[j], values[i]];
+  }
+
+  const shuffled = {};
+  for (let i = 0; i < letters.length; i++) {
+    shuffled[letters[i]] = values[i];
+  }
+
+  // Re-derive correctAnswer from the shuffled positions
+  const newCorrect = letters.find((l) => shuffled[l] === correctText) || quiz.correctAnswer;
+
+  return {
+    ...quiz,
+    choices: shuffled,
+    correctAnswer: newCorrect,
+    correctAnswerText: correctText
+  };
+}
+
 /* ================= JSON PARSER ================= */
 
 export function safeParseQuizJson(text = "") {
@@ -492,7 +546,8 @@ export function safeParseQuizJson(text = "") {
       parsed.correctAnswerText = parsed.choices[parsed.correctAnswer];
     }
 
-    return parsed;
+    // Shuffle choices server-side so correctAnswer is not always A
+    return shuffleQuizChoices(parsed);
   } catch (error) {
     console.error("Quiz JSON parse error:", error.message);
     return null;

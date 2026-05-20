@@ -1704,14 +1704,15 @@ export function createAskHandler({
       };
     }
 
-    const resultSources = safeArray(result.sources);
+    const resultSources = safeArray(result.sources || result.sourcesUsed);
+    const resultSourceCards = safeArray(result.sourceCards);
 
     const payload = {
       success: true,
       engine: "TINA_ASK_HANDLER",
       version: ENGINE_VERSION,
       hook: hookConfig.hook_code,
-      mode: hookConfig.mode,
+      mode: result.mode || hookConfig.mode,
       routeKind: hookConfig.routeKind,
       hookTitle: hookConfig.title,
 
@@ -1719,6 +1720,7 @@ export function createAskHandler({
 
       sources: resultSources,
       sourcesUsed: resultSources,
+      sourceCards: resultSourceCards,
       vectorMatches: resultSources.length,
 
       retrievedSourceCount: resultSources.length,
@@ -1727,8 +1729,8 @@ export function createAskHandler({
         ? "ISSUE_MATCHED_CONTEXT_USED"
         : "NO_VISIBLE_SOURCE",
 
-      responseMode: result.orchestration?.mode || hookConfig.mode,
-      orchestrationMode: result.orchestration?.mode || hookConfig.mode,
+      responseMode: result.responseMode || result.orchestration?.mode || hookConfig.mode,
+      orchestrationMode: result.orchestrationMode || result.orchestration?.mode || hookConfig.mode,
       pipelineVersion: result.pipelineVersion,
 
       metadata: {
