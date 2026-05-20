@@ -136,6 +136,24 @@ export function enforceProhibitedPhrases(text = "") {
   };
 }
 
+// Strips prohibited phrases from output. Removes the phrase and any trailing
+// "that " / "," connector so the remaining sentence stays grammatical.
+export function redactProhibitedPhrases(text = "") {
+  if (!text || typeof text !== "string") return text;
+  let result = text;
+  for (const phrase of PROHIBITED_PHRASES) {
+    const escaped = phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    result = result.replace(
+      new RegExp(`${escaped}(?:\\s*,\\s*|\\s+that\\s+)?`, "gi"),
+      ""
+    );
+  }
+  return result
+    .replace(/[ \t]{2,}/g, " ")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
 const TINA_HIERARCHY_RULE = `
 Apply Philippine legal hierarchy correctly (source hierarchy — Law 2):
 

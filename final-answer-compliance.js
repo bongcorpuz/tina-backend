@@ -35,7 +35,7 @@ import {
   MAX_VISIBLE_SOURCES
 } from "./source-visibility-engine.js";
 
-import { enforceProhibitedPhrases } from "./adaptive-tina-master-prompt.js";
+import { enforceProhibitedPhrases, redactProhibitedPhrases } from "./adaptive-tina-master-prompt.js";
 
 const ENGINE_VERSION = "6.1.0";
 
@@ -1864,6 +1864,8 @@ function finalizeCompliance({
     context
   });
 
+  // BUG-012: Redact before checking so violations are removed from the final answer.
+  output = redactProhibitedPhrases(output);
   const prohibitedPhraseCheck = enforceProhibitedPhrases(output);
 
   const warnings = buildComplianceWarnings({
@@ -1901,7 +1903,7 @@ function finalizeCompliance({
       hasVisibleSources: visibleSources.length > 0,
       visibleSourceCount: visibleSources.length,
       indexedSourceLimitation:
-        visibleSources.length === 0 ? "Indexed source not found." : null
+        visibleSources.length === 0 ? "Framework knowledge — pending index verification" : null
     }
   };
 }
