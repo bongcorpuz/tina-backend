@@ -41,6 +41,8 @@ import {
   finalizeSourcesForResponse
 } from "./ask-helpers.js";
 
+import { safeParseQuizQuestion } from "./services/schema-validator.js";
+
 import {
   callOpenAIWithOrchestration as defaultCallOpenAIWithOrchestration
 } from "./context-orchestration-engine.js";
@@ -545,6 +547,22 @@ Required JSON shape:
       return {
         ok: false,
         error: "Unable to generate valid multiple-choice question JSON.",
+        sourceChunks: compactSources
+      };
+    }
+
+    // Validate shape before writing to Supabase
+    const quizValidation = safeParseQuizQuestion(quiz);
+    if (!quizValidation.ok) {
+      console.error(
+        "[ASSESSMENT] Quiz schema invalid after parse:",
+        quizValidation.error?.issues
+          ?.map((i) => `${i.path.join(".") || "root"}: ${i.message}`)
+          .join("; ")
+      );
+      return {
+        ok: false,
+        error: "Quiz shape validation failed.",
         sourceChunks: compactSources
       };
     }

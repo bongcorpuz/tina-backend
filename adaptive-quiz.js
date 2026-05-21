@@ -10,6 +10,8 @@ import {
   updateTopicMastery
 } from "./learner-profile.js";
 
+import { safeParseQuizQuestion } from "./services/schema-validator.js";
+
 const ENGINE_VERSION = "3.0.0";
 
 const TAX_TOPICS = [
@@ -501,53 +503,43 @@ export function safeParseQuizJson(text = "") {
 
     const parsed = JSON.parse(cleaned);
 
-    if (
-      !parsed.question ||
-      !parsed.choices ||
-      !parsed.choices.A ||
-      !parsed.choices.B ||
-      !parsed.choices.C ||
-      !parsed.choices.D ||
-      !parsed.correctAnswer
-    ) {
-      console.error("Quiz JSON invalid structure.");
-      return null;
-    }
-
-    parsed.topic = normalizeText(parsed.topic) || "General Taxation";
-    parsed.subtopic = normalizeText(parsed.subtopic);
-    parsed.difficulty = normalizeDifficulty(parsed.difficulty || 1);
-    parsed.correctAnswer = normalizeChoiceLetter(parsed.correctAnswer);
-
-    if (!["A", "B", "C", "D"].includes(parsed.correctAnswer)) {
-      console.error("Quiz JSON invalid correctAnswer.");
-      return null;
-    }
-
-    parsed.correctAnswerText = normalizeText(parsed.correctAnswerText || parsed.choices[parsed.correctAnswer] || "");
-    parsed.explanation = normalizeText(parsed.explanation || "");
-    parsed.cpaleTrap = normalizeText(parsed.cpaleTrap || "");
-    parsed.sourceSupport = normalizeText(parsed.sourceSupport || "");
-    parsed.validationStatus = normalizeText(parsed.validationStatus || "UNVALIDATED");
-
-    parsed.choices = {
-      A: normalizeText(parsed.choices.A),
-      B: normalizeText(parsed.choices.B),
-      C: normalizeText(parsed.choices.C),
-      D: normalizeText(parsed.choices.D)
+    // Normalize all fields before schema validation
+    const normalizedCorrectAnswer = normalizeChoiceLetter(parsed.correctAnswer);
+    const normalizedChoices = {
+      A: normalizeText(String(parsed.choices?.A || "")),
+      B: normalizeText(String(parsed.choices?.B || "")),
+      C: normalizeText(String(parsed.choices?.C || "")),
+      D: normalizeText(String(parsed.choices?.D || ""))
+    };
+    const candidate = {
+      ...parsed,
+      topic:            normalizeText(parsed.topic) || "General Taxation",
+      subtopic:         normalizeText(parsed.subtopic || ""),
+      difficulty:       normalizeDifficulty(parsed.difficulty || 1),
+      correctAnswer:    normalizedCorrectAnswer,
+      correctAnswerText: normalizeText(
+        parsed.correctAnswerText || normalizedChoices[normalizedCorrectAnswer] || ""
+      ),
+      choices:          normalizedChoices,
+      explanation:      normalizeText(parsed.explanation || ""),
+      cpaleTrap:        normalizeText(parsed.cpaleTrap || ""),
+      sourceSupport:    normalizeText(parsed.sourceSupport || ""),
+      validationStatus: normalizeText(parsed.validationStatus || "UNVALIDATED")
     };
 
-    if (!parsed.choices.A || !parsed.choices.B || !parsed.choices.C || !parsed.choices.D) {
-      console.error("Quiz JSON invalid choices.");
+    const validation = safeParseQuizQuestion(candidate);
+    if (!validation.ok) {
+      console.error(
+        "Quiz JSON schema validation failed:",
+        validation.error.issues
+          ?.map((i) => `${i.path.join(".") || "root"}: ${i.message}`)
+          .join("; ")
+      );
       return null;
-    }
-
-    if (!parsed.correctAnswerText) {
-      parsed.correctAnswerText = parsed.choices[parsed.correctAnswer];
     }
 
     // Shuffle choices server-side so correctAnswer is not always A
-    return shuffleQuizChoices(parsed);
+    return shuffleQuizChoices(validation.data);
   } catch (error) {
     console.error("Quiz JSON parse error:", error.message);
     return null;

@@ -13,6 +13,7 @@ import { getQuizSourceChunks } from "../vector-store.js";
 import { formatQuestionBlock } from "../ask-helpers.js";
 import { buildRetrievalHints } from "./question-bank-router.js";
 import { getSubtopicLabel } from "./domain-normalizer.js";
+import { safeParseQuizQuestion } from "../services/schema-validator.js";
 
 const ENGINE_VERSION = "1.0.0";
 
@@ -329,6 +330,18 @@ Philippine taxation context only. Authority-grounded only.
 
   if (!quiz) {
     return { ok: false, error: "Quiz JSON parse failed.", sourceChunks: compactSources };
+  }
+
+  // Defense-in-depth: confirm shape is valid before writing to DB
+  const quizValidation = safeParseQuizQuestion(quiz);
+  if (!quizValidation.ok) {
+    console.error(
+      "[QUIZ ENGINE] Post-parse schema check failed:",
+      quizValidation.error?.issues
+        ?.map((i) => `${i.path.join(".") || "root"}: ${i.message}`)
+        .join("; ")
+    );
+    return { ok: false, error: "Quiz schema invalid after parsing.", sourceChunks: compactSources };
   }
 
   // Ensure subtopic is set
