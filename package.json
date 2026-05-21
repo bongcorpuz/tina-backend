@@ -34,6 +34,7 @@
     "openai": "^4.80.0",
     "pdf-parse": "^1.1.1",
     "pdfjs-dist": "^4.10.38",
-    "tesseract.js": "^4.0.2"
+    "tesseract.js": "^4.0.2",
+    "zod": "^3.25.76"
   }
 }
