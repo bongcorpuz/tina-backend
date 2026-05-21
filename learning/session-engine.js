@@ -531,8 +531,23 @@ export function createLearningHandler({
     // Parse domain from cleanQuestion
     const parsed = parseLearningCommand(cleanQuestion || "", hookCode);
 
-    // No domain provided — show domain menu
+    // No domain provided — show domain menu.
+    // Save mode state first so sticky mode works for the follow-up domain selection
+    // (e.g. user types "/review" → sees menu → types "VAT" → gets routed as "/review VAT").
     if (!parsed.domain) {
+      try {
+        await saveModeState(supabase, {
+          userId,
+          sessionId: conversationId || null,
+          activeHook: hookConfig.hook_code,
+          activeMode: hookConfig.mode,
+          modeTitle: hookConfig.title,
+          lastQuestion: hookConfig.originalQuestion || "",
+          lastAnswer: ""
+        });
+      } catch (err) {
+        console.error("[SESSION ENGINE] saveModeState (domain menu) failed (non-fatal):", err?.message);
+      }
       if (parsed.domainText) {
         return buildUnknownDomainResponse(hookCode, parsed.domainText);
       }
