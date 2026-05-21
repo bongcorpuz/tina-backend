@@ -605,21 +605,25 @@ export function getDomainAuthorities(domainKey = "") {
   return DOMAINS[domainKey]?.authorities || ["NIRC"];
 }
 
+const TAX_DOMAIN_OPTIONS = [
+  "VAT",
+  "Income Tax",
+  "Withholding Tax",
+  "Estate Tax",
+  "Donor's Tax",
+  "Percentage Tax",
+  "Excise Tax",
+  "Prescription",
+  "Tax Dispute"
+];
+
 export function buildDomainMenuText(hookCode = "/quiz") {
   const cmd    = hookCode === "/review" ? "/review" : "/quiz";
   const action = hookCode === "/review" ? "review"  : "quiz";
   return [
     `Choose a Philippine tax domain to ${action}:`,
     "",
-    `${cmd} VAT`,
-    `${cmd} Income Tax`,
-    `${cmd} Withholding Tax`,
-    `${cmd} Estate Tax`,
-    `${cmd} Donor's Tax`,
-    `${cmd} Percentage Tax`,
-    `${cmd} Excise Tax`,
-    `${cmd} Prescription`,
-    `${cmd} Tax Dispute`,
+    ...TAX_DOMAIN_OPTIONS.map((domain) => `- \`${cmd} ${domain}\``),
     "",
     `Example: **${cmd} VAT** or **${cmd} Income Tax**`
   ].join("\n");
