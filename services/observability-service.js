@@ -20,6 +20,12 @@ import { randomUUID } from "crypto";
 
 let _langfuse = null;
 
+// Keeps live trace references so endTrace() can call trace.update() on the
+// correct object rather than issuing a second _langfuse.trace() call, which
+// would create a different SDK object and risk sending an incomplete/nameless
+// update to the Langfuse API.
+const _traceMap = new Map();
+
 function _isEnabled() {
   return (
     process.env.LANGFUSE_ENABLED !== "false" &&
@@ -66,12 +72,13 @@ export function generateTraceId() {
 export function startTrace({ traceId, name = "tina-pipeline", hook, metadata = {} }) {
   if (!_langfuse) return;
   try {
-    _langfuse.trace({
+    const tr = _langfuse.trace({
       id:   traceId,
       name,
       tags: hook ? [hook] : [],
       metadata: { hook, ...metadata }
     });
+    _traceMap.set(traceId, tr);
   } catch {
     // non-fatal
   }
@@ -88,7 +95,13 @@ export function startTrace({ traceId, name = "tina-pipeline", hook, metadata = {
 export function endTrace({ traceId, metadata = {} }) {
   if (!_langfuse || !traceId) return;
   try {
-    _langfuse.trace({ id: traceId, metadata });
+    const tr = _traceMap.get(traceId);
+    if (tr) {
+      tr.update({ metadata });
+      _traceMap.delete(traceId);
+    }
+    // If the trace was never stored (e.g. startTrace was a no-op due to an
+    // earlier error), silently skip — the partial trace is already queued.
   } catch {
     // non-fatal
   }

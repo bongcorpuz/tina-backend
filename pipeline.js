@@ -30,7 +30,8 @@ import { callOpenAIWithOrchestration }            from "./context-orchestration-
 import {
   generateTraceId,
   startTrace,
-  endTrace
+  endTrace,
+  flushObservability
 }                                                 from "./services/observability-service.js";
 import { renderTinaAnswer }                       from "./answer-renderer.js";
 import { enforceFinalAnswerCompliance }           from "./final-answer-compliance.js";
@@ -409,15 +410,24 @@ export async function runPipeline({
   endTrace({
     traceId,
     metadata: {
-      mode:             ctx.mode,
-      primaryIssue:     ctx.issueClassification?.primaryIssue || null,
-      sourceCount:      ctx.rerankedChunks?.length || 0,
-      trueConflicts:    ctx.conflictAnalysis?.count || 0,
-      riskLevel:        ctx.riskScore?.level || null,
-      warnings:         trace.warnings.length,
+      mode:              ctx.mode,
+      primaryIssue:      ctx.issueClassification?.primaryIssue || null,
+      sourceCount:       ctx.rerankedChunks?.length || 0,
+      trueConflicts:     ctx.conflictAnalysis?.count || 0,
+      riskLevel:         ctx.riskScore?.level || null,
+      warnings:          trace.warnings.length,
       pipelineLatencyMs: Date.now() - pipelineStartMs
     }
   });
+
+  // Flush all queued Langfuse observations before the HTTP response is sent.
+  // Without this, the SDK's background timer (flushInterval) may fire after
+  // the response is returned, causing observations to appear empty in the UI.
+  // Capped at 2 s so a slow Langfuse API never delays TINA's answer.
+  await Promise.race([
+    flushObservability(),
+    new Promise(resolve => setTimeout(resolve, 2000))
+  ]);
 
   return {
     answer:              compliantResult?.finalAnswer || compliantResult?.answer || ctx.formattedAnswer,
