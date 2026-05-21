@@ -1029,9 +1029,6 @@ export function formatQuestionBlock({ quiz = {}, storedQuiz = null, teachingText
     ? `Source Anchor: ${quiz.sourceSupport}`
     : null;
 
-  // CPALE trap — only if present
-  const trapLine = quiz.cpaleTrap ? `Reviewer Trap: ${quiz.cpaleTrap}` : null;
-
   const questionText = [
     teachingText ? String(teachingText).trim() : null,
     teachingText ? "" : null,
@@ -1045,7 +1042,6 @@ export function formatQuestionBlock({ quiz = {}, storedQuiz = null, teachingText
     `C. ${choices.C || ""}`,
     `D. ${choices.D || ""}`,
     "",
-    trapLine,
     sourceAnchorLine,
     "",
     "Reply with A, B, C, or D only."

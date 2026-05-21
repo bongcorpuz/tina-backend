@@ -37,7 +37,7 @@ import {
 } from "./domain-normalizer.js";
 import { selectNextSubtopic } from "./question-bank-router.js";
 import { generateQuizQuestion } from "./quiz-engine.js";
-import { generateReviewMaterial } from "./review-engine.js";
+import { generateReviewMaterial, splitReviewContent } from "./review-engine.js";
 
 const ENGINE_VERSION = "1.0.0";
 const MAX_VISIBLE_SOURCES = 5;
@@ -389,6 +389,125 @@ export function createLearningHandler({
     };
   }
 
+  // ── evaluate review answer + generate next topic ────────────────────────────
+
+  async function handleReviewAnswerEvaluation({
+    userId, conversationId, hookConfig, sessionLearning, cleanAnswer
+  }) {
+    const { pendingAnswer } = sessionLearning;
+    const correctAnswer = String(pendingAnswer?.correctAnswer || "").toUpperCase();
+    const answerSectionText = String(pendingAnswer?.answerText || "No answer data available.");
+    const isCorrect = cleanAnswer === correctAnswer;
+
+    // Update score, clear pendingAnswer
+    const scoredState = updateLearningStateAfterAnswer({
+      sessionLearning,
+      subtopic: sessionLearning.subtopic || sessionLearning.domain,
+      isCorrect
+    });
+    scoredState.pendingAnswer = null;
+
+    // Generate next review topic
+    const nextSubtopic = selectNextSubtopic(scoredState.domain, scoredState);
+    let nextDisplayContent = null;
+    let nextAnswerText = null;
+    let nextCorrectAnswer = null;
+    let nextSourceChunks = [];
+
+    if (nextSubtopic) {
+      try {
+        const nextReview = await generateReviewMaterial({
+          domain: scoredState.domain,
+          subtopic: nextSubtopic,
+          sessionLearning: scoredState,
+          callOpenAI: callAssessmentOpenAI,
+          supabase
+        });
+        if (nextReview.ok) {
+          const split = splitReviewContent(nextReview.reviewText);
+          nextDisplayContent = split.displayContent;
+          nextAnswerText = split.answerText;
+          nextCorrectAnswer = split.correctAnswer;
+          nextSourceChunks = nextReview.sourceChunks || [];
+        }
+      } catch (err) {
+        console.error("[SESSION ENGINE] handleReviewAnswerEvaluation next generation failed:", err?.message);
+      }
+    }
+
+    // Update state with next subtopic and new pending answer
+    const finalState = nextSubtopic
+      ? updateLearningStateAfterQuestion({ sessionLearning: scoredState, subtopic: nextSubtopic, storedQuizId: null })
+      : { ...scoredState };
+
+    finalState.pendingAnswer = nextCorrectAnswer
+      ? { answerText: nextAnswerText, correctAnswer: nextCorrectAnswer }
+      : null;
+
+    // Build combined response
+    const parts = [
+      "## Result",
+      isCorrect ? "Correct ✅" : "Incorrect ❌",
+      "",
+      answerSectionText
+    ];
+
+    if (nextDisplayContent) {
+      parts.push("", "---", "", nextDisplayContent);
+    } else {
+      parts.push("", "---", `Type \`/review ${scoredState.domain}\` to continue with another topic.`);
+    }
+
+    const fullAnswer = parts.join("\n");
+
+    const visibleSources = finalizeSourcesForResponse(nextSourceChunks, {
+      maxItems: MAX_VISIBLE_SOURCES
+    });
+
+    await saveConversationTurn({
+      conversationId, userId,
+      question: cleanAnswer,
+      answerText: fullAnswer,
+      sourcesUsed: visibleSources
+    });
+
+    await saveModeState(supabase, {
+      userId,
+      sessionId: conversationId || null,
+      activeHook: hookConfig.hook_code,
+      activeMode: hookConfig.mode,
+      modeTitle: hookConfig.title,
+      lastQuestion: cleanAnswer,
+      lastAnswer: fullAnswer,
+      adaptiveContext: { learning: finalState }
+    });
+
+    return {
+      handled: true,
+      response: {
+        success: true,
+        engine: "TINA Learning System",
+        version: ENGINE_VERSION,
+        hook: hookConfig.hook_code,
+        mode: hookConfig.mode,
+        hookTitle: hookConfig.title,
+        answer: fullAnswer,
+        answerMode: "review_answer_evaluated",
+        isCorrect,
+        topic: scoredState.domain,
+        subtopic: nextSubtopic || sessionLearning.subtopic,
+        sessionScore: finalState.score,
+        sourceStatus: visibleSources.length ? "GDRIVE_GROUNDED" : "TRAINING_KNOWLEDGE",
+        sources: visibleSources,
+        sourcesUsed: visibleSources,
+        sourceCards: visibleSources,
+        vectorMatches: visibleSources.length,
+        learningSystemVersion: ENGINE_VERSION,
+        directOpenAICallDisabled: true
+      }
+    };
+  }
+
   // ── generate review material ────────────────────────────────────────────────
 
   async function handleReviewGeneration({
@@ -449,12 +568,18 @@ export function createLearningHandler({
       };
     }
 
-    // Update session state
+    // Split review content — gate the answer section until user responds
+    const { displayContent, answerText, correctAnswer } = splitReviewContent(reviewResult.reviewText);
+
+    // Update session state + store pendingAnswer
     const updatedState = updateLearningStateAfterQuestion({
       sessionLearning,
       subtopic,
       storedQuizId: null
     });
+    updatedState.pendingAnswer = correctAnswer
+      ? { answerText, correctAnswer }
+      : null;
 
     const visibleSources = finalizeSourcesForResponse(reviewResult.sourceChunks, {
       maxItems: MAX_VISIBLE_SOURCES
@@ -463,7 +588,7 @@ export function createLearningHandler({
     await saveConversationTurn({
       conversationId, userId,
       question: hookConfig.originalQuestion,
-      answerText: reviewResult.reviewText,
+      answerText: displayContent,
       sourcesUsed: visibleSources
     });
 
@@ -474,7 +599,7 @@ export function createLearningHandler({
       activeMode: hookConfig.mode,
       modeTitle: hookConfig.title,
       lastQuestion: hookConfig.originalQuestion || "",
-      lastAnswer: reviewResult.reviewText,
+      lastAnswer: displayContent,
       adaptiveContext: { learning: updatedState }
     });
 
@@ -487,7 +612,7 @@ export function createLearningHandler({
         hook: hookConfig.hook_code,
         mode: hookConfig.mode,
         hookTitle: hookConfig.title,
-        answer: reviewResult.reviewText,
+        answer: displayContent,
         answerMode: "review_material_generated",
         topic: domain,
         subtopic,
@@ -526,6 +651,45 @@ export function createLearningHandler({
       return { handled: false };
     }
 
+    // Fetch mode state first — needed for pending answer check and session context
+    let existingModeState = null;
+    try {
+      existingModeState = await getModeState(supabase, userId, conversationId || null);
+    } catch (err) {
+      console.error("[SESSION ENGINE] getModeState failed:", err?.message);
+    }
+
+    const adaptiveContext = safeObject(existingModeState?.adaptive_context);
+
+    // Check for pending review answer BEFORE parseLearningCommand.
+    // When pendingAnswer is stored, the user must submit A/B/C/D before getting the next topic.
+    if (hookCode === "/review") {
+      const storedLearning = safeObject(adaptiveContext?.learning);
+      if (storedLearning.pendingAnswer) {
+        const quizAnswer = extractQuizAnswer(cleanQuestion || "");
+        if (quizAnswer) {
+          const sessionLearning = {
+            ...emptyLearningState(storedLearning.domain || "", "REVIEW"),
+            ...storedLearning
+          };
+          return handleReviewAnswerEvaluation({
+            userId, conversationId, hookConfig, sessionLearning, cleanAnswer: quizAnswer
+          });
+        }
+        // Non-A/B/C/D received while answer is pending (ask-handler gate should prevent this, but handle gracefully)
+        return {
+          handled: true,
+          response: {
+            success: false,
+            engine: "TINA Learning System",
+            mode: "REVIEW_ANSWER_GATED",
+            answer: `Please answer the current question using A, B, C, or D. Type /bye to exit reviewer mode.`,
+            sources: [], sourcesUsed: [], sourceCards: [], vectorMatches: 0
+          }
+        };
+      }
+    }
+
     const mode = hookCode === "/review" ? "REVIEW" : "QUIZ";
 
     // Parse domain from cleanQuestion
@@ -561,15 +725,7 @@ export function createLearningHandler({
       return buildUnknownDomainResponse(hookCode, cleanQuestion || "");
     }
 
-    // Load existing mode state to retrieve session learning context
-    let existingModeState = null;
-    try {
-      existingModeState = await getModeState(supabase, userId, conversationId || null);
-    } catch (err) {
-      console.error("[SESSION ENGINE] getModeState failed:", err?.message);
-    }
-
-    const adaptiveContext = safeObject(existingModeState?.adaptive_context);
+    // adaptiveContext is already loaded above
     const sessionLearning = readLearningState(adaptiveContext, domain, mode);
 
     // Load learner profile for difficulty adaptation

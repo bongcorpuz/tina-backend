@@ -346,38 +346,28 @@ Philippine taxation context only. Authority-grounded only.
 function formatQuizBlock({ quiz, questionNumber, subtopicLabel, difficultyLabel, compactSources }) {
   const choices = quiz.choices || {};
 
-  const sourceAnchor =
-    quiz.sourceSupport &&
-    !quiz.sourceSupport.includes("GENERAL_FALLBACK") &&
-    !quiz.sourceSupport.includes("NO_INDEXED_SOURCE")
-      ? `\nSource Anchor: ${quiz.sourceSupport}`
-      : "";
-
-  const cpaleTrap = quiz.cpaleTrap
-    ? `\nReviewer Trap: ${quiz.cpaleTrap}`
-    : "";
-
   const sourceLines = compactSources.length
-    ? "\n\nSources:\n" + compactSources
-        .map((s) => `• ${s.citation || s.title || "Indexed Authority"} [${s.authorityType}]`)
+    ? "\n\n---\n\n**Sources:**\n" +
+      compactSources
+        .map((s) => `- ${s.citation || s.title || "Indexed Authority"} *(${s.authorityType})*`)
         .join("\n")
     : "";
 
   return [
-    `Question #${questionNumber}`,
-    `Difficulty: ${difficultyLabel}`,
-    `Topic: ${subtopicLabel}`,
+    `# ${subtopicLabel} — Question #${questionNumber}`,
     "",
+    `**Difficulty:** ${difficultyLabel}`,
+    "",
+    "## Question",
     quiz.question || "Question unavailable.",
     "",
-    `A. ${choices.A || ""}`,
-    `B. ${choices.B || ""}`,
-    `C. ${choices.C || ""}`,
-    `D. ${choices.D || ""}`,
-    cpaleTrap,
-    sourceAnchor,
+    `**A.** ${choices.A || ""}`,
+    `**B.** ${choices.B || ""}`,
+    `**C.** ${choices.C || ""}`,
+    `**D.** ${choices.D || ""}`,
     "",
-    "Reply with A, B, C, or D only.",
+    "---",
+    "_Answer with A, B, C, or D. Type /bye to exit._",
     sourceLines
   ]
     .filter((line) => line !== null && line !== undefined)

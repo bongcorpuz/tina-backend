@@ -702,19 +702,52 @@ Required JSON shape:
       nextSources = finalizeSourcesForResponse(nextQuestion.sourceChunks || [], {
         maxItems: MAX_VISIBLE_SOURCES
       });
-      nextQuestionText = ["", "Next Question:", nextQuestion.answerText].join("\n");
+      nextQuestionText = ["", "---", "**Next Question:**", "", nextQuestion.answerText].join("\n");
     }
 
-    const finalAnswer = [
+    // Split stored explanation at "\nCPALE Trap:" to get clean explanation text
+    const rawExplanation = String(pendingQuiz.explanation || "No explanation available.");
+    const cleanExplanation = rawExplanation.split(/\nCPALE Trap:/i)[0].trim();
+
+    const cpaleTrap = pendingQuiz.source_metadata?.cpaleTrap || null;
+    const correctAnswerText = pendingQuiz.source_metadata?.correctAnswerText || "";
+    const choices = pendingQuiz.choices || {};
+
+    const wrongChoiceLines = ["A", "B", "C", "D"]
+      .filter((l) => l !== correctAnswer)
+      .map((l) => {
+        const choiceText = choices[l];
+        return choiceText ? `**${l}.** ${choiceText} — Incorrect.` : null;
+      })
+      .filter(Boolean);
+
+    const answerDisplay = correctAnswerText
+      ? `${correctAnswer}. ${correctAnswerText}`
+      : correctAnswer;
+
+    const resultParts = [
+      "## Result",
       isCorrect ? "Correct ✅" : "Incorrect ❌",
       "",
-      `Your Answer: ${cleanAnswer}`,
-      `Correct Answer: ${correctAnswer}`,
+      "## Correct Answer",
+      answerDisplay,
       "",
-      `Explanation: ${pendingQuiz.explanation || "No explanation available."}`,
-      nextQuestionText
-    ]
-      .filter(Boolean)
+      "## Explanation",
+      cleanExplanation
+    ];
+
+    if (cpaleTrap) {
+      resultParts.push("", "## Reviewer Trap", cpaleTrap);
+    }
+
+    if (wrongChoiceLines.length) {
+      resultParts.push("", "## Why the Other Choices Are Wrong", ...wrongChoiceLines);
+    }
+
+    resultParts.push(nextQuestionText);
+
+    const finalAnswer = resultParts
+      .filter((line) => line !== null && line !== undefined)
       .join("\n");
 
     await saveConversationTurn({

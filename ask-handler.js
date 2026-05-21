@@ -1954,6 +1954,30 @@ export function createAskHandler({
       const activeHook = existingMode?.active_hook || null;
       const hasActiveAssessmentMode = assessmentHandler.isAssessmentHook(activeHook);
 
+      // MODE SESSION LOCK — prevent switching to a different slash command while in /quiz or /review
+      if (
+        (activeHook === "/quiz" || activeHook === "/review") &&
+        explicitHook &&
+        explicitHook !== activeHook
+      ) {
+        const lockedDomain = existingMode?.adaptive_context?.learning?.domain || "";
+        const modeLabel = activeHook === "/quiz" ? "Quiz" : "Reviewer";
+        const domainSuffix = lockedDomain ? ` for ${lockedDomain}` : "";
+        return res.json({
+          success: false,
+          engine: "TINA_ASK_HANDLER",
+          mode: "MODE_SESSION_LOCKED",
+          hook: activeHook,
+          answer: `You are currently in ${modeLabel} Mode${domainSuffix}. Type /bye, /exit, or /quit first before switching modes.`,
+          sourceStatus: "MODE_SESSION_LOCKED",
+          sources: [],
+          sourcesUsed: [],
+          vectorMatches: 0,
+          askHandlerVersion: ENGINE_VERSION,
+          contextOrchestrationEnabled: true
+        });
+      }
+
       const pendingQuiz = await assessmentHandler.fetchLatestPendingQuiz(userId, conversationId || null);
 
       if (pendingQuiz && !hasActiveAssessmentMode) {
@@ -1973,7 +1997,38 @@ export function createAskHandler({
       }
 
       if (pendingQuiz && hasActiveAssessmentMode && !quizAnswer && !explicitHook) {
-        return res.json(assessmentHandler.buildAssessmentLockedResponse(activeHook));
+        const lockedDomain = existingMode?.adaptive_context?.learning?.domain || "";
+        const modeLabel = activeHook === "/quiz" ? "Quiz" : "Reviewer";
+        return res.json({
+          success: false,
+          engine: "TINA Continuous Learning Engine",
+          mode: "MODE_ANSWER_GATED",
+          answer: `${modeLabel} mode is active${lockedDomain ? ` for ${lockedDomain}` : ""}. Please answer using A, B, C, or D only, or type /bye to exit.`,
+          sourceStatus: "QUIZ_MODE_LOCKED",
+          sources: [],
+          sourcesUsed: [],
+          vectorMatches: 0,
+          askHandlerVersion: ENGINE_VERSION,
+          contextOrchestrationEnabled: true
+        });
+      }
+
+      // REVIEW MODE ANSWER GATE — pendingAnswer in session state means the mini MCQ is awaiting a response
+      const pendingReviewAnswer = existingMode?.adaptive_context?.learning?.pendingAnswer || null;
+      if (pendingReviewAnswer && activeHook === "/review" && !quizAnswer && !explicitHook) {
+        const lockedDomain = existingMode?.adaptive_context?.learning?.domain || "";
+        return res.json({
+          success: false,
+          engine: "TINA_ASK_HANDLER",
+          mode: "MODE_ANSWER_GATED",
+          answer: `Reviewer mode is active${lockedDomain ? ` for ${lockedDomain}` : ""}. Please answer using A, B, C, or D only, or type /bye to exit.`,
+          sourceStatus: "REVIEW_MODE_LOCKED",
+          sources: [],
+          sourcesUsed: [],
+          vectorMatches: 0,
+          askHandlerVersion: ENGINE_VERSION,
+          contextOrchestrationEnabled: true
+        });
       }
 
       let effectiveQuestion = rawQuestion;

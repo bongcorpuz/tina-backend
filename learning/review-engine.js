@@ -249,6 +249,20 @@ Write at CPALE/BAR exam difficulty level.
   };
 }
 
+export function splitReviewContent(fullText = "") {
+  const text = String(fullText || "").trim();
+  const marker = "\n## Correct Answer";
+  const idx = text.indexOf(marker);
+  if (idx === -1) {
+    return { displayContent: text, answerText: "", correctAnswer: null };
+  }
+  const displayContent = text.slice(0, idx).trim();
+  const answerText = text.slice(idx).trim();
+  const m = answerText.match(/^## Correct Answer\s*[\n\r]+([A-D])/im);
+  const correctAnswer = m ? m[1].toUpperCase() : null;
+  return { displayContent, answerText, correctAnswer };
+}
+
 export function reviewEngineHealthCheck() {
   return {
     ok: true,
