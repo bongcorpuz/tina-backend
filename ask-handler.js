@@ -1984,6 +1984,86 @@ export function createAskHandler({
         await assessmentHandler.clearPendingQuizAttempts(userId, conversationId || null);
       }
 
+      // ── QUIZ SELECTION GATE ───────────────────────────────────────────────────
+      // When /quiz is active but no quiz question has been stored yet (i.e., the
+      // domain-selection menu was shown and the user has not yet chosen a domain),
+      // only "/quiz <domain>" commands and exit commands may proceed.
+      //
+      // Without this gate, requests arriving via the /ask endpoint (forcedHook="/ask")
+      // bypass the sticky-mode prepend and fall through to the normal RAG pipeline.
+      //
+      // Condition: activeHook === "/quiz" AND pendingQuiz is null (no stored question)
+      //            AND the learning context has no domain yet.
+      if (
+        activeHook === "/quiz" &&
+        !pendingQuiz &&
+        !isExitCommand(rawQuestion)
+      ) {
+        const quizLearningDomain =
+          existingMode?.adaptive_context?.learning?.domain || null;
+
+        if (!quizLearningDomain) {
+          const lowerInput = normalizeLower(rawQuestion);
+          // Valid domain commands must start with "/quiz " (e.g., "/quiz VAT")
+          // or be exactly "/quiz" (re-show the menu).
+          const isValidDomainCommand =
+            lowerInput.startsWith("/quiz ") || lowerInput === "/quiz";
+
+          if (!isValidDomainCommand) {
+            console.log("[TINA ROUTE] QUIZ_SELECTION_LOCKED — blocking:", {
+              rawQuestion: rawQuestion.slice(0, 80),
+              activeHook,
+              forcedHook,
+              quizLearningDomain
+            });
+            return res.json({
+              success: false,
+              engine: "TINA_ASK_HANDLER",
+              mode: "QUIZ_SELECTION_LOCKED",
+              hook: "/quiz",
+              answer:
+                "Quiz mode is waiting for a tax domain. Please choose one of the listed /quiz options, or type /bye to exit.",
+              sourceStatus: "QUIZ_SELECTION_LOCKED",
+              sources: [],
+              sourcesUsed: [],
+              vectorMatches: 0,
+              askHandlerVersion: ENGINE_VERSION,
+              contextOrchestrationEnabled: true
+            });
+          }
+        }
+      }
+      // ── END QUIZ SELECTION GATE ───────────────────────────────────────────────
+
+      // ── QUIZ DOMAIN SWITCH BLOCK ──────────────────────────────────────────────
+      // When a quiz question is pending (ANSWERING phase) and the user types a
+      // /quiz command (e.g., "/quiz Income Tax"), the MODE SESSION LOCK above does
+      // not fire because explicitHook === activeHook ("/quiz" === "/quiz").
+      // This second guard catches same-hook domain-switch attempts.
+      if (
+        pendingQuiz &&
+        hasActiveAssessmentMode &&
+        activeHook === "/quiz" &&
+        explicitHook === "/quiz"
+      ) {
+        const lockedDomain = existingMode?.adaptive_context?.learning?.domain || "";
+        const domainSuffix = lockedDomain ? ` for ${lockedDomain}` : "";
+        return res.json({
+          success: false,
+          engine: "TINA_ASK_HANDLER",
+          mode: "MODE_SESSION_LOCKED",
+          hook: "/quiz",
+          answer: `You are currently in Quiz Mode${domainSuffix}. Type /bye, /exit, or /quit first before switching modes.`,
+          sourceStatus: "MODE_SESSION_LOCKED",
+          sources: [],
+          sourcesUsed: [],
+          vectorMatches: 0,
+          askHandlerVersion: ENGINE_VERSION,
+          contextOrchestrationEnabled: true
+        });
+      }
+      // ── END QUIZ DOMAIN SWITCH BLOCK ──────────────────────────────────────────
+
       const quizAnswer = extractQuizAnswer(rawQuestion);
 
       if (pendingQuiz && hasActiveAssessmentMode && quizAnswer && !explicitHook) {
