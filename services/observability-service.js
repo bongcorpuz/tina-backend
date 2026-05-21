@@ -20,11 +20,12 @@ import { randomUUID } from "crypto";
 
 let _langfuse = null;
 
-// Keeps live trace references so endTrace() can call trace.update() on the
-// correct object rather than issuing a second _langfuse.trace() call, which
-// would create a different SDK object and risk sending an incomplete/nameless
-// update to the Langfuse API.
-const _traceMap = new Map();
+// Keeps live trace references (and names) so endTrace() can call tr.update()
+// on the correct object AND re-supply the trace name.  Without the name,
+// LangfuseTraceClient.update() enqueues a second "trace-create" event with no
+// name field — the Langfuse server may overwrite the name with null, causing
+// the trace to vanish from the Tracing table's default filtered view.
+const _traceMap = new Map(); // traceId → { tr: LangfuseTraceClient, name: string }
 
 function _isEnabled() {
   return (
@@ -78,7 +79,7 @@ export function startTrace({ traceId, name = "tina-pipeline", hook, metadata = {
       tags: hook ? [hook] : [],
       metadata: { hook, ...metadata }
     });
-    _traceMap.set(traceId, tr);
+    _traceMap.set(traceId, { tr, name });
   } catch {
     // non-fatal
   }
@@ -95,9 +96,11 @@ export function startTrace({ traceId, name = "tina-pipeline", hook, metadata = {
 export function endTrace({ traceId, metadata = {} }) {
   if (!_langfuse || !traceId) return;
   try {
-    const tr = _traceMap.get(traceId);
-    if (tr) {
-      tr.update({ metadata });
+    const stored = _traceMap.get(traceId);
+    if (stored) {
+      // Re-supply name so the SDK's second "trace-create" event doesn't land
+      // on the Langfuse server with a blank name and overwrite the original.
+      stored.tr.update({ name: stored.name, metadata });
       _traceMap.delete(traceId);
     }
     // If the trace was never stored (e.g. startTrace was a no-op due to an
@@ -154,7 +157,9 @@ export function endGeneration(gen, { output, usage, latencyMs, metadata = {} } =
   try {
     gen.end({
       output,
-      endTime: new Date(),
+      // endTime is omitted — LangfuseGenerationClient.end() always appends its
+      // own endTime: new Date() after the spread, so any value we pass here
+      // would be overwritten anyway.
       usage: {
         input:  usage?.prompt_tokens     ?? undefined,
         output: usage?.completion_tokens ?? undefined,
@@ -171,12 +176,19 @@ export function endGeneration(gen, { output, usage, latencyMs, metadata = {} } =
 /**
  * Flushes pending observations to Langfuse.
  * In a long-running Express server the SDK auto-flushes every flushInterval ms.
- * Call this only when you need to force-flush (e.g., serverless teardown).
+ * Call at the end of every pipeline run to force-flush before the HTTP response
+ * is sent, so observations don't sit in the queue for up to flushInterval ms.
+ *
+ * Uses awaitAllQueuedAndPendingRequests() rather than flushAsync() because
+ * flushAsync() only waits for ONE batch's HTTP callback; any other in-flight
+ * HTTP promises from concurrent/background flushes would still be pending.
+ * awaitAllQueuedAndPendingRequests() clears the timer, flushes, and awaits ALL
+ * pendingIngestionPromises — ensuring the Langfuse server receives everything.
  */
 export async function flushObservability() {
   if (!_langfuse) return;
   try {
-    await _langfuse.flushAsync();
+    await _langfuse.awaitAllQueuedAndPendingRequests();
   } catch {
     // non-fatal
   }
