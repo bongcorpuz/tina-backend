@@ -39,6 +39,7 @@ import {
 } from "./ask-helpers.js";
 
 import { createBackgroundReindexController } from "./reindex-service.js";
+import { registerTinaRoutes } from "./routes/index.js";
 
 import { queryIntentEngineHealthCheck } from "./query-intent-engine.js";
 import { issueClassificationEngineHealthCheck } from "./issue-classification-engine.js";
@@ -192,18 +193,6 @@ function allowAuthenticatedOrIndexSecret(req, res, next) {
   }
 
   return authenticate(req, res, next);
-}
-
-function attachForcedHook(hookCode) {
-  return (req, res, next) => {
-    req.body = {
-      ...(req.body || {}),
-      hook: req.body?.hook || hookCode,
-      forcedHook: hookCode
-    };
-    console.log(`[TINA API BODY] route=${hookCode} forcedHook=${req.body.forcedHook} question=${String(req.body.question || "").slice(0, 60)}`);
-    return next();
-  };
 }
 
 function localContextOrchestrationHealthCheck() {
@@ -655,18 +644,7 @@ app.get("/vector-stats", allowAuthenticatedOrIndexSecret, async (req, res) => {
 
 /* ================= ASK / MODE ROUTES ================= */
 
-app.post("/ask",        authenticate, attachForcedHook("/ask"),        askHandler);
-app.post("/tax",        authenticate, attachForcedHook("/tax"),        askHandler);
-app.post("/review",    authenticate, attachForcedHook("/review"),    askHandler);
-app.post("/quiz",      authenticate, attachForcedHook("/quiz"),      askHandler);
-app.post("/diagnostic", authenticate, attachForcedHook("/diagnostic"), askHandler);
-app.post("/source",    authenticate, attachForcedHook("/source"),    askHandler);
-app.post("/audit",     authenticate, attachForcedHook("/audit"),     askHandler);
-app.post("/case",      authenticate, attachForcedHook("/case"),      askHandler);
-app.post("/debug",     authenticate, attachForcedHook("/debug"),     askHandler);
-app.post("/patch",     authenticate, attachForcedHook("/patch"),     askHandler);
-app.post("/progress",  authenticate, attachForcedHook("/progress"),  askHandler);
-app.post("/feedback",  authenticate, attachForcedHook("/feedback"),  askHandler);
+registerTinaRoutes(app, { askHandler });
 
 /* ================= NOT FOUND ================= */
 
