@@ -62,6 +62,50 @@ const ENGINE_VERSION = "9.0.0";
 
 const EXIT_COMMANDS = ["/bye", "/exit", "/stop", "/quit", "/reset"];
 
+const AUDIT_WELCOME_MESSAGE = `\
+You are now in **/audit mode**.
+
+This mode is specifically designed for **COMPLEX_ADVISORY** matters involving:
+
+- BIR audit
+- Letter of Authority (LOA)
+- Notice for Informal Conference (NIC)
+- Preliminary Assessment Notice (PAN)
+- Final Assessment Notice / Formal Letter of Demand (FAN/FLD)
+- Deficiency tax assessments
+- Protest preparation
+- Request for reconsideration
+- Request for reinvestigation
+- Tax exposure analysis
+- Documentary evidence gaps
+- Audit defense strategy
+- CTA-preparation support
+- Settlement or compromise evaluation
+
+In this mode, TINA will act as a **senior Philippine tax controversy advisor, CPA-lawyer, BIR audit defense strategist, and Big 4-style tax advisory partner.**
+
+You may ask questions such as:
+- "I received an LOA. What should I check first?"
+- "How do I respond to a PAN?"
+- "What are the defenses against this deficiency VAT assessment?"
+- "What documents should I prepare for BIR audit?"
+- "Can this assessment be protested?"
+- "What are the procedural defects in this BIR notice?"
+- "What are the tax, legal, and accounting risks?"
+
+TINA will answer in a **natural advisory format** — not a rigid template — unless you specifically ask for a formal memo, protest draft, board report, or legal opinion.
+
+**Source-grounding:** TINA will prioritize indexed authorities, indexed jurisprudence, indexed BIR issuances, and indexed tax references before giving legal or tax conclusions.
+
+**Anti-hallucination:** TINA will never invent provisions, cases, Revenue Regulations, RMCs, RMOs, RAMOs, or BIR rulings. If an authority is unavailable from indexed sources, TINA will say so explicitly.
+
+---
+
+To exit **/audit mode** and return to normal **/ask mode**, type: \`/bye\`, \`/quit\`, or \`/exit\`
+
+_What is your audit or tax controversy matter?_\
+`.trim();
+
 const ALLOWED_HOOKS = [
   "/ask",
   "/quiz",
@@ -1710,6 +1754,7 @@ export function createAskHandler({
     else if (activeHook === "/case") answerText = "Case analysis session ended. Type /case to start a new case analysis or /ask to continue with a regular question.";
     else if (activeHook === "/source") answerText = "Source finder session ended. Type /source to look up another source or /ask to continue with a regular question.";
     else if (activeHook === "/diagnostic") answerText = "Diagnostic session ended. Type /diagnostic to start a new diagnostic or /ask to continue with a regular question.";
+    else if (activeHook === "/audit") answerText = "You have exited /audit mode and returned to normal /ask mode.";
     else if (activeHook !== "/ask") answerText = `${activeHook} session ended. Type /ask to continue with a regular question.`;
 
     return {
@@ -2088,6 +2133,60 @@ export function createAskHandler({
 
         return res.json(result.response);
       }
+
+      // ─── AUDIT MODE SWITCH ─────────────────────────────────────────────────────
+      // When the user types "/audit" with no following text, treat it as a mode
+      // switch — NOT a retrieval query. Save audit session state and return the
+      // welcome prompt immediately. The NEXT user message becomes the real query.
+      if (
+        compactHookConfig.hook_code === "/audit" &&
+        !String(compactHookConfig.cleanQuestion || "").trim()
+      ) {
+        const auditWelcome = AUDIT_WELCOME_MESSAGE;
+
+        await saveConversationTurn({
+          conversationId,
+          userId,
+          question: compactHookConfig.originalQuestion,
+          answerText: auditWelcome,
+          sourcesUsed: [],
+          fallbackReferences: []
+        });
+
+        await saveModeState(supabase, {
+          userId,
+          sessionId: conversationId || null,
+          activeHook: "/audit",
+          activeMode: "AUDIT_MODE",
+          modeTitle: "Audit / Evidence Evaluation Mode",
+          lastQuestion: compactHookConfig.originalQuestion,
+          lastAnswer: auditWelcome
+        });
+
+        return res.json({
+          success:              true,
+          engine:               "TINA_ASK_HANDLER",
+          version:              ENGINE_VERSION,
+          hook:                 "/audit",
+          mode:                 "AUDIT_MODE",
+          routeKind:            "MODE_SWITCH",
+          hookTitle:            "Audit / Evidence Evaluation Mode",
+          answer:               auditWelcome,
+          sources:              [],
+          sourcesUsed:          [],
+          sourceCards:          [],
+          vectorMatches:        0,
+          sourceStatus:         "AUDIT_MODE_ACTIVATED",
+          responseMode:         "COMPLEX_ADVISORY",
+          orchestrationMode:    "COMPLEX_ADVISORY",
+          activeHook:           "/audit",
+          activeMode:           "AUDIT_MODE",
+          auditModeActivated:   true,
+          askHandlerVersion:    ENGINE_VERSION,
+          contextOrchestrationEnabled: true
+        });
+      }
+      // ─── END AUDIT MODE SWITCH ──────────────────────────────────────────────────
 
       const adaptiveContext = buildAdaptiveContextForHook({
         hookConfig: compactHookConfig,
