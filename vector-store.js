@@ -1623,7 +1623,9 @@ export async function searchSimilar(arg1, arg2) {
 
   const { data, error } = await supabaseClient.rpc("match_tina_vectors", {
     query_embedding: queryEmbedding,
-    match_count: matchCount
+    match_threshold: 0.0,
+    match_count: matchCount,
+    filter_metadata: {}
   });
 
   if (error) {
