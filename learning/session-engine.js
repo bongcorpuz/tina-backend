@@ -38,6 +38,12 @@ import {
 import { selectNextSubtopic } from "./question-bank-router.js";
 import { generateQuizQuestion } from "./quiz-engine.js";
 import { generateReviewMaterial, splitReviewContent } from "./review-engine.js";
+import {
+  generateTraceId,
+  startTrace,
+  endTrace,
+  flushObservability
+} from "../services/observability-service.js";
 
 const ENGINE_VERSION = "1.0.0";
 const MAX_VISIBLE_SOURCES = 5;
@@ -268,125 +274,134 @@ export function createLearningHandler({
   async function handleQuizGeneration({
     userId, conversationId, hookConfig, domain, sessionLearning
   }) {
-    const subtopic = selectNextSubtopic(domain, sessionLearning);
+    const traceId = generateTraceId();
+    startTrace({ traceId, name: "tina-quiz", hook: "/quiz", metadata: { domain } });
+    const _tracedCall = (params) => callAssessmentOpenAI({ ...params, _traceId: traceId });
 
-    if (!subtopic) {
-      return {
-        handled: true,
-        response: {
-          success: false,
-          engine: "TINA Learning System",
-          hook: hookConfig.hook_code,
-          mode: hookConfig.mode,
-          answer: `No subtopics found for domain "${domain}". Type /quiz to choose a different domain.`,
-          sources: [], sourcesUsed: [], sourceCards: [], vectorMatches: 0
-        }
-      };
-    }
-
-    let questionResult;
     try {
-      questionResult = await generateQuizQuestion({
-        domain,
-        subtopic,
-        sessionLearning,
-        userId,
-        conversationId,
-        hookConfig,
-        callOpenAI: callAssessmentOpenAI,
-        supabase
-      });
-    } catch (err) {
-      console.error("[SESSION ENGINE] generateQuizQuestion failed:", err?.message);
-      return {
-        handled: true,
-        response: {
-          success: false,
-          engine: "TINA Learning System",
-          hook: hookConfig.hook_code,
-          mode: hookConfig.mode,
-          answer: `TINA could not generate a quiz question for "${domain}". Please try again.`,
-          error: err?.message,
-          sources: [], sourcesUsed: [], sourceCards: [], vectorMatches: 0
-        }
-      };
-    }
+      const subtopic = selectNextSubtopic(domain, sessionLearning);
 
-    if (!questionResult.ok) {
-      return {
-        handled: true,
-        response: {
-          success: false,
-          engine: "TINA Learning System",
-          hook: hookConfig.hook_code,
-          mode: hookConfig.mode,
-          answer: `TINA could not generate a quiz question for "${domain}" / "${subtopic}". Please try again.`,
-          sources: [], sourcesUsed: [], sourceCards: [], vectorMatches: 0
-        }
-      };
-    }
-
-    // Update session state
-    const updatedState = updateLearningStateAfterQuestion({
-      sessionLearning,
-      subtopic,
-      storedQuizId: questionResult.storedQuiz?.id || null
-    });
-
-    await saveLearningState({
-      supabase, userId, conversationId, hookConfig, sessionLearning: updatedState
-    });
-
-    const visibleSources = finalizeSourcesForResponse(questionResult.sourceChunks, {
-      maxItems: MAX_VISIBLE_SOURCES
-    });
-
-    await saveConversationTurn({
-      conversationId, userId,
-      question: hookConfig.originalQuestion,
-      answerText: questionResult.answerText,
-      sourcesUsed: visibleSources
-    });
-
-    await saveModeState(supabase, {
-      userId,
-      sessionId: conversationId || null,
-      activeHook: hookConfig.hook_code,
-      activeMode: hookConfig.mode,
-      modeTitle: hookConfig.title,
-      lastQuestion: hookConfig.originalQuestion || "",
-      lastAnswer: questionResult.answerText,
-      adaptiveContext: { learning: updatedState }
-    });
-
-    return {
-      handled: true,
-      response: {
-        success: true,
-        engine: "TINA Learning System",
-        version: ENGINE_VERSION,
-        hook: hookConfig.hook_code,
-        mode: hookConfig.mode,
-        hookTitle: hookConfig.title,
-        answer: questionResult.answerText,
-        answerMode: "quiz_question_generated",
-        quizId: questionResult.storedQuiz?.id || null,
-        topic: domain,
-        subtopic,
-        difficulty: questionResult.quiz?.difficulty || 1,
-        correctAnswerStored: Boolean(questionResult.storedQuiz?.correct_answer),
-        pendingAnswerStored: questionResult.storedQuiz?.user_answer === null,
-        confidence: visibleSources.length ? "GDRIVE_GROUNDED" : "GENERAL_ADAPTIVE",
-        sourceStatus: visibleSources.length ? "GDRIVE_GROUNDED_QUESTION_READY" : "GENERAL_QUESTION_READY",
-        sources: visibleSources,
-        sourcesUsed: visibleSources,
-        sourceCards: visibleSources,
-        vectorMatches: visibleSources.length,
-        sessionScore: updatedState.score,
-        learningSystemVersion: ENGINE_VERSION,
-        directOpenAICallDisabled: true
+      if (!subtopic) {
+        return {
+          handled: true,
+          response: {
+            success: false,
+            engine: "TINA Learning System",
+            hook: hookConfig.hook_code,
+            mode: hookConfig.mode,
+            answer: `No subtopics found for domain "${domain}". Type /quiz to choose a different domain.`,
+            sources: [], sourcesUsed: [], sourceCards: [], vectorMatches: 0
+          }
+        };
       }
-    };
+
+      let questionResult;
+      try {
+        questionResult = await generateQuizQuestion({
+          domain,
+          subtopic,
+          sessionLearning,
+          userId,
+          conversationId,
+          hookConfig,
+          callOpenAI: _tracedCall,
+          supabase
+        });
+      } catch (err) {
+        console.error("[SESSION ENGINE] generateQuizQuestion failed:", err?.message);
+        return {
+          handled: true,
+          response: {
+            success: false,
+            engine: "TINA Learning System",
+            hook: hookConfig.hook_code,
+            mode: hookConfig.mode,
+            answer: `TINA could not generate a quiz question for "${domain}". Please try again.`,
+            error: err?.message,
+            sources: [], sourcesUsed: [], sourceCards: [], vectorMatches: 0
+          }
+        };
+      }
+
+      if (!questionResult.ok) {
+        return {
+          handled: true,
+          response: {
+            success: false,
+            engine: "TINA Learning System",
+            hook: hookConfig.hook_code,
+            mode: hookConfig.mode,
+            answer: `TINA could not generate a quiz question for "${domain}" / "${subtopic}". Please try again.`,
+            sources: [], sourcesUsed: [], sourceCards: [], vectorMatches: 0
+          }
+        };
+      }
+
+      // Update session state
+      const updatedState = updateLearningStateAfterQuestion({
+        sessionLearning,
+        subtopic,
+        storedQuizId: questionResult.storedQuiz?.id || null
+      });
+
+      await saveLearningState({
+        supabase, userId, conversationId, hookConfig, sessionLearning: updatedState
+      });
+
+      const visibleSources = finalizeSourcesForResponse(questionResult.sourceChunks, {
+        maxItems: MAX_VISIBLE_SOURCES
+      });
+
+      await saveConversationTurn({
+        conversationId, userId,
+        question: hookConfig.originalQuestion,
+        answerText: questionResult.answerText,
+        sourcesUsed: visibleSources
+      });
+
+      await saveModeState(supabase, {
+        userId,
+        sessionId: conversationId || null,
+        activeHook: hookConfig.hook_code,
+        activeMode: hookConfig.mode,
+        modeTitle: hookConfig.title,
+        lastQuestion: hookConfig.originalQuestion || "",
+        lastAnswer: questionResult.answerText,
+        adaptiveContext: { learning: updatedState }
+      });
+
+      return {
+        handled: true,
+        response: {
+          success: true,
+          engine: "TINA Learning System",
+          version: ENGINE_VERSION,
+          hook: hookConfig.hook_code,
+          mode: hookConfig.mode,
+          hookTitle: hookConfig.title,
+          answer: questionResult.answerText,
+          answerMode: "quiz_question_generated",
+          quizId: questionResult.storedQuiz?.id || null,
+          topic: domain,
+          subtopic,
+          difficulty: questionResult.quiz?.difficulty || 1,
+          correctAnswerStored: Boolean(questionResult.storedQuiz?.correct_answer),
+          pendingAnswerStored: questionResult.storedQuiz?.user_answer === null,
+          confidence: visibleSources.length ? "GDRIVE_GROUNDED" : "GENERAL_ADAPTIVE",
+          sourceStatus: visibleSources.length ? "GDRIVE_GROUNDED_QUESTION_READY" : "GENERAL_QUESTION_READY",
+          sources: visibleSources,
+          sourcesUsed: visibleSources,
+          sourceCards: visibleSources,
+          vectorMatches: visibleSources.length,
+          sessionScore: updatedState.score,
+          learningSystemVersion: ENGINE_VERSION,
+          directOpenAICallDisabled: true
+        }
+      };
+    } finally {
+      endTrace({ traceId, metadata: { domain } });
+      flushObservability().catch(() => {});
+    }
   }
 
   // ── evaluate review answer + generate next topic ────────────────────────────
@@ -394,118 +409,127 @@ export function createLearningHandler({
   async function handleReviewAnswerEvaluation({
     userId, conversationId, hookConfig, sessionLearning, cleanAnswer
   }) {
-    const { pendingAnswer } = sessionLearning;
-    const correctAnswer = String(pendingAnswer?.correctAnswer || "").toUpperCase();
-    const answerSectionText = String(pendingAnswer?.answerText || "No answer data available.");
-    const isCorrect = cleanAnswer === correctAnswer;
+    const traceId = generateTraceId();
+    startTrace({ traceId, name: "tina-review-answer", hook: "/review", metadata: { domain: sessionLearning.domain } });
+    const _tracedCall = (params) => callAssessmentOpenAI({ ...params, _traceId: traceId });
 
-    // Update score, clear pendingAnswer
-    const scoredState = updateLearningStateAfterAnswer({
-      sessionLearning,
-      subtopic: sessionLearning.subtopic || sessionLearning.domain,
-      isCorrect
-    });
-    scoredState.pendingAnswer = null;
+    try {
+      const { pendingAnswer } = sessionLearning;
+      const correctAnswer = String(pendingAnswer?.correctAnswer || "").toUpperCase();
+      const answerSectionText = String(pendingAnswer?.answerText || "No answer data available.");
+      const isCorrect = cleanAnswer === correctAnswer;
 
-    // Generate next review topic
-    const nextSubtopic = selectNextSubtopic(scoredState.domain, scoredState);
-    let nextDisplayContent = null;
-    let nextAnswerText = null;
-    let nextCorrectAnswer = null;
-    let nextSourceChunks = [];
+      // Update score, clear pendingAnswer
+      const scoredState = updateLearningStateAfterAnswer({
+        sessionLearning,
+        subtopic: sessionLearning.subtopic || sessionLearning.domain,
+        isCorrect
+      });
+      scoredState.pendingAnswer = null;
 
-    if (nextSubtopic) {
-      try {
-        const nextReview = await generateReviewMaterial({
-          domain: scoredState.domain,
-          subtopic: nextSubtopic,
-          sessionLearning: scoredState,
-          callOpenAI: callAssessmentOpenAI,
-          supabase
-        });
-        if (nextReview.ok) {
-          const split = splitReviewContent(nextReview.reviewText);
-          nextDisplayContent = split.displayContent;
-          nextAnswerText = split.answerText;
-          nextCorrectAnswer = split.correctAnswer;
-          nextSourceChunks = nextReview.sourceChunks || [];
+      // Generate next review topic
+      const nextSubtopic = selectNextSubtopic(scoredState.domain, scoredState);
+      let nextDisplayContent = null;
+      let nextAnswerText = null;
+      let nextCorrectAnswer = null;
+      let nextSourceChunks = [];
+
+      if (nextSubtopic) {
+        try {
+          const nextReview = await generateReviewMaterial({
+            domain: scoredState.domain,
+            subtopic: nextSubtopic,
+            sessionLearning: scoredState,
+            callOpenAI: _tracedCall,
+            supabase
+          });
+          if (nextReview.ok) {
+            const split = splitReviewContent(nextReview.reviewText);
+            nextDisplayContent = split.displayContent;
+            nextAnswerText = split.answerText;
+            nextCorrectAnswer = split.correctAnswer;
+            nextSourceChunks = nextReview.sourceChunks || [];
+          }
+        } catch (err) {
+          console.error("[SESSION ENGINE] handleReviewAnswerEvaluation next generation failed:", err?.message);
         }
-      } catch (err) {
-        console.error("[SESSION ENGINE] handleReviewAnswerEvaluation next generation failed:", err?.message);
       }
-    }
 
-    // Update state with next subtopic and new pending answer
-    const finalState = nextSubtopic
-      ? updateLearningStateAfterQuestion({ sessionLearning: scoredState, subtopic: nextSubtopic, storedQuizId: null })
-      : { ...scoredState };
+      // Update state with next subtopic and new pending answer
+      const finalState = nextSubtopic
+        ? updateLearningStateAfterQuestion({ sessionLearning: scoredState, subtopic: nextSubtopic, storedQuizId: null })
+        : { ...scoredState };
 
-    finalState.pendingAnswer = nextCorrectAnswer
-      ? { answerText: nextAnswerText, correctAnswer: nextCorrectAnswer }
-      : null;
+      finalState.pendingAnswer = nextCorrectAnswer
+        ? { answerText: nextAnswerText, correctAnswer: nextCorrectAnswer }
+        : null;
 
-    // Build combined response
-    const parts = [
-      "## Result",
-      isCorrect ? "Correct ✅" : "Incorrect ❌",
-      "",
-      answerSectionText
-    ];
+      // Build combined response
+      const parts = [
+        "## Result",
+        isCorrect ? "Correct ✅" : "Incorrect ❌",
+        "",
+        answerSectionText
+      ];
 
-    if (nextDisplayContent) {
-      parts.push("", "---", "", nextDisplayContent);
-    } else {
-      parts.push("", "---", `Type \`/review ${scoredState.domain}\` to continue with another topic.`);
-    }
-
-    const fullAnswer = parts.join("\n");
-
-    const visibleSources = finalizeSourcesForResponse(nextSourceChunks, {
-      maxItems: MAX_VISIBLE_SOURCES
-    });
-
-    await saveConversationTurn({
-      conversationId, userId,
-      question: cleanAnswer,
-      answerText: fullAnswer,
-      sourcesUsed: visibleSources
-    });
-
-    await saveModeState(supabase, {
-      userId,
-      sessionId: conversationId || null,
-      activeHook: hookConfig.hook_code,
-      activeMode: hookConfig.mode,
-      modeTitle: hookConfig.title,
-      lastQuestion: cleanAnswer,
-      lastAnswer: fullAnswer,
-      adaptiveContext: { learning: finalState }
-    });
-
-    return {
-      handled: true,
-      response: {
-        success: true,
-        engine: "TINA Learning System",
-        version: ENGINE_VERSION,
-        hook: hookConfig.hook_code,
-        mode: hookConfig.mode,
-        hookTitle: hookConfig.title,
-        answer: fullAnswer,
-        answerMode: "review_answer_evaluated",
-        isCorrect,
-        topic: scoredState.domain,
-        subtopic: nextSubtopic || sessionLearning.subtopic,
-        sessionScore: finalState.score,
-        sourceStatus: visibleSources.length ? "GDRIVE_GROUNDED" : "TRAINING_KNOWLEDGE",
-        sources: visibleSources,
-        sourcesUsed: visibleSources,
-        sourceCards: visibleSources,
-        vectorMatches: visibleSources.length,
-        learningSystemVersion: ENGINE_VERSION,
-        directOpenAICallDisabled: true
+      if (nextDisplayContent) {
+        parts.push("", "---", "", nextDisplayContent);
+      } else {
+        parts.push("", "---", `Type \`/review ${scoredState.domain}\` to continue with another topic.`);
       }
-    };
+
+      const fullAnswer = parts.join("\n");
+
+      const visibleSources = finalizeSourcesForResponse(nextSourceChunks, {
+        maxItems: MAX_VISIBLE_SOURCES
+      });
+
+      await saveConversationTurn({
+        conversationId, userId,
+        question: cleanAnswer,
+        answerText: fullAnswer,
+        sourcesUsed: visibleSources
+      });
+
+      await saveModeState(supabase, {
+        userId,
+        sessionId: conversationId || null,
+        activeHook: hookConfig.hook_code,
+        activeMode: hookConfig.mode,
+        modeTitle: hookConfig.title,
+        lastQuestion: cleanAnswer,
+        lastAnswer: fullAnswer,
+        adaptiveContext: { learning: finalState }
+      });
+
+      return {
+        handled: true,
+        response: {
+          success: true,
+          engine: "TINA Learning System",
+          version: ENGINE_VERSION,
+          hook: hookConfig.hook_code,
+          mode: hookConfig.mode,
+          hookTitle: hookConfig.title,
+          answer: fullAnswer,
+          answerMode: "review_answer_evaluated",
+          isCorrect,
+          topic: scoredState.domain,
+          subtopic: nextSubtopic || sessionLearning.subtopic,
+          sessionScore: finalState.score,
+          sourceStatus: visibleSources.length ? "GDRIVE_GROUNDED" : "TRAINING_KNOWLEDGE",
+          sources: visibleSources,
+          sourcesUsed: visibleSources,
+          sourceCards: visibleSources,
+          vectorMatches: visibleSources.length,
+          learningSystemVersion: ENGINE_VERSION,
+          directOpenAICallDisabled: true
+        }
+      };
+    } finally {
+      endTrace({ traceId, metadata: { domain: sessionLearning.domain } });
+      flushObservability().catch(() => {});
+    }
   }
 
   // ── generate review material ────────────────────────────────────────────────
@@ -513,121 +537,130 @@ export function createLearningHandler({
   async function handleReviewGeneration({
     userId, conversationId, hookConfig, domain, sessionLearning
   }) {
-    const subtopic = selectNextSubtopic(domain, sessionLearning);
+    const traceId = generateTraceId();
+    startTrace({ traceId, name: "tina-review", hook: "/review", metadata: { domain } });
+    const _tracedCall = (params) => callAssessmentOpenAI({ ...params, _traceId: traceId });
 
-    if (!subtopic) {
-      return {
-        handled: true,
-        response: {
-          success: false,
-          engine: "TINA Learning System",
-          hook: hookConfig.hook_code,
-          mode: hookConfig.mode,
-          answer: `No subtopics found for domain "${domain}". Type /review to choose a different domain.`,
-          sources: [], sourcesUsed: [], sourceCards: [], vectorMatches: 0
-        }
-      };
-    }
-
-    let reviewResult;
     try {
-      reviewResult = await generateReviewMaterial({
-        domain,
-        subtopic,
-        sessionLearning,
-        callOpenAI: callAssessmentOpenAI,
-        supabase
-      });
-    } catch (err) {
-      console.error("[SESSION ENGINE] generateReviewMaterial failed:", err?.message);
-      return {
-        handled: true,
-        response: {
-          success: false,
-          engine: "TINA Learning System",
-          hook: hookConfig.hook_code,
-          mode: hookConfig.mode,
-          answer: `TINA could not generate review material for "${domain}". Please try again.`,
-          error: err?.message,
-          sources: [], sourcesUsed: [], sourceCards: [], vectorMatches: 0
-        }
-      };
-    }
+      const subtopic = selectNextSubtopic(domain, sessionLearning);
 
-    if (!reviewResult.ok) {
-      return {
-        handled: true,
-        response: {
-          success: false,
-          engine: "TINA Learning System",
-          hook: hookConfig.hook_code,
-          mode: hookConfig.mode,
-          answer: `TINA could not generate review material for "${domain}" / "${subtopic}". Please try again.`,
-          sources: [], sourcesUsed: [], sourceCards: [], vectorMatches: 0
-        }
-      };
-    }
-
-    // Split review content — gate the answer section until user responds
-    const { displayContent, answerText, correctAnswer } = splitReviewContent(reviewResult.reviewText);
-
-    // Update session state + store pendingAnswer
-    const updatedState = updateLearningStateAfterQuestion({
-      sessionLearning,
-      subtopic,
-      storedQuizId: null
-    });
-    updatedState.pendingAnswer = correctAnswer
-      ? { answerText, correctAnswer }
-      : null;
-
-    const visibleSources = finalizeSourcesForResponse(reviewResult.sourceChunks, {
-      maxItems: MAX_VISIBLE_SOURCES
-    });
-
-    await saveConversationTurn({
-      conversationId, userId,
-      question: hookConfig.originalQuestion,
-      answerText: displayContent,
-      sourcesUsed: visibleSources
-    });
-
-    await saveModeState(supabase, {
-      userId,
-      sessionId: conversationId || null,
-      activeHook: hookConfig.hook_code,
-      activeMode: hookConfig.mode,
-      modeTitle: hookConfig.title,
-      lastQuestion: hookConfig.originalQuestion || "",
-      lastAnswer: displayContent,
-      adaptiveContext: { learning: updatedState }
-    });
-
-    return {
-      handled: true,
-      response: {
-        success: true,
-        engine: "TINA Learning System",
-        version: ENGINE_VERSION,
-        hook: hookConfig.hook_code,
-        mode: hookConfig.mode,
-        hookTitle: hookConfig.title,
-        answer: displayContent,
-        answerMode: "review_material_generated",
-        topic: domain,
-        subtopic,
-        subtopicLabel: reviewResult.subtopicLabel,
-        confidence: visibleSources.length ? "GDRIVE_GROUNDED" : "TRAINING_KNOWLEDGE",
-        sourceStatus: visibleSources.length ? "GDRIVE_GROUNDED_REVIEW_READY" : "TRAINING_KNOWLEDGE_REVIEW",
-        sources: visibleSources,
-        sourcesUsed: visibleSources,
-        sourceCards: visibleSources,
-        vectorMatches: visibleSources.length,
-        sessionScore: updatedState.score,
-        learningSystemVersion: ENGINE_VERSION,
-        directOpenAICallDisabled: true
+      if (!subtopic) {
+        return {
+          handled: true,
+          response: {
+            success: false,
+            engine: "TINA Learning System",
+            hook: hookConfig.hook_code,
+            mode: hookConfig.mode,
+            answer: `No subtopics found for domain "${domain}". Type /review to choose a different domain.`,
+            sources: [], sourcesUsed: [], sourceCards: [], vectorMatches: 0
+          }
+        };
       }
-    };
+
+      let reviewResult;
+      try {
+        reviewResult = await generateReviewMaterial({
+          domain,
+          subtopic,
+          sessionLearning,
+          callOpenAI: _tracedCall,
+          supabase
+        });
+      } catch (err) {
+        console.error("[SESSION ENGINE] generateReviewMaterial failed:", err?.message);
+        return {
+          handled: true,
+          response: {
+            success: false,
+            engine: "TINA Learning System",
+            hook: hookConfig.hook_code,
+            mode: hookConfig.mode,
+            answer: `TINA could not generate review material for "${domain}". Please try again.`,
+            error: err?.message,
+            sources: [], sourcesUsed: [], sourceCards: [], vectorMatches: 0
+          }
+        };
+      }
+
+      if (!reviewResult.ok) {
+        return {
+          handled: true,
+          response: {
+            success: false,
+            engine: "TINA Learning System",
+            hook: hookConfig.hook_code,
+            mode: hookConfig.mode,
+            answer: `TINA could not generate review material for "${domain}" / "${subtopic}". Please try again.`,
+            sources: [], sourcesUsed: [], sourceCards: [], vectorMatches: 0
+          }
+        };
+      }
+
+      // Split review content — gate the answer section until user responds
+      const { displayContent, answerText, correctAnswer } = splitReviewContent(reviewResult.reviewText);
+
+      // Update session state + store pendingAnswer
+      const updatedState = updateLearningStateAfterQuestion({
+        sessionLearning,
+        subtopic,
+        storedQuizId: null
+      });
+      updatedState.pendingAnswer = correctAnswer
+        ? { answerText, correctAnswer }
+        : null;
+
+      const visibleSources = finalizeSourcesForResponse(reviewResult.sourceChunks, {
+        maxItems: MAX_VISIBLE_SOURCES
+      });
+
+      await saveConversationTurn({
+        conversationId, userId,
+        question: hookConfig.originalQuestion,
+        answerText: displayContent,
+        sourcesUsed: visibleSources
+      });
+
+      await saveModeState(supabase, {
+        userId,
+        sessionId: conversationId || null,
+        activeHook: hookConfig.hook_code,
+        activeMode: hookConfig.mode,
+        modeTitle: hookConfig.title,
+        lastQuestion: hookConfig.originalQuestion || "",
+        lastAnswer: displayContent,
+        adaptiveContext: { learning: updatedState }
+      });
+
+      return {
+        handled: true,
+        response: {
+          success: true,
+          engine: "TINA Learning System",
+          version: ENGINE_VERSION,
+          hook: hookConfig.hook_code,
+          mode: hookConfig.mode,
+          hookTitle: hookConfig.title,
+          answer: displayContent,
+          answerMode: "review_material_generated",
+          topic: domain,
+          subtopic,
+          subtopicLabel: reviewResult.subtopicLabel,
+          confidence: visibleSources.length ? "GDRIVE_GROUNDED" : "TRAINING_KNOWLEDGE",
+          sourceStatus: visibleSources.length ? "GDRIVE_GROUNDED_REVIEW_READY" : "TRAINING_KNOWLEDGE_REVIEW",
+          sources: visibleSources,
+          sourcesUsed: visibleSources,
+          sourceCards: visibleSources,
+          vectorMatches: visibleSources.length,
+          sessionScore: updatedState.score,
+          learningSystemVersion: ENGINE_VERSION,
+          directOpenAICallDisabled: true
+        }
+      };
+    } finally {
+      endTrace({ traceId, metadata: { domain } });
+      flushObservability().catch(() => {});
+    }
   }
 
   // ── handle answer validation (from continueAssessmentLoop) ─────────────────

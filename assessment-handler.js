@@ -49,6 +49,13 @@ import {
   callOpenAIWithOrchestration as defaultCallOpenAIWithOrchestration
 } from "./context-orchestration-engine.js";
 
+import {
+  generateTraceId,
+  startTrace,
+  endTrace,
+  flushObservability
+} from "./services/observability-service.js";
+
 const ENGINE_VERSION = "4.0.0";
 
 function getModel(openaiModel = null) {
@@ -222,7 +229,8 @@ export function createAssessmentHandler({
     intent = {},
     conversationHistory = [],
     quizMode = false,
-    adaptiveContext = {}
+    adaptiveContext = {},
+    _traceId = undefined
   }) {
     const result = await orchestration.callOpenAIWithOrchestration({
       openai,
@@ -235,7 +243,8 @@ export function createAssessmentHandler({
       conversationHistory: safeArray(conversationHistory).slice(-6),
       model,
       quizMode,
-      adaptiveContext
+      adaptiveContext,
+      _traceId
     });
 
     return extractOpenAIText(result);
@@ -776,6 +785,9 @@ Required JSON shape:
         : (selectNextSubtopic(domain, scoredLearning) || currentSubtopic);
 
       // Generate next quiz question via quiz-engine
+      const _quizNextTraceId = generateTraceId();
+      startTrace({ traceId: _quizNextTraceId, name: "tina-quiz-answer", hook: "/quiz", metadata: { domain, isCorrect } });
+      const _tracedQuizCall = (params) => callAssessmentOpenAI({ ...params, _traceId: _quizNextTraceId });
       let nextQuizResult = null;
       try {
         nextQuizResult = await generateQuizQuestion({
@@ -785,12 +797,14 @@ Required JSON shape:
           userId,
           conversationId,
           hookConfig: nextHookConfig,
-          callOpenAI: callAssessmentOpenAI,
+          callOpenAI: _tracedQuizCall,
           supabase
         });
       } catch (err) {
         console.error("[ASSESSMENT] Quiz next question generation failed:", err?.message);
       }
+      endTrace({ traceId: _quizNextTraceId, metadata: { domain, isCorrect, nextSubtopic } });
+      flushObservability().catch(() => {});
 
       let nextQuestionText = "\nNext question could not be generated. Type /quiz to continue.";
 
