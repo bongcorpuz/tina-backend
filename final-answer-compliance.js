@@ -2085,15 +2085,12 @@ function buildFinalCompliantAnswer({
     finalMode === RESPONSE_MODE.COMPLEX_ADVISORY ||
     finalMode === RESPONSE_MODE.AUDIT_FACT_PATTERN
   ) {
-    finalAnswer = buildComplexAdvisoryAnswer({
-      sanitizedDraft,
-      fallbackAnswer,
-      directAnswer,
-      legalBasisDocs: resolvedLegalBasisDocs,
-      professionalInsight,
-      issueClassification,
-      supersessionResult
-    });
+    // Audit/advisory mode is adaptive — pass through the sanitized draft without
+    // enforcing a rigid section structure. The audit system prompt owns the format.
+    finalAnswer = sanitizedDraft ||
+      fallbackAnswer ||
+      directAnswer ||
+      "The conclusion depends on the final facts and supporting documents. Please provide the specific details of the audit scenario.";
   } else {
     if (hasRequiredStructure(sanitizedDraft, requiredSectionsFromContext(context))) {
       finalAnswer = sanitizeConflictSection(sanitizedDraft, bestConflict);
@@ -2205,7 +2202,11 @@ function enforceFinalAnswerCompliance(args = {}) {
     rawMode === "LEARNING_PROGRESS" ||
     rawMode === "FEEDBACK_CAPTURE_MODE" ||
     rawMode === "FEEDBACK_CAPTURE" ||
-    rawMode === "FEEDBACK"
+    rawMode === "FEEDBACK" ||
+    rawMode === "COMPLEX_ADVISORY" ||
+    rawMode === "AUDIT_FACT_PATTERN" ||
+    rawMode === "AUDIT_MODE" ||
+    rawMode === "AUDIT"
   ) {
     const passthrough = args.draftAnswer || args.answer || "";
     return {

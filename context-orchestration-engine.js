@@ -28,6 +28,7 @@
  */
 
 import OpenAI from "openai";
+import { buildAuditSystemPrompt } from "./prompts/audit-mode-prompt.js";
 
 const ENGINE_VERSION = "5.0.0";
 
@@ -1818,26 +1819,7 @@ RECOMMENDED ACTION: State the defensible tax position and the concrete next step
 POSITION STRENGTH: Rate STRONG / MODERATE / WEAK / INDEFENSIBLE with a one-sentence justification.
 `.trim();
   } else if (modeFlags.isAudit || mode === "COMPLEX_ADVISORY" || mode === "AUDIT_FACT_PATTERN") {
-    modeInstruction = `
-AUDIT MODE FORMAT:
-Do not use standard A-F legal answer format.
-Use this 7-section audit and evidence evaluation structure:
-A. DIRECT ANSWER
-B. FACTS / ASSUMPTIONS
-C. CONTROLLING LEGAL BASIS
-D. ANALYSIS
-E. AUDIT / TAX RISK
-F. DOCUMENTARY GAPS
-G. PRACTICAL POSITION
-All seven sections are mandatory.
-B: State key facts presented and flag any factual gaps affecting the conclusion.
-C: Cite the specific NIRC provision, RR, RMC, or case controlling this transaction or position.
-D: Apply the controlling authority to the stated facts.
-E: Assess the actual audit exposure specific to this position — BIR risk level, prescription, documentary defects.
-F: List the specific documents required to support this position (contracts, invoices, BIR filings, entries).
-G: State the recommended tax position and any caveats.
-Never omit E. AUDIT / TAX RISK or F. DOCUMENTARY GAPS. Never use generic boilerplate for E, F, or G.
-`.trim();
+    modeInstruction = buildAuditSystemPrompt({ mode, intent, taxEngineContext });
   } else if (mode === "FEEDBACK_CAPTURE_MODE" || mode === "FEEDBACK_CAPTURE" || mode === "FEEDBACK") {
     modeInstruction = `
 FEEDBACK CAPTURE MODE FORMAT:
@@ -2005,7 +1987,7 @@ function buildUserPrompt({
   } else if (modeFlags.isDebug || mode === "DEBUG_MODE") {
     responseInstruction = "Use DEBUG_MODE. Do not use A-F legal format. Produce: A. SYMPTOM, B. PROBABLE CAUSE, C. DIAGNOSIS STEPS, D. FIX, E. PREVENTION. Reference file paths and function names exactly.";
   } else if (modeFlags.isAudit || mode === "COMPLEX_ADVISORY" || mode === "AUDIT_FACT_PATTERN") {
-    responseInstruction = "Use AUDIT_FACT_PATTERN. Produce all 7 mandatory sections: A. DIRECT ANSWER, B. FACTS / ASSUMPTIONS, C. CONTROLLING LEGAL BASIS, D. ANALYSIS, E. AUDIT / TAX RISK, F. DOCUMENTARY GAPS, G. PRACTICAL POSITION. Sections E, F, and G must be specific to this query — do not use generic boilerplate.";
+    responseInstruction = "Use AUDIT_MODE (COMPLEX_ADVISORY). Respond adaptively to the user's specific intent — simple questions get concise answers; audit scenarios get strategic analysis; formal requests get structured documents. Do NOT default to a fixed section template. Apply the authority hierarchy. Never fabricate provisions, GR numbers, or BIR rulings.";
   } else {
     responseInstruction = 'Use standard A-F legal/tax format: A. DIRECT ANSWER, B. CONTROLLING LEGAL BASIS, C. SUPPORTING RULES / ADMINISTRATIVE ISSUANCES, D. SUPPORTING JURISPRUDENCE, E. DOCTRINAL STATUS / CONFLICT ANALYSIS, F. PRACTICAL NOTE / APPLICATION. When no indexed source was retrieved, answer each section from Philippine tax law framework knowledge and label every such section "(Framework knowledge — pending index verification)". Do not output "Indexed source not found." Do not fabricate GR numbers or citation details you are uncertain of.';
   }
