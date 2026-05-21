@@ -156,7 +156,7 @@ export async function getRecentQuizHistory(
   // Limit 50 by default so fingerprint exclusion is effective.
   let query = supabase
     .from("tina_learning_attempts")
-    .select("id, topic, subtopic, question, source_path, chunk_index, source_metadata, created_at")
+    .select("id, topic, subtopic, question, source_path, chunk_index, source_metadata, created_at, is_correct, user_answer")
     .eq("user_id", String(userId))
     .order("created_at", { ascending: false })
     .limit(Math.max(1, Math.min(safeInteger(limit, 50), 200)));
@@ -181,23 +181,29 @@ export function buildQuizExclusionFromHistory(history = []) {
   const excludeQuestionFingerprints = [];
 
   for (const item of history || []) {
-    if (item.source_path && !excludeSourcePaths.includes(item.source_path)) {
-      excludeSourcePaths.push(item.source_path);
+    // Source/chunk exclusion: only for correctly answered questions.
+    // Incorrectly answered questions keep their source available so a
+    // reinforcement question on the same subtopic can still use it.
+    if (item.is_correct === true) {
+      if (item.source_path && !excludeSourcePaths.includes(item.source_path)) {
+        excludeSourcePaths.push(item.source_path);
+      }
+
+      const metadata = safeJson(item.source_metadata, {});
+      const sourceChunkId = metadata.sourceChunkId || metadata.chunkId || null;
+
+      if (sourceChunkId && !excludeChunkIds.includes(String(sourceChunkId))) {
+        excludeChunkIds.push(String(sourceChunkId));
+      }
+
+      if (item.chunk_index != null && item.source_path) {
+        const compoundKey = `${item.source_path}::${item.chunk_index}`;
+        if (!excludeChunkIds.includes(compoundKey)) excludeChunkIds.push(compoundKey);
+      }
     }
 
-    const metadata = safeJson(item.source_metadata, {});
-    const sourceChunkId = metadata.sourceChunkId || metadata.chunkId || null;
-
-    if (sourceChunkId && !excludeChunkIds.includes(String(sourceChunkId))) {
-      excludeChunkIds.push(String(sourceChunkId));
-    }
-
-    if (item.chunk_index != null && item.source_path) {
-      const compoundKey = `${item.source_path}::${item.chunk_index}`;
-      if (!excludeChunkIds.includes(compoundKey)) excludeChunkIds.push(compoundKey);
-    }
-
-    // Question text fingerprint — prevents repeating same wording across sessions
+    // Question fingerprint exclusion: always, regardless of correctness.
+    // Prevents the exact same wording being shown again in the same session.
     const qText = normalizeText(item.question || item.quiz_question || "");
     if (qText) {
       const fingerprint = qText.toLowerCase().replace(/\s+/g, " ").slice(0, 120);

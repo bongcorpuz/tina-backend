@@ -371,8 +371,7 @@ Philippine taxation context only. Authority-grounded only.
     quiz,
     questionNumber,
     subtopicLabel,
-    difficultyLabel,
-    compactSources
+    difficultyLabel
   });
 
   return {
@@ -385,15 +384,8 @@ Philippine taxation context only. Authority-grounded only.
   };
 }
 
-function formatQuizBlock({ quiz, questionNumber, subtopicLabel, difficultyLabel, compactSources }) {
+function formatQuizBlock({ quiz, questionNumber, subtopicLabel, difficultyLabel }) {
   const choices = quiz.choices || {};
-
-  const sourceLines = compactSources.length
-    ? "\n\n---\n\n**Sources:**\n" +
-      compactSources
-        .map((s) => `- ${s.citation || s.title || "Indexed Authority"} *(${s.authorityType})*`)
-        .join("\n")
-    : "";
 
   return [
     `# ${subtopicLabel} — Question #${questionNumber}`,
@@ -403,14 +395,13 @@ function formatQuizBlock({ quiz, questionNumber, subtopicLabel, difficultyLabel,
     "## Question",
     quiz.question || "Question unavailable.",
     "",
-    `**A.** ${choices.A || ""}`,
-    `**B.** ${choices.B || ""}`,
-    `**C.** ${choices.C || ""}`,
-    `**D.** ${choices.D || ""}`,
+    `A. ${choices.A || ""}`,
+    `B. ${choices.B || ""}`,
+    `C. ${choices.C || ""}`,
+    `D. ${choices.D || ""}`,
     "",
     "---",
-    "_Answer with A, B, C, or D. Type /bye to exit._",
-    sourceLines
+    "_Answer with A, B, C, or D. Type /bye to exit._"
   ]
     .filter((line) => line !== null && line !== undefined)
     .join("\n")

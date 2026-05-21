@@ -8,7 +8,9 @@
  * Uses context-orchestration-engine.js only for all OpenAI calls.
  */
 
-import { saveModeState } from "./mode-state.js";
+import { saveModeState, getModeState } from "./mode-state.js";
+import { generateQuizQuestion } from "./learning/quiz-engine.js";
+import { selectNextSubtopic } from "./learning/question-bank-router.js";
 
 import {
   extractMemoryHooks,
@@ -704,6 +706,174 @@ Required JSON shape:
 
     const nextHookConfig = buildAssessmentModeConfig(pendingQuiz.mode);
 
+    // Split stored explanation (strip any trailing CPALE Trap line)
+    const rawExplanation = String(pendingQuiz.explanation || "No explanation available.");
+    const cleanExplanation = rawExplanation.split(/\nCPALE Trap:/i)[0].trim();
+
+    const correctAnswerText = pendingQuiz.source_metadata?.correctAnswerText || "";
+    const answerDisplay = correctAnswerText
+      ? `${correctAnswer}. ${correctAnswerText}`
+      : correctAnswer;
+
+    // ── /quiz mode: use quiz-engine for next question + clean result format ──
+    if (nextHookConfig.hook_code === "/quiz") {
+      // Load session state so subtopic rotation and score tracking are correct
+      let sessionLearning = {
+        domain: pendingQuiz.topic || "VAT",
+        mode: "QUIZ",
+        subtopic: pendingQuiz.subtopic || null,
+        coveredSubtopics: [],
+        askedQuestionIds: [],
+        score: { correct: 0, total: 0 },
+        weakSubtopics: [],
+        currentQuestionId: null,
+        pendingAnswer: null
+      };
+
+      try {
+        const modeState = await getModeState(supabase, userId, conversationId || null);
+        const stored = modeState?.adaptive_context?.learning;
+        if (stored && stored.domain) {
+          sessionLearning = {
+            domain: stored.domain || pendingQuiz.topic || "VAT",
+            mode: "QUIZ",
+            subtopic: stored.subtopic || pendingQuiz.subtopic || null,
+            coveredSubtopics: safeArray(stored.coveredSubtopics),
+            askedQuestionIds: safeArray(stored.askedQuestionIds),
+            score: stored.score || { correct: 0, total: 0 },
+            weakSubtopics: safeArray(stored.weakSubtopics),
+            currentQuestionId: stored.currentQuestionId || null,
+            pendingAnswer: null
+          };
+        }
+      } catch {
+        // non-fatal — use defaults above
+      }
+
+      const domain = sessionLearning.domain;
+      const currentSubtopic = pendingQuiz.subtopic || sessionLearning.subtopic || "";
+
+      // Update score
+      const updatedScore = {
+        correct: (sessionLearning.score?.correct || 0) + (isCorrect ? 1 : 0),
+        total: (sessionLearning.score?.total || 0) + 1
+      };
+
+      // Update weak subtopics
+      const updatedWeakSubtopics = isCorrect
+        ? sessionLearning.weakSubtopics.filter((s) => s !== currentSubtopic)
+        : [...new Set([...sessionLearning.weakSubtopics, currentSubtopic])];
+
+      const scoredLearning = {
+        ...sessionLearning,
+        score: updatedScore,
+        weakSubtopics: updatedWeakSubtopics
+      };
+
+      // Reinforcement: repeat same subtopic on incorrect, rotate on correct
+      const nextSubtopic = !isCorrect && currentSubtopic
+        ? currentSubtopic
+        : (selectNextSubtopic(domain, scoredLearning) || currentSubtopic);
+
+      // Generate next quiz question via quiz-engine
+      let nextQuizResult = null;
+      try {
+        nextQuizResult = await generateQuizQuestion({
+          domain,
+          subtopic: nextSubtopic,
+          sessionLearning: { ...scoredLearning, subtopic: nextSubtopic },
+          userId,
+          conversationId,
+          hookConfig: nextHookConfig,
+          callOpenAI: callAssessmentOpenAI,
+          supabase
+        });
+      } catch (err) {
+        console.error("[ASSESSMENT] Quiz next question generation failed:", err?.message);
+      }
+
+      let nextQuestionText = "\nNext question could not be generated. Type /quiz to continue.";
+
+      if (nextQuizResult?.ok) {
+        const storedId = nextQuizResult.storedQuiz?.id || null;
+        const finalLearning = {
+          ...scoredLearning,
+          subtopic: nextSubtopic,
+          coveredSubtopics: scoredLearning.coveredSubtopics.includes(nextSubtopic)
+            ? scoredLearning.coveredSubtopics
+            : [...scoredLearning.coveredSubtopics, nextSubtopic],
+          askedQuestionIds: storedId
+            ? [...scoredLearning.askedQuestionIds.slice(-49), String(storedId)]
+            : scoredLearning.askedQuestionIds,
+          currentQuestionId: storedId
+        };
+
+        try {
+          await saveModeState(supabase, {
+            userId,
+            sessionId: conversationId || null,
+            activeHook: nextHookConfig.hook_code,
+            activeMode: nextHookConfig.mode,
+            modeTitle: nextHookConfig.title,
+            lastQuestion: incomingAnswer,
+            lastAnswer: "",
+            adaptiveContext: { learning: finalLearning }
+          });
+        } catch {
+          // non-fatal
+        }
+
+        nextQuestionText = ["", "---", "", "## Next Question", "", nextQuizResult.answerText].join("\n");
+      }
+
+      const resultParts = [
+        "## Result",
+        isCorrect ? "Correct ✅" : "Incorrect ❌",
+        "",
+        "## Correct Answer",
+        answerDisplay,
+        "",
+        "## Explanation",
+        cleanExplanation,
+        nextQuestionText
+      ];
+
+      const finalAnswer = resultParts
+        .filter((line) => line !== null && line !== undefined)
+        .join("\n");
+
+      await saveConversationTurn({
+        conversationId,
+        userId,
+        question: incomingAnswer,
+        answerText: finalAnswer,
+        sourcesUsed: [],
+        fallbackReferences: []
+      });
+
+      return {
+        handled: true,
+        response: {
+          success: true,
+          engine: "TINA Continuous Learning Engine",
+          mode: "ANSWER_CHECKED_AND_NEXT_READY",
+          answer: finalAnswer,
+          isCorrect,
+          mastery,
+          topic: pendingQuiz.topic || null,
+          difficulty: pendingQuiz.difficulty || null,
+          sourceStatus: "QUIZ_GROUNDED",
+          sourcesUsed: [],
+          sources: [],
+          sourceCards: [],
+          vectorMatches: 0,
+          contextOrchestrationEnabled: true,
+          directOpenAICallDisabled: true
+        }
+      };
+    }
+
+    // ── /diagnostic (and other modes): existing behavior with full result detail ──
     const nextQuestion = await generateStoredAssessmentQuestion({
       userId,
       conversationId,
@@ -723,12 +893,7 @@ Required JSON shape:
       nextQuestionText = ["", "---", "**Next Question:**", "", nextQuestion.answerText].join("\n");
     }
 
-    // Split stored explanation at "\nCPALE Trap:" to get clean explanation text
-    const rawExplanation = String(pendingQuiz.explanation || "No explanation available.");
-    const cleanExplanation = rawExplanation.split(/\nCPALE Trap:/i)[0].trim();
-
     const cpaleTrap = pendingQuiz.source_metadata?.cpaleTrap || null;
-    const correctAnswerText = pendingQuiz.source_metadata?.correctAnswerText || "";
     const choices = pendingQuiz.choices || {};
 
     const wrongChoiceLines = ["A", "B", "C", "D"]
@@ -738,10 +903,6 @@ Required JSON shape:
         return choiceText ? `**${l}.** ${choiceText} — Incorrect.` : null;
       })
       .filter(Boolean);
-
-    const answerDisplay = correctAnswerText
-      ? `${correctAnswer}. ${correctAnswerText}`
-      : correctAnswer;
 
     const resultParts = [
       "## Result",
