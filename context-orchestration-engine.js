@@ -29,6 +29,7 @@
 
 import OpenAI from "openai";
 import { buildAuditSystemPrompt } from "./prompts/audit-mode-prompt.js";
+import { startGeneration, endGeneration } from "./services/observability-service.js";
 
 const ENGINE_VERSION = "5.0.0";
 
@@ -2291,6 +2292,28 @@ export async function callOpenAIWithOrchestration(args = {}) {
     throw new Error("OPENAI_API_KEY is missing and no OpenAI client was supplied.");
   }
 
+  // Observability: start generation span before the OpenAI call.
+  // _traceId is injected by pipeline.js; undefined for callers that don't pass it.
+  const _gen = startGeneration({
+    traceId:         args._traceId,
+    name:            "openai-completion",
+    model:           orchestration.model,
+    input:           String(args.userQuery || args.query || "").slice(0, 1000),
+    modelParameters: {
+      temperature: orchestration.temperature,
+      max_tokens:  orchestration.maxCompletionTokens
+    },
+    metadata: {
+      mode:                  orchestration.mode,
+      estimatedInputTokens:  orchestration.estimatedInputTokens,
+      maxCompletionTokens:   orchestration.maxCompletionTokens,
+      sourceCount:           orchestration.retrievedSources.length,
+      complexity:            orchestration.complexity,
+      wasTrimmed:            orchestration.diagnostics.finalTrimApplied
+    }
+  });
+  const _genStartMs = Date.now();
+
   const completion = await openai.chat.completions.create({
     model: orchestration.model,
     messages: orchestration.messages,
@@ -2301,6 +2324,17 @@ export async function callOpenAIWithOrchestration(args = {}) {
   const answer =
     completion?.choices?.[0]?.message?.content ||
     "";
+
+  // Observability: close generation span with actual token usage and latency.
+  endGeneration(_gen, {
+    output:    answer.slice(0, 1000),
+    usage:     completion?.usage,
+    latencyMs: Date.now() - _genStartMs,
+    metadata: {
+      wasTrimmed:  orchestration.diagnostics.finalTrimApplied,
+      sourceCount: orchestration.retrievedSources.length
+    }
+  });
 
   return {
     answer,

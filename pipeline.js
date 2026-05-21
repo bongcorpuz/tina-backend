@@ -27,6 +27,11 @@ import {
   analyzeConflictPair
 }                                                 from "./conflict-engine.js";
 import { callOpenAIWithOrchestration }            from "./context-orchestration-engine.js";
+import {
+  generateTraceId,
+  startTrace,
+  endTrace
+}                                                 from "./services/observability-service.js";
 import { renderTinaAnswer }                       from "./answer-renderer.js";
 import { enforceFinalAnswerCompliance }           from "./final-answer-compliance.js";
 import { analyzeFactPattern }                     from "./fact-pattern-engine.js";
@@ -127,8 +132,21 @@ export async function runPipeline({
   issueClassificationOverride = null,
   modeOverride = null
 } = {}) {
-  const trace = { steps: [], warnings: [] };
-  const ctx   = {};
+  const trace          = { steps: [], warnings: [] };
+  const ctx            = {};
+  const traceId        = generateTraceId();
+  const pipelineStartMs = Date.now();
+
+  startTrace({
+    traceId,
+    name: "tina-pipeline",
+    hook,
+    metadata: {
+      queryLength:     (query || "").length,
+      pipelineVersion: PIPELINE_VERSION,
+      hook
+    }
+  });
 
   // ── Step 1: Issue Classification ──────────────────────────────────────────
   ctx.issueClassification = issueClassificationOverride || classify(query);
@@ -302,7 +320,8 @@ export async function runPipeline({
       systemPrompt:         ctx.promptContract?.masterPrompt,
       conversationHistory,
       mode:                 ctx.mode,
-      adaptiveContext:      { activeHook: hook, orchestrationMode: ctx.mode }
+      adaptiveContext:      { activeHook: hook, orchestrationMode: ctx.mode },
+      _traceId:             traceId
     });
   } catch (e) {
     const label = `OpenAI step-14 error [${e?.name || e?.constructor?.name}] status=${e?.status} code=${e?.code}: ${e?.message}`;
@@ -387,6 +406,19 @@ export async function runPipeline({
       };
     });
 
+  endTrace({
+    traceId,
+    metadata: {
+      mode:             ctx.mode,
+      primaryIssue:     ctx.issueClassification?.primaryIssue || null,
+      sourceCount:      ctx.rerankedChunks?.length || 0,
+      trueConflicts:    ctx.conflictAnalysis?.count || 0,
+      riskLevel:        ctx.riskScore?.level || null,
+      warnings:         trace.warnings.length,
+      pipelineLatencyMs: Date.now() - pipelineStartMs
+    }
+  });
+
   return {
     answer:              compliantResult?.finalAnswer || compliantResult?.answer || ctx.formattedAnswer,
     sources:             ctx.rerankedChunks || [],
@@ -400,6 +432,7 @@ export async function runPipeline({
     orchestrationMode:   ctx.mode,
     responseMode:        ctx.mode,
     pipelineVersion:     PIPELINE_VERSION,
+    traceId,
     trace
   };
 }
