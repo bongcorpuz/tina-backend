@@ -23,7 +23,7 @@ import * as excSub  from "./EXC/subclassifier.js";
 import * as preSub  from "./PRE/subclassifier.js";
 import * as disSub  from "./DIS/subclassifier.js";
 import * as lgtSub  from "./LGT/subclassifier.js";
-import * as cusSub  from "./CUS/subclassifier.js";
+import * as cusSub  from "./CUST/subclassifier.js";
 import * as spcSub  from "./SPC/subclassifier.js";
 import * as conSub  from "./CON/subclassifier.js";
 
@@ -40,7 +40,7 @@ const DOMAIN_MAP = Object.freeze({
   PRE:     preSub,
   DIS:     disSub,
   LGT:     lgtSub,
-  CUS:     cusSub,
+  CUST:     cusSub,
   SPC:     spcSub,
   CON:     conSub,
   // aliases
