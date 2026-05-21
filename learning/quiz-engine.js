@@ -236,7 +236,7 @@ export async function generateQuizQuestion({
   }
 
   const exclusions = buildQuizExclusionFromHistory(recentHistory);
-  const compactHistory = compactHistory(recentHistory);
+  const compactedHistory = compactHistory(recentHistory);
 
   // Source retrieval scoped to domain + subtopic
   const hints = buildRetrievalHints(domain, subtopic);
@@ -266,7 +266,7 @@ export async function generateQuizQuestion({
     difficultyLabel,
     profile: sessionLearning.learnerProfile || null,
     sourceChunks: compactSources,
-    recentQuestions: compactHistory,
+    recentQuestions: compactedHistory,
     excludeFingerprints: safeArray(exclusions.excludeQuestionFingerprints)
   });
 
@@ -296,7 +296,36 @@ Philippine taxation context only. Authority-grounded only.
     adaptiveContext: { activeHook: "/quiz", quizMode: true, orchestrationMode: "QUIZ" }
   });
 
-  const quiz = safeParseQuizJson(rawQuiz);
+  let quiz = safeParseQuizJson(rawQuiz);
+
+  if (!quiz) {
+    console.warn("[QUIZ ENGINE] safeParseQuizJson failed — retrying once");
+    try {
+      const retryRaw = await callOpenAI({
+        userQuery: quizPrompt,
+        systemPrompt: `Return ONLY valid JSON. No markdown, no code blocks, no extra text.\nStructure: {"topic":"","subtopic":"","difficulty":0,"question":"","choices":{"A":"","B":"","C":"","D":""},"correctAnswer":"","explanation":"","cpaleTrap":"","sourceSupport":"","validationStatus":""}`,
+        masterPrompt: `Return only valid JSON. Nothing else.`,
+        retrievedSources: compactSources,
+        classification: {
+          primaryIssue: domain,
+          subIssue: subtopic,
+          retrievalStrategy: compactSources.length ? "SOURCE_GROUNDED_QUIZ" : "GENERAL_QUIZ",
+          targetAuthorities: hints.targetAuthorities
+        },
+        intent: {
+          intent: "GENERATE_QUIZ_QUESTION",
+          requiresQuizMode: true,
+          quizDomain: domain,
+          quizSubtopic: subtopic
+        },
+        quizMode: true,
+        adaptiveContext: { activeHook: "/quiz", quizMode: true, orchestrationMode: "QUIZ" }
+      });
+      quiz = safeParseQuizJson(retryRaw);
+    } catch (retryErr) {
+      console.error("[QUIZ ENGINE] Retry failed:", retryErr?.message);
+    }
+  }
 
   if (!quiz) {
     return { ok: false, error: "Quiz JSON parse failed.", sourceChunks: compactSources };
