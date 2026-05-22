@@ -444,7 +444,7 @@ function formatQuizBlock({ quiz, subtopicLabel, domainLabel, isGrounded }) {
   const choicesObj = quiz.choices || {};
   const renderedChoices = letters
     .map((l) => `${l}. ${String(choicesObj[l] || "").trim()}`)
-    .join("\n");
+    .join("\n\n");
 
   // Strip "Domain — " prefix from subtopicLabel so the title reads cleanly
   const topicName = subtopicLabel.includes(" — ")

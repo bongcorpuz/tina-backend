@@ -63,13 +63,19 @@ export function buildRetrievalHints(domainKey = "", subtopic = "") {
   const authorities = getDomainAuthorities(domainKey);
 
   const subtopicSpecific = getSubtopicKeywords(domainKey, subtopic);
-  const firstSubtopicKeyword = subtopicSpecific[0] || baseKeywords[0] || domainKey.toLowerCase();
+  const subtopicAliases = getSubtopicAliases(domainKey, subtopic);
+
+  // Aliases use formal legal terminology more likely to match indexed document titles.
+  // Fall back to first informal keyword if no alias defined.
+  const primaryQuery =
+    subtopicAliases[0] || subtopicSpecific[0] || baseKeywords[0] || domainKey.toLowerCase();
 
   return {
-    primaryQuery: firstSubtopicKeyword,
+    primaryQuery,
     subtopicQuery: subtopicLabel,
+    queryAliases: subtopicAliases,
     fallbackQuery: `${domainKey.replace(/_/g, " ")} ${subtopic.replace(/_/g, " ")}`,
-    keywords: [...new Set([...subtopicSpecific, ...baseKeywords])].slice(0, 8),
+    keywords: [...new Set([...subtopicAliases, ...subtopicSpecific, ...baseKeywords])].slice(0, 10),
     targetAuthorities: authorities,
     domainKey,
     subtopic,
@@ -194,6 +200,127 @@ function getSubtopicKeywords(domainKey = "", subtopic = "") {
   };
 
   return safeArray(map[domainKey]?.[subtopic] || map[domainKey]?.["DEFINITION"] || []);
+}
+
+// Legal-terminology aliases — formal document-title-friendly phrases for ILIKE retrieval.
+// First entry is used as primaryQuery; subsequent entries expand the keywords array.
+function getSubtopicAliases(domainKey = "", subtopic = "") {
+  const map = {
+    VAT: {
+      DEFINITION:      ["value added tax", "section 105", "vat nature"],
+      EXEMPTION:       ["section 109", "vat exemption", "exempt transactions", "RR 16-2005"],
+      ZERO_RATING:     ["zero rated sales", "section 106", "section 108", "export sales vat"],
+      INPUT_TAX:       ["input tax credit", "section 110", "creditable input tax"],
+      OUTPUT_TAX:      ["output vat", "output tax", "section 106"],
+      REFUND_CREDIT:   ["section 112", "vat refund", "input tax refund", "120 day 30 day"],
+      REGISTRATION:    ["vat registration", "section 236", "3 million threshold"],
+      COMPLIANCE:      ["RR 16-2005", "vat return", "BIR Form 2550", "vat compliance filing"],
+      WITHHOLDING_VAT: ["withholding vat", "government withholding vat", "5 percent vat"],
+      TRANSITIONAL:    ["section 111", "transitional input tax", "beginning inventory vat"]
+    },
+    INCOME_TAX: {
+      RCIT:               ["section 27", "regular corporate income tax", "domestic corporation tax"],
+      MCIT:               ["section 27(e)", "minimum corporate income tax", "2 percent minimum tax"],
+      NOLCO:              ["net operating loss", "section 34(d)(3)", "nolco carry over"],
+      GROSS_INCOME:       ["section 32", "gross income exclusions", "items gross income"],
+      DEDUCTIONS:         ["section 34", "allowable deductions", "ordinary necessary expense"],
+      CAPITAL_GAINS:      ["section 24(d)", "capital gains tax", "real property 6 percent"],
+      RELATED_PARTY:      ["transfer pricing", "section 50", "arm length transaction", "RR 2-2013"],
+      SPECIAL_RATES:      ["CREATE Act", "income tax holiday", "special economic zone"],
+      DIVIDENDS:          ["section 24(b)", "dividends income", "section 27(d)"],
+      PASSIVE_INCOME:     ["passive income", "interest income", "royalty income"],
+      TAX_TREATY:         ["tax treaty", "double taxation", "treaty benefit", "certificate of residency"],
+      ACCOUNTING_METHOD:  ["accounting method", "cash basis accrual", "percentage of completion"],
+      COMPENSATION:       ["section 24(a)", "compensation income", "graduated tax rates individual"],
+      SELF_EMPLOYMENT:    ["professional income", "self employed income", "business income individual"],
+      MIXED_INCOME:       ["mixed income earner", "section 24(a)(2)", "compensation plus business"],
+      DE_MINIMIS:         ["de minimis benefits", "RR 11-2018", "exempt de minimis"],
+      "13TH_MONTH":       ["13th month pay", "section 32(b)(7)", "90000 exempt"],
+      FRINGE_BENEFITS:    ["fringe benefit tax", "section 33", "managerial supervisory fbt"],
+      ALIEN_NRA:          ["nonresident alien", "nra engaged trade", "alien income taxation"],
+      EXPATRIATE:         ["resident alien", "alien individual income", "income taxation aliens"],
+      OSD:                ["optional standard deduction", "section 34(l)", "40 percent osd"],
+      MINIMUM_WAGE_EARNER:["minimum wage earner", "section 24(a)(2)", "exempt minimum wage"]
+    },
+    WITHHOLDING_TAX: {
+      EWT:               ["expanded withholding tax", "RR 2-98", "creditable withholding tax"],
+      FINAL_WHT:         ["final withholding tax", "section 57", "passive income withholding"],
+      COMPENSATION_WHT:  ["withholding on compensation", "payroll withholding", "RR 11-2018"],
+      WITHHOLDING_AGENT: ["withholding agent obligation", "payor withholding", "liable withholding"],
+      GOVERNMENT_WHT:    ["government withholding", "procuring entity", "1601E"],
+      VAT_WHT:           ["withholding vat", "5 percent vat withholding", "government vat"],
+      FRINGE_BENEFIT_TAX:["fringe benefit tax", "section 33", "fbt grossed up"],
+      TREATY_WHT:        ["treaty withholding rate", "reduced withholding rate", "certificate of residency"],
+      FILING_REMITTANCE: ["1601-EQ quarterly", "remittance deadline withholding", "monthly quarterly filing"],
+      BIR_FORMS:         ["BIR Form 2307", "BIR Form 2306", "withholding tax certificate"]
+    },
+    ESTATE_TAX: {
+      GROSS_ESTATE:    ["section 85", "gross estate", "decedent property estate"],
+      DEDUCTIONS:      ["section 86", "estate deductions", "family home deduction"],
+      COMPUTATION:     ["section 84", "estate tax rate", "6 percent net estate"],
+      FILING:          ["section 90", "estate tax return", "one year filing estate"],
+      AMNESTY:         ["estate tax amnesty", "RA 11213", "amnesty availment"],
+      CONJUGAL_ACP_CPG:["conjugal property", "absolute community property", "conjugal partnership"]
+    },
+    DONORS_TAX: {
+      RATES:                   ["section 99", "donor's tax", "6 percent donation"],
+      EXEMPT_DONATIONS:        ["section 101", "exempt donation", "dowry gift exempt"],
+      VALUATION:               ["donation valuation", "fair market value donation"],
+      RELATED_PARTY_DONATIONS: ["related party donation", "stranger donor tax"],
+      CORPORATE_DONATIONS:     ["corporate donation", "deductible contribution", "section 34(h)"]
+    },
+    PERCENTAGE_TAX: {
+      SEC116:          ["section 116", "percentage tax general", "3 percent non-vat"],
+      OPTION_8PCT:     ["section 24(a)(2)(b)", "8 percent option", "flat 8 percent tax"],
+      COMMON_CARRIERS: ["section 117", "common carrier tax", "transport percentage tax"],
+      FRANCHISE_TAX:   ["section 119", "franchise tax", "franchisee percentage"],
+      OVERSEAS_DISPATCH:["section 120", "overseas communication tax"],
+      STT:             ["section 127", "stock transaction tax", "6/10 percent stt"],
+      BANKS_NON_BANKS: ["section 121", "bank percentage tax", "non-bank financial intermediary"],
+      IPT:             ["section 118", "international carrier tax", "shipping percentage"],
+      FILING_PAYMENT:  ["2551Q quarterly", "quarterly percentage tax return"],
+      VAT_ELECTION:    ["vat registration election", "opt into vat", "non-vat to vat election"]
+    },
+    EXCISE_TAX: {
+      TOBACCO:             ["section 145", "cigarette excise tax", "tobacco tax"],
+      ALCOHOL:             ["section 143", "alcohol excise tax", "fermented liquor distilled spirits"],
+      PETROLEUM:           ["section 148", "petroleum excise tax", "fuel oil excise"],
+      AUTOMOBILE:          ["section 149", "automobile excise tax", "motor vehicle excise"],
+      SWEETENED_BEVERAGES: ["section 150(b)", "sweetened beverage tax", "sugar tax"],
+      MINERAL_PRODUCTS:    ["section 151", "mineral excise tax", "mining excise"],
+      COSMETIC_PROCEDURES: ["section 150(a)", "cosmetic procedure tax"],
+      EXEMPTIONS:          ["excise tax exemption", "diplomatic exemption excise"],
+      REMOVAL_MARKING:     ["section 130", "removal marking excise"],
+      REFUND:              ["excise tax refund", "section 204 excise"]
+    },
+    PRESCRIPTION: {
+      PRESCRIPTION_3YR:       ["section 203", "3 year prescriptive period", "ordinary prescription tax"],
+      PRESCRIPTION_10YR:      ["section 222(a)", "10 year prescription", "fraudulent false return"],
+      WAIVER_VALIDITY:        ["waiver prescription", "RMO 20-90", "valid waiver requirements"],
+      LOA_LN:                 ["letter of authority", "loa validity", "letter notice BIR"],
+      PAN_FAN_FDDA:           ["section 228", "pre-assessment notice", "final assessment notice fdda"],
+      METRO_STAR_DOCTRINE:    ["metro star superama", "GR 185371", "due process assessment void"],
+      COLLECTION_PRESCRIPTION:["section 222(c)", "5 year collection prescription"],
+      TOLLING_INTERRUPTION:   ["tolling prescription", "interruption prescriptive period"],
+      AMENDED_RETURN:         ["amended return prescription", "filing amended return"],
+      JEOPARDY_ASSESSMENT:    ["section 6(d)", "jeopardy assessment", "immediate collection"]
+    },
+    TAX_DISPUTE: {
+      PROTEST:                       ["section 228", "tax protest", "30 day protest period"],
+      RECONSIDERATION_REINVESTIGATION:["reconsideration reinvestigation", "protest types", "submission documents protest"],
+      INACTION:                      ["inaction 180 days", "constructive denial", "30 days cta appeal"],
+      CTA_DIVISION:                  ["court of tax appeals", "cta division", "petition for review cta"],
+      CTA_EN_BANC:                   ["cta en banc", "appeal en banc cta"],
+      SUPREME_COURT:                 ["supreme court tax", "certiorari tax case", "rule 45 tax"],
+      COMPROMISE_ABATEMENT:          ["section 204", "compromise settlement", "abatement penalty"],
+      TAX_AMNESTY:                   ["tax amnesty", "RA 11213", "immunity from prosecution"],
+      REFUND_CLAIMS:                 ["section 229", "tax refund claim", "2 year refund period"],
+      INJUNCTION:                    ["section 218", "no injunction tax collection"],
+      CRIMINAL_TAX:                  ["section 254", "criminal liability tax", "tax evasion prosecution"]
+    }
+  };
+
+  return safeArray(map[domainKey]?.[subtopic] || []);
 }
 
 export function rotateSubtopics(domainKey = "", coveredSubtopics = []) {
