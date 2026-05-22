@@ -1422,6 +1422,34 @@ export async function removeSourceFromVectorStore(source, client = defaultSupaba
   };
 }
 
+// Returns true when the document's identifiers (source name, file name, folder path)
+// indicate this is the NIRC itself — not an RR or ruling that merely cites NIRC sections.
+function isNircSourceDocument(source = "", metadata = {}) {
+  const blob = lower([
+    source,
+    metadata.documentTitle,
+    metadata.originalFileName,
+    metadata.fileName,
+    metadata.folderPath,
+    metadata.path
+  ].filter(Boolean).join(" "));
+  return /nirc|national.internal.revenue.code/.test(blob);
+}
+
+// Detects a section heading at the start of a line or paragraph in NIRC chunk text.
+// Matches:  "SEC. 109. Exempt Transactions."
+//           "SECTION 109. Exempt Transactions."
+//           "Sec. 84. Rates of Estate Tax."
+// Does NOT match inline citations like "pursuant to Sec. 109 of the Code"
+// because those appear mid-sentence without a leading newline.
+function detectNircSectionHeading(chunkText = "") {
+  const match = chunkText.match(
+    /(?:^|\n)\s*(?:SEC(?:TION)?\.?)\s+([0-9]+[A-Z]?)\./i
+  );
+  if (!match) return null;
+  return `NIRC Sec. ${match[1]}`;
+}
+
 export async function addDocumentToVectorStore(text, source, metadata = {}, client = defaultSupabase) {
   const supabaseClient = resolveSupabaseClient(client);
   const chunks = chunkText(text);
@@ -1439,14 +1467,27 @@ export async function addDocumentToVectorStore(text, source, metadata = {}, clie
   await removeSourceFromVectorStore(normalizedSource, supabaseClient);
 
   const rows = [];
+  const isNirc = isNircSourceDocument(source, metadata);
+  let lastNircSection = null;
 
   for (let i = 0; i < chunks.length; i += 1) {
     const chunk = chunks[i];
+
+    // Per-chunk normalized_reference: detect NIRC section headings and carry forward.
+    // Non-NIRC documents (RR, RMC, court cases, etc.) are unaffected — isNirc stays false.
+    let chunkNormalizedRef = metadata.normalizedReference;
+    if (isNirc) {
+      const detected = detectNircSectionHeading(chunk);
+      if (detected) lastNircSection = detected;
+      if (lastNircSection) chunkNormalizedRef = lastNircSection;
+    }
+
     const embedding = await embedText(chunk);
 
     const authorityFields = buildAuthorityFields(chunk, source, {
       ...metadata,
-      normalizedSource
+      normalizedSource,
+      normalizedReference: chunkNormalizedRef
     });
 
     rows.push({
