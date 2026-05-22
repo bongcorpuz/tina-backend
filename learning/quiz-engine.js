@@ -10,9 +10,8 @@ import {
 } from "../adaptive-quiz.js";
 
 import { getQuizSourceChunks } from "../vector-store.js";
-import { formatQuestionBlock } from "../ask-helpers.js";
 import { buildRetrievalHints } from "./question-bank-router.js";
-import { getSubtopicLabel } from "./domain-normalizer.js";
+import { getSubtopicLabel, getDomainConfig } from "./domain-normalizer.js";
 import { safeParseQuizQuestion } from "../services/schema-validator.js";
 
 const ENGINE_VERSION = "1.0.0";
@@ -93,6 +92,24 @@ function compactHistory(history = []) {
   }));
 }
 
+// Normalizes choices from either array or {A,B,C,D} object into a plain text array.
+function normalizeQuizChoices(raw) {
+  const letters = ["A", "B", "C", "D"];
+  if (Array.isArray(raw?.choices)) {
+    return raw.choices.slice(0, 4).map((choice) => {
+      if (typeof choice === "string") return choice.replace(/^[A-D][.)]\s*/i, "").trim();
+      if (choice && typeof choice === "object") {
+        return String(choice.text || choice.label || choice.value || "").replace(/^[A-D][.)]\s*/i, "").trim();
+      }
+      return "";
+    });
+  }
+  if (raw?.choices && typeof raw.choices === "object") {
+    return letters.map((l) => String(raw.choices[l] || "").replace(/^[A-D][.)]\s*/i, "").trim());
+  }
+  return [];
+}
+
 function resolveDifficulty(sessionLearning = {}) {
   const score = sessionLearning.score || { correct: 0, total: 0 };
   const total = score.total || 0;
@@ -159,11 +176,17 @@ JSON structure:
   "subtopic": "${subtopic}",
   "difficulty": ${difficulty},
   "question": "...",
-  "choices": { "A": "...", "B": "...", "C": "...", "D": "..." },
-  "correctAnswer": "A|B|C|D",
+  "choices": [
+    "First choice text (no letter prefix)",
+    "Second choice text (no letter prefix)",
+    "Third choice text (no letter prefix)",
+    "Fourth choice text (no letter prefix)"
+  ],
+  "correctAnswer": "A",
   "explanation": "...",
   "cpaleTrap": "...",
   "sourceSupport": "GENERAL_FALLBACK_NO_INDEXED_SOURCE",
+  "groundingStatus": "limited_indexed_source",
   "validationStatus": "GENERAL_FALLBACK"
 }
 `.trim();
@@ -201,11 +224,17 @@ JSON structure:
   "subtopic": "${subtopic}",
   "difficulty": ${difficulty},
   "question": "...",
-  "choices": { "A": "...", "B": "...", "C": "...", "D": "..." },
-  "correctAnswer": "A|B|C|D",
+  "choices": [
+    "First choice text (no letter prefix)",
+    "Second choice text (no letter prefix)",
+    "Third choice text (no letter prefix)",
+    "Fourth choice text (no letter prefix)"
+  ],
+  "correctAnswer": "A",
   "explanation": "...",
   "cpaleTrap": "...",
   "sourceSupport": "Quote or close paraphrase from SOURCE CONTEXT supporting the answer",
+  "groundingStatus": "grounded",
   "validationStatus": "SOURCE_GROUNDED"
 }
 `.trim();
@@ -304,7 +333,7 @@ Philippine taxation context only. Authority-grounded only.
     try {
       const retryRaw = await callOpenAI({
         userQuery: quizPrompt,
-        systemPrompt: `Return ONLY valid JSON. No markdown, no code blocks, no extra text.\nStructure: {"topic":"","subtopic":"","difficulty":0,"question":"","choices":{"A":"","B":"","C":"","D":""},"correctAnswer":"","explanation":"","cpaleTrap":"","sourceSupport":"","validationStatus":""}`,
+        systemPrompt: `Return ONLY valid JSON. No markdown, no code blocks, no extra text.\nStructure: {"topic":"","subtopic":"","difficulty":0,"question":"","choices":["","","",""],"correctAnswer":"A","explanation":"","cpaleTrap":"","sourceSupport":"","groundingStatus":"limited_indexed_source","validationStatus":"GENERAL_FALLBACK"}`,
         masterPrompt: `Return only valid JSON. Nothing else.`,
         retrievedSources: compactSources,
         classification: {
@@ -366,12 +395,14 @@ Philippine taxation context only. Authority-grounded only.
     storedQuiz = null;
   }
 
-  const questionNumber = (sessionLearning.score?.total || 0) + 1;
+  const domainConfig = getDomainConfig(domain) || {};
+  const domainLabel = domainConfig.label || domain;
+  const isGrounded = compactSources.length > 0;
   const answerText = formatQuizBlock({
     quiz,
-    questionNumber,
     subtopicLabel,
-    difficultyLabel
+    domainLabel,
+    isGrounded
   });
 
   return {
@@ -384,28 +415,35 @@ Philippine taxation context only. Authority-grounded only.
   };
 }
 
-function formatQuizBlock({ quiz, questionNumber, subtopicLabel, difficultyLabel }) {
-  const choices = quiz.choices || {};
+function formatQuizBlock({ quiz, subtopicLabel, domainLabel, isGrounded }) {
+  const letters = ["A", "B", "C", "D"];
+  const choicesObj = quiz.choices || {};
+  const renderedChoices = letters
+    .map((l) => `${l}. ${String(choicesObj[l] || "").trim()}`)
+    .join("\n");
 
-  return [
-    `# ${subtopicLabel} — Question #${questionNumber}`,
-    "",
-    `**Difficulty:** ${difficultyLabel}`,
-    "",
+  // Strip "Domain — " prefix from subtopicLabel so the title reads cleanly
+  const topicName = subtopicLabel.includes(" — ")
+    ? subtopicLabel.split(" — ").slice(1).join(" — ")
+    : subtopicLabel;
+
+  const parts = [`# ${domainLabel} Quiz — ${topicName}`, ""];
+
+  if (isGrounded === false) {
+    parts.push("Indexed source is limited for this topic.", "");
+  }
+
+  parts.push(
     "## Question",
     quiz.question || "Question unavailable.",
     "",
-    `A. ${choices.A || ""}`,
-    `B. ${choices.B || ""}`,
-    `C. ${choices.C || ""}`,
-    `D. ${choices.D || ""}`,
+    renderedChoices,
     "",
-    "---",
-    "_Answer with A, B, C, or D. Type /bye to exit._"
-  ]
-    .filter((line) => line !== null && line !== undefined)
-    .join("\n")
-    .trim();
+    "Answer with A, B, C, or D only.",
+    "Type /bye to exit."
+  );
+
+  return parts.filter((line) => line !== null && line !== undefined).join("\n").trim();
 }
 
 export function quizEngineHealthCheck() {

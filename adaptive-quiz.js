@@ -511,11 +511,27 @@ export function safeParseQuizJson(text = "") {
 
     // Normalize all fields before schema validation
     const normalizedCorrectAnswer = normalizeChoiceLetter(parsed.correctAnswer);
+
+    // Accept both array format ["a","b","c","d"] and object format {A,B,C,D}
+    const choiceLetters = ["A", "B", "C", "D"];
+    let rawChoices = parsed.choices;
+    if (Array.isArray(rawChoices)) {
+      const obj = {};
+      rawChoices.slice(0, 4).forEach((choice, i) => {
+        if (choiceLetters[i]) {
+          const choiceText = typeof choice === "string"
+            ? choice
+            : String(choice?.text || choice?.label || choice?.value || "");
+          obj[choiceLetters[i]] = choiceText.replace(/^[A-D][.)]\s*/i, "").trim();
+        }
+      });
+      rawChoices = obj;
+    }
     const normalizedChoices = {
-      A: normalizeText(String(parsed.choices?.A || "")),
-      B: normalizeText(String(parsed.choices?.B || "")),
-      C: normalizeText(String(parsed.choices?.C || "")),
-      D: normalizeText(String(parsed.choices?.D || ""))
+      A: normalizeText(String(rawChoices?.A || "")),
+      B: normalizeText(String(rawChoices?.B || "")),
+      C: normalizeText(String(rawChoices?.C || "")),
+      D: normalizeText(String(rawChoices?.D || ""))
     };
     const candidate = {
       ...parsed,
