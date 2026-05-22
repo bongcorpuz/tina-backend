@@ -1733,6 +1733,7 @@ export async function getQuizSourceChunksLight({
   const cleanTopic = String(topic || "").trim().toLowerCase();
   if (!cleanTopic) return [];
 
+  const EXCLUDED_AUTHORITY_TYPES = new Set(["CPA_NOTES", "REVIEW_MATERIALS", "UNKNOWN"]);
   const safeLimit = Math.min(Math.max(1, Math.floor(Number(limit) || 3)), 5);
   const pattern = `%${cleanTopic}%`;
 
@@ -1742,16 +1743,19 @@ export async function getQuizSourceChunksLight({
       "id,source,original_source,document_title,authority_type,authority_level,normalized_reference,chunk_index,text,metadata"
     )
     .or(`source.ilike.${pattern},document_title.ilike.${pattern}`)
-    .not("authority_type", "in", '("CPA_NOTES","REVIEW_MATERIALS","UNKNOWN")')
     .order("authority_level", { ascending: true, nullsFirst: false })
-    .limit(safeLimit);
+    .limit(safeLimit * 3);
 
   if (error) {
     console.error("[QUIZ LIGHT SEARCH] Supabase error:", { message: error.message, code: error.code });
     return [];
   }
 
-  return (data || []).map((row) => {
+  const authorityFiltered = (data || []).filter(
+    (row) => !EXCLUDED_AUTHORITY_TYPES.has(row.authority_type)
+  );
+
+  return authorityFiltered.slice(0, safeLimit).map((row) => {
     const meta = row.metadata || {};
     const driveViewUrl = meta.driveViewUrl || meta.drive_view_url || meta.url || null;
     return {
@@ -1816,16 +1820,22 @@ export async function getQuizSourceChunks({
     return filtered;
   }
 
-  // Fall back to smartSearch only when light query returns too little
+  // Fall back to smartSearch only when light query returns too little.
+  // Internal 3000ms budget prevents smartSearch from consuming the outer 5000ms timeout.
   try {
-    const rows = await smartSearch({
-      supabase: supabaseClient,
-      query: cleanTopic || "Philippine taxation",
-      topK: Math.max(safeLimit * 2, 6),
-      includeWeakSources: false,
-      includeReviewSources: false,
-      reviewMode: false
-    });
+    const rows = await Promise.race([
+      smartSearch({
+        supabase: supabaseClient,
+        query: cleanTopic || "Philippine taxation",
+        topK: Math.max(safeLimit * 2, 6),
+        includeWeakSources: false,
+        includeReviewSources: false,
+        reviewMode: false
+      }),
+      new Promise((_, rej) =>
+        setTimeout(() => rej(new Error("smartSearch budget exceeded")), 3000)
+      )
+    ]);
 
     const fallbackFiltered = applyExclusions(rows).slice(0, safeLimit);
 
