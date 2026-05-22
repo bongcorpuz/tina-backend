@@ -353,7 +353,8 @@ function inferNormalizedReferenceFallback({
   folderPath = "",
   text = ""
 } = {}) {
-  const sample = `${fileName}\n${folderPath}\n${normalizeText(text).slice(0, 3000)}`;
+  const raw = `${fileName}\n${folderPath}\n${normalizeText(text).slice(0, 3000)}`;
+  const sample = raw.replace(/_/g, " ");
 
   const nircSection = sample.match(
     /\b(?:NIRC|National\s+Internal\s+Revenue\s+Code)?\s*(?:Sec\.?|Section)\s*([0-9]{1,3}[A-Z]?(?:\([A-Z0-9]+\))?)\b/i
@@ -403,12 +404,12 @@ function inferNormalizedReferenceFallback({
   if (grNo) return `G.R. No. ${grNo[1]}`;
 
   const ctaEb = sample.match(
-    /\bCTA\s*(?:EB|En\s+Banc)\s*(?:No\.?)?\s*([A-Z0-9.-]+)\b/i
+    /\bCTA\s*(?:EB|En\s+Banc)\s*(?:No\.?)?\s*(\d[A-Z0-9.-]*)\b/i
   );
   if (ctaEb) return `CTA EB No. ${ctaEb[1]}`;
 
   const ctaCase = sample.match(
-    /\bCTA\s*(?:Case)?\s*(?:No\.?)?\s*([A-Z0-9.-]+)\b/i
+    /\bCTA\s*(?:Case)?\s*(?:No\.?)?\s*(\d[A-Z0-9.-]*)\b/i
   );
   if (ctaCase) return `CTA Case No. ${ctaCase[1]}`;
 
@@ -681,14 +682,14 @@ export function normalizeIndexedMetadata(file = {}, text = "") {
     authorityLevelOf(authorityType);
 
   const normalizedReference =
-    driveMetadata.normalizedReference ||
-    driveMetadata.normalized_reference ||
-    authority.normalizedReference ||
     inferNormalizedReferenceSafe({
       fileName,
       folderPath,
       text: textPreview
-    });
+    }) ||
+    driveMetadata.normalizedReference ||
+    driveMetadata.normalized_reference ||
+    authority.normalizedReference;
 
   const possibleTaxDomain = unique([
     ...(Array.isArray(driveMetadata.possibleTaxDomain) ? driveMetadata.possibleTaxDomain : []),

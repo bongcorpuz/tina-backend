@@ -437,7 +437,8 @@ export function inferNormalizedReference({
   folderPath = "",
   text = ""
 } = {}) {
-  const sample = `${fileName}\n${folderPath}\n${normalizeText(text).slice(0, 3000)}`;
+  const raw = `${fileName}\n${folderPath}\n${normalizeText(text).slice(0, 3000)}`;
+  const sample = raw.replace(/_/g, " ");
 
   const nircSection = sample.match(
     /\b(?:NIRC|National\s+Internal\s+Revenue\s+Code)?\s*(?:Sec\.?|Section)\s*([0-9]{1,3}[A-Z]?(?:\([A-Z0-9]+\))?)\b/i
@@ -486,10 +487,10 @@ export function inferNormalizedReference({
   const grNo = sample.match(/\bG\.?\s*R\.?\s*No\.?\s*([A-Z0-9.-]+)\b/i);
   if (grNo) return `G.R. No. ${grNo[1]}`;
 
-  const ctaEb = sample.match(/\bCTA\s*(?:EB|En\s+Banc)\s*(?:No\.?)?\s*([A-Z0-9.-]+)\b/i);
+  const ctaEb = sample.match(/\bCTA\s*(?:EB|En\s+Banc)\s*(?:No\.?)?\s*(\d[A-Z0-9.-]*)\b/i);
   if (ctaEb) return `CTA EB No. ${ctaEb[1]}`;
 
-  const ctaCase = sample.match(/\bCTA\s*(?:Case)?\s*(?:No\.?)?\s*([A-Z0-9.-]+)\b/i);
+  const ctaCase = sample.match(/\bCTA\s*(?:Case)?\s*(?:No\.?)?\s*(\d[A-Z0-9.-]*)\b/i);
   if (ctaCase) return `CTA Case No. ${ctaCase[1]}`;
 
   const ra = sample.match(/\b(?:RA|R\.A\.|Republic\s+Act)\s*(?:No\.?)?\s*0*(\d{4,6})\b/i);
