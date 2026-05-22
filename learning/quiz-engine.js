@@ -165,7 +165,7 @@ RULES:
 - Philippine taxation only (NIRC, RR, RMC, Supreme Court, CTA).
 - One question, four choices: A, B, C, D.
 - Randomize where the correct answer falls (do not always put it at A).
-- Exam-level accuracy required. Do not fabricate specific GR numbers, dates, or rates you are uncertain of.
+- Do not cite specific RR numbers, RMC numbers, RMO numbers, BIR rulings, case names, G.R. numbers, deadlines, tax rates, or statutory section numbers. No indexed source is available for this question — use general framework explanation only.
 - Avoid repeating the following questions:
 ${allExcluded || "None yet."}
 - Return valid JSON only. No markdown. No text outside JSON.
@@ -268,9 +268,14 @@ export async function generateQuizQuestion({
   const exclusions = buildQuizExclusionFromHistory(recentHistory);
   const compactedHistory = compactHistory(recentHistory);
 
-  // Source retrieval scoped to domain + subtopic
+  // Source retrieval scoped to domain + subtopic.
+  // Intentional design: issue-classification-engine, retrieval-engine, and reranker-engine
+  // are bypassed here. /quiz uses a lightweight direct vector-store path for speed and
+  // token efficiency. Domain is locked by the command itself, not by classifier.
   const hints = buildRetrievalHints(domain, subtopic);
   let sourceChunks = [];
+  let retrievalFailed = false;
+  let retrievalFailReason = null;
   try {
     sourceChunks = await Promise.race([
       getQuizSourceChunks({
@@ -282,11 +287,30 @@ export async function generateQuizQuestion({
       new Promise((_, rej) => setTimeout(() => rej(new Error("source timeout")), 5000))
     ]);
   } catch (err) {
-    console.error("[QUIZ ENGINE] Source retrieval failed (topic-only fallback):", err?.message);
+    retrievalFailed = true;
+    retrievalFailReason = err?.message || "unknown";
     sourceChunks = [];
   }
 
   const compactSources = safeArray(sourceChunks).map(compactSourceChunk);
+
+  if (compactSources.length > 0) {
+    console.info("[QUIZ ENGINE] Grounded retrieval", {
+      domain,
+      subtopic,
+      query: hints.primaryQuery,
+      chunks: compactSources.length,
+      sources: compactSources.map((c) => c.title).slice(0, 3)
+    });
+  } else {
+    console.warn("[QUIZ ENGINE] Retrieval fallback — no grounded source", {
+      domain,
+      subtopic,
+      query: hints.primaryQuery,
+      retrievalFailed,
+      retrievalFailReason
+    });
+  }
 
   const quizPrompt = buildDomainSubtopicQuizPrompt({
     domain,

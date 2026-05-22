@@ -1742,6 +1742,7 @@ export async function getQuizSourceChunksLight({
       "id,source,original_source,document_title,authority_type,authority_level,normalized_reference,chunk_index,text,metadata"
     )
     .or(`source.ilike.${pattern},document_title.ilike.${pattern}`)
+    .not("authority_type", "in", '("CPA_NOTES","REVIEW_MATERIALS","UNKNOWN")')
     .order("authority_level", { ascending: true, nullsFirst: false })
     .limit(safeLimit);
 
@@ -1821,9 +1822,9 @@ export async function getQuizSourceChunks({
       supabase: supabaseClient,
       query: cleanTopic || "Philippine taxation",
       topK: Math.max(safeLimit * 2, 6),
-      includeWeakSources: true,
-      includeReviewSources: true,
-      reviewMode: true
+      includeWeakSources: false,
+      includeReviewSources: false,
+      reviewMode: false
     });
 
     const fallbackFiltered = applyExclusions(rows).slice(0, safeLimit);

@@ -63,9 +63,11 @@ export function buildRetrievalHints(domainKey = "", subtopic = "") {
   const authorities = getDomainAuthorities(domainKey);
 
   const subtopicSpecific = getSubtopicKeywords(domainKey, subtopic);
+  const firstSubtopicKeyword = subtopicSpecific[0] || baseKeywords[0] || domainKey.toLowerCase();
 
   return {
-    primaryQuery: subtopicLabel,
+    primaryQuery: firstSubtopicKeyword,
+    subtopicQuery: subtopicLabel,
     fallbackQuery: `${domainKey.replace(/_/g, " ")} ${subtopic.replace(/_/g, " ")}`,
     keywords: [...new Set([...subtopicSpecific, ...baseKeywords])].slice(0, 8),
     targetAuthorities: authorities,

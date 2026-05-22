@@ -366,7 +366,7 @@ STRICT RULES:
 - Ask only ONE question.
 - Give exactly four choices: A, B, C, D.
 - Randomize where the correct answer appears.
-- Do not cite a specific RR, RMC, RMO, case, date, section, form, rate, or deadline unless certain.
+- Do not cite specific RR numbers, RMC numbers, RMO numbers, BIR rulings, case names, G.R. numbers, deadlines, tax rates, or statutory section numbers unless they appear in the retrieved indexed source context. If no indexed source is available, use general framework explanation only and say: Indexed source is limited for this topic.
 - Avoid repeating recent questions.
 - Return valid JSON only.
 - Do not include markdown.
