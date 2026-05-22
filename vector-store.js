@@ -1902,6 +1902,167 @@ export async function getQuizSourceChunks({
   }
 }
 
+// Lightweight review source query — mirrors getQuizSourceChunksLight but allows
+// CPA_NOTES and REVIEW_MATERIALS as secondary sources. UNKNOWN is always excluded.
+// Do NOT use this for /quiz — quiz exclusion policy is enforced by getQuizSourceChunks().
+export async function getReviewSourceChunks({
+  topic = "",
+  excludeSourcePaths = [],
+  excludeChunkIds = [],
+  limit = 4,
+  supabase: suppliedSupabase = defaultSupabase
+} = {}) {
+  const supabaseClient = resolveSupabaseClient(suppliedSupabase);
+  const cleanTopic = String(topic || "").trim();
+  const cleanTopicLower = cleanTopic.toLowerCase();
+  if (!cleanTopicLower) return [];
+
+  const safeLimit = Math.min(Math.max(1, Math.floor(Number(limit) || 4)), 6);
+  const pattern = `%${cleanTopicLower}%`;
+
+  // Reviewer source types allowed as secondary (authority_level 14).
+  // Primary sources are everything else that is not UNKNOWN.
+  const REVIEWER_TYPES = new Set(["CPA_NOTES", "REVIEW_MATERIALS", "SECONDARY"]);
+
+  // Light retrieval — same indexed columns as /quiz, but only UNKNOWN is excluded.
+  const { data, error } = await supabaseClient
+    .from(VECTOR_TABLE)
+    .select(
+      "id,source,original_source,document_title,authority_type,authority_level,normalized_reference,chunk_index,text,metadata"
+    )
+    .or(`source.ilike.${pattern},document_title.ilike.${pattern},normalized_reference.ilike.${pattern}`)
+    .neq("authority_type", "UNKNOWN")
+    .order("authority_level", { ascending: true, nullsFirst: false })
+    .limit(safeLimit * 3);
+
+  if (error) {
+    console.error("[REVIEW LIGHT SEARCH] Supabase error:", { message: error.message, code: error.code });
+  }
+
+  function shapeRow(row) {
+    const meta = row.metadata || {};
+    const driveViewUrl = meta.driveViewUrl || meta.drive_view_url || meta.url || null;
+    return {
+      id: row.id,
+      source: row.source,
+      original_source: row.original_source,
+      title: row.document_title || row.original_source || row.source || "Review Source",
+      document_title: row.document_title,
+      authorityType: row.authority_type || "UNKNOWN",
+      authority_type: row.authority_type,
+      authority_level: row.authority_level,
+      citation: row.normalized_reference || "",
+      normalized_reference: row.normalized_reference,
+      chunk_index: row.chunk_index,
+      url: driveViewUrl || "",
+      driveViewUrl: driveViewUrl || "",
+      drive_view_url: driveViewUrl || "",
+      text: trimReturnText(row.text || ""),
+      content: trimReturnText(row.text || ""),
+      excerpt: trimReturnText(row.text || ""),
+      metadata: meta,
+      score: 0.7,
+      sourceTitle: row.document_title || row.original_source || row.source,
+      sourcePath: meta.path || row.original_source || row.source,
+      fileId: meta.fileId || meta.file_id || null,
+      compactOutput: true
+    };
+  }
+
+  const applyExclusions = (rows) =>
+    rows.filter((row) => {
+      const path = row.sourcePath || row.metadata?.path || row.original_source || row.source || "";
+      const chunkId = String(row.id || "");
+      if (excludeSourcePaths.includes(path)) return false;
+      if (excludeChunkIds.includes(chunkId)) return false;
+      return (row.text || "").trim().length >= 50;
+    });
+
+  const shaped = (data || []).map(shapeRow);
+  const primaryFiltered = applyExclusions(shaped.filter((r) => !REVIEWER_TYPES.has(r.authority_type)));
+  const secondaryFiltered = applyExclusions(shaped.filter((r) => REVIEWER_TYPES.has(r.authority_type)));
+
+  // Primary fills first; secondary supplements only when primary is insufficient.
+  let results;
+  if (primaryFiltered.length >= safeLimit) {
+    results = primaryFiltered.slice(0, safeLimit);
+  } else {
+    const remaining = safeLimit - primaryFiltered.length;
+    results = [...primaryFiltered, ...secondaryFiltered.slice(0, remaining)];
+  }
+
+  if (results.length > 0) {
+    const primaryCount = results.filter((r) => !REVIEWER_TYPES.has(r.authority_type)).length;
+    const secondaryCount = results.filter((r) => REVIEWER_TYPES.has(r.authority_type)).length;
+    console.info("[REVIEW SOURCE CHUNKS] Grounded retrieval", {
+      topic: cleanTopic,
+      primaryCount,
+      secondaryCount,
+      totalCount: results.length
+    });
+    return results;
+  }
+
+  // Fallback: smartSearch with reviewer sources included. 3000ms internal budget.
+  console.warn("[REVIEW SOURCE CHUNKS] Fallback retrieval", {
+    topic: cleanTopic,
+    reason: "light query returned no usable results"
+  });
+
+  try {
+    const fallbackRows = await Promise.race([
+      smartSearch({
+        supabase: supabaseClient,
+        query: cleanTopic || "Philippine taxation",
+        topK: Math.max(safeLimit * 2, 6),
+        includeWeakSources: true,
+        includeReviewSources: true,
+        reviewMode: true
+      }),
+      new Promise((_, rej) =>
+        setTimeout(() => rej(new Error("review smartSearch budget exceeded")), 3000)
+      )
+    ]);
+
+    const fallbackShaped = applyExclusions(
+      (fallbackRows || [])
+        .filter((r) => (r.authority_type || "UNKNOWN") !== "UNKNOWN")
+        .map((row) => ({
+          ...row,
+          text: trimReturnText(row.text),
+          content: trimReturnText(row.content || row.text),
+          excerpt: trimReturnText(row.excerpt || row.text),
+          sourceTitle:
+            row.documentTitle ||
+            row.document_title ||
+            row.metadata?.documentTitle ||
+            row.metadata?.originalFileName ||
+            row.original_source ||
+            row.source,
+          sourcePath: row.metadata?.path || row.original_source || row.source,
+          fileId: row.metadata?.fileId || row.metadata?.file_id || null,
+          compactOutput: true
+        }))
+    );
+
+    const fallbackPrimary = fallbackShaped.filter((r) => !REVIEWER_TYPES.has(r.authority_type));
+    const fallbackSecondary = fallbackShaped.filter((r) => REVIEWER_TYPES.has(r.authority_type));
+
+    let fallbackResults;
+    if (fallbackPrimary.length >= safeLimit) {
+      fallbackResults = fallbackPrimary.slice(0, safeLimit);
+    } else {
+      const remaining = safeLimit - fallbackPrimary.length;
+      fallbackResults = [...fallbackPrimary, ...fallbackSecondary.slice(0, remaining)];
+    }
+
+    return fallbackResults;
+  } catch (fallbackError) {
+    console.error("[REVIEW SOURCE CHUNKS] smartSearch fallback failed:", fallbackError?.message);
+    return [];
+  }
+}
+
 export async function getVectorStoreStats(client = defaultSupabase) {
   const supabaseClient = resolveSupabaseClient(client);
 
@@ -2016,6 +2177,7 @@ export default {
 
   getQuizSourceChunks,
   getQuizSourceChunksLight,
+  getReviewSourceChunks,
   getVectorStoreStats,
 
   normalizeSourceName,

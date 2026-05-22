@@ -1,7 +1,7 @@
 // FILE: learning/review-engine.js
 "use strict";
 
-import { getQuizSourceChunks } from "../vector-store.js";
+import { getReviewSourceChunks } from "../vector-store.js";
 import { buildRetrievalHints } from "./question-bank-router.js";
 import { getSubtopicLabel, getDomainAuthorities } from "./domain-normalizer.js";
 
@@ -184,11 +184,11 @@ export async function generateReviewMaterial({
   let sourceChunks = [];
   try {
     sourceChunks = await Promise.race([
-      getQuizSourceChunks({
+      getReviewSourceChunks({
         topic: hints.primaryQuery,
         excludeSourcePaths: [],
         excludeChunkIds: [],
-        limit: 3
+        limit: 4
       }),
       new Promise((_, rej) => setTimeout(() => rej(new Error("source timeout")), 5000))
     ]);
@@ -198,6 +198,22 @@ export async function generateReviewMaterial({
   }
 
   const compactSources = safeArray(sourceChunks).map(compactSourceChunk);
+
+  if (compactSources.length > 0) {
+    console.info("[REVIEW ENGINE] Grounded retrieval", {
+      domain,
+      subtopic,
+      query: hints.primaryQuery,
+      sourceCount: compactSources.length
+    });
+  } else {
+    console.warn("[REVIEW ENGINE] Retrieval fallback — no grounded source", {
+      domain,
+      subtopic,
+      query: hints.primaryQuery,
+      sourceCount: 0
+    });
+  }
 
   const reviewPrompt = buildReviewPrompt({
     domain,
