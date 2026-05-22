@@ -1742,7 +1742,7 @@ export async function getQuizSourceChunksLight({
     .select(
       "id,source,original_source,document_title,authority_type,authority_level,normalized_reference,chunk_index,text,metadata"
     )
-    .or(`source.ilike.${pattern},document_title.ilike.${pattern}`)
+    .or(`source.ilike.${pattern},document_title.ilike.${pattern},normalized_reference.ilike.${pattern}`)
     .order("authority_level", { ascending: true, nullsFirst: false })
     .limit(safeLimit * 3);
 
