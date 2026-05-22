@@ -1747,6 +1747,14 @@ export function createAskHandler({
     await clearModeState(supabase, userId, conversationId || null);
     await assessmentHandler.clearPendingQuizAttempts(userId, conversationId || null);
 
+    if (activeHook === "/review") {
+      console.log("[REVIEW EXIT]", {
+        userId,
+        sessionId: conversationId,
+        previousDomain: existingMode?.adaptive_context?.learning?.domain || null
+      });
+    }
+
     let answerText = "Session ended. Thank you for using TINA. Type any question or a mode hook (e.g. /ask, /quiz, /review) to start a new session.";
 
     if (activeHook === "/quiz") answerText = "Quiz session ended. Your progress has been saved. Type /quiz to start a new quiz or /ask to continue with a regular question.";
@@ -2093,21 +2101,21 @@ export function createAskHandler({
         });
       }
 
-      // REVIEW MODE ANSWER GATE — pendingAnswer in session state means the mini MCQ is awaiting a response.
-      // Invalid input is rejected here: no OpenAI call, no retrieval, no session reset.
-      const pendingReviewAnswer = existingMode?.adaptive_context?.learning?.pendingAnswer || null;
-      if (pendingReviewAnswer && activeHook === "/review" && !quizAnswer && !explicitHook) {
-        const lockedDomain = existingMode?.adaptive_context?.learning?.domain || "";
-        console.log("[REVIEW MODE] Invalid locked input", {
+      // REVIEW MODE LOCK — when a domain is selected, only A/B/C/D and exit commands
+      // may proceed. All other input is rejected immediately: no OpenAI call, no
+      // retrieval, no adaptive routing, no fallback to /ask.
+      const reviewLockedDomain = existingMode?.adaptive_context?.learning?.domain || null;
+      if (activeHook === "/review" && reviewLockedDomain && !quizAnswer) {
+        console.log("[REVIEW INVALID INPUT]", {
           input: rawQuestion.slice(0, 80),
-          sessionId: conversationId,
-          activeDomain: lockedDomain
+          activeDomain: reviewLockedDomain,
+          allowed: ["A", "B", "C", "D", "/bye", "/exit", "/quit"]
         });
         return res.json({
           success: false,
           engine: "TINA_ASK_HANDLER",
-          mode: "MODE_ANSWER_GATED",
-          answer: "Invalid review input.\n\nAllowed responses:\n• A\n• B\n• C\n• D\n• /bye\n• /exit\n• /quit",
+          mode: "REVIEW_MODE_LOCKED",
+          answer: `## Invalid Response\n\nAllowed responses:\n• A\n• B\n• C\n• D\n• /bye\n• /exit\n• /quit\n\nYou are currently inside /review ${reviewLockedDomain}.\n\nDo not answer questions directly in review mode.\n\nTYPE:\n• A/B/C/D to answer\n• /bye to exit`,
           sourceStatus: "REVIEW_MODE_LOCKED",
           sources: [],
           sourcesUsed: [],

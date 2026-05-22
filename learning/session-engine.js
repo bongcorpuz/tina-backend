@@ -419,6 +419,14 @@ export function createLearningHandler({
       const answerSectionText = String(pendingAnswer?.answerText || "No answer data available.");
       const isCorrect = cleanAnswer === correctAnswer;
 
+      console.log("[REVIEW ANSWER ACCEPTED]", {
+        answer: cleanAnswer,
+        isCorrect,
+        domain: sessionLearning.domain,
+        subtopic: sessionLearning.subtopic,
+        sessionId: conversationId
+      });
+
       // Update score, clear pendingAnswer
       const scoredState = updateLearningStateAfterAnswer({
         sessionLearning,
@@ -632,6 +640,14 @@ export function createLearningHandler({
         adaptiveContext: { learning: updatedState }
       });
 
+      console.log("[REVIEW LOCK]", {
+        domain,
+        subtopic,
+        sessionId: conversationId,
+        sourceCount: visibleSources.length,
+        pendingAnswer: Boolean(updatedState.pendingAnswer)
+      });
+
       return {
         handled: true,
         response: {
@@ -717,7 +733,7 @@ export function createLearningHandler({
             success: false,
             engine: "TINA Learning System",
             mode: "REVIEW_ANSWER_GATED",
-            answer: "Invalid review input.\n\nAllowed responses:\n• A\n• B\n• C\n• D\n• /bye\n• /exit\n• /quit",
+            answer: `## Invalid Response\n\nAllowed responses:\n• A\n• B\n• C\n• D\n• /bye\n• /exit\n• /quit\n\nYou are currently inside /review ${storedLearning.domain || ""}.\n\nDo not answer questions directly in review mode.\n\nTYPE:\n• A/B/C/D to answer\n• /bye to exit`,
             sources: [], sourcesUsed: [], sourceCards: [], vectorMatches: 0
           }
         };
