@@ -709,14 +709,15 @@ export function createLearningHandler({
             userId, conversationId, hookConfig, sessionLearning, cleanAnswer: quizAnswer
           });
         }
-        // Non-A/B/C/D received while answer is pending (ask-handler gate should prevent this, but handle gracefully)
+        // Non-A/B/C/D received while answer is pending — ask-handler gate should prevent this, but handle defensively.
+        // No OpenAI call, no retrieval, no session reset.
         return {
           handled: true,
           response: {
             success: false,
             engine: "TINA Learning System",
             mode: "REVIEW_ANSWER_GATED",
-            answer: `Please answer the current question using A, B, C, or D. Type /bye to exit reviewer mode.`,
+            answer: "Invalid review input.\n\nAllowed responses:\n• A\n• B\n• C\n• D\n• /bye\n• /exit\n• /quit",
             sources: [], sourcesUsed: [], sourceCards: [], vectorMatches: 0
           }
         };

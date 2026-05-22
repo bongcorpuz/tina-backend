@@ -2093,15 +2093,21 @@ export function createAskHandler({
         });
       }
 
-      // REVIEW MODE ANSWER GATE — pendingAnswer in session state means the mini MCQ is awaiting a response
+      // REVIEW MODE ANSWER GATE — pendingAnswer in session state means the mini MCQ is awaiting a response.
+      // Invalid input is rejected here: no OpenAI call, no retrieval, no session reset.
       const pendingReviewAnswer = existingMode?.adaptive_context?.learning?.pendingAnswer || null;
       if (pendingReviewAnswer && activeHook === "/review" && !quizAnswer && !explicitHook) {
         const lockedDomain = existingMode?.adaptive_context?.learning?.domain || "";
+        console.log("[REVIEW MODE] Invalid locked input", {
+          input: rawQuestion.slice(0, 80),
+          sessionId: conversationId,
+          activeDomain: lockedDomain
+        });
         return res.json({
           success: false,
           engine: "TINA_ASK_HANDLER",
           mode: "MODE_ANSWER_GATED",
-          answer: `Reviewer mode is active${lockedDomain ? ` for ${lockedDomain}` : ""}. Please answer using A, B, C, or D only, or type /bye to exit.`,
+          answer: "Invalid review input.\n\nAllowed responses:\n• A\n• B\n• C\n• D\n• /bye\n• /exit\n• /quit",
           sourceStatus: "REVIEW_MODE_LOCKED",
           sources: [],
           sourcesUsed: [],
