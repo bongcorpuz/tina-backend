@@ -54,8 +54,13 @@ const MAX_EMBED_INPUT_CHARS = Number(
 // Supabase free-tier statement_timeout fires on large vector batches (50 rows × 1536-dim
 // exceeds ~25–30 s with HNSW index updates). Smaller batches + inter-batch delay keep
 // each INSERT well under the limit. Both values are env-overridable on Render.
-const VECTOR_INSERT_BATCH_SIZE = Number(process.env.VECTOR_INSERT_BATCH_SIZE || 20);
-const VECTOR_INSERT_BATCH_DELAY_MS = Number(process.env.VECTOR_INSERT_BATCH_DELAY_MS || 150);
+const VECTOR_INSERT_BATCH_SIZE = Math.max(1, Math.min(50, Number(process.env.VECTOR_INSERT_BATCH_SIZE || 20)));
+const VECTOR_INSERT_BATCH_DELAY_MS = Math.max(0, Number(process.env.VECTOR_INSERT_BATCH_DELAY_MS || 150));
+
+console.info("[VECTOR INSERT CONFIG]", {
+  batchSize: VECTOR_INSERT_BATCH_SIZE,
+  batchDelayMs: VECTOR_INSERT_BATCH_DELAY_MS,
+});
 
 const GOOGLE_DRIVE_PRIORITY_FOLDERS = Object.freeze([
   "01_TAX_CODE",
