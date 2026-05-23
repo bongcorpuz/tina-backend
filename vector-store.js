@@ -51,6 +51,12 @@ const MAX_EMBED_INPUT_CHARS = Number(
   process.env.VECTOR_MAX_EMBED_INPUT_CHARS || 24000
 );
 
+// Supabase free-tier statement_timeout fires on large vector batches (50 rows × 1536-dim
+// exceeds ~25–30 s with HNSW index updates). Smaller batches + inter-batch delay keep
+// each INSERT well under the limit. Both values are env-overridable on Render.
+const VECTOR_INSERT_BATCH_SIZE = Number(process.env.VECTOR_INSERT_BATCH_SIZE || 20);
+const VECTOR_INSERT_BATCH_DELAY_MS = Number(process.env.VECTOR_INSERT_BATCH_DELAY_MS || 150);
+
 const GOOGLE_DRIVE_PRIORITY_FOLDERS = Object.freeze([
   "01_TAX_CODE",
   "02_REVENUE_REGULATIONS",
@@ -1574,19 +1580,45 @@ export async function addDocumentToVectorStore(text, source, metadata = {}, clie
     });
   }
 
-  const batchSize = 50;
   let inserted = 0;
+  const totalBatches = Math.ceil(rows.length / VECTOR_INSERT_BATCH_SIZE);
 
-  for (let i = 0; i < rows.length; i += batchSize) {
-    const batch = rows.slice(i, i + batchSize);
+  for (let i = 0; i < rows.length; i += VECTOR_INSERT_BATCH_SIZE) {
+    const batch = rows.slice(i, i + VECTOR_INSERT_BATCH_SIZE);
+    const batchNum = Math.floor(i / VECTOR_INSERT_BATCH_SIZE) + 1;
+
+    console.info("[BATCH INSERT START]", {
+      source: normalizedSource,
+      batch: batchNum,
+      of: totalBatches,
+      size: batch.length
+    });
+
     const { error } = await supabaseClient.from(VECTOR_TABLE).insert(batch);
 
     if (error) {
-      console.error("Supabase vector insert error:", error);
+      console.error("[BATCH INSERT FAIL]", {
+        source: normalizedSource,
+        batch: batchNum,
+        error: error.message,
+        code: error.code
+      });
       throw error;
     }
 
     inserted += batch.length;
+
+    console.info("[BATCH INSERT SUCCESS]", {
+      source: normalizedSource,
+      batch: batchNum,
+      of: totalBatches,
+      inserted,
+      remaining: rows.length - inserted
+    });
+
+    if (i + VECTOR_INSERT_BATCH_SIZE < rows.length && VECTOR_INSERT_BATCH_DELAY_MS > 0) {
+      await new Promise(r => setTimeout(r, VECTOR_INSERT_BATCH_DELAY_MS));
+    }
   }
 
   return {
