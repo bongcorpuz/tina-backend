@@ -502,6 +502,32 @@ function buildNircSectionKeywords(section = "") {
   ]);
 }
 
+// Returns raw (non-normalized) NIRC section strings that ILIKE-match the
+// stored normalized_reference format "NIRC Sec. N" written by detectNircSectionHeading.
+// Strips subsection qualifiers (e.g. "27(a)" → "27") because the heading detector
+// captures only the base section number.
+function buildNircSectionRawForms(section = "") {
+  const base = String(section || "").trim().match(/^([0-9]{1,3}[A-Z]?)/)?.[1];
+  if (!base) return [];
+  return [
+    `nirc sec. ${base}`,
+    `nirc sec ${base}`,
+    `nirc section ${base}`
+  ];
+}
+
+// For a given lowercased topic string, returns an extra comma-prefixed OR-clause
+// fragment that expands NIRC section queries to match stored "NIRC Sec. N" values.
+// Returns an empty string when the topic is not a recognisable NIRC section reference.
+function buildNircLightExpansion(topic = "") {
+  const t = String(topic || "").trim();
+  const m = t.match(/(?:^|(?:nirc[\s_-]+)?)sec(?:tion)?\.?\s+([0-9]{1,3}[A-Z]?)(?:\b|$)/i);
+  if (!m) return "";
+  const rawForms = buildNircSectionRawForms(m[1]);
+  if (!rawForms.length) return "";
+  return "," + rawForms.map(f => `normalized_reference.ilike.%${f}%`).join(",");
+}
+
 function buildPossibleSourceKeywords(query = "") {
   const q = String(query || "");
   const keywords = [];
@@ -514,9 +540,13 @@ function buildPossibleSourceKeywords(query = "") {
     );
   }
 
+  // Collect raw NIRC section forms (space+period format) separately so they survive
+  // the normalizeForMatch step below and produce correct ILIKE patterns downstream.
+  const nircRaw = [];
   const nircMatches = [...q.matchAll(/\b(?:NIRC\s*)?(?:Sec\.?|Section)\s*([0-9]{1,3}[A-Z]?(?:\([A-Z0-9]+\))?)\b/gi)];
   for (const match of nircMatches) {
     keywords.push(...buildNircSectionKeywords(match[1]));
+    nircRaw.push(...buildNircSectionRawForms(match[1]));
   }
 
   const raMatch = q.match(/\b(?:RA|R\.A\.|Republic\s+Act(?:\s+No\.?)?)\s*0*(\d{4,6})\b/i);
@@ -556,7 +586,9 @@ function buildPossibleSourceKeywords(query = "") {
   const ctaMatch = q.match(/\bcta\s+(?:case|eb)?\s*(?:no\.?)?\s*([A-Z0-9.-]+)\b/i);
   if (ctaMatch) keywords.push(...buildCourtKeywords("CTA", ctaMatch[1]));
 
-  return unique(keywords.map(normalizeForMatch).filter(Boolean));
+  // nircRaw entries are pre-normalized (space+period format) and must come first so
+  // buildSourceIlikeFilters includes them as the original keyword → %nirc sec. N% ILIKE.
+  return unique([...nircRaw, ...keywords.map(normalizeForMatch)].filter(Boolean));
 }
 
 function getFolderNameFromRow(row = {}) {
@@ -1777,13 +1809,14 @@ export async function getQuizSourceChunksLight({
   const EXCLUDED_AUTHORITY_TYPES = new Set(["CPA_NOTES", "REVIEW_MATERIALS", "UNKNOWN"]);
   const safeLimit = Math.min(Math.max(1, Math.floor(Number(limit) || 3)), 5);
   const pattern = `%${cleanTopic}%`;
+  const nircExpansion = buildNircLightExpansion(cleanTopic);
 
   const { data, error } = await supabaseClient
     .from(VECTOR_TABLE)
     .select(
       "id,source,original_source,document_title,authority_type,authority_level,normalized_reference,chunk_index,text,metadata"
     )
-    .or(`source.ilike.${pattern},document_title.ilike.${pattern},normalized_reference.ilike.${pattern}`)
+    .or(`source.ilike.${pattern},document_title.ilike.${pattern},normalized_reference.ilike.${pattern}${nircExpansion}`)
     .order("authority_level", { ascending: true, nullsFirst: false })
     .limit(safeLimit * 3);
 
@@ -1919,6 +1952,7 @@ export async function getReviewSourceChunks({
 
   const safeLimit = Math.min(Math.max(1, Math.floor(Number(limit) || 4)), 6);
   const pattern = `%${cleanTopicLower}%`;
+  const nircExpansion = buildNircLightExpansion(cleanTopicLower);
 
   // Reviewer source types allowed as secondary (authority_level 14).
   // Primary sources are everything else that is not UNKNOWN.
@@ -1930,7 +1964,7 @@ export async function getReviewSourceChunks({
     .select(
       "id,source,original_source,document_title,authority_type,authority_level,normalized_reference,chunk_index,text,metadata"
     )
-    .or(`source.ilike.${pattern},document_title.ilike.${pattern},normalized_reference.ilike.${pattern}`)
+    .or(`source.ilike.${pattern},document_title.ilike.${pattern},normalized_reference.ilike.${pattern}${nircExpansion}`)
     .neq("authority_type", "UNKNOWN")
     .order("authority_level", { ascending: true, nullsFirst: false })
     .limit(safeLimit * 3);
