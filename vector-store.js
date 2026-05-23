@@ -1516,7 +1516,7 @@ function detectNircSectionHeading(chunkText = "") {
   return `NIRC Sec. ${match[1]}`;
 }
 
-export async function addDocumentToVectorStore(text, source, metadata = {}, client = defaultSupabase) {
+export async function addDocumentToVectorStore(text, source, metadata = {}, client = defaultSupabase, { skipDelete = false } = {}) {
   const supabaseClient = resolveSupabaseClient(client);
   const chunks = chunkText(text);
   const normalizedSource = normalizeSourceName(metadata.normalizedSource || source);
@@ -1530,7 +1530,9 @@ export async function addDocumentToVectorStore(text, source, metadata = {}, clie
     };
   }
 
-  await removeSourceFromVectorStore(normalizedSource, supabaseClient);
+  if (!skipDelete) {
+    await removeSourceFromVectorStore(normalizedSource, supabaseClient);
+  }
 
   const rows = [];
   const isNirc = isNircSourceDocument(source, metadata);

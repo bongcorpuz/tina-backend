@@ -1075,7 +1075,7 @@ export async function deactivateOldChunks() {
   };
 }
 
-export async function upsertIndexedChunks(text = "", metadata = {}) {
+export async function upsertIndexedChunks(text = "", metadata = {}, { skipDelete = false } = {}) {
   const chunks = buildIndexChunks(text, metadata);
 
   const result = await addDocumentToVectorStore(
@@ -1092,7 +1092,9 @@ export async function upsertIndexedChunks(text = "", metadata = {}) {
       chunkCount: chunks.length,
       chunk_count: chunks.length,
       compactIndexedMetadata: true
-    }
+    },
+    undefined,
+    { skipDelete }
   );
 
   return {
@@ -1259,9 +1261,13 @@ export async function runTargetedReindex(isTargetFile = isNircOrVatFile) {
       const metadata = normalizeIndexedMetadata(readableFile, cleanText);
       const normalizedSource = metadata.normalizedSource;
 
-      console.info("[REINDEX REMOVE SOURCE]", { source: normalizedSource, fileName });
+      console.info("[REINDEX SKIP REMOVE SOURCE]", {
+        source: normalizedSource,
+        fileName,
+        reason: "targeted validation mode",
+      });
 
-      const indexResult = await upsertIndexedChunks(cleanText, metadata);
+      const indexResult = await upsertIndexedChunks(cleanText, metadata, { skipDelete: true });
       const chunksAdded = indexResult?.chunksAdded ?? indexResult?.chunkCount ?? 0;
 
       console.info("[REINDEX INSERT]", {
