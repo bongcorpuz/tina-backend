@@ -1468,15 +1468,21 @@ function isNircSourceDocument(source = "", metadata = {}) {
   return /nirc|national.internal.revenue.code/.test(blob);
 }
 
-// Detects a section heading at the start of a line or paragraph in NIRC chunk text.
+// Detects a section heading in NIRC chunk text.
+// Fires at start-of-string, after any line ending, after sentence-ending
+// punctuation + 1-3 spaces, or after 2+ whitespace chars (e.g. paragraph indent).
 // Matches:  "SEC. 109. Exempt Transactions."
-//           "SECTION 109. Exempt Transactions."
-//           "Sec. 84. Rates of Estate Tax."
+//           "SEC. 111. Transitional/Presumptive Input Tax Credits"
+//           "SEC. 84. Rates of Estate Tax."
+//           "Section 109. Exempt Transactions."
+//           "Sec. 109. Exempt Transactions."
+//           "...previous text. SEC. 84. Rates of Estate Tax."
 // Does NOT match inline citations like "pursuant to Sec. 109 of the Code"
-// because those appear mid-sentence without a leading newline.
+// or "under Section 112" because those lack a period immediately after the
+// section number — the trailing dot is the reliable heading discriminator.
 function detectNircSectionHeading(chunkText = "") {
   const match = chunkText.match(
-    /(?:^|\n)\s*(?:SEC(?:TION)?\.?)\s+([0-9]+[A-Z]?)\./i
+    /(?:^|[\r\n]|\.\s{1,3}|\s{2,})\s*(?:SEC(?:TION)?\.?)\s+([0-9]+[A-Z]?)\./i
   );
   if (!match) return null;
   return `NIRC Sec. ${match[1]}`;
