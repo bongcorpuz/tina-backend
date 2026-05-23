@@ -440,10 +440,18 @@ export function inferNormalizedReference({
   const raw = `${fileName}\n${folderPath}\n${normalizeText(text).slice(0, 3000)}`;
   const sample = raw.replace(/_/g, " ");
 
-  const nircSection = sample.match(
-    /\b(?:NIRC|National\s+Internal\s+Revenue\s+Code)?\s*(?:Sec\.?|Section)\s*([0-9]{1,3}[A-Z]?(?:\([A-Z0-9]+\))?)\b/i
-  );
-  if (nircSection) return buildSectionReference("NIRC", nircSection[1]);
+  // Use period-terminated matchAll so inline citations (no trailing dot) are excluded.
+  // If 2+ distinct section numbers appear, this is a multi-section document (e.g. full NIRC);
+  // skip document-level inference and let per-chunk detection assign references instead.
+  const nircSectionMatches = [
+    ...sample.matchAll(
+      /\b(?:NIRC|National\s+Internal\s+Revenue\s+Code)?\s*(?:Sec\.?|Section)\s+([0-9]{1,3}[A-Z]?)\./gi
+    )
+  ];
+  const distinctNircNums = new Set(nircSectionMatches.map(m => m[1].toUpperCase()));
+  if (distinctNircNums.size === 1) {
+    return buildSectionReference("NIRC", [...distinctNircNums][0]);
+  }
 
   const cmtaSection = sample.match(
     /\b(?:CMTA|Customs\s+Modernization\s+and\s+Tariff\s+Act)\s*(?:Sec\.?|Section)\s*([0-9]{1,4}[A-Z]?(?:\([A-Z0-9]+\))?)\b/i

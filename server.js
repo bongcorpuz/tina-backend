@@ -38,7 +38,7 @@ import {
   askHelpersHealthCheck
 } from "./ask-helpers.js";
 
-import { createBackgroundReindexController } from "./reindex-service.js";
+import { createBackgroundReindexController, runTargetedReindex } from "./reindex-service.js";
 import { registerTinaRoutes } from "./routes/index.js";
 
 import { queryIntentEngineHealthCheck } from "./query-intent-engine.js";
@@ -527,6 +527,19 @@ app.get("/reindex", allowAuthenticatedOrIndexSecret, async (req, res) => {
 
 app.get("/admin/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
   return res.json(startIndexingResponse("/admin/index-drive"));
+});
+
+app.get("/reindex-targeted", allowAuthenticatedOrIndexSecret, async (req, res) => {
+  res.json({
+    started: true,
+    message: "Targeted NIRC + VAT reindex started in background.",
+    targets: ["01_TAX_CODE (all)", "RR 16-2005", "RR 13-2018", "RMC 67-2021", "RMC 99-2021"],
+    note: "Check Render logs for [REINDEX START], [REINDEX INSERT], [REINDEX COMPLETE]"
+  });
+  setImmediate(() => {
+    runTargetedReindex()
+      .catch(err => console.error("[REINDEX] Targeted reindex failed:", err?.message));
+  });
 });
 
 app.get("/index-status", allowAuthenticatedOrIndexSecret, async (req, res) => {

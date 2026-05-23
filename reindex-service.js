@@ -356,10 +356,18 @@ function inferNormalizedReferenceFallback({
   const raw = `${fileName}\n${folderPath}\n${normalizeText(text).slice(0, 3000)}`;
   const sample = raw.replace(/_/g, " ");
 
-  const nircSection = sample.match(
-    /\b(?:NIRC|National\s+Internal\s+Revenue\s+Code)?\s*(?:Sec\.?|Section)\s*([0-9]{1,3}[A-Z]?(?:\([A-Z0-9]+\))?)\b/i
-  );
-  if (nircSection) return buildSectionReference("NIRC", nircSection[1]);
+  // Use period-terminated matchAll so inline citations (no trailing dot) are excluded.
+  // If 2+ distinct section numbers appear, this is a multi-section document (e.g. full NIRC);
+  // skip document-level inference and let per-chunk detection assign references instead.
+  const nircSectionMatches = [
+    ...sample.matchAll(
+      /\b(?:NIRC|National\s+Internal\s+Revenue\s+Code)?\s*(?:Sec\.?|Section)\s+([0-9]{1,3}[A-Z]?)\./gi
+    )
+  ];
+  const distinctNircNums = new Set(nircSectionMatches.map(m => m[1].toUpperCase()));
+  if (distinctNircNums.size === 1) {
+    return buildSectionReference("NIRC", [...distinctNircNums][0]);
+  }
 
   const cmtaSection = sample.match(
     /\b(?:CMTA|Customs\s+Modernization\s+and\s+Tariff\s+Act)\s*(?:Sec\.?|Section)\s*([0-9]{1,4}[A-Z]?(?:\([A-Z0-9]+\))?)\b/i
@@ -1197,6 +1205,105 @@ export async function runDriveReindex() {
   };
 }
 
+// ── Targeted reindex ──────────────────────────────────────────────────────────
+
+// Returns true for NIRC and priority VAT authority files only.
+// Matches on file name and folder path — both lowercased.
+function isNircOrVatFile(file) {
+  const name = (file.name || file.fileName || "").toLowerCase();
+  const path = (file.path || file.folderPath || "").toLowerCase();
+  return (
+    name.includes("nirc") ||
+    path.includes("01_tax_code") ||
+    name.includes("16-2005") ||
+    name.includes("rr_16-2005") ||
+    name.includes("13-2018") ||
+    name.includes("67-2021") ||
+    name.includes("rmc_67") ||
+    name.includes("99-2021") ||
+    name.includes("rmc_99")
+  );
+}
+
+// Reindexes only files matched by isTargetFile (defaults to NIRC + VAT files).
+// Does NOT call clearVectorStore. Each source's existing chunks are removed
+// per-source inside addDocumentToVectorStore before new chunks are inserted.
+export async function runTargetedReindex(isTargetFile = isNircOrVatFile) {
+  const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
+  if (!folderId) throw new Error("GOOGLE_DRIVE_FOLDER_ID not set");
+
+  const files = await listDriveFiles(folderId);
+  const targetFiles = (files || []).filter(isTargetFile);
+
+  console.info("[REINDEX START]", {
+    targeted: true,
+    totalFilesInDrive: files.length,
+    matchedFiles: targetFiles.length,
+    fileNames: targetFiles.map(f => f.name || f.fileName || "?")
+  });
+
+  const indexed = [];
+  const failed = [];
+  const skipped = [];
+
+  for (const file of targetFiles) {
+    const fileName = file.name || file.fileName || "unknown";
+    try {
+      const { file: readableFile, text } = await readFileForIndexing(file);
+      const cleanText = truncateText(normalizeText(text));
+
+      if (!cleanText) {
+        skipped.push({ fileName, reason: "No readable text" });
+        continue;
+      }
+
+      const metadata = normalizeIndexedMetadata(readableFile, cleanText);
+      const normalizedSource = metadata.normalizedSource;
+
+      console.info("[REINDEX REMOVE SOURCE]", { source: normalizedSource, fileName });
+
+      const indexResult = await upsertIndexedChunks(cleanText, metadata);
+      const chunksAdded = indexResult?.chunksAdded ?? indexResult?.chunkCount ?? 0;
+
+      console.info("[REINDEX INSERT]", {
+        source: normalizedSource,
+        chunksAdded,
+        normalizedReference: metadata.normalizedReference
+      });
+
+      indexed.push({
+        fileName: metadata.fileName,
+        normalizedSource,
+        normalizedReference: metadata.normalizedReference,
+        chunksAdded
+      });
+    } catch (error) {
+      console.error(`[REINDEX] Failed: ${fileName} — ${error?.message}`);
+      failed.push({ fileName, reason: error?.message || "Failed" });
+    }
+  }
+
+  console.info("[REINDEX COMPLETE]", {
+    indexed: indexed.length,
+    failed: failed.length,
+    skipped: skipped.length,
+    sources: indexed.map(r => r.normalizedSource)
+  });
+
+  return {
+    targeted: true,
+    totalFilesInDrive: (files || []).length,
+    filesMatched: targetFiles.length,
+    filesIndexed: indexed.length,
+    filesFailed: failed.length,
+    filesSkipped: skipped.length,
+    indexed,
+    failed,
+    skipped,
+    indexedAt: new Date().toISOString()
+  };
+}
+
 export function createBackgroundReindexController() {
   let isRunning = false;
 
@@ -1321,6 +1428,7 @@ export function reindexServiceHealthCheck() {
 
 export default {
   runDriveReindex,
+  runTargetedReindex,
   createBackgroundReindexController,
   reindexServiceHealthCheck,
 

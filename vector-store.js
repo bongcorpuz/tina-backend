@@ -1499,7 +1499,7 @@ function isNircSourceDocument(source = "", metadata = {}) {
 // section number — the trailing dot is the reliable heading discriminator.
 function detectNircSectionHeading(chunkText = "") {
   const match = chunkText.match(
-    /(?:^|[\r\n]|\.\s{1,3}|\s{2,})\s*(?:SEC(?:TION)?\.?)\s+([0-9]+[A-Z]?)\./i
+    /(?:^|[\r\n]|\.\s*|\s{2,})\s*(?:SEC(?:TION)?\.?)\s+([0-9]+[A-Z]?)\./i
   );
   if (!match) return null;
   return `NIRC Sec. ${match[1]}`;
@@ -1530,7 +1530,9 @@ export async function addDocumentToVectorStore(text, source, metadata = {}, clie
 
     // Per-chunk normalized_reference: detect NIRC section headings and carry forward.
     // Non-NIRC documents (RR, RMC, court cases, etc.) are unaffected — isNirc stays false.
-    let chunkNormalizedRef = metadata.normalizedReference;
+    // For NIRC docs, start null — document-level ref covers the whole NIRC and cannot be
+    // trusted for individual chunks; per-chunk detection is the authoritative source.
+    let chunkNormalizedRef = isNirc ? null : (metadata.normalizedReference || null);
     if (isNirc) {
       const detected = detectNircSectionHeading(chunk);
       if (detected) lastNircSection = detected;
