@@ -1208,20 +1208,19 @@ export async function runDriveReindex() {
 // ── Targeted reindex ──────────────────────────────────────────────────────────
 
 // Returns true for NIRC and priority VAT authority files only.
-// Matches on file name and folder path — both lowercased.
+// Filename-only match — broad folder path matching is intentionally excluded
+// to prevent pulling in unrelated files (e.g. Civil Code) that share a folder.
 function isNircOrVatFile(file) {
   const name = (file.name || file.fileName || "").toLowerCase();
-  const path = (file.path || file.folderPath || "").toLowerCase();
   return (
     name.includes("nirc") ||
-    path.includes("01_tax_code") ||
-    name.includes("16-2005") ||
     name.includes("rr_16-2005") ||
+    name.includes("16-2005") ||
     name.includes("13-2018") ||
-    name.includes("67-2021") ||
     name.includes("rmc_67") ||
-    name.includes("99-2021") ||
-    name.includes("rmc_99")
+    name.includes("67-2021") ||
+    name.includes("rmc_99") ||
+    name.includes("99-2021")
   );
 }
 
