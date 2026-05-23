@@ -1,6 +1,8 @@
 // FILE: learning/session-engine.js
 "use strict";
 
+import { createHash } from "crypto";
+
 /**
  * TINA Learning Session Engine
  *
@@ -59,6 +61,18 @@ function safeObject(value) {
   return value && typeof value === "object" && !Array.isArray(value) ? value : {};
 }
 
+// Extracts and hashes the ## Mini Question section to detect repeated questions.
+// Returns a 16-char hex string, or null if no mini question section is found.
+function hashMiniQuestion(text = "") {
+  const marker = "\n## Mini Question";
+  const idx = String(text || "").indexOf(marker);
+  if (idx === -1) return null;
+  const raw = text.slice(idx + marker.length).trim();
+  const normalized = raw.replace(/\s+/g, " ").trim().slice(0, 300);
+  if (!normalized.length) return null;
+  return createHash("sha256").update(normalized).digest("hex").slice(0, 16);
+}
+
 function normalizeText(value = "") {
   return String(value || "").replace(/\s+/g, " ").trim();
 }
@@ -75,7 +89,13 @@ function emptyLearningState(domain = "", mode = "QUIZ") {
     score: { correct: 0, total: 0 },
     weakSubtopics: [],
     currentQuestionId: null,
-    sessionStartedAt: new Date().toISOString()
+    sessionStartedAt: new Date().toISOString(),
+    reviewHistory: {
+      seenChunkIds: [],
+      seenSourcePaths: [],
+      seenQuestionHashes: [],
+      lastSubtopic: null
+    }
   };
 }
 
@@ -550,7 +570,36 @@ export function createLearningHandler({
     const _tracedCall = (params) => callAssessmentOpenAI({ ...params, _traceId: traceId });
 
     try {
-      const subtopic = selectNextSubtopic(domain, sessionLearning);
+      // Extract review anti-repetition state
+      const reviewHistory = safeObject(sessionLearning.reviewHistory);
+      const seenChunkIds = safeArray(reviewHistory.seenChunkIds).map(String);
+      const seenSourcePaths = safeArray(reviewHistory.seenSourcePaths);
+      const seenQuestionHashes = safeArray(reviewHistory.seenQuestionHashes);
+      const lastSubtopic = reviewHistory.lastSubtopic || null;
+
+      let subtopic = selectNextSubtopic(domain, sessionLearning);
+
+      // Prevent immediate re-selection of the last subtopic when alternatives exist
+      if (lastSubtopic && subtopic === lastSubtopic) {
+        const allSubtopics = getDomainSubtopics(domain);
+        if (allSubtopics.filter(s => s !== lastSubtopic).length > 0) {
+          const fakeSession = {
+            ...sessionLearning,
+            coveredSubtopics: [...safeArray(sessionLearning.coveredSubtopics), lastSubtopic]
+          };
+          const alt = selectNextSubtopic(domain, fakeSession);
+          if (alt && alt !== lastSubtopic) {
+            console.log("[REVIEW MEMORY]", {
+              event: "SUBTOPIC_REPEAT_PREVENTED",
+              from: lastSubtopic,
+              to: alt,
+              domain,
+              sessionId: conversationId
+            });
+            subtopic = alt;
+          }
+        }
+      }
 
       if (!subtopic) {
         return {
@@ -573,7 +622,9 @@ export function createLearningHandler({
           subtopic,
           sessionLearning,
           callOpenAI: _tracedCall,
-          supabase
+          supabase,
+          excludeChunkIds: seenChunkIds,
+          excludeSourcePaths: seenSourcePaths
         });
       } catch (err) {
         console.error("[SESSION ENGINE] generateReviewMaterial failed:", err?.message);
@@ -605,6 +656,44 @@ export function createLearningHandler({
         };
       }
 
+      // Detect repeated mini-question via hash — one retry attempt
+      const firstHash = hashMiniQuestion(reviewResult.reviewText);
+      if (firstHash && seenQuestionHashes.includes(firstHash)) {
+        console.log("[REVIEW MEMORY]", {
+          event: "QUESTION_REPEAT_DETECTED",
+          hash: firstHash,
+          subtopic,
+          domain,
+          sessionId: conversationId,
+          retrying: true
+        });
+        try {
+          const retryResult = await generateReviewMaterial({
+            domain,
+            subtopic,
+            sessionLearning,
+            callOpenAI: _tracedCall,
+            supabase,
+            excludeChunkIds: seenChunkIds,
+            excludeSourcePaths: seenSourcePaths
+          });
+          if (retryResult.ok) {
+            const retryHash = hashMiniQuestion(retryResult.reviewText);
+            if (retryHash !== firstHash) {
+              reviewResult = retryResult;
+              console.log("[REVIEW MEMORY]", {
+                event: "QUESTION_RETRY_USED",
+                hash: retryHash,
+                subtopic,
+                sessionId: conversationId
+              });
+            }
+          }
+        } catch (retryErr) {
+          console.warn("[REVIEW MEMORY] Retry failed (non-fatal):", retryErr?.message);
+        }
+      }
+
       // Split review content — gate the answer section until user responds
       const { displayContent, answerText, correctAnswer } = splitReviewContent(reviewResult.reviewText);
 
@@ -617,6 +706,20 @@ export function createLearningHandler({
       updatedState.pendingAnswer = correctAnswer
         ? { answerText, correctAnswer }
         : null;
+
+      // Build updated anti-repetition history
+      const qHash = hashMiniQuestion(displayContent);
+      const newChunkIds = safeArray(reviewResult.sourceChunks)
+        .map(s => String(s.id || "")).filter(Boolean);
+      const newSourcePaths = [...new Set(
+        safeArray(reviewResult.sourceChunks).map(s => s.sourcePath || "").filter(Boolean)
+      )];
+      updatedState.reviewHistory = {
+        seenChunkIds: [...new Set([...seenChunkIds, ...newChunkIds])].slice(-30),
+        seenSourcePaths: [...new Set([...seenSourcePaths, ...newSourcePaths])].slice(-15),
+        seenQuestionHashes: [...new Set([...seenQuestionHashes, ...(qHash ? [qHash] : [])])].slice(-20),
+        lastSubtopic: subtopic
+      };
 
       const visibleSources = finalizeSourcesForResponse(reviewResult.sourceChunks, {
         maxItems: MAX_VISIBLE_SOURCES
@@ -646,6 +749,17 @@ export function createLearningHandler({
         sessionId: conversationId,
         sourceCount: visibleSources.length,
         pendingAnswer: Boolean(updatedState.pendingAnswer)
+      });
+
+      console.log("[REVIEW MEMORY]", {
+        event: "STATE_UPDATED",
+        domain,
+        subtopic,
+        sessionId: conversationId,
+        questionHash: qHash,
+        seenChunkCount: updatedState.reviewHistory.seenChunkIds.length,
+        seenSourceCount: updatedState.reviewHistory.seenSourcePaths.length,
+        seenHashCount: updatedState.reviewHistory.seenQuestionHashes.length
       });
 
       return {

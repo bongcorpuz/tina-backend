@@ -23,6 +23,15 @@ function trimText(value = "", max = 1400) {
 
 function compactSourceChunk(chunk = {}) {
   return {
+    id: String(chunk.id || ""),
+
+    sourcePath:
+      chunk.sourcePath ||
+      chunk.metadata?.path ||
+      chunk.original_source ||
+      chunk.source ||
+      "",
+
     title:
       chunk.title ||
       chunk.sourceTitle ||
@@ -175,7 +184,9 @@ export async function generateReviewMaterial({
   subtopic,
   sessionLearning = {},
   callOpenAI,
-  supabase
+  supabase,
+  excludeChunkIds = [],
+  excludeSourcePaths = []
 }) {
   const subtopicLabel = getSubtopicLabel(domain, subtopic);
   const authorities = getDomainAuthorities(domain);
@@ -186,8 +197,8 @@ export async function generateReviewMaterial({
     sourceChunks = await Promise.race([
       getReviewSourceChunks({
         topic: hints.primaryQuery,
-        excludeSourcePaths: [],
-        excludeChunkIds: [],
+        excludeSourcePaths: safeArray(excludeSourcePaths),
+        excludeChunkIds: safeArray(excludeChunkIds).map(String),
         limit: 4
       }),
       new Promise((_, rej) => setTimeout(() => rej(new Error("source timeout")), 5000))
