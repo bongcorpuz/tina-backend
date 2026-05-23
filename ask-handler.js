@@ -47,7 +47,7 @@ import { storeFeedbackEntry } from "./feedback-learning.js";
 import { extractQuizAnswer } from "./ask-helpers.js";
 import { createAssessmentHandler } from "./assessment-handler.js";
 import { createLearningHandler, parseLearningCommand } from "./learning/session-engine.js";
-import { resolveSlashCommand } from "./command-resolver.js";
+import { resolveSlashCommand, resolveCommandIntent } from "./command-resolver.js";
 // generateRagAnswer removed — Law 1: all pipeline logic lives in pipeline.js
 
 import {
@@ -535,10 +535,12 @@ async function loadTaxHookConfig({ supabase, rawQuestion = "", forcedHook = null
   const forcedIsGenericDefault = forcedHook === "/ask";
   const explicitOverridesDefault = forcedIsGenericDefault && explicitHook && explicitHook !== "/ask";
 
-  // Fuzzy resolution: fires only when no exact command was found and text starts with /
+  // Fuzzy resolution: fires when no exact command was found, text starts with /,
+  // and forcedHook is absent or the generic /ask default (so that route-specific
+  // forcedHooks like "/review" or "/quiz" are never overridden by fuzzy).
   // e.g., /quizz → /quiz, /revieu → /review, /sourc → /source
   let fuzzyHookResult = null;
-  if (!explicitHook && !forcedHook) {
+  if (!explicitHook && (!forcedHook || forcedHook === "/ask")) {
     const firstWord = normalizeHookCommand(text);
     if (firstWord.startsWith("/")) {
       try {
@@ -551,7 +553,11 @@ async function loadTaxHookConfig({ supabase, rawQuestion = "", forcedHook = null
   }
   const fuzzyHook = fuzzyHookResult?.commandKey || null;
 
-  if (forcedHook && isAllowedHook(forcedHook) && !explicitOverridesDefault) {
+  // A fuzzy-resolved command overrides the generic /ask default just as an explicit
+  // command does. Route-specific forcedHooks (e.g. "/review") are never overridden.
+  const fuzzyOverridesDefault = forcedIsGenericDefault && fuzzyHook && fuzzyHook !== "/ask";
+
+  if (forcedHook && isAllowedHook(forcedHook) && !explicitOverridesDefault && !fuzzyOverridesDefault) {
     hookCode = forcedHook;
     cleanQuestion = stripExplicitHook(text, forcedHook);
   } else if (explicitHook) {
@@ -2061,25 +2067,57 @@ export function createAskHandler({
           lowerInput.startsWith("/review ") || lowerInput === "/review";
 
         if (!isValidDomainCommand) {
-          console.log("[REVIEW MENU INVALID INPUT]", {
-            input: rawQuestion.slice(0, 80),
-            sessionId: conversationId,
-            activeHook,
-            hasDomain: false
-          });
-          return res.json({
-            success: false,
-            engine: "TINA_ASK_HANDLER",
-            mode: "REVIEW_SELECTION_LOCKED",
-            hook: "/review",
-            answer: "## Invalid Review Selection\n\nChoose one of the allowed review domains:\n\n• /review VAT\n• /review Income Tax\n• /review Withholding Tax\n• /review Estate Tax\n• /review Donor's Tax\n• /review Percentage Tax\n• /review Excise Tax\n• /review Prescription\n• /review Tax Dispute\n\nOr type /bye to exit /review mode.",
-            sourceStatus: "REVIEW_SELECTION_LOCKED",
-            sources: [],
-            sourcesUsed: [],
-            vectorMatches: 0,
-            askHandlerVersion: ENGINE_VERSION,
-            contextOrchestrationEnabled: true
-          });
+          // Attempt fuzzy resolution for misspelled /review commands
+          // (e.g., /revie VAT, /REVVIE VAT, /reviw VAT).
+          // Only tried when input starts with / — bare text is never a valid command.
+          let fuzzyReviewOk = false;
+          if (lowerInput.startsWith("/")) {
+            try {
+              const intent = resolveCommandIntent(rawQuestion);
+              fuzzyReviewOk = intent.ok && intent.commandKey === "/review";
+              if (fuzzyReviewOk) {
+                console.log("[REVIEW COMMAND RESOLVED]", {
+                  rawInput: rawQuestion.slice(0, 80),
+                  resolvedCommand: "/review",
+                  resolvedDomain: intent.domain || null,
+                  confidence: intent.confidence,
+                  method: intent.matchType
+                });
+              } else {
+                console.log("[REVIEW COMMAND REJECTED]", {
+                  rawInput: rawQuestion.slice(0, 80),
+                  reason: intent.ok
+                    ? `resolved to ${intent.commandKey}, not /review`
+                    : "below confidence threshold"
+                });
+              }
+            } catch (e) {
+              console.warn("[REVIEW SELECTION GATE] Fuzzy resolver error (non-fatal):", e?.message);
+            }
+          }
+
+          if (!fuzzyReviewOk) {
+            console.log("[REVIEW MENU INVALID INPUT]", {
+              input: rawQuestion.slice(0, 80),
+              sessionId: conversationId,
+              activeHook,
+              hasDomain: false
+            });
+            return res.json({
+              success: false,
+              engine: "TINA_ASK_HANDLER",
+              mode: "REVIEW_SELECTION_LOCKED",
+              hook: "/review",
+              answer: "## Invalid Review Selection\n\nChoose one of the allowed review domains:\n\n• /review VAT\n• /review Income Tax\n• /review Withholding Tax\n• /review Estate Tax\n• /review Donor's Tax\n• /review Percentage Tax\n• /review Excise Tax\n• /review Prescription\n• /review Tax Dispute\n\nOr type /bye to exit /review mode.",
+              sourceStatus: "REVIEW_SELECTION_LOCKED",
+              sources: [],
+              sourcesUsed: [],
+              vectorMatches: 0,
+              askHandlerVersion: ENGINE_VERSION,
+              contextOrchestrationEnabled: true
+            });
+          }
+          // fuzzyReviewOk — fall through; loadTaxHookConfig resolves the command
         }
       }
       // ── END REVIEW SELECTION GATE ─────────────────────────────────────────────
@@ -2165,11 +2203,26 @@ export function createAskHandler({
         });
       }
 
+      if (activeHook === "/review" && reviewLockedDomain && quizAnswer) {
+        console.log("[REVIEW ANSWER ROUTED]", {
+          answer: quizAnswer,
+          domain: reviewLockedDomain,
+          pendingAnswer: true
+        });
+      }
+
       let effectiveQuestion = rawQuestion;
 
+      // Sticky mode prepend: when the active hook is not /ask (e.g. /review or /quiz)
+      // and the user sends a plain message (no slash prefix), prepend the active hook so
+      // loadTaxHookConfig routes it to the correct learning handler.
+      // Fires when forcedHook is absent OR the generic /ask default (not a route-specific hook).
+      // The "/" guard prevents double-prefixing for fuzzy slash commands like /revie VAT —
+      // those are handled by fuzzy resolution in loadTaxHookConfig.
       if (
-        !forcedHook &&
+        (!forcedHook || forcedHook === "/ask") &&
         !explicitHook &&
+        !rawQuestion.trimStart().startsWith("/") &&
         existingMode?.active_hook &&
         existingMode.active_hook !== "/ask" &&
         !isExplicitModeHook(rawQuestion)

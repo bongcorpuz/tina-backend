@@ -737,6 +737,15 @@ export function createLearningHandler({
             sources: [], sourcesUsed: [], sourceCards: [], vectorMatches: 0
           }
         };
+      } else {
+        // pendingAnswer not set — if A/B/C/D arrives anyway, log it (no question pending)
+        const orphanAnswer = extractQuizAnswer(cleanQuestion || "");
+        if (orphanAnswer) {
+          console.log("[REVIEW ANSWER ROUTE BLOCKED]", {
+            input: cleanQuestion,
+            reason: "no pending review question"
+          });
+        }
       }
     }
 
