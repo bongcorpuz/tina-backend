@@ -2043,6 +2043,47 @@ export function createAskHandler({
       }
       // ── END QUIZ SELECTION GATE ───────────────────────────────────────────────
 
+      // ── REVIEW SELECTION GATE ─────────────────────────────────────────────────
+      // When /review is active but no domain has been selected yet (i.e., the
+      // domain-selection menu was shown and the user has not yet chosen a domain),
+      // only "/review <domain>" commands and exit commands may proceed.
+      //
+      // Mirrors QUIZ SELECTION GATE — prevents fallback to /ask RAG pipeline.
+      const reviewLockedDomain = existingMode?.adaptive_context?.learning?.domain || null;
+
+      if (
+        activeHook === "/review" &&
+        !reviewLockedDomain &&
+        !isExitCommand(rawQuestion)
+      ) {
+        const lowerInput = normalizeLower(rawQuestion);
+        const isValidDomainCommand =
+          lowerInput.startsWith("/review ") || lowerInput === "/review";
+
+        if (!isValidDomainCommand) {
+          console.log("[REVIEW MENU INVALID INPUT]", {
+            input: rawQuestion.slice(0, 80),
+            sessionId: conversationId,
+            activeHook,
+            hasDomain: false
+          });
+          return res.json({
+            success: false,
+            engine: "TINA_ASK_HANDLER",
+            mode: "REVIEW_SELECTION_LOCKED",
+            hook: "/review",
+            answer: "## Invalid Review Selection\n\nChoose one of the allowed review domains:\n\n• /review VAT\n• /review Income Tax\n• /review Withholding Tax\n• /review Estate Tax\n• /review Donor's Tax\n• /review Percentage Tax\n• /review Excise Tax\n• /review Prescription\n• /review Tax Dispute\n\nOr type /bye to exit /review mode.",
+            sourceStatus: "REVIEW_SELECTION_LOCKED",
+            sources: [],
+            sourcesUsed: [],
+            vectorMatches: 0,
+            askHandlerVersion: ENGINE_VERSION,
+            contextOrchestrationEnabled: true
+          });
+        }
+      }
+      // ── END REVIEW SELECTION GATE ─────────────────────────────────────────────
+
       // ── QUIZ DOMAIN SWITCH BLOCK ──────────────────────────────────────────────
       // When a quiz question is pending (ANSWERING phase) and the user types a
       // /quiz command (e.g., "/quiz Income Tax"), the MODE SESSION LOCK above does
@@ -2104,12 +2145,11 @@ export function createAskHandler({
       // REVIEW MODE LOCK — when a domain is selected, only A/B/C/D and exit commands
       // may proceed. All other input is rejected immediately: no OpenAI call, no
       // retrieval, no adaptive routing, no fallback to /ask.
-      const reviewLockedDomain = existingMode?.adaptive_context?.learning?.domain || null;
       if (activeHook === "/review" && reviewLockedDomain && !quizAnswer) {
-        console.log("[REVIEW INVALID INPUT]", {
+        console.log("[REVIEW LOCKED INVALID INPUT]", {
           input: rawQuestion.slice(0, 80),
-          activeDomain: reviewLockedDomain,
-          allowed: ["A", "B", "C", "D", "/bye", "/exit", "/quit"]
+          sessionId: conversationId,
+          activeDomain: reviewLockedDomain
         });
         return res.json({
           success: false,
