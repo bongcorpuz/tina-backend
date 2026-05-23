@@ -6,6 +6,7 @@ import { createClient } from "@supabase/supabase-js";
 import "dotenv/config";
 
 import { buildAuthorityMetadata } from "./authority-engine.js";
+import { buildTaxConceptRetrievalAliases } from "./services/tax-concept-aliases.js";
 
 if (!process.env.OPENAI_API_KEY) {
   throw new Error("Missing OPENAI_API_KEY for vector-store.js");
@@ -526,6 +527,22 @@ function buildNircLightExpansion(topic = "") {
   const rawForms = buildNircSectionRawForms(m[1]);
   if (!rawForms.length) return "";
   return "," + rawForms.map(f => `normalized_reference.ilike.%${f}%`).join(",");
+}
+
+// Returns a comma-prefixed OR-clause fragment for concept-based aliases.
+// Searches normalized_reference, document_title, and source columns (indexed only).
+// Input is the already-resolved alias array from buildTaxConceptRetrievalAliases.
+function buildConceptAliasExpansion(aliases = []) {
+  if (!aliases.length) return "";
+  const fragments = [];
+  for (const alias of aliases.slice(0, 8)) {
+    fragments.push(
+      `normalized_reference.ilike.%${alias}%`,
+      `document_title.ilike.%${alias}%`,
+      `source.ilike.%${alias}%`
+    );
+  }
+  return "," + fragments.join(",");
 }
 
 function buildPossibleSourceKeywords(query = "") {
@@ -1816,13 +1833,19 @@ export async function getQuizSourceChunksLight({
   const safeLimit = Math.min(Math.max(1, Math.floor(Number(limit) || 3)), 5);
   const pattern = `%${cleanTopic}%`;
   const nircExpansion = buildNircLightExpansion(cleanTopic);
+  const conceptAliases = buildTaxConceptRetrievalAliases(cleanTopic);
+  const conceptExpansion = buildConceptAliasExpansion(conceptAliases);
+
+  if (conceptAliases.length) {
+    console.info("[RETRIEVAL ALIASES]", { mode: "QUIZ", topic: cleanTopic, aliases: conceptAliases });
+  }
 
   const { data, error } = await supabaseClient
     .from(VECTOR_TABLE)
     .select(
       "id,source,original_source,document_title,authority_type,authority_level,normalized_reference,chunk_index,text,metadata"
     )
-    .or(`source.ilike.${pattern},document_title.ilike.${pattern},normalized_reference.ilike.${pattern}${nircExpansion}`)
+    .or(`source.ilike.${pattern},document_title.ilike.${pattern},normalized_reference.ilike.${pattern}${nircExpansion}${conceptExpansion}`)
     .order("authority_level", { ascending: true, nullsFirst: false })
     .limit(safeLimit * 3);
 
@@ -1834,6 +1857,14 @@ export async function getQuizSourceChunksLight({
   const authorityFiltered = (data || []).filter(
     (row) => !EXCLUDED_AUTHORITY_TYPES.has(row.authority_type)
   );
+
+  if (conceptAliases.length) {
+    if (authorityFiltered.length > 0) {
+      console.info("[LIGHT RETRIEVAL HIT]", { mode: "QUIZ", topic: cleanTopic, aliasCount: conceptAliases.length, resultCount: authorityFiltered.length });
+    } else {
+      console.info("[LIGHT RETRIEVAL MISS]", { mode: "QUIZ", topic: cleanTopic, aliasCount: conceptAliases.length });
+    }
+  }
 
   return authorityFiltered.slice(0, safeLimit).map((row) => {
     const meta = row.metadata || {};
@@ -1959,6 +1990,12 @@ export async function getReviewSourceChunks({
   const safeLimit = Math.min(Math.max(1, Math.floor(Number(limit) || 4)), 6);
   const pattern = `%${cleanTopicLower}%`;
   const nircExpansion = buildNircLightExpansion(cleanTopicLower);
+  const conceptAliases = buildTaxConceptRetrievalAliases(cleanTopicLower);
+  const conceptExpansion = buildConceptAliasExpansion(conceptAliases);
+
+  if (conceptAliases.length) {
+    console.info("[RETRIEVAL ALIASES]", { mode: "REVIEW", topic: cleanTopicLower, aliases: conceptAliases });
+  }
 
   // Reviewer source types allowed as secondary (authority_level 14).
   // Primary sources are everything else that is not UNKNOWN.
@@ -1970,7 +2007,7 @@ export async function getReviewSourceChunks({
     .select(
       "id,source,original_source,document_title,authority_type,authority_level,normalized_reference,chunk_index,text,metadata"
     )
-    .or(`source.ilike.${pattern},document_title.ilike.${pattern},normalized_reference.ilike.${pattern}${nircExpansion}`)
+    .or(`source.ilike.${pattern},document_title.ilike.${pattern},normalized_reference.ilike.${pattern}${nircExpansion}${conceptExpansion}`)
     .neq("authority_type", "UNKNOWN")
     .order("authority_level", { ascending: true, nullsFirst: false })
     .limit(safeLimit * 3);
@@ -2034,6 +2071,9 @@ export async function getReviewSourceChunks({
   if (results.length > 0) {
     const primaryCount = results.filter((r) => !REVIEWER_TYPES.has(r.authority_type)).length;
     const secondaryCount = results.filter((r) => REVIEWER_TYPES.has(r.authority_type)).length;
+    if (conceptAliases.length) {
+      console.info("[LIGHT RETRIEVAL HIT]", { mode: "REVIEW", topic: cleanTopic, aliasCount: conceptAliases.length, resultCount: results.length });
+    }
     console.info("[REVIEW SOURCE CHUNKS] Grounded retrieval", {
       topic: cleanTopic,
       primaryCount,
@@ -2041,6 +2081,10 @@ export async function getReviewSourceChunks({
       totalCount: results.length
     });
     return results;
+  }
+
+  if (conceptAliases.length) {
+    console.info("[LIGHT RETRIEVAL MISS]", { mode: "REVIEW", topic: cleanTopic, aliasCount: conceptAliases.length });
   }
 
   // Fallback: smartSearch with reviewer sources included. 3000ms internal budget.
