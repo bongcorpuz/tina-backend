@@ -42,6 +42,10 @@ import { analyzeFactPattern }                     from "./fact-pattern-engine.js
 import { characterizeTransaction }                from "./transaction-characterization-engine.js";
 import { evaluateEvidence }                       from "./evidence-evaluation-engine.js";
 import { scoreRisk }                              from "./risk-scoring-engine.js";
+import {
+  inferIssuanceNumber,
+  sourceTitleOf
+}                                                 from "./source-visibility-engine.js";
 
 const PIPELINE_VERSION = "1.0.0";
 
@@ -121,6 +125,166 @@ export function fourPartDoctrineTest(a, b) {
       oppositeHolding: pairAnalysis.oppositeHolding?.passed ?? sameIssueAndOppositeHolding
     },
     pairAnalysis
+  };
+}
+
+// ─── Stage 2C: Educational Source Layer ──────────────────────────────────────
+// Pure function — no retrieval, no OpenAI, no async.
+// Input: reranked chunks (already authority-ranked), responseStyle, query string.
+// Output: educationalSources object or null.
+// Gate: called only when hook === "/ask" && ctx.mode === "FAST_DEFINITION".
+
+function buildEducationalSources(chunks = [], responseStyle = null, query = "") {
+  if (!Array.isArray(chunks) || !chunks.length) return null;
+
+  const STYLE_CONFIG = {
+    CONCISE:     { displayStyle: "SOURCE",          label: "Source",          max: 2, allowRMC: false },
+    STANDARD:    { displayStyle: "LEARN_MORE",      label: "Learn More",      max: 3, allowRMC: true  },
+    EXPLAIN:     { displayStyle: "LEARN_MORE",      label: "Learn More",      max: 4, allowRMC: true  },
+    PROCEDURAL:  { displayStyle: "LEARN_MORE",      label: "Learn More",      max: 4, allowRMC: true  },
+    EXAMPLE:     { displayStyle: "LEARN_MORE",      label: "Learn More",      max: 4, allowRMC: true  },
+    BEGINNER:    { displayStyle: "LEARN_MORE",      label: "Learn More",      max: 3, allowRMC: false },
+    TAGLISH:     { displayStyle: "LEARN_MORE",      label: "Learn More",      max: 3, allowRMC: false },
+    COMPARATIVE: { displayStyle: "COMPARE_SOURCES", label: "Compare Sources", max: 6, allowRMC: true  }
+  };
+  const cfg = STYLE_CONFIG[responseStyle] || STYLE_CONFIG.STANDARD;
+
+  const WEAK_TYPES  = new Set(["SECONDARY", "UNKNOWN", "CPA_NOTES", "REVIEW_MATERIALS"]);
+  const COURT_TYPES = new Set([
+    "SUPREME_COURT_EN_BANC", "SUPREME_COURT", "SC",
+    "CTA_EN_BANC", "CTA_DIVISION", "COURT_OF_APPEALS"
+  ]);
+  const RMC_TYPES   = new Set(["RMC", "RMO", "RAMO"]);
+
+  function docType(doc) {
+    return String(doc.authorityType || doc.authority_type || doc.metadata?.authorityType || "UNKNOWN")
+      .trim().toUpperCase().replace(/[\s-]+/g, "_");
+  }
+
+  function docLevel(doc) {
+    const n = Number(
+      doc.authorityLevel    ?? doc.authority_level    ??
+      doc.controllingPrecedence ?? doc.controlling_precedence ??
+      doc.metadata?.authorityLevel ?? NaN
+    );
+    if (Number.isFinite(n) && n > 0) return n;
+    const t = docType(doc);
+    if (t === "CONSTITUTION")                                             return 1;
+    if (["STATUTE","NIRC","TAX_CODE","REPUBLIC_ACT","RA","CMTA","LGC"].includes(t)) return 2;
+    if (["TAX_TREATY","TREATY"].includes(t))                             return 3;
+    if (t === "SUPREME_COURT_EN_BANC")                                   return 4;
+    if (["SUPREME_COURT","SC"].includes(t))                              return 5;
+    if (t === "CTA_EN_BANC")                                             return 6;
+    if (["CTA_DIVISION","COURT_OF_APPEALS"].includes(t))                 return 7;
+    if (["RR","REVENUE_REGULATION"].includes(t))                         return 8;
+    if (["RMC","RMO","RAMO"].includes(t))                                return 9;
+    if (t === "BIR_RULING")                                              return 10;
+    return 99;
+  }
+
+  const wantsCase = /\b(doctrine|ruling|case|supreme court|cta|jurisprudence)\b/i.test(query);
+
+  // COMPARATIVE: extract two concept terms from query
+  function extractComparativeTerms(q) {
+    const pats = [
+      /difference between\s+(.+?)\s+and\s+(.+)/i,
+      /compare\s+(.+?)\s+(?:and|vs\.?)\s+(.+)/i,
+      /(.+?)\s+vs\.?\s+(.+)/i,
+      /(.+?)\s+versus\s+(.+)/i
+    ];
+    for (const re of pats) {
+      const m = q.match(re);
+      if (m?.[1] && m?.[2]) {
+        const a = m[1].trim().replace(/[?]+$/, "").trim();
+        const b = m[2].trim().replace(/[?]+$/, "").trim();
+        if (a.length > 1 && a.length < 50 && b.length > 1 && b.length < 50) return [a, b];
+      }
+    }
+    return [];
+  }
+
+  const comparativeTerms =
+    responseStyle === "COMPARATIVE" ? extractComparativeTerms(query) : [];
+
+  // Assign a comparative group only if one concept clearly dominates.
+  // Generic words ("tax") are excluded to avoid false matches.
+  const GENERIC_WORDS = new Set(["tax", "the", "and", "for", "not", "are", "this", "that"]);
+  function assignGroup(doc, chipLabel) {
+    if (comparativeTerms.length !== 2) return null;
+    const blob = [
+      chipLabel,
+      String(doc.title || ""),
+      String(doc.source || ""),
+      String(doc.text || doc.content || "").slice(0, 300),
+      String(doc.normalizedReference || doc.normalized_reference || "")
+    ].join(" ").toLowerCase();
+    const scores = comparativeTerms.map(term => {
+      const words = term.toLowerCase().split(/\s+/)
+        .filter(w => w.length >= 3 && !GENERIC_WORDS.has(w));
+      if (!words.length) return 0;
+      return words.filter(w => {
+        const esc = w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        return new RegExp(`\\b${esc}\\b`).test(blob);
+      }).length;
+    });
+    if (scores[0] === scores[1]) return null;
+    const winner = comparativeTerms[scores[0] > scores[1] ? 0 : 1];
+    return winner.charAt(0).toUpperCase() + winner.slice(1);
+  }
+
+  // Filter to educational-quality authorities only
+  const eligible = chunks.filter(doc => {
+    const t   = docType(doc);
+    const lvl = docLevel(doc);
+    if (WEAK_TYPES.has(t))               return false;
+    if (COURT_TYPES.has(t) && !wantsCase) return false;
+    if (RMC_TYPES.has(t) && !cfg.allowRMC) return false;
+    if (lvl > 10)                         return false;
+    return true;
+  });
+
+  if (!eligible.length) return null;
+
+  // Build chips; deduplicate by normalized label, prefer entry with URL
+  const seen = new Map();
+  for (const doc of eligible) {
+    const issuanceLabel = inferIssuanceNumber(doc);
+    const fallback      = sourceTitleOf(doc)?.slice(0, 60) || "";
+    const chipLabel     = issuanceLabel || fallback;
+    if (!chipLabel) continue;
+
+    const normKey = chipLabel.toLowerCase().replace(/[^a-z0-9]/g, "");
+    if (!normKey) continue;
+
+    const meta = doc.metadata || {};
+    const url  =
+      doc.driveViewUrl  || doc.drive_view_url ||
+      doc.url           ||
+      meta.driveViewUrl || meta.drive_view_url || meta.url || meta.sourceUrl ||
+      null;
+
+    const lvl  = docLevel(doc);
+    const kind = lvl <= 3 ? "primary" : lvl <= 9 ? "regulation" : lvl === 10 ? "ruling" : "other";
+    const title = String(
+      doc.title || doc.document_title || doc.documentTitle || doc.source || chipLabel
+    ).slice(0, 120);
+
+    const chip = { label: chipLabel, title, url, group: assignGroup(doc, chipLabel), kind };
+    if (!seen.has(normKey)) {
+      seen.set(normKey, chip);
+    } else if (url && !seen.get(normKey).url) {
+      seen.set(normKey, chip);
+    }
+  }
+
+  const chips = Array.from(seen.values()).slice(0, cfg.max);
+  if (!chips.length) return null;
+
+  return {
+    label:         cfg.label,
+    responseStyle: responseStyle || "STANDARD",
+    displayStyle:  cfg.displayStyle,
+    chips
   };
 }
 
@@ -390,6 +554,12 @@ export async function runPipeline({
     ? renderFastDefinitionConversational(rawFinalAnswer, query, ctx.responseStyle)
     : rawFinalAnswer;
 
+  // ── Stage 2C: Educational sources (FAST_DEFINITION /ask only) ────────────
+  const educationalSources =
+    (hook === "/ask" && ctx.mode === "FAST_DEFINITION")
+      ? buildEducationalSources(ctx.rerankedChunks, ctx.responseStyle, query)
+      : null;
+
   // Build normalized source cards for frontend rendering.
   // Each card has the URL fields the frontend normalizeSources() needs.
   const sourceCards = (ctx.rerankedChunks || [])
@@ -453,6 +623,7 @@ export async function runPipeline({
     sources:             ctx.rerankedChunks || [],
     sourcesUsed:         ctx.rerankedChunks || [],
     sourceCards,
+    educationalSources,
     issueClassification: ctx.issueClassification,
     conflictAnalysis:    ctx.conflictAnalysis,
     riskScore:           ctx.riskScore,

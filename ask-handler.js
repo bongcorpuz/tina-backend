@@ -1838,8 +1838,9 @@ export function createAskHandler({
       };
     }
 
-    const resultSources = safeArray(result.sources || result.sourcesUsed);
-    const resultSourceCards = safeArray(result.sourceCards);
+    const resultSources            = safeArray(result.sources || result.sourcesUsed);
+    const resultSourceCards        = safeArray(result.sourceCards);
+    const resultEducationalSources = result.educationalSources || null;
 
     console.log("TINA MODE DOWNSTREAM DEBUG:", {
       responseMode: result.responseMode || result.orchestration?.mode || hookConfig.mode,
@@ -1864,7 +1865,8 @@ export function createAskHandler({
 
       sources: resultSources,
       sourcesUsed: resultSources,
-      sourceCards: resultSourceCards,
+      sourceCards:         resultSourceCards,
+      educationalSources:  resultEducationalSources,
       vectorMatches: resultSources.length,
 
       retrievedSourceCount: resultSources.length,
