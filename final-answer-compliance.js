@@ -1499,7 +1499,7 @@ function buildFastDefinitionAnswer({
     "";
 
   const answer = stripMechanics(
-    takeSentences(directBody || buildDirectAnswer({ draftAnswer: sanitizedDraft, fallbackAnswer }), 3)
+    takeSentences(directBody || buildDirectAnswer({ draftAnswer: sanitizedDraft, fallbackAnswer }), 4)
   );
 
   const indexedBasis = buildValidatedLegalBasis(legalBasisDocs).slice(0, 3);

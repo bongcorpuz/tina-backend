@@ -1991,7 +1991,23 @@ function buildUserPrompt({
   } else if (modeFlags.isAudit || mode === "COMPLEX_ADVISORY" || mode === "AUDIT_FACT_PATTERN") {
     responseInstruction = "Use AUDIT_MODE (COMPLEX_ADVISORY). Respond adaptively to the user's specific intent — simple questions get concise answers; audit scenarios get strategic analysis; formal requests get structured documents. Do NOT default to a fixed section template. Apply the authority hierarchy. Never fabricate provisions, GR numbers, or BIR rulings.";
   } else if (mode === "FAST_DEFINITION") {
-    responseInstruction = "Use CONVERSATIONAL DEFINITION format — four sections only: ### Direct Answer, ### Legal Basis, ### Practical Explanation, ### Practical Note. Write in professional but human-sounding language, not legal-memo style. Do NOT use A. B. C. D. letter-prefix headings. Do NOT add any section beyond ### Practical Note. Do NOT include doctrinal conflict analysis. Do NOT use the label '(Framework knowledge — pending index verification)' or the phrase 'Indexed source not found.' — if a citation is uncertain, state it plainly or omit it. Do not fabricate GR numbers or RR/RMC numbers.";
+    const _q = safeString(userQuery).toLowerCase().trim();
+    let _depthHint = "";
+    let _langHint = "";
+
+    if (/^(ano ang|ano ibig sabihin|paano|bakit)\b/i.test(_q)) {
+      _langHint = " The query is in Filipino — respond in Taglish (a natural mix of Filipino and English). Keep all legal citation names in English (e.g., Section 105, NIRC; RR 16-2005).";
+    }
+
+    if (/\b(how does|how is|how do|how are)\b/i.test(_q)) {
+      _depthHint = " Since this asks how it works: Practical Explanation should cover output VAT, input VAT offset, and net remittance in 2–3 sentences. A brief numbered example (1–2 lines) is welcome.";
+    } else if (/\b(explain|walk me through|help me understand)\b/i.test(_q)) {
+      _depthHint = " Since this is an explanation request: Practical Explanation may include one short concrete example (1–2 sentences).";
+    } else if (/^(what is|define|meaning of|vat meaning|[a-z]+ meaning)\b/i.test(_q) && _q.length <= 60) {
+      _depthHint = " Keep Direct Answer to 1–2 sentences. No example needed in Practical Explanation.";
+    }
+
+    responseInstruction = "Use CONVERSATIONAL DEFINITION format — four sections only: ### Direct Answer, ### Legal Basis, ### Practical Explanation, ### Practical Note. Write in professional but human-sounding language, not legal-memo style. Do NOT use A. B. C. D. letter-prefix headings. Do NOT add any section beyond ### Practical Note. Do NOT include doctrinal conflict analysis. Do NOT use the label '(Framework knowledge — pending index verification)' or the phrase 'Indexed source not found.' — if a citation is uncertain, state it plainly or omit it. Do not fabricate GR numbers or RR/RMC numbers." + _depthHint + _langHint;
   } else {
     responseInstruction = 'Use standard A-F legal/tax format: A. DIRECT ANSWER, B. CONTROLLING LEGAL BASIS, C. SUPPORTING RULES / ADMINISTRATIVE ISSUANCES, D. SUPPORTING JURISPRUDENCE, E. DOCTRINAL STATUS / CONFLICT ANALYSIS, F. PRACTICAL NOTE / APPLICATION. When no indexed source was retrieved, answer each section from Philippine tax law framework knowledge and label every such section "(Framework knowledge — pending index verification)". Do not output "Indexed source not found." Do not fabricate GR numbers or citation details you are uncertain of.';
   }
