@@ -63,10 +63,10 @@ const DEFAULT_AF_HEADINGS = Object.freeze([
 ]);
 
 const SIMPLE_DEFINITION_HEADINGS = Object.freeze([
-  "A. DIRECT ANSWER",
-  "B. CONTROLLING LEGAL BASIS",
-  "C. ADMINISTRATIVE ISSUANCE",
-  "D. PRACTICAL NOTE"
+  "### Direct Answer",
+  "### Legal Basis",
+  "### Practical Explanation",
+  "### Practical Note"
 ]);
 
 const AUDIT_FACT_PATTERN_HEADINGS = Object.freeze([
@@ -1486,42 +1486,58 @@ function buildFastDefinitionAnswer({
   directAnswer = "",
   legalBasisDocs = []
 }) {
-  const answer = takeSentences(
+  const stripMechanics = (text = "") =>
+    text
+      .replace(/\(Framework knowledge[^)]*\)/gi, "")
+      .replace(/Indexed source not found\.?/gi, "")
+      .trim();
+
+  const directBody =
+    getAFSectionBody(sanitizedDraft, "### Direct Answer") ||
+    getAFSectionBody(sanitizedDraft, "A. DIRECT ANSWER") ||
     directAnswer ||
-      buildDirectAnswer({
-        draftAnswer: sanitizedDraft,
-        fallbackAnswer
-      }),
-    3
-  );
-
-  const basis = buildValidatedLegalBasis(legalBasisDocs).slice(0, 3);
-
-  const adminIssuance =
-    getAFSectionBody(sanitizedDraft, "C. ADMINISTRATIVE ISSUANCE") ||
-    getAFSectionBody(sanitizedDraft, "C. SUPPORTING RULES / ADMINISTRATIVE ISSUANCES") ||
     "";
 
-  const practicalNote =
+  const answer = stripMechanics(
+    takeSentences(directBody || buildDirectAnswer({ draftAnswer: sanitizedDraft, fallbackAnswer }), 3)
+  );
+
+  const indexedBasis = buildValidatedLegalBasis(legalBasisDocs).slice(0, 3);
+  const modelLegalBasis = stripMechanics(
+    getAFSectionBody(sanitizedDraft, "### Legal Basis") ||
+    getAFSectionBody(sanitizedDraft, "B. CONTROLLING LEGAL BASIS") ||
+    ""
+  );
+
+  const practicalExplanation = stripMechanics(
+    getAFSectionBody(sanitizedDraft, "### Practical Explanation") ||
+    getAFSectionBody(sanitizedDraft, "C. ADMINISTRATIVE ISSUANCE") ||
+    getAFSectionBody(sanitizedDraft, "C. SUPPORTING RULES / ADMINISTRATIVE ISSUANCES") ||
+    ""
+  );
+
+  const practicalNote = stripMechanics(
+    getAFSectionBody(sanitizedDraft, "### Practical Note") ||
     getAFSectionBody(sanitizedDraft, "D. PRACTICAL NOTE") ||
     getAFSectionBody(sanitizedDraft, "F. PRACTICAL NOTE / APPLICATION") ||
     getAFSectionBody(sanitizedDraft, "C. PRACTICAL NOTE") ||
-    "";
+    ""
+  );
 
   return [
-    "A. DIRECT ANSWER",
-    answer || "No direct answer could be formed from the indexed sources.",
+    "### Direct Answer",
+    answer || "Please refer to the applicable NIRC provision for the statutory definition.",
     "",
-    "B. CONTROLLING LEGAL BASIS",
-    basis.length
-      ? ensureDashedBullets(basis)
-      : "- Indexed source not found.",
+    "### Legal Basis",
+    indexedBasis.length
+      ? ensureDashedBullets(indexedBasis)
+      : modelLegalBasis || "Refer to the relevant provision of the NIRC as amended and its implementing regulations.",
     "",
-    "C. ADMINISTRATIVE ISSUANCE",
-    adminIssuance || "Implementing regulations applicable to this provision are pending index verification.",
+    "### Practical Explanation",
+    practicalExplanation || "The implementing regulation applies. Refer to the relevant Revenue Regulation for operational details.",
     "",
-    "D. PRACTICAL NOTE",
-    practicalNote || "Verify the latest indexed authority before relying on the answer."
+    "### Practical Note",
+    practicalNote || "Consult the applicable provision and implementing regulation before relying on this answer for compliance purposes."
   ].join("\n");
 }
 

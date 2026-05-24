@@ -1847,26 +1847,27 @@ Do not generate legal analysis or A-F structured output.
 `.trim();
   } else if (mode === "FAST_DEFINITION") {
     modeInstruction = `
-FAST DEFINITION FORMAT — MANDATORY:
-This is a definitional or conceptual query. You MUST NOT use the full A-F structure.
+CONVERSATIONAL DEFINITION FORMAT — MANDATORY:
+This is a simple definitional query. Write in clear, professional, human-sounding language — not legal-memo style.
 Use this exact 4-section structure and no other:
-A. DIRECT ANSWER
-B. CONTROLLING LEGAL BASIS
-C. ADMINISTRATIVE ISSUANCE
-D. PRACTICAL NOTE
+### Direct Answer
+### Legal Basis
+### Practical Explanation
+### Practical Note
 
 Section rules:
-- A. DIRECT ANSWER: State the statutory definition concisely in two to four sentences. Lead with the specific NIRC provision (e.g., "Under Section 105, NIRC..."). No case citations in this section.
-- B. CONTROLLING LEGAL BASIS: Cite only the primary statute. One to three sentences. State what the statute provides, not what cases say about it.
-- C. ADMINISTRATIVE ISSUANCE: Cite the key implementing regulation (RR or RMC) that operationalizes the provision. One to two sentences. If the specific regulation is not in the retrieved sources, state it from your training knowledge — DO NOT label with "(Framework knowledge — pending index verification)" when any retrieved sources were provided to this prompt. Reserve that label only for answers where the retrieved sources block above was empty.
-- D. PRACTICAL NOTE: State one practical compliance implication directly derived from the definition. No conflict analysis. No jurisprudential survey.
+- ### Direct Answer: State the statutory definition naturally in two to four sentences. Cite the controlling NIRC provision (e.g., Section 105, NIRC) but do not begin the sentence with "Under Section". Write as a professional would explain it, not as a court opinion would state it. No case citations in this section.
+- ### Legal Basis: Cite the primary statute and the key implementing Revenue Regulation (RR) or Revenue Memorandum Circular (RMC) by name. One to three sentences. If the specific regulation is not in the retrieved sources, cite it from your training knowledge — do not add any label or caveat.
+- ### Practical Explanation: Explain in simple terms how this provision works in practice for a business or taxpayer. Two to four sentences. Write for a professional who is not a tax lawyer.
+- ### Practical Note: State one compliance or threshold implication directly relevant to the definition. No conflict analysis. No jurisprudential survey.
 
-ABSOLUTE PROHIBITIONS for FAST_DEFINITION:
-- Do NOT add Section E (Doctrinal Status / Conflict Analysis).
-- Do NOT add Section F (Practical Note / Application) from the standard A-F format.
-- Do NOT add any additional sections beyond D.
-- Do NOT include a jurisprudential conflict analysis or case law survey.
-- Four sections only: A, B, C, D.
+ABSOLUTE PROHIBITIONS:
+- Do NOT add any section beyond ### Practical Note.
+- Do NOT use A. B. C. D. E. F. letter-prefix headings.
+- Do NOT use the label "(Framework knowledge — pending index verification)".
+- Do NOT use the phrase "Indexed source not found."
+- Do NOT produce a legal memo with sections E or F.
+- Four sections only: ### Direct Answer, ### Legal Basis, ### Practical Explanation, ### Practical Note.
 `.trim();
   } else {
     modeInstruction = `
@@ -1990,7 +1991,7 @@ function buildUserPrompt({
   } else if (modeFlags.isAudit || mode === "COMPLEX_ADVISORY" || mode === "AUDIT_FACT_PATTERN") {
     responseInstruction = "Use AUDIT_MODE (COMPLEX_ADVISORY). Respond adaptively to the user's specific intent — simple questions get concise answers; audit scenarios get strategic analysis; formal requests get structured documents. Do NOT default to a fixed section template. Apply the authority hierarchy. Never fabricate provisions, GR numbers, or BIR rulings.";
   } else if (mode === "FAST_DEFINITION") {
-    responseInstruction = "Use FAST_DEFINITION format — four sections only: A. DIRECT ANSWER, B. CONTROLLING LEGAL BASIS, C. ADMINISTRATIVE ISSUANCE, D. PRACTICAL NOTE. Do NOT add sections E or F. Do NOT include doctrinal conflict analysis or jurisprudential survey. When no indexed source was retrieved, label only those sections that rely on training knowledge as '(Framework knowledge — pending index verification)'. Do not fabricate GR numbers or RR/RMC numbers you are not certain of.";
+    responseInstruction = "Use CONVERSATIONAL DEFINITION format — four sections only: ### Direct Answer, ### Legal Basis, ### Practical Explanation, ### Practical Note. Write in professional but human-sounding language, not legal-memo style. Do NOT use A. B. C. D. letter-prefix headings. Do NOT add any section beyond ### Practical Note. Do NOT include doctrinal conflict analysis. Do NOT use the label '(Framework knowledge — pending index verification)' or the phrase 'Indexed source not found.' — if a citation is uncertain, state it plainly or omit it. Do not fabricate GR numbers or RR/RMC numbers.";
   } else {
     responseInstruction = 'Use standard A-F legal/tax format: A. DIRECT ANSWER, B. CONTROLLING LEGAL BASIS, C. SUPPORTING RULES / ADMINISTRATIVE ISSUANCES, D. SUPPORTING JURISPRUDENCE, E. DOCTRINAL STATUS / CONFLICT ANALYSIS, F. PRACTICAL NOTE / APPLICATION. When no indexed source was retrieved, answer each section from Philippine tax law framework knowledge and label every such section "(Framework knowledge — pending index verification)". Do not output "Indexed source not found." Do not fabricate GR numbers or citation details you are uncertain of.';
   }

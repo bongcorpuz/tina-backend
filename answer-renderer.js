@@ -36,10 +36,10 @@ const TINA_AF_HEADINGS = Object.freeze([
 ]);
 
 const FAST_DEFINITION_HEADINGS = Object.freeze([
-  "A. DIRECT ANSWER",
-  "B. CONTROLLING LEGAL BASIS",
-  "C. ADMINISTRATIVE ISSUANCE",
-  "D. PRACTICAL NOTE"
+  "### Direct Answer",
+  "### Legal Basis",
+  "### Practical Explanation",
+  "### Practical Note"
 ]);
 
 const COMPLEX_ADVISORY_HEADINGS = Object.freeze([
@@ -409,6 +409,11 @@ function defaultBodyForHeading(heading = "") {
     "F. PRACTICAL APPLICATION":
       "Verify the latest indexed authority, controlling doctrine, and supporting documents before relying on the position.",
 
+    "### Direct Answer": "Please refer to the applicable NIRC provision for the statutory definition.",
+    "### Legal Basis": "Refer to the relevant provision of the NIRC as amended.",
+    "### Practical Explanation": "The implementing regulation applies. Refer to the relevant Revenue Regulation for operational details.",
+    "### Practical Note": "Consult the applicable provision and implementing regulation before relying on this answer.",
+
     // Senior Tax Counsel Memo headings
     "RULING":             "Indexed source not found.",
     "LEGAL BASIS":        "Indexed source not found.",
@@ -764,11 +769,23 @@ function sortVisibleSources(sources = []) {
     });
 }
 
+function normalizeLegacyFastDefinitionHeadings(text = "") {
+  return normalizeText(text)
+    .replace(/(^|\n)\s*A\. DIRECT ANSWER\b/gi, "$1### Direct Answer")
+    .replace(/(^|\n)\s*B\. CONTROLLING LEGAL BASIS\b/gi, "$1### Legal Basis")
+    .replace(/(^|\n)\s*C\. ADMINISTRATIVE ISSUANCE\b/gi, "$1### Practical Explanation")
+    .replace(/(^|\n)\s*D\. PRACTICAL NOTE\b/gi, "$1### Practical Note");
+}
+
 function renderAdaptiveAnswer(input = {}) {
   const headings = getHeadingsFromInput(input);
   const rawAnswer = input.answer || input.draftAnswer || input.fallbackAnswer || "";
 
-  let rendered = repairStructure(rawAnswer, headings);
+  const preNormalized = headings === FAST_DEFINITION_HEADINGS
+    ? normalizeLegacyFastDefinitionHeadings(rawAnswer)
+    : rawAnswer;
+
+  let rendered = repairStructure(preNormalized, headings);
   rendered = sanitizeConflictLanguage(rendered, headings, getConflictMetadata(input));
   rendered = protectHeadingSpacing(rendered, headings);
   if (headings === SENIOR_COUNSEL_MEMO_HEADINGS || headings.includes("POSITION STRENGTH")) {
