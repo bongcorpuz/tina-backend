@@ -343,7 +343,8 @@ export async function runPipeline({
   // Specialized hook modes (QUIZ_MODE, REVIEWER_MODE, etc.) are pinned and must not
   // be overridden by orchestration inference.
   const PINNED_HOOK_MODES = new Set([
-    "QUIZ_MODE", "REVIEWER_MODE", "CASE_ANALYSIS", "SOURCE_LOOKUP", "SENIOR_COUNSEL_MEMO"
+    "QUIZ_MODE", "REVIEWER_MODE", "CASE_ANALYSIS", "SOURCE_LOOKUP",
+    "SENIOR_COUNSEL_MEMO", "COMPLEX_ADVISORY"
   ]);
   const orchestrationRefinedMode = ctx.orchestration?.mode;
   if (orchestrationRefinedMode && !PINNED_HOOK_MODES.has(ctx.mode)) {
@@ -351,6 +352,12 @@ export async function runPipeline({
     ctx.mode = orchestrationRefinedMode;
   }
   ctx.responseStyle = ctx.orchestration?.responseStyle || null;
+  if (ctx.mode !== "FAST_DEFINITION" || hook !== "/ask") {
+    if (ctx.responseStyle) {
+      console.log(`[MODE ISOLATION] responseStyle cleared: hook=${hook} mode=${ctx.mode}`);
+    }
+    ctx.responseStyle = null;
+  }
 
   // ── Step 15: Format Answer ────────────────────────────────────────────────
   ctx.formattedAnswer = renderTinaAnswer({
@@ -379,7 +386,7 @@ export async function runPipeline({
   // Converts validated structured output to conversational paragraphs.
   // Compliance gate output is preserved as fallback if section parsing fails.
   const rawFinalAnswer = compliantResult?.finalAnswer || compliantResult?.answer || ctx.formattedAnswer;
-  const finalAnswer = ctx.mode === "FAST_DEFINITION"
+  const finalAnswer = (ctx.mode === "FAST_DEFINITION" && hook === "/ask")
     ? renderFastDefinitionConversational(rawFinalAnswer, query, ctx.responseStyle)
     : rawFinalAnswer;
 

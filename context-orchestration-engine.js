@@ -1671,7 +1671,8 @@ function buildSystemInstruction({
   masterPrompt = "",
   mode = "STANDARD_TAX",
   taxEngineContext = {},
-  modeFlags = {}
+  modeFlags = {},
+  intent = {}
 }) {
   const baseAuthorityRules = `
 You are TINA, a Philippine tax, legal, audit, and compliance reasoning assistant.
@@ -2221,7 +2222,8 @@ export function buildOpenAIContext(args = {}) {
       masterPrompt: normalized.masterPrompt,
       mode,
       taxEngineContext,
-      modeFlags
+      modeFlags,
+      intent: normalized.intent
     })
   };
 
