@@ -350,6 +350,7 @@ export async function runPipeline({
     console.log(`[TINA MODE] Refining ctx.mode from '${ctx.mode}' → '${orchestrationRefinedMode}' (orchestration)`);
     ctx.mode = orchestrationRefinedMode;
   }
+  ctx.responseStyle = ctx.orchestration?.responseStyle || null;
 
   // ── Step 15: Format Answer ────────────────────────────────────────────────
   ctx.formattedAnswer = renderTinaAnswer({
@@ -379,7 +380,7 @@ export async function runPipeline({
   // Compliance gate output is preserved as fallback if section parsing fails.
   const rawFinalAnswer = compliantResult?.finalAnswer || compliantResult?.answer || ctx.formattedAnswer;
   const finalAnswer = ctx.mode === "FAST_DEFINITION"
-    ? renderFastDefinitionConversational(rawFinalAnswer, query)
+    ? renderFastDefinitionConversational(rawFinalAnswer, query, ctx.responseStyle)
     : rawFinalAnswer;
 
   // Build normalized source cards for frontend rendering.

@@ -801,7 +801,7 @@ function renderAdaptiveAnswer(input = {}) {
   return normalizeText(rendered);
 }
 
-function renderFastDefinitionConversational(structuredAnswer = "", userQuery = "") {
+function renderFastDefinitionConversational(structuredAnswer = "", userQuery = "", responseStyle = null) {
   const q = normalizeText(userQuery).toLowerCase();
 
   const directAnswer     = getSectionBody(structuredAnswer, "### Direct Answer",        FAST_DEFINITION_HEADINGS);
@@ -826,14 +826,27 @@ function renderFastDefinitionConversational(structuredAnswer = "", userQuery = "
   const isGenericNote = /consult the applicable provision.*before relying/i.test(practicalNote);
   const noteToUse = (!isGenericNote && practicalNote.trim()) ? practicalNote.trim() : "";
 
-  // Suppress Practical Explanation if empty or identical to Direct Answer
+  // Suppress Practical Explanation if empty or identical to Direct Answer (skipped for COMPARATIVE)
   const explainToUse = (practicalExplain.trim() && practicalExplain.trim() !== directAnswer.trim())
     ? practicalExplain.trim()
     : "";
 
-  const isUltraShort  = q.length <= 60 && /^(what is|define|meaning of|[a-z]+ meaning)\b/i.test(q);
-  const isProcedural  = /\b(how does|how is|how do|how are)\b/i.test(q);
-  const isExplanation = /\b(explain|walk me through|help me understand)\b/i.test(q);
+  // COMPARATIVE: DA + PE + LB; PN suppressed; dedup guard bypassed
+  if (responseStyle === "COMPARATIVE") {
+    return [
+      directAnswer.trim(),
+      practicalExplain.trim() || explainToUse,
+      legalPara
+    ].filter(Boolean).join("\n\n");
+  }
+
+  // Derive presentation policy from responseStyle; fall back to inline regex when null
+  const isUltraShort  = responseStyle === "CONCISE"
+    || (!responseStyle && q.length <= 60 && /^(what is|define|meaning of|[a-z]+ meaning)\b/i.test(q));
+  const isProcedural  = responseStyle === "PROCEDURAL"
+    || (!responseStyle && /\b(how does|how is|how do|how are)\b/i.test(q));
+  const isExplanation = responseStyle === "EXPLAIN"
+    || (!responseStyle && /\b(explain|walk me through|help me understand)\b/i.test(q));
 
   const paragraphs = [];
 
