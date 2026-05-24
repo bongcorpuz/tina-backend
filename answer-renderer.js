@@ -801,6 +801,57 @@ function renderAdaptiveAnswer(input = {}) {
   return normalizeText(rendered);
 }
 
+function renderFastDefinitionConversational(structuredAnswer = "", userQuery = "") {
+  const q = normalizeText(userQuery).toLowerCase();
+
+  const directAnswer     = getSectionBody(structuredAnswer, "### Direct Answer",        FAST_DEFINITION_HEADINGS);
+  const legalBasis       = getSectionBody(structuredAnswer, "### Legal Basis",           FAST_DEFINITION_HEADINGS);
+  const practicalExplain = getSectionBody(structuredAnswer, "### Practical Explanation", FAST_DEFINITION_HEADINGS);
+  const practicalNote    = getSectionBody(structuredAnswer, "### Practical Note",        FAST_DEFINITION_HEADINGS);
+
+  // If key sections are missing, return structured output unchanged (safe fallback)
+  if (!directAnswer.trim() || !legalBasis.trim()) return structuredAnswer;
+
+  // Normalize legal basis: convert bullet list → readable sentence
+  const legalIsBulleted = /^[-•]\s/m.test(legalBasis.trim());
+  const legalPara = legalIsBulleted
+    ? "The main legal basis includes " +
+      legalBasis.split("\n")
+        .map(l => l.replace(/^[-•*]\s+/, "").trim())
+        .filter(Boolean)
+        .join(", ") + "."
+    : legalBasis.trim();
+
+  // Suppress generic compliance boilerplate in Practical Note
+  const isGenericNote = /consult the applicable provision.*before relying/i.test(practicalNote);
+  const noteToUse = (!isGenericNote && practicalNote.trim()) ? practicalNote.trim() : "";
+
+  // Suppress Practical Explanation if empty or identical to Direct Answer
+  const explainToUse = (practicalExplain.trim() && practicalExplain.trim() !== directAnswer.trim())
+    ? practicalExplain.trim()
+    : "";
+
+  const isUltraShort  = q.length <= 60 && /^(what is|define|meaning of|[a-z]+ meaning)\b/i.test(q);
+  const isProcedural  = /\b(how does|how is|how do|how are)\b/i.test(q);
+  const isExplanation = /\b(explain|walk me through|help me understand)\b/i.test(q);
+
+  const paragraphs = [];
+
+  paragraphs.push(directAnswer.trim());
+
+  if (!isUltraShort && explainToUse) {
+    paragraphs.push(explainToUse);
+  }
+
+  if ((isProcedural || isExplanation) && noteToUse) {
+    paragraphs.push(noteToUse);
+  }
+
+  paragraphs.push(legalPara);
+
+  return paragraphs.filter(Boolean).join("\n\n");
+}
+
 function renderTinaAnswer({
   answer = "",
   sources = [],
@@ -1046,6 +1097,7 @@ export {
   sanitizeConflictLanguage,
   protectHeadingSpacing,
   renderAdaptiveAnswer,
+  renderFastDefinitionConversational,
   renderTinaAnswer,
   renderTinaJsonPayload,
   assertAFStructure,
@@ -1076,6 +1128,7 @@ export default {
   sanitizeConflictLanguage,
   protectHeadingSpacing,
   renderAdaptiveAnswer,
+  renderFastDefinitionConversational,
   renderTinaAnswer,
   renderTinaJsonPayload,
   assertAFStructure,

@@ -33,7 +33,10 @@ import {
   endTrace,
   flushObservability
 }                                                 from "./services/observability-service.js";
-import { renderTinaAnswer }                       from "./answer-renderer.js";
+import {
+  renderTinaAnswer,
+  renderFastDefinitionConversational
+}                                                 from "./answer-renderer.js";
 import { enforceFinalAnswerCompliance }           from "./final-answer-compliance.js";
 import { analyzeFactPattern }                     from "./fact-pattern-engine.js";
 import { characterizeTransaction }                from "./transaction-characterization-engine.js";
@@ -371,6 +374,14 @@ export async function runPipeline({
   });
   trace.steps.push({ step: 16, name: "finalAnswerCompliance", done: true });
 
+  // ── Step 17: Presentation Transform (FAST_DEFINITION only) ─────────────────
+  // Converts validated structured output to conversational paragraphs.
+  // Compliance gate output is preserved as fallback if section parsing fails.
+  const rawFinalAnswer = compliantResult?.finalAnswer || compliantResult?.answer || ctx.formattedAnswer;
+  const finalAnswer = ctx.mode === "FAST_DEFINITION"
+    ? renderFastDefinitionConversational(rawFinalAnswer, query)
+    : rawFinalAnswer;
+
   // Build normalized source cards for frontend rendering.
   // Each card has the URL fields the frontend normalizeSources() needs.
   const sourceCards = (ctx.rerankedChunks || [])
@@ -430,7 +441,7 @@ export async function runPipeline({
   ]);
 
   return {
-    answer:              compliantResult?.finalAnswer || compliantResult?.answer || ctx.formattedAnswer,
+    answer:              finalAnswer,
     sources:             ctx.rerankedChunks || [],
     sourcesUsed:         ctx.rerankedChunks || [],
     sourceCards,
