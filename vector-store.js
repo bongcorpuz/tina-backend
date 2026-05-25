@@ -1636,7 +1636,12 @@ export async function addDocumentToVectorStore(text, source, metadata = {}, clie
         if (chunkMentionedRefs.length) {
           console.log("[MENTIONED REFS]", { chunkIndex: i, refs: chunkMentionedRefs, source: normalizedSource });
         } else {
-          console.log("[REF NULL — UNKNOWN SCOPE]", { chunkIndex: i, source: normalizedSource });
+          console.log("[REF NULL — UNKNOWN SCOPE]", {
+            chunkIndex: i,
+            source: normalizedSource,
+            rowNormalizedReference: null,
+            metadataNormalizedReference: null,
+          });
         }
       }
     }
@@ -1648,6 +1653,28 @@ export async function addDocumentToVectorStore(text, source, metadata = {}, clie
       normalizedSource,
       normalizedReference: chunkNormalizedRef
     });
+
+    // Single source of truth for the normalized reference that goes into BOTH:
+    //   1. the DB column  (row.normalized_reference)
+    //   2. the JSON blob  (metadata.normalizedReference via buildStoredMetadata)
+    //
+    // NIRC rule:  heading detected in this chunk → chunkSectionScope (same as detectedSection)
+    //             no heading detected            → null, unconditionally.
+    //             document-level fallbacks (authority.normalizedReference,
+    //             normalizeAuthorityReference(source)) are suppressed — they would
+    //             assign "nirc-1997-ra-10963" to every continuation chunk.
+    // Non-NIRC:   authorityFields fallback chain is correct and unchanged.
+    const effectiveNormalizedReference = isNirc
+      ? (chunkSectionScope || null)
+      : authorityFields.normalized_reference;
+
+    // Shallow-clone authorityFields with the effective reference so that
+    // buildStoredMetadata writes metadata.normalizedReference = effectiveNormalizedReference,
+    // not the unconstrained fallback value. All other authority fields are unchanged.
+    const sanitizedAuthorityFields = {
+      ...authorityFields,
+      normalized_reference: effectiveNormalizedReference,
+    };
 
     rows.push({
       source: normalizedSource,
@@ -1664,20 +1691,13 @@ export async function addDocumentToVectorStore(text, source, metadata = {}, clie
         chapterScope:        chunkChapterScope,
         subtitleScope:       chunkSubtitleScope,
         mentionedReferences: chunkMentionedRefs.length ? chunkMentionedRefs : undefined,
-      }, authorityFields),
+      }, sanitizedAuthorityFields),
       authority_type: authorityFields.authority_type,
       authority_level: authorityFields.authority_level,
       authority_score: authorityFields.authority_score,
       authority_label: authorityFields.authority_label,
       controlling_precedence: authorityFields.controlling_precedence,
-      // For NIRC multi-section docs: normalized_reference MUST come only from sectionScope.
-      // buildAuthorityFields falls back to authority.normalizedReference and then to
-      // normalizeAuthorityReference(source), both of which produce a document-level ref
-      // (e.g. "nirc-1997-ra-10963") even when no section heading was detected.
-      // Forcing null here ensures that continuation chunks never carry a false label.
-      normalized_reference: (isNirc && !chunkSectionScope)
-        ? null
-        : authorityFields.normalized_reference,
+      normalized_reference: effectiveNormalizedReference,
       normalized_aliases: authorityFields.normalized_aliases,
       recency_date: authorityFields.recency_date,
       jurisdiction: authorityFields.jurisdiction,
