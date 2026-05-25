@@ -1512,6 +1512,19 @@ export async function removeSourceByPatternFromVectorStore(pattern, client = def
   return { pattern, removedChunks: removed };
 }
 
+// Returns the exact row count in the vector store for a given source value (eq match).
+// Issues a HEAD-only Supabase count request — no row data is fetched.
+// Used for pre/post-delete integrity checks during repair reindexes.
+export async function countSourceRows(source, client = defaultSupabase) {
+  const supabaseClient = resolveSupabaseClient(client);
+  const { count, error } = await supabaseClient
+    .from(VECTOR_TABLE)
+    .select("*", { count: "exact", head: true })
+    .eq("source", source);
+  if (error) throw error;
+  return count || 0;
+}
+
 // Returns true when the document's identifiers (source name, file name, folder path)
 // indicate this is the NIRC itself — not an RR or ruling that merely cites NIRC sections.
 function isNircSourceDocument(source = "", metadata = {}) {
@@ -2578,6 +2591,7 @@ export default {
   clearVectorStore,
   removeSourceFromVectorStore,
   removeSourceByPatternFromVectorStore,
+  countSourceRows,
   addDocumentToVectorStore,
 
   exactAuthoritySearch,

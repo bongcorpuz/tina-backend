@@ -506,6 +506,16 @@ app.get("/conversations/:conversationId/messages", authenticate, async (req, res
 /* ================= INDEX ROUTES ================= */
 
 function startIndexingResponse(route) {
+  // Block full reindex while targeted reindex is running — both write NIRC rows.
+  if (isTargetedReindexRunning()) {
+    return {
+      success: false,
+      started: false,
+      reason: "targeted_reindex_running",
+      message: "Targeted NIRC/VAT reindex is currently running. " +
+        "Wait for [REINDEX COMPLETE] in Render logs before starting a full reindex.",
+    };
+  }
   const started = reindexController.start();
 
   return {
@@ -535,6 +545,15 @@ app.get("/reindex-targeted", allowAuthenticatedOrIndexSecret, async (req, res) =
       started: false,
       reason: "already_running",
       message: "Targeted reindex is already in progress. Check Render logs for [REINDEX COMPLETE]."
+    });
+  }
+  // Block targeted reindex while full background reindex is running.
+  if (reindexController.isActive()) {
+    return res.status(409).json({
+      started: false,
+      reason: "full_reindex_running",
+      message: "Full background reindex is currently running. " +
+        "Wait for it to complete before starting targeted reindex."
     });
   }
   res.json({

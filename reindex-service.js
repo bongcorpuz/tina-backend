@@ -38,6 +38,7 @@ import {
   clearVectorStore,
   addDocumentToVectorStore,
   removeSourceByPatternFromVectorStore,
+  countSourceRows,
   getVectorStoreStats,
   normalizeSourceName
 } from "./vector-store.js";
@@ -1287,22 +1288,52 @@ export async function runTargetedReindex(isTargetFile = isNircOrVatFile) {
         const metadata = normalizeIndexedMetadata(readableFile, cleanText);
         const normalizedSource = metadata.normalizedSource;
 
-        // Repair delete: for NIRC files, purge all historical source-name variants
-        // before the normal exact-match delete fires inside upsertIndexedChunks.
-        // This catches rows that were indexed with underscores, different casing, or
-        // missing/extra hyphens and would survive the eq("source", normalizedSource) check.
+        // Repair delete: for NIRC files, count existing rows, run ILIKE pattern deletes,
+        // recount, and ABORT reinsertion if any rows survive the delete.
+        // This prevents duplicates regardless of the historical source-name variant stored.
         const isNircFile =
           /nirc/.test(normalizedSource) ||
           /nirc.*10963/.test((metadata.fileName || "").toLowerCase());
 
         if (isNircFile) {
+          // 1. Pre-delete count
+          const preDeleteCount = await countSourceRows(normalizedSource);
+          console.info("[NIRC REPAIR PREDELETE COUNT]", {
+            source: normalizedSource,
+            rows: preDeleteCount,
+          });
+
+          // 2. ILIKE pattern deletes — covers all known historical source-name variants
           for (const pattern of NIRC_REPAIR_PATTERNS) {
             await removeSourceByPatternFromVectorStore(pattern);
           }
-          console.info("[REINDEX NIRC REPAIR DELETE]", {
+          console.info("[NIRC REPAIR DELETE]", {
             source: normalizedSource,
             patterns: NIRC_REPAIR_PATTERNS,
           });
+
+          // 3. Post-delete count — must be zero before insert is allowed
+          const postDeleteCount = await countSourceRows(normalizedSource);
+          console.info("[NIRC REPAIR POSTDELETE COUNT]", {
+            source: normalizedSource,
+            rows: postDeleteCount,
+          });
+
+          // 4. Abort if rows remain — do not insert into a dirty table
+          if (postDeleteCount > 0) {
+            const abortReason =
+              `NIRC repair delete incomplete — ${postDeleteCount} rows remain ` +
+              `for source "${normalizedSource}". Reinsertion aborted to prevent duplicates.`;
+            console.error("[NIRC REPAIR ABORT — DELETE FAILED]", {
+              source: normalizedSource,
+              preDeleteCount,
+              postDeleteCount,
+              patterns: NIRC_REPAIR_PATTERNS,
+              reason: abortReason,
+            });
+            failed.push({ fileName, reason: abortReason });
+            continue;
+          }
         }
 
         console.info("[REINDEX DELETE AND REINSERT]", {
