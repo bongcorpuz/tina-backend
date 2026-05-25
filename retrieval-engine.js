@@ -2182,7 +2182,16 @@ async function callSearchCallable({ callable, query, layer, poolK, issueClassifi
     if (Array.isArray(result?.retrievedSources)) return result.retrievedSources;
 
     return [];
-  } catch {
+  } catch (err) {
+    // Log explicitly so a real search failure is distinguishable from an intentional
+    // semantic skip (which returns [] without throwing).  The pipeline wrapper logs
+    // [SEMANTIC FALLBACK SKIPPED] for intentional skips and [SEMANTIC FALLBACK FAILED]
+    // for exceptions; callSearchCallable failures surface here as a separate signal.
+    console.warn("[RETRIEVAL] callSearchCallable exception", {
+      layer,
+      query: String(query || "").slice(0, 80),
+      error: err?.message || String(err)
+    });
     return [];
   }
 }

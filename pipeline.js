@@ -376,18 +376,34 @@ export async function runPipeline({
   // Semantic vector search is a TRUE FALLBACK: it fires only when layers 1–4 have
   // not yet accumulated enough results.
   //
-  // _authorityLayerHits counts deduplicated-enough layer 1–4 raw hits across all
-  // queries.  Once >= _SEMANTIC_SKIP_THRESHOLD, semantic calls return [] to
-  // prevent noisy semantic results from burying authority-targeted ones.
+  // _uniqueAuthorityCandidates (Set) tracks deduplicated authority docs from layers
+  // 1–4.  Once .size + _semanticHits >= _SEMANTIC_SKIP_THRESHOLD, semantic calls
+  // return [] to prevent noisy semantic results from burying authority-targeted ones.
   //
   // smartSearch() is NOT used for any layer — it performs a nested semantic
   // fallback internally (exact→normalized→title→semantic) which would run semantic
   // retrieval before Layer 5 is reached.
-  let _authorityLayerHits = 0;
-  // TODO(dedup): _authorityLayerHits counts raw results per-query including duplicates
-  // across layers.  For a more accurate threshold, track unique doc IDs in a Set and
-  // count only first-seen docs.  Current overcounting errs on the side of authority-first
-  // (correct for tax law), but may suppress semantic earlier than strictly necessary.
+  // Unique authority candidate tracking.
+  // Using a Set of stable doc keys so that the same doc retrieved by multiple
+  // Layer 1–4 queries (e.g. "NIRC Sec. 105" via Layer 1 AND via Layer 2) is counted
+  // only once toward the semantic skip threshold.  Only docs with usable text AND an
+  // authority-identifying field are counted — guards against empty/partial metadata rows.
+  const _authorityDocKey = (doc) => {
+    if (doc.id) return `id:${doc.id}`;
+    const src = String(doc.source        || doc.document_title || "");
+    const ref = String(doc.normalized_reference || doc.normalizedReference ||
+                       (doc.chunk_index != null ? doc.chunk_index : ""));
+    return `${src}|${ref}`;
+  };
+  const _isUsableAuthorityDoc = (doc) => {
+    const hasText = Boolean(doc.text || doc.content);
+    const hasAuth = Boolean(
+      doc.source || doc.document_title ||
+      doc.normalized_reference || doc.normalizedReference || doc.authority_type
+    );
+    return hasText && hasAuth;
+  };
+  const _uniqueAuthorityCandidates = new Set();
   let _semanticHits = 0;
   const _SEMANTIC_SKIP_THRESHOLD = 12; // matches topK: 12 passed to retrieveRelevantSources
 
@@ -405,19 +421,25 @@ export async function runPipeline({
     if (layer === "LAYER_1_EXACT_NORMALIZED_AUTHORITY") {
       console.log("[EXACT RETRIEVAL]",      { query: q, layer });
       const r = await exactAuthoritySearch(base);
-      _authorityLayerHits += r.length;
+      for (const doc of r) {
+        if (_isUsableAuthorityDoc(doc)) _uniqueAuthorityCandidates.add(_authorityDocKey(doc));
+      }
       return r;
     }
     if (layer === "LAYER_2_CITATION_VARIANT") {
       console.log("[NORMALIZED RETRIEVAL]", { query: q, layer });
       const r = await normalizedCitationSearch(base);
-      _authorityLayerHits += r.length;
+      for (const doc of r) {
+        if (_isUsableAuthorityDoc(doc)) _uniqueAuthorityCandidates.add(_authorityDocKey(doc));
+      }
       return r;
     }
     if (layer === "LAYER_3_TITLE_PATH_METADATA") {
       console.log("[DOMAIN RETRIEVAL]",     { query: q, layer });
       const r = await titleMetadataSearch(base);
-      _authorityLayerHits += r.length;
+      for (const doc of r) {
+        if (_isUsableAuthorityDoc(doc)) _uniqueAuthorityCandidates.add(_authorityDocKey(doc));
+      }
       return r;
     }
     if (layer === "LAYER_4_CONTENT_KEYWORD") {
@@ -425,24 +447,34 @@ export async function runPipeline({
       // cascades into semantic search internally before Layer 5 is reached.
       console.log("[DOMAIN RETRIEVAL]",     { query: q, layer });
       const r = await titleMetadataSearch(base);
-      _authorityLayerHits += r.length;
+      for (const doc of r) {
+        if (_isUsableAuthorityDoc(doc)) _uniqueAuthorityCandidates.add(_authorityDocKey(doc));
+      }
       return r;
     }
 
     // Layer 5 (VECTOR_SEMANTIC), Layer 6 (BROAD_TAX_DOMAIN_FALLBACK), unlabelled:
-    // Skip semantic if authority layers (1-4) plus any previous semantic pass have
-    // already accumulated enough results.  Using _authorityLayerHits + _semanticHits
-    // prevents Layer 6 from running a duplicate semantic pass when Layer 5 already
-    // found sufficient candidates.
-    const _totalHits = _authorityLayerHits + _semanticHits;
+    // Skip semantic if unique authority candidates (deduplicated via Set) plus any
+    // previous semantic pass have already accumulated enough results.  Using
+    // _uniqueAuthorityCandidates.size + _semanticHits prevents Layer 6 from running
+    // a duplicate semantic pass when Layer 5 already found sufficient candidates.
+    const _totalHits = _uniqueAuthorityCandidates.size + _semanticHits;
     if (_totalHits >= _SEMANTIC_SKIP_THRESHOLD) {
-      console.log("[SEMANTIC FALLBACK SKIPPED]", { query: q, layer, authorityLayerHits: _authorityLayerHits, semanticHits: _semanticHits, total: _totalHits });
+      console.log("[SEMANTIC FALLBACK SKIPPED]", { query: q, layer, uniqueAuthorityCount: _uniqueAuthorityCandidates.size, semanticHits: _semanticHits, total: _totalHits });
       return [];
     }
-    console.log("[SEMANTIC FALLBACK]", { query: q, layer, authorityLayerHits: _authorityLayerHits, semanticHits: _semanticHits });
-    const r = await searchSimilar(base);
-    _semanticHits += r.length;
-    return r;
+    // Wrap searchSimilar so intentional skips ([SEMANTIC FALLBACK SKIPPED]) are
+    // distinguishable from real search failures ([SEMANTIC FALLBACK FAILED]) in logs.
+    console.log("[SEMANTIC FALLBACK]", { query: q, layer, uniqueAuthorityCount: _uniqueAuthorityCandidates.size, semanticHits: _semanticHits });
+    try {
+      const r = await searchSimilar(base);
+      _semanticHits += r.length;
+      return r;
+    } catch (err) {
+      console.warn("[SEMANTIC FALLBACK FAILED]", { query: q, layer, error: err?.message || String(err) });
+      trace.warnings.push({ step: 5, warning: `semanticFallbackFailed: ${err?.message || "unknown"}`, layer });
+      return [];
+    }
   };
 
   const _retrievalRaw = await Promise.race([
@@ -458,8 +490,18 @@ export async function runPipeline({
     }),
     new Promise(resolve =>
       setTimeout(() => {
-        trace.warnings.push({ step: 5, warning: "Retrieval timed out after 15 s — proceeding with empty chunks" });
-        resolve([]);
+        trace.warnings.push({ step: 5, warning: "Retrieval timed out after 15 s — proceeding with empty chunks", timedOut: true });
+        // Return object shape (not bare []) so the normalizer stores retrievalDiagnostics
+        // with timedOut: true and downstream code can distinguish timeout from
+        // genuine empty retrieval.  The normalizer handles both [] and object shapes.
+        resolve({
+          retrievedSources:     [],
+          sources:              [],
+          retrievalDiagnostics: {
+            timedOut:  true,
+            timeoutMs: RETRIEVAL_STEP_TIMEOUT_MS
+          }
+        });
       }, RETRIEVAL_STEP_TIMEOUT_MS)
     )
   ]);
@@ -488,7 +530,7 @@ export async function runPipeline({
       layer5_semantic:   _diag?.semanticMatches          ?? "n/a",
       layer6_fallback:   _diag?.fallbackMatches          ?? "n/a",
       supabaseFallback:  _diag?.supabaseFallbackMatches  ?? "n/a",
-      wrapperAuthorityHits: _authorityLayerHits,
+      wrapperAuthorityHits: _uniqueAuthorityCandidates.size,
       wrapperSemanticHits:  _semanticHits,
       totalCandidates:   Array.isArray(_retrievalRaw.retrievedSources)
         ? _retrievalRaw.retrievedSources.length : "n/a"
