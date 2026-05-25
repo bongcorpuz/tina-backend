@@ -37,6 +37,7 @@ import {
 import {
   clearVectorStore,
   addDocumentToVectorStore,
+  removeSourceByPatternFromVectorStore,
   getVectorStoreStats,
   normalizeSourceName
 } from "./vector-store.js";
@@ -1212,6 +1213,21 @@ export async function runDriveReindex() {
 // Returns true for NIRC and priority VAT authority files only.
 // Filename-only match — broad folder path matching is intentionally excluded
 // to prevent pulling in unrelated files (e.g. Civil Code) that share a folder.
+// ── Targeted reindex concurrency lock ──────────────────────────────────────────
+// Prevents duplicate concurrent background jobs from overlapping HTTP calls.
+// Resets in the finally block of runTargetedReindex regardless of outcome.
+let _targetedReindexRunning = false;
+export function isTargetedReindexRunning() { return _targetedReindexRunning; }
+
+// ILIKE patterns covering all known historical source-name variants for the NIRC.
+// Underscores vs hyphens, bare vs parenthesised "(bir)", folder prefix variations.
+// Applied in repair reindex only — never during ordinary incremental indexing.
+const NIRC_REPAIR_PATTERNS = [
+  "%nirc-1997-ra-10963%",
+  "%nirc%10963%",
+  "%tax%code%nirc%",
+];
+
 function isNircOrVatFile(file) {
   const name = (file.name || file.fileName || "").toLowerCase();
   return (
@@ -1228,85 +1244,116 @@ function isNircOrVatFile(file) {
 
 // Reindexes only files matched by isTargetFile (defaults to NIRC + VAT files).
 // Does NOT call clearVectorStore. Each source's existing chunks are removed
-// per-source inside addDocumentToVectorStore before new chunks are inserted.
+// per-source via exact-match delete inside addDocumentToVectorStore. For NIRC
+// files an additional broad ILIKE delete purges historical source-name variants
+// (underscores vs hyphens, folder prefix casing) before reinsertion.
+// A concurrency lock prevents duplicate overlapping runs.
 export async function runTargetedReindex(isTargetFile = isNircOrVatFile) {
-  const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
-  if (!folderId) throw new Error("GOOGLE_DRIVE_FOLDER_ID not set");
-
-  const files = await listDriveFiles(folderId);
-  const targetFiles = (files || []).filter(isTargetFile);
-
-  console.info("[REINDEX START]", {
-    targeted: true,
-    totalFilesInDrive: files.length,
-    matchedFiles: targetFiles.length,
-    fileNames: targetFiles.map(f => f.name || f.fileName || "?")
-  });
-
-  const indexed = [];
-  const failed = [];
-  const skipped = [];
-
-  for (const file of targetFiles) {
-    const fileName = file.name || file.fileName || "unknown";
-    try {
-      const { file: readableFile, text } = await readFileForIndexing(file);
-      const cleanText = truncateText(normalizeText(text));
-
-      if (!cleanText) {
-        skipped.push({ fileName, reason: "No readable text" });
-        continue;
-      }
-
-      const metadata = normalizeIndexedMetadata(readableFile, cleanText);
-      const normalizedSource = metadata.normalizedSource;
-
-      console.info("[REINDEX DELETE AND REINSERT]", {
-        source: normalizedSource,
-        fileName,
-        reason: "metadata repair reindex — old rows deleted before reinsertion",
-      });
-
-      const indexResult = await upsertIndexedChunks(cleanText, metadata, {});
-      const chunksAdded = indexResult?.chunksAdded ?? indexResult?.chunkCount ?? 0;
-
-      console.info("[REINDEX INSERT]", {
-        source: normalizedSource,
-        chunksAdded,
-        normalizedReference: metadata.normalizedReference
-      });
-
-      indexed.push({
-        fileName: metadata.fileName,
-        normalizedSource,
-        normalizedReference: metadata.normalizedReference,
-        chunksAdded
-      });
-    } catch (error) {
-      console.error(`[REINDEX] Failed: ${fileName} — ${error?.message}`);
-      failed.push({ fileName, reason: error?.message || "Failed" });
-    }
+  if (_targetedReindexRunning) {
+    console.warn("[REINDEX TARGETED] Already running — rejecting duplicate invocation");
+    return { skipped: true, reason: "already_running" };
   }
+  _targetedReindexRunning = true;
 
-  console.info("[REINDEX COMPLETE]", {
-    indexed: indexed.length,
-    failed: failed.length,
-    skipped: skipped.length,
-    sources: indexed.map(r => r.normalizedSource)
-  });
+  try {
+    const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
+    if (!folderId) throw new Error("GOOGLE_DRIVE_FOLDER_ID not set");
 
-  return {
-    targeted: true,
-    totalFilesInDrive: (files || []).length,
-    filesMatched: targetFiles.length,
-    filesIndexed: indexed.length,
-    filesFailed: failed.length,
-    filesSkipped: skipped.length,
-    indexed,
-    failed,
-    skipped,
-    indexedAt: new Date().toISOString()
-  };
+    const files = await listDriveFiles(folderId);
+    const targetFiles = (files || []).filter(isTargetFile);
+
+    console.info("[REINDEX START]", {
+      targeted: true,
+      totalFilesInDrive: files.length,
+      matchedFiles: targetFiles.length,
+      fileNames: targetFiles.map(f => f.name || f.fileName || "?")
+    });
+
+    const indexed = [];
+    const failed = [];
+    const skipped = [];
+
+    for (const file of targetFiles) {
+      const fileName = file.name || file.fileName || "unknown";
+      try {
+        const { file: readableFile, text } = await readFileForIndexing(file);
+        const cleanText = truncateText(normalizeText(text));
+
+        if (!cleanText) {
+          skipped.push({ fileName, reason: "No readable text" });
+          continue;
+        }
+
+        const metadata = normalizeIndexedMetadata(readableFile, cleanText);
+        const normalizedSource = metadata.normalizedSource;
+
+        // Repair delete: for NIRC files, purge all historical source-name variants
+        // before the normal exact-match delete fires inside upsertIndexedChunks.
+        // This catches rows that were indexed with underscores, different casing, or
+        // missing/extra hyphens and would survive the eq("source", normalizedSource) check.
+        const isNircFile =
+          /nirc/.test(normalizedSource) ||
+          /nirc.*10963/.test((metadata.fileName || "").toLowerCase());
+
+        if (isNircFile) {
+          for (const pattern of NIRC_REPAIR_PATTERNS) {
+            await removeSourceByPatternFromVectorStore(pattern);
+          }
+          console.info("[REINDEX NIRC REPAIR DELETE]", {
+            source: normalizedSource,
+            patterns: NIRC_REPAIR_PATTERNS,
+          });
+        }
+
+        console.info("[REINDEX DELETE AND REINSERT]", {
+          source: normalizedSource,
+          fileName,
+          reason: "metadata repair reindex — old rows deleted before reinsertion",
+        });
+
+        const indexResult = await upsertIndexedChunks(cleanText, metadata, {});
+        const chunksAdded = indexResult?.chunksAdded ?? indexResult?.chunkCount ?? 0;
+
+        console.info("[REINDEX INSERT]", {
+          source: normalizedSource,
+          chunksAdded,
+          normalizedReference: metadata.normalizedReference
+        });
+
+        indexed.push({
+          fileName: metadata.fileName,
+          normalizedSource,
+          normalizedReference: metadata.normalizedReference,
+          chunksAdded
+        });
+      } catch (error) {
+        console.error(`[REINDEX] Failed: ${fileName} — ${error?.message}`);
+        failed.push({ fileName, reason: error?.message || "Failed" });
+      }
+    }
+
+    console.info("[REINDEX COMPLETE]", {
+      indexed: indexed.length,
+      failed: failed.length,
+      skipped: skipped.length,
+      sources: indexed.map(r => r.normalizedSource)
+    });
+
+    return {
+      targeted: true,
+      totalFilesInDrive: (files || []).length,
+      filesMatched: targetFiles.length,
+      filesIndexed: indexed.length,
+      filesFailed: failed.length,
+      filesSkipped: skipped.length,
+      indexed,
+      failed,
+      skipped,
+      indexedAt: new Date().toISOString()
+    };
+  } finally {
+    _targetedReindexRunning = false;
+  }
 }
 
 export function createBackgroundReindexController() {
@@ -1434,6 +1481,7 @@ export function reindexServiceHealthCheck() {
 export default {
   runDriveReindex,
   runTargetedReindex,
+  isTargetedReindexRunning,
   createBackgroundReindexController,
   reindexServiceHealthCheck,
 

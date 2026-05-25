@@ -1491,6 +1491,27 @@ export async function removeSourceFromVectorStore(source, client = defaultSupaba
   };
 }
 
+// Deletes all rows whose source column matches the given SQL ILIKE pattern.
+// Used during repair reindexes to purge historical source-name variants (underscores
+// vs hyphens, parentheses variations) that would not be caught by the exact-match
+// delete inside removeSourceFromVectorStore / addDocumentToVectorStore.
+// NOT called during ordinary incremental indexing.
+export async function removeSourceByPatternFromVectorStore(pattern, client = defaultSupabase) {
+  const supabaseClient = resolveSupabaseClient(client);
+
+  const { data, error } = await supabaseClient
+    .from(VECTOR_TABLE)
+    .delete()
+    .ilike("source", pattern)
+    .select("id");
+
+  if (error) throw error;
+
+  const removed = data?.length || 0;
+  console.info("[REMOVE BY PATTERN]", { pattern, removedChunks: removed });
+  return { pattern, removedChunks: removed };
+}
+
 // Returns true when the document's identifiers (source name, file name, folder path)
 // indicate this is the NIRC itself — not an RR or ruling that merely cites NIRC sections.
 function isNircSourceDocument(source = "", metadata = {}) {
@@ -1559,6 +1580,14 @@ export async function addDocumentToVectorStore(text, source, metadata = {}, clie
   const supabaseClient = resolveSupabaseClient(client);
   const chunks = chunkText(text);
   const normalizedSource = normalizeSourceName(metadata.normalizedSource || source);
+
+  // Confirm the same canonical key is used for both the pre-insert delete and the insert rows.
+  console.log("[SOURCE CANONICAL]", {
+    rawSource: source,
+    metadataNormalizedSource: metadata.normalizedSource || null,
+    canonicalSource: normalizedSource,
+    note: "delete and insert both use canonicalSource",
+  });
 
   if (!chunks.length) {
     return {
@@ -1641,7 +1670,14 @@ export async function addDocumentToVectorStore(text, source, metadata = {}, clie
       authority_score: authorityFields.authority_score,
       authority_label: authorityFields.authority_label,
       controlling_precedence: authorityFields.controlling_precedence,
-      normalized_reference: authorityFields.normalized_reference,
+      // For NIRC multi-section docs: normalized_reference MUST come only from sectionScope.
+      // buildAuthorityFields falls back to authority.normalizedReference and then to
+      // normalizeAuthorityReference(source), both of which produce a document-level ref
+      // (e.g. "nirc-1997-ra-10963") even when no section heading was detected.
+      // Forcing null here ensures that continuation chunks never carry a false label.
+      normalized_reference: (isNirc && !chunkSectionScope)
+        ? null
+        : authorityFields.normalized_reference,
       normalized_aliases: authorityFields.normalized_aliases,
       recency_date: authorityFields.recency_date,
       jurisdiction: authorityFields.jurisdiction,
@@ -2521,6 +2557,7 @@ export function vectorStoreHealthCheck() {
 export default {
   clearVectorStore,
   removeSourceFromVectorStore,
+  removeSourceByPatternFromVectorStore,
   addDocumentToVectorStore,
 
   exactAuthoritySearch,

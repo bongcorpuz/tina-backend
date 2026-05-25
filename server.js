@@ -38,7 +38,7 @@ import {
   askHelpersHealthCheck
 } from "./ask-helpers.js";
 
-import { createBackgroundReindexController, runTargetedReindex } from "./reindex-service.js";
+import { createBackgroundReindexController, runTargetedReindex, isTargetedReindexRunning } from "./reindex-service.js";
 import { registerTinaRoutes } from "./routes/index.js";
 
 import { queryIntentEngineHealthCheck } from "./query-intent-engine.js";
@@ -530,6 +530,13 @@ app.get("/admin/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) 
 });
 
 app.get("/reindex-targeted", allowAuthenticatedOrIndexSecret, async (req, res) => {
+  if (isTargetedReindexRunning()) {
+    return res.status(409).json({
+      started: false,
+      reason: "already_running",
+      message: "Targeted reindex is already in progress. Check Render logs for [REINDEX COMPLETE]."
+    });
+  }
   res.json({
     started: true,
     message: "Targeted NIRC + VAT reindex started in background.",
