@@ -20,7 +20,13 @@ import {
 import { rerankByHierarchy }                      from "./authority-engine.js";
 import { applySupersessionFilter }                from "./supersession-engine.js";
 import { retrieveRelevantSources }                from "./retrieval-engine.js";
-import { searchSimilar }                          from "./vector-store.js";
+import {
+  searchSimilar,
+  exactAuthoritySearch,
+  normalizedCitationSearch,
+  titleMetadataSearch,
+  smartSearch
+}                                                 from "./vector-store.js";
 import { rerankForTina }                          from "./reranker-engine.js";
 import { detectDoctrinalConflicts }               from "./doctrinal-engine.js";
 import {
@@ -365,18 +371,43 @@ export async function runPipeline({
   const controllingAuthorities = rawTargets;
   const RETRIEVAL_STEP_TIMEOUT_MS = 15000;
 
-  // Compatibility wrapper: callSearchCallable() inside retrieval-engine.js calls
-  // vectorSearch(queryString, optionsObject).  searchSimilar() uses parseSearchArgs()
-  // which treats a bare second argument as topK — not as an options object.
-  // This wrapper adapts the two-arg call into the object form so that the
-  // pipeline's supabase client and issue classification are forwarded correctly.
-  const _vectorSearchFn = (q, opts = {}) => searchSimilar({
-    query:               q,
-    supabase,
-    topK:                opts.topK || 48,
-    issueClassification: opts.issueClassification || ctx.issueClassification || null,
-    targetAuthorities:   opts.targetAuthorities    || controllingAuthorities  || []
-  });
+  // Authority-priority routing wrapper.
+  // callSearchCallable() passes opts.retrievalLayer so each layer calls the correct
+  // vector-store.js function — exact/metadata-column searches run first, semantic
+  // vector search is the fallback only (Layer 5).  All functions accept the object
+  // form of parseSearchArgs(), which reads arg1.supabase correctly.
+  const _vectorSearchFn = (q, opts = {}) => {
+    const layer = opts.retrievalLayer || "";
+    const base  = {
+      query:                 q,
+      supabase,
+      topK:                  opts.topK || 48,
+      issueClassification:   opts.issueClassification || ctx.issueClassification || null,
+      targetAuthorities:     opts.targetAuthorities   || controllingAuthorities  || [],
+      controllingAuthorities
+    };
+
+    if (layer === "LAYER_1_EXACT_NORMALIZED_AUTHORITY") {
+      console.log("[EXACT RETRIEVAL]",      { query: q, layer });
+      return exactAuthoritySearch(base);
+    }
+    if (layer === "LAYER_2_CITATION_VARIANT") {
+      console.log("[NORMALIZED RETRIEVAL]", { query: q, layer });
+      return normalizedCitationSearch(base);
+    }
+    if (layer === "LAYER_3_TITLE_PATH_METADATA") {
+      console.log("[DOMAIN RETRIEVAL]",     { query: q, layer });
+      return titleMetadataSearch(base);
+    }
+    if (layer === "LAYER_4_CONTENT_KEYWORD") {
+      console.log("[DOMAIN RETRIEVAL]",     { query: q, layer });
+      return smartSearch(base);
+    }
+    // Layer 5 (VECTOR_SEMANTIC), Layer 6 (BROAD_TAX_DOMAIN_FALLBACK), and any
+    // unlabelled call all fall through to semantic search.
+    console.log("[SEMANTIC FALLBACK]",      { query: q, layer });
+    return searchSimilar(base);
+  };
 
   const _retrievalRaw = await Promise.race([
     retrieveRelevantSources({
@@ -409,6 +440,20 @@ export async function runPipeline({
       2
     )
   );
+  // ── TEMP TRACE: authority-priority layer hit distribution ─────────────────
+  if (_retrievalRaw && typeof _retrievalRaw === "object" && !Array.isArray(_retrievalRaw)) {
+    const _diag = _retrievalRaw.retrievalDiagnostics;
+    console.log("[AUTHORITY PRIORITY ORDER]", {
+      layer1: _diag?.layerHits?.LAYER_1_EXACT_NORMALIZED_AUTHORITY ?? "n/a",
+      layer2: _diag?.layerHits?.LAYER_2_CITATION_VARIANT           ?? "n/a",
+      layer3: _diag?.layerHits?.LAYER_3_TITLE_PATH_METADATA        ?? "n/a",
+      layer4: _diag?.layerHits?.LAYER_4_CONTENT_KEYWORD            ?? "n/a",
+      layer5: _diag?.layerHits?.LAYER_5_VECTOR_SEMANTIC            ?? "n/a",
+      layer6: _diag?.layerHits?.LAYER_6_BROAD_TAX_DOMAIN_FALLBACK  ?? "n/a",
+      totalCandidates: Array.isArray(_retrievalRaw.retrievedSources)
+        ? _retrievalRaw.retrievedSources.length : "n/a"
+    });
+  }
   // ── END TEMP TRACE ────────────────────────────────────────────────────────
 
   // ── Retrieval contract normalizer ─────────────────────────────────────────
