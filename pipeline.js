@@ -412,6 +412,38 @@ export async function runPipeline({
 
   trace.steps.push({ step: 5, name: "retrieval", chunksFound: ctx.retrievedChunks.length, done: true });
 
+  // ── TEMP TRACE: Stage 1-3 — retrieval output + authority distribution ──────
+  // Remove after retrieval audit is complete.
+  console.log("[RPC RAW COUNT]", {
+    rawType:          typeof _retrievalRaw,
+    isArray:          Array.isArray(_retrievalRaw),
+    chunksNormalized: ctx.retrievedChunks.length,
+    retrievedKey:     Array.isArray(_retrievalRaw?.retrievedSources)
+      ? _retrievalRaw.retrievedSources.length : "n/a",
+    sourcesKey:       Array.isArray(_retrievalRaw?.sources)
+      ? _retrievalRaw.sources.length : "n/a"
+  });
+  if (ctx.retrievedChunks.length > 0) {
+    const _s = ctx.retrievedChunks[0];
+    console.log("[RPC SAMPLE]", {
+      id:            _s.id ?? null,
+      authorityType: _s.authorityType || _s.authority_type || "MISSING",
+      title:         (_s.title || _s.document_title || "?").slice(0, 80),
+      hasText:       Boolean(_s.text || _s.content),
+      score:         _s.score ?? 0
+    });
+  }
+  const _authDist = ctx.retrievedChunks.reduce((a, c) => {
+    const t = c.authorityType || c.authority_type || "MISSING";
+    a[t] = (a[t] || 0) + 1; return a;
+  }, {});
+  console.log("[AUTHORITY FILTER]", {
+    total:             ctx.retrievedChunks.length,
+    distribution:      _authDist,
+    unknownOrMissing:  (_authDist.UNKNOWN || 0) + (_authDist.MISSING || 0)
+  });
+  // ── END TEMP TRACE ────────────────────────────────────────────────────────
+
   // ── Step 6: Reranker ──────────────────────────────────────────────────────
   const rerankResult = rerankForTina({
     docs:               ctx.retrievedChunks,
@@ -419,6 +451,21 @@ export async function runPipeline({
     issueClassification: ctx.issueClassification
   });
   ctx.rerankedChunks = rerankResult?.results || rerankResult?.sources || rerankResult?.retrievedSources || [];
+  // ── TEMP TRACE: Stage 5 — reranker output ─────────────────────────────────
+  // Remove after retrieval audit is complete.
+  console.log("[RERANK]", {
+    input:               ctx.retrievedChunks.length,
+    output:              ctx.rerankedChunks.length,
+    suppressWeakDefault: true,
+    auditSummary: rerankResult?.audit
+      ? {
+          inputCount:      rerankResult.audit.inputCount,
+          outputCount:     rerankResult.audit.outputCount,
+          suppressedWeak:  rerankResult.audit.suppressWeakSecondary
+        }
+      : "no audit field"
+  });
+  // ── END TEMP TRACE ────────────────────────────────────────────────────────
   trace.steps.push({ step: 6, name: "reranker", done: true });
 
   // ── Step 7: Fact Pattern Reconstruction (conditional) ────────────────────
@@ -502,6 +549,15 @@ export async function runPipeline({
     transactionChar:     ctx.transactionChar
   });
   trace.steps.push({ step: 13, name: "masterPromptBuilt", done: true });
+
+  // ── TEMP TRACE: Stage 7 — final sources entering OpenAI ───────────────────
+  // Remove after retrieval audit is complete.
+  console.log("[FINAL SOURCES TO MODEL]", {
+    count:  (ctx.rerankedChunks || []).length,
+    types:  (ctx.rerankedChunks || []).map(c => c.authorityType || "?"),
+    titles: (ctx.rerankedChunks || []).map(c => (c.title || c.document_title || "?").slice(0, 60))
+  });
+  // ── END TEMP TRACE ────────────────────────────────────────────────────────
 
   // ── Step 14: OpenAI Completion ────────────────────────────────────────────
   let openAiResult;

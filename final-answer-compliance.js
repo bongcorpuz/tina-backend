@@ -1702,6 +1702,16 @@ function resolveVisibleSources({
         }).filter((source) => sourceAllowed(source, context))
       : visibleLegalBasisDocs;
 
+  // ── TEMP TRACE: Stage 6 — visible sources after filterVisibleSources() ─────
+  // Remove after retrieval audit is complete.
+  console.log("[VISIBLE SOURCES]", {
+    legalBasisIn:  resolvedLegalBasisDocs.length,
+    legalBasisOut: visibleLegalBasisDocs.length,
+    sourcesUsedIn: resolvedSourcesUsed.length,
+    sourcesUsedOut: visibleSourceDocs.length
+  });
+  // ── END TEMP TRACE ────────────────────────────────────────────────────────
+
   return {
     supersessionResult,
     resolvedLegalBasisDocs: visibleLegalBasisDocs,

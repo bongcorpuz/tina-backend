@@ -2560,6 +2560,17 @@ async function retrieveRelevantSources(options = {}) {
   }
 
   const prefiltered = filterBeforeRerank(candidates, { allowReviewMaterials });
+  // ── TEMP TRACE: Stage 3-4 — domain filter + supersession ──────────────────
+  // Remove after retrieval audit is complete.
+  console.log("[DOMAIN FILTER]", {
+    candidatesIn:  candidates.length,
+    afterFilter:   prefiltered.docs.length,
+    dropped:       prefiltered.droppedBeforeRerank
+  });
+  console.log("[SUPERSESSION FILTER]", {
+    note: "applySupersessionFilter inside filterBeforeRerank returns object not array — currently a no-op; see filterBeforeRerank line ~2114"
+  });
+  // ── END TEMP TRACE ────────────────────────────────────────────────────────
 
   const scored = scoreAndAnnotateSources({
     docs: prefiltered.docs,
