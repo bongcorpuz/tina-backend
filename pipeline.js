@@ -381,6 +381,20 @@ export async function runPipeline({
     )
   ]);
 
+  // ── TEMP TRACE: inspect raw retrieval shape before normalization ───────────
+  // Remove after retrieval audit is complete.
+  console.log(
+    "[RPC RAW FULL]",
+    JSON.stringify(
+      Array.isArray(_retrievalRaw)
+        ? _retrievalRaw.slice(0, 2)
+        : _retrievalRaw,
+      null,
+      2
+    )
+  );
+  // ── END TEMP TRACE ────────────────────────────────────────────────────────
+
   // ── Retrieval contract normalizer ─────────────────────────────────────────
   // retrieveRelevantSources() returns an object { retrievedSources, sources, … }.
   // The timeout fallback returns [].  All downstream consumers (reranker,
