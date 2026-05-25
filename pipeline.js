@@ -20,6 +20,7 @@ import {
 import { rerankByHierarchy }                      from "./authority-engine.js";
 import { applySupersessionFilter }                from "./supersession-engine.js";
 import { retrieveRelevantSources }                from "./retrieval-engine.js";
+import { searchSimilar }                          from "./vector-store.js";
 import { rerankForTina }                          from "./reranker-engine.js";
 import { detectDoctrinalConflicts }               from "./doctrinal-engine.js";
 import {
@@ -363,10 +364,25 @@ export async function runPipeline({
   // After 15 s, fall through with empty chunks so the pipeline still completes.
   const controllingAuthorities = rawTargets;
   const RETRIEVAL_STEP_TIMEOUT_MS = 15000;
+
+  // Compatibility wrapper: callSearchCallable() inside retrieval-engine.js calls
+  // vectorSearch(queryString, optionsObject).  searchSimilar() uses parseSearchArgs()
+  // which treats a bare second argument as topK — not as an options object.
+  // This wrapper adapts the two-arg call into the object form so that the
+  // pipeline's supabase client and issue classification are forwarded correctly.
+  const _vectorSearchFn = (q, opts = {}) => searchSimilar({
+    query:               q,
+    supabase,
+    topK:                opts.topK || 48,
+    issueClassification: opts.issueClassification || ctx.issueClassification || null,
+    targetAuthorities:   opts.targetAuthorities    || controllingAuthorities  || []
+  });
+
   const _retrievalRaw = await Promise.race([
     retrieveRelevantSources({
       query,
       supabase,
+      vectorSearch:         _vectorSearchFn,
       issueClassification:  ctx.issueClassification,
       targetAuthorities:    controllingAuthorities,
       controllingAuthorities,
