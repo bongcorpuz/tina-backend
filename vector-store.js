@@ -263,6 +263,15 @@ async function embedText(text) {
     throw new Error("OpenAI returned an empty embedding.");
   }
 
+  // ── TEMP TRACE: [QUERY EMBEDDING] ────────────────────────────────────────
+  // Remove after retrieval audit is complete.
+  console.log("[QUERY EMBEDDING] vector-store embedText", {
+    inputLength:     input.length,
+    embeddingLength: embedding.length,
+    first5dims:      embedding.slice(0, 5)
+  });
+  // ── END TEMP TRACE ────────────────────────────────────────────────────────
+
   return embedding;
 }
 
@@ -1758,12 +1767,37 @@ export async function searchSimilar(arg1, arg2) {
 
   const queryEmbedding = await embedText(cleanQuery);
 
+  // ── TEMP TRACE: [RPC PARAMS] vector-store searchSimilar ──────────────────
+  // Remove after retrieval audit is complete.
+  console.log("[RPC PARAMS] vector-store searchSimilar", {
+    rpcName:         "match_tina_vectors",
+    matchCount,
+    matchThreshold:  0.0,
+    embeddingLength: Array.isArray(queryEmbedding) ? queryEmbedding.length : "n/a",
+    filter_metadata: {}
+  });
+  // ── END TEMP TRACE ────────────────────────────────────────────────────────
+
   const { data, error } = await supabaseClient.rpc("match_tina_vectors", {
     query_embedding: queryEmbedding,
     match_threshold: 0.0,
     match_count: matchCount,
     filter_metadata: {}
   });
+
+  // ── TEMP TRACE: [RPC RESULTS] vector-store searchSimilar ─────────────────
+  // Remove after retrieval audit is complete.
+  console.log("[RPC RESULTS] vector-store searchSimilar", {
+    error:    error ? { message: error.message, code: error.code } : null,
+    rowCount: (data || []).length,
+    sample:   (data || []).slice(0, 2).map(r => ({
+      id:                   r.id,
+      score:                r.similarity ?? r.score ?? null,
+      authority_type:       r.authority_type ?? null,
+      normalized_reference: String(r.normalized_reference || "").slice(0, 60)
+    }))
+  });
+  // ── END TEMP TRACE ────────────────────────────────────────────────────────
 
   if (error) {
     console.error("Supabase vector search error:", error);

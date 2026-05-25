@@ -2193,12 +2193,43 @@ async function supabaseAuthoritySearch({
   if (!supabase || typeof supabase.rpc !== "function") return [];
   if (!Array.isArray(authorityFilter) || authorityFilter.length === 0) return [];
 
+  // ── TEMP TRACE: [QUERY EMBEDDING] + [RPC PARAMS] ─────────────────────────
+  // Remove after retrieval audit is complete.
+  console.log("[QUERY EMBEDDING]", {
+    embeddingProvided: Boolean(embedding),
+    embeddingIsArray:  Array.isArray(embedding),
+    embeddingLength:   Array.isArray(embedding) ? embedding.length : "n/a",
+    first5dims:        Array.isArray(embedding) ? embedding.slice(0, 5) : null
+  });
+  console.log("[RPC PARAMS]", {
+    rpcName:         "match_documents",
+    noteExpected:    "match_tina_vectors",
+    matchCount:      poolK,
+    filter:          { authority_names: authorityFilter },
+    embeddingIsNull: embedding === null
+  });
+  // ── END TEMP TRACE ────────────────────────────────────────────────────────
+
   try {
     const { data, error } = await supabase.rpc("match_documents", {
       query_embedding: embedding,
       match_count:     poolK,
       filter:          { authority_names: authorityFilter }
     });
+
+    // ── TEMP TRACE: [RPC RESULTS] ─────────────────────────────────────────
+    // Remove after retrieval audit is complete.
+    console.log("[RPC RESULTS]", {
+      error:    error ? { message: error.message, code: error.code, details: error.details } : null,
+      rowCount: (data || []).length,
+      sample:   (data || []).slice(0, 2).map(r => ({
+        id:                   r.id,
+        score:                r.similarity ?? r.score ?? null,
+        authority_type:       r.authority_type ?? null,
+        normalized_reference: String(r.normalized_reference || "").slice(0, 60)
+      }))
+    });
+    // ── END TEMP TRACE ──────────────────────────────────────────────────────
 
     if (error) {
       console.warn(`[RETRIEVAL_ENGINE] supabaseAuthoritySearch RPC error: ${error.message}`);
@@ -2325,6 +2356,21 @@ async function collectCandidateDocs({
 
   const callable = vectorSearch || searchFn;
 
+  // ── TEMP TRACE: callable check ────────────────────────────────────────────
+  // Remove after retrieval audit is complete.
+  console.log("[RETRIEVAL INPUT] collectCandidateDocs", {
+    callableIsNull:    callable === null,
+    callableType:      typeof callable,
+    hasVectorSearch:   Boolean(vectorSearch),
+    hasSearchFn:       Boolean(searchFn),
+    hasSupabase:       Boolean(supabase && typeof supabase.rpc === "function"),
+    authorityFilterLen: authorityFilter.length,
+    providedDocsLen:   safeArray(documents).length,
+    layerCount:        safeArray(querySet.layers).length,
+    poolK
+  });
+  // ── END TEMP TRACE ────────────────────────────────────────────────────────
+
   for (const layerInfo of safeArray(querySet.layers)) {
     const layer = layerInfo.layer;
     const queries = safeArray(layerInfo.queries).slice(0, 16);
@@ -2361,6 +2407,20 @@ async function collectCandidateDocs({
       if (layer === RETRIEVAL_LAYER.BROAD_TAX_DOMAIN_FALLBACK) diagnostics.fallbackMatches += annotated.length;
     }
   }
+
+  // ── TEMP TRACE: [DOMAIN FILTER] per-layer summary ────────────────────────
+  // Remove after retrieval audit is complete.
+  console.log("[DOMAIN FILTER] collectCandidateDocs result", {
+    totalCandidates:         candidates.length,
+    exactAuthorityMatches:   diagnostics.exactAuthorityMatches,
+    citationVariantMatches:  diagnostics.citationVariantMatches,
+    metadataMatches:         diagnostics.metadataMatches,
+    contentKeywordMatches:   diagnostics.contentKeywordMatches,
+    semanticMatches:         diagnostics.semanticMatches,
+    fallbackMatches:         diagnostics.fallbackMatches,
+    supabaseFallbackMatches: diagnostics.supabaseFallbackMatches
+  });
+  // ── END TEMP TRACE ────────────────────────────────────────────────────────
 
   return { candidates, layerDiagnostics: diagnostics };
 }
@@ -2526,6 +2586,27 @@ async function retrieveRelevantSources(options = {}) {
     []
   ).filter(Boolean);
 
+  // ── TEMP TRACE: [RETRIEVAL INPUT] ─────────────────────────────────────────
+  // Remove after retrieval audit is complete.
+  console.log("[RETRIEVAL INPUT]", {
+    query,
+    queryLength:          query.length,
+    adaptiveMode,
+    topK,
+    poolK,
+    authorityFilterLength: authorityFilter.length,
+    authorityFilter:       authorityFilter.slice(0, 10),
+    hasVectorSearch:       Boolean(options.vectorSearch),
+    hasSearchFn:           Boolean(options.searchFn),
+    hasSupabase:           Boolean(options.supabase && typeof options.supabase.rpc === "function"),
+    issueClassification: {
+      primaryIssue:      issueClassification?.primaryIssue     || null,
+      primaryDomain:     issueClassification?.primaryDomain    || null,
+      targetAuthorities: (issueClassification?.targetAuthorities || []).slice(0, 5)
+    }
+  });
+  // ── END TEMP TRACE ────────────────────────────────────────────────────────
+
   const { candidates, layerDiagnostics } = await collectCandidateDocs({
     query,
     querySet,
@@ -2593,6 +2674,25 @@ async function retrieveRelevantSources(options = {}) {
 
   const dedupedAfterScoring = finalDedupeAfterScoring(ranked);
   const sanitized = dedupedAfterScoring.slice(0, topK).map(sanitizeRetrievedSource);
+
+  // ── TEMP TRACE: [RETRIEVAL RETURN] ───────────────────────────────────────
+  // Remove after retrieval audit is complete.
+  console.log("[RETRIEVAL RETURN]", {
+    candidatesTotal:  candidates.length,
+    prefilteredDocs:  prefiltered.docs.length,
+    scored:           scored.length,
+    ranked:           ranked.length,
+    dedupedAfterScoring: dedupedAfterScoring.length,
+    sanitized:        sanitized.length,
+    layerDiagnostics,
+    sample: sanitized.slice(0, 2).map(s => ({
+      id:            s.id,
+      authorityType: s.authorityType,
+      title:         String(s.title || "").slice(0, 60),
+      score:         s.score
+    }))
+  });
+  // ── END TEMP TRACE ────────────────────────────────────────────────────────
 
   const retrievalDiagnostics = buildCompactDiagnostics({
     querySet,
