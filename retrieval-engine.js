@@ -2048,25 +2048,39 @@ function safeIssueClassification(query = "", existingClassification = null, extr
 }
 
 function sourceDedupeKey(doc = {}) {
+  // Prioritize the Supabase row-level PK — unique per chunk, prevents collapsing all
+  // chunks of a multi-section document (e.g. NIRC Sec. 105, 106, 107, 108 from the
+  // same PDF) into a single deduplicated entry.
+  // The old waterfall started with fileId/file_id (Google Drive document-level ID),
+  // which is identical for every chunk from the same PDF — causing 83/95 duplicates
+  // to be dropped and only 1 source reaching the reranker.
+  if (doc.id != null) return String(doc.id);
+
+  // Chunk-aware composite: document identity + provision reference + chunk position.
+  // Distinguishes NIRC Sec. 105 from Sec. 106 even when both share the same file_id.
+  const docId    = doc.fileId    || doc.file_id    ||
+                   doc.metadata?.fileId || doc.metadata?.file_id || null;
+  const chunkRef = doc.normalized_reference || doc.normalizedReference ||
+                   doc.metadata?.normalizedReference                    || null;
+  const chunkIdx = doc.chunk_index != null ? String(doc.chunk_index)
+                 : doc.chunkIndex   != null ? String(doc.chunkIndex) : null;
+
+  if (docId && (chunkRef || chunkIdx !== null)) {
+    return normalizeText(`${docId}|${chunkRef || ""}|${chunkIdx || ""}`).toLowerCase();
+  }
+
+  // Fallback for unchunked / non-Drive documents: citation → path → source → title.
   return normalizeText(
-    doc.fileId ||
-      doc.file_id ||
-      doc.id ||
-      doc.metadata?.fileId ||
-      doc.metadata?.file_id ||
-      doc.normalizedReference ||
-      doc.normalized_reference ||
-      doc.metadata?.normalizedReference ||
-      doc.citation ||
-      doc.reference ||
-      doc.path ||
-      doc.source_path ||
-      doc.metadata?.path ||
-      doc.originalSource ||
-      doc.original_source ||
-      doc.source ||
-      doc.title ||
-      `${extractBestTitle(doc)}|${extractBestCitation(doc)}|${extractBestUrl(doc)}`
+    doc.citation              ||
+    doc.reference             ||
+    doc.path                  ||
+    doc.source_path           ||
+    doc.metadata?.path        ||
+    doc.originalSource        ||
+    doc.original_source       ||
+    doc.source                ||
+    doc.title                 ||
+    `${extractBestTitle(doc)}|${extractBestCitation(doc)}|${extractBestUrl(doc)}`
   ).toLowerCase();
 }
 
@@ -2465,25 +2479,24 @@ async function collectCandidateDocs({
       if (layer === RETRIEVAL_LAYER.VECTOR_SEMANTIC) diagnostics.semanticMatches += annotated.length;
       if (layer === RETRIEVAL_LAYER.BROAD_TAX_DOMAIN_FALLBACK) diagnostics.fallbackMatches += annotated.length;
 
-      // Accumulate unique usable authority candidates for early-exit tracking.
-      // Only Layer 1 and Layer 2 contribute to the sufficiency count.
+      // Accumulate unique usable authority candidates and check sufficiency
+      // immediately after each query result — do not continue remaining queries
+      // in this layer once topK unique usable authority docs are collected.
+      // break layerLoop exits both the inner query loop and the outer layer loop.
       if (_AUTH_EXIT_LAYERS.has(layer)) {
         for (const doc of annotated) {
           if (_isUsableAuthorityDoc(doc)) _authCandidateKeys.add(_authDocKey(doc));
         }
+        if (_authCandidateKeys.size >= _AUTH_SUFFICIENCY) {
+          console.log("[AUTHORITY EARLY EXIT IMMEDIATE]", {
+            layer,
+            query:                String(searchQuery || "").slice(0, 80),
+            usableAuthorityCount: _authCandidateKeys.size,
+            returned:             candidates.length
+          });
+          break layerLoop;
+        }
       }
-    }
-
-    // After all queries for this layer complete, check authority sufficiency.
-    // If Layer 1 or Layer 2 produced >= topK unique usable authority docs, exit
-    // immediately — skips Layer 3/4/5/6 and the slow ILIKE metadataSearch path.
-    if (_AUTH_EXIT_LAYERS.has(layer) && _authCandidateKeys.size >= _AUTH_SUFFICIENCY) {
-      console.log("[AUTHORITY EARLY EXIT]", {
-        layer,
-        usableAuthorityCount: _authCandidateKeys.size,
-        returned: candidates.length
-      });
-      break layerLoop;
     }
   }
 
