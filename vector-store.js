@@ -5,7 +5,7 @@ import OpenAI from "openai";
 import { createClient } from "@supabase/supabase-js";
 import "dotenv/config";
 
-import { buildAuthorityMetadata } from "./authority-engine.js";
+import { buildAuthorityMetadata, normalizeLegalReference } from "./authority-engine.js";
 import { buildTaxConceptRetrievalAliases } from "./services/tax-concept-aliases.js";
 
 if (!process.env.OPENAI_API_KEY) {
@@ -1646,6 +1646,90 @@ export async function addDocumentToVectorStore(text, source, metadata = {}, clie
   };
 }
 
+// ── Phase 3 exact-authority fast-path helpers ─────────────────────────────
+//
+// The old metadataSearch() path generates 14+ OR ILIKE patterns per term —
+// including JSON-extracted metadata columns — and is called 12-16 times
+// sequentially, causing Supabase timeouts on cold starts.
+//
+// These two helpers replace the first query with a single indexed
+// .in("normalized_reference", refs) equality lookup.  Only if that lookup
+// returns fewer than topK usable results does the code fall back to the
+// original ILIKE metadataSearch path.
+//
+// buildNormalizedRefVariants() expands a list of human-readable authority
+// strings into every format that may be stored in the normalized_reference
+// column:
+//   "NIRC Sec. 105"  → original + "NIRC_SEC_105" + aliases from normalizeLegalReference
+//   "RR 16-2005"     → original + "RR_16_2005"   + aliases
+// This handles both the per-chunk NIRC format stored by detectNircSectionHeading
+// ("NIRC Sec. 105") and the normalized format produced by normalizeLegalReference
+// ("NIRC_SEC_105"), covering whichever format was written during indexing.
+
+function buildNormalizedRefVariants(terms = []) {
+  const variants = [];
+  for (const term of terms) {
+    if (!term) continue;
+    variants.push(term);                          // original form
+    try {
+      const nr = normalizeLegalReference(term);
+      if (nr.normalized) variants.push(nr.normalized);  // e.g. "NIRC_SEC_105"
+      for (const alias of (nr.aliases || [])) {
+        if (alias) variants.push(alias);          // e.g. "NIRC Sec. 105", "Section 105"
+      }
+    } catch {
+      // normalizeLegalReference is best-effort; failures are safe to ignore
+    }
+  }
+  return unique(variants).filter(Boolean);
+}
+
+// fastRefLookup() executes the single indexed .in() query and maps rows
+// through the same mapRowToResult + shouldSuppressRow pipeline as metadataSearch.
+async function fastRefLookup({
+  supabaseClient,
+  refs = [],
+  poolLimit,
+  parsed = {},
+  searchMode = "EXACT_AUTHORITY"
+} = {}) {
+  if (!refs.length) return [];
+  // Cap at 64 values — well within Supabase's limit and avoids query bloat.
+  const cleanRefs = unique(refs).filter(Boolean).slice(0, 64);
+  if (!cleanRefs.length) return [];
+
+  try {
+    const { data, error } = await supabaseClient
+      .from(VECTOR_TABLE)
+      .select(buildSelectColumns())
+      .in("normalized_reference", cleanRefs)
+      .order("authority_level", { ascending: true, nullsFirst: false })
+      .order("chunk_index",     { ascending: true })
+      .limit(poolLimit);
+
+    if (error) {
+      console.warn("[FAST_REF_LOOKUP] Supabase error:", { message: error.message, code: error.code });
+      return [];
+    }
+
+    const queryStr = parsed.query || parsed.keyword || "";
+    return (data || [])
+      .map((row) =>
+        mapRowToResult(
+          { ...row, citationMatchBonus: 1, searchMode },
+          1,
+          queryStr,
+          { ...parsed, searchMode }
+        )
+      )
+      .filter((row) => !shouldSuppressRow(row, queryStr, parsed));
+  } catch (err) {
+    console.warn("[FAST_REF_LOOKUP] exception:", err?.message || String(err));
+    return [];
+  }
+}
+// ── End Phase 3 helpers ───────────────────────────────────────────────────
+
 export async function exactAuthoritySearch(arg1, arg2) {
   const parsed = parseSearchArgs(arg1, arg2, { topK: 8 });
   const {
@@ -1656,6 +1740,35 @@ export async function exactAuthoritySearch(arg1, arg2) {
     targetAuthorities
   } = parsed;
 
+  const safeTopK   = clampTopK(topK);
+  const poolLimit  = clampMatchCount(Math.max(safeTopK * 3, safeTopK));
+
+  // ── Fast path: single indexed .in("normalized_reference", ...) query ──────
+  // Build all stored-format variants for the authority terms so the equality
+  // filter catches both "NIRC Sec. 105" (detectNircSectionHeading format) and
+  // "NIRC_SEC_105" (normalizeLegalReference format).
+  const fastRefs = buildNormalizedRefVariants([
+    keyword,
+    query,
+    ...targetAuthorities
+  ]);
+
+  const fastResults = await fastRefLookup({
+    supabaseClient,
+    refs:       fastRefs,
+    poolLimit,
+    parsed,
+    searchMode: "EXACT_AUTHORITY"
+  });
+
+  if (fastResults.length >= safeTopK) {
+    console.log("[EXACT AUTHORITY FAST PATH]", { refsQueried: fastRefs.length, found: fastResults.length });
+    return uniqueResults(sortResultsForTina(fastResults, query || keyword, parsed)).slice(0, safeTopK);
+  }
+
+  // ── Fallback: broad ILIKE metadataSearch (original behavior) ─────────────
+  // Only runs when the indexed lookup found too few results.
+  console.log("[EXACT AUTHORITY FALLBACK]", { fastFound: fastResults.length, needed: safeTopK });
   const searchTerms = unique([
     keyword,
     query,
@@ -1664,21 +1777,20 @@ export async function exactAuthoritySearch(arg1, arg2) {
     ...buildPossibleSourceKeywords(keyword)
   ]).filter(Boolean);
 
-  const results = [];
+  const results = [...fastResults];
 
   for (const term of searchTerms.slice(0, 12)) {
     const matches = await metadataSearch({
       supabaseClient,
-      keyword: term,
+      keyword:    term,
       topK,
-      options: parsed,
+      options:    parsed,
       searchMode: "EXACT_AUTHORITY"
     });
-
     results.push(...matches);
   }
 
-  return uniqueResults(sortResultsForTina(results, query || keyword, parsed)).slice(0, clampTopK(topK));
+  return uniqueResults(sortResultsForTina(results, query || keyword, parsed)).slice(0, safeTopK);
 }
 
 export async function normalizedCitationSearch(arg1, arg2) {
@@ -1694,6 +1806,34 @@ export async function normalizedCitationSearch(arg1, arg2) {
     supportingJurisprudence
   } = parsed;
 
+  const safeTopK   = clampTopK(topK);
+  const poolLimit  = clampMatchCount(Math.max(safeTopK * 3, safeTopK));
+
+  // ── Fast path: single indexed .in("normalized_reference", ...) query ──────
+  // Use controlling and target authorities as the primary exact lookup set.
+  // Supporting authorities and jurisprudence expand it only if needed.
+  const fastRefs = buildNormalizedRefVariants([
+    keyword,
+    query,
+    ...targetAuthorities,
+    ...controllingAuthorities
+  ]);
+
+  const fastResults = await fastRefLookup({
+    supabaseClient,
+    refs:       fastRefs,
+    poolLimit,
+    parsed,
+    searchMode: "NORMALIZED_CITATION"
+  });
+
+  if (fastResults.length >= safeTopK) {
+    console.log("[NORMALIZED CITATION FAST PATH]", { refsQueried: fastRefs.length, found: fastResults.length });
+    return uniqueResults(sortResultsForTina(fastResults, query || keyword, parsed)).slice(0, safeTopK);
+  }
+
+  // ── Fallback: broad ILIKE metadataSearch (original behavior) ─────────────
+  console.log("[NORMALIZED CITATION FALLBACK]", { fastFound: fastResults.length, needed: safeTopK });
   const terms = unique([
     keyword,
     query,
@@ -1710,21 +1850,20 @@ export async function normalizedCitationSearch(arg1, arg2) {
     ])
     .filter(Boolean);
 
-  const results = [];
+  const results = [...fastResults];
 
   for (const term of unique(terms).slice(0, 16)) {
     const matches = await metadataSearch({
       supabaseClient,
-      keyword: term,
+      keyword:    term,
       topK,
-      options: parsed,
+      options:    parsed,
       searchMode: "NORMALIZED_CITATION"
     });
-
     results.push(...matches);
   }
 
-  return uniqueResults(sortResultsForTina(results, query || keyword, parsed)).slice(0, clampTopK(topK));
+  return uniqueResults(sortResultsForTina(results, query || keyword, parsed)).slice(0, safeTopK);
 }
 
 export async function titleMetadataSearch(arg1, arg2) {
