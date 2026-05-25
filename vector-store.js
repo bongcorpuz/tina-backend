@@ -62,6 +62,16 @@ console.info("[VECTOR INSERT CONFIG]", {
   batchDelayMs: VECTOR_INSERT_BATCH_DELAY_MS,
 });
 
+// One-time log: proves which table all reads, writes, and deletes target.
+// If VECTOR_TABLE env var is misconfigured this is the only visible evidence.
+console.info("[VECTOR TABLE NAME]", {
+  VECTOR_TABLE,
+  fromEnv: process.env.VECTOR_TABLE || null,
+  usingDefault: !process.env.VECTOR_TABLE,
+  expectedTable: "tina_vector_store",
+  match: VECTOR_TABLE === "tina_vector_store",
+});
+
 const GOOGLE_DRIVE_PRIORITY_FOLDERS = Object.freeze([
   "01_TAX_CODE",
   "02_REVENUE_REGULATIONS",
@@ -1477,11 +1487,24 @@ export async function removeSourceFromVectorStore(source, client = defaultSupaba
   const supabaseClient = resolveSupabaseClient(client);
   const normalizedSource = normalizeSourceName(source);
 
-  const { data, error } = await supabaseClient
+  const response = await supabaseClient
     .from(VECTOR_TABLE)
     .delete()
     .eq("source", normalizedSource)
     .select("id");
+
+  const { data, error, status, statusText } = response;
+
+  // Log full Supabase response — dataIsNull:true means delete ran but RETURNING was skipped.
+  console.info("[DELETE SOURCE]", {
+    source: normalizedSource,
+    table: VECTOR_TABLE,
+    status,
+    statusText,
+    removedChunks: data?.length ?? null,
+    dataIsNull: data === null,
+    error: error ? { message: error.message, code: error.code, details: error.details } : null,
+  });
 
   if (error) throw error;
 
@@ -1499,30 +1522,48 @@ export async function removeSourceFromVectorStore(source, client = defaultSupaba
 export async function removeSourceByPatternFromVectorStore(pattern, client = defaultSupabase) {
   const supabaseClient = resolveSupabaseClient(client);
 
-  const { data, error } = await supabaseClient
+  const response = await supabaseClient
     .from(VECTOR_TABLE)
     .delete()
     .ilike("source", pattern)
     .select("id");
 
+  const { data, error, status, statusText } = response;
+
+  // Log full Supabase response — dataIsNull:true means delete ran but RETURNING was skipped.
+  console.info("[REMOVE BY PATTERN]", {
+    pattern,
+    table: VECTOR_TABLE,
+    status,
+    statusText,
+    removedChunks: data?.length ?? null,
+    dataIsNull: data === null,
+    error: error ? { message: error.message, code: error.code, details: error.details } : null,
+  });
+
   if (error) throw error;
 
-  const removed = data?.length || 0;
-  console.info("[REMOVE BY PATTERN]", { pattern, removedChunks: removed });
-  return { pattern, removedChunks: removed };
+  return { pattern, removedChunks: data?.length || 0 };
 }
 
 // Returns the exact row count in the vector store for a given source value (eq match).
-// Issues a HEAD-only Supabase count request — no row data is fetched.
-// Used for pre/post-delete integrity checks during repair reindexes.
+//
+// Implementation note: deliberately avoids { count: "exact", head: true }.
+// That approach depends on PostgREST returning a Content-Range header which the
+// Supabase JS client then parses into `count`. If the header is absent or the
+// client silently fails to parse it, `count` is null — null || 0 = 0 — and the
+// abort gate never fires regardless of actual row count.
+//
+// Instead: fetch actual row IDs with select("id") and count data.length in JS.
+// A 500-row NIRC table returns ~20 KB of UUIDs — small, fast, unambiguous.
 export async function countSourceRows(source, client = defaultSupabase) {
   const supabaseClient = resolveSupabaseClient(client);
-  const { count, error } = await supabaseClient
+  const { data, error } = await supabaseClient
     .from(VECTOR_TABLE)
-    .select("*", { count: "exact", head: true })
+    .select("id")
     .eq("source", source);
   if (error) throw error;
-  return count || 0;
+  return Array.isArray(data) ? data.length : 0;
 }
 
 // Returns true when the document's identifiers (source name, file name, folder path)
