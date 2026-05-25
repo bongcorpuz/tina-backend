@@ -912,7 +912,9 @@ export function inferIssuanceNumber(doc = {}) {
     { regex: /\b(BIR Ruling)\s*(?:No\.?)?\s*([\w./()-]+)\b/i, value: (m) => `${m[1]} No. ${m[2]}` },
     { regex: /\b(CTA(?:\s+EB| En Banc)?\s+No\.?\s*[\w.-]+)\b/i, value: (m) => compactSpaces(m[1]) },
     { regex: /\b(G\.R\.\s*No\.?\s*[\w.-]+)\b/i, value: (m) => compactSpaces(m[1]) },
-    { regex: /\b(CA-G\.R\.\s*[\w.-]+)\b/i, value: (m) => compactSpaces(m[1]) }
+    { regex: /\b(CA-G\.R\.\s*[\w.-]+)\b/i, value: (m) => compactSpaces(m[1]) },
+    // NIRC / Tax Code section references: "NIRC Sec. 105", "Tax Code Section 106"
+    { regex: /\b(?:NIRC|Tax Code)\s+Sec(?:tion)?\.?\s*(\d+[A-Z]?)\b/i, value: (m) => `NIRC Sec. ${m[1]}` }
   ];
 
   for (const pattern of directPatterns) {
@@ -926,7 +928,9 @@ export function inferIssuanceNumber(doc = {}) {
     { regex: /\bRMC_(\d{1,3})[-_](\d{2,4})\b/i, value: (m) => `RMC No. ${Number(m[1])}-${normalizeYear(m[2])}` },
     { regex: /\bRMO_(\d{1,3})[-_](\d{2,4})\b/i, value: (m) => `RMO No. ${Number(m[1])}-${normalizeYear(m[2])}` },
     { regex: /\bRAMO_(\d{1,3})[-_](\d{2,4})\b/i, value: (m) => `RAMO No. ${Number(m[1])}-${normalizeYear(m[2])}` },
-    { regex: /\bBIR_RULING_([A-Z0-9_./()-]+)\b/i, value: (m) => `BIR Ruling No. ${String(m[1]).replace(/_/g, "-")}` }
+    { regex: /\bBIR_RULING_([A-Z0-9_./()-]+)\b/i, value: (m) => `BIR Ruling No. ${String(m[1]).replace(/_/g, "-")}` },
+    // DB-normalized form produced by normalizeLegalReference(): "NIRC_SEC_105", "TAX_CODE_SEC_105"
+    { regex: /^(?:NIRC|TAX_CODE)_SEC_(\d+[A-Z]?)$/i, value: (m) => `NIRC Sec. ${m[1]}` }
   ];
 
   for (const pattern of normalizedPatterns) {
@@ -1063,15 +1067,30 @@ function isCitedOrUsed(doc = {}, citedSourceKeys = []) {
 }
 
 function toVisibleSourceEntry(doc = {}, issueClassification = null) {
+  // Provision-level display label: prefer the authority/provision reference
+  // (e.g. "NIRC Sec. 105", "RR No. 16-2005") over the raw PDF filename that all
+  // chunks from the same document would otherwise share.
+  // inferIssuanceNumber now recognises NIRC Sec. patterns (direct + DB-normalized form).
+  const _normRef   = doc.normalized_reference || doc.normalizedReference ||
+                     doc.metadata?.normalizedReference || null;
+  const _provLabel = inferIssuanceNumber(doc) || null;
+
   return {
-    title: sourceTitleOf(doc),
+    title: _provLabel || sourceTitleOf(doc),
+
+    // Expose normalized_reference so downstream dedup (buildDocKey) and the
+    // frontend can distinguish provisions from the same source document.
+    normalized_reference: _normRef,
+    normalizedReference:  _normRef,
+
     citation:
       doc.citation ||
       doc.reference ||
       doc.normalizedReference ||
+      doc.normalized_reference ||
       doc.metadata?.citation ||
       doc.metadata?.reference ||
-      inferIssuanceNumber(doc) ||
+      _provLabel ||
       sourceTitleOf(doc),
 
     drive_url: sourceDriveUrlOf(doc),
