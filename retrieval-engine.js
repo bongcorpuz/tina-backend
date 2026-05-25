@@ -2336,6 +2336,7 @@ async function collectCandidateDocs({
   searchFn = null,
   supabase = null,
   documents = [],
+  topK = DEFAULT_TOP_K,
   poolK = DEFAULT_POOL_K,
   issueClassification = null,
   authorityFilter = [],
@@ -2351,6 +2352,33 @@ async function collectCandidateDocs({
     fallbackMatches: 0,
     supabaseFallbackMatches: 0
   };
+
+  // ── Authority sufficiency: early exit after Layer 1 / Layer 2 ────────────
+  // After completing all queries for Layer 1 (EXACT_NORMALIZED_AUTHORITY) or
+  // Layer 2 (CITATION_VARIANT), if unique usable authority candidates already
+  // reach topK we break the layer loop immediately — no Layer 3-6 runs.
+  // This prevents the slow metadataSearch / ILIKE Supabase timeout (error 57014)
+  // when the fast .in("normalized_reference") path already found enough results.
+  const _AUTH_EXIT_LAYERS = new Set([
+    RETRIEVAL_LAYER.EXACT_NORMALIZED_AUTHORITY,
+    RETRIEVAL_LAYER.CITATION_VARIANT
+  ]);
+  const _AUTH_SUFFICIENCY = Math.max(Number(topK) || DEFAULT_TOP_K, DEFAULT_TOP_K);
+  const _authCandidateKeys = new Set();
+  const _isUsableAuthorityDoc = (doc) =>
+    Boolean(doc.text || doc.content) &&
+    Boolean(doc.source || doc.document_title || doc.normalized_reference ||
+            doc.normalizedReference || doc.authority_type);
+  const _authDocKey = (doc) => {
+    if (doc.id) return `id:${doc.id}`;
+    const src = String(doc.source || doc.document_title || "");
+    const ref = String(
+      doc.normalized_reference || doc.normalizedReference ||
+      (doc.chunk_index != null ? String(doc.chunk_index) : "")
+    );
+    return `${src}|${ref}`;
+  };
+  // ── End authority sufficiency ─────────────────────────────────────────────
 
   for (const doc of safeArray(documents)) {
     candidates.push(annotateDocLayer(doc, RETRIEVAL_LAYER.PROVIDED_DOCUMENTS, "provided"));
@@ -2392,7 +2420,7 @@ async function collectCandidateDocs({
   });
   // ── END TEMP TRACE ────────────────────────────────────────────────────────
 
-  for (const layerInfo of safeArray(querySet.layers)) {
+  layerLoop: for (const layerInfo of safeArray(querySet.layers)) {
     const layer = layerInfo.layer;
     const queries = safeArray(layerInfo.queries).slice(0, 16);
 
@@ -2436,6 +2464,26 @@ async function collectCandidateDocs({
       if (layer === RETRIEVAL_LAYER.CONTENT_KEYWORD) diagnostics.contentKeywordMatches += annotated.length;
       if (layer === RETRIEVAL_LAYER.VECTOR_SEMANTIC) diagnostics.semanticMatches += annotated.length;
       if (layer === RETRIEVAL_LAYER.BROAD_TAX_DOMAIN_FALLBACK) diagnostics.fallbackMatches += annotated.length;
+
+      // Accumulate unique usable authority candidates for early-exit tracking.
+      // Only Layer 1 and Layer 2 contribute to the sufficiency count.
+      if (_AUTH_EXIT_LAYERS.has(layer)) {
+        for (const doc of annotated) {
+          if (_isUsableAuthorityDoc(doc)) _authCandidateKeys.add(_authDocKey(doc));
+        }
+      }
+    }
+
+    // After all queries for this layer complete, check authority sufficiency.
+    // If Layer 1 or Layer 2 produced >= topK unique usable authority docs, exit
+    // immediately — skips Layer 3/4/5/6 and the slow ILIKE metadataSearch path.
+    if (_AUTH_EXIT_LAYERS.has(layer) && _authCandidateKeys.size >= _AUTH_SUFFICIENCY) {
+      console.log("[AUTHORITY EARLY EXIT]", {
+        layer,
+        usableAuthorityCount: _authCandidateKeys.size,
+        returned: candidates.length
+      });
+      break layerLoop;
     }
   }
 
@@ -2645,6 +2693,7 @@ async function retrieveRelevantSources(options = {}) {
     searchFn:        options.searchFn,
     supabase:        options.supabase,
     documents:       options.documents || options.sources || options.retrievedSources || [],
+    topK,
     poolK,
     issueClassification,
     authorityFilter,
