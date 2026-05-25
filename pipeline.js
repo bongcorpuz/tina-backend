@@ -251,12 +251,27 @@ function buildEducationalSources(chunks = [], responseStyle = null, query = "") 
 
   if (!eligible.length) return null;
 
-  // Build chips; deduplicate by normalized label, prefer entry with URL
+  // Build chips; deduplicate by normalized label, prefer entry with URL.
+  // Learn More must show document-level labels ("NIRC 1997 as amended"),
+  // NOT provision-level labels ("NIRC Sec. 105") — those belong in sourceCards.
+  // Multiple chunks from the same parent document collapse to one chip here.
   const seen = new Map();
   for (const doc of eligible) {
+    // Document-level title: prefer explicit document_title metadata over filename.
+    const rawDocTitle   = String(
+      doc.document_title    || doc.documentTitle    ||
+      doc.metadata?.documentTitle || doc.metadata?.document_title ||
+      doc.metadata?.originalFileName || doc.metadata?.original_file_name ||
+      ""
+    ).trim();
     const issuanceLabel = inferIssuanceNumber(doc);
+    // Section-level provision references ("NIRC Sec. 105") belong in sourceCards.
+    // For Learn More use the broader parent document label instead.
+    const isSection     = /\bsec(?:tion)?\.?\s*\d/i.test(issuanceLabel);
     const fallback      = sourceTitleOf(doc)?.slice(0, 60) || "";
-    const chipLabel     = issuanceLabel || fallback;
+    const chipLabel     = rawDocTitle
+      ? rawDocTitle.slice(0, 80)
+      : (isSection ? fallback : (issuanceLabel || fallback));
     if (!chipLabel) continue;
 
     const normKey = chipLabel.toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -272,7 +287,7 @@ function buildEducationalSources(chunks = [], responseStyle = null, query = "") 
     const lvl  = docLevel(doc);
     const kind = lvl <= 3 ? "primary" : lvl <= 9 ? "regulation" : lvl === 10 ? "ruling" : "other";
     const title = String(
-      doc.title || doc.document_title || doc.documentTitle || doc.source || chipLabel
+      rawDocTitle || doc.title || doc.document_title || doc.documentTitle || doc.source || chipLabel
     ).slice(0, 120);
 
     const chip = { label: chipLabel, title, url, group: assignGroup(doc, chipLabel), kind };
@@ -835,41 +850,54 @@ export async function runPipeline({
       ? buildEducationalSources(ctx.rerankedChunks, ctx.responseStyle, query)
       : null;
 
-  // Build normalized source cards for frontend rendering.
-  // Each card has the URL fields the frontend normalizeSources() needs.
-  const sourceCards = (ctx.rerankedChunks || [])
-    .filter((c) => c.title || c.document_title || c.source || c.originalSource)
-    .slice(0, 5)
-    .map((c) => {
-      const meta = c.metadata || {};
-      const url =
-        c.driveViewUrl ||
-        c.drive_view_url ||
-        c.url ||
-        meta.driveViewUrl ||
-        meta.drive_view_url ||
-        meta.url ||
-        meta.sourceUrl ||
-        "";
-      return {
-        title:
-          c.title ||
-          c.document_title ||
-          c.documentTitle ||
-          c.originalSource ||
-          c.source ||
-          "Source",
-        citation:
-          c.normalizedReference ||
-          c.normalized_reference ||
-          c.citation ||
-          "",
-        authorityType: c.authorityType || c.authority_type || "UNKNOWN",
-        driveViewUrl: url,
-        url,
-        excerpt: String(c.text || c.content || "").slice(0, 300)
-      };
+  // Build provision-aware source cards with dedup.
+  // Title format: "NIRC Sec. 105 — NIRC-1997-RA-10963 (BIR).pdf"
+  //   (provision label — parent document name)
+  // Dedup key = provision reference, so each distinct section gets one card;
+  // multiple chunks of the same section are collapsed to the first one.
+  // This is semantically distinct from educationalSources (Learn More) which
+  // groups at document level — same PDF appears in both but with different labels.
+  const _scSeen = new Map();
+  for (const c of (ctx.rerankedChunks || [])) {
+    if (!c.title && !c.document_title && !c.source && !c.originalSource) continue;
+
+    const provRef  = inferIssuanceNumber(c) ||
+                     c.normalizedReference  || c.normalized_reference ||
+                     c.citation             || "";
+    const docTitle = String(
+      c.document_title || c.documentTitle ||
+      c.title          || c.source        ||
+      c.originalSource || ""
+    ).slice(0, 80);
+
+    // Dedup: provision reference (unique per section) or doc+chunk for non-provision docs
+    const dedupeKey = provRef
+      ? provRef.toLowerCase().replace(/[^a-z0-9]/g, "")
+      : (docTitle + "|" + String(c.chunk_index || c.id || "")).toLowerCase().slice(0, 60);
+
+    if (_scSeen.has(dedupeKey)) continue;
+
+    const meta = c.metadata || {};
+    const url  =
+      c.driveViewUrl    || c.drive_view_url ||
+      c.url             ||
+      meta.driveViewUrl || meta.drive_view_url || meta.url || meta.sourceUrl ||
+      "";
+
+    _scSeen.set(dedupeKey, {
+      title:         provRef && docTitle
+                       ? `${provRef} — ${docTitle}`
+                       : provRef || docTitle || "Source",
+      citation:      provRef,
+      authorityType: c.authorityType || c.authority_type || "UNKNOWN",
+      driveViewUrl:  url,
+      url,
+      excerpt:       String(c.text || c.content || "").slice(0, 300)
     });
+
+    if (_scSeen.size >= 5) break;
+  }
+  const sourceCards = [..._scSeen.values()];
 
   endTrace({
     traceId,
