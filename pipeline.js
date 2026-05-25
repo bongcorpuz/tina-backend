@@ -363,7 +363,7 @@ export async function runPipeline({
   // After 15 s, fall through with empty chunks so the pipeline still completes.
   const controllingAuthorities = rawTargets;
   const RETRIEVAL_STEP_TIMEOUT_MS = 15000;
-  ctx.retrievedChunks = await Promise.race([
+  const _retrievalRaw = await Promise.race([
     retrieveRelevantSources({
       query,
       supabase,
@@ -380,7 +380,37 @@ export async function runPipeline({
       }, RETRIEVAL_STEP_TIMEOUT_MS)
     )
   ]);
-  trace.steps.push({ step: 5, name: "retrieval", chunksFound: ctx.retrievedChunks?.length ?? 0, done: true });
+
+  // ── Retrieval contract normalizer ─────────────────────────────────────────
+  // retrieveRelevantSources() returns an object { retrievedSources, sources, … }.
+  // The timeout fallback returns [].  All downstream consumers (reranker,
+  // renderer, compliance gate) require ctx.retrievedChunks to be a plain array.
+  if (Array.isArray(_retrievalRaw)) {
+    ctx.retrievedChunks      = _retrievalRaw;
+    ctx.retrievalMeta        = null;
+    ctx.retrievalDiagnostics = null;
+  } else if (_retrievalRaw && typeof _retrievalRaw === "object") {
+    const _chunks =
+      Array.isArray(_retrievalRaw.retrievedSources) ? _retrievalRaw.retrievedSources :
+      Array.isArray(_retrievalRaw.sources)           ? _retrievalRaw.sources          :
+      Array.isArray(_retrievalRaw.results)            ? _retrievalRaw.results           :
+      null;
+    if (_chunks === null) {
+      console.warn("[PIPELINE] Step 5: retrieval result has no recognizable source array — normalizing to []");
+      ctx.retrievedChunks = [];
+    } else {
+      ctx.retrievedChunks = _chunks;
+    }
+    ctx.retrievalMeta        = _retrievalRaw;
+    ctx.retrievalDiagnostics = _retrievalRaw.retrievalDiagnostics || null;
+  } else {
+    console.warn("[PIPELINE] Step 5: retrieval returned malformed data — normalizing to []");
+    ctx.retrievedChunks      = [];
+    ctx.retrievalMeta        = null;
+    ctx.retrievalDiagnostics = null;
+  }
+
+  trace.steps.push({ step: 5, name: "retrieval", chunksFound: ctx.retrievedChunks.length, done: true });
 
   // ── Step 6: Reranker ──────────────────────────────────────────────────────
   const rerankResult = rerankForTina({
