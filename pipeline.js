@@ -384,6 +384,11 @@ export async function runPipeline({
   // fallback internally (exact→normalized→title→semantic) which would run semantic
   // retrieval before Layer 5 is reached.
   let _authorityLayerHits = 0;
+  // TODO(dedup): _authorityLayerHits counts raw results per-query including duplicates
+  // across layers.  For a more accurate threshold, track unique doc IDs in a Set and
+  // count only first-seen docs.  Current overcounting errs on the side of authority-first
+  // (correct for tax law), but may suppress semantic earlier than strictly necessary.
+  let _semanticHits = 0;
   const _SEMANTIC_SKIP_THRESHOLD = 12; // matches topK: 12 passed to retrieveRelevantSources
 
   const _vectorSearchFn = async (q, opts = {}) => {
@@ -425,13 +430,19 @@ export async function runPipeline({
     }
 
     // Layer 5 (VECTOR_SEMANTIC), Layer 6 (BROAD_TAX_DOMAIN_FALLBACK), unlabelled:
-    // skip semantic entirely if authority layers already found enough results.
-    if (_authorityLayerHits >= _SEMANTIC_SKIP_THRESHOLD) {
-      console.log("[SEMANTIC FALLBACK SKIPPED]", { query: q, layer, authorityLayerHits: _authorityLayerHits });
+    // Skip semantic if authority layers (1-4) plus any previous semantic pass have
+    // already accumulated enough results.  Using _authorityLayerHits + _semanticHits
+    // prevents Layer 6 from running a duplicate semantic pass when Layer 5 already
+    // found sufficient candidates.
+    const _totalHits = _authorityLayerHits + _semanticHits;
+    if (_totalHits >= _SEMANTIC_SKIP_THRESHOLD) {
+      console.log("[SEMANTIC FALLBACK SKIPPED]", { query: q, layer, authorityLayerHits: _authorityLayerHits, semanticHits: _semanticHits, total: _totalHits });
       return [];
     }
-    console.log("[SEMANTIC FALLBACK]", { query: q, layer, authorityLayerHits: _authorityLayerHits });
-    return searchSimilar(base);
+    console.log("[SEMANTIC FALLBACK]", { query: q, layer, authorityLayerHits: _authorityLayerHits, semanticHits: _semanticHits });
+    const r = await searchSimilar(base);
+    _semanticHits += r.length;
+    return r;
   };
 
   const _retrievalRaw = await Promise.race([
@@ -477,7 +488,8 @@ export async function runPipeline({
       layer5_semantic:   _diag?.semanticMatches          ?? "n/a",
       layer6_fallback:   _diag?.fallbackMatches          ?? "n/a",
       supabaseFallback:  _diag?.supabaseFallbackMatches  ?? "n/a",
-      wrapperHits:       _authorityLayerHits,
+      wrapperAuthorityHits: _authorityLayerHits,
+      wrapperSemanticHits:  _semanticHits,
       totalCandidates:   Array.isArray(_retrievalRaw.retrievedSources)
         ? _retrievalRaw.retrievedSources.length : "n/a"
     });

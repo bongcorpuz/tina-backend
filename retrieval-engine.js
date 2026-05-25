@@ -2398,14 +2398,24 @@ async function collectCandidateDocs({
       });
 
       if (!results.length) {
-        results = await supabaseFallbackSearch({
-          supabase,
-          query: searchQuery,
-          poolK,
-          layer
-        });
+        // When a working callable is provided, semantic layers (VECTOR_SEMANTIC and
+        // BROAD_TAX_DOMAIN_FALLBACK) intentionally return [] when authority layers
+        // already accumulated enough results.  Do not treat that as a miss requiring
+        // rescue — supabaseFallbackSearch queries wrong table names anyway (documents,
+        // source_documents, tina_documents rather than tina_vector_store).
+        const _isSemanticLayer =
+          layer === RETRIEVAL_LAYER.VECTOR_SEMANTIC ||
+          layer === RETRIEVAL_LAYER.BROAD_TAX_DOMAIN_FALLBACK;
+        if (!callable || !_isSemanticLayer) {
+          results = await supabaseFallbackSearch({
+            supabase,
+            query: searchQuery,
+            poolK,
+            layer
+          });
 
-        diagnostics.supabaseFallbackMatches += results.length;
+          diagnostics.supabaseFallbackMatches += results.length;
+        }
       }
 
       const annotated = results.map((doc) => annotateDocLayer(doc, layer, searchQuery));

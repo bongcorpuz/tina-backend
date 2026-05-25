@@ -919,6 +919,41 @@ function extractExactReferenceSignals(text = "") {
   return unique(signals);
 }
 
+/**
+ * Returns true when any value in `authorities` appears as a substring in the
+ * doc's provision-identifying metadata fields.
+ *
+ * targetAuthorities values are provision-level strings like "NIRC Sec. 105" or
+ * "RR 16-2005" — they will never equal an authorityType string ("STATUTE", "RR"),
+ * so the old `targetAuthorities.includes(authorityType)` check always returned false.
+ * This check compares against the fields that actually store the citation text:
+ *   normalized_reference, citation, document_title, title, source (and metadata variants).
+ * Comparison is case-insensitive substring match.
+ */
+function matchesTargetAuthority(doc = {}, authorities = []) {
+  if (!authorities.length) return false;
+  const fields = unique([
+    doc.normalized_reference,
+    doc.normalizedReference,
+    doc.citation,
+    doc.document_title,
+    doc.documentTitle,
+    doc.title,
+    doc.source,
+    doc.original_source,
+    doc.originalSource,
+    doc.metadata?.normalized_reference,
+    doc.metadata?.normalizedReference
+  ]).filter(Boolean).map(v => lower(v));
+
+  for (const authority of authorities) {
+    if (!authority) continue;
+    const norm = lower(authority);
+    if (norm && fields.some(f => f.includes(norm))) return true;
+  }
+  return false;
+}
+
 function exactReferenceBonus(query = "", doc = {}) {
   const queryRefs = extractExactReferenceSignals(query);
   if (!queryRefs.length) return 0;
@@ -1204,8 +1239,13 @@ function rerankForTina({
         issueClassification: effectiveIssueClassification
       });
 
+      // targetAuthorities contains provision-level strings ("NIRC Sec. 105",
+      // "RR 16-2005") which will never equal authorityType ("STATUTE", "RR").
+      // matchesTargetAuthority() performs case-insensitive substring matching
+      // against normalized_reference, citation, document_title, title, source.
       const targetAuthorityMatch =
-        effectiveIssueClassification.targetAuthorities?.includes(authorityType) || false;
+        (effectiveIssueClassification.targetAuthorities?.includes(authorityType) || false) ||
+        matchesTargetAuthority(doc, effectiveIssueClassification.targetAuthorities || []);
 
       const domainAwareBonus = domainBonus(effectiveIssueClassification, doc);
       const precedence = masterPrecedenceForDoc(doc);
