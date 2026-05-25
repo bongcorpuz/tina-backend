@@ -1261,13 +1261,13 @@ export async function runTargetedReindex(isTargetFile = isNircOrVatFile) {
       const metadata = normalizeIndexedMetadata(readableFile, cleanText);
       const normalizedSource = metadata.normalizedSource;
 
-      console.info("[REINDEX SKIP REMOVE SOURCE]", {
+      console.info("[REINDEX DELETE AND REINSERT]", {
         source: normalizedSource,
         fileName,
-        reason: "targeted validation mode",
+        reason: "metadata repair reindex — old rows deleted before reinsertion",
       });
 
-      const indexResult = await upsertIndexedChunks(cleanText, metadata, { skipDelete: true });
+      const indexResult = await upsertIndexedChunks(cleanText, metadata, {});
       const chunksAdded = indexResult?.chunksAdded ?? indexResult?.chunkCount ?? 0;
 
       console.info("[REINDEX INSERT]", {

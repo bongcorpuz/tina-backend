@@ -1525,6 +1525,36 @@ function detectNircSectionHeading(chunkText = "") {
   return `NIRC Sec. ${match[1]}`;
 }
 
+// Extracts ALL NIRC section references found anywhere in chunk text —
+// both headings (SEC. 109.) and inline citations (pursuant to Sec. 109).
+// Used to populate metadata.mentionedReferences (citation index, not ownership).
+// Returns a deduplicated array like ["NIRC Sec. 109", "NIRC Sec. 112"].
+function extractMentionedNircRefs(chunkText = "") {
+  const rx = /\b(?:SEC(?:TION)?\.?)\s+([0-9]+[A-Z]?)\b/gi;
+  const seen = new Set();
+  const refs = [];
+  let m;
+  while ((m = rx.exec(chunkText)) !== null) {
+    const label = `NIRC Sec. ${m[1].toUpperCase()}`;
+    if (!seen.has(label)) { seen.add(label); refs.push(label); }
+  }
+  return refs;
+}
+
+// Detects NIRC structural scope markers (TITLE, CHAPTER, SUBTITLE) in chunk text.
+// Fires only on standalone headings (start-of-line / after newline / after sentence end).
+// Returns an object with title_scope, chapter_scope, subtitle_scope (each null if absent).
+function detectNircStructuralScope(chunkText = "") {
+  const titleM    = chunkText.match(/(?:^|[\r\n]|\.\s{1,3}|\s{2,})\s*TITLE\s+([IVXLC]+|[0-9]+)\b/i);
+  const chapterM  = chunkText.match(/(?:^|[\r\n]|\.\s{1,3}|\s{2,})\s*CHAPTER\s+([IVXLC]+|[0-9]+)\b/i);
+  const subtitleM = chunkText.match(/(?:^|[\r\n]|\.\s{1,3}|\s{2,})\s*SUBTITLE\s+([A-Z]|[IVXLC]+|[0-9]+)\b/i);
+  return {
+    title_scope:    titleM    ? `NIRC Title ${titleM[1].toUpperCase()}`       : null,
+    chapter_scope:  chapterM  ? `NIRC Chapter ${chapterM[1].toUpperCase()}`   : null,
+    subtitle_scope: subtitleM ? `NIRC Subtitle ${subtitleM[1].toUpperCase()}` : null,
+  };
+}
+
 export async function addDocumentToVectorStore(text, source, metadata = {}, client = defaultSupabase, { skipDelete = false } = {}) {
   const supabaseClient = resolveSupabaseClient(client);
   const chunks = chunkText(text);
@@ -1545,20 +1575,41 @@ export async function addDocumentToVectorStore(text, source, metadata = {}, clie
 
   const rows = [];
   const isNirc = isNircSourceDocument(source, metadata);
-  let lastNircSection = null;
-
   for (let i = 0; i < chunks.length; i += 1) {
     const chunk = chunks[i];
 
-    // Per-chunk normalized_reference: detect NIRC section headings and carry forward.
+    // Per-chunk normalized_reference: detect NIRC section heading IN THIS CHUNK ONLY.
+    // NO carry-forward — each chunk is independently scoped to prevent false metadata
+    // pollution when a lastNircSection leaks into unrelated continuation text.
     // Non-NIRC documents (RR, RMC, court cases, etc.) are unaffected — isNirc stays false.
-    // For NIRC docs, start null — document-level ref covers the whole NIRC and cannot be
-    // trusted for individual chunks; per-chunk detection is the authoritative source.
-    let chunkNormalizedRef = isNirc ? null : (metadata.normalizedReference || null);
+    let chunkNormalizedRef   = isNirc ? null : (metadata.normalizedReference || null);
+    let chunkSectionScope    = null;
+    let chunkSectionHeading  = null;
+    let chunkTitleScope      = null;
+    let chunkChapterScope    = null;
+    let chunkSubtitleScope   = null;
+    let chunkMentionedRefs   = [];
+
     if (isNirc) {
-      const detected = detectNircSectionHeading(chunk);
-      if (detected) lastNircSection = detected;
-      if (lastNircSection) chunkNormalizedRef = lastNircSection;
+      const detectedSection = detectNircSectionHeading(chunk);
+      if (detectedSection) {
+        chunkNormalizedRef  = detectedSection;
+        chunkSectionScope   = detectedSection;
+        chunkSectionHeading = detectedSection;
+        console.log("[SECTION SCOPE]", { chunkIndex: i, sectionScope: chunkSectionScope, source: normalizedSource });
+      }
+      const structural = detectNircStructuralScope(chunk);
+      chunkTitleScope    = structural.title_scope;
+      chunkChapterScope  = structural.chapter_scope;
+      chunkSubtitleScope = structural.subtitle_scope;
+      chunkMentionedRefs = extractMentionedNircRefs(chunk);
+      if (!chunkSectionScope) {
+        if (chunkMentionedRefs.length) {
+          console.log("[MENTIONED REFS]", { chunkIndex: i, refs: chunkMentionedRefs, source: normalizedSource });
+        } else {
+          console.log("[REF NULL — UNKNOWN SCOPE]", { chunkIndex: i, source: normalizedSource });
+        }
+      }
     }
 
     const embedding = await embedText(chunk);
@@ -1575,7 +1626,16 @@ export async function addDocumentToVectorStore(text, source, metadata = {}, clie
       chunk_index: i,
       text: chunk,
       embedding,
-      metadata: buildStoredMetadata(source, { ...metadata, normalizedSource }, authorityFields),
+      metadata: buildStoredMetadata(source, {
+        ...metadata,
+        normalizedSource,
+        sectionScope:        chunkSectionScope,
+        sectionHeading:      chunkSectionHeading,
+        titleScope:          chunkTitleScope,
+        chapterScope:        chunkChapterScope,
+        subtitleScope:       chunkSubtitleScope,
+        mentionedReferences: chunkMentionedRefs.length ? chunkMentionedRefs : undefined,
+      }, authorityFields),
       authority_type: authorityFields.authority_type,
       authority_level: authorityFields.authority_level,
       authority_score: authorityFields.authority_score,
