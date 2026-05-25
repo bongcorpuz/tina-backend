@@ -37,6 +37,7 @@ import {
 import {
   clearVectorStore,
   addDocumentToVectorStore,
+  removeSourceFromVectorStore,
   removeSourceByPatternFromVectorStore,
   countSourceRows,
   getVectorStoreStats,
@@ -1223,11 +1224,18 @@ export function isTargetedReindexRunning() { return _targetedReindexRunning; }
 // ILIKE patterns covering all known historical source-name variants for the NIRC.
 // Underscores vs hyphens, bare vs parenthesised "(bir)", folder prefix variations.
 // Applied in repair reindex only — never during ordinary incremental indexing.
+// Used only as FALLBACK if the exact-match delete does not clear all rows.
 const NIRC_REPAIR_PATTERNS = [
   "%nirc-1997-ra-10963%",
   "%nirc%10963%",
   "%tax%code%nirc%",
 ];
+
+// Canonical source key as it exists in the production DB.
+// normalizeIndexedMetadata may produce a different string depending on Drive file path
+// formatting (underscores vs hyphens). Using this constant directly for the exact-match
+// delete and for reinsertion guarantees the correct key is used regardless of metadata.
+const NIRC_CANONICAL_SOURCE = "01-tax-code/nirc-1997-ra-10963-(bir).pdf";
 
 function isNircOrVatFile(file) {
   const name = (file.name || file.fileName || "").toLowerCase();
@@ -1288,52 +1296,75 @@ export async function runTargetedReindex(isTargetFile = isNircOrVatFile) {
         const metadata = normalizeIndexedMetadata(readableFile, cleanText);
         const normalizedSource = metadata.normalizedSource;
 
-        // Repair delete: for NIRC files, count existing rows, run ILIKE pattern deletes,
-        // recount, and ABORT reinsertion if any rows survive the delete.
-        // This prevents duplicates regardless of the historical source-name variant stored.
+        // ── NIRC repair delete ─────────────────────────────────────────────────
+        // Uses NIRC_CANONICAL_SOURCE for all counts and deletes — not the
+        // metadata-derived normalizedSource which may differ depending on Drive
+        // file path formatting. Strategy: exact-match delete first (fast, indexed,
+        // no timeout risk); broad ILIKE patterns only as fallback if rows survive.
         const isNircFile =
           /nirc/.test(normalizedSource) ||
           /nirc.*10963/.test((metadata.fileName || "").toLowerCase());
 
         if (isNircFile) {
-          // 1. Pre-delete count
-          const preDeleteCount = await countSourceRows(normalizedSource);
+          const repairSource = NIRC_CANONICAL_SOURCE;
+          console.info("[NIRC REPAIR CANONICAL SOURCE]", {
+            metadataNormalizedSource: normalizedSource,
+            canonicalSource: repairSource,
+          });
+
+          // 1. Pre-delete count against canonical source
+          const preDeleteCount = await countSourceRows(repairSource);
           console.info("[NIRC REPAIR PREDELETE COUNT]", {
-            source: normalizedSource,
+            source: repairSource,
             rows: preDeleteCount,
           });
 
-          // 2. ILIKE pattern deletes — covers all known historical source-name variants
-          for (const pattern of NIRC_REPAIR_PATTERNS) {
-            await removeSourceByPatternFromVectorStore(pattern);
-          }
-          console.info("[NIRC REPAIR DELETE]", {
-            source: normalizedSource,
-            patterns: NIRC_REPAIR_PATTERNS,
+          // 2. Exact-match delete on canonical source — eq() scan is indexed and fast
+          const exactDeleteResult = await removeSourceFromVectorStore(repairSource);
+          console.info("[NIRC EXACT DELETE]", {
+            source: repairSource,
+            removedChunks: exactDeleteResult.removedChunks,
           });
 
-          // 3. Post-delete count — must be zero before insert is allowed
-          const postDeleteCount = await countSourceRows(normalizedSource);
+          // 3. Post-delete count
+          const postDeleteCount = await countSourceRows(repairSource);
           console.info("[NIRC REPAIR POSTDELETE COUNT]", {
-            source: normalizedSource,
+            source: repairSource,
             rows: postDeleteCount,
           });
 
-          // 4. Abort if rows remain — do not insert into a dirty table
-          if (postDeleteCount > 0) {
-            const abortReason =
-              `NIRC repair delete incomplete — ${postDeleteCount} rows remain ` +
-              `for source "${normalizedSource}". Reinsertion aborted to prevent duplicates.`;
-            console.error("[NIRC REPAIR ABORT — DELETE FAILED]", {
-              source: normalizedSource,
-              preDeleteCount,
-              postDeleteCount,
-              patterns: NIRC_REPAIR_PATTERNS,
-              reason: abortReason,
+          if (postDeleteCount === 0) {
+            // Exact delete cleared all rows — skip broad ILIKE to avoid 57014 timeout
+            console.info("[NIRC REPAIR PATTERN DELETE SKIPPED]", {
+              source: repairSource,
+              reason: "exact delete cleared all rows — ILIKE patterns not needed",
             });
-            failed.push({ fileName, reason: abortReason });
-            continue;
+          } else {
+            // Fallback: broad ILIKE patterns for any surviving historical source variants
+            for (const pattern of NIRC_REPAIR_PATTERNS) {
+              await removeSourceByPatternFromVectorStore(pattern);
+            }
+            const finalCount = await countSourceRows(repairSource);
+            if (finalCount > 0) {
+              console.error("[NIRC DELETE FAILED — ABORT]", {
+                source: repairSource,
+                preDeleteCount,
+                postDeleteCount,
+                finalCount,
+                patterns: NIRC_REPAIR_PATTERNS,
+                reason: "rows remain after exact + pattern delete — reinsertion aborted",
+              });
+              failed.push({
+                fileName,
+                reason: `NIRC delete failed — ${finalCount} rows remain after all deletes`,
+              });
+              continue;
+            }
           }
+
+          // Force canonical source so new rows are inserted with the known DB key,
+          // regardless of what normalizeIndexedMetadata produced.
+          metadata.normalizedSource = repairSource;
         }
 
         console.info("[REINDEX DELETE AND REINSERT]", {
