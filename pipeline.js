@@ -24,8 +24,7 @@ import {
   searchSimilar,
   exactAuthoritySearch,
   normalizedCitationSearch,
-  titleMetadataSearch,
-  smartSearch
+  titleMetadataSearch
 }                                                 from "./vector-store.js";
 import { rerankForTina }                          from "./reranker-engine.js";
 import { detectDoctrinalConflicts }               from "./doctrinal-engine.js";
@@ -372,11 +371,22 @@ export async function runPipeline({
   const RETRIEVAL_STEP_TIMEOUT_MS = 15000;
 
   // Authority-priority routing wrapper.
-  // callSearchCallable() passes opts.retrievalLayer so each layer calls the correct
-  // vector-store.js function — exact/metadata-column searches run first, semantic
-  // vector search is the fallback only (Layer 5).  All functions accept the object
-  // form of parseSearchArgs(), which reads arg1.supabase correctly.
-  const _vectorSearchFn = (q, opts = {}) => {
+  // callSearchCallable() passes opts.retrievalLayer — each layer dispatches to the
+  // correct vector-store.js function (metadata-column searches only; no semantic).
+  // Semantic vector search is a TRUE FALLBACK: it fires only when layers 1–4 have
+  // not yet accumulated enough results.
+  //
+  // _authorityLayerHits counts deduplicated-enough layer 1–4 raw hits across all
+  // queries.  Once >= _SEMANTIC_SKIP_THRESHOLD, semantic calls return [] to
+  // prevent noisy semantic results from burying authority-targeted ones.
+  //
+  // smartSearch() is NOT used for any layer — it performs a nested semantic
+  // fallback internally (exact→normalized→title→semantic) which would run semantic
+  // retrieval before Layer 5 is reached.
+  let _authorityLayerHits = 0;
+  const _SEMANTIC_SKIP_THRESHOLD = 12; // matches topK: 12 passed to retrieveRelevantSources
+
+  const _vectorSearchFn = async (q, opts = {}) => {
     const layer = opts.retrievalLayer || "";
     const base  = {
       query:                 q,
@@ -389,23 +399,38 @@ export async function runPipeline({
 
     if (layer === "LAYER_1_EXACT_NORMALIZED_AUTHORITY") {
       console.log("[EXACT RETRIEVAL]",      { query: q, layer });
-      return exactAuthoritySearch(base);
+      const r = await exactAuthoritySearch(base);
+      _authorityLayerHits += r.length;
+      return r;
     }
     if (layer === "LAYER_2_CITATION_VARIANT") {
       console.log("[NORMALIZED RETRIEVAL]", { query: q, layer });
-      return normalizedCitationSearch(base);
+      const r = await normalizedCitationSearch(base);
+      _authorityLayerHits += r.length;
+      return r;
     }
     if (layer === "LAYER_3_TITLE_PATH_METADATA") {
       console.log("[DOMAIN RETRIEVAL]",     { query: q, layer });
-      return titleMetadataSearch(base);
+      const r = await titleMetadataSearch(base);
+      _authorityLayerHits += r.length;
+      return r;
     }
     if (layer === "LAYER_4_CONTENT_KEYWORD") {
+      // Use titleMetadataSearch (metadata-column only) — NOT smartSearch, which
+      // cascades into semantic search internally before Layer 5 is reached.
       console.log("[DOMAIN RETRIEVAL]",     { query: q, layer });
-      return smartSearch(base);
+      const r = await titleMetadataSearch(base);
+      _authorityLayerHits += r.length;
+      return r;
     }
-    // Layer 5 (VECTOR_SEMANTIC), Layer 6 (BROAD_TAX_DOMAIN_FALLBACK), and any
-    // unlabelled call all fall through to semantic search.
-    console.log("[SEMANTIC FALLBACK]",      { query: q, layer });
+
+    // Layer 5 (VECTOR_SEMANTIC), Layer 6 (BROAD_TAX_DOMAIN_FALLBACK), unlabelled:
+    // skip semantic entirely if authority layers already found enough results.
+    if (_authorityLayerHits >= _SEMANTIC_SKIP_THRESHOLD) {
+      console.log("[SEMANTIC FALLBACK SKIPPED]", { query: q, layer, authorityLayerHits: _authorityLayerHits });
+      return [];
+    }
+    console.log("[SEMANTIC FALLBACK]", { query: q, layer, authorityLayerHits: _authorityLayerHits });
     return searchSimilar(base);
   };
 
@@ -441,16 +466,19 @@ export async function runPipeline({
     )
   );
   // ── TEMP TRACE: authority-priority layer hit distribution ─────────────────
+  // Uses the real buildCompactDiagnostics() field names (no layerHits sub-object).
   if (_retrievalRaw && typeof _retrievalRaw === "object" && !Array.isArray(_retrievalRaw)) {
     const _diag = _retrievalRaw.retrievalDiagnostics;
     console.log("[AUTHORITY PRIORITY ORDER]", {
-      layer1: _diag?.layerHits?.LAYER_1_EXACT_NORMALIZED_AUTHORITY ?? "n/a",
-      layer2: _diag?.layerHits?.LAYER_2_CITATION_VARIANT           ?? "n/a",
-      layer3: _diag?.layerHits?.LAYER_3_TITLE_PATH_METADATA        ?? "n/a",
-      layer4: _diag?.layerHits?.LAYER_4_CONTENT_KEYWORD            ?? "n/a",
-      layer5: _diag?.layerHits?.LAYER_5_VECTOR_SEMANTIC            ?? "n/a",
-      layer6: _diag?.layerHits?.LAYER_6_BROAD_TAX_DOMAIN_FALLBACK  ?? "n/a",
-      totalCandidates: Array.isArray(_retrievalRaw.retrievedSources)
+      layer1_exact:      _diag?.exactAuthorityMatches    ?? "n/a",
+      layer2_citation:   _diag?.citationVariantMatches   ?? "n/a",
+      layer3_metadata:   _diag?.metadataMatches          ?? "n/a",
+      layer4_keyword:    _diag?.contentKeywordMatches    ?? "n/a",
+      layer5_semantic:   _diag?.semanticMatches          ?? "n/a",
+      layer6_fallback:   _diag?.fallbackMatches          ?? "n/a",
+      supabaseFallback:  _diag?.supabaseFallbackMatches  ?? "n/a",
+      wrapperHits:       _authorityLayerHits,
+      totalCandidates:   Array.isArray(_retrievalRaw.retrievedSources)
         ? _retrievalRaw.retrievedSources.length : "n/a"
     });
   }

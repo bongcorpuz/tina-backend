@@ -1757,6 +1757,13 @@ function sanitizeRetrievedSource(doc = {}) {
     text: content,
     content,
 
+    // Preserve raw DB column names at top level so downstream consumers
+    // (reranker, renderer, compliance) can reference them without camelCase mapping.
+    source:               doc.source               || doc.original_source  || doc.originalSource || null,
+    document_title:       doc.document_title        || doc.documentTitle    || null,
+    authority_type:       doc.authority_type         || doc.authorityType   || null,
+    normalized_reference: doc.normalized_reference   || doc.normalizedReference || null,
+
     score: Number(
       doc.finalScore ||
         doc.final_score ||
@@ -2340,8 +2347,13 @@ async function collectCandidateDocs({
     candidates.push(annotateDocLayer(doc, RETRIEVAL_LAYER.PROVIDED_DOCUMENTS, "provided"));
   }
 
-  // LAW E — authority_names filter applied first when authorityFilter is supplied
-  if (Array.isArray(authorityFilter) && authorityFilter.length > 0) {
+  // LAW E — authority_names filter applied first when authorityFilter is supplied.
+  // BYPASSED when vectorSearch/searchFn is provided: Layer 1 of the callable
+  // (exactAuthoritySearch via the pipeline routing wrapper) handles exact authority
+  // retrieval on the correct RPC path.  The old supabaseAuthoritySearch() uses the
+  // stale match_documents RPC with a null embedding — skipping it prevents that
+  // wrong-RPC path from running additively alongside the working callable.
+  if (!(vectorSearch || searchFn) && Array.isArray(authorityFilter) && authorityFilter.length > 0) {
     const authorityResults = await supabaseAuthoritySearch({
       supabase,
       query,
