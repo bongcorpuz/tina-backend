@@ -1763,6 +1763,7 @@ function sanitizeRetrievedSource(doc = {}) {
     document_title:       doc.document_title        || doc.documentTitle    || null,
     authority_type:       doc.authority_type         || doc.authorityType   || null,
     normalized_reference: doc.normalized_reference   || doc.normalizedReference || null,
+    chunk_index:          doc.chunk_index             ?? doc.chunkIndex         ?? null,
 
     score: Number(
       doc.finalScore ||
@@ -2145,6 +2146,88 @@ function filterBeforeRerank(docs = [], { allowReviewMaterials = false } = {}) {
     droppedBeforeRerank: dropped
   };
 }
+
+// ── Precision filter: reject cross-domain-contaminated chunks from VAT queries ──
+const _PF_VAT_TERMS = [
+  "value-added tax", "value added tax", " vat ", "output vat", "input vat",
+  "output tax", "input tax", "zero-rated", "zero rated", "zero rating",
+  "vatable", "importation", "sale of goods", "sale of properties",
+  "sale of services"
+];
+
+const _PF_CROSS_DOMAIN = [
+  { key: "EXCISE",        terms: ["excise tax", "excise duty"],                                          query: /\bexcise\b/i },
+  { key: "TOBACCO",       terms: ["tobacco", "cigarette", "cigar"],                                      query: /\btobacco|cigarette|cigar\b/i },
+  { key: "PETROLEUM",     terms: ["petroleum", "oil industry", "oil depot"],                             query: /\bpetroleum\b/i },
+  { key: "SWEETENED_BEV", terms: ["sweetened beverage", "sugar-sweetened"],                             query: /\bsweetened bev/i },
+  { key: "ESTATE_TAX",    terms: ["estate tax"],                                                         query: /\bestate tax\b/i },
+  { key: "DONORS_TAX",    terms: ["donor's tax", "donors tax", "gift tax"],                             query: /\bdonor[’']?s tax|gift tax\b/i },
+  { key: "PCT_TAX",       terms: ["percentage tax", "other percentage tax", "section 116", "sec. 116"], query: /\bpercentage tax\b/i },
+  { key: "WITHHOLDING",   terms: ["withholding tax", "expanded withholding", "final withholding", "creditable withholding"], query: /\bwithholding\b/i },
+];
+
+function _pfIsVatFocused(issueClassification = {}, query = "") {
+  const q    = String(query || "").toLowerCase();
+  const prim = String(issueClassification.primaryIssue || "").toUpperCase().replace(/[\s-]/g, "_");
+  const dom  = String(issueClassification.domainCode || issueClassification.domain || "").toUpperCase().replace(/[\s-]/g, "_");
+  const subs = (issueClassification.subIssues || []).map(s => String(s).toUpperCase().replace(/[\s-]/g, "_"));
+  const vatSet = new Set(["VAT", "VAT_LIABILITY", "VAT_REFUND", "VAT_DEFINITION",
+    "VAT_ZERO_RATING", "VAT_EXEMPTION", "VAT_REGISTRATION", "VALUE_ADDED_TAX"]);
+  if (vatSet.has(prim) || vatSet.has(dom)) return true;
+  if (subs.some(s => vatSet.has(s))) return true;
+  if (/\b(?:vat|value[- ]added tax|output vat|input vat|vat refund|vat exempt)\b/i.test(q)) return true;
+  return false;
+}
+
+function applyPrecisionFilter(docs = [], issueClassification = {}, query = "") {
+  if (!docs.length) return { docs: [], precisionDropped: 0 };
+
+  const isVatQuery = _pfIsVatFocused(issueClassification, query);
+  if (!isVatQuery) {
+    console.log("[PRECISION FILTER]", { vatQuery: false, docsIn: docs.length, action: "PASS_ALL" });
+    return { docs, precisionDropped: 0 };
+  }
+
+  const q = String(query || "").toLowerCase();
+  const output = [];
+  let dropped = 0;
+
+  for (const doc of docs) {
+    const text     = String(doc.text || doc.content || "").toLowerCase();
+    const titleRaw = String(doc.title || doc.document_title || doc.source || "").toLowerCase();
+    const combined = `${text} ${titleRaw}`;
+
+    // Presence of any VAT term exempts the chunk from contamination rejection
+    const hasVatText = _PF_VAT_TERMS.some(t => combined.includes(t));
+
+    let rejectKey = null;
+    if (!hasVatText) {
+      // Only reject if cross-domain contamination present AND query didn't ask for it
+      for (const { key, terms, query: qRx } of _PF_CROSS_DOMAIN) {
+        if (!qRx.test(q) && terms.some(t => combined.includes(t))) {
+          rejectKey = key;
+          break;
+        }
+      }
+    }
+
+    if (rejectKey) {
+      dropped += 1;
+      console.log("[PRECISION FILTER REJECT]", {
+        reason:  rejectKey,
+        ref:     String(doc.normalized_reference || doc.normalizedReference || doc.id || "").slice(0, 60),
+        snippet: combined.slice(0, 100)
+      });
+      continue;
+    }
+
+    output.push(doc);
+  }
+
+  console.log("[PRECISION FILTER PASS]", { vatQuery: true, docsIn: docs.length, passed: output.length, dropped });
+  return { docs: output, precisionDropped: dropped };
+}
+// ── END precision filter ──────────────────────────────────────────────────────
 
 function applySafeHierarchyRerank(docs = []) {
   try {
@@ -2746,8 +2829,10 @@ async function retrieveRelevantSources(options = {}) {
   });
   // ── END TEMP TRACE ────────────────────────────────────────────────────────
 
+  const precisionResult = applyPrecisionFilter(prefiltered.docs, issueClassification, query);
+
   const scored = scoreAndAnnotateSources({
-    docs: prefiltered.docs,
+    docs: precisionResult.docs,
     query,
     issueClassification,
     querySet,
@@ -2771,9 +2856,11 @@ async function retrieveRelevantSources(options = {}) {
   // ── TEMP TRACE: [RETRIEVAL RETURN] ───────────────────────────────────────
   // Remove after retrieval audit is complete.
   console.log("[RETRIEVAL RETURN]", {
-    candidatesTotal:  candidates.length,
-    prefilteredDocs:  prefiltered.docs.length,
-    scored:           scored.length,
+    candidatesTotal:   candidates.length,
+    prefilteredDocs:   prefiltered.docs.length,
+    precisionFiltered: precisionResult.docs.length,
+    precisionDropped:  precisionResult.precisionDropped,
+    scored:            scored.length,
     ranked:           ranked.length,
     dedupedAfterScoring: dedupedAfterScoring.length,
     sanitized:        sanitized.length,

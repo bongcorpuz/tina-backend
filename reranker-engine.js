@@ -854,6 +854,21 @@ function classifiedIssueBonus(issueClassification = {}, doc = {}) {
     if (normalized.length >= 3 && text.includes(normalized)) bonus += 8;
   }
 
+  // Text-absence guard: if the query is VAT-focused but the chunk text contains
+  // no VAT terms, reduce the classification bonus so metadata alone cannot
+  // outrank a chunk with actual on-topic content.
+  const _vatPrimarySet = new Set([
+    "VAT_LIABILITY", "VAT_REFUND", "VAT_DEFINITION",
+    "VAT_ZERO_RATING", "VAT_EXEMPTION", "VAT_REGISTRATION"
+  ]);
+  if (bonus > 0 && _vatPrimarySet.has(primaryIssue)) {
+    const chunkText = lower(docText(doc));
+    const hasVatText = /\bv\.?a\.?t\b|value[- ]added tax|output vat|input vat|output tax|input tax|zero[- ]rated|vatable|importation|sale of goods|sale of services/.test(chunkText);
+    if (!hasVatText) {
+      bonus = Math.max(0, bonus - 50);
+    }
+  }
+
   return bonus;
 }
 
