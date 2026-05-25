@@ -2148,23 +2148,105 @@ function filterBeforeRerank(docs = [], { allowReviewMaterials = false } = {}) {
 }
 
 // ── Precision filter: reject cross-domain-contaminated chunks from VAT queries ──
-const _PF_VAT_TERMS = [
-  "value-added tax", "value added tax", " vat ", "output vat", "input vat",
-  "output tax", "input tax", "zero-rated", "zero rated", "zero rating",
-  "vatable", "importation", "sale of goods", "sale of properties",
-  "sale of services"
+//
+// DESIGN (Phase 4C.2):
+//  Strong VAT signals — appear almost exclusively in VAT context.
+//  "importation", "sale of goods/properties/services" intentionally EXCLUDED:
+//  they also appear verbatim in excise-tax and customs sections.
+//
+//  Two rejection tiers (controlled by the singleHit flag per category):
+//
+//  singleHit: true  — when strongVatHits === 0, even ONE hit is enough to reject.
+//    Used for ALL cross-domain categories including EXCISE.  A chunk with zero strong
+//    VAT signals that mentions excise/tobacco/estate-tax/etc. is conclusively off-topic.
+//
+//  singleHit: false — needs ≥2 hits (currently unused; kept for future use).
+//
+//  When strongVatHits > 0: ALWAYS use dominance check (cross > strong) regardless
+//    of singleHit flag.  This is where Sec. 106/107 incidental-excise protection lives:
+//    "including excise taxes, if any" adds 1 excise hit vs N VAT hits → not dominant → PASS.
+
+// Regex that matches genuine VAT signals regardless of surrounding punctuation.
+// Replaces " vat " (space-padded) which missed "VAT.", "VAT)", "VAT-exempt".
+const _PF_VAT_STRONG_RX = /\bv\.?a\.?t\.?\b|value[- ]added tax|output (?:vat|tax)|input (?:vat|tax)|zero[- ]rated|zero rating|vatable/gi;
+
+// singleHit: when true, a single cross-domain occurrence (with no strong VAT hits)
+// is sufficient for rejection.  When false, ≥2 hits are required.
+const _PF_CROSS_DOMAIN = [
+  // EXCISE: singleHit=true — Sec. 106/107 incidental-mention protection comes from the
+  // strongVatHits > 0 dominance path, NOT from this threshold.  A chunk with
+  // strongVatHits === 0 that mentions excise is conclusively non-VAT; reject on 1 hit.
+  // "excise" (bare) is safe here because _pfCountHits uses non-overlapping matching:
+  // "excise taxes" is consumed as "excise tax" first, preventing double-count on "excise".
+  { key: "EXCISE",          singleHit: true,
+    terms: ["excise tax", "excise duty", "excise", "specific tax", "ad valorem tax", "sin tax"],
+    query: /\bexcise\b|\bsin tax\b|\bad valorem\b|\bspecific tax\b/i },
+  // TOBACCO: singleHit=true — no legitimate reason for tobacco terms in a pure VAT chunk
+  { key: "TOBACCO",         singleHit: true,
+    terms: ["tobacco", "cigarette", "cigar", "heated tobacco", "heat-not-burn",
+            "vaping product", "tobacco product", "nicotine salt"],
+    query: /\btobacco|cigarette|cigar|heated tobacco|vaping\b/i },
+  // FDA: singleHit=true — RA 11467 (heated tobacco/FDA regulation) is not VAT.
+  // "fda" added as standalone term: DB text uses bare "FDA" in regulatory context.
+  { key: "FDA",             singleHit: true,
+    terms: ["fda", "food and drug administration", "fda clearance", "fda registration",
+            "health warning label", "nicotine content"],
+    query: /\bfda|food and drug\b/i },
+  // PETROLEUM: singleHit=true
+  { key: "PETROLEUM",       singleHit: true,
+    terms: ["petroleum", "petroleum product", "petroleum products", "oil industry", "oil depot"],
+    query: /\bpetroleum\b/i },
+  // SWEETENED_BEV: singleHit=true
+  { key: "SWEETENED_BEV",   singleHit: true,
+    terms: ["sweetened beverage", "sweetened beverages", "sugar-sweetened"],
+    query: /\bsweetened bev/i },
+  // ESTATE_TAX: singleHit=true
+  { key: "ESTATE_TAX",      singleHit: true,
+    terms: ["estate tax"],
+    query: /\bestate tax\b/i },
+  // DONORS_TAX: singleHit=true — includes ASCII apostrophe, Unicode right-quote (U+2019),
+  // and no-apostrophe variants.  NIRC text in Supabase uses U+2019 for possessives.
+  { key: "DONORS_TAX",      singleHit: true,
+    terms: ["donor’s tax", "donor's tax", "donor tax", "donors tax", "gift tax"],
+    query: /\bdonor['‘’]?s? tax|gift tax\b/i },
+  // PCT_TAX: singleHit=true
+  { key: "PCT_TAX",         singleHit: true,
+    terms: ["percentage tax", "other percentage tax", "section 116", "sec. 116"],
+    query: /\bpercentage tax\b/i },
+  // WITHHOLDING: singleHit=true — expanded/final/creditable withholding are clearly EWT/FWT
+  { key: "WITHHOLDING",     singleHit: true,
+    terms: ["withholding tax", "expanded withholding", "final withholding",
+            "creditable withholding", "withholding agent on vat"],
+    query: /\bwithholding\b/i },
+  // CRIMINAL_PENALTY: singleHit=true — Sec. 254/255 criminal penalty chunks
+  { key: "CRIMINAL_PENALTY", singleHit: true,
+    terms: ["evade or defeat", "willfully attempt", "fine of not less than",
+            "suffer imprisonment", "section 254", "sec. 254"],
+    query: /\bcriminal|imprison|evad|evasion\b/i },
 ];
 
-const _PF_CROSS_DOMAIN = [
-  { key: "EXCISE",        terms: ["excise tax", "excise duty"],                                          query: /\bexcise\b/i },
-  { key: "TOBACCO",       terms: ["tobacco", "cigarette", "cigar"],                                      query: /\btobacco|cigarette|cigar\b/i },
-  { key: "PETROLEUM",     terms: ["petroleum", "oil industry", "oil depot"],                             query: /\bpetroleum\b/i },
-  { key: "SWEETENED_BEV", terms: ["sweetened beverage", "sugar-sweetened"],                             query: /\bsweetened bev/i },
-  { key: "ESTATE_TAX",    terms: ["estate tax"],                                                         query: /\bestate tax\b/i },
-  { key: "DONORS_TAX",    terms: ["donor's tax", "donors tax", "gift tax"],                             query: /\bdonor[’']?s tax|gift tax\b/i },
-  { key: "PCT_TAX",       terms: ["percentage tax", "other percentage tax", "section 116", "sec. 116"], query: /\bpercentage tax\b/i },
-  { key: "WITHHOLDING",   terms: ["withholding tax", "expanded withholding", "final withholding", "creditable withholding"], query: /\bwithholding\b/i },
-];
+// Count non-overlapping occurrences of any term in the combined string.
+// Terms are sorted longest-first so compound terms (e.g. "excise tax") consume
+// their character positions before shorter sub-terms (e.g. bare "excise") can
+// re-claim them.  This prevents double-counting "excise taxes" as both an
+// "excise tax" hit AND an "excise" hit.
+function _pfCountHits(combined, terms) {
+  if (!terms.length) return 0;
+  const sorted   = [...terms].sort((a, b) => b.length - a.length);
+  const consumed = new Uint8Array(combined.length);
+  let   total    = 0;
+  for (const t of sorted) {
+    let pos = 0;
+    while ((pos = combined.indexOf(t, pos)) !== -1) {
+      if (!consumed[pos]) {
+        total++;
+        for (let i = pos; i < pos + t.length; i++) consumed[i] = 1;
+      }
+      pos++;   // +1 so we find all starts, skipping consumed ones
+    }
+  }
+  return total;
+}
 
 function _pfIsVatFocused(issueClassification = {}, query = "") {
   const q    = String(query || "").toLowerCase();
@@ -2180,43 +2262,60 @@ function _pfIsVatFocused(issueClassification = {}, query = "") {
 }
 
 function applyPrecisionFilter(docs = [], issueClassification = {}, query = "") {
-  if (!docs.length) return { docs: [], precisionDropped: 0 };
+  if (!docs.length) {
+    return { docs: [], precisionDropped: 0, precisionPassed: 0, dominantCrossDomain: null };
+  }
 
   const isVatQuery = _pfIsVatFocused(issueClassification, query);
   if (!isVatQuery) {
     console.log("[PRECISION FILTER]", { vatQuery: false, docsIn: docs.length, action: "PASS_ALL" });
-    return { docs, precisionDropped: 0 };
+    return { docs, precisionDropped: 0, precisionPassed: docs.length, dominantCrossDomain: null };
   }
 
-  const q = String(query || "").toLowerCase();
-  const output = [];
-  let dropped = 0;
+  const q           = String(query || "").toLowerCase();
+  const output      = [];
+  let   dropped     = 0;
+  const rejectFreq  = {};   // { key: count } for dominantCrossDomain
 
   for (const doc of docs) {
     const text     = String(doc.text || doc.content || "").toLowerCase();
     const titleRaw = String(doc.title || doc.document_title || doc.source || "").toLowerCase();
     const combined = `${text} ${titleRaw}`;
 
-    // Presence of any VAT term exempts the chunk from contamination rejection
-    const hasVatText = _PF_VAT_TERMS.some(t => combined.includes(t));
+    // Count strong VAT signals (handles all punctuation variants via regex).
+    const strongVatHits = (combined.match(_PF_VAT_STRONG_RX) || []).length;
 
-    let rejectKey = null;
-    if (!hasVatText) {
-      // Only reject if cross-domain contamination present AND query didn't ask for it
-      for (const { key, terms, query: qRx } of _PF_CROSS_DOMAIN) {
-        if (!qRx.test(q) && terms.some(t => combined.includes(t))) {
-          rejectKey = key;
-          break;
-        }
+    let rejectKey   = null;
+    let rejectCross = 0;
+
+    for (const { key, terms, query: qRx, singleHit } of _PF_CROSS_DOMAIN) {
+      if (qRx.test(q)) continue;                   // query explicitly asks about this domain → skip
+
+      const crossHits = _pfCountHits(combined, terms);
+      if (crossHits === 0) continue;               // no contamination signal at all
+
+      if (strongVatHits > 0) {
+        // Strong VAT content present: reject only when contamination clearly dominates.
+        // This protects Sec. 106/107 "including excise taxes, if any" (1 excise < N vat).
+        if (crossHits > strongVatHits) { rejectKey = key; rejectCross = crossHits; break; }
+      } else {
+        // No strong VAT signals in this chunk.
+        // singleHit categories: 1 hit is enough (estate tax, donor’s tax, tobacco, FDA, etc.)
+        // non-singleHit (EXCISE): require ≥2 hits to avoid rejecting procedural chunks
+        const threshold = singleHit ? 1 : 2;
+        if (crossHits >= threshold) { rejectKey = key; rejectCross = crossHits; break; }
       }
     }
 
     if (rejectKey) {
       dropped += 1;
+      rejectFreq[rejectKey] = (rejectFreq[rejectKey] || 0) + 1;
       console.log("[PRECISION FILTER REJECT]", {
-        reason:  rejectKey,
-        ref:     String(doc.normalized_reference || doc.normalizedReference || doc.id || "").slice(0, 60),
-        snippet: combined.slice(0, 100)
+        reason:    rejectKey,
+        ref:       String(doc.normalized_reference || doc.normalizedReference || doc.id || "").slice(0, 60),
+        strongVat: strongVatHits,
+        crossHits: rejectCross,
+        snippet:   combined.slice(0, 120)
       });
       continue;
     }
@@ -2224,8 +2323,16 @@ function applyPrecisionFilter(docs = [], issueClassification = {}, query = "") {
     output.push(doc);
   }
 
-  console.log("[PRECISION FILTER PASS]", { vatQuery: true, docsIn: docs.length, passed: output.length, dropped });
-  return { docs: output, precisionDropped: dropped };
+  // Most-frequently rejected cross-domain category for diagnostics
+  const dominantCrossDomain = Object.keys(rejectFreq).sort(
+    (a, b) => (rejectFreq[b] || 0) - (rejectFreq[a] || 0)
+  )[0] || null;
+
+  console.log("[PRECISION FILTER PASS]", {
+    vatQuery: true, docsIn: docs.length, passed: output.length,
+    dropped, dominantCrossDomain
+  });
+  return { docs: output, precisionDropped: dropped, precisionPassed: output.length, dominantCrossDomain };
 }
 // ── END precision filter ──────────────────────────────────────────────────────
 
@@ -2668,6 +2775,9 @@ function buildCompactDiagnostics({
   querySet = {},
   layerDiagnostics = {},
   droppedBeforeRerank = {},
+  precisionDropped = 0,
+  precisionPassed = 0,
+  dominantCrossDomain = null,
   scored = [],
   finalSourceCount = 0
 }) {
@@ -2687,6 +2797,11 @@ function buildCompactDiagnostics({
       duplicateExactSources: Number(droppedBeforeRerank.duplicateExactSources || 0),
       hiddenReviewerOnlySources: Number(droppedBeforeRerank.hiddenReviewerOnlySources || 0),
       clearlySupersededSources: Number(droppedBeforeRerank.clearlySupersededSources || 0)
+    },
+    precisionFilter: {
+      dropped:             Number(precisionDropped),
+      passed:              Number(precisionPassed),
+      dominantCrossDomain: dominantCrossDomain || null
     },
     scoredSourceCount: scored.length,
     finalSourceCount,
@@ -2877,7 +2992,10 @@ async function retrieveRelevantSources(options = {}) {
   const retrievalDiagnostics = buildCompactDiagnostics({
     querySet,
     layerDiagnostics,
-    droppedBeforeRerank: prefiltered.droppedBeforeRerank,
+    droppedBeforeRerank:  prefiltered.droppedBeforeRerank,
+    precisionDropped:     precisionResult.precisionDropped,
+    precisionPassed:      precisionResult.precisionPassed,
+    dominantCrossDomain:  precisionResult.dominantCrossDomain,
     scored,
     finalSourceCount: sanitized.length
   });
