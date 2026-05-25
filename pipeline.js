@@ -368,7 +368,29 @@ export async function runPipeline({
   // Per-step timeout: Supabase free-tier cold starts can hang without rejecting.
   // After 15 s, fall through with empty chunks so the pipeline still completes.
   const controllingAuthorities = rawTargets;
-  const RETRIEVAL_STEP_TIMEOUT_MS = 15000;
+
+  // Adaptive timeout: authority-priority fast path (Phase 3) + early exit (Phase 3B)
+  // complete quickly per query, but Render / Supabase free-tier TCP cold starts can add
+  // 10–25 s before the first indexed row returns.  The old hard-coded 15 s was correct
+  // for a single semantic query but too short for the layered indexed authority retrieval
+  // now in place.  UTILITY / DEBUG modes keep the short timeout — they do not produce
+  // user-facing answers and do not need full authority traversal.
+  const _RETRIEVAL_TIMEOUT_MAP = {
+    FAST_DEFINITION:     20_000,   // definitional — fast path sufficient
+    STANDARD_TAX_MODE:   35_000,   // primary /ask path
+    FULL_DOCUMENT_MODE:  35_000,
+    CASE_ANALYSIS:       40_000,
+    SOURCE_LOOKUP:       30_000,
+    SENIOR_COUNSEL_MEMO: 45_000,   // complex advisory — more authority layers
+    COMPLEX_ADVISORY:    45_000,
+    REVIEWER_MODE:       25_000,
+    QUIZ_MODE:           20_000,
+    CODE_PATCH_MODE:     20_000,
+    UTILITY:             15_000,   // no user-facing answer needed
+    DEBUG_MODE:          15_000,
+  };
+  const RETRIEVAL_STEP_TIMEOUT_MS = _RETRIEVAL_TIMEOUT_MAP[ctx.mode] ?? 35_000;
+  console.log("[RETRIEVAL TIMEOUT CONFIG]", { mode: ctx.mode, timeoutMs: RETRIEVAL_STEP_TIMEOUT_MS });
 
   // Authority-priority routing wrapper.
   // callSearchCallable() passes opts.retrievalLayer — each layer dispatches to the
@@ -477,6 +499,10 @@ export async function runPipeline({
     }
   };
 
+  // _retrievalWon is set inside the .then() wrapper before Promise.race resolves,
+  // so it is guaranteed true when checked immediately after the await if retrieval
+  // completed before the timeout arm fired.
+  let _retrievalWon = false;
   const _retrievalRaw = await Promise.race([
     retrieveRelevantSources({
       query,
@@ -487,10 +513,10 @@ export async function runPipeline({
       controllingAuthorities,
       topK:   12,
       poolK:  48
-    }),
+    }).then((r) => { _retrievalWon = true; return r; }),
     new Promise(resolve =>
       setTimeout(() => {
-        trace.warnings.push({ step: 5, warning: "Retrieval timed out after 15 s — proceeding with empty chunks", timedOut: true });
+        trace.warnings.push({ step: 5, warning: `Retrieval timed out after ${RETRIEVAL_STEP_TIMEOUT_MS} ms — proceeding with empty chunks`, timedOut: true });
         // Return object shape (not bare []) so the normalizer stores retrievalDiagnostics
         // with timedOut: true and downstream code can distinguish timeout from
         // genuine empty retrieval.  The normalizer handles both [] and object shapes.
@@ -505,6 +531,12 @@ export async function runPipeline({
       }, RETRIEVAL_STEP_TIMEOUT_MS)
     )
   ]);
+  if (_retrievalWon) {
+    console.log("[RETRIEVAL COMPLETED BEFORE TIMEOUT]", {
+      mode:      ctx.mode,
+      timeoutMs: RETRIEVAL_STEP_TIMEOUT_MS
+    });
+  }
 
   // ── TEMP TRACE: inspect raw retrieval shape before normalization ───────────
   // Remove after retrieval audit is complete.
