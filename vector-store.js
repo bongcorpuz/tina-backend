@@ -1535,12 +1535,33 @@ export async function acquireReindexLock(
   const expiresAt = new Date(Date.now() + 30 * 60 * 1000).toISOString(); // 30-minute TTL
 
   // Sweep any expired locks first so a crashed process doesn't block forever.
+  // Fetch the stale row before deleting so we can log the takeover details.
   try {
-    await supabaseClient
+    const now = new Date().toISOString();
+    const { data: staleRows } = await supabaseClient
       .from(LOCK_TABLE)
-      .delete()
+      .select("job_id, mode, instance_id, expires_at")
       .eq("lock_name", "global_reindex")
-      .lt("expires_at", new Date().toISOString());
+      .lt("expires_at", now);
+
+    if (staleRows?.length) {
+      const stale = staleRows[0];
+      console.warn("[REINDEX LOCK STALE TAKEOVER]", {
+        newJobId: jobId,
+        newInstanceId: instanceId,
+        oldJobId: stale.job_id || null,
+        oldMode: stale.mode || null,
+        oldInstanceId: stale.instance_id || null,
+        oldExpiresAt: stale.expires_at || null,
+        note: "Stale lock swept — prior job likely crashed or lost heartbeat connectivity",
+      });
+
+      await supabaseClient
+        .from(LOCK_TABLE)
+        .delete()
+        .eq("lock_name", "global_reindex")
+        .lt("expires_at", now);
+    }
   } catch (_sweepErr) {
     // Non-fatal: sweep failure should not block the acquire attempt.
   }
@@ -1626,27 +1647,47 @@ export async function releaseReindexLock(jobId, client = defaultSupabase) {
 // expiring on long jobs. The expired-lock sweep in acquireReindexLock checks expires_at,
 // so as long as the heartbeat fires before expires_at passes, the lock remains valid
 // and cannot be claimed by another instance.
+// Returns { renewed: boolean, rowsUpdated: number, lostOwnership: boolean }.
+// lostOwnership:true means the UPDATE matched 0 rows — the lock row is gone,
+// meaning another instance swept and claimed it. The caller must abort the job.
 export async function heartbeatReindexLock(jobId, client = defaultSupabase) {
   const supabaseClient = resolveSupabaseClient(client);
   const now = new Date().toISOString();
   const newExpiresAt = new Date(Date.now() + 30 * 60 * 1000).toISOString(); // +30 min
 
-  const { error } = await supabaseClient
+  // .select("lock_name") causes PostgREST to return the updated rows.
+  // If data is an empty array, 0 rows matched → we lost lock ownership.
+  const { data, error } = await supabaseClient
     .from(LOCK_TABLE)
     .update({ heartbeat_at: now, expires_at: newExpiresAt })
     .eq("lock_name", "global_reindex")
-    .eq("job_id", jobId);
+    .eq("job_id", jobId)
+    .select("lock_name");
 
   if (error) {
-    console.error("[REINDEX HEARTBEAT ERROR]", {
+    console.error("[REINDEX LOCK HEARTBEAT FAILED]", {
       jobId,
       error: { message: error.message, code: error.code }
     });
-    return false;
+    return { renewed: false, rowsUpdated: 0, lostOwnership: false };
   }
 
-  console.info("[REINDEX HEARTBEAT]", { jobId, newExpiresAt });
-  return true;
+  const rowsUpdated = Array.isArray(data) ? data.length : 0;
+  const lostOwnership = rowsUpdated === 0;
+
+  if (lostOwnership) {
+    // Lock row is gone — another instance took it after our TTL expired.
+    console.error("[REINDEX LOCK HEARTBEAT FAILED]", {
+      jobId,
+      rowsUpdated,
+      lostOwnership: true,
+      note: "UPDATE matched 0 rows — lock was swept and claimed by another instance",
+    });
+    return { renewed: false, rowsUpdated: 0, lostOwnership: true };
+  }
+
+  console.info("[REINDEX LOCK HEARTBEAT]", { jobId, newExpiresAt, rowsUpdated });
+  return { renewed: true, rowsUpdated, lostOwnership: false };
 }
 
 export async function removeSourceFromVectorStore(source, client = defaultSupabase, jobId = null) {
@@ -1686,7 +1727,7 @@ export async function removeSourceFromVectorStore(source, client = defaultSupaba
 // vs hyphens, parentheses variations) that would not be caught by the exact-match
 // delete inside removeSourceFromVectorStore / addDocumentToVectorStore.
 // NOT called during ordinary incremental indexing.
-export async function removeSourceByPatternFromVectorStore(pattern, client = defaultSupabase) {
+export async function removeSourceByPatternFromVectorStore(pattern, client = defaultSupabase, jobId = null) {
   const supabaseClient = resolveSupabaseClient(client);
 
   const response = await supabaseClient
@@ -1705,6 +1746,7 @@ export async function removeSourceByPatternFromVectorStore(pattern, client = def
     statusText,
     removedChunks: data?.length ?? null,
     dataIsNull: data === null,
+    jobId: jobId || null,
     error: error ? { message: error.message, code: error.code, details: error.details } : null,
   });
 

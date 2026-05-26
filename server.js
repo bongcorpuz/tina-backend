@@ -27,7 +27,8 @@ import {
 import {
   getVectorStoreStats,
   normalizeSourceName,
-  INSTANCE_ID
+  INSTANCE_ID,
+  acquireReindexLock
 } from "./vector-store.js";
 
 import { createAskHandler, askHandlerHealthCheck } from "./ask-handler.js";
@@ -39,7 +40,7 @@ import {
   askHelpersHealthCheck
 } from "./ask-helpers.js";
 
-import { createBackgroundReindexController, runTargetedReindex, isTargetedReindexRunning } from "./reindex-service.js";
+import { createBackgroundReindexController, runTargetedReindex, isTargetedReindexRunning, generateJobId } from "./reindex-service.js";
 import { registerTinaRoutes } from "./routes/index.js";
 
 import { queryIntentEngineHealthCheck } from "./query-intent-engine.js";
@@ -557,15 +558,41 @@ app.get("/reindex-targeted", allowAuthenticatedOrIndexSecret, async (req, res) =
         "Wait for it to complete before starting targeted reindex."
     });
   }
+
+  // Acquire DB lock synchronously before returning started:true.
+  // This guarantees the client only sees started:true when the lock is confirmed held.
+  // If the lock is denied or the table is missing, the route returns 409/503 instead.
+  const jobId = generateJobId();
+  const lockResult = await acquireReindexLock(jobId, "targeted_reindex");
+
+  if (!lockResult.acquired) {
+    const status = lockResult.reason === "lock_held" ? 409 : 503;
+    return res.status(status).json({
+      started: false,
+      lockAcquired: false,
+      jobId,
+      reason: lockResult.reason,
+      existingJobId: lockResult.existingJobId || null,
+      message: lockResult.reason === "lock_held"
+        ? "Another reindex job holds the DB lock. Check Render logs for [REINDEX LOCK ACQUIRED] / [REINDEX COMPLETE]."
+        : "Cannot acquire reindex lock — tina_reindex_locks table missing or RLS error. Run the migration and check /debug/db-identity.",
+    });
+  }
+
+  // Lock confirmed. Respond to client before background work starts.
   res.json({
     started: true,
-    message: "Targeted NIRC + VAT reindex started in background.",
+    lockAcquired: true,
+    jobId,
+    message: "Targeted NIRC + VAT reindex started. DB lock confirmed before this response.",
     targets: ["01_TAX_CODE (all)", "RR 16-2005", "RR 13-2018", "RMC 67-2021", "RMC 99-2021"],
-    note: "Check Render logs for [REINDEX START], [REINDEX INSERT], [REINDEX COMPLETE]"
+    note: "Check Render logs for [DB IDENTITY], [REINDEX START], [NIRC REPAIR PREDELETE COUNT], [NIRC POSTINSERT EXACT COUNT], [REINDEX COMPLETE], [REINDEX LOCK RELEASED]"
   });
+
+  // Pass the pre-acquired jobId so runTargetedReindex skips re-acquisition.
   setImmediate(() => {
-    runTargetedReindex()
-      .catch(err => console.error("[REINDEX] Targeted reindex failed:", err?.message));
+    runTargetedReindex(undefined, { preAcquiredJobId: jobId })
+      .catch(err => console.error("[REINDEX] Targeted reindex failed:", err?.message, { jobId }));
   });
 });
 

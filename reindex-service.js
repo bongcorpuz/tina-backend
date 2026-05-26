@@ -53,7 +53,9 @@ import { buildAuthorityMetadata } from "./authority-engine.js";
 
 // Generate a unique job ID for log correlation and DB lock attribution.
 // Format: "reindex-<timestamp-base36>-<4-byte-hex>"
-function generateJobId() {
+// Exported so server.js can generate the jobId and acquire the lock before
+// returning started:true, then pass the pre-acquired jobId to runTargetedReindex.
+export function generateJobId() {
   return `reindex-${Date.now().toString(36)}-${randomBytes(4).toString("hex")}`;
 }
 
@@ -1176,12 +1178,49 @@ export async function runDriveReindex() {
     };
   }
 
+  // lockState: shared between heartbeat interval and the for-loop.
+  // consecutiveFailures: incremented on each heartbeat error; reset on success.
+  // lost: set to true when ownership is confirmed lost (0 rows updated) OR
+  //       after 2 consecutive heartbeat failures (~10 min of silence).
+  // When lost:true the for-loop throws LockLostError before the next file starts.
+  const lockState = { lost: false, consecutiveFailures: 0 };
+
   // Heartbeat: renew lock TTL every 5 minutes while reindex runs.
-  // Prevents the 30-minute expires_at from lapsing on large Drive libraries.
   const HEARTBEAT_MS = 5 * 60 * 1000;
   let _heartbeatTimer = setInterval(async () => {
-    try { await heartbeatReindexLock(jobId); }
-    catch (hbErr) { console.error("[REINDEX HEARTBEAT EXCEPTION]", { jobId, error: hbErr?.message }); }
+    try {
+      const hbResult = await heartbeatReindexLock(jobId);
+      if (hbResult.lostOwnership) {
+        lockState.lost = true;
+        lockState.consecutiveFailures = 0;
+        console.error("[REINDEX LOCK LOST — ABORTING]", {
+          jobId,
+          mode: "full_drive_reindex",
+          instanceId: INSTANCE_ID,
+          reason: "heartbeat UPDATE matched 0 rows — lock taken by another instance",
+        });
+      } else if (hbResult.renewed) {
+        lockState.consecutiveFailures = 0;
+      }
+    } catch (hbErr) {
+      lockState.consecutiveFailures += 1;
+      console.error("[REINDEX LOCK HEARTBEAT FAILED]", {
+        jobId,
+        mode: "full_drive_reindex",
+        consecutiveFailures: lockState.consecutiveFailures,
+        error: hbErr?.message,
+      });
+      if (lockState.consecutiveFailures >= 2) {
+        lockState.lost = true;
+        console.error("[REINDEX LOCK LOST — ABORTING]", {
+          jobId,
+          mode: "full_drive_reindex",
+          instanceId: INSTANCE_ID,
+          consecutiveFailures: lockState.consecutiveFailures,
+          reason: "2+ consecutive heartbeat exceptions — assuming lock integrity lost",
+        });
+      }
+    }
   }, HEARTBEAT_MS);
 
   try {
@@ -1193,6 +1232,10 @@ export async function runDriveReindex() {
   const skipped = [];
 
   for (const file of files || []) {
+    // Lock-state check before each file. Aborts cleanly if heartbeat lost ownership.
+    if (lockState.lost) {
+      throw new Error(`[LOCK LOST] jobId=${jobId} mode=full_drive_reindex — reindex aborted after lock ownership lost`);
+    }
     try {
       const { file: readableFile, text } = await readFileForIndexing(file);
       const cleanText = truncateText(normalizeText(text));
@@ -1335,14 +1378,24 @@ function isNircOrVatFile(file) {
 // files an additional broad ILIKE delete purges historical source-name variants
 // (underscores vs hyphens, folder prefix casing) before reinsertion.
 // A concurrency lock prevents duplicate overlapping runs.
-export async function runTargetedReindex(isTargetFile = isNircOrVatFile) {
+// isTargetFile: filter function for which Drive files to reindex.
+// preAcquiredJobId: when the HTTP route acquires the DB lock before setImmediate,
+//   it passes the jobId here so this function skips re-acquisition. The lock is
+//   always released in the finally block regardless of how it was acquired.
+export async function runTargetedReindex(isTargetFile = isNircOrVatFile, { preAcquiredJobId = null } = {}) {
   if (_targetedReindexRunning) {
     console.warn("[REINDEX TARGETED] Already running — rejecting duplicate invocation");
+    // If route pre-acquired a lock for us, release it since we can't use it.
+    if (preAcquiredJobId) {
+      await releaseReindexLock(preAcquiredJobId).catch(e =>
+        console.error("[REINDEX] Failed to release pre-acquired lock on early exit", { preAcquiredJobId, error: e?.message })
+      );
+    }
     return { skipped: true, reason: "already_running" };
   }
   _targetedReindexRunning = true;
 
-  const jobId = generateJobId();
+  const jobId = preAcquiredJobId || generateJobId();
 
   // Compute DB identity fields once — used in logs and identity assertions.
   const _supabaseUrl = process.env.SUPABASE_URL || "";
@@ -1367,32 +1420,75 @@ export async function runTargetedReindex(isTargetFile = isNircOrVatFile) {
     pid: process.pid,
   });
 
-  // Acquire DB lock — fail closed: if lock cannot be acquired for ANY reason
-  // (lock_held OR lock_error), abort immediately. No unlocked reindex allowed.
-  const lockResult = await acquireReindexLock(jobId, "targeted_reindex");
-  if (!lockResult.acquired) {
-    const reason = lockResult.reason;
-    console.error("[REINDEX TARGETED] Cannot acquire lock — aborting (fail-closed)", {
+  // If the HTTP route pre-acquired the lock (and jobId was passed in), skip acquisition.
+  // Otherwise acquire here — fail closed: any failure aborts immediately.
+  if (!preAcquiredJobId) {
+    const lockResult = await acquireReindexLock(jobId, "targeted_reindex");
+    if (!lockResult.acquired) {
+      const reason = lockResult.reason;
+      console.error("[REINDEX TARGETED] Cannot acquire lock — aborting (fail-closed)", {
+        jobId,
+        reason,
+        existingJobId: lockResult.existingJobId || null,
+        error: lockResult.error || null,
+      });
+      _targetedReindexRunning = false;
+      return {
+        skipped: true,
+        reason,
+        jobId,
+        existingJobId: lockResult.existingJobId || null,
+        error: lockResult.error || null,
+      };
+    }
+  } else {
+    console.info("[REINDEX LOCK PRE-ACQUIRED]", {
       jobId,
-      reason,
-      existingJobId: lockResult.existingJobId || null,
-      error: lockResult.error || null,
+      instanceId: INSTANCE_ID,
+      note: "Lock was acquired at route level — skipping re-acquisition",
     });
-    _targetedReindexRunning = false;
-    return {
-      skipped: true,
-      reason,
-      jobId,
-      existingJobId: lockResult.existingJobId || null,
-      error: lockResult.error || null,
-    };
   }
+
+  // lockState: shared between heartbeat interval and the for-loop.
+  // lost:true causes the loop to throw before processing the next file.
+  const lockState = { lost: false, consecutiveFailures: 0 };
 
   // Heartbeat: renew lock TTL every 5 minutes while reindex runs.
   const HEARTBEAT_MS = 5 * 60 * 1000;
   let _heartbeatTimer = setInterval(async () => {
-    try { await heartbeatReindexLock(jobId); }
-    catch (hbErr) { console.error("[REINDEX HEARTBEAT EXCEPTION]", { jobId, error: hbErr?.message }); }
+    try {
+      const hbResult = await heartbeatReindexLock(jobId);
+      if (hbResult.lostOwnership) {
+        lockState.lost = true;
+        lockState.consecutiveFailures = 0;
+        console.error("[REINDEX LOCK LOST — ABORTING]", {
+          jobId,
+          mode: "targeted_reindex",
+          instanceId: INSTANCE_ID,
+          reason: "heartbeat UPDATE matched 0 rows — lock taken by another instance",
+        });
+      } else if (hbResult.renewed) {
+        lockState.consecutiveFailures = 0;
+      }
+    } catch (hbErr) {
+      lockState.consecutiveFailures += 1;
+      console.error("[REINDEX LOCK HEARTBEAT FAILED]", {
+        jobId,
+        mode: "targeted_reindex",
+        consecutiveFailures: lockState.consecutiveFailures,
+        error: hbErr?.message,
+      });
+      if (lockState.consecutiveFailures >= 2) {
+        lockState.lost = true;
+        console.error("[REINDEX LOCK LOST — ABORTING]", {
+          jobId,
+          mode: "targeted_reindex",
+          instanceId: INSTANCE_ID,
+          consecutiveFailures: lockState.consecutiveFailures,
+          reason: "2+ consecutive heartbeat exceptions — assuming lock integrity lost",
+        });
+      }
+    }
   }, HEARTBEAT_MS);
 
   try {
@@ -1415,6 +1511,11 @@ export async function runTargetedReindex(isTargetFile = isNircOrVatFile) {
     const skipped = [];
 
     for (const file of targetFiles) {
+      // Lock-state check before each file. Throws if heartbeat lost ownership,
+      // preventing delete/insert work after lock integrity is compromised.
+      if (lockState.lost) {
+        throw new Error(`[LOCK LOST] jobId=${jobId} mode=targeted_reindex — reindex aborted after lock ownership lost`);
+      }
       const fileName = file.name || file.fileName || "unknown";
       try {
         const { file: readableFile, text } = await readFileForIndexing(file);
@@ -1438,6 +1539,11 @@ export async function runTargetedReindex(isTargetFile = isNircOrVatFile) {
           /nirc.*10963/.test((metadata.fileName || "").toLowerCase());
 
         if (isNircFile) {
+          // Lock check before NIRC repair delete — most destructive operation.
+          if (lockState.lost) {
+            throw new Error(`[LOCK LOST] jobId=${jobId} — aborting before NIRC repair delete`);
+          }
+
           const repairSource = NIRC_CANONICAL_SOURCE;
           console.info("[NIRC REPAIR CANONICAL SOURCE]", {
             jobId,
@@ -1480,7 +1586,7 @@ export async function runTargetedReindex(isTargetFile = isNircOrVatFile) {
             // Fallback: broad ILIKE patterns for any surviving historical source variants
             for (const pattern of NIRC_REPAIR_PATTERNS) {
               console.info("[NIRC PATTERN DELETE]", { jobId, pattern, source: repairSource });
-              await removeSourceByPatternFromVectorStore(pattern);
+              await removeSourceByPatternFromVectorStore(pattern, undefined, jobId);
             }
             const finalCount = await countSourceRows(repairSource);
             if (finalCount > 0) {
@@ -1506,6 +1612,11 @@ export async function runTargetedReindex(isTargetFile = isNircOrVatFile) {
           metadata.normalizedSource = repairSource;
         }
 
+        // Lock check before insert — prevents inserting after lock loss during NIRC delete.
+        if (lockState.lost) {
+          throw new Error(`[LOCK LOST] jobId=${jobId} — aborting before insert for ${normalizedSource}`);
+        }
+
         console.info("[REINDEX DELETE AND REINSERT]", {
           jobId,
           source: normalizedSource,
@@ -1527,19 +1638,22 @@ export async function runTargetedReindex(isTargetFile = isNircOrVatFile) {
         // Detects silent insert failures, cross-instance overlap, or table mismatch.
         // isNircFile is already declared above (used for repair delete logic).
         if (isNircFile) {
-          const postInsertCount = await countSourceRows(NIRC_CANONICAL_SOURCE);
+          const rows = await countSourceRows(NIRC_CANONICAL_SOURCE);
+          const match = rows === chunksAdded;
           console.info("[NIRC POSTINSERT EXACT COUNT]", {
             jobId,
             source: NIRC_CANONICAL_SOURCE,
-            postInsertCount,
-            chunksAdded,
+            rows,
+            expectedChunksAdded: chunksAdded,
+            match,
           });
-          if (postInsertCount !== chunksAdded) {
+          if (!match) {
             console.error("[NIRC POSTINSERT COUNT MISMATCH]", {
               jobId,
               source: NIRC_CANONICAL_SOURCE,
-              postInsertCount,
-              chunksAdded,
+              rows,
+              expectedChunksAdded: chunksAdded,
+              match,
               note: "mismatch may indicate cross-instance overlap, table mismatch, or silent insert failure",
             });
           }
