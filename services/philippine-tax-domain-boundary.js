@@ -391,6 +391,31 @@ const AUDIT_TAX_SIGNALS = [
   /\bpost[- ]?clearance\b/i,
 ];
 
+// ─── Tax-adjacent CLARIFY patterns ───────────────────────────────────────────
+// Queries that are ambiguous but plausibly tax-related in Philippine context.
+// No confirmed PH-tax signal, but NOT a clearly non-tax domain either.
+// Returns CLARIFY to invite the user to add context.
+//
+// Checked AFTER NON_TAX_REJECT_PATTERNS — explicit REJECT beats ambiguous CLARIFY.
+// Checked BEFORE the fail-closed default — ambiguous tax-adjacent beats REJECT.
+//
+// Safe: "gross receipts tax" → "tax" hits PH_TAX_ALLOW_PATTERNS first → ALLOW.
+// Safe: "penalty for late BIR filing" → "BIR" hits allowlist first → ALLOW.
+
+const CLARIFY_PATTERNS = [
+  { pattern: /\bgross\s+receipts?\b/i,             domain: "TAX_ADJACENT" },
+  { pattern: /\bprofessional\s+fees?\b/i,          domain: "TAX_ADJACENT" },
+  { pattern: /\baudit\s+risk\b/i,                  domain: "TAX_ADJACENT" },
+  { pattern: /\blease[s]?\b/i,                     domain: "TAX_ADJACENT" },
+  { pattern: /\bregistration\b/i,                  domain: "TAX_ADJACENT" },
+  { pattern: /\bpenalt(y|ies)\b/i,                 domain: "TAX_ADJACENT" },
+  { pattern: /\bwithholding\s+certificate\b/i,     domain: "TAX_ADJACENT" },
+  { pattern: /\bcreditable\b/i,                    domain: "TAX_ADJACENT" },
+  { pattern: /\bsubstantiation\b/i,                domain: "TAX_ADJACENT" },
+  { pattern: /\bbooks\s+of\s+accounts?\b/i,        domain: "TAX_ADJACENT" },
+  { pattern: /\bofficial\s+receipt\b/i,            domain: "TAX_ADJACENT" },
+];
+
 // ─── Main classifier ──────────────────────────────────────────────────────────
 
 /**
@@ -459,22 +484,29 @@ export function detectPhilippineTaxBoundary(query = "", routeMode = "/ask", cont
 
   // ── 6. Clearly non-tax domain patterns ───────────────────────────────────
   // Explicit domain detection — REJECT with reason "clearly_non_tax_domain".
-  // CLARIFY is reserved for ambiguous tax-adjacent queries (step 7 below).
   for (const { pattern, domain } of NON_TAX_REJECT_PATTERNS) {
     if (pattern.test(q)) {
       return { isPhilippineTax: false, decision: "REJECT", detectedDomain: domain, reason: "clearly_non_tax_domain", confidence: 0.95 };
     }
   }
 
-  // ── 7. FAIL-CLOSED DEFAULT ────────────────────────────────────────────────
-  // No Philippine-tax signal found. Reject by default.
-  // This is intentional — it prevents non-tax queries from reaching retrieval
-  // and OpenAI when no tax indicator is present.
-  // Use CLARIFY so the user is invited to rephrase with a tax framing,
-  // rather than getting a hard "wrong domain" message.
+  // ── 7. Ambiguous but possibly tax-adjacent queries ────────────────────────
+  // These lack a confirmed PH-tax signal but are common enough in tax practice
+  // that CLARIFY (invite rephrasing) is preferable to a hard REJECT.
+  // Examples: gross receipts, professional fees, penalties, leases, registration.
+  for (const { pattern, domain } of CLARIFY_PATTERNS) {
+    if (pattern.test(q)) {
+      return { isPhilippineTax: false, decision: "CLARIFY", detectedDomain: domain, reason: "tax_adjacent_needs_context", confidence: 0.55 };
+    }
+  }
+
+  // ── 8. FAIL-CLOSED DEFAULT ────────────────────────────────────────────────
+  // No Philippine-tax signal, no known non-tax domain, no tax-adjacent hint.
+  // REJECT — not CLARIFY. Gibberish and truly unrelated queries must not be
+  // invited to rephrase; they are simply outside TINA's domain.
   return {
     isPhilippineTax: false,
-    decision:        "CLARIFY",
+    decision:        "REJECT",
     detectedDomain:  "UNCLASSIFIED",
     reason:          "fail_closed_no_tax_signal",
     confidence:      0.60,
