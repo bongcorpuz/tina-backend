@@ -112,6 +112,21 @@ const CONTROLLING_AUTHORITY_TYPES = Object.freeze(new Set([
   "LGU"
 ]));
 
+// Subset of CONTROLLING_AUTHORITY_TYPES — court/tribunal types only.
+// Used by the jurisprudence safety guard in isAuthoritySufficient() to check
+// whether the candidate pool contains any case-law chunks.
+const CASE_AUTHORITY_TYPES = Object.freeze(new Set([
+  "SUPREME_COURT_EN_BANC", "SUPREME_COURT",
+  "CTA_EN_BANC", "CTA_DIVISION",
+  "COURT_OF_APPEALS"
+]));
+
+// Matches Philippine court citation formats found in TINA's indexed corpus:
+//   G.R. No. / G.R. Nos. — Supreme Court docket numbers
+//   C.T.A. / CTA Case / CTA EB / CTA Div — Court of Tax Appeals citations
+// Used to detect jurisprudence-heavy queries from targetAuthorities strings.
+const CASE_CITATION_PATTERN = /G\.R\.\s*Nos?\.|C\.T\.A\.|CTA\s*(Case|EB|Div)/i;
+
 const AUTHORITY_LEVEL = Object.freeze({
   CONSTITUTION: 1,
   STATUTE: 2,
@@ -2565,6 +2580,17 @@ function annotateDocLayer(doc = {}, layer = RETRIEVAL_LAYER.VECTOR_SEMANTIC, que
  *   customs/CMTA, PEZA/incentives, refund, assessment/protest, jurisprudence,
  *   BIR issuances, and any future domain added to TINA's corpus.
  *
+ * Rules (applied in order):
+ *   Guard D — jurisprudence_required:      blocks all positive rules when case
+ *             law is expected but no case-type candidates are present
+ *   Rule  C — provision_specific_exact_match: narrow 1–2 provision query with
+ *             full exact-authority coverage
+ *   Rule  A — target_coverage:             named target authorities sufficiently
+ *             covered (≥50% and ≥min(2,count) matched)
+ *   Rule  B — unique_controlling_authorities: ≥3 distinct authority references
+ *             with at least one controlling-type chunk
+ *   Fallback— insufficient_authority:      none of the above met; run Layers 3/4
+ *
  * Returns { sufficient: boolean, reason: string, ...diagnosticFields }
  */
 function isAuthoritySufficient({
@@ -2572,22 +2598,30 @@ function isAuthoritySufficient({
   layerDiagnostics = {},
   uniqueAuthorityCount = 0,
   issueClassification = null,
-  topK = DEFAULT_TOP_K,
+  topK = DEFAULT_TOP_K,  // eslint-disable-line no-unused-vars — kept for API compat
 } = {}) {
   const { exactAuthorityMatches = 0, citationVariantMatches = 0 } = layerDiagnostics;
-  const totalAuthorityMatches = exactAuthorityMatches + citationVariantMatches;
 
-  const targetAuthorities = safeArray(issueClassification?.targetAuthorities).filter(Boolean);
+  const targetAuthorities =
+    safeArray(issueClassification?.targetAuthorities).filter(Boolean);
   const targetAuthoritiesCount = targetAuthorities.length;
 
-  // Collect distinct normalized_reference values present in the candidate pool.
+  const supportingJurisprudence =
+    safeArray(issueClassification?.supportingJurisprudence).filter(Boolean);
+
+  // ── Shared derived values ─────────────────────────────────────────────────
+
+  // Distinct normalized_reference values in the candidate pool.
+  // Used for Rule A target matching and Rule B distinct-ref counting.
+  // candidateRefs.size counts distinct authority references, NOT individual
+  // chunks — 3 chunks of the same section count as 1 ref.
   const candidateRefs = new Set(
     candidates
       .map(c => String(c.normalized_reference || c.normalizedReference || "").trim())
       .filter(Boolean)
   );
 
-  // Collect distinct authority_type values present in the candidate pool.
+  // Distinct authority_type values in the candidate pool.
   const candidateAuthorityTypes = new Set(
     candidates
       .map(c =>
@@ -2601,9 +2635,15 @@ function isAuthoritySufficient({
     CONTROLLING_AUTHORITY_TYPES.has(t)
   );
 
-  // How many target authorities from the issue classification are represented
-  // in the candidate pool?  Uses normalized string comparison so "NIRC Sec. 105"
-  // and "NIRC_SEC_105" both match their respective stored formats.
+  // Does the pool include at least one court/case-law authority type?
+  const hasJurisprudenceCandidates = [...candidateAuthorityTypes].some(t =>
+    CASE_AUTHORITY_TYPES.has(t)
+  );
+
+  // How many targetAuthorities from the issue classification appear in the
+  // candidate pool?  Normalized string comparison handles both stored formats:
+  // "NIRC Sec. 105" (detectNircSectionHeading) and "NIRC_SEC_105"
+  // (normalizeLegalReference).
   let matchedTargetAuthorities = 0;
   if (targetAuthoritiesCount > 0) {
     for (const ta of targetAuthorities) {
@@ -2623,58 +2663,123 @@ function isAuthoritySufficient({
   const targetCoverage =
     targetAuthoritiesCount > 0 ? matchedTargetAuthorities / targetAuthoritiesCount : 0;
 
-  // ── Rule 1: combined Layer 1+2 raw match count ≥ topK ────────────────────
-  // totalAuthorityMatches is the pre-dedup candidate count from Layers 1+2.
-  // If the raw count already exceeds topK, there is ample authority evidence
-  // regardless of deduplication — duplicates only strengthen the signal.
-  if (totalAuthorityMatches >= topK) {
+  // ── Safety guard D: jurisprudence-heavy queries ───────────────────────────
+  // If this query expects court-case authority (has supportingJurisprudence
+  // references, has case citation patterns in targetAuthorities, or has a
+  // jurisprudence-first retrievalStrategy) AND the candidate pool contains no
+  // SC/CTA/CA-type chunks — block all positive rules.
+  //
+  // Rationale: refund, prescriptive period, assessment, protest, and other
+  // jurisprudence-heavy issues require case law chunks to ground the answer.
+  // Without them, skipping Layer 3/4 would produce an ungrounded response.
+  // Layer 5 (semantic) is the correct path to surface case-law — not blocking it.
+  const retrievalStrategy =
+    String(issueClassification?.retrievalStrategy || "").toUpperCase();
+  const isJurisprudenceHeavy =
+    supportingJurisprudence.length > 0 ||
+    targetAuthorities.some(ta => CASE_CITATION_PATTERN.test(String(ta))) ||
+    retrievalStrategy.includes("JURISPRUDENCE") ||
+    retrievalStrategy.includes("CASE_LAW");
+
+  if (isJurisprudenceHeavy && !hasJurisprudenceCandidates) {
     return {
-      sufficient: true,
-      reason:     "total_authority_matches_gte_topK",
-      totalAuthorityMatches,
-      uniqueAuthorityCount,
+      sufficient:               false,
+      reason:                   "insufficient_authority_jurisprudence_required",
+      isJurisprudenceHeavy,
+      hasJurisprudenceCandidates,
       matchedTargetAuthorities,
       targetAuthoritiesCount,
+      uniqueAuthorityCount,
     };
   }
 
-  // ── Rule 2: ≥3 unique usable authority docs + at least one controlling type
-  // uniqueAuthorityCount counts distinct usable docs (have text + source/ref).
-  // Requiring a controlling type prevents triggering on 3 SECONDARY/CPA_NOTES
-  // chunks — those are supplementary, not authority-sufficient.
-  // Conservative floor of 3 avoids skipping on 1-2 thin or tangential matches.
-  if (uniqueAuthorityCount >= 3 && hasControllingAuthority) {
-    return {
-      sufficient:            true,
-      reason:                "unique_authorities_with_controlling_type",
-      uniqueAuthorityCount,
-      hasControllingAuthority,
-      matchedTargetAuthorities,
-      targetAuthoritiesCount,
-    };
-  }
-
-  // ── Rule 3: target authorities substantially covered (≥50%, min 1 match) ─
-  // When the issue classification named specific target authorities, coverage
-  // of those authorities is the most precise sufficiency signal.
-  // ≥50% with at least 1 match is deliberately conservative — a query
-  // targeting 4 authorities needs at least 2 represented.
-  if (targetAuthoritiesCount > 0 && matchedTargetAuthorities >= 1 && targetCoverage >= 0.5) {
+  // ── Rule C: provision_specific_exact_match ────────────────────────────────
+  // For narrow provision-lookup queries (1–2 named target authorities), 1–3
+  // exact chunks that directly cover all named provisions is sufficient.
+  // All of the following must hold:
+  //   • 1 or 2 target authorities specified (narrow, not a broad topic query)
+  //   • Layer 1 returned at least 1 exact-authority chunk
+  //   • All named target authorities are represented in the candidate refs
+  //     (matchedTargetAuthorities >= targetAuthoritiesCount — 100% coverage)
+  // This fires before Rule A so that single-provision queries get the most
+  // specific reason label in logs.
+  if (
+    targetAuthoritiesCount >= 1 &&
+    targetAuthoritiesCount <= 2 &&
+    exactAuthorityMatches >= 1 &&
+    matchedTargetAuthorities >= targetAuthoritiesCount
+  ) {
     return {
       sufficient:              true,
-      reason:                  "target_authorities_substantially_covered",
+      reason:                  "provision_specific_exact_match",
+      exactAuthorityMatches,
+      targetAuthoritiesCount,
+      matchedTargetAuthorities,
+      uniqueAuthorityCount,
+    };
+  }
+
+  // ── Rule A: target_coverage ───────────────────────────────────────────────
+  // Named target authorities must be substantially covered in the candidate pool.
+  //
+  // Two thresholds must both be met:
+  //   1. matchedTargetAuthorities >= min(2, targetAuthoritiesCount)
+  //      For a 1-authority query: needs 1 match (100%).
+  //      For a 2-authority query: needs 2 matches (100%).
+  //      For a 4-authority query: needs 2 matches (50%).
+  //      The min(2,…) floor prevents triggering when only a single tangential
+  //      authority is represented in a multi-authority query.
+  //   2. targetCoverage >= 0.5  (≥50% of named authorities present)
+  //      Combines with threshold 1 to require proportional coverage on
+  //      longer authority lists (e.g. 3/6 = 50% for a 6-authority query).
+  //
+  // Does not fire when no target authorities are named (unclassified query).
+  const minMatchRequired = Math.min(2, targetAuthoritiesCount);
+  if (
+    targetAuthoritiesCount > 0 &&
+    matchedTargetAuthorities >= minMatchRequired &&
+    targetCoverage >= 0.5
+  ) {
+    return {
+      sufficient:              true,
+      reason:                  "target_coverage",
       matchedTargetAuthorities,
       targetAuthoritiesCount,
       targetCoverage,
+      minMatchRequired,
       uniqueAuthorityCount,
+    };
+  }
+
+  // ── Rule B: unique_controlling_authorities ────────────────────────────────
+  // ≥3 distinct normalized_reference values in the candidate pool, AND at least
+  // one belongs to a primary authority type.
+  //
+  // Uses candidateRefs.size (distinct refs, not individual chunk count) so that
+  // 3 duplicate chunks of the same section do NOT qualify — genuine breadth
+  // across ≥3 different laws/sections is required.
+  //
+  // The hasControllingAuthority guard prevents triggering on 3 refs from
+  // SECONDARY, CPA_NOTES, or REVIEW_MATERIALS chunks.
+  if (candidateRefs.size >= 3 && hasControllingAuthority) {
+    return {
+      sufficient:              true,
+      reason:                  "unique_controlling_authorities",
+      distinctAuthorityRefs:   candidateRefs.size,
+      hasControllingAuthority,
+      uniqueAuthorityCount,
+      matchedTargetAuthorities,
+      targetAuthoritiesCount,
     };
   }
 
   // ── Insufficient — let Layers 3/4 run ────────────────────────────────────
   return {
     sufficient:              false,
-    reason:                  "insufficient_authority_coverage",
-    totalAuthorityMatches,
+    reason:                  "insufficient_authority",
+    exactAuthorityMatches,
+    citationVariantMatches,
+    distinctAuthorityRefs:   candidateRefs.size,
     uniqueAuthorityCount,
     matchedTargetAuthorities,
     targetAuthoritiesCount,
