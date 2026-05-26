@@ -708,14 +708,40 @@ function normalizeSourceKey(source = {}) {
     .trim();
 }
 
+function bestSourceUrl(source = {}) {
+  return source.driveViewUrl || source.url || source.webViewLink || source.sourceUrl || "";
+}
+
+function mergeSourceMetadata(retained, incoming) {
+  if (!incoming || bestSourceUrl(retained)) return retained;
+  const url = bestSourceUrl(incoming);
+  if (!url) return retained;
+  return Object.assign({}, retained, {
+    driveViewUrl:         url,
+    url,
+    webViewLink:          incoming.webViewLink    || retained.webViewLink,
+    sourceUrl:            incoming.sourceUrl      || retained.sourceUrl,
+    documentTitle:        retained.documentTitle   || incoming.documentTitle,
+    document_title:       retained.document_title  || incoming.document_title,
+    normalizedReference:  retained.normalizedReference  || incoming.normalizedReference,
+    normalized_reference: retained.normalized_reference || incoming.normalized_reference,
+    source:               retained.source || incoming.source
+  });
+}
+
 function dedupeSources(sources = []) {
-  const seen = new Set();
+  const seenIdx = new Map();
   const output = [];
 
   for (const source of safeArray(sources)) {
     const key = normalizeSourceKey(source);
-    if (!key || seen.has(key)) continue;
-    seen.add(key);
+    if (!key) continue;
+    if (seenIdx.has(key)) {
+      const idx = seenIdx.get(key);
+      output[idx] = mergeSourceMetadata(output[idx], source);
+      continue;
+    }
+    seenIdx.set(key, output.length);
     output.push(source);
   }
 

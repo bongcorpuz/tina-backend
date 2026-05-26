@@ -1065,17 +1065,55 @@ function buildDocKey(doc = {}) {
   );
 }
 
+// Best URL available on any doc shape (top-level and metadata-nested).
+function bestDocUrl(doc = {}) {
+  return (
+    doc.driveViewUrl    || doc.drive_view_url ||
+    doc.url             || doc.webViewLink    ||
+    doc.sourceUrl       || doc.source_url     ||
+    doc.metadata?.driveViewUrl || doc.metadata?.url || ""
+  );
+}
+
+// Upgrade retained doc's URL + safe metadata from an incoming duplicate.
+// URL upgrade: first-found URL wins — only upgrades when retained has none.
+// Metadata coalesce: retain existing value; fill in from incoming if absent.
+function mergeDocMetadata(retained, incoming) {
+  if (!incoming || bestDocUrl(retained)) return retained;
+  const url = bestDocUrl(incoming);
+  if (!url) return retained;
+  return Object.assign({}, retained, {
+    driveViewUrl:         url,
+    drive_view_url:       url,
+    url,
+    webViewLink:          incoming.webViewLink    || retained.webViewLink,
+    sourceUrl:            incoming.sourceUrl      || retained.sourceUrl,
+    documentTitle:        retained.documentTitle   || incoming.documentTitle,
+    document_title:       retained.document_title  || incoming.document_title,
+    normalizedReference:  retained.normalizedReference  || incoming.normalizedReference,
+    normalized_reference: retained.normalized_reference || incoming.normalized_reference,
+    source:               retained.source || incoming.source
+  });
+}
+
 export function uniqueDocs(docs = []) {
-  const seen = new Set();
+  const seenIdx = new Map();  // canonical key → index in result
   const result = [];
 
   for (const doc of Array.isArray(docs) ? docs : []) {
     if (!doc) continue;
 
     const key = buildDocKey(doc);
-    if (!key || seen.has(key)) continue;
+    if (!key) continue;
 
-    seen.add(key);
+    if (seenIdx.has(key)) {
+      // Merge: upgrade URL and safe metadata fields if retained is missing them.
+      const idx = seenIdx.get(key);
+      result[idx] = mergeDocMetadata(result[idx], doc);
+      continue;
+    }
+
+    seenIdx.set(key, result.length);
     result.push(doc);
   }
 

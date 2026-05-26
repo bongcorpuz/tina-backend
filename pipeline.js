@@ -932,14 +932,23 @@ export async function runPipeline({
       ? canonicalSourceKey(provRef)
       : (docTitle + "|" + String(c.chunk_index || c.id || "")).toLowerCase().slice(0, 60);
 
-    if (_scSeen.has(dedupeKey)) continue;
-
     const meta = c.metadata || {};
     const url  =
       c.driveViewUrl    || c.drive_view_url ||
       c.url             ||
       meta.driveViewUrl || meta.drive_view_url || meta.url || meta.sourceUrl ||
       "";
+
+    if (_scSeen.has(dedupeKey)) {
+      if (url) {
+        const stored = _scSeen.get(dedupeKey);
+        if (!stored.url) {
+          stored.url = url;
+          stored.driveViewUrl = url;
+        }
+      }
+      continue;
+    }
 
     _scSeen.set(dedupeKey, {
       title:         provRef && docTitle
