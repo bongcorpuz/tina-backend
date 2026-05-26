@@ -1603,7 +1603,10 @@ function applyFinalGateAndRender({
         contextMode:
           orchestration?.contextMode ||
           orchestration?.mode ||
-          null
+          null,
+        // renderTinaJsonPayload uses includeSourcesInAnswer:false and renders
+        // source chips separately — text appendix is always redundant here.
+        suppressSourceAppendix: true
       });
     } catch {
       finalAnswer = fallbackAnswer || guardedAnswer || (sources.length ? "" : "Indexed source not found.");

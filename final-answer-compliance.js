@@ -1980,7 +1980,8 @@ function buildFinalCompliantAnswer({
   answerStructure = null,
   returnObject = false,
   reviewMode = false,
-  includeHiddenSources = false
+  includeHiddenSources = false,
+  suppressSourceAppendix = false
 } = {}) {
   const context = {
     query,
@@ -2174,10 +2175,11 @@ function buildFinalCompliantAnswer({
     requiredSections: requiredAnswerSections || answerStructure || null
   });
 
-  const finalWithSources = appendValidatedSourceAppendix(
-    compliant.answer,
-    visibleSourceDocs
-  );
+  // suppressSourceAppendix: skip text-block append when the caller renders
+  // source chips/cards separately (pipeline Step 17 and rag-answer-handler).
+  const finalWithSources = suppressSourceAppendix
+    ? compliant.answer
+    : appendValidatedSourceAppendix(compliant.answer, visibleSourceDocs);
 
   const finalResult = {
     ...compliant,
@@ -2284,7 +2286,10 @@ function enforceFinalAnswerCompliance(args = {}) {
     contextMode: args.contextMode,
     requiredAnswerSections: args.requiredAnswerSections,
     answerStructure: args.answerStructure,
-    returnObject: true
+    returnObject: true,
+    // Pipeline Step 17 renders source chips; text appendix is redundant and
+    // gets stripped by the Step 17 regex anyway — suppress at the source.
+    suppressSourceAppendix: true
   });
 
   return {
