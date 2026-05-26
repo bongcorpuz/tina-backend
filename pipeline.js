@@ -852,7 +852,10 @@ export async function runPipeline({
     ctx.mode = orchestrationRefinedMode;
   }
   ctx.responseStyle = ctx.orchestration?.responseStyle || null;
-  if (ctx.mode !== "FAST_DEFINITION" || hook !== "/ask") {
+  // isAskMode: plain queries (no explicit hook) are rendering-equivalent to /ask.
+  // Renderer selection must rely on ctx.mode, not raw hook string detection.
+  const isAskMode = !hook || hook === "/ask";
+  if (ctx.mode !== "FAST_DEFINITION" || !isAskMode) {
     if (ctx.responseStyle) {
       console.log(`[MODE ISOLATION] responseStyle cleared: hook=${hook} mode=${ctx.mode}`);
     }
@@ -863,7 +866,7 @@ export async function runPipeline({
   ctx.formattedAnswer = renderTinaAnswer({
     answer:              ctx.rawAnswer,
     sources:             ctx.rerankedChunks || [],
-    includeSources:      true,
+    includeSources:      false,  // sourceCards chip-rendered by frontend; no duplicate text block
     issueClassification: ctx.issueClassification,
     mode:                ctx.mode,
     conflict:            ctx.conflictAnalysis?.hasConflict ? ctx.conflictAnalysis : null
@@ -885,14 +888,18 @@ export async function runPipeline({
   // ── Step 17: Presentation Transform (FAST_DEFINITION only) ─────────────────
   // Converts validated structured output to conversational paragraphs.
   // Compliance gate output is preserved as fallback if section parsing fails.
-  const rawFinalAnswer = compliantResult?.finalAnswer || compliantResult?.answer || ctx.formattedAnswer;
-  const finalAnswer = (ctx.mode === "FAST_DEFINITION" && hook === "/ask")
+  // Strip "Validated Indexed Sources" appendix added by final-answer-compliance —
+  // the frontend renders sourceCards as chips; text source lists are redundant.
+  const rawFinalAnswer = (compliantResult?.finalAnswer || compliantResult?.answer || ctx.formattedAnswer)
+    .replace(/\n+Validated Indexed Sources[\s\S]*$/i, "")
+    .trim();
+  const finalAnswer = (ctx.mode === "FAST_DEFINITION" && isAskMode)
     ? renderFastDefinitionConversational(rawFinalAnswer, query, ctx.responseStyle)
     : rawFinalAnswer;
 
-  // ── Stage 2C: Educational sources (FAST_DEFINITION /ask only) ────────────
+  // ── Stage 2C: Educational sources (FAST_DEFINITION ask-mode only) ────────
   const educationalSources =
-    (hook === "/ask" && ctx.mode === "FAST_DEFINITION")
+    (isAskMode && ctx.mode === "FAST_DEFINITION")
       ? buildEducationalSources(ctx.rerankedChunks, ctx.responseStyle, query)
       : null;
 
