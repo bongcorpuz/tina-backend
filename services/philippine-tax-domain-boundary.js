@@ -333,6 +333,11 @@ const NON_TAX_REJECT_PATTERNS = [
   // ── Criminal law (non-tax) ────────────────────────────────────────────────
   // Safe: "criminal liability for tax evasion" → "tax" hits allowlist first.
   { pattern: /\bcriminal\s+law\b/i,                          domain: "CRIMINAL_LAW" },
+  { pattern: /\bcriminal\s+procedure\b/i,                    domain: "CRIMINAL_LAW" },
+  { pattern: /\bcriminal\s+(court|litigation|prosecution)\b/i, domain: "CRIMINAL_LAW" },
+  { pattern: /\bcriminal\s+trial\b/i,                        domain: "CRIMINAL_LAW" },
+  { pattern: /\bcriminal\s+case\s+(procedure|rules|process)\b/i, domain: "CRIMINAL_LAW" },
+  { pattern: /\brules\s+of\s+criminal\s+procedure\b/i,       domain: "CRIMINAL_LAW" },
   { pattern: /\bmurder\s+(charge|case|trial)\b/i,            domain: "CRIMINAL_LAW" },
   { pattern: /\bkidnapping\s+(case|charge)\b/i,              domain: "CRIMINAL_LAW" },
   { pattern: /\bdrug\s+trafficking\b/i,                      domain: "CRIMINAL_LAW" },
