@@ -50,7 +50,8 @@ import { evaluateEvidence }                       from "./evidence-evaluation-en
 import { scoreRisk }                              from "./risk-scoring-engine.js";
 import {
   inferIssuanceNumber,
-  sourceTitleOf
+  sourceTitleOf,
+  canonicalSourceKey
 }                                                 from "./source-visibility-engine.js";
 import {
   detectPhilippineTaxBoundary,
@@ -923,9 +924,12 @@ export async function runPipeline({
       c.originalSource || ""
     ).slice(0, 80);
 
-    // Dedup: provision reference (unique per section) or doc+chunk for non-provision docs
+    // Dedup: canonical authority key (strips "No.", punctuation, separators) so that
+    // variant encodings of the same issuance (RR No. 16-2005 / RR_16_2005 / rr-16-2005)
+    // all collapse to one card ("rr162005").  Falls back to raw docTitle+chunk for
+    // sources without any issuance signal.
     const dedupeKey = provRef
-      ? provRef.toLowerCase().replace(/[^a-z0-9]/g, "")
+      ? canonicalSourceKey(provRef)
       : (docTitle + "|" + String(c.chunk_index || c.id || "")).toLowerCase().slice(0, 60);
 
     if (_scSeen.has(dedupeKey)) continue;

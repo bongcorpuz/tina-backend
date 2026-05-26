@@ -904,11 +904,15 @@ export function inferIssuanceNumber(doc = {}) {
   const directPatterns = [
     { regex: /\b(1987 Constitution)\b/i, value: (m) => compactSpaces(m[1]) },
     { regex: /\b(Republic Act No\.?\s*\d{4,6})\b/i, value: (m) => compactSpaces(m[1]) },
-    { regex: /\b(RA)\s*(?:No\.?)?\s*(\d{4,6})\b/i, value: (m) => `RA No. ${m[2]}` },
-    { regex: /\b(RR)\s*(?:No\.?)?\s*0*(\d+)\s*[-/_]\s*(\d{2,4})\b/i, value: (m) => `${m[1].toUpperCase()} No. ${Number(m[2])}-${normalizeYear(m[3])}` },
-    { regex: /\b(RMC)\s*(?:No\.?)?\s*0*(\d+)\s*[-/_]\s*(\d{2,4})\b/i, value: (m) => `${m[1].toUpperCase()} No. ${Number(m[2])}-${normalizeYear(m[3])}` },
-    { regex: /\b(RMO)\s*(?:No\.?)?\s*0*(\d+)\s*[-/_]\s*(\d{2,4})\b/i, value: (m) => `${m[1].toUpperCase()} No. ${Number(m[2])}-${normalizeYear(m[3])}` },
-    { regex: /\b(RAMO)\s*(?:No\.?)?\s*0*(\d+)\s*[-/_]\s*(\d{2,4})\b/i, value: (m) => `${m[1].toUpperCase()} No. ${Number(m[2])}-${normalizeYear(m[3])}` },
+    // RA: allow hyphen/underscore between "RA" and the act number (e.g. RA-10963, RA_10963)
+    { regex: /\b(RA)[-\s_]*(?:No\.?)?[-\s_]*(\d{4,6})\b/i, value: (m) => `RA No. ${m[2]}` },
+    // RR / RMC / RMO / RAMO: allow hyphen, underscore, or space between TYPE and "No." and
+    // between "No." and the serial number, and as the number↔year separator.
+    // Handles: RR-16-2005, RR_16_2005, rr-no.-16-2005, RMC65-2012, RMC No 65 2012, etc.
+    { regex: /\b(RR)[-\s_]*(?:No\.?)?[-\s_]*0*(\d+)[-\s_/](\d{2,4})\b/i, value: (m) => `${m[1].toUpperCase()} No. ${Number(m[2])}-${normalizeYear(m[3])}` },
+    { regex: /\b(RMC)[-\s_]*(?:No\.?)?[-\s_]*0*(\d+)[-\s_/](\d{2,4})\b/i, value: (m) => `${m[1].toUpperCase()} No. ${Number(m[2])}-${normalizeYear(m[3])}` },
+    { regex: /\b(RMO)[-\s_]*(?:No\.?)?[-\s_]*0*(\d+)[-\s_/](\d{2,4})\b/i, value: (m) => `${m[1].toUpperCase()} No. ${Number(m[2])}-${normalizeYear(m[3])}` },
+    { regex: /\b(RAMO)[-\s_]*(?:No\.?)?[-\s_]*0*(\d+)[-\s_/](\d{2,4})\b/i, value: (m) => `${m[1].toUpperCase()} No. ${Number(m[2])}-${normalizeYear(m[3])}` },
     { regex: /\b(BIR Ruling)\s*(?:No\.?)?\s*([\w./()-]+)\b/i, value: (m) => `${m[1]} No. ${m[2]}` },
     { regex: /\b(CTA(?:\s+EB| En Banc)?\s+No\.?\s*[\w.-]+)\b/i, value: (m) => compactSpaces(m[1]) },
     { regex: /\b(G\.R\.\s*No\.?\s*[\w.-]+)\b/i, value: (m) => compactSpaces(m[1]) },
@@ -939,6 +943,24 @@ export function inferIssuanceNumber(doc = {}) {
   }
 
   return "";
+}
+
+/**
+ * Canonical issuance comparison key for deduplication.
+ * Strips "No." / "No", all punctuation, and whitespace so that the
+ * many filename variants of the same authority all map to one key:
+ *   "RR No. 16-2005" → "rr162005"
+ *   "RR_16_2005"     → "rr162005"
+ *   "rr-16-2005"     → "rr162005"
+ *   "RMC No. 65-2012"→ "rmc652012"
+ * Use this instead of a bare .replace(/[^a-z0-9]/g,"") for dedupeKey
+ * computation so that the presence or absence of "No." is irrelevant.
+ */
+export function canonicalSourceKey(ref = "") {
+  return String(ref || "")
+    .toLowerCase()
+    .replace(/\bno\.?\s*/g, "")   // remove "No." / "No " / standalone "No"
+    .replace(/[^a-z0-9]/g, "");   // remove all punctuation, whitespace, underscores
 }
 
 export function buildShortSubject(doc = {}) {
