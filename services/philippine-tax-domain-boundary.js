@@ -3,398 +3,432 @@
 
 /**
  * Philippine Tax Domain Boundary
+ * Version: 2.0.0 — FAIL-CLOSED
  *
- * Synchronous, pre-retrieval classifier that determines whether a query
- * falls within TINA's domain (Philippine taxation).
+ * Synchronous, pre-retrieval classifier. Determines whether a query is within
+ * TINA's domain (Philippine taxation) BEFORE any retrieval, pipeline, or
+ * OpenAI call.
  *
- * Returns: { isPhilippineTax, decision, detectedDomain, reason }
+ * Exported API:
+ *   detectPhilippineTaxBoundary(query, routeMode, context?)
+ *   → { isPhilippineTax, decision, detectedDomain, reason, confidence }
  *   decision: "ALLOW" | "REJECT" | "CLARIFY"
  *
- * Design principles:
- *   - Synchronous only — no OpenAI, no DB access, no async
- *   - Conservative default: ALLOW (avoids false-positive rejections)
- *   - REJECT only when query is clearly non-tax
- *   - Hook-aware: /quiz and /review are strict; /audit requires audit-tax signals
+ * DESIGN: FAIL-CLOSED
+ *   Default is REJECT.
+ *   ALLOW is granted only when a Philippine-tax indicator is present.
+ *   Ambiguous queries return CLARIFY (treated as REJECT at enforcement points).
+ *
+ *   Previous version (v1) used conservative-default ALLOW — that allowed
+ *   "what is biology?" to reach retrieval and OpenAI. This version fixes that.
  */
 
 import { isTaxRelated } from "../tax-keywords.js";
 
-// ─── Rejection Message ────────────────────────────────────────────────────────
+// ─── Rejection / Clarification Messages ──────────────────────────────────────
 
 export const BOUNDARY_REJECTION_MESSAGE =
   "TINA is designed to answer questions about Philippine taxation. " +
   "Please ask a Philippine tax-related question, such as VAT, income tax, " +
   "withholding tax, BIR compliance, local tax, customs duties, or tax remedies.";
 
-// ─── Hooks that bypass the domain boundary entirely ──────────────────────────
-// These are meta/utility routes that must not be blocked.
+export const BOUNDARY_CLARIFY_MESSAGE =
+  "TINA is designed to answer questions about Philippine taxation. " +
+  "Could you clarify how your question relates to Philippine tax? " +
+  "For example: VAT, income tax, withholding tax, BIR compliance, " +
+  "local tax, customs duties, or tax remedies.";
+
+// ─── Hooks that bypass the boundary entirely ─────────────────────────────────
+// Meta/utility routes that must never be blocked.
 
 const BYPASS_HOOKS = new Set(["/feedback", "/progress", "/debug", "/patch"]);
 
-// ─── Strong Philippine-tax-specific allow patterns ───────────────────────────
-// Any match here → immediate ALLOW (before isTaxRelated).
+// ─── Philippine-tax ALLOW patterns ───────────────────────────────────────────
+// Ordered from broadest → most specific.
+// A single match is sufficient to ALLOW.
+// DO NOT include bare "Philippines" — "who is the president of the Philippines?"
+// must not match.
 
 const PH_TAX_ALLOW_PATTERNS = [
-  // Philippine jurisdiction signals
-  /\bphilippine[s]?\s+tax/i,
-  /\bphilippin[e]?[s]?\b/i,
-  /\bfilipino\b/i,
-  /\bpilipino\b/i,
+  // ── Core "tax" word (broadest, most important signal) ──────────────────
+  // These catch "what is tax?", "withholding tax", "income tax", etc.
+  /\btax\b/i,
+  /\btaxes\b/i,
+  /\btaxable\b/i,
+  /\btaxation\b/i,
+  /\btaxpayer\b/i,
+  /\btaxed\b/i,
+  /\btaxing\b/i,
+  /\bpre-?tax\b/i,
+  /\bafter-?tax\b/i,
+  /\bpost-?tax\b/i,
+  /\btax-?free\b/i,
+  /\btax-?exempt\b/i,
 
-  // VAT
+  // ── VAT ────────────────────────────────────────────────────────────────
   /\bvat\b/i,
-  /\bvalue[- ]added tax\b/i,
+  /\bvalue[- ]added\b/i,
   /\bvatable\b/i,
   /\bzero[- ]rated\b/i,
-  /\bvat[- ]exempt\b/i,
   /\binput\s+tax\b/i,
   /\boutput\s+tax\b/i,
 
-  // Income tax
-  /\bincome tax\b/i,
-  /\bcorporate income tax\b/i,
-  /\bpersonal income tax\b/i,
-  /\bminimum corporate income tax\b/i,
-  /\bmcit\b/i,
-  /\bnet\s+taxable\s+income\b/i,
-  /\bgross\s+taxable\b/i,
-
-  // Withholding
-  /\bwithholding tax\b/i,
-  /\bexpanded withholding\b/i,
-  /\bfinal withholding\b/i,
-  /\bcreditable withholding\b/i,
+  // ── Withholding ────────────────────────────────────────────────────────
+  /\bwithholding\b/i,
   /\bewt\b/i,
   /\bfwt\b/i,
+  /\bcreditable\s+withholding\b/i,
+  /\bexpanded\s+withholding\b/i,
+  /\bfinal\s+withholding\b/i,
 
-  // BIR / regulatory bodies
+  // ── BIR / regulatory ──────────────────────────────────────────────────
   /\bBIR\b/i,
-  /\bbureau of internal revenue\b/i,
-  /\bBIR\s+form\b/i,
+  /\bbureau\s+of\s+internal\s+revenue\b/i,
   /\bRMC\b/i,
   /\bRMO\b/i,
   /\bRAMO\b/i,
-  /\bRR\s*\d/i,
   /\bRevenue\s+Regulation/i,
   /\bRevenue\s+Memorandum/i,
-  /\bBIR\s+ruling\b/i,
-  /\bBIR\s+issuance\b/i,
+  /\bBIR\s+[Rr]uling\b/i,
+  /\bBIR\s+[Ii]ssuance\b/i,
+  /\bBIR\s+[Ff]orm\b/i,
 
-  // NIRC / key statutes
+  // Match "RR No." or "RR 2-98" style revenue regulation citations
+  /\bRR\s*(?:No\.?\s*)?\d/i,
+
+  // ── NIRC and key statutes ──────────────────────────────────────────────
   /\bNIRC\b/i,
-  /\bNational Internal Revenue Code\b/i,
+  /\bNational\s+Internal\s+Revenue\s+Code\b/i,
   /\bTRAIN\s+[Ll]aw\b/i,
   /\bCREATE\s+[Ll]aw\b/i,
   /\bEOPT\b/i,
-  /\bEase of Paying Taxes\b/i,
+  /\bEase\s+of\s+Paying\s+Taxes\b/i,
   /\bRA\s*8424\b/i,
   /\bRA\s*10963\b/i,
   /\bRA\s*11534\b/i,
   /\bRA\s*11976\b/i,
   /\bRA\s*10667\b/i,
 
-  // Customs / BOC
-  /\bcustoms duty\b/i,
-  /\bcustoms duties\b/i,
+  // ── Income tax types ───────────────────────────────────────────────────
+  /\bRCIT\b/i,
+  /\bMCIT\b/i,
+  /\bITR\b/i,
+
+  // ── Other PH tax types ────────────────────────────────────────────────
+  /\bDST\b/i,
+  /\bDocumentary\s+Stamp/i,
+  /\bexcise\b/i,
+  /\bpercentage\s+tax\b/i,
+  /\bsin\s+tax\b/i,
+  /\bdonor'?s?\s+tax\b/i,
+  /\bestate\s+tax\b/i,
+  /\bCGT\b/i,
+
+  // ── Customs / BOC ─────────────────────────────────────────────────────
   /\bCMTA\b/i,
   /\btariff\b/i,
-  /\bimport duty\b/i,
+  /\bcustoms\s+duty\b/i,
+  /\bcustoms\s+duties\b/i,
+  /\bimport\s+duty\b/i,
+  /\bimport\s+dut/i,
   /\bBOC\b/i,
-  /\bBureau of Customs\b/i,
-  /\bpost.?clearance audit\b/i,
+  /\bbureau\s+of\s+customs\b/i,
+  /\bpost[- ]?clearance\s+audit\b/i,
   /\bcustoms\s+assessment\b/i,
 
-  // Local taxes
-  /\breal property tax\b/i,
+  // ── Local taxes ────────────────────────────────────────────────────────
   /\bRPT\b/i,
-  /\blocal business tax\b/i,
+  /\breal\s+property\s+tax\b/i,
+  /\blocal\s+business\s+tax\b/i,
   /\bLBT\b/i,
   /\bLGC\b/i,
-  /\bLocal Government Code\b/i,
-  /\bsitus\s+(of\s+)?tax/i,
+  /\bLocal\s+Government\s+Code\b/i,
+  /\bLGU\s+tax\b/i,
+  /\bsitus\s+(of\s+)?(tax|taxation)/i,
 
-  // Documentary stamp / excise
-  /\bDST\b/i,
-  /\bDocumentary Stamp/i,
-  /\bexcise tax\b/i,
-  /\bsin tax\b/i,
-
-  // Assessment / remedies
-  /\btax\s+assessment\b/i,
-  /\bdeficiency tax\b/i,
+  // ── Assessment / remedies ─────────────────────────────────────────────
   /\bLOA\b/i,
-  /\bLetter of Authority\b/i,
-  /\bPreliminary Assessment Notice\b/i,
-  /\bFinal Assessment Notice\b/i,
-  /\bFormal Letter of Demand\b/i,
-  /\bNotice for Informal Conference\b/i,
-  /\btax protest\b/i,
-  /\btax refund\b/i,
-  /\bclaim for refund\b/i,
-  /\bCTA\b/i,
-  /\bCourt of Tax Appeals\b/i,
-  /\bprescription\s+(period|of\s+assessment)\b/i,
-  /\btax\s+lien\b/i,
-  /\bcompromise\s+penalty\b/i,
+  /\bLetter\s+of\s+Authority\b/i,
+  /\bPreliminary\s+Assessment\s+Notice\b/i,
+  /\bFinal\s+Assessment\s+Notice\b/i,
+  /\bFDDA\b/i,
+  /\bFormal\s+Letter\s+of\s+Demand\b/i,
+  /\bNotice\s+for\s+Informal\s+Conference\b/i,
+  /\bdeficiency\b/i,
   /\bsurcharge\b/i,
-  /\bpenalt(y|ies)\s+under\s+(the\s+)?NIRC/i,
+  /\bcompromise\s+penalty\b/i,
+  /\bcompromise\s+offer\b/i,
+  /\btax\s+lien\b/i,
+  /\bdelinquency\b/i,
+  /\bCourt\s+of\s+Tax\s+Appeals\b/i,
+  /\bCTA\b/i,
+  /\bprescriptive\s+period\b/i,
 
-  // Incentives / special regimes
-  /\bPEZA\b/i,
-  /\bBOI\b/i,
-  /\bFIRB\b/i,
-  /\btax\s+incentive[s]?\b/i,
-  /\bIncome Tax Holiday\b/i,
-  /\bITH\b/i,
-  /\bSCIT\b/i,
-  /\bEnhanced Deductions\b/i,
-  /\bregistered\s+(business\s+)?enterprise\b/i,
-
-  // Transfer pricing / international
-  /\btransfer pricing\b/i,
-  /\btax treaty\b/i,
-  /\bdouble\s+tax/i,
-  /\bDTA\b/i,
-  /\bBEPS\b/i,
-  /\bpermanent establishment\b/i,
-  /\btax\s+sparing\b/i,
-
-  // Common BIR compliance references
-  /\bITR\b/i,
-  /\bBIR\s*2307\b/i,
-  /\bBIR\s*1601\b/i,
-  /\bBIR\s*1702\b/i,
+  // ── Tax-specific concepts ─────────────────────────────────────────────
+  /\bdeductible\b/i,
+  /\bdeductibility\b/i,
+  /\bnon[- ]?deductible\b/i,
+  /\bdeduction[s]?\b/i,
+  /\bsubstantiation\b/i,
+  /\bOfficially\s+Registered\b/i,
+  /\binvoic/i,
+  /\bofficial\s+receipt\b/i,
+  /\bbooks\s+of\s+account[s]?\b/i,
   /\bAlpha\s*[Ll]ist\b/i,
   /\bSLSP\b/i,
   /\beSales\b/i,
+
+  // ── Incentives / special regimes ──────────────────────────────────────
+  /\bPEZA\b/i,
+  /\bBOI\b/i,
+  /\bFIRB\b/i,
+  /\bITH\b/i,
+  /\bSCIT\b/i,
+  /\bIncome\s+Tax\s+Holiday\b/i,
+  /\bEnhanced\s+Deductions\b/i,
+  /\bregistered\s+(business\s+)?enterprise\b/i,
+
+  // ── Transfer pricing / international ──────────────────────────────────
+  /\btransfer\s+pricing\b/i,
+  /\bBEPS\b/i,
+  /\bpermanent\s+establishment\b/i,
+  /\btax\s+sparing\b/i,
+  /\bdouble\s+tax/i,
+  /\bDTA\b/i,
+  /\btax\s+treaty\b/i,
+
+  // ── Philippine-qualified phrases ──────────────────────────────────────
+  // Only allow "Philippine(s)" when followed by a tax-related word
+  /\bPhilippine\s+(tax|vat|bir|nirc|income|withholding|customs|tariff|duty|duties|law|code)/i,
+  /\bPhilippines\s+(tax|vat|bir|nirc)/i,
+  /\bFilipino\s+tax/i,
 ];
 
-// ─── Audit-mode tax signals ───────────────────────────────────────────────────
-// /audit is a BIR-controversy-only mode.
-// These patterns identify tax-audit context separate from isTaxRelated().
-
-const AUDIT_TAX_SIGNALS = [
-  /\bLOA\b/i,
-  /\bLetter of Authority\b/i,
-  /\bPAN\b/i,
-  /\bFAN\b/i,
-  /\bFLD\b/i,
-  /\bNIC\b/i,
-  /\bBIR\b/i,
-  /\bdeficiency tax\b/i,
-  /\btax\s+audit\b/i,
-  /\bBIR\s+audit\b/i,
-  /\btax\s+assessment\b/i,
-  /\btax\s+protest\b/i,
-  /\btax\s+exposure\b/i,
-  /\baudit\s+defense\b/i,
-  /\bCTA\b/i,
-  /\bprotest\s+letter\b/i,
-  /\brequest\s+for\s+reconsideration\b/i,
-  /\brequest\s+for\s+reinvestigation\b/i,
-  /\bcompromise\b/i,
-  /\bdelinquency\b/i,
-  /\bvat\s+audit\b/i,
-  /\bincome\s+tax\s+audit\b/i,
-  /\bcustoms\s+audit\b/i,
-  /\bpost.?clearance\s+audit\b/i,
-  /\bassessment\s+notice\b/i,
-  /\bsurcharge\b/i,
-  /\bpenalt(y|ies)\b/i,
-  /\binterest\s+(on\s+)?deficiency\b/i,
-  /\bBIR\s+examiner\b/i,
-  /\bBIR\s+investigat/i,
-];
-
-// ─── Clear non-tax reject patterns ───────────────────────────────────────────
-// Conservative list — only unambiguous non-Philippine-tax domains.
-// Each entry has a regex pattern and a domain label for logging.
+// ─── Non-tax REJECT patterns ──────────────────────────────────────────────────
+// Used to detect clearly non-Philippine-tax queries for explicit reject logging.
+// With fail-closed default, these are supplementary — they improve the log
+// reason and provide faster rejection before the default.
 
 const NON_TAX_REJECT_PATTERNS = [
   // Biology / life sciences
-  { pattern: /\bDNA\s+sequenc/i,                             domain: "BIOLOGY" },
-  { pattern: /\bcell\s+biology\b/i,                         domain: "BIOLOGY" },
-  { pattern: /\bgenetic\s+(code|mutation|engineering)\b/i,  domain: "BIOLOGY" },
-  { pattern: /\bphotosynthesis\b/i,                         domain: "BIOLOGY" },
-  { pattern: /\bmitosis\b|\bmeiosis\b/i,                    domain: "BIOLOGY" },
+  { pattern: /\bbiology\b/i,                                  domain: "BIOLOGY" },
+  { pattern: /\bDNA\b/i,                                      domain: "BIOLOGY" },
+  { pattern: /\bcell\s+biology\b/i,                          domain: "BIOLOGY" },
+  { pattern: /\bphotosynthesis\b/i,                          domain: "BIOLOGY" },
+  { pattern: /\bmitosis\b|\bmeiosis\b/i,                     domain: "BIOLOGY" },
+  { pattern: /\bgenetics\b|\bgenome\b/i,                     domain: "BIOLOGY" },
+  { pattern: /\becology\b/i,                                  domain: "BIOLOGY" },
+  { pattern: /\bzoology\b|\bbotany\b/i,                      domain: "BIOLOGY" },
+  { pattern: /\bevolution\b/i,                               domain: "BIOLOGY" },
+  { pattern: /\borganism\b|\bspecies\b/i,                    domain: "BIOLOGY" },
 
   // Medicine / clinical health
-  { pattern: /\bmedical\s+diagnosis\b/i,                    domain: "MEDICINE" },
-  { pattern: /\bsurgical\s+procedure\b/i,                   domain: "MEDICINE" },
-  { pattern: /\bhuman\s+anatomy\b/i,                        domain: "MEDICINE" },
-  { pattern: /\bcancer\s+treatment\b/i,                     domain: "MEDICINE" },
-  { pattern: /\bvaccine\s+efficacy\b/i,                     domain: "MEDICINE" },
-  { pattern: /\bchemotherapy\b/i,                           domain: "MEDICINE" },
-  { pattern: /\bmedical\s+prescription\b/i,                 domain: "MEDICINE" },
-  { pattern: /\bdrug\s+dosage\b/i,                          domain: "MEDICINE" },
-  { pattern: /\bclinical\s+trial[s]?\b/i,                   domain: "MEDICINE" },
+  { pattern: /\bmedical\s+diagnosis\b/i,                     domain: "MEDICINE" },
+  { pattern: /\bsurgical\s+procedure\b/i,                    domain: "MEDICINE" },
+  { pattern: /\bhuman\s+anatomy\b/i,                         domain: "MEDICINE" },
+  { pattern: /\bcancer\s+treatment\b/i,                      domain: "MEDICINE" },
+  { pattern: /\bvaccine\s+efficacy\b/i,                      domain: "MEDICINE" },
+  { pattern: /\bchemotherapy\b/i,                            domain: "MEDICINE" },
+  { pattern: /\bmedical\s+prescription\b/i,                  domain: "MEDICINE" },
+  { pattern: /\bdrug\s+dosage\b/i,                           domain: "MEDICINE" },
+  { pattern: /\bclinical\s+trial[s]?\b/i,                    domain: "MEDICINE" },
 
-  // Cooking / food
-  { pattern: /\bhow\s+to\s+(cook|bake|fry|boil|steam)\b/i, domain: "COOKING" },
-  { pattern: /\brecipe\s+for\b/i,                           domain: "COOKING" },
-  { pattern: /\bingredients\s+(for|of)\b/i,                 domain: "COOKING" },
-  { pattern: /\bcooking\s+(tips|instructions)\b/i,          domain: "COOKING" },
+  // Politics / government (non-tax)
+  { pattern: /\bwho\s+is\s+the\s+president\b/i,             domain: "POLITICS" },
+  { pattern: /\bpresidential\s+election\b/i,                 domain: "POLITICS" },
+  { pattern: /\bsenate\s+(bill|hearing|seat)\b/i,            domain: "POLITICS" },
+  { pattern: /\bcongress(man|woman|person)?\s+(election|seat)\b/i, domain: "POLITICS" },
+  { pattern: /\bpolitical\s+(party|rally|campaign)\b/i,      domain: "POLITICS" },
+  { pattern: /\bvot(e|ing)\s+(for|in)\s+the\s+(election|election)\b/i, domain: "POLITICS" },
 
-  // Personal / romantic relationships
-  { pattern: /\brelationship\s+advice\b/i,                  domain: "PERSONAL" },
-  { pattern: /\bhow\s+to\s+(attract|impress|seduce)\b/i,   domain: "PERSONAL" },
-  { pattern: /\bdating\s+(tips|advice|app)\b/i,             domain: "PERSONAL" },
-  { pattern: /\bhow\s+to\s+win\s+(back|over)\b/i,          domain: "PERSONAL" },
-  { pattern: /\blove\s+(advice|letter)\b/i,                 domain: "PERSONAL" },
+  // Coding / software development
+  { pattern: /\bwrite\s+(a\s+)?(python|javascript|java|c\+\+|ruby|golang|typescript|react|angular|vue|swift)\s+(code|program|script|function|class|component)\b/i, domain: "PROGRAMMING" },
+  { pattern: /\bhow\s+to\s+code\b/i,                        domain: "PROGRAMMING" },
+  { pattern: /\bdebug\s+(my\s+)?(code|program|script)\b/i,  domain: "PROGRAMMING" },
+  { pattern: /\bsoftware\s+(architecture|engineering|development)\b/i, domain: "PROGRAMMING" },
+  { pattern: /\bReact\.(js|tsx?)\b/i,                       domain: "PROGRAMMING" },
+  { pattern: /\bNode\.js\b/i,                               domain: "PROGRAMMING" },
+  { pattern: /\bSQL\s+(query|database)\b/i,                  domain: "PROGRAMMING" },
+  { pattern: /\bprogramming\s+language\b/i,                  domain: "PROGRAMMING" },
+  { pattern: /\bGitHub\s+(repo|pull\s+request)\b/i,          domain: "PROGRAMMING" },
+  { pattern: /\bAPI\s+(endpoint|integration)\b/i,            domain: "PROGRAMMING" },
 
-  // Sports (score/game queries, not sports-industry tax)
-  { pattern: /\bfootball\s+score\b/i,                       domain: "SPORTS" },
-  { pattern: /\bbasketball\s+(game\s+score|nba\s+score)\b/i, domain: "SPORTS" },
-  { pattern: /\bsoccer\s+(score|match\s+result)\b/i,        domain: "SPORTS" },
-  { pattern: /\bbaseball\s+(score|standings)\b/i,           domain: "SPORTS" },
+  // Romantic / personal relationships
+  { pattern: /\blove\s+letter\b/i,                           domain: "PERSONAL" },
+  { pattern: /\brelationship\s+advice\b/i,                   domain: "PERSONAL" },
+  { pattern: /\bhow\s+to\s+(attract|impress|seduce)\b/i,    domain: "PERSONAL" },
+  { pattern: /\bdating\s+(tips|advice|app)\b/i,              domain: "PERSONAL" },
+  { pattern: /\bhow\s+to\s+win\s+(back|over)\b/i,           domain: "PERSONAL" },
+  { pattern: /\bwrite\s+(me\s+)?a\s+love\b/i,               domain: "PERSONAL" },
+
+  // Sports (score/game queries)
+  { pattern: /\bfootball\s+score\b/i,                        domain: "SPORTS" },
+  { pattern: /\bnba\s+(score|game|standings)\b/i,            domain: "SPORTS" },
+  { pattern: /\bbasketball\s+(game\s+score|standings)\b/i,   domain: "SPORTS" },
+  { pattern: /\bsoccer\s+(score|match\s+result)\b/i,         domain: "SPORTS" },
   { pattern: /\bwho\s+won\s+the\s+(game|match|championship)\b/i, domain: "SPORTS" },
 
-  // Travel / tourism (not airline/hotel tax)
-  { pattern: /\btravel\s+(guide|itinerary|tips)\b/i,        domain: "TRAVEL" },
-  { pattern: /\btourist\s+spots?\b/i,                       domain: "TRAVEL" },
-  { pattern: /\bhotel\s+recommendation[s]?\b/i,             domain: "TRAVEL" },
-  { pattern: /\bbest\s+place[s]?\s+to\s+visit\b/i,         domain: "TRAVEL" },
-  { pattern: /\btravel\s+package[s]?\b/i,                   domain: "TRAVEL" },
+  // Travel / tourism
+  { pattern: /\btravel\s+(guide|itinerary|tips)\b/i,         domain: "TRAVEL" },
+  { pattern: /\btourist\s+spots?\b/i,                        domain: "TRAVEL" },
+  { pattern: /\bhotel\s+recommendation[s]?\b/i,              domain: "TRAVEL" },
+  { pattern: /\bbest\s+place[s]?\s+to\s+visit\b/i,          domain: "TRAVEL" },
 
   // Entertainment / media
-  { pattern: /\bmovie\s+review\b/i,                         domain: "ENTERTAINMENT" },
-  { pattern: /\bTV\s+show\s+recommendation\b/i,             domain: "ENTERTAINMENT" },
-  { pattern: /\bcelebrit(y|ies)\s+gossip\b/i,               domain: "ENTERTAINMENT" },
-  { pattern: /\bfilm\s+critique\b/i,                        domain: "ENTERTAINMENT" },
-  { pattern: /\bsong\s+(lyrics|recommendation)\b/i,         domain: "ENTERTAINMENT" },
+  { pattern: /\bmovie\s+review\b/i,                          domain: "ENTERTAINMENT" },
+  { pattern: /\bTV\s+show\s+recommendation\b/i,              domain: "ENTERTAINMENT" },
+  { pattern: /\bcelebrit(y|ies)\s+gossip\b/i,                domain: "ENTERTAINMENT" },
+  { pattern: /\bsong\s+lyrics\b/i,                           domain: "ENTERTAINMENT" },
 
-  // Pure software / programming (not "tax code" or "revenue code")
-  { pattern: /\bwrite\s+(a\s+)?(python|javascript|java|c\+\+|ruby|golang|typescript)\s+(code|program|script|function)\b/i, domain: "PROGRAMMING" },
-  { pattern: /\bhow\s+to\s+code\s+(a\s+)?(function|class|loop)\b/i,  domain: "PROGRAMMING" },
-  { pattern: /\bdebug\s+(my\s+)?(code|program)\b/i,         domain: "PROGRAMMING" },
-  { pattern: /\bsoftware\s+architecture\b/i,                domain: "PROGRAMMING" },
-  { pattern: /\bcompile\s+(my\s+)?(code|program)\b/i,       domain: "PROGRAMMING" },
+  // Cooking / food
+  { pattern: /\bhow\s+to\s+(cook|bake|fry|boil|steam)\b/i,  domain: "COOKING" },
+  { pattern: /\brecipe\s+for\b/i,                            domain: "COOKING" },
+  { pattern: /\bingredients\s+(for|of)\b/i,                  domain: "COOKING" },
 
-  // Civil / family law (unambiguously non-tax)
-  { pattern: /\bnullity\s+of\s+marriage\b/i,                domain: "CIVIL_LAW" },
+  // Pure civil / family law (non-tax)
+  { pattern: /\bnullity\s+of\s+marriage\b/i,                 domain: "CIVIL_LAW" },
   { pattern: /\bannulment\s+(of\s+marriage|proceedings)\b/i, domain: "CIVIL_LAW" },
-  { pattern: /\blegal\s+separation\s+grounds\b/i,           domain: "CIVIL_LAW" },
-  { pattern: /\badoption\s+proceedings\b/i,                 domain: "CIVIL_LAW" },
-  { pattern: /\bcustody\s+(of\s+)?(a\s+)?child\b/i,        domain: "CIVIL_LAW" },
+  { pattern: /\blegal\s+separation\s+grounds\b/i,            domain: "CIVIL_LAW" },
+  { pattern: /\badoption\s+proceedings\b/i,                  domain: "CIVIL_LAW" },
 
-  // Criminal law (unambiguously non-tax — tax crimes handled separately)
-  { pattern: /\bmurder\s+(charge|case|trial)\b/i,           domain: "CRIMINAL_LAW" },
-  { pattern: /\bkidnapping\s+(case|charge)\b/i,             domain: "CRIMINAL_LAW" },
-  { pattern: /\bdrug\s+trafficking\b/i,                     domain: "CRIMINAL_LAW" },
+  // Criminal law (unambiguously non-tax)
+  { pattern: /\bmurder\s+(charge|case|trial)\b/i,            domain: "CRIMINAL_LAW" },
+  { pattern: /\bkidnapping\s+(case|charge)\b/i,              domain: "CRIMINAL_LAW" },
+  { pattern: /\bdrug\s+trafficking\b/i,                      domain: "CRIMINAL_LAW" },
 
-  // Pure physical science
-  { pattern: /\bquantum\s+mechanics\b/i,                    domain: "PHYSICS" },
-  { pattern: /\bblack\s+hole[s]?\b/i,                       domain: "PHYSICS" },
-  { pattern: /\bastrophysics\b/i,                           domain: "PHYSICS" },
-  { pattern: /\bstring\s+theory\b/i,                        domain: "PHYSICS" },
-  { pattern: /\bnuclear\s+physics\b/i,                      domain: "PHYSICS" },
+  // Pure physical / natural science
+  { pattern: /\bphotosynthesis\b/i,                          domain: "SCIENCE" },
+  { pattern: /\bquantum\s+mechanics\b/i,                     domain: "SCIENCE" },
+  { pattern: /\bblack\s+hole[s]?\b/i,                        domain: "SCIENCE" },
+  { pattern: /\bastrophysics\b/i,                            domain: "SCIENCE" },
+  { pattern: /\bstring\s+theory\b/i,                         domain: "SCIENCE" },
+  { pattern: /\bNewton'?s?\s+law[s]?\b/i,                    domain: "SCIENCE" },
 
   // Pet / animal care
-  { pattern: /\bhow\s+to\s+(train|groom|feed)\s+(my\s+)?(dog|cat|pet|hamster)\b/i, domain: "PETS" },
-  { pattern: /\bdog\s+(breed|grooming|training\s+tips)\b/i, domain: "PETS" },
-  { pattern: /\bcat\s+(care|breed|food\s+recommendation)\b/i, domain: "PETS" },
+  { pattern: /\bhow\s+to\s+(train|groom|feed)\s+(my\s+)?(dog|cat|pet)\b/i, domain: "PETS" },
+  { pattern: /\bdog\s+(breed|grooming|training\s+tips)\b/i,  domain: "PETS" },
+];
+
+// ─── Audit-mode tax signals ───────────────────────────────────────────────────
+// For /audit mode: require at least one of these to be present.
+// /audit is a BIR-tax-controversy-only mode.
+
+const AUDIT_TAX_SIGNALS = [
+  /\bLOA\b/i,
+  /\bLetter\s+of\s+Authority\b/i,
+  /\bPAN\b/i,
+  /\bFAN\b/i,
+  /\bFDDA\b/i,
+  /\bFLD\b/i,
+  /\bNIC\b/i,
+  /\bBIR\b/i,
+  /\bdeficiency\b/i,
+  /\btax\b/i,
+  /\bvat\b/i,
+  /\bwithholding\b/i,
+  /\baudit\s+defense\b/i,
+  /\btax\s+assessment\b/i,
+  /\btax\s+protest\b/i,
+  /\btax\s+exposure\b/i,
+  /\bprotest\s+letter\b/i,
+  /\breconsideration\b/i,
+  /\breinvestigation\b/i,
+  /\bcompromise\b/i,
+  /\bdelinquency\b/i,
+  /\bBIR\s+examiner\b/i,
+  /\bCTA\b/i,
+  /\bpost[- ]?clearance\b/i,
 ];
 
 // ─── Main classifier ──────────────────────────────────────────────────────────
 
 /**
- * checkPhilippineTaxBoundary
+ * detectPhilippineTaxBoundary
  *
- * Synchronous, no-I/O domain classifier.
+ * Synchronous, no-I/O domain classifier. FAIL-CLOSED by design:
+ * queries without a Philippine-tax indicator are REJECTED by default.
  *
- * @param {string} query  — the user query text (cleanQuestion preferred)
- * @param {string} hook   — the resolved hook code (e.g. "/ask", "/audit")
- * @returns {{ isPhilippineTax: boolean, decision: "ALLOW"|"REJECT"|"CLARIFY", detectedDomain: string, reason: string }}
+ * @param {string} query       — user query text (cleanQuestion preferred)
+ * @param {string} routeMode   — resolved hook/route (e.g. "/ask", "/audit")
+ * @param {object} [context]   — optional extra context (reserved for future use)
+ * @returns {{
+ *   isPhilippineTax: boolean,
+ *   decision: "ALLOW"|"REJECT"|"CLARIFY",
+ *   detectedDomain: string,
+ *   reason: string,
+ *   confidence: number
+ * }}
  */
-export function checkPhilippineTaxBoundary(query = "", hook = "/ask") {
+export function detectPhilippineTaxBoundary(query = "", routeMode = "/ask", context = {}) {
   const q = String(query || "").trim();
-  const h = String(hook || "/ask").toLowerCase();
+  const h = String(routeMode || "/ask").toLowerCase();
 
-  // ── 1. Bypass hooks — meta/utility routes must never be blocked ───────────
+  // ── 1. Bypass hooks — meta/utility routes never blocked ──────────────────
   if (BYPASS_HOOKS.has(h)) {
-    return {
-      isPhilippineTax: true,
-      decision:        "ALLOW",
-      detectedDomain:  "UTILITY",
-      reason:          "bypass_hook",
-    };
+    return { isPhilippineTax: true, decision: "ALLOW", detectedDomain: "UTILITY", reason: "bypass_hook", confidence: 1.0 };
   }
 
   // ── 2. Empty query — let downstream handle validation ────────────────────
   if (!q) {
-    return {
-      isPhilippineTax: false,
-      decision:        "ALLOW",
-      detectedDomain:  "UNKNOWN",
-      reason:          "empty_query",
-    };
+    return { isPhilippineTax: false, decision: "ALLOW", detectedDomain: "UNKNOWN", reason: "empty_query", confidence: 0.0 };
   }
 
-  // ── 3. Strong Philippine-tax allow patterns ───────────────────────────────
+  // ── 3. Philippine-tax allowlist (ALLOW path) ─────────────────────────────
+  // Check allow patterns first — any match → ALLOW immediately.
   for (const pattern of PH_TAX_ALLOW_PATTERNS) {
     if (pattern.test(q)) {
-      return {
-        isPhilippineTax: true,
-        decision:        "ALLOW",
-        detectedDomain:  "PHILIPPINE_TAX",
-        reason:          "ph_tax_pattern_match",
-      };
+      return { isPhilippineTax: true, decision: "ALLOW", detectedDomain: "PHILIPPINE_TAX", reason: "ph_tax_pattern_match", confidence: 0.98 };
     }
   }
 
-  // ── 4. isTaxRelated keyword check (broader, covers edge cases) ────────────
+  // ── 4. isTaxRelated keyword check (broader catch-all) ────────────────────
   if (isTaxRelated(q)) {
-    return {
-      isPhilippineTax: true,
-      decision:        "ALLOW",
-      detectedDomain:  "TAX_KEYWORD",
-      reason:          "tax_keyword_match",
-    };
+    return { isPhilippineTax: true, decision: "ALLOW", detectedDomain: "TAX_KEYWORD", reason: "tax_keyword_match", confidence: 0.85 };
   }
 
-  // ── 5. Hook-specific strict checks ───────────────────────────────────────
-  // /quiz and /review are tax-practice-only modes — no non-tax questions.
+  // ───────────────────────────────────────────────────────────────────────────
+  // Below this line: no Philippine-tax signal was detected.
+  // All paths lead to REJECT or CLARIFY — NEVER ALLOW.
+  // ───────────────────────────────────────────────────────────────────────────
+
+  // ── 5. Hook-specific strict rejection ────────────────────────────────────
+
+  // /quiz and /review are Philippine-tax-practice-only modes.
   if (h === "/quiz" || h === "/review") {
-    return {
-      isPhilippineTax: false,
-      decision:        "REJECT",
-      detectedDomain:  "NON_TAX",
-      reason:          "quiz_review_requires_tax_topic",
-    };
+    return { isPhilippineTax: false, decision: "REJECT", detectedDomain: "NON_TAX", reason: "quiz_review_requires_tax_topic", confidence: 0.95 };
   }
 
-  // /audit is BIR-tax-controversy only — require at least one audit-tax signal.
+  // /audit is BIR-tax-controversy only.
   if (h === "/audit") {
     const hasAuditTaxSignal = AUDIT_TAX_SIGNALS.some(p => p.test(q));
     if (!hasAuditTaxSignal) {
-      return {
-        isPhilippineTax: false,
-        decision:        "REJECT",
-        detectedDomain:  "NON_TAX",
-        reason:          "audit_mode_no_tax_signal",
-      };
+      return { isPhilippineTax: false, decision: "REJECT", detectedDomain: "NON_TAX", reason: "audit_mode_no_tax_signal", confidence: 0.92 };
     }
   }
 
-  // ── 6. Clear non-tax reject patterns ─────────────────────────────────────
+  // ── 6. Explicit non-tax domain patterns ──────────────────────────────────
+  // These provide a specific domain label in logs.
   for (const { pattern, domain } of NON_TAX_REJECT_PATTERNS) {
     if (pattern.test(q)) {
-      return {
-        isPhilippineTax: false,
-        decision:        "REJECT",
-        detectedDomain:  domain,
-        reason:          "non_tax_domain_pattern",
-      };
+      return { isPhilippineTax: false, decision: "REJECT", detectedDomain: domain, reason: "non_tax_domain_pattern", confidence: 0.95 };
     }
   }
 
-  // ── 7. Conservative default: ALLOW ────────────────────────────────────────
-  // Err on the side of allowing to avoid false-positive rejections.
-  // TINA's downstream issue-classification engine handles further scoping.
+  // ── 7. FAIL-CLOSED DEFAULT ────────────────────────────────────────────────
+  // No Philippine-tax signal found. Reject by default.
+  // This is intentional — it prevents non-tax queries from reaching retrieval
+  // and OpenAI when no tax indicator is present.
+  // Use CLARIFY so the user is invited to rephrase with a tax framing,
+  // rather than getting a hard "wrong domain" message.
   return {
-    isPhilippineTax: true,
-    decision:        "ALLOW",
+    isPhilippineTax: false,
+    decision:        "CLARIFY",
     detectedDomain:  "UNCLASSIFIED",
-    reason:          "default_allow",
+    reason:          "fail_closed_no_tax_signal",
+    confidence:      0.60,
   };
 }
+
+// ─── Backward-compat alias (v1 callers) ──────────────────────────────────────
+// Remove once all callers use detectPhilippineTaxBoundary.
+export const checkPhilippineTaxBoundary = detectPhilippineTaxBoundary;

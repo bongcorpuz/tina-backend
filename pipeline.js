@@ -53,7 +53,7 @@ import {
   sourceTitleOf
 }                                                 from "./source-visibility-engine.js";
 import {
-  checkPhilippineTaxBoundary,
+  detectPhilippineTaxBoundary,
   BOUNDARY_REJECTION_MESSAGE
 }                                                 from "./services/philippine-tax-domain-boundary.js";
 
@@ -341,13 +341,11 @@ export async function runPipeline({
     }
   });
 
-  // ── Defense-in-depth: Philippine Tax Domain Boundary ─────────────────────
-  // This guard catches any direct call to runPipeline() that bypassed the
-  // ask-handler.js primary enforcement.  Deliberately lenient: uses the same
-  // conservative-default logic, but logs a distinct tag so we can detect any
-  // bypass path in prod logs.
+  // ── Defense-in-depth: Philippine Tax Domain Boundary (FAIL-CLOSED) ─────────
+  // Catches any direct call to runPipeline() that bypassed ask-handler.js.
+  // Both REJECT and CLARIFY abort the pipeline — no retrieval, no OpenAI.
   {
-    const _pipelineBoundaryCheck = checkPhilippineTaxBoundary(query || "", hook || "/ask");
+    const _pipelineBoundaryCheck = detectPhilippineTaxBoundary(query || "", hook || "/ask");
     console.log("[PIPELINE DOMAIN BOUNDARY CHECK]", {
       query:           (query || "").slice(0, 120),
       hook,
@@ -355,21 +353,31 @@ export async function runPipeline({
       isPhilippineTax: _pipelineBoundaryCheck.isPhilippineTax,
       decision:        _pipelineBoundaryCheck.decision,
       reason:          _pipelineBoundaryCheck.reason,
+      confidence:      _pipelineBoundaryCheck.confidence,
     });
-    if (_pipelineBoundaryCheck.decision === "REJECT") {
+    if (_pipelineBoundaryCheck.decision === "REJECT" || _pipelineBoundaryCheck.decision === "CLARIFY") {
+      console.log("[PIPELINE DOMAIN BOUNDARY REJECTED]", {
+        query:      (query || "").slice(0, 120),
+        hook,
+        decision:   _pipelineBoundaryCheck.decision,
+        reason:     _pipelineBoundaryCheck.reason,
+        confidence: _pipelineBoundaryCheck.confidence,
+        blocked:    true,
+      });
       endTrace({ traceId, name: "tina-pipeline", status: "DOMAIN_BOUNDARY_REJECT", hook });
       return {
-        answer:               BOUNDARY_REJECTION_MESSAGE,
-        sources:              [],
-        sourcesUsed:          [],
-        sourceCards:          [],
-        vectorMatches:        0,
-        sourceStatus:         "DOMAIN_BOUNDARY_REJECT",
-        domainBoundary:       true,
-        domainBoundaryDecision: "REJECT",
-        domainBoundaryReason: _pipelineBoundaryCheck.reason,
-        detectedDomain:       _pipelineBoundaryCheck.detectedDomain,
-        pipelineVersion:      PIPELINE_VERSION,
+        answer:                   BOUNDARY_REJECTION_MESSAGE,
+        sources:                  [],
+        sourcesUsed:              [],
+        sourceCards:              [],
+        vectorMatches:            0,
+        sourceStatus:             "DOMAIN_BOUNDARY_REJECT",
+        domainBoundary:           true,
+        domainBoundaryDecision:   _pipelineBoundaryCheck.decision,
+        domainBoundaryReason:     _pipelineBoundaryCheck.reason,
+        domainBoundaryConfidence: _pipelineBoundaryCheck.confidence,
+        detectedDomain:           _pipelineBoundaryCheck.detectedDomain,
+        pipelineVersion:          PIPELINE_VERSION,
       };
     }
   }

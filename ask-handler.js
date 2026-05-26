@@ -59,8 +59,9 @@ import {
 import { runPipeline } from "./pipeline.js";
 
 import {
-  checkPhilippineTaxBoundary,
-  BOUNDARY_REJECTION_MESSAGE
+  detectPhilippineTaxBoundary,
+  BOUNDARY_REJECTION_MESSAGE,
+  BOUNDARY_CLARIFY_MESSAGE
 } from "./services/philippine-tax-domain-boundary.js";
 
 const ENGINE_VERSION = "9.0.0";
@@ -2263,66 +2264,64 @@ export function createAskHandler({
 
       const compactHookConfig = buildCompactHookConfig(hookConfig);
 
-      // ─── PHILIPPINE TAX DOMAIN BOUNDARY ──────────────────────────────────────
-      // Pre-retrieval check: reject non-Philippine-tax queries before any pipeline
-      // or OpenAI call. Conservative default is ALLOW (avoids false positives).
+      // ─── PHILIPPINE TAX DOMAIN BOUNDARY (FAIL-CLOSED) ───────────────────────
+      // Pre-retrieval check: reject non-Philippine-tax queries before any
+      // pipeline, retrieval, assessment handler, or OpenAI call.
+      // Default is REJECT — ALLOW is granted only when a PH-tax signal is found.
       {
         const _boundaryQuery =
           String(compactHookConfig.cleanQuestion || compactHookConfig.originalQuestion || rawQuestion || "").trim();
-        const _boundaryCheck = checkPhilippineTaxBoundary(_boundaryQuery, compactHookConfig.hook_code);
+        const _boundaryCheck = detectPhilippineTaxBoundary(_boundaryQuery, compactHookConfig.hook_code);
 
         console.log("[DOMAIN BOUNDARY CHECK]", {
-          query:          _boundaryQuery.slice(0, 120),
-          route:          compactHookConfig.hook_code,
-          mode:           compactHookConfig.mode,
-          detectedDomain: _boundaryCheck.detectedDomain,
+          query:           _boundaryQuery.slice(0, 120),
+          route:           compactHookConfig.hook_code,
+          mode:            compactHookConfig.mode,
+          detectedDomain:  _boundaryCheck.detectedDomain,
           isPhilippineTax: _boundaryCheck.isPhilippineTax,
-          decision:       _boundaryCheck.decision,
-          reason:         _boundaryCheck.reason,
+          decision:        _boundaryCheck.decision,
+          reason:          _boundaryCheck.reason,
+          confidence:      _boundaryCheck.confidence,
         });
 
-        if (_boundaryCheck.decision === "REJECT") {
-          return res.json({
-            success:              true,
-            engine:               "TINA_ASK_HANDLER",
-            version:              ENGINE_VERSION,
-            hook:                 compactHookConfig.hook_code || "/ask",
-            mode:                 compactHookConfig.mode || "GENERAL",
-            routeKind:            "DOMAIN_BOUNDARY",
-            answer:               BOUNDARY_REJECTION_MESSAGE,
-            sources:              [],
-            sourcesUsed:          [],
-            sourceCards:          [],
-            vectorMatches:        0,
-            sourceStatus:         "DOMAIN_BOUNDARY_REJECT",
-            domainBoundary:       true,
-            domainBoundaryDecision: "REJECT",
-            domainBoundaryReason: _boundaryCheck.reason,
-            detectedDomain:       _boundaryCheck.detectedDomain,
-            askHandlerVersion:    ENGINE_VERSION,
-            contextOrchestrationEnabled: true,
-          });
-        }
+        if (_boundaryCheck.decision === "REJECT" || _boundaryCheck.decision === "CLARIFY") {
+          const _isHardReject  = _boundaryCheck.decision === "REJECT";
+          const _boundaryMsg   = _isHardReject ? BOUNDARY_REJECTION_MESSAGE : BOUNDARY_CLARIFY_MESSAGE;
+          const _boundaryStatus = _isHardReject ? "DOMAIN_BOUNDARY_REJECT" : "DOMAIN_BOUNDARY_CLARIFY";
 
-        if (_boundaryCheck.decision === "CLARIFY") {
+          console.log("[DOMAIN BOUNDARY REJECTED]", {
+            query:           _boundaryQuery.slice(0, 120),
+            route:           compactHookConfig.hook_code,
+            mode:            compactHookConfig.mode,
+            detectedDomain:  _boundaryCheck.detectedDomain,
+            decision:        _boundaryCheck.decision,
+            reason:          _boundaryCheck.reason,
+            confidence:      _boundaryCheck.confidence,
+            blocked:         true,
+            pipelineReached: false,
+            retrievalReached: false,
+            openAIReached:   false,
+          });
+
           return res.json({
-            success:              true,
-            engine:               "TINA_ASK_HANDLER",
-            version:              ENGINE_VERSION,
-            hook:                 compactHookConfig.hook_code || "/ask",
-            mode:                 compactHookConfig.mode || "GENERAL",
-            routeKind:            "DOMAIN_BOUNDARY",
-            answer:               BOUNDARY_REJECTION_MESSAGE,
-            sources:              [],
-            sourcesUsed:          [],
-            sourceCards:          [],
-            vectorMatches:        0,
-            sourceStatus:         "DOMAIN_BOUNDARY_CLARIFY",
-            domainBoundary:       true,
-            domainBoundaryDecision: "CLARIFY",
-            domainBoundaryReason: _boundaryCheck.reason,
-            detectedDomain:       _boundaryCheck.detectedDomain,
-            askHandlerVersion:    ENGINE_VERSION,
+            success:                true,
+            engine:                 "TINA_ASK_HANDLER",
+            version:                ENGINE_VERSION,
+            hook:                   compactHookConfig.hook_code || "/ask",
+            mode:                   compactHookConfig.mode || "GENERAL",
+            routeKind:              "DOMAIN_BOUNDARY",
+            answer:                 _boundaryMsg,
+            sources:                [],
+            sourcesUsed:            [],
+            sourceCards:            [],
+            vectorMatches:          0,
+            sourceStatus:           _boundaryStatus,
+            domainBoundary:         true,
+            domainBoundaryDecision: _boundaryCheck.decision,
+            domainBoundaryReason:   _boundaryCheck.reason,
+            domainBoundaryConfidence: _boundaryCheck.confidence,
+            detectedDomain:         _boundaryCheck.detectedDomain,
+            askHandlerVersion:      ENGINE_VERSION,
             contextOrchestrationEnabled: true,
           });
         }
