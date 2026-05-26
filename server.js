@@ -28,7 +28,8 @@ import {
   getVectorStoreStats,
   normalizeSourceName,
   INSTANCE_ID,
-  acquireReindexLock
+  acquireReindexLock,
+  releaseReindexLock
 } from "./vector-store.js";
 
 import { createAskHandler, askHandlerHealthCheck } from "./ask-handler.js";
@@ -507,10 +508,11 @@ app.get("/conversations/:conversationId/messages", authenticate, async (req, res
 
 /* ================= INDEX ROUTES ================= */
 
-function startIndexingResponse(route) {
+async function startIndexingResponse(route) {
   // Block full reindex while targeted reindex is running — both write NIRC rows.
   if (isTargetedReindexRunning()) {
     return {
+      httpStatus: 409,
       success: false,
       started: false,
       reason: "targeted_reindex_running",
@@ -518,27 +520,78 @@ function startIndexingResponse(route) {
         "Wait for [REINDEX COMPLETE] in Render logs before starting a full reindex.",
     };
   }
-  const started = reindexController.start();
+
+  // Acquire DB lock synchronously before returning started:true.
+  // This guarantees the client only sees started:true when the lock is confirmed held.
+  // If the lock is denied or the table is missing, the route returns 409/503 instead.
+  const jobId = generateJobId();
+  const lockResult = await acquireReindexLock(jobId, "full_drive_reindex");
+
+  if (!lockResult.acquired) {
+    return {
+      httpStatus: lockResult.reason === "lock_held" ? 409 : 503,
+      success: false,
+      started: false,
+      lockAcquired: false,
+      jobId,
+      reason: lockResult.reason,
+      existingJobId: lockResult.existingJobId || null,
+      message: lockResult.reason === "lock_held"
+        ? "Another reindex job holds the DB lock. Check Render logs for [REINDEX LOCK ACQUIRED] / [REINDEX COMPLETE]."
+        : "Cannot acquire reindex lock — tina_reindex_locks table missing or RLS error. Run the migration and check /debug/db-identity.",
+    };
+  }
+
+  // Lock confirmed. Attempt to start the background controller.
+  // If already running in-memory (race condition guard), release the lock we just acquired.
+  const startResult = reindexController.start(jobId);
+
+  if (!startResult.started) {
+    await releaseReindexLock(jobId).catch(e =>
+      console.error("[REINDEX] Failed to release lock after start() denied", {
+        jobId, error: e?.message,
+      })
+    );
+    return {
+      httpStatus: 409,
+      success: false,
+      started: false,
+      lockAcquired: false,
+      jobId,
+      reason: "full_reindex_running",
+      message: "Indexing is already running.",
+    };
+  }
 
   return {
+    httpStatus: 200,
     success: true,
     engine: "TINA Background Indexing Engine",
     route,
-    ...started,
+    started: true,
+    lockAcquired: true,
+    jobId,
+    message: "Full reindex started in background. DB lock confirmed before this response.",
     statusUrl: "/index-status?secret=YOUR_SECRET"
   };
 }
 
 app.get("/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
-  return res.json(startIndexingResponse("/index-drive"));
+  const result = await startIndexingResponse("/index-drive");
+  const { httpStatus = 200, ...body } = result;
+  return res.status(httpStatus).json(body);
 });
 
 app.get("/reindex", allowAuthenticatedOrIndexSecret, async (req, res) => {
-  return res.json(startIndexingResponse("/reindex"));
+  const result = await startIndexingResponse("/reindex");
+  const { httpStatus = 200, ...body } = result;
+  return res.status(httpStatus).json(body);
 });
 
 app.get("/admin/index-drive", allowAuthenticatedOrIndexSecret, async (req, res) => {
-  return res.json(startIndexingResponse("/admin/index-drive"));
+  const result = await startIndexingResponse("/admin/index-drive");
+  const { httpStatus = 200, ...body } = result;
+  return res.status(httpStatus).json(body);
 });
 
 app.get("/reindex-targeted", allowAuthenticatedOrIndexSecret, async (req, res) => {

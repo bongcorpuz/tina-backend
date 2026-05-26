@@ -1126,14 +1126,14 @@ export async function upsertIndexedChunks(text = "", metadata = {}, { skipDelete
   };
 }
 
-export async function runDriveReindex() {
+export async function runDriveReindex({ preAcquiredJobId = null } = {}) {
   const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
 
   if (!folderId) {
     throw new Error("GOOGLE_DRIVE_FOLDER_ID not set");
   }
 
-  const jobId = generateJobId();
+  const jobId = preAcquiredJobId || generateJobId();
 
   // Compute DB identity fields once — used in logs and identity assertions.
   const _supabaseUrl = process.env.SUPABASE_URL || "";
@@ -1160,22 +1160,32 @@ export async function runDriveReindex() {
 
   // Acquire DB lock — fail closed: if lock cannot be acquired for ANY reason
   // (lock_held OR lock_error), abort immediately. No unlocked reindex allowed.
-  const lockResult = await acquireReindexLock(jobId, "full_drive_reindex");
-  if (!lockResult.acquired) {
-    const reason = lockResult.reason;
-    console.error("[REINDEX DRIVE] Cannot acquire lock — aborting (fail-closed)", {
+  // If preAcquiredJobId was provided, the lock was confirmed at route level — skip re-acquisition.
+  if (!preAcquiredJobId) {
+    const lockResult = await acquireReindexLock(jobId, "full_drive_reindex");
+    if (!lockResult.acquired) {
+      const reason = lockResult.reason;
+      console.error("[REINDEX DRIVE] Cannot acquire lock — aborting (fail-closed)", {
+        jobId,
+        reason,
+        existingJobId: lockResult.existingJobId || null,
+        error: lockResult.error || null,
+      });
+      return {
+        skipped: true,
+        reason,
+        jobId,
+        existingJobId: lockResult.existingJobId || null,
+        error: lockResult.error || null,
+      };
+    }
+  } else {
+    console.info("[REINDEX LOCK PRE-ACQUIRED]", {
       jobId,
-      reason,
-      existingJobId: lockResult.existingJobId || null,
-      error: lockResult.error || null,
+      mode: "full_drive_reindex",
+      instanceId: INSTANCE_ID,
+      note: "Lock was acquired at route level — skipping re-acquisition",
     });
-    return {
-      skipped: true,
-      reason,
-      jobId,
-      existingJobId: lockResult.existingJobId || null,
-      error: lockResult.error || null,
-    };
   }
 
   // lockState: shared between heartbeat interval and the for-loop.
@@ -1197,14 +1207,19 @@ export async function runDriveReindex() {
           jobId,
           mode: "full_drive_reindex",
           instanceId: INSTANCE_ID,
-          reason: "heartbeat UPDATE matched 0 rows — lock taken by another instance",
+          reason: hbResult.reason,
+          note: hbResult.reason === "heartbeat_error"
+            ? "Supabase heartbeat error — treating as lock lost (fail-closed)"
+            : "heartbeat UPDATE matched 0 rows — lock swept or taken by another instance",
         });
       } else if (hbResult.renewed) {
         lockState.consecutiveFailures = 0;
       }
     } catch (hbErr) {
+      // heartbeatReindexLock never throws for Supabase errors (returns lostOwnership:true).
+      // This catch is a safety net for unexpected non-Supabase exceptions only.
       lockState.consecutiveFailures += 1;
-      console.error("[REINDEX LOCK HEARTBEAT FAILED]", {
+      console.error("[REINDEX LOCK HEARTBEAT EXCEPTION]", {
         jobId,
         mode: "full_drive_reindex",
         consecutiveFailures: lockState.consecutiveFailures,
@@ -1217,7 +1232,8 @@ export async function runDriveReindex() {
           mode: "full_drive_reindex",
           instanceId: INSTANCE_ID,
           consecutiveFailures: lockState.consecutiveFailures,
-          reason: "2+ consecutive heartbeat exceptions — assuming lock integrity lost",
+          reason: "consecutive_heartbeat_exceptions",
+          note: "2+ unexpected heartbeat exceptions — assuming lock integrity lost",
         });
       }
     }
@@ -1465,14 +1481,19 @@ export async function runTargetedReindex(isTargetFile = isNircOrVatFile, { preAc
           jobId,
           mode: "targeted_reindex",
           instanceId: INSTANCE_ID,
-          reason: "heartbeat UPDATE matched 0 rows — lock taken by another instance",
+          reason: hbResult.reason,
+          note: hbResult.reason === "heartbeat_error"
+            ? "Supabase heartbeat error — treating as lock lost (fail-closed)"
+            : "heartbeat UPDATE matched 0 rows — lock swept or taken by another instance",
         });
       } else if (hbResult.renewed) {
         lockState.consecutiveFailures = 0;
       }
     } catch (hbErr) {
+      // heartbeatReindexLock never throws for Supabase errors (returns lostOwnership:true).
+      // This catch is a safety net for unexpected non-Supabase exceptions only.
       lockState.consecutiveFailures += 1;
-      console.error("[REINDEX LOCK HEARTBEAT FAILED]", {
+      console.error("[REINDEX LOCK HEARTBEAT EXCEPTION]", {
         jobId,
         mode: "targeted_reindex",
         consecutiveFailures: lockState.consecutiveFailures,
@@ -1485,7 +1506,8 @@ export async function runTargetedReindex(isTargetFile = isNircOrVatFile, { preAc
           mode: "targeted_reindex",
           instanceId: INSTANCE_ID,
           consecutiveFailures: lockState.consecutiveFailures,
-          reason: "2+ consecutive heartbeat exceptions — assuming lock integrity lost",
+          reason: "consecutive_heartbeat_exceptions",
+          note: "2+ unexpected heartbeat exceptions — assuming lock integrity lost",
         });
       }
     }
@@ -1729,7 +1751,7 @@ export function createBackgroundReindexController() {
     return isRunning;
   }
 
-  function start() {
+  function start(preAcquiredJobId = null) {
     if (isRunning) {
       return {
         started: false,
@@ -1750,7 +1772,7 @@ export function createBackgroundReindexController() {
       result: null
     };
 
-    runDriveReindex()
+    runDriveReindex({ preAcquiredJobId })
       .then((result) => {
         lastStatus = {
           running: false,
