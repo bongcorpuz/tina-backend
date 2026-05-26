@@ -210,8 +210,12 @@ const PH_TAX_ALLOW_PATTERNS = [
 // reason and provide faster rejection before the default.
 
 const NON_TAX_REJECT_PATTERNS = [
-  // Biology / life sciences
+  // ── Biology / life sciences ───────────────────────────────────────────────
+  // Safe: "tax on biology lab" → "tax" hits allowlist first → never reaches here.
   { pattern: /\bbiology\b/i,                                  domain: "BIOLOGY" },
+  { pattern: /\bbiological\b/i,                               domain: "BIOLOGY" },
+  { pattern: /\bbiochemistry\b/i,                             domain: "BIOLOGY" },
+  { pattern: /\bmicrobiology\b/i,                             domain: "BIOLOGY" },
   { pattern: /\bDNA\b/i,                                      domain: "BIOLOGY" },
   { pattern: /\bcell\s+biology\b/i,                          domain: "BIOLOGY" },
   { pattern: /\bphotosynthesis\b/i,                          domain: "BIOLOGY" },
@@ -221,8 +225,28 @@ const NON_TAX_REJECT_PATTERNS = [
   { pattern: /\bzoology\b|\bbotany\b/i,                      domain: "BIOLOGY" },
   { pattern: /\bevolution\b/i,                               domain: "BIOLOGY" },
   { pattern: /\borganism\b|\bspecies\b/i,                    domain: "BIOLOGY" },
+  { pattern: /\bchromosome[s]?\b/i,                          domain: "BIOLOGY" },
 
-  // Medicine / clinical health
+  // ── Natural science (general) ─────────────────────────────────────────────
+  // Catches "what is science?", "explain physics", "what is chemistry?", etc.
+  // Safe: "tax science" / "science of taxation" → "tax"/"taxation" hits allowlist first.
+  { pattern: /\bscience\b/i,                                  domain: "SCIENCE" },
+  { pattern: /\bphysics\b/i,                                  domain: "SCIENCE" },
+  { pattern: /\bchemistry\b/i,                                domain: "SCIENCE" },
+  { pattern: /\bgeology\b/i,                                  domain: "SCIENCE" },
+  { pattern: /\bastronomy\b/i,                                domain: "SCIENCE" },
+  { pattern: /\bphotosynthesis\b/i,                          domain: "SCIENCE" },
+  { pattern: /\bquantum\s+mechanics\b/i,                     domain: "SCIENCE" },
+  { pattern: /\bblack\s+hole[s]?\b/i,                        domain: "SCIENCE" },
+  { pattern: /\bastrophysics\b/i,                            domain: "SCIENCE" },
+  { pattern: /\bstring\s+theory\b/i,                         domain: "SCIENCE" },
+  { pattern: /\bNewton'?s?\s+law[s]?\b/i,                    domain: "SCIENCE" },
+
+  // ── Medicine / clinical health ────────────────────────────────────────────
+  // Safe: "medicine tax", "tax on medicine" → "tax" hits allowlist first.
+  { pattern: /\bmedicine\b/i,                                 domain: "MEDICINE" },
+  { pattern: /\banatomy\b/i,                                  domain: "MEDICINE" },
+  { pattern: /\bpharmacology\b/i,                             domain: "MEDICINE" },
   { pattern: /\bmedical\s+diagnosis\b/i,                     domain: "MEDICINE" },
   { pattern: /\bsurgical\s+procedure\b/i,                    domain: "MEDICINE" },
   { pattern: /\bhuman\s+anatomy\b/i,                         domain: "MEDICINE" },
@@ -233,78 +257,100 @@ const NON_TAX_REJECT_PATTERNS = [
   { pattern: /\bdrug\s+dosage\b/i,                           domain: "MEDICINE" },
   { pattern: /\bclinical\s+trial[s]?\b/i,                    domain: "MEDICINE" },
 
-  // Politics / government (non-tax)
+  // ── Politics / government (non-tax) ──────────────────────────────────────
+  // Safe: "political question doctrine in tax" → "tax" hits allowlist first.
+  { pattern: /\bpolitics\b/i,                                 domain: "POLITICS" },
+  { pattern: /\bpolitician[s]?\b/i,                           domain: "POLITICS" },
   { pattern: /\bwho\s+is\s+the\s+president\b/i,             domain: "POLITICS" },
+  { pattern: /\bpresident\s+of\s+the\s+Philippines?\b/i,    domain: "POLITICS" },
   { pattern: /\bpresidential\s+election\b/i,                 domain: "POLITICS" },
   { pattern: /\bsenate\s+(bill|hearing|seat)\b/i,            domain: "POLITICS" },
   { pattern: /\bcongress(man|woman|person)?\s+(election|seat)\b/i, domain: "POLITICS" },
   { pattern: /\bpolitical\s+(party|rally|campaign)\b/i,      domain: "POLITICS" },
-  { pattern: /\bvot(e|ing)\s+(for|in)\s+the\s+(election|election)\b/i, domain: "POLITICS" },
+  { pattern: /\bvot(e|ing)\s+(for|in)\s+the\s+election\b/i, domain: "POLITICS" },
 
-  // Coding / software development
+  // ── Coding / software development ─────────────────────────────────────────
+  // Safe: "React to BIR assessment" → "BIR" hits allowlist first.
+  // Safe: "JavaScript for eFPS" → "BIR"/"filing" in isTaxRelated context.
+  { pattern: /\bJavaScript\b/i,                               domain: "PROGRAMMING" },
+  { pattern: /\bTypeScript\b/i,                               domain: "PROGRAMMING" },
+  { pattern: /\bReact\b/i,                                    domain: "PROGRAMMING" },
+  { pattern: /\bAngular\b/i,                                  domain: "PROGRAMMING" },
+  { pattern: /\bVue\.?js\b/i,                                 domain: "PROGRAMMING" },
+  { pattern: /\bNode\.js\b/i,                                 domain: "PROGRAMMING" },
+  { pattern: /\bcoding\b/i,                                   domain: "PROGRAMMING" },
+  { pattern: /\bprogramming\b/i,                              domain: "PROGRAMMING" },
   { pattern: /\bwrite\s+(a\s+)?(python|javascript|java|c\+\+|ruby|golang|typescript|react|angular|vue|swift)\s+(code|program|script|function|class|component)\b/i, domain: "PROGRAMMING" },
   { pattern: /\bhow\s+to\s+code\b/i,                        domain: "PROGRAMMING" },
   { pattern: /\bdebug\s+(my\s+)?(code|program|script)\b/i,  domain: "PROGRAMMING" },
   { pattern: /\bsoftware\s+(architecture|engineering|development)\b/i, domain: "PROGRAMMING" },
-  { pattern: /\bReact\.(js|tsx?)\b/i,                       domain: "PROGRAMMING" },
-  { pattern: /\bNode\.js\b/i,                               domain: "PROGRAMMING" },
   { pattern: /\bSQL\s+(query|database)\b/i,                  domain: "PROGRAMMING" },
-  { pattern: /\bprogramming\s+language\b/i,                  domain: "PROGRAMMING" },
   { pattern: /\bGitHub\s+(repo|pull\s+request)\b/i,          domain: "PROGRAMMING" },
   { pattern: /\bAPI\s+(endpoint|integration)\b/i,            domain: "PROGRAMMING" },
 
-  // Romantic / personal relationships
+  // ── Romantic / personal relationships ─────────────────────────────────────
   { pattern: /\blove\s+letter\b/i,                           domain: "PERSONAL" },
+  { pattern: /\bwrite\s+(me\s+)?a\s+love\b/i,               domain: "PERSONAL" },
   { pattern: /\brelationship\s+advice\b/i,                   domain: "PERSONAL" },
+  { pattern: /\bromantic\s+(advice|letter|message|poem)\b/i, domain: "PERSONAL" },
   { pattern: /\bhow\s+to\s+(attract|impress|seduce)\b/i,    domain: "PERSONAL" },
   { pattern: /\bdating\s+(tips|advice|app)\b/i,              domain: "PERSONAL" },
   { pattern: /\bhow\s+to\s+win\s+(back|over)\b/i,           domain: "PERSONAL" },
-  { pattern: /\bwrite\s+(me\s+)?a\s+love\b/i,               domain: "PERSONAL" },
 
-  // Sports (score/game queries)
+  // ── Sports (score/game queries) ───────────────────────────────────────────
   { pattern: /\bfootball\s+score\b/i,                        domain: "SPORTS" },
   { pattern: /\bnba\s+(score|game|standings)\b/i,            domain: "SPORTS" },
   { pattern: /\bbasketball\s+(game\s+score|standings)\b/i,   domain: "SPORTS" },
   { pattern: /\bsoccer\s+(score|match\s+result)\b/i,         domain: "SPORTS" },
   { pattern: /\bwho\s+won\s+the\s+(game|match|championship)\b/i, domain: "SPORTS" },
 
-  // Travel / tourism
+  // ── Travel / tourism ──────────────────────────────────────────────────────
   { pattern: /\btravel\s+(guide|itinerary|tips)\b/i,         domain: "TRAVEL" },
   { pattern: /\btourist\s+spots?\b/i,                        domain: "TRAVEL" },
   { pattern: /\bhotel\s+recommendation[s]?\b/i,              domain: "TRAVEL" },
   { pattern: /\bbest\s+place[s]?\s+to\s+visit\b/i,          domain: "TRAVEL" },
 
-  // Entertainment / media
+  // ── Entertainment / media ─────────────────────────────────────────────────
   { pattern: /\bmovie\s+review\b/i,                          domain: "ENTERTAINMENT" },
   { pattern: /\bTV\s+show\s+recommendation\b/i,              domain: "ENTERTAINMENT" },
   { pattern: /\bcelebrit(y|ies)\s+gossip\b/i,                domain: "ENTERTAINMENT" },
   { pattern: /\bsong\s+lyrics\b/i,                           domain: "ENTERTAINMENT" },
 
-  // Cooking / food
+  // ── Cooking / food ────────────────────────────────────────────────────────
   { pattern: /\bhow\s+to\s+(cook|bake|fry|boil|steam)\b/i,  domain: "COOKING" },
   { pattern: /\brecipe\s+for\b/i,                            domain: "COOKING" },
   { pattern: /\bingredients\s+(for|of)\b/i,                  domain: "COOKING" },
 
-  // Pure civil / family law (non-tax)
+  // ── Civil / family law (non-tax) ──────────────────────────────────────────
+  // Safe: "civil law aspect of tax" → "tax" hits allowlist first.
+  { pattern: /\bcivil\s+law\b/i,                             domain: "CIVIL_LAW" },
+  { pattern: /\bfamily\s+law\b/i,                            domain: "CIVIL_LAW" },
   { pattern: /\bnullity\s+of\s+marriage\b/i,                 domain: "CIVIL_LAW" },
   { pattern: /\bannulment\s+(of\s+marriage|proceedings)\b/i, domain: "CIVIL_LAW" },
   { pattern: /\blegal\s+separation\s+grounds\b/i,            domain: "CIVIL_LAW" },
   { pattern: /\badoption\s+proceedings\b/i,                  domain: "CIVIL_LAW" },
 
-  // Criminal law (unambiguously non-tax)
+  // ── Criminal law (non-tax) ────────────────────────────────────────────────
+  // Safe: "criminal liability for tax evasion" → "tax" hits allowlist first.
+  { pattern: /\bcriminal\s+law\b/i,                          domain: "CRIMINAL_LAW" },
   { pattern: /\bmurder\s+(charge|case|trial)\b/i,            domain: "CRIMINAL_LAW" },
   { pattern: /\bkidnapping\s+(case|charge)\b/i,              domain: "CRIMINAL_LAW" },
   { pattern: /\bdrug\s+trafficking\b/i,                      domain: "CRIMINAL_LAW" },
 
-  // Pure physical / natural science
-  { pattern: /\bphotosynthesis\b/i,                          domain: "SCIENCE" },
-  { pattern: /\bquantum\s+mechanics\b/i,                     domain: "SCIENCE" },
-  { pattern: /\bblack\s+hole[s]?\b/i,                        domain: "SCIENCE" },
-  { pattern: /\bastrophysics\b/i,                            domain: "SCIENCE" },
-  { pattern: /\bstring\s+theory\b/i,                         domain: "SCIENCE" },
-  { pattern: /\bNewton'?s?\s+law[s]?\b/i,                    domain: "SCIENCE" },
+  // ── Investment / finance (non-tax) ───────────────────────────────────────
+  // Safe: "investment tax credit" → "tax" hits allowlist first.
+  { pattern: /\binvestment\s+advice\b/i,                     domain: "INVESTMENT" },
+  { pattern: /\bstock\s+(market|portfolio|trading|picks?)\b/i, domain: "INVESTMENT" },
+  { pattern: /\bcryptocurrency\b/i,                          domain: "INVESTMENT" },
+  { pattern: /\bcrypto\s+(trading|investment|wallet)\b/i,    domain: "INVESTMENT" },
+  { pattern: /\bforex\s+(trading|market)\b/i,                domain: "INVESTMENT" },
 
-  // Pet / animal care
+  // ── Trivia / general knowledge ────────────────────────────────────────────
+  { pattern: /\btrivia\b/i,                                   domain: "TRIVIA" },
+  { pattern: /\bfun\s+fact[s]?\b/i,                          domain: "TRIVIA" },
+  { pattern: /\bguess\s+the\s+(answer|word|number)\b/i,       domain: "TRIVIA" },
+
+  // ── Pet / animal care ─────────────────────────────────────────────────────
   { pattern: /\bhow\s+to\s+(train|groom|feed)\s+(my\s+)?(dog|cat|pet)\b/i, domain: "PETS" },
   { pattern: /\bdog\s+(breed|grooming|training\s+tips)\b/i,  domain: "PETS" },
 ];
@@ -406,11 +452,12 @@ export function detectPhilippineTaxBoundary(query = "", routeMode = "/ask", cont
     }
   }
 
-  // ── 6. Explicit non-tax domain patterns ──────────────────────────────────
-  // These provide a specific domain label in logs.
+  // ── 6. Clearly non-tax domain patterns ───────────────────────────────────
+  // Explicit domain detection — REJECT with reason "clearly_non_tax_domain".
+  // CLARIFY is reserved for ambiguous tax-adjacent queries (step 7 below).
   for (const { pattern, domain } of NON_TAX_REJECT_PATTERNS) {
     if (pattern.test(q)) {
-      return { isPhilippineTax: false, decision: "REJECT", detectedDomain: domain, reason: "non_tax_domain_pattern", confidence: 0.95 };
+      return { isPhilippineTax: false, decision: "REJECT", detectedDomain: domain, reason: "clearly_non_tax_domain", confidence: 0.95 };
     }
   }
 
