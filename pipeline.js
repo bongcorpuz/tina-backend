@@ -284,10 +284,14 @@ function buildEducationalSources(chunks = [], responseStyle = null, query = "") 
 
     const meta = doc.metadata || {};
     const url  =
-      doc.driveViewUrl  || doc.drive_view_url ||
-      doc.url           ||
-      meta.driveViewUrl || meta.drive_view_url || meta.url || meta.sourceUrl ||
-      null;
+      doc.driveViewUrl  || doc.drive_view_url   ||
+      doc.url           || doc.webViewLink       ||
+      doc.web_view_link || doc.sourceUrl         ||
+      doc.source_url    ||
+      meta.driveViewUrl || meta.drive_view_url   ||
+      meta.url          || meta.webViewLink       ||
+      meta.web_view_link || meta.sourceUrl        ||
+      meta.source_url   || null;
 
     const lvl  = docLevel(doc);
     const kind = lvl <= 3 ? "primary" : lvl <= 9 ? "regulation" : lvl === 10 ? "ruling" : "other";
@@ -934,31 +938,57 @@ export async function runPipeline({
 
     const meta = c.metadata || {};
     const url  =
-      c.driveViewUrl    || c.drive_view_url ||
-      c.url             ||
-      meta.driveViewUrl || meta.drive_view_url || meta.url || meta.sourceUrl ||
-      "";
+      c.driveViewUrl    || c.drive_view_url    ||
+      c.url             || c.webViewLink        ||
+      c.web_view_link   || c.sourceUrl          ||
+      c.source_url      ||
+      meta.driveViewUrl || meta.drive_view_url  ||
+      meta.url          || meta.webViewLink      ||
+      meta.web_view_link || meta.sourceUrl       ||
+      meta.source_url   || "";
 
     if (_scSeen.has(dedupeKey)) {
-      if (url) {
-        const stored = _scSeen.get(dedupeKey);
-        if (!stored.url) {
-          stored.url = url;
-          stored.driveViewUrl = url;
-        }
-      }
+      const stored = _scSeen.get(dedupeKey);
+      // URL coalesce: upgrade any absent URL field from the incoming duplicate.
+      // `url` already captures all top-level and metadata URL variants for this chunk.
+      if (!stored.url)                  stored.url                  = url;
+      if (!stored.driveViewUrl)         stored.driveViewUrl         = url;
+      if (!stored.drive_view_url)       stored.drive_view_url       = url;
+      if (!stored.webViewLink)          stored.webViewLink          = c.webViewLink    || meta.webViewLink    || "";
+      if (!stored.web_view_link)        stored.web_view_link        = c.web_view_link  || meta.web_view_link  || "";
+      if (!stored.sourceUrl)            stored.sourceUrl            = c.sourceUrl      || c.source_url        || meta.sourceUrl || meta.source_url || "";
+      if (!stored.source_url)           stored.source_url           = c.source_url     || meta.source_url     || "";
+      // Non-URL metadata: always fill any missing field from the incoming duplicate.
+      if (!stored.documentTitle)        stored.documentTitle        = c.document_title || c.documentTitle     || meta.documentTitle || docTitle || "";
+      if (!stored.document_title)       stored.document_title       = c.document_title || meta.documentTitle  || "";
+      if (!stored.normalizedReference)  stored.normalizedReference  = c.normalizedReference  || c.normalized_reference  || meta.normalizedReference  || provRef || "";
+      if (!stored.normalized_reference) stored.normalized_reference = c.normalized_reference || meta.normalizedReference || "";
+      if (!stored.citation)             stored.citation             = c.citation || provRef || "";
+      if (!stored.reference)            stored.reference            = c.reference || "";
+      if (!stored.source)               stored.source               = c.source   || "";
       continue;
     }
 
     _scSeen.set(dedupeKey, {
-      title:         provRef && docTitle
-                       ? `${provRef} — ${docTitle}`
-                       : provRef || docTitle || "Source",
-      citation:      provRef,
-      authorityType: c.authorityType || c.authority_type || "UNKNOWN",
-      driveViewUrl:  url,
+      title:               provRef && docTitle
+                             ? `${provRef} — ${docTitle}`
+                             : provRef || docTitle || "Source",
+      citation:            provRef || c.citation || "",
+      authorityType:       c.authorityType || c.authority_type || "UNKNOWN",
+      driveViewUrl:        url,
+      drive_view_url:      url,
       url,
-      excerpt:       String(c.text || c.content || "").slice(0, 300)
+      webViewLink:         c.webViewLink   || meta.webViewLink   || "",
+      web_view_link:       c.web_view_link || meta.web_view_link || "",
+      sourceUrl:           c.sourceUrl     || c.source_url       || meta.sourceUrl || meta.source_url || "",
+      source_url:          c.source_url    || meta.source_url    || "",
+      documentTitle:       c.document_title || c.documentTitle   || meta.documentTitle || docTitle || "",
+      document_title:      c.document_title || meta.documentTitle || "",
+      normalizedReference: c.normalizedReference || c.normalized_reference || meta.normalizedReference || provRef || "",
+      normalized_reference: c.normalized_reference || meta.normalizedReference || "",
+      reference:           c.reference || "",
+      source:              c.source    || "",
+      excerpt:             String(c.text || c.content || "").slice(0, 300)
     });
 
     if (_scSeen.size >= 5) break;

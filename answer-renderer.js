@@ -708,24 +708,46 @@ function normalizeSourceKey(source = {}) {
     .trim();
 }
 
+// Best URL from any known variant — top-level and metadata-nested.
 function bestSourceUrl(source = {}) {
-  return source.driveViewUrl || source.url || source.webViewLink || source.sourceUrl || "";
+  return (
+    source.driveViewUrl    || source.drive_view_url      ||
+    source.url             || source.webViewLink          ||
+    source.web_view_link   || source.sourceUrl            ||
+    source.source_url      ||
+    source.metadata?.driveViewUrl  || source.metadata?.drive_view_url ||
+    source.metadata?.url           || source.metadata?.webViewLink    ||
+    source.metadata?.web_view_link || source.metadata?.sourceUrl      ||
+    source.metadata?.source_url    || ""
+  );
 }
 
+// Merge metadata from an incoming duplicate into the retained source.
+// URL upgrade: if retained has no URL, promote incoming's best URL (including
+//   metadata-nested) to retained's top-level fields.
+// Metadata coalesce: ALWAYS fills any missing field from incoming — decoupled from
+//   the URL upgrade so that retained sources that already have a URL still gain
+//   documentTitle, citation, etc. from later duplicates.
 function mergeSourceMetadata(retained, incoming) {
-  if (!incoming || bestSourceUrl(retained)) return retained;
-  const url = bestSourceUrl(incoming);
-  if (!url) return retained;
+  if (!incoming) return retained;
+  const retUrl     = bestSourceUrl(retained);
+  const incUrl     = bestSourceUrl(incoming);
+  const promoteUrl = !retUrl && incUrl ? incUrl : undefined;
   return Object.assign({}, retained, {
-    driveViewUrl:         url,
-    url,
-    webViewLink:          incoming.webViewLink    || retained.webViewLink,
-    sourceUrl:            incoming.sourceUrl      || retained.sourceUrl,
-    documentTitle:        retained.documentTitle   || incoming.documentTitle,
-    document_title:       retained.document_title  || incoming.document_title,
+    driveViewUrl:   retained.driveViewUrl   || incoming.driveViewUrl   || promoteUrl,
+    drive_view_url: retained.drive_view_url || incoming.drive_view_url || promoteUrl,
+    url:            retained.url            || incoming.url            || promoteUrl,
+    webViewLink:    retained.webViewLink    || incoming.webViewLink,
+    web_view_link:  retained.web_view_link  || incoming.web_view_link,
+    sourceUrl:      retained.sourceUrl      || incoming.sourceUrl,
+    source_url:     retained.source_url     || incoming.source_url,
+    documentTitle:        retained.documentTitle        || incoming.documentTitle,
+    document_title:       retained.document_title       || incoming.document_title,
     normalizedReference:  retained.normalizedReference  || incoming.normalizedReference,
     normalized_reference: retained.normalized_reference || incoming.normalized_reference,
-    source:               retained.source || incoming.source
+    citation:             retained.citation             || incoming.citation,
+    reference:            retained.reference            || incoming.reference,
+    source:               retained.source               || incoming.source
   });
 }
 

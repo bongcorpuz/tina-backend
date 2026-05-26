@@ -306,11 +306,17 @@ export function sourceDriveUrlOf(doc = {}) {
     doc.driveViewUrl ||
     doc.drive_view_url ||
     doc.url ||
+    doc.webViewLink ||
+    doc.web_view_link ||
     doc.sourceUrl ||
     doc.source_url ||
     doc.metadata?.driveViewUrl ||
     doc.metadata?.drive_view_url ||
     doc.metadata?.url ||
+    doc.metadata?.webViewLink ||
+    doc.metadata?.web_view_link ||
+    doc.metadata?.sourceUrl ||
+    doc.metadata?.source_url ||
     (fileId ? `https://drive.google.com/file/d/${fileId}/view` : null)
   );
 }
@@ -1066,33 +1072,51 @@ function buildDocKey(doc = {}) {
 }
 
 // Best URL available on any doc shape (top-level and metadata-nested).
+// Checks every known URL variant so that metadata-nested URLs are found even
+// when no top-level URL field is populated.
 function bestDocUrl(doc = {}) {
   return (
-    doc.driveViewUrl    || doc.drive_view_url ||
-    doc.url             || doc.webViewLink    ||
-    doc.sourceUrl       || doc.source_url     ||
-    doc.metadata?.driveViewUrl || doc.metadata?.url || ""
+    doc.driveViewUrl       || doc.drive_view_url       ||
+    doc.url                || doc.webViewLink           ||
+    doc.web_view_link      || doc.sourceUrl             ||
+    doc.source_url         ||
+    doc.metadata?.driveViewUrl  || doc.metadata?.drive_view_url ||
+    doc.metadata?.url           || doc.metadata?.webViewLink    ||
+    doc.metadata?.web_view_link || doc.metadata?.sourceUrl      ||
+    doc.metadata?.source_url    || ""
   );
 }
 
-// Upgrade retained doc's URL + safe metadata from an incoming duplicate.
-// URL upgrade: first-found URL wins — only upgrades when retained has none.
-// Metadata coalesce: retain existing value; fill in from incoming if absent.
+// Merge metadata from an incoming duplicate into the retained doc.
+// URL upgrade: if retained has no clickable URL at all, promote incoming's best URL
+//   (checks metadata-nested fields via bestDocUrl) to retained's top-level fields.
+// Metadata coalesce: ALWAYS fills any missing field from incoming — decoupled from
+//   the URL upgrade so that retained docs that already have a URL still gain
+//   documentTitle, citation, normalizedReference, etc. from later duplicates.
 function mergeDocMetadata(retained, incoming) {
-  if (!incoming || bestDocUrl(retained)) return retained;
-  const url = bestDocUrl(incoming);
-  if (!url) return retained;
+  if (!incoming) return retained;
+  const retUrl     = bestDocUrl(retained);
+  const incUrl     = bestDocUrl(incoming);
+  // promoteUrl: only set when retained has absolutely no URL but incoming has one.
+  // Writing to driveViewUrl/url normalizes any metadata-nested URL to top-level.
+  const promoteUrl = !retUrl && incUrl ? incUrl : undefined;
   return Object.assign({}, retained, {
-    driveViewUrl:         url,
-    drive_view_url:       url,
-    url,
-    webViewLink:          incoming.webViewLink    || retained.webViewLink,
-    sourceUrl:            incoming.sourceUrl      || retained.sourceUrl,
-    documentTitle:        retained.documentTitle   || incoming.documentTitle,
-    document_title:       retained.document_title  || incoming.document_title,
+    // URL fields: coalesce individual top-level variants; fall back to promoted URL.
+    driveViewUrl:   retained.driveViewUrl   || incoming.driveViewUrl   || promoteUrl,
+    drive_view_url: retained.drive_view_url || incoming.drive_view_url || promoteUrl,
+    url:            retained.url            || incoming.url            || promoteUrl,
+    webViewLink:    retained.webViewLink    || incoming.webViewLink,
+    web_view_link:  retained.web_view_link  || incoming.web_view_link,
+    sourceUrl:      retained.sourceUrl      || incoming.sourceUrl,
+    source_url:     retained.source_url     || incoming.source_url,
+    // Non-URL metadata: always fill missing fields from incoming regardless of URL state.
+    documentTitle:        retained.documentTitle        || incoming.documentTitle,
+    document_title:       retained.document_title       || incoming.document_title,
     normalizedReference:  retained.normalizedReference  || incoming.normalizedReference,
     normalized_reference: retained.normalized_reference || incoming.normalized_reference,
-    source:               retained.source || incoming.source
+    citation:             retained.citation             || incoming.citation,
+    reference:            retained.reference            || incoming.reference,
+    source:               retained.source               || incoming.source
   });
 }
 
