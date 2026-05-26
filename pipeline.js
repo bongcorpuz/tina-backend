@@ -24,7 +24,8 @@ import {
   searchSimilar,
   exactAuthoritySearch,
   normalizedCitationSearch,
-  titleMetadataSearch
+  titleMetadataSearch,
+  exactProvisionSearch
 }                                                 from "./vector-store.js";
 import { rerankForTina }                          from "./reranker-engine.js";
 import { detectDoctrinalConflicts }               from "./doctrinal-engine.js";
@@ -495,6 +496,16 @@ export async function runPipeline({
   let _semanticHits = 0;
   const _SEMANTIC_SKIP_THRESHOLD = 12; // matches topK: 12 passed to retrieveRelevantSources
 
+  // Returns true when a Layer 3/4 query is an exact NIRC section or provision
+  // reference (e.g. "NIRC Sec. 105", "Section 105 of the NIRC", "NIRC 105").
+  // These are safe to intercept with the indexed normalized_reference fast-path.
+  // Broad topic queries ("VAT refund", "withholding tax", "BIR LOA") return false
+  // and fall through to the standard titleMetadataSearch path unchanged.
+  const _isExactProvisionQuery = (q = "") =>
+    /\b(?:nirc|tax\s+code|national\s+internal\s+revenue\s+code)(?:\s+sec(?:tion)?\.?\s*|\s+)\d{1,3}[A-Z]?\b/i.test(q) ||
+    /\bsec(?:tion)?\.?\s*\d{1,3}[A-Z]?\s+(?:of\s+(?:the\s+)?)?(?:nirc|tax\s+code)\b/i.test(q) ||
+    /\bnirc\s+\d{1,3}[A-Z]?\b/i.test(q);
+
   const _vectorSearchFn = async (q, opts = {}) => {
     const layer = opts.retrievalLayer || "";
     const base  = {
@@ -522,18 +533,58 @@ export async function runPipeline({
       }
       return r;
     }
-    if (layer === "LAYER_3_TITLE_PATH_METADATA") {
-      console.log("[DOMAIN RETRIEVAL]",     { query: q, layer });
-      const r = await titleMetadataSearch(base);
-      for (const doc of r) {
-        if (_isUsableAuthorityDoc(doc)) _uniqueAuthorityCandidates.add(_authorityDocKey(doc));
-      }
-      return r;
-    }
-    if (layer === "LAYER_4_CONTENT_KEYWORD") {
+    if (layer === "LAYER_3_TITLE_PATH_METADATA" || layer === "LAYER_4_CONTENT_KEYWORD") {
       // Use titleMetadataSearch (metadata-column only) — NOT smartSearch, which
       // cascades into semantic search internally before Layer 5 is reached.
-      console.log("[DOMAIN RETRIEVAL]",     { query: q, layer });
+      console.log("[DOMAIN RETRIEVAL]", { query: q, layer });
+
+      // ── Exact provision fast-path for Layer 3/4 ───────────────────────────
+      // When the Layer 3/4 query itself is an exact NIRC section reference
+      // (e.g. "NIRC Sec. 105" injected into titlePathMetadataQueries by
+      // buildRetrievalQuerySet for a "what is VAT" or direct provision query),
+      // try the indexed normalized_reference.in() lookup first.
+      //
+      // titleMetadataSearch also runs this fast-path internally, but intercepting
+      // here lets us skip titleMetadataSearch entirely when we have enough hits,
+      // avoiding the 10-sub-term ILIKE loop even when Layer 3 is not individually
+      // sufficient per the isAuthoritySufficient gate.
+      if (_isExactProvisionQuery(q)) {
+        const exactHits = await exactProvisionSearch({ ...base, query: q });
+
+        if (exactHits.length > 0) {
+          for (const doc of exactHits) {
+            if (_isUsableAuthorityDoc(doc)) _uniqueAuthorityCandidates.add(_authorityDocKey(doc));
+          }
+          // Skip the slow ILIKE path when we have enough exact results.
+          // Threshold: topK/4 ensures we don't skip when only 1-2 chunks matched
+          // across a 48-doc pool — the isAuthoritySufficient gate will decide.
+          const needed = Math.max(1, Math.floor((opts.topK || 48) / 4));
+          if (exactHits.length >= needed) {
+            console.log("[METADATA SEARCH SKIPPED FOR EXACT PROVISION]", {
+              query:      q,
+              layer,
+              exactFound: exactHits.length,
+              needed
+            });
+            return exactHits;
+          }
+          // Partial exact hit — merge with titleMetadataSearch.
+          // titleMetadataSearch internally tries fastRefLookup again (idempotent)
+          // and catches any 57014 gracefully, so duplicates sort out in dedup.
+          const slowR = await titleMetadataSearch(base);
+          const combined = [...exactHits, ...slowR];
+          for (const doc of combined) {
+            if (_isUsableAuthorityDoc(doc)) _uniqueAuthorityCandidates.add(_authorityDocKey(doc));
+          }
+          return combined;
+        }
+        // Exact lookup missed (normalized_reference null/unindexed for this doc).
+        // Fall through to titleMetadataSearch which catches 57014 internally
+        // via [METADATA SEARCH TIMEOUT FALLBACK] and returns partial results
+        // rather than wiping accumulated candidates.
+      }
+      // ── End exact provision fast-path ─────────────────────────────────────
+
       const r = await titleMetadataSearch(base);
       for (const doc of r) {
         if (_isUsableAuthorityDoc(doc)) _uniqueAuthorityCandidates.add(_authorityDocKey(doc));

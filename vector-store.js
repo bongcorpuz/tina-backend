@@ -1476,6 +1476,20 @@ async function metadataSearch({
     .limit(limit);
 
   if (error) {
+    // Supabase error 57014 = statement_timeout.
+    // The broad 14-condition ILIKE query (buildSourceIlikeFilters) with
+    // JSON-extracted metadata columns causes full table scans when no
+    // pg_trgm GIN indexes exist.  Catching here lets callers accumulate
+    // whatever results arrived from earlier sub-term calls instead of
+    // losing them all when the last call times out.
+    if (error.code === "57014") {
+      console.warn("[METADATA SEARCH TIMEOUT FALLBACK]", {
+        keyword:  String(keyword || "").slice(0, 80),
+        code:     error.code,
+        note:     "statement_timeout — returning [] to preserve accumulated results"
+      });
+      return [];
+    }
     console.error("Supabase metadata search error:", error);
     throw error;
   }
@@ -2144,6 +2158,66 @@ async function fastRefLookup({
 }
 // ── End Phase 3 helpers ───────────────────────────────────────────────────
 
+// ── exactProvisionSearch ──────────────────────────────────────────────────
+//
+// Thin exported wrapper around fastRefLookup + buildNormalizedRefVariants.
+// Called explicitly by pipeline.js Layer 3/4 dispatch for NIRC section and
+// issuance-ref queries BEFORE the broad 14-condition ILIKE scan that causes
+// Supabase 57014 statement_timeout errors.
+//
+// Design principles:
+//   • Uses only the query/keyword supplied — does NOT expand to full issue-
+//     classification targetAuthorities (that is exactAuthoritySearch's job).
+//   • Never throws; fastRefLookup already swallows its own errors.
+//   • Emits [EXACT PROVISION LOOKUP] / [HIT] / [MISS] for every call so
+//     retrieval audits can confirm whether provision chunks were found.
+export async function exactProvisionSearch(arg1, arg2) {
+  const parsed   = parseSearchArgs(arg1, arg2, { topK: 8 });
+  const { supabaseClient, query, keyword, topK } = parsed;
+
+  const refs     = buildNormalizedRefVariants([keyword, query].filter(Boolean));
+  const safeTopK = clampTopK(topK);
+  const poolLimit = clampMatchCount(Math.max(safeTopK * 3, safeTopK));
+
+  console.log("[EXACT PROVISION LOOKUP]", {
+    query:     String(keyword || query || "").slice(0, 80),
+    refsCount: refs.length,
+    refs:      refs.slice(0, 8)
+  });
+
+  if (!refs.length) {
+    console.log("[EXACT PROVISION LOOKUP MISS]", {
+      query: String(keyword || query || "").slice(0, 80),
+      note:  "buildNormalizedRefVariants returned no refs for this query"
+    });
+    return [];
+  }
+
+  const results = await fastRefLookup({
+    supabaseClient,
+    refs,
+    poolLimit,
+    parsed,
+    searchMode: "EXACT_PROVISION"
+  });
+
+  if (results.length > 0) {
+    console.log("[EXACT PROVISION LOOKUP HIT]", {
+      query: String(keyword || query || "").slice(0, 80),
+      found: results.length
+    });
+  } else {
+    console.log("[EXACT PROVISION LOOKUP MISS]", {
+      query:       String(keyword || query || "").slice(0, 80),
+      refsQueried: refs.length,
+      note:        "normalized_reference.in() returned no rows — re-index may be needed"
+    });
+  }
+
+  return results;
+}
+// ── End exactProvisionSearch ──────────────────────────────────────────────
+
 export async function exactAuthoritySearch(arg1, arg2) {
   const parsed = parseSearchArgs(arg1, arg2, { topK: 8 });
   const {
@@ -2277,6 +2351,46 @@ export async function normalizedCitationSearch(arg1, arg2) {
 export async function titleMetadataSearch(arg1, arg2) {
   const parsed = parseSearchArgs(arg1, arg2, { topK: 8 });
   const { supabaseClient, query, keyword, topK } = parsed;
+  const safeTopK  = clampTopK(topK);
+  const poolLimit = clampMatchCount(Math.max(safeTopK * 3, safeTopK));
+
+  // ── Exact provision fast-path ──────────────────────────────────────────────
+  // For NIRC sections, RR/RMC/RMO issuance refs, and other recognizable authority
+  // strings, buildNormalizedRefVariants produces 3–6 canonical forms that map
+  // directly to the normalized_reference column via indexed .in() equality lookup.
+  //
+  // If the exact lookup returns ≥ topK/2 results the broad ILIKE loop below is
+  // skipped entirely — this prevents the 14+ OR-condition full-table scans in
+  // buildSourceIlikeFilters (which include non-indexable metadata->>field JSON
+  // extractions) from triggering Supabase error 57014 (statement_timeout).
+  //
+  // For broad non-provision queries ("VAT refund prescriptive period",
+  // "withholding tax on professional fees", etc.) buildNormalizedRefVariants
+  // returns only the raw string, fastRefLookup returns 0 rows immediately
+  // (O(1) indexed miss), and execution falls through to the slow path unchanged.
+  const exactRefs    = buildNormalizedRefVariants([keyword, query].filter(Boolean));
+  const exactResults = exactRefs.length
+    ? await fastRefLookup({
+        supabaseClient,
+        refs:      exactRefs,
+        poolLimit,
+        parsed,
+        searchMode: "TITLE_METADATA_EXACT"
+      })
+    : [];
+
+  if (exactResults.length >= Math.max(1, Math.floor(safeTopK / 2))) {
+    console.log("[METADATA SEARCH SKIPPED FOR EXACT PROVISION]", {
+      query:        String(keyword || query || "").slice(0, 80),
+      exactFound:   exactResults.length,
+      topK:         safeTopK,
+      skippedIlike: true
+    });
+    return uniqueResults(
+      sortResultsForTina(exactResults, query || keyword, parsed)
+    ).slice(0, safeTopK);
+  }
+  // ── End exact provision fast-path ─────────────────────────────────────────
 
   const terms = unique([
     keyword,
@@ -2285,9 +2399,13 @@ export async function titleMetadataSearch(arg1, arg2) {
     ...buildPossibleSourceKeywords(keyword)
   ]).filter(Boolean);
 
-  const results = [];
+  // Start with any partial exact results (0 to topK/2 - 1) already collected.
+  const results = [...exactResults];
 
   for (const term of terms.slice(0, 10)) {
+    // metadataSearch catches Supabase error 57014 (statement_timeout) internally
+    // and returns [] rather than throwing.  Earlier accumulated results are
+    // preserved even if a later term times out.
     const matches = await metadataSearch({
       supabaseClient,
       keyword: term,
@@ -2299,7 +2417,7 @@ export async function titleMetadataSearch(arg1, arg2) {
     results.push(...matches);
   }
 
-  return uniqueResults(sortResultsForTina(results, query || keyword, parsed)).slice(0, clampTopK(topK));
+  return uniqueResults(sortResultsForTina(results, query || keyword, parsed)).slice(0, safeTopK);
 }
 
 export async function searchSimilar(arg1, arg2) {
