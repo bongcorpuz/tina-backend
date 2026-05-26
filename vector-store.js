@@ -1,6 +1,7 @@
 // FILE: vector-store.js
 "use strict";
 
+import { randomBytes } from "crypto";
 import OpenAI from "openai";
 import { createClient } from "@supabase/supabase-js";
 import "dotenv/config";
@@ -17,6 +18,17 @@ if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
 }
 
 const ENGINE_VERSION = "3.0.0";
+
+// Stable per-process identity for cross-instance lock attribution and log correlation.
+// Prefers Render's injected instance ID, falls back to service ID, then a random hex token
+// generated once at startup (survives within a single process lifetime).
+const INSTANCE_ID =
+  process.env.RENDER_INSTANCE_ID ||
+  process.env.RENDER_SERVICE_ID ||
+  randomBytes(8).toString("hex");
+
+// DB-backed lock table. Must be created manually in Supabase SQL editor (see SQL migration).
+const LOCK_TABLE = "tina_reindex_locks";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
@@ -62,15 +74,30 @@ console.info("[VECTOR INSERT CONFIG]", {
   batchDelayMs: VECTOR_INSERT_BATCH_DELAY_MS,
 });
 
-// One-time log: proves which table all reads, writes, and deletes target.
-// If VECTOR_TABLE env var is misconfigured this is the only visible evidence.
-console.info("[VECTOR TABLE NAME]", {
-  VECTOR_TABLE,
-  fromEnv: process.env.VECTOR_TABLE || null,
-  usingDefault: !process.env.VECTOR_TABLE,
-  expectedTable: "tina_vector_store",
-  match: VECTOR_TABLE === "tina_vector_store",
-});
+// One-time startup log: proves DB identity, table name, and instance/process details.
+// Use this to diagnose mismatched Supabase projects, stale Render instances, and
+// VECTOR_TABLE mis-configuration. Never logs secrets.
+{
+  const _supabaseUrl = process.env.SUPABASE_URL || "";
+  const _supabaseHost = _supabaseUrl.replace(/^https?:\/\//, "").replace(/\/.*$/, "");
+  const _supabaseProjectRef = _supabaseHost.split(".")[0] || null;
+  console.info("[DB IDENTITY]", {
+    supabaseUrlHost: _supabaseHost || null,
+    supabaseProjectRef: _supabaseProjectRef || null,
+    VECTOR_TABLE,
+    LOCK_TABLE,
+    vectorTableFromEnv: process.env.VECTOR_TABLE || null,
+    vectorTableUsingDefault: !process.env.VECTOR_TABLE,
+    vectorTableMatchExpected: VECTOR_TABLE === "tina_vector_store",
+    NODE_ENV: process.env.NODE_ENV || null,
+    RENDER_SERVICE_NAME: process.env.RENDER_SERVICE_NAME || null,
+    RENDER_GIT_COMMIT: process.env.RENDER_GIT_COMMIT || null,
+    RENDER_INSTANCE_ID: process.env.RENDER_INSTANCE_ID || null,
+    INSTANCE_ID,
+    pid: process.pid,
+    engineVersion: ENGINE_VERSION,
+  });
+}
 
 const GOOGLE_DRIVE_PRIORITY_FOLDERS = Object.freeze([
   "01_TAX_CODE",
@@ -1483,7 +1510,115 @@ export async function clearVectorStore(client = defaultSupabase) {
   return true;
 }
 
-export async function removeSourceFromVectorStore(source, client = defaultSupabase) {
+// ── DB-backed reindex lock ────────────────────────────────────────────────────
+//
+// acquireReindexLock tries to INSERT a row into tina_reindex_locks with
+// lock_name='global_reindex'. If the INSERT succeeds (HTTP 201) the lock is held
+// by this job. If a unique-constraint violation (code 23505) is returned, another
+// job holds the lock. Expired locks (expires_at < now()) are swept before the
+// INSERT attempt so a crashed process does not block reindex permanently.
+//
+// The caller MUST call releaseReindexLock(jobId) in a finally block.
+// If the tina_reindex_locks table does not exist the error is logged and the
+// function returns { acquired: false, reason: "lock_error" } — the caller should
+// proceed anyway (degraded mode) rather than blocking the entire reindex.
+
+export async function acquireReindexLock(
+  jobId,
+  mode = "targeted",
+  instanceId = INSTANCE_ID,
+  client = defaultSupabase
+) {
+  const supabaseClient = resolveSupabaseClient(client);
+  const expiresAt = new Date(Date.now() + 30 * 60 * 1000).toISOString(); // 30-minute TTL
+
+  // Sweep any expired locks first so a crashed process doesn't block forever.
+  try {
+    await supabaseClient
+      .from(LOCK_TABLE)
+      .delete()
+      .eq("lock_name", "global_reindex")
+      .lt("expires_at", new Date().toISOString());
+  } catch (_sweepErr) {
+    // Non-fatal: sweep failure should not block the acquire attempt.
+  }
+
+  const { error } = await supabaseClient
+    .from(LOCK_TABLE)
+    .insert({
+      lock_name: "global_reindex",
+      job_id: jobId,
+      mode,
+      instance_id: instanceId,
+      expires_at: expiresAt,
+      metadata: { pid: process.pid }
+    });
+
+  if (!error) {
+    console.info("[REINDEX LOCK ACQUIRED]", {
+      jobId,
+      mode,
+      instanceId,
+      expiresAt,
+      pid: process.pid
+    });
+    return { acquired: true, jobId };
+  }
+
+  if (error.code === "23505") {
+    // Unique-constraint violation — another job holds the lock.
+    const { data: existing } = await supabaseClient
+      .from(LOCK_TABLE)
+      .select("job_id, mode, instance_id, started_at, expires_at")
+      .eq("lock_name", "global_reindex")
+      .maybeSingle();
+
+    console.warn("[REINDEX LOCK DENIED]", {
+      jobId,
+      mode,
+      instanceId,
+      existingJobId: existing?.job_id || null,
+      existingMode: existing?.mode || null,
+      existingInstance: existing?.instance_id || null,
+      existingStartedAt: existing?.started_at || null,
+      existingExpiresAt: existing?.expires_at || null,
+    });
+    return { acquired: false, reason: "lock_held", existingJobId: existing?.job_id || null };
+  }
+
+  // Table missing, RLS error, or other unexpected error — log and allow degraded run.
+  console.error("[REINDEX LOCK ERROR]", {
+    jobId,
+    mode,
+    instanceId,
+    error: { message: error.message, code: error.code, details: error.details },
+    note: "Proceeding without DB lock — ensure tina_reindex_locks table exists"
+  });
+  return { acquired: false, reason: "lock_error", error: error.message };
+}
+
+export async function releaseReindexLock(jobId, client = defaultSupabase) {
+  const supabaseClient = resolveSupabaseClient(client);
+
+  const { error } = await supabaseClient
+    .from(LOCK_TABLE)
+    .delete()
+    .eq("lock_name", "global_reindex")
+    .eq("job_id", jobId);
+
+  if (error) {
+    console.error("[REINDEX LOCK RELEASE ERROR]", {
+      jobId,
+      error: { message: error.message, code: error.code }
+    });
+    return false;
+  }
+
+  console.info("[REINDEX LOCK RELEASED]", { jobId });
+  return true;
+}
+
+export async function removeSourceFromVectorStore(source, client = defaultSupabase, jobId = null) {
   const supabaseClient = resolveSupabaseClient(client);
   const normalizedSource = normalizeSourceName(source);
 
@@ -1503,6 +1638,7 @@ export async function removeSourceFromVectorStore(source, client = defaultSupaba
     statusText,
     removedChunks: data?.length ?? null,
     dataIsNull: data === null,
+    jobId: jobId || null,
     error: error ? { message: error.message, code: error.code, details: error.details } : null,
   });
 
@@ -1630,7 +1766,7 @@ function detectNircStructuralScope(chunkText = "") {
   };
 }
 
-export async function addDocumentToVectorStore(text, source, metadata = {}, client = defaultSupabase, { skipDelete = false } = {}) {
+export async function addDocumentToVectorStore(text, source, metadata = {}, client = defaultSupabase, { skipDelete = false, jobId = null } = {}) {
   const supabaseClient = resolveSupabaseClient(client);
   const chunks = chunkText(text);
   const normalizedSource = normalizeSourceName(metadata.normalizedSource || source);
@@ -1640,6 +1776,7 @@ export async function addDocumentToVectorStore(text, source, metadata = {}, clie
     rawSource: source,
     metadataNormalizedSource: metadata.normalizedSource || null,
     canonicalSource: normalizedSource,
+    jobId: jobId || null,
     note: "delete and insert both use canonicalSource",
   });
 
@@ -1653,7 +1790,7 @@ export async function addDocumentToVectorStore(text, source, metadata = {}, clie
   }
 
   if (!skipDelete) {
-    await removeSourceFromVectorStore(normalizedSource, supabaseClient);
+    await removeSourceFromVectorStore(normalizedSource, supabaseClient, jobId);
   }
 
   const rows = [];
@@ -1777,7 +1914,8 @@ export async function addDocumentToVectorStore(text, source, metadata = {}, clie
       source: normalizedSource,
       batch: batchNum,
       of: totalBatches,
-      size: batch.length
+      size: batch.length,
+      jobId: jobId || null
     });
 
     const { error } = await supabaseClient.from(VECTOR_TABLE).insert(batch);
@@ -1787,7 +1925,8 @@ export async function addDocumentToVectorStore(text, source, metadata = {}, clie
         source: normalizedSource,
         batch: batchNum,
         error: error.message,
-        code: error.code
+        code: error.code,
+        jobId: jobId || null
       });
       throw error;
     }
@@ -1799,7 +1938,8 @@ export async function addDocumentToVectorStore(text, source, metadata = {}, clie
       batch: batchNum,
       of: totalBatches,
       inserted,
-      remaining: rows.length - inserted
+      remaining: rows.length - inserted,
+      jobId: jobId || null
     });
 
     if (i + VECTOR_INSERT_BATCH_SIZE < rows.length && VECTOR_INSERT_BATCH_DELAY_MS > 0) {
@@ -2630,6 +2770,9 @@ export function vectorStoreHealthCheck() {
 
 export default {
   clearVectorStore,
+  acquireReindexLock,
+  releaseReindexLock,
+  INSTANCE_ID,
   removeSourceFromVectorStore,
   removeSourceByPatternFromVectorStore,
   countSourceRows,

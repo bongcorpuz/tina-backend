@@ -23,7 +23,7 @@
  * - No citation rendering
  */
 
-import { createHash } from "crypto";
+import { createHash, randomBytes } from "crypto";
 
 import {
   listDriveFiles,
@@ -36,6 +36,9 @@ import {
 
 import {
   clearVectorStore,
+  acquireReindexLock,
+  releaseReindexLock,
+  INSTANCE_ID,
   addDocumentToVectorStore,
   removeSourceFromVectorStore,
   removeSourceByPatternFromVectorStore,
@@ -45,6 +48,12 @@ import {
 } from "./vector-store.js";
 
 import { buildAuthorityMetadata } from "./authority-engine.js";
+
+// Generate a unique job ID for log correlation and DB lock attribution.
+// Format: "reindex-<timestamp-base36>-<4-byte-hex>"
+function generateJobId() {
+  return `reindex-${Date.now().toString(36)}-${randomBytes(4).toString("hex")}`;
+}
 
 const ENGINE_VERSION = "4.0.0";
 
@@ -1078,7 +1087,7 @@ export async function deactivateOldChunks() {
   };
 }
 
-export async function upsertIndexedChunks(text = "", metadata = {}, { skipDelete = false } = {}) {
+export async function upsertIndexedChunks(text = "", metadata = {}, { skipDelete = false, jobId = null } = {}) {
   const chunks = buildIndexChunks(text, metadata);
 
   const result = await addDocumentToVectorStore(
@@ -1097,7 +1106,7 @@ export async function upsertIndexedChunks(text = "", metadata = {}, { skipDelete
       compactIndexedMetadata: true
     },
     undefined,
-    { skipDelete }
+    { skipDelete, jobId }
   );
 
   return {
@@ -1120,6 +1129,36 @@ export async function runDriveReindex() {
     throw new Error("GOOGLE_DRIVE_FOLDER_ID not set");
   }
 
+  const jobId = generateJobId();
+
+  // Log DB + instance identity before any DB operation so mismatches are visible.
+  console.info("[DB IDENTITY]", {
+    jobId,
+    mode: "full_drive_reindex",
+    INSTANCE_ID,
+    RENDER_SERVICE_NAME: process.env.RENDER_SERVICE_NAME || null,
+    RENDER_GIT_COMMIT: process.env.RENDER_GIT_COMMIT || null,
+    RENDER_INSTANCE_ID: process.env.RENDER_INSTANCE_ID || null,
+    NODE_ENV: process.env.NODE_ENV || null,
+    pid: process.pid,
+  });
+
+  // Acquire DB lock — blocks concurrent full-reindex from another instance.
+  const lockResult = await acquireReindexLock(jobId, "full_drive_reindex");
+  if (!lockResult.acquired && lockResult.reason === "lock_held") {
+    console.warn("[REINDEX DRIVE] Lock denied — another reindex is running", {
+      jobId,
+      existingJobId: lockResult.existingJobId,
+    });
+    return {
+      skipped: true,
+      reason: "lock_held",
+      jobId,
+      existingJobId: lockResult.existingJobId,
+    };
+  }
+
+  try {
   await clearVectorStore();
 
   const files = await listDriveFiles(folderId);
@@ -1157,7 +1196,7 @@ export async function runDriveReindex() {
         continue;
       }
 
-      const indexResult = await upsertIndexedChunks(cleanText, metadata);
+      const indexResult = await upsertIndexedChunks(cleanText, metadata, { jobId });
 
       indexed.push({
         fileId: metadata.fileId,
@@ -1206,8 +1245,20 @@ export async function runDriveReindex() {
     failed,
     skipped,
     reindexServiceVersion: ENGINE_VERSION,
-    indexedAt: new Date().toISOString()
+    indexedAt: new Date().toISOString(),
+    jobId
   };
+  } catch (outerError) {
+    console.error("[REINDEX FAILED]", {
+      jobId,
+      mode: "full_drive_reindex",
+      error: outerError?.message,
+      stack: outerError?.stack?.split("\n").slice(0, 4).join(" | "),
+    });
+    throw outerError;
+  } finally {
+    await releaseReindexLock(jobId);
+  }
 }
 
 // ── Targeted reindex ──────────────────────────────────────────────────────────
@@ -1264,6 +1315,32 @@ export async function runTargetedReindex(isTargetFile = isNircOrVatFile) {
   }
   _targetedReindexRunning = true;
 
+  const jobId = generateJobId();
+
+  // Log DB + instance identity before any DB operation.
+  console.info("[DB IDENTITY]", {
+    jobId,
+    mode: "targeted_reindex",
+    INSTANCE_ID,
+    RENDER_SERVICE_NAME: process.env.RENDER_SERVICE_NAME || null,
+    RENDER_GIT_COMMIT: process.env.RENDER_GIT_COMMIT || null,
+    RENDER_INSTANCE_ID: process.env.RENDER_INSTANCE_ID || null,
+    NODE_ENV: process.env.NODE_ENV || null,
+    pid: process.pid,
+  });
+
+  // Acquire DB lock before proceeding — prevents overlap with another Render instance.
+  const lockResult = await acquireReindexLock(jobId, "targeted_reindex");
+  if (lockResult.reason === "lock_held") {
+    console.warn("[REINDEX TARGETED] DB lock denied — another instance is running", {
+      jobId,
+      existingJobId: lockResult.existingJobId,
+    });
+    _targetedReindexRunning = false;
+    return { skipped: true, reason: "lock_held", jobId, existingJobId: lockResult.existingJobId };
+  }
+  // lock_error: log already emitted by acquireReindexLock; proceed in degraded mode.
+
   try {
     const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
     if (!folderId) throw new Error("GOOGLE_DRIVE_FOLDER_ID not set");
@@ -1272,6 +1349,7 @@ export async function runTargetedReindex(isTargetFile = isNircOrVatFile) {
     const targetFiles = (files || []).filter(isTargetFile);
 
     console.info("[REINDEX START]", {
+      jobId,
       targeted: true,
       totalFilesInDrive: files.length,
       matchedFiles: targetFiles.length,
@@ -1368,33 +1446,59 @@ export async function runTargetedReindex(isTargetFile = isNircOrVatFile) {
         }
 
         console.info("[REINDEX DELETE AND REINSERT]", {
+          jobId,
           source: normalizedSource,
           fileName,
           reason: "metadata repair reindex — old rows deleted before reinsertion",
         });
 
-        const indexResult = await upsertIndexedChunks(cleanText, metadata, {});
+        const indexResult = await upsertIndexedChunks(cleanText, metadata, { jobId });
         const chunksAdded = indexResult?.chunksAdded ?? indexResult?.chunkCount ?? 0;
 
         console.info("[REINDEX INSERT]", {
+          jobId,
           source: normalizedSource,
           chunksAdded,
           normalizedReference: metadata.normalizedReference
         });
 
+        // NIRC-specific: verify post-insert row count matches chunks added.
+        // Detects silent insert failures, cross-instance overlap, or table mismatch.
+        // isNircFile is already declared above (used for repair delete logic).
+        if (isNircFile) {
+          const postInsertCount = await countSourceRows(NIRC_CANONICAL_SOURCE);
+          console.info("[NIRC POSTINSERT EXACT COUNT]", {
+            jobId,
+            source: NIRC_CANONICAL_SOURCE,
+            postInsertCount,
+            chunksAdded,
+          });
+          if (postInsertCount !== chunksAdded) {
+            console.error("[NIRC POSTINSERT COUNT MISMATCH]", {
+              jobId,
+              source: NIRC_CANONICAL_SOURCE,
+              postInsertCount,
+              chunksAdded,
+              note: "mismatch may indicate cross-instance overlap, table mismatch, or silent insert failure",
+            });
+          }
+        }
+
         indexed.push({
+          jobId,
           fileName: metadata.fileName,
           normalizedSource,
           normalizedReference: metadata.normalizedReference,
           chunksAdded
         });
       } catch (error) {
-        console.error(`[REINDEX] Failed: ${fileName} — ${error?.message}`);
+        console.error(`[REINDEX] Failed: ${fileName} — ${error?.message}`, { jobId });
         failed.push({ fileName, reason: error?.message || "Failed" });
       }
     }
 
     console.info("[REINDEX COMPLETE]", {
+      jobId,
       indexed: indexed.length,
       failed: failed.length,
       skipped: skipped.length,
@@ -1403,6 +1507,7 @@ export async function runTargetedReindex(isTargetFile = isNircOrVatFile) {
 
     return {
       targeted: true,
+      jobId,
       totalFilesInDrive: (files || []).length,
       filesMatched: targetFiles.length,
       filesIndexed: indexed.length,
@@ -1413,8 +1518,17 @@ export async function runTargetedReindex(isTargetFile = isNircOrVatFile) {
       skipped,
       indexedAt: new Date().toISOString()
     };
+  } catch (outerError) {
+    console.error("[REINDEX FAILED]", {
+      jobId,
+      mode: "targeted_reindex",
+      error: outerError?.message,
+      stack: outerError?.stack?.split("\n").slice(0, 4).join(" | "),
+    });
+    throw outerError;
   } finally {
     _targetedReindexRunning = false;
+    await releaseReindexLock(jobId);
   }
 }
 

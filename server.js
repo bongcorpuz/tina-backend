@@ -26,7 +26,8 @@ import {
 
 import {
   getVectorStoreStats,
-  normalizeSourceName
+  normalizeSourceName,
+  INSTANCE_ID
 } from "./vector-store.js";
 
 import { createAskHandler, askHandlerHealthCheck } from "./ask-handler.js";
@@ -582,6 +583,56 @@ app.get("/index-status", allowAuthenticatedOrIndexSecret, async (req, res) => {
   } catch (error) {
     console.error("Index status error:", error);
     return sendError(res, 500, error.message || "Failed to read index status");
+  }
+});
+
+/* ================= DB IDENTITY DEBUG ================= */
+
+app.get("/debug/db-identity", allowAuthenticatedOrIndexSecret, async (req, res) => {
+  try {
+    const supabaseUrl = process.env.SUPABASE_URL || "";
+    const supabaseHost = supabaseUrl.replace(/^https?:\/\//, "").replace(/\/.*$/, "");
+    const supabaseProjectRef = supabaseHost.split(".")[0] || null;
+
+    const LOCK_TABLE = "tina_reindex_locks";
+    const VECTOR_TABLE = process.env.VECTOR_TABLE || "tina_vector_store";
+
+    // Try reading lock table to confirm it exists and is accessible.
+    let lockTableStatus = "unknown";
+    try {
+      const { createClient } = await import("@supabase/supabase-js");
+      const sc = createClient(
+        process.env.SUPABASE_URL,
+        process.env.SUPABASE_SERVICE_ROLE_KEY,
+        { auth: { persistSession: false, autoRefreshToken: false } }
+      );
+      const { error } = await sc.from(LOCK_TABLE).select("lock_name").limit(1);
+      lockTableStatus = error
+        ? `error: ${error.message} (code: ${error.code})`
+        : "accessible";
+    } catch (e) {
+      lockTableStatus = `exception: ${e?.message}`;
+    }
+
+    return res.json({
+      supabaseUrlHost: supabaseHost || null,
+      supabaseProjectRef,
+      VECTOR_TABLE,
+      vectorTableFromEnv: process.env.VECTOR_TABLE || null,
+      vectorTableMatchExpected: VECTOR_TABLE === "tina_vector_store",
+      LOCK_TABLE,
+      lockTableStatus,
+      RENDER_SERVICE_NAME: process.env.RENDER_SERVICE_NAME || null,
+      RENDER_GIT_COMMIT: process.env.RENDER_GIT_COMMIT || null,
+      RENDER_INSTANCE_ID: process.env.RENDER_INSTANCE_ID || null,
+      INSTANCE_ID,
+      NODE_ENV: process.env.NODE_ENV || null,
+      pid: process.pid,
+      time: new Date().toISOString(),
+    });
+  } catch (error) {
+    console.error("[DEBUG DB IDENTITY] Error:", error);
+    return sendError(res, 500, error.message || "Failed to read DB identity");
   }
 });
 
