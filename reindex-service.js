@@ -1091,7 +1091,7 @@ export async function deactivateOldChunks() {
   };
 }
 
-export async function upsertIndexedChunks(text = "", metadata = {}, { skipDelete = false, jobId = null } = {}) {
+export async function upsertIndexedChunks(text = "", metadata = {}, { skipDelete = false, jobId = null, shouldAbort = null } = {}) {
   const chunks = buildIndexChunks(text, metadata);
 
   const result = await addDocumentToVectorStore(
@@ -1110,7 +1110,7 @@ export async function upsertIndexedChunks(text = "", metadata = {}, { skipDelete
       compactIndexedMetadata: true
     },
     undefined,
-    { skipDelete, jobId }
+    { skipDelete, jobId, shouldAbort }
   );
 
   return {
@@ -1281,7 +1281,7 @@ export async function runDriveReindex({ preAcquiredJobId = null } = {}) {
         continue;
       }
 
-      const indexResult = await upsertIndexedChunks(cleanText, metadata, { jobId });
+      const indexResult = await upsertIndexedChunks(cleanText, metadata, { jobId, shouldAbort: () => lockState.lost });
 
       indexed.push({
         fileId: metadata.fileId,
@@ -1646,7 +1646,7 @@ export async function runTargetedReindex(isTargetFile = isNircOrVatFile, { preAc
           reason: "metadata repair reindex — old rows deleted before reinsertion",
         });
 
-        const indexResult = await upsertIndexedChunks(cleanText, metadata, { jobId });
+        const indexResult = await upsertIndexedChunks(cleanText, metadata, { jobId, shouldAbort: () => lockState.lost });
         const chunksAdded = indexResult?.chunksAdded ?? indexResult?.chunkCount ?? 0;
 
         console.info("[REINDEX INSERT]", {

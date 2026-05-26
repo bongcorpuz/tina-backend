@@ -1647,9 +1647,16 @@ export async function releaseReindexLock(jobId, client = defaultSupabase) {
 // expiring on long jobs. The expired-lock sweep in acquireReindexLock checks expires_at,
 // so as long as the heartbeat fires before expires_at passes, the lock remains valid
 // and cannot be claimed by another instance.
-// Returns { renewed: boolean, rowsUpdated: number, lostOwnership: boolean }.
-// lostOwnership:true means the UPDATE matched 0 rows — the lock row is gone,
-// meaning another instance swept and claimed it. The caller must abort the job.
+// Returns { renewed: boolean, rowsUpdated: number, lostOwnership: boolean, reason: string|null }.
+//
+// lostOwnership:true signals the caller must abort the reindex immediately.
+// Three outcomes that produce lostOwnership:true:
+//   'heartbeat_error'  — Supabase returned an error on the UPDATE query.
+//                        Treated identically to ownership loss (fail-closed):
+//                        we cannot confirm the lock is still ours, so we abort.
+//   'ownership_lost'   — UPDATE succeeded but matched 0 rows. The lock row is
+//                        gone; another instance swept and claimed it.
+//   null               — Success. renewed:true, lostOwnership:false.
 export async function heartbeatReindexLock(jobId, client = defaultSupabase) {
   const supabaseClient = resolveSupabaseClient(client);
   const now = new Date().toISOString();
@@ -1665,29 +1672,33 @@ export async function heartbeatReindexLock(jobId, client = defaultSupabase) {
     .select("lock_name");
 
   if (error) {
+    // Supabase error — cannot confirm lock is still ours. Treat as lost (fail-closed).
+    // A transient network blip is unfortunate but acceptable: safety over availability.
     console.error("[REINDEX LOCK HEARTBEAT FAILED]", {
       jobId,
-      error: { message: error.message, code: error.code }
+      reason: "heartbeat_error",
+      error: { message: error.message, code: error.code },
+      note: "Supabase heartbeat error — treating as lock lost (fail-closed)",
     });
-    return { renewed: false, rowsUpdated: 0, lostOwnership: false };
+    return { renewed: false, rowsUpdated: 0, lostOwnership: true, reason: "heartbeat_error" };
   }
 
   const rowsUpdated = Array.isArray(data) ? data.length : 0;
   const lostOwnership = rowsUpdated === 0;
 
   if (lostOwnership) {
-    // Lock row is gone — another instance took it after our TTL expired.
+    // Lock row is gone — another instance swept it after TTL expired.
     console.error("[REINDEX LOCK HEARTBEAT FAILED]", {
       jobId,
+      reason: "ownership_lost",
       rowsUpdated,
-      lostOwnership: true,
-      note: "UPDATE matched 0 rows — lock was swept and claimed by another instance",
+      note: "UPDATE matched 0 rows — lock swept and claimed by another instance",
     });
-    return { renewed: false, rowsUpdated: 0, lostOwnership: true };
+    return { renewed: false, rowsUpdated: 0, lostOwnership: true, reason: "ownership_lost" };
   }
 
   console.info("[REINDEX LOCK HEARTBEAT]", { jobId, newExpiresAt, rowsUpdated });
-  return { renewed: true, rowsUpdated, lostOwnership: false };
+  return { renewed: true, rowsUpdated, lostOwnership: false, reason: null };
 }
 
 export async function removeSourceFromVectorStore(source, client = defaultSupabase, jobId = null) {
@@ -1839,7 +1850,7 @@ function detectNircStructuralScope(chunkText = "") {
   };
 }
 
-export async function addDocumentToVectorStore(text, source, metadata = {}, client = defaultSupabase, { skipDelete = false, jobId = null } = {}) {
+export async function addDocumentToVectorStore(text, source, metadata = {}, client = defaultSupabase, { skipDelete = false, jobId = null, shouldAbort = null } = {}) {
   const supabaseClient = resolveSupabaseClient(client);
   const chunks = chunkText(text);
   const normalizedSource = normalizeSourceName(metadata.normalizedSource || source);
@@ -1982,6 +1993,26 @@ export async function addDocumentToVectorStore(text, source, metadata = {}, clie
   for (let i = 0; i < rows.length; i += VECTOR_INSERT_BATCH_SIZE) {
     const batch = rows.slice(i, i + VECTOR_INSERT_BATCH_SIZE);
     const batchNum = Math.floor(i / VECTOR_INSERT_BATCH_SIZE) + 1;
+
+    // Lock-loss check before each batch insert.
+    // shouldAbort is injected as () => lockState.lost from runDriveReindex / runTargetedReindex.
+    // If the heartbeat confirmed ownership lost between batches, stop immediately.
+    // No further rows are inserted after lock loss — the error propagates to the for-loop
+    // catch in the caller, which records the failure and continues to finally/release.
+    if (shouldAbort && shouldAbort()) {
+      console.error("[BATCH INSERT ABORTED — LOCK LOST]", {
+        source: normalizedSource,
+        batch: batchNum,
+        of: totalBatches,
+        jobId: jobId || null,
+        instanceId: INSTANCE_ID,
+        note: "lockState.lost=true — heartbeat confirmed lock ownership lost; aborting batch insertion",
+      });
+      throw new Error(
+        `[LOCK LOST] batch insert aborted — jobId=${jobId || "unknown"} ` +
+        `source=${normalizedSource} batch=${batchNum}/${totalBatches}`
+      );
+    }
 
     console.info("[BATCH INSERT START]", {
       source: normalizedSource,
