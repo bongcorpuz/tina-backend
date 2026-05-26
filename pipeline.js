@@ -52,6 +52,10 @@ import {
   inferIssuanceNumber,
   sourceTitleOf
 }                                                 from "./source-visibility-engine.js";
+import {
+  checkPhilippineTaxBoundary,
+  BOUNDARY_REJECTION_MESSAGE
+}                                                 from "./services/philippine-tax-domain-boundary.js";
 
 const PIPELINE_VERSION = "1.0.0";
 
@@ -336,6 +340,40 @@ export async function runPipeline({
       hook
     }
   });
+
+  // ── Defense-in-depth: Philippine Tax Domain Boundary ─────────────────────
+  // This guard catches any direct call to runPipeline() that bypassed the
+  // ask-handler.js primary enforcement.  Deliberately lenient: uses the same
+  // conservative-default logic, but logs a distinct tag so we can detect any
+  // bypass path in prod logs.
+  {
+    const _pipelineBoundaryCheck = checkPhilippineTaxBoundary(query || "", hook || "/ask");
+    console.log("[PIPELINE DOMAIN BOUNDARY CHECK]", {
+      query:           (query || "").slice(0, 120),
+      hook,
+      detectedDomain:  _pipelineBoundaryCheck.detectedDomain,
+      isPhilippineTax: _pipelineBoundaryCheck.isPhilippineTax,
+      decision:        _pipelineBoundaryCheck.decision,
+      reason:          _pipelineBoundaryCheck.reason,
+    });
+    if (_pipelineBoundaryCheck.decision === "REJECT") {
+      endTrace({ traceId, name: "tina-pipeline", status: "DOMAIN_BOUNDARY_REJECT", hook });
+      return {
+        answer:               BOUNDARY_REJECTION_MESSAGE,
+        sources:              [],
+        sourcesUsed:          [],
+        sourceCards:          [],
+        vectorMatches:        0,
+        sourceStatus:         "DOMAIN_BOUNDARY_REJECT",
+        domainBoundary:       true,
+        domainBoundaryDecision: "REJECT",
+        domainBoundaryReason: _pipelineBoundaryCheck.reason,
+        detectedDomain:       _pipelineBoundaryCheck.detectedDomain,
+        pipelineVersion:      PIPELINE_VERSION,
+      };
+    }
+  }
+  // ── End Defense-in-depth ──────────────────────────────────────────────────
 
   // ── Step 1: Issue Classification ──────────────────────────────────────────
   ctx.issueClassification = issueClassificationOverride || classify(query);
