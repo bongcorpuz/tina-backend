@@ -94,6 +94,24 @@ const AUTHORITY_WEIGHT = Object.freeze({
   UNKNOWN: 0
 });
 
+// Authority types that represent genuine primary legal/administrative sources.
+// A candidate pool containing at least one of these qualifies the
+// uniqueAuthorityCount rule inside isAuthoritySufficient() — ensuring the gate
+// only fires when real controlling authorities are present, not just secondary
+// material (CPA notes, reviewer handouts, UNKNOWN-typed chunks).
+// Domain-general: covers all tax/legal domains TINA handles.
+const CONTROLLING_AUTHORITY_TYPES = Object.freeze(new Set([
+  "CONSTITUTION",
+  "STATUTE", "NIRC", "TAX_CODE", "CMTA", "LGC", "REPUBLIC_ACT", "RA",
+  "TAX_TREATY",
+  "SUPREME_COURT_EN_BANC", "SUPREME_COURT",
+  "CTA_EN_BANC", "CTA_DIVISION", "COURT_OF_APPEALS",
+  "RR", "REVENUE_REGULATION", "RMC", "RMO", "RAMO",
+  "BIR_RULING",
+  "BOC_ISSUANCE", "FIRB_ISSUANCE", "PEZA_MEMO",
+  "LGU"
+]));
+
 const AUTHORITY_LEVEL = Object.freeze({
   CONSTITUTION: 1,
   STATUTE: 2,
@@ -2533,6 +2551,137 @@ function annotateDocLayer(doc = {}, layer = RETRIEVAL_LAYER.VECTOR_SEMANTIC, que
   };
 }
 
+/**
+ * isAuthoritySufficient — domain-general authority sufficiency gate
+ *
+ * Decides whether the candidates collected by Layers 1 and 2 are rich enough
+ * to skip Layer 3 (TITLE_PATH_METADATA) and Layer 4 (CONTENT_KEYWORD).
+ * Those layers call metadataSearch() with broad ILIKE queries — up to 60
+ * OR-chained conditions per keyword call — that cause Supabase 57014
+ * statement_timeout when no pg_trgm GIN indexes are present.
+ *
+ * Domain-general: no VAT/NIRC-specific logic.  Applies identically to:
+ *   income tax, withholding tax, excise tax, percentage tax, DST, local tax,
+ *   customs/CMTA, PEZA/incentives, refund, assessment/protest, jurisprudence,
+ *   BIR issuances, and any future domain added to TINA's corpus.
+ *
+ * Returns { sufficient: boolean, reason: string, ...diagnosticFields }
+ */
+function isAuthoritySufficient({
+  candidates = [],
+  layerDiagnostics = {},
+  uniqueAuthorityCount = 0,
+  issueClassification = null,
+  topK = DEFAULT_TOP_K,
+} = {}) {
+  const { exactAuthorityMatches = 0, citationVariantMatches = 0 } = layerDiagnostics;
+  const totalAuthorityMatches = exactAuthorityMatches + citationVariantMatches;
+
+  const targetAuthorities = safeArray(issueClassification?.targetAuthorities).filter(Boolean);
+  const targetAuthoritiesCount = targetAuthorities.length;
+
+  // Collect distinct normalized_reference values present in the candidate pool.
+  const candidateRefs = new Set(
+    candidates
+      .map(c => String(c.normalized_reference || c.normalizedReference || "").trim())
+      .filter(Boolean)
+  );
+
+  // Collect distinct authority_type values present in the candidate pool.
+  const candidateAuthorityTypes = new Set(
+    candidates
+      .map(c =>
+        String(c.authority_type || c.metadata?.authorityType || "").trim().toUpperCase()
+      )
+      .filter(Boolean)
+  );
+
+  // Does the pool include at least one recognized primary authority type?
+  const hasControllingAuthority = [...candidateAuthorityTypes].some(t =>
+    CONTROLLING_AUTHORITY_TYPES.has(t)
+  );
+
+  // How many target authorities from the issue classification are represented
+  // in the candidate pool?  Uses normalized string comparison so "NIRC Sec. 105"
+  // and "NIRC_SEC_105" both match their respective stored formats.
+  let matchedTargetAuthorities = 0;
+  if (targetAuthoritiesCount > 0) {
+    for (const ta of targetAuthorities) {
+      const taNorm = String(ta || "").trim().toUpperCase();
+      if (!taNorm) continue;
+      const matched =
+        candidateRefs.has(ta) ||
+        candidateRefs.has(taNorm) ||
+        [...candidateRefs].some(r => {
+          const rUp = r.toUpperCase();
+          return rUp === taNorm || rUp.includes(taNorm) || taNorm.includes(rUp);
+        });
+      if (matched) matchedTargetAuthorities++;
+    }
+  }
+
+  const targetCoverage =
+    targetAuthoritiesCount > 0 ? matchedTargetAuthorities / targetAuthoritiesCount : 0;
+
+  // ── Rule 1: combined Layer 1+2 raw match count ≥ topK ────────────────────
+  // totalAuthorityMatches is the pre-dedup candidate count from Layers 1+2.
+  // If the raw count already exceeds topK, there is ample authority evidence
+  // regardless of deduplication — duplicates only strengthen the signal.
+  if (totalAuthorityMatches >= topK) {
+    return {
+      sufficient: true,
+      reason:     "total_authority_matches_gte_topK",
+      totalAuthorityMatches,
+      uniqueAuthorityCount,
+      matchedTargetAuthorities,
+      targetAuthoritiesCount,
+    };
+  }
+
+  // ── Rule 2: ≥3 unique usable authority docs + at least one controlling type
+  // uniqueAuthorityCount counts distinct usable docs (have text + source/ref).
+  // Requiring a controlling type prevents triggering on 3 SECONDARY/CPA_NOTES
+  // chunks — those are supplementary, not authority-sufficient.
+  // Conservative floor of 3 avoids skipping on 1-2 thin or tangential matches.
+  if (uniqueAuthorityCount >= 3 && hasControllingAuthority) {
+    return {
+      sufficient:            true,
+      reason:                "unique_authorities_with_controlling_type",
+      uniqueAuthorityCount,
+      hasControllingAuthority,
+      matchedTargetAuthorities,
+      targetAuthoritiesCount,
+    };
+  }
+
+  // ── Rule 3: target authorities substantially covered (≥50%, min 1 match) ─
+  // When the issue classification named specific target authorities, coverage
+  // of those authorities is the most precise sufficiency signal.
+  // ≥50% with at least 1 match is deliberately conservative — a query
+  // targeting 4 authorities needs at least 2 represented.
+  if (targetAuthoritiesCount > 0 && matchedTargetAuthorities >= 1 && targetCoverage >= 0.5) {
+    return {
+      sufficient:              true,
+      reason:                  "target_authorities_substantially_covered",
+      matchedTargetAuthorities,
+      targetAuthoritiesCount,
+      targetCoverage,
+      uniqueAuthorityCount,
+    };
+  }
+
+  // ── Insufficient — let Layers 3/4 run ────────────────────────────────────
+  return {
+    sufficient:              false,
+    reason:                  "insufficient_authority_coverage",
+    totalAuthorityMatches,
+    uniqueAuthorityCount,
+    matchedTargetAuthorities,
+    targetAuthoritiesCount,
+    hasControllingAuthority,
+  };
+}
+
 async function collectCandidateDocs({
   query = "",
   querySet = {},
@@ -2627,6 +2776,52 @@ async function collectCandidateDocs({
   layerLoop: for (const layerInfo of safeArray(querySet.layers)) {
     const layer = layerInfo.layer;
     const queries = safeArray(layerInfo.queries).slice(0, 16);
+
+    // ── Domain-general authority sufficiency gate ──────────────────────────
+    // Skip Layer 3 (TITLE_PATH_METADATA) and Layer 4 (CONTENT_KEYWORD) when
+    // Layers 1+2 already produced sufficient authority-grounded results.
+    // Both layers call metadataSearch() with broad ILIKE queries that trigger
+    // Supabase 57014 statement timeouts under load.
+    // Layer 5 (VECTOR_SEMANTIC) and Layer 6 (BROAD_TAX_DOMAIN_FALLBACK) are
+    // never skipped — they supplement broad/explanatory queries where exact
+    // authority retrieval alone is not enough.
+    if (
+      layer === RETRIEVAL_LAYER.TITLE_PATH_METADATA ||
+      layer === RETRIEVAL_LAYER.CONTENT_KEYWORD
+    ) {
+      const suffCheck = isAuthoritySufficient({
+        candidates,
+        layerDiagnostics:    diagnostics,
+        uniqueAuthorityCount: _authCandidateKeys.size,
+        issueClassification,
+        topK,
+      });
+
+      console.log("[AUTHORITY SUFFICIENCY CHECK]", {
+        layer,
+        exactAuthorityMatches:    diagnostics.exactAuthorityMatches,
+        citationVariantMatches:   diagnostics.citationVariantMatches,
+        uniqueAuthorityCount:     _authCandidateKeys.size,
+        targetAuthoritiesCount:   safeArray(issueClassification?.targetAuthorities).length,
+        matchedTargetAuthorities: suffCheck.matchedTargetAuthorities ?? null,
+        decision: suffCheck.sufficient ? "SKIP" : "CONTINUE",
+        reason:   suffCheck.reason,
+      });
+
+      if (suffCheck.sufficient) {
+        console.log("[AUTHORITY SUFFICIENCY MET — SKIP METADATA KEYWORD LAYERS]", {
+          skippedLayer:             layer,
+          domain:                   issueClassification?.primaryDomain  ?? null,
+          primaryIssue:             issueClassification?.primaryIssue   ?? null,
+          exactAuthorityMatches:    diagnostics.exactAuthorityMatches,
+          citationVariantMatches:   diagnostics.citationVariantMatches,
+          uniqueAuthorityCount:     _authCandidateKeys.size,
+          totalCandidates:          candidates.length,
+        });
+        continue layerLoop;
+      }
+    }
+    // ── End authority sufficiency gate ─────────────────────────────────────
 
     for (const searchQuery of queries) {
       let results = await callSearchCallable({
