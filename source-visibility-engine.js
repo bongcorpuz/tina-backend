@@ -913,6 +913,14 @@ export function inferIssuanceNumber(doc = {}) {
     { regex: /\b(RMC)[-\s_]*(?:No\.?)?[-\s_]*0*(\d+)[-\s_/](\d{2,4})\b/i, value: (m) => `${m[1].toUpperCase()} No. ${Number(m[2])}-${normalizeYear(m[3])}` },
     { regex: /\b(RMO)[-\s_]*(?:No\.?)?[-\s_]*0*(\d+)[-\s_/](\d{2,4})\b/i, value: (m) => `${m[1].toUpperCase()} No. ${Number(m[2])}-${normalizeYear(m[3])}` },
     { regex: /\b(RAMO)[-\s_]*(?:No\.?)?[-\s_]*0*(\d+)[-\s_/](\d{2,4})\b/i, value: (m) => `${m[1].toUpperCase()} No. ${Number(m[2])}-${normalizeYear(m[3])}` },
+    // Full English names → canonical abbreviated form.
+    // Catches document titles/source fields like "Revenue Regulations No. 16-2005".
+    // RAMO is listed before RMO/RMC so "Revenue Audit Memorandum Order" cannot
+    // partially match the RMO pattern ("Revenue Memorandum Order" is a substring).
+    { regex: /\bRevenue Audit Memorandum Orders?[-\s_]*(?:No\.?)?[-\s_]*0*(\d+)[-\s_/](\d{2,4})\b/i, value: (m) => `RAMO No. ${Number(m[1])}-${normalizeYear(m[2])}` },
+    { regex: /\bRevenue Memorandum Circulars?[-\s_]*(?:No\.?)?[-\s_]*0*(\d+)[-\s_/](\d{2,4})\b/i, value: (m) => `RMC No. ${Number(m[1])}-${normalizeYear(m[2])}` },
+    { regex: /\bRevenue Memorandum Orders?[-\s_]*(?:No\.?)?[-\s_]*0*(\d+)[-\s_/](\d{2,4})\b/i, value: (m) => `RMO No. ${Number(m[1])}-${normalizeYear(m[2])}` },
+    { regex: /\bRevenue Regulations?[-\s_]*(?:No\.?)?[-\s_]*0*(\d+)[-\s_/](\d{2,4})\b/i, value: (m) => `RR No. ${Number(m[1])}-${normalizeYear(m[2])}` },
     { regex: /\b(BIR Ruling)\s*(?:No\.?)?\s*([\w./()-]+)\b/i, value: (m) => `${m[1]} No. ${m[2]}` },
     { regex: /\b(CTA(?:\s+EB| En Banc)?\s+No\.?\s*[\w.-]+)\b/i, value: (m) => compactSpaces(m[1]) },
     { regex: /\b(G\.R\.\s*No\.?\s*[\w.-]+)\b/i, value: (m) => compactSpaces(m[1]) },
