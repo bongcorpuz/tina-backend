@@ -2154,13 +2154,23 @@ export async function exactAuthoritySearch(arg1, arg2) {
     targetAuthorities
   } = parsed;
 
-  const safeTopK   = clampTopK(topK);
-  const poolLimit  = clampMatchCount(Math.max(safeTopK * 3, safeTopK));
+  const safeTopK  = clampTopK(topK);
+  const poolLimit = clampMatchCount(Math.max(safeTopK * 3, safeTopK));
 
-  // ── Fast path: single indexed .in("normalized_reference", ...) query ──────
-  // Build all stored-format variants for the authority terms so the equality
-  // filter catches both "NIRC Sec. 105" (detectNircSectionHeading format) and
-  // "NIRC_SEC_105" (normalizeLegalReference format).
+  // ── Equality-only path: single indexed .in("normalized_reference", ...) ──
+  //
+  // Layer 1 MUST NOT fall back to broad metadataSearch / ILIKE.
+  //
+  // The ILIKE fallback over source + 14 JSON-extracted metadata fields generates
+  // up to 60 OR conditions per keyword, all leading-wildcard (%term%), with no
+  // pg_trgm GIN indexes.  Each call forces a full sequential scan of
+  // tina_vector_store.  Called up to 12 times sequentially, this reliably
+  // triggers Supabase error 57014 (statement_timeout).
+  //
+  // Resolution: accept fewer than topK results here.  The authority sufficiency
+  // gate in collectCandidateDocs, plus Layer 2 (citation variant) and Layers
+  // 3-5, will supplement if the exact equality scan returns fewer results than
+  // needed.  Precision over recall is correct for Layer 1 exact authority lookup.
   const fastRefs = buildNormalizedRefVariants([
     keyword,
     query,
@@ -2175,36 +2185,25 @@ export async function exactAuthoritySearch(arg1, arg2) {
     searchMode: "EXACT_AUTHORITY"
   });
 
-  if (fastResults.length >= safeTopK) {
-    console.log("[EXACT AUTHORITY FAST PATH]", { refsQueried: fastRefs.length, found: fastResults.length });
-    return uniqueResults(sortResultsForTina(fastResults, query || keyword, parsed)).slice(0, safeTopK);
-  }
+  const sorted = uniqueResults(
+    sortResultsForTina(fastResults, query || keyword, parsed)
+  ).slice(0, safeTopK);
 
-  // ── Fallback: broad ILIKE metadataSearch (original behavior) ─────────────
-  // Only runs when the indexed lookup found too few results.
-  console.log("[EXACT AUTHORITY FALLBACK]", { fastFound: fastResults.length, needed: safeTopK });
-  const searchTerms = unique([
-    keyword,
-    query,
-    ...targetAuthorities,
-    ...buildPossibleSourceKeywords(query),
-    ...buildPossibleSourceKeywords(keyword)
-  ]).filter(Boolean);
-
-  const results = [...fastResults];
-
-  for (const term of searchTerms.slice(0, 12)) {
-    const matches = await metadataSearch({
-      supabaseClient,
-      keyword:    term,
-      topK,
-      options:    parsed,
-      searchMode: "EXACT_AUTHORITY"
+  if (sorted.length >= safeTopK) {
+    console.log("[EXACT AUTHORITY FAST RETURN]", {
+      refsQueried: fastRefs.length,
+      found:       sorted.length,
     });
-    results.push(...matches);
+  } else {
+    console.log("[EXACT AUTHORITY NO BROAD FALLBACK]", {
+      refsQueried: fastRefs.length,
+      found:       sorted.length,
+      needed:      safeTopK,
+      note:        "returning equality results only — ILIKE fallback removed to prevent 57014 timeout",
+    });
   }
 
-  return uniqueResults(sortResultsForTina(results, query || keyword, parsed)).slice(0, safeTopK);
+  return sorted;
 }
 
 export async function normalizedCitationSearch(arg1, arg2) {
@@ -2220,17 +2219,30 @@ export async function normalizedCitationSearch(arg1, arg2) {
     supportingJurisprudence
   } = parsed;
 
-  const safeTopK   = clampTopK(topK);
-  const poolLimit  = clampMatchCount(Math.max(safeTopK * 3, safeTopK));
+  const safeTopK  = clampTopK(topK);
+  const poolLimit = clampMatchCount(Math.max(safeTopK * 3, safeTopK));
 
-  // ── Fast path: single indexed .in("normalized_reference", ...) query ──────
-  // Use controlling and target authorities as the primary exact lookup set.
-  // Supporting authorities and jurisprudence expand it only if needed.
+  // ── Equality-only path: single indexed .in("normalized_reference", ...) ──
+  //
+  // Layer 2 MUST NOT fall back to broad metadataSearch / ILIKE for the same
+  // reason as Layer 1 — up to 16 sequential full-scan queries caused 57014.
+  //
+  // Compensation: the ref set is expanded to include ALL authority lists
+  // (controlling + supporting + jurisprudence), not just target + controlling.
+  // buildNormalizedRefVariants deduplicates and normalizes each term, so this
+  // remains a single indexed .in() call — O(1) query cost regardless of how
+  // many authority references are in the classification.
+  //
+  // Accept fewer than topK results here.  Layers 3-5 and semantic fallback
+  // will supplement for broad topic queries where authority references are
+  // indirect (e.g. "explain VAT like I am a business owner").
   const fastRefs = buildNormalizedRefVariants([
     keyword,
     query,
     ...targetAuthorities,
-    ...controllingAuthorities
+    ...controllingAuthorities,
+    ...supportingAuthorities,
+    ...supportingJurisprudence
   ]);
 
   const fastResults = await fastRefLookup({
@@ -2241,43 +2253,25 @@ export async function normalizedCitationSearch(arg1, arg2) {
     searchMode: "NORMALIZED_CITATION"
   });
 
-  if (fastResults.length >= safeTopK) {
-    console.log("[NORMALIZED CITATION FAST PATH]", { refsQueried: fastRefs.length, found: fastResults.length });
-    return uniqueResults(sortResultsForTina(fastResults, query || keyword, parsed)).slice(0, safeTopK);
-  }
+  const sorted = uniqueResults(
+    sortResultsForTina(fastResults, query || keyword, parsed)
+  ).slice(0, safeTopK);
 
-  // ── Fallback: broad ILIKE metadataSearch (original behavior) ─────────────
-  console.log("[NORMALIZED CITATION FALLBACK]", { fastFound: fastResults.length, needed: safeTopK });
-  const terms = unique([
-    keyword,
-    query,
-    ...targetAuthorities,
-    ...controllingAuthorities,
-    ...supportingAuthorities,
-    ...supportingJurisprudence
-  ])
-    .flatMap((term) => [
-      term,
-      normalizeAuthorityReference(term),
-      normalizeForMatch(term),
-      ...buildPossibleSourceKeywords(term)
-    ])
-    .filter(Boolean);
-
-  const results = [...fastResults];
-
-  for (const term of unique(terms).slice(0, 16)) {
-    const matches = await metadataSearch({
-      supabaseClient,
-      keyword:    term,
-      topK,
-      options:    parsed,
-      searchMode: "NORMALIZED_CITATION"
+  if (sorted.length >= safeTopK) {
+    console.log("[CITATION VARIANT FAST RETURN]", {
+      refsQueried: fastRefs.length,
+      found:       sorted.length,
     });
-    results.push(...matches);
+  } else {
+    console.log("[CITATION VARIANT NO BROAD FALLBACK]", {
+      refsQueried: fastRefs.length,
+      found:       sorted.length,
+      needed:      safeTopK,
+      note:        "returning equality results only — ILIKE fallback removed to prevent 57014 timeout",
+    });
   }
 
-  return uniqueResults(sortResultsForTina(results, query || keyword, parsed)).slice(0, safeTopK);
+  return sorted;
 }
 
 export async function titleMetadataSearch(arg1, arg2) {
