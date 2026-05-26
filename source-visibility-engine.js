@@ -1030,26 +1030,35 @@ export function buildSourcesEntry(doc = {}) {
 }
 
 function buildDocKey(doc = {}) {
-  const number = inferIssuanceNumber(doc);
-  const normalizedReference =
-    doc.normalizedReference ||
-    doc.normalized_reference ||
-    doc.citation ||
-    doc.reference ||
+  // PRIMARY: canonical authority reference.
+  // All variant encodings of the same issuance — abbreviated (RR No. 16-2005),
+  // filename (RR-16-2005.pdf, RR_16_2005.pdf), and full-form
+  // (Revenue Regulations No. 16-2005) — produce the same compact key ("rr162005").
+  // Two chunks from different PDFs that represent the same authority will correctly
+  // collapse to a single visible-source entry.
+  const authorityRef =
+    inferIssuanceNumber(doc)          ||
+    doc.normalizedReference           || doc.normalized_reference ||
+    doc.citation                      || doc.reference            ||
     doc.metadata?.normalizedReference ||
-    doc.metadata?.citation ||
-    doc.metadata?.reference ||
-    "";
+    doc.metadata?.citation            || doc.metadata?.reference  ||
+    doc.document_title                || doc.documentTitle        ||
+    doc.metadata?.documentTitle       ||
+    doc.source                        || "";
 
+  if (authorityRef) {
+    return canonicalSourceKey(authorityRef);
+  }
+
+  // FALLBACK: document-specific fields for sources that carry no authority reference.
+  // fileId / id uniquely identify the chunk; path and title provide a readable fallback.
   return normalizeLooseText(
     [
       fileIdOf(doc),
       doc.id,
-      number,
-      normalizedReference,
       sourcePathOf(doc),
       sourceTitleOf(doc),
-      authorityTypeOf(doc)
+      String(doc.chunk_index || doc.chunkIndex || "")
     ]
       .filter(Boolean)
       .join("|")

@@ -13,6 +13,11 @@
  * No legal reasoning generation.
  */
 
+import {
+  inferIssuanceNumber,
+  canonicalSourceKey
+} from "./source-visibility-engine.js";
+
 const ENGINE_VERSION = "5.2.0";
 
 const ORCHESTRATION_MODES = Object.freeze({
@@ -670,13 +675,24 @@ function isTargetAuthorityMatched(source = {}) {
 }
 
 function normalizeSourceKey(source = {}) {
+  // PRIMARY: resolve to a canonical authority key so that variant encodings of the
+  // same issuance (abbreviated, full-form, filename) collapse to the same dedup slot.
+  const authorityRef =
+    inferIssuanceNumber(source)    ||
+    source.citation                ||
+    source.reference               ||
+    source.normalizedReference     ||
+    source.normalized_reference    ||
+    source.issuanceNumber          || "";
+
+  if (authorityRef) {
+    return canonicalSourceKey(authorityRef);
+  }
+
+  // FALLBACK: exact-document fields when no authority ref can be resolved.
   return [
     source.fileId,
     source.id,
-    source.citation,
-    source.reference,
-    source.normalizedReference,
-    source.normalized_reference,
     source.title,
     source.source,
     source.sourcePath,
