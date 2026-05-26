@@ -358,6 +358,23 @@ const NON_TAX_REJECT_PATTERNS = [
   // ── Pet / animal care ─────────────────────────────────────────────────────
   { pattern: /\bhow\s+to\s+(train|groom|feed)\s+(my\s+)?(dog|cat|pet)\b/i, domain: "PETS" },
   { pattern: /\bdog\s+(breed|grooming|training\s+tips)\b/i,  domain: "PETS" },
+
+  // ── Religion / spirituality / theology ───────────────────────────────────
+  // Safe: "tax exemption for religious orgs" → "tax" hits allowlist first.
+  // Safe: "church BIR registration" → "BIR" hits allowlist first.
+  // Safe: "prayer for relief in tax protest" → "tax" hits allowlist first.
+  { pattern: /\breligion\b/i,                                domain: "RELIGION" },
+  { pattern: /\breligious\b/i,                               domain: "RELIGION" },
+  { pattern: /\btheology\b/i,                                domain: "RELIGION" },
+  { pattern: /\btheological\b/i,                             domain: "RELIGION" },
+  { pattern: /\bworship\b/i,                                 domain: "RELIGION" },
+  { pattern: /\bprayer\b/i,                                  domain: "RELIGION" },
+  { pattern: /\bBible\b/i,                                   domain: "RELIGION" },
+  { pattern: /\bQuran\b|\bKoran\b/i,                         domain: "RELIGION" },
+  { pattern: /\bscripture[s]?\b/i,                           domain: "RELIGION" },
+  { pattern: /\bchurch\b/i,                                  domain: "RELIGION" },
+  { pattern: /\bspiritual(ity)?\b/i,                         domain: "RELIGION" },
+  { pattern: /\bdivine\s+(will|law|grace|command)\b/i,       domain: "RELIGION" },
 ];
 
 // ─── Audit-mode tax signals ───────────────────────────────────────────────────
