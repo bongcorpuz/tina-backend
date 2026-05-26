@@ -38,7 +38,9 @@ import {
   clearVectorStore,
   acquireReindexLock,
   releaseReindexLock,
+  heartbeatReindexLock,
   INSTANCE_ID,
+  LOCK_TABLE,
   addDocumentToVectorStore,
   removeSourceFromVectorStore,
   removeSourceByPatternFromVectorStore,
@@ -1131,11 +1133,22 @@ export async function runDriveReindex() {
 
   const jobId = generateJobId();
 
+  // Compute DB identity fields once — used in logs and identity assertions.
+  const _supabaseUrl = process.env.SUPABASE_URL || "";
+  const _supabaseHost = _supabaseUrl.replace(/^https?:\/\//, "").replace(/\/.*$/, "");
+  const _supabaseProjectRef = _supabaseHost.split(".")[0] || null;
+  const _vectorTable = process.env.VECTOR_TABLE || "tina_vector_store";
+
   // Log DB + instance identity before any DB operation so mismatches are visible.
   console.info("[DB IDENTITY]", {
     jobId,
     mode: "full_drive_reindex",
+    supabaseUrlHost: _supabaseHost || null,
+    supabaseProjectRef: _supabaseProjectRef,
+    VECTOR_TABLE: _vectorTable,
+    LOCK_TABLE,
     INSTANCE_ID,
+    instanceId: INSTANCE_ID,
     RENDER_SERVICE_NAME: process.env.RENDER_SERVICE_NAME || null,
     RENDER_GIT_COMMIT: process.env.RENDER_GIT_COMMIT || null,
     RENDER_INSTANCE_ID: process.env.RENDER_INSTANCE_ID || null,
@@ -1143,20 +1156,33 @@ export async function runDriveReindex() {
     pid: process.pid,
   });
 
-  // Acquire DB lock — blocks concurrent full-reindex from another instance.
+  // Acquire DB lock — fail closed: if lock cannot be acquired for ANY reason
+  // (lock_held OR lock_error), abort immediately. No unlocked reindex allowed.
   const lockResult = await acquireReindexLock(jobId, "full_drive_reindex");
-  if (!lockResult.acquired && lockResult.reason === "lock_held") {
-    console.warn("[REINDEX DRIVE] Lock denied — another reindex is running", {
+  if (!lockResult.acquired) {
+    const reason = lockResult.reason;
+    console.error("[REINDEX DRIVE] Cannot acquire lock — aborting (fail-closed)", {
       jobId,
-      existingJobId: lockResult.existingJobId,
+      reason,
+      existingJobId: lockResult.existingJobId || null,
+      error: lockResult.error || null,
     });
     return {
       skipped: true,
-      reason: "lock_held",
+      reason,
       jobId,
-      existingJobId: lockResult.existingJobId,
+      existingJobId: lockResult.existingJobId || null,
+      error: lockResult.error || null,
     };
   }
+
+  // Heartbeat: renew lock TTL every 5 minutes while reindex runs.
+  // Prevents the 30-minute expires_at from lapsing on large Drive libraries.
+  const HEARTBEAT_MS = 5 * 60 * 1000;
+  let _heartbeatTimer = setInterval(async () => {
+    try { await heartbeatReindexLock(jobId); }
+    catch (hbErr) { console.error("[REINDEX HEARTBEAT EXCEPTION]", { jobId, error: hbErr?.message }); }
+  }, HEARTBEAT_MS);
 
   try {
   await clearVectorStore();
@@ -1257,6 +1283,7 @@ export async function runDriveReindex() {
     });
     throw outerError;
   } finally {
+    clearInterval(_heartbeatTimer);
     await releaseReindexLock(jobId);
   }
 }
@@ -1317,11 +1344,22 @@ export async function runTargetedReindex(isTargetFile = isNircOrVatFile) {
 
   const jobId = generateJobId();
 
+  // Compute DB identity fields once — used in logs and identity assertions.
+  const _supabaseUrl = process.env.SUPABASE_URL || "";
+  const _supabaseHost = _supabaseUrl.replace(/^https?:\/\//, "").replace(/\/.*$/, "");
+  const _supabaseProjectRef = _supabaseHost.split(".")[0] || null;
+  const _vectorTable = process.env.VECTOR_TABLE || "tina_vector_store";
+
   // Log DB + instance identity before any DB operation.
   console.info("[DB IDENTITY]", {
     jobId,
     mode: "targeted_reindex",
+    supabaseUrlHost: _supabaseHost || null,
+    supabaseProjectRef: _supabaseProjectRef,
+    VECTOR_TABLE: _vectorTable,
+    LOCK_TABLE,
     INSTANCE_ID,
+    instanceId: INSTANCE_ID,
     RENDER_SERVICE_NAME: process.env.RENDER_SERVICE_NAME || null,
     RENDER_GIT_COMMIT: process.env.RENDER_GIT_COMMIT || null,
     RENDER_INSTANCE_ID: process.env.RENDER_INSTANCE_ID || null,
@@ -1329,17 +1367,33 @@ export async function runTargetedReindex(isTargetFile = isNircOrVatFile) {
     pid: process.pid,
   });
 
-  // Acquire DB lock before proceeding — prevents overlap with another Render instance.
+  // Acquire DB lock — fail closed: if lock cannot be acquired for ANY reason
+  // (lock_held OR lock_error), abort immediately. No unlocked reindex allowed.
   const lockResult = await acquireReindexLock(jobId, "targeted_reindex");
-  if (lockResult.reason === "lock_held") {
-    console.warn("[REINDEX TARGETED] DB lock denied — another instance is running", {
+  if (!lockResult.acquired) {
+    const reason = lockResult.reason;
+    console.error("[REINDEX TARGETED] Cannot acquire lock — aborting (fail-closed)", {
       jobId,
-      existingJobId: lockResult.existingJobId,
+      reason,
+      existingJobId: lockResult.existingJobId || null,
+      error: lockResult.error || null,
     });
     _targetedReindexRunning = false;
-    return { skipped: true, reason: "lock_held", jobId, existingJobId: lockResult.existingJobId };
+    return {
+      skipped: true,
+      reason,
+      jobId,
+      existingJobId: lockResult.existingJobId || null,
+      error: lockResult.error || null,
+    };
   }
-  // lock_error: log already emitted by acquireReindexLock; proceed in degraded mode.
+
+  // Heartbeat: renew lock TTL every 5 minutes while reindex runs.
+  const HEARTBEAT_MS = 5 * 60 * 1000;
+  let _heartbeatTimer = setInterval(async () => {
+    try { await heartbeatReindexLock(jobId); }
+    catch (hbErr) { console.error("[REINDEX HEARTBEAT EXCEPTION]", { jobId, error: hbErr?.message }); }
+  }, HEARTBEAT_MS);
 
   try {
     const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
@@ -1386,6 +1440,7 @@ export async function runTargetedReindex(isTargetFile = isNircOrVatFile) {
         if (isNircFile) {
           const repairSource = NIRC_CANONICAL_SOURCE;
           console.info("[NIRC REPAIR CANONICAL SOURCE]", {
+            jobId,
             metadataNormalizedSource: normalizedSource,
             canonicalSource: repairSource,
           });
@@ -1393,13 +1448,15 @@ export async function runTargetedReindex(isTargetFile = isNircOrVatFile) {
           // 1. Pre-delete count against canonical source
           const preDeleteCount = await countSourceRows(repairSource);
           console.info("[NIRC REPAIR PREDELETE COUNT]", {
+            jobId,
             source: repairSource,
             rows: preDeleteCount,
           });
 
           // 2. Exact-match delete on canonical source — eq() scan is indexed and fast
-          const exactDeleteResult = await removeSourceFromVectorStore(repairSource);
+          const exactDeleteResult = await removeSourceFromVectorStore(repairSource, undefined, jobId);
           console.info("[NIRC EXACT DELETE]", {
+            jobId,
             source: repairSource,
             removedChunks: exactDeleteResult.removedChunks,
           });
@@ -1407,6 +1464,7 @@ export async function runTargetedReindex(isTargetFile = isNircOrVatFile) {
           // 3. Post-delete count
           const postDeleteCount = await countSourceRows(repairSource);
           console.info("[NIRC REPAIR POSTDELETE COUNT]", {
+            jobId,
             source: repairSource,
             rows: postDeleteCount,
           });
@@ -1414,17 +1472,20 @@ export async function runTargetedReindex(isTargetFile = isNircOrVatFile) {
           if (postDeleteCount === 0) {
             // Exact delete cleared all rows — skip broad ILIKE to avoid 57014 timeout
             console.info("[NIRC REPAIR PATTERN DELETE SKIPPED]", {
+              jobId,
               source: repairSource,
               reason: "exact delete cleared all rows — ILIKE patterns not needed",
             });
           } else {
             // Fallback: broad ILIKE patterns for any surviving historical source variants
             for (const pattern of NIRC_REPAIR_PATTERNS) {
+              console.info("[NIRC PATTERN DELETE]", { jobId, pattern, source: repairSource });
               await removeSourceByPatternFromVectorStore(pattern);
             }
             const finalCount = await countSourceRows(repairSource);
             if (finalCount > 0) {
               console.error("[NIRC DELETE FAILED — ABORT]", {
+                jobId,
                 source: repairSource,
                 preDeleteCount,
                 postDeleteCount,
@@ -1527,6 +1588,7 @@ export async function runTargetedReindex(isTargetFile = isNircOrVatFile) {
     });
     throw outerError;
   } finally {
+    clearInterval(_heartbeatTimer);
     _targetedReindexRunning = false;
     await releaseReindexLock(jobId);
   }

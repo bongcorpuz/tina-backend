@@ -22,13 +22,15 @@ const ENGINE_VERSION = "3.0.0";
 // Stable per-process identity for cross-instance lock attribution and log correlation.
 // Prefers Render's injected instance ID, falls back to service ID, then a random hex token
 // generated once at startup (survives within a single process lifetime).
-const INSTANCE_ID =
+// Named export — reindex-service.js and server.js import this directly.
+export const INSTANCE_ID =
   process.env.RENDER_INSTANCE_ID ||
   process.env.RENDER_SERVICE_ID ||
   randomBytes(8).toString("hex");
 
 // DB-backed lock table. Must be created manually in Supabase SQL editor (see SQL migration).
-const LOCK_TABLE = "tina_reindex_locks";
+// Named export — reindex-service.js imports this for DB identity logs.
+export const LOCK_TABLE = "tina_reindex_locks";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
@@ -1586,13 +1588,14 @@ export async function acquireReindexLock(
     return { acquired: false, reason: "lock_held", existingJobId: existing?.job_id || null };
   }
 
-  // Table missing, RLS error, or other unexpected error — log and allow degraded run.
+  // Table missing, RLS error, or other unexpected error.
+  // Reindex will be rejected — caller must NOT proceed without a confirmed lock.
   console.error("[REINDEX LOCK ERROR]", {
     jobId,
     mode,
     instanceId,
     error: { message: error.message, code: error.code, details: error.details },
-    note: "Proceeding without DB lock — ensure tina_reindex_locks table exists"
+    note: "Reindex rejected — create tina_reindex_locks table and verify RLS policy"
   });
   return { acquired: false, reason: "lock_error", error: error.message };
 }
@@ -1615,6 +1618,34 @@ export async function releaseReindexLock(jobId, client = defaultSupabase) {
   }
 
   console.info("[REINDEX LOCK RELEASED]", { jobId });
+  return true;
+}
+
+// Extends the lock's expires_at and updates heartbeat_at.
+// Called on an interval while a reindex is running to prevent the 30-minute TTL from
+// expiring on long jobs. The expired-lock sweep in acquireReindexLock checks expires_at,
+// so as long as the heartbeat fires before expires_at passes, the lock remains valid
+// and cannot be claimed by another instance.
+export async function heartbeatReindexLock(jobId, client = defaultSupabase) {
+  const supabaseClient = resolveSupabaseClient(client);
+  const now = new Date().toISOString();
+  const newExpiresAt = new Date(Date.now() + 30 * 60 * 1000).toISOString(); // +30 min
+
+  const { error } = await supabaseClient
+    .from(LOCK_TABLE)
+    .update({ heartbeat_at: now, expires_at: newExpiresAt })
+    .eq("lock_name", "global_reindex")
+    .eq("job_id", jobId);
+
+  if (error) {
+    console.error("[REINDEX HEARTBEAT ERROR]", {
+      jobId,
+      error: { message: error.message, code: error.code }
+    });
+    return false;
+  }
+
+  console.info("[REINDEX HEARTBEAT]", { jobId, newExpiresAt });
   return true;
 }
 
@@ -2772,7 +2803,9 @@ export default {
   clearVectorStore,
   acquireReindexLock,
   releaseReindexLock,
+  heartbeatReindexLock,
   INSTANCE_ID,
+  LOCK_TABLE,
   removeSourceFromVectorStore,
   removeSourceByPatternFromVectorStore,
   countSourceRows,
