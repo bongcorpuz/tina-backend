@@ -2167,11 +2167,63 @@ function filterBeforeRerank(docs = [], { allowReviewMaterials = false } = {}) {
     const filtered = applySupersessionFilter(output);
 
     if (Array.isArray(filtered)) {
-      dropped.clearlySupersededSources += Math.max(0, output.length - filtered.length);
+      // Legacy: direct-array return path (preserved for safety)
+      const droppedCount = Math.max(0, output.length - filtered.length);
+      dropped.clearlySupersededSources += droppedCount;
       supersessionFiltered = filtered;
+      console.log("[SUPERSESSION FILTER APPLIED]", {
+        returnShape:  "array",
+        inputCount:   output.length,
+        outputCount:  filtered.length,
+        droppedCount,
+      });
+    } else if (filtered && typeof filtered === "object") {
+      // Object return — extract the best available array in priority order:
+      //   activeDocs > effectiveDocs > sources > filtered > filteredSources
+      const shapeCandidates = [
+        ["object.activeDocs",      filtered.activeDocs],
+        ["object.effectiveDocs",   filtered.effectiveDocs],
+        ["object.sources",         filtered.sources],
+        ["object.filtered",        filtered.filtered],
+        ["object.filteredSources", filtered.filteredSources],
+      ];
+      const found = shapeCandidates.find(([, arr]) => Array.isArray(arr));
+
+      if (found) {
+        const [returnShape, resultArray] = found;
+        const droppedCount = Math.max(0, output.length - resultArray.length);
+        dropped.clearlySupersededSources += droppedCount;
+        supersessionFiltered = resultArray;
+        console.log("[SUPERSESSION FILTER APPLIED]", {
+          returnShape,
+          inputCount:           output.length,
+          outputCount:          resultArray.length,
+          droppedCount,
+          supersededCount:      filtered.supersededCount      ?? null,
+          hasSupersededSources: filtered.hasSupersededSources ?? null,
+        });
+      } else {
+        // Object returned but contains no valid array — preserve original sources
+        console.log("[SUPERSESSION FILTER SHAPE WARNING]", {
+          returnShape:  "object_no_valid_array",
+          inputCount:   output.length,
+          outputCount:  output.length,
+          droppedCount: 0,
+          availableKeys: Object.keys(filtered),
+          note: "No valid array found in applySupersessionFilter result; preserving original sources",
+        });
+      }
     }
-  } catch {
+  } catch (err) {
     supersessionFiltered = output;
+    console.log("[SUPERSESSION FILTER SHAPE WARNING]", {
+      returnShape:  "error",
+      inputCount:   output.length,
+      outputCount:  output.length,
+      droppedCount: 0,
+      error:        err?.message || String(err),
+      note:         "applySupersessionFilter threw; preserving original sources",
+    });
   }
 
   return {
@@ -3238,9 +3290,6 @@ async function retrieveRelevantSources(options = {}) {
     candidatesIn:  candidates.length,
     afterFilter:   prefiltered.docs.length,
     dropped:       prefiltered.droppedBeforeRerank
-  });
-  console.log("[SUPERSESSION FILTER]", {
-    note: "applySupersessionFilter inside filterBeforeRerank returns object not array — currently a no-op; see filterBeforeRerank line ~2114"
   });
   // ── END TEMP TRACE ────────────────────────────────────────────────────────
 
