@@ -1,9 +1,9 @@
 // FILE: learning/review-engine.js
 "use strict";
 
-import { getReviewSourceChunks } from "../vector-store.js";
 import { buildRetrievalHints } from "./question-bank-router.js";
 import { getSubtopicLabel, getDomainAuthorities } from "./domain-normalizer.js";
+import { buildTaxConceptRetrievalAliases } from "../services/tax-concept-aliases.js";
 
 const ENGINE_VERSION = "1.0.0";
 
@@ -65,6 +65,140 @@ function compactSourceChunk(chunk = {}) {
       Number(chunk.finalScore || chunk.final_score || chunk.retrievalScore || chunk.score || chunk.similarity || 0) || 0
   };
 }
+
+// ─── bounded light retrieval ─────────────────────────────────────────────────
+// Mirrors the light stage of getReviewSourceChunks (vector-store.js) without
+// the smartSearch fallback.  One indexed-column Supabase query is issued with a
+// 2 s AbortController deadline.  When the deadline fires, the underlying fetch
+// is cancelled by Supabase's PostgREST client — no orphan HTTP request remains.
+//
+// Columns queried: source, document_title, normalized_reference
+// Authority filter: everything except UNKNOWN (same as the full function)
+// Priority: primary authorities fill first; CPA_NOTES/REVIEW_MATERIALS supplement
+//
+// NIRC raw-form expansion (buildNircLightExpansion) is omitted because it is an
+// internal helper in vector-store.js that is not exported.  The concept-alias
+// expansion already covers the formal NIRC section labels that matter here.
+async function getBoundedReviewSourceChunks({
+  topic,
+  excludeChunkIds = [],
+  excludeSourcePaths = [],
+  limit = 4,
+  supabase: supabaseClient
+}) {
+  if (!supabaseClient || typeof supabaseClient.from !== "function") return [];
+  const cleanTopic = String(topic || "").trim().toLowerCase();
+  if (!cleanTopic) return [];
+
+  const safeLimit = Math.min(Math.max(1, Math.floor(Number(limit) || 4)), 6);
+  const pattern   = `%${cleanTopic}%`;
+
+  // Concept-alias expansion — mirrors buildConceptAliasExpansion from vector-store.js
+  const conceptAliases = buildTaxConceptRetrievalAliases(cleanTopic);
+  const aliasFragments = conceptAliases.slice(0, 8).flatMap(a => [
+    `normalized_reference.ilike.%${a}%`,
+    `document_title.ilike.%${a}%`,
+    `source.ilike.%${a}%`
+  ]);
+
+  const orClause = [
+    `source.ilike.${pattern}`,
+    `document_title.ilike.${pattern}`,
+    `normalized_reference.ilike.${pattern}`,
+    ...aliasFragments
+  ].join(",");
+
+  const VECTOR_TABLE   = process.env.VECTOR_TABLE || "tina_vector_store";
+  const REVIEWER_TYPES = new Set(["CPA_NOTES", "REVIEW_MATERIALS", "SECONDARY"]);
+
+  const excPaths = new Set(safeArray(excludeSourcePaths));
+  const excIds   = new Set(safeArray(excludeChunkIds).map(String));
+
+  // AbortController: 2 s deadline.  When controller.abort() fires, the
+  // underlying fetch is cancelled by Supabase's PostgREST client.
+  let timedOut = false;
+  const controller = new AbortController();
+  const timer = setTimeout(() => { timedOut = true; controller.abort(); }, 2000);
+
+  let data, queryError;
+  try {
+    ({ data, error: queryError } = await supabaseClient
+      .from(VECTOR_TABLE)
+      .select(
+        "id,source,original_source,document_title,authority_type,authority_level," +
+        "normalized_reference,chunk_index,text,metadata"
+      )
+      .or(orClause)
+      .neq("authority_type", "UNKNOWN")
+      .order("authority_level", { ascending: true, nullsFirst: false })
+      .limit(safeLimit * 3)
+      .abortSignal(controller.signal));
+    clearTimeout(timer);
+  } catch (fetchErr) {
+    clearTimeout(timer);
+    if (timedOut) {
+      console.warn("[REVIEW ENGINE] Bounded light query timed out (>2 s) — no-source guard will fire");
+    } else {
+      console.error("[REVIEW ENGINE] Bounded light query fetch error:", fetchErr?.message);
+    }
+    return [];
+  }
+
+  if (queryError) {
+    console.error("[REVIEW ENGINE] Bounded light query DB error:", {
+      message: queryError.message, code: queryError.code, topic: cleanTopic
+    });
+    return [];
+  }
+
+  const shaped = (data || [])
+    .filter(row => {
+      const path    = row.metadata?.path || row.original_source || row.source || "";
+      const chunkId = String(row.id || "");
+      return (
+        !excPaths.has(path) &&
+        !excIds.has(chunkId) &&
+        (row.text || "").trim().length >= 50
+      );
+    })
+    .map(row => {
+      const meta       = row.metadata || {};
+      const driveViewUrl = meta.driveViewUrl || meta.drive_view_url || meta.url || null;
+      return {
+        id:                row.id,
+        source:            row.source,
+        original_source:   row.original_source,
+        title:             row.document_title || row.original_source || row.source || "Review Source",
+        document_title:    row.document_title,
+        authorityType:     row.authority_type || "UNKNOWN",
+        authority_type:    row.authority_type,
+        authority_level:   row.authority_level,
+        citation:          row.normalized_reference || "",
+        normalized_reference: row.normalized_reference,
+        chunk_index:       row.chunk_index,
+        url:               driveViewUrl || "",
+        driveViewUrl:      driveViewUrl || "",
+        drive_view_url:    driveViewUrl || "",
+        text:              trimText(row.text || "", 1400),
+        content:           trimText(row.text || "", 1400),
+        excerpt:           trimText(row.text || "", 1400),
+        metadata:          meta,
+        score:             0.7,
+        sourceTitle:       row.document_title || row.original_source || row.source,
+        sourcePath:        meta.path || row.original_source || row.source,
+        fileId:            meta.fileId || meta.file_id || null,
+        compactOutput:     true
+      };
+    });
+
+  const primary   = shaped.filter(r => !REVIEWER_TYPES.has(r.authority_type));
+  const secondary = shaped.filter(r =>  REVIEWER_TYPES.has(r.authority_type));
+
+  if (primary.length >= safeLimit) return primary.slice(0, safeLimit);
+  const remaining = safeLimit - primary.length;
+  return [...primary, ...secondary.slice(0, remaining)];
+}
+// ─── end bounded light retrieval ──────────────────────────────────────────────
 
 function buildReviewPrompt({ domain, subtopic, subtopicLabel, sourceChunks, authorities }) {
   const sourceContext = safeArray(sourceChunks)
@@ -192,19 +326,20 @@ export async function generateReviewMaterial({
   const authorities = getDomainAuthorities(domain);
   const hints = buildRetrievalHints(domain, subtopic);
 
+  // Bounded single-stage retrieval: one indexed-column query, no smartSearch fallback.
+  // If this returns empty the no-source guard fires immediately; there is nothing else
+  // running that could produce post-response logs or start an OpenAI call.
   let sourceChunks = [];
   try {
-    sourceChunks = await Promise.race([
-      getReviewSourceChunks({
-        topic: hints.primaryQuery,
-        excludeSourcePaths: safeArray(excludeSourcePaths),
-        excludeChunkIds: safeArray(excludeChunkIds).map(String),
-        limit: 4
-      }),
-      new Promise((_, rej) => setTimeout(() => rej(new Error("source timeout")), 5000))
-    ]);
+    sourceChunks = await getBoundedReviewSourceChunks({
+      topic:              hints.primaryQuery,
+      excludeSourcePaths: safeArray(excludeSourcePaths),
+      excludeChunkIds:    safeArray(excludeChunkIds).map(String),
+      limit:              4,
+      supabase
+    });
   } catch (err) {
-    console.error("[REVIEW ENGINE] Source retrieval failed (training-knowledge fallback):", err?.message);
+    console.error("[REVIEW ENGINE] Source retrieval failed:", err?.message);
     sourceChunks = [];
   }
 

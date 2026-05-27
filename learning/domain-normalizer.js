@@ -416,6 +416,9 @@ const DOMAIN_ALIAS_MAP = new Map([
   ["prscription",                 "PRESCRIPTION"],  // typo (missing e)
   ["prsciption",                  "PRESCRIPTION"],  // typo (missing e and r)
   ["prscription tax",             "PRESCRIPTION"],  // typo with filler word
+  ["presctiption",                "PRESCRIPTION"],  // typo (extra t: presc-t-iption)
+  ["presctipion",                 "PRESCRIPTION"],  // typo variant (extra t, missing t at end)
+  ["presctiption tax",            "PRESCRIPTION"],  // typo with filler word
   ["prescriptive period",         "PRESCRIPTION"],
   ["prescriptive periods",        "PRESCRIPTION"],
   ["prescription period",         "PRESCRIPTION"],

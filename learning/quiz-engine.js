@@ -9,10 +9,10 @@ import {
   buildQuizExclusionFromHistory
 } from "../adaptive-quiz.js";
 
-import { getQuizSourceChunks } from "../vector-store.js";
 import { buildRetrievalHints } from "./question-bank-router.js";
 import { getSubtopicLabel, getDomainConfig } from "./domain-normalizer.js";
 import { safeParseQuizQuestion } from "../services/schema-validator.js";
+import { buildTaxConceptRetrievalAliases } from "../services/tax-concept-aliases.js";
 
 const ENGINE_VERSION = "1.0.0";
 
@@ -121,6 +121,133 @@ function resolveDifficulty(sessionLearning = {}) {
   if (accuracy >= 0.45) return 2;
   return 1;
 }
+
+// ─── bounded light retrieval for /quiz ──────────────────────────────────────
+// Single indexed-column Supabase query with a 2 s AbortController deadline.
+// When the deadline fires, the underlying fetch is actually cancelled — no
+// orphan HTTP request continues in the background.
+//
+// Excluded authority types match getQuizSourceChunksLight:
+//   CPA_NOTES, REVIEW_MATERIALS, UNKNOWN
+//
+// History-based exclusions are applied as a post-query filter because the
+// AbortSignal approach targets the DB call itself, not post-processing.
+//
+// NIRC raw-form expansion is omitted (internal helper, not exported).
+// Concept-alias expansion is replicated inline (3-line logic).
+async function getBoundedQuizSourceChunks({
+  topic,
+  limit = 3,
+  supabase: supabaseClient,
+  excludeSourcePaths = [],
+  excludeChunkIds = []
+}) {
+  if (!supabaseClient || typeof supabaseClient.from !== "function") return [];
+  const cleanTopic = String(topic || "").trim().toLowerCase();
+  if (!cleanTopic) return [];
+
+  const EXCLUDED = new Set(["CPA_NOTES", "REVIEW_MATERIALS", "UNKNOWN"]);
+  const safeLimit = Math.min(Math.max(1, Math.floor(Number(limit) || 3)), 5);
+  const pattern   = `%${cleanTopic}%`;
+
+  // Concept-alias expansion (mirrors buildConceptAliasExpansion in vector-store.js)
+  const conceptAliases = buildTaxConceptRetrievalAliases(cleanTopic);
+  const aliasFragments = conceptAliases.slice(0, 8).flatMap(a => [
+    `normalized_reference.ilike.%${a}%`,
+    `document_title.ilike.%${a}%`,
+    `source.ilike.%${a}%`
+  ]);
+
+  const orClause = [
+    `source.ilike.${pattern}`,
+    `document_title.ilike.${pattern}`,
+    `normalized_reference.ilike.${pattern}`,
+    ...aliasFragments
+  ].join(",");
+
+  const VECTOR_TABLE = process.env.VECTOR_TABLE || "tina_vector_store";
+
+  // AbortController: 2 s deadline.  When controller.abort() fires, the underlying
+  // fetch is cancelled by Supabase's PostgREST client — no orphan request.
+  let timedOut = false;
+  const controller = new AbortController();
+  const timer = setTimeout(() => {
+    timedOut = true;
+    controller.abort();
+  }, 2000);
+
+  let data, queryError;
+  try {
+    ({ data, error: queryError } = await supabaseClient
+      .from(VECTOR_TABLE)
+      .select(
+        "id,source,original_source,document_title,authority_type,authority_level," +
+        "normalized_reference,chunk_index,text,metadata"
+      )
+      .or(orClause)
+      .order("authority_level", { ascending: true, nullsFirst: false })
+      .limit(safeLimit * 3)
+      .abortSignal(controller.signal));
+    clearTimeout(timer);
+  } catch (fetchErr) {
+    clearTimeout(timer);
+    if (timedOut) {
+      console.warn("[QUIZ ENGINE] Bounded light query timed out (>2 s) — no-source guard will fire");
+    } else {
+      console.error("[QUIZ ENGINE] Bounded light query fetch error:", fetchErr?.message);
+    }
+    return [];
+  }
+
+  if (queryError) {
+    console.error("[QUIZ ENGINE] Bounded light query DB error:", {
+      message: queryError.message, code: queryError.code, topic: cleanTopic
+    });
+    return [];
+  }
+
+  const excPaths = new Set(safeArray(excludeSourcePaths));
+  const excIds   = new Set(safeArray(excludeChunkIds).map(String));
+
+  return (data || [])
+    .filter(row => {
+      if (EXCLUDED.has(row.authority_type)) return false;
+      const path    = row.metadata?.path || row.original_source || row.source || "";
+      const chunkId = String(row.id || "");
+      return !excPaths.has(path) && !excIds.has(chunkId) && (row.text || "").trim().length >= 50;
+    })
+    .slice(0, safeLimit)
+    .map(row => {
+      const meta = row.metadata || {};
+      const driveViewUrl = meta.driveViewUrl || meta.drive_view_url || meta.url || null;
+      return {
+        id:                   row.id,
+        source:               row.source,
+        original_source:      row.original_source,
+        title:                row.document_title || row.original_source || row.source || "Quiz Source",
+        document_title:       row.document_title,
+        authorityType:        row.authority_type || "UNKNOWN",
+        authority_type:       row.authority_type,
+        authority_level:      row.authority_level,
+        citation:             row.normalized_reference || "",
+        normalized_reference: row.normalized_reference,
+        chunk_index:          row.chunk_index,
+        url:                  driveViewUrl || "",
+        driveViewUrl:         driveViewUrl || "",
+        drive_view_url:       driveViewUrl || "",
+        text:                 trimText(row.text || "", 1200),
+        content:              trimText(row.text || "", 1200),
+        excerpt:              trimText(row.text || "", 1200),
+        metadata:             meta,
+        score:                0.7,
+        sourceTitle:          row.document_title || row.original_source || row.source,
+        sourcePath:           meta.path || row.original_source || row.source,
+        fileId:               meta.fileId || meta.file_id || null,
+        compactOutput:        true
+      };
+    });
+}
+// ─── end bounded light retrieval for /quiz ───────────────────────────────────
 
 // Builds the quiz prompt for a specific domain + subtopic (different from the base adaptive prompt)
 function buildDomainSubtopicQuizPrompt({
@@ -275,21 +402,25 @@ export async function generateQuizQuestion({
   // token efficiency. Domain is locked by the command itself, not by classifier.
   const hints = buildRetrievalHints(domain, subtopic);
   let sourceChunks = [];
+  // Bounded single-stage light retrieval with a real AbortController deadline.
+  // getBoundedQuizSourceChunks issues one indexed-column Supabase query and
+  // cancels the underlying fetch via AbortSignal if it exceeds 2 s.
+  // There is no smartSearch fallback; no background vector work continues after
+  // this call returns.
   let retrievalFailed = false;
   let retrievalFailReason = null;
   try {
-    sourceChunks = await Promise.race([
-      getQuizSourceChunks({
-        topic: hints.primaryQuery,
-        excludeSourcePaths: safeArray(exclusions.excludeSourcePaths),
-        excludeChunkIds: safeArray(exclusions.excludeChunkIds),
-        limit: 3
-      }),
-      new Promise((_, rej) => setTimeout(() => rej(new Error("source timeout")), 5000))
-    ]);
+    sourceChunks = await getBoundedQuizSourceChunks({
+      topic:              hints.primaryQuery,
+      limit:              3,
+      supabase,
+      excludeSourcePaths: safeArray(exclusions.excludeSourcePaths),
+      excludeChunkIds:    safeArray(exclusions.excludeChunkIds)
+    });
   } catch (err) {
-    retrievalFailed = true;
+    retrievalFailed    = true;
     retrievalFailReason = err?.message || "unknown";
+    console.error("[QUIZ ENGINE] Bounded source retrieval failed:", err?.message);
     sourceChunks = [];
   }
 

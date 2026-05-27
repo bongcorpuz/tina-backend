@@ -47,6 +47,7 @@ import { storeFeedbackEntry } from "./feedback-learning.js";
 import { extractQuizAnswer } from "./ask-helpers.js";
 import { createAssessmentHandler } from "./assessment-handler.js";
 import { createLearningHandler, parseLearningCommand } from "./learning/session-engine.js";
+import { resolveTaxDomain } from "./learning/domain-normalizer.js";
 import { resolveSlashCommand, resolveCommandIntent } from "./command-resolver.js";
 // generateRagAnswer removed — Law 1: all pipeline logic lives in pipeline.js
 
@@ -2336,6 +2337,118 @@ export function createAskHandler({
         }
       }
       // ─── END STANDALONE LEARNING MENU INTERCEPT ──────────────────────────────
+
+      // ─── REVIEW PENDING ANSWER EARLY ROUTE ───────────────────────────────────
+      // When /review is active with a locked domain AND a pending answer is stored,
+      // a bare A/B/C/D input must reach the learning handler immediately — before
+      // the domain boundary, which would otherwise reject "a"/"b"/"c"/"d" as
+      // non-Philippine-tax at step 5 (quiz_review_requires_tax_topic).
+      //
+      // Condition: /review active, domain locked, pendingAnswer stored, quizAnswer
+      // valid, no explicit slash command override.
+      {
+        const _hasPendingReviewAnswer =
+          activeHook === "/review" &&
+          reviewLockedDomain &&
+          Boolean(existingMode?.adaptive_context?.learning?.pendingAnswer) &&
+          quizAnswer &&
+          !explicitHook;
+
+        if (_hasPendingReviewAnswer) {
+          console.log("[REVIEW_PENDING_ANSWER_ROUTE]", {
+            answer:    quizAnswer,
+            domain:    reviewLockedDomain,
+            sessionId: conversationId
+          });
+
+          let _reviewAnsResult;
+          try {
+            _reviewAnsResult = await learningHandler.handleLearningCommand({
+              userId,
+              conversationId,
+              hookConfig:       compactHookConfig,
+              cleanQuestion:    compactHookConfig.cleanQuestion,
+              originalQuestion: compactHookConfig.originalQuestion
+            });
+          } catch (_raErr) {
+            console.error("[REVIEW_PENDING_ANSWER_ROUTE ERROR]", _raErr?.message);
+          }
+
+          if (_reviewAnsResult?.handled) return res.json(_reviewAnsResult.response);
+          // if not handled, fall through (should not happen)
+        }
+      }
+      // ─── END REVIEW PENDING ANSWER EARLY ROUTE ───────────────────────────────
+
+      // ─── LEARNING DOMAIN RESOLVED INTERCEPT ──────────────────────────────────
+      // For /quiz and /review: attempt domain normalization BEFORE the boundary.
+      // The boundary's regex patterns don't do fuzzy matching, so a typo like
+      // "prscription" reaches step 5 and is unconditionally rejected.
+      //
+      // If resolveTaxDomain succeeds, the cleanQuestion IS a valid PH-tax learning
+      // domain — bypass the boundary and route directly to the learning handler.
+      // The handler calls parseLearningCommand internally which re-resolves and logs
+      // any fuzzy match.
+      //
+      // If resolution fails (e.g. "photosynthesis"), fall through to the boundary,
+      // which will correctly reject it.
+      {
+        const _isLearningRoute =
+          compactHookConfig.hook_code === "/quiz" ||
+          compactHookConfig.hook_code === "/review";
+        const _lcq = String(compactHookConfig.cleanQuestion || "").trim();
+
+        if (_isLearningRoute && _lcq) {
+          const _domainResolution = resolveTaxDomain(_lcq);
+
+          if (_domainResolution.ok) {
+            if (_domainResolution.matchType !== "exact" && _domainResolution.matchType !== "alias") {
+              console.log("[LEARNING_DOMAIN_FUZZY_MATCH]", {
+                raw:        _lcq,
+                normalized: _domainResolution.canonicalDomain,
+                domainKey:  _domainResolution.domainKey,
+                matchType:  _domainResolution.matchType,
+                confidence: _domainResolution.confidence,
+                mode:       compactHookConfig.hook_code
+              });
+            }
+
+            console.log("[LEARNING_DOMAIN_INTERCEPT]", {
+              cleanQuestion: _lcq,
+              resolvedDomain: _domainResolution.domainKey,
+              hook: compactHookConfig.hook_code,
+              bypassBoundary: true
+            });
+
+            let _ldResult;
+            try {
+              _ldResult = await learningHandler.handleLearningCommand({
+                userId,
+                conversationId,
+                hookConfig:       compactHookConfig,
+                cleanQuestion:    compactHookConfig.cleanQuestion,
+                originalQuestion: compactHookConfig.originalQuestion
+              });
+            } catch (_ldErr) {
+              console.error("[LEARNING_DOMAIN_INTERCEPT ERROR]", _ldErr?.message);
+              return res.json({
+                success:     false,
+                engine:      "TINA Learning System",
+                hook:        compactHookConfig.hook_code,
+                mode:        compactHookConfig.mode,
+                answer:      "TINA encountered an error in the learning system. Please try again.",
+                sources:     [], sourcesUsed: [], sourceCards: [], vectorMatches: 0,
+                error:       _ldErr?.message
+              });
+            }
+
+            if (_ldResult?.handled) return res.json(_ldResult.response);
+            // if not handled (shouldn't happen), fall through to boundary
+          }
+          // resolution failed → fall through to boundary (correct rejection path)
+        }
+      }
+      // ─── END LEARNING DOMAIN RESOLVED INTERCEPT ──────────────────────────────
 
       // ─── PHILIPPINE TAX DOMAIN BOUNDARY (FAIL-CLOSED) ───────────────────────
       // Pre-retrieval check: reject non-Philippine-tax queries before any
