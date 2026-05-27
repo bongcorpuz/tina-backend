@@ -2264,6 +2264,79 @@ export function createAskHandler({
 
       const compactHookConfig = buildCompactHookConfig(hookConfig);
 
+      // ─── STANDALONE LEARNING MENU INTERCEPT ──────────────────────────────────
+      // /quiz and /review typed alone (no topic) produce an empty cleanQuestion
+      // after hook stripping.  The boundary check below falls back to rawQuestion
+      // ("/quiz" or "/review") when cleanQuestion is empty — the domain guard
+      // then unconditionally rejects it at step 5 (quiz_review_requires_tax_topic)
+      // because it sees no Philippine-tax signal in the bare slash command.
+      //
+      // Fix: detect standalone entry here, before the boundary, and route directly
+      // to the learning handler which renders the domain/mode selection menu.
+      //
+      // Scope:
+      //   hook_code is /quiz or /review   AND   cleanQuestion is empty
+      //
+      // NOT intercepted (falls through to boundary as before):
+      //   /quiz VAT, /review withholding   → cleanQuestion = "VAT" / "withholding"
+      //   → boundary evaluates the topic normally (ALLOW for tax, REJECT otherwise)
+      {
+        const _isLearningHook =
+          compactHookConfig.hook_code === "/quiz" ||
+          compactHookConfig.hook_code === "/review";
+        const _isStandaloneLearningEntry =
+          _isLearningHook && !String(compactHookConfig.cleanQuestion || "").trim();
+
+        if (_isStandaloneLearningEntry) {
+          console.log("[LEARNING_MENU_ENTRY]", {
+            hook:       compactHookConfig.hook_code,
+            standalone: true,
+            userId,
+            conversationId
+          });
+
+          let _menuResult;
+          try {
+            _menuResult = await learningHandler.handleLearningCommand({
+              userId,
+              conversationId,
+              hookConfig: compactHookConfig,
+              cleanQuestion: compactHookConfig.cleanQuestion,
+              originalQuestion: compactHookConfig.originalQuestion
+            });
+          } catch (_menuErr) {
+            console.error("[LEARNING_MENU_ENTRY ERROR]", _menuErr.message);
+            return res.json({
+              success:      false,
+              engine:       "TINA Learning System",
+              hook:         compactHookConfig.hook_code,
+              mode:         compactHookConfig.mode,
+              answer:       "TINA could not load the learning menu. Please try again.",
+              sources:      [],
+              sourcesUsed:  [],
+              vectorMatches: 0,
+              error:        _menuErr.message
+            });
+          }
+
+          if (!_menuResult || !_menuResult.handled || !_menuResult.response) {
+            return res.json({
+              success:      false,
+              engine:       "TINA Learning System",
+              hook:         compactHookConfig.hook_code,
+              mode:         compactHookConfig.mode,
+              answer:       "TINA could not load the learning menu. Please try again.",
+              sources:      [],
+              sourcesUsed:  [],
+              vectorMatches: 0
+            });
+          }
+
+          return res.json(_menuResult.response);
+        }
+      }
+      // ─── END STANDALONE LEARNING MENU INTERCEPT ──────────────────────────────
+
       // ─── PHILIPPINE TAX DOMAIN BOUNDARY (FAIL-CLOSED) ───────────────────────
       // Pre-retrieval check: reject non-Philippine-tax queries before any
       // pipeline, retrieval, assessment handler, or OpenAI call.
