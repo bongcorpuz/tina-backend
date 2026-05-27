@@ -390,6 +390,24 @@ export function createLearningHandler({
         adaptiveContext: { learning: updatedState }
       });
 
+      // ── Quiz source suppression ───────────────────────────────────────────────
+      // Sources are retrieved internally to ground the question (kept in
+      // saveConversationTurn above and may surface in the post-answer explanation
+      // rendered by assessment-handler.js).  They are NOT sent to the client
+      // before the student submits an answer — showing the legal basis / authority
+      // before answering defeats the assessment purpose of the question.
+      //
+      // Suppressed fields: sources, sourcesUsed, sourceCards, vectorMatches.
+      // Internal grounding via saveConversationTurn() is unaffected.
+      // /review mode is NOT affected — handleReviewGeneration retains its sources.
+      console.log("[QUIZ_SOURCE_SUPPRESSED]", {
+        hook:        "/quiz",
+        domain,
+        subtopic,
+        sourceCount: visibleSources.length,
+        reason:      "quiz_question_pre_answer — sources hidden until student submits"
+      });
+
       return {
         handled: true,
         response: {
@@ -408,11 +426,11 @@ export function createLearningHandler({
           correctAnswerStored: Boolean(questionResult.storedQuiz?.correct_answer),
           pendingAnswerStored: questionResult.storedQuiz?.user_answer === null,
           confidence: visibleSources.length ? "GDRIVE_GROUNDED" : "GENERAL_ADAPTIVE",
-          sourceStatus: visibleSources.length ? "GDRIVE_GROUNDED_QUESTION_READY" : "GENERAL_QUESTION_READY",
-          sources: visibleSources,
-          sourcesUsed: visibleSources,
-          sourceCards: visibleSources,
-          vectorMatches: visibleSources.length,
+          sourceStatus: visibleSources.length ? "QUIZ_QUESTION_SOURCES_HIDDEN" : "GENERAL_QUESTION_READY",
+          sources:       [],
+          sourcesUsed:   [],
+          sourceCards:   [],
+          vectorMatches: 0,
           sessionScore: updatedState.score,
           learningSystemVersion: ENGINE_VERSION,
           directOpenAICallDisabled: true
