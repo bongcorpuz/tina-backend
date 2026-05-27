@@ -323,6 +323,8 @@ const DOMAIN_ALIAS_MAP = new Map([
   ["withholding",                   "WITHHOLDING_TAX"],
   ["witholding tax",                "WITHHOLDING_TAX"],  // typo (one h)
   ["witholding",                    "WITHHOLDING_TAX"],  // typo
+  ["whitholding tax",               "WITHHOLDING_TAX"],  // typo (extra h)
+  ["whitholding",                   "WITHHOLDING_TAX"],  // typo
   ["expanded withholding tax",      "WITHHOLDING_TAX"],
   ["creditable withholding tax",    "WITHHOLDING_TAX"],
   ["final withholding tax",         "WITHHOLDING_TAX"],
@@ -391,6 +393,10 @@ const DOMAIN_ALIAS_MAP = new Map([
   ["excise tax",        "EXCISE_TAX"],
   ["excse tax",         "EXCISE_TAX"],  // typo
   ["exise tax",         "EXCISE_TAX"],  // typo
+  ["exice tax",         "EXCISE_TAX"],  // typo
+  ["exice",             "EXCISE_TAX"],  // typo
+  ["excize tax",        "EXCISE_TAX"],  // typo
+  ["excize",            "EXCISE_TAX"],  // typo
   ["excise",            "EXCISE_TAX"],
   ["excise duty",       "EXCISE_TAX"],
   ["sin tax",           "EXCISE_TAX"],
@@ -404,9 +410,12 @@ const DOMAIN_ALIAS_MAP = new Map([
 
   // Prescription — exact and typo aliases
   ["prescription",                "PRESCRIPTION"],
-  ["prescrption",                 "PRESCRIPTION"],  // typo
+  ["prescrption",                 "PRESCRIPTION"],  // typo (missing i)
   ["prescriptikons",              "PRESCRIPTION"],  // typo
-  ["presciption",                 "PRESCRIPTION"],  // typo
+  ["presciption",                 "PRESCRIPTION"],  // typo (missing r)
+  ["prscription",                 "PRESCRIPTION"],  // typo (missing e)
+  ["prsciption",                  "PRESCRIPTION"],  // typo (missing e and r)
+  ["prscription tax",             "PRESCRIPTION"],  // typo with filler word
   ["prescriptive period",         "PRESCRIPTION"],
   ["prescriptive periods",        "PRESCRIPTION"],
   ["prescription period",         "PRESCRIPTION"],
@@ -461,7 +470,8 @@ const DOMAIN_ALIAS_MAP = new Map([
 
 const HARD_GUARDS = [
   // prescription/prescriptive must win over percentage
-  { pattern: /\bprescript/i,                                           domainKey: "PRESCRIPTION"    },
+  // Also catches common typos: prscription, prescrption, presciption
+  { pattern: /\bpre?s(?:c|k)r?i?p(?:tion|t)/i,                        domainKey: "PRESCRIPTION"    },
   // percent/perc/pct must win over prescription
   { pattern: /\bperc(?:ent(?:age)?)?\b|\bpct\b/i,                    domainKey: "PERCENTAGE_TAX"  },
   // estate/estat/estte must win over excise

@@ -248,6 +248,17 @@ export function parseLearningCommand(rawQuestion = "", hookCode = "") {
 
   const resolution = resolveTaxDomain(stripped);
 
+  if (resolution.ok && resolution.matchType !== "exact" && resolution.matchType !== "alias") {
+    console.log("[LEARNING_DOMAIN_FUZZY_MATCH]", {
+      raw:        stripped,
+      normalized: resolution.canonicalDomain,
+      domainKey:  resolution.domainKey,
+      matchType:  resolution.matchType,
+      confidence: resolution.confidence,
+      mode:       hook
+    });
+  }
+
   return {
     isLearningCommand: true,
     domain: resolution.ok ? resolution.domainKey : null,
@@ -405,6 +416,28 @@ export function createLearningHandler({
       }
 
       if (!questionResult.ok) {
+        if (questionResult.noSource) {
+          return {
+            handled: true,
+            response: {
+              success: false,
+              engine: "TINA Learning System",
+              hook: hookConfig.hook_code,
+              mode: hookConfig.mode,
+              answer: [
+                `**Indexed Source Not Available**`,
+                ``,
+                `TINA could not find sufficient indexed source material for **${domain} — ${subtopic}**.`,
+                ``,
+                `> Indexed source not found or insufficient indexed source for this topic.`,
+                ``,
+                `Please choose another tax domain or type \`/quiz\` to return to the domain menu.`
+              ].join("\n"),
+              sourceStatus: "NO_INDEXED_SOURCE",
+              sources: [], sourcesUsed: [], sourceCards: [], vectorMatches: 0
+            }
+          };
+        }
         return {
           handled: true,
           response: {
@@ -807,6 +840,28 @@ export function createLearningHandler({
       }
 
       if (!reviewResult.ok) {
+        if (reviewResult.noSource) {
+          return {
+            handled: true,
+            response: {
+              success: false,
+              engine: "TINA Learning System",
+              hook: hookConfig.hook_code,
+              mode: hookConfig.mode,
+              answer: [
+                `**Indexed Source Not Available**`,
+                ``,
+                `TINA could not find sufficient indexed source material for **${domain} — ${reviewResult.subtopicLabel || subtopic}**.`,
+                ``,
+                `> Indexed source not found or insufficient indexed source for this topic.`,
+                ``,
+                `Please choose another tax domain or type \`/review\` to return to the domain menu.`
+              ].join("\n"),
+              sourceStatus: "NO_INDEXED_SOURCE",
+              sources: [], sourcesUsed: [], sourceCards: [], vectorMatches: 0
+            }
+          };
+        }
         return {
           handled: true,
           response: {

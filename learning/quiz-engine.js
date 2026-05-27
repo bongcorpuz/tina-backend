@@ -304,13 +304,20 @@ export async function generateQuizQuestion({
       sources: compactSources.map((c) => c.title).slice(0, 3)
     });
   } else {
-    console.warn("[QUIZ ENGINE] Retrieval fallback — no grounded source", {
+    console.warn("[QUIZ ENGINE] No indexed source found — refusing ungrounded generation", {
       domain,
       subtopic,
       query: hints.primaryQuery,
       retrievalFailed,
       retrievalFailReason
     });
+    // No source chunks: do NOT call OpenAI to invent quiz content.
+    // Return noSource so the caller (session-engine) can surface a clear limitation.
+    return {
+      ok: false,
+      noSource: true,
+      sourceChunks: []
+    };
   }
 
   const quizPrompt = buildDomainSubtopicQuizPrompt({

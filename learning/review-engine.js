@@ -218,12 +218,21 @@ export async function generateReviewMaterial({
       sourceCount: compactSources.length
     });
   } else {
-    console.warn("[REVIEW ENGINE] Retrieval fallback — no grounded source", {
+    console.warn("[REVIEW ENGINE] No indexed source found — refusing ungrounded generation", {
       domain,
       subtopic,
       query: hints.primaryQuery,
       sourceCount: 0
     });
+    // No source chunks: do NOT call OpenAI to invent doctrine.
+    // Return noSource so the caller (session-engine) can surface a clear limitation.
+    return {
+      ok: false,
+      noSource: true,
+      reviewText: null,
+      sourceChunks: [],
+      subtopicLabel
+    };
   }
 
   const reviewPrompt = buildReviewPrompt({
