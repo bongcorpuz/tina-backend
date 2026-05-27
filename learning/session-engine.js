@@ -39,6 +39,7 @@ import {
 } from "./domain-normalizer.js";
 import { selectNextSubtopic } from "./question-bank-router.js";
 import { generateQuizQuestion } from "./quiz-engine.js";
+import { storeUnansweredQuiz } from "../adaptive-quiz.js";
 import { generateReviewMaterial, splitReviewContent } from "./review-engine.js";
 import {
   generateTraceId,
@@ -77,6 +78,49 @@ function normalizeText(value = "") {
   return String(value || "").replace(/\s+/g, " ").trim();
 }
 
+// ─── quiz / review dedup helpers ─────────────────────────────────────────────
+//
+// These are exported so assessment-handler.js can apply the same hard dedup
+// when generating the next question after an answer is submitted.
+
+// Stable canonical form: lowercase, strip punctuation, collapse whitespace, cap length.
+// Two questions that are the same topic phrased identically will produce the same output.
+export function normalizeQuestionText(text = "") {
+  return String(text || "")
+    .toLowerCase()
+    .replace(/[^\w\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 400);
+}
+
+// 24-char hex sha256 signature keyed on domain + mode + normalized question text.
+// Stable across sessions for the same user + domain pair.
+export function buildQuestionSignature(questionText = "", domain = "", mode = "QUIZ") {
+  const input = `${String(domain)}::${String(mode)}::${normalizeQuestionText(questionText)}`;
+  return createHash("sha256").update(input).digest("hex").slice(0, 24);
+}
+
+// Returns true when sig appears anywhere in the recent signature ring buffer.
+export function hasRecentQuestionSignature(signatures = [], sig = "") {
+  return safeArray(signatures).includes(sig);
+}
+
+// Appends sig to the ring buffer, trimming oldest entries beyond limit.
+export function recordQuestionSignature(signatures = [], sig = "", limit = 50) {
+  const next = [...safeArray(signatures), sig];
+  return next.length > limit ? next.slice(-limit) : next;
+}
+
+// Returns true when a scheduled weak subtopic has "matured" — enough new questions
+// have been answered since it was marked wrong to warrant re-introduction.
+export function shouldRevisitWeakConcept(weakSubtopicSchedule = {}, subtopic = "", currentTotal = 0) {
+  if (!subtopic) return false;
+  const scheduledAt = safeObject(weakSubtopicSchedule)[subtopic];
+  if (scheduledAt == null) return false;
+  return currentTotal >= scheduledAt + 7;
+}
+
 // ─── session learning state (stored in adaptive_context.learning) ─────────────
 
 function emptyLearningState(domain = "", mode = "QUIZ") {
@@ -88,6 +132,8 @@ function emptyLearningState(domain = "", mode = "QUIZ") {
     askedQuestionIds: [],
     score: { correct: 0, total: 0 },
     weakSubtopics: [],
+    weakSubtopicSchedule: {},    // {subtopicKey: score.total at time of wrong answer}
+    askedQuestionSignatures: [], // [24-char sha256 hex, ...] hard-dedup ring buffer (last 50)
     currentQuestionId: null,
     sessionStartedAt: new Date().toISOString(),
     reviewHistory: {
@@ -157,8 +203,22 @@ function updateLearningStateAfterAnswer({ sessionLearning, subtopic, isCorrect }
     if (!updated.weakSubtopics.includes(subtopic)) {
       updated.weakSubtopics = [...updated.weakSubtopics, subtopic];
     }
+    // Spaced reinforcement: record the score.total at the time of wrong answer.
+    // assessment-handler.js uses this to skip re-introducing the subtopic for
+    // ~7 questions, then allows it back in with a potentially different wording.
+    const schedule = safeObject(updated.weakSubtopicSchedule);
+    if (schedule[subtopic] == null) {
+      updated.weakSubtopicSchedule = { ...schedule, [subtopic]: updated.score.total };
+    }
   } else {
     updated.weakSubtopics = updated.weakSubtopics.filter((s) => s !== subtopic);
+    // Clear the spaced schedule when the concept is answered correctly.
+    const schedule = safeObject(updated.weakSubtopicSchedule);
+    if (schedule[subtopic] != null) {
+      const cleared = { ...schedule };
+      delete cleared[subtopic];
+      updated.weakSubtopicSchedule = cleared;
+    }
   }
 
   return updated;
@@ -325,7 +385,8 @@ export function createLearningHandler({
           conversationId,
           hookConfig,
           callOpenAI: _tracedCall,
-          supabase
+          supabase,
+          persist: false  // all candidates are preview-only; winner stored after dedup selection
         });
       } catch (err) {
         console.error("[SESSION ENGINE] generateQuizQuestion failed:", err?.message);
@@ -357,25 +418,110 @@ export function createLearningHandler({
         };
       }
 
+      // ── Hard question-signature dedup (atomic) ───────────────────────────────
+      // All candidates are generated with persist:false — no DB rows exist yet.
+      // Soft dedup runs inside quiz-engine.js via excludeQuestionFingerprints.
+      // This hard check catches cases where the model ignores that signal.
+      // Retry limit = 2 (bounded, never infinite).
+      // After selection, exactly one DB row is written for the winner.
+      const _MAX_DEDUP_RETRIES = 2;
+      const _existingSigs = safeArray(sessionLearning.askedQuestionSignatures);
+      const _initialSig   = buildQuestionSignature(questionResult.quiz?.question, domain, "QUIZ");
+      let   _finalResult  = questionResult;
+      let   _finalSig     = _initialSig;
+
+      if (hasRecentQuestionSignature(_existingSigs, _initialSig)) {
+        console.log("[QUIZ_DEDUP_HIT]", { domain, subtopic, sig: _initialSig.slice(0, 12) });
+        let _retryCount = 0;
+        while (_retryCount < _MAX_DEDUP_RETRIES) {
+          _retryCount++;
+          console.log("[QUIZ_DEDUP_RETRY]", { domain, subtopic, attempt: _retryCount });
+          let _retryQR;
+          try {
+            _retryQR = await generateQuizQuestion({
+              domain, subtopic, sessionLearning, userId, conversationId, hookConfig,
+              callOpenAI: _tracedCall, supabase,
+              persist: false  // preview-only candidate
+            });
+          } catch (_rErr) {
+            console.warn("[QUIZ_DEDUP_RETRY] generation failed (non-fatal):", _rErr?.message);
+            break;
+          }
+          if (_retryQR?.ok) {
+            const _retrySig = buildQuestionSignature(_retryQR.quiz?.question, domain, "QUIZ");
+            if (!hasRecentQuestionSignature(_existingSigs, _retrySig)) {
+              _finalResult = _retryQR;
+              _finalSig    = _retrySig;
+              break;
+            }
+          }
+        }
+        if (_finalResult === questionResult) {
+          console.log("[QUIZ_DEDUP_EXHAUSTED]", {
+            domain, subtopic, sig: _initialSig.slice(0, 12),
+            note: "all retries duplicated — using original candidate"
+          });
+        }
+      }
+
+      // Store exactly one DB row for the final selected question.
+      // Nothing has been written yet (all calls used persist:false).
+      let _storedFinal = null;
+      try {
+        _storedFinal = await storeUnansweredQuiz(supabase, {
+          userId,
+          sessionId: conversationId || null,
+          quiz: _finalResult.quiz,
+          mode: hookConfig?.mode || "QUIZ_MASTER",
+          sourceChunks: _finalResult.sourceChunks || []
+        });
+      } catch (_storeErr) {
+        console.error("[QUIZ_DEDUP] storeUnansweredQuiz for winner failed:", _storeErr?.message);
+      }
+      if (_storedFinal && !_storedFinal.saveFailed) {
+        _finalResult = { ..._finalResult, storedQuiz: _storedFinal, saveFailed: false };
+      } else {
+        // Store failed — cannot present this question as answerable.
+        console.error("[QUIZ_DEDUP] store failed; will not display untracked quiz", {
+          domain, subtopic, storedFinal: _storedFinal
+        });
+        endTrace({ traceId, metadata: { domain, subtopic, error: "store_failed" } });
+        flushObservability().catch(() => {});
+        return {
+          handled: true,
+          response: {
+            success: false,
+            engine: "TINA Learning System",
+            hook: hookConfig.hook_code,
+            mode: hookConfig.mode,
+            answer: "TINA could not prepare a quiz question right now. Please type /quiz to try again.",
+            sources: [], sourcesUsed: [], sourceCards: [], vectorMatches: 0
+          }
+        };
+      }
+      // ── End hard dedup + atomic store ─────────────────────────────────────────
+
       // Update session state
       const updatedState = updateLearningStateAfterQuestion({
         sessionLearning,
         subtopic,
-        storedQuizId: questionResult.storedQuiz?.id || null
+        storedQuizId: _finalResult.storedQuiz?.id || null
       });
+      // Record the question's signature in the ring buffer for future dedup checks.
+      updatedState.askedQuestionSignatures = recordQuestionSignature(_existingSigs, _finalSig);
 
       await saveLearningState({
         supabase, userId, conversationId, hookConfig, sessionLearning: updatedState
       });
 
-      const visibleSources = finalizeSourcesForResponse(questionResult.sourceChunks, {
+      const visibleSources = finalizeSourcesForResponse(_finalResult.sourceChunks, {
         maxItems: MAX_VISIBLE_SOURCES
       });
 
       await saveConversationTurn({
         conversationId, userId,
         question: hookConfig.originalQuestion,
-        answerText: questionResult.answerText,
+        answerText: _finalResult.answerText,
         sourcesUsed: visibleSources
       });
 
@@ -386,7 +532,7 @@ export function createLearningHandler({
         activeMode: hookConfig.mode,
         modeTitle: hookConfig.title,
         lastQuestion: hookConfig.originalQuestion || "",
-        lastAnswer: questionResult.answerText,
+        lastAnswer: _finalResult.answerText,
         adaptiveContext: { learning: updatedState }
       });
 
@@ -417,14 +563,14 @@ export function createLearningHandler({
           hook: hookConfig.hook_code,
           mode: hookConfig.mode,
           hookTitle: hookConfig.title,
-          answer: questionResult.answerText,
+          answer: _finalResult.answerText,
           answerMode: "quiz_question_generated",
-          quizId: questionResult.storedQuiz?.id || null,
+          quizId: _finalResult.storedQuiz?.id || null,
           topic: domain,
           subtopic,
-          difficulty: questionResult.quiz?.difficulty || 1,
-          correctAnswerStored: Boolean(questionResult.storedQuiz?.correct_answer),
-          pendingAnswerStored: questionResult.storedQuiz?.user_answer === null,
+          difficulty: _finalResult.quiz?.difficulty || 1,
+          correctAnswerStored: Boolean(_finalResult.storedQuiz?.correct_answer),
+          pendingAnswerStored: _finalResult.storedQuiz?.user_answer === null,
           confidence: visibleSources.length ? "GDRIVE_GROUNDED" : "GENERAL_ADAPTIVE",
           sourceStatus: visibleSources.length ? "QUIZ_QUESTION_SOURCES_HIDDEN" : "GENERAL_QUESTION_READY",
           sources:       [],
@@ -674,9 +820,14 @@ export function createLearningHandler({
         };
       }
 
-      // Detect repeated mini-question via hash — one retry attempt
+      // Detect repeated mini-question via hash — up to one retry attempt.
+      // Strengthened check: retryHash must NOT be in the full seenQuestionHashes list
+      // (not just different from firstHash) to catch matches against older sessions.
       const firstHash = hashMiniQuestion(reviewResult.reviewText);
       if (firstHash && seenQuestionHashes.includes(firstHash)) {
+        console.log("[REVIEW_DEDUP_HIT]", {
+          hash: firstHash.slice(0, 12), subtopic, domain, sessionId: conversationId
+        });
         console.log("[REVIEW MEMORY]", {
           event: "QUESTION_REPEAT_DETECTED",
           hash: firstHash,
@@ -697,7 +848,7 @@ export function createLearningHandler({
           });
           if (retryResult.ok) {
             const retryHash = hashMiniQuestion(retryResult.reviewText);
-            if (retryHash !== firstHash) {
+            if (!seenQuestionHashes.includes(retryHash)) {
               reviewResult = retryResult;
               console.log("[REVIEW MEMORY]", {
                 event: "QUESTION_RETRY_USED",

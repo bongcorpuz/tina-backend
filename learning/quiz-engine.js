@@ -248,7 +248,8 @@ export async function generateQuizQuestion({
   conversationId,
   hookConfig,
   callOpenAI,
-  supabase
+  supabase,
+  persist = true   // false = preview-only; skip storeUnansweredQuiz (use for dedup retries)
 }) {
   const subtopicLabel = getSubtopicLabel(domain, subtopic);
   const difficulty = resolveDifficulty(sessionLearning);
@@ -401,22 +402,28 @@ Philippine taxation context only. Authority-grounded only.
   quiz.subtopic = quiz.subtopic || subtopic;
   quiz.topic = quiz.topic || domain;
 
-  // Store in tina_learning_attempts for answer lock
+  // Store in tina_learning_attempts for answer lock (skip when persist:false — dedup retries)
   let storedQuiz = null;
-  try {
-    storedQuiz = await Promise.race([
-      storeUnansweredQuiz(supabase, {
-        userId,
-        sessionId: conversationId || null,
-        quiz,
-        mode: hookConfig?.mode || "QUIZ_MASTER",
-        sourceChunks: compactSources
-      }),
-      new Promise((_, rej) => setTimeout(() => rej(new Error("store timeout")), 5000))
-    ]);
-  } catch (err) {
-    console.error("[QUIZ ENGINE] storeUnansweredQuiz failed (untracked quiz returned):", err?.message);
-    storedQuiz = null;
+  if (persist) {
+    try {
+      storedQuiz = await Promise.race([
+        storeUnansweredQuiz(supabase, {
+          userId,
+          sessionId: conversationId || null,
+          quiz,
+          mode: hookConfig?.mode || "QUIZ_MASTER",
+          sourceChunks: compactSources
+        }),
+        new Promise((_, rej) => setTimeout(() => rej(new Error("store timeout")), 5000))
+      ]);
+    } catch (err) {
+      console.error("[QUIZ ENGINE] storeUnansweredQuiz failed (untracked quiz returned):", err?.message);
+      storedQuiz = null;
+    }
+  } else {
+    // Preview-only: question generated and validated but NOT written to tina_learning_attempts.
+    // The caller (dedup retry path) must store the winning question separately.
+    storedQuiz = { id: null, correct_answer: quiz.correctAnswer, user_answer: null, previewOnly: true };
   }
 
   const domainConfig = getDomainConfig(domain) || {};

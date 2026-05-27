@@ -11,6 +11,11 @@
 import { saveModeState, getModeState } from "./mode-state.js";
 import { generateQuizQuestion } from "./learning/quiz-engine.js";
 import { selectNextSubtopic } from "./learning/question-bank-router.js";
+import {
+  buildQuestionSignature,
+  hasRecentQuestionSignature,
+  recordQuestionSignature
+} from "./learning/session-engine.js";
 
 import {
   extractMemoryHooks,
@@ -65,6 +70,10 @@ function getModel(openaiModel = null) {
 function safeArray(value) {
   if (!value) return [];
   return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
+}
+
+function safeObject(value) {
+  return value && typeof value === "object" && !Array.isArray(value) ? value : {};
 }
 
 function normalizeText(value = "") {
@@ -735,6 +744,8 @@ Required JSON shape:
         askedQuestionIds: [],
         score: { correct: 0, total: 0 },
         weakSubtopics: [],
+        weakSubtopicSchedule: {},      // preserved across answer cycles — spaced reinforcement
+        askedQuestionSignatures: [],   // preserved across answer cycles — dedup ring buffer
         currentQuestionId: null,
         pendingAnswer: null
       };
@@ -751,6 +762,8 @@ Required JSON shape:
             askedQuestionIds: safeArray(stored.askedQuestionIds),
             score: stored.score || { correct: 0, total: 0 },
             weakSubtopics: safeArray(stored.weakSubtopics),
+            weakSubtopicSchedule: safeObject(stored.weakSubtopicSchedule),     // Blocker A fix
+            askedQuestionSignatures: safeArray(stored.askedQuestionSignatures), // Blocker A fix
             currentQuestionId: stored.currentQuestionId || null,
             pendingAnswer: null
           };
@@ -773,16 +786,51 @@ Required JSON shape:
         ? sessionLearning.weakSubtopics.filter((s) => s !== currentSubtopic)
         : [...new Set([...sessionLearning.weakSubtopics, currentSubtopic])];
 
+      // ── Spaced reinforcement schedule ────────────────────────────────────────
+      // Track when each subtopic was answered incorrectly.  When selecting the
+      // next subtopic, we exclude subtopics scheduled within the last 7 questions
+      // so the student sees different content before the weak concept re-appears.
+      const _existingSchedule = safeObject(sessionLearning.weakSubtopicSchedule);
+      let _updatedSchedule = { ..._existingSchedule };
+      if (!isCorrect && currentSubtopic && _updatedSchedule[currentSubtopic] == null) {
+        _updatedSchedule[currentSubtopic] = updatedScore.total;
+        console.log("[QUIZ_WEAK_CONCEPT_SCHEDULED]", {
+          domain,
+          subtopic:     currentSubtopic,
+          scheduledAt:  updatedScore.total,
+          revisitAfter: updatedScore.total + 7
+        });
+      } else if (isCorrect && currentSubtopic) {
+        delete _updatedSchedule[currentSubtopic]; // mastered — clear spaced schedule
+      }
+
       const scoredLearning = {
         ...sessionLearning,
         score: updatedScore,
-        weakSubtopics: updatedWeakSubtopics
+        weakSubtopics: updatedWeakSubtopics,
+        weakSubtopicSchedule: _updatedSchedule
       };
 
-      // Reinforcement: repeat same subtopic on incorrect, rotate on correct
-      const nextSubtopic = !isCorrect && currentSubtopic
-        ? currentSubtopic
-        : (selectNextSubtopic(domain, scoredLearning) || currentSubtopic);
+      // Spaced reinforcement: on incorrect answer, pick a DIFFERENT subtopic now
+      // and let the scheduler re-introduce the weak subtopic after ≥7 questions.
+      // On correct answer, rotate normally (weak subtopics that have matured are
+      // still prioritized by selectNextSubtopic via the weakSubtopics array).
+      const _currentTotal = updatedScore.total;
+      const _matureWeak = updatedWeakSubtopics.filter(s => {
+        const _at = _updatedSchedule[s];
+        return _at == null || _currentTotal >= _at + 7;
+      });
+      const _selectionLearning = {
+        ...scoredLearning,
+        weakSubtopics:    _matureWeak,
+        // On incorrect: temporarily mark currentSubtopic as recently-covered so
+        // selectNextSubtopic skips it for this round without persisting the change.
+        coveredSubtopics: !isCorrect
+          ? [...safeArray(scoredLearning.coveredSubtopics), currentSubtopic]
+          : safeArray(scoredLearning.coveredSubtopics)
+      };
+      const nextSubtopic = selectNextSubtopic(domain, _selectionLearning) || currentSubtopic;
+      // ── End spaced reinforcement ──────────────────────────────────────────────
 
       // Generate next quiz question via quiz-engine
       const _quizNextTraceId = generateTraceId();
@@ -798,7 +846,8 @@ Required JSON shape:
           conversationId,
           hookConfig: nextHookConfig,
           callOpenAI: _tracedQuizCall,
-          supabase
+          supabase,
+          persist: false  // all candidates preview-only; winner stored after dedup selection
         });
       } catch (err) {
         console.error("[ASSESSMENT] Quiz next question generation failed:", err?.message);
@@ -806,10 +855,68 @@ Required JSON shape:
       endTrace({ traceId: _quizNextTraceId, metadata: { domain, isCorrect, nextSubtopic } });
       flushObservability().catch(() => {});
 
+      // ── Hard dedup + atomic store for the next question ─────────────────────
+      // All candidates are generated with persist:false — nothing written to DB yet.
+      // Dedup selection picks the winner; exactly one store follows.
+      const _sessionSigs = safeArray(sessionLearning.askedQuestionSignatures);
+      if (nextQuizResult?.ok) {
+        const _nextSig = buildQuestionSignature(nextQuizResult.quiz?.question, domain, "QUIZ");
+        if (hasRecentQuestionSignature(_sessionSigs, _nextSig)) {
+          console.log("[QUIZ_DEDUP_HIT]", {
+            domain, subtopic: nextSubtopic, sig: _nextSig.slice(0, 12), context: "after_answer"
+          });
+          try {
+            const _dedupRetry = await generateQuizQuestion({
+              domain,
+              subtopic: nextSubtopic,
+              sessionLearning: { ...scoredLearning, subtopic: nextSubtopic },
+              userId,
+              conversationId,
+              hookConfig: nextHookConfig,
+              callOpenAI: _tracedQuizCall,
+              supabase,
+              persist: false  // preview-only candidate
+            });
+            if (_dedupRetry?.ok) {
+              const _retrySig = buildQuestionSignature(_dedupRetry.quiz?.question, domain, "QUIZ");
+              if (!hasRecentQuestionSignature(_sessionSigs, _retrySig)) {
+                nextQuizResult = _dedupRetry;  // swap to winner; store unconditionally below
+              }
+            }
+          } catch (_dErr) {
+            console.warn("[QUIZ_DEDUP_RETRY] after-answer retry failed (non-fatal):", _dErr?.message);
+          }
+        }
+
+        // Store exactly one DB row for the final selected question.
+        // Nothing has been written yet (initial + retry calls both used persist:false).
+        let _storedNext = null;
+        try {
+          _storedNext = await storeUnansweredQuiz(supabase, {
+            userId,
+            sessionId: conversationId || null,
+            quiz: nextQuizResult.quiz,
+            mode: nextHookConfig?.mode || "QUIZ_MASTER",
+            sourceChunks: nextQuizResult.sourceChunks || []
+          });
+        } catch (_sErr) {
+          console.warn("[QUIZ_DEDUP] store winner failed (non-fatal):", _sErr?.message);
+        }
+        if (_storedNext && !_storedNext.saveFailed) {
+          nextQuizResult = { ...nextQuizResult, storedQuiz: _storedNext, saveFailed: false };
+        } else {
+          // Store failed — mark so downstream can omit question or show fallback.
+          nextQuizResult = { ...nextQuizResult, saveFailed: true };
+          console.warn("[QUIZ_DEDUP] next question store failed; question will not be presented as answerable");
+        }
+      }
+      // ── End dedup + atomic store ───────────────────────────────────────────────
+
       let nextQuestionText = "\nNext question could not be generated. Type /quiz to continue.";
 
-      if (nextQuizResult?.ok) {
+      if (nextQuizResult?.ok && !nextQuizResult.saveFailed) {
         const storedId = nextQuizResult.storedQuiz?.id || null;
+        const _nextFinalSig = buildQuestionSignature(nextQuizResult.quiz?.question, domain, "QUIZ");
         const finalLearning = {
           ...scoredLearning,
           subtopic: nextSubtopic,
@@ -819,7 +926,8 @@ Required JSON shape:
           askedQuestionIds: storedId
             ? [...scoredLearning.askedQuestionIds.slice(-49), String(storedId)]
             : scoredLearning.askedQuestionIds,
-          currentQuestionId: storedId
+          currentQuestionId: storedId,
+          askedQuestionSignatures: recordQuestionSignature(_sessionSigs, _nextFinalSig)
         };
 
         try {
