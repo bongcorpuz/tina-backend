@@ -44,7 +44,7 @@ import {
 import { saveMessage, getHistory } from "./conversation-memory.js";
 import { storeFeedbackEntry } from "./feedback-learning.js";
 
-import { extractQuizAnswer } from "./ask-helpers.js";
+import { extractQuizAnswer, finalizeSourcesForResponse, MAX_VISIBLE_SOURCES } from "./ask-helpers.js";
 import { createAssessmentHandler } from "./assessment-handler.js";
 import { createLearningHandler, parseLearningCommand } from "./learning/session-engine.js";
 import { resolveTaxDomain } from "./learning/domain-normalizer.js";
@@ -1849,12 +1849,30 @@ export function createAskHandler({
     const resultSourceCards        = safeArray(result.sourceCards);
     const resultEducationalSources = result.educationalSources || null;
 
+    // /source mode: full uncapped source explorer — do NOT restrict to sourceCards max-5.
+    // All other modes: normalize all three fields to the deduped, authority-ranked, max-5
+    // sourceCards array so the frontend never sees a duplicate raw source list.
+    // Fallback: if sourceCards is unexpectedly empty but raw sources exist, build them.
+    const isSourceMode =
+      hookConfig.hook_code === "/source" ||
+      hookConfig.forceSourceVisibility === true;
+
+    const visibleSources = isSourceMode
+      ? resultSources                                              // /source: full array, uncapped
+      : resultSourceCards.length > 0
+        ? resultSourceCards                                        // normal: deduped max-5 cards
+        : resultSources.length > 0
+          ? finalizeSourcesForResponse(resultSources, { maxItems: MAX_VISIBLE_SOURCES })
+          : [];                                                    // fallback: build from raw
+
     console.log("TINA MODE DOWNSTREAM DEBUG:", {
       responseMode: result.responseMode || result.orchestration?.mode || hookConfig.mode,
       orchestrationMode: result.orchestrationMode || result.orchestration?.mode || hookConfig.mode,
       commandMode: hookConfig.mode,
+      isSourceMode,
       retrievedSourceCount: resultSources.length,
       sourceCardCount: resultSourceCards.length,
+      visibleSourceCount: visibleSources.length,
       finalComplianceApplied: Boolean(result.answer),
       rendererMode: result.mode || hookConfig.mode
     });
@@ -1870,9 +1888,9 @@ export function createAskHandler({
 
       answer: result.answer || "",
 
-      sources: resultSources,
-      sourcesUsed: resultSources,
-      sourceCards:         resultSourceCards,
+      sources: visibleSources,
+      sourcesUsed: visibleSources,
+      sourceCards: isSourceMode ? resultSourceCards : visibleSources,
       educationalSources:  resultEducationalSources,
       vectorMatches: resultSources.length,
 

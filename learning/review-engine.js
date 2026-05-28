@@ -405,16 +405,9 @@ Write at CPALE/BAR exam difficulty level.
     adaptiveContext: { activeHook: "/review", reviewMode: true, orchestrationMode: "REVIEWER" }
   });
 
-  const sourceLines = compactSources.length
-    ? "\n\n---\n\n**Sources Used:**\n" +
-      compactSources
-        .map((s) => `- ${s.citation || s.title || "Indexed Authority"} *(${s.authorityType})*`)
-        .join("\n")
-    : "";
-
   return {
     ok: Boolean(rawReview),
-    reviewText: (String(rawReview || "").trim() + sourceLines).trim(),
+    reviewText: String(rawReview || "").trim(),
     sourceChunks: compactSources,
     subtopicLabel
   };

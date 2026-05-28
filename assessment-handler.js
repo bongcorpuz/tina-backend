@@ -1323,6 +1323,7 @@ Required JSON shape:
           : "GENERAL_QUESTION_READY",
         sourcesUsed: quizSourcesUsed,
         sources: quizSourcesUsed,
+        sourceCards: quizSourcesUsed,
         vectorMatches: quizSourcesUsed.length,
         contextOrchestrationEnabled: true,
         directOpenAICallDisabled: true
