@@ -261,9 +261,13 @@ function stripRawSourceSections(text = "") {
   return normalizeText(text)
     // "Sources Used" — plain, bold (**Sources Used:**), italic (*Sources Used:*)
     .replace(/\n+\*{0,2}Sources Used\*{0,2}:?\*{0,2}[\s\S]*$/i, "")
-    // "Sources" — plain (Sources:), bold (**Sources:**, **Sources**:, **Sources**),
-    // italic (*Sources:*) — newline-anchored; (?:\n|$) blocks inline phrase matches
-    .replace(/\n+\*{0,2}Sources\*{0,2}:?\*{0,2}\s*(?:\n|$)[\s\S]*$/i, "")
+    // "Sources" — colon-present variant: Sources:, **Sources:**, **Sources**:, *Sources:*
+    // No (?:\n|$) guard needed when a colon is present; colon itself distinguishes the
+    // section header from prose like "Sources of income vary…"
+    .replace(/\n+\*{0,2}Sources\*{0,2}:\*{0,2}[\s\S]*$/i, "")
+    // "Sources" — no-colon variant (e.g. **Sources** then newline); explicit \n guard
+    // required here to avoid stripping "Sources of income…" sentences
+    .replace(/\n+\*{0,2}Sources\*{0,2}\s*\n[\s\S]*$/i, "")
     // Markdown heading variants: ## Sources, ### Sources:, # Sources Used, ## References
     .replace(/\n+#{1,6}\s*\*{0,2}(?:Sources(?:\s+Used)?|References)\*{0,2}:?[\s\S]*$/i, "")
     // "References" — plain (References:), bold (**References:**), italic

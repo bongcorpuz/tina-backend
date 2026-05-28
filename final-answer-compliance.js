@@ -1168,8 +1168,11 @@ function stripInventedSourceSections(text = "") {
     .replace(/\n+\s*SOURCES USED[\s\S]*$/i, "")
     // Bold/italic "Sources Used" variants: **Sources Used:**, **Sources Used**:, *Sources Used:*
     .replace(/\n+\*{0,2}Sources Used\*{0,2}:?\*{0,2}[\s\S]*$/i, "")
-    // Bold/italic "Sources" variants: **Sources:**, **Sources**:, *Sources:*
-    .replace(/\n+\*{0,2}Sources\*{0,2}:?\*{0,2}\s*(?:\n|$)[\s\S]*$/i, "")
+    // Bold/italic "Sources" — colon-present: **Sources:**, **Sources**:, *Sources:*
+    // Colon distinguishes header from prose; no (?:\n|$) guard needed.
+    .replace(/\n+\*{0,2}Sources\*{0,2}:\*{0,2}[\s\S]*$/i, "")
+    // Bold/italic "Sources" — no-colon: **Sources**\nItems — explicit \n guard
+    .replace(/\n+\*{0,2}Sources\*{0,2}\s*\n[\s\S]*$/i, "")
     // Bold/italic "References" variants: **References:**, *References:*
     .replace(/\n+\*{0,2}References\*{0,2}:?\*{0,2}[\s\S]*$/i, "")
     // Markdown heading variants: ## Sources, ### Sources:, ## References
