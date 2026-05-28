@@ -1166,6 +1166,14 @@ function stripInventedSourceSections(text = "") {
     .replace(/\n+\s*6\.\s*SOURCES USED[\s\S]*$/i, "")
     .replace(/\n+\s*8\.\s*SOURCES[\s\S]*$/i, "")
     .replace(/\n+\s*SOURCES USED[\s\S]*$/i, "")
+    // Bold/italic "Sources Used" variants: **Sources Used:**, **Sources Used**:, *Sources Used:*
+    .replace(/\n+\*{0,2}Sources Used\*{0,2}:?\*{0,2}[\s\S]*$/i, "")
+    // Bold/italic "Sources" variants: **Sources:**, **Sources**:, *Sources:*
+    .replace(/\n+\*{0,2}Sources\*{0,2}:?\*{0,2}\s*(?:\n|$)[\s\S]*$/i, "")
+    // Bold/italic "References" variants: **References:**, *References:*
+    .replace(/\n+\*{0,2}References\*{0,2}:?\*{0,2}[\s\S]*$/i, "")
+    // Markdown heading variants: ## Sources, ### Sources:, ## References
+    .replace(/\n+#{1,6}\s*\*{0,2}(?:Sources(?:\s+Used)?|References)\*{0,2}:?[\s\S]*$/i, "")
     .replace(/\n+\s*Source\(s\):\s*[\s\S]*$/i, "")
     .replace(/\n+\s*Sources:\s*[\s\S]*$/i, "")
     .replace(/\n+\s*Source:\s*[\s\S]*$/i, "")

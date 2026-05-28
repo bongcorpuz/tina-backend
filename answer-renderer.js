@@ -259,10 +259,15 @@ function escapeRegex(value = "") {
 
 function stripRawSourceSections(text = "") {
   return normalizeText(text)
-    .replace(/\n+\s*Sources Used[\s\S]*$/i, "")
-    .replace(/\n+\s*Sources:[\s\S]*$/i, "")
-    .replace(/\n+\*{0,2}Sources\*{0,2}\s*\n[\s\S]*$/i, "")
-    .replace(/\n+\s*References:[\s\S]*$/i, "")
+    // "Sources Used" — plain, bold (**Sources Used:**), italic (*Sources Used:*)
+    .replace(/\n+\*{0,2}Sources Used\*{0,2}:?\*{0,2}[\s\S]*$/i, "")
+    // "Sources" — plain (Sources:), bold (**Sources:**, **Sources**:, **Sources**),
+    // italic (*Sources:*) — newline-anchored; (?:\n|$) blocks inline phrase matches
+    .replace(/\n+\*{0,2}Sources\*{0,2}:?\*{0,2}\s*(?:\n|$)[\s\S]*$/i, "")
+    // Markdown heading variants: ## Sources, ### Sources:, # Sources Used, ## References
+    .replace(/\n+#{1,6}\s*\*{0,2}(?:Sources(?:\s+Used)?|References)\*{0,2}:?[\s\S]*$/i, "")
+    // "References" — plain (References:), bold (**References:**), italic
+    .replace(/\n+\*{0,2}References\*{0,2}:?\*{0,2}[\s\S]*$/i, "")
     .replace(/\n+\s*Validated Indexed Sources[\s\S]*$/i, "")
     .replace(/\n+\s*Authority Used[\s\S]*$/i, "")
     .replace(/\n+\s*Supersession Audit[\s\S]*$/i, "")
