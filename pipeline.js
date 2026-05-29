@@ -84,6 +84,146 @@ function detectQueryFlags(issueClassification, hook = "/ask") {
 //   (3) Same statute
 //   (4) Opposite holding
 
+function sourceCardBasename(value = "") {
+  return safeStr(value).replace(/^.*[/\\]/, "");
+}
+
+function sourceCardIdentityBlob(c = {}) {
+  const meta = c.metadata || {};
+  return [
+    c.issuanceNumber,
+    c.displayTitle,
+    c.sourceTitle,
+    c.source_title,
+    c.document_title,
+    c.documentTitle,
+    c.source,
+    c.originalSource,
+    c.original_source,
+    c.path,
+    c.source_path,
+    meta.documentTitle,
+    meta.document_title,
+    meta.originalFileName,
+    meta.original_file_name,
+    meta.originalSource,
+    meta.path,
+    meta.source_path
+  ]
+    .filter(Boolean)
+    .map(sourceCardBasename)
+    .join(" ");
+}
+
+function inferLinkedSourceType(c = {}) {
+  const blob = sourceCardIdentityBlob(c).toLowerCase();
+  if (/(^|[\s_/.-])rr[\s_.-]*\d+[\s_.-]*\d{2,4}\b/.test(blob) || blob.includes("revenue regulation")) return "RR";
+  if (/(^|[\s_/.-])rmc[\s_.-]*\d+[\s_.-]*\d{2,4}\b/.test(blob) || blob.includes("revenue memorandum circular")) return "RMC";
+  if (/(^|[\s_/.-])rmo[\s_.-]*\d+[\s_.-]*\d{2,4}\b/.test(blob) || blob.includes("revenue memorandum order")) return "RMO";
+  if (/(^|[\s_/.-])ramo[\s_.-]*\d+[\s_.-]*\d{2,4}\b/.test(blob) || blob.includes("revenue audit memorandum order")) return "RAMO";
+  if (blob.includes("01_tax_code") || blob.includes("nirc") || blob.includes("tax code")) return "NIRC";
+  if (/\bra[\s_.-]*(?:no[\s_.-]*)?\d{4,6}\b/.test(blob) || blob.includes("republic act")) return "RA";
+  return "";
+}
+
+function sourceCardYear(value = "") {
+  const text = safeStr(value);
+  if (text.length !== 2) return text;
+  return Number(text) <= 30 ? `20${text}` : `19${text}`;
+}
+
+function inferAdministrativeRef(blob = "", type = "") {
+  const prefix = safeStr(type).toUpperCase();
+  const escaped = prefix.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const patterns = [
+    new RegExp(`\\b${escaped}[-\\s_]*(?:No\\.?)?[-\\s_]*0*(\\d+)[-\\s_/](\\d{2,4})\\b`, "i"),
+    new RegExp(`\\bRevenue\\s+(?:Audit\\s+)?(?:Regulations?|Memorandum\\s+(?:Circulars?|Orders?))[-\\s_]*(?:No\\.?)?[-\\s_]*0*(\\d+)[-\\s_/](\\d{2,4})\\b`, "i")
+  ];
+  for (const pattern of patterns) {
+    const match = safeStr(blob).match(pattern);
+    if (match) return `${prefix} No. ${Number(match[1])}-${sourceCardYear(match[2])}`;
+  }
+  return "";
+}
+
+function inferSourceCardRef(c = {}, linkedType = "") {
+  const meta = c.metadata || {};
+  const identityBlob = sourceCardIdentityBlob(c);
+  const normalizedRef =
+    c.normalizedReference ||
+    c.normalized_reference ||
+    meta.normalizedReference ||
+    meta.normalized_reference ||
+    "";
+
+  if (["RR", "RMC", "RMO", "RAMO"].includes(linkedType)) {
+    return inferAdministrativeRef(identityBlob, linkedType);
+  }
+
+  if (["NIRC", "STATUTE", "TAX_CODE"].includes(linkedType)) {
+    const nircBlob = [normalizedRef, c.citation, c.reference, identityBlob].filter(Boolean).join(" ");
+    const direct = nircBlob.match(/\b(?:NIRC|Tax Code)\s+Sec(?:tion)?\.?\s*(\d+[A-Z]?)\b/i);
+    if (direct) return `NIRC Sec. ${direct[1]}`;
+    const normalized = nircBlob.match(/\b(?:NIRC|TAX_CODE)_SEC_(\d+[A-Z]?)\b/i);
+    if (normalized) return `NIRC Sec. ${normalized[1]}`;
+  }
+
+  if (linkedType === "RA") {
+    const match = identityBlob.match(/\bRA[-\s_]*(?:No\.?)?[-\s_]*(\d{4,6})\b/i);
+    if (match) return `RA No. ${match[1]}`;
+  }
+
+  return inferIssuanceNumber({
+    ...c,
+    title: "",
+    normalizedReference: "",
+    normalized_reference: "",
+    metadata: {
+      ...meta,
+      normalizedReference: "",
+      normalized_reference: ""
+    }
+  });
+}
+
+function sourceCardLabelType(label = "") {
+  const text = safeStr(label).trim().toUpperCase();
+  if (/^NIRC\b|^TAX CODE\b/.test(text)) return "NIRC";
+  if (/^RR\b|^REVENUE REGULATIONS?\b/.test(text)) return "RR";
+  if (/^RMC\b|^REVENUE MEMORANDUM CIRCULAR\b/.test(text)) return "RMC";
+  if (/^RMO\b|^REVENUE MEMORANDUM ORDER\b/.test(text)) return "RMO";
+  if (/^RAMO\b|^REVENUE AUDIT MEMORANDUM ORDER\b/.test(text)) return "RAMO";
+  if (/^RA\b|^REPUBLIC ACT\b/.test(text)) return "RA";
+  return "";
+}
+
+function sourceCardIsConsistent(label = "", linkedType = "") {
+  const labelType = sourceCardLabelType(label);
+  if (!labelType || !linkedType) return true;
+  if (labelType === "NIRC") return ["NIRC", "STATUTE", "TAX_CODE"].includes(linkedType);
+  if (labelType === "RA") return ["RA", "NIRC", "STATUTE", "TAX_CODE"].includes(linkedType);
+  return labelType === linkedType;
+}
+
+function sourceCardDocumentTitle(c = {}) {
+  const meta = c.metadata || {};
+  return safeStr(
+    c.document_title ||
+      c.documentTitle ||
+      meta.documentTitle ||
+      meta.document_title ||
+      meta.originalFileName ||
+      meta.original_file_name ||
+      c.source ||
+      c.originalSource ||
+      c.original_source ||
+      c.path ||
+      c.source_path ||
+      c.title ||
+      "Source"
+  ).slice(0, 80);
+}
+
 function detectSameStatute(a, b) {
   const normalize = v =>
     safeStr(v?.statute || v?.primaryStatute || v?.normalizedReference || v?.citation || "")
@@ -978,14 +1118,11 @@ export async function runPipeline({
 
     if (!c.title && !c.document_title && !c.source && !c.originalSource) continue;
 
-    const provRef  = inferIssuanceNumber(c) ||
-                     c.normalizedReference  || c.normalized_reference ||
-                     c.citation             || "";
-    const docTitle = String(
-      c.document_title || c.documentTitle ||
-      c.title          || c.source        ||
-      c.originalSource || ""
-    ).slice(0, 80);
+    const linkedType = inferLinkedSourceType(c);
+    const provRef = inferSourceCardRef(c, linkedType);
+    if (provRef && !sourceCardIsConsistent(provRef, linkedType)) continue;
+
+    const docTitle = sourceCardDocumentTitle(c);
 
     // Dedup: canonical authority key (strips "No.", punctuation, separators) so that
     // variant encodings of the same issuance (RR No. 16-2005 / RR_16_2005 / rr-16-2005)
@@ -1007,24 +1144,6 @@ export async function runPipeline({
       meta.source_url   || "";
 
     if (_scSeen.has(dedupeKey)) {
-      const stored = _scSeen.get(dedupeKey);
-      // URL coalesce: upgrade any absent URL field from the incoming duplicate.
-      // `url` already captures all top-level and metadata URL variants for this chunk.
-      if (!stored.url)                  stored.url                  = url;
-      if (!stored.driveViewUrl)         stored.driveViewUrl         = url;
-      if (!stored.drive_view_url)       stored.drive_view_url       = url;
-      if (!stored.webViewLink)          stored.webViewLink          = c.webViewLink    || meta.webViewLink    || "";
-      if (!stored.web_view_link)        stored.web_view_link        = c.web_view_link  || meta.web_view_link  || "";
-      if (!stored.sourceUrl)            stored.sourceUrl            = c.sourceUrl      || c.source_url        || meta.sourceUrl || meta.source_url || "";
-      if (!stored.source_url)           stored.source_url           = c.source_url     || meta.source_url     || "";
-      // Non-URL metadata: always fill any missing field from the incoming duplicate.
-      if (!stored.documentTitle)        stored.documentTitle        = c.document_title || c.documentTitle     || meta.documentTitle || docTitle || "";
-      if (!stored.document_title)       stored.document_title       = c.document_title || meta.documentTitle  || "";
-      if (!stored.normalizedReference)  stored.normalizedReference  = c.normalizedReference  || c.normalized_reference  || meta.normalizedReference  || provRef || "";
-      if (!stored.normalized_reference) stored.normalized_reference = c.normalized_reference || meta.normalizedReference || "";
-      if (!stored.citation)             stored.citation             = c.citation || provRef || "";
-      if (!stored.reference)            stored.reference            = c.reference || "";
-      if (!stored.source)               stored.source               = c.source   || "";
       continue;
     }
 
@@ -1043,10 +1162,11 @@ export async function runPipeline({
       source_url:          c.source_url    || meta.source_url    || "",
       documentTitle:       c.document_title || c.documentTitle   || meta.documentTitle || docTitle || "",
       document_title:      c.document_title || meta.documentTitle || "",
-      normalizedReference: c.normalizedReference || c.normalized_reference || meta.normalizedReference || provRef || "",
-      normalized_reference: c.normalized_reference || meta.normalizedReference || "",
+      normalizedReference: provRef || c.normalizedReference || c.normalized_reference || meta.normalizedReference || "",
+      normalized_reference: provRef || c.normalized_reference || meta.normalizedReference || "",
       reference:           c.reference || "",
       source:              c.source    || "",
+      linkedSourceType:    linkedType,
       excerpt:             String(c.text || c.content || "").slice(0, 300)
     });
 
