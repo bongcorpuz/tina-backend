@@ -967,7 +967,15 @@ export async function runPipeline({
   // This is semantically distinct from educationalSources (Learn More) which
   // groups at document level — same PDF appears in both but with different labels.
   const _scSeen = new Map();
+  const targetAuths = ctx.issueClassification?.targetAuthorities || [];
+  const hasTargetAuthorities = targetAuths.length > 0;
   for (const c of (ctx.rerankedChunks || [])) {
+    if (
+      hasTargetAuthorities &&
+      c.targetAuthorityMatch === false &&
+      c.issueMismatch === true
+    ) continue;
+
     if (!c.title && !c.document_title && !c.source && !c.originalSource) continue;
 
     const provRef  = inferIssuanceNumber(c) ||
