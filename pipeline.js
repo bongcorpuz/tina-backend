@@ -161,11 +161,36 @@ function inferSourceCardRef(c = {}, linkedType = "") {
   }
 
   if (["NIRC", "STATUTE", "TAX_CODE"].includes(linkedType)) {
-    const nircBlob = [normalizedRef, c.citation, c.reference, identityBlob].filter(Boolean).join(" ");
+    // Search normalizedRef + citation + reference + identity blob
+    // PLUS chunk title and text preview — normalizedReference is often null for
+    // NIRC Sec. 105-108 chunks, so the section number must be extracted from
+    // the section heading (c.title) or the chunk text itself.
+    const nircExtra = [
+      c.title,
+      c.sectionHeading,
+      c.section_heading,
+      c.sectionTitle,
+      c.section_title,
+      String(c.text || c.content || "").slice(0, 500)
+    ].filter(Boolean).join(" ");
+    const nircBlob = [normalizedRef, c.citation, c.reference, identityBlob, nircExtra]
+      .filter(Boolean).join(" ");
+    // 1. Qualified "NIRC Sec. NNN" / "Tax Code Section NNN" reference
     const direct = nircBlob.match(/\b(?:NIRC|Tax Code)\s+Sec(?:tion)?\.?\s*(\d+[A-Z]?)\b/i);
     if (direct) return `NIRC Sec. ${direct[1]}`;
-    const normalized = nircBlob.match(/\b(?:NIRC|TAX_CODE)_SEC_(\d+[A-Z]?)\b/i);
-    if (normalized) return `NIRC Sec. ${normalized[1]}`;
+    // 2. DB-normalised NIRC_SEC_NNN / TAX_CODE_SEC_NNN form (normalizedRef column)
+    const normalizedMatch = nircBlob.match(/\b(?:NIRC|TAX_CODE)_SEC_(\d+[A-Z]?)\b/i);
+    if (normalizedMatch) return `NIRC Sec. ${normalizedMatch[1]}`;
+    // 3. Bare "Section NNN" / "Sec. NNN" — present in NIRC chunk headings and text.
+    //    Range capped at 1–999 (all NIRC provisions) to avoid false positives from
+    //    year literals or large RPC/civil code article numbers.
+    const bare = nircBlob.match(/\bSec(?:tion)?\.?\s+(\d{1,3}[A-Z]?)\b/i);
+    if (bare) return `NIRC Sec. ${bare[1]}`;
+    // 4. No section number found — return a NIRC-typed document-level label.
+    //    Do NOT fall through to inferIssuanceNumber here: inferIssuanceNumber would
+    //    match "RA-10963" in the NIRC filename and return "RA No. 10963", collapsing
+    //    ALL NIRC chunks into a single mislabeled "RA No. 10963" card.
+    return "Tax Code";
   }
 
   if (linkedType === "RA") {
@@ -203,6 +228,81 @@ function sourceCardIsConsistent(label = "", linkedType = "") {
   if (labelType === "NIRC") return ["NIRC", "STATUTE", "TAX_CODE"].includes(linkedType);
   if (labelType === "RA") return ["RA", "NIRC", "STATUTE", "TAX_CODE"].includes(linkedType);
   return labelType === linkedType;
+}
+
+/**
+ * Visible-source target whitelist.
+ *
+ * When targetAuthorities is non-empty this is a strict allowlist — only two
+ * categories of cards survive:
+ *
+ *   1. Exact canonical match: canonicalSourceKey(provRef) === canonicalSourceKey(target)
+ *      e.g. "NIRC Sec. 105" ↔ target "NIRC Sec. 105"
+ *           "RR No. 16-2005" ↔ target "RR 16-2005"   (canonicalization strips "No.")
+ *
+ *   2. NIRC document-level fallback "Tax Code" — allowed only when at least one
+ *      target authority is a NIRC/statute provision (correct document family).
+ *      Specific section labels like "NIRC Sec. 4" do NOT fall into this bucket —
+ *      they must match a target via case 1 or be rejected.
+ *
+ * Everything else is rejected, including:
+ *   - off-target NIRC sections (NIRC Sec. 4 for a VAT query)
+ *   - off-target administrative issuances (RMC 65-2012 for a VAT query)
+ *   - RA labels that are not themselves in targetAuthorities
+ *
+ * When targetAuthorities is empty the gate is open (returns true for all).
+ */
+function isTargetAllowedCard(provRef, linkedType, targetAuths) {
+  if (!targetAuths.length) return true;
+
+  const provKey = canonicalSourceKey(provRef);
+
+  // 1. Canonical match — covers "RR No. 16-2005" ≡ target "RR 16-2005"
+  if (targetAuths.some(a => canonicalSourceKey(a) === provKey)) return true;
+
+  // 2. NIRC document-level "Tax Code" label as a safe fallback.
+  //    Only valid when the target list includes at least one NIRC/statute provision.
+  if (/^tax code$/i.test(provRef)) {
+    return targetAuths.some(a => /\b(?:NIRC|Tax\s*Code)\b/i.test(a));
+  }
+
+  return false;
+}
+
+/**
+ * For chunks where inferSourceCardRef returned "" (no issuance label derived),
+ * attempts to return a safe visible-card reference when targetAuthorities exist.
+ *
+ * Returns a non-empty string if the chunk's document identity can be tied to a
+ * target authority; returns null when it cannot be verified and the chunk should
+ * be suppressed (prevents arbitrary docTitle cards from bypassing the whitelist).
+ *
+ * Rules:
+ *   NIRC/statute/tax-code: "Tax Code" when any target is a NIRC/statute provision.
+ *     (inferSourceCardRef already returns "Tax Code" for this family, so this helper
+ *      acts as a defensive backstop for edge cases.)
+ *   RR/RMC/RMO/RAMO: re-attempts inferAdministrativeRef on the document identity blob;
+ *     returns the derived label only when it is an exact canonical target match.
+ *     A non-matching or empty label → null (suppressed).
+ *   RA or unknown linkedType → null (cannot safely verify target match).
+ */
+function deriveTargetSafeDocumentRef(c, linkedType, targetAuths) {
+  if (!targetAuths.length) return null;
+
+  // NIRC/statute family — document-level "Tax Code" is safe when NIRC targets exist
+  if (["NIRC", "STATUTE", "TAX_CODE"].includes(linkedType)) {
+    return targetAuths.some(a => /\b(?:NIRC|Tax\s*Code)\b/i.test(a)) ? "Tax Code" : null;
+  }
+
+  // Administrative issuances — only allow exact canonical target match
+  if (["RR", "RMC", "RMO", "RAMO"].includes(linkedType)) {
+    const adminRef = inferAdministrativeRef(sourceCardIdentityBlob(c), linkedType);
+    if (adminRef && isTargetAllowedCard(adminRef, linkedType, targetAuths)) return adminRef;
+    return null;
+  }
+
+  // RA or unknown — cannot safely determine target match from document identity alone
+  return null;
 }
 
 function sourceCardDocumentTitle(c = {}) {
@@ -1109,18 +1209,59 @@ export async function runPipeline({
   const _scSeen = new Map();
   const targetAuths = ctx.issueClassification?.targetAuthorities || [];
   const hasTargetAuthorities = targetAuths.length > 0;
+  // Skip counters — aggregated into a single structured log after the loop.
+  const _scSkip = { contamination: 0, consistency: 0, target: 0 };
+  const _scSkipTargetDetail = [];   // up to 5 rejected provRef values for spot-checks
   for (const c of (ctx.rerankedChunks || [])) {
+    // Gate 1 (contamination): hard-blocks cross-domain chunks flagged by reranker
+    // as BOTH off-target AND issue-mismatched (the strictest reranker signal).
     if (
       hasTargetAuthorities &&
       c.targetAuthorityMatch === false &&
       c.issueMismatch === true
-    ) continue;
+    ) {
+      _scSkip.contamination++;
+      continue;
+    }
 
     if (!c.title && !c.document_title && !c.source && !c.originalSource) continue;
 
     const linkedType = inferLinkedSourceType(c);
-    const provRef = inferSourceCardRef(c, linkedType);
-    if (provRef && !sourceCardIsConsistent(provRef, linkedType)) continue;
+    let provRef = inferSourceCardRef(c, linkedType);   // `let` — may be promoted below
+
+    // Gate 2 (consistency): NIRC labels must link to NIRC/statute documents, etc.
+    if (provRef && !sourceCardIsConsistent(provRef, linkedType)) {
+      _scSkip.consistency++;
+      continue;
+    }
+
+    // Gate 3 (target whitelist): exact-target enforcement for both labeled and
+    // unlabeled chunks.
+    //
+    //  Labeled (provRef exists): must canonically match a target authority or be
+    //    the "Tax Code" NIRC document-level fallback.  Blocks off-target chips
+    //    (NIRC Sec. 4, RMC 65-2012) that survive Gate 1 when issueMismatch is false.
+    //
+    //  Unlabeled (!provRef): do NOT fall through to docTitle cards — that would
+    //    allow off-target document titles to bypass the whitelist.  Instead, try
+    //    deriveTargetSafeDocumentRef; if it returns a safe label, promote provRef
+    //    and continue; if it returns null, suppress the chunk.
+    if (hasTargetAuthorities) {
+      if (provRef) {
+        if (!isTargetAllowedCard(provRef, linkedType, targetAuths)) {
+          _scSkip.target++;
+          if (_scSkipTargetDetail.length < 5) _scSkipTargetDetail.push(provRef);
+          continue;
+        }
+      } else {
+        const _safeRef = deriveTargetSafeDocumentRef(c, linkedType, targetAuths);
+        if (!_safeRef) {
+          _scSkip.target++;
+          continue;
+        }
+        provRef = _safeRef;  // promote: use as effective ref for dedupeKey + card label
+      }
+    }
 
     const docTitle = sourceCardDocumentTitle(c);
 
@@ -1172,6 +1313,80 @@ export async function runPipeline({
 
     if (_scSeen.size >= 5) break;
   }
+
+  // Single structured log for the entire sourceCards build step.
+  console.log("[SOURCE CARDS]", {
+    produced:          _scSeen.size,
+    skipContamination: _scSkip.contamination,
+    skipConsistency:   _scSkip.consistency,
+    skipTarget:        _scSkip.target,
+    labels: [..._scSeen.values()].map(v => v.normalizedReference || v.title || "?").slice(0, 6),
+    ...(_scSkipTargetDetail.length > 0 && { rejectedByTarget: _scSkipTargetDetail })
+  });
+
+  // Non-empty safety fallback ─────────────────────────────────────────────────
+  // Exact-target-aware: each candidate must produce a target-allowed label via
+  // inferSourceCardRef or deriveTargetSafeDocumentRef before being eligible.
+  // Family-based matching (any RR target → all RR docs) is intentionally removed;
+  // RMC 65-2012 cannot appear here for a VAT query unless it is in targetAuthorities.
+  if (_scSeen.size === 0) {
+    const _fbCandidates = (ctx.rerankedChunks || []).filter(c => {
+      if (!c.title && !c.document_title && !c.source && !c.originalSource) return false;
+      if (hasTargetAuthorities && c.targetAuthorityMatch === false && c.issueMismatch === true) return false;
+      if (!hasTargetAuthorities) return true;
+      // Must produce an exact-target label to be eligible
+      const lType      = inferLinkedSourceType(c);
+      const ref        = inferSourceCardRef(c, lType);
+      const effectiveRef = ref || deriveTargetSafeDocumentRef(c, lType, targetAuths) || "";
+      return effectiveRef ? isTargetAllowedCard(effectiveRef, lType, targetAuths) : false;
+    });
+    if (_fbCandidates.length > 0) {
+      for (const c of _fbCandidates) {
+        const _fbLType = inferLinkedSourceType(c);
+        const _fbRef   = inferSourceCardRef(c, _fbLType) ||
+                         deriveTargetSafeDocumentRef(c, _fbLType, targetAuths) || "";
+        if (!_fbRef) continue;
+        const _fbDocTitle = sourceCardDocumentTitle(c);
+        const _fbKey = canonicalSourceKey(_fbRef);
+        if (!_fbKey || _scSeen.has(_fbKey)) continue;
+        const _fbMeta = c.metadata || {};
+        const _fbUrl  =
+          c.driveViewUrl  || c.drive_view_url  || c.url          || c.webViewLink  ||
+          c.web_view_link || c.sourceUrl       || c.source_url   ||
+          _fbMeta.driveViewUrl || _fbMeta.drive_view_url || _fbMeta.url ||
+          _fbMeta.webViewLink  || _fbMeta.web_view_link  ||
+          _fbMeta.sourceUrl    || _fbMeta.source_url     || "";
+        _scSeen.set(_fbKey, {
+          title:               _fbRef && _fbDocTitle ? `${_fbRef} — ${_fbDocTitle}` : _fbRef || _fbDocTitle || "Source",
+          citation:            _fbRef || c.citation || "",
+          authorityType:       c.authorityType || c.authority_type || "UNKNOWN",
+          driveViewUrl:        _fbUrl,
+          drive_view_url:      _fbUrl,
+          url:                 _fbUrl,
+          webViewLink:         c.webViewLink  || _fbMeta.webViewLink  || "",
+          web_view_link:       c.web_view_link || _fbMeta.web_view_link || "",
+          sourceUrl:           c.sourceUrl    || c.source_url || _fbMeta.sourceUrl || _fbMeta.source_url || "",
+          source_url:          c.source_url   || _fbMeta.source_url || "",
+          documentTitle:       c.document_title || _fbMeta.document_title || _fbDocTitle || "",
+          document_title:      c.document_title || _fbMeta.document_title || "",
+          normalizedReference: _fbRef,
+          normalized_reference: _fbRef,
+          reference:           c.reference || "",
+          source:              c.source    || "",
+          linkedSourceType:    _fbLType,
+          excerpt:             String(c.text || c.content || "").slice(0, 300)
+        });
+        if (_scSeen.size >= 5) break;
+      }
+      console.warn("[SOURCE CARDS FALLBACK]", {
+        reason:    "main loop 0 cards; rebuilt from exact-target-matched chunks",
+        produced:  _scSeen.size,
+        candidates: _fbCandidates.length,
+        labels: [..._scSeen.values()].map(v => v.normalizedReference || v.title || "?").slice(0, 6)
+      });
+    }
+  }
+
   const sourceCards = [..._scSeen.values()];
 
   endTrace({
