@@ -306,6 +306,43 @@ function deriveTargetSafeDocumentRef(c, linkedType, targetAuths) {
 }
 
 /**
+ * Returns whether a non-target-matched chunk has sufficient affirmative issue
+ * relevance to appear as a visible source chip.
+ *
+ * Leverages the reranker's issueClassificationMatch.matched flag, which is
+ * computed by buildIssueClassificationMatch and captures:
+ *   • compatible — whether the doc's detected issues are compatible with the query
+ *   • issueOverlap — whether query and doc issues share a common issue type
+ *   • issueMismatch — whether there is an explicit cross-domain mismatch
+ *
+ * The `matched` flag is `false` when the reranker explicitly determined that the
+ * chunk's subject matter is incompatible with the query (e.g. a VAT section chunk
+ * for an EWT query, where detectDocIssues found ["VAT"] and compatible === false).
+ *
+ * Rules (applied in order — caller should only invoke for non-target chunks):
+ *  1. issueMismatch === true  → reject ("issue_mismatch")
+ *  2. No issueClassificationMatch data → allow ("no_icm_data") — conservative pass
+ *  3. icm.matched === false   → reject ("non_target_no_issue_relevance")
+ *  4. icm.matched === true or undefined → allow
+ *
+ * @param {object} c - Reranked chunk (must have c.issueClassificationMatch)
+ * @returns {{ allowed: boolean, reason: string }}
+ */
+function isIssueRelevantSourceCardCandidate(c) {
+  if (c.issueMismatch === true) {
+    return { allowed: false, reason: "issue_mismatch" };
+  }
+  const icm = c.issueClassificationMatch;
+  if (!icm || typeof icm !== "object") {
+    return { allowed: true, reason: "no_icm_data" };
+  }
+  if (icm.matched === false) {
+    return { allowed: false, reason: "non_target_no_issue_relevance" };
+  }
+  return { allowed: true, reason: icm.matched === true ? "issue_match" : "unknown_allow" };
+}
+
+/**
  * Final outbound consistency sanitizer for source cards.
  *
  * Re-derives the actual document type from each card's stable identity fields
@@ -1310,7 +1347,8 @@ export async function runPipeline({
   const targetAuths    = ctx.issueClassification?.targetAuthorities || [];
   const hasTargetAuthorities = targetAuths.length > 0;
   // Skip counters — aggregated into a single structured log after the loop.
-  const _scSkip = { contamination: 0, consistency: 0 };
+  const _scSkip = { contamination: 0, consistency: 0, issueRelevance: 0 };
+  const _scSkipIssueDetail = [];   // up to 5 rejected non-target provRef values
 
   for (const c of (ctx.rerankedChunks || [])) {
     if (_scSeen.size >= CANDIDATE_CAP) break;
@@ -1338,10 +1376,8 @@ export async function runPipeline({
     }
 
     // Priority signal: does this chunk canonically match a target authority?
-    // Unlike the old Gate 3, a non-matching chunk is NOT rejected — it becomes a
-    // lower-priority candidate (sorted behind target-matched cards after the loop).
-    // This allows retrieved, issue-relevant implementing regs (e.g. RR 2-98 for EWT)
-    // to appear as chips even when they are absent from targetAuthorities.
+    // Non-matching chunks are not immediately rejected — they become lower-priority
+    // candidates if they also pass Gate 3 (issue relevance) below.
     let _isTargetMatch = !hasTargetAuthorities; // no targets → everything is "matched"
     if (hasTargetAuthorities) {
       if (provRef) {
@@ -1349,12 +1385,32 @@ export async function runPipeline({
       } else {
         // Try to boost unlabeled chunk with a target-safe label.
         // If found, promote provRef and mark as target-matched.
-        // If not found, chunk still passes as a lower-priority candidate.
+        // If not found, chunk still passes as a lower-priority candidate (Gate 3 decides).
         const _safeRef = deriveTargetSafeDocumentRef(c, linkedType, targetAuths);
         if (_safeRef) {
           provRef       = _safeRef;
           _isTargetMatch = true;
         }
+      }
+    }
+
+    // Gate 3 (issue relevance): non-target candidates must have affirmative
+    // issue relevance according to the reranker's issueClassificationMatch.matched
+    // signal.  This blocks VAT-domain chunks (NIRC Sec. 106, RMC 65-2012) from
+    // appearing as chips in an EWT query, while still allowing retrieved
+    // implementing regs whose doc issues genuinely overlap with the query
+    // (e.g. RR 2-98 for EWT, RMC 65-2012 for condo-dues VAT queries).
+    //
+    // Target-matched chunks bypass this gate — they were explicitly requested by
+    // the issue classifier and are always relevant by definition.
+    if (!_isTargetMatch) {
+      const _rel = isIssueRelevantSourceCardCandidate(c);
+      if (!_rel.allowed) {
+        _scSkip.issueRelevance++;
+        if (_scSkipIssueDetail.length < 5) {
+          _scSkipIssueDetail.push({ ref: provRef || "(no-ref)", reason: _rel.reason });
+        }
+        continue;
       }
     }
 
@@ -1436,13 +1492,15 @@ export async function runPipeline({
   const _scSorted         = [..._scTargetMatched, ..._scNonTarget];
 
   console.log("[SOURCE CARD CANDIDATES]", {
-    total:             _scCandidateArray.length,
-    targetMatched:     _scTargetMatched.length,
-    nonTarget:         _scNonTarget.length,
-    skipContamination: _scSkip.contamination,
-    skipConsistency:   _scSkip.consistency,
+    total:              _scCandidateArray.length,
+    targetMatched:      _scTargetMatched.length,
+    nonTarget:          _scNonTarget.length,
+    skipContamination:  _scSkip.contamination,
+    skipConsistency:    _scSkip.consistency,
+    skipIssueRelevance: _scSkip.issueRelevance,
     targetMatched_labels: _scTargetMatched.map(v => v.normalizedReference || v.title || "?"),
-    nonTarget_labels:     _scNonTarget.map(v => v.normalizedReference || v.title || "?").slice(0, 5)
+    nonTarget_labels:     _scNonTarget.map(v => v.normalizedReference || v.title || "?").slice(0, 5),
+    ...(_scSkipIssueDetail.length > 0 && { rejectedByIssue: _scSkipIssueDetail })
   });
 
   const _scFiltered = _scSorted.slice(0, 5);
@@ -1457,12 +1515,19 @@ export async function runPipeline({
 
   // Non-empty safety fallback ─────────────────────────────────────────────────
   // Fires only when the main loop produced zero candidates (all chunks rejected
-  // by Gate 1 or Gate 2, or rerankedChunks is empty).  Applies Gate 1 only —
-  // no target whitelist — so any retrieved, non-contaminated chunk is eligible.
+  // by Gates 1–3, or rerankedChunks is empty).  Applies the same three gates as
+  // the main loop so fallback cannot reintroduce chunks that Gate 3 already
+  // rejected (e.g. NIRC Sec. 106/107 or RMC 65-2012 for an EWT query).
   if (_scFilteredClean.length === 0) {
     const _fbCandidates = (ctx.rerankedChunks || []).filter(c => {
       if (!c.title && !c.document_title && !c.source && !c.originalSource) return false;
+      // Gate 1: explicit contamination
       if (hasTargetAuthorities && c.targetAuthorityMatch === false && c.issueMismatch === true) return false;
+      // Gate 3: issue relevance for non-target chunks (mirrors main loop)
+      if (!c.targetAuthorityMatch) {
+        const _rel = isIssueRelevantSourceCardCandidate(c);
+        if (!_rel.allowed) return false;
+      }
       return true;
     });
     if (_fbCandidates.length > 0) {
@@ -1508,7 +1573,7 @@ export async function runPipeline({
         if (_scFilteredClean.length >= 5) break;
       }
       console.warn("[SOURCE CARDS FALLBACK]", {
-        reason:     "main loop 0 candidates; rebuilt from Gate-1-only filtered chunks",
+        reason:     "main loop 0 candidates; rebuilt applying Gates 1+3 (no target whitelist)",
         produced:   _scFilteredClean.length,
         candidates: _fbCandidates.length,
         labels:     _scFilteredClean.map(v => v.normalizedReference || v.title || "?").slice(0, 6)
