@@ -988,6 +988,27 @@ function renderTinaAnswer({
     });
   }
 
+  // ── Source mode: deterministic list when sources are available ───────────────
+  // When SOURCE_LOOKUP has retrieved sources, discard the model's answer text
+  // (which may say "No indexed sources found" if the pipeline passed it an empty
+  // list before retrieval was fixed) and render a numbered list from the source
+  // array instead.  includeSources is intentionally not consulted — SOURCE_LOOKUP
+  // always owns its own rendered output when sources are present.
+  if (isSourceMode && sources.length > 0) {
+    const SOURCE_MODE_CAP = 12;
+    const sorted = sortVisibleSources(sources).slice(0, SOURCE_MODE_CAP);
+
+    const lines = sorted.map((s, i) => {
+      const compact = compactSource(s);
+      const label   = (compact.citation || compact.title || "Unknown Source").trim();
+      const path    = String(s.source || s.original_source || "").trim();
+      return path ? `${i + 1}. ${label} — ${path}` : `${i + 1}. ${label}`;
+    });
+
+    rendered = `Indexed sources found:\n${lines.join("\n")}`;
+  }
+  // ── End source mode override ────────────────────────────────────────────────
+
   if (includeSources) {
     const visible = sortVisibleSources(sources)
       .slice(0, MAX_VISIBLE_SOURCES)
