@@ -2156,6 +2156,87 @@ async function fastRefLookup({
     return [];
   }
 }
+
+// fastAuthorityReferenceLookup — supplemental indexed-column ILIKE lookup.
+//
+// Called by titleMetadataSearch when fastRefLookup (normalized_reference.in())
+// returns 0 rows for a recognizable authority reference (RR, RMC, RMO, RAMO,
+// NIRC section, RA, G.R. No., CTA case).  This can happen when the document was
+// indexed without a populated normalized_reference value but is still findable
+// via its source path or document_title.
+//
+// Queries ONLY four top-level columns that carry pg_trgm GIN indexes:
+//   normalized_reference, source, original_source, document_title.
+// Never touches metadata->>field JSON extractions — those are not GIN-indexed
+// and are the source of the 57014 statement_timeout.
+//
+// Returns results through the same mapRowToResult + shouldSuppressRow pipeline
+// as every other search helper.  Never throws.
+async function fastAuthorityReferenceLookup({
+  supabaseClient,
+  keyword = "",
+  poolLimit,
+  parsed  = {},
+  searchMode = "FAST_AUTHORITY_COLUMN"
+} = {}) {
+  if (!keyword || !supabaseClient) return [];
+
+  // Build a narrow set of ILIKE terms.
+  // normalizeForMatch produces the slug stored in source/original_source paths
+  //   ("RR 16-2005" → "rr-16-2005" matches "02-revenue-regulations/.../rr-16-2005.pdf").
+  // normalizeAuthorityReference adds any NIRC-specific transformations.
+  // The raw keyword catches normalized_reference values written in the original
+  //   citation format ("NIRC Sec. 105" stored literally by detectNircSectionHeading).
+  const terms = unique([
+    normalizeForMatch(keyword),
+    normalizeAuthorityReference(keyword),
+    keyword.trim()
+  ]).filter(Boolean).slice(0, 4);
+
+  if (!terms.length) return [];
+
+  const orClauses = terms
+    .flatMap(term => [
+      `normalized_reference.ilike.%${term}%`,
+      `source.ilike.%${term}%`,
+      `original_source.ilike.%${term}%`,
+      `document_title.ilike.%${term}%`
+    ])
+    .join(",");
+
+  try {
+    const { data, error } = await supabaseClient
+      .from(VECTOR_TABLE)
+      .select(buildSelectColumns())
+      .or(orClauses)
+      .order("authority_level", { ascending: true, nullsFirst: false })
+      .order("chunk_index",     { ascending: true })
+      .limit(poolLimit);
+
+    if (error) {
+      console.warn("[FAST_AUTHORITY_COLUMN_LOOKUP] Supabase error:", {
+        message: error.message,
+        code:    error.code
+      });
+      return [];
+    }
+
+    const queryStr = parsed.query || parsed.keyword || keyword;
+    return (data || [])
+      .map(row =>
+        mapRowToResult(
+          { ...row, citationMatchBonus: 1, searchMode },
+          1,
+          queryStr,
+          { ...parsed, searchMode }
+        )
+      )
+      .filter(row => !shouldSuppressRow(row, queryStr, parsed));
+  } catch (err) {
+    console.warn("[FAST_AUTHORITY_COLUMN_LOOKUP] exception:", err?.message || String(err));
+    return [];
+  }
+}
 // ── End Phase 3 helpers ───────────────────────────────────────────────────
 
 // ── exactProvisionSearch ──────────────────────────────────────────────────
@@ -2430,6 +2511,36 @@ export async function titleMetadataSearch(arg1, arg2) {
     ).slice(0, safeTopK);
   }
   // ── End exact provision fast-path ─────────────────────────────────────────
+
+  // ── Supplemental column lookup for recognized authority references ──────────
+  // Fires only when fastRefLookup (normalized_reference.in()) found nothing AND
+  // the keyword is a recognizable numbered authority citation.  Queries four
+  // GIN-indexed top-level columns via ILIKE — no metadata JSON extraction —
+  // so it avoids 57014 timeouts regardless of table size.
+  if (exactResults.length === 0 && isRecognizableAuthorityReference(keyword || query)) {
+    const columnResults = await fastAuthorityReferenceLookup({
+      supabaseClient,
+      keyword:    keyword || query,
+      poolLimit,
+      parsed,
+      searchMode: "FAST_AUTHORITY_COLUMN"
+    });
+    if (columnResults.length > 0) {
+      console.log("[FAST AUTHORITY COLUMN LOOKUP HIT]", {
+        query:       String(keyword || query || "").slice(0, 80),
+        columnFound: columnResults.length,
+        topK:        safeTopK,
+      });
+      return uniqueResults(
+        sortResultsForTina(columnResults, query || keyword, parsed)
+      ).slice(0, safeTopK);
+    }
+    console.log("[FAST AUTHORITY COLUMN LOOKUP MISS]", {
+      query: String(keyword || query || "").slice(0, 80),
+      note:  "no rows in top-level columns — falling through to metadataSearch",
+    });
+  }
+  // ── End supplemental column lookup ─────────────────────────────────────────
 
   const terms = unique([
     keyword,
