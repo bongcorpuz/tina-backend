@@ -318,7 +318,10 @@ function deriveTargetSafeDocumentRef(c, linkedType, targetAuths) {
  *   consistent              → kept unchanged
  *   inconsistent, relabeled → card re-emitted with corrected RR/RMC label
  *   inconsistent, no label  → card dropped
- *   relabeled but off-target → card dropped (respects targetAuths)
+ *
+ * NOTE: targetAuths is accepted for legacy call-site compatibility but is no longer
+ * used to drop relabeled cards.  Target-priority ordering is handled upstream by
+ * the source-card loop before this function is called.
  */
 function sanitizeOutboundSourceCards(cards, targetAuths = []) {
   const result = [];
@@ -362,14 +365,6 @@ function sanitizeOutboundSourceCards(cards, targetAuths = []) {
       // Cannot safely relabel — drop the card
       console.warn("[SC SANITIZE] drop (no relabel):", {
         labelRef, labelType, effectiveType, source: reChunk.source || "(none)"
-      });
-      continue;
-    }
-
-    // Re-check corrected label against target whitelist
-    if (targetAuths.length && !isTargetAllowedCard(correctedRef, effectiveType, targetAuths)) {
-      console.warn("[SC SANITIZE] drop (relabeled but off-target):", {
-        original: labelRef, corrected: correctedRef, effectiveType
       });
       continue;
     }
@@ -1301,13 +1296,25 @@ export async function runPipeline({
   // multiple chunks of the same section are collapsed to the first one.
   // This is semantically distinct from educationalSources (Learn More) which
   // groups at document level — same PDF appears in both but with different labels.
-  const _scSeen = new Map();
-  const targetAuths = ctx.issueClassification?.targetAuthorities || [];
+  //
+  // Priority model (replaces Gate 3 exclusive whitelist):
+  //   • Gate 1 (contamination) and Gate 2 (consistency) are hard blocks.
+  //   • targetAuthorities is a RANKING signal, not a mandatory whitelist.
+  //   • Retrieved, issue-relevant implementing regs (e.g. RR 2-98 for EWT) that
+  //     are absent from targetAuthorities still appear as chips — just sorted after
+  //     explicitly targeted authorities.
+  //   • After collecting up to CANDIDATE_CAP unique candidates, sort target-matched
+  //     cards first (preserving reranker order within each group), then slice to 5.
+  const CANDIDATE_CAP  = 15; // collect more before priority-sort; final slice is 5
+  const _scSeen        = new Map();
+  const targetAuths    = ctx.issueClassification?.targetAuthorities || [];
   const hasTargetAuthorities = targetAuths.length > 0;
   // Skip counters — aggregated into a single structured log after the loop.
-  const _scSkip = { contamination: 0, consistency: 0, target: 0 };
-  const _scSkipTargetDetail = [];   // up to 5 rejected provRef values for spot-checks
+  const _scSkip = { contamination: 0, consistency: 0 };
+
   for (const c of (ctx.rerankedChunks || [])) {
+    if (_scSeen.size >= CANDIDATE_CAP) break;
+
     // Gate 1 (contamination): hard-blocks cross-domain chunks flagged by reranker
     // as BOTH off-target AND issue-mismatched (the strictest reranker signal).
     if (
@@ -1330,31 +1337,24 @@ export async function runPipeline({
       continue;
     }
 
-    // Gate 3 (target whitelist): exact-target enforcement for both labeled and
-    // unlabeled chunks.
-    //
-    //  Labeled (provRef exists): must canonically match a target authority or be
-    //    the "Tax Code" NIRC document-level fallback.  Blocks off-target chips
-    //    (NIRC Sec. 4, RMC 65-2012) that survive Gate 1 when issueMismatch is false.
-    //
-    //  Unlabeled (!provRef): do NOT fall through to docTitle cards — that would
-    //    allow off-target document titles to bypass the whitelist.  Instead, try
-    //    deriveTargetSafeDocumentRef; if it returns a safe label, promote provRef
-    //    and continue; if it returns null, suppress the chunk.
+    // Priority signal: does this chunk canonically match a target authority?
+    // Unlike the old Gate 3, a non-matching chunk is NOT rejected — it becomes a
+    // lower-priority candidate (sorted behind target-matched cards after the loop).
+    // This allows retrieved, issue-relevant implementing regs (e.g. RR 2-98 for EWT)
+    // to appear as chips even when they are absent from targetAuthorities.
+    let _isTargetMatch = !hasTargetAuthorities; // no targets → everything is "matched"
     if (hasTargetAuthorities) {
       if (provRef) {
-        if (!isTargetAllowedCard(provRef, linkedType, targetAuths)) {
-          _scSkip.target++;
-          if (_scSkipTargetDetail.length < 5) _scSkipTargetDetail.push(provRef);
-          continue;
-        }
+        _isTargetMatch = isTargetAllowedCard(provRef, linkedType, targetAuths);
       } else {
+        // Try to boost unlabeled chunk with a target-safe label.
+        // If found, promote provRef and mark as target-matched.
+        // If not found, chunk still passes as a lower-priority candidate.
         const _safeRef = deriveTargetSafeDocumentRef(c, linkedType, targetAuths);
-        if (!_safeRef) {
-          _scSkip.target++;
-          continue;
+        if (_safeRef) {
+          provRef       = _safeRef;
+          _isTargetMatch = true;
         }
-        provRef = _safeRef;  // promote: use as effective ref for dedupeKey + card label
       }
     }
 
@@ -1401,11 +1401,10 @@ export async function runPipeline({
       meta.web_view_link || meta.sourceUrl       ||
       meta.source_url   || "";
 
-    if (_scSeen.has(dedupeKey)) {
-      continue;
-    }
+    if (_scSeen.has(dedupeKey)) continue;
 
     _scSeen.set(dedupeKey, {
+      _targetMatch:        _isTargetMatch,  // priority tag — stripped before output
       title:               provRef && docTitle
                              ? `${provRef} — ${docTitle}`
                              : provRef || docTitle || "Source",
@@ -1427,45 +1426,58 @@ export async function runPipeline({
       linkedSourceType:    linkedType,
       excerpt:             String(c.text || c.content || "").slice(0, 300)
     });
-
-    if (_scSeen.size >= 5) break;
   }
 
-  // Single structured log for the entire sourceCards build step.
-  console.log("[SOURCE CARDS]", {
-    produced:          _scSeen.size,
+  // Sort: target-matched candidates first (reranker order preserved within group),
+  // then non-target candidates.  Slice to 5 visible chips.
+  const _scCandidateArray = [..._scSeen.values()];
+  const _scTargetMatched  = _scCandidateArray.filter(v =>  v._targetMatch);
+  const _scNonTarget      = _scCandidateArray.filter(v => !v._targetMatch);
+  const _scSorted         = [..._scTargetMatched, ..._scNonTarget];
+
+  console.log("[SOURCE CARD CANDIDATES]", {
+    total:             _scCandidateArray.length,
+    targetMatched:     _scTargetMatched.length,
+    nonTarget:         _scNonTarget.length,
     skipContamination: _scSkip.contamination,
     skipConsistency:   _scSkip.consistency,
-    skipTarget:        _scSkip.target,
-    labels: [..._scSeen.values()].map(v => v.normalizedReference || v.title || "?").slice(0, 6),
-    ...(_scSkipTargetDetail.length > 0 && { rejectedByTarget: _scSkipTargetDetail })
+    targetMatched_labels: _scTargetMatched.map(v => v.normalizedReference || v.title || "?"),
+    nonTarget_labels:     _scNonTarget.map(v => v.normalizedReference || v.title || "?").slice(0, 5)
+  });
+
+  const _scFiltered = _scSorted.slice(0, 5);
+  // Strip internal priority tag before passing to sanitizer / outbound response.
+  // eslint-disable-next-line no-unused-vars
+  const _scFilteredClean = _scFiltered.map(({ _targetMatch, ...card }) => card);
+
+  console.log("[SOURCE CARD FILTERED]", {
+    count:  _scFilteredClean.length,
+    labels: _scFilteredClean.map(v => v.normalizedReference || v.title || "?")
   });
 
   // Non-empty safety fallback ─────────────────────────────────────────────────
-  // Exact-target-aware: each candidate must produce a target-allowed label via
-  // inferSourceCardRef or deriveTargetSafeDocumentRef before being eligible.
-  // Family-based matching (any RR target → all RR docs) is intentionally removed;
-  // RMC 65-2012 cannot appear here for a VAT query unless it is in targetAuthorities.
-  if (_scSeen.size === 0) {
+  // Fires only when the main loop produced zero candidates (all chunks rejected
+  // by Gate 1 or Gate 2, or rerankedChunks is empty).  Applies Gate 1 only —
+  // no target whitelist — so any retrieved, non-contaminated chunk is eligible.
+  if (_scFilteredClean.length === 0) {
     const _fbCandidates = (ctx.rerankedChunks || []).filter(c => {
       if (!c.title && !c.document_title && !c.source && !c.originalSource) return false;
       if (hasTargetAuthorities && c.targetAuthorityMatch === false && c.issueMismatch === true) return false;
-      if (!hasTargetAuthorities) return true;
-      // Must produce an exact-target label to be eligible
-      const lType      = inferLinkedSourceType(c);
-      const ref        = inferSourceCardRef(c, lType);
-      const effectiveRef = ref || deriveTargetSafeDocumentRef(c, lType, targetAuths) || "";
-      return effectiveRef ? isTargetAllowedCard(effectiveRef, lType, targetAuths) : false;
+      return true;
     });
     if (_fbCandidates.length > 0) {
       for (const c of _fbCandidates) {
-        const _fbLType = inferLinkedSourceType(c);
-        const _fbRef   = inferSourceCardRef(c, _fbLType) ||
-                         deriveTargetSafeDocumentRef(c, _fbLType, targetAuths) || "";
-        if (!_fbRef) continue;
+        const _fbLType    = inferLinkedSourceType(c);
+        const _fbRef      = inferSourceCardRef(c, _fbLType) ||
+                            deriveTargetSafeDocumentRef(c, _fbLType, targetAuths) || "";
         const _fbDocTitle = sourceCardDocumentTitle(c);
-        const _fbKey = canonicalSourceKey(_fbRef);
-        if (!_fbKey || _scSeen.has(_fbKey)) continue;
+        const _fbKey      = _fbRef
+          ? canonicalSourceKey(_fbRef)
+          : (_fbDocTitle + "|" + String(c.chunk_index || c.id || "")).toLowerCase().slice(0, 60);
+        if (!_fbKey) continue;
+        if (_scFilteredClean.some(x =>
+          x.normalizedReference && canonicalSourceKey(x.normalizedReference) === _fbKey
+        )) continue;
         const _fbMeta = c.metadata || {};
         const _fbUrl  =
           c.driveViewUrl  || c.drive_view_url  || c.url          || c.webViewLink  ||
@@ -1473,7 +1485,7 @@ export async function runPipeline({
           _fbMeta.driveViewUrl || _fbMeta.drive_view_url || _fbMeta.url ||
           _fbMeta.webViewLink  || _fbMeta.web_view_link  ||
           _fbMeta.sourceUrl    || _fbMeta.source_url     || "";
-        _scSeen.set(_fbKey, {
+        _scFilteredClean.push({
           title:               _fbRef && _fbDocTitle ? `${_fbRef} — ${_fbDocTitle}` : _fbRef || _fbDocTitle || "Source",
           citation:            _fbRef || c.citation || "",
           authorityType:       c.authorityType || c.authority_type || "UNKNOWN",
@@ -1486,20 +1498,20 @@ export async function runPipeline({
           source_url:          c.source_url   || _fbMeta.source_url || "",
           documentTitle:       c.document_title || _fbMeta.document_title || _fbDocTitle || "",
           document_title:      c.document_title || _fbMeta.document_title || "",
-          normalizedReference: _fbRef,
-          normalized_reference: _fbRef,
+          normalizedReference: _fbRef || c.normalizedReference || c.normalized_reference || _fbMeta.normalizedReference || "",
+          normalized_reference: _fbRef || c.normalized_reference || _fbMeta.normalizedReference || "",
           reference:           c.reference || "",
           source:              c.source    || "",
           linkedSourceType:    _fbLType,
           excerpt:             String(c.text || c.content || "").slice(0, 300)
         });
-        if (_scSeen.size >= 5) break;
+        if (_scFilteredClean.length >= 5) break;
       }
       console.warn("[SOURCE CARDS FALLBACK]", {
-        reason:    "main loop 0 cards; rebuilt from exact-target-matched chunks",
-        produced:  _scSeen.size,
+        reason:     "main loop 0 candidates; rebuilt from Gate-1-only filtered chunks",
+        produced:   _scFilteredClean.length,
         candidates: _fbCandidates.length,
-        labels: [..._scSeen.values()].map(v => v.normalizedReference || v.title || "?").slice(0, 6)
+        labels:     _scFilteredClean.map(v => v.normalizedReference || v.title || "?").slice(0, 6)
       });
     }
   }
@@ -1507,7 +1519,21 @@ export async function runPipeline({
   // Final outbound sanitizer: re-check each card's label↔document-type consistency.
   // Relabels or drops cards that slipped through earlier gates (e.g. a card with
   // normalizedReference="NIRC Sec. 4" whose source field identifies it as RR).
-  const sourceCards = sanitizeOutboundSourceCards([..._scSeen.values()], targetAuths);
+  const sourceCards = sanitizeOutboundSourceCards(_scFilteredClean, targetAuths);
+
+  // Diagnostic log — shows the exact array that will be sent as result.sourceCards.
+  // Each entry shows the chip label (ref), document type (type), source identity field
+  // (src — what the sanitizer uses to re-derive type), and whether a clickable URL exists.
+  console.log("[SOURCE CARDS FINAL]", {
+    count:      sourceCards.length,
+    targetAuths: targetAuths.slice(0, 8),
+    cards: sourceCards.map(c => ({
+      ref:    c.normalizedReference || c.citation || "(none)",
+      type:   c.linkedSourceType   || "",
+      src:    c.source             || c.document_title || "(none)",
+      hasUrl: Boolean(c.driveViewUrl || c.drive_view_url || c.url)
+    }))
+  });
 
   endTrace({
     traceId,
