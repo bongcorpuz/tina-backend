@@ -305,6 +305,101 @@ function deriveTargetSafeDocumentRef(c, linkedType, targetAuths) {
   return null;
 }
 
+/**
+ * Final outbound consistency sanitizer for source cards.
+ *
+ * Re-derives the actual document type from each card's stable identity fields
+ * (source, document_title, documentTitle) and compares it with the visible chip
+ * label type.  Catches mismatches that escaped the per-chunk gates — most commonly
+ * a chunk whose DB-stored normalizedReference says "NIRC Sec. X" but whose source
+ * field identifies it as an RR or RMC document.
+ *
+ * Outcomes per card:
+ *   consistent              → kept unchanged
+ *   inconsistent, relabeled → card re-emitted with corrected RR/RMC label
+ *   inconsistent, no label  → card dropped
+ *   relabeled but off-target → card dropped (respects targetAuths)
+ */
+function sanitizeOutboundSourceCards(cards, targetAuths = []) {
+  const result = [];
+  for (const card of cards) {
+    const labelRef  = (card.normalizedReference || card.citation || "").trim();
+    const labelType = sourceCardLabelType(labelRef);
+
+    // No typed chip label — nothing to validate
+    if (!labelType) { result.push(card); continue; }
+
+    // Re-derive actual document type from the card's source-identity fields.
+    // These are set from c.source / c.document_title / c.documentTitle in the loop
+    // and survive independently of whatever linkedType was inferred at chunk level.
+    const reChunk = {
+      source:         card.source         || "",
+      document_title: card.document_title || "",
+      documentTitle:  card.documentTitle  || ""
+    };
+    const recomputedType = inferLinkedSourceType(reChunk);
+    const effectiveType  = recomputedType || card.linkedSourceType || "";
+
+    // Cannot determine document type — keep as-is
+    if (!effectiveType) { result.push(card); continue; }
+
+    // Is the label type compatible with the actual document type?
+    const consistent =
+      labelType === effectiveType ||
+      (labelType === "NIRC" && ["NIRC", "STATUTE", "TAX_CODE"].includes(effectiveType)) ||
+      (labelType === "RA"   && ["RA",   "NIRC",    "STATUTE",  "TAX_CODE"].includes(effectiveType));
+
+    if (consistent) { result.push(card); continue; }
+
+    // Inconsistency detected (e.g. "NIRC Sec. 4" label on an RR document).
+    // Attempt to derive the correct label from the card's identity fields.
+    let correctedRef = "";
+    if (["RR", "RMC", "RMO", "RAMO"].includes(effectiveType)) {
+      correctedRef = inferAdministrativeRef(sourceCardIdentityBlob(reChunk), effectiveType);
+    }
+
+    if (!correctedRef) {
+      // Cannot safely relabel — drop the card
+      console.warn("[SC SANITIZE] drop (no relabel):", {
+        labelRef, labelType, effectiveType, source: reChunk.source || "(none)"
+      });
+      continue;
+    }
+
+    // Re-check corrected label against target whitelist
+    if (targetAuths.length && !isTargetAllowedCard(correctedRef, effectiveType, targetAuths)) {
+      console.warn("[SC SANITIZE] drop (relabeled but off-target):", {
+        original: labelRef, corrected: correctedRef, effectiveType
+      });
+      continue;
+    }
+
+    // Accept with corrected label
+    const docTitle = card.documentTitle || card.document_title || "";
+    const newTitle  = correctedRef && docTitle
+      ? `${correctedRef} — ${docTitle}`
+      : correctedRef || docTitle || "Source";
+    console.warn("[SC SANITIZE] relabeled:", { from: labelRef, to: correctedRef, effectiveType });
+    result.push({
+      ...card,
+      title:               newTitle,
+      citation:            correctedRef,
+      normalizedReference: correctedRef,
+      normalized_reference: correctedRef,
+      linkedSourceType:    effectiveType
+    });
+  }
+
+  if (result.length !== cards.length) {
+    console.log("[SC SANITIZE] summary:", {
+      before: cards.length, after: result.length,
+      dropped: cards.length - result.length
+    });
+  }
+
+  return result;
+}
+
 function sourceCardDocumentTitle(c = {}) {
   const meta = c.metadata || {};
   return safeStr(
@@ -1263,6 +1358,28 @@ export async function runPipeline({
       }
     }
 
+    // Guard: when no issuance label was derived (provRef still ""), validate any
+    // DB-stored normalizedReference against the actual linkedType before allowing it
+    // to become the chip label.  Without this check, a chunk whose DB field says
+    // normalizedReference="NIRC Sec. 4" but whose linkedType is "RR" would produce
+    // a chip labeled "NIRC Sec. 4" that opens an RR PDF.
+    //
+    // Only fires when linkedType is known — unknown types (linkedType="") fall through
+    // so that legitimate DB labels are still inherited when we have no counter-evidence.
+    if (!provRef && linkedType) {
+      const _cMeta  = c.metadata || {};
+      const _dbRef  =
+        c.normalizedReference || c.normalized_reference ||
+        _cMeta.normalizedReference || _cMeta.normalized_reference || "";
+      if (_dbRef) {
+        const _dbLabelType = sourceCardLabelType(_dbRef);
+        if (_dbLabelType && !sourceCardIsConsistent(_dbRef, linkedType)) {
+          _scSkip.consistency++;
+          continue;
+        }
+      }
+    }
+
     const docTitle = sourceCardDocumentTitle(c);
 
     // Dedup: canonical authority key (strips "No.", punctuation, separators) so that
@@ -1387,7 +1504,10 @@ export async function runPipeline({
     }
   }
 
-  const sourceCards = [..._scSeen.values()];
+  // Final outbound sanitizer: re-check each card's label↔document-type consistency.
+  // Relabels or drops cards that slipped through earlier gates (e.g. a card with
+  // normalizedReference="NIRC Sec. 4" whose source field identifies it as RR).
+  const sourceCards = sanitizeOutboundSourceCards([..._scSeen.values()], targetAuths);
 
   endTrace({
     traceId,
