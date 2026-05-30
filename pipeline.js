@@ -58,6 +58,7 @@ import {
   detectPhilippineTaxBoundary,
   BOUNDARY_REJECTION_MESSAGE
 }                                                 from "./services/philippine-tax-domain-boundary.js";
+import { selectSourceAuthorities }                from "./services/source-authority-selector.js";
 
 const PIPELINE_VERSION = "1.0.0";
 
@@ -1599,6 +1600,40 @@ export async function runPipeline({
       hasUrl: Boolean(c.driveViewUrl || c.drive_view_url || c.url)
     }))
   });
+
+  // ── Stage 1: Passive source authority diagnostic ────────────────────────────
+  // Runs AFTER existing sourceCards are already built and logged.
+  // Does NOT change sourceCards, answer, or any pipeline output.
+  // Attaches diagnostics to trace._sourceAuthoritySelectorDiagnostics only.
+  // Safe: selectSourceAuthorities() never throws.
+  const _sasResult = selectSourceAuthorities({
+    rerankedChunks:     ctx.rerankedChunks || [],
+    issueClassification: ctx.issueClassification || {},
+    query:              ctx.query || "",
+    answerText:         finalAnswer || "",
+    mode:               ctx.mode   || "",
+    maxSources:         5,
+    currentSourceCards: sourceCards
+  });
+  trace._sourceAuthoritySelectorDiagnostics = _sasResult.diagnostics;
+  if (!_sasResult.diagnostics.error) {
+    console.log("[SAS DIAGNOSTIC]", {
+      version:         _sasResult.diagnostics.selectorVersion,
+      inspected:       _sasResult.diagnostics.totalChunksInspected,
+      accepted:        _sasResult.diagnostics.accepted,
+      rejected:        _sasResult.diagnostics.rejected,
+      rejectionBreakdown: _sasResult.diagnostics.rejectionBreakdown,
+      selectorLabels:  _sasResult.diagnostics.selectorLabels,
+      currentLabels:   _sasResult.diagnostics.currentLabels,
+      same:            _sasResult.diagnostics.diffFromCurrentSourceCards?.same,
+      diff:            _sasResult.diagnostics.diffFromCurrentSourceCards?.same
+                         ? null
+                         : _sasResult.diagnostics.diffFromCurrentSourceCards
+    });
+  } else {
+    console.warn("[SAS DIAGNOSTIC] selector error (non-blocking):", _sasResult.diagnostics.error);
+  }
+  // ── End Stage 1 diagnostic ───────────────────────────────────────────────────
 
   endTrace({
     traceId,
