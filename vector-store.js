@@ -2348,6 +2348,35 @@ export async function normalizedCitationSearch(arg1, arg2) {
   return sorted;
 }
 
+// Returns true when the input string is a recognizable numbered authority reference —
+// an RR, RMC, RMO, RAMO, NIRC section, Republic Act, G.R. No., or CTA case number.
+// Used by titleMetadataSearch to skip the slow metadataSearch ILIKE fallback when
+// fastRefLookup already found at least one matching row for that reference.
+// Deliberately narrow: broad topic words like "VAT" or "withholding tax" return false.
+function isRecognizableAuthorityReference(input = "") {
+  const s = String(input || "");
+  return (
+    // RR: "RR 16-2005", "Revenue Regulation No. 16-2005", "Revenue Regulations 16-2005"
+    /\b(?:RR|Revenue\s+Regulations?)\s*(?:No\.?)?\s*\d+\s*[-_/]\s*\d{2,4}\b/i.test(s) ||
+    // RMC: "RMC 65-2012", "Revenue Memorandum Circular No. 65-2012"
+    /\b(?:RMC|Revenue\s+Memorandum\s+Circulars?)\s*(?:No\.?)?\s*\d+\s*[-_/]\s*\d{2,4}\b/i.test(s) ||
+    // RMO: "RMO 23-2010", "Revenue Memorandum Order No. 23-2010"
+    /\b(?:RMO|Revenue\s+Memorandum\s+Orders?)\s*(?:No\.?)?\s*\d+\s*[-_/]\s*\d{2,4}\b/i.test(s) ||
+    // RAMO: "RAMO 1-95", "Revenue Audit Memorandum Order No. 1-95"
+    /\b(?:RAMO|Revenue\s+Audit\s+Memorandum\s+Orders?)\s*(?:No\.?)?\s*\d+\s*[-_/]\s*\d{2,4}\b/i.test(s) ||
+    // NIRC/Tax Code section: "NIRC Sec. 105", "NIRC Section 105", "Tax Code Sec. 105"
+    /\b(?:nirc|tax\s+code|national\s+internal\s+revenue\s+code)\s+sec(?:tion)?\.?\s*\d{1,3}[A-Z]?\b/i.test(s) ||
+    // Flipped form: "Sec. 105 of the NIRC", "Section 105 NIRC"
+    /\bsec(?:tion)?\.?\s*\d{1,3}[A-Z]?\s+(?:of\s+(?:the\s+)?)?(?:nirc|tax\s+code)\b/i.test(s) ||
+    // G.R. No.: "G.R. No. 199422"
+    /\bg\.?\s*r\.?\s*no\.?\s*\d/i.test(s) ||
+    // CTA cases: "CTA Case No. 123", "CTA EB No. 456"
+    /\bcta\s+(?:eb\s+)?(?:case\s+)?no\.?\s*\d/i.test(s) ||
+    // Republic Act: "RA 9337", "R.A. 9337", "Republic Act No. 9337"
+    /\b(?:RA|R\.A\.|Republic\s+Act)\s*(?:No\.?)?\s*\d{4,6}\b/i.test(s)
+  );
+}
+
 export async function titleMetadataSearch(arg1, arg2) {
   const parsed = parseSearchArgs(arg1, arg2, { topK: 8 });
   const { supabaseClient, query, keyword, topK } = parsed;
@@ -2379,6 +2408,16 @@ export async function titleMetadataSearch(arg1, arg2) {
       })
     : [];
 
+  if (exactResults.length > 0 && isRecognizableAuthorityReference(keyword || query)) {
+    console.log("[TITLE METADATA EXACT AUTHORITY RETURN]", {
+      query:      String(keyword || query || "").slice(0, 80),
+      exactFound: exactResults.length,
+      topK:       safeTopK,
+    });
+    return uniqueResults(
+      sortResultsForTina(exactResults, query || keyword, parsed)
+    ).slice(0, safeTopK);
+  }
   if (exactResults.length >= Math.max(1, Math.floor(safeTopK / 2))) {
     console.log("[METADATA SEARCH SKIPPED FOR EXACT PROVISION]", {
       query:        String(keyword || query || "").slice(0, 80),
