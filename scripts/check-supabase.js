@@ -11,15 +11,23 @@ const SUPABASE_URL             = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 const REQUIRED_TABLES = [
-  "documents",
+  "tina_vector_store",
   "conversations",
   "messages",
   "supersession_registry",
   "feedback"
 ];
 
+// Projection-based: each column is validated via SELECT <col> LIMIT 0 (no row needed).
 const REQUIRED_COLUMNS = {
-  documents:             ["id", "content", "embedding", "authority_name", "authority_tier", "is_superseded"],
+  tina_vector_store: [
+    "id", "source", "original_source", "chunk_index", "text", "metadata",
+    "embedding", "authority_type", "authority_level", "authority_score",
+    "authority_label", "controlling_precedence", "normalized_reference",
+    "normalized_aliases", "recency_date", "jurisdiction", "source_category",
+    "document_title", "effective_from", "effective_to", "is_superseded",
+    "superseded_by_reference", "repealed_by_reference", "amended_by_reference"
+  ],
   conversations:         ["id", "user_id", "mode", "title", "updated_at"],
   messages:              ["id", "conversation_id", "role", "content", "turn_number", "pipeline_log"],
   supersession_registry: ["id", "old_authority", "superseded_by", "effective_date"],
@@ -54,6 +62,13 @@ function check(label, passed, detail = "") {
   }
 }
 
+// Legacy checks warn but do not count toward failures.
+function legacyCheck(label, passed, detail = "") {
+  const icon = passed ? PASS : WARN;
+  const line  = `  ${icon} ${label}${detail ? `  — ${detail}` : ""}  [legacy]`;
+  console.log(line);
+}
+
 async function checkEnv() {
   console.log(ANSI.bold("\n── Environment Variables ──────────────────────────────────"));
   const required = [
@@ -70,7 +85,7 @@ async function checkEnv() {
 async function checkConnection(supabase) {
   console.log(ANSI.bold("\n── Supabase Connection ────────────────────────────────────"));
   try {
-    const { error } = await supabase.from("documents").select("id").limit(1);
+    const { error } = await supabase.from("conversations").select("id").limit(1);
     check("Supabase reachable", !error, error?.message);
     return !error;
   } catch (err) {
@@ -87,7 +102,6 @@ async function checkPgvector(supabase) {
       .select("*");
 
     if (error) {
-      // Try direct query as fallback
       const { data: d2, error: e2 } = await supabase
         .from("pg_extension")
         .select("extname")
@@ -108,28 +122,20 @@ async function checkPgvector(supabase) {
   }
 }
 
+// Projection-based column validation: each column is probed via SELECT <col> LIMIT 0.
+// This works on empty tables and does not require any rows to be present.
 async function checkTables(supabase) {
   console.log(ANSI.bold("\n── Tables ──────────────────────────────────────────────────"));
   for (const table of REQUIRED_TABLES) {
     try {
-      const { error } = await supabase.from(table).select("id").limit(1);
-      check(`Table: ${table}`, !error, error?.message);
+      const { error: tableErr } = await supabase.from(table).select("id").limit(0);
+      check(`Table: ${table}`, !tableErr, tableErr?.message);
 
-      if (!error) {
-        // Check columns
+      if (!tableErr) {
         const cols = REQUIRED_COLUMNS[table] || [];
-        const { data: sample } = await supabase.from(table).select("*").limit(1);
-        const existingCols = sample && sample.length > 0
-          ? Object.keys(sample[0])
-          : [];
-
-        // If table is empty, we can't check columns from data alone — skip col check
-        if (existingCols.length > 0) {
-          for (const col of cols) {
-            check(`  Column: ${table}.${col}`, existingCols.includes(col));
-          }
-        } else {
-          console.log(`  ${WARN} ${table} is empty — column check skipped`);
+        for (const col of cols) {
+          const { error: colErr } = await supabase.from(table).select(col).limit(0);
+          check(`  Column: ${table}.${col}`, !colErr, colErr?.message);
         }
       }
     } catch (err) {
@@ -138,10 +144,46 @@ async function checkTables(supabase) {
   }
 }
 
-async function checkMatchDocumentsRpc(supabase) {
-  console.log(ANSI.bold("\n── match_documents() RPC ──────────────────────────────────"));
+async function checkMatchTinaVectorsRpc(supabase) {
+  console.log(ANSI.bold("\n── match_tina_vectors() RPC ───────────────────────────────"));
 
-  // Test with a zero-vector call (just verifies function exists and returns correct shape)
+  const zeroEmbedding = new Array(1536).fill(0);
+  const expectedCols  = [
+    "id", "source", "original_source", "chunk_index", "text", "metadata",
+    "authority_type", "authority_level", "authority_score", "authority_label",
+    "controlling_precedence", "normalized_reference", "normalized_aliases",
+    "recency_date", "jurisdiction", "source_category", "document_title",
+    "effective_from", "effective_to", "is_superseded",
+    "superseded_by_reference", "repealed_by_reference", "amended_by_reference",
+    "score", "similarity"
+  ];
+
+  try {
+    const { data, error } = await supabase.rpc("match_tina_vectors", {
+      query_embedding: zeroEmbedding,
+      match_count:     1,
+      match_threshold: 0.0,
+      filter_metadata: {}
+    });
+
+    check("match_tina_vectors() RPC exists", !error, error?.message);
+
+    if (!error) {
+      const row = (data || [])[0];
+      const hasExpectedCols = !row || expectedCols.every(col => col in row);
+      const foundCols = row
+        ? Object.keys(row).join(", ")
+        : "No rows (table may be empty — schema OK)";
+      check("match_tina_vectors() returns correct columns", hasExpectedCols, foundCols);
+    }
+  } catch (err) {
+    check("match_tina_vectors() RPC exists", false, err.message);
+  }
+}
+
+async function checkMatchDocumentsRpcLegacy(supabase) {
+  console.log(ANSI.bold("\n── match_documents() RPC  [legacy — optional] ─────────────"));
+
   const zeroEmbedding = new Array(1536).fill(0);
 
   try {
@@ -151,7 +193,7 @@ async function checkMatchDocumentsRpc(supabase) {
       filter:          {}
     });
 
-    check("match_documents() RPC exists", !error, error?.message);
+    legacyCheck("match_documents() RPC exists", !error, error?.message);
 
     if (!error) {
       const row = (data || [])[0];
@@ -162,14 +204,13 @@ async function checkMatchDocumentsRpc(supabase) {
         "is_superseded" in row &&
         "similarity" in row
       );
-      check("match_documents() returns correct columns", hasExpectedCols,
+      legacyCheck("match_documents() returns correct columns", hasExpectedCols,
             row ? Object.keys(row).join(", ") : "No rows (table may be empty — schema OK)");
     }
   } catch (err) {
-    check("match_documents() RPC exists", false, err.message);
+    legacyCheck("match_documents() RPC exists", false, err.message);
   }
 
-  // Test with authority_names filter
   try {
     const zeroEmbedding2 = new Array(1536).fill(0);
     const { error: filterError } = await supabase.rpc("match_documents", {
@@ -177,9 +218,9 @@ async function checkMatchDocumentsRpc(supabase) {
       match_count:     1,
       filter:          { authority_names: ["NIRC Sec. 105"] }
     });
-    check("match_documents() authority_names filter works", !filterError, filterError?.message);
+    legacyCheck("match_documents() authority_names filter works", !filterError, filterError?.message);
   } catch (err) {
-    check("match_documents() authority_names filter works", false, err.message);
+    legacyCheck("match_documents() authority_names filter works", false, err.message);
   }
 }
 
@@ -210,8 +251,9 @@ async function checkRlsEnabled(supabase) {
 async function checkIndexes(supabase) {
   console.log(ANSI.bold("\n── Indexes ─────────────────────────────────────────────────"));
   const requiredIndexes = [
-    "documents_embedding_idx",
-    "documents_authority_idx",
+    "tina_vector_store_embedding_idx",
+    "tina_vector_store_normalized_reference_idx",
+    "tina_vector_store_authority_level_idx",
     "messages_session_turn_idx",
     "conversations_user_idx"
   ];
@@ -226,7 +268,9 @@ async function checkIndexes(supabase) {
         .limit(1);
 
       check(`Index: ${idx}`, !error && (data?.length ?? 0) > 0,
-            error?.message || (data?.length === 0 ? "Missing — run 001_initial_schema.sql" : ""));
+            error?.message || (data?.length === 0
+              ? "Missing — run 20260530000000_create_tina_vector_store.sql"
+              : ""));
     } catch {
       console.log(`  ${WARN} Could not verify index ${idx} — check Supabase dashboard`);
     }
@@ -242,16 +286,16 @@ async function checkNodeVersion() {
 async function printSummary() {
   console.log(ANSI.bold("\n── Deployment Checklist ─────────────────────────────────────"));
   const items = [
-    ["pgvector extension enabled",                   "Run: CREATE EXTENSION IF NOT EXISTS vector;"],
-    ["All 5 tables created",                         "Run: supabase/migrations/001_initial_schema.sql"],
-    ["match_documents() RPC deployed",               "Run: supabase/migrations/001_initial_schema.sql"],
-    ["RLS enabled on messages + conversations",      "Run: supabase/migrations/001_initial_schema.sql"],
-    ["Both indexes created",                         "Run: supabase/migrations/001_initial_schema.sql"],
-    ["All .env variables set",                       "Copy .env.example → .env, fill values"],
-    ["Node.js ≥20 on server",                        "Upgrade Node.js if needed"],
-    ["npm install completed",                        "Run: npm install"],
-    ["GET /health returns 200",                      "Run: node server.js, curl /health"],
-    ["OpenAI API key tested",                        "Run: scripts/check-supabase.js (checks env)"]
+    ["pgvector + pgcrypto extensions enabled",           "Run: CREATE EXTENSION IF NOT EXISTS vector; pgcrypto;"],
+    ["tina_vector_store table created (full schema)",    "Run: supabase/migrations/20260530000000_create_tina_vector_store.sql"],
+    ["match_tina_vectors() RPC deployed",                "Run: supabase/migrations/20260530000000_create_tina_vector_store.sql"],
+    ["All 3 tina_vector_store indexes created",          "Run: supabase/migrations/20260530000000_create_tina_vector_store.sql"],
+    ["RLS enabled on messages + conversations",          "Run: supabase/migrations/001_initial_schema.sql"],
+    ["All .env variables set",                           "Copy .env.example → .env, fill values"],
+    ["Node.js ≥20 on server",                            "Upgrade Node.js if needed"],
+    ["npm install completed",                            "Run: npm install"],
+    ["GET /health returns 200",                          "Run: node server.js, curl /health"],
+    ["OpenAI API key tested",                            "Run: scripts/check-supabase.js (checks env)"]
   ];
 
   for (const [label] of items) {
@@ -284,7 +328,8 @@ async function main() {
 
   await checkPgvector(supabase);
   await checkTables(supabase);
-  await checkMatchDocumentsRpc(supabase);
+  await checkMatchTinaVectorsRpc(supabase);
+  await checkMatchDocumentsRpcLegacy(supabase);
   await checkRlsEnabled(supabase);
   await checkIndexes(supabase);
   await printSummary();
@@ -295,10 +340,10 @@ async function main() {
   if (failures.length) {
     console.log(ANSI.red(`\n  Failed checks:`));
     for (const f of failures) console.log(ANSI.red(`    • ${f}`));
-    console.log(ANSI.yellow(`\n  Run supabase/migrations/001_initial_schema.sql to fix schema issues.\n`));
+    console.log(ANSI.yellow(`\n  Run supabase/migrations/20260530000000_create_tina_vector_store.sql to fix schema issues.\n`));
     process.exit(1);
   } else {
-    console.log(ANSI.green("\n  All checks passed. Supabase is ready for TINA.\n"));
+    console.log(ANSI.green("\n  All checks passed. TINA active schema is ready.\n"));
   }
 }
 
