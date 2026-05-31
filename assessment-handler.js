@@ -852,6 +852,26 @@ Required JSON shape:
       } catch (err) {
         console.error("[ASSESSMENT] Quiz next question generation failed:", err?.message);
       }
+      console.warn("[QUIZ_NEXT_RESULT_DIAGNOSTIC]", {
+        topic:                 domain,
+        subtopic:              nextSubtopic,
+        selectedNextSubtopic:  nextSubtopic,
+        isCorrect,
+        conversationIdPresent: Boolean(conversationId),
+        userIdPresent:         Boolean(userId),
+        resultPresent:         Boolean(nextQuizResult),
+        ok:                    Boolean(nextQuizResult?.ok),
+        noSource:              Boolean(nextQuizResult?.noSource),
+        saveFailed:            Boolean(nextQuizResult?.saveFailed),
+        hasQuestion:           Boolean(nextQuizResult?.quiz?.question),
+        hasAnswer:             Boolean(nextQuizResult?.quiz?.correctAnswer),
+        hasExplanation:        Boolean(nextQuizResult?.quiz?.explanation),
+        hasAnswerText:         Boolean(nextQuizResult?.answerText),
+        sourceChunkCount:      safeArray(nextQuizResult?.sourceChunks).length,
+        previewOnly:           Boolean(nextQuizResult?.storedQuiz?.previewOnly),
+        error:                 nextQuizResult?.error || null,
+        resultKeys:            nextQuizResult ? Object.keys(nextQuizResult) : []
+      });
       endTrace({ traceId: _quizNextTraceId, metadata: { domain, isCorrect, nextSubtopic } });
       flushObservability().catch(() => {});
 
@@ -911,6 +931,19 @@ Required JSON shape:
         }
       }
       // ── End dedup + atomic store ───────────────────────────────────────────────
+
+      console.warn("[QUIZ_NEXT_RESULT_POST_STORE]", {
+        topic:             domain,
+        subtopic:          nextSubtopic,
+        ok:                Boolean(nextQuizResult?.ok),
+        noSource:          Boolean(nextQuizResult?.noSource),
+        storeAttempted:    Boolean(nextQuizResult?.ok),
+        storeSucceeded:    Boolean(nextQuizResult?.ok) && !Boolean(nextQuizResult?.saveFailed),
+        saveFailed:        Boolean(nextQuizResult?.saveFailed),
+        storedQuizId:      nextQuizResult?.storedQuiz?.id || null,
+        storedQuizPreview: Boolean(nextQuizResult?.storedQuiz?.previewOnly),
+        error:             nextQuizResult?.error || null
+      });
 
       let nextQuestionText = "\nNext question could not be generated. Type /quiz to continue.";
 
