@@ -1350,13 +1350,34 @@ export async function runPipeline({
   // Skip counters — aggregated into a single structured log after the loop.
   const _scSkip = { contamination: 0, consistency: 0, issueRelevance: 0 };
   const _scSkipIssueDetail = [];   // up to 5 rejected non-target provRef values
+  const isSourceLookupMode = String(ctx.mode || "").toUpperCase() === "SOURCE_LOOKUP";
 
   for (const c of (ctx.rerankedChunks || [])) {
     if (_scSeen.size >= CANDIDATE_CAP) break;
 
+    // Identity derivation — computed before Gate 1 so sourcePathAuthorityHit can
+    // protect RR/RMC/RMO/RAMO chunks whose normalized_reference was corrupted at
+    // index time (e.g. "NIRC Sec. 4" written into an RR 16-2005 chunk).
+    const linkedType = inferLinkedSourceType(c);
+    let provRef = inferSourceCardRef(c, linkedType);   // `let` — may be promoted below
+
+    // True when this is a SOURCE_LOOKUP query and the chunk is a well-formed
+    // RR/RMC/RMO/RAMO card whose source path unambiguously identifies the issuance.
+    // Exempts such chunks from Gate 1 contamination and Gate 3 issue-relevance
+    // rejection that was triggered by a stale/malformed normalized_reference.
+    const sourcePathAuthorityHit =
+      isSourceLookupMode &&
+      ["RR", "RMC", "RMO", "RAMO"].includes(linkedType) &&
+      Boolean(provRef) &&
+      sourceCardIsConsistent(provRef, linkedType);
+
     // Gate 1 (contamination): hard-blocks cross-domain chunks flagged by reranker
     // as BOTH off-target AND issue-mismatched (the strictest reranker signal).
+    // sourcePathAuthorityHit exempts correctly-identified RR/RMC/RMO/RAMO cards in
+    // SOURCE_LOOKUP — their source path is authoritative even when normalized_reference
+    // misled the reranker.
     if (
+      !sourcePathAuthorityHit &&
       hasTargetAuthorities &&
       c.targetAuthorityMatch === false &&
       c.issueMismatch === true
@@ -1366,9 +1387,6 @@ export async function runPipeline({
     }
 
     if (!c.title && !c.document_title && !c.source && !c.originalSource) continue;
-
-    const linkedType = inferLinkedSourceType(c);
-    let provRef = inferSourceCardRef(c, linkedType);   // `let` — may be promoted below
 
     // Gate 2 (consistency): NIRC labels must link to NIRC/statute documents, etc.
     if (provRef && !sourceCardIsConsistent(provRef, linkedType)) {
@@ -1404,7 +1422,9 @@ export async function runPipeline({
     //
     // Target-matched chunks bypass this gate — they were explicitly requested by
     // the issue classifier and are always relevant by definition.
-    if (!_isTargetMatch) {
+    // sourcePathAuthorityHit also bypasses — the source path is more reliable than
+    // the reranker's issue-match signal when normalized_reference is corrupted.
+    if (!_isTargetMatch && !sourcePathAuthorityHit) {
       const _rel = isIssueRelevantSourceCardCandidate(c);
       if (!_rel.allowed) {
         _scSkip.issueRelevance++;
@@ -1522,10 +1542,24 @@ export async function runPipeline({
   if (_scFilteredClean.length === 0) {
     const _fbCandidates = (ctx.rerankedChunks || []).filter(c => {
       if (!c.title && !c.document_title && !c.source && !c.originalSource) return false;
+      // Derive identity here so sourcePathAuthorityHit can protect Gate 1 and Gate 3
+      // (mirrors the main loop restructuring above).
+      const _fbLType = inferLinkedSourceType(c);
+      const _fbRef   = inferSourceCardRef(c, _fbLType);
+      const _fbSourcePathAuthorityHit =
+        isSourceLookupMode &&
+        ["RR", "RMC", "RMO", "RAMO"].includes(_fbLType) &&
+        Boolean(_fbRef) &&
+        sourceCardIsConsistent(_fbRef, _fbLType);
       // Gate 1: explicit contamination
-      if (hasTargetAuthorities && c.targetAuthorityMatch === false && c.issueMismatch === true) return false;
+      if (
+        !_fbSourcePathAuthorityHit &&
+        hasTargetAuthorities &&
+        c.targetAuthorityMatch === false &&
+        c.issueMismatch === true
+      ) return false;
       // Gate 3: issue relevance for non-target chunks (mirrors main loop)
-      if (!c.targetAuthorityMatch) {
+      if (!c.targetAuthorityMatch && !_fbSourcePathAuthorityHit) {
         const _rel = isIssueRelevantSourceCardCandidate(c);
         if (!_rel.allowed) return false;
       }
