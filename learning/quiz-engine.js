@@ -303,12 +303,12 @@ JSON structure:
   "subtopic": "${subtopic}",
   "difficulty": ${difficulty},
   "question": "...",
-  "choices": [
-    "First choice text (no letter prefix)",
-    "Second choice text (no letter prefix)",
-    "Third choice text (no letter prefix)",
-    "Fourth choice text (no letter prefix)"
-  ],
+  "choices": {
+    "A": "First choice text",
+    "B": "Second choice text",
+    "C": "Third choice text",
+    "D": "Fourth choice text"
+  },
   "correctAnswer": "A",
   "explanation": "...",
   "cpaleTrap": "...",
@@ -351,12 +351,12 @@ JSON structure:
   "subtopic": "${subtopic}",
   "difficulty": ${difficulty},
   "question": "...",
-  "choices": [
-    "First choice text (no letter prefix)",
-    "Second choice text (no letter prefix)",
-    "Third choice text (no letter prefix)",
-    "Fourth choice text (no letter prefix)"
-  ],
+  "choices": {
+    "A": "First choice text",
+    "B": "Second choice text",
+    "C": "Third choice text",
+    "D": "Fourth choice text"
+  },
   "correctAnswer": "A",
   "explanation": "...",
   "cpaleTrap": "...",
@@ -524,9 +524,16 @@ export async function generateQuizQuestion({
     userQuery: quizPrompt,
     systemPrompt: `
 You are TINA's CPALE Philippine Tax Quiz Generator.
-Generate exactly one multiple-choice question in valid JSON only.
-No markdown. No explanations outside JSON. Do not add any text before or after the JSON.
+Return ONLY valid JSON. No markdown. No code fences. No prose outside JSON.
 Philippine taxation context only. Authority-grounded only.
+
+Required top-level keys: question, choices, correctAnswer, explanation.
+choices MUST be a JSON object with exactly keys A, B, C, D — not an array.
+correctAnswer MUST be exactly one of: A, B, C, D. Randomize; do not always use A.
+All string values must be non-empty.
+
+Output shape (use this structure exactly):
+{"question":"...","choices":{"A":"...","B":"...","C":"...","D":"..."},"correctAnswer":"B","explanation":"..."}
 `.trim(),
     masterPrompt: `Return only this exact JSON structure with all fields populated.`,
     retrievedSources: compactSources,
@@ -553,7 +560,7 @@ Philippine taxation context only. Authority-grounded only.
     try {
       const retryRaw = await callOpenAI({
         userQuery: quizPrompt,
-        systemPrompt: `Return ONLY valid JSON. No markdown, no code blocks, no extra text.\nStructure: {"topic":"","subtopic":"","difficulty":0,"question":"","choices":["","","",""],"correctAnswer":"A","explanation":"","cpaleTrap":"","sourceSupport":"","groundingStatus":"limited_indexed_source","validationStatus":"GENERAL_FALLBACK"}`,
+        systemPrompt: `Return ONLY valid JSON. No markdown. No code fences. No prose outside JSON.\nRequired keys: question, choices, correctAnswer, explanation.\nchoices MUST be an object with keys A, B, C, D — not an array. correctAnswer MUST be exactly A, B, C, or D. All strings non-empty.\nExample output (use this structure exactly):\n{"question":"Which transaction is exempt from VAT under the cited source?","choices":{"A":"Sale of ordinary taxable services","B":"Sale or importation of agricultural food products in their original state","C":"Sale of imported digital services","D":"Sale of non-essential services"},"correctAnswer":"B","explanation":"The cited source treats agricultural food products in their original state as VAT-exempt."}`,
         masterPrompt: `Return only valid JSON. Nothing else.`,
         retrievedSources: compactSources,
         classification: {
