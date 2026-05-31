@@ -988,34 +988,45 @@ export async function runPipeline({
   // so it is guaranteed true when checked immediately after the await if retrieval
   // completed before the timeout arm fired.
   let _retrievalWon = false;
-  const _retrievalRaw = await Promise.race([
-    retrieveRelevantSources({
-      query,
-      supabase,
-      vectorSearch:         _vectorSearchFn,
-      issueClassification:  ctx.issueClassification,
-      targetAuthorities:    controllingAuthorities,
-      controllingAuthorities,
-      topK:   12,
-      poolK:  48
-    }).then((r) => { _retrievalWon = true; return r; }),
-    new Promise(resolve =>
-      setTimeout(() => {
-        trace.warnings.push({ step: 5, warning: `Retrieval timed out after ${RETRIEVAL_STEP_TIMEOUT_MS} ms — proceeding with empty chunks`, timedOut: true });
-        // Return object shape (not bare []) so the normalizer stores retrievalDiagnostics
-        // with timedOut: true and downstream code can distinguish timeout from
-        // genuine empty retrieval.  The normalizer handles both [] and object shapes.
-        resolve({
-          retrievedSources:     [],
-          sources:              [],
-          retrievalDiagnostics: {
-            timedOut:  true,
-            timeoutMs: RETRIEVAL_STEP_TIMEOUT_MS
-          }
-        });
-      }, RETRIEVAL_STEP_TIMEOUT_MS)
-    )
-  ]);
+  const retrievalPromise = retrieveRelevantSources({
+    query,
+    supabase,
+    vectorSearch:         _vectorSearchFn,
+    issueClassification:  ctx.issueClassification,
+    targetAuthorities:    controllingAuthorities,
+    controllingAuthorities,
+    topK:   12,
+    poolK:  48
+  }).then((r) => { _retrievalWon = true; return r; });
+
+  const timeoutFallbackPromise = new Promise(resolve =>
+    setTimeout(() => {
+      trace.warnings.push({ step: 5, warning: `Retrieval timed out after ${RETRIEVAL_STEP_TIMEOUT_MS} ms — proceeding with empty chunks`, timedOut: true });
+      // Return object shape (not bare []) so the normalizer stores retrievalDiagnostics
+      // with timedOut: true and downstream code can distinguish timeout from
+      // genuine empty retrieval.  The normalizer handles both [] and object shapes.
+      resolve({
+        retrievedSources:     [],
+        sources:              [],
+        retrievalDiagnostics: {
+          timedOut:  true,
+          timeoutMs: RETRIEVAL_STEP_TIMEOUT_MS
+        }
+      });
+    }, RETRIEVAL_STEP_TIMEOUT_MS)
+  );
+
+  // SOURCE_LOOKUP awaits retrieval directly — the timeout fallback must not win
+  // before retrieval completes, which would produce a false-empty response while
+  // the real retrieval runs in the background.  All other modes keep the existing
+  // Promise.race behaviour so their latency characteristics are unchanged.
+  const isSourceLookupRetrieval =
+    String(ctx.mode || "").toUpperCase() === "SOURCE_LOOKUP";
+
+  const _retrievalRaw = isSourceLookupRetrieval
+    ? await retrievalPromise
+    : await Promise.race([retrievalPromise, timeoutFallbackPromise]);
+
   if (_retrievalWon) {
     console.log("[RETRIEVAL COMPLETED BEFORE TIMEOUT]", {
       mode:      ctx.mode,
