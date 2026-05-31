@@ -51,6 +51,7 @@ const DOMAIN_MAP = Object.freeze({
   PRESCRIPTION:      preSub,
   DISPUTE:           disSub,
   LOCAL_TAX:         lgtSub,
+  CUS:               cusSub,
   CUSTOMS:           cusSub,
   TRANSFER_PRICING:  spcSub,
   CONSTITUTIONAL:    conSub
