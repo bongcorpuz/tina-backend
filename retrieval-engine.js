@@ -2173,6 +2173,7 @@ function filterBeforeRerank(docs = [], { allowReviewMaterials = false } = {}) {
       supersessionFiltered = filtered;
       console.log("[SUPERSESSION FILTER APPLIED]", {
         returnShape:  "array",
+        selectedField: "direct",
         inputCount:   output.length,
         outputCount:  filtered.length,
         droppedCount,
@@ -2181,21 +2182,22 @@ function filterBeforeRerank(docs = [], { allowReviewMaterials = false } = {}) {
       // Object return — extract the best available array in priority order:
       //   activeDocs > effectiveDocs > sources > filtered > filteredSources
       const shapeCandidates = [
-        ["object.activeDocs",      filtered.activeDocs],
-        ["object.effectiveDocs",   filtered.effectiveDocs],
-        ["object.sources",         filtered.sources],
-        ["object.filtered",        filtered.filtered],
-        ["object.filteredSources", filtered.filteredSources],
+        ["activeDocs",      filtered.activeDocs],
+        ["effectiveDocs",   filtered.effectiveDocs],
+        ["sources",         filtered.sources],
+        ["filtered",        filtered.filtered],
+        ["filteredSources", filtered.filteredSources],
       ];
       const found = shapeCandidates.find(([, arr]) => Array.isArray(arr));
 
       if (found) {
-        const [returnShape, resultArray] = found;
+        const [selectedField, resultArray] = found;
         const droppedCount = Math.max(0, output.length - resultArray.length);
         dropped.clearlySupersededSources += droppedCount;
         supersessionFiltered = resultArray;
         console.log("[SUPERSESSION FILTER APPLIED]", {
-          returnShape,
+          returnShape:          "object",
+          selectedField,
           inputCount:           output.length,
           outputCount:          resultArray.length,
           droppedCount,
@@ -2206,6 +2208,7 @@ function filterBeforeRerank(docs = [], { allowReviewMaterials = false } = {}) {
         // Object returned but contains no valid array — preserve original sources
         console.log("[SUPERSESSION FILTER SHAPE WARNING]", {
           returnShape:  "object_no_valid_array",
+          selectedField: null,
           inputCount:   output.length,
           outputCount:  output.length,
           droppedCount: 0,
@@ -2213,11 +2216,21 @@ function filterBeforeRerank(docs = [], { allowReviewMaterials = false } = {}) {
           note: "No valid array found in applySupersessionFilter result; preserving original sources",
         });
       }
+    } else {
+      console.log("[SUPERSESSION FILTER SHAPE WARNING]", {
+        returnShape:  filtered == null ? String(filtered) : typeof filtered,
+        selectedField: null,
+        inputCount:   output.length,
+        outputCount:  output.length,
+        droppedCount: 0,
+        note: "Unexpected applySupersessionFilter result shape; preserving original sources",
+      });
     }
   } catch (err) {
     supersessionFiltered = output;
     console.log("[SUPERSESSION FILTER SHAPE WARNING]", {
       returnShape:  "error",
+      selectedField: null,
       inputCount:   output.length,
       outputCount:  output.length,
       droppedCount: 0,
