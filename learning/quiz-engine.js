@@ -424,6 +424,63 @@ export async function generateQuizQuestion({
     sourceChunks = [];
   }
 
+  // ── Fallback retrieval ────────────────────────────────────────────────────
+  // If the primaryQuery ILIKE missed (common when the subtopic alias does not
+  // appear verbatim in source/document_title/normalized_reference), try up to 4
+  // alternate terms derived from the same hints object before refusing generation.
+  // Uses the identical getBoundedQuizSourceChunks path — same 2-second
+  // AbortController deadline, same column scope, same exclusion lists.
+  // No semantic search, no LLM calls, no expansion of source authority scope.
+  if (sourceChunks.length === 0) {
+    const _fallbackTerms = [
+      ...safeArray(hints.keywords),
+      hints.fallbackQuery,
+      hints.subtopicQuery
+    ]
+      .filter(Boolean)
+      .filter(t => t !== hints.primaryQuery)
+      .filter((t, i, arr) => arr.indexOf(t) === i)   // deduplicate
+      .slice(0, 4);
+
+    console.warn("[QUIZ SOURCE FALLBACK]", {
+      domain,
+      subtopic,
+      primaryQuery:  hints.primaryQuery,
+      fallbackTerms: _fallbackTerms,
+      retrievalFailed
+    });
+
+    for (const _fbTerm of _fallbackTerms) {
+      let _fbChunks = [];
+      try {
+        _fbChunks = await getBoundedQuizSourceChunks({
+          topic:              _fbTerm,
+          limit:              3,
+          supabase,
+          excludeSourcePaths: safeArray(exclusions.excludeSourcePaths),
+          excludeChunkIds:    safeArray(exclusions.excludeChunkIds)
+        });
+      } catch {
+        _fbChunks = [];
+      }
+      if (_fbChunks.length > 0) {
+        sourceChunks = _fbChunks;
+        console.info("[QUIZ SOURCE FALLBACK HIT]", {
+          domain, subtopic, fallbackTerm: _fbTerm, chunks: _fbChunks.length
+        });
+        break;
+      }
+    }
+
+    if (sourceChunks.length === 0) {
+      console.warn("[QUIZ SOURCE FALLBACK MISS]", {
+        domain, subtopic,
+        triedTerms: [hints.primaryQuery, ..._fallbackTerms]
+      });
+    }
+  }
+  // ── End fallback retrieval ────────────────────────────────────────────────
+
   const compactSources = safeArray(sourceChunks).map(compactSourceChunk);
 
   if (compactSources.length > 0) {
