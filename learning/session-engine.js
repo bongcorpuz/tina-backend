@@ -65,7 +65,7 @@ function safeObject(value) {
 // Extracts and hashes the ## Mini Question section to detect repeated questions.
 // Returns a 16-char hex string, or null if no mini question section is found.
 function hashMiniQuestion(text = "") {
-  const marker = "\n## Mini Question";
+  const marker = "\n## Self-Check Question";
   const idx = String(text || "").indexOf(marker);
   if (idx === -1) return null;
   const raw = text.slice(idx + marker.length).trim();
@@ -918,18 +918,18 @@ export function createLearningHandler({
         }
       }
 
-      // Split review content — gate the answer section until user responds
-      const { displayContent, answerText, correctAnswer } = splitReviewContent(reviewResult.reviewText);
+      // Review is self-check: full content (Self-Check Question + Self-Check Answer) is
+      // shown immediately in one response.  No answer is hidden; no pending-answer state
+      // is created.  A/B/C/D typed after a review card is not routed as a quiz answer.
+      const displayContent = reviewResult.reviewText;
 
-      // Update session state + store pendingAnswer
+      // Update session state — pendingAnswer is always null for /review
       const updatedState = updateLearningStateAfterQuestion({
         sessionLearning,
         subtopic,
         storedQuizId: null
       });
-      updatedState.pendingAnswer = correctAnswer
-        ? { answerText, correctAnswer }
-        : null;
+      updatedState.pendingAnswer = null;
 
       // Build updated anti-repetition history
       const qHash = hashMiniQuestion(displayContent);

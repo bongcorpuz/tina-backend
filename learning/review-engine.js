@@ -225,7 +225,7 @@ STRICT RULES:
 - Do not fabricate specific GR numbers, dates, or rates unless certain.
 - Output must use the EXACT markdown section headers shown below — no plain text headers.
 - Write at the level of a CPALE/BAR exam reviewer.
-- Include one mini MCQ at the end with correct answer indicated.
+- Include one self-check question at the end. Show the correct answer immediately below it in ## Self-Check Answer — the user does not type a response in chat.
 - If no specific indexed source is available, state principles from training knowledge without fabricating citations.
 
 OUTPUT FORMAT (use exactly these markdown headers, including the # symbols):
@@ -247,11 +247,11 @@ OUTPUT FORMAT (use exactly these markdown headers, including the # symbols):
 ## CPA / Bar Tip
 [One exam strategy or common trap for this subtopic]
 
-## Mini Question
-[One MCQ with 4 choices: A, B, C, D]
+## Self-Check Question
+[One MCQ with 4 choices: A, B, C, D — a self-check for personal review only. The correct answer is shown in the next section. No need to type your response in chat.]
 
-## Correct Answer
-[State the correct letter and option text]
+## Self-Check Answer
+[State the correct letter and full option text immediately]
 
 ## Explanation
 [One-sentence explanation of why the correct answer is correct]
@@ -278,7 +278,7 @@ STRICT RULES:
 - Philippine taxation only.
 - Output must use the EXACT markdown section headers shown below — no plain text headers.
 - Write at the level of a CPALE/BAR exam reviewer.
-- Include one mini MCQ at the end grounded in SOURCE CONTEXT.
+- Include one self-check question at the end grounded in SOURCE CONTEXT. Show the correct answer immediately below it in ## Self-Check Answer — the user does not type a response in chat.
 
 OUTPUT FORMAT (use exactly these markdown headers, including the # symbols):
 
@@ -299,11 +299,11 @@ OUTPUT FORMAT (use exactly these markdown headers, including the # symbols):
 ## CPA / Bar Tip
 [One exam strategy or CPALE trap derived from SOURCE CONTEXT]
 
-## Mini Question
-[One MCQ with 4 choices: A, B, C, D]
+## Self-Check Question
+[One MCQ with 4 choices: A, B, C, D — a self-check for personal review only. The correct answer is shown in the next section. No need to type your response in chat.]
 
-## Correct Answer
-[State the correct letter and option text]
+## Self-Check Answer
+[State the correct letter and full option text immediately]
 
 ## Explanation
 [One-sentence explanation grounded in SOURCE CONTEXT]
