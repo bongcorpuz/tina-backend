@@ -4,6 +4,7 @@
 import { buildRetrievalHints } from "./question-bank-router.js";
 import { getSubtopicLabel, getDomainAuthorities } from "./domain-normalizer.js";
 import { buildTaxConceptRetrievalAliases } from "../services/tax-concept-aliases.js";
+import { validateLearningAuthorityForDomain } from "./authority-validation.js";
 
 const ENGINE_VERSION = "1.0.0";
 
@@ -346,6 +347,23 @@ export async function generateReviewMaterial({
   const compactSources = safeArray(sourceChunks).map(compactSourceChunk);
 
   if (compactSources.length > 0) {
+    const authorityCheck = validateLearningAuthorityForDomain({
+      domain,
+      subtopic,
+      sourceChunks: compactSources,
+      mode: "review"
+    });
+    if (!authorityCheck.ok) {
+      return {
+        ok: false,
+        noSource: true,
+        reviewText: null,
+        sourceChunks: [],
+        subtopicLabel,
+        reason: authorityCheck.reason || "insufficient_valid_authority"
+      };
+    }
+
     console.info("[REVIEW ENGINE] Grounded retrieval", {
       domain,
       subtopic,
