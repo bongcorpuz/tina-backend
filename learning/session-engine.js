@@ -815,19 +815,84 @@ export function createLearningHandler({
         };
       }
 
+      const MAX_REVIEW_ATTEMPTS = 5;
+      const attemptedSubtopics = [];
       let reviewResult;
-      try {
-        reviewResult = await generateReviewMaterial({
-          domain,
-          subtopic,
-          sessionLearning,
-          callOpenAI: _tracedCall,
-          supabase,
-          excludeChunkIds: seenChunkIds,
-          excludeSourcePaths: seenSourcePaths
-        });
-      } catch (err) {
-        console.error("[SESSION ENGINE] generateReviewMaterial failed:", err?.message);
+
+      for (let attempt = 1; attempt <= MAX_REVIEW_ATTEMPTS; attempt++) {
+        try {
+          reviewResult = await generateReviewMaterial({
+            domain,
+            subtopic,
+            sessionLearning,
+            callOpenAI: _tracedCall,
+            supabase,
+            excludeChunkIds: seenChunkIds,
+            excludeSourcePaths: seenSourcePaths
+          });
+        } catch (err) {
+          console.error("[SESSION ENGINE] generateReviewMaterial failed:", err?.message);
+          return {
+            handled: true,
+            response: {
+              success: false,
+              engine: "TINA Learning System",
+              hook: hookConfig.hook_code,
+              mode: hookConfig.mode,
+              answer: `TINA could not generate review material for "${domain}". Please try again.`,
+              error: err?.message,
+              sources: [], sourcesUsed: [], sourceCards: [], vectorMatches: 0
+            }
+          };
+        }
+
+        if (reviewResult.ok) break;
+
+        if (reviewResult.noSource) {
+          console.log("[REVIEW_NEXT_RETRY_ATTEMPT]", {
+            domain,
+            subtopic,
+            attempt,
+            maxAttempts: MAX_REVIEW_ATTEMPTS,
+            ok: reviewResult.ok,
+            noSource: reviewResult.noSource,
+            reason: reviewResult.reason || "no_indexed_source"
+          });
+
+          attemptedSubtopics.push(subtopic);
+
+          if (attempt < MAX_REVIEW_ATTEMPTS) {
+            const fakeSession = {
+              ...sessionLearning,
+              coveredSubtopics: [
+                ...safeArray(sessionLearning.coveredSubtopics),
+                ...attemptedSubtopics
+              ]
+            };
+            const nextSubtopic = selectNextSubtopic(domain, fakeSession);
+            if (nextSubtopic && !attemptedSubtopics.includes(nextSubtopic)) {
+              subtopic = nextSubtopic;
+              continue;
+            }
+
+            // selectNextSubtopic returned null or a duplicate — fall back to full pool:
+            // all domain subtopics minus persistent coveredSubtopics minus already attempted.
+            const allSubtopics = getDomainSubtopics(domain);
+            const persistentCovered = new Set(safeArray(sessionLearning.coveredSubtopics));
+            const attemptedSet = new Set(attemptedSubtopics);
+            const eligible = allSubtopics.filter(
+              s => !persistentCovered.has(s) && !attemptedSet.has(s)
+            );
+            if (eligible.length > 0) {
+              subtopic = eligible[Math.floor(Math.random() * eligible.length)];
+              continue;
+            }
+          }
+
+          break;
+        }
+
+        // Non-noSource failure — bail immediately
         return {
           handled: true,
           response: {
@@ -835,15 +900,19 @@ export function createLearningHandler({
             engine: "TINA Learning System",
             hook: hookConfig.hook_code,
             mode: hookConfig.mode,
-            answer: `TINA could not generate review material for "${domain}". Please try again.`,
-            error: err?.message,
+            answer: `TINA could not generate review material for "${domain}" / "${subtopic}". Please try again.`,
             sources: [], sourcesUsed: [], sourceCards: [], vectorMatches: 0
           }
         };
       }
 
-      if (!reviewResult.ok) {
-        if (reviewResult.noSource) {
+      if (!reviewResult?.ok) {
+        if (reviewResult?.noSource) {
+          console.log("[REVIEW_RETRY_EXHAUSTED]", {
+            domain,
+            attemptedSubtopics,
+            maxAttempts: MAX_REVIEW_ATTEMPTS
+          });
           return {
             handled: true,
             response: {
