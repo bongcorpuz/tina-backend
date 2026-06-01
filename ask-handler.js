@@ -2179,6 +2179,7 @@ export function createAskHandler({
       // ── END QUIZ DOMAIN SWITCH BLOCK ──────────────────────────────────────────
 
       const quizAnswer = extractQuizAnswer(rawQuestion);
+      const hasPendingReviewAnswer = Boolean(existingMode?.adaptive_context?.learning?.pendingAnswer);
 
       if (pendingQuiz && hasActiveAssessmentMode && quizAnswer && !explicitHook) {
         const loopResult = await assessmentHandler.continueAssessmentLoop({
@@ -2234,7 +2235,32 @@ export function createAskHandler({
         console.log("[REVIEW ANSWER ROUTED]", {
           answer: quizAnswer,
           domain: reviewLockedDomain,
-          pendingAnswer: true
+          pendingAnswer: hasPendingReviewAnswer
+        });
+
+        if (hasPendingReviewAnswer) {
+          const loopResult = await assessmentHandler.continueAssessmentLoop({
+            userId,
+            conversationId: conversationId || null,
+            incomingAnswer: rawQuestion
+          });
+          if (loopResult.handled) return res.json(loopResult.response);
+        }
+
+        // /review is self-check mode — pendingAnswer is always null; bare A/B/C/D
+        // has no pending question to grade, so return a friendly message instead of
+        // falling through to the domain boundary which would reject "A" as NON_TAX.
+        return res.json({
+          success: true,
+          engine: "TINA_ASK_HANDLER",
+          mode: "REVIEW_SELF_CHECK",
+          answer: `You are in review/self-check mode. There is no pending answer to grade because the review card already shows the self-check answer. Type \`/review ${reviewLockedDomain}\` for another review item or \`/bye\` to exit review mode.`,
+          sourceStatus: "REVIEW_SELF_CHECK",
+          sources: [],
+          sourcesUsed: [],
+          vectorMatches: 0,
+          askHandlerVersion: ENGINE_VERSION,
+          contextOrchestrationEnabled: true
         });
       }
 
