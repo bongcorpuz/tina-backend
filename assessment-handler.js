@@ -630,6 +630,110 @@ Required JSON shape:
     };
   }
 
+  // Private helper: select + generate the next grounded quiz question with
+  // noSource subtopic rotation.  Tries the first selectNextSubtopic candidate,
+  // then rotates to alternate subtopics if noSource:true is returned, up to
+  // maxAttempts.  Returns the first ok:true result with a selectedSubtopic key,
+  // or an exhausted sentinel { ok:false, noSource:true, exhausted:true }.
+  // Does NOT call storeUnansweredQuiz (persist:false throughout); the caller
+  // owns the dedup-check and the single atomic store.
+  async function generateNextGroundedQuizWithRetries({
+    domain,
+    currentSubtopic,
+    scoredLearning,
+    selectionLearning,
+    userId,
+    conversationId,
+    hookConfig,
+    callOpenAI,
+    maxAttempts = 4
+  }) {
+    const MAX = Math.min(Math.max(1, maxAttempts), 5);
+    const failedSubtopics = [];
+    let attempt = 0;
+    let lastCandidate = currentSubtopic;
+
+    while (attempt < MAX) {
+      attempt++;
+
+      // Extend covered subtopics so selectNextSubtopic skips all noSource failures
+      const selectionCtx = failedSubtopics.length
+        ? {
+            ...selectionLearning,
+            coveredSubtopics: [
+              ...safeArray(selectionLearning.coveredSubtopics),
+              ...failedSubtopics
+            ]
+          }
+        : selectionLearning;
+
+      const candidate = selectNextSubtopic(domain, selectionCtx) || currentSubtopic;
+
+      // Router has no new candidates — all available subtopics already failed
+      if (failedSubtopics.includes(candidate)) break;
+
+      lastCandidate = candidate;
+
+      let result = null;
+      try {
+        result = await generateQuizQuestion({
+          domain,
+          subtopic:        candidate,
+          sessionLearning: { ...scoredLearning, subtopic: candidate },
+          userId,
+          conversationId,
+          hookConfig,
+          callOpenAI,
+          supabase,
+          persist: false
+        });
+      } catch (genErr) {
+        console.error("[ASSESSMENT] generateNextGroundedQuizWithRetries attempt threw:", {
+          domain, subtopic: candidate, attempt, error: genErr?.message
+        });
+        result = null;
+      }
+
+      console.warn("[QUIZ_NEXT_RETRY_ATTEMPT]", {
+        domain,
+        subtopic:    candidate,
+        attempt,
+        maxAttempts: MAX,
+        ok:          Boolean(result?.ok),
+        noSource:    Boolean(result?.noSource),
+        error:       result?.error || null
+      });
+
+      if (result?.ok) {
+        return { ...result, selectedSubtopic: candidate };
+      }
+
+      if (result?.noSource) {
+        failedSubtopics.push(candidate);
+        continue; // try the next subtopic
+      }
+
+      // Non-retrieval failure (parse/schema) — retrying a different subtopic
+      // would not help; return immediately so the caller can surface the error.
+      return { ...(result || { ok: false }), selectedSubtopic: candidate };
+    }
+
+    console.warn("[QUIZ_NEXT_RETRY_EXHAUSTED]", {
+      domain,
+      attempted:   failedSubtopics,
+      maxAttempts: MAX
+    });
+
+    return {
+      ok:              false,
+      noSource:        true,
+      exhausted:       true,
+      selectedSubtopic: lastCandidate,
+      attempted:       [...failedSubtopics],
+      sourceChunks:    []
+    };
+  }
+
   async function continueAssessmentLoop({
     userId,
     conversationId,
@@ -829,33 +933,37 @@ Required JSON shape:
           ? [...safeArray(scoredLearning.coveredSubtopics), currentSubtopic]
           : safeArray(scoredLearning.coveredSubtopics)
       };
-      const nextSubtopic = selectNextSubtopic(domain, _selectionLearning) || currentSubtopic;
       // ── End spaced reinforcement ──────────────────────────────────────────────
 
-      // Generate next quiz question via quiz-engine
+      // Generate next quiz question via quiz-engine with noSource subtopic retry.
+      // generateNextGroundedQuizWithRetries calls selectNextSubtopic internally and
+      // rotates to a different subtopic whenever noSource:true is returned, so one
+      // missing-source subtopic (e.g. EXCISE_TAX / AUTOMOBILE) does not stop the loop.
       const _quizNextTraceId = generateTraceId();
       startTrace({ traceId: _quizNextTraceId, name: "tina-quiz-answer", hook: "/quiz", metadata: { domain, isCorrect } });
       const _tracedQuizCall = (params) => callAssessmentOpenAI({ ...params, _traceId: _quizNextTraceId });
-      let nextQuizResult = null;
-      try {
-        nextQuizResult = await generateQuizQuestion({
-          domain,
-          subtopic: nextSubtopic,
-          sessionLearning: { ...scoredLearning, subtopic: nextSubtopic },
-          userId,
-          conversationId,
-          hookConfig: nextHookConfig,
-          callOpenAI: _tracedQuizCall,
-          supabase,
-          persist: false  // all candidates preview-only; winner stored after dedup selection
-        });
-      } catch (err) {
-        console.error("[ASSESSMENT] Quiz next question generation failed:", err?.message);
-      }
+
+      const _retryResult = await generateNextGroundedQuizWithRetries({
+        domain,
+        currentSubtopic,
+        scoredLearning,
+        selectionLearning: _selectionLearning,
+        userId,
+        conversationId,
+        hookConfig:  nextHookConfig,
+        callOpenAI:  _tracedQuizCall,
+        maxAttempts: 4
+      });
+      const nextSubtopic = _retryResult.selectedSubtopic
+        || (selectNextSubtopic(domain, _selectionLearning) || currentSubtopic);
+      let nextQuizResult = _retryResult;
+
       console.warn("[QUIZ_NEXT_RESULT_DIAGNOSTIC]", {
         topic:                 domain,
         subtopic:              nextSubtopic,
         selectedNextSubtopic:  nextSubtopic,
+        retryAttempts:         safeArray(_retryResult?.attempted).length + 1,
+        exhausted:             Boolean(_retryResult?.exhausted),
         isCorrect,
         conversationIdPresent: Boolean(conversationId),
         userIdPresent:         Boolean(userId),
@@ -937,6 +1045,7 @@ Required JSON shape:
         subtopic:          nextSubtopic,
         ok:                Boolean(nextQuizResult?.ok),
         noSource:          Boolean(nextQuizResult?.noSource),
+        exhausted:         Boolean(nextQuizResult?.exhausted),
         storeAttempted:    Boolean(nextQuizResult?.ok),
         storeSucceeded:    Boolean(nextQuizResult?.ok) && !Boolean(nextQuizResult?.saveFailed),
         saveFailed:        Boolean(nextQuizResult?.saveFailed),
@@ -945,7 +1054,9 @@ Required JSON shape:
         error:             nextQuizResult?.error || null
       });
 
-      let nextQuestionText = "\nNext question could not be generated. Type /quiz to continue.";
+      let nextQuestionText = _retryResult?.exhausted
+        ? "\nYour answer was recorded. TINA could not find an indexed source for the next quiz item. Type /quiz [topic] to continue."
+        : "\nNext question could not be generated. Type /quiz to continue.";
 
       if (nextQuizResult?.ok && !nextQuizResult.saveFailed) {
         const storedId = nextQuizResult.storedQuiz?.id || null;
