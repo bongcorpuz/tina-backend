@@ -40,7 +40,7 @@ import {
 import { selectNextSubtopic } from "./question-bank-router.js";
 import { generateQuizQuestion } from "./quiz-engine.js";
 import { storeUnansweredQuiz } from "../adaptive-quiz.js";
-import { generateReviewMaterial, splitReviewContent } from "./review-engine.js";
+import { generateReviewMaterial, splitReviewContent, splitReviewRevealContent } from "./review-engine.js";
 import {
   generateTraceId,
   startTrace,
@@ -990,10 +990,13 @@ export function createLearningHandler({
         }
       }
 
-      // Review is self-check: full content (Self-Check Question + Self-Check Answer) is
-      // shown immediately in one response.  No answer is hidden; no pending-answer state
-      // is created.  A/B/C/D typed after a review card is not routed as a quiz answer.
-      const displayContent = reviewResult.reviewText;
+      // Split visible question from hidden self-check answer.
+      // visibleContent is shown immediately; hiddenContent is returned only on /reveal.
+      const revealSplit = splitReviewRevealContent(reviewResult.reviewText);
+      const displayContent = revealSplit.visibleContent;
+      const responseAnswer = revealSplit.hasHiddenAnswer
+        ? displayContent + "\n\n---\nAnswer hidden. Type `/reveal` to show the self-check answer."
+        : displayContent;
 
       // Update session state — pendingAnswer is always null for /review
       const updatedState = updateLearningStateAfterQuestion({
@@ -1003,8 +1006,19 @@ export function createLearningHandler({
       });
       updatedState.pendingAnswer = null;
 
-      // Build updated anti-repetition history
-      const qHash = hashMiniQuestion(displayContent);
+      updatedState.reviewReveal = revealSplit.hasHiddenAnswer
+        ? {
+            hiddenContent: revealSplit.hiddenContent,
+            revealed: false,
+            domain,
+            subtopic,
+            subtopicLabel: reviewResult.subtopicLabel,
+            createdAt: new Date().toISOString()
+          }
+        : null;
+
+      // Build updated anti-repetition history (hash full text so dedup matches the firstHash check above)
+      const qHash = hashMiniQuestion(reviewResult.reviewText);
       const newChunkIds = safeArray(reviewResult.sourceChunks)
         .map(s => String(s.id || "")).filter(Boolean);
       const newSourcePaths = [...new Set(
@@ -1067,7 +1081,7 @@ export function createLearningHandler({
           hook: hookConfig.hook_code,
           mode: hookConfig.mode,
           hookTitle: hookConfig.title,
-          answer: displayContent,
+          answer: responseAnswer,
           answerMode: "review_material_generated",
           topic: domain,
           subtopic,

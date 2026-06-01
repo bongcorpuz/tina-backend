@@ -1995,6 +1995,55 @@ export function createAskHandler({
       const activeHook = existingMode?.active_hook || null;
       const hasActiveAssessmentMode = assessmentHandler.isAssessmentHook(activeHook);
 
+      // /reveal — shows hidden self-check answer stored by /review generation.
+      // Must run before MODE SESSION LOCK so "/reveal" is not rejected as a foreign command.
+      if (/^(?:\/)?reveal\s*$/i.test(rawQuestion.trim()) && activeHook === "/review") {
+        const reviewReveal = existingMode?.adaptive_context?.learning?.reviewReveal;
+        const hiddenContent = reviewReveal?.hiddenContent || "";
+
+        if (!hiddenContent) {
+          return res.json({
+            success: false,
+            engine: "TINA_ASK_HANDLER",
+            mode: "REVIEW_REVEAL",
+            answer: "No hidden review answer is available yet. Start with `/review [topic]`.",
+            sourceStatus: "REVIEW_REVEAL",
+            sources: [], sourcesUsed: [], sourceCards: [], vectorMatches: 0,
+            askHandlerVersion: ENGINE_VERSION,
+            contextOrchestrationEnabled: true
+          });
+        }
+
+        // Mark revealed:true in state (fire-and-forget — non-blocking)
+        if (reviewReveal && !reviewReveal.revealed) {
+          const updatedLearning = {
+            ...existingMode.adaptive_context.learning,
+            reviewReveal: { ...reviewReveal, revealed: true }
+          };
+          saveModeState(supabase, {
+            userId,
+            sessionId: conversationId || null,
+            activeHook: existingMode.active_hook,
+            activeMode: existingMode.active_mode,
+            modeTitle: existingMode.mode_title || "",
+            lastQuestion: rawQuestion,
+            lastAnswer: hiddenContent,
+            adaptiveContext: { learning: updatedLearning }
+          }).catch(err => console.warn("[REVIEW_REVEAL] saveModeState failed:", err?.message));
+        }
+
+        return res.json({
+          success: true,
+          engine: "TINA_ASK_HANDLER",
+          mode: "REVIEW_REVEAL",
+          answer: hiddenContent,
+          sourceStatus: "REVIEW_REVEAL",
+          sources: [], sourcesUsed: [], sourceCards: [], vectorMatches: 0,
+          askHandlerVersion: ENGINE_VERSION,
+          contextOrchestrationEnabled: true
+        });
+      }
+
       // MODE SESSION LOCK — prevent switching to a different slash command while in /quiz or /review
       if (
         (activeHook === "/quiz" || activeHook === "/review") &&
@@ -2254,7 +2303,7 @@ export function createAskHandler({
           success: true,
           engine: "TINA_ASK_HANDLER",
           mode: "REVIEW_SELF_CHECK",
-          answer: `You are in review/self-check mode. There is no pending answer to grade because the review card already shows the self-check answer. Type \`/review ${reviewLockedDomain}\` for another review item or \`/bye\` to exit review mode.`,
+          answer: `This is review self-check mode. The answer is hidden/revealed through \`/reveal\`, not graded as a quiz. Type \`/reveal\` to show the self-check answer, \`/review ${reviewLockedDomain}\` for another review item, or \`/bye\` to exit review mode.`,
           sourceStatus: "REVIEW_SELF_CHECK",
           sources: [],
           sourcesUsed: [],

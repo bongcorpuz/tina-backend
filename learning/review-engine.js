@@ -445,6 +445,19 @@ export function splitReviewContent(fullText = "") {
   return { displayContent, answerText, correctAnswer };
 }
 
+export function splitReviewRevealContent(reviewText) {
+  const text = String(reviewText == null ? "" : reviewText);
+  const match = text.match(/^##\s+Self-Check Answer\b/im);
+  if (!match) {
+    return { visibleContent: text, hiddenContent: "", hasHiddenAnswer: false };
+  }
+  return {
+    visibleContent: text.slice(0, match.index),
+    hiddenContent: text.slice(match.index),
+    hasHiddenAnswer: true
+  };
+}
+
 export function reviewEngineHealthCheck() {
   return {
     ok: true,
