@@ -546,7 +546,7 @@ export function safeParseQuizJson(text = "") {
       explanation:      normalizeText(parsed.explanation || ""),
       cpaleTrap:        normalizeText(parsed.cpaleTrap || ""),
       sourceSupport:    normalizeText(parsed.sourceSupport || ""),
-      validationStatus: normalizeText(parsed.validationStatus || "UNVALIDATED")
+      validationStatus: normalizeText(parsed.validationStatus || "")
     };
 
     const validation = safeParseQuizQuestion(candidate);
@@ -621,15 +621,12 @@ export async function storeUnansweredQuiz(
     correctAnswerText: quiz.correctAnswerText || choices?.[correctAnswer] || "",
     cpaleTrap: quiz.cpaleTrap || "",
     sourceSupport: quiz.sourceSupport || "",
-    validationStatus: quiz.validationStatus || "UNVALIDATED",
+    validationStatus: quiz.validationStatus || "",
     tinaAdaptiveQuizVersion: ENGINE_VERSION
   };
 
   const explanationParts = [
-    quiz.explanation ? String(quiz.explanation) : "",
-    quiz.cpaleTrap ? `CPALE Trap: ${quiz.cpaleTrap}` : "",
-    quiz.sourceSupport ? `Source Support: ${quiz.sourceSupport}` : "",
-    quiz.validationStatus ? `Validation: ${quiz.validationStatus}` : ""
+    quiz.explanation ? String(quiz.explanation) : ""
   ].filter(Boolean);
 
   const payload = {

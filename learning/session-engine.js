@@ -551,11 +551,14 @@ export function createLearningHandler({
         maxItems: MAX_VISIBLE_SOURCES
       });
 
+      // Sources are suppressed in the persisted assistant message — they must not
+      // appear in conversation history before the student submits an answer.
+      // visibleSources is computed above for the [QUIZ_SOURCE_SUPPRESSED] log only.
       await saveConversationTurn({
         conversationId, userId,
         question: hookConfig.originalQuestion,
         answerText: _finalResult.answerText,
-        sourcesUsed: visibleSources
+        sourcesUsed: []
       });
 
       await saveModeState(supabase, {

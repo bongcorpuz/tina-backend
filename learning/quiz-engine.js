@@ -82,6 +82,129 @@ function compactSourceChunk(chunk = {}) {
   };
 }
 
+// ─── Quiz authority validation ───────────────────────────────────────────────
+
+// Court/case authority types that can never satisfy statutory/regulatory requirements.
+// A CTA case that cites RR 2-98 in its title is still a court document, not a regulation.
+const COURT_CASE_AUTHORITY_TYPES = new Set([
+  "CTA", "CTA_CASE", "CTA_DIVISION", "CTA_EN_BANC",
+  "COURT", "COURT_DECISION",
+  "CASE", "CASE_LAW",
+  "JURISPRUDENCE",
+  "SUPREME_COURT", "SC_DECISION", "SC_EN_BANC", "SC_DIVISION"
+]);
+
+// Title/citation patterns that conclusively identify a court or case document.
+const COURT_CASE_TITLE_PATTERNS = [
+  /\bcta\s+case\b/i,
+  /\bcta\s+eb\b/i,
+  /\bc\.t\.a\.\s+case\b/i,
+  /\bcourt\s+of\s+tax\s+appeals\b/i,
+  /\bvs?\.\s+cir\b/i,
+  /\bv\s+cir\b/i,
+  /\bg\.r\.\s+no\./i
+];
+
+// Statutory/regulatory/BIR authority types accepted as controlling authority.
+const STATUTORY_REGULATORY_AUTHORITY_TYPES = new Set([
+  "NIRC", "NIRC_SECTION", "TAX_CODE",
+  "REPUBLIC_ACT", "RA",
+  "REVENUE_REGULATION", "REVENUE_REGULATIONS", "RR",
+  "REVENUE_MEMORANDUM_CIRCULAR", "RMC",
+  "REVENUE_MEMORANDUM_ORDER", "RMO",
+  "RAMO", "REVENUE_AUDIT_MEMORANDUM_ORDER",
+  "BIR_RULING", "BIR_RULINGS",
+  "BIR_ISSUANCE", "BIR_ISSUANCES",
+  "BIR_REGULATION", "BIR_REGULATIONS",
+  "STATUTE", "LAW"
+]);
+
+// WHT domain identifiers (normalized to uppercase underscore form).
+// Strict authority validation applies only when the DOMAIN itself is one of these —
+// not merely because a VAT subtopic contains the word "withholding".
+const WHT_DOMAINS = new Set([
+  "WITHHOLDING_TAX", "WHT", "EWT", "CWT", "WITHHOLDING"
+]);
+
+function isCourtOrCaseSource(chunk) {
+  const type = String(chunk.authorityType || "").toUpperCase().replace(/[\s\-]/g, "_");
+  if (COURT_CASE_AUTHORITY_TYPES.has(type)) return true;
+  const combined = (String(chunk.title || "") + " " + String(chunk.citation || "")).toLowerCase();
+  return COURT_CASE_TITLE_PATTERNS.some(p => p.test(combined));
+}
+
+function isStatutoryOrRegulatorySource(chunk) {
+  // Court/case sources must never satisfy the statutory authority requirement —
+  // even when their title/citation quotes a regulation like RR 2-98 or NIRC.
+  if (isCourtOrCaseSource(chunk)) return false;
+
+  const type = String(chunk.authorityType || "").toUpperCase().replace(/[\s\-]/g, "_");
+  if (STATUTORY_REGULATORY_AUTHORITY_TYPES.has(type)) return true;
+
+  // Text-based fallback for chunks with generic/UNKNOWN authorityType.
+  const combined = (String(chunk.title || "") + " " + String(chunk.citation || "")).toLowerCase();
+  return (
+    /\bnirc\b/.test(combined) ||
+    /national internal revenue code/i.test(combined) ||
+    /\btax code\b/i.test(combined) ||
+    /\bsec(?:tion)?\.?\s*5[78]\b/.test(combined) ||        // Sec. 57, Sec. 58, Section 57/58
+    /revenue regulations?/i.test(combined) ||
+    /rev(?:enue)?\.?\s*regs?\./i.test(combined) ||          // Rev. Regs. / Rev. Reg.
+    /\brr\s*no\.?\s*\d/.test(combined) ||                   // RR No. 2-98
+    /\brr\s*\d/.test(combined) ||                           // RR 2-98
+    /revenue\s+memorandum\s+circular/i.test(combined) ||
+    /\brmc\b/.test(combined) ||                            // RMC, RMC No., RMC No. 12-2024
+    /revenue\s+memorandum\s+order/i.test(combined) ||
+    /\brmo\b/.test(combined) ||                            // RMO, RMO No., RMO No. 12-2024
+    /revenue\s+audit\s+memorandum/i.test(combined) ||
+    /\bramo\b/.test(combined) ||                           // RAMO, RAMO No., RAMO No. 1-2000
+    /bir\s+ruling/i.test(combined) ||
+    /bir\s+issuance/i.test(combined)
+  );
+}
+
+// Validates that retrieved sourceChunks contain appropriate controlling authority
+// for the given domain/subtopic before allowing quiz generation.
+//
+// Strict validation applies only when the DOMAIN is a WHT domain (WITHHOLDING_TAX,
+// WHT, EWT, CWT).  VAT subtopics such as WITHHOLDING_VAT are NOT subject to this
+// check — the word "withholding" in a subtopic name does not make it a WHT domain.
+function validateQuizAuthorityForDomain({ domain, subtopic, sourceChunks }) {
+  const normDomain = String(domain || "").toUpperCase().replace(/[\s\-]/g, "_");
+  if (!WHT_DOMAINS.has(normDomain)) return { ok: true };
+
+  const hasStatutory = sourceChunks.some(isStatutoryOrRegulatorySource);
+  const sourceTitles = sourceChunks.map(c => c.title || "").slice(0, 5);
+  const detectedAuthorityTypes = sourceChunks.map(c => c.authorityType || "UNKNOWN");
+
+  if (!hasStatutory) {
+    const allCourt = sourceChunks.every(isCourtOrCaseSource);
+    const reason = allCourt
+      ? "court_or_case_source_not_controlling_for_wht"
+      : "insufficient_valid_authority";
+    console.warn("[QUIZ_AUTHORITY_VALIDATION_REJECTED]", {
+      domain,
+      subtopic,
+      reason,
+      sourceCount: sourceChunks.length,
+      sourceTitles,
+      detectedAuthorityTypes
+    });
+    return { ok: false, noSource: true, reason };
+  }
+
+  const primary = sourceChunks.find(isStatutoryOrRegulatorySource);
+  console.info("[QUIZ_AUTHORITY_VALIDATION_PASSED]", {
+    domain,
+    subtopic,
+    sourceCount: sourceChunks.length,
+    primaryAuthorityTitle: primary?.title || "N/A",
+    primaryAuthorityType: primary?.authorityType || "UNKNOWN"
+  });
+  return { ok: true };
+}
+// ─── End quiz authority validation ───────────────────────────────────────────
+
 function compactHistory(history = []) {
   return safeArray(history).slice(0, 8).map((item) => ({
     topic: item.topic || null,
@@ -484,6 +607,15 @@ export async function generateQuizQuestion({
   const compactSources = safeArray(sourceChunks).map(compactSourceChunk);
 
   if (compactSources.length > 0) {
+    const authorityCheck = validateQuizAuthorityForDomain({ domain, subtopic, sourceChunks: compactSources });
+    if (!authorityCheck.ok) {
+      return {
+        ok: false,
+        noSource: true,
+        reason: authorityCheck.reason || "insufficient_valid_authority",
+        sourceChunks: compactSources
+      };
+    }
     console.info("[QUIZ ENGINE] Grounded retrieval", {
       domain,
       subtopic,

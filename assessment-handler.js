@@ -828,9 +828,25 @@ Required JSON shape:
 
     const nextHookConfig = buildAssessmentModeConfig(pendingQuiz.mode);
 
-    // Split stored explanation (strip any trailing CPALE Trap line)
+    // Strip internal diagnostic labels from stored explanations — both whole-line
+    // and inline occurrences (e.g. "...tax was withheld. Validation: UNVALIDATED").
+    // Validation: only removed for the known bad sentinel values (UNVALIDATED, undefined, null)
+    // so legitimate uses of the word "validation" in explanation text are preserved.
     const rawExplanation = String(pendingQuiz.explanation || "No explanation available.");
-    const cleanExplanation = rawExplanation.split(/\nCPALE Trap:/i)[0].trim();
+    const cleanExplanation = rawExplanation
+      .split("\n")
+      .map(line =>
+        line
+          .replace(/\s*Validation:\s*(?:UNVALIDATED|undefined|null)\b.*/i, "")
+          .replace(/\s*Source Support:.*/i, "")
+          .replace(/\s*CPALE Trap:.*/i, "")
+      )
+      .filter(line => {
+        const t = line.trim();
+        return t.length > 0 && !/^(CPALE Trap:|Source Support:|Validation:)/i.test(t);
+      })
+      .join("\n")
+      .trim();
 
     const correctAnswerText = pendingQuiz.source_metadata?.correctAnswerText || "";
     const answerDisplay = correctAnswerText
