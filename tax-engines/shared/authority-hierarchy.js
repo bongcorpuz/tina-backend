@@ -263,6 +263,51 @@ export const ISSUE_AUTHORITY_PROFILE = Object.freeze({
   GENERAL: ["STATUTE", "RR", "SUPREME_COURT", "RMC"]
 });
 
+// ---------------------------------------------------------------------------
+// PHASE 1 ADAPTER SKELETON — private, not exported, not called at runtime.
+// Phase 2 will route the public lookup functions through these stubs rather
+// than accessing the canonical maps directly, enabling zero-downtime map swap.
+// ---------------------------------------------------------------------------
+
+const _ADAPTER_ENABLED = false; // gate stays closed until Phase 2
+
+/* Frozen snapshots of the canonical maps as they exist at Phase 1 cutover. */
+const _LEGACY_NORMALIZED_AUTHORITY_TYPE = Object.freeze({ ...NORMALIZED_AUTHORITY_TYPE });
+const _LEGACY_AUTHORITY_LEVEL           = Object.freeze({ ...AUTHORITY_LEVEL });
+const _LEGACY_AUTHORITY_SCORE           = Object.freeze({ ...AUTHORITY_SCORE });
+const _LEGACY_AUTHORITY_LABEL           = Object.freeze({ ...AUTHORITY_LABEL });
+
+/* Stub resolvers — Phase 2 wires replacement maps in here before opening gate. */
+function _adapterNormalize(key) {
+  return _LEGACY_NORMALIZED_AUTHORITY_TYPE[key];
+}
+function _adapterLevel(normalizedType) {
+  return _LEGACY_AUTHORITY_LEVEL[normalizedType];
+}
+function _adapterScore(normalizedType) {
+  return _LEGACY_AUTHORITY_SCORE[normalizedType];
+}
+function _adapterLabel(normalizedType) {
+  return _LEGACY_AUTHORITY_LABEL[normalizedType];
+}
+
+/* Invariant checker: asserts adapter output matches legacy before gate opens. */
+function _adapterMatchesLegacy(rawType) {
+  const norm = _adapterNormalize(rawType);
+  return (
+    norm                 === _LEGACY_NORMALIZED_AUTHORITY_TYPE[rawType] &&
+    _adapterLevel(norm)  === _LEGACY_AUTHORITY_LEVEL[norm]              &&
+    _adapterScore(norm)  === _LEGACY_AUTHORITY_SCORE[norm]              &&
+    _adapterLabel(norm)  === _LEGACY_AUTHORITY_LABEL[norm]
+  );
+}
+
+// Suppress "declared but never used" lint noise during Phase 1.
+void (_ADAPTER_ENABLED, _adapterNormalize, _adapterLevel, _adapterScore,
+      _adapterLabel, _adapterMatchesLegacy);
+
+// ---------------------------------------------------------------------------
+
 export function normalizeAuthorityType(value = "") {
   const key = String(value || "").trim().toUpperCase().replace(/[\s-]+/g, "_");
   return NORMALIZED_AUTHORITY_TYPE[key] || key || "UNKNOWN";
