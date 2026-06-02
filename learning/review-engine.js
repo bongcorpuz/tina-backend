@@ -458,6 +458,113 @@ export function splitReviewRevealContent(reviewText) {
   };
 }
 
+// ─── Phase 1: MCQ review helpers ─────────────────────────────────────────────
+
+// Parse the LLM output and extract the MCQ answer key into a structured object.
+// Returns null if extraction fails — callers must fall back to reveal-only mode.
+export function extractReviewMcqState(reviewText = "") {
+  const text = String(reviewText || "").trim();
+  if (!text) return null;
+
+  // Locate ## Self-Check Answer block
+  const answerMatch = text.match(/^##\s+Self-Check Answer\b[\r\n]+([\s\S]*?)(?=^##\s|\s*$)/im);
+  if (!answerMatch) return null;
+
+  const answerBlock = answerMatch[1].trim();
+  let correctChoice = null;
+  const correctAnswer = answerBlock;
+
+  // "B. Zero-rated..." or bare "B"
+  const m1 = answerBlock.match(/^([A-D])(?:[.\):\s]|$)/m);
+  if (m1) {
+    correctChoice = m1[1].toUpperCase();
+  } else {
+    // "Correct Answer: B" or "Answer: B"
+    const m2 = answerBlock.match(/(?:correct\s+answer|answer)\s*:\s*([A-D])\b/i);
+    if (m2) correctChoice = m2[1].toUpperCase();
+  }
+
+  if (!correctChoice) return null;
+
+  const explanationMatch = text.match(/^##\s+Explanation\b[\r\n]+([\s\S]*?)(?=^##\s|\s*$)/im);
+  const explanation = explanationMatch ? explanationMatch[1].trim() : "";
+
+  const whyMatch = text.match(/^##\s+Why the Other Choices Are Wrong\b[\r\n]+([\s\S]*?)(?=^##\s|\s*$)/im);
+  const whyOthersWrong = whyMatch ? whyMatch[1].trim() : "";
+
+  // Extract question text and A/B/C/D choices from ## Self-Check Question
+  const questionMatch = text.match(/^##\s+Self-Check Question\b[\r\n]+([\s\S]*?)(?=^##\s)/im);
+  let question = "";
+  const choices = {};
+
+  if (questionMatch) {
+    const qBlock = questionMatch[1].trim();
+    const choiceMatches = [...qBlock.matchAll(/^([A-D])[.\)]\s*(.+)$/gm)];
+    if (choiceMatches.length > 0) {
+      const firstChoiceIdx = qBlock.indexOf(choiceMatches[0][0]);
+      question = firstChoiceIdx > 0 ? qBlock.slice(0, firstChoiceIdx).trim() : qBlock;
+      for (const m of choiceMatches) choices[m[1]] = m[2].trim();
+    } else {
+      question = qBlock;
+    }
+  }
+
+  return { correctChoice, correctAnswer, explanation, whyOthersWrong, question, choices };
+}
+
+// Returns only the content the user sees on /review — everything up to (not including)
+// ## Self-Check Answer, ## Explanation, and ## Why the Other Choices Are Wrong.
+export function buildReviewVisibleContent(reviewText = "") {
+  const text = String(reviewText || "").trim();
+  if (!text) return text;
+  let cutIdx = text.length;
+  for (const pat of [
+    /^##\s+Self-Check Answer\b/im,
+    /^##\s+Explanation\b/im,
+    /^##\s+Why the Other Choices Are Wrong\b/im
+  ]) {
+    const m = text.match(pat);
+    if (m && m.index < cutIdx) cutIdx = m.index;
+  }
+  return text.slice(0, cutIdx).trim();
+}
+
+// Returns the hidden portion (Self-Check Answer + Explanation + Why Others Wrong).
+// Stored in reviewMode.currentItem.hiddenContent — never sent in initial response.
+export function buildReviewHiddenContent(reviewText = "") {
+  const text = String(reviewText || "").trim();
+  if (!text) return "";
+  let cutIdx = text.length;
+  for (const pat of [
+    /^##\s+Self-Check Answer\b/im,
+    /^##\s+Explanation\b/im,
+    /^##\s+Why the Other Choices Are Wrong\b/im
+  ]) {
+    const m = text.match(pat);
+    if (m && m.index < cutIdx) cutIdx = m.index;
+  }
+  return cutIdx >= text.length ? "" : text.slice(cutIdx).trim();
+}
+
+// Builds the instructional feedback shown after the user submits an MCQ answer.
+export function buildReviewFeedback(currentItem = {}, userChoice = "") {
+  const correct = String(currentItem.correctChoice || "").toUpperCase();
+  const isCorrect = String(userChoice || "").toUpperCase() === correct;
+  const parts = [`## ${isCorrect ? "Correct ✅" : "Incorrect ❌"}`, ""];
+  if (currentItem.correctAnswer) {
+    parts.push(`**Correct Answer:** ${currentItem.correctAnswer}`, "");
+  }
+  if (currentItem.explanation) {
+    parts.push("## Explanation", currentItem.explanation, "");
+  }
+  if (currentItem.whyOthersWrong) {
+    parts.push("## Why the Other Choices Are Wrong", currentItem.whyOthersWrong, "");
+  }
+  return parts.join("\n").trim();
+}
+
+// ─── end Phase 1 MCQ helpers ──────────────────────────────────────────────────
+
 export function reviewEngineHealthCheck() {
   return {
     ok: true,

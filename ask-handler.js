@@ -2044,9 +2044,11 @@ export function createAskHandler({
         });
       }
 
-      // MODE SESSION LOCK — prevent switching to a different slash command while in /quiz or /review
+      // MODE SESSION LOCK — prevent switching to a different slash command while in /quiz.
+      // /review intentionally does not lock explicit commands — the user may switch to
+      // /ask, /quiz, or another hook directly without needing /bye first.
       if (
-        (activeHook === "/quiz" || activeHook === "/review") &&
+        activeHook === "/quiz" &&
         explicitHook &&
         explicitHook !== activeHook
       ) {
@@ -2229,6 +2231,9 @@ export function createAskHandler({
 
       const quizAnswer = extractQuizAnswer(rawQuestion);
       const hasPendingReviewAnswer = Boolean(existingMode?.adaptive_context?.learning?.pendingAnswer);
+      const hasActiveReviewMcq = Boolean(
+        existingMode?.adaptive_context?.learning?.reviewMode?.currentItem?.questionType === "mcq"
+      );
 
       if (pendingQuiz && hasActiveAssessmentMode && quizAnswer && !explicitHook) {
         const loopResult = await assessmentHandler.continueAssessmentLoop({
@@ -2257,10 +2262,9 @@ export function createAskHandler({
         });
       }
 
-      // REVIEW MODE LOCK — when a domain is selected, only A/B/C/D and exit commands
-      // may proceed. All other input is rejected immediately: no OpenAI call, no
-      // retrieval, no adaptive routing, no fallback to /ask.
-      if (activeHook === "/review" && reviewLockedDomain && !quizAnswer) {
+      // REVIEW MODE LOCK — when a domain is selected, only A/B/C/D, exit commands, and
+      // explicit slash commands may proceed. All other bare text is rejected.
+      if (activeHook === "/review" && reviewLockedDomain && !quizAnswer && !explicitHook) {
         console.log("[REVIEW LOCKED INVALID INPUT]", {
           input: rawQuestion.slice(0, 80),
           sessionId: conversationId,
@@ -2284,33 +2288,28 @@ export function createAskHandler({
         console.log("[REVIEW ANSWER ROUTED]", {
           answer: quizAnswer,
           domain: reviewLockedDomain,
-          pendingAnswer: hasPendingReviewAnswer
+          hasActiveReviewMcq,
+          hasPendingReviewAnswer
         });
 
-        if (hasPendingReviewAnswer) {
-          const loopResult = await assessmentHandler.continueAssessmentLoop({
-            userId,
-            conversationId: conversationId || null,
-            incomingAnswer: rawQuestion
+        if (!hasActiveReviewMcq && !hasPendingReviewAnswer) {
+          // No active question — tell the user to restart review for this domain
+          return res.json({
+            success: true,
+            engine: "TINA_ASK_HANDLER",
+            mode: "REVIEW_SELF_CHECK",
+            answer: `No active review question found. Type \`/review ${reviewLockedDomain}\` to start a new review item, or \`/bye\` to exit review mode.`,
+            sourceStatus: "REVIEW_SELF_CHECK",
+            sources: [],
+            sourcesUsed: [],
+            vectorMatches: 0,
+            askHandlerVersion: ENGINE_VERSION,
+            contextOrchestrationEnabled: true
           });
-          if (loopResult.handled) return res.json(loopResult.response);
         }
-
-        // /review is self-check mode — pendingAnswer is always null; bare A/B/C/D
-        // has no pending question to grade, so return a friendly message instead of
-        // falling through to the domain boundary which would reject "A" as NON_TAX.
-        return res.json({
-          success: true,
-          engine: "TINA_ASK_HANDLER",
-          mode: "REVIEW_SELF_CHECK",
-          answer: `This is review self-check mode. The answer is hidden/revealed through \`/reveal\`, not graded as a quiz. Type \`/reveal\` to show the self-check answer, \`/review ${reviewLockedDomain}\` for another review item, or \`/bye\` to exit review mode.`,
-          sourceStatus: "REVIEW_SELF_CHECK",
-          sources: [],
-          sourcesUsed: [],
-          vectorMatches: 0,
-          askHandlerVersion: ENGINE_VERSION,
-          contextOrchestrationEnabled: true
-        });
+        // hasActiveReviewMcq OR hasPendingReviewAnswer: fall through to
+        // REVIEW_PENDING_ANSWER_EARLY_ROUTE (after compactHookConfig is built).
+        // Both cases are routed safely to learningHandler — never assessmentHandler.
       }
 
       let effectiveQuestion = rawQuestion;
@@ -2443,7 +2442,7 @@ export function createAskHandler({
         const _hasPendingReviewAnswer =
           activeHook === "/review" &&
           reviewLockedDomain &&
-          Boolean(existingMode?.adaptive_context?.learning?.pendingAnswer) &&
+          (hasActiveReviewMcq || Boolean(existingMode?.adaptive_context?.learning?.pendingAnswer)) &&
           quizAnswer &&
           !explicitHook;
 

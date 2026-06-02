@@ -40,7 +40,7 @@ import {
 import { selectNextSubtopic } from "./question-bank-router.js";
 import { generateQuizQuestion } from "./quiz-engine.js";
 import { storeUnansweredQuiz } from "../adaptive-quiz.js";
-import { generateReviewMaterial, splitReviewContent, splitReviewRevealContent } from "./review-engine.js";
+import { generateReviewMaterial, splitReviewContent, splitReviewRevealContent, extractReviewMcqState, buildReviewVisibleContent, buildReviewHiddenContent, buildReviewFeedback } from "./review-engine.js";
 import {
   generateTraceId,
   startTrace,
@@ -357,6 +357,147 @@ export function createLearningHandler({
         vectorMatches: 0,
         learningSystemVersion: ENGINE_VERSION
       }
+    };
+  }
+
+  // ── shared review item generator ──────────────────────────────────────────────
+  // Single authoritative path for retrieval → no-source check → dedup → MCQ extraction.
+  // Used by handleReviewGeneration (initial item) AND handleReviewMcqAnswer (next item)
+  // so neither path duplicates retrieval, retry, or hash-dedup logic.
+
+  async function generateReviewItemForSession({ domain, sessionLearning, callOpenAI, conversationId }) {
+    const reviewHistory = safeObject(sessionLearning.reviewHistory);
+    const seenChunkIds   = safeArray(reviewHistory.seenChunkIds).map(String);
+    const seenSourcePaths = safeArray(reviewHistory.seenSourcePaths);
+    const seenQuestionHashes = safeArray(reviewHistory.seenQuestionHashes);
+    const lastSubtopic   = reviewHistory.lastSubtopic || null;
+
+    let subtopic = selectNextSubtopic(domain, sessionLearning);
+
+    // Prevent immediate re-selection of the last subtopic when alternatives exist
+    if (lastSubtopic && subtopic === lastSubtopic) {
+      const allSubtopics = getDomainSubtopics(domain);
+      if (allSubtopics.filter(s => s !== lastSubtopic).length > 0) {
+        const fakeSession = {
+          ...sessionLearning,
+          coveredSubtopics: [...safeArray(sessionLearning.coveredSubtopics), lastSubtopic]
+        };
+        const alt = selectNextSubtopic(domain, fakeSession);
+        if (alt && alt !== lastSubtopic) {
+          console.log("[REVIEW ITEM GEN] Subtopic repeat prevented", { from: lastSubtopic, to: alt, domain, sessionId: conversationId });
+          subtopic = alt;
+        }
+      }
+    }
+
+    if (!subtopic) return { ok: false, noSubtopic: true };
+
+    const MAX_REVIEW_ATTEMPTS = 5;
+    const attemptedSubtopics = [];
+    let reviewResult;
+
+    for (let attempt = 1; attempt <= MAX_REVIEW_ATTEMPTS; attempt++) {
+      try {
+        reviewResult = await generateReviewMaterial({
+          domain, subtopic, sessionLearning, callOpenAI, supabase,
+          excludeChunkIds: seenChunkIds,
+          excludeSourcePaths: seenSourcePaths
+        });
+      } catch (err) {
+        console.error("[REVIEW ITEM GEN] generateReviewMaterial failed:", err?.message);
+        return { ok: false, error: err?.message };
+      }
+
+      if (reviewResult.ok) break;
+
+      if (reviewResult.noSource) {
+        console.log("[REVIEW ITEM GEN] No source, trying alternate subtopic", {
+          domain, subtopic, attempt, maxAttempts: MAX_REVIEW_ATTEMPTS,
+          reason: reviewResult.reason || "no_indexed_source"
+        });
+        attemptedSubtopics.push(subtopic);
+
+        if (attempt < MAX_REVIEW_ATTEMPTS) {
+          const fakeSession = {
+            ...sessionLearning,
+            coveredSubtopics: [...safeArray(sessionLearning.coveredSubtopics), ...attemptedSubtopics]
+          };
+          const nextSub = selectNextSubtopic(domain, fakeSession);
+          if (nextSub && !attemptedSubtopics.includes(nextSub)) {
+            subtopic = nextSub;
+            continue;
+          }
+          // Fall back to full pool minus covered + attempted
+          const allSubtopics = getDomainSubtopics(domain);
+          const persistentCovered = new Set(safeArray(sessionLearning.coveredSubtopics));
+          const attemptedSet = new Set(attemptedSubtopics);
+          const eligible = allSubtopics.filter(s => !persistentCovered.has(s) && !attemptedSet.has(s));
+          if (eligible.length > 0) {
+            subtopic = eligible[Math.floor(Math.random() * eligible.length)];
+            continue;
+          }
+        }
+        break;
+      }
+
+      // Non-noSource failure
+      return { ok: false, error: "generation_failed" };
+    }
+
+    if (!reviewResult?.ok) {
+      return {
+        ok: false,
+        noSource: Boolean(reviewResult?.noSource),
+        subtopicLabel: reviewResult?.subtopicLabel,
+        attemptedSubtopics
+      };
+    }
+
+    // Mini-question hash dedup — one retry when duplicate detected
+    const firstHash = hashMiniQuestion(reviewResult.reviewText);
+    if (firstHash && seenQuestionHashes.includes(firstHash)) {
+      console.log("[REVIEW ITEM GEN] Question hash dedup hit", { hash: firstHash?.slice(0, 12), subtopic, domain });
+      try {
+        const retryResult = await generateReviewMaterial({
+          domain, subtopic, sessionLearning, callOpenAI, supabase,
+          excludeChunkIds: seenChunkIds, excludeSourcePaths: seenSourcePaths
+        });
+        if (retryResult.ok) {
+          const retryHash = hashMiniQuestion(retryResult.reviewText);
+          if (!seenQuestionHashes.includes(retryHash)) reviewResult = retryResult;
+        }
+      } catch (retryErr) {
+        console.warn("[REVIEW ITEM GEN] Dedup retry failed (non-fatal):", retryErr?.message);
+      }
+    }
+
+    const fullText        = reviewResult.reviewText || "";
+    const visibleContent  = buildReviewVisibleContent(fullText);
+    const hiddenContent   = buildReviewHiddenContent(fullText);
+    const mcqState        = extractReviewMcqState(fullText);
+    const questionHash    = hashMiniQuestion(fullText);
+
+    const newChunkIds    = safeArray(reviewResult.sourceChunks).map(s => String(s.id || "")).filter(Boolean);
+    const newSourcePaths = [...new Set(safeArray(reviewResult.sourceChunks).map(s => s.sourcePath || "").filter(Boolean))];
+
+    const updatedReviewHistory = {
+      seenChunkIds:       [...new Set([...seenChunkIds,        ...newChunkIds])].slice(-30),
+      seenSourcePaths:    [...new Set([...seenSourcePaths,     ...newSourcePaths])].slice(-15),
+      seenQuestionHashes: [...new Set([...seenQuestionHashes,  ...(questionHash ? [questionHash] : [])])].slice(-20),
+      lastSubtopic:       subtopic
+    };
+
+    return {
+      ok: true,
+      subtopic,
+      subtopicLabel:        reviewResult.subtopicLabel,
+      reviewText:           fullText,
+      visibleContent,
+      hiddenContent,
+      mcqState,
+      questionHash,
+      sourceChunks:         reviewResult.sourceChunks || [],
+      updatedReviewHistory
     };
   }
 
@@ -744,7 +885,6 @@ export function createLearningHandler({
           isCorrect,
           topic: scoredState.domain,
           subtopic: nextSubtopic || sessionLearning.subtopic,
-          sessionScore: finalState.score,
           sourceStatus: visibleSources.length ? "GDRIVE_GROUNDED" : "TRAINING_KNOWLEDGE",
           sources: visibleSources,
           sourcesUsed: visibleSources,
@@ -770,68 +910,12 @@ export function createLearningHandler({
     const _tracedCall = (params) => callAssessmentOpenAI({ ...params, _traceId: traceId });
 
     try {
-      // Extract review anti-repetition state
-      const reviewHistory = safeObject(sessionLearning.reviewHistory);
-      const seenChunkIds = safeArray(reviewHistory.seenChunkIds).map(String);
-      const seenSourcePaths = safeArray(reviewHistory.seenSourcePaths);
-      const seenQuestionHashes = safeArray(reviewHistory.seenQuestionHashes);
-      const lastSubtopic = reviewHistory.lastSubtopic || null;
+      const itemResult = await generateReviewItemForSession({
+        domain, sessionLearning, callOpenAI: _tracedCall, conversationId
+      });
 
-      let subtopic = selectNextSubtopic(domain, sessionLearning);
-
-      // Prevent immediate re-selection of the last subtopic when alternatives exist
-      if (lastSubtopic && subtopic === lastSubtopic) {
-        const allSubtopics = getDomainSubtopics(domain);
-        if (allSubtopics.filter(s => s !== lastSubtopic).length > 0) {
-          const fakeSession = {
-            ...sessionLearning,
-            coveredSubtopics: [...safeArray(sessionLearning.coveredSubtopics), lastSubtopic]
-          };
-          const alt = selectNextSubtopic(domain, fakeSession);
-          if (alt && alt !== lastSubtopic) {
-            console.log("[REVIEW MEMORY]", {
-              event: "SUBTOPIC_REPEAT_PREVENTED",
-              from: lastSubtopic,
-              to: alt,
-              domain,
-              sessionId: conversationId
-            });
-            subtopic = alt;
-          }
-        }
-      }
-
-      if (!subtopic) {
-        return {
-          handled: true,
-          response: {
-            success: false,
-            engine: "TINA Learning System",
-            hook: hookConfig.hook_code,
-            mode: hookConfig.mode,
-            answer: `No subtopics found for domain "${domain}". Type /review to choose a different domain.`,
-            sources: [], sourcesUsed: [], sourceCards: [], vectorMatches: 0
-          }
-        };
-      }
-
-      const MAX_REVIEW_ATTEMPTS = 5;
-      const attemptedSubtopics = [];
-      let reviewResult;
-
-      for (let attempt = 1; attempt <= MAX_REVIEW_ATTEMPTS; attempt++) {
-        try {
-          reviewResult = await generateReviewMaterial({
-            domain,
-            subtopic,
-            sessionLearning,
-            callOpenAI: _tracedCall,
-            supabase,
-            excludeChunkIds: seenChunkIds,
-            excludeSourcePaths: seenSourcePaths
-          });
-        } catch (err) {
-          console.error("[SESSION ENGINE] generateReviewMaterial failed:", err?.message);
+      if (!itemResult.ok) {
+        if (itemResult.noSubtopic) {
           return {
             handled: true,
             response: {
@@ -839,80 +923,13 @@ export function createLearningHandler({
               engine: "TINA Learning System",
               hook: hookConfig.hook_code,
               mode: hookConfig.mode,
-              answer: `TINA could not generate review material for "${domain}". Please try again.`,
-              error: err?.message,
+              answer: `No subtopics found for domain "${domain}". Type /review to choose a different domain.`,
               sources: [], sourcesUsed: [], sourceCards: [], vectorMatches: 0
             }
           };
         }
-
-        if (reviewResult.ok) break;
-
-        if (reviewResult.noSource) {
-          console.log("[REVIEW_NEXT_RETRY_ATTEMPT]", {
-            domain,
-            subtopic,
-            attempt,
-            maxAttempts: MAX_REVIEW_ATTEMPTS,
-            ok: reviewResult.ok,
-            noSource: reviewResult.noSource,
-            reason: reviewResult.reason || "no_indexed_source"
-          });
-
-          attemptedSubtopics.push(subtopic);
-
-          if (attempt < MAX_REVIEW_ATTEMPTS) {
-            const fakeSession = {
-              ...sessionLearning,
-              coveredSubtopics: [
-                ...safeArray(sessionLearning.coveredSubtopics),
-                ...attemptedSubtopics
-              ]
-            };
-            const nextSubtopic = selectNextSubtopic(domain, fakeSession);
-            if (nextSubtopic && !attemptedSubtopics.includes(nextSubtopic)) {
-              subtopic = nextSubtopic;
-              continue;
-            }
-
-            // selectNextSubtopic returned null or a duplicate — fall back to full pool:
-            // all domain subtopics minus persistent coveredSubtopics minus already attempted.
-            const allSubtopics = getDomainSubtopics(domain);
-            const persistentCovered = new Set(safeArray(sessionLearning.coveredSubtopics));
-            const attemptedSet = new Set(attemptedSubtopics);
-            const eligible = allSubtopics.filter(
-              s => !persistentCovered.has(s) && !attemptedSet.has(s)
-            );
-            if (eligible.length > 0) {
-              subtopic = eligible[Math.floor(Math.random() * eligible.length)];
-              continue;
-            }
-          }
-
-          break;
-        }
-
-        // Non-noSource failure — bail immediately
-        return {
-          handled: true,
-          response: {
-            success: false,
-            engine: "TINA Learning System",
-            hook: hookConfig.hook_code,
-            mode: hookConfig.mode,
-            answer: `TINA could not generate review material for "${domain}" / "${subtopic}". Please try again.`,
-            sources: [], sourcesUsed: [], sourceCards: [], vectorMatches: 0
-          }
-        };
-      }
-
-      if (!reviewResult?.ok) {
-        if (reviewResult?.noSource) {
-          console.log("[REVIEW_RETRY_EXHAUSTED]", {
-            domain,
-            attemptedSubtopics,
-            maxAttempts: MAX_REVIEW_ATTEMPTS
-          });
+        if (itemResult.noSource) {
+          console.log("[REVIEW_RETRY_EXHAUSTED]", { domain, attemptedSubtopics: itemResult.attemptedSubtopics });
           return {
             handled: true,
             response: {
@@ -923,7 +940,7 @@ export function createLearningHandler({
               answer: [
                 `**Indexed Source Not Available**`,
                 ``,
-                `TINA could not find sufficient indexed source material for **${domain} — ${reviewResult.subtopicLabel || subtopic}**.`,
+                `TINA could not find sufficient indexed source material for **${domain} — ${itemResult.subtopicLabel || "this subtopic"}**.`,
                 ``,
                 `> Indexed source not found or insufficient indexed source for this topic.`,
                 ``,
@@ -941,104 +958,71 @@ export function createLearningHandler({
             engine: "TINA Learning System",
             hook: hookConfig.hook_code,
             mode: hookConfig.mode,
-            answer: `TINA could not generate review material for "${domain}" / "${subtopic}". Please try again.`,
+            answer: `TINA could not generate review material for "${domain}". Please try again.`,
+            error: itemResult.error,
             sources: [], sourcesUsed: [], sourceCards: [], vectorMatches: 0
           }
         };
       }
 
-      // Detect repeated mini-question via hash — up to one retry attempt.
-      // Strengthened check: retryHash must NOT be in the full seenQuestionHashes list
-      // (not just different from firstHash) to catch matches against older sessions.
-      const firstHash = hashMiniQuestion(reviewResult.reviewText);
-      if (firstHash && seenQuestionHashes.includes(firstHash)) {
-        console.log("[REVIEW_DEDUP_HIT]", {
-          hash: firstHash.slice(0, 12), subtopic, domain, sessionId: conversationId
-        });
-        console.log("[REVIEW MEMORY]", {
-          event: "QUESTION_REPEAT_DETECTED",
-          hash: firstHash,
-          subtopic,
-          domain,
-          sessionId: conversationId,
-          retrying: true
-        });
-        try {
-          const retryResult = await generateReviewMaterial({
-            domain,
-            subtopic,
-            sessionLearning,
-            callOpenAI: _tracedCall,
-            supabase,
-            excludeChunkIds: seenChunkIds,
-            excludeSourcePaths: seenSourcePaths
-          });
-          if (retryResult.ok) {
-            const retryHash = hashMiniQuestion(retryResult.reviewText);
-            if (!seenQuestionHashes.includes(retryHash)) {
-              reviewResult = retryResult;
-              console.log("[REVIEW MEMORY]", {
-                event: "QUESTION_RETRY_USED",
-                hash: retryHash,
-                subtopic,
-                sessionId: conversationId
-              });
-            }
-          }
-        } catch (retryErr) {
-          console.warn("[REVIEW MEMORY] Retry failed (non-fatal):", retryErr?.message);
-        }
-      }
+      const { subtopic, subtopicLabel, visibleContent, hiddenContent, mcqState, questionHash, sourceChunks, updatedReviewHistory } = itemResult;
 
-      // Split visible question from hidden self-check answer.
-      // visibleContent is shown immediately; hiddenContent is returned only on /reveal.
-      const revealSplit = splitReviewRevealContent(reviewResult.reviewText);
-      const displayContent = revealSplit.visibleContent;
-      const responseAnswer = revealSplit.hasHiddenAnswer
-        ? displayContent + "\n\n---\nAnswer hidden. Type `/reveal` to show the self-check answer."
-        : displayContent;
-
-      // Update session state — pendingAnswer is always null for /review
-      const updatedState = updateLearningStateAfterQuestion({
-        sessionLearning,
-        subtopic,
-        storedQuizId: null
-      });
+      // Build updated session state — pendingAnswer stays null; review is not graded
+      const updatedState = updateLearningStateAfterQuestion({ sessionLearning, subtopic, storedQuizId: null });
       updatedState.pendingAnswer = null;
 
-      updatedState.reviewReveal = revealSplit.hasHiddenAnswer
-        ? {
-            hiddenContent: revealSplit.hiddenContent,
-            revealed: false,
-            domain,
-            subtopic,
-            subtopicLabel: reviewResult.subtopicLabel,
-            createdAt: new Date().toISOString()
+      // Store MCQ answer key under reviewMode.currentItem (never sent in visible response)
+      if (mcqState?.correctChoice) {
+        updatedState.reviewMode = {
+          phase:   "AWAITING_ANSWER",
+          domain,
+          subtopic,
+          subtopicLabel,
+          currentItem: {
+            itemType:       "conceptual",
+            questionType:   "mcq",
+            visibleContent,
+            hiddenContent,
+            question:       mcqState.question,
+            choices:        mcqState.choices,
+            correctChoice:  mcqState.correctChoice,
+            correctAnswer:  mcqState.correctAnswer,
+            explanation:    mcqState.explanation,
+            whyOthersWrong: mcqState.whyOthersWrong,
+            sourceChunkIds: safeArray(sourceChunks).map(s => String(s.id || "")),
+            sourcePaths:    [...new Set(safeArray(sourceChunks).map(s => s.sourcePath || "").filter(Boolean))],
+            questionHash,
+            createdAt:      new Date().toISOString()
+          },
+          history: {
+            seenQuestionHashes: updatedReviewHistory.seenQuestionHashes,
+            seenChunkIds:       updatedReviewHistory.seenChunkIds,
+            seenSourcePaths:    updatedReviewHistory.seenSourcePaths,
+            roundNumber:        1
           }
+        };
+      } else {
+        // MCQ extraction failed — fall back to reveal-only mode
+        updatedState.reviewMode = null;
+      }
+
+      // Keep reviewReveal for /reveal fallback
+      updatedState.reviewReveal = hiddenContent
+        ? { hiddenContent, revealed: false, domain, subtopic, subtopicLabel, createdAt: new Date().toISOString() }
         : null;
 
-      // Build updated anti-repetition history (hash full text so dedup matches the firstHash check above)
-      const qHash = hashMiniQuestion(reviewResult.reviewText);
-      const newChunkIds = safeArray(reviewResult.sourceChunks)
-        .map(s => String(s.id || "")).filter(Boolean);
-      const newSourcePaths = [...new Set(
-        safeArray(reviewResult.sourceChunks).map(s => s.sourcePath || "").filter(Boolean)
-      )];
-      updatedState.reviewHistory = {
-        seenChunkIds: [...new Set([...seenChunkIds, ...newChunkIds])].slice(-30),
-        seenSourcePaths: [...new Set([...seenSourcePaths, ...newSourcePaths])].slice(-15),
-        seenQuestionHashes: [...new Set([...seenQuestionHashes, ...(qHash ? [qHash] : [])])].slice(-20),
-        lastSubtopic: subtopic
-      };
+      updatedState.reviewHistory = updatedReviewHistory;
 
-      const visibleSources = finalizeSourcesForResponse(reviewResult.sourceChunks, {
-        maxItems: MAX_VISIBLE_SOURCES
-      });
+      const responseAnswer = mcqState?.correctChoice
+        ? visibleContent + "\n\n---\nType **A**, **B**, **C**, or **D** to answer."
+        : visibleContent + "\n\n---\nAnswer hidden. Type `/reveal` to show the self-check answer.";
+
+      const visibleSources = finalizeSourcesForResponse(sourceChunks, { maxItems: MAX_VISIBLE_SOURCES });
 
       await saveConversationTurn({
         conversationId, userId,
         question: hookConfig.originalQuestion,
-        answerText: displayContent,
+        answerText: visibleContent,
         sourcesUsed: visibleSources
       });
 
@@ -1049,56 +1033,205 @@ export function createLearningHandler({
         activeMode: hookConfig.mode,
         modeTitle: hookConfig.title,
         lastQuestion: hookConfig.originalQuestion || "",
-        lastAnswer: displayContent,
+        lastAnswer: visibleContent,
         adaptiveContext: { learning: updatedState }
       });
 
       console.log("[REVIEW LOCK]", {
-        domain,
-        subtopic,
-        sessionId: conversationId,
-        sourceCount: visibleSources.length,
-        pendingAnswer: Boolean(updatedState.pendingAnswer)
+        domain, subtopic, sessionId: conversationId,
+        sourceCount:      visibleSources.length,
+        pendingAnswer:    false,
+        reviewModePhase:  updatedState.reviewMode?.phase || "reveal_only",
+        mcqExtracted:     Boolean(mcqState?.correctChoice)
       });
 
       console.log("[REVIEW MEMORY]", {
-        event: "STATE_UPDATED",
-        domain,
-        subtopic,
-        sessionId: conversationId,
-        questionHash: qHash,
-        seenChunkCount: updatedState.reviewHistory.seenChunkIds.length,
-        seenSourceCount: updatedState.reviewHistory.seenSourcePaths.length,
-        seenHashCount: updatedState.reviewHistory.seenQuestionHashes.length
+        event:           "STATE_UPDATED",
+        domain, subtopic, sessionId: conversationId,
+        questionHash,
+        seenChunkCount:  updatedReviewHistory.seenChunkIds.length,
+        seenSourceCount: updatedReviewHistory.seenSourcePaths.length,
+        seenHashCount:   updatedReviewHistory.seenQuestionHashes.length
       });
 
       return {
         handled: true,
         response: {
-          success: true,
-          engine: "TINA Learning System",
-          version: ENGINE_VERSION,
-          hook: hookConfig.hook_code,
-          mode: hookConfig.mode,
-          hookTitle: hookConfig.title,
-          answer: responseAnswer,
-          answerMode: "review_material_generated",
-          topic: domain,
+          success:              true,
+          engine:               "TINA Learning System",
+          version:              ENGINE_VERSION,
+          hook:                 hookConfig.hook_code,
+          mode:                 hookConfig.mode,
+          hookTitle:            hookConfig.title,
+          answer:               responseAnswer,
+          answerMode:           "review_material_generated",
+          topic:                domain,
           subtopic,
-          subtopicLabel: reviewResult.subtopicLabel,
-          confidence: visibleSources.length ? "GDRIVE_GROUNDED" : "TRAINING_KNOWLEDGE",
-          sourceStatus: visibleSources.length ? "GDRIVE_GROUNDED_REVIEW_READY" : "TRAINING_KNOWLEDGE_REVIEW",
-          sources: visibleSources,
-          sourcesUsed: visibleSources,
-          sourceCards: visibleSources,
-          vectorMatches: visibleSources.length,
-          sessionScore: updatedState.score,
+          subtopicLabel,
+          confidence:           visibleSources.length ? "GDRIVE_GROUNDED" : "TRAINING_KNOWLEDGE",
+          sourceStatus:         visibleSources.length ? "GDRIVE_GROUNDED_REVIEW_READY" : "TRAINING_KNOWLEDGE_REVIEW",
+          sources:              visibleSources,
+          sourcesUsed:          visibleSources,
+          sourceCards:          visibleSources,
+          vectorMatches:        visibleSources.length,
           learningSystemVersion: ENGINE_VERSION,
           directOpenAICallDisabled: true
         }
       };
     } finally {
       endTrace({ traceId, metadata: { domain } });
+      flushObservability().catch(() => {});
+    }
+  }
+
+  // ── evaluate MCQ review answer + generate next item ─────────────────────────
+  // Evaluates the user's A/B/C/D choice locally against reviewMode.currentItem.
+  // Does NOT update score, mastery, weakSubtopics, or tina_learning_attempts.
+  // Generates the next review item and appends its visible content to the response.
+
+  async function handleReviewMcqAnswer({
+    userId, conversationId, hookConfig, sessionLearning, cleanAnswer
+  }) {
+    const traceId = generateTraceId();
+    startTrace({ traceId, name: "tina-review-mcq", hook: "/review", metadata: { domain: sessionLearning.domain } });
+    const _tracedCall = (params) => callAssessmentOpenAI({ ...params, _traceId: traceId });
+
+    try {
+      const domain      = sessionLearning.domain || "";
+      const reviewMode  = safeObject(sessionLearning.reviewMode);
+      const currentItem = safeObject(reviewMode.currentItem);
+
+      const feedback = buildReviewFeedback(currentItem, cleanAnswer);
+
+      console.log("[REVIEW MCQ ANSWER]", {
+        answer:    cleanAnswer,
+        correct:   currentItem.correctChoice,
+        isCorrect: String(cleanAnswer).toUpperCase() === String(currentItem.correctChoice || "").toUpperCase(),
+        domain,
+        subtopic:  sessionLearning.subtopic,
+        sessionId: conversationId
+      });
+
+      // No score/mastery update — /review is a learning mode, not a quiz
+      const updatedState = { ...sessionLearning };
+      updatedState.pendingAnswer = null;
+
+      // Generate next review item via the shared helper
+      const nextItemResult = await generateReviewItemForSession({
+        domain, sessionLearning: updatedState, callOpenAI: _tracedCall, conversationId
+      });
+
+      let nextContent = "";
+      let nextSourceChunks = [];
+
+      if (nextItemResult.ok) {
+        const { subtopic, subtopicLabel, visibleContent, hiddenContent, mcqState, questionHash, sourceChunks, updatedReviewHistory } = nextItemResult;
+
+        nextSourceChunks = sourceChunks || [];
+        nextContent = mcqState?.correctChoice
+          ? visibleContent + "\n\n---\nType **A**, **B**, **C**, or **D** to answer."
+          : visibleContent + "\n\n---\nAnswer hidden. Type `/reveal` to show the self-check answer.";
+
+        updatedState.subtopic = subtopic;
+        if (!safeArray(updatedState.coveredSubtopics).includes(subtopic)) {
+          updatedState.coveredSubtopics = [...safeArray(updatedState.coveredSubtopics), subtopic];
+        }
+
+        if (mcqState?.correctChoice) {
+          updatedState.reviewMode = {
+            phase:   "AWAITING_ANSWER",
+            domain,
+            subtopic,
+            subtopicLabel,
+            currentItem: {
+              itemType:       "conceptual",
+              questionType:   "mcq",
+              visibleContent,
+              hiddenContent,
+              question:       mcqState.question,
+              choices:        mcqState.choices,
+              correctChoice:  mcqState.correctChoice,
+              correctAnswer:  mcqState.correctAnswer,
+              explanation:    mcqState.explanation,
+              whyOthersWrong: mcqState.whyOthersWrong,
+              sourceChunkIds: safeArray(sourceChunks).map(s => String(s.id || "")),
+              sourcePaths:    [...new Set(safeArray(sourceChunks).map(s => s.sourcePath || "").filter(Boolean))],
+              questionHash,
+              createdAt:      new Date().toISOString()
+            },
+            history: {
+              seenQuestionHashes: updatedReviewHistory.seenQuestionHashes,
+              seenChunkIds:       updatedReviewHistory.seenChunkIds,
+              seenSourcePaths:    updatedReviewHistory.seenSourcePaths,
+              roundNumber:        ((reviewMode.history?.roundNumber) || 0) + 1
+            }
+          };
+        } else {
+          updatedState.reviewMode = null;
+        }
+
+        updatedState.reviewReveal = hiddenContent
+          ? { hiddenContent, revealed: false, domain, subtopic, subtopicLabel, createdAt: new Date().toISOString() }
+          : null;
+
+        updatedState.reviewHistory = updatedReviewHistory;
+      } else {
+        // Next item failed — clear MCQ state, show fallback message
+        updatedState.reviewMode  = null;
+        updatedState.reviewReveal = null;
+        if (nextItemResult.noSource) {
+          console.log("[REVIEW MCQ NEXT] No indexed source for next item", { domain, sessionId: conversationId });
+        }
+        nextContent = "\n\n---\nNext review item could not be generated from indexed sources. You may try another topic or type `/bye`.";
+      }
+
+      const fullAnswer = [feedback, "", "---", "", nextContent].join("\n").trim();
+
+      const visibleSources = finalizeSourcesForResponse(nextSourceChunks, { maxItems: MAX_VISIBLE_SOURCES });
+
+      // Save only the feedback in conversation history — hidden answer data excluded
+      await saveConversationTurn({
+        conversationId, userId,
+        question: cleanAnswer,
+        answerText: feedback,
+        sourcesUsed: []
+      });
+
+      await saveModeState(supabase, {
+        userId,
+        sessionId: conversationId || null,
+        activeHook: hookConfig.hook_code,
+        activeMode: hookConfig.mode,
+        modeTitle: hookConfig.title,
+        lastQuestion: cleanAnswer,
+        lastAnswer: fullAnswer,
+        adaptiveContext: { learning: updatedState }
+      });
+
+      return {
+        handled: true,
+        response: {
+          success:              true,
+          engine:               "TINA Learning System",
+          version:              ENGINE_VERSION,
+          hook:                 hookConfig.hook_code,
+          mode:                 hookConfig.mode,
+          hookTitle:            hookConfig.title,
+          answer:               fullAnswer,
+          answerMode:           "review_mcq_evaluated",
+          topic:                domain,
+          subtopic:             updatedState.subtopic,
+          sourceStatus:         visibleSources.length ? "GDRIVE_GROUNDED" : "TRAINING_KNOWLEDGE",
+          sources:              visibleSources,
+          sourcesUsed:          visibleSources,
+          sourceCards:          visibleSources,
+          vectorMatches:        visibleSources.length,
+          learningSystemVersion: ENGINE_VERSION,
+          directOpenAICallDisabled: true
+        }
+      };
+    } finally {
+      endTrace({ traceId, metadata: { domain: sessionLearning.domain } });
       flushObservability().catch(() => {});
     }
   }
@@ -1134,11 +1267,37 @@ export function createLearningHandler({
 
     const adaptiveContext = safeObject(existingModeState?.adaptive_context);
 
-    // Check for pending review answer BEFORE parseLearningCommand.
-    // When pendingAnswer is stored, the user must submit A/B/C/D before getting the next topic.
+    // Check for active review MCQ item BEFORE parseLearningCommand.
+    // When reviewMode.currentItem.questionType === "mcq", user must submit A/B/C/D.
+    // Legacy: also handles old sessions that still have pendingAnswer.
     if (hookCode === "/review") {
-      const storedLearning = safeObject(adaptiveContext?.learning);
-      if (storedLearning.pendingAnswer) {
+      const storedLearning  = safeObject(adaptiveContext?.learning);
+      const reviewModeItem  = safeObject(storedLearning.reviewMode?.currentItem);
+
+      if (reviewModeItem.questionType === "mcq") {
+        const quizAnswer = extractQuizAnswer(cleanQuestion || "");
+        if (quizAnswer) {
+          const sessionLearning = {
+            ...emptyLearningState(storedLearning.domain || "", "REVIEW"),
+            ...storedLearning
+          };
+          return handleReviewMcqAnswer({
+            userId, conversationId, hookConfig, sessionLearning, cleanAnswer: quizAnswer
+          });
+        }
+        // Non-A/B/C/D while MCQ is awaiting answer
+        return {
+          handled: true,
+          response: {
+            success: false,
+            engine: "TINA Learning System",
+            mode: "REVIEW_ANSWER_GATED",
+            answer: `## Invalid Response\n\nAllowed responses:\n• A\n• B\n• C\n• D\n• /bye\n• /exit\n• /quit\n\nYou are currently inside /review ${storedLearning.domain || ""}.\n\nDo not answer questions directly in review mode.\n\nTYPE:\n• A/B/C/D to answer\n• /bye to exit`,
+            sources: [], sourcesUsed: [], sourceCards: [], vectorMatches: 0
+          }
+        };
+      } else if (storedLearning.pendingAnswer) {
+        // Legacy path: old sessions stored pendingAnswer before reviewMode was introduced
         const quizAnswer = extractQuizAnswer(cleanQuestion || "");
         if (quizAnswer) {
           const sessionLearning = {
@@ -1149,8 +1308,6 @@ export function createLearningHandler({
             userId, conversationId, hookConfig, sessionLearning, cleanAnswer: quizAnswer
           });
         }
-        // Non-A/B/C/D received while answer is pending — ask-handler gate should prevent this, but handle defensively.
-        // No OpenAI call, no retrieval, no session reset.
         return {
           handled: true,
           response: {
@@ -1162,12 +1319,12 @@ export function createLearningHandler({
           }
         };
       } else {
-        // pendingAnswer not set — if A/B/C/D arrives anyway, log it (no question pending)
+        // No active MCQ item — log orphan A/B/C/D if received
         const orphanAnswer = extractQuizAnswer(cleanQuestion || "");
         if (orphanAnswer) {
           console.log("[REVIEW ANSWER ROUTE BLOCKED]", {
             input: cleanQuestion,
-            reason: "no pending review question"
+            reason: "no active review MCQ item"
           });
         }
       }
