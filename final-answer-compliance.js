@@ -37,6 +37,8 @@ import {
 
 import { enforceProhibitedPhrases, redactProhibitedPhrases } from "./adaptive-tina-master-prompt.js";
 
+import { expandLegalCitationMentions } from "./legal-citation-range-utils.js";
+
 const ENGINE_VERSION = "6.1.0";
 
 const RESPONSE_MODE = Object.freeze({
@@ -599,6 +601,13 @@ function extractCitationsFromText(text = "") {
         normalized: compactText(pattern.normalize(match))
       });
     }
+  }
+
+  // Citation range/list expansion: "Sections 105 to 108 of the NIRC", "NIRC Secs. 84-97", etc.
+  // Adds individual NIRC section entries for ranges/lists that single-section patterns miss.
+  // These entries participate in citationSupportedBySources validation like any other citation.
+  for (const ref of expandLegalCitationMentions(value)) {
+    output.push({ type: "NIRC", raw: ref, normalized: compactText(ref) });
   }
 
   return uniqueBy(output, (item) => `${item.type}|${item.normalized}`.toLowerCase());

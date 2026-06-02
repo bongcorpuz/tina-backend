@@ -24,6 +24,10 @@ import {
   findReplacementForDocument
 } from "./supersession-engine.js";
 
+import {
+  expandLegalCitationMentionsToKeys
+} from "./legal-citation-range-utils.js";
+
 export const ENGINE_VERSION = "3.3.0";
 export const MAX_VISIBLE_SOURCES = 5;
 
@@ -1598,6 +1602,15 @@ function _extractAnswerCitationKeys(normalizedAnswerText = "") {
   for (const m of t.matchAll(/\bra\s+(?:no\.?\s*)?(\d{4,6})\b/gi)) {
     keys.add(`ra${m[1]}`);
   }
+
+  // Citation range/list expansion: "Sections 105 to 108 of the NIRC", "NIRC Secs. 84-97", etc.
+  // Adds canonical keys for every section in a cited range so source cards can match.
+  for (const ck of expandLegalCitationMentionsToKeys(normalizedAnswerText)) {
+    keys.add(ck);
+    const scDigit = ck.match(/^nircsc(\d+)$/);
+    if (scDigit) keys.add(`sc${scDigit[1]}`);
+  }
+
   return keys;
 }
 
@@ -1636,6 +1649,14 @@ function _sourceCanonicalKeys(source = {}) {
     // Canonical key (strips all punctuation/spaces)
     const ck = canonicalSourceKey(loose);
     if (ck && ck.length >= 3) keys.add(ck);
+
+    // Range expansion for multi-section source labels ("NIRC Secs. 105-108").
+    // Allows a chunk covering a section range to match any individual section key.
+    for (const rangeKey of expandLegalCitationMentionsToKeys(loose)) {
+      keys.add(rangeKey);
+      const scDigit = rangeKey.match(/^nircsc(\d+)$/);
+      if (scDigit) keys.add(`sc${scDigit[1]}`);
+    }
   }
   return keys;
 }
