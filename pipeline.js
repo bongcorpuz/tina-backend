@@ -1024,7 +1024,26 @@ export async function runPipeline({
   const isSourceLookupRetrieval =
     String(ctx.mode || "").toUpperCase() === "SOURCE_LOOKUP";
 
-  const _retrievalRaw = isSourceLookupRetrieval
+  // Authority-critical retrieval: queries whose answer is meaningless without the
+  // canonical primary authorities (e.g. "What is VAT?" requires Sec. 105-108).
+  // Accepting a timeout-empty fallback would cascade to zero source cards even
+  // though retrieval eventually finds the right documents.  Like SOURCE_LOOKUP,
+  // these await the real retrieval promise and skip the race entirely.
+  const isAuthorityCriticalRetrieval =
+    ctx.issueClassification?.subIssue === "VAT_DEFINITION" ||
+    String(ctx.issueClassification?.retrievalStrategy || "").includes("VAT_DEFINITION") ||
+    ctx.issueClassification?.requiresAuthorityCriticalRetrieval === true;
+
+  if (isAuthorityCriticalRetrieval) {
+    console.log("[RETRIEVAL AWAIT MODE]", {
+      reason:            "authority_critical",
+      mode:              ctx.mode,
+      subIssue:          ctx.issueClassification?.subIssue || null,
+      retrievalStrategy: ctx.issueClassification?.retrievalStrategy || null
+    });
+  }
+
+  const _retrievalRaw = (isSourceLookupRetrieval || isAuthorityCriticalRetrieval)
     ? await retrievalPromise
     : await Promise.race([retrievalPromise, timeoutFallbackPromise]);
 
