@@ -52,7 +52,8 @@ import { scoreRisk }                              from "./risk-scoring-engine.js
 import {
   inferIssuanceNumber,
   sourceTitleOf,
-  canonicalSourceKey
+  canonicalSourceKey,
+  filterDisplayedSourcesByDirectSupport
 }                                                 from "./source-visibility-engine.js";
 import {
   detectPhilippineTaxBoundary,
@@ -1646,6 +1647,28 @@ export async function runPipeline({
     }))
   });
 
+  // ── Direct-support display filter ────────────────────────────────────────────
+  // Runs AFTER retrieval, reranking, authority validation, supersession, answer gen,
+  // and outbound sanitizer.  Only controls what is DISPLAYED — does NOT touch
+  // retrieval candidates or LLM context.
+  // targetAuthority alone is NOT a pass condition (enforces spec HARD RULES 5 & 6).
+  // HARD RULE 8: if all cards are filtered out, returns [] — no unrelated backfill.
+  const {
+    displayedSources: _dsFiltered,
+    diagnostics:      _dsDiag
+  } = filterDisplayedSourcesByDirectSupport({
+    candidateSources:    sourceCards,
+    answerText:          finalAnswer,
+    issueClassification: ctx.issueClassification,
+    query,
+    legalBasisText:      "",
+    keyTerms:            [],
+    mode:                ctx.mode,
+    hook
+  });
+  console.log("[DIRECT SUPPORT FILTER]", _dsDiag);
+  const finalSourceCards = _dsFiltered;
+
   // ── Stage 1: Passive source authority diagnostic ────────────────────────────
   // Runs AFTER existing sourceCards are already built and logged.
   // Does NOT change sourceCards, answer, or any pipeline output.
@@ -1658,7 +1681,7 @@ export async function runPipeline({
     answerText:         finalAnswer || "",
     mode:               ctx.mode   || "",
     maxSources:         5,
-    currentSourceCards: sourceCards
+    currentSourceCards: finalSourceCards
   });
   trace._sourceAuthoritySelectorDiagnostics = _sasResult.diagnostics;
   if (!_sasResult.diagnostics.error) {
@@ -1703,10 +1726,13 @@ export async function runPipeline({
   ]);
 
   return {
-    answer:              finalAnswer,
-    sources:             ctx.rerankedChunks || [],
-    sourcesUsed:         ctx.rerankedChunks || [],
-    sourceCards,
+    answer:                           finalAnswer,
+    sources:                          ctx.rerankedChunks || [],
+    sourcesUsed:                      ctx.rerankedChunks || [],
+    sourceCards:                      finalSourceCards,
+    sourceCardsDirectSupportFiltered: true,
+    retrievedSourceCount:             ctx.rerankedChunks?.length || 0,
+    displayedSourceCount:             finalSourceCards.length,
     educationalSources,
     issueClassification: ctx.issueClassification,
     conflictAnalysis:    ctx.conflictAnalysis,

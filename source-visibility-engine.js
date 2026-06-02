@@ -1525,6 +1525,377 @@ export function buildFinalRoutePayload({
   };
 }
 
+// ─── Direct-Support Display Filter ───────────────────────────────────────────
+// Deterministic post-generation filter.
+// Retrieved ≠ Displayed. Only sources that directly support the final answer
+// are shown. targetAuthority alone is NOT a pass condition.
+
+function _isSourceLookupQuery(query = "") {
+  const q = normalizeLooseText(query);
+  if (
+    /\b(show me|find|locate|look up|fetch|get)\b/i.test(q) &&
+    /\b(source|section|provision|rmc|rr|rmo|ramo|bir ruling|nirc|text)\b/i.test(q)
+  ) return true;
+  if (/\bwhat does\s+.{2,50}\s+say\b/i.test(q)) return true;
+  if (/\btext of\b/i.test(q)) return true;
+  if (/\bsources? on\b/i.test(q)) return true;
+  if (/^(?:nirc|tax code)\s+sec(?:tion)?\.?\s*\d+[a-z]?\s*$/i.test(q.trim())) return true;
+  if (/^(?:rmc|rr|rmo|ramo)\s+(?:no\.?\s*)?\d+[-\s]\d{2,4}\s*$/i.test(q.trim())) return true;
+  return false;
+}
+
+function _extractLegalBasisSection(answerText = "") {
+  const text = normalizeText(answerText);
+  const patterns = [
+    /B\.\s*CONTROLLING LEGAL BASIS\s*\n([\s\S]*?)(?=\n\s*[C-H]\.\s+[A-Z]|\n\s*#{1,6}\s+[A-Z]|$)/i,
+    /#{1,3}\s*Legal Basis\s*\n([\s\S]*?)(?=\n\s*#{1,3}\s+[A-Z]|$)/i,
+    /\bLEGAL BASIS\b[:\s]*\n([\s\S]*?)(?=\n\s*[C-H]\.\s+[A-Z]|\n\s*#{1,3}\s+[A-Z]|\n\s*\d+\.\s+[A-Z]|$)/i
+  ];
+  for (const p of patterns) {
+    const m = text.match(p);
+    if (m?.[1]?.trim()) return m[1].trim();
+  }
+  return "";
+}
+
+function _expandYear2(twoDigit = "") {
+  return Number(twoDigit) <= 30 ? `20${twoDigit}` : `19${twoDigit}`;
+}
+
+// Extract canonical citation keys from normalized answer text.
+// Returns a Set of short opaque strings used for O(1) source matching.
+function _extractAnswerCitationKeys(normalizedAnswerText = "") {
+  const keys = new Set();
+  const t = normalizedAnswerText;
+
+  // NIRC / Tax Code sections
+  for (const m of t.matchAll(/\b(?:nirc\s+)?sec(?:tion)?\.?\s*(\d{1,3}[a-z]?)\b/gi)) {
+    const n = m[1].toLowerCase();
+    keys.add(`nircsc${n}`);
+    keys.add(`sc${n}`);
+  }
+  for (const m of t.matchAll(/\bsec(?:tion)?\.?\s*(\d{1,3}[a-z]?)\s+of\s+(?:the\s+)?(?:nirc|tax code)\b/gi)) {
+    const n = m[1].toLowerCase();
+    keys.add(`nircsc${n}`); keys.add(`sc${n}`);
+  }
+  // Administrative issuances
+  for (const m of t.matchAll(/\brr\s+(?:no\.?\s*)?(\d{1,3})[-\s](\d{2,4})\b/gi)) {
+    const yr = m[2].length === 2 ? _expandYear2(m[2]) : m[2];
+    keys.add(`rr${m[1]}${yr}`);
+  }
+  for (const m of t.matchAll(/\brmc\s+(?:no\.?\s*)?(\d{1,3})[-\s](\d{2,4})\b/gi)) {
+    const yr = m[2].length === 2 ? _expandYear2(m[2]) : m[2];
+    keys.add(`rmc${m[1]}${yr}`);
+  }
+  for (const m of t.matchAll(/\brmo\s+(?:no\.?\s*)?(\d{1,3})[-\s](\d{2,4})\b/gi)) {
+    const yr = m[2].length === 2 ? _expandYear2(m[2]) : m[2];
+    keys.add(`rmo${m[1]}${yr}`);
+  }
+  for (const m of t.matchAll(/\bramo\s+(?:no\.?\s*)?(\d{1,3})[-\s](\d{2,4})\b/gi)) {
+    const yr = m[2].length === 2 ? _expandYear2(m[2]) : m[2];
+    keys.add(`ramo${m[1]}${yr}`);
+  }
+  for (const m of t.matchAll(/\bra\s+(?:no\.?\s*)?(\d{4,6})\b/gi)) {
+    keys.add(`ra${m[1]}`);
+  }
+  return keys;
+}
+
+// Build the set of canonical keys that identify a source card.
+function _sourceCanonicalKeys(source = {}) {
+  const refs = [
+    source.normalizedReference,
+    source.citation,
+    source.issuanceNumber,
+    source.title
+  ].filter(Boolean);
+
+  const keys = new Set();
+  for (const ref of refs) {
+    const loose = normalizeLooseText(ref);
+
+    // NIRC section key
+    const secM = loose.match(/\bsec(?:tion)?\.?\s*(\d{1,3}[a-z]?)\b/i);
+    if (secM) {
+      const n = secM[1].toLowerCase();
+      keys.add(`nircsc${n}`);
+      keys.add(`sc${n}`);
+    }
+
+    // Admin issuance key
+    const adminM = loose.match(/\b(rr|rmc|rmo|ramo)\s+(?:no\.?\s*)?(\d{1,3})[-\s](\d{2,4})\b/i);
+    if (adminM) {
+      const yr = adminM[3].length === 2 ? _expandYear2(adminM[3]) : adminM[3];
+      keys.add(`${adminM[1].toLowerCase()}${adminM[2]}${yr}`);
+    }
+
+    // RA key
+    const raM = loose.match(/\bra\s+(?:no\.?\s*)?(\d{4,6})\b/i);
+    if (raM) keys.add(`ra${raM[1]}`);
+
+    // Canonical key (strips all punctuation/spaces)
+    const ck = canonicalSourceKey(loose);
+    if (ck && ck.length >= 3) keys.add(ck);
+  }
+  return keys;
+}
+
+// Signal A + B: does the source reference appear in the answer/legal-basis text?
+function _sourceAppearsInAnswer(source = {}, answerCitationKeys = new Set(), normalizedAnswerText = "") {
+  const sourceKeys = _sourceCanonicalKeys(source);
+  for (const k of sourceKeys) {
+    if (k && answerCitationKeys.has(k)) return true;
+  }
+  // Substring fallback for refs that canonical-key extraction may miss
+  const refs = [source.normalizedReference, source.citation, source.issuanceNumber].filter(Boolean);
+  for (const ref of refs) {
+    const loose = normalizeLooseText(ref);
+    if (loose.length >= 4 && normalizedAnswerText.includes(loose)) return true;
+  }
+  return false;
+}
+
+// Domain term groups used for Signal C key-term overlap scoring.
+// Each group represents a distinct legal/tax proposition domain.
+const _DIRECT_SUPPORT_TERM_GROUPS = Object.freeze([
+  // EWT / Creditable Withholding
+  ["withholding", "withholding tax", "expanded withholding tax", "creditable withholding", "ewt", "cwt", "tax withheld at source", "withholding agent", "2307", "1601"],
+  // Final Withholding
+  ["final withholding", "fwt", "final tax", "dividends", "royalties"],
+  // VAT general
+  ["value added tax", "value-added tax", "output vat", "input vat", "zero rated", "zero-rated", "vat exempt", "vat registration", "vatable"],
+  // VAT importation (separate group so it does NOT bleed into EWT)
+  ["importation", "import vat", "vat on importation", "customs", "tariff", "cmta", "section 107"],
+  // Income tax
+  ["income tax", "corporate income tax", "rcit", "mcit", "nolco", "taxable income", "gross income", "compensation income"],
+  // Estate / Donor
+  ["estate tax", "donor tax", "gross estate", "net estate"],
+  // Percentage / Excise
+  ["percentage tax", "excise tax", "sin tax", "petroleum"],
+  // Assessment / Prescription
+  ["assessment", "prescription", "loa", "pan", "fan", "fdda", "waiver"],
+  // Dispute
+  ["protest", "appeal", "refund", "compromise", "abatement"]
+]);
+
+function _extractAnswerKeyTerms(answerText = "", extraKeyTerms = [], issueClassification = null) {
+  const normalized = normalizeLooseText(answerText);
+  const terms = new Set();
+
+  for (const t of extraKeyTerms) {
+    if (t) terms.add(normalizeLooseText(t));
+  }
+
+  // Add domain terms that actually appear in this answer (word-boundary aware)
+  for (const group of _DIRECT_SUPPORT_TERM_GROUPS) {
+    for (const term of group) {
+      const norm = normalizeLooseText(term);
+      if (_termMatches(normalized, norm)) terms.add(norm);
+    }
+  }
+
+  // Add domain keywords from issue classification (word-boundary aware)
+  if (issueClassification) {
+    const domKey = String(
+      issueClassification.primaryDomain ||
+      issueClassification.taxDomainClassification?.primaryDomain ||
+      ""
+    ).toUpperCase();
+    if (domKey && DOMAIN_KEYWORDS[domKey]) {
+      for (const kw of DOMAIN_KEYWORDS[domKey]) {
+        const norm = normalizeLooseText(kw);
+        if (_termMatches(normalized, norm)) terms.add(norm);
+      }
+    }
+  }
+
+  // Add section references that appear in the answer as strong key terms
+  for (const m of normalized.matchAll(/\b(?:nirc\s+)?sec(?:tion)?\.?\s*(\d{1,3}[a-z]?)\b/gi)) {
+    terms.add(`sec ${m[1].toLowerCase()}`);
+    terms.add(`section ${m[1].toLowerCase()}`);
+  }
+
+  return [...terms].filter(t => t && t.length >= 3);
+}
+
+// Word-boundary-aware term match.
+// Single-word terms use \b anchors to prevent "pan" matching inside "expanded",
+// "loa" inside "loan", etc.  Multi-word phrases use substring match (safe because
+// a phrase like "withholding tax" cannot appear as an embedded fragment of another word).
+function _termMatches(normalizedBlob = "", normalizedTerm = "") {
+  if (!normalizedBlob || !normalizedTerm || normalizedTerm.length < 3) return false;
+  if (normalizedTerm.includes(" ")) {
+    return normalizedBlob.includes(normalizedTerm);
+  }
+  const esc = normalizedTerm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp(`\\b${esc}\\b`).test(normalizedBlob);
+}
+
+// Signal C: count meaningful key-term overlaps between source blob and answer terms.
+// Uses word-boundary matching for single-word terms via _termMatches.
+function _hasDirectSupportTerms(sourceBlob = "", keyTerms = [], minOverlap = 2) {
+  if (!sourceBlob || !keyTerms.length) return false;
+  const nb = normalizeLooseText(sourceBlob);
+  let overlap = 0;
+  for (const term of keyTerms) {
+    if (!term || term.length < 3) continue;
+    if (_termMatches(nb, term)) {
+      overlap++;
+      if (overlap >= minOverlap) return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * filterDisplayedSourcesByDirectSupport
+ *
+ * Final display-only filter. Runs AFTER retrieval, reranking, authority validation,
+ * supersession, and answer generation. Only filters what is shown to the user.
+ *
+ * Pass signals (any one sufficient):
+ *   A. Source reference explicitly cited in the final answer text.
+ *   B. Source reference appears in the answer's Legal Basis section.
+ *   C. Source excerpt/title key-term overlap with answer propositions (≥ 2 terms).
+ *   D. Query is an explicit source/citation lookup (always pass).
+ *
+ * targetAuthority alone is NOT a pass signal (enforces HARD RULE 5 & 6).
+ */
+export function filterDisplayedSourcesByDirectSupport({
+  candidateSources = [],
+  answerText = "",
+  issueClassification = null,
+  query = "",
+  legalBasisText = "",
+  keyTerms = [],
+  mode = "",
+  hook = ""
+} = {}) {
+  if (!Array.isArray(candidateSources) || !candidateSources.length) {
+    return {
+      displayedSources: [],
+      rejectedSources: [],
+      diagnostics: { reason: "no_candidates", total: 0, displayed: 0, rejected: 0 }
+    };
+  }
+
+  // Explicit source explorer / source lookup mode — pass all through without
+  // answer-support gating.  /source is a document browser, not an answer validator.
+  // SOURCE_LOOKUP mode is the pipeline's internal equivalent.
+  const _isExplicitSourceMode =
+    String(hook || "").toLowerCase() === "/source" ||
+    String(mode || "").toUpperCase() === "SOURCE_LOOKUP";
+
+  if (_isExplicitSourceMode) {
+    return {
+      displayedSources: candidateSources,
+      rejectedSources: [],
+      diagnostics: {
+        reason:    "source_mode_passthrough",
+        total:     candidateSources.length,
+        displayed: candidateSources.length,
+        rejected:  0
+      }
+    };
+  }
+
+  // No answer text — fail closed: cannot validate direct support without an answer.
+  // Exception: explicit source/citation lookup queries may still pass all through.
+  if (!answerText || !String(answerText).trim()) {
+    if (_isSourceLookupQuery(query)) {
+      return {
+        displayedSources: candidateSources,
+        rejectedSources: [],
+        diagnostics: { reason: "source_lookup_exception_empty_answer", total: candidateSources.length, displayed: candidateSources.length, rejected: 0 }
+      };
+    }
+    return {
+      displayedSources: [],
+      rejectedSources: candidateSources.map(s => ({
+        ref:    s.normalizedReference || s.citation || s.title || "(no-ref)",
+        reason: "empty_answer_text_no_direct_support"
+      })),
+      diagnostics: {
+        reason:     "empty_answer_text_fail_closed",
+        failClosed: true,
+        total:      candidateSources.length,
+        displayed:  0,
+        rejected:   candidateSources.length
+      }
+    };
+  }
+
+  // Signal D: source lookup queries get all candidates (looser gate per spec)
+  if (_isSourceLookupQuery(query)) {
+    return {
+      displayedSources: candidateSources,
+      rejectedSources: [],
+      diagnostics: { reason: "source_lookup_exception", total: candidateSources.length, displayed: candidateSources.length, rejected: 0 }
+    };
+  }
+
+  const normalizedAnswer     = normalizeLooseText(answerText);
+  const legalBasisBody       = _extractLegalBasisSection(answerText) || legalBasisText;
+  const normalizedLegalBasis = normalizeLooseText(legalBasisBody);
+  const answerCitationKeys   = _extractAnswerCitationKeys(normalizedAnswer);
+  const legalBasisCitKeys    = _extractAnswerCitationKeys(normalizedLegalBasis);
+  const answerKeyTerms       = _extractAnswerKeyTerms(answerText, keyTerms, issueClassification);
+
+  const displayedSources = [];
+  const rejectedSources  = [];
+
+  for (const source of candidateSources) {
+    // Signal A: source reference explicitly cited in the final answer
+    if (_sourceAppearsInAnswer(source, answerCitationKeys, normalizedAnswer)) {
+      displayedSources.push(source);
+      continue;
+    }
+
+    // Signal B: source reference cited in the answer's legal basis section
+    if (normalizedLegalBasis && _sourceAppearsInAnswer(source, legalBasisCitKeys, normalizedLegalBasis)) {
+      displayedSources.push(source);
+      continue;
+    }
+
+    // Signal C: source excerpt/title directly supports answer via key-term overlap
+    // Requires ≥ 2 overlapping meaningful terms to prevent false positives
+    if (answerKeyTerms.length >= 2) {
+      const sourceBlob = [
+        source.excerpt            || "",
+        source.title              || "",
+        source.normalizedReference || source.citation || "",
+        source.documentTitle      || source.document_title || ""
+      ].filter(Boolean).join(" ");
+
+      if (sourceBlob && _hasDirectSupportTerms(sourceBlob, answerKeyTerms, 2)) {
+        displayedSources.push(source);
+        continue;
+      }
+    }
+
+    // No signal — reject (HARD RULE 8: do not backfill with unrelated chunks)
+    rejectedSources.push({
+      ref:    source.normalizedReference || source.citation || source.title || "(no-ref)",
+      reason: "no_direct_support"
+    });
+  }
+
+  return {
+    displayedSources,
+    rejectedSources,
+    diagnostics: {
+      filterVersion:           "1.0.0",
+      total:                   candidateSources.length,
+      displayed:               displayedSources.length,
+      rejected:                rejectedSources.length,
+      answerCitationKeysCount: answerCitationKeys.size,
+      answerKeyTermsCount:     answerKeyTerms.length,
+      keyTermsSample:          answerKeyTerms.slice(0, 8),
+      rejectedRefs:            rejectedSources.map(r => r.ref).slice(0, 10)
+    }
+  };
+}
+
 export function sourceVisibilityHealthCheck() {
   return {
     ok: true,
@@ -1555,6 +1926,7 @@ export default {
   filterVisibleSources,
   runSupersessionPreflight,
   buildFinalRoutePayload,
+  filterDisplayedSourcesByDirectSupport,
   sourceTitleOf,
   sourceDriveUrlOf,
   sourceDownloadUrlOf,

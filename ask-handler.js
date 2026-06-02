@@ -1857,13 +1857,19 @@ export function createAskHandler({
       hookConfig.hook_code === "/source" ||
       hookConfig.forceSourceVisibility === true;
 
+    // When the pipeline applied the direct-support filter and intentionally produced
+    // empty sourceCards, do NOT backfill from result.sources — those are also set to
+    // finalSourceCards by pipeline.js and any backfill would reintroduce sources that
+    // were deliberately excluded for not supporting the final answer.
+    const _dsFiltered = Boolean(result.sourceCardsDirectSupportFiltered);
+
     const visibleSources = isSourceMode
       ? resultSources                                              // /source: full array, uncapped
       : resultSourceCards.length > 0
         ? resultSourceCards                                        // normal: deduped max-5 cards
-        : resultSources.length > 0
+        : (!_dsFiltered && resultSources.length > 0)
           ? finalizeSourcesForResponse(resultSources, { maxItems: MAX_VISIBLE_SOURCES })
-          : [];                                                    // fallback: build from raw
+          : [];                                                    // no backfill when DS-filtered
 
     console.log("TINA MODE DOWNSTREAM DEBUG:", {
       responseMode: result.responseMode || result.orchestration?.mode || hookConfig.mode,
@@ -1892,9 +1898,10 @@ export function createAskHandler({
       sourcesUsed: visibleSources,
       sourceCards: isSourceMode ? resultSourceCards : visibleSources,
       educationalSources:  resultEducationalSources,
-      vectorMatches: resultSources.length,
+      vectorMatches: result.retrievedSourceCount ?? resultSources.length,
 
-      retrievedSourceCount: resultSources.length,
+      retrievedSourceCount: result.retrievedSourceCount ?? resultSources.length,
+      displayedSourceCount: result.displayedSourceCount ?? resultSourceCards.length,
 
       sourceStatus: resultSources.length
         ? "ISSUE_MATCHED_CONTEXT_USED"
