@@ -741,6 +741,108 @@ function buildEducationalSources(chunks = [], responseStyle = null, query = "") 
   };
 }
 
+// ─── Source Availability Classification ──────────────────────────────────────
+
+const _SA_WARNING_STARTS = [
+  "Indexed source not found.",
+  "Indexed source retrieval timed out.",
+  "I found related indexed material",
+];
+
+/**
+ * Classifies source availability after all filtering stages are complete.
+ * Must be called ONLY after filterDisplayedSourcesByDirectSupport has run.
+ *
+ * Priority order:
+ *  1. RETRIEVAL_TIMEOUT  — timedOut wins over everything
+ *  2. AUTHORITY_FOUND    — at least one direct-support card survived
+ *  3. SOURCE_LOOKUP_EMPTY — /source or SOURCE_LOOKUP mode with no final cards
+ *  4. RELATED_AUTHORITY_ONLY — reranked chunks exist but no card survived DS filter
+ *  5. NO_INDEXED_SOURCE  — nothing retrieved, no timeout
+ */
+function computeSourceAvailability({
+  mode,
+  hook,
+  rerankedChunks,
+  finalSourceCards,
+  retrievalDiagnostics
+}) {
+  const timedOut       = Boolean(retrievalDiagnostics?.timedOut);
+  const isSourceLookup = String(mode || "").toUpperCase() === "SOURCE_LOOKUP" || hook === "/source";
+  const rerankedCount  = Array.isArray(rerankedChunks) ? rerankedChunks.length : 0;
+  const displayedCount = Array.isArray(finalSourceCards) ? finalSourceCards.length : 0;
+
+  let sourceAvailability;
+  let sourceAvailabilityReason;
+
+  if (timedOut) {
+    sourceAvailability      = "RETRIEVAL_TIMEOUT";
+    sourceAvailabilityReason = "Retrieval timed out; no indexed source verification was possible.";
+  } else if (displayedCount > 0) {
+    sourceAvailability      = "AUTHORITY_FOUND";
+    sourceAvailabilityReason = `${displayedCount} direct-support source card(s) passed all filters.`;
+  } else if (isSourceLookup) {
+    sourceAvailability      = "SOURCE_LOOKUP_EMPTY";
+    sourceAvailabilityReason = "SOURCE_LOOKUP mode: no indexed source card survived the direct-support filter.";
+  } else if (rerankedCount > 0) {
+    sourceAvailability      = "RELATED_AUTHORITY_ONLY";
+    sourceAvailabilityReason = `${rerankedCount} reranked chunk(s) retrieved but no source card survived direct-support filter.`;
+  } else {
+    sourceAvailability      = "NO_INDEXED_SOURCE";
+    sourceAvailabilityReason = "No reranked chunks retrieved and retrieval did not time out.";
+  }
+
+  return {
+    sourceAvailability,
+    sourceStatus:             sourceAvailability,
+    sourceAvailabilityReason,
+    retrievalTimedOut:        timedOut,
+    retrievedSourceCount:     rerankedCount,
+    displayedSourceCount:     displayedCount,
+    relatedSourceCount:       sourceAvailability === "RELATED_AUTHORITY_ONLY" ? rerankedCount : 0
+  };
+}
+
+/**
+ * Prepends a source-availability caveat to the answer.
+ * Skips prepend when the answer already opens with the relevant warning text.
+ * For /audit fail-closed statuses, replaces the answer entirely.
+ * Returns the answer unchanged for AUTHORITY_FOUND.
+ */
+function prependSourceAvailabilityWarning(answer, sourceAvailability, mode, hook) {
+  if (sourceAvailability === "AUTHORITY_FOUND") return answer;
+
+  const trimmed = String(answer || "").trimStart();
+  if (_SA_WARNING_STARTS.some(s => trimmed.startsWith(s))) return answer;
+
+  const isAuditMode =
+    hook === "/audit" ||
+    String(mode || "").toUpperCase() === "COMPLEX_ADVISORY" ||
+    String(mode || "").toUpperCase() === "AUDIT_MODE";
+
+  // RETRIEVAL_TIMEOUT must use timeout-specific language in all modes.
+  // Audit mode still fails closed but with the correct reason (timeout ≠ no-source).
+  if (sourceAvailability === "RETRIEVAL_TIMEOUT") {
+    if (isAuditMode) {
+      return "Indexed source retrieval timed out. TINA cannot provide an audit or legal conclusion for this mode because the indexed knowledge base could not be verified within the retrieval window.";
+    }
+    return "Indexed source retrieval timed out. I could not verify this answer against TINA's indexed knowledge base within the retrieval window.\n\n" + answer;
+  }
+
+  // NO_INDEXED_SOURCE and RELATED_AUTHORITY_ONLY in audit mode: fail closed.
+  if (isAuditMode) {
+    return "Indexed source not found. TINA cannot provide an audit or legal conclusion for this mode without a directly supporting indexed authority.";
+  }
+
+  if (sourceAvailability === "NO_INDEXED_SOURCE") {
+    return "Indexed source not found. I could not locate a directly supporting authority in TINA's indexed knowledge base. The following is general information only and should not be treated as a cited Philippine tax authority.\n\n" + answer;
+  }
+  if (sourceAvailability === "RELATED_AUTHORITY_ONLY") {
+    return "I found related indexed material, but no directly supporting source card survived TINA's direct-support filter. Treat this as a cautious general explanation, not a source-grounded legal conclusion.\n\n" + answer;
+  }
+  return answer;
+}
+
 // ─── Main Pipeline ────────────────────────────────────────────────────────────
 
 export async function runPipeline({
@@ -1773,6 +1875,53 @@ export async function runPipeline({
   }
   // ── End Stage 1 diagnostic ───────────────────────────────────────────────────
 
+  // ── Source Availability Classification ────────────────────────────────────────
+  // Computed here — after retrieval, reranking, source-card generation,
+  // sanitizeOutboundSourceCards, and filterDisplayedSourcesByDirectSupport.
+  // The final source card set is now known.
+  const _sourceAvail = computeSourceAvailability({
+    mode:                 ctx.mode,
+    hook,
+    rerankedChunks:       ctx.rerankedChunks || [],
+    finalSourceCards,
+    retrievalDiagnostics: ctx.retrievalDiagnostics
+  });
+
+  console.log("[SOURCE AVAILABILITY]", {
+    sourceAvailability: _sourceAvail.sourceAvailability,
+    reason:             _sourceAvail.sourceAvailabilityReason,
+    retrievalTimedOut:  _sourceAvail.retrievalTimedOut,
+    retrievedCount:     _sourceAvail.retrievedSourceCount,
+    displayedCount:     _sourceAvail.displayedSourceCount,
+    relatedCount:       _sourceAvail.relatedSourceCount,
+    mode:               ctx.mode,
+    hook
+  });
+
+  // Apply mode-specific answer modifications based on source availability.
+  // finalAnswer is const; _outputAnswer holds the post-modification result.
+  let _outputAnswer = finalAnswer;
+  const _isLearningMode =
+    String(ctx.mode || "").toUpperCase() === "REVIEWER_MODE" ||
+    String(ctx.mode || "").toUpperCase() === "QUIZ_MODE";
+
+  if (_sourceAvail.sourceAvailability === "SOURCE_LOOKUP_EMPTY") {
+    // /source: return deterministic message, no general answer.
+    _outputAnswer = "Indexed source not found. I could not locate this authority in TINA's indexed knowledge base.";
+  } else if (_isLearningMode && _sourceAvail.sourceAvailability !== "AUTHORITY_FOUND") {
+    // /review and /quiz: no grounded source available — guard only; these hooks
+    // normally route through learningHandler, not pipeline.
+    _outputAnswer = "No grounded source available.";
+  } else {
+    _outputAnswer = prependSourceAvailabilityWarning(
+      _outputAnswer,
+      _sourceAvail.sourceAvailability,
+      ctx.mode,
+      hook
+    );
+  }
+  // ── End Source Availability ───────────────────────────────────────────────────
+
   endTrace({
     traceId,
     metadata: {
@@ -1796,13 +1945,18 @@ export async function runPipeline({
   ]);
 
   return {
-    answer:                           finalAnswer,
+    answer:                           _outputAnswer,
     sources:                          ctx.rerankedChunks || [],
     sourcesUsed:                      ctx.rerankedChunks || [],
     sourceCards:                      finalSourceCards,
     sourceCardsDirectSupportFiltered: true,
     retrievedSourceCount:             ctx.rerankedChunks?.length || 0,
     displayedSourceCount:             finalSourceCards.length,
+    sourceAvailability:               _sourceAvail.sourceAvailability,
+    sourceStatus:                     _sourceAvail.sourceStatus,
+    sourceAvailabilityReason:         _sourceAvail.sourceAvailabilityReason,
+    retrievalTimedOut:                _sourceAvail.retrievalTimedOut,
+    relatedSourceCount:               _sourceAvail.relatedSourceCount,
     educationalSources,
     issueClassification: ctx.issueClassification,
     conflictAnalysis:    ctx.conflictAnalysis,

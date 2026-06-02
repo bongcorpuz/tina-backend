@@ -1857,19 +1857,28 @@ export function createAskHandler({
       hookConfig.hook_code === "/source" ||
       hookConfig.forceSourceVisibility === true;
 
+    // SOURCE_LOOKUP_EMPTY: pipeline determined no indexed source exists for /source.
+    // Do NOT expose raw result.sources — the answer already says "Indexed source not found."
+    // Returning raw chunks would contradict the deterministic no-source message.
+    const _sourceLookupEmpty =
+      result.sourceAvailability === "SOURCE_LOOKUP_EMPTY" ||
+      result.sourceStatus === "SOURCE_LOOKUP_EMPTY";
+
     // When the pipeline applied the direct-support filter and intentionally produced
     // empty sourceCards, do NOT backfill from result.sources — those are also set to
     // finalSourceCards by pipeline.js and any backfill would reintroduce sources that
     // were deliberately excluded for not supporting the final answer.
     const _dsFiltered = Boolean(result.sourceCardsDirectSupportFiltered);
 
-    const visibleSources = isSourceMode
-      ? resultSources                                              // /source: full array, uncapped
-      : resultSourceCards.length > 0
-        ? resultSourceCards                                        // normal: deduped max-5 cards
-        : (!_dsFiltered && resultSources.length > 0)
-          ? finalizeSourcesForResponse(resultSources, { maxItems: MAX_VISIBLE_SOURCES })
-          : [];                                                    // no backfill when DS-filtered
+    const visibleSources = _sourceLookupEmpty
+      ? []                                                         // no raw exposure when no source found
+      : isSourceMode
+        ? resultSources                                            // /source with results: full array, uncapped
+        : resultSourceCards.length > 0
+          ? resultSourceCards                                      // normal: deduped max-5 cards
+          : (!_dsFiltered && resultSources.length > 0)
+            ? finalizeSourcesForResponse(resultSources, { maxItems: MAX_VISIBLE_SOURCES })
+            : [];                                                   // no backfill when DS-filtered
 
     console.log("TINA MODE DOWNSTREAM DEBUG:", {
       responseMode: result.responseMode || result.orchestration?.mode || hookConfig.mode,
@@ -1896,16 +1905,19 @@ export function createAskHandler({
 
       sources: visibleSources,
       sourcesUsed: visibleSources,
-      sourceCards: isSourceMode ? resultSourceCards : visibleSources,
+      sourceCards: _sourceLookupEmpty ? [] : (isSourceMode ? resultSourceCards : visibleSources),
       educationalSources:  resultEducationalSources,
       vectorMatches: result.retrievedSourceCount ?? resultSources.length,
 
       retrievedSourceCount: result.retrievedSourceCount ?? resultSources.length,
       displayedSourceCount: result.displayedSourceCount ?? resultSourceCards.length,
 
-      sourceStatus: resultSources.length
-        ? "ISSUE_MATCHED_CONTEXT_USED"
-        : "NO_VISIBLE_SOURCE",
+      sourceStatus:             result.sourceStatus || result.sourceAvailability ||
+                                  (resultSources.length ? "ISSUE_MATCHED_CONTEXT_USED" : "NO_VISIBLE_SOURCE"),
+      sourceAvailability:       result.sourceAvailability        || null,
+      sourceAvailabilityReason: result.sourceAvailabilityReason  || null,
+      retrievalTimedOut:        result.retrievalTimedOut === true,
+      relatedSourceCount:       result.relatedSourceCount        ?? 0,
 
       responseMode: result.responseMode || result.orchestration?.mode || hookConfig.mode,
       orchestrationMode: result.orchestrationMode || result.orchestration?.mode || hookConfig.mode,
