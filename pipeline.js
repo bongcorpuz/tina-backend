@@ -213,6 +213,62 @@ function inferSourceCardRef(c = {}, linkedType = "") {
   });
 }
 
+/**
+ * Resolves the canonical display label for a source card chip.
+ *
+ * Extends inferSourceCardRef with additional provision-scope metadata fields
+ * that the DB sometimes stores in sectionScope / metadata-nested heading fields.
+ * Also upgrades the generic "Tax Code" fallback to the more descriptive "NIRC Tax Code".
+ *
+ * HARD RULE: NIRC section labels (e.g. "NIRC Sec. 116") are derived only from
+ * source-side metadata — answer text is never consulted here.
+ *
+ * Priority for NIRC/statute family:
+ *   1-4.  normalizedReference / metadata.normalizedReference  (via inferSourceCardRef)
+ *   5-6.  sectionScope / metadata.sectionScope               (checked here first)
+ *   7.    metadata.sectionHeading / metadata.section_heading  (checked here first)
+ *   8-9.  citation / reference                                (via inferSourceCardRef)
+ *  10.    section number in c.title / c.sectionHeading / chunk text (via inferSourceCardRef)
+ *  11.    "NIRC Tax Code" — document-family fallback
+ *
+ * For RR / RMC / RMO / RAMO / RA: delegates directly to inferSourceCardRef.
+ */
+function resolveSourceCardDisplayRef(c = {}, linkedType = "") {
+  const meta = c.metadata || {};
+
+  if (["NIRC", "STATUTE", "TAX_CODE"].includes(linkedType)) {
+    // Priority 5-6: explicit sectionScope field in source/metadata
+    const sectionScope = safeStr(
+      meta.sectionScope  || meta.section_scope ||
+      c.sectionScope     || c.section_scope    || ""
+    );
+    if (sectionScope) {
+      const m = sectionScope.match(/\b(?:NIRC\s+)?Sec(?:tion)?\.?\s*(\d{1,3}[A-Z]?)\b/i);
+      if (m) return `NIRC Sec. ${m[1]}`;
+    }
+
+    // Priority 7: metadata-nested section heading (not inspected by inferSourceCardRef)
+    const metaHeading = safeStr(
+      meta.sectionHeading || meta.section_heading ||
+      meta.sectionTitle   || meta.section_title   || ""
+    );
+    if (metaHeading) {
+      const m = metaHeading.match(/\b(?:NIRC\s+)?Sec(?:tion)?\.?\s*(\d{1,3}[A-Z]?)\b/i);
+      if (m) return `NIRC Sec. ${m[1]}`;
+    }
+
+    // Delegate to inferSourceCardRef for all remaining patterns
+    // (normalizedRef, citation, top-level sectionHeading, chunk text excerpt)
+    const base = inferSourceCardRef(c, linkedType);
+
+    // Upgrade the generic "Tax Code" fallback to the more descriptive family label
+    return base === "Tax Code" ? "NIRC Tax Code" : base;
+  }
+
+  // All other types: delegate directly
+  return inferSourceCardRef(c, linkedType);
+}
+
 function sourceCardLabelType(label = "") {
   const text = safeStr(label).trim().toUpperCase();
   if (/^NIRC\b|^TAX CODE\b/.test(text)) return "NIRC";
@@ -262,9 +318,9 @@ function isTargetAllowedCard(provRef, linkedType, targetAuths) {
   // 1. Canonical match — covers "RR No. 16-2005" ≡ target "RR 16-2005"
   if (targetAuths.some(a => canonicalSourceKey(a) === provKey)) return true;
 
-  // 2. NIRC document-level "Tax Code" label as a safe fallback.
+  // 2. NIRC document-level fallback — both "Tax Code" and "NIRC Tax Code" labels.
   //    Only valid when the target list includes at least one NIRC/statute provision.
-  if (/^tax code$/i.test(provRef)) {
+  if (/^(?:nirc\s+)?tax\s+code$/i.test(provRef)) {
     return targetAuths.some(a => /\b(?:NIRC|Tax\s*Code)\b/i.test(a));
   }
 
@@ -408,11 +464,8 @@ function sanitizeOutboundSourceCards(cards, targetAuths = []) {
       continue;
     }
 
-    // Accept with corrected label
-    const docTitle = card.documentTitle || card.document_title || "";
-    const newTitle  = correctedRef && docTitle
-      ? `${correctedRef} — ${docTitle}`
-      : correctedRef || docTitle || "Source";
+    // Accept with corrected label (canonical authority label only; filename stays in documentTitle)
+    const newTitle = correctedRef || card.documentTitle || card.document_title || "Source";
     console.warn("[SC SANITIZE] relabeled:", { from: labelRef, to: correctedRef, effectiveType });
     result.push({
       ...card,
@@ -1359,8 +1412,8 @@ export async function runPipeline({
       : null;
 
   // Build provision-aware source cards with dedup.
-  // Title format: "NIRC Sec. 105 — NIRC-1997-RA-10963 (BIR).pdf"
-  //   (provision label — parent document name)
+  // Title = canonical authority label only (e.g. "NIRC Sec. 105", "RR No. 16-2005").
+  // Raw filename / documentTitle is preserved in the documentTitle field.
   // Dedup key = provision reference, so each distinct section gets one card;
   // multiple chunks of the same section are collapsed to the first one.
   // This is semantically distinct from educationalSources (Learn More) which
@@ -1390,7 +1443,7 @@ export async function runPipeline({
     // protect RR/RMC/RMO/RAMO chunks whose normalized_reference was corrupted at
     // index time (e.g. "NIRC Sec. 4" written into an RR 16-2005 chunk).
     const linkedType = inferLinkedSourceType(c);
-    let provRef = inferSourceCardRef(c, linkedType);   // `let` — may be promoted below
+    let provRef = resolveSourceCardDisplayRef(c, linkedType);   // `let` — may be promoted below
 
     // True when this is a SOURCE_LOOKUP query and the chunk is a well-formed
     // RR/RMC/RMO/RAMO card whose source path unambiguously identifies the issuance.
@@ -1513,9 +1566,7 @@ export async function runPipeline({
 
     _scSeen.set(dedupeKey, {
       _targetMatch:        _isTargetMatch,  // priority tag — stripped before output
-      title:               provRef && docTitle
-                             ? `${provRef} — ${docTitle}`
-                             : provRef || docTitle || "Source",
+      title:               provRef || docTitle || "Source",
       citation:            provRef || c.citation || "",
       authorityType:       c.authorityType || c.authority_type || "UNKNOWN",
       driveViewUrl:        url,
@@ -1576,7 +1627,7 @@ export async function runPipeline({
       // Derive identity here so sourcePathAuthorityHit can protect Gate 1 and Gate 3
       // (mirrors the main loop restructuring above).
       const _fbLType = inferLinkedSourceType(c);
-      const _fbRef   = inferSourceCardRef(c, _fbLType);
+      const _fbRef   = resolveSourceCardDisplayRef(c, _fbLType);
       const _fbSourcePathAuthorityHit =
         isSourceLookupMode &&
         ["RR", "RMC", "RMO", "RAMO"].includes(_fbLType) &&
@@ -1599,7 +1650,7 @@ export async function runPipeline({
     if (_fbCandidates.length > 0) {
       for (const c of _fbCandidates) {
         const _fbLType    = inferLinkedSourceType(c);
-        const _fbRef      = inferSourceCardRef(c, _fbLType) ||
+        const _fbRef      = resolveSourceCardDisplayRef(c, _fbLType) ||
                             deriveTargetSafeDocumentRef(c, _fbLType, targetAuths) || "";
         const _fbDocTitle = sourceCardDocumentTitle(c);
         const _fbKey      = _fbRef
@@ -1617,7 +1668,7 @@ export async function runPipeline({
           _fbMeta.webViewLink  || _fbMeta.web_view_link  ||
           _fbMeta.sourceUrl    || _fbMeta.source_url     || "";
         _scFilteredClean.push({
-          title:               _fbRef && _fbDocTitle ? `${_fbRef} — ${_fbDocTitle}` : _fbRef || _fbDocTitle || "Source",
+          title:               _fbRef || _fbDocTitle || "Source",
           citation:            _fbRef || c.citation || "",
           authorityType:       c.authorityType || c.authority_type || "UNKNOWN",
           driveViewUrl:        _fbUrl,
