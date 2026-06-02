@@ -249,7 +249,7 @@ OUTPUT FORMAT (use exactly these markdown headers, including the # symbols):
 [One exam strategy or common trap for this subtopic]
 
 ## Self-Check Question
-[One MCQ with 4 choices: A, B, C, D — a self-check for personal review only. The correct answer is shown in the next section. No need to type your response in chat.]
+[One MCQ with 4 choices. Requirement: Question stem on its own line, followed by a blank line. Choices A, B, C, and D on separate lines with a blank line between each. Use "A. <text>" format. Never use inline A) B) C) style or single paragraphs.]
 
 ## Self-Check Answer
 [State the correct letter and full option text immediately]
@@ -301,7 +301,7 @@ OUTPUT FORMAT (use exactly these markdown headers, including the # symbols):
 [One exam strategy or CPALE trap derived from SOURCE CONTEXT]
 
 ## Self-Check Question
-[One MCQ with 4 choices: A, B, C, D — a self-check for personal review only. The correct answer is shown in the next section. No need to type your response in chat.]
+[One MCQ with 4 choices. Requirement: Question stem on its own line, followed by a blank line. Choices A, B, C, and D on separate lines with a blank line between each. Use "A. <text>" format. Never use inline A) B) C) style or single paragraphs.]
 
 ## Self-Check Answer
 [State the correct letter and full option text immediately]
