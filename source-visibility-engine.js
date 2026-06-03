@@ -1878,9 +1878,10 @@ export function filterDisplayedSourcesByDirectSupport({
       continue;
     }
 
-    // Signal C: source excerpt/title directly supports answer via key-term overlap
-    // Requires ≥ 2 overlapping meaningful terms to prevent false positives
-    if (answerKeyTerms.length >= 2) {
+    // Signal C: source excerpt/title directly supports answer via key-term overlap.
+    // Threshold: 1 for FAST_DEFINITION or single-term answers; 2 otherwise.
+    const minOverlapRequired = (mode === "FAST_DEFINITION" || answerKeyTerms.length === 1) ? 1 : 2;
+    if (answerKeyTerms.length >= minOverlapRequired) {
       const sourceBlob = [
         source.excerpt            || "",
         source.title              || "",
@@ -1888,9 +1889,28 @@ export function filterDisplayedSourcesByDirectSupport({
         source.documentTitle      || source.document_title || ""
       ].filter(Boolean).join(" ");
 
-      if (sourceBlob && _hasDirectSupportTerms(sourceBlob, answerKeyTerms, 2)) {
+      if (sourceBlob && _hasDirectSupportTerms(sourceBlob, answerKeyTerms, minOverlapRequired)) {
         displayedSources.push(source);
         continue;
+      }
+    }
+
+    // Signal E (FAST_DEFINITION only): accepted target-authority pass.
+    // Short/concise FAST_DEFINITION answers may not produce enough key terms for
+    // Signal C overlap.  Allow a source card whose canonical reference directly
+    // matches a target authority from the issue classification, provided the card
+    // is not contaminated (no issueMismatch on the card).
+    if (mode === "FAST_DEFINITION") {
+      const _e_targetAuths = issueClassification?.targetAuthorities || [];
+      if (_e_targetAuths.length > 0) {
+        const _e_srcRef = source.normalizedReference || source.citation || source.title || "";
+        if (_e_srcRef) {
+          const _e_srcKey = canonicalSourceKey(_e_srcRef);
+          if (_e_targetAuths.some(t => canonicalSourceKey(t) === _e_srcKey)) {
+            displayedSources.push(source);
+            continue;
+          }
+        }
       }
     }
 

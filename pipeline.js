@@ -53,7 +53,8 @@ import {
   inferIssuanceNumber,
   sourceTitleOf,
   canonicalSourceKey,
-  filterDisplayedSourcesByDirectSupport
+  filterDisplayedSourcesByDirectSupport,
+  shouldHideSource
 }                                                 from "./source-visibility-engine.js";
 import {
   detectPhilippineTaxBoundary,
@@ -753,19 +754,29 @@ const _SA_WARNING_STARTS = [
  * Classifies source availability after all filtering stages are complete.
  * Must be called ONLY after filterDisplayedSourcesByDirectSupport has run.
  *
+ * Invariant: AUTHORITY_FOUND requires displayedCount > 0 (renderer-visible cards).
+ * acceptedSourceCount alone never produces AUTHORITY_FOUND.
+ *
  * Priority order:
- *  1. RETRIEVAL_TIMEOUT  — timedOut wins over everything
- *  2. AUTHORITY_FOUND    — at least one direct-support card survived
- *  3. SOURCE_LOOKUP_EMPTY — /source or SOURCE_LOOKUP mode with no final cards
- *  4. RELATED_AUTHORITY_ONLY — reranked chunks exist but no card survived DS filter
- *  5. NO_INDEXED_SOURCE  — nothing retrieved, no timeout
+ *  1. AUTHORITY_FOUND      — displayedCount > 0 (visible cards exist; timeout is diagnostic only)
+ *  2. RETRIEVAL_TIMEOUT    — timedOut and no visible card
+ *  3. SOURCE_LOOKUP_EMPTY  — /source or SOURCE_LOOKUP mode with no visible card
+ *  4. RELATED_AUTHORITY_ONLY — retrieved/accepted chunks exist but none survived to visible card
+ *  5. NO_INDEXED_SOURCE    — nothing retrieved, no timeout
+ *
+ * acceptedSourceCount > 0 upgrades the no-visible-card path from NO_INDEXED_SOURCE to
+ * RELATED_AUTHORITY_ONLY (sources were retrieved and passed Gates 1–3 but were filtered
+ * out before display).  It never claims AUTHORITY_FOUND.
+ *
+ * timedOut is always preserved as retrievalTimedOut in the return value for diagnostics.
  */
 function computeSourceAvailability({
   mode,
   hook,
   rerankedChunks,
   finalSourceCards,
-  retrievalDiagnostics
+  retrievalDiagnostics,
+  acceptedSourceCount = 0
 }) {
   const timedOut       = Boolean(retrievalDiagnostics?.timedOut);
   const isSourceLookup = String(mode || "").toUpperCase() === "SOURCE_LOOKUP" || hook === "/source";
@@ -775,18 +786,26 @@ function computeSourceAvailability({
   let sourceAvailability;
   let sourceAvailabilityReason;
 
-  if (timedOut) {
+  if (displayedCount > 0) {
+    // Only path that may produce AUTHORITY_FOUND — visible cards must exist.
+    sourceAvailability      = "AUTHORITY_FOUND";
+    sourceAvailabilityReason = timedOut
+      ? `${displayedCount} direct-support source card(s) verified; partial retrieval timeout occurred but authority found.`
+      : `${displayedCount} direct-support source card(s) passed all filters.`;
+  } else if (timedOut) {
     sourceAvailability      = "RETRIEVAL_TIMEOUT";
     sourceAvailabilityReason = "Retrieval timed out; no indexed source verification was possible.";
-  } else if (displayedCount > 0) {
-    sourceAvailability      = "AUTHORITY_FOUND";
-    sourceAvailabilityReason = `${displayedCount} direct-support source card(s) passed all filters.`;
   } else if (isSourceLookup) {
     sourceAvailability      = "SOURCE_LOOKUP_EMPTY";
     sourceAvailabilityReason = "SOURCE_LOOKUP mode: no indexed source card survived the direct-support filter.";
-  } else if (rerankedCount > 0) {
+  } else if (rerankedCount > 0 || acceptedSourceCount > 0) {
+    // Chunks were retrieved and/or passed pre-filter gates, but none survived to a
+    // visible source card.  acceptedSourceCount > 0 prevents misclassification as
+    // NO_INDEXED_SOURCE when sources did exist — just filtered before display.
     sourceAvailability      = "RELATED_AUTHORITY_ONLY";
-    sourceAvailabilityReason = `${rerankedCount} reranked chunk(s) retrieved but no source card survived direct-support filter.`;
+    sourceAvailabilityReason = acceptedSourceCount > 0
+      ? `${acceptedSourceCount} accepted authority source(s) retrieved but no source card survived display filtering.`
+      : `${rerankedCount} reranked chunk(s) retrieved but no source card survived direct-support filter.`;
   } else {
     sourceAvailability      = "NO_INDEXED_SOURCE";
     sourceAvailabilityReason = "No reranked chunks retrieved and retrieval did not time out.";
@@ -1574,6 +1593,10 @@ export async function runPipeline({
 
     if (!c.title && !c.document_title && !c.source && !c.originalSource) continue;
 
+    // Gate 0 (visibility): hidden/reviewer-only materials must not appear as source
+    // chips outside reviewer/quiz modes.  Mirrors the same gate in filterVisibleSources().
+    if (shouldHideSource(c, ctx.issueClassification)) continue;
+
     // Gate 2 (consistency): NIRC labels must link to NIRC/statute documents, etc.
     if (provRef && !sourceCardIsConsistent(provRef, linkedType)) {
       _scSkip.consistency++;
@@ -1726,6 +1749,8 @@ export async function runPipeline({
   if (_scFilteredClean.length === 0) {
     const _fbCandidates = (ctx.rerankedChunks || []).filter(c => {
       if (!c.title && !c.document_title && !c.source && !c.originalSource) return false;
+      // Gate 0 (visibility): mirrors the gate in the primary loop.
+      if (shouldHideSource(c, ctx.issueClassification)) return false;
       // Derive identity here so sourcePathAuthorityHit can protect Gate 1 and Gate 3
       // (mirrors the main loop restructuring above).
       const _fbLType = inferLinkedSourceType(c);
@@ -1839,21 +1864,21 @@ export async function runPipeline({
     hook
   });
   console.log("[DIRECT SUPPORT FILTER]", _dsDiag);
-  const finalSourceCards = _dsFiltered;
 
-  // ── Stage 1: Passive source authority diagnostic ────────────────────────────
-  // Runs AFTER existing sourceCards are already built and logged.
-  // Does NOT change sourceCards, answer, or any pipeline output.
-  // Attaches diagnostics to trace._sourceAuthoritySelectorDiagnostics only.
+  // ── Stage 1: Source authority selector (diagnostic + fallback protector) ────
+  // Runs AFTER DSF to provide an accurate diff.  When DSF drops all cards but SAS
+  // found valid same-topic authority cards from the retrieved pool, SAS cards are
+  // used as the canonical fallback so that authority hits are not silently erased.
+  // SAS cards are non-fabricated: they derive only from retrieved/reranked chunks.
   // Safe: selectSourceAuthorities() never throws.
   const _sasResult = selectSourceAuthorities({
-    rerankedChunks:     ctx.rerankedChunks || [],
+    rerankedChunks:      ctx.rerankedChunks || [],
     issueClassification: ctx.issueClassification || {},
-    query:              ctx.query || "",
-    answerText:         finalAnswer || "",
-    mode:               ctx.mode   || "",
-    maxSources:         5,
-    currentSourceCards: finalSourceCards
+    query:               ctx.query || "",
+    answerText:          finalAnswer || "",
+    mode:                ctx.mode   || "",
+    maxSources:          5,
+    currentSourceCards:  _dsFiltered
   });
   trace._sourceAuthoritySelectorDiagnostics = _sasResult.diagnostics;
   if (!_sasResult.diagnostics.error) {
@@ -1873,18 +1898,46 @@ export async function runPipeline({
   } else {
     console.warn("[SAS DIAGNOSTIC] selector error (non-blocking):", _sasResult.diagnostics.error);
   }
-  // ── End Stage 1 diagnostic ───────────────────────────────────────────────────
+
+  // SAS fallback: if DSF produced zero visible cards but SAS found valid same-topic
+  // authority cards derived from the retrieved pool, use SAS cards as final source
+  // cards.  This prevents timeout or aggressive DS-filtering from erasing exact hits.
+  // max-5 cap and authority ordering are enforced by selectSourceAuthorities().
+  let finalSourceCards;
+  if (_dsFiltered.length > 0) {
+    finalSourceCards = _dsFiltered;
+  } else if (_sasResult.visibleSourceCards.length > 0) {
+    // Gate 0 applied to SAS cards: SAS does not call shouldHideSource internally,
+    // so filter hidden/reviewer materials before adopting SAS cards as final cards.
+    const _sasVisible = _sasResult.visibleSourceCards
+      .filter(c => !shouldHideSource(c, ctx.issueClassification));
+    if (_sasVisible.length > 0) {
+      finalSourceCards = _sasVisible.slice(0, 5);
+      console.log("[SAS FALLBACK ACTIVATED]", {
+        reason:  "direct_support_filter_dropped_all_cards",
+        count:   finalSourceCards.length,
+        labels:  finalSourceCards.map(c => c.normalizedReference || c.citation || "?")
+      });
+    } else {
+      finalSourceCards = [];
+    }
+  } else {
+    finalSourceCards = [];
+  }
+  // ── End Stage 1 ──────────────────────────────────────────────────────────────
 
   // ── Source Availability Classification ────────────────────────────────────────
   // Computed here — after retrieval, reranking, source-card generation,
-  // sanitizeOutboundSourceCards, and filterDisplayedSourcesByDirectSupport.
-  // The final source card set is now known.
+  // sanitizeOutboundSourceCards, filterDisplayedSourcesByDirectSupport, and SAS fallback.
+  // acceptedSourceCount: pre-DSF source cards (Gates 1–3 passed); prevents pure
+  // RETRIEVAL_TIMEOUT classification when valid authority sources were found.
   const _sourceAvail = computeSourceAvailability({
     mode:                 ctx.mode,
     hook,
     rerankedChunks:       ctx.rerankedChunks || [],
     finalSourceCards,
-    retrievalDiagnostics: ctx.retrievalDiagnostics
+    retrievalDiagnostics: ctx.retrievalDiagnostics,
+    acceptedSourceCount:  sourceCards.length
   });
 
   console.log("[SOURCE AVAILABILITY]", {
