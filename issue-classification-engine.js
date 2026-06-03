@@ -1073,6 +1073,29 @@ function buildAuthorities({ question = "", detector = null, primaryIssue, subIss
     controllingAuthorities = safeArray(definitionAuthorities.controllingAuthorities);
     supportingAuthorities = safeArray(definitionAuthorities.supportingAuthorities);
     supportingJurisprudence = safeArray(definitionAuthorities.supportingJurisprudence);
+
+    // Preserve standalone exact-section entries that appear in the definition map's
+    // targetAuthorities but are not assigned to any sub-group (e.g. NIRC Sec. 84 in
+    // ESTATE_TAX_DEFINITION, NIRC Sec. 129 in EXCISE_TAX_DEFINITION).  These are
+    // governing provisions — promote them into controllingAuthorities, maintaining the
+    // order they hold in targetAuthorities relative to the other controlling entries.
+    const explicitTargets = safeArray(definitionAuthorities.targetAuthorities);
+    const assignedSet = new Set([
+      ...controllingAuthorities,
+      ...supportingAuthorities,
+      ...supportingJurisprudence
+    ]);
+    const unassigned = explicitTargets.filter((a) => !assignedSet.has(a));
+
+    if (unassigned.length > 0) {
+      const unassignedSet = new Set(unassigned);
+      const controllingSet = new Set(controllingAuthorities);
+      const reordered = explicitTargets.filter(
+        (a) => controllingSet.has(a) || unassignedSet.has(a)
+      );
+      const remaining = controllingAuthorities.filter((a) => !new Set(reordered).has(a));
+      controllingAuthorities = unique([...reordered, ...remaining]);
+    }
   } else {
     const issueTargets = safeArray(ISSUE_SPECIFIC_TARGETS[subIssue]);
 
@@ -1105,6 +1128,7 @@ function buildAuthorities({ question = "", detector = null, primaryIssue, subIss
   }
 
   const targetAuthorities = unique([
+    ...safeArray(definitionAuthorities?.targetAuthorities),
     ...controllingAuthorities,
     ...supportingAuthorities,
     ...supportingJurisprudence
