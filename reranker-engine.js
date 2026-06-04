@@ -1115,6 +1115,127 @@ function tierBoostForDoc(doc = {}) {
   return TIER_BOOST[type] ?? TIER_BOOST.UNKNOWN;
 }
 
+/**
+ * Returns true when the authority string is a section range
+ * (e.g. "NIRC Secs. 84-97", "NIRC Secs. 116-122").
+ */
+function isRangeAuthority(authority = "") {
+  return /\bsecs?\.\s*\d+\s*[-–]\s*\d+/i.test(authority);
+}
+
+/**
+ * Returns true when one of the doc's citation fields contains a section number
+ * that falls numerically within the range expressed by rangeAuthority.
+ * docFieldsLower: pre-lowercased array of citation/reference strings from the doc.
+ */
+function sectionFallsInRange(docFieldsLower = [], rangeAuthority = "") {
+  const m = rangeAuthority.match(/^(.*?)\bsecs?\.\s*(\d+)\s*[-–]\s*(\d+)/i);
+  if (!m) return false;
+
+  const prefix = lower(m[1].trim());
+  const start = parseInt(m[2], 10);
+  const end = parseInt(m[3], 10);
+  if (!prefix || isNaN(start) || isNaN(end) || start > end) return false;
+
+  const escaped = prefix.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const secRe = new RegExp(`${escaped}\\s*sec\\.?\\s*(\\d+)`, "i");
+
+  for (const field of docFieldsLower) {
+    const hit = field.match(secRe);
+    if (hit) {
+      const secNum = parseInt(hit[1], 10);
+      if (secNum >= start && secNum <= end) return true;
+    }
+  }
+
+  return false;
+}
+
+/**
+ * Computes a numerical authority match tier (1–4) for a single doc against the
+ * effective issue classification.  Lower = stronger match.
+ *
+ * Tier 1 — Exact Provision Match
+ *   A specific provision target from the classifier (e.g. "NIRC Sec. 116",
+ *   "RR 2-98") is found as a substring in the doc's citation/reference fields.
+ *
+ * Tier 2 — Range Match
+ *   The doc's provision number falls within a range target in the classifier
+ *   (e.g. "NIRC Secs. 116-122" covers Sec. 119).
+ *
+ * Tier 3 — Authority Family Match
+ *   The doc's authorityType (e.g. "STATUTE") matches a generic type entry in
+ *   targetAuthorities (populated from DOMAIN_AUTHORITY_PROFILE / ISSUE_AUTHORITY_PROFILE).
+ *
+ * Tier 4 — No Match (contextual/semantic only)
+ *
+ * This prevents "Authority Type Saturation": a generic STATUTE match for VAT Sec. 106
+ * (Tier 3) cannot outrank an exact match for PCT Sec. 116 (Tier 1), even if the VAT
+ * chunk has higher semantic similarity.
+ */
+function computeAuthorityMatchTier(doc = {}, effectiveIssueClassification = {}) {
+  const authorityType = safeAuthorityType(doc);
+
+  // Raw provision-level targets preserved from the original classification via
+  // the ...candidate spread in extractIssueClassification (human-readable form:
+  // "NIRC Sec. 116", "RR 2-98", "NIRC Secs. 84-97", etc.)
+  const rawControlling = arrayify(
+    effectiveIssueClassification.controllingAuthorities ||
+      effectiveIssueClassification.targetAuthorityGroups?.controllingAuthorities
+  );
+  const rawSupporting = arrayify(
+    effectiveIssueClassification.supportingAuthorities ||
+      effectiveIssueClassification.targetAuthorityGroups?.supportingAuthorities
+  );
+  const rawProvisionTargets = unique([...rawControlling, ...rawSupporting]);
+
+  // Generic authority-type entries have no digits (e.g. "STATUTE", "RR", "SUPREME_COURT").
+  // These come from DOMAIN_AUTHORITY_PROFILE / ISSUE_AUTHORITY_PROFILE merged into
+  // effectiveIssueClassification.targetAuthorities.
+  const normalizedTargets = arrayify(effectiveIssueClassification.targetAuthorities);
+  const genericTypeTargets = normalizedTargets.filter((a) => !/\d/.test(a));
+
+  // Lowercased doc citation / reference fields for substring matching
+  const docFieldsLower = unique([
+    doc.normalized_reference,
+    doc.normalizedReference,
+    doc.citation,
+    doc.document_title,
+    doc.documentTitle,
+    doc.title,
+    doc.source,
+    doc.original_source,
+    doc.originalSource,
+    doc.metadata?.normalized_reference,
+    doc.metadata?.normalizedReference
+  ])
+    .filter(Boolean)
+    .map((f) => lower(f));
+
+  // Tier 1: exact provision or exact range-document match.
+  // Covers both specific sections ("NIRC Sec. 116" in doc field) AND docs whose
+  // reference IS the range string itself ("NIRC Secs. 84-97" doc vs same target).
+  for (const target of rawProvisionTargets) {
+    if (!target) continue;
+    const normTarget = lower(target);
+    if (normTarget && docFieldsLower.some((f) => f.includes(normTarget))) return 1;
+  }
+
+  // Tier 2: numeric range match — doc's specific section number falls WITHIN a range
+  // target (e.g. Sec. 91 within "NIRC Secs. 84-97").  Only reached when the doc did
+  // not match the range string exactly in Tier 1 above.
+  for (const target of rawProvisionTargets) {
+    if (!target || !isRangeAuthority(target)) continue;
+    if (sectionFallsInRange(docFieldsLower, target)) return 2;
+  }
+
+  // Tier 3: generic authority-family match (e.g. authorityType "STATUTE" in targetAuthorities)
+  if (genericTypeTargets.includes(authorityType)) return 3;
+
+  // Tier 4: no authority match
+  return 4;
+}
+
 function computeTinaRerankScore({
   query = "",
   doc = {},
@@ -1262,6 +1383,11 @@ function rerankForTina({
         (effectiveIssueClassification.targetAuthorities?.includes(authorityType) || false) ||
         matchesTargetAuthority(doc, effectiveIssueClassification.targetAuthorities || []);
 
+      // Numerical tier for authority specificity.  Replaces the binary
+      // targetAuthorityMatch as the primary sort key to prevent generic
+      // STATUTE matches from ranking equally with exact provision matches.
+      const authorityMatchTier = computeAuthorityMatchTier(doc, effectiveIssueClassification);
+
       const domainAwareBonus = domainBonus(effectiveIssueClassification, doc);
       const precedence = masterPrecedenceForDoc(doc);
 
@@ -1278,6 +1404,7 @@ function rerankForTina({
         weakSecondary,
         superseded,
         targetAuthorityMatch,
+        authorityMatchTier,
         domainAwareBonus,
         primaryDomain: effectiveIssueClassification.primaryDomain || null,
         citationMatchBonus: exactReferenceBonus(query, doc),
@@ -1291,6 +1418,7 @@ function rerankForTina({
           targetAuthorities: effectiveIssueClassification.targetAuthorities,
           matchedAuthorityType: authorityType,
           targetAuthorityMatch,
+          authorityMatchTier,
           issueOverlap: issueOverlap(queryIssues, docIssues),
           issueMismatch: mismatch,
           taxDomainClassification:
@@ -1306,6 +1434,7 @@ function rerankForTina({
           classifiedIssueAware: true,
           exactAuthorityAware: true,
           targetAuthorityAware: true,
+          authorityMatchTierAware: true,
           supersessionAware: true,
           adaptiveContextAware: true,
           mainTaxEngineClassificationCompatible: true,
@@ -1320,9 +1449,13 @@ function rerankForTina({
       return true;
     })
     .sort((a, b) => {
-      const bTarget = b.targetAuthorityMatch ? 1 : 0;
-      const aTarget = a.targetAuthorityMatch ? 1 : 0;
-      if (bTarget !== aTarget) return bTarget - aTarget;
+      // authorityMatchTier: 1 (exact provision) → 2 (range) → 3 (family) → 4 (none)
+      // Lower tier = stronger match = sorts first.  Replaces the binary
+      // targetAuthorityMatch to prevent generic STATUTE hits from equalling
+      // exact-provision matches (Authority Type Saturation fix).
+      const aTier = Number(a.authorityMatchTier || 4);
+      const bTier = Number(b.authorityMatchTier || 4);
+      if (aTier !== bTier) return aTier - bTier;
 
       const aExact = Number(a.citationMatchBonus || 0);
       const bExact = Number(b.citationMatchBonus || 0);
