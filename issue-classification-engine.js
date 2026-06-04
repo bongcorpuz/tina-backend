@@ -475,8 +475,8 @@ const DEFINITION_AUTHORITY_MAP = Object.freeze({
     primaryIssue: "EST",
     domainCode: "EST",
     domainName: "Donor's Tax",
-    targetAuthorities: ["NIRC Title III", "NIRC Sec. 98", "NIRC Secs. 98-104"],
-    controllingAuthorities: ["NIRC Title III", "NIRC Secs. 98-104"],
+    targetAuthorities: ["NIRC Title III", "NIRC Sec. 98", "NIRC Sec. 99", "NIRC Sec. 100", "NIRC Secs. 98-104"],
+    controllingAuthorities: ["NIRC Title III", "NIRC Sec. 98", "NIRC Sec. 99", "NIRC Sec. 100", "NIRC Secs. 98-104"],
     supportingAuthorities: [],
     supportingJurisprudence: []
   },

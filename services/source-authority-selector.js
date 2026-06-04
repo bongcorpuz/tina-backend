@@ -39,7 +39,7 @@ import {
   inferIssuanceNumber
 } from "../source-visibility-engine.js";
 
-const SELECTOR_VERSION = "1.0.0-diagnostic";
+const SELECTOR_VERSION = "2.0.0-active";
 const DEFAULT_CANDIDATE_CAP = 15;
 const DEFAULT_MAX_VISIBLE    = 5;
 
@@ -280,13 +280,210 @@ function diffSourceCards(selectorCards = [], currentCards = []) {
   };
 }
 
+// ─── NIRC generic-label detection (Blocker 1) ────────────────────────────────
+
+/**
+ * Returns true when ref is a generic NIRC document-level label with no specific
+ * section number.  Matches: "Tax Code", "NIRC Tax Code", bare "NIRC", and
+ * "National Internal Revenue Code".  Does NOT match specific section labels
+ * ("NIRC Sec. 105") or section ranges ("NIRC Secs. 84-97").
+ */
+function isGenericNircDocumentLabel(ref = "") {
+  const r = safeStr(ref).trim();
+  if (!r) return false;
+  // Exact generic fallback labels produced by inferSourceCardRef / resolveSourceCardDisplayRef
+  if (/^(?:nirc\s+)?tax\s+code$/i.test(r)) return true;
+  // Full document name
+  if (/^national\s+internal\s+revenue\s+code\b/i.test(r)) return true;
+  // Bare "NIRC..." without a section number or section-range number
+  if (/^nirc\b/i.test(r) &&
+      !/\bsec(?:tion)?\.?\s*\d/i.test(r) &&   // no "Sec. NNN"
+      !/\bsecs?\.\s*\d/i.test(r)) return true; // no "Secs. NNN-MMM"
+  return false;
+}
+
+/** Returns true when ref identifies a specific NIRC section, e.g. "NIRC Sec. 105". */
+function isExactNircSectionLabel(ref = "") {
+  return /\bNIRC\s+Sec(?:tion)?\.?\s*\d/i.test(safeStr(ref));
+}
+
+// ─── Range section-number helpers (Blocker 2) ────────────────────────────────
+
+/**
+ * Extracts the first section number from a reference string such as "NIRC Sec. 91".
+ * Returns null when no number is found.
+ */
+function extractSectionNumber(ref = "") {
+  const m = safeStr(ref).match(/\bsec(?:tion)?\.?\s*(\d+)/i);
+  return m ? parseInt(m[1], 10) : null;
+}
+
+/**
+ * Parses a section range from an authority string.  Returns { start, end } or null.
+ *
+ * Handles all standard forms:
+ *   "NIRC Secs. 84-97"     "NIRC Secs. 84–97"
+ *   "NIRC Sections 84-97"  "NIRC Sections 84 to 97"
+ *   "Secs. 98-104"         "Sections 98 to 104"
+ *   "Sec. 116 to Sec. 127"
+ */
+function parseRangeFromAuthority(auth = "") {
+  const m = safeStr(auth).match(
+    /\b(?:secs?|sections?)\s*\.?\s*(\d+)\s*(?:[-–]|to)\s*(?:secs?|sections?)?\s*\.?\s*(\d+)/i
+  );
+  if (!m) return null;
+  const start = parseInt(m[1], 10);
+  const end   = parseInt(m[2], 10);
+  if (isNaN(start) || isNaN(end) || start > end) return null;
+  return { start, end };
+}
+
+/**
+ * Searches authorities for the first entry that is a section range whose bounds
+ * contain the section number extracted from cardRef.  Returns { start, end } or null.
+ */
+function findCoveringRange(cardRef = "", authorities = []) {
+  const secNum = extractSectionNumber(cardRef);
+  if (secNum === null) return null;
+  for (const auth of authorities) {
+    const r = parseRangeFromAuthority(auth);
+    if (!r) continue;
+    if (secNum >= r.start && secNum <= r.end) return r;
+  }
+  return null;
+}
+
+// ─── Off-plan NIRC section suppression helpers ───────────────────────────────
+
+/**
+ * Builds a NIRC authority plan from the issueClassification.
+ * Returns { exactSections: Set<number>, ranges: Array<{start,end}> } when
+ * the plan contains at least one explicit section or range entry.
+ * Returns null when no specific NIRC section or range is found (e.g. only
+ * "NIRC Title III") — no off-plan suppression is applied in that case.
+ */
+function buildNircAuthorityPlan(issueClassification = {}) {
+  const allAuths = [
+    ...(issueClassification.targetAuthorities        || []),
+    ...(issueClassification.controllingAuthorities   || []),
+    ...(issueClassification.targetAuthorityGroups?.controllingAuthorities || []),
+    ...(issueClassification.supportingAuthorities    || []),
+    ...(issueClassification.targetAuthorityGroups?.supportingAuthorities  || [])
+  ].filter(Boolean);
+
+  const exactSections = new Set();
+  const ranges = [];
+
+  for (const auth of allAuths) {
+    const r = parseRangeFromAuthority(auth);
+    if (r) {
+      ranges.push(r);
+    } else if (/\bNIRC\b|\bTax\s*Code\b/i.test(auth)) {
+      const secNum = extractSectionNumber(auth);
+      if (secNum !== null) exactSections.add(secNum);
+    }
+  }
+
+  if (exactSections.size === 0 && ranges.length === 0) return null;
+  return { exactSections, ranges };
+}
+
+/**
+ * Returns true when the section number from ref is on the NIRC authority plan
+ * (exact match or inside a planned range).  Always returns true when plan is null.
+ */
+function isNircSectionOnPlan(ref = "", plan = null) {
+  if (!plan) return true;
+  const secNum = extractSectionNumber(ref);
+  if (secNum === null) return true;
+  if (plan.exactSections.has(secNum)) return true;
+  for (const range of plan.ranges) {
+    if (secNum >= range.start && secNum <= range.end) return true;
+  }
+  return false;
+}
+
+// ─── Authority-priority sort helper ──────────────────────────────────────────
+
+/**
+ * Returns a numeric sort score for a candidate source card.
+ * Lower score = higher display priority.
+ *
+ * Priority 1 (score 0..n-1):     Tier 1 exact match in controllingAuthorities, in classifier order.
+ * Priority 2 (score 150):        Tier 1 exact match in targetAuthorities, not in controlling/supporting.
+ * Priority 3 (score 100..199):   Tier 2 range match — score = 100 + (sectionNum − rangeStart),
+ *                                 giving deterministic ordering by section number within the range.
+ * Priority 4 (score 200..m):     Tier 1 exact match in supportingAuthorities, in classifier order.
+ * Priority 5 (score 1000+):      Tier 3/4 generic family or no match.
+ *
+ * _rerankScore is used only as a tiebreaker after the authority-plan score, so
+ * semantic similarity cannot reorder sections within the same range.
+ */
+function _computeCardSortScore(card, controllingAuths, supportingAuths) {
+  const tier    = Number(card._authorityMatchTier || 4);
+  const cardKey = canonicalSourceKey(card.normalizedReference || card.citation || "");
+
+  if (!cardKey) return 1500 + tier * 100;
+
+  if (tier <= 2) {
+    // Priority 1 — exact match in controllingAuthorities (classifier order: 0..n-1)
+    const ci = controllingAuths.findIndex(a => canonicalSourceKey(a) === cardKey);
+    if (ci >= 0) return ci;
+
+    // Priority 3 — Tier 2 range match.
+    // Score = 100 + (sectionNumber − rangeStart), giving deterministic ordering
+    // by section number within the range.  Capped at 0..99 offset so all Tier 2
+    // scores stay in [100, 199] and never bleed into Priority 4 (200+).
+    // rerankScore is NOT used here — only after the authority-plan score.
+    if (tier === 2) {
+      const cardRef  = card.normalizedReference || card.citation || "";
+      const covering = findCoveringRange(cardRef, [...controllingAuths, ...supportingAuths]);
+      if (covering) {
+        const secNum = extractSectionNumber(cardRef);
+        if (secNum !== null) {
+          const offset = Math.min(Math.max(0, secNum - covering.start), 99);
+          return 100 + offset;
+        }
+      }
+      return 100;
+    }
+
+    // Priority 4 — exact match in supportingAuthorities (200..m)
+    const si = supportingAuths.findIndex(a => canonicalSourceKey(a) === cardKey);
+    if (si >= 0) return 200 + si;
+
+    // Priority 2 — Tier 1 exact match not found in controlling or supporting lists
+    return 150;
+  }
+
+  // Priority 5 — Tier 3 generic family match or Tier 4 no match
+  return tier === 3 ? 1000 : 2000;
+}
+
 // ─── Main selector ────────────────────────────────────────────────────────────
 
 /**
- * selectSourceAuthorities
+ * selectSourceAuthorities — Active Source Authority Selector (v2)
  *
- * Passive diagnostic — runs the same gate/sort logic as pipeline.js and
- * compares results with current sourceCards.  Never throws.
+ * Selects and orders source cards from the reranked pool using issueClassification
+ * authority metadata.  This is the active Single Source of Truth for source card
+ * ordering — it is NOT merely diagnostic.
+ *
+ * Sort order (lowest score = highest priority):
+ *   1. Exact controlling authorities in issueClassification.controllingAuthorities,
+ *      in classifier order.
+ *   2. Exact targetAuthorities matches (not in controlling), in classifier order.
+ *   3. Range members (section number falls within a named range target, Tier 2).
+ *   4. Exact supportingAuthorities matches, in classifier order.
+ *   5. Generic issue-relevant authorities (Tier 3/4, pass Gate 3).
+ *
+ * Gates (applied before scoring):
+ *   Gate 0 — visibility (shouldHideSource): enforced by pipeline caller, not here.
+ *   Gate 1 — contamination: both targetAuthorityMatch===false AND issueMismatch===true.
+ *   Gate 2 — label/link consistency: NIRC labels must link to NIRC/statute docs, etc.
+ *   Gate 3 — issue relevance: non-exact-match candidates must have affirmative relevance.
+ *
+ * Never throws.  All exceptions are caught and returned in diagnostics.error.
  *
  * @param {{
  *   rerankedChunks:      object[],
@@ -395,9 +592,15 @@ export function selectSourceAuthorities({
 
       seen.set(dedupeKey, {
         _targetMatch,
+        // Tier and score stored for authority-priority sort (used below)
+        _authorityMatchTier: c.authorityMatchTier ||
+                             c.issueClassificationMatch?.authorityMatchTier || 4,
+        _rerankScore:        c.rerankScore || c.finalScore || c.score || 0,
         title:               provRef && docTitle ? `${provRef} — ${docTitle}` : provRef || docTitle || "Source",
         citation:            provRef || c.citation || "",
         authorityType:       c.authorityType || c.authority_type || "UNKNOWN",
+        authorityMatchTier:  c.authorityMatchTier ||
+                             c.issueClassificationMatch?.authorityMatchTier || 4,
         driveViewUrl:        url,
         drive_view_url:      url,
         url,
@@ -416,19 +619,68 @@ export function selectSourceAuthorities({
       });
     }
 
-    // Priority sort: target-matched first, then issue-relevant non-target
-    const allCandidates    = [...seen.values()];
-    const targetMatched    = allCandidates.filter(v =>  v._targetMatch);
-    const nonTargetMatched = allCandidates.filter(v => !v._targetMatch);
-    const sorted           = [...targetMatched, ...nonTargetMatched];
+    // Authority-priority sort (replaces binary targetMatch sort).
+    // Uses _computeCardSortScore which maps each card to a numeric priority:
+    //   0..n-1  — exact match in controllingAuthorities (classifier order)
+    //   100     — Tier 2 range match
+    //   150     — Tier 1 exact but not found in controlling/supporting
+    //   200..m  — exact match in supportingAuthorities (classifier order)
+    //   1000    — Tier 3 generic family match
+    //   2000    — Tier 4 no match
+    // Ties broken by _rerankScore descending.
+    const controllingAuths = [
+      ...(issueClassification?.controllingAuthorities || []),
+      ...(issueClassification?.targetAuthorityGroups?.controllingAuthorities || [])
+    ].filter((v, i, a) => v && a.indexOf(v) === i);
+    const supportingAuths  = [
+      ...(issueClassification?.supportingAuthorities || []),
+      ...(issueClassification?.targetAuthorityGroups?.supportingAuthorities || [])
+    ].filter((v, i, a) => v && a.indexOf(v) === i);
 
-    // validatedSources = full sorted candidate list (before cap)
+    const allCandidates = [...seen.values()];
+    allCandidates.sort((a, b) => {
+      const aScore = _computeCardSortScore(a, controllingAuths, supportingAuths);
+      const bScore = _computeCardSortScore(b, controllingAuths, supportingAuths);
+      if (aScore !== bScore) return aScore - bScore;
+      return (b._rerankScore || 0) - (a._rerankScore || 0);
+    });
+
+    // BLOCKER 1 — suppress generic NIRC document-level cards (e.g. "Tax Code",
+    // "NIRC Tax Code") when at least one exact NIRC section card exists in the
+    // candidate pool.  A generic label produced by the "Tax Code" fallback in
+    // inferSourceCardRef must not occupy a visible slot when exact section cards
+    // (e.g. "NIRC Sec. 84") are available.  Non-generic issuances (RR, RMC) are
+    // unaffected by this filter.
+    const _hasExactNircSection = allCandidates.some(c =>
+      isExactNircSectionLabel(c.normalizedReference || c.citation || "")
+    );
+    const afterGenericSuppress = _hasExactNircSection
+      ? allCandidates.filter(c => !isGenericNircDocumentLabel(c.normalizedReference || c.citation || ""))
+      : allCandidates;
+    const _genericSuppressed = allCandidates.length - afterGenericSuppress.length;
+
+    // Off-plan NIRC section suppression: discard exact NIRC section cards that lie
+    // outside the classifier's authority plan (e.g. VAT Sec. 106 for Estate Tax).
+    // Non-NIRC issuances (RR, RMC, RAMO, BIR rulings, etc.) are never suppressed here.
+    const _nircPlan = buildNircAuthorityPlan(issueClassification);
+    const finalSorted = _nircPlan
+      ? afterGenericSuppress.filter(c => {
+          const ref = c.normalizedReference || c.citation || "";
+          if (!isExactNircSectionLabel(ref)) return true;
+          return isNircSectionOnPlan(ref, _nircPlan);
+        })
+      : afterGenericSuppress;
+    const _offPlanSuppressed = afterGenericSuppress.length - finalSorted.length;
+
+    // Strip internal sort tags (_targetMatch, _authorityMatchTier, _rerankScore)
+    // before output.  The public authorityMatchTier field (stored separately in the
+    // card object by the seen.set() call) is preserved for downstream callers.
     // eslint-disable-next-line no-unused-vars
-    const validatedSources = sorted.map(({ _targetMatch, ...card }) => card);
+    const validatedSources = finalSorted.map(({ _targetMatch, _authorityMatchTier, _rerankScore, ...card }) => card);
 
     // Slice to visible cap + run outbound sanitizer
     // eslint-disable-next-line no-unused-vars
-    const preClean         = sorted.slice(0, visibleCap).map(({ _targetMatch, ...card }) => card);
+    const preClean         = finalSorted.slice(0, visibleCap).map(({ _targetMatch, _authorityMatchTier, _rerankScore, ...card }) => card);
     const visibleSourceCards = sanitizeSelectorCards(preClean);
 
     // Diff vs current sourceCards
@@ -438,9 +690,12 @@ export function selectSourceAuthorities({
       selectorVersion:       SELECTOR_VERSION,
       computedAt:            new Date().toISOString(),
       totalChunksInspected:  rerankedChunks.length,
-      candidatesCollected:   allCandidates.length,
-      targetMatchedCount:    targetMatched.length,
-      nonTargetMatchedCount: nonTargetMatched.length,
+      candidatesCollected:         allCandidates.length,
+      genericNircSuppressed:       _genericSuppressed,
+      offPlanNircSectionsSuppressed: _offPlanSuppressed,
+      tier1Count:            allCandidates.filter(v => Number(v._authorityMatchTier || 4) === 1).length,
+      tier2Count:            allCandidates.filter(v => Number(v._authorityMatchTier || 4) === 2).length,
+      tier3Count:            allCandidates.filter(v => Number(v._authorityMatchTier || 4) === 3).length,
       accepted:              validatedSources.length,
       rejected:              skip.contamination + skip.consistency + skip.issueRelevance,
       rejectionBreakdown: {

@@ -1844,17 +1844,50 @@ export async function runPipeline({
     }))
   });
 
+  // ── Stage 1: Source Authority Selector — active selection (runs BEFORE DSF) ──
+  // SAS is now the active Single Source of Truth for authority-priority ordering.
+  // It selects and orders cards from the reranked pool by:
+  //   Tier 1 exact controlling authorities (classifier order)
+  //   →  Tier 2 range members  →  Tier 1 supporting  →  Tier 3/4 generic
+  // Never throws; exceptions returned in diagnostics.error.
+  const _sasResult = selectSourceAuthorities({
+    rerankedChunks:      ctx.rerankedChunks || [],
+    issueClassification: ctx.issueClassification || {},
+    query,
+    answerText:          finalAnswer || "",
+    mode:                ctx.mode   || "",
+    maxSources:          5
+  });
+  trace._sourceAuthoritySelectorDiagnostics = _sasResult.diagnostics;
+
+  // Gate 0 on SAS cards: shouldHideSource is not called inside SAS, so apply it here.
+  const _sasVisible = (_sasResult.visibleSourceCards || [])
+    .filter(c => !shouldHideSource(c, ctx.issueClassification));
+
+  if (!_sasResult.diagnostics.error) {
+    console.log("[SAS ACTIVE]", {
+      version:        _sasResult.diagnostics.selectorVersion,
+      inspected:      _sasResult.diagnostics.totalChunksInspected,
+      accepted:       _sasResult.diagnostics.accepted,
+      rejected:       _sasResult.diagnostics.rejected,
+      visible:        _sasVisible.length,
+      selectorLabels: _sasResult.diagnostics.selectorLabels
+    });
+  } else {
+    console.warn("[SAS ERROR] (non-blocking):", _sasResult.diagnostics.error);
+  }
+
   // ── Direct-support display filter ────────────────────────────────────────────
-  // Runs AFTER retrieval, reranking, authority validation, supersession, answer gen,
-  // and outbound sanitizer.  Only controls what is DISPLAYED — does NOT touch
-  // retrieval candidates or LLM context.
-  // targetAuthority alone is NOT a pass condition (enforces spec HARD RULES 5 & 6).
-  // HARD RULE 8: if all cards are filtered out, returns [] — no unrelated backfill.
+  // DSF is a display-safety filter — it does NOT determine authority priority order.
+  // When SAS produced authority-ordered cards, DSF operates on that ordered list.
+  // When SAS produced nothing, DSF falls back to the pipeline loop's sourceCards.
+  // HARD RULE: only controls what is DISPLAYED; does not touch retrieval / LLM context.
+  const _dsfInput = _sasVisible.length > 0 ? _sasVisible : sourceCards;
   const {
     displayedSources: _dsFiltered,
     diagnostics:      _dsDiag
   } = filterDisplayedSourcesByDirectSupport({
-    candidateSources:    sourceCards,
+    candidateSources:    _dsfInput,
     answerText:          finalAnswer,
     issueClassification: ctx.issueClassification,
     query,
@@ -1865,64 +1898,62 @@ export async function runPipeline({
   });
   console.log("[DIRECT SUPPORT FILTER]", _dsDiag);
 
-  // ── Stage 1: Source authority selector (diagnostic + fallback protector) ────
-  // Runs AFTER DSF to provide an accurate diff.  When DSF drops all cards but SAS
-  // found valid same-topic authority cards from the retrieved pool, SAS cards are
-  // used as the canonical fallback so that authority hits are not silently erased.
-  // SAS cards are non-fabricated: they derive only from retrieved/reranked chunks.
-  // Safe: selectSourceAuthorities() never throws.
-  const _sasResult = selectSourceAuthorities({
-    rerankedChunks:      ctx.rerankedChunks || [],
-    issueClassification: ctx.issueClassification || {},
-    query:               ctx.query || "",
-    answerText:          finalAnswer || "",
-    mode:                ctx.mode   || "",
-    maxSources:          5,
-    currentSourceCards:  _dsFiltered
-  });
-  trace._sourceAuthoritySelectorDiagnostics = _sasResult.diagnostics;
-  if (!_sasResult.diagnostics.error) {
-    console.log("[SAS DIAGNOSTIC]", {
-      version:         _sasResult.diagnostics.selectorVersion,
-      inspected:       _sasResult.diagnostics.totalChunksInspected,
-      accepted:        _sasResult.diagnostics.accepted,
-      rejected:        _sasResult.diagnostics.rejected,
-      rejectionBreakdown: _sasResult.diagnostics.rejectionBreakdown,
-      selectorLabels:  _sasResult.diagnostics.selectorLabels,
-      currentLabels:   _sasResult.diagnostics.currentLabels,
-      same:            _sasResult.diagnostics.diffFromCurrentSourceCards?.same,
-      diff:            _sasResult.diagnostics.diffFromCurrentSourceCards?.same
-                         ? null
-                         : _sasResult.diagnostics.diffFromCurrentSourceCards
-    });
-  } else {
-    console.warn("[SAS DIAGNOSTIC] selector error (non-blocking):", _sasResult.diagnostics.error);
-  }
-
-  // SAS fallback: if DSF produced zero visible cards but SAS found valid same-topic
-  // authority cards derived from the retrieved pool, use SAS cards as final source
-  // cards.  This prevents timeout or aggressive DS-filtering from erasing exact hits.
-  // max-5 cap and authority ordering are enforced by selectSourceAuthorities().
+  // ── Final source card resolution ──────────────────────────────────────────────
+  // SAS is primary; DSF is a display safety filter.
+  // Key invariant: Tier 1 exact controlling authorities selected by SAS cannot be
+  // suppressed by a partial DSF result.  They are restored at the front before cap.
   let finalSourceCards;
-  if (_dsFiltered.length > 0) {
-    finalSourceCards = _dsFiltered;
-  } else if (_sasResult.visibleSourceCards.length > 0) {
-    // Gate 0 applied to SAS cards: SAS does not call shouldHideSource internally,
-    // so filter hidden/reviewer materials before adopting SAS cards as final cards.
-    const _sasVisible = _sasResult.visibleSourceCards
-      .filter(c => !shouldHideSource(c, ctx.issueClassification));
-    if (_sasVisible.length > 0) {
+  if (_sasVisible.length > 0) {
+    if (_dsFiltered.length > 0) {
+      // Restore any Tier 1 exact controlling authority cards that DSF dropped.
+      // These are the classifier's highest-confidence authorities (exact provision
+      // match) and must appear regardless of DSF answer-text proximity scoring.
+      const _dsKeys = new Set(
+        _dsFiltered
+          .map(c => canonicalSourceKey(c.normalizedReference || c.citation || ""))
+          .filter(Boolean)
+      );
+      // Restore exact authority cards (authorityMatchTier === 1) that DSF dropped.
+      // This covers both exact controlling authorities (e.g. "NIRC Sec. 84") AND
+      // exact supporting authorities (e.g. "RR No. 16-2005" for VAT).  Both are
+      // Tier 1 exact matches against the classifier's authority plan and must not
+      // be suppressed by DSF's answer-text proximity scoring.
+      const _tier1Dropped = _sasVisible.filter(c => {
+        const k = canonicalSourceKey(c.normalizedReference || c.citation || "");
+        return k && Number(c.authorityMatchTier || 4) === 1 && !_dsKeys.has(k);
+      });
+      if (_tier1Dropped.length > 0) {
+        // Prepend restored exact-authority cards (in SAS order), then DSF cards.
+        const _restoreSeen = new Set();
+        finalSourceCards = [..._tier1Dropped, ..._dsFiltered]
+          .filter(c => {
+            const k = canonicalSourceKey(c.normalizedReference || c.citation || "") ||
+                      ((c.documentTitle || "") + "|" + (c.source || "")).toLowerCase().slice(0, 60);
+            if (_restoreSeen.has(k)) return false;
+            _restoreSeen.add(k);
+            return true;
+          })
+          .slice(0, 5);
+        console.log("[SAS EXACT AUTHORITY RESTORED]", {
+          restored: _tier1Dropped.map(c => c.normalizedReference || c.citation || "?"),
+          dsfKept:  _dsFiltered.length,
+          final:    finalSourceCards.length
+        });
+      } else {
+        finalSourceCards = _dsFiltered;
+      }
+    } else {
+      // DSF dropped all cards — use SAS output directly (authority-priority ordered).
       finalSourceCards = _sasVisible.slice(0, 5);
       console.log("[SAS FALLBACK ACTIVATED]", {
         reason:  "direct_support_filter_dropped_all_cards",
         count:   finalSourceCards.length,
         labels:  finalSourceCards.map(c => c.normalizedReference || c.citation || "?")
       });
-    } else {
-      finalSourceCards = [];
     }
   } else {
-    finalSourceCards = [];
+    // SAS found nothing — preserve existing DSF behavior as last resort.
+    finalSourceCards = _dsFiltered;
   }
   // ── End Stage 1 ──────────────────────────────────────────────────────────────
 
