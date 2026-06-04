@@ -1992,6 +1992,35 @@ function buildUserPrompt({
     responseInstruction = "Use DEBUG_MODE. Do not use A-F legal format. Produce: A. SYMPTOM, B. PROBABLE CAUSE, C. DIAGNOSIS STEPS, D. FIX, E. PREVENTION. Reference file paths and function names exactly.";
   } else if (modeFlags.isAudit || mode === "COMPLEX_ADVISORY" || mode === "AUDIT_FACT_PATTERN") {
     responseInstruction = "Use AUDIT_MODE (COMPLEX_ADVISORY). Respond adaptively to the user's specific intent — simple questions get concise answers; audit scenarios get strategic analysis; formal requests get structured documents. Do NOT default to a fixed section template. Apply the authority hierarchy. Never fabricate provisions, GR numbers, or BIR rulings.";
+  } else if (
+    responsePlan?.askProfile &&
+    (adaptiveContext?.activeHook === "/ask" || !adaptiveContext?.activeHook) &&
+    !modeFlags.isQuiz && !modeFlags.isReviewer && !modeFlags.isSource && !modeFlags.isCase &&
+    mode !== "COMPLEX_ADVISORY" && mode !== "AUDIT_FACT_PATTERN" && mode !== "SENIOR_COUNSEL_MEMO"
+  ) {
+    // /ask Research Profile — selected by adaptive-response-planner.js.
+    // Injects concise profile instructions without large raw JSON objects.
+    const _profile  = responsePlan.askProfile;
+    const _secs     = responsePlan.askProfileSections || responsePlan.rendererContract?.sections || [];
+    const _secList  = _secs.map((s, i) => `${i + 1}. ### ${s}`).join("\n");
+    const _limNote  = responsePlan.mustIncludeLimitation
+      ? "\n\nLIMITATION NOTE: State that the conclusion is preliminary and subject to full fact verification before the final section."
+      : "";
+    responseInstruction = `ASK RESEARCH FORMAT — PROFILE: ${_profile}
+
+TONE: Write as a CPA tax practitioner or tax lawyer advising a professional colleague. Use clear, concise professional prose — not a legal memo, not encyclopedic, not a generic chatbot response.
+
+REQUIRED SECTIONS (use ### prefix for each heading, in this order):
+${_secList}
+
+RULES:
+- Follow the section order above exactly. Do not add or remove sections.
+- Do not use A. B. C. D. E. F. letter-prefix headings.
+- Retrieved indexed sources take priority. Use training knowledge only when no indexed source was retrieved; label such content: "(Framework knowledge — pending index verification)".
+- Controlling Authorities: cite specific NIRC provision → implementing RR → directly applicable SC/CTA ruling. Follow the Master Prompt authority hierarchy.
+- Never fabricate GR numbers, RR numbers, RMC numbers, or docket numbers you are not certain of.
+- Do not cite authorities that were not retrieved and are not clearly applicable from training knowledge.
+- Source Verification Limitation: if indexed retrieval timed out or no sources were retrieved, open the response with: "**Source Verification Limitation:** Indexed retrieval did not return verified sources. The following is framework analysis pending indexed-source verification."${_limNote}`;
   } else if (mode === "FAST_DEFINITION") {
     let _depthHint = "";
 

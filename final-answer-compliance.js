@@ -1894,6 +1894,107 @@ function sanitizeDraftAnswer(text = "", conflictMetadata = null) {
   );
 }
 
+/**
+ * Narrow compliance path for /ask research profile answers.
+ *
+ * Runs all content-safety safeguards WITHOUT A-F structural repair:
+ *   1. Debug/metadata leakage removal
+ *   2. Framework-knowledge / source-limitation labels
+ *   3. Prohibited phrase redaction
+ *   4. Source grounding validation (unsupported citations → warnings)
+ *   5. Authority hierarchy display validation
+ *
+ * Returns complianceStatus "ASK_PROFILE_COMPLIANT" (clean) or
+ * "ASK_PROFILE_LIMITED_COMPLIANCE" (warnings present).
+ * Does NOT return "BYPASS" — safeguards are always enforced.
+ */
+function enforceAskProfileCompliance(args = {}) {
+  const draft      = args.draftAnswer || args.answer || "";
+  const askProfile = args.responsePlan.askProfile;
+
+  const context = {
+    query:               args.query               || "",
+    issueClassification: args.issueClassification || null,
+    mode:                args.mode                || null,
+    reviewMode:          false,
+    includeHiddenSources: false
+  };
+
+  const allSources = uniqueDocs([
+    ...safeArray(args.sourcesUsed),
+    ...safeArray(args.sources),
+    ...safeArray(args.retrievedSources)
+  ]);
+  const visibleSources = allSources.filter(s => sourceAllowed(s, context));
+
+  // Step 1: debug / metadata leakage removal
+  let output = sanitizeRawDebugLeakage(draft);
+
+  // Step 2: normalize framework-knowledge / pending-index labels
+  output = ensureIndexedSourceLimitation({ answer: output, sources: visibleSources, context });
+
+  // Step 3: prohibited phrase redaction
+  output = redactProhibitedPhrases(output);
+  const prohibitedCheck = enforceProhibitedPhrases(output);
+
+  // Step 4: source grounding validation — unsupported citations become warnings
+  const sourceGroundingValidation = validateSourceGrounding({ answer: output, sources: visibleSources, context });
+
+  // Step 5: authority hierarchy display validation
+  const hierarchyValidation = enforceAuthorityHierarchyDisplay({ answer: output, sources: visibleSources, context });
+
+  const warnings = [
+    sourceGroundingValidation.warning,
+    ...(hierarchyValidation.warnings || [])
+  ].filter(Boolean);
+
+  if (!prohibitedCheck.passed) {
+    warnings.push(`PROHIBITED_PHRASES_DETECTED: ${prohibitedCheck.violations.join(", ")}`);
+  }
+
+  const complianceStatus = warnings.length ? "ASK_PROFILE_LIMITED_COMPLIANCE" : "ASK_PROFILE_COMPLIANT";
+
+  return {
+    success:          true,
+    answer:           output,
+    finalAnswer:      output,
+    sources:          visibleSources,
+    sourcesUsed:      visibleSources,
+    citations:        [],
+    legalBasis:       [],
+    complianceStatus,
+    warnings,
+    metadata: {
+      askProfile,
+      bypassStructuralRepair:              true,
+      finalAnswerComplianceVersion:        ENGINE_VERSION,
+      finalGateOnly:                       true,
+      noOpenAICalls:                       true,
+      noRetrieval:                         true,
+      sourceGroundingValidation,
+      hierarchyValidation,
+      prohibitedPhraseCheck:               prohibitedCheck,
+      masterPromptAuthorityHierarchyApplied:        true,
+      courtAuthorityNotSubordinatedToBIRIssuances:  true
+    },
+    confidence:   warnings.length ? "LIMITED" : "PASSED",
+    sourceStatus: {
+      hasVisibleSources:      visibleSources.length > 0,
+      visibleSourceCount:     visibleSources.length,
+      indexedSourceLimitation: visibleSources.length === 0
+        ? "Framework knowledge — pending index verification"
+        : null
+    },
+    authorityValidation: null,
+    conflictValidation:  null,
+    version:          ENGINE_VERSION,
+    finalGateOnly:    true,
+    noOpenAICalls:    true,
+    noPromptAssembly: true,
+    noRetrieval:      true
+  };
+}
+
 function finalizeCompliance({
   answer = "",
   visibleSources = [],
@@ -2226,6 +2327,13 @@ function buildFinalCompliantAnswer({
 }
 
 function enforceFinalAnswerCompliance(args = {}) {
+  // /ask research profiles: run content-safety safeguards without A-F structural
+  // repair.  enforceAskProfileCompliance validates citations, hierarchy, debug
+  // leakage, and prohibited phrases while preserving the profile section headings.
+  if (args.responsePlan?.askProfile) {
+    return enforceAskProfileCompliance(args);
+  }
+
   // Non-A-F modes must pass through without reformatting.
   // These modes own their own output structure; A-F enforcement must not touch them.
   const rawMode = String(args.mode || args.orchestrationMode || "").toUpperCase();

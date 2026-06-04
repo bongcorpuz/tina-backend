@@ -385,7 +385,7 @@ function getResponseModeFromInput(input = {}) {
 function getHeadingsFromInput(input = {}) {
   const mode = getResponseModeFromInput(input);
 
-  return safeArray(
+  const rawSections = safeArray(
     input.rendererContract?.sections ||
       input.responsePlan?.rendererContract?.sections ||
       input.responsePlan?.responseTemplate ||
@@ -395,6 +395,21 @@ function getHeadingsFromInput(input = {}) {
       FALLBACK_TEMPLATES[mode] ||
       FALLBACK_TEMPLATES.LEGAL_ANALYSIS
   );
+
+  // Normalize /ask profile section labels to markdown headings.
+  // The LLM is instructed to emit "### Short Answer" etc., but the planner stores
+  // plain labels ("Short Answer").  hasHeading() and repairStructure() both use
+  // the exact heading string — if plain and the LLM emits ### , they miss each other,
+  // causing repairStructure to dump all content into section 0.
+  // Normalizing here ensures consistent ### matching without changing any other path.
+  if (input.responsePlan?.askProfile) {
+    return rawSections.map(s => {
+      const str = String(s || "").trim();
+      return str.startsWith("### ") ? str : `### ${str}`;
+    });
+  }
+
+  return rawSections;
 }
 
 function defaultBodyForHeading(heading = "") {
@@ -435,7 +450,40 @@ function defaultBodyForHeading(heading = "") {
     "QUALIFICATIONS":     "No conditions that change the ruling have been identified.",
     "OPEN ISSUES":        "No unresolved doctrinal issues identified.",
     "RECOMMENDED ACTION": "Indexed source not found.",
-    "POSITION STRENGTH":  "MODERATE — Position requires verification against current indexed authority."
+    "POSITION STRENGTH":  "MODERATE — Position requires verification against current indexed authority.",
+
+    // /ask research profile headings (BASIC_RESEARCH, LEGAL_INTERPRETATION, etc.)
+    "### Short Answer":                   "Indexed source not found.",
+    "### Controlling Authorities":        "Indexed source not found.",
+    "### Interpretation":                 "Indexed source not found.",
+    "### Practical Meaning":              "Consult the applicable provision and implementing regulation before relying on this answer.",
+    "### Issue Presented":                "Indexed source not found.",
+    "### Legal Interpretation":           "Indexed source not found.",
+    "### Practical Application":          "Consult the applicable provision and implementing regulation before relying on this answer.",
+    "### Relevant Facts / Assumptions":   "The factual circumstances have not been fully described. The analysis is based on the question as presented.",
+    "### Legal / Tax Analysis":           "Indexed source not found.",
+    "### Alternative Interpretations":    "No alternative interpretations identified from the available indexed authorities.",
+    "### Position Strength":              "Position strength is preliminary and subject to full fact pattern verification.",
+    "### Practical Note":                 "Consult the applicable provision and implementing regulation before relying on this answer.",
+    "### Characterization Issue":         "Indexed source not found.",
+    "### Competing Characterizations":    "No competing characterizations identified from the available authorities.",
+    "### Tax Consequences":               "Indexed source not found.",
+    "### Evidence / Substance Factors":   "The applicable substance-over-form factors have not been fully assessed.",
+    "### Most Defensible Position":       "Position determination requires full fact pattern assessment.",
+    "### Case / Doctrine Asked":          "Indexed source not found.",
+    "### Facts and Issue":                "Indexed source not found.",
+    "### Ruling":                         "Indexed source not found.",
+    "### Doctrine":                       "Indexed source not found.",
+    "### Current Significance":           "Indexed source not found.",
+    "### Related Authorities":            "Indexed source not found.",
+    "### Authority Question":             "Indexed source not found.",
+    "### Authority Hierarchy":            "Refer to the Master Prompt authority hierarchy: Constitution → NIRC/CMTA/LGC → Tax Treaties → Supreme Court → CTA → RR → RMC/RMO → BIR Rulings.",
+    "### Conflict / Consistency Analysis": "No conflict identified from the available indexed authorities.",
+    "### Controlling Rule":               "Indexed source not found.",
+    "### Practical Effect":               "Consult the applicable provision and implementing regulation before relying on this answer.",
+    "### Accounting Treatment":           "Indexed source not found.",
+    "### Tax Treatment":                  "Indexed source not found.",
+    "### Differences and Reconciliation": "Indexed source not found."
   };
 
   return defaults[heading] || "Indexed source not found.";

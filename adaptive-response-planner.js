@@ -35,6 +35,147 @@ const ORCHESTRATION_MODE = Object.freeze({
   EMERGENCY_TRIM: "EMERGENCY_TRIM"
 });
 
+// ─── /ask Research Profiles ───────────────────────────────────────────────────
+// Each profile maps to a distinct output structure for the /ask hook.
+// Profile selection is driven by query signals and issueClassification only —
+// no OpenAI calls, no retrieval, no prompt assembly here.
+
+const ASK_PROFILE = Object.freeze({
+  BASIC_RESEARCH:               "BASIC_RESEARCH",
+  LEGAL_INTERPRETATION:         "LEGAL_INTERPRETATION",
+  FACT_PATTERN_ANALYSIS:        "FACT_PATTERN_ANALYSIS",
+  TRANSACTION_CHARACTERIZATION: "TRANSACTION_CHARACTERIZATION",
+  JURISPRUDENCE_ANALYSIS:       "JURISPRUDENCE_ANALYSIS",
+  AUTHORITY_COMPARISON:         "AUTHORITY_COMPARISON",
+  ACCOUNTING_TAX_INTERACTION:   "ACCOUNTING_TAX_INTERACTION"
+});
+
+const ASK_PROFILE_SECTIONS = Object.freeze({
+  // A. "What is X?" — statutory definition, brief interpretation, practical meaning.
+  [ASK_PROFILE.BASIC_RESEARCH]: [
+    "Short Answer",
+    "Controlling Authorities",
+    "Interpretation",
+    "Practical Meaning"
+  ],
+
+  // B. "What constitutes X?" / "Is Y subject to Z?" — legal analysis of an issue.
+  [ASK_PROFILE.LEGAL_INTERPRETATION]: [
+    "Issue Presented",
+    "Short Answer",
+    "Controlling Authorities",
+    "Legal Interpretation",
+    "Practical Application"
+  ],
+
+  // C. "We paid X without Y. Is it deductible?" — specific factual scenario.
+  [ASK_PROFILE.FACT_PATTERN_ANALYSIS]: [
+    "Issue Presented",
+    "Short Answer",
+    "Relevant Facts / Assumptions",
+    "Controlling Authorities",
+    "Legal / Tax Analysis",
+    "Alternative Interpretations",
+    "Position Strength",
+    "Practical Note"
+  ],
+
+  // D. "Is this reimbursement or revenue?" / "Dividend or loan?" — competing labels.
+  [ASK_PROFILE.TRANSACTION_CHARACTERIZATION]: [
+    "Characterization Issue",
+    "Competing Characterizations",
+    "Controlling Authorities",
+    "Tax Consequences",
+    "Evidence / Substance Factors",
+    "Most Defensible Position"
+  ],
+
+  // E. "What did Medicard decide?" / "What cases discuss X?" — case / doctrine.
+  [ASK_PROFILE.JURISPRUDENCE_ANALYSIS]: [
+    "Case / Doctrine Asked",
+    "Facts and Issue",
+    "Ruling",
+    "Doctrine",
+    "Current Significance",
+    "Related Authorities"
+  ],
+
+  // F. "Which prevails, RR or NIRC?" / "Can an RMC create a tax?" — hierarchy conflict.
+  [ASK_PROFILE.AUTHORITY_COMPARISON]: [
+    "Authority Question",
+    "Short Answer",
+    "Authority Hierarchy",
+    "Conflict / Consistency Analysis",
+    "Controlling Rule",
+    "Practical Effect"
+  ],
+
+  // G. "How do book-tax differences affect deductibility?" — accounting ↔ tax.
+  [ASK_PROFILE.ACCOUNTING_TAX_INTERACTION]: [
+    "Issue Presented",
+    "Short Answer",
+    "Accounting Treatment",
+    "Tax Treatment",
+    "Differences and Reconciliation",
+    "Practical Note"
+  ]
+});
+
+/**
+ * Selects the /ask response profile from the query text and classification.
+ * Uses source-side signals only — no OpenAI calls.
+ */
+function selectAskProfile(query = "", issueClassification = {}) {
+  const q = String(query || "").toLowerCase().trim();
+  const pi       = String(issueClassification?.primaryIssue || "").toUpperCase();
+  const sub      = String(issueClassification?.subIssue    || "").toUpperCase();
+  const factSens = String(issueClassification?.factSensitivity || "").toLowerCase();
+
+  // JURISPRUDENCE_ANALYSIS — asks about a specific case, ruling, or doctrine.
+  // "significance of" and named cases are strong enough signals regardless of
+  // whether the query also starts with "what is".
+  if (
+    /\b(what did|significance of|what cases|cases.*discuss|case.*about|decided in|held in)\b/i.test(q) ||
+    /\b(medicard|sony|aichi|san roque|seagate|toshiba|meralco|philippine hearts)\b/i.test(q) ||
+    /g\.r\.\s*no\.?\s*\d|cta.*case\s*no/i.test(q)
+  ) return ASK_PROFILE.JURISPRUDENCE_ANALYSIS;
+
+  // AUTHORITY_COMPARISON — hierarchy, conflict, override, BIR ruling bindingness.
+  // "bir.*binding" is tested separately because \b cannot straddle "binding" inside
+  // a larger alternation group without missing the suffix.
+  if (
+    /\b(prevails?|override|overrides?|supersede|supersedes?|superseded|inconsistent with|which.*higher|which.*authority|hierarchy|rmc.*create.*tax|can.*bir.*impose|can.*rr.*impose|rr.*vs\.?\s*nirc|nirc.*vs\.?\s*rr|consistent.*nirc|nirc.*consistent|can an rmc|can a bir ruling)\b/i.test(q) ||
+    /\bbir\b.*\bbinding\b/i.test(q)
+  ) return ASK_PROFILE.AUTHORITY_COMPARISON;
+
+  // TRANSACTION_CHARACTERIZATION — competing legal/tax labels.
+  if (
+    /\b(reimbursement.*or.*revenue|revenue.*or.*reimbursement|dividend.*or.*loan|loan.*or.*dividend|management fee.*or.*dividend|is this.*or.*that|is this.*characteriz|characteriz|pass[- ]through|gross.*or.*net)\b/i.test(q) ||
+    pi === "TRANSACTION" || sub.includes("CHARACTERIZATION") || sub === "TRANSACTION"
+  ) return ASK_PROFILE.TRANSACTION_CHARACTERIZATION;
+
+  // ACCOUNTING_TAX_INTERACTION — book-tax differences, PFRS vs tax treatment.
+  if (
+    /\b(book[- ]tax|pfrs|financial statement|accounting.*deductib|deductib.*accounting|book.*income|tax.*income|reconcil|timing differ|accounting treatment|when.*recogni|recogni.*for.*tax)\b/i.test(q)
+  ) return ASK_PROFILE.ACCOUNTING_TAX_INTERACTION;
+
+  // FACT_PATTERN_ANALYSIS — specific factual scenario described by the user.
+  if (
+    /\b(we (paid|collected|received|incurred|failed|did not|have not|will|are|were)|our company|our client|our firm|the taxpayer|the company|client.*paid|paid.*without|collected.*without|incurred|failed to withhold|without.*withholding|can we deduct|is it deductible|is this taxable|is this subject|are we liable)\b/i.test(q) ||
+    factSens === "high" ||
+    issueClassification?.requiresFactPatternAnalysis === true
+  ) return ASK_PROFILE.FACT_PATTERN_ANALYSIS;
+
+  // LEGAL_INTERPRETATION — interpretive question (not a plain definition).
+  if (
+    /\b(what constitutes|what counts as|what qualifies|what falls under|is.*subject to|are.*subject to|is.*covered by|what is covered|how does.*apply|when does.*apply|applies to|does.*include|difference between.*and|distinguish.*between)\b/i.test(q) &&
+    !/\bwhat is\b.*\??\s*$/i.test(q)
+  ) return ASK_PROFILE.LEGAL_INTERPRETATION;
+
+  // BASIC_RESEARCH — definition / overview, default for /ask.
+  return ASK_PROFILE.BASIC_RESEARCH;
+}
+
 const RESPONSE_DEPTH = Object.freeze({
   CONCISE: "CONCISE",
   STANDARD: "STANDARD",
@@ -730,7 +871,26 @@ function planAdaptiveResponse(input = {}) {
     orchestrationMode
   );
 
-  const template =
+  // ── /ask profile selection ─────────────────────────────────────────────────
+  // Only applies to the /ask hook (or when no explicit hook is set).
+  // Reviewer, quiz, and other pinned hooks use their own section templates.
+  const hook     = input.hook || null;
+  const isAskHook = !hook || hook === "/ask";
+  const isPinnedHook =
+    hook === "/review" || hook === "/quiz" || hook === "/audit" ||
+    hook === "/tax"    || hook === "/case" || hook === "/source";
+
+  const askProfile = (isAskHook && !isPinnedHook)
+    ? selectAskProfile(
+        input.query || input.userQuery || input.question || "",
+        issueClassification
+      )
+    : null;
+
+  const askProfileSections = askProfile ? ASK_PROFILE_SECTIONS[askProfile] : null;
+
+  // Profile sections override the orchestration template for /ask.
+  const template = askProfileSections ||
     ORCHESTRATION_TEMPLATES[orchestrationMode] ||
     RESPONSE_TEMPLATES[mode] ||
     RESPONSE_TEMPLATES[RESPONSE_MODE.TECHNICAL];
@@ -752,6 +912,10 @@ function planAdaptiveResponse(input = {}) {
   return {
     engine: "TINA_ADAPTIVE_RESPONSE_PLANNER",
     version: ENGINE_VERSION,
+
+    // /ask profile fields (null for all other hooks)
+    askProfile,
+    askProfileSections,
 
     responseMode: mode,
     orchestrationMode,
@@ -780,6 +944,8 @@ function planAdaptiveResponse(input = {}) {
       contextMode: orchestrationMode,
       responseDepth: depth,
       requiredSections: template,
+      askProfile,
+      askProfileSections,
       conclusionRule,
       mustIncludeLimitation: limitationRequired,
       sourceOrderingPolicy: buildSourceOrderingPolicy(issueClassification),
@@ -800,6 +966,7 @@ function planAdaptiveResponse(input = {}) {
       contextMode: orchestrationMode,
       responseMode: mode,
       responseDepth: depth,
+      askProfileAware: askProfile !== null,
       tinaAdaptiveResponsePlannerVersion: ENGINE_VERSION
     }
   };
@@ -867,6 +1034,9 @@ export {
   RESPONSE_TEMPLATES,
   ORCHESTRATION_TEMPLATES,
   TECHNICAL_TEMPLATE,
+  ASK_PROFILE,
+  ASK_PROFILE_SECTIONS,
+  selectAskProfile,
   normalizeMode,
   normalizeOrchestrationMode,
   getIssueClassification,
@@ -884,6 +1054,9 @@ export default {
   RESPONSE_TEMPLATES,
   ORCHESTRATION_TEMPLATES,
   TECHNICAL_TEMPLATE,
+  ASK_PROFILE,
+  ASK_PROFILE_SECTIONS,
+  selectAskProfile,
   normalizeMode,
   normalizeOrchestrationMode,
   getIssueClassification,

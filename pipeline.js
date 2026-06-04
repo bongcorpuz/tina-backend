@@ -17,6 +17,7 @@ import {
   getModeRoutingMetadata,
   buildAdaptivePromptContract
 }                                                 from "./adaptive-tina-master-prompt.js";
+import { planAdaptiveResponse }                   from "./adaptive-response-planner.js";
 import { rerankByHierarchy }                      from "./authority-engine.js";
 import { applySupersessionFilter }                from "./supersession-engine.js";
 import { retrieveRelevantSources }                from "./retrieval-engine.js";
@@ -1419,13 +1420,42 @@ export async function runPipeline({
   }
   trace.steps.push({ step: 12, name: "riskScoring", done: true });
 
+  // ── Step 12.5: Adaptive Response Plan (/ask only) ─────────────────────────
+  // Selects an /ask research profile (BASIC_RESEARCH, LEGAL_INTERPRETATION, etc.)
+  // and builds the rendererContract used by Steps 14–16.  No OpenAI calls here.
+  ctx.responsePlan = null;
+  if (hook === "/ask" || !hook) {
+    try {
+      ctx.responsePlan = planAdaptiveResponse({
+        hook,
+        query,
+        issueClassification:  ctx.issueClassification,
+        factPattern:          ctx.factPattern,
+        transactionChar:      ctx.transactionChar,
+        evidenceEvaluation:   ctx.evidenceEval,
+        riskScore:            ctx.riskScore,
+        conflictAnalysis:     ctx.conflictAnalysis
+      });
+      console.log("[ASK PROFILE]", {
+        profile:   ctx.responsePlan?.askProfile,
+        sections:  ctx.responsePlan?.askProfileSections?.length ?? 0,
+        mode:      ctx.responsePlan?.responseMode,
+        limitation: ctx.responsePlan?.mustIncludeLimitation
+      });
+    } catch (e) {
+      trace.warnings.push({ step: "12.5", warning: `adaptiveResponsePlanner: ${e.message || e}` });
+    }
+  }
+  trace.steps.push({ step: "12.5", name: "adaptiveResponsePlan", done: true, askProfile: ctx.responsePlan?.askProfile || null });
+
   // ── Step 13: Build Adaptive Master Prompt ────────────────────────────────
   ctx.promptContract = buildAdaptivePromptContract(ctx.mode, {
     issueClassification: ctx.issueClassification,
     conflictAnalysis:    ctx.conflictAnalysis,
     riskScore:           ctx.riskScore,
     factPattern:         ctx.factPattern,
-    transactionChar:     ctx.transactionChar
+    transactionChar:     ctx.transactionChar,
+    responsePlan:        ctx.responsePlan
   });
   trace.steps.push({ step: 13, name: "masterPromptBuilt", done: true });
 
@@ -1453,7 +1483,12 @@ export async function runPipeline({
       systemPrompt:         ctx.promptContract?.masterPrompt,
       conversationHistory,
       mode:                 ctx.mode,
-      adaptiveContext:      { activeHook: hook, orchestrationMode: ctx.mode },
+      responsePlan:         ctx.responsePlan,
+      adaptiveContext: {
+        activeHook:        hook,
+        orchestrationMode: ctx.mode,
+        responsePlan:      ctx.responsePlan
+      },
       _traceId:             traceId
     });
   } catch (e) {
@@ -1498,6 +1533,7 @@ export async function runPipeline({
     includeSources:      false,  // sourceCards chip-rendered by frontend; no duplicate text block
     issueClassification: ctx.issueClassification,
     mode:                ctx.mode,
+    responsePlan:        ctx.responsePlan,
     conflict:            ctx.conflictAnalysis?.hasConflict ? ctx.conflictAnalysis : null
   });
   trace.steps.push({ step: 15, name: "answerRenderer", done: true });
@@ -1510,6 +1546,7 @@ export async function runPipeline({
     conflicts:           ctx.conflictAnalysis?.trueConflicts || [],
     issueClassification: ctx.issueClassification,
     mode:                ctx.mode,
+    responsePlan:        ctx.responsePlan,
     query
   });
   trace.steps.push({ step: 16, name: "finalAnswerCompliance", done: true });
@@ -1522,7 +1559,10 @@ export async function runPipeline({
   const rawFinalAnswer = (compliantResult?.finalAnswer || compliantResult?.answer || ctx.formattedAnswer)
     .replace(/\n+Validated Indexed Sources[\s\S]*$/i, "")
     .trim();
-  const finalAnswer = (ctx.mode === "FAST_DEFINITION" && isAskMode)
+  // FAST_DEFINITION conversational rendering only fires when no /ask profile
+  // is active — /ask profiles use their own section headings and must not be
+  // reparsed by the FAST_DEFINITION paragraph converter.
+  const finalAnswer = (ctx.mode === "FAST_DEFINITION" && isAskMode && !ctx.responsePlan?.askProfile)
     ? renderFastDefinitionConversational(rawFinalAnswer, query, ctx.responseStyle)
     : rawFinalAnswer;
 
