@@ -43,10 +43,162 @@ const SELECTOR_VERSION = "2.0.0-active";
 const DEFAULT_CANDIDATE_CAP = 15;
 const DEFAULT_MAX_VISIBLE    = 5;
 
+const CARD_ELIGIBLE_SAE_STATUSES = Object.freeze(new Set([
+  "AUTHORITY_FOUND",
+  "RELATED_AUTHORITY_ONLY"
+]));
+
+const CARD_SUPPRESSED_SAE_STATUSES = Object.freeze(new Set([
+  "RETRIEVAL_TIMEOUT",
+  "SOURCE_LOOKUP_EMPTY",
+  "SOURCE_PARSE_ERROR",
+  "NO_INDEXED_SOURCE"
+]));
+
+const REQUIRED_CARD_FIELDS = Object.freeze([
+  "authorityId",
+  "displayLabel",
+  "authorityType",
+  "authorityRole",
+  "authorityLevel",
+  "citation",
+  "isIndexed",
+  "isParsed",
+  "isGoverning",
+  "limitationRequired"
+]);
+
+const INTERNAL_CARD_FIELDS = Object.freeze([
+  "fileId",
+  "source_path",
+  "sourcePath",
+  "vectorId",
+  "storageKey",
+  "supabaseId",
+  "rowId"
+]);
+
 // ─── Pure helpers (mirrors pipeline.js; no side-effects) ─────────────────────
 
 function safeStr(v) {
   return typeof v === "string" ? v : String(v == null ? "" : v);
+}
+
+function normalizeStatus(value = "") {
+  if (value && typeof value === "object") return "";
+  return safeStr(value).trim().toUpperCase();
+}
+
+function objectOrEmpty(value) {
+  return value && typeof value === "object" && !Array.isArray(value) ? value : {};
+}
+
+function firstObject(...values) {
+  for (const value of values) {
+    const candidate = objectOrEmpty(value);
+    if (Object.keys(candidate).length > 0) return candidate;
+  }
+  return {};
+}
+
+function resolveSaeStatus(input = {}) {
+  const availability = firstObject(input.sourceAvailabilityMetadata, input.sourceAvailability);
+  return normalizeStatus(
+    input.saeStatus ||
+    input.sourceStatus ||
+    availability.saeStatus ||
+    availability.sourceAvailability ||
+    availability.sourceStatus ||
+    availability.status
+  );
+}
+
+function coalesceCardField(card = {}, camel, snake = null) {
+  const meta = card.metadata || {};
+  const annotation = card.authorityAnnotation || {};
+  const snakeKey = snake || camel.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);
+  return card[camel] ?? card[snakeKey] ?? annotation[camel] ?? annotation[snakeKey] ?? meta[camel] ?? meta[snakeKey];
+}
+
+function normalizeAuthorityRole(card = {}) {
+  return normalizeStatus(coalesceCardField(card, "authorityRole") || "UNKNOWN") || "UNKNOWN";
+}
+
+function normalizeBooleanField(value) {
+  if (value === true || value === false) return value;
+  if (typeof value === "string") {
+    const normalized = value.trim().toLowerCase();
+    if (normalized === "true") return true;
+    if (normalized === "false") return false;
+  }
+  return null;
+}
+
+function normalizedEligibilityFields(card = {}) {
+  return {
+    authorityId: coalesceCardField(card, "authorityId"),
+    displayLabel: coalesceCardField(card, "displayLabel"),
+    authorityType: normalizeStatus(coalesceCardField(card, "authorityType")),
+    authorityRole: normalizeAuthorityRole(card),
+    authorityLevel: coalesceCardField(card, "authorityLevel"),
+    citation:
+      coalesceCardField(card, "citation") ||
+      coalesceCardField(card, "reference") ||
+      coalesceCardField(card, "normalizedReference") ||
+      coalesceCardField(card, "issuanceNumber"),
+    isIndexed: normalizeBooleanField(coalesceCardField(card, "isIndexed")),
+    isParsed: normalizeBooleanField(coalesceCardField(card, "isParsed")),
+    isGoverning: normalizeBooleanField(coalesceCardField(card, "isGoverning")),
+    limitationRequired: normalizeBooleanField(coalesceCardField(card, "limitationRequired"))
+  };
+}
+
+function validateSourceCardEligibility(card = {}, saeStatus = "") {
+  const failures = [];
+  const fields = normalizedEligibilityFields(card);
+
+  if (Object.prototype.hasOwnProperty.call(card, "isSupportingOnly") ||
+      Object.prototype.hasOwnProperty.call(card.metadata || {}, "isSupportingOnly") ||
+      Object.prototype.hasOwnProperty.call(card.authorityAnnotation || {}, "isSupportingOnly")) {
+    failures.push("isSupportingOnly_prohibited");
+  }
+
+  for (const field of REQUIRED_CARD_FIELDS) {
+    const value = fields[field];
+    const missing =
+      value === undefined ||
+      value === null ||
+      value === "" ||
+      (field === "authorityLevel" && !Number.isFinite(Number(value)));
+    if (missing) failures.push(`missing_${field}`);
+  }
+
+  if (saeStatus === "AUTHORITY_FOUND") {
+    if (fields.isGoverning !== true) failures.push("authority_found_requires_isGoverning_true");
+    if (fields.limitationRequired !== false) failures.push("authority_found_requires_limitationRequired_false");
+    if (fields.authorityRole !== "GOVERNING") failures.push("authority_found_requires_governing_role");
+  }
+
+  if (saeStatus === "RELATED_AUTHORITY_ONLY") {
+    if (fields.isGoverning !== false) failures.push("related_only_requires_isGoverning_false");
+    if (fields.limitationRequired !== true) failures.push("related_only_requires_limitationRequired_true");
+    if (fields.authorityRole === "GOVERNING") failures.push("related_only_prohibits_governing_role");
+  }
+
+  return {
+    eligible: failures.length === 0,
+    fields,
+    validationFailures: failures,
+    suppressionReason: failures[0] || null
+  };
+}
+
+function stripInternalCardFields(card = {}) {
+  const clean = { ...card };
+  for (const field of INTERNAL_CARD_FIELDS) {
+    delete clean[field];
+  }
+  return clean;
 }
 
 function sourceCardBasename(value = "") {
@@ -492,6 +644,8 @@ function _computeCardSortScore(card, controllingAuths, supportingAuths) {
  *   answerText:          string,
  *   mode:                string,
  *   maxSources:          number,
+ *   saeStatus:           string,
+ *   sourceAvailability:  object,
  *   currentSourceCards:  object[]
  * }} input
  * @returns {{ validatedSources: object[], visibleSourceCards: object[], diagnostics: object }}
@@ -503,6 +657,10 @@ export function selectSourceAuthorities({
   answerText          = "",      // eslint-disable-line no-unused-vars — reserved Stage 2
   mode                = "",      // eslint-disable-line no-unused-vars
   maxSources          = DEFAULT_MAX_VISIBLE,
+  saeStatus           = "",
+  sourceStatus        = "",
+  sourceAvailability  = null,
+  sourceAvailabilityMetadata = null,
   currentSourceCards  = []
 } = {}) {
   try {
@@ -510,13 +668,51 @@ export function selectSourceAuthorities({
     const hasTargetAuthorities = targetAuths.length > 0;
     const candidateCap         = Math.max(maxSources * 3, DEFAULT_CANDIDATE_CAP);
     const visibleCap           = Math.min(maxSources, DEFAULT_MAX_VISIBLE);
+    const resolvedSaeStatus    = resolveSaeStatus({
+      saeStatus,
+      sourceStatus,
+      sourceAvailability,
+      sourceAvailabilityMetadata
+    });
+    const eligibilityGateActive = CARD_ELIGIBLE_SAE_STATUSES.has(resolvedSaeStatus);
+
+    if (CARD_SUPPRESSED_SAE_STATUSES.has(resolvedSaeStatus)) {
+      const diagnostics = {
+        selectorVersion: SELECTOR_VERSION,
+        computedAt: new Date().toISOString(),
+        totalChunksInspected: rerankedChunks.length,
+        eligibilityStatus: "SUPPRESSED",
+        saeStatus: resolvedSaeStatus,
+        suppressionReason: `sae_status_${resolvedSaeStatus.toLowerCase()}`,
+        validationFailures: [],
+        visibleCount: 0,
+        accepted: 0,
+        rejected: rerankedChunks.length
+      };
+      return { validatedSources: [], visibleSourceCards: [], diagnostics };
+    }
 
     const seen  = new Map();  // dedupeKey → { card, _targetMatch }
-    const skip  = { contamination: 0, consistency: 0, issueRelevance: 0 };
+    const skip  = { contamination: 0, consistency: 0, issueRelevance: 0, eligibility: 0 };
     const rejectDetails = [];
+    const eligibilityDetails = [];
 
     for (const c of rerankedChunks) {
       if (seen.size >= candidateCap) break;
+
+      const eligibility = eligibilityGateActive
+        ? validateSourceCardEligibility(c, resolvedSaeStatus)
+        : { eligible: true, fields: normalizedEligibilityFields(c), validationFailures: [], suppressionReason: null };
+      if (!eligibility.eligible) {
+        skip.eligibility++;
+        eligibilityDetails.push({
+          ref: c.normalizedReference || c.normalized_reference || c.citation || c.title || "(no-ref)",
+          eligibilityStatus: "SUPPRESSED",
+          suppressionReason: eligibility.suppressionReason,
+          validationFailures: eligibility.validationFailures
+        });
+        continue;
+      }
 
       // Gate 1 — contamination (both flags required)
       if (hasTargetAuthorities && c.targetAuthorityMatch === false && c.issueMismatch === true) {
@@ -589,6 +785,7 @@ export function selectSourceAuthorities({
         c.web_view_link   || c.sourceUrl         || c.source_url      ||
         meta.driveViewUrl || meta.drive_view_url || meta.url          || meta.webViewLink  ||
         meta.web_view_link || meta.sourceUrl     || meta.source_url   || "";
+      const eligibilityFields = eligibility.fields;
 
       seen.set(dedupeKey, {
         _targetMatch,
@@ -597,8 +794,16 @@ export function selectSourceAuthorities({
                              c.issueClassificationMatch?.authorityMatchTier || 4,
         _rerankScore:        c.rerankScore || c.finalScore || c.score || 0,
         title:               provRef && docTitle ? `${provRef} — ${docTitle}` : provRef || docTitle || "Source",
-        citation:            provRef || c.citation || "",
-        authorityType:       c.authorityType || c.authority_type || "UNKNOWN",
+        displayLabel:        eligibilityFields.displayLabel || provRef || docTitle || "Source",
+        citation:            eligibilityFields.citation || provRef || c.citation || "",
+        authorityId:         eligibilityFields.authorityId || "",
+        authorityType:       eligibilityFields.authorityType || c.authorityType || c.authority_type || "UNKNOWN",
+        authorityRole:       eligibilityFields.authorityRole || "UNKNOWN",
+        authorityLevel:      eligibilityFields.authorityLevel ?? null,
+        isIndexed:           eligibilityFields.isIndexed,
+        isParsed:            eligibilityFields.isParsed,
+        isGoverning:         eligibilityFields.isGoverning,
+        limitationRequired:  eligibilityFields.limitationRequired,
         authorityMatchTier:  c.authorityMatchTier ||
                              c.issueClassificationMatch?.authorityMatchTier || 4,
         driveViewUrl:        url,
@@ -676,12 +881,13 @@ export function selectSourceAuthorities({
     // before output.  The public authorityMatchTier field (stored separately in the
     // card object by the seen.set() call) is preserved for downstream callers.
     // eslint-disable-next-line no-unused-vars
-    const validatedSources = finalSorted.map(({ _targetMatch, _authorityMatchTier, _rerankScore, ...card }) => card);
+    const validatedSources = finalSorted
+      .map(({ _targetMatch, _authorityMatchTier, _rerankScore, ...card }) => stripInternalCardFields(card));
 
     // Slice to visible cap + run outbound sanitizer
     // eslint-disable-next-line no-unused-vars
     const preClean         = finalSorted.slice(0, visibleCap).map(({ _targetMatch, _authorityMatchTier, _rerankScore, ...card }) => card);
-    const visibleSourceCards = sanitizeSelectorCards(preClean);
+    const visibleSourceCards = sanitizeSelectorCards(preClean).map(stripInternalCardFields);
 
     // Diff vs current sourceCards
     const diff = diffSourceCards(visibleSourceCards, currentSourceCards);
@@ -690,6 +896,10 @@ export function selectSourceAuthorities({
       selectorVersion:       SELECTOR_VERSION,
       computedAt:            new Date().toISOString(),
       totalChunksInspected:  rerankedChunks.length,
+      eligibilityStatus:     eligibilityGateActive ? "ENFORCED" : "NOT_EVALUATED",
+      saeStatus:             resolvedSaeStatus || null,
+      suppressionReason:     eligibilityDetails.length ? "card_validation_failed" : null,
+      validationFailures:    eligibilityDetails.slice(0, 10),
       candidatesCollected:         allCandidates.length,
       genericNircSuppressed:       _genericSuppressed,
       offPlanNircSectionsSuppressed: _offPlanSuppressed,
@@ -697,13 +907,14 @@ export function selectSourceAuthorities({
       tier2Count:            allCandidates.filter(v => Number(v._authorityMatchTier || 4) === 2).length,
       tier3Count:            allCandidates.filter(v => Number(v._authorityMatchTier || 4) === 3).length,
       accepted:              validatedSources.length,
-      rejected:              skip.contamination + skip.consistency + skip.issueRelevance,
+      rejected:              skip.contamination + skip.consistency + skip.issueRelevance + skip.eligibility,
       rejectionBreakdown: {
         contamination:  skip.contamination,
         consistency:    skip.consistency,
-        issueRelevance: skip.issueRelevance
+        issueRelevance: skip.issueRelevance,
+        eligibility:    skip.eligibility
       },
-      rejectedDetails:       rejectDetails.slice(0, 10),
+      rejectedDetails:       [...eligibilityDetails, ...rejectDetails].slice(0, 10),
       visibleCount:          visibleSourceCards.length,
       targetAuths:           targetAuths.slice(0, 8),
       selectorLabels:        visibleSourceCards.map(c => c.normalizedReference || c.citation || "(none)"),

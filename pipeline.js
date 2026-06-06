@@ -2077,7 +2077,10 @@ export async function runPipeline({
     query,
     answerText:          finalAnswer || "",
     mode:                ctx.mode   || "",
-    maxSources:          5
+    maxSources:          5,
+    saeStatus:           ctx.saeStatus,
+    sourceAvailability:  ctx.sourceAvailability,
+    limitationRequired:  ctx.limitationRequired
   });
   trace._sourceAuthoritySelectorDiagnostics = _sasResult.diagnostics;
 
