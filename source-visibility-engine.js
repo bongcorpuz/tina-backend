@@ -32,71 +32,57 @@ export const ENGINE_VERSION = "3.3.0";
 export const MAX_VISIBLE_SOURCES = 5;
 
 /**
- * Master Prompt hierarchy:
- * 1. Constitution
- * 2. NIRC / CMTA / LGC / primary statutes
- * 3. Tax Treaties
- * 4. Supreme Court En Banc
- * 5. Supreme Court Division
- * 6. CTA En Banc
- * 7. CTA Division
- * 8. Revenue Regulations
- * 9. RMC / RMO / RAMO
- * 10. BIR Rulings
- * 11. LGU / BOC issuances
- * 12. PFRS / PAS / PSA, when accounting applies
- * 13. OECD / foreign persuasive authorities
- * 14. CPA reviewer notes / secondary materials
+ * Architecture v2.0 visible source hierarchy.
+ * Retrieval order and vector score must not control display order.
  */
 const CONTROLLING_AUTHORITY_PRIORITY = Object.freeze({
+  STATUTE: 1,
   CONSTITUTION: 1,
+  NIRC: 1,
+  TAX_CODE: 1,
+  CMTA: 1,
+  LGC: 1,
+  REPUBLIC_ACT: 1,
+  RA: 1,
 
-  STATUTE: 2,
-  NIRC: 2,
-  TAX_CODE: 2,
-  CMTA: 2,
-  LGC: 2,
-  REPUBLIC_ACT: 2,
-  RA: 2,
+  TAX_TREATY: 2,
+  TREATY: 2,
 
-  TAX_TREATY: 3,
-  TREATY: 3,
+  CASE_SC: 3,
+  SUPREME_COURT_EN_BANC: 3,
+  SUPREME_COURT: 3,
+  SC: 3,
 
-  SUPREME_COURT_EN_BANC: 4,
-  SUPREME_COURT: 5,
-  SC: 5,
+  CASE_CTA: 4,
+  CTA_EN_BANC: 4,
+  CTA_DIVISION: 4,
 
-  CTA_EN_BANC: 6,
+  RR: 5,
+  REVENUE_REGULATION: 5,
 
-  CTA_DIVISION: 7,
-  COURT_OF_APPEALS: 7,
+  RMC: 6,
+  RMO: 7,
+  RAMO: 8,
 
-  RR: 8,
-  REVENUE_REGULATION: 8,
+  BIR_RULING: 9,
 
-  RMC: 9,
-  RMO: 9,
-  RAMO: 9,
+  SECONDARY: 10,
+  LGU: 10,
+  LGU_ISSUANCE: 10,
+  BOC_ISSUANCE: 10,
+  FIRB_ISSUANCE: 10,
+  PEZA_MEMO: 10,
+  SEC_GUIDANCE: 10,
 
-  BIR_RULING: 10,
+  PFRS: 10,
+  PAS: 10,
+  PSA: 10,
 
-  LGU: 11,
-  LGU_ISSUANCE: 11,
-  BOC_ISSUANCE: 11,
-  FIRB_ISSUANCE: 11,
-  PEZA_MEMO: 11,
-  SEC_GUIDANCE: 11,
+  OECD_GUIDANCE: 10,
+  FOREIGN_AUTHORITY: 10,
 
-  PFRS: 12,
-  PAS: 12,
-  PSA: 12,
-
-  OECD_GUIDANCE: 13,
-  FOREIGN_AUTHORITY: 13,
-
-  SECONDARY: 14,
-  CPA_NOTES: 14,
-  REVIEW_MATERIALS: 14,
+  CPA_NOTES: 10,
+  REVIEW_MATERIALS: 10,
 
   UNKNOWN: 99
 });
@@ -372,18 +358,20 @@ function normalizeAuthority(value = "") {
     TAX_TREATY: "TREATY",
     TREATY: "TREATY",
 
-    SUPREME_COURT_EN_BANC: "SUPREME_COURT_EN_BANC",
-    SUPREME_COURT_DECISION: "SUPREME_COURT",
-    SUPREME_COURT: "SUPREME_COURT",
-    SC: "SUPREME_COURT",
-    CASE_LAW: "SUPREME_COURT",
-    JURISPRUDENCE: "SUPREME_COURT",
+    CASE_SC: "CASE_SC",
+    SUPREME_COURT_EN_BANC: "CASE_SC",
+    SUPREME_COURT_DECISION: "CASE_SC",
+    SUPREME_COURT: "CASE_SC",
+    SC: "CASE_SC",
+    CASE_LAW: "CASE_SC",
+    JURISPRUDENCE: "CASE_SC",
 
-    CTA_EN_BANC: "CTA_EN_BANC",
-    CTA: "CTA_DIVISION",
-    CTA_DIVISION: "CTA_DIVISION",
-    COURT_OF_APPEALS: "COURT_OF_APPEALS",
-    CA: "COURT_OF_APPEALS",
+    CASE_CTA: "CASE_CTA",
+    CTA_EN_BANC: "CASE_CTA",
+    CTA: "CASE_CTA",
+    CTA_DIVISION: "CASE_CTA",
+    COURT_OF_APPEALS: "SECONDARY",
+    CA: "SECONDARY",
 
     REVENUE_REGULATION: "RR",
     REVENUE_REGULATIONS: "RR",
@@ -450,13 +438,13 @@ export function authorityTypeOf(doc = {}) {
 
   if (path.includes("00_constitution") || title.includes("constitution")) return "CONSTITUTION";
 
-  if (path.includes("06_court_cases") && hasSupremeCourtEnBancSignal(blob)) return "SUPREME_COURT_EN_BANC";
-  if (hasSupremeCourtEnBancSignal(blob)) return "SUPREME_COURT_EN_BANC";
-  if (path.includes("06_court_cases") && hasSupremeCourtSignal(blob)) return "SUPREME_COURT";
-  if (title.includes("supreme court") || hasSupremeCourtSignal(blob)) return "SUPREME_COURT";
-  if (title.includes("cta en banc") || hasCtaEnBancSignal(blob)) return "CTA_EN_BANC";
-  if (title.includes("court of appeals") || /\bca-g\.?r\.?\b/i.test(blob)) return "COURT_OF_APPEALS";
-  if (title.includes("cta") || hasCtaSignal(blob)) return "CTA_DIVISION";
+  if (path.includes("06_court_cases") && hasSupremeCourtEnBancSignal(blob)) return "CASE_SC";
+  if (hasSupremeCourtEnBancSignal(blob)) return "CASE_SC";
+  if (path.includes("06_court_cases") && hasSupremeCourtSignal(blob)) return "CASE_SC";
+  if (title.includes("supreme court") || hasSupremeCourtSignal(blob)) return "CASE_SC";
+  if (title.includes("cta en banc") || hasCtaEnBancSignal(blob)) return "CASE_CTA";
+  if (title.includes("court of appeals") || /\bca-g\.?r\.?\b/i.test(blob)) return "SECONDARY";
+  if (title.includes("cta") || hasCtaSignal(blob)) return "CASE_CTA";
 
   if (
     path.includes("01_tax_code") ||
@@ -484,6 +472,9 @@ export function authorityTypeOf(doc = {}) {
 }
 
 export function authorityLevelOf(doc = {}) {
+  const mapped = CONTROLLING_AUTHORITY_PRIORITY[authorityTypeOf(doc)];
+  if (Number.isFinite(Number(mapped)) && Number(mapped) > 0) return Number(mapped);
+
   const explicit =
     doc.authorityLevel ??
     doc.authority_level ??
@@ -492,10 +483,13 @@ export function authorityLevelOf(doc = {}) {
 
   if (Number.isFinite(Number(explicit)) && Number(explicit) > 0) return Number(explicit);
 
-  return CONTROLLING_AUTHORITY_PRIORITY[authorityTypeOf(doc)] || 99;
+  return 99;
 }
 
 export function controllingPrecedenceOf(doc = {}) {
+  const mapped = CONTROLLING_AUTHORITY_PRIORITY[authorityTypeOf(doc)];
+  if (Number.isFinite(Number(mapped)) && Number(mapped) > 0) return Number(mapped);
+
   const explicit =
     doc.controllingPrecedence ??
     doc.controlling_precedence ??
@@ -504,7 +498,7 @@ export function controllingPrecedenceOf(doc = {}) {
 
   if (Number.isFinite(Number(explicit)) && Number(explicit) > 0) return Number(explicit);
 
-  return CONTROLLING_AUTHORITY_PRIORITY[authorityTypeOf(doc)] || 99;
+  return 99;
 }
 
 function isReviewMode(issueClassification = null) {
@@ -545,7 +539,7 @@ export function isWeakAuthority(doc = {}) {
 }
 
 export function isControllingAuthority(doc = {}) {
-  return controllingPrecedenceOf(doc) <= 7;
+  return controllingPrecedenceOf(doc) <= 4;
 }
 
 export function isAdministrativeAuthority(doc = {}) {
@@ -554,6 +548,8 @@ export function isAdministrativeAuthority(doc = {}) {
 
 export function isCourtAuthority(doc = {}) {
   return [
+    "CASE_SC",
+    "CASE_CTA",
     "SUPREME_COURT_EN_BANC",
     "SUPREME_COURT",
     "CTA_EN_BANC",
@@ -852,6 +848,8 @@ export function formatDocType(doc = {}) {
     REPUBLIC_ACT: "Republic Act",
     TAX_TREATY: "Tax Treaty",
     TREATY: "Tax Treaty",
+    CASE_SC: "Supreme Court Case",
+    CASE_CTA: "CTA Case",
     SUPREME_COURT_EN_BANC: "Supreme Court En Banc",
     SUPREME_COURT: "Supreme Court",
     CTA_EN_BANC: "CTA En Banc",
@@ -1025,20 +1023,20 @@ export function buildShortSubject(doc = {}) {
 export function buildLegalBasisEntry(doc = {}) {
   const type = formatDocType(doc);
   const number = inferIssuanceNumber(doc);
-  const subject = buildShortSubject(doc);
+  const subject = safeDisplayLabelOf(doc);
 
   if (number && subject) return `[${type}] ${number} – ${subject}`;
   if (number) return `[${type}] ${number}`;
-  return `[${type}] ${subject || sourceTitleOf(doc)}`;
+  return `[${type}] ${subject || `${type} Source`}`;
 }
 
 export function buildSourcesEntry(doc = {}) {
   const number = inferIssuanceNumber(doc);
-  const subject = buildShortSubject(doc);
+  const subject = safeDisplayLabelOf(doc);
 
   if (number && subject) return `${number} – ${subject}`;
   if (number) return number;
-  return subject || sourceTitleOf(doc);
+  return subject || "Source";
 }
 
 function buildDocKey(doc = {}) {
@@ -1122,7 +1120,13 @@ function mergeDocMetadata(retained, incoming) {
     normalized_reference: retained.normalized_reference || incoming.normalized_reference,
     citation:             retained.citation             || incoming.citation,
     reference:            retained.reference            || incoming.reference,
-    source:               retained.source               || incoming.source
+    source:               retained.source               || incoming.source,
+    displayLabel:         retained.displayLabel         || incoming.displayLabel         || incoming.display_label,
+    display_label:        retained.display_label        || incoming.display_label        || incoming.displayLabel,
+    authorityType:        retained.authorityType        || incoming.authorityType        || incoming.authority_type,
+    authority_type:       retained.authority_type       || incoming.authority_type       || incoming.authorityType,
+    authorityLevel:       retained.authorityLevel       || incoming.authorityLevel       || incoming.authority_level,
+    authority_level:      retained.authority_level      || incoming.authority_level      || incoming.authorityLevel
   });
 }
 
@@ -1173,6 +1177,25 @@ function isCitedOrUsed(doc = {}, citedSourceKeys = []) {
   return citedSourceKeys.some((key) => keyBlob.includes(normalizeLooseText(key)));
 }
 
+function safeDisplayLabelOf(doc = {}) {
+  return trimText(
+    doc.displayLabel ||
+      doc.display_label ||
+      doc.metadata?.displayLabel ||
+      doc.metadata?.display_label ||
+      doc.citation ||
+      doc.reference ||
+      doc.normalizedReference ||
+      doc.normalized_reference ||
+      doc.metadata?.citation ||
+      doc.metadata?.reference ||
+      doc.metadata?.normalizedReference ||
+      inferIssuanceNumber(doc) ||
+      "",
+    240
+  );
+}
+
 function toVisibleSourceEntry(doc = {}, issueClassification = null) {
   // Provision-level display label: prefer the authority/provision reference
   // (e.g. "NIRC Sec. 105", "RR No. 16-2005") over the raw PDF filename that all
@@ -1181,9 +1204,12 @@ function toVisibleSourceEntry(doc = {}, issueClassification = null) {
   const _normRef   = doc.normalized_reference || doc.normalizedReference ||
                      doc.metadata?.normalizedReference || null;
   const _provLabel = inferIssuanceNumber(doc) || null;
+  const _safeLabel = safeDisplayLabelOf(doc);
+  const _title = _safeLabel || _provLabel || `${formatDocType(doc)} Source`;
 
   return {
-    title: _provLabel || sourceTitleOf(doc),
+    title: _title,
+    displayLabel: _safeLabel || _title,
 
     // Expose normalized_reference so downstream dedup (buildDocKey) and the
     // frontend can distinguish provisions from the same source document.
@@ -1198,16 +1224,13 @@ function toVisibleSourceEntry(doc = {}, issueClassification = null) {
       doc.metadata?.citation ||
       doc.metadata?.reference ||
       _provLabel ||
-      sourceTitleOf(doc),
+      _safeLabel ||
+      _title,
 
     drive_url: sourceDriveUrlOf(doc),
     driveViewUrl: sourceDriveUrlOf(doc),
     drive_download_url: sourceDownloadUrlOf(doc),
     driveDownloadUrl: sourceDownloadUrlOf(doc),
-
-    fileId: fileIdOf(doc),
-    source_path: sourcePathOf(doc),
-    sourcePath: sourcePathOf(doc),
 
     authority_type: authorityTypeOf(doc),
     authorityType: authorityTypeOf(doc),
@@ -1312,6 +1335,9 @@ function sourceScore(doc = {}, issueClassification = null) {
 
 function prioritizeVisibleSources(docs = [], issueClassification = null) {
   return [...docs].sort((a, b) => {
+    const precedenceDiff = controllingPrecedenceOf(a) - controllingPrecedenceOf(b);
+    if (precedenceDiff !== 0) return precedenceDiff;
+
     const domainDiff =
       Number(docDomainMatched(b, issueClassification) === true) -
       Number(docDomainMatched(a, issueClassification) === true);
@@ -1328,9 +1354,6 @@ function prioritizeVisibleSources(docs = [], issueClassification = null) {
     if (aIssue !== bIssue) {
       return Number(bIssue === true) - Number(aIssue === true);
     }
-
-    const precedenceDiff = controllingPrecedenceOf(a) - controllingPrecedenceOf(b);
-    if (precedenceDiff !== 0) return precedenceDiff;
 
     const scoreDiff = sourceScore(b, issueClassification) - sourceScore(a, issueClassification);
     if (scoreDiff !== 0) return scoreDiff;
@@ -1355,6 +1378,10 @@ export function filterVisibleSources(
     requireCited = false
   } = {}
 ) {
+  const visibleLimit = Math.min(
+    Math.max(Number(maxItems) || MAX_VISIBLE_SOURCES, 0),
+    MAX_VISIBLE_SOURCES
+  );
   const visible = [];
 
   const issueMatchedDocs = buildIssueMatchedVisiblePool(
@@ -1378,7 +1405,7 @@ export function filterVisibleSources(
     visible.push(toVisibleSourceEntry(sourceToUse, issueClassification));
   }
 
-  return uniqueDocs(prioritizeVisibleSources(visible, issueClassification)).slice(0, maxItems);
+  return uniqueDocs(prioritizeVisibleSources(visible, issueClassification)).slice(0, visibleLimit);
 }
 
 export function runSupersessionPreflight({
@@ -1493,7 +1520,8 @@ export function buildFinalRoutePayload({
           requireCited: citedSourceKeys.length > 0
         });
 
-  const sources = uniqueDocs(finalVisibleSources)
+  const uniqueFinalVisibleSources = uniqueDocs(finalVisibleSources);
+  const sources = uniqueFinalVisibleSources
     .slice(0, MAX_VISIBLE_SOURCES)
     .map((doc) => toVisibleSourceEntry(doc, issueClassification));
 
@@ -1523,8 +1551,12 @@ export function buildFinalRoutePayload({
       rawFullTextHidden: true,
       contextOrchestrationCompatible: true,
       masterPromptAuthorityHierarchyApplied: true,
+      architectureV2DisplayHierarchyApplied: true,
       courtAuthorityNotSubordinatedToBIRIssuances: true,
       reviewerSourcesExcludedUnlessReviewMode: true,
+      maxVisibleSources: MAX_VISIBLE_SOURCES,
+      overflowSuppressedFromVisibleOutput: uniqueFinalVisibleSources.length > MAX_VISIBLE_SOURCES,
+      caseOrderingLimitation: "CASE_SC and CASE_CTA are separated when source metadata or court signals identify Supreme Court or CTA sources; Court of Appeals sources are not treated as CASE_CTA.",
       sourceCount: sources.length,
       primaryDomain: getPrimaryDomain(issueClassification) || null
     }
@@ -1810,13 +1842,15 @@ export function filterDisplayedSourcesByDirectSupport({
     String(mode || "").toUpperCase() === "SOURCE_LOOKUP";
 
   if (_isExplicitSourceMode) {
+    const displayed = prioritizeVisibleSources(candidateSources, issueClassification)
+      .slice(0, MAX_VISIBLE_SOURCES);
     return {
-      displayedSources: candidateSources,
+      displayedSources: displayed,
       rejectedSources: [],
       diagnostics: {
         reason:    "source_mode_passthrough",
         total:     candidateSources.length,
-        displayed: candidateSources.length,
+        displayed: displayed.length,
         rejected:  0
       }
     };
@@ -1826,10 +1860,12 @@ export function filterDisplayedSourcesByDirectSupport({
   // Exception: explicit source/citation lookup queries may still pass all through.
   if (!answerText || !String(answerText).trim()) {
     if (_isSourceLookupQuery(query)) {
+      const displayed = prioritizeVisibleSources(candidateSources, issueClassification)
+        .slice(0, MAX_VISIBLE_SOURCES);
       return {
-        displayedSources: candidateSources,
+        displayedSources: displayed,
         rejectedSources: [],
-        diagnostics: { reason: "source_lookup_exception_empty_answer", total: candidateSources.length, displayed: candidateSources.length, rejected: 0 }
+        diagnostics: { reason: "source_lookup_exception_empty_answer", total: candidateSources.length, displayed: displayed.length, rejected: 0 }
       };
     }
     return {
@@ -1850,10 +1886,12 @@ export function filterDisplayedSourcesByDirectSupport({
 
   // Signal D: source lookup queries get all candidates (looser gate per spec)
   if (_isSourceLookupQuery(query)) {
+    const displayed = prioritizeVisibleSources(candidateSources, issueClassification)
+      .slice(0, MAX_VISIBLE_SOURCES);
     return {
-      displayedSources: candidateSources,
+      displayedSources: displayed,
       rejectedSources: [],
-      diagnostics: { reason: "source_lookup_exception", total: candidateSources.length, displayed: candidateSources.length, rejected: 0 }
+      diagnostics: { reason: "source_lookup_exception", total: candidateSources.length, displayed: displayed.length, rejected: 0 }
     };
   }
 
@@ -1923,13 +1961,16 @@ export function filterDisplayedSourcesByDirectSupport({
     });
   }
 
+  const orderedDisplayedSources = prioritizeVisibleSources(displayedSources, issueClassification)
+    .slice(0, MAX_VISIBLE_SOURCES);
+
   return {
-    displayedSources,
+    displayedSources: orderedDisplayedSources,
     rejectedSources,
     diagnostics: {
       filterVersion:           "1.0.0",
       total:                   candidateSources.length,
-      displayed:               displayedSources.length,
+      displayed:               orderedDisplayedSources.length,
       rejected:                rejectedSources.length,
       answerCitationKeysCount: answerCitationKeys.size,
       answerKeyTermsCount:     answerKeyTerms.length,
