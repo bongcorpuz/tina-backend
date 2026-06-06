@@ -406,14 +406,18 @@ export function buildAuthorityHierarchyText() {
   return [
     "1. Constitution",
     "2. NIRC / Republic Acts / Statutes",
-    "3. Supreme Court Decisions",
-    "4. Revenue Regulations",
-    "5. Tax Treaties",
-    "6. RMC / RMO / RAMO",
-    "7. BIR Rulings",
-    "8. CTA / Court of Appeals",
-    "9. LGU / BOC Issuances / PFRS / PAS / PSA, depending on the issue",
-    "10. OECD / secondary materials"
+    "3. Tax Treaties",
+    "4. Supreme Court En Banc Decisions",
+    "5. Supreme Court Division Decisions",
+    "6. CTA En Banc Decisions",
+    "7. CTA Division / Court of Appeals Decisions",
+    "8. Revenue Regulations",
+    "9. RMC / RMO / RAMO",
+    "10. BIR Rulings",
+    "11. LGU / BOC Issuances",
+    "12. PFRS / PAS / PSA, when accounting applies",
+    "13. OECD / foreign persuasive authorities",
+    "14. Secondary materials"
   ].join("\n");
 }
 
