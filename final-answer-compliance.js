@@ -41,6 +41,22 @@ import { expandLegalCitationMentions } from "./legal-citation-range-utils.js";
 
 const ENGINE_VERSION = "6.1.0";
 
+const SAE_STATUS = Object.freeze({
+  AUTHORITY_FOUND: "AUTHORITY_FOUND",
+  RELATED_AUTHORITY_ONLY: "RELATED_AUTHORITY_ONLY",
+  RETRIEVAL_TIMEOUT: "RETRIEVAL_TIMEOUT",
+  SOURCE_LOOKUP_EMPTY: "SOURCE_LOOKUP_EMPTY",
+  SOURCE_PARSE_ERROR: "SOURCE_PARSE_ERROR",
+  NO_INDEXED_SOURCE: "NO_INDEXED_SOURCE"
+});
+
+const SAE_SOURCE_CARD_SUPPRESSED_STATUSES = new Set([
+  SAE_STATUS.RETRIEVAL_TIMEOUT,
+  SAE_STATUS.SOURCE_LOOKUP_EMPTY,
+  SAE_STATUS.SOURCE_PARSE_ERROR,
+  SAE_STATUS.NO_INDEXED_SOURCE
+]);
+
 const RESPONSE_MODE = Object.freeze({
   FAST_DEFINITION: "FAST_DEFINITION",
   STANDARD_TAX: "STANDARD_TAX",
@@ -1847,6 +1863,232 @@ function enforceAuthorityHierarchyDisplay({
   };
 }
 
+function normalizeSaeStatus(value = "") {
+  return String(value || "").trim().toUpperCase();
+}
+
+function resolveSaeMetadata(input = {}) {
+  const sourceAvailability = safeObject(input.sourceAvailability);
+  const sourceAvailabilityMetadata = safeObject(input.sourceAvailabilityMetadata);
+  const metadata = safeObject(input.metadata);
+  const metadataSourceAvailability = safeObject(metadata.sourceAvailability);
+  const metadataSourceAvailabilityMetadata = safeObject(metadata.sourceAvailabilityMetadata);
+
+  const saeStatus = normalizeSaeStatus(
+    input.saeStatus ||
+      sourceAvailability.saeStatus ||
+      sourceAvailability.sourceAvailability ||
+      sourceAvailability.sourceStatus ||
+      sourceAvailability.status ||
+      sourceAvailabilityMetadata.saeStatus ||
+      sourceAvailabilityMetadata.sourceAvailability ||
+      sourceAvailabilityMetadata.sourceStatus ||
+      sourceAvailabilityMetadata.status ||
+      metadata.saeStatus ||
+      metadataSourceAvailability.saeStatus ||
+      metadataSourceAvailability.sourceAvailability ||
+      metadataSourceAvailability.sourceStatus ||
+      metadataSourceAvailability.status ||
+      metadataSourceAvailabilityMetadata.saeStatus ||
+      metadataSourceAvailabilityMetadata.sourceAvailability ||
+      metadataSourceAvailabilityMetadata.sourceStatus ||
+      metadataSourceAvailabilityMetadata.status ||
+      (typeof input.sourceAvailability === "string" ? input.sourceAvailability : "")
+  );
+
+  return {
+    saeStatus,
+    sourceAvailability: input.sourceAvailability ?? null,
+    sourceAvailabilityMetadata: input.sourceAvailabilityMetadata ?? null,
+    limitationRequired:
+      input.limitationRequired ??
+      sourceAvailability.limitationRequired ??
+      sourceAvailabilityMetadata.limitationRequired ??
+      metadata.limitationRequired ??
+      metadataSourceAvailability.limitationRequired ??
+      metadataSourceAvailabilityMetadata.limitationRequired ??
+      null,
+    disclosureType:
+      input.disclosureType ||
+      sourceAvailability.disclosureType ||
+      sourceAvailabilityMetadata.disclosureType ||
+      metadata.disclosureType ||
+      metadataSourceAvailability.disclosureType ||
+      metadataSourceAvailabilityMetadata.disclosureType ||
+      null,
+    statusReason:
+      input.statusReason ||
+      input.sourceAvailabilityReason ||
+      sourceAvailability.statusReason ||
+      sourceAvailability.sourceAvailabilityReason ||
+      sourceAvailabilityMetadata.statusReason ||
+      sourceAvailabilityMetadata.sourceAvailabilityReason ||
+      metadata.statusReason ||
+      metadata.sourceAvailabilityReason ||
+      metadataSourceAvailability.statusReason ||
+      metadataSourceAvailability.sourceAvailabilityReason ||
+      metadataSourceAvailabilityMetadata.statusReason ||
+      metadataSourceAvailabilityMetadata.sourceAvailabilityReason ||
+      ""
+  };
+}
+
+function hasRelatedAuthorityLimitationLanguage(text = "") {
+  return /\b(related|supporting|secondary|persuasive|not\s+controlling|not\s+governing|does\s+not\s+(?:directly\s+)?govern|limitation|limited|no\s+controlling|no\s+governing|direct\s+governing\s+authority\s+(?:was\s+)?not\s+(?:found|identified))\b/i.test(
+    text
+  );
+}
+
+function claimsControllingAuthorityFound(text = "") {
+  return /\b(controlling|governing|directly\s+applicable|direct)\s+(legal\s+)?(authority|law|basis|source|rule)\s+(?:was\s+|is\s+|has\s+been\s+)?(?:found|identified|available|retrieved|confirmed|established)\b/i.test(
+    text
+  ) ||
+    /\b(?:found|identified|retrieved|confirmed|established)\s+(?:a\s+|the\s+)?(?:controlling|governing|directly\s+applicable|direct)\s+(legal\s+)?(?:authority|law|basis|source|rule)\b/i.test(
+      text
+    );
+}
+
+function presentsRelatedAsControlling(text = "") {
+  return /\b(related|supporting|secondary|persuasive)\s+(authority|source|issuance|material|rule)s?\s+(?:is|are|was|were|serves?\s+as|constitutes?)\s+(?:the\s+)?(controlling|governing|direct)\b/i.test(
+    text
+  ) ||
+    /\b(controlling|governing|direct)\s+(authority|source|basis|rule)\s+(?:is|are|was|were)\s+(?:the\s+)?(related|supporting|secondary|persuasive)\b/i.test(
+      text
+    );
+}
+
+function containsSourceCardDisplay(text = "") {
+  return /(^|\n)\s*(?:Validated Indexed Sources|Sources Used|Sources|References|Source\(s\)|Source Cards?|Authority Used)\s*:?\s*(\n|$)/i.test(
+    text
+  );
+}
+
+function reliesOnParseFailedAuthority(text = "") {
+  return /\b(parse[-\s]?failed|failed\s+to\s+parse|unparsed|parsing\s+error)\b[\s\S]{0,160}\b(authority|source|law|basis|controls?|governs?|applies)\b/i.test(
+    text
+  ) ||
+    /\b(authority|source|law|basis|controls?|governs?|applies)\b[\s\S]{0,160}\b(parse[-\s]?failed|failed\s+to\s+parse|unparsed|parsing\s+error)\b/i.test(
+      text
+    );
+}
+
+function treatsTimeoutAsNoLaw(text = "") {
+  return /\b(no|none|not\s+any|does\s+not\s+exist|doesn'?t\s+exist)\b[\s\S]{0,80}\b(law|legal\s+basis|authority|source|rule|issuance)\b/i.test(
+    text
+  ) ||
+    /\b(law|legal\s+basis|authority|source|rule|issuance)\b[\s\S]{0,80}\b(does\s+not\s+exist|doesn'?t\s+exist|is\s+absent|was\s+not\s+found)\b/i.test(
+      text
+    );
+}
+
+function misframesSourceLookupEmpty(text = "") {
+  return /\b(no\s+indexed\s+source|indexed\s+source\s+not\s+found|no\s+indexed\s+authority|no\s+source\s+exists|no\s+law\s+exists|no\s+legal\s+basis\s+exists)\b/i.test(
+    text
+  );
+}
+
+function buildSaeComplianceResult({
+  answer = "",
+  finalAnswer = "",
+  renderedAnswer = "",
+  sources = [],
+  sourcesUsed = [],
+  visibleSources = [],
+  context = {},
+  metadata = {}
+} = {}) {
+  const saeMetadata = resolveSaeMetadata({ ...metadata, ...context });
+  const saeStatus = saeMetadata.saeStatus;
+  const text = normalizeText([answer, finalAnswer, renderedAnswer].filter(Boolean).join("\n\n"));
+  const violations = [];
+  const warnings = [];
+
+  if (!saeStatus) {
+    return {
+      checked: false,
+      valid: true,
+      saeStatus: "",
+      hardFailCount: 0,
+      warningCount: 0,
+      consumedMetadata: saeMetadata,
+      violations,
+      warnings
+    };
+  }
+
+  if (saeStatus === SAE_STATUS.RELATED_AUTHORITY_ONLY) {
+    if (!hasRelatedAuthorityLimitationLanguage(text)) {
+      violations.push({
+        code: "SAE_C1_RELATED_AUTHORITY_LIMITATION_MISSING",
+        severity: "hard_fail",
+        message: "RELATED_AUTHORITY_ONLY final answer must include limitation language."
+      });
+    }
+
+    if (presentsRelatedAsControlling(text)) {
+      violations.push({
+        code: "SAE_C1_RELATED_AUTHORITY_PRESENTED_AS_CONTROLLING",
+        severity: "hard_fail",
+        message: "RELATED_AUTHORITY_ONLY final answer must not present related/supporting/secondary authority as controlling."
+      });
+    }
+  }
+
+  if (saeStatus !== SAE_STATUS.AUTHORITY_FOUND && claimsControllingAuthorityFound(text)) {
+    warnings.push({
+      code: "SAE_C2_FABRICATED_GOVERNING_AUTHORITY",
+      severity: "monitoring",
+      message: "Non-AUTHORITY_FOUND final answer appears to claim a controlling/governing authority was found."
+    });
+  }
+
+  if (SAE_SOURCE_CARD_SUPPRESSED_STATUSES.has(saeStatus)) {
+    const sourceCount = safeArray(sources).length + safeArray(sourcesUsed).length + safeArray(visibleSources).length;
+    if (sourceCount > 0 || containsSourceCardDisplay(text)) {
+      violations.push({
+        code: "SAE_C3_SOURCE_CARD_UNDER_SUPPRESSED_STATUS",
+        severity: "hard_fail",
+        message: "Suppressed SAE status must not display source cards."
+      });
+    }
+  }
+
+  if (saeStatus === SAE_STATUS.SOURCE_PARSE_ERROR && reliesOnParseFailedAuthority(text)) {
+    warnings.push({
+      code: "SAE_C4_PARSE_FAILED_CONTENT_USED_AS_AUTHORITY",
+      severity: "monitoring",
+      message: "SOURCE_PARSE_ERROR final answer appears to rely on parse-failed content as authority."
+    });
+  }
+
+  if (saeStatus === SAE_STATUS.RETRIEVAL_TIMEOUT && treatsTimeoutAsNoLaw(text)) {
+    warnings.push({
+      code: "SAE_C5_TIMEOUT_TREATED_AS_ABSENCE_OF_LAW",
+      severity: "monitoring",
+      message: "RETRIEVAL_TIMEOUT final answer appears to treat timeout as absence of law/source."
+    });
+  }
+
+  if (saeStatus === SAE_STATUS.SOURCE_LOOKUP_EMPTY && misframesSourceLookupEmpty(text)) {
+    violations.push({
+      code: "SAE_C6_SOURCE_LOOKUP_EMPTY_MISFRAMED",
+      severity: "hard_fail",
+      message: "SOURCE_LOOKUP_EMPTY final answer must not be framed as NO_INDEXED_SOURCE or legal non-existence."
+    });
+  }
+
+  return {
+    checked: true,
+    valid: violations.length === 0,
+    saeStatus,
+    hardFailCount: violations.length,
+    warningCount: warnings.length,
+    consumedMetadata: saeMetadata,
+    violations,
+    warnings
+  };
+}
+
 function ensureIndexedSourceLimitation({
   answer = "",
   sources = [],
@@ -1917,7 +2159,13 @@ function enforceAskProfileCompliance(args = {}) {
     issueClassification: args.issueClassification || null,
     mode:                args.mode                || null,
     reviewMode:          false,
-    includeHiddenSources: false
+    includeHiddenSources: false,
+    saeStatus:           args.saeStatus,
+    sourceAvailability:  args.sourceAvailability,
+    sourceAvailabilityMetadata: args.sourceAvailabilityMetadata,
+    limitationRequired:  args.limitationRequired,
+    disclosureType:      args.disclosureType,
+    statusReason:        args.statusReason || args.sourceAvailabilityReason
   };
 
   const allSources = uniqueDocs([
@@ -1943,19 +2191,30 @@ function enforceAskProfileCompliance(args = {}) {
   // Step 5: authority hierarchy display validation
   const hierarchyValidation = enforceAuthorityHierarchyDisplay({ answer: output, sources: visibleSources, context });
 
+  const saeCompliance = buildSaeComplianceResult({
+    answer: output,
+    sources: visibleSources,
+    sourcesUsed: visibleSources,
+    visibleSources,
+    context
+  });
+
   const warnings = [
     sourceGroundingValidation.warning,
-    ...(hierarchyValidation.warnings || [])
+    ...(hierarchyValidation.warnings || []),
+    ...saeCompliance.warnings.map((item) => `${item.code}: ${item.message}`)
   ].filter(Boolean);
 
   if (!prohibitedCheck.passed) {
     warnings.push(`PROHIBITED_PHRASES_DETECTED: ${prohibitedCheck.violations.join(", ")}`);
   }
 
-  const complianceStatus = warnings.length ? "ASK_PROFILE_LIMITED_COMPLIANCE" : "ASK_PROFILE_COMPLIANT";
+  const complianceStatus = saeCompliance.valid
+    ? warnings.length ? "ASK_PROFILE_LIMITED_COMPLIANCE" : "ASK_PROFILE_COMPLIANT"
+    : "ASK_PROFILE_FAILED";
 
   return {
-    success:          true,
+    success:          saeCompliance.valid,
     answer:           output,
     finalAnswer:      output,
     sources:          visibleSources,
@@ -1973,11 +2232,15 @@ function enforceAskProfileCompliance(args = {}) {
       noRetrieval:                         true,
       sourceGroundingValidation,
       hierarchyValidation,
+      saeCompliance,
       prohibitedPhraseCheck:               prohibitedCheck,
       masterPromptAuthorityHierarchyApplied:        true,
       courtAuthorityNotSubordinatedToBIRIssuances:  true
     },
-    confidence:   warnings.length ? "LIMITED" : "PASSED",
+    saeCompliance,
+    saeViolations: saeCompliance.violations,
+    saeWarnings:   saeCompliance.warnings,
+    confidence:   saeCompliance.valid ? warnings.length ? "LIMITED" : "PASSED" : "FAILED",
     sourceStatus: {
       hasVisibleSources:      visibleSources.length > 0,
       visibleSourceCount:     visibleSources.length,
@@ -2039,6 +2302,18 @@ function finalizeCompliance({
     hierarchyValidation
   });
 
+  const saeCompliance = buildSaeComplianceResult({
+    answer: output,
+    sources: visibleSources,
+    sourcesUsed: visibleSources,
+    visibleSources,
+    context
+  });
+
+  warnings.push(
+    ...saeCompliance.warnings.map((item) => `${item.code}: ${item.message}`)
+  );
+
   if (!prohibitedPhraseCheck.passed) {
     warnings.push(
       `PROHIBITED_PHRASES_DETECTED: ${prohibitedPhraseCheck.violations.join(", ")}`
@@ -2048,8 +2323,13 @@ function finalizeCompliance({
   return {
     answer: output,
     finalAnswer: output,
-    complianceStatus: warnings.length ? "PASSED_WITH_WARNINGS" : "PASSED",
+    complianceStatus: saeCompliance.valid
+      ? warnings.length ? "PASSED_WITH_WARNINGS" : "PASSED"
+      : "FAILED",
     warnings,
+    saeCompliance,
+    saeViolations: saeCompliance.violations,
+    saeWarnings: saeCompliance.warnings,
     metadata: {
       finalAnswerComplianceVersion: ENGINE_VERSION,
       finalGateOnly: true,
@@ -2059,6 +2339,7 @@ function finalizeCompliance({
       sourceGroundingValidation,
       hierarchyValidation,
       conflictValidation,
+      saeCompliance,
       prohibitedPhraseCheck,
       masterPromptAuthorityHierarchyApplied: true,
       courtAuthorityNotSubordinatedToBIRIssuances: true
@@ -2102,7 +2383,14 @@ function buildFinalCompliantAnswer({
   returnObject = false,
   reviewMode = false,
   includeHiddenSources = false,
-  suppressSourceAppendix = false
+  suppressSourceAppendix = false,
+  saeStatus = null,
+  sourceAvailability = null,
+  sourceAvailabilityMetadata = null,
+  limitationRequired = null,
+  disclosureType = null,
+  statusReason = null,
+  sourceAvailabilityReason = null
 } = {}) {
   const context = {
     query,
@@ -2115,7 +2403,13 @@ function buildFinalCompliantAnswer({
     requiredAnswerSections,
     answerStructure,
     reviewMode,
-    includeHiddenSources
+    includeHiddenSources,
+    saeStatus,
+    sourceAvailability,
+    sourceAvailabilityMetadata,
+    limitationRequired,
+    disclosureType,
+    statusReason: statusReason || sourceAvailabilityReason
   };
 
   if (
@@ -2314,9 +2608,13 @@ function buildFinalCompliantAnswer({
       visibleSourceDocs.length > 0
         ? "SOURCE_GROUNDED"
         : "INDEXED_SOURCE_NOT_FOUND",
+    saeCompliance: compliant.saeCompliance,
+    saeViolations: compliant.saeViolations,
+    saeWarnings: compliant.saeWarnings,
     authorityValidation: {
       hierarchyValidation: compliant.metadata.hierarchyValidation,
       sourceGroundingValidation: compliant.metadata.sourceGroundingValidation,
+      saeCompliance: compliant.metadata.saeCompliance,
       masterPromptAuthorityHierarchyApplied: true,
       courtAuthorityNotSubordinatedToBIRIssuances: true
     },
@@ -2365,18 +2663,48 @@ function enforceFinalAnswerCompliance(args = {}) {
     rawMode === "AUDIT"
   ) {
     const passthrough = args.draftAnswer || args.answer || "";
+    const saeCompliance = buildSaeComplianceResult({
+      answer: passthrough,
+      sources: args.sources || [],
+      sourcesUsed: args.sourcesUsed || [],
+      visibleSources: uniqueDocs([
+        ...safeArray(args.sources),
+        ...safeArray(args.sourcesUsed),
+        ...safeArray(args.retrievedSources)
+      ]),
+      context: {
+        mode: args.mode,
+        orchestrationMode: args.orchestrationMode,
+        saeStatus: args.saeStatus,
+        sourceAvailability: args.sourceAvailability,
+        sourceAvailabilityMetadata: args.sourceAvailabilityMetadata,
+        limitationRequired: args.limitationRequired,
+        disclosureType: args.disclosureType,
+        statusReason: args.statusReason || args.sourceAvailabilityReason
+      }
+    });
+    const saeWarningMessages = saeCompliance.warnings.map(
+      (item) => `${item.code}: ${item.message}`
+    );
+
     return {
-      success: true,
+      success: saeCompliance.valid,
       answer: passthrough,
       finalAnswer: passthrough,
       sources: args.sources || [],
       sourcesUsed: args.sourcesUsed || [],
       citations: [],
       legalBasis: [],
-      complianceStatus: "BYPASSED_NON_AF_MODE",
-      warnings: [],
-      metadata: { bypassReason: `${rawMode.toLowerCase()}_no_AF_enforcement` },
-      confidence: "BYPASS",
+      complianceStatus: saeCompliance.valid ? "BYPASSED_NON_AF_MODE" : "FAILED",
+      warnings: saeWarningMessages,
+      metadata: {
+        bypassReason: `${rawMode.toLowerCase()}_no_AF_enforcement`,
+        saeCompliance
+      },
+      saeCompliance,
+      saeViolations: saeCompliance.violations,
+      saeWarnings: saeCompliance.warnings,
+      confidence: saeCompliance.valid ? "BYPASS" : "FAILED",
       sourceStatus: "BYPASS",
       authorityValidation: null,
       conflictValidation: null,
@@ -2415,13 +2743,20 @@ function enforceFinalAnswerCompliance(args = {}) {
     requiredAnswerSections: args.requiredAnswerSections,
     answerStructure: args.answerStructure,
     returnObject: true,
+    saeStatus: args.saeStatus,
+    sourceAvailability: args.sourceAvailability,
+    sourceAvailabilityMetadata: args.sourceAvailabilityMetadata,
+    limitationRequired: args.limitationRequired,
+    disclosureType: args.disclosureType,
+    statusReason: args.statusReason,
+    sourceAvailabilityReason: args.sourceAvailabilityReason,
     // Pipeline Step 17 renders source chips; text appendix is redundant and
     // gets stripped by the Step 17 regex anyway — suppress at the source.
     suppressSourceAppendix: true
   });
 
   return {
-    success: true,
+    success: finalResult.saeCompliance?.valid !== false,
     answer: finalResult.answer,
     finalAnswer: finalResult.finalAnswer,
     sources: finalResult.sources,
@@ -2433,6 +2768,9 @@ function enforceFinalAnswerCompliance(args = {}) {
     metadata: finalResult.metadata,
     confidence: finalResult.confidence,
     sourceStatus: finalResult.sourceStatus,
+    saeCompliance: finalResult.saeCompliance,
+    saeViolations: finalResult.saeViolations,
+    saeWarnings: finalResult.saeWarnings,
     authorityValidation: finalResult.authorityValidation,
     conflictValidation: finalResult.conflictValidation,
     version: ENGINE_VERSION,
@@ -2463,6 +2801,9 @@ function finalAnswerComplianceHealthCheck() {
     taxEngineRequiredSectionsAware: true,
     sourceGroundingValidationEnabled: true,
     citationSupportValidationEnabled: true,
+    saeComplianceValidationEnabled: true,
+    saeHardFailStatusesEnabled: true,
+    saeMonitoringWarningsEnabled: true,
     authorityHierarchyDisplayValidationEnabled: true,
     hiddenSourceLeakagePreventionEnabled: true,
     reviewSourceSuppressionEnabled: true,
@@ -2505,6 +2846,7 @@ export {
   validateSourceGrounding,
   validateCitationSupport,
   validateConflictLabel,
+  buildSaeComplianceResult,
   enforceAuthorityHierarchyDisplay,
   ensureIndexedSourceLimitation,
   buildComplianceWarnings
@@ -2519,6 +2861,7 @@ export default {
   finalAnswerComplianceHealthCheck,
   validateFinalAnswerStructure,
   validateSourceGrounding,
+  buildSaeComplianceResult,
   validateCitationSupport,
   validateConflictLabel,
   enforceAuthorityHierarchyDisplay,
