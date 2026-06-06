@@ -223,8 +223,8 @@ function normalizeAuthority(value = "") {
     CMTA: "CMTA",
     LGC: "LGC",
 
-    TAX_TREATY: "TAX_TREATY",
-    TREATY: "TAX_TREATY",
+    TAX_TREATY: "TREATY",
+    TREATY: "TREATY",
 
     SUPREME_COURT_EN_BANC: "SUPREME_COURT_EN_BANC",
     SC: "SUPREME_COURT",
@@ -611,7 +611,7 @@ function inferAuthorityType(doc = {}) {
     blob.includes("tax treaty") ||
     blob.includes("double taxation agreement") ||
     blob.includes("double tax treaty")
-  ) return "TAX_TREATY";
+  ) return "TREATY";
 
   if (
     blob.includes("national internal revenue code") ||

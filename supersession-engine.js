@@ -133,7 +133,8 @@ const PRIMARY_TYPES = new Set([
   "LGC",
   "REPUBLIC_ACT",
   "RA",
-  "TAX_TREATY"
+  "TAX_TREATY",
+  "TREATY"
 ]);
 
 function normalizeText(value = "") {
@@ -192,8 +193,8 @@ function normalizeAuthorityType(value = "") {
     REPUBLIC_ACT: "REPUBLIC_ACT",
     RA: "REPUBLIC_ACT",
 
-    TAX_TREATY: "TAX_TREATY",
-    TREATY: "TAX_TREATY",
+    TAX_TREATY: "TREATY",
+    TREATY: "TREATY",
 
     SUPREME_COURT_EN_BANC: "SUPREME_COURT_EN_BANC",
     SUPREME_COURT: "SUPREME_COURT",

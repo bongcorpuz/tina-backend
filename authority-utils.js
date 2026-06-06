@@ -209,8 +209,8 @@ function normalizeAuthorityType(value = "") {
     CMTA: "STATUTE",
     LGC: "STATUTE",
 
-    TAX_TREATY: "TAX_TREATY",
-    TREATY: "TAX_TREATY",
+    TAX_TREATY: "TREATY",
+    TREATY: "TREATY",
 
     SUPREME_COURT_EN_BANC: "SUPREME_COURT_EN_BANC",
     SUPREME_COURT: "SUPREME_COURT",
@@ -300,7 +300,7 @@ export function classifyAuthorityFromDocument({ fileName = "", path = "", text =
     /\bdouble tax(?:ation)? treaty\b/i.test(fullBlob) ||
     /\bphilippines[-\s]+[a-z]+ tax treaty\b/i.test(fullBlob)
   ) {
-    return "TAX_TREATY";
+    return "TREATY";
   }
 
   if (
@@ -460,7 +460,7 @@ export function normalizeLegalReference(input = "") {
     return {
       raw,
       normalized: raw.toUpperCase().replace(/[^A-Z0-9]+/g, "_"),
-      type: "TAX_TREATY",
+      type: "TREATY",
       aliases: [raw]
     };
   }

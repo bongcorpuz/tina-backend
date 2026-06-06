@@ -35,6 +35,7 @@ export const TAX_AUTHORITY_HIERARCHY = Object.freeze([
   "CONSTITUTION",
   "NIRC",
   "REPUBLIC_ACT",
+  "TREATY",
   "SUPREME_COURT",
   "CTA_EN_BANC",
   "CTA_DIVISION",
@@ -45,7 +46,6 @@ export const TAX_AUTHORITY_HIERARCHY = Object.freeze([
   "BIR_RULING",
   "LGU_ISSUANCE",
   "BOC_ISSUANCE",
-  "TAX_TREATY",
   "OECD_GUIDANCE",
   "SECONDARY_SOURCE"
 ]);

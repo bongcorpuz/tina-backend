@@ -640,8 +640,8 @@ function normalizeAuthorityType(value = "") {
     CMTA: "CMTA",
     LGC: "LGC",
 
-    TREATY: "TAX_TREATY",
-    TAX_TREATY: "TAX_TREATY",
+    TREATY: "TREATY",
+    TAX_TREATY: "TREATY",
 
     SUPREME_COURT_EN_BANC: "SUPREME_COURT_EN_BANC",
     SC: "SUPREME_COURT",

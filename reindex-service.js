@@ -211,7 +211,8 @@ function normalizeAuthorityType(type = "") {
     TAX_CODE: "STATUTE",
     REPUBLIC_ACT: "STATUTE",
     RA: "STATUTE",
-    TREATY: "TAX_TREATY",
+    TAX_TREATY: "TREATY",
+    TREATY: "TREATY",
     CASE_LAW: "JURISPRUDENCE",
     COURT_CASES: "JURISPRUDENCE",
     REVENUE_REGULATION: "RR",
@@ -291,7 +292,7 @@ function inferAuthorityType(file = {}, textPreview = "") {
   if (/\b(local government code|lgc)\b/i.test(blob)) return "LGC";
   if (/\b(nirc|tax code|national internal revenue code)\b/i.test(blob)) return "STATUTE";
   if (/\b(ra|r\.a\.|republic act)\s*(no\.?)?\s*\d{4,6}\b/i.test(blob)) return "STATUTE";
-  if (/\btax treaty|double tax agreement|dta\b/i.test(blob)) return "TAX_TREATY";
+  if (/\btax treaty|double tax agreement|dta\b/i.test(blob)) return "TREATY";
 
   if (/\brr\b|revenue regulation/i.test(blob)) return "RR";
   if (/\brmc\b|revenue memorandum circular/i.test(blob)) return "RMC";

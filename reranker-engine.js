@@ -78,6 +78,7 @@ const TIER_BOOST = Object.freeze({
   REPUBLIC_ACT:          0.35,
   RA:                    0.35,
   TAX_TREATY:            0.30,
+  TREATY:                0.30,
   SUPREME_COURT_EN_BANC: 0.25,
   SUPREME_COURT:         0.25,
   CTA_EN_BANC:           0.15,
@@ -180,6 +181,7 @@ const AUTHORITY_WEIGHT = Object.freeze({
   RA: 145,
 
   TAX_TREATY: 138,
+  TREATY: 138,
 
   SUPREME_COURT_EN_BANC: 132,
   SUPREME_COURT: 126,
@@ -218,8 +220,8 @@ const AUTHORITY_WEIGHT = Object.freeze({
 });
 
 const DOMAIN_AUTHORITY_PROFILE = Object.freeze({
-  VAT: ["STATUTE", "TAX_TREATY", "SUPREME_COURT", "CTA_EN_BANC", "CTA_DIVISION", "RR", "RMC"],
-  CIT: ["STATUTE", "TAX_TREATY", "SUPREME_COURT", "CTA_EN_BANC", "CTA_DIVISION", "RR", "RMC"],
+  VAT: ["STATUTE", "TREATY", "SUPREME_COURT", "CTA_EN_BANC", "CTA_DIVISION", "RR", "RMC"],
+  CIT: ["STATUTE", "TREATY", "SUPREME_COURT", "CTA_EN_BANC", "CTA_DIVISION", "RR", "RMC"],
   IIT: ["STATUTE", "SUPREME_COURT", "CTA_EN_BANC", "RR", "RMC"],
   WHT: ["STATUTE", "SUPREME_COURT", "CTA_EN_BANC", "RR", "RMC", "BIR_RULING"],
   EST: ["STATUTE", "SUPREME_COURT", "RR", "RMC"],
@@ -335,8 +337,8 @@ function normalizeAuthority(value = "") {
     CMTA: "STATUTE",
     LGC: "STATUTE",
 
-    TAX_TREATY: "TAX_TREATY",
-    TREATY: "TAX_TREATY",
+    TAX_TREATY: "TREATY",
+    TREATY: "TREATY",
 
     SUPREME_COURT_EN_BANC: "SUPREME_COURT_EN_BANC",
     SUPREME_COURT_DECISION: "SUPREME_COURT",
@@ -1001,7 +1003,7 @@ function controllingBonus(doc = {}) {
 
   let bonus = 0;
 
-  if (["CONSTITUTION", "STATUTE", "NIRC", "TAX_CODE", "TAX_TREATY"].includes(type)) bonus += 60;
+  if (["CONSTITUTION", "STATUTE", "NIRC", "TAX_CODE", "TAX_TREATY", "TREATY"].includes(type)) bonus += 60;
   else if (["SUPREME_COURT_EN_BANC", "SUPREME_COURT"].includes(type)) bonus += 55;
   else if (["CTA_EN_BANC", "CTA_DIVISION", "COURT_OF_APPEALS"].includes(type)) bonus += 42;
   else if (type === "RR") bonus += 30;

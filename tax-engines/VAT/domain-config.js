@@ -55,7 +55,7 @@ export const VAT_EXCLUDED_FOLDERS = Object.freeze([
 export const VAT_AUTHORITY_HIERARCHY = Object.freeze([
   "CONSTITUTION",
   "STATUTE",
-  "TAX_TREATY",
+  "TREATY",
   "SUPREME_COURT_EN_BANC",
   "SUPREME_COURT",
   "CTA_EN_BANC",

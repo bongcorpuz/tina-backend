@@ -369,8 +369,8 @@ function normalizeAuthority(value = "") {
     CMTA: "CMTA",
     LGC: "LGC",
 
-    TAX_TREATY: "TAX_TREATY",
-    TREATY: "TAX_TREATY",
+    TAX_TREATY: "TREATY",
+    TREATY: "TREATY",
 
     SUPREME_COURT_EN_BANC: "SUPREME_COURT_EN_BANC",
     SUPREME_COURT_DECISION: "SUPREME_COURT",
@@ -465,7 +465,7 @@ export function authorityTypeOf(doc = {}) {
     title.includes("nirc")
   ) return "STATUTE";
 
-  if (path.includes("05b_tax_treaties") || title.includes("tax treaty") || title.includes("double tax")) return "TAX_TREATY";
+  if (path.includes("05b_tax_treaties") || title.includes("tax treaty") || title.includes("double tax")) return "TREATY";
   if (path.includes("02_revenue_regulations") || /\brr\b/i.test(title)) return "RR";
   if (path.includes("03_rmc") || /\brmc\b/i.test(title)) return "RMC";
   if (path.includes("04b_ramo") || /\bramo\b/i.test(title)) return "RAMO";
@@ -572,7 +572,8 @@ export function isStatutoryAuthority(doc = {}) {
     "LGC",
     "REPUBLIC_ACT",
     "RA",
-    "TAX_TREATY"
+    "TAX_TREATY",
+    "TREATY"
   ].includes(authorityTypeOf(doc));
 }
 
@@ -850,6 +851,7 @@ export function formatDocType(doc = {}) {
     LGC: "LGC",
     REPUBLIC_ACT: "Republic Act",
     TAX_TREATY: "Tax Treaty",
+    TREATY: "Tax Treaty",
     SUPREME_COURT_EN_BANC: "Supreme Court En Banc",
     SUPREME_COURT: "Supreme Court",
     CTA_EN_BANC: "CTA En Banc",

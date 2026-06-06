@@ -123,6 +123,7 @@ const MASTER_AUTHORITY_SCORE = Object.freeze({
   RA: 145,
 
   TAX_TREATY: 138,
+  TREATY: 138,
 
   SUPREME_COURT_EN_BANC: 132,
   SUPREME_COURT: 126,
@@ -173,6 +174,7 @@ const MASTER_AUTHORITY_LABEL = Object.freeze({
   RA: "Republic Act",
 
   TAX_TREATY: "Tax Treaty",
+  TREATY: "Tax Treaty",
 
   SUPREME_COURT_EN_BANC: "Supreme Court En Banc Decision",
   SUPREME_COURT: "Supreme Court Decision",
@@ -236,7 +238,8 @@ const PRIMARY_LEGAL_TYPES = new Set([
   "LGC",
   "REPUBLIC_ACT",
   "RA",
-  "TAX_TREATY"
+  "TAX_TREATY",
+  "TREATY"
 ]);
 
 const SECONDARY_OR_REVIEW_TYPES = new Set([
@@ -276,8 +279,8 @@ function normalizeAuthorityType(value = "") {
     REPUBLIC_ACT: "REPUBLIC_ACT",
     RA: "REPUBLIC_ACT",
 
-    TAX_TREATY: "TAX_TREATY",
-    TREATY: "TAX_TREATY",
+    TAX_TREATY: "TREATY",
+    TREATY: "TREATY",
 
     SUPREME_COURT_EN_BANC: "SUPREME_COURT_EN_BANC",
     SUPREME_COURT: "SUPREME_COURT",

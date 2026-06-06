@@ -308,7 +308,7 @@ export const TAX_DOMAIN_REGISTRY = Object.freeze({
     name: "Transfer Pricing & Special",
     shortName: "Special Tax",
     primaryStatutes: ["RR 2-2013", "CREATE", "PEZA", "OECD"],
-    defaultAuthorities: ["RR", "STATUTE", "RMC", "TAX_TREATY", "OECD_GUIDANCE"],
+    defaultAuthorities: ["RR", "STATUTE", "RMC", "TREATY", "OECD_GUIDANCE"],
     coverage: 6,
     aliases: [
       "Transfer Pricing",
