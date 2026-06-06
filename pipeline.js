@@ -74,6 +74,81 @@ function safeStr(v) {
   return typeof v === "string" ? v : String(v || "");
 }
 
+function hasSaeHardFail(compliantResult = {}) {
+  const status = safeStr(compliantResult.complianceStatus).toUpperCase();
+  const violations = Array.isArray(compliantResult.saeViolations)
+    ? compliantResult.saeViolations
+    : [];
+  const saeCompliance = compliantResult.saeCompliance || compliantResult.metadata?.saeCompliance || {};
+  const saeViolations = Array.isArray(saeCompliance.violations)
+    ? saeCompliance.violations
+    : [];
+
+  const allViolations = [...violations, ...saeViolations];
+  const hasHardFailViolation = allViolations.some((violation) => {
+    const severity = safeStr(violation?.severity || violation?.type).toLowerCase();
+    const code = safeStr(violation?.code || violation?.id).toUpperCase();
+    return (
+      severity === "hard_fail" ||
+      code.includes("SAE_C1") ||
+      code.includes("SAE_C3") ||
+      code.includes("SAE_C6")
+    );
+  });
+
+  return compliantResult.success === false || status === "FAILED" || hasHardFailViolation;
+}
+
+function buildSaeHardFailFallback(ctx = {}) {
+  const saeStatus = safeStr(ctx.saeStatus).toUpperCase();
+
+  if (saeStatus === "RELATED_AUTHORITY_ONLY") {
+    return [
+      "I cannot present the available source as controlling authority for this issue.",
+      "",
+      "Only related or supporting authority was found. Please verify the governing statute, regulation, or controlling issuance before relying on this answer."
+    ].join("\n");
+  }
+
+  if (saeStatus === "SOURCE_LOOKUP_EMPTY") {
+    return [
+      "The source lookup completed but did not return matching authority for this query.",
+      "",
+      "This does not mean that no law or authority exists. Please verify the governing source before relying on a legal or tax conclusion."
+    ].join("\n");
+  }
+
+  if (saeStatus === "RETRIEVAL_TIMEOUT") {
+    return [
+      "The authority retrieval process timed out before a reliable governing source could be confirmed.",
+      "",
+      "This does not mean that no law or authority exists. Please retry or verify the governing source before relying on a legal or tax conclusion."
+    ].join("\n");
+  }
+
+  if (saeStatus === "SOURCE_PARSE_ERROR") {
+    return [
+      "An indexed source was located, but its content could not be parsed reliably.",
+      "",
+      "I cannot rely on the parse-failed content as authority. Please verify the governing source before relying on a legal or tax conclusion."
+    ].join("\n");
+  }
+
+  if (saeStatus === "NO_INDEXED_SOURCE") {
+    return [
+      "No indexed governing source was available for this issue in the current source set.",
+      "",
+      "I cannot provide a source-grounded legal or tax conclusion without the governing authority."
+    ].join("\n");
+  }
+
+  return [
+    "The answer did not pass final SAE compliance checks.",
+    "",
+    "Please verify the governing source before relying on this response."
+  ].join("\n");
+}
+
 function detectQueryFlags(issueClassification, hook = "/ask") {
   const qi = safeStr(issueClassification?.queryIntent).toLowerCase();
   const pi = safeStr(issueClassification?.primaryIssue).toLowerCase();
@@ -1707,19 +1782,23 @@ export async function runPipeline({
     query
   });
   trace.steps.push({ step: 16, name: "finalAnswerCompliance", done: true });
+  const saeHardFailBlocked = hasSaeHardFail(compliantResult);
+  const saeHardFailFallback = saeHardFailBlocked
+    ? buildSaeHardFailFallback(ctx, compliantResult)
+    : null;
 
   // ── Step 17: Presentation Transform (FAST_DEFINITION only) ─────────────────
   // Converts validated structured output to conversational paragraphs.
   // Compliance gate output is preserved as fallback if section parsing fails.
   // Strip "Validated Indexed Sources" appendix added by final-answer-compliance —
   // the frontend renders sourceCards as chips; text source lists are redundant.
-  const rawFinalAnswer = (compliantResult?.finalAnswer || compliantResult?.answer || ctx.formattedAnswer)
+  const rawFinalAnswer = (saeHardFailFallback || compliantResult?.finalAnswer || compliantResult?.answer || ctx.formattedAnswer)
     .replace(/\n+Validated Indexed Sources[\s\S]*$/i, "")
     .trim();
   // FAST_DEFINITION conversational rendering only fires when no /ask profile
   // is active — /ask profiles use their own section headings and must not be
   // reparsed by the FAST_DEFINITION paragraph converter.
-  const finalAnswer = (ctx.mode === "FAST_DEFINITION" && isAskMode && !ctx.responsePlan?.askProfile)
+  const finalAnswer = (!saeHardFailBlocked && ctx.mode === "FAST_DEFINITION" && isAskMode && !ctx.responsePlan?.askProfile)
     ? renderFastDefinitionConversational(rawFinalAnswer, query, ctx.responseStyle)
     : rawFinalAnswer;
 
@@ -2082,7 +2161,7 @@ export async function runPipeline({
   // When SAS produced authority-ordered cards, DSF operates on that ordered list.
   // When SAS produced nothing, DSF falls back to the pipeline loop's sourceCards.
   // HARD RULE: only controls what is DISPLAYED; does not touch retrieval / LLM context.
-  const _saeSuppressSourceCards = sourceCardsSuppressedBySaeStatus(ctx.saeStatus);
+  const _saeSuppressSourceCards = saeHardFailBlocked || sourceCardsSuppressedBySaeStatus(ctx.saeStatus);
   const _dsfInput = _saeSuppressSourceCards
     ? []
     : _sasVisible.length > 0 ? _sasVisible : sourceCards;
@@ -2196,7 +2275,11 @@ export async function runPipeline({
 
   if (_sourceAvail.sourceAvailability === "SOURCE_LOOKUP_EMPTY") {
     // /source: return deterministic message, no general answer.
-    _outputAnswer = "Indexed source not found. I could not locate this authority in TINA's indexed knowledge base.";
+    _outputAnswer = [
+      "The source lookup completed but did not return matching authority for this query.",
+      "",
+      "This does not mean that no law or authority exists. Please verify the governing source before relying on a legal or tax conclusion."
+    ].join("\n");
   } else if (_isLearningMode && _sourceAvail.sourceAvailability !== "AUTHORITY_FOUND") {
     // /review and /quiz: no grounded source available — guard only; these hooks
     // normally route through learningHandler, not pipeline.
@@ -2256,7 +2339,11 @@ export async function runPipeline({
     responseMode:        ctx.mode,
     pipelineVersion:     PIPELINE_VERSION,
     traceId,
-    trace
+    trace,
+    saeHardFailBlocked,
+    saeHardFailFallbackApplied: saeHardFailBlocked,
+    saeCompliance:             compliantResult.saeCompliance,
+    saeViolations:             compliantResult.saeViolations || []
   };
 }
 

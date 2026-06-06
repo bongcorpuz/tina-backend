@@ -2089,6 +2089,43 @@ function buildSaeComplianceResult({
   };
 }
 
+function mergeSaeComplianceResults(finalCompliance = {}, draftCompliance = {}) {
+  const byCode = new Map();
+  const addItems = (items = []) => {
+    safeArray(items).forEach((item) => {
+      const key = String(item?.code || item?.id || JSON.stringify(item));
+      if (!byCode.has(key)) byCode.set(key, item);
+    });
+  };
+
+  addItems(finalCompliance.violations);
+  addItems(draftCompliance.violations);
+
+  const warningByCode = new Map();
+  const addWarnings = (items = []) => {
+    safeArray(items).forEach((item) => {
+      const key = String(item?.code || item?.id || JSON.stringify(item));
+      if (!warningByCode.has(key)) warningByCode.set(key, item);
+    });
+  };
+
+  addWarnings(finalCompliance.warnings);
+  addWarnings(draftCompliance.warnings);
+
+  const violations = [...byCode.values()];
+  const warnings = [...warningByCode.values()];
+
+  return {
+    ...finalCompliance,
+    valid: violations.length === 0,
+    hardFailCount: violations.length,
+    warningCount: warnings.length,
+    violations,
+    warnings,
+    draftChecked: draftCompliance.checked === true
+  };
+}
+
 function ensureIndexedSourceLimitation({
   answer = "",
   sources = [],
@@ -2501,6 +2538,13 @@ function buildFinalCompliantAnswer({
     issueClassification,
     context
   });
+  const draftSaeCompliance = buildSaeComplianceResult({
+    answer: rawSanitizedDraft || draftAnswer,
+    sources: visibleSourceDocs,
+    sourcesUsed: visibleSourceDocs,
+    visibleSources: visibleSourceDocs,
+    context
+  });
 
   let finalAnswer;
 
@@ -2589,15 +2633,39 @@ function buildFinalCompliantAnswer({
     conflictValidation: conflictCheck,
     requiredSections: requiredAnswerSections || answerStructure || null
   });
+  const mergedSaeCompliance = mergeSaeComplianceResults(
+    compliant.saeCompliance,
+    draftSaeCompliance
+  );
+  const mergedSaeWarningMessages = mergedSaeCompliance.warnings.map(
+    (item) => `${item.code}: ${item.message}`
+  );
+  const compliantWithSae = {
+    ...compliant,
+    complianceStatus: mergedSaeCompliance.valid
+      ? compliant.complianceStatus
+      : "FAILED",
+    warnings: [
+      ...safeArray(compliant.warnings).filter((warning) => !String(warning).startsWith("SAE_")),
+      ...mergedSaeWarningMessages
+    ],
+    saeCompliance: mergedSaeCompliance,
+    saeViolations: mergedSaeCompliance.violations,
+    saeWarnings: mergedSaeCompliance.warnings,
+    metadata: {
+      ...compliant.metadata,
+      saeCompliance: mergedSaeCompliance
+    }
+  };
 
   // suppressSourceAppendix: skip text-block append when the caller renders
   // source chips/cards separately (pipeline Step 17 and rag-answer-handler).
   const finalWithSources = suppressSourceAppendix
-    ? compliant.answer
-    : appendValidatedSourceAppendix(compliant.answer, visibleSourceDocs);
+    ? compliantWithSae.answer
+    : appendValidatedSourceAppendix(compliantWithSae.answer, visibleSourceDocs);
 
   const finalResult = {
-    ...compliant,
+    ...compliantWithSae,
     answer: finalWithSources.trim(),
     finalAnswer: finalWithSources.trim(),
     sources: visibleSourceDocs,
@@ -2608,13 +2676,13 @@ function buildFinalCompliantAnswer({
       visibleSourceDocs.length > 0
         ? "SOURCE_GROUNDED"
         : "INDEXED_SOURCE_NOT_FOUND",
-    saeCompliance: compliant.saeCompliance,
-    saeViolations: compliant.saeViolations,
-    saeWarnings: compliant.saeWarnings,
+    saeCompliance: compliantWithSae.saeCompliance,
+    saeViolations: compliantWithSae.saeViolations,
+    saeWarnings: compliantWithSae.saeWarnings,
     authorityValidation: {
-      hierarchyValidation: compliant.metadata.hierarchyValidation,
-      sourceGroundingValidation: compliant.metadata.sourceGroundingValidation,
-      saeCompliance: compliant.metadata.saeCompliance,
+      hierarchyValidation: compliantWithSae.metadata.hierarchyValidation,
+      sourceGroundingValidation: compliantWithSae.metadata.sourceGroundingValidation,
+      saeCompliance: compliantWithSae.metadata.saeCompliance,
       masterPromptAuthorityHierarchyApplied: true,
       courtAuthorityNotSubordinatedToBIRIssuances: true
     },
