@@ -833,6 +833,17 @@ function _saeFallbackStatus(input = {}) {
   return String(input.fallbackStatus?.saeStatus || input.fallbackStatus || "").toUpperCase();
 }
 
+const SAE_SOURCE_CARD_SUPPRESSED_STATUSES = new Set([
+  "RETRIEVAL_TIMEOUT",
+  "SOURCE_LOOKUP_EMPTY",
+  "SOURCE_PARSE_ERROR",
+  "NO_INDEXED_SOURCE"
+]);
+
+function sourceCardsSuppressedBySaeStatus(saeStatus = "") {
+  return SAE_SOURCE_CARD_SUPPRESSED_STATUSES.has(String(saeStatus || "").toUpperCase());
+}
+
 function _saeIsParsed(candidate = {}) {
   if (candidate.isParsed === true) return true;
   if (candidate.authorityAnnotation?.isParsed === true) return true;
@@ -1687,6 +1698,12 @@ export async function runPipeline({
     issueClassification: ctx.issueClassification,
     mode:                ctx.mode,
     responsePlan:        ctx.responsePlan,
+    saeStatus:           ctx.saeStatus,
+    sourceAvailability:  ctx.sourceAvailability,
+    sourceAvailabilityMetadata: ctx.sourceAvailability,
+    limitationRequired:  ctx.limitationRequired,
+    disclosureType:      ctx.disclosureType,
+    statusReason:        ctx.statusReason,
     query
   });
   trace.steps.push({ step: 16, name: "finalAnswerCompliance", done: true });
@@ -2065,7 +2082,10 @@ export async function runPipeline({
   // When SAS produced authority-ordered cards, DSF operates on that ordered list.
   // When SAS produced nothing, DSF falls back to the pipeline loop's sourceCards.
   // HARD RULE: only controls what is DISPLAYED; does not touch retrieval / LLM context.
-  const _dsfInput = _sasVisible.length > 0 ? _sasVisible : sourceCards;
+  const _saeSuppressSourceCards = sourceCardsSuppressedBySaeStatus(ctx.saeStatus);
+  const _dsfInput = _saeSuppressSourceCards
+    ? []
+    : _sasVisible.length > 0 ? _sasVisible : sourceCards;
   const {
     displayedSources: _dsFiltered,
     diagnostics:      _dsDiag
@@ -2143,6 +2163,19 @@ export async function runPipeline({
   // ── Source Availability Classification ────────────────────────────────────────
   // Step 6.5 already classified source availability before prompt assembly.
   // This wrapper preserves legacy response fields without recalculating status.
+  if (_saeSuppressSourceCards) {
+    if (finalSourceCards.length > 0 || sourceCards.length > 0 || _sasVisible.length > 0) {
+      console.warn("[SAE SOURCE CARD SUPPRESSION]", {
+        saeStatus:      ctx.saeStatus,
+        sourceCards:    sourceCards.length,
+        sasVisible:     _sasVisible.length,
+        dsfVisible:     _dsFiltered.length,
+        finalBeforeCut: finalSourceCards.length
+      });
+    }
+    finalSourceCards = [];
+  }
+
   const _sourceAvail = {
     ...ctx.sourceAvailability,
     sourceAvailability:       ctx.saeStatus,
