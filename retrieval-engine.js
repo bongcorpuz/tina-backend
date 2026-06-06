@@ -47,6 +47,19 @@ const MAX_SOURCE_CITATION_CHARS = 240;
 const MAX_SOURCE_URL_CHARS = 500;
 const MAX_DIAGNOSTIC_ITEMS = 24;
 
+const RETRIEVAL_OUTCOME_CATEGORY = Object.freeze({
+  CANDIDATES_RETURNED: "CANDIDATES_RETURNED",
+  NO_CANDIDATES: "NO_CANDIDATES",
+  RETRIEVAL_TIMEOUT: "RETRIEVAL_TIMEOUT",
+  PARSE_FAILED: "PARSE_FAILED"
+});
+
+const PARSE_STATUS = Object.freeze({
+  SUCCESS: "success",
+  FAILED: "failed",
+  UNKNOWN: "unknown"
+});
+
 const RETRIEVAL_LAYER = Object.freeze({
   EXACT_NORMALIZED_AUTHORITY: "LAYER_1_EXACT_NORMALIZED_AUTHORITY",
   CITATION_VARIANT: "LAYER_2_CITATION_VARIANT",
@@ -1268,6 +1281,66 @@ function extractBestContent(doc = {}) {
   );
 }
 
+function candidateContentValues(doc = {}) {
+  return [
+    doc.text,
+    doc.content,
+    doc.excerpt,
+    doc.preview,
+    doc.chunkText,
+    doc.chunk_text,
+    doc.pageContent,
+    doc.page_content
+  ];
+}
+
+function hasReliableParsedContent(doc = {}) {
+  return candidateContentValues(doc).some(
+    (value) => typeof value === "string" && normalizeText(value).length > 0
+  );
+}
+
+function determineParseStatus(doc = {}) {
+  if (!doc || typeof doc !== "object") return PARSE_STATUS.UNKNOWN;
+  return hasReliableParsedContent(doc) ? PARSE_STATUS.SUCCESS : PARSE_STATUS.FAILED;
+}
+
+function isRetrievalTimeout(options = {}) {
+  return Boolean(
+    options.timedOut === true ||
+      options.timeout === true ||
+      options.retrievalTimedOut === true ||
+      options.retrievalTimeout === true ||
+      options.sourceAvailability === RETRIEVAL_OUTCOME_CATEGORY.RETRIEVAL_TIMEOUT ||
+      options.sourceStatus === RETRIEVAL_OUTCOME_CATEGORY.RETRIEVAL_TIMEOUT
+  );
+}
+
+function determineOutcomeCategory({
+  candidates = [],
+  returnedSources = [],
+  timedOut = false
+} = {}) {
+  if (timedOut) return RETRIEVAL_OUTCOME_CATEGORY.RETRIEVAL_TIMEOUT;
+
+  const returned = safeArray(returnedSources);
+  const candidatePool = safeArray(candidates);
+  const relevant = returned.length ? returned : candidatePool;
+
+  if (!relevant.length) return RETRIEVAL_OUTCOME_CATEGORY.NO_CANDIDATES;
+
+  const parseStatuses = relevant.map((doc) => doc.parseStatus || determineParseStatus(doc));
+  if (parseStatuses.some((status) => status === PARSE_STATUS.SUCCESS)) {
+    return RETRIEVAL_OUTCOME_CATEGORY.CANDIDATES_RETURNED;
+  }
+
+  if (parseStatuses.every((status) => status === PARSE_STATUS.FAILED)) {
+    return RETRIEVAL_OUTCOME_CATEGORY.PARSE_FAILED;
+  }
+
+  return RETRIEVAL_OUTCOME_CATEGORY.CANDIDATES_RETURNED;
+}
+
 function detectDocIssueType(doc = {}) {
   return detectIssueType(docText(doc));
 }
@@ -1773,6 +1846,7 @@ function sanitizeRetrievedSource(doc = {}) {
   const authorityLevel = safeAuthorityLevel(doc);
   const controllingPrecedence = safeControllingPrecedence(doc);
   const content = extractBestContent(doc);
+  const parseStatus = doc.parseStatus || determineParseStatus(doc);
 
   return {
     id:
@@ -1791,6 +1865,7 @@ function sanitizeRetrievedSource(doc = {}) {
     url: extractBestUrl(doc),
     text: content,
     content,
+    parseStatus,
 
     // Preserve raw DB column names at top level so downstream consumers
     // (reranker, renderer, compliance) can reference them without camelCase mapping.
@@ -1849,6 +1924,7 @@ function sanitizeRetrievedSource(doc = {}) {
         Number(doc.citationMatchBonus || 0) > 0,
       retrievalPhase: doc.retrievalPhase || doc.retrievalLayer || null,
       retrievalLayer: doc.retrievalLayer || null,
+      parseStatus,
       googleDriveIndexed: isGoogleDriveIndexedSource(doc),
       googleDriveFolderAuthority: getGoogleDriveFolderAuthority(doc),
       rawFullDocumentInjectionPrevented: true
@@ -2558,6 +2634,7 @@ async function supabaseAuthoritySearch({
 
     return (data || []).map((doc) => ({
       ...doc,
+      parseStatus: determineParseStatus(doc),
       retrievalLayer:       layer,
       retrievalPhase:       layer,
       matchedRetrievalQuery: query,
@@ -2627,6 +2704,7 @@ async function supabaseFallbackSearch({
 function annotateDocLayer(doc = {}, layer = RETRIEVAL_LAYER.VECTOR_SEMANTIC, queryText = "") {
   return {
     ...doc,
+    parseStatus: doc.parseStatus || determineParseStatus(doc),
     retrievalLayer: doc.retrievalLayer || layer,
     retrievalPhase: doc.retrievalPhase || layer,
     matchedRetrievalQuery: doc.matchedRetrievalQuery || queryText || null
@@ -3105,6 +3183,7 @@ function scoreAndAnnotateSources({
 
     return {
       ...doc,
+      parseStatus: doc.parseStatus || determineParseStatus(doc),
       retrievalScore,
       finalScore: retrievalScore,
       issueClassificationMatch,
@@ -3331,6 +3410,12 @@ async function retrieveRelevantSources(options = {}) {
 
   const dedupedAfterScoring = finalDedupeAfterScoring(ranked);
   const sanitized = dedupedAfterScoring.slice(0, topK).map(sanitizeRetrievedSource);
+  const retrievalTimedOut = isRetrievalTimeout(options);
+  const outcomeCategory = determineOutcomeCategory({
+    candidates,
+    returnedSources: sanitized,
+    timedOut: retrievalTimedOut
+  });
 
   // ── TEMP TRACE: [RETRIEVAL RETURN] ───────────────────────────────────────
   // Remove after retrieval audit is complete.
@@ -3366,6 +3451,7 @@ async function retrieveRelevantSources(options = {}) {
 
   return {
     query,
+    outcomeCategory,
     retrievedSources: sanitized,
     sources: sanitized,
     issueClassification,
@@ -3388,6 +3474,7 @@ async function retrieveRelevantSources(options = {}) {
       prefilteredCount: prefiltered.docs.length,
       scoredCount: scored.length,
       returnedCount: sanitized.length,
+      outcomeCategory,
       layeredRetrievalApplied: true,
       retrievalLayers: Object.values(RETRIEVAL_LAYER),
       supabaseFallbackEnabled: true,
