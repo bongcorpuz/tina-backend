@@ -65,6 +65,25 @@ function unique(values = []) {
   return [...new Set(safeArray(values))];
 }
 
+function firstText(values = []) {
+  return values.map(normalizeText).find(Boolean) || "";
+}
+
+function hasPathOrIdShape(value = "") {
+  const text = String(value || "");
+  return (
+    /[\\/]/.test(text) ||
+    /\.[a-z0-9]{2,5}(?:$|[?#\s])/i.test(text) ||
+    /\b[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\b/i.test(text) ||
+    /\b(?:storage|vector|chunk|file|source)[_-]?[a-f0-9]{8,}\b/i.test(text)
+  );
+}
+
+function safeDisplayText(value = "") {
+  const text = normalizeText(value);
+  return text && !hasPathOrIdShape(text) ? text : "";
+}
+
 export function getDocPath(doc = {}) {
   return (
     doc.path ||
@@ -274,6 +293,335 @@ function normalizeAuthorityType(value = "") {
   };
 
   return aliases[raw] || raw || "UNKNOWN";
+}
+
+function toContractAuthorityType(value = "") {
+  const type = normalizeAuthorityType(value);
+
+  if (["CONSTITUTION", "STATUTE", "NIRC", "TAX_CODE", "CMTA", "LGC", "REPUBLIC_ACT", "RA"].includes(type)) {
+    return "STATUTE";
+  }
+
+  if (type === "TREATY") return "TREATY";
+  if (["SUPREME_COURT_EN_BANC", "SUPREME_COURT", "CTA_EN_BANC", "COURT_OF_APPEALS", "CTA_DIVISION"].includes(type)) {
+    return "CASE";
+  }
+
+  if (["RR", "RMC", "RMO", "RAMO", "BIR_RULING"].includes(type)) return type;
+  if (["SECONDARY", "CPA_NOTES", "REVIEW_MATERIALS", "PFRS", "PAS", "PSA", "OECD_GUIDANCE", "FOREIGN_AUTHORITY", "UNKNOWN"].includes(type)) {
+    return "SECONDARY";
+  }
+
+  return type || "SECONDARY";
+}
+
+function normalizeAuthorityIdCitation(value = "") {
+  return normalizeText(value)
+    .toUpperCase()
+    .replace(/[^A-Z0-9.]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+function displayCitationFromReference(reference = {}) {
+  const normalized = String(reference.normalized || "");
+
+  if (!normalized) return "";
+
+  const nirc = normalized.match(/^NIRC_SEC_(.+)$/i);
+  if (nirc) return `NIRC Sec. ${nirc[1].replace(/_/g, ".")}`;
+
+  const issuance = normalized.match(/^(RR|RMC|RMO|RAMO)_(\d+)_(\d{4})$/i);
+  if (issuance) return `${issuance[1].toUpperCase()} No. ${issuance[2]}-${issuance[3]}`;
+
+  const ra = normalized.match(/^RA_(\d+)$/i);
+  if (ra) return `RA ${ra[1]}`;
+
+  const gr = normalized.match(/^GR_(.+)$/i);
+  if (gr) return `G.R. No. ${gr[1].replace(/_/g, "-")}`;
+
+  return firstText(reference.aliases || []) || normalized.replace(/_/g, " ");
+}
+
+function buildAuthorityId(authorityType = "", citation = "") {
+  const normalizedCitation = normalizeAuthorityIdCitation(citation);
+  if (!authorityType || !normalizedCitation) return null;
+  return `${authorityType}-${normalizedCitation}`;
+}
+
+function getDocCitation(doc = {}) {
+  return firstText([
+    doc.citation,
+    doc.citationText,
+    doc.citation_text,
+    doc.reference,
+    doc.referenceText,
+    doc.reference_text,
+    doc.metadata?.citation,
+    doc.metadata?.reference
+  ].map(safeDisplayText));
+}
+
+function buildDisplayLabel(doc = {}, citation = "", authorityType = "") {
+  const candidates = [
+    doc.displayLabel,
+    doc.display_label,
+    doc.authorityLabel,
+    doc.authority_label,
+    doc.title,
+    doc.documentTitle,
+    doc.document_title,
+    doc.metadata?.displayLabel,
+    doc.metadata?.authorityLabel,
+    doc.metadata?.documentTitle,
+    citation,
+    AUTHORITY_LABEL[authorityType]
+  ];
+
+  return firstText(candidates.map(safeDisplayText)) || citation || AUTHORITY_LABEL[authorityType] || authorityType;
+}
+
+function hasParsedContent(doc = {}) {
+  return Boolean(
+    firstText([
+      doc.text,
+      doc.content,
+      doc.excerpt,
+      doc.preview,
+      doc.chunkText,
+      doc.chunk_text,
+      doc.pageContent,
+      doc.page_content
+    ])
+  );
+}
+
+function getIsParsed(doc = {}) {
+  const parseStatus = String(doc.parseStatus || doc.parse_status || doc.metadata?.parseStatus || "").toLowerCase();
+  if (parseStatus === "success") return true;
+  if (parseStatus === "failed") return false;
+  if (parseStatus === "unknown") return hasParsedContent(doc);
+  return hasParsedContent(doc);
+}
+
+function isIndexedCandidate(doc = {}) {
+  if (
+    doc.isIndexed === true ||
+    doc.indexed === true ||
+    doc.googleDriveIndexed === true ||
+    doc.metadata?.isIndexed === true ||
+    doc.metadata?.googleDriveIndexed === true
+  ) return true;
+
+  if (
+    doc.isIndexed === false ||
+    doc.indexed === false ||
+    doc.metadata?.isIndexed === false
+  ) return false;
+
+  return Boolean(
+    doc.retrievalLayer ||
+      doc.retrievalPhase ||
+      doc.retrievalEngineVersion ||
+      doc.metadata?.retrievalLayer ||
+      doc.metadata?.retrievalEngineVersion
+  );
+}
+
+function getNormalizedConfidence(doc = {}) {
+  const explicit = Number(doc.confidence ?? doc.metadata?.confidence);
+  if (Number.isFinite(explicit)) {
+    return Math.min(1, Math.max(0, explicit));
+  }
+
+  const rawScore = Number(
+    doc.rerankScore ??
+      doc.rerank_score ??
+      doc.finalScore ??
+      doc.final_score ??
+      doc.retrievalScore ??
+      doc.retrieval_score ??
+      doc.score ??
+      doc.similarity ??
+      0
+  );
+
+  if (!Number.isFinite(rawScore) || rawScore <= 0) return 0;
+  return Math.min(1, Math.max(0, rawScore / 400));
+}
+
+function normalizeAuthorityProfileTypes(values = []) {
+  return safeArray(values)
+    .flatMap((value) => {
+      if (!value) return [];
+      if (typeof value === "string") return [value];
+      if (typeof value === "object") {
+        return [
+          value.authorityType,
+          value.authority_type,
+          value.type,
+          value.group,
+          value.code
+        ];
+      }
+      return [];
+    })
+    .map(normalizeAuthorityType)
+    .filter(Boolean);
+}
+
+function getRequiredAuthorityLevel(issueClassification = {}, fallbackLevel = 99) {
+  const profileTypes = normalizeAuthorityProfileTypes([
+    ...safeArray(issueClassification.requiredAuthorityTypes),
+    ...safeArray(issueClassification.requiredAuthorities),
+    ...safeArray(issueClassification.controllingAuthorityTypes),
+    ...safeArray(issueClassification.controllingAuthorities),
+    ...safeArray(issueClassification.targetAuthorityTypes),
+    ...safeArray(issueClassification.targetAuthorities)
+  ]);
+
+  const levels = profileTypes
+    .map((type) => AUTHORITY_LEVEL[type])
+    .filter((level) => Number.isFinite(level) && level > 0 && level < 99);
+
+  if (levels.length) return Math.min(...levels);
+
+  const safeFallback = Number(fallbackLevel);
+  return Number.isFinite(safeFallback) && safeFallback > 0 ? safeFallback : 99;
+}
+
+function getRetrievalStatus(doc = {}, options = {}) {
+  return (
+    options.retrievalStatus ||
+    options.outcomeCategory ||
+    doc.retrievalStatus ||
+    doc.retrieval_status ||
+    doc.outcomeCategory ||
+    doc.metadata?.retrievalStatus ||
+    doc.metadata?.outcomeCategory ||
+    null
+  );
+}
+
+function directlyGovernsIssue(doc = {}) {
+  const match = doc.issueClassificationMatch || {};
+  return Boolean(
+    doc.directlyGovernsIssue === true ||
+      doc.exactAuthorityMatch === true ||
+      doc.targetAuthorityMatch === true ||
+      match.exactAuthorityMatch === true ||
+      match.targetAuthorityMatch === true ||
+      Number(doc.citationMatchBonus || 0) > 0 ||
+      ["LAYER_1_EXACT_NORMALIZED_AUTHORITY", "LAYER_2_CITATION_VARIANT"].includes(
+        doc.retrievalLayer || doc.retrievalPhase || match.retrievalLayer
+      )
+  );
+}
+
+function getAuthorityRole({
+  authorityLevel = 99,
+  directlyGoverns = false,
+  isIndexed = false,
+  isParsed = false,
+  requiredAuthorityKnown = false,
+  higherAuthorityMissing = false,
+  hasGoverningPeer = false
+} = {}) {
+  if ([12, 13, 14].includes(Number(authorityLevel))) return "SECONDARY";
+  if (directlyGoverns && isIndexed && isParsed && requiredAuthorityKnown && !higherAuthorityMissing) return "GOVERNING";
+  if (hasGoverningPeer) return "SUPPORTING";
+  if (directlyGoverns === false) return "RELATED";
+  return "UNKNOWN";
+}
+
+export function buildAuthorityAnnotation(doc = {}, options = {}) {
+  const rawAuthorityType = getAuthorityTypeForDoc(doc);
+  const authorityType = toContractAuthorityType(rawAuthorityType);
+  const authorityLevel = getAuthorityLevelForDoc(doc);
+  const parsedReference = normalizeLegalReference(
+    getDocCitation(doc) || getDocNormalizedReference(doc)
+  );
+  const citation = getDocCitation(doc) || displayCitationFromReference(parsedReference);
+  const isParsed = Boolean(citation) && getIsParsed(doc);
+  const authorityId = isParsed ? buildAuthorityId(authorityType, citation) : null;
+  const requiredAuthorityLevel = getRequiredAuthorityLevel(
+    options.issueClassification || doc.issueClassification || doc.issueClassificationMatch || {},
+    options.defaultRequiredAuthorityLevel || 99
+  );
+  const hasRequiredLevel = Number.isFinite(requiredAuthorityLevel) && requiredAuthorityLevel > 0 && requiredAuthorityLevel < 99;
+  const higherAuthorityMissing = hasRequiredLevel && Number.isFinite(authorityLevel)
+    ? authorityLevel > requiredAuthorityLevel
+    : false;
+  const governs = directlyGovernsIssue(doc);
+  const indexed = isIndexedCandidate(doc);
+
+  const annotation = {
+    authorityId,
+    displayLabel: buildDisplayLabel(doc, citation, authorityType),
+    authorityType,
+    authorityRole: "UNKNOWN",
+    authorityLevel,
+    citation: citation || null,
+    isIndexed: indexed,
+    isParsed,
+    directlyGovernsIssue: governs,
+    requiredAuthorityLevel: hasRequiredLevel ? requiredAuthorityLevel : null,
+    higherAuthorityMissing,
+    retrievalStatus: getRetrievalStatus(doc, options),
+    confidence: getNormalizedConfidence(doc)
+  };
+
+  annotation.authorityRole = getAuthorityRole({
+    authorityLevel,
+    directlyGoverns: governs,
+    isIndexed: indexed,
+    isParsed,
+    requiredAuthorityKnown: hasRequiredLevel,
+    higherAuthorityMissing,
+    hasGoverningPeer: options.hasGoverningPeer === true
+  });
+
+  return annotation;
+}
+
+export function annotateAuthorityCandidate(doc = {}, options = {}) {
+  const annotation = buildAuthorityAnnotation(doc, options);
+
+  return {
+    ...doc,
+    ...annotation,
+    authorityAnnotation: annotation,
+    metadata: {
+      ...(doc.metadata || {}),
+      authorityAnnotation: annotation
+    }
+  };
+}
+
+export function annotateAuthorityCandidates(docs = [], options = {}) {
+  const initial = safeArray(docs).map((doc) => annotateAuthorityCandidate(doc, options));
+  const hasGoverningPeer = initial.some((doc) => doc.authorityRole === "GOVERNING");
+
+  if (!hasGoverningPeer) return initial;
+
+  return initial.map((doc) => {
+    if (doc.authorityRole !== "UNKNOWN") return doc;
+
+    const annotation = {
+      ...doc.authorityAnnotation,
+      authorityRole: "SUPPORTING"
+    };
+
+    return {
+      ...doc,
+      authorityRole: "SUPPORTING",
+      authorityAnnotation: annotation,
+      metadata: {
+        ...(doc.metadata || {}),
+        authorityAnnotation: annotation
+      }
+    };
+  });
 }
 
 export function classifyAuthorityFromDocument({ fileName = "", path = "", text = "" }) {
@@ -754,6 +1102,9 @@ export default {
   classifyAuthorityFromDocument,
   normalizeLegalReference,
   buildAuthorityMetadata,
+  buildAuthorityAnnotation,
+  annotateAuthorityCandidate,
+  annotateAuthorityCandidates,
 
   getAuthorityTypeForDoc,
   getAuthorityLevelForDoc,

@@ -32,6 +32,9 @@ import {
   normalizeLegalReference,
   classifyAuthorityFromDocument,
   buildAuthorityMetadata,
+  buildAuthorityAnnotation,
+  annotateAuthorityCandidate,
+  annotateAuthorityCandidates,
   getAuthorityTypeForDoc,
   getAuthorityLevelForDoc,
   getAuthorityScoreForDoc,
@@ -471,6 +474,7 @@ function buildAuthorityAuditMetadata(doc = {}, query = "") {
   const controllingPrecedence = getMasterAuthorityPrecedenceForDoc(doc);
   const authorityScore = getMasterAuthorityScoreForDoc(doc);
   const authorityLabel = getMasterAuthorityLabelForDoc(doc);
+  const authorityAnnotation = buildAuthorityAnnotation(doc);
 
   return {
     authorityType,
@@ -488,6 +492,7 @@ function buildAuthorityAuditMetadata(doc = {}, query = "") {
     authorityPriorityBonus: computeAuthorityPriorityBonus(doc),
     exactReferenceBonus: exactReferenceBonus(query, doc),
     authorityRiskPenalty: authorityRiskPenalty(doc),
+    authorityAnnotation,
 
     masterPromptAuthorityHierarchyApplied: true,
     courtAuthorityNotSubordinatedToBIRIssuances: true,
@@ -767,6 +772,9 @@ export {
   normalizeLegalReference,
   classifyAuthorityFromDocument,
   buildAuthorityMetadata,
+  buildAuthorityAnnotation,
+  annotateAuthorityCandidate,
+  annotateAuthorityCandidates,
 
   getAuthorityTypeForDoc,
   getAuthorityLevelForDoc,
@@ -804,6 +812,9 @@ export default {
   normalizeLegalReference,
   classifyAuthorityFromDocument,
   buildAuthorityMetadata,
+  buildAuthorityAnnotation,
+  annotateAuthorityCandidate,
+  annotateAuthorityCandidates,
 
   getAuthorityTypeForDoc,
   getAuthorityLevelForDoc,
