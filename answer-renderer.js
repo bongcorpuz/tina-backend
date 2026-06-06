@@ -234,6 +234,22 @@ const AUTHORITY_PRECEDENCE = Object.freeze({
 
 const MAX_VISIBLE_SOURCES = 5;
 
+const SAE_DISCLOSURE_STATUSES = Object.freeze(new Set([
+  "RELATED_AUTHORITY_ONLY",
+  "NO_INDEXED_SOURCE",
+  "RETRIEVAL_TIMEOUT",
+  "SOURCE_LOOKUP_EMPTY",
+  "SOURCE_PARSE_ERROR"
+]));
+
+const AUTHORITY_ROLE_SUFFIX = Object.freeze({
+  GOVERNING:  "",
+  SUPPORTING: "Supporting authority only",
+  RELATED:    "Related authority only",
+  SECONDARY:  "Secondary reference only",
+  UNKNOWN:    "Unclassified reference only"
+});
+
 function normalizeText(value = "") {
   return String(value || "")
     .replace(/\r\n/g, "\n")
@@ -251,6 +267,177 @@ function trimText(value = "", max = 1000) {
   const text = normalizeText(value).replace(/\s+/g, " ");
   if (!text) return "";
   return text.length <= max ? text : `${text.slice(0, max).trim()} ...[trimmed]`;
+}
+
+function normalizeStatus(value = "") {
+  if (value && typeof value === "object") return "";
+  return String(value || "").trim().toUpperCase();
+}
+
+function objectOrEmpty(value) {
+  return value && typeof value === "object" && !Array.isArray(value) ? value : {};
+}
+
+function firstObject(...values) {
+  for (const value of values) {
+    const candidate = objectOrEmpty(value);
+    if (Object.keys(candidate).length > 0) return candidate;
+  }
+  return {};
+}
+
+function normalizeAuthorityRole(source = {}) {
+  return normalizeStatus(
+    source.authorityRole ||
+    source.authority_role ||
+    source.metadata?.authorityRole ||
+    source.metadata?.authority_role ||
+    "UNKNOWN"
+  ) || "UNKNOWN";
+}
+
+function resolveSaeContext(input = {}) {
+  const metadata = input.metadata || {};
+  const inputSourceAvailability = objectOrEmpty(input.sourceAvailability);
+  const metadataSourceAvailability = objectOrEmpty(metadata.sourceAvailability);
+  const saeMetadata = firstObject(
+    input.sourceAvailabilityMetadata,
+    metadata.sourceAvailabilityMetadata,
+    inputSourceAvailability,
+    metadataSourceAvailability
+  );
+
+  const saeStatus = normalizeStatus(
+    input.saeStatus ||
+    inputSourceAvailability.saeStatus ||
+    inputSourceAvailability.status ||
+    (typeof input.sourceAvailability === "string" ? input.sourceAvailability : "") ||
+    input.sourceStatus ||
+    saeMetadata.saeStatus ||
+    saeMetadata.status ||
+    saeMetadata.sourceAvailability ||
+    metadata.saeStatus ||
+    metadataSourceAvailability.saeStatus ||
+    metadataSourceAvailability.status ||
+    (typeof metadata.sourceAvailability === "string" ? metadata.sourceAvailability : "") ||
+    metadata.sourceStatus
+  );
+
+  if (!saeStatus) {
+    return {
+      hasSaeMetadata: false,
+      saeStatus: "",
+      disclosureType: null,
+      limitationRequired: false,
+      statusReason: ""
+    };
+  }
+
+  const disclosureType = normalizeStatus(
+    input.disclosureType ||
+    inputSourceAvailability.disclosureType ||
+    saeMetadata.disclosureType ||
+    metadata.disclosureType ||
+    metadataSourceAvailability.disclosureType ||
+    saeStatus
+  );
+
+  return {
+    hasSaeMetadata: true,
+    saeStatus,
+    disclosureType,
+    limitationRequired: saeStatus === "RELATED_AUTHORITY_ONLY",
+    statusReason: trimText(
+      input.statusReason ||
+      input.sourceAvailabilityReason ||
+      inputSourceAvailability.statusReason ||
+      inputSourceAvailability.sourceAvailabilityReason ||
+      saeMetadata.statusReason ||
+      saeMetadata.sourceAvailabilityReason ||
+      metadata.statusReason ||
+      metadataSourceAvailability.statusReason ||
+      metadataSourceAvailability.sourceAvailabilityReason ||
+      metadata.sourceAvailabilityReason ||
+      "",
+      500
+    )
+  };
+}
+
+function deriveIsGoverning(source = {}, saeContext = {}) {
+  const role = normalizeAuthorityRole(source);
+  if (!saeContext.hasSaeMetadata) {
+    return source.isGoverning === true || source.metadata?.isGoverning === true;
+  }
+  return saeContext.saeStatus === "AUTHORITY_FOUND" && role === "GOVERNING";
+}
+
+function deriveLimitationRequired(source = {}, saeContext = {}) {
+  if (!saeContext.hasSaeMetadata) {
+    return source.limitationRequired === true || source.metadata?.limitationRequired === true;
+  }
+  if (saeContext.saeStatus === "AUTHORITY_FOUND") return false;
+  return saeContext.saeStatus === "RELATED_AUTHORITY_ONLY";
+}
+
+function authorityRoleSuffix(authorityRole = "UNKNOWN") {
+  return AUTHORITY_ROLE_SUFFIX[normalizeStatus(authorityRole)] ?? AUTHORITY_ROLE_SUFFIX.UNKNOWN;
+}
+
+function buildSourceAvailabilityDisclosure(saeContext = {}) {
+  if (!saeContext.hasSaeMetadata) return "";
+  const type = normalizeStatus(saeContext.disclosureType || saeContext.saeStatus);
+  if (!SAE_DISCLOSURE_STATUSES.has(type)) return "";
+
+  if (type === "RELATED_AUTHORITY_ONLY") {
+    return [
+      "Source limitation:",
+      "A governing authority was not directly located.",
+      "Displayed sources are related, supporting, or secondary only.",
+      "They are not the controlling basis for the answer."
+    ].join(" ");
+  }
+
+  if (type === "NO_INDEXED_SOURCE") {
+    return "Source limitation: No indexed source was located for direct verification.";
+  }
+
+  if (type === "RETRIEVAL_TIMEOUT") {
+    return "Source limitation: Indexed source retrieval timed out before source availability could be verified.";
+  }
+
+  if (type === "SOURCE_LOOKUP_EMPTY") {
+    return "Source limitation: Source lookup completed, but no indexed source was found.";
+  }
+
+  if (type === "SOURCE_PARSE_ERROR") {
+    return "Source limitation: Sources were retrieved, but source parsing failed before authority could be verified.";
+  }
+
+  return "";
+}
+
+function hasDisclosureText(answer = "", disclosure = "") {
+  if (!disclosure) return true;
+  const normalizedAnswer = normalizeText(answer).toLowerCase();
+  const normalizedDisclosure = normalizeText(disclosure).toLowerCase();
+  return normalizedAnswer.includes(normalizedDisclosure);
+}
+
+function appendDisclosureBeforeSources(answer = "", disclosure = "") {
+  const rendered = normalizeText(answer);
+  if (!disclosure || hasDisclosureText(rendered, disclosure)) return rendered;
+  return [rendered, disclosure].filter(Boolean).join("\n\n");
+}
+
+function formatSourceLine(source = {}, index = 0, sourcePath = "") {
+  const label = `${source.citation ? `${source.citation} – ` : ""}${source.title}`;
+  const suffix = source.authorityRoleSuffix ? ` [${source.authorityRoleSuffix}]` : "";
+  const linked = source.url ? `[${label}](${source.url})` : label;
+  const path = trimText(sourcePath, 240);
+  return path
+    ? `${index + 1}. ${linked}${suffix} — ${path}`
+    : `${index + 1}. ${linked}${suffix} (${source.authorityType})`;
 }
 
 function escapeRegex(value = "") {
@@ -804,7 +991,28 @@ function mergeSourceMetadata(retained, incoming) {
     normalized_reference: retained.normalized_reference || incoming.normalized_reference,
     citation:             retained.citation             || incoming.citation,
     reference:            retained.reference            || incoming.reference,
-    source:               retained.source               || incoming.source
+    source:               retained.source               || incoming.source,
+    authorityId:          retained.authorityId          || incoming.authorityId          || incoming.authority_id,
+    authority_id:         retained.authority_id         || incoming.authority_id         || incoming.authorityId,
+    displayLabel:         retained.displayLabel         || incoming.displayLabel         || incoming.display_label,
+    display_label:        retained.display_label        || incoming.display_label        || incoming.displayLabel,
+    authorityType:        retained.authorityType        || incoming.authorityType        || incoming.authority_type,
+    authority_type:       retained.authority_type       || incoming.authority_type       || incoming.authorityType,
+    authorityRole:        retained.authorityRole        || incoming.authorityRole        || incoming.authority_role,
+    authority_role:       retained.authority_role       || incoming.authority_role       || incoming.authorityRole,
+    authorityLevel:       retained.authorityLevel       || incoming.authorityLevel       || incoming.authority_level,
+    authority_level:      retained.authority_level      || incoming.authority_level      || incoming.authorityLevel,
+    isIndexed:            retained.isIndexed            ?? incoming.isIndexed            ?? incoming.is_indexed,
+    is_indexed:           retained.is_indexed           ?? incoming.is_indexed           ?? incoming.isIndexed,
+    isParsed:             retained.isParsed             ?? incoming.isParsed             ?? incoming.is_parsed,
+    is_parsed:            retained.is_parsed            ?? incoming.is_parsed            ?? incoming.isParsed,
+    isGoverning:          retained.isGoverning          ?? incoming.isGoverning          ?? incoming.is_governing,
+    is_governing:         retained.is_governing         ?? incoming.is_governing         ?? incoming.isGoverning,
+    limitationRequired:   retained.limitationRequired   ?? incoming.limitationRequired   ?? incoming.limitation_required,
+    limitation_required:  retained.limitation_required  ?? incoming.limitation_required  ?? incoming.limitationRequired,
+    confidence:           retained.confidence           ?? incoming.confidence,
+    retrievalStatus:      retained.retrievalStatus      || incoming.retrievalStatus      || incoming.retrieval_status,
+    retrieval_status:     retained.retrieval_status     || incoming.retrieval_status     || incoming.retrievalStatus
   });
 }
 
@@ -827,11 +1035,39 @@ function dedupeSources(sources = []) {
   return output;
 }
 
-function compactSource(source = {}) {
+function compactSource(source = {}, saeContext = {}) {
   const authorityType = sourceAuthorityType(source);
+  const authorityRole = normalizeAuthorityRole(source);
+  const displayLabel = trimText(
+    source.displayLabel ||
+      source.display_label ||
+      source.metadata?.displayLabel ||
+      source.metadata?.display_label ||
+      "",
+    220
+  );
+  const citation = trimText(
+    source.citation ||
+      source.metadata?.citation ||
+      source.reference ||
+      source.metadata?.reference ||
+      source.normalizedReference ||
+      source.normalized_reference ||
+      source.metadata?.normalizedReference ||
+      source.metadata?.normalized_reference ||
+      source.issuanceNumber ||
+      source.issuance_number ||
+      source.metadata?.issuanceNumber ||
+      source.metadata?.issuance_number ||
+      "",
+    260
+  );
+  const isGoverning = deriveIsGoverning(source, saeContext);
+  const limitationRequired = deriveLimitationRequired(source, saeContext);
 
   return {
     title: trimText(
+      displayLabel ||
       source.title ||
         source.sourceTitle ||
         source.source ||
@@ -841,27 +1077,24 @@ function compactSource(source = {}) {
         "Untitled Source",
       220
     ),
-    citation: trimText(
-      source.citation ||
-        source.reference ||
-        source.normalizedReference ||
-        source.normalized_reference ||
-        source.issuanceNumber ||
-        source.issuance_number ||
-        "",
-      260
-    ),
+    displayLabel,
+    citation,
     url: trimText(
-      source.url ||
-        source.driveViewUrl ||
-        source.drive_url ||
-        source.sourceUrl ||
-        "",
+      bestSourceUrl(source),
       320
     ),
     authorityType,
-    authorityLevel: sourcePrecedence(source),
+    authorityRole,
+    authorityLevel: source.authorityLevel ?? source.authority_level ?? sourcePrecedence(source),
     controllingPrecedence: sourcePrecedence(source),
+    authorityId: source.authorityId || source.authority_id || source.metadata?.authorityId || source.metadata?.authority_id || "",
+    isIndexed: source.isIndexed ?? source.is_indexed ?? source.metadata?.isIndexed ?? source.metadata?.is_indexed ?? null,
+    isParsed: source.isParsed ?? source.is_parsed ?? source.metadata?.isParsed ?? source.metadata?.is_parsed ?? null,
+    isGoverning,
+    limitationRequired,
+    confidence: source.confidence ?? source.metadata?.confidence ?? null,
+    retrievalStatus: source.retrievalStatus || source.retrieval_status || source.metadata?.retrievalStatus || source.metadata?.retrieval_status || "",
+    authorityRoleSuffix: saeContext.hasSaeMetadata ? authorityRoleSuffix(authorityRole) : "",
     score: sourceScore(source),
     issueClassificationMatch: source.issueClassificationMatch || null,
     targetAuthorityMatch: isTargetAuthorityMatched(source),
@@ -1004,8 +1237,28 @@ function renderTinaAnswer({
   orchestrationMode = null,
   contextMode = null,
   mode = null,
+  saeStatus = null,
+  sourceAvailability = null,
+  sourceStatus = null,
+  sourceAvailabilityMetadata = null,
+  limitationRequired = null,
+  disclosureType = null,
+  statusReason = null,
+  sourceAvailabilityReason = null,
   metadata = {}
 } = {}) {
+  const saeContext = resolveSaeContext({
+    saeStatus,
+    sourceAvailability,
+    sourceStatus,
+    sourceAvailabilityMetadata,
+    limitationRequired,
+    disclosureType,
+    statusReason,
+    sourceAvailabilityReason,
+    metadata
+  });
+  const sourceDisclosure = buildSourceAvailabilityDisclosure(saeContext);
   const resolvedMode = String(mode || orchestrationMode || contextMode || "").toUpperCase();
   const isQuizMode = resolvedMode === "QUIZ_MODE" || resolvedMode === "QUIZ";
   const isReviewerMode = resolvedMode === "REVIEWER_MODE" || resolvedMode === "REVIEWER";
@@ -1047,30 +1300,29 @@ function renderTinaAnswer({
     const sorted = sortVisibleSources(sources).slice(0, SOURCE_MODE_CAP);
 
     const lines = sorted.map((s, i) => {
-      const compact = compactSource(s);
-      const label   = (compact.citation || compact.title || "Unknown Source").trim();
+      const compact = compactSource(s, saeContext);
       const path    = String(s.source || s.original_source || "").trim();
-      return path ? `${i + 1}. ${label} — ${path}` : `${i + 1}. ${label}`;
+      return formatSourceLine(compact, i, path);
     });
 
-    rendered = `Indexed sources found:\n${lines.join("\n")}`;
+    rendered = appendDisclosureBeforeSources("Indexed sources found:", sourceDisclosure);
+    rendered = [rendered, lines.join("\n")].filter(Boolean).join("\n\n");
   }
   // ── End source mode override ────────────────────────────────────────────────
 
   if (includeSources) {
     const visible = sortVisibleSources(sources)
       .slice(0, MAX_VISIBLE_SOURCES)
-      .map(compactSource);
+      .map((source) => compactSource(source, saeContext));
 
     if (visible.length) {
-      const sourceLines = visible.map((s, i) => {
-        const label = `${s.citation ? `${s.citation} – ` : ""}${s.title}`;
-        const linked = s.url ? `[${label}](${s.url})` : label;
-        return `${i + 1}. ${linked} (${s.authorityType})`;
-      });
+      const sourceLines = visible.map((s, i) => formatSourceLine(s, i));
 
+      rendered = appendDisclosureBeforeSources(rendered, sourceDisclosure);
       rendered = `${rendered}\n\n**Sources**\n${sourceLines.join("\n")}`;
     }
+  } else if (sourceDisclosure) {
+    rendered = appendDisclosureBeforeSources(rendered, sourceDisclosure);
   }
 
   return rendered.trim();
@@ -1094,15 +1346,36 @@ function renderTinaJsonPayload({
   primaryDomain = null,
   orchestrationMode = null,
   contextMode = null,
-  mode = null
+  mode = null,
+  saeStatus = null,
+  sourceAvailability = null,
+  sourceStatus = null,
+  sourceAvailabilityMetadata = null,
+  limitationRequired = null,
+  disclosureType = null,
+  statusReason = null,
+  sourceAvailabilityReason = null
 } = {}) {
+  const saeContext = resolveSaeContext({
+    saeStatus,
+    sourceAvailability,
+    sourceStatus,
+    sourceAvailabilityMetadata,
+    limitationRequired,
+    disclosureType,
+    statusReason,
+    sourceAvailabilityReason,
+    metadata
+  });
+  const sourceDisclosure = buildSourceAvailabilityDisclosure(saeContext);
+
   const effectiveMode =
     normalizeOrchestrationMode(orchestrationMode || contextMode || mode || metadata?.orchestrationMode || metadata?.mode || "") ||
     getResponseModeFromInput({ adaptiveContext, responsePlan, metadata });
 
   const sortedSources = sortVisibleSources(sources)
     .slice(0, MAX_VISIBLE_SOURCES)
-    .map(compactSource);
+    .map((source) => compactSource(source, saeContext));
 
   const renderedAnswer = renderTinaAnswer({
     answer,
@@ -1122,6 +1395,14 @@ function renderTinaJsonPayload({
     orchestrationMode: effectiveMode,
     contextMode,
     mode,
+    saeStatus,
+    sourceAvailability,
+    sourceStatus,
+    sourceAvailabilityMetadata,
+    limitationRequired,
+    disclosureType,
+    statusReason,
+    sourceAvailabilityReason,
     metadata
   });
 
@@ -1169,6 +1450,8 @@ function renderTinaJsonPayload({
       sourceCount: sortedSources.length,
       compactSourcesOnly: true,
       rawSourceInjectionPrevented: true,
+      sourceAvailabilityDisclosurePrepared: Boolean(sourceDisclosure),
+      disclosureEmitted: Boolean(sourceDisclosure && hasDisclosureText(renderedAnswer, sourceDisclosure)),
       debugOutputSuppressed: true,
 
       conflictLanguageGated: true,
