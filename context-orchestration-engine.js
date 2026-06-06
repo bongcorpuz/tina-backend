@@ -51,6 +51,15 @@ const MODEL_CONTEXT_LIMITS = Object.freeze({
 
 const HARD_SAFETY_RATIO = 0.6;
 
+const SAE_PROMPT_STATUSES = Object.freeze(new Set([
+  "AUTHORITY_FOUND",
+  "RELATED_AUTHORITY_ONLY",
+  "NO_INDEXED_SOURCE",
+  "RETRIEVAL_TIMEOUT",
+  "SOURCE_LOOKUP_EMPTY",
+  "SOURCE_PARSE_ERROR"
+]));
+
 const MODE_CONFIG = Object.freeze({
   QUIZ_MODE: {
     maxInputTokens: 12000,
@@ -470,6 +479,14 @@ function normalizeAuthority(value = "") {
 function normalizeBuildArgs(args = {}) {
   const adaptiveContext = args.adaptiveContext || {};
   const responsePlan = args.responsePlan || adaptiveContext?.responsePlan || {};
+  const sourceAvailability = args.sourceAvailabilityMetadata || args.sourceAvailability || {};
+  const saeStatus = safeString(
+    args.saeStatus ||
+    sourceAvailability?.saeStatus ||
+    sourceAvailability?.sourceAvailability ||
+    sourceAvailability?.sourceStatus ||
+    ""
+  ).trim().toUpperCase();
 
   return {
     userQuery:
@@ -508,6 +525,24 @@ function normalizeBuildArgs(args = {}) {
     sourceGroundingInstructions:
       args.sourceGroundingInstructions ||
       {},
+
+    sourceAvailabilityMetadata: {
+      saeStatus,
+      sourceAvailability,
+      limitationRequired:
+        args.limitationRequired ??
+        sourceAvailability?.limitationRequired ??
+        null,
+      disclosureType:
+        args.disclosureType ??
+        sourceAvailability?.disclosureType ??
+        null,
+      statusReason:
+        args.statusReason ||
+        sourceAvailability?.statusReason ||
+        sourceAvailability?.sourceAvailabilityReason ||
+        ""
+    },
 
     authorityPacket:
       args.authorityPacket ||
@@ -1667,13 +1702,48 @@ function buildCompactTaxEngineContext({ classification = {}, sourceGroundingInst
   };
 }
 
+function buildSaePromptFraming(sourceAvailabilityMetadata = {}) {
+  const saeStatus = safeString(sourceAvailabilityMetadata?.saeStatus).trim().toUpperCase();
+  if (!SAE_PROMPT_STATUSES.has(saeStatus)) return "";
+
+  const limitationRequired = sourceAvailabilityMetadata?.limitationRequired;
+  const disclosureType = sourceAvailabilityMetadata?.disclosureType || null;
+  const statusReason = safeString(sourceAvailabilityMetadata?.statusReason || "");
+
+  const ruleByStatus = {
+    AUTHORITY_FOUND:
+      "Normal authority-grounded answering is allowed. Do not add limitation language solely because SAE metadata exists.",
+    RELATED_AUTHORITY_ONLY:
+      "Use limitation framing. State that governing authority was not directly located, cited or displayed sources are related/supporting/secondary only, and related authority must not be framed as the controlling basis.",
+    NO_INDEXED_SOURCE:
+      "Use grounded incompleteness. Do not fabricate governing authority or imply that an indexed governing source was located.",
+    RETRIEVAL_TIMEOUT:
+      "State that retrieval timed out. Do not treat timeout as absence of law or as proof that no governing authority exists.",
+    SOURCE_LOOKUP_EMPTY:
+      "State that retrieval completed but no candidate source was returned. Keep this distinct from NO_INDEXED_SOURCE.",
+    SOURCE_PARSE_ERROR:
+      "State that a source or candidate could not be reliably parsed. Do not rely on parse-failed content as authority."
+  };
+
+  return normalizeWhitespace(`
+Source Availability Engine framing:
+- saeStatus: ${saeStatus}
+- limitationRequired: ${limitationRequired === null ? "unknown" : String(limitationRequired)}
+- disclosureType: ${disclosureType || "none"}
+- statusReason: ${statusReason || "none supplied"}
+- Rule: ${ruleByStatus[saeStatus]}
+- Do not recompute source availability. Use this metadata only for answer framing.
+  `);
+}
+
 function buildSystemInstruction({
   systemPrompt = "",
   masterPrompt = "",
   mode = "STANDARD_TAX",
   taxEngineContext = {},
   modeFlags = {},
-  intent = {}
+  intent = {},
+  sourceAvailabilityMetadata = {}
 }) {
   const baseAuthorityRules = `
 You are TINA, a Philippine tax, legal, audit, and compliance reasoning assistant.
@@ -1889,6 +1959,7 @@ F. PRACTICAL NOTE / APPLICATION
   return normalizeWhitespace(
     [
       baseAuthorityRules,
+      buildSaePromptFraming(sourceAvailabilityMetadata),
       modeInstruction,
       `Tax-engine context:\n${JSON.stringify(taxEngineContext, null, 2)}`,
       systemPrompt,
@@ -1912,6 +1983,7 @@ function buildUserPrompt({
   taxEngineContext = {},
   sourceGroundingInstructions = {},
   authorityPacket = {},
+  sourceAvailabilityMetadata = {},
   modeFlags = {}
 }) {
   const compactClassification = {
@@ -1974,6 +2046,12 @@ function buildUserPrompt({
       hasControllingAuthority: authorityPacket?.hasControllingAuthority ?? authoritySummary.controlling > 0,
       hasSupportingRules: authorityPacket?.hasSupportingRules ?? authoritySummary.administrative > 0,
       hasSupportingJurisprudence: authorityPacket?.hasSupportingJurisprudence ?? authoritySummary.jurisprudence > 0
+    },
+    sourceAvailability: {
+      saeStatus: sourceAvailabilityMetadata?.saeStatus || null,
+      limitationRequired: sourceAvailabilityMetadata?.limitationRequired ?? null,
+      disclosureType: sourceAvailabilityMetadata?.disclosureType || null,
+      statusReason: sourceAvailabilityMetadata?.statusReason || ""
     }
   };
 
@@ -2253,7 +2331,8 @@ export function buildOpenAIContext(args = {}) {
       mode,
       taxEngineContext,
       modeFlags,
-      intent: normalized.intent
+      intent: normalized.intent,
+      sourceAvailabilityMetadata: normalized.sourceAvailabilityMetadata
     })
   };
 
@@ -2272,6 +2351,7 @@ export function buildOpenAIContext(args = {}) {
       taxEngineContext,
       sourceGroundingInstructions: normalized.sourceGroundingInstructions,
       authorityPacket: normalized.authorityPacket,
+      sourceAvailabilityMetadata: normalized.sourceAvailabilityMetadata,
       modeFlags
     })
   };

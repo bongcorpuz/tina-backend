@@ -219,6 +219,19 @@ A conflict may be stated only when metadata supports:
 If these are not complete, say no direct doctrinal conflict is established and explain whether the authorities are distinguishable, procedural, evidentiary, factual, temporal, or merely background.
 `.trim();
 
+const TINA_SOURCE_AVAILABILITY_RULE = `
+Source Availability Engine framing:
+
+- Recognize these SAE statuses only: AUTHORITY_FOUND, RELATED_AUTHORITY_ONLY, NO_INDEXED_SOURCE, RETRIEVAL_TIMEOUT, SOURCE_LOOKUP_EMPTY, SOURCE_PARSE_ERROR.
+- AUTHORITY_FOUND: answer normally from retrieved authority. Do not add limitation language solely because SAE metadata exists.
+- RELATED_AUTHORITY_ONLY: state that no directly governing authority was located; cited/displayed sources are related, supporting, or secondary only; never frame related authority as the controlling basis.
+- NO_INDEXED_SOURCE: use grounded incompleteness. Do not fabricate governing authority.
+- RETRIEVAL_TIMEOUT: state retrieval timed out. Do not treat timeout as absence of law.
+- SOURCE_LOOKUP_EMPTY: state retrieval completed but returned no candidate source. Keep distinct from NO_INDEXED_SOURCE.
+- SOURCE_PARSE_ERROR: state that a source/candidate could not be reliably parsed. Do not rely on parse-failed content as authority.
+- Do not recompute SAE status, create source cards, or override renderer/source-selector behavior.
+`.trim();
+
 const TINA_RESPONSE_RULE = `
 Output rules:
 
@@ -248,6 +261,8 @@ ${TINA_CONTEXT_ORCHESTRATION_RULE}
 ${TINA_FACTUAL_REASONING_RULE}
 
 ${TINA_CONFLICT_RULE}
+
+${TINA_SOURCE_AVAILABILITY_RULE}
 
 ${TINA_RESPONSE_RULE}
 `.trim();
@@ -888,6 +903,7 @@ export {
   TINA_CONTEXT_ORCHESTRATION_RULE,
   TINA_FACTUAL_REASONING_RULE,
   TINA_CONFLICT_RULE,
+  TINA_SOURCE_AVAILABILITY_RULE,
   TINA_RESPONSE_RULE,
   ADAPTIVE_MASTER_PROMPT,
 
@@ -936,6 +952,7 @@ export default {
   TINA_CONTEXT_ORCHESTRATION_RULE,
   TINA_FACTUAL_REASONING_RULE,
   TINA_CONFLICT_RULE,
+  TINA_SOURCE_AVAILABILITY_RULE,
   TINA_RESPONSE_RULE,
   ADAPTIVE_MASTER_PROMPT,
 

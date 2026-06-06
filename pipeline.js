@@ -748,12 +748,6 @@ function buildEducationalSources(chunks = [], responseStyle = null, query = "") 
 
 // ─── Source Availability Classification ──────────────────────────────────────
 
-const _SA_WARNING_STARTS = [
-  "Indexed source not found.",
-  "Indexed source retrieval timed out.",
-  "I found related indexed material",
-];
-
 /**
  * Classifies source availability after all filtering stages are complete.
  * Must be called ONLY after filterDisplayedSourcesByDirectSupport has run.
@@ -973,46 +967,6 @@ export function classifySourceAvailability(input = {}) {
     disclosureType: "NO_INDEXED_SOURCE",
     statusReason:  "No indexed source candidate satisfied source availability classification."
   };
-}
-
-/**
- * Prepends a source-availability caveat to the answer.
- * Skips prepend when the answer already opens with the relevant warning text.
- * For /audit fail-closed statuses, replaces the answer entirely.
- * Returns the answer unchanged for AUTHORITY_FOUND.
- */
-function prependSourceAvailabilityWarning(answer, sourceAvailability, mode, hook) {
-  if (sourceAvailability === "AUTHORITY_FOUND") return answer;
-
-  const trimmed = String(answer || "").trimStart();
-  if (_SA_WARNING_STARTS.some(s => trimmed.startsWith(s))) return answer;
-
-  const isAuditMode =
-    hook === "/audit" ||
-    String(mode || "").toUpperCase() === "COMPLEX_ADVISORY" ||
-    String(mode || "").toUpperCase() === "AUDIT_MODE";
-
-  // RETRIEVAL_TIMEOUT must use timeout-specific language in all modes.
-  // Audit mode still fails closed but with the correct reason (timeout ≠ no-source).
-  if (sourceAvailability === "RETRIEVAL_TIMEOUT") {
-    if (isAuditMode) {
-      return "Indexed source retrieval timed out. TINA cannot provide an audit or legal conclusion for this mode because the indexed knowledge base could not be verified within the retrieval window.";
-    }
-    return "Indexed source retrieval timed out. I could not verify this answer against TINA's indexed knowledge base within the retrieval window.\n\n" + answer;
-  }
-
-  // NO_INDEXED_SOURCE and RELATED_AUTHORITY_ONLY in audit mode: fail closed.
-  if (isAuditMode) {
-    return "Indexed source not found. TINA cannot provide an audit or legal conclusion for this mode without a directly supporting indexed authority.";
-  }
-
-  if (sourceAvailability === "NO_INDEXED_SOURCE") {
-    return "Indexed source not found. I could not locate a directly supporting authority in TINA's indexed knowledge base. The following is general information only and should not be treated as a cited Philippine tax authority.\n\n" + answer;
-  }
-  if (sourceAvailability === "RELATED_AUTHORITY_ONLY") {
-    return "I found related indexed material, but no directly supporting source card survived TINA's direct-support filter. Treat this as a cautious general explanation, not a source-grounded legal conclusion.\n\n" + answer;
-  }
-  return answer;
 }
 
 // ─── Main Pipeline ────────────────────────────────────────────────────────────
@@ -1662,6 +1616,11 @@ export async function runPipeline({
       taxDomainClassification: ctx.routingMetadata,
       conflictAnalysis:     ctx.conflictAnalysis,
       systemPrompt:         ctx.promptContract?.masterPrompt,
+      saeStatus:            ctx.saeStatus,
+      sourceAvailabilityMetadata: ctx.sourceAvailability,
+      limitationRequired:   ctx.limitationRequired,
+      disclosureType:       ctx.disclosureType,
+      statusReason:         ctx.statusReason,
       conversationHistory,
       mode:                 ctx.mode,
       responsePlan:         ctx.responsePlan,
@@ -2209,13 +2168,6 @@ export async function runPipeline({
     // /review and /quiz: no grounded source available — guard only; these hooks
     // normally route through learningHandler, not pipeline.
     _outputAnswer = "No grounded source available.";
-  } else {
-    _outputAnswer = prependSourceAvailabilityWarning(
-      _outputAnswer,
-      _sourceAvail.sourceAvailability,
-      ctx.mode,
-      hook
-    );
   }
   // ── End Source Availability ───────────────────────────────────────────────────
 
