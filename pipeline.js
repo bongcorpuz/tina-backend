@@ -18,7 +18,10 @@ import {
   buildAdaptivePromptContract
 }                                                 from "./adaptive-tina-master-prompt.js";
 import { planAdaptiveResponse }                   from "./adaptive-response-planner.js";
-import { rerankByHierarchy }                      from "./authority-engine.js";
+import {
+  rerankByHierarchy,
+  annotateAuthorityCandidates
+}                                                 from "./authority-engine.js";
 import { applySupersessionFilter }                from "./supersession-engine.js";
 import { retrieveRelevantSources }                from "./retrieval-engine.js";
 import {
@@ -823,6 +826,155 @@ function computeSourceAvailability({
   };
 }
 
+function _saeOutcomeCategory(input = {}) {
+  return String(
+    input.outcomeCategory ||
+    input.retrievalMeta?.outcomeCategory ||
+    input.retrievalMeta?.retrievalMeta?.outcomeCategory ||
+    ""
+  ).toUpperCase();
+}
+
+function _saeFallbackStatus(input = {}) {
+  return String(input.fallbackStatus?.saeStatus || input.fallbackStatus || "").toUpperCase();
+}
+
+function _saeIsParsed(candidate = {}) {
+  if (candidate.isParsed === true) return true;
+  if (candidate.authorityAnnotation?.isParsed === true) return true;
+  return String(candidate.parseStatus || candidate.parse_status || "").toLowerCase() === "success";
+}
+
+function _saeHasRequiredAuthorityLevel(candidate = {}) {
+  const required = candidate.requiredAuthorityLevel ?? candidate.authorityAnnotation?.requiredAuthorityLevel;
+  const actual = candidate.authorityLevel ?? candidate.authorityAnnotation?.authorityLevel;
+  if (!Number.isFinite(Number(required))) return true;
+  if (!Number.isFinite(Number(actual))) return false;
+  return Number(actual) <= Number(required);
+}
+
+function _saeSuppressionReason(candidate = {}) {
+  if (!_saeIsParsed(candidate)) return "SOURCE_PARSE_ERROR";
+  if (candidate.isIndexed !== true && candidate.authorityAnnotation?.isIndexed !== true) return "NOT_INDEXED";
+  if (candidate.authorityRole !== "GOVERNING") return "NON_GOVERNING_AUTHORITY";
+  if (candidate.directlyGovernsIssue !== true) return "DOES_NOT_DIRECTLY_GOVERN_ISSUE";
+  if (candidate.higherAuthorityMissing === true) return "HIGHER_AUTHORITY_MISSING";
+  if (!_saeHasRequiredAuthorityLevel(candidate)) return "REQUIRED_AUTHORITY_LEVEL_NOT_SATISFIED";
+  return "NOT_ELIGIBLE_FOR_AUTHORITY_FOUND";
+}
+
+/**
+ * Classifies source availability before prompt assembly.
+ *
+ * Priority order:
+ *  1. RETRIEVAL_TIMEOUT
+ *  2. SOURCE_LOOKUP_EMPTY
+ *  3. SOURCE_PARSE_ERROR
+ *  4. AUTHORITY_FOUND
+ *  5. RELATED_AUTHORITY_ONLY
+ *  6. NO_INDEXED_SOURCE
+ */
+export function classifySourceAvailability(input = {}) {
+  const annotatedCandidates = Array.isArray(input.annotatedCandidates)
+    ? input.annotatedCandidates
+    : [];
+  const outcomeCategory = _saeOutcomeCategory(input);
+  const fallbackStatus = _saeFallbackStatus(input);
+  const retrievalTimedOut =
+    outcomeCategory === "RETRIEVAL_TIMEOUT" ||
+    fallbackStatus === "RETRIEVAL_TIMEOUT" ||
+    input.retrievalDiagnostics?.timedOut === true ||
+    input.retrievalMeta?.retrievalDiagnostics?.timedOut === true;
+
+  const eligibleCandidates = annotatedCandidates.filter((candidate) =>
+    candidate.authorityRole === "GOVERNING" &&
+    candidate.directlyGovernsIssue === true &&
+    candidate.isIndexed === true &&
+    _saeIsParsed(candidate) === true &&
+    candidate.higherAuthorityMissing === false
+  );
+  const suppressedCandidates = annotatedCandidates
+    .filter((candidate) => !eligibleCandidates.includes(candidate))
+    .map((candidate) => ({
+      ...candidate,
+      sourceAvailabilitySuppressionReason: _saeSuppressionReason(candidate)
+    }));
+
+  const base = {
+    eligibleCandidates,
+    suppressedCandidates,
+    limitationRequired: true,
+    disclosureType:    "LIMITATION",
+    statusReason:      ""
+  };
+
+  if (retrievalTimedOut) {
+    return {
+      ...base,
+      saeStatus:      "RETRIEVAL_TIMEOUT",
+      disclosureType: "RETRIEVAL_TIMEOUT",
+      statusReason:  "Retrieval timed out; source availability could not be verified within the retrieval window."
+    };
+  }
+
+  if (outcomeCategory === "NO_CANDIDATES" && annotatedCandidates.length === 0) {
+    return {
+      ...base,
+      saeStatus:      "SOURCE_LOOKUP_EMPTY",
+      disclosureType: "SOURCE_LOOKUP_EMPTY",
+      statusReason:  "Retrieval completed successfully and returned zero candidates."
+    };
+  }
+
+  if (
+    annotatedCandidates.length > 0 &&
+    annotatedCandidates.every((candidate) => !_saeIsParsed(candidate))
+  ) {
+    return {
+      ...base,
+      saeStatus:      "SOURCE_PARSE_ERROR",
+      disclosureType: "SOURCE_PARSE_ERROR",
+      statusReason:  "Candidates were retrieved, but all relevant candidates failed source parsing."
+    };
+  }
+
+  if (eligibleCandidates.length > 0) {
+    return {
+      ...base,
+      saeStatus:          "AUTHORITY_FOUND",
+      limitationRequired: false,
+      disclosureType:     null,
+      statusReason:       `${eligibleCandidates.length} governing indexed parsed candidate(s) directly govern the issue.`
+    };
+  }
+
+  const hasRelatedAuthority = annotatedCandidates.some((candidate) =>
+    candidate.authorityRole !== "GOVERNING" ||
+    candidate.directlyGovernsIssue === false ||
+    candidate.higherAuthorityMissing === true ||
+    !_saeHasRequiredAuthorityLevel(candidate)
+  );
+  if (hasRelatedAuthority) {
+    return {
+      ...base,
+      saeStatus:      "RELATED_AUTHORITY_ONLY",
+      disclosureType: "RELATED_AUTHORITY_ONLY",
+      statusReason:  "Indexed candidates exist, but none satisfy governing direct-authority requirements."
+    };
+  }
+
+  console.warn("[SOURCE AVAILABILITY] NO_INDEXED_SOURCE emitted", {
+    outcomeCategory,
+    candidateCount: annotatedCandidates.length
+  });
+  return {
+    ...base,
+    saeStatus:      "NO_INDEXED_SOURCE",
+    disclosureType: "NO_INDEXED_SOURCE",
+    statusReason:  "No indexed source candidate satisfied source availability classification."
+  };
+}
+
 /**
  * Prepends a source-availability caveat to the answer.
  * Skips prepend when the answer already opens with the relevant warning text.
@@ -1347,6 +1499,35 @@ export async function runPipeline({
   });
   // ── END TEMP TRACE ────────────────────────────────────────────────────────
   trace.steps.push({ step: 6, name: "reranker", done: true });
+
+  // Step 6.5: Source Availability Engine classification.
+  ctx.rerankedChunks = annotateAuthorityCandidates(ctx.rerankedChunks || [], {
+    issueClassification: ctx.issueClassification,
+    outcomeCategory:     ctx.retrievalMeta?.outcomeCategory || ctx.retrievalMeta?.retrievalMeta?.outcomeCategory || null
+  });
+  ctx.sourceAvailability = classifySourceAvailability({
+    annotatedCandidates:  ctx.rerankedChunks || [],
+    outcomeCategory:      ctx.retrievalMeta?.outcomeCategory || ctx.retrievalMeta?.retrievalMeta?.outcomeCategory || null,
+    retrievalDiagnostics: ctx.retrievalDiagnostics,
+    retrievalMeta:        ctx.retrievalMeta,
+    fallbackStatus:       ctx.retrievalMeta?.fallbackStatus || null
+  });
+  ctx.saeStatus            = ctx.sourceAvailability.saeStatus;
+  ctx.eligibleCandidates   = ctx.sourceAvailability.eligibleCandidates;
+  ctx.suppressedCandidates = ctx.sourceAvailability.suppressedCandidates;
+  ctx.limitationRequired   = ctx.sourceAvailability.limitationRequired;
+  ctx.disclosureType       = ctx.sourceAvailability.disclosureType;
+  ctx.statusReason         = ctx.sourceAvailability.statusReason;
+  console.log("[SOURCE AVAILABILITY]", {
+    saeStatus:          ctx.saeStatus,
+    reason:             ctx.statusReason,
+    eligibleCount:      ctx.eligibleCandidates.length,
+    suppressedCount:    ctx.suppressedCandidates.length,
+    outcomeCategory:    ctx.retrievalMeta?.outcomeCategory || ctx.retrievalMeta?.retrievalMeta?.outcomeCategory || null,
+    retrievalTimedOut:  Boolean(ctx.retrievalDiagnostics?.timedOut),
+    limitationRequired: ctx.limitationRequired
+  });
+  trace.steps.push({ step: "6.5", name: "sourceAvailabilityClassification", saeStatus: ctx.saeStatus, done: true });
 
   // ── Step 7: Fact Pattern Reconstruction (conditional) ────────────────────
   const flags = detectQueryFlags(ctx.issueClassification, hook);
@@ -1998,29 +2179,18 @@ export async function runPipeline({
   // ── End Stage 1 ──────────────────────────────────────────────────────────────
 
   // ── Source Availability Classification ────────────────────────────────────────
-  // Computed here — after retrieval, reranking, source-card generation,
-  // sanitizeOutboundSourceCards, filterDisplayedSourcesByDirectSupport, and SAS fallback.
-  // acceptedSourceCount: pre-DSF source cards (Gates 1–3 passed); prevents pure
-  // RETRIEVAL_TIMEOUT classification when valid authority sources were found.
-  const _sourceAvail = computeSourceAvailability({
-    mode:                 ctx.mode,
-    hook,
-    rerankedChunks:       ctx.rerankedChunks || [],
-    finalSourceCards,
-    retrievalDiagnostics: ctx.retrievalDiagnostics,
-    acceptedSourceCount:  sourceCards.length
-  });
-
-  console.log("[SOURCE AVAILABILITY]", {
-    sourceAvailability: _sourceAvail.sourceAvailability,
-    reason:             _sourceAvail.sourceAvailabilityReason,
-    retrievalTimedOut:  _sourceAvail.retrievalTimedOut,
-    retrievedCount:     _sourceAvail.retrievedSourceCount,
-    displayedCount:     _sourceAvail.displayedSourceCount,
-    relatedCount:       _sourceAvail.relatedSourceCount,
-    mode:               ctx.mode,
-    hook
-  });
+  // Step 6.5 already classified source availability before prompt assembly.
+  // This wrapper preserves legacy response fields without recalculating status.
+  const _sourceAvail = {
+    ...ctx.sourceAvailability,
+    sourceAvailability:       ctx.saeStatus,
+    sourceStatus:             ctx.saeStatus,
+    sourceAvailabilityReason: ctx.statusReason,
+    retrievalTimedOut:        Boolean(ctx.retrievalDiagnostics?.timedOut),
+    retrievedSourceCount:     ctx.rerankedChunks?.length || 0,
+    displayedSourceCount:     finalSourceCards.length,
+    relatedSourceCount:       ctx.saeStatus === "RELATED_AUTHORITY_ONLY" ? ctx.suppressedCandidates?.length || 0 : 0
+  };
 
   // Apply mode-specific answer modifications based on source availability.
   // finalAnswer is const; _outputAnswer holds the post-modification result.
@@ -2076,6 +2246,13 @@ export async function runPipeline({
     sourceCardsDirectSupportFiltered: true,
     retrievedSourceCount:             ctx.rerankedChunks?.length || 0,
     displayedSourceCount:             finalSourceCards.length,
+    saeStatus:                        ctx.saeStatus,
+    sourceAvailabilityMetadata:       ctx.sourceAvailability,
+    eligibleCandidates:               ctx.eligibleCandidates,
+    suppressedCandidates:             ctx.suppressedCandidates,
+    limitationRequired:               ctx.limitationRequired,
+    disclosureType:                   ctx.disclosureType,
+    statusReason:                     ctx.statusReason,
     sourceAvailability:               _sourceAvail.sourceAvailability,
     sourceStatus:                     _sourceAvail.sourceStatus,
     sourceAvailabilityReason:         _sourceAvail.sourceAvailabilityReason,
