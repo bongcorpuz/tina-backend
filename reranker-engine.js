@@ -23,6 +23,7 @@ import { analyzeQueryIntent } from "./query-intent-engine.js";
 
 const ENGINE_VERSION = "4.2.0";
 const DEFAULT_LIMIT = 12;
+const CONFIDENCE_NORMALIZATION_CEILING = 400;
 
 const ISSUE_TYPE = Object.freeze({
   VAT_REFUND: "VAT_REFUND",
@@ -1035,6 +1036,16 @@ function semanticScore(doc = {}) {
   );
 }
 
+function normalizeConfidence(rawScore) {
+  const numericScore = Number(rawScore);
+  if (!Number.isFinite(numericScore) || numericScore <= 0) return 0;
+
+  return Math.min(
+    1.0,
+    Math.max(0.0, numericScore / CONFIDENCE_NORMALIZATION_CEILING)
+  );
+}
+
 function adaptiveModeBonus(responseMode = RESPONSE_MODE.STANDARD, doc = {}) {
   const mode = normalizeMode(responseMode);
   const authorityType = safeAuthorityType(doc);
@@ -1376,6 +1387,7 @@ function rerankForTina({
         responseMode: effectiveMode,
         issueClassification: effectiveIssueClassification
       });
+      const confidence = normalizeConfidence(rerankScore);
 
       // targetAuthorities contains provision-level strings ("NIRC Sec. 105",
       // "RR 16-2005") which will never equal authorityType ("STATUTE", "RR").
@@ -1402,6 +1414,7 @@ function rerankForTina({
           precedence,
         rerankIssueTypes: docIssues,
         rerankScore,
+        confidence,
         issueMismatch: mismatch,
         weakSecondary,
         superseded,
@@ -1439,6 +1452,8 @@ function rerankForTina({
           authorityMatchTierAware: true,
           supersessionAware: true,
           adaptiveContextAware: true,
+          confidenceNormalized: true,
+          confidenceNormalizationCeiling: CONFIDENCE_NORMALIZATION_CEILING,
           mainTaxEngineClassificationCompatible: true,
           tinaRerankerVersion: ENGINE_VERSION
         }
@@ -1599,9 +1614,11 @@ function rerankerHealthCheck() {
 
 export {
   ENGINE_VERSION,
+  CONFIDENCE_NORMALIZATION_CEILING,
   ISSUE_TYPE,
   RESPONSE_MODE,
   normalizeMode,
+  normalizeConfidence,
   detectIssueTypes,
   extractIssueClassification,
   computeTinaRerankScore,
@@ -1613,9 +1630,11 @@ export {
 
 export default {
   ENGINE_VERSION,
+  CONFIDENCE_NORMALIZATION_CEILING,
   ISSUE_TYPE,
   RESPONSE_MODE,
   normalizeMode,
+  normalizeConfidence,
   detectIssueTypes,
   extractIssueClassification,
   computeTinaRerankScore,
