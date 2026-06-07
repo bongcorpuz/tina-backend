@@ -12,7 +12,11 @@
 
 "use strict";
 
-import { classify }                               from "./issue-classification-engine.js";
+import {
+  classify,
+  hasSemanticNoMatchGuard,
+  sourceMaterialTermsMatchAuthority
+}                                                 from "./issue-classification-engine.js";
 import {
   getModeRoutingMetadata,
   buildAdaptivePromptContract
@@ -114,15 +118,15 @@ function buildSaeHardFailFallback(ctx = {}) {
     return [
       "The source lookup completed but did not return matching authority for this query.",
       "",
-      "This does not mean that no law or authority exists. Please verify the governing source before relying on a legal or tax conclusion."
+      "This does not mean that no law or authority exists. Please verify the relevant indexed source before relying on a legal or tax conclusion."
     ].join("\n");
   }
 
   if (saeStatus === "RETRIEVAL_TIMEOUT") {
     return [
-      "The authority retrieval process timed out before a reliable governing source could be confirmed.",
+      "The authority retrieval process timed out before a reliable indexed source could be confirmed.",
       "",
-      "This does not mean that no law or authority exists. Please retry or verify the governing source before relying on a legal or tax conclusion."
+      "This does not mean that no law or authority exists. Please retry or verify the relevant indexed source before relying on a legal or tax conclusion."
     ].join("\n");
   }
 
@@ -130,22 +134,22 @@ function buildSaeHardFailFallback(ctx = {}) {
     return [
       "An indexed source was located, but its content could not be parsed reliably.",
       "",
-      "I cannot rely on the parse-failed content as authority. Please verify the governing source before relying on a legal or tax conclusion."
+      "I cannot rely on the parse-failed content as authority. Please verify the relevant indexed source before relying on a legal or tax conclusion."
     ].join("\n");
   }
 
   if (saeStatus === "NO_INDEXED_SOURCE") {
     return [
-      "No indexed governing source was available for this issue in the current source set.",
+      "TINA could not identify an indexed authority matching the specific transaction or claim described.",
       "",
-      "I cannot provide a source-grounded legal or tax conclusion without the governing authority."
+      "This does not mean that no law or authority exists."
     ].join("\n");
   }
 
   return [
     "The answer did not pass final SAE compliance checks.",
     "",
-    "Please verify the governing source before relying on this response."
+    "Please verify the relevant indexed source before relying on this response."
   ].join("\n");
 }
 
@@ -1178,6 +1182,12 @@ export function classifySourceAvailability(input = {}) {
     _saeIsParsed(candidate) === true &&
     candidate.higherAuthorityMissing === false
   );
+  const semanticNoMatchGuardActive = hasSemanticNoMatchGuard(issueClassification);
+  const semanticNoMatchCandidateMatched =
+    !semanticNoMatchGuardActive ||
+    annotatedCandidates.some((candidate) =>
+      sourceMaterialTermsMatchAuthority(candidate, issueClassification).matches
+    );
   const suppressedCandidates = annotatedCandidates
     .filter((candidate) => !eligibleCandidates.includes(candidate))
     .map((candidate) => ({
@@ -1230,6 +1240,15 @@ export function classifySourceAvailability(input = {}) {
       limitationRequired: false,
       disclosureType:     null,
       statusReason:       `${eligibleCandidates.length} governing indexed parsed candidate(s) directly govern the issue.`
+    };
+  }
+
+  if (semanticNoMatchGuardActive && !semanticNoMatchCandidateMatched) {
+    return {
+      ...base,
+      saeStatus:      "NO_INDEXED_SOURCE",
+      disclosureType: "NO_INDEXED_SOURCE",
+      statusReason:  "Retrieved generic tax candidates did not match the query's material transaction qualifiers."
     };
   }
 
@@ -2076,8 +2095,9 @@ export async function runPipeline({
   const _scSeen        = new Map();
   const targetAuths    = ctx.issueClassification?.targetAuthorities || [];
   const hasTargetAuthorities = targetAuths.length > 0;
-  // Skip counters — aggregated into a single structured log after the loop.
-  const _scSkip = { contamination: 0, consistency: 0, issueRelevance: 0 };
+  const semanticNoMatchGuardActive = hasSemanticNoMatchGuard(ctx.issueClassification || {});
+  // Skip counters - aggregated into a single structured log after the loop.
+  const _scSkip = { contamination: 0, consistency: 0, issueRelevance: 0, semanticNoMatch: 0 };
   const _scSkipIssueDetail = [];   // up to 5 rejected non-target provRef values
   const isSourceLookupMode = String(ctx.mode || "").toUpperCase() === "SOURCE_LOOKUP";
 
@@ -2120,6 +2140,13 @@ export async function runPipeline({
     // Gate 0 (visibility): hidden/reviewer-only materials must not appear as source
     // chips outside reviewer/quiz modes.  Mirrors the same gate in filterVisibleSources().
     if (shouldHideSource(c, ctx.issueClassification)) continue;
+    if (
+      semanticNoMatchGuardActive &&
+      !sourceMaterialTermsMatchAuthority(c, ctx.issueClassification).matches
+    ) {
+      _scSkip.semanticNoMatch++;
+      continue;
+    }
 
     // Gate 2 (consistency): NIRC labels must link to NIRC/statute documents, etc.
     if (provRef && !sourceCardIsConsistent(provRef, linkedType)) {
@@ -2255,6 +2282,7 @@ export async function runPipeline({
     skipContamination:  _scSkip.contamination,
     skipConsistency:    _scSkip.consistency,
     skipIssueRelevance: _scSkip.issueRelevance,
+    skipSemanticNoMatch: _scSkip.semanticNoMatch,
     targetMatched_labels: _scTargetMatched.map(v => v.normalizedReference || v.title || "?"),
     nonTarget_labels:     _scNonTarget.map(v => v.normalizedReference || v.title || "?").slice(0, 5),
     ...(_scSkipIssueDetail.length > 0 && { rejectedByIssue: _scSkipIssueDetail })
@@ -2280,6 +2308,10 @@ export async function runPipeline({
       if (!c.title && !c.document_title && !c.source && !c.originalSource) return false;
       // Gate 0 (visibility): mirrors the gate in the primary loop.
       if (shouldHideSource(c, ctx.issueClassification)) return false;
+      if (
+        semanticNoMatchGuardActive &&
+        !sourceMaterialTermsMatchAuthority(c, ctx.issueClassification).matches
+      ) return false;
       // Derive identity here so sourcePathAuthorityHit can protect Gate 1 and Gate 3
       // (mirrors the main loop restructuring above).
       const _fbLType = inferLinkedSourceType(c);
@@ -2577,7 +2609,7 @@ export async function runPipeline({
     _outputAnswer = [
       "The source lookup completed but did not return matching authority for this query.",
       "",
-      "This does not mean that no law or authority exists. Please verify the governing source before relying on a legal or tax conclusion."
+      "This does not mean that no law or authority exists. Please verify the relevant indexed source before relying on a legal or tax conclusion."
     ].join("\n");
   } else if (_isLearningMode && _sourceAvail.sourceAvailability !== "AUTHORITY_FOUND") {
     // /review and /quiz: no grounded source available — guard only; these hooks

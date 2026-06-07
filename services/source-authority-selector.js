@@ -38,6 +38,10 @@ import {
   canonicalSourceKey,
   inferIssuanceNumber
 } from "../source-visibility-engine.js";
+import {
+  hasSemanticNoMatchGuard,
+  sourceMaterialTermsMatchAuthority
+} from "../issue-classification-engine.js";
 
 const SELECTOR_VERSION = "2.0.0-active";
 const DEFAULT_CANDIDATE_CAP = 15;
@@ -756,6 +760,7 @@ export function selectSourceAuthorities({
   try {
     const targetAuths          = issueClassification?.targetAuthorities || [];
     const hasTargetAuthorities = targetAuths.length > 0;
+    const semanticNoMatchGuardActive = hasSemanticNoMatchGuard(issueClassification || {});
     const candidateCap         = Math.max(maxSources * 3, DEFAULT_CANDIDATE_CAP);
     const visibleCap           = Math.min(maxSources, DEFAULT_MAX_VISIBLE);
     const resolvedSaeStatus    = resolveSaeStatus({
@@ -783,7 +788,7 @@ export function selectSourceAuthorities({
     }
 
     const seen  = new Map();  // dedupeKey → { card, _targetMatch }
-    const skip  = { contamination: 0, consistency: 0, issueRelevance: 0, eligibility: 0 };
+    const skip  = { contamination: 0, consistency: 0, issueRelevance: 0, eligibility: 0, semanticNoMatch: 0 };
     const rejectDetails = [];
     const eligibilityDetails = [];
 
@@ -813,6 +818,18 @@ export function selectSourceAuthorities({
       }
 
       if (!c.title && !c.document_title && !c.source && !c.originalSource) continue;
+      if (
+        semanticNoMatchGuardActive &&
+        !sourceMaterialTermsMatchAuthority(c, issueClassification).matches
+      ) {
+        skip.semanticNoMatch++;
+        rejectDetails.push({
+          ref: c.normalizedReference || c.normalized_reference || c.citation || c.title || "(no-ref)",
+          reason: "semantic_no_match",
+          src: c.source || c.document_title || ""
+        });
+        continue;
+      }
 
       const linkedType = inferLinkedSourceType(c);
       let   provRef    = inferSourceCardRef(c, linkedType);

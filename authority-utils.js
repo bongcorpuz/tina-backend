@@ -25,6 +25,9 @@ import {
   AUTHORITY_SCORE,
   AUTHORITY_LABEL
 } from "./authority-constants.js";
+import {
+  sourceMaterialTermsMatchAuthority
+} from "./issue-classification-engine.js";
 
 export function normalizeText(value = "") {
   return String(value || "").replace(/\s+/g, " ").trim();
@@ -579,9 +582,10 @@ function docOnSpecificAuthorityPlan(doc = {}) {
   return false;
 }
 
-function directlyGovernsIssue(doc = {}) {
+function directlyGovernsIssue(doc = {}, issueClassification = {}) {
   const match = doc.issueClassificationMatch || {};
   if (!docOnSpecificAuthorityPlan(doc)) return false;
+  if (!sourceMaterialTermsMatchAuthority(doc, issueClassification).matches) return false;
 
   return Boolean(
     doc.directlyGovernsIssue === true ||
@@ -649,7 +653,14 @@ export function buildAuthorityAnnotation(doc = {}, options = {}) {
   const higherAuthorityMissing = hasRequiredLevel && Number.isFinite(authorityLevel)
     ? authorityLevel > requiredAuthorityLevel
     : false;
-  const governs = directlyGovernsIssue(doc);
+  const semanticMaterialMatch = sourceMaterialTermsMatchAuthority(
+    doc,
+    options.issueClassification || doc.issueClassification || doc.issueClassificationMatch || {}
+  );
+  const governs = directlyGovernsIssue(
+    doc,
+    options.issueClassification || doc.issueClassification || doc.issueClassificationMatch || {}
+  );
   const indexed = isIndexedCandidate(doc);
 
   const annotation = {
@@ -667,6 +678,13 @@ export function buildAuthorityAnnotation(doc = {}, options = {}) {
     retrievalStatus: getRetrievalStatus(doc, options),
     confidence: getNormalizedConfidence(doc)
   };
+  if (semanticMaterialMatch.matches === false) {
+    annotation.semanticNoMatchGuard = {
+      active: true,
+      matchedTerms: semanticMaterialMatch.matchedTerms,
+      missingTerms: semanticMaterialMatch.missingTerms
+    };
+  }
 
   annotation.authorityRole = getAuthorityRole({
     authorityType,
