@@ -1940,11 +1940,12 @@ function hasRelatedAuthorityLimitationLanguage(text = "") {
 }
 
 function claimsControllingAuthorityFound(text = "") {
+  const unsafeText = stripSafeControllingAuthorityNegations(text);
   return /\b(controlling|governing|directly\s+applicable|direct)\s+(legal\s+)?(authority|law|basis|source|rule)\s+(?:was\s+|is\s+|has\s+been\s+)?(?:found|identified|available|retrieved|confirmed|established)\b/i.test(
-    text
+    unsafeText
   ) ||
     /\b(?:found|identified|retrieved|confirmed|established)\s+(?:a\s+|the\s+)?(?:controlling|governing|directly\s+applicable|direct)\s+(legal\s+)?(?:authority|law|basis|source|rule)\b/i.test(
-      text
+      unsafeText
     );
 }
 
@@ -1963,21 +1964,42 @@ function containsSourceCardDisplay(text = "") {
   );
 }
 
+function stripSafeControllingAuthorityNegations(text = "") {
+  return String(text || "")
+    .replace(/\bno\s+indexed\s+(?:governing|controlling)\s+source\s+was\s+available\b/gi, "")
+    .replace(/\bthe\s+(?:governing|controlling)\s+authority\s+could\s+not\s+be\s+confirmed\b/gi, "")
+    .replace(/\bi\s+cannot\s+confirm\s+(?:a\s+|the\s+)?(?:controlling|governing)\s+authority\s+from\s+the\s+available\s+sources\b/gi, "");
+}
+
+function stripSafeParseFailedNegations(text = "") {
+  return String(text || "")
+    .replace(/\bi\s+cannot\s+rely\s+on\s+parse[-\s]?failed\s+content\s+as\s+authority\b/gi, "")
+    .replace(/\bthe\s+source\s+could\s+not\s+be\s+parsed\s+reliably\b/gi, "");
+}
+
+function stripSafeTimeoutNegations(text = "") {
+  return String(text || "")
+    .replace(/\b(?:this\s+)?does\s+not\s+mean\s+(?:that\s+)?no\s+[^.?!]*(?:law|authority|source|legal\s+basis)[^.?!]*(?:exists?|is\s+available)?/gi, "")
+    .replace(/\bthe\s+retrieval\s+process\s+timed\s+out\s+before\s+confirmation\b/gi, "");
+}
+
 function reliesOnParseFailedAuthority(text = "") {
+  const unsafeText = stripSafeParseFailedNegations(text);
   return /\b(parse[-\s]?failed|failed\s+to\s+parse|unparsed|parsing\s+error)\b[\s\S]{0,160}\b(authority|source|law|basis|controls?|governs?|applies)\b/i.test(
-    text
+    unsafeText
   ) ||
     /\b(authority|source|law|basis|controls?|governs?|applies)\b[\s\S]{0,160}\b(parse[-\s]?failed|failed\s+to\s+parse|unparsed|parsing\s+error)\b/i.test(
-      text
+      unsafeText
     );
 }
 
 function treatsTimeoutAsNoLaw(text = "") {
+  const unsafeText = stripSafeTimeoutNegations(text);
   return /\b(no|none|not\s+any|does\s+not\s+exist|doesn'?t\s+exist)\b[\s\S]{0,80}\b(law|legal\s+basis|authority|source|rule|issuance)\b/i.test(
-    text
+    unsafeText
   ) ||
     /\b(law|legal\s+basis|authority|source|rule|issuance)\b[\s\S]{0,80}\b(does\s+not\s+exist|doesn'?t\s+exist|is\s+absent|was\s+not\s+found)\b/i.test(
-      text
+      unsafeText
     );
 }
 

@@ -1720,7 +1720,7 @@ function buildSaePromptFraming(sourceAvailabilityMetadata = {}) {
     RETRIEVAL_TIMEOUT:
       "State that retrieval timed out. Do not treat timeout as absence of law or as proof that no governing authority exists.",
     SOURCE_LOOKUP_EMPTY:
-      "State that retrieval completed but no candidate source was returned. Keep this distinct from NO_INDEXED_SOURCE.",
+      "State: Source lookup completed but returned no matching authority for this query. This does not mean that no law or authority exists. Keep this distinct from NO_INDEXED_SOURCE.",
     SOURCE_PARSE_ERROR:
       "State that a source or candidate could not be reliably parsed. Do not rely on parse-failed content as authority."
   };
@@ -2034,12 +2034,17 @@ function buildUserPrompt({
       sourceGroundingInstructions?.mustUseRetrievedSourcesFirst !== false,
     mustNotInventAuthorities: true,
     mustSayIndexedSourceNotFoundWhenNoAuthority:
-      sourceGroundingInstructions?.mustSayIndexedSourceNotFoundWhenNoAuthority !== false,
+      sourceAvailabilityMetadata?.saeStatus === "SOURCE_LOOKUP_EMPTY"
+        ? false
+        : sourceGroundingInstructions?.mustSayIndexedSourceNotFoundWhenNoAuthority !== false,
     doNotSayIndexedSourceNotFoundWhenSourcesExist:
+      sourceAvailabilityMetadata?.saeStatus === "SOURCE_LOOKUP_EMPTY" ||
       sourceGroundingInstructions?.doNotSayIndexedSourceNotFoundWhenSourcesExist === true,
     requiredReplacementWhenEmpty:
-      sourceGroundingInstructions?.requiredReplacementWhenEmpty ||
-      "Indexed source not found.",
+      sourceAvailabilityMetadata?.saeStatus === "SOURCE_LOOKUP_EMPTY"
+        ? "Source lookup completed but returned no matching authority for this query. This does not mean that no law or authority exists."
+        : sourceGroundingInstructions?.requiredReplacementWhenEmpty ||
+          "Source verification is pending indexed authority confirmation.",
     authoritySummary,
     authorityPacketSummary: {
       hasIndexedAuthority: authorityPacket?.hasIndexedAuthority ?? authoritySummary.indexedGoogleDriveAuthorities > 0,

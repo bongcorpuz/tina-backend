@@ -242,6 +242,13 @@ const SAE_DISCLOSURE_STATUSES = Object.freeze(new Set([
   "SOURCE_PARSE_ERROR"
 ]));
 
+const SOURCE_CARD_SUPPRESSED_SAE_STATUSES = Object.freeze(new Set([
+  "NO_INDEXED_SOURCE",
+  "RETRIEVAL_TIMEOUT",
+  "SOURCE_LOOKUP_EMPTY",
+  "SOURCE_PARSE_ERROR"
+]));
+
 const AUTHORITY_ROLE_SUFFIX = Object.freeze({
   GOVERNING:  "",
   SUPPORTING: "Supporting authority only",
@@ -362,6 +369,18 @@ function resolveSaeContext(input = {}) {
       500
     )
   };
+}
+
+function suppressSourcesIfSaeStatusRequires(sourceCards = [], saeContext = {}) {
+  const cards = safeArray(sourceCards);
+  const saeStatus = normalizeStatus(saeContext?.saeStatus || saeContext?.sourceAvailability || "");
+
+  // Renderer-pipeline contract guard: source cards should normally arrive only
+  // after SAS eligibility and pipeline SAE suppression. This defensive backstop
+  // protects direct renderer calls without recomputing SAE status.
+  if (SOURCE_CARD_SUPPRESSED_SAE_STATUSES.has(saeStatus)) return [];
+
+  return cards;
 }
 
 function deriveIsGoverning(source = {}, saeContext = {}) {
@@ -1264,6 +1283,7 @@ function renderTinaAnswer({
   const isReviewerMode = resolvedMode === "REVIEWER_MODE" || resolvedMode === "REVIEWER";
   const isCaseMode = resolvedMode === "CASE_ANALYSIS" || resolvedMode === "CASE";
   const isSourceMode = resolvedMode === "SOURCE_LOOKUP" || resolvedMode === "SOURCE" || resolvedMode === "SOURCE_FINDER";
+  const renderableSources = suppressSourcesIfSaeStatusRequires(sources, saeContext);
 
   let rendered;
   if (isQuizMode || isReviewerMode || isCaseMode || isSourceMode) {
@@ -1295,9 +1315,9 @@ function renderTinaAnswer({
   // list before retrieval was fixed) and render a numbered list from the source
   // array instead.  includeSources is intentionally not consulted — SOURCE_LOOKUP
   // always owns its own rendered output when sources are present.
-  if (isSourceMode && sources.length > 0) {
+  if (isSourceMode && renderableSources.length > 0) {
     const SOURCE_MODE_CAP = 12;
-    const sorted = sortVisibleSources(sources).slice(0, SOURCE_MODE_CAP);
+    const sorted = sortVisibleSources(renderableSources).slice(0, SOURCE_MODE_CAP);
 
     const lines = sorted.map((s, i) => {
       const compact = compactSource(s, saeContext);
@@ -1311,7 +1331,7 @@ function renderTinaAnswer({
   // ── End source mode override ────────────────────────────────────────────────
 
   if (includeSources) {
-    const visible = sortVisibleSources(sources)
+    const visible = sortVisibleSources(renderableSources)
       .slice(0, MAX_VISIBLE_SOURCES)
       .map((source) => compactSource(source, saeContext));
 
