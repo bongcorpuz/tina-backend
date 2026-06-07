@@ -585,7 +585,7 @@ function buildNircLightExpansion(topic = "") {
   if (!m) return "";
   const rawForms = buildNircSectionRawForms(m[1]);
   if (!rawForms.length) return "";
-  return "," + rawForms.map(f => `normalized_reference.ilike.%${f}%`).join(",");
+  return "," + rawForms.map(f => sanitizeMetadataSearchTerm(f)).filter(Boolean).map(f => `normalized_reference.ilike.%${f}%`).join(",");
 }
 
 // Returns a comma-prefixed OR-clause fragment for concept-based aliases.
@@ -595,12 +595,15 @@ function buildConceptAliasExpansion(aliases = []) {
   if (!aliases.length) return "";
   const fragments = [];
   for (const alias of aliases.slice(0, 8)) {
+    const safeAlias = sanitizeMetadataSearchTerm(alias);
+    if (!safeAlias) continue;
     fragments.push(
-      `normalized_reference.ilike.%${alias}%`,
-      `document_title.ilike.%${alias}%`,
-      `source.ilike.%${alias}%`
+      `normalized_reference.ilike.%${safeAlias}%`,
+      `document_title.ilike.%${safeAlias}%`,
+      `source.ilike.%${safeAlias}%`
     );
   }
+  if (!fragments.length) return "";
   return "," + fragments.join(",");
 }
 
@@ -1368,25 +1371,47 @@ function mapRowToResult(row, score = 1, query = "", options = {}) {
   };
 }
 
-function buildSourceIlikeFilters(keyword) {
+function sanitizeMetadataSearchTerm(value = "") {
+  const clean = String(value || "")
+    .toLowerCase()
+    .replace(/[,%()?!'"{}[\]\\:;]/g, " ")
+    .replace(/[^a-z0-9.\s_-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 64);
+
+  if (clean.length < 2) return "";
+  if (!/[a-z0-9]/.test(clean)) return "";
+  return clean;
+}
+
+function buildSafeMetadataSearchTerms(keyword = "") {
   const normalizedKeyword = normalizeForMatch(keyword);
   const normalizedAuthority = normalizeAuthorityReference(keyword);
   const looseKeyword = String(keyword || "").replace(/-/g, "_");
-  const terms = unique([normalizedKeyword, normalizedAuthority, looseKeyword, keyword].filter(Boolean));
+  const rawTokens = String(keyword || "")
+    .toLowerCase()
+    .match(/\b[a-z0-9][a-z0-9._-]{2,}\b/g) || [];
+
+  return unique([
+    normalizedAuthority,
+    normalizedKeyword,
+    looseKeyword,
+    ...rawTokens
+  ].map(sanitizeMetadataSearchTerm).filter(Boolean))
+    .filter((term) => term.length <= 64)
+    .slice(0, 6);
+}
+
+function buildSourceIlikeFilters(keyword) {
+  const terms = buildSafeMetadataSearchTerms(keyword);
+  if (!terms.length) return "";
 
   return terms
     .flatMap((term) => [
       `source.ilike.%${term}%`,
       `original_source.ilike.%${term}%`,
       `document_title.ilike.%${term}%`,
-      `metadata->>originalSource.ilike.%${term}%`,
-      `metadata->>originalFileName.ilike.%${term}%`,
-      `metadata->>documentTitle.ilike.%${term}%`,
-      `metadata->>title.ilike.%${term}%`,
-      `metadata->>normalizedSource.ilike.%${term}%`,
-      `metadata->>path.ilike.%${term}%`,
-      `metadata->>folderPath.ilike.%${term}%`,
-      `metadata->>normalizedReference.ilike.%${term}%`,
       `normalized_reference.ilike.%${term}%`,
       `superseded_by_reference.ilike.%${term}%`,
       `repealed_by_reference.ilike.%${term}%`,
@@ -1467,11 +1492,19 @@ async function metadataSearch({
   const safeTopK = clampTopK(topK);
   const limit = clampMatchCount(Math.max(safeTopK * 3, safeTopK));
   if (!keyword) return [];
+  const orFilters = buildSourceIlikeFilters(keyword);
+  if (!orFilters) {
+    console.warn("[METADATA SEARCH SKIPPED]", {
+      keyword: String(keyword || "").slice(0, 80),
+      reason:  "no_safe_terms"
+    });
+    return [];
+  }
 
   const { data, error } = await supabaseClient
     .from(VECTOR_TABLE)
     .select(buildSelectColumns())
-    .or(buildSourceIlikeFilters(keyword))
+    .or(orFilters)
     .order("authority_level", { ascending: true, nullsFirst: false })
     .order("chunk_index", { ascending: true })
     .limit(limit);
@@ -2722,7 +2755,9 @@ export async function getQuizSourceChunksLight({
 
   const EXCLUDED_AUTHORITY_TYPES = new Set(["CPA_NOTES", "REVIEW_MATERIALS", "UNKNOWN"]);
   const safeLimit = Math.min(Math.max(1, Math.floor(Number(limit) || 3)), 5);
-  const pattern = `%${cleanTopic}%`;
+  const safeTopic = sanitizeMetadataSearchTerm(cleanTopic);
+  if (!safeTopic) return [];
+  const pattern = `%${safeTopic}%`;
   const nircExpansion = buildNircLightExpansion(cleanTopic);
   const conceptAliases = buildTaxConceptRetrievalAliases(cleanTopic);
   const conceptExpansion = buildConceptAliasExpansion(conceptAliases);
@@ -2879,7 +2914,9 @@ export async function getReviewSourceChunks({
   if (!cleanTopicLower) return [];
 
   const safeLimit = Math.min(Math.max(1, Math.floor(Number(limit) || 4)), 6);
-  const pattern = `%${cleanTopicLower}%`;
+  const safeTopic = sanitizeMetadataSearchTerm(cleanTopicLower);
+  if (!safeTopic) return [];
+  const pattern = `%${safeTopic}%`;
   const nircExpansion = buildNircLightExpansion(cleanTopicLower);
   const conceptAliases = buildTaxConceptRetrievalAliases(cleanTopicLower);
   const conceptExpansion = buildConceptAliasExpansion(conceptAliases);

@@ -95,11 +95,21 @@ const REQUIRED_CARD_FIELDS = Object.freeze([
 ]);
 
 const INTERNAL_CARD_FIELDS = Object.freeze([
-  "fileId",
+  "id",
+  "source",
+  "path",
+  "filePath",
+  "file_path",
+  "filename",
+  "fileName",
+  "documentTitle",
+  "document_title",
   "source_path",
   "sourcePath",
-  "vectorId",
   "storageKey",
+  "metadata",
+  "fileId",
+  "vectorId",
   "supabaseId",
   "rowId"
 ]);
@@ -220,11 +230,50 @@ function validateSourceCardEligibility(card = {}, saeStatus = "") {
 }
 
 function stripInternalCardFields(card = {}) {
-  const clean = { ...card };
+  const clean = sanitizePublicSelectorCard(card);
   for (const field of INTERNAL_CARD_FIELDS) {
     delete clean[field];
   }
   return clean;
+}
+
+function publicCardText(value = "") {
+  const text = safeStr(value).replace(/\s+/g, " ").trim();
+  if (!text) return "";
+  if (/[\\/]/.test(text)) return "";
+  if (/\.(?:pdf|docx?|txt|csv|md|json)(?:$|[?#\s])/i.test(text)) return "";
+  if (/\b[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\b/i.test(text)) return "";
+  return text;
+}
+
+function publicCardUrl(value = "") {
+  const url = safeStr(value).trim();
+  return /^https?:\/\//i.test(url) ? url : "";
+}
+
+function sanitizePublicSelectorCard(card = {}) {
+  const citation = publicCardText(card.citation || card.normalizedReference || card.normalized_reference || "");
+  const displayLabel = publicCardText(card.displayLabel || card.display_label || citation || card.authorityLabel || "");
+  const title = publicCardText(card.title) || displayLabel || citation || "Source";
+  const url = publicCardUrl(card.url || card.driveViewUrl || card.drive_view_url || card.webViewLink || card.web_view_link || card.sourceUrl || card.source_url);
+
+  return {
+    title,
+    label: displayLabel || title,
+    displayLabel: displayLabel || title,
+    citation,
+    normalizedReference: citation,
+    normalized_reference: citation,
+    authorityId: publicCardText(card.authorityId || card.authority_id || ""),
+    authorityType: publicCardText(card.authorityType || card.authority_type || ""),
+    authorityRole: publicCardText(card.authorityRole || card.authority_role || ""),
+    authorityLevel: card.authorityLevel ?? card.authority_level ?? null,
+    isIndexed: card.isIndexed === true,
+    isParsed: card.isParsed === true,
+    isGoverning: card.isGoverning === true,
+    limitationRequired: card.limitationRequired === true,
+    ...(url ? { url } : {})
+  };
 }
 
 function sourceCardBasename(value = "") {

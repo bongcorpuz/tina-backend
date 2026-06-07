@@ -519,6 +519,7 @@ function directlyGovernsIssue(doc = {}) {
 }
 
 function getAuthorityRole({
+  authorityType = "UNKNOWN",
   authorityLevel = 99,
   directlyGoverns = false,
   isIndexed = false,
@@ -527,8 +528,26 @@ function getAuthorityRole({
   higherAuthorityMissing = false,
   hasGoverningPeer = false
 } = {}) {
+  const recognizedGoverningType = [
+    "CONSTITUTION",
+    "STATUTE",
+    "TREATY",
+    "CASE",
+    "RR",
+    "RMC",
+    "RMO",
+    "RAMO",
+    "BIR_RULING",
+    "LGU",
+    "BOC_ISSUANCE",
+    "FIRB_ISSUANCE",
+    "PEZA_MEMO",
+    "SEC_GUIDANCE"
+  ].includes(String(authorityType || "").toUpperCase());
+
   if ([12, 13, 14].includes(Number(authorityLevel))) return "SECONDARY";
   if (directlyGoverns && isIndexed && isParsed && requiredAuthorityKnown && !higherAuthorityMissing) return "GOVERNING";
+  if (directlyGoverns && isIndexed && isParsed && !requiredAuthorityKnown && !higherAuthorityMissing && recognizedGoverningType) return "GOVERNING";
   if (hasGoverningPeer) return "SUPPORTING";
   if (directlyGoverns === false) return "RELATED";
   return "UNKNOWN";
@@ -572,6 +591,7 @@ export function buildAuthorityAnnotation(doc = {}, options = {}) {
   };
 
   annotation.authorityRole = getAuthorityRole({
+    authorityType,
     authorityLevel,
     directlyGoverns: governs,
     isIndexed: indexed,

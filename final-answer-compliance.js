@@ -1967,8 +1967,19 @@ function containsSourceCardDisplay(text = "") {
 function stripSafeControllingAuthorityNegations(text = "") {
   return String(text || "")
     .replace(/\bno\s+indexed\s+(?:governing|controlling)\s+source\s+was\s+available\b/gi, "")
+    .replace(/\bno\s+(?:controlling|governing)\s+authority\s+was\s+(?:found|identified)\b/gi, "")
+    .replace(/\bonly\s+(?:related|supporting|secondary|persuasive)\s+authority\s+was\s+found\b/gi, "")
+    .replace(/\bi\s+cannot\s+(?:identify|present|confirm)\s+(?:it\s+as\s+)?(?:a\s+|the\s+)?(?:controlling|governing)\s+authority\b/gi, "")
     .replace(/\bthe\s+(?:governing|controlling)\s+authority\s+could\s+not\s+be\s+confirmed\b/gi, "")
     .replace(/\bi\s+cannot\s+confirm\s+(?:a\s+|the\s+)?(?:controlling|governing)\s+authority\s+from\s+the\s+available\s+sources\b/gi, "");
+}
+
+function usesControllingStyleForRelatedOnly(text = "") {
+  const unsafeText = stripSafeControllingAuthorityNegations(text);
+  return /(^|\n)\s*(?:#+\s*)?(?:[A-Z]\.\s*)?(?:Controlling Authorities|Governing Authorities|Controlling Law|Governing Law)\s*:?\s*(\n|$)/i.test(unsafeText) ||
+    /\bthe\s+(?:controlling|governing)\s+authority\b/i.test(unsafeText) ||
+    /\bunder\s+the\s+governing\s+rule\b/i.test(unsafeText) ||
+    /\bthe\s+law\s+clearly\s+provides\b/i.test(unsafeText);
 }
 
 function stripSafeParseFailedNegations(text = "") {
@@ -2063,6 +2074,14 @@ function buildSaeComplianceResult({
         code: "SAE_C1_RELATED_AUTHORITY_PRESENTED_AS_CONTROLLING",
         severity: "hard_fail",
         message: "RELATED_AUTHORITY_ONLY final answer must not present related/supporting/secondary authority as controlling."
+      });
+    }
+
+    if (usesControllingStyleForRelatedOnly(text)) {
+      violations.push({
+        code: "SAE_C1_RELATED_AUTHORITY_CONTROLLING_STYLE",
+        severity: "hard_fail",
+        message: "RELATED_AUTHORITY_ONLY final answer must not use controlling-style headings or governing-law framing."
       });
     }
   }

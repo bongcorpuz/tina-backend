@@ -505,7 +505,7 @@ function sanitizeOutboundSourceCards(cards, targetAuths = []) {
     const labelType = sourceCardLabelType(labelRef);
 
     // No typed chip label — nothing to validate
-    if (!labelType) { result.push(card); continue; }
+    if (!labelType) { result.push(sanitizePublicSourceCard(card)); continue; }
 
     // Re-derive actual document type from the card's source-identity fields.
     // These are set from c.source / c.document_title / c.documentTitle in the loop
@@ -519,7 +519,7 @@ function sanitizeOutboundSourceCards(cards, targetAuths = []) {
     const effectiveType  = recomputedType || card.linkedSourceType || "";
 
     // Cannot determine document type — keep as-is
-    if (!effectiveType) { result.push(card); continue; }
+    if (!effectiveType) { result.push(sanitizePublicSourceCard(card)); continue; }
 
     // Is the label type compatible with the actual document type?
     const consistent =
@@ -527,7 +527,7 @@ function sanitizeOutboundSourceCards(cards, targetAuths = []) {
       (labelType === "NIRC" && ["NIRC", "STATUTE", "TAX_CODE"].includes(effectiveType)) ||
       (labelType === "RA"   && ["RA",   "NIRC",    "STATUTE",  "TAX_CODE"].includes(effectiveType));
 
-    if (consistent) { result.push(card); continue; }
+    if (consistent) { result.push(sanitizePublicSourceCard(card)); continue; }
 
     // Inconsistency detected (e.g. "NIRC Sec. 4" label on an RR document).
     // Attempt to derive the correct label from the card's identity fields.
@@ -547,14 +547,14 @@ function sanitizeOutboundSourceCards(cards, targetAuths = []) {
     // Accept with corrected label (canonical authority label only; filename stays in documentTitle)
     const newTitle = correctedRef || card.documentTitle || card.document_title || "Source";
     console.warn("[SC SANITIZE] relabeled:", { from: labelRef, to: correctedRef, effectiveType });
-    result.push({
+    result.push(sanitizePublicSourceCard({
       ...card,
       title:               newTitle,
       citation:            correctedRef,
       normalizedReference: correctedRef,
       normalized_reference: correctedRef,
       linkedSourceType:    effectiveType
-    });
+    }));
   }
 
   if (result.length !== cards.length) {
@@ -565,6 +565,45 @@ function sanitizeOutboundSourceCards(cards, targetAuths = []) {
   }
 
   return result;
+}
+
+function publicText(value = "") {
+  const text = safeStr(value).replace(/\s+/g, " ").trim();
+  if (!text) return "";
+  if (/[\\/]/.test(text)) return "";
+  if (/\.(?:pdf|docx?|txt|csv|md|json)(?:$|[?#\s])/i.test(text)) return "";
+  if (/\b[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\b/i.test(text)) return "";
+  return text;
+}
+
+function publicUrl(value = "") {
+  const url = safeStr(value).trim();
+  return /^https?:\/\//i.test(url) ? url : "";
+}
+
+function sanitizePublicSourceCard(card = {}) {
+  const citation = publicText(card.citation || card.normalizedReference || card.normalized_reference || "");
+  const displayLabel = publicText(card.displayLabel || card.display_label || citation || card.authorityLabel || "");
+  const title = publicText(card.title) || displayLabel || citation || "Source";
+  const url = publicUrl(card.url || card.driveViewUrl || card.drive_view_url || card.webViewLink || card.web_view_link || card.sourceUrl || card.source_url);
+
+  return {
+    title,
+    label: displayLabel || title,
+    displayLabel: displayLabel || title,
+    citation,
+    normalizedReference: citation,
+    normalized_reference: citation,
+    authorityId: publicText(card.authorityId || card.authority_id || ""),
+    authorityType: publicText(card.authorityType || card.authority_type || ""),
+    authorityRole: publicText(card.authorityRole || card.authority_role || ""),
+    authorityLevel: card.authorityLevel ?? card.authority_level ?? null,
+    isIndexed: card.isIndexed === true,
+    isParsed: card.isParsed === true,
+    isGoverning: card.isGoverning === true,
+    limitationRequired: card.limitationRequired === true,
+    ...(url ? { url } : {})
+  };
 }
 
 function sourceCardDocumentTitle(c = {}) {
@@ -943,6 +982,39 @@ function _saeSuppressionReason(candidate = {}) {
   return "NOT_ELIGIBLE_FOR_AUTHORITY_FOUND";
 }
 
+function _saeAuthorityType(candidate = {}) {
+  return String(
+    candidate.authorityType ||
+      candidate.authority_type ||
+      candidate.authorityAnnotation?.authorityType ||
+      candidate.metadata?.authorityType ||
+      "UNKNOWN"
+  ).toUpperCase();
+}
+
+function _saeHasRelatedIssueSignal(candidate = {}) {
+  const match = candidate.issueClassificationMatch || {};
+  return Boolean(
+    candidate.directlyGovernsIssue === true ||
+      candidate.exactAuthorityMatch === true ||
+      candidate.targetAuthorityMatch === true ||
+      match.exactAuthorityMatch === true ||
+      match.targetAuthorityMatch === true ||
+      match.matched === true ||
+      match.issueOverlap === true ||
+      Number(candidate.citationMatchBonus || 0) > 0 ||
+      Number(candidate.confidence || candidate.authorityAnnotation?.confidence || 0) >= 0.35
+  );
+}
+
+function _saeIsRelatedAuthorityCandidate(candidate = {}) {
+  const role = String(candidate.authorityRole || candidate.authorityAnnotation?.authorityRole || "UNKNOWN").toUpperCase();
+  const type = _saeAuthorityType(candidate);
+  if (role === "GOVERNING" || role === "UNKNOWN" || role === "SECONDARY") return false;
+  if (["UNKNOWN", "SECONDARY", "REVIEWER", "CPA_NOTES", "REVIEW_MATERIALS"].includes(type)) return false;
+  return candidate.isIndexed === true && _saeIsParsed(candidate) === true && _saeHasRelatedIssueSignal(candidate);
+}
+
 /**
  * Classifies source availability before prompt assembly.
  *
@@ -1028,12 +1100,7 @@ export function classifySourceAvailability(input = {}) {
     };
   }
 
-  const hasRelatedAuthority = annotatedCandidates.some((candidate) =>
-    candidate.authorityRole !== "GOVERNING" ||
-    candidate.directlyGovernsIssue === false ||
-    candidate.higherAuthorityMissing === true ||
-    !_saeHasRequiredAuthorityLevel(candidate)
-  );
+  const hasRelatedAuthority = annotatedCandidates.some(_saeIsRelatedAuthorityCandidate);
   if (hasRelatedAuthority) {
     return {
       ...base,

@@ -2657,6 +2657,19 @@ async function supabaseFallbackSearch({
 
   const search = normalizeText(query);
   if (!search) return [];
+  const fallbackTerms = buildSafeSupabaseFallbackTerms(search);
+  if (!fallbackTerms.length) return [];
+  const fallbackOr = fallbackTerms
+    .flatMap((term) => [
+      `title.ilike.%${term}%`,
+      `content.ilike.%${term}%`,
+      `text.ilike.%${term}%`,
+      `source.ilike.%${term}%`,
+      `path.ilike.%${term}%`,
+      `citation.ilike.%${term}%`,
+      `normalized_reference.ilike.%${term}%`
+    ])
+    .join(",");
 
   const tables = ["documents", "source_documents", "tina_documents"];
 
@@ -2665,17 +2678,7 @@ async function supabaseFallbackSearch({
       let q = supabase
         .from(table)
         .select("*")
-        .or(
-          [
-            `title.ilike.%${search}%`,
-            `content.ilike.%${search}%`,
-            `text.ilike.%${search}%`,
-            `source.ilike.%${search}%`,
-            `path.ilike.%${search}%`,
-            `citation.ilike.%${search}%`,
-            `normalized_reference.ilike.%${search}%`
-          ].join(",")
-        )
+        .or(fallbackOr)
         .limit(poolK);
 
       // Apply authority_names metadata filter when provided (LAW E)
@@ -2699,6 +2702,29 @@ async function supabaseFallbackSearch({
   }
 
   return [];
+}
+
+function sanitizeSupabaseFallbackTerm(value = "") {
+  const clean = String(value || "")
+    .toLowerCase()
+    .replace(/[,%()?!'"{}[\]\\:;]/g, " ")
+    .replace(/[^a-z0-9.\s_-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 64);
+  return clean.length >= 2 && /[a-z0-9]/.test(clean) ? clean : "";
+}
+
+function buildSafeSupabaseFallbackTerms(query = "") {
+  const tokens = String(query || "")
+    .toLowerCase()
+    .match(/\b[a-z0-9][a-z0-9._-]{2,}\b/g) || [];
+  return [...new Set([
+    sanitizeSupabaseFallbackTerm(query),
+    ...tokens.map(sanitizeSupabaseFallbackTerm)
+  ].filter(Boolean))]
+    .filter((term) => term.length <= 64)
+    .slice(0, 6);
 }
 
 function annotateDocLayer(doc = {}, layer = RETRIEVAL_LAYER.VECTOR_SEMANTIC, queryText = "") {
