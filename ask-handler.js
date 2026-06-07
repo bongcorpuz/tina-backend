@@ -278,6 +278,65 @@ async function withTimeout(promise, ms, label) {
   return Promise.race([promise, timeoutAfter(ms, label)]);
 }
 
+function isRoutePipelineTimeout(error = {}) {
+  return /TINA 16-step pipeline timed out/i.test(error?.message || "");
+}
+
+function buildRouteTimeoutFallback({
+  error = {},
+  question = "",
+  hookConfig = {}
+} = {}) {
+  const hookCode = hookConfig.hook_code || "/ask";
+  const mode = hookConfig.mode || "ASK";
+  const responseMode = hookConfig.adaptiveResponseMode || mode;
+  const orchestrationMode = hookConfig.orchestrationMode || responseMode;
+
+  return {
+    answer:
+      "The retrieval or answer-generation pipeline timed out before TINA could complete a sourced answer. This does not mean that no law or authority exists. Please retry or narrow the question.",
+    sources: [],
+    sourcesUsed: [],
+    sourceCards: [],
+    issueClassification: {},
+    sourceAvailability: "RETRIEVAL_TIMEOUT",
+    saeStatus: "RETRIEVAL_TIMEOUT",
+    sourceStatus: "RETRIEVAL_TIMEOUT",
+    sourceAvailabilityReason:
+      "The route-level pipeline timeout elapsed before sourced answer generation completed.",
+    retrievalTimedOut: true,
+    retrievedSourceCount: 0,
+    displayedSourceCount: 0,
+    relatedSourceCount: 0,
+    retrievalLayerCounts: null,
+    firstSourceLabels: [],
+    mode,
+    responseMode,
+    orchestrationMode,
+    pipelineVersion: null,
+    orchestration: {
+      ragError: error?.message || "TINA 16-step pipeline timed out.",
+      ragErrorName: error?.name || error?.constructor?.name || "Error",
+      ragErrorStatus: error?.status,
+      ragErrorCode: error?.code,
+      routeTimeout: true,
+      internalTimeoutType: "PIPELINE_TIMEOUT",
+      timeoutMs: RAG_TIMEOUT_MS,
+      selectedHook: hookCode,
+      selectedMode: mode,
+      responseMode,
+      orchestrationMode,
+      query: compactString(question, 500),
+      sourceAvailability: "RETRIEVAL_TIMEOUT",
+      saeStatus: "RETRIEVAL_TIMEOUT",
+      sourceStatus: "RETRIEVAL_TIMEOUT",
+      retrievalTimedOut: true,
+      retrievalPreserved: false,
+      fallbackAnswerUsed: true
+    }
+  };
+}
+
 function getUserId(req) {
   return (
     req?.user?.id ||
@@ -1865,19 +1924,50 @@ export function createAskHandler({
         type:    error?.type,
         stack:   error?.stack?.split("\n").slice(0, 10).join("\n")
       });
-      result = {
-        answer:
-          "I could not complete the full sourced answer because the pipeline failed or timed out. Please try again with a narrower question.",
-        sources: [],
-        issueClassification: {},
-        orchestration: {
-          ragError:           error.message,
-          ragErrorName:       error?.name || error?.constructor?.name,
-          ragErrorStatus:     error?.status,
-          ragErrorCode:       error?.code,
-          fallbackAnswerUsed: true
-        }
-      };
+      result = isRoutePipelineTimeout(error)
+        ? buildRouteTimeoutFallback({ error, question, hookConfig })
+        : {
+            answer:
+              "TINA encountered an internal pipeline error before it could complete a sourced answer. This does not mean that no law or authority exists. Please retry or narrow the question.",
+            sources: [],
+            sourcesUsed: [],
+            sourceCards: [],
+            issueClassification: {},
+            sourceAvailability: "RETRIEVAL_TIMEOUT",
+            saeStatus: "RETRIEVAL_TIMEOUT",
+            sourceStatus: "RETRIEVAL_TIMEOUT",
+            sourceAvailabilityReason:
+              "The route-level pipeline fallback was used before source verification completed.",
+            retrievalTimedOut: true,
+            retrievedSourceCount: 0,
+            displayedSourceCount: 0,
+            relatedSourceCount: 0,
+            retrievalLayerCounts: null,
+            firstSourceLabels: [],
+            mode: hookConfig.mode,
+            responseMode: hookConfig.adaptiveResponseMode || hookConfig.mode,
+            orchestrationMode: hookConfig.orchestrationMode || hookConfig.mode,
+            orchestration: {
+              ragError:           error.message,
+              ragErrorName:       error?.name || error?.constructor?.name,
+              ragErrorStatus:     error?.status,
+              ragErrorCode:       error?.code,
+              routeTimeout:       false,
+              internalTimeoutType: "PIPELINE_FALLBACK",
+              timeoutMs:          RAG_TIMEOUT_MS,
+              selectedHook:       hookConfig.hook_code,
+              selectedMode:       hookConfig.mode,
+              responseMode:       hookConfig.adaptiveResponseMode || hookConfig.mode,
+              orchestrationMode:  hookConfig.orchestrationMode || hookConfig.mode,
+              query:              compactString(question, 500),
+              sourceAvailability: "RETRIEVAL_TIMEOUT",
+              saeStatus:          "RETRIEVAL_TIMEOUT",
+              sourceStatus:       "RETRIEVAL_TIMEOUT",
+              retrievalTimedOut:  true,
+              retrievalPreserved: false,
+              fallbackAnswerUsed: true
+            }
+          };
     }
 
     const resultSources            = safeArray(result.sources || result.sourcesUsed);
@@ -1950,7 +2040,7 @@ export function createAskHandler({
       displayedSourceCount: result.displayedSourceCount ?? visibleSources.length,
 
       sourceStatus:             result.sourceStatus || result.sourceAvailability ||
-                                  (resultSources.length ? "ISSUE_MATCHED_CONTEXT_USED" : "NO_VISIBLE_SOURCE"),
+                                  (resultSources.length ? "ISSUE_MATCHED_CONTEXT_USED" : "RETRIEVAL_TIMEOUT"),
       sourceAvailability:       result.sourceAvailability        || null,
       sourceAvailabilityReason: result.sourceAvailabilityReason  || null,
       retrievalTimedOut:        result.retrievalTimedOut === true,
