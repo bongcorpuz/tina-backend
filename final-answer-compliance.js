@@ -1981,10 +1981,21 @@ function treatsTimeoutAsNoLaw(text = "") {
     );
 }
 
-function misframesSourceLookupEmpty(text = "") {
-  return /\b(no\s+indexed\s+source|indexed\s+source\s+not\s+found|no\s+indexed\s+authority|no\s+source\s+exists|no\s+law\s+exists|no\s+legal\s+basis\s+exists)\b/i.test(
-    text
+function stripSafeSourceLookupNegations(text = "") {
+  return String(text || "").replace(
+    /\b(?:this\s+)?does\s+not\s+mean\s+(?:that\s+)?no\s+[^.?!]*(?:law|authority|source|legal\s+basis)[^.?!]*(?:exists?|is\s+available)?/gi,
+    ""
   );
+}
+
+function misframesSourceLookupEmpty(text = "") {
+  const unsafeText = stripSafeSourceLookupNegations(text);
+  return /\b(no\s+indexed\s+source|indexed\s+source\s+not\s+found|no\s+indexed\s+authority)\b/i.test(unsafeText) ||
+    /\bno\s+(?:legal\s+)?(?:applicable\s+|governing\s+)?authority\s+exists\b/i.test(unsafeText) ||
+    /\bno\s+(?:governing\s+)?source\s+exists\b/i.test(unsafeText) ||
+    /\bno\s+(?:applicable\s+)?law\s+exists\b/i.test(unsafeText) ||
+    /\bno\s+legal\s+basis\s+exists\b/i.test(unsafeText) ||
+    /\bthere\s+is\s+no\s+(?:legal\s+)?(?:applicable\s+|governing\s+)?(?:authority|source|law|legal\s+basis)\b/i.test(unsafeText);
 }
 
 function buildSaeComplianceResult({

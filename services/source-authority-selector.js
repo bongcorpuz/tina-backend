@@ -55,6 +55,32 @@ const CARD_SUPPRESSED_SAE_STATUSES = Object.freeze(new Set([
   "NO_INDEXED_SOURCE"
 ]));
 
+const SAS_AUTHORITY_PRIORITY = Object.freeze({
+  CONSTITUTION: 0,
+  STATUTE: 1,
+  NIRC: 1,
+  TAX_CODE: 1,
+  TREATY: 2,
+  TAX_TREATY: 2,
+  DOUBLE_TAXATION_AGREEMENT: 2,
+  DTA: 2,
+  SUPREME_COURT: 3,
+  SC: 3,
+  CTA_EN_BANC: 4,
+  CTA_DIVISION: 5,
+  CTA: 5,
+  RR: 6,
+  REVENUE_REGULATION: 6,
+  RMO: 7,
+  REVENUE_MEMORANDUM_ORDER: 7,
+  RMC: 8,
+  REVENUE_MEMORANDUM_CIRCULAR: 8,
+  BIR_RULING: 9,
+  RULING: 9,
+  SECONDARY: 10,
+  UNKNOWN: 99
+});
+
 const REQUIRED_CARD_FIELDS = Object.freeze([
   "authorityId",
   "displayLabel",
@@ -612,6 +638,29 @@ function _computeCardSortScore(card, controllingAuths, supportingAuths) {
   return tier === 3 ? 1000 : 2000;
 }
 
+function _authorityPriorityOf(card = {}) {
+  const rawType =
+    card.authorityType ||
+    card.authority_type ||
+    card.metadata?.authorityType ||
+    card.metadata?.authority_type ||
+    "";
+  const authorityType = normalizeStatus(rawType) || "UNKNOWN";
+  return SAS_AUTHORITY_PRIORITY[authorityType] ?? SAS_AUTHORITY_PRIORITY.UNKNOWN;
+}
+
+function _compareBySasAuthorityPriority(a, b, controllingAuths, supportingAuths) {
+  const aPriority = _authorityPriorityOf(a);
+  const bPriority = _authorityPriorityOf(b);
+  if (aPriority !== bPriority) return aPriority - bPriority;
+
+  const aScore = _computeCardSortScore(a, controllingAuths, supportingAuths);
+  const bScore = _computeCardSortScore(b, controllingAuths, supportingAuths);
+  if (aScore !== bScore) return aScore - bScore;
+
+  return (b._rerankScore || 0) - (a._rerankScore || 0);
+}
+
 // ─── Main selector ────────────────────────────────────────────────────────────
 
 /**
@@ -843,12 +892,7 @@ export function selectSourceAuthorities({
     ].filter((v, i, a) => v && a.indexOf(v) === i);
 
     const allCandidates = [...seen.values()];
-    allCandidates.sort((a, b) => {
-      const aScore = _computeCardSortScore(a, controllingAuths, supportingAuths);
-      const bScore = _computeCardSortScore(b, controllingAuths, supportingAuths);
-      if (aScore !== bScore) return aScore - bScore;
-      return (b._rerankScore || 0) - (a._rerankScore || 0);
-    });
+    allCandidates.sort((a, b) => _compareBySasAuthorityPriority(a, b, controllingAuths, supportingAuths));
 
     // BLOCKER 1 — suppress generic NIRC document-level cards (e.g. "Tax Code",
     // "NIRC Tax Code") when at least one exact NIRC section card exists in the
