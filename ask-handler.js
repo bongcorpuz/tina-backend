@@ -233,6 +233,41 @@ function compactString(value = "", maxChars = 2000) {
   return text.length > maxChars ? `${text.slice(0, maxChars)}...` : text;
 }
 
+function publicSourceCardText(value = "") {
+  const text = normalizeText(value).replace(/\s+/g, " ").trim();
+  if (!text) return "";
+  if (/[\\/]/.test(text)) return "";
+  if (/\.(?:pdf|docx?|txt|csv|md|json)(?:$|[?#\s])/i.test(text)) return "";
+  if (/\b[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\b/i.test(text)) return "";
+  return text;
+}
+
+function publicSourceCardUrl(value = "") {
+  const url = normalizeText(value);
+  return /^https?:\/\//i.test(url) ? url : "";
+}
+
+function sanitizePublicSourceCard(card = {}) {
+  const citation = publicSourceCardText(card.citation || card.label || card.displayLabel || card.title || "");
+  const title = publicSourceCardText(card.title) || citation || "Source";
+  const displayLabel = publicSourceCardText(card.displayLabel || card.label || citation || title) || title;
+  const safeUrl = publicSourceCardUrl(card.publicUrl || card.public_url || "");
+
+  return {
+    label: displayLabel,
+    title,
+    citation,
+    authorityType: publicSourceCardText(card.authorityType || card.authority_type || ""),
+    displayLabel,
+    limitationRequired: card.limitationRequired === true,
+    ...(safeUrl ? { publicUrl: safeUrl } : {})
+  };
+}
+
+function sanitizePublicSourceCards(cards = []) {
+  return safeArray(cards).map(sanitizePublicSourceCard);
+}
+
 function timeoutAfter(ms, label = "Operation") {
   return new Promise((_, reject) => {
     setTimeout(() => reject(new Error(`${label} timed out after ${ms}ms.`)), ms);
@@ -1870,7 +1905,7 @@ export function createAskHandler({
     // were deliberately excluded for not supporting the final answer.
     const _dsFiltered = Boolean(result.sourceCardsDirectSupportFiltered);
 
-    const visibleSources = _sourceLookupEmpty
+    const visibleSourcesRaw = _sourceLookupEmpty
       ? []                                                         // no raw exposure when no source found
       : isSourceMode
         ? resultSources                                            // /source with results: full array, uncapped
@@ -1879,6 +1914,8 @@ export function createAskHandler({
           : (!_dsFiltered && resultSources.length > 0)
             ? finalizeSourcesForResponse(resultSources, { maxItems: MAX_VISIBLE_SOURCES })
             : [];                                                   // no backfill when DS-filtered
+    const visibleSources = sanitizePublicSourceCards(visibleSourcesRaw);
+    const publicResultSourceCards = sanitizePublicSourceCards(resultSourceCards);
 
     console.log("TINA MODE DOWNSTREAM DEBUG:", {
       responseMode: result.responseMode || result.orchestration?.mode || hookConfig.mode,
@@ -1905,12 +1942,12 @@ export function createAskHandler({
 
       sources: visibleSources,
       sourcesUsed: visibleSources,
-      sourceCards: _sourceLookupEmpty ? [] : (isSourceMode ? resultSourceCards : visibleSources),
+      sourceCards: _sourceLookupEmpty ? [] : (isSourceMode ? publicResultSourceCards : visibleSources),
       educationalSources:  resultEducationalSources,
       vectorMatches: result.retrievedSourceCount ?? resultSources.length,
 
       retrievedSourceCount: result.retrievedSourceCount ?? resultSources.length,
-      displayedSourceCount: result.displayedSourceCount ?? resultSourceCards.length,
+      displayedSourceCount: result.displayedSourceCount ?? visibleSources.length,
 
       sourceStatus:             result.sourceStatus || result.sourceAvailability ||
                                   (resultSources.length ? "ISSUE_MATCHED_CONTEXT_USED" : "NO_VISIBLE_SOURCE"),
@@ -1942,6 +1979,8 @@ export function createAskHandler({
 
       metadata: {
         ...safeObject(result.orchestration),
+        openAiModel: safeObject(result.orchestration).openAiModel || openaiModel,
+        openAiProjectAccessFailure: Boolean(safeObject(result.orchestration).openAiProjectAccessFailure),
         askHandlerVersion: ENGINE_VERSION,
         pipelineSupremacy: true,
         pipelineVersion: result.pipelineVersion,
@@ -2616,6 +2655,9 @@ export function createAskHandler({
             sourcesUsed:            [],
             sourceCards:            [],
             vectorMatches:          0,
+            retrievedSourceCount:   0,
+            displayedSourceCount:   0,
+            relatedSourceCount:     0,
             sourceStatus:           _boundaryStatus,
             domainBoundary:         true,
             domainBoundaryDecision: _boundaryCheck.decision,

@@ -255,24 +255,16 @@ function sanitizePublicSelectorCard(card = {}) {
   const citation = publicCardText(card.citation || card.normalizedReference || card.normalized_reference || "");
   const displayLabel = publicCardText(card.displayLabel || card.display_label || citation || card.authorityLabel || "");
   const title = publicCardText(card.title) || displayLabel || citation || "Source";
-  const url = publicCardUrl(card.url || card.driveViewUrl || card.drive_view_url || card.webViewLink || card.web_view_link || card.sourceUrl || card.source_url);
+  const safeUrl = publicCardUrl(card.publicUrl || card.public_url || "");
 
   return {
     title,
     label: displayLabel || title,
     displayLabel: displayLabel || title,
     citation,
-    normalizedReference: citation,
-    normalized_reference: citation,
-    authorityId: publicCardText(card.authorityId || card.authority_id || ""),
     authorityType: publicCardText(card.authorityType || card.authority_type || ""),
-    authorityRole: publicCardText(card.authorityRole || card.authority_role || ""),
-    authorityLevel: card.authorityLevel ?? card.authority_level ?? null,
-    isIndexed: card.isIndexed === true,
-    isParsed: card.isParsed === true,
-    isGoverning: card.isGoverning === true,
     limitationRequired: card.limitationRequired === true,
-    ...(url ? { url } : {})
+    ...(safeUrl ? { publicUrl: safeUrl } : {})
   };
 }
 

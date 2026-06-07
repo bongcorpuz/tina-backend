@@ -487,8 +487,8 @@ const DEFINITION_AUTHORITY_MAP = Object.freeze({
     primaryIssue: "EST",
     domainCode: "EST",
     domainName: "Estate Tax",
-    targetAuthorities: ["NIRC Title III", "NIRC Sec. 84", "NIRC Secs. 84-97"],
-    controllingAuthorities: ["NIRC Title III", "NIRC Secs. 84-97"],
+    targetAuthorities: ["NIRC Sec. 84", "NIRC Sec. 85", "NIRC Sec. 86", "NIRC Sec. 88", "NIRC Sec. 89", "NIRC Sec. 91", "NIRC Sec. 92", "NIRC Sec. 93", "NIRC Sec. 94", "NIRC Sec. 96"],
+    controllingAuthorities: ["NIRC Sec. 84", "NIRC Sec. 85", "NIRC Sec. 86", "NIRC Sec. 88", "NIRC Sec. 89", "NIRC Sec. 91", "NIRC Sec. 92", "NIRC Sec. 93", "NIRC Sec. 94", "NIRC Sec. 96"],
     supportingAuthorities: [],
     supportingJurisprudence: []
   },
@@ -497,8 +497,8 @@ const DEFINITION_AUTHORITY_MAP = Object.freeze({
     primaryIssue: "EST",
     domainCode: "EST",
     domainName: "Estate Tax Deductions",
-    targetAuthorities: ["NIRC Title III", "NIRC Sec. 86", "NIRC Secs. 84-97"],
-    controllingAuthorities: ["NIRC Title III", "NIRC Sec. 86", "NIRC Secs. 84-97"],
+    targetAuthorities: ["NIRC Sec. 86", "NIRC Sec. 85", "NIRC Sec. 89", "NIRC Sec. 91", "NIRC Sec. 92", "NIRC Sec. 93", "NIRC Sec. 94", "NIRC Sec. 96"],
+    controllingAuthorities: ["NIRC Sec. 86", "NIRC Sec. 85", "NIRC Sec. 89", "NIRC Sec. 91", "NIRC Sec. 92", "NIRC Sec. 93", "NIRC Sec. 94", "NIRC Sec. 96"],
     supportingAuthorities: [],
     supportingJurisprudence: []
   },
@@ -812,6 +812,8 @@ const ISSUE_SPECIFIC_TARGETS = Object.freeze({
   EWT: ["NIRC Sec. 57", "NIRC Sec. 58", "RR 2-98"],
   FWT: ["NIRC final withholding tax provisions", "RR 2-98"],
   COMPENSATION_WHT: ["NIRC withholding on compensation provisions", "RR 2-98"],
+  ESTATE_TAX: ["NIRC Sec. 84", "NIRC Sec. 85", "NIRC Sec. 86", "NIRC Sec. 88", "NIRC Sec. 89", "NIRC Sec. 91", "NIRC Sec. 92", "NIRC Sec. 93", "NIRC Sec. 94", "NIRC Sec. 96"],
+  ESTATE_DEDUCTIONS: ["NIRC Sec. 86", "NIRC Sec. 85", "NIRC Sec. 89", "NIRC Sec. 91", "NIRC Sec. 92", "NIRC Sec. 93", "NIRC Sec. 94", "NIRC Sec. 96"],
 
   ASSESSMENT_PRESCRIPTION: ["NIRC Sec. 203", "NIRC Sec. 222", "NIRC Sec. 228", "RR 18-2013", "CIR v. Aznar (GR No. L-20569)", "CIR v. BF Goodrich Philippines (GR No. L-28508)", "CIR v. Bohol Land Transportation (G.R. No. L-13099)"],
   LOA_VALIDITY: ["NIRC assessment provisions", "BIR audit and LOA issuances", "Medicard Philippines"],
@@ -971,6 +973,8 @@ function detectSubIssue(question = "", primaryIssue = "GENERAL_TAX", queryIntent
   if (/\brcit|regular corporate income tax\b/i.test(q)) return "RCIT";
   if (/\bmcit|minimum corporate income tax\b/i.test(q)) return "MCIT";
   if (/\bnolco|net operating loss\b/i.test(q)) return "NOLCO";
+  if (/\bgross estate\b/i.test(q) && /\b(?:deductible|deduction|deductions|expenses?)\b/i.test(q)) return "ESTATE_DEDUCTIONS";
+  if (/\bestate tax\b|\bgross estate\b|\bdecedent\b/i.test(q)) return "ESTATE_TAX";
   if (/\bdeductible|deduction|non[- ]deductible|substantiation\b/i.test(q)) return "DEDUCTIONS";
 
   if (/\bewt|expanded withholding|creditable withholding|cwt|2307\b/i.test(q)) return "EWT";

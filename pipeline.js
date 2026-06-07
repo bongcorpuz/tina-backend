@@ -653,25 +653,38 @@ function sanitizePublicSourceCard(card = {}) {
   const citation = publicText(card.citation || card.normalizedReference || card.normalized_reference || "");
   const displayLabel = publicText(card.displayLabel || card.display_label || citation || card.authorityLabel || "");
   const title = publicText(card.title) || displayLabel || citation || "Source";
-  const url = publicUrl(card.url || card.driveViewUrl || card.drive_view_url || card.webViewLink || card.web_view_link || card.sourceUrl || card.source_url);
+  const safeUrl = publicUrl(card.publicUrl || card.public_url || "");
 
   return {
     title,
     label: displayLabel || title,
     displayLabel: displayLabel || title,
     citation,
-    normalizedReference: citation,
-    normalized_reference: citation,
-    authorityId: publicText(card.authorityId || card.authority_id || ""),
     authorityType: publicText(card.authorityType || card.authority_type || ""),
-    authorityRole: publicText(card.authorityRole || card.authority_role || ""),
-    authorityLevel: card.authorityLevel ?? card.authority_level ?? null,
-    isIndexed: card.isIndexed === true,
-    isParsed: card.isParsed === true,
-    isGoverning: card.isGoverning === true,
     limitationRequired: card.limitationRequired === true,
-    ...(url ? { url } : {})
+    ...(safeUrl ? { publicUrl: safeUrl } : {})
   };
+}
+
+function sourceCardFromRetrievedTarget(doc = {}, target = "") {
+  const citation = publicText(
+    target ||
+      doc.citation ||
+      doc.normalizedReference ||
+      doc.normalized_reference ||
+      doc.reference ||
+      ""
+  );
+  if (!citation) return null;
+
+  return sanitizePublicSourceCard({
+    title: citation,
+    label: citation,
+    displayLabel: citation,
+    citation,
+    authorityType: doc.authorityType || doc.authority_type || "STATUTE",
+    limitationRequired: false
+  });
 }
 
 function sourceCardDocumentTitle(c = {}) {
@@ -1248,6 +1261,9 @@ export async function runPipeline({
         sourcesUsed:              [],
         sourceCards:              [],
         vectorMatches:            0,
+        retrievedSourceCount:     0,
+        displayedSourceCount:     0,
+        relatedSourceCount:       0,
         sourceStatus:             "DOMAIN_BOUNDARY_REJECT",
         domainBoundary:           true,
         domainBoundaryDecision:   _pipelineBoundaryCheck.decision,
@@ -1541,6 +1557,14 @@ export async function runPipeline({
   // these await the real retrieval promise and skip the race entirely.
   const isAuthorityCriticalRetrieval =
     ctx.issueClassification?.subIssue === "VAT_DEFINITION" ||
+    ctx.issueClassification?.subIssue === "WITHHOLDING_TAX_DEFINITION" ||
+    ctx.issueClassification?.subIssue === "EWT" ||
+    ctx.issueClassification?.subIssue === "ESTATE_TAX_DEFINITION" ||
+    ctx.issueClassification?.subIssue === "ESTATE_TAX" ||
+    ctx.issueClassification?.subIssue === "ESTATE_DEDUCTIONS" ||
+    ctx.issueClassification?.primaryIssue === "WITHHOLDING" ||
+    ctx.issueClassification?.primaryIssue === "EST" ||
+    ctx.issueClassification?.primaryIssue === "ESTATE_TAX" ||
     String(ctx.issueClassification?.retrievalStrategy || "").includes("VAT_DEFINITION") ||
     ctx.issueClassification?.requiresAuthorityCriticalRetrieval === true;
 
@@ -1874,9 +1898,14 @@ export async function runPipeline({
         answer: buildOpenAiFailureRetrievalAnswer(ctx, query),
         orchestration: {
           mode:                  ctx.mode,
+          openAiModel:           model || process.env.OPENAI_MODEL || process.env.DEFAULT_OPENAI_MODEL || "gpt-4o-mini",
           openAiError:           e?.message || String(e),
           openAiErrorStatus:     e?.status || null,
           openAiErrorCode:       e?.code || null,
+          openAiProjectAccessFailure:
+            e?.status === 403 ||
+            e?.code === "model_not_found" ||
+            /does not have access to model|model_not_found/i.test(e?.message || ""),
           retrievalPreserved:    true,
           fallbackAnswerUsed:    true,
           answerGenerationFailed: true
@@ -2421,6 +2450,53 @@ export async function runPipeline({
       });
     }
     finalSourceCards = [];
+  }
+
+  if (!_saeSuppressSourceCards && ctx.saeStatus === "AUTHORITY_FOUND" && targetAuths.length > 0) {
+    const existingKeys = new Set(
+      finalSourceCards.map(c => canonicalSourceKey(c.citation || c.label || c.title || "")).filter(Boolean)
+    );
+    const restored = [];
+
+    for (const target of targetAuths) {
+      const targetKey = canonicalSourceKey(target);
+      if (!targetKey || existingKeys.has(targetKey)) continue;
+
+      const doc = (ctx.rerankedChunks || []).find((candidate) => {
+        const candidateKey = canonicalSourceKey(
+          candidate.citation ||
+            candidate.normalizedReference ||
+            candidate.normalized_reference ||
+            candidate.reference ||
+            ""
+        );
+        return candidateKey && candidateKey === targetKey;
+      });
+
+      const card = doc ? sourceCardFromRetrievedTarget(doc, target) : null;
+      if (!card) continue;
+
+      restored.push(card);
+      existingKeys.add(targetKey);
+      if (restored.length >= 2) break;
+    }
+
+    if (restored.length > 0) {
+      const merged = [...restored, ...finalSourceCards];
+      const seen = new Set();
+      finalSourceCards = merged
+        .filter((card) => {
+          const key = canonicalSourceKey(card.citation || card.label || card.title || "");
+          if (!key || seen.has(key)) return false;
+          seen.add(key);
+          return true;
+        })
+        .slice(0, 5);
+      console.log("[TARGET AUTHORITY CARD RESTORED]", {
+        restored: restored.map(c => c.citation || c.label),
+        final: finalSourceCards.map(c => c.citation || c.label)
+      });
+    }
   }
 
   const _sourceAvail = {

@@ -326,6 +326,8 @@ app.get("/health", async (req, res) => {
       success: true,
       status: "ok",
       version: SERVER_VERSION,
+      commitSha: process.env.RENDER_GIT_COMMIT || process.env.GIT_COMMIT || null,
+      serviceName: process.env.RENDER_SERVICE_NAME || null,
       environment: NODE_ENV,
       engine: "TINA Philippine Tax Intelligence Engine",
       adaptiveArchitectureEnabled: true,
