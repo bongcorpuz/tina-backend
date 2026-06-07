@@ -3092,19 +3092,27 @@ export async function getVectorStoreStats(client = defaultSupabase) {
     };
   }
 
-  const { data: sourceRows, error: sourceError } = await supabaseClient
-    .from(VECTOR_TABLE)
-    .select("source")
-    .limit(10000);
+  const sourceRows = [];
+  const pageSize = 1000;
+  for (let from = 0; from < Math.max(count || 0, 1); from += pageSize) {
+    const to = from + pageSize - 1;
+    const { data, error: sourceError } = await supabaseClient
+      .from(VECTOR_TABLE)
+      .select("source")
+      .range(from, to);
 
-  if (sourceError) {
-    return {
-      storage: "supabase",
-      chunks: count || 0,
-      sources: 0,
-      sourceNames: [],
-      error: sourceError.message
-    };
+    if (sourceError) {
+      return {
+        storage: "supabase",
+        chunks: count || 0,
+        sources: 0,
+        sourceNames: [],
+        error: sourceError.message
+      };
+    }
+
+    sourceRows.push(...(data || []));
+    if (!data || data.length < pageSize) break;
   }
 
   const sourceNames = [

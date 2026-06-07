@@ -149,6 +149,61 @@ function buildSaeHardFailFallback(ctx = {}) {
   ].join("\n");
 }
 
+function buildOpenAiFailureRetrievalAnswer(ctx = {}, query = "") {
+  const sources = Array.isArray(ctx.rerankedChunks) ? ctx.rerankedChunks : [];
+  const sourceLabels = sources
+    .map((source) =>
+      source.citation ||
+      source.normalized_reference ||
+      source.normalizedReference ||
+      source.title ||
+      source.document_title ||
+      source.source ||
+      ""
+    )
+    .filter(Boolean)
+    .slice(0, 5);
+
+  const governingLine = sourceLabels.length
+    ? `Governing indexed authority was retrieved: ${sourceLabels.join(", ")}.`
+    : "Indexed authority was retrieved for this query.";
+
+  return [
+    "I found indexed authority for this Philippine tax question, but the answer-generation model failed before a full narrative answer could be completed.",
+    "",
+    governingLine,
+    "",
+    "Please use the source cards shown with this response to review the retrieved governing authority."
+  ].join("\n");
+}
+
+function buildRetrievalLayerCounts(retrievalDiagnostics = {}) {
+  return {
+    exactAuthorityMatches:    retrievalDiagnostics?.exactAuthorityMatches    ?? 0,
+    citationVariantMatches:   retrievalDiagnostics?.citationVariantMatches   ?? 0,
+    metadataMatches:          retrievalDiagnostics?.metadataMatches          ?? 0,
+    contentKeywordMatches:    retrievalDiagnostics?.contentKeywordMatches    ?? 0,
+    semanticMatches:          retrievalDiagnostics?.semanticMatches          ?? 0,
+    fallbackMatches:          retrievalDiagnostics?.fallbackMatches          ?? 0,
+    supabaseFallbackMatches:  retrievalDiagnostics?.supabaseFallbackMatches  ?? 0
+  };
+}
+
+function buildFirstSourceLabels(sources = [], max = 5) {
+  return (Array.isArray(sources) ? sources : [])
+    .map((source) =>
+      source.citation ||
+      source.normalized_reference ||
+      source.normalizedReference ||
+      source.title ||
+      source.document_title ||
+      source.source ||
+      ""
+    )
+    .filter(Boolean)
+    .slice(0, max);
+}
+
 function detectQueryFlags(issueClassification, hook = "/ask") {
   const qi = safeStr(issueClassification?.queryIntent).toLowerCase();
   const pi = safeStr(issueClassification?.primaryIssue).toLowerCase();
@@ -405,6 +460,19 @@ function isTargetAllowedCard(provRef, linkedType, targetAuths) {
   }
 
   return false;
+}
+
+function extractNircSectionNumber(ref = "") {
+  const match = safeStr(ref).match(/\bsec(?:tion)?\.?\s*(\d{1,4})/i);
+  return match ? Number(match[1]) : null;
+}
+
+function sourceCardPlanSortScore(card = {}) {
+  const tier = Number(card.authorityMatchTier || 4);
+  const section = extractNircSectionNumber(card.normalizedReference || card.citation || card.title || "");
+  if (tier === 1) return section === null ? 0 : section;
+  if (tier === 2) return section === null ? 100 : 100 + section;
+  return 1000 + tier * 100 + (section || 0);
 }
 
 /**
@@ -1402,7 +1470,15 @@ export async function runPipeline({
     // a duplicate semantic pass when Layer 5 already found sufficient candidates.
     const _totalHits = _uniqueAuthorityCandidates.size + _semanticHits;
     if (_totalHits >= _SEMANTIC_SKIP_THRESHOLD) {
-      console.log("[SEMANTIC FALLBACK SKIPPED]", { query: q, layer, uniqueAuthorityCount: _uniqueAuthorityCandidates.size, semanticHits: _semanticHits, total: _totalHits });
+      console.log("[SEMANTIC FALLBACK SKIPPED]", {
+        query: q,
+        layer,
+        reason: "retrieval_pool_sufficient",
+        uniqueAuthorityCount: _uniqueAuthorityCandidates.size,
+        semanticHits: _semanticHits,
+        total: _totalHits,
+        threshold: _SEMANTIC_SKIP_THRESHOLD
+      });
       return [];
     }
     // Wrap searchSimilar so intentional skips ([SEMANTIC FALLBACK SKIPPED]) are
@@ -1787,7 +1863,28 @@ export async function runPipeline({
   } catch (e) {
     const label = `OpenAI step-14 error [${e?.name || e?.constructor?.name}] status=${e?.status} code=${e?.code}: ${e?.message}`;
     trace.warnings.push({ step: 14, warning: label });
-    throw new Error(label);
+    if ((ctx.rerankedChunks || []).length > 0) {
+      console.warn("[OPENAI FAILURE RETRIEVAL PRESERVED]", {
+        retrievedSourceCount: ctx.rerankedChunks.length,
+        saeStatus:           ctx.saeStatus,
+        errorStatus:         e?.status || null,
+        errorCode:           e?.code || null
+      });
+      openAiResult = {
+        answer: buildOpenAiFailureRetrievalAnswer(ctx, query),
+        orchestration: {
+          mode:                  ctx.mode,
+          openAiError:           e?.message || String(e),
+          openAiErrorStatus:     e?.status || null,
+          openAiErrorCode:       e?.code || null,
+          retrievalPreserved:    true,
+          fallbackAnswerUsed:    true,
+          answerGenerationFailed: true
+        }
+      };
+    } else {
+      throw new Error(label);
+    }
   }
   ctx.rawAnswer    = openAiResult?.answer || "";
   ctx.orchestration = openAiResult?.orchestration || {};
@@ -2034,6 +2131,7 @@ export async function runPipeline({
 
     _scSeen.set(dedupeKey, {
       _targetMatch:        _isTargetMatch,  // priority tag — stripped before output
+      authorityMatchTier:  c.authorityMatchTier || c.issueClassificationMatch?.authorityMatchTier || 4,
       title:               provRef || docTitle || "Source",
       citation:            provRef || c.citation || "",
       authorityType:       c.authorityType || c.authority_type || "UNKNOWN",
@@ -2058,8 +2156,12 @@ export async function runPipeline({
   // Sort: target-matched candidates first (reranker order preserved within group),
   // then non-target candidates.  Slice to 5 visible chips.
   const _scCandidateArray = [..._scSeen.values()];
-  const _scTargetMatched  = _scCandidateArray.filter(v =>  v._targetMatch);
-  const _scNonTarget      = _scCandidateArray.filter(v => !v._targetMatch);
+  const _scTargetMatched  = _scCandidateArray
+    .filter(v =>  v._targetMatch)
+    .sort((a, b) => sourceCardPlanSortScore(a) - sourceCardPlanSortScore(b));
+  const _scNonTarget      = _scCandidateArray
+    .filter(v => !v._targetMatch)
+    .sort((a, b) => sourceCardPlanSortScore(a) - sourceCardPlanSortScore(b));
   const _scSorted         = [..._scTargetMatched, ..._scNonTarget];
 
   console.log("[SOURCE CARD CANDIDATES]", {
@@ -2208,7 +2310,8 @@ export async function runPipeline({
 
   // Gate 0 on SAS cards: shouldHideSource is not called inside SAS, so apply it here.
   const _sasVisible = (_sasResult.visibleSourceCards || [])
-    .filter(c => !shouldHideSource(c, ctx.issueClassification));
+    .filter(c => !shouldHideSource(c, ctx.issueClassification))
+    .sort((a, b) => sourceCardPlanSortScore(a) - sourceCardPlanSortScore(b));
 
   if (!_sasResult.diagnostics.error) {
     console.log("[SAS ACTIVE]", {
@@ -2262,14 +2365,12 @@ export async function runPipeline({
           .map(c => canonicalSourceKey(c.normalizedReference || c.citation || ""))
           .filter(Boolean)
       );
-      // Restore exact authority cards (authorityMatchTier === 1) that DSF dropped.
-      // This covers both exact controlling authorities (e.g. "NIRC Sec. 84") AND
-      // exact supporting authorities (e.g. "RR No. 16-2005" for VAT).  Both are
-      // Tier 1 exact matches against the classifier's authority plan and must not
-      // be suppressed by DSF's answer-text proximity scoring.
+      // Restore planned authority cards (authorityMatchTier 1 or 2) that DSF dropped.
+      // This covers exact controlling/supporting authorities and NIRC range members
+      // such as estate-tax sections inside "NIRC Secs. 84-97".
       const _tier1Dropped = _sasVisible.filter(c => {
         const k = canonicalSourceKey(c.normalizedReference || c.citation || "");
-        return k && Number(c.authorityMatchTier || 4) === 1 && !_dsKeys.has(k);
+        return k && Number(c.authorityMatchTier || 4) <= 2 && !_dsKeys.has(k);
       });
       if (_tier1Dropped.length > 0) {
         // Prepend restored exact-authority cards (in SAS order), then DSF cards.
@@ -2396,6 +2497,8 @@ export async function runPipeline({
     sourceAvailabilityReason:         _sourceAvail.sourceAvailabilityReason,
     retrievalTimedOut:                _sourceAvail.retrievalTimedOut,
     relatedSourceCount:               _sourceAvail.relatedSourceCount,
+    retrievalLayerCounts:             buildRetrievalLayerCounts(ctx.retrievalDiagnostics),
+    firstSourceLabels:                buildFirstSourceLabels(finalSourceCards.length ? finalSourceCards : ctx.rerankedChunks),
     educationalSources,
     issueClassification: ctx.issueClassification,
     conflictAnalysis:    ctx.conflictAnalysis,

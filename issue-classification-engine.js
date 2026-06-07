@@ -417,8 +417,8 @@ const DEFINITION_AUTHORITY_MAP = Object.freeze({
     primaryIssue: "INCOME_TAX",
     domainCode: "CIT",
     domainName: "Income Tax",
-    targetAuthorities: ["NIRC Sec. 23", "NIRC Sec. 24", "NIRC Sec. 27", "NIRC Sec. 31", "NIRC Sec. 32", "NIRC Sec. 34"],
-    controllingAuthorities: ["NIRC Sec. 23", "NIRC Sec. 24", "NIRC Sec. 27", "NIRC Sec. 31", "NIRC Sec. 32", "NIRC Sec. 34"],
+    targetAuthorities: ["NIRC Sec. 21", "NIRC Sec. 23", "NIRC Sec. 24", "NIRC Sec. 25", "NIRC Sec. 27", "NIRC Sec. 28", "NIRC Sec. 31", "NIRC Sec. 32", "NIRC Sec. 33", "NIRC Sec. 34", "NIRC Sec. 35"],
+    controllingAuthorities: ["NIRC Sec. 21", "NIRC Sec. 23", "NIRC Sec. 24", "NIRC Sec. 25", "NIRC Sec. 27", "NIRC Sec. 28", "NIRC Sec. 31", "NIRC Sec. 32", "NIRC Sec. 33", "NIRC Sec. 34", "NIRC Sec. 35"],
     supportingAuthorities: [],
     supportingJurisprudence: []
   },
@@ -489,6 +489,16 @@ const DEFINITION_AUTHORITY_MAP = Object.freeze({
     domainName: "Estate Tax",
     targetAuthorities: ["NIRC Title III", "NIRC Sec. 84", "NIRC Secs. 84-97"],
     controllingAuthorities: ["NIRC Title III", "NIRC Secs. 84-97"],
+    supportingAuthorities: [],
+    supportingJurisprudence: []
+  },
+
+  ESTATE_DEDUCTIONS_DEFINITION: {
+    primaryIssue: "EST",
+    domainCode: "EST",
+    domainName: "Estate Tax Deductions",
+    targetAuthorities: ["NIRC Title III", "NIRC Sec. 86", "NIRC Secs. 84-97"],
+    controllingAuthorities: ["NIRC Title III", "NIRC Sec. 86", "NIRC Secs. 84-97"],
     supportingAuthorities: [],
     supportingJurisprudence: []
   },
@@ -700,6 +710,14 @@ const DOMAIN_DETECTORS = Object.freeze([
     defaultSubIssue: "ESTATE_TAX",
     patterns: [/\bestate tax\b/i, /\bgross estate\b/i, /\bdecedent\b/i],
     definitionKey: "ESTATE_TAX_DEFINITION"
+  },
+  {
+    domainCode: "EST",
+    primaryIssue: "EST",
+    domainName: "Estate Tax Deductions",
+    defaultSubIssue: "ESTATE_DEDUCTIONS",
+    patterns: [/\b(?:deductible|deduction|deductions|expenses?)\b.*\bgross estate\b/i, /\bgross estate\b.*\b(?:deductible|deduction|deductions|expenses?)\b/i, /\bestate deduction\b/i],
+    definitionKey: "ESTATE_DEDUCTIONS_DEFINITION"
   },
   {
     domainCode: "EST",
@@ -1054,6 +1072,14 @@ function buildLegalQuestionPresented({ question = "", primaryIssue, subIssue, do
 }
 
 function getDefinitionAuthorityFor(question = "", detector = null, primaryIssue = "", subIssue = "") {
+  if (/\bgross estate\b/i.test(question) && /\b(?:deductible|deduction|deductions|expenses?)\b/i.test(question)) {
+    return DEFINITION_AUTHORITY_MAP.ESTATE_DEDUCTIONS_DEFINITION;
+  }
+
+  if (/\bgross estate\b|\bestate deduction\b|\bclaims against estate\b/i.test(question)) {
+    return DEFINITION_AUTHORITY_MAP.ESTATE_TAX_DEFINITION;
+  }
+
   if (!detectDefinitionPattern(question)) return null;
 
   const definitionKey =

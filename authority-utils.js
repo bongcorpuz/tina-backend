@@ -503,8 +503,86 @@ function getRetrievalStatus(doc = {}, options = {}) {
   );
 }
 
+function extractNircSectionNumber(ref = "") {
+  const match = normalizeText(ref).match(/\b(?:nirc|tax\s*code)?\s*(?:sec\.?|section)\s*(\d{1,4})/i);
+  return match ? Number(match[1]) : null;
+}
+
+function parseNircSectionRange(ref = "") {
+  const match = normalizeText(ref).match(
+    /\b(?:nirc|tax\s*code)?\s*(?:secs?\.?|sections?)\s*(\d{1,4})\s*(?:-|–|to)\s*(?:secs?\.?|sections?)?\s*(\d{1,4})/i
+  );
+  if (!match) return null;
+  const start = Number(match[1]);
+  const end = Number(match[2]);
+  if (!Number.isFinite(start) || !Number.isFinite(end) || start > end) return null;
+  return { start, end };
+}
+
+function plannedAuthorities(issueClassification = {}) {
+  return unique([
+    ...safeArray(issueClassification.targetAuthorities),
+    ...safeArray(issueClassification.controllingAuthorities),
+    ...safeArray(issueClassification.supportingAuthorities),
+    ...safeArray(issueClassification.supportingJurisprudence),
+    ...safeArray(issueClassification.targetAuthorityGroups?.controllingAuthorities),
+    ...safeArray(issueClassification.targetAuthorityGroups?.supportingAuthorities),
+    ...safeArray(issueClassification.targetAuthorityGroups?.supportingJurisprudence)
+  ]);
+}
+
+function hasSpecificAuthorityPlan(issueClassification = {}) {
+  return plannedAuthorities(issueClassification).some((authority) =>
+    extractNircSectionNumber(authority) !== null ||
+      parseNircSectionRange(authority) !== null ||
+      /\b(?:rr|rmc|rmo|ramo|revenue\s+(?:regulations?|memorandum|audit))/i.test(authority) ||
+      /\b(?:ra|r\.a\.|republic\s+act|g\.?\s*r\.?\s*no\.?)\b/i.test(authority)
+  );
+}
+
+function docCitationText(doc = {}) {
+  return normalizeText([
+    doc.normalizedReference,
+    doc.normalized_reference,
+    doc.citation,
+    doc.reference,
+    doc.metadata?.normalizedReference,
+    doc.metadata?.normalized_reference
+  ].filter(Boolean).join(" "));
+}
+
+function docOnSpecificAuthorityPlan(doc = {}) {
+  const match = doc.issueClassificationMatch || {};
+  const issueClassification = {
+    targetAuthorities: match.targetAuthorities || [],
+    controllingAuthorities: match.controllingAuthorities || [],
+    supportingAuthorities: match.supportingAuthorities || [],
+    supportingJurisprudence: match.supportingJurisprudence || [],
+    targetAuthorityGroups: match.targetAuthorityGroups || null
+  };
+  if (!hasSpecificAuthorityPlan(issueClassification)) return true;
+
+  const tier = Number(doc.authorityMatchTier ?? match.authorityMatchTier ?? 4);
+  if (tier <= 2) return true;
+
+  const docSection = extractNircSectionNumber(docCitationText(doc));
+  if (docSection !== null) {
+    for (const authority of plannedAuthorities(issueClassification)) {
+      const exactSection = extractNircSectionNumber(authority);
+      if (exactSection !== null && exactSection === docSection) return true;
+
+      const range = parseNircSectionRange(authority);
+      if (range && docSection >= range.start && docSection <= range.end) return true;
+    }
+  }
+
+  return false;
+}
+
 function directlyGovernsIssue(doc = {}) {
   const match = doc.issueClassificationMatch || {};
+  if (!docOnSpecificAuthorityPlan(doc)) return false;
+
   return Boolean(
     doc.directlyGovernsIssue === true ||
       doc.exactAuthorityMatch === true ||
@@ -600,6 +678,8 @@ export function buildAuthorityAnnotation(doc = {}, options = {}) {
     higherAuthorityMissing,
     hasGoverningPeer: options.hasGoverningPeer === true
   });
+  annotation.isGoverning = annotation.authorityRole === "GOVERNING";
+  annotation.limitationRequired = annotation.authorityRole !== "GOVERNING";
 
   return annotation;
 }

@@ -122,6 +122,10 @@ const PH_TAX_ALLOW_PATTERNS = [
   /\bsin\s+tax\b/i,
   /\bdonor'?s?\s+tax\b/i,
   /\bestate\s+tax\b/i,
+  /\bgross\s+estate\b/i,
+  /\bnet\s+estate\b/i,
+  /\bestate\s+deduction[s]?\b/i,
+  /\bclaims\s+against\s+estate\b/i,
   /\bCGT\b/i,
 
   // ── Customs / BOC ─────────────────────────────────────────────────────

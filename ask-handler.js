@@ -1918,6 +1918,8 @@ export function createAskHandler({
       sourceAvailabilityReason: result.sourceAvailabilityReason  || null,
       retrievalTimedOut:        result.retrievalTimedOut === true,
       relatedSourceCount:       result.relatedSourceCount        ?? 0,
+      retrievalLayerCounts:     result.retrievalLayerCounts      || null,
+      firstSourceLabels:        result.firstSourceLabels         || [],
 
       responseMode: result.responseMode || result.orchestration?.mode || hookConfig.mode,
       orchestrationMode: result.orchestrationMode || result.orchestration?.mode || hookConfig.mode,
@@ -1948,6 +1950,8 @@ export function createAskHandler({
         retrievalEngineCalled: true,
         rerankerEngineCalled: true,
         fourPartDoctrineTestApplied: true,
+        retrievalLayerCounts: result.retrievalLayerCounts || null,
+        firstSourceLabels:    result.firstSourceLabels    || [],
         routeControllerOnly: true,
         noLegalReasoningInsideAskHandler: true,
         noSourceRankingInsideAskHandler: true,

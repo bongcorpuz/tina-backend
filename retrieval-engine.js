@@ -284,7 +284,7 @@ const TAX_DOMAIN_SEARCH_HINTS = Object.freeze({
 
   INCOME_TAX: {
     keywords: ["income tax", "taxable income", "gross income", "deductions", "RCIT", "MCIT", "NOLCO"],
-    authorities: ["NIRC Sec. 23", "NIRC Sec. 24", "NIRC Sec. 27", "NIRC Sec. 31", "NIRC Sec. 32", "NIRC Sec. 34"]
+    authorities: ["NIRC Sec. 21", "NIRC Sec. 23", "NIRC Sec. 24", "NIRC Sec. 25", "NIRC Sec. 27", "NIRC Sec. 28", "NIRC Sec. 31", "NIRC Sec. 32", "NIRC Sec. 33", "NIRC Sec. 34", "NIRC Sec. 35"]
   },
 
   CIT: {
@@ -919,6 +919,17 @@ function extractAuthoritySearchTerms(targetAuthorities = null) {
 
     if (!term) return;
 
+    const range = term.match(/\b(?:NIRC|Tax\s*Code)\s+Secs?\.?\s*(\d{1,4})\s*(?:-|–|to)\s*(\d{1,4})\b/i);
+    if (range) {
+      const start = Number(range[1]);
+      const end = Number(range[2]);
+      if (Number.isFinite(start) && Number.isFinite(end) && start <= end && end - start <= 50) {
+        for (let section = start; section <= end; section++) {
+          output.push(`NIRC Sec. ${section}`);
+        }
+      }
+    }
+
     if (
       !normalizeAuthority(term) ||
       /\d|sec|section|rr|rmc|rmo|ramo|cir|v\.|versus|gr|g\.r\./i.test(term)
@@ -1455,6 +1466,99 @@ function extractExactReferenceSignals(text = "") {
   return unique(signals);
 }
 
+function extractNircSectionNumber(ref = "") {
+  const match = normalizeText(ref).match(/\b(?:nirc|tax\s*code)?\s*(?:sec\.?|section)\s*(\d{1,4})/i);
+  return match ? Number(match[1]) : null;
+}
+
+function parseNircSectionRange(ref = "") {
+  const match = normalizeText(ref).match(
+    /\b(?:nirc|tax\s*code)?\s*(?:secs?\.?|sections?)\s*(\d{1,4})\s*(?:-|–|to)\s*(?:secs?\.?|sections?)?\s*(\d{1,4})/i
+  );
+  if (!match) return null;
+  const start = Number(match[1]);
+  const end = Number(match[2]);
+  if (!Number.isFinite(start) || !Number.isFinite(end) || start > end) return null;
+  return { start, end };
+}
+
+function docReferenceText(doc = {}) {
+  return normalizeText([
+    doc.normalizedReference,
+    doc.normalized_reference,
+    doc.citation,
+    doc.reference,
+    doc.metadata?.normalizedReference,
+    doc.metadata?.normalized_reference,
+    doc.title,
+    doc.document_title
+  ].filter(Boolean).join(" "));
+}
+
+function hasSpecificAuthorityTargets(classification = {}) {
+  return extractAuthoritySearchTerms([
+    ...safeArray(classification.targetAuthorities),
+    ...safeArray(classification.controllingAuthorities),
+    ...safeArray(classification.supportingAuthorities),
+    ...safeArray(classification.supportingJurisprudence)
+  ]).length > 0;
+}
+
+function docMatchesSpecificAuthorityPlan(doc = {}, classification = {}) {
+  const authorities = unique([
+    ...safeArray(classification.targetAuthorities),
+    ...safeArray(classification.controllingAuthorities),
+    ...safeArray(classification.supportingAuthorities),
+    ...safeArray(classification.supportingJurisprudence)
+  ]);
+  if (!authorities.length) return false;
+
+  const docRefText = docReferenceText(doc);
+  const docSection = extractNircSectionNumber(docRefText);
+
+  for (const authority of authorities) {
+    const range = parseNircSectionRange(authority);
+    if (range && docSection !== null && docSection >= range.start && docSection <= range.end) {
+      return true;
+    }
+
+    const authSection = extractNircSectionNumber(authority);
+    if (authSection !== null && docSection !== null && authSection === docSection) {
+      return true;
+    }
+
+    for (const variant of generateAuthorityVariants(authority)) {
+      if (variant && haystackIncludesVariant(doc, variant)) return true;
+    }
+  }
+
+  return false;
+}
+
+function computeAuthorityMatchTier(doc = {}, classification = {}) {
+  const authorities = unique([
+    ...safeArray(classification.targetAuthorities),
+    ...safeArray(classification.controllingAuthorities),
+    ...safeArray(classification.supportingAuthorities),
+    ...safeArray(classification.supportingJurisprudence)
+  ]);
+  if (!authorities.length) return 4;
+
+  const docSection = extractNircSectionNumber(docReferenceText(doc));
+
+  for (const authority of authorities) {
+    const authSection = extractNircSectionNumber(authority);
+    if (authSection !== null && docSection !== null && authSection === docSection) return 1;
+  }
+
+  for (const authority of authorities) {
+    const range = parseNircSectionRange(authority);
+    if (range && docSection !== null && docSection >= range.start && docSection <= range.end) return 2;
+  }
+
+  return docMatchesSpecificAuthorityPlan(doc, classification) ? 3 : 4;
+}
+
 function haystackIncludesVariant(doc = {}, variant = "", searchArea = "ALL") {
   const haystack =
     searchArea === "TITLE_PATH_METADATA"
@@ -1547,6 +1651,10 @@ function docTargetAuthorityMatch(classification = {}, doc = {}, querySet = {}) {
 
   if (!targets.length && !safeArray(querySet.generatedAuthorityVariants).length) return false;
 
+  if (hasSpecificAuthorityTargets(classification)) {
+    return docMatchesSpecificAuthorityPlan(doc, classification);
+  }
+
   const docType = getNormalizedDocAuthorityType(doc);
   if (targets.includes(docType)) return true;
 
@@ -1631,6 +1739,7 @@ function buildIssueClassificationMatch(query = "", classification = {}, doc = {}
   const compatible = issueClassificationCompatible(classification, doc);
   const targetAuthorityMatch = docTargetAuthorityMatch(classification, doc, querySet);
   const exactAuthorityMatch = exactReferenceBonus(query, doc, classification, querySet) > 0;
+  const authorityMatchTier = computeAuthorityMatchTier(doc, classification);
   const authority = findMatchedAuthority({ doc, classification, querySet, layer });
 
   const confidenceBase =
@@ -1648,6 +1757,7 @@ function buildIssueClassificationMatch(query = "", classification = {}, doc = {}
     primaryIssue: classification.primaryIssue || null,
     subIssue: classification.subIssue || null,
     targetAuthorityMatch,
+    authorityMatchTier,
     matchedAuthority: authority.matchedAuthority,
     matchedAuthorityVariant: authority.matchedAuthorityVariant,
     matchedBy: inferMatchedByFromLayer(layer),
@@ -1666,6 +1776,10 @@ function buildIssueClassificationMatch(query = "", classification = {}, doc = {}
     legalDimensions: classification.legalDimensions || [],
     retrievalStrategy: classification.retrievalStrategy || null,
     targetAuthorities: classification.targetAuthorities || [],
+    controllingAuthorities: classification.controllingAuthorities || [],
+    supportingAuthorities: classification.supportingAuthorities || [],
+    supportingJurisprudence: classification.supportingJurisprudence || [],
+    targetAuthorityGroups: classification.targetAuthorityGroups || null,
     authoritySearchTerms: classification.authoritySearchTerms || [],
     docIssues,
     docAuthorityType: getNormalizedDocAuthorityType(doc)
@@ -1948,8 +2062,7 @@ function isVatDefinitionClassification(classification = {}, query = "") {
     issues.includes("VAT_DEFINITION") ||
     (issues.includes("VAT") &&
       /\b(define|definition|what is)\b.*\b(vat|value-added tax|value added tax)\b/i.test(q)) ||
-    strategy.includes("vat_definition") ||
-    strategy.includes("fast_definition")
+    strategy.includes("vat_definition")
   );
 }
 
