@@ -1088,12 +1088,63 @@ function _saeHasRelatedIssueSignal(candidate = {}) {
   );
 }
 
-function _saeIsRelatedAuthorityCandidate(candidate = {}) {
+function _saeArray(value) {
+  if (!value) return [];
+  return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
+}
+
+function _saeHasConcreteAuthorityPlan(issueClassification = {}) {
+  const authorityGroups = issueClassification.targetAuthorityGroups || {};
+  const planned = [
+    ..._saeArray(issueClassification.targetAuthorities),
+    ..._saeArray(issueClassification.controllingAuthorities),
+    ..._saeArray(issueClassification.supportingAuthorities),
+    ..._saeArray(issueClassification.supportingJurisprudence),
+    ..._saeArray(authorityGroups.controllingAuthorities),
+    ..._saeArray(authorityGroups.supportingAuthorities),
+    ..._saeArray(authorityGroups.supportingJurisprudence)
+  ];
+
+  return planned.some((authority) => {
+    const text = String(authority || "").trim();
+    if (!text) return false;
+    if (/^applicable\b/i.test(text)) return false;
+    if (/\bprimary statute provisions?\b/i.test(text)) return false;
+    if (/\brevenue regulations?\s*\/\s*bir issuances?\b/i.test(text)) return false;
+    return true;
+  });
+}
+
+function _saeHasConcreteRelatedIssueSignal(candidate = {}, issueClassification = {}) {
+  const match = candidate.issueClassificationMatch || {};
+  const hasConcreteAuthorityPlan = _saeHasConcreteAuthorityPlan(issueClassification);
+  const exactOrTargetAuthorityMatch = Boolean(
+    candidate.exactAuthorityMatch === true ||
+      candidate.targetAuthorityMatch === true ||
+      match.exactAuthorityMatch === true ||
+      match.targetAuthorityMatch === true ||
+      Number(candidate.citationMatchBonus || 0) > 0
+  );
+  const issueFamilyMatch = Boolean(match.matched === true || match.issueOverlap === true);
+
+  if (candidate.directlyGovernsIssue === true) return true;
+  if (exactOrTargetAuthorityMatch && hasConcreteAuthorityPlan) return true;
+  if (issueFamilyMatch && hasConcreteAuthorityPlan) return true;
+
+  return false;
+}
+
+function _saeIsRelatedAuthorityCandidate(candidate = {}, issueClassification = {}) {
   const role = String(candidate.authorityRole || candidate.authorityAnnotation?.authorityRole || "UNKNOWN").toUpperCase();
   const type = _saeAuthorityType(candidate);
   if (role === "GOVERNING" || role === "UNKNOWN" || role === "SECONDARY") return false;
   if (["UNKNOWN", "SECONDARY", "REVIEWER", "CPA_NOTES", "REVIEW_MATERIALS"].includes(type)) return false;
-  return candidate.isIndexed === true && _saeIsParsed(candidate) === true && _saeHasRelatedIssueSignal(candidate);
+  return (
+    candidate.isIndexed === true &&
+    _saeIsParsed(candidate) === true &&
+    _saeHasRelatedIssueSignal(candidate) &&
+    _saeHasConcreteRelatedIssueSignal(candidate, issueClassification)
+  );
 }
 
 /**
@@ -1111,6 +1162,7 @@ export function classifySourceAvailability(input = {}) {
   const annotatedCandidates = Array.isArray(input.annotatedCandidates)
     ? input.annotatedCandidates
     : [];
+  const issueClassification = input.issueClassification || {};
   const outcomeCategory = _saeOutcomeCategory(input);
   const fallbackStatus = _saeFallbackStatus(input);
   const retrievalTimedOut =
@@ -1181,7 +1233,9 @@ export function classifySourceAvailability(input = {}) {
     };
   }
 
-  const hasRelatedAuthority = annotatedCandidates.some(_saeIsRelatedAuthorityCandidate);
+  const hasRelatedAuthority = annotatedCandidates.some((candidate) =>
+    _saeIsRelatedAuthorityCandidate(candidate, issueClassification)
+  );
   if (hasRelatedAuthority) {
     return {
       ...base,
@@ -1714,6 +1768,7 @@ export async function runPipeline({
   });
   ctx.sourceAvailability = classifySourceAvailability({
     annotatedCandidates:  ctx.rerankedChunks || [],
+    issueClassification:  ctx.issueClassification,
     outcomeCategory:      ctx.retrievalMeta?.outcomeCategory || ctx.retrievalMeta?.retrievalMeta?.outcomeCategory || null,
     retrievalDiagnostics: ctx.retrievalDiagnostics,
     retrievalMeta:        ctx.retrievalMeta,
