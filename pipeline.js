@@ -2106,7 +2106,35 @@ export async function runPipeline({
             mode:           ctx.mode,
             saeStatus:      ctx.saeStatus
           });
+        } else {
+          console.log("[PRE_GENERATION_AUTHORITY_LOCK_SKIPPED]", {
+            query:             query.slice(0, 120),
+            primaryIssue:      ctx.issueClassification?.primaryIssue,
+            subIssue:          ctx.issueClassification?.subIssue,
+            primaryDomain:     ctx.issueClassification?.primaryDomain,
+            primaryDomainCode: ctx.issueClassification?.primaryDomainCode,
+            acceptedCount:     _pgAccepted,
+            acceptedRefs:      _pgLockedRefs,
+            lockedKeys:        [..._pgLockedKeys],
+            targetKeys:        _pgTa.map(t => canonicalSourceKey(t)),
+            hasTarget:         _pgHasTarget,
+            failedReason:      `_pgHasTarget=false && _pgAccepted=${_pgAccepted} < 2`
+          });
         }
+      } else {
+        console.log("[PRE_GENERATION_AUTHORITY_LOCK_SKIPPED]", {
+          query:             query.slice(0, 120),
+          primaryIssue:      ctx.issueClassification?.primaryIssue,
+          subIssue:          ctx.issueClassification?.subIssue,
+          primaryDomain:     ctx.issueClassification?.primaryDomain,
+          primaryDomainCode: ctx.issueClassification?.primaryDomainCode,
+          acceptedCount:     0,
+          acceptedRefs:      [],
+          lockedKeys:        [],
+          targetKeys:        _pgTa.map(t => canonicalSourceKey(t)),
+          hasTarget:         false,
+          failedReason:      "_pgAccepted=0 — no chunks matched EWT bridge or semantic terms"
+        });
       }
     }
     trace.steps.push({ step: "6.6", name: "preGenerationSourceSelection", done: true, fastEwtPath: Boolean(ctx._fastEwtAuthorityPath) });

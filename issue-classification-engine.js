@@ -1837,34 +1837,62 @@ export function sourceMaterialTermsMatchAuthority(doc = {}, query = "") {
 }
 
 /**
- * PATCH-017A: Issue Classification to Semantic Source Selection Bridge
+ * PATCH-017A / PATCH-017C-FIX1: Issue Classification to Semantic Source Selection Bridge.
  * Prevents rejection of critical EWT authorities when semantic scores are low.
+ * FIX1: Robust EWT detection for definition-phrased queries ("What is the EWT rate…").
  */
+function isRr298Ref(ref = "") {
+  return /^rr2(19)?98$/.test(
+    String(ref || "")
+      .toLowerCase()
+      .replace(/revenue\s*regulations?\s*/g, "rr")
+      .replace(/\bno\.?\s*/g, "")
+      .replace(/[^a-z0-9]/g, "")
+  );
+}
+
 export function isEwtBridgeEligible(classification = {}, doc = {}, query = "") {
+  // 1. Primary domain must be WITHHOLDING / WHT
   const primary = classification.primaryIssue || "";
-  const sub = classification.subIssue || "";
-  const isEwt = (primary === "WITHHOLDING" || primary === "WHT") && sub === "EWT";
+  const pDomain = classification.primaryDomain || classification.primaryDomainCode || classification.domainCode || "";
+  const isWhtDomain =
+    primary === "WITHHOLDING" || primary === "WHT" ||
+    pDomain === "WHT"         || pDomain === "WITHHOLDING";
+  if (!isWhtDomain) return false;
 
-  if (!isEwt) return false;
+  // 2. Query or classification must signal EWT relevance.
+  //    Covers definition-phrased queries where detectSubIssue returns
+  //    "WITHHOLDING_TAX_DEFINITION" rather than "EWT".
+  const q = lower(query);
+  const isEwtRelevant =
+    q.includes("ewt") ||
+    q.includes("expanded withholding tax") ||
+    lower(classification.subIssue || "") === "ewt" ||
+    lower(classification.primarySubIssue || "") === "ewt" ||
+    (classification.keyTerms  || []).some(t => lower(t).includes("ewt")) ||
+    (classification.subIssues || []).some(s => lower(s) === "ewt") ||
+    (classification.targetAuthorities || []).some(a => isRr298Ref(a)) ||
+    (primary === "WITHHOLDING" && q.includes("advertising") && q.includes("rate"));
+  if (!isEwtRelevant) return false;
 
-  // Verify candidate is an intended target
-  const isTarget = doc.targetAuthorityMatch === true || doc.exactAuthorityMatch === true;
+  // 3. Verify candidate is an intended EWT target:
+  //    targetAuthorityMatch flag (set by retrieval engine), OR a canonical RR 2-98 ref.
+  const docRef = doc.normalizedReference || doc.normalized_reference || doc.citation || doc.title || "";
+  const isTarget =
+    doc.targetAuthorityMatch === true ||
+    doc.exactAuthorityMatch  === true ||
+    isRr298Ref(docRef);
   if (!isTarget) return false;
 
+  // 4. Doc text must contain at least one EWT material term
   const text = lower(doc.text || doc.content || "");
   const ewtKeywords = [
-    "advertising agencies",
-    "contractors",
-    "withholding",
-    "ewt",
-    "expanded withholding tax",
-    "2.57.2",
-    "gross payments",
-    "income payments"
+    "advertising agencies", "advertising", "contractors",
+    "withholding", "ewt", "expanded withholding tax",
+    "sec. 2.57.2", "2.57.2", "gross payments", "income payments",
+    "professional fees"
   ];
-
-  const hasKeywords = ewtKeywords.some((kw) => text.includes(kw));
-  return hasKeywords;
+  return ewtKeywords.some((kw) => text.includes(kw));
 }
 
 // ─── PATCH B — OpenAI-backed issue classification (Steps 1-2, gpt-4o-mini) ───
