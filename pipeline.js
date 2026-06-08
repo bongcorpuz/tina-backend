@@ -15,7 +15,8 @@
 import {
   classify,
   hasSemanticNoMatchGuard,
-  sourceMaterialTermsMatchAuthority
+  sourceMaterialTermsMatchAuthority,
+  isEwtBridgeEligible
 }                                                 from "./issue-classification-engine.js";
 import {
   getModeRoutingMetadata,
@@ -1306,6 +1307,7 @@ export function classifySourceAvailability(input = {}) {
     ? input.annotatedCandidates
     : [];
   const issueClassification = input.issueClassification || {};
+  const query = String(input.query || "");
   const outcomeCategory = _saeOutcomeCategory(input);
   const fallbackStatus = _saeFallbackStatus(input);
   const retrievalTimedOut =
@@ -1322,10 +1324,11 @@ export function classifySourceAvailability(input = {}) {
     candidate.higherAuthorityMissing === false
   );
   const semanticNoMatchGuardActive = hasSemanticNoMatchGuard(issueClassification);
+  // PATCH-017B: use query string (not issueClassification object); function now returns boolean.
   const semanticNoMatchCandidateMatched =
     !semanticNoMatchGuardActive ||
     annotatedCandidates.some((candidate) =>
-      sourceMaterialTermsMatchAuthority(candidate, issueClassification).matches
+      sourceMaterialTermsMatchAuthority(candidate, query)
     );
   const suppressedCandidates = annotatedCandidates
     .filter((candidate) => !eligibleCandidates.includes(candidate))
@@ -1958,6 +1961,7 @@ export async function runPipeline({
   ctx.sourceAvailability = classifySourceAvailability({
     annotatedCandidates:  ctx.rerankedChunks || [],
     issueClassification:  ctx.issueClassification,
+    query,                // PATCH-017B: pass query for fixed sourceMaterialTermsMatchAuthority call
     outcomeCategory:      ctx.retrievalMeta?.outcomeCategory || ctx.retrievalMeta?.retrievalMeta?.outcomeCategory || null,
     retrievalDiagnostics: ctx.retrievalDiagnostics,
     retrievalMeta:        ctx.retrievalMeta,
@@ -1979,6 +1983,100 @@ export async function runPipeline({
     limitationRequired: ctx.limitationRequired
   });
   trace.steps.push({ step: "6.5", name: "sourceAvailabilityClassification", saeStatus: ctx.saeStatus, done: true });
+
+  // ── Step 6.6: Pre-Generation Authority Lock (PATCH-017B) ──────────────────
+  // For authority-critical WITHHOLDING/WHT queries targeting NIRC Sec. 57, Sec. 58,
+  // or RR 2-98, run a narrow source selection BEFORE generation.
+  // Prevents budget exhaustion caused by NO_INDEXED_SOURCE prompt when retrieval
+  // actually succeeded but saeStatus was mis-classified (PATCH-017A regression).
+  {
+    const _pgPi  = String(ctx.issueClassification?.primaryIssue  || "").toUpperCase();
+    const _pgPd  = String(ctx.issueClassification?.primaryDomain || ctx.issueClassification?.primaryDomainCode || "").toUpperCase();
+    const _pgTa  = ctx.issueClassification?.targetAuthorities || [];
+    const _pgQ   = (query || "").toLowerCase();
+
+    const _pgIsWht       = _pgPi === "WITHHOLDING" || _pgPd === "WHT" || _pgPd.includes("WITHHOLDING") || _pgPi === "WHT";
+    const _pgHasEwtTgts  = _pgTa.some(t => /nirc.*sec\.?\s*(57|58)\b/i.test(t) || /rr[\s\-.]?2[\s\-.]?98\b/i.test(t));
+    const _pgHasEwtKw    = /\b(ewt|withholding|advertising|rate)\b/i.test(_pgQ);
+    const _pgHasChunks   = (ctx.rerankedChunks || []).length > 0;
+    const _pgRunPreGen   = _pgIsWht && (_pgHasEwtTgts || _pgHasEwtKw) && _pgHasChunks;
+
+    if (_pgRunPreGen) {
+      console.log("[PRE_GENERATION_SOURCE_SELECTION_STARTED]", {
+        query:            _pgQ.slice(0, 120),
+        primaryIssue:     ctx.issueClassification?.primaryIssue,
+        subIssue:         ctx.issueClassification?.subIssue,
+        primaryDomain:    ctx.issueClassification?.primaryDomain,
+        targetAuthorities: _pgTa.slice(0, 6),
+        retrievedCount:   ctx.rerankedChunks.length,
+        currentSaeStatus: ctx.saeStatus
+      });
+
+      let _pgAccepted = 0;
+      const _pgLockedRefs = [];
+
+      for (const _pgC of ctx.rerankedChunks) {
+        const _pgBridge = isEwtBridgeEligible(ctx.issueClassification, _pgC, query);
+        const _pgMatch  = sourceMaterialTermsMatchAuthority(_pgC, query);
+        if (_pgBridge || _pgMatch) {
+          _pgAccepted++;
+          const _pgRef =
+            _pgC.normalizedReference || _pgC.normalized_reference ||
+            _pgC.citation || _pgC.title || "";
+          if (_pgRef && _pgLockedRefs.length < 8) _pgLockedRefs.push(_pgRef);
+        }
+      }
+
+      console.log("[PRE_GENERATION_SOURCE_SELECTION_COMPLETE]", {
+        inspected:  ctx.rerankedChunks.length,
+        accepted:   _pgAccepted,
+        locked:     _pgLockedRefs,
+        sourceAvailability: ctx.saeStatus
+      });
+
+      if (_pgAccepted > 0) {
+        const _pgLockedKeys = new Set(_pgLockedRefs.map(r => canonicalSourceKey(r)).filter(Boolean));
+        const _pgHasTarget  = _pgTa.some(t => _pgLockedKeys.has(canonicalSourceKey(t)));
+
+        if (_pgHasTarget || _pgAccepted >= 2) {
+          console.log("[PRE_GENERATION_AUTHORITY_LOCK]", {
+            query:             query.slice(0, 120),
+            primaryIssue:      ctx.issueClassification?.primaryIssue,
+            subIssue:          ctx.issueClassification?.subIssue,
+            primaryDomain:     ctx.issueClassification?.primaryDomain,
+            targetAuthorities: _pgTa.slice(0, 6),
+            retrievedCount:    ctx.rerankedChunks.length,
+            acceptedCount:     _pgAccepted,
+            visibleCount:      _pgLockedRefs.length,
+            lockedAuthorities: _pgLockedRefs,
+            sourceAvailability: "AUTHORITY_FOUND"
+          });
+
+          ctx.saeStatus          = "AUTHORITY_FOUND";
+          ctx.limitationRequired = false;
+          ctx.disclosureType     = null;
+          ctx.sourceAvailability = {
+            ...ctx.sourceAvailability,
+            saeStatus:          "AUTHORITY_FOUND",
+            limitationRequired: false,
+            disclosureType:     null,
+            statusReason:       `[PATCH-017B] ${_pgAccepted} EWT authority candidate(s) verified pre-generation.`
+          };
+          ctx._fastEwtAuthorityPath     = true;
+          ctx._preGenLockedAuthorities  = _pgLockedRefs;
+
+          console.log("[FAST_EWT_AUTHORITY_PATH]", {
+            query:          query.slice(0, 120),
+            lockedCount:    _pgAccepted,
+            authorities:    _pgLockedRefs,
+            mode:           ctx.mode,
+            saeStatus:      ctx.saeStatus
+          });
+        }
+      }
+    }
+    trace.steps.push({ step: "6.6", name: "preGenerationSourceSelection", done: true, fastEwtPath: Boolean(ctx._fastEwtAuthorityPath) });
+  }
 
   // ── Step 7: Fact Pattern Reconstruction (conditional) ────────────────────
   const flags = detectQueryFlags(ctx.issueClassification, hook);
@@ -2355,9 +2453,11 @@ export async function runPipeline({
     // Gate 0 (visibility): hidden/reviewer-only materials must not appear as source
     // chips outside reviewer/quiz modes.  Mirrors the same gate in filterVisibleSources().
     if (shouldHideSource(c, ctx.issueClassification)) continue;
+    // PATCH-017B: EWT bridge (PATCH-017A) + fixed signature (query string, not object; returns bool).
+    const _scEwtBridge = isEwtBridgeEligible(ctx.issueClassification, c, query);
     if (
-      semanticNoMatchGuardActive &&
-      !sourceMaterialTermsMatchAuthority(c, ctx.issueClassification).matches
+      semanticNoMatchGuardActive && !_scEwtBridge &&
+      !sourceMaterialTermsMatchAuthority(c, query)
     ) {
       _scSkip.semanticNoMatch++;
       continue;
@@ -2523,9 +2623,11 @@ export async function runPipeline({
       if (!c.title && !c.document_title && !c.source && !c.originalSource) return false;
       // Gate 0 (visibility): mirrors the gate in the primary loop.
       if (shouldHideSource(c, ctx.issueClassification)) return false;
+      // PATCH-017B: EWT bridge (PATCH-017A) + fixed signature (query string; returns bool).
+      const _fbEwtBridge = isEwtBridgeEligible(ctx.issueClassification, c, query);
       if (
-        semanticNoMatchGuardActive &&
-        !sourceMaterialTermsMatchAuthority(c, ctx.issueClassification).matches
+        semanticNoMatchGuardActive && !_fbEwtBridge &&
+        !sourceMaterialTermsMatchAuthority(c, query)
       ) return false;
       // Derive identity here so sourcePathAuthorityHit can protect Gate 1 and Gate 3
       // (mirrors the main loop restructuring above).
