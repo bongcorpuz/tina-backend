@@ -2311,8 +2311,26 @@ export async function runPipeline({
   publishDiagnostics(false);
 
   // ── PATCH-017D: Hard fast-definition generation cap ──────────────────────
+  const _fdGateRemainingMs = timing.remainingBudgetMs();
+  console.log("[FAST_EWT_GATE_CHECK]", {
+    query:                        query.slice(0, 120),
+    fastEwtAuthorityPath:         ctx._fastEwtAuthorityPath,
+    authorityLockApplied:         ctx.authorityLockApplied,
+    saeStatus:                    ctx.saeStatus,
+    sourceAvailability:           ctx.sourceAvailability,
+    sourceAvailabilitySaeStatus:  ctx.sourceAvailability?.saeStatus,
+    mode:                         ctx.mode,
+    responseMode:                 ctx.responseMode,
+    orchestrationMode:            ctx.orchestrationMode,
+    openAiResultIsNull:           openAiResult == null,
+    remainingBudgetMs:            _fdGateRemainingMs,
+    preGenerationSourceCardsCount: (ctx.preGenerationSourceCards || []).length,
+    lockedAuthorities:            ctx.lockedAuthorities,
+    hasOpenAiClient:              Boolean(openai),
+    generationFile:               "pipeline.js"
+  });
   if (ctx._fastEwtAuthorityPath && ctx.saeStatus === "AUTHORITY_FOUND") {
-    const _fdRemainingMs = timing.remainingBudgetMs();
+    const _fdRemainingMs = _fdGateRemainingMs;
     const _fdCards       = (ctx.preGenerationSourceCards || []).slice(0, 4);
 
     if (_fdRemainingMs < 15000) {
@@ -2401,6 +2419,19 @@ export async function runPipeline({
       openaiCallTiming.durationMs  = Date.now() - openaiCallStartMs;
       openaiCallTiming.status      = openAiResult ? "completed" : "fallthrough";
     }
+  } else {
+    console.log("[FAST_EWT_GATE_SKIPPED]", {
+      reason:                   !ctx._fastEwtAuthorityPath
+        ? "fastEwtAuthorityPath is falsy"
+        : ctx.saeStatus !== "AUTHORITY_FOUND"
+          ? `saeStatus is '${ctx.saeStatus}' not AUTHORITY_FOUND`
+          : "unknown",
+      fastPath:                 Boolean(ctx._fastEwtAuthorityPath),
+      saeStatus:                ctx.saeStatus,
+      sourceAvailabilityStatus: ctx.sourceAvailability?.saeStatus,
+      openAiResultIsNull:       openAiResult == null,
+      remainingBudgetMs:        _fdGateRemainingMs
+    });
   }
 
   if (openAiResult == null) try {
