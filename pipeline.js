@@ -1827,16 +1827,32 @@ export async function runPipeline({
 
   // ── TEMP TRACE: inspect raw retrieval shape before normalization ───────────
   // Remove after retrieval audit is complete.
-  console.log(
-    "[RPC RAW FULL]",
-    JSON.stringify(
-      Array.isArray(_retrievalRaw)
-        ? _retrievalRaw.slice(0, 2)
-        : _retrievalRaw,
-      null,
-      2
-    )
-  );
+  // WHT/EWT fast path: skip full JSON.stringify to avoid serializing 100+ chunks.
+  {
+    const _rpcIsWhtPath =
+      String(ctx.issueClassification?.primaryIssue || "").toUpperCase() === "WITHHOLDING" ||
+      String(ctx.issueClassification?.primaryDomain || ctx.issueClassification?.primaryDomainCode || "").toUpperCase() === "WHT";
+    if (_rpcIsWhtPath) {
+      console.log("[FAST_EWT_FULL_PAYLOAD_LOG_SUPPRESSED]", {
+        query:          query.slice(0, 120),
+        primaryIssue:   ctx.issueClassification?.primaryIssue,
+        rawSourceCount: Array.isArray(_retrievalRaw?.retrievedSources) ? _retrievalRaw.retrievedSources.length :
+                        Array.isArray(_retrievalRaw) ? _retrievalRaw.length : "n/a",
+        reason:         "full payload log suppressed for WHT fast path"
+      });
+    } else {
+      console.log(
+        "[RPC RAW FULL]",
+        JSON.stringify(
+          Array.isArray(_retrievalRaw)
+            ? _retrievalRaw.slice(0, 2)
+            : _retrievalRaw,
+          null,
+          2
+        )
+      );
+    }
+  }
   // ── TEMP TRACE: authority-priority layer hit distribution ─────────────────
   // Uses the real buildCompactDiagnostics() field names (no layerHits sub-object).
   if (_retrievalRaw && typeof _retrievalRaw === "object" && !Array.isArray(_retrievalRaw)) {
@@ -1896,6 +1912,104 @@ export async function runPipeline({
     retrievalLayerCounts: timing.partialPipelineState.retrievalLayerCounts
   });
   publishDiagnostics(false);
+
+  // ── Step 5.5: Compact EWT/WHT retrieval set (PATCH-017E) ──────────────────
+  // For simple WHT/EWT queries targeting NIRC Sec. 57/58 or RR 2-98, replace
+  // ctx.retrievedChunks with only target authority chunks before the reranker.
+  // This ensures Step 6.6 authority lock fires and PATCH-017D gate is reachable
+  // without 100+ irrelevant NIRC chunks flowing through all downstream steps.
+  {
+    const _e5Pi      = String(ctx.issueClassification?.primaryIssue  || "").toUpperCase();
+    const _e5Pd      = String(ctx.issueClassification?.primaryDomain || ctx.issueClassification?.primaryDomainCode || "").toUpperCase();
+    const _e5Q       = (query || "").toLowerCase();
+    const _e5Ta      = ctx.issueClassification?.targetAuthorities || [];
+    const _e5Cx      = String(ctx.issueClassification?.complexity   || "").toLowerCase();
+
+    const _e5IsWht     = _e5Pi === "WITHHOLDING" || _e5Pd === "WHT" || _e5Pd.includes("WITHHOLDING") || _e5Pi === "WHT";
+    const _e5HasTgts   = _e5Ta.some(t => /nirc.*sec\.?\s*(57|58)\b/i.test(t) || /rr[\s\-.]?2[\s\-.]?98\b/i.test(t));
+    const _e5HasKw     = /\b(ewt|withholding|advertising|rate)\b/i.test(_e5Q);
+    const _e5Simple    = _e5Cx === "simple" || _e5Cx === "standard" || _e5Cx === "";
+    const _e5HasChunks = ctx.retrievedChunks.length > 0;
+
+    if (_e5IsWht && (_e5HasTgts || _e5HasKw) && _e5Simple && _e5HasChunks) {
+      const _e5TaKeys = new Set(_e5Ta.map(t => canonicalSourceKey(t)).filter(Boolean));
+      // Always include core EWT governing authority canonical keys as a safety net
+      _e5TaKeys.add("nircsec57");
+      _e5TaKeys.add("nircsec58");
+      _e5TaKeys.add("rr298");
+
+      const _e5EwtTerms = [
+        "advertising agencies", "advertising", "contractors", "withholding",
+        "ewt", "expanded withholding tax", "sec. 2.57.2", "2.57.2",
+        "gross payments", "income payments", "professional fees"
+      ];
+      const _e5OrigCount = ctx.retrievedChunks.length;
+      const _e5Found     = [];
+
+      for (const c of ctx.retrievedChunks) {
+        const _e5Ref  = (c.normalizedReference || c.normalized_reference || c.citation || c.title || "").trim();
+        const _e5CKey = canonicalSourceKey(_e5Ref);
+        if (_e5CKey && _e5TaKeys.has(_e5CKey)) {
+          const _e5FullTxt = (c.text || c.content || "").toLowerCase();
+          const _e5HasMat  = _e5EwtTerms.some(t => _e5FullTxt.includes(t));
+          _e5Found.push({ c, hasMat: _e5HasMat });
+        }
+      }
+
+      if (_e5Found.length > 0) {
+        // Prefer chunks with EWT material terms; cap at 6 compact chunks
+        _e5Found.sort((a, b) => (b.hasMat ? 1 : 0) - (a.hasMat ? 1 : 0));
+        ctx.retrievedChunks = _e5Found.slice(0, 6).map(({ c }) => ({
+          id:                   c.id,
+          title:                c.title,
+          citation:             c.citation,
+          normalizedReference:  c.normalizedReference || c.normalized_reference || "",
+          authorityType:        c.authorityType || c.authority_type,
+          authority_type:       c.authority_type || c.authorityType,
+          authorityLevel:       c.authorityLevel || c.authority_level,
+          authority_level:      c.authority_level || c.authorityLevel,
+          text:                 (c.text || c.content || "").slice(0, 1200),
+          url:                  c.url,
+          targetAuthorityMatch: true,
+          exactAuthorityMatch:  c.exactAuthorityMatch || false,
+          retrievalLayer:       c.retrievalLayer,
+          sourceType:           c.sourceType,
+          score:                c.score,
+          _fastEwtCompact:      true
+        }));
+
+        const _e5Refs = ctx.retrievedChunks.map(c => c.normalizedReference || c.title || "").filter(Boolean);
+
+        console.log("[FAST_EWT_RETRIEVAL_EARLY_STOP_APPLIED]", {
+          query:                  query.slice(0, 120),
+          primaryIssue:           _e5Pi,
+          primaryDomain:          _e5Pd,
+          subIssue:               ctx.issueClassification?.subIssue,
+          targetAuthorities:      _e5Ta.slice(0, 6),
+          foundTargetAuthorities: _e5Refs,
+          compactCandidateCount:  ctx.retrievedChunks.length,
+          skippedExpansionLayer:  `${_e5OrigCount - _e5Found.length} non-target chunks skipped`,
+          elapsedMs:              timing.elapsedMs(),
+          remainingBudgetMs:      timing.remainingBudgetMs(),
+          candidateRefs:          _e5Refs
+        });
+        console.log("[FAST_EWT_RETRIEVAL_EXPANSION_SKIPPED]", {
+          query:            query.slice(0, 120),
+          originalCount:    _e5OrigCount,
+          targetCount:      _e5Found.length,
+          compactCount:     ctx.retrievedChunks.length,
+          nonTargetSkipped: _e5OrigCount - _e5Found.length
+        });
+        console.log("[FAST_EWT_COMPACT_RETRIEVAL_SET_BUILT]", {
+          query:             query.slice(0, 120),
+          compactCount:      ctx.retrievedChunks.length,
+          candidateRefs:     _e5Refs,
+          elapsedMs:         timing.elapsedMs(),
+          remainingBudgetMs: timing.remainingBudgetMs()
+        });
+      }
+    }
+  }
 
   // ── TEMP TRACE: Stage 1-3 — retrieval output + authority distribution ──────
   // Remove after retrieval audit is complete.
