@@ -1902,6 +1902,7 @@ export function createAskHandler({
       ? await getHistory(supabase, conversationId, 20).catch(() => [])
       : [];
     let result;
+    let latestPipelineDiagnostics = null;
     try {
       result = await withTimeout(
         runPipeline({
@@ -1910,12 +1911,51 @@ export function createAskHandler({
           supabase,
           openai,
           model:   openaiModel,
-          conversationHistory: priorMessages
+          conversationHistory: priorMessages,
+          routeBudgetMs: RAG_TIMEOUT_MS,
+          instrumentationReceiver: diagnostics => {
+            latestPipelineDiagnostics = diagnostics;
+          }
         }),
         RAG_TIMEOUT_MS,
         "TINA 16-step pipeline"
       );
     } catch (error) {
+      const routeTimedOut = /timed out after/i.test(String(error?.message || ""));
+      const partialState = latestPipelineDiagnostics?.partialPipelineState || {};
+      const inferredTimeoutType =
+        latestPipelineDiagnostics?.timeoutType ||
+        (!partialState.classificationCompleted
+          ? "CLASSIFICATION_TIMEOUT"
+          : partialState.retrievalCompleted === false
+            ? "RETRIEVAL_OPERATION_TIMEOUT"
+            : partialState.generationStarted && !partialState.generationCompleted
+              ? "GENERATION_TIMEOUT"
+              : partialState.complianceStarted && !partialState.complianceCompleted
+                ? "COMPLIANCE_TIMEOUT"
+                : "ROUTE_PIPELINE_TIMEOUT");
+      const timeoutDiagnostics = routeTimedOut
+        ? {
+            pipelineTimings: {},
+            pipelineStageDurations: {},
+            partialPipelineState: partialState,
+            openaiCalls: [],
+            ...(latestPipelineDiagnostics || {}),
+            timeout: true,
+            timeoutType: inferredTimeoutType,
+            elapsedMs: latestPipelineDiagnostics?.elapsedMs ?? RAG_TIMEOUT_MS,
+            budgetMs: latestPipelineDiagnostics?.budgetMs ?? RAG_TIMEOUT_MS
+          }
+        : null;
+      if (routeTimedOut) {
+        console.warn("[ROUTE_TIMEOUT_FIRED]", {
+          elapsedMs: timeoutDiagnostics.elapsedMs,
+          remainingBudgetMs: 0,
+          budgetMs: timeoutDiagnostics.budgetMs,
+          timeoutType: timeoutDiagnostics.timeoutType,
+          partialPipelineState: timeoutDiagnostics.partialPipelineState || null
+        });
+      }
       console.error("Pipeline failed:", {
         name:    error?.name || error?.constructor?.name,
         message: error?.message,
@@ -1968,6 +2008,18 @@ export function createAskHandler({
               fallbackAnswerUsed: true
             }
           };
+      result = {
+        ...result,
+        retrievedSourceCount: timeoutDiagnostics?.partialPipelineState?.retrievedCount ?? result.retrievedSourceCount ?? 0,
+        displayedSourceCount: timeoutDiagnostics?.partialPipelineState?.displayedSourceCardCount ?? result.displayedSourceCount ?? 0,
+        diagnostics: timeoutDiagnostics,
+        orchestration: {
+          ...safeObject(result.orchestration),
+          timeout: routeTimedOut,
+          timeoutType: timeoutDiagnostics?.timeoutType || null,
+          diagnostics: timeoutDiagnostics
+        }
+      };
     }
 
     const resultSources            = safeArray(result.sources || result.sourcesUsed);
@@ -2051,6 +2103,7 @@ export function createAskHandler({
       responseMode: result.responseMode || result.orchestration?.mode || hookConfig.mode,
       orchestrationMode: result.orchestrationMode || result.orchestration?.mode || hookConfig.mode,
       pipelineVersion: result.pipelineVersion,
+      diagnostics: result.diagnostics || result.orchestration?.diagnostics || null,
 
       activeHook: hookConfig.hook_code,
       activeMode: hookConfig.mode,
@@ -2071,6 +2124,7 @@ export function createAskHandler({
         ...safeObject(result.orchestration),
         openAiModel: safeObject(result.orchestration).openAiModel || openaiModel,
         openAiProjectAccessFailure: Boolean(safeObject(result.orchestration).openAiProjectAccessFailure),
+        diagnostics: result.diagnostics || result.orchestration?.diagnostics || null,
         askHandlerVersion: ENGINE_VERSION,
         pipelineSupremacy: true,
         pipelineVersion: result.pipelineVersion,

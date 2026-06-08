@@ -71,6 +71,8 @@ import {
 import { selectSourceAuthorities }                from "./services/source-authority-selector.js";
 
 const PIPELINE_VERSION = "1.0.0";
+const ROUTE_BUDGET_MS = 90_000;
+const PIPELINE_BUDGET_WARNING_THRESHOLDS_MS = [15_000, 10_000, 5_000];
 
 // ─── helpers ──────────────────────────────────────────────────────────────────
 
@@ -206,6 +208,143 @@ function buildFirstSourceLabels(sources = [], max = 5) {
     )
     .filter(Boolean)
     .slice(0, max);
+}
+
+function createPipelineInstrumentation({
+  budgetMs = ROUTE_BUDGET_MS,
+  now = () => Date.now()
+} = {}) {
+  const startedAt = now();
+  const pipelineTimings = {};
+  const pipelineStageDurations = {};
+  const openaiCalls = [];
+  const warnedThresholds = new Set();
+  const partialPipelineState = {
+    retrievalCompleted: false,
+    classificationCompleted: false,
+    generationStarted: false,
+    generationCompleted: false,
+    complianceStarted: false,
+    complianceCompleted: false,
+    retrievedCount: 0,
+    displayedSourceCardCount: 0,
+    sourceAvailabilityStatusBeforeTimeout: null,
+    sourceLabelsBeforeTimeout: [],
+    retrievalLayerCounts: {}
+  };
+
+  const elapsedMs = () => now() - startedAt;
+  const remainingBudgetMs = () => Math.max(0, budgetMs - elapsedMs());
+
+  function warnIfNeeded(checkpoint) {
+    const remaining = remainingBudgetMs();
+    for (const threshold of PIPELINE_BUDGET_WARNING_THRESHOLDS_MS) {
+      if (remaining <= threshold && !warnedThresholds.has(threshold)) {
+        warnedThresholds.add(threshold);
+        console.warn("[PIPELINE_BUDGET_WARNING]", {
+          checkpoint,
+          elapsedMs: elapsedMs(),
+          remainingBudgetMs: remaining,
+          thresholdMs: threshold,
+          budgetMs
+        });
+      }
+    }
+  }
+
+  function checkpoint(event, stageName = null) {
+    const entry = {
+      event,
+      stageName,
+      at: new Date(now()).toISOString(),
+      elapsedMs: elapsedMs(),
+      remainingBudgetMs: remainingBudgetMs(),
+      budgetMs
+    };
+    pipelineTimings[event] = entry;
+    warnIfNeeded(event);
+    console.log(`[${event}]`, {
+      elapsedMs: entry.elapsedMs,
+      remainingBudgetMs: entry.remainingBudgetMs,
+      budgetMs
+    });
+    return entry;
+  }
+
+  function stageStarted(event, stageName) {
+    const entry = checkpoint(event, stageName);
+    pipelineStageDurations[stageName] = {
+      startedAt: entry.at,
+      completedAt: null,
+      durationMs: null,
+      status: "started"
+    };
+    return entry;
+  }
+
+  function stageCompleted(event, stageName, extra = {}) {
+    const entry = checkpoint(event, stageName);
+    const startedAtIso = pipelineStageDurations[stageName]?.startedAt;
+    const startedAtMs = startedAtIso ? Date.parse(startedAtIso) : now();
+    pipelineStageDurations[stageName] = {
+      ...pipelineStageDurations[stageName],
+      ...extra,
+      completedAt: entry.at,
+      durationMs: Number.isFinite(startedAtMs) ? now() - startedAtMs : null,
+      status: "completed"
+    };
+    return entry;
+  }
+
+  function classifyTimeoutType() {
+    if (!partialPipelineState.classificationCompleted) return "CLASSIFICATION_TIMEOUT";
+    if (!partialPipelineState.retrievalCompleted) return "RETRIEVAL_OPERATION_TIMEOUT";
+    if (partialPipelineState.generationStarted && !partialPipelineState.generationCompleted) return "GENERATION_TIMEOUT";
+    if (partialPipelineState.complianceStarted && !partialPipelineState.complianceCompleted) return "COMPLIANCE_TIMEOUT";
+    if (pipelineStageDurations.rendering?.status === "started" && pipelineStageDurations.rendering?.status !== "completed") return "RENDERING_TIMEOUT";
+    return "UNKNOWN_PIPELINE_TIMEOUT";
+  }
+
+  function diagnostics(timeout = false) {
+    const timeoutType = timeout ? classifyTimeoutType() : null;
+    return {
+      timeout,
+      timeoutType,
+      elapsedMs: elapsedMs(),
+      budgetMs,
+      pipelineTimings,
+      pipelineStageDurations,
+      partialPipelineState: { ...partialPipelineState },
+      openaiCalls: [...openaiCalls]
+    };
+  }
+
+  return {
+    budgetMs,
+    pipelineTimings,
+    pipelineStageDurations,
+    partialPipelineState,
+    openaiCalls,
+    elapsedMs,
+    remainingBudgetMs,
+    checkpoint,
+    stageStarted,
+    stageCompleted,
+    classifyTimeoutType,
+    diagnostics
+  };
+}
+
+function extractRetrievalLayerCounts(retrievalDiagnostics = {}) {
+  return {
+    exactAuthorityMatches: retrievalDiagnostics?.exactAuthorityMatches ?? null,
+    citationVariantMatches: retrievalDiagnostics?.citationVariantMatches ?? null,
+    metadataMatches: retrievalDiagnostics?.metadataMatches ?? null,
+    contentKeywordMatches: retrievalDiagnostics?.contentKeywordMatches ?? null,
+    semanticMatches: retrievalDiagnostics?.semanticMatches ?? null,
+    fallbackMatches: retrievalDiagnostics?.fallbackMatches ?? null,
+    supabaseFallbackMatches: retrievalDiagnostics?.supabaseFallbackMatches ?? null
+  };
 }
 
 function detectQueryFlags(issueClassification, hook = "/ask") {
@@ -1286,12 +1425,24 @@ export async function runPipeline({
   model,
   conversationHistory = [],
   issueClassificationOverride = null,
-  modeOverride = null
+  modeOverride = null,
+  instrumentationReceiver = null,
+  routeBudgetMs = ROUTE_BUDGET_MS
 } = {}) {
   const trace          = { steps: [], warnings: [] };
   const ctx            = {};
   const traceId        = generateTraceId();
   const pipelineStartMs = Date.now();
+  const timing         = createPipelineInstrumentation({ budgetMs: routeBudgetMs });
+  const publishDiagnostics = (timeout = false) => {
+    const diagnostics = timing.diagnostics(timeout);
+    if (typeof instrumentationReceiver === "function") {
+      instrumentationReceiver(diagnostics);
+    }
+    return diagnostics;
+  };
+
+  publishDiagnostics(false);
 
   startTrace({
     traceId,
@@ -1344,13 +1495,18 @@ export async function runPipeline({
         domainBoundaryConfidence: _pipelineBoundaryCheck.confidence,
         detectedDomain:           _pipelineBoundaryCheck.detectedDomain,
         pipelineVersion:          PIPELINE_VERSION,
+        diagnostics:              publishDiagnostics(false),
       };
     }
   }
   // ── End Defense-in-depth ──────────────────────────────────────────────────
 
   // ── Step 1: Issue Classification ──────────────────────────────────────────
+  timing.stageStarted("CLASSIFICATION_STARTED", "classification");
   ctx.issueClassification = issueClassificationOverride || classify(query);
+  timing.partialPipelineState.classificationCompleted = true;
+  timing.stageCompleted("CLASSIFICATION_COMPLETE", "classification");
+  publishDiagnostics(false);
   trace.steps.push({ step: 1, name: "issueClassification", done: true });
 
   // ── Step 2: Sub-Prompt / Mode Routing ────────────────────────────────────
@@ -1380,11 +1536,14 @@ export async function runPipeline({
     authorityType: a,
     source: a
   }));
+  timing.stageStarted("AUTHORITY_RESOLUTION_STARTED", "authorityResolution");
   ctx.rankedAuthorities = rerankByHierarchy(authorityDocs, query);
   trace.steps.push({ step: 3, name: "authorityRanking", count: ctx.rankedAuthorities.length, done: true });
 
   // ── Step 4: Supersession Filter ───────────────────────────────────────────
   ctx.activeAuthorities = applySupersessionFilter(ctx.rankedAuthorities);
+  timing.stageCompleted("AUTHORITY_RESOLUTION_COMPLETE", "authorityResolution");
+  publishDiagnostics(false);
   trace.steps.push({ step: 4, name: "supersessionFilter", done: true });
 
   // ── Step 5: Issue-Targeted Retrieval (Law 3) ──────────────────────────────
@@ -1418,6 +1577,8 @@ export async function runPipeline({
   };
   const RETRIEVAL_STEP_TIMEOUT_MS = _RETRIEVAL_TIMEOUT_MAP[ctx.mode] ?? 35_000;
   console.log("[RETRIEVAL TIMEOUT CONFIG]", { mode: ctx.mode, timeoutMs: RETRIEVAL_STEP_TIMEOUT_MS });
+  timing.stageStarted("RETRIEVAL_STARTED", "retrieval");
+  publishDiagnostics(false);
 
   // Authority-priority routing wrapper.
   // callSearchCallable() passes opts.retrievalLayer — each layer dispatches to the
@@ -1723,6 +1884,15 @@ export async function runPipeline({
   }
 
   trace.steps.push({ step: 5, name: "retrieval", chunksFound: ctx.retrievedChunks.length, done: true });
+  timing.partialPipelineState.retrievalCompleted = !Boolean(ctx.retrievalDiagnostics?.timedOut);
+  timing.partialPipelineState.retrievedCount = ctx.retrievedChunks.length;
+  timing.partialPipelineState.retrievalLayerCounts = extractRetrievalLayerCounts(ctx.retrievalDiagnostics || {});
+  timing.stageCompleted("RETRIEVAL_COMPLETE", "retrieval", {
+    timedOut: Boolean(ctx.retrievalDiagnostics?.timedOut),
+    retrievedCount: ctx.retrievedChunks.length,
+    retrievalLayerCounts: timing.partialPipelineState.retrievalLayerCounts
+  });
+  publishDiagnostics(false);
 
   // ── TEMP TRACE: Stage 1-3 — retrieval output + authority distribution ──────
   // Remove after retrieval audit is complete.
@@ -1932,6 +2102,21 @@ export async function runPipeline({
 
   // ── Step 14: OpenAI Completion ────────────────────────────────────────────
   let openAiResult;
+  const openaiCallTiming = {
+    purpose: "answer_generation",
+    model,
+    startedAt: new Date().toISOString(),
+    completedAt: null,
+    durationMs: null,
+    status: "started",
+    errorCode: null,
+    errorType: null
+  };
+  const openaiCallStartMs = Date.now();
+  timing.openaiCalls.push(openaiCallTiming);
+  timing.partialPipelineState.generationStarted = true;
+  timing.stageStarted("GENERATION_STARTED", "generation");
+  publishDiagnostics(false);
   try {
     openAiResult = await callOpenAIWithOrchestration({
       openai,
@@ -1958,7 +2143,15 @@ export async function runPipeline({
       },
       _traceId:             traceId
     });
+    openaiCallTiming.completedAt = new Date().toISOString();
+    openaiCallTiming.durationMs = Date.now() - openaiCallStartMs;
+    openaiCallTiming.status = "completed";
   } catch (e) {
+    openaiCallTiming.completedAt = new Date().toISOString();
+    openaiCallTiming.durationMs = Date.now() - openaiCallStartMs;
+    openaiCallTiming.status = "error";
+    openaiCallTiming.errorCode = e?.code || e?.status || null;
+    openaiCallTiming.errorType = e?.type || e?.name || e?.constructor?.name || null;
     const label = `OpenAI step-14 error [${e?.name || e?.constructor?.name}] status=${e?.status} code=${e?.code}: ${e?.message}`;
     trace.warnings.push({ step: 14, warning: label });
     if ((ctx.rerankedChunks || []).length > 0) {
@@ -1986,11 +2179,21 @@ export async function runPipeline({
         }
       };
     } else {
+      publishDiagnostics(false);
       throw new Error(label);
     }
   }
   ctx.rawAnswer    = openAiResult?.answer || "";
   ctx.orchestration = openAiResult?.orchestration || {};
+  if (!openaiCallTiming.model) {
+    openaiCallTiming.model = ctx.orchestration?.diagnostics?.model || ctx.orchestration?.model || null;
+  }
+  timing.partialPipelineState.generationCompleted = true;
+  timing.stageCompleted("GENERATION_COMPLETE", "generation", {
+    openaiDurationMs: openaiCallTiming.durationMs,
+    model: openaiCallTiming.model
+  });
+  publishDiagnostics(false);
   trace.steps.push({ step: 14, name: "openAiCompletion", done: true });
 
   // Refine rendering mode from the orchestration engine's determineMode() result.
@@ -2020,6 +2223,7 @@ export async function runPipeline({
   }
 
   // ── Step 15: Format Answer ────────────────────────────────────────────────
+  timing.stageStarted("RENDERING_STARTED", "rendering");
   ctx.formattedAnswer = renderTinaAnswer({
     answer:              ctx.rawAnswer,
     sources:             ctx.rerankedChunks || [],
@@ -2029,9 +2233,14 @@ export async function runPipeline({
     responsePlan:        ctx.responsePlan,
     conflict:            ctx.conflictAnalysis?.hasConflict ? ctx.conflictAnalysis : null
   });
+  timing.stageCompleted("RENDERING_COMPLETE", "rendering");
+  publishDiagnostics(false);
   trace.steps.push({ step: 15, name: "answerRenderer", done: true });
 
   // ── Step 16: Final Compliance Validation ──────────────────────────────────
+  timing.partialPipelineState.complianceStarted = true;
+  timing.stageStarted("COMPLIANCE_STARTED", "compliance");
+  publishDiagnostics(false);
   const compliantResult = enforceFinalAnswerCompliance({
     draftAnswer:         ctx.formattedAnswer,
     sources:             ctx.rerankedChunks || [],
@@ -2048,6 +2257,9 @@ export async function runPipeline({
     statusReason:        ctx.statusReason,
     query
   });
+  timing.partialPipelineState.complianceCompleted = true;
+  timing.stageCompleted("COMPLIANCE_COMPLETE", "compliance");
+  publishDiagnostics(false);
   trace.steps.push({ step: 16, name: "finalAnswerCompliance", done: true });
   const saeHardFailBlocked = hasSaeHardFail(compliantResult);
   const saeHardFailFallback = saeHardFailBlocked
@@ -2074,6 +2286,9 @@ export async function runPipeline({
     (isAskMode && ctx.mode === "FAST_DEFINITION")
       ? buildEducationalSources(ctx.rerankedChunks, ctx.responseStyle, query)
       : null;
+
+  timing.stageStarted("SOURCE_SELECTION_STARTED", "sourceSelection");
+  publishDiagnostics(false);
 
   // Build provision-aware source cards with dedup.
   // Title = canonical authority label only (e.g. "NIRC Sec. 105", "RR No. 16-2005").
@@ -2597,6 +2812,27 @@ export async function runPipeline({
     relatedSourceCount:       ctx.saeStatus === "RELATED_AUTHORITY_ONLY" ? ctx.suppressedCandidates?.length || 0 : 0
   };
 
+  console.log("[SOURCE AVAILABILITY]", {
+    sourceAvailability: _sourceAvail.sourceAvailability,
+    reason:             _sourceAvail.sourceAvailabilityReason,
+    retrievalTimedOut:  _sourceAvail.retrievalTimedOut,
+    retrievedCount:     _sourceAvail.retrievedSourceCount,
+    displayedCount:     _sourceAvail.displayedSourceCount,
+    relatedCount:       _sourceAvail.relatedSourceCount,
+    mode:               ctx.mode,
+    hook
+  });
+  timing.partialPipelineState.displayedSourceCardCount = finalSourceCards.length;
+  timing.partialPipelineState.sourceAvailabilityStatusBeforeTimeout = _sourceAvail.sourceAvailability;
+  timing.partialPipelineState.sourceLabelsBeforeTimeout = finalSourceCards
+    .map(c => c.normalizedReference || c.citation || c.title || "")
+    .filter(Boolean);
+  timing.stageCompleted("SOURCE_SELECTION_COMPLETE", "sourceSelection", {
+    displayedSourceCardCount: finalSourceCards.length,
+    sourceAvailability: _sourceAvail.sourceAvailability
+  });
+  publishDiagnostics(false);
+
   // Apply mode-specific answer modifications based on source availability.
   // finalAnswer is const; _outputAnswer holds the post-modification result.
   let _outputAnswer = finalAnswer;
@@ -2640,6 +2876,9 @@ export async function runPipeline({
     new Promise(resolve => setTimeout(resolve, 2000))
   ]);
 
+  timing.checkpoint("RESPONSE_COMPLETE", "response");
+  const finalDiagnostics = publishDiagnostics(false);
+
   return {
     answer:                           _outputAnswer,
     sources:                          ctx.rerankedChunks || [],
@@ -2671,6 +2910,7 @@ export async function runPipeline({
     orchestrationMode:   ctx.mode,
     responseMode:        ctx.mode,
     pipelineVersion:     PIPELINE_VERSION,
+    diagnostics:         finalDiagnostics,
     traceId,
     trace,
     saeHardFailBlocked,
