@@ -2064,6 +2064,40 @@ export async function runPipeline({
           };
           ctx._fastEwtAuthorityPath     = true;
           ctx._preGenLockedAuthorities  = _pgLockedRefs;
+          ctx.authorityLockApplied      = true;
+          ctx.lockedAuthorities         = _pgLockedRefs;
+          ctx.preGenerationSourceCards  = ctx.rerankedChunks.filter(c =>
+            isEwtBridgeEligible(ctx.issueClassification, c, query) ||
+            sourceMaterialTermsMatchAuthority(c, query)
+          );
+
+          const _pgComplexity = String(ctx.issueClassification?.complexity || "").toLowerCase();
+          const _pgPriorMode  = ctx.mode;
+          if (_pgComplexity === "simple" || _pgComplexity === "standard") {
+            ctx.mode = "FAST_DEFINITION";
+            console.log("[FAST_DEFINITION_MODE_PRESERVED]", {
+              query:       query.slice(0, 120),
+              priorMode:   _pgPriorMode,
+              complexity:  _pgComplexity,
+              lockedCount: _pgAccepted
+            });
+          } else {
+            console.log("[COMPACT_EWT_GENERATION_PATH]", {
+              query:       query.slice(0, 120),
+              priorMode:   _pgPriorMode,
+              complexity:  _pgComplexity,
+              lockedCount: _pgAccepted
+            });
+          }
+
+          console.log("[PRE_GENERATION_AUTHORITY_LOCK_APPLIED]", {
+            query:                query.slice(0, 120),
+            authorityLockApplied: true,
+            lockedAuthorities:    _pgLockedRefs,
+            preGenCardCount:      ctx.preGenerationSourceCards.length,
+            mode:                 ctx.mode,
+            saeStatus:            ctx.saeStatus
+          });
 
           console.log("[FAST_EWT_AUTHORITY_PATH]", {
             query:          query.slice(0, 120),
@@ -2294,6 +2328,22 @@ export async function runPipeline({
   publishDiagnostics(false);
   trace.steps.push({ step: 14, name: "openAiCompletion", done: true });
 
+  // ── PATCH-017C: Post-Generation Timeout Safeguard ────────────────────────
+  if (ctx._fastEwtAuthorityPath && ctx.saeStatus === "AUTHORITY_FOUND") {
+    const _pgElapsed = timing.elapsedMs();
+    const _pgBudget  = timing.budgetMs;
+    if (_pgElapsed > _pgBudget * 0.9) {
+      console.warn("[POST_GENERATION_TIMEOUT_WITH_AUTHORITY_FOUND]", {
+        query:             query.slice(0, 120),
+        elapsedMs:         _pgElapsed,
+        budgetMs:          _pgBudget,
+        saeStatus:         ctx.saeStatus,
+        lockedAuthorities: ctx.lockedAuthorities || ctx._preGenLockedAuthorities || [],
+        preGenCardCount:   ctx.preGenerationSourceCards?.length ?? 0
+      });
+    }
+  }
+
   // Refine rendering mode from the orchestration engine's determineMode() result.
   // ctx.mode (Step 2) reflects only the hook type (e.g. "STANDARD_TAX_MODE" for /ask).
   // The orchestration engine analyzes query intent and returns a specific rendering
@@ -2306,8 +2356,18 @@ export async function runPipeline({
   ]);
   const orchestrationRefinedMode = ctx.orchestration?.mode;
   if (orchestrationRefinedMode && !PINNED_HOOK_MODES.has(ctx.mode)) {
-    console.log(`[TINA MODE] Refining ctx.mode from '${ctx.mode}' → '${orchestrationRefinedMode}' (orchestration)`);
-    ctx.mode = orchestrationRefinedMode;
+    if (ctx._fastEwtAuthorityPath && orchestrationRefinedMode === "LEGAL_ANALYSIS") {
+      console.log("[LEGAL_ANALYSIS_ESCALATION_SUPPRESSED]", {
+        query:          query.slice(0, 120),
+        primaryIssue:   ctx.issueClassification?.primaryIssue,
+        suppressedMode: orchestrationRefinedMode,
+        preservedMode:  ctx.mode,
+        saeStatus:      ctx.saeStatus
+      });
+    } else {
+      console.log(`[TINA MODE] Refining ctx.mode from '${ctx.mode}' → '${orchestrationRefinedMode}' (orchestration)`);
+      ctx.mode = orchestrationRefinedMode;
+    }
   }
   ctx.responseStyle = ctx.orchestration?.responseStyle || null;
   // isAskMode: plain queries (no explicit hook) are rendering-equivalent to /ask.
