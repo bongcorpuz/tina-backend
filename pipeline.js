@@ -1583,6 +1583,227 @@ export async function runPipeline({
   timing.stageStarted("RETRIEVAL_STARTED", "retrieval");
   publishDiagnostics(false);
 
+  // ── PATCH-017F: Pre-retrieval EWT/WHT authority short-circuit ─────────────
+  // Simple EWT/WHT questions only need an exact hit on the core governing
+  // authorities before the existing PATCH-017E/017D fast path can take over.
+  const _patch017fCanonicalAuthorityKey = (value = "") => {
+    const raw = String(value || "");
+    const compact = canonicalSourceKey(raw);
+    if (!compact) return "";
+    if (/\b(?:nirc|tax\s*code|national\s*internal\s*revenue\s*code)\s*(?:sec(?:tion)?\.?\s*)?57\b/i.test(raw) ||
+        compact === "nircsec57" || compact === "taxcodesec57" ||
+        compact === "nationalinternalrevenuecodesec57") return "nircsec57";
+    if (/\b(?:nirc|tax\s*code|national\s*internal\s*revenue\s*code)\s*(?:sec(?:tion)?\.?\s*)?58\b/i.test(raw) ||
+        compact === "nircsec58" || compact === "taxcodesec58" ||
+        compact === "nationalinternalrevenuecodesec58") return "nircsec58";
+    if (/\b(?:rr|rev(?:enue)?\.?\s*regs?|rev(?:enue)?\.?\s*reg(?:ulation)?s?)\s*(?:no\.?\s*)?2\s*[-.]?\s*(?:98|1998)\b/i.test(raw) ||
+        compact === "rr298" || compact === "rr21998" ||
+        compact === "revenueregulations298" || compact === "revenueregulation298" ||
+        compact === "revenueregulations21998" || compact === "revenueregulation21998") return "rr298";
+    return compact;
+  };
+
+  const _patch017fDocAuthorityKeys = (doc = {}) => {
+    const meta = doc.metadata || {};
+    const values = [
+      doc.normalizedReference,
+      doc.normalized_reference,
+      doc.citation,
+      doc.title,
+      doc.document_title,
+      doc.source,
+      doc.sourceTitle,
+      meta.normalizedReference,
+      meta.normalized_reference,
+      meta.citation,
+      meta.title,
+      meta.documentTitle,
+      meta.document_title,
+      meta.originalFileName,
+      meta.original_file_name,
+      meta.source,
+      meta.sectionScope,
+      meta.section_scope,
+      meta.sectionHeading,
+      meta.section_heading
+    ];
+    return new Set(values.map(_patch017fCanonicalAuthorityKey).filter(Boolean));
+  };
+
+  const _patch017fTargetKeys = new Set(["nircsec57", "nircsec58", "rr298"]);
+  const _patch017fExactAuthorityRefs = [
+    "NIRC Sec. 57",
+    "NIRC Section 57",
+    "Tax Code Sec. 57",
+    "National Internal Revenue Code Sec. 57",
+    "NIRC Sec. 58",
+    "NIRC Section 58",
+    "Tax Code Sec. 58",
+    "National Internal Revenue Code Sec. 58",
+    "RR 2-98",
+    "RR No. 2-98",
+    "RR 2-1998",
+    "RR No. 2-1998",
+    "Revenue Regulations No. 2-98",
+    "Revenue Regulations No. 2-1998"
+  ];
+  const _patch017fPrimaryIssue = String(ctx.issueClassification?.primaryIssue || "").toUpperCase();
+  const _patch017fPrimaryDomain = String(
+    ctx.issueClassification?.primaryDomain ||
+    ctx.issueClassification?.primaryDomainCode ||
+    ""
+  ).toUpperCase();
+  const _patch017fQuery = String(query || "");
+  const _patch017fTargetAuthorities = ctx.issueClassification?.targetAuthorities || [];
+  const _patch017fComplexity = String(ctx.issueClassification?.complexity || "").toLowerCase();
+  const _patch017fIsWht =
+    _patch017fPrimaryIssue === "WITHHOLDING" ||
+    _patch017fPrimaryIssue === "WHT" ||
+    _patch017fPrimaryDomain === "WHT" ||
+    _patch017fPrimaryDomain.includes("WITHHOLDING");
+  const _patch017fHasTgts = _patch017fTargetAuthorities.some((target) =>
+    _patch017fTargetKeys.has(_patch017fCanonicalAuthorityKey(target))
+  );
+  const _patch017fHasKw = /\b(ewt|withholding|advertising|rate)\b/i.test(_patch017fQuery);
+  const _patch017fSimple =
+    _patch017fComplexity === "" ||
+    _patch017fComplexity === "simple" ||
+    _patch017fComplexity === "standard" ||
+    _patch017fComplexity === "moderate";
+  const _patch017fEligible = _patch017fIsWht && (_patch017fHasTgts || _patch017fHasKw) && _patch017fSimple;
+
+  console.log("[PATCH_017F_PRE_RETRIEVAL_EWT_CHECK]", {
+    query: _patch017fQuery.slice(0, 160),
+    primaryIssue: ctx.issueClassification?.primaryIssue,
+    primaryDomain: ctx.issueClassification?.primaryDomain || ctx.issueClassification?.primaryDomainCode,
+    subIssue: ctx.issueClassification?.subIssue,
+    complexity: ctx.issueClassification?.complexity,
+    targetAuthorities: _patch017fTargetAuthorities,
+    eligible: _patch017fEligible
+  });
+
+  let _patch017fRetrievalRaw = null;
+  if (_patch017fEligible) {
+    const _patch017fExactHits = await exactAuthoritySearch({
+      query: "RR 2-98 NIRC Sec. 57 NIRC Sec. 58",
+      supabase,
+      topK: 18,
+      targetAuthorities: [...new Set([
+        ..._patch017fTargetAuthorities.filter((target) =>
+          _patch017fTargetKeys.has(_patch017fCanonicalAuthorityKey(target))
+        ),
+        ..._patch017fExactAuthorityRefs
+      ])]
+    });
+    const _patch017fMatched = [];
+
+    for (const c of _patch017fExactHits) {
+      const keys = _patch017fDocAuthorityKeys(c);
+      const matchedAuthority = [...keys].find((key) => _patch017fTargetKeys.has(key));
+      if (matchedAuthority) _patch017fMatched.push({ c, matchedAuthority });
+    }
+
+    const _patch017fAuthorities = [...new Set(
+      _patch017fMatched.map(({ matchedAuthority }) => matchedAuthority)
+    )];
+    console.log("[PATCH_017F_EXACT_AUTHORITY_HITS]", {
+      foundCount: _patch017fMatched.length,
+      foundAuthorities: _patch017fAuthorities
+    });
+
+    if (_patch017fMatched.length > 0) {
+      const _patch017fEwtTerms = /\b(advertising|rate|income payments?|withholding|expanded withholding|ewt|2\.57\.2)\b/i;
+      const _patch017fRank = ({ c, matchedAuthority }) => {
+        const text = String(c.text || c.content || "");
+        if (matchedAuthority === "rr298" && _patch017fEwtTerms.test(text)) return 0;
+        if (matchedAuthority === "rr298") return 1;
+        if (matchedAuthority === "nircsec57") return 2;
+        if (matchedAuthority === "nircsec58") return 3;
+        return 4;
+      };
+      _patch017fMatched.sort((a, b) => _patch017fRank(a) - _patch017fRank(b));
+
+      const _patch017fCompact = _patch017fMatched.slice(0, 6).map(({ c, matchedAuthority }) => {
+        const body = String(c.text || c.content || "").slice(0, 1200);
+        return {
+          id: c.id,
+          title: c.title || c.document_title || c.sourceTitle || c.source,
+          citation: c.citation,
+          normalizedReference: c.normalizedReference || c.normalized_reference || matchedAuthority,
+          authorityType: c.authorityType || c.authority_type,
+          authority_type: c.authority_type || c.authorityType,
+          authorityLevel: c.authorityLevel || c.authority_level,
+          authority_level: c.authority_level || c.authorityLevel,
+          text: body,
+          content: body,
+          url: c.url,
+          score: c.score,
+          retrievalLayer: "LAYER_1_EXACT_NORMALIZED_AUTHORITY",
+          sourceType: c.sourceType,
+          targetAuthorityMatch: true,
+          exactAuthorityMatch: true,
+          issueClassificationMatch: true,
+          patch017fPreRetrievalShortCircuit: true
+        };
+      });
+
+      console.log("[PATCH_017F_PRE_RETRIEVAL_SHORT_CIRCUIT_APPLIED]", {
+        skippedNormalRetrieval: true,
+        skippedLayers: [
+          "LAYER_2_CITATION_VARIANT",
+          "LAYER_3_TITLE_PATH_METADATA",
+          "LAYER_4_CONTENT_KEYWORD",
+          "LAYER_5_VECTOR_SEMANTIC",
+          "LAYER_6_BROAD_TAX_DOMAIN_FALLBACK"
+        ],
+        compactCount: _patch017fCompact.length,
+        authorities: _patch017fAuthorities,
+        elapsedMs: timing.elapsedMs(),
+        remainingBudgetMs: timing.remainingBudgetMs()
+      });
+
+      ctx._fastEwtAuthorityPath = true;
+      ctx.saeStatus = "AUTHORITY_FOUND";
+      ctx.sourceAvailability = {
+        ...(ctx.sourceAvailability || {}),
+        saeStatus: "AUTHORITY_FOUND",
+        sourceAvailability: "AUTHORITY_FOUND",
+        sourceStatus: "AUTHORITY_FOUND",
+        limitationRequired: false,
+        statusReason: "[PATCH-017F] Exact indexed EWT/WHT authority chunk found before expansion."
+      };
+      _patch017fRetrievalRaw = {
+        retrievedSources: _patch017fCompact,
+        sources: _patch017fCompact,
+        retrievalDiagnostics: {
+          exactAuthorityMatches: _patch017fMatched.length,
+          citationVariantMatches: 0,
+          metadataMatches: 0,
+          contentKeywordMatches: 0,
+          semanticMatches: 0,
+          fallbackMatches: 0,
+          supabaseFallbackMatches: 0,
+          patch017fPreRetrievalShortCircuit: true,
+          skippedLayers: [
+            "LAYER_2_CITATION_VARIANT",
+            "LAYER_3_TITLE_PATH_METADATA",
+            "LAYER_4_CONTENT_KEYWORD",
+            "LAYER_5_VECTOR_SEMANTIC",
+            "LAYER_6_BROAD_TAX_DOMAIN_FALLBACK"
+          ]
+        }
+      };
+    } else {
+      console.log("[PATCH_017F_PRE_RETRIEVAL_SHORT_CIRCUIT_NOT_APPLIED]", {
+        reason: "no_target_authority_chunk_found"
+      });
+    }
+  } else {
+    console.log("[PATCH_017F_PRE_RETRIEVAL_SHORT_CIRCUIT_NOT_APPLIED]", {
+      reason: "not_eligible"
+    });
+  }
+
   // Authority-priority routing wrapper.
   // callSearchCallable() passes opts.retrievalLayer — each layer dispatches to the
   // correct vector-store.js function (metadata-column searches only; no semantic).
@@ -1751,72 +1972,76 @@ export async function runPipeline({
   // _retrievalWon is set inside the .then() wrapper before Promise.race resolves,
   // so it is guaranteed true when checked immediately after the await if retrieval
   // completed before the timeout arm fired.
-  let _retrievalWon = false;
-  const retrievalPromise = retrieveRelevantSources({
-    query,
-    supabase,
-    vectorSearch:         _vectorSearchFn,
-    issueClassification:  ctx.issueClassification,
-    targetAuthorities:    controllingAuthorities,
-    controllingAuthorities,
-    topK:   12,
-    poolK:  48
-  }).then((r) => { _retrievalWon = true; return r; });
+  let _retrievalWon = Boolean(_patch017fRetrievalRaw);
+  let _retrievalRaw = _patch017fRetrievalRaw;
 
-  const timeoutFallbackPromise = new Promise(resolve =>
-    setTimeout(() => {
-      trace.warnings.push({ step: 5, warning: `Retrieval timed out after ${RETRIEVAL_STEP_TIMEOUT_MS} ms — proceeding with empty chunks`, timedOut: true });
-      // Return object shape (not bare []) so the normalizer stores retrievalDiagnostics
-      // with timedOut: true and downstream code can distinguish timeout from
-      // genuine empty retrieval.  The normalizer handles both [] and object shapes.
-      resolve({
-        retrievedSources:     [],
-        sources:              [],
-        retrievalDiagnostics: {
-          timedOut:  true,
-          timeoutMs: RETRIEVAL_STEP_TIMEOUT_MS
-        }
+  if (!_retrievalRaw) {
+    const retrievalPromise = retrieveRelevantSources({
+      query,
+      supabase,
+      vectorSearch:         _vectorSearchFn,
+      issueClassification:  ctx.issueClassification,
+      targetAuthorities:    controllingAuthorities,
+      controllingAuthorities,
+      topK:   12,
+      poolK:  48
+    }).then((r) => { _retrievalWon = true; return r; });
+
+    const timeoutFallbackPromise = new Promise(resolve =>
+      setTimeout(() => {
+        trace.warnings.push({ step: 5, warning: `Retrieval timed out after ${RETRIEVAL_STEP_TIMEOUT_MS} ms — proceeding with empty chunks`, timedOut: true });
+        // Return object shape (not bare []) so the normalizer stores retrievalDiagnostics
+        // with timedOut: true and downstream code can distinguish timeout from
+        // genuine empty retrieval.  The normalizer handles both [] and object shapes.
+        resolve({
+          retrievedSources:     [],
+          sources:              [],
+          retrievalDiagnostics: {
+            timedOut:  true,
+            timeoutMs: RETRIEVAL_STEP_TIMEOUT_MS
+          }
+        });
+      }, RETRIEVAL_STEP_TIMEOUT_MS)
+    );
+
+    // SOURCE_LOOKUP awaits retrieval directly — the timeout fallback must not win
+    // before retrieval completes, which would produce a false-empty response while
+    // the real retrieval runs in the background.  All other modes keep the existing
+    // Promise.race behaviour so their latency characteristics are unchanged.
+    const isSourceLookupRetrieval =
+      String(ctx.mode || "").toUpperCase() === "SOURCE_LOOKUP";
+
+    // Authority-critical retrieval: queries whose answer is meaningless without the
+    // canonical primary authorities (e.g. "What is VAT?" requires Sec. 105-108).
+    // Accepting a timeout-empty fallback would cascade to zero source cards even
+    // though retrieval eventually finds the right documents.  Like SOURCE_LOOKUP,
+    // these await the real retrieval promise and skip the race entirely.
+    const isAuthorityCriticalRetrieval =
+      ctx.issueClassification?.subIssue === "VAT_DEFINITION" ||
+      ctx.issueClassification?.subIssue === "WITHHOLDING_TAX_DEFINITION" ||
+      ctx.issueClassification?.subIssue === "EWT" ||
+      ctx.issueClassification?.subIssue === "ESTATE_TAX_DEFINITION" ||
+      ctx.issueClassification?.subIssue === "ESTATE_TAX" ||
+      ctx.issueClassification?.subIssue === "ESTATE_DEDUCTIONS" ||
+      ctx.issueClassification?.primaryIssue === "WITHHOLDING" ||
+      ctx.issueClassification?.primaryIssue === "EST" ||
+      ctx.issueClassification?.primaryIssue === "ESTATE_TAX" ||
+      String(ctx.issueClassification?.retrievalStrategy || "").includes("VAT_DEFINITION") ||
+      ctx.issueClassification?.requiresAuthorityCriticalRetrieval === true;
+
+    if (isAuthorityCriticalRetrieval) {
+      console.log("[RETRIEVAL AWAIT MODE]", {
+        reason:            "authority_critical",
+        mode:              ctx.mode,
+        subIssue:          ctx.issueClassification?.subIssue || null,
+        retrievalStrategy: ctx.issueClassification?.retrievalStrategy || null
       });
-    }, RETRIEVAL_STEP_TIMEOUT_MS)
-  );
+    }
 
-  // SOURCE_LOOKUP awaits retrieval directly — the timeout fallback must not win
-  // before retrieval completes, which would produce a false-empty response while
-  // the real retrieval runs in the background.  All other modes keep the existing
-  // Promise.race behaviour so their latency characteristics are unchanged.
-  const isSourceLookupRetrieval =
-    String(ctx.mode || "").toUpperCase() === "SOURCE_LOOKUP";
-
-  // Authority-critical retrieval: queries whose answer is meaningless without the
-  // canonical primary authorities (e.g. "What is VAT?" requires Sec. 105-108).
-  // Accepting a timeout-empty fallback would cascade to zero source cards even
-  // though retrieval eventually finds the right documents.  Like SOURCE_LOOKUP,
-  // these await the real retrieval promise and skip the race entirely.
-  const isAuthorityCriticalRetrieval =
-    ctx.issueClassification?.subIssue === "VAT_DEFINITION" ||
-    ctx.issueClassification?.subIssue === "WITHHOLDING_TAX_DEFINITION" ||
-    ctx.issueClassification?.subIssue === "EWT" ||
-    ctx.issueClassification?.subIssue === "ESTATE_TAX_DEFINITION" ||
-    ctx.issueClassification?.subIssue === "ESTATE_TAX" ||
-    ctx.issueClassification?.subIssue === "ESTATE_DEDUCTIONS" ||
-    ctx.issueClassification?.primaryIssue === "WITHHOLDING" ||
-    ctx.issueClassification?.primaryIssue === "EST" ||
-    ctx.issueClassification?.primaryIssue === "ESTATE_TAX" ||
-    String(ctx.issueClassification?.retrievalStrategy || "").includes("VAT_DEFINITION") ||
-    ctx.issueClassification?.requiresAuthorityCriticalRetrieval === true;
-
-  if (isAuthorityCriticalRetrieval) {
-    console.log("[RETRIEVAL AWAIT MODE]", {
-      reason:            "authority_critical",
-      mode:              ctx.mode,
-      subIssue:          ctx.issueClassification?.subIssue || null,
-      retrievalStrategy: ctx.issueClassification?.retrievalStrategy || null
-    });
+    _retrievalRaw = (isSourceLookupRetrieval || isAuthorityCriticalRetrieval)
+      ? await retrievalPromise
+      : await Promise.race([retrievalPromise, timeoutFallbackPromise]);
   }
-
-  const _retrievalRaw = (isSourceLookupRetrieval || isAuthorityCriticalRetrieval)
-    ? await retrievalPromise
-    : await Promise.race([retrievalPromise, timeoutFallbackPromise]);
 
   if (_retrievalWon) {
     console.log("[RETRIEVAL COMPLETED BEFORE TIMEOUT]", {
