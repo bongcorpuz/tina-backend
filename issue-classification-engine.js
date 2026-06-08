@@ -149,8 +149,7 @@ const LEGAL_DIMENSION = Object.freeze({
 const AUTHORITY_TYPE = Object.freeze({
   CONSTITUTION: "CONSTITUTION",
   STATUTE: "STATUTE",
-  TAX_TREATY: "TREATY",
-  TREATY: "TREATY",
+  TAX_TREATY: "TAX_TREATY",
   SUPREME_COURT: "SUPREME_COURT",
   CTA_EN_BANC: "CTA_EN_BANC",
   CTA_DIVISION: "CTA_DIVISION",
@@ -199,163 +198,6 @@ function safeArray(value) {
 
 function unique(values = []) {
   return [...new Set((values || []).filter(Boolean))];
-}
-
-const SEMANTIC_NO_MATCH_TAX_TERMS = Object.freeze([
-  "tax",
-  "taxes",
-  "taxable",
-  "taxation",
-  "vat",
-  "value",
-  "added",
-  "withholding",
-  "ewt",
-  "cwt",
-  "fwt",
-  "refund",
-  "credit",
-  "deduction",
-  "deductions",
-  "deductible",
-  "incentive",
-  "incentives",
-  "treaty",
-  "nirc",
-  "bir"
-]);
-
-const SEMANTIC_NO_MATCH_STOPWORDS = Object.freeze(new Set([
-  "a", "an", "and", "are", "as", "at", "be", "by", "can", "does", "for",
-  "from", "how", "in", "is", "it", "of", "on", "or", "our", "the", "to",
-  "under", "what", "when", "where", "which", "who", "why", "with", "we",
-  "subject", "claim", "claims", "mechanics", "philippine", "philippines"
-]));
-
-const SEMANTIC_NO_MATCH_SUPPORTED_TERMS = Object.freeze(new Set([
-  "advertising", "service", "services", "sale", "sales", "goods", "property",
-  "real", "lease", "rental", "import", "export", "importation", "exportation",
-  "resident", "nonresident", "corporation", "individual", "employee", "employer",
-  "compensation", "professional", "contractor", "supplier", "purchase", "expense",
-  "expenses", "ordinary", "necessary", "substantiation", "input", "output",
-  "zero", "rated", "exempt", "gross", "income", "estate", "decedent",
-  "inheritance", "donor", "local", "business", "customs", "tariff", "peza",
-  "boi", "firb", "registered", "enterprise", "assessment", "loa", "pan",
-  "fan", "fdda", "prescription", "waiver", "tcc", "invoice", "receipt",
-  "expanded", "creditable", "final", "corporate"
-]));
-
-function semanticNoMatchTaxConcepts(question = "") {
-  const q = lower(question);
-  const concepts = [];
-  const push = (condition, value) => {
-    if (condition) concepts.push(value);
-  };
-
-  push(/\bvat\b|\bvalue[- ]added\b/i.test(q), "VAT");
-  push(/\bwithholding\b|\bewt\b|\bcwt\b|\bfwt\b/i.test(q), "WITHHOLDING");
-  push(/\btax\s+credit\b|\btcc\b/i.test(q), "TAX_CREDIT");
-  push(/\brefund\b|\bclaim\s+for\s+refund\b/i.test(q), "REFUND");
-  push(/\bdeduction[s]?\b|\bdeductible\b/i.test(q), "DEDUCTION");
-  push(/\bincentive[s]?\b|\bith\b|\bscit\b/i.test(q), "INCENTIVE");
-  push(/\btax\s+treaty\b|\bdouble\s+tax/i.test(q), "TAX_TREATY");
-  push(/\btax\b|\btaxes\b|\btaxable\b|\btaxation\b/i.test(q), "TAX");
-
-  return unique(concepts);
-}
-
-function semanticNoMatchMaterialTerms(question = "") {
-  const taxTermSet = new Set(SEMANTIC_NO_MATCH_TAX_TERMS);
-  const q = lower(question)
-    .replace(/\bvalue[- ]added\s+tax\b/g, " ")
-    .replace(/\btax\s+(?:credit|refund|deduction|treaty|incentive)s?\b/g, " ")
-    .replace(/\bwithholding\s+tax\b/g, " ")
-    .replace(/\bclaim\s+for\s+refund\b/g, " ")
-    .replace(/\bexpanded\s+withholding\b|\bcreditable\s+withholding\b|\bfinal\s+withholding\b/g, " ");
-
-  return unique(
-    q
-      .replace(/[^a-z0-9\s-]/g, " ")
-      .split(/\s+/)
-      .map((term) => term.replace(/^-+|-+$/g, ""))
-      .filter((term) =>
-        term.length >= 3 &&
-        !SEMANTIC_NO_MATCH_STOPWORDS.has(term) &&
-        !taxTermSet.has(term)
-      )
-  );
-}
-
-function buildSemanticNoMatchGuard(question = "") {
-  const taxConcepts = semanticNoMatchTaxConcepts(question);
-  const materialTerms = semanticNoMatchMaterialTerms(question);
-  const unsupportedQualifiers = materialTerms.filter(
-    (term) => !SEMANTIC_NO_MATCH_SUPPORTED_TERMS.has(term)
-  );
-  const active = taxConcepts.length > 0 && unsupportedQualifiers.length >= 2;
-
-  return {
-    active,
-    taxConcepts,
-    materialTerms,
-    unsupportedQualifiers,
-    reason: active ? "tax_concept_with_unsupported_material_qualifiers" : null
-  };
-}
-
-function semanticGuardEvidenceBlob(candidate = {}, issueClassification = {}) {
-  const meta = candidate.metadata || {};
-  return lower([
-    candidate.title,
-    candidate.documentTitle,
-    candidate.document_title,
-    candidate.source,
-    candidate.originalSource,
-    candidate.normalizedReference,
-    candidate.normalized_reference,
-    candidate.citation,
-    candidate.reference,
-    candidate.text,
-    candidate.content,
-    meta.title,
-    meta.documentTitle,
-    meta.document_title,
-    meta.source,
-    meta.normalizedReference,
-    meta.normalized_reference,
-    meta.sectionHeading,
-    meta.section_heading,
-    issueClassification.knownTransactionCategory,
-    issueClassification.transactionCategory,
-    issueClassification.transactionCharacterization
-  ].filter(Boolean).join(" "));
-}
-
-function semanticGuardTermMatches(blob = "", term = "") {
-  const escaped = String(term || "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  return Boolean(escaped) && new RegExp(`\\b${escaped}\\b`, "i").test(lower(blob));
-}
-
-export function hasSemanticNoMatchGuard(issueClassification = {}) {
-  return issueClassification?.semanticNoMatchGuard?.active === true;
-}
-
-export function sourceMaterialTermsMatchAuthority(candidate = {}, issueClassification = {}) {
-  const guard = issueClassification?.semanticNoMatchGuard || {};
-  if (guard.active !== true) {
-    return { matches: true, matchedTerms: [], missingTerms: [] };
-  }
-
-  const terms = safeArray(guard.unsupportedQualifiers || guard.materialTerms);
-  const blob = semanticGuardEvidenceBlob(candidate, issueClassification);
-  const matchedTerms = terms.filter((term) => semanticGuardTermMatches(blob, term));
-  const missingTerms = terms.filter((term) => !matchedTerms.includes(term));
-
-  return {
-    matches: terms.length === 0 || missingTerms.length === 0,
-    matchedTerms,
-    missingTerms
-  };
 }
 
 function normalizeQuery(value = "") {
@@ -463,8 +305,7 @@ function normalizeAuthority(value = "") {
     TRAIN_LAW: "STATUTE",
     CMTA: "STATUTE",
     LGC: "STATUTE",
-    TAX_TREATY: "TREATY",
-    TREATY: "TREATY",
+    TREATY: "TAX_TREATY",
     REVENUE_REGULATION: "RR",
     REVENUE_REGULATIONS: "RR",
     REVENUE_MEMORANDUM_CIRCULAR: "RMC",
@@ -574,8 +415,8 @@ const DEFINITION_AUTHORITY_MAP = Object.freeze({
     primaryIssue: "INCOME_TAX",
     domainCode: "CIT",
     domainName: "Income Tax",
-    targetAuthorities: ["NIRC Sec. 21", "NIRC Sec. 23", "NIRC Sec. 24", "NIRC Sec. 25", "NIRC Sec. 27", "NIRC Sec. 28", "NIRC Sec. 31", "NIRC Sec. 32", "NIRC Sec. 33", "NIRC Sec. 34", "NIRC Sec. 35"],
-    controllingAuthorities: ["NIRC Sec. 21", "NIRC Sec. 23", "NIRC Sec. 24", "NIRC Sec. 25", "NIRC Sec. 27", "NIRC Sec. 28", "NIRC Sec. 31", "NIRC Sec. 32", "NIRC Sec. 33", "NIRC Sec. 34", "NIRC Sec. 35"],
+    targetAuthorities: ["NIRC Sec. 23", "NIRC Sec. 24", "NIRC Sec. 27", "NIRC Sec. 31", "NIRC Sec. 32", "NIRC Sec. 34"],
+    controllingAuthorities: ["NIRC Sec. 23", "NIRC Sec. 24", "NIRC Sec. 27", "NIRC Sec. 31", "NIRC Sec. 32", "NIRC Sec. 34"],
     supportingAuthorities: [],
     supportingJurisprudence: []
   },
@@ -644,18 +485,8 @@ const DEFINITION_AUTHORITY_MAP = Object.freeze({
     primaryIssue: "EST",
     domainCode: "EST",
     domainName: "Estate Tax",
-    targetAuthorities: ["NIRC Sec. 84", "NIRC Sec. 85", "NIRC Sec. 86", "NIRC Sec. 88", "NIRC Sec. 89", "NIRC Sec. 91", "NIRC Sec. 92", "NIRC Sec. 93", "NIRC Sec. 94", "NIRC Sec. 96"],
-    controllingAuthorities: ["NIRC Sec. 84", "NIRC Sec. 85", "NIRC Sec. 86", "NIRC Sec. 88", "NIRC Sec. 89", "NIRC Sec. 91", "NIRC Sec. 92", "NIRC Sec. 93", "NIRC Sec. 94", "NIRC Sec. 96"],
-    supportingAuthorities: [],
-    supportingJurisprudence: []
-  },
-
-  ESTATE_DEDUCTIONS_DEFINITION: {
-    primaryIssue: "EST",
-    domainCode: "EST",
-    domainName: "Estate Tax Deductions",
-    targetAuthorities: ["NIRC Sec. 86", "NIRC Sec. 85", "NIRC Sec. 89", "NIRC Sec. 91", "NIRC Sec. 92", "NIRC Sec. 93", "NIRC Sec. 94", "NIRC Sec. 96"],
-    controllingAuthorities: ["NIRC Sec. 86", "NIRC Sec. 85", "NIRC Sec. 89", "NIRC Sec. 91", "NIRC Sec. 92", "NIRC Sec. 93", "NIRC Sec. 94", "NIRC Sec. 96"],
+    targetAuthorities: ["NIRC Title III", "NIRC Sec. 84", "NIRC Secs. 84-97"],
+    controllingAuthorities: ["NIRC Title III", "NIRC Secs. 84-97"],
     supportingAuthorities: [],
     supportingJurisprudence: []
   },
@@ -871,14 +702,6 @@ const DOMAIN_DETECTORS = Object.freeze([
   {
     domainCode: "EST",
     primaryIssue: "EST",
-    domainName: "Estate Tax Deductions",
-    defaultSubIssue: "ESTATE_DEDUCTIONS",
-    patterns: [/\b(?:deductible|deduction|deductions|expenses?)\b.*\bgross estate\b/i, /\bgross estate\b.*\b(?:deductible|deduction|deductions|expenses?)\b/i, /\bestate deduction\b/i],
-    definitionKey: "ESTATE_DEDUCTIONS_DEFINITION"
-  },
-  {
-    domainCode: "EST",
-    primaryIssue: "EST",
     domainName: "Donor's Tax",
     defaultSubIssue: "DONOR_TAX",
     patterns: [/\bdonor'?s tax\b/i, /\bdonor tax\b/i, /\bdonation\b/i, /\bgift tax\b/i],
@@ -969,8 +792,6 @@ const ISSUE_SPECIFIC_TARGETS = Object.freeze({
   EWT: ["NIRC Sec. 57", "NIRC Sec. 58", "RR 2-98"],
   FWT: ["NIRC final withholding tax provisions", "RR 2-98"],
   COMPENSATION_WHT: ["NIRC withholding on compensation provisions", "RR 2-98"],
-  ESTATE_TAX: ["NIRC Sec. 84", "NIRC Sec. 85", "NIRC Sec. 86", "NIRC Sec. 88", "NIRC Sec. 89", "NIRC Sec. 91", "NIRC Sec. 92", "NIRC Sec. 93", "NIRC Sec. 94", "NIRC Sec. 96"],
-  ESTATE_DEDUCTIONS: ["NIRC Sec. 86", "NIRC Sec. 85", "NIRC Sec. 89", "NIRC Sec. 91", "NIRC Sec. 92", "NIRC Sec. 93", "NIRC Sec. 94", "NIRC Sec. 96"],
 
   ASSESSMENT_PRESCRIPTION: ["NIRC Sec. 203", "NIRC Sec. 222", "NIRC Sec. 228", "RR 18-2013", "CIR v. Aznar (GR No. L-20569)", "CIR v. BF Goodrich Philippines (GR No. L-28508)", "CIR v. Bohol Land Transportation (G.R. No. L-13099)"],
   LOA_VALIDITY: ["NIRC assessment provisions", "BIR audit and LOA issuances", "Medicard Philippines"],
@@ -1130,8 +951,6 @@ function detectSubIssue(question = "", primaryIssue = "GENERAL_TAX", queryIntent
   if (/\brcit|regular corporate income tax\b/i.test(q)) return "RCIT";
   if (/\bmcit|minimum corporate income tax\b/i.test(q)) return "MCIT";
   if (/\bnolco|net operating loss\b/i.test(q)) return "NOLCO";
-  if (/\bgross estate\b/i.test(q) && /\b(?:deductible|deduction|deductions|expenses?)\b/i.test(q)) return "ESTATE_DEDUCTIONS";
-  if (/\bestate tax\b|\bgross estate\b|\bdecedent\b/i.test(q)) return "ESTATE_TAX";
   if (/\bdeductible|deduction|non[- ]deductible|substantiation\b/i.test(q)) return "DEDUCTIONS";
 
   if (/\bewt|expanded withholding|creditable withholding|cwt|2307\b/i.test(q)) return "EWT";
@@ -1233,14 +1052,6 @@ function buildLegalQuestionPresented({ question = "", primaryIssue, subIssue, do
 }
 
 function getDefinitionAuthorityFor(question = "", detector = null, primaryIssue = "", subIssue = "") {
-  if (/\bgross estate\b/i.test(question) && /\b(?:deductible|deduction|deductions|expenses?)\b/i.test(question)) {
-    return DEFINITION_AUTHORITY_MAP.ESTATE_DEDUCTIONS_DEFINITION;
-  }
-
-  if (/\bgross estate\b|\bestate deduction\b|\bclaims against estate\b/i.test(question)) {
-    return DEFINITION_AUTHORITY_MAP.ESTATE_TAX_DEFINITION;
-  }
-
   if (!detectDefinitionPattern(question)) return null;
 
   const definitionKey =
@@ -1725,7 +1536,6 @@ function classifyTaxIssue(question = "", queryIntent = {}) {
     domains: detectedDomains,
     exactAuthority
   });
-  const semanticNoMatchGuard = buildSemanticNoMatchGuard(normalizedQuery);
 
   const classification = {
     engine: "TINA_ISSUE_CLASSIFICATION_ENGINE",
@@ -1765,7 +1575,6 @@ function classifyTaxIssue(question = "", queryIntent = {}) {
     controllingAuthorities: authoritySet.controllingAuthorities,
     supportingAuthorities: authoritySet.supportingAuthorities,
     supportingJurisprudence: authoritySet.supportingJurisprudence,
-    semanticNoMatchGuard,
 
     requiredAnswerSections: STANDARD_REQUIRED_ANSWER_SECTIONS,
 
@@ -1788,7 +1597,7 @@ function classifyTaxIssue(question = "", queryIntent = {}) {
     ...hierarchyFlags,
 
     transactionCharacterizationRequired:
-      /\breimbursement|pass[- ]through|principal|agent|concession|lease|bundled|package|economic substance|substance over form|joint venture|related party\b/i.test(normalizedQuery),
+      /\b(?:reimbursement|pass[- ]through|principal|agent|concession|lease|bundled|package|economic substance|substance over form|joint venture|related party|shareholder\s+(?:advance|withdrawal)|disguised\s+dividend|financing\s+arrangement|employer[- ]employee|independent\s+contractor|advance\s+payment|customer\s+deposit|deposit\s+income|cost\s+recovery|installment\s+sale)\b/i.test(normalizedQuery),
 
     factPatternRequired: flags.requiresFactPatternAnalysis,
 
@@ -2003,6 +1812,59 @@ function isIssueClassificationCompatibleWithDoc(classification = {}, doc = {}) {
   }
 
   return false;
+}
+
+/**
+ * PATCH-016: Semantic No-Match Guard
+ * Determines if the query classification is stable enough to enforce
+ * semantic relevance filtering.
+ */
+export function hasSemanticNoMatchGuard(classification = {}) {
+  if (classification.orchestrationMode === "SOURCE_LOOKUP") return false;
+  return (classification.confidence || 0) > 0.3;
+}
+
+/**
+ * PATCH-016: Primary semantic relevance check.
+ * Checks if the document contains material terms from the query.
+ */
+export function sourceMaterialTermsMatchAuthority(doc = {}, query = "") {
+  const text = lower(doc.text || doc.content || "");
+  const q = lower(query);
+  const tokens = q.split(/\s+/).filter((t) => t.length > 3);
+  if (!tokens.length) return true;
+  return tokens.some((t) => text.includes(t));
+}
+
+/**
+ * PATCH-017A: Issue Classification to Semantic Source Selection Bridge
+ * Prevents rejection of critical EWT authorities when semantic scores are low.
+ */
+export function isEwtBridgeEligible(classification = {}, doc = {}, query = "") {
+  const primary = classification.primaryIssue || "";
+  const sub = classification.subIssue || "";
+  const isEwt = (primary === "WITHHOLDING" || primary === "WHT") && sub === "EWT";
+
+  if (!isEwt) return false;
+
+  // Verify candidate is an intended target
+  const isTarget = doc.targetAuthorityMatch === true || doc.exactAuthorityMatch === true;
+  if (!isTarget) return false;
+
+  const text = lower(doc.text || doc.content || "");
+  const ewtKeywords = [
+    "advertising agencies",
+    "contractors",
+    "withholding",
+    "ewt",
+    "expanded withholding tax",
+    "2.57.2",
+    "gross payments",
+    "income payments"
+  ];
+
+  const hasKeywords = ewtKeywords.some((kw) => text.includes(kw));
+  return hasKeywords;
 }
 
 // ─── PATCH B — OpenAI-backed issue classification (Steps 1-2, gpt-4o-mini) ───
@@ -2225,5 +2087,8 @@ export default {
   isIssueClassificationCompatibleWithDoc,
   issueClassificationEngineHealthCheck,
   CLASSIFICATION_SYSTEM_PROMPT,
-  classifyWithOpenAI
+  classifyWithOpenAI,
+  hasSemanticNoMatchGuard,
+  sourceMaterialTermsMatchAuthority,
+  isEwtBridgeEligible
 };

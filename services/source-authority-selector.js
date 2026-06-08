@@ -40,7 +40,8 @@ import {
 } from "../source-visibility-engine.js";
 import {
   hasSemanticNoMatchGuard,
-  sourceMaterialTermsMatchAuthority
+  sourceMaterialTermsMatchAuthority,
+  isEwtBridgeEligible
 } from "../issue-classification-engine.js";
 
 const SELECTOR_VERSION = "2.0.0-active";
@@ -812,23 +813,33 @@ export function selectSourceAuthorities({
       // Gate 1 — contamination (both flags required)
       if (hasTargetAuthorities && c.targetAuthorityMatch === false && c.issueMismatch === true) {
         skip.contamination++;
-        rejectDetails.push({ ref: "(pre-label)", reason: "contamination",
-          src: c.source || c.document_title || "" });
+        rejectDetails.push({ ref: "(pre-label)", reason: "contamination" });
         continue;
       }
 
-      if (!c.title && !c.document_title && !c.source && !c.originalSource) continue;
-      if (
-        semanticNoMatchGuardActive &&
-        !sourceMaterialTermsMatchAuthority(c, issueClassification).matches
-      ) {
-        skip.semanticNoMatch++;
-        rejectDetails.push({
-          ref: c.normalizedReference || c.normalized_reference || c.citation || c.title || "(no-ref)",
-          reason: "semantic_no_match",
-          src: c.source || c.document_title || ""
+      // Gate 3 — Semantic No-Match Guard (PATCH-016)
+      // Bypassed by PATCH-017A Bridge for EWT authorities
+      const ewtBridgeActive = isEwtBridgeEligible(issueClassification, c, query);
+
+      if (semanticNoMatchGuardActive && !ewtBridgeActive) {
+        if (!sourceMaterialTermsMatchAuthority(c, query)) {
+          skip.semanticNoMatch++;
+          rejectDetails.push({
+            ref: c.normalizedReference || c.title || "(no-ref)",
+            reason: "semantic_no_match"
+          });
+          continue;
+        }
+      }
+
+      if (ewtBridgeActive) {
+        console.log(`[SEMANTIC_SOURCE_SELECTION_BRIDGE] Bypassing no-match for EWT authority:`, {
+          query: query.slice(0, 100),
+          primaryIssue: issueClassification.primaryIssue,
+          subIssue: issueClassification.subIssue,
+          matchedAuthority: c.normalizedReference || c.citation || c.title,
+          reason: "ewt_target_match_with_keywords"
         });
-        continue;
       }
 
       const linkedType = inferLinkedSourceType(c);
@@ -896,7 +907,6 @@ export function selectSourceAuthorities({
 
       seen.set(dedupeKey, {
         _targetMatch,
-        // Tier and score stored for authority-priority sort (used below)
         _authorityMatchTier: c.authorityMatchTier ||
                              c.issueClassificationMatch?.authorityMatchTier || 4,
         _rerankScore:        c.rerankScore || c.finalScore || c.score || 0,
@@ -931,15 +941,6 @@ export function selectSourceAuthorities({
       });
     }
 
-    // Authority-priority sort (replaces binary targetMatch sort).
-    // Uses _computeCardSortScore which maps each card to a numeric priority:
-    //   0..n-1  — exact match in controllingAuthorities (classifier order)
-    //   100     — Tier 2 range match
-    //   150     — Tier 1 exact but not found in controlling/supporting
-    //   200..m  — exact match in supportingAuthorities (classifier order)
-    //   1000    — Tier 3 generic family match
-    //   2000    — Tier 4 no match
-    // Ties broken by _rerankScore descending.
     const controllingAuths = [
       ...(issueClassification?.controllingAuthorities || []),
       ...(issueClassification?.targetAuthorityGroups?.controllingAuthorities || [])
@@ -952,12 +953,6 @@ export function selectSourceAuthorities({
     const allCandidates = [...seen.values()];
     allCandidates.sort((a, b) => _compareBySasAuthorityPriority(a, b, controllingAuths, supportingAuths));
 
-    // BLOCKER 1 — suppress generic NIRC document-level cards (e.g. "Tax Code",
-    // "NIRC Tax Code") when at least one exact NIRC section card exists in the
-    // candidate pool.  A generic label produced by the "Tax Code" fallback in
-    // inferSourceCardRef must not occupy a visible slot when exact section cards
-    // (e.g. "NIRC Sec. 84") are available.  Non-generic issuances (RR, RMC) are
-    // unaffected by this filter.
     const _hasExactNircSection = allCandidates.some(c =>
       isExactNircSectionLabel(c.normalizedReference || c.citation || "")
     );
@@ -966,9 +961,6 @@ export function selectSourceAuthorities({
       : allCandidates;
     const _genericSuppressed = allCandidates.length - afterGenericSuppress.length;
 
-    // Off-plan NIRC section suppression: discard exact NIRC section cards that lie
-    // outside the classifier's authority plan (e.g. VAT Sec. 106 for Estate Tax).
-    // Non-NIRC issuances (RR, RMC, RAMO, BIR rulings, etc.) are never suppressed here.
     const _nircPlan = buildNircAuthorityPlan(issueClassification);
     const finalSorted = _nircPlan
       ? afterGenericSuppress.filter(c => {
@@ -979,19 +971,14 @@ export function selectSourceAuthorities({
       : afterGenericSuppress;
     const _offPlanSuppressed = afterGenericSuppress.length - finalSorted.length;
 
-    // Strip internal sort tags (_targetMatch, _authorityMatchTier, _rerankScore)
-    // before output.  The public authorityMatchTier field (stored separately in the
-    // card object by the seen.set() call) is preserved for downstream callers.
     // eslint-disable-next-line no-unused-vars
     const validatedSources = finalSorted
       .map(({ _targetMatch, _authorityMatchTier, _rerankScore, ...card }) => stripInternalCardFields(card));
 
-    // Slice to visible cap + run outbound sanitizer
     // eslint-disable-next-line no-unused-vars
     const preClean         = finalSorted.slice(0, visibleCap).map(({ _targetMatch, _authorityMatchTier, _rerankScore, ...card }) => card);
     const visibleSourceCards = sanitizeSelectorCards(preClean).map(stripInternalCardFields);
 
-    // Diff vs current sourceCards
     const diff = diffSourceCards(visibleSourceCards, currentSourceCards);
 
     const diagnostics = {
@@ -1030,7 +1017,6 @@ export function selectSourceAuthorities({
     return { validatedSources, visibleSourceCards, diagnostics };
 
   } catch (err) {
-    // Never throw — diagnostic failures must not affect pipeline
     const diagnostics = {
       selectorVersion: SELECTOR_VERSION,
       computedAt:      new Date().toISOString(),
@@ -1043,3 +1029,4 @@ export function selectSourceAuthorities({
 }
 
 export default { selectSourceAuthorities, SELECTOR_VERSION };
+  
