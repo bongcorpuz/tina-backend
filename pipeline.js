@@ -1897,6 +1897,21 @@ export async function runPipeline({
   });
   publishDiagnostics(false);
 
+  // ── PATCH-017C-FIX1 TEMP DIAGNOSTIC ──────────────────────────────────────
+  console.log("[PATCH017C_PLACEMENT_AFTER_RETRIEVAL]", {
+    hasRerankedChunks:    Boolean(ctx.rerankedChunks),
+    rerankedChunksLength: (ctx.rerankedChunks || []).length,
+    hasRetrievedSources:  Boolean(ctx.retrievedSources),
+    retrievedSourcesLen:  (ctx.retrievedSources || []).length,
+    hasCtxSources:        Boolean(ctx.sources),
+    ctxSourcesLen:        (ctx.sources || []).length,
+    hasRetrievalMeta:     Boolean(ctx.retrievalMeta),
+    retrievalMetaKeys:    ctx.retrievalMeta ? Object.keys(ctx.retrievalMeta).slice(0, 8) : [],
+    retrievedChunksLen:   (ctx.retrievedChunks || []).length,
+    note:                 "After step 5 retrieval — ctx.rerankedChunks not yet set"
+  });
+  // ── END PATCH-017C-FIX1 TEMP DIAGNOSTIC ──────────────────────────────────
+
   // ── TEMP TRACE: Stage 1-3 — retrieval output + authority distribution ──────
   // Remove after retrieval audit is complete.
   console.log("[RPC RAW COUNT]", {
@@ -1984,12 +1999,48 @@ export async function runPipeline({
   });
   trace.steps.push({ step: "6.5", name: "sourceAvailabilityClassification", saeStatus: ctx.saeStatus, done: true });
 
+  // ── PATCH-017C-FIX1 TEMP DIAGNOSTIC ──────────────────────────────────────
+  console.log("[PATCH017C_RERANKED_CHUNKS_READY]", {
+    hasRerankedChunks:    Boolean(ctx.rerankedChunks),
+    rerankedChunksLength: (ctx.rerankedChunks || []).length,
+    hasRetrievedSources:  Boolean(ctx.retrievedSources),
+    retrievedSourcesLen:  (ctx.retrievedSources || []).length,
+    hasCtxSources:        Boolean(ctx.sources),
+    ctxSourcesLen:        (ctx.sources || []).length,
+    hasRetrievalMeta:     Boolean(ctx.retrievalMeta),
+    retrievedChunksLen:   (ctx.retrievedChunks || []).length,
+    saeStatus:            ctx.saeStatus,
+    annotatedSample:      (ctx.rerankedChunks || []).slice(0, 3).map(c => ({
+      ref:              c.normalizedReference || c.normalized_reference || c.citation || c.title || "?",
+      targetAuthMatch:  c.targetAuthorityMatch,
+      exactAuthMatch:   c.exactAuthorityMatch,
+      hasText:          Boolean(c.text || c.content)
+    })),
+    note: "After step 6.5 annotate+SAE — state entering step 6.6"
+  });
+  // ── END PATCH-017C-FIX1 TEMP DIAGNOSTIC ──────────────────────────────────
+
   // ── Step 6.6: Pre-Generation Authority Lock (PATCH-017B) ──────────────────
   // For authority-critical WITHHOLDING/WHT queries targeting NIRC Sec. 57, Sec. 58,
   // or RR 2-98, run a narrow source selection BEFORE generation.
   // Prevents budget exhaustion caused by NO_INDEXED_SOURCE prompt when retrieval
   // actually succeeded but saeStatus was mis-classified (PATCH-017A regression).
   {
+    // ── PATCH-017C-FIX1 TEMP DIAGNOSTIC ────────────────────────────────────
+    console.log("[PATCH017C_PLACEMENT_BEFORE]", {
+      hasRerankedChunks:    Boolean(ctx.rerankedChunks),
+      rerankedChunksLength: (ctx.rerankedChunks || []).length,
+      hasRetrievedSources:  Boolean(ctx.retrievedSources),
+      retrievedSourcesLen:  (ctx.retrievedSources || []).length,
+      hasCtxSources:        Boolean(ctx.sources),
+      ctxSourcesLen:        (ctx.sources || []).length,
+      hasRetrievalMeta:     Boolean(ctx.retrievalMeta),
+      retrievedChunksLen:   (ctx.retrievedChunks || []).length,
+      saeStatus:            ctx.saeStatus,
+      note:                 "At step 6.6 block entry — before condition vars"
+    });
+    // ── END PATCH-017C-FIX1 TEMP DIAGNOSTIC ────────────────────────────────
+
     const _pgPi  = String(ctx.issueClassification?.primaryIssue  || "").toUpperCase();
     const _pgPd  = String(ctx.issueClassification?.primaryDomain || ctx.issueClassification?.primaryDomainCode || "").toUpperCase();
     const _pgTa  = ctx.issueClassification?.targetAuthorities || [];
@@ -2000,6 +2051,27 @@ export async function runPipeline({
     const _pgHasEwtKw    = /\b(ewt|withholding|advertising|rate)\b/i.test(_pgQ);
     const _pgHasChunks   = (ctx.rerankedChunks || []).length > 0;
     const _pgRunPreGen   = _pgIsWht && (_pgHasEwtTgts || _pgHasEwtKw) && _pgHasChunks;
+
+    // ── PATCH-017C-FIX1 TEMP DIAGNOSTIC ────────────────────────────────────
+    console.log("[PATCH017C_AUTH_LOCK_CONDITION_VALUES]", {
+      hasRerankedChunks:    Boolean(ctx.rerankedChunks),
+      rerankedChunksLength: (ctx.rerankedChunks || []).length,
+      hasRetrievedSources:  Boolean(ctx.retrievedSources),
+      retrievedSourcesLen:  (ctx.retrievedSources || []).length,
+      hasCtxSources:        Boolean(ctx.sources),
+      ctxSourcesLen:        (ctx.sources || []).length,
+      hasRetrievalMeta:     Boolean(ctx.retrievalMeta),
+      retrievedChunksLen:   (ctx.retrievedChunks || []).length,
+      _pgRunPreGen,
+      _pgHasChunks,
+      _pgIsWht,
+      _pgHasEwtTgts,
+      _pgHasEwtKw,
+      primaryIssue:      _pgPi,
+      subIssue:          ctx.issueClassification?.subIssue,
+      targetAuthorities: _pgTa.slice(0, 6)
+    });
+    // ── END PATCH-017C-FIX1 TEMP DIAGNOSTIC ────────────────────────────────
 
     if (_pgRunPreGen) {
       console.log("[PRE_GENERATION_SOURCE_SELECTION_STARTED]", {
