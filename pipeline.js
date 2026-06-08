@@ -1183,6 +1183,57 @@ function sourceCardsSuppressedBySaeStatus(saeStatus = "") {
   return SAE_SOURCE_CARD_SUPPRESSED_STATUSES.has(String(saeStatus || "").toUpperCase());
 }
 
+function syncPatch017gSourceState(ctx = {}, {
+  visibleSourceCount = 0,
+  reason = "authority_lock_with_visible_cards"
+} = {}) {
+  const priorSaeStatus = ctx.saeStatus || ctx.sourceAvailability?.saeStatus || "";
+  const hasAuthorityLock =
+    ctx.authorityLockApplied === true ||
+    ctx._fastEwtAuthorityPath === true ||
+    (ctx.preGenerationSourceCards?.length || 0) > 0;
+  const hasAuthorityFound =
+    ctx.saeStatus === "AUTHORITY_FOUND" ||
+    ctx.sourceAvailability?.saeStatus === "AUTHORITY_FOUND";
+  const hasVisibleAuthorityCards =
+    (ctx.preGenerationSourceCards?.length || 0) > 0 ||
+    (ctx.sourceCards?.length || 0) > 0 ||
+    visibleSourceCount > 0;
+
+  if (!(hasAuthorityLock && hasAuthorityFound && hasVisibleAuthorityCards)) {
+    return false;
+  }
+
+  const statusReason =
+    "[PATCH-017G] Authority-locked EWT source cards preserved after source-state synchronization.";
+  ctx.saeStatus = "AUTHORITY_FOUND";
+  ctx.limitationRequired = false;
+  ctx.disclosureType = null;
+  ctx.statusReason = statusReason;
+  ctx.sourceAvailability = {
+    ...(ctx.sourceAvailability || {}),
+    saeStatus: "AUTHORITY_FOUND",
+    sourceAvailability: "AUTHORITY_FOUND",
+    sourceStatus: "AUTHORITY_FOUND",
+    limitationRequired: false,
+    disclosureType: null,
+    statusReason,
+    sourceAvailabilityReason: statusReason
+  };
+
+  console.log("[PATCH_017G_SOURCE_STATE_SYNC]", {
+    priorSaeStatus,
+    finalSaeStatus: ctx.saeStatus,
+    authorityLockApplied: ctx.authorityLockApplied === true,
+    fastEwtAuthorityPath: ctx._fastEwtAuthorityPath === true,
+    preGenCardCount: ctx.preGenerationSourceCards?.length || 0,
+    sourceCardCount: ctx.sourceCards?.length || 0,
+    visibleSourceCount,
+    reason
+  });
+  return true;
+}
+
 function _saeIsParsed(candidate = {}) {
   if (candidate.isParsed === true) return true;
   if (candidate.authorityAnnotation?.isParsed === true) return true;
@@ -2512,6 +2563,11 @@ export async function runPipeline({
   }
 
   // ── Step 7: Fact Pattern Reconstruction (conditional) ────────────────────
+  syncPatch017gSourceState(ctx, {
+    visibleSourceCount: ctx.preGenerationSourceCards?.length || 0,
+    reason: "post_pre_generation_authority_lock"
+  });
+
   const flags = detectQueryFlags(ctx.issueClassification, hook);
   ctx.factPattern = null;
   if (flags.isFactPattern) {
@@ -2913,6 +2969,12 @@ export async function runPipeline({
     issueClassification: ctx.issueClassification,
     mode:                ctx.mode,
     responsePlan:        ctx.responsePlan,
+    saeStatus:           ctx.saeStatus,
+    sourceAvailability:  ctx.sourceAvailability,
+    sourceAvailabilityMetadata: ctx.sourceAvailability,
+    limitationRequired:  ctx.limitationRequired,
+    disclosureType:      ctx.disclosureType,
+    statusReason:        ctx.statusReason,
     conflict:            ctx.conflictAnalysis?.hasConflict ? ctx.conflictAnalysis : null
   });
   timing.stageCompleted("RENDERING_COMPLETE", "rendering");
