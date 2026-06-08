@@ -1897,21 +1897,6 @@ export async function runPipeline({
   });
   publishDiagnostics(false);
 
-  // ── PATCH-017C-FIX1 TEMP DIAGNOSTIC ──────────────────────────────────────
-  console.log("[PATCH017C_PLACEMENT_AFTER_RETRIEVAL]", {
-    hasRerankedChunks:    Boolean(ctx.rerankedChunks),
-    rerankedChunksLength: (ctx.rerankedChunks || []).length,
-    hasRetrievedSources:  Boolean(ctx.retrievedSources),
-    retrievedSourcesLen:  (ctx.retrievedSources || []).length,
-    hasCtxSources:        Boolean(ctx.sources),
-    ctxSourcesLen:        (ctx.sources || []).length,
-    hasRetrievalMeta:     Boolean(ctx.retrievalMeta),
-    retrievalMetaKeys:    ctx.retrievalMeta ? Object.keys(ctx.retrievalMeta).slice(0, 8) : [],
-    retrievedChunksLen:   (ctx.retrievedChunks || []).length,
-    note:                 "After step 5 retrieval — ctx.rerankedChunks not yet set"
-  });
-  // ── END PATCH-017C-FIX1 TEMP DIAGNOSTIC ──────────────────────────────────
-
   // ── TEMP TRACE: Stage 1-3 — retrieval output + authority distribution ──────
   // Remove after retrieval audit is complete.
   console.log("[RPC RAW COUNT]", {
@@ -1999,48 +1984,12 @@ export async function runPipeline({
   });
   trace.steps.push({ step: "6.5", name: "sourceAvailabilityClassification", saeStatus: ctx.saeStatus, done: true });
 
-  // ── PATCH-017C-FIX1 TEMP DIAGNOSTIC ──────────────────────────────────────
-  console.log("[PATCH017C_RERANKED_CHUNKS_READY]", {
-    hasRerankedChunks:    Boolean(ctx.rerankedChunks),
-    rerankedChunksLength: (ctx.rerankedChunks || []).length,
-    hasRetrievedSources:  Boolean(ctx.retrievedSources),
-    retrievedSourcesLen:  (ctx.retrievedSources || []).length,
-    hasCtxSources:        Boolean(ctx.sources),
-    ctxSourcesLen:        (ctx.sources || []).length,
-    hasRetrievalMeta:     Boolean(ctx.retrievalMeta),
-    retrievedChunksLen:   (ctx.retrievedChunks || []).length,
-    saeStatus:            ctx.saeStatus,
-    annotatedSample:      (ctx.rerankedChunks || []).slice(0, 3).map(c => ({
-      ref:              c.normalizedReference || c.normalized_reference || c.citation || c.title || "?",
-      targetAuthMatch:  c.targetAuthorityMatch,
-      exactAuthMatch:   c.exactAuthorityMatch,
-      hasText:          Boolean(c.text || c.content)
-    })),
-    note: "After step 6.5 annotate+SAE — state entering step 6.6"
-  });
-  // ── END PATCH-017C-FIX1 TEMP DIAGNOSTIC ──────────────────────────────────
-
   // ── Step 6.6: Pre-Generation Authority Lock (PATCH-017B) ──────────────────
   // For authority-critical WITHHOLDING/WHT queries targeting NIRC Sec. 57, Sec. 58,
   // or RR 2-98, run a narrow source selection BEFORE generation.
   // Prevents budget exhaustion caused by NO_INDEXED_SOURCE prompt when retrieval
   // actually succeeded but saeStatus was mis-classified (PATCH-017A regression).
   {
-    // ── PATCH-017C-FIX1 TEMP DIAGNOSTIC ────────────────────────────────────
-    console.log("[PATCH017C_PLACEMENT_BEFORE]", {
-      hasRerankedChunks:    Boolean(ctx.rerankedChunks),
-      rerankedChunksLength: (ctx.rerankedChunks || []).length,
-      hasRetrievedSources:  Boolean(ctx.retrievedSources),
-      retrievedSourcesLen:  (ctx.retrievedSources || []).length,
-      hasCtxSources:        Boolean(ctx.sources),
-      ctxSourcesLen:        (ctx.sources || []).length,
-      hasRetrievalMeta:     Boolean(ctx.retrievalMeta),
-      retrievedChunksLen:   (ctx.retrievedChunks || []).length,
-      saeStatus:            ctx.saeStatus,
-      note:                 "At step 6.6 block entry — before condition vars"
-    });
-    // ── END PATCH-017C-FIX1 TEMP DIAGNOSTIC ────────────────────────────────
-
     const _pgPi  = String(ctx.issueClassification?.primaryIssue  || "").toUpperCase();
     const _pgPd  = String(ctx.issueClassification?.primaryDomain || ctx.issueClassification?.primaryDomainCode || "").toUpperCase();
     const _pgTa  = ctx.issueClassification?.targetAuthorities || [];
@@ -2051,27 +2000,6 @@ export async function runPipeline({
     const _pgHasEwtKw    = /\b(ewt|withholding|advertising|rate)\b/i.test(_pgQ);
     const _pgHasChunks   = (ctx.rerankedChunks || []).length > 0;
     const _pgRunPreGen   = _pgIsWht && (_pgHasEwtTgts || _pgHasEwtKw) && _pgHasChunks;
-
-    // ── PATCH-017C-FIX1 TEMP DIAGNOSTIC ────────────────────────────────────
-    console.log("[PATCH017C_AUTH_LOCK_CONDITION_VALUES]", {
-      hasRerankedChunks:    Boolean(ctx.rerankedChunks),
-      rerankedChunksLength: (ctx.rerankedChunks || []).length,
-      hasRetrievedSources:  Boolean(ctx.retrievedSources),
-      retrievedSourcesLen:  (ctx.retrievedSources || []).length,
-      hasCtxSources:        Boolean(ctx.sources),
-      ctxSourcesLen:        (ctx.sources || []).length,
-      hasRetrievalMeta:     Boolean(ctx.retrievalMeta),
-      retrievedChunksLen:   (ctx.retrievedChunks || []).length,
-      _pgRunPreGen,
-      _pgHasChunks,
-      _pgIsWht,
-      _pgHasEwtTgts,
-      _pgHasEwtKw,
-      primaryIssue:      _pgPi,
-      subIssue:          ctx.issueClassification?.subIssue,
-      targetAuthorities: _pgTa.slice(0, 6)
-    });
-    // ── END PATCH-017C-FIX1 TEMP DIAGNOSTIC ────────────────────────────────
 
     if (_pgRunPreGen) {
       console.log("[PRE_GENERATION_SOURCE_SELECTION_STARTED]", {
@@ -2142,6 +2070,38 @@ export async function runPipeline({
             isEwtBridgeEligible(ctx.issueClassification, c, query) ||
             sourceMaterialTermsMatchAuthority(c, query)
           );
+
+          // ── PATCH-017D: Filter contaminating non-target authorities ──────────
+          if (_pgTa.length > 0) {
+            const _fdTaKeys = new Set(_pgTa.map(t => canonicalSourceKey(t)).filter(Boolean));
+            if (_fdTaKeys.size > 0) {
+              const _fdLockedFiltered = ctx.lockedAuthorities.filter(
+                r => _fdTaKeys.has(canonicalSourceKey(r))
+              );
+              const _fdCardsFiltered = ctx.preGenerationSourceCards.filter(c => {
+                const _fdRef = c.normalizedReference || c.normalized_reference || c.citation || c.title || "";
+                return _fdRef ? _fdTaKeys.has(canonicalSourceKey(_fdRef)) : false;
+              });
+              if (_fdLockedFiltered.length > 0) {
+                if (
+                  _fdLockedFiltered.length !== ctx.lockedAuthorities.length ||
+                  _fdCardsFiltered.length  !== ctx.preGenerationSourceCards.length
+                ) {
+                  console.log("[FAST_EWT_LOCKED_AUTHORITIES_FILTERED]", {
+                    query:        query.slice(0, 120),
+                    lockedBefore: ctx.lockedAuthorities,
+                    lockedAfter:  _fdLockedFiltered,
+                    cardsBefore:  ctx.preGenerationSourceCards.length,
+                    cardsAfter:   _fdCardsFiltered.length,
+                    targetKeys:   [..._fdTaKeys]
+                  });
+                }
+                ctx.lockedAuthorities        = _fdLockedFiltered;
+                ctx._preGenLockedAuthorities = _fdLockedFiltered;
+                ctx.preGenerationSourceCards = _fdCardsFiltered;
+              }
+            }
+          }
 
           const _pgComplexity = String(ctx.issueClassification?.complexity || "").toLowerCase();
           const _pgPriorMode  = ctx.mode;
@@ -2349,7 +2309,101 @@ export async function runPipeline({
   timing.partialPipelineState.generationStarted = true;
   timing.stageStarted("GENERATION_STARTED", "generation");
   publishDiagnostics(false);
-  try {
+
+  // ── PATCH-017D: Hard fast-definition generation cap ──────────────────────
+  if (ctx._fastEwtAuthorityPath && ctx.saeStatus === "AUTHORITY_FOUND") {
+    const _fdRemainingMs = timing.remainingBudgetMs();
+    const _fdCards       = (ctx.preGenerationSourceCards || []).slice(0, 4);
+
+    if (_fdRemainingMs < 15000) {
+      const _fdAuthList = _fdCards
+        .map(c => c.normalizedReference || c.citation || c.title || "")
+        .filter(Boolean)
+        .join(", ");
+      console.log("[FAST_EWT_LOW_BUDGET_FALLBACK_USED]", {
+        query:       query.slice(0, 120),
+        remainingMs: _fdRemainingMs,
+        cardCount:   _fdCards.length,
+        authorities: _fdAuthList
+      });
+      openAiResult = {
+        answer: `The EWT rate applicable to advertising agencies under RR 2-98 is 10% of gross payments. Authority: ${_fdAuthList || "RR 2-98, NIRC Sec. 57, NIRC Sec. 58"}.`,
+        orchestration: {
+          mode:                ctx.mode,
+          engine:              "fast-ewt-fallback",
+          version:             "1.0",
+          sourceCount:         _fdCards.length,
+          maxCompletionTokens: 0,
+          wasTrimmed:          false,
+          diagnostics:         { finalTrimApplied: false }
+        }
+      };
+      openaiCallTiming.completedAt = new Date().toISOString();
+      openaiCallTiming.durationMs  = Date.now() - openaiCallStartMs;
+      openaiCallTiming.status      = "completed";
+    } else {
+      const _fdSourceText = _fdCards
+        .map((c, i) => {
+          const ref = c.normalizedReference || c.citation || c.title || `Source ${i + 1}`;
+          const txt = (c.text || c.content || "").slice(0, 800);
+          return `[${ref}]\n${txt}`;
+        })
+        .join("\n\n---\n\n");
+      console.log("[FAST_EWT_GENERATION_CAP_APPLIED]", {
+        query:       query.slice(0, 120),
+        remainingMs: _fdRemainingMs,
+        sourceCount: _fdCards.length,
+        maxTokens:   600,
+        authorities: _fdCards.map(c => (c.normalizedReference || c.citation || "").slice(0, 60)).filter(Boolean)
+      });
+      console.log("[FAST_EWT_COMPACT_PROMPT_USED]", {
+        promptChars: _fdSourceText.length,
+        sources:     _fdCards.map(c => (c.normalizedReference || c.title || "").slice(0, 60))
+      });
+      try {
+        const _fdCompletion = await openai.chat.completions.create({
+          model,
+          messages: [
+            {
+              role:    "system",
+              content: "You are TINA, a Philippine tax assistant. Answer in 2-3 sentences using only the provided sources. State the applicable rate and cite the authority."
+            },
+            {
+              role:    "user",
+              content: `Sources:\n\n${_fdSourceText}\n\nQuestion: ${query}`
+            }
+          ],
+          max_tokens:  600,
+          temperature: 0.2
+        });
+        const _fdAnswer = _fdCompletion?.choices?.[0]?.message?.content || "";
+        openAiResult = {
+          answer:        _fdAnswer,
+          orchestration: {
+            mode:                ctx.mode,
+            engine:              "fast-ewt-cap",
+            version:             "1.0",
+            sourceCount:         _fdCards.length,
+            maxCompletionTokens: 600,
+            wasTrimmed:          false,
+            diagnostics:         { finalTrimApplied: false }
+          },
+          usage: _fdCompletion?.usage || null,
+          raw:   _fdCompletion
+        };
+      } catch (_fdErr) {
+        console.warn("[FAST_EWT_CAP_ERROR_FALLTHROUGH]", {
+          query: query.slice(0, 120),
+          error: _fdErr?.message || String(_fdErr)
+        });
+      }
+      openaiCallTiming.completedAt = new Date().toISOString();
+      openaiCallTiming.durationMs  = Date.now() - openaiCallStartMs;
+      openaiCallTiming.status      = openAiResult ? "completed" : "fallthrough";
+    }
+  }
+
+  if (openAiResult == null) try {
     openAiResult = await callOpenAIWithOrchestration({
       openai,
       model,
