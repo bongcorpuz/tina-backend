@@ -3855,32 +3855,134 @@ export async function runPipeline({
   }
 
   if (!_saeSuppressSourceCards && ctx.saeStatus === "AUTHORITY_FOUND" && targetAuths.length > 0) {
+    // ── PATCH-017K: indexed supporting authority availability mapping ─────────────
+    //
+    // Problem: RR 16-2005 is in ctx.rerankedChunks but its chunk stores
+    // normalizedReference as "Revenue Regulation No. 16-2005", which canonicalizes
+    // to "revenueregulation162005" — not the "rr162005" we get from the target
+    // string "RR 16-2005".  The previous exact-key match missed it.
+    //
+    // Fix (two layers):
+    //   1. Alias-aware candidate key set — checks direct key AND RR-alias-normalized
+    //      key AND inferAdministrativeRef-inferred key for each chunk.
+    //   2. Indexed supporting authority fallback — if the target appears in the
+    //      classification's supportingAuthorities (authority inventory lookup) and
+    //      no chunk was found even after alias expansion, create a minimal card
+    //      backed by the classification's authority inventory.
+    // ─────────────────────────────────────────────────────────────────────────────
+
+    // Supporting authorities pool (classification-validated)
+    const _017kSupportAuths = [
+      ...(ctx.issueClassification?.supportingAuthorities || []),
+      ...(ctx.issueClassification?.targetAuthorityGroups?.supportingAuthorities || [])
+    ].filter(Boolean);
+    const _017kSupportKeys = new Set(
+      _017kSupportAuths.map(a => canonicalSourceKey(a)).filter(Boolean)
+    );
+
+    if (_017kSupportKeys.size > 0) {
+      console.log("[PATCH-017K]", {
+        marker:             "PATCH_017K_SUPPORTING_AUTHORITY_LOOKUP_STARTED",
+        supportingAuths:    _017kSupportAuths,
+        rerankedChunkCount: (ctx.rerankedChunks || []).length
+      });
+    }
+
     const existingKeys = new Set(
       finalSourceCards.map(c => canonicalSourceKey(c.citation || c.label || c.title || "")).filter(Boolean)
     );
-    const restored = [];
+    const restored       = [];
+    const _017kMissed    = [];
 
     for (const target of targetAuths) {
       const targetKey = canonicalSourceKey(target);
       if (!targetKey || existingKeys.has(targetKey)) continue;
 
+      // PATCH-017K layer 1: alias-aware candidate search
+      // For each candidate, compute a set of canonical keys covering:
+      //   a) direct citation/normalizedReference key
+      //   b) key after normalizing "Revenue Regulation[s]" → "RR"
+      //   c) key inferred via inferAdministrativeRef (for RR/RMC/RMO/RAMO chunks)
       const doc = (ctx.rerankedChunks || []).find((candidate) => {
-        const candidateKey = canonicalSourceKey(
-          candidate.citation ||
-            candidate.normalizedReference ||
-            candidate.normalized_reference ||
-            candidate.reference ||
-            ""
-        );
-        return candidateKey && candidateKey === targetKey;
+        const meta  = candidate.metadata || {};
+        const refs  = [
+          candidate.citation,
+          candidate.normalizedReference,
+          candidate.normalized_reference,
+          meta.normalizedReference,
+          meta.normalized_reference,
+          candidate.reference,
+        ].filter(Boolean);
+
+        for (const ref of refs) {
+          if (canonicalSourceKey(ref) === targetKey) return true;
+          // Alias: "Revenue Regulation[s]" → "rr" before stripping punctuation
+          const rrNorm = ref.replace(/\brevenue regulation[s]?\b/gi, "rr")
+                            .replace(/\bno\.?\s*/g, "");
+          if (canonicalSourceKey(rrNorm) === targetKey) return true;
+        }
+
+        // inferAdministrativeRef path — reconstructs "RR No. 16-2005" from the
+        // chunk's identity blob (path, source, title) for admin document types
+        const lt = inferLinkedSourceType(candidate);
+        if (["RR", "RMC", "RMO", "RAMO"].includes(lt)) {
+          const inferred = inferAdministrativeRef(sourceCardIdentityBlob(candidate), lt);
+          if (inferred && canonicalSourceKey(inferred) === targetKey) return true;
+        }
+
+        return false;
       });
 
-      const card = doc ? sourceCardFromRetrievedTarget(doc, target) : null;
-      if (!card) continue;
+      let card = doc ? sourceCardFromRetrievedTarget(doc, target) : null;
+
+      if (doc && _017kSupportKeys.has(targetKey)) {
+        console.log("[PATCH-017K]", { marker: "PATCH_017K_SUPPORTING_AUTHORITY_LOOKUP_HIT", target });
+      }
+
+      // PATCH-017K layer 2: indexed supporting authority fallback
+      // When no chunk matched even after alias expansion, but the target is listed
+      // in classification.supportingAuthorities (authority inventory lookup), create
+      // a minimal card.  This handles the case where the authority exists in the
+      // index but the retrieval window did not return a chunk for it.
+      if (!card && _017kSupportKeys.has(targetKey)) {
+        const _017kType = /\brr\b|\brevenue regulation/i.test(target) ? "RR"
+                        : /\brmc\b|\bmemorandu[mo]\s+circular/i.test(target) ? "RMC"
+                        : /\brmo\b|\bmemorandu[mo]\s+order/i.test(target)    ? "RMO"
+                        : "STATUTE";
+        card = sourceCardFromRetrievedTarget({ authorityType: _017kType }, target);
+        if (card) {
+          console.log("[PATCH-017K]", {
+            marker: "PATCH_017K_INDEXED_SUPPORTING_AUTHORITY_RESTORED",
+            target,
+            authorityType: _017kType,
+            source: "classification_authority_inventory"
+          });
+        }
+      }
+
+      if (!card) {
+        if (_017kSupportKeys.has(targetKey)) {
+          _017kMissed.push(target);
+          console.log("[PATCH-017K]", { marker: "PATCH_017K_SUPPORTING_AUTHORITY_LOOKUP_MISS", target });
+        }
+        continue;
+      }
 
       restored.push(card);
       existingKeys.add(targetKey);
-      // PATCH-017J: removed 2-card cap — restore all available target authorities up to the 5-card total limit
+      // Removed 2-card cap (PATCH-017J) — restore all target authorities up to 5-card total limit
+    }
+
+    // ── PATCH-017K completion summary ─────────────────────────────────────────
+    if (_017kSupportKeys.size > 0) {
+      const _017kFound    = _017kSupportAuths.filter(a => !_017kMissed.some(m => canonicalSourceKey(m) === canonicalSourceKey(a)));
+      console.log("[PATCH-017K]", {
+        marker:                         "PATCH_017K_SUPPORTING_AUTHORITY_COMPLETION_SUMMARY",
+        requestedSupportingAuthorities: _017kSupportAuths,
+        foundSupportingAuthorities:     _017kFound,
+        missingSupportingAuthorities:   _017kMissed,
+        restoredCards:                  restored.length
+      });
     }
 
     console.log("[PATCH-017J]", {
@@ -3902,7 +4004,7 @@ export async function runPipeline({
         })
         .slice(0, 5);
       console.log("[PATCH-017J]", {
-        marker:  "PATCH_017J_VAT_SOURCE_CARD_RESTORATION_COMPLETED",
+        marker:   "PATCH_017J_VAT_SOURCE_CARD_RESTORATION_COMPLETED",
         restored: restored.map(c => c.citation || c.label),
         final:    finalSourceCards.map(c => c.citation || c.label)
       });
