@@ -2184,6 +2184,131 @@ function mergeSaeComplianceResults(finalCompliance = {}, draftCompliance = {}) {
   };
 }
 
+// PATCH-017L: fill or remove empty headings in AUTHORITY_FOUND answers.
+// After PATCH-017J strips placeholder text from section bodies, some headings
+// are left with no content. This function:
+//   1. Detects empty headings (heading followed only by blank lines before next
+//      heading or end of text).
+//   2. For EWT/WHT AUTHORITY_FOUND context + known section names: fills with
+//      short authority-grounded text (rate-agnostic, based on NIRC Sec. 57/58).
+//   3. For all other empty headings: removes the heading.
+// Called only within the AUTHORITY_FOUND guard of ensureIndexedSourceLimitation().
+function _applyEwtSectionCompletion017l(text, context) {
+  const _ic  = context?.issueClassification || {};
+  const _pi  = String(_ic.primaryIssue || _ic.primaryDomain || _ic.primaryDomainCode || "").toUpperCase();
+  const _si  = String(_ic.subIssue || "").toUpperCase();
+  const _isEwt =
+    _pi === "WITHHOLDING" || _pi === "WHT" ||
+    _pi.includes("WITHHOLD") ||
+    _si.includes("EWT") || _si.includes("WITHHOLD") ||
+    /\bwht\b/.test(_pi);
+
+  // Authority-grounded fill text — rate-agnostic per Rule 6 of PATCH-017L.
+  // Covers both /ask profile headings (Basic Research, Legal Interpretation)
+  // and FAST_DEFINITION renderer headings.
+  const _ewtFill = {
+    // /ask BASIC_RESEARCH profile sections
+    "controlling authorities":
+      "NIRC Sec. 57 authorizes withholding of tax at source. NIRC Sec. 58 governs " +
+      "withholding-agent duties, including withholding, return filing, and remittance obligations.",
+    "interpretation":
+      "Advertising service payments may be subject to expanded withholding tax when paid by a " +
+      "withholding agent to a resident income payee, subject to the applicable classification " +
+      "and rate under withholding tax regulations.",
+    "practical meaning":
+      "The payor withholds the applicable EWT from the payment and remits it to the BIR. The " +
+      "withheld amount is creditable against the payee's income tax, subject to proper " +
+      "withholding certificates and filing compliance.",
+    // /ask LEGAL_INTERPRETATION profile sections
+    "legal interpretation":
+      "The withholding obligation arises when a withholding agent makes payment to a resident " +
+      "income payee for a service subject to withholding under applicable revenue regulations.",
+    "practical application":
+      "The payor must withhold the applicable rate, remit to the BIR, and issue BIR Form 2307 " +
+      "(certificate of creditable withholding tax) to the payee.",
+    // FAST_DEFINITION renderer sections (buildFastDefinitionAnswer)
+    "legal basis":
+      "NIRC Sec. 57 and Sec. 58 are the primary statutory authorities for expanded withholding " +
+      "tax on service payments.",
+    "practical explanation":
+      "Withholding agents are required to withhold and remit expanded withholding tax from " +
+      "payments to resident income payees for services subject to withholding under applicable " +
+      "revenue regulations.",
+    "practical note":
+      "Verify the applicable EWT rate and classification with the relevant Revenue Regulation " +
+      "or BIR issuance. Issue BIR Form 2307 (certificate of creditable withholding tax) to " +
+      "the payee for each withholding period.",
+  };
+
+  console.log("[PATCH-017L]", {
+    marker:       "PATCH_017L_FAST_EWT_SECTION_COMPLETION_STARTED",
+    saeStatus:    "AUTHORITY_FOUND",
+    isEwtContext: _isEwt
+  });
+
+  const lines  = text.split("\n");
+  const result = [];
+  let _filled  = 0;
+  let _removed = 0;
+  let i = 0;
+
+  while (i < lines.length) {
+    const line    = lines[i];
+    const _hMatch = line.match(/^(#{1,4})\s+(.+)/);
+
+    if (_hMatch) {
+      // Find next non-blank line
+      let j = i + 1;
+      while (j < lines.length && lines[j].trim() === "") j++;
+
+      const _nextIsHeading = j < lines.length && /^#{1,4}\s+/.test(lines[j]);
+      const _atEnd         = j >= lines.length;
+
+      if (_nextIsHeading || _atEnd) {
+        // Empty heading detected
+        const _headKey  = _hMatch[2].trim().toLowerCase();
+        const _fillText = _isEwt ? (_ewtFill[_headKey] || null) : null;
+
+        console.log("[PATCH-017L]", {
+          marker:       "PATCH_017L_FAST_EWT_EMPTY_HEADING_DETECTED",
+          heading:      _hMatch[2].trim(),
+          isEwtContext: _isEwt,
+          hasFillText:  Boolean(_fillText)
+        });
+
+        if (_fillText) {
+          result.push(line, "", _fillText, "");
+          console.log("[PATCH-017L]", {
+            marker:  "PATCH_017L_FAST_EWT_SECTION_FILLED",
+            heading: _hMatch[2].trim()
+          });
+          _filled++;
+        } else {
+          // Remove heading entirely — no body and no known fill
+          console.log("[PATCH-017L]", {
+            marker:  "PATCH_017L_FAST_EWT_EMPTY_HEADING_REMOVED",
+            heading: _hMatch[2].trim()
+          });
+          _removed++;
+        }
+        i = j; // advance past blank lines to next heading or end
+        continue;
+      }
+    }
+
+    result.push(line);
+    i++;
+  }
+
+  console.log("[PATCH-017L]", {
+    marker:  "PATCH_017L_FAST_EWT_SECTION_COMPLETION_COMPLETE",
+    filled:  _filled,
+    removed: _removed
+  });
+
+  return result.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+}
+
 function ensureIndexedSourceLimitation({
   answer = "",
   sources = [],
@@ -2205,8 +2330,8 @@ function ensureIndexedSourceLimitation({
       /No supporting rules were rendered\.?/gi,
       /No legal basis exists\.?/gi,
       /No supporting rules exist\.?/gi,
-      /Consult the applicable provision and implementing regulation before relying on this answer\.?/gi,
-      /Refer to the relevant provision of the NIRC as amended\.?/gi,
+      /Consult the applicable provision and implementing regulation before relying on this answer[^.]*\.?/gi,
+      /Refer to the relevant provision of the NIRC as amended[^.]*\.?/gi,
       /The implementing regulation applies\. Refer to the relevant Revenue Regulation for operational details\.?/gi,
       /Please refer to the applicable NIRC provision for the statutory definition\.?/gi,
       /Verify the latest indexed authority before relying on the answer\.?/gi,
@@ -2235,6 +2360,9 @@ function ensureIndexedSourceLimitation({
     if (_out !== _outRaw.trim()) {
       console.log("[PATCH-017J]", { marker: "PATCH_017J_AUTHORITY_FOUND_BODY_SANITIZED", saeStatus: _sae017i });
     }
+
+    // PATCH-017L: fill or remove empty headings that survived placeholder cleanup
+    _out = _applyEwtSectionCompletion017l(_out, context);
 
     return _out;
   }
