@@ -200,6 +200,178 @@ function unique(values = []) {
   return [...new Set((values || []).filter(Boolean))];
 }
 
+const SEMANTIC_NO_MATCH_TAX_TERMS = Object.freeze([
+  "tax",
+  "taxes",
+  "taxable",
+  "taxation",
+  "vat",
+  "value",
+  "added",
+  "withholding",
+  "ewt",
+  "cwt",
+  "fwt",
+  "refund",
+  "credit",
+  "deduction",
+  "deductions",
+  "deductible",
+  "incentive",
+  "incentives",
+  "treaty",
+  "nirc",
+  "bir"
+]);
+
+const SEMANTIC_NO_MATCH_STOPWORDS = Object.freeze(new Set([
+  "a", "an", "and", "are", "as", "at", "be", "by", "can", "does", "for",
+  "from", "how", "in", "is", "it", "of", "on", "or", "our", "the", "to",
+  "under", "what", "when", "where", "which", "who", "why", "with", "we",
+  "subject", "claim", "claims", "mechanics", "philippine", "philippines"
+]));
+
+const SEMANTIC_NO_MATCH_SUPPORTED_TERMS = Object.freeze(new Set([
+  "advertising", "service", "services", "sale", "sales", "goods", "property",
+  "real", "lease", "rental", "import", "export", "importation", "exportation",
+  "resident", "nonresident", "corporation", "individual", "employee", "employer",
+  "compensation", "professional", "contractor", "supplier", "purchase", "expense",
+  "expenses", "ordinary", "necessary", "substantiation", "input", "output",
+  "zero", "rated", "exempt", "gross", "income", "estate", "decedent",
+  "inheritance", "donor", "local", "business", "customs", "tariff", "peza",
+  "boi", "firb", "registered", "enterprise", "assessment", "loa", "pan",
+  "fan", "fdda", "prescription", "waiver", "tcc", "invoice", "receipt",
+  "expanded", "creditable", "final", "corporate"
+]));
+
+function semanticNoMatchTaxConcepts(question = "") {
+  const q = lower(question);
+  const concepts = [];
+  const push = (condition, value) => {
+    if (condition) concepts.push(value);
+  };
+
+  push(/\bvat\b|\bvalue[- ]added\b/i.test(q), "VAT");
+  push(/\bwithholding\b|\bewt\b|\bcwt\b|\bfwt\b/i.test(q), "WITHHOLDING");
+  push(/\btax\s+credit\b|\btcc\b/i.test(q), "TAX_CREDIT");
+  push(/\brefund\b|\bclaim\s+for\s+refund\b/i.test(q), "REFUND");
+  push(/\bdeduction[s]?\b|\bdeductible\b/i.test(q), "DEDUCTION");
+  push(/\bincentive[s]?\b|\bith\b|\bscit\b/i.test(q), "INCENTIVE");
+  push(/\btax\s+treaty\b|\bdouble\s+tax/i.test(q), "TAX_TREATY");
+  push(/\btax\b|\btaxes\b|\btaxable\b|\btaxation\b/i.test(q), "TAX");
+
+  return unique(concepts);
+}
+
+function semanticNoMatchMaterialTerms(question = "") {
+  const taxTermSet = new Set(SEMANTIC_NO_MATCH_TAX_TERMS);
+  const q = lower(question)
+    .replace(/\bvalue[- ]added\s+tax\b/g, " ")
+    .replace(/\btax\s+(?:credit|refund|deduction|treaty|incentive)s?\b/g, " ")
+    .replace(/\bwithholding\s+tax\b/g, " ")
+    .replace(/\bclaim\s+for\s+refund\b/g, " ")
+    .replace(/\bexpanded\s+withholding\b|\bcreditable\s+withholding\b|\bfinal\s+withholding\b/g, " ");
+
+  return unique(
+    q
+      .replace(/[^a-z0-9\s-]/g, " ")
+      .split(/\s+/)
+      .map((term) => term.replace(/^-+|-+$/g, ""))
+      .filter((term) =>
+        term.length >= 3 &&
+        !SEMANTIC_NO_MATCH_STOPWORDS.has(term) &&
+        !taxTermSet.has(term)
+      )
+  );
+}
+
+function buildSemanticNoMatchGuard(question = "") {
+  const taxConcepts = semanticNoMatchTaxConcepts(question);
+  const materialTerms = semanticNoMatchMaterialTerms(question);
+  const unsupportedQualifiers = materialTerms.filter(
+    (term) => !SEMANTIC_NO_MATCH_SUPPORTED_TERMS.has(term)
+  );
+  const active = taxConcepts.length > 0 && unsupportedQualifiers.length >= 2;
+
+  return {
+    active,
+    taxConcepts,
+    materialTerms,
+    unsupportedQualifiers,
+    reason: active ? "tax_concept_with_unsupported_material_qualifiers" : null
+  };
+}
+
+function semanticGuardEvidenceBlob(candidate = {}, issueClassification = {}) {
+  const meta = candidate.metadata || {};
+  return lower([
+    candidate.title,
+    candidate.documentTitle,
+    candidate.document_title,
+    candidate.source,
+    candidate.originalSource,
+    candidate.normalizedReference,
+    candidate.normalized_reference,
+    candidate.citation,
+    candidate.reference,
+    candidate.text,
+    candidate.content,
+    meta.title,
+    meta.documentTitle,
+    meta.document_title,
+    meta.source,
+    meta.normalizedReference,
+    meta.normalized_reference,
+    meta.sectionHeading,
+    meta.section_heading,
+    issueClassification.knownTransactionCategory,
+    issueClassification.transactionCategory,
+    issueClassification.transactionCharacterization
+  ].filter(Boolean).join(" "));
+}
+
+function semanticGuardTermMatches(blob = "", term = "") {
+  const escaped = String(term || "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return Boolean(escaped) && new RegExp(`\\b${escaped}\\b`, "i").test(lower(blob));
+}
+
+export function hasSemanticNoMatchGuard(classification = {}) {
+  if (classification.orchestrationMode === "SOURCE_LOOKUP") return false;
+  return (classification.confidence || 0) > 0.3;
+}
+
+export function isVatDefinitionQuery(classification = {}) {
+  const subIssue = String(classification?.subIssue || "");
+  const strategy = String(classification?.retrievalStrategy || "");
+  return subIssue === "VAT_DEFINITION" || strategy.includes("VAT_DEFINITION");
+}
+
+// Dual-dispatch: when called with (doc, queryString) returns boolean (PATCH-016 new API);
+// when called with (candidate, issueClassification object) returns { matches, matchedTerms, missingTerms }
+// for backward-compat with authority-utils.js.
+export function sourceMaterialTermsMatchAuthority(candidate = {}, classificationOrQuery = {}) {
+  if (typeof classificationOrQuery === "string") {
+    const text = lower(candidate.text || candidate.content || "");
+    const q = lower(classificationOrQuery);
+    const tokens = q.split(/\s+/).filter((t) => t.length > 3);
+    if (!tokens.length) return true;
+    return tokens.some((t) => text.includes(t));
+  }
+  const guard = (classificationOrQuery || {})?.semanticNoMatchGuard || {};
+  if (guard.active !== true) {
+    return { matches: true, matchedTerms: [], missingTerms: [] };
+  }
+  const terms = safeArray(guard.unsupportedQualifiers || guard.materialTerms);
+  const blob = semanticGuardEvidenceBlob(candidate, classificationOrQuery);
+  const matchedTerms = terms.filter((term) => semanticGuardTermMatches(blob, term));
+  const missingTerms = terms.filter((term) => !matchedTerms.includes(term));
+  return {
+    matches: terms.length === 0 || missingTerms.length === 0,
+    matchedTerms,
+    missingTerms
+  };
+}
+
 function normalizeQuery(value = "") {
   const rawQuery = String(value || "");
   const normalizedQuery = normalizeText(rawQuery)
@@ -1814,27 +1986,8 @@ function isIssueClassificationCompatibleWithDoc(classification = {}, doc = {}) {
   return false;
 }
 
-/**
- * PATCH-016: Semantic No-Match Guard
- * Determines if the query classification is stable enough to enforce
- * semantic relevance filtering.
- */
-export function hasSemanticNoMatchGuard(classification = {}) {
-  if (classification.orchestrationMode === "SOURCE_LOOKUP") return false;
-  return (classification.confidence || 0) > 0.3;
-}
-
-/**
- * PATCH-016: Primary semantic relevance check.
- * Checks if the document contains material terms from the query.
- */
-export function sourceMaterialTermsMatchAuthority(doc = {}, query = "") {
-  const text = lower(doc.text || doc.content || "");
-  const q = lower(query);
-  const tokens = q.split(/\s+/).filter((t) => t.length > 3);
-  if (!tokens.length) return true;
-  return tokens.some((t) => text.includes(t));
-}
+// hasSemanticNoMatchGuard and sourceMaterialTermsMatchAuthority are declared
+// earlier in this file (near the top); these duplicates removed by rebase conflict resolution.
 
 /**
  * PATCH-017A / PATCH-017C-FIX1: Issue Classification to Semantic Source Selection Bridge.
@@ -2118,5 +2271,7 @@ export default {
   classifyWithOpenAI,
   hasSemanticNoMatchGuard,
   sourceMaterialTermsMatchAuthority,
-  isEwtBridgeEligible
+  isEwtBridgeEligible,
+
+  isVatDefinitionQuery
 };

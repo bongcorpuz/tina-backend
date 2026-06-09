@@ -16,7 +16,8 @@ import {
   classify,
   hasSemanticNoMatchGuard,
   sourceMaterialTermsMatchAuthority,
-  isEwtBridgeEligible
+  isEwtBridgeEligible,
+  isVatDefinitionQuery
 }                                                 from "./issue-classification-engine.js";
 import {
   getModeRoutingMetadata,
@@ -77,6 +78,105 @@ const PIPELINE_BUDGET_WARNING_THRESHOLDS_MS = [15_000, 10_000, 5_000];
 
 // ─── helpers ──────────────────────────────────────────────────────────────────
 
+function ensurePipelineDiagnostics(diag = null, {
+  requestStartedAt = Date.now(),
+  route = "",
+  model = "",
+  budgetMs = null,
+  requestId = ""
+} = {}) {
+  const target = diag && typeof diag === "object" ? diag : {};
+  target.requestId = target.requestId || requestId || generateTraceId();
+  target.route = target.route || route;
+  target.model = target.model || model || "";
+  target.budgetMs = Number.isFinite(Number(target.budgetMs)) ? Number(target.budgetMs) : budgetMs;
+  target.pipelineTimings = target.pipelineTimings || { requestStartedAt };
+  target.pipelineTimings.requestStartedAt = target.pipelineTimings.requestStartedAt || requestStartedAt;
+  target.pipelineStageDurations = target.pipelineStageDurations || {};
+  target.partialPipelineState = target.partialPipelineState || {
+    retrievalCompleted: false,
+    classificationCompleted: false,
+    generationStarted: false,
+    generationCompleted: false,
+    complianceStarted: false,
+    complianceCompleted: false
+  };
+  target.openaiCalls = Array.isArray(target.openaiCalls) ? target.openaiCalls : [];
+  target.checkpoints = Array.isArray(target.checkpoints) ? target.checkpoints : [];
+  return target;
+}
+
+function computePipelineStageDurations(diag = {}) {
+  const t = diag.pipelineTimings || {};
+  const duration = (start, end) =>
+    Number.isFinite(t[start]) && Number.isFinite(t[end])
+      ? Math.max(0, t[end] - t[start])
+      : undefined;
+  const totalEnd = t.responseCompletedAt || Date.now();
+  const durations = {
+    classificationMs: duration("classificationStartedAt", "classificationCompletedAt"),
+    retrievalMs: duration("retrievalStartedAt", "retrievalCompletedAt"),
+    authorityResolutionMs: duration("authorityResolutionStartedAt", "authorityResolutionCompletedAt"),
+    sourceSelectionMs: duration("sourceSelectionStartedAt", "sourceSelectionCompletedAt"),
+    generationMs: duration("generationStartedAt", "generationCompletedAt"),
+    complianceMs: duration("complianceStartedAt", "complianceCompletedAt"),
+    renderingMs: duration("renderingStartedAt", "renderingCompletedAt"),
+    totalMs: Number.isFinite(t.requestStartedAt) ? Math.max(0, totalEnd - t.requestStartedAt) : undefined
+  };
+  diag.pipelineStageDurations = Object.fromEntries(
+    Object.entries(durations).filter(([, value]) => value !== undefined)
+  );
+  return diag.pipelineStageDurations;
+}
+
+function markPipelineCheckpoint(diag = null, checkpoint, {
+  timingField = "",
+  mode = "",
+  route = "",
+  model = "",
+  sourceAvailabilityStatus = "",
+  retrievedCount = 0,
+  displayedSourceCardCount = 0
+} = {}) {
+  if (!diag || !checkpoint) return;
+  const now = Date.now();
+  const timings = diag.pipelineTimings || (diag.pipelineTimings = { requestStartedAt: now });
+  if (timingField) timings[timingField] = now;
+  const elapsedMs = Number.isFinite(timings.requestStartedAt) ? now - timings.requestStartedAt : 0;
+  const budgetMs = Number.isFinite(Number(diag.budgetMs)) ? Number(diag.budgetMs) : null;
+  const remainingBudgetMs = budgetMs === null ? null : budgetMs - elapsedMs;
+  const entry = {
+    checkpoint,
+    requestId: diag.requestId || "",
+    elapsedMs,
+    remainingBudgetMs,
+    model: model || diag.model || "",
+    mode,
+    route: route || diag.route || "",
+    sourceAvailabilityStatus: sourceAvailabilityStatus || "",
+    retrievedCount,
+    displayedSourceCardCount
+  };
+  diag.checkpoints = diag.checkpoints || [];
+  diag.checkpoints.push(entry);
+  computePipelineStageDurations(diag);
+  console.log("[PIPELINE CHECKPOINT]", entry);
+  for (const threshold of [15000, 10000, 5000]) {
+    if (remainingBudgetMs !== null && remainingBudgetMs <= threshold && !diag[`_warnedBelow${threshold}`]) {
+      diag[`_warnedBelow${threshold}`] = true;
+      console.warn("[PIPELINE_BUDGET_WARNING]", { ...entry, thresholdMs: threshold });
+    }
+  }
+}
+
+function finalizePipelineDiagnostics(diag = null) {
+  if (!diag) return null;
+  diag.pipelineTimings = diag.pipelineTimings || { requestStartedAt: Date.now() };
+  diag.pipelineTimings.responseCompletedAt = diag.pipelineTimings.responseCompletedAt || Date.now();
+  computePipelineStageDurations(diag);
+  diag.pipelineTimings.totalMs = diag.pipelineStageDurations.totalMs;
+  return diag;
+}
 function safeStr(v) {
   return typeof v === "string" ? v : String(v || "");
 }
@@ -1481,7 +1581,9 @@ export async function runPipeline({
   issueClassificationOverride = null,
   modeOverride = null,
   instrumentationReceiver = null,
-  routeBudgetMs = ROUTE_BUDGET_MS
+  routeBudgetMs = ROUTE_BUDGET_MS,
+  pipelineDiagnostics = null,
+  requestId = null
 } = {}) {
   const trace          = { steps: [], warnings: [] };
   const ctx            = {};
@@ -1497,6 +1599,13 @@ export async function runPipeline({
   };
 
   publishDiagnostics(false);
+  const diagnostics = ensurePipelineDiagnostics(pipelineDiagnostics, {
+    requestStartedAt: pipelineStartMs,
+    route: hook,
+    model,
+    budgetMs: routeBudgetMs,
+    requestId: requestId || traceId
+  });
 
   startTrace({
     traceId,
@@ -1533,6 +1642,14 @@ export async function runPipeline({
         blocked:    true,
       });
       endTrace({ traceId, name: "tina-pipeline", status: "DOMAIN_BOUNDARY_REJECT", hook });
+      markPipelineCheckpoint(diagnostics, "RESPONSE_COMPLETE", {
+        timingField: "responseCompletedAt",
+        mode: ctx.mode || "",
+        route: hook,
+        model,
+        sourceAvailabilityStatus: "DOMAIN_BOUNDARY_REJECT"
+      });
+      finalizePipelineDiagnostics(diagnostics);
       return {
         answer:                   BOUNDARY_REJECTION_MESSAGE,
         sources:                  [],
@@ -1550,17 +1667,31 @@ export async function runPipeline({
         detectedDomain:           _pipelineBoundaryCheck.detectedDomain,
         pipelineVersion:          PIPELINE_VERSION,
         diagnostics:              publishDiagnostics(false),
+        diagnostics,
+        pipelineTimings:          diagnostics.pipelineTimings,
+        pipelineStageDurations:   diagnostics.pipelineStageDurations,
+        partialPipelineState:     diagnostics.partialPipelineState,
+        openaiCalls:              diagnostics.openaiCalls
       };
     }
   }
   // ── End Defense-in-depth ──────────────────────────────────────────────────
 
   // ── Step 1: Issue Classification ──────────────────────────────────────────
-  timing.stageStarted("CLASSIFICATION_STARTED", "classification");
+  markPipelineCheckpoint(diagnostics, "CLASSIFICATION_STARTED", {
+    timingField: "classificationStartedAt",
+    mode: ctx.mode || "",
+    route: hook,
+    model
+  });
   ctx.issueClassification = issueClassificationOverride || classify(query);
-  timing.partialPipelineState.classificationCompleted = true;
-  timing.stageCompleted("CLASSIFICATION_COMPLETE", "classification");
-  publishDiagnostics(false);
+  diagnostics.partialPipelineState.classificationCompleted = true;
+  markPipelineCheckpoint(diagnostics, "CLASSIFICATION_COMPLETE", {
+    timingField: "classificationCompletedAt",
+    mode: ctx.mode || "",
+    route: hook,
+    model
+  });
   trace.steps.push({ step: 1, name: "issueClassification", done: true });
 
   // ── Step 2: Sub-Prompt / Mode Routing ────────────────────────────────────
@@ -2023,8 +2154,24 @@ export async function runPipeline({
   // _retrievalWon is set inside the .then() wrapper before Promise.race resolves,
   // so it is guaranteed true when checked immediately after the await if retrieval
   // completed before the timeout arm fired.
-  let _retrievalWon = Boolean(_patch017fRetrievalRaw);
-  let _retrievalRaw = _patch017fRetrievalRaw;
+  markPipelineCheckpoint(diagnostics, "RETRIEVAL_STARTED", {
+    timingField: "retrievalStartedAt",
+    mode: ctx.mode,
+    route: hook,
+    model,
+    sourceAvailabilityStatus: ctx.saeStatus || ""
+  });
+  let _retrievalWon = false;
+  const retrievalPromise = retrieveRelevantSources({
+    query,
+    supabase,
+    vectorSearch:         _vectorSearchFn,
+    issueClassification:  ctx.issueClassification,
+    targetAuthorities:    controllingAuthorities,
+    controllingAuthorities,
+    topK:   12,
+    poolK:  48
+  }).then((r) => { _retrievalWon = true; return r; });
 
   if (!_retrievalRaw) {
     const retrievalPromise = retrieveRelevantSources({
@@ -2093,6 +2240,25 @@ export async function runPipeline({
       ? await retrievalPromise
       : await Promise.race([retrievalPromise, timeoutFallbackPromise]);
   }
+
+  const _retrievalRaw = (isSourceLookupRetrieval || isAuthorityCriticalRetrieval)
+    ? await retrievalPromise
+    : await Promise.race([retrievalPromise, timeoutFallbackPromise]);
+  diagnostics.partialPipelineState.retrievalCompleted = _retrievalWon === true;
+  markPipelineCheckpoint(diagnostics, "RETRIEVAL_COMPLETE", {
+    timingField: "retrievalCompletedAt",
+    mode: ctx.mode,
+    route: hook,
+    model,
+    sourceAvailabilityStatus: ctx.saeStatus || "",
+    retrievedCount: Array.isArray(_retrievalRaw)
+      ? _retrievalRaw.length
+      : Array.isArray(_retrievalRaw?.retrievedSources)
+        ? _retrievalRaw.retrievedSources.length
+        : Array.isArray(_retrievalRaw?.sources)
+          ? _retrievalRaw.sources.length
+          : 0
+  });
 
   if (_retrievalWon) {
     console.log("[RETRIEVAL COMPLETED BEFORE TIMEOUT]", {
@@ -2179,14 +2345,8 @@ export async function runPipeline({
   }
 
   trace.steps.push({ step: 5, name: "retrieval", chunksFound: ctx.retrievedChunks.length, done: true });
-  timing.partialPipelineState.retrievalCompleted = !Boolean(ctx.retrievalDiagnostics?.timedOut);
-  timing.partialPipelineState.retrievedCount = ctx.retrievedChunks.length;
-  timing.partialPipelineState.retrievalLayerCounts = extractRetrievalLayerCounts(ctx.retrievalDiagnostics || {});
-  timing.stageCompleted("RETRIEVAL_COMPLETE", "retrieval", {
-    timedOut: Boolean(ctx.retrievalDiagnostics?.timedOut),
-    retrievedCount: ctx.retrievedChunks.length,
-    retrievalLayerCounts: timing.partialPipelineState.retrievalLayerCounts
-  });
+  diagnostics.partialPipelineState.retrievedCount = ctx.retrievedChunks.length;
+  diagnostics.partialPipelineState.retrievalLayerCounts = buildRetrievalLayerCounts(ctx.retrievalDiagnostics);
   publishDiagnostics(false);
 
   // ── Step 5.5: Compact EWT/WHT retrieval set (PATCH-017E) ──────────────────
@@ -2344,6 +2504,13 @@ export async function runPipeline({
   trace.steps.push({ step: 6, name: "reranker", done: true });
 
   // Step 6.5: Source Availability Engine classification.
+  markPipelineCheckpoint(diagnostics, "AUTHORITY_RESOLUTION_STARTED", {
+    timingField: "authorityResolutionStartedAt",
+    mode: ctx.mode,
+    route: hook,
+    model,
+    retrievedCount: ctx.rerankedChunks?.length || 0
+  });
   ctx.rerankedChunks = annotateAuthorityCandidates(ctx.rerankedChunks || [], {
     issueClassification: ctx.issueClassification,
     outcomeCategory:     ctx.retrievalMeta?.outcomeCategory || ctx.retrievalMeta?.retrievalMeta?.outcomeCategory || null
@@ -2363,6 +2530,17 @@ export async function runPipeline({
   ctx.limitationRequired   = ctx.sourceAvailability.limitationRequired;
   ctx.disclosureType       = ctx.sourceAvailability.disclosureType;
   ctx.statusReason         = ctx.sourceAvailability.statusReason;
+  diagnostics.partialPipelineState.sourceAvailabilityStatusBeforeTimeout = ctx.saeStatus;
+  diagnostics.partialPipelineState.retrievedCount = ctx.rerankedChunks?.length || 0;
+  diagnostics.partialPipelineState.sourceLabelsBeforeTimeout = buildFirstSourceLabels(ctx.rerankedChunks);
+  markPipelineCheckpoint(diagnostics, "AUTHORITY_RESOLUTION_COMPLETE", {
+    timingField: "authorityResolutionCompletedAt",
+    mode: ctx.mode,
+    route: hook,
+    model,
+    sourceAvailabilityStatus: ctx.saeStatus,
+    retrievedCount: ctx.rerankedChunks?.length || 0
+  });
   console.log("[SOURCE AVAILABILITY]", {
     saeStatus:          ctx.saeStatus,
     reason:             ctx.statusReason,
@@ -2562,6 +2740,115 @@ export async function runPipeline({
     trace.steps.push({ step: "6.6", name: "preGenerationSourceSelection", done: true, fastEwtPath: Boolean(ctx._fastEwtAuthorityPath) });
   }
 
+  // ── Step 6.7: VAT Definition Bridge (PATCH-017H) ─────────────────────────
+  // Repair: VAT definition queries that retrieved valid indexed authorities but
+  // received NO_INDEXED_SOURCE or RELATED_AUTHORITY_ONLY due to annotation gaps
+  // (missing citation field → isParsed=false → role never reaches GOVERNING).
+  // Only activates when evidence of indexed target-matched VAT authority exists.
+  if (
+    isVatDefinitionQuery(ctx.issueClassification) &&
+    (ctx.saeStatus === "NO_INDEXED_SOURCE" || ctx.saeStatus === "RELATED_AUTHORITY_ONLY")
+  ) {
+    const vatTargetChunks = (ctx.rerankedChunks || []).filter(
+      (chunk) =>
+        chunk.targetAuthorityMatch === true &&
+        chunk.isIndexed !== false &&
+        Boolean(chunk.text || chunk.content || chunk.excerpt)
+    );
+
+    if (vatTargetChunks.length > 0) {
+      const vatTargetAuthorities =
+        ctx.issueClassification?.targetAuthorities ||
+        ctx.issueClassification?.definitionAuthorities ||
+        [];
+
+      for (const chunk of vatTargetChunks) {
+        // Derive citation from the widest set of candidate fields (mirrors matchesTargetAuthority).
+        // Needed because getDocCitation() in authority-utils only checks doc.citation/reference/metadata,
+        // but targetAuthorityMatch can fire on normalizedReference, title, or source as well.
+        const existingCitation =
+          chunk.citation ||
+          chunk.normalizedReference ||
+          chunk.normalized_reference ||
+          chunk.reference ||
+          chunk.document_title ||
+          chunk.title ||
+          chunk.metadata?.citation ||
+          chunk.metadata?.normalizedReference ||
+          chunk.metadata?.normalized_reference ||
+          null;
+
+        chunk.authorityRole          = "GOVERNING";
+        chunk.isGoverning            = true;
+        chunk.limitationRequired     = false;
+        chunk.directlyGovernsIssue   = true;
+        chunk.isParsed               = true;
+        if (existingCitation && !chunk.citation) {
+          chunk.citation = existingCitation;
+        }
+        if (chunk.authorityAnnotation && typeof chunk.authorityAnnotation === "object") {
+          chunk.authorityAnnotation.authorityRole        = "GOVERNING";
+          chunk.authorityAnnotation.isGoverning          = true;
+          chunk.authorityAnnotation.limitationRequired   = false;
+          chunk.authorityAnnotation.directlyGovernsIssue = true;
+          chunk.authorityAnnotation.isParsed             = true;
+          if (existingCitation && !chunk.authorityAnnotation.citation) {
+            chunk.authorityAnnotation.citation = existingCitation;
+          }
+        }
+      }
+
+      const prevStatus = ctx.saeStatus;
+      ctx.saeStatus          = "AUTHORITY_FOUND";
+      ctx.limitationRequired = false;
+      ctx.disclosureType     = null;
+      ctx.statusReason       = "VAT_DEFINITION_BRIDGE_AUTHORITY_CONFIRMED";
+      if (ctx.sourceAvailability && typeof ctx.sourceAvailability === "object") {
+        ctx.sourceAvailability.saeStatus          = "AUTHORITY_FOUND";
+        ctx.sourceAvailability.limitationRequired  = false;
+        ctx.sourceAvailability.disclosureType      = null;
+        ctx.sourceAvailability.statusReason        = "VAT_DEFINITION_BRIDGE_AUTHORITY_CONFIRMED";
+        ctx.sourceAvailability.eligibleCandidates  = vatTargetChunks;
+        ctx.sourceAvailability.suppressedCandidates =
+          (ctx.sourceAvailability.suppressedCandidates || []).filter(
+            (c) => !vatTargetChunks.includes(c)
+          );
+      }
+      ctx.eligibleCandidates   = ctx.sourceAvailability?.eligibleCandidates ?? vatTargetChunks;
+      ctx.suppressedCandidates = ctx.sourceAvailability?.suppressedCandidates ?? [];
+
+      console.log("[VAT DEFINITION BRIDGE]", {
+        marker:          "PATCH_017H_VAT_DEFINITION_BRIDGE_APPLIED",
+        prevStatus,
+        newStatus:       ctx.saeStatus,
+        correctedChunks: vatTargetChunks.length
+      });
+      trace.steps.push({
+        step: "6.7",
+        name: "vatDefinitionBridge",
+        marker: "PATCH_017H_VAT_DEFINITION_BRIDGE_APPLIED",
+        prevStatus,
+        newStatus: ctx.saeStatus,
+        correctedChunks: vatTargetChunks.length,
+        done: true
+      });
+    } else {
+      console.log("[VAT DEFINITION BRIDGE]", {
+        marker:    "PATCH_017H_VAT_DEFINITION_BRIDGE_NOT_APPLIED",
+        saeStatus: ctx.saeStatus,
+        reason:    "no_indexed_target_matched_chunks"
+      });
+      trace.steps.push({
+        step: "6.7",
+        name: "vatDefinitionBridge",
+        marker: "PATCH_017H_VAT_DEFINITION_BRIDGE_NOT_APPLIED",
+        saeStatus: ctx.saeStatus,
+        done: true
+      });
+    }
+  }
+  // ── END Step 6.7 ─────────────────────────────────────────────────────────
+
   // ── Step 7: Fact Pattern Reconstruction (conditional) ────────────────────
   syncPatch017gSourceState(ctx, {
     visibleSourceCount: ctx.preGenerationSourceCards?.length || 0,
@@ -2701,8 +2988,16 @@ export async function runPipeline({
   };
   const openaiCallStartMs = Date.now();
   timing.openaiCalls.push(openaiCallTiming);
-  timing.partialPipelineState.generationStarted = true;
-  timing.stageStarted("GENERATION_STARTED", "generation");
+
+  diagnostics.partialPipelineState.generationStarted = true;
+  markPipelineCheckpoint(diagnostics, "GENERATION_STARTED", {
+    timingField: "generationStartedAt",
+    mode: ctx.mode,
+    route: hook,
+    model,
+    sourceAvailabilityStatus: ctx.saeStatus,
+    retrievedCount: ctx.rerankedChunks?.length || 0
+  });
   publishDiagnostics(false);
 
   // ── PATCH-017D: Hard fast-definition generation cap ──────────────────────
@@ -2853,17 +3148,31 @@ export async function runPipeline({
         orchestrationMode: ctx.mode,
         responsePlan:      ctx.responsePlan
       },
-      _traceId:             traceId
+      _traceId:             traceId,
+      openaiDiagnostics:    diagnostics.openaiCalls
+    });
+    diagnostics.partialPipelineState.generationCompleted = true;
+    markPipelineCheckpoint(diagnostics, "GENERATION_COMPLETE", {
+      timingField: "generationCompletedAt",
+      mode: ctx.mode,
+      route: hook,
+      model,
+      sourceAvailabilityStatus: ctx.saeStatus,
+      retrievedCount: ctx.rerankedChunks?.length || 0
     });
     openaiCallTiming.completedAt = new Date().toISOString();
     openaiCallTiming.durationMs = Date.now() - openaiCallStartMs;
     openaiCallTiming.status = "completed";
   } catch (e) {
-    openaiCallTiming.completedAt = new Date().toISOString();
-    openaiCallTiming.durationMs = Date.now() - openaiCallStartMs;
-    openaiCallTiming.status = "error";
-    openaiCallTiming.errorCode = e?.code || e?.status || null;
-    openaiCallTiming.errorType = e?.type || e?.name || e?.constructor?.name || null;
+    const lastCall = diagnostics.openaiCalls[diagnostics.openaiCalls.length - 1];
+    if (lastCall && !lastCall.completedAt) {
+      lastCall.completedAt = Date.now();
+      lastCall.durationMs = lastCall.completedAt - lastCall.startedAt;
+      lastCall.status = "error";
+      lastCall.errorCode = e?.code || null;
+      lastCall.errorType = e?.type || e?.name || e?.constructor?.name || "Error";
+      lastCall.messageSummary = String(e?.message || e || "").slice(0, 180);
+    }
     const label = `OpenAI step-14 error [${e?.name || e?.constructor?.name}] status=${e?.status} code=${e?.code}: ${e?.message}`;
     trace.warnings.push({ step: 14, warning: label });
     if ((ctx.rerankedChunks || []).length > 0) {
@@ -2961,7 +3270,14 @@ export async function runPipeline({
   }
 
   // ── Step 15: Format Answer ────────────────────────────────────────────────
-  timing.stageStarted("RENDERING_STARTED", "rendering");
+  markPipelineCheckpoint(diagnostics, "RENDERING_STARTED", {
+    timingField: "renderingStartedAt",
+    mode: ctx.mode,
+    route: hook,
+    model,
+    sourceAvailabilityStatus: ctx.saeStatus,
+    retrievedCount: ctx.rerankedChunks?.length || 0
+  });
   ctx.formattedAnswer = renderTinaAnswer({
     answer:              ctx.rawAnswer,
     sources:             ctx.rerankedChunks || [],
@@ -2977,14 +3293,26 @@ export async function runPipeline({
     statusReason:        ctx.statusReason,
     conflict:            ctx.conflictAnalysis?.hasConflict ? ctx.conflictAnalysis : null
   });
-  timing.stageCompleted("RENDERING_COMPLETE", "rendering");
-  publishDiagnostics(false);
+  markPipelineCheckpoint(diagnostics, "RENDERING_COMPLETE", {
+    timingField: "renderingCompletedAt",
+    mode: ctx.mode,
+    route: hook,
+    model,
+    sourceAvailabilityStatus: ctx.saeStatus,
+    retrievedCount: ctx.rerankedChunks?.length || 0
+  });
   trace.steps.push({ step: 15, name: "answerRenderer", done: true });
 
   // ── Step 16: Final Compliance Validation ──────────────────────────────────
-  timing.partialPipelineState.complianceStarted = true;
-  timing.stageStarted("COMPLIANCE_STARTED", "compliance");
-  publishDiagnostics(false);
+  diagnostics.partialPipelineState.complianceStarted = true;
+  markPipelineCheckpoint(diagnostics, "COMPLIANCE_STARTED", {
+    timingField: "complianceStartedAt",
+    mode: ctx.mode,
+    route: hook,
+    model,
+    sourceAvailabilityStatus: ctx.saeStatus,
+    retrievedCount: ctx.rerankedChunks?.length || 0
+  });
   const compliantResult = enforceFinalAnswerCompliance({
     draftAnswer:         ctx.formattedAnswer,
     sources:             ctx.rerankedChunks || [],
@@ -3001,9 +3329,15 @@ export async function runPipeline({
     statusReason:        ctx.statusReason,
     query
   });
-  timing.partialPipelineState.complianceCompleted = true;
-  timing.stageCompleted("COMPLIANCE_COMPLETE", "compliance");
-  publishDiagnostics(false);
+  diagnostics.partialPipelineState.complianceCompleted = true;
+  markPipelineCheckpoint(diagnostics, "COMPLIANCE_COMPLETE", {
+    timingField: "complianceCompletedAt",
+    mode: ctx.mode,
+    route: hook,
+    model,
+    sourceAvailabilityStatus: ctx.saeStatus,
+    retrievedCount: ctx.rerankedChunks?.length || 0
+  });
   trace.steps.push({ step: 16, name: "finalAnswerCompliance", done: true });
   const saeHardFailBlocked = hasSaeHardFail(compliantResult);
   const saeHardFailFallback = saeHardFailBlocked
@@ -3050,6 +3384,14 @@ export async function runPipeline({
   //     explicitly targeted authorities.
   //   • After collecting up to CANDIDATE_CAP unique candidates, sort target-matched
   //     cards first (preserving reranker order within each group), then slice to 5.
+  markPipelineCheckpoint(diagnostics, "SOURCE_SELECTION_STARTED", {
+    timingField: "sourceSelectionStartedAt",
+    mode: ctx.mode,
+    route: hook,
+    model,
+    sourceAvailabilityStatus: ctx.saeStatus,
+    retrievedCount: ctx.rerankedChunks?.length || 0
+  });
   const CANDIDATE_CAP  = 15; // collect more before priority-sort; final slice is 5
   const _scSeen        = new Map();
   const targetAuths    = ctx.issueClassification?.targetAuthorities || [];
@@ -3549,6 +3891,18 @@ export async function runPipeline({
     }
   }
 
+  diagnostics.partialPipelineState.displayedSourceCardCount = finalSourceCards.length;
+  diagnostics.partialPipelineState.sourceLabelsBeforeTimeout = buildFirstSourceLabels(finalSourceCards.length ? finalSourceCards : ctx.rerankedChunks);
+  markPipelineCheckpoint(diagnostics, "SOURCE_SELECTION_COMPLETE", {
+    timingField: "sourceSelectionCompletedAt",
+    mode: ctx.mode,
+    route: hook,
+    model,
+    sourceAvailabilityStatus: ctx.saeStatus,
+    retrievedCount: ctx.rerankedChunks?.length || 0,
+    displayedSourceCardCount: finalSourceCards.length
+  });
+
   const _sourceAvail = {
     ...ctx.sourceAvailability,
     sourceAvailability:       ctx.saeStatus,
@@ -3623,6 +3977,16 @@ export async function runPipeline({
     flushObservability(),
     new Promise(resolve => setTimeout(resolve, 2000))
   ]);
+  markPipelineCheckpoint(diagnostics, "RESPONSE_COMPLETE", {
+    timingField: "responseCompletedAt",
+    mode: ctx.mode,
+    route: hook,
+    model,
+    sourceAvailabilityStatus: ctx.saeStatus,
+    retrievedCount: ctx.rerankedChunks?.length || 0,
+    displayedSourceCardCount: finalSourceCards.length
+  });
+  finalizePipelineDiagnostics(diagnostics);
 
   timing.checkpoint("RESPONSE_COMPLETE", "response");
   const finalDiagnostics = publishDiagnostics(false);
@@ -3660,6 +4024,11 @@ export async function runPipeline({
     pipelineVersion:     PIPELINE_VERSION,
     diagnostics:         finalDiagnostics,
     traceId,
+    diagnostics,
+    pipelineTimings: diagnostics.pipelineTimings,
+    pipelineStageDurations: diagnostics.pipelineStageDurations,
+    partialPipelineState: diagnostics.partialPipelineState,
+    openaiCalls: diagnostics.openaiCalls,
     trace,
     saeHardFailBlocked,
     saeHardFailFallbackApplied: saeHardFailBlocked,

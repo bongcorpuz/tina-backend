@@ -2469,13 +2469,37 @@ export async function callOpenAIWithOrchestration(args = {}) {
     }
   });
   const _genStartMs = Date.now();
-
-  const completion = await openai.chat.completions.create({
+  const openaiDiagnostics = Array.isArray(args.openaiDiagnostics)
+    ? args.openaiDiagnostics
+    : null;
+  const openaiCallRecord = {
+    purpose: "generation",
     model: orchestration.model,
-    messages: orchestration.messages,
-    max_tokens: orchestration.maxCompletionTokens,
-    temperature: orchestration.temperature
-  });
+    startedAt: _genStartMs,
+    status: "pending"
+  };
+  if (openaiDiagnostics) openaiDiagnostics.push(openaiCallRecord);
+
+  let completion;
+  try {
+    completion = await openai.chat.completions.create({
+      model: orchestration.model,
+      messages: orchestration.messages,
+      max_tokens: orchestration.maxCompletionTokens,
+      temperature: orchestration.temperature
+    });
+    openaiCallRecord.completedAt = Date.now();
+    openaiCallRecord.durationMs = openaiCallRecord.completedAt - openaiCallRecord.startedAt;
+    openaiCallRecord.status = "success";
+  } catch (error) {
+    openaiCallRecord.completedAt = Date.now();
+    openaiCallRecord.durationMs = openaiCallRecord.completedAt - openaiCallRecord.startedAt;
+    openaiCallRecord.status = "error";
+    openaiCallRecord.errorCode = error?.code || null;
+    openaiCallRecord.errorType = error?.type || error?.name || error?.constructor?.name || "Error";
+    openaiCallRecord.messageSummary = String(error?.message || error || "").slice(0, 180);
+    throw error;
+  }
 
   const answer =
     completion?.choices?.[0]?.message?.content ||

@@ -278,6 +278,102 @@ async function withTimeout(promise, ms, label) {
   return Promise.race([promise, timeoutAfter(ms, label)]);
 }
 
+function createRoutePipelineDiagnostics({
+  requestId = "",
+  route = "",
+  model = "",
+  budgetMs = RAG_TIMEOUT_MS
+} = {}) {
+  const requestStartedAt = Date.now();
+  return {
+    requestId,
+    route,
+    model,
+    budgetMs,
+    pipelineTimings: { requestStartedAt },
+    pipelineStageDurations: {},
+    partialPipelineState: {
+      retrievalCompleted: false,
+      classificationCompleted: false,
+      generationStarted: false,
+      generationCompleted: false,
+      complianceStarted: false,
+      complianceCompleted: false
+    },
+    openaiCalls: [],
+    checkpoints: []
+  };
+}
+
+function deriveInternalTimeoutType(diagnostics = {}) {
+  const state = diagnostics.partialPipelineState || {};
+  if (!state.classificationCompleted) return "ROUTE_PIPELINE_TIMEOUT";
+  if (!diagnostics.pipelineTimings?.retrievalStartedAt) return "ROUTE_PIPELINE_TIMEOUT";
+  if (diagnostics.pipelineTimings?.retrievalStartedAt && !state.retrievalCompleted) {
+    return "RETRIEVAL_OPERATION_TIMEOUT";
+  }
+  if (state.retrievalCompleted && !state.generationCompleted) return "GENERATION_TIMEOUT";
+  if (state.generationCompleted && !state.complianceCompleted) return "COMPLIANCE_TIMEOUT";
+  if (state.complianceCompleted && !diagnostics.pipelineTimings?.renderingCompletedAt) return "RENDERING_TIMEOUT";
+  return "UNKNOWN_PIPELINE_TIMEOUT";
+}
+
+function finalizeRouteDiagnostics(diagnostics = {}, timeout = false) {
+  const now = Date.now();
+  diagnostics.pipelineTimings = diagnostics.pipelineTimings || { requestStartedAt: now };
+  diagnostics.pipelineTimings.responseCompletedAt = diagnostics.pipelineTimings.responseCompletedAt || now;
+  const t = diagnostics.pipelineTimings;
+  const dur = (a, b) =>
+    Number.isFinite(t[a]) && Number.isFinite(t[b]) ? Math.max(0, t[b] - t[a]) : undefined;
+  const durations = {
+    classificationMs: dur("classificationStartedAt", "classificationCompletedAt"),
+    retrievalMs: dur("retrievalStartedAt", "retrievalCompletedAt"),
+    authorityResolutionMs: dur("authorityResolutionStartedAt", "authorityResolutionCompletedAt"),
+    sourceSelectionMs: dur("sourceSelectionStartedAt", "sourceSelectionCompletedAt"),
+    generationMs: dur("generationStartedAt", "generationCompletedAt"),
+    complianceMs: dur("complianceStartedAt", "complianceCompletedAt"),
+    renderingMs: dur("renderingStartedAt", "renderingCompletedAt"),
+    totalMs: Number.isFinite(t.requestStartedAt) ? Math.max(0, t.responseCompletedAt - t.requestStartedAt) : undefined
+  };
+  diagnostics.pipelineStageDurations = Object.fromEntries(
+    Object.entries(durations).filter(([, value]) => value !== undefined)
+  );
+  diagnostics.pipelineTimings.totalMs = diagnostics.pipelineStageDurations.totalMs;
+  diagnostics.timeout = timeout;
+  if (timeout) diagnostics.timeoutType = deriveInternalTimeoutType(diagnostics);
+  return diagnostics;
+}
+
+function logRouteCheckpoint(diagnostics = {}, checkpoint, {
+  route = "",
+  mode = "",
+  model = "",
+  sourceAvailabilityStatus = "",
+  retrievedCount = 0,
+  displayedSourceCardCount = 0
+} = {}) {
+  const now = Date.now();
+  const startedAt = diagnostics.pipelineTimings?.requestStartedAt || now;
+  const elapsedMs = now - startedAt;
+  const budgetMs = Number(diagnostics.budgetMs || RAG_TIMEOUT_MS);
+  const entry = {
+    checkpoint,
+    requestId: diagnostics.requestId || "",
+    elapsedMs,
+    remainingBudgetMs: budgetMs - elapsedMs,
+    model: model || diagnostics.model || "",
+    mode,
+    route: route || diagnostics.route || "",
+    sourceAvailabilityStatus,
+    retrievedCount,
+    displayedSourceCardCount
+  };
+  diagnostics.checkpoints = diagnostics.checkpoints || [];
+  diagnostics.checkpoints.push(entry);
+  console.log("[ROUTE CHECKPOINT]", entry);
+  return entry;
+}
+
 function isRoutePipelineTimeout(error = {}) {
   return /TINA 16-step pipeline timed out/i.test(error?.message || "");
 }
@@ -285,8 +381,18 @@ function isRoutePipelineTimeout(error = {}) {
 function buildRouteTimeoutFallback({
   error = {},
   question = "",
-  hookConfig = {}
+  hookConfig = {},
+  pipelineDiagnostics = null
 } = {}) {
+  const diagnostics = finalizeRouteDiagnostics(pipelineDiagnostics || {}, true);
+  logRouteCheckpoint(diagnostics, "ROUTE_TIMEOUT_FIRED", {
+    route: hookConfig.hook_code || "/ask",
+    mode: hookConfig.mode || "ASK",
+    model: diagnostics.model || "",
+    sourceAvailabilityStatus: diagnostics.partialPipelineState?.sourceAvailabilityStatusBeforeTimeout || "RETRIEVAL_TIMEOUT",
+    retrievedCount: diagnostics.partialPipelineState?.retrievedCount || 0,
+    displayedSourceCardCount: diagnostics.partialPipelineState?.displayedSourceCardCount || 0
+  });
   const hookCode = hookConfig.hook_code || "/ask";
   const mode = hookConfig.mode || "ASK";
   const responseMode = hookConfig.adaptiveResponseMode || mode;
@@ -305,11 +411,16 @@ function buildRouteTimeoutFallback({
     sourceAvailabilityReason:
       "The route-level pipeline timeout elapsed before sourced answer generation completed.",
     retrievalTimedOut: true,
-    retrievedSourceCount: 0,
-    displayedSourceCount: 0,
+    retrievedSourceCount: diagnostics.partialPipelineState?.retrievedCount || 0,
+    displayedSourceCount: diagnostics.partialPipelineState?.displayedSourceCardCount || 0,
     relatedSourceCount: 0,
-    retrievalLayerCounts: null,
-    firstSourceLabels: [],
+    retrievalLayerCounts: diagnostics.partialPipelineState?.retrievalLayerCounts || null,
+    firstSourceLabels: diagnostics.partialPipelineState?.sourceLabelsBeforeTimeout || [],
+    diagnostics,
+    pipelineTimings: diagnostics.pipelineTimings,
+    pipelineStageDurations: diagnostics.pipelineStageDurations,
+    partialPipelineState: diagnostics.partialPipelineState,
+    openaiCalls: diagnostics.openaiCalls,
     mode,
     responseMode,
     orchestrationMode,
@@ -320,7 +431,7 @@ function buildRouteTimeoutFallback({
       ragErrorStatus: error?.status,
       ragErrorCode: error?.code,
       routeTimeout: true,
-      internalTimeoutType: "PIPELINE_TIMEOUT",
+      internalTimeoutType: diagnostics.timeoutType || "UNKNOWN_PIPELINE_TIMEOUT",
       timeoutMs: RAG_TIMEOUT_MS,
       selectedHook: hookCode,
       selectedMode: mode,
@@ -331,7 +442,7 @@ function buildRouteTimeoutFallback({
       saeStatus: "RETRIEVAL_TIMEOUT",
       sourceStatus: "RETRIEVAL_TIMEOUT",
       retrievalTimedOut: true,
-      retrievalPreserved: false,
+      retrievalPreserved: diagnostics.partialPipelineState?.retrievalCompleted === true,
       fallbackAnswerUsed: true
     }
   };
@@ -1896,6 +2007,13 @@ export function createAskHandler({
     orchestrationMetadata
   }) {
     const question = hookConfig.cleanQuestion || hookConfig.originalQuestion;
+    const requestId = `route-${Date.now()}-${Math.random().toString(16).slice(2, 10)}`;
+    const pipelineDiagnostics = createRoutePipelineDiagnostics({
+      requestId,
+      route: hookConfig.hook_code,
+      model: openaiModel,
+      budgetMs: RAG_TIMEOUT_MS
+    });
 
     // LAW 1: ask-handler calls ONLY pipeline.runPipeline(). No engine called here.
     const priorMessages = conversationId
@@ -1916,6 +2034,9 @@ export function createAskHandler({
           instrumentationReceiver: diagnostics => {
             latestPipelineDiagnostics = diagnostics;
           }
+          pipelineDiagnostics,
+          routeBudgetMs: RAG_TIMEOUT_MS,
+          requestId
         }),
         RAG_TIMEOUT_MS,
         "TINA 16-step pipeline"
@@ -1965,7 +2086,7 @@ export function createAskHandler({
         stack:   error?.stack?.split("\n").slice(0, 10).join("\n")
       });
       result = isRoutePipelineTimeout(error)
-        ? buildRouteTimeoutFallback({ error, question, hookConfig })
+        ? buildRouteTimeoutFallback({ error, question, hookConfig, pipelineDiagnostics })
         : {
             answer:
               "TINA encountered an internal pipeline error before it could complete a sourced answer. This does not mean that no law or authority exists. Please retry or narrow the question.",
@@ -1984,6 +2105,11 @@ export function createAskHandler({
             relatedSourceCount: 0,
             retrievalLayerCounts: null,
             firstSourceLabels: [],
+            diagnostics: finalizeRouteDiagnostics(pipelineDiagnostics, true),
+            pipelineTimings: pipelineDiagnostics.pipelineTimings,
+            pipelineStageDurations: pipelineDiagnostics.pipelineStageDurations,
+            partialPipelineState: pipelineDiagnostics.partialPipelineState,
+            openaiCalls: pipelineDiagnostics.openaiCalls,
             mode: hookConfig.mode,
             responseMode: hookConfig.adaptiveResponseMode || hookConfig.mode,
             orchestrationMode: hookConfig.orchestrationMode || hookConfig.mode,
@@ -2099,6 +2225,11 @@ export function createAskHandler({
       relatedSourceCount:       result.relatedSourceCount        ?? 0,
       retrievalLayerCounts:     result.retrievalLayerCounts      || null,
       firstSourceLabels:        result.firstSourceLabels         || [],
+      diagnostics:              result.diagnostics               || null,
+      pipelineTimings:          result.pipelineTimings           || result.diagnostics?.pipelineTimings || null,
+      pipelineStageDurations:   result.pipelineStageDurations    || result.diagnostics?.pipelineStageDurations || null,
+      partialPipelineState:     result.partialPipelineState      || result.diagnostics?.partialPipelineState || null,
+      openaiCalls:              result.openaiCalls               || result.diagnostics?.openaiCalls || [],
 
       responseMode: result.responseMode || result.orchestration?.mode || hookConfig.mode,
       orchestrationMode: result.orchestrationMode || result.orchestration?.mode || hookConfig.mode,
@@ -2135,6 +2266,11 @@ export function createAskHandler({
         fourPartDoctrineTestApplied: true,
         retrievalLayerCounts: result.retrievalLayerCounts || null,
         firstSourceLabels:    result.firstSourceLabels    || [],
+        diagnostics:          result.diagnostics           || null,
+        pipelineTimings:      result.pipelineTimings       || result.diagnostics?.pipelineTimings || null,
+        pipelineStageDurations: result.pipelineStageDurations || result.diagnostics?.pipelineStageDurations || null,
+        partialPipelineState: result.partialPipelineState  || result.diagnostics?.partialPipelineState || null,
+        openaiCalls:          result.openaiCalls           || result.diagnostics?.openaiCalls || [],
         routeControllerOnly: true,
         noLegalReasoningInsideAskHandler: true,
         noSourceRankingInsideAskHandler: true,
