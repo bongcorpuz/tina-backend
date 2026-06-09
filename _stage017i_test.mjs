@@ -53,7 +53,8 @@ console.log("\n=== PART 1: ensureIndexedSourceLimitation — AUTHORITY_FOUND ===
   });
   assertAbsent("AUTHORITY_FOUND: no pendingLabel injected", result, "Framework knowledge");
   assertAbsent("AUTHORITY_FOUND: no 'Indexed source not found'", result, "Indexed source not found");
-  assertPresent("AUTHORITY_FOUND: neutral replacement used", result, "retrieved indexed authority");
+  // PATCH-017J: neutral replacement strings are themselves stripped (they were Defect 1)
+  assertAbsent("AUTHORITY_FOUND: neutral replacement not present (PATCH-017J)", result, "retrieved indexed authority");
 }
 
 {

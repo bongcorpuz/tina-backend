@@ -3880,8 +3880,15 @@ export async function runPipeline({
 
       restored.push(card);
       existingKeys.add(targetKey);
-      if (restored.length >= 2) break;
+      // PATCH-017J: removed 2-card cap — restore all available target authorities up to the 5-card total limit
     }
+
+    console.log("[PATCH-017J]", {
+      marker:       "PATCH_017J_SOURCE_CARD_TARGET_COMPLETION_CHECK",
+      targetAuths:  targetAuths.length,
+      preExisting:  finalSourceCards.length,
+      restored:     restored.length
+    });
 
     if (restored.length > 0) {
       const merged = [...restored, ...finalSourceCards];
@@ -3894,9 +3901,10 @@ export async function runPipeline({
           return true;
         })
         .slice(0, 5);
-      console.log("[TARGET AUTHORITY CARD RESTORED]", {
+      console.log("[PATCH-017J]", {
+        marker:  "PATCH_017J_VAT_SOURCE_CARD_RESTORATION_COMPLETED",
         restored: restored.map(c => c.citation || c.label),
-        final: finalSourceCards.map(c => c.citation || c.label)
+        final:    finalSourceCards.map(c => c.citation || c.label)
       });
     }
   }

@@ -2189,21 +2189,54 @@ function ensureIndexedSourceLimitation({
   sources = [],
   context = {}
 } = {}) {
-  // PATCH-017I: when AUTHORITY_FOUND, suppress all limitation injection and clean renderer placeholders
+  // PATCH-017I/017J: when AUTHORITY_FOUND, suppress all limitation injection and strip all renderer placeholders
   const _sae017i = String(context?.saeStatus || "").trim().toUpperCase();
   if (_sae017i === "AUTHORITY_FOUND") {
     let _out = normalizeText(answer);
-    const _needsClean = /Indexed source not found\.?|No legal basis was rendered\.|No supporting rules were rendered\.|No legal basis exists\.|No supporting rules exist\./i.test(_out);
-    if (_needsClean) {
-      _out = _out
-        .replace(/Indexed source not found\.?/gi, "Refer to the retrieved indexed authority.")
-        .replace(/No legal basis was rendered\./gi, "See the retrieved indexed authority.")
-        .replace(/No supporting rules were rendered\./gi, "Refer to applicable implementing regulations.")
-        .replace(/No legal basis exists\./gi, "")
-        .replace(/No supporting rules exist\./gi, "");
-      console.log("[PATCH-017I]", { marker: "PATCH_017I_AUTHORITY_FOUND_LIMITATION_SUPPRESSED", saeStatus: _sae017i });
+
+    // All placeholder patterns to strip — includes PATCH-017I neutral replacements (now themselves defects)
+    // and all defaultBodyForHeading() sentinel strings from answer-renderer.js
+    const _placeholderPatterns017j = [
+      /Refer to the retrieved indexed authority\.?/gi,
+      /See the retrieved indexed authority\.?/gi,
+      /Refer to applicable implementing regulations\.?/gi,
+      /Indexed source not found\.?/gi,
+      /No legal basis was rendered\.?/gi,
+      /No supporting rules were rendered\.?/gi,
+      /No legal basis exists\.?/gi,
+      /No supporting rules exist\.?/gi,
+      /Consult the applicable provision and implementing regulation before relying on this answer\.?/gi,
+      /Refer to the relevant provision of the NIRC as amended\.?/gi,
+      /The implementing regulation applies\. Refer to the relevant Revenue Regulation for operational details\.?/gi,
+      /Please refer to the applicable NIRC provision for the statutory definition\.?/gi,
+      /Verify the latest indexed authority before relying on the answer\.?/gi,
+      /Verify the latest indexed authority, controlling doctrine, and supporting documents before relying on the position\.?/gi,
+      /Implementing regulations applicable to this provision are pending index verification\.?/gi,
+    ];
+
+    let _blockedCount = 0;
+    for (const _pat of _placeholderPatterns017j) {
+      const _before = _out;
+      _out = _out.replace(_pat, "");
+      if (_out !== _before) _blockedCount++;
     }
-    return _out.trim();
+
+    if (_blockedCount > 0) {
+      console.log("[PATCH-017J]", {
+        marker:  "PATCH_017J_AUTHORITY_FOUND_PLACEHOLDER_BLOCKED",
+        saeStatus: _sae017i,
+        patternsBlocked: _blockedCount
+      });
+    }
+
+    // Collapse blank lines left by placeholder removal
+    const _outRaw = _out;
+    _out = _out.replace(/\n{3,}/g, "\n\n").trim();
+    if (_out !== _outRaw.trim()) {
+      console.log("[PATCH-017J]", { marker: "PATCH_017J_AUTHORITY_FOUND_BODY_SANITIZED", saeStatus: _sae017i });
+    }
+
+    return _out;
   }
 
   const hasSources = safeArray(sources).some((source) =>
