@@ -2161,89 +2161,84 @@ export async function runPipeline({
     model,
     sourceAvailabilityStatus: ctx.saeStatus || ""
   });
-  let _retrievalWon = false;
-  const retrievalPromise = retrieveRelevantSources({
-    query,
-    supabase,
-    vectorSearch:         _vectorSearchFn,
-    issueClassification:  ctx.issueClassification,
-    targetAuthorities:    controllingAuthorities,
-    controllingAuthorities,
-    topK:   12,
-    poolK:  48
-  }).then((r) => { _retrievalWon = true; return r; });
+
+
+  let _retrievalWon = Boolean(_patch017fRetrievalRaw);
+  let _retrievalRaw = _patch017fRetrievalRaw || null;
+
+  // SOURCE_LOOKUP awaits retrieval directly — the timeout fallback must not win
+  // before retrieval completes, which would produce a false-empty response while
+  // the real retrieval runs in the background.  All other modes keep the existing
+  // Promise.race behaviour so their latency characteristics are unchanged.
+  const isSourceLookupRetrieval =
+    String(ctx.mode || "").toUpperCase() === "SOURCE_LOOKUP";
+
+  // Authority-critical retrieval: queries whose answer is meaningless without the
+  // canonical primary authorities (e.g. "What is VAT?" requires Sec. 105-108).
+  // Accepting a timeout-empty fallback would cascade to zero source cards even
+  // though retrieval eventually finds the right documents.  Like SOURCE_LOOKUP,
+  // these await the real retrieval promise and skip the race entirely.
+  const isAuthorityCriticalRetrieval =
+    ctx.issueClassification?.subIssue === "VAT_DEFINITION" ||
+    ctx.issueClassification?.subIssue === "WITHHOLDING_TAX_DEFINITION" ||
+    ctx.issueClassification?.subIssue === "EWT" ||
+    ctx.issueClassification?.subIssue === "ESTATE_TAX_DEFINITION" ||
+    ctx.issueClassification?.subIssue === "ESTATE_TAX" ||
+    ctx.issueClassification?.subIssue === "ESTATE_DEDUCTIONS" ||
+    ctx.issueClassification?.primaryIssue === "WITHHOLDING" ||
+    ctx.issueClassification?.primaryIssue === "EST" ||
+    ctx.issueClassification?.primaryIssue === "ESTATE_TAX" ||
+    String(ctx.issueClassification?.retrievalStrategy || "").includes("VAT_DEFINITION") ||
+    ctx.issueClassification?.requiresAuthorityCriticalRetrieval === true;
+
+  if (isAuthorityCriticalRetrieval) {
+    console.log("[RETRIEVAL AWAIT MODE]", {
+      reason:            "authority_critical",
+      mode:              ctx.mode,
+      subIssue:          ctx.issueClassification?.subIssue || null,
+      retrievalStrategy: ctx.issueClassification?.retrievalStrategy || null
+    });
+  }
 
   if (!_retrievalRaw) {
     const retrievalPromise = retrieveRelevantSources({
       query,
       supabase,
-      vectorSearch:         _vectorSearchFn,
-      issueClassification:  ctx.issueClassification,
-      targetAuthorities:    controllingAuthorities,
+      vectorSearch: _vectorSearchFn,
+      issueClassification: ctx.issueClassification,
+      targetAuthorities: controllingAuthorities,
       controllingAuthorities,
-      topK:   12,
-      poolK:  48
-    }).then((r) => { _retrievalWon = true; return r; });
+      topK: 12,
+      poolK: 48
+    }).then((r) => {
+      _retrievalWon = true;
+      return r;
+    });
 
     const timeoutFallbackPromise = new Promise(resolve =>
       setTimeout(() => {
-        trace.warnings.push({ step: 5, warning: `Retrieval timed out after ${RETRIEVAL_STEP_TIMEOUT_MS} ms — proceeding with empty chunks`, timedOut: true });
-        // Return object shape (not bare []) so the normalizer stores retrievalDiagnostics
-        // with timedOut: true and downstream code can distinguish timeout from
-        // genuine empty retrieval.  The normalizer handles both [] and object shapes.
+        trace.warnings.push({
+          step: 5,
+          warning: `Retrieval timed out after ${RETRIEVAL_STEP_TIMEOUT_MS} ms — proceeding with empty chunks`,
+          timedOut: true
+        });
+
         resolve({
-          retrievedSources:     [],
-          sources:              [],
+          retrievedSources: [],
+          sources: [],
           retrievalDiagnostics: {
-            timedOut:  true,
+            timedOut: true,
             timeoutMs: RETRIEVAL_STEP_TIMEOUT_MS
           }
         });
       }, RETRIEVAL_STEP_TIMEOUT_MS)
     );
 
-    // SOURCE_LOOKUP awaits retrieval directly — the timeout fallback must not win
-    // before retrieval completes, which would produce a false-empty response while
-    // the real retrieval runs in the background.  All other modes keep the existing
-    // Promise.race behaviour so their latency characteristics are unchanged.
-    const isSourceLookupRetrieval =
-      String(ctx.mode || "").toUpperCase() === "SOURCE_LOOKUP";
-
-    // Authority-critical retrieval: queries whose answer is meaningless without the
-    // canonical primary authorities (e.g. "What is VAT?" requires Sec. 105-108).
-    // Accepting a timeout-empty fallback would cascade to zero source cards even
-    // though retrieval eventually finds the right documents.  Like SOURCE_LOOKUP,
-    // these await the real retrieval promise and skip the race entirely.
-    const isAuthorityCriticalRetrieval =
-      ctx.issueClassification?.subIssue === "VAT_DEFINITION" ||
-      ctx.issueClassification?.subIssue === "WITHHOLDING_TAX_DEFINITION" ||
-      ctx.issueClassification?.subIssue === "EWT" ||
-      ctx.issueClassification?.subIssue === "ESTATE_TAX_DEFINITION" ||
-      ctx.issueClassification?.subIssue === "ESTATE_TAX" ||
-      ctx.issueClassification?.subIssue === "ESTATE_DEDUCTIONS" ||
-      ctx.issueClassification?.primaryIssue === "WITHHOLDING" ||
-      ctx.issueClassification?.primaryIssue === "EST" ||
-      ctx.issueClassification?.primaryIssue === "ESTATE_TAX" ||
-      String(ctx.issueClassification?.retrievalStrategy || "").includes("VAT_DEFINITION") ||
-      ctx.issueClassification?.requiresAuthorityCriticalRetrieval === true;
-
-    if (isAuthorityCriticalRetrieval) {
-      console.log("[RETRIEVAL AWAIT MODE]", {
-        reason:            "authority_critical",
-        mode:              ctx.mode,
-        subIssue:          ctx.issueClassification?.subIssue || null,
-        retrievalStrategy: ctx.issueClassification?.retrievalStrategy || null
-      });
-    }
-
     _retrievalRaw = (isSourceLookupRetrieval || isAuthorityCriticalRetrieval)
       ? await retrievalPromise
       : await Promise.race([retrievalPromise, timeoutFallbackPromise]);
   }
 
-  const _retrievalRaw = (isSourceLookupRetrieval || isAuthorityCriticalRetrieval)
-    ? await retrievalPromise
-    : await Promise.race([retrievalPromise, timeoutFallbackPromise]);
   diagnostics.partialPipelineState.retrievalCompleted = _retrievalWon === true;
   markPipelineCheckpoint(diagnostics, "RETRIEVAL_COMPLETE", {
     timingField: "retrievalCompletedAt",
