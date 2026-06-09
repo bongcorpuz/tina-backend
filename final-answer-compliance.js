@@ -1522,11 +1522,17 @@ function buildFastDefinitionAnswer({
   directAnswer = "",
   legalBasisDocs = []
 }) {
-  const stripMechanics = (text = "") =>
-    text
+  console.log("[PATCH-017I]", { marker: "PATCH_017I_FAST_DEFINITION_RENDERER_APPLIED" });
+  const stripMechanics = (text = "") => {
+    const cleaned = text
       .replace(/\(Framework knowledge[^)]*\)/gi, "")
       .replace(/Indexed source not found\.?/gi, "")
       .trim();
+    if (cleaned !== text.trim()) {
+      console.log("[PATCH-017I]", { marker: "PATCH_017I_FALLBACK_LANGUAGE_BLOCKED", renderer: "FAST_DEFINITION" });
+    }
+    return cleaned;
+  };
 
   const directBody =
     getAFSectionBody(sanitizedDraft, "### Direct Answer") ||
@@ -2183,6 +2189,23 @@ function ensureIndexedSourceLimitation({
   sources = [],
   context = {}
 } = {}) {
+  // PATCH-017I: when AUTHORITY_FOUND, suppress all limitation injection and clean renderer placeholders
+  const _sae017i = String(context?.saeStatus || "").trim().toUpperCase();
+  if (_sae017i === "AUTHORITY_FOUND") {
+    let _out = normalizeText(answer);
+    const _needsClean = /Indexed source not found\.?|No legal basis was rendered\.|No supporting rules were rendered\.|No legal basis exists\.|No supporting rules exist\./i.test(_out);
+    if (_needsClean) {
+      _out = _out
+        .replace(/Indexed source not found\.?/gi, "Refer to the retrieved indexed authority.")
+        .replace(/No legal basis was rendered\./gi, "See the retrieved indexed authority.")
+        .replace(/No supporting rules were rendered\./gi, "Refer to applicable implementing regulations.")
+        .replace(/No legal basis exists\./gi, "")
+        .replace(/No supporting rules exist\./gi, "");
+      console.log("[PATCH-017I]", { marker: "PATCH_017I_AUTHORITY_FOUND_LIMITATION_SUPPRESSED", saeStatus: _sae017i });
+    }
+    return _out.trim();
+  }
+
   const hasSources = safeArray(sources).some((source) =>
     sourceAllowed(source, context)
   );

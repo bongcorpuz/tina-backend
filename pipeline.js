@@ -3264,6 +3264,21 @@ export async function runPipeline({
     ctx.responseStyle = null;
   }
 
+  // ── PATCH-017I: Renderer source-state normalization ──────────────────────
+  // Ensure limitationRequired and disclosureType are coherent with confirmed AUTHORITY_FOUND
+  // before handing off to answer-renderer and final-answer-compliance.
+  if (ctx.saeStatus === "AUTHORITY_FOUND") {
+    if (ctx.limitationRequired !== false) ctx.limitationRequired = false;
+    if (ctx.disclosureType)               ctx.disclosureType     = null;
+    console.log("[PATCH-017I]", {
+      marker:             "PATCH_017I_RENDERER_SOURCE_STATE_NORMALIZED",
+      saeStatus:          ctx.saeStatus,
+      mode:               ctx.mode,
+      limitationRequired: ctx.limitationRequired,
+      disclosureType:     ctx.disclosureType
+    });
+  }
+
   // ── Step 15: Format Answer ────────────────────────────────────────────────
   markPipelineCheckpoint(diagnostics, "RENDERING_STARTED", {
     timingField: "renderingStartedAt",

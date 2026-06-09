@@ -1986,6 +1986,10 @@ function buildUserPrompt({
   sourceAvailabilityMetadata = {},
   modeFlags = {}
 }) {
+  // PATCH-017I: pre-compute SAE status for source-state normalization across prompt builder
+  const _saeStatus017i = safeString(sourceAvailabilityMetadata?.saeStatus).trim().toUpperCase();
+  const _isAuthorityFound017i = _saeStatus017i === "AUTHORITY_FOUND";
+
   const compactClassification = {
     primaryIssue: classification?.primaryIssue || classification?.domain || null,
     subIssue: classification?.subIssue || null,
@@ -2087,9 +2091,23 @@ function buildUserPrompt({
     const _profile  = responsePlan.askProfile;
     const _secs     = responsePlan.askProfileSections || responsePlan.rendererContract?.sections || [];
     const _secList  = _secs.map((s, i) => `${i + 1}. ### ${s}`).join("\n");
-    const _limNote  = responsePlan.mustIncludeLimitation
+    const _limNote  = (responsePlan.mustIncludeLimitation && !_isAuthorityFound017i)
       ? "\n\nLIMITATION NOTE: State that the conclusion is preliminary and subject to full fact verification before the final section."
       : "";
+    // PATCH-017I: when AUTHORITY_FOUND, block fallback-language instructions from reaching the model
+    if (_isAuthorityFound017i) {
+      console.log("[PATCH-017I]", {
+        marker:    "PATCH_017I_FALLBACK_LANGUAGE_BLOCKED",
+        saeStatus: _saeStatus017i,
+        profile:   _profile
+      });
+    }
+    const _sourceRule017i = _isAuthorityFound017i
+      ? "- Indexed authority is confirmed (AUTHORITY_FOUND). Do NOT add '(Framework knowledge — pending index verification)' labels to any section. Do NOT open with 'Source Verification Limitation'. Answer directly from the retrieved indexed sources."
+      : "- Retrieved indexed sources take priority. Use training knowledge only when no indexed source was retrieved; label such content: \"(Framework knowledge — pending index verification)\".";
+    const _limRule017i = _isAuthorityFound017i
+      ? ""
+      : `- Source Verification Limitation: if indexed retrieval timed out or no sources were retrieved, open the response with: "**Source Verification Limitation:** Indexed retrieval did not return verified sources. The following is framework analysis pending indexed-source verification."${_limNote}`;
     responseInstruction = `ASK RESEARCH FORMAT — PROFILE: ${_profile}
 
 TONE: Write as a CPA tax practitioner or tax lawyer advising a professional colleague. Use clear, concise professional prose — not a legal memo, not encyclopedic, not a generic chatbot response.
@@ -2100,11 +2118,11 @@ ${_secList}
 RULES:
 - Follow the section order above exactly. Do not add or remove sections.
 - Do not use A. B. C. D. E. F. letter-prefix headings.
-- Retrieved indexed sources take priority. Use training knowledge only when no indexed source was retrieved; label such content: "(Framework knowledge — pending index verification)".
+${_sourceRule017i}
 - Controlling Authorities: cite specific NIRC provision → implementing RR → directly applicable SC/CTA ruling. Follow the Master Prompt authority hierarchy.
 - Never fabricate GR numbers, RR numbers, RMC numbers, or docket numbers you are not certain of.
 - Do not cite authorities that were not retrieved and are not clearly applicable from training knowledge.
-- Source Verification Limitation: if indexed retrieval timed out or no sources were retrieved, open the response with: "**Source Verification Limitation:** Indexed retrieval did not return verified sources. The following is framework analysis pending indexed-source verification."${_limNote}`;
+${_limRule017i}`.trimEnd();
   } else if (mode === "FAST_DEFINITION") {
     let _depthHint = "";
 
@@ -2146,7 +2164,9 @@ SOURCE GROUNDING / AUTHORITY PRESERVATION:
 ${JSON.stringify(compactGrounding, null, 2)}
 
 RETRIEVED RELEVANT AUTHORITIES / EXTRACTS:
-${compressedSources || "[No retrieved source extracts supplied. Answer using your Philippine tax law training knowledge: cite NIRC provisions, implementing regulations (RR/RMC/RMO), and Supreme Court/CTA jurisprudence directly relevant to the query. Label every section that relies on training knowledge as '(Framework knowledge — pending index verification)'. Do not output 'Indexed source not found.' Do not fabricate GR numbers, docket numbers, or RR/RMC numbers you are not certain of.]"}
+${compressedSources || (_isAuthorityFound017i
+  ? "[AUTHORITY_FOUND: Indexed sources confirmed. Answer from retrieved indexed authorities. Do NOT add limitation labels or Framework knowledge labels.]"
+  : "[No retrieved source extracts supplied. Answer using your Philippine tax law training knowledge: cite NIRC provisions, implementing regulations (RR/RMC/RMO), and Supreme Court/CTA jurisprudence directly relevant to the query. Label every section that relies on training knowledge as '(Framework knowledge — pending index verification)'. Do not output 'Indexed source not found.' Do not fabricate GR numbers, docket numbers, or RR/RMC numbers you are not certain of.]")}
 
 RESPONSE INSTRUCTION:
 ${responseInstruction}
