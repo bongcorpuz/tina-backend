@@ -2033,7 +2033,7 @@ export function createAskHandler({
           routeBudgetMs: RAG_TIMEOUT_MS,
           instrumentationReceiver: diagnostics => {
             latestPipelineDiagnostics = diagnostics;
-          }
+          },
           pipelineDiagnostics,
           routeBudgetMs: RAG_TIMEOUT_MS,
           requestId
