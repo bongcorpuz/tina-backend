@@ -1496,13 +1496,25 @@ export function classifySourceAvailability(input = {}) {
     statusReason:      ""
   };
 
+  // PATCH-018A: Reconciliation guard — if timedOut but candidates exist, block RETRIEVAL_TIMEOUT
+  // override and fall through to normal classification with those candidates.
+  // True timeout (zero candidates) still returns RETRIEVAL_TIMEOUT.
   if (retrievalTimedOut) {
-    return {
-      ...base,
-      saeStatus:      "RETRIEVAL_TIMEOUT",
-      disclosureType: "RETRIEVAL_TIMEOUT",
-      statusReason:  "Retrieval timed out; source availability could not be verified within the retrieval window."
-    };
+    if (annotatedCandidates.length > 0) {
+      console.log("[PATCH_018A_SAE_TIMEOUT_OVERRIDE_BLOCKED]", {
+        annotatedCandidateCount: annotatedCandidates.length,
+        retrievalTimedOut:       true,
+        reason:                  "retrieval_returned_usable_candidates_despite_timeout_signal"
+      });
+      // Fall through to normal classification below
+    } else {
+      return {
+        ...base,
+        saeStatus:      "RETRIEVAL_TIMEOUT",
+        disclosureType: "RETRIEVAL_TIMEOUT",
+        statusReason:  "Retrieval timed out; source availability could not be verified within the retrieval window."
+      };
+    }
   }
 
   if (outcomeCategory === "NO_CANDIDATES" && annotatedCandidates.length === 0) {
@@ -1537,6 +1549,14 @@ export function classifySourceAvailability(input = {}) {
   }
 
   if (semanticNoMatchGuardActive && !semanticNoMatchCandidateMatched) {
+    // PATCH-018A: log when NO_INDEXED_SOURCE would fire but candidates exist (override blocked diagnostic)
+    if (annotatedCandidates.length > 0) {
+      console.log("[PATCH_018A_NO_INDEXED_SOURCE_OVERRIDE_BLOCKED]", {
+        reason:         "semantic_no_match_guard_active_with_existing_candidates",
+        candidateCount: annotatedCandidates.length,
+        guardActive:    true
+      });
+    }
     return {
       ...base,
       saeStatus:      "NO_INDEXED_SOURCE",
@@ -1555,6 +1575,29 @@ export function classifySourceAvailability(input = {}) {
       disclosureType: "RELATED_AUTHORITY_ONLY",
       statusReason:  "Indexed candidates exist, but none satisfy governing direct-authority requirements."
     };
+  }
+
+  // PATCH-018A: For case/jurisprudence queries, if only statute/RR authority is found,
+  // return RELATED_AUTHORITY_ONLY instead of NO_INDEXED_SOURCE.
+  const _018aCaseQuery = /\b(cases?|jurisprudence|ruling[s]?|supreme\s+court|cta\b)/i.test(query);
+  if (_018aCaseQuery && annotatedCandidates.length > 0) {
+    const _018aHasStatuteOrRr = annotatedCandidates.some(c => {
+      const t = String(c.authorityType || c.authority_type || c.authorityAnnotation?.authorityType || "").toUpperCase().replace(/[\s-]+/g, "_");
+      return ["NIRC", "STATUTE", "TAX_CODE", "RR", "REVENUE_REGULATION", "REPUBLIC_ACT", "RA"].includes(t);
+    });
+    if (_018aHasStatuteOrRr) {
+      console.log("[PATCH_018A_CASE_QUERY_RELATED_AUTHORITY_DOWNGRADE]", {
+        query:           query.slice(0, 120),
+        annotatedCount:  annotatedCandidates.length,
+        reason:          "case_jurisprudence_query_statute_rr_only_downgraded_to_related_authority_only"
+      });
+      return {
+        ...base,
+        saeStatus:      "RELATED_AUTHORITY_ONLY",
+        disclosureType: "RELATED_AUTHORITY_ONLY",
+        statusReason:  "[PATCH-018A] Case/jurisprudence query: related statute/RR authority found but no case authority satisfied direct-govern requirements."
+      };
+    }
   }
 
   console.warn("[SOURCE AVAILABILITY] NO_INDEXED_SOURCE emitted", {
@@ -2178,6 +2221,27 @@ export async function runPipeline({
   // Accepting a timeout-empty fallback would cascade to zero source cards even
   // though retrieval eventually finds the right documents.  Like SOURCE_LOOKUP,
   // these await the real retrieval promise and skip the race entirely.
+  //
+  // PATCH-018A: Extended to include VAT-domain queries (input tax, credit, refund)
+  // and case/jurisprudence queries whose evidence showed timeout-then-zero-source
+  // inconsistency despite retrieval logging 12 ranked candidates in background.
+  const _018aPrimaryDomain = String(
+    ctx.issueClassification?.primaryDomain ||
+    ctx.issueClassification?.primaryDomainCode || ""
+  ).toUpperCase();
+  const _018aPrimaryIssue = String(ctx.issueClassification?.primaryIssue || "").toUpperCase();
+  const _018aSubIssue     = String(ctx.issueClassification?.subIssue     || "").toUpperCase();
+  const _018aQueryLower   = (query || "").toLowerCase();
+  const _018aIsCaseQuery  = /\b(cases?|jurisprudence|rulings?|supreme\s+court|\bcta\b)/i.test(query);
+  const _018aIsVatDomain  =
+    _018aPrimaryDomain === "VAT" ||
+    _018aPrimaryIssue  === "VAT" ||
+    _018aPrimaryIssue  === "INPUT_TAX" ||
+    _018aPrimaryIssue  === "VAT_CREDIT" ||
+    _018aPrimaryIssue  === "VAT_REFUND" ||
+    _018aSubIssue.startsWith("VAT") ||
+    /\b(vat|value.?added\s+tax|input\s+tax|output\s+tax|vat\s+credit|vat\s+refund)\b/i.test(_018aQueryLower);
+
   const isAuthorityCriticalRetrieval =
     ctx.issueClassification?.subIssue === "VAT_DEFINITION" ||
     ctx.issueClassification?.subIssue === "WITHHOLDING_TAX_DEFINITION" ||
@@ -2189,14 +2253,19 @@ export async function runPipeline({
     ctx.issueClassification?.primaryIssue === "EST" ||
     ctx.issueClassification?.primaryIssue === "ESTATE_TAX" ||
     String(ctx.issueClassification?.retrievalStrategy || "").includes("VAT_DEFINITION") ||
-    ctx.issueClassification?.requiresAuthorityCriticalRetrieval === true;
+    ctx.issueClassification?.requiresAuthorityCriticalRetrieval === true ||
+    // PATCH-018A: VAT-domain and case queries always await retrieval
+    _018aIsVatDomain ||
+    (_018aIsCaseQuery && (ctx.issueClassification?.targetAuthorities || []).length > 0);
 
   if (isAuthorityCriticalRetrieval) {
     console.log("[RETRIEVAL AWAIT MODE]", {
       reason:            "authority_critical",
       mode:              ctx.mode,
       subIssue:          ctx.issueClassification?.subIssue || null,
-      retrievalStrategy: ctx.issueClassification?.retrievalStrategy || null
+      retrievalStrategy: ctx.issueClassification?.retrievalStrategy || null,
+      patch018aVatDomain: _018aIsVatDomain,
+      patch018aCaseQuery: _018aIsCaseQuery
     });
   }
 
@@ -2343,6 +2412,19 @@ export async function runPipeline({
   diagnostics.partialPipelineState.retrievedCount = ctx.retrievedChunks.length;
   diagnostics.partialPipelineState.retrievalLayerCounts = buildRetrievalLayerCounts(ctx.retrievalDiagnostics);
   publishDiagnostics(false);
+
+  // PATCH-018A: Post-retrieval canonical counts — canonical state after normalization
+  console.log("[PATCH_018A_POST_RETRIEVAL_CANONICAL_COUNTS]", {
+    retrievedChunks:       ctx.retrievedChunks.length,
+    timedOut:              Boolean(ctx.retrievalDiagnostics?.timedOut),
+    retrievalWon:          _retrievalWon,
+    exactAuthorityMatches: ctx.retrievalDiagnostics?.exactAuthorityMatches ?? "n/a",
+    citationVariantMatches: ctx.retrievalDiagnostics?.citationVariantMatches ?? "n/a",
+    metadataMatches:       ctx.retrievalDiagnostics?.metadataMatches        ?? "n/a",
+    finalSourceCount:      ctx.retrievalDiagnostics?.finalSourceCount       ?? "n/a",
+    mode:                  ctx.mode,
+    isAuthorityCritical:   isAuthorityCriticalRetrieval
+  });
 
   // ── Step 5.5: Compact EWT/WHT retrieval set (PATCH-017E) ──────────────────
   // For simple WHT/EWT queries targeting NIRC Sec. 57/58 or RR 2-98, replace
@@ -2510,6 +2592,14 @@ export async function runPipeline({
     issueClassification: ctx.issueClassification,
     outcomeCategory:     ctx.retrievalMeta?.outcomeCategory || ctx.retrievalMeta?.retrievalMeta?.outcomeCategory || null
   });
+
+  // PATCH-018A: Pre-SAE annotated candidate counts before classifySourceAvailability
+  console.log("[PATCH_018A_PRE_SAE_COUNTS]", {
+    annotatedCandidates: ctx.rerankedChunks.length,
+    timedOut:            Boolean(ctx.retrievalDiagnostics?.timedOut),
+    outcomeCategory:     ctx.retrievalMeta?.outcomeCategory || null
+  });
+
   ctx.sourceAvailability = classifySourceAvailability({
     annotatedCandidates:  ctx.rerankedChunks || [],
     issueClassification:  ctx.issueClassification,
@@ -2545,6 +2635,19 @@ export async function runPipeline({
     retrievalTimedOut:  Boolean(ctx.retrievalDiagnostics?.timedOut),
     limitationRequired: ctx.limitationRequired
   });
+
+  // PATCH-018A: Post-SAE reconciliation state — confirms saeStatus after classification
+  console.log("[PATCH_018A_RETRIEVAL_STATE_RECONCILED]", {
+    saeStatus:          ctx.saeStatus,
+    rerankedChunks:     ctx.rerankedChunks.length,
+    eligibleCandidates: ctx.eligibleCandidates?.length ?? 0,
+    timedOut:           Boolean(ctx.retrievalDiagnostics?.timedOut),
+    reconciled:         Boolean(
+      ctx.rerankedChunks.length > 0 &&
+      (ctx.saeStatus === "AUTHORITY_FOUND" || ctx.saeStatus === "RELATED_AUTHORITY_ONLY")
+    )
+  });
+
   trace.steps.push({ step: "6.5", name: "sourceAvailabilityClassification", saeStatus: ctx.saeStatus, done: true });
 
   // ── Step 6.6: Pre-Generation Authority Lock (PATCH-017B) ──────────────────
@@ -2740,6 +2843,22 @@ export async function runPipeline({
   // received NO_INDEXED_SOURCE or RELATED_AUTHORITY_ONLY due to annotation gaps
   // (missing citation field → isParsed=false → role never reaches GOVERNING).
   // Only activates when evidence of indexed target-matched VAT authority exists.
+  //
+  // PATCH-018A does NOT alter this gate. The gate condition is exactly as
+  // established by PATCH-017H: isVatDefinitionQuery() + suppressed SAE status.
+  // VAT credit / zero-rated / case queries resolve subIssue != VAT_DEFINITION,
+  // so isVatDefinitionQuery() returns false and this block is never entered.
+  console.log("[PATCH_018A_VAT_BRIDGE_SCOPE_PRESERVED]", {
+    marker:              "PATCH_018A_VAT_BRIDGE_SCOPE_PRESERVED",
+    isVatDefinitionQuery: isVatDefinitionQuery(ctx.issueClassification),
+    subIssue:            ctx.issueClassification?.subIssue || null,
+    retrievalStrategy:   ctx.issueClassification?.retrievalStrategy || null,
+    saeStatus:           ctx.saeStatus,
+    bridgeWillEvaluate:  (
+      isVatDefinitionQuery(ctx.issueClassification) &&
+      (ctx.saeStatus === "NO_INDEXED_SOURCE" || ctx.saeStatus === "RELATED_AUTHORITY_ONLY")
+    )
+  });
   if (
     isVatDefinitionQuery(ctx.issueClassification) &&
     (ctx.saeStatus === "NO_INDEXED_SOURCE" || ctx.saeStatus === "RELATED_AUTHORITY_ONLY")
@@ -3402,6 +3521,15 @@ export async function runPipeline({
     sourceAvailabilityStatus: ctx.saeStatus,
     retrievedCount: ctx.rerankedChunks?.length || 0
   });
+  // PATCH-018A: Pre-source-selection counts before source card loop
+  console.log("[PATCH_018A_PRE_SOURCE_SELECTION_COUNTS]", {
+    rerankedChunks:        ctx.rerankedChunks?.length ?? 0,
+    saeStatus:             ctx.saeStatus,
+    saeSuppressSourceCards: saeHardFailBlocked || sourceCardsSuppressedBySaeStatus(ctx.saeStatus),
+    eligibleCandidates:    ctx.eligibleCandidates?.length ?? 0,
+    targetAuthorities:     (ctx.issueClassification?.targetAuthorities || []).length
+  });
+
   const CANDIDATE_CAP  = 15; // collect more before priority-sort; final slice is 5
   const _scSeen        = new Map();
   const targetAuths    = ctx.issueClassification?.targetAuthorities || [];
