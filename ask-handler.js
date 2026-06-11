@@ -448,6 +448,95 @@ function buildRouteTimeoutFallback({
   };
 }
 
+// ── PATCH-018C: Internal pipeline errors are NOT Source Availability outcomes ──
+// A non-timeout runPipeline() exception previously emitted
+// saeStatus/sourceAvailability/sourceStatus = "RETRIEVAL_TIMEOUT", violating the
+// Source Availability Contract (incorrect source state emitted). SAE statuses
+// describe retrieval conditions only; software failures must be reported as
+// PIPELINE_ERROR with null SAE fields. True retrieval timeouts still route to
+// buildRouteTimeoutFallback() via isRoutePipelineTimeout() — unchanged.
+function buildPipelineErrorFallback({
+  error = {},
+  question = "",
+  hookConfig = {},
+  pipelineDiagnostics = null
+} = {}) {
+  const diagnostics = finalizeRouteDiagnostics(pipelineDiagnostics || {}, false);
+  const hookCode = hookConfig.hook_code || "/ask";
+  const mode = hookConfig.mode || "ASK";
+  const responseMode = hookConfig.adaptiveResponseMode || mode;
+  const orchestrationMode = hookConfig.orchestrationMode || responseMode;
+  const errorName = error?.name || error?.constructor?.name || "Error";
+
+  console.error("[PATCH_018C_INTERNAL_PIPELINE_ERROR_NOT_SAE_TIMEOUT]", {
+    query:                           compactString(question, 200),
+    route:                           hookCode,
+    errorName,
+    errorMessage:                    compactString(error?.message || String(error), 300),
+    errorCategory:                   "PIPELINE_ERROR",
+    emittedSaeStatus:                null,
+    emittedSourceAvailabilityStatus: null
+  });
+
+  return {
+    answer:
+      "TINA encountered an internal pipeline error before it could complete a sourced answer. This does not mean that no law or authority exists. Please retry or narrow the question.",
+    sources: [],
+    sourcesUsed: [],
+    sourceCards: [],
+    issueClassification: {},
+    internalError: true,
+    errorCategory: "PIPELINE_ERROR",
+    saeStatus: null,
+    sourceAvailability: null,
+    sourceAvailabilityStatus: null,
+    // sourceStatus is the legacy mixed transport field (it already carries
+    // non-SAE values like MODE_STATE_CLEARED / QUIZ_GROUNDED). PIPELINE_ERROR
+    // here prevents the payload-level default from resurrecting
+    // RETRIEVAL_TIMEOUT. It is not one of the reserved SAE statuses.
+    sourceStatus: "PIPELINE_ERROR",
+    sourceAvailabilityReason:
+      "An internal pipeline error occurred before source availability could be classified. No SAE status was emitted.",
+    retrievalTimedOut: false,
+    retrievedSourceCount: diagnostics.partialPipelineState?.retrievedCount || 0,
+    displayedSourceCount: 0,
+    relatedSourceCount: 0,
+    retrievalLayerCounts: null,
+    firstSourceLabels: [],
+    diagnostics,
+    pipelineTimings: diagnostics.pipelineTimings,
+    pipelineStageDurations: diagnostics.pipelineStageDurations,
+    partialPipelineState: diagnostics.partialPipelineState,
+    openaiCalls: diagnostics.openaiCalls,
+    mode,
+    responseMode,
+    orchestrationMode,
+    pipelineVersion: null,
+    orchestration: {
+      ragError: error?.message || String(error),
+      ragErrorName: errorName,
+      ragErrorStatus: error?.status,
+      ragErrorCode: error?.code,
+      routeTimeout: false,
+      internalError: true,
+      errorCategory: "PIPELINE_ERROR",
+      internalTimeoutType: "PIPELINE_FALLBACK",
+      timeoutMs: RAG_TIMEOUT_MS,
+      selectedHook: hookCode,
+      selectedMode: mode,
+      responseMode,
+      orchestrationMode,
+      query: compactString(question, 500),
+      sourceAvailability: null,
+      saeStatus: null,
+      sourceStatus: "PIPELINE_ERROR",
+      retrievalTimedOut: false,
+      retrievalPreserved: false,
+      fallbackAnswerUsed: true
+    }
+  };
+}
+
 function getUserId(req) {
   return (
     req?.user?.id ||
@@ -2085,55 +2174,12 @@ export function createAskHandler({
         type:    error?.type,
         stack:   error?.stack?.split("\n").slice(0, 10).join("\n")
       });
+      // PATCH-018C: non-timeout internal errors must not be classified as
+      // RETRIEVAL_TIMEOUT (or any SAE status). True route timeouts keep the
+      // existing buildRouteTimeoutFallback behavior unchanged.
       result = isRoutePipelineTimeout(error)
         ? buildRouteTimeoutFallback({ error, question, hookConfig, pipelineDiagnostics })
-        : {
-            answer:
-              "TINA encountered an internal pipeline error before it could complete a sourced answer. This does not mean that no law or authority exists. Please retry or narrow the question.",
-            sources: [],
-            sourcesUsed: [],
-            sourceCards: [],
-            issueClassification: {},
-            sourceAvailability: "RETRIEVAL_TIMEOUT",
-            saeStatus: "RETRIEVAL_TIMEOUT",
-            sourceStatus: "RETRIEVAL_TIMEOUT",
-            sourceAvailabilityReason:
-              "The route-level pipeline fallback was used before source verification completed.",
-            retrievalTimedOut: true,
-            retrievedSourceCount: 0,
-            displayedSourceCount: 0,
-            relatedSourceCount: 0,
-            retrievalLayerCounts: null,
-            firstSourceLabels: [],
-            diagnostics: finalizeRouteDiagnostics(pipelineDiagnostics, true),
-            pipelineTimings: pipelineDiagnostics.pipelineTimings,
-            pipelineStageDurations: pipelineDiagnostics.pipelineStageDurations,
-            partialPipelineState: pipelineDiagnostics.partialPipelineState,
-            openaiCalls: pipelineDiagnostics.openaiCalls,
-            mode: hookConfig.mode,
-            responseMode: hookConfig.adaptiveResponseMode || hookConfig.mode,
-            orchestrationMode: hookConfig.orchestrationMode || hookConfig.mode,
-            orchestration: {
-              ragError:           error.message,
-              ragErrorName:       error?.name || error?.constructor?.name,
-              ragErrorStatus:     error?.status,
-              ragErrorCode:       error?.code,
-              routeTimeout:       false,
-              internalTimeoutType: "PIPELINE_FALLBACK",
-              timeoutMs:          RAG_TIMEOUT_MS,
-              selectedHook:       hookConfig.hook_code,
-              selectedMode:       hookConfig.mode,
-              responseMode:       hookConfig.adaptiveResponseMode || hookConfig.mode,
-              orchestrationMode:  hookConfig.orchestrationMode || hookConfig.mode,
-              query:              compactString(question, 500),
-              sourceAvailability: "RETRIEVAL_TIMEOUT",
-              saeStatus:          "RETRIEVAL_TIMEOUT",
-              sourceStatus:       "RETRIEVAL_TIMEOUT",
-              retrievalTimedOut:  true,
-              retrievalPreserved: false,
-              fallbackAnswerUsed: true
-            }
-          };
+        : buildPipelineErrorFallback({ error, question, hookConfig, pipelineDiagnostics });
       result = {
         ...result,
         retrievedSourceCount: timeoutDiagnostics?.partialPipelineState?.retrievedCount ?? result.retrievedSourceCount ?? 0,
@@ -2217,9 +2263,15 @@ export function createAskHandler({
       retrievedSourceCount: result.retrievedSourceCount ?? resultSources.length,
       displayedSourceCount: result.displayedSourceCount ?? visibleSources.length,
 
+      // PATCH-018C: internal errors must never default into RETRIEVAL_TIMEOUT.
       sourceStatus:             result.sourceStatus || result.sourceAvailability ||
-                                  (resultSources.length ? "ISSUE_MATCHED_CONTEXT_USED" : "RETRIEVAL_TIMEOUT"),
+                                  (result.internalError === true
+                                    ? "PIPELINE_ERROR"
+                                    : resultSources.length ? "ISSUE_MATCHED_CONTEXT_USED" : "RETRIEVAL_TIMEOUT"),
       sourceAvailability:       result.sourceAvailability        || null,
+      saeStatus:                result.saeStatus                 ?? null,
+      internalError:            result.internalError === true,
+      errorCategory:            result.errorCategory             || null,
       sourceAvailabilityReason: result.sourceAvailabilityReason  || null,
       retrievalTimedOut:        result.retrievalTimedOut === true,
       relatedSourceCount:       result.relatedSourceCount        ?? 0,

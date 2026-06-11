@@ -284,6 +284,13 @@ function buildOpenAiFailureRetrievalAnswer(ctx = {}, query = "") {
   ].join("\n");
 }
 
+// ── PATCH-018B: Safe insufficient-generation fallback for the fast-EWT path ──
+// Replaces the removed hardcoded EWT legal conclusion. This text must never
+// state a specific rate, treatment, income payment category, or legal
+// conclusion — those depend on facts that generation did not analyze.
+const SAFE_EWT_INSUFFICIENT_GENERATION_ANSWER =
+  "TINA found potentially relevant withholding tax authorities, but the answer could not be safely completed within the available generation budget. The applicable EWT treatment or rate depends on the specific income payment category, payee status, and governing regulation. Please rerun the query or narrow the fact pattern.";
+
 function buildRetrievalLayerCounts(retrievalDiagnostics = {}) {
   return {
     exactAuthorityMatches:    retrievalDiagnostics?.exactAuthorityMatches    ?? 0,
@@ -3138,25 +3145,39 @@ export async function runPipeline({
     const _fdCards       = (ctx.preGenerationSourceCards || []).slice(0, 4);
 
     if (_fdRemainingMs < 15000) {
-      const _fdAuthList = _fdCards
+      const _fdAuthorities = _fdCards
         .map(c => c.normalizedReference || c.citation || c.title || "")
         .filter(Boolean)
-        .join(", ");
+        .slice(0, 8);
       console.log("[FAST_EWT_LOW_BUDGET_FALLBACK_USED]", {
         query:       query.slice(0, 120),
         remainingMs: _fdRemainingMs,
         cardCount:   _fdCards.length,
-        authorities: _fdAuthList
+        authorities: _fdAuthorities.join(", ")
+      });
+      // PATCH-018B: never return a hardcoded legal conclusion here. The prior
+      // fallback stated an advertising-agency-specific rate regardless of the
+      // actual income payment category. Retrieved authorities and source
+      // cards are preserved downstream (ctx.preGenerationSourceCards is untouched
+      // and saeStatus remains AUTHORITY_FOUND); only the answer text is replaced
+      // with safe insufficient-generation language.
+      console.log("[PATCH_018B_SAFE_EWT_INSUFFICIENT_GENERATION_FALLBACK]", {
+        query:             query.slice(0, 120),
+        remainingBudgetMs: _fdRemainingMs,
+        sourceCount:       _fdCards.length,
+        authorities:       _fdAuthorities,
+        reason:            "remaining_generation_budget_below_safe_minimum"
       });
       openAiResult = {
-        answer: `The EWT rate applicable to advertising agencies under RR 2-98 is 10% of gross payments. Authority: ${_fdAuthList || "RR 2-98, NIRC Sec. 57, NIRC Sec. 58"}.`,
+        answer: SAFE_EWT_INSUFFICIENT_GENERATION_ANSWER,
         orchestration: {
           mode:                ctx.mode,
           engine:              "fast-ewt-fallback",
-          version:             "1.0",
+          version:             "1.1",
           sourceCount:         _fdCards.length,
           maxCompletionTokens: 0,
           wasTrimmed:          false,
+          patch018bSafeFallbackApplied: true,
           diagnostics:         { finalTrimApplied: false }
         }
       };
