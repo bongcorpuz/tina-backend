@@ -58,6 +58,7 @@ import {
 
 // LAW 1: Individual engine imports removed — all engine calls go through pipeline.js only.
 import { runPipeline } from "./pipeline.js";
+import { applyVerifiedAuthorityGate } from "./answer-renderer.js";
 
 import {
   detectPhilippineTaxBoundary,
@@ -399,8 +400,15 @@ function buildRouteTimeoutFallback({
   const orchestrationMode = hookConfig.orchestrationMode || responseMode;
 
   return {
-    answer:
-      "The retrieval or answer-generation pipeline timed out before TINA could complete a sourced answer. This does not mean that no law or authority exists. Please retry or narrow the question.",
+    // PATCH-019A: timeout fallback answer passes the verified-authority gate
+    // so a RETRIEVAL_TIMEOUT response can never carry legal citations.
+    answer: applyVerifiedAuthorityGate({
+      answer:
+        "The retrieval or answer-generation pipeline timed out before TINA could complete a sourced answer. This does not mean that no law or authority exists. Please retry or narrow the question.",
+      saeStatus: "RETRIEVAL_TIMEOUT",
+      mode,
+      route: hookCode
+    }).answer,
     sources: [],
     sourcesUsed: [],
     sourceCards: [],
@@ -468,6 +476,16 @@ function buildPipelineErrorFallback({
   const orchestrationMode = hookConfig.orchestrationMode || responseMode;
   const errorName = error?.name || error?.constructor?.name || "Error";
 
+  // PATCH-019A: route-level unsafe-status answers pass the verified-authority
+  // gate too, so no legal citation can ever ride out on a PIPELINE_ERROR.
+  const gatedAnswer = applyVerifiedAuthorityGate({
+    answer:
+      "TINA encountered an internal pipeline error before it could complete a sourced answer. This does not mean that no law or authority exists. Please retry or narrow the question.",
+    saeStatus: "PIPELINE_ERROR",
+    mode,
+    route: hookCode
+  }).answer;
+
   console.error("[PATCH_018C_INTERNAL_PIPELINE_ERROR_NOT_SAE_TIMEOUT]", {
     query:                           compactString(question, 200),
     route:                           hookCode,
@@ -479,8 +497,7 @@ function buildPipelineErrorFallback({
   });
 
   return {
-    answer:
-      "TINA encountered an internal pipeline error before it could complete a sourced answer. This does not mean that no law or authority exists. Please retry or narrow the question.",
+    answer: gatedAnswer,
     sources: [],
     sourcesUsed: [],
     sourceCards: [],

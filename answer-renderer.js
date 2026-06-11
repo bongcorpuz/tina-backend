@@ -1533,6 +1533,335 @@ function answerRendererHealthCheck() {
   };
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+ * PATCH-019A REV2 — Verified-Authority Final Answer Gate
+ *
+ * Post-generation, post-compliance, post-017J/017K text gate.
+ * Rule: No verified source, no legal citation.
+ *
+ * The gate NEVER performs retrieval, NEVER changes SAE status, NEVER invents
+ * authorities. It only inspects/sanitizes the final answer TEXT against an
+ * allow-list of verified authorities supplied by the caller (pipeline.js /
+ * ask-handler.js). VAT-bridge and EWT-fast-path preservation decisions are
+ * made by the CALLER from existing pipeline flags and passed in as booleans —
+ * the gate does no query matching and no classification of its own.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+const PATCH_019A_UNSAFE_STATUSES = Object.freeze(new Set([
+  "NO_INDEXED_SOURCE",
+  "RETRIEVAL_TIMEOUT",
+  "SOURCE_LOOKUP_EMPTY",
+  "SOURCE_PARSE_ERROR",
+  "PIPELINE_ERROR"
+]));
+
+// Canonical keys for the preservation contracts (PATCH-019A §8 / §9).
+const PATCH_019A_VAT_FAST_DEFINITION_KEYS = Object.freeze([
+  "nircsec105", "nircsec106", "nircsec107", "nircsec108", "rr162005"
+]);
+const PATCH_019A_EWT_FAST_PATH_KEYS = Object.freeze([
+  "nircsec57", "nircsec58", "rr298"
+]);
+
+// Per-status safe limitation messages (mirror pipeline.js SAE fallback texts).
+// Used only when sanitization removes so much that no usable answer remains.
+const PATCH_019A_LIMITATION_MESSAGES = Object.freeze({
+  RETRIEVAL_TIMEOUT:
+    "The authority retrieval process timed out before a reliable indexed source could be confirmed.\n\nThis does not mean that no law or authority exists. Please retry or verify the relevant indexed source before relying on a legal or tax conclusion.",
+  NO_INDEXED_SOURCE:
+    "TINA could not identify an indexed authority matching the specific transaction or claim described.\n\nThis does not mean that no law or authority exists.",
+  SOURCE_LOOKUP_EMPTY:
+    "The source lookup completed but did not return matching authority for this query.\n\nThis does not mean that no law or authority exists. Please verify the relevant indexed source before relying on a legal or tax conclusion.",
+  SOURCE_PARSE_ERROR:
+    "An indexed source was located, but its content could not be parsed reliably.\n\nI cannot rely on the parse-failed content as authority. Please verify the relevant indexed source before relying on a legal or tax conclusion.",
+  PIPELINE_ERROR:
+    "TINA encountered an internal pipeline error before it could complete a sourced answer. This does not mean that no law or authority exists. Please retry or narrow the question."
+});
+
+// Gate-local canonicalization for allow-list matching ONLY. Pre-normalizes
+// long-form issuance names before canonicalSourceKey so that
+// "Revenue Regulations No. 16-2005" and "RR 16-2005" produce the same key.
+// Not a replacement for authority-utils normalization (which is untouched).
+function patch019aCanonicalKey(value = "") {
+  const pre = String(value || "")
+    .toLowerCase()
+    .replace(/\brevenue\s+regulations?\b/g, "rr")
+    .replace(/\brevenue\s+memorandum\s+circular\b/g, "rmc")
+    .replace(/\brevenue\s+memorandum\s+order\b/g, "rmo")
+    .replace(/\brevenue\s+audit\s+memorandum\s+order\b/g, "ramo")
+    .replace(/\bnational\s+internal\s+revenue\s+code\b/g, "nirc")
+    .replace(/\btax\s+code\b/g, "nirc")
+    .replace(/\bsections?\b/g, "sec")
+    .replace(/\brepublic\s+act\b/g, "ra");
+  return canonicalSourceKey(pre);
+}
+
+// Citation extractors: return canonical keys for every authority-looking
+// citation in a text fragment. Patterns cover the citation families the
+// Authority Lock governs (NIRC/Tax Code sections, RR/RMC/RMO/RAMO, RA).
+const PATCH_019A_CITATION_EXTRACTORS = Object.freeze([
+  {
+    re: /\b(?:nirc|tax\s+code|national\s+internal\s+revenue\s+code)\s*,?\s*(?:sec(?:tion)?s?\.?\s*)(\d{1,3}(?:\s*-\s*[a-z]|[a-z])?)\b/gi,
+    key: (m) => `nircsec${m[1].toLowerCase().replace(/[\s-]/g, "")}`
+  },
+  {
+    re: /\bsec(?:tion)?s?\.?\s*(\d{1,3}(?:\s*-\s*[a-z]|[a-z])?)\s*(?:,\s*|\s+of\s+the\s+)(?:nirc|tax\s+code|national\s+internal\s+revenue\s+code)\b/gi,
+    key: (m) => `nircsec${m[1].toLowerCase().replace(/[\s-]/g, "")}`
+  },
+  {
+    re: /\b(rr|rmc|rmo|ramo)\s*(?:no\.?\s*)?(\d{1,3})\s*[-–]\s*(\d{2,4})\b/gi,
+    key: (m) => `${m[1].toLowerCase()}${m[2]}${m[3]}`
+  },
+  {
+    re: /\brevenue\s+(regulations?|memorandum\s+circular|memorandum\s+order|audit\s+memorandum\s+order)\s*(?:no\.?\s*)?(\d{1,3})\s*[-–]\s*(\d{2,4})\b/gi,
+    key: (m) => {
+      const t = m[1].toLowerCase();
+      const prefix = t.startsWith("regulation") ? "rr"
+        : t.startsWith("memorandum circular") ? "rmc"
+        : t.startsWith("audit") ? "ramo" : "rmo";
+      return `${prefix}${m[2]}${m[3]}`;
+    }
+  },
+  {
+    re: /\b(?:ra|r\.\s*a\.|republic\s+act)\s*(?:no\.?\s*)?(\d{3,6})\b/gi,
+    key: (m) => `ra${m[1]}`
+  }
+]);
+
+function patch019aExtractCitations(text = "") {
+  const found = [];
+  for (const { re, key } of PATCH_019A_CITATION_EXTRACTORS) {
+    re.lastIndex = 0;
+    let m;
+    while ((m = re.exec(String(text))) !== null) {
+      found.push({ raw: m[0], key: key(m) });
+    }
+  }
+  return found;
+}
+
+// Authority-looking section headings (PATCH-019A §10). Matches plain,
+// markdown (#/##/###), bolded, lettered ("B."), and inline-list variants.
+const PATCH_019A_AUTHORITY_HEADING_RE =
+  /^\s{0,3}(?:#{1,4}\s*)?(?:\*\*)?\s*(?:[A-Z]\.\s*)?(controlling|governing|primary|legal)?\s*authorit(?:y|ies)\s*(?:\*\*)?\s*:?\s*(?:\*\*)?\s*/i;
+
+const PATCH_019A_FORBIDDEN_RELATED_HEADING_RE =
+  /(controlling|governing|primary)\s+authorit(?:y|ies)/gi;
+
+function patch019aIsAuthorityHeadingLine(line = "") {
+  const trimmed = String(line).trim();
+  if (!trimmed) return false;
+  const m = trimmed.match(PATCH_019A_AUTHORITY_HEADING_RE);
+  if (!m) return false;
+  // Require the heading to be the dominant content of the line: either the
+  // line is just the heading, or heading + inline citation list after ":".
+  const rest = trimmed.replace(PATCH_019A_AUTHORITY_HEADING_RE, "").trim();
+  return rest === "" || patch019aExtractCitations(rest).length > 0;
+}
+
+function patch019aIsListLine(line = "") {
+  return /^\s*(?:[-*•]|\d+[.)])\s+/.test(String(line));
+}
+
+/**
+ * PATCH-019A REV2 — apply the verified-authority gate to a final answer.
+ *
+ * Runs strictly on TEXT. Caller supplies verified authority sources and the
+ * preservation flags (computed from existing pipeline state — see pipeline.js
+ * Step 17.5). Returns the gated answer plus diagnostics flags.
+ */
+function applyVerifiedAuthorityGate({
+  answer = "",
+  saeStatus = "",
+  finalSourceCards = [],
+  pipelineSourceCards = [],
+  eligibleCandidates = [],
+  preGenerationSourceCards = [],
+  lockedAuthorities = [],
+  vatFastDefinitionPreserved = false,
+  ewtFastPathPreserved = false,
+  mode = "",
+  route = ""
+} = {}) {
+  const status = String(saeStatus || "").trim().toUpperCase();
+  const originalAnswer = String(answer || "");
+  const result = {
+    answer: originalAnswer,
+    saeStatus: status,
+    gateEvaluated: true,
+    changed: false,
+    leakageBlocked: false,
+    relabelApplied: false,
+    removedSectionCount: 0,
+    suppressedCitations: [],
+    verifiedAuthorityCount: 0,
+    vatFastDefinitionPreserved: vatFastDefinitionPreserved === true,
+    ewtFastPathPreserved: ewtFastPathPreserved === true
+  };
+
+  // ── Build the verified-authority allow-list (PATCH-019A §6) ──────────────
+  const verifiedKeys = new Set();
+  const addRef = (ref) => {
+    const key = patch019aCanonicalKey(ref);
+    if (key) verifiedKeys.add(key);
+  };
+  const addCardLike = (card) => {
+    if (!card || typeof card !== "object") return;
+    addRef(card.normalizedReference || card.normalized_reference || "");
+    addRef(card.citation || "");
+    addRef(card.title || "");
+    addRef(card.label || "");
+    addRef(card.reference || "");
+    if (card.authorityAnnotation && typeof card.authorityAnnotation === "object") {
+      addRef(card.authorityAnnotation.citation || "");
+      addRef(card.authorityAnnotation.displayLabel || "");
+    }
+  };
+  (Array.isArray(finalSourceCards) ? finalSourceCards : []).forEach(addCardLike);
+  (Array.isArray(pipelineSourceCards) ? pipelineSourceCards : []).forEach(addCardLike);
+  (Array.isArray(eligibleCandidates) ? eligibleCandidates : []).forEach(addCardLike);
+  (Array.isArray(preGenerationSourceCards) ? preGenerationSourceCards : []).forEach(addCardLike);
+  (Array.isArray(lockedAuthorities) ? lockedAuthorities : []).forEach(addRef);
+
+  // Preservation contracts: flags are decided by the CALLER from existing
+  // pipeline state (017F/G/H flags, mode, saeStatus). The gate only honors them.
+  if (vatFastDefinitionPreserved === true && status === "AUTHORITY_FOUND") {
+    PATCH_019A_VAT_FAST_DEFINITION_KEYS.forEach((k) => verifiedKeys.add(k));
+  }
+  if (ewtFastPathPreserved === true && status === "AUTHORITY_FOUND") {
+    PATCH_019A_EWT_FAST_PATH_KEYS.forEach((k) => verifiedKeys.add(k));
+  }
+  result.verifiedAuthorityCount = verifiedKeys.size;
+
+  const lines = originalAnswer.split("\n");
+
+  // ── Unsafe statuses: absolute citation suppression (PATCH-019A §7.3) ─────
+  if (PATCH_019A_UNSAFE_STATUSES.has(status)) {
+    const kept = [];
+    let inAuthoritySection = false;
+    for (const line of lines) {
+      if (patch019aIsAuthorityHeadingLine(line)) {
+        inAuthoritySection = true;
+        result.removedSectionCount++;
+        continue;
+      }
+      if (inAuthoritySection) {
+        if (String(line).trim() === "") { inAuthoritySection = false; continue; }
+        if (patch019aIsListLine(line) || patch019aExtractCitations(line).length > 0) continue;
+        inAuthoritySection = false; // prose resumed — section ended
+      }
+      const cites = patch019aExtractCitations(line);
+      if (cites.length > 0) {
+        for (const c of cites) {
+          if (result.suppressedCitations.length < 12) result.suppressedCitations.push(c.raw);
+        }
+        continue; // drop citation-bearing line under unsafe status
+      }
+      kept.push(line);
+    }
+    let gated = kept.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+    if (gated.length < 40) {
+      gated = PATCH_019A_LIMITATION_MESSAGES[status] || PATCH_019A_LIMITATION_MESSAGES.NO_INDEXED_SOURCE;
+    }
+    if (gated !== originalAnswer.trim() && (result.removedSectionCount > 0 || result.suppressedCitations.length > 0)) {
+      result.changed = true;
+      result.leakageBlocked = true;
+      result.answer = gated;
+      console.warn("[PATCH_019A_AUTHORITY_LEAKAGE_BLOCKED]", {
+        saeStatus: status,
+        mode,
+        route,
+        removedSectionCount: result.removedSectionCount,
+        suppressedCitationCount: result.suppressedCitations.length,
+        suppressedCitations: result.suppressedCitations.slice(0, 8),
+        fallbackMessageUsed: result.answer === PATCH_019A_LIMITATION_MESSAGES[status]
+      });
+    }
+    console.log("[PATCH_019A_AUTHORITY_GATE_EVALUATED]", {
+      saeStatus: status, mode, route,
+      verifiedAuthorityCount: result.verifiedAuthorityCount,
+      leakageBlocked: result.leakageBlocked,
+      relabelApplied: false
+    });
+    return result;
+  }
+
+  // ── RELATED_AUTHORITY_ONLY: no controlling presentation (§7.2) ───────────
+  // Relabel HEADING lines only ("Controlling/Governing/Primary Authorities").
+  // Prose-level controlling-language framing remains the job of the existing
+  // SAE_C1 compliance checks in final-answer-compliance.js (untouched).
+  if (status === "RELATED_AUTHORITY_ONLY") {
+    const relabeled = lines
+      .map((line) => {
+        if (!patch019aIsAuthorityHeadingLine(line)) return line;
+        PATCH_019A_FORBIDDEN_RELATED_HEADING_RE.lastIndex = 0;
+        if (!PATCH_019A_FORBIDDEN_RELATED_HEADING_RE.test(line)) return line;
+        PATCH_019A_FORBIDDEN_RELATED_HEADING_RE.lastIndex = 0;
+        return line.replace(
+          PATCH_019A_FORBIDDEN_RELATED_HEADING_RE,
+          "Related / Supporting Authorities"
+        );
+      })
+      .join("\n");
+    if (relabeled !== originalAnswer) {
+      result.changed = true;
+      result.relabelApplied = true;
+      result.answer = relabeled;
+      console.log("[PATCH_019A_RELATED_AUTHORITY_RELABEL_APPLIED]", {
+        saeStatus: status, mode, route
+      });
+    }
+    console.log("[PATCH_019A_AUTHORITY_GATE_EVALUATED]", {
+      saeStatus: status, mode, route,
+      verifiedAuthorityCount: result.verifiedAuthorityCount,
+      leakageBlocked: false,
+      relabelApplied: result.relabelApplied
+    });
+    return result;
+  }
+
+  // ── AUTHORITY_FOUND: every citation-bearing line must be fully verified ──
+  // REV2-FIX: scan ALL lines, not only detected authority sections, so inline
+  // prose citations cannot bypass the gate. A line survives only if it carries
+  // no legal citation, or every detected citation is in the verified
+  // allow-list. A single unverified citation suppresses the whole line.
+  if (status === "AUTHORITY_FOUND" && verifiedKeys.size > 0) {
+    const kept = [];
+    for (const line of lines) {
+      const cites = patch019aExtractCitations(line);
+      if (cites.length > 0 && !cites.every((c) => verifiedKeys.has(c.key))) {
+        for (const c of cites) {
+          if (verifiedKeys.has(c.key)) continue;
+          if (result.suppressedCitations.length < 12) result.suppressedCitations.push(c.raw);
+        }
+        result.changed = true;
+        continue;
+      }
+      kept.push(line);
+    }
+    if (result.changed) {
+      result.answer = kept.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+      console.warn("[PATCH_019A_AUTHORITY_LEAKAGE_BLOCKED]", {
+        saeStatus: status, mode, route,
+        reason: "unverified_citation_in_answer",
+        suppressedCitationCount: result.suppressedCitations.length,
+        suppressedCitations: result.suppressedCitations.slice(0, 8)
+      });
+      result.leakageBlocked = true;
+    }
+  }
+
+  console.log("[PATCH_019A_AUTHORITY_GATE_EVALUATED]", {
+    saeStatus: status, mode, route,
+    verifiedAuthorityCount: result.verifiedAuthorityCount,
+    leakageBlocked: result.leakageBlocked,
+    relabelApplied: result.relabelApplied,
+    vatFastDefinitionPreserved: result.vatFastDefinitionPreserved,
+    ewtFastPathPreserved: result.ewtFastPathPreserved
+  });
+  return result;
+}
+
 export {
   ENGINE_VERSION,
   ORCHESTRATION_MODES,
@@ -1561,6 +1890,7 @@ export {
   assertAFStructure,
   assertStructure,
   normalizeOrchestrationMode,
+  applyVerifiedAuthorityGate,
   answerRendererHealthCheck
 };
 
@@ -1592,5 +1922,6 @@ export default {
   assertAFStructure,
   assertStructure,
   normalizeOrchestrationMode,
+  applyVerifiedAuthorityGate,
   answerRendererHealthCheck
 };

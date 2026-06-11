@@ -52,7 +52,8 @@ import {
 }                                                 from "./services/observability-service.js";
 import {
   renderTinaAnswer,
-  renderFastDefinitionConversational
+  renderFastDefinitionConversational,
+  applyVerifiedAuthorityGate
 }                                                 from "./answer-renderer.js";
 import { enforceFinalAnswerCompliance }           from "./final-answer-compliance.js";
 import { analyzeFactPattern }                     from "./fact-pattern-engine.js";
@@ -4225,6 +4226,77 @@ export async function runPipeline({
   }
   // ── End Source Availability ───────────────────────────────────────────────────
 
+  // ── Step 17.5: PATCH-019A Verified-Authority Final Answer Gate ────────────────
+  // Runs AFTER retrieval, SAE assignment, generation, rendering, compliance,
+  // and PATCH-017J/017K source-card restoration. Text-only: no retrieval, no
+  // classification change, no SAE change, no invented authorities.
+  //
+  // Preservation flags are derived ONLY from existing pipeline state:
+  //  - VAT FAST_DEFINITION: existing classifier gate isVatDefinitionQuery()
+  //    (the same flag that gates the 017H bridge in Step 6.7) OR the bridge's
+  //    own applied marker (statusReason). No query-string matching here.
+  //  - EWT fast path: ctx._fastEwtAuthorityPath, set only by PATCH-017F
+  //    short-circuit or the PATCH-017B/017G pre-generation authority lock.
+  const _019aVatBridgeApplied =
+    ctx.statusReason === "VAT_DEFINITION_BRIDGE_AUTHORITY_CONFIRMED";
+  const _019aVatFastDefinitionPreserved =
+    ctx.mode === "FAST_DEFINITION" &&
+    ctx.saeStatus === "AUTHORITY_FOUND" &&
+    (isVatDefinitionQuery(ctx.issueClassification) === true || _019aVatBridgeApplied);
+  const _019aEwtFastPathPreserved =
+    ctx._fastEwtAuthorityPath === true &&
+    ctx.saeStatus === "AUTHORITY_FOUND";
+
+  if (_019aVatFastDefinitionPreserved) {
+    console.log("[PATCH_019A_FAST_DEFINITION_PRESERVED]", {
+      query:            query.slice(0, 120),
+      mode:             ctx.mode,
+      saeStatus:        ctx.saeStatus,
+      vatBridgeApplied: _019aVatBridgeApplied,
+      subIssue:         ctx.issueClassification?.subIssue || null
+    });
+    console.log("[PATCH_019A_FAST_VAT_AUTHORITY_PATH_PRESERVED]", {
+      query:               query.slice(0, 120),
+      preservedAuthorities: ["NIRC Sec. 105", "NIRC Sec. 106", "NIRC Sec. 107", "NIRC Sec. 108", "RR 16-2005"]
+    });
+  }
+  if (_019aEwtFastPathPreserved) {
+    console.log("[PATCH_019A_EWT_FAST_PATH_PRESERVED]", {
+      query:                query.slice(0, 120),
+      mode:                 ctx.mode,
+      saeStatus:            ctx.saeStatus,
+      lockedAuthorities:    ctx.lockedAuthorities || ctx._preGenLockedAuthorities || [],
+      preservedAuthorities: ["NIRC Sec. 57", "NIRC Sec. 58", "RR 2-98"]
+    });
+  }
+
+  const _019aGate = applyVerifiedAuthorityGate({
+    answer:                     _outputAnswer,
+    saeStatus:                  ctx.saeStatus,
+    finalSourceCards,
+    pipelineSourceCards:        sourceCards,
+    eligibleCandidates:         ctx.eligibleCandidates || [],
+    preGenerationSourceCards:   ctx.preGenerationSourceCards || [],
+    lockedAuthorities:          ctx.lockedAuthorities || ctx._preGenLockedAuthorities || [],
+    vatFastDefinitionPreserved: _019aVatFastDefinitionPreserved,
+    ewtFastPathPreserved:       _019aEwtFastPathPreserved,
+    mode:                       ctx.mode,
+    route:                      hook
+  });
+  _outputAnswer = _019aGate.answer;
+  trace.steps.push({
+    step: "17.5",
+    name: "verifiedAuthorityGate",
+    saeStatus: ctx.saeStatus,
+    leakageBlocked: _019aGate.leakageBlocked,
+    relabelApplied: _019aGate.relabelApplied,
+    verifiedAuthorityCount: _019aGate.verifiedAuthorityCount,
+    vatFastDefinitionPreserved: _019aVatFastDefinitionPreserved,
+    ewtFastPathPreserved: _019aEwtFastPathPreserved,
+    done: true
+  });
+  // ── End Step 17.5 ─────────────────────────────────────────────────────────────
+
   endTrace({
     traceId,
     metadata: {
@@ -4299,6 +4371,16 @@ export async function runPipeline({
     partialPipelineState: diagnostics.partialPipelineState,
     openaiCalls: diagnostics.openaiCalls,
     trace,
+    verifiedAuthorityGate: {
+      evaluated:                  true,
+      leakageBlocked:             _019aGate.leakageBlocked,
+      relabelApplied:             _019aGate.relabelApplied,
+      removedSectionCount:        _019aGate.removedSectionCount,
+      suppressedCitationCount:    _019aGate.suppressedCitations.length,
+      verifiedAuthorityCount:     _019aGate.verifiedAuthorityCount,
+      vatFastDefinitionPreserved: _019aGate.vatFastDefinitionPreserved,
+      ewtFastPathPreserved:       _019aGate.ewtFastPathPreserved
+    },
     saeHardFailBlocked,
     saeHardFailFallbackApplied: saeHardFailBlocked,
     saeCompliance:             compliantResult.saeCompliance,
