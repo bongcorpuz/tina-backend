@@ -760,6 +760,33 @@ function patch021cIsCaseAuthority(doc = {}) {
   return patch021cJurisprudenceRank(doc) <= 3;
 }
 
+// PATCH-021E: build the explicit names of retrieved court decisions from the
+// FINAL source set only — never invented, never inferred. Used by the Step 13.5
+// naming directive so the model cannot claim no indexed case law was retrieved
+// when promoted court sources are sitting in its own source blocks.
+function patch021eCaseNamesFromSources(sources = []) {
+  const names = [];
+  for (const c of Array.isArray(sources) ? sources : []) {
+    if (!patch021cIsCaseAuthority(c)) continue;
+    const ref = String(
+      c.normalizedReference || c.normalized_reference || c.citation || ""
+    ).trim();
+    const title = String(c.title || c.document_title || c.documentTitle || "")
+      .replace(/\.pdf$/i, "")
+      .trim();
+    let name = "";
+    if (title && ref && title.toLowerCase().startsWith(ref.toLowerCase())) {
+      name = title; // title already begins with the case reference
+    } else if (title && ref) {
+      name = `${ref} (${title})`;
+    } else {
+      name = title || ref;
+    }
+    if (name) names.push(name);
+  }
+  return [...new Set(names)];
+}
+
 /**
  * For chunks where inferSourceCardRef returned "" (no issuance label derived),
  * attempts to return a safe visible-card reference when targetAuthorities exist.
@@ -3183,19 +3210,63 @@ export async function runPipeline({
       });
 
       // Generation directive: answer the case-law question directly.
-      const _jpDirective = [
-        "",
-        "[JURISPRUDENCE QUERY DIRECTIVE — PATCH-021C]",
-        "This question asks about court cases / case law. Answer the case-law question directly:",
-        "1. FIRST identify the retrieved court decisions (Supreme Court / CTA) exactly as they are named in the provided sources. If no court decision appears in the sources, state plainly that no indexed case-law source was retrieved for this question — do NOT claim that no such cases exist.",
-        "2. THEN explain the statutory and regulatory background (e.g., NIRC provisions, revenue regulations) as supporting context only.",
-        "3. If court decisions are present in the sources, do NOT present statutes or regulations as the only controlling authorities.",
-        "4. NEVER invent case names, G.R. numbers, or holdings that are not present in the provided sources."
-      ].join("\n");
+      // PATCH-021E: when court sources were actually promoted into the final
+      // set, NAME them explicitly — diagnostics proved the generic directive
+      // (buried late in a ~10k-char system prompt and contradicted by
+      // statute-only authority metadata) loses to framing, and the model
+      // falsely answers "no indexed court cases were retrieved".
+      const _jpPromotedNames = patch021eCaseNamesFromSources(ctx.rerankedChunks);
+      const _jpDirective = _jpPromotedNames.length > 0
+        ? [
+            "",
+            "[JURISPRUDENCE QUERY DIRECTIVE — PATCH-021C/021E]",
+            "This question asks about court cases / case law.",
+            `Indexed court decisions retrieved for this query include: ${_jpPromotedNames.join("; ")}.`,
+            `1. You MUST identify and discuss these retrieved court decisions FIRST, naming them explicitly (e.g., "${_jpPromotedNames[0]}"), before any statutory background.`,
+            "2. Do NOT state that no indexed court cases or case-law sources were retrieved — the court decisions listed above ARE present in the provided sources.",
+            "3. Statutes and regulations (e.g., NIRC provisions, revenue regulations) are supporting background only — do NOT present them as the only controlling authorities.",
+            "4. NEVER invent case names, G.R. numbers, or holdings that are not present in the provided sources. Discuss only the decisions listed above and any other court decisions actually present in the sources."
+          ].join("\n")
+        : [
+            "",
+            "[JURISPRUDENCE QUERY DIRECTIVE — PATCH-021C]",
+            "This question asks about court cases / case law. Answer the case-law question directly:",
+            "1. FIRST identify the retrieved court decisions (Supreme Court / CTA) exactly as they are named in the provided sources. If no court decision appears in the sources, state plainly that no indexed case-law source was retrieved for this question — do NOT claim that no such cases exist.",
+            "2. THEN explain the statutory and regulatory background (e.g., NIRC provisions, revenue regulations) as supporting context only.",
+            "3. If court decisions are present in the sources, do NOT present statutes or regulations as the only controlling authorities.",
+            "4. NEVER invent case names, G.R. numbers, or holdings that are not present in the provided sources."
+          ].join("\n");
+      if (_jpPromotedNames.length > 0) {
+        // PATCH-021E: surface the promoted decisions in the classification's
+        // supportingJurisprudence so the USER prompt's authority context names
+        // them too — Langfuse raw completions proved the system-prompt
+        // directive alone loses to the statute-only authority JSON shown to
+        // the model in the user message. supportingJurisprudence is prompt
+        // metadata only: SAS, source cards, renderer, and 019A never read it,
+        // and the SAE plan check consumed it before this step.
+        ctx.issueClassification = {
+          ...ctx.issueClassification,
+          supportingJurisprudence: [...new Set([
+            ...(ctx.issueClassification?.supportingJurisprudence || []),
+            ..._jpPromotedNames
+          ])]
+        };
+        console.log("[PATCH_021E_JURISPRUDENCE_NAMING_DIRECTIVE]", {
+          query: query.slice(0, 120),
+          namedCaseAuthorities: _jpPromotedNames.slice(0, 5),
+          promotedCount: _jpPromotedNames.length,
+          supportingJurisprudenceAugmented: true
+        });
+      }
       if (ctx.promptContract && typeof ctx.promptContract.masterPrompt === "string") {
+        // PATCH-021E: PREPEND when court decisions were promoted — live runs
+        // proved the appended directive (landing at ~99% of a 10k-char system
+        // message) loses to the statute-only authority framing above it.
         ctx.promptContract = {
           ...ctx.promptContract,
-          masterPrompt: ctx.promptContract.masterPrompt + "\n" + _jpDirective
+          masterPrompt: _jpPromotedNames.length > 0
+            ? _jpDirective.trimStart() + "\n\n" + ctx.promptContract.masterPrompt
+            : ctx.promptContract.masterPrompt + "\n" + _jpDirective
         };
       }
       trace.steps.push({

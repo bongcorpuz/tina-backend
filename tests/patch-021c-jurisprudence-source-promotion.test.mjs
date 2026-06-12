@@ -128,8 +128,8 @@ group("Test 6 — generation directive wired for jurisprudence queries", () => {
   assert(PIPELINE_SRC.includes("do NOT present statutes or regulations as the only controlling authorities"), "statutes-not-controlling instruction present");
   assert(PIPELINE_SRC.includes("NEVER invent case names"), "anti-invention instruction present");
   assert(
-    /masterPrompt:\s*ctx\.promptContract\.masterPrompt\s*\+/.test(PIPELINE_SRC),
-    "directive appended to master prompt"
+    /masterPrompt:\s*_jpPromotedNames\.length\s*>\s*0\s*\?\s*_jpDirective\.trimStart\(\)[\s\S]{0,120}?:\s*ctx\.promptContract\.masterPrompt\s*\+\s*"\\n"\s*\+\s*_jpDirective/.test(PIPELINE_SRC),
+    "directive wired to master prompt (PATCH-021E: prepended when court decisions promoted, appended fallback otherwise)"
   );
 });
 
