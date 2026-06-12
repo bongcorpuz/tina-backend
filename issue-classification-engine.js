@@ -346,6 +346,33 @@ export function isVatDefinitionQuery(classification = {}) {
   return subIssue === "VAT_DEFINITION" || strategy.includes("VAT_DEFINITION");
 }
 
+// PATCH-021A: deterministic case-law / jurisprudence intent detector.
+// detectCasePattern's \bcase\b misses plural phrasings ("court cases",
+// "tax cases"), which let the fast EWT path swallow jurisprudence queries.
+// This helper feeds isJurisprudenceQuery on the classification payload so
+// pipeline.js Step 5.5 / Step 6.6 can refuse fast EWT for case-law intent.
+const CASE_LAW_INTENT_PATTERN = new RegExp(
+  [
+    "\\bcourt\\s+cases?\\b",
+    "\\bcase\\s+law\\b",
+    "\\bcases\\b",
+    "\\bjurisprudence\\b",
+    "\\bsupreme\\s+court\\b",
+    "\\bcta\\b",
+    "\\bcourt\\s+of\\s+tax\\s+appeals\\b",
+    "\\bdoctrine\\b",
+    "\\bdecisions?\\b",
+    "\\bdecided\\b",
+    "\\brulings?\\b",
+    "\\bprecedents?\\b"
+  ].join("|"),
+  "i"
+);
+
+export function isCaseLawIntent(question = "") {
+  return CASE_LAW_INTENT_PATTERN.test(lower(String(question || "")));
+}
+
 // Dual-dispatch: when called with (doc, queryString) returns boolean (PATCH-016 new API);
 // when called with (candidate, issueClassification object) returns { matches, matchedTerms, missingTerms }
 // for backward-compat with authority-utils.js.
@@ -1492,6 +1519,7 @@ function buildHierarchyFlags({ question = "", queryIntent = {}, primaryIssue, su
   const needsJurisprudence =
     queryIntent?.needsJurisprudence ||
     detectCasePattern(question, queryIntent) ||
+    isCaseLawIntent(question) ||
     needsConflict ||
     subIssue === "VAT_DEFINITION" ||
     subIssue === "VAT_OVERVIEW" ||
@@ -1751,6 +1779,11 @@ function classifyTaxIssue(question = "", queryIntent = {}) {
     domainName,
 
     subIssues: unique([subIssue]),
+
+    // PATCH-021A: case-law / jurisprudence intent flag. pipeline.js Step 5.5
+    // and Step 6.6 check this to keep the fast EWT path from swallowing
+    // queries that ask for court cases instead of the governing provision.
+    isJurisprudenceQuery: isCaseLawIntent(normalizedQuery),
 
     queryIntent: finalQueryIntent,
     preservedQueryIntent: queryIntent || {},
@@ -2302,5 +2335,6 @@ export default {
   sourceMaterialTermsMatchAuthority,
   isEwtBridgeEligible,
 
-  isVatDefinitionQuery
+  isVatDefinitionQuery,
+  isCaseLawIntent
 };

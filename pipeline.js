@@ -2452,7 +2452,9 @@ export async function runPipeline({
     const _e5Simple    = _e5Cx === "simple" || _e5Cx === "standard" || _e5Cx === "";
     const _e5HasChunks = ctx.retrievedChunks.length > 0;
 
-    if (_e5IsWht && (_e5HasTgts || _e5HasKw) && _e5Simple && _e5HasChunks) {
+    // PATCH-021A: case-law / jurisprudence intent must never collapse into the
+    // compact EWT retrieval set — Supreme Court / CTA retrieval is needed.
+    if (_e5IsWht && (_e5HasTgts || _e5HasKw) && _e5Simple && _e5HasChunks && !ctx.issueClassification?.isJurisprudenceQuery) {
       const _e5TaKeys = new Set(_e5Ta.map(t => canonicalSourceKey(t)).filter(Boolean));
       // Always include core EWT governing authority canonical keys as a safety net
       _e5TaKeys.add("nircsec57");
@@ -2673,7 +2675,9 @@ export async function runPipeline({
     const _pgHasEwtTgts  = _pgTa.some(t => /nirc.*sec\.?\s*(57|58)\b/i.test(t) || /rr[\s\-.]?2[\s\-.]?98\b/i.test(t));
     const _pgHasEwtKw    = /\b(ewt|withholding|advertising|rate)\b/i.test(_pgQ);
     const _pgHasChunks   = (ctx.rerankedChunks || []).length > 0;
-    const _pgRunPreGen   = _pgIsWht && (_pgHasEwtTgts || _pgHasEwtKw) && _pgHasChunks;
+    // PATCH-021A: case-law / jurisprudence intent must not be locked onto the
+    // fast EWT authority path (Sec. 57/58 only) nor forced into FAST_DEFINITION.
+    const _pgRunPreGen   = _pgIsWht && (_pgHasEwtTgts || _pgHasEwtKw) && _pgHasChunks && !ctx.issueClassification?.isJurisprudenceQuery;
 
     if (_pgRunPreGen) {
       console.log("[PRE_GENERATION_SOURCE_SELECTION_STARTED]", {
