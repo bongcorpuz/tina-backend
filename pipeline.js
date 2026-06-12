@@ -3251,6 +3251,13 @@ export async function runPipeline({
             ..._jpPromotedNames
           ])]
         };
+        // PATCH-021F: carry the promoted decision names into the response plan —
+        // the ask-profile section machinery (the instruction block the model
+        // demonstrably follows) renders a CASE-LAW NAMING rule from this field.
+        ctx.responsePlan = {
+          ...(ctx.responsePlan || {}),
+          jurisprudenceNamedAuthorities: _jpPromotedNames
+        };
         console.log("[PATCH_021E_JURISPRUDENCE_NAMING_DIRECTIVE]", {
           query: query.slice(0, 120),
           namedCaseAuthorities: _jpPromotedNames.slice(0, 5),
@@ -3790,14 +3797,29 @@ export async function runPipeline({
     // sourcePathAuthorityHit exempts correctly-identified RR/RMC/RMO/RAMO cards in
     // SOURCE_LOOKUP — their source path is authoritative even when normalized_reference
     // misled the reranker.
+    // PATCH-021F: court sources for jurisprudence queries are exempt from the
+    // contamination gate — they are never statute/RR target matches, and the
+    // reranker's issueMismatch flag is tuned for statute targets. Staging
+    // audit: skipContamination: 1 was the court card.
+    const _021fCourtCard =
+      ctx.issueClassification?.isJurisprudenceQuery === true &&
+      patch021cIsCaseAuthority(c);
     if (
       !sourcePathAuthorityHit &&
+      !_021fCourtCard &&
       hasTargetAuthorities &&
       c.targetAuthorityMatch === false &&
       c.issueMismatch === true
     ) {
       _scSkip.contamination++;
       continue;
+    }
+    if (_021fCourtCard) {
+      console.log("[PATCH_021F_COURT_CARD_ELIGIBILITY_APPLIED]", {
+        stage: "pipeline_candidate_loop",
+        ref: c.normalizedReference || c.normalized_reference || c.citation || c.title || "(no-ref)",
+        contaminationExempt: true
+      });
     }
 
     if (!c.title && !c.document_title && !c.source && !c.originalSource) continue;

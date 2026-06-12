@@ -194,6 +194,35 @@ function normalizedEligibilityFields(card = {}) {
   };
 }
 
+// PATCH-021F: court source types eligible as jurisprudence cards for case-law
+// queries. Court decisions never receive authorityRole GOVERNING for statute-
+// target sub-issues, so the AUTHORITY_FOUND eligibility gate structurally
+// suppressed them — the exact defect of the post-021E staging audit.
+const PATCH_021F_COURT_TYPES = Object.freeze(new Set([
+  "CASE", "CASE_LAW", "JURISPRUDENCE",
+  "SUPREME_COURT", "SUPREME_COURT_EN_BANC",
+  "CTA_EN_BANC", "CTA_DIVISION"
+]));
+
+function patch021fCourtSourceType(doc = {}) {
+  const candidates = [
+    doc.authorityType, doc.authority_type,
+    doc.metadata?.authorityType, doc.metadata?.authority_type
+  ];
+  for (const v of candidates) {
+    const t = String(v || "").trim().toUpperCase().replace(/[\s-]+/g, "_");
+    if (PATCH_021F_COURT_TYPES.has(t)) return t;
+  }
+  return null;
+}
+
+function patch021fCourtRef(doc = {}) {
+  return String(
+    doc.normalizedReference || doc.normalized_reference ||
+    doc.citation || doc.document_title || doc.documentTitle || doc.title || ""
+  ).trim();
+}
+
 function validateSourceCardEligibility(card = {}, saeStatus = "") {
   const failures = [];
   const fields = normalizedEligibilityFields(card);
@@ -793,12 +822,41 @@ export function selectSourceAuthorities({
     const rejectDetails = [];
     const eligibilityDetails = [];
 
+    // PATCH-021F: jurisprudence queries accept court sources as supporting
+    // jurisprudence cards — they bypass the GOVERNING eligibility requirement
+    // and the contamination/semantic gates (which are tuned for statute/RR
+    // targets), but must still carry a usable reference or title.
+    const _021fJurisIntent = issueClassification?.isJurisprudenceQuery === true;
+
     for (const c of rerankedChunks) {
       if (seen.size >= candidateCap) break;
 
-      const eligibility = eligibilityGateActive
+      const _021fCourtType = _021fJurisIntent ? patch021fCourtSourceType(c) : null;
+      const _021fCourtOverride = Boolean(_021fCourtType && patch021fCourtRef(c));
+
+      let eligibility = eligibilityGateActive
         ? validateSourceCardEligibility(c, resolvedSaeStatus)
         : { eligible: true, fields: normalizedEligibilityFields(c), validationFailures: [], suppressionReason: null };
+      if (!eligibility.eligible && _021fCourtOverride) {
+        eligibility = {
+          eligible: true,
+          fields: {
+            ...eligibility.fields,
+            authorityRole: "SUPPORTING_JURISPRUDENCE",
+            authorityType: _021fCourtType,
+            citation: eligibility.fields.citation || patch021fCourtRef(c),
+            displayLabel: eligibility.fields.displayLabel || patch021fCourtRef(c)
+          },
+          validationFailures: [],
+          suppressionReason: null
+        };
+        console.log("[PATCH_021F_COURT_CARD_ELIGIBILITY_APPLIED]", {
+          stage: "sas_eligibility_override",
+          ref: patch021fCourtRef(c),
+          courtType: _021fCourtType,
+          role: "SUPPORTING_JURISPRUDENCE"
+        });
+      }
       if (!eligibility.eligible) {
         skip.eligibility++;
         eligibilityDetails.push({
@@ -811,7 +869,9 @@ export function selectSourceAuthorities({
       }
 
       // Gate 1 — contamination (both flags required)
-      if (hasTargetAuthorities && c.targetAuthorityMatch === false && c.issueMismatch === true) {
+      // PATCH-021F: court sources for jurisprudence queries are exempt — they
+      // are never statute/RR target matches by construction.
+      if (!_021fCourtOverride && hasTargetAuthorities && c.targetAuthorityMatch === false && c.issueMismatch === true) {
         skip.contamination++;
         rejectDetails.push({ ref: "(pre-label)", reason: "contamination" });
         continue;
@@ -821,7 +881,7 @@ export function selectSourceAuthorities({
       // Bypassed by PATCH-017A Bridge for EWT authorities
       const ewtBridgeActive = isEwtBridgeEligible(issueClassification, c, query);
 
-      if (semanticNoMatchGuardActive && !ewtBridgeActive) {
+      if (semanticNoMatchGuardActive && !ewtBridgeActive && !_021fCourtOverride) {
         if (!sourceMaterialTermsMatchAuthority(c, query)) {
           skip.semanticNoMatch++;
           rejectDetails.push({
@@ -845,8 +905,14 @@ export function selectSourceAuthorities({
       const linkedType = inferLinkedSourceType(c);
       let   provRef    = inferSourceCardRef(c, linkedType);
 
-      // Gate 2 — label/link consistency
-      if (provRef && !sourceCardIsConsistent(provRef, linkedType)) {
+      // PATCH-021F: court cards label from their case reference directly.
+      if (_021fCourtOverride && !provRef) {
+        provRef = patch021fCourtRef(c);
+      }
+
+      // Gate 2 — label/link consistency (court override: the case reference
+      // IS the document identity — statute-style consistency rules don't apply)
+      if (!_021fCourtOverride && provRef && !sourceCardIsConsistent(provRef, linkedType)) {
         skip.consistency++;
         rejectDetails.push({ ref: provRef, reason: "label_link_mismatch", linkedType });
         continue;
@@ -864,7 +930,9 @@ export function selectSourceAuthorities({
       }
 
       // Gate 3 — issue relevance (non-target candidates only)
-      if (!_targetMatch) {
+      // PATCH-021F: court override cards already passed retrieval relevance +
+      // 021C promotion for this jurisprudence query.
+      if (!_targetMatch && !_021fCourtOverride) {
         const rel = isIssueRelevantSourceCardCandidate(c);
         if (!rel.allowed) {
           skip.issueRelevance++;

@@ -2105,6 +2105,22 @@ function buildUserPrompt({
     const _sourceRule017i = _isAuthorityFound017i
       ? "- Indexed authority is confirmed (AUTHORITY_FOUND). Do NOT add '(Framework knowledge — pending index verification)' labels to any section. Do NOT open with 'Source Verification Limitation'. Answer directly from the retrieved indexed sources."
       : "- Retrieved indexed sources take priority. Use training knowledge only when no indexed source was retrieved; label such content: \"(Framework knowledge — pending index verification)\".";
+    // PATCH-021F: jurisprudence queries with promoted court decisions — the
+    // section rules must require the answer to NAME them. The generic 021E
+    // system-prompt directive alone loses to this instruction block (the model
+    // follows the ASK RESEARCH FORMAT rules verbatim — proven via Langfuse).
+    const _021fNamedCases = Array.isArray(responsePlan?.jurisprudenceNamedAuthorities)
+      ? responsePlan.jurisprudenceNamedAuthorities.filter(Boolean)
+      : [];
+    const _021fCaseNamingRule = _021fNamedCases.length > 0
+      ? `\n- CASE-LAW NAMING (jurisprudence query): The "### Short Answer" section MUST explicitly name the retrieved court decision(s): ${_021fNamedCases.join("; ")}. The first substantive section after it must state what each named decision addresses based on the retrieved source text, BEFORE statutory background. Do NOT state that no court cases were retrieved.`
+      : "";
+    if (_021fNamedCases.length > 0) {
+      console.log("[PATCH_021F_RESPONSE_CASE_NAMING_APPLIED]", {
+        profile: _profile,
+        namedCaseAuthorities: _021fNamedCases.slice(0, 5)
+      });
+    }
     const _limRule017i = _isAuthorityFound017i
       ? ""
       : `- Source Verification Limitation: if indexed retrieval timed out or no sources were retrieved, open the response with: "**Source Verification Limitation:** Indexed retrieval did not return verified sources. The following is framework analysis pending indexed-source verification."${_limNote}`;
@@ -2118,7 +2134,7 @@ ${_secList}
 RULES:
 - Follow the section order above exactly. Do not add or remove sections.
 - Do not use A. B. C. D. E. F. letter-prefix headings.
-${_sourceRule017i}
+${_sourceRule017i}${_021fCaseNamingRule}
 - Controlling Authorities: cite specific NIRC provision → implementing RR → directly applicable SC/CTA ruling. Follow the Master Prompt authority hierarchy.
 - Never fabricate GR numbers, RR numbers, RMC numbers, or docket numbers you are not certain of.
 - Do not cite authorities that were not retrieved and are not clearly applicable from training knowledge.
