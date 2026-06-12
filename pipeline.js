@@ -1903,7 +1903,15 @@ export async function runPipeline({
     _patch017fComplexity === "simple" ||
     _patch017fComplexity === "standard" ||
     _patch017fComplexity === "moderate";
-  const _patch017fEligible = _patch017fIsWht && (_patch017fHasTgts || _patch017fHasKw) && _patch017fSimple;
+  // PATCH-021B: global jurisprudence guard. Case-law intent must never be
+  // short-circuited away from full retrieval — the skipped layers (citation
+  // variant, metadata, keyword, vector, fallback) are where SC/CTA chunks live.
+  const _patch017fIsJurisQuery   = ctx.issueClassification?.isJurisprudenceQuery === true;
+  const _patch017fReqJuris       = ctx.issueClassification?.requiresJurisprudence === true;
+  const _patch017fUseJurisEngine = ctx.issueClassification?.downstreamRouting?.useJurisprudenceEngine === true;
+  const _patch017fCaseLawGuard   = _patch017fIsJurisQuery || _patch017fReqJuris || _patch017fUseJurisEngine;
+  const _patch017fEligible =
+    _patch017fIsWht && (_patch017fHasTgts || _patch017fHasKw) && _patch017fSimple && !_patch017fCaseLawGuard;
 
   console.log("[PATCH_017F_PRE_RETRIEVAL_EWT_CHECK]", {
     query: _patch017fQuery.slice(0, 160),
@@ -1912,6 +1920,10 @@ export async function runPipeline({
     subIssue: ctx.issueClassification?.subIssue,
     complexity: ctx.issueClassification?.complexity,
     targetAuthorities: _patch017fTargetAuthorities,
+    isJurisprudenceQuery: _patch017fIsJurisQuery,
+    requiresJurisprudence: _patch017fReqJuris,
+    useJurisprudenceEngine: _patch017fUseJurisEngine,
+    caseLawGuardApplied: _patch017fCaseLawGuard,
     eligible: _patch017fEligible
   });
 
@@ -2033,7 +2045,8 @@ export async function runPipeline({
     }
   } else {
     console.log("[PATCH_017F_PRE_RETRIEVAL_SHORT_CIRCUIT_NOT_APPLIED]", {
-      reason: "not_eligible"
+      reason: _patch017fCaseLawGuard ? "case_law_intent_guard" : "not_eligible",
+      caseLawGuardApplied: _patch017fCaseLawGuard
     });
   }
 
@@ -3127,10 +3140,17 @@ export async function runPipeline({
   publishDiagnostics(false);
 
   // ── PATCH-017D: Hard fast-definition generation cap ──────────────────────
+  // PATCH-021B: case-law intent must never receive the capped 600-token compact
+  // EWT prompt — jurisprudence answers need full orchestration/generation.
+  const _fdCaseLawGuard =
+    ctx.issueClassification?.isJurisprudenceQuery === true ||
+    ctx.issueClassification?.requiresJurisprudence === true ||
+    ctx.issueClassification?.downstreamRouting?.useJurisprudenceEngine === true;
   const _fdGateRemainingMs = timing.remainingBudgetMs();
   console.log("[FAST_EWT_GATE_CHECK]", {
     query:                        query.slice(0, 120),
     fastEwtAuthorityPath:         ctx._fastEwtAuthorityPath,
+    caseLawGuardApplied:          _fdCaseLawGuard,
     authorityLockApplied:         ctx.authorityLockApplied,
     saeStatus:                    ctx.saeStatus,
     sourceAvailability:           ctx.sourceAvailability,
@@ -3145,7 +3165,9 @@ export async function runPipeline({
     hasOpenAiClient:              Boolean(openai),
     generationFile:               "pipeline.js"
   });
-  if (ctx._fastEwtAuthorityPath && ctx.saeStatus === "AUTHORITY_FOUND") {
+  // PATCH-021B: !_fdCaseLawGuard keeps FAST_EWT_GENERATION_CAP_APPLIED and
+  // FAST_EWT_COMPACT_PROMPT_USED away from jurisprudence / case-law queries.
+  if (ctx._fastEwtAuthorityPath && ctx.saeStatus === "AUTHORITY_FOUND" && !_fdCaseLawGuard) {
     const _fdRemainingMs = _fdGateRemainingMs;
     const _fdCards       = (ctx.preGenerationSourceCards || []).slice(0, 4);
 
@@ -3255,7 +3277,10 @@ export async function runPipeline({
         ? "fastEwtAuthorityPath is falsy"
         : ctx.saeStatus !== "AUTHORITY_FOUND"
           ? `saeStatus is '${ctx.saeStatus}' not AUTHORITY_FOUND`
-          : "unknown",
+          : _fdCaseLawGuard
+            ? "case_law_intent_guard"
+            : "unknown",
+      caseLawGuardApplied:      _fdCaseLawGuard,
       fastPath:                 Boolean(ctx._fastEwtAuthorityPath),
       saeStatus:                ctx.saeStatus,
       sourceAvailabilityStatus: ctx.sourceAvailability?.saeStatus,
