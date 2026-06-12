@@ -12,6 +12,8 @@
     "start": "node server.js",
     "start:prod": "NODE_ENV=production node server.js",
     "dev": "node --watch server.js",
+    "test": "node scripts/run-regressions.mjs",
+    "guard:files": "node scripts/forbidden-files-guard.mjs",
     "check": "node --check server.js",
     "check:supabase": "node scripts/check-supabase.js",
     "generate:jwt": "node -e \"console.log(require('crypto').randomBytes(64).toString('hex'))\"",
