@@ -423,6 +423,57 @@ function normalizeForMatch(value = "") {
     .trim();
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+ * PATCH-021G — COURT INDEXER REFERENCE DERIVATION RULE
+ *
+ * Court Index Metadata Audit 2026-06-13: every newly indexed court document
+ * was polluted because document-level reference inference sampled body text
+ * with statute patterns checked first ("Sec. 249." in a judgment quote beats
+ * the G.R. number in the title). Court-typed documents must derive
+ * normalized_reference from the case identifier in the document title /
+ * source filename — never from body-citation extraction.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+export const COURT_AUTHORITY_TYPES = Object.freeze(new Set([
+  "SUPREME_COURT",
+  "SUPREME_COURT_EN_BANC",
+  "CTA_EN_BANC",
+  "CTA_DIVISION",
+  "CASE",
+  "CASE_LAW",
+  "JURISPRUDENCE"
+]));
+
+const PATCH_021G_STATUTE_SHAPED_RE =
+  /^(NIRC|CMTA|LGC|RR\b|RMC|RMO|RAMO|RA\b|BIR\s+Ruling)/i;
+
+export function isStatuteShapedReference(value = "") {
+  return PATCH_021G_STATUTE_SHAPED_RE.test(String(value || "").trim());
+}
+
+// Extracts a court case identifier (G.R. No./Nos., CTA Case/EB/AC No.) from a
+// title, filename, or path string. Returns null when none is present.
+export function extractCourtCaseIdentifier(value = "") {
+  const s = String(value || "").replace(/_/g, " ");
+
+  const grNos = s.match(/\bG\.?\s*R\.?\s*Nos\.?\s*([0-9][0-9,&\s.-]*[0-9])/i);
+  if (grNos) return `G.R. Nos. ${grNos[1].replace(/\s+/g, " ").trim()}`;
+
+  const grNo = s.match(/\bG\.?\s*R\.?\s*No\.?\s*(L-)?(\d[\d.-]*\d|\d)/i);
+  if (grNo) return `G.R. No. ${(grNo[1] || "").toUpperCase()}${grNo[2]}`;
+
+  const ctaEb = s.match(/\bCTA\s*EB\s*(?:Case\s*)?(?:No\.?)?\s*(\d[A-Z0-9.-]*\d|\d)/i);
+  if (ctaEb) return `CTA EB No. ${ctaEb[1]}`;
+
+  const ctaAc = s.match(/\bCTA\s*AC\s*(?:No\.?)?\s*(\d[A-Z0-9.-]*\d|\d)/i);
+  if (ctaAc) return `CTA AC No. ${ctaAc[1]}`;
+
+  const ctaCase = s.match(/\bCTA\s*(?:Case\s*)?(?:No\.?)?\s*(\d[A-Z0-9.-]*\d|\d)/i);
+  if (ctaCase) return `CTA Case No. ${ctaCase[1]}`;
+
+  return null;
+}
+
 export function normalizeAuthorityReference(value = "") {
   const raw = String(value || "").trim();
   if (!raw) return "";
@@ -1020,6 +1071,56 @@ function buildAuthorityFields(text, source, metadata = {}) {
     Number(metadata.authorityLevel || authority.authorityLevel) ||
     getAuthorityPrecedence(authorityType);
 
+  // PATCH-021G: court-typed documents derive normalized_reference from the
+  // case identifier in title/filename. Body-citation extraction may only be
+  // consulted when no identifier exists in title/source — and a statute/RR/
+  // BIR-Ruling-shaped reference is NEVER stored for a court document.
+  let normalizedReference =
+    metadata.normalizedReference ||
+    authority.normalizedReference ||
+    normalizeAuthorityReference(source);
+  if (COURT_AUTHORITY_TYPES.has(authorityType)) {
+    const titleBlob = [
+      metadata.documentTitle, metadata.originalFileName, metadata.originalSource, source
+    ].filter(Boolean).join(" ");
+    const titleCaseId = extractCourtCaseIdentifier(titleBlob);
+    if (titleCaseId) {
+      if (titleCaseId !== normalizedReference) {
+        console.log("[PATCH_021G_COURT_REFERENCE_FROM_TITLE]", {
+          source: String(source).slice(0, 80),
+          previousReference: String(normalizedReference || "").slice(0, 60),
+          normalizedReference: titleCaseId
+        });
+      }
+      normalizedReference = titleCaseId;
+    } else {
+      const bodyCaseId = extractCourtCaseIdentifier(String(text || "").slice(0, 3000));
+      if (bodyCaseId) {
+        console.log("[PATCH_021G_COURT_REFERENCE_FROM_TITLE]", {
+          source: String(source).slice(0, 80),
+          derivedFrom: "body_case_identifier",
+          normalizedReference: bodyCaseId
+        });
+        normalizedReference = bodyCaseId;
+      } else if (isStatuteShapedReference(normalizedReference)) {
+        const fallback = normalizeAuthorityReference(source) || "";
+        console.warn("[PATCH_021G_COURT_REFERENCE_FALLBACK_WARNING]", {
+          source: String(source).slice(0, 80),
+          rejectedStatuteReference: String(normalizedReference).slice(0, 60),
+          fallbackReference: fallback.slice(0, 60),
+          reason: "court_document_without_case_identifier"
+        });
+        normalizedReference = fallback;
+      } else {
+        console.warn("[PATCH_021G_COURT_REFERENCE_FALLBACK_WARNING]", {
+          source: String(source).slice(0, 80),
+          fallbackReference: String(normalizedReference || "").slice(0, 60),
+          reason: "court_document_without_case_identifier"
+        });
+      }
+    }
+  }
+
   return {
     authority_type: authorityType,
     authority_level: authorityLevel,
@@ -1028,10 +1129,7 @@ function buildAuthorityFields(text, source, metadata = {}) {
     controlling_precedence:
       Number(metadata.controllingPrecedence || authority.controllingPrecedence) ||
       getAuthorityPrecedence(authorityType),
-    normalized_reference:
-      metadata.normalizedReference ||
-      authority.normalizedReference ||
-      normalizeAuthorityReference(source),
+    normalized_reference: normalizedReference,
     normalized_aliases: unique([
       ...(authority.normalizedAliases || []),
       ...buildPossibleSourceKeywords(source),

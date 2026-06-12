@@ -29,6 +29,7 @@ import { google } from "googleapis";
 import pdfParse from "pdf-parse";
 import mammoth from "mammoth";
 import { convertWithMarkitdown } from "./document-conversion-service.js";
+import { extractCourtCaseIdentifier } from "./vector-store.js";
 
 const ENGINE_VERSION = "4.0.0";
 
@@ -438,6 +439,20 @@ export function inferNormalizedReference({
   folderPath = "",
   text = ""
 } = {}) {
+  // PATCH-021G: case identifiers in the file name / folder path take absolute
+  // precedence. A title carrying "G.R. No(s)." or "CTA Case/EB/AC No." IS a
+  // court decision, and court decisions must never be labeled by statute/RR/
+  // BIR-Ruling citations quoted in their body text (Court Index Metadata
+  // Audit 2026-06-13: all 5 polluted documents came from this path).
+  const _021gTitleCaseId = extractCourtCaseIdentifier(`${fileName}\n${folderPath}`);
+  if (_021gTitleCaseId) {
+    console.log("[PATCH_021G_COURT_REFERENCE_FROM_TITLE]", {
+      fileName: String(fileName).slice(0, 80),
+      normalizedReference: _021gTitleCaseId
+    });
+    return _021gTitleCaseId;
+  }
+
   const raw = `${fileName}\n${folderPath}\n${normalizeText(text).slice(0, 3000)}`;
   const sample = raw.replace(/_/g, " ");
 
