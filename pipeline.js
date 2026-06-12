@@ -732,16 +732,27 @@ function sourceCardPlanSortScore(card = {}) {
 // materials must outrank statutes and regulations in the final sources sent
 // to the model and in visible source cards. Lower rank = higher priority.
 function patch021cJurisprudenceRank(doc = {}) {
-  const t = String(
-    doc.authorityType || doc.authority_type || doc.metadata?.authorityType || doc.linkedSourceType || ""
-  ).trim().toUpperCase().replace(/[\s-]+/g, "_");
-  if (t === "SUPREME_COURT" || t === "SUPREME_COURT_EN_BANC" || t === "SC") return 1;
-  if (t === "CTA_EN_BANC") return 2;
-  if (t === "CTA_DIVISION" || t === "COURT_OF_APPEALS") return 3;
-  if (["STATUTE", "NIRC", "TAX_CODE", "REPUBLIC_ACT", "RA", "CMTA", "LGC"].includes(t)) return 4;
-  if (t === "RR" || t === "REVENUE_REGULATION") return 5;
-  if (t === "RMC") return 6;
-  if (t === "RMO" || t === "RAMO") return 7;
+  // Inspect every type field: the Step-6 reranker can rewrite authorityType to
+  // the coarse "CASE" class while the raw authority_type / metadata still hold
+  // the precise court type (validated live in PATCH-021D).
+  const candidates = [
+    doc.authorityType, doc.authority_type,
+    doc.metadata?.authorityType, doc.metadata?.authority_type,
+    doc.linkedSourceType
+  ]
+    .map((v) => String(v || "").trim().toUpperCase().replace(/[\s-]+/g, "_"))
+    .filter(Boolean);
+  const has = (...types) => candidates.some((t) => types.includes(t));
+
+  if (has("SUPREME_COURT", "SUPREME_COURT_EN_BANC", "SC")) return 1;
+  if (has("CTA_EN_BANC")) return 2;
+  if (has("CTA_DIVISION", "COURT_OF_APPEALS")) return 3;
+  // Coarse case-law class (reranker output) — court decision of unspecified level.
+  if (has("CASE", "CASE_LAW", "JURISPRUDENCE")) return 3;
+  if (has("STATUTE", "NIRC", "TAX_CODE", "REPUBLIC_ACT", "RA", "CMTA", "LGC")) return 4;
+  if (has("RR", "REVENUE_REGULATION")) return 5;
+  if (has("RMC")) return 6;
+  if (has("RMO", "RAMO")) return 7;
   return 8;
 }
 

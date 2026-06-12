@@ -3399,6 +3399,163 @@ function buildSearchQueries(query = "", classification = {}) {
   return querySet.allQueries.slice(0, 24);
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+ * PATCH-021D — JURISPRUDENCE RETRIEVAL SLOT RESERVATION
+ *
+ * Root defect (validated live): for case-law queries, Layer 5 finds SC/CTA
+ * chunks but (a) vector-store's target-authority-first sort slices them out
+ * before the pool forms, and (b) even in the pool, authority-first scoring
+ * ranks them below topK. Both losses happen before PATCH-021C promotion.
+ *
+ * Fix: when the classification carries case-law intent (isJurisprudenceQuery,
+ * the same deterministic signal PATCH-021C promotes on):
+ *   1. If the candidate pool holds no court authorities, recover up to 4
+ *      relevant SUPREME_COURT / CTA_* chunks directly from the vector table
+ *      (authority_type-filtered select — no embedding required).
+ *   2. At the final topK slice, reserve slots for at least one SC and one
+ *      CTA authority when available, never evicting the last statute/RR
+ *      framework source.
+ * Non-jurisprudence queries take the exact pre-patch path.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+const PATCH_021D_COURT_TYPES = Object.freeze([
+  "SUPREME_COURT_EN_BANC",
+  "SUPREME_COURT",
+  "SC",
+  "CTA_EN_BANC",
+  "CTA_DIVISION"
+]);
+const PATCH_021D_VECTOR_TABLE = process.env.VECTOR_TABLE || "tina_vector_store";
+
+function patch021dDocCourtType(doc = {}) {
+  const t = String(doc.authorityType || doc.authority_type || doc.metadata?.authorityType || "")
+    .trim().toUpperCase().replace(/[\s-]+/g, "_");
+  return PATCH_021D_COURT_TYPES.includes(t) ? t : null;
+}
+
+function patch021dCourtRank(doc = {}) {
+  const t = patch021dDocCourtType(doc);
+  if (t === "SUPREME_COURT_EN_BANC" || t === "SUPREME_COURT" || t === "SC") return 1;
+  if (t === "CTA_EN_BANC") return 2;
+  if (t === "CTA_DIVISION") return 3;
+  return 99;
+}
+
+function patch021dDocRef(doc = {}) {
+  return (
+    doc.normalized_reference || doc.normalizedReference ||
+    doc.citation || doc.document_title || doc.title || String(doc.id || "?")
+  );
+}
+
+// Recover relevant court chunks via a plain authority_type-filtered select.
+// Relevance = punctuation-stripped query-token overlap against chunk text and
+// reference fields (the 3-char acronym pitfall from the source-card audit is
+// avoided: tokens of length >= 4 only, punctuation removed first).
+async function patch021dRecoverCourtAuthorities({ supabase, query = "", limit = 4 }) {
+  if (!supabase || typeof supabase.from !== "function") return [];
+  try {
+    const { data, error } = await supabase
+      .from(PATCH_021D_VECTOR_TABLE)
+      .select("id, source, original_source, chunk_index, text, metadata, authority_type, authority_level, authority_score, authority_label, controlling_precedence, normalized_reference, document_title")
+      .in("authority_type", [...PATCH_021D_COURT_TYPES])
+      .limit(48);
+
+    if (error || !Array.isArray(data) || data.length === 0) {
+      console.log("[PATCH_021D_COURT_RECOVERY_MISS]", {
+        error: error?.message || null,
+        rowCount: Array.isArray(data) ? data.length : 0
+      });
+      return [];
+    }
+
+    const tokens = String(query || "")
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, " ")
+      .split(/\s+/)
+      .filter((t) => t.length >= 4);
+
+    const scoredRows = [];
+    for (const row of data) {
+      const text = String(row.text || "").toLowerCase();
+      const refBlob = `${row.normalized_reference || ""} ${row.document_title || ""}`.toLowerCase();
+      const hits = tokens.filter((t) => text.includes(t) || refBlob.includes(t)).length;
+      if (hits > 0) scoredRows.push({ row, hits });
+    }
+    scoredRows.sort((a, b) => b.hits - a.hits || patch021dCourtRank(a.row) - patch021dCourtRank(b.row));
+
+    return scoredRows.slice(0, limit).map(({ row }) => ({
+      ...row,
+      content: row.text || "",
+      normalizedReference: row.normalized_reference || "",
+      authorityType: row.authority_type,
+      parseStatus: determineParseStatus(row),
+      retrievalLayer: RETRIEVAL_LAYER.VECTOR_SEMANTIC,
+      retrievalPhase: RETRIEVAL_LAYER.VECTOR_SEMANTIC,
+      matchedRetrievalQuery: query,
+      patch021dJurisprudenceRecovered: true
+    }));
+  } catch (err) {
+    console.warn("[PATCH_021D_COURT_RECOVERY_FAILED]", { error: err?.message || String(err) });
+    return [];
+  }
+}
+
+// Final-slice slot reservation. Keeps existing rank order, then guarantees:
+// at least one SUPREME_COURT* and one CTA_* doc when available in the deduped
+// pool, evicting lowest-ranked non-court docs but always preserving at least
+// one statute/regulation framework source.
+// extraCourtPool: court docs captured at scoring time — the downstream safe
+// reranks (rerankForTina) can shrink the list and silently drop court docs
+// before this point (validated live: scored 16 → ranked 12), so reservation
+// must be able to restore them from the pre-rerank pool.
+function patch021dReserveJurisprudenceSlots(docs = [], topK = DEFAULT_TOP_K, extraCourtPool = []) {
+  const base = docs.slice(0, topK);
+  const seenIds = new Set(docs.map((d) => String(d.id ?? patch021dDocRef(d))));
+  const carriedCourts = (extraCourtPool || []).filter(
+    (d) => patch021dDocCourtType(d) !== null && !seenIds.has(String(d.id ?? patch021dDocRef(d)))
+  );
+  const courts = [
+    ...docs.filter((d) => patch021dDocCourtType(d) !== null),
+    ...carriedCourts
+  ];
+  if (courts.length === 0) return base;
+
+  const sortedCourts = [...courts].sort(
+    (a, b) => patch021dCourtRank(a) - patch021dCourtRank(b)
+  );
+  const inBase = new Set(base);
+  const reserves = [];
+  const firstSc = sortedCourts.find((d) => patch021dCourtRank(d) === 1);
+  const firstCta = sortedCourts.find((d) => {
+    const r = patch021dCourtRank(d);
+    return r === 2 || r === 3;
+  });
+  for (const pick of [firstSc, firstCta]) {
+    if (pick && !inBase.has(pick) && !reserves.includes(pick)) reserves.push(pick);
+  }
+  // Court coverage already inside topK and nothing missing — no changes.
+  if (reserves.length === 0) return base;
+
+  const result = [...base];
+  for (const reserve of reserves) {
+    if (result.length < topK) {
+      result.push(reserve);
+      continue;
+    }
+    const nonCourtCount = result.filter((d) => !patch021dDocCourtType(d)).length;
+    if (nonCourtCount <= 1) break; // preserve at least one statute/RR framework source
+    for (let i = result.length - 1; i >= 0; i--) {
+      if (!patch021dDocCourtType(result[i])) {
+        result.splice(i, 1);
+        result.push(reserve);
+        break;
+      }
+    }
+  }
+  return result.slice(0, topK);
+}
+
 async function retrieveRelevantSources(options = {}) {
   const query =
     options.query ||
@@ -3496,6 +3653,39 @@ async function retrieveRelevantSources(options = {}) {
     embedding:       options.embedding || null
   });
 
+  // ── PATCH-021D Part 1: jurisprudence court-authority recovery ─────────────
+  const _021dIntent = issueClassification?.isJurisprudenceQuery === true;
+  let _021dRecoveredCount = 0;
+  if (_021dIntent) {
+    const _021dCourtsInPool = candidates.filter((d) => patch021dDocCourtType(d) !== null);
+    console.log("[PATCH_021D_CASELAW_CANDIDATES]", {
+      jurisprudenceQueryDetected: true,
+      courtCandidatesBeforeConsolidation: _021dCourtsInPool.length,
+      courtRefs: _021dCourtsInPool.slice(0, 6).map(patch021dDocRef),
+      poolSize: candidates.length
+    });
+    if (_021dCourtsInPool.length === 0) {
+      const _021dRecovered = await patch021dRecoverCourtAuthorities({
+        supabase: options.supabase,
+        query,
+        limit: 4
+      });
+      if (_021dRecovered.length > 0) {
+        candidates.push(..._021dRecovered);
+        _021dRecoveredCount = _021dRecovered.length;
+        layerDiagnostics.jurisprudenceRecovered = _021dRecovered.length;
+        console.log("[PATCH_021D_COURT_RECOVERY_APPLIED]", {
+          recoveredCount: _021dRecovered.length,
+          recovered: _021dRecovered.map((d) => ({
+            ref: patch021dDocRef(d),
+            type: d.authorityType || d.authority_type
+          }))
+        });
+      }
+    }
+  }
+  // ── End PATCH-021D Part 1 ──────────────────────────────────────────────────
+
   // LAW 3 — ISSUE-TARGETED RETRIEVAL
   // Semantic similarity alone is PROHIBITED as the sole retrieval criterion.
   // If authority-targeted layers (1-4) produced zero results and only Layer 5
@@ -3539,6 +3729,13 @@ async function retrieveRelevantSources(options = {}) {
 
   let ranked = scored.sort((a, b) => Number(b.finalScore || 0) - Number(a.finalScore || 0));
 
+  // PATCH-021D: capture court docs at scoring time — the safe reranks below can
+  // shrink the list (rerankForTina caps/filters) and drop them before the
+  // reservation step sees the final pool.
+  const _021dScoredCourts = _021dIntent
+    ? scored.filter((d) => patch021dDocCourtType(d) !== null)
+    : [];
+
   ranked = applySafeHierarchyRerank(ranked);
   ranked = applySafeTinaRerank({
     docs: ranked,
@@ -3548,7 +3745,27 @@ async function retrieveRelevantSources(options = {}) {
   });
 
   const dedupedAfterScoring = finalDedupeAfterScoring(ranked);
-  const sanitized = dedupedAfterScoring.slice(0, topK).map(sanitizeRetrievedSource);
+
+  // ── PATCH-021D Part 2: jurisprudence slot reservation at the topK slice ───
+  let finalSelection = dedupedAfterScoring.slice(0, topK);
+  if (_021dIntent) {
+    finalSelection = patch021dReserveJurisprudenceSlots(dedupedAfterScoring, topK, _021dScoredCourts);
+    console.log("[PATCH_021D_JURISPRUDENCE_SLOT_RESERVATION]", {
+      jurisprudenceQueryDetected: true,
+      courtCandidatesAvailable:
+        dedupedAfterScoring.filter((d) => patch021dDocCourtType(d) !== null).length ||
+        _021dScoredCourts.length,
+      reservedCourtAuthorities: finalSelection
+        .filter((d) => patch021dDocCourtType(d) !== null)
+        .map(patch021dDocRef)
+        .slice(0, 6),
+      recoveredFromIndex: _021dRecoveredCount,
+      finalSourceTypes: finalSelection.map((d) => d.authorityType || d.authority_type || "?")
+    });
+  }
+  // ── End PATCH-021D Part 2 ──────────────────────────────────────────────────
+
+  const sanitized = finalSelection.map(sanitizeRetrievedSource);
   const retrievalTimedOut = isRetrievalTimeout(options);
   const outcomeCategory = determineOutcomeCategory({
     candidates,
@@ -3699,7 +3916,11 @@ export {
   runRetrievalEngine,
   getRelevantSources,
   searchRelevantSources,
-  retrievalEngine
+  retrievalEngine,
+
+  patch021dDocCourtType,
+  patch021dCourtRank,
+  patch021dReserveJurisprudenceSlots
 };
 
 export default {
