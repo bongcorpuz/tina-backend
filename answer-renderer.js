@@ -1825,7 +1825,11 @@ function applyVerifiedAuthorityGate({
   // prose citations cannot bypass the gate. A line survives only if it carries
   // no legal citation, or every detected citation is in the verified
   // allow-list. A single unverified citation suppresses the whole line.
-  if (status === "AUTHORITY_FOUND" && verifiedKeys.size > 0) {
+  // REV1-OUTCOME-6 FIX: the scan runs even when the verified allow-list is
+  // EMPTY. AUTHORITY_FOUND with zero verified authority records is an
+  // authority-verification failure — no citation is backed by a verified
+  // record, so every citation-bearing line must be suppressed.
+  if (status === "AUTHORITY_FOUND") {
     const kept = [];
     for (const line of lines) {
       const cites = patch019aExtractCitations(line);
@@ -1841,9 +1845,14 @@ function applyVerifiedAuthorityGate({
     }
     if (result.changed) {
       result.answer = kept.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+      if (verifiedKeys.size === 0 && result.answer.length < 40) {
+        result.answer = PATCH_019A_LIMITATION_MESSAGES.NO_INDEXED_SOURCE;
+      }
       console.warn("[PATCH_019A_AUTHORITY_LEAKAGE_BLOCKED]", {
         saeStatus: status, mode, route,
-        reason: "unverified_citation_in_answer",
+        reason: verifiedKeys.size === 0
+          ? "authority_verification_failure_no_records"
+          : "unverified_citation_in_answer",
         suppressedCitationCount: result.suppressedCitations.length,
         suppressedCitations: result.suppressedCitations.slice(0, 8)
       });

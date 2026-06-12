@@ -394,6 +394,52 @@ group("RELATED_AUTHORITY_ONLY — controlling headings relabeled, prose untouche
   assert(r.answer.includes("the controlling authority question remains open"), "prose sentence untouched (heading-only relabel)");
 });
 
+// ─── REV1 OUTCOME 6 — authority verification failure prohibits citations ──────
+// AUTHORITY_FOUND status with ZERO verified authority records (and no
+// preservation contract) is a verification failure: no citation in the answer
+// is backed by a verified record, so all citation-bearing lines are suppressed.
+
+group("REV1 OUTCOME 6 — AUTHORITY_FOUND with empty verified set suppresses citations", () => {
+  const r = applyVerifiedAuthorityGate({
+    answer: "Under NIRC Sec. 57 and RR 2-98, EWT applies to income payments.\n\nWithholding obligations rest on the payor.",
+    saeStatus: "AUTHORITY_FOUND",
+    finalSourceCards: [],
+    pipelineSourceCards: [],
+    eligibleCandidates: [],
+    preGenerationSourceCards: [],
+    lockedAuthorities: []
+  });
+  assert(r.leakageBlocked === true, "leakage blocked on verification failure");
+  assert(!/NIRC Sec\.\s*57|RR 2-98/i.test(r.answer), "no authority citations in output");
+  assert(r.suppressedCitations.length >= 2, "both citations recorded as suppressed");
+  assert(r.answer.length > 0, "answer generation not blocked — safe text remains");
+  assert(r.verifiedAuthorityCount === 0, "verified authority count is zero");
+});
+
+group("REV1 OUTCOME 6 — fully-cited answer falls back to safe limitation message", () => {
+  const r = applyVerifiedAuthorityGate({
+    answer: "NIRC Sec. 57 and RR 2-98 apply.",
+    saeStatus: "AUTHORITY_FOUND",
+    finalSourceCards: []
+  });
+  assert(r.leakageBlocked === true, "leakage blocked");
+  assert(!/NIRC|RR 2-98/.test(r.answer), "no citations in fallback");
+  assert(r.answer.includes("does not mean that no law or authority exists"), "safe limitation message used");
+});
+
+group("REV1 OUTCOME 6 — verified records still allow citations (no regression)", () => {
+  const r = applyVerifiedAuthorityGate({
+    answer: "Under NIRC Sec. 57 and RR 2-98, EWT applies.",
+    saeStatus: "AUTHORITY_FOUND",
+    finalSourceCards: [
+      { normalizedReference: "NIRC Sec. 57" },
+      { normalizedReference: "RR 2-98" }
+    ]
+  });
+  assert(r.leakageBlocked === false, "no blocking when citations verified");
+  assert(r.answer.includes("NIRC Sec. 57") && r.answer.includes("RR 2-98"), "verified citations preserved");
+});
+
 // ─── Results ──────────────────────────────────────────────────────────────────
 
 console.log(`\n${"─".repeat(60)}`);
