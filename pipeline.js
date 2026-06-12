@@ -727,6 +727,28 @@ function sourceCardPlanSortScore(card = {}) {
   return 1000 + tier * 100 + (section || 0);
 }
 
+// PATCH-021C: jurisprudence authority promotion rank. For case-law intent
+// queries (isJurisprudenceQuery), SUPREME_COURT / CTA_EN_BANC / CTA_DIVISION
+// materials must outrank statutes and regulations in the final sources sent
+// to the model and in visible source cards. Lower rank = higher priority.
+function patch021cJurisprudenceRank(doc = {}) {
+  const t = String(
+    doc.authorityType || doc.authority_type || doc.metadata?.authorityType || doc.linkedSourceType || ""
+  ).trim().toUpperCase().replace(/[\s-]+/g, "_");
+  if (t === "SUPREME_COURT" || t === "SUPREME_COURT_EN_BANC" || t === "SC") return 1;
+  if (t === "CTA_EN_BANC") return 2;
+  if (t === "CTA_DIVISION" || t === "COURT_OF_APPEALS") return 3;
+  if (["STATUTE", "NIRC", "TAX_CODE", "REPUBLIC_ACT", "RA", "CMTA", "LGC"].includes(t)) return 4;
+  if (t === "RR" || t === "REVENUE_REGULATION") return 5;
+  if (t === "RMC") return 6;
+  if (t === "RMO" || t === "RAMO") return 7;
+  return 8;
+}
+
+function patch021cIsCaseAuthority(doc = {}) {
+  return patch021cJurisprudenceRank(doc) <= 3;
+}
+
 /**
  * For chunks where inferSourceCardRef returned "" (no issuance label derived),
  * attempts to return a safe visible-card reference when targetAuthorities exist.
@@ -3104,6 +3126,77 @@ export async function runPipeline({
   });
   trace.steps.push({ step: 13, name: "masterPromptBuilt", done: true });
 
+  // ── Step 13.5: PATCH-021C — jurisprudence authority promotion ─────────────
+  // For case-law intent queries, retrieved SC/CTA decisions must lead the
+  // final sources sent to the model; statutes/regulations stay as background.
+  // Trigger is isJurisprudenceQuery ONLY: requiresJurisprudence /
+  // useJurisprudenceEngine are also true for ordinary VAT definition queries
+  // by design and must not receive case-law framing.
+  {
+    const _jpIntent = ctx.issueClassification?.isJurisprudenceQuery === true;
+    if (_jpIntent && (ctx.rerankedChunks || []).length > 0) {
+      const _jpBeforeTypes = ctx.rerankedChunks.map(c => c.authorityType || c.authority_type || "?");
+      const _jpRefOf = (c) => c.normalizedReference || c.normalized_reference || c.citation || c.title || "?";
+
+      // Stable sorts: reranker order is preserved within each rank.
+      const _jpCase = ctx.rerankedChunks
+        .filter(c => patch021cIsCaseAuthority(c))
+        .sort((a, b) => patch021cJurisprudenceRank(a) - patch021cJurisprudenceRank(b));
+      const _jpBackground = ctx.rerankedChunks
+        .filter(c => !patch021cIsCaseAuthority(c))
+        .sort((a, b) => patch021cJurisprudenceRank(a) - patch021cJurisprudenceRank(b));
+
+      if (_jpCase.length > 0) {
+        const _jpMax      = 5;
+        const _jpCaseTake = Math.min(_jpCase.length, _jpBackground.length > 0 ? _jpMax - 1 : _jpMax);
+        const _jpSelected = [
+          ..._jpCase.slice(0, _jpCaseTake),
+          ..._jpBackground.slice(0, _jpMax - _jpCaseTake)
+        ];
+        ctx.rerankedChunks = _jpSelected;
+      }
+
+      console.log("[PATCH_021C_JURISPRUDENCE_SOURCE_PROMOTION]", {
+        query: query.slice(0, 120),
+        caseLawIntent: {
+          isJurisprudenceQuery:   true,
+          requiresJurisprudence:  ctx.issueClassification?.requiresJurisprudence === true,
+          useJurisprudenceEngine: ctx.issueClassification?.downstreamRouting?.useJurisprudenceEngine === true
+        },
+        beforeTypes:                   _jpBeforeTypes,
+        afterTypes:                    ctx.rerankedChunks.map(c => c.authorityType || c.authority_type || "?"),
+        promotedCount:                 Math.min(_jpCase.length, 5),
+        finalSourceCount:              ctx.rerankedChunks.length,
+        includedCaseAuthorities:       _jpCase.slice(0, 5).map(_jpRefOf),
+        includedBackgroundAuthorities: ctx.rerankedChunks.filter(c => !patch021cIsCaseAuthority(c)).map(_jpRefOf)
+      });
+
+      // Generation directive: answer the case-law question directly.
+      const _jpDirective = [
+        "",
+        "[JURISPRUDENCE QUERY DIRECTIVE — PATCH-021C]",
+        "This question asks about court cases / case law. Answer the case-law question directly:",
+        "1. FIRST identify the retrieved court decisions (Supreme Court / CTA) exactly as they are named in the provided sources. If no court decision appears in the sources, state plainly that no indexed case-law source was retrieved for this question — do NOT claim that no such cases exist.",
+        "2. THEN explain the statutory and regulatory background (e.g., NIRC provisions, revenue regulations) as supporting context only.",
+        "3. If court decisions are present in the sources, do NOT present statutes or regulations as the only controlling authorities.",
+        "4. NEVER invent case names, G.R. numbers, or holdings that are not present in the provided sources."
+      ].join("\n");
+      if (ctx.promptContract && typeof ctx.promptContract.masterPrompt === "string") {
+        ctx.promptContract = {
+          ...ctx.promptContract,
+          masterPrompt: ctx.promptContract.masterPrompt + "\n" + _jpDirective
+        };
+      }
+      trace.steps.push({
+        step: "13.5",
+        name: "jurisprudenceSourcePromotion",
+        done: true,
+        caseSourceCount: _jpCase.length,
+        finalSourceCount: ctx.rerankedChunks.length
+      });
+    }
+  }
+
   // ── TEMP TRACE: Stage 7 — final sources entering OpenAI ───────────────────
   // Remove after retrieval audit is complete.
   console.log("[FINAL SOURCES TO MODEL]", {
@@ -3765,7 +3858,17 @@ export async function runPipeline({
   const _scNonTarget      = _scCandidateArray
     .filter(v => !v._targetMatch)
     .sort((a, b) => sourceCardPlanSortScore(a) - sourceCardPlanSortScore(b));
-  const _scSorted         = [..._scTargetMatched, ..._scNonTarget];
+  let _scSorted           = [..._scTargetMatched, ..._scNonTarget];
+
+  // PATCH-021C: for case-law intent queries, SC/CTA cards outrank statute/RR
+  // cards regardless of target-match tier (the WHT targets are statutes, which
+  // would otherwise pin NIRC Sec. 57/58 ahead of retrieved decisions).
+  // Stable sort: prior ordering is preserved within each jurisprudence rank.
+  if (ctx.issueClassification?.isJurisprudenceQuery === true) {
+    _scSorted = [..._scSorted].sort(
+      (a, b) => patch021cJurisprudenceRank(a) - patch021cJurisprudenceRank(b)
+    );
+  }
 
   console.log("[SOURCE CARD CANDIDATES]", {
     total:              _scCandidateArray.length,
