@@ -1107,6 +1107,24 @@ function detectSubIssue(question = "", primaryIssue = "GENERAL_TAX", queryIntent
 
   if (queryIntent?.subIssue) return queryIntent.subIssue;
 
+  // PATCH-020A: specialized VAT sub-issue checks take priority over the generic
+  // definition pattern. Definition-phrased exemption / zero-rating / input / output
+  // queries ("What is VAT-exempt sale?") must not collapse into VAT_DEFINITION and
+  // the VAT_DEFINITION_AUTHORITY_FIRST bridge. Export-sale phrasing counts as
+  // zero-rating only in VAT context so income tax / customs export queries keep
+  // their own classification.
+  const vatContext =
+    ["VAT_LIABILITY", "ZERO_RATED_SALES", "INPUT_TAX", "OUTPUT_TAX", "VAT_REFUND"].includes(primaryIssue) ||
+    /\bvat\b|\bvalue[- ]added tax\b/i.test(q);
+
+  if (detectDefinitionPattern(question, queryIntent)) {
+    if (/\bvat[\s-]*exempt|\bexempt(?:ed)?\s+from\s+vat\b|\bsection\s*109\b|\bsec\.?\s*109\b/i.test(q)) return "VAT_EXEMPTION";
+    if (/\bzero[\s-]*rated|\bzero[\s-]*rating|\b0%\s*vat\b/i.test(q)) return "ZERO_RATING_DEFINITION";
+    if (vatContext && /\bexport\s+sales?\b/i.test(q)) return "ZERO_RATING_DEFINITION";
+    if (/\binput tax|input vat|creditable input\b/i.test(q)) return "INPUT_TAX_DEFINITION";
+    if (/\boutput tax|output vat|vat payable\b/i.test(q)) return "OUTPUT_TAX_DEFINITION";
+  }
+
   if (detectDefinitionPattern(question, queryIntent)) {
     const detector = detectTaxDomain(question, queryIntent)[0];
     return detector?.definitionKey || `${primaryIssue}_DEFINITION`;
@@ -1114,8 +1132,9 @@ function detectSubIssue(question = "", primaryIssue = "GENERAL_TAX", queryIntent
 
   if (primaryIssue === "VAT_LIABILITY" && detectOverviewPattern(question, queryIntent)) return "VAT_OVERVIEW";
   if (primaryIssue === "VAT_LIABILITY" && detectRiskPattern(question, queryIntent)) return "VAT_RISK_ANALYSIS";
-  if (/\bvat exempt|exempt from vat|section 109|sec\.?\s*109\b/i.test(q)) return "VAT_EXEMPTION";
-  if (/\bzero[- ]rated|zero rating|0%\s*vat\b/i.test(q)) return "ZERO_RATING";
+  if (/\bvat[\s-]*exempt|exempt(?:ed)?\s+from\s+vat|section\s*109|sec\.?\s*109\b/i.test(q)) return "VAT_EXEMPTION";
+  if (/\bzero[\s-]*rated|zero[\s-]*rating|0%\s*vat\b/i.test(q)) return "ZERO_RATING";
+  if (vatContext && /\bexport\s+sales?\b/i.test(q)) return "ZERO_RATING";
   if (/\binput tax|input vat|creditable input\b/i.test(q)) return "INPUT_TAX";
   if (/\boutput tax|output vat|vat payable\b/i.test(q)) return "OUTPUT_TAX";
   if (/\bvat refund|section 112|sec\.?\s*112|unutilized input|excess input|tcc\b/i.test(q)) return "REFUND_CREDIT";
@@ -1225,6 +1244,16 @@ function buildLegalQuestionPresented({ question = "", primaryIssue, subIssue, do
 
 function getDefinitionAuthorityFor(question = "", detector = null, primaryIssue = "", subIssue = "") {
   if (!detectDefinitionPattern(question)) return null;
+
+  // PATCH-020A: the sub-issue resolved by detectSubIssue's specialized VAT priority
+  // guard wins over the domain detector's definitionKey. Otherwise "What is VAT on
+  // zero-rated transactions?" would resolve detector VAT_LIABILITY → VAT_DEFINITION
+  // authorities (Sec. 105-108) despite a ZERO_RATING_DEFINITION sub-issue.
+  if (subIssue && DEFINITION_AUTHORITY_MAP[subIssue]) return DEFINITION_AUTHORITY_MAP[subIssue];
+
+  // VAT_EXEMPTION has no definition-map entry by design: returning null routes
+  // buildAuthorities to ISSUE_SPECIFIC_TARGETS.VAT_EXEMPTION (NIRC Sec. 109).
+  if (subIssue === "VAT_EXEMPTION") return null;
 
   const definitionKey =
     detector?.definitionKey ||
