@@ -1733,6 +1733,34 @@ const _DIRECT_SUPPORT_TERM_GROUPS = Object.freeze([
   ["protest", "appeal", "refund", "compromise", "abatement"]
 ]);
 
+// PATCH-022: DSF-local tax acronym expansion table.
+// When an acronym appears in extracted answer key terms, inject the spelled-out
+// phrases so source blobs using the full form can achieve ≥2 key-term overlap
+// even when the LLM answer used only the abbreviation.
+// Both hyphenated and non-hyphenated variants are included where applicable.
+// Scope: DSF answer key-term extraction only — no retrieval or ranking changes.
+const _TAX_ACRONYM_EXPANSIONS = Object.freeze({
+  vat:   ["value added tax", "value-added tax"],
+  ewt:   ["expanded withholding tax"],
+  fwt:   ["final withholding tax"],
+  cwt:   ["creditable withholding tax"],
+  cgt:   ["capital gains tax"],
+  dst:   ["documentary stamp tax"],
+  mcit:  ["minimum corporate income tax"],
+  nolco: ["net operating loss carry-over", "net operating loss carryover"],
+  rpt:   ["real property tax"],
+});
+
+function _expandTaxAcronyms(terms) {
+  for (const [acronym, phrases] of Object.entries(_TAX_ACRONYM_EXPANSIONS)) {
+    if (terms.has(acronym)) {
+      for (const phrase of phrases) {
+        terms.add(phrase);
+      }
+    }
+  }
+}
+
 function _extractAnswerKeyTerms(answerText = "", extraKeyTerms = [], issueClassification = null) {
   const normalized = normalizeLooseText(answerText);
   const terms = new Set();
@@ -1769,6 +1797,10 @@ function _extractAnswerKeyTerms(answerText = "", extraKeyTerms = [], issueClassi
     terms.add(`sec ${m[1].toLowerCase()}`);
     terms.add(`section ${m[1].toLowerCase()}`);
   }
+
+  // PATCH-022: expand known tax acronyms to their spelled-out forms so source
+  // blobs using the full phrase can achieve ≥2 key-term overlap with acronym answers.
+  _expandTaxAcronyms(terms);
 
   return [...terms].filter(t => t && t.length >= 3);
 }
