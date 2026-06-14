@@ -601,6 +601,102 @@ group("Functional — REV2 reads label and displayLabel source card fields", () 
   }
 });
 
+// ─── Group 9: REV3 Form 2 — direct extraction assertions ─────────────────────
+//
+// These cases all failed before PATCH-024C-REV3 because the old Form 2 regex
+// had \s* before the optional connector, greedily consuming the space between
+// the section number and "of", so \s+of\s+ inside the optional group couldn't
+// match.  After the fix the suffix form is correctly extracted.
+
+group("REV3 Form 2 — direct extraction assertions (suffix-form NIRC)", () => {
+  if (!extractCanonicalCitationsFromText) {
+    console.log("  SKIP  (module load failed — static checks cover this)");
+    return;
+  }
+
+  {
+    const keys = extractCanonicalCitationsFromText(
+      "Section 109(BB) of the National Internal Revenue Code"
+    );
+    assert(keys.includes("NIRC:109(BB)"), "REV3-E1: extracts NIRC:109(BB) from suffix long-form");
+  }
+
+  {
+    const keys = extractCanonicalCitationsFromText("Section 109(P) of the NIRC");
+    assert(keys.includes("NIRC:109(P)"), "REV3-E2: extracts NIRC:109(P) from 'Section N(P) of the NIRC'");
+  }
+
+  {
+    const keys = extractCanonicalCitationsFromText("Section 110(B) of the NIRC");
+    assert(keys.includes("NIRC:110(B)"), "REV3-E3: extracts NIRC:110(B) from 'Section 110(B) of the NIRC'");
+  }
+
+  {
+    const keys = extractCanonicalCitationsFromText("Sec 112 NIRC");
+    assert(keys.includes("NIRC:112"), "REV3-E4: extracts NIRC:112 from 'Sec 112 NIRC' (no 'of', no dot)");
+  }
+
+  {
+    const keys = extractCanonicalCitationsFromText("Section 107 of the Tax Code");
+    assert(keys.includes("NIRC:107"), "REV3-E5: extracts NIRC:107 from 'Section 107 of the Tax Code'");
+  }
+});
+
+// ─── Group 10: REV3 Form 2 — strip behavior ──────────────────────────────────
+
+group("REV3 Form 2 — suffix-form strip and keep behavior", () => {
+  if (!stripUnverifiedAuthorityLines || !extractCanonicalCitationsFromText) {
+    console.log("  SKIP  (module load failed)");
+    return;
+  }
+
+  // REV3-S1: visible source = RR 16-2005 only; answer cites suffix-form NIRC → stripped
+  {
+    const sources = [src("RR 16-2005")];
+    const answer  = "This is governed by Section 109(P) of the NIRC, which provides the exemption.";
+    const result  = stripUnverifiedAuthorityLines(answer, sources);
+    assert(
+      !result.includes("Section 109(P) of the NIRC"),
+      "REV3-S1: suffix 'Section 109(P) of the NIRC' stripped when source is only RR 16-2005"
+    );
+  }
+
+  // REV3-S2: visible source = NIRC Sec. 109(P); answer cites suffix-form (P) → kept
+  {
+    const sources = [src("NIRC Sec. 109(P)")];
+    const answer  = "This is governed by Section 109(P) of the NIRC.";
+    const result  = stripUnverifiedAuthorityLines(answer, sources);
+    assert(
+      result.includes("Section 109(P) of the NIRC"),
+      "REV3-S2: suffix 'Section 109(P) of the NIRC' kept when source is NIRC Sec. 109(P)"
+    );
+  }
+
+  // REV3-S3: visible source = NIRC Sec. 109(P); answer cites suffix-form (BB) → stripped
+  //          NIRC:109(BB) ≠ NIRC:109(P) and ≠ NIRC:109 (base); verifiedSet = {NIRC:109(P), NIRC:109}
+  //          Wait: NIRC:109(BB) ≠ NIRC:109 so it's stripped. ✓
+  {
+    const sources = [src("NIRC Sec. 109(P)")];
+    const answer  = "Under Section 109(BB) of the NIRC the person is exempt.";
+    const result  = stripUnverifiedAuthorityLines(answer, sources);
+    assert(
+      !result.includes("Section 109(BB) of the NIRC"),
+      "REV3-S3: suffix 'Section 109(BB) of the NIRC' stripped when source is only NIRC Sec. 109(P)"
+    );
+  }
+
+  // REV3-S4: visible source = NIRC Sec. 110(B); answer cites suffix-form 110(B) → kept
+  {
+    const sources = [src("NIRC Sec. 110(B)")];
+    const answer  = "Input tax allocation is governed by Section 110(B) of the NIRC.";
+    const result  = stripUnverifiedAuthorityLines(answer, sources);
+    assert(
+      result.includes("Section 110(B) of the NIRC"),
+      "REV3-S4: suffix 'Section 110(B) of the NIRC' kept when source is NIRC Sec. 110(B)"
+    );
+  }
+});
+
 // ─── Results ──────────────────────────────────────────────────────────────────
 
 console.log(`\n${"─".repeat(56)}`);

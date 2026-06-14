@@ -2567,16 +2567,25 @@ function _rev2AddNircBase(set, key) {
 
 // Two-form NIRC extractors:
 //   Form 1 (prefix-first): [NIRC|Tax Code|NIRC-long] Sec/Section <num>[(sub)]
-//   Form 2 (suffix-first): Sec/Section <num>[(sub)] [,|of the] [NIRC|Tax Code]
+//   Form 2 (suffix-first): Sec/Section <num>[(sub)] [,|of [the]] [NIRC|Tax Code]
 // Trailing (?=\W|$) used instead of \b because ")" is \W so \b would fail at
 // end-of-string after a parenthetical subsection like "(BB)".
+//
+// PATCH-024C-REV3 fix (Form 2): replaced the bare \s* before the optional
+// connector with the space absorbed inside the alternatives.
+// Old: \s*(?:,\s*|\s+of\s+(?:the\s+)?)?
+// New: (?:,\s*|\s+(?:of\s+(?:the\s+)?)?)?
+// Without the fix, \s* greedily consumed the space between the captured section
+// number and "of", leaving \s+of\s+ inside the optional group unable to match
+// (cursor at "o", not whitespace). This caused suffix-form citations like
+// "Section 109(BB) of the National Internal Revenue Code" to extract nothing.
 const _024C_REV2_EXTRACTORS = Object.freeze([
   {
     re: /\b(?:nirc|tax\s+code|national\s+internal\s+revenue\s+code)\s+(?:sec(?:tion)?s?\.?\s*)(\d{1,4}[A-Z]?(?:\([A-Z0-9]{1,4}\))?)(?=\W|$)/gi,
     key: (m) => `NIRC:${String(m[1]).trim().toUpperCase().replace(/\s+/g, "")}`
   },
   {
-    re: /\b(?:sec(?:tion)?s?\.?\s*)(\d{1,4}[A-Z]?(?:\([A-Z0-9]{1,4}\))?)\s*(?:,\s*|\s+of\s+(?:the\s+)?)?(?:nirc|tax\s+code|national\s+internal\s+revenue\s+code)(?=\W|$)/gi,
+    re: /\b(?:sec(?:tion)?s?\.?\s*)(\d{1,4}[A-Z]?(?:\([A-Z0-9]{1,4}\))?)(?:,\s*|\s+(?:of\s+(?:the\s+)?)?)?(?:nirc|tax\s+code|national\s+internal\s+revenue\s+code)(?=\W|$)/gi,
     key: (m) => `NIRC:${String(m[1]).trim().toUpperCase().replace(/\s+/g, "")}`
   },
   {
