@@ -2298,10 +2298,12 @@ export async function runPipeline({
   let _retrievalWon = Boolean(_patch017fRetrievalRaw);
   let _retrievalRaw = _patch017fRetrievalRaw || null;
 
-  // SOURCE_LOOKUP awaits retrieval directly — the timeout fallback must not win
-  // before retrieval completes, which would produce a false-empty response while
-  // the real retrieval runs in the background.  All other modes keep the existing
-  // Promise.race behaviour so their latency characteristics are unchanged.
+  // PATCH-024A: isSourceLookupRetrieval is recorded for SAE classification
+  // downstream but NO LONGER bypasses the retrieval timeout race.
+  // Prior behaviour (SOURCE_LOOKUP awaiting retrieval without a timeout bound)
+  // allowed estate-tax /source queries to block for 100+ s and trip Render's
+  // 120 s hard-kill, returning HTTP 502.  Auth-critical /ask queries still
+  // await retrieval fully (see isAuthorityCriticalRetrieval below).
   const isSourceLookupRetrieval =
     String(ctx.mode || "").toUpperCase() === "SOURCE_LOOKUP";
 
@@ -2392,7 +2394,10 @@ export async function runPipeline({
       }, RETRIEVAL_STEP_TIMEOUT_MS)
     );
 
-    _retrievalRaw = (isSourceLookupRetrieval || isAuthorityCriticalRetrieval)
+    // PATCH-024A: /source (isSourceLookupRetrieval) now uses the timeout race so
+    // unbounded Supabase metadata scans cannot exceed Render's hard-kill limit.
+    // Only auth-critical /ask requests bypass the race and await retrieval fully.
+    _retrievalRaw = (isAuthorityCriticalRetrieval && !isSourceLookupRetrieval)
       ? await retrievalPromise
       : await Promise.race([retrievalPromise, timeoutFallbackPromise]);
   }
@@ -2706,6 +2711,32 @@ export async function runPipeline({
   ctx.limitationRequired   = ctx.sourceAvailability.limitationRequired;
   ctx.disclosureType       = ctx.sourceAvailability.disclosureType;
   ctx.statusReason         = ctx.sourceAvailability.statusReason;
+
+  // PATCH-024A Q40: When a specific BIR issuance (RMC/RR/RMO/RAMO) is cited in
+  // the query but retrieval returned nothing, reclassify RETRIEVAL_TIMEOUT to
+  // NO_INDEXED_SOURCE.  RETRIEVAL_TIMEOUT allows the model to generate content
+  // from training knowledge about a potentially fictional authority; the SAE
+  // hard-fail gate at Step 16 is then forced so no fabricated text is surfaced.
+  {
+    const _024aExactAuth = ctx.issueClassification?.exactAuthority;
+    if (
+      _024aExactAuth?.detected === true &&
+      ["RMC", "RR", "RMO", "RAMO"].includes(String(_024aExactAuth.type || "").toUpperCase()) &&
+      (ctx.rerankedChunks || []).length === 0 &&
+      ctx.saeStatus === "RETRIEVAL_TIMEOUT"
+    ) {
+      ctx.saeStatus   = "NO_INDEXED_SOURCE";
+      ctx.statusReason = "[PATCH-024A] Specific BIR issuance cited but not in index; reclassified from RETRIEVAL_TIMEOUT.";
+      ctx._024a_exactAuthorityMissing = true;
+      console.log("[PATCH_024A_EXACT_AUTHORITY_NOT_INDEXED]", {
+        exactAuthority: _024aExactAuth.reference,
+        type:           _024aExactAuth.type,
+        wasStatus:      "RETRIEVAL_TIMEOUT",
+        nowStatus:      "NO_INDEXED_SOURCE"
+      });
+    }
+  }
+
   diagnostics.partialPipelineState.sourceAvailabilityStatusBeforeTimeout = ctx.saeStatus;
   diagnostics.partialPipelineState.retrievedCount = ctx.rerankedChunks?.length || 0;
   diagnostics.partialPipelineState.sourceLabelsBeforeTimeout = buildFirstSourceLabels(ctx.rerankedChunks);
@@ -3709,7 +3740,8 @@ export async function runPipeline({
     retrievedCount: ctx.rerankedChunks?.length || 0
   });
   trace.steps.push({ step: 16, name: "finalAnswerCompliance", done: true });
-  const saeHardFailBlocked = hasSaeHardFail(compliantResult);
+  // PATCH-024A: force hard-fail when a specific BIR issuance was cited but not indexed.
+  const saeHardFailBlocked = hasSaeHardFail(compliantResult) || ctx._024a_exactAuthorityMissing === true;
   const saeHardFailFallback = saeHardFailBlocked
     ? buildSaeHardFailFallback(ctx, compliantResult)
     : null;

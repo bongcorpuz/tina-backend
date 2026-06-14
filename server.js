@@ -870,6 +870,17 @@ function shutdown(signal) {
 }
 
 process.on("SIGTERM", () => shutdown("SIGTERM"));
-process.on("SIGINT", () => shutdown("SIGINT"));
+process.on("SIGINT",  () => shutdown("SIGINT"));
+
+// PATCH-024A: Prevent unhandled promise rejections from crashing the process.
+// Node 18+ exits on unhandledRejection by default; a single escaped promise
+// rejection (e.g. a Supabase RPC error outside a try/catch) would kill the
+// service and cause HTTP 502 for any in-flight request.
+process.on("unhandledRejection", (reason) => {
+  console.error("[UNHANDLED_REJECTION]", {
+    message: reason instanceof Error ? reason.message : String(reason),
+    stack:   reason instanceof Error ? (reason.stack || "").split("\n").slice(0, 6).join("\n") : undefined
+  });
+});
 
 export default app;
