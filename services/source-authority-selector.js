@@ -289,7 +289,12 @@ function sanitizePublicSelectorCard(card = {}) {
   const citation = publicCardText(card.citation || card.normalizedReference || card.normalized_reference || "");
   const displayLabel = publicCardText(card.displayLabel || card.display_label || citation || card.authorityLabel || "");
   const title = publicCardText(card.title) || displayLabel || citation || "Source";
-  const safeUrl = publicCardUrl(card.publicUrl || card.public_url || "");
+  // PATCH-023B: bridge intermediate URL fields to publicUrl (mirrors pipeline.js fix).
+  const safeUrl = publicCardUrl(
+    card.publicUrl    || card.public_url    ||
+    card.driveViewUrl || card.drive_view_url ||
+    card.url          || card.webViewLink    || card.web_view_link || ""
+  );
 
   return {
     title,
@@ -328,6 +333,18 @@ function inferLinkedSourceType(c = {}) {
   if (/(^|[\s_/.-])ramo[\s_.-]*\d+[\s_.-]*\d{2,4}\b/.test(blob) || blob.includes("revenue audit memorandum order")) return "RAMO";
   if (blob.includes("01_tax_code") || blob.includes("nirc") || blob.includes("tax code")) return "NIRC";
   if (/\bra[\s_.-]*(?:no[\s_.-]*)?\d{4,6}\b/.test(blob) || blob.includes("republic act")) return "RA";
+  // PATCH-023B: fall back to authorityType field when the identity blob lacks document-type
+  // markers (e.g. NIRC statute chunks whose source paths don't contain "nirc" / "tax code").
+  // Without this, inferSourceCardRef returns "" → provRef = "" → displayLabel falls to
+  // metadata.displayLabel = "Primary Statute" instead of "NIRC Sec. 57".
+  const rawType = String(
+    c.authorityType || c.authority_type || (c.metadata || {}).authorityType || ""
+  ).trim().toUpperCase();
+  if (["STATUTE", "NIRC", "TAX_CODE"].includes(rawType)) return "NIRC";
+  if (rawType === "RR" || rawType === "REVENUE_REGULATION") return "RR";
+  if (rawType === "RMC") return "RMC";
+  if (rawType === "RMO") return "RMO";
+  if (rawType === "RAMO") return "RAMO";
   return "";
 }
 

@@ -965,7 +965,15 @@ function sanitizePublicSourceCard(card = {}) {
   const citation = publicText(card.citation || card.normalizedReference || card.normalized_reference || "");
   const displayLabel = publicText(card.displayLabel || card.display_label || citation || card.authorityLabel || "");
   const title = publicText(card.title) || displayLabel || citation || "Source";
-  const safeUrl = publicUrl(card.publicUrl || card.public_url || "");
+  // PATCH-023B: bridge all intermediate URL fields to publicUrl.
+  // Intermediate cards carry driveViewUrl/url/webViewLink; sanitizePublicSourceCard
+  // previously read only publicUrl/public_url, which was never set → all cards lacked
+  // clickable URLs in the outbound payload.
+  const safeUrl = publicUrl(
+    card.publicUrl    || card.public_url    ||
+    card.driveViewUrl || card.drive_view_url ||
+    card.url          || card.webViewLink    || card.web_view_link || ""
+  );
 
   return {
     title,
@@ -4094,7 +4102,8 @@ export async function runPipeline({
 
   // Diagnostic log — shows the exact array that will be sent as result.sourceCards.
   // Each entry shows the chip label (ref), document type (type), source identity field
-  // (src — what the sanitizer uses to re-derive type), and whether a clickable URL exists.
+  // (src — what the sanitizer uses to re-derive type), and whether a clickable URL exists
+  // in the outbound payload (hasUrl checks publicUrl after PATCH-023B URL bridging).
   console.log("[SOURCE CARDS FINAL]", {
     count:      sourceCards.length,
     targetAuths: targetAuths.slice(0, 8),
@@ -4102,7 +4111,7 @@ export async function runPipeline({
       ref:    c.normalizedReference || c.citation || "(none)",
       type:   c.linkedSourceType   || "",
       src:    c.source             || c.document_title || "(none)",
-      hasUrl: Boolean(c.driveViewUrl || c.drive_view_url || c.url)
+      hasUrl: Boolean(c.publicUrl)
     }))
   });
 
