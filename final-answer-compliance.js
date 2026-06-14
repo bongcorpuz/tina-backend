@@ -2531,6 +2531,62 @@ function enforceAskProfileCompliance(args = {}) {
   };
 }
 
+// PATCH-024C: Remove every line whose cited authorities are not present in the
+// retrieved verified source set.  Runs on the draft answer before structural
+// validation so downstream validators see the cleaner text.
+//
+// Behaviour per scenario:
+//   visibleSources non-empty → keep lines only when EVERY citation is supported
+//   visibleSources empty     → drop ALL citation-bearing lines (nothing verified)
+//
+// Lines with no recognisable authority citation pass through unchanged so that
+// prose explanations, headings, and framework-knowledge notes survive.
+function stripUnverifiedAuthorityLines(answer = "", visibleSources = []) {
+  const sources = safeArray(visibleSources);
+  if (!normalizeText(answer)) return answer;
+
+  const lines = String(answer).split("\n");
+  const kept = [];
+  const blocked = [];
+
+  for (const line of lines) {
+    const citations = extractCitationsFromText(line);
+    if (!citations.length) {
+      kept.push(line);
+      continue;
+    }
+    // When sources exist every citation must be individually supported.
+    // When no sources exist nothing is verified — strip the line entirely.
+    const allVerified =
+      sources.length > 0 &&
+      citations.every((c) => citationSupportedBySources(c, sources));
+
+    if (allVerified) {
+      kept.push(line);
+    } else {
+      blocked.push({
+        line: line.slice(0, 120),
+        unverified: sources.length === 0
+          ? citations.map((c) => c.normalized)
+          : citations
+              .filter((c) => !citationSupportedBySources(c, sources))
+              .map((c) => c.normalized)
+      });
+    }
+  }
+
+  if (blocked.length) {
+    console.log("[PATCH_024C]", {
+      marker:          "PATCH_024C_UNVERIFIED_CITATIONS_STRIPPED",
+      blockedCount:    blocked.length,
+      sourceCount:     sources.length,
+      samples:         blocked.slice(0, 4)
+    });
+  }
+
+  return kept.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+}
+
 function finalizeCompliance({
   answer = "",
   visibleSources = [],
@@ -2545,6 +2601,16 @@ function finalizeCompliance({
     sources: visibleSources,
     context
   });
+
+  // PATCH-024C: strip any line that cites an authority not in the retrieved
+  // visible source set.  Runs after limitation labels are applied and before
+  // structural/grounding validation so those validators see the cleaned text.
+  // Only fires when visible sources exist — when sources is empty the pipeline
+  // is in a framework-knowledge path and PATCH-019A handles downstream citation
+  // suppression via the verifiedKeys gate in answer-renderer.
+  if (visibleSources.length > 0) {
+    output = stripUnverifiedAuthorityLines(output, visibleSources);
+  }
 
   const structureValidation = validateFinalAnswerStructure({
     answer: output,
@@ -3153,7 +3219,8 @@ export {
   buildSaeComplianceResult,
   enforceAuthorityHierarchyDisplay,
   ensureIndexedSourceLimitation,
-  buildComplianceWarnings
+  buildComplianceWarnings,
+  stripUnverifiedAuthorityLines
 };
 
 export default {
@@ -3173,5 +3240,6 @@ export default {
   buildComplianceWarnings,
   isSystemFallbackAnswer,
   preserveSystemFallbackAnswer,
-  normalizeMode
+  normalizeMode,
+  stripUnverifiedAuthorityLines
 };

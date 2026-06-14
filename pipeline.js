@@ -2377,7 +2377,14 @@ export async function runPipeline({
     "VAT_EXEMPTION_REAL_PROPERTY",
     "VAT_EXEMPTION_MEDICAL_PROFESSIONAL",
     "VAT_IMPORTATION",
-    "VAT_REFUND_CREDIT"
+    "VAT_REFUND_CREDIT",
+    // PATCH-024C: extend shield to PATCH-024B-EXT sub-issues so that queries
+    // like "What is the VAT treatment of residential rental?" do not re-trigger
+    // the /what is.*vat/i branch in isVatDefinitionClassification() and revert
+    // the retrieval target to the generic NIRC Sec. 105-108 set.
+    "VAT_INVOICING",
+    "VAT_INPUT_TAX_ALLOCATION",
+    "VAT_EXEMPTION_RESIDENTIAL_LEASE"
   ]);
   const _024b_sub = ctx.issueClassification?.subIssue;
   if (_024b_specializedVatSubs.has(_024b_sub)) {

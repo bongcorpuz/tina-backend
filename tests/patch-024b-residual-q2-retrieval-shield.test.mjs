@@ -73,7 +73,7 @@ group("pipeline.js — PATCH-024B retrieval classification shield present", () =
     "_024b_specializedVatSubs Set defined in pipeline.js"
   );
 
-  const setMatch = PIPELINE_SRC.match(/_024b_specializedVatSubs\s*=\s*new Set\(\[[\s\S]{0,400}\]\)/);
+  const setMatch = PIPELINE_SRC.match(/_024b_specializedVatSubs\s*=\s*new Set\(\[[\s\S]{0,900}\]\)/);
   const setBody  = setMatch ? setMatch[0] : "";
   assert(setBody.includes('"VAT_EXEMPTION_REAL_PROPERTY"'), "Shield Set includes VAT_EXEMPTION_REAL_PROPERTY");
   assert(setBody.includes('"VAT_REGISTRATION"'),            "Shield Set includes VAT_REGISTRATION");
@@ -100,7 +100,7 @@ group("pipeline.js — PATCH-024B retrieval classification shield present", () =
 
   // Confirm ctx.issueClassification itself is NOT mutated (only the copy)
   const shieldBlock = PIPELINE_SRC.match(
-    /PATCH-024B: retrieval-engine[\s\S]{0,2000}issueClassification: _024bClassificationForRetrieval/
+    /PATCH-024B: retrieval-engine[\s\S]{0,3000}issueClassification: _024bClassificationForRetrieval/
   );
   assert(
     Boolean(shieldBlock) &&
