@@ -2360,12 +2360,43 @@ export async function runPipeline({
     });
   }
 
+  // PATCH-024B: retrieval-engine.js's isVatDefinitionClassification() fires on any
+  // query whose text matches /what is.*vat/i when normalizeIssue(primaryIssue)
+  // resolves to "VAT" (VAT_LIABILITY normalises to "VAT" in the retrieval alias
+  // table).  When that check fires it resets provisional.subIssue to "VAT_DEFINITION"
+  // and provisional.targetAuthorities to NIRC Sec. 105/106/108 — overwriting the
+  // precise PATCH-024B authorities (NIRC Sec. 109(P), RR 4-2007, etc.).
+  // Fix: pass a shallow copy of issueClassification where primaryIssue and
+  // domainCode hold the specialized sub-issue value.  That value is NOT in the
+  // retrieval alias table so normalizeIssue(primaryIssue) !== "VAT",
+  // issues.includes("VAT") is false, and the override block is never entered.
+  // ctx.issueClassification is unchanged; only the snapshot to the retrieval
+  // layer is modified.
+  const _024b_specializedVatSubs = new Set([
+    "VAT_REGISTRATION",
+    "VAT_EXEMPTION_REAL_PROPERTY",
+    "VAT_EXEMPTION_MEDICAL_PROFESSIONAL",
+    "VAT_IMPORTATION",
+    "VAT_REFUND_CREDIT"
+  ]);
+  const _024b_sub = ctx.issueClassification?.subIssue;
+  if (_024b_specializedVatSubs.has(_024b_sub)) {
+    console.log("[PATCH_024B_RETRIEVAL_CLASSIFICATION_SHIELD]", {
+      subIssue:             _024b_sub,
+      originalPrimaryIssue: ctx.issueClassification?.primaryIssue,
+      shieldedPrimaryIssue: _024b_sub
+    });
+  }
+  const _024bClassificationForRetrieval = _024b_specializedVatSubs.has(_024b_sub)
+    ? { ...ctx.issueClassification, primaryIssue: _024b_sub, domainCode: _024b_sub }
+    : ctx.issueClassification;
+
   if (!_retrievalRaw) {
     const retrievalPromise = retrieveRelevantSources({
       query,
       supabase,
       vectorSearch: _vectorSearchFn,
-      issueClassification: ctx.issueClassification,
+      issueClassification: _024bClassificationForRetrieval,
       targetAuthorities: controllingAuthorities,
       controllingAuthorities,
       topK: 12,

@@ -1322,6 +1322,12 @@ function getDefinitionAuthorityFor(question = "", detector = null, primaryIssue 
   // buildAuthorities to ISSUE_SPECIFIC_TARGETS.VAT_EXEMPTION (NIRC Sec. 109).
   if (subIssue === "VAT_EXEMPTION") return null;
 
+  // PATCH-024B: Specialized VAT sub-issues (real property, medical, importation,
+  // registration, refund/credit) have precise entries in ISSUE_SPECIFIC_TARGETS.
+  // Returning null prevents the domain detector's definitionKey ("VAT_DEFINITION")
+  // from overriding those targets with the generic NIRC Sec. 105–108 set.
+  if (_VAT_SPECIALIZED_SUB_ISSUES_024B.has(subIssue)) return null;
+
   const definitionKey =
     detector?.definitionKey ||
     subIssue ||
