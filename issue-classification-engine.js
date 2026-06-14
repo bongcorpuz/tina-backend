@@ -1000,6 +1000,11 @@ const ISSUE_SPECIFIC_TARGETS = Object.freeze({
   VAT_IMPORTATION: ["NIRC Sec. 107", "NIRC Sec. 107(B)", "RR 16-2005"],
   VAT_REFUND_CREDIT: ["NIRC Sec. 112", "RR 1-2017", "RR 16-2005", "CIR v. San Roque Power Corporation", "CIR v. Aichi Forging"],
 
+  // PATCH-024B-EXT: Additional specialized VAT sub-issues discovered in Q6-Q8 expanded probes.
+  VAT_INVOICING: ["NIRC Sec. 264", "RR 18-2012", "NIRC Sec. 236", "RR 16-2005"],
+  VAT_INPUT_TAX_ALLOCATION: ["NIRC Sec. 110(B)", "NIRC Sec. 110", "RR 16-2005"],
+  VAT_EXEMPTION_RESIDENTIAL_LEASE: ["NIRC Sec. 109(Q)", "RR 16-2005"],
+
   INCOME_TAX_OVERVIEW: ["NIRC Sec. 23", "NIRC Sec. 24", "NIRC Sec. 27", "NIRC Sec. 31", "NIRC Sec. 32", "NIRC Sec. 34"],
   RCIT: ["NIRC Sec. 27(A)", "CREATE Act", "RR 9-1998"],
   MCIT: ["NIRC Sec. 27(E)", "RR 9-1998", "CREATE Act"],
@@ -1168,16 +1173,37 @@ function detectSubIssue(question = "", primaryIssue = "GENERAL_TAX", queryIntent
   // "Can an exporter claim a VAT refund on its input taxes?") never collapse into
   // VAT_DEFINITION / FAST_DEFINITION.  Guard is scoped to vatContext only.
   if (vatContext) {
-    // VAT_REFUND_CREDIT: must precede the INPUT_TAX guard (line ~1176) because
-    // refund/credit queries typically contain "input taxes" which would win first.
+    // VAT_REFUND_CREDIT: must precede the INPUT_TAX guard because refund/credit
+    // queries typically contain "input taxes" which would win first.
     if (
       /\bvat\s+refund\b|refund\s+or\s+credit\s+on\s+(?:its\s+)?input|tax\s+credit\s+certificate|\btcc\b|unutilized\s+input|excess\s+input/i.test(q) ||
       (/(?:sells?\s+(?:goods?\s+)?abroad|zero[-\s]rated\s+(?:exporter|sales?))/.test(q) && /\brefund\b|\bcredit\b/i.test(q))
     ) return "VAT_REFUND_CREDIT";
+    // PATCH-024B-EXT VAT_INVOICING: non-VAT seller issuing a VAT invoice / unauthorized
+    // VAT invoicing.  Must precede VAT_REGISTRATION because "non-VAT registered" matches
+    // the registration pattern and would otherwise shadow this more specific sub-issue.
+    if (
+      /\bvat\s+invoic/i.test(q) &&
+      /non[-\s]?vat|not\s+(?:vat[-\s])?register|without\s+(?:vat\s+)?registr|unauthorized/i.test(q)
+    ) return "VAT_INVOICING";
+    // PATCH-024B-EXT VAT_INPUT_TAX_ALLOCATION: input VAT apportionment for mixed
+    // VAT/exempt transactions (NIRC Sec. 110(B)).  Must precede VAT_REGISTRATION because
+    // queries like "VAT-registered business … apportion its input VAT" contain
+    // "VAT-registered" which would otherwise win the registration guard.
+    if (
+      /\binput[-\s](?:vat|tax)\b/i.test(q) && (
+        /\bapportion|\ballocat|\battribut/i.test(q) ||
+        /(?:both|mixed)[^.]*(?:exempt|taxable)|vat[-\s]?exempt[^.]*vat[-\s]?taxable|vat[-\s]?taxable[^.]*vat[-\s]?exempt/i.test(q)
+      )
+    ) return "VAT_INPUT_TAX_ALLOCATION";
     // VAT_REGISTRATION: explicit registration phrases
     if (/register\s+(?:for\s+)?vat|vat\s+registration|required\s+to\s+register(?:\s+for\s+vat)?|\bvat[-\s]registered\b/i.test(q)) return "VAT_REGISTRATION";
-    // VAT_EXEMPTION_REAL_PROPERTY: residential lots / dwellings / house-and-lot
+    // VAT_EXEMPTION_REAL_PROPERTY: residential lots / dwellings / house-and-lot (sale)
     if (/residential\s+lots?|residential\s+dwell(?:ing)?|house\s+and\s+lot|sale\s+of\s+residential/i.test(q)) return "VAT_EXEMPTION_REAL_PROPERTY";
+    // PATCH-024B-EXT VAT_EXEMPTION_RESIDENTIAL_LEASE: lease/rent of residential unit.
+    // Distinct from VAT_EXEMPTION_REAL_PROPERTY (sale); governed by NIRC Sec. 109(Q).
+    // Flexible connector [^.]{0,15} handles "of a", "on a", "for a", etc.
+    if (/(?:lease|rent(?:al)?)[^.]{0,15}residential|residential[^.]{0,30}(?:lease|rent)/i.test(q)) return "VAT_EXEMPTION_RESIDENTIAL_LEASE";
     // VAT_EXEMPTION_MEDICAL_PROFESSIONAL: medical, dental, hospital, veterinary
     if (/\bdoctors?\b|\bphysicians?\b|\bmedical\s+(?:services?|professionals?)\b|\bdental\b|\bdentists?\b|\bhospital\b|\bveterinary\b/i.test(q)) return "VAT_EXEMPTION_MEDICAL_PROFESSIONAL";
     // VAT_IMPORTATION: importation phrasing
@@ -1423,7 +1449,11 @@ const _VAT_SPECIALIZED_SUB_ISSUES_024B = new Set([
   "VAT_EXEMPTION_REAL_PROPERTY",
   "VAT_EXEMPTION_MEDICAL_PROFESSIONAL",
   "VAT_IMPORTATION",
-  "VAT_REFUND_CREDIT"
+  "VAT_REFUND_CREDIT",
+  // PATCH-024B-EXT additions
+  "VAT_INVOICING",
+  "VAT_INPUT_TAX_ALLOCATION",
+  "VAT_EXEMPTION_RESIDENTIAL_LEASE"
 ]);
 
 function detectRetrievalStrategy({ question = "", queryIntent = {}, primaryIssue, subIssue, exactAuthority }) {
