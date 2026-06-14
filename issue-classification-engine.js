@@ -992,6 +992,14 @@ const ISSUE_SPECIFIC_TARGETS = Object.freeze({
   ZERO_RATING: ["NIRC Sec. 106(A)(2)", "NIRC Sec. 108(B)", "RR 16-2005"],
   REFUND_CREDIT: ["NIRC Sec. 112", "RR 16-2005", "CIR v. Aichi Forging", "CIR v. San Roque Power"],
 
+  // PATCH-024B: Specialized VAT sub-issues — more precise authority targets than
+  // the generic VAT_OVERVIEW / VAT_EXEMPTION entries above.
+  VAT_REGISTRATION: ["NIRC Sec. 109(BB)", "NIRC Sec. 236", "RR 16-2005", "RMC 75-2015"],
+  VAT_EXEMPTION_REAL_PROPERTY: ["NIRC Sec. 109(P)", "RR 4-2007", "RR 16-2005"],
+  VAT_EXEMPTION_MEDICAL_PROFESSIONAL: ["NIRC Sec. 109(G)", "RR 16-2005"],
+  VAT_IMPORTATION: ["NIRC Sec. 107", "NIRC Sec. 107(B)", "RR 16-2005"],
+  VAT_REFUND_CREDIT: ["NIRC Sec. 112", "RR 1-2017", "RR 16-2005", "CIR v. San Roque Power Corporation", "CIR v. Aichi Forging"],
+
   INCOME_TAX_OVERVIEW: ["NIRC Sec. 23", "NIRC Sec. 24", "NIRC Sec. 27", "NIRC Sec. 31", "NIRC Sec. 32", "NIRC Sec. 34"],
   RCIT: ["NIRC Sec. 27(A)", "CREATE Act", "RR 9-1998"],
   MCIT: ["NIRC Sec. 27(E)", "RR 9-1998", "CREATE Act"],
@@ -1154,6 +1162,27 @@ function detectSubIssue(question = "", primaryIssue = "GENERAL_TAX", queryIntent
   const vatContext =
     ["VAT_LIABILITY", "ZERO_RATED_SALES", "INPUT_TAX", "OUTPUT_TAX", "VAT_REFUND"].includes(primaryIssue) ||
     /\bvat\b|\bvalue[- ]added tax\b/i.test(q);
+
+  // PATCH-024B: Specialized VAT routing guard.  Fires before detectDefinitionPattern()
+  // so fact-pattern queries ("What is the VAT treatment of residential lots?",
+  // "Can an exporter claim a VAT refund on its input taxes?") never collapse into
+  // VAT_DEFINITION / FAST_DEFINITION.  Guard is scoped to vatContext only.
+  if (vatContext) {
+    // VAT_REFUND_CREDIT: must precede the INPUT_TAX guard (line ~1176) because
+    // refund/credit queries typically contain "input taxes" which would win first.
+    if (
+      /\bvat\s+refund\b|refund\s+or\s+credit\s+on\s+(?:its\s+)?input|tax\s+credit\s+certificate|\btcc\b|unutilized\s+input|excess\s+input/i.test(q) ||
+      (/(?:sells?\s+(?:goods?\s+)?abroad|zero[-\s]rated\s+(?:exporter|sales?))/.test(q) && /\brefund\b|\bcredit\b/i.test(q))
+    ) return "VAT_REFUND_CREDIT";
+    // VAT_REGISTRATION: explicit registration phrases
+    if (/register\s+(?:for\s+)?vat|vat\s+registration|required\s+to\s+register(?:\s+for\s+vat)?|\bvat[-\s]registered\b/i.test(q)) return "VAT_REGISTRATION";
+    // VAT_EXEMPTION_REAL_PROPERTY: residential lots / dwellings / house-and-lot
+    if (/residential\s+lots?|residential\s+dwell(?:ing)?|house\s+and\s+lot|sale\s+of\s+residential/i.test(q)) return "VAT_EXEMPTION_REAL_PROPERTY";
+    // VAT_EXEMPTION_MEDICAL_PROFESSIONAL: medical, dental, hospital, veterinary
+    if (/\bdoctors?\b|\bphysicians?\b|\bmedical\s+(?:services?|professionals?)\b|\bdental\b|\bdentists?\b|\bhospital\b|\bveterinary\b/i.test(q)) return "VAT_EXEMPTION_MEDICAL_PROFESSIONAL";
+    // VAT_IMPORTATION: importation phrasing
+    if (/\bimportation\b|\bimport\s+vat\b|\bimported\s+goods?\b/i.test(q)) return "VAT_IMPORTATION";
+  }
 
   if (detectDefinitionPattern(question, queryIntent)) {
     if (/\bvat[\s-]*exempt|\bexempt(?:ed)?\s+from\s+vat\b|\bsection\s*109\b|\bsec\.?\s*109\b/i.test(q)) return "VAT_EXEMPTION";
@@ -1381,10 +1410,23 @@ function buildAuthorities({ question = "", detector = null, primaryIssue, subIss
   };
 }
 
+// PATCH-024B: Sub-issue values that must never receive FAST_DEFINITION retrieval
+// or response mode regardless of how the query is phrased.
+const _VAT_SPECIALIZED_SUB_ISSUES_024B = new Set([
+  "VAT_REGISTRATION",
+  "VAT_EXEMPTION_REAL_PROPERTY",
+  "VAT_EXEMPTION_MEDICAL_PROFESSIONAL",
+  "VAT_IMPORTATION",
+  "VAT_REFUND_CREDIT"
+]);
+
 function detectRetrievalStrategy({ question = "", queryIntent = {}, primaryIssue, subIssue, exactAuthority }) {
   if (exactAuthority?.detected) return RETRIEVAL_STRATEGY.EXACT_AUTHORITY;
   if (detectSourcePattern(question, queryIntent)) return RETRIEVAL_STRATEGY.SOURCE_FINDER;
   if (subIssue === "VAT_DEFINITION") return RETRIEVAL_STRATEGY.VAT_DEFINITION;
+  // PATCH-024B: Specialized VAT sub-issues use MIXED (authority-hierarchy-semantic)
+  // not FAST_DEFINITION, even when the query surface is definition-phrased.
+  if (_VAT_SPECIALIZED_SUB_ISSUES_024B.has(subIssue)) return RETRIEVAL_STRATEGY.MIXED;
   if (detectDefinitionPattern(question, queryIntent)) return RETRIEVAL_STRATEGY.FAST_DEFINITION;
   if (detectCasePattern(question, queryIntent)) return RETRIEVAL_STRATEGY.JURISPRUDENTIAL;
   if (detectRiskPattern(question, queryIntent)) return RETRIEVAL_STRATEGY.FACT_DRIVEN;
@@ -1395,8 +1437,10 @@ function detectRetrievalStrategy({ question = "", queryIntent = {}, primaryIssue
   return RETRIEVAL_STRATEGY.MIXED;
 }
 
-function detectResponseMode({ question = "", queryIntent = {}, complexity }) {
+function detectResponseMode({ question = "", queryIntent = {}, complexity, subIssue = "" }) {
   if (queryIntent?.responseMode) return queryIntent.responseMode;
+  // PATCH-024B: Specialized VAT sub-issues must not be downgraded to FAST_DEFINITION.
+  if (_VAT_SPECIALIZED_SUB_ISSUES_024B.has(subIssue)) return "STANDARD";
   if (detectDefinitionPattern(question, queryIntent)) return "FAST_DEFINITION";
   if (detectSourcePattern(question, queryIntent)) return "SOURCE";
   if (queryIntent?.requiresReviewMode) return "REVIEWER";
@@ -1714,7 +1758,8 @@ function classifyTaxIssue(question = "", queryIntent = {}) {
   const responseMode = detectResponseMode({
     question: normalizedQuery,
     queryIntent,
-    complexity
+    complexity,
+    subIssue  // PATCH-024B: prevents FAST_DEFINITION override for specialized VAT sub-issues
   });
 
   const orchestrationMode = detectOrchestrationMode({
