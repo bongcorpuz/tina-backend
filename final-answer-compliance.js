@@ -2531,35 +2531,207 @@ function enforceAskProfileCompliance(args = {}) {
   };
 }
 
-// PATCH-024C: Remove every line whose cited authorities are not present in the
-// retrieved verified source set.  Runs on the draft answer before structural
-// validation so downstream validators see the cleaner text.
+// ─── PATCH-024C-REV2: Canonical Authority Key Infrastructure ─────────────────
 //
-// Behaviour per scenario:
-//   visibleSources non-empty → keep lines only when EVERY citation is supported
-//   visibleSources empty     → drop ALL citation-bearing lines (nothing verified)
+// Replaces the PATCH-024C substring/normalizeLooseText comparison with a
+// canonical key approach.  Key format:
+//   NIRC:<section>[(subsection)]  e.g.  NIRC:109(BB)
+//   RR:<N>-<YYYY>                 e.g.  RR:16-2005
+//   RMC:<N>-<YYYY>               e.g.  RMC:75-2015
+//   RMO:<N>-<YYYY>
+//   RAMO:<N>-<YYYY>
+//   RA:<number>
+//   GR:<number>
+//   CTA:<number>
 //
-// Lines with no recognisable authority citation pass through unchanged so that
-// prose explanations, headings, and framework-knowledge notes survive.
+// This eliminates two root-cause failures from PATCH-024C:
+//   1. source.label / source.displayLabel were not in sourceReferenceBlob →
+//      verified set was empty for label-keyed source cards.
+//   2. expandLegalCitationMentions on "NIRC Sec. 109(P)" returned "NIRC Sec. 109"
+//      (subsection stripped), so NIRC:109(BB) matched NIRC:109 via substring →
+//      wrong subsection passed through.  Canonical comparison is exact.
+
+function _rev2NormYear(raw = "") {
+  const y = parseInt(String(raw || "").trim(), 10);
+  if (isNaN(y)) return String(raw).trim();
+  if (y < 100) return String(y < 50 ? 2000 + y : 1900 + y);
+  return String(y);
+}
+
+function _rev2AddNircBase(set, key) {
+  // "NIRC:109(P)" → also add "NIRC:109" so base-section references pass.
+  if (/^NIRC:\d{1,4}[A-Z]?\([A-Z0-9]{1,4}\)$/.test(key)) {
+    set.add(key.replace(/[A-Z]?\([A-Z0-9]{1,4}\)$/, ""));
+  }
+}
+
+// Two-form NIRC extractors:
+//   Form 1 (prefix-first): [NIRC|Tax Code|NIRC-long] Sec/Section <num>[(sub)]
+//   Form 2 (suffix-first): Sec/Section <num>[(sub)] [,|of the] [NIRC|Tax Code]
+// Trailing (?=\W|$) used instead of \b because ")" is \W so \b would fail at
+// end-of-string after a parenthetical subsection like "(BB)".
+const _024C_REV2_EXTRACTORS = Object.freeze([
+  {
+    re: /\b(?:nirc|tax\s+code|national\s+internal\s+revenue\s+code)\s+(?:sec(?:tion)?s?\.?\s*)(\d{1,4}[A-Z]?(?:\([A-Z0-9]{1,4}\))?)(?=\W|$)/gi,
+    key: (m) => `NIRC:${String(m[1]).trim().toUpperCase().replace(/\s+/g, "")}`
+  },
+  {
+    re: /\b(?:sec(?:tion)?s?\.?\s*)(\d{1,4}[A-Z]?(?:\([A-Z0-9]{1,4}\))?)\s*(?:,\s*|\s+of\s+(?:the\s+)?)?(?:nirc|tax\s+code|national\s+internal\s+revenue\s+code)(?=\W|$)/gi,
+    key: (m) => `NIRC:${String(m[1]).trim().toUpperCase().replace(/\s+/g, "")}`
+  },
+  {
+    re: /\b(?:revenue\s+regulations?\s*(?:no\.?)?\s*|rr\s*(?:no\.?)?\s*)(\d{1,3})\s*[-–]\s*(\d{2,4})\b/gi,
+    key: (m) => `RR:${m[1]}-${_rev2NormYear(m[2])}`
+  },
+  {
+    re: /\b(?:revenue\s+memorandum\s+circular\s*(?:no\.?)?\s*|rmc\s*(?:no\.?)?\s*)(\d{1,3})\s*[-–]\s*(\d{2,4})\b/gi,
+    key: (m) => `RMC:${m[1]}-${_rev2NormYear(m[2])}`
+  },
+  {
+    re: /\b(?:revenue\s+memorandum\s+order\s*(?:no\.?)?\s*|rmo\s*(?:no\.?)?\s*)(\d{1,3})\s*[-–]\s*(\d{2,4})\b/gi,
+    key: (m) => `RMO:${m[1]}-${_rev2NormYear(m[2])}`
+  },
+  {
+    re: /\b(?:revenue\s+audit\s+memorandum\s+order\s*(?:no\.?)?\s*|ramo\s*(?:no\.?)?\s*)(\d{1,3})\s*[-–]\s*(\d{2,4})\b/gi,
+    key: (m) => `RAMO:${m[1]}-${_rev2NormYear(m[2])}`
+  },
+  {
+    re: /\b(?:republic\s+act\s*(?:no\.?)?\s*|r\.?\s*a\.?\s*(?:no\.?)?\s*)(\d{3,6})\b/gi,
+    key: (m) => `RA:${m[1]}`
+  },
+  {
+    re: /\b(?:g\.?\s*r\.?\s*(?:no\.?)?\s*|gr\s*(?:no\.?)?\s*)(\d{5,7})\b/gi,
+    key: (m) => `GR:${m[1]}`
+  },
+  {
+    re: /\bCTA\s+(?:(?:en\s+banc|eb|case)\s+)?(?:no\.?\s*)?(\d{3,6})\b/gi,
+    key: (m) => `CTA:${m[1]}`
+  }
+]);
+
+// Extract canonical authority keys from any text string.
+// Returns a string[] of distinct canonical keys found in text.
+// Used for both answer lines and source card fields.
+function extractCanonicalCitationsFromText(text = "") {
+  const keys = new Set();
+  const s = String(text || "");
+  if (!s.trim()) return [];
+
+  for (const ex of _024C_REV2_EXTRACTORS) {
+    ex.re.lastIndex = 0;
+    for (const m of s.matchAll(ex.re)) {
+      const k = ex.key(m);
+      if (k) keys.add(k);
+    }
+  }
+
+  // Range expansion: "NIRC Secs. 105 to 108" → individual sections.
+  // Each expanded string is re-parsed for canonical keys.
+  for (const ref of expandLegalCitationMentions(s)) {
+    const rs = String(ref);
+    for (const ex of _024C_REV2_EXTRACTORS) {
+      ex.re.lastIndex = 0;
+      const m = ex.re.exec(rs);
+      if (m) {
+        const k = ex.key(m);
+        if (k) keys.add(k);
+      }
+    }
+  }
+
+  return [...keys];
+}
+
+// Build the Set<string> of canonical authority keys that are VERIFIED for this
+// response.  Reads ALL source card fields including label/displayLabel, which
+// sourceReferenceBlob (the PATCH-024C basis) was missing.
+function _buildVerifiedCanonicalSet(sources = []) {
+  const set = new Set();
+  for (const source of safeArray(sources)) {
+    const fields = [
+      source.normalizedReference,
+      source.normalized_reference,
+      source.citation,
+      source.label,
+      source.displayLabel,
+      source.display_label,
+      source.reference,
+      source.title,
+      source.documentTitle,
+      source.document_title,
+      source.sourceTitle,
+      source.source_title,
+      source.originalSource,
+      source.original_source,
+      source.issuanceNumber,
+      source.issuance_number,
+      source.metadata?.normalizedReference,
+      source.metadata?.normalized_reference,
+      source.metadata?.citation,
+      source.metadata?.label
+    ];
+    for (const field of fields) {
+      if (!field || typeof field !== "string") continue;
+      for (const key of extractCanonicalCitationsFromText(field)) {
+        set.add(key);
+        _rev2AddNircBase(set, key);
+      }
+    }
+  }
+  return set;
+}
+
+// Remove authority section headings that became empty after citation stripping.
+const _AUTHORITY_HEADING_RE = /^(?:#{1,4}\s+)?(?:[A-F]\.\s+)?(?:CONTROLLING\s+(?:LEGAL\s+BASIS|AUTHORITIES?)|LEGAL\s+BASIS|AUTHORITY\s+ANALYSIS)$/i;
+
+function _removeEmptyAuthorityHeadings(text = "") {
+  const lines = String(text).split("\n");
+  const out = [];
+  let i = 0;
+  while (i < lines.length) {
+    if (_AUTHORITY_HEADING_RE.test(lines[i].trim())) {
+      let j = i + 1;
+      while (j < lines.length && !lines[j].trim()) j++;
+      // Empty section: nothing follows or next non-blank is another heading.
+      if (j >= lines.length || /^(?:#{1,6}|[A-F]\.\s+)/.test(lines[j].trim())) {
+        i = j;
+        continue;
+      }
+    }
+    out.push(lines[i]);
+    i++;
+  }
+  return out.join("\n");
+}
+
+// ─── PATCH-024C-REV2: stripUnverifiedAuthorityLines ──────────────────────────
+//
+// Replaces the PATCH-024C implementation.  Uses canonical key comparison
+// instead of normalizeLooseText substring matching, and reads label/displayLabel
+// from source cards so label-keyed source cards are correctly matched.
+//
+// Behaviour:
+//   visibleSources non-empty → keep line only when EVERY canonical citation key
+//                              found in the line is present in the verified set.
+//   visibleSources empty     → strip ALL citation-bearing lines.
+//   Lines with no canonical citations → pass through unchanged.
 function stripUnverifiedAuthorityLines(answer = "", visibleSources = []) {
   const sources = safeArray(visibleSources);
   if (!normalizeText(answer)) return answer;
+
+  const verifiedSet = sources.length > 0 ? _buildVerifiedCanonicalSet(sources) : new Set();
 
   const lines = String(answer).split("\n");
   const kept = [];
   const blocked = [];
 
   for (const line of lines) {
-    const citations = extractCitationsFromText(line);
-    if (!citations.length) {
+    const keys = extractCanonicalCitationsFromText(line);
+    if (!keys.length) {
       kept.push(line);
       continue;
     }
-    // When sources exist every citation must be individually supported.
-    // When no sources exist nothing is verified — strip the line entirely.
-    const allVerified =
-      sources.length > 0 &&
-      citations.every((c) => citationSupportedBySources(c, sources));
+    const allVerified = sources.length > 0 && keys.every((k) => verifiedSet.has(k));
 
     if (allVerified) {
       kept.push(line);
@@ -2567,24 +2739,25 @@ function stripUnverifiedAuthorityLines(answer = "", visibleSources = []) {
       blocked.push({
         line: line.slice(0, 120),
         unverified: sources.length === 0
-          ? citations.map((c) => c.normalized)
-          : citations
-              .filter((c) => !citationSupportedBySources(c, sources))
-              .map((c) => c.normalized)
+          ? keys
+          : keys.filter((k) => !verifiedSet.has(k))
       });
     }
   }
 
   if (blocked.length) {
     console.log("[PATCH_024C]", {
-      marker:          "PATCH_024C_UNVERIFIED_CITATIONS_STRIPPED",
-      blockedCount:    blocked.length,
-      sourceCount:     sources.length,
-      samples:         blocked.slice(0, 4)
+      marker:       "PATCH_024C_UNVERIFIED_CITATIONS_STRIPPED",
+      blockedCount: blocked.length,
+      sourceCount:  sources.length,
+      verifiedKeys: sources.length > 0 ? [...verifiedSet].slice(0, 8) : [],
+      samples:      blocked.slice(0, 4)
     });
   }
 
-  return kept.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+  let result = kept.join("\n");
+  result = _removeEmptyAuthorityHeadings(result);
+  return result.replace(/\n{3,}/g, "\n\n").trim();
 }
 
 function finalizeCompliance({
@@ -3220,7 +3393,8 @@ export {
   enforceAuthorityHierarchyDisplay,
   ensureIndexedSourceLimitation,
   buildComplianceWarnings,
-  stripUnverifiedAuthorityLines
+  stripUnverifiedAuthorityLines,
+  extractCanonicalCitationsFromText
 };
 
 export default {
@@ -3241,5 +3415,6 @@ export default {
   isSystemFallbackAnswer,
   preserveSystemFallbackAnswer,
   normalizeMode,
-  stripUnverifiedAuthorityLines
+  stripUnverifiedAuthorityLines,
+  extractCanonicalCitationsFromText
 };
