@@ -373,6 +373,11 @@ export function isCaseLawIntent(question = "") {
   return CASE_LAW_INTENT_PATTERN.test(lower(String(question || "")));
 }
 
+// PATCH-022A: 3-character Philippine tax acronyms preserved through the length
+// filter in sourceMaterialTermsMatchAuthority's query-string branch.
+// Without this set, "VAT?" → strip → "vat" (len 3) is excluded by len > 3.
+const _SEMANTIC_GUARD_ACRONYMS = new Set(["vat", "ewt", "fwt", "cwt", "cgt", "dst", "rpt"]);
+
 // Dual-dispatch: when called with (doc, queryString) returns boolean (PATCH-016 new API);
 // when called with (candidate, issueClassification object) returns { matches, matchedTerms, missingTerms }
 // for backward-compat with authority-utils.js.
@@ -380,7 +385,13 @@ export function sourceMaterialTermsMatchAuthority(candidate = {}, classification
   if (typeof classificationOrQuery === "string") {
     const text = lower(candidate.text || candidate.content || "");
     const q = lower(classificationOrQuery);
-    const tokens = q.split(/\s+/).filter((t) => t.length > 3);
+    // PATCH-022A: strip leading/trailing punctuation from each token before the
+    // length filter so "vat?" normalizes to "vat" and is not silently dropped.
+    // The > 3 threshold is kept for generic words; known 3-char tax acronyms
+    // are whitelisted so they survive despite being exactly 3 characters.
+    const tokens = q.split(/\s+/)
+      .map(t => t.replace(/^[^\w]+|[^\w]+$/g, ""))
+      .filter(t => t.length > 3 || _SEMANTIC_GUARD_ACRONYMS.has(t));
     if (!tokens.length) return true;
     return tokens.some((t) => text.includes(t));
   }
