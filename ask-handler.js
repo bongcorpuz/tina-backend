@@ -2287,6 +2287,7 @@ export function createAskHandler({
                                     : resultSources.length ? "ISSUE_MATCHED_CONTEXT_USED" : "RETRIEVAL_TIMEOUT"),
       sourceAvailability:       result.sourceAvailability        || null,
       saeStatus:                result.saeStatus                 ?? null,
+      patch024cPostSourcecard:  result.patch024cPostSourcecard   || null,
       internalError:            result.internalError === true,
       errorCategory:            result.errorCategory             || null,
       sourceAvailabilityReason: result.sourceAvailabilityReason  || null,
