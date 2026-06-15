@@ -4562,8 +4562,11 @@ export async function runPipeline({
   ) {
     const _024c4Before = _outputAnswer;
     _outputAnswer = stripUnverifiedAuthorityLines(_outputAnswer, finalSourceCards);
-    console.log("[PATCH_024C_POST_SOURCECARD]", {
-      requestId:       requestId || traceId,
+    const _024c4CorrelationId = requestId || traceId || "missing-request-id";
+    console.log(`[PATCH_024C_POST_SOURCECARD requestId=${_024c4CorrelationId}]`, {
+      marker:          "PATCH_024C_POST_SOURCECARD",
+      requestId:       _024c4CorrelationId,
+      traceId:         traceId || null,
       sourceCardCount: finalSourceCards.length,
       beforeLength:    _024c4Before.length,
       afterLength:     _outputAnswer.length,
