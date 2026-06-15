@@ -49,6 +49,7 @@ const __dirname       = dirname(fileURLToPath(import.meta.url));
 const COMPLIANCE_PATH = join(__dirname, "..", "final-answer-compliance.js");
 const COMPLIANCE_SRC  = readFileSync(COMPLIANCE_PATH, "utf8");
 const PIPELINE_SRC    = readFileSync(join(__dirname, "..", "pipeline.js"), "utf8");
+const ASK_HANDLER_SRC = readFileSync(join(__dirname, "..", "ask-handler.js"), "utf8");
 
 let passed  = 0;
 let failed  = 0;
@@ -1003,6 +1004,66 @@ group("PATCH-025A-REV2 — diagnostic echo static checks", () => {
   assert(
     _retStart > 0 && _ret024cStart > 0 && _ret024cStart > _retStart,
     "025A-REV2 regression: patch024cPostSourcecard follows verifiedAuthorityGate in return payload"
+  );
+});
+
+// ─── Group 14: PATCH-025A-REV3 — /ask response mapper echo checks ───────────
+//
+// PATCH-025A-REV2 correctly returned patch024cPostSourcecard from pipeline.js,
+// but /ask constructs a frontend-compatible payload object in ask-handler.js.
+// These checks prevent that mapper from silently dropping the safe diagnostic.
+
+group("PATCH-025A-REV3 — ask-handler payload mapper echoes diagnostic", () => {
+  const payloadStart = ASK_HANDLER_SRC.indexOf("const payload = {");
+  const payloadEnd   = ASK_HANDLER_SRC.indexOf("return res.json(payload)", payloadStart);
+  const payloadSrc   = payloadStart >= 0 && payloadEnd > payloadStart
+    ? ASK_HANDLER_SRC.slice(payloadStart, payloadEnd)
+    : "";
+
+  assert(
+    payloadSrc.includes("patch024cPostSourcecard:"),
+    "025A-REV3 static: /ask payload includes patch024cPostSourcecard"
+  );
+
+  assert(
+    /patch024cPostSourcecard:\s+result\.patch024cPostSourcecard\s+\|\|\s+null/.test(payloadSrc),
+    "025A-REV3 regression: /ask payload copies result.patch024cPostSourcecard || null"
+  );
+
+  const sourceAvailabilityIdx = payloadSrc.indexOf("sourceAvailability:");
+  const saeStatusIdx          = payloadSrc.indexOf("saeStatus:");
+  const patch025Idx           = payloadSrc.indexOf("patch024cPostSourcecard:");
+  const diagnosticsIdx        = payloadSrc.indexOf("diagnostics:");
+  assert(
+    sourceAvailabilityIdx > 0 &&
+    saeStatusIdx > sourceAvailabilityIdx &&
+    patch025Idx > saeStatusIdx &&
+    diagnosticsIdx > patch025Idx,
+    "025A-REV3 static: diagnostic is placed near sourceAvailability/saeStatus before diagnostics"
+  );
+
+  const mapperLine = payloadSrc.match(/patch024cPostSourcecard:[^\n]+/)?.[0] || "";
+  for (const forbidden of [
+    "result.sources",
+    "result.sourcesUsed",
+    "result.sourceCards",
+    "result.rerankedChunks",
+    "result.prompt",
+    "OPENAI",
+    "SUPABASE",
+    "apiKey",
+    "__dirname",
+    "__filename"
+  ]) {
+    assert(
+      !mapperLine.includes(forbidden),
+      `025A-REV3 safety: mapper diagnostic line does not introduce '${forbidden}'`
+    );
+  }
+
+  assert(
+    /patch024cPostSourcecard:\s+ctx\._patch024cPostSourcecard/.test(PIPELINE_SRC),
+    "025A-REV3 regression: pipeline.js diagnostic return remains unchanged"
   );
 });
 
