@@ -55,7 +55,7 @@ import {
   renderFastDefinitionConversational,
   applyVerifiedAuthorityGate
 }                                                 from "./answer-renderer.js";
-import { enforceFinalAnswerCompliance }           from "./final-answer-compliance.js";
+import { enforceFinalAnswerCompliance, stripUnverifiedAuthorityLines } from "./final-answer-compliance.js";
 import { analyzeFactPattern }                     from "./fact-pattern-engine.js";
 import { characterizeTransaction }                from "./transaction-characterization-engine.js";
 import { evaluateEvidence }                       from "./evidence-evaluation-engine.js";
@@ -4540,6 +4540,37 @@ export async function runPipeline({
     _outputAnswer = "No grounded source available.";
   }
   // ── End Source Availability ───────────────────────────────────────────────────
+
+  // ── Step 17.4: PATCH-024C-REV4 Post-Source-Card Verified Authority Gate ──────
+  // PATCH-024C's first pass (Step 16) builds its verified set from
+  // ctx.rerankedChunks — raw retrieval results that may include NIRC/RR chunks
+  // for authorities later excluded from finalSourceCards.  This creates false
+  // positives: unsupported citations appear "verified" because the underlying
+  // chunk exists in the retrieval window even though it never became a chip.
+  //
+  // This pass runs AFTER finalSourceCards are finalised and uses them as the
+  // authoritative source set — the exact cards shown to the user.  Any citation
+  // not backed by a finalSourceCard is stripped here, regardless of mode.
+  //
+  // Applies globally: LEGAL_ANALYSIS, COMPLEX_ADVISORY (bypassed Step 16),
+  // STANDARD_TAX, FAST_DEFINITION, and any future mode.
+  // Does NOT modify routing, retrieval, source-card selection, or PATCH-019A.
+  if (
+    finalSourceCards.length > 0 &&
+    !_isLearningMode &&
+    _sourceAvail.sourceAvailability !== "SOURCE_LOOKUP_EMPTY"
+  ) {
+    const _024c4Before = _outputAnswer;
+    _outputAnswer = stripUnverifiedAuthorityLines(_outputAnswer, finalSourceCards);
+    console.log("[PATCH_024C_POST_SOURCECARD]", {
+      requestId:       requestId || traceId,
+      sourceCardCount: finalSourceCards.length,
+      beforeLength:    _024c4Before.length,
+      afterLength:     _outputAnswer.length,
+      changed:         _024c4Before.length !== _outputAnswer.length
+    });
+  }
+  // ── End Step 17.4 ─────────────────────────────────────────────────────────────
 
   // ── Step 17.5: PATCH-019A Verified-Authority Final Answer Gate ────────────────
   // Runs AFTER retrieval, SAE assignment, generation, rendering, compliance,

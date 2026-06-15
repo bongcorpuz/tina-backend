@@ -697,6 +697,207 @@ group("REV3 Form 2 — suffix-form strip and keep behavior", () => {
   }
 });
 
+// ─── Group 11: REV4 — post-source-card authority contract ────────────────────
+//
+// These tests call stripUnverifiedAuthorityLines directly with source lists
+// that represent finalSourceCards (the user-visible chips), NOT raw reranked
+// chunks.  This proves that REV4's second pass — which uses finalSourceCards —
+// produces correct strip / keep behaviour across all tax domains.
+//
+// The root-cause scenario (REV3 failure):
+//   ctx.rerankedChunks includes an NIRC 109(P) chunk → verified set contains
+//   NIRC:109(P) → citation survives Step 16 strip.
+//   finalSourceCards has only RR 16-2005 → REV4 pass strips NIRC:109(P). ✓
+
+group("REV4 — post-source-card authority contract (domain-neutral)", () => {
+  if (!stripUnverifiedAuthorityLines) {
+    console.log("  SKIP  (module load failed — static checks cover this)");
+    return;
+  }
+
+  // ── A: VAT source-card contract ─────────────────────────────────────────────
+  // finalSourceCards = [RR No. 16-2005]; answer cites Section 109(P) → STRIPPED.
+  // (This is the exact production failure fixed by REV4.)
+  {
+    const sources = [src("RR No. 16-2005")];
+    const answer  = [
+      "This is governed by Section 109(P) of the National Internal Revenue Code (NIRC), which states that the sale of residential lots exceeding ₱1.5 million is subject to VAT.",
+      "Additionally, Revenue Regulations No. 16-2005 provides further clarification."
+    ].join("\n");
+    const result  = stripUnverifiedAuthorityLines(answer, sources);
+    assert(
+      !result.includes("Section 109(P) of the National Internal Revenue Code"),
+      "REV4-A: suffix-form NIRC 109(P) stripped when finalSourceCards has only RR 16-2005"
+    );
+    assert(
+      result.includes("Revenue Regulations No. 16-2005"),
+      "REV4-A: verified RR 16-2005 line survives"
+    );
+  }
+
+  // ── B: Verified VAT citation survives ─────────────────────────────────────
+  // finalSourceCards = [NIRC Sec. 109(P)]; same phrase → KEPT.
+  {
+    const sources = [src("NIRC Sec. 109(P)")];
+    const answer  = "This is governed by Section 109(P) of the National Internal Revenue Code (NIRC).";
+    const result  = stripUnverifiedAuthorityLines(answer, sources);
+    assert(
+      result.includes("Section 109(P) of the National Internal Revenue Code"),
+      "REV4-B: suffix-form NIRC 109(P) kept when finalSourceCards contains NIRC Sec. 109(P)"
+    );
+  }
+
+  // ── C: COMPLEX_ADVISORY path ──────────────────────────────────────────────
+  // Step 16 is bypassed for COMPLEX_ADVISORY; REV4 second pass catches it.
+  // finalSourceCards = [RR 16-2005]; answer cites 109(BB) → STRIPPED.
+  {
+    const sources = [src("RR No. 16-2005")];
+    const answer  = "Under Section 109(BB) of the National Internal Revenue Code, the person is exempt from VAT registration.";
+    const result  = stripUnverifiedAuthorityLines(answer, sources);
+    assert(
+      !result.includes("Section 109(BB) of the National Internal Revenue Code"),
+      "REV4-C: COMPLEX_ADVISORY-bypassed suffix-form 109(BB) stripped by post-source-card pass"
+    );
+  }
+
+  // ── D: EWT domain ────────────────────────────────────────────────────────
+  // finalSourceCards = [RR 2-98]; answer cites RR 2-98 (keep) and NIRC Sec. 57 (strip).
+  {
+    const sources = [src("RR 2-98")];
+    const answer  = [
+      "- RR 2-98 implements the expanded withholding tax (EWT) system.",
+      "- NIRC Sec. 57 provides the statutory basis for the withholding of taxes."
+    ].join("\n");
+    const result  = stripUnverifiedAuthorityLines(answer, sources);
+    assert(
+      result.includes("RR 2-98"),
+      "REV4-D: verified RR 2-98 line survives"
+    );
+    assert(
+      !result.includes("NIRC Sec. 57"),
+      "REV4-D: unsupported NIRC Sec. 57 line stripped"
+    );
+  }
+
+  // ── E: Income Tax domain ─────────────────────────────────────────────────
+  // finalSourceCards = [NIRC Sec. 24]; answer cites Sec. 24 (keep) and Sec. 34 (strip).
+  {
+    const sources = [src("NIRC Sec. 24")];
+    const answer  = [
+      "- NIRC Sec. 24 imposes graduated income tax on individual taxpayers.",
+      "- NIRC Sec. 34 provides the schedule of allowable deductions."
+    ].join("\n");
+    const result  = stripUnverifiedAuthorityLines(answer, sources);
+    assert(
+      result.includes("NIRC Sec. 24"),
+      "REV4-E: verified NIRC Sec. 24 line kept (Income Tax)"
+    );
+    assert(
+      !result.includes("NIRC Sec. 34"),
+      "REV4-E: unsupported NIRC Sec. 34 line stripped (Income Tax)"
+    );
+  }
+
+  // ── F: Estate Tax domain ─────────────────────────────────────────────────
+  // finalSourceCards = [NIRC Sec. 84]; answer cites Sec. 84 (keep) and Sec. 90 (strip).
+  {
+    const sources = [src("NIRC Sec. 84")];
+    const answer  = [
+      "- NIRC Sec. 84 imposes estate tax on the net taxable estate of the decedent.",
+      "- NIRC Sec. 90 prescribes the filing of the estate tax return."
+    ].join("\n");
+    const result  = stripUnverifiedAuthorityLines(answer, sources);
+    assert(
+      result.includes("NIRC Sec. 84"),
+      "REV4-F: verified NIRC Sec. 84 line kept (Estate Tax)"
+    );
+    assert(
+      !result.includes("NIRC Sec. 90"),
+      "REV4-F: unsupported NIRC Sec. 90 line stripped (Estate Tax)"
+    );
+  }
+
+  // ── G: Jurisprudence domain ──────────────────────────────────────────────
+  // finalSourceCards = [CTA Case No. 9711]; answer cites CTA 9711 (keep) and G.R. No. 222743 (strip).
+  {
+    const sources = [src("CTA Case No. 9711")];
+    const answer  = [
+      "- CTA 9711 upheld the zero-rating treatment for export sales.",
+      "- G.R. No. 222743 provides the constitutional basis for the VAT system."
+    ].join("\n");
+    const result  = stripUnverifiedAuthorityLines(answer, sources);
+    assert(
+      result.includes("CTA 9711"),
+      "REV4-G: verified CTA 9711 line kept (Jurisprudence)"
+    );
+    assert(
+      !result.includes("G.R. No. 222743"),
+      "REV4-G: unsupported G.R. No. 222743 line stripped (Jurisprudence)"
+    );
+  }
+
+  // ── H: Empty authority heading removed after stripping ───────────────────
+  // When all lines under a heading are stripped, the heading itself is removed.
+  {
+    const sources = [src("RR No. 16-2005")];
+    const answer  = [
+      "### Short Answer",
+      "Yes, a VAT-registered exporter can claim a refund on input taxes.",
+      "",
+      "### Controlling Authorities",
+      "- NIRC Sec. 112 allows VAT refund or credit for zero-rated sales.",
+      "",
+      "### Interpretation",
+      "Applicable under Revenue Regulations No. 16-2005."
+    ].join("\n");
+    const result  = stripUnverifiedAuthorityLines(answer, sources);
+    assert(
+      !result.includes("NIRC Sec. 112"),
+      "REV4-H: unsupported NIRC Sec. 112 citation stripped"
+    );
+    assert(
+      !result.includes("### Controlling Authorities"),
+      "REV4-H: empty '### Controlling Authorities' heading removed after stripping"
+    );
+    assert(
+      result.includes("Revenue Regulations No. 16-2005"),
+      "REV4-H: verified RR No. 16-2005 prose survives"
+    );
+  }
+});
+
+// ─── Group 12: REV4 — pipeline.js static implementation checks ───────────────
+
+group("REV4 — pipeline.js post-source-card gate: static checks", () => {
+  assert(
+    PIPELINE_SRC.includes("PATCH_024C_POST_SOURCECARD"),
+    "pipeline.js contains [PATCH_024C_POST_SOURCECARD] log marker"
+  );
+
+  assert(
+    PIPELINE_SRC.includes("stripUnverifiedAuthorityLines") &&
+    PIPELINE_SRC.includes("final-answer-compliance.js") &&
+    /import\s*\{[^}]*stripUnverifiedAuthorityLines[^}]*\}\s*from\s*["']\.\/final-answer-compliance\.js["']/.test(PIPELINE_SRC),
+    "pipeline.js imports stripUnverifiedAuthorityLines from final-answer-compliance.js"
+  );
+
+  assert(
+    PIPELINE_SRC.includes("requestId") &&
+    PIPELINE_SRC.includes("sourceCardCount") &&
+    PIPELINE_SRC.includes("beforeLength") &&
+    PIPELINE_SRC.includes("afterLength"),
+    "[PATCH_024C_POST_SOURCECARD] log includes requestId, sourceCardCount, beforeLength, afterLength"
+  );
+
+  // Verify ordering: REV4 gate must come BEFORE PATCH-019A gate
+  const rev4Idx  = PIPELINE_SRC.indexOf("PATCH_024C_POST_SOURCECARD");
+  const p019aIdx = PIPELINE_SRC.indexOf("PATCH-019A Verified-Authority Final Answer Gate");
+  assert(
+    rev4Idx > 0 && p019aIdx > 0 && rev4Idx < p019aIdx,
+    "PATCH-024C-REV4 post-source-card strip precedes PATCH-019A gate in pipeline.js"
+  );
+});
+
 // ─── Results ──────────────────────────────────────────────────────────────────
 
 console.log(`\n${"─".repeat(56)}`);
