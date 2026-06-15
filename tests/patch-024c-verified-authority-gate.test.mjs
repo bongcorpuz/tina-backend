@@ -883,10 +883,33 @@ group("REV4 — pipeline.js post-source-card gate: static checks", () => {
 
   assert(
     PIPELINE_SRC.includes("requestId") &&
+    PIPELINE_SRC.includes("traceId") &&
     PIPELINE_SRC.includes("sourceCardCount") &&
     PIPELINE_SRC.includes("beforeLength") &&
     PIPELINE_SRC.includes("afterLength"),
-    "[PATCH_024C_POST_SOURCECARD] log includes requestId, sourceCardCount, beforeLength, afterLength"
+    "[PATCH_024C_POST_SOURCECARD] log includes requestId, traceId, sourceCardCount, beforeLength, afterLength"
+  );
+
+  assert(
+    /const\s+_024c4CorrelationId\s*=\s*requestId\s*\|\|\s*traceId\s*\|\|\s*["']missing-request-id["']/.test(PIPELINE_SRC),
+    "PATCH-025A static: PATCH_024C_POST_SOURCECARD log uses requestId with traceId fallback"
+  );
+
+  assert(
+    /console\.log\(\s*`\[PATCH_024C_POST_SOURCECARD requestId=\$\{_024c4CorrelationId\}\]`/.test(PIPELINE_SRC),
+    "PATCH-025A static: requestId is visible in PATCH_024C_POST_SOURCECARD log prefix"
+  );
+
+  assert(
+    PIPELINE_SRC.includes('marker:          "PATCH_024C_POST_SOURCECARD"') &&
+    PIPELINE_SRC.includes("requestId:       _024c4CorrelationId") &&
+    PIPELINE_SRC.includes("traceId:         traceId || null"),
+    "PATCH-025A regression: correlated log preserves marker, requestId, and traceId fields"
+  );
+
+  assert(
+    !/console\.log\(\s*["']\[PATCH_024C_POST_SOURCECARD\]["']/.test(PIPELINE_SRC),
+    "PATCH-025A regression: bare PATCH_024C_POST_SOURCECARD log prefix cannot hide requestId"
   );
 
   // Verify ordering: REV4 gate must come BEFORE PATCH-019A gate
@@ -895,6 +918,91 @@ group("REV4 — pipeline.js post-source-card gate: static checks", () => {
   assert(
     rev4Idx > 0 && p019aIdx > 0 && rev4Idx < p019aIdx,
     "PATCH-024C-REV4 post-source-card strip precedes PATCH-019A gate in pipeline.js"
+  );
+});
+
+// ─── Group 13: PATCH-025A-REV2 — diagnostic echo static checks ───────────────
+//
+// Verifies that ctx._patch024cPostSourcecard is populated in both execution
+// paths (gate ran / gate skipped) and that the field is echoed safely in the
+// pipeline return payload.  All checks are static source analysis — no runtime
+// pipeline invocation is required.
+//
+// Safety contract: the diagnostic MUST contain only counts, flags, enum strings,
+// and a correlation requestId.  It MUST NOT contain answer text, retrieved
+// chunks, prompt content, API keys, or internal paths.
+
+group("PATCH-025A-REV2 — diagnostic echo static checks", () => {
+  // 1. _024cSkipReason ternary present with all three allowed skip labels
+  assert(
+    /const\s+_024cSkipReason\s*=/.test(PIPELINE_SRC) &&
+    PIPELINE_SRC.includes('"NO_FINAL_SOURCE_CARDS"') &&
+    PIPELINE_SRC.includes('"LEARNING_MODE"')         &&
+    PIPELINE_SRC.includes('"SOURCE_LOOKUP_EMPTY"'),
+    "025A-REV2 static: _024cSkipReason covers NO_FINAL_SOURCE_CARDS, LEARNING_MODE, SOURCE_LOOKUP_EMPTY"
+  );
+
+  // 2. executed=true block present
+  assert(
+    PIPELINE_SRC.includes("ctx._patch024cPostSourcecard = {") &&
+    /executed:\s+true,/.test(PIPELINE_SRC),
+    "025A-REV2 static: ctx._patch024cPostSourcecard = { executed: true } set when gate runs"
+  );
+
+  // 3. executed=false + skippedReason block present (else branch)
+  assert(
+    /executed:\s+false,/.test(PIPELINE_SRC) &&
+    /skippedReason:\s+_024cSkipReason,/.test(PIPELINE_SRC),
+    "025A-REV2 static: skip branch sets executed:false and skippedReason:_024cSkipReason"
+  );
+
+  // 4. diagnostic is echoed in the pipeline return payload
+  assert(
+    /patch024cPostSourcecard:\s+ctx\._patch024cPostSourcecard/.test(PIPELINE_SRC),
+    "025A-REV2 static: patch024cPostSourcecard returned in pipeline response payload"
+  );
+
+  // 5. All safe fields present in the executed=true diagnostic block
+  const _execStart = PIPELINE_SRC.indexOf("executed:           true,");
+  const _execSnip  = _execStart >= 0 ? PIPELINE_SRC.slice(_execStart, _execStart + 420) : "";
+  for (const field of [
+    "sourceCardCount", "beforeLength", "afterLength", "changed",
+    "sourceAvailability", "answerMode", "requestId"
+  ]) {
+    assert(
+      _execSnip.includes(field + ":"),
+      `025A-REV2 static: safe field '${field}' present in executed=true diagnostic block`
+    );
+  }
+
+  // 6. Forbidden content absent from both diagnostic assignment blocks
+  //    Extract ~700 chars from the first ctx._patch024cPostSourcecard assignment
+  //    (covers both the executed=true and executed=false blocks).
+  const _diagStart = PIPELINE_SRC.indexOf("ctx._patch024cPostSourcecard = {");
+  const _diagSnip  = _diagStart >= 0 ? PIPELINE_SRC.slice(_diagStart, _diagStart + 700) : "";
+  for (const forbidden of [
+    "finalAnswer",
+    "ctx.rerankedChunks",
+    "prompt",
+    "openaiKey",
+    "SUPABASE",
+    "apiKey",
+    "__dirname",
+    "__filename"
+  ]) {
+    assert(
+      !_diagSnip.includes(forbidden),
+      `025A-REV2 safety: forbidden identifier '${forbidden}' absent from _patch024cPostSourcecard assignment`
+    );
+  }
+
+  // 7. Regression: PATCH-019A verifiedAuthorityGate and patch024cPostSourcecard
+  //    both present in the return object, in source order
+  const _retStart     = PIPELINE_SRC.lastIndexOf("verifiedAuthorityGate:");
+  const _ret024cStart = PIPELINE_SRC.lastIndexOf("patch024cPostSourcecard:");
+  assert(
+    _retStart > 0 && _ret024cStart > 0 && _ret024cStart > _retStart,
+    "025A-REV2 regression: patch024cPostSourcecard follows verifiedAuthorityGate in return payload"
   );
 });
 

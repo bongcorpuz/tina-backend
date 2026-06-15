@@ -4555,14 +4555,28 @@ export async function runPipeline({
   // Applies globally: LEGAL_ANALYSIS, COMPLEX_ADVISORY (bypassed Step 16),
   // STANDARD_TAX, FAST_DEFINITION, and any future mode.
   // Does NOT modify routing, retrieval, source-card selection, or PATCH-019A.
-  if (
-    finalSourceCards.length > 0 &&
-    !_isLearningMode &&
-    _sourceAvail.sourceAvailability !== "SOURCE_LOOKUP_EMPTY"
-  ) {
+  //
+  // PATCH-025A-REV2: ctx._patch024cPostSourcecard stores safe diagnostic metadata
+  // (counts and flags only — no text, keys, or chunks) for API-response echo.
+  const _024cSkipReason =
+    finalSourceCards.length === 0                             ? "NO_FINAL_SOURCE_CARDS" :
+    _isLearningMode                                           ? "LEARNING_MODE"         :
+    _sourceAvail.sourceAvailability === "SOURCE_LOOKUP_EMPTY" ? "SOURCE_LOOKUP_EMPTY"   :
+    null;
+  if (!_024cSkipReason) {
     const _024c4Before = _outputAnswer;
     _outputAnswer = stripUnverifiedAuthorityLines(_outputAnswer, finalSourceCards);
     const _024c4CorrelationId = requestId || traceId || "missing-request-id";
+    ctx._patch024cPostSourcecard = {
+      executed:           true,
+      sourceCardCount:    finalSourceCards.length,
+      beforeLength:       _024c4Before.length,
+      afterLength:        _outputAnswer.length,
+      changed:            _024c4Before.length !== _outputAnswer.length,
+      sourceAvailability: _sourceAvail.sourceAvailability,
+      answerMode:         ctx.mode,
+      requestId:          _024c4CorrelationId
+    };
     console.log(`[PATCH_024C_POST_SOURCECARD requestId=${_024c4CorrelationId}]`, {
       marker:          "PATCH_024C_POST_SOURCECARD",
       requestId:       _024c4CorrelationId,
@@ -4572,6 +4586,15 @@ export async function runPipeline({
       afterLength:     _outputAnswer.length,
       changed:         _024c4Before.length !== _outputAnswer.length
     });
+  } else {
+    ctx._patch024cPostSourcecard = {
+      executed:           false,
+      skippedReason:      _024cSkipReason,
+      sourceCardCount:    finalSourceCards.length,
+      sourceAvailability: _sourceAvail.sourceAvailability,
+      answerMode:         ctx.mode,
+      requestId:          requestId || traceId || "missing-request-id"
+    };
   }
   // ── End Step 17.4 ─────────────────────────────────────────────────────────────
 
@@ -4730,6 +4753,7 @@ export async function runPipeline({
       vatFastDefinitionPreserved: _019aGate.vatFastDefinitionPreserved,
       ewtFastPathPreserved:       _019aGate.ewtFastPathPreserved
     },
+    patch024cPostSourcecard: ctx._patch024cPostSourcecard || null,
     saeHardFailBlocked,
     saeHardFailFallbackApplied: saeHardFailBlocked,
     saeCompliance:             compliantResult.saeCompliance,
