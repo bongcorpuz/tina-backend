@@ -1036,6 +1036,14 @@ function isCreateActAuthorityAlias(value = "") {
   );
 }
 
+function isTrainLawAuthorityAlias(value = "") {
+  const text = normalizeText(value);
+  return (
+    /\bTRAIN\s+Law\b/i.test(text) ||
+    /\bTax\s+Reform\s+for\s+Acceleration\s+and\s+Inclusion\s+Act\b/i.test(text)
+  );
+}
+
 function detectExactAuthority(question = "") {
   const value = normalizeText(question);
 
@@ -1045,6 +1053,16 @@ function detectExactAuthority(question = "") {
       type: "STATUTE",
       reference: "RA 11534",
       number: "11534",
+      year: null
+    };
+  }
+
+  if (isTrainLawAuthorityAlias(value)) {
+    return {
+      detected: true,
+      type: "STATUTE",
+      reference: "RA 10963",
+      number: "10963",
       year: null
     };
   }
@@ -1494,6 +1512,7 @@ function detectRetrievalStrategy({ question = "", queryIntent = {}, primaryIssue
 function detectResponseMode({ question = "", queryIntent = {}, complexity, subIssue = "", exactAuthority = null }) {
   if (queryIntent?.responseMode) return queryIntent.responseMode;
   if (exactAuthority?.reference === "RA 11534" && isCreateActAuthorityAlias(question)) return "STANDARD";
+  if (exactAuthority?.reference === "RA 10963" && isTrainLawAuthorityAlias(question)) return "STANDARD";
   // PATCH-024B: Specialized VAT sub-issues must not be downgraded to FAST_DEFINITION.
   if (_VAT_SPECIALIZED_SUB_ISSUES_024B.has(subIssue)) return "STANDARD";
   if (detectDefinitionPattern(question, queryIntent)) return "FAST_DEFINITION";
