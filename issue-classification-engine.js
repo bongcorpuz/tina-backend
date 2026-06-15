@@ -1028,8 +1028,26 @@ const ISSUE_SPECIFIC_TARGETS = Object.freeze({
   PEZA_INCENTIVES: ["CREATE Act", "NIRC incentive provisions", "PEZA law", "FIRB issuances"]
 });
 
+function isCreateActAuthorityAlias(value = "") {
+  const text = normalizeText(value);
+  return (
+    /\bCREATE\s+Act\b/i.test(text) ||
+    /\bCorporate\s+Recovery\s+and\s+Tax\s+Incentives\s+for\s+Enterprises\s+Act\b/i.test(text)
+  );
+}
+
 function detectExactAuthority(question = "") {
   const value = normalizeText(question);
+
+  if (isCreateActAuthorityAlias(value)) {
+    return {
+      detected: true,
+      type: "STATUTE",
+      reference: "RA 11534",
+      number: "11534",
+      year: null
+    };
+  }
 
   const issuancePatterns = [
     ["RR", /\b(?:rr|revenue regulation[s]?)\s*(?:no\.?)?\s*0*(\d+)[-_/ ]+(\d{2,4})\b/i],
@@ -1473,8 +1491,9 @@ function detectRetrievalStrategy({ question = "", queryIntent = {}, primaryIssue
   return RETRIEVAL_STRATEGY.MIXED;
 }
 
-function detectResponseMode({ question = "", queryIntent = {}, complexity, subIssue = "" }) {
+function detectResponseMode({ question = "", queryIntent = {}, complexity, subIssue = "", exactAuthority = null }) {
   if (queryIntent?.responseMode) return queryIntent.responseMode;
+  if (exactAuthority?.reference === "RA 11534" && isCreateActAuthorityAlias(question)) return "STANDARD";
   // PATCH-024B: Specialized VAT sub-issues must not be downgraded to FAST_DEFINITION.
   if (_VAT_SPECIALIZED_SUB_ISSUES_024B.has(subIssue)) return "STANDARD";
   if (detectDefinitionPattern(question, queryIntent)) return "FAST_DEFINITION";
@@ -1795,7 +1814,8 @@ function classifyTaxIssue(question = "", queryIntent = {}) {
     question: normalizedQuery,
     queryIntent,
     complexity,
-    subIssue  // PATCH-024B: prevents FAST_DEFINITION override for specialized VAT sub-issues
+    subIssue, // PATCH-024B: prevents FAST_DEFINITION override for specialized VAT sub-issues
+    exactAuthority
   });
 
   const orchestrationMode = detectOrchestrationMode({
