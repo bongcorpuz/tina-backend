@@ -1934,7 +1934,7 @@ export async function countSourceRows(source, client = defaultSupabase) {
 
 // Returns true when the document's identifiers (source name, file name, folder path)
 // indicate this is the NIRC itself — not an RR or ruling that merely cites NIRC sections.
-function isNircSourceDocument(source = "", metadata = {}) {
+export function isNircSourceDocument(source = "", metadata = {}) {
   const blob = lower([
     source,
     metadata.documentTitle,
@@ -1958,7 +1958,7 @@ function isNircSourceDocument(source = "", metadata = {}) {
 // Does NOT match inline citations like "pursuant to Sec. 109 of the Code"
 // or "under Section 112" because those lack a period immediately after the
 // section number — the trailing dot is the reliable heading discriminator.
-function detectNircSectionHeading(chunkText = "") {
+export function detectNircSectionHeading(chunkText = "") {
   const match = chunkText.match(
     /(?:^|[\r\n]|\.\s*|\s{2,})\s*(?:SEC(?:TION)?\.?)\s+([0-9]+[A-Z]?)\./i
   );
@@ -2025,12 +2025,13 @@ export async function addDocumentToVectorStore(text, source, metadata = {}, clie
 
   const rows = [];
   const isNirc = isNircSourceDocument(source, metadata);
+  let lastNircSection = null;
   for (let i = 0; i < chunks.length; i += 1) {
     const chunk = chunks[i];
 
-    // Per-chunk normalized_reference: detect NIRC section heading IN THIS CHUNK ONLY.
-    // NO carry-forward — each chunk is independently scoped to prevent false metadata
-    // pollution when a lastNircSection leaks into unrelated continuation text.
+    // Per-chunk normalized_reference: detect NIRC section heading in this chunk.
+    // If no heading is detected but a prior section was seen, carry it forward (bounded to
+    // the current document call — lastNircSection resets per addDocumentToVectorStore call).
     // Non-NIRC documents (RR, RMC, court cases, etc.) are unaffected — isNirc stays false.
     let chunkNormalizedRef   = isNirc ? null : (metadata.normalizedReference || null);
     let chunkSectionScope    = null;
@@ -2043,10 +2044,15 @@ export async function addDocumentToVectorStore(text, source, metadata = {}, clie
     if (isNirc) {
       const detectedSection = detectNircSectionHeading(chunk);
       if (detectedSection) {
+        lastNircSection     = detectedSection;
         chunkNormalizedRef  = detectedSection;
         chunkSectionScope   = detectedSection;
         chunkSectionHeading = detectedSection;
         console.log("[SECTION SCOPE]", { chunkIndex: i, sectionScope: chunkSectionScope, source: normalizedSource });
+      } else if (lastNircSection) {
+        chunkNormalizedRef = lastNircSection;
+        chunkSectionScope  = lastNircSection;
+        console.log("[SECTION SCOPE INHERITED]", { chunkIndex: i, inheritedSection: lastNircSection, source: normalizedSource });
       }
       const structural = detectNircStructuralScope(chunk);
       chunkTitleScope    = structural.title_scope;
@@ -2080,7 +2086,8 @@ export async function addDocumentToVectorStore(text, source, metadata = {}, clie
     //   2. the JSON blob  (metadata.normalizedReference via buildStoredMetadata)
     //
     // NIRC rule:  heading detected in this chunk → chunkSectionScope (same as detectedSection)
-    //             no heading detected            → null, unconditionally.
+    //             no heading but prior section seen → carry-forward via lastNircSection.
+    //             no heading and no prior section  → null.
     //             document-level fallbacks (authority.normalizedReference,
     //             normalizeAuthorityReference(source)) are suppressed — they would
     //             assign "nirc-1997-ra-10963" to every continuation chunk.
