@@ -1518,6 +1518,59 @@ function _saeIsRelatedAuthorityCandidate(candidate = {}, issueClassification = {
   );
 }
 
+export function patch027nIsBroadWithholdingDefinitionQuery(query = "", issueClassification = {}) {
+  const q = String(query || "").toLowerCase().trim();
+  if (!q) return false;
+
+  const primary = String(issueClassification.primaryIssue || "").toUpperCase();
+  const domain = String(
+    issueClassification.primaryDomain ||
+      issueClassification.primaryDomainCode ||
+      issueClassification.domainCode ||
+      ""
+  ).toUpperCase();
+  const subIssue = String(issueClassification.subIssue || "").toUpperCase();
+  const isWht =
+    primary === "WITHHOLDING" ||
+    primary === "WHT" ||
+    domain === "WHT" ||
+    domain.includes("WITHHOLDING") ||
+    subIssue === "WITHHOLDING_TAX_DEFINITION";
+  if (!isWht) return false;
+
+  const broadDefinitionShape =
+    /^(?:what\s+is|define|explain)\s+(?:the\s+)?withholding\s+tax\s*[\?\.!]?$/i.test(q);
+  if (!broadDefinitionShape) return false;
+
+  return !/\b(?:ewt|expanded\s+withholding|cwt|fwt|final\s+withholding|creditable\s+withholding|rate|subject\s+to|applicab|classification|categor|payor|payer|payee|withholding\s+agent|advertising|professional|contractor|service|income\s+payment|rr\s*(?:no\.?\s*)?2\s*[-.]?\s*(?:98|1998)|revenue\s+regulations?\s+(?:no\.?\s*)?2\s*[-.]?\s*(?:98|1998))\b/i.test(q);
+}
+
+export function patch027nHasSpecificWhtFastPathSignal(query = "", issueClassification = {}) {
+  const q = String(query || "");
+  if (patch027nIsBroadWithholdingDefinitionQuery(q, issueClassification)) return false;
+
+  return /\b(?:ewt|expanded\s+withholding|cwt|fwt|final\s+withholding|creditable\s+withholding|rate|subject\s+to|applicab|classification|categor|payor|payer|payee|withholding\s+agent|advertising|professional|contractor|service|income\s+payment|rr\s*(?:no\.?\s*)?2\s*[-.]?\s*(?:98|1998)|revenue\s+regulations?\s+(?:no\.?\s*)?2\s*[-.]?\s*(?:98|1998))\b/i.test(q);
+}
+
+function patch027nHasJurisprudenceIntent(query = "", issueClassification = {}) {
+  return Boolean(
+    issueClassification.isJurisprudenceQuery === true ||
+      issueClassification.requiresJurisprudence === true ||
+      issueClassification.downstreamRouting?.useJurisprudenceEngine === true ||
+      /\b(cases?|jurisprudence|case\s+law|ruling[s]?|supreme\s+court|cta\b|court\s+decision)\b/i.test(String(query || ""))
+  );
+}
+
+function patch027nIsCourtAuthority(candidate = {}) {
+  const type = _saeAuthorityType(candidate).replace(/[\s-]+/g, "_");
+  return ["CASE", "SUPREME_COURT", "CTA_EN_BANC", "CTA_DIVISION", "COURT_DECISION"].includes(type);
+}
+
+function patch027nIsStatutoryAuthority(candidate = {}) {
+  const type = _saeAuthorityType(candidate).replace(/[\s-]+/g, "_");
+  return ["NIRC", "STATUTE", "TAX_CODE", "REPUBLIC_ACT", "RA"].includes(type);
+}
+
 /**
  * Classifies source availability before prompt assembly.
  *
@@ -1611,6 +1664,42 @@ export function classifySourceAvailability(input = {}) {
       saeStatus:      "SOURCE_PARSE_ERROR",
       disclosureType: "SOURCE_PARSE_ERROR",
       statusReason:  "Candidates were retrieved, but all relevant candidates failed source parsing."
+    };
+  }
+
+  const jurisprudenceIntent = patch027nHasJurisprudenceIntent(query, issueClassification);
+  if (jurisprudenceIntent && eligibleCandidates.length > 0) {
+    const courtEligibleCandidates = eligibleCandidates.filter(patch027nIsCourtAuthority);
+    if (courtEligibleCandidates.length === 0) {
+      console.log("[PATCH_027N_CASE_QUERY_AUTHORITY_FOUND_BLOCKED]", {
+        query: query.slice(0, 120),
+        eligibleCount: eligibleCandidates.length,
+        reason: "case_law_intent_requires_court_authority_for_authority_found"
+      });
+      return {
+        ...base,
+        saeStatus:      "RELATED_AUTHORITY_ONLY",
+        disclosureType: "RELATED_AUTHORITY_ONLY",
+        statusReason:  "[PATCH-027N] Case/jurisprudence query: statute/RR authority cannot alone support AUTHORITY_FOUND."
+      };
+    }
+  }
+
+  if (
+    patch027nIsBroadWithholdingDefinitionQuery(query, issueClassification) &&
+    eligibleCandidates.length > 0 &&
+    !eligibleCandidates.some(patch027nIsStatutoryAuthority)
+  ) {
+    console.log("[PATCH_027N_BROAD_WHT_RR_ONLY_AUTHORITY_FOUND_BLOCKED]", {
+      query: query.slice(0, 120),
+      eligibleCount: eligibleCandidates.length,
+      reason: "broad_withholding_definition_requires_statutory_candidate_for_authority_found"
+    });
+    return {
+      ...base,
+      saeStatus:      "RELATED_AUTHORITY_ONLY",
+      disclosureType: "RELATED_AUTHORITY_ONLY",
+      statusReason:  "[PATCH-027N] Broad withholding definition: RR/admin authority alone cannot support AUTHORITY_FOUND."
     };
   }
 
@@ -1966,6 +2055,10 @@ export async function runPipeline({
     _patch017fTargetKeys.has(_patch017fCanonicalAuthorityKey(target))
   );
   const _patch017fHasKw = /\b(ewt|withholding|advertising|rate)\b/i.test(_patch017fQuery);
+  const _patch017fSpecificWhtSignal = patch027nHasSpecificWhtFastPathSignal(
+    _patch017fQuery,
+    ctx.issueClassification || {}
+  );
   const _patch017fSimple =
     _patch017fComplexity === "" ||
     _patch017fComplexity === "simple" ||
@@ -1979,7 +2072,7 @@ export async function runPipeline({
   const _patch017fUseJurisEngine = ctx.issueClassification?.downstreamRouting?.useJurisprudenceEngine === true;
   const _patch017fCaseLawGuard   = _patch017fIsJurisQuery || _patch017fReqJuris || _patch017fUseJurisEngine;
   const _patch017fEligible =
-    _patch017fIsWht && (_patch017fHasTgts || _patch017fHasKw) && _patch017fSimple && !_patch017fCaseLawGuard;
+    _patch017fIsWht && (_patch017fHasTgts || _patch017fHasKw) && _patch017fSpecificWhtSignal && _patch017fSimple && !_patch017fCaseLawGuard;
 
   console.log("[PATCH_017F_PRE_RETRIEVAL_EWT_CHECK]", {
     query: _patch017fQuery.slice(0, 160),
@@ -1992,6 +2085,7 @@ export async function runPipeline({
     requiresJurisprudence: _patch017fReqJuris,
     useJurisprudenceEngine: _patch017fUseJurisEngine,
     caseLawGuardApplied: _patch017fCaseLawGuard,
+    specificWhtFastPathSignal: _patch017fSpecificWhtSignal,
     eligible: _patch017fEligible
   });
 
@@ -2573,12 +2667,13 @@ export async function runPipeline({
     const _e5IsWht     = _e5Pi === "WITHHOLDING" || _e5Pd === "WHT" || _e5Pd.includes("WITHHOLDING") || _e5Pi === "WHT";
     const _e5HasTgts   = _e5Ta.some(t => /nirc.*sec\.?\s*(57|58)\b/i.test(t) || /rr[\s\-.]?2[\s\-.]?98\b/i.test(t));
     const _e5HasKw     = /\b(ewt|withholding|advertising|rate)\b/i.test(_e5Q);
+    const _e5SpecificWhtSignal = patch027nHasSpecificWhtFastPathSignal(query || "", ctx.issueClassification || {});
     const _e5Simple    = _e5Cx === "simple" || _e5Cx === "standard" || _e5Cx === "";
     const _e5HasChunks = ctx.retrievedChunks.length > 0;
 
     // PATCH-021A: case-law / jurisprudence intent must never collapse into the
     // compact EWT retrieval set — Supreme Court / CTA retrieval is needed.
-    if (_e5IsWht && (_e5HasTgts || _e5HasKw) && _e5Simple && _e5HasChunks && !ctx.issueClassification?.isJurisprudenceQuery) {
+    if (_e5IsWht && (_e5HasTgts || _e5HasKw) && _e5SpecificWhtSignal && _e5Simple && _e5HasChunks && !ctx.issueClassification?.isJurisprudenceQuery) {
       const _e5TaKeys = new Set(_e5Ta.map(t => canonicalSourceKey(t)).filter(Boolean));
       // Always include core EWT governing authority canonical keys as a safety net
       _e5TaKeys.add("nircsec57");
@@ -2824,10 +2919,11 @@ export async function runPipeline({
     const _pgIsWht       = _pgPi === "WITHHOLDING" || _pgPd === "WHT" || _pgPd.includes("WITHHOLDING") || _pgPi === "WHT";
     const _pgHasEwtTgts  = _pgTa.some(t => /nirc.*sec\.?\s*(57|58)\b/i.test(t) || /rr[\s\-.]?2[\s\-.]?98\b/i.test(t));
     const _pgHasEwtKw    = /\b(ewt|withholding|advertising|rate)\b/i.test(_pgQ);
+    const _pgSpecificWhtSignal = patch027nHasSpecificWhtFastPathSignal(query || "", ctx.issueClassification || {});
     const _pgHasChunks   = (ctx.rerankedChunks || []).length > 0;
     // PATCH-021A: case-law / jurisprudence intent must not be locked onto the
     // fast EWT authority path (Sec. 57/58 only) nor forced into FAST_DEFINITION.
-    const _pgRunPreGen   = _pgIsWht && (_pgHasEwtTgts || _pgHasEwtKw) && _pgHasChunks && !ctx.issueClassification?.isJurisprudenceQuery;
+    const _pgRunPreGen   = _pgIsWht && (_pgHasEwtTgts || _pgHasEwtKw) && _pgSpecificWhtSignal && _pgHasChunks && !ctx.issueClassification?.isJurisprudenceQuery;
 
     if (_pgRunPreGen) {
       console.log("[PRE_GENERATION_SOURCE_SELECTION_STARTED]", {
