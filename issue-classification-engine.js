@@ -1398,6 +1398,28 @@ function getDefinitionAuthorityFor(question = "", detector = null, primaryIssue 
   return DEFINITION_AUTHORITY_MAP[definitionKey] || null;
 }
 
+const EXACT_ADMINISTRATIVE_AUTHORITY_TYPES = new Set(["RR", "RMC", "RMO", "RAMO"]);
+
+const GENERIC_CONTROLLING_PLACEHOLDERS = new Set([
+  "Applicable NIRC / primary statute provisions"
+]);
+
+function isExactAdministrativeAuthorityLookup(question = "", exactAuthority = {}) {
+  if (!exactAuthority?.detected) return false;
+  if (!EXACT_ADMINISTRATIVE_AUTHORITY_TYPES.has(String(exactAuthority.type || "").toUpperCase())) return false;
+  const q = lower(question);
+  if (!q) return false;
+  const topicModifierLookup =
+    /\bwhat\s+does\b[\s\S]{0,80}\b(?:provide|say|state|cover|discuss)\b(?:\s+(?:about|on|regarding)\b[\s\S]{0,80})?/i.test(q);
+  return (
+    detectDefinitionPattern(question) ||
+    detectOverviewPattern(question) ||
+    detectSourcePattern(question) ||
+    topicModifierLookup ||
+    /\b(?:explain|summari[sz]e|what\s+is|what\s+are|show\s+sources?\s+for|source[s]?\s+for)\b/i.test(q)
+  );
+}
+
 function buildAuthorities({ question = "", detector = null, primaryIssue, subIssue, exactAuthority }) {
   const definitionAuthorities = getDefinitionAuthorityFor(question, detector, primaryIssue, subIssue);
 
@@ -1456,6 +1478,12 @@ function buildAuthorities({ question = "", detector = null, primaryIssue, subIss
   if (exactAuthority?.detected && exactAuthority.reference) {
     if (["SUPREME_COURT", "CTA_DIVISION", "CTA_EN_BANC"].includes(exactAuthority.type)) {
       supportingJurisprudence.unshift(exactAuthority.reference);
+    } else if (isExactAdministrativeAuthorityLookup(question, exactAuthority)) {
+      controllingAuthorities = [
+        exactAuthority.reference,
+        ...controllingAuthorities.filter((a) => !GENERIC_CONTROLLING_PLACEHOLDERS.has(a))
+      ];
+      supportingAuthorities = supportingAuthorities.filter((a) => a !== exactAuthority.reference);
     } else if (["RR", "RMC", "RMO", "RAMO", "BIR_RULING"].includes(exactAuthority.type)) {
       supportingAuthorities.unshift(exactAuthority.reference);
     } else {
