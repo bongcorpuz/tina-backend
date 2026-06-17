@@ -1538,11 +1538,27 @@ export function patch027nIsBroadWithholdingDefinitionQuery(query = "", issueClas
     subIssue === "WITHHOLDING_TAX_DEFINITION";
   if (!isWht) return false;
 
-  const broadDefinitionShape =
+  // Path 1 (unchanged): "what is withholding tax" / "explain withholding tax" exact forms.
+  const _withholdingTaxShape =
     /^(?:what\s+is|define|explain)\s+(?:the\s+)?withholding\s+tax\s*[\?\.!]?$/i.test(q);
-  if (!broadDefinitionShape) return false;
+  if (_withholdingTaxShape) {
+    return !/\b(?:ewt|expanded\s+withholding|cwt|fwt|final\s+withholding|creditable\s+withholding|rate|subject\s+to|applicab|classification|categor|payor|payer|payee|withholding\s+agent|advertising|professional|contractor|service|income\s+payment|rr\s*(?:no\.?\s*)?2\s*[-.]?\s*(?:98|1998)|revenue\s+regulations?\s+(?:no\.?\s*)?2\s*[-.]?\s*(?:98|1998))\b/i.test(q);
+  }
 
-  return !/\b(?:ewt|expanded\s+withholding|cwt|fwt|final\s+withholding|creditable\s+withholding|rate|subject\s+to|applicab|classification|categor|payor|payer|payee|withholding\s+agent|advertising|professional|contractor|service|income\s+payment|rr\s*(?:no\.?\s*)?2\s*[-.]?\s*(?:98|1998)|revenue\s+regulations?\s+(?:no\.?\s*)?2\s*[-.]?\s*(?:98|1998))\b/i.test(q);
+  // PATCH-027O Path 2: EWT acronym and expanded-name definitional forms.
+  // "explain EWT", "what is EWT?", "what is the EWT?", "define EWT", "define the EWT",
+  // "explain the EWT", "explain expanded withholding tax", etc.
+  // When the EWT acronym or full name is the sole subject of a definition/explanation
+  // request it is a broad definition request, not a specific rate or applicability inquiry.
+  const _ewtAcronymShape =
+    /^(?:what\s+is|define|explain)\s+(?:the\s+)?(?:ewt|expanded\s+withholding\s+tax)\s*[\?\.!]?$/i.test(q);
+  if (!_ewtAcronymShape) return false;
+
+  // Exclude if specificity terms appear alongside the EWT acronym — these signals indicate
+  // the query goes beyond a generic definition despite the EWT-acronym opener.
+  // Note: "ewt" and "expanded withholding" are intentionally absent from this exclusion
+  // list — they are the query subject here, not specificity signals.
+  return !/\b(?:rate|percentage|subject\s+to|applicab|classification|categor|payor|payer|payee|withholding\s+agent|advertising|professional|contractor|service|income\s+payment|cwt|fwt|final\s+withholding|creditable\s+withholding|rr\s*(?:no\.?\s*)?2\s*[-.]?\s*(?:98|1998)|revenue\s+regulations?\s+(?:no\.?\s*)?2\s*[-.]?\s*(?:98|1998))\b/i.test(q);
 }
 
 export function patch027nHasSpecificWhtFastPathSignal(query = "", issueClassification = {}) {
@@ -1550,6 +1566,17 @@ export function patch027nHasSpecificWhtFastPathSignal(query = "", issueClassific
   if (patch027nIsBroadWithholdingDefinitionQuery(q, issueClassification)) return false;
 
   return /\b(?:ewt|expanded\s+withholding|cwt|fwt|final\s+withholding|creditable\s+withholding|rate|subject\s+to|applicab|classification|categor|payor|payer|payee|withholding\s+agent|advertising|professional|contractor|service|income\s+payment|rr\s*(?:no\.?\s*)?2\s*[-.]?\s*(?:98|1998)|revenue\s+regulations?\s+(?:no\.?\s*)?2\s*[-.]?\s*(?:98|1998))\b/i.test(q);
+}
+
+// PATCH-027O: Determines whether a WHT/EWT query is rate-seeking (specific) or
+// generic (definitional). Used by the fast-EWT compact prompt to avoid instructing
+// the model to "State the applicable rate" when the user only asked for a general
+// explanation of EWT. Rate-seeking signals: explicit mention of rate, percentage,
+// specific payment category (advertising, service, professional), or party roles.
+export function patch027oIsEwtRateSeeking(query = "") {
+  return /\b(?:rates?|percentage|subject\s+to|applicabl(?:e|ity)?|classification|categor|payor|payer|payee|withholding\s+agent|advertising|professional|contractor|service|income\s+payment)\b/i.test(
+    String(query || "")
+  );
 }
 
 function patch027nHasJurisprudenceIntent(query = "", issueClassification = {}) {
@@ -3581,9 +3608,19 @@ export async function runPipeline({
         maxTokens:   600,
         authorities: _fdCards.map(c => (c.normalizedReference || c.citation || "").slice(0, 60)).filter(Boolean)
       });
+      // PATCH-027O: Only instruct "State the applicable rate" when the query is
+      // rate-seeking. For generic EWT definition queries (e.g. a query that
+      // reached this path despite the broad-definition guard), avoid forcing the
+      // model to extract and cite a specific rate or payment category from whichever
+      // RR 2-98 chunk happened to be retrieved.
+      const _fdIsRateSeeking = patch027oIsEwtRateSeeking(query);
+      const _fdSystemInstruction = _fdIsRateSeeking
+        ? "You are TINA, a Philippine tax assistant. Answer in 2-3 sentences using only the provided sources. State the applicable rate and cite the authority."
+        : "You are TINA, a Philippine tax assistant. Answer in 2-3 sentences using only the provided sources. Explain the legal concept generally and cite the authority. Do not speculate about rates or specific payment categories not mentioned in the question.";
       console.log("[FAST_EWT_COMPACT_PROMPT_USED]", {
-        promptChars: _fdSourceText.length,
-        sources:     _fdCards.map(c => (c.normalizedReference || c.title || "").slice(0, 60))
+        promptChars:    _fdSourceText.length,
+        sources:        _fdCards.map(c => (c.normalizedReference || c.title || "").slice(0, 60)),
+        isRateSeeking:  _fdIsRateSeeking
       });
       try {
         const _fdCompletion = await openai.chat.completions.create({
@@ -3591,7 +3628,7 @@ export async function runPipeline({
           messages: [
             {
               role:    "system",
-              content: "You are TINA, a Philippine tax assistant. Answer in 2-3 sentences using only the provided sources. State the applicable rate and cite the authority."
+              content: _fdSystemInstruction
             },
             {
               role:    "user",
