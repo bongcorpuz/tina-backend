@@ -554,19 +554,124 @@ function docCitationText(doc = {}) {
   ].filter(Boolean).join(" "));
 }
 
-function docOnSpecificAuthorityPlan(doc = {}) {
+const EXACT_ADMINISTRATIVE_AUTHORITY_TYPES = new Set(["RR", "RMC", "RMO", "RAMO"]);
+
+function administrativeAuthorityKey(value = "") {
+  const text = normalizeText(value);
+  if (!text) return "";
+
+  const normalizedShape = text.match(/\b(RR|RMC|RMO|RAMO)[_-]+0*(\d+)[_-]+(\d{2,4})\b/i);
+  if (normalizedShape) {
+    return `${normalizedShape[1].toUpperCase()}_${Number(normalizedShape[2])}_${normalizeYear(normalizedShape[3])}`;
+  }
+
+  const parsed = normalizeLegalReference(text);
+  if (!EXACT_ADMINISTRATIVE_AUTHORITY_TYPES.has(String(parsed.type || "").toUpperCase())) return "";
+  return parsed.normalized || "";
+}
+
+function controllingAdministrativeAuthorityKeys(issueClassification = {}) {
+  const controlling = unique([
+    ...safeArray(issueClassification.controllingAuthorities),
+    ...safeArray(issueClassification.targetAuthorityGroups?.controllingAuthorities)
+  ]);
+
+  return new Set(controlling.map(administrativeAuthorityKey).filter(Boolean));
+}
+
+function docPrimaryAdministrativeAuthorityKeys(doc = {}) {
+  const values = [
+    doc.normalizedReference,
+    doc.normalized_reference,
+    doc.citation,
+    doc.reference,
+    doc.metadata?.normalizedReference,
+    doc.metadata?.normalized_reference,
+    doc.metadata?.citation,
+    doc.metadata?.reference,
+    ...getDocAliases(doc),
+    doc.displayLabel,
+    doc.display_label,
+    doc.authorityLabel,
+    doc.authority_label,
+    doc.metadata?.displayLabel,
+    doc.metadata?.display_label,
+    doc.metadata?.authorityLabel,
+    doc.metadata?.authority_label
+  ];
+
+  return new Set(values.map(administrativeAuthorityKey).filter(Boolean));
+}
+
+function hasExactAuthorityRetrievalSignal(doc = {}, match = {}) {
+  const layer = doc.retrievalLayer || doc.retrievalPhase || match.retrievalLayer;
+  return Boolean(
+    doc.exactAuthorityMatch === true ||
+      match.exactAuthorityMatch === true ||
+      ["LAYER_1_EXACT_NORMALIZED_AUTHORITY", "LAYER_2_CITATION_VARIANT"].includes(layer)
+  );
+}
+
+function hasExactAdministrativeAuthorityContextVeto(issueClassification = {}) {
+  const queryText = lower([
+    issueClassification.originalQuery,
+    issueClassification.normalizedQuery,
+    issueClassification.legalQuestionPresented
+  ].filter(Boolean).join(" "));
+
+  return Boolean(
+    issueClassification.isJurisprudenceQuery === true ||
+      issueClassification.requiresJurisprudence === true ||
+      /\b(?:jurisprudence|case\s+law|supreme\s+court|cta|court\s+decision)\b/i.test(queryText) ||
+      /\b(?:cite|citing|use|using)\s+only\s+(?:the\s+)?nirc\b/i.test(queryText) ||
+      /\bonly\s+(?:the\s+)?nirc\b/i.test(queryText)
+  );
+}
+
+function isExactAdministrativeAuthorityPlanMatch(doc = {}, issueClassification = {}, match = {}) {
+  if (!hasExactAuthorityRetrievalSignal(doc, match)) return false;
+  if (hasExactAdministrativeAuthorityContextVeto(issueClassification)) return false;
+
+  const docType = toContractAuthorityType(getAuthorityTypeForDoc(doc));
+  if (!EXACT_ADMINISTRATIVE_AUTHORITY_TYPES.has(docType)) return false;
+
+  const plannedKeys = controllingAdministrativeAuthorityKeys(issueClassification);
+  if (!plannedKeys.size) return false;
+
+  const docKeys = docPrimaryAdministrativeAuthorityKeys(doc);
+  for (const key of docKeys) {
+    if (plannedKeys.has(key)) return true;
+  }
+  return false;
+}
+
+function docOnSpecificAuthorityPlan(doc = {}, issueClassificationOverride = {}) {
   const match = doc.issueClassificationMatch || {};
+  const matchTargets = safeArray(match.targetAuthorities);
+  const matchControlling = safeArray(match.controllingAuthorities);
+  const matchSupporting = safeArray(match.supportingAuthorities);
+  const matchJurisprudence = safeArray(match.supportingJurisprudence);
   const issueClassification = {
-    targetAuthorities: match.targetAuthorities || [],
-    controllingAuthorities: match.controllingAuthorities || [],
-    supportingAuthorities: match.supportingAuthorities || [],
-    supportingJurisprudence: match.supportingJurisprudence || [],
-    targetAuthorityGroups: match.targetAuthorityGroups || null
+    originalQuery: issueClassificationOverride.originalQuery || issueClassificationOverride.normalizedQuery || match.originalQuery || "",
+    normalizedQuery: issueClassificationOverride.normalizedQuery || match.normalizedQuery || "",
+    legalQuestionPresented: issueClassificationOverride.legalQuestionPresented || match.legalQuestionPresented || "",
+    primaryIssue: match.primaryIssue || issueClassificationOverride.primaryIssue || null,
+    subIssue: match.subIssue || issueClassificationOverride.subIssue || null,
+    isJurisprudenceQuery: match.isJurisprudenceQuery === true || issueClassificationOverride.isJurisprudenceQuery === true,
+    requiresJurisprudence: match.requiresJurisprudence === true || issueClassificationOverride.requiresJurisprudence === true,
+    legalDimensions: match.legalDimensions || issueClassificationOverride.legalDimensions || [],
+    retrievalStrategy: match.retrievalStrategy || issueClassificationOverride.retrievalStrategy || null,
+    targetAuthorities: matchTargets.length ? matchTargets : safeArray(issueClassificationOverride.targetAuthorities),
+    controllingAuthorities: matchControlling.length ? matchControlling : safeArray(issueClassificationOverride.controllingAuthorities),
+    supportingAuthorities: matchSupporting.length ? matchSupporting : safeArray(issueClassificationOverride.supportingAuthorities),
+    supportingJurisprudence: matchJurisprudence.length ? matchJurisprudence : safeArray(issueClassificationOverride.supportingJurisprudence),
+    targetAuthorityGroups: match.targetAuthorityGroups || issueClassificationOverride.targetAuthorityGroups || null
   };
   if (!hasSpecificAuthorityPlan(issueClassification)) return true;
 
   const tier = Number(doc.authorityMatchTier ?? match.authorityMatchTier ?? 4);
   if (tier <= 2) return true;
+  if (isExactAdministrativeAuthorityPlanMatch(doc, issueClassification, match)) return true;
 
   const docSection = extractNircSectionNumber(docCitationText(doc));
   if (docSection !== null) {
@@ -584,7 +689,7 @@ function docOnSpecificAuthorityPlan(doc = {}) {
 
 function directlyGovernsIssue(doc = {}, issueClassification = {}) {
   const match = doc.issueClassificationMatch || {};
-  if (!docOnSpecificAuthorityPlan(doc)) return false;
+  if (!docOnSpecificAuthorityPlan(doc, issueClassification)) return false;
   if (!sourceMaterialTermsMatchAuthority(doc, issueClassification).matches) return false;
 
   return Boolean(
