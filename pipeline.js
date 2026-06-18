@@ -277,7 +277,7 @@ function buildOpenAiFailureRetrievalAnswer(ctx = {}, query = "") {
     : "Indexed authority was retrieved for this query.";
 
   return [
-    "I found indexed authority for this Philippine tax question, but the answer-generation model failed before a full narrative answer could be completed.",
+    "TINA retrieved indexed legal sources, but the answer-generation request failed due to a temporary model connection issue. Please retry the question.",
     "",
     governingLine,
     "",

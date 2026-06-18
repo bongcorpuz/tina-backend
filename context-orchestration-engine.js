@@ -350,6 +350,31 @@ function safeObject(value) {
   return value && typeof value === "object" && !Array.isArray(value) ? value : {};
 }
 
+function sleep(ms = 0) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function isTransientOpenAiTransportError(error = {}) {
+  const code = safeString(error?.code || "").toUpperCase();
+  const type = safeString(error?.type || error?.name || error?.constructor?.name || "").toUpperCase();
+  const message = safeString(error?.message || error || "");
+  const status = Number(error?.status || 0);
+
+  if ([401, 403, 404, 422, 429].includes(status)) return false;
+  if (/authentication|permission|forbidden|unauthorized|model_not_found|does not have access|rate limit|invalid request|schema|validation/i.test(message)) {
+    return false;
+  }
+
+  return (
+    code === "ERR_STREAM_PREMATURE_CLOSE" ||
+    code === "ECONNRESET" ||
+    code === "ETIMEDOUT" ||
+    /premature close|socket hang up|network|fetch failed|connection reset|timed out/i.test(message) ||
+    type === "FETCHERROR" ||
+    type === "TYPEERROR"
+  );
+}
+
 function unique(values = []) {
   return [...new Set(safeArray(values).filter(Boolean))];
 }
@@ -2512,29 +2537,94 @@ export async function callOpenAIWithOrchestration(args = {}) {
     purpose: "generation",
     model: orchestration.model,
     startedAt: _genStartMs,
-    status: "pending"
+    status: "pending",
+    attempts: []
   };
   if (openaiDiagnostics) openaiDiagnostics.push(openaiCallRecord);
 
   let completion;
-  try {
-    completion = await openai.chat.completions.create({
-      model: orchestration.model,
-      messages: orchestration.messages,
-      max_tokens: orchestration.maxCompletionTokens,
-      temperature: orchestration.temperature
+  const requestPayload = {
+    model: orchestration.model,
+    messages: orchestration.messages,
+    max_tokens: orchestration.maxCompletionTokens,
+    temperature: orchestration.temperature
+  };
+  const maxAttempts = 2;
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    const attemptStartedAt = Date.now();
+    try {
+      completion = await openai.chat.completions.create(requestPayload);
+      const attemptCompletedAt = Date.now();
+      openaiCallRecord.attempts.push({
+        attempt,
+        startedAt: attemptStartedAt,
+        completedAt: attemptCompletedAt,
+        durationMs: attemptCompletedAt - attemptStartedAt,
+        status: "success"
+      });
+      openaiCallRecord.completedAt = attemptCompletedAt;
+      openaiCallRecord.durationMs = openaiCallRecord.completedAt - openaiCallRecord.startedAt;
+      openaiCallRecord.status = "success";
+      openaiCallRecord.attempt = attempt;
+      openaiCallRecord.retrySucceeded = attempt > 1;
+      break;
+    } catch (error) {
+      const attemptCompletedAt = Date.now();
+      const transient = isTransientOpenAiTransportError(error);
+      openaiCallRecord.attempts.push({
+        attempt,
+        startedAt: attemptStartedAt,
+        completedAt: attemptCompletedAt,
+        durationMs: attemptCompletedAt - attemptStartedAt,
+        status: "error",
+        errorCode: error?.code || null,
+        errorType: error?.type || error?.name || error?.constructor?.name || "Error",
+        messageSummary: String(error?.message || error || "").slice(0, 180),
+        transient
+      });
+
+      if (transient && attempt < maxAttempts) {
+        console.warn("[PATCH_027U_OPENAI_TRANSIENT_RETRY]", {
+          attempt,
+          nextAttempt: attempt + 1,
+          errorCode: error?.code || null,
+          errorType: error?.type || error?.name || error?.constructor?.name || "Error",
+          success: false
+        });
+        await sleep(350);
+        continue;
+      }
+
+      openaiCallRecord.completedAt = attemptCompletedAt;
+      openaiCallRecord.durationMs = openaiCallRecord.completedAt - openaiCallRecord.startedAt;
+      openaiCallRecord.status = "error";
+      openaiCallRecord.attempt = attempt;
+      openaiCallRecord.retryAttempted = transient && attempt > 1;
+      openaiCallRecord.retryExhausted = transient && attempt >= maxAttempts;
+      openaiCallRecord.errorCode = error?.code || null;
+      openaiCallRecord.errorType = error?.type || error?.name || error?.constructor?.name || "Error";
+      openaiCallRecord.messageSummary = String(error?.message || error || "").slice(0, 180);
+      if (transient) {
+        console.warn("[PATCH_027U_OPENAI_TRANSIENT_RETRY]", {
+          attempt,
+          errorCode: error?.code || null,
+          errorType: error?.type || error?.name || error?.constructor?.name || "Error",
+          success: false,
+          exhausted: attempt >= maxAttempts,
+          retried: attempt > 1
+        });
+      }
+      throw error;
+    }
+  }
+
+  if (openaiCallRecord.retrySucceeded) {
+    console.warn("[PATCH_027U_OPENAI_TRANSIENT_RETRY]", {
+      attempt: openaiCallRecord.attempt,
+      errorCode: openaiCallRecord.attempts[0]?.errorCode || null,
+      success: true
     });
-    openaiCallRecord.completedAt = Date.now();
-    openaiCallRecord.durationMs = openaiCallRecord.completedAt - openaiCallRecord.startedAt;
-    openaiCallRecord.status = "success";
-  } catch (error) {
-    openaiCallRecord.completedAt = Date.now();
-    openaiCallRecord.durationMs = openaiCallRecord.completedAt - openaiCallRecord.startedAt;
-    openaiCallRecord.status = "error";
-    openaiCallRecord.errorCode = error?.code || null;
-    openaiCallRecord.errorType = error?.type || error?.name || error?.constructor?.name || "Error";
-    openaiCallRecord.messageSummary = String(error?.message || error || "").slice(0, 180);
-    throw error;
   }
 
   const answer =
