@@ -2296,6 +2296,54 @@ async function fastRefLookup({
   }
 }
 
+function buildExplicitAuthorityRefGroups(targetAuthorities = []) {
+  return unique(targetAuthorities)
+    .filter((term) => isRecognizableAuthorityReference(term))
+    .map((term) => ({
+      term,
+      refs: buildNormalizedRefVariants([term])
+    }))
+    .filter((group) => group.refs.length > 0);
+}
+
+async function fastRefLookupByExplicitAuthority({
+  supabaseClient,
+  authorityGroups = [],
+  poolLimit,
+  parsed = {},
+  searchMode = "EXACT_AUTHORITY"
+} = {}) {
+  if (!authorityGroups.length) return [];
+
+  const perAuthorityLimit = clampMatchCount(
+    Math.max(3, Math.ceil(Number(poolLimit || DEFAULT_TOP_K) / authorityGroups.length))
+  );
+  const results = [];
+
+  for (const group of authorityGroups) {
+    const groupResults = await fastRefLookup({
+      supabaseClient,
+      refs: group.refs,
+      poolLimit: perAuthorityLimit,
+      parsed,
+      searchMode
+    });
+
+    if (groupResults.length > 0) {
+      console.log("[PATCH_027S_EXPLICIT_AUTHORITY_ALLOCATION_HIT]", {
+        authority: String(group.term || "").slice(0, 80),
+        refsQueried: group.refs.length,
+        allocatedLimit: perAuthorityLimit,
+        found: groupResults.length
+      });
+    }
+
+    results.push(...groupResults);
+  }
+
+  return results;
+}
+
 // fastAuthorityReferenceLookup — supplemental indexed-column ILIKE lookup.
 //
 // Called by titleMetadataSearch when fastRefLookup (normalized_reference.in())
@@ -2471,6 +2519,18 @@ export async function exactAuthoritySearch(arg1, arg2) {
     ...targetAuthorities
   ]);
 
+  const explicitAuthorityGroups = buildExplicitAuthorityRefGroups(targetAuthorities);
+  const perAuthorityResults =
+    explicitAuthorityGroups.length > 1
+      ? await fastRefLookupByExplicitAuthority({
+          supabaseClient,
+          authorityGroups: explicitAuthorityGroups,
+          poolLimit,
+          parsed,
+          searchMode: "EXACT_AUTHORITY"
+        })
+      : [];
+
   const fastResults = await fastRefLookup({
     supabaseClient,
     refs:       fastRefs,
@@ -2480,17 +2540,21 @@ export async function exactAuthoritySearch(arg1, arg2) {
   });
 
   const sorted = uniqueResults(
-    sortResultsForTina(fastResults, query || keyword, parsed)
+    sortResultsForTina([...perAuthorityResults, ...fastResults], query || keyword, parsed)
   ).slice(0, safeTopK);
 
   if (sorted.length >= safeTopK) {
     console.log("[EXACT AUTHORITY FAST RETURN]", {
       refsQueried: fastRefs.length,
+      explicitAuthorityGroups: explicitAuthorityGroups.length,
+      perAuthorityFound: perAuthorityResults.length,
       found:       sorted.length,
     });
   } else {
     console.log("[EXACT AUTHORITY NO BROAD FALLBACK]", {
       refsQueried: fastRefs.length,
+      explicitAuthorityGroups: explicitAuthorityGroups.length,
+      perAuthorityFound: perAuthorityResults.length,
       found:       sorted.length,
       needed:      safeTopK,
       note:        "returning equality results only — ILIKE fallback removed to prevent 57014 timeout",
