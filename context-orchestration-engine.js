@@ -428,6 +428,39 @@ function buildOpenAiPayloadMetricsOnFailure(requestPayload = {}, attempts = []) 
   };
 }
 
+function truncateOpenAiDiagnosticText(value = "", limit = 300) {
+  return safeString(value || "").slice(0, limit);
+}
+
+function firstOpenAiDiagnosticStackLines(value = "") {
+  const stack = safeString(value || "");
+  if (!stack) return [];
+  return stack.split(/\r?\n/).slice(0, 8);
+}
+
+function buildOpenAiErrorStackDiagnostic(error = {}, { attempt = null, maxAttempts = null } = {}) {
+  const cause = error?.cause || null;
+  return {
+    attempt,
+    maxAttempts,
+    errorName: error?.name || null,
+    errorCode: error?.code || null,
+    errorType: error?.type || null,
+    errorStatus: error?.status ?? null,
+    errorMessage: truncateOpenAiDiagnosticText(error?.message || error || ""),
+    errorStack: firstOpenAiDiagnosticStackLines(error?.stack || ""),
+    causeName: cause?.name || null,
+    causeCode: cause?.code || null,
+    causeType: cause?.type || null,
+    causeMessage: truncateOpenAiDiagnosticText(cause?.message || ""),
+    causeStack: firstOpenAiDiagnosticStackLines(cause?.stack || ""),
+    constructorName: error?.constructor?.name || null,
+    causeConstructorName: cause?.constructor?.name || null,
+    isErrorInstance: error instanceof Error,
+    isCauseErrorInstance: cause instanceof Error
+  };
+}
+
 function unique(values = []) {
   return [...new Set(safeArray(values).filter(Boolean))];
 }
@@ -2659,6 +2692,12 @@ export async function callOpenAIWithOrchestration(args = {}) {
         prematureClose,
         freshClientUsed
       });
+      if (transient) {
+        console.warn("[PATCH_027W_OPENAI_ERROR_STACK_DIAGNOSTIC]", buildOpenAiErrorStackDiagnostic(error, {
+          attempt,
+          maxAttempts: effectiveMaxAttempts
+        }));
+      }
 
       const delayMs = prematureClose
         ? (attempt === 1 ? 750 : attempt === 2 ? 2000 : 0)
