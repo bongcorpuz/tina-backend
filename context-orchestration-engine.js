@@ -375,6 +375,59 @@ function isTransientOpenAiTransportError(error = {}) {
   );
 }
 
+function isPrematureCloseOpenAiError(error = {}) {
+  const code = safeString(error?.code || "").toUpperCase();
+  const message = safeString(error?.message || error || "");
+  return code === "ERR_STREAM_PREMATURE_CLOSE" || /premature close/i.test(message);
+}
+
+function canBuildFreshOpenAiClient(args = {}) {
+  return typeof args.openaiClientFactory === "function" || Boolean(process.env.OPENAI_API_KEY);
+}
+
+function buildFreshOpenAiClient(args = {}, fallbackOpenAi = null) {
+  if (typeof args.openaiClientFactory === "function") {
+    return args.openaiClientFactory();
+  }
+  if (!process.env.OPENAI_API_KEY && fallbackOpenAi) {
+    return fallbackOpenAi;
+  }
+  return new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY
+  });
+}
+
+function buildOpenAiPayloadMetricsOnFailure(requestPayload = {}, attempts = []) {
+  const messages = Array.isArray(requestPayload.messages) ? requestPayload.messages : [];
+  const messageCharCounts = messages.map((message) => safeString(message?.content || "").length);
+  const totalChars = messageCharCounts.reduce((sum, count) => sum + count, 0);
+  let jsonByteSize = 0;
+  try {
+    jsonByteSize = Buffer.byteLength(JSON.stringify(requestPayload), "utf8");
+  } catch {
+    jsonByteSize = 0;
+  }
+
+  return {
+    model: safeString(requestPayload.model || ""),
+    messageCount: messages.length,
+    roleSequence: messages.map((message) => safeString(message?.role || "")),
+    messageCharCounts,
+    totalChars,
+    estimatedTokens: estimateMessagesTokens(messages),
+    jsonByteSize,
+    max_tokens: requestPayload.max_tokens ?? null,
+    temperature: requestPayload.temperature ?? null,
+    hasStream: Object.prototype.hasOwnProperty.call(requestPayload, "stream"),
+    hasTools: Object.prototype.hasOwnProperty.call(requestPayload, "tools"),
+    hasResponseFormat: Object.prototype.hasOwnProperty.call(requestPayload, "response_format"),
+    hasSignal: Object.prototype.hasOwnProperty.call(requestPayload, "signal"),
+    hasTimeoutOption: Object.prototype.hasOwnProperty.call(requestPayload, "timeout"),
+    attemptDurations: attempts.map((attempt) => attempt.durationMs ?? null),
+    errorCodes: attempts.map((attempt) => attempt.errorCode || null)
+  };
+}
+
 function unique(values = []) {
   return [...new Set(safeArray(values).filter(Boolean))];
 }
@@ -2549,29 +2602,50 @@ export async function callOpenAIWithOrchestration(args = {}) {
     max_tokens: orchestration.maxCompletionTokens,
     temperature: orchestration.temperature
   };
-  const maxAttempts = 2;
+  const maxAttempts = 3;
+  const canUseFreshRetryClient = canBuildFreshOpenAiClient(args);
 
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
     const attemptStartedAt = Date.now();
+    const shouldUseFreshClient = attempt > 1 && isPrematureCloseOpenAiError(openaiCallRecord.attempts.at(-1));
+    const freshClientUsed = shouldUseFreshClient && canBuildFreshOpenAiClient(args);
+    const attemptOpenAi = shouldUseFreshClient ? buildFreshOpenAiClient(args, openai) : openai;
     try {
-      completion = await openai.chat.completions.create(requestPayload);
+      completion = await attemptOpenAi.chat.completions.create(requestPayload);
       const attemptCompletedAt = Date.now();
       openaiCallRecord.attempts.push({
         attempt,
         startedAt: attemptStartedAt,
         completedAt: attemptCompletedAt,
         durationMs: attemptCompletedAt - attemptStartedAt,
-        status: "success"
+        status: "success",
+        freshClientUsed
       });
       openaiCallRecord.completedAt = attemptCompletedAt;
       openaiCallRecord.durationMs = openaiCallRecord.completedAt - openaiCallRecord.startedAt;
       openaiCallRecord.status = "success";
       openaiCallRecord.attempt = attempt;
       openaiCallRecord.retrySucceeded = attempt > 1;
+      if (attempt > 1) {
+        const successMaxAttempts = isPrematureCloseOpenAiError(openaiCallRecord.attempts[0])
+          ? (canUseFreshRetryClient ? maxAttempts : 2)
+          : 2;
+        console.warn("[PATCH_027V_OPENAI_RETRY_SUCCESS]", {
+          attempt,
+          maxAttempts: successMaxAttempts,
+          errorCode: openaiCallRecord.attempts[0]?.errorCode || null,
+          durationMs: attemptCompletedAt - attemptStartedAt,
+          freshClientUsed
+        });
+      }
       break;
     } catch (error) {
       const attemptCompletedAt = Date.now();
       const transient = isTransientOpenAiTransportError(error);
+      const prematureClose = isPrematureCloseOpenAiError(error);
+      const effectiveMaxAttempts = prematureClose
+        ? (canUseFreshRetryClient ? maxAttempts : 2)
+        : 2;
       openaiCallRecord.attempts.push({
         attempt,
         startedAt: attemptStartedAt,
@@ -2581,10 +2655,19 @@ export async function callOpenAIWithOrchestration(args = {}) {
         errorCode: error?.code || null,
         errorType: error?.type || error?.name || error?.constructor?.name || "Error",
         messageSummary: String(error?.message || error || "").slice(0, 180),
-        transient
+        transient,
+        prematureClose,
+        freshClientUsed
       });
 
-      if (transient && attempt < maxAttempts) {
+      const delayMs = prematureClose
+        ? (attempt === 1 ? 750 : attempt === 2 ? 2000 : 0)
+        : 350;
+      const canRetry =
+        (prematureClose && attempt < effectiveMaxAttempts) ||
+        (!prematureClose && transient && attempt < 2);
+
+      if (canRetry) {
         console.warn("[PATCH_027U_OPENAI_TRANSIENT_RETRY]", {
           attempt,
           nextAttempt: attempt + 1,
@@ -2592,7 +2675,19 @@ export async function callOpenAIWithOrchestration(args = {}) {
           errorType: error?.type || error?.name || error?.constructor?.name || "Error",
           success: false
         });
-        await sleep(350);
+        if (prematureClose) {
+          const nextFreshClientUsed = canBuildFreshOpenAiClient(args);
+          console.warn("[PATCH_027V_OPENAI_RETRY_ATTEMPT]", {
+            attempt,
+            nextAttempt: attempt + 1,
+            maxAttempts: effectiveMaxAttempts,
+            delayMs,
+            errorCode: error?.code || null,
+            durationMs: attemptCompletedAt - attemptStartedAt,
+            freshClientUsed: nextFreshClientUsed
+          });
+        }
+        await sleep(delayMs);
         continue;
       }
 
@@ -2601,7 +2696,7 @@ export async function callOpenAIWithOrchestration(args = {}) {
       openaiCallRecord.status = "error";
       openaiCallRecord.attempt = attempt;
       openaiCallRecord.retryAttempted = transient && attempt > 1;
-      openaiCallRecord.retryExhausted = transient && attempt >= maxAttempts;
+      openaiCallRecord.retryExhausted = transient && attempt >= effectiveMaxAttempts;
       openaiCallRecord.errorCode = error?.code || null;
       openaiCallRecord.errorType = error?.type || error?.name || error?.constructor?.name || "Error";
       openaiCallRecord.messageSummary = String(error?.message || error || "").slice(0, 180);
@@ -2611,9 +2706,22 @@ export async function callOpenAIWithOrchestration(args = {}) {
           errorCode: error?.code || null,
           errorType: error?.type || error?.name || error?.constructor?.name || "Error",
           success: false,
-          exhausted: attempt >= maxAttempts,
+          exhausted: attempt >= effectiveMaxAttempts,
           retried: attempt > 1
         });
+      }
+      if (prematureClose) {
+        const payloadMetrics = buildOpenAiPayloadMetricsOnFailure(requestPayload, openaiCallRecord.attempts);
+        openaiCallRecord.payloadMetricsOnFailure = payloadMetrics;
+        console.warn("[PATCH_027V_OPENAI_RETRY_EXHAUSTED]", {
+          attempt,
+          maxAttempts: effectiveMaxAttempts,
+          errorCode: error?.code || null,
+          durationMs: attemptCompletedAt - attemptStartedAt,
+          freshClientUsed,
+          retryExhausted: attempt >= effectiveMaxAttempts
+        });
+        console.warn("[PATCH_027V_OPENAI_PAYLOAD_METRICS_ON_FAILURE]", payloadMetrics);
       }
       throw error;
     }
