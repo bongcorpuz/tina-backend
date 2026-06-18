@@ -289,6 +289,9 @@ function sanitizePublicSelectorCard(card = {}) {
   const citation = publicCardText(card.citation || card.normalizedReference || card.normalized_reference || "");
   const displayLabel = publicCardText(card.displayLabel || card.display_label || citation || card.authorityLabel || "");
   const title = publicCardText(card.title) || displayLabel || citation || "Source";
+  const normalizedReference = publicCardText(card.normalizedReference || card.normalized_reference || "");
+  const authorityMatchTier = Number(card.authorityMatchTier || card._authorityMatchTier || 0);
+  const excerpt = publicCardText(card.excerpt || "");
   // PATCH-023B: bridge intermediate URL fields to publicUrl (mirrors pipeline.js fix).
   const safeUrl = publicCardUrl(
     card.publicUrl    || card.public_url    ||
@@ -303,6 +306,9 @@ function sanitizePublicSelectorCard(card = {}) {
     citation,
     authorityType: publicCardText(card.authorityType || card.authority_type || ""),
     limitationRequired: card.limitationRequired === true,
+    ...(normalizedReference ? { normalizedReference } : {}),
+    ...(Number.isFinite(authorityMatchTier) && authorityMatchTier > 0 ? { authorityMatchTier } : {}),
+    ...(excerpt ? { excerpt } : {}),
     ...(safeUrl ? { publicUrl: safeUrl } : {})
   };
 }

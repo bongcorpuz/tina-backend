@@ -4394,12 +4394,22 @@ export async function runPipeline({
           .map(c => canonicalSourceKey(c.normalizedReference || c.citation || ""))
           .filter(Boolean)
       );
+      const _controllingKeys = new Set([
+        ...(Array.isArray(ctx.issueClassification?.controllingAuthorities)
+          ? ctx.issueClassification.controllingAuthorities
+          : []),
+        ...(Array.isArray(ctx.issueClassification?.targetAuthorityGroups?.controllingAuthorities)
+          ? ctx.issueClassification.targetAuthorityGroups.controllingAuthorities
+          : [])
+      ].map(a => canonicalSourceKey(a)).filter(Boolean));
       // Restore planned authority cards (authorityMatchTier 1 or 2) that DSF dropped.
       // This covers exact controlling/supporting authorities and NIRC range members
       // such as estate-tax sections inside "NIRC Secs. 84-97".
       const _tier1Dropped = _sasVisible.filter(c => {
         const k = canonicalSourceKey(c.normalizedReference || c.citation || "");
-        return k && Number(c.authorityMatchTier || 4) <= 2 && !_dsKeys.has(k);
+        const _tierEligible = Number(c.authorityMatchTier || 4) <= 2;
+        const _controllingFallback = k && _controllingKeys.has(k);
+        return k && (_tierEligible || _controllingFallback) && !_dsKeys.has(k);
       });
       if (_tier1Dropped.length > 0) {
         // Prepend restored exact-authority cards (in SAS order), then DSF cards.
