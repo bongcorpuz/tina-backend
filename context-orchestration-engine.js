@@ -245,6 +245,14 @@ const EXCLUDED_NON_REVIEW_FOLDERS = Object.freeze([
   "08_review_materials"
 ]);
 
+const OPENAI_IDENTITY_ENCODING_HEADERS = Object.freeze({
+  "Accept-Encoding": "identity"
+});
+
+const OPENAI_IDENTITY_ENCODING_REQUEST_OPTIONS = Object.freeze({
+  headers: OPENAI_IDENTITY_ENCODING_HEADERS
+});
+
 const REVIEW_MODE_MARKERS = Object.freeze([
   "TAX_REVIEWER",
   "REVIEWER",
@@ -393,7 +401,8 @@ function buildFreshOpenAiClient(args = {}, fallbackOpenAi = null) {
     return fallbackOpenAi;
   }
   return new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY
+    apiKey: process.env.OPENAI_API_KEY,
+    defaultHeaders: OPENAI_IDENTITY_ENCODING_HEADERS
   });
 }
 
@@ -2588,7 +2597,8 @@ export async function callOpenAIWithOrchestration(args = {}) {
   const openai =
     args.openai ||
     new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY
+      apiKey: process.env.OPENAI_API_KEY,
+      defaultHeaders: OPENAI_IDENTITY_ENCODING_HEADERS
     });
 
   if (!process.env.OPENAI_API_KEY && !args.openai) {
@@ -2644,7 +2654,15 @@ export async function callOpenAIWithOrchestration(args = {}) {
     const freshClientUsed = shouldUseFreshClient && canBuildFreshOpenAiClient(args);
     const attemptOpenAi = shouldUseFreshClient ? buildFreshOpenAiClient(args, openai) : openai;
     try {
-      completion = await attemptOpenAi.chat.completions.create(requestPayload);
+      console.warn("[PATCH_027X_OPENAI_IDENTITY_ENCODING_ENABLED]", {
+        enabled: true,
+        attempt,
+        clientType: freshClientUsed ? "fresh" : "shared"
+      });
+      completion = await attemptOpenAi.chat.completions.create(
+        requestPayload,
+        OPENAI_IDENTITY_ENCODING_REQUEST_OPTIONS
+      );
       const attemptCompletedAt = Date.now();
       openaiCallRecord.attempts.push({
         attempt,
