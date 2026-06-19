@@ -727,6 +727,64 @@ function sourceCardPlanSortScore(card = {}) {
   return 1000 + tier * 100 + (section || 0);
 }
 
+function finalSourceCardCanonicalKey(card = {}) {
+  const ref = safeStr(
+    card.normalizedReference ||
+      card.normalized_reference ||
+      card.citation ||
+      card.displayLabel ||
+      card.display_label ||
+      card.label ||
+      card.title ||
+      ""
+  );
+  if (!ref) return "";
+
+  const admin = ref.match(/\b(?:rr|revenue\s+regulations?|revenue\s+regulation)\s*(?:no\.?\s*)?(\d{1,4})[-\s]+(\d{2,4})\b/i);
+  if (admin) {
+    const number = String(Number(admin[1]));
+    const year = admin[2].length === 2 ? `19${admin[2]}` : admin[2];
+    return `rr:${number}-${year}`;
+  }
+
+  return canonicalSourceKey(ref);
+}
+
+function mergeFinalSourceCards(existingCards = [], restoredCards = [], maxCards = 5) {
+  const beforeCards = [
+    ...(Array.isArray(existingCards) ? existingCards : []),
+    ...(Array.isArray(restoredCards) ? restoredCards : [])
+  ];
+  const seen = new Set();
+  const finalCards = [];
+  const droppedDuplicateLabels = [];
+
+  for (const card of beforeCards) {
+    const key = finalSourceCardCanonicalKey(card);
+    const label = card?.normalizedReference || card?.citation || card?.displayLabel || card?.label || card?.title || "";
+    if (!key) continue;
+    if (seen.has(key)) {
+      droppedDuplicateLabels.push(label || "(unlabeled)");
+      continue;
+    }
+    seen.add(key);
+    finalCards.push(card);
+    if (finalCards.length >= maxCards) break;
+  }
+
+  return {
+    finalCards,
+    diagnostics: {
+      beforeLabels: beforeCards.map(c => c?.normalizedReference || c?.citation || c?.displayLabel || c?.label || c?.title || "?"),
+      afterLabels: finalCards.map(c => c?.normalizedReference || c?.citation || c?.displayLabel || c?.label || c?.title || "?"),
+      beforeCanonicalKeys: beforeCards.map(c => finalSourceCardCanonicalKey(c)).filter(Boolean),
+      afterCanonicalKeys: finalCards.map(c => finalSourceCardCanonicalKey(c)).filter(Boolean),
+      droppedDuplicateLabels,
+      finalCount: finalCards.length
+    }
+  };
+}
+
 // PATCH-021C: jurisprudence authority promotion rank. For case-law intent
 // queries (isJurisprudenceQuery), SUPREME_COURT / CTA_EN_BANC / CTA_DIVISION
 // materials must outrank statutes and regulations in the final sources sent
@@ -965,6 +1023,9 @@ function sanitizePublicSourceCard(card = {}) {
   const citation = publicText(card.citation || card.normalizedReference || card.normalized_reference || "");
   const displayLabel = publicText(card.displayLabel || card.display_label || citation || card.authorityLabel || "");
   const title = publicText(card.title) || displayLabel || citation || "Source";
+  const normalizedReference = publicText(card.normalizedReference || card.normalized_reference || "");
+  const authorityRole = publicText(card.authorityRole || card.authority_role || "");
+  const authorityMatchTier = Number(card.authorityMatchTier || card.authority_match_tier || 0);
   // PATCH-023B: bridge all intermediate URL fields to publicUrl.
   // Intermediate cards carry driveViewUrl/url/webViewLink; sanitizePublicSourceCard
   // previously read only publicUrl/public_url, which was never set → all cards lacked
@@ -982,28 +1043,58 @@ function sanitizePublicSourceCard(card = {}) {
     citation,
     authorityType: publicText(card.authorityType || card.authority_type || ""),
     limitationRequired: card.limitationRequired === true,
+    ...(normalizedReference ? { normalizedReference } : {}),
+    ...(Number.isFinite(authorityMatchTier) && authorityMatchTier > 0 ? { authorityMatchTier } : {}),
+    ...(authorityRole ? { authorityRole } : {}),
     ...(safeUrl ? { publicUrl: safeUrl } : {})
   };
 }
 
 function sourceCardFromRetrievedTarget(doc = {}, target = "") {
+  const meta = doc.metadata || {};
   const citation = publicText(
     target ||
       doc.citation ||
       doc.normalizedReference ||
       doc.normalized_reference ||
+      meta.normalizedReference ||
+      meta.normalized_reference ||
       doc.reference ||
       ""
   );
   if (!citation) return null;
 
   return sanitizePublicSourceCard({
-    title: citation,
+    title: doc.title || doc.documentTitle || doc.document_title || meta.documentTitle || meta.document_title || citation,
     label: citation,
     displayLabel: citation,
     citation,
-    authorityType: doc.authorityType || doc.authority_type || "STATUTE",
-    limitationRequired: false
+    normalizedReference:
+      doc.normalizedReference ||
+      doc.normalized_reference ||
+      meta.normalizedReference ||
+      meta.normalized_reference ||
+      citation,
+    normalized_reference:
+      doc.normalized_reference ||
+      doc.normalizedReference ||
+      meta.normalized_reference ||
+      meta.normalizedReference ||
+      citation,
+    authorityType: doc.authorityType || doc.authority_type || meta.authorityType || meta.authority_type || "STATUTE",
+    authorityRole: doc.authorityRole || doc.authority_role || meta.authorityRole || meta.authority_role || "",
+    authorityMatchTier:
+      doc.authorityMatchTier ||
+      doc.authority_match_tier ||
+      doc.issueClassificationMatch?.authorityMatchTier ||
+      meta.authorityMatchTier ||
+      meta.authority_match_tier ||
+      undefined,
+    limitationRequired: doc.limitationRequired === true || doc.limitation_required === true || meta.limitationRequired === true,
+    publicUrl: doc.publicUrl || doc.public_url || meta.publicUrl || meta.public_url || "",
+    driveViewUrl: doc.driveViewUrl || doc.drive_view_url || meta.driveViewUrl || meta.drive_view_url || "",
+    webViewLink: doc.webViewLink || doc.web_view_link || meta.webViewLink || meta.web_view_link || "",
+    url: doc.url || meta.url || doc.source_url || meta.source_url || ""
   });
 }
 
@@ -4412,9 +4503,9 @@ export async function runPipeline({
         return k && (_tierEligible || _controllingFallback) && !_dsKeys.has(k);
       });
       if (_tier1Dropped.length > 0) {
-        // Prepend restored exact-authority cards (in SAS order), then DSF cards.
+        // Preserve DSF-kept/direct cards first, then add restored planned authorities.
         const _restoreSeen = new Set();
-        finalSourceCards = [..._tier1Dropped, ..._dsFiltered]
+        finalSourceCards = [..._dsFiltered, ..._tier1Dropped]
           .filter(c => {
             const k = canonicalSourceKey(c.normalizedReference || c.citation || "") ||
                       ((c.documentTitle || "") + "|" + (c.source || "")).toLowerCase().slice(0, 60);
@@ -4601,16 +4692,17 @@ export async function runPipeline({
     });
 
     if (restored.length > 0) {
-      const merged = [...restored, ...finalSourceCards];
-      const seen = new Set();
-      finalSourceCards = merged
-        .filter((card) => {
-          const key = canonicalSourceKey(card.citation || card.label || card.title || "");
-          if (!key || seen.has(key)) return false;
-          seen.add(key);
-          return true;
-        })
-        .slice(0, 5);
+      const beforeCards = [...finalSourceCards, ...restored];
+      const {
+        finalCards,
+        diagnostics: _027yFinalDiag
+      } = mergeFinalSourceCards(finalSourceCards, restored, 5);
+      finalSourceCards = finalCards;
+      console.log("[PATCH_027Y_SOURCE_CARD_FINALIZED]", {
+        ..._027yFinalDiag,
+        beforeLabels: beforeCards.map(c => c.normalizedReference || c.citation || c.displayLabel || c.label || c.title || "?"),
+        beforeCanonicalKeys: beforeCards.map(c => finalSourceCardCanonicalKey(c)).filter(Boolean)
+      });
       console.log("[PATCH-017J]", {
         marker:   "PATCH_017J_VAT_SOURCE_CARD_RESTORATION_COMPLETED",
         restored: restored.map(c => c.citation || c.label),
