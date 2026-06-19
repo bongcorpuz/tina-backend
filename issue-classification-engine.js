@@ -69,7 +69,8 @@ const PRIMARY_ISSUE = Object.freeze({
   CASE_LAW: "CASE_LAW",
   ISSUANCE: "ISSUANCE",
   NAMED_LAW: "NAMED_LAW",
-  GENERAL_TAX: "GENERAL_TAX"
+  GENERAL_TAX: "GENERAL_TAX",
+  BIR_ORGANIZATION: "BIR_ORGANIZATION"  // PATCH-028A-R2A
 });
 
 const LEGACY_PRIMARY_ISSUE = Object.freeze({
@@ -809,6 +810,37 @@ const DEFINITION_AUTHORITY_MAP = Object.freeze({
     controllingAuthorities: ["NIRC Sec. 106(A)(2)", "NIRC Sec. 108(B)"],
     supportingAuthorities: ["RR 16-2005"],
     supportingJurisprudence: []
+  },
+
+  // PATCH-028A-R2A: BIR organizational / foundational definitions
+  BIR_DEFINITION: {
+    primaryIssue: "BIR_ORGANIZATION",
+    domainCode: "BIR",
+    domainName: "BIR / NIRC Organizational",
+    targetAuthorities: ["NIRC Sec. 2", "NIRC Sec. 3", "NIRC Sec. 21"],
+    controllingAuthorities: ["NIRC Sec. 2", "NIRC Sec. 3"],
+    supportingAuthorities: ["NIRC Sec. 21"],
+    supportingJurisprudence: []
+  },
+
+  NIRC_DEFINITION: {
+    primaryIssue: "BIR_ORGANIZATION",
+    domainCode: "BIR",
+    domainName: "BIR / NIRC Organizational",
+    targetAuthorities: ["NIRC Sec. 21", "NIRC Sec. 2"],
+    controllingAuthorities: ["NIRC Sec. 21"],
+    supportingAuthorities: ["NIRC Sec. 2"],
+    supportingJurisprudence: []
+  },
+
+  TAX_CLASSIFICATION_DEFINITION: {
+    primaryIssue: "BIR_ORGANIZATION",
+    domainCode: "BIR",
+    domainName: "BIR / NIRC Organizational",
+    targetAuthorities: ["NIRC Sec. 21"],
+    controllingAuthorities: ["NIRC Sec. 21"],
+    supportingAuthorities: [],
+    supportingJurisprudence: []
   }
 });
 
@@ -980,6 +1012,26 @@ const DOMAIN_DETECTORS = Object.freeze([
     defaultSubIssue: "EXEMPTIONS",
     patterns: [/\btax exemption\b/i, /\bexemptions?\b/i, /\bstrictissimi juris\b/i],
     definitionKey: "EXEMPTIONS_DEFINITION"
+  },
+  // PATCH-028A-R2A: BIR/NIRC organizational and foundational tax-classification queries.
+  // Without this detector, queries about the BIR, the NIRC as an entity, the Tax Code,
+  // and the classification of national internal revenue taxes fall to GENERAL_TAX with
+  // only generic placeholder target authorities that match no indexed chunk.
+  {
+    domainCode: "BIR",
+    primaryIssue: "BIR_ORGANIZATION",
+    domainName: "BIR / NIRC Organizational",
+    defaultSubIssue: "BIR_OVERVIEW",
+    patterns: [
+      /\bbir\b/i,
+      /\bbureau\s+of\s+internal\s+revenue\b/i,
+      /\bcommissioner\s+of\s+internal\s+revenue\b/i,
+      /\bnirc\b/i,
+      /\bnational\s+internal\s+revenue\s+code\b/i,
+      /\bnational\s+internal\s+revenue\s+taxes?\b/i,
+      /\btax\s+code\b/i
+    ],
+    definitionKey: "BIR_DEFINITION"
   }
 ]);
 
@@ -1025,7 +1077,13 @@ const ISSUE_SPECIFIC_TARGETS = Object.freeze({
   LOCAL_BUSINESS_TAX: ["Local Government Code Sec. 143", "Local Government Code Sec. 151", "City of Manila v. Coca-Cola Bottlers Philippines (G.R. No. 180845)"],
   REAL_PROPERTY_TAX: ["Local Government Code Sec. 197", "Local Government Code Sec. 198", "Local Government Code Sec. 199", "Local Government Code Sec. 232"],
   CUSTOMS_DUTIES: ["CMTA", "BOC issuances"],
-  PEZA_INCENTIVES: ["CREATE Act", "NIRC incentive provisions", "PEZA law", "FIRB issuances"]
+  PEZA_INCENTIVES: ["CREATE Act", "NIRC incentive provisions", "PEZA law", "FIRB issuances"],
+
+  // PATCH-028A-R2A: BIR/NIRC organizational sub-issues → concrete indexed sections
+  BIR_OVERVIEW:           ["NIRC Sec. 2", "NIRC Sec. 3"],
+  BIR_DEFINITION:         ["NIRC Sec. 2", "NIRC Sec. 3"],
+  NIRC_DEFINITION:        ["NIRC Sec. 21", "NIRC Sec. 2"],
+  TAX_CLASSIFICATION:     ["NIRC Sec. 21"]
 });
 
 function isCreateActAuthorityAlias(value = "") {
@@ -1193,6 +1251,16 @@ function detectSubIssue(question = "", primaryIssue = "GENERAL_TAX", queryIntent
   const q = lower(question);
 
   if (queryIntent?.subIssue) return queryIntent.subIssue;
+
+  // PATCH-028A-R2A: BIR/NIRC organizational sub-issue routing.
+  // Must precede generic definition pattern so "What is the BIR?" does not
+  // collapse into GENERAL_TAX_DEFINITION before reaching these checks.
+  if (primaryIssue === "BIR_ORGANIZATION") {
+    if (/\bnational\s+internal\s+revenue\s+taxes?\b|\bclassif/i.test(q)) return "TAX_CLASSIFICATION";
+    if (/\bnirc\b|\bnational\s+internal\s+revenue\s+code\b|\btax\s+code\b/i.test(q)) return "NIRC_DEFINITION";
+    if (detectDefinitionPattern(question, queryIntent)) return "BIR_DEFINITION";
+    return "BIR_OVERVIEW";
+  }
 
   // PATCH-020A: specialized VAT sub-issue checks take priority over the generic
   // definition pattern. Definition-phrased exemption / zero-rating / input / output

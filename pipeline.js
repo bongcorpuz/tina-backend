@@ -1670,12 +1670,18 @@ export function patch027oIsEwtRateSeeking(query = "") {
   );
 }
 
+// PATCH-028A-R1A: Use ONLY isJurisprudenceQuery and explicit query-text signals as
+// case-law intent for the SAE court-authority gate.
+// requiresJurisprudence and useJurisprudenceEngine are doctrinal-analysis flags that
+// are intentionally set to true for VAT_DEFINITION / VAT_OVERVIEW subIssues (to enable
+// jurisprudence retrieval and doctrinal analysis) — they must not trigger the
+// court-authority-required AUTHORITY_FOUND block, which is only correct for queries
+// that explicitly ask for case law.  Step 13.5 already enforces the same distinction
+// (pipeline.js comment at the PATCH-021C block).
 function patch027nHasJurisprudenceIntent(query = "", issueClassification = {}) {
   return Boolean(
     issueClassification.isJurisprudenceQuery === true ||
-      issueClassification.requiresJurisprudence === true ||
-      issueClassification.downstreamRouting?.useJurisprudenceEngine === true ||
-      /\b(cases?|jurisprudence|case\s+law|ruling[s]?|supreme\s+court|cta\b|court\s+decision)\b/i.test(String(query || ""))
+      /\b(cases?|jurisprudence|case\s+law|ruling[s]?|supreme\s+court|cta\b|court\s+decision|doctrine)\b/i.test(String(query || ""))
   );
 }
 
