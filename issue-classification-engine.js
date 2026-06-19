@@ -1477,6 +1477,10 @@ function isExactAdministrativeAuthorityLookup(question = "", exactAuthority = {}
   if (!EXACT_ADMINISTRATIVE_AUTHORITY_TYPES.has(String(exactAuthority.type || "").toUpperCase())) return false;
   const q = lower(question);
   if (!q) return false;
+  const isBareIssuanceCitation =
+    exactAuthority.detected === true &&
+    /^\s*(?:rr|rmc|rmo|ramo)\s*(?:no\.?\s*)?\d+[-/. ]+\d{2,4}\s*$/i.test(q);
+  if (isBareIssuanceCitation) return true;
   const topicModifierLookup =
     /\bwhat\s+does\b[\s\S]{0,80}\b(?:provide|say|state|cover|discuss)\b(?:\s+(?:about|on|regarding)\b[\s\S]{0,80})?/i.test(q);
   return (

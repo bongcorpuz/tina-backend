@@ -98,6 +98,44 @@ group("Positive: exact administrative authority topic-modifier lookups", () => {
   );
 });
 
+group("Positive: bare exact administrative authority citations", () => {
+  assertExactAdminPromoted(
+    "RR 2-98",
+    "RR",
+    "RR No. 2-1998"
+  );
+
+  assertExactAdminPromoted(
+    "RR No. 2-1998",
+    "RR",
+    "RR No. 2-1998"
+  );
+
+  assertExactAdminPromoted(
+    "RMC 65-2012",
+    "RMC",
+    "RMC No. 65-2012"
+  );
+
+  assertExactAdminPromoted(
+    "RMO 20-2013",
+    "RMO",
+    "RMO No. 20-2013"
+  );
+
+  assertExactAdminPromoted(
+    "RMO 24-2013",
+    "RMO",
+    "RMO No. 24-2013"
+  );
+
+  assertExactAdminPromoted(
+    "RAMO 1-2000",
+    "RAMO",
+    "RAMO No. 1-2000"
+  );
+});
+
 group("Negative: generic and out-of-scope shapes are not promoted", () => {
   const genericBir = classify("What BIR issuances apply to estate tax?");
   assert(
@@ -134,6 +172,45 @@ group("Negative: generic and out-of-scope shapes are not promoted", () => {
   assert(
     !birRuling.controllingAuthorities.some((a) => /BIR Ruling No\. 016-2024/i.test(a)),
     "BIR Ruling No. 016-2024 remains out of exact-admin promotion scope"
+  );
+
+  assertNotPromoted(
+    "RR 2-98 and EWT rates",
+    "RR No. 2-1998",
+    "compound RR 2-98 and EWT rates"
+  );
+
+  const compared = classify("Compare RR 2-98 and RR 12-2018");
+  const comparedAdminControls = compared.controllingAuthorities.filter((a) =>
+    /\bRR\s+No\.\s*(?:2-1998|12-2018)\b/i.test(a)
+  );
+  assert(
+    comparedAdminControls.length === 0,
+    "compare query: no bare-citation administrative authority promoted"
+  );
+
+  assertNotPromoted(
+    "Explain EWT",
+    "RR No. 2-1998",
+    "generic Explain EWT"
+  );
+
+  const vat = classify("What is VAT?");
+  assert(
+    vat.primaryDomain === "VAT" && !vat.controllingAuthorities.some((a) => /\b(?:RR|RMC|RMO|RAMO)\s+No\.\s*\d+/i.test(a)),
+    "What is VAT?: PATCH-028A VAT behavior remains non-admin-exact"
+  );
+
+  const bir = classify("What is the BIR?");
+  assert(
+    bir.primaryIssue === "BIR_ORGANIZATION" && !bir.controllingAuthorities.some((a) => /\b(?:RR|RMC|RMO|RAMO)\s+No\.\s*\d+/i.test(a)),
+    "What is the BIR?: PATCH-028A BIR_ORGANIZATION behavior remains non-admin-exact"
+  );
+
+  const ctaCase = classify("CTA Case No. 9369");
+  assert(
+    !ctaCase.controllingAuthorities.some((a) => /\bCTA Case No\. 9369\b/i.test(a)),
+    "CTA Case No. 9369 remains outside administrative authority promotion"
   );
 });
 
