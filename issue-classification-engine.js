@@ -632,6 +632,16 @@ const DEFINITION_AUTHORITY_MAP = Object.freeze({
     supportingJurisprudence: []
   },
 
+  RESIDENT_CITIZEN_INCOME_SCOPE: {
+    primaryIssue: "INCOME_TAX",
+    domainCode: "CIT",
+    domainName: "Income Tax",
+    targetAuthorities: ["NIRC Sec. 23"],
+    controllingAuthorities: ["NIRC Sec. 23"],
+    supportingAuthorities: [],
+    supportingJurisprudence: []
+  },
+
   WITHHOLDING_TAX_DEFINITION: {
     primaryIssue: "WITHHOLDING",
     domainCode: "WHT",
@@ -1058,6 +1068,7 @@ const ISSUE_SPECIFIC_TARGETS = Object.freeze({
   VAT_EXEMPTION_RESIDENTIAL_LEASE: ["NIRC Sec. 109(Q)", "RR 16-2005"],
 
   INCOME_TAX_OVERVIEW: ["NIRC Sec. 23", "NIRC Sec. 24", "NIRC Sec. 27", "NIRC Sec. 31", "NIRC Sec. 32", "NIRC Sec. 34"],
+  RESIDENT_CITIZEN_INCOME_SCOPE: ["NIRC Sec. 23"],
   RCIT: ["NIRC Sec. 27(A)", "CREATE Act", "RR 9-1998"],
   MCIT: ["NIRC Sec. 27(E)", "RR 9-1998", "CREATE Act"],
   NOLCO: ["NIRC Sec. 34(D)(3)"],
@@ -1255,6 +1266,24 @@ function detectPrimaryIssue(question = "", queryIntent = {}) {
   return domains[0]?.primaryIssue || "GENERAL_TAX";
 }
 
+function isResidentCitizenIncomeScopeQuery(question = "") {
+  const q = lower(question);
+  if (!/\bresident\s+citizens?\b/i.test(q)) return false;
+
+  return Boolean(
+    /\btaxable\b/i.test(q) ||
+      /\bincome\b/i.test(q) ||
+      /\bphilippine[-\s]+source\b/i.test(q) ||
+      /\bsource\s+income\b/i.test(q) ||
+      /\bsources?\s+within\b/i.test(q) ||
+      /\bsources?\s+without\b/i.test(q) ||
+      /\bwithin\s+and\s+without\b/i.test(q) ||
+      /\bworldwide\s+income\b/i.test(q) ||
+      /\bnirc\b/i.test(q) ||
+      /\btax\s+code\b/i.test(q)
+  );
+}
+
 function detectSubIssue(question = "", primaryIssue = "GENERAL_TAX", queryIntent = {}) {
   const q = lower(question);
 
@@ -1269,6 +1298,8 @@ function detectSubIssue(question = "", primaryIssue = "GENERAL_TAX", queryIntent
     if (detectDefinitionPattern(question, queryIntent)) return "BIR_DEFINITION";
     return "BIR_OVERVIEW";
   }
+
+  if (isResidentCitizenIncomeScopeQuery(question)) return "RESIDENT_CITIZEN_INCOME_SCOPE";
 
   // PATCH-020A: specialized VAT sub-issue checks take priority over the generic
   // definition pattern. Definition-phrased exemption / zero-rating / input / output
