@@ -1690,6 +1690,63 @@ function patch027nIsCourtAuthority(candidate = {}) {
   return ["CASE", "SUPREME_COURT", "CTA_EN_BANC", "CTA_DIVISION", "COURT_DECISION"].includes(type);
 }
 
+function patch030aNormalizeCourtCaseReference(reference = "", type = "") {
+  const ref = String(reference || "").trim();
+  if (!ref) return "";
+
+  if (type === "CTA_DIVISION") {
+    const match = ref.match(/\bcta\s+(?:case\s+)?(?:no\.?\s*)?([a-z0-9.-]+)\b/i);
+    return match ? `CTA Case No. ${match[1]}` : ref;
+  }
+
+  if (type === "CTA_EN_BANC") {
+    const match = ref.match(/\bcta\s+(?:eb\s+)?(?:no\.?\s*)?([a-z0-9.-]+)\b/i);
+    return match ? `CTA EB No. ${match[1]}` : ref;
+  }
+
+  if (type === "SUPREME_COURT") {
+    const match = ref.match(/\bg\.?\s*r\.?\s*no\.?\s*([a-z0-9.-]+)\b/i);
+    return match ? `G.R. No. ${match[1]}` : ref;
+  }
+
+  return ref;
+}
+
+function patch030aExactCourtAuthority(issueClassification = {}) {
+  const exactAuthority = issueClassification?.exactAuthority || {};
+  const type = String(exactAuthority.type || "").toUpperCase().replace(/[\s-]+/g, "_");
+  if (exactAuthority.detected !== true) return null;
+  if (!["SUPREME_COURT", "CTA_EN_BANC", "CTA_DIVISION", "COURT_OF_APPEALS"].includes(type)) return null;
+
+  const reference = patch030aNormalizeCourtCaseReference(exactAuthority.reference || "", type);
+  if (!reference) return null;
+  return {
+    type,
+    reference,
+    key: canonicalSourceKey(reference)
+  };
+}
+
+function patch030aSourceCardMatchesExactCourt(card = {}, exactCourt = null) {
+  if (!exactCourt?.key) return false;
+  const refs = [
+    card.normalizedReference,
+    card.normalized_reference,
+    card.citation,
+    card.displayLabel,
+    card.display_label,
+    card.label,
+    card.title,
+    card.reference,
+    card.metadata?.normalizedReference,
+    card.metadata?.normalized_reference
+  ].filter(Boolean);
+
+  return refs.some((ref) =>
+    canonicalSourceKey(patch030aNormalizeCourtCaseReference(ref, exactCourt.type)) === exactCourt.key
+  );
+}
+
 function patch027nIsStatutoryAuthority(candidate = {}) {
   const type = _saeAuthorityType(candidate).replace(/[\s-]+/g, "_");
   return ["NIRC", "STATUTE", "TAX_CODE", "REPUBLIC_ACT", "RA"].includes(type);
@@ -4717,6 +4774,36 @@ export async function runPipeline({
     }
   }
 
+  const _030aExactCourt = patch030aExactCourtAuthority(ctx.issueClassification || {});
+  if (_030aExactCourt) {
+    const _030aExactFinalCards = finalSourceCards.filter((card) =>
+      patch030aSourceCardMatchesExactCourt(card, _030aExactCourt)
+    );
+    const _030aRestoredFromRetrieval = _030aExactFinalCards.length > 0
+      ? null
+      : (ctx.rerankedChunks || []).find((chunk) =>
+          patch030aSourceCardMatchesExactCourt(chunk, _030aExactCourt)
+        );
+
+    if (_030aExactFinalCards.length > 0) {
+      finalSourceCards = mergeFinalSourceCards(_030aExactFinalCards, [], 5).finalCards;
+    } else if (_030aRestoredFromRetrieval) {
+      const _030aCard = sourceCardFromRetrievedTarget(_030aRestoredFromRetrieval, _030aExactCourt.reference);
+      finalSourceCards = _030aCard ? [_030aCard] : [];
+    } else {
+      finalSourceCards = [];
+      ctx._030a_exactCourtAuthorityMissing = true;
+    }
+
+    console.log("[PATCH_030A_EXACT_COURT_CARD_GUARD]", {
+      exactAuthority: _030aExactCourt.reference,
+      matchedFinalCards: _030aExactFinalCards.length,
+      restoredFromRetrieval: Boolean(_030aRestoredFromRetrieval),
+      finalCount: finalSourceCards.length,
+      suppressedRelatedCards: finalSourceCards.length === 0 || _030aExactFinalCards.length > 0
+    });
+  }
+
   diagnostics.partialPipelineState.displayedSourceCardCount = finalSourceCards.length;
   diagnostics.partialPipelineState.sourceLabelsBeforeTimeout = buildFirstSourceLabels(finalSourceCards.length ? finalSourceCards : ctx.rerankedChunks);
   markPipelineCheckpoint(diagnostics, "SOURCE_SELECTION_COMPLETE", {
@@ -4774,6 +4861,14 @@ export async function runPipeline({
       "The source lookup completed but did not return matching authority for this query.",
       "",
       "This does not mean that no law or authority exists. Please verify the relevant indexed source before relying on a legal or tax conclusion."
+    ].join("\n");
+  } else if (ctx._030a_exactCourtAuthorityMissing === true) {
+    const _030aExactCourt = patch030aExactCourtAuthority(ctx.issueClassification || {});
+    const _030aRef = _030aExactCourt?.reference || "the requested case";
+    _outputAnswer = [
+      `I could not locate an indexed source card matching ${_030aRef}.`,
+      "",
+      "I cannot discuss that named case as sourced authority without a matching indexed case source. Please verify the case citation or ask a broader jurisprudence question."
     ].join("\n");
   } else if (_isLearningMode && _sourceAvail.sourceAvailability !== "AUTHORITY_FOUND") {
     // /review and /quiz: no grounded source available — guard only; these hooks

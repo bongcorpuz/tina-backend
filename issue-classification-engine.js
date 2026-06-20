@@ -1179,15 +1179,23 @@ function detectExactAuthority(question = "") {
     };
   }
 
-  const cta =
-    value.match(/\bcta\s+eb\s+no\.?\s*([a-z0-9.-]+)\b/i) ||
-    value.match(/\bcta\s+case\s+no\.?\s*([a-z0-9.-]+)\b/i);
+  const ctaEb = value.match(/\bcta\s+eb\s+no\.?\s*([a-z0-9.-]+)\b/i);
+  if (ctaEb) {
+    return {
+      detected: true,
+      type: "CTA_EN_BANC",
+      reference: `CTA EB No. ${ctaEb[1]}`,
+      number: ctaEb[1],
+      year: null
+    };
+  }
 
+  const cta = value.match(/\bcta\s+case\s+no\.?\s*([a-z0-9.-]+)\b/i);
   if (cta) {
     return {
       detected: true,
       type: "CTA_DIVISION",
-      reference: `CTA ${cta[1]}`,
+      reference: `CTA Case No. ${cta[1]}`,
       number: cta[1],
       year: null
     };

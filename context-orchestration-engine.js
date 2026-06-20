@@ -661,7 +661,12 @@ function normalizeBuildArgs(args = {}) {
         args.statusReason ||
         sourceAvailability?.statusReason ||
         sourceAvailability?.sourceAvailabilityReason ||
-        ""
+        "",
+      exactAuthority:
+        args.issueClassification?.exactAuthority ||
+        args.classification?.exactAuthority ||
+        sourceAvailability?.exactAuthority ||
+        null
     },
 
     authorityPacket:
@@ -1829,6 +1834,11 @@ function buildSaePromptFraming(sourceAvailabilityMetadata = {}) {
   const limitationRequired = sourceAvailabilityMetadata?.limitationRequired;
   const disclosureType = sourceAvailabilityMetadata?.disclosureType || null;
   const statusReason = safeString(sourceAvailabilityMetadata?.statusReason || "");
+  const exactAuthority = sourceAvailabilityMetadata?.exactAuthority || {};
+  const exactAuthorityType = safeString(exactAuthority?.type).trim().toUpperCase().replace(/[\s-]+/g, "_");
+  const exactCourtReference = ["SUPREME_COURT", "CTA_EN_BANC", "CTA_DIVISION", "COURT_OF_APPEALS"].includes(exactAuthorityType)
+    ? safeString(exactAuthority?.reference)
+    : "";
 
   const ruleByStatus = {
     AUTHORITY_FOUND:
@@ -1852,6 +1862,7 @@ Source Availability Engine framing:
 - disclosureType: ${disclosureType || "none"}
 - statusReason: ${statusReason || "none supplied"}
 - Rule: ${ruleByStatus[saeStatus]}
+${exactCourtReference && saeStatus !== "AUTHORITY_FOUND" ? `- Exact court-case integrity: The user named ${exactCourtReference}, but source availability is ${saeStatus}. Do not discuss that named case's facts, holding, doctrine, or disposition as sourced authority unless a matching indexed case source is retrieved and displayed. State that no indexed matching case source was located.` : ""}
 - Do not recompute source availability. Use this metadata only for answer framing.
   `);
 }
