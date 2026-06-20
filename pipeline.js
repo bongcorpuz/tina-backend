@@ -72,112 +72,20 @@ import {
   BOUNDARY_REJECTION_MESSAGE
 }                                                 from "./services/philippine-tax-domain-boundary.js";
 import { selectSourceAuthorities }                from "./services/source-authority-selector.js";
+import {
+  ensurePipelineDiagnostics,
+  markPipelineCheckpoint,
+  finalizePipelineDiagnostics,
+  createPipelineInstrumentation,
+  buildRetrievalLayerCounts,
+  buildFirstSourceLabels
+}                                                 from "./pipeline-observability.js";
 
 const PIPELINE_VERSION = "1.0.0";
 const ROUTE_BUDGET_MS = 90_000;
-const PIPELINE_BUDGET_WARNING_THRESHOLDS_MS = [15_000, 10_000, 5_000];
 
 // ─── helpers ──────────────────────────────────────────────────────────────────
 
-function ensurePipelineDiagnostics(diag = null, {
-  requestStartedAt = Date.now(),
-  route = "",
-  model = "",
-  budgetMs = null,
-  requestId = ""
-} = {}) {
-  const target = diag && typeof diag === "object" ? diag : {};
-  target.requestId = target.requestId || requestId || generateTraceId();
-  target.route = target.route || route;
-  target.model = target.model || model || "";
-  target.budgetMs = Number.isFinite(Number(target.budgetMs)) ? Number(target.budgetMs) : budgetMs;
-  target.pipelineTimings = target.pipelineTimings || { requestStartedAt };
-  target.pipelineTimings.requestStartedAt = target.pipelineTimings.requestStartedAt || requestStartedAt;
-  target.pipelineStageDurations = target.pipelineStageDurations || {};
-  target.partialPipelineState = target.partialPipelineState || {
-    retrievalCompleted: false,
-    classificationCompleted: false,
-    generationStarted: false,
-    generationCompleted: false,
-    complianceStarted: false,
-    complianceCompleted: false
-  };
-  target.openaiCalls = Array.isArray(target.openaiCalls) ? target.openaiCalls : [];
-  target.checkpoints = Array.isArray(target.checkpoints) ? target.checkpoints : [];
-  return target;
-}
-
-function computePipelineStageDurations(diag = {}) {
-  const t = diag.pipelineTimings || {};
-  const duration = (start, end) =>
-    Number.isFinite(t[start]) && Number.isFinite(t[end])
-      ? Math.max(0, t[end] - t[start])
-      : undefined;
-  const totalEnd = t.responseCompletedAt || Date.now();
-  const durations = {
-    classificationMs: duration("classificationStartedAt", "classificationCompletedAt"),
-    retrievalMs: duration("retrievalStartedAt", "retrievalCompletedAt"),
-    authorityResolutionMs: duration("authorityResolutionStartedAt", "authorityResolutionCompletedAt"),
-    sourceSelectionMs: duration("sourceSelectionStartedAt", "sourceSelectionCompletedAt"),
-    generationMs: duration("generationStartedAt", "generationCompletedAt"),
-    complianceMs: duration("complianceStartedAt", "complianceCompletedAt"),
-    renderingMs: duration("renderingStartedAt", "renderingCompletedAt"),
-    totalMs: Number.isFinite(t.requestStartedAt) ? Math.max(0, totalEnd - t.requestStartedAt) : undefined
-  };
-  diag.pipelineStageDurations = Object.fromEntries(
-    Object.entries(durations).filter(([, value]) => value !== undefined)
-  );
-  return diag.pipelineStageDurations;
-}
-
-function markPipelineCheckpoint(diag = null, checkpoint, {
-  timingField = "",
-  mode = "",
-  route = "",
-  model = "",
-  sourceAvailabilityStatus = "",
-  retrievedCount = 0,
-  displayedSourceCardCount = 0
-} = {}) {
-  if (!diag || !checkpoint) return;
-  const now = Date.now();
-  const timings = diag.pipelineTimings || (diag.pipelineTimings = { requestStartedAt: now });
-  if (timingField) timings[timingField] = now;
-  const elapsedMs = Number.isFinite(timings.requestStartedAt) ? now - timings.requestStartedAt : 0;
-  const budgetMs = Number.isFinite(Number(diag.budgetMs)) ? Number(diag.budgetMs) : null;
-  const remainingBudgetMs = budgetMs === null ? null : budgetMs - elapsedMs;
-  const entry = {
-    checkpoint,
-    requestId: diag.requestId || "",
-    elapsedMs,
-    remainingBudgetMs,
-    model: model || diag.model || "",
-    mode,
-    route: route || diag.route || "",
-    sourceAvailabilityStatus: sourceAvailabilityStatus || "",
-    retrievedCount,
-    displayedSourceCardCount
-  };
-  diag.checkpoints = diag.checkpoints || [];
-  diag.checkpoints.push(entry);
-  computePipelineStageDurations(diag);
-  console.log("[PIPELINE CHECKPOINT]", entry);
-  for (const threshold of [15000, 10000, 5000]) {
-    if (remainingBudgetMs !== null && remainingBudgetMs <= threshold && !diag[`_warnedBelow${threshold}`]) {
-      diag[`_warnedBelow${threshold}`] = true;
-      console.warn("[PIPELINE_BUDGET_WARNING]", { ...entry, thresholdMs: threshold });
-    }
-  }
-}
-
-function finalizePipelineDiagnostics(diag = null) {
-  if (!diag) return null;
-  diag.pipelineTimings = diag.pipelineTimings || { requestStartedAt: Date.now() };
-  diag.pipelineTimings.responseCompletedAt = diag.pipelineTimings.responseCompletedAt || Date.now();
-  computePipelineStageDurations(diag);
-  diag.pipelineTimings.totalMs = diag.pipelineStageDurations.totalMs;
-  return diag;
-}
 function safeStr(v) {
   return typeof v === "string" ? v : String(v || "");
 }
@@ -291,158 +199,6 @@ function buildOpenAiFailureRetrievalAnswer(ctx = {}, query = "") {
 // conclusion — those depend on facts that generation did not analyze.
 const SAFE_EWT_INSUFFICIENT_GENERATION_ANSWER =
   "TINA found potentially relevant withholding tax authorities, but the answer could not be safely completed within the available generation budget. The applicable EWT treatment or rate depends on the specific income payment category, payee status, and governing regulation. Please rerun the query or narrow the fact pattern.";
-
-function buildRetrievalLayerCounts(retrievalDiagnostics = {}) {
-  return {
-    exactAuthorityMatches:    retrievalDiagnostics?.exactAuthorityMatches    ?? 0,
-    citationVariantMatches:   retrievalDiagnostics?.citationVariantMatches   ?? 0,
-    metadataMatches:          retrievalDiagnostics?.metadataMatches          ?? 0,
-    contentKeywordMatches:    retrievalDiagnostics?.contentKeywordMatches    ?? 0,
-    semanticMatches:          retrievalDiagnostics?.semanticMatches          ?? 0,
-    fallbackMatches:          retrievalDiagnostics?.fallbackMatches          ?? 0,
-    supabaseFallbackMatches:  retrievalDiagnostics?.supabaseFallbackMatches  ?? 0
-  };
-}
-
-function buildFirstSourceLabels(sources = [], max = 5) {
-  return (Array.isArray(sources) ? sources : [])
-    .map((source) =>
-      source.citation ||
-      source.normalized_reference ||
-      source.normalizedReference ||
-      source.title ||
-      source.document_title ||
-      source.source ||
-      ""
-    )
-    .filter(Boolean)
-    .slice(0, max);
-}
-
-function createPipelineInstrumentation({
-  budgetMs = ROUTE_BUDGET_MS,
-  now = () => Date.now()
-} = {}) {
-  const startedAt = now();
-  const pipelineTimings = {};
-  const pipelineStageDurations = {};
-  const openaiCalls = [];
-  const warnedThresholds = new Set();
-  const partialPipelineState = {
-    retrievalCompleted: false,
-    classificationCompleted: false,
-    generationStarted: false,
-    generationCompleted: false,
-    complianceStarted: false,
-    complianceCompleted: false,
-    retrievedCount: 0,
-    displayedSourceCardCount: 0,
-    sourceAvailabilityStatusBeforeTimeout: null,
-    sourceLabelsBeforeTimeout: [],
-    retrievalLayerCounts: {}
-  };
-
-  const elapsedMs = () => now() - startedAt;
-  const remainingBudgetMs = () => Math.max(0, budgetMs - elapsedMs());
-
-  function warnIfNeeded(checkpoint) {
-    const remaining = remainingBudgetMs();
-    for (const threshold of PIPELINE_BUDGET_WARNING_THRESHOLDS_MS) {
-      if (remaining <= threshold && !warnedThresholds.has(threshold)) {
-        warnedThresholds.add(threshold);
-        console.warn("[PIPELINE_BUDGET_WARNING]", {
-          checkpoint,
-          elapsedMs: elapsedMs(),
-          remainingBudgetMs: remaining,
-          thresholdMs: threshold,
-          budgetMs
-        });
-      }
-    }
-  }
-
-  function checkpoint(event, stageName = null) {
-    const entry = {
-      event,
-      stageName,
-      at: new Date(now()).toISOString(),
-      elapsedMs: elapsedMs(),
-      remainingBudgetMs: remainingBudgetMs(),
-      budgetMs
-    };
-    pipelineTimings[event] = entry;
-    warnIfNeeded(event);
-    console.log(`[${event}]`, {
-      elapsedMs: entry.elapsedMs,
-      remainingBudgetMs: entry.remainingBudgetMs,
-      budgetMs
-    });
-    return entry;
-  }
-
-  function stageStarted(event, stageName) {
-    const entry = checkpoint(event, stageName);
-    pipelineStageDurations[stageName] = {
-      startedAt: entry.at,
-      completedAt: null,
-      durationMs: null,
-      status: "started"
-    };
-    return entry;
-  }
-
-  function stageCompleted(event, stageName, extra = {}) {
-    const entry = checkpoint(event, stageName);
-    const startedAtIso = pipelineStageDurations[stageName]?.startedAt;
-    const startedAtMs = startedAtIso ? Date.parse(startedAtIso) : now();
-    pipelineStageDurations[stageName] = {
-      ...pipelineStageDurations[stageName],
-      ...extra,
-      completedAt: entry.at,
-      durationMs: Number.isFinite(startedAtMs) ? now() - startedAtMs : null,
-      status: "completed"
-    };
-    return entry;
-  }
-
-  function classifyTimeoutType() {
-    if (!partialPipelineState.classificationCompleted) return "CLASSIFICATION_TIMEOUT";
-    if (!partialPipelineState.retrievalCompleted) return "RETRIEVAL_OPERATION_TIMEOUT";
-    if (partialPipelineState.generationStarted && !partialPipelineState.generationCompleted) return "GENERATION_TIMEOUT";
-    if (partialPipelineState.complianceStarted && !partialPipelineState.complianceCompleted) return "COMPLIANCE_TIMEOUT";
-    if (pipelineStageDurations.rendering?.status === "started" && pipelineStageDurations.rendering?.status !== "completed") return "RENDERING_TIMEOUT";
-    return "UNKNOWN_PIPELINE_TIMEOUT";
-  }
-
-  function diagnostics(timeout = false) {
-    const timeoutType = timeout ? classifyTimeoutType() : null;
-    return {
-      timeout,
-      timeoutType,
-      elapsedMs: elapsedMs(),
-      budgetMs,
-      pipelineTimings,
-      pipelineStageDurations,
-      partialPipelineState: { ...partialPipelineState },
-      openaiCalls: [...openaiCalls]
-    };
-  }
-
-  return {
-    budgetMs,
-    pipelineTimings,
-    pipelineStageDurations,
-    partialPipelineState,
-    openaiCalls,
-    elapsedMs,
-    remainingBudgetMs,
-    checkpoint,
-    stageStarted,
-    stageCompleted,
-    classifyTimeoutType,
-    diagnostics
-  };
-}
 
 function extractRetrievalLayerCounts(retrievalDiagnostics = {}) {
   return {
