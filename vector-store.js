@@ -2239,6 +2239,56 @@ export async function addDocumentToVectorStore(text, source, metadata = {}, clie
 // ("NIRC Sec. 105") and the normalized format produced by normalizeLegalReference
 // ("NIRC_SEC_105"), covering whichever format was written during indexing.
 
+function buildAdminIssuanceYearLookupVariants(term = "") {
+  const raw = String(term || "").trim();
+  if (!raw) return [];
+
+  const patterns = [
+    {
+      prefix: "RR",
+      longName: "Revenue Regulations",
+      regex: /\b(?:RR|Revenue\s+Regulations?)\s*(?:No\.?)?\s*0*(\d+)\s*[-/. ]+\s*(19\d{2})\b/i
+    },
+    {
+      prefix: "RMC",
+      longName: "Revenue Memorandum Circular",
+      regex: /\b(?:RMC|Revenue\s+Memorandum\s+Circulars?)\s*(?:No\.?)?\s*0*(\d+)\s*[-/. ]+\s*(19\d{2})\b/i
+    },
+    {
+      prefix: "RMO",
+      longName: "Revenue Memorandum Order",
+      regex: /\b(?:RMO|Revenue\s+Memorandum\s+Orders?)\s*(?:No\.?)?\s*0*(\d+)\s*[-/. ]+\s*(19\d{2})\b/i
+    },
+    {
+      prefix: "RAMO",
+      longName: "Revenue Audit Memorandum Order",
+      regex: /\b(?:RAMO|Revenue\s+Audit\s+Memorandum\s+Orders?)\s*(?:No\.?)?\s*0*(\d+)\s*[-/. ]+\s*(19\d{2})\b/i
+    }
+  ];
+
+  for (const { prefix, longName, regex } of patterns) {
+    const match = raw.match(regex);
+    if (!match) continue;
+
+    const number = String(Number(match[1]));
+    const fullYear = match[2];
+    const shortYear = fullYear.slice(-2);
+
+    return unique([
+      `${prefix} No. ${number}-${fullYear}`,
+      `${prefix} ${number}-${fullYear}`,
+      `${longName} No. ${number}-${fullYear}`,
+      `${longName} ${number}-${fullYear}`,
+      `${prefix} No. ${number}-${shortYear}`,
+      `${prefix} ${number}-${shortYear}`,
+      `${longName} No. ${number}-${shortYear}`,
+      `${longName} ${number}-${shortYear}`
+    ]);
+  }
+
+  return [];
+}
+
 function buildNormalizedRefVariants(terms = []) {
   const variants = [];
   for (const term of terms) {
@@ -2253,6 +2303,7 @@ function buildNormalizedRefVariants(terms = []) {
     } catch {
       // normalizeLegalReference is best-effort; failures are safe to ignore
     }
+    variants.push(...buildAdminIssuanceYearLookupVariants(term));
   }
   return unique(variants).filter(Boolean);
 }

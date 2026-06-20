@@ -1518,7 +1518,7 @@ function isExactAdministrativeAuthorityLookup(question = "", exactAuthority = {}
   if (!q) return false;
   const isBareIssuanceCitation =
     exactAuthority.detected === true &&
-    /^\s*(?:rr|rmc|rmo|ramo)\s*(?:no\.?\s*)?\d+[-/. ]+\d{2,4}\s*$/i.test(q);
+    /^\s*(?:(?:rr|rmc|rmo|ramo)|revenue\s+regulations?|revenue\s+memorandum\s+circulars?|revenue\s+memorandum\s+orders?|revenue\s+audit\s+memorandum\s+orders?)\s*(?:no\.?\s*)?\d+[-/. ]+\d{2,4}\s*$/i.test(q);
   if (isBareIssuanceCitation) return true;
   const topicModifierLookup =
     /\bwhat\s+does\b[\s\S]{0,80}\b(?:provide|say|state|cover|discuss)\b(?:\s+(?:about|on|regarding)\b[\s\S]{0,80})?/i.test(q);
