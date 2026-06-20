@@ -1959,11 +1959,17 @@ export function isNircSourceDocument(source = "", metadata = {}) {
 // or "under Section 112" because those lack a period immediately after the
 // section number — the trailing dot is the reliable heading discriminator.
 export function detectNircSectionHeading(chunkText = "") {
-  const match = chunkText.match(
+  const directMatch = chunkText.match(
     /(?:^|[\r\n]|\.\s*|\s{2,})\s*(?:SEC(?:TION)?\.?)\s+([0-9]+[A-Z]?)\./i
   );
-  if (!match) return null;
-  return `NIRC Sec. ${match[1]}`;
+  if (directMatch) return `NIRC Sec. ${directMatch[1]}`;
+
+  const compactStructuralMatch = chunkText.match(
+    /\b(?:TITLE|CHAPTER|SUBTITLE)\s+(?:[IVXLC]+|[0-9]+|[A-Z])\b(?:(?!\bSEC(?:TION)?\.?\s+[0-9]+[A-Z]?\.).){0,180}\b(?:SEC(?:TION)?\.?)\s+([0-9]+[A-Z]?)\./i
+  );
+  if (compactStructuralMatch) return `NIRC Sec. ${compactStructuralMatch[1]}`;
+
+  return null;
 }
 
 // Extracts ALL NIRC section references found anywhere in chunk text —
