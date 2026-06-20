@@ -775,6 +775,21 @@ function publicUrl(value = "") {
   return /^https?:\/\//i.test(url) ? url : "";
 }
 
+function sourceCardPublicUrlFromDoc(doc = {}) {
+  const meta = doc.metadata || {};
+  return publicUrl(
+    doc.publicUrl || doc.public_url ||
+      doc.driveViewUrl || doc.drive_view_url ||
+      doc.url || doc.webViewLink || doc.web_view_link ||
+      doc.sourceUrl || doc.source_url ||
+      meta.publicUrl || meta.public_url ||
+      meta.driveViewUrl || meta.drive_view_url ||
+      meta.url || meta.webViewLink || meta.web_view_link ||
+      meta.sourceUrl || meta.source_url ||
+      ""
+  );
+}
+
 function sanitizePublicSourceCard(card = {}) {
   const citation = publicText(card.citation || card.normalizedReference || card.normalized_reference || "");
   const displayLabel = publicText(card.displayLabel || card.display_label || citation || card.authorityLabel || "");
@@ -847,11 +862,32 @@ function sourceCardFromRetrievedTarget(doc = {}, target = "") {
       meta.authority_match_tier ||
       undefined,
     limitationRequired: doc.limitationRequired === true || doc.limitation_required === true || meta.limitationRequired === true,
-    publicUrl: doc.publicUrl || doc.public_url || meta.publicUrl || meta.public_url || "",
+    publicUrl: sourceCardPublicUrlFromDoc(doc),
     driveViewUrl: doc.driveViewUrl || doc.drive_view_url || meta.driveViewUrl || meta.drive_view_url || "",
     webViewLink: doc.webViewLink || doc.web_view_link || meta.webViewLink || meta.web_view_link || "",
     url: doc.url || meta.url || doc.source_url || meta.source_url || ""
   });
+}
+
+async function resolveIndexedSourceCardTarget(target = "") {
+  const cleanTarget = safeStr(target).trim();
+  if (!cleanTarget) return null;
+
+  try {
+    const matches = await exactAuthoritySearch({
+      query: cleanTarget,
+      keyword: cleanTarget,
+      targetAuthorities: [cleanTarget],
+      topK: 1
+    });
+    return Array.isArray(matches) && matches.length > 0 ? matches[0] : null;
+  } catch (error) {
+    console.warn("[PATCH_033D_R1_INDEXED_SOURCE_CARD_LOOKUP_FAILED]", {
+      target: cleanTarget.slice(0, 80),
+      error: error?.message || String(error)
+    });
+    return null;
+  }
 }
 
 function sourceCardDocumentTitle(c = {}) {
@@ -4411,6 +4447,7 @@ export async function runPipeline({
     );
     const restored       = [];
     const _017kMissed    = [];
+    const _033dR1IndexedCardCache = new Map();
 
     for (const target of targetAuths) {
       const targetKey = canonicalSourceKey(target);
@@ -4467,13 +4504,21 @@ export async function runPipeline({
                         : /\brmc\b|\bmemorandu[mo]\s+circular/i.test(target) ? "RMC"
                         : /\brmo\b|\bmemorandu[mo]\s+order/i.test(target)    ? "RMO"
                         : "STATUTE";
-        card = sourceCardFromRetrievedTarget({ authorityType: _017kType }, target);
+        let _033dR1IndexedDoc = _033dR1IndexedCardCache.get(targetKey);
+        if (!_033dR1IndexedCardCache.has(targetKey)) {
+          _033dR1IndexedDoc = await resolveIndexedSourceCardTarget(target);
+          _033dR1IndexedCardCache.set(targetKey, _033dR1IndexedDoc || null);
+        }
+        card = _033dR1IndexedDoc
+          ? sourceCardFromRetrievedTarget(_033dR1IndexedDoc, target)
+          : sourceCardFromRetrievedTarget({ authorityType: _017kType }, target);
         if (card) {
           console.log("[PATCH-017K]", {
             marker: "PATCH_017K_INDEXED_SUPPORTING_AUTHORITY_RESTORED",
             target,
             authorityType: _017kType,
-            source: "classification_authority_inventory"
+            source: _033dR1IndexedDoc ? "indexed_source_card_lookup" : "classification_authority_inventory",
+            hasUrl: Boolean(card.publicUrl)
           });
         }
       }
@@ -4559,6 +4604,20 @@ export async function runPipeline({
       suppressedRelatedCards: finalSourceCards.length === 0 || _030aExactFinalCards.length > 0
     });
   }
+
+  const {
+    finalCards: _033dR1DedupedCards,
+    diagnostics: _033dR1DedupeDiag
+  } = mergeFinalSourceCards(finalSourceCards, [], 5);
+  if (_033dR1DedupeDiag.droppedDuplicateLabels.length > 0 || _033dR1DedupedCards.length !== finalSourceCards.length) {
+    console.log("[PATCH_033D_R1_SOURCE_CARD_GLOBAL_DEDUPE]", {
+      beforeLabels: _033dR1DedupeDiag.beforeLabels,
+      afterLabels: _033dR1DedupeDiag.afterLabels,
+      droppedDuplicateLabels: _033dR1DedupeDiag.droppedDuplicateLabels,
+      finalCount: _033dR1DedupeDiag.finalCount
+    });
+  }
+  finalSourceCards = _033dR1DedupedCards;
 
   diagnostics.partialPipelineState.displayedSourceCardCount = finalSourceCards.length;
   diagnostics.partialPipelineState.sourceLabelsBeforeTimeout = buildFirstSourceLabels(finalSourceCards.length ? finalSourceCards : ctx.rerankedChunks);
