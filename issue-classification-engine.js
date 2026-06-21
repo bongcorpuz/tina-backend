@@ -853,9 +853,9 @@ const DEFINITION_AUTHORITY_MAP = Object.freeze({
     primaryIssue: "BIR_ORGANIZATION",
     domainCode: "BIR",
     domainName: "BIR / NIRC Organizational",
-    targetAuthorities: ["NIRC Sec. 2", "NIRC Sec. 3", "NIRC Sec. 21"],
+    targetAuthorities: ["NIRC Sec. 2", "NIRC Sec. 3"],
     controllingAuthorities: ["NIRC Sec. 2", "NIRC Sec. 3"],
-    supportingAuthorities: ["NIRC Sec. 21"],
+    supportingAuthorities: [],
     supportingJurisprudence: []
   },
 
@@ -1539,6 +1539,8 @@ function buildLegalQuestionPresented({ question = "", primaryIssue, subIssue, do
 
 function getDefinitionAuthorityFor(question = "", detector = null, primaryIssue = "", subIssue = "") {
   if (!detectDefinitionPattern(question)) return null;
+
+  if (subIssue === "TAX_CLASSIFICATION") return DEFINITION_AUTHORITY_MAP.TAX_CLASSIFICATION_DEFINITION;
 
   // PATCH-020A: the sub-issue resolved by detectSubIssue's specialized VAT priority
   // guard wins over the domain detector's definitionKey. Otherwise "What is VAT on
