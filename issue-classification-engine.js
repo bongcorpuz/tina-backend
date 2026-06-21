@@ -658,6 +658,16 @@ const DEFINITION_AUTHORITY_MAP = Object.freeze({
     supportingJurisprudence: []
   },
 
+  TAXPAYER_DEFINITION: {
+    primaryIssue: "INCOME_TAX",
+    domainCode: "CIT",
+    domainName: "Income Tax",
+    targetAuthorities: ["NIRC Sec. 22"],
+    controllingAuthorities: ["NIRC Sec. 22"],
+    supportingAuthorities: [],
+    supportingJurisprudence: []
+  },
+
   WITHHOLDING_TAX_DEFINITION: {
     primaryIssue: "WITHHOLDING",
     domainCode: "WHT",
@@ -1300,10 +1310,45 @@ function isResidentCitizenIncomeScopeQuery(question = "") {
   );
 }
 
+function isTaxpayerDefinitionQuery(question = "") {
+  const q = lower(question);
+  if (!detectDefinitionPattern(question)) return false;
+
+  const citizenOrAlienStatus =
+    /\b(?:non[-\s]?resident|resident)\s+citizens?\b/i.test(q) ||
+    /\b(?:non[-\s]?resident|resident)\s+aliens?\b/i.test(q);
+
+  const corporationStatus =
+    /\b(?:resident|non[-\s]?resident)\s+foreign\s+corporations?\b/i.test(q) ||
+    /\bdomestic\s+corporations?\b/i.test(q) ||
+    /\bforeign\s+corporations?\b/i.test(q);
+
+  const taxpayerStatus = /\btaxpayers?\b/i.test(q);
+
+  if (!citizenOrAlienStatus && !corporationStatus && !taxpayerStatus) return false;
+
+  const taxContext =
+    /\bnirc\b/i.test(q) ||
+    /\bnational\s+internal\s+revenue\s+code\b/i.test(q) ||
+    /\btax\s+code\b/i.test(q) ||
+    /\bphilippine\s+(?:tax|taxation|income\s+tax)\b/i.test(q) ||
+    /\bincome\s+tax\b/i.test(q) ||
+    /\btax(?:es|able|ation)?\b/i.test(q) ||
+    taxpayerStatus;
+
+  const distinctiveTaxpayerCorporation =
+    /\b(?:resident|non[-\s]?resident)\s+foreign\s+corporations?\b/i.test(q);
+
+  return Boolean(taxContext || distinctiveTaxpayerCorporation);
+}
+
 function detectSubIssue(question = "", primaryIssue = "GENERAL_TAX", queryIntent = {}) {
   const q = lower(question);
 
   if (queryIntent?.subIssue) return queryIntent.subIssue;
+
+  if (isResidentCitizenIncomeScopeQuery(question)) return "RESIDENT_CITIZEN_INCOME_SCOPE";
+  if (isTaxpayerDefinitionQuery(question)) return "TAXPAYER_DEFINITION";
 
   // PATCH-028A-R2A: BIR/NIRC organizational sub-issue routing.
   // Must precede generic definition pattern so "What is the BIR?" does not
@@ -1314,8 +1359,6 @@ function detectSubIssue(question = "", primaryIssue = "GENERAL_TAX", queryIntent
     if (detectDefinitionPattern(question, queryIntent)) return "BIR_DEFINITION";
     return "BIR_OVERVIEW";
   }
-
-  if (isResidentCitizenIncomeScopeQuery(question)) return "RESIDENT_CITIZEN_INCOME_SCOPE";
 
   // PATCH-020A: specialized VAT sub-issue checks take priority over the generic
   // definition pattern. Definition-phrased exemption / zero-rating / input / output
@@ -1650,6 +1693,7 @@ const _VAT_SPECIALIZED_SUB_ISSUES_024B = new Set([
 function detectRetrievalStrategy({ question = "", queryIntent = {}, primaryIssue, subIssue, exactAuthority }) {
   if (exactAuthority?.detected) return RETRIEVAL_STRATEGY.EXACT_AUTHORITY;
   if (detectSourcePattern(question, queryIntent)) return RETRIEVAL_STRATEGY.SOURCE_FINDER;
+  if (subIssue === "TAXPAYER_DEFINITION") return RETRIEVAL_STRATEGY.MIXED;
   if (subIssue === "VAT_DEFINITION") return RETRIEVAL_STRATEGY.VAT_DEFINITION;
   // PATCH-024B: Specialized VAT sub-issues use MIXED (authority-hierarchy-semantic)
   // not FAST_DEFINITION, even when the query surface is definition-phrased.
@@ -1668,10 +1712,11 @@ function detectResponseMode({ question = "", queryIntent = {}, complexity, subIs
   if (queryIntent?.responseMode) return queryIntent.responseMode;
   if (exactAuthority?.reference === "RA 11534" && isCreateActAuthorityAlias(question)) return "STANDARD";
   if (exactAuthority?.reference === "RA 10963" && isTrainLawAuthorityAlias(question)) return "STANDARD";
+  if (detectSourcePattern(question, queryIntent)) return "SOURCE";
   // PATCH-024B: Specialized VAT sub-issues must not be downgraded to FAST_DEFINITION.
+  if (subIssue === "TAXPAYER_DEFINITION") return "STANDARD";
   if (_VAT_SPECIALIZED_SUB_ISSUES_024B.has(subIssue)) return "STANDARD";
   if (detectDefinitionPattern(question, queryIntent)) return "FAST_DEFINITION";
-  if (detectSourcePattern(question, queryIntent)) return "SOURCE";
   if (queryIntent?.requiresReviewMode) return "REVIEWER";
   if (queryIntent?.requiresQuizMode) return "QUIZ";
   if (/\bcompute|calculate|how much|tax due|tax payable\b/i.test(question)) return "COMPUTATION";

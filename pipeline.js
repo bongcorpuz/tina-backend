@@ -69,7 +69,8 @@ import {
 }                                                 from "./source-visibility-engine.js";
 import {
   detectPhilippineTaxBoundary,
-  BOUNDARY_REJECTION_MESSAGE
+  BOUNDARY_REJECTION_MESSAGE,
+  BOUNDARY_CLARIFY_MESSAGE
 }                                                 from "./services/philippine-tax-domain-boundary.js";
 import { selectSourceAuthorities }                from "./services/source-authority-selector.js";
 import {
@@ -1814,7 +1815,11 @@ export async function runPipeline({
       confidence:      _pipelineBoundaryCheck.confidence,
     });
     if (_pipelineBoundaryCheck.decision === "REJECT" || _pipelineBoundaryCheck.decision === "CLARIFY") {
-      console.log("[PIPELINE DOMAIN BOUNDARY REJECTED]", {
+      const _isHardReject = _pipelineBoundaryCheck.decision === "REJECT";
+      const _boundaryStatus = _isHardReject ? "DOMAIN_BOUNDARY_REJECT" : "DOMAIN_BOUNDARY_CLARIFY";
+      const _boundaryMessage = _isHardReject ? BOUNDARY_REJECTION_MESSAGE : BOUNDARY_CLARIFY_MESSAGE;
+
+      console.log("[PIPELINE DOMAIN BOUNDARY BLOCKED]", {
         query:      (query || "").slice(0, 120),
         hook,
         decision:   _pipelineBoundaryCheck.decision,
@@ -1822,17 +1827,17 @@ export async function runPipeline({
         confidence: _pipelineBoundaryCheck.confidence,
         blocked:    true,
       });
-      endTrace({ traceId, name: "tina-pipeline", status: "DOMAIN_BOUNDARY_REJECT", hook });
+      endTrace({ traceId, name: "tina-pipeline", status: _boundaryStatus, hook });
       markPipelineCheckpoint(diagnostics, "RESPONSE_COMPLETE", {
         timingField: "responseCompletedAt",
         mode: ctx.mode || "",
         route: hook,
         model,
-        sourceAvailabilityStatus: "DOMAIN_BOUNDARY_REJECT"
+        sourceAvailabilityStatus: _boundaryStatus
       });
       finalizePipelineDiagnostics(diagnostics);
       return {
-        answer:                   BOUNDARY_REJECTION_MESSAGE,
+        answer:                   _boundaryMessage,
         sources:                  [],
         sourcesUsed:              [],
         sourceCards:              [],
@@ -1840,7 +1845,7 @@ export async function runPipeline({
         retrievedSourceCount:     0,
         displayedSourceCount:     0,
         relatedSourceCount:       0,
-        sourceStatus:             "DOMAIN_BOUNDARY_REJECT",
+        sourceStatus:             _boundaryStatus,
         domainBoundary:           true,
         domainBoundaryDecision:   _pipelineBoundaryCheck.decision,
         domainBoundaryReason:     _pipelineBoundaryCheck.reason,

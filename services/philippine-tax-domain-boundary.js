@@ -424,6 +424,8 @@ const AUDIT_TAX_SIGNALS = [
 // Safe: "penalty for late BIR filing" → "BIR" hits allowlist first → ALLOW.
 
 const CLARIFY_PATTERNS = [
+  { pattern: /\b(?:non[-\s]?resident|resident)\s+citizens?\b/i, domain: "TAXPAYER_STATUS" },
+  { pattern: /\b(?:non[-\s]?resident|resident)\s+aliens?\b/i,   domain: "TAXPAYER_STATUS" },
   { pattern: /\bgross\s+receipts?\b/i,             domain: "TAX_ADJACENT" },
   { pattern: /\bprofessional\s+fees?\b/i,          domain: "TAX_ADJACENT" },
   { pattern: /\baudit\s+risk\b/i,                  domain: "TAX_ADJACENT" },
