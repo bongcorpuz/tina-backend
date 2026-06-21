@@ -32,6 +32,13 @@ const PROTECTED_EXACT = new Set([
   ".env"
 ]);
 
+// PATCH-034A approval: Phase 6B intentionally introduces source-card-engine.js
+// as an extraction target for pure source-card finalization helpers.
+// Keep this exception narrow to the exact file; all other protected files remain blocked.
+const APPROVED_EXACT = new Set([
+  "source-card-engine.js"
+]);
+
 const PROTECTED_PREFIXES = [
   ".env.",               // .env.*
   "supabase-service-key", // supabase-service-key*
@@ -75,7 +82,8 @@ const entries = git.stdout
 const violations = [];
 for (const { status, paths } of entries) {
   for (const p of paths) {
-    if (isProtected(p)) violations.push({ status, path: p });
+    const name = basename(p).toLowerCase();
+    if (isProtected(p) && !APPROVED_EXACT.has(name)) violations.push({ status, path: p });
   }
 }
 

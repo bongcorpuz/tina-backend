@@ -81,6 +81,13 @@ import {
   buildRetrievalLayerCounts,
   buildFirstSourceLabels
 }                                                 from "./pipeline-observability.js";
+import {
+  finalSourceCardCanonicalKey as engineFinalSourceCardCanonicalKey,
+  mergeFinalSourceCards as engineMergeFinalSourceCards,
+  sanitizePublicSourceCard as engineSanitizePublicSourceCard,
+  sourceCardFromRetrievedTarget as engineSourceCardFromRetrievedTarget,
+  sourceCardPublicUrlFromDoc as engineSourceCardPublicUrlFromDoc
+}                                                 from "./source-card-engine.js";
 
 const PIPELINE_VERSION = "1.0.0";
 const ROUTE_BUDGET_MS = 90_000;
@@ -485,61 +492,11 @@ function sourceCardPlanSortScore(card = {}) {
 }
 
 function finalSourceCardCanonicalKey(card = {}) {
-  const ref = safeStr(
-    card.normalizedReference ||
-      card.normalized_reference ||
-      card.citation ||
-      card.displayLabel ||
-      card.display_label ||
-      card.label ||
-      card.title ||
-      ""
-  );
-  if (!ref) return "";
-
-  const admin = ref.match(/\b(?:rr|revenue\s+regulations?|revenue\s+regulation)\s*(?:no\.?\s*)?(\d{1,4})[-\s]+(\d{2,4})\b/i);
-  if (admin) {
-    const number = String(Number(admin[1]));
-    const year = admin[2].length === 2 ? `19${admin[2]}` : admin[2];
-    return `rr:${number}-${year}`;
-  }
-
-  return canonicalSourceKey(ref);
+  return engineFinalSourceCardCanonicalKey(card);
 }
 
 function mergeFinalSourceCards(existingCards = [], restoredCards = [], maxCards = 5) {
-  const beforeCards = [
-    ...(Array.isArray(existingCards) ? existingCards : []),
-    ...(Array.isArray(restoredCards) ? restoredCards : [])
-  ];
-  const seen = new Set();
-  const finalCards = [];
-  const droppedDuplicateLabels = [];
-
-  for (const card of beforeCards) {
-    const key = finalSourceCardCanonicalKey(card);
-    const label = card?.normalizedReference || card?.citation || card?.displayLabel || card?.label || card?.title || "";
-    if (!key) continue;
-    if (seen.has(key)) {
-      droppedDuplicateLabels.push(label || "(unlabeled)");
-      continue;
-    }
-    seen.add(key);
-    finalCards.push(card);
-    if (finalCards.length >= maxCards) break;
-  }
-
-  return {
-    finalCards,
-    diagnostics: {
-      beforeLabels: beforeCards.map(c => c?.normalizedReference || c?.citation || c?.displayLabel || c?.label || c?.title || "?"),
-      afterLabels: finalCards.map(c => c?.normalizedReference || c?.citation || c?.displayLabel || c?.label || c?.title || "?"),
-      beforeCanonicalKeys: beforeCards.map(c => finalSourceCardCanonicalKey(c)).filter(Boolean),
-      afterCanonicalKeys: finalCards.map(c => finalSourceCardCanonicalKey(c)).filter(Boolean),
-      droppedDuplicateLabels,
-      finalCount: finalCards.length
-    }
-  };
+  return engineMergeFinalSourceCards(existingCards, restoredCards, maxCards);
 }
 
 // PATCH-021C: jurisprudence authority promotion rank. For case-law intent
@@ -777,21 +734,12 @@ function publicUrl(value = "") {
 }
 
 function sourceCardPublicUrlFromDoc(doc = {}) {
-  const meta = doc.metadata || {};
-  return publicUrl(
-    doc.publicUrl || doc.public_url ||
-      doc.driveViewUrl || doc.drive_view_url ||
-      doc.url || doc.webViewLink || doc.web_view_link ||
-      doc.sourceUrl || doc.source_url ||
-      meta.publicUrl || meta.public_url ||
-      meta.driveViewUrl || meta.drive_view_url ||
-      meta.url || meta.webViewLink || meta.web_view_link ||
-      meta.sourceUrl || meta.source_url ||
-      ""
-  );
+  return engineSourceCardPublicUrlFromDoc(doc);
 }
 
 function sanitizePublicSourceCard(card = {}) {
+  return engineSanitizePublicSourceCard(card);
+
   const citation = publicText(card.citation || card.normalizedReference || card.normalized_reference || "");
   const displayLabel = publicText(card.displayLabel || card.display_label || citation || card.authorityLabel || "");
   const title = publicText(card.title) || displayLabel || citation || "Source";
@@ -823,6 +771,8 @@ function sanitizePublicSourceCard(card = {}) {
 }
 
 function sourceCardFromRetrievedTarget(doc = {}, target = "") {
+  return engineSourceCardFromRetrievedTarget(doc, target);
+
   const meta = doc.metadata || {};
   const citation = publicText(
     target ||
