@@ -171,9 +171,32 @@ export function sourceCardFromRetrievedTarget(doc = {}, target = "") {
   });
 }
 
+export async function resolveIndexedSourceCardTarget(target = "", { exactAuthoritySearch, logger = console } = {}) {
+  const cleanTarget = safeStr(target).trim();
+  if (!cleanTarget) return null;
+  if (typeof exactAuthoritySearch !== "function") return null;
+
+  try {
+    const matches = await exactAuthoritySearch({
+      query: cleanTarget,
+      keyword: cleanTarget,
+      targetAuthorities: [cleanTarget],
+      topK: 1
+    });
+    return Array.isArray(matches) && matches.length > 0 ? matches[0] : null;
+  } catch (error) {
+    logger?.warn?.("[PATCH_033D_R1_INDEXED_SOURCE_CARD_LOOKUP_FAILED]", {
+      target: cleanTarget.slice(0, 80),
+      error: error?.message || String(error)
+    });
+    return null;
+  }
+}
+
 export default {
   finalSourceCardCanonicalKey,
   mergeFinalSourceCards,
+  resolveIndexedSourceCardTarget,
   sanitizePublicSourceCard,
   sourceCardFromRetrievedTarget,
   sourceCardPublicUrlFromDoc

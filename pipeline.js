@@ -84,6 +84,7 @@ import {
 import {
   finalSourceCardCanonicalKey as engineFinalSourceCardCanonicalKey,
   mergeFinalSourceCards as engineMergeFinalSourceCards,
+  resolveIndexedSourceCardTarget as engineResolveIndexedSourceCardTarget,
   sanitizePublicSourceCard as engineSanitizePublicSourceCard,
   sourceCardFromRetrievedTarget as engineSourceCardFromRetrievedTarget,
   sourceCardPublicUrlFromDoc as engineSourceCardPublicUrlFromDoc
@@ -821,24 +822,7 @@ function sourceCardFromRetrievedTarget(doc = {}, target = "") {
 }
 
 async function resolveIndexedSourceCardTarget(target = "") {
-  const cleanTarget = safeStr(target).trim();
-  if (!cleanTarget) return null;
-
-  try {
-    const matches = await exactAuthoritySearch({
-      query: cleanTarget,
-      keyword: cleanTarget,
-      targetAuthorities: [cleanTarget],
-      topK: 1
-    });
-    return Array.isArray(matches) && matches.length > 0 ? matches[0] : null;
-  } catch (error) {
-    console.warn("[PATCH_033D_R1_INDEXED_SOURCE_CARD_LOOKUP_FAILED]", {
-      target: cleanTarget.slice(0, 80),
-      error: error?.message || String(error)
-    });
-    return null;
-  }
+  return engineResolveIndexedSourceCardTarget(target, { exactAuthoritySearch, logger: console });
 }
 
 function sourceCardDocumentTitle(c = {}) {
