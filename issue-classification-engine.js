@@ -27,6 +27,10 @@ import {
   isResidentCitizenIncomeScopeQuery as registryIsResidentCitizenIncomeScopeQuery,
   isTaxpayerDefinitionQuery as registryIsTaxpayerDefinitionQuery
 } from "./taxpayer-definition-registry.js";
+import {
+  detectAdministrativeAuthorityReference,
+  isExactAdministrativeAuthorityLookup as registryIsExactAdministrativeAuthorityLookup
+} from "./authority-alias-registry.js";
 
 const ENGINE_VERSION = "7.0.0";
 
@@ -429,20 +433,6 @@ function normalizeQuery(value = "") {
     normalizedQuery,
     lowerQuery: lower(normalizedQuery)
   };
-}
-
-function normalizeYear(year = "") {
-  const raw = String(year || "").trim();
-  if (!raw) return "";
-  if (/^\d{4}$/.test(raw)) return raw;
-
-  if (/^\d{2}$/.test(raw)) {
-    const yy = Number(raw);
-    const currentYY = new Date().getFullYear() % 100;
-    return yy <= currentYY + 1 ? `20${raw}` : `19${raw}`;
-  }
-
-  return raw;
 }
 
 function normalizeIssue(value = "") {
@@ -1135,26 +1125,8 @@ function detectExactAuthority(question = "") {
     };
   }
 
-  const issuancePatterns = [
-    ["RR", /\b(?:rr|revenue regulation[s]?)\s*(?:no\.?)?\s*0*(\d+)[-_/ ]+(\d{2,4})\b/i],
-    ["RMC", /\b(?:rmc|revenue memorandum circular[s]?)\s*(?:no\.?)?\s*0*(\d+)[-_/ ]+(\d{2,4})\b/i],
-    ["RMO", /\b(?:rmo|revenue memorandum order[s]?)\s*(?:no\.?)?\s*0*(\d+)[-_/ ]+(\d{2,4})\b/i],
-    ["RAMO", /\b(?:ramo|revenue audit memorandum order[s]?)\s*(?:no\.?)?\s*0*(\d+)[-_/ ]+(\d{2,4})\b/i]
-  ];
-
-  for (const [type, regex] of issuancePatterns) {
-    const match = value.match(regex);
-
-    if (match) {
-      return {
-        detected: true,
-        type,
-        reference: `${type} No. ${Number(match[1])}-${normalizeYear(match[2])}`,
-        number: String(Number(match[1])),
-        year: normalizeYear(match[2])
-      };
-    }
-  }
+  const administrativeAuthority = detectAdministrativeAuthorityReference(value);
+  if (administrativeAuthority.detected) return administrativeAuthority;
 
   const ra = value.match(/\b(?:ra|r\.a\.|republic act)\s*(?:no\.?)?\s*(\d{4,6})\b/i);
   if (ra) {
@@ -1497,30 +1469,16 @@ function getDefinitionAuthorityFor(question = "", detector = null, primaryIssue 
   return DEFINITION_AUTHORITY_MAP[definitionKey] || null;
 }
 
-const EXACT_ADMINISTRATIVE_AUTHORITY_TYPES = new Set(["RR", "RMC", "RMO", "RAMO"]);
-
 const GENERIC_CONTROLLING_PLACEHOLDERS = new Set([
   "Applicable NIRC / primary statute provisions"
 ]);
 
 function isExactAdministrativeAuthorityLookup(question = "", exactAuthority = {}) {
-  if (!exactAuthority?.detected) return false;
-  if (!EXACT_ADMINISTRATIVE_AUTHORITY_TYPES.has(String(exactAuthority.type || "").toUpperCase())) return false;
-  const q = lower(question);
-  if (!q) return false;
-  const isBareIssuanceCitation =
-    exactAuthority.detected === true &&
-    /^\s*(?:(?:rr|rmc|rmo|ramo)|revenue\s+regulations?|revenue\s+memorandum\s+circulars?|revenue\s+memorandum\s+orders?|revenue\s+audit\s+memorandum\s+orders?)\s*(?:no\.?\s*)?\d+[-/. ]+\d{2,4}\s*$/i.test(q);
-  if (isBareIssuanceCitation) return true;
-  const topicModifierLookup =
-    /\bwhat\s+does\b[\s\S]{0,80}\b(?:provide|say|state|cover|discuss)\b(?:\s+(?:about|on|regarding)\b[\s\S]{0,80})?/i.test(q);
-  return (
-    detectDefinitionPattern(question) ||
-    detectOverviewPattern(question) ||
-    detectSourcePattern(question) ||
-    topicModifierLookup ||
-    /\b(?:explain|summari[sz]e|what\s+is|what\s+are|show\s+sources?\s+for|source[s]?\s+for)\b/i.test(q)
-  );
+  return registryIsExactAdministrativeAuthorityLookup(question, exactAuthority, {
+    detectDefinitionPattern,
+    detectOverviewPattern,
+    detectSourcePattern
+  });
 }
 
 function buildAuthorities({ question = "", detector = null, primaryIssue, subIssue, exactAuthority }) {
