@@ -8,6 +8,10 @@ import "dotenv/config";
 
 import { buildAuthorityMetadata, normalizeLegalReference } from "./authority-engine.js";
 import { buildTaxConceptRetrievalAliases } from "./services/tax-concept-aliases.js";
+import {
+  buildNormalizedRefVariants as buildRegistryNormalizedRefVariants,
+  isRecognizableAuthorityReference
+} from "./vector-authority-reference-registry.js";
 
 if (!process.env.OPENAI_API_KEY) {
   throw new Error("Missing OPENAI_API_KEY for vector-store.js");
@@ -2239,73 +2243,8 @@ export async function addDocumentToVectorStore(text, source, metadata = {}, clie
 // ("NIRC Sec. 105") and the normalized format produced by normalizeLegalReference
 // ("NIRC_SEC_105"), covering whichever format was written during indexing.
 
-function buildAdminIssuanceYearLookupVariants(term = "") {
-  const raw = String(term || "").trim();
-  if (!raw) return [];
-
-  const patterns = [
-    {
-      prefix: "RR",
-      longName: "Revenue Regulations",
-      regex: /\b(?:RR|Revenue\s+Regulations?)\s*(?:No\.?)?\s*0*(\d+)\s*[-/. ]+\s*(19\d{2})\b/i
-    },
-    {
-      prefix: "RMC",
-      longName: "Revenue Memorandum Circular",
-      regex: /\b(?:RMC|Revenue\s+Memorandum\s+Circulars?)\s*(?:No\.?)?\s*0*(\d+)\s*[-/. ]+\s*(19\d{2})\b/i
-    },
-    {
-      prefix: "RMO",
-      longName: "Revenue Memorandum Order",
-      regex: /\b(?:RMO|Revenue\s+Memorandum\s+Orders?)\s*(?:No\.?)?\s*0*(\d+)\s*[-/. ]+\s*(19\d{2})\b/i
-    },
-    {
-      prefix: "RAMO",
-      longName: "Revenue Audit Memorandum Order",
-      regex: /\b(?:RAMO|Revenue\s+Audit\s+Memorandum\s+Orders?)\s*(?:No\.?)?\s*0*(\d+)\s*[-/. ]+\s*(19\d{2})\b/i
-    }
-  ];
-
-  for (const { prefix, longName, regex } of patterns) {
-    const match = raw.match(regex);
-    if (!match) continue;
-
-    const number = String(Number(match[1]));
-    const fullYear = match[2];
-    const shortYear = fullYear.slice(-2);
-
-    return unique([
-      `${prefix} No. ${number}-${fullYear}`,
-      `${prefix} ${number}-${fullYear}`,
-      `${longName} No. ${number}-${fullYear}`,
-      `${longName} ${number}-${fullYear}`,
-      `${prefix} No. ${number}-${shortYear}`,
-      `${prefix} ${number}-${shortYear}`,
-      `${longName} No. ${number}-${shortYear}`,
-      `${longName} ${number}-${shortYear}`
-    ]);
-  }
-
-  return [];
-}
-
 function buildNormalizedRefVariants(terms = []) {
-  const variants = [];
-  for (const term of terms) {
-    if (!term) continue;
-    variants.push(term);                          // original form
-    try {
-      const nr = normalizeLegalReference(term);
-      if (nr.normalized) variants.push(nr.normalized);  // e.g. "NIRC_SEC_105"
-      for (const alias of (nr.aliases || [])) {
-        if (alias) variants.push(alias);          // e.g. "NIRC Sec. 105", "Section 105"
-      }
-    } catch {
-      // normalizeLegalReference is best-effort; failures are safe to ignore
-    }
-    variants.push(...buildAdminIssuanceYearLookupVariants(term));
-  }
-  return unique(variants).filter(Boolean);
+  return buildRegistryNormalizedRefVariants(terms, { normalizeLegalReference });
 }
 
 // fastRefLookup() executes the single indexed .in() query and maps rows
@@ -2687,35 +2626,6 @@ export async function normalizedCitationSearch(arg1, arg2) {
   }
 
   return sorted;
-}
-
-// Returns true when the input string is a recognizable numbered authority reference —
-// an RR, RMC, RMO, RAMO, NIRC section, Republic Act, G.R. No., or CTA case number.
-// Used by titleMetadataSearch to skip the slow metadataSearch ILIKE fallback when
-// fastRefLookup already found at least one matching row for that reference.
-// Deliberately narrow: broad topic words like "VAT" or "withholding tax" return false.
-function isRecognizableAuthorityReference(input = "") {
-  const s = String(input || "");
-  return (
-    // RR: "RR 16-2005", "Revenue Regulation No. 16-2005", "Revenue Regulations 16-2005"
-    /\b(?:RR|Revenue\s+Regulations?)\s*(?:No\.?)?\s*\d+\s*[-_/]\s*\d{2,4}\b/i.test(s) ||
-    // RMC: "RMC 65-2012", "Revenue Memorandum Circular No. 65-2012"
-    /\b(?:RMC|Revenue\s+Memorandum\s+Circulars?)\s*(?:No\.?)?\s*\d+\s*[-_/]\s*\d{2,4}\b/i.test(s) ||
-    // RMO: "RMO 23-2010", "Revenue Memorandum Order No. 23-2010"
-    /\b(?:RMO|Revenue\s+Memorandum\s+Orders?)\s*(?:No\.?)?\s*\d+\s*[-_/]\s*\d{2,4}\b/i.test(s) ||
-    // RAMO: "RAMO 1-95", "Revenue Audit Memorandum Order No. 1-95"
-    /\b(?:RAMO|Revenue\s+Audit\s+Memorandum\s+Orders?)\s*(?:No\.?)?\s*\d+\s*[-_/]\s*\d{2,4}\b/i.test(s) ||
-    // NIRC/Tax Code section: "NIRC Sec. 105", "NIRC Section 105", "Tax Code Sec. 105"
-    /\b(?:nirc|tax\s+code|national\s+internal\s+revenue\s+code)\s+sec(?:tion)?\.?\s*\d{1,3}[A-Z]?\b/i.test(s) ||
-    // Flipped form: "Sec. 105 of the NIRC", "Section 105 NIRC"
-    /\bsec(?:tion)?\.?\s*\d{1,3}[A-Z]?\s+(?:of\s+(?:the\s+)?)?(?:nirc|tax\s+code)\b/i.test(s) ||
-    // G.R. No.: "G.R. No. 199422"
-    /\bg\.?\s*r\.?\s*no\.?\s*\d/i.test(s) ||
-    // CTA cases: "CTA Case No. 123", "CTA EB No. 456"
-    /\bcta\s+(?:eb\s+)?(?:case\s+)?no\.?\s*\d/i.test(s) ||
-    // Republic Act: "RA 9337", "R.A. 9337", "Republic Act No. 9337"
-    /\b(?:RA|R\.A\.|Republic\s+Act)\s*(?:No\.?)?\s*\d{4,6}\b/i.test(s)
-  );
 }
 
 export async function titleMetadataSearch(arg1, arg2) {
