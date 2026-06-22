@@ -89,6 +89,10 @@ import {
   sourceCardFromRetrievedTarget as engineSourceCardFromRetrievedTarget,
   sourceCardPublicUrlFromDoc as engineSourceCardPublicUrlFromDoc
 }                                                 from "./source-card-engine.js";
+import {
+  findAuthorityRestorationCandidate,
+  inferRestorationAuthorityType
+}                                                 from "./authority-restoration-engine.js";
 
 const PIPELINE_VERSION = "1.0.0";
 const ROUTE_BUDGET_MS = 90_000;
@@ -4397,34 +4401,11 @@ export async function runPipeline({
       //   a) direct citation/normalizedReference key
       //   b) key after normalizing "Revenue Regulation[s]" → "RR"
       //   c) key inferred via inferAdministrativeRef (for RR/RMC/RMO/RAMO chunks)
-      const doc = (ctx.rerankedChunks || []).find((candidate) => {
-        const meta  = candidate.metadata || {};
-        const refs  = [
-          candidate.citation,
-          candidate.normalizedReference,
-          candidate.normalized_reference,
-          meta.normalizedReference,
-          meta.normalized_reference,
-          candidate.reference,
-        ].filter(Boolean);
-
-        for (const ref of refs) {
-          if (canonicalSourceKey(ref) === targetKey) return true;
-          // Alias: "Revenue Regulation[s]" → "rr" before stripping punctuation
-          const rrNorm = ref.replace(/\brevenue regulation[s]?\b/gi, "rr")
-                            .replace(/\bno\.?\s*/g, "");
-          if (canonicalSourceKey(rrNorm) === targetKey) return true;
-        }
-
-        // inferAdministrativeRef path — reconstructs "RR No. 16-2005" from the
-        // chunk's identity blob (path, source, title) for admin document types
-        const lt = inferLinkedSourceType(candidate);
-        if (["RR", "RMC", "RMO", "RAMO"].includes(lt)) {
-          const inferred = inferAdministrativeRef(sourceCardIdentityBlob(candidate), lt);
-          if (inferred && canonicalSourceKey(inferred) === targetKey) return true;
-        }
-
-        return false;
+      const doc = findAuthorityRestorationCandidate(ctx.rerankedChunks || [], targetKey, {
+        canonicalSourceKey,
+        inferAdministrativeRef,
+        sourceCardIdentityBlob,
+        inferLinkedSourceType
       });
 
       let card = doc ? sourceCardFromRetrievedTarget(doc, target) : null;
@@ -4439,10 +4420,7 @@ export async function runPipeline({
       // a minimal card.  This handles the case where the authority exists in the
       // index but the retrieval window did not return a chunk for it.
       if (!card && _017kSupportKeys.has(targetKey)) {
-        const _017kType = /\brr\b|\brevenue regulation/i.test(target) ? "RR"
-                        : /\brmc\b|\bmemorandu[mo]\s+circular/i.test(target) ? "RMC"
-                        : /\brmo\b|\bmemorandu[mo]\s+order/i.test(target)    ? "RMO"
-                        : "STATUTE";
+        const _017kType = inferRestorationAuthorityType(target);
         let _033dR1IndexedDoc = _033dR1IndexedCardCache.get(targetKey);
         if (!_033dR1IndexedCardCache.has(targetKey)) {
           _033dR1IndexedDoc = await resolveIndexedSourceCardTarget(target);
