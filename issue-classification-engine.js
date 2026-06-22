@@ -21,6 +21,12 @@
 
 import { enrichIssueClassification } from "./main-tax-engine-classification.js";
 import { detectSourcePattern as registryDetectSourcePattern } from "./source-intent-registry.js";
+import {
+  RESIDENT_CITIZEN_INCOME_SCOPE,
+  TAXPAYER_DEFINITION,
+  isResidentCitizenIncomeScopeQuery as registryIsResidentCitizenIncomeScopeQuery,
+  isTaxpayerDefinitionQuery as registryIsTaxpayerDefinitionQuery
+} from "./taxpayer-definition-registry.js";
 
 const ENGINE_VERSION = "7.0.0";
 
@@ -628,23 +634,11 @@ const DEFINITION_AUTHORITY_MAP = Object.freeze({
   },
 
   RESIDENT_CITIZEN_INCOME_SCOPE: {
-    primaryIssue: "INCOME_TAX",
-    domainCode: "CIT",
-    domainName: "Income Tax",
-    targetAuthorities: ["NIRC Sec. 23"],
-    controllingAuthorities: ["NIRC Sec. 23"],
-    supportingAuthorities: [],
-    supportingJurisprudence: []
+    ...RESIDENT_CITIZEN_INCOME_SCOPE
   },
 
   TAXPAYER_DEFINITION: {
-    primaryIssue: "INCOME_TAX",
-    domainCode: "CIT",
-    domainName: "Income Tax",
-    targetAuthorities: ["NIRC Sec. 22"],
-    controllingAuthorities: ["NIRC Sec. 22"],
-    supportingAuthorities: [],
-    supportingJurisprudence: []
+    ...TAXPAYER_DEFINITION
   },
 
   WITHHOLDING_TAX_DEFINITION: {
@@ -1272,53 +1266,11 @@ function detectPrimaryIssue(question = "", queryIntent = {}) {
 }
 
 function isResidentCitizenIncomeScopeQuery(question = "") {
-  const q = lower(question);
-  if (!/\bresident\s+citizens?\b/i.test(q)) return false;
-
-  return Boolean(
-    /\btaxable\b/i.test(q) ||
-      /\bincome\b/i.test(q) ||
-      /\bphilippine[-\s]+source\b/i.test(q) ||
-      /\bsource\s+income\b/i.test(q) ||
-      /\bsources?\s+within\b/i.test(q) ||
-      /\bsources?\s+without\b/i.test(q) ||
-      /\bwithin\s+and\s+without\b/i.test(q) ||
-      /\bworldwide\s+income\b/i.test(q) ||
-      /\bnirc\b/i.test(q) ||
-      /\btax\s+code\b/i.test(q)
-  );
+  return registryIsResidentCitizenIncomeScopeQuery(question);
 }
 
 function isTaxpayerDefinitionQuery(question = "") {
-  const q = lower(question);
-  if (!detectDefinitionPattern(question)) return false;
-
-  const citizenOrAlienStatus =
-    /\b(?:non[-\s]?resident|resident)\s+citizens?\b/i.test(q) ||
-    /\b(?:non[-\s]?resident|resident)\s+aliens?\b/i.test(q);
-
-  const corporationStatus =
-    /\b(?:resident|non[-\s]?resident)\s+foreign\s+corporations?\b/i.test(q) ||
-    /\bdomestic\s+corporations?\b/i.test(q) ||
-    /\bforeign\s+corporations?\b/i.test(q);
-
-  const taxpayerStatus = /\btaxpayers?\b/i.test(q);
-
-  if (!citizenOrAlienStatus && !corporationStatus && !taxpayerStatus) return false;
-
-  const taxContext =
-    /\bnirc\b/i.test(q) ||
-    /\bnational\s+internal\s+revenue\s+code\b/i.test(q) ||
-    /\btax\s+code\b/i.test(q) ||
-    /\bphilippine\s+(?:tax|taxation|income\s+tax)\b/i.test(q) ||
-    /\bincome\s+tax\b/i.test(q) ||
-    /\btax(?:es|able|ation)?\b/i.test(q) ||
-    taxpayerStatus;
-
-  const distinctiveTaxpayerCorporation =
-    /\b(?:resident|non[-\s]?resident)\s+foreign\s+corporations?\b/i.test(q);
-
-  return Boolean(taxContext || distinctiveTaxpayerCorporation);
+  return registryIsTaxpayerDefinitionQuery(question);
 }
 
 function detectSubIssue(question = "", primaryIssue = "GENERAL_TAX", queryIntent = {}) {
