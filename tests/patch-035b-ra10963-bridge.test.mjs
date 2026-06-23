@@ -149,7 +149,7 @@ function refs(results = []) {
 
 function assertBridgeHit(result, label) {
   assert.deepEqual(refs(result.results), ["NIRC Sec. 2", "NIRC Sec. 21"], `${label}: bridged NIRC source rows`);
-  assert(result.calls.some((call) => call.type === "or" && call.orClause.includes("nirc-1997-ra-10963-(bir).pdf")), `${label}: bridge uses known source path`);
+  assert(result.calls.some((call) => call.type === "or" && call.orClause.includes("nirc-1997-ra-10963")), `${label}: bridge uses known source path`);
   assert(result.results.every((item) => /nirc-1997-ra-10963/i.test(item.source || "")), `${label}: only TRAIN/NIRC source returned`);
 }
 

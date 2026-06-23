@@ -2460,9 +2460,9 @@ function isRa10963ExactAuthority(parsed = {}) {
 
 function buildRa10963SourceBridgeFilter() {
   return [
-    "source.ilike.%nirc-1997-ra-10963-(bir).pdf%",
-    "original_source.ilike.%nirc-1997-ra-10963-(bir).pdf%",
-    "document_title.ilike.%NIRC-1997-RA-10963 (BIR).pdf%"
+    "source.ilike.%nirc-1997-ra-10963%",
+    "original_source.ilike.%nirc-1997-ra-10963%",
+    "document_title.ilike.%NIRC-1997-RA-10963%"
   ].join(",");
 }
 
