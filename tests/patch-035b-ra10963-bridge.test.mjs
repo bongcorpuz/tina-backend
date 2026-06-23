@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { annotateAuthorityCandidates } from "../authority-utils.js";
 import { classify } from "../issue-classification-engine.js";
 import { classifySourceAvailability } from "../pipeline.js";
+import { rerankForTina } from "../reranker-engine.js";
 import retrievalEngine from "../retrieval-engine.js";
 import { exactAuthoritySearch } from "../vector-store.js";
 
@@ -231,6 +232,30 @@ await test("retrieval-engine preserves RA 10963 bridge eligibility through final
   assert.equal(availability.saeStatus, "AUTHORITY_FOUND");
   assert.equal(availability.eligibleCandidates.length, 2);
   assert(annotated.every((item) => item.authorityMatchTier === 1));
+  assert(annotated.every((item) => item.authorityRole === "GOVERNING"));
+  assert.deepEqual(refs(annotated), ["NIRC Sec. 2", "NIRC Sec. 21"]);
+});
+
+await test("reranker preserves explicit RA 10963 bridge Tier 1 authority markers", async () => {
+  const query = "What is RA 10963?";
+  const classification = classify(query);
+  const result = await search(query, [trainRow("NIRC Sec. 2", 0), trainRow("NIRC Sec. 21", 20)]);
+  const reranked = rerankForTina({
+    docs: result.results,
+    query,
+    issueClassification: classification,
+    limit: 5
+  }).results;
+  const annotated = annotateAuthorityCandidates(reranked, { issueClassification: classification });
+  const availability = classifySourceAvailability({
+    annotatedCandidates: annotated,
+    issueClassification: classification,
+    query
+  });
+
+  assert.equal(availability.saeStatus, "AUTHORITY_FOUND");
+  assert(annotated.every((item) => item.authorityMatchTier === 1));
+  assert(annotated.every((item) => item.exactAuthorityMatch === true));
   assert(annotated.every((item) => item.authorityRole === "GOVERNING"));
   assert.deepEqual(refs(annotated), ["NIRC Sec. 2", "NIRC Sec. 21"]);
 });

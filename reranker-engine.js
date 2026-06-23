@@ -1393,14 +1393,42 @@ function rerankForTina({
       // "RR 16-2005") which will never equal authorityType ("STATUTE", "RR").
       // matchesTargetAuthority() performs case-insensitive substring matching
       // against normalized_reference, citation, document_title, title, source.
-      const targetAuthorityMatch =
+      const explicitTargetAuthorityMatch =
+        doc.targetAuthorityMatch === true ||
+        doc.issueClassificationMatch?.targetAuthorityMatch === true ||
+        doc.metadata?.targetAuthorityMatch === true;
+      const explicitExactAuthorityMatch =
+        doc.exactAuthorityMatch === true ||
+        doc.issueClassificationMatch?.exactAuthorityMatch === true ||
+        doc.metadata?.exactAuthorityMatch === true;
+      const explicitAuthorityMatchTier = Math.min(
+        ...[
+          doc.authorityMatchTier,
+          doc.authority_match_tier,
+          doc.issueClassificationMatch?.authorityMatchTier,
+          doc.issueClassificationMatch?.authority_match_tier,
+          doc.metadata?.authorityMatchTier,
+          doc.metadata?.authority_match_tier
+        ]
+          .map((value) => Number(value))
+          .filter((value) => Number.isFinite(value) && value > 0)
+      );
+      const hasExplicitAuthorityMatchTier = Number.isFinite(explicitAuthorityMatchTier);
+      const computedTargetAuthorityMatch =
         (effectiveIssueClassification.targetAuthorities?.includes(authorityType) || false) ||
         matchesTargetAuthority(doc, effectiveIssueClassification.targetAuthorities || []);
+      const targetAuthorityMatch =
+        computedTargetAuthorityMatch ||
+        explicitTargetAuthorityMatch ||
+        explicitExactAuthorityMatch;
 
       // Numerical tier for authority specificity.  Replaces the binary
       // targetAuthorityMatch as the primary sort key to prevent generic
       // STATUTE matches from ranking equally with exact provision matches.
-      const authorityMatchTier = computeAuthorityMatchTier(doc, effectiveIssueClassification);
+      const computedAuthorityMatchTier = computeAuthorityMatchTier(doc, effectiveIssueClassification);
+      const authorityMatchTier = hasExplicitAuthorityMatchTier
+        ? Math.min(explicitAuthorityMatchTier, computedAuthorityMatchTier)
+        : computedAuthorityMatchTier;
 
       const domainAwareBonus = domainBonus(effectiveIssueClassification, doc);
       const precedence = masterPrecedenceForDoc(doc);
@@ -1433,6 +1461,10 @@ function rerankForTina({
           targetAuthorities: effectiveIssueClassification.targetAuthorities,
           matchedAuthorityType: authorityType,
           targetAuthorityMatch,
+          exactAuthorityMatch:
+            doc.exactAuthorityMatch === true ||
+            doc.issueClassificationMatch?.exactAuthorityMatch === true ||
+            doc.metadata?.exactAuthorityMatch === true,
           authorityMatchTier,
           issueOverlap: issueOverlap(queryIssues, docIssues),
           issueMismatch: mismatch,
