@@ -34,6 +34,10 @@ import { selectSourceAuthorities } from "../services/source-authority-selector.j
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PIPELINE_SRC = readFileSync(join(__dirname, "..", "pipeline.js"), "utf8");
 const SAS_SRC      = readFileSync(join(__dirname, "..", "services", "source-authority-selector.js"), "utf8");
+const SAS_SANITIZER_SRC = readFileSync(
+  join(__dirname, "..", "services", "source-authority-selector-card-sanitizer.js"),
+  "utf8"
+);
 
 let passed = 0;
 let failed = 0;
@@ -176,13 +180,13 @@ group("Test 1 — pipeline.js sanitizePublicSourceCard bridges driveViewUrl", ()
   );
 });
 
-group("Test 2 — source-authority-selector.js sanitizePublicSelectorCard bridges driveViewUrl", () => {
+group("Test 2 — source-authority-selector-card-sanitizer.js sanitizePublicSelectorCard bridges driveViewUrl", () => {
   assert(
-    /publicCardUrl\s*\(\s*[\s\S]*?driveViewUrl/.test(SAS_SRC),
+    /publicCardUrl\s*\(\s*[\s\S]*?driveViewUrl/.test(SAS_SANITIZER_SRC),
     "sanitizePublicSelectorCard reads driveViewUrl in its publicCardUrl() call"
   );
   assert(
-    /publicCardUrl\s*\(\s*[\s\S]*?webViewLink/.test(SAS_SRC),
+    /publicCardUrl\s*\(\s*[\s\S]*?webViewLink/.test(SAS_SANITIZER_SRC),
     "sanitizePublicSelectorCard reads webViewLink in its publicCardUrl() call"
   );
 });

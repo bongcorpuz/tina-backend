@@ -7,6 +7,7 @@
 
 import fs from "fs";
 import selector from "../services/source-authority-selector.js";
+import { sanitizePublicSelectorCard } from "../services/source-authority-selector-card-sanitizer.js";
 import {
   canonicalSourceKey,
   filterDisplayedSourcesByDirectSupport
@@ -14,6 +15,10 @@ import {
 
 const PIPELINE_SRC = fs.readFileSync(new URL("../pipeline.js", import.meta.url), "utf8");
 const SELECTOR_SRC = fs.readFileSync(new URL("../services/source-authority-selector.js", import.meta.url), "utf8");
+const SELECTOR_SANITIZER_SRC = fs.readFileSync(
+  new URL("../services/source-authority-selector-card-sanitizer.js", import.meta.url),
+  "utf8"
+);
 
 let passed = 0;
 let failed = 0;
@@ -96,16 +101,20 @@ function restoredCards({ sasVisible, dsFiltered, issueClassification }) {
 
 group("Production source contains PATCH-027R sanitizer and restoration hooks", () => {
   assert(
-    SELECTOR_SRC.includes("const normalizedReference = publicCardText(card.normalizedReference || card.normalized_reference || \"\");"),
+    SELECTOR_SANITIZER_SRC.includes("const normalizedReference = publicCardText(card.normalizedReference || card.normalized_reference || \"\");"),
     "sanitizePublicSelectorCard preserves normalizedReference"
   );
   assert(
-    SELECTOR_SRC.includes("const authorityMatchTier = Number(card.authorityMatchTier || card._authorityMatchTier || 0);"),
+    SELECTOR_SANITIZER_SRC.includes("const authorityMatchTier = Number(card.authorityMatchTier || card._authorityMatchTier || 0);"),
     "sanitizePublicSelectorCard preserves authorityMatchTier"
   );
   assert(
-    SELECTOR_SRC.includes("const excerpt = publicCardText(card.excerpt || \"\");"),
+    SELECTOR_SANITIZER_SRC.includes("const excerpt = publicCardText(card.excerpt || \"\");"),
     "sanitizePublicSelectorCard preserves excerpt"
+  );
+  assert(
+    SELECTOR_SRC.includes("source-authority-selector-card-sanitizer.js"),
+    "selector imports extracted card sanitizer helper"
   );
   assert(
     PIPELINE_SRC.includes("const _controllingKeys = new Set(["),
@@ -115,6 +124,25 @@ group("Production source contains PATCH-027R sanitizer and restoration hooks", (
     PIPELINE_SRC.includes("const _controllingFallback = k && _controllingKeys.has(k);"),
     "pipeline restoration uses canonical controlling-authority fallback"
   );
+});
+
+group("sanitizePublicSelectorCard exported helper preserves public evidence fields", () => {
+  const card = sanitizePublicSelectorCard({
+    title: "NIRC Sec. 57",
+    normalizedReference: "NIRC Sec. 57",
+    authorityMatchTier: 1,
+    excerpt: "Section 57 provides withholding tax rules.",
+    driveViewUrl: "https://drive.google.com/file/d/example/view",
+    source: "01-tax-code/nirc-1997-ra-10963-(bir).pdf",
+    metadata: { internal: true }
+  });
+
+  assert(card.normalizedReference === "NIRC Sec. 57", "exported sanitizer preserves normalizedReference");
+  assert(card.authorityMatchTier === 1, "exported sanitizer preserves authorityMatchTier");
+  assert(/withholding tax rules/i.test(card.excerpt || ""), "exported sanitizer preserves excerpt");
+  assert(card.publicUrl === "https://drive.google.com/file/d/example/view", "exported sanitizer bridges driveViewUrl");
+  assert(!("source" in card), "exported sanitizer does not expose source path");
+  assert(!("metadata" in card), "exported sanitizer does not expose metadata");
 });
 
 group("sanitizePublicSelectorCard preserves public evidence fields", () => {
