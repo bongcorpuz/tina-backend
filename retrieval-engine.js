@@ -1961,6 +1961,11 @@ function sanitizeRetrievedSource(doc = {}) {
   const controllingPrecedence = safeControllingPrecedence(doc);
   const content = extractBestContent(doc);
   const parseStatus = doc.parseStatus || determineParseStatus(doc);
+  const isRa10963Bridge = doc.metadata?.ra10963SourceBridge === true;
+  const sanitizedAuthorityMatchTier =
+    isRa10963Bridge && doc.exactAuthorityMatch === true
+      ? 1
+      : doc.authorityMatchTier || doc.authority_match_tier || doc.metadata?.authorityMatchTier || null;
 
   return {
     id:
@@ -1980,6 +1985,23 @@ function sanitizeRetrievedSource(doc = {}) {
     text: content,
     content,
     parseStatus,
+    isIndexed:
+      doc.isIndexed === true ||
+      doc.indexed === true ||
+      doc.googleDriveIndexed === true ||
+      doc.metadata?.isIndexed === true ||
+      doc.metadata?.googleDriveIndexed === true,
+    indexed:
+      doc.indexed === true ||
+      doc.isIndexed === true ||
+      doc.googleDriveIndexed === true ||
+      doc.metadata?.isIndexed === true ||
+      doc.metadata?.googleDriveIndexed === true,
+    googleDriveIndexed:
+      doc.googleDriveIndexed === true ||
+      doc.metadata?.googleDriveIndexed === true,
+    authorityMatchTier: sanitizedAuthorityMatchTier,
+    authority_match_tier: sanitizedAuthorityMatchTier,
 
     // Preserve raw DB column names at top level so downstream consumers
     // (reranker, renderer, compliance) can reference them without camelCase mapping.
@@ -2036,6 +2058,13 @@ function sanitizeRetrievedSource(doc = {}) {
       exactCitationMatched:
         doc.exactAuthorityMatch === true ||
         Number(doc.citationMatchBonus || 0) > 0,
+      isIndexed:
+        doc.isIndexed === true ||
+        doc.indexed === true ||
+        doc.googleDriveIndexed === true ||
+        doc.metadata?.isIndexed === true ||
+        doc.metadata?.googleDriveIndexed === true,
+      authorityMatchTier: sanitizedAuthorityMatchTier,
       retrievalPhase: doc.retrievalPhase || doc.retrievalLayer || null,
       retrievalLayer: doc.retrievalLayer || null,
       parseStatus,
@@ -3320,15 +3349,41 @@ function scoreAndAnnotateSources({
       layer
     });
 
+    const explicitTargetAuthorityMatch =
+      doc.targetAuthorityMatch === true ||
+      doc.target_authority_match === true ||
+      doc.issueClassificationMatch?.targetAuthorityMatch === true;
+    const explicitExactAuthorityMatch =
+      doc.exactAuthorityMatch === true ||
+      doc.exact_authority_match === true ||
+      doc.issueClassificationMatch?.exactAuthorityMatch === true;
+    const explicitAuthorityMatchTier = Number(
+      doc.authorityMatchTier ||
+        doc.authority_match_tier ||
+        doc.issueClassificationMatch?.authorityMatchTier ||
+        doc.metadata?.authorityMatchTier ||
+        0
+    );
+    const preservedAuthorityMatchTier =
+      Number.isFinite(explicitAuthorityMatchTier) && explicitAuthorityMatchTier > 0
+        ? Math.min(explicitAuthorityMatchTier, issueClassificationMatch.authorityMatchTier || 4)
+        : issueClassificationMatch.authorityMatchTier;
+
     return {
       ...doc,
       parseStatus: doc.parseStatus || determineParseStatus(doc),
       retrievalScore,
       finalScore: retrievalScore,
-      issueClassificationMatch,
+      issueClassificationMatch: {
+        ...issueClassificationMatch,
+        targetAuthorityMatch: issueClassificationMatch.targetAuthorityMatch || explicitTargetAuthorityMatch,
+        exactAuthorityMatch: issueClassificationMatch.exactAuthorityMatch || explicitExactAuthorityMatch,
+        authorityMatchTier: preservedAuthorityMatchTier
+      },
       issueMismatch: issueClassificationMatch.issueMismatch,
-      targetAuthorityMatch: issueClassificationMatch.targetAuthorityMatch,
-      exactAuthorityMatch: issueClassificationMatch.exactAuthorityMatch,
+      targetAuthorityMatch: issueClassificationMatch.targetAuthorityMatch || explicitTargetAuthorityMatch,
+      exactAuthorityMatch: issueClassificationMatch.exactAuthorityMatch || explicitExactAuthorityMatch,
+      authorityMatchTier: preservedAuthorityMatchTier,
       citationMatchBonus: exactReferenceBonus(query, doc, issueClassification, querySet),
       retrievalIssueType: issueClassificationMatch.docIssues,
       retrievalEngineVersion: ENGINE_VERSION,

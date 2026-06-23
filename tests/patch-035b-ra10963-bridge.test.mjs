@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { annotateAuthorityCandidates } from "../authority-utils.js";
 import { classify } from "../issue-classification-engine.js";
 import { classifySourceAvailability } from "../pipeline.js";
+import retrievalEngine from "../retrieval-engine.js";
 import { exactAuthoritySearch } from "../vector-store.js";
 
 let passed = 0;
@@ -195,6 +196,42 @@ await test("RA 10963 bridge rows are eligible for AUTHORITY_FOUND without rewrit
   assert.equal(availability.eligibleCandidates.length, 2);
   assert(annotated.every((item) => item.authorityRole === "GOVERNING"));
   assert(annotated.every((item) => item.directlyGovernsIssue === true));
+  assert.deepEqual(refs(annotated), ["NIRC Sec. 2", "NIRC Sec. 21"]);
+});
+
+await test("retrieval-engine preserves RA 10963 bridge eligibility through final sanitization", async () => {
+  const query = "What is RA 10963?";
+  const classification = classify(query);
+  const rows = [trainRow("NIRC Sec. 2", 0), trainRow("NIRC Sec. 21", 20)];
+  const vectorSearch = async (searchQuery, opts = {}) => {
+    if (opts.retrievalLayer !== "LAYER_1_EXACT_NORMALIZED_AUTHORITY") return [];
+    return (await search(searchQuery, rows, {
+      issueClassification: classification,
+      targetAuthorities: classification.targetAuthorities || [],
+      controllingAuthorities: classification.controllingAuthorities || []
+    })).results;
+  };
+
+  const retrieval = await retrievalEngine.retrieveRelevantSources({
+    query,
+    issueClassification: classification,
+    vectorSearch,
+    topK: 5,
+    poolK: 12
+  });
+  const docs = retrieval.retrievedSources || [];
+  const annotated = annotateAuthorityCandidates(docs, { issueClassification: classification });
+  const availability = classifySourceAvailability({
+    annotatedCandidates: annotated,
+    issueClassification: classification,
+    query,
+    retrievalDiagnostics: retrieval.retrievalDiagnostics
+  });
+
+  assert.equal(availability.saeStatus, "AUTHORITY_FOUND");
+  assert.equal(availability.eligibleCandidates.length, 2);
+  assert(annotated.every((item) => item.authorityMatchTier === 1));
+  assert(annotated.every((item) => item.authorityRole === "GOVERNING"));
   assert.deepEqual(refs(annotated), ["NIRC Sec. 2", "NIRC Sec. 21"]);
 });
 
