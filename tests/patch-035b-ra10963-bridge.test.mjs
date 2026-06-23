@@ -151,6 +151,10 @@ function assertBridgeHit(result, label) {
   assert.deepEqual(refs(result.results), ["NIRC Sec. 2", "NIRC Sec. 21"], `${label}: bridged NIRC source rows`);
   assert(result.calls.some((call) => call.type === "or" && call.orClause.includes("nirc-1997-ra-10963")), `${label}: bridge uses known source path`);
   assert(result.results.every((item) => /nirc-1997-ra-10963/i.test(item.source || "")), `${label}: only TRAIN/NIRC source returned`);
+  assert(result.results.every((item) => item.exactAuthorityMatch === true), `${label}: bridge rows are marked exact authority matches`);
+  assert(result.results.every((item) => item.targetAuthorityMatch === true), `${label}: bridge rows are marked target authority matches`);
+  assert(result.results.every((item) => item.metadata?.ra10963SourceBridge === true), `${label}: bridge marker is metadata-only`);
+  assert(result.results.every((item) => item.normalizedReference !== "RA 10963"), `${label}: NIRC section normalized references are preserved`);
 }
 
 await test("RA 10963 bridges to the known NIRC-1997-RA-10963 source after equality miss", async () => {

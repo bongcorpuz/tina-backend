@@ -1278,7 +1278,8 @@ function mapRowToResult(row, score = 1, query = "", options = {}) {
   ]);
 
   const citationMatchBonus = Number(row.citationMatchBonus || row.citation_match_bonus || 0);
-  const targetAuthorityMatch = rowMatchesTargetAuthorities(
+  const exactAuthorityMatch = row.exactAuthorityMatch === true || row.exact_authority_match === true;
+  const targetAuthorityMatch = row.targetAuthorityMatch === true || row.target_authority_match === true || rowMatchesTargetAuthorities(
     {
       ...row,
       normalized_reference: normalizedReference,
@@ -1398,6 +1399,8 @@ function mapRowToResult(row, score = 1, query = "", options = {}) {
     normalizedAliases,
     normalized_aliases: normalizedAliases,
 
+    exactAuthorityMatch,
+    exact_authority_match: exactAuthorityMatch,
     targetAuthorityMatch,
     target_authority_match: targetAuthorityMatch,
     issueClassificationMatch,
@@ -2466,6 +2469,18 @@ function buildRa10963SourceBridgeFilter() {
   ].join(",");
 }
 
+function buildRa10963SourceBridgeAliases(row = {}) {
+  return unique([
+    ...(Array.isArray(row.normalized_aliases) ? row.normalized_aliases : []),
+    ...(Array.isArray(row.metadata?.normalizedAliases) ? row.metadata.normalizedAliases : []),
+    "RA 10963",
+    "R.A. No. 10963",
+    "Republic Act No. 10963",
+    "TRAIN Law",
+    "Tax Reform for Acceleration and Inclusion Act"
+  ]);
+}
+
 async function searchRa10963IndexedTaxCodeSource({
   supabaseClient,
   poolLimit,
@@ -2495,7 +2510,19 @@ async function searchRa10963IndexedTaxCodeSource({
     return (data || [])
       .map((row) =>
         mapRowToResult(
-          { ...row, citationMatchBonus: 1, searchMode },
+          {
+            ...row,
+            citationMatchBonus: 1,
+            exactAuthorityMatch: true,
+            targetAuthorityMatch: true,
+            normalized_aliases: buildRa10963SourceBridgeAliases(row),
+            metadata: {
+              ...(row.metadata || {}),
+              normalizedAliases: buildRa10963SourceBridgeAliases(row),
+              ra10963SourceBridge: true
+            },
+            searchMode
+          },
           1,
           queryStr,
           { ...parsed, searchMode }
