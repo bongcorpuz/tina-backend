@@ -1279,6 +1279,7 @@ function mapRowToResult(row, score = 1, query = "", options = {}) {
 
   const citationMatchBonus = Number(row.citationMatchBonus || row.citation_match_bonus || 0);
   const exactAuthorityMatch = row.exactAuthorityMatch === true || row.exact_authority_match === true;
+  const authorityMatchTier = Number(row.authorityMatchTier || row.authority_match_tier || 0);
   const targetAuthorityMatch = row.targetAuthorityMatch === true || row.target_authority_match === true || rowMatchesTargetAuthorities(
     {
       ...row,
@@ -1338,6 +1339,14 @@ function mapRowToResult(row, score = 1, query = "", options = {}) {
     id: row.id,
     fileId,
     file_id: fileId,
+
+    isIndexed: row.isIndexed === true || row.indexed === true || row.googleDriveIndexed === true,
+    indexed: row.indexed === true || row.isIndexed === true || row.googleDriveIndexed === true,
+    googleDriveIndexed: row.googleDriveIndexed === true,
+    retrievalLayer: row.retrievalLayer || row.retrieval_layer || null,
+    retrieval_layer: row.retrieval_layer || row.retrievalLayer || null,
+    retrievalPhase: row.retrievalPhase || row.retrieval_phase || null,
+    retrieval_phase: row.retrieval_phase || row.retrievalPhase || null,
 
     title,
     documentTitle: title,
@@ -1401,6 +1410,10 @@ function mapRowToResult(row, score = 1, query = "", options = {}) {
 
     exactAuthorityMatch,
     exact_authority_match: exactAuthorityMatch,
+    ...(Number.isFinite(authorityMatchTier) && authorityMatchTier > 0 ? {
+      authorityMatchTier,
+      authority_match_tier: authorityMatchTier
+    } : {}),
     targetAuthorityMatch,
     target_authority_match: targetAuthorityMatch,
     issueClassificationMatch,
@@ -1462,6 +1475,11 @@ function mapRowToResult(row, score = 1, query = "", options = {}) {
       possibleSubIssues,
       issueTypes,
       retrievalScore: enrichedScore,
+      isIndexed: row.isIndexed === true || row.indexed === true || row.googleDriveIndexed === true,
+      retrievalLayer: row.retrievalLayer || row.retrieval_layer || null,
+      retrievalPhase: row.retrievalPhase || row.retrieval_phase || null,
+      exactAuthorityMatch,
+      ...(Number.isFinite(authorityMatchTier) && authorityMatchTier > 0 ? { authorityMatchTier } : {}),
       targetAuthorityMatch,
       issueClassificationMatch,
       citationMatchBonus,
@@ -2515,11 +2533,23 @@ async function searchRa10963IndexedTaxCodeSource({
             citationMatchBonus: 1,
             exactAuthorityMatch: true,
             targetAuthorityMatch: true,
+            authorityMatchTier: 1,
+            authority_match_tier: 1,
+            isIndexed: true,
+            indexed: true,
+            googleDriveIndexed: true,
+            retrievalLayer: "LAYER_1_EXACT_NORMALIZED_AUTHORITY",
+            retrievalPhase: "LAYER_1_EXACT_NORMALIZED_AUTHORITY",
             normalized_aliases: buildRa10963SourceBridgeAliases(row),
             metadata: {
               ...(row.metadata || {}),
               normalizedAliases: buildRa10963SourceBridgeAliases(row),
-              ra10963SourceBridge: true
+              ra10963SourceBridge: true,
+              isIndexed: true,
+              googleDriveIndexed: true,
+              retrievalLayer: "LAYER_1_EXACT_NORMALIZED_AUTHORITY",
+              retrievalPhase: "LAYER_1_EXACT_NORMALIZED_AUTHORITY",
+              authorityMatchTier: 1
             },
             searchMode
           },

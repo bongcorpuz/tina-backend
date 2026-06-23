@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 
+import { annotateAuthorityCandidates } from "../authority-utils.js";
 import { classify } from "../issue-classification-engine.js";
+import { classifySourceAvailability } from "../pipeline.js";
 import { exactAuthoritySearch } from "../vector-store.js";
 
 let passed = 0;
@@ -153,6 +155,9 @@ function assertBridgeHit(result, label) {
   assert(result.results.every((item) => /nirc-1997-ra-10963/i.test(item.source || "")), `${label}: only TRAIN/NIRC source returned`);
   assert(result.results.every((item) => item.exactAuthorityMatch === true), `${label}: bridge rows are marked exact authority matches`);
   assert(result.results.every((item) => item.targetAuthorityMatch === true), `${label}: bridge rows are marked target authority matches`);
+  assert(result.results.every((item) => item.authorityMatchTier === 1), `${label}: bridge rows are Tier 1 exact matches`);
+  assert(result.results.every((item) => item.isIndexed === true), `${label}: bridge rows preserve indexed status`);
+  assert(result.results.every((item) => item.retrievalLayer === "LAYER_1_EXACT_NORMALIZED_AUTHORITY"), `${label}: bridge rows preserve Layer 1 retrieval`);
   assert(result.results.every((item) => item.metadata?.ra10963SourceBridge === true), `${label}: bridge marker is metadata-only`);
   assert(result.results.every((item) => item.normalizedReference !== "RA 10963"), `${label}: NIRC section normalized references are preserved`);
 }
@@ -173,6 +178,24 @@ await test("Tax Reform for Acceleration and Inclusion Act bridges to the known s
     trainRow("NIRC Sec. 21", 20)
   ]);
   assertBridgeHit(result, "full TRAIN title");
+});
+
+await test("RA 10963 bridge rows are eligible for AUTHORITY_FOUND without rewriting NIRC references", async () => {
+  const query = "What is RA 10963?";
+  const result = await search(query, [trainRow("NIRC Sec. 2", 0), trainRow("NIRC Sec. 21", 20)]);
+  const classification = classify(query);
+  const annotated = annotateAuthorityCandidates(result.results, { issueClassification: classification });
+  const availability = classifySourceAvailability({
+    annotatedCandidates: annotated,
+    issueClassification: classification,
+    query
+  });
+
+  assert.equal(availability.saeStatus, "AUTHORITY_FOUND");
+  assert.equal(availability.eligibleCandidates.length, 2);
+  assert(annotated.every((item) => item.authorityRole === "GOVERNING"));
+  assert(annotated.every((item) => item.directlyGovernsIssue === true));
+  assert.deepEqual(refs(annotated), ["NIRC Sec. 2", "NIRC Sec. 21"]);
 });
 
 await test("CREATE Act / RA 11534 still resolves through RA 11534 equality rows", async () => {
