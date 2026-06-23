@@ -2435,6 +2435,79 @@ async function fastAuthorityReferenceLookup({
 //   • Never throws; fastRefLookup already swallows its own errors.
 //   • Emits [EXACT PROVISION LOOKUP] / [HIT] / [MISS] for every call so
 //     retrieval audits can confirm whether provision chunks were found.
+// PATCH-035B: narrow TRAIN Law / RA 10963 bridge to the existing indexed NIRC source.
+function isRa10963ExactAuthority(parsed = {}) {
+  const exactAuthority = parsed.issueClassification?.exactAuthority || {};
+  const reference = String(exactAuthority.reference || "").trim().toUpperCase();
+  const hasCanonicalTarget = [
+    parsed.keyword,
+    parsed.query,
+    ...safeArray(parsed.targetAuthorities),
+    ...safeArray(parsed.controllingAuthorities)
+  ].some((value) => String(value || "").trim().toUpperCase() === "RA 10963");
+
+  if (exactAuthority.detected === true && reference === "RA 10963") return true;
+  if (!hasCanonicalTarget) return false;
+
+  const text = `${parsed.keyword || ""} ${parsed.query || ""}`;
+  return (
+    /\bRA\s*(?:No\.?\s*)?10963\b/i.test(text) ||
+    /\bRepublic\s+Act\s*(?:No\.?\s*)?10963\b/i.test(text) ||
+    /\bTRAIN\s+Law\b/i.test(text) ||
+    /\bTax\s+Reform\s+for\s+Acceleration\s+and\s+Inclusion\s+Act\b/i.test(text)
+  );
+}
+
+function buildRa10963SourceBridgeFilter() {
+  return [
+    "source.ilike.%nirc-1997-ra-10963-(bir).pdf%",
+    "original_source.ilike.%nirc-1997-ra-10963-(bir).pdf%",
+    "document_title.ilike.%NIRC-1997-RA-10963 (BIR).pdf%"
+  ].join(",");
+}
+
+async function searchRa10963IndexedTaxCodeSource({
+  supabaseClient,
+  poolLimit,
+  parsed = {},
+  searchMode = "RA_10963_SOURCE_BRIDGE"
+} = {}) {
+  if (!supabaseClient || !isRa10963ExactAuthority(parsed)) return [];
+
+  try {
+    const { data, error } = await supabaseClient
+      .from(VECTOR_TABLE)
+      .select(buildSelectColumns())
+      .or(buildRa10963SourceBridgeFilter())
+      .order("authority_level", { ascending: true, nullsFirst: false })
+      .order("chunk_index",     { ascending: true })
+      .limit(poolLimit);
+
+    if (error) {
+      console.warn("[RA_10963_SOURCE_BRIDGE] Supabase error:", {
+        message: error.message,
+        code:    error.code
+      });
+      return [];
+    }
+
+    const queryStr = parsed.query || parsed.keyword || "RA 10963";
+    return (data || [])
+      .map((row) =>
+        mapRowToResult(
+          { ...row, citationMatchBonus: 1, searchMode },
+          1,
+          queryStr,
+          { ...parsed, searchMode }
+        )
+      )
+      .filter((row) => !shouldSuppressRow(row, queryStr, parsed));
+  } catch (err) {
+    console.warn("[RA_10963_SOURCE_BRIDGE] exception:", err?.message || String(err));
+    return [];
+  }
+}
+
 export async function exactProvisionSearch(arg1, arg2) {
   const parsed   = parseSearchArgs(arg1, arg2, { topK: 8 });
   const { supabaseClient, query, keyword, topK } = parsed;
@@ -2535,9 +2608,30 @@ export async function exactAuthoritySearch(arg1, arg2) {
     searchMode: "EXACT_AUTHORITY"
   });
 
-  const sorted = uniqueResults(
+  const equalityResults = uniqueResults(
     sortResultsForTina([...perAuthorityResults, ...fastResults], query || keyword, parsed)
+  );
+
+  const ra10963BridgeResults = equalityResults.length === 0
+    ? await searchRa10963IndexedTaxCodeSource({
+        supabaseClient,
+        poolLimit,
+        parsed,
+        searchMode: "RA_10963_SOURCE_BRIDGE"
+      })
+    : [];
+
+  const sorted = uniqueResults(
+    sortResultsForTina([...equalityResults, ...ra10963BridgeResults], query || keyword, parsed)
   ).slice(0, safeTopK);
+
+  if (ra10963BridgeResults.length > 0) {
+    console.log("[RA_10963_SOURCE_BRIDGE HIT]", {
+      found:       ra10963BridgeResults.length,
+      returned:    sorted.length,
+      sourceMatch: "nirc-1997-ra-10963-(bir).pdf"
+    });
+  }
 
   if (sorted.length >= safeTopK) {
     console.log("[EXACT AUTHORITY FAST RETURN]", {
