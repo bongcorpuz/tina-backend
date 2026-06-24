@@ -15,6 +15,7 @@ import { classify, detectExactAuthority } from "../issue-classification-engine.j
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ISSUE_CLASSIFICATION_SRC = readFileSync(join(__dirname, "..", "issue-classification-engine.js"), "utf8");
+const EXACT_AUTHORITY_DETECTOR_SRC = readFileSync(join(__dirname, "..", "issue-exact-authority-detector.js"), "utf8");
 
 let passed = 0;
 let failed = 0;
@@ -57,14 +58,18 @@ await test("registry exports expected administrative helper primitives", () => {
 await test("classifier keeps detectExactAuthority compatibility wrapper behavior", () => {
   assert.match(
     ISSUE_CLASSIFICATION_SRC,
+    /import\s+\{[\s\S]*detectExactAuthority[\s\S]*\}\s+from\s+["']\.\/issue-exact-authority-detector\.js["'];/
+  );
+  assert.match(
+    EXACT_AUTHORITY_DETECTOR_SRC,
     /import\s+\{[\s\S]*detectAdministrativeAuthorityReference[\s\S]*\}\s+from\s+["']\.\/authority-alias-registry\.js["'];/
   );
   assert.match(
-    ISSUE_CLASSIFICATION_SRC,
+    EXACT_AUTHORITY_DETECTOR_SRC,
     /function\s+detectExactAuthority\s*\(\s*question\s*=\s*["']{2}\s*\)/
   );
   assert.match(
-    ISSUE_CLASSIFICATION_SRC,
+    EXACT_AUTHORITY_DETECTOR_SRC,
     /const\s+administrativeAuthority\s*=\s*detectAdministrativeAuthorityReference\(value\);/
   );
 });

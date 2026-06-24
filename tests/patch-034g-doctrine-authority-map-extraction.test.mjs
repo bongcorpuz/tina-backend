@@ -64,7 +64,10 @@ await test("issue classifier imports maps and keeps classifier functions local",
   assert.match(ISSUE_CLASSIFICATION_SRC, /function\s+getDefinitionAuthorityFor\s*\(/);
   assert.match(ISSUE_CLASSIFICATION_SRC, /function\s+buildAuthorities\s*\(/);
   assert.match(ISSUE_CLASSIFICATION_SRC, /function\s+detectSubIssue\s*\(/);
-  assert.match(ISSUE_CLASSIFICATION_SRC, /function\s+detectExactAuthority\s*\(/);
+  assert.match(
+    ISSUE_CLASSIFICATION_SRC,
+    /import\s+\{[\s\S]*detectExactAuthority[\s\S]*\}\s+from\s+["']\.\/issue-exact-authority-detector\.js["'];/
+  );
   assert.match(ISSUE_CLASSIFICATION_SRC, /function\s+detectRetrievalStrategy\s*\(/);
   assert.match(ISSUE_CLASSIFICATION_SRC, /function\s+detectResponseMode\s*\(/);
   assert.match(ISSUE_CLASSIFICATION_SRC, /function\s+detectOrchestrationMode\s*\(/);
