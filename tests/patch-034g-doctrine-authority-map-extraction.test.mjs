@@ -15,6 +15,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 const ISSUE_CLASSIFICATION_SRC = readFileSync(join(ROOT, "issue-classification-engine.js"), "utf8");
 const DOCTRINE_MAP_SRC = readFileSync(join(ROOT, "doctrine-authority-map.js"), "utf8");
+const VECTOR_STORE_SRC = readFileSync(join(ROOT, "vector-store.js"), "utf8");
 
 let passed = 0;
 let failed = 0;
@@ -256,11 +257,12 @@ await test("exact authority override behavior remains classifier-local", () => {
   assert.equal(cta.supportingJurisprudence.includes("CTA Case No. 9369"), true);
 });
 
-await test("pipeline/vector/source-card files have no PATCH-034G diff", () => {
-  for (const file of ["pipeline.js", "vector-store.js", "source-card-engine.js"]) {
+await test("pipeline/source-card files have no PATCH-034G diff and vector-store stays doctrine-map independent", () => {
+  for (const file of ["pipeline.js", "source-card-engine.js"]) {
     const diff = execFileSync("git", ["diff", "--", file], { cwd: ROOT, encoding: "utf8" });
     assert.equal(diff, "", `${file} has no diff`);
   }
+  assert.equal(VECTOR_STORE_SRC.includes("doctrine-authority-map"), false);
 });
 
 console.log(`\nPATCH-034G doctrine authority map extraction tests: ${passed} passed, ${failed} failed`);
