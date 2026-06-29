@@ -12,7 +12,7 @@ Current status:
 
 ```text
 PHASE 6F ACTIVE
-PATCH-06F-004 COMPLETE / LOCAL PASS
+PATCH-06F-005 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -58,33 +58,33 @@ No automatic ingestion until Phase 10 source-governance workflow is implemented.
 Latest implemented patch:
 
 ```text
-PATCH-06F-004 - Generic-query guard regression tests
+PATCH-06F-005 - Exact-source limitation wording regression tests
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-06F-004 add generic-query guard regression tests
+PATCH-06F-005 add exact-source limitation wording regression tests
 ```
 
 Current working state:
 
 ```text
-PATCH-06F-004 COMPLETE / LOCAL PASS
-Generic-query guard regression fixture added and validated.
+PATCH-06F-005 COMPLETE / LOCAL PASS
+Exact-source limitation wording regression fixture added and validated.
 Phase 6F active.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-06F-005 - Exact-source limitation wording regression tests
+PATCH-06F-006 - Mode-format evaluation: /ask, /tax, /audit
 ```
 
 Expected next gate:
 
 ```text
-PATCH-06F-005S - Exact-source limitation wording staging smoke, if needed
+PATCH-06F-006S - Mode-format evaluation staging smoke, if needed
 ```
 
 Next phase after Phase 6E closes:
@@ -546,7 +546,8 @@ PATCH-06F-001R â€” Codex crash recovery report - COMPLETE / PUSHED
 PATCH-06F-002 â€” Authority/source-card regression suite - COMPLETE / LOCAL PASS
 PATCH-06F-003 â€” CTA / G.R. click-target integrity tests - COMPLETE / LOCAL PASS
 PATCH-06F-004 â€” Generic-query guard regression tests - COMPLETE / LOCAL PASS
-PATCH-06F-005 â€” Exact-source limitation wording regression tests
+PATCH-06F-005 â€” Exact-source limitation wording regression tests - COMPLETE / LOCAL PASS
+PATCH-06F-006 â€” Mode-format evaluation: /ask, /tax, /audit
 ```
 
 Critical behaviors to lock:
@@ -900,26 +901,26 @@ PHASE 6F - Automated Evaluation & Regression Harness
 Current latest pushed commit:
 
 ```text
-PATCH-06F-004 add generic-query guard regression tests
+PATCH-06F-005 add exact-source limitation wording regression tests
 ```
 
 Current status:
 
 ```text
 PHASE 6F ACTIVE
-PATCH-06F-004 COMPLETE / LOCAL PASS
+PATCH-06F-005 COMPLETE / LOCAL PASS
 ```
 
 Immediate next Codex task:
 
 ```text
-PATCH-06F-005 - Exact-source limitation wording regression tests
+PATCH-06F-006 - Mode-format evaluation: /ask, /tax, /audit
 ```
 
 After that:
 
 ```text
-PATCH-06F-005S - Exact-source limitation wording staging smoke, if needed
+PATCH-06F-006S - Mode-format evaluation staging smoke, if needed
 ```
 
 Work owner rules:
