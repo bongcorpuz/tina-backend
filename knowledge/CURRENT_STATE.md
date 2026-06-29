@@ -12,7 +12,7 @@ Current status:
 
 ```text
 PHASE 6F ACTIVE
-PATCH-06F-001 COMPLETE / LOCAL PASS
+PATCH-06F-002 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -58,33 +58,33 @@ No automatic ingestion until Phase 10 source-governance workflow is implemented.
 Latest implemented patch:
 
 ```text
-PATCH-06F-001 - Evaluation runner skeleton
+PATCH-06F-002 - Authority/source-card regression suite
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-06F-001 add evaluation runner skeleton
+PATCH-06F-002 add authority source-card regression suite
 ```
 
 Current working state:
 
 ```text
-PATCH-06F-001 COMPLETE / LOCAL PASS
-Evaluation runner skeleton added and validated.
+PATCH-06F-002 COMPLETE / LOCAL PASS
+Authority/source-card regression fixture added and validated.
 Phase 6F active.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-06F-002 - Authority/source-card regression suite
+PATCH-06F-003 - CTA / G.R. click-target integrity tests
 ```
 
 Expected next gate:
 
 ```text
-PATCH-06F-002S - Authority/source-card regression staging smoke, if needed
+PATCH-06F-003S - CTA / G.R. click-target staging smoke, if needed
 ```
 
 Next phase after Phase 6E closes:
@@ -542,9 +542,9 @@ Planned work:
 
 ```text
 PATCH-06F-001 â€” Create TINA evaluation runner skeleton - COMPLETE / LOCAL PASS
-PATCH-06F-001S â€” Staging evaluation smoke validation
-PATCH-06F-002 â€” Authority/source-card regression suite
-PATCH-06F-003 â€” CTA click-target integrity tests
+PATCH-06F-001R â€” Codex crash recovery report - COMPLETE / PUSHED
+PATCH-06F-002 â€” Authority/source-card regression suite - COMPLETE / LOCAL PASS
+PATCH-06F-003 â€” CTA / G.R. click-target integrity tests
 PATCH-06F-004 â€” Generic-query guard regression tests
 PATCH-06F-005 â€” Staging evaluation report generator
 ```
@@ -900,26 +900,26 @@ PHASE 6F - Automated Evaluation & Regression Harness
 Current latest pushed commit:
 
 ```text
-PATCH-06F-001 add evaluation runner skeleton
+PATCH-06F-002 add authority source-card regression suite
 ```
 
 Current status:
 
 ```text
 PHASE 6F ACTIVE
-PATCH-06F-001 COMPLETE / LOCAL PASS
+PATCH-06F-002 COMPLETE / LOCAL PASS
 ```
 
 Immediate next Codex task:
 
 ```text
-PATCH-06F-002 - Authority/source-card regression suite
+PATCH-06F-003 - CTA / G.R. click-target integrity tests
 ```
 
 After that:
 
 ```text
-PATCH-06F-002S - Authority/source-card regression staging smoke, if needed
+PATCH-06F-003S - CTA / G.R. click-target staging smoke, if needed
 ```
 
 Work owner rules:

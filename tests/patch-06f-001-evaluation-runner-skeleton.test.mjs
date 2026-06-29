@@ -67,6 +67,7 @@ await test("category registry exposes the planned Phase 6F evaluation categories
     "unavailable_source",
     "related_authority",
     "generic_guard",
+    "case_card_integrity",
     "source_limitation_wording",
     "click_target_integrity",
     "mode_format",

@@ -1,0 +1,294 @@
+{
+  "version": "phase-6f-002",
+  "description": "Offline authority/source-card regression fixture. Runtime, live, sourceAvailability, source-card, limitation wording, and click-target assertions are intentionally pending until later Phase 6F live evaluation support exists.",
+  "cases": [
+    {
+      "id": "bir-ruling-da-489-03-question-unavailable-source",
+      "name": "BIR Ruling DA-489-03 question unavailable source guard",
+      "category": "unavailable_source",
+      "route": "/ask",
+      "query": "What is BIR Ruling DA-489-03?",
+      "checks": [
+        { "type": "schema", "note": "Fixture shape is active locally." },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "expectedSourceAvailability": "NO_INDEXED_SOURCE",
+          "expectedSourceCount": 0,
+          "forbiddenSourceCards": ["BIR Ruling DA-489-03", "G.R. No. 187485", "G.R. No. 226592", "NIRC Sec. 2"]
+        }
+      ]
+    },
+    {
+      "id": "bir-ruling-da-489-03-short-unavailable-source",
+      "name": "BIR Ruling DA-489-03 short unavailable source guard",
+      "category": "unavailable_source",
+      "route": "/ask",
+      "query": "BIR Ruling DA-489-03",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "expectedSourceAvailability": "NO_INDEXED_SOURCE",
+          "expectedSourceCount": 0,
+          "forbiddenSourceCards": ["BIR Ruling DA-489-03", "G.R. No. 187485", "G.R. No. 226592", "NIRC Sec. 2"]
+        }
+      ]
+    },
+    {
+      "id": "bir-ruling-da-489-03-explain-unavailable-source",
+      "name": "BIR Ruling DA-489-03 explain unavailable source guard",
+      "category": "unavailable_source",
+      "route": "/ask",
+      "query": "Explain BIR Ruling DA-489-03",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "expectedSourceAvailability": "NO_INDEXED_SOURCE",
+          "expectedSourceCount": 0,
+          "forbiddenSourceCards": ["BIR Ruling DA-489-03", "G.R. No. 187485", "G.R. No. 226592", "NIRC Sec. 2"]
+        }
+      ]
+    },
+    {
+      "id": "bir-ruling-da-489-03-spaced-unavailable-source",
+      "name": "BIR Ruling DA 489 03 spaced unavailable source guard",
+      "category": "unavailable_source",
+      "route": "/ask",
+      "query": "BIR Ruling DA 489 03",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "expectedSourceAvailability": "NO_INDEXED_SOURCE",
+          "expectedSourceCount": 0,
+          "forbiddenSourceCards": ["BIR Ruling DA-489-03", "G.R. No. 187485", "G.R. No. 226592", "NIRC Sec. 2"]
+        }
+      ]
+    },
+    {
+      "id": "nirc-section-23-exact-authority",
+      "name": "NIRC Section 23 exact authority source-card regression",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "What is NIRC Section 23?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "NIRC Sec. 23" }
+      ]
+    },
+    {
+      "id": "nirc-section-23-source-request",
+      "name": "NIRC Section 23 direct source-card request",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "Show me the source for NIRC Section 23.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "NIRC Sec. 23" }
+      ]
+    },
+    {
+      "id": "nirc-section-57-exact-authority",
+      "name": "NIRC Section 57 exact authority source-card regression",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "What does NIRC Section 57 provide?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "NIRC Sec. 57" }
+      ]
+    },
+    {
+      "id": "nirc-section-58-exact-authority",
+      "name": "NIRC Section 58 exact authority source-card regression",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "What does NIRC Section 58 provide?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "NIRC Sec. 58" }
+      ]
+    },
+    {
+      "id": "rr-2-98-ewt-exact-authority",
+      "name": "RR 2-98 expanded withholding tax source-card regression",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "What does RR 2-98 provide on expanded withholding tax?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "RR 2-98" }
+      ]
+    },
+    {
+      "id": "rmc-65-2012-exact-authority",
+      "name": "RMC 65-2012 exact authority source-card regression",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "What is RMC 65-2012?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "RMC 65-2012" }
+      ]
+    },
+    {
+      "id": "rmo-20-2013-exact-authority",
+      "name": "RMO 20-2013 exact authority source-card regression",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "What is RMO 20-2013?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "RMO 20-2013" }
+      ]
+    },
+    {
+      "id": "rmo-24-2013-exact-authority",
+      "name": "RMO 24-2013 exact authority source-card regression",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "What is RMO 24-2013?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "RMO 24-2013" }
+      ]
+    },
+    {
+      "id": "ra-10963-exact-authority",
+      "name": "RA 10963 exact authority source-card regression",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "What is RA 10963?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "RA 10963" }
+      ]
+    },
+    {
+      "id": "train-law-related-authority",
+      "name": "TRAIN Law related authority source-card regression",
+      "category": "related_authority",
+      "route": "/ask",
+      "query": "What is the TRAIN Law?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "expectedRelatedAuthority": "RA 10963", "note": "Keep related authority behavior distinguishable from an exact RA number query." }
+      ]
+    },
+    {
+      "id": "ra-11534-exact-authority",
+      "name": "RA 11534 exact authority source-card regression",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "What is RA 11534?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "RA 11534" }
+      ]
+    },
+    {
+      "id": "create-act-related-authority",
+      "name": "CREATE Act related authority source-card regression",
+      "category": "related_authority",
+      "route": "/ask",
+      "query": "What is the CREATE Act?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "expectedRelatedAuthority": "RA 11534", "note": "Keep related authority behavior distinguishable from an exact RA number query." }
+      ]
+    },
+    {
+      "id": "cta-case-9369-case-card-integrity",
+      "name": "CTA Case No. 9369 case-card integrity regression",
+      "category": "case_card_integrity",
+      "route": "/ask",
+      "query": "What is CTA Case No. 9369?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "expectedSourceCard": "CTA Case No. 9369", "expectedLimitationAvoidance": "Do not say a governing authority was not directly located when the exact case source is located." }
+      ]
+    },
+    {
+      "id": "seagate-gr-153866-source-limitation-wording",
+      "name": "CIR v. Seagate G.R. No. 153866 source-limitation wording regression",
+      "category": "source_limitation_wording",
+      "route": "/ask",
+      "query": "EXPOUND CIR v. Seagate Technology (GR No. 153866)",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "expectedSourceCard": "G.R. No. 153866", "expectedLimitationAvoidance": "Do not use unavailable-source wording when the exact source is located." }
+      ]
+    },
+    {
+      "id": "explain-ewt-generic-guard",
+      "name": "Explain EWT generic guard regression",
+      "category": "generic_guard",
+      "route": "/ask",
+      "query": "Explain EWT.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "forbiddenFalseExactPromotion": true, "expectedBoundary": "Generic EWT behavior remains controlled." }
+      ]
+    },
+    {
+      "id": "withholding-tax-generic-guard",
+      "name": "Withholding tax generic guard regression",
+      "category": "generic_guard",
+      "route": "/ask",
+      "query": "What is withholding tax?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "forbiddenFalseExactPromotion": true, "expectedBoundary": "Generic WHT behavior remains controlled." }
+      ]
+    },
+    {
+      "id": "bir-generic-boundary-guard",
+      "name": "BIR generic boundary guard regression",
+      "category": "generic_guard",
+      "route": "/ask",
+      "query": "What is BIR?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "forbiddenFalseExactPromotion": true, "expectedBoundary": "Broad public agency term respects sourceAvailability discipline." }
+      ]
+    },
+    {
+      "id": "train-generic-boundary-guard",
+      "name": "TRAIN generic boundary guard regression",
+      "category": "generic_guard",
+      "route": "/ask",
+      "query": "What is TRAIN?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "forbiddenFalseExactPromotion": true, "expectedBoundary": "Generic TRAIN query does not falsely promote RA 10963 as an exact query." }
+      ]
+    },
+    {
+      "id": "republic-act-generic-boundary-guard",
+      "name": "Republic Act generic boundary guard regression",
+      "category": "generic_guard",
+      "route": "/ask",
+      "query": "What is a Republic Act?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "forbiddenFalseExactPromotion": true, "expectedBoundary": "Generic Republic Act query is guarded or rejected instead of promoted to an unrelated exact RA." }
+      ]
+    },
+    {
+      "id": "withholding-tax-jurisprudence-generic-guard",
+      "name": "Withholding tax jurisprudence generic guard regression",
+      "category": "generic_guard",
+      "route": "/ask",
+      "query": "Are there jurisprudence cases on withholding tax?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "forbiddenFalseExactPromotion": true, "expectedBoundary": "Broad jurisprudence request remains distinguishable from exact case authority." }
+      ]
+    }
+  ]
+}
