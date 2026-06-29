@@ -14,6 +14,7 @@ Current status:
 PHASE 6F CLOSED / PASS
 PHASE 6G ACTIVE
 PATCH-06F-GATE-1 COMPLETE / LOCAL PASS
+PATCH-06G-001 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -59,27 +60,27 @@ No automatic ingestion until Phase 10 source-governance workflow is implemented.
 Latest implemented patch:
 
 ```text
-PATCH-06F-GATE-1 - Phase 6F Evaluation Harness Stabilization Gate
+PATCH-06G-001 - JS module inventory and decomposition destination map
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-06F-GATE-1 close Phase 6F
+PATCH-06G-001 add JS module inventory and decomposition map
 ```
 
 Current working state:
 
 ```text
-PATCH-06F-GATE-1 COMPLETE / LOCAL PASS
-Phase 6F evaluation harness closed as STABILIZED / PASS.
+PATCH-06G-001 COMPLETE / LOCAL PASS
+JS module inventory and decomposition destination map completed.
 Phase 6G active.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-06G-001 - JS module inventory and decomposition destination map
+PATCH-06G-002 - Claude Code architecture review of JS module inventory and decomposition boundaries
 ```
 
 Expected next gate:
@@ -475,20 +476,20 @@ Unavailable BIR Ruling DA-489-03 variants returned NO_INDEXED_SOURCE with zero c
 Next required task:
 
 ```text
-PATCH-06F-001 - Evaluation runner skeleton
+PATCH-06G-002 - Claude Code architecture review of JS module inventory and decomposition boundaries
 ```
 
 ---
 
 # Immediate Next Codex Task
 
-## PATCH-06F-001 - Evaluation Runner Skeleton
+## PATCH-06G-002 - Claude Code architecture review of JS module inventory and decomposition boundaries
 
 Objective:
 
 ```text
-Begin Phase 6F by creating the internal TINA automated evaluation runner skeleton.
-Do not integrate external tools, ingestion, DB/indexing/vector changes, or runtime behavior changes.
+Review the PATCH-06G-001 JS module inventory and decomposition destination map before any runtime decomposition begins.
+Keep pipeline.js untouched unless a later narrow patch expressly approves it.
 ```
 
 ---
@@ -887,7 +888,7 @@ continuous user learning
 Current objective:
 
 ```text
-Begin Phase 6F automated evaluation and regression harness.
+Continue Phase 6G authority/pipeline decomposition planning under the completed Phase 6F evaluation guard.
 ```
 
 ---
@@ -908,10 +909,17 @@ Do not start actual decomposition before inventorying existing JS modules and de
 Do not touch pipeline.js unless expressly approved in a later narrow patch.
 ```
 
+Planned work:
+
+```text
+PATCH-06G-001 - JS module inventory and decomposition destination map - COMPLETE / LOCAL PASS
+PATCH-06G-002 - Claude Code architecture review of JS module inventory and decomposition boundaries
+```
+
 Immediate next task:
 
 ```text
-PATCH-06G-001 - JS module inventory and decomposition destination map
+PATCH-06G-002 - Claude Code architecture review of JS module inventory and decomposition boundaries
 ```
 
 ---
@@ -929,7 +937,7 @@ PHASE 6G - Authority / Pipeline Decomposition Planning Under Evaluation Guard
 Current latest pushed commit:
 
 ```text
-PATCH-06F-GATE-1 close Phase 6F
+PATCH-06G-001 add JS module inventory and decomposition map
 ```
 
 Current status:
@@ -938,18 +946,19 @@ Current status:
 PHASE 6F CLOSED / PASS
 PHASE 6G ACTIVE
 PATCH-06F-GATE-1 COMPLETE / LOCAL PASS
+PATCH-06G-001 COMPLETE / LOCAL PASS
 ```
 
 Immediate next Codex task:
 
 ```text
-PATCH-06G-001 - JS module inventory and decomposition destination map
+PATCH-06G-002 - Claude Code architecture review of JS module inventory and decomposition boundaries
 ```
 
 After that:
 
 ```text
-Phase 6G planning follow-up based on the approved inventory/map.
+Phase 6G planning follow-up based on the Claude Code architecture review.
 ```
 
 Work owner rules:
