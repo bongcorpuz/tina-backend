@@ -1,25 +1,29 @@
-# Current State
+﻿# CURRENT_STATE.md
 
 ## TINA Continuity Status
 
-Current phase: **Phase 6B — Controlled Decomposition and Registry Extraction**
-
-Current backend latest pushed commit:
+Current phase:
 
 ```text
-8adba2a PATCH-034H Phase 6B stabilization gate
+PHASE 6E â€” Controlled Source Authority Extraction
 ```
 
-Last behavior-validated staging runtime commit:
+Current status:
 
 ```text
-60bbc642a47bbacd3c825d12056c8a0b32c8af2f
+ACTIVE / NEAR CLOSURE
 ```
 
 Current backend branch:
 
 ```text
 feature/source-availability-engine-v1
+```
+
+Current repo:
+
+```text
+C:/Projects/tina-backend
 ```
 
 Backend service:
@@ -34,7 +38,7 @@ Environment:
 staging
 ```
 
-Current staging status:
+Current known staging baseline:
 
 ```text
 /health: ok
@@ -42,12 +46,50 @@ indexingRunning: false
 vector store: 5,346 chunks / 102 sources
 ```
 
+Current corpus / ingestion rule:
+
+```text
+No DB/indexing/RAG/vector/corpus updates unless expressly approved.
+New Google Drive / Backblaze B2 / other source files remain parked or mirrored only.
+No automatic ingestion until Phase 10 source-governance workflow is implemented.
+```
+
+Latest implemented patch:
+
+```text
+PATCH-06E-010 â€” Unavailable BIR Ruling SourceAvailability Guard
+```
+
+Latest pushed commit:
+
+```text
+c2b6380 PATCH-06E-010 guard unavailable BIR Ruling promotion
+```
+
 Current working state:
 
 ```text
-PATCH-034H COMPLETE / PUSHED
-Phase 6B Stabilization Gate: PASS WITH KNOWN BACKLOG
-Next step: choose next approved work item; do not start TRAIN Law / RA 10963 without separate approval
+PATCH-06E-010 COMPLETE / PUSHED / LOCAL PASS
+PATCH-06E-010S staging smoke PASS.
+Phase 6E is not yet closed.
+```
+
+Immediate next task:
+
+```text
+PATCH-06E-GATE-3 â€” Phase 6E Closure Gate
+```
+
+Expected next gate:
+
+```text
+PATCH-06E-GATE-3 â€” Phase 6E Closure Gate
+```
+
+Next phase after Phase 6E closes:
+
+```text
+PHASE 6F â€” TINA Automated Evaluation & Regression Harness
 ```
 
 ---
@@ -78,6 +120,14 @@ Required backend workflow:
 
 Do not patch from assumptions.
 
+Do not broaden patch scope.
+
+Do not mix unrelated features with decomposition or diagnostics.
+
+Do not touch `pipeline.js` unless expressly approved.
+
+Do not update DB/indexing/RAG/vector/corpus unless expressly approved.
+
 ---
 
 ## Work Owner Rule
@@ -98,7 +148,7 @@ diagnostic runs
 repo verification
 ```
 
-Codex is the primary implementation worker for Phase 6B.
+Codex remains the primary implementation worker for the current Phase 6E work.
 
 ### Claude Code
 
@@ -114,101 +164,60 @@ module boundary design
 future system architecture
 ```
 
-Claude Code is the architecture/refactor planning owner, especially before deep `pipeline.js`, `source-authority-selector.js`, `authority-utils.js`, or route/controller decomposition.
-
-### Gemini
-
-Use **Gemini** only as optional:
+Claude Code is the architecture/refactor planning owner, especially before deep work on:
 
 ```text
-second-opinion reviewer
-external reasoning comparator
-research reviewer
-architecture critique
+pipeline.js
+source-authority-selector.js
+authority-utils.js
+route/controller decomposition
+memory architecture
+workflow orchestration
+source-governance architecture
 ```
 
-Gemini is not the primary implementer or governance owner.
+### Gemini / GLM / GitHub Copilot / other coding agents
 
----
-
-# SAE V1 Staging Release-Gate
-
-## SAE V1 STAGING RELEASE-GATE: PASS
-
-Backend commit:
+Status:
 
 ```text
-bdf2445518f7968440c64af1c705b261607e2487
+PARKED
 ```
 
-Service:
+Use only later as optional reviewers or experiments after the relevant phase or after all TINA phases are complete.
+
+Current rule:
 
 ```text
-tina-backend-staging
+Do not switch primary implementation away from Codex during Phase 6E closure.
 ```
 
-Environment:
+### External GitHub / AI Tools
+
+The following are parked for now:
 
 ```text
-staging
+Claude Cookbooks
+DSPy
+nanoGPT
+Honeycomb
+Hermes Agent
+OpenDesign / opencode
+Headroom
+DeepSeek-R1-Distill-Qwen-14B
+GLM 5.2
+Gemini
+GitHub Copilot Agent Mode
+other external GitHub tool explorations
 ```
 
-Matrix:
-
-```text
-7/7 PASS
-```
-
-Validated queries:
-
-1. `What does RR 2-98 provide on expanded withholding tax?`
-   Result: `AUTHORITY_FOUND`, RR 2-98, 4 cards — PASS
-
-2. `What does RR 12-2018 provide on estate tax?`
-   Result: `AUTHORITY_FOUND`, RR No. 12-2018, 1 card — PASS
-
-3. `What is RMC 65-2012?`
-   Result: `AUTHORITY_FOUND`, RMC No. 65-2012, 1 card — PASS
-
-4. `What is RMO 20-2013?`
-   Result: `AUTHORITY_FOUND`, RMO No. 20-2013, 1 card — PASS
-
-5. `What is RMO 24-2013?`
-   Result: `AUTHORITY_FOUND`, RMO No. 24-2013, 1 card — PASS
-
-6. `What is withholding tax?`
-   Result: `RELATED_AUTHORITY_ONLY`, 0 cards — PASS
-
-7. `Are there jurisprudence cases on withholding tax?`
-   Result: `RELATED_AUTHORITY_ONLY`, CTA Case No. 9711, 1 card — PASS
-
-SAE V1 status:
-
-```text
-RELEASE-GATE APPROVED
-```
-
-TINA v1 status:
-
-```text
-AUTHORITY-SAFE CANDIDATE
-```
-
-Completed commits:
-
-```text
-66659c8 PATCH-027J-R2
-2a322ab PATCH-027M
-d500d92 PATCH-027N
-bdf2445 SAE V1 local release-gate validation report
-2c89a10 SAE V1 staging release-gate approval docs
-```
+They are not abandoned, but they are deferred until the relevant later phase.
 
 ---
 
 # Completed Phase Status
 
-## Phase 1 — Core Tax Assistant
+## Phase 1 â€” Core Tax Assistant
 
 Status:
 
@@ -216,7 +225,7 @@ Status:
 COMPLETE
 ```
 
-## Phase 2 — Retrieval Foundation
+## Phase 2 â€” Retrieval Foundation
 
 Status:
 
@@ -224,7 +233,7 @@ Status:
 COMPLETE
 ```
 
-## Phase 3 — Authority-Aware Retrieval
+## Phase 3 â€” Authority-Aware Retrieval
 
 Status:
 
@@ -232,7 +241,7 @@ Status:
 COMPLETE
 ```
 
-## Phase 4 — Retrieval Integrity and Authority Discipline
+## Phase 4 â€” Retrieval Integrity and Authority Discipline
 
 Status:
 
@@ -240,7 +249,7 @@ Status:
 COMPLETE
 ```
 
-## Phase 5 — Source Availability Engine V1
+## Phase 5 â€” Source Availability Engine V1
 
 Status:
 
@@ -254,527 +263,236 @@ TINA reached:
 Authority-Safe Candidate
 ```
 
-## Phase 6 — NIRC Metadata and Authority Normalization
+## Phase 6 â€” NIRC Metadata and Authority Normalization
 
 Status:
 
 ```text
-STABILIZED
+COMPLETE / STABILIZED
 ```
 
-## Phase 6B — Controlled Decomposition and Registry Extraction
+## Phase 6B â€” Controlled Decomposition and Registry Extraction
 
 Status:
 
 ```text
-ACTIVE
+COMPLETE / STABILIZED
 ```
 
-Current result:
+Key result:
 
 ```text
-PATCH-034A through PATCH-034G are COMPLETE / STAGING PASS
-PATCH-034H Phase 6B Stabilization Gate is COMPLETE / PUSHED
-Phase 6B extracted-module behavior is stable
+PATCH-034A through PATCH-034H completed.
+Phase 6B extracted-module behavior stable.
+```
+
+## Phase 6C â€” Known Authority Backlog Fixes
+
+Status:
+
+```text
+COMPLETE / STABILIZED
+```
+
+Key result:
+
+```text
+PATCH-035 series completed.
+TRAIN Law / RA 10963 retrieval bridge and source-card behavior stabilized.
+```
+
+## Phase 6D â€” Post-PATCH-035 Stabilization
+
+Status:
+
+```text
+COMPLETE
+```
+
+Key result:
+
+```text
+PATCH-035D post-035 stabilization gate completed.
+No DB/indexing/RAG/vector/corpus changes.
 ```
 
 ---
 
-# Phase 6B Completed Patches
+# Active Phase
 
-## PATCH-034A — Source Card Engine Pure Helpers
-
-Work owner:
-
-```text
-Codex
-```
+## Phase 6E â€” Controlled Source Authority Extraction
 
 Status:
 
 ```text
-COMPLETE / STAGING PASS
-```
-
-Created/extracted:
-
-```text
-source-card-engine.js
+ACTIVE / NEAR CLOSURE
 ```
 
 Purpose:
 
 ```text
-Extract pure source-card helper functions from pipeline.js.
+Continue safe JavaScript decomposition and source-authority helper extraction without changing behavior.
+Preserve authority safety, sourceAvailability, source-card labels, public URLs, click targets, exact authority behavior, and guarded fallback behavior.
 ```
 
-Validated:
+Current Phase 6E completed work:
 
 ```text
-VAT cards
-RR 2-98 dedupe/clickability
-CTA 9369 no wrong-link regression
-BIR definition
-taxpayer/NIRC cards
+PATCH-06E-001  â€” Safe JS decomposition plan
+PATCH-06E-002  â€” Source-authority selector card sanitizer extraction
+PATCH-06E-002S â€” Source-card sanitizer staging smoke
+PATCH-06E-003  â€” Philippine tax boundary pattern constants extraction
+PATCH-06E-003S â€” Boundary pattern staging smoke
+PATCH-06E-004  â€” Reranker normalizers extraction
+PATCH-06E-004S â€” Reranker normalizers staging smoke
+PATCH-06E-005  â€” Reranker issue-signal helpers extraction
+PATCH-06E-005S â€” Reranker issue signals staging smoke
+PATCH-06E-GATE-1 â€” First-wave stabilization gate
+PATCH-06E-006  â€” Issue exact-authority detector extraction
+PATCH-06E-006S â€” Issue exact-authority detector staging smoke
+PATCH-06E-007  â€” Vector authority keyword builders extraction
+PATCH-06E-007S â€” Vector authority keyword builders staging smoke
+PATCH-06E-GATE-2 â€” Post-006/007 stabilization gate
+PATCH-06E-008  â€” Source-authority selector eligibility extraction
+PATCH-06E-008S â€” Source-authority selector eligibility staging smoke
+PATCH-06E-009  â€” Ask-handler public source sanitizer extraction
+PATCH-06E-009S â€” Ask-handler sanitizer staging diagnostic
+PATCH-06E-009T â€” BIR Ruling DA-489-03 promotion diagnostic
+PATCH-06E-010  â€” Unavailable BIR Ruling SourceAvailability Guard
+PATCH-06E-010S â€” Unavailable BIR Ruling Guard Staging Smoke
+```
+
+Current pending work inside Phase 6E:
+
+```text
+PATCH-06E-GATE-3 â€” Phase 6E Closure Gate
+```
+
+Optional only if closure gate identifies a remaining issue:
+
+```text
+PATCH-06E-011 â€” Last narrow extraction or diagnostic only if needed
 ```
 
 ---
 
-## PATCH-034B — Indexed Source-Card Hydration
+# Latest Patch Detail
 
-Work owner:
-
-```text
-Codex
-```
+## PATCH-06E-010 â€” Unavailable BIR Ruling SourceAvailability Guard
 
 Status:
 
 ```text
-COMPLETE / STAGING PASS
+COMPLETE / PUSHED / LOCAL PASS
+```
+
+Commit:
+
+```text
+c2b6380 PATCH-06E-010 guard unavailable BIR Ruling promotion
 ```
 
 Purpose:
 
 ```text
-Extract indexed source-card hydration helper.
+Prevent specific unavailable BIR Ruling-number queries from being promoted to AUTHORITY_FOUND through unrelated G.R./NIRC substitute cards.
 ```
 
-Key behavior preserved:
+Root-cause diagnostic from PATCH-06E-009T:
 
 ```text
-resolveIndexedSourceCardTarget()
-exactAuthoritySearch payload behavior
-source-card URL hydration
+Query:
+What is BIR Ruling DA-489-03?
+
+Observed staging behavior before PATCH-06E-010:
+AUTHORITY_FOUND with public cards:
+- G.R. No. 187485
+- G.R. No. 226592
+- NIRC Sec. 2
+
+No BIR Ruling DA-489-03 source card was exposed.
+
+Root cause:
+Primary: sourceAvailability promotion gap.
+Secondary: missing source / expected unavailable-source behavior and BIR Ruling exclusion gap.
+Not caused by PATCH-06E-009 sanitizer extraction.
+
+Corpus status:
+BIR Ruling DA-489-03 does not exist in the staging vector-store source list.
 ```
 
----
-
-## PATCH-034C — Authority Restoration Matching Helpers
-
-Work owner:
+Guard location:
 
 ```text
-Codex
+Narrow classifier-side guard in issue-classification-engine.js.
 ```
 
-Status:
+Guard behavior:
 
 ```text
-COMPLETE / STAGING PASS
+Specific BIR Ruling-number queries now get a specific BIR Ruling signal/reference.
+Non-matching/non-BIR candidates fail the existing material-authority match path.
+Unrelated G.R./NIRC candidates should no longer become AUTHORITY_FOUND for unavailable specific BIR Ruling queries.
 ```
 
-Created/extracted:
+Files reported changed:
 
 ```text
-authority-restoration-engine.js
+issue-classification-engine.js
+tests/patch-06e-010-unavailable-bir-ruling-sourceavailability-guard.test.mjs
 ```
 
-Purpose:
+Note for next validation:
 
 ```text
-Extract authority restoration candidate matching helpers.
+User display also showed authority-utils.js +6/-6 in the edited file list.
+Before PATCH-06E-010S, verify actual committed file list with:
+git show --name-only --stat c2b6380
 ```
 
-Kept local in `pipeline.js`:
+Local validation:
 
 ```text
-PATCH-017K restoration coordinator
-async indexed lookup/cache
-final source-card merge behavior
-```
-
----
-
-## PATCH-034D — Source Intent Registry
-
-Work owner:
-
-```text
-Codex
-```
-
-Status:
-
-```text
-COMPLETE / STAGING PASS
-```
-
-Created/extracted:
-
-```text
-source-intent-registry.js
-```
-
-Purpose:
-
-```text
-Extract source intent/source inventory detection helpers.
-```
-
-Validated:
-
-```text
-SOURCE_LOOKUP preserved
-income-source legal terms do not accidentally trigger source inventory
-NIRC Sec. 23 source lookup preserved
-```
-
----
-
-## PATCH-034E — Taxpayer Definition Registry
-
-Work owner:
-
-```text
-Codex
-```
-
-Commit:
-
-```text
-332db5f32e71a9ac48792e6272ea04e7f7480fca
-```
-
-Status:
-
-```text
-COMPLETE / STAGING PASS
-```
-
-Created/extracted:
-
-```text
-taxpayer-definition-registry.js
-```
-
-Exports:
-
-```text
-RESIDENT_CITIZEN_INCOME_SCOPE
-TAXPAYER_DEFINITION
-hasTaxOrNircContext
-isResidentCitizenIncomeScopeQuery
-isTaxpayerDefinitionQuery
-```
-
-Validated:
-
-```text
-NIRC Sec. 22 taxpayer definitions
-NIRC Sec. 23 resident citizen income-scope
-bare resident citizen / nonresident alien clarification
-VAT
-BIR
-RR 2-98
-CTA 9369
-NIRC Sec. 23 source lookup
-```
-
----
-
-## PATCH-034F-1 — Classifier-Side Authority Alias Registry
-
-Work owner:
-
-```text
-Codex
-```
-
-Commit:
-
-```text
-f04c8c30a9b122633e99a1ea1b7002e3397a1220
-```
-
-Status:
-
-```text
-COMPLETE / STAGING PASS
-```
-
-Created/extracted:
-
-```text
-authority-alias-registry.js
-```
-
-Exports:
-
-```text
-ADMINISTRATIVE_AUTHORITY_TYPES
-EXACT_ADMINISTRATIVE_AUTHORITY_TYPES
-normalizeAdminAuthorityYear
-normalizeAdministrativeAuthorityReference
-detectAdministrativeAuthorityReference
-isExactAdministrativeAuthorityLookup
-```
-
-Kept local in `issue-classification-engine.js`:
-
-```text
-detectExactAuthority() compatibility wrapper/export
-buildAuthorities()
-detectRetrievalStrategy()
-detectResponseMode()
-detectOrchestrationMode()
-classifyTaxIssue() execution order
-CREATE/TRAIN, RA, NIRC, G.R., CTA handling
-BIR ruling exclusion/promotion behavior
-```
-
-Validated:
-
-```text
-RR 2-98
-RR 2-1998
-RR No. 2-1998
-Revenue Regulations No. 2-1998
-RMC 65-2012
-Revenue Memorandum Circular No. 65-2012
-RMO 20-2013
-Revenue Memorandum Order No. 20-2013
-RR 12-2018
-BIR Ruling exclusion
-CTA 9369
-VAT
-taxpayer under NIRC
-```
-
----
-
-## PATCH-034F-2 — Vector-Side Authority Reference Registry
-
-Work owner:
-
-```text
-Codex
-```
-
-Commit:
-
-```text
-8c6d4ce7c70baf8a26bffa102c8f22fc15df91ff
-```
-
-Status:
-
-```text
-COMPLETE / STAGING PASS
-```
-
-Created/extracted:
-
-```text
-vector-authority-reference-registry.js
-```
-
-Exports:
-
-```text
-buildAdminIssuanceYearLookupVariants
-buildNormalizedRefVariants
-isRecognizableAuthorityReference
-```
-
-Dependency handling:
-
-```text
-buildNormalizedRefVariants uses dependency injection for normalizeLegalReference.
-vector-store.js keeps a local wrapper calling:
-buildRegistryNormalizedRefVariants(terms, { normalizeLegalReference })
-```
-
-Kept local in `vector-store.js`:
-
-```text
-exactAuthoritySearch()
-fastRefLookup()
-fastRefLookupByExplicitAuthority()
-fastAuthorityReferenceLookup()
-Supabase/query logic
-sorting/dedup/scoring/suppression
-source-card hydration
-URL behavior
-searchIndexedSources() order
-```
-
-Validated:
-
-```text
-RR/RMC/RMO variants
-RR 2-1998 to RR 2-98 lookup variants
-RR 16-2005 VAT restoration
-NIRC Sec. 23 source lookup
-CTA 9369 no wrong-link regression
-BIR Ruling no accidental admin exact lookup
-G.R./RA no admin-year conversion
-```
-
----
-
-## PATCH-034G — Doctrine Authority Map Extraction
-
-Work owner:
-
-```text
-Codex
-```
-
-Commit:
-
-```text
-60bbc642a47bbacd3c825d12056c8a0b32c8af2f
-```
-
-Status:
-
-```text
-COMPLETE / STAGING PASS
-```
-
-Created/extracted:
-
-```text
-doctrine-authority-map.js
-```
-
-Exports only:
-
-```text
-DEFINITION_AUTHORITY_MAP
-DOMAIN_DETECTORS
-ISSUE_SPECIFIC_TARGETS
-```
-
-Kept local in `issue-classification-engine.js`:
-
-```text
-detectSubIssue()
-detectExactAuthority()
-getDefinitionAuthorityFor()
-buildAuthorities()
-detectRetrievalStrategy()
-detectResponseMode()
-detectOrchestrationMode()
-classifyTaxIssue()
-CREATE/TRAIN alias helpers
-EWT bridge logic
-VAT specialized guard logic
-exact authority override logic
-```
-
-Validated:
-
-```text
-VAT maps preserved
-BIR definition map preserved
-taxpayer NIRC Sec. 22 preserved
-resident citizen NIRC Sec. 23 preserved
-EWT/WHT NIRC Sec. 57/58 + RR 2-98 preserved
-RR exact behavior preserved
-BIR Ruling exclusion preserved
-CTA 9369 preserved
-CREATE Act preserved
-NIRC Sec. 23 source lookup preserved
-```
-
----
-
-## PATCH-034H — Phase 6B Stabilization Gate
-
-Work owner:
-
-```text
-Codex
-```
-
-Commit:
-
-```text
-8adba2a PATCH-034H Phase 6B stabilization gate
-```
-
-Status:
-
-```text
-COMPLETE / PUSHED
-PASS WITH KNOWN BACKLOG
-```
-
-Report:
-
-```text
-PATCH-034H_PHASE-6B_STABILIZATION_GATE.md
-```
-
-Purpose:
-
-```text
-Run a complete local and staging regression matrix across all Phase 6B extracted modules before any new development.
-```
-
-Validated:
-
-```text
-source-card-engine.js
-authority-restoration-engine.js
-source-intent-registry.js
-taxpayer-definition-registry.js
-authority-alias-registry.js
-vector-authority-reference-registry.js
-doctrine-authority-map.js
-```
-
-Local regression:
-
-```text
-npm test
-Syntax checks: 10 run, 0 failed
-Test suites: 56 run, 0 failed
-GATE PASSED
+Focused 06E-010 test: PASS
+Targeted authority/source-card/EWT-WHT controls: PASS
+npm test: PASS, 10 syntax checks + 65 suites, 0 failures
+npm run guard:files: PASS
 ```
 
 Staging validation:
 
 ```text
-/health: ok
-commitSha: 60bbc642a47bbacd3c825d12056c8a0b32c8af2f
-indexingRunning: false
-vector store: 5,346 chunks / 102 sources
+PASS on staging.
+Deployed commit matched c2b6380.
+indexingRunning=false.
+Vector store remained 5,346 chunks / 102 sources.
+Unavailable BIR Ruling DA-489-03 variants returned NO_INDEXED_SOURCE with zero cards and no unrelated G.R./NIRC substitute promotion.
 ```
 
-Matrix result:
+Next required gate:
 
 ```text
-VAT source-card behavior: PASS
-BIR definition behavior: PASS
-taxpayer definition under NIRC Sec. 22: PASS
-resident citizen income-scope under NIRC Sec. 23: PASS
-EWT/WHT behavior under NIRC Sec. 57 and Sec. 58: PASS
-RR 2-98 exact authority behavior: PASS
-RR/RMC/RMO alias variants: PASS
-BIR Ruling exclusion behavior: PASS
-CTA Case No. 9369 source-card correctness and click target: PASS
-NIRC Sec. 23 source lookup: PASS
-CREATE Act / RA 11534 behavior: PASS
-TRAIN Law / RA 10963: PASS WITH KNOWN BACKLOG
-```
-
-Failure classification:
-
-```text
-Phase 6B regression: none
-Pre-existing backlog: TRAIN Law / RA 10963 indexed-source alias/retrieval gap
-Staging/environment issue: none
-Test/query issue: initial over-specific CTA 9369 VAT-refund phrasing missed the exact case-card path
+PATCH-06E-GATE-3 â€” Phase 6E Closure Gate
 ```
 
 ---
 
-# Current Extracted Modules
+# Immediate Next Codex Task
 
-The following extracted modules now exist:
+## PATCH-06E-GATE-3 â€” Phase 6E Closure Gate
+
+Objective:
+
+```text
+Run the Phase 6E closure gate after PATCH-06E-010S PASS.
+Confirm the completed extraction series remains stable before Phase 6F begins.
+```
+
+---
+
+# Current Extracted / New Modules
+
+The following extracted modules now exist or have been added through Phase 6B and Phase 6E:
 
 ```text
 source-card-engine.js
@@ -784,308 +502,347 @@ taxpayer-definition-registry.js
 authority-alias-registry.js
 vector-authority-reference-registry.js
 doctrine-authority-map.js
+services/source-authority-selector-card-sanitizer.js
+services/philippine-tax-boundary-patterns.js
+reranker-normalizers.js
+reranker-issue-signals.js
+issue-exact-authority-detector.js
+vector-authority-keyword-builders.js
+services/source-authority-selector-eligibility.js
+services/ask-handler-public-source-sanitizer.js
 ```
 
 ---
 
-# Known Backlog
-
-## TRAIN Law / RA 10963 Retrieval Timeout
+# Phase 6F â€” TINA Automated Evaluation & Regression Harness
 
 Status:
 
 ```text
-Pre-existing backlog
-Not a PATCH-034G or PATCH-034H regression
+NOT STARTED
 ```
 
-Observed:
+Start condition:
 
 ```text
-TRAIN Law repeatedly returned RETRIEVAL_TIMEOUT / STANDARD_TAX.
+Begin only after Phase 6E closes.
 ```
 
-Diagnosis:
+Purpose:
 
 ```text
-TRAIN Law maps correctly to RA 10963.
-RA 10963 exactAuthoritySearch returns 0 rows.
-normalizedCitationSearch for RA 10963 returns 0 rows.
-normalized_reference = RA 10963 returns 0 rows.
+Create a permanent testing/evaluation harness inspired by evaluation-cookbook patterns, but governed for TINA.
+This is not a replacement for TINA and not an external repo integration.
+It is an internal evaluation layer.
 ```
 
-But the source exists:
+Planned work:
 
 ```text
-01-tax-code/nirc-1997-ra-10963-(bir).pdf
+PATCH-06F-001 â€” Create TINA evaluation runner skeleton
+PATCH-06F-001S â€” Staging evaluation smoke validation
+PATCH-06F-002 â€” Authority/source-card regression suite
+PATCH-06F-003 â€” CTA click-target integrity tests
+PATCH-06F-004 â€” Generic-query guard regression tests
+PATCH-06F-005 â€” Staging evaluation report generator
 ```
 
-Problem:
+Critical behaviors to lock:
 
 ```text
-Rows are normalized as NIRC sections, not RA 10963.
-```
-
-CREATE works because:
-
-```text
-CREATE Act maps to RA 11534.
-RA 11534 is indexed as RA 11534.
-Exact lookup succeeds.
-```
-
-Backlog fix options:
-
-```text
-1. Metadata repair: add RA 10963 alias to the indexed NIRC/Tax Code source.
-2. Retrieval bridge: if exactAuthority is RA 10963 and exact lookup misses, bridge to NIRC 1997 / TRAIN-amended Tax Code source.
-3. Source alias registry: map TRAIN Law / RA 10963 to indexed NIRC 1997 RA 10963 source without broad semantic fallback.
-```
-
-Do not mix this with Phase 6B decomposition unless separately approved.
-
----
-
-# Future JS Decomposition Candidates
-
-## issue-classification-engine.js
-
-Priority:
-
-```text
-High
-```
-
-Already decomposed through:
-
-```text
-source-intent-registry.js
-taxpayer-definition-registry.js
-authority-alias-registry.js
-doctrine-authority-map.js
-```
-
-Future possible extractions:
-
-```text
-response-mode registry
-retrieval-strategy registry
-classification helper modules
-subIssue routing modules
-```
-
-Timing:
-
-```text
-Only after Phase 6B Stabilization Gate.
+NIRC Sec. 57 source card appears
+NIRC Sec. 58 remains correct
+RR 2-98 authority identity preserved
+RR 12-2018 source behavior preserved
+RMC 65-2012 source behavior preserved
+RMO 20-2013 / RMO 24-2013 source behavior preserved
+Generic EWT/WHT does not over-promote authority
+Generic TRAIN query does not falsely promote RA 10963
+Generic Republic Act query is rejected or guarded
+BIR Ruling exclusion / unavailable-source guard remains preserved
+CTA Case No. 9369 source card opens the correct case
+Source-card label, public URL, and click target match
 ```
 
 ---
 
-## vector-store.js
+# Future Phase Roadmap
 
-Priority:
+## Phase 7A â€” Human Conversational Response Layer
+
+Status:
 
 ```text
-Medium
+NOT STARTED
 ```
 
-Already decomposed through:
+Purpose:
 
 ```text
-vector-authority-reference-registry.js
+Make TINA answer like a professional tax adviser, not merely a retrieval engine.
+Improve clarity, structure, tone, examples, and practical explanation while preserving authority discipline.
 ```
 
-Future possible extractions:
+## Phase 7B â€” Analytical / Adversarial Reasoning Layer
+
+Status:
 
 ```text
-reference-normalization-engine.js
-authority-lookup-engine.js
-retrieval-ranking-engine.js
-embedding-search-engine.js
+NOT STARTED
 ```
 
-Timing:
+Purpose:
 
 ```text
-Only after vector helper extraction remains stable.
-Avoid DB/query extraction until timeout/scoring/fallback risks are better isolated.
+Risk flags, conflicts, counterarguments, fact gaps, supersession checks, audit/litigation positioning, and adversarial review.
+```
+
+## Phase 8 â€” Memory, User Learning & Governed Tax Intelligence
+
+Status:
+
+```text
+NOT STARTED
+```
+
+Purpose:
+
+```text
+Implement governed continuous learning, user learning, /quiz and /review progress, firm memory, client/matter memory, and Tax Guru personalization.
+```
+
+Knowledge separation rule:
+
+```text
+User questions teach TINA demand patterns and personalization.
+Quiz/review results teach TINA user mastery and weaknesses.
+Client/matter facts teach TINA private matter context.
+Only approved source-backed materials teach TINA the law.
+```
+
+Knowledge layers:
+
+```text
+Global Knowledge:
+Approved tax/legal/regulatory sources available to all users.
+
+Firm Knowledge:
+BCCPAs templates, workflows, methodology, preferred formats, internal playbooks.
+
+User Memory:
+User preferences, quiz/review history, learning weaknesses, frequent topics, answer style.
+
+Matter Memory:
+Client/entity/case-specific facts, assumptions, documents, issue history.
+```
+
+Suggested work:
+
+```text
+PATCH-08A â€” Memory governance design
+PATCH-08B â€” Global vs firm vs user vs matter memory schema
+PATCH-08C â€” User query learning log
+PATCH-08D â€” /quiz and /review learning memory
+PATCH-08E â€” Matter/client memory
+PATCH-08F â€” Firm knowledge layer
+PATCH-08G â€” Global knowledge promotion workflow
+PATCH-08H â€” Tax Guru personalization engine
+PATCH-08I â€” Memory privacy and audit trail
+```
+
+## Phase 9 â€” Professional Workflow Co-Pilot
+
+Status:
+
+```text
+NOT STARTED
+```
+
+Purpose:
+
+```text
+Professional outputs and practice workflows.
+```
+
+Examples:
+
+```text
+BIR replies
+audit defense matrices
+client letters
+engagement checklists
+tax position memos
+compliance trackers
+document workflows
+```
+
+## Phase 10 â€” Regulatory Monitoring, Source Governance & Ingestion Automation
+
+Status:
+
+```text
+NOT STARTED
+```
+
+Purpose:
+
+```text
+Controlled regulatory source monitoring, archival, approval, ingestion, metadata governance, validation, and rollback.
+```
+
+Tool roles later:
+
+```text
+Apify:
+Source discovery / crawler layer for BIR, SEC, CTA, Supreme Court, DOF, PEZA, BOI, LGU and other regulatory pages.
+
+n8n:
+Workflow orchestration for scheduled monitoring, download workflows, manifest creation, checksum generation, Backblaze B2 archiving, human approval routing, ingestion queue creation, validation, notifications, and rollback.
+
+Backblaze B2:
+Source archive / standby source-of-truth storage after governance.
+```
+
+Critical rule:
+
+```text
+Apify finds.
+n8n orchestrates.
+B2 stores.
+Human/governance approves.
+TINA ingests only approved sources.
+```
+
+## Phase 11 â€” Speed, Scaling, Token, Model & Deployment Optimization
+
+Status:
+
+```text
+NOT STARTED
+```
+
+Purpose:
+
+```text
+Token efficiency, model comparison, open-weights testing, observability, deployment optimization, and scaling.
+```
+
+Parked tools for later review:
+
+```text
+Headroom
+GLM
+Gemini
+DeepSeek-R1-Distill-Qwen-14B
+GitHub Copilot Agent Mode
+Honeycomb
+other model/deployment/observability tools
+```
+
+Current rule:
+
+```text
+No external tool integration during Phase 6E closure.
+Headroom may be used only as developer-side token-efficiency tooling, not inside TINA runtime.
+```
+
+## Phase 12 â€” Document-Aware Advisory & Client File Intelligence
+
+Status:
+
+```text
+NOT STARTED
+```
+
+Purpose:
+
+```text
+Client-file-aware advisory, document understanding, matter-specific answers, document-grounded workflows.
+```
+
+## Phase 13 â€” Philippine Tax Operating System / Full Tax Guru
+
+Status:
+
+```text
+NOT STARTED
+```
+
+Purpose:
+
+```text
+Mature TINA as a Philippine Tax Operating System and full Tax Guru platform.
+```
+
+Target maturity:
+
+```text
+authority-safe retrieval
+automated evaluation
+human conversational layer
+adversarial tax reasoning
+memory and personalization
+governed source ingestion
+professional workflows
+document intelligence
+continuous regulatory monitoring
+firm/client/matter knowledge
 ```
 
 ---
 
-## source-authority-selector.js
+# Source Storage / Backblaze B2 Status
 
-Priority:
+Current storage posture:
 
 ```text
-Later / high-risk
+Google Drive:
+Working source repository.
+
+Backblaze B2:
+Backup / standby archive only.
+
+MEGA:
+Optional private encrypted archive.
 ```
 
-Reason:
+Current B2 rule:
 
 ```text
-Controls SAS/DSF/source card selection/authority tiers.
-Past bugs came from stripped fields like excerpt, authorityMatchTier, normalizedReference.
+Backblaze B2 is not connected to TINA ingestion yet.
+No B2-to-RAG ingestion.
+No automatic indexing.
+No vector update.
 ```
 
-Timing:
+Known B2 setup:
 
 ```text
-After SAS/DSF/source-card stabilization.
-Use Claude Code for architecture first, then Codex for narrow patches.
+Bucket:
+tina-source-archive
+
+Purpose now:
+GDrive mirror / backup / standby archive
+
+Future Phase 10 purpose:
+Governed source archive and ingestion source-of-truth candidate.
 ```
 
----
-
-## authority-utils.js
-
-Priority:
+Recommended rclone posture:
 
 ```text
-Later / medium-high risk
+Use rclone copy, not rclone sync.
+Back up selected folders only, not the whole Google Drive unless expressly intended.
 ```
 
-Reason:
+Suggested TINA source mirror:
 
 ```text
-Authority role logic, exact admin promotion, controlling/supporting decisions.
-```
+Source:
+gdrive:TINA TAX LIBRARY
 
-Timing:
-
-```text
-After role/promotion behavior is fully mapped and protected by tests.
-```
-
----
-
-## pipeline.js
-
-Priority:
-
-```text
-Major orchestration / later
-```
-
-Reason:
-
-```text
-Controls orchestration, retrieval layers, timeout races, source-card restoration, diagnostics, answer generation, and state transitions.
-```
-
-Timing:
-
-```text
-Do not deeply decompose pipeline.js yet.
-Do it only after Phase 6B Stabilization Gate and after registry/helper extractions are proven stable.
-```
-
-Work owner split:
-
-```text
-Claude Code for decomposition plan.
-Codex for narrow implementation patches.
-```
-
----
-
-## ask-handler.js or route/controller equivalent
-
-Priority:
-
-```text
-Product layer / later
-```
-
-Timing:
-
-```text
-When implementing streaming, response tiers, caching, memory, user/session orchestration.
-```
-
-Likely phase:
-
-```text
-Phase 7 or Phase 8
-```
-
----
-
-## services/philippine-tax-domain-boundary.js
-
-Priority:
-
-```text
-Sensitive boundary layer / later
-```
-
-Reason:
-
-```text
-Controls clarify/reject/answer behavior.
-High risk if changed too early.
-```
-
-Timing:
-
-```text
-After classifier and authority layers are stable.
-```
-
----
-
-# Immediate Next Step
-
-The next step is not another extraction.
-
-Phase 6B stabilization has passed.
-
-Next candidate work items, subject to explicit selection/approval:
-
-```text
-1. TRAIN Law / RA 10963 backlog fix
-2. response-mode / retrieval-strategy registry investigation
-3. source-authority-selector.js investigation
-4. pipeline.js deeper decomposition planning
-```
-
-Current recommended hygiene posture:
-
-```text
-Do not start TRAIN Law / RA 10963 work yet.
-Do not start another extraction yet.
-Choose and approve the next work item first.
-```
-
-Completed gate:
-
-```text
-PATCH-034H Phase 6B Stabilization Gate
-PASS WITH KNOWN BACKLOG
-```
-
-Required validation coverage:
-
-```text
-source-card behavior
-authority restoration
-source intent
-taxpayer definitions
-authority aliases
-vector authority variants
-doctrine maps
-VAT
-BIR
-taxpayer Sec. 22
-resident citizen Sec. 23
-EWT/WHT Sec. 57/58 + RR 2-98
-RR/RMC/RMO aliases
-BIR Ruling exclusion
-CTA 9369
-NIRC source lookup
-CREATE Act
-TRAIN Law known backlog classification
+Destination:
+b2:tina-source-archive/gdrive-mirror/raw/TINA TAX LIBRARY
 ```
 
 ---
@@ -1101,7 +858,7 @@ single large tax chatbot backend
 toward:
 
 ```text
-Philippine Tax Operating System
+Philippine Tax Operating System / Full Tax Guru
 ```
 
 Long-term direction:
@@ -1114,14 +871,18 @@ document-aware advisory
 regulatory monitoring
 filing/preparation workflows
 case/jurisprudence intelligence
-client/entity memory
+client/entity/matter memory
 professional-grade tax/legal operating workflows
+controlled source governance
+continuous user learning
 ```
 
 Current objective:
 
 ```text
-stability, authority safety, source-card correctness, and clean backend architecture.
+Finish Phase 6E safely.
+Run Phase 6E closure gate.
+Then begin Phase 6F automated evaluation and regression harness.
 ```
 
 ---
@@ -1133,27 +894,39 @@ Continue TINA development from the latest continuity state.
 Current phase:
 
 ```text
-Phase 6B — Controlled Decomposition and Registry Extraction
+PHASE 6E â€” Controlled Source Authority Extraction
 ```
 
 Current latest pushed commit:
 
 ```text
-8adba2a PATCH-034H Phase 6B stabilization gate
-```
-
-Last behavior-validated staging runtime commit:
-
-```text
-60bbc642a47bbacd3c825d12056c8a0b32c8af2f
+c2b6380 PATCH-06E-010 guard unavailable BIR Ruling promotion
 ```
 
 Current status:
 
 ```text
-PATCH-034H COMPLETE / PUSHED
-Phase 6B Stabilization Gate: PASS WITH KNOWN BACKLOG
-Next step: choose next approved work item
+PATCH-06E-010 COMPLETE / PUSHED / LOCAL PASS
+PATCH-06E-010S staging smoke PASS
+Phase 6E is active / near closure
+```
+
+Immediate next Codex task:
+
+```text
+PATCH-06E-GATE-3 â€” Phase 6E Closure Gate
+```
+
+After that:
+
+```text
+PATCH-06E-GATE-3 â€” Phase 6E Closure Gate
+```
+
+Then:
+
+```text
+PHASE 6F â€” TINA Automated Evaluation & Regression Harness
 ```
 
 Work owner rules:
@@ -1161,12 +934,15 @@ Work owner rules:
 ```text
 Codex for narrow implementation, diagnostics, tests, commits, staging validation.
 Claude Code for broad architecture/refactor planning.
-Gemini only for optional outside review, not primary implementation.
+Gemini/GLM/Copilot/external tools parked unless expressly approved later.
 ```
 
-Important backlog:
+Important current guard:
 
 ```text
-TRAIN Law / RA 10963 retrieval/indexing gap is pre-existing and not a PATCH-034G or PATCH-034H regression.
-RA 10963 exact lookup misses because the source exists as nirc-1997-ra-10963-(bir).pdf but rows are normalized as NIRC sections, not RA 10963.
+Specific unavailable BIR Ruling-number queries should not be promoted to AUTHORITY_FOUND through unrelated non-BIR substitute authorities.
+BIR Ruling DA-489-03 is not in the corpus and should not expose a BIR Ruling source card.
 ```
+
+
+
