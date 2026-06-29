@@ -1,0 +1,157 @@
+{
+  "version": "phase-6f-003",
+  "description": "Offline CTA/G.R. click-target integrity fixture. Runtime source-card, click-target, exact-source wording, and live/staging assertions are intentionally pending until later Phase 6F evaluation support exists.",
+  "cases": [
+    {
+      "id": "cta-case-9369-exact-card-target",
+      "name": "CTA Case No. 9369 exact card target",
+      "category": "case_card_integrity",
+      "route": "/ask",
+      "query": "What is CTA Case No. 9369?",
+      "checks": [
+        { "type": "schema", "note": "Fixture shape is active locally." },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "expectedAuthorityType": "CTA_CASE",
+          "expectedCaseNumber": "CTA Case No. 9369",
+          "expectedCitation": "CTA Case No. 9369",
+          "expectedTitleTerms": ["CTA", "9369"],
+          "expectedSourceCardTerms": ["CTA Case No. 9369"],
+          "expectedClickTargetTerms": ["CTA Case No. 9369"],
+          "forbiddenCardTerms": ["different CTA case", "unrelated CTA case"],
+          "forbiddenAuthorityNumbers": ["CTA Case No. 9368", "CTA Case No. 9370"],
+          "pendingRuntimeAssertions": [
+            "answer identifies CTA Case No. 9369",
+            "source card label/title corresponds to CTA Case No. 9369",
+            "click target corresponds to CTA Case No. 9369",
+            "no different CTA case is substituted"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cta-case-9369-source-lookup-click-target",
+      "name": "CTA Case No. 9369 source lookup click target",
+      "category": "click_target_integrity",
+      "route": "/ask",
+      "query": "Show me the source for CTA Case No. 9369.",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "expectedAuthorityType": "CTA_CASE",
+          "expectedCaseNumber": "CTA Case No. 9369",
+          "expectedCitation": "CTA Case No. 9369",
+          "expectedSourceCardTerms": ["CTA Case No. 9369"],
+          "expectedClickTargetTerms": ["CTA Case No. 9369"],
+          "forbiddenCardTerms": ["different CTA case", "unrelated CTA case"],
+          "forbiddenAuthorityNumbers": ["CTA Case No. 9368", "CTA Case No. 9370"],
+          "pendingRuntimeAssertions": [
+            "source card is exact if indexed",
+            "no unrelated CTA case card is substituted",
+            "click target matches CTA Case No. 9369"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "seagate-gr-153866-exact-source",
+      "name": "CIR v. Seagate G.R. No. 153866 exact source",
+      "category": "source_limitation_wording",
+      "route": "/ask",
+      "query": "EXPOUND CIR v. Seagate Technology (GR No. 153866)",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "expectedAuthorityType": "SUPREME_COURT_GR",
+          "expectedCaseNumber": "G.R. No. 153866",
+          "expectedCitation": "G.R. No. 153866",
+          "expectedTitleTerms": ["CIR", "Seagate", "Technology"],
+          "expectedSourceCardTerms": ["G.R. No. 153866", "Seagate"],
+          "expectedClickTargetTerms": ["G.R. No. 153866"],
+          "forbiddenAuthorityNumbers": ["G.R. No. 153865", "G.R. No. 153867"],
+          "forbiddenLimitationPhrases": ["A governing authority was not directly located."],
+          "pendingRuntimeAssertions": [
+            "answer identifies G.R. No. 153866",
+            "source card corresponds to G.R. No. 153866 if indexed",
+            "exact-source limitation wording is suppressed when exact authority is present"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "seagate-gr-153866-source-lookup-click-target",
+      "name": "CIR v. Seagate G.R. No. 153866 source lookup click target",
+      "category": "click_target_integrity",
+      "route": "/ask",
+      "query": "Show me the source for CIR v. Seagate Technology G.R. No. 153866.",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "expectedAuthorityType": "SUPREME_COURT_GR",
+          "expectedCaseNumber": "G.R. No. 153866",
+          "expectedCitation": "G.R. No. 153866",
+          "expectedTitleTerms": ["CIR", "Seagate", "Technology"],
+          "expectedSourceCardTerms": ["G.R. No. 153866", "Seagate"],
+          "expectedClickTargetTerms": ["G.R. No. 153866"],
+          "forbiddenCardTerms": ["unrelated G.R.", "different G.R."],
+          "forbiddenAuthorityNumbers": ["G.R. No. 153865", "G.R. No. 153867"],
+          "pendingRuntimeAssertions": [
+            "source card/click target corresponds to G.R. No. 153866",
+            "no unrelated G.R. card is substituted"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "generic-gr-case-guard",
+      "name": "Generic G.R. case guard",
+      "category": "generic_guard",
+      "route": "/ask",
+      "query": "What is a G.R. case?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "expectedAuthorityType": "GENERIC_CASE_EXPLANATION",
+          "forbiddenFalseExactPromotion": true,
+          "forbiddenAuthorityNumbers": ["G.R. No. 153866"],
+          "forbiddenCardTerms": ["CIR v. Seagate", "Seagate Technology"],
+          "pendingRuntimeAssertions": [
+            "generic legal/case explanation remains distinguishable from exact case lookup",
+            "no specific unrelated G.R. source card is falsely promoted"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "generic-cta-case-guard",
+      "name": "Generic CTA case guard",
+      "category": "generic_guard",
+      "route": "/ask",
+      "query": "What is a CTA case?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "expectedAuthorityType": "GENERIC_CASE_EXPLANATION",
+          "forbiddenFalseExactPromotion": true,
+          "forbiddenAuthorityNumbers": ["CTA Case No. 9369"],
+          "forbiddenCardTerms": ["CTA Case No. 9369"],
+          "pendingRuntimeAssertions": [
+            "generic explanation remains distinguishable from exact case lookup",
+            "no specific unrelated CTA case source card is falsely promoted"
+          ]
+        }
+      ]
+    }
+  ]
+}
