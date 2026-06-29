@@ -11,8 +11,8 @@ PHASE 6F - Automated Evaluation & Regression Harness
 Current status:
 
 ```text
-PHASE 6E CLOSED / PASS
-PHASE 6F READY / NOT STARTED
+PHASE 6F ACTIVE
+PATCH-06F-001 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -58,33 +58,33 @@ No automatic ingestion until Phase 10 source-governance workflow is implemented.
 Latest implemented patch:
 
 ```text
-PATCH-06E-GATE-3 - Phase 6E Closure Gate
+PATCH-06F-001 - Evaluation runner skeleton
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-06E-GATE-3 close Phase 6E
+PATCH-06F-001 add evaluation runner skeleton
 ```
 
 Current working state:
 
 ```text
-PATCH-06E-GATE-3 COMPLETE / LOCAL PASS
-Phase 6E CLOSED / PASS.
-Phase 6F is ready to begin.
+PATCH-06F-001 COMPLETE / LOCAL PASS
+Evaluation runner skeleton added and validated.
+Phase 6F active.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-06F-001 - Evaluation runner skeleton
+PATCH-06F-002 - Authority/source-card regression suite
 ```
 
 Expected next gate:
 
 ```text
-PATCH-06F-001S - Staging evaluation smoke validation
+PATCH-06F-002S - Authority/source-card regression staging smoke, if needed
 ```
 
 Next phase after Phase 6E closes:
@@ -521,13 +521,13 @@ services/ask-handler-public-source-sanitizer.js
 Status:
 
 ```text
-READY / NOT STARTED
+ACTIVE
 ```
 
 Start condition:
 
 ```text
-Phase 6E is closed. Begin with PATCH-06F-001.
+Phase 6E is closed. PATCH-06F-001 completed the local evaluation runner skeleton.
 ```
 
 Purpose:
@@ -541,7 +541,7 @@ It is an internal evaluation layer.
 Planned work:
 
 ```text
-PATCH-06F-001 â€” Create TINA evaluation runner skeleton
+PATCH-06F-001 â€” Create TINA evaluation runner skeleton - COMPLETE / LOCAL PASS
 PATCH-06F-001S â€” Staging evaluation smoke validation
 PATCH-06F-002 â€” Authority/source-card regression suite
 PATCH-06F-003 â€” CTA click-target integrity tests
@@ -900,26 +900,26 @@ PHASE 6F - Automated Evaluation & Regression Harness
 Current latest pushed commit:
 
 ```text
-PATCH-06E-GATE-3 close Phase 6E
+PATCH-06F-001 add evaluation runner skeleton
 ```
 
 Current status:
 
 ```text
-PHASE 6E CLOSED / PASS
-PHASE 6F READY / NOT STARTED
+PHASE 6F ACTIVE
+PATCH-06F-001 COMPLETE / LOCAL PASS
 ```
 
 Immediate next Codex task:
 
 ```text
-PATCH-06F-001 - Evaluation runner skeleton
+PATCH-06F-002 - Authority/source-card regression suite
 ```
 
 After that:
 
 ```text
-PATCH-06F-001S - Staging evaluation smoke validation
+PATCH-06F-002S - Authority/source-card regression staging smoke, if needed
 ```
 
 Work owner rules:
@@ -936,6 +936,10 @@ Important current guard:
 Specific unavailable BIR Ruling-number queries should not be promoted to AUTHORITY_FOUND through unrelated non-BIR substitute authorities.
 BIR Ruling DA-489-03 is not in the corpus and should not expose a BIR Ruling source card.
 ```
+
+
+
+
 
 
 

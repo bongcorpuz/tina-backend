@@ -1,0 +1,205 @@
+﻿{
+  "version": "phase-6f-001",
+  "description": "Offline skeleton fixture for future TINA authority/source-card evaluation cases. Behavioral assertions are intentionally pending except schema checks.",
+  "cases": [
+    {
+      "id": "bir-ruling-da-489-03-unavailable-source",
+      "name": "BIR Ruling DA-489-03 unavailable source guard",
+      "category": "unavailable_source",
+      "route": "/ask",
+      "query": "What is BIR Ruling DA-489-03?",
+      "checks": [
+        { "type": "schema", "note": "Fixture shape is active in PATCH-06F-001." },
+        { "type": "sourceAvailability", "status": "pending", "expected": "NO_INDEXED_SOURCE" },
+        { "type": "sourceCardSuppression", "status": "pending", "expected": "no unrelated substitute cards" }
+      ]
+    },
+    {
+      "id": "nirc-section-23-exact-authority",
+      "name": "NIRC Section 23 exact authority",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "What is NIRC Section 23?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "sourceCard", "status": "pending", "expectedLabel": "NIRC Sec. 23" }
+      ]
+    },
+    {
+      "id": "nirc-section-57-exact-authority",
+      "name": "NIRC Section 57 exact authority",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "What does NIRC Section 57 provide?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "sourceCard", "status": "pending", "expectedLabel": "NIRC Sec. 57" }
+      ]
+    },
+    {
+      "id": "nirc-section-58-exact-authority",
+      "name": "NIRC Section 58 exact authority",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "What does NIRC Section 58 provide?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "sourceCard", "status": "pending", "expectedLabel": "NIRC Sec. 58" }
+      ]
+    },
+    {
+      "id": "rr-2-98-ewt-exact-authority",
+      "name": "RR 2-98 EWT exact authority",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "What does RR 2-98 provide on expanded withholding tax?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "sourceCard", "status": "pending", "expectedLabel": "Revenue Regulations" }
+      ]
+    },
+    {
+      "id": "rmc-65-2012-exact-authority",
+      "name": "RMC 65-2012 exact authority",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "What is RMC 65-2012?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "sourceCard", "status": "pending", "expectedLabel": "RMC No. 65-2012" }
+      ]
+    },
+    {
+      "id": "rmo-20-2013-exact-authority",
+      "name": "RMO 20-2013 exact authority",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "What is RMO 20-2013?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "sourceCard", "status": "pending", "expectedLabel": "RMO No. 20-2013" }
+      ]
+    },
+    {
+      "id": "rmo-24-2013-exact-authority",
+      "name": "RMO 24-2013 exact authority",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "What is RMO 24-2013?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "sourceCard", "status": "pending", "expectedLabel": "RMO No. 24-2013" }
+      ]
+    },
+    {
+      "id": "cta-case-9369-click-target-integrity",
+      "name": "CTA Case No. 9369 click-target integrity",
+      "category": "click_target_integrity",
+      "route": "/ask",
+      "query": "What is CTA Case No. 9369?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "clickTarget", "status": "pending", "expectedLabel": "CTA Case No. 9369" }
+      ]
+    },
+    {
+      "id": "seagate-exact-source-limitation-wording",
+      "name": "CIR v. Seagate G.R. No. 153866 exact-source limitation wording",
+      "category": "source_limitation_wording",
+      "route": "/ask",
+      "query": "What is CIR v. Seagate G.R. No. 153866?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "limitationWording", "status": "pending", "expected": "source limitation wording present when needed" }
+      ]
+    },
+    {
+      "id": "ra-10963-train-authority-behavior",
+      "name": "RA 10963 / TRAIN authority behavior",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "What is RA 10963?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "sourceAvailability", "status": "pending", "expected": "AUTHORITY_FOUND" }
+      ]
+    },
+    {
+      "id": "ra-11534-create-authority-behavior",
+      "name": "RA 11534 / CREATE authority behavior",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "What is RA 11534?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "sourceAvailability", "status": "pending", "expected": "AUTHORITY_FOUND" }
+      ]
+    },
+    {
+      "id": "explain-ewt-generic-guard",
+      "name": "Explain EWT generic guard",
+      "category": "generic_guard",
+      "route": "/ask",
+      "query": "Explain EWT.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "sourceCardCoverage", "status": "pending", "expected": "NIRC Sec. 57, NIRC Sec. 58, RR No. 2-1998" }
+      ]
+    },
+    {
+      "id": "withholding-tax-generic-guard",
+      "name": "What is withholding tax generic guard",
+      "category": "generic_guard",
+      "route": "/ask",
+      "query": "What is withholding tax?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "sourceCardCoverage", "status": "pending", "expected": "NIRC Sec. 57, NIRC Sec. 58, RR No. 2-1998" }
+      ]
+    },
+    {
+      "id": "ask-mode-format-placeholder",
+      "name": "/ask mode format placeholder",
+      "category": "mode_format",
+      "route": "/ask",
+      "query": "What is CREATE Act?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "modeFormat", "status": "pending", "expected": "/ask response shape remains stable" }
+      ]
+    },
+    {
+      "id": "tax-mode-format-placeholder",
+      "name": "/tax mode format placeholder",
+      "category": "mode_format",
+      "route": "/tax",
+      "query": "What is withholding tax?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "modeFormat", "status": "pending", "expected": "/tax response shape remains stable" }
+      ]
+    },
+    {
+      "id": "audit-mode-format-placeholder",
+      "name": "/audit mode format placeholder",
+      "category": "mode_format",
+      "route": "/audit",
+      "query": "Assess withholding tax risk.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "modeFormat", "status": "pending", "expected": "/audit response shape remains stable" }
+      ]
+    },
+    {
+      "id": "domain-source-card-coverage-placeholder",
+      "name": "Domain source-card coverage placeholder",
+      "category": "domain_source_card_coverage",
+      "route": "/ask",
+      "query": "What does RR 2-98 provide on expanded withholding tax?",
+      "checks": [
+        { "type": "schema" },
+        { "type": "domainCoverage", "status": "pending", "expected": "domain source card coverage remains sufficient" }
+      ]
+    }
+  ]
+}
