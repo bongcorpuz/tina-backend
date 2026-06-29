@@ -5,14 +5,15 @@
 Current phase:
 
 ```text
-PHASE 6F - Automated Evaluation & Regression Harness
+PHASE 6G - Authority / Pipeline Decomposition Planning Under Evaluation Guard
 ```
 
 Current status:
 
 ```text
-PHASE 6F ACTIVE
-PATCH-06F-008 COMPLETE / LOCAL PASS
+PHASE 6F CLOSED / PASS
+PHASE 6G ACTIVE
+PATCH-06F-GATE-1 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -58,33 +59,33 @@ No automatic ingestion until Phase 10 source-governance workflow is implemented.
 Latest implemented patch:
 
 ```text
-PATCH-06F-008 - Staging evaluation report generator
+PATCH-06F-GATE-1 - Phase 6F Evaluation Harness Stabilization Gate
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-06F-008 add staging evaluation report generator
+PATCH-06F-GATE-1 close Phase 6F
 ```
 
 Current working state:
 
 ```text
-PATCH-06F-008 COMPLETE / LOCAL PASS
-Local/static Phase 6F evaluation report generator added and validated.
-Phase 6F active.
+PATCH-06F-GATE-1 COMPLETE / LOCAL PASS
+Phase 6F evaluation harness closed as STABILIZED / PASS.
+Phase 6G active.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-06F-GATE-1 - Phase 6F Evaluation Harness Stabilization Gate
+PATCH-06G-001 - JS module inventory and decomposition destination map
 ```
 
 Expected next gate:
 
 ```text
-PATCH-06F-GATE-1 - Phase 6F Evaluation Harness Stabilization Gate
+PATCH-06G-GATE-1 - Decomposition planning gate, if needed
 ```
 
 Next phase after Phase 6E closes:
@@ -521,7 +522,7 @@ services/ask-handler-public-source-sanitizer.js
 Status:
 
 ```text
-ACTIVE
+CLOSED / PASS
 ```
 
 Start condition:
@@ -550,7 +551,7 @@ PATCH-06F-005 â€” Exact-source limitation wording regression tests - COMPLE
 PATCH-06F-006 â€” Mode-format evaluation: /ask, /tax, /audit - COMPLETE / LOCAL PASS
 PATCH-06F-007 â€” Domain source-card coverage tests: EWT, VAT, PEZA, LOA - COMPLETE / LOCAL PASS
 PATCH-06F-008 â€” Staging evaluation report generator - COMPLETE / LOCAL PASS
-PATCH-06F-GATE-1 â€” Phase 6F Evaluation Harness Stabilization Gate
+PATCH-06F-GATE-1 â€” Phase 6F Evaluation Harness Stabilization Gate - COMPLETE / LOCAL PASS
 ```
 
 Critical behaviors to lock:
@@ -891,6 +892,30 @@ Begin Phase 6F automated evaluation and regression harness.
 
 ---
 
+# Phase 6G - Authority / Pipeline Decomposition Planning Under Evaluation Guard
+
+Status:
+
+```text
+ACTIVE
+```
+
+Purpose:
+
+```text
+Plan future authority/pipeline decomposition under the completed Phase 6F evaluation guard.
+Do not start actual decomposition before inventorying existing JS modules and destination boundaries.
+Do not touch pipeline.js unless expressly approved in a later narrow patch.
+```
+
+Immediate next task:
+
+```text
+PATCH-06G-001 - JS module inventory and decomposition destination map
+```
+
+---
+
 # Continuity Instruction for New Chat
 
 Continue TINA development from the latest continuity state.
@@ -898,32 +923,33 @@ Continue TINA development from the latest continuity state.
 Current phase:
 
 ```text
-PHASE 6F - Automated Evaluation & Regression Harness
+PHASE 6G - Authority / Pipeline Decomposition Planning Under Evaluation Guard
 ```
 
 Current latest pushed commit:
 
 ```text
-PATCH-06F-008 add staging evaluation report generator
+PATCH-06F-GATE-1 close Phase 6F
 ```
 
 Current status:
 
 ```text
-PHASE 6F ACTIVE
-PATCH-06F-008 COMPLETE / LOCAL PASS
+PHASE 6F CLOSED / PASS
+PHASE 6G ACTIVE
+PATCH-06F-GATE-1 COMPLETE / LOCAL PASS
 ```
 
 Immediate next Codex task:
 
 ```text
-PATCH-06F-GATE-1 - Phase 6F Evaluation Harness Stabilization Gate
+PATCH-06G-001 - JS module inventory and decomposition destination map
 ```
 
 After that:
 
 ```text
-Phase 6F closure/stabilization decision, then next approved phase/task.
+Phase 6G planning follow-up based on the approved inventory/map.
 ```
 
 Work owner rules:
