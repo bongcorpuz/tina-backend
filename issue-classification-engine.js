@@ -392,6 +392,56 @@ export function isCaseLawIntent(question = "") {
   return CASE_LAW_INTENT_PATTERN.test(lower(String(question || "")));
 }
 
+function detectSpecificBirRulingReference(question = "") {
+  const q = String(question || "");
+  const match = q.match(/\bbir\s+rulings?\s+(?:(da)\s*[-.]?\s*)?(?:no\.?\s*)?(\d{1,4})\s*[-.]?\s*(\d{2,4})\b/i);
+  if (!match) return null;
+
+  const prefix = match[1] ? "DA-" : "No. ";
+  return `BIR Ruling ${prefix}${Number(match[2])}-${match[3]}`;
+}
+
+function birRulingRefKey(value = "") {
+  const ref = detectSpecificBirRulingReference(value);
+  if (!ref) return "";
+  const match = ref.match(/\bBIR Ruling (DA-|No\. )(\d+)-(\d{2,4})\b/i);
+  return match ? `${match[1].toLowerCase().startsWith("da") ? "da" : "no"}:${Number(match[2])}:${match[3]}` : "";
+}
+
+function candidateMatchesSpecificBirRuling(candidate = {}, reference = "") {
+  const referenceKey = birRulingRefKey(reference);
+  if (!referenceKey) return false;
+
+  const type = String(
+    candidate.authorityType ||
+      candidate.authority_type ||
+      candidate.metadata?.authorityType ||
+      candidate.metadata?.authority_type ||
+      candidate.metadata?.sourceType ||
+      ""
+  ).trim().toUpperCase().replace(/[\s-]+/g, "_");
+  if (type !== "BIR_RULING") return false;
+
+  return [
+    candidate.citation,
+    candidate.normalizedReference,
+    candidate.normalized_reference,
+    candidate.reference,
+    candidate.title,
+    candidate.documentTitle,
+    candidate.document_title,
+    candidate.source,
+    candidate.originalSource,
+    candidate.metadata?.citation,
+    candidate.metadata?.normalizedReference,
+    candidate.metadata?.normalized_reference,
+    candidate.metadata?.title,
+    candidate.metadata?.documentTitle,
+    candidate.metadata?.document_title,
+    candidate.metadata?.source
+  ].some((value) => birRulingRefKey(value) === referenceKey);
+}
+
 // PATCH-022A: 3-character Philippine tax acronyms preserved through the length
 // filter in sourceMaterialTermsMatchAuthority's query-string branch.
 // Without this set, "VAT?" → strip → "vat" (len 3) is excluded by len > 3.
@@ -413,6 +463,18 @@ export function sourceMaterialTermsMatchAuthority(candidate = {}, classification
       .filter(t => t.length > 3 || _SEMANTIC_GUARD_ACRONYMS.has(t));
     if (!tokens.length) return true;
     return tokens.some((t) => text.includes(t));
+  }
+  if (classificationOrQuery?.specificBirRulingQuery === true) {
+    const reference = classificationOrQuery.specificBirRulingReference ||
+      classificationOrQuery.normalizedQuery ||
+      classificationOrQuery.originalQuery ||
+      "";
+    const matches = candidateMatchesSpecificBirRuling(candidate, reference);
+    return {
+      matches,
+      matchedTerms: matches ? [reference].filter(Boolean) : [],
+      missingTerms: matches ? [] : [reference || "specific BIR Ruling"]
+    };
   }
   const guard = (classificationOrQuery || {})?.semanticNoMatchGuard || {};
   if (guard.active !== true) {
@@ -1291,6 +1353,7 @@ function buildOrchestrationClassification(classification = {}) {
 function classifyTaxIssue(question = "", queryIntent = {}) {
   const { rawQuery, normalizedQuery } = normalizeQuery(question);
   const exactAuthority = detectExactAuthority(normalizedQuery);
+  const specificBirRulingReference = detectSpecificBirRulingReference(normalizedQuery);
 
   const detectedDomains = detectTaxDomain(normalizedQuery, queryIntent);
   const detector = detectedDomains[0] || null;
@@ -1326,13 +1389,21 @@ function classifyTaxIssue(question = "", queryIntent = {}) {
   const legalDimensions = detectLegalDimensions(normalizedQuery, primaryIssue, subIssue);
   const finalQueryIntent = detectQueryIntent(normalizedQuery, primaryIssue, queryIntent);
 
-  const authoritySet = buildAuthorities({
+  const baseAuthoritySet = buildAuthorities({
     question: normalizedQuery,
     detector,
     primaryIssue,
     subIssue,
     exactAuthority
   });
+  const authoritySet = specificBirRulingReference
+    ? {
+        targetAuthorities: [specificBirRulingReference],
+        controllingAuthorities: [],
+        supportingAuthorities: [],
+        supportingJurisprudence: []
+      }
+    : baseAuthoritySet;
 
   const complexity = detectComplexity({
     question: normalizedQuery,
@@ -1435,7 +1506,9 @@ function classifyTaxIssue(question = "", queryIntent = {}) {
     // PATCH-021A: case-law / jurisprudence intent flag. pipeline.js Step 5.5
     // and Step 6.6 check this to keep the fast EWT path from swallowing
     // queries that ask for court cases instead of the governing provision.
-    isJurisprudenceQuery: isCaseLawIntent(normalizedQuery),
+    isJurisprudenceQuery: specificBirRulingReference ? false : isCaseLawIntent(normalizedQuery),
+    specificBirRulingQuery: Boolean(specificBirRulingReference),
+    specificBirRulingReference,
 
     queryIntent: finalQueryIntent,
     preservedQueryIntent: queryIntent || {},
