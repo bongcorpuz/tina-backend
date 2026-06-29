@@ -12,7 +12,7 @@ Current status:
 
 ```text
 PHASE 6F ACTIVE
-PATCH-06F-006 COMPLETE / LOCAL PASS
+PATCH-06F-007 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -58,33 +58,33 @@ No automatic ingestion until Phase 10 source-governance workflow is implemented.
 Latest implemented patch:
 
 ```text
-PATCH-06F-006 - Mode-format evaluation: /ask, /tax, /audit
+PATCH-06F-007 - Domain source-card coverage tests: EWT, VAT, PEZA, LOA
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-06F-006 add mode-format evaluation cases
+PATCH-06F-007 add domain source-card coverage tests
 ```
 
 Current working state:
 
 ```text
-PATCH-06F-006 COMPLETE / LOCAL PASS
-Mode-format evaluation fixture for /ask, /tax, and /audit added and validated.
+PATCH-06F-007 COMPLETE / LOCAL PASS
+Domain source-card coverage fixture for EWT, VAT, PEZA, and LOA added and validated.
 Phase 6F active.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-06F-007 - Domain source-card coverage tests: EWT, VAT, PEZA, LOA
+PATCH-06F-008 - Staging evaluation report generator
 ```
 
 Expected next gate:
 
 ```text
-PATCH-06F-007S - Domain source-card coverage staging smoke, if needed
+PATCH-06F-008S - Staging evaluation report generator smoke, if needed
 ```
 
 Next phase after Phase 6E closes:
@@ -548,7 +548,8 @@ PATCH-06F-003 â€” CTA / G.R. click-target integrity tests - COMPLETE / LOCA
 PATCH-06F-004 â€” Generic-query guard regression tests - COMPLETE / LOCAL PASS
 PATCH-06F-005 â€” Exact-source limitation wording regression tests - COMPLETE / LOCAL PASS
 PATCH-06F-006 â€” Mode-format evaluation: /ask, /tax, /audit - COMPLETE / LOCAL PASS
-PATCH-06F-007 â€” Domain source-card coverage tests: EWT, VAT, PEZA, LOA
+PATCH-06F-007 â€” Domain source-card coverage tests: EWT, VAT, PEZA, LOA - COMPLETE / LOCAL PASS
+PATCH-06F-008 â€” Staging evaluation report generator
 ```
 
 Critical behaviors to lock:
@@ -902,26 +903,26 @@ PHASE 6F - Automated Evaluation & Regression Harness
 Current latest pushed commit:
 
 ```text
-PATCH-06F-006 add mode-format evaluation cases
+PATCH-06F-007 add domain source-card coverage tests
 ```
 
 Current status:
 
 ```text
 PHASE 6F ACTIVE
-PATCH-06F-006 COMPLETE / LOCAL PASS
+PATCH-06F-007 COMPLETE / LOCAL PASS
 ```
 
 Immediate next Codex task:
 
 ```text
-PATCH-06F-007 - Domain source-card coverage tests: EWT, VAT, PEZA, LOA
+PATCH-06F-008 - Staging evaluation report generator
 ```
 
 After that:
 
 ```text
-PATCH-06F-007S - Domain source-card coverage staging smoke, if needed
+PATCH-06F-008S - Staging evaluation report generator smoke, if needed
 ```
 
 Work owner rules:

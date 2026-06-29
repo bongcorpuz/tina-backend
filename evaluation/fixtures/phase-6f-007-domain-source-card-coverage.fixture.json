@@ -1,0 +1,555 @@
+{
+  "version": "phase-6f-007",
+  "description": "Offline domain source-card coverage fixture for EWT, VAT, PEZA, and LOA. Runtime source-card, domain coverage, source inventory, and live/staging assertions are intentionally pending until later Phase 6F evaluation support exists.",
+  "cases": [
+    {
+      "id": "ewt-rr-2-98-exact-source-card-coverage",
+      "name": "EWT RR 2-98 exact source-card coverage",
+      "category": "domain_source_card_coverage",
+      "route": "/ask",
+      "query": "What does RR 2-98 provide on expanded withholding tax?",
+      "checks": [
+        { "type": "schema", "note": "Fixture shape is active locally." },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "domain": "EWT",
+          "subdomain": "expanded withholding tax / RR 2-98",
+          "expectedInternalMode": "ask/exact_authority",
+          "expectedSourceBehavior": "exact_authority_if_indexed",
+          "expectedAuthorityTypes": ["REVENUE_REGULATION"],
+          "requiredSourceCardTerms": ["RR 2-98"],
+          "forbiddenAuthoritySubstitutions": ["unrelated RR", "unrelated RMC", "unrelated RMO", "unrelated NIRC section", "unrelated case"],
+          "sourceCoverageGapAwareness": "Do not infer source absence from Google Drive; evaluate indexed/runtime source-card behavior only.",
+          "requiredFactPrompts": [],
+          "pendingRuntimeAssertions": [
+            "source card corresponds to RR 2-98 if indexed",
+            "unrelated authority is not substituted as exact authority",
+            "exact-source limitation wording discipline is preserved"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ewt-nirc-section-57-exact-source-card-coverage",
+      "name": "EWT NIRC Section 57 exact source-card coverage",
+      "category": "domain_source_card_coverage",
+      "route": "/ask",
+      "query": "What does NIRC Section 57 provide?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "domain": "EWT",
+          "subdomain": "withholding tax / NIRC Section 57",
+          "expectedInternalMode": "ask/exact_authority",
+          "expectedSourceBehavior": "exact_authority_if_indexed",
+          "expectedAuthorityTypes": ["NIRC_SECTION"],
+          "requiredSourceCardTerms": ["NIRC Sec. 57"],
+          "forbiddenAuthoritySubstitutions": ["NIRC Sec. 58", "unrelated NIRC section", "unrelated RR", "unrelated RMC"],
+          "sourceCoverageGapAwareness": "Evaluate indexed/runtime source-card behavior without changing corpus.",
+          "requiredFactPrompts": [],
+          "pendingRuntimeAssertions": [
+            "source card corresponds to NIRC Section 57 if indexed",
+            "NIRC Section 58 or unrelated section is not substituted as exact authority"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ewt-interest-payments-tax-source-card-coverage",
+      "name": "EWT/FWT interest payments tax source-card coverage",
+      "category": "domain_source_card_coverage",
+      "route": "/tax",
+      "query": "/tax What is the withholding tax treatment of interest payments?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "domain": "withholding tax",
+          "subdomain": "interest payments / FWT or EWT classification",
+          "expectedInternalMode": "tax",
+          "expectedSourceBehavior": "exact_or_related_authority_depending_indexed_authorities",
+          "expectedAuthorityTypes": ["NIRC_SECTION", "REVENUE_REGULATION", "REVENUE_MEMORANDUM_CIRCULAR"],
+          "requiredSourceCardTerms": [],
+          "forbiddenAuthoritySubstitutions": ["unrelated exact authority", "unrelated case", "unrelated BIR issuance"],
+          "sourceCoverageGapAwareness": "Expose exact indexed authorities when available; otherwise distinguish related authorities or source limits.",
+          "requiredFactPrompts": ["payer type", "payee residency", "interest type", "instrument/source", "treaty or special law facts"],
+          "pendingRuntimeAssertions": [
+            "identifies facts needed to determine EWT/FWT treatment",
+            "uses source-backed tax advisory structure",
+            "does not falsely promote unrelated exact authority"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ewt-generic-explanation-source-card-guard",
+      "name": "EWT generic explanation source-card guard",
+      "category": "domain_source_card_coverage",
+      "route": "/ask",
+      "query": "Explain EWT.",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "domain": "EWT",
+          "subdomain": "generic EWT explanation",
+          "expectedInternalMode": "ask/general_tax_explanation",
+          "expectedSourceBehavior": "generic_guard",
+          "expectedAuthorityTypes": ["NIRC_SECTION", "REVENUE_REGULATION"],
+          "requiredSourceCardTerms": [],
+          "forbiddenAuthoritySubstitutions": ["RR 2-98 as false exact request", "unrelated exact authority"],
+          "sourceCoverageGapAwareness": "Generic explanation may use related support but must not overclaim exact source-card behavior.",
+          "requiredFactPrompts": [],
+          "pendingRuntimeAssertions": [
+            "generic guard remains preserved",
+            "generic explanation is distinguished from exact authority lookup",
+            "RR 2-98 is not falsely promoted unless runtime classification supports exact source use"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vat-input-vat-tax-source-card-coverage",
+      "name": "VAT input VAT tax source-card coverage",
+      "category": "domain_source_card_coverage",
+      "route": "/tax",
+      "query": "/tax What is input VAT?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "domain": "VAT",
+          "subdomain": "input VAT definition and treatment",
+          "expectedInternalMode": "tax",
+          "expectedSourceBehavior": "exact_or_related_authority_depending_indexed_authorities",
+          "expectedAuthorityTypes": ["NIRC_SECTION", "REVENUE_REGULATION", "REVENUE_MEMORANDUM_CIRCULAR"],
+          "requiredSourceCardTerms": [],
+          "forbiddenAuthoritySubstitutions": ["unrelated exact VAT source", "unrelated non-VAT authority"],
+          "sourceCoverageGapAwareness": "Exact source should be exposed only if indexed and properly matched.",
+          "requiredFactPrompts": [],
+          "pendingRuntimeAssertions": [
+            "preserves source-card discipline",
+            "related authorities are not mislabeled as exact authority"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vat-reimbursable-expenses-tax-source-card-coverage",
+      "name": "VAT reimbursable expenses tax source-card coverage",
+      "category": "domain_source_card_coverage",
+      "route": "/tax",
+      "query": "/tax What is the VAT treatment of reimbursable expenses?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "domain": "VAT",
+          "subdomain": "reimbursable expenses",
+          "expectedInternalMode": "tax",
+          "expectedSourceBehavior": "related_authority_or_source_limited_if_exact_absent",
+          "expectedAuthorityTypes": ["NIRC_SECTION", "REVENUE_REGULATION", "REVENUE_MEMORANDUM_CIRCULAR", "SUPREME_COURT_GR", "CTA_CASE"],
+          "requiredSourceCardTerms": [],
+          "forbiddenAuthoritySubstitutions": ["unrelated exact VAT source", "unrelated gross receipts authority"],
+          "sourceCoverageGapAwareness": "Do not overclaim exact indexed authority when only related or source-limited support exists.",
+          "requiredFactPrompts": ["reimbursement arrangement", "agency/pass-through relationship", "markup", "billing documents", "contract terms"],
+          "pendingRuntimeAssertions": [
+            "identifies facts needed for VAT treatment analysis",
+            "does not falsely promote unrelated exact VAT source"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vat-reimbursable-expenses-audit-defense-source-card-coverage",
+      "name": "VAT reimbursable expenses audit defense source-card coverage",
+      "category": "domain_source_card_coverage",
+      "route": "/audit",
+      "query": "/audit The examiner included reimbursable expenses in gross receipts for VAT. What is our defense?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "domain": "VAT",
+          "subdomain": "audit defense / reimbursable expenses in gross receipts",
+          "expectedInternalMode": "audit",
+          "expectedSourceBehavior": "exact_or_related_authority_with_clear_distinction",
+          "expectedAuthorityTypes": ["NIRC_SECTION", "REVENUE_REGULATION", "SUPREME_COURT_GR", "CTA_CASE"],
+          "requiredSourceCardTerms": [],
+          "forbiddenAuthoritySubstitutions": ["unrelated exact VAT source", "unrelated case as exact authority"],
+          "sourceCoverageGapAwareness": "Differentiate exact authority from related/supporting authority in audit defense.",
+          "requiredFactPrompts": ["billing statements", "service invoices", "pass-through proof", "no markup support", "contracts"],
+          "pendingRuntimeAssertions": [
+            "uses audit/complex advisory structure",
+            "identifies documents/evidence needed",
+            "does not promote unrelated exact source card"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vat-input-vat-invoice-mismatch-audit-source-card-coverage",
+      "name": "VAT input VAT invoice mismatch audit source-card coverage",
+      "category": "domain_source_card_coverage",
+      "route": "/audit",
+      "query": "/audit The examiner disallowed input VAT due to invoice mismatch. What is our defense?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "domain": "VAT",
+          "subdomain": "input VAT substantiation / invoice mismatch",
+          "expectedInternalMode": "audit",
+          "expectedSourceBehavior": "source_disciplined_audit_support",
+          "expectedAuthorityTypes": ["NIRC_SECTION", "REVENUE_REGULATION", "REVENUE_MEMORANDUM_CIRCULAR", "SUPREME_COURT_GR", "CTA_CASE"],
+          "requiredSourceCardTerms": [],
+          "forbiddenAuthoritySubstitutions": ["unrelated exact VAT source", "unrelated input VAT case"],
+          "sourceCoverageGapAwareness": "Source-card behavior should distinguish exact and related audit-defense authorities.",
+          "requiredFactPrompts": ["invoice details", "supplier information", "VAT invoice compliance", "purchase documents", "proof of business use"],
+          "pendingRuntimeAssertions": [
+            "identifies examiner position, taxpayer defense, evidence needed, risk level, recommendation",
+            "preserves source-card discipline"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "peza-purchases-tax-source-card-coverage",
+      "name": "PEZA purchases tax source-card coverage",
+      "category": "domain_source_card_coverage",
+      "route": "/tax",
+      "query": "/tax What is the tax treatment of PEZA purchases?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "domain": "PEZA",
+          "subdomain": "VAT / zero-rating / ecozone purchases",
+          "expectedInternalMode": "tax",
+          "expectedSourceBehavior": "exact_or_related_authority_with_clear_distinction",
+          "expectedAuthorityTypes": ["NIRC_SECTION", "REVENUE_REGULATION", "REVENUE_MEMORANDUM_CIRCULAR", "SUPREME_COURT_GR"],
+          "requiredSourceCardTerms": [],
+          "forbiddenAuthoritySubstitutions": ["unrelated PEZA/VAT authority", "unrelated exact case"],
+          "sourceCoverageGapAwareness": "Distinguish exact authorities from related authorities; do not overclaim source support.",
+          "requiredFactPrompts": ["buyer PEZA status", "seller PEZA status", "location", "type of sale", "registration", "zero-rating documents"],
+          "pendingRuntimeAssertions": [
+            "uses senior tax advisory format",
+            "identifies PEZA/VAT facts needed",
+            "preserves source-card discipline"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "peza-seagate-case-source-card-coverage",
+      "name": "PEZA Seagate case source-card coverage",
+      "category": "domain_source_card_coverage",
+      "route": "/tax",
+      "query": "/tax Expound CIR v. Seagate Technology G.R. No. 153866.",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "domain": "PEZA",
+          "subdomain": "VAT / zero-rating / Supreme Court case",
+          "expectedInternalMode": "tax",
+          "expectedSourceBehavior": "exact_authority_if_indexed",
+          "expectedAuthorityTypes": ["SUPREME_COURT_GR"],
+          "requiredSourceCardTerms": ["G.R. No. 153866", "Seagate"],
+          "forbiddenAuthoritySubstitutions": ["unrelated G.R.", "unrelated CTA case", "different Seagate source"],
+          "sourceCoverageGapAwareness": "If exact source card is exposed, click target and label should correspond to G.R. No. 153866.",
+          "requiredFactPrompts": [],
+          "forbiddenLimitationPhrases": ["A governing authority was not directly located.", "governing authority was not directly located"],
+          "pendingRuntimeAssertions": [
+            "uses case exposition / senior tax memo hybrid",
+            "identifies G.R. No. 153866",
+            "no incorrect no-direct-source limitation wording appears if exact source is exposed"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "peza-cross-border-doctrine-related-source-card-coverage",
+      "name": "PEZA cross-border doctrine related source-card coverage",
+      "category": "domain_source_card_coverage",
+      "route": "/tax",
+      "query": "/tax Explain the cross-border doctrine in PEZA VAT cases.",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "domain": "PEZA",
+          "subdomain": "VAT doctrine / cross-border doctrine",
+          "expectedInternalMode": "tax",
+          "expectedSourceBehavior": "related_authority_or_exact_if_classification_supports",
+          "expectedAuthorityTypes": ["SUPREME_COURT_GR", "CTA_CASE", "REVENUE_REGULATION", "REVENUE_MEMORANDUM_CIRCULAR"],
+          "requiredSourceCardTerms": [],
+          "forbiddenAuthoritySubstitutions": ["unrelated exact authority", "unrelated case as exact doctrine source"],
+          "sourceCoverageGapAwareness": "Doctrine explanation may use related cases if available but must not falsely promote unrelated exact authority.",
+          "requiredFactPrompts": [],
+          "pendingRuntimeAssertions": [
+            "distinguishes doctrine explanation from exact case lookup",
+            "related case authorities are identified as related when used"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "peza-zero-rating-vs-exemption-source-card-coverage",
+      "name": "PEZA zero-rating versus exemption source-card coverage",
+      "category": "domain_source_card_coverage",
+      "route": "/tax",
+      "query": "/tax Are sales to PEZA entities VAT zero-rated or VAT-exempt?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "domain": "PEZA",
+          "subdomain": "VAT zero-rating versus exemption",
+          "expectedInternalMode": "tax",
+          "expectedSourceBehavior": "exact_or_related_authority_with_source_limitation_if_needed",
+          "expectedAuthorityTypes": ["NIRC_SECTION", "REVENUE_REGULATION", "REVENUE_MEMORANDUM_CIRCULAR", "SUPREME_COURT_GR"],
+          "requiredSourceCardTerms": [],
+          "forbiddenAuthoritySubstitutions": ["unrelated VAT exemption authority", "unrelated zero-rating authority"],
+          "sourceCoverageGapAwareness": "Identify source limitations if exact indexed authority is unavailable; do not overclaim support.",
+          "requiredFactPrompts": ["buyer PEZA status", "seller status", "registration", "type of sale", "location", "governing period"],
+          "pendingRuntimeAssertions": [
+            "distinguishes VAT zero-rating and VAT exemption depending facts and law",
+            "does not overclaim source support"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "loa-evaluate-defense-source-card-coverage",
+      "name": "LOA defense source-card coverage",
+      "category": "domain_source_card_coverage",
+      "route": "/audit",
+      "query": "/audit Evaluate this LOA and possible defense.",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "domain": "LOA",
+          "subdomain": "BIR audit procedure / LOA defense",
+          "expectedInternalMode": "audit",
+          "expectedSourceBehavior": "exact_or_related_procedural_authority_with_clear_distinction",
+          "expectedAuthorityTypes": ["NIRC_SECTION", "REVENUE_MEMORANDUM_ORDER", "REVENUE_MEMORANDUM_CIRCULAR", "SUPREME_COURT_GR", "CTA_CASE"],
+          "requiredSourceCardTerms": [],
+          "forbiddenAuthoritySubstitutions": ["unrelated procedural authority", "unrelated case as exact LOA authority"],
+          "sourceCoverageGapAwareness": "Expose exact procedural authorities only if indexed; related authorities must not be mislabeled as exact.",
+          "requiredFactPrompts": ["LOA date", "named examiners", "tax types", "taxable period", "reassignment", "replacement LOA", "assessment timeline"],
+          "pendingRuntimeAssertions": [
+            "uses complex advisory format",
+            "asks for LOA procedural facts",
+            "preserves source-card discipline"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "loa-stale-loa-pan-defense-source-card-coverage",
+      "name": "LOA stale LOA PAN defense source-card coverage",
+      "category": "domain_source_card_coverage",
+      "route": "/audit",
+      "query": "/audit We received a PAN after a stale LOA. What is our defense?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "domain": "LOA",
+          "subdomain": "PAN / stale LOA / procedural defense",
+          "expectedInternalMode": "audit",
+          "expectedSourceBehavior": "source_disciplined_procedural_defense",
+          "expectedAuthorityTypes": ["NIRC_SECTION", "REVENUE_MEMORANDUM_ORDER", "SUPREME_COURT_GR", "CTA_CASE"],
+          "requiredSourceCardTerms": [],
+          "forbiddenAuthoritySubstitutions": ["unrelated exact LOA authority", "unrelated assessment case"],
+          "sourceCoverageGapAwareness": "Distinguish BIR position and taxpayer defense without inventing exact source-card coverage.",
+          "requiredFactPrompts": ["LOA date", "PAN date", "taxable period", "examiner authority", "reassignment history", "assessment timeline"],
+          "pendingRuntimeAssertions": [
+            "identifies possible procedural defense and facts needed",
+            "distinguishes BIR position from taxpayer defense"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "loa-subpoena-ntpr-documents-source-card-coverage",
+      "name": "BIR subpoena NTPR documents source-card coverage",
+      "category": "domain_source_card_coverage",
+      "route": "/audit",
+      "query": "/audit We received a subpoena and NTPR. What documents do we need?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "domain": "LOA",
+          "subdomain": "BIR audit / subpoena / NTPR / document request",
+          "expectedInternalMode": "audit",
+          "expectedSourceBehavior": "related_authority_or_source_limited",
+          "expectedAuthorityTypes": ["NIRC_SECTION", "REVENUE_MEMORANDUM_ORDER", "REVENUE_MEMORANDUM_CIRCULAR"],
+          "requiredSourceCardTerms": [],
+          "forbiddenAuthoritySubstitutions": ["unrelated exact procedural authority", "unrelated tax deficiency source"],
+          "sourceCoverageGapAwareness": "May be source-limited depending indexed authorities; do not invent source cards.",
+          "requiredFactPrompts": ["subpoena details", "NTPR details", "requested documents", "tax period", "audit stage", "deadlines"],
+          "pendingRuntimeAssertions": [
+            "identifies required documents/evidence and risk",
+            "does not answer as generic tax explanation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "loa-different-examiners-procedural-defect-source-card-coverage",
+      "name": "LOA different examiners procedural defect source-card coverage",
+      "category": "domain_source_card_coverage",
+      "route": "/audit",
+      "query": "/audit The LOA names different examiners from those who conducted the audit. What is the issue?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "domain": "LOA",
+          "subdomain": "examiner authority / procedural defect",
+          "expectedInternalMode": "audit",
+          "expectedSourceBehavior": "exact_or_related_procedural_authority_with_clear_distinction",
+          "expectedAuthorityTypes": ["NIRC_SECTION", "REVENUE_MEMORANDUM_ORDER", "SUPREME_COURT_GR", "CTA_CASE"],
+          "requiredSourceCardTerms": [],
+          "forbiddenAuthoritySubstitutions": ["unrelated exact LOA authority", "unrelated BIR procedure source"],
+          "sourceCoverageGapAwareness": "Do not falsely promote unrelated exact authority for examiner-authority defect.",
+          "requiredFactPrompts": ["LOA", "mission order", "reassignment", "replacement LOA", "notices", "dates"],
+          "pendingRuntimeAssertions": [
+            "identifies possible authority/authorization defect",
+            "requests procedural facts needed",
+            "source-card behavior remains disciplined"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ewt-source-card-inventory-gap-awareness",
+      "name": "EWT source-card inventory gap awareness",
+      "category": "domain_source_card_coverage",
+      "route": "/ask",
+      "query": "/ask What source cards do you have for EWT?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "domain": "EWT",
+          "subdomain": "source coverage inventory",
+          "expectedInternalMode": "ask/source_lookup",
+          "expectedSourceBehavior": "source_coverage_gap_awareness",
+          "expectedAuthorityTypes": ["NIRC_SECTION", "REVENUE_REGULATION", "REVENUE_MEMORANDUM_CIRCULAR"],
+          "requiredSourceCardTerms": [],
+          "forbiddenAuthoritySubstitutions": ["invented EWT source card", "Google Drive source presented as runtime source card"],
+          "sourceCoverageGapAwareness": "Distinguish runtime source-card inventory from Google Drive, approved source, and indexed corpus inventories.",
+          "requiredFactPrompts": [],
+          "pendingRuntimeAssertions": [
+            "does not invent source coverage",
+            "flags source coverage/gap behavior if runtime inventory support is unavailable"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vat-source-card-inventory-gap-awareness",
+      "name": "VAT source-card inventory gap awareness",
+      "category": "domain_source_card_coverage",
+      "route": "/ask",
+      "query": "/ask What source cards do you have for VAT?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "domain": "VAT",
+          "subdomain": "source coverage inventory",
+          "expectedInternalMode": "ask/source_lookup",
+          "expectedSourceBehavior": "source_coverage_gap_awareness",
+          "expectedAuthorityTypes": ["NIRC_SECTION", "REVENUE_REGULATION", "REVENUE_MEMORANDUM_CIRCULAR", "SUPREME_COURT_GR", "CTA_CASE"],
+          "requiredSourceCardTerms": [],
+          "forbiddenAuthoritySubstitutions": ["invented VAT source card", "unindexed source presented as runtime source card"],
+          "sourceCoverageGapAwareness": "Distinguish indexed/runtime source-card coverage from source inventory.",
+          "requiredFactPrompts": [],
+          "pendingRuntimeAssertions": [
+            "does not invent available source cards",
+            "distinguishes indexed/runtime coverage from broader inventory"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "peza-vat-source-card-inventory-gap-awareness",
+      "name": "PEZA VAT source-card inventory gap awareness",
+      "category": "domain_source_card_coverage",
+      "route": "/ask",
+      "query": "/ask What source cards do you have for PEZA VAT?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "domain": "PEZA",
+          "subdomain": "PEZA/VAT source coverage inventory",
+          "expectedInternalMode": "ask/source_lookup",
+          "expectedSourceBehavior": "source_coverage_gap_awareness",
+          "expectedAuthorityTypes": ["NIRC_SECTION", "REVENUE_REGULATION", "REVENUE_MEMORANDUM_CIRCULAR", "SUPREME_COURT_GR"],
+          "requiredSourceCardTerms": [],
+          "forbiddenAuthoritySubstitutions": ["invented PEZA VAT source card", "unrelated PEZA/VAT authority"],
+          "sourceCoverageGapAwareness": "Do not overclaim source availability; identify source limitation where applicable.",
+          "requiredFactPrompts": [],
+          "pendingRuntimeAssertions": [
+            "does not overclaim source availability",
+            "identifies source limitation where applicable"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "loa-source-card-inventory-gap-awareness",
+      "name": "LOA procedural defense source-card inventory gap awareness",
+      "category": "domain_source_card_coverage",
+      "route": "/ask",
+      "query": "/ask What source cards do you have for LOA procedural defenses?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "domain": "LOA",
+          "subdomain": "LOA procedural defense source coverage inventory",
+          "expectedInternalMode": "ask/source_lookup",
+          "expectedSourceBehavior": "source_coverage_gap_awareness",
+          "expectedAuthorityTypes": ["NIRC_SECTION", "REVENUE_MEMORANDUM_ORDER", "REVENUE_MEMORANDUM_CIRCULAR", "SUPREME_COURT_GR", "CTA_CASE"],
+          "requiredSourceCardTerms": [],
+          "forbiddenAuthoritySubstitutions": ["invented LOA source card", "unindexed procedural source presented as runtime source card"],
+          "sourceCoverageGapAwareness": "Distinguish source-card availability from broader legal/source existence.",
+          "requiredFactPrompts": [],
+          "pendingRuntimeAssertions": [
+            "does not invent source cards",
+            "distinguishes source-card availability from broader legal/source existence"
+          ]
+        }
+      ]
+    }
+  ]
+}
