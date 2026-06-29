@@ -1,0 +1,403 @@
+{
+  "version": "phase-6f-006",
+  "description": "Offline mode-format evaluation fixture for /ask, /tax, and /audit. Runtime answer-format, intent-routing, response-section, and live/staging assertions are intentionally pending until later Phase 6F evaluation support exists.",
+  "cases": [
+    {
+      "id": "ask-withholding-tax-general-explanation-format",
+      "name": "/ask withholding tax general explanation format",
+      "category": "mode_format",
+      "route": "/ask",
+      "query": "What is withholding tax?",
+      "checks": [
+        { "type": "schema", "note": "Fixture shape is active locally." },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "typedCommandMode": "ask",
+          "expectedInternalMode": "ask/general_tax_explanation",
+          "expectedResponseFormat": "general_explanation",
+          "requiredSections": ["plain explanation", "source discipline if sources are used"],
+          "forbiddenSections": ["full senior tax memo by default"],
+          "shouldEscalateToTaxMode": false,
+          "shouldEscalateToAuditMode": false,
+          "forbiddenMisrouting": ["audit_defense_format", "full_tax_memo_without_need"],
+          "sourceCardExpectation": "preserve generic guard/source-card discipline where applicable",
+          "pendingRuntimeAssertions": [
+            "accepts general tax question",
+            "does not force every answer into senior memo format",
+            "preserves generic withholding tax guard behavior"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ask-bir-general-explanation-format",
+      "name": "/ask BIR general explanation format",
+      "category": "mode_format",
+      "route": "/ask",
+      "query": "/ask What is BIR?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "typedCommandMode": "ask",
+          "expectedInternalMode": "ask/general_explanation",
+          "expectedResponseFormat": "general_explanation",
+          "requiredSections": ["plain explanation", "source limitation if legal basis is not requested"],
+          "forbiddenSections": ["forced legal-basis memo"],
+          "shouldEscalateToTaxMode": false,
+          "shouldEscalateToAuditMode": false,
+          "forbiddenMisrouting": ["tax_memo_without_legal_basis_request", "audit_defense_format"],
+          "sourceCardExpectation": "do not promote unrelated exact authority/source card",
+          "pendingRuntimeAssertions": [
+            "remains general unless legal-basis treatment is requested",
+            "does not force tax memo or audit format"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ask-peza-purchases-tax-mode-escalation",
+      "name": "/ask PEZA purchases tax mode escalation",
+      "category": "mode_format",
+      "route": "/ask",
+      "query": "/ask What is the tax treatment of PEZA purchases?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "typedCommandMode": "ask",
+          "expectedInternalMode": "tax",
+          "expectedResponseFormat": "tax_advisory_senior_memo",
+          "requiredSections": ["Issue Presented", "Short Answer / Executive Conclusion", "Facts / Assumptions", "Applicable Law / Authorities", "Analysis", "Conclusion / Recommendation", "Limits / Caveats", "Source Cards"],
+          "optionalSections": ["questions for missing facts"],
+          "shouldEscalateToTaxMode": true,
+          "shouldEscalateToAuditMode": false,
+          "forbiddenMisrouting": ["generic_ask_only", "audit_defense_format"],
+          "sourceCardExpectation": "preserve source-card discipline and do not invent support",
+          "pendingRuntimeAssertions": [
+            "detects tax treatment analysis despite typed /ask",
+            "uses tax advisory/senior memo structure when facts require tax treatment analysis"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ask-pan-ewt-audit-mode-escalation",
+      "name": "/ask PAN EWT audit mode escalation",
+      "category": "mode_format",
+      "route": "/ask",
+      "query": "/ask We received a PAN for EWT deficiency. What should we do?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "typedCommandMode": "ask",
+          "expectedInternalMode": "audit",
+          "expectedResponseFormat": "audit_defense_complex_advisory",
+          "requiredSections": ["Issue / Audit Concern", "Relevant Facts Needed", "Possible Exposure", "BIR / Examiner Position", "Taxpayer Defense", "Documents / Evidence Needed", "Procedural Defects, if any", "Risk Level", "Recommended Action", "Source Cards / Authorities"],
+          "shouldEscalateToTaxMode": false,
+          "shouldEscalateToAuditMode": true,
+          "forbiddenMisrouting": ["generic_ask_only", "simple_tax_explanation"],
+          "sourceCardExpectation": "preserve authority/source-card discipline for audit-defense support",
+          "pendingRuntimeAssertions": [
+            "detects audit-defense scenario despite typed /ask",
+            "uses audit-defense/complex advisory structure in future"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tax-peza-purchases-senior-memo-format",
+      "name": "/tax PEZA purchases senior memo format",
+      "category": "mode_format",
+      "route": "/tax",
+      "query": "/tax What is the tax treatment of PEZA purchases?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "typedCommandMode": "tax",
+          "expectedInternalMode": "tax",
+          "expectedResponseFormat": "senior_tax_memo",
+          "requiredSections": ["Issue Presented", "Short Answer / Executive Conclusion", "Facts / Assumptions", "Applicable Law / Authorities", "Analysis", "Conclusion / Recommendation", "Limits / Caveats", "Source Cards"],
+          "shouldEscalateToTaxMode": false,
+          "shouldEscalateToAuditMode": false,
+          "forbiddenMisrouting": ["generic_chatbot_answer", "audit_defense_format_without_audit_facts"],
+          "sourceCardExpectation": "preserve authority/source-card discipline and do not invent support",
+          "pendingRuntimeAssertions": [
+            "uses senior tax memo format",
+            "does not sound like generic chatbot answer when technical tax memo is needed"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tax-nirc-section-57-authority-format",
+      "name": "/tax NIRC Section 57 authority format",
+      "category": "mode_format",
+      "route": "/tax",
+      "query": "/tax What does NIRC Section 57 provide?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "typedCommandMode": "tax",
+          "expectedInternalMode": "tax",
+          "expectedResponseFormat": "senior_tax_memo",
+          "requiredSections": ["Issue Presented", "Short Answer / Executive Conclusion", "Applicable Law / Authorities", "Analysis", "Conclusion / Recommendation", "Source Cards"],
+          "optionalSections": ["Facts / Assumptions", "Limits / Caveats"],
+          "shouldEscalateToTaxMode": false,
+          "shouldEscalateToAuditMode": false,
+          "forbiddenMisrouting": ["generic_definition_only", "audit_defense_format"],
+          "sourceCardExpectation": "preserve exact NIRC Section 57 authority/source-card behavior",
+          "pendingRuntimeAssertions": [
+            "includes legal authority discussion",
+            "preserves exact authority/source-card behavior"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tax-seagate-case-exposition-format",
+      "name": "/tax Seagate case exposition format",
+      "category": "mode_format",
+      "route": "/tax",
+      "query": "/tax Expound CIR v. Seagate Technology G.R. No. 153866.",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "typedCommandMode": "tax",
+          "expectedInternalMode": "tax",
+          "expectedResponseFormat": "case_exposition_senior_tax_memo_hybrid",
+          "requiredSections": ["Issue Presented", "Facts / Context", "Ruling / Holding", "Doctrine", "Application", "Limits / Caveats", "Source Cards"],
+          "shouldEscalateToTaxMode": false,
+          "shouldEscalateToAuditMode": false,
+          "forbiddenMisrouting": ["generic_case_summary_only", "audit_defense_format"],
+          "sourceCardExpectation": "preserve exact G.R. No. 153866 source-card behavior",
+          "forbiddenLimitationPhrases": ["A governing authority was not directly located.", "governing authority was not directly located"],
+          "pendingRuntimeAssertions": [
+            "uses case exposition / senior tax memo hybrid structure",
+            "does not include incorrect exact-source limitation wording if exact source is present"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tax-ra10963-ra11534-comparison-format",
+      "name": "/tax RA 10963 and RA 11534 comparison format",
+      "category": "mode_format",
+      "route": "/tax",
+      "query": "/tax Compare RA 10963 and RA 11534.",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "typedCommandMode": "tax",
+          "expectedInternalMode": "tax",
+          "expectedResponseFormat": "compare_authority_mapping",
+          "requiredSections": ["Issue Presented", "Short Answer / Executive Conclusion", "Applicable Law / Authorities", "Comparison / Mapping", "Analysis", "Conclusion / Recommendation", "Source Cards"],
+          "shouldEscalateToTaxMode": false,
+          "shouldEscalateToAuditMode": false,
+          "forbiddenMisrouting": ["generic_explanation_only", "single_authority_treatment"],
+          "sourceCardExpectation": "distinguish RA 10963/TRAIN and RA 11534/CREATE source cards if indexed",
+          "pendingRuntimeAssertions": [
+            "distinguishes TRAIN and CREATE",
+            "does not treat comparison as generic explanation only"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "audit-pan-ewt-complex-advisory-format",
+      "name": "/audit PAN EWT complex advisory format",
+      "category": "mode_format",
+      "route": "/audit",
+      "query": "/audit We received a PAN for EWT deficiency. What should we do?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "typedCommandMode": "audit",
+          "expectedInternalMode": "audit",
+          "expectedResponseFormat": "audit_defense_complex_advisory",
+          "requiredSections": ["Issue / Audit Concern", "Relevant Facts Needed", "Possible Exposure", "BIR / Examiner Position", "Taxpayer Defense", "Documents / Evidence Needed", "Procedural Defects, if any", "Risk Level", "Recommended Action", "Source Cards / Authorities"],
+          "shouldEscalateToTaxMode": false,
+          "shouldEscalateToAuditMode": false,
+          "forbiddenMisrouting": ["generic_tax_explanation", "senior_tax_memo_without_defense_dimensions"],
+          "sourceCardExpectation": "preserve authority/source-card discipline for audit-defense support",
+          "pendingRuntimeAssertions": [
+            "includes audit concern, exposure, BIR position, taxpayer defense, documents, procedural defects, risk, recommendation, authorities",
+            "does not answer as simple generic tax explanation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "audit-loa-defense-procedural-review-format",
+      "name": "/audit LOA defense procedural review format",
+      "category": "mode_format",
+      "route": "/audit",
+      "query": "/audit Evaluate this LOA and possible defense.",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "typedCommandMode": "audit",
+          "expectedInternalMode": "audit",
+          "expectedResponseFormat": "audit_defense_complex_advisory",
+          "requiredSections": ["Issue / Audit Concern", "Relevant Facts Needed", "Possible Exposure", "BIR / Examiner Position", "Taxpayer Defense", "Documents / Evidence Needed", "Procedural Defects, if any", "Risk Level", "Recommended Action", "Source Cards / Authorities"],
+          "shouldEscalateToTaxMode": false,
+          "shouldEscalateToAuditMode": false,
+          "forbiddenMisrouting": ["generic_tax_explanation", "source_lookup_only"],
+          "sourceCardExpectation": "preserve source-card discipline and request needed LOA details before overclaiming",
+          "pendingRuntimeAssertions": [
+            "identifies needed LOA details",
+            "includes procedural-defect review dimension",
+            "does not answer as generic tax explanation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "audit-input-vat-invoice-mismatch-defense-format",
+      "name": "/audit input VAT invoice mismatch defense format",
+      "category": "mode_format",
+      "route": "/audit",
+      "query": "/audit The examiner disallowed input VAT due to invoice mismatch. What is our defense?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "typedCommandMode": "audit",
+          "expectedInternalMode": "audit",
+          "expectedResponseFormat": "audit_defense_complex_advisory",
+          "requiredSections": ["Issue / Audit Concern", "Relevant Facts Needed", "Possible Exposure", "BIR / Examiner Position", "Taxpayer Defense", "Documents / Evidence Needed", "Procedural Defects, if any", "Risk Level", "Recommended Action", "Source Cards / Authorities"],
+          "shouldEscalateToTaxMode": false,
+          "shouldEscalateToAuditMode": false,
+          "forbiddenMisrouting": ["generic_vat_explanation", "tax_memo_without_defense_dimensions"],
+          "sourceCardExpectation": "preserve source-card discipline for VAT substantiation/defense authorities",
+          "pendingRuntimeAssertions": [
+            "includes exposure, examiner position, taxpayer defense, evidence needed, risk level, recommended action, authorities",
+            "identifies missing facts and documents needed"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "audit-ewt-cwt-reconciliation-documents-format",
+      "name": "/audit EWT CWT reconciliation documents format",
+      "category": "mode_format",
+      "route": "/audit",
+      "query": "/audit There is an EWT deficiency due to CWT reconciliation. What documents do we need?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "typedCommandMode": "audit",
+          "expectedInternalMode": "audit",
+          "expectedResponseFormat": "audit_defense_complex_advisory",
+          "requiredSections": ["Issue / Audit Concern", "Relevant Facts Needed", "Possible Exposure", "BIR / Examiner Position", "Taxpayer Defense", "Documents / Evidence Needed", "Procedural Defects, if any", "Risk Level", "Recommended Action", "Source Cards / Authorities"],
+          "shouldEscalateToTaxMode": false,
+          "shouldEscalateToAuditMode": false,
+          "forbiddenMisrouting": ["general_ewt_explanation_only", "tax_memo_without_document_request"],
+          "sourceCardExpectation": "preserve source-card discipline for EWT/CWT reconciliation authorities",
+          "pendingRuntimeAssertions": [
+            "includes documents/evidence needed",
+            "distinguishes assessment defense from general EWT explanation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ask-loa-defense-audit-misrouting-guard",
+      "name": "/ask LOA defense audit misrouting guard",
+      "category": "mode_format",
+      "route": "/ask",
+      "query": "/ask Evaluate this LOA and possible defense.",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "typedCommandMode": "ask",
+          "expectedInternalMode": "audit",
+          "expectedResponseFormat": "audit_defense_complex_advisory",
+          "requiredSections": ["Issue / Audit Concern", "Relevant Facts Needed", "Taxpayer Defense", "Documents / Evidence Needed", "Procedural Defects, if any", "Risk Level", "Recommended Action"],
+          "shouldEscalateToTaxMode": false,
+          "shouldEscalateToAuditMode": true,
+          "forbiddenMisrouting": ["generic_ask_format", "general_tax_explanation"],
+          "sourceCardExpectation": "preserve authority/source-card discipline for audit-defense support",
+          "pendingRuntimeAssertions": [
+            "typed command is /ask but internal mode is audit",
+            "does not remain generic /ask format"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ask-seagate-tax-case-misrouting-guard",
+      "name": "/ask Seagate tax case misrouting guard",
+      "category": "mode_format",
+      "route": "/ask",
+      "query": "/ask Expound CIR v. Seagate Technology G.R. No. 153866.",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "typedCommandMode": "ask",
+          "expectedInternalMode": "tax",
+          "expectedResponseFormat": "case_exposition_senior_tax_memo_hybrid",
+          "requiredSections": ["Issue Presented", "Facts / Context", "Ruling / Holding", "Doctrine", "Application", "Limits / Caveats", "Source Cards"],
+          "shouldEscalateToTaxMode": true,
+          "shouldEscalateToAuditMode": false,
+          "forbiddenMisrouting": ["generic_ask_format", "generic_case_summary_only"],
+          "sourceCardExpectation": "preserve exact G.R. No. 153866 source-card behavior",
+          "pendingRuntimeAssertions": [
+            "typed command is /ask but internal mode is tax",
+            "uses case exposition / tax memo structure in future"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tax-pan-ewt-audit-treatment-misrouting-guard",
+      "name": "/tax PAN EWT audit treatment misrouting guard",
+      "category": "mode_format",
+      "route": "/tax",
+      "query": "/tax We received a PAN for EWT deficiency. What should we do?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "typedCommandMode": "tax",
+          "expectedInternalMode": "audit",
+          "expectedResponseFormat": "audit_defense_complex_advisory",
+          "requiredSections": ["Issue / Audit Concern", "Relevant Facts Needed", "Possible Exposure", "BIR / Examiner Position", "Taxpayer Defense", "Documents / Evidence Needed", "Procedural Defects, if any", "Risk Level", "Recommended Action", "Source Cards / Authorities"],
+          "shouldEscalateToTaxMode": false,
+          "shouldEscalateToAuditMode": true,
+          "forbiddenMisrouting": ["pure_tax_memo_without_audit_defense", "generic_ewt_explanation"],
+          "sourceCardExpectation": "preserve authority/source-card discipline for audit-defense support",
+          "pendingRuntimeAssertions": [
+            "typed command is /tax but internal mode is audit",
+            "flags audit-defense treatment instead of forcing pure tax memo"
+          ]
+        }
+      ]
+    }
+  ]
+}
