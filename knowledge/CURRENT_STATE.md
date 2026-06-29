@@ -5,13 +5,14 @@
 Current phase:
 
 ```text
-PHASE 6E â€” Controlled Source Authority Extraction
+PHASE 6F - Automated Evaluation & Regression Harness
 ```
 
 Current status:
 
 ```text
-ACTIVE / NEAR CLOSURE
+PHASE 6E CLOSED / PASS
+PHASE 6F READY / NOT STARTED
 ```
 
 Current backend branch:
@@ -57,39 +58,39 @@ No automatic ingestion until Phase 10 source-governance workflow is implemented.
 Latest implemented patch:
 
 ```text
-PATCH-06E-010 â€” Unavailable BIR Ruling SourceAvailability Guard
+PATCH-06E-GATE-3 - Phase 6E Closure Gate
 ```
 
 Latest pushed commit:
 
 ```text
-c2b6380 PATCH-06E-010 guard unavailable BIR Ruling promotion
+PATCH-06E-GATE-3 close Phase 6E
 ```
 
 Current working state:
 
 ```text
-PATCH-06E-010 COMPLETE / PUSHED / LOCAL PASS
-PATCH-06E-010S staging smoke PASS.
-Phase 6E is not yet closed.
+PATCH-06E-GATE-3 COMPLETE / LOCAL PASS
+Phase 6E CLOSED / PASS.
+Phase 6F is ready to begin.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-06E-GATE-3 â€” Phase 6E Closure Gate
+PATCH-06F-001 - Evaluation runner skeleton
 ```
 
 Expected next gate:
 
 ```text
-PATCH-06E-GATE-3 â€” Phase 6E Closure Gate
+PATCH-06F-001S - Staging evaluation smoke validation
 ```
 
 Next phase after Phase 6E closes:
 
 ```text
-PHASE 6F â€” TINA Automated Evaluation & Regression Harness
+PHASE 6F - Automated Evaluation & Regression Harness
 ```
 
 ---
@@ -318,14 +319,14 @@ No DB/indexing/RAG/vector/corpus changes.
 
 ---
 
-# Active Phase
+# Closed Phase
 
-## Phase 6E â€” Controlled Source Authority Extraction
+## Phase 6E - Controlled Source Authority Extraction
 
 Status:
 
 ```text
-ACTIVE / NEAR CLOSURE
+CLOSED / PASS
 ```
 
 Purpose:
@@ -360,12 +361,13 @@ PATCH-06E-009S â€” Ask-handler sanitizer staging diagnostic
 PATCH-06E-009T â€” BIR Ruling DA-489-03 promotion diagnostic
 PATCH-06E-010  â€” Unavailable BIR Ruling SourceAvailability Guard
 PATCH-06E-010S â€” Unavailable BIR Ruling Guard Staging Smoke
+PATCH-06E-GATE-3 - Phase 6E Closure Gate
 ```
 
 Current pending work inside Phase 6E:
 
 ```text
-PATCH-06E-GATE-3 â€” Phase 6E Closure Gate
+None. Phase 6E is closed.
 ```
 
 Optional only if closure gate identifies a remaining issue:
@@ -469,23 +471,23 @@ Vector store remained 5,346 chunks / 102 sources.
 Unavailable BIR Ruling DA-489-03 variants returned NO_INDEXED_SOURCE with zero cards and no unrelated G.R./NIRC substitute promotion.
 ```
 
-Next required gate:
+Next required task:
 
 ```text
-PATCH-06E-GATE-3 â€” Phase 6E Closure Gate
+PATCH-06F-001 - Evaluation runner skeleton
 ```
 
 ---
 
 # Immediate Next Codex Task
 
-## PATCH-06E-GATE-3 â€” Phase 6E Closure Gate
+## PATCH-06F-001 - Evaluation Runner Skeleton
 
 Objective:
 
 ```text
-Run the Phase 6E closure gate after PATCH-06E-010S PASS.
-Confirm the completed extraction series remains stable before Phase 6F begins.
+Begin Phase 6F by creating the internal TINA automated evaluation runner skeleton.
+Do not integrate external tools, ingestion, DB/indexing/vector changes, or runtime behavior changes.
 ```
 
 ---
@@ -514,18 +516,18 @@ services/ask-handler-public-source-sanitizer.js
 
 ---
 
-# Phase 6F â€” TINA Automated Evaluation & Regression Harness
+# Phase 6F - Automated Evaluation & Regression Harness
 
 Status:
 
 ```text
-NOT STARTED
+READY / NOT STARTED
 ```
 
 Start condition:
 
 ```text
-Begin only after Phase 6E closes.
+Phase 6E is closed. Begin with PATCH-06F-001.
 ```
 
 Purpose:
@@ -880,9 +882,7 @@ continuous user learning
 Current objective:
 
 ```text
-Finish Phase 6E safely.
-Run Phase 6E closure gate.
-Then begin Phase 6F automated evaluation and regression harness.
+Begin Phase 6F automated evaluation and regression harness.
 ```
 
 ---
@@ -894,39 +894,32 @@ Continue TINA development from the latest continuity state.
 Current phase:
 
 ```text
-PHASE 6E â€” Controlled Source Authority Extraction
+PHASE 6F - Automated Evaluation & Regression Harness
 ```
 
 Current latest pushed commit:
 
 ```text
-c2b6380 PATCH-06E-010 guard unavailable BIR Ruling promotion
+PATCH-06E-GATE-3 close Phase 6E
 ```
 
 Current status:
 
 ```text
-PATCH-06E-010 COMPLETE / PUSHED / LOCAL PASS
-PATCH-06E-010S staging smoke PASS
-Phase 6E is active / near closure
+PHASE 6E CLOSED / PASS
+PHASE 6F READY / NOT STARTED
 ```
 
 Immediate next Codex task:
 
 ```text
-PATCH-06E-GATE-3 â€” Phase 6E Closure Gate
+PATCH-06F-001 - Evaluation runner skeleton
 ```
 
 After that:
 
 ```text
-PATCH-06E-GATE-3 â€” Phase 6E Closure Gate
-```
-
-Then:
-
-```text
-PHASE 6F â€” TINA Automated Evaluation & Regression Harness
+PATCH-06F-001S - Staging evaluation smoke validation
 ```
 
 Work owner rules:
@@ -943,6 +936,9 @@ Important current guard:
 Specific unavailable BIR Ruling-number queries should not be promoted to AUTHORITY_FOUND through unrelated non-BIR substitute authorities.
 BIR Ruling DA-489-03 is not in the corpus and should not expose a BIR Ruling source card.
 ```
+
+
+
 
 
 
