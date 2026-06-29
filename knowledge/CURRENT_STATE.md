@@ -12,7 +12,7 @@ Current status:
 
 ```text
 PHASE 6F ACTIVE
-PATCH-06F-007 COMPLETE / LOCAL PASS
+PATCH-06F-008 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -58,33 +58,33 @@ No automatic ingestion until Phase 10 source-governance workflow is implemented.
 Latest implemented patch:
 
 ```text
-PATCH-06F-007 - Domain source-card coverage tests: EWT, VAT, PEZA, LOA
+PATCH-06F-008 - Staging evaluation report generator
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-06F-007 add domain source-card coverage tests
+PATCH-06F-008 add staging evaluation report generator
 ```
 
 Current working state:
 
 ```text
-PATCH-06F-007 COMPLETE / LOCAL PASS
-Domain source-card coverage fixture for EWT, VAT, PEZA, and LOA added and validated.
+PATCH-06F-008 COMPLETE / LOCAL PASS
+Local/static Phase 6F evaluation report generator added and validated.
 Phase 6F active.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-06F-008 - Staging evaluation report generator
+PATCH-06F-GATE-1 - Phase 6F Evaluation Harness Stabilization Gate
 ```
 
 Expected next gate:
 
 ```text
-PATCH-06F-008S - Staging evaluation report generator smoke, if needed
+PATCH-06F-GATE-1 - Phase 6F Evaluation Harness Stabilization Gate
 ```
 
 Next phase after Phase 6E closes:
@@ -549,7 +549,8 @@ PATCH-06F-004 â€” Generic-query guard regression tests - COMPLETE / LOCAL P
 PATCH-06F-005 â€” Exact-source limitation wording regression tests - COMPLETE / LOCAL PASS
 PATCH-06F-006 â€” Mode-format evaluation: /ask, /tax, /audit - COMPLETE / LOCAL PASS
 PATCH-06F-007 â€” Domain source-card coverage tests: EWT, VAT, PEZA, LOA - COMPLETE / LOCAL PASS
-PATCH-06F-008 â€” Staging evaluation report generator
+PATCH-06F-008 â€” Staging evaluation report generator - COMPLETE / LOCAL PASS
+PATCH-06F-GATE-1 â€” Phase 6F Evaluation Harness Stabilization Gate
 ```
 
 Critical behaviors to lock:
@@ -903,26 +904,26 @@ PHASE 6F - Automated Evaluation & Regression Harness
 Current latest pushed commit:
 
 ```text
-PATCH-06F-007 add domain source-card coverage tests
+PATCH-06F-008 add staging evaluation report generator
 ```
 
 Current status:
 
 ```text
 PHASE 6F ACTIVE
-PATCH-06F-007 COMPLETE / LOCAL PASS
+PATCH-06F-008 COMPLETE / LOCAL PASS
 ```
 
 Immediate next Codex task:
 
 ```text
-PATCH-06F-008 - Staging evaluation report generator
+PATCH-06F-GATE-1 - Phase 6F Evaluation Harness Stabilization Gate
 ```
 
 After that:
 
 ```text
-PATCH-06F-008S - Staging evaluation report generator smoke, if needed
+Phase 6F closure/stabilization decision, then next approved phase/task.
 ```
 
 Work owner rules:
