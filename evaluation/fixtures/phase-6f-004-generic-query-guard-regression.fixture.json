@@ -1,0 +1,368 @@
+{
+  "version": "phase-6f-004",
+  "description": "Offline generic-query guard regression fixture. Runtime source-card, sourceAvailability, exact-authority promotion, and live/staging assertions are intentionally pending until later Phase 6F evaluation support exists.",
+  "cases": [
+    {
+      "id": "explain-ewt-generic-query-guard",
+      "name": "Explain EWT generic query guard",
+      "category": "generic_guard",
+      "route": "/ask",
+      "query": "Explain EWT.",
+      "checks": [
+        { "type": "schema", "note": "Fixture shape is active locally." },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "queryShape": "generic",
+          "expectedBehavior": "generic_guard",
+          "forbiddenFalseExactPromotion": true,
+          "forbiddenExactCardOverclaim": true,
+          "forbiddenSubstitutedAuthorities": ["RR 2-98", "NIRC Sec. 57", "NIRC Sec. 58"],
+          "permittedRelatedSourceBehavior": "May use controlled related EWT/WHT authorities only when clearly not overclaimed as an exact requested authority.",
+          "pendingRuntimeAssertions": [
+            "generic EWT explanation remains distinguishable from exact RR/RMC/NIRC lookup",
+            "unrelated exact authority is not promoted",
+            "controlled generic EWT behavior is preserved"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "withholding-tax-generic-query-guard",
+      "name": "Withholding tax generic query guard",
+      "category": "generic_guard",
+      "route": "/ask",
+      "query": "What is withholding tax?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "queryShape": "generic",
+          "expectedBehavior": "generic_guard",
+          "forbiddenFalseExactPromotion": true,
+          "forbiddenExactCardOverclaim": true,
+          "forbiddenSubstitutedAuthorities": ["RR 2-98", "NIRC Sec. 57", "NIRC Sec. 58"],
+          "permittedRelatedSourceBehavior": "May use related withholding tax authorities only when source availability is not overstated.",
+          "pendingRuntimeAssertions": [
+            "generic WHT guard behavior is preserved",
+            "unrelated exact authority/source card is not promoted",
+            "exact source availability is not overclaimed for related authorities"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "expanded-withholding-tax-generic-query-guard",
+      "name": "Expanded withholding tax generic query guard",
+      "category": "generic_guard",
+      "route": "/ask",
+      "query": "What is expanded withholding tax?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "queryShape": "generic",
+          "expectedBehavior": "generic_guard",
+          "forbiddenFalseExactPromotion": true,
+          "forbiddenExactCardOverclaim": true,
+          "forbiddenSubstitutedAuthorities": ["RR 2-98"],
+          "permittedRelatedSourceBehavior": "May cite RR 2-98 or NIRC withholding provisions only as related support when classification permits.",
+          "pendingRuntimeAssertions": [
+            "generic concept explanation remains distinguishable from exact RR 2-98 lookup",
+            "related authorities are not misrepresented as the exact governing source"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bir-agency-generic-query-guard",
+      "name": "BIR agency generic query guard",
+      "category": "generic_guard",
+      "route": "/ask",
+      "query": "What is BIR?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "queryShape": "generic",
+          "expectedBehavior": "generic_guard",
+          "forbiddenFalseExactPromotion": true,
+          "forbiddenExactCardOverclaim": true,
+          "forbiddenSubstitutedAuthorities": ["NIRC Sec. 2", "NIRC Sec. 3", "BIR issuance"],
+          "permittedRelatedSourceBehavior": "May identify source limitation or legal basis only if the answer is explicitly framed that way.",
+          "pendingRuntimeAssertions": [
+            "generic BIR explanation does not falsely promote NIRC Section 2 or 3",
+            "unrelated BIR issuance is not promoted as exact authority"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cta-agency-generic-query-guard",
+      "name": "CTA agency generic query guard",
+      "category": "generic_guard",
+      "route": "/ask",
+      "query": "What is the CTA?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "queryShape": "generic",
+          "expectedBehavior": "generic_guard",
+          "forbiddenFalseExactPromotion": true,
+          "forbiddenExactCardOverclaim": true,
+          "forbiddenSubstitutedAuthorities": ["CTA Case No. 9369"],
+          "permittedRelatedSourceBehavior": "May explain the Court of Tax Appeals generally without substituting a specific case card.",
+          "pendingRuntimeAssertions": [
+            "general CTA explanation remains distinguishable from exact CTA case lookup",
+            "specific CTA case is not falsely promoted"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cta-case-generic-query-guard",
+      "name": "CTA case generic query guard",
+      "category": "generic_guard",
+      "route": "/ask",
+      "query": "What is a CTA case?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "queryShape": "generic",
+          "expectedBehavior": "generic_guard",
+          "forbiddenFalseExactPromotion": true,
+          "forbiddenExactCardOverclaim": true,
+          "forbiddenSubstitutedAuthorities": ["CTA Case No. 9369"],
+          "permittedRelatedSourceBehavior": "May provide a generic case-type explanation unless an exact case is requested.",
+          "pendingRuntimeAssertions": [
+            "generic CTA case explanation remains distinguishable from exact case lookup",
+            "CTA Case No. 9369 is not falsely promoted"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "train-law-generic-query-guard",
+      "name": "TRAIN law generic query guard",
+      "category": "generic_guard",
+      "route": "/ask",
+      "query": "What is TRAIN?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "queryShape": "generic",
+          "expectedBehavior": "generic_guard",
+          "forbiddenFalseExactPromotion": true,
+          "forbiddenExactCardOverclaim": true,
+          "forbiddenSubstitutedAuthorities": ["RA 10963", "NIRC provision"],
+          "permittedRelatedSourceBehavior": "May identify RA 10963 as related to TRAIN only when not overclaimed as an exact source request.",
+          "pendingRuntimeAssertions": [
+            "generic TRAIN explanation remains distinguishable from exact RA 10963 lookup",
+            "unrelated RA/NIRC cards are not promoted"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "republic-act-generic-query-guard",
+      "name": "Republic Act generic query guard",
+      "category": "generic_guard",
+      "route": "/ask",
+      "query": "What is a Republic Act?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "queryShape": "generic",
+          "expectedBehavior": "generic_guard",
+          "forbiddenFalseExactPromotion": true,
+          "forbiddenExactCardOverclaim": true,
+          "forbiddenSubstitutedAuthorities": ["RA 10963", "RA 11534"],
+          "permittedRelatedSourceBehavior": "Should remain a generic legal concept explanation unless a specific Republic Act is requested.",
+          "pendingRuntimeAssertions": [
+            "specific Republic Act is not promoted as exact source",
+            "generic legal concept explanation is preserved"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tax-law-generic-query-guard",
+      "name": "Tax law generic query guard",
+      "category": "generic_guard",
+      "route": "/ask",
+      "query": "What is a tax law?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "queryShape": "generic",
+          "expectedBehavior": "generic_guard",
+          "forbiddenFalseExactPromotion": true,
+          "forbiddenExactCardOverclaim": true,
+          "forbiddenSubstitutedAuthorities": ["NIRC provision", "Revenue Regulation", "Revenue Memorandum Circular", "Revenue Memorandum Order", "Republic Act", "CTA case", "G.R. case"],
+          "permittedRelatedSourceBehavior": "Should remain generic or ask for narrowing before exact authority promotion.",
+          "pendingRuntimeAssertions": [
+            "specific NIRC/RR/RMC/RMO/RA/CTA/G.R. authority is not promoted",
+            "broad tax law explanation remains source-disciplined"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gr-case-generic-query-guard",
+      "name": "G.R. case generic query guard",
+      "category": "generic_guard",
+      "route": "/ask",
+      "query": "What is a G.R. case?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "queryShape": "generic",
+          "expectedBehavior": "generic_guard",
+          "forbiddenFalseExactPromotion": true,
+          "forbiddenExactCardOverclaim": true,
+          "forbiddenSubstitutedAuthorities": ["CIR v. Seagate", "G.R. No. 153866"],
+          "permittedRelatedSourceBehavior": "May explain G.R. case format generally without substituting a Supreme Court case.",
+          "pendingRuntimeAssertions": [
+            "generic explanation remains distinguishable from exact G.R. lookup",
+            "CIR v. Seagate or any unrelated Supreme Court case is not promoted"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jurisprudence-generic-query-guard",
+      "name": "Jurisprudence generic query guard",
+      "category": "generic_guard",
+      "route": "/ask",
+      "query": "What is jurisprudence?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "queryShape": "generic",
+          "expectedBehavior": "generic_guard",
+          "forbiddenFalseExactPromotion": true,
+          "forbiddenExactCardOverclaim": true,
+          "forbiddenSubstitutedAuthorities": ["Supreme Court case", "G.R. No. 153866"],
+          "permittedRelatedSourceBehavior": "Should remain generic unless exact jurisprudence is requested.",
+          "pendingRuntimeAssertions": [
+            "specific Supreme Court case is not promoted as exact authority",
+            "generic jurisprudence explanation is preserved"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "withholding-tax-jurisprudence-related-query-guard",
+      "name": "Withholding tax jurisprudence related query guard",
+      "category": "related_authority",
+      "route": "/ask",
+      "query": "Are there jurisprudence cases on withholding tax?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "queryShape": "generic",
+          "expectedBehavior": "generic_guard",
+          "forbiddenFalseExactPromotion": true,
+          "forbiddenExactCardOverclaim": true,
+          "forbiddenSubstitutedAuthorities": ["specific Supreme Court case as exact answer"],
+          "permittedRelatedSourceBehavior": "May return related jurisprudence if available and clearly identified as related rather than exact.",
+          "pendingRuntimeAssertions": [
+            "related jurisprudence is distinguished from exact authority",
+            "specific case is not falsely promoted as the exact answer unless requested"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tax-sources-broad-lookup-guard",
+      "name": "Tax sources broad lookup guard",
+      "category": "source_limitation_wording",
+      "route": "/ask",
+      "query": "Show me tax sources.",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "queryShape": "generic",
+          "expectedBehavior": "generic_guard",
+          "forbiddenFalseExactPromotion": true,
+          "forbiddenExactCardOverclaim": true,
+          "forbiddenSubstitutedAuthorities": ["one arbitrary exact source card"],
+          "permittedRelatedSourceBehavior": "May behave as broad source request or ask for narrowing.",
+          "pendingRuntimeAssertions": [
+            "one arbitrary exact source card is not promoted",
+            "broad source request remains source-limited or asks for narrowing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bir-issuances-broad-lookup-guard",
+      "name": "BIR issuances broad lookup guard",
+      "category": "source_limitation_wording",
+      "route": "/ask",
+      "query": "Give me BIR issuances.",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "queryShape": "generic",
+          "expectedBehavior": "generic_guard",
+          "forbiddenFalseExactPromotion": true,
+          "forbiddenExactCardOverclaim": true,
+          "forbiddenSubstitutedAuthorities": ["specific RR", "specific RMC", "specific RMO"],
+          "permittedRelatedSourceBehavior": "May remain broad/list-oriented or identify source limitation.",
+          "pendingRuntimeAssertions": [
+            "specific RR/RMC/RMO is not falsely promoted as exact requested authority",
+            "broad/list-oriented behavior is preserved"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tax-cases-broad-lookup-guard",
+      "name": "Tax cases broad lookup guard",
+      "category": "source_limitation_wording",
+      "route": "/ask",
+      "query": "What are tax cases?",
+      "checks": [
+        { "type": "schema" },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "queryShape": "generic",
+          "expectedBehavior": "generic_guard",
+          "forbiddenFalseExactPromotion": true,
+          "forbiddenExactCardOverclaim": true,
+          "forbiddenSubstitutedAuthorities": ["specific CTA case", "specific G.R. case", "CTA Case No. 9369", "G.R. No. 153866"],
+          "permittedRelatedSourceBehavior": "May remain generic or broad without exact case promotion.",
+          "pendingRuntimeAssertions": [
+            "specific CTA or G.R. case is not falsely promoted",
+            "generic/broad tax cases explanation is preserved"
+          ]
+        }
+      ]
+    }
+  ]
+}
