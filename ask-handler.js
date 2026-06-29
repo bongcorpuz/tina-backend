@@ -66,6 +66,8 @@ import {
   BOUNDARY_CLARIFY_MESSAGE
 } from "./services/philippine-tax-domain-boundary.js";
 
+import { sanitizePublicSourceCards } from "./services/ask-handler-public-source-sanitizer.js";
+
 const ENGINE_VERSION = "9.0.0";
 
 const EXIT_COMMANDS = ["/bye", "/exit", "/stop", "/quit", "/reset"];
@@ -232,41 +234,6 @@ function compactString(value = "", maxChars = 2000) {
   const text = normalizeText(value).replace(/\s+/g, " ");
   if (!text) return "";
   return text.length > maxChars ? `${text.slice(0, maxChars)}...` : text;
-}
-
-function publicSourceCardText(value = "") {
-  const text = normalizeText(value).replace(/\s+/g, " ").trim();
-  if (!text) return "";
-  if (/[\\/]/.test(text)) return "";
-  if (/\.(?:pdf|docx?|txt|csv|md|json)(?:$|[?#\s])/i.test(text)) return "";
-  if (/\b[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\b/i.test(text)) return "";
-  return text;
-}
-
-function publicSourceCardUrl(value = "") {
-  const url = normalizeText(value);
-  return /^https?:\/\//i.test(url) ? url : "";
-}
-
-function sanitizePublicSourceCard(card = {}) {
-  const citation = publicSourceCardText(card.citation || card.label || card.displayLabel || card.title || "");
-  const title = publicSourceCardText(card.title) || citation || "Source";
-  const displayLabel = publicSourceCardText(card.displayLabel || card.label || citation || title) || title;
-  const safeUrl = publicSourceCardUrl(card.publicUrl || card.public_url || "");
-
-  return {
-    label: displayLabel,
-    title,
-    citation,
-    authorityType: publicSourceCardText(card.authorityType || card.authority_type || ""),
-    displayLabel,
-    limitationRequired: card.limitationRequired === true,
-    ...(safeUrl ? { publicUrl: safeUrl } : {})
-  };
-}
-
-function sanitizePublicSourceCards(cards = []) {
-  return safeArray(cards).map(sanitizePublicSourceCard);
 }
 
 function timeoutAfter(ms, label = "Operation") {
