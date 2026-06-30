@@ -990,6 +990,11 @@ function buildEducationalSources(chunks = [], responseStyle = null, query = "") 
  * out before display).  It never claims AUTHORITY_FOUND.
  *
  * timedOut is always preserved as retrievalTimedOut in the return value for diagnostics.
+ *
+ * PATCH-06G-005 SAE boundary note:
+ * computeSourceAvailability is private pipeline orchestration/aggregation logic.
+ * It is distinct from classifySourceAvailability and must not be treated as the
+ * exported SAE classifier boundary.
  */
 function computeSourceAvailability({
   mode,
@@ -1379,6 +1384,15 @@ function patch027nIsStatutoryAuthority(candidate = {}) {
  *  4. AUTHORITY_FOUND
  *  5. RELATED_AUTHORITY_ONLY
  *  6. NO_INDEXED_SOURCE
+ *
+ * PATCH-06G-005 SAE boundary note:
+ * classifySourceAvailability is the exported SAE classifier boundary. Keep it
+ * in pipeline.js during Phase 6G because tests and callers import it from here.
+ * Do not move it to source-visibility-engine.js; that module owns source
+ * display/document visibility utilities, not SAE classification.
+ * Any future extraction is Phase 6H+ work and should use a dedicated
+ * source-availability-classifier.js-style module after Phase 6F evaluation
+ * coverage and explicit approval.
  */
 export function classifySourceAvailability(input = {}) {
   const annotatedCandidates = Array.isArray(input.annotatedCandidates)
@@ -2631,6 +2645,8 @@ export async function runPipeline({
     outcomeCategory:     ctx.retrievalMeta?.outcomeCategory || null
   });
 
+  // PATCH-06G-005: exported SAE classifier boundary remains in pipeline.js for
+  // Phase 6G; this call intentionally uses the local exported classifier.
   ctx.sourceAvailability = classifySourceAvailability({
     annotatedCandidates:  ctx.rerankedChunks || [],
     issueClassification:  ctx.issueClassification,
