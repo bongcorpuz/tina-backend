@@ -14,7 +14,7 @@ Current status:
 PHASE 6F CLOSED / PASS
 PHASE 6G CLOSED / PASS
 PHASE 6H CLOSED / PASS
-PHASE 7A ACTIVE / READY
+PHASE 7A ACTIVE
 PATCH-06F-GATE-1 COMPLETE / LOCAL PASS
 PATCH-06G-001 COMPLETE / LOCAL PASS
 PATCH-06G-002 COMPLETE / LOCAL PASS
@@ -30,6 +30,7 @@ PATCH-06H-005 COMPLETE / LOCAL PASS
 PATCH-06H-006 COMPLETE / LOCAL PASS
 PATCH-06H-007 COMPLETE / LOCAL PASS
 PATCH-06H-GATE-1 COMPLETE / LOCAL PASS
+PATCH-07A-001 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -75,60 +76,55 @@ No automatic ingestion until Phase 10 source-governance workflow is implemented.
 Latest implemented patch:
 
 ```text
-PATCH-06H-GATE-1 - Phase 6H Stabilization Gate
+PATCH-07A-001 - Human Conversational Response Layer Architecture Review
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-06H-GATE-1 close Phase 6H
+PATCH-07A-001 add human response architecture review
 ```
 
 Current working state:
 
 ```text
-PATCH-06H-GATE-1 COMPLETE / LOCAL PASS
-Phase 6G closed through stabilization gate.
-Phase 6H closed through stabilization gate.
-Key findings:
-- Wrapper adapter pattern was collapsed in pipeline.js after PATCH-06G-003 equivalence coverage.
-- pipeline.js now imports source-card helpers directly from source-card-engine.js.
-- Focused PATCH-06G-003 test now locks the collapsed direct-import state and representative source-card-engine fixtures.
-- classifySourceAvailability remains exported from pipeline.js and imported by 6+ test files.
-- source-visibility-engine.js is a utility/display module, not a SAE classifier.
-- Two distinct SAE functions in pipeline.js: computeSourceAvailability (private) and classifySourceAvailability (exported).
-- PATCH-06G-005 added comment-only SAE boundary notes around computeSourceAvailability, classifySourceAvailability, and the classifier call site.
-- No broad pipeline decomposition, retrieval/reranker work, sourceAvailability behavior change, DB/indexing/RAG/vector/corpus/ingestion change, package/dependency change, or external tool adoption occurred in Phase 6G.
-- PATCH-06H-001 mapped retrieval-engine.js, vector-store.js, reranker-engine.js, authority normalization modules, sourceAvailability boundaries, and source-card selector boundaries without runtime changes.
-- Baseline finding: bare citation query "RR 2-98" is a likely issue-classification / exact-authority normalization gap before it is a vector-store or source-card rendering issue.
-- PATCH-06H-002 added offline fixture/test coverage for bare administrative citations, statutory citations, case citations, named authority aliases, and generic guard controls.
-- PATCH-06H-002 remains test-only: all behavioral expectations are pending future runtime assertions and no runtime behavior changed.
-- PATCH-06H-003 implemented a narrow exact-authority detector fix for CTA Case citations without "No." and known Seagate named-case aliases.
-- PATCH-06H-003 converted Phase 6H bare/named authority targets into active classifier assertions while preserving generic guard controls.
-- PATCH-06H-004 documented the current retrieval/reranker baseline after PATCH-06H-003 and confirmed no evidence supports runtime reranker modification or cohere-ai adoption yet.
-- PATCH-06H-004 recommends a no-dependency retrieval/reranker comparison plan before any provider experiment or behavior change.
-- PATCH-06H-005 defined a no-dependency retrieval/reranker comparison plan, candidate modes, query groups, metrics, conservative thresholds, future artifact design, and external-reranker readiness gates.
-- PATCH-06H-005 keeps cohere-ai and external reranker adoption deferred until local comparison artifacts and thresholds exist.
-- PATCH-06H-006 added a local/static retrieval-reranker comparison fixture and focused scaffold test covering exact administrative, statutory, case, topic-based, audit/procedural, generic guard, and near-match/wrong-authority controls.
-- PATCH-06H-006 encodes comparison metrics and conservative pass/fail policies without running retrieval, reranking, DB/vector lookup, sourceAvailability, source-card selection, OpenAI, external APIs, or staging.
-- PATCH-06H-007 added a deterministic local/static comparison report generator and focused test for the PATCH-06H-006 fixture.
-- PATCH-06H-007 confirms structural readiness for a Phase 6H stabilization gate without running retrieval, reranking, DB/vector lookup, sourceAvailability, source-card selection, OpenAI, Cohere, external APIs, or staging.
-- PATCH-06H-GATE-1 verified all Phase 6H artifacts, branch/history, bare citation/named authority behavior, retrieval/reranker comparison scaffolding, SourceAvailability boundaries, protected-scope rules, and roadmap discipline.
-- PATCH-06H-GATE-1 closed Phase 6H as CLOSED / PASS.
-- No pipeline.js, retrieval-engine.js, reranker-engine.js, sourceAvailability, source-card, DB/indexing/RAG/vector/corpus/ingestion, package/dependency, env, prompt, route, or controller changes occurred.
-- Recommended next work is the Phase 7A architecture review before response formatting or tone implementation.
+PATCH-07A-001 COMPLETE / LOCAL PASS
+Phase 6H closed through stabilization gate (PATCH-06H-GATE-1).
+Phase 7A is now active.
+Key Phase 7A architecture findings:
+- PATCH-07A-001 completed a full read-only architecture review for Phase 7A.
+- Existing answer-renderer.js (v5.2.0) is a pure formatting-only layer — no OpenAI calls.
+  It is the correct target for heading set and format changes.
+- context-orchestration-engine.js (v5.0.0) is the sole file allowed to assemble OpenAI
+  messages and call OpenAI. It is the correct target for tone and authority-state policy.
+- prompts/audit-mode-prompt.js shows the correct pattern for mode-specific prompt separation.
+  A prompts/tax-mode-prompt.js should be created in PATCH-07A-005.
+- The SAE disclosure layer in answer-renderer.js (buildSourceAvailabilityDisclosure) is
+  already mandatory and must not be weakened by Phase 7A conversational formatting.
+- The existing A-F heading structure should be preserved for /tax mode.
+  A lighter conversational heading set should replace it for /ask general queries.
+- Authority-state awareness must be injected into the OpenAI system prompt as an explicit
+  instruction clause before response generation — not just as a formatting hint.
+- applyVerifiedAuthorityGate (ask-handler.js imports from answer-renderer.js) must be
+  assessed for compatibility with short /ask responses before PATCH-07A-004 begins.
+- PATCH-07A-002 fixtures must be complete and passing before any runtime change begins.
+- Recommended Phase 7A sequence: 002 fixtures → 003 policy scaffold → 004 /ask →
+  005 /tax → 006 /audit → 007 source limitation wording tests → GATE-1.
+- No pipeline.js, retrieval, reranker, sourceAvailability, source-card, DB/indexing/RAG/
+  vector/corpus/ingestion, package/dependency, env, prompt, route, or controller changes
+  occurred in PATCH-07A-001.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07A-001 - Human Conversational Response Layer Architecture Review
+PATCH-07A-002 - Human response mode-format fixtures and regression tests
 ```
 
 Expected next gate:
 
 ```text
-TBD after Phase 7A architecture review
+PATCH-07A-GATE-1 - Phase 7A Stabilization Gate (after PATCH-07A-002 through 007)
 ```
 
 Next phase:
@@ -1071,7 +1067,7 @@ PHASE 7A - Human Conversational Response Layer
 Current latest pushed commit:
 
 ```text
-PATCH-06H-GATE-1 close Phase 6H
+PATCH-07A-001 add human response architecture review
 ```
 
 Current status:
@@ -1080,7 +1076,7 @@ Current status:
 PHASE 6F CLOSED / PASS
 PHASE 6G CLOSED / PASS
 PHASE 6H CLOSED / PASS
-PHASE 7A ACTIVE / READY
+PHASE 7A ACTIVE
 PATCH-06F-GATE-1 COMPLETE / LOCAL PASS
 PATCH-06G-001 COMPLETE / LOCAL PASS
 PATCH-06G-002 COMPLETE / LOCAL PASS
@@ -1096,18 +1092,27 @@ PATCH-06H-005 COMPLETE / LOCAL PASS
 PATCH-06H-006 COMPLETE / LOCAL PASS
 PATCH-06H-007 COMPLETE / LOCAL PASS
 PATCH-06H-GATE-1 COMPLETE / LOCAL PASS
+PATCH-07A-001 COMPLETE / LOCAL PASS
 ```
 
 Immediate next Codex task:
 
 ```text
-PATCH-07A-001 - Human Conversational Response Layer Architecture Review
+PATCH-07A-002 - Human response mode-format fixtures and regression tests
 ```
 
 After that:
 
 ```text
-Phase 6H runtime retrieval/reranker changes remain deferred unless a later approved phase reopens them with local comparison fixture/report artifacts, measurable baseline metrics, and conservative pass/fail thresholds.
+PATCH-07A-003 - Authority-state response policy design / test scaffold
+PATCH-07A-004 - /ask conversational formatting implementation (after 002 fixtures pass)
+PATCH-07A-005 - /tax senior memo formatting implementation
+PATCH-07A-006 - /audit advisory formatting implementation
+PATCH-07A-007 - Source limitation wording preservation tests
+PATCH-07A-GATE-1 - Phase 7A Stabilization Gate
+Phase 6H runtime retrieval/reranker changes remain deferred unless a later approved phase
+reopens them with local comparison fixture/report artifacts, measurable baseline metrics,
+and conservative pass/fail thresholds.
 ```
 
 Key Phase 6G architecture findings:
