@@ -5,20 +5,22 @@
 Current phase:
 
 ```text
-PHASE 6G - Authority / Pipeline Decomposition Planning Under Evaluation Guard
+PHASE 6H - Retrieval / Reranker / Authority Normalization Under Evaluation Guard
 ```
 
 Current status:
 
 ```text
 PHASE 6F CLOSED / PASS
-PHASE 6G ACTIVE
+PHASE 6G CLOSED / PASS
+PHASE 6H ACTIVE / READY
 PATCH-06F-GATE-1 COMPLETE / LOCAL PASS
 PATCH-06G-001 COMPLETE / LOCAL PASS
 PATCH-06G-002 COMPLETE / LOCAL PASS
 PATCH-06G-003 COMPLETE / LOCAL PASS
 PATCH-06G-004 COMPLETE / LOCAL PASS
 PATCH-06G-005 COMPLETE / LOCAL PASS
+PATCH-06G-GATE-1 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -64,48 +66,48 @@ No automatic ingestion until Phase 10 source-governance workflow is implemented.
 Latest implemented patch:
 
 ```text
-PATCH-06G-005 - SAE boundary documentation comments in pipeline.js
+PATCH-06G-GATE-1 - Phase 6G Stabilization Gate
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-06G-005 document SAE boundary
+PATCH-06G-GATE-1 close Phase 6G
 ```
 
 Current working state:
 
 ```text
-PATCH-06G-005 COMPLETE / LOCAL PASS
-SAE boundary documentation comments completed.
+PATCH-06G-GATE-1 COMPLETE / LOCAL PASS
+Phase 6G closed through stabilization gate.
 Key findings:
 - Wrapper adapter pattern was collapsed in pipeline.js after PATCH-06G-003 equivalence coverage.
 - pipeline.js now imports source-card helpers directly from source-card-engine.js.
 - Focused PATCH-06G-003 test now locks the collapsed direct-import state and representative source-card-engine fixtures.
-- classifySourceAvailability remains exported from pipeline.js and imported by 6+ test files — cannot move in Phase 6G.
+- classifySourceAvailability remains exported from pipeline.js and imported by 6+ test files.
 - source-visibility-engine.js is a utility/display module, not a SAE classifier.
 - Two distinct SAE functions in pipeline.js: computeSourceAvailability (private) and classifySourceAvailability (exported).
 - PATCH-06G-005 added comment-only SAE boundary notes around computeSourceAvailability, classifySourceAvailability, and the classifier call site.
-- Phase 6G stabilization gate is the next required step before further decomposition.
-Phase 6G active.
+- No broad pipeline decomposition, retrieval/reranker work, sourceAvailability behavior change, DB/indexing/RAG/vector/corpus/ingestion change, package/dependency change, or external tool adoption occurred in Phase 6G.
+- Phase 6H is active/ready and must begin with a retrieval/reranker/authority-normalization baseline map before implementation.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-06G-GATE-1 - Phase 6G Stabilization Gate
+PATCH-06H-001 - Retrieval / Reranker / Authority Normalization Baseline Map
 ```
 
 Expected next gate:
 
 ```text
-PATCH-06G-GATE-1 - Decomposition planning gate, if needed
+PATCH-06H-GATE-1 - Phase 6H stabilization gate, if needed
 ```
 
-Next phase after Phase 6E closes:
+Next phase:
 
 ```text
-PHASE 6F - Automated Evaluation & Regression Harness
+PHASE 6H - Retrieval / Reranker / Authority Normalization Under Evaluation Guard
 ```
 
 ---
@@ -589,6 +591,21 @@ Source-card label, public URL, and click target match
 
 # Future Phase Roadmap
 
+## Phase 6H - Retrieval / Reranker / Authority Normalization Under Evaluation Guard
+
+Status:
+
+```text
+ACTIVE / READY
+```
+
+Purpose:
+
+```text
+Map retrieval, reranker, authority normalization, PATCH-029-style bare citation normalization, and possible classifySourceAvailability extraction planning under the completed Phase 6F evaluation guard.
+Begin with PATCH-06H-001 baseline mapping only before implementation.
+```
+
 ## Phase 7A â€” Human Conversational Response Layer
 
 Status:
@@ -616,6 +633,21 @@ Purpose:
 
 ```text
 Risk flags, conflicts, counterarguments, fact gaps, supersession checks, audit/litigation positioning, and adversarial review.
+Validator false-positive fixes such as BIR Form 2307 / 2550M may be routed here if they are response/analysis-layer issues rather than retrieval baseline issues.
+```
+
+## Phase 7C / 6F-LIVE - Live Answer-Grounding and Citation-Faithfulness Evaluation
+
+Status:
+
+```text
+NOT STARTED
+```
+
+Purpose:
+
+```text
+Live answer-grounding and citation-faithfulness evaluation, including CTA 9711 / CTA 9369 / Seagate-style grounding checks.
 ```
 
 ## Phase 8 â€” Memory, User Learning & Governed Tax Intelligence
@@ -709,6 +741,7 @@ Purpose:
 
 ```text
 Controlled regulatory source monitoring, archival, approval, ingestion, metadata governance, validation, and rollback.
+Metadata schema/source registry design, authority metadata fields, and PATCH-026-style source coverage belong here unless explicitly pulled forward by an approved gate.
 ```
 
 Tool roles later:
@@ -746,6 +779,7 @@ Purpose:
 
 ```text
 Token efficiency, model comparison, open-weights testing, observability, deployment optimization, and scaling.
+Query evidence logging and possible Langfuse / Vercel AI SDK use belong here unless explicitly approved earlier.
 ```
 
 Parked tools for later review:
@@ -808,6 +842,20 @@ professional workflows
 document intelligence
 continuous regulatory monitoring
 firm/client/matter knowledge
+```
+
+## Phase 14 - Mobile App / Distribution
+
+Status:
+
+```text
+NOT STARTED
+```
+
+Purpose:
+
+```text
+Mobile app and distribution work after Phase 13 platform maturity.
 ```
 
 ---
@@ -901,7 +949,7 @@ continuous user learning
 Current objective:
 
 ```text
-Continue Phase 6G authority/pipeline decomposition planning under the completed Phase 6F evaluation guard.
+Begin Phase 6H with a retrieval/reranker/authority-normalization baseline map under the completed Phase 6F evaluation guard.
 ```
 
 ---
@@ -911,7 +959,7 @@ Continue Phase 6G authority/pipeline decomposition planning under the completed 
 Status:
 
 ```text
-ACTIVE
+CLOSED / PASS
 ```
 
 Purpose:
@@ -930,13 +978,42 @@ PATCH-06G-002 - Claude Code architecture review of JS module inventory and decom
 PATCH-06G-003 - Source-card wrapper equivalence test lock (test-only) - COMPLETE / LOCAL PASS
 PATCH-06G-004 - Source-card wrapper collapse in pipeline.js (approved by PATCH-06G-002 review) - COMPLETE / LOCAL PASS
 PATCH-06G-005 - Source-availability boundary documentation hardening - COMPLETE / LOCAL PASS
-PATCH-06G-GATE-1 - Phase 6G stabilization gate
+PATCH-06G-GATE-1 - Phase 6G stabilization gate - COMPLETE / LOCAL PASS
 ```
 
 Immediate next task:
 
 ```text
-PATCH-06G-GATE-1 - Phase 6G Stabilization Gate
+PATCH-06H-001 - Retrieval / Reranker / Authority Normalization Baseline Map
+```
+
+---
+
+# Phase 6H - Retrieval / Reranker / Authority Normalization Under Evaluation Guard
+
+Status:
+
+```text
+ACTIVE / READY
+```
+
+Purpose:
+
+```text
+Begin with a baseline map for retrieval, reranker, authority normalization, PATCH-029-style bare citation normalization, and classifier extraction planning boundaries before implementation.
+Do not implement retrieval/reranker/sourceAvailability changes before PATCH-06H-001 maps scope and validation coverage.
+```
+
+Planned work:
+
+```text
+PATCH-06H-001 - Retrieval / Reranker / Authority Normalization Baseline Map
+```
+
+Immediate next task:
+
+```text
+PATCH-06H-001 - Retrieval / Reranker / Authority Normalization Baseline Map
 ```
 
 ---
@@ -948,47 +1025,49 @@ Continue TINA development from the latest continuity state.
 Current phase:
 
 ```text
-PHASE 6G - Authority / Pipeline Decomposition Planning Under Evaluation Guard
+PHASE 6H - Retrieval / Reranker / Authority Normalization Under Evaluation Guard
 ```
 
 Current latest pushed commit:
 
 ```text
-PATCH-06G-002 add Claude architecture review
+PATCH-06G-GATE-1 close Phase 6G
 ```
 
 Current status:
 
 ```text
 PHASE 6F CLOSED / PASS
-PHASE 6G ACTIVE
+PHASE 6G CLOSED / PASS
+PHASE 6H ACTIVE / READY
 PATCH-06F-GATE-1 COMPLETE / LOCAL PASS
 PATCH-06G-001 COMPLETE / LOCAL PASS
 PATCH-06G-002 COMPLETE / LOCAL PASS
 PATCH-06G-003 COMPLETE / LOCAL PASS
 PATCH-06G-004 COMPLETE / LOCAL PASS
 PATCH-06G-005 COMPLETE / LOCAL PASS
+PATCH-06G-GATE-1 COMPLETE / LOCAL PASS
 ```
 
 Immediate next Codex task:
 
 ```text
-PATCH-06G-GATE-1 - Phase 6G Stabilization Gate
+PATCH-06H-001 - Retrieval / Reranker / Authority Normalization Baseline Map
 ```
 
 After that:
 
 ```text
-No further decomposition before PATCH-06G-GATE-1 completes.
+Phase 6H implementation remains gated behind the PATCH-06H-001 baseline map.
 ```
 
-Key architecture findings from PATCH-06G-002:
+Key Phase 6G architecture findings:
 
 ```text
-1. Wrapper adapter pattern confirmed: pipeline.js has 6 one-line delegate wrappers pointing to source-card-engine.js.
-   Wrapper collapse is the safe Phase 6G decomposition path.
+1. Wrapper adapter pattern was confirmed and then collapsed safely:
+   pipeline.js now uses direct source-card-engine.js imports.
 2. classifySourceAvailability is exported from pipeline.js and imported by 6+ test files.
-   It CANNOT be moved in Phase 6G. Extraction is Phase 6H minimum.
+   It was not moved in Phase 6G. Extraction is Phase 6H minimum.
 3. source-visibility-engine.js is a utility/display module, NOT a SAE classifier.
    Do NOT route classifySourceAvailability to source-visibility-engine.js.
    Correct future destination: new dedicated source-availability-classifier.js (Phase 6H+).
@@ -1011,10 +1090,6 @@ Important current guard:
 Specific unavailable BIR Ruling-number queries should not be promoted to AUTHORITY_FOUND through unrelated non-BIR substitute authorities.
 BIR Ruling DA-489-03 is not in the corpus and should not expose a BIR Ruling source card.
 ```
-
-
-
-
 
 
 
