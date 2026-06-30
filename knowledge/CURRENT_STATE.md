@@ -31,6 +31,7 @@ PATCH-06H-006 COMPLETE / LOCAL PASS
 PATCH-06H-007 COMPLETE / LOCAL PASS
 PATCH-06H-GATE-1 COMPLETE / LOCAL PASS
 PATCH-07A-001 COMPLETE / LOCAL PASS
+PATCH-07A-002 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -76,19 +77,19 @@ No automatic ingestion until Phase 10 source-governance workflow is implemented.
 Latest implemented patch:
 
 ```text
-PATCH-07A-001 - Human Conversational Response Layer Architecture Review
+PATCH-07A-002 - Human Response Mode-Format Fixtures and Regression Tests
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-07A-001 add human response architecture review
+PATCH-07A-002 add human response mode format fixtures
 ```
 
 Current working state:
 
 ```text
-PATCH-07A-001 COMPLETE / LOCAL PASS
+PATCH-07A-002 COMPLETE / LOCAL PASS
 Phase 6H closed through stabilization gate (PATCH-06H-GATE-1).
 Phase 7A is now active.
 Key Phase 7A architecture findings:
@@ -108,6 +109,13 @@ Key Phase 7A architecture findings:
 - applyVerifiedAuthorityGate (ask-handler.js imports from answer-renderer.js) must be
   assessed for compatibility with short /ask responses before PATCH-07A-004 begins.
 - PATCH-07A-002 fixtures must be complete and passing before any runtime change begins.
+- PATCH-07A-002 added local/static human response mode-format fixtures and focused
+  regression tests for /ask conversational format, /tax senior memo format, /audit
+  advisory format, authority-state response policy, source-card/source-limitation
+  preservation, generic-query non-promotion, and mode escalation.
+- PATCH-07A-002 did not change runtime behavior, prompts, routes/controllers, retrieval,
+  reranker, authority normalization, source-card, sourceAvailability, package/dependency,
+  DB/indexing/RAG/vector/corpus, ingestion, env, or secrets.
 - Recommended Phase 7A sequence: 002 fixtures → 003 policy scaffold → 004 /ask →
   005 /tax → 006 /audit → 007 source limitation wording tests → GATE-1.
 - No pipeline.js, retrieval, reranker, sourceAvailability, source-card, DB/indexing/RAG/
@@ -118,7 +126,7 @@ Key Phase 7A architecture findings:
 Immediate next task:
 
 ```text
-PATCH-07A-002 - Human response mode-format fixtures and regression tests
+PATCH-07A-003 - Authority-state response policy and applyVerifiedAuthorityGate compatibility tests
 ```
 
 Expected next gate:
@@ -136,7 +144,7 @@ PHASE 7A - Human Conversational Response Layer
 Recommended agent:
 
 ```text
-Claude Code
+Codex
 ```
 
 ---
@@ -1049,7 +1057,7 @@ PATCH-06H-GATE-1 - Phase 6H Stabilization Gate - COMPLETE / LOCAL PASS
 Immediate next task:
 
 ```text
-PATCH-07A-001 - Human Conversational Response Layer Architecture Review
+PATCH-07A-003 - Authority-state response policy and applyVerifiedAuthorityGate compatibility tests
 ```
 
 ---
@@ -1067,7 +1075,7 @@ PHASE 7A - Human Conversational Response Layer
 Current latest pushed commit:
 
 ```text
-PATCH-07A-001 add human response architecture review
+PATCH-07A-002 add human response mode format fixtures
 ```
 
 Current status:
@@ -1093,18 +1101,18 @@ PATCH-06H-006 COMPLETE / LOCAL PASS
 PATCH-06H-007 COMPLETE / LOCAL PASS
 PATCH-06H-GATE-1 COMPLETE / LOCAL PASS
 PATCH-07A-001 COMPLETE / LOCAL PASS
+PATCH-07A-002 COMPLETE / LOCAL PASS
 ```
 
 Immediate next Codex task:
 
 ```text
-PATCH-07A-002 - Human response mode-format fixtures and regression tests
+PATCH-07A-003 - Authority-state response policy and applyVerifiedAuthorityGate compatibility tests
 ```
 
 After that:
 
 ```text
-PATCH-07A-003 - Authority-state response policy design / test scaffold
 PATCH-07A-004 - /ask conversational formatting implementation (after 002 fixtures pass)
 PATCH-07A-005 - /tax senior memo formatting implementation
 PATCH-07A-006 - /audit advisory formatting implementation
