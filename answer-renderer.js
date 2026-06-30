@@ -40,6 +40,15 @@ const TINA_AF_HEADINGS = Object.freeze([
   "F. PRACTICAL NOTE / APPLICATION"
 ]);
 
+const TAX_SENIOR_MEMO_HEADINGS = Object.freeze([
+  "A. Short Answer / Conclusion",
+  "B. Governing Authority",
+  "C. Analysis",
+  "D. Compliance Effect",
+  "E. Caveats / Missing Facts",
+  "F. Sources / Source Cards"
+]);
+
 const FAST_DEFINITION_HEADINGS = Object.freeze([
   "### Direct Answer",
   "### Legal Basis",
@@ -78,7 +87,7 @@ const POSITION_STRENGTH_VALUES = Object.freeze(["STRONG", "MODERATE", "WEAK", "I
 
 const FALLBACK_TEMPLATES = Object.freeze({
   FAST_DEFINITION: FAST_DEFINITION_HEADINGS,
-  STANDARD_TAX: TINA_AF_HEADINGS,
+  STANDARD_TAX: TAX_SENIOR_MEMO_HEADINGS,
   LEGAL_ANALYSIS: TINA_AF_HEADINGS,
   COMPLEX_ADVISORY: COMPLEX_ADVISORY_HEADINGS,
   EMERGENCY_TRIM: FAST_DEFINITION_HEADINGS,
@@ -559,6 +568,16 @@ function normalizeLegacyHeadings(text = "") {
     .replace(/(^|\n)\s*D\.\s*DOCTRINAL STATUS \/ CONFLICT ANALYSIS\b/gi, "$1E. DOCTRINAL STATUS / CONFLICT ANALYSIS");
 }
 
+function normalizeLegacyTaxMemoHeadings(text = "") {
+  return normalizeText(text)
+    .replace(/(^|\n)\s*A\.\s*(?:DIRECT ANSWER|SHORT ANSWER|CONCLUSION|SHORT ANSWER \/ CONCLUSION)\b/gi, "$1A. Short Answer / Conclusion")
+    .replace(/(^|\n)\s*B\.\s*(?:CONTROLLING LEGAL BASIS|LEGAL BASIS|GOVERNING AUTHORITY)\b/gi, "$1B. Governing Authority")
+    .replace(/(^|\n)\s*C\.\s*(?:SUPPORTING RULES \/ ADMINISTRATIVE ISSUANCES|SUPPORTING RULES|ADMINISTRATIVE ISSUANCES|ANALYSIS)\b/gi, "$1C. Analysis")
+    .replace(/(^|\n)\s*D\.\s*(?:SUPPORTING JURISPRUDENCE|COMPLIANCE EFFECT|PRACTICAL EFFECT)\b/gi, "$1D. Compliance Effect")
+    .replace(/(^|\n)\s*E\.\s*(?:DOCTRINAL STATUS \/ CONFLICT ANALYSIS|CAVEATS \/ MISSING FACTS|CAVEATS|MISSING FACTS)\b/gi, "$1E. Caveats / Missing Facts")
+    .replace(/(^|\n)\s*F\.\s*(?:PRACTICAL NOTE \/ APPLICATION|PRACTICAL APPLICATION|SOURCES \/ SOURCE CARDS|SOURCE CARDS|SOURCES)\b/gi, "$1F. Sources / Source Cards");
+}
+
 function normalizeOrchestrationMode(value = "") {
   const raw = String(value || "").trim().toUpperCase();
 
@@ -573,6 +592,31 @@ function normalizeOrchestrationMode(value = "") {
   if (raw.includes("STANDARD") || raw.includes("TAX")) return "STANDARD_TAX";
 
   return null;
+}
+
+function routeTokensFromInput(input = {}) {
+  return [
+    input.route,
+    input.routeHook,
+    input.routeMode,
+    input.commandMode,
+    input.metadata?.routeHook,
+    input.metadata?.routeMode,
+    input.metadata?.hook,
+    input.metadata?.hookCode,
+    input.metadata?.activeHook,
+    input.metadata?.modeFlags?.hook,
+    input.metadata?.modeFlags?.commandMode,
+    input.adaptiveContext?.activeHook,
+    input.adaptiveContext?.routeHook,
+    input.adaptiveContext?.hookConfig?.hook_code,
+    input.responsePlan?.hookCode
+  ].map(normalizeRouteToken);
+}
+
+function isTaxRoute(input = {}) {
+  const tokens = routeTokensFromInput(input);
+  return tokens.includes("/tax") || tokens.includes("tax");
 }
 
 function getResponseModeFromInput(input = {}) {
@@ -596,6 +640,10 @@ function getResponseModeFromInput(input = {}) {
 
 function getHeadingsFromInput(input = {}) {
   const mode = getResponseModeFromInput(input);
+
+  if (isTaxRoute(input)) {
+    return TAX_SENIOR_MEMO_HEADINGS;
+  }
 
   const rawSections = safeArray(
     input.rendererContract?.sections ||
@@ -650,6 +698,13 @@ function defaultBodyForHeading(heading = "") {
     "F. PRACTICAL APPLICATION":
       "Verify the latest indexed authority, controlling doctrine, and supporting documents before relying on the position.",
 
+    "A. Short Answer / Conclusion": "Indexed source not found.",
+    "B. Governing Authority": "Indexed source not found.",
+    "C. Analysis": "Apply the verified governing authority to the stated facts before relying on the position.",
+    "D. Compliance Effect": "Confirm the filing, withholding, payment, documentation, and reporting effects once the governing authority and facts are verified.",
+    "E. Caveats / Missing Facts": "Material facts may be missing. Confirm the taxpayer, transaction, taxable period, amounts, and supporting documents.",
+    "F. Sources / Source Cards": "Use source cards only when indexed sources support the answer; do not treat related sources as governing authority.",
+
     "### Direct Answer": "Please refer to the applicable NIRC provision for the statutory definition.",
     "### Legal Basis": "Refer to the relevant provision of the NIRC as amended.",
     "### Practical Explanation": "The implementing regulation applies. Refer to the relevant Revenue Regulation for operational details.",
@@ -702,7 +757,10 @@ function defaultBodyForHeading(heading = "") {
 }
 
 function repairStructure(answer = "", headings = TINA_AF_HEADINGS) {
-  const clean = normalizeLegacyHeadings(stripRawSourceSections(answer));
+  const stripped = stripRawSourceSections(answer);
+  const clean = headings === TAX_SENIOR_MEMO_HEADINGS
+    ? normalizeLegacyTaxMemoHeadings(stripped)
+    : normalizeLegacyHeadings(stripped);
   if (hasStructure(clean, headings)) return clean;
 
   const hasAnyHeading = safeArray(headings).some((heading) => hasHeading(clean, heading));
@@ -1262,23 +1320,7 @@ function isAskConversationalFormattingEligible(input = {}) {
       ""
   );
 
-  const routeTokens = [
-    input.route,
-    input.routeHook,
-    input.routeMode,
-    input.commandMode,
-    input.metadata?.routeHook,
-    input.metadata?.routeMode,
-    input.metadata?.hook,
-    input.metadata?.hookCode,
-    input.metadata?.activeHook,
-    input.metadata?.modeFlags?.hook,
-    input.metadata?.modeFlags?.commandMode,
-    input.adaptiveContext?.activeHook,
-    input.adaptiveContext?.routeHook,
-    input.adaptiveContext?.hookConfig?.hook_code,
-    input.responsePlan?.hookCode
-  ].map(normalizeRouteToken);
+  const routeTokens = routeTokensFromInput(input);
 
   const isAskRoute = routeTokens.includes("/ask") || routeTokens.includes("ask");
   return isAskRoute && (ASK_CONVERSATIONAL_MODES.has(mode) || input.responsePlan?.askProfile === true);
@@ -2021,6 +2063,7 @@ export {
   ENGINE_VERSION,
   ORCHESTRATION_MODES,
   TINA_AF_HEADINGS,
+  TAX_SENIOR_MEMO_HEADINGS,
   FAST_DEFINITION_HEADINGS,
   COMPLEX_ADVISORY_HEADINGS,
   SENIOR_COUNSEL_MEMO_HEADINGS,
@@ -2053,6 +2096,7 @@ export default {
   ENGINE_VERSION,
   ORCHESTRATION_MODES,
   TINA_AF_HEADINGS,
+  TAX_SENIOR_MEMO_HEADINGS,
   FAST_DEFINITION_HEADINGS,
   COMPLEX_ADVISORY_HEADINGS,
   SENIOR_COUNSEL_MEMO_HEADINGS,

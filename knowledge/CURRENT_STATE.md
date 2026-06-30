@@ -34,6 +34,7 @@ PATCH-07A-001 COMPLETE / LOCAL PASS
 PATCH-07A-002 COMPLETE / LOCAL PASS
 PATCH-07A-003 COMPLETE / LOCAL PASS
 PATCH-07A-004 COMPLETE / LOCAL PASS
+PATCH-07A-005 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -79,19 +80,19 @@ No automatic ingestion until Phase 10 source-governance workflow is implemented.
 Latest implemented patch:
 
 ```text
-PATCH-07A-004 - /ask Conversational Formatting Implementation
+PATCH-07A-005 - /tax Senior Memo Prompt and Formatting Protection
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-07A-004 implement ask conversational formatting
+PATCH-07A-005 protect tax senior memo formatting
 ```
 
 Current working state:
 
 ```text
-PATCH-07A-004 COMPLETE / LOCAL PASS
+PATCH-07A-005 COMPLETE / LOCAL PASS
 Phase 6H closed through stabilization gate (PATCH-06H-GATE-1).
 Phase 7A is now active.
 Key Phase 7A architecture findings:
@@ -101,7 +102,7 @@ Key Phase 7A architecture findings:
 - context-orchestration-engine.js (v5.0.0) is the sole file allowed to assemble OpenAI
   messages and call OpenAI. It is the correct target for tone and authority-state policy.
 - prompts/audit-mode-prompt.js shows the correct pattern for mode-specific prompt separation.
-  A prompts/tax-mode-prompt.js should be created in PATCH-07A-005.
+  PATCH-07A-005 created prompts/tax-mode-prompt.js as prompt-only /tax guidance.
 - The SAE disclosure layer in answer-renderer.js (buildSourceAvailabilityDisclosure) is
   already mandatory and must not be weakened by Phase 7A conversational formatting.
 - The existing A-F heading structure should be preserved for /tax mode.
@@ -139,6 +140,17 @@ Key Phase 7A architecture findings:
 - PATCH-07A-004 did not change prompts, routes/controllers, retrieval, reranker,
   authority normalization, source-card, sourceAvailability, package/dependency,
   DB/indexing/RAG/vector/corpus, ingestion, env, or secrets.
+- PATCH-07A-005 formalized `/tax` senior memo headings in answer-renderer.js:
+  A. Short Answer / Conclusion, B. Governing Authority, C. Analysis,
+  D. Compliance Effect, E. Caveats / Missing Facts, and F. Sources / Source Cards.
+- PATCH-07A-005 created prompts/tax-mode-prompt.js as prompt-only guidance with
+  authority-state caution and no retrieval, sourceAvailability, source-card, OpenAI,
+  external-search, or Phase 7B reasoning logic.
+- PATCH-07A-005 confirmed `/ask` conversational formatting and `/audit` advisory
+  formatting remain isolated from `/tax` senior memo formatting.
+- PATCH-07A-005 did not change routes/controllers, context orchestration, retrieval,
+  reranker, authority normalization, source-card, sourceAvailability,
+  package/dependency, DB/indexing/RAG/vector/corpus, ingestion, env, or secrets.
 - Recommended Phase 7A sequence: 002 fixtures → 003 policy scaffold → 004 /ask →
   005 /tax → 006 /audit → 007 source limitation wording tests → GATE-1.
 - No pipeline.js, retrieval, reranker, sourceAvailability, source-card, DB/indexing/RAG/
@@ -149,7 +161,7 @@ Key Phase 7A architecture findings:
 Immediate next task:
 
 ```text
-PATCH-07A-005 - /tax senior memo prompt and formatting protection
+PATCH-07A-006 - /audit advisory formatting protection
 ```
 
 Expected next gate:
@@ -1080,7 +1092,7 @@ PATCH-06H-GATE-1 - Phase 6H Stabilization Gate - COMPLETE / LOCAL PASS
 Immediate next task:
 
 ```text
-PATCH-07A-005 - /tax senior memo prompt and formatting protection
+PATCH-07A-006 - /audit advisory formatting protection
 ```
 
 ---
@@ -1098,7 +1110,7 @@ PHASE 7A - Human Conversational Response Layer
 Current latest pushed commit:
 
 ```text
-PATCH-07A-004 implement ask conversational formatting
+PATCH-07A-005 protect tax senior memo formatting
 ```
 
 Current status:
@@ -1127,19 +1139,19 @@ PATCH-07A-001 COMPLETE / LOCAL PASS
 PATCH-07A-002 COMPLETE / LOCAL PASS
 PATCH-07A-003 COMPLETE / LOCAL PASS
 PATCH-07A-004 COMPLETE / LOCAL PASS
+PATCH-07A-005 COMPLETE / LOCAL PASS
 ```
 
 Immediate next Codex task:
 
 ```text
-PATCH-07A-005 - /tax senior memo prompt and formatting protection
+PATCH-07A-006 - /audit advisory formatting protection
 ```
 
 After that:
 
 ```text
-PATCH-07A-005 - /tax senior memo prompt and formatting protection
-PATCH-07A-006 - /audit advisory formatting implementation
+PATCH-07A-006 - /audit advisory formatting protection
 PATCH-07A-007 - Source limitation wording preservation tests
 PATCH-07A-GATE-1 - Phase 7A Stabilization Gate
 Phase 6H runtime retrieval/reranker changes remain deferred unless a later approved phase

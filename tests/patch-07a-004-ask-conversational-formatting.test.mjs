@@ -180,8 +180,9 @@ await test("/tax formatting remains protected even for FAST_DEFINITION mode", ()
     metadata: { modeFlags: { hook: "/tax", orchestrationMode: "FAST_DEFINITION" } }
   });
 
-  assert(rendered.includes("### Direct Answer"));
-  assert(rendered.includes("### Legal Basis"));
+  assert(rendered.includes("A. Short Answer / Conclusion"));
+  assert(rendered.includes("B. Governing Authority"));
+  assert(rendered.includes("F. Sources / Source Cards"));
   assert(!rendered.includes("### Direct answer"));
   assert(!rendered.includes("### Source / authority note"));
 });
