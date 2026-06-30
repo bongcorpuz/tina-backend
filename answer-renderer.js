@@ -47,6 +47,12 @@ const FAST_DEFINITION_HEADINGS = Object.freeze([
   "### Practical Note"
 ]);
 
+const ASK_CONVERSATIONAL_MODES = Object.freeze(new Set([
+  "FAST_DEFINITION",
+  "EMERGENCY_TRIM",
+  "QUICK"
+]));
+
 const COMPLEX_ADVISORY_HEADINGS = Object.freeze([
   "A. DIRECT ANSWER",
   "B. FACTS / ASSUMPTIONS",
@@ -1238,6 +1244,103 @@ function renderFastDefinitionConversational(structuredAnswer = "", userQuery = "
   return paragraphs.filter(Boolean).join("\n\n");
 }
 
+function normalizeRouteToken(value = "") {
+  return String(value || "").trim().toLowerCase();
+}
+
+function isAskConversationalFormattingEligible(input = {}) {
+  const mode = normalizeOrchestrationMode(
+    input.orchestrationMode ||
+      input.contextMode ||
+      input.mode ||
+      input.metadata?.orchestrationMode ||
+      input.metadata?.mode ||
+      input.responsePlan?.orchestrationMode ||
+      input.responsePlan?.contextMode ||
+      input.metadata?.modeFlags?.orchestrationMode ||
+      input.metadata?.modeFlags?.responseMode ||
+      ""
+  );
+
+  const routeTokens = [
+    input.route,
+    input.routeHook,
+    input.routeMode,
+    input.commandMode,
+    input.metadata?.routeHook,
+    input.metadata?.routeMode,
+    input.metadata?.hook,
+    input.metadata?.hookCode,
+    input.metadata?.activeHook,
+    input.metadata?.modeFlags?.hook,
+    input.metadata?.modeFlags?.commandMode,
+    input.adaptiveContext?.activeHook,
+    input.adaptiveContext?.routeHook,
+    input.adaptiveContext?.hookConfig?.hook_code,
+    input.responsePlan?.hookCode
+  ].map(normalizeRouteToken);
+
+  const isAskRoute = routeTokens.includes("/ask") || routeTokens.includes("ask");
+  return isAskRoute && (ASK_CONVERSATIONAL_MODES.has(mode) || input.responsePlan?.askProfile === true);
+}
+
+function stripHeadingOnlyLines(text = "") {
+  return normalizeText(text)
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line && !/^#{1,4}\s+/i.test(line))
+    .filter((line) => !/^[A-Z]\.\s+(?:DIRECT ANSWER|CONTROLLING LEGAL BASIS|SUPPORTING RULES|SUPPORTING JURISPRUDENCE|DOCTRINAL STATUS|PRACTICAL NOTE|PRACTICAL APPLICATION)\b/i.test(line))
+    .join("\n")
+    .trim();
+}
+
+function ensureAskHeading(label = "", body = "") {
+  const clean = stripHeadingOnlyLines(body);
+  if (!clean) return "";
+  return `### ${label}\n${clean}`;
+}
+
+function renderAskConversationalAnswer(structuredAnswer = "", input = {}) {
+  const clean = normalizeText(structuredAnswer);
+  if (!clean) return clean;
+
+  if (hasStructure(clean, FAST_DEFINITION_HEADINGS)) {
+    const directAnswer = getSectionBody(clean, "### Direct Answer", FAST_DEFINITION_HEADINGS);
+    const legalBasis = getSectionBody(clean, "### Legal Basis", FAST_DEFINITION_HEADINGS);
+    const practicalExplain = getSectionBody(clean, "### Practical Explanation", FAST_DEFINITION_HEADINGS);
+    const practicalNote = getSectionBody(clean, "### Practical Note", FAST_DEFINITION_HEADINGS);
+
+    return [
+      ensureAskHeading("Direct answer", directAnswer),
+      ensureAskHeading("Key explanation", practicalExplain),
+      ensureAskHeading("Practical note", practicalNote),
+      ensureAskHeading("Source / authority note", legalBasis)
+    ].filter(Boolean).join("\n\n").trim() || clean;
+  }
+
+  if (hasCompleteAFStructure(clean)) {
+    const directAnswer = getSectionBody(clean, "A. DIRECT ANSWER", TINA_AF_HEADINGS);
+    const legalBasis = getSectionBody(clean, "B. CONTROLLING LEGAL BASIS", TINA_AF_HEADINGS);
+    const supportingRules = getSectionBody(clean, "C. SUPPORTING RULES / ADMINISTRATIVE ISSUANCES", TINA_AF_HEADINGS);
+    const jurisprudence = getSectionBody(clean, "D. SUPPORTING JURISPRUDENCE", TINA_AF_HEADINGS);
+    const doctrinalStatus = getSectionBody(clean, "E. DOCTRINAL STATUS / CONFLICT ANALYSIS", TINA_AF_HEADINGS);
+    const practicalNote = getSectionBody(clean, "F. PRACTICAL NOTE / APPLICATION", TINA_AF_HEADINGS);
+    const sourceNote = [legalBasis, supportingRules, jurisprudence, doctrinalStatus]
+      .map(stripHeadingOnlyLines)
+      .filter(Boolean)
+      .join("\n\n");
+
+    return [
+      ensureAskHeading("Direct answer", directAnswer),
+      ensureAskHeading("Key explanation", supportingRules || legalBasis),
+      ensureAskHeading("Practical note", practicalNote),
+      ensureAskHeading("Source / authority note", sourceNote)
+    ].filter(Boolean).join("\n\n").trim() || clean;
+  }
+
+  return clean;
+}
+
 function renderTinaAnswer({
   answer = "",
   sources = [],
@@ -1256,6 +1359,10 @@ function renderTinaAnswer({
   orchestrationMode = null,
   contextMode = null,
   mode = null,
+  route = null,
+  routeHook = null,
+  routeMode = null,
+  commandMode = null,
   saeStatus = null,
   sourceAvailability = null,
   sourceStatus = null,
@@ -1305,6 +1412,37 @@ function renderTinaAnswer({
       orchestrationMode,
       contextMode,
       mode,
+      route,
+      routeHook,
+      routeMode,
+      commandMode,
+      metadata
+    });
+  }
+
+  if (isAskConversationalFormattingEligible({
+    rendered,
+    adaptiveContext,
+    responsePlan,
+    orchestrationMode,
+    contextMode,
+    mode,
+    route,
+    routeHook,
+    routeMode,
+    commandMode,
+    metadata
+  })) {
+    rendered = renderAskConversationalAnswer(rendered, {
+      adaptiveContext,
+      responsePlan,
+      orchestrationMode,
+      contextMode,
+      mode,
+      route,
+      routeHook,
+      routeMode,
+      commandMode,
       metadata
     });
   }
@@ -1367,6 +1505,10 @@ function renderTinaJsonPayload({
   orchestrationMode = null,
   contextMode = null,
   mode = null,
+  route = null,
+  routeHook = null,
+  routeMode = null,
+  commandMode = null,
   saeStatus = null,
   sourceAvailability = null,
   sourceStatus = null,
@@ -1415,6 +1557,10 @@ function renderTinaJsonPayload({
     orchestrationMode: effectiveMode,
     contextMode,
     mode,
+    route,
+    routeHook,
+    routeMode,
+    commandMode,
     saeStatus,
     sourceAvailability,
     sourceStatus,

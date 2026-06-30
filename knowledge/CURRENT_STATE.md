@@ -33,6 +33,7 @@ PATCH-06H-GATE-1 COMPLETE / LOCAL PASS
 PATCH-07A-001 COMPLETE / LOCAL PASS
 PATCH-07A-002 COMPLETE / LOCAL PASS
 PATCH-07A-003 COMPLETE / LOCAL PASS
+PATCH-07A-004 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -78,19 +79,19 @@ No automatic ingestion until Phase 10 source-governance workflow is implemented.
 Latest implemented patch:
 
 ```text
-PATCH-07A-003 - Authority-State Response Policy and applyVerifiedAuthorityGate Compatibility Tests
+PATCH-07A-004 - /ask Conversational Formatting Implementation
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-07A-003 add authority-state response policy tests
+PATCH-07A-004 implement ask conversational formatting
 ```
 
 Current working state:
 
 ```text
-PATCH-07A-003 COMPLETE / LOCAL PASS
+PATCH-07A-004 COMPLETE / LOCAL PASS
 Phase 6H closed through stabilization gate (PATCH-06H-GATE-1).
 Phase 7A is now active.
 Key Phase 7A architecture findings:
@@ -128,6 +129,16 @@ Key Phase 7A architecture findings:
 - PATCH-07A-003 did not change runtime behavior, prompts, routes/controllers, retrieval,
   reranker, authority normalization, source-card, sourceAvailability, package/dependency,
   DB/indexing/RAG/vector/corpus, ingestion, env, or secrets.
+- PATCH-07A-004 implemented a narrow `/ask`-only conversational formatting pass in
+  answer-renderer.js for FAST_DEFINITION, QUICK, and EMERGENCY_TRIM responses.
+- PATCH-07A-004 maps eligible `/ask` answers to lighter Direct answer, Key explanation,
+  Practical note, and Source / authority note sections while preserving downstream SAE
+  disclosure and source-card behavior.
+- PATCH-07A-004 protects `/tax` and `/audit` formatting through route/hook eligibility
+  checks and focused regression tests.
+- PATCH-07A-004 did not change prompts, routes/controllers, retrieval, reranker,
+  authority normalization, source-card, sourceAvailability, package/dependency,
+  DB/indexing/RAG/vector/corpus, ingestion, env, or secrets.
 - Recommended Phase 7A sequence: 002 fixtures → 003 policy scaffold → 004 /ask →
   005 /tax → 006 /audit → 007 source limitation wording tests → GATE-1.
 - No pipeline.js, retrieval, reranker, sourceAvailability, source-card, DB/indexing/RAG/
@@ -138,7 +149,7 @@ Key Phase 7A architecture findings:
 Immediate next task:
 
 ```text
-PATCH-07A-004 - /ask conversational formatting implementation
+PATCH-07A-005 - /tax senior memo prompt and formatting protection
 ```
 
 Expected next gate:
@@ -1069,7 +1080,7 @@ PATCH-06H-GATE-1 - Phase 6H Stabilization Gate - COMPLETE / LOCAL PASS
 Immediate next task:
 
 ```text
-PATCH-07A-004 - /ask conversational formatting implementation
+PATCH-07A-005 - /tax senior memo prompt and formatting protection
 ```
 
 ---
@@ -1087,7 +1098,7 @@ PHASE 7A - Human Conversational Response Layer
 Current latest pushed commit:
 
 ```text
-PATCH-07A-003 add authority-state response policy tests
+PATCH-07A-004 implement ask conversational formatting
 ```
 
 Current status:
@@ -1115,18 +1126,19 @@ PATCH-06H-GATE-1 COMPLETE / LOCAL PASS
 PATCH-07A-001 COMPLETE / LOCAL PASS
 PATCH-07A-002 COMPLETE / LOCAL PASS
 PATCH-07A-003 COMPLETE / LOCAL PASS
+PATCH-07A-004 COMPLETE / LOCAL PASS
 ```
 
 Immediate next Codex task:
 
 ```text
-PATCH-07A-004 - /ask conversational formatting implementation
+PATCH-07A-005 - /tax senior memo prompt and formatting protection
 ```
 
 After that:
 
 ```text
-PATCH-07A-005 - /tax senior memo formatting implementation
+PATCH-07A-005 - /tax senior memo prompt and formatting protection
 PATCH-07A-006 - /audit advisory formatting implementation
 PATCH-07A-007 - Source limitation wording preservation tests
 PATCH-07A-GATE-1 - Phase 7A Stabilization Gate
