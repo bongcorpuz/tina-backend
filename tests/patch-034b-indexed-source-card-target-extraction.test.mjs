@@ -108,9 +108,10 @@ await test("search error logs PATCH_033D_R1_INDEXED_SOURCE_CARD_LOOKUP_FAILED", 
   assert.equal(warnings[0].payload.error, "lookup failed");
 });
 
-await test("pipeline.js keeps resolveIndexedSourceCardTarget compatibility wrapper", async () => {
-  assert.match(PIPELINE_SRC, /async function resolveIndexedSourceCardTarget\(target = ""\)/);
-  assert.match(PIPELINE_SRC, /engineResolveIndexedSourceCardTarget\(target, \{ exactAuthoritySearch, logger: console \}\)/);
+await test("pipeline.js uses direct resolveIndexedSourceCardTarget engine import", async () => {
+  assert.match(PIPELINE_SRC, /resolveIndexedSourceCardTarget,\s*\n\s*sanitizePublicSourceCard/);
+  assert.doesNotMatch(PIPELINE_SRC, /async function resolveIndexedSourceCardTarget\(target = ""\)/);
+  assert.match(PIPELINE_SRC, /resolveIndexedSourceCardTarget\(target,\s*\{\s*exactAuthoritySearch,\s*logger:\s*console\s*\}\)/);
 });
 
 console.log(`\nPATCH-034B indexed source-card target extraction tests: ${passed} passed, ${failed} failed`);

@@ -187,8 +187,8 @@ const card = (label, fields = {}) => ({
 });
 
 group("Production source contains PATCH-027Y hooks", () => {
-  assert(PIPELINE_SRC.includes("function finalSourceCardCanonicalKey(card = {})"), "final canonical key helper exists");
-  assert(PIPELINE_SRC.includes("function mergeFinalSourceCards(existingCards = [], restoredCards = [], maxCards = 5)"), "final merge helper exists");
+  assert(PIPELINE_SRC.includes("finalSourceCardCanonicalKey,"), "final canonical key helper is imported from source-card-engine");
+  assert(PIPELINE_SRC.includes("mergeFinalSourceCards,"), "final merge helper is imported from source-card-engine");
   assert(PIPELINE_SRC.includes("[PATCH_027Y_SOURCE_CARD_FINALIZED]"), "bounded PATCH-027Y diagnostic marker exists");
   assert(PIPELINE_SRC.includes("finalSourceCards = [..._dsFiltered, ..._tier1Dropped]"), "DSF-kept cards are preserved before restored SAS cards");
   assert(PIPELINE_SRC.includes("const beforeCards = [...finalSourceCards, ...restored];"), "PATCH-017J merge evaluates existing cards before restored cards");
@@ -254,7 +254,8 @@ group("VAT and scope controls", () => {
   ], 5).finalCards;
 
   assert(vat.map(c => c.normalizedReference).join(" > ") === "NIRC Sec. 108 > RR 16-2005 > NIRC Sec. 106", "VAT cards keep existing order and dedupe RR alias");
-  assert(PIPELINE_SRC.includes("function sourceCardFromRetrievedTarget(doc = {}, target = \"\")"), "PATCH-027Y is scoped to pipeline source-card finalization helpers");
+  assert(PIPELINE_SRC.includes("sourceCardFromRetrievedTarget"), "PATCH-027Y remains wired to source-card finalization helpers");
+  assert(!PIPELINE_SRC.includes("function sourceCardFromRetrievedTarget(doc = {}, target = \"\")"), "source-card finalization helper wrapper stays collapsed");
   assert(PIPELINE_SRC.includes("selectSourceAuthorities({"), "SAS call remains in place");
   assert(PIPELINE_SRC.includes("filterDisplayedSourcesByDirectSupport({"), "DSF call remains in place");
 });

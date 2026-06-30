@@ -257,8 +257,8 @@ await test("exact authority override behavior remains classifier-local", () => {
   assert.equal(cta.supportingJurisprudence.includes("CTA Case No. 9369"), true);
 });
 
-await test("pipeline/source-card files have no PATCH-034G diff and vector-store stays doctrine-map independent", () => {
-  for (const file of ["pipeline.js", "source-card-engine.js"]) {
+await test("source-card engine has no PATCH-034G diff and vector-store stays doctrine-map independent", () => {
+  for (const file of ["source-card-engine.js"]) {
     const diff = execFileSync("git", ["diff", "--", file], { cwd: ROOT, encoding: "utf8" });
     assert.equal(diff, "", `${file} has no diff`);
   }

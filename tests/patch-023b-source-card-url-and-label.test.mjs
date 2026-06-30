@@ -33,6 +33,7 @@ import { selectSourceAuthorities } from "../services/source-authority-selector.j
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PIPELINE_SRC = readFileSync(join(__dirname, "..", "pipeline.js"), "utf8");
+const SOURCE_CARD_ENGINE_SRC = readFileSync(join(__dirname, "..", "source-card-engine.js"), "utf8");
 const SAS_SRC      = readFileSync(join(__dirname, "..", "services", "source-authority-selector.js"), "utf8");
 const SAS_SANITIZER_SRC = readFileSync(
   join(__dirname, "..", "services", "source-authority-selector-card-sanitizer.js"),
@@ -171,11 +172,11 @@ const STATUTE_CHUNK_NO_BLOB_MARKERS = {
 
 group("Test 1 — pipeline.js sanitizePublicSourceCard bridges driveViewUrl", () => {
   assert(
-    /publicUrl\s*\(\s*[\s\S]*?driveViewUrl/.test(PIPELINE_SRC),
+    /publicUrl\s*\(\s*[\s\S]*?driveViewUrl/.test(SOURCE_CARD_ENGINE_SRC),
     "sanitizePublicSourceCard reads driveViewUrl in its publicUrl() call"
   );
   assert(
-    /publicUrl\s*\(\s*[\s\S]*?webViewLink/.test(PIPELINE_SRC),
+    /publicUrl\s*\(\s*[\s\S]*?webViewLink/.test(SOURCE_CARD_ENGINE_SRC),
     "sanitizePublicSourceCard reads webViewLink in its publicUrl() call"
   );
 });

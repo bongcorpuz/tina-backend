@@ -1,10 +1,10 @@
 /**
  * PATCH-06G-003 - Source-card wrapper equivalence test lock
  *
- * This test is intentionally offline and test-only. The pipeline.js source-card
- * wrappers are local functions, so the equivalence lock verifies their exact
- * one-line delegation to source-card-engine.js aliases, then exercises the real
- * engine implementations with representative fixtures.
+ * This test is intentionally offline. PATCH-06G-004 collapsed the pipeline.js
+ * source-card wrappers, so this lock now verifies that pipeline.js uses direct
+ * source-card-engine.js imports without restoring local wrapper bodies, then
+ * exercises the real engine implementations with representative fixtures.
  */
 
 "use strict";
@@ -29,39 +29,39 @@ const PIPELINE_SRC = readFileSync(join(__dirname, "..", "pipeline.js"), "utf8");
 const WRAPPER_MAPPINGS = [
   {
     wrapperName: "finalSourceCardCanonicalKey",
-    engineAlias: "engineFinalSourceCardCanonicalKey",
+    engineName: "finalSourceCardCanonicalKey",
     signature: "function finalSourceCardCanonicalKey(card = {})",
-    delegation: "return engineFinalSourceCardCanonicalKey(card);"
+    importedByPipeline: true
   },
   {
     wrapperName: "mergeFinalSourceCards",
-    engineAlias: "engineMergeFinalSourceCards",
+    engineName: "mergeFinalSourceCards",
     signature: "function mergeFinalSourceCards(existingCards = [], restoredCards = [], maxCards = 5)",
-    delegation: "return engineMergeFinalSourceCards(existingCards, restoredCards, maxCards);"
+    importedByPipeline: true
   },
   {
     wrapperName: "sourceCardPublicUrlFromDoc",
-    engineAlias: "engineSourceCardPublicUrlFromDoc",
+    engineName: "sourceCardPublicUrlFromDoc",
     signature: "function sourceCardPublicUrlFromDoc(doc = {})",
-    delegation: "return engineSourceCardPublicUrlFromDoc(doc);"
+    importedByPipeline: false
   },
   {
     wrapperName: "sanitizePublicSourceCard",
-    engineAlias: "engineSanitizePublicSourceCard",
+    engineName: "sanitizePublicSourceCard",
     signature: "function sanitizePublicSourceCard(card = {})",
-    delegation: "return engineSanitizePublicSourceCard(card);"
+    importedByPipeline: true
   },
   {
     wrapperName: "sourceCardFromRetrievedTarget",
-    engineAlias: "engineSourceCardFromRetrievedTarget",
+    engineName: "sourceCardFromRetrievedTarget",
     signature: "function sourceCardFromRetrievedTarget(doc = {}, target = \"\")",
-    delegation: "return engineSourceCardFromRetrievedTarget(doc, target);"
+    importedByPipeline: true
   },
   {
     wrapperName: "resolveIndexedSourceCardTarget",
-    engineAlias: "engineResolveIndexedSourceCardTarget",
+    engineName: "resolveIndexedSourceCardTarget",
     signature: "async function resolveIndexedSourceCardTarget(target = \"\")",
-    delegation: "return engineResolveIndexedSourceCardTarget(target, { exactAuthoritySearch, logger: console });"
+    importedByPipeline: true
   }
 ];
 
@@ -88,34 +88,44 @@ function assertUnchanged(actual, expected, label) {
   assert.deepEqual(actual, expected, `${label} input should not be mutated`);
 }
 
-function assertWrapperDelegates({ wrapperName, signature, delegation }) {
+function assertCollapsedWrapper({ wrapperName, engineName, signature, importedByPipeline }) {
   assert(
-    PIPELINE_SRC.includes(signature),
-    `${wrapperName} wrapper signature should remain present in pipeline.js`
-  );
-  const wrapperFirstStatementPattern = new RegExp(
-    `${signature.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s*\\{\\s*${delegation.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`
+    !PIPELINE_SRC.includes(signature),
+    `${wrapperName} wrapper signature should not be restored in pipeline.js`
   );
   assert(
-    wrapperFirstStatementPattern.test(PIPELINE_SRC),
-    `${wrapperName} should delegate to its source-card-engine alias as the first statement`
+    !PIPELINE_SRC.includes(` as engine${engineName[0].toUpperCase()}${engineName.slice(1)}`),
+    `${wrapperName} should not be imported through a pipeline engine* alias`
   );
+  if (importedByPipeline) {
+    assert(
+      PIPELINE_SRC.includes(`  ${engineName}`),
+      `${wrapperName} should be imported directly from source-card-engine.js`
+    );
+  }
 }
 
-await test("pipeline.js imports the six source-card engine aliases", () => {
-  for (const { engineAlias } of WRAPPER_MAPPINGS) {
-    assert(
-      PIPELINE_SRC.includes(` as ${engineAlias}`),
-      `pipeline.js should import source-card-engine function as ${engineAlias}`
-    );
+await test("pipeline.js has collapsed the six source-card wrappers", () => {
+  for (const mapping of WRAPPER_MAPPINGS) {
+    assertCollapsedWrapper(mapping);
   }
 });
 
-for (const mapping of WRAPPER_MAPPINGS) {
-  await test(`${mapping.wrapperName} delegates to ${mapping.engineAlias}`, () => {
-    assertWrapperDelegates(mapping);
-  });
-}
+await test("pipeline.js injects indexed lookup dependencies at the direct engine call site", () => {
+  assert(
+    PIPELINE_SRC.includes("await resolveIndexedSourceCardTarget(target, { exactAuthoritySearch, logger: console })"),
+    "resolveIndexedSourceCardTarget should receive the same exactAuthoritySearch/logger dependencies after collapse"
+  );
+});
+
+await test("pipeline.js no longer imports source-card engine* aliases", () => {
+  for (const { engineName } of WRAPPER_MAPPINGS) {
+    assert(
+      !PIPELINE_SRC.includes(`engine${engineName[0].toUpperCase()}${engineName.slice(1)}`),
+      `pipeline.js should not keep engine alias for ${engineName}`
+    );
+  }
+});
 
 await test("finalSourceCardCanonicalKey engine fixture is stable and non-mutating", () => {
   const input = { citation: "RR No. 2-1998", title: "Revenue Regulations No. 2-1998.pdf" };

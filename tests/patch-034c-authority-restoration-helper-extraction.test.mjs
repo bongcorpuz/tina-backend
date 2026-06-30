@@ -153,7 +153,7 @@ await test("pipeline.js still calls sourceCardFromRetrievedTarget inside restora
 
 await test("pipeline.js still owns resolveIndexedSourceCardTarget cache/coordinator usage", () => {
   assert.match(PIPELINE_SRC, /const _033dR1IndexedCardCache = new Map\(\)/);
-  assert.match(PIPELINE_SRC, /await resolveIndexedSourceCardTarget\(target\)/);
+  assert.match(PIPELINE_SRC, /await resolveIndexedSourceCardTarget\(target,\s*\{\s*exactAuthoritySearch,\s*logger:\s*console\s*\}\)/);
 });
 
 console.log(`\nPATCH-034C authority restoration helper extraction tests: ${passed} passed, ${failed} failed`);

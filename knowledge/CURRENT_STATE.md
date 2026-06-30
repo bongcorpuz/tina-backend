@@ -17,6 +17,7 @@ PATCH-06F-GATE-1 COMPLETE / LOCAL PASS
 PATCH-06G-001 COMPLETE / LOCAL PASS
 PATCH-06G-002 COMPLETE / LOCAL PASS
 PATCH-06G-003 COMPLETE / LOCAL PASS
+PATCH-06G-004 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -62,35 +63,35 @@ No automatic ingestion until Phase 10 source-governance workflow is implemented.
 Latest implemented patch:
 
 ```text
-PATCH-06G-003 - Source-card wrapper equivalence test lock
+PATCH-06G-004 - Source-card wrapper collapse in pipeline.js
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-06G-003 add source-card wrapper equivalence tests
+PATCH-06G-004 collapse source-card wrappers
 ```
 
 Current working state:
 
 ```text
-PATCH-06G-003 COMPLETE / LOCAL PASS
-Source-card wrapper equivalence test lock completed.
+PATCH-06G-004 COMPLETE / LOCAL PASS
+Source-card wrapper collapse completed.
 Key findings:
-- Wrapper adapter pattern remains confirmed in pipeline.js (6 source-card wrappers delegate to source-card-engine.js).
-- Focused PATCH-06G-003 test locks the six wrapper-to-engine mappings without runtime changes.
-- Representative source-card-engine fixtures pass and verify non-mutating behavior where practical.
+- Wrapper adapter pattern was collapsed in pipeline.js after PATCH-06G-003 equivalence coverage.
+- pipeline.js now imports source-card helpers directly from source-card-engine.js.
+- Focused PATCH-06G-003 test now locks the collapsed direct-import state and representative source-card-engine fixtures.
 - classifySourceAvailability is exported from pipeline.js and imported by 6+ test files — cannot move in Phase 6G.
 - source-visibility-engine.js is a utility/display module, not a SAE classifier.
 - Two distinct SAE functions in pipeline.js: computeSourceAvailability (private) and classifySourceAvailability (exported).
-- Wrapper collapse is the next safe Phase 6G decomposition step.
+- SAE boundary documentation is the next safe Phase 6G step.
 Phase 6G active.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-06G-004 - Source-card wrapper collapse in pipeline.js
+PATCH-06G-005 - SAE boundary documentation comments in pipeline.js
 ```
 
 Expected next gate:
@@ -925,7 +926,7 @@ Planned work:
 PATCH-06G-001 - JS module inventory and decomposition destination map - COMPLETE / LOCAL PASS
 PATCH-06G-002 - Claude Code architecture review of JS module inventory and decomposition boundaries - COMPLETE / LOCAL PASS
 PATCH-06G-003 - Source-card wrapper equivalence test lock (test-only) - COMPLETE / LOCAL PASS
-PATCH-06G-004 - Source-card wrapper collapse in pipeline.js (approved by PATCH-06G-002 review)
+PATCH-06G-004 - Source-card wrapper collapse in pipeline.js (approved by PATCH-06G-002 review) - COMPLETE / LOCAL PASS
 PATCH-06G-005 - Source-availability boundary documentation hardening
 PATCH-06G-GATE-1 - Phase 6G stabilization gate
 ```
@@ -933,7 +934,7 @@ PATCH-06G-GATE-1 - Phase 6G stabilization gate
 Immediate next task:
 
 ```text
-PATCH-06G-004 - Source-card wrapper collapse in pipeline.js
+PATCH-06G-005 - SAE boundary documentation comments in pipeline.js
 ```
 
 ---
@@ -963,12 +964,13 @@ PATCH-06F-GATE-1 COMPLETE / LOCAL PASS
 PATCH-06G-001 COMPLETE / LOCAL PASS
 PATCH-06G-002 COMPLETE / LOCAL PASS
 PATCH-06G-003 COMPLETE / LOCAL PASS
+PATCH-06G-004 COMPLETE / LOCAL PASS
 ```
 
 Immediate next Codex task:
 
 ```text
-PATCH-06G-004 - Source-card wrapper collapse in pipeline.js
+PATCH-06G-005 - SAE boundary documentation comments in pipeline.js
 ```
 
 After that:
@@ -1007,7 +1009,6 @@ Important current guard:
 Specific unavailable BIR Ruling-number queries should not be promoted to AUTHORITY_FOUND through unrelated non-BIR substitute authorities.
 BIR Ruling DA-489-03 is not in the corpus and should not expose a BIR Ruling source card.
 ```
-
 
 
 

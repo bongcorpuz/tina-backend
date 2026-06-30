@@ -247,8 +247,8 @@ test("VAT authority cards remain visible after final dedupe", () => {
 });
 
 test("PATCH-033D-R1 runtime hooks are present and scoped to source-card finalization", () => {
-  assert.match(PIPELINE_SRC, /function sourceCardPublicUrlFromDoc\(doc = \{\}\)/);
-  assert.match(PIPELINE_SRC, /async function resolveIndexedSourceCardTarget\(target = ""\)/);
+  assert.match(PIPELINE_SRC, /sourceCardFromRetrievedTarget/);
+  assert.match(PIPELINE_SRC, /resolveIndexedSourceCardTarget\(target,\s*\{\s*exactAuthoritySearch,\s*logger:\s*console\s*\}\)/);
   assert.match(PIPELINE_SRC, /indexed_source_card_lookup/);
   assert.match(PIPELINE_SRC, /classification_authority_inventory/);
   assert.match(PIPELINE_SRC, /PATCH_033D_R1_SOURCE_CARD_GLOBAL_DEDUPE/);

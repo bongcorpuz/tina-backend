@@ -82,12 +82,11 @@ import {
   buildFirstSourceLabels
 }                                                 from "./pipeline-observability.js";
 import {
-  finalSourceCardCanonicalKey as engineFinalSourceCardCanonicalKey,
-  mergeFinalSourceCards as engineMergeFinalSourceCards,
-  resolveIndexedSourceCardTarget as engineResolveIndexedSourceCardTarget,
-  sanitizePublicSourceCard as engineSanitizePublicSourceCard,
-  sourceCardFromRetrievedTarget as engineSourceCardFromRetrievedTarget,
-  sourceCardPublicUrlFromDoc as engineSourceCardPublicUrlFromDoc
+  finalSourceCardCanonicalKey,
+  mergeFinalSourceCards,
+  resolveIndexedSourceCardTarget,
+  sanitizePublicSourceCard,
+  sourceCardFromRetrievedTarget
 }                                                 from "./source-card-engine.js";
 import {
   findAuthorityRestorationCandidate,
@@ -496,14 +495,6 @@ function sourceCardPlanSortScore(card = {}) {
   return 1000 + tier * 100 + (section || 0);
 }
 
-function finalSourceCardCanonicalKey(card = {}) {
-  return engineFinalSourceCardCanonicalKey(card);
-}
-
-function mergeFinalSourceCards(existingCards = [], restoredCards = [], maxCards = 5) {
-  return engineMergeFinalSourceCards(existingCards, restoredCards, maxCards);
-}
-
 // PATCH-021C: jurisprudence authority promotion rank. For case-law intent
 // queries (isJurisprudenceQuery), SUPREME_COURT / CTA_EN_BANC / CTA_DIVISION
 // materials must outrank statutes and regulations in the final sources sent
@@ -722,111 +713,6 @@ function sanitizeOutboundSourceCards(cards, targetAuths = []) {
   }
 
   return result;
-}
-
-function publicText(value = "") {
-  const text = safeStr(value).replace(/\s+/g, " ").trim();
-  if (!text) return "";
-  if (/[\\/]/.test(text)) return "";
-  if (/\.(?:pdf|docx?|txt|csv|md|json)(?:$|[?#\s])/i.test(text)) return "";
-  if (/\b[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\b/i.test(text)) return "";
-  return text;
-}
-
-function publicUrl(value = "") {
-  const url = safeStr(value).trim();
-  return /^https?:\/\//i.test(url) ? url : "";
-}
-
-function sourceCardPublicUrlFromDoc(doc = {}) {
-  return engineSourceCardPublicUrlFromDoc(doc);
-}
-
-function sanitizePublicSourceCard(card = {}) {
-  return engineSanitizePublicSourceCard(card);
-
-  const citation = publicText(card.citation || card.normalizedReference || card.normalized_reference || "");
-  const displayLabel = publicText(card.displayLabel || card.display_label || citation || card.authorityLabel || "");
-  const title = publicText(card.title) || displayLabel || citation || "Source";
-  const normalizedReference = publicText(card.normalizedReference || card.normalized_reference || "");
-  const authorityRole = publicText(card.authorityRole || card.authority_role || "");
-  const authorityMatchTier = Number(card.authorityMatchTier || card.authority_match_tier || 0);
-  // PATCH-023B: bridge all intermediate URL fields to publicUrl.
-  // Intermediate cards carry driveViewUrl/url/webViewLink; sanitizePublicSourceCard
-  // previously read only publicUrl/public_url, which was never set → all cards lacked
-  // clickable URLs in the outbound payload.
-  const safeUrl = publicUrl(
-    card.publicUrl    || card.public_url    ||
-    card.driveViewUrl || card.drive_view_url ||
-    card.url          || card.webViewLink    || card.web_view_link || ""
-  );
-
-  return {
-    title,
-    label: displayLabel || title,
-    displayLabel: displayLabel || title,
-    citation,
-    authorityType: publicText(card.authorityType || card.authority_type || ""),
-    limitationRequired: card.limitationRequired === true,
-    ...(normalizedReference ? { normalizedReference } : {}),
-    ...(Number.isFinite(authorityMatchTier) && authorityMatchTier > 0 ? { authorityMatchTier } : {}),
-    ...(authorityRole ? { authorityRole } : {}),
-    ...(safeUrl ? { publicUrl: safeUrl } : {})
-  };
-}
-
-function sourceCardFromRetrievedTarget(doc = {}, target = "") {
-  return engineSourceCardFromRetrievedTarget(doc, target);
-
-  const meta = doc.metadata || {};
-  const citation = publicText(
-    target ||
-      doc.citation ||
-      doc.normalizedReference ||
-      doc.normalized_reference ||
-      meta.normalizedReference ||
-      meta.normalized_reference ||
-      doc.reference ||
-      ""
-  );
-  if (!citation) return null;
-
-  return sanitizePublicSourceCard({
-    title: doc.title || doc.documentTitle || doc.document_title || meta.documentTitle || meta.document_title || citation,
-    label: citation,
-    displayLabel: citation,
-    citation,
-    normalizedReference:
-      doc.normalizedReference ||
-      doc.normalized_reference ||
-      meta.normalizedReference ||
-      meta.normalized_reference ||
-      citation,
-    normalized_reference:
-      doc.normalized_reference ||
-      doc.normalizedReference ||
-      meta.normalized_reference ||
-      meta.normalizedReference ||
-      citation,
-    authorityType: doc.authorityType || doc.authority_type || meta.authorityType || meta.authority_type || "STATUTE",
-    authorityRole: doc.authorityRole || doc.authority_role || meta.authorityRole || meta.authority_role || "",
-    authorityMatchTier:
-      doc.authorityMatchTier ||
-      doc.authority_match_tier ||
-      doc.issueClassificationMatch?.authorityMatchTier ||
-      meta.authorityMatchTier ||
-      meta.authority_match_tier ||
-      undefined,
-    limitationRequired: doc.limitationRequired === true || doc.limitation_required === true || meta.limitationRequired === true,
-    publicUrl: sourceCardPublicUrlFromDoc(doc),
-    driveViewUrl: doc.driveViewUrl || doc.drive_view_url || meta.driveViewUrl || meta.drive_view_url || "",
-    webViewLink: doc.webViewLink || doc.web_view_link || meta.webViewLink || meta.web_view_link || "",
-    url: doc.url || meta.url || doc.source_url || meta.source_url || ""
-  });
-}
-
-async function resolveIndexedSourceCardTarget(target = "") {
-  return engineResolveIndexedSourceCardTarget(target, { exactAuthoritySearch, logger: console });
 }
 
 function sourceCardDocumentTitle(c = {}) {
@@ -4423,7 +4309,7 @@ export async function runPipeline({
         const _017kType = inferRestorationAuthorityType(target);
         let _033dR1IndexedDoc = _033dR1IndexedCardCache.get(targetKey);
         if (!_033dR1IndexedCardCache.has(targetKey)) {
-          _033dR1IndexedDoc = await resolveIndexedSourceCardTarget(target);
+          _033dR1IndexedDoc = await resolveIndexedSourceCardTarget(target, { exactAuthoritySearch, logger: console });
           _033dR1IndexedCardCache.set(targetKey, _033dR1IndexedDoc || null);
         }
         card = _033dR1IndexedDoc

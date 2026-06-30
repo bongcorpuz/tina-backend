@@ -137,7 +137,7 @@ await test("vector-store exports exactAuthoritySearch and keeps implementation l
 await test("source-card-engine and pipeline are untouched by registry extraction", () => {
   assert.equal(SOURCE_CARD_ENGINE_SRC.includes("vector-authority-reference-registry"), false);
   assert.equal(PIPELINE_SRC.includes("vector-authority-reference-registry"), false);
-  assert.match(PIPELINE_SRC, /engineResolveIndexedSourceCardTarget\(target,\s*\{\s*exactAuthoritySearch,\s*logger:\s*console\s*\}\)/);
+  assert.match(PIPELINE_SRC, /resolveIndexedSourceCardTarget\(target,\s*\{\s*exactAuthoritySearch,\s*logger:\s*console\s*\}\)/);
 });
 
 console.log(`\nPATCH-034F-2 vector authority reference registry extraction tests: ${passed} passed, ${failed} failed`);
