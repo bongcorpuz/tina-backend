@@ -21,6 +21,7 @@ PATCH-06G-003 COMPLETE / LOCAL PASS
 PATCH-06G-004 COMPLETE / LOCAL PASS
 PATCH-06G-005 COMPLETE / LOCAL PASS
 PATCH-06G-GATE-1 COMPLETE / LOCAL PASS
+PATCH-06H-001 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -66,20 +67,21 @@ No automatic ingestion until Phase 10 source-governance workflow is implemented.
 Latest implemented patch:
 
 ```text
-PATCH-06G-GATE-1 - Phase 6G Stabilization Gate
+PATCH-06H-001 - Retrieval / Reranker / Authority Normalization Baseline Map
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-06G-GATE-1 close Phase 6G
+PATCH-06H-001 add retrieval reranker authority baseline map
 ```
 
 Current working state:
 
 ```text
-PATCH-06G-GATE-1 COMPLETE / LOCAL PASS
+PATCH-06H-001 COMPLETE / LOCAL PASS
 Phase 6G closed through stabilization gate.
+Phase 6H started with a diagnostic-only retrieval/reranker/authority-normalization baseline map.
 Key findings:
 - Wrapper adapter pattern was collapsed in pipeline.js after PATCH-06G-003 equivalence coverage.
 - pipeline.js now imports source-card helpers directly from source-card-engine.js.
@@ -89,13 +91,15 @@ Key findings:
 - Two distinct SAE functions in pipeline.js: computeSourceAvailability (private) and classifySourceAvailability (exported).
 - PATCH-06G-005 added comment-only SAE boundary notes around computeSourceAvailability, classifySourceAvailability, and the classifier call site.
 - No broad pipeline decomposition, retrieval/reranker work, sourceAvailability behavior change, DB/indexing/RAG/vector/corpus/ingestion change, package/dependency change, or external tool adoption occurred in Phase 6G.
-- Phase 6H is active/ready and must begin with a retrieval/reranker/authority-normalization baseline map before implementation.
+- PATCH-06H-001 mapped retrieval-engine.js, vector-store.js, reranker-engine.js, authority normalization modules, sourceAvailability boundaries, and source-card selector boundaries without runtime changes.
+- Baseline finding: bare citation query "RR 2-98" is a likely issue-classification / exact-authority normalization gap before it is a vector-store or source-card rendering issue.
+- Recommended next work is test-first: add bare citation normalization regressions before any fix.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-06H-001 - Retrieval / Reranker / Authority Normalization Baseline Map
+PATCH-06H-002 - Bare citation normalization regression tests
 ```
 
 Expected next gate:
@@ -1008,12 +1012,13 @@ Planned work:
 
 ```text
 PATCH-06H-001 - Retrieval / Reranker / Authority Normalization Baseline Map
+PATCH-06H-002 - Bare citation normalization regression tests
 ```
 
 Immediate next task:
 
 ```text
-PATCH-06H-001 - Retrieval / Reranker / Authority Normalization Baseline Map
+PATCH-06H-002 - Bare citation normalization regression tests
 ```
 
 ---
@@ -1031,7 +1036,7 @@ PHASE 6H - Retrieval / Reranker / Authority Normalization Under Evaluation Guard
 Current latest pushed commit:
 
 ```text
-PATCH-06G-GATE-1 close Phase 6G
+PATCH-06H-001 add retrieval reranker authority baseline map
 ```
 
 Current status:
@@ -1047,18 +1052,19 @@ PATCH-06G-003 COMPLETE / LOCAL PASS
 PATCH-06G-004 COMPLETE / LOCAL PASS
 PATCH-06G-005 COMPLETE / LOCAL PASS
 PATCH-06G-GATE-1 COMPLETE / LOCAL PASS
+PATCH-06H-001 COMPLETE / LOCAL PASS
 ```
 
 Immediate next Codex task:
 
 ```text
-PATCH-06H-001 - Retrieval / Reranker / Authority Normalization Baseline Map
+PATCH-06H-002 - Bare citation normalization regression tests
 ```
 
 After that:
 
 ```text
-Phase 6H implementation remains gated behind the PATCH-06H-001 baseline map.
+Phase 6H implementation remains gated behind bare citation regression tests.
 ```
 
 Key Phase 6G architecture findings:
@@ -1090,6 +1096,5 @@ Important current guard:
 Specific unavailable BIR Ruling-number queries should not be promoted to AUTHORITY_FOUND through unrelated non-BIR substitute authorities.
 BIR Ruling DA-489-03 is not in the corpus and should not expose a BIR Ruling source card.
 ```
-
 
 
