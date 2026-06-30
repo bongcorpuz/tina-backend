@@ -15,6 +15,7 @@ PHASE 6F CLOSED / PASS
 PHASE 6G ACTIVE
 PATCH-06F-GATE-1 COMPLETE / LOCAL PASS
 PATCH-06G-001 COMPLETE / LOCAL PASS
+PATCH-06G-002 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -60,27 +61,33 @@ No automatic ingestion until Phase 10 source-governance workflow is implemented.
 Latest implemented patch:
 
 ```text
-PATCH-06G-001 - JS module inventory and decomposition destination map
+PATCH-06G-002 - Claude Code architecture review of JS module inventory and decomposition boundaries
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-06G-001 add JS module inventory and decomposition map
+PATCH-06G-002 add Claude architecture review
 ```
 
 Current working state:
 
 ```text
-PATCH-06G-001 COMPLETE / LOCAL PASS
-JS module inventory and decomposition destination map completed.
+PATCH-06G-002 COMPLETE / LOCAL PASS
+Claude Code architecture review of JS module boundaries completed.
+Key findings:
+- Wrapper adapter pattern confirmed in pipeline.js (6 source-card wrappers delegate to source-card-engine.js).
+- classifySourceAvailability is exported from pipeline.js and imported by 6+ test files — cannot move in Phase 6G.
+- source-visibility-engine.js is a utility/display module, not a SAE classifier.
+- Two distinct SAE functions in pipeline.js: computeSourceAvailability (private) and classifySourceAvailability (exported).
+- Wrapper collapse is the only safe Phase 6G decomposition step.
 Phase 6G active.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-06G-002 - Claude Code architecture review of JS module inventory and decomposition boundaries
+PATCH-06G-003 - Source-card wrapper equivalence test lock (test-only, no runtime code change)
 ```
 
 Expected next gate:
@@ -913,13 +920,17 @@ Planned work:
 
 ```text
 PATCH-06G-001 - JS module inventory and decomposition destination map - COMPLETE / LOCAL PASS
-PATCH-06G-002 - Claude Code architecture review of JS module inventory and decomposition boundaries
+PATCH-06G-002 - Claude Code architecture review of JS module inventory and decomposition boundaries - COMPLETE / LOCAL PASS
+PATCH-06G-003 - Source-card wrapper equivalence test lock (test-only)
+PATCH-06G-004 - Source-card wrapper collapse in pipeline.js (approved by PATCH-06G-002 review)
+PATCH-06G-005 - Source-availability boundary documentation hardening
+PATCH-06G-GATE-1 - Phase 6G stabilization gate
 ```
 
 Immediate next task:
 
 ```text
-PATCH-06G-002 - Claude Code architecture review of JS module inventory and decomposition boundaries
+PATCH-06G-003 - Source-card wrapper equivalence test lock (test-only, no runtime code change)
 ```
 
 ---
@@ -937,7 +948,7 @@ PHASE 6G - Authority / Pipeline Decomposition Planning Under Evaluation Guard
 Current latest pushed commit:
 
 ```text
-PATCH-06G-001 add JS module inventory and decomposition map
+PATCH-06G-002 add Claude architecture review
 ```
 
 Current status:
@@ -947,18 +958,36 @@ PHASE 6F CLOSED / PASS
 PHASE 6G ACTIVE
 PATCH-06F-GATE-1 COMPLETE / LOCAL PASS
 PATCH-06G-001 COMPLETE / LOCAL PASS
+PATCH-06G-002 COMPLETE / LOCAL PASS
 ```
 
 Immediate next Codex task:
 
 ```text
-PATCH-06G-002 - Claude Code architecture review of JS module inventory and decomposition boundaries
+PATCH-06G-003 - Source-card wrapper equivalence test lock (test-only, no runtime code change)
 ```
 
 After that:
 
 ```text
-Phase 6G planning follow-up based on the Claude Code architecture review.
+PATCH-06G-004 - Source-card wrapper collapse in pipeline.js (expressly approved by PATCH-06G-002 architecture review)
+PATCH-06G-005 - Source-availability boundary documentation hardening
+PATCH-06G-GATE-1 - Phase 6G stabilization gate
+```
+
+Key architecture findings from PATCH-06G-002:
+
+```text
+1. Wrapper adapter pattern confirmed: pipeline.js has 6 one-line delegate wrappers pointing to source-card-engine.js.
+   Wrapper collapse is the safe Phase 6G decomposition path.
+2. classifySourceAvailability is exported from pipeline.js and imported by 6+ test files.
+   It CANNOT be moved in Phase 6G. Extraction is Phase 6H minimum.
+3. source-visibility-engine.js is a utility/display module, NOT a SAE classifier.
+   Do NOT route classifySourceAvailability to source-visibility-engine.js.
+   Correct future destination: new dedicated source-availability-classifier.js (Phase 6H+).
+4. Two SAE functions in pipeline.js: computeSourceAvailability (private) and
+   classifySourceAvailability (exported). They serve different pipeline stages.
+5. All retrieval, mode/response, and other decomposition is deferred (Phase 6H+).
 ```
 
 Work owner rules:
