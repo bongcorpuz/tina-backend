@@ -1,0 +1,594 @@
+{
+  "version": "phase-6h-002",
+  "description": "Offline bare citation normalization regression fixture. Runtime retrieval, reranker, authority-normalization, sourceAvailability, and source-card assertions are intentionally pending until PATCH-06H-003 implements the narrow fix.",
+  "cases": [
+    {
+      "id": "rr-2-98-bare-admin-citation",
+      "name": "RR 2-98 bare administrative citation recognition",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "RR 2-98",
+      "expectedAuthorityLookupType": "exact_named_authority",
+      "expectedAuthorityFamily": "revenue_regulation",
+      "expectedNamedAuthorityRecognition": true,
+      "expectedPromotionPolicy": "promote_exact_authority_if_indexed",
+      "expectedSourceCardPolicy": "prefer_exact_indexed_source_card",
+      "expectedGuardBehavior": "not_generic_general_tax",
+      "notes": "Locks the parked FINDING-028A-F1 target where a short RR citation should not be downgraded merely because it is bare.",
+      "checks": [
+        { "type": "schema", "note": "Fixture shape is active locally." },
+        {
+          "type": "future_runtime_assertion",
+          "status": "pending",
+          "queryShape": "bare_admin_citation",
+          "expectedAuthorityLookupType": "exact_named_authority",
+          "expectedAuthorityFamily": "revenue_regulation",
+          "expectedNamedAuthorityRecognition": true,
+          "forbiddenIssueClassification": "GENERAL_TAX",
+          "expectedSourceAvailability": "AUTHORITY_FOUND",
+          "expectedSourceCard": "RR 2-98",
+          "forbiddenFalseExactPromotion": false,
+          "forbiddenUnrelatedAuthorities": true
+        }
+      ]
+    },
+    {
+      "id": "rr-no-2-98-bare-admin-citation",
+      "name": "RR No. 2-98 bare administrative citation recognition",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "RR No. 2-98",
+      "expectedAuthorityLookupType": "exact_named_authority",
+      "expectedAuthorityFamily": "revenue_regulation",
+      "expectedNamedAuthorityRecognition": true,
+      "expectedPromotionPolicy": "promote_exact_authority_if_indexed",
+      "expectedSourceCardPolicy": "prefer_exact_indexed_source_card",
+      "expectedGuardBehavior": "not_generic_general_tax",
+      "notes": "Locks RR abbreviation plus No. variant.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "bare_admin_citation", "expectedAuthorityLookupType": "exact_named_authority", "expectedAuthorityFamily": "revenue_regulation", "expectedNamedAuthorityRecognition": true, "forbiddenIssueClassification": "GENERAL_TAX", "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "RR 2-98", "forbiddenUnrelatedAuthorities": true }
+      ]
+    },
+    {
+      "id": "revenue-regulations-no-2-98-bare-admin-citation",
+      "name": "Revenue Regulations No. 2-98 named administrative citation recognition",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "Revenue Regulations No. 2-98",
+      "expectedAuthorityLookupType": "exact_named_authority",
+      "expectedAuthorityFamily": "revenue_regulation",
+      "expectedNamedAuthorityRecognition": true,
+      "expectedPromotionPolicy": "promote_exact_authority_if_indexed",
+      "expectedSourceCardPolicy": "prefer_exact_indexed_source_card",
+      "expectedGuardBehavior": "not_generic_general_tax",
+      "notes": "Locks full-name RR variant.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "named_authority_lookup", "expectedAuthorityLookupType": "exact_named_authority", "expectedAuthorityFamily": "revenue_regulation", "expectedNamedAuthorityRecognition": true, "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "RR 2-98", "forbiddenUnrelatedAuthorities": true }
+      ]
+    },
+    {
+      "id": "rmc-65-2012-bare-admin-citation",
+      "name": "RMC 65-2012 bare administrative citation recognition",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "RMC 65-2012",
+      "expectedAuthorityLookupType": "exact_named_authority",
+      "expectedAuthorityFamily": "revenue_memorandum_circular",
+      "expectedNamedAuthorityRecognition": true,
+      "expectedPromotionPolicy": "promote_exact_authority_if_indexed",
+      "expectedSourceCardPolicy": "prefer_exact_indexed_source_card",
+      "expectedGuardBehavior": "not_generic_general_tax",
+      "notes": "Locks short RMC citation handling.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "bare_admin_citation", "expectedAuthorityLookupType": "exact_named_authority", "expectedAuthorityFamily": "revenue_memorandum_circular", "expectedNamedAuthorityRecognition": true, "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "RMC 65-2012", "forbiddenUnrelatedAuthorities": true }
+      ]
+    },
+    {
+      "id": "rmc-no-65-2012-bare-admin-citation",
+      "name": "RMC No. 65-2012 bare administrative citation recognition",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "RMC No. 65-2012",
+      "expectedAuthorityLookupType": "exact_named_authority",
+      "expectedAuthorityFamily": "revenue_memorandum_circular",
+      "expectedNamedAuthorityRecognition": true,
+      "expectedPromotionPolicy": "promote_exact_authority_if_indexed",
+      "expectedSourceCardPolicy": "prefer_exact_indexed_source_card",
+      "expectedGuardBehavior": "not_generic_general_tax",
+      "notes": "Locks RMC abbreviation plus No. variant.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "bare_admin_citation", "expectedAuthorityLookupType": "exact_named_authority", "expectedAuthorityFamily": "revenue_memorandum_circular", "expectedNamedAuthorityRecognition": true, "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "RMC 65-2012", "forbiddenUnrelatedAuthorities": true }
+      ]
+    },
+    {
+      "id": "revenue-memorandum-circular-no-65-2012-bare-admin-citation",
+      "name": "Revenue Memorandum Circular No. 65-2012 named administrative citation recognition",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "Revenue Memorandum Circular No. 65-2012",
+      "expectedAuthorityLookupType": "exact_named_authority",
+      "expectedAuthorityFamily": "revenue_memorandum_circular",
+      "expectedNamedAuthorityRecognition": true,
+      "expectedPromotionPolicy": "promote_exact_authority_if_indexed",
+      "expectedSourceCardPolicy": "prefer_exact_indexed_source_card",
+      "expectedGuardBehavior": "not_generic_general_tax",
+      "notes": "Locks full-name RMC variant.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "named_authority_lookup", "expectedAuthorityLookupType": "exact_named_authority", "expectedAuthorityFamily": "revenue_memorandum_circular", "expectedNamedAuthorityRecognition": true, "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "RMC 65-2012", "forbiddenUnrelatedAuthorities": true }
+      ]
+    },
+    {
+      "id": "rmo-20-2013-bare-admin-citation",
+      "name": "RMO 20-2013 bare administrative citation recognition",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "RMO 20-2013",
+      "expectedAuthorityLookupType": "exact_named_authority",
+      "expectedAuthorityFamily": "revenue_memorandum_order",
+      "expectedNamedAuthorityRecognition": true,
+      "expectedPromotionPolicy": "promote_exact_authority_if_indexed",
+      "expectedSourceCardPolicy": "prefer_exact_indexed_source_card",
+      "expectedGuardBehavior": "not_generic_general_tax",
+      "notes": "Locks short RMO citation handling.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "bare_admin_citation", "expectedAuthorityLookupType": "exact_named_authority", "expectedAuthorityFamily": "revenue_memorandum_order", "expectedNamedAuthorityRecognition": true, "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "RMO 20-2013", "forbiddenUnrelatedAuthorities": true }
+      ]
+    },
+    {
+      "id": "rmo-no-20-2013-bare-admin-citation",
+      "name": "RMO No. 20-2013 bare administrative citation recognition",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "RMO No. 20-2013",
+      "expectedAuthorityLookupType": "exact_named_authority",
+      "expectedAuthorityFamily": "revenue_memorandum_order",
+      "expectedNamedAuthorityRecognition": true,
+      "expectedPromotionPolicy": "promote_exact_authority_if_indexed",
+      "expectedSourceCardPolicy": "prefer_exact_indexed_source_card",
+      "expectedGuardBehavior": "not_generic_general_tax",
+      "notes": "Locks RMO abbreviation plus No. variant.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "bare_admin_citation", "expectedAuthorityLookupType": "exact_named_authority", "expectedAuthorityFamily": "revenue_memorandum_order", "expectedNamedAuthorityRecognition": true, "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "RMO 20-2013", "forbiddenUnrelatedAuthorities": true }
+      ]
+    },
+    {
+      "id": "revenue-memorandum-order-no-20-2013-bare-admin-citation",
+      "name": "Revenue Memorandum Order No. 20-2013 named administrative citation recognition",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "Revenue Memorandum Order No. 20-2013",
+      "expectedAuthorityLookupType": "exact_named_authority",
+      "expectedAuthorityFamily": "revenue_memorandum_order",
+      "expectedNamedAuthorityRecognition": true,
+      "expectedPromotionPolicy": "promote_exact_authority_if_indexed",
+      "expectedSourceCardPolicy": "prefer_exact_indexed_source_card",
+      "expectedGuardBehavior": "not_generic_general_tax",
+      "notes": "Locks full-name RMO variant.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "named_authority_lookup", "expectedAuthorityLookupType": "exact_named_authority", "expectedAuthorityFamily": "revenue_memorandum_order", "expectedNamedAuthorityRecognition": true, "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "RMO 20-2013", "forbiddenUnrelatedAuthorities": true }
+      ]
+    },
+    {
+      "id": "rmo-24-2013-bare-admin-citation",
+      "name": "RMO 24-2013 bare administrative citation recognition",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "RMO 24-2013",
+      "expectedAuthorityLookupType": "exact_named_authority",
+      "expectedAuthorityFamily": "revenue_memorandum_order",
+      "expectedNamedAuthorityRecognition": true,
+      "expectedPromotionPolicy": "promote_exact_authority_if_indexed",
+      "expectedSourceCardPolicy": "prefer_exact_indexed_source_card",
+      "expectedGuardBehavior": "not_generic_general_tax",
+      "notes": "Locks the second RMO control from the Phase 6H brief.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "bare_admin_citation", "expectedAuthorityLookupType": "exact_named_authority", "expectedAuthorityFamily": "revenue_memorandum_order", "expectedNamedAuthorityRecognition": true, "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "RMO 24-2013", "forbiddenUnrelatedAuthorities": true }
+      ]
+    },
+    {
+      "id": "nirc-sec-57-bare-statutory-citation",
+      "name": "NIRC Sec. 57 bare statutory citation recognition",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "NIRC Sec. 57",
+      "expectedAuthorityLookupType": "exact_named_authority",
+      "expectedAuthorityFamily": "nirc_section",
+      "expectedNamedAuthorityRecognition": true,
+      "expectedPromotionPolicy": "promote_exact_authority_if_indexed",
+      "expectedSourceCardPolicy": "prefer_exact_indexed_source_card",
+      "expectedGuardBehavior": "not_generic_general_tax",
+      "notes": "Locks NIRC Sec. abbreviation handling.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "bare_statutory_citation", "expectedAuthorityLookupType": "exact_named_authority", "expectedAuthorityFamily": "nirc_section", "expectedNamedAuthorityRecognition": true, "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "NIRC Sec. 57", "forbiddenUnrelatedAuthorities": true }
+      ]
+    },
+    {
+      "id": "nirc-section-57-bare-statutory-citation",
+      "name": "NIRC Section 57 bare statutory citation recognition",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "NIRC Section 57",
+      "expectedAuthorityLookupType": "exact_named_authority",
+      "expectedAuthorityFamily": "nirc_section",
+      "expectedNamedAuthorityRecognition": true,
+      "expectedPromotionPolicy": "promote_exact_authority_if_indexed",
+      "expectedSourceCardPolicy": "prefer_exact_indexed_source_card",
+      "expectedGuardBehavior": "not_generic_general_tax",
+      "notes": "Locks NIRC Section full token handling.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "bare_statutory_citation", "expectedAuthorityLookupType": "exact_named_authority", "expectedAuthorityFamily": "nirc_section", "expectedNamedAuthorityRecognition": true, "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "NIRC Sec. 57", "forbiddenUnrelatedAuthorities": true }
+      ]
+    },
+    {
+      "id": "section-57-of-nirc-bare-statutory-citation",
+      "name": "Section 57 of the NIRC statutory citation recognition",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "Section 57 of the NIRC",
+      "expectedAuthorityLookupType": "exact_named_authority",
+      "expectedAuthorityFamily": "nirc_section",
+      "expectedNamedAuthorityRecognition": true,
+      "expectedPromotionPolicy": "promote_exact_authority_if_indexed",
+      "expectedSourceCardPolicy": "prefer_exact_indexed_source_card",
+      "expectedGuardBehavior": "not_generic_general_tax",
+      "notes": "Locks reversed NIRC section wording.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "bare_statutory_citation", "expectedAuthorityLookupType": "exact_named_authority", "expectedAuthorityFamily": "nirc_section", "expectedNamedAuthorityRecognition": true, "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "NIRC Sec. 57", "forbiddenUnrelatedAuthorities": true }
+      ]
+    },
+    {
+      "id": "nirc-sec-58-bare-statutory-citation",
+      "name": "NIRC Sec. 58 bare statutory citation recognition",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "NIRC Sec. 58",
+      "expectedAuthorityLookupType": "exact_named_authority",
+      "expectedAuthorityFamily": "nirc_section",
+      "expectedNamedAuthorityRecognition": true,
+      "expectedPromotionPolicy": "promote_exact_authority_if_indexed",
+      "expectedSourceCardPolicy": "prefer_exact_indexed_source_card",
+      "expectedGuardBehavior": "not_generic_general_tax",
+      "notes": "Locks adjacent NIRC withholding section behavior.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "bare_statutory_citation", "expectedAuthorityLookupType": "exact_named_authority", "expectedAuthorityFamily": "nirc_section", "expectedNamedAuthorityRecognition": true, "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "NIRC Sec. 58", "forbiddenUnrelatedAuthorities": true }
+      ]
+    },
+    {
+      "id": "nirc-section-23-bare-statutory-citation",
+      "name": "NIRC Section 23 bare statutory citation recognition",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "NIRC Section 23",
+      "expectedAuthorityLookupType": "exact_named_authority",
+      "expectedAuthorityFamily": "nirc_section",
+      "expectedNamedAuthorityRecognition": true,
+      "expectedPromotionPolicy": "promote_exact_authority_if_indexed",
+      "expectedSourceCardPolicy": "prefer_exact_indexed_source_card",
+      "expectedGuardBehavior": "not_generic_general_tax",
+      "notes": "Locks NIRC Section 23 exact source-card behavior from existing Phase 6F coverage in bare form.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "bare_statutory_citation", "expectedAuthorityLookupType": "exact_named_authority", "expectedAuthorityFamily": "nirc_section", "expectedNamedAuthorityRecognition": true, "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "NIRC Sec. 23", "forbiddenUnrelatedAuthorities": true }
+      ]
+    },
+    {
+      "id": "ra-10963-bare-statutory-citation",
+      "name": "RA 10963 bare statutory citation recognition",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "RA 10963",
+      "expectedAuthorityLookupType": "exact_named_authority",
+      "expectedAuthorityFamily": "republic_act",
+      "expectedNamedAuthorityRecognition": true,
+      "expectedPromotionPolicy": "promote_exact_authority_if_indexed",
+      "expectedSourceCardPolicy": "prefer_exact_indexed_source_card",
+      "expectedGuardBehavior": "not_generic_republic_act",
+      "notes": "Locks bare RA number recognition.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "bare_statutory_citation", "expectedAuthorityLookupType": "exact_named_authority", "expectedAuthorityFamily": "republic_act", "expectedNamedAuthorityRecognition": true, "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "RA 10963", "forbiddenUnrelatedAuthorities": true }
+      ]
+    },
+    {
+      "id": "republic-act-no-10963-bare-statutory-citation",
+      "name": "Republic Act No. 10963 named statutory citation recognition",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "Republic Act No. 10963",
+      "expectedAuthorityLookupType": "exact_named_authority",
+      "expectedAuthorityFamily": "republic_act",
+      "expectedNamedAuthorityRecognition": true,
+      "expectedPromotionPolicy": "promote_exact_authority_if_indexed",
+      "expectedSourceCardPolicy": "prefer_exact_indexed_source_card",
+      "expectedGuardBehavior": "not_generic_republic_act",
+      "notes": "Locks full-name Republic Act number handling.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "named_authority_lookup", "expectedAuthorityLookupType": "exact_named_authority", "expectedAuthorityFamily": "republic_act", "expectedNamedAuthorityRecognition": true, "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "RA 10963", "forbiddenUnrelatedAuthorities": true }
+      ]
+    },
+    {
+      "id": "train-law-named-statutory-authority",
+      "name": "TRAIN Law named statutory authority recognition",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "TRAIN Law",
+      "expectedAuthorityLookupType": "named_authority_alias",
+      "expectedAuthorityFamily": "republic_act",
+      "expectedNamedAuthorityRecognition": true,
+      "expectedPromotionPolicy": "resolve_alias_to_named_authority",
+      "expectedSourceCardPolicy": "prefer_exact_or_alias_target_source_card",
+      "expectedGuardBehavior": "not_generic_train",
+      "notes": "Locks TRAIN as a named RA 10963 alias without loosening generic TRAIN guard cases.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "named_authority_lookup", "expectedAuthorityLookupType": "named_authority_alias", "expectedAuthorityFamily": "republic_act", "expectedNamedAuthorityRecognition": true, "expectedRelatedAuthority": "RA 10963", "forbiddenUnrelatedAuthorities": true }
+      ]
+    },
+    {
+      "id": "ra-11534-bare-statutory-citation",
+      "name": "RA 11534 bare statutory citation recognition",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "RA 11534",
+      "expectedAuthorityLookupType": "exact_named_authority",
+      "expectedAuthorityFamily": "republic_act",
+      "expectedNamedAuthorityRecognition": true,
+      "expectedPromotionPolicy": "promote_exact_authority_if_indexed",
+      "expectedSourceCardPolicy": "prefer_exact_indexed_source_card",
+      "expectedGuardBehavior": "not_generic_republic_act",
+      "notes": "Locks CREATE Act number as a bare statutory citation.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "bare_statutory_citation", "expectedAuthorityLookupType": "exact_named_authority", "expectedAuthorityFamily": "republic_act", "expectedNamedAuthorityRecognition": true, "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "RA 11534", "forbiddenUnrelatedAuthorities": true }
+      ]
+    },
+    {
+      "id": "create-act-named-statutory-authority",
+      "name": "CREATE Act named statutory authority recognition",
+      "category": "exact_authority",
+      "route": "/ask",
+      "query": "CREATE Act",
+      "expectedAuthorityLookupType": "named_authority_alias",
+      "expectedAuthorityFamily": "republic_act",
+      "expectedNamedAuthorityRecognition": true,
+      "expectedPromotionPolicy": "resolve_alias_to_named_authority",
+      "expectedSourceCardPolicy": "prefer_exact_or_alias_target_source_card",
+      "expectedGuardBehavior": "not_generic_create",
+      "notes": "Locks CREATE as a named RA 11534 alias without treating broad statute words as exact authority.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "named_authority_lookup", "expectedAuthorityLookupType": "named_authority_alias", "expectedAuthorityFamily": "republic_act", "expectedNamedAuthorityRecognition": true, "expectedRelatedAuthority": "RA 11534", "forbiddenUnrelatedAuthorities": true }
+      ]
+    },
+    {
+      "id": "cta-case-no-9369-bare-case-citation",
+      "name": "CTA Case No. 9369 bare case citation recognition",
+      "category": "case_card_integrity",
+      "route": "/ask",
+      "query": "CTA Case No. 9369",
+      "expectedAuthorityLookupType": "exact_named_authority",
+      "expectedAuthorityFamily": "cta_case",
+      "expectedNamedAuthorityRecognition": true,
+      "expectedPromotionPolicy": "promote_exact_authority_if_indexed",
+      "expectedSourceCardPolicy": "prefer_exact_indexed_source_card",
+      "expectedGuardBehavior": "not_generic_court_case",
+      "notes": "Locks exact CTA case number recognition and click-target discipline.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "bare_case_citation", "expectedAuthorityLookupType": "exact_named_authority", "expectedAuthorityFamily": "cta_case", "expectedNamedAuthorityRecognition": true, "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "CTA Case No. 9369", "forbiddenUnrelatedAuthorities": true }
+      ]
+    },
+    {
+      "id": "cta-case-9369-bare-case-citation",
+      "name": "CTA Case 9369 bare case citation recognition",
+      "category": "case_card_integrity",
+      "route": "/ask",
+      "query": "CTA Case 9369",
+      "expectedAuthorityLookupType": "exact_named_authority",
+      "expectedAuthorityFamily": "cta_case",
+      "expectedNamedAuthorityRecognition": true,
+      "expectedPromotionPolicy": "promote_exact_authority_if_indexed",
+      "expectedSourceCardPolicy": "prefer_exact_indexed_source_card",
+      "expectedGuardBehavior": "not_generic_court_case",
+      "notes": "Locks CTA case number variant without No.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "bare_case_citation", "expectedAuthorityLookupType": "exact_named_authority", "expectedAuthorityFamily": "cta_case", "expectedNamedAuthorityRecognition": true, "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "CTA Case No. 9369", "forbiddenUnrelatedAuthorities": true }
+      ]
+    },
+    {
+      "id": "gr-no-153866-bare-case-citation",
+      "name": "G.R. No. 153866 bare Supreme Court citation recognition",
+      "category": "case_card_integrity",
+      "route": "/ask",
+      "query": "G.R. No. 153866",
+      "expectedAuthorityLookupType": "exact_named_authority",
+      "expectedAuthorityFamily": "supreme_court_gr",
+      "expectedNamedAuthorityRecognition": true,
+      "expectedPromotionPolicy": "promote_exact_authority_if_indexed",
+      "expectedSourceCardPolicy": "prefer_exact_indexed_source_card",
+      "expectedGuardBehavior": "not_generic_court_case",
+      "notes": "Locks bare Supreme Court G.R. citation handling.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "bare_case_citation", "expectedAuthorityLookupType": "exact_named_authority", "expectedAuthorityFamily": "supreme_court_gr", "expectedNamedAuthorityRecognition": true, "expectedSourceAvailability": "AUTHORITY_FOUND", "expectedSourceCard": "G.R. No. 153866", "forbiddenUnrelatedAuthorities": true }
+      ]
+    },
+    {
+      "id": "cir-v-seagate-named-case-citation",
+      "name": "CIR v. Seagate named Supreme Court case recognition",
+      "category": "case_card_integrity",
+      "route": "/ask",
+      "query": "CIR v. Seagate",
+      "expectedAuthorityLookupType": "named_authority_alias",
+      "expectedAuthorityFamily": "supreme_court_gr",
+      "expectedNamedAuthorityRecognition": true,
+      "expectedPromotionPolicy": "resolve_case_name_to_named_authority",
+      "expectedSourceCardPolicy": "prefer_exact_or_alias_target_source_card",
+      "expectedGuardBehavior": "not_generic_court_case",
+      "notes": "Locks named case lookup for the Seagate authority.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "named_authority_lookup", "expectedAuthorityLookupType": "named_authority_alias", "expectedAuthorityFamily": "supreme_court_gr", "expectedNamedAuthorityRecognition": true, "expectedSourceCard": "G.R. No. 153866", "forbiddenUnrelatedAuthorities": true }
+      ]
+    },
+    {
+      "id": "seagate-case-named-case-citation",
+      "name": "Seagate case named Supreme Court case recognition",
+      "category": "case_card_integrity",
+      "route": "/ask",
+      "query": "Seagate case",
+      "expectedAuthorityLookupType": "named_authority_alias",
+      "expectedAuthorityFamily": "supreme_court_gr",
+      "expectedNamedAuthorityRecognition": true,
+      "expectedPromotionPolicy": "resolve_case_name_to_named_authority",
+      "expectedSourceCardPolicy": "prefer_exact_or_alias_target_source_card",
+      "expectedGuardBehavior": "not_generic_court_case",
+      "notes": "Locks short named case lookup while preserving generic case guards.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "named_authority_lookup", "expectedAuthorityLookupType": "named_authority_alias", "expectedAuthorityFamily": "supreme_court_gr", "expectedNamedAuthorityRecognition": true, "expectedSourceCard": "G.R. No. 153866", "forbiddenUnrelatedAuthorities": true }
+      ]
+    },
+    {
+      "id": "tax-law-generic-guard-control",
+      "name": "Tax law generic guard control",
+      "category": "generic_guard",
+      "route": "/ask",
+      "query": "tax law",
+      "expectedAuthorityLookupType": "generic_query",
+      "expectedAuthorityFamily": "none",
+      "expectedNamedAuthorityRecognition": false,
+      "expectedPromotionPolicy": "do_not_promote_exact_authority",
+      "expectedSourceCardPolicy": "do_not_fabricate_exact_source_card",
+      "expectedGuardBehavior": "generic_query_guard",
+      "notes": "Broad legal term must not become an exact authority.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "generic", "expectedAuthorityLookupType": "generic_query", "expectedNamedAuthorityRecognition": false, "expectedBehavior": "generic_guard", "forbiddenFalseExactPromotion": true, "forbiddenExactCardOverclaim": true, "forbiddenSubstitutedAuthorities": ["NIRC Sec. 57", "RA 10963", "G.R. No. 153866"] }
+      ]
+    },
+    {
+      "id": "bir-issuance-generic-guard-control",
+      "name": "BIR issuance generic guard control",
+      "category": "generic_guard",
+      "route": "/ask",
+      "query": "BIR issuance",
+      "expectedAuthorityLookupType": "generic_query",
+      "expectedAuthorityFamily": "none",
+      "expectedNamedAuthorityRecognition": false,
+      "expectedPromotionPolicy": "do_not_promote_exact_authority",
+      "expectedSourceCardPolicy": "do_not_fabricate_exact_source_card",
+      "expectedGuardBehavior": "generic_query_guard",
+      "notes": "Broad administrative source term must not become a specific RR/RMC/RMO.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "generic", "expectedAuthorityLookupType": "generic_query", "expectedNamedAuthorityRecognition": false, "expectedBehavior": "generic_guard", "forbiddenFalseExactPromotion": true, "forbiddenExactCardOverclaim": true, "forbiddenSubstitutedAuthorities": ["RR 2-98", "RMC 65-2012", "RMO 20-2013"] }
+      ]
+    },
+    {
+      "id": "court-case-generic-guard-control",
+      "name": "Court case generic guard control",
+      "category": "generic_guard",
+      "route": "/ask",
+      "query": "court case",
+      "expectedAuthorityLookupType": "generic_query",
+      "expectedAuthorityFamily": "none",
+      "expectedNamedAuthorityRecognition": false,
+      "expectedPromotionPolicy": "do_not_promote_exact_authority",
+      "expectedSourceCardPolicy": "do_not_fabricate_exact_source_card",
+      "expectedGuardBehavior": "generic_query_guard",
+      "notes": "Broad court-case term must not become a specific CTA or G.R. authority.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "generic", "expectedAuthorityLookupType": "generic_query", "expectedNamedAuthorityRecognition": false, "expectedBehavior": "generic_guard", "forbiddenFalseExactPromotion": true, "forbiddenExactCardOverclaim": true, "forbiddenSubstitutedAuthorities": ["CTA Case No. 9369", "G.R. No. 153866"] }
+      ]
+    },
+    {
+      "id": "vat-case-generic-guard-control",
+      "name": "VAT case generic guard control",
+      "category": "generic_guard",
+      "route": "/ask",
+      "query": "VAT case",
+      "expectedAuthorityLookupType": "generic_query",
+      "expectedAuthorityFamily": "none",
+      "expectedNamedAuthorityRecognition": false,
+      "expectedPromotionPolicy": "do_not_promote_exact_authority",
+      "expectedSourceCardPolicy": "do_not_fabricate_exact_source_card",
+      "expectedGuardBehavior": "generic_query_guard",
+      "notes": "Broad VAT case request must remain distinguishable from an exact case lookup.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "generic", "expectedAuthorityLookupType": "generic_query", "expectedNamedAuthorityRecognition": false, "expectedBehavior": "generic_guard", "forbiddenFalseExactPromotion": true, "forbiddenExactCardOverclaim": true, "forbiddenSubstitutedAuthorities": ["G.R. No. 153866", "CTA Case No. 9369"] }
+      ]
+    },
+    {
+      "id": "withholding-tax-case-generic-guard-control",
+      "name": "Withholding tax case generic guard control",
+      "category": "generic_guard",
+      "route": "/ask",
+      "query": "withholding tax case",
+      "expectedAuthorityLookupType": "generic_query",
+      "expectedAuthorityFamily": "none",
+      "expectedNamedAuthorityRecognition": false,
+      "expectedPromotionPolicy": "do_not_promote_exact_authority",
+      "expectedSourceCardPolicy": "do_not_fabricate_exact_source_card",
+      "expectedGuardBehavior": "generic_query_guard",
+      "notes": "Broad withholding-tax case request must not become a substituted exact case.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "generic", "expectedAuthorityLookupType": "generic_query", "expectedNamedAuthorityRecognition": false, "expectedBehavior": "generic_guard", "forbiddenFalseExactPromotion": true, "forbiddenExactCardOverclaim": true, "forbiddenSubstitutedAuthorities": ["G.R. No. 153866", "CTA Case No. 9369"] }
+      ]
+    },
+    {
+      "id": "explain-ewt-generic-guard-control",
+      "name": "Explain EWT generic guard control",
+      "category": "generic_guard",
+      "route": "/ask",
+      "query": "explain EWT",
+      "expectedAuthorityLookupType": "generic_query",
+      "expectedAuthorityFamily": "none",
+      "expectedNamedAuthorityRecognition": false,
+      "expectedPromotionPolicy": "do_not_promote_exact_authority",
+      "expectedSourceCardPolicy": "do_not_fabricate_exact_source_card",
+      "expectedGuardBehavior": "generic_query_guard",
+      "notes": "Generic EWT explanation must not be over-promoted as RR 2-98 merely because EWT appears.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "generic", "expectedAuthorityLookupType": "generic_query", "expectedNamedAuthorityRecognition": false, "expectedBehavior": "generic_guard", "forbiddenFalseExactPromotion": true, "forbiddenExactCardOverclaim": true, "forbiddenSubstitutedAuthorities": ["RR 2-98", "NIRC Sec. 57", "NIRC Sec. 58"] }
+      ]
+    },
+    {
+      "id": "what-is-withholding-tax-generic-guard-control",
+      "name": "What is withholding tax generic guard control",
+      "category": "generic_guard",
+      "route": "/ask",
+      "query": "what is withholding tax",
+      "expectedAuthorityLookupType": "generic_query",
+      "expectedAuthorityFamily": "none",
+      "expectedNamedAuthorityRecognition": false,
+      "expectedPromotionPolicy": "do_not_promote_exact_authority",
+      "expectedSourceCardPolicy": "do_not_fabricate_exact_source_card",
+      "expectedGuardBehavior": "generic_query_guard",
+      "notes": "Generic withholding tax explanation must preserve generic-query guard behavior.",
+      "checks": [
+        { "type": "schema" },
+        { "type": "future_runtime_assertion", "status": "pending", "queryShape": "generic", "expectedAuthorityLookupType": "generic_query", "expectedNamedAuthorityRecognition": false, "expectedBehavior": "generic_guard", "forbiddenFalseExactPromotion": true, "forbiddenExactCardOverclaim": true, "forbiddenSubstitutedAuthorities": ["RR 2-98", "NIRC Sec. 57", "NIRC Sec. 58"] }
+      ]
+    }
+  ]
+}
