@@ -32,6 +32,7 @@ PATCH-06H-007 COMPLETE / LOCAL PASS
 PATCH-06H-GATE-1 COMPLETE / LOCAL PASS
 PATCH-07A-001 COMPLETE / LOCAL PASS
 PATCH-07A-002 COMPLETE / LOCAL PASS
+PATCH-07A-003 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -77,19 +78,19 @@ No automatic ingestion until Phase 10 source-governance workflow is implemented.
 Latest implemented patch:
 
 ```text
-PATCH-07A-002 - Human Response Mode-Format Fixtures and Regression Tests
+PATCH-07A-003 - Authority-State Response Policy and applyVerifiedAuthorityGate Compatibility Tests
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-07A-002 add human response mode format fixtures
+PATCH-07A-003 add authority-state response policy tests
 ```
 
 Current working state:
 
 ```text
-PATCH-07A-002 COMPLETE / LOCAL PASS
+PATCH-07A-003 COMPLETE / LOCAL PASS
 Phase 6H closed through stabilization gate (PATCH-06H-GATE-1).
 Phase 7A is now active.
 Key Phase 7A architecture findings:
@@ -116,6 +117,17 @@ Key Phase 7A architecture findings:
 - PATCH-07A-002 did not change runtime behavior, prompts, routes/controllers, retrieval,
   reranker, authority normalization, source-card, sourceAvailability, package/dependency,
   DB/indexing/RAG/vector/corpus, ingestion, env, or secrets.
+- PATCH-07A-003 added local/static authority-state response policy fixtures and focused
+  compatibility tests for short /ask answers, RELATED_AUTHORITY_ONLY caution,
+  NO_INDEXED_SOURCE non-fabrication, GENERAL_TAX/generic guard non-promotion, /tax
+  and /audit structure safety, and representative applyVerifiedAuthorityGate behavior.
+- PATCH-07A-003 confirmed applyVerifiedAuthorityGate can be imported safely in local tests
+  and preserves verified short answers, relabels related-only controlling headings, blocks
+  citation leakage under NO_INDEXED_SOURCE, and blocks unverified citations even under
+  AUTHORITY_FOUND.
+- PATCH-07A-003 did not change runtime behavior, prompts, routes/controllers, retrieval,
+  reranker, authority normalization, source-card, sourceAvailability, package/dependency,
+  DB/indexing/RAG/vector/corpus, ingestion, env, or secrets.
 - Recommended Phase 7A sequence: 002 fixtures → 003 policy scaffold → 004 /ask →
   005 /tax → 006 /audit → 007 source limitation wording tests → GATE-1.
 - No pipeline.js, retrieval, reranker, sourceAvailability, source-card, DB/indexing/RAG/
@@ -126,7 +138,7 @@ Key Phase 7A architecture findings:
 Immediate next task:
 
 ```text
-PATCH-07A-003 - Authority-state response policy and applyVerifiedAuthorityGate compatibility tests
+PATCH-07A-004 - /ask conversational formatting implementation
 ```
 
 Expected next gate:
@@ -1057,7 +1069,7 @@ PATCH-06H-GATE-1 - Phase 6H Stabilization Gate - COMPLETE / LOCAL PASS
 Immediate next task:
 
 ```text
-PATCH-07A-003 - Authority-state response policy and applyVerifiedAuthorityGate compatibility tests
+PATCH-07A-004 - /ask conversational formatting implementation
 ```
 
 ---
@@ -1075,7 +1087,7 @@ PHASE 7A - Human Conversational Response Layer
 Current latest pushed commit:
 
 ```text
-PATCH-07A-002 add human response mode format fixtures
+PATCH-07A-003 add authority-state response policy tests
 ```
 
 Current status:
@@ -1102,18 +1114,18 @@ PATCH-06H-007 COMPLETE / LOCAL PASS
 PATCH-06H-GATE-1 COMPLETE / LOCAL PASS
 PATCH-07A-001 COMPLETE / LOCAL PASS
 PATCH-07A-002 COMPLETE / LOCAL PASS
+PATCH-07A-003 COMPLETE / LOCAL PASS
 ```
 
 Immediate next Codex task:
 
 ```text
-PATCH-07A-003 - Authority-state response policy and applyVerifiedAuthorityGate compatibility tests
+PATCH-07A-004 - /ask conversational formatting implementation
 ```
 
 After that:
 
 ```text
-PATCH-07A-004 - /ask conversational formatting implementation (after 002 fixtures pass)
 PATCH-07A-005 - /tax senior memo formatting implementation
 PATCH-07A-006 - /audit advisory formatting implementation
 PATCH-07A-007 - Source limitation wording preservation tests
