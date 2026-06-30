@@ -25,6 +25,7 @@ PATCH-06H-001 COMPLETE / LOCAL PASS
 PATCH-06H-002 COMPLETE / LOCAL PASS
 PATCH-06H-003 COMPLETE / LOCAL PASS
 PATCH-06H-004 COMPLETE / LOCAL PASS
+PATCH-06H-005 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -70,19 +71,19 @@ No automatic ingestion until Phase 10 source-governance workflow is implemented.
 Latest implemented patch:
 
 ```text
-PATCH-06H-004 - Retrieval / Reranker Baseline Evaluation Report
+PATCH-06H-005 - Retrieval / Reranker Comparison Plan, No Dependency
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-06H-004 add retrieval reranker baseline evaluation
+PATCH-06H-005 add retrieval reranker comparison plan
 ```
 
 Current working state:
 
 ```text
-PATCH-06H-004 COMPLETE / LOCAL PASS
+PATCH-06H-005 COMPLETE / LOCAL PASS
 Phase 6G closed through stabilization gate.
 Phase 6H started with a diagnostic-only retrieval/reranker/authority-normalization baseline map.
 Key findings:
@@ -102,14 +103,16 @@ Key findings:
 - PATCH-06H-003 converted Phase 6H bare/named authority targets into active classifier assertions while preserving generic guard controls.
 - PATCH-06H-004 documented the current retrieval/reranker baseline after PATCH-06H-003 and confirmed no evidence supports runtime reranker modification or cohere-ai adoption yet.
 - PATCH-06H-004 recommends a no-dependency retrieval/reranker comparison plan before any provider experiment or behavior change.
+- PATCH-06H-005 defined a no-dependency retrieval/reranker comparison plan, candidate modes, query groups, metrics, conservative thresholds, future artifact design, and external-reranker readiness gates.
+- PATCH-06H-005 keeps cohere-ai and external reranker adoption deferred until local comparison artifacts and thresholds exist.
 - No pipeline.js, retrieval-engine.js, reranker-engine.js, sourceAvailability, source-card, DB/indexing/RAG/vector/corpus/ingestion, package/dependency, env, prompt, route, or controller changes occurred.
-- Recommended next work is a retrieval/reranker comparison plan with no dependency changes.
+- Recommended next work is a retrieval/reranker comparison fixture and test scaffold with no runtime change.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-06H-005 - Retrieval / reranker comparison plan, no dependency
+PATCH-06H-006 - Retrieval / reranker comparison fixture and test scaffold, no runtime change
 ```
 
 Expected next gate:
@@ -1025,13 +1028,14 @@ PATCH-06H-001 - Retrieval / Reranker / Authority Normalization Baseline Map
 PATCH-06H-002 - Bare citation normalization regression tests - COMPLETE / LOCAL PASS
 PATCH-06H-003 - Bare citation normalization fix - COMPLETE / LOCAL PASS
 PATCH-06H-004 - Retrieval / reranker baseline evaluation report - COMPLETE / LOCAL PASS
-PATCH-06H-005 - Retrieval / reranker comparison plan, no dependency
+PATCH-06H-005 - Retrieval / reranker comparison plan, no dependency - COMPLETE / LOCAL PASS
+PATCH-06H-006 - Retrieval / reranker comparison fixture and test scaffold, no runtime change
 ```
 
 Immediate next task:
 
 ```text
-PATCH-06H-005 - Retrieval / reranker comparison plan, no dependency
+PATCH-06H-006 - Retrieval / reranker comparison fixture and test scaffold, no runtime change
 ```
 
 ---
@@ -1049,7 +1053,7 @@ PHASE 6H - Retrieval / Reranker / Authority Normalization Under Evaluation Guard
 Current latest pushed commit:
 
 ```text
-PATCH-06H-004 add retrieval reranker baseline evaluation
+PATCH-06H-005 add retrieval reranker comparison plan
 ```
 
 Current status:
@@ -1069,18 +1073,19 @@ PATCH-06H-001 COMPLETE / LOCAL PASS
 PATCH-06H-002 COMPLETE / LOCAL PASS
 PATCH-06H-003 COMPLETE / LOCAL PASS
 PATCH-06H-004 COMPLETE / LOCAL PASS
+PATCH-06H-005 COMPLETE / LOCAL PASS
 ```
 
 Immediate next Codex task:
 
 ```text
-PATCH-06H-005 - Retrieval / reranker comparison plan, no dependency
+PATCH-06H-006 - Retrieval / reranker comparison fixture and test scaffold, no runtime change
 ```
 
 After that:
 
 ```text
-Phase 6H runtime retrieval/reranker changes remain gated behind a no-dependency comparison plan and measurable baseline metrics.
+Phase 6H runtime retrieval/reranker changes remain gated behind local comparison artifacts, measurable baseline metrics, and conservative pass/fail thresholds.
 ```
 
 Key Phase 6G architecture findings:
