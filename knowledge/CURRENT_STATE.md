@@ -24,6 +24,7 @@ PATCH-06G-GATE-1 COMPLETE / LOCAL PASS
 PATCH-06H-001 COMPLETE / LOCAL PASS
 PATCH-06H-002 COMPLETE / LOCAL PASS
 PATCH-06H-003 COMPLETE / LOCAL PASS
+PATCH-06H-004 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -69,19 +70,19 @@ No automatic ingestion until Phase 10 source-governance workflow is implemented.
 Latest implemented patch:
 
 ```text
-PATCH-06H-003 - Bare Citation Normalization Fix
+PATCH-06H-004 - Retrieval / Reranker Baseline Evaluation Report
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-06H-003 fix bare citation normalization
+PATCH-06H-004 add retrieval reranker baseline evaluation
 ```
 
 Current working state:
 
 ```text
-PATCH-06H-003 COMPLETE / LOCAL PASS
+PATCH-06H-004 COMPLETE / LOCAL PASS
 Phase 6G closed through stabilization gate.
 Phase 6H started with a diagnostic-only retrieval/reranker/authority-normalization baseline map.
 Key findings:
@@ -99,14 +100,16 @@ Key findings:
 - PATCH-06H-002 remains test-only: all behavioral expectations are pending future runtime assertions and no runtime behavior changed.
 - PATCH-06H-003 implemented a narrow exact-authority detector fix for CTA Case citations without "No." and known Seagate named-case aliases.
 - PATCH-06H-003 converted Phase 6H bare/named authority targets into active classifier assertions while preserving generic guard controls.
+- PATCH-06H-004 documented the current retrieval/reranker baseline after PATCH-06H-003 and confirmed no evidence supports runtime reranker modification or cohere-ai adoption yet.
+- PATCH-06H-004 recommends a no-dependency retrieval/reranker comparison plan before any provider experiment or behavior change.
 - No pipeline.js, retrieval-engine.js, reranker-engine.js, sourceAvailability, source-card, DB/indexing/RAG/vector/corpus/ingestion, package/dependency, env, prompt, route, or controller changes occurred.
-- Recommended next work is a retrieval/reranker baseline evaluation report before any reranker/provider experiment or broader decomposition.
+- Recommended next work is a retrieval/reranker comparison plan with no dependency changes.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-06H-004 - Retrieval / reranker baseline evaluation report
+PATCH-06H-005 - Retrieval / reranker comparison plan, no dependency
 ```
 
 Expected next gate:
@@ -1021,13 +1024,14 @@ Planned work:
 PATCH-06H-001 - Retrieval / Reranker / Authority Normalization Baseline Map
 PATCH-06H-002 - Bare citation normalization regression tests - COMPLETE / LOCAL PASS
 PATCH-06H-003 - Bare citation normalization fix - COMPLETE / LOCAL PASS
-PATCH-06H-004 - Retrieval / reranker baseline evaluation report
+PATCH-06H-004 - Retrieval / reranker baseline evaluation report - COMPLETE / LOCAL PASS
+PATCH-06H-005 - Retrieval / reranker comparison plan, no dependency
 ```
 
 Immediate next task:
 
 ```text
-PATCH-06H-004 - Retrieval / reranker baseline evaluation report
+PATCH-06H-005 - Retrieval / reranker comparison plan, no dependency
 ```
 
 ---
@@ -1045,7 +1049,7 @@ PHASE 6H - Retrieval / Reranker / Authority Normalization Under Evaluation Guard
 Current latest pushed commit:
 
 ```text
-PATCH-06H-003 fix bare citation normalization
+PATCH-06H-004 add retrieval reranker baseline evaluation
 ```
 
 Current status:
@@ -1064,18 +1068,19 @@ PATCH-06G-GATE-1 COMPLETE / LOCAL PASS
 PATCH-06H-001 COMPLETE / LOCAL PASS
 PATCH-06H-002 COMPLETE / LOCAL PASS
 PATCH-06H-003 COMPLETE / LOCAL PASS
+PATCH-06H-004 COMPLETE / LOCAL PASS
 ```
 
 Immediate next Codex task:
 
 ```text
-PATCH-06H-004 - Retrieval / reranker baseline evaluation report
+PATCH-06H-005 - Retrieval / reranker comparison plan, no dependency
 ```
 
 After that:
 
 ```text
-Phase 6H implementation remains gated behind bare citation regression tests.
+Phase 6H runtime retrieval/reranker changes remain gated behind a no-dependency comparison plan and measurable baseline metrics.
 ```
 
 Key Phase 6G architecture findings:
