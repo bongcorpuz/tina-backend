@@ -10,6 +10,7 @@ import assert from "node:assert/strict";
 import {
   detectExactAuthority,
   isCreateActAuthorityAlias,
+  isSeagateAuthorityAlias,
   isTrainLawAuthorityAlias
 } from "../issue-exact-authority-detector.js";
 import {
@@ -110,7 +111,18 @@ test("administrative authority aliases preserve registry-backed results", () => 
 });
 
 test("court exact authority recognition is preserved", () => {
+  assert.equal(isSeagateAuthorityAlias("CIR v. Seagate"), true);
+  assert.equal(isSeagateAuthorityAlias("Seagate case"), true);
+  assert.equal(isSeagateAuthorityAlias("VAT case"), false);
+
   assertAuthority("What is CTA Case No. 9369?", {
+    detected: true,
+    type: "CTA_DIVISION",
+    reference: "CTA Case No. 9369",
+    number: "9369",
+    year: null
+  });
+  assertAuthority("CTA Case 9369", {
     detected: true,
     type: "CTA_DIVISION",
     reference: "CTA Case No. 9369",
@@ -122,6 +134,20 @@ test("court exact authority recognition is preserved", () => {
     type: "SUPREME_COURT",
     reference: "G.R. No. 203335",
     number: "203335",
+    year: null
+  });
+  assertAuthority("CIR v. Seagate", {
+    detected: true,
+    type: "SUPREME_COURT",
+    reference: "G.R. No. 153866",
+    number: "153866",
+    year: null
+  });
+  assertAuthority("Seagate case", {
+    detected: true,
+    type: "SUPREME_COURT",
+    reference: "G.R. No. 153866",
+    number: "153866",
     year: null
   });
 });

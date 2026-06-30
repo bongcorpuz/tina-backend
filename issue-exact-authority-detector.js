@@ -23,6 +23,14 @@ function isTrainLawAuthorityAlias(value = "") {
   );
 }
 
+function isSeagateAuthorityAlias(value = "") {
+  const text = normalizeText(value);
+  return (
+    /\bCIR\s+v\.?\s+Seagate(?:\s+Technology)?\b/i.test(text) ||
+    /^\s*Seagate\s+case\s*$/i.test(text)
+  );
+}
+
 function detectExactAuthority(question = "") {
   const value = normalizeText(question);
 
@@ -42,6 +50,16 @@ function detectExactAuthority(question = "") {
       type: "STATUTE",
       reference: "RA 10963",
       number: "10963",
+      year: null
+    };
+  }
+
+  if (isSeagateAuthorityAlias(value)) {
+    return {
+      detected: true,
+      type: "SUPREME_COURT",
+      reference: "G.R. No. 153866",
+      number: "153866",
       year: null
     };
   }
@@ -93,7 +111,7 @@ function detectExactAuthority(question = "") {
     };
   }
 
-  const cta = value.match(/\bcta\s+case\s+no\.?\s*([a-z0-9.-]+)\b/i);
+  const cta = value.match(/\bcta\s+case\s+(?:no\.?\s*)?([a-z0-9.-]+)\b/i);
   if (cta) {
     return {
       detected: true,
@@ -116,11 +134,13 @@ function detectExactAuthority(question = "") {
 export {
   isCreateActAuthorityAlias,
   isTrainLawAuthorityAlias,
+  isSeagateAuthorityAlias,
   detectExactAuthority
 };
 
 export default {
   isCreateActAuthorityAlias,
   isTrainLawAuthorityAlias,
+  isSeagateAuthorityAlias,
   detectExactAuthority
 };

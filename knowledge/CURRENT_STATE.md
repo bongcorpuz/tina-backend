@@ -23,6 +23,7 @@ PATCH-06G-005 COMPLETE / LOCAL PASS
 PATCH-06G-GATE-1 COMPLETE / LOCAL PASS
 PATCH-06H-001 COMPLETE / LOCAL PASS
 PATCH-06H-002 COMPLETE / LOCAL PASS
+PATCH-06H-003 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -68,19 +69,19 @@ No automatic ingestion until Phase 10 source-governance workflow is implemented.
 Latest implemented patch:
 
 ```text
-PATCH-06H-002 - Bare Citation Normalization Regression Tests
+PATCH-06H-003 - Bare Citation Normalization Fix
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-06H-002 add bare citation normalization regression tests
+PATCH-06H-003 fix bare citation normalization
 ```
 
 Current working state:
 
 ```text
-PATCH-06H-002 COMPLETE / LOCAL PASS
+PATCH-06H-003 COMPLETE / LOCAL PASS
 Phase 6G closed through stabilization gate.
 Phase 6H started with a diagnostic-only retrieval/reranker/authority-normalization baseline map.
 Key findings:
@@ -96,13 +97,16 @@ Key findings:
 - Baseline finding: bare citation query "RR 2-98" is a likely issue-classification / exact-authority normalization gap before it is a vector-store or source-card rendering issue.
 - PATCH-06H-002 added offline fixture/test coverage for bare administrative citations, statutory citations, case citations, named authority aliases, and generic guard controls.
 - PATCH-06H-002 remains test-only: all behavioral expectations are pending future runtime assertions and no runtime behavior changed.
-- Recommended next work is the narrow bare citation normalization fix against the new regression targets.
+- PATCH-06H-003 implemented a narrow exact-authority detector fix for CTA Case citations without "No." and known Seagate named-case aliases.
+- PATCH-06H-003 converted Phase 6H bare/named authority targets into active classifier assertions while preserving generic guard controls.
+- No pipeline.js, retrieval-engine.js, reranker-engine.js, sourceAvailability, source-card, DB/indexing/RAG/vector/corpus/ingestion, package/dependency, env, prompt, route, or controller changes occurred.
+- Recommended next work is a retrieval/reranker baseline evaluation report before any reranker/provider experiment or broader decomposition.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-06H-003 - Bare citation normalization fix
+PATCH-06H-004 - Retrieval / reranker baseline evaluation report
 ```
 
 Expected next gate:
@@ -1016,13 +1020,14 @@ Planned work:
 ```text
 PATCH-06H-001 - Retrieval / Reranker / Authority Normalization Baseline Map
 PATCH-06H-002 - Bare citation normalization regression tests - COMPLETE / LOCAL PASS
-PATCH-06H-003 - Bare citation normalization fix
+PATCH-06H-003 - Bare citation normalization fix - COMPLETE / LOCAL PASS
+PATCH-06H-004 - Retrieval / reranker baseline evaluation report
 ```
 
 Immediate next task:
 
 ```text
-PATCH-06H-003 - Bare citation normalization fix
+PATCH-06H-004 - Retrieval / reranker baseline evaluation report
 ```
 
 ---
@@ -1040,7 +1045,7 @@ PHASE 6H - Retrieval / Reranker / Authority Normalization Under Evaluation Guard
 Current latest pushed commit:
 
 ```text
-PATCH-06H-002 add bare citation normalization regression tests
+PATCH-06H-003 fix bare citation normalization
 ```
 
 Current status:
@@ -1058,12 +1063,13 @@ PATCH-06G-005 COMPLETE / LOCAL PASS
 PATCH-06G-GATE-1 COMPLETE / LOCAL PASS
 PATCH-06H-001 COMPLETE / LOCAL PASS
 PATCH-06H-002 COMPLETE / LOCAL PASS
+PATCH-06H-003 COMPLETE / LOCAL PASS
 ```
 
 Immediate next Codex task:
 
 ```text
-PATCH-06H-003 - Bare citation normalization fix
+PATCH-06H-004 - Retrieval / reranker baseline evaluation report
 ```
 
 After that:
@@ -1101,4 +1107,3 @@ Important current guard:
 Specific unavailable BIR Ruling-number queries should not be promoted to AUTHORITY_FOUND through unrelated non-BIR substitute authorities.
 BIR Ruling DA-489-03 is not in the corpus and should not expose a BIR Ruling source card.
 ```
-

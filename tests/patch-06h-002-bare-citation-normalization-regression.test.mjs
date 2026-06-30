@@ -24,6 +24,10 @@ import {
   runEvaluation,
   validateEvaluationFixture
 } from "../evaluation/runner/evaluation-runner.js";
+import {
+  classify,
+  detectExactAuthority
+} from "../issue-classification-engine.js";
 
 const FIXTURE_PATH = resolve("evaluation", "fixtures", "phase-6h-002-bare-citation-normalization-regression.fixture.json");
 
@@ -70,6 +74,44 @@ const REQUIRED_POLICY_FIELDS = [
   "expectedSourceCardPolicy",
   "expectedGuardBehavior",
   "notes"
+];
+
+const EXPECTED_EXACT_AUTHORITIES = new Map([
+  ["RR 2-98", { type: "RR", reference: "RR No. 2-1998" }],
+  ["RR No. 2-98", { type: "RR", reference: "RR No. 2-1998" }],
+  ["Revenue Regulations No. 2-98", { type: "RR", reference: "RR No. 2-1998" }],
+  ["RMC 65-2012", { type: "RMC", reference: "RMC No. 65-2012" }],
+  ["RMC No. 65-2012", { type: "RMC", reference: "RMC No. 65-2012" }],
+  ["Revenue Memorandum Circular No. 65-2012", { type: "RMC", reference: "RMC No. 65-2012" }],
+  ["RMO 20-2013", { type: "RMO", reference: "RMO No. 20-2013" }],
+  ["RMO No. 20-2013", { type: "RMO", reference: "RMO No. 20-2013" }],
+  ["Revenue Memorandum Order No. 20-2013", { type: "RMO", reference: "RMO No. 20-2013" }],
+  ["RMO 24-2013", { type: "RMO", reference: "RMO No. 24-2013" }],
+  ["NIRC Sec. 57", { type: "STATUTE", reference: "NIRC Sec. 57" }],
+  ["NIRC Section 57", { type: "STATUTE", reference: "NIRC Sec. 57" }],
+  ["Section 57 of the NIRC", { type: "STATUTE", reference: "NIRC Sec. 57" }],
+  ["NIRC Sec. 58", { type: "STATUTE", reference: "NIRC Sec. 58" }],
+  ["NIRC Section 23", { type: "STATUTE", reference: "NIRC Sec. 23" }],
+  ["RA 10963", { type: "STATUTE", reference: "RA 10963" }],
+  ["Republic Act No. 10963", { type: "STATUTE", reference: "RA 10963" }],
+  ["TRAIN Law", { type: "STATUTE", reference: "RA 10963" }],
+  ["RA 11534", { type: "STATUTE", reference: "RA 11534" }],
+  ["CREATE Act", { type: "STATUTE", reference: "RA 11534" }],
+  ["CTA Case No. 9369", { type: "CTA_DIVISION", reference: "CTA Case No. 9369" }],
+  ["CTA Case 9369", { type: "CTA_DIVISION", reference: "CTA Case No. 9369" }],
+  ["G.R. No. 153866", { type: "SUPREME_COURT", reference: "G.R. No. 153866" }],
+  ["CIR v. Seagate", { type: "SUPREME_COURT", reference: "G.R. No. 153866" }],
+  ["Seagate case", { type: "SUPREME_COURT", reference: "G.R. No. 153866" }]
+]);
+
+const GENERIC_GUARD_QUERIES = [
+  "tax law",
+  "BIR issuance",
+  "court case",
+  "VAT case",
+  "withholding tax case",
+  "explain EWT",
+  "what is withholding tax"
 ];
 
 let passed = 0;
@@ -207,6 +249,43 @@ await test("parked RR 2-98 finding is represented as a future normalization targ
   assert.match(rrCase.notes, /FINDING-028A-F1/);
   assert.equal(check.forbiddenIssueClassification, "GENERAL_TAX");
   assert.equal(check.expectedSourceCard, "RR 2-98");
+});
+
+await test("bare and named authority fixture queries are active exact-authority lookups", () => {
+  for (const [query, expected] of EXPECTED_EXACT_AUTHORITIES) {
+    const exact = detectExactAuthority(query);
+    const classification = classify(query);
+
+    assert.equal(exact.detected, true, `${query}: exact authority detected`);
+    assert.equal(exact.type, expected.type, `${query}: exact authority type`);
+    assert.equal(exact.reference, expected.reference, `${query}: exact authority reference`);
+    assert.equal(classification.exactAuthority.detected, true, `${query}: classifier exactAuthority detected`);
+    assert.equal(classification.exactAuthority.reference, expected.reference, `${query}: classifier reference`);
+    assert.equal(
+      classification.retrievalStrategy,
+      "EXACT_AUTHORITY_FIRST_THEN_ISSUE_SEMANTIC",
+      `${query}: exact authority retrieval strategy`
+    );
+    assert(
+      classification.targetAuthorities.includes(expected.reference),
+      `${query}: targetAuthorities include ${expected.reference}`
+    );
+  }
+});
+
+await test("generic guard fixture queries remain non-exact authority lookups", () => {
+  for (const query of GENERIC_GUARD_QUERIES) {
+    const exact = detectExactAuthority(query);
+    const classification = classify(query);
+
+    assert.equal(exact.detected, false, `${query}: no exact authority detected`);
+    assert.equal(classification.exactAuthority.detected, false, `${query}: classifier no exact authority`);
+    assert.notEqual(
+      classification.retrievalStrategy,
+      "EXACT_AUTHORITY_FIRST_THEN_ISSUE_SEMANTIC",
+      `${query}: not exact authority retrieval`
+    );
+  }
 });
 
 await test("pending bare citation expectations do not fail the evaluation runner", () => {
