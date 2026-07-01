@@ -43,6 +43,7 @@ PATCH-07A-008 COMPLETE / LOCAL PASS
 PATCH-07A-GATE-1 COMPLETE / LOCAL PASS
 PATCH-07B-001 COMPLETE / LOCAL PASS
 PATCH-07B-002 COMPLETE / LOCAL PASS
+PATCH-07B-003 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -108,13 +109,13 @@ full Tax Operating System red-team after Phase 13
 Latest implemented patch:
 
 ```text
-PATCH-07B-002 - Analytical Reasoning Fixture and Issue-Framing Test Scaffold
+PATCH-07B-003 - Fact-Gap Detector Fixture and Tests
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-07B-002 add analytical reasoning issue-framing scaffold
+PATCH-07B-003 add fact-gap detector fixture and tests
 ```
 
 Current working state:
@@ -285,12 +286,29 @@ Key Phase 7A architecture findings:
 - PATCH-07B-002 did not create runtime engines and did not change runtime behavior,
   prompts, routes, retrieval, reranker, sourceAvailability, source-card,
   package/dependency, DB/indexing/RAG/vector/corpus, ingestion, env, or secrets.
+- PATCH-07B-003 added a local/static fact-gap detector fixture with 36 cases across
+  withholding/EWT, VAT zero-rating, NOLCO, deductibility/substantiation,
+  CWT/Form 2307, BIR audit procedure, invoice mismatch/VAT input,
+  reimbursable/pass-through billing, authority-state fact-gap behavior, client
+  fact-pattern checklist scaffold, and policy-first/non-engine scaffold coverage.
+- PATCH-07B-003 added focused fixture tests confirming top-level runtime-safety
+  metadata, mode coverage, authority-state coverage, critical versus helpful
+  missing fact separation, assumptions-not-allowed coverage, document/timing/
+  taxpayer-status/transaction-character/assessment-stage gap coverage, user fact
+  gap versus source coverage gap separation, Phase 10 metadata/source governance
+  deferrals, hierarchy/conflict placeholders, supersession/effective-date
+  deferrals, numeric risk scoring deferral, client checklist fact-gathering-only
+  behavior, policy-first non-engine safeguards, and Phase 7A safeguard preservation.
+- PATCH-07B-003 did not create runtime engines and did not change runtime behavior,
+  prompts, routes, retrieval, reranker, sourceAvailability, source-card,
+  issue-classification, package/dependency, DB/indexing/RAG/vector/corpus,
+  ingestion, env, or secrets.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-003 - Fact-gap detector fixture and tests
+PATCH-07B-004 - Authority applicability policy fixture and tests
 ```
 
 Expected next gate:
@@ -314,7 +332,7 @@ Codex
 Gemini review for next task:
 
 ```text
-Not required unless PATCH-07B-002 reveals material architecture uncertainty.
+Not required unless PATCH-07B-003 reveals material architecture uncertainty.
 ```
 
 ---
@@ -1227,7 +1245,7 @@ PATCH-06H-GATE-1 - Phase 6H Stabilization Gate - COMPLETE / LOCAL PASS
 Immediate next task:
 
 ```text
-PATCH-07B-003 - Fact-gap detector fixture and tests
+PATCH-07B-004 - Authority applicability policy fixture and tests
 ```
 
 ---
@@ -1245,7 +1263,7 @@ PHASE 7B - Analytical / Adversarial Reasoning Layer
 Current latest pushed commit:
 
 ```text
-PATCH-07B-002 add analytical reasoning issue-framing scaffold
+PATCH-07B-003 add fact-gap detector fixture and tests
 ```
 
 Current status:
@@ -1283,12 +1301,13 @@ PATCH-07A-008 COMPLETE / LOCAL PASS
 PATCH-07A-GATE-1 COMPLETE / LOCAL PASS
 PATCH-07B-001 COMPLETE / LOCAL PASS
 PATCH-07B-002 COMPLETE / LOCAL PASS
+PATCH-07B-003 COMPLETE / LOCAL PASS
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-003 - Fact-gap detector fixture and tests
+PATCH-07B-004 - Authority applicability policy fixture and tests
 ```
 
 Recommended agent for next task:
@@ -1307,7 +1326,6 @@ After that:
 
 ```text
 Phase 7B approved sequence:
-PATCH-07B-003 - Fact-gap detector fixture and tests
 PATCH-07B-004 - Authority applicability policy fixture and tests
 PATCH-07B-005 - BIR vs taxpayer position architecture fixture and tests
 PATCH-07B-006 - Audit-defense risk-language fixture and tests
