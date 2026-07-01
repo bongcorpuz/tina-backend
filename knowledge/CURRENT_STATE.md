@@ -44,6 +44,7 @@ PATCH-07A-GATE-1 COMPLETE / LOCAL PASS
 PATCH-07B-001 COMPLETE / LOCAL PASS
 PATCH-07B-002 COMPLETE / LOCAL PASS
 PATCH-07B-003 COMPLETE / LOCAL PASS
+PATCH-07B-004 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -109,13 +110,13 @@ full Tax Operating System red-team after Phase 13
 Latest implemented patch:
 
 ```text
-PATCH-07B-003 - Fact-Gap Detector Fixture and Tests
+PATCH-07B-004 - Authority Applicability Policy Fixture and Tests
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-07B-003 add fact-gap detector fixture and tests
+PATCH-07B-004 add authority applicability policy fixture
 ```
 
 Current working state:
@@ -303,12 +304,32 @@ Key Phase 7A architecture findings:
   prompts, routes, retrieval, reranker, sourceAvailability, source-card,
   issue-classification, package/dependency, DB/indexing/RAG/vector/corpus,
   ingestion, env, or secrets.
+- PATCH-07B-004 added a local/static authority applicability policy fixture with
+  35 cases across statutory/NIRC applicability, Revenue Regulation applicability,
+  RMC/RMO applicability, BIR ruling applicability, court decision applicability,
+  effective-date/transition placeholders, supersession/amendment placeholders,
+  taxpayer-type/transaction-type applicability, procedural posture applicability,
+  authority-state applicability behavior, and policy-first/non-engine scaffold
+  coverage.
+- PATCH-07B-004 added focused fixture tests confirming runtime-safety metadata,
+  mode coverage, authority-state coverage, authority type coverage, applicability
+  classification coverage, required field completeness, user fact gap versus
+  source coverage gap separation, taxpayer/transaction/period checklist coverage,
+  hierarchy/effective-date/supersession placeholder treatment, RELATED_AUTHORITY_ONLY
+  and NO_INDEXED_SOURCE non-overclaim behavior, GENERAL_TAX non-promotion,
+  BIR ruling non-addressee limits, court decision fact/procedural posture limits,
+  Phase 10 dependency policy, policy-first non-engine safeguards, and Phase 7A
+  safeguard preservation.
+- PATCH-07B-004 did not create runtime engines and did not change runtime behavior,
+  prompts, routes, retrieval, reranker, sourceAvailability, source-card,
+  issue-classification, package/dependency, DB/indexing/RAG/vector/corpus,
+  ingestion, env, or secrets.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-004 - Authority applicability policy fixture and tests
+PATCH-07B-005 - BIR vs Taxpayer Position Fixture and Tests
 ```
 
 Expected next gate:
@@ -332,7 +353,7 @@ Codex
 Gemini review for next task:
 
 ```text
-Not required unless PATCH-07B-003 reveals material architecture uncertainty.
+Not required unless PATCH-07B-004 reveals material architecture uncertainty.
 ```
 
 ---
@@ -1245,7 +1266,7 @@ PATCH-06H-GATE-1 - Phase 6H Stabilization Gate - COMPLETE / LOCAL PASS
 Immediate next task:
 
 ```text
-PATCH-07B-004 - Authority applicability policy fixture and tests
+PATCH-07B-005 - BIR vs Taxpayer Position Fixture and Tests
 ```
 
 ---
@@ -1263,7 +1284,7 @@ PHASE 7B - Analytical / Adversarial Reasoning Layer
 Current latest pushed commit:
 
 ```text
-PATCH-07B-003 add fact-gap detector fixture and tests
+PATCH-07B-004 add authority applicability policy fixture
 ```
 
 Current status:
@@ -1302,12 +1323,13 @@ PATCH-07A-GATE-1 COMPLETE / LOCAL PASS
 PATCH-07B-001 COMPLETE / LOCAL PASS
 PATCH-07B-002 COMPLETE / LOCAL PASS
 PATCH-07B-003 COMPLETE / LOCAL PASS
+PATCH-07B-004 COMPLETE / LOCAL PASS
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-004 - Authority applicability policy fixture and tests
+PATCH-07B-005 - BIR vs Taxpayer Position Fixture and Tests
 ```
 
 Recommended agent for next task:
@@ -1319,14 +1341,13 @@ Codex
 Gemini review:
 
 ```text
-Not required unless PATCH-07B-002 reveals material architecture uncertainty.
+Not required unless PATCH-07B-004 reveals material architecture uncertainty.
 ```
 
 After that:
 
 ```text
 Phase 7B approved sequence:
-PATCH-07B-004 - Authority applicability policy fixture and tests
 PATCH-07B-005 - BIR vs taxpayer position architecture fixture and tests
 PATCH-07B-006 - Audit-defense risk-language fixture and tests
 PATCH-07B-007 - Reasoning safety policy and source-state guard tests
