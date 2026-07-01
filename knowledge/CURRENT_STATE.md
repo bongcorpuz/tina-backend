@@ -55,6 +55,7 @@ PATCH-07B-011 COMPLETE / LOCAL PASS
 PATCH-07B-012 COMPLETE / LOCAL PASS
 PATCH-07B-GATE-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 PATCH-07B-013R COMPLETE / LOCAL PASS
+PATCH-07B-014 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -528,20 +529,41 @@ Key Phase 7A architecture findings:
   prohibited conclusions, hidden-weakness policy, numeric-risk policy,
   settlement/protest policy, Phase 10 dependency flag handling, and structured
   adversarial safety assertions.
-- PATCH-07B-013R confirmed there is still no BIR/taxpayer runtime helper yet, no
-  audit-risk runtime helper yet, no settlement/protest runtime yet, no authority
-  conflict/hierarchy/supersession/effective-date runtime engine yet, and no live
-  route/prompt integration yet.
+- PATCH-07B-013R confirmed there was still no BIR/taxpayer runtime helper yet,
+  no audit-risk runtime helper yet, no settlement/protest runtime yet, no
+  authority conflict/hierarchy/supersession/effective-date runtime engine yet,
+  and no live route/prompt integration yet.
 - PATCH-07B-013R did not change prompts, routes/controllers, retrieval,
   reranker, sourceAvailability, source-card behavior, package/dependency,
   DB/indexing/RAG/vector/corpus, ingestion, env, secrets, or deferred Phase 10
   fact-check assets.
+- PATCH-07B-014 added bir-vs-taxpayer-position-helper.js as the first narrow
+  BIR vs taxpayer position runtime helper.
+- PATCH-07B-014 exposes assessBirTaxpayerPositions(input) and
+  buildPositionFramingChecklist(input) with implementationScope
+  BIR_TAXPAYER_POSITION_HELPER_ONLY and hard false capability flags for final
+  conclusions, risk scoring, and settlement recommendation.
+- PATCH-07B-014 integrates adversarial-content-safety-policy.js directly through
+  applyAdversarialContentSafetyPolicy, sanitizeAdversarialText, and
+  assertAdversarialSafety; generated position text is conditional, sanitized,
+  weakness-paired, and non-conclusive.
+- PATCH-07B-014 preserves authority-state boundaries for NO_INDEXED_SOURCE,
+  GENERAL_TAX, RELATED_AUTHORITY_ONLY, and AUTHORITY_FOUND, and preserves
+  Phase 10 dependency flags without resolving hierarchy, conflict,
+  supersession, effective date, currentness, ruling/case status, or source
+  metadata.
+- PATCH-07B-014 did not implement audit-risk runtime helper, settlement/protest
+  runtime, CTA/forum strategy runtime, compromise calculation, authority
+  conflict/hierarchy/supersession/effective-date runtime engine, live
+  route/prompt integration, source governance, retrieval/reranker changes,
+  sourceAvailability/source-card changes, package/dependency changes,
+  DB/indexing/vector/corpus/ingestion changes, or deferred Phase 10 assets.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-GEMINI-REVIEW-4 - Adversarial Content-Safety Policy Review Before BIR/Taxpayer Runtime
+PATCH-07B-GEMINI-REVIEW-5 - BIR vs Taxpayer Position Runtime Helper Review
 ```
 
 Recommended agent:
@@ -553,13 +575,13 @@ Gemini
 Gemini review:
 
 ```text
-Required after PATCH-07B-013R and before PATCH-07B-014.
+Required after PATCH-07B-014 because this is the first runtime helper capable of generating BIR-side and taxpayer-side position framing.
 ```
 
 Expected next gate:
 
 ```text
-TBD after PATCH-07B-GEMINI-REVIEW-4 recommendations
+TBD after PATCH-07B-GEMINI-REVIEW-5 recommendations
 ```
 
 Next phase:
@@ -577,7 +599,7 @@ Codex
 Gemini review for next task:
 
 ```text
-Not required unless scaffold uncertainty remains.
+Required; Gemini should review adversarial-content-safety integration and strict boundary preservation before any further adversarial runtime work.
 ```
 
 ---
@@ -1558,12 +1580,13 @@ PATCH-07B-011 COMPLETE / LOCAL PASS
 PATCH-07B-012 COMPLETE / LOCAL PASS
 PATCH-07B-GATE-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 PATCH-07B-013R COMPLETE / LOCAL PASS
+PATCH-07B-014 COMPLETE / LOCAL PASS
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-GEMINI-REVIEW-4 - Adversarial Content-Safety Policy Review Before BIR/Taxpayer Runtime
+PATCH-07B-GEMINI-REVIEW-5 - BIR vs Taxpayer Position Runtime Helper Review
 ```
 
 Recommended agent for next task:
@@ -1575,7 +1598,7 @@ Gemini
 Gemini review:
 
 ```text
-Required after PATCH-07B-013R and before PATCH-07B-014.
+Required after PATCH-07B-014 before any further adversarial runtime work.
 ```
 
 After that:
