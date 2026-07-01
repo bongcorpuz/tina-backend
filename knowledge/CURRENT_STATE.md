@@ -49,6 +49,7 @@ PATCH-07B-005 COMPLETE / LOCAL PASS
 PATCH-07B-006 COMPLETE / LOCAL PASS
 PATCH-07B-007 COMPLETE / LOCAL PASS
 PATCH-07B-008 COMPLETE / LOCAL PASS
+PATCH-07B-009 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -122,13 +123,13 @@ full Tax Operating System red-team after Phase 13
 Latest implemented patch:
 
 ```text
-PATCH-07B-008 - First Narrow Runtime Implementation
+PATCH-07B-009 - Narrow Fact-Gap Runtime Helper
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-07B-008 add narrow issue framing runtime
+PATCH-07B-009 add narrow fact-gap runtime helper
 ```
 
 Current working state:
@@ -419,12 +420,31 @@ Key Phase 7A architecture findings:
   reranker, sourceAvailability, source-card behavior, package/dependency,
   DB/indexing/RAG/vector/corpus, ingestion, env, secrets, or deferred Phase 10
   fact-check assets.
+- PATCH-07B-009 added fact-gap-helper.js as a deterministic, dependency-free,
+  fact-gap-helper-only runtime module with identifyFactGaps(input) and
+  buildFactChecklist(inputOrFactGapResult).
+- PATCH-07B-009 identifies critical missing facts, helpful missing facts,
+  document gaps, timing/period gaps, taxpayer-status gaps, transaction-character
+  gaps, assessment-stage gaps, and checklist questions while preserving known
+  facts and source coverage needs separately.
+- PATCH-07B-009 integrates narrowly with issue-framing-engine.js and
+  reasoning-safety-policy.js from PATCH-07B-008, preserving NO_INDEXED_SOURCE
+  /audit caution and RELATED_AUTHORITY_ONLY / GENERAL_TAX posture without
+  broad reasoning.
+- PATCH-07B-009 did not implement BIR/taxpayer runtime engines, audit risk runtime
+  scoring, settlement/protest strategy runtime, authority applicability runtime,
+  authority conflict resolution, hierarchy runtime, supersession runtime,
+  effective-date runtime, source governance/acquisition, memory, workflow
+  generation, observability, frontend, streaming, prompt changes, retrieval,
+  reranker, sourceAvailability, source-card behavior, package/dependency,
+  DB/indexing/RAG/vector/corpus, ingestion, env, secrets, or deferred Phase 10
+  fact-check assets.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-009 - Narrow Fact-Gap Runtime Helper
+PATCH-07B-010 - Client Fact-Pattern Checklist Output Integration
 ```
 
 Recommended agent:
@@ -436,7 +456,7 @@ Codex
 Gemini review:
 
 ```text
-Not required if limited to fact-gap extraction/helper only and no BIR/taxpayer/risk/authority-conflict runtime logic is introduced.
+Not required if limited to exposing checklist output safely and no BIR/taxpayer/risk/authority-conflict runtime logic is introduced.
 ```
 
 Expected next gate:
@@ -1391,7 +1411,7 @@ PHASE 7B - Analytical / Adversarial Reasoning Layer
 Current latest pushed commit:
 
 ```text
-PATCH-07B-008 add narrow issue framing runtime
+PATCH-07B-009 add narrow fact-gap runtime helper
 ```
 
 Current status:
@@ -1435,12 +1455,13 @@ PATCH-07B-005 COMPLETE / LOCAL PASS
 PATCH-07B-006 COMPLETE / LOCAL PASS
 PATCH-07B-007 COMPLETE / LOCAL PASS
 PATCH-07B-008 COMPLETE / LOCAL PASS
+PATCH-07B-009 COMPLETE / LOCAL PASS
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-009 - Narrow Fact-Gap Runtime Helper
+PATCH-07B-010 - Client Fact-Pattern Checklist Output Integration
 ```
 
 Recommended agent for next task:
@@ -1452,7 +1473,7 @@ Codex
 Gemini review:
 
 ```text
-Not required if limited to fact-gap extraction/helper only and no BIR/taxpayer/risk/authority-conflict runtime logic is introduced.
+Not required if limited to exposing checklist output safely and no BIR/taxpayer/risk/authority-conflict runtime logic is introduced.
 ```
 
 After that:
