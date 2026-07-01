@@ -52,6 +52,7 @@ PATCH-07B-008 COMPLETE / LOCAL PASS
 PATCH-07B-009 COMPLETE / LOCAL PASS
 PATCH-07B-010 COMPLETE / LOCAL PASS
 PATCH-07B-011 COMPLETE / LOCAL PASS
+PATCH-07B-012 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -125,13 +126,13 @@ full Tax Operating System red-team after Phase 13
 Latest implemented patch:
 
 ```text
-PATCH-07B-011 - Narrow Authority Applicability Runtime Helper
+PATCH-07B-012 - Reasoning Runtime Integration Guard and Composition Tests
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-07B-011 add narrow authority applicability helper
+PATCH-07B-012 add reasoning runtime composition guards
 ```
 
 Current working state:
@@ -484,12 +485,32 @@ Key Phase 7A architecture findings:
   reranker, sourceAvailability, source-card behavior, package/dependency,
   DB/indexing/RAG/vector/corpus, ingestion, env, secrets, or deferred Phase 10
   fact-check assets.
+- PATCH-07B-012 completed reasoning runtime integration guard and composition
+  tests for issue-framing-engine.js, reasoning-safety-policy.js,
+  fact-gap-helper.js, client-fact-checklist-output.js, and
+  authority-applicability-helper.js.
+- PATCH-07B-012 added a test-only composed helper chain covering /ask, /tax,
+  /audit, GENERAL_TAX, NO_INDEXED_SOURCE, RELATED_AUTHORITY_ONLY, and
+  AUTHORITY_FOUND scenarios, plus VAT zero-rating, CWT/Form 2307, BIR audit
+  procedure, and NOLCO fact-gap scenarios.
+- PATCH-07B-012 confirmed composed output remains issue-framing only,
+  fact-gathering only, checklist-oriented, authority-applicability posture-only,
+  source-state cautious, mode-boundary preserving, and free from final legal
+  conclusions.
+- PATCH-07B-012 confirmed there is no live route/prompt integration yet, no
+  BIR/taxpayer runtime engine yet, no audit risk runtime engine yet, no
+  settlement/protest strategy runtime yet, and no authority
+  conflict/hierarchy/supersession/effective-date runtime engine yet.
+- PATCH-07B-012 did not change prompts, routes/controllers, retrieval,
+  reranker, sourceAvailability, source-card behavior, package/dependency,
+  DB/indexing/RAG/vector/corpus, ingestion, env, secrets, or deferred Phase 10
+  fact-check assets.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-012 - Reasoning Runtime Integration Guard and Composition Tests
+PATCH-07B-GATE-1 - Phase 7B Narrow Runtime Safety Gate
 ```
 
 Recommended agent:
@@ -501,13 +522,13 @@ Codex
 Gemini review:
 
 ```text
-Not required if limited to composition tests and no BIR/taxpayer/risk/authority-conflict runtime logic is introduced.
+Suggested after gate if preparing to move into BIR/taxpayer position runtime or audit-risk runtime.
 ```
 
 Expected next gate:
 
 ```text
-TBD after Phase 7B architecture and approved implementation sequence
+PATCH-07B-GATE-1 - Phase 7B Narrow Runtime Safety Gate
 ```
 
 Next phase:
@@ -1456,7 +1477,7 @@ PHASE 7B - Analytical / Adversarial Reasoning Layer
 Current latest pushed commit:
 
 ```text
-PATCH-07B-011 add narrow authority applicability helper
+PATCH-07B-012 add reasoning runtime composition guards
 ```
 
 Current status:
@@ -1503,12 +1524,13 @@ PATCH-07B-008 COMPLETE / LOCAL PASS
 PATCH-07B-009 COMPLETE / LOCAL PASS
 PATCH-07B-010 COMPLETE / LOCAL PASS
 PATCH-07B-011 COMPLETE / LOCAL PASS
+PATCH-07B-012 COMPLETE / LOCAL PASS
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-012 - Reasoning Runtime Integration Guard and Composition Tests
+PATCH-07B-GATE-1 - Phase 7B Narrow Runtime Safety Gate
 ```
 
 Recommended agent for next task:
@@ -1520,7 +1542,7 @@ Codex
 Gemini review:
 
 ```text
-Not required if limited to composition tests and no BIR/taxpayer/risk/authority-conflict runtime logic is introduced.
+Suggested after gate if preparing to move into BIR/taxpayer position runtime or audit-risk runtime.
 ```
 
 After that:
