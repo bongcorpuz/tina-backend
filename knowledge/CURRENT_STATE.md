@@ -45,6 +45,7 @@ PATCH-07B-001 COMPLETE / LOCAL PASS
 PATCH-07B-002 COMPLETE / LOCAL PASS
 PATCH-07B-003 COMPLETE / LOCAL PASS
 PATCH-07B-004 COMPLETE / LOCAL PASS
+PATCH-07B-005 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -110,13 +111,13 @@ full Tax Operating System red-team after Phase 13
 Latest implemented patch:
 
 ```text
-PATCH-07B-004 - Authority Applicability Policy Fixture and Tests
+PATCH-07B-005 - BIR vs Taxpayer Position Fixture and Tests
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-07B-004 add authority applicability policy fixture
+PATCH-07B-005 add BIR vs taxpayer position fixture
 ```
 
 Current working state:
@@ -324,12 +325,33 @@ Key Phase 7A architecture findings:
   prompts, routes, retrieval, reranker, sourceAvailability, source-card,
   issue-classification, package/dependency, DB/indexing/RAG/vector/corpus,
   ingestion, env, or secrets.
+- PATCH-07B-005 added a local/static BIR vs taxpayer position policy fixture with
+  40 cases across EWT/withholding deficiency, CWT/Form 2307 disallowance,
+  VAT zero-rating disallowance, input VAT invoice mismatch, deductibility/
+  substantiation, reimbursable/pass-through billing, LOA/PAN/FAN/FDDA procedure,
+  prescription/assessment timing, NOLCO disallowance, authority-state BIR vs
+  taxpayer behavior, settlement/protest posture scaffold, and policy-first/
+  non-engine scaffold coverage.
+- PATCH-07B-005 added focused fixture tests confirming runtime-safety metadata,
+  mode coverage, authority-state coverage, authority support level policy,
+  risk-level policy, settlement/protest posture policy, required field
+  completeness, user fact gap versus source coverage gap separation, BIR likely
+  position versus taxpayer position distinction, strongest support versus weakest
+  facts/documents distinction, required documents coverage, qualitative exposure
+  indicators, no guaranteed outcome policy, no hidden weakness policy,
+  RELATED_AUTHORITY_ONLY and NO_INDEXED_SOURCE non-overclaim behavior,
+  GENERAL_TAX orientation-only behavior, Phase 10 dependency policy,
+  policy-first non-engine safeguards, and Phase 7A safeguard preservation.
+- PATCH-07B-005 did not create runtime engines and did not change runtime behavior,
+  prompts, routes, retrieval, reranker, sourceAvailability, source-card,
+  issue-classification, package/dependency, DB/indexing/RAG/vector/corpus,
+  ingestion, env, or secrets.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-005 - BIR vs Taxpayer Position Fixture and Tests
+PATCH-07B-006 - Audit-Defense Risk-Language Fixture and Tests
 ```
 
 Expected next gate:
@@ -353,7 +375,7 @@ Codex
 Gemini review for next task:
 
 ```text
-Not required unless PATCH-07B-004 reveals material architecture uncertainty.
+Not required unless scaffold uncertainty remains.
 ```
 
 ---
@@ -1266,7 +1288,7 @@ PATCH-06H-GATE-1 - Phase 6H Stabilization Gate - COMPLETE / LOCAL PASS
 Immediate next task:
 
 ```text
-PATCH-07B-005 - BIR vs Taxpayer Position Fixture and Tests
+PATCH-07B-006 - Audit-Defense Risk-Language Fixture and Tests
 ```
 
 ---
@@ -1284,7 +1306,7 @@ PHASE 7B - Analytical / Adversarial Reasoning Layer
 Current latest pushed commit:
 
 ```text
-PATCH-07B-004 add authority applicability policy fixture
+PATCH-07B-005 add BIR vs taxpayer position fixture
 ```
 
 Current status:
@@ -1324,12 +1346,13 @@ PATCH-07B-001 COMPLETE / LOCAL PASS
 PATCH-07B-002 COMPLETE / LOCAL PASS
 PATCH-07B-003 COMPLETE / LOCAL PASS
 PATCH-07B-004 COMPLETE / LOCAL PASS
+PATCH-07B-005 COMPLETE / LOCAL PASS
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-005 - BIR vs Taxpayer Position Fixture and Tests
+PATCH-07B-006 - Audit-Defense Risk-Language Fixture and Tests
 ```
 
 Recommended agent for next task:
@@ -1341,7 +1364,7 @@ Codex
 Gemini review:
 
 ```text
-Not required unless PATCH-07B-004 reveals material architecture uncertainty.
+Not required unless scaffold uncertainty remains.
 ```
 
 After that:
