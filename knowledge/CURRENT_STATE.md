@@ -46,6 +46,7 @@ PATCH-07B-002 COMPLETE / LOCAL PASS
 PATCH-07B-003 COMPLETE / LOCAL PASS
 PATCH-07B-004 COMPLETE / LOCAL PASS
 PATCH-07B-005 COMPLETE / LOCAL PASS
+PATCH-07B-006 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -99,6 +100,14 @@ Phase 7C/6F-LIVE answer-grounding/citation-faithfulness
 Phase 8 memory/user learning/governed tax intelligence
 Phase 9 professional workflow co-pilot
 Phase 10 source governance, official-source acquisition, n8n/Crawlee/Apify/Google Drive/source repository
+Phase 10 Tax Accuracy Evaluation and Reliability QA using deferred fact-check assets:
+  tests/TINA_Tax_FactCheck_Answer_Key_v2.md
+  evaluation/factcheck/README.md
+  evaluation/factcheck/TINA_Tax_FactCheck_Test_Plan_v2.md
+  evaluation/factcheck/TINA_Tax_FactCheck_Test_Cases_v2.md
+  evaluation/factcheck/TINA_Tax_FactCheck_Scoring_Rubric_v2.md
+  evaluation/factcheck/TINA_Tax_FactCheck_Run_Log_Template_v2.md
+  evaluation/factcheck/TINA_Tax_FactCheck_Evaluation_Report_Template_v2.md
 Phase 11 observability/query evidence/adaptive operations
 Phase 12 document-aware advisory
 Phase 13 full Philippine Tax Operating System
@@ -111,13 +120,13 @@ full Tax Operating System red-team after Phase 13
 Latest implemented patch:
 
 ```text
-PATCH-07B-005 - BIR vs Taxpayer Position Fixture and Tests
+PATCH-07B-006 - Audit-Defense Risk-Language Fixture and Tests
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-07B-005 add BIR vs taxpayer position fixture
+PATCH-07B-006 add audit-defense risk-language fixture
 ```
 
 Current working state:
@@ -346,12 +355,32 @@ Key Phase 7A architecture findings:
   prompts, routes, retrieval, reranker, sourceAvailability, source-card,
   issue-classification, package/dependency, DB/indexing/RAG/vector/corpus,
   ingestion, env, or secrets.
+- PATCH-07B-006 added a local/static audit-defense risk-language policy fixture
+  with 41 cases across EWT/withholding deficiency, CWT/Form 2307 disallowance,
+  VAT zero-rating, input VAT invoice mismatch, deductibility/substantiation,
+  reimbursable/pass-through billing, LOA/PAN/FAN/FDDA procedure, prescription/
+  assessment timing, NOLCO disallowance, authority-state risk-language behavior,
+  settlement/protest posture, and policy-first/non-engine risk-language traps.
+- PATCH-07B-006 added focused fixture tests confirming runtime-safety metadata,
+  mode coverage, authority-state coverage, authority/fact/document/procedural
+  strength policy values, risk-level policy, uncertainty-level policy,
+  settlement/protest posture policy, required field completeness, user fact gap
+  versus source coverage gap separation, qualitative exposure indicators,
+  prohibited numeric scoring, no guaranteed outcome policy, no hidden weakness
+  policy, RELATED_AUTHORITY_ONLY and NO_INDEXED_SOURCE risk-language limits,
+  GENERAL_TAX orientation-only behavior, AUTHORITY_FOUND not overriding weak
+  facts/documents, Phase 10 dependency policy, policy-first non-engine safeguards,
+  and Phase 7A safeguard preservation.
+- PATCH-07B-006 did not create runtime engines and did not change runtime behavior,
+  prompts, routes, retrieval, reranker, sourceAvailability, source-card,
+  issue-classification, package/dependency, DB/indexing/RAG/vector/corpus,
+  ingestion, env, secrets, or deferred Phase 10 fact-check assets.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-006 - Audit-Defense Risk-Language Fixture and Tests
+PATCH-07B-007 - Reasoning Safety Policy and Source-State Guard Tests
 ```
 
 Expected next gate:
@@ -1288,7 +1317,7 @@ PATCH-06H-GATE-1 - Phase 6H Stabilization Gate - COMPLETE / LOCAL PASS
 Immediate next task:
 
 ```text
-PATCH-07B-006 - Audit-Defense Risk-Language Fixture and Tests
+PATCH-07B-007 - Reasoning Safety Policy and Source-State Guard Tests
 ```
 
 ---
@@ -1306,7 +1335,7 @@ PHASE 7B - Analytical / Adversarial Reasoning Layer
 Current latest pushed commit:
 
 ```text
-PATCH-07B-005 add BIR vs taxpayer position fixture
+PATCH-07B-006 add audit-defense risk-language fixture
 ```
 
 Current status:
@@ -1347,12 +1376,13 @@ PATCH-07B-002 COMPLETE / LOCAL PASS
 PATCH-07B-003 COMPLETE / LOCAL PASS
 PATCH-07B-004 COMPLETE / LOCAL PASS
 PATCH-07B-005 COMPLETE / LOCAL PASS
+PATCH-07B-006 COMPLETE / LOCAL PASS
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-006 - Audit-Defense Risk-Language Fixture and Tests
+PATCH-07B-007 - Reasoning Safety Policy and Source-State Guard Tests
 ```
 
 Recommended agent for next task:
