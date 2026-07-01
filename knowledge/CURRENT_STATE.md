@@ -41,6 +41,7 @@ PATCH-07A-007 COMPLETE / LOCAL PASS
 PATCH-07A-007R COMPLETE / LOCAL PASS
 PATCH-07A-008 COMPLETE / LOCAL PASS
 PATCH-07A-GATE-1 COMPLETE / LOCAL PASS
+PATCH-07B-001 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -106,13 +107,13 @@ full Tax Operating System red-team after Phase 13
 Latest implemented patch:
 
 ```text
-PATCH-07A-GATE-1 - Phase 7A Stabilization Gate
+PATCH-07B-001 - Analytical / Adversarial Reasoning Layer Architecture Review
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-07A-GATE-1 close Phase 7A
+PATCH-07B-001 add analytical reasoning architecture review
 ```
 
 Current working state:
@@ -240,12 +241,42 @@ Key Phase 7A architecture findings:
 - PATCH-07A-GATE-1 closed Phase 7A / PASS and did not implement Phase 7B,
   frontend cleanup, streaming UX, source governance/acquisition, DB/indexing/RAG/
   vector/corpus/ingestion, or full red-team work.
+- PATCH-07B-001 completed a full read-only architecture review for Phase 7B.
+- Key Phase 7B architecture decisions:
+  1. Phase 7B reasoning feeds into Phase 7A format sections, not around them.
+     Phase 7A /ask, /tax, and /audit section structures are preserved.
+  2. Reasoning-safety-policy (Component 10) gates all Phase 7B reasoning components.
+     It must be implemented before any reasoning engine is activated.
+  3. Phase 10 temporal dependency is explicitly excluded from Phase 7B.
+     Effective-date computation, supersession detection, and authority freshness
+     checking are Phase 10 work. Phase 7B fixtures must include explicit
+     temporal-dependency placeholders.
+  4. Fixture-first always: PATCH-07B-002 through 07B-007 fixtures must all pass
+     before PATCH-07B-008 first implementation begins.
+  5. Gemini review of the architecture report is suggested before PATCH-07B-008.
+  6. BIR Form 2307/2550M (PATCH-025B) requires Phase 7B-002 diagnostic fixture first.
+     Runtime fix only if fixture confirms the issue is classification/reasoning,
+     not corpus coverage.
+  7. CTA 9711/9369/Seagate: Phase 7B designs reasoning cautions for case-applicability
+     checks; live answer-grounding belongs to Phase 7C/6F-LIVE.
+- Phase 7B proposed reasoning components (design only, not implemented):
+  issue-framing-engine, fact-gap-detector, authority-applicability-engine,
+  authority-conflict-advisor (placeholder only), bir-position-engine,
+  taxpayer-position-engine, audit-defense-risk-engine, documentary-support-engine,
+  procedural-issue-engine, reasoning-safety-policy, advisory-output-policy.
+- Recommended Phase 7B sequence: 001 arch review -> 002 issue-framing fixture ->
+  003 fact-gap fixture -> 004 applicability fixture -> 005 BIR/taxpayer position
+  fixture -> 006 risk-language fixture -> 007 reasoning safety fixture -> 008 first
+  narrow implementation -> GATE-1.
+- PATCH-07B-001 did not change runtime behavior, prompts, routes, retrieval, reranker,
+  sourceAvailability, source-card, package/dependency, DB/indexing/RAG/vector/corpus,
+  ingestion, env, or secrets.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-001 - Analytical / Adversarial Reasoning Layer Architecture Review
+PATCH-07B-002 - Analytical reasoning fixture and issue-framing test scaffold
 ```
 
 Expected next gate:
@@ -1236,24 +1267,39 @@ PATCH-07A-007 COMPLETE / LOCAL PASS
 PATCH-07A-007R COMPLETE / LOCAL PASS
 PATCH-07A-008 COMPLETE / LOCAL PASS
 PATCH-07A-GATE-1 COMPLETE / LOCAL PASS
+PATCH-07B-001 COMPLETE / LOCAL PASS
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-001 - Analytical / Adversarial Reasoning Layer Architecture Review
+PATCH-07B-002 - Analytical reasoning fixture and issue-framing test scaffold
 ```
 
-Gemini review for next task:
+Recommended agent for next task:
 
 ```text
-Suggested for PATCH-07B-001 because Phase 7B introduces higher-risk legal/tax reasoning architecture, authority conflict handling, applicability logic, BIR vs taxpayer positions, and audit-defense reasoning design.
+Codex
+```
+
+Gemini review:
+
+```text
+Suggested — review PATCH-07B-001 architecture report before PATCH-07B-008 implementation begins.
 ```
 
 After that:
 
 ```text
-Phase 7B approved sequence after PATCH-07B-001 architecture review.
+Phase 7B approved sequence:
+PATCH-07B-003 - Fact-gap detector fixture and tests
+PATCH-07B-004 - Authority applicability policy fixture and tests
+PATCH-07B-005 - BIR vs taxpayer position architecture fixture and tests
+PATCH-07B-006 - Audit-defense risk-language fixture and tests
+PATCH-07B-007 - Reasoning safety policy and source-state guard tests
+PATCH-07B-008 - First narrow issue-framing implementation, if fixtures support it
+PATCH-07B-GATE-1 - Phase 7B Stabilization Gate
+
 Phase 6H runtime retrieval/reranker changes remain deferred unless a later approved phase
 reopens them with local comparison fixture/report artifacts, measurable baseline metrics,
 and conservative pass/fail thresholds.
