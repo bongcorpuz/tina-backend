@@ -42,6 +42,7 @@ PATCH-07A-007R COMPLETE / LOCAL PASS
 PATCH-07A-008 COMPLETE / LOCAL PASS
 PATCH-07A-GATE-1 COMPLETE / LOCAL PASS
 PATCH-07B-001 COMPLETE / LOCAL PASS
+PATCH-07B-002 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -107,13 +108,13 @@ full Tax Operating System red-team after Phase 13
 Latest implemented patch:
 
 ```text
-PATCH-07B-001 - Analytical / Adversarial Reasoning Layer Architecture Review
+PATCH-07B-002 - Analytical Reasoning Fixture and Issue-Framing Test Scaffold
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-07B-001 add analytical reasoning architecture review
+PATCH-07B-002 add analytical reasoning issue-framing scaffold
 ```
 
 Current working state:
@@ -271,12 +272,25 @@ Key Phase 7A architecture findings:
 - PATCH-07B-001 did not change runtime behavior, prompts, routes, retrieval, reranker,
   sourceAvailability, source-card, package/dependency, DB/indexing/RAG/vector/corpus,
   ingestion, env, or secrets.
+- PATCH-07B-002 created a local/static analytical reasoning issue-framing fixture
+  with 31 cases across WHT/EWT, VAT zero-rating, NOLCO, deductibility/
+  substantiation, CWT/Form 2307, BIR audit procedure, invoice mismatch/VAT input,
+  reimbursable/pass-through billing, authority-state reasoning posture, and
+  policy-first/non-engine scaffold coverage.
+- PATCH-07B-002 added focused scaffold tests confirming top-level runtime-safety
+  metadata, mode coverage, authority-state coverage, user fact gap vs source
+  coverage gap separation, Phase 10 metadata/source governance deferrals,
+  authority hierarchy/conflict placeholders, supersession/effective-date deferrals,
+  numeric risk scoring deferral, and Phase 7A safeguard preservation.
+- PATCH-07B-002 did not create runtime engines and did not change runtime behavior,
+  prompts, routes, retrieval, reranker, sourceAvailability, source-card,
+  package/dependency, DB/indexing/RAG/vector/corpus, ingestion, env, or secrets.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-002 - Analytical reasoning fixture and issue-framing test scaffold
+PATCH-07B-003 - Fact-gap detector fixture and tests
 ```
 
 Expected next gate:
@@ -294,13 +308,13 @@ PHASE 7B - Analytical / Adversarial Reasoning Layer
 Recommended agent:
 
 ```text
-Claude Code
+Codex
 ```
 
 Gemini review for next task:
 
 ```text
-Suggested for PATCH-07B-001 because Phase 7B introduces higher-risk legal/tax reasoning architecture, authority conflict handling, applicability logic, BIR vs taxpayer positions, and audit-defense reasoning design.
+Not required unless PATCH-07B-002 reveals material architecture uncertainty.
 ```
 
 ---
@@ -1213,7 +1227,7 @@ PATCH-06H-GATE-1 - Phase 6H Stabilization Gate - COMPLETE / LOCAL PASS
 Immediate next task:
 
 ```text
-PATCH-07B-001 - Analytical / Adversarial Reasoning Layer Architecture Review
+PATCH-07B-003 - Fact-gap detector fixture and tests
 ```
 
 ---
@@ -1231,7 +1245,7 @@ PHASE 7B - Analytical / Adversarial Reasoning Layer
 Current latest pushed commit:
 
 ```text
-PATCH-07A-GATE-1 close Phase 7A
+PATCH-07B-002 add analytical reasoning issue-framing scaffold
 ```
 
 Current status:
@@ -1268,12 +1282,13 @@ PATCH-07A-007R COMPLETE / LOCAL PASS
 PATCH-07A-008 COMPLETE / LOCAL PASS
 PATCH-07A-GATE-1 COMPLETE / LOCAL PASS
 PATCH-07B-001 COMPLETE / LOCAL PASS
+PATCH-07B-002 COMPLETE / LOCAL PASS
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-002 - Analytical reasoning fixture and issue-framing test scaffold
+PATCH-07B-003 - Fact-gap detector fixture and tests
 ```
 
 Recommended agent for next task:
@@ -1285,7 +1300,7 @@ Codex
 Gemini review:
 
 ```text
-Suggested — review PATCH-07B-001 architecture report before PATCH-07B-008 implementation begins.
+Not required unless PATCH-07B-002 reveals material architecture uncertainty.
 ```
 
 After that:
