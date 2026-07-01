@@ -51,6 +51,7 @@ PATCH-07B-007 COMPLETE / LOCAL PASS
 PATCH-07B-008 COMPLETE / LOCAL PASS
 PATCH-07B-009 COMPLETE / LOCAL PASS
 PATCH-07B-010 COMPLETE / LOCAL PASS
+PATCH-07B-011 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -124,13 +125,13 @@ full Tax Operating System red-team after Phase 13
 Latest implemented patch:
 
 ```text
-PATCH-07B-010 - Client Fact-Pattern Checklist Output Integration
+PATCH-07B-011 - Narrow Authority Applicability Runtime Helper
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-07B-010 add client fact checklist output
+PATCH-07B-011 add narrow authority applicability helper
 ```
 
 Current working state:
@@ -463,24 +464,44 @@ Key Phase 7A architecture findings:
   changes, retrieval, reranker, sourceAvailability, source-card behavior,
   package/dependency, DB/indexing/RAG/vector/corpus, ingestion, env, secrets, or
   deferred Phase 10 fact-check assets.
+- PATCH-07B-011 added authority-applicability-helper.js as a deterministic,
+  dependency-free authority-applicability-helper-only runtime module with
+  assessAuthorityApplicability(input) and
+  buildAuthorityApplicabilityChecklist(input).
+- PATCH-07B-011 classifies applicabilityLevel and mechanically derived
+  applicabilityPosture from already-known inputs, preserves missing
+  applicability facts separately from source coverage needs, preserves
+  source-state caution through reasoning-safety-policy.js, and flags Phase 10
+  dependency needs without resolving them.
+- PATCH-07B-011 activated all 35 PATCH-07B-004 authority applicability fixture
+  cases in focused runtime tests and preserved authority-state hard caps for
+  NO_INDEXED_SOURCE, RELATED_AUTHORITY_ONLY, GENERAL_TAX, and AUTHORITY_FOUND.
+- PATCH-07B-011 did not implement BIR/taxpayer runtime engines, audit risk
+  runtime scoring, settlement/protest strategy runtime, authority conflict
+  resolution, hierarchy runtime, supersession runtime, effective-date runtime,
+  source currentness runtime, source governance/acquisition, memory, workflow
+  generation, observability, frontend, streaming, prompt changes, retrieval,
+  reranker, sourceAvailability, source-card behavior, package/dependency,
+  DB/indexing/RAG/vector/corpus, ingestion, env, secrets, or deferred Phase 10
+  fact-check assets.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-011 - Narrow Authority Applicability Runtime Helper
+PATCH-07B-012 - Reasoning Runtime Integration Guard and Composition Tests
 ```
 
 Recommended agent:
 
 ```text
-Claude Code first if design uncertainty exists; otherwise Codex
+Codex
 ```
 
 Gemini review:
 
 ```text
-Suggested if the helper goes beyond placeholder labels into effectivity, hierarchy, supersession, or legal applicability conclusions.
+Not required if limited to composition tests and no BIR/taxpayer/risk/authority-conflict runtime logic is introduced.
 ```
 
 Expected next gate:
@@ -1435,7 +1456,7 @@ PHASE 7B - Analytical / Adversarial Reasoning Layer
 Current latest pushed commit:
 
 ```text
-PATCH-07B-009 add narrow fact-gap runtime helper
+PATCH-07B-011 add narrow authority applicability helper
 ```
 
 Current status:
@@ -1481,24 +1502,25 @@ PATCH-07B-007 COMPLETE / LOCAL PASS
 PATCH-07B-008 COMPLETE / LOCAL PASS
 PATCH-07B-009 COMPLETE / LOCAL PASS
 PATCH-07B-010 COMPLETE / LOCAL PASS
+PATCH-07B-011 COMPLETE / LOCAL PASS
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-011 - Narrow Authority Applicability Runtime Helper
+PATCH-07B-012 - Reasoning Runtime Integration Guard and Composition Tests
 ```
 
 Recommended agent for next task:
 
 ```text
-Claude Code first if design uncertainty exists; otherwise Codex
+Codex
 ```
 
 Gemini review:
 
 ```text
-Suggested if the helper goes beyond placeholder labels into effectivity, hierarchy, supersession, or legal applicability conclusions.
+Not required if limited to composition tests and no BIR/taxpayer/risk/authority-conflict runtime logic is introduced.
 ```
 
 After that:
@@ -1512,6 +1534,8 @@ PATCH-07B-GEMINI-REVIEW-1 - Phase 7B Pre-Implementation Scaffold Review
 PATCH-07B-008 - First narrow issue-framing implementation, if fixtures support it
 PATCH-07B-009 - Narrow fact-gap runtime helper, if kept narrow
 PATCH-07B-010 - Client fact-pattern checklist output integration, if kept checklist-only
+PATCH-07B-011 - Narrow authority applicability runtime helper, if kept posture-only
+PATCH-07B-012 - Reasoning runtime integration guard and composition tests
 PATCH-07B-GATE-1 - Phase 7B Stabilization Gate
 
 Phase 6H runtime retrieval/reranker changes remain deferred unless a later approved phase
