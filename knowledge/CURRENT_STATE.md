@@ -36,6 +36,7 @@ PATCH-07A-003 COMPLETE / LOCAL PASS
 PATCH-07A-004 COMPLETE / LOCAL PASS
 PATCH-07A-005 COMPLETE / LOCAL PASS
 PATCH-07A-006 COMPLETE / LOCAL PASS
+PATCH-07A-007 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -81,19 +82,19 @@ No automatic ingestion until Phase 10 source-governance workflow is implemented.
 Latest implemented patch:
 
 ```text
-PATCH-07A-006 - /audit Advisory Formatting Protection
+PATCH-07A-007 - Phase 7A Response-Safety Red-Team Fixture and Tests
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-07A-006 protect audit advisory formatting
+PATCH-07A-007 add response safety red-team fixture
 ```
 
 Current working state:
 
 ```text
-PATCH-07A-006 COMPLETE / LOCAL PASS
+PATCH-07A-007 COMPLETE / LOCAL PASS
 Phase 6H closed through stabilization gate (PATCH-06H-GATE-1).
 Phase 7A is now active.
 Key Phase 7A architecture findings:
@@ -164,8 +165,19 @@ Key Phase 7A architecture findings:
 - PATCH-07A-006 did not change routes/controllers, context orchestration, retrieval,
   reranker, authority normalization, source-card, sourceAvailability,
   package/dependency, DB/indexing/RAG/vector/corpus, ingestion, env, or secrets.
+- PATCH-07A-007 added a limited offline Phase 7A response-safety red-team fixture
+  with 30 adversarial cases across /ask, /tax, and /audit.
+- PATCH-07A-007 covers generic authority traps, fake citation bait,
+  related-authority overclaiming, NO_INDEXED_SOURCE fabrication pressure,
+  source-card misuse, prompt-injection-style safeguard suppression, forced yes/no
+  overconfidence, mode confusion, structure contamination, and audit outcome
+  overconfidence.
+- PATCH-07A-007 added focused fixture tests only and did not change runtime behavior,
+  prompts, routes/controllers, context orchestration, retrieval, reranker,
+  authority normalization, source-card, sourceAvailability, package/dependency,
+  DB/indexing/RAG/vector/corpus, ingestion, env, or secrets.
 - Recommended Phase 7A sequence: 002 fixtures → 003 policy scaffold → 004 /ask →
-  005 /tax → 006 /audit → 007 source limitation wording tests → GATE-1.
+  005 /tax → 006 /audit → 007 red-team fixture → 008 hardening → GATE-1.
 - No pipeline.js, retrieval, reranker, sourceAvailability, source-card, DB/indexing/RAG/
   vector/corpus/ingestion, package/dependency, env, prompt, route, or controller changes
   occurred in PATCH-07A-001.
@@ -174,7 +186,7 @@ Key Phase 7A architecture findings:
 Immediate next task:
 
 ```text
-PATCH-07A-007 - Phase 7A response-safety red-team fixture and tests
+PATCH-07A-008 - Source limitation wording preservation and mode-boundary regression hardening
 ```
 
 Expected next gate:
@@ -198,7 +210,7 @@ Codex
 Gemini review for next task:
 
 ```text
-Suggested for PATCH-07A-007 limited response-safety red-team fixture and tests.
+Not necessary unless PATCH-07A-007 or Gemini review identifies serious missing adversarial coverage.
 ```
 
 ---
@@ -1111,7 +1123,7 @@ PATCH-06H-GATE-1 - Phase 6H Stabilization Gate - COMPLETE / LOCAL PASS
 Immediate next task:
 
 ```text
-PATCH-07A-007 - Phase 7A response-safety red-team fixture and tests
+PATCH-07A-008 - Source limitation wording preservation and mode-boundary regression hardening
 ```
 
 ---
@@ -1129,7 +1141,7 @@ PHASE 7A - Human Conversational Response Layer
 Current latest pushed commit:
 
 ```text
-PATCH-07A-006 protect audit advisory formatting
+PATCH-07A-007 add response safety red-team fixture
 ```
 
 Current status:
@@ -1160,24 +1172,25 @@ PATCH-07A-003 COMPLETE / LOCAL PASS
 PATCH-07A-004 COMPLETE / LOCAL PASS
 PATCH-07A-005 COMPLETE / LOCAL PASS
 PATCH-07A-006 COMPLETE / LOCAL PASS
+PATCH-07A-007 COMPLETE / LOCAL PASS
 ```
 
 Immediate next Codex task:
 
 ```text
-PATCH-07A-007 - Phase 7A response-safety red-team fixture and tests
+PATCH-07A-008 - Source limitation wording preservation and mode-boundary regression hardening
 ```
 
 Gemini review for next task:
 
 ```text
-Suggested.
+Not necessary unless PATCH-07A-007 or Gemini review identifies serious missing adversarial coverage.
 ```
 
 After that:
 
 ```text
-PATCH-07A-007 - Phase 7A response-safety red-team fixture and tests
+PATCH-07A-008 - Source limitation wording preservation and mode-boundary regression hardening
 PATCH-07A-GATE-1 - Phase 7A Stabilization Gate
 Phase 6H runtime retrieval/reranker changes remain deferred unless a later approved phase
 reopens them with local comparison fixture/report artifacts, measurable baseline metrics,
