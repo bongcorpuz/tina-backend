@@ -56,6 +56,7 @@ PATCH-07B-012 COMPLETE / LOCAL PASS
 PATCH-07B-GATE-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 PATCH-07B-013R COMPLETE / LOCAL PASS
 PATCH-07B-014 COMPLETE / LOCAL PASS
+PATCH-07B-015 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 ```
 
 Current backend branch:
@@ -558,12 +559,26 @@ Key Phase 7A architecture findings:
   route/prompt integration, source governance, retrieval/reranker changes,
   sourceAvailability/source-card changes, package/dependency changes,
   DB/indexing/vector/corpus/ingestion changes, or deferred Phase 10 assets.
+- PATCH-07B-015 completed the BIR vs taxpayer position runtime composition
+  guard and gate with a PASS WITH RECOMMENDATIONS decision.
+- PATCH-07B-015 composition-tested the full Phase 7B adversarial runtime helper
+  chain: issue framing, reasoning safety, fact gaps, client checklist output,
+  authority applicability, adversarial content safety, BIR/taxpayer position
+  framing, and position-framing checklist output.
+- PATCH-07B-015 confirmed there is still no audit-risk runtime helper yet, no
+  settlement/protest runtime yet, no authority
+  conflict/hierarchy/supersession/effective-date runtime engine yet, and no
+  live route/prompt integration yet.
+- PATCH-07B-015 did not change production helper behavior, prompts,
+  routes/controllers, retrieval, reranker, sourceAvailability, source-card
+  behavior, package/dependency, DB/indexing/vector/corpus, ingestion, env,
+  secrets, or deferred Phase 10 assets.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-GEMINI-REVIEW-5 - BIR vs Taxpayer Position Runtime Helper Review
+PATCH-07B-GEMINI-REVIEW-6 - Phase 7B Adversarial Runtime Composition Gate Review
 ```
 
 Recommended agent:
@@ -575,13 +590,13 @@ Gemini
 Gemini review:
 
 ```text
-Required after PATCH-07B-014 because this is the first runtime helper capable of generating BIR-side and taxpayer-side position framing.
+Required after PATCH-07B-015 to decide the safest next workstream.
 ```
 
 Expected next gate:
 
 ```text
-TBD after PATCH-07B-GEMINI-REVIEW-5 recommendations
+TBD after PATCH-07B-GEMINI-REVIEW-6 recommendations
 ```
 
 Next phase:
@@ -599,7 +614,7 @@ Codex
 Gemini review for next task:
 
 ```text
-Required; Gemini should review adversarial-content-safety integration and strict boundary preservation before any further adversarial runtime work.
+Required; Gemini should decide whether the Phase 7B adversarial reasoning block is complete enough to proceed to audit-risk runtime design, live clarification integration design, Phase 7B final gate/closure, or another coverage addendum.
 ```
 
 ---
@@ -1581,12 +1596,13 @@ PATCH-07B-012 COMPLETE / LOCAL PASS
 PATCH-07B-GATE-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 PATCH-07B-013R COMPLETE / LOCAL PASS
 PATCH-07B-014 COMPLETE / LOCAL PASS
+PATCH-07B-015 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-GEMINI-REVIEW-5 - BIR vs Taxpayer Position Runtime Helper Review
+PATCH-07B-GEMINI-REVIEW-6 - Phase 7B Adversarial Runtime Composition Gate Review
 ```
 
 Recommended agent for next task:
@@ -1598,7 +1614,7 @@ Gemini
 Gemini review:
 
 ```text
-Required after PATCH-07B-014 before any further adversarial runtime work.
+Required after PATCH-07B-015 before selecting the next adversarial runtime workstream.
 ```
 
 After that:
