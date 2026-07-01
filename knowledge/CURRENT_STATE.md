@@ -35,6 +35,7 @@ PATCH-07A-002 COMPLETE / LOCAL PASS
 PATCH-07A-003 COMPLETE / LOCAL PASS
 PATCH-07A-004 COMPLETE / LOCAL PASS
 PATCH-07A-005 COMPLETE / LOCAL PASS
+PATCH-07A-006 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -80,19 +81,19 @@ No automatic ingestion until Phase 10 source-governance workflow is implemented.
 Latest implemented patch:
 
 ```text
-PATCH-07A-005 - /tax Senior Memo Prompt and Formatting Protection
+PATCH-07A-006 - /audit Advisory Formatting Protection
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-07A-005 protect tax senior memo formatting
+PATCH-07A-006 protect audit advisory formatting
 ```
 
 Current working state:
 
 ```text
-PATCH-07A-005 COMPLETE / LOCAL PASS
+PATCH-07A-006 COMPLETE / LOCAL PASS
 Phase 6H closed through stabilization gate (PATCH-06H-GATE-1).
 Phase 7A is now active.
 Key Phase 7A architecture findings:
@@ -151,6 +152,18 @@ Key Phase 7A architecture findings:
 - PATCH-07A-005 did not change routes/controllers, context orchestration, retrieval,
   reranker, authority normalization, source-card, sourceAvailability,
   package/dependency, DB/indexing/RAG/vector/corpus, ingestion, env, or secrets.
+- PATCH-07A-006 formalized `/audit` advisory headings in answer-renderer.js:
+  Quick Assessment, BIR Likely Position, Taxpayer Position / Defenses,
+  Documentary Support Needed, Procedural Issues, Risk Level, Recommended Action,
+  and Sources / Source Cards.
+- PATCH-07A-006 strengthened prompts/audit-mode-prompt.js as prompt-only guidance
+  with audit advisory structure, authority-state caution, source limitation discipline,
+  and no outcome guarantees.
+- PATCH-07A-006 confirmed `/ask` conversational formatting and `/tax` senior memo
+  formatting remain isolated from `/audit` advisory formatting.
+- PATCH-07A-006 did not change routes/controllers, context orchestration, retrieval,
+  reranker, authority normalization, source-card, sourceAvailability,
+  package/dependency, DB/indexing/RAG/vector/corpus, ingestion, env, or secrets.
 - Recommended Phase 7A sequence: 002 fixtures → 003 policy scaffold → 004 /ask →
   005 /tax → 006 /audit → 007 source limitation wording tests → GATE-1.
 - No pipeline.js, retrieval, reranker, sourceAvailability, source-card, DB/indexing/RAG/
@@ -161,7 +174,7 @@ Key Phase 7A architecture findings:
 Immediate next task:
 
 ```text
-PATCH-07A-006 - /audit advisory formatting protection
+PATCH-07A-007 - Phase 7A response-safety red-team fixture and tests
 ```
 
 Expected next gate:
@@ -180,6 +193,12 @@ Recommended agent:
 
 ```text
 Codex
+```
+
+Gemini review for next task:
+
+```text
+Suggested for PATCH-07A-007 limited response-safety red-team fixture and tests.
 ```
 
 ---
@@ -1092,7 +1111,7 @@ PATCH-06H-GATE-1 - Phase 6H Stabilization Gate - COMPLETE / LOCAL PASS
 Immediate next task:
 
 ```text
-PATCH-07A-006 - /audit advisory formatting protection
+PATCH-07A-007 - Phase 7A response-safety red-team fixture and tests
 ```
 
 ---
@@ -1110,7 +1129,7 @@ PHASE 7A - Human Conversational Response Layer
 Current latest pushed commit:
 
 ```text
-PATCH-07A-005 protect tax senior memo formatting
+PATCH-07A-006 protect audit advisory formatting
 ```
 
 Current status:
@@ -1140,19 +1159,25 @@ PATCH-07A-002 COMPLETE / LOCAL PASS
 PATCH-07A-003 COMPLETE / LOCAL PASS
 PATCH-07A-004 COMPLETE / LOCAL PASS
 PATCH-07A-005 COMPLETE / LOCAL PASS
+PATCH-07A-006 COMPLETE / LOCAL PASS
 ```
 
 Immediate next Codex task:
 
 ```text
-PATCH-07A-006 - /audit advisory formatting protection
+PATCH-07A-007 - Phase 7A response-safety red-team fixture and tests
+```
+
+Gemini review for next task:
+
+```text
+Suggested.
 ```
 
 After that:
 
 ```text
-PATCH-07A-006 - /audit advisory formatting protection
-PATCH-07A-007 - Source limitation wording preservation tests
+PATCH-07A-007 - Phase 7A response-safety red-team fixture and tests
 PATCH-07A-GATE-1 - Phase 7A Stabilization Gate
 Phase 6H runtime retrieval/reranker changes remain deferred unless a later approved phase
 reopens them with local comparison fixture/report artifacts, measurable baseline metrics,

@@ -94,8 +94,8 @@ function assertTaxSeniorMemo(rendered) {
   assert(!rendered.includes("### Key explanation"));
   assert(!rendered.includes("### Practical note"));
   assert(!rendered.includes("### Source / authority note"));
-  assert(!rendered.includes("E. AUDIT / TAX RISK"));
-  assert(!rendered.includes("G. PRACTICAL POSITION"));
+  assert(!rendered.includes("1. Quick Assessment"));
+  assert(!rendered.includes("7. Recommended Action"));
 }
 
 await test("/tax formatting preserves A-F senior memo structure", () => {
@@ -201,9 +201,9 @@ await test("/audit advisory format remains protected", () => {
     metadata: { modeFlags: { hook: "/audit", orchestrationMode: "AUDIT" } }
   });
 
-  assert(rendered.includes("A. DIRECT ANSWER"));
-  assert(rendered.includes("E. AUDIT / TAX RISK"));
-  assert(rendered.includes("G. PRACTICAL POSITION"));
+  assert(rendered.includes("1. Quick Assessment"));
+  assert(rendered.includes("6. Risk Level"));
+  assert(rendered.includes("7. Recommended Action"));
   assert(!rendered.includes("A. Short Answer / Conclusion"));
   assert(!rendered.includes("### Direct answer"));
 });

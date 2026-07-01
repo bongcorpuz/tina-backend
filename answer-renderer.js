@@ -49,6 +49,17 @@ const TAX_SENIOR_MEMO_HEADINGS = Object.freeze([
   "F. Sources / Source Cards"
 ]);
 
+const AUDIT_ADVISORY_HEADINGS = Object.freeze([
+  "1. Quick Assessment",
+  "2. BIR Likely Position",
+  "3. Taxpayer Position / Defenses",
+  "4. Documentary Support Needed",
+  "5. Procedural Issues",
+  "6. Risk Level",
+  "7. Recommended Action",
+  "8. Sources / Source Cards"
+]);
+
 const FAST_DEFINITION_HEADINGS = Object.freeze([
   "### Direct Answer",
   "### Legal Basis",
@@ -98,15 +109,7 @@ const FALLBACK_TEMPLATES = Object.freeze({
   STANDARD: TINA_AF_HEADINGS,
   TECHNICAL: TINA_AF_HEADINGS,
 
-  AUDIT: [
-    "A. DIRECT ANSWER",
-    "B. KNOWN FACTS AND ASSUMPTIONS",
-    "C. AUDIT ISSUE",
-    "D. ACCOUNTING / TAX TREATMENT",
-    "E. AUDIT RISK / MISSTATEMENT RISK",
-    "F. REQUIRED AUDIT EVIDENCE",
-    "G. RECOMMENDED AUDIT POSITION"
-  ],
+  AUDIT: AUDIT_ADVISORY_HEADINGS,
 
   LITIGATION: [
     "A. DIRECT ANSWER",
@@ -578,6 +581,18 @@ function normalizeLegacyTaxMemoHeadings(text = "") {
     .replace(/(^|\n)\s*F\.\s*(?:PRACTICAL NOTE \/ APPLICATION|PRACTICAL APPLICATION|SOURCES \/ SOURCE CARDS|SOURCE CARDS|SOURCES)\b/gi, "$1F. Sources / Source Cards");
 }
 
+function normalizeLegacyAuditAdvisoryHeadings(text = "") {
+  return normalizeText(text)
+    .replace(/(^|\n)\s*(?:A\.\s*)?(?:DIRECT ANSWER|QUICK ASSESSMENT|ASSESSMENT)\b/gi, "$11. Quick Assessment")
+    .replace(/(^|\n)\s*(?:B\.\s*)?(?:KNOWN FACTS AND ASSUMPTIONS|BIR LIKELY POSITION|BIR POSITION|BIR \/ OPPOSING POSITION)\b/gi, "$12. BIR Likely Position")
+    .replace(/(^|\n)\s*(?:C\.\s*)?(?:AUDIT ISSUE|TAXPAYER POSITION \/ DEFENSES|TAXPAYER POSITION|TAXPAYER DEFENSES|TAXPAYER DEFENSE)\b/gi, "$13. Taxpayer Position / Defenses")
+    .replace(/(^|\n)\s*(?:D\.\s*)?(?:ACCOUNTING \/ TAX TREATMENT|DOCUMENTARY SUPPORT NEEDED|DOCUMENTARY SUPPORT|DOCUMENTARY GAPS|REQUIRED AUDIT EVIDENCE)\b/gi, "$14. Documentary Support Needed")
+    .replace(/(^|\n)\s*(?:E\.\s*)?(?:AUDIT RISK \/ MISSTATEMENT RISK|AUDIT \/ TAX RISK|PROCEDURAL ISSUES|PROCEDURAL ISSUE)\b/gi, "$15. Procedural Issues")
+    .replace(/(^|\n)\s*(?:F\.\s*)?(?:REQUIRED AUDIT EVIDENCE|RISK LEVEL|AUDIT RISK)\b/gi, "$16. Risk Level")
+    .replace(/(^|\n)\s*(?:G\.\s*)?(?:RECOMMENDED AUDIT POSITION|RECOMMENDED ACTION|PRACTICAL POSITION)\b/gi, "$17. Recommended Action")
+    .replace(/(^|\n)\s*(?:H\.\s*)?(?:SOURCES \/ SOURCE CARDS|SOURCE CARDS|SOURCES)\b/gi, "$18. Sources / Source Cards");
+}
+
 function normalizeOrchestrationMode(value = "") {
   const raw = String(value || "").trim().toUpperCase();
 
@@ -619,6 +634,11 @@ function isTaxRoute(input = {}) {
   return tokens.includes("/tax") || tokens.includes("tax");
 }
 
+function isAuditRoute(input = {}) {
+  const tokens = routeTokensFromInput(input);
+  return tokens.includes("/audit") || tokens.includes("audit");
+}
+
 function getResponseModeFromInput(input = {}) {
   return (
     normalizeOrchestrationMode(
@@ -643,6 +663,10 @@ function getHeadingsFromInput(input = {}) {
 
   if (isTaxRoute(input)) {
     return TAX_SENIOR_MEMO_HEADINGS;
+  }
+
+  if (isAuditRoute(input)) {
+    return AUDIT_ADVISORY_HEADINGS;
   }
 
   const rawSections = safeArray(
@@ -705,6 +729,15 @@ function defaultBodyForHeading(heading = "") {
     "E. Caveats / Missing Facts": "Material facts may be missing. Confirm the taxpayer, transaction, taxable period, amounts, and supporting documents.",
     "F. Sources / Source Cards": "Use source cards only when indexed sources support the answer; do not treat related sources as governing authority.",
 
+    "1. Quick Assessment": "Indexed source not found.",
+    "2. BIR Likely Position": "Identify the likely BIR position only to the extent supported by verified facts and indexed authority.",
+    "3. Taxpayer Position / Defenses": "State taxpayer defenses cautiously and do not guarantee the audit outcome.",
+    "4. Documentary Support Needed": "Identify documents needed to evaluate or support the position.",
+    "5. Procedural Issues": "Identify procedural issues only when supported by the facts and verified authority.",
+    "6. Risk Level": "Risk level is preliminary and subject to complete facts, documents, and verified authority.",
+    "7. Recommended Action": "Preserve deadlines and source limitations; recommend verification before relying on procedural conclusions.",
+    "8. Sources / Source Cards": "Use source cards only when indexed sources support the answer; do not treat related sources as governing authority.",
+
     "### Direct Answer": "Please refer to the applicable NIRC provision for the statutory definition.",
     "### Legal Basis": "Refer to the relevant provision of the NIRC as amended.",
     "### Practical Explanation": "The implementing regulation applies. Refer to the relevant Revenue Regulation for operational details.",
@@ -760,6 +793,8 @@ function repairStructure(answer = "", headings = TINA_AF_HEADINGS) {
   const stripped = stripRawSourceSections(answer);
   const clean = headings === TAX_SENIOR_MEMO_HEADINGS
     ? normalizeLegacyTaxMemoHeadings(stripped)
+    : headings === AUDIT_ADVISORY_HEADINGS
+      ? normalizeLegacyAuditAdvisoryHeadings(stripped)
     : normalizeLegacyHeadings(stripped);
   if (hasStructure(clean, headings)) return clean;
 
@@ -2064,6 +2099,7 @@ export {
   ORCHESTRATION_MODES,
   TINA_AF_HEADINGS,
   TAX_SENIOR_MEMO_HEADINGS,
+  AUDIT_ADVISORY_HEADINGS,
   FAST_DEFINITION_HEADINGS,
   COMPLEX_ADVISORY_HEADINGS,
   SENIOR_COUNSEL_MEMO_HEADINGS,
@@ -2097,6 +2133,7 @@ export default {
   ORCHESTRATION_MODES,
   TINA_AF_HEADINGS,
   TAX_SENIOR_MEMO_HEADINGS,
+  AUDIT_ADVISORY_HEADINGS,
   FAST_DEFINITION_HEADINGS,
   COMPLEX_ADVISORY_HEADINGS,
   SENIOR_COUNSEL_MEMO_HEADINGS,

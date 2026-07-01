@@ -194,9 +194,9 @@ await test("/audit formatting remains protected", () => {
     metadata: { modeFlags: { hook: "/audit", orchestrationMode: "AUDIT" } }
   });
 
-  assert(rendered.includes("A. DIRECT ANSWER"));
-  assert(rendered.includes("E. AUDIT / TAX RISK"));
-  assert(rendered.includes("G. PRACTICAL POSITION"));
+  assert(rendered.includes("1. Quick Assessment"));
+  assert(rendered.includes("6. Risk Level"));
+  assert(rendered.includes("7. Recommended Action"));
   assert(!rendered.includes("### Direct answer"));
 });
 
