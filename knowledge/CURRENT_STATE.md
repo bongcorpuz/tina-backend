@@ -47,6 +47,7 @@ PATCH-07B-003 COMPLETE / LOCAL PASS
 PATCH-07B-004 COMPLETE / LOCAL PASS
 PATCH-07B-005 COMPLETE / LOCAL PASS
 PATCH-07B-006 COMPLETE / LOCAL PASS
+PATCH-07B-007 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -120,13 +121,13 @@ full Tax Operating System red-team after Phase 13
 Latest implemented patch:
 
 ```text
-PATCH-07B-006 - Audit-Defense Risk-Language Fixture and Tests
+PATCH-07B-007 - Reasoning Safety Policy and Source-State Guard Tests
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-07B-006 add audit-defense risk-language fixture
+PATCH-07B-007 add reasoning safety source-state guards
 ```
 
 Current working state:
@@ -375,12 +376,43 @@ Key Phase 7A architecture findings:
   prompts, routes, retrieval, reranker, sourceAvailability, source-card,
   issue-classification, package/dependency, DB/indexing/RAG/vector/corpus,
   ingestion, env, secrets, or deferred Phase 10 fact-check assets.
+- PATCH-07B-007 added a local/static reasoning-safety and source-state guard
+  fixture with 44 cases across authority-state discipline, source-card discipline,
+  fact gaps, source-coverage gaps, authority applicability, BIR-vs-taxpayer
+  reasoning, audit risk language, settlement/protest posture, mode boundaries,
+  Phase 10 boundaries, and policy-first/non-engine traps.
+- PATCH-07B-007 added focused fixture tests confirming runtime-safety metadata,
+  mode coverage, authority-state coverage, allowed safety postures, allowed
+  source-card states, required field completeness, user fact gap versus source
+  coverage gap separation, related-authority caution, no-indexed-source
+  non-fabrication, GENERAL_TAX non-promotion, AUTHORITY_FOUND not overriding
+  weak facts/documents, source cards not overriding sourceAvailability,
+  assumptions not becoming facts, no live source acquisition claims, Phase 10
+  dependency policy, no hidden weakness, no guaranteed outcome, no numeric
+  scoring, settlement/protest caution, mode-boundary preservation, policy-first
+  non-engine safeguards, and Phase 7A safeguard preservation.
+- PATCH-07B-007 did not create runtime engines and did not change runtime behavior,
+  prompts, routes, retrieval, reranker, sourceAvailability, source-card,
+  issue-classification, package/dependency, DB/indexing/RAG/vector/corpus,
+  ingestion, env, secrets, or deferred Phase 10 fact-check assets.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-007 - Reasoning Safety Policy and Source-State Guard Tests
+PATCH-07B-GEMINI-REVIEW-1 - Phase 7B Pre-Implementation Scaffold Review
+```
+
+Recommended reviewer:
+
+```text
+Gemini
+```
+
+Reason:
+
+```text
+Review complete pre-implementation scaffold before PATCH-07B-008 first narrow runtime implementation.
 ```
 
 Expected next gate:
@@ -1335,7 +1367,7 @@ PHASE 7B - Analytical / Adversarial Reasoning Layer
 Current latest pushed commit:
 
 ```text
-PATCH-07B-006 add audit-defense risk-language fixture
+PATCH-07B-007 add reasoning safety source-state guards
 ```
 
 Current status:
@@ -1377,24 +1409,25 @@ PATCH-07B-003 COMPLETE / LOCAL PASS
 PATCH-07B-004 COMPLETE / LOCAL PASS
 PATCH-07B-005 COMPLETE / LOCAL PASS
 PATCH-07B-006 COMPLETE / LOCAL PASS
+PATCH-07B-007 COMPLETE / LOCAL PASS
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-007 - Reasoning Safety Policy and Source-State Guard Tests
+PATCH-07B-GEMINI-REVIEW-1 - Phase 7B Pre-Implementation Scaffold Review
 ```
 
-Recommended agent for next task:
+Recommended reviewer for next task:
 
 ```text
-Codex
+Gemini
 ```
 
-Gemini review:
+Reason:
 
 ```text
-Not required unless scaffold uncertainty remains.
+Review complete pre-implementation scaffold before PATCH-07B-008 first narrow runtime implementation.
 ```
 
 After that:
@@ -1404,6 +1437,7 @@ Phase 7B approved sequence:
 PATCH-07B-005 - BIR vs taxpayer position architecture fixture and tests
 PATCH-07B-006 - Audit-defense risk-language fixture and tests
 PATCH-07B-007 - Reasoning safety policy and source-state guard tests
+PATCH-07B-GEMINI-REVIEW-1 - Phase 7B Pre-Implementation Scaffold Review
 PATCH-07B-008 - First narrow issue-framing implementation, if fixtures support it
 PATCH-07B-GATE-1 - Phase 7B Stabilization Gate
 
