@@ -50,6 +50,7 @@ PATCH-07B-006 COMPLETE / LOCAL PASS
 PATCH-07B-007 COMPLETE / LOCAL PASS
 PATCH-07B-008 COMPLETE / LOCAL PASS
 PATCH-07B-009 COMPLETE / LOCAL PASS
+PATCH-07B-010 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -123,13 +124,13 @@ full Tax Operating System red-team after Phase 13
 Latest implemented patch:
 
 ```text
-PATCH-07B-009 - Narrow Fact-Gap Runtime Helper
+PATCH-07B-010 - Client Fact-Pattern Checklist Output Integration
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-07B-009 add narrow fact-gap runtime helper
+PATCH-07B-010 add client fact checklist output
 ```
 
 Current working state:
@@ -439,24 +440,47 @@ Key Phase 7A architecture findings:
   reranker, sourceAvailability, source-card behavior, package/dependency,
   DB/indexing/RAG/vector/corpus, ingestion, env, secrets, or deferred Phase 10
   fact-check assets.
+- PATCH-07B-010 added client-fact-checklist-output.js as a deterministic,
+  dependency-free client fact-pattern checklist output helper with
+  buildClientFactChecklistOutput(input), formatChecklistForMode(checklistResult,
+  mode), buildModeBoundaryCaution(mode), and
+  buildProhibitedNextSteps(inputOrChecklistResult).
+- PATCH-07B-010 exposes checklistType CLIENT_FACT_PATTERN_CHECKLIST and
+  implementationScope CLIENT_FACT_CHECKLIST_OUTPUT_ONLY while preserving known
+  facts, critical questions, helpful questions, document requests, timing/period
+  questions, taxpayer-status questions, transaction-character questions,
+  assessment-stage questions, source coverage needs, source-state caution, mode
+  boundary caution, must-answer-before-final-advice items, and prohibited next
+  steps.
+- PATCH-07B-010 integrates narrowly with fact-gap-helper.js,
+  issue-framing-engine.js, and reasoning-safety-policy.js without changing their
+  public behavior, and preserves NO_INDEXED_SOURCE /audit caution.
+- PATCH-07B-010 did not implement BIR/taxpayer runtime engines, audit risk
+  runtime scoring, settlement/protest strategy runtime, authority applicability
+  runtime conclusions, authority conflict resolution, hierarchy runtime,
+  supersession runtime, effective-date runtime, source governance/acquisition,
+  memory, workflow generation, observability, frontend, streaming, prompt
+  changes, retrieval, reranker, sourceAvailability, source-card behavior,
+  package/dependency, DB/indexing/RAG/vector/corpus, ingestion, env, secrets, or
+  deferred Phase 10 fact-check assets.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-010 - Client Fact-Pattern Checklist Output Integration
+PATCH-07B-011 - Narrow Authority Applicability Runtime Helper
 ```
 
 Recommended agent:
 
 ```text
-Codex
+Claude Code first if design uncertainty exists; otherwise Codex
 ```
 
 Gemini review:
 
 ```text
-Not required if limited to exposing checklist output safely and no BIR/taxpayer/risk/authority-conflict runtime logic is introduced.
+Suggested if the helper goes beyond placeholder labels into effectivity, hierarchy, supersession, or legal applicability conclusions.
 ```
 
 Expected next gate:
@@ -1456,24 +1480,25 @@ PATCH-07B-006 COMPLETE / LOCAL PASS
 PATCH-07B-007 COMPLETE / LOCAL PASS
 PATCH-07B-008 COMPLETE / LOCAL PASS
 PATCH-07B-009 COMPLETE / LOCAL PASS
+PATCH-07B-010 COMPLETE / LOCAL PASS
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-010 - Client Fact-Pattern Checklist Output Integration
+PATCH-07B-011 - Narrow Authority Applicability Runtime Helper
 ```
 
 Recommended agent for next task:
 
 ```text
-Codex
+Claude Code first if design uncertainty exists; otherwise Codex
 ```
 
 Gemini review:
 
 ```text
-Not required if limited to exposing checklist output safely and no BIR/taxpayer/risk/authority-conflict runtime logic is introduced.
+Suggested if the helper goes beyond placeholder labels into effectivity, hierarchy, supersession, or legal applicability conclusions.
 ```
 
 After that:
@@ -1486,6 +1511,7 @@ PATCH-07B-007 - Reasoning safety policy and source-state guard tests
 PATCH-07B-GEMINI-REVIEW-1 - Phase 7B Pre-Implementation Scaffold Review
 PATCH-07B-008 - First narrow issue-framing implementation, if fixtures support it
 PATCH-07B-009 - Narrow fact-gap runtime helper, if kept narrow
+PATCH-07B-010 - Client fact-pattern checklist output integration, if kept checklist-only
 PATCH-07B-GATE-1 - Phase 7B Stabilization Gate
 
 Phase 6H runtime retrieval/reranker changes remain deferred unless a later approved phase
