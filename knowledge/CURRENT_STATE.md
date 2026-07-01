@@ -37,6 +37,7 @@ PATCH-07A-004 COMPLETE / LOCAL PASS
 PATCH-07A-005 COMPLETE / LOCAL PASS
 PATCH-07A-006 COMPLETE / LOCAL PASS
 PATCH-07A-007 COMPLETE / LOCAL PASS
+PATCH-07A-007R COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -82,19 +83,19 @@ No automatic ingestion until Phase 10 source-governance workflow is implemented.
 Latest implemented patch:
 
 ```text
-PATCH-07A-007 - Phase 7A Response-Safety Red-Team Fixture and Tests
+PATCH-07A-007R - Response-Safety Red-Team Coverage Expansion
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-07A-007 add response safety red-team fixture
+PATCH-07A-007R expand response safety red-team coverage
 ```
 
 Current working state:
 
 ```text
-PATCH-07A-007 COMPLETE / LOCAL PASS
+PATCH-07A-007R COMPLETE / LOCAL PASS
 Phase 6H closed through stabilization gate (PATCH-06H-GATE-1).
 Phase 7A is now active.
 Key Phase 7A architecture findings:
@@ -176,8 +177,24 @@ Key Phase 7A architecture findings:
   prompts, routes/controllers, context orchestration, retrieval, reranker,
   authority normalization, source-card, sourceAvailability, package/dependency,
   DB/indexing/RAG/vector/corpus, ingestion, env, or secrets.
-- Recommended Phase 7A sequence: 002 fixtures → 003 policy scaffold → 004 /ask →
-  005 /tax → 006 /audit → 007 red-team fixture → 008 hardening → GATE-1.
+- PATCH-07A-007R expanded the existing PATCH-07A-007 response-safety red-team
+  fixture from 30 to 53 local/static cases after Gemini PASS WITH
+  RECOMMENDATIONS review.
+- PATCH-07A-007R strengthened safeguard-suppression prompts, source-card misuse
+  traps, RELATED_AUTHORITY_ONLY overclaim traps, NO_INDEXED_SOURCE fabrication
+  pressure, structure-contamination cases, forced yes/no caveat-removal cases,
+  and audit-outcome overconfidence traps.
+- PATCH-07A-007R hardened fixture tests with direct assertions for safeguard
+  preservation, exact-vs-related distinction, no fabricated authority,
+  mode-boundary preservation, material caveat preservation, source-card role
+  preservation, and no guaranteed audit outcomes.
+- PATCH-07A-007R did not change runtime behavior, prompts, routes/controllers,
+  context orchestration, retrieval, reranker, authority normalization, source-card,
+  sourceAvailability, package/dependency, DB/indexing/RAG/vector/corpus,
+  ingestion, env, or secrets.
+- Recommended Phase 7A sequence: 002 fixtures -> 003 policy scaffold -> 004 /ask ->
+  005 /tax -> 006 /audit -> 007 red-team fixture -> 007R coverage expansion ->
+  008 hardening -> GATE-1.
 - No pipeline.js, retrieval, reranker, sourceAvailability, source-card, DB/indexing/RAG/
   vector/corpus/ingestion, package/dependency, env, prompt, route, or controller changes
   occurred in PATCH-07A-001.
@@ -192,7 +209,7 @@ PATCH-07A-008 - Source limitation wording preservation and mode-boundary regress
 Expected next gate:
 
 ```text
-PATCH-07A-GATE-1 - Phase 7A Stabilization Gate (after PATCH-07A-002 through 007)
+PATCH-07A-GATE-1 - Phase 7A Stabilization Gate (after PATCH-07A-002 through 007R)
 ```
 
 Next phase:
@@ -210,7 +227,7 @@ Codex
 Gemini review for next task:
 
 ```text
-Not necessary unless PATCH-07A-007 or Gemini review identifies serious missing adversarial coverage.
+Not necessary unless PATCH-07A-007R identifies serious unresolved adversarial coverage gaps.
 ```
 
 ---
@@ -1141,7 +1158,7 @@ PHASE 7A - Human Conversational Response Layer
 Current latest pushed commit:
 
 ```text
-PATCH-07A-007 add response safety red-team fixture
+PATCH-07A-007R expand response safety red-team coverage
 ```
 
 Current status:
@@ -1173,6 +1190,7 @@ PATCH-07A-004 COMPLETE / LOCAL PASS
 PATCH-07A-005 COMPLETE / LOCAL PASS
 PATCH-07A-006 COMPLETE / LOCAL PASS
 PATCH-07A-007 COMPLETE / LOCAL PASS
+PATCH-07A-007R COMPLETE / LOCAL PASS
 ```
 
 Immediate next Codex task:
@@ -1184,7 +1202,7 @@ PATCH-07A-008 - Source limitation wording preservation and mode-boundary regress
 Gemini review for next task:
 
 ```text
-Not necessary unless PATCH-07A-007 or Gemini review identifies serious missing adversarial coverage.
+Not necessary unless PATCH-07A-007R identifies serious unresolved adversarial coverage gaps.
 ```
 
 After that:
