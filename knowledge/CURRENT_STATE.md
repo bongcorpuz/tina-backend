@@ -48,6 +48,7 @@ PATCH-07B-004 COMPLETE / LOCAL PASS
 PATCH-07B-005 COMPLETE / LOCAL PASS
 PATCH-07B-006 COMPLETE / LOCAL PASS
 PATCH-07B-007 COMPLETE / LOCAL PASS
+PATCH-07B-008 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -121,13 +122,13 @@ full Tax Operating System red-team after Phase 13
 Latest implemented patch:
 
 ```text
-PATCH-07B-007 - Reasoning Safety Policy and Source-State Guard Tests
+PATCH-07B-008 - First Narrow Runtime Implementation
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-07B-007 add reasoning safety source-state guards
+PATCH-07B-008 add narrow issue framing runtime
 ```
 
 Current working state:
@@ -395,24 +396,47 @@ Key Phase 7A architecture findings:
   prompts, routes, retrieval, reranker, sourceAvailability, source-card,
   issue-classification, package/dependency, DB/indexing/RAG/vector/corpus,
   ingestion, env, secrets, or deferred Phase 10 fact-check assets.
+- PATCH-07B-GEMINI-REVIEW-1 returned PASS WITH RECOMMENDATIONS and approved
+  proceeding to PATCH-07B-008 as a narrow runtime implementation limited to issue
+  framing and reasoning-safety policy.
+- PATCH-07B-008 added issue-framing-engine.js as a deterministic, dependency-free,
+  issue-framing-only helper with controlled issue-family and tax-type taxonomy,
+  preserved known facts, missing facts, source coverage needs, source-state caution,
+  mode boundary, prohibited conclusions, and implementationScope
+  ISSUE_FRAMING_ONLY.
+- PATCH-07B-008 added reasoning-safety-policy.js as a deterministic,
+  dependency-free safety helper for AUTHORITY_FOUND, RELATED_AUTHORITY_ONLY,
+  NO_INDEXED_SOURCE, and GENERAL_TAX postures, source-card discipline, unsafe
+  instruction rejection, and /ask, /tax, /audit mode boundaries.
+- PATCH-07B-008 strengthened NO_INDEXED_SOURCE /audit posture by prohibiting BIR
+  legal-position generation, taxpayer legal-position generation, fabricated
+  authority, direct legal support, and legal conclusions from unavailable indexed
+  authority.
+- PATCH-07B-008 did not implement BIR/taxpayer runtime engines, audit risk runtime
+  scoring, authority conflict resolution, hierarchy runtime, supersession runtime,
+  effective-date runtime, source governance/acquisition, memory, workflow
+  generation, observability, frontend, streaming, prompt changes, retrieval,
+  reranker, sourceAvailability, source-card behavior, package/dependency,
+  DB/indexing/RAG/vector/corpus, ingestion, env, secrets, or deferred Phase 10
+  fact-check assets.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-GEMINI-REVIEW-1 - Phase 7B Pre-Implementation Scaffold Review
+PATCH-07B-009 - Narrow Fact-Gap Runtime Helper
 ```
 
-Recommended reviewer:
+Recommended agent:
 
 ```text
-Gemini
+Codex
 ```
 
-Reason:
+Gemini review:
 
 ```text
-Review complete pre-implementation scaffold before PATCH-07B-008 first narrow runtime implementation.
+Not required if limited to fact-gap extraction/helper only and no BIR/taxpayer/risk/authority-conflict runtime logic is introduced.
 ```
 
 Expected next gate:
@@ -1367,7 +1391,7 @@ PHASE 7B - Analytical / Adversarial Reasoning Layer
 Current latest pushed commit:
 
 ```text
-PATCH-07B-007 add reasoning safety source-state guards
+PATCH-07B-008 add narrow issue framing runtime
 ```
 
 Current status:
@@ -1410,24 +1434,25 @@ PATCH-07B-004 COMPLETE / LOCAL PASS
 PATCH-07B-005 COMPLETE / LOCAL PASS
 PATCH-07B-006 COMPLETE / LOCAL PASS
 PATCH-07B-007 COMPLETE / LOCAL PASS
+PATCH-07B-008 COMPLETE / LOCAL PASS
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-GEMINI-REVIEW-1 - Phase 7B Pre-Implementation Scaffold Review
+PATCH-07B-009 - Narrow Fact-Gap Runtime Helper
 ```
 
-Recommended reviewer for next task:
+Recommended agent for next task:
 
 ```text
-Gemini
+Codex
 ```
 
-Reason:
+Gemini review:
 
 ```text
-Review complete pre-implementation scaffold before PATCH-07B-008 first narrow runtime implementation.
+Not required if limited to fact-gap extraction/helper only and no BIR/taxpayer/risk/authority-conflict runtime logic is introduced.
 ```
 
 After that:
@@ -1439,6 +1464,7 @@ PATCH-07B-006 - Audit-defense risk-language fixture and tests
 PATCH-07B-007 - Reasoning safety policy and source-state guard tests
 PATCH-07B-GEMINI-REVIEW-1 - Phase 7B Pre-Implementation Scaffold Review
 PATCH-07B-008 - First narrow issue-framing implementation, if fixtures support it
+PATCH-07B-009 - Narrow fact-gap runtime helper, if kept narrow
 PATCH-07B-GATE-1 - Phase 7B Stabilization Gate
 
 Phase 6H runtime retrieval/reranker changes remain deferred unless a later approved phase
