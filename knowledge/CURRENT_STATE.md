@@ -54,6 +54,7 @@ PATCH-07B-010 COMPLETE / LOCAL PASS
 PATCH-07B-011 COMPLETE / LOCAL PASS
 PATCH-07B-012 COMPLETE / LOCAL PASS
 PATCH-07B-GATE-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
+PATCH-07B-013R COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -127,13 +128,13 @@ full Tax Operating System red-team after Phase 13
 Latest implemented patch:
 
 ```text
-PATCH-07B-GATE-1 - Phase 7B Narrow Runtime Safety Gate
+PATCH-07B-013R - Adversarial Content-Safety and Risk-Language Policy
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-07B-GATE-1 validate narrow runtime safety gate
+PATCH-07B-013R add adversarial content safety policy
 ```
 
 Current working state:
@@ -520,12 +521,27 @@ Key Phase 7A architecture findings:
   routes/controllers, retrieval, reranker, sourceAvailability, source-card
   behavior, package/dependency, DB/indexing/RAG/vector/corpus, ingestion, env,
   secrets, or deferred Phase 10 fact-check assets.
+- PATCH-07B-013R added adversarial-content-safety-policy.js as the centralized
+  adversarial content-safety and risk-language policy module required before any
+  BIR/taxpayer runtime helper.
+- PATCH-07B-013R centralizes deterministic sanitization, context-aware
+  prohibited conclusions, hidden-weakness policy, numeric-risk policy,
+  settlement/protest policy, Phase 10 dependency flag handling, and structured
+  adversarial safety assertions.
+- PATCH-07B-013R confirmed there is still no BIR/taxpayer runtime helper yet, no
+  audit-risk runtime helper yet, no settlement/protest runtime yet, no authority
+  conflict/hierarchy/supersession/effective-date runtime engine yet, and no live
+  route/prompt integration yet.
+- PATCH-07B-013R did not change prompts, routes/controllers, retrieval,
+  reranker, sourceAvailability, source-card behavior, package/dependency,
+  DB/indexing/RAG/vector/corpus, ingestion, env, secrets, or deferred Phase 10
+  fact-check assets.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-GEMINI-REVIEW-2 - Phase 7B Narrow Runtime Gate Review and Pre-Adversarial Runtime Review
+PATCH-07B-GEMINI-REVIEW-4 - Adversarial Content-Safety Policy Review Before BIR/Taxpayer Runtime
 ```
 
 Recommended agent:
@@ -537,13 +553,13 @@ Gemini
 Gemini review:
 
 ```text
-Recommended before starting BIR/taxpayer position runtime, audit-risk runtime, authority conflict resolution, live route integration, or broader reasoning behavior.
+Required after PATCH-07B-013R and before PATCH-07B-014.
 ```
 
 Expected next gate:
 
 ```text
-TBD after PATCH-07B-GEMINI-REVIEW-2 recommendations
+TBD after PATCH-07B-GEMINI-REVIEW-4 recommendations
 ```
 
 Next phase:
@@ -1492,7 +1508,7 @@ PHASE 7B - Analytical / Adversarial Reasoning Layer
 Current latest pushed commit:
 
 ```text
-PATCH-07B-GATE-1 validate narrow runtime safety gate
+PATCH-07B-013R add adversarial content safety policy
 ```
 
 Current status:
@@ -1541,12 +1557,13 @@ PATCH-07B-010 COMPLETE / LOCAL PASS
 PATCH-07B-011 COMPLETE / LOCAL PASS
 PATCH-07B-012 COMPLETE / LOCAL PASS
 PATCH-07B-GATE-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
+PATCH-07B-013R COMPLETE / LOCAL PASS
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-GEMINI-REVIEW-2 - Phase 7B Narrow Runtime Gate Review and Pre-Adversarial Runtime Review
+PATCH-07B-GEMINI-REVIEW-4 - Adversarial Content-Safety Policy Review Before BIR/Taxpayer Runtime
 ```
 
 Recommended agent for next task:
@@ -1558,7 +1575,7 @@ Gemini
 Gemini review:
 
 ```text
-Recommended before starting BIR/taxpayer position runtime, audit-risk runtime, authority conflict resolution, live route integration, or broader reasoning behavior.
+Required after PATCH-07B-013R and before PATCH-07B-014.
 ```
 
 After that:
