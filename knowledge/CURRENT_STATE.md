@@ -38,6 +38,7 @@ PATCH-07A-005 COMPLETE / LOCAL PASS
 PATCH-07A-006 COMPLETE / LOCAL PASS
 PATCH-07A-007 COMPLETE / LOCAL PASS
 PATCH-07A-007R COMPLETE / LOCAL PASS
+PATCH-07A-008 COMPLETE / LOCAL PASS
 ```
 
 Current backend branch:
@@ -83,19 +84,19 @@ No automatic ingestion until Phase 10 source-governance workflow is implemented.
 Latest implemented patch:
 
 ```text
-PATCH-07A-007R - Response-Safety Red-Team Coverage Expansion
+PATCH-07A-008 - Source Limitation Wording and Mode-Boundary Regression Hardening
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-07A-007R expand response safety red-team coverage
+PATCH-07A-008 harden source limitation and mode boundaries
 ```
 
 Current working state:
 
 ```text
-PATCH-07A-007R COMPLETE / LOCAL PASS
+PATCH-07A-008 COMPLETE / LOCAL PASS
 Phase 6H closed through stabilization gate (PATCH-06H-GATE-1).
 Phase 7A is now active.
 Key Phase 7A architecture findings:
@@ -192,6 +193,17 @@ Key Phase 7A architecture findings:
   context orchestration, retrieval, reranker, authority normalization, source-card,
   sourceAvailability, package/dependency, DB/indexing/RAG/vector/corpus,
   ingestion, env, or secrets.
+- PATCH-07A-008 added a local/static source limitation wording and mode-boundary
+  hardening fixture with 28 cases across /ask, /tax, /audit, RELATED_AUTHORITY_ONLY,
+  NO_INDEXED_SOURCE, source-card authority status, safeguard suppression, and
+  cross-mode contamination.
+- PATCH-07A-008 added focused fixture/policy tests and pure renderer heading checks
+  confirming /ask remains conversational, /tax remains senior memo, /audit remains
+  audit advisory, and source limitation/source-card authority policies remain locked.
+- PATCH-07A-008 did not change runtime behavior, prompts, routes/controllers,
+  context orchestration, retrieval, reranker, authority normalization, source-card,
+  sourceAvailability, package/dependency, DB/indexing/RAG/vector/corpus,
+  ingestion, env, or secrets.
 - Recommended Phase 7A sequence: 002 fixtures -> 003 policy scaffold -> 004 /ask ->
   005 /tax -> 006 /audit -> 007 red-team fixture -> 007R coverage expansion ->
   008 hardening -> GATE-1.
@@ -203,13 +215,13 @@ Key Phase 7A architecture findings:
 Immediate next task:
 
 ```text
-PATCH-07A-008 - Source limitation wording preservation and mode-boundary regression hardening
+PATCH-07A-GATE-1 - Phase 7A Stabilization Gate
 ```
 
 Expected next gate:
 
 ```text
-PATCH-07A-GATE-1 - Phase 7A Stabilization Gate (after PATCH-07A-002 through 007R)
+PATCH-07A-GATE-1 - Phase 7A Stabilization Gate (after PATCH-07A-002 through 008)
 ```
 
 Next phase:
@@ -227,7 +239,7 @@ Codex
 Gemini review for next task:
 
 ```text
-Not necessary unless PATCH-07A-007R identifies serious unresolved adversarial coverage gaps.
+Suggested only if PATCH-07A-008 finds unresolved risk or if final gate wants adversarial review confirmation. Otherwise not necessary.
 ```
 
 ---
@@ -1140,7 +1152,7 @@ PATCH-06H-GATE-1 - Phase 6H Stabilization Gate - COMPLETE / LOCAL PASS
 Immediate next task:
 
 ```text
-PATCH-07A-008 - Source limitation wording preservation and mode-boundary regression hardening
+PATCH-07A-GATE-1 - Phase 7A Stabilization Gate
 ```
 
 ---
@@ -1158,7 +1170,7 @@ PHASE 7A - Human Conversational Response Layer
 Current latest pushed commit:
 
 ```text
-PATCH-07A-007R expand response safety red-team coverage
+PATCH-07A-008 harden source limitation and mode boundaries
 ```
 
 Current status:
@@ -1191,24 +1203,24 @@ PATCH-07A-005 COMPLETE / LOCAL PASS
 PATCH-07A-006 COMPLETE / LOCAL PASS
 PATCH-07A-007 COMPLETE / LOCAL PASS
 PATCH-07A-007R COMPLETE / LOCAL PASS
+PATCH-07A-008 COMPLETE / LOCAL PASS
 ```
 
 Immediate next Codex task:
 
 ```text
-PATCH-07A-008 - Source limitation wording preservation and mode-boundary regression hardening
+PATCH-07A-GATE-1 - Phase 7A Stabilization Gate
 ```
 
 Gemini review for next task:
 
 ```text
-Not necessary unless PATCH-07A-007R identifies serious unresolved adversarial coverage gaps.
+Suggested only if PATCH-07A-008 finds unresolved risk or if final gate wants adversarial review confirmation. Otherwise not necessary.
 ```
 
 After that:
 
 ```text
-PATCH-07A-008 - Source limitation wording preservation and mode-boundary regression hardening
 PATCH-07A-GATE-1 - Phase 7A Stabilization Gate
 Phase 6H runtime retrieval/reranker changes remain deferred unless a later approved phase
 reopens them with local comparison fixture/report artifacts, measurable baseline metrics,
