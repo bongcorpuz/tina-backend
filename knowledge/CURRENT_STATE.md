@@ -66,6 +66,7 @@ PATCH-07B-CLARIFICATION-HELPER-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIO
 PATCH-07B-CLARIFICATION-GATE-2 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 PATCH-07B-CLARIFICATION-FINAL-GATE-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 PATCH-07B-CLARIFICATION-ROUTE-SCAFFOLD-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
+PATCH-07B-CLARIFICATION-ROUTE-HELPER-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 ```
 
 Current backend branch:
@@ -139,13 +140,13 @@ full Tax Operating System red-team after Phase 13
 Latest implemented patch:
 
 ```text
-PATCH-07B-CLARIFICATION-ROUTE-SCAFFOLD-1 - Route/Prompt Integration Fixture and Tests
+PATCH-07B-CLARIFICATION-ROUTE-HELPER-1 - Narrow Route Clarification Orchestrator Helper
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-07B-CLARIFICATION-ROUTE-SCAFFOLD-1 add route integration fixture
+PATCH-07B-CLARIFICATION-ROUTE-HELPER-1 add route clarification orchestrator helper
 ```
 
 Current working state:
@@ -667,25 +668,39 @@ Key Phase 7A architecture findings:
   after Step 6.5 and before Step 13/14 inside runPipeline.
 - PATCH-07B-CLARIFICATION-ROUTE-SCAFFOLD-1 requires feature flag OFF and
   byte-identical OFF-state behavior for future live wiring.
+- PATCH-07B-CLARIFICATION-ROUTE-HELPER-1 added
+  clarification-route-orchestrator-helper.js as a pure, non-live helper.
+- PATCH-07B-CLARIFICATION-ROUTE-HELPER-1 did not add live route wiring, prompt
+  integration, response-generation changes, a production orchestrator, or
+  frontend implementation.
+- PATCH-07B-CLARIFICATION-ROUTE-HELPER-1 encodes the feature flag OFF
+  byte-identical requirement for future route wiring.
+- PATCH-07B-CLARIFICATION-ROUTE-HELPER-1 encodes the answerAllowed false
+  blocking contract for future route/prompt integration.
+- PATCH-07B-CLARIFICATION-ROUTE-HELPER-1 produces structuredClarificationObject
+  metadata for future prompt consumption only.
+- PATCH-07B-CLARIFICATION-ROUTE-HELPER-1 strips raw full document text from
+  sourceCards and retrievalContext.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-CLARIFICATION-ROUTE-HELPER-1 - Narrow Route Clarification Orchestrator Helper
+PATCH-07B-GEMINI-REVIEW-14 - Narrow Route Clarification Orchestrator Helper Review
 ```
 
 Recommended agent:
 
 ```text
-Codex
+Gemini
 ```
 
 Gemini review:
 
 ```text
 Gemini Review 13 was required and completed before PATCH-07B-CLARIFICATION-ROUTE-SCAFFOLD-1. No live route wiring, prompt implementation, response-generation changes, or production orchestrator may proceed without the later approved route-helper and route-gate sequence.
-Gemini Review 14 is required after route helper implementation before any live route/prompt integration.
+Historical PATCH-07B-CLARIFICATION-FINAL-GATE-1 next-task marker preserved: PATCH-07B-CLARIFICATION-ROUTE-DESIGN-1 / Claude Code remained design-only and route/prompt/live integration stayed deferred.
+Gemini Review 14 is required before route composition gate, live route wiring, prompt integration, response-generation branching, or frontend responseType implementation.
 ```
 
 Gemini review:
@@ -1706,33 +1721,35 @@ PATCH-07B-CLARIFICATION-SCAFFOLD-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDAT
 PATCH-07B-CLARIFICATION-HELPER-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 PATCH-07B-CLARIFICATION-GATE-2 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 PATCH-07B-CLARIFICATION-FINAL-GATE-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
+PATCH-07B-CLARIFICATION-ROUTE-SCAFFOLD-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
+PATCH-07B-CLARIFICATION-ROUTE-HELPER-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-CLARIFICATION-ROUTE-DESIGN-1 - Live Clarification Route/Prompt Integration Design Gate
+PATCH-07B-GEMINI-REVIEW-14 - Narrow Route Clarification Orchestrator Helper Review
 ```
 
 Recommended agent for next task:
 
 ```text
-Claude Code
+Gemini
 ```
 
 Gemini review:
 
 ```text
-Gemini Review 14 is required after route helper implementation before any live route/prompt integration.
+Gemini Review 14 is required before route composition gate, live route wiring, prompt integration, response-generation branching, or frontend responseType implementation.
 ```
 
 After that:
 
 ```text
 Phase 7B clarification route/prompt integration sequence:
-PATCH-07B-CLARIFICATION-ROUTE-DESIGN-1 - design-only route/prompt integration gate
-PATCH-07B-GEMINI-REVIEW-13 - required review after design
-Implementation may begin only after the design gate and Gemini Review 13 approve it.
+PATCH-07B-GEMINI-REVIEW-14 - required review after route helper
+PATCH-07B-CLARIFICATION-ROUTE-COMPOSITION-GATE-1 - route composition safety gate, if approved
+No live route wiring, prompt integration, response-generation branching, or frontend responseType implementation may begin before Gemini Review 14 and a later approved gate.
 
 Phase 6H runtime retrieval/reranker changes remain deferred unless a later approved phase
 reopens them with local comparison fixture/report artifacts, measurable baseline metrics,
