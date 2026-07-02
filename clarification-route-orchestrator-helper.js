@@ -48,6 +48,8 @@ const RAW_TEXT_KEYS = new Set([
   "excerpt",
   "pageText",
   "chunkText",
+  "fullDocument",
+  "rawBody",
   "documentText",
   "fullDocumentText",
   "rawContent",
