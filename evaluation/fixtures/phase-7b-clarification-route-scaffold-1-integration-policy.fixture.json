@@ -1,0 +1,499 @@
+{
+  "version": "phase-7b-clarification-route-scaffold-1",
+  "fixtureId": "phase-7b-clarification-route-scaffold-1-integration-policy",
+  "patch": "PATCH-07B-CLARIFICATION-ROUTE-SCAFFOLD-1",
+  "phase": "Phase 7B",
+  "purpose": "Route/prompt integration fixture and tests",
+  "implementationScope": "CLARIFICATION_ROUTE_PROMPT_INTEGRATION_FIXTURE_ONLY",
+  "runtimeRouteIntegrationImplemented": false,
+  "promptIntegrationImplemented": false,
+  "responseGenerationImplemented": false,
+  "productionOrchestratorImplemented": false,
+  "frontendImplemented": false,
+  "featureFlagDefault": "OFF",
+  "featureFlagOffBehavior": "BYTE_IDENTICAL_CURRENT_BEHAVIOR_REQUIRED",
+  "runtimeSafe": true,
+  "requiresNetwork": false,
+  "requiresDb": false,
+  "requiresSecrets": false,
+  "futureInsertionPoint": {
+    "location": "runPipeline",
+    "after": "Step 6.5 sourceAvailability/SAE state available",
+    "before": "Step 13 prompt construction and Step 14 OpenAI generation",
+    "mustNotRunAfterGeneration": true,
+    "mustNotRunAfterPipelineReturns": true
+  },
+  "answerBlockingRule": {
+    "hardBlockingTrigger": "answerAllowed === false",
+    "whenBlocked": {
+      "buildFullAnswerPrompt": false,
+      "callOpenAIForFullAnswer": false,
+      "returnResponseType": "clarification"
+    },
+    "nonBlockingConstraintDecisions": [
+      "ANSWER_CAUTIOUSLY_AND_ASK_FOLLOWUP",
+      "REQUEST_DOCUMENTS",
+      "DISCLOSE_SOURCE_LIMITATION",
+      "DISCLOSE_PHASE10_DEFERRAL",
+      "ANSWER_NOW_NO_CLARIFICATION_NEEDED"
+    ]
+  },
+  "responseTypes": [
+    "clarification",
+    "answer_with_followup",
+    "document_request_with_cautious_answer",
+    "source_limited_orientation",
+    "phase10_deferred_orientation",
+    "answer"
+  ],
+  "futureObjectContract": {
+    "mode": "",
+    "userQuery": "",
+    "sourceAvailabilityState": "",
+    "authorityState": "",
+    "sourceCoverageNeeds": [],
+    "sourceCards": [],
+    "retrievalContext": {
+      "metadataOnly": true,
+      "rawFullDocumentInjectionAllowed": false
+    },
+    "knownFacts": {},
+    "helperOutputs": {
+      "issueFrameResult": {},
+      "safetyPolicyResult": {},
+      "factGapResult": {},
+      "clientFactChecklistResult": {},
+      "authorityApplicabilityResult": {},
+      "adversarialContentSafetyResult": {},
+      "birTaxpayerPositionResult": {},
+      "qualitativeAuditRiskResult": {},
+      "clarificationResult": {}
+    }
+  },
+  "requiredPromptConstraintFields": [
+    "prohibitedConclusions",
+    "allowedAnswerPosture",
+    "sourceCoverageLimitations",
+    "phase10Deferrals",
+    "questions",
+    "documentRequests",
+    "canReachFinalConclusion"
+  ],
+  "phase7aPreservationRequirements": [
+    "/ask conversational formatting preserved",
+    "/tax senior memo formatting preserved",
+    "/audit advisory formatting preserved",
+    "source limitation wording preserved verbatim",
+    "source cards preserved",
+    "applyVerifiedAuthorityGate remains terminal gate"
+  ],
+  "stopConditions": [
+    "generation-blocking cannot be proven",
+    "feature-flag OFF not byte-identical",
+    "sourceAvailability unavailable",
+    "source limitation wording lost",
+    "Phase 7A formatting bypassed",
+    "frontend cannot safely display clarification response",
+    "route flow materially changes"
+  ],
+  "deferredItems": [
+    "Phase 8 memory",
+    "Phase 9 workflows",
+    "Phase 10 source governance/acquisition",
+    "Phase 10 Tax Accuracy QA execution",
+    "Phase 11 observability",
+    "Phase 12 document advisory",
+    "settlement/protest runtime",
+    "CTA strategy runtime",
+    "authority conflict/hierarchy/supersession runtime"
+  ],
+  "cases": [
+    {
+      "caseId": "ask-blocking-clarification",
+      "mode": "/ask",
+      "scenario": "Critical fact gap blocks a full answer.",
+      "clarificationDecision": "ASK_BEFORE_ANSWERING",
+      "answerAllowed": false,
+      "sourceAvailabilityState": "AUTHORITY_FOUND",
+      "expectedIntegration": {
+        "insertionPoint": "after Step 6.5, before Step 13/14",
+        "shouldBuildFullAnswerPrompt": false,
+        "shouldCallOpenAIForFullAnswer": false,
+        "responseType": "clarification",
+        "questionCap": 3,
+        "clarificationQuestions": ["What taxpayer type is involved?"],
+        "renderingExpectation": "conversational clarification",
+        "fullAnswerGenerationAllowed": false
+      },
+      "expectedPromptConstraints": {
+        "structuredClarificationObjectRequired": true,
+        "rawStringOnlyPromptInjectionProhibited": true,
+        "allowedAnswerPosture": "NO_ANSWER_UNTIL_CLARIFIED",
+        "prohibitedConclusions": ["Do not provide a full answer until the blocking fact is supplied."],
+        "canReachFinalConclusion": false
+      }
+    },
+    {
+      "caseId": "ask-answer-with-followup",
+      "mode": "/ask",
+      "scenario": "Helpful facts are missing but cautious answer is allowed.",
+      "clarificationDecision": "ANSWER_CAUTIOUSLY_AND_ASK_FOLLOWUP",
+      "answerAllowed": true,
+      "sourceAvailabilityState": "AUTHORITY_FOUND",
+      "expectedIntegration": {
+        "shouldBuildFullAnswerPrompt": true,
+        "shouldCallOpenAIForFullAnswer": true,
+        "responseType": "answer_with_followup",
+        "questionCap": 3,
+        "clarificationQuestions": ["What amount is involved?", "Is the transaction recurring?"],
+        "renderingExpectation": "conversational answer with follow-up"
+      },
+      "expectedPromptConstraints": {
+        "structuredClarificationObjectRequired": true,
+        "allowedAnswerPosture": "CAUTIOUS_ANSWER_WITH_OPEN_ITEMS",
+        "questionsIncluded": true,
+        "canReachFinalConclusion": false
+      }
+    },
+    {
+      "caseId": "ask-source-limited-orientation",
+      "mode": "/ask",
+      "scenario": "No indexed source is available for a general ask request.",
+      "clarificationDecision": "DISCLOSE_SOURCE_LIMITATION",
+      "answerAllowed": true,
+      "sourceAvailabilityState": "NO_INDEXED_SOURCE",
+      "expectedIntegration": {
+        "shouldBuildFullAnswerPrompt": true,
+        "shouldCallOpenAIForFullAnswer": true,
+        "responseType": "source_limited_orientation",
+        "questionCap": 3,
+        "sourceLimitationWordingPreserved": true,
+        "fullAnswerLimitedByAllowedAnswerPosture": true
+      },
+      "expectedPromptConstraints": {
+        "allowedAnswerPosture": "GENERAL_ORIENTATION_ONLY",
+        "sourceCoverageLimitations": ["Indexed source support is unavailable for this request."],
+        "prohibitedConclusions": ["Do not outsource source coverage to the user."],
+        "canReachFinalConclusion": false
+      }
+    },
+    {
+      "caseId": "tax-blocking-clarification",
+      "mode": "/tax",
+      "scenario": "VAT zero-rating facts block senior memo answer generation.",
+      "clarificationDecision": "ASK_BEFORE_ANSWERING",
+      "answerAllowed": false,
+      "sourceAvailabilityState": "AUTHORITY_FOUND",
+      "expectedIntegration": {
+        "shouldBuildFullAnswerPrompt": false,
+        "shouldCallOpenAIForFullAnswer": false,
+        "responseType": "clarification",
+        "questionCap": 7,
+        "clarificationQuestions": ["Is the seller VAT-registered?", "What is the PEZA/export status?", "What is the buyer/customer status?"],
+        "renderingExpectation": "senior-memo clarification structure",
+        "fullAnswerGenerationAllowed": false
+      },
+      "expectedPromptConstraints": {
+        "allowedAnswerPosture": "NO_ANSWER_UNTIL_CLARIFIED",
+        "prohibitedConclusions": ["Do not provide a final tax opinion."],
+        "canReachFinalConclusion": false
+      }
+    },
+    {
+      "caseId": "tax-document-request-cautious-answer",
+      "mode": "/tax",
+      "scenario": "Documents are missing but cautious answer generation may proceed.",
+      "clarificationDecision": "REQUEST_DOCUMENTS",
+      "answerAllowed": true,
+      "sourceAvailabilityState": "AUTHORITY_FOUND",
+      "expectedIntegration": {
+        "shouldBuildFullAnswerPrompt": true,
+        "shouldCallOpenAIForFullAnswer": true,
+        "responseType": "document_request_with_cautious_answer",
+        "documentRequestSectionPresent": true,
+        "documentRequests": ["Please provide the Form 2307.", "Please provide the service invoice."],
+        "legalJudgmentDocumentRequestProhibited": true
+      },
+      "expectedPromptConstraints": {
+        "allowedAnswerPosture": "CAUTIOUS_ANSWER_WITH_OPEN_ITEMS",
+        "documentRequestsIncluded": true,
+        "canReachFinalConclusion": false
+      }
+    },
+    {
+      "caseId": "tax-phase10-deferred-orientation",
+      "mode": "/tax",
+      "scenario": "Currentness and hierarchy flags remain Phase 10 deferrals.",
+      "clarificationDecision": "DISCLOSE_PHASE10_DEFERRAL",
+      "answerAllowed": true,
+      "sourceAvailabilityState": "AUTHORITY_FOUND",
+      "expectedIntegration": {
+        "shouldBuildFullAnswerPrompt": true,
+        "shouldCallOpenAIForFullAnswer": true,
+        "responseType": "phase10_deferred_orientation",
+        "phase10DeferralWordingPreserved": true,
+        "noUserSourceStatusQuestion": true
+      },
+      "expectedPromptConstraints": {
+        "allowedAnswerPosture": "CAUTIOUS_ANSWER_WITH_OPEN_ITEMS",
+        "phase10Deferrals": ["Source currentness review remains deferred.", "Authority hierarchy review remains deferred."],
+        "prohibitedConclusions": ["Do not provide final legal or tax conclusion."],
+        "canReachFinalConclusion": false
+      }
+    },
+    {
+      "caseId": "tax-answer-now",
+      "mode": "/tax",
+      "scenario": "No clarification needed, normal answer generation allowed.",
+      "clarificationDecision": "ANSWER_NOW_NO_CLARIFICATION_NEEDED",
+      "answerAllowed": true,
+      "sourceAvailabilityState": "AUTHORITY_FOUND",
+      "expectedIntegration": {
+        "shouldBuildFullAnswerPrompt": true,
+        "shouldCallOpenAIForFullAnswer": true,
+        "responseType": "answer",
+        "normalAnswerGenerationAllowed": true,
+        "phase7aAndPhase7bProtectionsStillApply": true
+      },
+      "expectedPromptConstraints": {
+        "allowedAnswerPosture": "CAUTIOUS_ANSWER_WITH_OPEN_ITEMS",
+        "canReachFinalConclusion": false
+      }
+    },
+    {
+      "caseId": "audit-blocking-procedural-clarification",
+      "mode": "/audit",
+      "scenario": "Audit procedural stage blocks full answer generation.",
+      "clarificationDecision": "ASK_BEFORE_ANSWERING",
+      "answerAllowed": false,
+      "sourceAvailabilityState": "AUTHORITY_FOUND",
+      "expectedIntegration": {
+        "shouldBuildFullAnswerPrompt": false,
+        "shouldCallOpenAIForFullAnswer": false,
+        "responseType": "clarification",
+        "questionCap": 10,
+        "proceduralFirstClarification": true,
+        "clarificationQuestions": ["What is the current assessment stage?", "Was an LOA received and what is its date?", "Were PAN, FAN, or FDDA notices received?"],
+        "fullAnswerGenerationAllowed": false
+      },
+      "expectedPromptConstraints": {
+        "allowedAnswerPosture": "NO_ANSWER_UNTIL_CLARIFIED",
+        "prohibitedConclusions": ["Do not provide forum or outcome strategy."],
+        "canReachFinalConclusion": false
+      }
+    },
+    {
+      "caseId": "audit-document-request-cautious-answer",
+      "mode": "/audit",
+      "scenario": "Audit documents are missing after stage is known.",
+      "clarificationDecision": "REQUEST_DOCUMENTS",
+      "answerAllowed": true,
+      "sourceAvailabilityState": "AUTHORITY_FOUND",
+      "expectedIntegration": {
+        "shouldBuildFullAnswerPrompt": true,
+        "shouldCallOpenAIForFullAnswer": true,
+        "responseType": "document_request_with_cautious_answer",
+        "documentRequests": ["Please provide the LOA/PAN/FAN/FDDA.", "Please provide the support documents."],
+        "documentRequestSectionPresent": true
+      },
+      "expectedPromptConstraints": {
+        "allowedAnswerPosture": "CAUTIOUS_ANSWER_WITH_OPEN_ITEMS",
+        "prohibitedConclusions": ["Do not provide audit-defense conclusion."],
+        "canReachFinalConclusion": false
+      }
+    },
+    {
+      "caseId": "audit-source-limited-orientation",
+      "mode": "/audit",
+      "scenario": "No indexed audit authority is available.",
+      "clarificationDecision": "DISCLOSE_SOURCE_LIMITATION",
+      "answerAllowed": true,
+      "sourceAvailabilityState": "NO_INDEXED_SOURCE",
+      "expectedIntegration": {
+        "shouldBuildFullAnswerPrompt": true,
+        "shouldCallOpenAIForFullAnswer": true,
+        "responseType": "source_limited_orientation",
+        "sourceLimitationWordingPreserved": true,
+        "noOutsourcedLegalSourceQuestion": true
+      },
+      "expectedPromptConstraints": {
+        "allowedAnswerPosture": "GENERAL_ORIENTATION_ONLY",
+        "sourceCoverageLimitations": ["Indexed audit authority is unavailable."],
+        "prohibitedConclusions": ["Do not provide audit-defense conclusion."],
+        "canReachFinalConclusion": false
+      }
+    },
+    {
+      "caseId": "feature-flag-off-baseline",
+      "mode": "/ask",
+      "scenario": "Feature flag OFF preserves current behavior.",
+      "featureFlagState": "OFF",
+      "clarificationDecision": "ASK_BEFORE_ANSWERING",
+      "answerAllowed": false,
+      "sourceAvailabilityState": "AUTHORITY_FOUND",
+      "expectedIntegration": {
+        "featureFlagDefault": "OFF",
+        "featureFlagOffBehavior": "BYTE_IDENTICAL_CURRENT_BEHAVIOR_REQUIRED",
+        "shouldBuildFullAnswerPrompt": false,
+        "shouldCallOpenAIForFullAnswer": false,
+        "responseType": "clarification",
+        "routePromptResponseBehaviorUnchangedWhenOff": true,
+        "phase7bLiveClarificationBranchActive": false
+      },
+      "expectedPromptConstraints": {
+        "structuredClarificationObjectRequiredWhenFlagOnOnly": true,
+        "canReachFinalConclusion": false
+      }
+    },
+    {
+      "caseId": "feature-flag-on-future-branch",
+      "mode": "/ask",
+      "scenario": "Future flag ON may run only at the approved insertion point.",
+      "featureFlagState": "ON",
+      "clarificationDecision": "ASK_BEFORE_ANSWERING",
+      "answerAllowed": false,
+      "sourceAvailabilityState": "AUTHORITY_FOUND",
+      "expectedIntegration": {
+        "clarificationBranchMayRunOnlyWhenFlagOn": true,
+        "insertionPoint": "after Step 6.5, before Step 13/14",
+        "shouldBuildFullAnswerPrompt": false,
+        "shouldCallOpenAIForFullAnswer": false,
+        "responseType": "clarification"
+      },
+      "expectedPromptConstraints": {
+        "allowedAnswerPosture": "NO_ANSWER_UNTIL_CLARIFIED",
+        "canReachFinalConclusion": false
+      }
+    },
+    {
+      "caseId": "prompt-constraint-object",
+      "mode": "/tax",
+      "scenario": "Future prompt construction receives a structured clarification object.",
+      "clarificationDecision": "ANSWER_CAUTIOUSLY_AND_ASK_FOLLOWUP",
+      "answerAllowed": true,
+      "sourceAvailabilityState": "AUTHORITY_FOUND",
+      "expectedIntegration": {
+        "shouldBuildFullAnswerPrompt": true,
+        "shouldCallOpenAIForFullAnswer": true,
+        "responseType": "answer_with_followup",
+        "structuredClarificationObjectPassedToPrompt": true,
+        "rawStringOnlyPromptInjectionProhibited": true
+      },
+      "expectedPromptConstraints": {
+        "prohibitedConclusions": ["Do not treat missing facts as supplied."],
+        "allowedAnswerPosture": "CAUTIOUS_ANSWER_WITH_OPEN_ITEMS",
+        "sourceCoverageLimitations": [],
+        "phase10Deferrals": [],
+        "questions": ["What amount is involved?"],
+        "documentRequests": [],
+        "canReachFinalConclusion": false
+      }
+    },
+    {
+      "caseId": "phase7a-preservation",
+      "mode": "mixed",
+      "scenario": "Future integration preserves Phase 7A formatting and terminal authority gate.",
+      "clarificationDecision": "ANSWER_NOW_NO_CLARIFICATION_NEEDED",
+      "answerAllowed": true,
+      "sourceAvailabilityState": "AUTHORITY_FOUND",
+      "expectedIntegration": {
+        "shouldBuildFullAnswerPrompt": true,
+        "shouldCallOpenAIForFullAnswer": true,
+        "askConversationalFormattingPreserved": true,
+        "taxSeniorMemoFormattingPreserved": true,
+        "auditAdvisoryFormattingPreserved": true,
+        "sourceLimitationWordingPreserved": true,
+        "sourceCardsPreserved": true,
+        "applyVerifiedAuthorityGateRemainsTerminalGate": true,
+        "responseType": "answer"
+      },
+      "expectedPromptConstraints": {
+        "phase7aFormattingBypassProhibited": true,
+        "canReachFinalConclusion": false
+      }
+    },
+    {
+      "caseId": "frontend-contract-anticipation",
+      "mode": "mixed",
+      "scenario": "Response type is anticipated while frontend remains deferred.",
+      "clarificationDecision": "ASK_BEFORE_ANSWERING",
+      "answerAllowed": false,
+      "sourceAvailabilityState": "AUTHORITY_FOUND",
+      "expectedIntegration": {
+        "shouldBuildFullAnswerPrompt": false,
+        "shouldCallOpenAIForFullAnswer": false,
+        "responseTypeAnticipated": true,
+        "responseType": "clarification",
+        "frontendImplemented": false,
+        "frontendImplicationsDeferredToLaterDesignGate": true
+      },
+      "expectedPromptConstraints": {
+        "canReachFinalConclusion": false
+      }
+    },
+    {
+      "caseId": "stop-conditions",
+      "mode": "mixed",
+      "scenario": "Future implementation must stop when safety prerequisites cannot be proven.",
+      "clarificationDecision": "ASK_BEFORE_ANSWERING",
+      "answerAllowed": false,
+      "sourceAvailabilityState": "AUTHORITY_FOUND",
+      "expectedIntegration": {
+        "shouldBuildFullAnswerPrompt": false,
+        "shouldCallOpenAIForFullAnswer": false,
+        "stopConditionsRequired": [
+          "generation-blocking cannot be proven",
+          "feature-flag OFF not byte-identical",
+          "sourceAvailability unavailable",
+          "source limitation wording lost",
+          "Phase 7A formatting bypassed",
+          "frontend cannot safely display clarification response",
+          "route flow materially changes"
+        ],
+        "responseType": "clarification"
+      },
+      "expectedPromptConstraints": {
+        "canReachFinalConclusion": false
+      }
+    },
+    {
+      "caseId": "no-live-implementation",
+      "mode": "mixed",
+      "scenario": "This scaffold adds no live implementation.",
+      "clarificationDecision": "ANSWER_NOW_NO_CLARIFICATION_NEEDED",
+      "answerAllowed": true,
+      "sourceAvailabilityState": "AUTHORITY_FOUND",
+      "expectedIntegration": {
+        "shouldBuildFullAnswerPrompt": true,
+        "shouldCallOpenAIForFullAnswer": true,
+        "routeControllerChanges": false,
+        "promptChanges": false,
+        "responseGenerationChanges": false,
+        "pipelineBehaviorChanges": false,
+        "productionOrchestratorChanges": false,
+        "responseType": "answer"
+      },
+      "expectedPromptConstraints": {
+        "canReachFinalConclusion": false
+      }
+    },
+    {
+      "caseId": "deferred-items",
+      "mode": "mixed",
+      "scenario": "Later phase and strategy work remains deferred.",
+      "clarificationDecision": "DISCLOSE_PHASE10_DEFERRAL",
+      "answerAllowed": true,
+      "sourceAvailabilityState": "AUTHORITY_FOUND",
+      "expectedIntegration": {
+        "shouldBuildFullAnswerPrompt": true,
+        "shouldCallOpenAIForFullAnswer": true,
+        "deferredItemsExplicitlyListed": true,
+        "responseType": "phase10_deferred_orientation"
+      },
+      "expectedPromptConstraints": {
+        "phase10Deferrals": ["Phase 10 source governance/acquisition remains deferred."],
+        "canReachFinalConclusion": false
+      }
+    }
+  ]
+}

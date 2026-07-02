@@ -65,6 +65,7 @@ PATCH-07B-CLARIFICATION-SCAFFOLD-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDAT
 PATCH-07B-CLARIFICATION-HELPER-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 PATCH-07B-CLARIFICATION-GATE-2 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 PATCH-07B-CLARIFICATION-FINAL-GATE-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
+PATCH-07B-CLARIFICATION-ROUTE-SCAFFOLD-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 ```
 
 Current backend branch:
@@ -138,13 +139,13 @@ full Tax Operating System red-team after Phase 13
 Latest implemented patch:
 
 ```text
-PATCH-07B-CLARIFICATION-FINAL-GATE-1 - Clarification Track Final Gate
+PATCH-07B-CLARIFICATION-ROUTE-SCAFFOLD-1 - Route/Prompt Integration Fixture and Tests
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-07B-CLARIFICATION-FINAL-GATE-1 close clarification track
+PATCH-07B-CLARIFICATION-ROUTE-SCAFFOLD-1 add route integration fixture
 ```
 
 Current working state:
@@ -657,24 +658,34 @@ Key Phase 7A architecture findings:
 - PATCH-07B-CLARIFICATION-FINAL-GATE-1 confirmed route/prompt/live integration remains deferred.
 - Phase 7B reasoning block is complete and ready for Phase 7B final closure,
   depending final roadmap wording.
+- PATCH-07B-CLARIFICATION-ROUTE-SCAFFOLD-1 added the route/prompt integration
+  fixture and scaffold tests.
+- PATCH-07B-CLARIFICATION-ROUTE-SCAFFOLD-1 did not implement live route
+  integration, prompt integration, response-generation changes, pipeline behavior
+  changes, or a production orchestrator.
+- PATCH-07B-CLARIFICATION-ROUTE-SCAFFOLD-1 preserves the future insertion point
+  after Step 6.5 and before Step 13/14 inside runPipeline.
+- PATCH-07B-CLARIFICATION-ROUTE-SCAFFOLD-1 requires feature flag OFF and
+  byte-identical OFF-state behavior for future live wiring.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-CLARIFICATION-ROUTE-DESIGN-1 - Live Clarification Route/Prompt Integration Design Gate
+PATCH-07B-CLARIFICATION-ROUTE-HELPER-1 - Narrow Route Clarification Orchestrator Helper
 ```
 
 Recommended agent:
 
 ```text
-Claude Code
+Codex
 ```
 
 Gemini review:
 
 ```text
-Gemini Review 13 is required after the design-only route/prompt integration gate before any implementation.
+Gemini Review 13 was required and completed before PATCH-07B-CLARIFICATION-ROUTE-SCAFFOLD-1. No live route wiring, prompt implementation, response-generation changes, or production orchestrator may proceed without the later approved route-helper and route-gate sequence.
+Gemini Review 14 is required after route helper implementation before any live route/prompt integration.
 ```
 
 Gemini review:
@@ -1712,7 +1723,7 @@ Claude Code
 Gemini review:
 
 ```text
-Gemini Review 13 is required after the design-only route/prompt integration gate before any implementation.
+Gemini Review 14 is required after route helper implementation before any live route/prompt integration.
 ```
 
 After that:
