@@ -62,6 +62,7 @@ PATCH-07B-AUDIT-RISK-HELPER-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 PATCH-07B-AUDIT-RISK-GATE-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 PATCH-07B-AUDIT-RISK-FINAL-GATE-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 PATCH-07B-CLARIFICATION-SCAFFOLD-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
+PATCH-07B-CLARIFICATION-HELPER-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 ```
 
 Current backend branch:
@@ -135,13 +136,13 @@ full Tax Operating System red-team after Phase 13
 Latest implemented patch:
 
 ```text
-PATCH-07B-CLARIFICATION-SCAFFOLD-1 - Clarification Decision Fixture and Tests
+PATCH-07B-CLARIFICATION-HELPER-1 - Narrow Clarification Boundary Policy Helper
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-07B-CLARIFICATION-SCAFFOLD-1 add clarification decision fixture
+PATCH-07B-CLARIFICATION-HELPER-1 add clarification boundary policy
 ```
 
 Current working state:
@@ -629,30 +630,36 @@ Key Phase 7A architecture findings:
   generation changes.
 - PATCH-07B-CLARIFICATION-SCAFFOLD-1 keeps the future helper as a narrow
   aggregator-only helper over existing Phase 7B outputs.
+- PATCH-07B-CLARIFICATION-HELPER-1 added clarification-boundary-policy.js.
+- PATCH-07B-CLARIFICATION-HELPER-1 implemented assessClarificationNeed and
+  buildClarificationChecklist as narrow aggregator-only exports.
+- PATCH-07B-CLARIFICATION-HELPER-1 did not export buildClarificationPrompt and
+  did not add live route/prompt integration, a production orchestrator, or
+  response-generation changes.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-CLARIFICATION-HELPER-1 - Narrow Clarification Boundary Policy Helper
+PATCH-07B-GEMINI-REVIEW-11 - Narrow Clarification Boundary Policy Helper Review
 ```
 
 Recommended agent:
 
 ```text
-Codex
+Gemini
 ```
 
 Gemini review:
 
 ```text
-Gemini Review 11 is required after PATCH-07B-CLARIFICATION-HELPER-1 before any route or prompt integration.
+Gemini Review 11 is required now, before any composition gate, route integration, or prompt integration.
 ```
 
 Expected next gate:
 
 ```text
-PATCH-07B-CLARIFICATION-HELPER-1 should implement clarification-boundary-policy.js as a narrow aggregator helper using the approved scaffold.
+PATCH-07B-GEMINI-REVIEW-11 should review clarification-boundary-policy.js and its focused tests before any composition gate or live integration.
 ```
 
 Next phase:
