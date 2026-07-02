@@ -68,6 +68,9 @@ PATCH-07B-CLARIFICATION-FINAL-GATE-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMEND
 PATCH-07B-CLARIFICATION-ROUTE-SCAFFOLD-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 PATCH-07B-CLARIFICATION-ROUTE-HELPER-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 PATCH-07B-CLARIFICATION-ROUTE-GATE-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
+PATCH-07B-GEMINI-REVIEW-14 COMPLETE / PASS WITH STRICT RECOMMENDATIONS
+PATCH-07B-GEMINI-REVIEW-15 COMPLETE / PASS WITH STRICT RECOMMENDATIONS
+PATCH-07B-CLARIFICATION-FINAL-GATE-2 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 ```
 
 Current backend branch:
@@ -141,18 +144,56 @@ full Tax Operating System red-team after Phase 13
 Latest implemented patch:
 
 ```text
-PATCH-07B-CLARIFICATION-ROUTE-GATE-1 - Route Clarification Helper Composition and Safety Gate
+PATCH-07B-CLARIFICATION-FINAL-GATE-2 - Clarification Route/Helper Workstream Final Closure Gate
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-07B-CLARIFICATION-ROUTE-GATE-1 validate route clarification composition
+PATCH-07B-CLARIFICATION-FINAL-GATE-2 close route helper workstream
 ```
 
 Current working state:
 
 ```text
+PATCH-07B-GEMINI-REVIEW-15 COMPLETE / PASS WITH STRICT RECOMMENDATIONS
+Required fixes before next patch: None.
+Gemini Review 15 strict recommendation carried forward: immediate next patch must be PATCH-07B-CLARIFICATION-FINAL-GATE-2.
+PATCH-07B-CLARIFICATION-FINAL-GATE-2 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
+Clarification route/helper workstream formally closed.
+Phase 7B reasoning block formally closed and ready for live design.
+Ten-helper reasoning chain complete and gated:
+1. issue framing
+2. reasoning safety
+3. fact gap
+4. client fact checklist
+5. authority applicability
+6. adversarial content safety
+7. BIR vs taxpayer position
+8. qualitative audit-risk
+9. clarification boundary
+10. route clarification orchestrator
+No live route wiring.
+No prompt integration.
+No response-generation branching.
+No production orchestrator.
+No frontend implementation.
+Feature flag OFF default and BYTE_IDENTICAL_CURRENT_BEHAVIOR_REQUIRED carried forward.
+answerAllowed false blocking contract carried forward.
+shouldBuildFullAnswerPrompt false when blocked carried forward.
+shouldCallOpenAIForFullAnswer false when blocked carried forward.
+structuredClarificationObject contract carried forward.
+compact metadata sanitization carried forward.
+retrievalContext strips fullDocument and rawBody carried forward.
+source limitation non-blocking unless answerAllowed false.
+Phase 10 deferral non-blocking unless answerAllowed false.
+Approved next task: PATCH-07B-CLARIFICATION-LIVE-DESIGN-1 - Live Clarification Route/Prompt Integration Design.
+Agent: Claude Code.
+Task type: Design-only.
+Live design is after final gate; no live route wiring yet.
+Gemini Review 16 required after live design and before live route implementation.
+Phase 10 hallucination/trap questions and court-case/G.R. lookup remain deferred.
+runPipeline insertion point carried forward: after Step 6.5, before Step 13, before Step 14, before prompt construction, and before OpenAI generation.
 PATCH-07B-CLARIFICATION-ROUTE-GATE-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 Route clarification helper composition and safety gate added.
 Helper chain composition validated through clarification-route-orchestrator-helper.js.
@@ -165,8 +206,8 @@ answerAllowed false blocking contract validated in composition.
 Source limitation and Phase 10 deferral validated as non-blocking constraints unless answerAllowed false.
 Feature flag OFF byte-identical requirement carried forward.
 Compact metadata sanitization validated in composition, including fullDocument and rawBody retrievalContext stripping after approved narrow helper fix.
-Next task: PATCH-07B-GEMINI-REVIEW-15 - Route Clarification Helper Composition Gate Review.
-Gemini Review 15 required before live route wiring, prompt integration, response-generation branching, or frontend responseType implementation.
+Next task: PATCH-07B-CLARIFICATION-LIVE-DESIGN-1 - Live Clarification Route/Prompt Integration Design.
+Gemini Review 16 required after live design and before live route implementation.
 PATCH-07A-GATE-1 COMPLETE / LOCAL PASS
 Phase 6H closed through stabilization gate (PATCH-06H-GATE-1).
 Phase 7A is closed / PASS.
@@ -707,13 +748,13 @@ Key Phase 7A architecture findings:
 Immediate next task:
 
 ```text
-PATCH-07B-GEMINI-REVIEW-15 - Route Clarification Helper Composition Gate Review
+PATCH-07B-CLARIFICATION-LIVE-DESIGN-1 - Live Clarification Route/Prompt Integration Design
 ```
 
 Recommended agent:
 
 ```text
-Gemini
+Claude Code
 ```
 
 Gemini review:
@@ -721,7 +762,7 @@ Gemini review:
 ```text
 Gemini Review 13 was required and completed before PATCH-07B-CLARIFICATION-ROUTE-SCAFFOLD-1. No live route wiring, prompt implementation, response-generation changes, or production orchestrator may proceed without the later approved route-helper and route-gate sequence.
 Historical PATCH-07B-CLARIFICATION-FINAL-GATE-1 next-task marker preserved: PATCH-07B-CLARIFICATION-ROUTE-DESIGN-1 / Claude Code remained design-only and route/prompt/live integration stayed deferred.
-Gemini Review 15 is required before live route wiring, prompt integration, response-generation branching, or frontend responseType implementation.
+PATCH-07B-GEMINI-REVIEW-15 completed with PASS WITH STRICT RECOMMENDATIONS and required fixes before next patch: None. Gemini Review 16 is required after live design and before implementation.
 ```
 
 Gemini review:
@@ -1682,7 +1723,7 @@ PHASE 7B - Analytical / Adversarial Reasoning Layer
 Current latest pushed commit:
 
 ```text
-PATCH-07B-CLARIFICATION-ROUTE-GATE-1 validate route clarification composition
+PATCH-07B-CLARIFICATION-FINAL-GATE-2 close route helper workstream
 ```
 
 Current status:
@@ -1745,32 +1786,35 @@ PATCH-07B-CLARIFICATION-FINAL-GATE-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMEND
 PATCH-07B-CLARIFICATION-ROUTE-SCAFFOLD-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 PATCH-07B-CLARIFICATION-ROUTE-HELPER-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 PATCH-07B-CLARIFICATION-ROUTE-GATE-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
+PATCH-07B-GEMINI-REVIEW-15 COMPLETE / PASS WITH STRICT RECOMMENDATIONS
+PATCH-07B-CLARIFICATION-FINAL-GATE-2 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-GEMINI-REVIEW-15 - Route Clarification Helper Composition Gate Review
+PATCH-07B-CLARIFICATION-LIVE-DESIGN-1 - Live Clarification Route/Prompt Integration Design
 ```
 
 Recommended agent for next task:
 
 ```text
-Gemini
+Claude Code
 ```
 
 Gemini review:
 
 ```text
-Gemini Review 15 is required before live route wiring, prompt integration, response-generation branching, or frontend responseType implementation.
+Gemini Review 16 required after live design and before live route implementation.
 ```
 
 After that:
 
 ```text
 Phase 7B clarification route/prompt integration sequence:
-PATCH-07B-GEMINI-REVIEW-15 - required review after route composition gate
-No live route wiring, prompt integration, response-generation branching, or frontend responseType implementation may begin before Gemini Review 15 and a later approved implementation gate.
+PATCH-07B-CLARIFICATION-LIVE-DESIGN-1 - design-only review after final gate
+PATCH-07B-GEMINI-REVIEW-16 - required review after live design and before implementation
+No live route wiring, prompt integration, response-generation branching, or frontend responseType implementation may begin before Gemini Review 16 and a later approved implementation gate.
 
 Phase 6H runtime retrieval/reranker changes remain deferred unless a later approved phase
 reopens them with local comparison fixture/report artifacts, measurable baseline metrics,
