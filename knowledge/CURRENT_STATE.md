@@ -15,7 +15,7 @@ PHASE 6F CLOSED / PASS
 PHASE 6G CLOSED / PASS
 PHASE 6H CLOSED / PASS
 PHASE 7A CLOSED / PASS
-PHASE 7B ACTIVE / READY
+PHASE 7B ACTIVE / READY FOR PHASE 7B FINAL CLOSURE
 PATCH-06F-GATE-1 COMPLETE / LOCAL PASS
 PATCH-06G-001 COMPLETE / LOCAL PASS
 PATCH-06G-002 COMPLETE / LOCAL PASS
@@ -64,6 +64,7 @@ PATCH-07B-AUDIT-RISK-FINAL-GATE-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATI
 PATCH-07B-CLARIFICATION-SCAFFOLD-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 PATCH-07B-CLARIFICATION-HELPER-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 PATCH-07B-CLARIFICATION-GATE-2 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
+PATCH-07B-CLARIFICATION-FINAL-GATE-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 ```
 
 Current backend branch:
@@ -137,13 +138,13 @@ full Tax Operating System red-team after Phase 13
 Latest implemented patch:
 
 ```text
-PATCH-07B-CLARIFICATION-GATE-2 - Clarification Helper Composition and Safety Gate
+PATCH-07B-CLARIFICATION-FINAL-GATE-1 - Clarification Track Final Gate
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-07B-CLARIFICATION-GATE-2 validate clarification composition
+PATCH-07B-CLARIFICATION-FINAL-GATE-1 close clarification track
 ```
 
 Current working state:
@@ -152,7 +153,7 @@ Current working state:
 PATCH-07A-GATE-1 COMPLETE / LOCAL PASS
 Phase 6H closed through stabilization gate (PATCH-06H-GATE-1).
 Phase 7A is closed / PASS.
-Phase 7B is active / ready for architecture review.
+Phase 7B is active / ready for Phase 7B final closure.
 Key Phase 7A architecture findings:
 - PATCH-07A-001 completed a full read-only architecture review for Phase 7A.
 - Existing answer-renderer.js (v5.2.0) is a pure formatting-only layer — no OpenAI calls.
@@ -642,18 +643,38 @@ Key Phase 7A architecture findings:
 - PATCH-07B-CLARIFICATION-GATE-2 validated clarification-boundary-policy.js
   against composed upstream helper outputs without live route/prompt integration,
   a production orchestrator, or response-generation changes.
+- PATCH-07B-CLARIFICATION-FINAL-GATE-1 completed the clarification track final
+  gate as CLOSED / COMPLETE / PASS WITH RECOMMENDATIONS.
+- Phase 7B clarification track CLOSED / COMPLETE / PASS WITH RECOMMENDATIONS.
+- PATCH-07B-CLARIFICATION-FINAL-GATE-1 validated the nine-helper Phase 7B
+  reasoning chain in test-only composition:
+  issue-framing-engine.js, reasoning-safety-policy.js, fact-gap-helper.js,
+  client-fact-checklist-output.js, authority-applicability-helper.js,
+  adversarial-content-safety-policy.js, bir-vs-taxpayer-position-helper.js,
+  audit-risk-language-helper.js, and clarification-boundary-policy.js.
+- PATCH-07B-CLARIFICATION-FINAL-GATE-1 confirmed no live route/prompt
+  integration, no production orchestrator, and no response-generation changes.
+- PATCH-07B-CLARIFICATION-FINAL-GATE-1 confirmed route/prompt/live integration remains deferred.
+- Phase 7B reasoning block is complete and ready for Phase 7B final closure,
+  depending final roadmap wording.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-GEMINI-REVIEW-12 - Clarification Composition Gate Review
+PATCH-07B-CLARIFICATION-ROUTE-DESIGN-1 - Live Clarification Route/Prompt Integration Design Gate
 ```
 
 Recommended agent:
 
 ```text
-Gemini
+Claude Code
+```
+
+Gemini review:
+
+```text
+Gemini Review 13 is required after the design-only route/prompt integration gate before any implementation.
 ```
 
 Gemini review:
@@ -1614,7 +1635,7 @@ PHASE 7B - Analytical / Adversarial Reasoning Layer
 Current latest pushed commit:
 
 ```text
-PATCH-07B-013R add adversarial content safety policy
+PATCH-07B-CLARIFICATION-FINAL-GATE-1 close clarification track
 ```
 
 Current status:
@@ -1624,7 +1645,7 @@ PHASE 6F CLOSED / PASS
 PHASE 6G CLOSED / PASS
 PHASE 6H CLOSED / PASS
 PHASE 7A CLOSED / PASS
-PHASE 7B ACTIVE / READY
+PHASE 7B ACTIVE / READY FOR PHASE 7B FINAL CLOSURE
 PATCH-06F-GATE-1 COMPLETE / LOCAL PASS
 PATCH-06G-001 COMPLETE / LOCAL PASS
 PATCH-06G-002 COMPLETE / LOCAL PASS
@@ -1670,12 +1691,16 @@ PATCH-07B-FINAL-GATE-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 PATCH-07B-AUDIT-RISK-HELPER-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 PATCH-07B-AUDIT-RISK-GATE-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 PATCH-07B-AUDIT-RISK-FINAL-GATE-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
+PATCH-07B-CLARIFICATION-SCAFFOLD-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
+PATCH-07B-CLARIFICATION-HELPER-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
+PATCH-07B-CLARIFICATION-GATE-2 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
+PATCH-07B-CLARIFICATION-FINAL-GATE-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-CLARIFICATION-GATE-1 - Live Clarification Boundary and Fact-Gap Prompt Integration Review
+PATCH-07B-CLARIFICATION-ROUTE-DESIGN-1 - Live Clarification Route/Prompt Integration Design Gate
 ```
 
 Recommended agent for next task:
@@ -1687,23 +1712,16 @@ Claude Code
 Gemini review:
 
 ```text
-Gemini Review 10 is required after PATCH-07B-CLARIFICATION-GATE-1 before any live clarification implementation.
+Gemini Review 13 is required after the design-only route/prompt integration gate before any implementation.
 ```
 
 After that:
 
 ```text
-Phase 7B approved sequence:
-PATCH-07B-005 - BIR vs taxpayer position architecture fixture and tests
-PATCH-07B-006 - Audit-defense risk-language fixture and tests
-PATCH-07B-007 - Reasoning safety policy and source-state guard tests
-PATCH-07B-GEMINI-REVIEW-1 - Phase 7B Pre-Implementation Scaffold Review
-PATCH-07B-008 - First narrow issue-framing implementation, if fixtures support it
-PATCH-07B-009 - Narrow fact-gap runtime helper, if kept narrow
-PATCH-07B-010 - Client fact-pattern checklist output integration, if kept checklist-only
-PATCH-07B-011 - Narrow authority applicability runtime helper, if kept posture-only
-PATCH-07B-012 - Reasoning runtime integration guard and composition tests
-PATCH-07B-GATE-1 - Phase 7B Stabilization Gate
+Phase 7B clarification route/prompt integration sequence:
+PATCH-07B-CLARIFICATION-ROUTE-DESIGN-1 - design-only route/prompt integration gate
+PATCH-07B-GEMINI-REVIEW-13 - required review after design
+Implementation may begin only after the design gate and Gemini Review 13 approve it.
 
 Phase 6H runtime retrieval/reranker changes remain deferred unless a later approved phase
 reopens them with local comparison fixture/report artifacts, measurable baseline metrics,
