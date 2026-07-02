@@ -1,0 +1,662 @@
+{
+  "version": "phase-7b-clarification-scaffold-1",
+  "fixtureId": "phase-7b-clarification-scaffold-1-decision-policy",
+  "patch": "PATCH-07B-CLARIFICATION-SCAFFOLD-1",
+  "phase": "Phase 7B",
+  "purpose": "Clarification decision fixture and tests",
+  "implementationScope": "CLARIFICATION_DECISION_FIXTURE_ONLY",
+  "runtimeImplemented": false,
+  "routeIntegrationImplemented": false,
+  "promptIntegrationImplemented": false,
+  "productionOrchestratorImplemented": false,
+  "responseGenerationChanged": false,
+  "runtimeSafe": true,
+  "requiresNetwork": false,
+  "requiresDb": false,
+  "requiresSecrets": false,
+  "clarificationDecisionEnum": [
+    "ASK_BEFORE_ANSWERING",
+    "ANSWER_CAUTIOUSLY_AND_ASK_FOLLOWUP",
+    "REQUEST_DOCUMENTS",
+    "DISCLOSE_SOURCE_LIMITATION",
+    "DISCLOSE_PHASE10_DEFERRAL",
+    "ANSWER_NOW_NO_CLARIFICATION_NEEDED"
+  ],
+  "allowedAnswerPostureEnum": [
+    "GENERAL_ORIENTATION_ONLY",
+    "CAUTIOUS_ANSWER_WITH_OPEN_ITEMS",
+    "NO_ANSWER_UNTIL_CLARIFIED"
+  ],
+  "implementationScopeEnum": [
+    "CLARIFICATION_BOUNDARY_POLICY_ONLY"
+  ],
+  "futureHelper": {
+    "fileName": "clarification-boundary-policy.js",
+    "primaryFunction": "assessClarificationNeed",
+    "checklistFunction": "buildClarificationChecklist",
+    "prohibitedFunctionNames": ["buildClarificationPrompt"],
+    "aggregatorOnly": true,
+    "consumesExistingHelperOutputs": [
+      "criticalMissingFacts",
+      "helpfulMissingFacts",
+      "documentGaps",
+      "sourceCoverageNeeds",
+      "missingApplicabilityFacts",
+      "requiredApplicabilityFacts",
+      "phase10DependencyFlags",
+      "auditProceduralFactsMissing"
+    ],
+    "doesNotCreateNewDetectorTaxonomy": true,
+    "routeIntegrationImplemented": false,
+    "promptIntegrationImplemented": false,
+    "liveIntegrationImplemented": false
+  },
+  "safeDocumentRequestExamples": [
+    "Please provide the Form 2307.",
+    "Please provide the service invoice.",
+    "Please provide the LOA/PAN/FAN/FDDA.",
+    "Please provide the reconciliation schedule."
+  ],
+  "unsafeLegalJudgmentRequestExamples": [
+    "Please prove this qualifies as zero-rated.",
+    "Please confirm this is legally deductible.",
+    "Please confirm the assessment is void."
+  ],
+  "questionCaps": {
+    "/ask": 3,
+    "/tax": 7,
+    "/audit": 10
+  },
+  "priorityOrdering": [
+    "legal-conclusion-gating facts",
+    "audit deadlines/procedural posture",
+    "authority applicability facts",
+    "substantiation documents",
+    "helpful-only facts"
+  ],
+  "cases": [
+    {
+      "caseId": "ask-missing-taxpayer-type-critical",
+      "mode": "/ask",
+      "scenario": "Missing taxpayer type blocks a specific answer.",
+      "inputSignals": {
+        "authorityState": "AUTHORITY_FOUND",
+        "criticalMissingFacts": ["taxpayer type"],
+        "helpfulMissingFacts": [],
+        "documentGaps": [],
+        "sourceCoverageNeeds": [],
+        "phase10DependencyFlags": []
+      },
+      "expectedClarification": {
+        "clarificationDecision": "ASK_BEFORE_ANSWERING",
+        "clarificationReason": "Taxpayer type is needed before a specific tax answer.",
+        "shouldAskBeforeAnswer": true,
+        "questions": ["What taxpayer type is involved?"],
+        "documentRequests": [],
+        "sourceCoverageLimitations": [],
+        "phase10Deferrals": [],
+        "answerAllowed": false,
+        "allowedAnswerPosture": "NO_ANSWER_UNTIL_CLARIFIED",
+        "prohibitedConclusions": ["Do not provide a conclusive legal, tax, or audit outcome."],
+        "canReachFinalConclusion": false,
+        "implementationScope": "CLARIFICATION_BOUNDARY_POLICY_ONLY"
+      },
+      "prohibitedBehavior": ["Do not ask for documents before the taxpayer-type fact.", "Do not ask for TIN."],
+      "rationale": "A critical identity category is the highest priority for /ask."
+    },
+    {
+      "caseId": "ask-helpful-only-missing-facts",
+      "mode": "/ask",
+      "scenario": "Helpful facts are missing but a cautious answer is allowed.",
+      "inputSignals": {
+        "authorityState": "AUTHORITY_FOUND",
+        "criticalMissingFacts": [],
+        "helpfulMissingFacts": ["payment amount", "whether recurring"],
+        "documentGaps": [],
+        "sourceCoverageNeeds": [],
+        "phase10DependencyFlags": []
+      },
+      "expectedClarification": {
+        "clarificationDecision": "ANSWER_CAUTIOUSLY_AND_ASK_FOLLOWUP",
+        "clarificationReason": "Only helpful context is missing.",
+        "shouldAskBeforeAnswer": false,
+        "questions": ["What amount is involved?", "Is the transaction recurring?"],
+        "documentRequests": [],
+        "sourceCoverageLimitations": [],
+        "phase10Deferrals": [],
+        "answerAllowed": true,
+        "allowedAnswerPosture": "CAUTIOUS_ANSWER_WITH_OPEN_ITEMS",
+        "prohibitedConclusions": ["Do not turn helpful missing facts into assumed facts."],
+        "canReachFinalConclusion": false,
+        "implementationScope": "CLARIFICATION_BOUNDARY_POLICY_ONLY"
+      },
+      "prohibitedBehavior": ["Do not block the answer only because helpful facts are missing."],
+      "rationale": "Helpful-only gaps should produce a cautious answer plus follow-up."
+    },
+    {
+      "caseId": "ask-general-tax-orientation",
+      "mode": "/ask",
+      "scenario": "General tax orientation with no specific facts.",
+      "inputSignals": {
+        "authorityState": "GENERAL_TAX",
+        "criticalMissingFacts": ["specific transaction"],
+        "helpfulMissingFacts": [],
+        "documentGaps": [],
+        "sourceCoverageNeeds": ["specific indexed authority after issue narrowing"],
+        "phase10DependencyFlags": []
+      },
+      "expectedClarification": {
+        "clarificationDecision": "ANSWER_CAUTIOUSLY_AND_ASK_FOLLOWUP",
+        "clarificationReason": "General orientation is allowed while asking for issue-narrowing facts.",
+        "shouldAskBeforeAnswer": false,
+        "questions": ["What transaction or tax issue do you want to narrow?"],
+        "documentRequests": [],
+        "sourceCoverageLimitations": ["Only general orientation is supported until the issue is narrowed."],
+        "phase10Deferrals": [],
+        "answerAllowed": true,
+        "allowedAnswerPosture": "GENERAL_ORIENTATION_ONLY",
+        "prohibitedConclusions": ["Do not claim exact authority support."],
+        "canReachFinalConclusion": false,
+        "implementationScope": "CLARIFICATION_BOUNDARY_POLICY_ONLY"
+      },
+      "prohibitedBehavior": ["Do not present exact authority support for a general orientation."],
+      "rationale": "General tax answers must preserve Phase 7A source and mode boundaries."
+    },
+    {
+      "caseId": "ask-no-indexed-source",
+      "mode": "/ask",
+      "scenario": "No indexed source is available.",
+      "inputSignals": {
+        "authorityState": "NO_INDEXED_SOURCE",
+        "criticalMissingFacts": [],
+        "helpfulMissingFacts": [],
+        "documentGaps": [],
+        "sourceCoverageNeeds": ["indexed source support unavailable"],
+        "phase10DependencyFlags": []
+      },
+      "expectedClarification": {
+        "clarificationDecision": "DISCLOSE_SOURCE_LIMITATION",
+        "clarificationReason": "Indexed source support is unavailable.",
+        "shouldAskBeforeAnswer": false,
+        "questions": [],
+        "documentRequests": [],
+        "sourceCoverageLimitations": ["Indexed source support is unavailable for this request."],
+        "phase10Deferrals": [],
+        "answerAllowed": true,
+        "allowedAnswerPosture": "GENERAL_ORIENTATION_ONLY",
+        "prohibitedConclusions": ["Do not ask the user to identify applicable law."],
+        "canReachFinalConclusion": false,
+        "implementationScope": "CLARIFICATION_BOUNDARY_POLICY_ONLY"
+      },
+      "prohibitedBehavior": ["Do not ask what law applies.", "Do not ask the user to search the BIR website."],
+      "rationale": "Source coverage cannot be outsourced to the user."
+    },
+    {
+      "caseId": "tax-vat-zero-rating-missing-facts",
+      "mode": "/tax",
+      "scenario": "VAT zero-rating facts are incomplete.",
+      "inputSignals": {
+        "authorityState": "AUTHORITY_FOUND",
+        "criticalMissingFacts": ["seller VAT registration", "PEZA/export status", "buyer/customer status", "transaction date"],
+        "helpfulMissingFacts": ["foreign-currency remittance status"],
+        "documentGaps": [],
+        "sourceCoverageNeeds": [],
+        "phase10DependencyFlags": []
+      },
+      "expectedClarification": {
+        "clarificationDecision": "ASK_BEFORE_ANSWERING",
+        "clarificationReason": "VAT zero-rating depends on taxpayer, transaction, customer, and period facts.",
+        "shouldAskBeforeAnswer": true,
+        "questions": ["Is the seller VAT-registered?", "What is the PEZA/export status?", "What is the buyer/customer status?", "What transaction date or taxable period is involved?"],
+        "documentRequests": [],
+        "sourceCoverageLimitations": [],
+        "phase10Deferrals": [],
+        "answerAllowed": false,
+        "allowedAnswerPosture": "NO_ANSWER_UNTIL_CLARIFIED",
+        "prohibitedConclusions": ["Do not ask the user to prove the legal characterization."],
+        "canReachFinalConclusion": false,
+        "implementationScope": "CLARIFICATION_BOUNDARY_POLICY_ONLY"
+      },
+      "prohibitedBehavior": ["Do not ask: Please prove this qualifies as zero-rated."],
+      "rationale": "Legal-conclusion-gating facts come before documents or advice."
+    },
+    {
+      "caseId": "tax-missing-documents-critical-facts-present",
+      "mode": "/tax",
+      "scenario": "Critical facts are present but substantiation documents are missing.",
+      "inputSignals": {
+        "authorityState": "AUTHORITY_FOUND",
+        "criticalMissingFacts": [],
+        "helpfulMissingFacts": [],
+        "documentGaps": ["Form 2307", "service invoice", "reconciliation schedule"],
+        "sourceCoverageNeeds": [],
+        "phase10DependencyFlags": []
+      },
+      "expectedClarification": {
+        "clarificationDecision": "REQUEST_DOCUMENTS",
+        "clarificationReason": "Documents are needed for substantiation but a cautious answer can proceed.",
+        "shouldAskBeforeAnswer": false,
+        "questions": [],
+        "documentRequests": ["Please provide the Form 2307.", "Please provide the service invoice.", "Please provide the reconciliation schedule."],
+        "sourceCoverageLimitations": [],
+        "phase10Deferrals": [],
+        "answerAllowed": true,
+        "allowedAnswerPosture": "CAUTIOUS_ANSWER_WITH_OPEN_ITEMS",
+        "prohibitedConclusions": ["Do not treat missing documents as supplied."],
+        "canReachFinalConclusion": false,
+        "implementationScope": "CLARIFICATION_BOUNDARY_POLICY_ONLY"
+      },
+      "prohibitedBehavior": ["Do not say documents prove the tax result before review."],
+      "rationale": "Document requests should not become legal-judgment questions."
+    },
+    {
+      "caseId": "tax-related-authority-only",
+      "mode": "/tax",
+      "scenario": "Only related authority is available.",
+      "inputSignals": {
+        "authorityState": "RELATED_AUTHORITY_ONLY",
+        "criticalMissingFacts": [],
+        "helpfulMissingFacts": ["fact similarity to related authority"],
+        "documentGaps": [],
+        "sourceCoverageNeeds": ["direct authority support not available"],
+        "missingApplicabilityFacts": ["whether taxpayer facts match the related authority"],
+        "phase10DependencyFlags": []
+      },
+      "expectedClarification": {
+        "clarificationDecision": "DISCLOSE_SOURCE_LIMITATION",
+        "clarificationReason": "Related authority can support only limited orientation.",
+        "shouldAskBeforeAnswer": false,
+        "questions": ["Which taxpayer facts match the related authority?"],
+        "documentRequests": [],
+        "sourceCoverageLimitations": ["Only related authority support is available."],
+        "phase10Deferrals": [],
+        "answerAllowed": true,
+        "allowedAnswerPosture": "CAUTIOUS_ANSWER_WITH_OPEN_ITEMS",
+        "prohibitedConclusions": ["Do not convert related support into exact authority support."],
+        "canReachFinalConclusion": false,
+        "implementationScope": "CLARIFICATION_BOUNDARY_POLICY_ONLY"
+      },
+      "prohibitedBehavior": ["Do not state a controlling or exact authority conclusion."],
+      "rationale": "Applicability questions may be asked while preserving source limitations."
+    },
+    {
+      "caseId": "tax-authority-found-complete-inputs",
+      "mode": "/tax",
+      "scenario": "Authority, critical facts, and documents are present.",
+      "inputSignals": {
+        "authorityState": "AUTHORITY_FOUND",
+        "criticalMissingFacts": [],
+        "helpfulMissingFacts": [],
+        "documentGaps": [],
+        "sourceCoverageNeeds": [],
+        "phase10DependencyFlags": []
+      },
+      "expectedClarification": {
+        "clarificationDecision": "ANSWER_NOW_NO_CLARIFICATION_NEEDED",
+        "clarificationReason": "No blocking clarification signal is present.",
+        "shouldAskBeforeAnswer": false,
+        "questions": [],
+        "documentRequests": [],
+        "sourceCoverageLimitations": [],
+        "phase10Deferrals": [],
+        "answerAllowed": true,
+        "allowedAnswerPosture": "CAUTIOUS_ANSWER_WITH_OPEN_ITEMS",
+        "prohibitedConclusions": ["Do not state a conclusive legal or tax outcome."],
+        "canReachFinalConclusion": false,
+        "implementationScope": "CLARIFICATION_BOUNDARY_POLICY_ONLY"
+      },
+      "prohibitedBehavior": ["Do not add unnecessary questions."],
+      "rationale": "No clarification should be forced when required signals are complete."
+    },
+    {
+      "caseId": "tax-phase10-flags",
+      "mode": "/tax",
+      "scenario": "Phase 10 metadata/currentness flags are present.",
+      "inputSignals": {
+        "authorityState": "AUTHORITY_FOUND",
+        "criticalMissingFacts": [],
+        "helpfulMissingFacts": [],
+        "documentGaps": [],
+        "sourceCoverageNeeds": [],
+        "phase10DependencyFlags": ["SOURCE_CURRENTNESS_REVIEW_NEEDED", "HIERARCHY_CONFLICT_REVIEW_NEEDED"]
+      },
+      "expectedClarification": {
+        "clarificationDecision": "DISCLOSE_PHASE10_DEFERRAL",
+        "clarificationReason": "Source currentness and hierarchy review are deferred to Phase 10.",
+        "shouldAskBeforeAnswer": false,
+        "questions": [],
+        "documentRequests": [],
+        "sourceCoverageLimitations": [],
+        "phase10Deferrals": ["Source currentness review is deferred.", "Authority hierarchy review is deferred."],
+        "answerAllowed": true,
+        "allowedAnswerPosture": "CAUTIOUS_ANSWER_WITH_OPEN_ITEMS",
+        "prohibitedConclusions": ["Do not ask the user to resolve source metadata or authority ranking."],
+        "canReachFinalConclusion": false,
+        "implementationScope": "CLARIFICATION_BOUNDARY_POLICY_ONLY"
+      },
+      "prohibitedBehavior": ["Do not ask which authority controls.", "Do not ask the user to find the newer regulation."],
+      "rationale": "Phase 10 matters must be disclosed as deferrals, not outsourced."
+    },
+    {
+      "caseId": "audit-missing-loa-pan-fan-fdda-stage",
+      "mode": "/audit",
+      "scenario": "Audit procedural stage is missing.",
+      "inputSignals": {
+        "authorityState": "AUTHORITY_FOUND",
+        "criticalMissingFacts": ["taxpayer type"],
+        "assessmentStageGaps": ["LOA date", "PAN/FAN/FDDA status", "assessment stage", "taxable period"],
+        "documentGaps": [],
+        "sourceCoverageNeeds": [],
+        "phase10DependencyFlags": []
+      },
+      "expectedClarification": {
+        "clarificationDecision": "ASK_BEFORE_ANSWERING",
+        "clarificationReason": "Audit procedural facts are needed before audit analysis.",
+        "shouldAskBeforeAnswer": true,
+        "questions": ["What is the current assessment stage?", "Was an LOA received and what is its date?", "Were PAN, FAN, or FDDA notices received?", "What taxable period is covered?", "What taxpayer type is involved?"],
+        "documentRequests": [],
+        "sourceCoverageLimitations": [],
+        "phase10Deferrals": [],
+        "answerAllowed": false,
+        "allowedAnswerPosture": "NO_ANSWER_UNTIL_CLARIFIED",
+        "prohibitedConclusions": ["Do not provide protest, settlement, or forum strategy."],
+        "canReachFinalConclusion": false,
+        "implementationScope": "CLARIFICATION_BOUNDARY_POLICY_ONLY"
+      },
+      "prohibitedBehavior": ["Do not recommend settlement.", "Do not state assessment voidness."],
+      "rationale": "Procedural posture must precede substantive audit analysis."
+    },
+    {
+      "caseId": "audit-deadlines-running",
+      "mode": "/audit",
+      "scenario": "Deadlines may be running but date facts are missing.",
+      "inputSignals": {
+        "authorityState": "AUTHORITY_FOUND",
+        "criticalMissingFacts": [],
+        "assessmentStageGaps": ["current stage", "notice receipt date", "deadline facts"],
+        "documentGaps": [],
+        "sourceCoverageNeeds": [],
+        "phase10DependencyFlags": []
+      },
+      "expectedClarification": {
+        "clarificationDecision": "ASK_BEFORE_ANSWERING",
+        "clarificationReason": "Stage and date facts must be confirmed before discussing deadlines.",
+        "shouldAskBeforeAnswer": true,
+        "questions": ["What is the current assessment stage?", "What notice was received?", "What date was the notice received?", "Is any response deadline already calendared?"],
+        "documentRequests": [],
+        "sourceCoverageLimitations": [],
+        "phase10Deferrals": [],
+        "answerAllowed": false,
+        "allowedAnswerPosture": "NO_ANSWER_UNTIL_CLARIFIED",
+        "prohibitedConclusions": ["Do not compute deadlines without date facts."],
+        "canReachFinalConclusion": false,
+        "implementationScope": "CLARIFICATION_BOUNDARY_POLICY_ONLY"
+      },
+      "prohibitedBehavior": ["Do not provide legal strategy.", "Do not compute a deadline without dates."],
+      "rationale": "Deadline facts have priority in audit mode."
+    },
+    {
+      "caseId": "audit-documents-missing-stage-known",
+      "mode": "/audit",
+      "scenario": "Audit stage is known but documents are missing.",
+      "inputSignals": {
+        "authorityState": "AUTHORITY_FOUND",
+        "criticalMissingFacts": [],
+        "assessmentStageGaps": [],
+        "documentGaps": ["LOA/PAN/FAN/FDDA", "support documents"],
+        "sourceCoverageNeeds": [],
+        "phase10DependencyFlags": []
+      },
+      "expectedClarification": {
+        "clarificationDecision": "REQUEST_DOCUMENTS",
+        "clarificationReason": "Audit documents are needed to support review.",
+        "shouldAskBeforeAnswer": false,
+        "questions": [],
+        "documentRequests": ["Please provide the LOA/PAN/FAN/FDDA.", "Please provide the support documents."],
+        "sourceCoverageLimitations": [],
+        "phase10Deferrals": [],
+        "answerAllowed": true,
+        "allowedAnswerPosture": "CAUTIOUS_ANSWER_WITH_OPEN_ITEMS",
+        "prohibitedConclusions": ["Do not treat absent notices as reviewed."],
+        "canReachFinalConclusion": false,
+        "implementationScope": "CLARIFICATION_BOUNDARY_POLICY_ONLY"
+      },
+      "prohibitedBehavior": ["Do not say BIR has no case."],
+      "rationale": "Known stage allows cautious answer, but document review remains open."
+    },
+    {
+      "caseId": "audit-no-indexed-source",
+      "mode": "/audit",
+      "scenario": "Audit query has no indexed source.",
+      "inputSignals": {
+        "authorityState": "NO_INDEXED_SOURCE",
+        "criticalMissingFacts": [],
+        "assessmentStageGaps": ["current stage"],
+        "documentGaps": [],
+        "sourceCoverageNeeds": ["indexed audit authority unavailable"],
+        "phase10DependencyFlags": []
+      },
+      "expectedClarification": {
+        "clarificationDecision": "DISCLOSE_SOURCE_LIMITATION",
+        "clarificationReason": "Indexed audit authority is unavailable.",
+        "shouldAskBeforeAnswer": false,
+        "questions": ["What is the current assessment stage?"],
+        "documentRequests": [],
+        "sourceCoverageLimitations": ["Indexed audit authority is unavailable."],
+        "phase10Deferrals": [],
+        "answerAllowed": true,
+        "allowedAnswerPosture": "GENERAL_ORIENTATION_ONLY",
+        "prohibitedConclusions": ["Do not ask the user to supply legal authority."],
+        "canReachFinalConclusion": false,
+        "implementationScope": "CLARIFICATION_BOUNDARY_POLICY_ONLY"
+      },
+      "prohibitedBehavior": ["Do not ask the user to find the regulation."],
+      "rationale": "Procedural facts may be requested, but source coverage remains TINA's boundary."
+    },
+    {
+      "caseId": "audit-authority-found-complete-procedure",
+      "mode": "/audit",
+      "scenario": "Authority and procedural documents are complete.",
+      "inputSignals": {
+        "authorityState": "AUTHORITY_FOUND",
+        "criticalMissingFacts": [],
+        "assessmentStageGaps": [],
+        "documentGaps": [],
+        "sourceCoverageNeeds": [],
+        "phase10DependencyFlags": []
+      },
+      "expectedClarification": {
+        "clarificationDecision": "ANSWER_NOW_NO_CLARIFICATION_NEEDED",
+        "clarificationReason": "No blocking audit clarification signal is present.",
+        "shouldAskBeforeAnswer": false,
+        "questions": [],
+        "documentRequests": [],
+        "sourceCoverageLimitations": [],
+        "phase10Deferrals": [],
+        "answerAllowed": true,
+        "allowedAnswerPosture": "CAUTIOUS_ANSWER_WITH_OPEN_ITEMS",
+        "prohibitedConclusions": ["Do not provide settlement, protest, CTA, or final audit outcome advice."],
+        "canReachFinalConclusion": false,
+        "implementationScope": "CLARIFICATION_BOUNDARY_POLICY_ONLY"
+      },
+      "prohibitedBehavior": ["Do not recommend protest strategy.", "Do not recommend CTA strategy."],
+      "rationale": "Even complete inputs do not authorize final audit conclusions."
+    },
+    {
+      "caseId": "document-request-safe-unsafe-contrast",
+      "mode": "/tax",
+      "scenario": "Document request wording must remain factual.",
+      "inputSignals": {
+        "authorityState": "AUTHORITY_FOUND",
+        "criticalMissingFacts": [],
+        "documentGaps": ["Form 2307", "service invoice", "LOA/PAN/FAN/FDDA", "reconciliation schedule"],
+        "sourceCoverageNeeds": [],
+        "phase10DependencyFlags": []
+      },
+      "expectedClarification": {
+        "clarificationDecision": "REQUEST_DOCUMENTS",
+        "clarificationReason": "Factual document requests are safe; legal-judgment requests are not.",
+        "shouldAskBeforeAnswer": false,
+        "questions": [],
+        "documentRequests": ["Please provide the Form 2307.", "Please provide the service invoice.", "Please provide the LOA/PAN/FAN/FDDA.", "Please provide the reconciliation schedule."],
+        "sourceCoverageLimitations": [],
+        "phase10Deferrals": [],
+        "answerAllowed": true,
+        "allowedAnswerPosture": "CAUTIOUS_ANSWER_WITH_OPEN_ITEMS",
+        "prohibitedConclusions": ["Do not ask users to confirm the legal result."],
+        "canReachFinalConclusion": false,
+        "implementationScope": "CLARIFICATION_BOUNDARY_POLICY_ONLY"
+      },
+      "prohibitedBehavior": ["Please prove this qualifies as zero-rated.", "Please confirm this is legally deductible.", "Please confirm the assessment is void."],
+      "rationale": "Clarification asks for facts and documents, not legal admissions."
+    },
+    {
+      "caseId": "source-limitation-not-outsourced",
+      "mode": "/ask",
+      "scenario": "Source coverage should not be outsourced to the user.",
+      "inputSignals": {
+        "authorityState": "NO_INDEXED_SOURCE",
+        "criticalMissingFacts": [],
+        "documentGaps": [],
+        "sourceCoverageNeeds": ["indexed source support unavailable"],
+        "userOfferedSource": true,
+        "phase10DependencyFlags": []
+      },
+      "expectedClarification": {
+        "clarificationDecision": "DISCLOSE_SOURCE_LIMITATION",
+        "clarificationReason": "TINA must disclose source limits and may only ask for a user-offered cited document.",
+        "shouldAskBeforeAnswer": false,
+        "questions": [],
+        "documentRequests": ["If you already have a cited document, you may share or upload it for review."],
+        "sourceCoverageLimitations": ["Indexed source support is unavailable."],
+        "phase10Deferrals": [],
+        "answerAllowed": true,
+        "allowedAnswerPosture": "GENERAL_ORIENTATION_ONLY",
+        "prohibitedConclusions": ["Do not outsource legal research to the user."],
+        "canReachFinalConclusion": false,
+        "implementationScope": "CLARIFICATION_BOUNDARY_POLICY_ONLY"
+      },
+      "prohibitedBehavior": ["What law applies?", "Please find the regulation.", "Search the BIR website.", "Determine the governing authority."],
+      "rationale": "Users can share a document, but cannot be asked to solve source coverage."
+    },
+    {
+      "caseId": "phase10-boundary-deferral",
+      "mode": "/tax",
+      "scenario": "Phase 10 currentness, supersession, hierarchy, and source metadata remain deferred.",
+      "inputSignals": {
+        "authorityState": "AUTHORITY_FOUND",
+        "criticalMissingFacts": [],
+        "documentGaps": [],
+        "sourceCoverageNeeds": [],
+        "phase10DependencyFlags": ["SOURCE_CURRENTNESS_REVIEW_NEEDED", "SUPERSESSION_OR_AMENDMENT_REVIEW_NEEDED", "HIERARCHY_CONFLICT_REVIEW_NEEDED", "OFFICIAL_SOURCE_METADATA_REVIEW_NEEDED"]
+      },
+      "expectedClarification": {
+        "clarificationDecision": "DISCLOSE_PHASE10_DEFERRAL",
+        "clarificationReason": "Phase 10 review is required for source metadata and temporal authority questions.",
+        "shouldAskBeforeAnswer": false,
+        "questions": [],
+        "documentRequests": [],
+        "sourceCoverageLimitations": [],
+        "phase10Deferrals": ["Currentness review is deferred.", "Supersession review is deferred.", "Hierarchy review is deferred.", "Official source metadata review is deferred."],
+        "answerAllowed": true,
+        "allowedAnswerPosture": "CAUTIOUS_ANSWER_WITH_OPEN_ITEMS",
+        "prohibitedConclusions": ["Do not ask the user to resolve Phase 10 matters."],
+        "canReachFinalConclusion": false,
+        "implementationScope": "CLARIFICATION_BOUNDARY_POLICY_ONLY"
+      },
+      "prohibitedBehavior": ["Is this still current?", "Has this been superseded?", "Which authority controls?", "Check case status.", "Verify official source metadata."],
+      "rationale": "Phase 10 flags should produce deferral disclosure, not questions."
+    },
+    {
+      "caseId": "privacy-security-boundary",
+      "mode": "/tax",
+      "scenario": "Clarification asks for safe categories and avoids unnecessary identifiers.",
+      "inputSignals": {
+        "authorityState": "AUTHORITY_FOUND",
+        "criticalMissingFacts": ["taxable year", "tax type", "transaction character", "document status", "procedural stage"],
+        "documentGaps": [],
+        "sourceCoverageNeeds": [],
+        "phase10DependencyFlags": []
+      },
+      "expectedClarification": {
+        "clarificationDecision": "ASK_BEFORE_ANSWERING",
+        "clarificationReason": "Safe fact categories are needed before the answer.",
+        "shouldAskBeforeAnswer": true,
+        "questions": ["What taxable year is involved?", "What tax type is involved?", "What is the transaction character?", "What is the document status?", "What procedural stage applies?"],
+        "documentRequests": [],
+        "sourceCoverageLimitations": [],
+        "phase10Deferrals": [],
+        "answerAllowed": false,
+        "allowedAnswerPosture": "NO_ANSWER_UNTIL_CLARIFIED",
+        "prohibitedConclusions": ["Do not request unnecessary personal identifiers."],
+        "canReachFinalConclusion": false,
+        "implementationScope": "CLARIFICATION_BOUNDARY_POLICY_ONLY"
+      },
+      "prohibitedBehavior": ["TIN", "full address", "bank account number", "unnecessary personal identifiers"],
+      "rationale": "Clarification should minimize sensitive identifiers."
+    },
+    {
+      "caseId": "over-questioning-cap-enforcement",
+      "mode": "/audit",
+      "scenario": "Audit clarification respects max question count and priority ordering.",
+      "inputSignals": {
+        "authorityState": "AUTHORITY_FOUND",
+        "criticalMissingFacts": ["taxpayer type", "tax type"],
+        "assessmentStageGaps": ["current stage", "notice date", "deadline fact"],
+        "missingApplicabilityFacts": ["authority applicability fact"],
+        "documentGaps": ["LOA/PAN/FAN/FDDA", "support document"],
+        "helpfulMissingFacts": ["optional context"],
+        "sourceCoverageNeeds": [],
+        "phase10DependencyFlags": []
+      },
+      "expectedClarification": {
+        "clarificationDecision": "ASK_BEFORE_ANSWERING",
+        "clarificationReason": "Blocking audit questions are prioritized and capped.",
+        "shouldAskBeforeAnswer": true,
+        "questions": ["What taxpayer type is involved?", "What tax type is involved?", "What is the current assessment stage?", "What notice date is involved?", "Is any deadline fact known?", "What authority applicability fact is missing?", "What support document status is known?"],
+        "documentRequests": ["Please provide the LOA/PAN/FAN/FDDA."],
+        "sourceCoverageLimitations": [],
+        "phase10Deferrals": [],
+        "answerAllowed": false,
+        "allowedAnswerPosture": "NO_ANSWER_UNTIL_CLARIFIED",
+        "prohibitedConclusions": ["Do not ask more than the audit cap."],
+        "canReachFinalConclusion": false,
+        "implementationScope": "CLARIFICATION_BOUNDARY_POLICY_ONLY"
+      },
+      "prohibitedBehavior": ["Do not ask helpful-only facts before blocking facts."],
+      "rationale": "Priority ordering prevents over-questioning and preserves mode boundaries."
+    },
+    {
+      "caseId": "existing-helper-output-preservation",
+      "mode": "/tax",
+      "scenario": "Future helper consumes existing helper outputs only.",
+      "inputSignals": {
+        "authorityState": "AUTHORITY_FOUND",
+        "criticalMissingFacts": ["income type"],
+        "helpfulMissingFacts": ["optional context"],
+        "documentGaps": ["Form 2307"],
+        "sourceCoverageNeeds": ["source coverage need"],
+        "missingApplicabilityFacts": ["applicability fact"],
+        "requiredApplicabilityFacts": ["required applicability fact"],
+        "phase10DependencyFlags": ["RULING_OR_CASE_STATUS_REVIEW_NEEDED"],
+        "auditProceduralFactsMissing": false
+      },
+      "expectedClarification": {
+        "clarificationDecision": "ASK_BEFORE_ANSWERING",
+        "clarificationReason": "Existing helper outputs indicate blocking fact and Phase 10 signals.",
+        "shouldAskBeforeAnswer": true,
+        "questions": ["What income type is involved?", "What applicability fact is missing?"],
+        "documentRequests": ["Please provide the Form 2307."],
+        "sourceCoverageLimitations": ["Source coverage need remains separate."],
+        "phase10Deferrals": ["Ruling or case status review is deferred."],
+        "answerAllowed": false,
+        "allowedAnswerPosture": "NO_ANSWER_UNTIL_CLARIFIED",
+        "prohibitedConclusions": ["Do not create a new detector taxonomy."],
+        "canReachFinalConclusion": false,
+        "implementationScope": "CLARIFICATION_BOUNDARY_POLICY_ONLY"
+      },
+      "prohibitedBehavior": ["Do not invent a new detector taxonomy.", "Do not bypass existing helper outputs."],
+      "rationale": "Clarification must aggregate existing Phase 7B outputs only."
+    }
+  ]
+}

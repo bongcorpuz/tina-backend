@@ -61,6 +61,7 @@ PATCH-07B-FINAL-GATE-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 PATCH-07B-AUDIT-RISK-HELPER-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 PATCH-07B-AUDIT-RISK-GATE-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 PATCH-07B-AUDIT-RISK-FINAL-GATE-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
+PATCH-07B-CLARIFICATION-SCAFFOLD-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 ```
 
 Current backend branch:
@@ -134,13 +135,13 @@ full Tax Operating System red-team after Phase 13
 Latest implemented patch:
 
 ```text
-PATCH-07B-AUDIT-RISK-FINAL-GATE-1 - Audit-Risk Workstream Final Gate
+PATCH-07B-CLARIFICATION-SCAFFOLD-1 - Clarification Decision Fixture and Tests
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-07B-AUDIT-RISK-FINAL-GATE-1 close audit risk workstream
+PATCH-07B-CLARIFICATION-SCAFFOLD-1 add clarification decision fixture
 ```
 
 Current working state:
@@ -621,30 +622,37 @@ Key Phase 7A architecture findings:
   engines, or Phase 8/9/10/11/12 work.
 - PATCH-07B-AUDIT-RISK-FINAL-GATE-1 confirmed Gemini Review 10 is required
   after clarification design before any live clarification implementation.
+- PATCH-07B-CLARIFICATION-SCAFFOLD-1 added the clarification decision fixture and
+  scaffold tests for future clarification boundary logic.
+- PATCH-07B-CLARIFICATION-SCAFFOLD-1 did not implement a runtime clarification
+  helper, live route/prompt integration, a production orchestrator, or response
+  generation changes.
+- PATCH-07B-CLARIFICATION-SCAFFOLD-1 keeps the future helper as a narrow
+  aggregator-only helper over existing Phase 7B outputs.
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-CLARIFICATION-GATE-1 - Live Clarification Boundary and Fact-Gap Prompt Integration Review
+PATCH-07B-CLARIFICATION-HELPER-1 - Narrow Clarification Boundary Policy Helper
 ```
 
 Recommended agent:
 
 ```text
-Claude Code
+Codex
 ```
 
 Gemini review:
 
 ```text
-Gemini Review 10 is required after PATCH-07B-CLARIFICATION-GATE-1 before any live clarification implementation.
+Gemini Review 11 is required after PATCH-07B-CLARIFICATION-HELPER-1 before any route or prompt integration.
 ```
 
 Expected next gate:
 
 ```text
-PATCH-07B-CLARIFICATION-GATE-1 remains pending for live clarification boundary and fact-gap prompt integration review.
+PATCH-07B-CLARIFICATION-HELPER-1 should implement clarification-boundary-policy.js as a narrow aggregator helper using the approved scaffold.
 ```
 
 Next phase:
