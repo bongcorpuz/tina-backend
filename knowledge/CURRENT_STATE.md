@@ -71,6 +71,7 @@ PATCH-07B-CLARIFICATION-ROUTE-GATE-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMEND
 PATCH-07B-GEMINI-REVIEW-14 COMPLETE / PASS WITH STRICT RECOMMENDATIONS
 PATCH-07B-GEMINI-REVIEW-15 COMPLETE / PASS WITH STRICT RECOMMENDATIONS
 PATCH-07B-CLARIFICATION-FINAL-GATE-2 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
+PATCH-07B-CLARIFICATION-LIVE-DESIGN-1 COMPLETE / DESIGN PASS WITH RECOMMENDATIONS / READY FOR GEMINI REVIEW 16
 ```
 
 Current backend branch:
@@ -144,13 +145,13 @@ full Tax Operating System red-team after Phase 13
 Latest implemented patch:
 
 ```text
-PATCH-07B-CLARIFICATION-FINAL-GATE-2 - Clarification Route/Helper Workstream Final Closure Gate
+PATCH-07B-CLARIFICATION-LIVE-DESIGN-1 - Live Clarification Route/Prompt Integration Design (design-only)
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-07B-CLARIFICATION-FINAL-GATE-2 close route helper workstream
+PATCH-07B-CLARIFICATION-LIVE-DESIGN-1 design live clarification integration
 ```
 
 Current working state:
@@ -187,11 +188,25 @@ compact metadata sanitization carried forward.
 retrievalContext strips fullDocument and rawBody carried forward.
 source limitation non-blocking unless answerAllowed false.
 Phase 10 deferral non-blocking unless answerAllowed false.
-Approved next task: PATCH-07B-CLARIFICATION-LIVE-DESIGN-1 - Live Clarification Route/Prompt Integration Design.
-Agent: Claude Code.
-Task type: Design-only.
-Live design is after final gate; no live route wiring yet.
-Gemini Review 16 required after live design and before live route implementation.
+PATCH-07B-CLARIFICATION-LIVE-DESIGN-1 COMPLETE / DESIGN PASS WITH RECOMMENDATIONS / READY FOR GEMINI REVIEW 16.
+Live clarification route/prompt integration design added.
+Design-only; no live route wiring yet.
+No live route wiring implemented.
+No prompt integration implemented.
+No response-generation branching implemented.
+No frontend responseType implementation.
+Exact future insertion point carried forward and mapped to live code: new Step 12.6 in runPipeline, between end of Step 12.5 (~pipeline.js:3145) and Step 13 buildAdaptivePromptContract (~pipeline.js:3147); after Step 6.5 sourceAvailability (~2650) and before Step 14 callOpenAIWithOrchestration (~3289).
+Feature flag designed: TINA_ENABLE_CLARIFICATION_ROUTE_GATE, default OFF, missing/invalid treated as OFF, OFF must not enter Step 12.6 block and must be byte-identical; OFF-state byte-identical proof plan designed.
+answerAllowed false early-exit design defined, mirroring existing buildSaeHardFailFallback pre-generation return shape.
+structuredClarificationObject prompt-consumption design defined (compact constraint metadata only; raw document text stripped via RAW_TEXT_KEYS).
+Source limitation and Phase 10 deferral handling designed as non-blocking unless answerAllowed false.
+/ask, /tax, /audit mode contracts designed.
+SAE->authorityState map designed, with non-answer SAE states (RETRIEVAL_TIMEOUT/PIPELINE_ERROR/SOURCE_LOOKUP_EMPTY) bypassing clarification to existing fallbacks.
+Honest limitation recorded: live pipeline has no structured user-fact extraction; helper chain runs on query text and biases toward asking, not concluding; no fact-extractor invented.
+Rollback plan (flag OFF; revert single wiring commit) and staging smoke plan designed.
+Next task: PATCH-07B-GEMINI-REVIEW-16 - Live Clarification Route/Prompt Integration Design Review.
+Agent: Gemini.
+Gemini Review 16 mandatory before any live route wiring implementation (PATCH-07B-CLARIFICATION-LIVE-WIRING-1, agent Codex).
 Phase 10 hallucination/trap questions and court-case/G.R. lookup remain deferred.
 runPipeline insertion point carried forward: after Step 6.5, before Step 13, before Step 14, before prompt construction, and before OpenAI generation.
 PATCH-07B-CLARIFICATION-ROUTE-GATE-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
