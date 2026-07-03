@@ -1822,12 +1822,13 @@ PATCH-07B-CLARIFICATION-LIVE-WIRING-1 COMPLETE / LOCAL PASS
 PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-SMOKE-1 RUN / ON-STATE FINDINGS / OFF-STATE PASS
 PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-FOLLOWUP-1 COMPLETE / LOCAL PASS
 PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-SMOKE-1-RERUN COMPLETE / PASS WITH STRICT RECOMMENDATIONS
+PATCH-07B-CLARIFICATION-LIVE-WIRING-FINAL-RELEASE-GATE-1 COMPLETE / PASS WITH STRICT RELEASE RESTRICTIONS
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-CLARIFICATION-LIVE-WIRING-FINAL-RELEASE-GATE-1
+PATCH-07B-PHASE-7-FINAL-CLOSURE-GATE-1
 ```
 
 Recommended agent for next task:
@@ -1918,6 +1919,36 @@ The final release gate must weigh the strict recommendations, in particular
 the ON-state over-blocking finding, before any rollout decision.
 ```
 
+Final release gate state (2026-07-04):
+
+```text
+PATCH-07B-CLARIFICATION-LIVE-WIRING-FINAL-RELEASE-GATE-1 is complete.
+Decision: PASS WITH STRICT RELEASE RESTRICTIONS.
+Latest reviewed commit: 38d0833 PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-SMOKE-1-RERUN record staging smoke.
+Report: PATCH-07B-CLARIFICATION-LIVE-WIRING-FINAL-RELEASE-GATE-1_FINAL_RELEASE_GATE.md.
+
+Phase 7B live clarification wiring is technically complete.
+Backend code may remain merged/deployed behind TINA_ENABLE_CLARIFICATION_ROUTE_GATE.
+Production flag: absent/OFF (re-verified read-only at gate time).
+Staging flag: OFF after the smoke rerun (re-verified read-only at gate time).
+Production ON: NOT APPROVED.
+
+Release restriction: do not enable the clarification gate in production or any
+broad pilot until the ON-state boundary over-blocking of definitional /
+exact authority-content queries is tuned (suggested narrow patch:
+PATCH-07B-CLARIFICATION-BOUNDARY-TUNING-1) with new smoke validation, or a
+restricted pilot is explicitly approved accepting the over-blocking risk.
+Frontend tolerance of ON-state fields must be verified before any production ON.
+
+Gate-time validation passed: node --check on the three runtime files, 7
+focused Phase 7B suites, npm test (113 suites, 0 failed, GATE PASSED), and
+npm run guard:files PASS.
+
+Next required step: PATCH-07B-PHASE-7-FINAL-CLOSURE-GATE-1.
+Phase 7 is not marked fully closed by this release gate; only the separate
+Phase 7 final closure gate may close Phase 7.
+```
+
 After that:
 
 ```text
@@ -1929,10 +1960,12 @@ PATCH-07B-CLARIFICATION-LIVE-WIRING-1 - COMPLETE / LOCAL PASS
 PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-SMOKE-1 - RUN / ON-STATE FINDINGS / OFF-STATE PASS
 PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-FOLLOWUP-1 - COMPLETE / LOCAL PASS
 PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-SMOKE-1-RERUN - COMPLETE / PASS WITH STRICT RECOMMENDATIONS
-PATCH-07B-CLARIFICATION-LIVE-WIRING-FINAL-RELEASE-GATE-1 - NEXT
-The final release gate must weigh the recorded strict recommendations
-(notably ON-state over-blocking of definitional/authority-content queries)
-before any rollout decision.
+PATCH-07B-CLARIFICATION-LIVE-WIRING-FINAL-RELEASE-GATE-1 - COMPLETE / PASS WITH STRICT RELEASE RESTRICTIONS
+PATCH-07B-PHASE-7-FINAL-CLOSURE-GATE-1 - NEXT
+Production ON is NOT approved: keep TINA_ENABLE_CLARIFICATION_ROUTE_GATE
+OFF/absent in production until boundary over-blocking is tuned (suggested:
+PATCH-07B-CLARIFICATION-BOUNDARY-TUNING-1) with new smoke validation, or a
+restricted pilot is explicitly approved accepting the over-blocking risk.
 
 PATCH-07B-CLARIFICATION-LIVE-WIRING-SCAFFOLD-1 added a live wiring scaffold fixture and tests only.
 It leaves no live wiring implemented, no prompt integration implemented, no response-generation branching implemented,
