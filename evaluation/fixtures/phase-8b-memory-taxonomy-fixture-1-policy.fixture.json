@@ -1,0 +1,330 @@
+{
+  "patch": {
+    "id": "PATCH-08B-MEMORY-TAXONOMY-FIXTURE-1",
+    "phase": "Phase 8B",
+    "taskType": "fixture_policy_tests_only",
+    "baseCommit": "2fbd73a PATCH-08A-MEMORY-GOVERNANCE-DESIGN-1 design memory governance",
+    "runtimeImplementationAllowed": false,
+    "durableWritesAllowed": false,
+    "pipelineIntegrationAllowed": false
+  },
+  "memoryClasses": [
+    {
+      "id": "user_profile",
+      "description": "Who the user is professionally: role, firm context, recurring professional identity facts.",
+      "defaultPermissionLevel": "user_profile",
+      "allowedScopes": ["global_user"],
+      "consentRequirement": "explicit_consent_for_sensitive_items_otherwise_confirm_scope",
+      "allowedUses": ["response style calibration", "professional-role-aware phrasing", "workflow continuity"],
+      "prohibitedUses": ["treating profile facts as client facts", "using profile facts as legal authority"],
+      "examples": ["user is a CPA", "firm context", "user manages TINA governance"],
+      "mustNotAffectAuthority": true
+    },
+    {
+      "id": "user_preference",
+      "description": "How the user wants TINA to respond: style, format, language of analysis.",
+      "defaultPermissionLevel": "user_profile",
+      "allowedScopes": ["global_user", "session"],
+      "consentRequirement": "implicit_save_allowed_with_confirmation",
+      "allowedUses": ["tone and format selection within approved formats", "continuity preferences"],
+      "prohibitedUses": ["removing required sections or disclosures", "weakening source limitation wording"],
+      "examples": ["wants concise but powerful letters", "wants Philippine-law based analysis", "wants strict continuity in TINA development"],
+      "mustNotAffectAuthority": true
+    },
+    {
+      "id": "matter",
+      "description": "Facts and state of one specific engagement, case, or workstream.",
+      "defaultPermissionLevel": "matter_scoped",
+      "allowedScopes": ["matter"],
+      "consentRequirement": "scope_confirmation_required_once_per_matter",
+      "allowedUses": ["answer continuity within the same matter", "reducing repeated clarification questions in-matter"],
+      "prohibitedUses": ["use in unrelated matters or clients", "use as general tax law", "overriding live conversation facts"],
+      "examples": ["a specific BIR LOA matter", "a condo corporation matter", "WTE Bolinao matter", "TINA development patch state"],
+      "mustNotAffectAuthority": true
+    },
+    {
+      "id": "client_entity",
+      "description": "Facts about one specific client or entity.",
+      "defaultPermissionLevel": "client_scoped",
+      "allowedScopes": ["client"],
+      "consentRequirement": "explicit_consent_required_for_sensitive_facts",
+      "allowedUses": ["client-specific answer context", "entity type and registration context within the client scope"],
+      "prohibitedUses": ["cross-client use", "generalization into tax law", "assertion as legal authority"],
+      "examples": ["client name", "tax registration facts", "relevant periods", "known documents", "recurring issues"],
+      "mustNotAffectAuthority": true
+    },
+    {
+      "id": "temporary_session",
+      "description": "Facts supplied during one conversation, not yet approved for storage.",
+      "defaultPermissionLevel": "session_only",
+      "allowedScopes": ["session"],
+      "consentRequirement": "none_for_session_use_promotion_requires_consent",
+      "allowedUses": ["contextual continuity within the active session only"],
+      "prohibitedUses": ["persistence beyond the session without consent", "silent promotion to durable memory"],
+      "examples": ["facts supplied during one conversation", "draft-specific assumptions", "facts not yet approved for storage"],
+      "mustNotAffectAuthority": true
+    },
+    {
+      "id": "source_derived",
+      "description": "Facts about TINA's own indexed sources: metadata, availability, provenance notes. Always defers to live index state and sourceAvailability classification at answer time.",
+      "defaultPermissionLevel": "no_store",
+      "allowedScopes": ["source_document"],
+      "consentRequirement": "not_user_personal_no_consent_but_no_durable_store_in_phase_8",
+      "allowedUses": ["source availability references", "source-card provenance notes"],
+      "prohibitedUses": ["asserting legal currentness", "asserting supersession", "asserting court case status", "substituting for live retrieval"],
+      "examples": ["file/document metadata already indexed", "authority availability facts", "source-card provenance notes"],
+      "mustNotAffectAuthority": true
+    },
+    {
+      "id": "prohibited_sensitive",
+      "description": "Content that must never be stored, or only with explicit logged consent where legally necessary.",
+      "defaultPermissionLevel": "prohibited",
+      "allowedScopes": [],
+      "consentRequirement": "prohibited_outright_or_explicit_consent_plus_necessity_for_sensitive",
+      "allowedUses": [],
+      "prohibitedUses": ["any storage of prohibited items", "any echo of secret values into logs or events"],
+      "examples": ["passwords/secrets/API keys", "private credentials", "unsupported legal conclusions", "raw confidential documents without consent", "health/personal data unless explicitly necessary and consented"],
+      "mustNotAffectAuthority": true
+    }
+  ],
+  "permissionLevels": [
+    {
+      "id": "no_store",
+      "description": "Item must not be written at all.",
+      "retentionConcept": "none",
+      "allowedUse": "use in the current response only",
+      "prohibitedUse": "any persistence or log echo of the value",
+      "requiresExplicitConsent": false,
+      "example": "an API key pasted by mistake"
+    },
+    {
+      "id": "session_only",
+      "description": "Kept only for the active conversation.",
+      "retentionConcept": "expires with session",
+      "allowedUse": "contextual continuity within the session",
+      "prohibitedUse": "persistence or cross-session recall",
+      "requiresExplicitConsent": false,
+      "example": "assume 8% income tax option for this computation"
+    },
+    {
+      "id": "matter_scoped",
+      "description": "Attached to one matter/case.",
+      "retentionConcept": "until matter archived",
+      "allowedUse": "answers within that matter",
+      "prohibitedUse": "use in other matters/clients or as general law",
+      "requiresExplicitConsent": false,
+      "example": "this LOA covers taxable year 2023"
+    },
+    {
+      "id": "client_scoped",
+      "description": "Attached to one client/entity.",
+      "retentionConcept": "until client relationship ended or erased",
+      "allowedUse": "answers about that client",
+      "prohibitedUse": "cross-client use or generalization into tax law",
+      "requiresExplicitConsent": false,
+      "example": "client X is VAT-registered"
+    },
+    {
+      "id": "user_profile",
+      "description": "Attached to the user's own profile.",
+      "retentionConcept": "until user edits or deletes",
+      "allowedUse": "style, role, and workflow continuity",
+      "prohibitedUse": "treating preferences as facts about clients",
+      "requiresExplicitConsent": false,
+      "example": "user is a CPA and prefers concise memos"
+    },
+    {
+      "id": "system_governance",
+      "description": "TINA development/governance continuity state.",
+      "retentionConcept": "durable and auditable",
+      "allowedUse": "patch state and governance continuity",
+      "prohibitedUse": "storing user or client personal data under this label",
+      "requiresExplicitConsent": false,
+      "example": "Phase 7 closed at commit 6c59576"
+    },
+    {
+      "id": "explicit_consent",
+      "description": "May be stored only after an affirmative user approval recorded with the item; composes with a scope.",
+      "retentionConcept": "per approval",
+      "allowedUse": "as approved by the recorded consent event",
+      "prohibitedUse": "storage without a logged consent event",
+      "requiresExplicitConsent": true,
+      "example": "sensitive client fact volunteered mid-conversation"
+    },
+    {
+      "id": "prohibited",
+      "description": "Must never be stored.",
+      "retentionConcept": "none",
+      "allowedUse": "none",
+      "prohibitedUse": "everything",
+      "requiresExplicitConsent": false,
+      "example": "passwords, secrets, unsupported legal conclusions"
+    }
+  ],
+  "confidenceStates": [
+    {
+      "id": "user_confirmed",
+      "description": "Stated or approved explicitly by the user.",
+      "mayReduceClarificationQuestions": true,
+      "requiresUserConfirmationBeforeUse": false,
+      "mustTriggerClarificationWhenConflicting": true
+    },
+    {
+      "id": "inferred",
+      "description": "Deduced by TINA; must be labeled; never sufficient alone to skip a clarification question.",
+      "mayReduceClarificationQuestions": false,
+      "requiresUserConfirmationBeforeUse": true,
+      "mustTriggerClarificationWhenConflicting": true
+    },
+    {
+      "id": "source_derived",
+      "description": "From TINA's own index metadata; defers to live index state.",
+      "mayReduceClarificationQuestions": false,
+      "requiresUserConfirmationBeforeUse": false,
+      "mustTriggerClarificationWhenConflicting": true
+    },
+    {
+      "id": "stale",
+      "description": "Past its freshness horizon; usable only with re-confirmation.",
+      "mayReduceClarificationQuestions": false,
+      "requiresUserConfirmationBeforeUse": true,
+      "mustTriggerClarificationWhenConflicting": true
+    },
+    {
+      "id": "contradicted",
+      "description": "Conflicts with newer input; excluded from answers until resolved.",
+      "mayReduceClarificationQuestions": false,
+      "requiresUserConfirmationBeforeUse": true,
+      "mustTriggerClarificationWhenConflicting": true
+    },
+    {
+      "id": "unverified",
+      "description": "Supplied by a third channel and not yet confirmed; treated like inferred.",
+      "mayReduceClarificationQuestions": false,
+      "requiresUserConfirmationBeforeUse": true,
+      "mustTriggerClarificationWhenConflicting": true
+    },
+    {
+      "id": "revoked",
+      "description": "User deleted or withdrew; must not be used; retained only as a deletion audit event without the value where feasible.",
+      "mayReduceClarificationQuestions": false,
+      "requiresUserConfirmationBeforeUse": true,
+      "mustTriggerClarificationWhenConflicting": true
+    }
+  ],
+  "scopeTypes": [
+    {
+      "id": "global_user",
+      "description": "The user's own profile and preferences.",
+      "allowedMemoryClasses": ["user_profile", "user_preference"],
+      "leakageProhibitedTo": ["other_users"],
+      "example": "user prefers concise memos"
+    },
+    {
+      "id": "firm_workspace_future",
+      "description": "Firm/workspace scope. FUTURE ONLY - reserved concept; not implemented in Phase 8.",
+      "allowedMemoryClasses": [],
+      "leakageProhibitedTo": ["other_firms", "other_users"],
+      "example": "reserved for future multi-user firm workspaces"
+    },
+    {
+      "id": "client",
+      "description": "One client/entity, spanning its matters.",
+      "allowedMemoryClasses": ["client_entity"],
+      "leakageProhibitedTo": ["other_clients", "general_tax_law", "unrelated_matters"],
+      "example": "client X is VAT-registered"
+    },
+    {
+      "id": "matter",
+      "description": "One engagement, case, or workstream.",
+      "allowedMemoryClasses": ["matter"],
+      "leakageProhibitedTo": ["unrelated_clients", "unrelated_matters", "general_tax_opinions"],
+      "example": "the BIR LOA matter for taxable year 2023"
+    },
+    {
+      "id": "session",
+      "description": "The active conversation only.",
+      "allowedMemoryClasses": ["temporary_session", "user_preference"],
+      "leakageProhibitedTo": ["durable_memory_without_consent", "other_sessions"],
+      "example": "draft-specific assumption for one computation"
+    },
+    {
+      "id": "source_document",
+      "description": "Metadata bound to an indexed source.",
+      "allowedMemoryClasses": ["source_derived"],
+      "leakageProhibitedTo": ["legal_currentness_claims", "case_status_claims"],
+      "example": "provenance note for an indexed RMC document"
+    }
+  ],
+  "prohibitedMemoryRules": [
+    { "id": "no_passwords", "description": "Passwords must never be stored." },
+    { "id": "no_api_keys", "description": "API keys must never be stored." },
+    { "id": "no_private_credentials", "description": "Private credentials and secrets must never be stored." },
+    { "id": "no_unsupported_legal_conclusions", "description": "Unsupported legal conclusions must never be stored as memory." },
+    { "id": "no_unsupported_tax_conclusions", "description": "Unsupported tax conclusions must never be stored as memory." },
+    { "id": "no_unsupported_accusations", "description": "Unsupported accusations must never be stored." },
+    { "id": "no_raw_confidential_contents_without_approval", "description": "Raw confidential file contents must not be stored without explicit storage approval." },
+    { "id": "no_unnecessary_sensitive_personal_data", "description": "Sensitive personal data must not be stored unless explicitly necessary to the service and consented." },
+    { "id": "no_court_case_currentness_claims", "description": "Court case currentness claims must not be stored or asserted; Phase 10 legal-state validation is deferred." },
+    { "id": "no_gr_case_name_lookup_conclusions_before_phase10", "description": "G.R. case-name lookup conclusions must not be stored or asserted before Phase 10." },
+    { "id": "no_source_supersession_or_currentness_claims_before_phase10", "description": "Source supersession or currentness claims must not be stored or asserted before Phase 10." },
+    { "id": "no_cross_client_factual_assumptions", "description": "Facts from one client must not be assumed for another client." },
+    { "id": "no_matter_facts_as_general_tax_law", "description": "Matter facts must never be used or stored as general tax law." }
+  ],
+  "authoritySafetyRules": [
+    { "id": "memory_is_context_not_authority", "description": "Memory is inserted as context constraints, never as authority." },
+    { "id": "memory_must_not_change_sae_status", "description": "Memory has zero influence on sourceAvailability/SAE classification." },
+    { "id": "memory_must_not_change_retrieval", "description": "Memory must not alter retrieval behavior or results." },
+    { "id": "memory_must_not_change_source_cards", "description": "Memory never adds, removes, reorders, or rewords source cards (Authority Lock)." },
+    { "id": "memory_must_not_override_authority_gate", "description": "Memory must not bypass or override authority gates." },
+    { "id": "memory_must_not_create_fake_citations", "description": "Memory must never produce or support fabricated citations." },
+    { "id": "memory_must_not_assert_legal_currentness", "description": "Memory must not assert legal currentness, supersession, or case status." },
+    { "id": "memory_must_not_replace_source_availability", "description": "Memory must not substitute for sourceAvailability classification or source-grounded answers." },
+    { "id": "live_facts_override_memory", "description": "Facts stated in the live conversation always outrank stored memory." },
+    { "id": "conflicting_memory_triggers_clarification", "description": "Conflicting stored memory is marked contradicted and triggers clarification, never silent override." }
+  ],
+  "consentRules": [
+    { "id": "explicit_save_command_allowed", "description": "An explicit user save command allows storage with a one-sentence scope confirmation." },
+    { "id": "sensitive_client_facts_require_explicit_consent", "description": "Sensitive or confidential client facts require explicit consent before durable storage." },
+    { "id": "matter_memory_requires_scope_confirmation", "description": "Matter facts require scope confirmation (matter vs session-only) once per matter session." },
+    { "id": "inferred_memory_requires_confirmation_before_durable_write", "description": "Inferred items must be confirmed by the user before any durable write." },
+    { "id": "user_correction_can_update_memory_with_scope", "description": "User corrections update stored memory with old-vs-new shown and scope preserved." },
+    { "id": "forget_request_must_be_honored", "description": "A forget/delete request must be honored immediately, confirmed, and logged." },
+    { "id": "no_automatic_confidential_document_storage", "description": "Facts from confidential documents are never stored automatically." },
+    { "id": "no_durable_write_without_permission_level", "description": "Every durable write must carry exactly one permission level; unlabeled writes are rejected." }
+  ],
+  "featureFlags": [
+    { "id": "TINA_ENABLE_MEMORY_READS", "defaultEnabled": false, "productionEnabled": false, "requiresGateBeforeProduction": true, "allowedBeforePhase8I": false },
+    { "id": "TINA_ENABLE_MEMORY_WRITES", "defaultEnabled": false, "productionEnabled": false, "requiresGateBeforeProduction": true, "allowedBeforePhase8I": false },
+    { "id": "TINA_ENABLE_MATTER_MEMORY", "defaultEnabled": false, "productionEnabled": false, "requiresGateBeforeProduction": true, "allowedBeforePhase8I": false },
+    { "id": "TINA_ENABLE_MEMORY_SUGGESTIONS", "defaultEnabled": false, "productionEnabled": false, "requiresGateBeforeProduction": true, "allowedBeforePhase8I": false },
+    { "id": "TINA_ENABLE_MEMORY_DEBUG_TRACE", "defaultEnabled": false, "productionEnabled": false, "requiresGateBeforeProduction": true, "allowedBeforePhase8I": false }
+  ],
+  "deferredBoundaries": [
+    { "id": "phase7b_boundary_tuning_followup", "description": "PATCH-07B-CLARIFICATION-BOUNDARY-TUNING-1 remains a Phase 7B pre-production-ON follow-up, not Phase 8 memory work.", "excludedFromPhase8B": true, "mayBeReferencedAsBoundary": true, "implementationAllowedHere": false },
+    { "id": "phase10_source_governance", "description": "Official source repository governance, source freshness, and legal-state validation are Phase 10.", "excludedFromPhase8B": true, "mayBeReferencedAsBoundary": true, "implementationAllowedHere": false },
+    { "id": "phase10_court_metadata", "description": "Court case metadata registry, G.R. number lookup, jurisprudence applicability/currentness/supersession are Phase 10.", "excludedFromPhase8B": true, "mayBeReferencedAsBoundary": true, "implementationAllowedHere": false },
+    { "id": "phase10_hallucination_traps", "description": "Hallucination trap evaluation and HAL-TEST.xlsx items are Phase 10.", "excludedFromPhase8B": true, "mayBeReferencedAsBoundary": true, "implementationAllowedHere": false },
+    { "id": "phase11_observability_performance", "description": "Observability, query evidence logging, tracing, cache headers, compression, CDN/static caching, API response caching, vector/search performance are Phase 11.", "excludedFromPhase8B": true, "mayBeReferencedAsBoundary": true, "implementationAllowedHere": false },
+    { "id": "phase12_document_advisory", "description": "Document-aware advisory, uploaded client document intelligence, working-paper extraction are Phase 12.", "excludedFromPhase8B": true, "mayBeReferencedAsBoundary": true, "implementationAllowedHere": false },
+    { "id": "phase14_mobile_after_phase13", "description": "Mobile app comes after Phase 13 only.", "excludedFromPhase8B": true, "mayBeReferencedAsBoundary": true, "implementationAllowedHere": false }
+  ],
+  "testCases": [
+    { "id": "CLASS_SET_EXACT", "expected": "exactly seven memory classes; no extra classes; no missing classes" },
+    { "id": "PERMISSION_SET_EXACT", "expected": "exactly eight permission levels; no unlabeled writes allowed" },
+    { "id": "DEFAULT_PERMISSION_MAPPING", "expected": "user_profile->user_profile; user_preference->user_profile; matter->matter_scoped; client_entity->client_scoped; temporary_session->session_only; source_derived->no_store; prohibited_sensitive->prohibited" },
+    { "id": "MEMORY_CONTEXT_NOT_AUTHORITY", "expected": "memory must not change SAE, retrieval, source cards, authority gates, citations, source currentness, or legal conclusions" },
+    { "id": "CROSS_CLIENT_LEAKAGE_PROHIBITED", "expected": "matter facts must not leak into unrelated clients; client facts must not become general tax law" },
+    { "id": "LIVE_FACTS_OVERRIDE_MEMORY", "expected": "current conversation facts outrank stored memory; conflicting stored memory becomes contradicted or requires clarification" },
+    { "id": "CONSENT_REQUIRED_FOR_SENSITIVE_CLIENT_FACTS", "expected": "sensitive client facts require explicit consent before durable storage" },
+    { "id": "NO_DURABLE_WRITES_IN_PHASE8B", "expected": "this patch defines contract only; durableWritesAllowed false" },
+    { "id": "MEMORY_FLAGS_DEFAULT_OFF", "expected": "all future memory flags default OFF and productionEnabled false" },
+    { "id": "PHASE10_DEFERRED", "expected": "court metadata, G.R. lookup, hallucination trap validation, source currentness are excluded" },
+    { "id": "PHASE11_DEFERRED", "expected": "performance/cache/compression/observability are excluded" },
+    { "id": "BOUNDARY_TUNING_NOT_PHASE8", "expected": "PATCH-07B-CLARIFICATION-BOUNDARY-TUNING-1 is a Phase 7B pre-production-ON follow-up, not Phase 8B" },
+    { "id": "PROHIBITED_ITEMS_REJECTED", "expected": "credentials, passwords, API keys, unsupported tax/legal conclusions, unsupported accusations, and raw confidential contents without approval are prohibited" },
+    { "id": "SESSION_ONLY_NOT_PERSISTED", "expected": "session-only facts are not durable memory" },
+    { "id": "SOURCE_DERIVED_MEMORY_NOT_LEGAL_CURRENTNESS", "expected": "source-derived memory can reference source availability/provenance only; cannot assert currentness, supersession, or case status" },
+    { "id": "FORGET_REQUEST_REQUIRED", "expected": "deletion/forget request must be honored by future implementation contract" }
+  ]
+}

@@ -1825,6 +1825,7 @@ PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-SMOKE-1-RERUN COMPLETE / PASS WITH S
 PATCH-07B-CLARIFICATION-LIVE-WIRING-FINAL-RELEASE-GATE-1 COMPLETE / PASS WITH STRICT RELEASE RESTRICTIONS
 PATCH-07B-PHASE-7-FINAL-CLOSURE-GATE-1 COMPLETE / PASS WITH STRICT RECOMMENDATIONS
 PATCH-08A-MEMORY-GOVERNANCE-DESIGN-1 COMPLETE / DESIGN PASS WITH STRICT RECOMMENDATIONS
+PATCH-08B-MEMORY-TAXONOMY-FIXTURE-1 COMPLETE / FIXTURE PASS WITH STRICT RECOMMENDATIONS
 ```
 
 Phase 7 status:
@@ -1869,6 +1870,54 @@ Standing restrictions unchanged:
 - Phase 7B boundary tuning remains a pre-production-ON follow-up, not Phase 8 work.
 - Phase 10 remains deferred.
 - Phase 11 performance/cache/compression/observability remains deferred.
+```
+
+Phase 8B state (2026-07-04):
+
+```text
+PATCH-08B-MEMORY-TAXONOMY-FIXTURE-1 is complete.
+Decision: FIXTURE PASS WITH STRICT RECOMMENDATIONS.
+Report: PATCH-08B-MEMORY-TAXONOMY-FIXTURE-1_MEMORY_TAXONOMY_FIXTURE_AND_POLICY_TESTS.md
+
+Files created:
+- evaluation/fixtures/phase-8b-memory-taxonomy-fixture-1-policy.fixture.json
+- tests/patch-08b-memory-taxonomy-fixture-1-policy.test.mjs
+
+The fixture encodes the approved Phase 8A contract: 7 memory classes, 8
+permission levels, default permission mapping, 7 confidence states, 6 scope
+types with leakage prohibitions, 13 prohibited-memory rules, 10 authority
+safety rules (memory is context not authority; no SAE/retrieval/source-card/
+authority-gate influence; live facts override memory), 8 consent rules, 5
+memory feature flags all default OFF / production OFF / gate required, and
+7 deferred boundaries (Phase 7B tuning, Phase 10, Phase 11, Phase 12,
+Phase 14).
+
+Validation passed: focused fixture test 26 passed / 0 failed;
+npm test 114 suites / 0 failed / GATE PASSED; npm run guard:files PASS.
+
+No runtime memory implementation occurred. No DB tables, no durable writes,
+no pipeline wiring, no memory services, no frontend, no dependencies.
+All memory flags remain OFF / not implemented in runtime.
+
+Strict recommendations carried into Phase 8C:
+1. Preserve the exact taxonomy and permission levels unless a design
+   revision is approved.
+2. No runtime memory reads/writes until policy tests expand into
+   service-boundary tests.
+3. Any future storage schema must enforce exactly one permission level per
+   memory item.
+4. Cross-client/matter leakage tests must become runtime tests before any
+   staging pilot.
+5. Source-authority separation remains a hard gate in all Phase 8
+   implementation patches.
+
+Next required task: PATCH-08C-MEMORY-SCOPE-SCHEMA-DESIGN-1.
+
+Standing restrictions unchanged:
+- Production clarification route gate remains OFF / NOT approved.
+- Phase 7B boundary tuning remains a pre-production-ON follow-up.
+- Phase 10 remains deferred.
+- Phase 11 performance/cache/compression remains deferred.
 ```
 
 Recommended agent for next task:
