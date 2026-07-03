@@ -2373,3 +2373,53 @@ Phase 14 mobile remains after Phase 13.
 Next required task:
 PATCH-08G-MEMORY-SERVICE-BOUNDARY-SCAFFOLD-1
 ```
+
+Phase 8G memory service boundary scaffold state (2026-07-04):
+
+```text
+PATCH-08G-MEMORY-SERVICE-BOUNDARY-SCAFFOLD-1 is complete.
+Decision: SCAFFOLD PASS WITH STRICT RECOMMENDATIONS.
+
+Files created:
+memory-boundaries/memory-taxonomy-registry.js
+memory-boundaries/memory-scope-policy.js
+memory-boundaries/memory-consent-policy.js
+memory-boundaries/memory-authority-separation-policy.js
+memory-boundaries/memory-service-boundary-contract.js
+memory-boundaries/index.js
+tests/patch-08g-memory-service-boundary-scaffold-1.test.mjs
+PATCH-08G-MEMORY-SERVICE-BOUNDARY-SCAFFOLD-1_SERVICE_BOUNDARY_SCAFFOLD_REPORT.md
+
+Validation:
+node tests/patch-08g-memory-service-boundary-scaffold-1.test.mjs
+PASS - 18 passed, 0 failed, 224 assertions.
+
+npm run guard:files
+PASS - No protected files modified.
+
+Strict recommendations carried forward:
+1. Phase 8H may use these service-boundary contracts only behind memory read flags.
+2. No memory read integration into pipeline until OFF-state and authority-separation tests pass.
+3. No persistence or DB-backed memory until a later explicit migration/schema patch.
+4. No write service until consent denial, revocation, and sensitive-data service tests pass.
+5. Any future memory context must remain non-authority phrased as "user/matter context indicates: ...".
+6. Feature flags remain default-OFF and production-OFF until Phase 8J/8K gates pass.
+
+No runtime memory implementation occurred.
+No runtime consent implementation occurred.
+No DB/migration/tables occurred.
+No persistence services occurred.
+No route/controller, ask-handler, pipeline, retrieval, reranker, sourceAvailability, source-card, Authority Lock, or frontend work occurred.
+No dependencies were added.
+All memory flags remain OFF/not implemented.
+
+Production clarification route gate remains OFF/not approved.
+Phase 7B boundary tuning remains a pre-production-ON follow-up.
+Phase 10 source governance / court metadata / hallucination traps remain deferred.
+Phase 11 performance/cache/compression/observability remains deferred.
+Phase 12 document-aware advisory remains deferred.
+Phase 14 mobile remains after Phase 13.
+
+Next required task:
+PATCH-08H-MEMORY-READ-SCAFFOLD-1
+```
