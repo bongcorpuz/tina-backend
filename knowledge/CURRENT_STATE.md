@@ -145,13 +145,13 @@ full Tax Operating System red-team after Phase 13
 Latest implemented patch:
 
 ```text
-PATCH-07B-CLARIFICATION-LIVE-DESIGN-1 - Live Clarification Route/Prompt Integration Design (design-only)
+PATCH-07B-CLARIFICATION-LIVE-WIRING-1 - Narrow Live Clarification Route Wiring
 ```
 
 Latest pushed commit:
 
 ```text
-PATCH-07B-CLARIFICATION-LIVE-DESIGN-1 design live clarification integration
+PATCH-07B-CLARIFICATION-LIVE-WIRING-1 wire clarification gate behind flag
 ```
 
 Current working state:
@@ -209,6 +209,18 @@ Agent: Gemini.
 Gemini Review 16 mandatory before any live route wiring implementation (PATCH-07B-CLARIFICATION-LIVE-WIRING-1, agent Codex).
 Phase 10 hallucination/trap questions and court-case/G.R. lookup remain deferred.
 runPipeline insertion point carried forward: after Step 6.5, before Step 13, before Step 14, before prompt construction, and before OpenAI generation.
+PATCH-07B-CLARIFICATION-LIVE-WIRING-1 COMPLETE / LOCAL PASS.
+Narrow Step 12.6 live clarification route wiring implemented in runPipeline behind TINA_ENABLE_CLARIFICATION_ROUTE_GATE.
+Feature flag remains default OFF; missing/invalid values remain OFF.
+OFF-state does not invoke the ten-helper clarification route chain, does not call buildClarificationRouteDecision, does not early exit, and does not add responseType or structuredClarificationObject.
+ON-state answerAllowed false returns clarification-only response, caps questions to 3, preserves documentRequests/sourceCoverageLimitations/phase10Deferrals, and skips full-answer prompt construction/OpenAI full-answer generation.
+ON-state non-blocking route decisions continue existing Step 13/14 answer generation and pass structuredClarificationObject only as compact prompt constraint metadata.
+Helper-chain failure remains fail-open.
+No structured user-fact extraction introduced.
+Legacy scaffold/final-gate guard assertions aligned narrowly for authorized live wiring; tests still block unauthorized broad route/controller, frontend, dependency, retrieval, reranker, source-card, sourceAvailability, DB/vector/indexing/corpus/ingestion, and deferred Phase 8/9/10 changes.
+Validation passed: node --check pipeline.js; focused live wiring test; scaffold/route/final-gate guard tests; npm test; npm run guard:files.
+Next required step: PATCH-07B-GEMINI-REVIEW-17.
+Do not proceed to staging smoke/release gate until Gemini Review 17 is complete.
 PATCH-07B-CLARIFICATION-ROUTE-GATE-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 Route clarification helper composition and safety gate added.
 Helper chain composition validated through clarification-route-orchestrator-helper.js.
@@ -1806,12 +1818,13 @@ PATCH-07B-CLARIFICATION-FINAL-GATE-2 COMPLETE / LOCAL PASS / PASS WITH RECOMMEND
 PATCH-07B-CLARIFICATION-LIVE-DESIGN-1 COMPLETE / DESIGN PASS WITH RECOMMENDATIONS
 PATCH-07B-GEMINI-REVIEW-16 COMPLETE / PASS WITH STRICT RECOMMENDATIONS
 PATCH-07B-CLARIFICATION-LIVE-WIRING-SCAFFOLD-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
+PATCH-07B-CLARIFICATION-LIVE-WIRING-1 COMPLETE / LOCAL PASS
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-CLARIFICATION-LIVE-WIRING-1 - Narrow Live Clarification Route Wiring
+PATCH-07B-GEMINI-REVIEW-17
 ```
 
 Recommended agent for next task:
@@ -1833,8 +1846,9 @@ Phase 7B clarification route/prompt integration sequence:
 PATCH-07B-CLARIFICATION-LIVE-DESIGN-1 - COMPLETE / DESIGN PASS WITH RECOMMENDATIONS
 PATCH-07B-GEMINI-REVIEW-16 - COMPLETE / PASS WITH STRICT RECOMMENDATIONS
 PATCH-07B-CLARIFICATION-LIVE-WIRING-SCAFFOLD-1 - COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
-PATCH-07B-CLARIFICATION-LIVE-WIRING-1 - NEXT narrow live clarification route wiring
-No immediate staging rollout is recommended before narrow implementation, focused tests, and Gemini Review 17.
+PATCH-07B-CLARIFICATION-LIVE-WIRING-1 - COMPLETE / LOCAL PASS
+PATCH-07B-GEMINI-REVIEW-17 - NEXT
+Do not proceed to staging smoke/release gate until Gemini Review 17 is complete.
 
 PATCH-07B-CLARIFICATION-LIVE-WIRING-SCAFFOLD-1 added a live wiring scaffold fixture and tests only.
 It leaves no live wiring implemented, no prompt integration implemented, no response-generation branching implemented,
@@ -1848,6 +1862,12 @@ OpenAI full-answer generation; source limitation and Phase 10 deferral remain no
 Helper-chain error fail-open behavior is carried forward.
 No structured user-fact extraction limitation is carried forward: the helper chain must not invent facts and must bias
 toward clarification when facts are missing.
+PATCH-07B-CLARIFICATION-LIVE-WIRING-1 implemented the narrow Step 12.6 live clarification route gate behind
+TINA_ENABLE_CLARIFICATION_ROUTE_GATE.
+Legacy scaffold/final-gate guards were aligned narrowly for authorized live wiring while preserving governance
+against broad pipeline/route/controller/frontend/retrieval/reranker/source-card/sourceAvailability/dependency and
+deferred Phase 8/9/10 changes.
+Validation passed, including npm test and npm run guard:files.
 
 Phase 6H runtime retrieval/reranker changes remain deferred unless a later approved phase
 reopens them with local comparison fixture/report artifacts, measurable baseline metrics,

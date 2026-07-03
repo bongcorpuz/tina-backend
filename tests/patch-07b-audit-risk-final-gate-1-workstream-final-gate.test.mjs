@@ -54,7 +54,6 @@ const PROHIBITED_HELPERS = [
 const PROTECTED_DIFF_PATTERNS = [
   /^server\.js$/,
   /^ask-handler\.js$/,
-  /^pipeline\.js$/,
   /^adaptive-tina-master-prompt\.js$/,
   /^prompts\//,
   /^retrieval-engine\.js$/,
@@ -64,6 +63,18 @@ const PROTECTED_DIFF_PATTERNS = [
   /^package(?:-lock)?\.json$/,
   /^\.env/
 ];
+
+const ALLOWED_LIVE_WIRING_DIFF_FILES = new Set([
+  "pipeline.js",
+  "tests/patch-07b-clarification-live-wiring-1-narrow-route-gate.test.mjs",
+  "tests/patch-07b-clarification-live-wiring-scaffold-1-contract-fixture.test.mjs",
+  "tests/patch-07b-clarification-route-scaffold-1-integration-fixture.test.mjs",
+  "tests/patch-07b-clarification-final-gate-1-track-closure.test.mjs",
+  "tests/patch-07b-audit-risk-final-gate-1-workstream-final-gate.test.mjs",
+  "tests/patch-07b-final-gate-1-analytical-adversarial-final-gate.test.mjs",
+  "PATCH-07B-CLARIFICATION-LIVE-WIRING-1_NARROW_LIVE_CLARIFICATION_ROUTE_WIRING.md",
+  "knowledge/CURRENT_STATE.md"
+]);
 
 let passed = 0;
 let failed = 0;
@@ -117,13 +128,16 @@ await test("audit-risk helper chain remains route and prompt unwired", () => {
   const prompt = readFileSync(resolve("adaptive-tina-master-prompt.js"), "utf8");
   const forbidden = /audit-risk-language-helper|assessQualitativeAuditRisk|buildAuditRiskLanguageChecklist/;
   assert.doesNotMatch(askHandler, forbidden);
-  assert.doesNotMatch(pipeline, forbidden);
+  assert.match(pipeline, /TINA_ENABLE_CLARIFICATION_ROUTE_GATE/);
+  assert.match(pipeline, /Step 12\.6: Live clarification route gate/);
+  assert.match(pipeline, /assessQualitativeAuditRisk/);
   assert.doesNotMatch(prompt, forbidden);
 });
 
-await test("current patch diff excludes protected production integration files", () => {
+await test("current patch diff allows only authorized clarification live wiring and protected production files remain blocked", () => {
   const changed = gitDiffNames();
   for (const name of changed) {
+    assert(ALLOWED_LIVE_WIRING_DIFF_FILES.has(name), `unexpected changed file: ${name}`);
     assert(!PROTECTED_DIFF_PATTERNS.some((pattern) => pattern.test(name)), `protected file changed: ${name}`);
   }
 });

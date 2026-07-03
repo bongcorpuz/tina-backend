@@ -60,6 +60,16 @@ import { analyzeFactPattern }                     from "./fact-pattern-engine.js
 import { characterizeTransaction }                from "./transaction-characterization-engine.js";
 import { evaluateEvidence }                       from "./evidence-evaluation-engine.js";
 import { scoreRisk }                              from "./risk-scoring-engine.js";
+import { frameTaxIssue }                          from "./issue-framing-engine.js";
+import { applyReasoningSafetyPolicy }             from "./reasoning-safety-policy.js";
+import { identifyFactGaps }                       from "./fact-gap-helper.js";
+import { buildClientFactChecklistOutput }         from "./client-fact-checklist-output.js";
+import { assessAuthorityApplicability }           from "./authority-applicability-helper.js";
+import { applyAdversarialContentSafetyPolicy }    from "./adversarial-content-safety-policy.js";
+import { assessBirTaxpayerPositions }             from "./bir-vs-taxpayer-position-helper.js";
+import { assessQualitativeAuditRisk }             from "./audit-risk-language-helper.js";
+import { assessClarificationNeed }                from "./clarification-boundary-policy.js";
+import { buildClarificationRouteDecision }        from "./clarification-route-orchestrator-helper.js";
 import {
   inferIssuanceNumber,
   sourceTitleOf,
@@ -175,6 +185,333 @@ function buildSaeHardFailFallback(ctx = {}) {
     "",
     "Please verify the relevant indexed source before relying on this response."
   ].join("\n");
+}
+
+const CLARIFICATION_ROUTE_GATE_TRUE_VALUES = new Set(["1", "true", "on", "yes"]);
+const CLARIFICATION_ROUTE_GATE_NON_ANSWER_SAE = new Set([
+  "RETRIEVAL_TIMEOUT",
+  "PIPELINE_ERROR",
+  "SOURCE_LOOKUP_EMPTY",
+  "SOURCE_PARSE_ERROR"
+]);
+
+export function isClarificationRouteGateEnabled(env = process.env) {
+  const value = String(env?.TINA_ENABLE_CLARIFICATION_ROUTE_GATE || "").trim().toLowerCase();
+  return CLARIFICATION_ROUTE_GATE_TRUE_VALUES.has(value);
+}
+
+function normalizeClarificationRouteMode(hook = "/ask") {
+  if (hook === "/tax") return "/tax";
+  if (hook === "/audit") return "/audit";
+  return "/ask";
+}
+
+function mapClarificationAuthorityState(ctx = {}) {
+  const saeStatus = safeStr(ctx.saeStatus || ctx.sourceAvailability?.saeStatus).toUpperCase();
+  if (saeStatus === "AUTHORITY_FOUND") return "AUTHORITY_FOUND";
+  if (saeStatus === "RELATED_AUTHORITY_ONLY") return "RELATED_AUTHORITY_ONLY";
+  if (saeStatus === "NO_INDEXED_SOURCE") return "NO_INDEXED_SOURCE";
+  return "GENERAL_TAX";
+}
+
+function sourceCoverageNeedsFromContext(ctx = {}) {
+  return [
+    ctx.statusReason,
+    ctx.sourceAvailability?.statusReason,
+    ctx.sourceAvailability?.sourceAvailabilityReason,
+    ctx.limitationRequired ? ctx.disclosureType : null
+  ].filter(Boolean);
+}
+
+function buildClarificationRouteInputFromContext(ctx = {}, query = "", hook = "/ask") {
+  return {
+    mode: normalizeClarificationRouteMode(hook),
+    query,
+    userQuery: query,
+    sourceAvailabilityState: safeStr(ctx.saeStatus || ctx.sourceAvailability?.saeStatus),
+    authorityState: mapClarificationAuthorityState(ctx),
+    knownFacts: {},
+    missingUserFacts: [],
+    providedDocuments: [],
+    sourceCoverageNeeds: sourceCoverageNeedsFromContext(ctx),
+    sourceCards: ctx.eligibleCandidates?.length ? ctx.eligibleCandidates : (ctx.rerankedChunks || []),
+    retrievalContext: {
+      retrievedCount: ctx.rerankedChunks?.length || 0,
+      eligibleCandidateCount: ctx.eligibleCandidates?.length || 0,
+      suppressedCandidateCount: ctx.suppressedCandidates?.length || 0,
+      saeStatus: ctx.saeStatus,
+      disclosureType: ctx.disclosureType,
+      limitationRequired: ctx.limitationRequired
+    },
+    authorityType: ctx.issueClassification?.authorityType || "",
+    authorityReference: ctx.issueClassification?.exactAuthority?.reference || ""
+  };
+}
+
+function runClarificationHelperChain(input = {}) {
+  const issueFrameResult = frameTaxIssue(input);
+  const safetyPolicyResult = applyReasoningSafetyPolicy({ ...input, ...issueFrameResult });
+  const factGapResult = identifyFactGaps({ ...input, issueFrameResult, safetyPolicyResult });
+  const clientFactChecklistResult = buildClientFactChecklistOutput({
+    ...input,
+    issueFrameResult,
+    safetyPolicyResult,
+    factGapResult
+  });
+  const authorityApplicabilityResult = assessAuthorityApplicability({
+    ...input,
+    issueFrameResult,
+    safetyPolicyResult,
+    factGapResult
+  });
+  const adversarialContentSafetyResult = applyAdversarialContentSafetyPolicy({
+    ...input,
+    issueFrameResult,
+    safetyPolicyResult,
+    factGapResult,
+    clientFactChecklistResult,
+    authorityApplicabilityResult
+  });
+  const birTaxpayerPositionResult = assessBirTaxpayerPositions({
+    ...input,
+    issueFrameResult,
+    safetyPolicyResult,
+    factGapResult,
+    clientFactChecklistResult,
+    authorityApplicabilityResult,
+    adversarialContentSafetyResult
+  });
+  const qualitativeAuditRiskResult = assessQualitativeAuditRisk({
+    ...input,
+    issueFrameResult,
+    safetyPolicyResult,
+    factGapResult,
+    clientFactChecklistResult,
+    authorityApplicabilityResult,
+    adversarialContentSafetyResult,
+    birTaxpayerPositionResult
+  });
+  const clarificationResult = assessClarificationNeed({
+    ...input,
+    issueFrameResult,
+    safetyPolicyResult,
+    factGapResult,
+    clientFactChecklistResult,
+    authorityApplicabilityResult,
+    adversarialContentSafetyResult,
+    birTaxpayerPositionResult,
+    qualitativeAuditRiskResult
+  });
+
+  return {
+    issueFrameResult,
+    safetyPolicyResult,
+    factGapResult,
+    clientFactChecklistResult,
+    authorityApplicabilityResult,
+    adversarialContentSafetyResult,
+    birTaxpayerPositionResult,
+    qualitativeAuditRiskResult,
+    clarificationResult
+  };
+}
+
+function buildClarificationOnlyAnswer(structuredClarificationObject = {}) {
+  const questions = Array.isArray(structuredClarificationObject.questions)
+    ? structuredClarificationObject.questions.slice(0, 3)
+    : [];
+  const documentRequests = Array.isArray(structuredClarificationObject.documentRequests)
+    ? structuredClarificationObject.documentRequests
+    : [];
+  const sourceCoverageLimitations = Array.isArray(structuredClarificationObject.sourceCoverageLimitations)
+    ? structuredClarificationObject.sourceCoverageLimitations
+    : [];
+  const phase10Deferrals = Array.isArray(structuredClarificationObject.phase10Deferrals)
+    ? structuredClarificationObject.phase10Deferrals
+    : [];
+
+  const lines = [
+    "I need a few details before I can give a reliable sourced answer.",
+    ""
+  ];
+  if (questions.length > 0) {
+    lines.push("Questions:");
+    questions.forEach((question, index) => lines.push(`${index + 1}. ${question}`));
+    lines.push("");
+  }
+  if (documentRequests.length > 0) {
+    lines.push("Documents needed:");
+    documentRequests.forEach((request, index) => lines.push(`${index + 1}. ${request}`));
+    lines.push("");
+  }
+  if (sourceCoverageLimitations.length > 0) {
+    lines.push("Source limitation:");
+    sourceCoverageLimitations.forEach((item) => lines.push(`- ${item}`));
+    lines.push("");
+  }
+  if (phase10Deferrals.length > 0) {
+    lines.push("Deferred source-governance checks:");
+    phase10Deferrals.forEach((item) => lines.push(`- ${item}`));
+    lines.push("");
+  }
+  lines.push("I will avoid a final legal or tax conclusion until those details are clarified.");
+  return lines.join("\n").trim();
+}
+
+export function buildClarificationFallback(ctx = {}, routeDecision = {}, query = "", hook = "/ask") {
+  const structuredClarificationObject = routeDecision.structuredClarificationObject || {};
+  const sourceCards = Array.isArray(structuredClarificationObject.sourceCards)
+    ? structuredClarificationObject.sourceCards
+    : [];
+  const gated = applyVerifiedAuthorityGate({
+    answer: buildClarificationOnlyAnswer(structuredClarificationObject),
+    saeStatus: ctx.saeStatus,
+    finalSourceCards: sourceCards,
+    pipelineSourceCards: sourceCards,
+    eligibleCandidates: ctx.eligibleCandidates || [],
+    preGenerationSourceCards: ctx.preGenerationSourceCards || [],
+    lockedAuthorities: ctx.lockedAuthorities || ctx._preGenLockedAuthorities || [],
+    mode: ctx.mode,
+    route: hook
+  });
+
+  return {
+    answer: gated.answer,
+    sources: ctx.rerankedChunks || [],
+    sourcesUsed: ctx.rerankedChunks || [],
+    sourceCards,
+    retrievedSourceCount: ctx.rerankedChunks?.length || 0,
+    displayedSourceCount: sourceCards.length,
+    saeStatus: ctx.saeStatus,
+    sourceAvailabilityMetadata: ctx.sourceAvailability,
+    eligibleCandidates: ctx.eligibleCandidates || [],
+    suppressedCandidates: ctx.suppressedCandidates || [],
+    limitationRequired: ctx.limitationRequired,
+    disclosureType: ctx.disclosureType,
+    statusReason: ctx.statusReason,
+    sourceAvailability: ctx.saeStatus,
+    sourceStatus: ctx.saeStatus,
+    sourceAvailabilityReason: ctx.statusReason,
+    retrievalTimedOut: Boolean(ctx.retrievalDiagnostics?.timedOut),
+    relatedSourceCount: ctx.saeStatus === "RELATED_AUTHORITY_ONLY" ? ctx.suppressedCandidates?.length || 0 : 0,
+    issueClassification: ctx.issueClassification,
+    conflictAnalysis: ctx.conflictAnalysis,
+    riskScore: ctx.riskScore,
+    mode: ctx.mode,
+    orchestrationMode: ctx.mode,
+    responseMode: ctx.mode,
+    pipelineVersion: PIPELINE_VERSION,
+    responseType: "clarification",
+    answerAllowed: false,
+    questions: structuredClarificationObject.questions || [],
+    documentRequests: structuredClarificationObject.documentRequests || [],
+    sourceCoverageLimitations: structuredClarificationObject.sourceCoverageLimitations || [],
+    phase10Deferrals: structuredClarificationObject.phase10Deferrals || [],
+    structuredClarificationObject,
+    clarificationRouteGate: {
+      enabled: true,
+      routeAction: routeDecision.routeAction,
+      blockingTrigger: routeDecision.blockingTrigger,
+      shouldBuildFullAnswerPrompt: false,
+      shouldCallOpenAIForFullAnswer: false
+    },
+    verifiedAuthorityGate: {
+      evaluated: true,
+      leakageBlocked: gated.leakageBlocked,
+      relabelApplied: gated.relabelApplied,
+      removedSectionCount: gated.removedSectionCount,
+      suppressedCitationCount: gated.suppressedCitations?.length || 0,
+      verifiedAuthorityCount: gated.verifiedAuthorityCount
+    },
+    trace: {
+      steps: [{ step: "12.6", name: "clarificationRouteGate", done: true, earlyExit: true }]
+    },
+    openaiCalls: []
+  };
+}
+
+export function evaluateClarificationRouteGate({
+  ctx = {},
+  query = "",
+  hook = "/ask",
+  env = process.env,
+  routeDecisionBuilder = buildClarificationRouteDecision,
+  helperChainRunner = runClarificationHelperChain
+} = {}) {
+  if (!isClarificationRouteGateEnabled(env)) {
+    return {
+      enabled: false,
+      helperChainInvoked: false,
+      buildClarificationRouteDecisionInvoked: false,
+      routeDecision: null,
+      structuredClarificationObject: null,
+      responseType: null,
+      earlyExitResponse: null
+    };
+  }
+
+  const saeStatus = safeStr(ctx.saeStatus || ctx.sourceAvailability?.saeStatus).toUpperCase();
+  if (CLARIFICATION_ROUTE_GATE_NON_ANSWER_SAE.has(saeStatus)) {
+    return {
+      enabled: true,
+      bypassed: true,
+      bypassReason: "NON_ANSWER_SOURCE_AVAILABILITY_STATE",
+      helperChainInvoked: false,
+      buildClarificationRouteDecisionInvoked: false,
+      routeDecision: null,
+      structuredClarificationObject: null,
+      responseType: null,
+      earlyExitResponse: null
+    };
+  }
+
+  let routeInput;
+  let helperOutputs;
+  let routeDecision;
+  try {
+    routeInput = buildClarificationRouteInputFromContext(ctx, query, hook);
+    helperOutputs = helperChainRunner(routeInput);
+    routeDecision = routeDecisionBuilder({
+      ...routeInput,
+      featureFlagEnabled: true,
+      helperOutputs,
+      clarificationResult: helperOutputs.clarificationResult
+    });
+  } catch (e) {
+    return {
+      enabled: true,
+      failOpen: true,
+      warning: `clarificationRouteGate fail-open: ${e?.message || e}`,
+      helperChainInvoked: true,
+      buildClarificationRouteDecisionInvoked: false,
+      routeDecision: null,
+      structuredClarificationObject: null,
+      responseType: null,
+      earlyExitResponse: null
+    };
+  }
+
+  if (routeDecision?.answerAllowed === false) {
+    return {
+      enabled: true,
+      helperChainInvoked: true,
+      buildClarificationRouteDecisionInvoked: true,
+      routeDecision,
+      structuredClarificationObject: routeDecision.structuredClarificationObject,
+      responseType: "clarification",
+      earlyExitResponse: buildClarificationFallback(ctx, routeDecision, query, hook)
+    };
+  }
+
+  return {
+    enabled: true,
+    helperChainInvoked: true,
+    buildClarificationRouteDecisionInvoked: true,
+    routeDecision,
+    structuredClarificationObject: routeDecision?.structuredClarificationObject || null,
+    responseType: routeDecision?.responseType || null,
+    earlyExitResponse: null
+  };
 }
 
 function buildOpenAiFailureRetrievalAnswer(ctx = {}, query = "") {
@@ -3145,14 +3482,102 @@ export async function runPipeline({
   trace.steps.push({ step: "12.5", name: "adaptiveResponsePlan", done: true, askProfile: ctx.responsePlan?.askProfile || null });
 
   // ── Step 13: Build Adaptive Master Prompt ────────────────────────────────
+  // Step 12.6: Live clarification route gate (flagged).
+  // Runs after SAE state is available and before prompt construction/OpenAI generation.
+  try {
+    const clarificationGate = evaluateClarificationRouteGate({ ctx, query, hook });
+    if (clarificationGate.enabled) {
+      if (clarificationGate.failOpen) {
+        trace.warnings.push({ step: "12.6", warning: clarificationGate.warning });
+        console.warn("[CLARIFICATION_ROUTE_GATE_FAIL_OPEN]", {
+          message: clarificationGate.warning
+        });
+      }
+      trace.steps.push({
+        step: "12.6",
+        name: "clarificationRouteGate",
+        done: true,
+        bypassed: clarificationGate.bypassed === true,
+        failOpen: clarificationGate.failOpen === true,
+        responseType: clarificationGate.responseType || null,
+        earlyExit: Boolean(clarificationGate.earlyExitResponse)
+      });
+    }
+    if (clarificationGate.earlyExitResponse) {
+      endTrace({
+        traceId,
+        metadata: {
+          mode: ctx.mode,
+          primaryIssue: ctx.issueClassification?.primaryIssue || null,
+          sourceCount: ctx.rerankedChunks?.length || 0,
+          warnings: trace.warnings.length,
+          pipelineLatencyMs: Date.now() - pipelineStartMs,
+          clarificationRouteGateEarlyExit: true
+        }
+      });
+      await Promise.race([
+        flushObservability(),
+        new Promise(resolve => setTimeout(resolve, 2000))
+      ]);
+      markPipelineCheckpoint(diagnostics, "RESPONSE_COMPLETE", {
+        timingField: "responseCompletedAt",
+        mode: ctx.mode,
+        route: hook,
+        model,
+        sourceAvailabilityStatus: ctx.saeStatus,
+        retrievedCount: ctx.rerankedChunks?.length || 0,
+        displayedSourceCardCount: clarificationGate.earlyExitResponse.sourceCards?.length || 0
+      });
+      finalizePipelineDiagnostics(diagnostics);
+      timing.checkpoint("RESPONSE_COMPLETE", "response");
+      const finalDiagnostics = publishDiagnostics(false);
+      return {
+        ...clarificationGate.earlyExitResponse,
+        diagnostics: finalDiagnostics,
+        pipelineTimings: diagnostics.pipelineTimings,
+        pipelineStageDurations: diagnostics.pipelineStageDurations,
+        partialPipelineState: diagnostics.partialPipelineState,
+        openaiCalls: diagnostics.openaiCalls,
+        trace: {
+          ...trace,
+          steps: [
+            ...trace.steps,
+            { step: "12.6", name: "clarificationRouteGateEarlyExit", done: true }
+          ]
+        },
+        traceId
+      };
+    }
+    if (clarificationGate.structuredClarificationObject) {
+      ctx.structuredClarificationObject = clarificationGate.structuredClarificationObject;
+      ctx.responseType = clarificationGate.responseType;
+      ctx.clarificationRouteDecision = clarificationGate.routeDecision;
+    }
+  } catch (e) {
+    const warning = `clarificationRouteGate fail-open: ${e?.message || e}`;
+    trace.warnings.push({ step: "12.6", warning });
+    console.warn("[CLARIFICATION_ROUTE_GATE_FAIL_OPEN]", {
+      message: e?.message || String(e)
+    });
+  }
+
   ctx.promptContract = buildAdaptivePromptContract(ctx.mode, {
     issueClassification: ctx.issueClassification,
     conflictAnalysis:    ctx.conflictAnalysis,
     riskScore:           ctx.riskScore,
     factPattern:         ctx.factPattern,
     transactionChar:     ctx.transactionChar,
-    responsePlan:        ctx.responsePlan
+    responsePlan:        ctx.responsePlan,
+    ...(ctx.structuredClarificationObject
+      ? { structuredClarificationObject: ctx.structuredClarificationObject }
+      : {})
   });
+  if (ctx.structuredClarificationObject) {
+    ctx.promptContract = {
+      ...ctx.promptContract,
+      structuredClarificationObject: ctx.structuredClarificationObject
+    };
+  }
   trace.steps.push({ step: 13, name: "masterPromptBuilt", done: true });
 
   // ── Step 13.5: PATCH-021C — jurisprudence authority promotion ─────────────
@@ -3491,10 +3916,16 @@ export async function runPipeline({
       conversationHistory,
       mode:                 ctx.mode,
       responsePlan:         ctx.responsePlan,
+      ...(ctx.structuredClarificationObject
+        ? { structuredClarificationObject: ctx.structuredClarificationObject }
+        : {}),
       adaptiveContext: {
         activeHook:        hook,
         orchestrationMode: ctx.mode,
-        responsePlan:      ctx.responsePlan
+        responsePlan:      ctx.responsePlan,
+        ...(ctx.structuredClarificationObject
+          ? { structuredClarificationObject: ctx.structuredClarificationObject }
+          : {})
       },
       _traceId:             traceId,
       openaiDiagnostics:    diagnostics.openaiCalls
@@ -4727,7 +5158,20 @@ export async function runPipeline({
     saeHardFailBlocked,
     saeHardFailFallbackApplied: saeHardFailBlocked,
     saeCompliance:             compliantResult.saeCompliance,
-    saeViolations:             compliantResult.saeViolations || []
+    saeViolations:             compliantResult.saeViolations || [],
+    ...(ctx.responseType ? { responseType: ctx.responseType } : {}),
+    ...(ctx.structuredClarificationObject
+      ? {
+          structuredClarificationObject: ctx.structuredClarificationObject,
+          clarificationRouteGate: {
+            enabled: true,
+            routeAction: ctx.clarificationRouteDecision?.routeAction || null,
+            blockingTrigger: ctx.clarificationRouteDecision?.blockingTrigger || null,
+            shouldBuildFullAnswerPrompt: ctx.clarificationRouteDecision?.shouldBuildFullAnswerPrompt !== false,
+            shouldCallOpenAIForFullAnswer: ctx.clarificationRouteDecision?.shouldCallOpenAIForFullAnswer !== false
+          }
+        }
+      : {})
   };
 }
 

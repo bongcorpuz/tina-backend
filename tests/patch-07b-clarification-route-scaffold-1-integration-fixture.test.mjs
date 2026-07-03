@@ -103,7 +103,6 @@ const PROTECTED_DIFF_PATTERNS = [
   /^adaptive-tina-master-prompt\.js$/,
   /^answer-renderer\.js$/,
   /^context-orchestration-engine\.js$/,
-  /^pipeline\.js$/,
   /^retrieval-engine\.js$/,
   /^reranker-engine\.js$/,
   /^reranker-/,
@@ -124,6 +123,13 @@ const ALLOWED_DIFF_FILES = new Set([
   "evaluation/fixtures/phase-7b-clarification-route-scaffold-1-integration-policy.fixture.json",
   "tests/patch-07b-clarification-route-scaffold-1-integration-fixture.test.mjs",
   "PATCH-07B-CLARIFICATION-ROUTE-SCAFFOLD-1_ROUTE_PROMPT_INTEGRATION_FIXTURE_AND_TESTS.md",
+  "pipeline.js",
+  "tests/patch-07b-clarification-live-wiring-1-narrow-route-gate.test.mjs",
+  "tests/patch-07b-clarification-live-wiring-scaffold-1-contract-fixture.test.mjs",
+  "tests/patch-07b-clarification-final-gate-1-track-closure.test.mjs",
+  "tests/patch-07b-audit-risk-final-gate-1-workstream-final-gate.test.mjs",
+  "tests/patch-07b-final-gate-1-analytical-adversarial-final-gate.test.mjs",
+  "PATCH-07B-CLARIFICATION-LIVE-WIRING-1_NARROW_LIVE_CLARIFICATION_ROUTE_WIRING.md",
   "knowledge/CURRENT_STATE.md"
 ]);
 
@@ -178,6 +184,19 @@ function gitDiffNames() {
   const result = spawnSync("git", ["diff", "--name-only"], { cwd: resolve("."), encoding: "utf8" });
   assert.equal(result.status, 0, result.stderr || result.stdout);
   return result.stdout.split(/\r?\n/).map((item) => item.trim()).filter(Boolean);
+}
+
+function assertAuthorizedLiveWiringPipeline() {
+  const source = readFileSync(resolve("pipeline.js"), "utf8");
+  assert(source.includes("TINA_ENABLE_CLARIFICATION_ROUTE_GATE"));
+  assert(source.includes("Step 12.6: Live clarification route gate"));
+  assert(source.includes("evaluateClarificationRouteGate"));
+  assert(source.includes("buildClarificationRouteDecision"));
+  assert.match(source, /if \(!isClarificationRouteGateEnabled\(env\)\)[\s\S]*enabled:\s*false/);
+  assert.match(source, /responseType:\s*"clarification"/);
+  assert.match(source, /structuredClarificationObject:\s*null/);
+  assert.match(source, /CLARIFICATION_ROUTE_GATE_FAIL_OPEN/);
+  assert.doesNotMatch(source, /routes\/|routes\\/i);
 }
 
 await test("fixture loads and has correct top-level metadata", () => {
@@ -387,12 +406,13 @@ await test("expected integration outputs contain no prohibited conclusion, strat
   }
 });
 
-await test("current patch diff excludes protected live integration and deferred files", () => {
+await test("current patch diff allows only authorized flagged live wiring and deferred files remain protected", () => {
   const changed = gitDiffNames();
   for (const name of changed) {
     assert(ALLOWED_DIFF_FILES.has(name), `unexpected changed file: ${name}`);
     assert(!PROTECTED_DIFF_PATTERNS.some((pattern) => pattern.test(name)), `protected file changed: ${name}`);
   }
+  if (changed.includes("pipeline.js")) assertAuthorizedLiveWiringPipeline();
 });
 
 console.log(`\nPATCH-07B-CLARIFICATION-ROUTE-SCAFFOLD-1 integration fixture tests: ${passed} passed, ${failed} failed`);
