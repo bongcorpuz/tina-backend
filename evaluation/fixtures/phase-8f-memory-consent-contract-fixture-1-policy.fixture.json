@@ -1,0 +1,233 @@
+{
+  "patch": {
+    "id": "PATCH-08F-MEMORY-CONSENT-CONTRACT-FIXTURE-1",
+    "phase": "Phase 8F",
+    "taskType": "consent_contract_fixture_policy_tests_only",
+    "baseCommit": "f621747 PATCH-08E-MEMORY-CONSENT-CONTRACT-DESIGN-1 design memory consent contract",
+    "runtimeImplementationAllowed": false,
+    "runtimeConsentHandlingAllowed": false,
+    "databaseMigrationAllowed": false,
+    "databaseTablesAllowed": false,
+    "durableWritesAllowed": false,
+    "readServiceAllowed": false,
+    "writeServiceAllowed": false,
+    "consentServiceAllowed": false,
+    "pipelineIntegrationAllowed": false,
+    "frontendImplementationAllowed": false,
+    "implementationOutputs": []
+  },
+  "baseContracts": {
+    "phase8A": "PATCH-08A-MEMORY-GOVERNANCE-DESIGN-1",
+    "phase8BFixture": "evaluation/fixtures/phase-8b-memory-taxonomy-fixture-1-policy.fixture.json",
+    "phase8CDesign": "PATCH-08C-MEMORY-SCOPE-SCHEMA-DESIGN-1_MEMORY_SCOPE_AND_SCHEMA_DESIGN.md",
+    "phase8DFixture": "evaluation/fixtures/phase-8d-memory-scope-schema-fixture-1-invariants.fixture.json",
+    "phase8EDesign": "PATCH-08E-MEMORY-CONSENT-CONTRACT-DESIGN-1_MEMORY_CONSENT_CONTRACT_DESIGN.md",
+    "memoryClasses": ["user_profile", "user_preference", "matter", "client_entity", "temporary_session", "source_derived", "prohibited_sensitive"],
+    "permissionLevels": ["no_store", "session_only", "matter_scoped", "client_scoped", "user_profile", "system_governance", "explicit_consent", "prohibited"],
+    "confidenceStates": ["user_confirmed", "inferred", "source_derived", "stale", "contradicted", "unverified", "revoked"],
+    "scopeTypes": ["global_user", "firm_workspace_future", "client", "matter", "session", "source_document"],
+    "authoritySeparationRuleReferences": ["PATCH-08B authoritySafetyRules", "PATCH-08D authoritySeparationRules", "memory is context, never authority"]
+  },
+  "consentPhilosophyRules": [
+    { "id": "CONSENT_AUTHORIZES_STORAGE_NOT_AUTHORITY", "requiredBehavior": "Consent authorizes storage only.", "prohibitedBehavior": "Consent must not authorize legal or tax authority use.", "example": "A consented matter fact remains context only." },
+    { "id": "NO_DURABLE_WRITE_WITHOUT_ALLOWED_PERMISSION_LEVEL", "requiredBehavior": "Durable writes require an approved permission level.", "prohibitedBehavior": "Unlabeled durable writes.", "example": "A client fact must be client_scoped or explicit_consent." },
+    { "id": "SENSITIVE_FACTS_REQUIRE_EXPLICIT_CONSENT", "requiredBehavior": "Sensitive client/matter facts require explicit consent.", "prohibitedBehavior": "Silent or default approval.", "example": "BIR audit exposure facts require approve." },
+    { "id": "INFERRED_DURABLE_MEMORY_REQUIRES_CONFIRMATION", "requiredBehavior": "Inferred durable memory requires user confirmation.", "prohibitedBehavior": "Persisting deductions as facts.", "example": "Inferred user role is confirmed before storage." },
+    { "id": "RAW_CONFIDENTIAL_DOCUMENT_STORAGE_NOT_IMPLIED", "requiredBehavior": "Only reviewed summaries may be proposed.", "prohibitedBehavior": "Raw confidential document storage by implication.", "example": "Store a consented summary, not raw pages." },
+    { "id": "CREDENTIALS_AND_SECRETS_NEVER_STORED", "requiredBehavior": "Secrets are rejected and not echoed.", "prohibitedBehavior": "Storage or logging of secret values.", "example": "An API key is not stored." },
+    { "id": "UNSUPPORTED_TAX_LEGAL_CONCLUSIONS_NOT_STORED_AS_AUTHORITY", "requiredBehavior": "Unsupported conclusions are not stored as authority.", "prohibitedBehavior": "Remembering a conclusion as verified law.", "example": "A user note remains non-authority." },
+    { "id": "CONSENT_IS_SCOPED_REVOCABLE_AUDITABLE", "requiredBehavior": "Consent is scoped, revocable, and auditable.", "prohibitedBehavior": "Unscoped or irrevocable consent.", "example": "A client grant can be revoked." },
+    { "id": "REFUSAL_MUST_BE_RESPECTED", "requiredBehavior": "Deny, ask_later, and session_only prevent durable writes.", "prohibitedBehavior": "Writing despite refusal.", "example": "A denied suggestion is not persisted." },
+    { "id": "DENIAL_DOES_NOT_DEGRADE_CURRENT_SESSION", "requiredBehavior": "Storage denial does not punish current-session use.", "prohibitedBehavior": "Degrading the current answer because storage was denied.", "example": "The fact may still be used in-session if permitted." },
+    { "id": "MEMORY_CONTEXT_NOT_AUTHORITY", "requiredBehavior": "Memory is context only.", "prohibitedBehavior": "Changing SAE, retrieval, source cards, Authority Lock, or legal-state validation.", "example": "Stored matter context never creates a source card." }
+  ],
+  "consentRequirementMatrix": [
+    { "memoryClass": "user_profile", "defaultConsentRequirement": "confirmation_required_for_durable_storage", "explicitConsentMandatory": false, "scopeConfirmationMandatory": false, "sessionOnlyAllowedWithoutDurableConsent": true, "durableWriteAllowed": true, "defaultScopeBehavior": "global_user profile scope only; inferred durable profile requires confirmation", "sensitiveVariantBehavior": "explicit consent required for sensitive profile facts; not_required cannot apply", "examples": ["confirmed professional role", "inferred profile requires confirmation"] },
+    { "memoryClass": "user_preference", "defaultConsentRequirement": "explicit_or_clear_user_approval_required", "explicitConsentMandatory": false, "scopeConfirmationMandatory": false, "sessionOnlyAllowedWithoutDurableConsent": true, "durableWriteAllowed": true, "defaultScopeBehavior": "global_user or session scope; clear approval required for durable storage", "sensitiveVariantBehavior": "sensitive preference variants require explicit consent or no-store", "examples": ["prefers concise memos", "format preference approved by user"] },
+    { "memoryClass": "matter", "defaultConsentRequirement": "matter_scope_confirmation_required", "explicitConsentMandatory": true, "scopeConfirmationMandatory": true, "sessionOnlyAllowedWithoutDurableConsent": true, "durableWriteAllowed": true, "defaultScopeBehavior": "matter scope required and visible to user", "sensitiveVariantBehavior": "sensitive matter facts require explicit consent and visible matter scope", "examples": ["LOA covers TY 2023 for named matter"] },
+    { "memoryClass": "client_entity", "defaultConsentRequirement": "client_scope_confirmation_required", "explicitConsentMandatory": true, "scopeConfirmationMandatory": true, "sessionOnlyAllowedWithoutDurableConsent": true, "durableWriteAllowed": true, "defaultScopeBehavior": "client scope required and visible to user", "sensitiveVariantBehavior": "sensitive client facts require explicit consent; prefer matter scope when narrower", "examples": ["client VAT registration fact with named client scope"] },
+    { "memoryClass": "temporary_session", "defaultConsentRequirement": "none_for_session_use_promotion_requires_consent", "explicitConsentMandatory": false, "scopeConfirmationMandatory": false, "sessionOnlyAllowedWithoutDurableConsent": true, "durableWriteAllowed": false, "durableWriteConversionRule": "durableWriteAllowed false unless later explicit conversion creates a new consented item", "defaultScopeBehavior": "session scope only", "sensitiveVariantBehavior": "sensitive content remains session-only or no-store unless explicit conversion is approved", "examples": ["draft assumption for this conversation only"] },
+    { "memoryClass": "source_derived", "defaultConsentRequirement": "provenance_only_no_authority_use", "explicitConsentMandatory": false, "scopeConfirmationMandatory": false, "sessionOnlyAllowedWithoutDurableConsent": true, "durableWriteAllowed": false, "defaultScopeBehavior": "source_document provenance/reference only; cannot assert currentness", "sensitiveVariantBehavior": "source-derived confidential summaries require approval and remain non-authority", "examples": ["indexed source provenance note, not currentness"] },
+    { "memoryClass": "prohibited_sensitive", "defaultConsentRequirement": "storage_prohibited", "explicitConsentMandatory": true, "scopeConfirmationMandatory": false, "sessionOnlyAllowedWithoutDurableConsent": false, "durableWriteAllowed": false, "defaultScopeBehavior": "no durable scope allowed", "sensitiveVariantBehavior": "credentials, secrets, unsupported conclusions, and raw confidential document text are rejected", "examples": ["API keys", "passwords", "unsupported legal conclusion"] }
+  ],
+  "consentStates": [
+    { "id": "not_required", "description": "Consent is not required for this non-sensitive non-durable use.", "allowedReadBehavior": "allowed only under scope and permission rules; cannot apply to sensitive client facts", "allowedWriteBehavior": "allowed only where permission rules allow; no sensitive client facts", "userVisibleBehavior": "no consent prompt required", "auditEventRequired": false, "allowedTransitions": ["required_pending", "invalid"] },
+    { "id": "required_pending", "description": "Consent is needed but no prompt has been issued yet.", "allowedReadBehavior": "blocked for durable memory", "allowedWriteBehavior": "blocked until granted", "userVisibleBehavior": "no prompt yet", "auditEventRequired": false, "allowedTransitions": ["requested", "invalid"] },
+    { "id": "requested", "description": "Consent prompt has been shown and awaits user response.", "allowedReadBehavior": "blocked", "allowedWriteBehavior": "blocked", "userVisibleBehavior": "prompt visible with scope and default response", "auditEventRequired": true, "allowedTransitions": ["granted", "denied", "expired", "invalid"] },
+    { "id": "granted", "description": "User approved the request with scope.", "allowedReadBehavior": "readable only under scope, freshness, and authority-separation rules", "allowedWriteBehavior": "durable write allowed once for explicit-consent memory", "userVisibleBehavior": "approval confirmation shown", "auditEventRequired": true, "allowedTransitions": ["revoked", "expired", "superseded"] },
+    { "id": "denied", "description": "User refused durable storage.", "allowedReadBehavior": "not readable because durable memory is not created", "allowedWriteBehavior": "prohibits durable write", "userVisibleBehavior": "denial acknowledged without degrading current session", "auditEventRequired": true, "allowedTransitions": [] },
+    { "id": "revoked", "description": "User withdrew a prior consent grant.", "allowedReadBehavior": "prohibits read immediately", "allowedWriteBehavior": "blocked unless a new independent consent flow is granted", "userVisibleBehavior": "forget/revocation confirmation shown", "auditEventRequired": true, "allowedTransitions": [] },
+    { "id": "expired", "description": "Consent or request passed its expiry.", "allowedReadBehavior": "blocks durable use until refreshed", "allowedWriteBehavior": "blocked until refreshed", "userVisibleBehavior": "refresh prompt may be shown when relevant", "auditEventRequired": true, "allowedTransitions": ["requested"] },
+    { "id": "superseded", "description": "Older consent replaced by newer scoped consent.", "allowedReadBehavior": "old consent inert; newer consent governs", "allowedWriteBehavior": "old consent cannot authorize writes", "userVisibleBehavior": "update confirmation shown", "auditEventRequired": true, "allowedTransitions": [] },
+    { "id": "invalid", "description": "Malformed, unverifiable, or contradictory consent record.", "allowedReadBehavior": "blocked", "allowedWriteBehavior": "blocks write and should trigger correction/clarification", "userVisibleBehavior": "treated as absent; correction or clarification required", "auditEventRequired": true, "allowedTransitions": ["requested"] }
+  ],
+  "consentEventTypes": [
+    { "id": "candidate_detected", "purpose": "Record that a memory candidate was identified.", "requiredFields": ["eventId", "eventType", "actorId", "scopeType", "scopeId", "createdAt"], "emittedWhen": "A suggestion is built.", "appendOnly": true, "mustNotContainSecretValues": true, "auditRequirement": "append-only audit record without raw secret values" },
+    { "id": "consent_prompted", "purpose": "Record that a consent prompt was shown.", "requiredFields": ["eventId", "consentRequestId", "consentText", "scopeLabel", "createdAt"], "emittedWhen": "A prompt is issued.", "appendOnly": true, "mustNotContainSecretValues": true, "auditRequirement": "append-only audit record without raw secret values" },
+    { "id": "consent_granted", "purpose": "Record approval.", "requiredFields": ["eventId", "consentRequestId", "userResponse", "selectedScopeType", "respondedAt"], "emittedWhen": "User approves.", "appendOnly": true, "mustNotContainSecretValues": true, "auditRequirement": "append-only audit record without raw secret values" },
+    { "id": "consent_denied", "purpose": "Record refusal.", "requiredFields": ["eventId", "consentRequestId", "respondedAt"], "emittedWhen": "User denies.", "appendOnly": true, "mustNotContainSecretValues": true, "auditRequirement": "append-only denial record without candidate value" },
+    { "id": "consent_revoked", "purpose": "Record withdrawal of consent.", "requiredFields": ["eventId", "consentEventId", "reason", "revokedAt"], "emittedWhen": "User revokes.", "appendOnly": true, "mustNotContainSecretValues": true, "auditRequirement": "append-only revocation record" },
+    { "id": "consent_expired", "purpose": "Record expiry.", "requiredFields": ["eventId", "consentRequestId", "expiresAt"], "emittedWhen": "Consent expires.", "appendOnly": true, "mustNotContainSecretValues": true, "auditRequirement": "append-only expiry record" },
+    { "id": "consent_superseded", "purpose": "Record replacement.", "requiredFields": ["eventId", "oldConsentId", "newConsentId", "reason"], "emittedWhen": "Consent is replaced.", "appendOnly": true, "mustNotContainSecretValues": true, "auditRequirement": "append-only supersession record" },
+    { "id": "memory_written_after_consent", "purpose": "Link future write to grant.", "requiredFields": ["eventId", "memoryId", "consentEventId", "createdAt"], "emittedWhen": "Future durable write completes.", "appendOnly": true, "mustNotContainSecretValues": true, "auditRequirement": "append-only write-after-consent record" },
+    { "id": "memory_not_written_no_consent", "purpose": "Record blocked write.", "requiredFields": ["eventId", "suggestionId", "blockingReason", "createdAt"], "emittedWhen": "Write is attempted without grant.", "appendOnly": true, "mustNotContainSecretValues": true, "auditRequirement": "append-only no-write record" },
+    { "id": "memory_deleted_after_revocation", "purpose": "Record deletion after revocation.", "requiredFields": ["eventId", "memoryId", "revocationEventId", "createdAt"], "emittedWhen": "Deletion completes.", "appendOnly": true, "mustNotContainSecretValues": true, "auditRequirement": "append-only deletion record" },
+    { "id": "consent_scope_changed", "purpose": "Record scope adjustment.", "requiredFields": ["eventId", "oldScope", "newScope", "confirmation", "createdAt"], "emittedWhen": "User chooses another scope.", "appendOnly": true, "mustNotContainSecretValues": true, "auditRequirement": "append-only scope-change record" }
+  ],
+  "memorySuggestionContract": {
+    "objectName": "memorySuggestion",
+    "requiredFields": ["suggestionId", "suggestionType", "memoryClass", "proposedPermissionLevel", "proposedScopeType", "proposedScopeId", "proposedScopeLabel", "contentSummary", "structuredCandidate", "sensitivityLabel", "confidenceState", "consentRequired", "consentReason", "userPrompt", "allowedActions", "prohibitedUses", "authorityUseProhibited", "legalConclusionProhibited", "sourceRefs", "expiresAt", "createdAt"],
+    "allowedSuggestionTypes": ["remember_user_preference", "remember_user_profile", "remember_client_fact", "remember_matter_fact", "remember_source_provenance", "update_existing_memory", "forget_existing_memory", "keep_session_only"],
+    "allowedActions": ["approve", "deny", "session_only", "choose_scope", "edit_summary", "forget", "ask_later"],
+    "authorityUseProhibited": true,
+    "legalConclusionProhibited": true,
+    "rules": ["suggestion_is_not_durable_memory", "suggestion_does_not_create_memory", "suggestion_does_not_create_authority", "no_raw_confidential_document_text", "no_credentials_or_secrets", "legalConclusionProhibited true", "authorityUseProhibited true", "scope_must_be_visible", "default_persistence_not_assumed"]
+  },
+  "memoryConsentRequestContract": {
+    "objectName": "memoryConsentRequest",
+    "requiredFields": ["consentRequestId", "suggestionId", "userId", "requestedAction", "memoryClass", "permissionLevel", "scopeType", "scopeId", "scopeLabel", "consentText", "consentReason", "riskLevel", "sensitiveDataPresent", "allowedUserResponses", "defaultResponse", "expiresAt", "createdAt"],
+    "defaultResponseAllowedValues": ["deny", "session_only"],
+    "defaultResponseForbiddenValues": ["approve"],
+    "rules": ["defaultResponse_must_be_deny_or_session_only", "defaultResponse_must_never_be_approve", "sensitiveDataPresent_requires_explicit_approve", "client_matter_scope_visible_to_user", "consent_text_plain_language", "no_bundled_unrelated_scopes", "no_multi_client_consent_without_future_design"]
+  },
+  "memoryConsentResponseContract": {
+    "objectName": "memoryConsentResponse",
+    "requiredFields": ["consentRequestId", "userResponse", "approved", "selectedScopeType", "selectedScopeId", "editedContentSummary", "permissionLevel", "retentionPreference", "userNotes", "respondedAt"],
+    "allowedUserResponses": ["approve", "deny", "session_only", "approve_with_edits", "choose_different_scope", "forget", "ask_later"],
+    "approvedTrueRequires": ["approve", "approve_with_edits"],
+    "rules": ["deny_creates_no_durable_memory", "session_only_creates_no_durable_memory", "ask_later_creates_no_durable_memory", "approve_with_edits_supersedes_original_candidate", "choose_different_scope_requires_scope_validation", "forget_triggers_revocation_or_deletion_flow_only_for_existing_memory", "approved_true_requires_userResponse_approve_or_approve_with_edits"]
+  },
+  "promptWordingLibrary": [
+    { "id": "user_preference", "template": "Do you want TINA to remember this as your preference for future responses?", "requiredScopeDisclosure": false, "prohibitedWording": ["I will remember this automatically", "This becomes legal authority", "This confirms the law", "This proves the source is current", "Approved by default"], "riskLevel": "low" },
+    { "id": "user_profile", "template": "Should TINA remember this as part of your professional profile?", "requiredScopeDisclosure": false, "prohibitedWording": ["I will remember this automatically", "This becomes legal authority", "This confirms the law", "This proves the source is current", "Approved by default"], "riskLevel": "low" },
+    { "id": "client_fact", "template": "Do you want TINA to remember this for [Client Name] only?", "requiredScopeDisclosure": true, "prohibitedWording": ["I will remember this automatically", "This becomes legal authority", "This confirms the law", "This proves the source is current", "Approved by default"], "riskLevel": "medium" },
+    { "id": "matter_fact", "template": "Do you want TINA to remember this for the [Matter Name] matter only?", "requiredScopeDisclosure": true, "prohibitedWording": ["I will remember this automatically", "This becomes legal authority", "This confirms the law", "This proves the source is current", "Approved by default"], "riskLevel": "medium" },
+    { "id": "sensitive_client_fact", "template": "This may be sensitive client information. Should TINA remember it for this matter only, or use it only in this conversation?", "requiredScopeDisclosure": true, "prohibitedWording": ["I will remember this automatically", "This becomes legal authority", "This confirms the law", "This proves the source is current", "Approved by default"], "riskLevel": "high" },
+    { "id": "source_provenance", "template": "Should TINA keep this as a provenance note only? This will not be treated as legal authority or source currentness.", "requiredScopeDisclosure": true, "prohibitedWording": ["I will remember this automatically", "This becomes legal authority", "This confirms the law", "This proves the source is current", "Approved by default"], "riskLevel": "low" },
+    { "id": "correction_update", "template": "You corrected a stored fact. Should TINA update it, keep both with a warning, or use the correction only in this conversation?", "requiredScopeDisclosure": true, "prohibitedWording": ["I will remember this automatically", "This becomes legal authority", "This confirms the law", "This proves the source is current", "Approved by default"], "riskLevel": "medium" },
+    { "id": "forget_request", "template": "I can forget this stored memory. Do you want to remove it from future use?", "requiredScopeDisclosure": true, "prohibitedWording": ["I will remember this automatically", "This becomes legal authority", "This confirms the law", "This proves the source is current", "Approved by default"], "riskLevel": "medium" },
+    { "id": "session_only", "template": "I will use this only for this conversation and will not store it as memory.", "requiredScopeDisclosure": false, "prohibitedWording": ["I will remember this automatically", "This becomes legal authority", "This confirms the law", "This proves the source is current", "Approved by default"], "riskLevel": "low" }
+  ],
+  "consentScopeRules": [
+    { "id": "GLOBAL_USER_CONSENT_ALLOWED_FOR_NON_SENSITIVE_PROFILE_ONLY", "requiredBehavior": "Global user consent covers non-sensitive profile/preference facts only.", "prohibitedBehavior": "Client confidential facts in global_user memory.", "example": "Response style preference may be global_user." },
+    { "id": "CLIENT_SCOPE_MUST_BE_VISIBLE", "requiredBehavior": "Client scope label is visible before approval.", "prohibitedBehavior": "Hidden client scope.", "example": "Prompt names Client A." },
+    { "id": "MATTER_SCOPE_MUST_BE_VISIBLE", "requiredBehavior": "Matter scope label is visible before approval.", "prohibitedBehavior": "Hidden matter scope.", "example": "Prompt names the LOA matter." },
+    { "id": "AMBIGUOUS_SCOPE_DEFAULTS_SESSION_ONLY", "requiredBehavior": "Ambiguous scope defaults to session-only.", "prohibitedBehavior": "Durable write on ambiguous scope.", "example": "Use only this conversation until scope is confirmed." },
+    { "id": "SCOPE_CANNOT_BE_INFERRED_SILENTLY_FOR_DURABLE_MEMORY", "requiredBehavior": "Durable scope requires user-visible confirmation.", "prohibitedBehavior": "Silent scope inference.", "example": "TINA asks client vs matter." },
+    { "id": "CHANGING_SCOPE_REQUIRES_USER_CONFIRMATION", "requiredBehavior": "Scope changes require confirmation and audit.", "prohibitedBehavior": "Silent scope mutation.", "example": "Move client fact to matter after confirmation." },
+    { "id": "CROSS_CLIENT_SCOPE_PROHIBITED_WITHOUT_FUTURE_MULTI_CLIENT_DESIGN", "requiredBehavior": "Consent applies to one client unless future design approves otherwise.", "prohibitedBehavior": "Bundled multi-client approval.", "example": "Client A consent does not cover Client B." },
+    { "id": "SOURCE_DOCUMENT_PROVENANCE_SCOPE_NOT_AUTHORITY", "requiredBehavior": "Source document scope is provenance only.", "prohibitedBehavior": "Citation or currentness authority.", "example": "Source note remains non-authority." }
+  ],
+  "sensitiveDataRules": [
+    { "id": "client_tax_registration_details", "explicitConsentRequired": true, "preferredScope": "matter", "durableStorageAllowed": true, "prohibitedUse": "general tax law or cross-client inference", "example": "VAT registration detail for a named client" },
+    { "id": "bir_audit_facts", "explicitConsentRequired": true, "preferredScope": "matter", "durableStorageAllowed": true, "prohibitedUse": "cross-matter reuse", "example": "LOA or PAN details for a specific audit" },
+    { "id": "financial_exposure_amounts", "explicitConsentRequired": true, "preferredScope": "matter", "durableStorageAllowed": true, "prohibitedUse": "unscoped profile storage", "example": "deficiency exposure estimate" },
+    { "id": "legal_dispute_facts", "explicitConsentRequired": true, "preferredScope": "matter", "durableStorageAllowed": true, "prohibitedUse": "authority assertion", "example": "pending dispute posture" },
+    { "id": "personal_identifiers", "explicitConsentRequired": true, "preferredScope": "matter", "durableStorageAllowed": true, "prohibitedUse": "unnecessary collection", "example": "TIN or identity detail when necessary" },
+    { "id": "health_or_personal_sensitive_data", "explicitConsentRequired": true, "preferredScope": "matter", "durableStorageAllowed": false, "prohibitedUse": "storage absent explicit necessity and consent", "example": "sensitive personal condition; no-store unless strictly necessary" },
+    { "id": "confidential_documents", "explicitConsentRequired": true, "preferredScope": "matter", "durableStorageAllowed": true, "rawStorageProhibited": true, "prohibitedUse": "raw confidential document storage", "example": "reviewed summary only, not raw document text" },
+    { "id": "credentials_or_secrets", "explicitConsentRequired": true, "preferredScope": "none", "durableStorageAllowed": false, "prohibitedUse": "any storage or audit echo", "example": "passwords, API keys, tokens" }
+  ],
+  "denialSessionOnlyRules": [
+    { "id": "DENIAL_NO_DURABLE_WRITE", "requiredBehavior": "Deny prevents durable write.", "prohibitedBehavior": "Writing after denial.", "example": "Denied candidate is discarded." },
+    { "id": "DENIAL_CAN_USE_CURRENT_SESSION_ONLY_IF_USER_PERMITS", "requiredBehavior": "Denied storage may still allow session use if user permits.", "prohibitedBehavior": "Persisting the fact.", "example": "Use for current draft only." },
+    { "id": "DENIAL_NOT_REPROMPTED_UNLESS_REINTRODUCED", "requiredBehavior": "Do not re-prompt unless reintroduced.", "prohibitedBehavior": "Repeated nagging.", "example": "Same candidate remains denied." },
+    { "id": "SESSION_ONLY_EXPIRES_AFTER_SESSION", "requiredBehavior": "Session-only expires after session.", "prohibitedBehavior": "Cross-session recall.", "example": "Draft assumption disappears." },
+    { "id": "SESSION_ONLY_NOT_PERSISTED", "requiredBehavior": "Session-only is not persisted.", "prohibitedBehavior": "Durable storage.", "example": "No database write." },
+    { "id": "DENIAL_DOES_NOT_DEGRADE_CURRENT_RESPONSE", "requiredBehavior": "Denial does not degrade current response.", "prohibitedBehavior": "Punishing refusal.", "example": "Current answer may continue." }
+  ],
+  "revocationForgetRules": [
+    { "id": "USER_CAN_REVOKE_CONSENT", "requiredBehavior": "User can revoke consent.", "prohibitedBehavior": "Irrevocable grants.", "example": "User withdraws client memory consent." },
+    { "id": "REVOKED_MEMORY_UNREADABLE_IMMEDIATELY", "requiredBehavior": "Revoked memory is unreadable immediately.", "prohibitedBehavior": "Future reads.", "example": "Forgotten fact never re-enters context." },
+    { "id": "DELETION_OR_REVOCATION_EVENT_LOGGED", "requiredBehavior": "Revocation/deletion is logged.", "prohibitedBehavior": "Silent deletion without audit.", "example": "Revocation event records no secret value." },
+    { "id": "DERIVED_SUGGESTIONS_INVALIDATED", "requiredBehavior": "Derived suggestions are invalidated.", "prohibitedBehavior": "Using revoked derivations.", "example": "Candidate based on forgotten fact is discarded." },
+    { "id": "FUTURE_ANSWERS_MUST_NOT_USE_REVOKED_MEMORY", "requiredBehavior": "Future answers cannot use revoked memory.", "prohibitedBehavior": "Recall after forget.", "example": "No answer context includes revoked fact." },
+    { "id": "PRIOR_OUTPUTS_NOT_RETROACTIVELY_CHANGED", "requiredBehavior": "Prior outputs are not retroactively changed.", "prohibitedBehavior": "Rewriting history.", "example": "Only future use stops." },
+    { "id": "FORGET_REQUEST_MUST_BE_HONORED", "requiredBehavior": "Forget request is honored.", "prohibitedBehavior": "Ignoring deletion/revocation request.", "example": "User request removes future use." }
+  ],
+  "conflictConsentRules": [
+    { "id": "LIVE_FACTS_WIN_CURRENT_ANSWER", "requiredBehavior": "Live facts win current answer.", "prohibitedBehavior": "Stored memory overriding live input.", "example": "New VAT status controls." },
+    { "id": "STORED_MEMORY_MARKED_CONTRADICTED", "requiredBehavior": "Stored conflict is marked contradicted.", "prohibitedBehavior": "Silent reliance.", "example": "Old fact is flagged." },
+    { "id": "USER_PROMPTED_TO_UPDATE_REVOKE_KEEP_OR_SESSION_ONLY", "requiredBehavior": "User chooses update, revoke, keep, or session-only.", "prohibitedBehavior": "Automatic resolution.", "example": "Prompt offers update choices." },
+    { "id": "NO_AUTO_CLARIFICATION_REDUCTION_FROM_CONTRADICTED_MEMORY", "requiredBehavior": "Contradicted memory cannot reduce clarification automatically.", "prohibitedBehavior": "Skipping needed questions.", "example": "Clarification remains required." },
+    { "id": "CONSENT_REQUIRED_FOR_UPDATE", "requiredBehavior": "Updates require consent.", "prohibitedBehavior": "Silent durable update.", "example": "Corrected fact creates new grant." },
+    { "id": "AUDIT_EVENT_REQUIRED_FOR_CONFLICT_RESOLUTION", "requiredBehavior": "Conflict resolution is audited.", "prohibitedBehavior": "No event trail.", "example": "Update/revoke decision logged." }
+  ],
+  "freshnessExpiryRules": [
+    { "id": "CONSENT_CAN_EXPIRE", "requiredBehavior": "Consent can expire.", "prohibitedBehavior": "Permanent unstated grants.", "example": "Grant expires at policy horizon." },
+    { "id": "STALE_MEMORY_REQUIRES_CONFIRMATION_HIGH_RISK", "requiredBehavior": "Stale high-risk memory requires confirmation.", "prohibitedBehavior": "Silent reliance.", "example": "Old registration fact is reconfirmed." },
+    { "id": "TAX_PERIOD_FACTS_REQUIRE_PERIOD_CONFIRMATION", "requiredBehavior": "Tax-period facts require period confirmation.", "prohibitedBehavior": "Using prior period as current.", "example": "TY 2023 fact is not assumed for TY 2026." },
+    { "id": "CLIENT_REGISTRATION_FACTS_REQUIRE_PERIODIC_CONFIRMATION", "requiredBehavior": "Client registration facts require periodic confirmation.", "prohibitedBehavior": "Indefinite reliance.", "example": "VAT status is refreshed." },
+    { "id": "EXPIRED_CONSENT_BLOCKS_DURABLE_USE_UNTIL_REFRESHED", "requiredBehavior": "Expired consent blocks durable use until refreshed.", "prohibitedBehavior": "Use after expiry.", "example": "Prompt for refreshed consent." },
+    { "id": "SESSION_ONLY_EXPIRES_AT_SESSION_END", "requiredBehavior": "Session-only expires at session end.", "prohibitedBehavior": "Persistence.", "example": "Session fact is discarded." }
+  ],
+  "sourceAuthorityConsentRules": [
+    { "id": "CONSENT_DOES_NOT_AUTHORIZE_LEGAL_AUTHORITY_USE", "requiredBehavior": "Consent does not authorize legal authority use.", "prohibitedBehavior": "Treating memory as law.", "example": "Matter note remains context." },
+    { "id": "CONSENT_DOES_NOT_MAKE_SOURCE_CURRENT", "requiredBehavior": "Consent does not make a source current.", "prohibitedBehavior": "Currentness claim from memory.", "example": "Source currentness still needs Phase 10 validation." },
+    { "id": "CONSENT_DOES_NOT_VALIDATE_TAX_CONCLUSION", "requiredBehavior": "Consent does not validate a tax conclusion.", "prohibitedBehavior": "Stored conclusion as tax law.", "example": "Answer still requires authority." },
+    { "id": "CONSENT_DOES_NOT_BYPASS_SOURCE_AVAILABILITY", "requiredBehavior": "Consent does not bypass sourceAvailability.", "prohibitedBehavior": "Changing SAE status.", "example": "NO_INDEXED_SOURCE remains possible." },
+    { "id": "CONSENT_DOES_NOT_CREATE_CITATION_AUTHORITY", "requiredBehavior": "Consent does not create citation authority.", "prohibitedBehavior": "Fake or memory-based citations.", "example": "Citations come from retrieval." },
+    { "id": "SOURCE_DERIVED_MEMORY_PROVENANCE_ONLY", "requiredBehavior": "Source-derived memory is provenance only.", "prohibitedBehavior": "Currentness, supersession, or case status.", "example": "Indexed document note is not authority." },
+    { "id": "TAX_LEGAL_ANSWERS_STILL_REQUIRE_RETRIEVAL_SOURCE_CARDS", "requiredBehavior": "Tax/legal answers still require retrieval/source cards.", "prohibitedBehavior": "Memory-only legal answers.", "example": "Source cards remain required." }
+  ],
+  "futureServiceBoundaries": [
+    { "id": "memory-consent-contract.js", "purpose": "Canonical future consent states, event types, and object shapes.", "allowedInputs": ["none"], "outputs": ["contract registries only in future patch"], "prohibitedResponsibilities": ["policy decisions", "storage", "I/O"], "implementationHereAllowed": false },
+    { "id": "memory-consent-policy.js", "purpose": "Future consent requirement decisions.", "allowedInputs": ["candidate", "class", "sensitivity", "scope"], "outputs": ["consent requirement decision"], "prohibitedResponsibilities": ["prompt rendering", "storage", "I/O"], "implementationHereAllowed": false },
+    { "id": "memory-suggestion-builder.js", "purpose": "Future suggestion construction from redacted candidates.", "allowedInputs": ["redacted candidate", "scope proposal"], "outputs": ["memorySuggestion"], "prohibitedResponsibilities": ["creating durable memory", "storing anything"], "implementationHereAllowed": false },
+    { "id": "memory-consent-request-builder.js", "purpose": "Future consent request creation.", "allowedInputs": ["memorySuggestion", "user context"], "outputs": ["memoryConsentRequest"], "prohibitedResponsibilities": ["approval", "default approve"], "implementationHereAllowed": false },
+    { "id": "memory-consent-response-validator.js", "purpose": "Future response validation.", "allowedInputs": ["request", "response"], "outputs": ["valid/invalid response"], "prohibitedResponsibilities": ["writing memory", "silent scope mutation"], "implementationHereAllowed": false },
+    { "id": "memory-consent-audit-policy.js", "purpose": "Future append-only audit event policy.", "allowedInputs": ["event type", "context"], "outputs": ["audit event spec"], "prohibitedResponsibilities": ["secret storage", "skipping required events"], "implementationHereAllowed": false },
+    { "id": "memory-revocation-policy.js", "purpose": "Future revocation and forget policy.", "allowedInputs": ["revocation request", "item state"], "outputs": ["revocation actions"], "prohibitedResponsibilities": ["leaving revoked items readable"], "implementationHereAllowed": false },
+    { "id": "memory-sensitive-data-policy.js", "purpose": "Future sensitivity and prohibited data policy.", "allowedInputs": ["candidate content"], "outputs": ["sensitivity label or rejection"], "prohibitedResponsibilities": ["storing prohibited values"], "implementationHereAllowed": false }
+  ],
+  "featureFlags": [
+    { "id": "TINA_ENABLE_MEMORY_READS", "defaultEnabled": false, "productionEnabled": false, "requiresGateBeforeProduction": true, "allowedBeforePhase8I": false },
+    { "id": "TINA_ENABLE_MEMORY_WRITES", "defaultEnabled": false, "productionEnabled": false, "requiresGateBeforeProduction": true, "allowedBeforePhase8I": false },
+    { "id": "TINA_ENABLE_MATTER_MEMORY", "defaultEnabled": false, "productionEnabled": false, "requiresGateBeforeProduction": true, "allowedBeforePhase8I": false },
+    { "id": "TINA_ENABLE_MEMORY_SUGGESTIONS", "defaultEnabled": false, "productionEnabled": false, "requiresGateBeforeProduction": true, "allowedBeforePhase8I": false },
+    { "id": "TINA_ENABLE_MEMORY_DEBUG_TRACE", "defaultEnabled": false, "productionEnabled": false, "requiresGateBeforeProduction": true, "allowedBeforePhase8I": false }
+  ],
+  "deferredBoundaries": [
+    { "id": "phase7b_boundary_tuning_followup", "description": "PATCH-07B-CLARIFICATION-BOUNDARY-TUNING-1 remains a Phase 7B pre-production-ON follow-up, not Phase 8F implementation.", "implementationAllowedHere": false, "mayBeReferencedAsBoundary": true },
+    { "id": "phase10_source_governance", "description": "Official source repository governance, source freshness, and legal-state validation are Phase 10.", "implementationAllowedHere": false, "mayBeReferencedAsBoundary": true },
+    { "id": "phase10_court_metadata", "description": "Court metadata, G.R. lookup, case status, and supersession are Phase 10.", "implementationAllowedHere": false, "mayBeReferencedAsBoundary": true },
+    { "id": "phase10_hallucination_traps", "description": "Hallucination trap validation remains Phase 10.", "implementationAllowedHere": false, "mayBeReferencedAsBoundary": true },
+    { "id": "phase11_observability_performance", "description": "Observability, performance, cache, and compression remain Phase 11.", "implementationAllowedHere": false, "mayBeReferencedAsBoundary": true },
+    { "id": "phase12_document_advisory", "description": "Document-aware advisory and working-paper extraction remain Phase 12.", "implementationAllowedHere": false, "mayBeReferencedAsBoundary": true },
+    { "id": "phase14_mobile_after_phase13", "description": "Mobile remains after Phase 13.", "implementationAllowedHere": false, "mayBeReferencedAsBoundary": true }
+  ],
+  "fixtureTestCases": [
+    { "id": "CONSENT_PHILOSOPHY_REQUIRED", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "CONSENT_MATRIX_ALL_CLASSES", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "CONSENT_STATES_EXACT", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "CONSENT_EVENT_TYPES_EXACT", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "MEMORY_SUGGESTION_CONTRACT", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "CONSENT_REQUEST_CONTRACT", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "CONSENT_RESPONSE_CONTRACT", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "DEFAULT_RESPONSE_NOT_APPROVE", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "SENSITIVE_DATA_EXPLICIT_APPROVE", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "DENY_SESSION_ASK_LATER_NO_DURABLE_WRITE", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "REVOKED_MEMORY_UNREADABLE", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "FORGET_REQUEST_HONORED", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "AMBIGUOUS_SCOPE_SESSION_ONLY", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "CLIENT_MATTER_SCOPE_VISIBLE", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "NO_BUNDLED_MULTI_CLIENT_CONSENT", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "SOURCE_DERIVED_PROVENANCE_ONLY", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "CONSENT_NOT_AUTHORITY", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "CONSENT_NOT_SOURCE_CURRENTNESS", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "CONSENT_NOT_CITATION_AUTHORITY", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "CONFLICT_UPDATE_REQUIRES_CONSENT", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "LIVE_FACTS_WIN", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "STALE_MEMORY_REQUIRES_CONFIRMATION", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "PROMPT_LIBRARY_REQUIRED", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "PROHIBITED_PROMPT_WORDING_BLOCKED", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "CREDENTIALS_SECRETS_NEVER_STORED", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "CONFIDENTIAL_DOCUMENT_RAW_STORAGE_PROHIBITED", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "FEATURE_FLAGS_DEFAULT_OFF", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "DEFERRED_BOUNDARIES_EXCLUDED", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "NO_RUNTIME_CONSENT_IMPLEMENTATION", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "NO_DATABASE_IMPLEMENTATION", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "NO_PIPELINE_INTEGRATION", "expected": "enforced by Phase 8F policy tests" },
+    { "id": "NO_FRONTEND_IMPLEMENTATION", "expected": "enforced by Phase 8F policy tests" }
+  ]
+}

@@ -2328,3 +2328,48 @@ Important current guard:
 Specific unavailable BIR Ruling-number queries should not be promoted to AUTHORITY_FOUND through unrelated non-BIR substitute authorities.
 BIR Ruling DA-489-03 is not in the corpus and should not expose a BIR Ruling source card.
 ```
+
+Phase 8F memory consent contract fixture state (2026-07-04):
+
+```text
+PATCH-08F-MEMORY-CONSENT-CONTRACT-FIXTURE-1 is complete.
+Decision: FIXTURE PASS WITH STRICT RECOMMENDATIONS.
+
+Files created:
+evaluation/fixtures/phase-8f-memory-consent-contract-fixture-1-policy.fixture.json
+tests/patch-08f-memory-consent-contract-fixture-1-policy.test.mjs
+PATCH-08F-MEMORY-CONSENT-CONTRACT-FIXTURE-1_CONSENT_CONTRACT_FIXTURE_AND_POLICY_TESTS.md
+
+Validation:
+node tests/patch-08f-memory-consent-contract-fixture-1-policy.test.mjs
+PASS - 20 passed, 0 failed, 284 assertions.
+
+npm run guard:files
+PASS - No protected files modified.
+
+Strict recommendations carried forward:
+1. Phase 8G must preserve the exact consent object contracts unless a design revision is approved.
+2. No runtime consent handler until consent denial, revocation, sensitive-data, and scope-confirmation tests are represented at service-boundary level.
+3. No durable memory write service until deny/session_only/ask_later no-write behavior is service-tested.
+4. No frontend consent UI until backend consent contract is stable and fixture-tested.
+5. Source-authority separation must remain test-enforced in every consent and memory implementation patch.
+6. Memory flags remain default-OFF and production-OFF until Phase 8J/8K gates pass.
+
+No runtime consent implementation occurred.
+No runtime memory implementation occurred.
+No DB/migration/tables occurred.
+No read/write/consent services occurred.
+No route/controller, ask-handler, pipeline, retrieval, reranker, sourceAvailability, source-card, Authority Lock, or frontend work occurred.
+No dependencies were added.
+All memory flags remain OFF/not implemented.
+
+Production clarification route gate remains OFF/not approved.
+Phase 7B boundary tuning remains a pre-production-ON follow-up.
+Phase 10 source governance / court metadata / hallucination traps remain deferred.
+Phase 11 performance/cache/compression/observability remains deferred.
+Phase 12 document-aware advisory remains deferred.
+Phase 14 mobile remains after Phase 13.
+
+Next required task:
+PATCH-08G-MEMORY-SERVICE-BOUNDARY-SCAFFOLD-1
+```
