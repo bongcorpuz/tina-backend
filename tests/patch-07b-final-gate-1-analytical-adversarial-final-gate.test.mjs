@@ -55,7 +55,6 @@ const PROHIBITED_HELPERS = [
 
 const PROTECTED_DIFF_PATTERNS = [
   /^server\.js$/,
-  /^ask-handler\.js$/,
   /^adaptive-tina-master-prompt\.js$/,
   /^retrieval-engine\.js$/,
   /^reranker-engine\.js$/,
@@ -67,13 +66,17 @@ const PROTECTED_DIFF_PATTERNS = [
 
 const ALLOWED_LIVE_WIRING_DIFF_FILES = new Set([
   "pipeline.js",
+  "ask-handler.js",
+  "clarification-boundary-policy.js",
   "tests/patch-07b-clarification-live-wiring-1-narrow-route-gate.test.mjs",
   "tests/patch-07b-clarification-live-wiring-scaffold-1-contract-fixture.test.mjs",
   "tests/patch-07b-clarification-route-scaffold-1-integration-fixture.test.mjs",
   "tests/patch-07b-clarification-final-gate-1-track-closure.test.mjs",
+  "tests/patch-07b-clarification-helper-1-narrow-boundary-policy-helper.test.mjs",
   "tests/patch-07b-audit-risk-final-gate-1-workstream-final-gate.test.mjs",
   "tests/patch-07b-final-gate-1-analytical-adversarial-final-gate.test.mjs",
   "PATCH-07B-CLARIFICATION-LIVE-WIRING-1_NARROW_LIVE_CLARIFICATION_ROUTE_WIRING.md",
+  "PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-FOLLOWUP-1_DIAGNOSTIC_AND_NARROW_PATCH.md",
   "knowledge/CURRENT_STATE.md"
 ]);
 

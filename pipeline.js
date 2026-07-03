@@ -223,7 +223,18 @@ function sourceCoverageNeedsFromContext(ctx = {}) {
   ].filter(Boolean);
 }
 
+function detectsCourtMetadataLookup(query = "") {
+  const text = safeStr(query);
+  return /\bG\.?\s*R\.?\s*(?:No\.?|Nos\.?)\s*\d{2,}(?:[-\s&]+\d{2,})?\b/i.test(text) &&
+    /\b(?:case\s+name|case\s+title|title|holding|doctrine|status|current|superseded|metadata|what\s+is\s+the\s+case)\b/i.test(text);
+}
+
+function phase10DependencyFlagsFromQuery(query = "") {
+  return detectsCourtMetadataLookup(query) ? ["CASE_STATUS_METADATA"] : [];
+}
+
 function buildClarificationRouteInputFromContext(ctx = {}, query = "", hook = "/ask") {
+  const phase10DependencyFlags = phase10DependencyFlagsFromQuery(query);
   return {
     mode: normalizeClarificationRouteMode(hook),
     query,
@@ -234,6 +245,7 @@ function buildClarificationRouteInputFromContext(ctx = {}, query = "", hook = "/
     missingUserFacts: [],
     providedDocuments: [],
     sourceCoverageNeeds: sourceCoverageNeedsFromContext(ctx),
+    phase10DependencyFlags,
     sourceCards: ctx.eligibleCandidates?.length ? ctx.eligibleCandidates : (ctx.rerankedChunks || []),
     retrievalContext: {
       retrievedCount: ctx.rerankedChunks?.length || 0,

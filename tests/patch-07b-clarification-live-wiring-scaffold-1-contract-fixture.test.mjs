@@ -82,7 +82,6 @@ const PROHIBITED_IMPORT_PATTERNS = [
 ];
 
 const PROTECTED_DIFF_PATTERNS = [
-  /^ask-handler\.js$/,
   /^context-orchestration-engine\.js$/,
   /^answer-renderer\.js$/,
   /^routes\//,
@@ -108,12 +107,16 @@ const ALLOWED_DIFF_FILES = new Set([
   "tests/patch-07b-clarification-live-wiring-scaffold-1-contract-fixture.test.mjs",
   "PATCH-07B-CLARIFICATION-LIVE-WIRING-SCAFFOLD-1_LIVE_CLARIFICATION_WIRING_FIXTURE_AND_TESTS.md",
   "pipeline.js",
+  "ask-handler.js",
+  "clarification-boundary-policy.js",
   "tests/patch-07b-clarification-live-wiring-1-narrow-route-gate.test.mjs",
   "tests/patch-07b-clarification-route-scaffold-1-integration-fixture.test.mjs",
   "tests/patch-07b-clarification-final-gate-1-track-closure.test.mjs",
+  "tests/patch-07b-clarification-helper-1-narrow-boundary-policy-helper.test.mjs",
   "tests/patch-07b-audit-risk-final-gate-1-workstream-final-gate.test.mjs",
   "tests/patch-07b-final-gate-1-analytical-adversarial-final-gate.test.mjs",
   "PATCH-07B-CLARIFICATION-LIVE-WIRING-1_NARROW_LIVE_CLARIFICATION_ROUTE_WIRING.md",
+  "PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-FOLLOWUP-1_DIAGNOSTIC_AND_NARROW_PATCH.md",
   "knowledge/CURRENT_STATE.md"
 ]);
 
@@ -179,6 +182,19 @@ function assertAuthorizedLiveWiringPipeline() {
   assert.match(source, /structuredClarificationObject:\s*null/);
   assert.match(source, /CLARIFICATION_ROUTE_GATE_FAIL_OPEN/);
   assert.doesNotMatch(source, /routes\/|routes\\/i);
+}
+
+function assertAuthorizedAskHandlerFollowup() {
+  const source = readText(resolve("ask-handler.js"));
+  assert.match(source, /\.\.\.\(result\.responseType \? \{ responseType: result\.responseType \} : \{\}\)/);
+  assert.match(source, /\.\.\.\(result\.structuredClarificationObject[\s\S]*structuredClarificationObject: result\.structuredClarificationObject/);
+  assert.match(source, /\.\.\.\(result\.clarificationRouteGate[\s\S]*clarificationRouteGate: result\.clarificationRouteGate/);
+  const stickyBlock = source.slice(
+    source.indexOf("Sticky mode prepend:"),
+    source.indexOf("const hookConfig = await loadTaxHookConfig", source.indexOf("Sticky mode prepend:"))
+  );
+  assert(stickyBlock.includes("!forcedHook"));
+  assert.doesNotMatch(stickyBlock, /forcedHook\s*===\s*["']\/ask["']/);
 }
 
 await test("fixture metadata correctness", () => {
@@ -401,6 +417,7 @@ await test("current patch diff allows only authorized flagged live wiring and de
     assert(!PROTECTED_DIFF_PATTERNS.some((pattern) => pattern.test(name)), `protected file changed: ${name}`);
   }
   if (changed.includes("pipeline.js")) assertAuthorizedLiveWiringPipeline();
+  if (changed.includes("ask-handler.js")) assertAuthorizedAskHandlerFollowup();
 });
 
 console.log(`\nPATCH-07B-CLARIFICATION-LIVE-WIRING-SCAFFOLD-1 contract fixture tests: ${passed} passed, ${failed} failed`);

@@ -1819,12 +1819,14 @@ PATCH-07B-CLARIFICATION-LIVE-DESIGN-1 COMPLETE / DESIGN PASS WITH RECOMMENDATION
 PATCH-07B-GEMINI-REVIEW-16 COMPLETE / PASS WITH STRICT RECOMMENDATIONS
 PATCH-07B-CLARIFICATION-LIVE-WIRING-SCAFFOLD-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 PATCH-07B-CLARIFICATION-LIVE-WIRING-1 COMPLETE / LOCAL PASS
+PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-SMOKE-1 RUN / ON-STATE FINDINGS / OFF-STATE PASS
+PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-FOLLOWUP-1 COMPLETE / LOCAL PASS
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-GEMINI-REVIEW-17
+PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-SMOKE-1-RERUN
 ```
 
 Recommended agent for next task:
@@ -1839,6 +1841,27 @@ Gemini review:
 Gemini Review 17 required after live wiring implementation and focused tests before staging composition/gate or broader rollout.
 ```
 
+Staging follow-up state:
+
+```text
+PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-FOLLOWUP-1 is complete.
+Root causes found by the staging smoke and corrected narrowly:
+1. Public response assembly in ask-handler.js dropped responseType, structuredClarificationObject, and
+   clarificationRouteGate; they are now copied conditionally from the pipeline result, so OFF-state
+   responses still omit them.
+2. Sticky mode prepend in ask-handler.js allowed a direct /ask route request (forcedHook "/ask") to
+   inherit a stored sticky /audit hook; sticky prepend now runs only when there is no concrete forcedHook.
+3. G.R. number case-name/metadata lookup queries were not marked as Phase 10 dependencies; pipeline.js now
+   adds a CASE_STATUS_METADATA Phase 10 dependency flag to the Step 12.6 clarification route input, and
+   clarification-boundary-policy.js prioritizes explicit Phase 10 dependency flags into
+   DISCLOSE_PHASE10_DEFERRAL. No Phase 10 implementation was added.
+Validation passed: node --check on changed runtime files, focused patch-07b suites, npm test
+(113 suites, 0 failed), and npm run guard:files.
+Staging flag TINA_ENABLE_CLARIFICATION_ROUTE_GATE must remain OFF unless actively running smoke.
+Next required step: PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-SMOKE-1-RERUN.
+Do not proceed to final release gate until the staging smoke rerun passes.
+```
+
 After that:
 
 ```text
@@ -1847,8 +1870,10 @@ PATCH-07B-CLARIFICATION-LIVE-DESIGN-1 - COMPLETE / DESIGN PASS WITH RECOMMENDATI
 PATCH-07B-GEMINI-REVIEW-16 - COMPLETE / PASS WITH STRICT RECOMMENDATIONS
 PATCH-07B-CLARIFICATION-LIVE-WIRING-SCAFFOLD-1 - COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 PATCH-07B-CLARIFICATION-LIVE-WIRING-1 - COMPLETE / LOCAL PASS
-PATCH-07B-GEMINI-REVIEW-17 - NEXT
-Do not proceed to staging smoke/release gate until Gemini Review 17 is complete.
+PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-SMOKE-1 - RUN / ON-STATE FINDINGS / OFF-STATE PASS
+PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-FOLLOWUP-1 - COMPLETE / LOCAL PASS
+PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-SMOKE-1-RERUN - NEXT
+Do not proceed to final release gate until the staging smoke rerun passes.
 
 PATCH-07B-CLARIFICATION-LIVE-WIRING-SCAFFOLD-1 added a live wiring scaffold fixture and tests only.
 It leaves no live wiring implemented, no prompt integration implemented, no response-generation branching implemented,

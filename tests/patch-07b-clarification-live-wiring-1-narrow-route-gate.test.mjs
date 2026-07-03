@@ -266,6 +266,23 @@ await test("non-answer SAE states bypass clarification so existing fallbacks rem
   assert.equal(result.earlyExitResponse, null);
 });
 
+await test("G.R. metadata lookup query is flagged as Phase 10 deferral orientation when ON", () => {
+  const result = evaluateClarificationRouteGate({
+    ctx: baseCtx({
+      saeStatus: "RELATED_AUTHORITY_ONLY",
+      sourceAvailability: { saeStatus: "RELATED_AUTHORITY_ONLY" },
+      suppressedCandidates: [{ title: "G.R. No. 226592", normalizedReference: "G.R. No. 226592" }]
+    }),
+    query: "What is the case name for G.R. No. 226592, July 27, 2021?",
+    hook: "/tax",
+    env: { TINA_ENABLE_CLARIFICATION_ROUTE_GATE: "true" }
+  });
+  assert.equal(result.responseType, "phase10_deferred_orientation");
+  assert.equal(result.earlyExitResponse, null);
+  assert(result.structuredClarificationObject.phase10Deferrals.some((item) => /case|metadata|deferred/i.test(item)));
+  assert.match(result.structuredClarificationObject.prohibitedConclusions.join(" "), /Do not provide a final legal or tax conclusion/i);
+});
+
 await test("pipeline source wires Step 12.6 before prompt construction and OpenAI generation", () => {
   const source = readFileSync(resolve("pipeline.js"), "utf8");
   const step126 = source.indexOf("Step 12.6: Live clarification route gate");
@@ -285,6 +302,22 @@ await test("pipeline source introduces no structured fact extraction or frontend
   assert.match(source, /knownFacts:\s*\{\}/);
   assert.doesNotMatch(liveWiringSource, /extractStructuredUserFacts|structuredFactExtraction|new\s+FactExtractor/i);
   assert.doesNotMatch(liveWiringSource, /frontend|package\.json|HAL-TEST/i);
+});
+
+await test("ask-handler public payload exposes gate metadata only when pipeline result has it", () => {
+  const source = readFileSync(resolve("ask-handler.js"), "utf8");
+  assert.match(source, /\.\.\.\(result\.responseType \? \{ responseType: result\.responseType \} : \{\}\)/);
+  assert.match(source, /\.\.\.\(result\.structuredClarificationObject[\s\S]*structuredClarificationObject: result\.structuredClarificationObject/);
+  assert.match(source, /\.\.\.\(result\.clarificationRouteGate[\s\S]*clarificationRouteGate: result\.clarificationRouteGate/);
+});
+
+await test("direct forced route requests do not inherit sticky non-ask hook state", () => {
+  const source = readFileSync(resolve("ask-handler.js"), "utf8");
+  const stickyBlockStart = source.indexOf("Sticky mode prepend:");
+  const stickyBlockEnd = source.indexOf("const hookConfig = await loadTaxHookConfig", stickyBlockStart);
+  const stickyBlock = source.slice(stickyBlockStart, stickyBlockEnd);
+  assert(stickyBlock.includes("!forcedHook"));
+  assert.doesNotMatch(stickyBlock, /forcedHook\s*===\s*["']\/ask["']/);
 });
 
 console.log(`\nPATCH-07B-CLARIFICATION-LIVE-WIRING-1 tests: ${passed} passed, ${failed} failed`);

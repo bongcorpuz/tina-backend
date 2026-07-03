@@ -2244,6 +2244,14 @@ export function createAskHandler({
       educationalSources:  resultEducationalSources,
       vectorMatches: result.retrievedSourceCount ?? resultSources.length,
 
+      ...(result.responseType ? { responseType: result.responseType } : {}),
+      ...(result.structuredClarificationObject
+        ? { structuredClarificationObject: result.structuredClarificationObject }
+        : {}),
+      ...(result.clarificationRouteGate
+        ? { clarificationRouteGate: result.clarificationRouteGate }
+        : {}),
+
       retrievedSourceCount: result.retrievedSourceCount ?? resultSources.length,
       displayedSourceCount: result.displayedSourceCount ?? visibleSources.length,
 
@@ -2700,7 +2708,7 @@ export function createAskHandler({
       // The "/" guard prevents double-prefixing for fuzzy slash commands like /revie VAT —
       // those are handled by fuzzy resolution in loadTaxHookConfig.
       if (
-        (!forcedHook || forcedHook === "/ask") &&
+        !forcedHook &&
         !explicitHook &&
         !rawQuestion.trimStart().startsWith("/") &&
         existingMode?.active_hook &&

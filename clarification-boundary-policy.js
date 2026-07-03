@@ -266,7 +266,7 @@ function decide(input, mode, authorityState, signals) {
   const hasDocuments = signals.documentGaps.length > 0;
   const hasHelpful = signals.helpfulMissingFacts.length > 0;
 
-  if (hasPhase10 && !blockingFacts) {
+  if (hasPhase10) {
     return {
       clarificationDecision: "DISCLOSE_PHASE10_DEFERRAL",
       clarificationReason: "Phase 10 source-status review remains deferred.",
