@@ -1826,6 +1826,7 @@ PATCH-07B-CLARIFICATION-LIVE-WIRING-FINAL-RELEASE-GATE-1 COMPLETE / PASS WITH ST
 PATCH-07B-PHASE-7-FINAL-CLOSURE-GATE-1 COMPLETE / PASS WITH STRICT RECOMMENDATIONS
 PATCH-08A-MEMORY-GOVERNANCE-DESIGN-1 COMPLETE / DESIGN PASS WITH STRICT RECOMMENDATIONS
 PATCH-08B-MEMORY-TAXONOMY-FIXTURE-1 COMPLETE / FIXTURE PASS WITH STRICT RECOMMENDATIONS
+PATCH-08C-MEMORY-SCOPE-SCHEMA-DESIGN-1 COMPLETE / DESIGN PASS WITH STRICT RECOMMENDATIONS
 ```
 
 Phase 7 status:
@@ -1912,6 +1913,68 @@ Strict recommendations carried into Phase 8C:
    implementation patches.
 
 Next required task: PATCH-08C-MEMORY-SCOPE-SCHEMA-DESIGN-1.
+
+Standing restrictions unchanged:
+- Production clarification route gate remains OFF / NOT approved.
+- Phase 7B boundary tuning remains a pre-production-ON follow-up.
+- Phase 10 remains deferred.
+- Phase 11 performance/cache/compression remains deferred.
+```
+
+Phase 8C state (2026-07-04):
+
+```text
+PATCH-08C-MEMORY-SCOPE-SCHEMA-DESIGN-1 is complete.
+Decision: DESIGN PASS WITH STRICT RECOMMENDATIONS.
+Report: PATCH-08C-MEMORY-SCOPE-SCHEMA-DESIGN-1_MEMORY_SCOPE_AND_SCHEMA_DESIGN.md
+
+Design-only: no runtime memory, no DB migrations or tables, no Supabase
+schema changes, no pipeline wiring, no memory services, no dependencies,
+no frontend changes, no flags enabled.
+
+Design outputs:
+- Scope model and hierarchy: global_user -> firm_workspace_future (future
+  only) -> client -> matter -> session, with source_document as
+  provenance/reference scope only; one primary scope per memory item;
+  reference links never expand read eligibility without policy approval.
+- Conceptual schema: memory_items, memory_scopes, client_profiles,
+  matter_profiles, memory_consent_events, memory_audit_events,
+  memory_conflict_events, memory_source_refs, memory_retention_policies,
+  memory_access_policies.
+- 17 schema invariants (exactly one class/level/primary scope per item;
+  consent required for durable non-system items; prohibited/no_store never
+  persisted; session_only never durable; revoked never read; contradicted
+  never silently reduces clarification; memory never legal authority;
+  source-derived never currentness; scope isolation; flags default OFF).
+- Permission enforcement mapping, read/write eligibility rules, conflict
+  lifecycle, freshness/retention model, consent/audit lifecycle with
+  recommended consent wording, cross-client contamination controls with
+  scope proof, authority separation rules, 12 future service module
+  boundaries, future flag-gated pipeline integration concept, and the
+  Phase 8D+ validation strategy.
+
+Phase 8 roadmap (authoritative sequence going forward):
+08D scope/schema fixture -> 08E consent contract design -> 08F service
+boundary scaffold -> 08G read scaffold -> 08H write scaffold -> 08I
+governance gate -> 08J staging smoke.
+
+Strict recommendations carried into Phase 8D:
+1. Phase 8D must convert this design into fixture/invariant tests before
+   any runtime memory.
+2. No DB schema/migration until schema invariants are fixture-tested.
+3. No memory read/write service until scope isolation and consent
+   eligibility are tested.
+4. Every future memory item must enforce exactly one memory_class, one
+   permission_level, one primary_scope_type, and one primary_scope_id.
+5. Source-authority separation must be tested in every memory
+   implementation patch.
+6. Production memory flags remain OFF until Phase 8 governance and smoke
+   gates pass.
+
+No runtime memory implementation occurred. No DB/migration occurred.
+All memory flags remain OFF / not implemented.
+
+Next required task: PATCH-08D-MEMORY-SCOPE-SCHEMA-FIXTURE-1.
 
 Standing restrictions unchanged:
 - Production clarification route gate remains OFF / NOT approved.
