@@ -1824,6 +1824,7 @@ PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-FOLLOWUP-1 COMPLETE / LOCAL PASS
 PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-SMOKE-1-RERUN COMPLETE / PASS WITH STRICT RECOMMENDATIONS
 PATCH-07B-CLARIFICATION-LIVE-WIRING-FINAL-RELEASE-GATE-1 COMPLETE / PASS WITH STRICT RELEASE RESTRICTIONS
 PATCH-07B-PHASE-7-FINAL-CLOSURE-GATE-1 COMPLETE / PASS WITH STRICT RECOMMENDATIONS
+PATCH-08A-MEMORY-GOVERNANCE-DESIGN-1 COMPLETE / DESIGN PASS WITH STRICT RECOMMENDATIONS
 ```
 
 Phase 7 status:
@@ -1835,11 +1836,39 @@ Phase 7 overall: CLOSED / PASS WITH STRICT RECOMMENDATIONS
 Closure report: PATCH-07B-PHASE-7-FINAL-CLOSURE-GATE-1_PHASE_7_FINAL_CLOSURE.md
 ```
 
-Immediate next phase:
+Phase 8 status:
 
 ```text
-Phase 8 - Memory, User Learning & Governed Tax Intelligence
-(not started by the closure gate)
+Phase 8 - Memory, User Learning & Governed Tax Intelligence: STARTED.
+Phase 8A (Memory Governance Design): COMPLETE / DESIGN PASS WITH STRICT RECOMMENDATIONS.
+Design report: PATCH-08A-MEMORY-GOVERNANCE-DESIGN-1_MEMORY_GOVERNANCE_AND_USER_LEARNING_DESIGN.md
+
+Design-only: no runtime memory, no database tables, no pipeline changes, no
+dependencies, no flags enabled.
+
+Strict recommendations carried into Phase 8B:
+1. No durable memory writes until the explicit consent policy is
+   fixture/test-covered and separately approved.
+2. Matter/client scope isolation must be test-proven before any runtime
+   memory read or write exists.
+3. Memory must never replace source authority: SAE, retrieval, source cards,
+   and authority gates remain untouched by memory context, enforced by tests
+   from Phase 8B onward.
+4. Phase 10 legal-state validation remains deferred; memory must not claim
+   source currentness or case status.
+5. Production memory flags remain OFF until the Phase 8I release gate; all
+   memory flags default OFF with missing/invalid resolving OFF.
+6. PATCH-07B-CLARIFICATION-BOUNDARY-TUNING-1 remains a Phase 7B
+   pre-production-ON follow-up and is not Phase 8 work.
+
+Next required task: PATCH-08B-MEMORY-TAXONOMY-FIXTURE-1
+(memory taxonomy fixture and policy tests; no runtime memory).
+
+Standing restrictions unchanged:
+- Production clarification route gate remains OFF / NOT approved.
+- Phase 7B boundary tuning remains a pre-production-ON follow-up, not Phase 8 work.
+- Phase 10 remains deferred.
+- Phase 11 performance/cache/compression/observability remains deferred.
 ```
 
 Recommended agent for next task:
