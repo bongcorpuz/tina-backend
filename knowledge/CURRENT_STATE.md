@@ -1828,6 +1828,7 @@ PATCH-08A-MEMORY-GOVERNANCE-DESIGN-1 COMPLETE / DESIGN PASS WITH STRICT RECOMMEN
 PATCH-08B-MEMORY-TAXONOMY-FIXTURE-1 COMPLETE / FIXTURE PASS WITH STRICT RECOMMENDATIONS
 PATCH-08C-MEMORY-SCOPE-SCHEMA-DESIGN-1 COMPLETE / DESIGN PASS WITH STRICT RECOMMENDATIONS
 PATCH-08D-MEMORY-SCOPE-SCHEMA-FIXTURE-1 COMPLETE / FIXTURE PASS WITH STRICT RECOMMENDATIONS
+PATCH-08E-MEMORY-CONSENT-CONTRACT-DESIGN-1 COMPLETE / DESIGN PASS WITH STRICT RECOMMENDATIONS
 ```
 
 Phase 7 status:
@@ -2028,6 +2029,70 @@ Strict recommendations carried into Phase 8E:
    gates pass.
 
 Next required task: PATCH-08E-MEMORY-CONSENT-CONTRACT-DESIGN-1.
+
+Standing restrictions unchanged:
+- Production clarification route gate remains OFF / NOT approved.
+- Phase 7B boundary tuning remains a pre-production-ON follow-up.
+- Phase 10 remains deferred.
+- Phase 11 performance/cache/compression remains deferred.
+```
+
+Phase 8E state (2026-07-04):
+
+```text
+PATCH-08E-MEMORY-CONSENT-CONTRACT-DESIGN-1 is complete.
+Decision: DESIGN PASS WITH STRICT RECOMMENDATIONS.
+Report: PATCH-08E-MEMORY-CONSENT-CONTRACT-DESIGN-1_MEMORY_CONSENT_CONTRACT_DESIGN.md
+
+Design-only: no runtime memory, no consent runtime, no DB migrations or
+tables, no Supabase changes, no pipeline wiring, no memory services, no
+frontend/UI, no dependencies, no flags enabled.
+
+Design outputs:
+- Consent philosophy (9 binding principles; refusal respected; memory is
+  context never authority; consent authorizes storage, never authority use).
+- Consent requirement matrix across all 7 memory classes.
+- 9 consent states (not_required, required_pending, requested, granted,
+  denied, revoked, expired, superseded, invalid) with read/write behavior,
+  audit, and transitions.
+- 11 consent event types, all append-only and audited, no secret values.
+- memorySuggestion object (8 suggestion types, 7 allowed actions; a
+  suggestion is not durable memory and cannot create memory or authority).
+- memoryConsentRequest object (defaultResponse never approve; sensitive
+  data requires explicit approve; no bundled multi-client consent).
+- memoryConsentResponse object (7 response values; deny/session_only/
+  ask_later never create durable memory; forget triggers deletion flow).
+- Consent prompt wording library (9 plain-language templates).
+- Consent scope rules (explicit scope for client/matter; ambiguous scope
+  defaults to session-only; scope changes require confirmation).
+- Sensitive/confidential data consent (8 high-risk categories;
+  credentials/secrets always prohibited; smallest-sufficient-scope rule).
+- Denial, revocation/forget, conflict, and freshness/expiry behavior.
+- Source-authority separation in consent flows.
+- Future flag-gated pipeline integration concept (suggestions post-response
+  only; reads only under flag; no automatic durable writes).
+- 8 future consent service module boundaries.
+- Consent test strategy (14 test families) and durable-write gate criteria.
+
+Updated authoritative Phase 8 sequence (supersedes the Phase 8C sequence;
+a consent fixture step is inserted before service-boundary scaffolds):
+08E consent contract design (done) -> 08F consent contract fixture ->
+08G service boundary scaffold -> 08H read scaffold -> 08I write scaffold ->
+08J governance gate -> 08K staging smoke.
+
+Strict recommendations carried into Phase 8F:
+1. Phase 8F must convert this design into consent contract fixtures/tests
+   before any runtime consent handling.
+2. No durable memory write service until consent denial, revocation,
+   sensitive-data, and scope-confirmation tests pass.
+3. The default response for any consent request must never be approve.
+4. All sensitive client/matter memory requires explicit consent and
+   visible scope.
+5. Source-authority separation must remain test-enforced in consent flows.
+6. Production memory flags remain OFF until Phase 8 governance and smoke
+   gates pass.
+
+Next required task: PATCH-08F-MEMORY-CONSENT-CONTRACT-FIXTURE-1.
 
 Standing restrictions unchanged:
 - Production clarification route gate remains OFF / NOT approved.
