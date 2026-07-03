@@ -1821,12 +1821,13 @@ PATCH-07B-CLARIFICATION-LIVE-WIRING-SCAFFOLD-1 COMPLETE / LOCAL PASS / PASS WITH
 PATCH-07B-CLARIFICATION-LIVE-WIRING-1 COMPLETE / LOCAL PASS
 PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-SMOKE-1 RUN / ON-STATE FINDINGS / OFF-STATE PASS
 PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-FOLLOWUP-1 COMPLETE / LOCAL PASS
+PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-SMOKE-1-RERUN COMPLETE / PASS WITH STRICT RECOMMENDATIONS
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-SMOKE-1-RERUN
+PATCH-07B-CLARIFICATION-LIVE-WIRING-FINAL-RELEASE-GATE-1
 ```
 
 Recommended agent for next task:
@@ -1858,8 +1859,63 @@ Root causes found by the staging smoke and corrected narrowly:
 Validation passed: node --check on changed runtime files, focused patch-07b suites, npm test
 (113 suites, 0 failed), and npm run guard:files.
 Staging flag TINA_ENABLE_CLARIFICATION_ROUTE_GATE must remain OFF unless actively running smoke.
-Next required step: PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-SMOKE-1-RERUN.
-Do not proceed to final release gate until the staging smoke rerun passes.
+```
+
+Staging smoke rerun state (2026-07-03):
+
+```text
+PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-SMOKE-1-RERUN is complete.
+Decision: PASS WITH STRICT RECOMMENDATIONS.
+Tested commit: b2b5351 PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-FOLLOWUP-1 fix staging smoke findings.
+Report: PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-SMOKE-1-RERUN_STAGING_SMOKE_REPORT.md.
+
+OFF-state result: PASS. All three OFF cases omitted responseType,
+structuredClarificationObject, and clarificationRouteGate; normal answer and
+source-card behavior preserved.
+
+ON-state result: PASS against all listed pass criteria. Public metadata
+exposure works (responseType / structuredClarificationObject /
+clarificationRouteGate present on gated responses); blocking behavior was
+exercised (clarification with answerAllowed=false, 3 capped questions, no tax
+conclusion); non-blocking source limitation and orientation postures observed.
+
+Route isolation result: PASS. Direct /ask after /audit (same user) kept hook
+/ask with no audit inheritance; fresh-user control matched.
+
+Phase 10 deferral result: PASS. G.R. No. 226592 case-name lookup returned
+responseType phase10_deferred_orientation with DISCLOSE_PHASE10_DEFERRAL and
+a disclosed deferral; all case content shown was grounded in the indexed
+G.R. No. 226592 source card; nothing unsupported was asserted.
+
+Public metadata exposure result: PASS ON-state; fields correctly absent
+OFF-state including in the final OFF sanity query.
+
+Source-card preservation result: PASS in both flag states, including on
+clarification-blocked responses.
+
+Final staging flag reset: CONFIRMED. TINA_ENABLE_CLARIFICATION_ROUTE_GATE=false
+re-verified by Render env readback, redeploy, and final OFF sanity behavior.
+
+Production flag safety: CONFIRMED. Production has no
+TINA_ENABLE_CLARIFICATION_ROUTE_GATE variable, no production deployment
+occurred during the rerun, and no production change was made.
+
+Strict recommendations recorded for the final release gate:
+1. ON-state over-blocking: definitional / authority-content queries (e.g.
+   "What is expanded withholding tax in the Philippines?", "What does
+   RMC 65-2012 provide?") are blocked with ASK_BEFORE_ANSWERING demanding
+   taxpayer facts even when AUTHORITY_FOUND. Source cards and authority state
+   are preserved (no Authority Lock violation), but a narrow boundary-policy
+   tuning should exempt definitional/authority-lookup query shapes before any
+   production ON-state.
+2. Governance decision needed on indexed-source-backed case content
+   accompanying phase10_deferred_orientation.
+3. Verify frontend tolerance of ON-state fields before any production ON.
+4. Keep the flag OFF everywhere except active smoke windows.
+
+Next required step: PATCH-07B-CLARIFICATION-LIVE-WIRING-FINAL-RELEASE-GATE-1.
+The final release gate must weigh the strict recommendations, in particular
+the ON-state over-blocking finding, before any rollout decision.
 ```
 
 After that:
@@ -1872,8 +1928,11 @@ PATCH-07B-CLARIFICATION-LIVE-WIRING-SCAFFOLD-1 - COMPLETE / LOCAL PASS / PASS WI
 PATCH-07B-CLARIFICATION-LIVE-WIRING-1 - COMPLETE / LOCAL PASS
 PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-SMOKE-1 - RUN / ON-STATE FINDINGS / OFF-STATE PASS
 PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-FOLLOWUP-1 - COMPLETE / LOCAL PASS
-PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-SMOKE-1-RERUN - NEXT
-Do not proceed to final release gate until the staging smoke rerun passes.
+PATCH-07B-CLARIFICATION-LIVE-WIRING-STAGING-SMOKE-1-RERUN - COMPLETE / PASS WITH STRICT RECOMMENDATIONS
+PATCH-07B-CLARIFICATION-LIVE-WIRING-FINAL-RELEASE-GATE-1 - NEXT
+The final release gate must weigh the recorded strict recommendations
+(notably ON-state over-blocking of definitional/authority-content queries)
+before any rollout decision.
 
 PATCH-07B-CLARIFICATION-LIVE-WIRING-SCAFFOLD-1 added a live wiring scaffold fixture and tests only.
 It leaves no live wiring implemented, no prompt integration implemented, no response-generation branching implemented,
