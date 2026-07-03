@@ -1738,7 +1738,7 @@ PHASE 7B - Analytical / Adversarial Reasoning Layer
 Current latest pushed commit:
 
 ```text
-PATCH-07B-CLARIFICATION-FINAL-GATE-2 close route helper workstream
+PATCH-07B-CLARIFICATION-LIVE-WIRING-SCAFFOLD-1 add live wiring scaffold
 ```
 
 Current status:
@@ -1748,7 +1748,7 @@ PHASE 6F CLOSED / PASS
 PHASE 6G CLOSED / PASS
 PHASE 6H CLOSED / PASS
 PHASE 7A CLOSED / PASS
-PHASE 7B ACTIVE / READY FOR PHASE 7B FINAL CLOSURE
+PHASE 7B CLARIFICATION LIVE WIRING SCAFFOLD COMPLETE / READY FOR NARROW LIVE WIRING IMPLEMENTATION
 PATCH-06F-GATE-1 COMPLETE / LOCAL PASS
 PATCH-06G-001 COMPLETE / LOCAL PASS
 PATCH-06G-002 COMPLETE / LOCAL PASS
@@ -1803,33 +1803,51 @@ PATCH-07B-CLARIFICATION-ROUTE-HELPER-1 COMPLETE / LOCAL PASS / PASS WITH RECOMME
 PATCH-07B-CLARIFICATION-ROUTE-GATE-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 PATCH-07B-GEMINI-REVIEW-15 COMPLETE / PASS WITH STRICT RECOMMENDATIONS
 PATCH-07B-CLARIFICATION-FINAL-GATE-2 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
+PATCH-07B-CLARIFICATION-LIVE-DESIGN-1 COMPLETE / DESIGN PASS WITH RECOMMENDATIONS
+PATCH-07B-GEMINI-REVIEW-16 COMPLETE / PASS WITH STRICT RECOMMENDATIONS
+PATCH-07B-CLARIFICATION-LIVE-WIRING-SCAFFOLD-1 COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
 ```
 
 Immediate next task:
 
 ```text
-PATCH-07B-CLARIFICATION-LIVE-DESIGN-1 - Live Clarification Route/Prompt Integration Design
+PATCH-07B-CLARIFICATION-LIVE-WIRING-1 - Narrow Live Clarification Route Wiring
 ```
 
 Recommended agent for next task:
 
 ```text
-Claude Code
+Codex
 ```
 
 Gemini review:
 
 ```text
-Gemini Review 16 required after live design and before live route implementation.
+Gemini Review 17 required after live wiring implementation and focused tests before staging composition/gate or broader rollout.
 ```
 
 After that:
 
 ```text
 Phase 7B clarification route/prompt integration sequence:
-PATCH-07B-CLARIFICATION-LIVE-DESIGN-1 - design-only review after final gate
-PATCH-07B-GEMINI-REVIEW-16 - required review after live design and before implementation
-No live route wiring, prompt integration, response-generation branching, or frontend responseType implementation may begin before Gemini Review 16 and a later approved implementation gate.
+PATCH-07B-CLARIFICATION-LIVE-DESIGN-1 - COMPLETE / DESIGN PASS WITH RECOMMENDATIONS
+PATCH-07B-GEMINI-REVIEW-16 - COMPLETE / PASS WITH STRICT RECOMMENDATIONS
+PATCH-07B-CLARIFICATION-LIVE-WIRING-SCAFFOLD-1 - COMPLETE / LOCAL PASS / PASS WITH RECOMMENDATIONS
+PATCH-07B-CLARIFICATION-LIVE-WIRING-1 - NEXT narrow live clarification route wiring
+No immediate staging rollout is recommended before narrow implementation, focused tests, and Gemini Review 17.
+
+PATCH-07B-CLARIFICATION-LIVE-WIRING-SCAFFOLD-1 added a live wiring scaffold fixture and tests only.
+It leaves no live wiring implemented, no prompt integration implemented, no response-generation branching implemented,
+no frontend implementation, and no Phase 10 implementation.
+The future insertion point Step 12.6 inside runPipeline is carried forward after Step 12.5 and before Step 13/14.
+Feature flag TINA_ENABLE_CLARIFICATION_ROUTE_GATE is carried forward with default OFF, missing OFF, invalid OFF,
+OFF-state byte-identical contract, OFF-state no helper-chain invocation, and OFF-state no responseType or
+structuredClarificationObject additions.
+ON-state blocking/non-blocking contracts are carried forward: answerAllowed false blocks prompt construction and
+OpenAI full-answer generation; source limitation and Phase 10 deferral remain non-blocking unless answerAllowed false.
+Helper-chain error fail-open behavior is carried forward.
+No structured user-fact extraction limitation is carried forward: the helper chain must not invent facts and must bias
+toward clarification when facts are missing.
 
 Phase 6H runtime retrieval/reranker changes remain deferred unless a later approved phase
 reopens them with local comparison fixture/report artifacts, measurable baseline metrics,

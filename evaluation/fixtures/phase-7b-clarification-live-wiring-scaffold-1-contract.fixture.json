@@ -1,0 +1,307 @@
+{
+  "patch": "PATCH-07B-CLARIFICATION-LIVE-WIRING-SCAFFOLD-1",
+  "purpose": "Live clarification wiring fixture and tests",
+  "implementationScope": "LIVE_WIRING_FIXTURE_ONLY",
+  "runtimeImplemented": false,
+  "pipelineImplemented": false,
+  "promptIntegrationImplemented": false,
+  "responseGenerationImplemented": false,
+  "frontendImplemented": false,
+  "productionOrchestratorImplemented": false,
+  "phase10Implemented": false,
+  "approvedDesignPatch": "PATCH-07B-CLARIFICATION-LIVE-DESIGN-1",
+  "approvedReview": "PATCH-07B-GEMINI-REVIEW-16",
+  "approvedReviewDecision": "PASS WITH STRICT RECOMMENDATIONS",
+  "correctedPatchNameReason": "Avoids collision with completed PATCH-07B-CLARIFICATION-ROUTE-SCAFFOLD-1",
+  "insertionPoint": {
+    "file": "pipeline.js",
+    "function": "runPipeline",
+    "newStep": "12.6",
+    "after": "Step 12.5",
+    "before": "Step 13 buildAdaptivePromptContract",
+    "afterSourceAvailabilityStep": "Step 6.5",
+    "beforeOpenAIGenerationStep": "Step 14",
+    "mustRunBeforePromptConstruction": true,
+    "mustRunBeforeOpenAIGeneration": true
+  },
+  "featureFlag": {
+    "name": "TINA_ENABLE_CLARIFICATION_ROUTE_GATE",
+    "default": "OFF",
+    "missingValue": "OFF",
+    "invalidValue": "OFF",
+    "truthyValuesAllowed": ["1", "true", "TRUE", "on", "ON", "yes", "YES"],
+    "offStateByteIdenticalRequired": true,
+    "offStateMustNotInvokeHelperChain": true,
+    "offStateMustNotAddResponseType": true,
+    "offStateMustNotAddStructuredClarificationObject": true
+  },
+  "offStateExpectations": {
+    "featureFlagMissingInvalidOrOff": true,
+    "noStep126ExecutionBeyondFeatureFlagCheck": true,
+    "helperChainInvoked": false,
+    "buildClarificationRouteDecisionInvoked": false,
+    "responseTypeInFinalResponse": false,
+    "structuredClarificationObjectInCtxOrFinalResponse": false,
+    "earlyExit": false,
+    "step13AndStep14ProceedExactlyAsBefore": true,
+    "sourceCardsUnchanged": true,
+    "frontendUnaffected": true
+  },
+  "onStateExpectations": {
+    "featureFlagOn": true,
+    "step126AfterStep125BeforeStep13": true,
+    "tenHelperChainInvokedUsingAvailableMetadata": true,
+    "buildClarificationRouteDecisionCalled": true,
+    "blockingWhenAnswerAllowedFalse": {
+      "skipStep13FullPromptConstruction": true,
+      "skipStep14OpenAIFullAnswerGeneration": true,
+      "returnClarificationOnlyResponse": true
+    },
+    "nonBlockingWhenAnswerAllowedTrue": {
+      "continueToStep13": true,
+      "structuredClarificationObjectPassedAsPromptConstraintMetadata": true,
+      "sourceCardAndAuthorityGateBehaviorPreserved": true,
+      "phase7aModeFormattingPreserved": true
+    }
+  },
+  "responseTypes": [
+    "clarification",
+    "answer_with_followup",
+    "document_request_with_cautious_answer",
+    "source_limited_orientation",
+    "phase10_deferred_orientation",
+    "answer"
+  ],
+  "cases": [
+    {
+      "caseId": "FLAG_OFF_BASELINE_ASK",
+      "mode": "ask",
+      "featureFlag": "OFF",
+      "expected": {
+        "helperChainInvoked": false,
+        "buildClarificationRouteDecisionInvoked": false,
+        "responseTypeAdded": false,
+        "structuredClarificationObjectAdded": false,
+        "earlyExit": false,
+        "promptConstructionProceeds": true,
+        "openAIFullAnswerCallProceeds": true
+      }
+    },
+    {
+      "caseId": "FLAG_OFF_BASELINE_TAX",
+      "mode": "tax",
+      "featureFlag": "OFF",
+      "expected": {
+        "helperChainInvoked": false,
+        "buildClarificationRouteDecisionInvoked": false,
+        "responseTypeAdded": false,
+        "structuredClarificationObjectAdded": false,
+        "earlyExit": false,
+        "promptConstructionProceeds": true,
+        "openAIFullAnswerCallProceeds": true
+      }
+    },
+    {
+      "caseId": "FLAG_OFF_BASELINE_AUDIT",
+      "mode": "audit",
+      "featureFlag": "OFF",
+      "expected": {
+        "helperChainInvoked": false,
+        "buildClarificationRouteDecisionInvoked": false,
+        "responseTypeAdded": false,
+        "structuredClarificationObjectAdded": false,
+        "earlyExit": false,
+        "promptConstructionProceeds": true,
+        "openAIFullAnswerCallProceeds": true
+      }
+    },
+    {
+      "caseId": "FLAG_ON_BLOCKING_ASK",
+      "mode": "ask",
+      "featureFlag": "ON",
+      "expected": {
+        "helperChainInvoked": true,
+        "buildClarificationRouteDecisionInvoked": true,
+        "answerAllowed": false,
+        "responseType": "clarification",
+        "skipPromptConstruction": true,
+        "skipOpenAIFullAnswerCall": true,
+        "returnClarificationOnly": true,
+        "maxQuestions": 3
+      }
+    },
+    {
+      "caseId": "FLAG_ON_BLOCKING_TAX",
+      "mode": "tax",
+      "featureFlag": "ON",
+      "expected": {
+        "helperChainInvoked": true,
+        "buildClarificationRouteDecisionInvoked": true,
+        "answerAllowed": false,
+        "responseType": "clarification",
+        "noFinalTaxOpinion": true,
+        "skipPromptConstruction": true,
+        "skipOpenAIFullAnswerCall": true,
+        "returnClarificationOnly": true
+      }
+    },
+    {
+      "caseId": "FLAG_ON_BLOCKING_AUDIT",
+      "mode": "audit",
+      "featureFlag": "ON",
+      "expected": {
+        "helperChainInvoked": true,
+        "buildClarificationRouteDecisionInvoked": true,
+        "answerAllowed": false,
+        "responseType": "clarification",
+        "noProtestSettlementCTAStrategy": true,
+        "skipPromptConstruction": true,
+        "skipOpenAIFullAnswerCall": true,
+        "returnClarificationOnly": true
+      }
+    },
+    {
+      "caseId": "FLAG_ON_NONBLOCKING_SOURCE_LIMITATION",
+      "mode": "ask",
+      "featureFlag": "ON",
+      "expected": {
+        "answerAllowed": true,
+        "responseType": "source_limited_orientation",
+        "skipPromptConstruction": false,
+        "skipOpenAIFullAnswerCall": false,
+        "structuredClarificationObjectPassedToPromptConstraints": true,
+        "sourceLimitationPreserved": true,
+        "noUserInstructionToFindOrSearchLaw": true
+      }
+    },
+    {
+      "caseId": "FLAG_ON_NONBLOCKING_PHASE10_DEFERRAL",
+      "mode": "tax",
+      "featureFlag": "ON",
+      "expected": {
+        "answerAllowed": true,
+        "responseType": "phase10_deferred_orientation",
+        "skipPromptConstruction": false,
+        "skipOpenAIFullAnswerCall": false,
+        "structuredClarificationObjectPassedToPromptConstraints": true,
+        "phase10DeferralPreserved": true,
+        "phase10LogicExecuted": false
+      }
+    },
+    {
+      "caseId": "FLAG_ON_REQUEST_DOCUMENTS",
+      "mode": "tax",
+      "featureFlag": "ON",
+      "expected": {
+        "answerAllowed": true,
+        "responseType": "document_request_with_cautious_answer",
+        "promptConstructionProceeds": true,
+        "openAIFullAnswerCallProceeds": true,
+        "documentRequestsPreserved": true,
+        "noLegalConclusionFromMissingDocuments": true
+      }
+    },
+    {
+      "caseId": "FLAG_ON_CAUTIOUS_FOLLOWUP",
+      "mode": "ask",
+      "featureFlag": "ON",
+      "expected": {
+        "answerAllowed": true,
+        "responseType": "answer_with_followup",
+        "promptConstructionProceeds": true,
+        "openAIFullAnswerCallProceeds": true,
+        "questionsCappedTo": 3
+      }
+    },
+    {
+      "caseId": "FLAG_ON_NO_CLARIFICATION_NEEDED",
+      "mode": "tax",
+      "featureFlag": "ON",
+      "expected": {
+        "answerAllowed": true,
+        "responseType": "answer",
+        "promptConstructionProceeds": true,
+        "openAIFullAnswerCallProceeds": true,
+        "normalAnswerPathConstrainedOnlyByExistingGates": true
+      }
+    },
+    {
+      "caseId": "FLAG_ON_HELPER_CHAIN_ERROR_FAIL_OPEN",
+      "mode": "ask",
+      "featureFlag": "ON",
+      "expected": {
+        "helperChainThrows": true,
+        "failOpen": true,
+        "promptConstructionProceeds": true,
+        "openAIFullAnswerCallProceeds": true,
+        "noStackTraceExposed": true,
+        "noFabricatedClarificationResult": true,
+        "diagnosticLoggedIfExistingLoggingAvailable": true
+      }
+    },
+    {
+      "caseId": "NO_STRUCTURED_FACT_EXTRACTION",
+      "mode": "mixed",
+      "expected": {
+        "structuredUserFactExtractionAvailable": false,
+        "helperChainMustNotInventFacts": true,
+        "biasTowardClarificationWhenFactsMissing": true
+      }
+    },
+    {
+      "caseId": "SOURCE_CARD_AUTHORITY_PRESERVATION",
+      "mode": "mixed",
+      "expected": {
+        "sourceCardsPreserved": true,
+        "authorityGateNotBypassed": true,
+        "sourceAvailabilityNotBypassed": true
+      }
+    },
+    {
+      "caseId": "FRONTEND_DEFERRED",
+      "mode": "mixed",
+      "expected": {
+        "frontendImplemented": false,
+        "frontendChangeRequiredForFlagOff": false,
+        "frontendImpactDeferred": true
+      }
+    },
+    {
+      "caseId": "PHASE10_DEFERRED",
+      "mode": "mixed",
+      "expected": {
+        "phase10Implemented": false,
+        "HALTrapQuestionsImplemented": false,
+        "courtCaseMetadataImplemented": false,
+        "noGRLookup": true
+      }
+    }
+  ],
+  "continuity": {
+    "latestClosureCommit": "ad57e09 PATCH-07B-CLARIFICATION-FINAL-GATE-2 close route helper workstream",
+    "liveDesignCommitObserved": "2e51c19 PATCH-07B-CLARIFICATION-LIVE-DESIGN-1 design live clarification integration",
+    "nextTask": "PATCH-07B-CLARIFICATION-LIVE-WIRING-1 - Narrow Live Clarification Route Wiring",
+    "nextAgent": "Codex",
+    "geminiReview17RequiredAfterLiveWiring": true,
+    "noImmediateStagingRolloutRecommended": true
+  },
+  "noLiveImplementationGuard": {
+    "protectedLiveFilesMustNotChange": [
+      "pipeline.js",
+      "ask-handler.js",
+      "context-orchestration-engine.js",
+      "answer-renderer.js",
+      "routes/",
+      "prompts/",
+      "adaptive-tina-master-prompt.js"
+    ],
+    "deferredPhasesNotImplemented": [
+      "Phase 8 memory",
+      "Phase 9 workflows",
+      "Phase 10 hallucination trap tests",
+      "Phase 10 court case metadata",
+      "Phase 11 observability",
+      "Phase 12 document advisory"
+    ]
+  }
+}
