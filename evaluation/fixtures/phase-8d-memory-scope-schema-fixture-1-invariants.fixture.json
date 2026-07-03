@@ -1,0 +1,691 @@
+{
+  "patch": {
+    "id": "PATCH-08D-MEMORY-SCOPE-SCHEMA-FIXTURE-1",
+    "phase": "Phase 8D",
+    "taskType": "scope_schema_fixture_invariant_tests_only",
+    "baseCommit": "389474a PATCH-08C-MEMORY-SCOPE-SCHEMA-DESIGN-1 design memory scope schema",
+    "runtimeImplementationAllowed": false,
+    "databaseMigrationAllowed": false,
+    "databaseTablesAllowed": false,
+    "durableWritesAllowed": false,
+    "readServiceAllowed": false,
+    "writeServiceAllowed": false,
+    "pipelineIntegrationAllowed": false,
+    "implementationOutputs": []
+  },
+  "baseContracts": {
+    "phase8A": "PATCH-08A-MEMORY-GOVERNANCE-DESIGN-1",
+    "phase8BFixture": "evaluation/fixtures/phase-8b-memory-taxonomy-fixture-1-policy.fixture.json",
+    "phase8CDesign": "PATCH-08C-MEMORY-SCOPE-SCHEMA-DESIGN-1_MEMORY_SCOPE_AND_SCHEMA_DESIGN.md",
+    "memoryClasses": ["user_profile", "user_preference", "matter", "client_entity", "temporary_session", "source_derived", "prohibited_sensitive"],
+    "permissionLevels": ["no_store", "session_only", "matter_scoped", "client_scoped", "user_profile", "system_governance", "explicit_consent", "prohibited"],
+    "confidenceStates": ["user_confirmed", "inferred", "source_derived", "stale", "contradicted", "unverified", "revoked"],
+    "scopeTypes": ["global_user", "firm_workspace_future", "client", "matter", "session", "source_document"]
+  },
+  "scopeHierarchy": {
+    "hierarchyRules": [
+      "global_user has no parent",
+      "firm_workspace_future parent is global_user and is future-only",
+      "client parent may be global_user or firm_workspace_future",
+      "matter parent must be client unless internal/system exception",
+      "session may attach to matter or client only after user confirmation",
+      "source_document is reference/provenance only",
+      "source_document must not expand read eligibility",
+      "every memory item must have exactly one primary scope",
+      "reference scopes do not expand read eligibility"
+    ],
+    "scopes": [
+      {
+        "id": "global_user",
+        "description": "The user's own professional identity and preferences; root of the hierarchy.",
+        "parentAllowed": [],
+        "childAllowed": ["firm_workspace_future", "client", "session"],
+        "isFutureOnly": false,
+        "isPrimaryScopeAllowed": true,
+        "isReferenceScopeAllowed": false,
+        "allowedMemoryClasses": ["user_profile", "user_preference"],
+        "prohibitedMemoryClasses": ["client_entity", "matter", "prohibited_sensitive"],
+        "readEligibilityRule": "readable in any request by the owning user only",
+        "writeEligibilityRule": "user action or confirmed suggestion; explicit consent for sensitive items",
+        "leakageProhibitedTo": ["other_users", "client_confidential_facts"],
+        "consentRequirement": "confirm scope; explicit consent for sensitive items",
+        "retentionConcept": "until user edits or deletes",
+        "example": "user is a CPA and prefers concise memos"
+      },
+      {
+        "id": "firm_workspace_future",
+        "description": "Reserved for future multi-user firm workspaces. FUTURE ONLY; no Phase 8 implementation.",
+        "parentAllowed": ["global_user"],
+        "childAllowed": ["client"],
+        "isFutureOnly": true,
+        "isPrimaryScopeAllowed": false,
+        "isReferenceScopeAllowed": false,
+        "allowedMemoryClasses": [],
+        "prohibitedMemoryClasses": ["user_profile", "user_preference", "matter", "client_entity", "temporary_session", "source_derived", "prohibited_sensitive"],
+        "readEligibilityRule": "none in Phase 8",
+        "writeEligibilityRule": "none in Phase 8",
+        "leakageProhibitedTo": ["other_firms", "other_users"],
+        "consentRequirement": "not applicable in Phase 8",
+        "retentionConcept": "not applicable in Phase 8",
+        "example": "reserved for future firm workspaces"
+      },
+      {
+        "id": "client",
+        "description": "One client/entity across its matters.",
+        "parentAllowed": ["global_user", "firm_workspace_future"],
+        "childAllowed": ["matter", "session"],
+        "isFutureOnly": false,
+        "isPrimaryScopeAllowed": true,
+        "isReferenceScopeAllowed": false,
+        "allowedMemoryClasses": ["client_entity"],
+        "prohibitedMemoryClasses": ["user_profile", "prohibited_sensitive"],
+        "readEligibilityRule": "readable only in requests resolved to this client",
+        "writeEligibilityRule": "consented client facts only; explicit consent for sensitive facts",
+        "leakageProhibitedTo": ["other_clients", "general_tax_law", "unrelated_matters"],
+        "consentRequirement": "explicit consent required for sensitive facts",
+        "retentionConcept": "until client relationship ended or erased",
+        "example": "client X is VAT-registered; client facts cannot become general law"
+      },
+      {
+        "id": "matter",
+        "description": "One engagement, case, or workstream; must belong to a client unless explicitly marked internal/system.",
+        "parentAllowed": ["client", "internal_system_exception"],
+        "childAllowed": ["session"],
+        "isFutureOnly": false,
+        "isPrimaryScopeAllowed": true,
+        "isReferenceScopeAllowed": false,
+        "allowedMemoryClasses": ["matter"],
+        "prohibitedMemoryClasses": ["prohibited_sensitive"],
+        "readEligibilityRule": "readable only inside this matter unless user confirms transfer",
+        "writeEligibilityRule": "consented matter facts only; scope confirmation once per matter session",
+        "leakageProhibitedTo": ["unrelated_clients", "unrelated_matters", "general_tax_opinions"],
+        "consentRequirement": "scope confirmation required once per matter session",
+        "retentionConcept": "until matter archived",
+        "example": "this LOA covers taxable year 2023; matter facts cannot leak across clients"
+      },
+      {
+        "id": "session",
+        "description": "The active conversation only; attaches to matter or client only after user confirmation, otherwise standalone.",
+        "parentAllowed": ["matter", "client", "standalone"],
+        "childAllowed": [],
+        "isFutureOnly": false,
+        "isPrimaryScopeAllowed": true,
+        "isReferenceScopeAllowed": false,
+        "allowedMemoryClasses": ["temporary_session", "user_preference"],
+        "prohibitedMemoryClasses": ["prohibited_sensitive"],
+        "readEligibilityRule": "same session only",
+        "writeEligibilityRule": "automatic non-durable session context only; promotion requires consent",
+        "leakageProhibitedTo": ["durable_memory_without_consent", "other_sessions"],
+        "consentRequirement": "none for session use; user confirmation required to attach to matter/client",
+        "retentionConcept": "expires with session",
+        "example": "assume 8% option for this computation only"
+      },
+      {
+        "id": "source_document",
+        "description": "Provenance/reference attachment to an indexed source. Reference scope only; never expands read eligibility; cannot assert currentness.",
+        "parentAllowed": [],
+        "childAllowed": [],
+        "isFutureOnly": false,
+        "isPrimaryScopeAllowed": false,
+        "isReferenceScopeAllowed": true,
+        "allowedMemoryClasses": ["source_derived"],
+        "prohibitedMemoryClasses": ["user_profile", "user_preference", "matter", "client_entity", "temporary_session", "prohibited_sensitive"],
+        "readEligibilityRule": "provenance context only; never expands read eligibility; cannot assert currentness",
+        "writeEligibilityRule": "no durable writes in Phase 8; defers to live index state",
+        "leakageProhibitedTo": ["legal_currentness_claims", "case_status_claims", "supersession_claims"],
+        "consentRequirement": "not user-personal; no consent but no durable store in Phase 8",
+        "retentionConcept": "defers to live index; no durable store in Phase 8",
+        "example": "provenance note for an indexed RMC document; cannot assert currentness"
+      }
+    ]
+  },
+  "conceptualEntities": [
+    {
+      "id": "memory_items",
+      "purpose": "One stored memory fact with class, permission, primary scope, confidence, and lifecycle status.",
+      "implementationHereAllowed": false,
+      "requiredFields": ["memory_id", "memory_class", "permission_level", "primary_scope_type", "primary_scope_id", "content_summary", "sensitivity_label", "confidence_state", "status", "authority_use_prohibited", "legal_conclusion_prohibited", "created_at", "updated_at"],
+      "optionalFields": ["structured_payload", "source_type", "source_ref", "consent_event_id", "created_by", "expires_at", "revoked_at", "notes"],
+      "prohibitedFields": ["legal_authority_status", "source_currentness_status", "citation_authority", "case_status", "supersession_status", "password", "api_key", "secret"],
+      "invariants": ["EXACTLY_ONE_MEMORY_CLASS", "EXACTLY_ONE_PERMISSION_LEVEL", "EXACTLY_ONE_PRIMARY_SCOPE_TYPE", "EXACTLY_ONE_PRIMARY_SCOPE_ID", "MEMORY_NOT_LEGAL_AUTHORITY"],
+      "examples": ["client X is VAT-registered (client_entity, client_scoped, client scope)"]
+    },
+    {
+      "id": "memory_scopes",
+      "purpose": "Scope instances forming the hierarchy chain for memory items.",
+      "implementationHereAllowed": false,
+      "requiredFields": ["scope_id", "scope_type", "display_name", "owner_user_id", "lifecycle_status", "created_at", "updated_at"],
+      "optionalFields": ["parent_scope_id", "normalized_name", "client_id", "matter_id", "archived_at"],
+      "prohibitedFields": ["password", "api_key", "secret"],
+      "invariants": ["CLIENT_SCOPE_ISOLATION", "MATTER_SCOPE_ISOLATION"],
+      "examples": ["matter scope 'BIR LOA TY2023' with parent client scope"]
+    },
+    {
+      "id": "client_profiles",
+      "purpose": "One client/entity profile owning client-scoped memory.",
+      "implementationHereAllowed": false,
+      "requiredFields": ["client_id", "display_name", "normalized_name", "entity_type", "jurisdiction", "created_at", "updated_at"],
+      "optionalFields": ["tax_registration_status", "sensitive_profile_flag", "archived_at"],
+      "prohibitedFields": ["password", "api_key", "secret"],
+      "invariants": ["CLIENT_SCOPE_ISOLATION", "GLOBAL_USER_NO_CLIENT_CONFIDENTIAL_FACTS"],
+      "examples": ["domestic corporation client, PH jurisdiction"]
+    },
+    {
+      "id": "matter_profiles",
+      "purpose": "One engagement/matter profile; belongs to a client unless internal/system.",
+      "implementationHereAllowed": false,
+      "requiredFields": ["matter_id", "client_id", "matter_name", "matter_type", "matter_status", "confidentiality_level", "created_at", "updated_at"],
+      "optionalFields": ["tax_period", "jurisdiction", "issue_tags", "archived_at"],
+      "prohibitedFields": ["password", "api_key", "secret"],
+      "invariants": ["MATTER_SCOPE_ISOLATION"],
+      "examples": ["BIR LOA matter for TY 2023 under client X"]
+    },
+    {
+      "id": "memory_consent_events",
+      "purpose": "Immutable record of consent decisions gating durable writes.",
+      "implementationHereAllowed": false,
+      "requiredFields": ["consent_event_id", "memory_id", "user_id", "consent_type", "consent_scope", "granted", "granted_at", "source_interaction_id"],
+      "optionalFields": ["consent_text", "revoked_at", "revocation_reason"],
+      "prohibitedFields": ["password", "api_key", "secret"],
+      "invariants": ["DURABLE_NON_SYSTEM_REQUIRES_CONSENT", "EXPLICIT_CONSENT_REQUIRES_CONSENT_EVENT"],
+      "examples": ["user granted storage of a client fact under client scope"]
+    },
+    {
+      "id": "memory_audit_events",
+      "purpose": "Append-only audit trail of memory lifecycle events; never contains secret values.",
+      "implementationHereAllowed": false,
+      "requiredFields": ["audit_event_id", "memory_id", "event_type", "actor_type", "actor_id", "reason", "created_at"],
+      "optionalFields": ["previous_value_hash", "new_value_hash"],
+      "prohibitedFields": ["password", "api_key", "secret", "raw_secret_value"],
+      "invariants": ["REVOKED_NOT_READABLE"],
+      "examples": ["delete event recorded after a forget request"]
+    },
+    {
+      "id": "memory_conflict_events",
+      "purpose": "Conflict detection and resolution lifecycle records.",
+      "implementationHereAllowed": false,
+      "requiredFields": ["conflict_event_id", "memory_id", "conflicting_input_summary", "conflict_type", "resolution_status", "created_at"],
+      "optionalFields": ["resolution_action", "resolved_at"],
+      "prohibitedFields": ["password", "api_key", "secret"],
+      "invariants": ["CONTRADICTED_NOT_USED_FOR_CLARIFICATION_REDUCTION"],
+      "examples": ["stored VAT-registered fact contradicted by live user statement"]
+    },
+    {
+      "id": "memory_source_refs",
+      "purpose": "Provenance links from memory items to sources; never citable as authority.",
+      "implementationHereAllowed": false,
+      "requiredFields": ["source_ref_id", "memory_id", "source_type", "source_id", "citation_prohibited_as_authority", "created_at"],
+      "optionalFields": ["source_title", "source_card_id", "document_hash"],
+      "prohibitedFields": ["legal_authority_status", "source_currentness_status", "case_status", "supersession_status"],
+      "invariants": ["SOURCE_DERIVED_NOT_CURRENTNESS", "MEMORY_NOT_LEGAL_AUTHORITY"],
+      "examples": ["provenance ref to an indexed RMC document"]
+    },
+    {
+      "id": "memory_retention_policies",
+      "purpose": "Retention rules per permission level and memory class.",
+      "implementationHereAllowed": false,
+      "requiredFields": ["policy_id", "permission_level", "memory_class", "default_retention", "max_retention", "requires_review", "deletion_behavior", "created_at"],
+      "optionalFields": [],
+      "prohibitedFields": ["password", "api_key", "secret"],
+      "invariants": ["NO_STORE_NOT_PERSISTED", "SESSION_ONLY_NOT_DURABLE"],
+      "examples": ["session_only retention: expires with session"]
+    },
+    {
+      "id": "memory_access_policies",
+      "purpose": "Read/write policy matrix per scope type, memory class, and permission level.",
+      "implementationHereAllowed": false,
+      "requiredFields": ["policy_id", "scope_type", "memory_class", "permission_level", "can_read_for_answer_context", "can_write_automatically", "requires_explicit_consent", "requires_scope_confirmation", "prohibited_in_general_queries", "created_at"],
+      "optionalFields": [],
+      "prohibitedFields": ["password", "api_key", "secret"],
+      "invariants": ["CLIENT_SCOPE_ISOLATION", "MATTER_SCOPE_ISOLATION", "MEMORY_FLAGS_DEFAULT_OFF"],
+      "examples": ["client_entity/client_scoped readable only in resolved client context; can_write_automatically false everywhere in early Phase 8"]
+    }
+  ],
+  "schemaInvariants": [
+    {
+      "id": "EXACTLY_ONE_MEMORY_CLASS",
+      "description": "Every memory item has exactly one memory_class.",
+      "appliesTo": "memory_items",
+      "requiredOutcome": "single class from the seven approved classes",
+      "violationOutcome": "write rejected",
+      "examplePass": "item with memory_class=client_entity",
+      "exampleFail": "item with two classes or unknown class"
+    },
+    {
+      "id": "EXACTLY_ONE_PERMISSION_LEVEL",
+      "description": "Every memory item has exactly one permission_level.",
+      "appliesTo": "memory_items",
+      "requiredOutcome": "single level from the eight approved levels",
+      "violationOutcome": "write rejected (unlabeled writes rejected)",
+      "examplePass": "item with permission_level=matter_scoped",
+      "exampleFail": "item with no permission_level"
+    },
+    {
+      "id": "EXACTLY_ONE_PRIMARY_SCOPE_TYPE",
+      "description": "Every memory item has exactly one primary_scope_type.",
+      "appliesTo": "memory_items",
+      "requiredOutcome": "single primary scope type",
+      "violationOutcome": "write rejected",
+      "examplePass": "item with primary_scope_type=matter",
+      "exampleFail": "item with primary scope in both client and matter"
+    },
+    {
+      "id": "EXACTLY_ONE_PRIMARY_SCOPE_ID",
+      "description": "Every memory item has exactly one primary_scope_id.",
+      "appliesTo": "memory_items",
+      "requiredOutcome": "single resolved scope instance",
+      "violationOutcome": "write rejected",
+      "examplePass": "item bound to one matter scope id",
+      "exampleFail": "item bound to two matter ids"
+    },
+    {
+      "id": "DURABLE_NON_SYSTEM_REQUIRES_CONSENT",
+      "description": "Every durable memory item has consent_event_id unless class/permission is system_governance.",
+      "appliesTo": "memory_items, memory_consent_events",
+      "requiredOutcome": "durable write carries a granted consent event",
+      "violationOutcome": "write rejected",
+      "examplePass": "client fact stored with consent_event_id",
+      "exampleFail": "durable client fact with no consent event"
+    },
+    {
+      "id": "PROHIBITED_MEMORY_REJECTED",
+      "description": "Prohibited memory cannot be stored; no value echo into logs or events.",
+      "appliesTo": "memory_items",
+      "requiredOutcome": "rejection without persistence",
+      "violationOutcome": "governance violation",
+      "examplePass": "pasted API key rejected with no echo",
+      "exampleFail": "password stored or echoed into an audit event"
+    },
+    {
+      "id": "NO_STORE_NOT_PERSISTED",
+      "description": "no_store memory cannot be persisted.",
+      "appliesTo": "memory_items, memory_retention_policies",
+      "requiredOutcome": "no durable representation ever",
+      "violationOutcome": "write rejected",
+      "examplePass": "no_store item used only in current response",
+      "exampleFail": "no_store item found in durable storage"
+    },
+    {
+      "id": "SESSION_ONLY_NOT_DURABLE",
+      "description": "session_only cannot become durable; promotion requires a new consent event and a new item.",
+      "appliesTo": "memory_items, memory_retention_policies",
+      "requiredOutcome": "session items expire at session end",
+      "violationOutcome": "write rejected",
+      "examplePass": "session assumption discarded at session end",
+      "exampleFail": "session fact silently persisted across sessions"
+    },
+    {
+      "id": "EXPLICIT_CONSENT_REQUIRES_CONSENT_EVENT",
+      "description": "explicit_consent memories require consent_event_id with granted=true.",
+      "appliesTo": "memory_items, memory_consent_events",
+      "requiredOutcome": "granted consent event linked before write",
+      "violationOutcome": "write rejected",
+      "examplePass": "sensitive fact stored after logged consent",
+      "exampleFail": "explicit_consent item with null consent_event_id"
+    },
+    {
+      "id": "REVOKED_NOT_READABLE",
+      "description": "Revoked memories cannot be read.",
+      "appliesTo": "memory_items, read policy",
+      "requiredOutcome": "revoked items excluded from all reads",
+      "violationOutcome": "read policy violation",
+      "examplePass": "forgotten fact never re-enters context",
+      "exampleFail": "revoked item used in an answer"
+    },
+    {
+      "id": "CONTRADICTED_NOT_USED_FOR_CLARIFICATION_REDUCTION",
+      "description": "Contradicted memories cannot silently reduce clarification questions.",
+      "appliesTo": "memory_items, memory_conflict_events, clarification interaction",
+      "requiredOutcome": "conflict triggers clarification instead of reduction",
+      "violationOutcome": "clarification-safety violation",
+      "examplePass": "conflicting VAT status triggers a question",
+      "exampleFail": "contradicted fact silently pre-fills the gate"
+    },
+    {
+      "id": "MEMORY_NOT_LEGAL_AUTHORITY",
+      "description": "Memory cannot be marked as legal authority; authority_use_prohibited is always true.",
+      "appliesTo": "memory_items, memory_source_refs",
+      "requiredOutcome": "memory never cited or used as authority",
+      "violationOutcome": "authority-separation violation",
+      "examplePass": "memory phrased as 'user/matter context indicates ...'",
+      "exampleFail": "memory presented as 'the law is X'"
+    },
+    {
+      "id": "SOURCE_DERIVED_NOT_CURRENTNESS",
+      "description": "Source-derived memory cannot assert source currentness, supersession, or case status.",
+      "appliesTo": "memory_items, memory_source_refs",
+      "requiredOutcome": "provenance context only; defers to live index and SAE",
+      "violationOutcome": "Phase 10 boundary violation",
+      "examplePass": "provenance note referencing an indexed RMC",
+      "exampleFail": "memory asserting an RMC is still current law"
+    },
+    {
+      "id": "CLIENT_SCOPE_ISOLATION",
+      "description": "Client-scoped memory cannot be read in unrelated client context.",
+      "appliesTo": "memory_items, memory_scopes, read policy",
+      "requiredOutcome": "client A facts never appear for client B",
+      "violationOutcome": "cross-client contamination",
+      "examplePass": "client A VAT fact absent in client B request",
+      "exampleFail": "client A fact used in client B answer"
+    },
+    {
+      "id": "MATTER_SCOPE_ISOLATION",
+      "description": "Matter-scoped memory cannot be read outside its matter unless the user confirms transfer.",
+      "appliesTo": "memory_items, memory_scopes, read policy",
+      "requiredOutcome": "matter facts stay inside the matter",
+      "violationOutcome": "matter leakage",
+      "examplePass": "LOA fact absent in an unrelated matter",
+      "exampleFail": "matter fact used in a general tax opinion"
+    },
+    {
+      "id": "GLOBAL_USER_NO_CLIENT_CONFIDENTIAL_FACTS",
+      "description": "global_user memory cannot contain client confidential facts.",
+      "appliesTo": "memory_items, memory_scopes, client_profiles",
+      "requiredOutcome": "client confidential facts live only in client/matter scopes",
+      "violationOutcome": "confidentiality violation",
+      "examplePass": "user preference stored in global_user scope",
+      "exampleFail": "client tax liability detail stored as global_user memory"
+    },
+    {
+      "id": "MEMORY_FLAGS_DEFAULT_OFF",
+      "description": "All memory flags default OFF; missing/invalid resolves OFF.",
+      "appliesTo": "featureFlags, memory_access_policies",
+      "requiredOutcome": "OFF-state preserves current behavior byte-identically",
+      "violationOutcome": "flag-governance violation",
+      "examplePass": "unset TINA_ENABLE_MEMORY_READS behaves as OFF",
+      "exampleFail": "memory read occurs with flag unset"
+    }
+  ],
+  "readEligibilityRules": [
+    {
+      "id": "READ_SCOPE_MATCH_REQUIRED",
+      "description": "Memory is read only if the resolved scope chain matches the item's primary scope.",
+      "requiredInputs": ["resolved scope chain", "item primary scope"],
+      "allowedOutcome": "read with scope proof attached",
+      "prohibitedOutcome": "read without scope match",
+      "testExample": "matter item read inside its matter only"
+    },
+    {
+      "id": "READ_EXPLICIT_USER_REFERENCE_ALLOWED_WITH_SCOPE_CONFIRMATION",
+      "description": "Explicit user reference may enable a read only after the reference resolves and confirms scope.",
+      "requiredInputs": ["explicit user reference", "scope confirmation"],
+      "allowedOutcome": "read after confirmed resolution",
+      "prohibitedOutcome": "read on ambiguous reference",
+      "testExample": "'same client as before' requires resolution before read"
+    },
+    {
+      "id": "READ_UNRELATED_CLIENT_PROHIBITED",
+      "description": "Unrelated client memory is never read.",
+      "requiredInputs": ["resolved client scope"],
+      "allowedOutcome": "only matching client items",
+      "prohibitedOutcome": "client A items in client B context",
+      "testExample": "client A / client B leakage simulation"
+    },
+    {
+      "id": "READ_UNRELATED_MATTER_PROHIBITED",
+      "description": "Unrelated matter memory is never read.",
+      "requiredInputs": ["resolved matter scope"],
+      "allowedOutcome": "only matching matter items",
+      "prohibitedOutcome": "matter A items in matter B context",
+      "testExample": "matter A / matter B leakage simulation"
+    },
+    {
+      "id": "READ_REVOKED_PROHIBITED",
+      "description": "Revoked items are never read.",
+      "requiredInputs": ["item status"],
+      "allowedOutcome": "revoked items excluded",
+      "prohibitedOutcome": "revoked item in context",
+      "testExample": "forgotten fact stays forgotten"
+    },
+    {
+      "id": "READ_PROHIBITED_CLASS_PROHIBITED",
+      "description": "prohibited_sensitive class items are never read (they must never exist).",
+      "requiredInputs": ["item class"],
+      "allowedOutcome": "no prohibited items ever readable",
+      "prohibitedOutcome": "prohibited item in context",
+      "testExample": "no credential ever enters context"
+    },
+    {
+      "id": "READ_NO_STORE_PROHIBITED",
+      "description": "no_store items are never read from storage because they are never persisted.",
+      "requiredInputs": ["permission level"],
+      "allowedOutcome": "no_store never in storage reads",
+      "prohibitedOutcome": "no_store item retrieved from storage",
+      "testExample": "no_store item absent from any read result"
+    },
+    {
+      "id": "READ_STALE_REQUIRES_CONFIRMATION",
+      "description": "Stale memory requires user re-confirmation before use.",
+      "requiredInputs": ["freshness state"],
+      "allowedOutcome": "surfaced with confirmation request",
+      "prohibitedOutcome": "silent reliance on stale facts",
+      "testExample": "prior-year registration fact prompts re-confirmation"
+    },
+    {
+      "id": "READ_CONTRADICTED_TRIGGERS_CLARIFICATION",
+      "description": "Contradicted memory triggers clarification instead of use.",
+      "requiredInputs": ["confidence state", "conflict events"],
+      "allowedOutcome": "clarification question raised",
+      "prohibitedOutcome": "contradicted fact used silently",
+      "testExample": "conflicting VAT status yields a question"
+    },
+    {
+      "id": "READ_SOURCE_DERIVED_PROVENANCE_ONLY",
+      "description": "Source-derived memory supplies provenance context only, never currentness.",
+      "requiredInputs": ["item class", "source refs"],
+      "allowedOutcome": "provenance note in context",
+      "prohibitedOutcome": "currentness/supersession/case-status assertion",
+      "testExample": "indexed RMC provenance note without currentness claim"
+    },
+    {
+      "id": "READ_AUTHORITY_GOVERNED_QUESTION_REQUIRES_SOURCES",
+      "description": "High-risk/authority-governed questions require source authority regardless of memory.",
+      "requiredInputs": ["query risk class", "SAE status"],
+      "allowedOutcome": "memory as context alongside required sources",
+      "prohibitedOutcome": "memory substituting for retrieval or SAE",
+      "testExample": "source-governed question keeps NO_INDEXED_SOURCE despite memory"
+    }
+  ],
+  "writeEligibilityRules": [
+    {
+      "id": "WRITE_NO_AUTOMATIC_DURABLE_WRITES_EARLY_PHASE8",
+      "description": "No automatic durable writes in early Phase 8; can_write_automatically is false everywhere.",
+      "requiredInputs": ["write trigger type"],
+      "allowedOutcome": "explicit-consent writes only, in later scaffolds",
+      "prohibitedOutcome": "any automatic durable write",
+      "testExample": "generated answer never writes memory by itself"
+    },
+    {
+      "id": "WRITE_PERMISSION_LEVEL_REQUIRED",
+      "description": "Every write carries exactly one permission level; unlabeled writes are rejected.",
+      "requiredInputs": ["permission level"],
+      "allowedOutcome": "labeled write",
+      "prohibitedOutcome": "unlabeled write",
+      "testExample": "write without level rejected"
+    },
+    {
+      "id": "WRITE_SCOPE_CONFIRMATION_REQUIRED_FOR_CLIENT_MATTER",
+      "description": "Client/matter writes require scope confirmation.",
+      "requiredInputs": ["target scope", "scope confirmation"],
+      "allowedOutcome": "write after confirmed scope",
+      "prohibitedOutcome": "client/matter write without confirmation",
+      "testExample": "matter fact asks matter vs session-only"
+    },
+    {
+      "id": "WRITE_EXPLICIT_CONSENT_REQUIRED_FOR_SENSITIVE_CLIENT_FACTS",
+      "description": "Sensitive client facts require explicit consent before durable storage.",
+      "requiredInputs": ["sensitivity label", "consent event"],
+      "allowedOutcome": "write after granted consent event",
+      "prohibitedOutcome": "sensitive fact stored without consent",
+      "testExample": "confidential client fact prompts consent"
+    },
+    {
+      "id": "WRITE_SESSION_ONLY_NOT_PERSISTED",
+      "description": "Session-only facts are not persisted.",
+      "requiredInputs": ["permission level"],
+      "allowedOutcome": "session context only",
+      "prohibitedOutcome": "session fact in durable storage",
+      "testExample": "session assumption absent after session end"
+    },
+    {
+      "id": "WRITE_PROHIBITED_REJECTED",
+      "description": "Prohibited facts are rejected with no value echo into logs or events.",
+      "requiredInputs": ["prohibited content detection"],
+      "allowedOutcome": "rejection without echo",
+      "prohibitedOutcome": "storage or echo of prohibited values",
+      "testExample": "API key write rejected, value not logged"
+    },
+    {
+      "id": "WRITE_SOURCE_DERIVED_REQUIRES_PROVENANCE",
+      "description": "Source-derived facts require provenance refs and cannot become legal conclusions.",
+      "requiredInputs": ["source refs"],
+      "allowedOutcome": "provenance-linked note",
+      "prohibitedOutcome": "source-derived legal conclusion",
+      "testExample": "note without source ref rejected"
+    },
+    {
+      "id": "WRITE_TAX_LEGAL_CONCLUSIONS_REJECTED_AS_AUTHORITY",
+      "description": "Tax/legal conclusions are not written as memory unless framed as a user note, marked non-authority, and explicitly consented.",
+      "requiredInputs": ["content classification", "consent event"],
+      "allowedOutcome": "consented user note marked non-authority",
+      "prohibitedOutcome": "conclusion stored as verified law",
+      "testExample": "'this deduction is legal' rejected as memory fact"
+    },
+    {
+      "id": "WRITE_SYSTEM_GOVERNANCE_ALLOWED_FOR_TINA_CONTINUITY_ONLY",
+      "description": "system_governance writes are allowed for TINA development/system continuity state only, never client facts.",
+      "requiredInputs": ["memory class", "content classification"],
+      "allowedOutcome": "patch/governance continuity state",
+      "prohibitedOutcome": "client personal data under system_governance",
+      "testExample": "'Phase 7 closed at 6c59576' allowed; client fact rejected"
+    }
+  ],
+  "conflictLifecycle": {
+    "states": ["detected", "marked_contradicted", "user_prompted", "resolved_updated", "resolved_revoked", "resolved_archived", "retained_with_warning"],
+    "rules": [
+      "live facts override stored memory",
+      "conflict prevents automatic clarification reduction",
+      "audit event required",
+      "contradicted memory cannot be silently read as fact"
+    ]
+  },
+  "consentLifecycle": {
+    "states": ["candidate_detected", "scope_proposed", "consent_requested", "consent_granted", "consent_rejected", "memory_written", "consent_revoked", "memory_not_readable_after_revocation"],
+    "rules": [
+      "no durable write before consent when consent required",
+      "consent event required",
+      "revocation creates audit event",
+      "revoked memory not readable"
+    ]
+  },
+  "authoritySeparationRules": [
+    {
+      "id": "MEMORY_CONTEXT_NOT_AUTHORITY",
+      "requiredBehavior": "memory contributes context constraints only, carried separately from source cards",
+      "prohibitedBehavior": "memory presented or used as legal/tax authority",
+      "example": "memory may say 'matter notes indicate 2024 taxable year'"
+    },
+    {
+      "id": "MEMORY_NO_SAE_MUTATION",
+      "requiredBehavior": "SAE status computed from retrieval exactly as today",
+      "prohibitedBehavior": "memory altering AUTHORITY_FOUND / RELATED_AUTHORITY_ONLY / SOURCE_LIMITED / NO_INDEXED_SOURCE",
+      "example": "NO_INDEXED_SOURCE remains regardless of stored facts"
+    },
+    {
+      "id": "MEMORY_NO_RETRIEVAL_MUTATION",
+      "requiredBehavior": "retrieval behavior and results unchanged by memory",
+      "prohibitedBehavior": "memory filtering, seeding, or replacing retrieval",
+      "example": "same retrieval output with or without memory context"
+    },
+    {
+      "id": "MEMORY_NO_SOURCE_CARD_MUTATION",
+      "requiredBehavior": "source cards untouched by memory (Authority Lock)",
+      "prohibitedBehavior": "memory adding, removing, reordering, or rewording source cards",
+      "example": "identical source cards with and without memory"
+    },
+    {
+      "id": "MEMORY_NO_AUTHORITY_GATE_OVERRIDE",
+      "requiredBehavior": "authority gates apply unchanged",
+      "prohibitedBehavior": "memory bypassing or overriding an authority gate",
+      "example": "authority-governed question still requires sources"
+    },
+    {
+      "id": "MEMORY_NO_FAKE_CITATIONS",
+      "requiredBehavior": "citations come only from indexed sources via retrieval",
+      "prohibitedBehavior": "memory creating or supporting fabricated citations",
+      "example": "no citation generated from a remembered claim"
+    },
+    {
+      "id": "MEMORY_NO_LEGAL_CURRENTNESS",
+      "requiredBehavior": "no currentness claims; Phase 10 remains deferred",
+      "prohibitedBehavior": "memory asserting a law or issuance is current",
+      "example": "'RMC X is still in force' never comes from memory"
+    },
+    {
+      "id": "MEMORY_NO_CASE_STATUS",
+      "requiredBehavior": "no case status claims; Phase 10 remains deferred",
+      "prohibitedBehavior": "memory asserting a case is good law or superseded",
+      "example": "case status questions keep Phase 10 deferral"
+    },
+    {
+      "id": "MEMORY_NO_PHASE10_BYPASS",
+      "requiredBehavior": "Phase 10 deferral disclosures apply unchanged",
+      "prohibitedBehavior": "memory bypassing phase10_deferred_orientation",
+      "example": "G.R. metadata query keeps its deferral disclosure"
+    },
+    {
+      "id": "MEMORY_ALLOWED_PHRASE_USER_CONTEXT_INDICATES_ONLY",
+      "requiredBehavior": "memory phrasing limited to 'user/matter context indicates ...' forms",
+      "prohibitedBehavior": "memory phrased as 'the law is ...' or any authority assertion",
+      "example": "'user previously said this client is VAT-registered'"
+    }
+  ],
+  "featureFlags": [
+    { "id": "TINA_ENABLE_MEMORY_READS", "defaultEnabled": false, "productionEnabled": false, "requiresGateBeforeProduction": true, "allowedBeforePhase8I": false },
+    { "id": "TINA_ENABLE_MEMORY_WRITES", "defaultEnabled": false, "productionEnabled": false, "requiresGateBeforeProduction": true, "allowedBeforePhase8I": false },
+    { "id": "TINA_ENABLE_MATTER_MEMORY", "defaultEnabled": false, "productionEnabled": false, "requiresGateBeforeProduction": true, "allowedBeforePhase8I": false },
+    { "id": "TINA_ENABLE_MEMORY_SUGGESTIONS", "defaultEnabled": false, "productionEnabled": false, "requiresGateBeforeProduction": true, "allowedBeforePhase8I": false },
+    { "id": "TINA_ENABLE_MEMORY_DEBUG_TRACE", "defaultEnabled": false, "productionEnabled": false, "requiresGateBeforeProduction": true, "allowedBeforePhase8I": false }
+  ],
+  "deferredBoundaries": [
+    { "id": "phase7b_boundary_tuning_followup", "description": "PATCH-07B-CLARIFICATION-BOUNDARY-TUNING-1 remains a Phase 7B pre-production-ON follow-up, excluded from Phase 8D implementation.", "implementationAllowedHere": false, "mayBeReferencedAsBoundary": true },
+    { "id": "phase10_source_governance", "description": "Official source repository governance, source freshness, legal-state validation are Phase 10.", "implementationAllowedHere": false, "mayBeReferencedAsBoundary": true },
+    { "id": "phase10_court_metadata", "description": "Court case metadata registry, G.R. number lookup, jurisprudence applicability/currentness/supersession are Phase 10.", "implementationAllowedHere": false, "mayBeReferencedAsBoundary": true },
+    { "id": "phase10_hallucination_traps", "description": "Hallucination trap evaluation and HAL-TEST.xlsx items are Phase 10.", "implementationAllowedHere": false, "mayBeReferencedAsBoundary": true },
+    { "id": "phase11_observability_performance", "description": "Observability, tracing, cache headers, compression, CDN/static caching, API response caching, vector/search performance are Phase 11.", "implementationAllowedHere": false, "mayBeReferencedAsBoundary": true },
+    { "id": "phase12_document_advisory", "description": "Document-aware advisory and working-paper extraction are Phase 12.", "implementationAllowedHere": false, "mayBeReferencedAsBoundary": true },
+    { "id": "phase14_mobile_after_phase13", "description": "Mobile app comes after Phase 13 only.", "implementationAllowedHere": false, "mayBeReferencedAsBoundary": true }
+  ],
+  "fixtureTestCases": [
+    { "id": "SCOPE_SET_EXACT", "expected": "exactly six scope types matching Phase 8B" },
+    { "id": "ENTITY_SET_EXACT", "expected": "exactly ten conceptual entities" },
+    { "id": "MEMORY_ITEMS_FIELD_CONTRACT", "expected": "memory_items required/optional/prohibited field contract holds" },
+    { "id": "MEMORY_SCOPES_FIELD_CONTRACT", "expected": "memory_scopes field contract holds" },
+    { "id": "CLIENT_PROFILE_FIELD_CONTRACT", "expected": "client_profiles field contract holds" },
+    { "id": "MATTER_PROFILE_FIELD_CONTRACT", "expected": "matter_profiles field contract holds" },
+    { "id": "CONSENT_EVENT_FIELD_CONTRACT", "expected": "memory_consent_events field contract holds" },
+    { "id": "AUDIT_EVENT_FIELD_CONTRACT", "expected": "memory_audit_events field contract holds" },
+    { "id": "CONFLICT_EVENT_FIELD_CONTRACT", "expected": "memory_conflict_events field contract holds" },
+    { "id": "SOURCE_REF_FIELD_CONTRACT", "expected": "memory_source_refs field contract holds including citation_prohibited_as_authority" },
+    { "id": "RETENTION_POLICY_FIELD_CONTRACT", "expected": "memory_retention_policies field contract holds" },
+    { "id": "ACCESS_POLICY_FIELD_CONTRACT", "expected": "memory_access_policies field contract holds" },
+    { "id": "INVARIANT_SET_REQUIRED", "expected": "all seventeen schema invariants present" },
+    { "id": "READ_RULE_SET_REQUIRED", "expected": "all eleven read eligibility rules present" },
+    { "id": "WRITE_RULE_SET_REQUIRED", "expected": "all nine write eligibility rules present" },
+    { "id": "CONFLICT_LIFECYCLE_REQUIRED", "expected": "conflict lifecycle states and rules present" },
+    { "id": "CONSENT_LIFECYCLE_REQUIRED", "expected": "consent lifecycle states and rules present" },
+    { "id": "AUTHORITY_SEPARATION_REQUIRED", "expected": "all ten authority separation rules present" },
+    { "id": "FLAGS_DEFAULT_OFF", "expected": "all memory flags default OFF, production OFF, gate required" },
+    { "id": "DEFERRED_BOUNDARIES_EXCLUDED", "expected": "Phase 7B tuning, Phase 10, 11, 12, 14 excluded from implementation" },
+    { "id": "NO_RUNTIME_IMPLEMENTATION", "expected": "runtimeImplementationAllowed false; no runtime outputs" },
+    { "id": "NO_DATABASE_IMPLEMENTATION", "expected": "databaseMigrationAllowed and databaseTablesAllowed false" },
+    { "id": "NO_PIPELINE_INTEGRATION", "expected": "pipelineIntegrationAllowed false" },
+    { "id": "NO_PHASE10_IMPLEMENTATION", "expected": "no Phase 10 court metadata / currentness / trap work" },
+    { "id": "CROSS_CLIENT_LEAKAGE_PROHIBITED", "expected": "client A facts never appear for client B" },
+    { "id": "MATTER_LEAKAGE_PROHIBITED", "expected": "matter facts never leak to unrelated matters/clients" },
+    { "id": "SOURCE_DOCUMENT_REFERENCE_ONLY", "expected": "source_document is reference/provenance only, never primary" },
+    { "id": "REFERENCE_SCOPE_NO_READ_EXPANSION", "expected": "reference scopes never expand read eligibility" },
+    { "id": "ONE_PRIMARY_SCOPE_REQUIRED", "expected": "every memory item has exactly one primary scope" },
+    { "id": "MEMORY_CONTEXT_NOT_AUTHORITY", "expected": "memory is context, never authority" }
+  ]
+}

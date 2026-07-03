@@ -1827,6 +1827,7 @@ PATCH-07B-PHASE-7-FINAL-CLOSURE-GATE-1 COMPLETE / PASS WITH STRICT RECOMMENDATIO
 PATCH-08A-MEMORY-GOVERNANCE-DESIGN-1 COMPLETE / DESIGN PASS WITH STRICT RECOMMENDATIONS
 PATCH-08B-MEMORY-TAXONOMY-FIXTURE-1 COMPLETE / FIXTURE PASS WITH STRICT RECOMMENDATIONS
 PATCH-08C-MEMORY-SCOPE-SCHEMA-DESIGN-1 COMPLETE / DESIGN PASS WITH STRICT RECOMMENDATIONS
+PATCH-08D-MEMORY-SCOPE-SCHEMA-FIXTURE-1 COMPLETE / FIXTURE PASS WITH STRICT RECOMMENDATIONS
 ```
 
 Phase 7 status:
@@ -1975,6 +1976,58 @@ No runtime memory implementation occurred. No DB/migration occurred.
 All memory flags remain OFF / not implemented.
 
 Next required task: PATCH-08D-MEMORY-SCOPE-SCHEMA-FIXTURE-1.
+
+Standing restrictions unchanged:
+- Production clarification route gate remains OFF / NOT approved.
+- Phase 7B boundary tuning remains a pre-production-ON follow-up.
+- Phase 10 remains deferred.
+- Phase 11 performance/cache/compression remains deferred.
+```
+
+Phase 8D state (2026-07-04):
+
+```text
+PATCH-08D-MEMORY-SCOPE-SCHEMA-FIXTURE-1 is complete.
+Decision: FIXTURE PASS WITH STRICT RECOMMENDATIONS.
+Report: PATCH-08D-MEMORY-SCOPE-SCHEMA-FIXTURE-1_SCOPE_SCHEMA_FIXTURE_AND_INVARIANT_TESTS.md
+
+Files created:
+- evaluation/fixtures/phase-8d-memory-scope-schema-fixture-1-invariants.fixture.json
+- tests/patch-08d-memory-scope-schema-fixture-1-invariants.test.mjs
+
+The fixture converts the Phase 8C design into a testable contract: the six-
+scope hierarchy with nine hierarchy rules (one primary scope per item;
+reference scopes never expand read eligibility; source_document is
+provenance-only), the ten conceptual entities with required/optional/
+prohibited field contracts (memory_items prohibits legal-state and secret
+fields; memory_source_refs requires citation_prohibited_as_authority), all
+17 schema invariants, 11 read eligibility rules, 9 write eligibility rules,
+consent and conflict lifecycles, 10 authority-separation rules (allowed
+phrasing: "user/matter context indicates ..." only), 5 memory flags default
+OFF / production OFF / gate required, and 7 deferred boundaries.
+
+Validation passed: focused invariant test 29 passed / 0 failed;
+npm test 115 suites / 0 failed / GATE PASSED; npm run guard:files PASS.
+
+No runtime memory implementation occurred. No DB migrations or tables.
+No memory services. No pipeline wiring. No frontend. No dependencies.
+All memory flags remain OFF / not implemented in runtime.
+
+Strict recommendations carried into Phase 8E:
+1. Preserve the exact scope hierarchy and conceptual entity set unless a
+   design revision is approved.
+2. No DB migration or runtime memory tables until schema invariants become
+   enforceable contract tests against a real schema.
+3. No memory read/write service until read/write eligibility rules are
+   tested at service-boundary level.
+4. No pipeline memory integration until source-authority separation tests
+   are enforced.
+5. Cross-client and matter leakage tests must be carried into every future
+   runtime scaffold.
+6. Memory flags remain default-OFF and production-OFF until Phase 8I/8J
+   gates pass.
+
+Next required task: PATCH-08E-MEMORY-CONSENT-CONTRACT-DESIGN-1.
 
 Standing restrictions unchanged:
 - Production clarification route gate remains OFF / NOT approved.
