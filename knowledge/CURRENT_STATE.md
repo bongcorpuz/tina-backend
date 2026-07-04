@@ -2877,3 +2877,77 @@ Strict recommendations:
 Next required task:
 PATCH-08S-SECURITY-POLICY-FIXTURE-1
 ```
+
+Phase 8S security policy fixture state (2026-07-04):
+
+```text
+PATCH-08S-SECURITY-POLICY-FIXTURE-1 is complete.
+Decision: SECURITY POLICY FIXTURE PASS WITH STRICT RECOMMENDATIONS.
+Type: security policy fixture / test-foundation fixture-test-report patch only.
+Base commit: 56fd16d PATCH-08S-SECURITY-ROUTE-INVENTORY-1 add security route inventory.
+
+Files created:
+evaluation/fixtures/phase-8s-security-policy-fixture-1.fixture.json
+tests/patch-08s-security-policy-fixture-1.test.mjs
+PATCH-08S-SECURITY-POLICY-FIXTURE-1_SECURITY_POLICY_FIXTURE_REPORT.md
+
+Files updated:
+knowledge/CURRENT_STATE.md
+
+Policy categories encoded (20), each marked noRuntimeChangeInThisPatch and mapped to a future enforcing patch:
+cors, security_headers, rate_limit, route_guard, admin_debug, no_query_secret, secrets_env,
+log_redaction, third_party_egress_redaction, error_sanitization, tenant_isolation (CRITICAL),
+supabase_service_role (CRITICAL, calibrated wording), prompt_injection_control,
+authority_spoofing_control, request_size_limit, route_recon_minimization, phase8_memory_inactive,
+phase9_readiness_blockers, deferred_boundaries, phase8X_diagnostic_separation.
+
+Route inventory integration (cross-checked and required to agree by the test):
+30 routes; 22 expensive-operation routes (all rate-limit covered); 17 tenant_isolation routes;
+9 admin routes flagged no_query_secret; GET /health performs DB read and requires rate_limit.
+
+Validation:
+node tests/patch-08s-security-policy-fixture-1.test.mjs - PASS / 29 passed / 0 failed / 154 assertions.
+node tests/patch-08s-security-route-inventory-1.test.mjs - PASS / 21 passed / 0 failed / 1193 assertions.
+npm run guard:files - PASS.
+npm test - GATE PASSED / 0 failed.
+
+Calibrated Supabase service-role wording (Gemini controlling, encoded in fixture):
+Supabase service-role access may be acceptable only for tightly controlled server-only
+administrative/source-corpus operations. It is not acceptable as the default access path
+for user/client/matter data in Phase 9 without tenant-scoping, RLS, or an equivalent isolation model.
+
+No runtime security implementation occurred.
+No middleware wiring occurred.
+No CORS/header/rate-limit/auth/route/server.js behavior changes occurred.
+No package.json/package-lock.json changes and no dependency installs occurred.
+No DB/Supabase, environment, Render/Vercel, or deployment changes occurred.
+No production changes occurred.
+Phase 8 remains closed; memory remains inactive; all TINA_ENABLE_MEMORY_* flags remain OFF.
+No Phase 9/10/11 implementation occurred.
+
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-DIAGNOSTIC-1 remains a separate non-security diagnostic;
+not persistent memory, not Phase 8S security, and not implemented here.
+
+Phase 9 readiness blockers (must complete before Phase 9):
+PATCH-08S-TENANT-ISOLATION-GATE-1, PATCH-08S-SECRETS-ENV-LOGGING-SAFETY-GATE-1,
+PATCH-08S-SECURITY-HEADERS-CORS-RATE-LIMIT-SCAFFOLD-1, PATCH-08S-STAGING-SECURITY-SMOKE-1,
+PATCH-08S-FINAL-CLOSURE-GATE-1. Minimum approved-before-Phase-9 set: tenant_isolation,
+log_redaction, third_party_egress_redaction, cors, rate_limit.
+
+Strict recommendations:
+1. Security policies must remain fixture/test-enforced.
+2. No runtime security changes until the policy fixture is accepted.
+3. Tenant/client isolation gate remains mandatory before Phase 9.
+4. Secrets/env/logging/egress safety gate remains mandatory before Phase 9.
+5. Headers/CORS/rate-limit scaffold remains mandatory before Phase 9.
+6. Staging security smoke remains mandatory before Phase 9.
+7. INDEX_SECRET query-string acceptance must be removed/replaced (header-only or stronger).
+8. /health and /routes require reconnaissance-minimization policy.
+9. Langfuse/third-party egress requires redaction/data-classification policy before Phase 9.
+10. Prompt/source-authority spoofing policy must be preserved.
+11. Phase 8 memory remains inactive; Phase 9 remains Professional Workflow Co-Pilot.
+12. Phase 10 and Phase 11 remain deferred; Phase 8X chat-context diagnostic remains separate.
+
+Next required task:
+PATCH-08S-TENANT-ISOLATION-GATE-1
+```

@@ -1,0 +1,396 @@
+{
+  "patch": {
+    "id": "PATCH-08S-SECURITY-POLICY-FIXTURE-1",
+    "phase": "Phase 8S",
+    "taskType": "security_policy_fixture_test_report_only",
+    "title": "Security Policy Fixture"
+  },
+  "decision": "SECURITY POLICY FIXTURE PASS WITH STRICT RECOMMENDATIONS",
+  "baseCommit": "56fd16d PATCH-08S-SECURITY-ROUTE-INVENTORY-1 add security route inventory",
+  "policyVersion": "1.0.0",
+  "scope": "Encode the Phase 8S threat model and route inventory findings as machine-readable, test-enforced security policies. Policy definition only; no controls are implemented.",
+  "nonRuntimePatch": true,
+  "runtimeSecurityImplemented": false,
+  "middlewareWired": false,
+  "memoryActive": false,
+  "phase9Started": false,
+  "persistentMemoryExists": false,
+  "sourceArtifacts": [
+    "PATCH-08S-SECURITY-HARDENING-DESIGN-1_SECURITY_ARCHITECTURE_THREAT_MODEL_REPORT.md",
+    "evaluation/fixtures/phase-8s-security-route-inventory-1.fixture.json",
+    "PATCH-08S-SECURITY-ROUTE-INVENTORY-1_ROUTE_INVENTORY_REPORT.md",
+    "tests/patch-08s-security-route-inventory-1.test.mjs"
+  ],
+  "routeInventoryIntegration": {
+    "routeInventoryFixture": "evaluation/fixtures/phase-8s-security-route-inventory-1.fixture.json",
+    "totalRoutes": 30,
+    "expensiveRouteCount": 22,
+    "tenantIsolationRouteCount": 17,
+    "noQuerySecretAdminRouteCount": 9,
+    "healthPerformsDbRead": true,
+    "healthRequiresRateLimit": true,
+    "note": "The policy fixture test recomputes these counts from the route inventory fixture and requires exact agreement so the two fixtures cannot drift apart."
+  },
+  "policyCategories": [
+    "corsPolicy",
+    "securityHeadersPolicy",
+    "rateLimitPolicy",
+    "routeGuardPolicy",
+    "adminDebugPolicy",
+    "querySecretPolicy",
+    "secretsEnvPolicy",
+    "loggingRedactionPolicy",
+    "thirdPartyEgressPolicy",
+    "errorDisclosurePolicy",
+    "tenantIsolationPolicy",
+    "supabaseServiceRolePolicy",
+    "promptInjectionPolicy",
+    "sourceAuthoritySpoofingPolicy",
+    "requestSizePolicy",
+    "reconnaissanceMinimizationPolicy",
+    "phase8MemoryPolicy",
+    "phase9ReadinessBlockers",
+    "deferredBoundaries",
+    "phase8XDiagnosticSeparation"
+  ],
+  "corsPolicy": {
+    "id": "cors",
+    "severity": "HIGH",
+    "noRuntimeChangeInThisPatch": true,
+    "requirements": [
+      "Wildcard origin ('*') must not be used together with credentials:true.",
+      "Production CORS must use an explicit origin allowlist.",
+      "A missing production allowlist must fail closed (deny), not default to wildcard.",
+      "Staging and production origins must be separately classified.",
+      "CORS policy must be tested before Phase 9."
+    ],
+    "prohibited": ["wildcard_with_credentials", "production_wildcard_default", "implicit_origin_reflection_with_credentials"],
+    "enforcedBy": "PATCH-08S-SECURITY-HEADERS-CORS-RATE-LIMIT-SCAFFOLD-1"
+  },
+  "securityHeadersPolicy": {
+    "id": "security_headers",
+    "severity": "MEDIUM",
+    "noRuntimeChangeInThisPatch": true,
+    "requiredFutureHeaders": [
+      "X-Content-Type-Options",
+      "Referrer-Policy",
+      "X-Frame-Options",
+      "frame-ancestors",
+      "Content-Security-Policy",
+      "Permissions-Policy",
+      "Cross-Origin-Resource-Policy",
+      "Cross-Origin-Opener-Policy"
+    ],
+    "notes": [
+      "Content-Security-Policy applies where the backend returns renderable content.",
+      "Strict-Transport-Security (HSTS) should be evaluated at the platform/proxy level, not necessarily in-app.",
+      "X-Frame-Options or a frame-ancestors CSP directive is required to prevent framing."
+    ],
+    "enforcedBy": "PATCH-08S-SECURITY-HEADERS-CORS-RATE-LIMIT-SCAFFOLD-1"
+  },
+  "rateLimitPolicy": {
+    "id": "rate_limit",
+    "severity": "HIGH",
+    "noRuntimeChangeInThisPatch": true,
+    "requirements": [
+      "Public auth endpoints (/register, /login) require stricter rate limits and lockout policy.",
+      "Model/retrieval/mode routes require rate limits.",
+      "Admin/index routes require rate limits.",
+      "All expensive-operation routes require rate limits.",
+      "GET /health requires a rate limit because it performs a DB read via getVectorStoreStats.",
+      "Rate-limit policy must cover all 22 expensive-operation routes recorded in the route inventory."
+    ],
+    "mustCoverRouteGroups": ["auth", "mode", "admin-index", "admin-read", "debug", "health"],
+    "mustCoverExpensiveRouteCount": 22,
+    "enforcedBy": "PATCH-08S-SECURITY-HEADERS-CORS-RATE-LIMIT-SCAFFOLD-1"
+  },
+  "routeGuardPolicy": {
+    "id": "auth_guard",
+    "severity": "HIGH",
+    "noRuntimeChangeInThisPatch": true,
+    "requirements": [
+      "Every route must appear in the route inventory.",
+      "Route inventory drift must fail tests.",
+      "Public routes must be explicitly classified public.",
+      "Authenticated routes must require authenticate.",
+      "Mode routes must require authenticate.",
+      "Admin/index/read/debug routes must require allowAuthenticatedOrIndexSecret or stronger.",
+      "An unknown guard is not acceptable for Phase 9 readiness."
+    ],
+    "unknownGuardAcceptableForPhase9": false,
+    "driftMustFailTests": true,
+    "enforcedBy": "PATCH-08S-SECURITY-ROUTE-INVENTORY-1"
+  },
+  "adminDebugPolicy": {
+    "id": "admin_debug",
+    "severity": "MEDIUM",
+    "noRuntimeChangeInThisPatch": true,
+    "requirements": [
+      "Admin routes require an explicit admin_guard policy.",
+      "Debug routes require a debug_guard policy.",
+      "Debug/diagnostic route output must be minimized.",
+      "/routes and /health require a reconnaissance-minimization policy.",
+      "Admin/read/index routes require log_redaction and error_sanitization policy."
+    ],
+    "requiredPolicies": ["admin_guard", "debug_guard", "log_redaction", "error_sanitization", "route_recon_minimization"],
+    "enforcedBy": ["PATCH-08S-SECRETS-ENV-LOGGING-SAFETY-GATE-1", "PATCH-08S-SECURITY-HEADERS-CORS-RATE-LIMIT-SCAFFOLD-1"]
+  },
+  "querySecretPolicy": {
+    "id": "no_query_secret",
+    "severity": "HIGH",
+    "noRuntimeChangeInThisPatch": true,
+    "requirements": [
+      "INDEX_SECRET or any admin-equivalent secret must not be accepted via URL query string in the future hardened state.",
+      "The future accepted path must be header-only or stronger.",
+      "Current query-string acceptance is recorded as a known risk (server.js getAdminSecret reads req.query.secret).",
+      "All admin routes are flagged no_query_secret in the route inventory."
+    ],
+    "currentQuerySecretAcceptedRisk": true,
+    "futureAcceptedTransport": "header_only_or_stronger",
+    "adminRoutesFlaggedNoQuerySecret": 9,
+    "enforcedBy": "PATCH-08S-SECRETS-ENV-LOGGING-SAFETY-GATE-1"
+  },
+  "secretsEnvPolicy": {
+    "id": "secrets_env",
+    "severity": "HIGH",
+    "noRuntimeChangeInThisPatch": true,
+    "requirements": [
+      "P0 secrets must never be logged.",
+      "Required env vars must fail fast when missing.",
+      "Optional env vars must not silently enable insecure production fallbacks.",
+      "Production must not default to wildcard CORS.",
+      "No env values may be printed in reports, tests, or logs."
+    ],
+    "p0SecretsNeverLogged": true,
+    "requiredEnvFailFast": true,
+    "noInsecureProductionFallback": true,
+    "enforcedBy": "PATCH-08S-SECRETS-ENV-LOGGING-SAFETY-GATE-1"
+  },
+  "loggingRedactionPolicy": {
+    "id": "log_redaction",
+    "severity": "HIGH",
+    "noRuntimeChangeInThisPatch": true,
+    "mustRedactClasses": [
+      "P0_SECRET",
+      "P1_CLIENT_CONFIDENTIAL",
+      "P1_LEGAL_TAX_STRATEGY",
+      "P2_USER_DATA",
+      "P2_GENERATED_WORK_PRODUCT"
+    ],
+    "mustRedactFields": [
+      "TIN",
+      "client_name",
+      "financial_audit_figures",
+      "document_excerpts",
+      "raw_request_bodies",
+      "raw_model_prompts",
+      "raw_model_answers"
+    ],
+    "requirements": [
+      "Logs touching request/answer content must pass through redaction in the future hardened state.",
+      "Production logs must not contain raw user queries or PII/client identifiers."
+    ],
+    "enforcedBy": "PATCH-08S-SECRETS-ENV-LOGGING-SAFETY-GATE-1"
+  },
+  "thirdPartyEgressPolicy": {
+    "id": "third_party_egress_redaction",
+    "severity": "HIGH",
+    "noRuntimeChangeInThisPatch": true,
+    "requirements": [
+      "Langfuse / third-party egress requires a redaction and data-classification policy.",
+      "P1 data must not be sent to third-party observability without an approved policy.",
+      "Query/answer content must be classified and redacted before egress.",
+      "Third-party egress must be test-gated before Phase 9."
+    ],
+    "thirdParties": ["langfuse", "openai", "google_drive"],
+    "p1EgressDefault": "deny_without_approved_policy",
+    "enforcedBy": "PATCH-08S-SECRETS-ENV-LOGGING-SAFETY-GATE-1"
+  },
+  "errorDisclosurePolicy": {
+    "id": "error_sanitization",
+    "severity": "MEDIUM",
+    "noRuntimeChangeInThisPatch": true,
+    "requirements": [
+      "Production error responses must not expose raw error.message.",
+      "Production error responses must not expose stack traces.",
+      "Route catch blocks must eventually use a sanitizing helper/policy.",
+      "Diagnostic detail must be gated."
+    ],
+    "prohibitedInProduction": ["raw_error_message", "stack_trace"],
+    "enforcedBy": "PATCH-08S-SECRETS-ENV-LOGGING-SAFETY-GATE-1"
+  },
+  "tenantIsolationPolicy": {
+    "id": "tenant_isolation",
+    "severity": "CRITICAL",
+    "noRuntimeChangeInThisPatch": true,
+    "mandatoryBeforePhase9": true,
+    "requirements": [
+      "Tenant/client/matter isolation is mandatory before Phase 9.",
+      "User/client/matter data must be scoped.",
+      "Generated professional work product must be access-controlled.",
+      "Conversation routes touching user data require tenant_isolation.",
+      "Mode routes handling client facts require tenant_isolation.",
+      "PATCH-08S-TENANT-ISOLATION-GATE-1 is mandatory before Phase 9."
+    ],
+    "tenantIsolationRouteCount": 17,
+    "enforcedBy": "PATCH-08S-TENANT-ISOLATION-GATE-1"
+  },
+  "supabaseServiceRolePolicy": {
+    "id": "supabase_service_role",
+    "severity": "CRITICAL",
+    "noRuntimeChangeInThisPatch": true,
+    "calibratedWording": "Supabase service-role access may be acceptable only for tightly controlled server-only administrative/source-corpus operations. It is not acceptable as the default access path for user/client/matter data in Phase 9 without tenant-scoping, RLS, or an equivalent isolation model.",
+    "requirements": [
+      "Service-role-as-default-path for user/client/matter data is a CRITICAL risk.",
+      "The future tenant isolation gate must define permitted service-role use.",
+      "No DB/Supabase changes occur in this patch."
+    ],
+    "serviceRoleAsDefaultPathForUserDataRisk": "CRITICAL",
+    "enforcedBy": "PATCH-08S-TENANT-ISOLATION-GATE-1"
+  },
+  "promptInjectionPolicy": {
+    "id": "prompt_injection_control",
+    "severity": "HIGH",
+    "noRuntimeChangeInThisPatch": true,
+    "requirements": [
+      "User prompts must be treated as untrusted input.",
+      "User-provided instructions cannot override system/governance rules.",
+      "Prompt injection tests are required before Phase 9.",
+      "Generated professional documents must preserve source/authority discipline."
+    ],
+    "userPromptsUntrusted": true,
+    "enforcedBy": "PATCH-08S-STAGING-SECURITY-SMOKE-1"
+  },
+  "sourceAuthoritySpoofingPolicy": {
+    "id": "authority_spoofing_control",
+    "severity": "HIGH",
+    "noRuntimeChangeInThisPatch": true,
+    "requirements": [
+      "User-provided source references cannot create citations.",
+      "User-provided URLs/text cannot create source cards.",
+      "User-provided text cannot upgrade sourceAvailability or Authority Lock.",
+      "Authority remains controlled by the retrieval/source-card system, not by memory or user text.",
+      "Phase 10 source-governance remains deferred."
+    ],
+    "userTextCannotCreateAuthority": true,
+    "phase10SourceGovernanceDeferred": true,
+    "enforcedBy": "PATCH-08S-STAGING-SECURITY-SMOKE-1"
+  },
+  "requestSizePolicy": {
+    "id": "request_size_limit",
+    "severity": "MEDIUM",
+    "noRuntimeChangeInThisPatch": true,
+    "requirements": [
+      "Request-size limits must be policy-controlled.",
+      "Expensive endpoints require stricter size/rate policy.",
+      "Auth endpoints require strict body expectations.",
+      "Generated document routes in Phase 9 require a size policy before implementation."
+    ],
+    "currentBodyLimitObserved": "25mb (REQUEST_LIMIT default in server.js)",
+    "enforcedBy": "PATCH-08S-SECURITY-HEADERS-CORS-RATE-LIMIT-SCAFFOLD-1"
+  },
+  "reconnaissanceMinimizationPolicy": {
+    "id": "route_recon_minimization",
+    "severity": "MEDIUM",
+    "noRuntimeChangeInThisPatch": true,
+    "requirements": [
+      "Public /routes and /health require a future minimization or gating policy.",
+      "Debug/internal metadata must not be exposed publicly in production.",
+      "Route banners must not advertise admin secret usage."
+    ],
+    "appliesToRoutes": ["/", "/routes", "/health"],
+    "enforcedBy": "PATCH-08S-SECURITY-HEADERS-CORS-RATE-LIMIT-SCAFFOLD-1"
+  },
+  "phase8MemoryPolicy": {
+    "id": "phase8_memory_inactive",
+    "noRuntimeChangeInThisPatch": true,
+    "memoryActive": false,
+    "requirements": [
+      "Memory remains inactive.",
+      "No TINA_ENABLE_MEMORY_* flags are enabled.",
+      "No persistent memory.",
+      "No runtime memory.",
+      "No memory DB/Supabase schema.",
+      "No memory route/pipeline/frontend integration."
+    ],
+    "memoryFlagsMustRemainDisabled": [
+      "TINA_ENABLE_MEMORY_READS",
+      "TINA_ENABLE_MEMORY_WRITES",
+      "TINA_ENABLE_MATTER_MEMORY",
+      "TINA_ENABLE_MEMORY_SUGGESTIONS",
+      "TINA_ENABLE_MEMORY_DEBUG_TRACE"
+    ]
+  },
+  "phase9ReadinessBlockers": {
+    "phase9CanBegin": false,
+    "requiredCompleteBeforePhase9": [
+      "PATCH-08S-SECURITY-POLICY-FIXTURE-1",
+      "PATCH-08S-TENANT-ISOLATION-GATE-1",
+      "PATCH-08S-SECRETS-ENV-LOGGING-SAFETY-GATE-1",
+      "PATCH-08S-SECURITY-HEADERS-CORS-RATE-LIMIT-SCAFFOLD-1",
+      "PATCH-08S-STAGING-SECURITY-SMOKE-1",
+      "PATCH-08S-FINAL-CLOSURE-GATE-1"
+    ],
+    "minimumApprovedBeforePhase9": ["tenant_isolation", "log_redaction", "third_party_egress_redaction", "cors", "rate_limit"]
+  },
+  "deferredBoundaries": {
+    "phase10SourceGovernance": "deferred",
+    "phase10CourtMetadata": "deferred",
+    "phase10CurrentnessSupersession": "deferred",
+    "phase11Observability": "deferred",
+    "phase11PerformanceCacheCompression": "deferred",
+    "phase12DocumentAdvisory": "deferred",
+    "phase14MobileAfterPhase13": "deferred",
+    "phase7bClarificationBoundaryTuning": "separate",
+    "phase9ImplementedInThisPatch": false
+  },
+  "phase8XDiagnosticSeparation": {
+    "id": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-DIAGNOSTIC-1",
+    "isSeparate": true,
+    "isPersistentMemory": false,
+    "isPhase8SSecurity": false,
+    "implementedInThisPatch": false,
+    "runBeforePhase9AsSeparateDiagnostic": true,
+    "note": "Short-term chat/session context carryover diagnostic; distinct from persistent memory and from Phase 8S security work."
+  },
+  "futurePatchDependencies": {
+    "PATCH-08S-TENANT-ISOLATION-GATE-1": ["tenant_isolation", "supabase_service_role"],
+    "PATCH-08S-SECRETS-ENV-LOGGING-SAFETY-GATE-1": ["secrets_env", "log_redaction", "third_party_egress_redaction", "error_sanitization", "no_query_secret"],
+    "PATCH-08S-SECURITY-HEADERS-CORS-RATE-LIMIT-SCAFFOLD-1": ["cors", "security_headers", "rate_limit", "request_size_limit", "route_recon_minimization"],
+    "PATCH-08S-STAGING-SECURITY-SMOKE-1": ["prompt_injection_control", "authority_spoofing_control"],
+    "PATCH-08S-FINAL-CLOSURE-GATE-1": ["all"]
+  },
+  "prohibitedClaims": [
+    "runtime security hardening is already implemented",
+    "middleware is already wired",
+    "Phase 9 has started",
+    "persistent memory exists",
+    "memory is active",
+    "CORS/headers/rate-limit are already enforced at runtime"
+  ],
+  "testCases": [
+    { "id": "cors_no_wildcard_credentials", "category": "corsPolicy", "expect": "wildcard_with_credentials is prohibited" },
+    { "id": "cors_fail_closed", "category": "corsPolicy", "expect": "production CORS fails closed without allowlist" },
+    { "id": "headers_required", "category": "securityHeadersPolicy", "expect": "required future headers listed" },
+    { "id": "rate_limit_covers_expensive", "category": "rateLimitPolicy", "expect": "covers all 22 expensive routes" },
+    { "id": "health_rate_limited", "category": "rateLimitPolicy", "expect": "GET /health requires rate_limit due to DB read" },
+    { "id": "guard_drift_fails", "category": "routeGuardPolicy", "expect": "route inventory drift must fail tests" },
+    { "id": "unknown_guard_rejected", "category": "routeGuardPolicy", "expect": "unknown guard not acceptable for Phase 9" },
+    { "id": "admin_debug_guards", "category": "adminDebugPolicy", "expect": "admin_guard and debug_guard required" },
+    { "id": "no_query_secret_future", "category": "querySecretPolicy", "expect": "INDEX_SECRET via query prohibited in hardened state" },
+    { "id": "secrets_never_logged", "category": "secretsEnvPolicy", "expect": "P0 secrets never logged" },
+    { "id": "redaction_classes", "category": "loggingRedactionPolicy", "expect": "P0/P1/P2, TIN, client_name, figures, raw prompts/answers redacted" },
+    { "id": "egress_redaction", "category": "thirdPartyEgressPolicy", "expect": "Langfuse/query-answer redaction required" },
+    { "id": "error_no_stack_prod", "category": "errorDisclosurePolicy", "expect": "no raw error.message/stack in production" },
+    { "id": "tenant_isolation_mandatory", "category": "tenantIsolationPolicy", "expect": "mandatory before Phase 9" },
+    { "id": "service_role_calibrated", "category": "supabaseServiceRolePolicy", "expect": "calibrated wording present" },
+    { "id": "prompt_untrusted", "category": "promptInjectionPolicy", "expect": "user prompts untrusted" },
+    { "id": "authority_spoofing_blocked", "category": "sourceAuthoritySpoofingPolicy", "expect": "user text cannot create citations/source cards/authority" },
+    { "id": "request_size_policy", "category": "requestSizePolicy", "expect": "request-size limits policy-controlled" },
+    { "id": "recon_min", "category": "reconnaissanceMinimizationPolicy", "expect": "/health and /routes minimization" },
+    { "id": "memory_inactive", "category": "phase8MemoryPolicy", "expect": "memory inactive, flags disabled" },
+    { "id": "phase9_blockers", "category": "phase9ReadinessBlockers", "expect": "future Phase 8S gates required" },
+    { "id": "deferred_boundaries", "category": "deferredBoundaries", "expect": "Phase 10/11 deferred" },
+    { "id": "phase8x_separate", "category": "phase8XDiagnosticSeparation", "expect": "08X separate, not implemented here" }
+  ]
+}
