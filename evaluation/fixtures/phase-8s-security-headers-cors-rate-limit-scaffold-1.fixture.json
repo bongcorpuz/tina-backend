@@ -1,0 +1,359 @@
+{
+  "patch": {
+    "id": "PATCH-08S-SECURITY-HEADERS-CORS-RATE-LIMIT-SCAFFOLD-1",
+    "phase": "Phase 8S",
+    "taskType": "security_headers_cors_rate_limit_scaffold_fixture_test_report_only",
+    "title": "Security Headers / CORS / Rate-Limit Scaffold"
+  },
+  "decision": "SECURITY HEADERS CORS RATE LIMIT SCAFFOLD PASS WITH STRICT RECOMMENDATIONS",
+  "baseCommit": "b81579f PATCH-08S-SECRETS-ENV-LOGGING-SAFETY-GATE-1 add secrets env logging safety gate",
+  "scaffoldVersion": "1.0.0",
+  "scope": "Non-runtime scaffold contracts and policy fixtures for security headers, CORS, rate limiting, and request-size posture before Phase 9. No controls are implemented and no dependencies are installed.",
+  "nonRuntimePatch": true,
+  "runtimeSecurityImplemented": false,
+  "corsImplemented": false,
+  "securityHeadersImplemented": false,
+  "rateLimitImplemented": false,
+  "requestSizeChanged": false,
+  "middlewareWired": false,
+  "dependenciesInstalled": false,
+  "productionHardened": false,
+  "phase9Unblocked": false,
+  "tenantIsolationImplemented": false,
+  "secretsLoggingRuntimeRedactionImplemented": false,
+  "memoryActive": false,
+  "persistentMemoryExists": false,
+  "sourceArtifacts": [
+    "PATCH-08S-SECURITY-HARDENING-DESIGN-1_SECURITY_ARCHITECTURE_THREAT_MODEL_REPORT.md",
+    "evaluation/fixtures/phase-8s-security-route-inventory-1.fixture.json",
+    "PATCH-08S-SECURITY-ROUTE-INVENTORY-1_ROUTE_INVENTORY_REPORT.md",
+    "evaluation/fixtures/phase-8s-security-policy-fixture-1.fixture.json",
+    "PATCH-08S-SECURITY-POLICY-FIXTURE-1_SECURITY_POLICY_FIXTURE_REPORT.md",
+    "evaluation/fixtures/phase-8s-tenant-isolation-gate-1.fixture.json",
+    "PATCH-08S-TENANT-ISOLATION-GATE-1_TENANT_ISOLATION_GATE_REPORT.md",
+    "evaluation/fixtures/phase-8s-secrets-env-logging-safety-gate-1.fixture.json",
+    "PATCH-08S-SECRETS-ENV-LOGGING-SAFETY-GATE-1_SECRETS_ENV_LOGGING_SAFETY_GATE_REPORT.md",
+    "server.js (read-only, for CORS/header/rate-limit/body-limit pattern identification)"
+  ],
+  "sourceTextFindings": {
+    "corsObserved": "server.js uses cors() with origin callback; default origin resolves to '*' when CORS_ORIGIN/ALLOWED_ORIGINS unset, and credentials:true is set — wildcard-with-credentials risk when unconfigured.",
+    "securityHeadersObserved": "No helmet and no security-header middleware present.",
+    "rateLimitObserved": "No express-rate-limit or equivalent present; no per-route throttling.",
+    "requestSizeObserved": "express.json and express.urlencoded use REQUEST_LIMIT default '25mb'.",
+    "note": "Findings are read-only observations. This patch changes none of them."
+  },
+  "routeInventoryIntegration": {
+    "routeInventoryFixture": "evaluation/fixtures/phase-8s-security-route-inventory-1.fixture.json",
+    "totalRoutes": 30,
+    "expensiveRouteCount": 22,
+    "tenantIsolationRouteCount": 17,
+    "noQuerySecretAdminRouteCount": 9,
+    "modeRouteCount": 12,
+    "conversationRouteCount": 3,
+    "debugRouteCount": 1,
+    "publicRouteCount": 6,
+    "healthPerformsDbRead": true,
+    "healthRequiresRateLimit": true,
+    "note": "The scaffold test recomputes these counts from the route inventory fixture and requires exact agreement so the fixtures cannot drift apart."
+  },
+  "securityPolicyIntegration": {
+    "securityPolicyFixture": "evaluation/fixtures/phase-8s-security-policy-fixture-1.fixture.json",
+    "crossCheckedCategories": [
+      "corsPolicy",
+      "securityHeadersPolicy",
+      "rateLimitPolicy",
+      "requestSizePolicy",
+      "reconnaissanceMinimizationPolicy",
+      "errorDisclosurePolicy",
+      "loggingRedactionPolicy",
+      "querySecretPolicy",
+      "tenantIsolationPolicy",
+      "thirdPartyEgressPolicy"
+    ]
+  },
+  "tenantIsolationIntegration": {
+    "tenantIsolationGateFixture": "evaluation/fixtures/phase-8s-tenant-isolation-gate-1.fixture.json",
+    "tenantIsolationGatePatchId": "PATCH-08S-TENANT-ISOLATION-GATE-1",
+    "scaffoldReplacesTenantIsolation": false,
+    "tenantIsolationRemainsMandatoryBeforePhase9": true
+  },
+  "secretsEnvLoggingIntegration": {
+    "secretsEnvLoggingGateFixture": "evaluation/fixtures/phase-8s-secrets-env-logging-safety-gate-1.fixture.json",
+    "secretsEnvLoggingGatePatchId": "PATCH-08S-SECRETS-ENV-LOGGING-SAFETY-GATE-1",
+    "scaffoldReplacesSecretsEnvLoggingSafety": false,
+    "secretsEnvLoggingRemainsMandatoryBeforePhase9": true
+  },
+  "corsScaffoldPolicy": {
+    "id": "cors",
+    "severity": "HIGH",
+    "noRuntimeChangeInThisPatch": true,
+    "requirements": [
+      "Wildcard origin ('*') must not be used together with credentials:true.",
+      "Production CORS requires an explicit origin allowlist.",
+      "A missing production allowlist must fail closed (deny), not default to wildcard.",
+      "Staging and production origins must be separately classified.",
+      "Local development origins must be explicitly classified, not implied by production config.",
+      "credentials:true requires an explicit origin match.",
+      "CORS rejection must not leak sensitive diagnostic details.",
+      "CORS policy must be test-gated before Phase 9."
+    ],
+    "prohibited": ["wildcard_with_credentials", "production_wildcard_default", "implicit_origin_reflection_with_credentials"],
+    "failClosedInProduction": true,
+    "originClasses": ["local_development", "staging", "production"],
+    "enforcedBy": "future approved CORS implementation patch"
+  },
+  "securityHeadersScaffoldPolicy": {
+    "id": "security_headers",
+    "severity": "MEDIUM",
+    "noRuntimeChangeInThisPatch": true,
+    "headers": [
+      { "name": "X-Content-Type-Options", "classification": "required_backend_header" },
+      { "name": "Referrer-Policy", "classification": "required_backend_header" },
+      { "name": "X-Frame-Options", "classification": "required_backend_header" },
+      { "name": "frame-ancestors", "classification": "conditional_browser_policy" },
+      { "name": "Content-Security-Policy", "classification": "conditional_browser_policy" },
+      { "name": "Permissions-Policy", "classification": "required_backend_header" },
+      { "name": "Cross-Origin-Resource-Policy", "classification": "conditional_browser_policy" },
+      { "name": "Cross-Origin-Opener-Policy", "classification": "conditional_browser_policy" },
+      { "name": "Strict-Transport-Security", "classification": "required_platform_or_proxy_review" }
+    ],
+    "headerClassifications": ["required_backend_header", "required_platform_or_proxy_review", "conditional_browser_policy", "future_review_required"],
+    "notes": [
+      "Content-Security-Policy applies where the backend returns renderable content.",
+      "X-Frame-Options or a frame-ancestors CSP directive is required to prevent framing.",
+      "HSTS should be evaluated at the platform/proxy level (required_platform_or_proxy_review)."
+    ],
+    "enforcedBy": "future approved security-header implementation patch"
+  },
+  "rateLimitScaffoldPolicy": {
+    "id": "rate_limit",
+    "severity": "HIGH",
+    "noRuntimeChangeInThisPatch": true,
+    "requirements": [
+      "Public auth endpoints (/register, /login) require stricter rate limits and lockout policy.",
+      "Public reconnaissance routes (/, /routes, /health) require a rate-limit policy.",
+      "Model/retrieval/mode routes require rate limits.",
+      "Admin/index/read/debug routes require rate limits.",
+      "All expensive-operation routes require rate limits.",
+      "GET /health requires a rate limit because it performs a DB read via getVectorStoreStats.",
+      "Rate-limit policy must cover all 22 expensive-operation routes from the route inventory.",
+      "Rate-limit policy must cover all 12 mode routes.",
+      "Rate-limit policy must cover all 9 no_query_secret admin routes.",
+      "Rate-limit policy must cover POST /register and POST /login.",
+      "Future policy should support routeGroup-based tiers.",
+      "Future policy should support fail-closed / deny-by-default for unclassified expensive routes."
+    ],
+    "mustCoverRouteGroups": ["auth", "mode", "admin-index", "admin-read", "debug", "health", "root", "conversation"],
+    "mustCoverExpensiveRouteCount": 22,
+    "mustCoverModeRouteCount": 12,
+    "mustCoverNoQuerySecretAdminRouteCount": 9,
+    "mustCoverAuthRoutes": ["POST /register", "POST /login"],
+    "mustCoverHealthDbRead": true,
+    "supportsRouteGroupTiers": true,
+    "failClosedForUnclassifiedExpensiveRoutes": true,
+    "enforcedBy": "future approved rate-limit implementation patch"
+  },
+  "requestSizeScaffoldPolicy": {
+    "id": "request_size_limit",
+    "severity": "MEDIUM",
+    "noRuntimeChangeInThisPatch": true,
+    "requirements": [
+      "Request-size limits must be policy-controlled.",
+      "Expensive endpoints require stricter size/rate policy.",
+      "Auth endpoints require strict body expectations.",
+      "Future Phase 9 generated document routes require a size policy before implementation."
+    ],
+    "currentBodyLimitObserved": "25mb (REQUEST_LIMIT default in server.js) — recorded as a finding, not changed.",
+    "coversAuthRoutes": true,
+    "coversExpensiveRoutes": true,
+    "coversFuturePhase9DocumentRoutes": true,
+    "enforcedBy": "future approved request-size implementation patch"
+  },
+  "routeGroupPolicyMapping": [
+    { "routeGroup": "root", "examples": ["GET /", "GET /routes"], "requiredFuturePolicies": ["rate_limit", "security_headers", "route_recon_minimization", "error_sanitization", "cors"] },
+    { "routeGroup": "health", "examples": ["GET /health"], "requiredFuturePolicies": ["rate_limit", "security_headers", "route_recon_minimization", "error_sanitization", "log_redaction", "cors"] },
+    { "routeGroup": "auth", "examples": ["POST /register", "POST /login"], "requiredFuturePolicies": ["rate_limit", "request_size_limit", "security_headers", "log_redaction", "error_sanitization", "tenant_isolation", "cors"] },
+    { "routeGroup": "conversation", "examples": ["POST /conversations", "GET /conversations", "GET /conversations/:conversationId/messages"], "requiredFuturePolicies": ["rate_limit", "security_headers", "log_redaction", "tenant_isolation", "error_sanitization", "cors"] },
+    { "routeGroup": "mode", "examples": ["POST /ask", "POST /tax", "POST /audit"], "requiredFuturePolicies": ["rate_limit", "request_size_limit", "security_headers", "log_redaction", "tenant_isolation", "third_party_egress_redaction", "prompt_injection_control", "authority_spoofing_control", "error_sanitization", "cors"] },
+    { "routeGroup": "admin-index", "examples": ["GET /index-drive", "GET /reindex", "GET /admin/index-drive", "GET /reindex-targeted", "GET /index-status"], "requiredFuturePolicies": ["rate_limit", "admin_guard", "no_query_secret", "security_headers", "log_redaction", "error_sanitization", "route_recon_minimization", "cors"] },
+    { "routeGroup": "admin-read", "examples": ["GET /list", "GET /read-drive", "GET /vector-stats"], "requiredFuturePolicies": ["rate_limit", "admin_guard", "no_query_secret", "security_headers", "log_redaction", "error_sanitization", "route_recon_minimization", "cors"] },
+    { "routeGroup": "debug", "examples": ["GET /debug/db-identity"], "requiredFuturePolicies": ["rate_limit", "admin_guard", "debug_guard", "no_query_secret", "security_headers", "log_redaction", "error_sanitization", "route_recon_minimization", "cors"] },
+    { "routeGroup": "fallback", "examples": ["fallback-404"], "requiredFuturePolicies": ["security_headers", "route_recon_minimization", "error_sanitization", "cors"] }
+  ],
+  "expensiveRoutePolicyMapping": {
+    "expensiveRouteKeys": [
+      "GET /health", "POST /ask", "POST /tax", "POST /review", "POST /quiz", "POST /diagnostic",
+      "POST /source", "POST /audit", "POST /case", "POST /debug", "POST /patch", "POST /progress",
+      "POST /feedback", "GET /index-drive", "GET /reindex", "GET /admin/index-drive",
+      "GET /reindex-targeted", "GET /index-status", "GET /debug/db-identity", "GET /list",
+      "GET /read-drive", "GET /vector-stats"
+    ],
+    "requiredFuturePoliciesPerExpensiveRoute": ["rate_limit", "error_sanitization"],
+    "conditionalFuturePolicies": {
+      "log_redaction": "where the route may log request/answer/user content",
+      "third_party_egress_redaction": "where the route egresses to OpenAI/Langfuse/Google Drive",
+      "tenant_isolation": "where the route touches user/client/matter data"
+    },
+    "count": 22
+  },
+  "authRoutePolicyMapping": {
+    "routes": ["POST /register", "POST /login"],
+    "requiredFuturePolicies": ["rate_limit", "request_size_limit", "error_sanitization", "log_redaction"],
+    "bruteForceCredentialStuffingPolicyRequiredInHardenedState": true,
+    "noRuntimeImplementationInThisPatch": true
+  },
+  "adminDebugPolicyMapping": {
+    "routes": [
+      "GET /index-drive", "GET /reindex", "GET /admin/index-drive", "GET /reindex-targeted",
+      "GET /index-status", "GET /list", "GET /read-drive", "GET /vector-stats", "GET /debug/db-identity"
+    ],
+    "requiredFuturePolicies": ["no_query_secret", "admin_guard", "rate_limit", "error_sanitization", "log_redaction", "route_recon_minimization"],
+    "debugRoutesAlsoRequire": ["debug_guard"],
+    "count": 9
+  },
+  "healthRoutesPolicyMapping": {
+    "route": "GET /health",
+    "performsDbRead": true,
+    "requiredFuturePolicies": ["rate_limit", "route_recon_minimization", "security_headers", "error_sanitization", "log_redaction"]
+  },
+  "publicReconPolicyMapping": {
+    "routes": ["GET /", "GET /routes", "GET /health", "fallback-404"],
+    "requiredFuturePolicies": ["route_recon_minimization", "security_headers", "rate_limit", "error_sanitization"],
+    "outputMinimizationRequiredInHardenedState": true
+  },
+  "futureImplementationConstraints": {
+    "requirements": [
+      "Future runtime scaffold implementation must be a separate approved patch.",
+      "No package install until the implementation patch is approved.",
+      "No middleware wiring until this scaffold policy passes.",
+      "CORS must fail closed in production.",
+      "Unclassified routes must fail tests before runtime wiring.",
+      "Route inventory drift must fail tests.",
+      "Security headers must be explicitly classified.",
+      "Rate-limit tiers must be route-group mapped.",
+      "All expensive routes must be covered by rate-limit policy.",
+      "All admin routes must have a no_query_secret policy.",
+      "All public diagnostic routes must have a reconnaissance-minimization policy."
+    ],
+    "packageInstallAllowedInThisPatch": false,
+    "middlewareWiringAllowedInThisPatch": false,
+    "runtimeChangeAllowedInThisPatch": false
+  },
+  "futureSmokeRequirements": [
+    "CORS rejects unapproved origins.",
+    "CORS permits approved staging/production origins only.",
+    "Wildcard origin with credentials:true cannot pass.",
+    "Security headers present where expected.",
+    "Rate-limit triggers on auth/model/admin routes.",
+    "GET /health does not leak sensitive details.",
+    "GET /routes output is minimized or gated in the hardened state.",
+    "Production-mode errors are sanitized.",
+    "No secret values appear in responses or logs."
+  ],
+  "phase9Blockers": {
+    "phase9CanBegin": false,
+    "requiredCompleteBeforePhase9": [
+      "PATCH-08S-SECURITY-HEADERS-CORS-RATE-LIMIT-SCAFFOLD-1",
+      "PATCH-08S-STAGING-SECURITY-SMOKE-1",
+      "PATCH-08S-FINAL-CLOSURE-GATE-1"
+    ],
+    "futureImplementationGateRequiredOrScheduled": true,
+    "tenantIsolationGateMustRemainSatisfied": true,
+    "secretsEnvLoggingGateMustRemainSatisfied": true
+  },
+  "requiredFutureTests": [
+    "wildcard+credentials CORS rejected",
+    "production CORS missing allowlist fails closed",
+    "allowed origin list enforced",
+    "security headers emitted on relevant responses",
+    "HSTS platform/proxy review recorded",
+    "rate limits cover all expensive routes",
+    "auth endpoints have stricter rate limits",
+    "admin/index/read/debug routes rate limited",
+    "unclassified routes fail policy tests",
+    "/health and /routes reconnaissance minimized or gated",
+    "no runtime implementation without fixture coverage"
+  ],
+  "prohibitedClaims": [
+    "CORS hardening is implemented",
+    "security headers are implemented",
+    "rate limiting is implemented",
+    "request-size changes are implemented",
+    "runtime middleware is wired",
+    "package dependencies are installed",
+    "production is hardened",
+    "Phase 9 is unblocked",
+    "runtime security hardening is complete",
+    "tenant isolation is implemented",
+    "secrets/logging runtime redaction is implemented",
+    "persistent memory exists",
+    "Phase 8 memory is active"
+  ],
+  "deferredBoundaries": {
+    "phase9ImplementedInThisPatch": false,
+    "phase10SourceGovernance": "deferred",
+    "phase10CourtMetadata": "deferred",
+    "phase10CurrentnessSupersession": "deferred",
+    "phase11Observability": "deferred",
+    "phase11PerformanceCacheCompression": "deferred",
+    "phase12DocumentAdvisory": "deferred",
+    "phase14MobileAfterPhase13": "deferred",
+    "phase7bClarificationBoundaryTuning": "separate"
+  },
+  "phase8MemoryPolicy": {
+    "id": "phase8_memory_inactive",
+    "memoryActive": false,
+    "requirements": [
+      "Memory remains inactive.",
+      "No TINA_ENABLE_MEMORY_* flags are enabled.",
+      "No persistent memory.",
+      "No runtime memory.",
+      "No memory DB/Supabase schema.",
+      "No memory route/pipeline/frontend integration."
+    ],
+    "memoryFlagsMustRemainDisabled": [
+      "TINA_ENABLE_MEMORY_READS",
+      "TINA_ENABLE_MEMORY_WRITES",
+      "TINA_ENABLE_MATTER_MEMORY",
+      "TINA_ENABLE_MEMORY_SUGGESTIONS",
+      "TINA_ENABLE_MEMORY_DEBUG_TRACE"
+    ]
+  },
+  "phase8XDiagnosticSeparation": {
+    "id": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-DIAGNOSTIC-1",
+    "isSeparate": true,
+    "isPersistentMemory": false,
+    "isPhase8SSecurity": false,
+    "implementedInThisPatch": false,
+    "runBeforePhase9AsSeparateDiagnostic": true
+  },
+  "futurePatchDependencies": {
+    "PATCH-08S-STAGING-SECURITY-SMOKE-1": ["cors", "security_headers", "rate_limit", "request_size_limit", "route_recon_minimization", "error_sanitization"],
+    "PATCH-08S-FINAL-CLOSURE-GATE-1": ["all"],
+    "future_cors_headers_rate_limit_implementation_patch": ["cors", "security_headers", "rate_limit", "request_size_limit"]
+  },
+  "testCases": [
+    { "id": "cors_no_wildcard_credentials", "category": "corsScaffoldPolicy", "expect": "wildcard_with_credentials prohibited" },
+    { "id": "cors_fail_closed", "category": "corsScaffoldPolicy", "expect": "production fails closed without allowlist" },
+    { "id": "cors_origin_classes", "category": "corsScaffoldPolicy", "expect": "local/staging/production separately classified" },
+    { "id": "headers_classified", "category": "securityHeadersScaffoldPolicy", "expect": "required headers listed and classified" },
+    { "id": "hsts_platform_review", "category": "securityHeadersScaffoldPolicy", "expect": "HSTS platform/proxy review" },
+    { "id": "rate_limit_expensive", "category": "rateLimitScaffoldPolicy", "expect": "covers 22 expensive routes" },
+    { "id": "rate_limit_mode", "category": "rateLimitScaffoldPolicy", "expect": "covers 12 mode routes" },
+    { "id": "rate_limit_admin", "category": "rateLimitScaffoldPolicy", "expect": "covers 9 no_query_secret admin routes" },
+    { "id": "rate_limit_auth", "category": "rateLimitScaffoldPolicy", "expect": "covers /register and /login" },
+    { "id": "rate_limit_health", "category": "rateLimitScaffoldPolicy", "expect": "covers /health DB read" },
+    { "id": "request_size", "category": "requestSizeScaffoldPolicy", "expect": "auth/expensive/future doc routes covered" },
+    { "id": "route_group_mapping", "category": "routeGroupPolicyMapping", "expect": "public/conversation/mode/admin-index/admin-read/debug present" },
+    { "id": "public_recon", "category": "publicReconPolicyMapping", "expect": "/, /routes, /health, fallback-404 covered" },
+    { "id": "admin_debug", "category": "adminDebugPolicyMapping", "expect": "no_query_secret + guards + rate_limit + sanitization" },
+    { "id": "integration", "category": "securityPolicyIntegration", "expect": "cross-checks policy fixture categories" },
+    { "id": "tenant_secrets_dep", "category": "tenantIsolationIntegration", "expect": "tenant + secrets gates referenced" },
+    { "id": "impl_constraints", "category": "futureImplementationConstraints", "expect": "no install/wiring/runtime here" },
+    { "id": "smoke_reqs", "category": "futureSmokeRequirements", "expect": "future smoke enumerated" },
+    { "id": "phase9_blockers", "category": "phase9Blockers", "expect": "scaffold + smoke + closure + gates" },
+    { "id": "prohibited_claims", "category": "prohibitedClaims", "expect": "no implemented/hardened claims" },
+    { "id": "deferred", "category": "deferredBoundaries", "expect": "Phase 9/10/11/12/14 preserved" },
+    { "id": "phase8x", "category": "phase8XDiagnosticSeparation", "expect": "08X separate" }
+  ]
+}

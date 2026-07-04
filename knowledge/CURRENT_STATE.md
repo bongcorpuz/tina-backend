@@ -3083,3 +3083,72 @@ PATCH-08X-CHAT-CONTEXT-CARRYOVER-DIAGNOSTIC-1 remains a separate non-security di
 Next required task:
 PATCH-08S-SECURITY-HEADERS-CORS-RATE-LIMIT-SCAFFOLD-1
 ```
+
+Phase 8S security headers / CORS / rate-limit scaffold state (2026-07-04):
+
+```text
+PATCH-08S-SECURITY-HEADERS-CORS-RATE-LIMIT-SCAFFOLD-1 is complete.
+Decision: SECURITY HEADERS CORS RATE LIMIT SCAFFOLD PASS WITH STRICT RECOMMENDATIONS.
+Type: security headers/CORS/rate-limit scaffold fixture-test-report patch only (non-runtime).
+Base commit: b81579f PATCH-08S-SECRETS-ENV-LOGGING-SAFETY-GATE-1 add secrets env logging safety gate.
+
+Files created:
+evaluation/fixtures/phase-8s-security-headers-cors-rate-limit-scaffold-1.fixture.json
+tests/patch-08s-security-headers-cors-rate-limit-scaffold-1.test.mjs
+PATCH-08S-SECURITY-HEADERS-CORS-RATE-LIMIT-SCAFFOLD-1_SECURITY_HEADERS_CORS_RATE_LIMIT_SCAFFOLD_REPORT.md
+
+Files updated:
+knowledge/CURRENT_STATE.md
+
+Scaffold policy summary (all implementation flags false; no controls implemented, no dependencies installed):
+- CORS scaffold: no wildcard+credentials; production explicit allowlist; fail-closed when missing;
+  local/staging/production origin classes; credentials require explicit origin match.
+- Security headers scaffold: X-Content-Type-Options, Referrer-Policy, X-Frame-Options,
+  Permissions-Policy (backend); frame-ancestors, CSP, CORP, COOP (conditional); HSTS (platform/proxy review).
+- Rate-limit scaffold: covers auth (/register, /login), all 12 mode routes, all 22 expensive routes,
+  all 9 no_query_secret admin routes, and /health (DB read); route-group tiers; fail-closed for
+  unclassified expensive routes.
+- Request-size scaffold: policy-controlled for auth/expensive/future Phase 9 document routes
+  (observed 25mb default recorded as a finding only).
+
+Route inventory integration (cross-checked and required to agree by the test):
+30 routes; 22 expensive; 17 tenant_isolation; 9 no_query_secret admin; 12 mode; 3 conversation;
+1 debug; 6 public; GET /health DB read requires rate_limit.
+
+Dependencies preserved (not replaced by this scaffold):
+- Tenant/client/matter isolation remains mandatory before Phase 9 (PATCH-08S-TENANT-ISOLATION-GATE-1).
+- Secrets/env/logging safety (P0/P1/P2 redaction, env validation, error sanitization) remains
+  mandatory before Phase 9 (PATCH-08S-SECRETS-ENV-LOGGING-SAFETY-GATE-1).
+
+Validation:
+node tests/patch-08s-security-headers-cors-rate-limit-scaffold-1.test.mjs - PASS / 27 passed / 0 failed / 208 assertions.
+node tests/patch-08s-secrets-env-logging-safety-gate-1.test.mjs - PASS / 24 passed / 0 failed / 230 assertions.
+node tests/patch-08s-tenant-isolation-gate-1.test.mjs - PASS / 21 passed / 0 failed / 163 assertions.
+node tests/patch-08s-security-policy-fixture-1.test.mjs - PASS / 29 passed / 0 failed / 154 assertions.
+node tests/patch-08s-security-route-inventory-1.test.mjs - PASS / 21 passed / 0 failed / 1193 assertions.
+npm run guard:files - PASS.
+npm test - GATE PASSED / 0 failed.
+
+No runtime CORS implementation occurred.
+No runtime security headers implementation occurred.
+No runtime rate-limit implementation occurred.
+No request-size runtime change occurred.
+No package.json/package-lock.json changes and no dependency installs (no helmet/express-rate-limit/cors install).
+No middleware wiring, server.js, route, auth, DB/Supabase, env, logging, Langfuse, or error-handling changes occurred.
+No deployment or production changes occurred.
+Phase 8 remains closed; memory remains inactive; all TINA_ENABLE_MEMORY_* flags remain OFF.
+No Phase 9/10/11 implementation occurred.
+
+Phase 9 remains Professional Workflow Co-Pilot but remains BLOCKED pending Phase 8S completion:
+PATCH-08S-STAGING-SECURITY-SMOKE-1 and PATCH-08S-FINAL-CLOSURE-GATE-1 outstanding; tenant-isolation
+and secrets/env/logging gates must remain satisfied; future CORS/header/rate-limit runtime
+implementation requires a separate approved patch (no package install/middleware wiring until then).
+
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-DIAGNOSTIC-1 remains a separate non-security diagnostic;
+not persistent memory, not Phase 8S security, and not implemented here.
+
+Phase 10 remains deferred; Phase 11 remains deferred; Phase 7B clarification boundary tuning remains separate.
+
+Next required task:
+PATCH-08S-STAGING-SECURITY-SMOKE-1
+```
