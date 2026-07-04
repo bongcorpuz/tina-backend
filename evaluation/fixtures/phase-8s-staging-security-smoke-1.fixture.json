@@ -2,12 +2,12 @@
   "patch": {
     "id": "PATCH-08S-STAGING-SECURITY-SMOKE-1",
     "phase": "Phase 8S",
-    "taskType": "staging_security_smoke_evidence_gate_rerun",
-    "title": "Phase 8S Staging Security Smoke (rerun after CORS remediation)"
+    "taskType": "staging_security_smoke_evidence_gate_rerun_with_frontend_allowlist",
+    "title": "Phase 8S Staging Security Smoke (rerun after CORS remediation and frontend allowlist)"
   },
   "decision": "STAGING SECURITY SMOKE WARNING WITH STRICT RECOMMENDATIONS",
-  "baseCommit": "a396f67 PATCH-08S-CORS-STAGING-REMEDIATION-1 fix credentialed CORS fail-open",
-  "smokeVersion": "1.0.0",
+  "baseCommit": "b44b80e PATCH-08S-STAGING-SECURITY-SMOKE-1 add staging security smoke",
+  "smokeVersion": "2.0.0",
   "nonRuntimePatch": true,
   "nonRuntimeDeclaration": {
     "noRuntimeChangeInThisPatch": true,
@@ -20,6 +20,14 @@
     "noPhase9Or10Or11Work": true
   },
   "remediationCommit": "a396f67",
+  "allowlistUpdate": {
+    "allowedFrontendOrigin": "https://tina-fawn.vercel.app",
+    "source": "user_confirmation",
+    "renderEnvVariableNamesExpected": ["CORS_ORIGIN", "ALLOWED_ORIGINS"],
+    "trailingSlash": false,
+    "livePositiveCorsConfirmsFrontendAllowed": true,
+    "note": "Only the non-secret frontend origin is recorded. No env values are recorded."
+  },
   "remediationIntegration": {
     "remediationPatchId": "PATCH-08S-CORS-STAGING-REMEDIATION-1",
     "remediationCommit": "a396f67",
@@ -30,8 +38,11 @@
   },
   "stagingTarget": {
     "baseUrlSource": "repo_documentation",
+    "baseUrl": "https://tina-backend-staging.onrender.com",
     "baseUrlHostname": "tina-backend-staging.onrender.com",
     "baseUrlSecretBearing": false,
+    "frontendOrigin": "https://tina-fawn.vercel.app",
+    "negativeSmokeOrigin": "https://phase8s-smoke.invalid",
     "timestamp": "2026-07-04",
     "requestTool": "curl"
   },
@@ -39,12 +50,12 @@
     "confirmedCommit": null,
     "confirmedBy": "behavior_confirmed",
     "freshnessStatus": "behavior_confirmed",
-    "note": "No commit marker was captured; the live CORS behavior change (unknown origin no longer reflected and no Access-Control-Allow-Credentials) confirms the a396f67 remediation is deployed. The previous smoke on the pre-remediation deploy reflected the unknown origin with credentials; this rerun does not."
+    "note": "No commit marker captured. Live CORS behavior confirms both the a396f67 remediation (unknown origin denied) and the frontend allowlist (https://tina-fawn.vercel.app allowed with credentials, exact match)."
   },
   "smokeExecution": {
     "timestamp": "2026-07-04",
     "tool": "curl",
-    "totalChecks": 9,
+    "totalChecks": 11,
     "destructive": false,
     "authenticatedChecksRun": false,
     "modelChecksRun": false,
@@ -99,15 +110,17 @@
     "remediationCommit": "a396f67"
   },
   "checks": [
-    { "checkId": "get-root", "method": "GET", "path": "/", "timestamp": "2026-07-04", "statusCode": 200, "durationMsApprox": 540, "safeHeaders": { "content-type": "application/json; charset=utf-8", "x-powered-by": "Express", "server": "cloudflare", "access-control-allow-origin": null, "access-control-allow-credentials": null }, "bodyClassification": "public_banner_only", "observedRiskNotes": "Public banner with usefulRoutes list; x-powered-by exposed.", "expectedPolicyReference": "route_recon_minimization, security_headers", "result": "WARNING" },
-    { "checkId": "get-health", "method": "GET", "path": "/health", "timestamp": "2026-07-04", "statusCode": 200, "durationMsApprox": 3115, "safeHeaders": { "content-type": "application/json; charset=utf-8", "x-powered-by": "Express", "server": "cloudflare", "access-control-allow-credentials": null }, "bodyClassification": "health_metadata", "observedRiskNotes": "Unauthenticated health metadata (env/model/version/DB stats booleans); no secret values observed; x-powered-by exposed.", "expectedPolicyReference": "route_recon_minimization, rate_limit, log_redaction", "result": "WARNING" },
-    { "checkId": "get-routes", "method": "GET", "path": "/routes", "timestamp": "2026-07-04", "statusCode": 200, "durationMsApprox": 441, "safeHeaders": { "content-type": "application/json; charset=utf-8", "x-powered-by": "Express", "server": "cloudflare" }, "bodyClassification": "route_listing", "observedRiskNotes": "Public route enumeration including admin routes; x-powered-by exposed.", "expectedPolicyReference": "route_recon_minimization", "result": "WARNING" },
-    { "checkId": "get-404", "method": "GET", "path": "/nonexistent-phase-8s-smoke-path", "timestamp": "2026-07-04", "statusCode": 404, "durationMsApprox": 471, "safeHeaders": { "content-type": "application/json; charset=utf-8", "x-powered-by": "Express", "server": "cloudflare" }, "bodyClassification": "sanitized_error", "observedRiskNotes": "Structured 404 JSON; no stack/raw error; x-powered-by exposed.", "expectedPolicyReference": "error_sanitization, route_recon_minimization", "result": "PASS" },
-    { "checkId": "options-health-unknown-origin", "method": "OPTIONS", "path": "/health", "timestamp": "2026-07-04", "statusCode": 404, "durationMsApprox": 524, "safeHeaders": { "access-control-allow-origin": null, "access-control-allow-credentials": null }, "bodyClassification": "not_recorded", "observedRiskNotes": "Unknown origin https://phase8s-smoke.invalid NOT reflected; no ACAO, no ACAC. Denied preflight falls through to 404 (no CORS grant).", "expectedPolicyReference": "cors (fail-closed)", "result": "PASS" },
-    { "checkId": "options-login-unknown-origin", "method": "OPTIONS", "path": "/login", "timestamp": "2026-07-04", "statusCode": 404, "durationMsApprox": 500, "safeHeaders": { "access-control-allow-origin": null, "access-control-allow-credentials": null }, "bodyClassification": "not_recorded", "observedRiskNotes": "Unknown origin NOT reflected; no ACAO, no ACAC.", "expectedPolicyReference": "cors (fail-closed)", "result": "PASS" },
-    { "checkId": "get-health-unknown-origin", "method": "GET", "path": "/health", "timestamp": "2026-07-04", "statusCode": 200, "durationMsApprox": 500, "safeHeaders": { "access-control-allow-origin": null, "access-control-allow-credentials": null }, "bodyClassification": "health_metadata", "observedRiskNotes": "Unknown origin NOT reflected on simple GET; no ACAO, no ACAC. Prior critical failure resolved.", "expectedPolicyReference": "cors (fail-closed)", "result": "PASS" },
-    { "checkId": "post-login-invalid", "method": "POST", "path": "/login", "timestamp": "2026-07-04", "statusCode": 401, "durationMsApprox": 500, "safeHeaders": { "content-type": "application/json; charset=utf-8" }, "bodyClassification": "auth_error", "bodySnippet": "{\"success\":false,\"error\":\"Invalid credentials\"}", "observedRiskNotes": "Generic 401; no stack trace, no secret markers, no user enumeration. Single request only.", "expectedPolicyReference": "error_sanitization, rate_limit", "result": "PASS" },
-    { "checkId": "cors-legitimate-origin", "method": "OPTIONS", "path": "/health", "timestamp": "2026-07-04", "statusCode": null, "durationMsApprox": null, "safeHeaders": {}, "bodyClassification": "not_recorded", "observedRiskNotes": "No approved legitimate frontend origin was provided; positive-path CORS allow was not exercised.", "expectedPolicyReference": "cors (positive path)", "result": "SKIPPED" }
+    { "checkId": "get-root", "method": "GET", "path": "/", "timestamp": "2026-07-04", "statusCode": 200, "durationMsApprox": 500, "safeHeaders": { "content-type": "application/json; charset=utf-8", "x-powered-by": "Express" }, "bodyClassification": "public_banner_only", "observedRiskNotes": "Public banner with usefulRoutes list; x-powered-by exposed; no security headers.", "expectedPolicyReference": "route_recon_minimization, security_headers", "result": "WARNING" },
+    { "checkId": "get-health", "method": "GET", "path": "/health", "timestamp": "2026-07-04", "statusCode": 200, "durationMsApprox": 800, "safeHeaders": { "content-type": "application/json; charset=utf-8", "x-powered-by": "Express" }, "bodyClassification": "health_metadata", "observedRiskNotes": "Unauthenticated health metadata; no secret values; x-powered-by exposed; no security headers.", "expectedPolicyReference": "route_recon_minimization, rate_limit, log_redaction", "result": "WARNING" },
+    { "checkId": "get-routes", "method": "GET", "path": "/routes", "timestamp": "2026-07-04", "statusCode": 200, "durationMsApprox": 450, "safeHeaders": { "content-type": "application/json; charset=utf-8", "x-powered-by": "Express" }, "bodyClassification": "route_listing", "observedRiskNotes": "Public route enumeration including admin routes; x-powered-by exposed; no security headers.", "expectedPolicyReference": "route_recon_minimization", "result": "WARNING" },
+    { "checkId": "get-404", "method": "GET", "path": "/nonexistent-phase-8s-smoke-path", "timestamp": "2026-07-04", "statusCode": 404, "durationMsApprox": 450, "safeHeaders": { "content-type": "application/json; charset=utf-8", "x-powered-by": "Express" }, "bodyClassification": "sanitized_error", "observedRiskNotes": "Structured 404 JSON; no stack/raw error; x-powered-by exposed.", "expectedPolicyReference": "error_sanitization", "result": "PASS" },
+    { "checkId": "neg-options-health", "method": "OPTIONS", "path": "/health", "timestamp": "2026-07-04", "statusCode": 404, "durationMsApprox": 500, "safeHeaders": { "access-control-allow-origin": null, "access-control-allow-credentials": null }, "bodyClassification": "not_recorded", "observedRiskNotes": "Unknown origin https://phase8s-smoke.invalid NOT reflected; no ACAO, no ACAC.", "expectedPolicyReference": "cors (fail-closed)", "result": "PASS" },
+    { "checkId": "neg-options-login", "method": "OPTIONS", "path": "/login", "timestamp": "2026-07-04", "statusCode": 404, "durationMsApprox": 500, "safeHeaders": { "access-control-allow-origin": null, "access-control-allow-credentials": null }, "bodyClassification": "not_recorded", "observedRiskNotes": "Unknown origin NOT reflected; no ACAO, no ACAC.", "expectedPolicyReference": "cors (fail-closed)", "result": "PASS" },
+    { "checkId": "neg-get-health", "method": "GET", "path": "/health", "timestamp": "2026-07-04", "statusCode": 200, "durationMsApprox": 500, "safeHeaders": { "access-control-allow-origin": null, "access-control-allow-credentials": null }, "bodyClassification": "health_metadata", "observedRiskNotes": "Unknown origin NOT reflected on simple GET; no ACAO, no ACAC. Prior critical failure remains resolved.", "expectedPolicyReference": "cors (fail-closed)", "result": "PASS" },
+    { "checkId": "pos-options-health", "method": "OPTIONS", "path": "/health", "timestamp": "2026-07-04", "statusCode": 204, "durationMsApprox": 500, "safeHeaders": { "access-control-allow-origin": "https://tina-fawn.vercel.app", "access-control-allow-credentials": "true", "access-control-allow-methods": "GET,HEAD,PUT,PATCH,POST,DELETE" }, "bodyClassification": "not_recorded", "observedRiskNotes": "Legitimate frontend origin allowed with exact-match ACAO and credentials; no wildcard.", "expectedPolicyReference": "cors (positive allow path)", "result": "PASS" },
+    { "checkId": "pos-options-login", "method": "OPTIONS", "path": "/login", "timestamp": "2026-07-04", "statusCode": 204, "durationMsApprox": 500, "safeHeaders": { "access-control-allow-origin": "https://tina-fawn.vercel.app", "access-control-allow-credentials": "true", "access-control-allow-methods": "GET,HEAD,PUT,PATCH,POST,DELETE" }, "bodyClassification": "not_recorded", "observedRiskNotes": "Legitimate frontend origin allowed for /login preflight with credentials; exact match.", "expectedPolicyReference": "cors (positive allow path)", "result": "PASS" },
+    { "checkId": "pos-get-health", "method": "GET", "path": "/health", "timestamp": "2026-07-04", "statusCode": 200, "durationMsApprox": 500, "safeHeaders": { "access-control-allow-origin": "https://tina-fawn.vercel.app", "access-control-allow-credentials": "true" }, "bodyClassification": "health_metadata", "observedRiskNotes": "Simple GET from frontend origin reflected exactly with credentials; no wildcard.", "expectedPolicyReference": "cors (positive allow path)", "result": "PASS" },
+    { "checkId": "post-login-invalid", "method": "POST", "path": "/login", "timestamp": "2026-07-04", "statusCode": 401, "durationMsApprox": 500, "safeHeaders": { "content-type": "application/json; charset=utf-8" }, "bodyClassification": "auth_error", "bodySnippet": "{\"success\":false,\"error\":\"Invalid credentials\"}", "observedRiskNotes": "Generic 401; no stack trace, no secret markers, no user enumeration. Single request only.", "expectedPolicyReference": "error_sanitization, rate_limit", "result": "PASS" }
   ],
   "corsSmokeResults": {
     "unknownOrigin": "https://phase8s-smoke.invalid",
@@ -117,10 +130,33 @@
     "wildcardWithCredentialsObserved": false,
     "unknownOriginAllowedWithCredentials": false,
     "priorCriticalCorsFailureResolved": true,
-    "legitimateFrontendOriginTested": false,
-    "legitimateFrontendOriginCoverage": "SKIPPED",
+    "legitimateFrontendOriginTested": true,
+    "legitimateFrontendOriginCoverage": "PASS",
     "classification": "PASS",
-    "notes": "For the unknown origin, no Access-Control-Allow-Origin and no Access-Control-Allow-Credentials are returned on any of the three prior-failing endpoints. Denied preflights fall through to 404 with no CORS grant."
+    "notes": "Negative and positive CORS both verified. Unknown origin denied (no ACAO/ACAC); legitimate frontend origin allowed with exact-match ACAO and credentials."
+  },
+  "negativeCorsSmokeResults": {
+    "origin": "https://phase8s-smoke.invalid",
+    "endpointsTested": ["OPTIONS /health", "OPTIONS /login", "GET /health"],
+    "accessControlAllowOriginReflected": false,
+    "accessControlAllowCredentialsTrue": false,
+    "wildcardWithCredentialsObserved": false,
+    "unknownOriginAllowedWithCredentials": false,
+    "classification": "PASS",
+    "notes": "Unknown origin returns no Access-Control-Allow-Origin and no Access-Control-Allow-Credentials on all three endpoints; denied preflight falls through to 404."
+  },
+  "positiveCorsSmokeResults": {
+    "origin": "https://tina-fawn.vercel.app",
+    "endpointsTested": ["OPTIONS /health", "OPTIONS /login", "GET /health"],
+    "accessControlAllowOriginEqualsFrontend": true,
+    "accessControlAllowOriginExactMatch": true,
+    "accessControlAllowCredentialsTrue": true,
+    "wildcardWithCredentialsObserved": false,
+    "otherOriginReflected": false,
+    "frontendOriginAllowed": true,
+    "browserAccessShouldWork": true,
+    "classification": "PASS",
+    "notes": "Legitimate frontend origin https://tina-fawn.vercel.app is allowed with exact-match Access-Control-Allow-Origin and Access-Control-Allow-Credentials: true on OPTIONS /health, OPTIONS /login, and GET /health. No wildcard used. Trailing-slash-free exact match confirmed."
   },
   "securityHeadersSmokeResults": {
     "endpointsChecked": ["GET /", "GET /health", "GET /routes", "GET /nonexistent-phase-8s-smoke-path"],
@@ -144,7 +180,7 @@
     "rateLimitHeadersObserved": false,
     "implementationStatus": "policy_scaffold_only",
     "classification": "WARNING",
-    "notes": "No rate-limit or Retry-After headers naturally observed. Rate limiting remains policy/scaffold-only; auth/model/admin rate-limit implementation remains future work. No endpoints were spammed."
+    "notes": "No rate-limit or Retry-After headers naturally observed. Rate limiting remains policy/scaffold-only. No endpoints were spammed."
   },
   "publicReconSmokeResults": {
     "rootBannerPublic": true,
@@ -154,7 +190,7 @@
     "notFoundExposesStackOrRawError": false,
     "secretOrEnvLeakage": false,
     "classification": "WARNING",
-    "notes": "/routes enumerates the route surface; /health exposes environment/model/version/DB-stat metadata; x-powered-by: Express is present. No secret/env values or stack traces exposed."
+    "notes": "/routes enumerates the route surface; /health exposes environment/model/version/DB-stat metadata; x-powered-by: Express present. No secret/env values or stack traces exposed."
   },
   "diagnosticOutputSmokeResults": {
     "adminDiagnosticRoutesTested": false,
@@ -167,7 +203,7 @@
     "stackOrRawExceptionObserved": false,
     "userEnumerationObserved": false,
     "classification": "PASS",
-    "notes": "Single invalid placeholder login returned generic 'Invalid credentials'. No brute force; no account creation."
+    "notes": "Single invalid placeholder login returned generic 'Invalid credentials'."
   },
   "errorDisclosureSmokeResults": {
     "notFoundSanitized": true,
@@ -181,8 +217,7 @@
     { "check": "model_route_checks", "reason": "no safe token and no approval; expensive routes not called" },
     { "check": "admin_route_checks", "reason": "no safe admin test credential; non-destructive smoke only" },
     { "check": "rate_limit_trigger_checks", "reason": "no load testing allowed; endpoints not spammed" },
-    { "check": "index_secret_checks", "reason": "no permission to test INDEX_SECRET; not tested with real secrets" },
-    { "check": "legitimate_frontend_origin_cors_checks", "reason": "no approved frontend origin was provided" }
+    { "check": "index_secret_checks", "reason": "no permission to test INDEX_SECRET; not tested with real secrets" }
   ],
   "blockedChecks": [],
   "observedRisks": [
@@ -211,7 +246,6 @@
   "phase9Blockers": {
     "phase9CanBegin": false,
     "requiredCompleteBeforePhase9": [
-      "PATCH-08S-STAGING-SECURITY-SMOKE-1",
       "PATCH-08S-FINAL-CLOSURE-GATE-1"
     ],
     "criticalStagingFailMustBeResolvedOrGated": true,
@@ -221,11 +255,11 @@
     "headersRateLimitImplementationDecisionMadeOrDeferredByFinalGate": true
   },
   "futureSmokeRequirements": [
-    "After configuring CORS_ORIGIN allowlist in Render, confirm legitimate frontend origin is allowed with credentials and unknown origins remain denied.",
     "After a future headers implementation patch, confirm security headers present on relevant responses.",
     "After a future rate-limit implementation patch, confirm rate-limit triggers on auth/model/admin routes.",
     "Confirm /health and /routes reconnaissance minimization once implemented.",
-    "Confirm INDEX_SECRET is no longer accepted via query string once remediated."
+    "Confirm INDEX_SECRET is no longer accepted via query string once remediated.",
+    "Re-verify frontend CORS allow-path if the frontend origin changes."
   ],
   "prohibitedClaims": [
     "staging is production-hardened",
@@ -271,7 +305,9 @@
   },
   "testCases": [
     { "id": "cors_prior_failure_resolved", "expect": "unknown origin not reflected, no credentials on 3 endpoints" },
+    { "id": "cors_positive_frontend_allowed", "expect": "frontend origin exact-match allowed with credentials on 3 endpoints" },
     { "id": "cors_no_wildcard_credentials", "expect": "no wildcard+credentials observed" },
+    { "id": "allowlist_update", "expect": "https://tina-fawn.vercel.app recorded, no trailing slash" },
     { "id": "headers_absent_warning", "expect": "security headers absent -> WARNING policy-only" },
     { "id": "rate_limit_policy_only", "expect": "no rate-limit headers -> policy-only WARNING" },
     { "id": "public_recon_warning", "expect": "/routes, /health, x-powered-by -> WARNING" },

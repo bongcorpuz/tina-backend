@@ -3277,3 +3277,54 @@ Open items carried into final closure (expected policy-only WARNINGs): security 
 Next required task:
 PATCH-08S-FINAL-CLOSURE-GATE-1
 ```
+
+Phase 8S staging security smoke — RERUN WITH FRONTEND ALLOWLIST / WARNING (2026-07-04):
+
+```text
+PATCH-08S-STAGING-SECURITY-SMOKE-1 rerun with frontend allowlist is complete.
+Decision: STAGING SECURITY SMOKE WARNING WITH STRICT RECOMMENDATIONS.
+Type: safe staging smoke / fixture-test-report update (non-runtime; no deployment in this patch).
+Base commit: b44b80e PATCH-08S-STAGING-SECURITY-SMOKE-1 add staging security smoke.
+
+Files updated:
+evaluation/fixtures/phase-8s-staging-security-smoke-1.fixture.json (smokeVersion 2.0.0; added allowlistUpdate, negativeCorsSmokeResults, positiveCorsSmokeResults)
+tests/patch-08s-staging-security-smoke-1.test.mjs (adds allowlist + positive/negative CORS assertions)
+PATCH-08S-STAGING-SECURITY-SMOKE-1_STAGING_SECURITY_SMOKE_REPORT.md
+knowledge/CURRENT_STATE.md
+
+Staging target/method: https://tina-backend-staging.onrender.com (source: repo_documentation; reachable); frontend origin https://tina-fawn.vercel.app; negative origin https://phase8s-smoke.invalid; tool curl; single non-destructive requests. No secrets/tokens/cookies/full bodies saved.
+
+Allowlist verification: user confirmed Render staging env allowlist updated to include https://tina-fawn.vercel.app (CORS_ORIGIN and/or ALLOWED_ORIGINS; no trailing slash). Live POSITIVE CORS confirms the frontend origin is ALLOWED with exact-match Access-Control-Allow-Origin and Access-Control-Allow-Credentials: true on OPTIONS /health, OPTIONS /login, and GET /health; no wildcard used. Only the non-secret origin is recorded; no env values recorded.
+
+Remediation verification: unknown origin https://phase8s-smoke.invalid remains DENIED (no ACAO/ACAC on all three endpoints); prior critical CORS failure remains resolved (a396f67).
+
+Deployment freshness: behavior_confirmed (live CORS behavior confirms both the remediation and the allowlist).
+
+Smoke results: negative CORS PASS (unknown denied); positive CORS PASS (frontend allowed, exact match + credentials, no wildcard); 404 sanitized PASS; invalid login generic 401 PASS (no stack/secret/enumeration). WARNINGs (expected policy-only gaps): no security headers; no observable rate-limit; public /routes enumeration; public /health metadata; x-powered-by: Express. No critical exposures. SKIPPED: authenticated/model/admin/rate-limit-trigger/INDEX_SECRET checks.
+
+Validation:
+node tests/patch-08s-staging-security-smoke-1.test.mjs - PASS / 28 passed / 0 failed / 236 assertions.
+node tests/patch-08s-cors-staging-remediation-1.test.mjs - PASS / 12 / 0.
+node tests/patch-08s-security-headers-cors-rate-limit-scaffold-1.test.mjs - PASS / 27 / 0.
+node tests/patch-08s-secrets-env-logging-safety-gate-1.test.mjs - PASS / 24 / 0.
+node tests/patch-08s-tenant-isolation-gate-1.test.mjs - PASS / 21 / 0.
+node tests/patch-08s-security-policy-fixture-1.test.mjs - PASS / 29 / 0.
+node tests/patch-08s-security-route-inventory-1.test.mjs - PASS / 21 / 0.
+npm run guard:files - PASS.
+npm test - GATE PASSED / 0 failed.
+
+Route inventory / security policy / tenant isolation / secrets-env-logging / headers-CORS-rate-limit scaffold / CORS remediation integrations all preserved.
+
+No runtime CORS implementation occurred in this patch (CORS code fix was a396f67; allowlist value was a Render env change made by the user, not a code change here).
+No runtime security headers / rate-limit / request-size implementation occurred.
+No package changes, no middleware wiring, no deployment occurred in this patch.
+Phase 8 remains closed; memory remains inactive; all TINA_ENABLE_MEMORY_* flags remain OFF.
+Phase 9 remains Professional Workflow Co-Pilot but remains BLOCKED pending Phase 8S final closure.
+Phase 10 and Phase 11 remain deferred; Phase 7B clarification boundary tuning remains separate.
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-DIAGNOSTIC-1 remains a separate non-security diagnostic.
+
+Open items carried into final closure (expected policy-only WARNINGs, unchanged): security headers, rate limits, /health & /routes reconnaissance minimization, x-powered-by suppression, INDEX_SECRET query-string removal. CORS is now fully verified in both directions (unknown denied, frontend allowed).
+
+Next required task:
+PATCH-08S-FINAL-CLOSURE-GATE-1
+```

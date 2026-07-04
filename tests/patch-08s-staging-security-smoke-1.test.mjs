@@ -1,8 +1,8 @@
 // PATCH-08S-STAGING-SECURITY-SMOKE-1 - staging security smoke evidence test.
 // Static, JSON-based validation only. Performs NO HTTP, does NOT start the
 // server, imports no server.js/runtime modules, requires no env vars, and prints
-// no env values. It validates the smoke evidence fixture and its integration
-// with the prior Phase 8S fixtures.
+// no env values. It validates the smoke evidence fixture (rerun with frontend
+// allowlist) and its integration with the prior Phase 8S fixtures.
 
 import assert from "node:assert/strict";
 import { readFileSync, existsSync } from "node:fs";
@@ -14,6 +14,9 @@ const POLICY_PATH = "evaluation/fixtures/phase-8s-security-policy-fixture-1.fixt
 const TENANT_PATH = "evaluation/fixtures/phase-8s-tenant-isolation-gate-1.fixture.json";
 const SECRETS_PATH = "evaluation/fixtures/phase-8s-secrets-env-logging-safety-gate-1.fixture.json";
 const SCAFFOLD_PATH = "evaluation/fixtures/phase-8s-security-headers-cors-rate-limit-scaffold-1.fixture.json";
+
+const FRONTEND_ORIGIN = "https://tina-fawn.vercel.app";
+const UNKNOWN_ORIGIN = "https://phase8s-smoke.invalid";
 
 let passed = 0;
 let failed = 0;
@@ -59,15 +62,16 @@ await test("staging smoke fixture exists and all referenced fixtures are valid J
 await test("required top-level sections exist", () => {
   const required = [
     "patch", "decision", "baseCommit", "smokeVersion", "nonRuntimePatch", "remediationCommit",
-    "remediationIntegration", "stagingTarget", "deploymentFreshness", "smokeExecution",
+    "allowlistUpdate", "remediationIntegration", "stagingTarget", "deploymentFreshness", "smokeExecution",
     "sourceArtifacts", "routeInventoryIntegration", "securityPolicyIntegration",
     "tenantIsolationIntegration", "secretsEnvLoggingIntegration", "headersCorsRateLimitScaffoldIntegration",
-    "corsRemediationIntegration", "checks", "corsSmokeResults", "securityHeadersSmokeResults",
-    "rateLimitSmokeResults", "publicReconSmokeResults", "diagnosticOutputSmokeResults",
-    "authEndpointSmokeResults", "errorDisclosureSmokeResults", "skippedChecks", "blockedChecks",
-    "observedRisks", "controlsNotImplemented", "policyOnlyControls", "phase9Blockers",
-    "futureSmokeRequirements", "prohibitedClaims", "deferredBoundaries", "phase8MemoryPolicy",
-    "phase8XDiagnosticSeparation", "futurePatchDependencies", "testCases"
+    "corsRemediationIntegration", "checks", "corsSmokeResults", "negativeCorsSmokeResults",
+    "positiveCorsSmokeResults", "securityHeadersSmokeResults", "rateLimitSmokeResults",
+    "publicReconSmokeResults", "diagnosticOutputSmokeResults", "authEndpointSmokeResults",
+    "errorDisclosureSmokeResults", "skippedChecks", "blockedChecks", "observedRisks",
+    "controlsNotImplemented", "policyOnlyControls", "phase9Blockers", "futureSmokeRequirements",
+    "prohibitedClaims", "deferredBoundaries", "phase8MemoryPolicy", "phase8XDiagnosticSeparation",
+    "futurePatchDependencies", "testCases"
   ];
   for (const key of required) check(Object.prototype.hasOwnProperty.call(smoke, key), `missing section: ${key}`);
   check(smoke.patch.id === "PATCH-08S-STAGING-SECURITY-SMOKE-1", "patch id");
@@ -90,6 +94,16 @@ await test("remediation integration references PATCH-08S-CORS-STAGING-REMEDIATIO
   check(smoke.corsRemediationIntegration.remediationCommit === "a396f67", "cors remediation integration commit");
 });
 
+await test("allowlist update references the frontend origin with no trailing slash", () => {
+  const a = smoke.allowlistUpdate;
+  check(a.allowedFrontendOrigin === FRONTEND_ORIGIN, "allowed frontend origin recorded");
+  check(!a.allowedFrontendOrigin.endsWith("/"), "no trailing slash");
+  check(a.trailingSlash === false, "trailingSlash flag false");
+  check(Array.isArray(a.renderEnvVariableNamesExpected) && a.renderEnvVariableNamesExpected.includes("CORS_ORIGIN"), "CORS_ORIGIN env name recorded");
+  const raw = readFileSync(resolve(SMOKE_PATH), "utf8");
+  check(!/CORS_ORIGIN\s*=/.test(raw), "no env value assignment recorded in fixture");
+});
+
 await test("staging target source is recorded and contains no secrets", () => {
   check(typeof smoke.stagingTarget.baseUrlSource === "string" && smoke.stagingTarget.baseUrlSource.length > 0, "baseUrlSource recorded");
   check(smoke.stagingTarget.baseUrlSecretBearing === false, "base URL not secret-bearing");
@@ -99,7 +113,6 @@ await test("staging target source is recorded and contains no secrets", () => {
 
 await test("smoke execution timestamp and deployment freshness are recorded", () => {
   check(typeof smoke.smokeExecution.timestamp === "string" && smoke.smokeExecution.timestamp.length > 0, "timestamp recorded");
-  check(typeof smoke.deploymentFreshness.freshnessStatus === "string", "freshnessStatus recorded");
   check(["confirmed", "behavior_confirmed", "inconclusive", "stale"].includes(smoke.deploymentFreshness.freshnessStatus), "valid freshnessStatus");
 });
 
@@ -141,25 +154,47 @@ await test("checks contain safe metadata only and store no tokens/cookies/secret
   }
 });
 
-await test("CORS smoke results classify wildcard+credentials and unknown-origin-with-credentials as FAIL if observed", () => {
-  const cr = smoke.corsSmokeResults;
-  // If either dangerous condition were observed, the decision must be FAIL.
-  if (cr.wildcardWithCredentialsObserved === true || cr.unknownOriginAllowedWithCredentials === true) {
+await test("negative CORS results classify wildcard+credentials and unknown-origin-with-credentials as FAIL if observed", () => {
+  const nc = smoke.negativeCorsSmokeResults;
+  if (nc.wildcardWithCredentialsObserved === true || nc.unknownOriginAllowedWithCredentials === true) {
     check(smoke.decision === "STAGING SECURITY SMOKE FAIL", "dangerous CORS must force FAIL decision");
   }
-  // Consistency: reflected-with-credentials implies unknownOriginAllowedWithCredentials.
-  if (cr.accessControlAllowOriginReflectedForUnknownOrigin === true && cr.accessControlAllowCredentialsTrueForUnknownOrigin === true) {
-    check(cr.unknownOriginAllowedWithCredentials === true, "reflection+credentials implies allowed-with-credentials");
+  if (nc.accessControlAllowOriginReflected === true && nc.accessControlAllowCredentialsTrue === true) {
+    check(nc.unknownOriginAllowedWithCredentials === true, "reflection+credentials implies allowed-with-credentials");
   }
 });
 
 await test("PASS/WARNING decision requires prior critical CORS failure resolved and no critical exposure", () => {
   if (smoke.decision.includes("PASS") || smoke.decision.includes("WARNING")) {
-    check(smoke.corsSmokeResults.priorCriticalCorsFailureResolved === true, "prior CORS failure must be resolved");
-    check(smoke.corsSmokeResults.unknownOriginAllowedWithCredentials === false, "unknown origin must not be allowed with credentials");
-    check(smoke.corsSmokeResults.wildcardWithCredentialsObserved === false, "no wildcard+credentials");
-    check(Array.isArray(smoke.criticalExposuresObserved) && smoke.criticalExposuresObserved.length === 0, "no critical exposures for PASS/WARNING");
+    check(smoke.negativeCorsSmokeResults.unknownOriginAllowedWithCredentials === false, "unknown origin must not be allowed with credentials");
+    check(smoke.negativeCorsSmokeResults.wildcardWithCredentialsObserved === false, "no wildcard+credentials");
     check(smoke.remediationIntegration.priorFailureResolvedLive === true, "remediation resolved live");
+    check(Array.isArray(smoke.criticalExposuresObserved) && smoke.criticalExposuresObserved.length === 0, "no critical exposures for PASS/WARNING");
+  }
+});
+
+await test("positive CORS results include the frontend origin and classify allowed/denied/inconclusive", () => {
+  const pc = smoke.positiveCorsSmokeResults;
+  check(pc.origin === FRONTEND_ORIGIN, "positive CORS origin is the frontend origin");
+  check(Array.isArray(pc.endpointsTested) && pc.endpointsTested.length >= 3, "positive CORS tested on >=3 endpoints");
+  check(["PASS", "WARNING", "INCONCLUSIVE", "FAIL"].includes(pc.classification), "positive CORS classified");
+  // No wildcard nor other-origin reflection is allowed regardless of decision.
+  check(pc.wildcardWithCredentialsObserved === false, "positive CORS must not use wildcard+credentials");
+  check(pc.otherOriginReflected === false, "positive CORS must not reflect a different origin");
+});
+
+await test("if decision is PASS, positive CORS must show frontend origin allowed", () => {
+  if (smoke.decision.includes("PASS") && !smoke.decision.includes("WARNING")) {
+    check(smoke.positiveCorsSmokeResults.frontendOriginAllowed === true, "PASS requires frontend origin allowed");
+    check(smoke.positiveCorsSmokeResults.accessControlAllowOriginEqualsFrontend === true, "PASS requires exact ACAO match");
+  }
+});
+
+await test("positive CORS exact-match with credentials is consistent when frontend is allowed", () => {
+  const pc = smoke.positiveCorsSmokeResults;
+  if (pc.frontendOriginAllowed === true) {
+    check(pc.accessControlAllowOriginEqualsFrontend === true, "allowed implies exact ACAO match");
+    check(pc.accessControlAllowOriginExactMatch === true, "exact match flag set");
   }
 });
 
@@ -185,24 +220,34 @@ await test("public reconnaissance covers /, /health, /routes, and 404 path", () 
   }
 });
 
-await test("auth endpoint result covers invalid login or records a skipped/blocked reason", () => {
+await test("negative and positive CORS checks are both present in the check records", () => {
+  const ids = smoke.checks.map((c) => c.checkId);
+  for (const id of ["neg-options-health", "neg-options-login", "neg-get-health"]) check(ids.includes(id), `missing negative check ${id}`);
+  for (const id of ["pos-options-health", "pos-options-login", "pos-get-health"]) check(ids.includes(id), `missing positive check ${id}`);
+  for (const c of smoke.checks.filter((x) => x.checkId.startsWith("pos-"))) {
+    check(c.safeHeaders["access-control-allow-origin"] === FRONTEND_ORIGIN, `${c.checkId} reflects exact frontend origin`);
+  }
+  for (const c of smoke.checks.filter((x) => x.checkId.startsWith("neg-"))) {
+    check(!c.safeHeaders["access-control-allow-origin"], `${c.checkId} does not reflect unknown origin`);
+  }
+});
+
+await test("auth endpoint result covers invalid login with no enumeration", () => {
   const login = smoke.checks.find((c) => c.checkId === "post-login-invalid");
   check(login && [401, 400].includes(login.statusCode), "invalid login recorded with 4xx");
   check(smoke.authEndpointSmokeResults.userEnumerationObserved === false, "no user enumeration");
 });
 
-await test("skipped checks explicitly include authenticated/model/admin/rate-limit/INDEX_SECRET and legitimate-origin", () => {
+await test("skipped checks explicitly include authenticated/model/admin/rate-limit/INDEX_SECRET", () => {
   const s = smoke.skippedChecks.map((x) => x.check);
-  for (const key of ["authenticated_route_checks", "model_route_checks", "admin_route_checks", "rate_limit_trigger_checks", "index_secret_checks", "legitimate_frontend_origin_cors_checks"]) {
+  for (const key of ["authenticated_route_checks", "model_route_checks", "admin_route_checks", "rate_limit_trigger_checks", "index_secret_checks"]) {
     check(s.includes(key), `skipped must include ${key}`);
   }
 });
 
 await test("observed risks are classified", () => {
   check(Array.isArray(smoke.observedRisks) && smoke.observedRisks.length > 0, "observed risks present");
-  for (const r of smoke.observedRisks) {
-    check(typeof r.severity === "string" && r.severity.length > 0, `${r.risk} classified`);
-  }
+  for (const r of smoke.observedRisks) check(typeof r.severity === "string" && r.severity.length > 0, `${r.risk} classified`);
 });
 
 await test("controls not implemented list is complete", () => {
@@ -212,7 +257,7 @@ await test("controls not implemented list is complete", () => {
   }
 });
 
-await test("Phase 9 blockers include staging smoke, final closure, and the gates/scaffold", () => {
+await test("Phase 9 blockers include final closure and the gates/scaffold", () => {
   const b = smoke.phase9Blockers;
   check(b.phase9CanBegin === false, "Phase 9 cannot begin");
   check(b.requiredCompleteBeforePhase9.includes("PATCH-08S-FINAL-CLOSURE-GATE-1"), "final closure blocker");
