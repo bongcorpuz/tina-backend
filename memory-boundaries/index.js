@@ -1,4 +1,4 @@
-// PATCH-08G scaffold index: exports contract/policy functions only.
+// PATCH-08G/08H scaffold index: exports contract/policy functions only.
 // This file must not auto-run or import runtime application modules.
 
 export {
@@ -43,3 +43,13 @@ export {
   getDeferredBoundaries,
   explainBoundaryContract
 } from "./memory-service-boundary-contract.js";
+
+export {
+  getMemoryReadScaffoldContract,
+  isMemoryReadFlagEnabled,
+  evaluateMemoryReadEligibility,
+  selectEligibleMemoryForContext,
+  buildStructuredMemoryContext,
+  explainMemoryReadDecision,
+  assertReadScaffoldNoRuntimeSideEffects
+} from "./memory-read-scaffold.js";

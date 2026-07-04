@@ -2423,3 +2423,59 @@ Phase 14 mobile remains after Phase 13.
 Next required task:
 PATCH-08H-MEMORY-READ-SCAFFOLD-1
 ```
+
+Phase 8H memory read scaffold state (2026-07-04):
+
+```text
+PATCH-08H-MEMORY-READ-SCAFFOLD-1 is complete.
+Decision: SCAFFOLD PASS WITH STRICT RECOMMENDATIONS.
+
+Files created:
+memory-boundaries/memory-read-scaffold.js
+tests/patch-08h-memory-read-scaffold-1.test.mjs
+PATCH-08H-MEMORY-READ-SCAFFOLD-1_MEMORY_READ_SCAFFOLD_REPORT.md
+
+Files updated:
+memory-boundaries/index.js (exports read scaffold functions)
+tests/patch-08g-memory-service-boundary-scaffold-1.test.mjs (test-only reconciliation: the pinned index export list was extended with the seven authorized Phase 8H read scaffold exports so the regression gate stays green; no Phase 8G behavior assertion changed)
+
+Validation:
+node tests/patch-08h-memory-read-scaffold-1.test.mjs
+PASS - 23 passed, 0 failed, 212 assertions.
+
+node tests/patch-08g-memory-service-boundary-scaffold-1.test.mjs
+PASS - 18 passed, 0 failed, 231 assertions.
+
+npm run guard:files
+PASS - No protected files modified.
+
+npm test
+GATE PASSED - 118 suites run, 0 failed.
+
+Strict recommendations carried forward:
+1. Phase 8I write scaffold must preserve the read scaffold's OFF-state and no-runtime side-effect guarantees.
+2. No persistent memory reads may be introduced until a later explicit storage/schema patch and governance gate.
+3. No pipeline memory read integration until OFF-state, scope isolation, consent blocking, and authority-separation tests pass in a dedicated integration patch.
+4. Any future memory context must remain non-authority and use only "user/matter context indicates: ..." phrasing.
+5. Source-derived memory must remain provenance-only and must not assert currentness, case status, or citation authority.
+6. Memory flags remain default-OFF and production-OFF until Phase 8J/8K gates pass.
+
+No persistent memory reads occurred; the read scaffold evaluates in-memory mock candidate arrays only.
+No runtime memory implementation occurred.
+No runtime consent implementation occurred.
+No DB/migration/tables occurred.
+No persistence services occurred.
+No route/controller, ask-handler, pipeline, retrieval, reranker, sourceAvailability, source-card, Authority Lock, or frontend work occurred.
+No dependencies were added.
+All memory flags remain OFF/not implemented; TINA_ENABLE_MEMORY_READS is contract-only and default-OFF.
+
+Production clarification route gate remains OFF/not approved.
+Phase 7B boundary tuning remains a pre-production-ON follow-up.
+Phase 10 source governance / court metadata / hallucination traps remain deferred.
+Phase 11 performance/cache/compression/observability remains deferred.
+Phase 12 document-aware advisory remains deferred.
+Phase 14 mobile remains after Phase 13.
+
+Next required task:
+PATCH-08I-MEMORY-WRITE-SCAFFOLD-1
+```
