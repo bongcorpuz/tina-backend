@@ -2726,3 +2726,86 @@ Next roadmap decision required:
 A. Start Phase 9 - Professional Workflow Co-Pilot.
 B. Insert separate Phase 8S / Security & Hardening Gate before Phase 9, only if explicitly approved.
 ```
+
+Phase 8S security hardening design state (2026-07-04):
+
+```text
+PATCH-08S-SECURITY-HARDENING-DESIGN-1 is complete.
+Decision: DESIGN PASS WITH STRICT RECOMMENDATIONS.
+Type: report-only security architecture / threat-model design patch.
+
+Roadmap: Phase 8S (Security & Hardening Gate) is inserted after Phase 8 and before Phase 9.
+Phase 8 remains formally closed. Phase 8 memory remains inactive.
+Phase 9 remains Professional Workflow Co-Pilot (unchanged, not renamed or replaced).
+
+Reviews:
+Claude Code (Opus) baseline security architecture/threat-model review: DESIGN PASS WITH STRICT RECOMMENDATIONS.
+Gemini independent adversarial review: ADVERSARIAL DESIGN PASS WITH STRICT RECOMMENDATIONS.
+Gemini controls where stricter; its calibrations were adopted (CRITICAL tenant/client isolation,
+CRITICAL service-role-as-default-path risk, dedicated tenant-isolation gate, 08X separation).
+
+Files created:
+PATCH-08S-SECURITY-HARDENING-DESIGN-1_SECURITY_ARCHITECTURE_THREAT_MODEL_REPORT.md
+tests/patch-08s-security-hardening-design-1.test.mjs
+
+Files updated:
+knowledge/CURRENT_STATE.md
+
+Validation:
+node tests/patch-08s-security-hardening-design-1.test.mjs - PASS / 10 passed / 0 failed / 51 assertions
+npm run guard:files - PASS
+npm test - GATE PASSED / 0 failed
+
+No runtime security implementation occurred.
+No middleware wiring occurred.
+No server.js/route/auth/CORS/header/rate-limit/logging runtime changes occurred.
+No Supabase/DB runtime changes occurred.
+No package.json/package-lock.json changes and no dependency installs occurred.
+No environment-variable, Render/Vercel, or deployment changes occurred.
+No production changes occurred.
+No Phase 8 memory enablement occurred; all memory flags remain OFF/not implemented.
+No Phase 9/10/11 implementation occurred.
+
+Official Phase 8S sequence recorded:
+1. PATCH-08S-SECURITY-HARDENING-DESIGN-1 (this patch)
+2. PATCH-08S-SECURITY-ROUTE-INVENTORY-1
+3. PATCH-08S-SECURITY-POLICY-FIXTURE-1
+4. PATCH-08S-TENANT-ISOLATION-GATE-1
+5. PATCH-08S-SECRETS-ENV-LOGGING-SAFETY-GATE-1
+6. PATCH-08S-SECURITY-HEADERS-CORS-RATE-LIMIT-SCAFFOLD-1
+7. PATCH-08S-STAGING-SECURITY-SMOKE-1
+8. PATCH-08S-FINAL-CLOSURE-GATE-1
+
+Pre-Phase-9 blockers: route inventory, security policy fixture, tenant isolation gate,
+secrets/env/logging safety gate, headers/CORS/rate-limit scaffold, staging security smoke,
+and Phase 8S final closure must pass. Minimum bar before Phase 9: tenant isolation,
+logging/egress redaction, CORS, and rate-limit policies approved.
+
+Separate non-security diagnostic recorded:
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-DIAGNOSTIC-1 - diagnose short-term chat/session context
+carryover (e.g. VAT context not inherited on a follow-up question). This is NOT persistent
+memory, NOT Phase 8 memory, and NOT Phase 8S security; it runs as a separate parallel
+diagnostic before Phase 9 and is not implemented in this patch.
+
+Strict recommendations:
+1. Phase 8S proceeds design-first and fixture-first.
+2. No runtime security changes until policies and route inventory are approved.
+3. Route inventory is the first substantive follow-up.
+4. Tenant/client isolation is mandatory before Phase 9.
+5. CORS and rate-limit policies are mandatory before Phase 9.
+6. Secrets/logging/redaction/third-party egress policies are mandatory before Phase 9.
+7. Prompt/source-authority spoofing policy is mandatory before Phase 9.
+8. Phase 8 memory remains inactive.
+9. Phase 9 remains Professional Workflow Co-Pilot.
+10. Phase 10 and Phase 11 remain deferred.
+11. Chat-context diagnostic moves to Phase 8X, separate from Phase 8S.
+
+Calibrated service-role wording (Gemini controlling):
+Supabase service-role access may be acceptable only for tightly controlled server-only
+administrative/source-corpus operations. It is not acceptable as the default access path
+for user/client/matter data in Phase 9 without tenant-scoping, RLS, or an equivalent
+isolation model.
+
+Next required task:
+PATCH-08S-SECURITY-ROUTE-INVENTORY-1
+```
