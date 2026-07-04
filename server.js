@@ -5,6 +5,8 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import OpenAI from "openai";
+
+import { buildCorsOptionsDelegate } from "./security/cors-policy.js";
 import { createClient } from "@supabase/supabase-js";
 
 import {
@@ -90,29 +92,12 @@ const app = express();
 
 /* ================= CORS ================= */
 
-function buildAllowedOrigins() {
-  const raw = process.env.CORS_ORIGIN || process.env.ALLOWED_ORIGINS || "*";
-  if (raw === "*") return "*";
-
-  return raw
-    .split(",")
-    .map((origin) => origin.trim())
-    .filter(Boolean);
-}
-
-const allowedOrigins = buildAllowedOrigins();
-
-app.use(
-  cors({
-    origin(origin, callback) {
-      if (allowedOrigins === "*") return callback(null, true);
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) return callback(null, true);
-      return callback(new Error(`CORS blocked origin: ${origin}`));
-    },
-    credentials: true
-  })
-);
+// PATCH-08S-CORS-STAGING-REMEDIATION-1: fail closed outside local/dev.
+// The origin decision is delegated to security/cors-policy.js, which never
+// reflects an unlisted origin with credentials in staging/production. When no
+// explicit CORS_ORIGIN / ALLOWED_ORIGINS allowlist is configured on hosted
+// infrastructure, unknown browser origins receive no credentialed CORS grant.
+app.use(cors(buildCorsOptionsDelegate(process.env)));
 
 app.use(express.json({ limit: REQUEST_LIMIT }));
 app.use(express.urlencoded({ extended: true, limit: REQUEST_LIMIT }));

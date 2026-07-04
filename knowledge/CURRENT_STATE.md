@@ -3152,3 +3152,76 @@ Phase 10 remains deferred; Phase 11 remains deferred; Phase 7B clarification bou
 Next required task:
 PATCH-08S-STAGING-SECURITY-SMOKE-1
 ```
+
+Phase 8S staging security smoke — first run FAILED (2026-07-04):
+
+```text
+PATCH-08S-STAGING-SECURITY-SMOKE-1 (first attempt) produced STAGING SECURITY SMOKE FAIL and was
+correctly stopped before creating or committing any smoke fixture/test/report.
+
+Target: https://tina-backend-staging.onrender.com (base URL source: repo_documentation; reachable, HTTP 200 on /health).
+Critical live CORS failure: unknown Origin https://phase8s-smoke.invalid was reflected as
+access-control-allow-origin: https://phase8s-smoke.invalid with access-control-allow-credentials: true,
+observed on OPTIONS /health, OPTIONS /login, and GET /health.
+Other observations (non-critical): no security headers present (expected policy-only gap); no observable
+rate-limit headers (policy-only); /routes publicly enumerates routes and x-powered-by: Express exposed
+(reconnaissance WARNING); invalid login returned generic 401 "Invalid credentials" with no stack/secret/
+enumeration (PASS); 404 sanitized (PASS). No secrets/tokens/bodies were saved.
+
+The smoke rerun is required after the CORS remediation below is deployed to staging.
+```
+
+Phase 8S CORS staging remediation state (2026-07-04):
+
+```text
+PATCH-08S-CORS-STAGING-REMEDIATION-1 is complete.
+Decision: CORS STAGING REMEDIATION PASS WITH STRICT RECOMMENDATIONS.
+Type: approved narrow runtime CORS remediation (CORS response behavior only).
+Base commit: f5a9d4b PATCH-08S-SECURITY-HEADERS-CORS-RATE-LIMIT-SCAFFOLD-1 add security scaffold.
+Reason: PATCH-08S-STAGING-SECURITY-SMOKE-1 found a critical live CORS failure and stopped before commit.
+
+Root cause: server.js buildAllowedOrigins() returned "*" when CORS_ORIGIN/ALLOWED_ORIGINS were unset,
+and the origin callback did `if (allowedOrigins === "*") return callback(null, true)` with credentials:true,
+reflecting arbitrary origins with credentials.
+
+Remediation: CORS origin/credentials decisions extracted into pure helper security/cors-policy.js and
+wired via app.use(cors(buildCorsOptionsDelegate(process.env))). Staging/production now require an explicit
+allowlist; missing or "*" allowlist outside local/dev fails closed (unknown origins get
+{ origin:false, credentials:false } — no ACAO, no ACAC); credentials tied to exact origin match;
+Render markers force non-local classification (so hosted staging fails closed even if NODE_ENV=development);
+local dev remains explicitly bounded (loopback + explicit allowlist; wildcard permissive only locally);
+no-Origin requests allowed without a credentialed browser grant. Helper logs nothing and exposes no env values.
+
+Files changed:
+server.js (CORS block only: removed inline buildAllowedOrigins + unsafe callback; import + delegate)
+security/cors-policy.js (new pure helper)
+tests/patch-08s-cors-staging-remediation-1.test.mjs (new focused test)
+PATCH-08S-CORS-STAGING-REMEDIATION-1_CORS_STAGING_REMEDIATION_REPORT.md (new report)
+knowledge/CURRENT_STATE.md (updated)
+
+Validation:
+node tests/patch-08s-cors-staging-remediation-1.test.mjs - PASS / 12 passed / 0 failed / 42 assertions.
+node tests/patch-08s-security-headers-cors-rate-limit-scaffold-1.test.mjs - PASS / 27 / 0.
+node tests/patch-08s-secrets-env-logging-safety-gate-1.test.mjs - PASS / 24 / 0.
+node tests/patch-08s-tenant-isolation-gate-1.test.mjs - PASS / 21 / 0.
+node tests/patch-08s-security-policy-fixture-1.test.mjs - PASS / 29 / 0.
+node tests/patch-08s-security-route-inventory-1.test.mjs - PASS / 21 / 0.
+npm run guard:files - PASS (server.js is not a protected file).
+npm test - GATE PASSED / 0 failed (run with the patch staged; Phase 7B/8 diff-guard suites assert an
+empty unstaged git diff, so the gate is run with tracked changes staged, per established repo convention;
+server.js is not in any diff-guard forbidden list).
+
+No dependency installs; no package.json/package-lock.json changes.
+No DB/Supabase/migration/RLS/auth changes; no rate-limit/header/logging/tenant-isolation implementation.
+No deployment performed from this patch.
+Phase 8 remains closed; memory remains inactive; all TINA_ENABLE_MEMORY_* flags remain OFF.
+Phase 9 remains BLOCKED; Phase 10 and Phase 11 remain deferred.
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-DIAGNOSTIC-1 remains a separate non-security diagnostic.
+
+Deployment requirement: this patch must be deployed to staging before the smoke rerun. Live CORS is not
+claimed fixed until post-deploy smoke confirms an unknown origin is no longer reflected with credentials.
+An explicit CORS_ORIGIN allowlist (real frontend origins) should be set in Render staging.
+
+Next required task:
+PATCH-08S-STAGING-SECURITY-SMOKE-1 (rerun after staging deployment)
+```
