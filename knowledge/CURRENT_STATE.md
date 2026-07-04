@@ -3225,3 +3225,55 @@ An explicit CORS_ORIGIN allowlist (real frontend origins) should be set in Rende
 Next required task:
 PATCH-08S-STAGING-SECURITY-SMOKE-1 (rerun after staging deployment)
 ```
+
+Phase 8S staging security smoke — RERUN COMPLETE / WARNING (2026-07-04):
+
+```text
+PATCH-08S-STAGING-SECURITY-SMOKE-1 (rerun after CORS remediation) is complete.
+Decision: STAGING SECURITY SMOKE WARNING WITH STRICT RECOMMENDATIONS.
+Type: safe staging smoke / fixture-test-report patch only (non-runtime; no deployment in this patch).
+Base commit: a396f67 PATCH-08S-CORS-STAGING-REMEDIATION-1 fix credentialed CORS fail-open.
+
+Files created:
+evaluation/fixtures/phase-8s-staging-security-smoke-1.fixture.json
+tests/patch-08s-staging-security-smoke-1.test.mjs
+PATCH-08S-STAGING-SECURITY-SMOKE-1_STAGING_SECURITY_SMOKE_REPORT.md
+
+Files updated:
+knowledge/CURRENT_STATE.md
+
+Staging target/method: https://tina-backend-staging.onrender.com (source: repo_documentation; reachable, HTTP 200 on /health); tool curl; single, read-only, non-destructive requests. No secrets/tokens/cookies/full bodies saved.
+
+Deployment freshness: behavior_confirmed (no commit marker captured; live CORS behavior change confirms a396f67 is deployed).
+
+CORS remediation verification: PRIOR CRITICAL CORS FAILURE RESOLVED. For unknown Origin https://phase8s-smoke.invalid on OPTIONS /health, OPTIONS /login, and GET /health, no Access-Control-Allow-Origin and no Access-Control-Allow-Credentials are returned (denied preflight falls through to 404 with no CORS grant); ACAC:true no longer emitted on plain /, /health, /routes. Legitimate frontend origin allow-path SKIPPED (no approved origin provided).
+
+Smoke results: CORS negatives PASS; 404 sanitized PASS; invalid login generic 401 PASS (no stack/secret/enumeration). WARNINGs (expected policy-only gaps): no security headers; no observable rate-limit; public /routes enumeration; public /health metadata; x-powered-by: Express. No critical exposures. SKIPPED: authenticated/model/admin/rate-limit-trigger/INDEX_SECRET/legitimate-origin checks.
+
+Validation:
+node tests/patch-08s-staging-security-smoke-1.test.mjs - PASS / 23 passed / 0 failed / 204 assertions.
+node tests/patch-08s-cors-staging-remediation-1.test.mjs - PASS / 12 / 0.
+node tests/patch-08s-security-headers-cors-rate-limit-scaffold-1.test.mjs - PASS / 27 / 0.
+node tests/patch-08s-secrets-env-logging-safety-gate-1.test.mjs - PASS / 24 / 0.
+node tests/patch-08s-tenant-isolation-gate-1.test.mjs - PASS / 21 / 0.
+node tests/patch-08s-security-policy-fixture-1.test.mjs - PASS / 29 / 0.
+node tests/patch-08s-security-route-inventory-1.test.mjs - PASS / 21 / 0.
+npm run guard:files - PASS.
+npm test - GATE PASSED / 0 failed.
+
+Route inventory integration preserved (30/22/17/9/12/3/1/6; /health DB read requires rate_limit).
+Security policy, tenant isolation, secrets/env/logging, headers/CORS/rate-limit scaffold, and CORS remediation dependencies preserved.
+
+No runtime CORS implementation occurred in this patch (the CORS fix was PATCH-08S-CORS-STAGING-REMEDIATION-1 / a396f67).
+No runtime security headers / rate-limit / request-size implementation occurred.
+No package changes, no middleware wiring, no deployment occurred in this patch.
+Phase 8 remains closed; memory remains inactive; all TINA_ENABLE_MEMORY_* flags remain OFF.
+Phase 9 remains Professional Workflow Co-Pilot but remains BLOCKED pending Phase 8S final closure.
+Phase 10 and Phase 11 remain deferred; Phase 7B clarification boundary tuning remains separate.
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-DIAGNOSTIC-1 remains a separate non-security diagnostic.
+
+Open items carried into final closure (expected policy-only WARNINGs): security headers, rate limits, /health & /routes reconnaissance minimization, x-powered-by suppression, and INDEX_SECRET query-string removal. Final closure must accept these as future implementation items or require implementation patches first. An explicit CORS_ORIGIN allowlist should be set in Render staging so legitimate browsers are allowed (staging currently denies all browser origins).
+
+Next required task:
+PATCH-08S-FINAL-CLOSURE-GATE-1
+```

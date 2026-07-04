@@ -1,0 +1,282 @@
+{
+  "patch": {
+    "id": "PATCH-08S-STAGING-SECURITY-SMOKE-1",
+    "phase": "Phase 8S",
+    "taskType": "staging_security_smoke_evidence_gate_rerun",
+    "title": "Phase 8S Staging Security Smoke (rerun after CORS remediation)"
+  },
+  "decision": "STAGING SECURITY SMOKE WARNING WITH STRICT RECOMMENDATIONS",
+  "baseCommit": "a396f67 PATCH-08S-CORS-STAGING-REMEDIATION-1 fix credentialed CORS fail-open",
+  "smokeVersion": "1.0.0",
+  "nonRuntimePatch": true,
+  "nonRuntimeDeclaration": {
+    "noRuntimeChangeInThisPatch": true,
+    "noDeploymentInThisPatch": true,
+    "noPackageChange": true,
+    "noMiddlewareWiring": true,
+    "noEnvChange": true,
+    "noDbSupabaseChange": true,
+    "noMemoryEnablement": true,
+    "noPhase9Or10Or11Work": true
+  },
+  "remediationCommit": "a396f67",
+  "remediationIntegration": {
+    "remediationPatchId": "PATCH-08S-CORS-STAGING-REMEDIATION-1",
+    "remediationCommit": "a396f67",
+    "liveBehaviorConfirmsRemediation": true,
+    "priorFailingOrigin": "https://phase8s-smoke.invalid",
+    "priorFailureClass": "unknown_origin_reflected_with_credentials",
+    "priorFailureResolvedLive": true
+  },
+  "stagingTarget": {
+    "baseUrlSource": "repo_documentation",
+    "baseUrlHostname": "tina-backend-staging.onrender.com",
+    "baseUrlSecretBearing": false,
+    "timestamp": "2026-07-04",
+    "requestTool": "curl"
+  },
+  "deploymentFreshness": {
+    "confirmedCommit": null,
+    "confirmedBy": "behavior_confirmed",
+    "freshnessStatus": "behavior_confirmed",
+    "note": "No commit marker was captured; the live CORS behavior change (unknown origin no longer reflected and no Access-Control-Allow-Credentials) confirms the a396f67 remediation is deployed. The previous smoke on the pre-remediation deploy reflected the unknown origin with credentials; this rerun does not."
+  },
+  "smokeExecution": {
+    "timestamp": "2026-07-04",
+    "tool": "curl",
+    "totalChecks": 9,
+    "destructive": false,
+    "authenticatedChecksRun": false,
+    "modelChecksRun": false,
+    "adminChecksRun": false,
+    "loadTestingPerformed": false,
+    "secretsOrTokensSaved": false,
+    "fullBodiesSaved": false
+  },
+  "sourceArtifacts": [
+    "evaluation/fixtures/phase-8s-security-route-inventory-1.fixture.json",
+    "evaluation/fixtures/phase-8s-security-policy-fixture-1.fixture.json",
+    "evaluation/fixtures/phase-8s-tenant-isolation-gate-1.fixture.json",
+    "evaluation/fixtures/phase-8s-secrets-env-logging-safety-gate-1.fixture.json",
+    "evaluation/fixtures/phase-8s-security-headers-cors-rate-limit-scaffold-1.fixture.json",
+    "PATCH-08S-CORS-STAGING-REMEDIATION-1_CORS_STAGING_REMEDIATION_REPORT.md",
+    "security/cors-policy.js"
+  ],
+  "routeInventoryIntegration": {
+    "routeInventoryFixture": "evaluation/fixtures/phase-8s-security-route-inventory-1.fixture.json",
+    "totalRoutes": 30,
+    "expensiveRouteCount": 22,
+    "tenantIsolationRouteCount": 17,
+    "noQuerySecretAdminRouteCount": 9,
+    "modeRouteCount": 12,
+    "conversationRouteCount": 3,
+    "debugRouteCount": 1,
+    "publicRouteCount": 6,
+    "healthPerformsDbRead": true,
+    "healthRequiresRateLimit": true
+  },
+  "securityPolicyIntegration": {
+    "securityPolicyFixture": "evaluation/fixtures/phase-8s-security-policy-fixture-1.fixture.json",
+    "securityPolicyPatchId": "PATCH-08S-SECURITY-POLICY-FIXTURE-1"
+  },
+  "tenantIsolationIntegration": {
+    "tenantIsolationGateFixture": "evaluation/fixtures/phase-8s-tenant-isolation-gate-1.fixture.json",
+    "tenantIsolationGatePatchId": "PATCH-08S-TENANT-ISOLATION-GATE-1",
+    "tenantIsolationRemainsMandatoryBeforePhase9": true
+  },
+  "secretsEnvLoggingIntegration": {
+    "secretsEnvLoggingGateFixture": "evaluation/fixtures/phase-8s-secrets-env-logging-safety-gate-1.fixture.json",
+    "secretsEnvLoggingGatePatchId": "PATCH-08S-SECRETS-ENV-LOGGING-SAFETY-GATE-1",
+    "secretsEnvLoggingRemainsMandatoryBeforePhase9": true
+  },
+  "headersCorsRateLimitScaffoldIntegration": {
+    "scaffoldFixture": "evaluation/fixtures/phase-8s-security-headers-cors-rate-limit-scaffold-1.fixture.json",
+    "scaffoldPatchId": "PATCH-08S-SECURITY-HEADERS-CORS-RATE-LIMIT-SCAFFOLD-1"
+  },
+  "corsRemediationIntegration": {
+    "remediationReport": "PATCH-08S-CORS-STAGING-REMEDIATION-1_CORS_STAGING_REMEDIATION_REPORT.md",
+    "remediationPatchId": "PATCH-08S-CORS-STAGING-REMEDIATION-1",
+    "remediationCommit": "a396f67"
+  },
+  "checks": [
+    { "checkId": "get-root", "method": "GET", "path": "/", "timestamp": "2026-07-04", "statusCode": 200, "durationMsApprox": 540, "safeHeaders": { "content-type": "application/json; charset=utf-8", "x-powered-by": "Express", "server": "cloudflare", "access-control-allow-origin": null, "access-control-allow-credentials": null }, "bodyClassification": "public_banner_only", "observedRiskNotes": "Public banner with usefulRoutes list; x-powered-by exposed.", "expectedPolicyReference": "route_recon_minimization, security_headers", "result": "WARNING" },
+    { "checkId": "get-health", "method": "GET", "path": "/health", "timestamp": "2026-07-04", "statusCode": 200, "durationMsApprox": 3115, "safeHeaders": { "content-type": "application/json; charset=utf-8", "x-powered-by": "Express", "server": "cloudflare", "access-control-allow-credentials": null }, "bodyClassification": "health_metadata", "observedRiskNotes": "Unauthenticated health metadata (env/model/version/DB stats booleans); no secret values observed; x-powered-by exposed.", "expectedPolicyReference": "route_recon_minimization, rate_limit, log_redaction", "result": "WARNING" },
+    { "checkId": "get-routes", "method": "GET", "path": "/routes", "timestamp": "2026-07-04", "statusCode": 200, "durationMsApprox": 441, "safeHeaders": { "content-type": "application/json; charset=utf-8", "x-powered-by": "Express", "server": "cloudflare" }, "bodyClassification": "route_listing", "observedRiskNotes": "Public route enumeration including admin routes; x-powered-by exposed.", "expectedPolicyReference": "route_recon_minimization", "result": "WARNING" },
+    { "checkId": "get-404", "method": "GET", "path": "/nonexistent-phase-8s-smoke-path", "timestamp": "2026-07-04", "statusCode": 404, "durationMsApprox": 471, "safeHeaders": { "content-type": "application/json; charset=utf-8", "x-powered-by": "Express", "server": "cloudflare" }, "bodyClassification": "sanitized_error", "observedRiskNotes": "Structured 404 JSON; no stack/raw error; x-powered-by exposed.", "expectedPolicyReference": "error_sanitization, route_recon_minimization", "result": "PASS" },
+    { "checkId": "options-health-unknown-origin", "method": "OPTIONS", "path": "/health", "timestamp": "2026-07-04", "statusCode": 404, "durationMsApprox": 524, "safeHeaders": { "access-control-allow-origin": null, "access-control-allow-credentials": null }, "bodyClassification": "not_recorded", "observedRiskNotes": "Unknown origin https://phase8s-smoke.invalid NOT reflected; no ACAO, no ACAC. Denied preflight falls through to 404 (no CORS grant).", "expectedPolicyReference": "cors (fail-closed)", "result": "PASS" },
+    { "checkId": "options-login-unknown-origin", "method": "OPTIONS", "path": "/login", "timestamp": "2026-07-04", "statusCode": 404, "durationMsApprox": 500, "safeHeaders": { "access-control-allow-origin": null, "access-control-allow-credentials": null }, "bodyClassification": "not_recorded", "observedRiskNotes": "Unknown origin NOT reflected; no ACAO, no ACAC.", "expectedPolicyReference": "cors (fail-closed)", "result": "PASS" },
+    { "checkId": "get-health-unknown-origin", "method": "GET", "path": "/health", "timestamp": "2026-07-04", "statusCode": 200, "durationMsApprox": 500, "safeHeaders": { "access-control-allow-origin": null, "access-control-allow-credentials": null }, "bodyClassification": "health_metadata", "observedRiskNotes": "Unknown origin NOT reflected on simple GET; no ACAO, no ACAC. Prior critical failure resolved.", "expectedPolicyReference": "cors (fail-closed)", "result": "PASS" },
+    { "checkId": "post-login-invalid", "method": "POST", "path": "/login", "timestamp": "2026-07-04", "statusCode": 401, "durationMsApprox": 500, "safeHeaders": { "content-type": "application/json; charset=utf-8" }, "bodyClassification": "auth_error", "bodySnippet": "{\"success\":false,\"error\":\"Invalid credentials\"}", "observedRiskNotes": "Generic 401; no stack trace, no secret markers, no user enumeration. Single request only.", "expectedPolicyReference": "error_sanitization, rate_limit", "result": "PASS" },
+    { "checkId": "cors-legitimate-origin", "method": "OPTIONS", "path": "/health", "timestamp": "2026-07-04", "statusCode": null, "durationMsApprox": null, "safeHeaders": {}, "bodyClassification": "not_recorded", "observedRiskNotes": "No approved legitimate frontend origin was provided; positive-path CORS allow was not exercised.", "expectedPolicyReference": "cors (positive path)", "result": "SKIPPED" }
+  ],
+  "corsSmokeResults": {
+    "unknownOrigin": "https://phase8s-smoke.invalid",
+    "endpointsTested": ["OPTIONS /health", "OPTIONS /login", "GET /health"],
+    "accessControlAllowOriginReflectedForUnknownOrigin": false,
+    "accessControlAllowCredentialsTrueForUnknownOrigin": false,
+    "wildcardWithCredentialsObserved": false,
+    "unknownOriginAllowedWithCredentials": false,
+    "priorCriticalCorsFailureResolved": true,
+    "legitimateFrontendOriginTested": false,
+    "legitimateFrontendOriginCoverage": "SKIPPED",
+    "classification": "PASS",
+    "notes": "For the unknown origin, no Access-Control-Allow-Origin and no Access-Control-Allow-Credentials are returned on any of the three prior-failing endpoints. Denied preflights fall through to 404 with no CORS grant."
+  },
+  "securityHeadersSmokeResults": {
+    "endpointsChecked": ["GET /", "GET /health", "GET /routes", "GET /nonexistent-phase-8s-smoke-path"],
+    "headersObserved": {
+      "x-content-type-options": false,
+      "referrer-policy": false,
+      "x-frame-options": false,
+      "content-security-policy": false,
+      "frame-ancestors": false,
+      "permissions-policy": false,
+      "cross-origin-resource-policy": false,
+      "cross-origin-opener-policy": false,
+      "strict-transport-security": false
+    },
+    "classification": "WARNING",
+    "notes": "No security headers present. Expected policy-only gap: header runtime implementation is deferred to a future approved patch or explicit final-closure deferral. Not a FAIL."
+  },
+  "rateLimitSmokeResults": {
+    "loadTestingPerformed": false,
+    "retryAfterObserved": false,
+    "rateLimitHeadersObserved": false,
+    "implementationStatus": "policy_scaffold_only",
+    "classification": "WARNING",
+    "notes": "No rate-limit or Retry-After headers naturally observed. Rate limiting remains policy/scaffold-only; auth/model/admin rate-limit implementation remains future work. No endpoints were spammed."
+  },
+  "publicReconSmokeResults": {
+    "rootBannerPublic": true,
+    "routesListPublic": true,
+    "healthMetadataPublic": true,
+    "xPoweredByExposed": true,
+    "notFoundExposesStackOrRawError": false,
+    "secretOrEnvLeakage": false,
+    "classification": "WARNING",
+    "notes": "/routes enumerates the route surface; /health exposes environment/model/version/DB-stat metadata; x-powered-by: Express is present. No secret/env values or stack traces exposed."
+  },
+  "diagnosticOutputSmokeResults": {
+    "adminDiagnosticRoutesTested": false,
+    "classification": "SKIPPED",
+    "notes": "GET /debug/db-identity and admin/index routes were not called (no safe admin credentials; non-destructive smoke only)."
+  },
+  "authEndpointSmokeResults": {
+    "invalidLoginStatus": 401,
+    "errorSanitized": true,
+    "stackOrRawExceptionObserved": false,
+    "userEnumerationObserved": false,
+    "classification": "PASS",
+    "notes": "Single invalid placeholder login returned generic 'Invalid credentials'. No brute force; no account creation."
+  },
+  "errorDisclosureSmokeResults": {
+    "notFoundSanitized": true,
+    "invalidLoginSanitized": true,
+    "stackTraceExposed": false,
+    "secretOrEnvExposed": false,
+    "classification": "PASS"
+  },
+  "skippedChecks": [
+    { "check": "authenticated_route_checks", "reason": "no safe staging test token provided" },
+    { "check": "model_route_checks", "reason": "no safe token and no approval; expensive routes not called" },
+    { "check": "admin_route_checks", "reason": "no safe admin test credential; non-destructive smoke only" },
+    { "check": "rate_limit_trigger_checks", "reason": "no load testing allowed; endpoints not spammed" },
+    { "check": "index_secret_checks", "reason": "no permission to test INDEX_SECRET; not tested with real secrets" },
+    { "check": "legitimate_frontend_origin_cors_checks", "reason": "no approved frontend origin was provided" }
+  ],
+  "blockedChecks": [],
+  "observedRisks": [
+    { "risk": "public_routes_enumeration", "severity": "expected_policy_only_warning", "policy": "route_recon_minimization" },
+    { "risk": "health_metadata_public", "severity": "expected_policy_only_warning", "policy": "route_recon_minimization" },
+    { "risk": "missing_security_headers", "severity": "expected_policy_only_warning", "policy": "security_headers" },
+    { "risk": "no_observable_rate_limit", "severity": "expected_policy_only_warning", "policy": "rate_limit" },
+    { "risk": "x_powered_by_express", "severity": "expected_policy_only_warning", "policy": "route_recon_minimization" },
+    { "risk": "index_secret_query_string_acceptance", "severity": "known_open_risk_not_retested_live", "policy": "no_query_secret" }
+  ],
+  "criticalExposuresObserved": [],
+  "controlsNotImplemented": [
+    "security_headers",
+    "rate_limiting",
+    "request_size_changes",
+    "tenant_isolation",
+    "logging_redaction",
+    "langfuse_redaction",
+    "error_sanitization",
+    "query_secret_removal",
+    "route_minimization",
+    "memory",
+    "additional_cors_code_changes"
+  ],
+  "policyOnlyControls": ["security_headers", "rate_limit", "route_recon_minimization", "log_redaction", "third_party_egress_redaction", "error_sanitization", "no_query_secret", "tenant_isolation"],
+  "phase9Blockers": {
+    "phase9CanBegin": false,
+    "requiredCompleteBeforePhase9": [
+      "PATCH-08S-STAGING-SECURITY-SMOKE-1",
+      "PATCH-08S-FINAL-CLOSURE-GATE-1"
+    ],
+    "criticalStagingFailMustBeResolvedOrGated": true,
+    "tenantIsolationGateMustRemainSatisfied": true,
+    "secretsEnvLoggingGateMustRemainSatisfied": true,
+    "headersCorsRateLimitScaffoldMustRemainSatisfied": true,
+    "headersRateLimitImplementationDecisionMadeOrDeferredByFinalGate": true
+  },
+  "futureSmokeRequirements": [
+    "After configuring CORS_ORIGIN allowlist in Render, confirm legitimate frontend origin is allowed with credentials and unknown origins remain denied.",
+    "After a future headers implementation patch, confirm security headers present on relevant responses.",
+    "After a future rate-limit implementation patch, confirm rate-limit triggers on auth/model/admin routes.",
+    "Confirm /health and /routes reconnaissance minimization once implemented.",
+    "Confirm INDEX_SECRET is no longer accepted via query string once remediated."
+  ],
+  "prohibitedClaims": [
+    "staging is production-hardened",
+    "security headers are implemented",
+    "rate limiting is implemented",
+    "tenant isolation is implemented",
+    "logging redaction is implemented",
+    "Langfuse egress is fixed",
+    "query-secret risk is fixed",
+    "production error sanitization is implemented",
+    "Phase 9 is unblocked",
+    "runtime security hardening is complete",
+    "persistent memory exists",
+    "Phase 8 memory is active"
+  ],
+  "deferredBoundaries": {
+    "phase9ImplementedInThisPatch": false,
+    "phase10SourceGovernance": "deferred",
+    "phase11Observability": "deferred",
+    "phase12DocumentAdvisory": "deferred",
+    "phase14MobileAfterPhase13": "deferred",
+    "phase7bClarificationBoundaryTuning": "separate"
+  },
+  "phase8MemoryPolicy": {
+    "memoryActive": false,
+    "memoryFlagsMustRemainDisabled": [
+      "TINA_ENABLE_MEMORY_READS",
+      "TINA_ENABLE_MEMORY_WRITES",
+      "TINA_ENABLE_MATTER_MEMORY",
+      "TINA_ENABLE_MEMORY_SUGGESTIONS",
+      "TINA_ENABLE_MEMORY_DEBUG_TRACE"
+    ]
+  },
+  "phase8XDiagnosticSeparation": {
+    "id": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-DIAGNOSTIC-1",
+    "isSeparate": true,
+    "isPersistentMemory": false,
+    "isPhase8SSecurity": false,
+    "implementedInThisPatch": false
+  },
+  "futurePatchDependencies": {
+    "PATCH-08S-FINAL-CLOSURE-GATE-1": ["all Phase 8S gates", "this staging smoke WARNING accepted or headers/rate-limit implementation decided"]
+  },
+  "testCases": [
+    { "id": "cors_prior_failure_resolved", "expect": "unknown origin not reflected, no credentials on 3 endpoints" },
+    { "id": "cors_no_wildcard_credentials", "expect": "no wildcard+credentials observed" },
+    { "id": "headers_absent_warning", "expect": "security headers absent -> WARNING policy-only" },
+    { "id": "rate_limit_policy_only", "expect": "no rate-limit headers -> policy-only WARNING" },
+    { "id": "public_recon_warning", "expect": "/routes, /health, x-powered-by -> WARNING" },
+    { "id": "auth_error_sanitized", "expect": "invalid login generic 401, no leak" },
+    { "id": "decision_warning", "expect": "WARNING with strict recommendations" },
+    { "id": "remediation_integration", "expect": "references PATCH-08S-CORS-STAGING-REMEDIATION-1 and a396f67" }
+  ]
+}
