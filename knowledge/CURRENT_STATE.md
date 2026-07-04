@@ -2951,3 +2951,70 @@ Strict recommendations:
 Next required task:
 PATCH-08S-TENANT-ISOLATION-GATE-1
 ```
+
+Phase 8S tenant isolation gate state (2026-07-04):
+
+```text
+PATCH-08S-TENANT-ISOLATION-GATE-1 is complete.
+Decision: TENANT ISOLATION GATE PASS WITH STRICT RECOMMENDATIONS.
+Type: tenant/client/matter isolation gate fixture-test-report patch only.
+Base commit: 08ba6c8 PATCH-08S-SECURITY-POLICY-FIXTURE-1 add security policy fixture.
+
+Files created:
+evaluation/fixtures/phase-8s-tenant-isolation-gate-1.fixture.json
+tests/patch-08s-tenant-isolation-gate-1.test.mjs
+PATCH-08S-TENANT-ISOLATION-GATE-1_TENANT_ISOLATION_GATE_REPORT.md
+
+Files updated:
+knowledge/CURRENT_STATE.md
+
+Tenant isolation gate summary:
+Tenant/client/matter isolation is mandatory before Phase 9.
+User/client/matter data must be scoped to authenticated subjects and authorized tenant/client/matter boundaries.
+Generated professional work product must be access-controlled before it can be generated, stored,
+retrieved, listed, or edited in Phase 9.
+Route inventory integration preserved: 30 routes; 17 tenant_isolation routes; 12 mode routes;
+3 conversation routes; 22 expensive routes; 9 no_query_secret admin routes; GET /health performs
+DB read and requires rate-limit policy.
+Security policy integration preserved: tenant_isolation and supabase_service_role remain CRITICAL.
+
+Supabase service-role gate:
+Supabase service-role access may be acceptable only for tightly controlled server-only
+administrative/source-corpus operations. It is not acceptable as the default access path
+for user/client/matter data in Phase 9 without tenant-scoping, RLS, or an equivalent isolation model.
+
+Required future architecture options recorded:
+1. RLS-enforced per-user/per-tenant Supabase client for user/client/matter data.
+2. Server-mediated tenant enforcement with explicit scoped query builders and testable authorization checks.
+3. Hybrid model: service-role only for admin/source-corpus paths, tenant-scoped access for user/client/matter paths.
+
+Validation:
+node tests/patch-08s-tenant-isolation-gate-1.test.mjs - PASS.
+node tests/patch-08s-security-policy-fixture-1.test.mjs - PASS.
+node tests/patch-08s-security-route-inventory-1.test.mjs - PASS.
+npm run guard:files - PASS.
+npm test - PASS / 0 failed.
+
+No runtime tenant isolation implementation occurred.
+No runtime security implementation occurred.
+No Supabase/DB changes occurred.
+No migrations/RLS/schema changes occurred.
+No package changes occurred.
+No middleware wiring occurred.
+No server.js/route/auth/CORS/header/rate-limit/logging behavior changes occurred.
+No environment-variable, Render/Vercel, deployment, or production changes occurred.
+Phase 8 remains formally closed.
+Memory remains inactive; no persistent memory exists; all TINA_ENABLE_MEMORY_* flags remain OFF.
+Phase 9 remains Professional Workflow Co-Pilot but remains blocked pending Phase 8S completion.
+Phase 10 remains deferred.
+Phase 11 remains deferred.
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-DIAGNOSTIC-1 remains a separate non-security diagnostic.
+
+Phase 9 readiness remains blocked until tenant isolation architecture is selected or formally
+gated for implementation, user/client/matter and generated work product access rules are defined,
+service-role boundaries are enforced by future gates, secrets/logging/egress safety gate passes,
+headers/CORS/rate-limit scaffold passes, staging security smoke passes, and Phase 8S final closure passes.
+
+Next required task:
+PATCH-08S-SECRETS-ENV-LOGGING-SAFETY-GATE-1
+```

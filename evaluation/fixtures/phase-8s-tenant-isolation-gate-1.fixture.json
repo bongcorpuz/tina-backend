@@ -1,0 +1,343 @@
+{
+  "patch": {
+    "id": "PATCH-08S-TENANT-ISOLATION-GATE-1",
+    "phase": "Phase 8S",
+    "taskType": "tenant_client_matter_isolation_gate_fixture_test_report_only",
+    "title": "Tenant / Client / Matter Isolation Gate",
+    "runtimeTenantIsolationImplemented": false,
+    "runtimeSecurityImplemented": false,
+    "middlewareWired": false,
+    "dbChanged": false,
+    "supabaseCodeChanged": false,
+    "migrationsCreated": false,
+    "rlsImplemented": false,
+    "schemaChanged": false,
+    "packageChanged": false,
+    "deploymentChanged": false,
+    "phase9Started": false,
+    "phase10Implemented": false,
+    "phase11Implemented": false,
+    "memoryActive": false,
+    "persistentMemoryExists": false
+  },
+  "decision": "TENANT ISOLATION GATE PASS WITH STRICT RECOMMENDATIONS",
+  "baseCommit": "08ba6c8 PATCH-08S-SECURITY-POLICY-FIXTURE-1 add security policy fixture",
+  "gateVersion": "1.0.0",
+  "nonRuntimePatch": true,
+  "sourceArtifacts": [
+    "PATCH-08S-SECURITY-HARDENING-DESIGN-1_SECURITY_ARCHITECTURE_THREAT_MODEL_REPORT.md",
+    "evaluation/fixtures/phase-8s-security-route-inventory-1.fixture.json",
+    "PATCH-08S-SECURITY-ROUTE-INVENTORY-1_ROUTE_INVENTORY_REPORT.md",
+    "evaluation/fixtures/phase-8s-security-policy-fixture-1.fixture.json",
+    "PATCH-08S-SECURITY-POLICY-FIXTURE-1_SECURITY_POLICY_FIXTURE_REPORT.md",
+    "tests/patch-08s-security-route-inventory-1.test.mjs",
+    "tests/patch-08s-security-policy-fixture-1.test.mjs",
+    "knowledge/CURRENT_STATE.md"
+  ],
+  "routeInventoryIntegration": {
+    "routeInventoryFixture": "evaluation/fixtures/phase-8s-security-route-inventory-1.fixture.json",
+    "totalRoutes": 30,
+    "tenantIsolationRouteCount": 17,
+    "modeRouteCount": 12,
+    "conversationRouteCount": 3,
+    "expensiveRouteCount": 22,
+    "noQuerySecretAdminRouteCount": 9,
+    "healthPath": "/health",
+    "healthPerformsDbRead": true,
+    "healthRequiresRateLimit": true,
+    "requiredTenantRoutePolicies": [
+      "tenant_scope_required",
+      "subject_authorization_required",
+      "object_scope_required",
+      "no_cross_user_access",
+      "no_cross_client_access_future",
+      "no_cross_matter_access_future",
+      "redaction_required",
+      "audit_policy_required_future"
+    ],
+    "note": "This gate cross-checks route counts from the route inventory fixture. Every route flagged tenant_isolation remains blocked from Phase 9 readiness until the future isolation architecture is selected, implemented in a separate patch, and validated."
+  },
+  "securityPolicyIntegration": {
+    "securityPolicyFixture": "evaluation/fixtures/phase-8s-security-policy-fixture-1.fixture.json",
+    "tenantIsolationPolicy": {
+      "id": "tenant_isolation",
+      "severity": "CRITICAL",
+      "mandatoryBeforePhase9": true,
+      "tenantIsolationRouteCount": 17
+    },
+    "supabaseServiceRolePolicy": {
+      "id": "supabase_service_role",
+      "severity": "CRITICAL",
+      "serviceRoleAsDefaultPathForUserDataRisk": "CRITICAL",
+      "calibratedWording": "Supabase service-role access may be acceptable only for tightly controlled server-only administrative/source-corpus operations. It is not acceptable as the default access path for user/client/matter data in Phase 9 without tenant-scoping, RLS, or an equivalent isolation model."
+    }
+  },
+  "tenantIsolationPrinciples": [
+    "Tenant/client/matter isolation is mandatory before Phase 9.",
+    "User/client/matter data must be scoped to an authenticated subject and authorized tenant/client/matter boundary.",
+    "Generated professional work product must be access-controlled.",
+    "Conversation history and prompts must not be readable across users/clients/matters.",
+    "Phase 9 professional documents must not be generated, stored, retrieved, listed, or edited without an isolation model.",
+    "Route inventory entries requiring tenant_isolation must remain blocked from Phase 9 readiness until the tenant isolation gate is resolved.",
+    "Supabase service-role access may be acceptable only for tightly controlled server-only administrative/source-corpus operations.",
+    "Supabase service-role access is not acceptable as the default access path for user/client/matter data in Phase 9 without tenant-scoping, RLS, or an equivalent isolation model.",
+    "This patch approves no runtime implementation.",
+    "This patch creates no DB schema, RLS policy, migration, or runtime access client."
+  ],
+  "protectedDataClasses": [
+    "P0_SECRET",
+    "P1_CLIENT_CONFIDENTIAL",
+    "P1_LEGAL_TAX_STRATEGY",
+    "P2_USER_DATA",
+    "P2_GENERATED_WORK_PRODUCT",
+    "P3_DIAGNOSTIC_INTERNAL",
+    "P4_PUBLIC_SOURCE"
+  ],
+  "tenantScopeModel": [
+    "user",
+    "organization / firm workspace",
+    "client",
+    "matter",
+    "source_corpus",
+    "admin_system",
+    "public_source"
+  ],
+  "subjectTypes": [
+    "anonymous_user",
+    "authenticated_user",
+    "admin_operator",
+    "index_operator",
+    "system_service",
+    "future_firm_member",
+    "future_client_user"
+  ],
+  "objectTypes": [
+    "account",
+    "conversation",
+    "prompt",
+    "answer",
+    "client_profile_future",
+    "matter_profile_future",
+    "generated_document_future",
+    "audit_defense_matrix_future",
+    "compliance_calendar_future",
+    "source_document",
+    "source_chunk",
+    "vector_record",
+    "index_job",
+    "diagnostic_record",
+    "log_record"
+  ],
+  "requiredIsolationDimensions": [
+    "user_id",
+    "organization_id / firm_workspace_id future",
+    "client_id future",
+    "matter_id future",
+    "role / permission future",
+    "source_corpus_scope",
+    "admin_operation_scope",
+    "data_classification"
+  ],
+  "routeRiskMapping": {
+    "tenantIsolationRoutes": [
+      "post-register",
+      "post-login",
+      "post-conversations",
+      "get-conversations",
+      "get-conversation-messages",
+      "post-ask",
+      "post-tax",
+      "post-review",
+      "post-quiz",
+      "post-diagnostic",
+      "post-source",
+      "post-audit",
+      "post-case",
+      "post-debug",
+      "post-patch",
+      "post-progress",
+      "post-feedback"
+    ],
+    "futurePolicyRequiredForEachTenantRoute": [
+      "tenant_scope_required",
+      "subject_authorization_required",
+      "object_scope_required",
+      "no_cross_user_access",
+      "no_cross_client_access_future",
+      "no_cross_matter_access_future",
+      "redaction_required",
+      "audit_policy_required_future"
+    ],
+    "conversationRoutes": 3,
+    "modeRoutes": 12,
+    "authRoutes": 2,
+    "phase9Readiness": "blocked_until_architecture_selected_and_separately_implemented"
+  },
+  "supabaseServiceRolePolicy": {
+    "id": "supabase_service_role",
+    "severity": "CRITICAL",
+    "calibratedWording": "Supabase service-role access may be acceptable only for tightly controlled server-only administrative/source-corpus operations. It is not acceptable as the default access path for user/client/matter data in Phase 9 without tenant-scoping, RLS, or an equivalent isolation model.",
+    "serviceRoleNotAutomaticallyForbidden": true,
+    "defaultUserClientMatterPathAcceptableForPhase9": false,
+    "noRuntimeChangeInThisPatch": true
+  },
+  "dbAccessClassification": {
+    "sourceCorpusAndIndexing": "admin_or_source_corpus_scope_future_review_required",
+    "healthStats": "diagnostic_internal_minimize_and_guard_in_future",
+    "conversationData": "user_scoped_today_future_tenant_client_matter_controls_required",
+    "phase9GeneratedWorkProduct": "future_p1_p2_access_control_required_before_creation",
+    "clientMatterProfiles": "future_p1_p2_access_control_required_before_creation",
+    "logsDiagnostics": "p3_by_default_may_contain_p1_p2_if_unredacted_future_redaction_required"
+  },
+  "allowedServiceRoleUses": [
+    "source corpus ingestion",
+    "source chunk indexing",
+    "vector maintenance",
+    "controlled admin/index operations",
+    "system health checks only if minimized and guarded appropriately in future",
+    "migrations and maintenance outside user-facing request paths"
+  ],
+  "prohibitedServiceRoleUses": [
+    "default user-facing data access path",
+    "generated professional document CRUD",
+    "client profile CRUD",
+    "matter profile CRUD",
+    "cross-user conversation reads",
+    "cross-client/matter reads",
+    "arbitrary user-driven DB queries",
+    "direct trust of client-supplied tenant/client/matter IDs without authorization proof"
+  ],
+  "requiredFutureArchitecture": {
+    "phase9CannotBeginUntilSelectedDesignedFixtureTestedApproved": true,
+    "options": [
+      {
+        "id": "Option A",
+        "name": "RLS-enforced tenant-scoped client",
+        "description": "RLS-enforced per-user/per-tenant Supabase client for user/client/matter data."
+      },
+      {
+        "id": "Option B",
+        "name": "Server-mediated tenant enforcement",
+        "description": "Server-mediated tenant enforcement with explicit scoped query builders and testable authorization checks."
+      },
+      {
+        "id": "Option C",
+        "name": "Hybrid model",
+        "description": "Hybrid model: service-role only for admin/source-corpus paths, tenant-scoped access for user/client/matter paths."
+      }
+    ],
+    "noOptionImplementedOrRuntimeApprovedInThisPatch": true
+  },
+  "phase9Blockers": {
+    "phase9CanBegin": false,
+    "requiredCompleteBeforePhase9": [
+      "PATCH-08S-TENANT-ISOLATION-GATE-1 complete",
+      "tenant isolation architecture selected or formally gated for implementation",
+      "user/client/matter data access rules defined",
+      "generated work product access rules defined",
+      "service-role permitted/prohibited use boundaries defined",
+      "route inventory tenant_isolation routes mapped to future controls",
+      "PATCH-08S-SECRETS-ENV-LOGGING-SAFETY-GATE-1 complete",
+      "PATCH-08S-SECURITY-HEADERS-CORS-RATE-LIMIT-SCAFFOLD-1 complete",
+      "PATCH-08S-STAGING-SECURITY-SMOKE-1 complete",
+      "PATCH-08S-FINAL-CLOSURE-GATE-1 complete"
+    ]
+  },
+  "requiredFutureTests": [
+    "no cross-user conversation read",
+    "no cross-client document read future",
+    "no cross-matter document read future",
+    "generated work product must require owner/client/matter authorization",
+    "client-supplied tenant/client/matter IDs cannot authorize access alone",
+    "service-role import/use cannot appear in user/client/matter runtime paths unless explicitly exempted",
+    "source-corpus admin operations must be separated from user/client/matter data flows",
+    "route inventory tenant_isolation routes must have policy mapping",
+    "public routes must not expose tenant-scoped data",
+    "admin routes must require stronger guard and no query-secret in future hardened state"
+  ],
+  "migrationAndRlsDeferred": {
+    "noMigrationsInThisPatch": true,
+    "noRlsPolicyInThisPatch": true,
+    "noSchemaChangesInThisPatch": true,
+    "noSupabaseCodeChangesInThisPatch": true,
+    "futureDbRlsWorkRequiresSeparateDesignFixtureImplementationSmokeGate": true
+  },
+  "prohibitedClaims": [
+    "tenant isolation is implemented",
+    "RLS is implemented",
+    "service-role risk is fixed",
+    "Phase 9 is unblocked",
+    "generated document security is implemented",
+    "client/matter access control is implemented",
+    "runtime security hardening is implemented",
+    "persistent memory exists",
+    "Phase 8 memory is active"
+  ],
+  "deferredBoundaries": {
+    "phase9ProfessionalWorkflowCoPilot": "blocked_not_started",
+    "phase10SourceGovernance": "deferred",
+    "phase10CourtMetadata": "deferred",
+    "phase10CurrentnessSupersession": "deferred",
+    "phase11Observability": "deferred",
+    "phase11PerformanceCacheCompression": "deferred",
+    "phase7bClarificationBoundaryTuning": "separate"
+  },
+  "phase8MemoryPolicy": {
+    "memoryActive": false,
+    "persistentMemoryExists": false,
+    "runtimeMemoryImplemented": false,
+    "durableWrites": false,
+    "persistentReads": false,
+    "memoryFlagsMustRemainDisabled": [
+      "TINA_ENABLE_MEMORY_READS",
+      "TINA_ENABLE_MEMORY_WRITES",
+      "TINA_ENABLE_MATTER_MEMORY",
+      "TINA_ENABLE_MEMORY_SUGGESTIONS",
+      "TINA_ENABLE_MEMORY_DEBUG_TRACE"
+    ]
+  },
+  "phase8XDiagnosticSeparation": {
+    "id": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-DIAGNOSTIC-1",
+    "isSeparate": true,
+    "isPersistentMemory": false,
+    "isPhase8SSecurity": false,
+    "implementedInThisPatch": false,
+    "note": "Short-term chat/session context carryover diagnostic remains separate and is not fixed inside this tenant isolation gate."
+  },
+  "futurePatchDependencies": {
+    "PATCH-08S-SECRETS-ENV-LOGGING-SAFETY-GATE-1": [
+      "secrets_env",
+      "log_redaction",
+      "third_party_egress_redaction",
+      "error_sanitization",
+      "no_query_secret"
+    ],
+    "PATCH-08S-SECURITY-HEADERS-CORS-RATE-LIMIT-SCAFFOLD-1": [
+      "cors",
+      "security_headers",
+      "rate_limit",
+      "request_size_limit",
+      "route_recon_minimization"
+    ],
+    "PATCH-08S-STAGING-SECURITY-SMOKE-1": [
+      "prompt_injection_control",
+      "authority_spoofing_control",
+      "staging_security_smoke"
+    ],
+    "PATCH-08S-FINAL-CLOSURE-GATE-1": [
+      "all_phase8s_gates"
+    ]
+  },
+  "testCases": [
+    { "id": "fixture_valid_json", "expect": "tenant isolation gate fixture exists and is valid JSON" },
+    { "id": "non_runtime_patch", "expect": "patch is non-runtime and implements no tenant isolation" },
+    { "id": "route_inventory_counts", "expect": "route inventory counts match 30/17/12/3/22/9 and /health DB read rate-limit fact" },
+    { "id": "policy_integration_critical", "expect": "tenant_isolation and supabase_service_role are CRITICAL" },
+    { "id": "service_role_calibrated", "expect": "calibrated service-role wording appears exactly" },
+    { "id": "future_architecture_options", "expect": "RLS, server-mediated, and hybrid options are listed but not implemented" },
+    { "id": "phase9_blocked", "expect": "Phase 9 remains blocked pending Phase 8S gates" },
+    { "id": "migration_rls_deferred", "expect": "migrations, RLS, schema, and Supabase code changes are deferred" },
+    { "id": "memory_inactive", "expect": "Phase 8 memory remains inactive and persistent memory does not exist" },
+    { "id": "phase8x_separate", "expect": "PATCH-08X diagnostic remains separate" }
+  ]
+}
