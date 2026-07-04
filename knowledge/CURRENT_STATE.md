@@ -2594,3 +2594,63 @@ Strict recommendations:
 Next required task:
 PATCH-08K-MEMORY-STAGING-SMOKE-1
 ```
+
+Phase 8K memory staging-smoke state (2026-07-04):
+
+```text
+PATCH-08K-MEMORY-STAGING-SMOKE-1 is complete.
+Smoke decision: SMOKE PASS WITH STRICT RECOMMENDATIONS.
+Smoke scope: repository-level staging-readiness smoke only.
+No Render deployment, production deployment, or environment-variable change occurred.
+Render staging environment was not modified or verified in this patch.
+
+Files created:
+PATCH-08K-MEMORY-STAGING-SMOKE-1_MEMORY_STAGING_SMOKE_REPORT.md
+tests/patch-08k-memory-staging-smoke-1.test.mjs
+
+Files updated:
+knowledge/CURRENT_STATE.md
+
+Validation results:
+node tests/patch-08b-memory-taxonomy-fixture-1-policy.test.mjs - PASS
+node tests/patch-08d-memory-scope-schema-fixture-1-invariants.test.mjs - PASS
+node tests/patch-08f-memory-consent-contract-fixture-1-policy.test.mjs - PASS
+node tests/patch-08g-memory-service-boundary-scaffold-1.test.mjs - PASS
+node tests/patch-08h-memory-read-scaffold-1.test.mjs - PASS
+node tests/patch-08i-memory-write-scaffold-1.test.mjs - PASS
+node tests/patch-08j-memory-governance-gate-1.test.mjs - PASS
+node tests/patch-08k-memory-staging-smoke-1.test.mjs - PASS / 13 passed / 0 failed / 182 assertions
+npm run guard:files - PASS
+npm test - PASS / 10 syntax checks / 121 suites run / 0 failed
+
+No durable memory writes occurred.
+No persistent memory reads occurred.
+No runtime memory implementation occurred.
+No runtime consent implementation occurred.
+No DB/migration/tables occurred.
+No persistence services occurred.
+No pipeline/frontend work occurred.
+No route/controller, ask-handler, retrieval, reranker, sourceAvailability,
+source-card, Authority Lock, package, or dependency work occurred.
+All memory flags remain OFF/not implemented.
+Production clarification route gate remains OFF/not approved.
+Phase 7B boundary tuning remains pre-production-ON follow-up.
+Phase 10 remains deferred.
+Phase 11 performance/cache/compression remains deferred.
+Phase 8 is not yet formally closed until 08L.
+
+Strict recommendations:
+1. Phase 8 may close only as scaffold/governance complete; memory remains inactive.
+2. No production memory flag may be enabled.
+3. No persistent memory read or durable write may be introduced without a separate storage/schema/migration design, fixture, implementation, and governance gate.
+4. No pipeline integration may occur without a separate integration patch and OFF-state smoke.
+5. deny/session_only/ask_later remain hard no-write outcomes.
+6. Source-derived memory remains provenance-only.
+7. Memory context remains non-authority and uses only "user/matter context indicates:" phrasing.
+8. Phase 10 and Phase 11 remain deferred.
+9. Production clarification route gate remains OFF/not approved until Phase 7B boundary tuning or explicit restricted-pilot approval.
+10. Next phase/task must be explicitly selected; do not automatically begin Phase 9, Phase 10, Phase 11, or security work.
+
+Next required task:
+PATCH-08L-PHASE-8-FINAL-CLOSURE-GATE-1
+```
