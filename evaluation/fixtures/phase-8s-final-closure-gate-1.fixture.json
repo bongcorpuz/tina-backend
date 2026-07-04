@@ -1,0 +1,242 @@
+{
+  "patch": {
+    "id": "PATCH-08S-FINAL-CLOSURE-GATE-1",
+    "phase": "Phase 8S",
+    "taskType": "phase_8s_final_governance_closure_gate",
+    "title": "Phase 8S Final Closure Gate"
+  },
+  "decision": "PHASE 8S FINAL CLOSURE PASS WITH STRICT RECOMMENDATIONS",
+  "baseCommit": "cc1eaee PATCH-08S-STAGING-SECURITY-SMOKE-1 update staging smoke allowlist evidence",
+  "closureVersion": "1.0.0",
+  "nonRuntimePatch": true,
+  "nonRuntimeDeclaration": {
+    "noRuntimeChange": true,
+    "noDeployment": true,
+    "noPackageChange": true,
+    "noMiddlewareWiring": true,
+    "noEnvChange": true,
+    "noDbSupabaseChange": true,
+    "noMemoryEnablement": true,
+    "noPhase9Implementation": true,
+    "noPhase10Implementation": true,
+    "noPhase11Implementation": true
+  },
+  "phaseClosed": "Phase 8S — Security & Hardening Gate",
+  "phaseClosedAs": "Security governance, route inventory, policy fixture, tenant isolation gate, secrets/env/logging safety gate, headers/CORS/rate-limit scaffold, CORS remediation, and staging smoke evidence completed. Closure is a governance/security-readiness gate, not a claim of full production hardening.",
+  "sourceArtifacts": [
+    "PATCH-08S-SECURITY-HARDENING-DESIGN-1_SECURITY_ARCHITECTURE_THREAT_MODEL_REPORT.md",
+    "evaluation/fixtures/phase-8s-security-route-inventory-1.fixture.json",
+    "PATCH-08S-SECURITY-ROUTE-INVENTORY-1_ROUTE_INVENTORY_REPORT.md",
+    "evaluation/fixtures/phase-8s-security-policy-fixture-1.fixture.json",
+    "PATCH-08S-SECURITY-POLICY-FIXTURE-1_SECURITY_POLICY_FIXTURE_REPORT.md",
+    "evaluation/fixtures/phase-8s-tenant-isolation-gate-1.fixture.json",
+    "PATCH-08S-TENANT-ISOLATION-GATE-1_TENANT_ISOLATION_GATE_REPORT.md",
+    "evaluation/fixtures/phase-8s-secrets-env-logging-safety-gate-1.fixture.json",
+    "PATCH-08S-SECRETS-ENV-LOGGING-SAFETY-GATE-1_SECRETS_ENV_LOGGING_SAFETY_GATE_REPORT.md",
+    "evaluation/fixtures/phase-8s-security-headers-cors-rate-limit-scaffold-1.fixture.json",
+    "PATCH-08S-SECURITY-HEADERS-CORS-RATE-LIMIT-SCAFFOLD-1_SECURITY_HEADERS_CORS_RATE_LIMIT_SCAFFOLD_REPORT.md",
+    "PATCH-08S-CORS-STAGING-REMEDIATION-1_CORS_STAGING_REMEDIATION_REPORT.md",
+    "security/cors-policy.js",
+    "evaluation/fixtures/phase-8s-staging-security-smoke-1.fixture.json",
+    "PATCH-08S-STAGING-SECURITY-SMOKE-1_STAGING_SECURITY_SMOKE_REPORT.md"
+  ],
+  "completedPatchLedger": [
+    { "patchId": "PATCH-08S-SECURITY-HARDENING-DESIGN-1", "commit": "70d7684", "decision": "DESIGN PASS WITH STRICT RECOMMENDATIONS", "purpose": "Security architecture / threat-model design.", "artifacts": ["PATCH-08S-SECURITY-HARDENING-DESIGN-1_SECURITY_ARCHITECTURE_THREAT_MODEL_REPORT.md", "tests/patch-08s-security-hardening-design-1.test.mjs"], "validation": "design test PASS; guard PASS; npm test 0 failed", "runtimeImpact": "non_runtime_policy" },
+    { "patchId": "PATCH-08S-SECURITY-ROUTE-INVENTORY-1", "commit": "56fd16d", "decision": "ROUTE INVENTORY PASS WITH STRICT RECOMMENDATIONS", "purpose": "Formal route inventory, classification, and drift tests.", "artifacts": ["evaluation/fixtures/phase-8s-security-route-inventory-1.fixture.json", "tests/patch-08s-security-route-inventory-1.test.mjs", "PATCH-08S-SECURITY-ROUTE-INVENTORY-1_ROUTE_INVENTORY_REPORT.md"], "validation": "route inventory test PASS; guard PASS; npm test 0 failed", "runtimeImpact": "non_runtime_fixture" },
+    { "patchId": "PATCH-08S-SECURITY-POLICY-FIXTURE-1", "commit": "08ba6c8", "decision": "SECURITY POLICY FIXTURE PASS WITH STRICT RECOMMENDATIONS", "purpose": "Encode 20 non-runtime security policy categories.", "artifacts": ["evaluation/fixtures/phase-8s-security-policy-fixture-1.fixture.json", "tests/patch-08s-security-policy-fixture-1.test.mjs", "PATCH-08S-SECURITY-POLICY-FIXTURE-1_SECURITY_POLICY_FIXTURE_REPORT.md"], "validation": "policy fixture test PASS; guard PASS; npm test 0 failed", "runtimeImpact": "non_runtime_policy" },
+    { "patchId": "PATCH-08S-TENANT-ISOLATION-GATE-1", "commit": "2de69d3", "decision": "TENANT ISOLATION GATE PASS WITH STRICT RECOMMENDATIONS", "purpose": "Mandatory tenant/client/matter isolation design before Phase 9; Supabase service-role calibration.", "artifacts": ["evaluation/fixtures/phase-8s-tenant-isolation-gate-1.fixture.json", "tests/patch-08s-tenant-isolation-gate-1.test.mjs", "PATCH-08S-TENANT-ISOLATION-GATE-1_TENANT_ISOLATION_GATE_REPORT.md"], "validation": "tenant isolation gate test PASS; guard PASS; npm test 0 failed", "runtimeImpact": "non_runtime_policy" },
+    { "patchId": "PATCH-08S-SECRETS-ENV-LOGGING-SAFETY-GATE-1", "commit": "b81579f", "decision": "SECRETS ENV LOGGING SAFETY GATE PASS WITH STRICT RECOMMENDATIONS", "purpose": "P0/P1/P2 logging, env validation, third-party egress, and error-disclosure policy.", "artifacts": ["evaluation/fixtures/phase-8s-secrets-env-logging-safety-gate-1.fixture.json", "tests/patch-08s-secrets-env-logging-safety-gate-1.test.mjs", "PATCH-08S-SECRETS-ENV-LOGGING-SAFETY-GATE-1_SECRETS_ENV_LOGGING_SAFETY_GATE_REPORT.md"], "validation": "secrets/env/logging test PASS; guard PASS; npm test 0 failed", "runtimeImpact": "non_runtime_policy" },
+    { "patchId": "PATCH-08S-SECURITY-HEADERS-CORS-RATE-LIMIT-SCAFFOLD-1", "commit": "f5a9d4b", "decision": "SECURITY HEADERS CORS RATE LIMIT SCAFFOLD PASS WITH STRICT RECOMMENDATIONS", "purpose": "Non-runtime scaffold policy for headers, CORS, rate limits, and request size.", "artifacts": ["evaluation/fixtures/phase-8s-security-headers-cors-rate-limit-scaffold-1.fixture.json", "tests/patch-08s-security-headers-cors-rate-limit-scaffold-1.test.mjs", "PATCH-08S-SECURITY-HEADERS-CORS-RATE-LIMIT-SCAFFOLD-1_SECURITY_HEADERS_CORS_RATE_LIMIT_SCAFFOLD_REPORT.md"], "validation": "scaffold test PASS; guard PASS; npm test 0 failed", "runtimeImpact": "non_runtime_policy" },
+    { "patchId": "PATCH-08S-CORS-STAGING-REMEDIATION-1", "commit": "a396f67", "decision": "CORS STAGING REMEDIATION PASS WITH STRICT RECOMMENDATIONS", "purpose": "Narrow runtime CORS fail-closed remediation only (security/cors-policy.js + server.js CORS block). No broad runtime hardening.", "artifacts": ["security/cors-policy.js", "server.js (CORS block only)", "tests/patch-08s-cors-staging-remediation-1.test.mjs", "PATCH-08S-CORS-STAGING-REMEDIATION-1_CORS_STAGING_REMEDIATION_REPORT.md"], "validation": "CORS remediation test PASS; guard PASS; npm test 0 failed", "runtimeImpact": "narrow_runtime_cors_remediation" },
+    { "patchId": "PATCH-08S-STAGING-SECURITY-SMOKE-1", "commit": "b44b80e", "decision": "STAGING SECURITY SMOKE WARNING WITH STRICT RECOMMENDATIONS", "purpose": "First committed staging smoke evidence after CORS remediation (unknown origin denied; frontend allow-path skipped).", "artifacts": ["evaluation/fixtures/phase-8s-staging-security-smoke-1.fixture.json", "tests/patch-08s-staging-security-smoke-1.test.mjs", "PATCH-08S-STAGING-SECURITY-SMOKE-1_STAGING_SECURITY_SMOKE_REPORT.md"], "validation": "staging smoke test PASS; guard PASS; npm test 0 failed", "runtimeImpact": "staging_smoke_evidence" },
+    { "patchId": "PATCH-08S-STAGING-SECURITY-SMOKE-1 (allowlist evidence update)", "commit": "cc1eaee", "decision": "STAGING SECURITY SMOKE WARNING WITH STRICT RECOMMENDATIONS", "purpose": "Staging smoke rerun with frontend allowlist; CORS verified both directions (unknown denied, frontend allowed).", "artifacts": ["evaluation/fixtures/phase-8s-staging-security-smoke-1.fixture.json", "tests/patch-08s-staging-security-smoke-1.test.mjs", "PATCH-08S-STAGING-SECURITY-SMOKE-1_STAGING_SECURITY_SMOKE_REPORT.md"], "validation": "staging smoke test PASS; guard PASS; npm test 0 failed", "runtimeImpact": "staging_smoke_evidence" }
+  ],
+  "routeInventoryIntegration": {
+    "routeInventoryFixture": "evaluation/fixtures/phase-8s-security-route-inventory-1.fixture.json",
+    "totalRoutes": 30,
+    "expensiveRouteCount": 22,
+    "tenantIsolationRouteCount": 17,
+    "noQuerySecretAdminRouteCount": 9,
+    "modeRouteCount": 12,
+    "conversationRouteCount": 3,
+    "debugRouteCount": 1,
+    "publicRouteCount": 6,
+    "healthPerformsDbRead": true,
+    "healthRequiresRateLimit": true
+  },
+  "securityPolicyIntegration": {
+    "securityPolicyFixture": "evaluation/fixtures/phase-8s-security-policy-fixture-1.fixture.json",
+    "securityPolicyPatchId": "PATCH-08S-SECURITY-POLICY-FIXTURE-1",
+    "policyCategoryCount": 20
+  },
+  "tenantIsolationIntegration": {
+    "tenantIsolationGateFixture": "evaluation/fixtures/phase-8s-tenant-isolation-gate-1.fixture.json",
+    "tenantIsolationGatePatchId": "PATCH-08S-TENANT-ISOLATION-GATE-1",
+    "tenantIsolationRemainsMandatoryBeforePhase9": true,
+    "serviceRoleNotDefaultPathForUserDataWithoutIsolation": true,
+    "implementedInPhase8S": false
+  },
+  "secretsEnvLoggingIntegration": {
+    "secretsEnvLoggingGateFixture": "evaluation/fixtures/phase-8s-secrets-env-logging-safety-gate-1.fixture.json",
+    "secretsEnvLoggingGatePatchId": "PATCH-08S-SECRETS-ENV-LOGGING-SAFETY-GATE-1",
+    "loggingRedactionRemainsRequired": true,
+    "langfuseThirdPartyBoundary": true,
+    "implementedInPhase8S": false
+  },
+  "headersCorsRateLimitScaffoldIntegration": {
+    "scaffoldFixture": "evaluation/fixtures/phase-8s-security-headers-cors-rate-limit-scaffold-1.fixture.json",
+    "scaffoldPatchId": "PATCH-08S-SECURITY-HEADERS-CORS-RATE-LIMIT-SCAFFOLD-1",
+    "securityHeadersImplemented": false,
+    "rateLimitsImplemented": false,
+    "requestSizePolicyImplemented": false
+  },
+  "corsRemediationIntegration": {
+    "remediationPatchId": "PATCH-08S-CORS-STAGING-REMEDIATION-1",
+    "remediationCommit": "a396f67",
+    "finalSmokeEvidenceCommit": "cc1eaee",
+    "priorCriticalFailure": "unknown_origin_reflected_with_credentials",
+    "negativeOrigin": "https://phase8s-smoke.invalid",
+    "negativeOriginDenied": true,
+    "positiveOrigin": "https://tina-fawn.vercel.app",
+    "positiveOriginAllowed": true,
+    "wildcardWithCredentialsObserved": false,
+    "status": "resolved"
+  },
+  "stagingSmokeIntegration": {
+    "stagingSmokeFixture": "evaluation/fixtures/phase-8s-staging-security-smoke-1.fixture.json",
+    "finalStagingSmokeDecision": "STAGING SECURITY SMOKE WARNING WITH STRICT RECOMMENDATIONS",
+    "finalStagingSmokeCommit": "cc1eaee",
+    "noCriticalExposureRemains": true,
+    "warningsArePolicyOnly": true,
+    "warningStateAcceptedToCloseNotProofOfProductionHardening": true
+  },
+  "acceptedWarnings": [
+    "security_headers_absent",
+    "rate_limit_headers_absent",
+    "routes_public_route_enumeration",
+    "health_metadata_exposure",
+    "x_powered_by_express_exposure",
+    "index_secret_query_string_removal_future",
+    "tenant_client_matter_isolation_policy_gate_only",
+    "logging_redaction_policy_gate_only",
+    "third_party_egress_controls_policy_gate_only",
+    "headers_rate_limit_recon_minimization_future_implementation"
+  ],
+  "criticalFailures": {
+    "unresolvedCriticalStagingFailRemains": false,
+    "note": "The prior critical live CORS exposure (unknown origin reflected with credentials) was remediated (a396f67) and verified in both directions by the staging smoke rerun (cc1eaee). No unresolved critical staging FAIL remains."
+  },
+  "futureImplementationItems": [
+    "implement_security_headers",
+    "implement_rate_limits_auth_mode_admin_expensive_health",
+    "minimize_or_gate_routes",
+    "minimize_health_metadata",
+    "suppress_x_powered_by",
+    "remove_or_replace_index_secret_query_string_with_header_only_or_stronger",
+    "implement_tenant_client_matter_isolation_before_persistence_or_workproduct_storage",
+    "implement_logging_redaction",
+    "implement_third_party_langfuse_egress_redaction_or_blocking",
+    "implement_production_error_sanitization_if_insufficient",
+    "implement_request_size_policy_for_phase9_generated_document_routes"
+  ],
+  "phase9EntryGuardrails": {
+    "phase9MayStartAs": "controlled Professional Workflow Co-Pilot design/scaffold work",
+    "noProductionLaunch": true,
+    "noBroadClientMatterPersistenceUntilTenantIsolationImplemented": true,
+    "noGeneratedWorkProductStorageUntilAccessControlsImplemented": true,
+    "noUserClientMatterDbExpansionWithoutTenantIsolationDesign": true,
+    "noUnredactedP1P2LogsOrThirdPartyEgress": true,
+    "preserveSourceAuthorityDiscipline": true,
+    "noPhase10SourceCurrentnessWorkUnlessMovedToPhase10": true,
+    "noPhase11ObservabilityPerformanceWorkUnlessMovedToPhase11": true,
+    "allPhase8SFutureSecurityItemsRemainTracked": true
+  },
+  "phase9BlockersOrConstraints": {
+    "productionClientMatterWorkProductBlockedUntilSecurityImplementationGates": true,
+    "tenantIsolationMandatoryBeforeUserClientMatterPersistence": true,
+    "headersRateLimitReconQuerySecretLogRedactionEgressAreFutureApprovedPatches": true
+  },
+  "prohibitedPhase9Scope": [
+    "implement_court_metadata_currentness_supersession_in_phase9",
+    "implement_observability_performance_optimization_in_phase9",
+    "implement_persistent_memory_without_separate_future_memory_phase_approval",
+    "implement_mobile_app_before_post_phase13_phase14",
+    "implement_tenant_risky_client_matter_persistence_without_isolation"
+  ],
+  "phase8MemoryPolicy": {
+    "memoryActive": false,
+    "noPersistentMemory": true,
+    "noRuntimeMemory": true,
+    "noMemoryDbSupabase": true,
+    "noMemoryRoutePipelineFrontendIntegration": true,
+    "memoryRemainsContextOnlyFutureDesignNeverAuthority": true,
+    "memoryFlagsMustRemainDisabled": [
+      "TINA_ENABLE_MEMORY_READS",
+      "TINA_ENABLE_MEMORY_WRITES",
+      "TINA_ENABLE_MATTER_MEMORY",
+      "TINA_ENABLE_MEMORY_SUGGESTIONS",
+      "TINA_ENABLE_MEMORY_DEBUG_TRACE"
+    ]
+  },
+  "phase8XDiagnosticSeparation": {
+    "id": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-DIAGNOSTIC-1",
+    "isSeparate": true,
+    "isPersistentMemory": false,
+    "isPhase8SSecurity": false,
+    "recommendedBeforePhase9WorkflowBuildout": true,
+    "implementedInThisPatch": false,
+    "blocksPhase8SClosure": false
+  },
+  "phase10DeferredBoundary": "deferred",
+  "phase11DeferredBoundary": "deferred",
+  "phase7BDeferredBoundary": "separate",
+  "phase12DeferredBoundary": "deferred",
+  "phase14MobileBoundary": "after Phase 13",
+  "validationMatrix": {
+    "requiredPassingTests": [
+      "tests/patch-08s-final-closure-gate-1.test.mjs",
+      "tests/patch-08s-staging-security-smoke-1.test.mjs",
+      "tests/patch-08s-cors-staging-remediation-1.test.mjs",
+      "tests/patch-08s-security-headers-cors-rate-limit-scaffold-1.test.mjs",
+      "tests/patch-08s-secrets-env-logging-safety-gate-1.test.mjs",
+      "tests/patch-08s-tenant-isolation-gate-1.test.mjs",
+      "tests/patch-08s-security-policy-fixture-1.test.mjs",
+      "tests/patch-08s-security-route-inventory-1.test.mjs"
+    ],
+    "guardFilesRequiredPass": true,
+    "npmTestRequiredZeroFailed": true
+  },
+  "prohibitedClaims": [
+    "production is fully hardened",
+    "security headers are implemented",
+    "rate limits are implemented",
+    "tenant isolation is implemented",
+    "logging redaction is implemented",
+    "Langfuse egress is fixed",
+    "query-secret risk is fixed",
+    "/routes and /health are minimized",
+    "x-powered-by is suppressed",
+    "Phase 9 is production-ready",
+    "Phase 10 has started",
+    "Phase 11 has started",
+    "persistent memory exists",
+    "Phase 8 memory is active"
+  ],
+  "nextPhase": {
+    "nextRecommendedTask": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-DIAGNOSTIC-1",
+    "nextMajorPhase": "Phase 9 — Professional Workflow Co-Pilot",
+    "ifSkip08X": "Phase 9A — Professional Workflow Co-Pilot Design / Scope Gate"
+  },
+  "testCases": [
+    { "id": "decision_pass", "expect": "PHASE 8S FINAL CLOSURE PASS WITH STRICT RECOMMENDATIONS" },
+    { "id": "ledger_complete", "expect": "all 9 Phase 8S commits present" },
+    { "id": "cors_narrow_remediation", "expect": "a396f67 marked narrow_runtime_cors_remediation" },
+    { "id": "cors_resolved_both_ways", "expect": "unknown denied, frontend allowed, no wildcard+credentials" },
+    { "id": "no_critical_fail", "expect": "no unresolved critical staging FAIL" },
+    { "id": "accepted_warnings", "expect": "policy-only warnings accepted as future items" },
+    { "id": "phase9_guardrails", "expect": "no production launch, no persistence without isolation" },
+    { "id": "deferred_boundaries", "expect": "Phase 7B/10/11/12/14 preserved" },
+    { "id": "memory_inactive", "expect": "memory inactive, flags disabled" },
+    { "id": "08x_separate", "expect": "08X separate, does not block closure" }
+  ]
+}

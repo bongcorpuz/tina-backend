@@ -3328,3 +3328,79 @@ Open items carried into final closure (expected policy-only WARNINGs, unchanged)
 Next required task:
 PATCH-08S-FINAL-CLOSURE-GATE-1
 ```
+
+Phase 8S FINAL CLOSURE — COMPLETE (2026-07-05):
+
+```text
+PATCH-08S-FINAL-CLOSURE-GATE-1 is complete.
+Decision: PHASE 8S FINAL CLOSURE PASS WITH STRICT RECOMMENDATIONS.
+Phase 8S — Security & Hardening Gate is formally CLOSED as a governance/security-readiness gate
+(not a claim of full production hardening).
+Type: fixture/test/report/CURRENT_STATE patch only (non-runtime).
+Base commit: cc1eaee PATCH-08S-STAGING-SECURITY-SMOKE-1 update staging smoke allowlist evidence.
+
+Files created:
+evaluation/fixtures/phase-8s-final-closure-gate-1.fixture.json
+tests/patch-08s-final-closure-gate-1.test.mjs
+PATCH-08S-FINAL-CLOSURE-GATE-1_PHASE_8S_FINAL_CLOSURE_REPORT.md
+
+Files updated:
+knowledge/CURRENT_STATE.md
+
+Completed Phase 8S ledger (all commits verified in git history):
+70d7684 PATCH-08S-SECURITY-HARDENING-DESIGN-1 (non_runtime_policy)
+56fd16d PATCH-08S-SECURITY-ROUTE-INVENTORY-1 (non_runtime_fixture)
+08ba6c8 PATCH-08S-SECURITY-POLICY-FIXTURE-1 (non_runtime_policy)
+2de69d3 PATCH-08S-TENANT-ISOLATION-GATE-1 (non_runtime_policy)
+b81579f PATCH-08S-SECRETS-ENV-LOGGING-SAFETY-GATE-1 (non_runtime_policy)
+f5a9d4b PATCH-08S-SECURITY-HEADERS-CORS-RATE-LIMIT-SCAFFOLD-1 (non_runtime_policy)
+a396f67 PATCH-08S-CORS-STAGING-REMEDIATION-1 (narrow_runtime_cors_remediation — only runtime change in Phase 8S)
+b44b80e PATCH-08S-STAGING-SECURITY-SMOKE-1 (staging_smoke_evidence)
+cc1eaee PATCH-08S-STAGING-SECURITY-SMOKE-1 allowlist evidence update (staging_smoke_evidence)
+
+CORS critical failure remediated and verified: prior unknown-origin-reflected-with-credentials resolved (a396f67);
+staging smoke (cc1eaee) confirms unknown origin https://phase8s-smoke.invalid denied (no ACAO/ACAC) and legitimate
+frontend https://tina-fawn.vercel.app allowed (exact-match ACAO + credentials, no wildcard). No unresolved critical
+staging FAIL remains.
+
+Remaining warnings accepted as future implementation items (tracked, not implemented): security headers; rate limits;
+/routes minimization; /health metadata minimization; x-powered-by suppression; INDEX_SECRET query-string removal;
+tenant/client/matter isolation (policy/gate-only); logging redaction (policy/gate-only); third-party/Langfuse egress
+controls (policy/gate-only); request-size policy for Phase 9 document routes.
+
+Validation:
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 passed / 0 failed / 203 assertions.
+node tests/patch-08s-staging-security-smoke-1.test.mjs - PASS / 28 / 0.
+node tests/patch-08s-cors-staging-remediation-1.test.mjs - PASS / 12 / 0.
+node tests/patch-08s-security-headers-cors-rate-limit-scaffold-1.test.mjs - PASS / 27 / 0.
+node tests/patch-08s-secrets-env-logging-safety-gate-1.test.mjs - PASS / 24 / 0.
+node tests/patch-08s-tenant-isolation-gate-1.test.mjs - PASS / 21 / 0.
+node tests/patch-08s-security-policy-fixture-1.test.mjs - PASS / 29 / 0.
+node tests/patch-08s-security-route-inventory-1.test.mjs - PASS / 21 / 0.
+npm run guard:files - PASS.
+npm test - GATE PASSED / 0 failed.
+
+Route inventory / security policy / tenant isolation / secrets-env-logging / headers-CORS-rate-limit scaffold /
+CORS remediation / staging smoke integrations all preserved.
+
+No runtime changes occurred in this patch. No package changes, no middleware wiring, no deployment.
+Phase 8 remains closed; memory remains inactive; all TINA_ENABLE_MEMORY_* flags remain OFF; memory remains
+context-only future design, never authority.
+
+Phase 9 may begin ONLY under guardrails: no production launch; no broad client/matter persistence until tenant
+isolation implemented; no generated work-product storage until access controls implemented; no unredacted P1/P2
+logs or third-party egress; preserve source authority discipline; no Phase 10 court/currentness work; no Phase 11
+observability/performance work; all Phase 8S future security items remain tracked.
+
+Phase 10 remains deferred; Phase 11 remains deferred; Phase 12 deferred; Phase 14 mobile after Phase 13;
+Phase 7B clarification boundary tuning remains separate.
+
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-DIAGNOSTIC-1 remains separate (not persistent memory, not Phase 8S security);
+recommended before Phase 9 workflow buildout; does not block Phase 8S closure.
+
+Next recommended task:
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-DIAGNOSTIC-1
+
+Next major phase:
+Phase 9 — Professional Workflow Co-Pilot (or Phase 9A — Professional Workflow Co-Pilot Design / Scope Gate if 08X is skipped)
+```
