@@ -2654,3 +2654,75 @@ Strict recommendations:
 Next required task:
 PATCH-08L-PHASE-8-FINAL-CLOSURE-GATE-1
 ```
+
+Phase 8 final closure state (2026-07-04):
+
+```text
+PATCH-08L-PHASE-8-FINAL-CLOSURE-GATE-1 is complete.
+Decision: PHASE 8 FINAL CLOSURE PASS WITH STRICT RECOMMENDATIONS.
+Phase 8 is formally closed.
+Closure scope: memory scaffold/governance complete only.
+Memory remains inactive.
+
+Gemini final closure review:
+FINAL CLOSURE PASS WITH STRICT RECOMMENDATIONS.
+Gemini required fixes: None.
+
+Files created:
+PATCH-08L-PHASE-8-FINAL-CLOSURE-GATE-1_PHASE_8_FINAL_CLOSURE_REPORT.md
+tests/patch-08l-phase-8-final-closure-gate-1.test.mjs
+
+Files updated:
+knowledge/CURRENT_STATE.md
+
+Validation results:
+node tests/patch-08b-memory-taxonomy-fixture-1-policy.test.mjs - PASS
+node tests/patch-08d-memory-scope-schema-fixture-1-invariants.test.mjs - PASS
+node tests/patch-08f-memory-consent-contract-fixture-1-policy.test.mjs - PASS
+node tests/patch-08g-memory-service-boundary-scaffold-1.test.mjs - PASS
+node tests/patch-08h-memory-read-scaffold-1.test.mjs - PASS
+node tests/patch-08i-memory-write-scaffold-1.test.mjs - PASS
+node tests/patch-08j-memory-governance-gate-1.test.mjs - PASS
+node tests/patch-08k-memory-staging-smoke-1.test.mjs - PASS
+node tests/patch-08l-phase-8-final-closure-gate-1.test.mjs - PASS / 15 passed / 0 failed / 185 assertions
+npm run guard:files - PASS
+npm test - PASS / 10 syntax checks / 122 suites run / 0 failed
+
+No durable memory writes occurred.
+No persistent memory reads occurred.
+No runtime memory implementation occurred.
+No runtime consent implementation occurred.
+No DB/migration/tables occurred.
+No persistence services occurred.
+No pipeline/frontend work occurred.
+No route/controller, ask-handler, retrieval, reranker, sourceAvailability,
+source-card, Authority Lock, package, or dependency work occurred.
+All memory flags remain OFF/not implemented.
+Production clarification route gate remains OFF/not approved.
+Phase 7B boundary tuning remains pre-production-ON follow-up.
+Phase 10 remains deferred.
+Phase 11 performance/cache/compression remains deferred.
+Phase 9 remains Professional Workflow Co-Pilot:
+- tax memo generator
+- BIR reply / protest letter / audit defense matrix
+- compliance calendar / checklist / client advisory
+- engagement scope / working paper support
+
+Carry-forward restrictions:
+1. Phase 8 is closed only as memory scaffold/governance complete.
+2. Memory remains inactive.
+3. No production memory flags may be enabled.
+4. No persistent read or durable write may be introduced without separate storage/schema/migration design, fixture, implementation, and governance gate.
+5. No pipeline integration may occur without separate integration patch, OFF-state smoke, consent tests, scope-isolation tests, and authority-separation tests.
+6. deny/session_only/ask_later remain hard no-write outcomes.
+7. source_derived remains provenance-only.
+8. memory context must use only "user/matter context indicates:" phrasing.
+9. Phase 10 and Phase 11 remain deferred.
+10. Phase 7B clarification boundary tuning remains separate.
+11. Original Phase 9 remains Professional Workflow Co-Pilot unless separate approved roadmap change inserts security first.
+12. Security/hardening may only be inserted as a separate approved phase/gate, not inside Phase 8 closure.
+
+Next roadmap decision required:
+A. Start Phase 9 - Professional Workflow Co-Pilot.
+B. Insert separate Phase 8S / Security & Hardening Gate before Phase 9, only if explicitly approved.
+```
