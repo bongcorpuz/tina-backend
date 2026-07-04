@@ -2479,3 +2479,64 @@ Phase 14 mobile remains after Phase 13.
 Next required task:
 PATCH-08I-MEMORY-WRITE-SCAFFOLD-1
 ```
+
+Phase 8I memory write scaffold state (2026-07-04):
+
+```text
+PATCH-08I-MEMORY-WRITE-SCAFFOLD-1 is complete.
+Decision: SCAFFOLD PASS WITH STRICT RECOMMENDATIONS.
+
+Files created:
+memory-boundaries/memory-write-scaffold.js
+tests/patch-08i-memory-write-scaffold-1.test.mjs
+PATCH-08I-MEMORY-WRITE-SCAFFOLD-1_MEMORY_WRITE_SCAFFOLD_REPORT.md
+
+Files updated:
+memory-boundaries/index.js (exports write scaffold functions)
+tests/patch-08g-memory-service-boundary-scaffold-1.test.mjs (authorized test-only reconciliation: the pinned index export list was extended with the eight Phase 8I write scaffold exports; no behavioral assertion changed)
+tests/patch-08h-memory-read-scaffold-1.test.mjs required no reconciliation.
+
+Validation:
+node tests/patch-08i-memory-write-scaffold-1.test.mjs
+PASS - 27 passed, 0 failed, 248 assertions.
+
+node tests/patch-08g-memory-service-boundary-scaffold-1.test.mjs
+PASS - 18 passed, 0 failed, 239 assertions.
+
+node tests/patch-08h-memory-read-scaffold-1.test.mjs
+PASS - 23 passed, 0 failed, 212 assertions.
+
+npm run guard:files
+PASS - No protected files modified.
+
+npm test
+GATE PASSED - 119 suites run, 0 failed.
+
+Strict recommendations carried forward:
+1. Phase 8J governance gate must validate both read and write scaffolds together before any staging pilot.
+2. No durable memory writes may be introduced until explicit storage/schema/migration approval and governance gate.
+3. No pipeline memory integration until OFF-state, consent, scope isolation, and authority-separation tests pass in a dedicated integration patch.
+4. Deny/session_only/ask_later must remain hard no-write outcomes in all future write implementations.
+5. Source-derived memory must remain provenance-only and must not assert currentness, case status, or citation authority.
+6. Memory flags remain default-OFF and production-OFF until Phase 8J/8K gates pass.
+
+No durable memory writes occurred; the write scaffold returns non-persistent plan objects from in-memory mock candidates only.
+No persistent memory reads occurred.
+No runtime memory implementation occurred.
+No runtime consent implementation occurred.
+No DB/migration/tables occurred.
+No persistence services occurred.
+No route/controller, ask-handler, pipeline, retrieval, reranker, sourceAvailability, source-card, Authority Lock, or frontend work occurred.
+No dependencies were added.
+All memory flags remain OFF/not implemented; TINA_ENABLE_MEMORY_WRITES is contract-only and default-OFF.
+
+Production clarification route gate remains OFF/not approved.
+Phase 7B boundary tuning remains a pre-production-ON follow-up.
+Phase 10 source governance / court metadata / hallucination traps remain deferred.
+Phase 11 performance/cache/compression/observability remains deferred.
+Phase 12 document-aware advisory remains deferred.
+Phase 14 mobile remains after Phase 13.
+
+Next required task:
+PATCH-08J-MEMORY-GOVERNANCE-GATE-1
+```

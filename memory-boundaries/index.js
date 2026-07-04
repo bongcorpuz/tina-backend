@@ -1,4 +1,4 @@
-// PATCH-08G/08H scaffold index: exports contract/policy functions only.
+// PATCH-08G/08H/08I scaffold index: exports contract/policy functions only.
 // This file must not auto-run or import runtime application modules.
 
 export {
@@ -53,3 +53,14 @@ export {
   explainMemoryReadDecision,
   assertReadScaffoldNoRuntimeSideEffects
 } from "./memory-read-scaffold.js";
+
+export {
+  getMemoryWriteScaffoldContract,
+  isMemoryWriteFlagEnabled,
+  evaluateMemoryWriteEligibility,
+  buildNonPersistentWritePlan,
+  rejectProhibitedMemoryCandidate,
+  validateWriteCandidateContract,
+  explainMemoryWriteDecision,
+  assertWriteScaffoldNoRuntimeSideEffects
+} from "./memory-write-scaffold.js";

@@ -94,7 +94,11 @@ await test("all scaffold modules import successfully and index exports only cont
     // PATCH-08H read scaffold exports authorized by PATCH-08H-MEMORY-READ-SCAFFOLD-1.
     "getMemoryReadScaffoldContract", "isMemoryReadFlagEnabled", "evaluateMemoryReadEligibility",
     "selectEligibleMemoryForContext", "buildStructuredMemoryContext", "explainMemoryReadDecision",
-    "assertReadScaffoldNoRuntimeSideEffects"
+    "assertReadScaffoldNoRuntimeSideEffects",
+    // PATCH-08I write scaffold exports authorized by PATCH-08I-MEMORY-WRITE-SCAFFOLD-1.
+    "getMemoryWriteScaffoldContract", "isMemoryWriteFlagEnabled", "evaluateMemoryWriteEligibility",
+    "buildNonPersistentWritePlan", "rejectProhibitedMemoryCandidate", "validateWriteCandidateContract",
+    "explainMemoryWriteDecision", "assertWriteScaffoldNoRuntimeSideEffects"
   ].sort();
   deepEqual(Object.keys(boundaries).sort(), expectedExports, "index exports exact functions");
   for (const name of Object.keys(boundaries)) {
