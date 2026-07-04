@@ -2809,3 +2809,71 @@ isolation model.
 Next required task:
 PATCH-08S-SECURITY-ROUTE-INVENTORY-1
 ```
+
+Phase 8S security route inventory state (2026-07-04):
+
+```text
+PATCH-08S-SECURITY-ROUTE-INVENTORY-1 is complete.
+Decision: ROUTE INVENTORY PASS WITH STRICT RECOMMENDATIONS.
+Type: security route inventory / policy-foundation fixture-test-report patch only.
+Base commit: 70d7684 PATCH-08S-SECURITY-HARDENING-DESIGN-1 add security threat model design.
+
+Files created:
+evaluation/fixtures/phase-8s-security-route-inventory-1.fixture.json
+tests/patch-08s-security-route-inventory-1.test.mjs
+PATCH-08S-SECURITY-ROUTE-INVENTORY-1_ROUTE_INVENTORY_REPORT.md
+
+Files updated:
+knowledge/CURRENT_STATE.md
+
+Route inventory summary:
+Total routes inventoried: 30 (29 declared + 1 terminal 404 fallback).
+Public: 6 (GET /, GET /routes, GET /health, POST /register, POST /login, fallback-404).
+Authenticated conversation: 3 (POST/GET /conversations, GET /conversations/:conversationId/messages).
+Mode: 12 (POST /ask /tax /review /quiz /diagnostic /source /audit /case /debug /patch /progress /feedback).
+Admin/index: 5 (/index-drive, /reindex, /admin/index-drive, /reindex-targeted, /index-status).
+Admin/read: 3 (/list, /read-drive, /vector-stats).
+Debug: 1 (GET /debug/db-identity).
+Expensive-operation routes: 22 (all mode + all admin index/read + /debug/db-identity + /health DB read).
+Model/retrieval routes: 12 (all mode). Third-party egress possible: mode (OpenAI/Langfuse) + Drive routes.
+Routes requiring tenant_isolation: 17 (conversation + mode + auth).
+All admin routes flagged no_query_secret (INDEX_SECRET currently accepted via query string).
+
+Validation:
+node tests/patch-08s-security-route-inventory-1.test.mjs - PASS / 21 passed / 0 failed / 1193 assertions.
+npm run guard:files - PASS.
+npm test - GATE PASSED / 0 failed.
+
+Drift test is fully static: reads server.js and routes/*-route.js as text, reconciles declared
+routes against the fixture in both directions, validates fixture shape/guards/policies, and
+imports no runtime/server modules and reads no process.env.
+
+No runtime security implementation occurred.
+No middleware wiring occurred.
+No server.js/route/auth/CORS/header/rate-limit/logging behavior changes occurred.
+No package.json/package-lock.json changes and no dependency installs occurred.
+No DB/Supabase, environment, Render/Vercel, or deployment changes occurred.
+No production changes occurred.
+Phase 8 remains closed; memory remains inactive; all TINA_ENABLE_MEMORY_* flags remain OFF.
+No Phase 9/10/11 implementation occurred.
+
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-DIAGNOSTIC-1 remains a separate non-security diagnostic
+(short-term chat/session context carryover); not persistent memory, not Phase 8 memory,
+not Phase 8S security, and not inventoried as a route/security item.
+
+Strict recommendations:
+1. Route inventory must remain test-enforced; future route drift must fail tests.
+2. Route inventory feeds PATCH-08S-SECURITY-POLICY-FIXTURE-1.
+3. Public /health and /routes require reconnaissance-minimization policy.
+4. Auth endpoints require stricter rate-limit/lockout policy.
+5. Mode/model/retrieval routes require rate-limit and log-redaction policy.
+6. Admin/index routes require admin_guard, header-only secret (no_query_secret), and rate-limit policy.
+7. Debug/diagnostic routes require debug_guard and error-sanitization policy.
+8. Tenant/client isolation remains mandatory before Phase 9.
+9. No runtime security changes until policies are approved.
+10. Phase 8 memory remains inactive; Phase 9 remains Professional Workflow Co-Pilot.
+11. Phase 10 and Phase 11 remain deferred.
+
+Next required task:
+PATCH-08S-SECURITY-POLICY-FIXTURE-1
+```
