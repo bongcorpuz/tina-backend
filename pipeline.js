@@ -44,6 +44,7 @@ import {
   analyzeConflictPair
 }                                                 from "./conflict-engine.js";
 import { callOpenAIWithOrchestration }            from "./context-orchestration-engine.js";
+import { buildShortTermContextCarryover }          from "./helpers/chat-context-carryover.js";
 import {
   generateTraceId,
   startTrace,
@@ -198,6 +199,73 @@ const CLARIFICATION_ROUTE_GATE_NON_ANSWER_SAE = new Set([
 export function isClarificationRouteGateEnabled(env = process.env) {
   const value = String(env?.TINA_ENABLE_CLARIFICATION_ROUTE_GATE || "").trim().toLowerCase();
   return CLARIFICATION_ROUTE_GATE_TRUE_VALUES.has(value);
+}
+
+// PATCH-08X-CHAT-CONTEXT-CARRYOVER-PIPELINE-WIRING-1
+// Feature flag: TINA_ENABLE_CHAT_CONTEXT_CARRYOVER. Default OFF. Only "1"/"true"/
+// "on"/"yes" enable it; absent/empty/"0"/"false"/"off"/"no" disable it.
+const CHAT_CONTEXT_CARRYOVER_TRUE_VALUES = new Set(["1", "true", "on", "yes"]);
+
+export function isChatContextCarryoverEnabled(env = process.env) {
+  const value = String(env?.TINA_ENABLE_CHAT_CONTEXT_CARRYOVER || "").trim().toLowerCase();
+  return CHAT_CONTEXT_CARRYOVER_TRUE_VALUES.has(value);
+}
+
+// Pure resolver. Given the flag state, the current query, and bounded recent
+// turns, returns the effective query used ONLY for issue classification and
+// retrieval. When disabled (default), effectiveQuery === currentQuery so the
+// pipeline is byte-identical to prior behavior. The original query is always
+// preserved for final answer generation. Never logs raw recent turns; the trace
+// object contains no prior message contents. Uses only bounded short-term
+// conversation history — no persistent memory, no durable writes.
+export function resolveChatContextCarryoverForPipeline({
+  enabled,
+  currentQuery,
+  conversationHistory,
+  conversationId = null,
+  sessionId = null
+} = {}) {
+  const originalQuery = String(currentQuery == null ? "" : currentQuery);
+  if (!enabled) {
+    return {
+      enabled: false,
+      applied: false,
+      effectiveQuery: originalQuery,
+      decision: null,
+      trace: {
+        chatContextCarryoverEnabled: false,
+        chatContextCarryoverApplied: false,
+        standaloneQueryUsed: false,
+        inheritedTaxType: null,
+        inheritedJurisdiction: null,
+        riskFlags: [],
+        boundedTurnCount: 0
+      }
+    };
+  }
+  const decision = buildShortTermContextCarryover({
+    currentQuery: originalQuery,
+    recentTurns: Array.isArray(conversationHistory) ? conversationHistory : [],
+    activeConversationId: conversationId || sessionId || null,
+    maxRewriteTurns: 6,
+    jurisdictionDefault: "Philippines"
+  });
+  const effectiveQuery = decision.applied ? decision.standaloneQuery : originalQuery;
+  return {
+    enabled: true,
+    applied: decision.applied,
+    effectiveQuery,
+    decision,
+    trace: {
+      chatContextCarryoverEnabled: true,
+      chatContextCarryoverApplied: decision.applied,
+      standaloneQueryUsed: decision.applied,
+      inheritedTaxType: decision.inheritedTaxType,
+      inheritedJurisdiction: decision.inheritedJurisdiction,
+      riskFlags: decision.riskFlags,
+      boundedTurnCount: decision.boundedTurnCount
+    }
+  };
 }
 
 function normalizeClarificationRouteMode(hook = "/ask") {
@@ -1959,6 +2027,19 @@ export async function runPipeline({
   const traceId        = generateTraceId();
   const pipelineStartMs = Date.now();
   const timing         = createPipelineInstrumentation({ budgetMs: routeBudgetMs });
+
+  // PATCH-08X-CHAT-CONTEXT-CARRYOVER-PIPELINE-WIRING-1: flag-gated short-term
+  // context carryover. OFF by default => effectiveQuery === query (no behavior
+  // change). When enabled and a bounded follow-up rewrite applies, effectiveQuery
+  // becomes the standaloneQuery used ONLY for classification and retrieval below;
+  // `query` (the original) is still used for final answer generation.
+  const _chatContextCarryover = resolveChatContextCarryoverForPipeline({
+    enabled: isChatContextCarryoverEnabled(),
+    currentQuery: query,
+    conversationHistory
+  });
+  const effectiveQuery = _chatContextCarryover.effectiveQuery;
+  ctx.chatContextCarryover = _chatContextCarryover.trace;
   const publishDiagnostics = (timeout = false) => {
     const diagnostics = timing.diagnostics(timeout);
     if (typeof instrumentationReceiver === "function") {
@@ -2057,7 +2138,7 @@ export async function runPipeline({
     route: hook,
     model
   });
-  ctx.issueClassification = issueClassificationOverride || classify(query);
+  ctx.issueClassification = issueClassificationOverride || classify(effectiveQuery);
   diagnostics.partialPipelineState.classificationCompleted = true;
   markPipelineCheckpoint(diagnostics, "CLASSIFICATION_COMPLETE", {
     timingField: "classificationCompletedAt",
@@ -2659,7 +2740,7 @@ export async function runPipeline({
 
   if (!_retrievalRaw) {
     const retrievalPromise = retrieveRelevantSources({
-      query,
+      query: effectiveQuery,
       supabase,
       vectorSearch: _vectorSearchFn,
       issueClassification: _024bClassificationForRetrieval,

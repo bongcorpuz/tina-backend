@@ -1,0 +1,201 @@
+{
+  "patch": {
+    "id": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-PIPELINE-WIRING-1",
+    "phase": "Phase 8X (feature-flagged runtime wiring)",
+    "taskType": "feature_flagged_standalone_query_pipeline_wiring",
+    "title": "Feature-Flagged StandaloneQuery Pipeline Wiring"
+  },
+  "decision": "CHAT CONTEXT CARRYOVER PIPELINE WIRING PASS WITH STRICT RECOMMENDATIONS",
+  "baseCommit": "ff07be7 PATCH-08X-CHAT-CONTEXT-CARRYOVER-SCAFFOLD-1 add pure follow-up rewrite helper",
+  "wiringVersion": "1.0.0",
+  "runtimePatch": {
+    "runtimeWiringAdded": true,
+    "liveBehaviorUnchangedByDefault": true,
+    "noDeployment": true,
+    "noEnvChanges": true,
+    "noPackageChanges": true,
+    "noDbSupabaseChanges": true,
+    "noPersistentMemory": true,
+    "noPhase9": true
+  },
+  "featureFlag": {
+    "name": "TINA_ENABLE_CHAT_CONTEXT_CARRYOVER",
+    "default": false,
+    "enabledValues": ["1", "true", "on", "yes"],
+    "disabledValues": [null, "", "0", "false", "off", "no"],
+    "productionEnabled": false,
+    "stagingEnabled": false,
+    "envChanged": false
+  },
+  "phaseStatus": {
+    "phase8Closed": true,
+    "phase8SClosed": true,
+    "phase08XDiagnosticComplete": true,
+    "phase08XDesignComplete": true,
+    "phase08XScaffoldComplete": true,
+    "phase9NotStarted": true,
+    "phase10Deferred": true,
+    "phase11Deferred": true,
+    "phase8MemoryInactive": true
+  },
+  "scaffoldIntegration": {
+    "scaffoldPatchId": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-SCAFFOLD-1",
+    "scaffoldCommit": "ff07be7",
+    "helperFile": "helpers/chat-context-carryover.js"
+  },
+  "designIntegration": {
+    "designPatchId": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-DESIGN-1",
+    "designCommit": "dae4128"
+  },
+  "diagnosticIntegration": {
+    "diagnosticPatchId": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-DIAGNOSTIC-1",
+    "diagnosticCommit": "38d5b9e",
+    "rootCause": ["CLASSIFICATION_CONTEXT_GAP", "RETRIEVAL_REWRITE_GAP"]
+  },
+  "modifiedRuntimeFiles": ["pipeline.js"],
+  "unmodifiedRuntimeFiles": ["ask-handler.js", "server.js", "issue-classification-engine.js", "retrieval-engine.js", "context-orchestration-engine.js", "source-availability-engine.js", "conversation-memory.js", "helpers/chat-context-carryover.js"],
+  "wiringContract": {
+    "flagParser": "isChatContextCarryoverEnabled(env = process.env)",
+    "resolver": "resolveChatContextCarryoverForPipeline({ enabled, currentQuery, conversationHistory, conversationId, sessionId })",
+    "effectiveQueryComputedInRunPipeline": true,
+    "helperImported": "buildShortTermContextCarryover from ./helpers/chat-context-carryover.js",
+    "recentTurnsSource": "existing runPipeline conversationHistory (already fetched by ask-handler via getHistory, bounded to 20)",
+    "boundedForRewrite": { "maxRewriteTurns": 6, "hardMaxTurns": 20 },
+    "traceFields": ["chatContextCarryoverEnabled", "chatContextCarryoverApplied", "standaloneQueryUsed", "inheritedTaxType", "inheritedJurisdiction", "riskFlags", "boundedTurnCount"],
+    "traceContainsNoRawTurns": true,
+    "originalQueryPreservedForGeneration": true
+  },
+  "flagOffBehavior": {
+    "originalCurrentQueryRemainsUsed": true,
+    "standaloneQueryNotUsed": true,
+    "behaviorEquivalentToPrior": true,
+    "helperDoesNotAffectClassificationOrRetrieval": true,
+    "effectiveQueryEqualsCurrentQuery": true,
+    "noLiveFixClaim": true,
+    "note": "When the flag is OFF (default), resolveChatContextCarryoverForPipeline returns effectiveQuery === currentQuery and the helper is not invoked for rewrite; classification and retrieval receive the original query exactly as before."
+  },
+  "flagOnBehavior": {
+    "boundedRecentTurnsUsed": true,
+    "standaloneQueryBuiltWhenDecisionApplied": true,
+    "classificationUsesStandaloneQuery": true,
+    "retrievalUsesStandaloneQuery": true,
+    "originalQueryPreserved": true,
+    "authorityDisciplineUnchanged": true,
+    "example": {
+      "currentQuery": "How about fresh frozen seafood?",
+      "priorTurn": "Is tobacco subject to VAT?",
+      "effectiveClassificationQuery": "Is fresh frozen seafood subject to VAT in the Philippines?",
+      "effectiveRetrievalQuery": "Is fresh frozen seafood subject to VAT in the Philippines?",
+      "finalAnswerAnswers": "the original current query, using retrieved/source-backed authorities"
+    }
+  },
+  "queryFlow": [
+    "raw request",
+    "normalize currentQuery (query param)",
+    "fetch/bound recentTurns (conversationHistory already fetched by ask-handler)",
+    "build shortTermContext/decision only if flag ON (resolveChatContextCarryoverForPipeline)",
+    "resolve effective query (effectiveQuery = applied ? standaloneQuery : query)",
+    "issue classification uses effectiveQuery (classify(effectiveQuery))",
+    "retrieval uses effectiveQuery (retrieveRelevantSources({ query: effectiveQuery }))",
+    "SAE/source cards using retrieved authorities",
+    "final prompt/answer using original query + retrieved sources + bounded history"
+  ],
+  "classificationIntegration": {
+    "callSite": "ctx.issueClassification = issueClassificationOverride || classify(effectiveQuery)",
+    "classifierInternalsChanged": false,
+    "usesEffectiveQuery": true
+  },
+  "retrievalIntegration": {
+    "callSite": "retrieveRelevantSources({ query: effectiveQuery, ... })",
+    "retrievalInternalsChanged": false,
+    "usesEffectiveQuery": true
+  },
+  "promptIntegration": {
+    "generationStillUsesOriginalQuery": true,
+    "contextOrchestrationChanged": false,
+    "note": "callOpenAIWithOrchestration still receives `query` (original) and `userQuery: query`; conversationHistory continues to flow to the prompt as before."
+  },
+  "sourceAuthorityDiscipline": {
+    "noCitationsFromHistory": true,
+    "noLegalConclusionFromHelper": true,
+    "saeSourceCardsUnchanged": true,
+    "retrievalStillFindsAuthorities": true,
+    "ifNoAuthorityTinaSaysSo": true
+  },
+  "securityPrivacyControls": {
+    "noPersistentMemory": true,
+    "noMemoryFlags": true,
+    "noRawRecentTurnsLogging": true,
+    "noP1P2ThirdPartyEgressAdded": true,
+    "noDbPersistenceExpansion": true,
+    "tenantIsolationStillRequiredForFutureClientMatterPersistence": true
+  },
+  "runtimeWiringStatus": {
+    "runtimeWired": true,
+    "pipelineUsesHelper": true,
+    "askHandlerUsesHelper": false,
+    "classificationUsesEffectiveQuery": true,
+    "retrievalUsesEffectiveQuery": true,
+    "liveBehaviorChangedByDefault": false,
+    "featureFlagAdded": true,
+    "featureFlagDefaultEnabled": false
+  },
+  "liveBehaviorStatus": {
+    "liveBehaviorChangedByDefault": false,
+    "liveIssueFixed": false,
+    "note": "The live issue is not considered fixed until the flag is enabled in staging and a staging smoke passes."
+  },
+  "stagingStatus": { "stagingFlagEnabled": false, "deployed": false },
+  "productionStatus": { "productionFlagEnabled": false, "deployed": false },
+  "frontendContractStatus": {
+    "backendSupportsConversationIdSessionIdHeader": true,
+    "frontendVerifiedInThisPatch": false,
+    "ifFrontendOmitsConversationIdRecentTurnsMayBeEmpty": true,
+    "frontendVerificationRequiredBeforeStagingSmokeOrDeploymentConfidence": true
+  },
+  "testPlan": {
+    "approach": "The focused test imports the pure helper and statically verifies pipeline.js wiring; it does NOT import pipeline.js (which has module-load side effects and reads env).",
+    "flagOnCase": "tobacco VAT -> fresh frozen seafood => effective query includes VAT and Philippines",
+    "flagOffCase": "same input => effective query equals currentQuery"
+  },
+  "risks": [
+    "frontend not sending conversationId (recentTurns empty; carryover no-ops)",
+    "wrong issue inheritance if enabled without review",
+    "retrieval drift if enabled without staging smoke",
+    "privacy exposure if recentTurns logged (mitigated: no raw logging added)"
+  ],
+  "prohibitedClaims": [
+    "production is fixed",
+    "staging is fixed",
+    "frontend is verified",
+    "Phase 9 started",
+    "persistent memory is active",
+    "tenant isolation is implemented",
+    "logging redaction is implemented",
+    "source correctness is guaranteed",
+    "the feature flag is enabled",
+    "live behavior changed by default"
+  ],
+  "validationMatrix": {
+    "requiredPassingTests": [
+      "tests/patch-08x-chat-context-carryover-pipeline-wiring-1.test.mjs",
+      "tests/patch-08x-chat-context-carryover-scaffold-1.test.mjs",
+      "tests/patch-08x-chat-context-carryover-design-1.test.mjs",
+      "tests/patch-08x-chat-context-carryover-diagnostic-1.test.mjs",
+      "tests/patch-08s-final-closure-gate-1.test.mjs"
+    ],
+    "guardFilesRequiredPass": true,
+    "npmTestRequiredZeroFailed": true
+  },
+  "testCases": [
+    { "id": "flag_default_false", "expect": "TINA_ENABLE_CHAT_CONTEXT_CARRYOVER default false" },
+    { "id": "flag_off_passthrough", "expect": "effective query equals currentQuery when OFF" },
+    { "id": "flag_on_standalone", "expect": "effective query = standaloneQuery (VAT + Philippines) when ON and applied" },
+    { "id": "classify_uses_effective_query", "expect": "pipeline.js classify(effectiveQuery)" },
+    { "id": "retrieval_uses_effective_query", "expect": "pipeline.js retrieveRelevantSources({ query: effectiveQuery })" },
+    { "id": "generation_uses_original_query", "expect": "pipeline.js generation still uses original query" },
+    { "id": "no_raw_turns_logged", "expect": "no console logging of raw recentTurns/conversationHistory" },
+    { "id": "no_memory_flag_introduced", "expect": "no TINA_ENABLE_MEMORY_* introduced" },
+    { "id": "runtime_files_minimal", "expect": "only pipeline.js runtime file modified" }
+  ]
+}

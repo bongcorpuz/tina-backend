@@ -3583,3 +3583,64 @@ Next recommended patch:
 PATCH-08X-CHAT-CONTEXT-CARRYOVER-PIPELINE-WIRING-1 (feature-flagged wiring of the standaloneQuery stage before
 classification/retrieval, OFF by default; confirm frontend conversationId/sessionId before staging smoke).
 ```
+
+Phase 8X chat-context carryover PIPELINE WIRING — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-05):
+
+```text
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-PIPELINE-WIRING-1 is complete.
+Decision: CHAT CONTEXT CARRYOVER PIPELINE WIRING PASS WITH STRICT RECOMMENDATIONS.
+Type: feature-flagged runtime wiring (pipeline.js only) + fixture/test/report. Live behavior UNCHANGED by default.
+Base commit: ff07be7 PATCH-08X-CHAT-CONTEXT-CARRYOVER-SCAFFOLD-1 add pure follow-up rewrite helper.
+
+Feature flag: TINA_ENABLE_CHAT_CONTEXT_CARRYOVER. Default OFF. Enabled by "1"/"true"/"on"/"yes";
+disabled by absent/empty/"0"/"false"/"off"/"no". Not enabled in staging or production; no env files changed.
+
+Files created:
+evaluation/fixtures/phase-08x-chat-context-carryover-pipeline-wiring-1.fixture.json
+tests/patch-08x-chat-context-carryover-pipeline-wiring-1.test.mjs
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-PIPELINE-WIRING-1_CHAT_CONTEXT_CARRYOVER_PIPELINE_WIRING_REPORT.md
+
+Runtime files changed:
+pipeline.js ONLY (ask-handler.js NOT changed — it already passes conversationHistory into runPipeline).
+
+Wiring: pipeline.js imports buildShortTermContextCarryover from ./helpers/chat-context-carryover.js; adds
+isChatContextCarryoverEnabled(env=process.env) and pure resolveChatContextCarryoverForPipeline(...); computes
+effectiveQuery once near the top of runPipeline (effectiveQuery = decision.applied ? standaloneQuery : query);
+feeds effectiveQuery to classification (classify(effectiveQuery)) and retrieval (retrieveRelevantSources({ query:
+effectiveQuery })). Original `query` is preserved for generation (callOpenAIWithOrchestration still uses userQuery:
+query). Safe trace at ctx.chatContextCarryover carries only enabled/applied/standaloneQueryUsed/inheritedTaxType/
+inheritedJurisdiction/riskFlags/boundedTurnCount — NO raw recent-turn content. No classifier/retrieval engine
+internals changed.
+
+Flag-OFF behavior (default): effectiveQuery === query; helper not invoked for rewrite; classification/retrieval use
+the original query exactly as before => byte-identical behavior. Confirmed by the full regression gate (all pipeline
+behavior suites passed unchanged; only the Phase 8 memory diff-guard suites required the change to be staged, since
+they assert an empty unstaged git diff — the established repo convention; pipeline.js is not in any guard's forbidden list).
+
+Flag-ON behavior: tobacco VAT → "How about fresh frozen seafood?" builds standaloneQuery "Is fresh frozen seafood
+subject to VAT in the Philippines?" used for classification and retrieval; final answer still answers the original
+query using retrieved/source-backed authorities. No prior issue / non-tax / reset / jurisdiction-switch => passthrough.
+
+Source authority discipline preserved: no citations from history; no legal conclusion from helper; SAE/source cards
+unchanged; retrieval must still find authorities; if none, TINA says so.
+Security/privacy: no persistent memory; no TINA_ENABLE_MEMORY_* flags; no raw recentTurns logging; no P1/P2
+third-party egress added; no DB/persistence expansion; tenant isolation still required for future client/matter persistence.
+Frontend: not verified in this backend patch; if frontend omits conversationId/sessionId, recent turns may be empty.
+
+Validation:
+node tests/patch-08x-chat-context-carryover-pipeline-wiring-1.test.mjs - PASS / 19 passed / 0 failed / 138 assertions.
+node tests/patch-08x-chat-context-carryover-scaffold-1.test.mjs - PASS / 15 / 0.
+node tests/patch-08x-chat-context-carryover-design-1.test.mjs - PASS / 27 / 0.
+node tests/patch-08x-chat-context-carryover-diagnostic-1.test.mjs - PASS / 20 / 0.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0.
+npm run guard:files - PASS.
+npm test - GATE PASSED / 0 failed (run with pipeline.js staged).
+
+No deployment; no env/package/DB/Supabase changes; no memory enablement; no Phase 9 implementation.
+Phase 8 remains closed; Phase 8S remains closed; Phase 9 remains not started; Phase 10 and Phase 11 remain deferred.
+The live issue is NOT considered fixed until the flag is enabled in staging and a staging smoke passes.
+
+Next recommended task:
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-STAGING-SMOKE-1 (only after staging flag is explicitly enabled and frontend
+conversationId/sessionId behavior is confirmed or testable).
+```
