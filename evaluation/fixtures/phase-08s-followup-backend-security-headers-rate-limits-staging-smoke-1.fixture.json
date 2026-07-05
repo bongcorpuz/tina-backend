@@ -1,0 +1,229 @@
+{
+  "patch": {
+    "id": "PATCH-08S-FOLLOWUP-BACKEND-SECURITY-HEADERS-RATE-LIMITS-STAGING-SMOKE-1",
+    "phase": "Phase 8S follow-up (backend hardening staging smoke)",
+    "taskType": "live_staging_smoke_evidence",
+    "title": "Backend Security Headers and Rate Limits Staging Smoke"
+  },
+  "decision": "BACKEND SECURITY HEADERS RATE LIMITS STAGING SMOKE PASS WITH STRICT RECOMMENDATIONS",
+  "baseCommit": "ee65dc6 PATCH-08S-FOLLOWUP-BACKEND-SECURITY-HEADERS-RATE-LIMITS-1 add backend headers and limits",
+  "smokeVersion": "1.0.0",
+  "nonRuntimePatch": {
+    "noRuntimeFilesChanged": true,
+    "noServerJsChange": true,
+    "noSecurityHelperChange": true,
+    "noAskHandlerChange": true,
+    "noPipelineChange": true,
+    "noRouteChange": true,
+    "noEnvFilesChanged": true,
+    "noPackageChange": true,
+    "noDbOrSupabaseChange": true,
+    "noMemoryEnablement": true,
+    "noDeploymentPerformed": true,
+    "noPhase9Implementation": true
+  },
+  "stagingTarget": "https://tina-backend-staging.onrender.com",
+  "deploymentFreshness": "confirmed_commit_ee65dc6",
+  "observedCommitSha": "ee65dc626eb64eebbc6f8458e06a115bab768e4c",
+  "observedEnvironment": "staging",
+  "smokeTimestampUtc": "2026-07-05T10:56:09Z",
+  "phaseStatus": {
+    "phase8Closed": true,
+    "phase8SClosed": true,
+    "phase8SReopened": false,
+    "phase08XClosed": true,
+    "phase9NotStarted": true,
+    "phase10Deferred": true,
+    "phase11Deferred": true,
+    "memoryInactive": true
+  },
+  "prerequisiteStatus": {
+    "backendHardeningPatch": "PATCH-08S-FOLLOWUP-BACKEND-SECURITY-HEADERS-RATE-LIMITS-1",
+    "backendHardeningCommit": "ee65dc6",
+    "frontendSecurityHeaders": {
+      "patch": "PATCH-08S-FOLLOWUP-FRONTEND-SECURITY-HEADERS-1",
+      "repo": "tina-ai",
+      "commit": "23503ba",
+      "status": "complete"
+    }
+  },
+  "probes": [
+    {
+      "probeId": "A_health",
+      "method": "GET",
+      "path": "/health",
+      "statusCode": 200,
+      "deploymentFreshness": "confirmed_commit_ee65dc6",
+      "requiredHeadersPresent": true,
+      "missingHeaders": [],
+      "xPoweredByAbsent": true,
+      "cspPresent": true,
+      "cacheControlPresent": true,
+      "rateLimitHeadersPresent": false,
+      "rateLimitHeadersExpectedOnHealth": false,
+      "note": "health is exempt from the limiter, so X-RateLimit-* are correctly absent",
+      "result": "PASS"
+    },
+    {
+      "probeId": "B_options_ask",
+      "method": "OPTIONS",
+      "path": "/ask",
+      "statusCode": 204,
+      "optionsBlocked": false,
+      "corsOriginReflected": "https://tina-fawn.vercel.app",
+      "corsCredentials": true,
+      "securityHeadersOnPreflight": false,
+      "note": "cors preflight short-circuits (204) before the security-headers middleware runs; not 429; CORS behavior sane",
+      "result": "PASS"
+    },
+    {
+      "probeId": "C_ask_unauth",
+      "method": "POST",
+      "path": "/ask",
+      "statusCode": 401,
+      "requiredHeadersPresent": true,
+      "missingHeaders": [],
+      "xPoweredByAbsent": true,
+      "cspPresent": true,
+      "cacheControlPresent": true,
+      "rateLimitHeadersPresent": true,
+      "observedRateLimitLimit": 20,
+      "observedRateLimitRemaining": 19,
+      "rateLimitTierObserved": "expensive",
+      "authProtected": true,
+      "bodySnippet": "{\"error\":\"Authentication required\"}",
+      "note": "limiter runs before auth and classifies /ask as expensive tier (limit 20); request carried only a synthetic non-client question",
+      "result": "PASS"
+    },
+    {
+      "probeId": "D_rate_limit_observation",
+      "method": "OBSERVATION",
+      "path": "/ask",
+      "rateLimitObserved": "headers_present",
+      "reason": "X-RateLimit-Limit/Remaining/Reset observed live on /ask (limit 20, remaining 19); 429 not forced to avoid load testing (would require 20+ requests, borderline load-like)",
+      "result": "WARNING"
+    }
+  ],
+  "healthProbe": {
+    "statusCode": 200,
+    "commitShaConfirmed": true,
+    "environment": "staging",
+    "allRequiredHeadersPresent": true
+  },
+  "optionsProbe": {
+    "statusCode": 204,
+    "blockedBy429": false,
+    "corsRegressionObserved": false
+  },
+  "askUnauthProbe": {
+    "statusCode": 401,
+    "authProtected": true,
+    "securityHeadersPresent": true,
+    "xPoweredByAbsent": true,
+    "rateLimitHeadersPresent": true
+  },
+  "headerFindings": {
+    "Content-Security-Policy": "present",
+    "X-Content-Type-Options": "present",
+    "X-Frame-Options": "present",
+    "Referrer-Policy": "present",
+    "Permissions-Policy": "present",
+    "Cross-Origin-Opener-Policy": "present",
+    "Cross-Origin-Resource-Policy": "present",
+    "Cache-Control": "present",
+    "observedOn": ["GET /health", "POST /ask (401)"],
+    "notPresentOnPreflight": "expected; cors middleware ends preflight before security-headers middleware"
+  },
+  "xPoweredByFinding": "absent",
+  "cspFinding": {
+    "present": true,
+    "value": "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'",
+    "apiConservative": true,
+    "containsUnsafe": false
+  },
+  "cacheControlFinding": {
+    "present": true,
+    "value": "no-store",
+    "observedOn": ["GET /health", "POST /ask (401)"]
+  },
+  "rateLimitFinding": "headers_present",
+  "rateLimitDetail": {
+    "expensiveTierLimitObserved": 20,
+    "remainingObserved": 19,
+    "healthExemptConfirmed": true,
+    "optionsBypassConfirmed": true,
+    "status429Observed": false,
+    "status429NotForcedReason": "avoid load testing"
+  },
+  "corsFinding": {
+    "optionsNot429Blocked": true,
+    "corsRegressionObserved": false,
+    "allowlistedOriginReflected": true
+  },
+  "authProtectionFinding": {
+    "unauthenticatedAskProtected": true,
+    "statusCode": 401,
+    "message": "Authentication required"
+  },
+  "securityPrivacyObservations": [
+    "no JWTs, cookies, or authorization headers were sent, captured, or stored",
+    "no tokens stored",
+    "no real client data / TINs / financial statements used",
+    "only a synthetic non-client question was sent to /ask",
+    "no load testing performed; no admin/index routes probed; no INDEX_SECRET tested",
+    "production was not touched",
+    "response bodies were not stored beyond a short non-sensitive snippet"
+  ],
+  "limitations": [
+    "rate-limit live threshold (429) was not fully exercised to avoid load testing",
+    "in-memory limiter is per-instance only (not distributed)",
+    "production tuning required",
+    "this is not production readiness",
+    "remaining Phase 8S items still open: /routes minimization, /health minimization, INDEX_SECRET query-string removal, tenant isolation, full logging redaction, third-party/Langfuse egress controls, Phase 9 request-size policy"
+  ],
+  "prohibitedClaims": [
+    "production fully hardened",
+    "production deployed",
+    "distributed rate limiting proven",
+    "tenant isolation implemented",
+    "INDEX_SECRET fixed",
+    "/routes minimized",
+    "/health minimized",
+    "Phase 9 started"
+  ],
+  "validationMatrix": {
+    "requiredPassingTests": [
+      "tests/patch-08s-followup-backend-security-headers-rate-limits-staging-smoke-1.test.mjs",
+      "tests/patch-08s-followup-backend-security-headers-rate-limits-1.test.mjs",
+      "tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs",
+      "tests/patch-08s-final-closure-gate-1.test.mjs"
+    ],
+    "guardFiles": "npm run guard:files",
+    "fullRegression": "npm test"
+  },
+  "testCases": [
+    { "id": "fixture_valid", "expect": "fixture parses and patch id/decision valid" },
+    { "id": "non_runtime", "expect": "non-runtime declaration present" },
+    { "id": "staging_target", "expect": "staging target is the staging onrender URL" },
+    { "id": "deployment_fresh", "expect": "deploymentFreshness confirmed_commit_ee65dc6 for PASS" },
+    { "id": "phase_boundaries", "expect": "Phase 8S closed/not reopened; 08X closed; Phase 9 not started" },
+    { "id": "probes_present", "expect": "health, OPTIONS /ask, unauth /ask, rate-limit observation probes present" },
+    { "id": "header_findings", "expect": "all required headers recorded present" },
+    { "id": "xpoweredby_absent", "expect": "X-Powered-By absent" },
+    { "id": "csp_default_none", "expect": "backend CSP includes default-src 'none'" },
+    { "id": "cache_control", "expect": "Cache-Control finding present (no-store)" },
+    { "id": "options_not_429", "expect": "OPTIONS not 429-blocked" },
+    { "id": "auth_protected", "expect": "unauthenticated /ask protected (401)" },
+    { "id": "rate_limit_finding", "expect": "rate-limit finding is headers_present" },
+    { "id": "limitations", "expect": "limitations include in-memory per-instance and production tuning" },
+    { "id": "prohibited_claims", "expect": "prohibited claims include production fully hardened and Phase 9 started" }
+  ],
+  "nextTask": {
+    "recommendedNextOptions": [
+      "PATCH-08S-FOLLOWUP-BACKEND-ROUTES-HEALTH-MINIMIZATION-1",
+      "PATCH-08S-FOLLOWUP-INDEX-SECRET-QUERY-REMOVAL-1",
+      "PHASE-09A-PROFESSIONAL-WORKFLOW-COPILOT-DESIGN-1"
+    ],
+    "userChoosesPriority": true
+  }
+}

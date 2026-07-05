@@ -3870,3 +3870,54 @@ PATCH-08S-FOLLOWUP-INDEX-SECRET-QUERY-REMOVAL-1 OR
 PHASE-09A-PROFESSIONAL-WORKFLOW-COPILOT-DESIGN-1.
 Keep production flag OFF; deploy + curl/header smoke on staging as a separate approved step.
 ```
+
+Phase 8S follow-up BACKEND security headers + rate limits STAGING SMOKE — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-05):
+
+```text
+PATCH-08S-FOLLOWUP-BACKEND-SECURITY-HEADERS-RATE-LIMITS-STAGING-SMOKE-1 is complete.
+Decision: BACKEND SECURITY HEADERS RATE LIMITS STAGING SMOKE PASS WITH STRICT RECOMMENDATIONS.
+Type: live staging smoke evidence only / fixture / test / report (NON-RUNTIME; no code, env, or deployment change).
+Base commit: ee65dc6 PATCH-08S-FOLLOWUP-BACKEND-SECURITY-HEADERS-RATE-LIMITS-1.
+
+Deployment freshness: confirmed_commit_ee65dc6 (staging /health commitSha ee65dc626eb..., environment staging,
+serviceName tina-backend-staging). Verified live against https://tina-backend-staging.onrender.com.
+
+Live header findings: all 8 required headers observed present on GET /health (200) and POST /ask (401):
+Content-Security-Policy (default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'),
+X-Content-Type-Options nosniff, X-Frame-Options DENY, Referrer-Policy strict-origin-when-cross-origin,
+Permissions-Policy camera=(), microphone=(), geolocation=(), Cross-Origin-Opener-Policy same-origin,
+Cross-Origin-Resource-Policy same-site, Cache-Control no-store. (Headers intentionally absent on OPTIONS 204
+preflight because cors ends preflight before the security-headers middleware — expected, does not affect API responses.)
+
+x-powered-by finding: ABSENT on all observed responses.
+CSP finding: present, API-conservative, no unsafe-inline/unsafe-eval.
+OPTIONS finding: OPTIONS /ask returned 204 (NOT 429-blocked); allowlisted origin https://tina-fawn.vercel.app reflected
+with credentials; no CORS regression.
+auth protection finding: unauthenticated POST /ask returned 401 {"error":"Authentication required"} — protected.
+rate-limit finding: headers_present. Live X-RateLimit-Limit 20 / Remaining 19 / Reset observed on /ask (expensive tier,
+limiter runs before auth); /health carried NO X-RateLimit-* (exempt confirmed). 429 NOT forced (would need 20+ rapid /ask
+requests = borderline load; 429 shape already covered by prior focused test).
+security/privacy: no JWTs/cookies/authorization sent or stored; no tokens stored; only a synthetic non-client question sent;
+no load testing; no admin/index routes probed; INDEX_SECRET not tested; production untouched.
+
+No runtime changes; no env changes; no deployment by this patch. Phase 8 closed; Phase 8S closed and NOT reopened;
+08X remains CLOSED; Phase 9 not started; Phase 10/11 deferred; memory inactive.
+
+Limitations: rate-limit 429 threshold not fully exercised (safety); in-memory limiter is per-instance (not distributed,
+no Redis); production tuning required; NOT production readiness. Remaining Phase 8S items still open: /routes minimization,
+/health minimization, INDEX_SECRET query-string removal, tenant isolation, full logging redaction, third-party/Langfuse
+egress controls, Phase 9 request-size policy.
+
+Validation:
+node tests/patch-08s-followup-backend-security-headers-rate-limits-staging-smoke-1.test.mjs - PASS / 18 / 0 / 67.
+node tests/patch-08s-followup-backend-security-headers-rate-limits-1.test.mjs - PASS / 23 / 0 / 1055.
+node tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs - PASS / 17 / 0 / 127.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0 / 203.
+npm run guard:files - PASS. npm test - GATE PASSED / 0 failed.
+
+Next recommended task (user chooses priority):
+PATCH-08S-FOLLOWUP-BACKEND-ROUTES-HEALTH-MINIMIZATION-1 OR
+PATCH-08S-FOLLOWUP-INDEX-SECRET-QUERY-REMOVAL-1 OR
+PHASE-09A-PROFESSIONAL-WORKFLOW-COPILOT-DESIGN-1.
+Keep production unchanged; do not claim production readiness.
+```
