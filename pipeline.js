@@ -2072,15 +2072,29 @@ export async function runPipeline({
   // Catches any direct call to runPipeline() that bypassed ask-handler.js.
   // Both REJECT and CLARIFY abort the pipeline — no retrieval, no OpenAI.
   {
-    const _pipelineBoundaryCheck = detectPhilippineTaxBoundary(query || "", hook || "/ask");
+    // PATCH-08X-CHAT-CONTEXT-CARRYOVER-PIPELINE-DOMAIN-BOUNDARY-REMEDIATION-1
+    // Evaluate the pipeline domain boundary against effectiveQuery so a bounded
+    // tax follow-up (rewritten to a standaloneQuery when carryover applies) is not
+    // fail-closed-rejected here. When the flag is OFF, effectiveQuery === query, so
+    // this boundary is byte-identical to prior behavior. The boundary still RUNS
+    // and still decides ALLOW/REJECT — no bypass; non-tax/reset/jurisdiction-switch
+    // follow-ups do not inherit (helper returns applied:false) and remain rejected.
+    const _pipelineBoundaryCheck = detectPhilippineTaxBoundary(effectiveQuery || "", hook || "/ask");
     console.log("[PIPELINE DOMAIN BOUNDARY CHECK]", {
-      query:           (query || "").slice(0, 120),
+      query:           (effectiveQuery || "").slice(0, 120),
       hook,
       detectedDomain:  _pipelineBoundaryCheck.detectedDomain,
       isPhilippineTax: _pipelineBoundaryCheck.isPhilippineTax,
       decision:        _pipelineBoundaryCheck.decision,
       reason:          _pipelineBoundaryCheck.reason,
       confidence:      _pipelineBoundaryCheck.confidence,
+      // Safe carryover trace only — no raw recent turns / no prior message contents.
+      pipelineDomainBoundaryCarryoverEnabled: _chatContextCarryover.trace.chatContextCarryoverEnabled,
+      pipelineDomainBoundaryCarryoverApplied: _chatContextCarryover.trace.chatContextCarryoverApplied,
+      pipelineDomainBoundaryStandaloneQueryUsed: _chatContextCarryover.trace.standaloneQueryUsed,
+      inheritedTaxType: _chatContextCarryover.trace.inheritedTaxType,
+      inheritedJurisdiction: _chatContextCarryover.trace.inheritedJurisdiction,
+      boundedTurnCount: _chatContextCarryover.trace.boundedTurnCount,
     });
     if (_pipelineBoundaryCheck.decision === "REJECT" || _pipelineBoundaryCheck.decision === "CLARIFY") {
       const _isHardReject = _pipelineBoundaryCheck.decision === "REJECT";
@@ -2088,7 +2102,7 @@ export async function runPipeline({
       const _boundaryMessage = _isHardReject ? BOUNDARY_REJECTION_MESSAGE : BOUNDARY_CLARIFY_MESSAGE;
 
       console.log("[PIPELINE DOMAIN BOUNDARY BLOCKED]", {
-        query:      (query || "").slice(0, 120),
+        query:      (effectiveQuery || "").slice(0, 120),
         hook,
         decision:   _pipelineBoundaryCheck.decision,
         reason:     _pipelineBoundaryCheck.reason,

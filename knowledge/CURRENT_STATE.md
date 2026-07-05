@@ -3701,3 +3701,58 @@ The live issue is NOT considered fixed until the flag is enabled in staging and 
 Next recommended task:
 PATCH-08X-CHAT-CONTEXT-CARRYOVER-STAGING-SMOKE-1 (only after staging flag is explicitly enabled).
 ```
+
+Phase 8X chat-context carryover PIPELINE DOMAIN BOUNDARY REMEDIATION — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-05):
+
+```text
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-PIPELINE-DOMAIN-BOUNDARY-REMEDIATION-1 is complete.
+Decision: CHAT CONTEXT CARRYOVER PIPELINE DOMAIN BOUNDARY REMEDIATION PASS WITH STRICT RECOMMENDATIONS.
+Type: narrow feature-flagged runtime remediation (pipeline.js only) + fixture/test/report. Live behavior UNCHANGED by default.
+Base commit: 56b20f3 PATCH-08X-CHAT-CONTEXT-CARRYOVER-DOMAIN-BOUNDARY-WIRING-1 wire flag-gated boundary carryover.
+
+Render log evidence carried forward: route-level [DOMAIN BOUNDARY CHECK] correctly ALLOWed the standalone VAT
+follow-up (domainBoundaryCarryoverApplied true, inheritedTaxType VAT, boundedTurnCount 2), but the second
+[PIPELINE DOMAIN BOUNDARY CHECK] in pipeline.js evaluated the RAW query "How about fresh frozen seafood?" and
+REJECTed it (fail_closed_no_tax_signal; sourceAvailabilityStatus DOMAIN_BOUNDARY_REJECT; retrievedCount 0).
+Root cause: PIPELINE_DOMAIN_BOUNDARY_CONTEXT_GAP (pipeline-internal second boundary used raw query; not
+frontend/auth/session/flag/helper).
+
+Runtime files changed: pipeline.js ONLY (ask-handler.js unchanged — route boundary already works).
+
+Remediation: the pipeline defense-in-depth boundary now calls detectPhilippineTaxBoundary(effectiveQuery || "", ...)
+instead of (query || "", ...). effectiveQuery was already resolved earlier by PATCH-08X-...-PIPELINE-WIRING-1
+(applied ? standaloneQuery : query). Both [PIPELINE DOMAIN BOUNDARY CHECK]/[BLOCKED] logs now show the effective
+query plus safe carryover trace fields (pipelineDomainBoundaryCarryoverEnabled/Applied/StandaloneQueryUsed,
+inheritedTaxType, inheritedJurisdiction, boundedTurnCount) — no raw recent turns. The boundary STILL RUNS and STILL
+decides ALLOW/REJECT (no bypass). classify(effectiveQuery) and retrieveRelevantSources({query:effectiveQuery})
+remain aligned; original query preserved for generation.
+
+Verified locally: flag OFF => boundary on raw "How about fresh frozen seafood?" = REJECT (unchanged);
+flag ON => boundary on standalone "Is fresh frozen seafood subject to VAT in the Philippines?" = ALLOW.
+
+Safety controls preserved: non-tax still rejected; reset ("Forget VAT...") and jurisdiction switch ("In the US...")
+not inherited (helper applied:false); no-context follow-up not auto-allowed; boundary not bypassed.
+Source authority discipline: no citations/source cards/source availability from history; retrieval must still find
+indexed authorities; SAE/source cards unchanged.
+Security/privacy: no persistent memory; no TINA_ENABLE_MEMORY_* flags; no raw recentTurns logging; no P1/P2 egress
+added; no DB/persistence expansion.
+
+Validation:
+node tests/patch-08x-chat-context-carryover-pipeline-domain-boundary-remediation-1.test.mjs - PASS / 16 passed / 0 failed / 114 assertions.
+node tests/patch-08x-chat-context-carryover-domain-boundary-wiring-1.test.mjs - PASS / 18 / 0.
+node tests/patch-08x-chat-context-carryover-pipeline-wiring-1.test.mjs - PASS / 19 / 0.
+node tests/patch-08x-chat-context-carryover-scaffold-1.test.mjs - PASS / 15 / 0.
+node tests/patch-08x-chat-context-carryover-design-1.test.mjs - PASS / 27 / 0.
+node tests/patch-08x-chat-context-carryover-diagnostic-1.test.mjs - PASS / 20 / 0.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0.
+npm run guard:files - PASS.
+npm test - GATE PASSED / 0 failed (run with pipeline.js staged).
+
+No deployment by this patch; staging/prod env not changed; no memory enablement; no Phase 9 implementation.
+Phase 8 remains closed; Phase 8S remains closed; Phase 9 remains not started; Phase 10 and Phase 11 remain deferred.
+The live follow-up is fixed in code and verified locally but NOT claimed fixed live until staging is redeployed and
+the smoke reruns.
+
+Next recommended task:
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-STAGING-SMOKE-1-RERUN (after staging redeploy of this commit).
+```
