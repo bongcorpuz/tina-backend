@@ -3404,3 +3404,63 @@ PATCH-08X-CHAT-CONTEXT-CARRYOVER-DIAGNOSTIC-1
 Next major phase:
 Phase 9 — Professional Workflow Co-Pilot (or Phase 9A — Professional Workflow Co-Pilot Design / Scope Gate if 08X is skipped)
 ```
+
+Phase 8X chat-context carryover diagnostic — COMPLETE / PASS WITH FINDINGS (2026-07-05):
+
+```text
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-DIAGNOSTIC-1 is complete.
+Decision: CHAT CONTEXT CARRYOVER DIAGNOSTIC PASS WITH FINDINGS.
+Type: read-only diagnostic / evidence / fixture / test / report patch (non-runtime).
+Base commit: 833e2e5 PATCH-08S-FINAL-CLOSURE-GATE-1 close Phase 8S.
+Separate non-security diagnostic; not persistent memory; not a Phase 8S security patch; not Phase 9 implementation.
+
+Files created:
+evaluation/fixtures/phase-08x-chat-context-carryover-diagnostic-1.fixture.json
+tests/patch-08x-chat-context-carryover-diagnostic-1.test.mjs
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-DIAGNOSTIC-1_CHAT_CONTEXT_CARRYOVER_DIAGNOSTIC_REPORT.md
+
+Files updated:
+knowledge/CURRENT_STATE.md
+
+Files/routes inspected: server.js, routes/index.js + ask/tax route files, shared/mode-guards.js, ask-handler.js,
+pipeline.js, issue-classification-engine.js, retrieval-engine.js, context-orchestration-engine.js,
+conversation-memory.js. Routes: POST /ask + 11 mode routes (all delegate to askHandler), POST/GET /conversations,
+GET /conversations/:conversationId/messages.
+
+Likely root cause (strong evidence): CLASSIFICATION_CONTEXT_GAP + RETRIEVAL_REWRITE_GAP, contributing
+REQUEST_CONTRACT_GAP + CONVERSATION_PERSISTENCE_DISCONNECTED => FRONTEND_AND_BACKEND.
+The backend carries bounded short-term history into the FINAL ANSWER PROMPT only (context-orchestration-engine
+uses conversationHistory; pipeline forwards it at generation, ask-handler fetches getHistory(20) gated on
+conversationId). Issue classification and retrieval query construction see the CURRENT MESSAGE ONLY (0 references
+to conversationHistory in issue-classification-engine.js and retrieval-engine.js), and there is NO standalone-query
+rewrite stage. So an elliptical follow-up ("How about fresh frozen seafood?") is classified/retrieved as
+standalone/non-tax and the answer degrades before the context-aware prompt runs. The path also depends on the
+frontend supplying a conversationId/sessionId; the frontend is a separate repo (no frontend files here) so that
+dependency is unverifiable in this patch. NOT a PROMPT_CONTEXT_GAP (the prompt is already context-aware).
+Evidence strength: strong (backend gap definitive by static analysis); moderate overall (frontend unverifiable).
+
+Non-memory boundary: solve with bounded short-term chat/session context, NOT persistent memory. No
+TINA_ENABLE_MEMORY_* flags, no memory DB, no durable user memory.
+
+Validation:
+node tests/patch-08x-chat-context-carryover-diagnostic-1.test.mjs - PASS / 20 passed / 0 failed / 145 assertions.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0.
+node tests/patch-08s-staging-security-smoke-1.test.mjs - PASS / 28 / 0.
+npm run guard:files - PASS.
+npm test - GATE PASSED / 0 failed.
+
+No runtime changes; no memory enablement; no Phase 9 implementation.
+Phase 8 remains closed; Phase 8S remains closed (Gemini review accepted); Phase 9 remains not started.
+Phase 10 remains deferred; Phase 11 remains deferred.
+
+Recommended next patch (design-first, safest): PATCH-08X-CHAT-CONTEXT-CARRYOVER-DESIGN-1 — design a bounded
+standaloneQuery/rewrite stage that runs before classification and retrieval (Option A: API recent-turns/messages
+preferred; Option C: pure follow-up rewrite helper as fallback), confirm the frontend conversationId/recent-turns
+contract, and set redaction/tenant-isolation guardrails. No runtime change.
+
+Next recommended patch:
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-DESIGN-1
+
+Next major phase (after 08X track):
+Phase 9 — Professional Workflow Co-Pilot (or Phase 9A design/scope gate)
+```

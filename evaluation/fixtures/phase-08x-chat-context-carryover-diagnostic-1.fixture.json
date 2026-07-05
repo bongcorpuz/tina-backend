@@ -1,0 +1,227 @@
+{
+  "patch": {
+    "id": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-DIAGNOSTIC-1",
+    "phase": "Phase 8X (separate non-security diagnostic)",
+    "taskType": "short_term_chat_context_carryover_diagnostic",
+    "title": "Short-Term Chat / Session Context Carryover Diagnostic"
+  },
+  "decision": "CHAT CONTEXT CARRYOVER DIAGNOSTIC PASS WITH FINDINGS",
+  "baseCommit": "833e2e5 PATCH-08S-FINAL-CLOSURE-GATE-1 close Phase 8S",
+  "diagnosticVersion": "1.0.0",
+  "nonRuntimePatch": true,
+  "nonRuntimeDeclaration": {
+    "noRuntimeChange": true,
+    "noDeployment": true,
+    "noPackageChange": true,
+    "noEnvChange": true,
+    "noDbSupabaseChange": true,
+    "noMemoryEnablement": true,
+    "noPhase9Implementation": true,
+    "noPhase10Implementation": true,
+    "noPhase11Implementation": true
+  },
+  "phaseStatus": {
+    "phase8Closed": true,
+    "phase8SClosed": true,
+    "phase9NotStarted": true,
+    "phase10Deferred": true,
+    "phase11Deferred": true,
+    "phase8MemoryInactive": true,
+    "geminiPhase8SReviewAccepted": true
+  },
+  "sourceFilesInspected": [
+    "server.js",
+    "routes/index.js",
+    "routes/ask-route.js",
+    "routes/tax-route.js",
+    "shared/mode-guards.js",
+    "ask-handler.js",
+    "pipeline.js",
+    "issue-classification-engine.js",
+    "retrieval-engine.js",
+    "context-orchestration-engine.js",
+    "conversation-memory.js"
+  ],
+  "routeInventory": [
+    { "file": "routes/ask-route.js", "method": "POST", "path": "/ask", "handler": "askHandler (createAskRoute)", "auth": "authenticate", "acceptsMessage": true, "acceptsQuery": true, "acceptsHistoryArray": false, "acceptsMessagesArray": false, "acceptsConversationId": true, "acceptsSessionId": true, "acceptsMode": true, "storesPriorMessages": true, "retrievesPriorMessages": true, "passesPriorMessagesToClassifier": false, "passesPriorMessagesToRetrieval": false, "passesPriorMessagesToPromptAssembly": true },
+    { "file": "routes/*-route.js", "method": "POST", "path": "/tax /review /quiz /diagnostic /source /audit /case /debug /patch /progress /feedback", "handler": "askHandler with forcedHook", "auth": "authenticate", "acceptsMessage": true, "acceptsConversationId": true, "acceptsSessionId": true, "acceptsMode": true, "note": "All 12 mode routes delegate to the same askHandler via attachForcedHook." },
+    { "file": "server.js", "method": "POST", "path": "/conversations", "handler": "createConversation", "auth": "authenticate", "note": "Creates a conversation record (conversationId source)." },
+    { "file": "server.js", "method": "GET", "path": "/conversations", "handler": "getUserConversations", "auth": "authenticate", "note": "Lists conversations." },
+    { "file": "server.js", "method": "GET", "path": "/conversations/:conversationId/messages", "handler": "getConversationMessages", "auth": "authenticate", "note": "Reads persisted messages for a conversation." }
+  ],
+  "requestSchemaFindings": {
+    "askPathAcceptsCurrentMessage": true,
+    "currentMessageFields": ["question", "query"],
+    "acceptsMessagesArray": false,
+    "acceptsHistoryArray": false,
+    "acceptsConversationId": true,
+    "acceptsSessionId": true,
+    "acceptsConversationIdHeader": true,
+    "conversationIdResolution": "ask-handler getConversationId(req) = req.body.conversationId || req.body.sessionId || req.headers['x-conversation-id'] || null",
+    "acceptsMode": true,
+    "note": "The ask path does NOT accept a client-supplied messages[]/history[] array. Prior turns are fetched server-side from Supabase via getHistory(supabase, conversationId, 20), and ONLY when a conversationId/sessionId is supplied."
+  },
+  "conversationPersistenceFindings": {
+    "conversationsPersisted": true,
+    "messagesPersisted": true,
+    "conversationIdExists": true,
+    "askHandlerReadsPersistedHistory": true,
+    "askHandlerHistoryEvidence": "ask-handler.js line 2092-2105: const priorMessages = conversationId ? await getHistory(supabase, conversationId, 20).catch(() => []) : []; runPipeline({ ..., conversationHistory: priorMessages })",
+    "historyOrdering": "conversation-memory.js getHistory returns last N (default 10, called with 20) ordered oldest-first",
+    "connectedToAskFlow": "partially",
+    "connectedToPromptAssembly": true,
+    "connectedToClassificationOrRetrieval": false,
+    "note": "Persistence is connected to the FINAL ANSWER PROMPT only. It is NOT connected to issue classification or retrieval query construction, and the entire path is gated on the caller supplying a conversationId/sessionId."
+  },
+  "frontendContractFindings": {
+    "frontendInspected": false,
+    "frontendPresentInBackendRepo": false,
+    "frontend_not_in_backend_repo": true,
+    "frontendStagingOrigin": "https://tina-fawn.vercel.app",
+    "sendsLatestMessageOnly": "unknown",
+    "sendsHistory": "unknown",
+    "sendsConversationIdOrSessionId": "unknown",
+    "note": "This is the tina-backend repo; no frontend source files (.jsx/.tsx/.vue/.svelte) are present. Whether the live frontend supplies a conversationId/sessionId with each /ask request cannot be verified in this patch. If the frontend omits it, even the prompt-level history is empty (priorMessages = [])."
+  },
+  "issueClassificationFindings": {
+    "receivesCurrentQueryOnly": true,
+    "receivesRecentTurns": false,
+    "hasFollowUpClassificationLogic": false,
+    "detectsEllipticalFollowUps": false,
+    "inheritsPriorTaxIssue": false,
+    "rewritesFollowUpIntoStandaloneQuery": false,
+    "evidence": "issue-classification-engine.js contains 0 references to conversationHistory / priorMessages / history. runPipeline passes only `query` (current message) into classification.",
+    "classification": "current_query_only"
+  },
+  "retrievalQueryFindings": {
+    "basedOnCurrentMessageOnly": true,
+    "includesPriorTopic": false,
+    "usesCondensedStandaloneQuestion": false,
+    "preservesPriorIssueType": false,
+    "evidence": "retrieval-engine.js contains 0 references to conversationHistory / priorMessages. Retrieval operates on the current `query` only; there is no standalone-query rewrite stage (0 matches for standalone/rewrite/followUp/condense in pipeline.js).",
+    "classification": "current_query_only"
+  },
+  "promptAssemblyFindings": {
+    "includesPreviousTurns": true,
+    "conversationHistoryBlockPresent": true,
+    "standaloneRewrittenQueryPresent": false,
+    "evidence": "context-orchestration-engine.js uses conversationHistory (lines 676-677 and 2482: const history = safeArray(normalized.conversationHistory)). pipeline.js passes conversationHistory into callOpenAIWithOrchestration at line 3928.",
+    "classification": "context_aware_prompt_only",
+    "note": "The final answer prompt IS context-aware, but by generation time the classification and retrieval decisions (mode, tax-issue, source selection) were already made from the current message in isolation."
+  },
+  "observedBehaviorCase": {
+    "turn1": "Is tobacco subject to VAT?",
+    "turn2Followup": "How about fresh frozen seafood?",
+    "expectedInheritedIssue": "VAT",
+    "expectedStandaloneRewrite": "Is fresh frozen seafood subject to VAT in the Philippines?",
+    "expectedAnswerType": "Philippine VAT classification / exemption / zero-rated / subject-to-VAT analysis with authority caveat",
+    "suspectedActualBehavior": "Turn 2 classified/retrieved as a standalone, non-VAT (possibly non-tax) query because classification and retrieval never see the prior VAT turn."
+  },
+  "expectedBehaviorCase": {
+    "followUpShouldInheritIssue": "VAT",
+    "followUpShouldBeRewrittenBeforeClassificationAndRetrieval": true,
+    "answerShouldBeVatAnalysisWithAuthorityCaveat": true
+  },
+  "rootCauseClassification": [
+    "CLASSIFICATION_CONTEXT_GAP",
+    "RETRIEVAL_REWRITE_GAP",
+    "REQUEST_CONTRACT_GAP",
+    "CONVERSATION_PERSISTENCE_DISCONNECTED",
+    "FRONTEND_AND_BACKEND"
+  ],
+  "rootCauseSummary": "The backend carries bounded short-term history into the FINAL ANSWER PROMPT only. Issue classification and retrieval query construction operate on the current message in isolation (0 references to conversationHistory in either engine), and there is no standalone-query rewrite stage. For an elliptical follow-up ('How about fresh frozen seafood?') the classifier and retriever have no VAT/tax signal, so the turn is treated as standalone/non-tax and the answer degrades before the context-aware prompt ever runs. The path additionally depends on the caller supplying a conversationId/sessionId; the frontend cannot be verified in this repo.",
+  "evidenceStrength": "strong",
+  "evidenceStrengthNotes": "Backend classification/retrieval gap is strongly evidenced by definitive static findings (0 references in issue-classification-engine.js and retrieval-engine.js; conversationHistory forwarded only to generation at pipeline.js:3928; prompt use confirmed in context-orchestration-engine.js). The frontend dependency is moderate/unverifiable because the frontend is a separate repo.",
+  "risks": [
+    "A fix that broadens what is fetched/logged as recent turns could log P1/P2 client content — must respect Phase 8S logging-redaction future controls.",
+    "A conversationId-based server fetch touches user/client/matter data — must respect the tenant-isolation gate before broader runtime use.",
+    "A rewrite stage must not weaken source-authority discipline or fabricate a tax issue where none exists."
+  ],
+  "nonMemoryBoundary": {
+    "solveWithBoundedShortTermContextNotPersistentMemory": true,
+    "noTinaEnableMemoryFlags": true,
+    "noMemoryDb": true,
+    "noDurableUserMemory": true,
+    "distinction": "Short-term context = bounded recent turns of the CURRENT chat/session used to disambiguate the current question. Persistent memory (Phase 8, inactive) = durable cross-session user profile/preferences/facts. This issue must be solved with bounded short-term context, not persistent memory.",
+    "memoryFlagsMustRemainDisabled": [
+      "TINA_ENABLE_MEMORY_READS",
+      "TINA_ENABLE_MEMORY_WRITES",
+      "TINA_ENABLE_MATTER_MEMORY",
+      "TINA_ENABLE_MEMORY_SUGGESTIONS",
+      "TINA_ENABLE_MEMORY_DEBUG_TRACE"
+    ]
+  },
+  "phase8SBoundary": {
+    "isSecurityClosureIssue": false,
+    "phase8SRemainsClosed": true,
+    "phase8SFutureSecurityItemsRemainTracked": true
+  },
+  "phase9Implications": {
+    "phase9WorkflowQualityDependsOnFollowUpContext": true,
+    "shouldDiagnoseFixBeforeProfessionalWorkflowUxBuildout": true,
+    "doesNotPermitClientMatterPersistenceWithoutTenantIsolation": true,
+    "note": "Phase 9 professional workflows (tax memo, BIR reply, audit defense) are inherently multi-turn with clarification. Without short-term context carryover into classification/retrieval, Phase 9 UX and correctness will suffer."
+  },
+  "futureFixOptions": [
+    {
+      "id": "OPTION_A_API_RECENT_TURNS",
+      "description": "Frontend sends bounded last-N turns (or a conversationId), backend accepts a bounded recentTurns/messages payload and builds a standaloneQuery used for classification and retrieval; final prompt includes bounded recent context.",
+      "benefits": ["General; handles elliptical and pronoun follow-ups", "No persistent memory or durable writes required", "Works even without server-side conversation persistence"],
+      "risks": ["Client-supplied turns must be size-bounded and validated", "Recent turns may contain P1/P2 content"],
+      "securityPrivacyImplications": ["Must apply request-size policy and logging redaction; do not log unredacted recentTurns"],
+      "implementationScope": "frontend payload + backend request contract + standaloneQuery stage before classification/retrieval",
+      "recommended": true
+    },
+    {
+      "id": "OPTION_B_CONVERSATION_ID_SERVER_FETCH",
+      "description": "Ask route receives conversationId, backend fetches last N turns (getHistory already exists) and builds a standaloneQuery for classification/retrieval, not just the prompt.",
+      "benefits": ["Reuses existing persistence (getHistory) and conversationId path", "No client history payload needed"],
+      "risks": ["Depends on frontend reliably sending conversationId", "Touches user/client/matter data → tenant-isolation considerations before broader runtime use"],
+      "securityPrivacyImplications": ["Must respect tenant/user isolation gate; must redact P1/P2 in logs"],
+      "implementationScope": "backend standaloneQuery stage fed by getHistory; verify frontend sends conversationId",
+      "recommended": false
+    },
+    {
+      "id": "OPTION_C_FOLLOWUP_REWRITE_HELPER",
+      "description": "A pure helper detects elliptical follow-ups ('how about X?', 'what about X?', 'and X?', 'same with X?') and rewrites them with the previous tax issue, used before issue classification and retrieval.",
+      "benefits": ["Low risk; pure/testable; no persistence", "Directly addresses the observed 'How about fresh frozen seafood?' case"],
+      "risks": ["Less general than full context carryover; heuristic coverage gaps", "Still needs the prior issue available (conversationId or recentTurns)"],
+      "securityPrivacyImplications": ["Minimal; operates on bounded in-memory turns"],
+      "implementationScope": "pure follow-up-rewrite helper + wiring before classification/retrieval",
+      "recommended": false
+    }
+  ],
+  "recommendedNextPatch": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-DESIGN-1",
+  "recommendedNextPatchRationale": "Design-first is safest: it can specify the bounded standaloneQuery/rewrite stage that runs before classification and retrieval (Option A preferred, with Option C rewrite heuristics as a fallback), confirm the frontend conversationId/recent-turns contract, and set the redaction/tenant-isolation guardrails — all with no runtime change. A scaffold or implementation patch should follow only after the design and elliptical-follow-up test cases are approved.",
+  "prohibitedClaims": [
+    "persistent memory is required",
+    "memory is active",
+    "Phase 8 reopened",
+    "Phase 8S reopened",
+    "Phase 9 started",
+    "the runtime issue is fixed",
+    "the frontend is definitely the cause",
+    "the backend is definitely the sole cause",
+    "production-ready context carryover exists",
+    "authority or retrieval correctness is changed by this patch"
+  ],
+  "validationMatrix": {
+    "requiredPassingTests": [
+      "tests/patch-08x-chat-context-carryover-diagnostic-1.test.mjs",
+      "tests/patch-08s-final-closure-gate-1.test.mjs",
+      "tests/patch-08s-staging-security-smoke-1.test.mjs"
+    ],
+    "guardFilesRequiredPass": true,
+    "npmTestRequiredZeroFailed": true
+  },
+  "testCases": [
+    { "id": "decision_pass_with_findings", "expect": "CHAT CONTEXT CARRYOVER DIAGNOSTIC PASS WITH FINDINGS" },
+    { "id": "classification_current_query_only", "expect": "issue classification is current-query-only" },
+    { "id": "retrieval_current_query_only", "expect": "retrieval is current-query-only, no standalone rewrite" },
+    { "id": "prompt_context_aware", "expect": "prompt assembly includes conversationHistory" },
+    { "id": "history_gated_on_conversation_id", "expect": "priorMessages fetched only when conversationId present" },
+    { "id": "frontend_not_in_repo", "expect": "frontend contract unverifiable in backend repo" },
+    { "id": "non_memory_boundary", "expect": "solve with bounded short-term context, not persistent memory" },
+    { "id": "recommended_next_patch", "expect": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-DESIGN-1" }
+  ]
+}
