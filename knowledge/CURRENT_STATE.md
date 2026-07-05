@@ -3526,3 +3526,60 @@ optional PATCH-08X-CHAT-CONTEXT-CARRYOVER-FRONTEND-CONTRACT-1.
 Next recommended patch:
 PATCH-08X-CHAT-CONTEXT-CARRYOVER-SCAFFOLD-1
 ```
+
+Phase 8X chat-context carryover SCAFFOLD — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-05):
+
+```text
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-SCAFFOLD-1 is complete.
+Decision: CHAT CONTEXT CARRYOVER SCAFFOLD PASS WITH STRICT RECOMMENDATIONS.
+Type: pure helper scaffold / fixture / test / report patch. The helper is code, but it is NOT wired into
+runtime (no route/pipeline/classification/retrieval/prompt wiring); live behavior is unchanged.
+Base commit: dae4128 PATCH-08X-CHAT-CONTEXT-CARRYOVER-DESIGN-1 design short-term context carryover.
+
+Files created:
+helpers/chat-context-carryover.js (new helpers/ directory; pure ESM module)
+evaluation/fixtures/phase-08x-chat-context-carryover-scaffold-1.fixture.json
+tests/patch-08x-chat-context-carryover-scaffold-1.test.mjs
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-SCAFFOLD-1_CHAT_CONTEXT_CARRYOVER_SCAFFOLD_REPORT.md
+
+Files updated:
+knowledge/CURRENT_STATE.md
+
+Helper API (pure functions): normalizeText, boundRecentTurns, detectReset, detectJurisdictionSwitch,
+detectFollowUp, extractPriorTaxContext, buildStandaloneQuery, buildContextCarryoverDecision, and top-level
+buildShortTermContextCarryover({ currentQuery, recentTurns, activeConversationId, maxRewriteTurns,
+jurisdictionDefault }). Returns { applied, reason, confidence, originalQuery, standaloneQuery,
+inheritedIssueType, inheritedTaxType, inheritedJurisdiction, sourceTurnIndexes, riskFlags,
+fallbackClarification, boundedTurnCount, memoryBoundary:{persistentMemoryUsed:false, durableWriteRequired:false} }.
+
+Behavior verified by tests:
+Positive cases (rewrite applied): tobacco VAT → fresh frozen seafood (VAT); rent EWT → condominium dues (EWT);
+NOLCO → corp with no income (NOLCO); PEZA zero-rating → local purchases (PEZA zero-rating); MCIT → newly
+registered corporation (MCIT); rent withholding → security deposit (withholding tax). All produce a standalone
+question containing the subject + inherited tax token + "Philippines", confidence >= 0.70.
+Negative cases (not applied; standaloneQuery == originalQuery): explicit new question / forget (explicit_reset_detected);
+jurisdiction switch (jurisdiction_switch_detected); non-tax weather/recipes (non_tax_query_detected); complete
+standalone "What is VAT?" (standalone_query_detected); no recent turns (no_prior_tax_issue + fallback clarification).
+Pure/deterministic; bounded recentTurns (default 6, hard max 20); tolerates {role,content}/{sender,message}/{type,text};
+does not mutate inputs; no citations/conclusions; standaloneQuery is a question.
+
+Runtime wiring status: runtimeWired=false, askHandlerUsesHelper=false, classificationUsesHelper=false,
+retrievalUsesHelper=false, liveBehaviorChanged=false, featureFlagAdded=false. The helper is imported only by its
+focused test, not by any runtime module.
+
+Validation:
+node tests/patch-08x-chat-context-carryover-scaffold-1.test.mjs - PASS / 15 passed / 0 failed / 231 assertions.
+node tests/patch-08x-chat-context-carryover-design-1.test.mjs - PASS / 27 / 0.
+node tests/patch-08x-chat-context-carryover-diagnostic-1.test.mjs - PASS / 20 / 0.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0.
+npm run guard:files - PASS.
+npm test - GATE PASSED / 0 failed.
+
+No live behavior change; no memory enablement (no TINA_ENABLE_MEMORY_* flags); no persistent memory; no durable
+writes; no ask-handler/pipeline/classification/retrieval/prompt/server.js/route/frontend/DB/Supabase/env/package changes.
+Phase 8 remains closed; Phase 8S remains closed; Phase 9 remains not started; Phase 10 and Phase 11 remain deferred.
+
+Next recommended patch:
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-PIPELINE-WIRING-1 (feature-flagged wiring of the standaloneQuery stage before
+classification/retrieval, OFF by default; confirm frontend conversationId/sessionId before staging smoke).
+```

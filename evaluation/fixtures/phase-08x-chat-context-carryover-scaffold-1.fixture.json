@@ -1,0 +1,171 @@
+{
+  "patch": {
+    "id": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-SCAFFOLD-1",
+    "phase": "Phase 8X (separate non-security scaffold)",
+    "taskType": "pure_short_term_followup_rewrite_helper_scaffold",
+    "title": "Pure Short-Term Follow-Up Rewrite Helper Scaffold"
+  },
+  "decision": "CHAT CONTEXT CARRYOVER SCAFFOLD PASS WITH STRICT RECOMMENDATIONS",
+  "baseCommit": "dae4128 PATCH-08X-CHAT-CONTEXT-CARRYOVER-DESIGN-1 design short-term context carryover",
+  "scaffoldVersion": "1.0.0",
+  "nonRuntimePatch": true,
+  "nonRuntimeDeclaration": {
+    "noRouteWiring": true,
+    "noPipelineWiring": true,
+    "noIssueClassificationWiring": true,
+    "noRetrievalWiring": true,
+    "noPromptWiring": true,
+    "noServerJsChange": true,
+    "noFrontendChange": true,
+    "noDbSupabaseChange": true,
+    "noEnvOrPackageChange": true,
+    "noDeployment": true,
+    "noMemoryEnablement": true,
+    "noPhase9Implementation": true
+  },
+  "phaseStatus": {
+    "phase8Closed": true,
+    "phase8SClosed": true,
+    "phase08XDiagnosticComplete": true,
+    "phase08XDesignComplete": true,
+    "phase9NotStarted": true,
+    "phase10Deferred": true,
+    "phase11Deferred": true,
+    "phase8MemoryInactive": true
+  },
+  "designIntegration": {
+    "designPatchId": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-DESIGN-1",
+    "designCommit": "dae4128",
+    "selectedDesign": "bounded standaloneQuery/rewrite stage before classification and retrieval"
+  },
+  "diagnosticIntegration": {
+    "diagnosticPatchId": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-DIAGNOSTIC-1",
+    "diagnosticCommit": "38d5b9e",
+    "rootCause": ["CLASSIFICATION_CONTEXT_GAP", "RETRIEVAL_REWRITE_GAP"]
+  },
+  "helperFile": "helpers/chat-context-carryover.js",
+  "helperApi": [
+    "normalizeText",
+    "boundRecentTurns",
+    "detectReset",
+    "detectJurisdictionSwitch",
+    "detectFollowUp",
+    "extractPriorTaxContext",
+    "buildStandaloneQuery",
+    "buildContextCarryoverDecision",
+    "buildShortTermContextCarryover"
+  ],
+  "behaviorContract": {
+    "topLevelHelper": "buildShortTermContextCarryover({ currentQuery, recentTurns, activeConversationId, maxRewriteTurns, jurisdictionDefault })",
+    "returnFields": ["applied", "reason", "confidence", "originalQuery", "standaloneQuery", "inheritedIssueType", "inheritedTaxType", "inheritedJurisdiction", "sourceTurnIndexes", "riskFlags", "fallbackClarification", "boundedTurnCount", "memoryBoundary"],
+    "originalQueryAlwaysPreserved": true,
+    "standaloneEqualsOriginalWhenNotApplied": true,
+    "defaultMaxRewriteTurns": 6,
+    "hardMaxTurns": 20,
+    "confidenceThreshold": 0.70,
+    "defaultJurisdiction": "Philippines",
+    "toleratedTurnShapes": ["{role,content}", "{sender,message}", "{type,text}"]
+  },
+  "runtimeWiringStatus": {
+    "runtimeWired": false,
+    "classificationUsesHelper": false,
+    "retrievalUsesHelper": false,
+    "askHandlerUsesHelper": false,
+    "liveBehaviorChanged": false,
+    "featureFlagAdded": false
+  },
+  "featureFlagStatus": {
+    "featureFlagAdded": false,
+    "note": "A feature flag will be introduced only in the pipeline-wiring patch, OFF by default."
+  },
+  "positiveCases": [
+    { "id": "vat_tobacco_to_seafood", "currentQuery": "How about fresh frozen seafood?", "recentTurns": [{ "role": "user", "content": "Is tobacco subject to VAT?" }, { "role": "assistant", "content": "Tobacco products are subject to VAT." }], "expectApplied": true, "expectTaxType": "VAT", "mustIncludeSubject": "fresh frozen seafood", "mustIncludeTaxToken": "VAT" },
+    { "id": "ewt_rent_to_condo_dues", "currentQuery": "How about condominium dues?", "recentTurns": [{ "role": "user", "content": "Is rent subject to EWT?" }], "expectApplied": true, "expectTaxType": "EWT", "mustIncludeSubject": "condominium dues", "mustIncludeTaxToken": "EWT" },
+    { "id": "nolco_corp_no_income", "currentQuery": "What about a corporation with no income?", "recentTurns": [{ "role": "user", "content": "Can a corporation claim NOLCO?" }], "expectApplied": true, "expectTaxType": "NOLCO", "mustIncludeSubject": "corporation with no income", "mustIncludeTaxToken": "NOLCO" },
+    { "id": "peza_zero_rating_local_purchases", "currentQuery": "What about local purchases?", "recentTurns": [{ "role": "user", "content": "Are PEZA sales zero-rated for VAT?" }], "expectApplied": true, "expectTaxType": "PEZA zero-rating", "mustIncludeSubject": "local purchases", "mustIncludeTaxToken": "PEZA" },
+    { "id": "mcit_newly_registered_corp", "currentQuery": "How about newly registered corporation?", "recentTurns": [{ "role": "user", "content": "When is MCIT applicable?" }], "expectApplied": true, "expectTaxType": "MCIT", "mustIncludeSubject": "newly registered corporation", "mustIncludeTaxToken": "MCIT" },
+    { "id": "withholding_rent_to_security_deposit", "currentQuery": "What about security deposit?", "recentTurns": [{ "role": "user", "content": "Is rent subject to withholding tax?" }], "expectApplied": true, "expectTaxType": "withholding tax", "mustIncludeSubject": "security deposit", "mustIncludeTaxToken": "withholding tax" }
+  ],
+  "negativeCases": [
+    { "id": "explicit_new_question", "currentQuery": "New question: what is NOLCO?", "recentTurns": [{ "role": "user", "content": "Is tobacco subject to VAT?" }], "expectApplied": false, "expectReasonIncludes": "explicit_reset_detected" },
+    { "id": "reset_forget_previous", "currentQuery": "Forget VAT, explain EWT.", "recentTurns": [{ "role": "user", "content": "Is tobacco subject to VAT?" }], "expectApplied": false, "expectReasonIncludes": "explicit_reset_detected" },
+    { "id": "jurisdiction_switch", "currentQuery": "In the US, how is this taxed?", "recentTurns": [{ "role": "user", "content": "Is tobacco subject to VAT?" }], "expectApplied": false, "expectReasonIncludes": "jurisdiction_switch_detected" },
+    { "id": "non_tax_weather", "currentQuery": "What is the weather?", "recentTurns": [{ "role": "user", "content": "Is tobacco subject to VAT?" }], "expectApplied": false, "expectReasonIncludes": "non_tax_query_detected" },
+    { "id": "seafood_recipes", "currentQuery": "Tell me about seafood recipes.", "recentTurns": [{ "role": "user", "content": "Is tobacco subject to VAT?" }], "expectApplied": false, "expectReasonIncludes": "non_tax_query_detected" },
+    { "id": "complete_standalone_vat", "currentQuery": "What is VAT?", "recentTurns": [{ "role": "user", "content": "Is tobacco subject to VAT?" }], "expectApplied": false, "expectReasonIncludes": "standalone_query_detected" },
+    { "id": "no_recent_turns", "currentQuery": "How about fresh frozen seafood?", "recentTurns": [], "expectApplied": false, "expectReasonIncludes": "no_prior_tax_issue", "expectFallbackClarification": true }
+  ],
+  "falsePositiveControls": {
+    "explicitResetPhrases": ["new question", "different topic", "separate issue", "forget", "ignore previous", "start over"],
+    "jurisdictionSwitchPhrases": ["in the US", "in the U.S.", "in the united states", "under US tax", "in Singapore", "in the UK"],
+    "confidenceThreshold": 0.70,
+    "maxAgeControl": "bounded to last maxRewriteTurns (default 6, hard max 20)",
+    "ambiguityControl": "ambiguous_prior_issue when >=2 distinct tax families co-occur",
+    "standaloneControl": "standalone_query_detected when current query is a complete tax question and not a follow-up",
+    "nonTaxControl": "non_tax_query_detected when current query is not a follow-up and has no tax signal"
+  },
+  "securityPrivacyControls": {
+    "boundedRecentTurns": true,
+    "noRawRecentTurnLogs": true,
+    "noThirdPartyEgress": true,
+    "noPersistentMemory": true,
+    "noMemoryFlags": true,
+    "noDbWrites": true,
+    "noClientMatterPersistence": true,
+    "noCitationsOrLegalAnswers": true
+  },
+  "sourceAuthorityDiscipline": {
+    "helperProducesNoCitations": true,
+    "helperProducesNoTaxConclusion": true,
+    "helperDoesNotBypassSaeOrSourceCards": true,
+    "helperDoesNotClaimAuthorityFound": true,
+    "finalAnswerStillRequiresRetrievalSourceBackedAuthority": true
+  },
+  "phase9Boundary": {
+    "phase9NotStarted": true,
+    "helperReusableByPhase9Workflows": true,
+    "noPhase9ImplementationInThisPatch": true
+  },
+  "risks": [
+    "wrong issue inheritance",
+    "stale context beyond bounded window",
+    "jurisdiction contamination",
+    "privacy/logging exposure of P1/P2 recent turns",
+    "frontend not sending conversationId (helper receives empty recentTurns)",
+    "over-reliance on prior uncertain assistant answer",
+    "retrieval drift if wired without review"
+  ],
+  "prohibitedClaims": [
+    "the live issue is fixed",
+    "the helper is wired into runtime",
+    "classification now uses the helper",
+    "retrieval now uses the helper",
+    "Phase 9 started",
+    "persistent memory is active",
+    "tenant isolation is implemented",
+    "logging redaction is implemented",
+    "source correctness is guaranteed",
+    "production-ready"
+  ],
+  "validationMatrix": {
+    "requiredPassingTests": [
+      "tests/patch-08x-chat-context-carryover-scaffold-1.test.mjs",
+      "tests/patch-08x-chat-context-carryover-design-1.test.mjs",
+      "tests/patch-08x-chat-context-carryover-diagnostic-1.test.mjs",
+      "tests/patch-08s-final-closure-gate-1.test.mjs"
+    ],
+    "guardFilesRequiredPass": true,
+    "npmTestRequiredZeroFailed": true
+  },
+  "testCases": [
+    { "id": "helper_imports", "expect": "pure helper imports successfully" },
+    { "id": "positive_cases_apply", "expect": "6 positive cases applied with correct standaloneQuery" },
+    { "id": "negative_cases_do_not_apply", "expect": "7 negative cases not applied; standaloneQuery == originalQuery" },
+    { "id": "input_immutability", "expect": "recentTurns input not mutated" },
+    { "id": "no_persistent_memory", "expect": "memoryBoundary.persistentMemoryUsed false; durableWriteRequired false" },
+    { "id": "no_citations_or_conclusions", "expect": "no citations/legal conclusions in output" },
+    { "id": "confidence_deterministic", "expect": "confidence is a number in [0,1]" },
+    { "id": "runtime_wiring_false", "expect": "runtimeWiringStatus all false" },
+    { "id": "forbidden_helper_content", "expect": "helper source has no runtime imports/calls/env/memory-flags" }
+  ]
+}
