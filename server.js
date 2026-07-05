@@ -9,6 +9,8 @@ import OpenAI from "openai";
 import { buildCorsOptionsDelegate } from "./security/cors-policy.js";
 import { createSecurityHeadersMiddleware } from "./security/security-headers.js";
 import { createRateLimitMiddleware } from "./security/rate-limit.js";
+import { buildPublicHealth } from "./security/public-health.js";
+import { buildRouteNotFound, ROUTE_NOT_FOUND_STATUS } from "./security/route-disclosure.js";
 import { createClient } from "@supabase/supabase-js";
 
 import {
@@ -233,167 +235,46 @@ function localContextOrchestrationHealthCheck() {
 
 /* ================= BASIC ROUTES ================= */
 
+// PATCH-08S-FOLLOWUP-BACKEND-ROUTES-HEALTH-MINIMIZATION-1: minimized public
+// identity. No route inventory, version, architecture, or internal flags are
+// disclosed publicly (route enumeration surface removed; see /routes below).
 app.get("/", (req, res) => {
   return res.json({
     success: true,
     name: "TINA Backend",
-    version: SERVER_VERSION,
-    engine: "TINA Philippine Tax Intelligence Engine",
-    architecture:
-      "Adaptive Tax, Legal, Audit, Evidence, RAG, and Context Orchestration",
-    contextOrchestrationEnabled: true,
-    serverUsesDirectPromptAssembly: false,
-    message: "Backend is running.",
-    usefulRoutes: [
-      "/health",
-      "/routes",
-      "/ask",
-      "/tax",
-      "/review",
-      "/quiz",
-      "/diagnostic",
-      "/source",
-      "/audit",
-      "/case",
-      "/debug",
-      "/patch",
-      "/progress",
-      "/feedback"
-    ]
+    message: "Backend is running."
   });
 });
 
+// PATCH-08S-FOLLOWUP-BACKEND-ROUTES-HEALTH-MINIMIZATION-1: the public /routes
+// endpoint previously returned the full route inventory and internal module list,
+// enabling endpoint enumeration. It now returns a minimal 404 with no inventory,
+// no method list, and no module names. Actual route registration is unchanged;
+// only public disclosure is removed. Route documentation lives in routes/index.js
+// for developers.
 app.get("/routes", (req, res) => {
-  return res.json({
-    success: true,
-    version: SERVER_VERSION,
-    engine: "TINA Philippine Tax Intelligence Engine",
-    adaptiveSupport: true,
-    issueClassificationPipeline: true,
-    contextOrchestrationEnabled: true,
-    serverUsesDirectPromptAssembly: false,
-    modeSupport: ["/ask", "/tax", "/review", "/quiz", "/diagnostic", "/source", "/audit", "/case", "/debug", "/patch", "/progress", "/feedback"],
-    adaptiveModules: [
-      "context-orchestration-engine.js",
-      "issue-classification-engine.js",
-      "query-intent-engine.js",
-      "adaptive-mode-engine.js",
-      "adaptive-response-planner.js",
-      "retrieval-engine.js",
-      "reranker-engine.js",
-      "supersession-engine.js",
-      "provision-citation-engine.js",
-      "jurisprudence-engine.js",
-      "doctrine-tagging-engine.js",
-      "conflict-engine.js",
-      "legal-validation-engine.js",
-      "final-answer-compliance.js",
-      "answer-renderer.js",
-      "rag-answer-handler.js",
-      "assessment-handler.js",
-      "ask-handler.js"
-    ],
-    routes: [
-      "GET /",
-      "GET /health",
-      "GET /routes",
-      "POST /register",
-      "POST /login",
-      "POST /conversations",
-      "GET /conversations",
-      "GET /conversations/:conversationId/messages",
-      "GET /list?secret=YOUR_SECRET",
-      "GET /read-drive?secret=YOUR_SECRET",
-      "GET /index-drive?secret=YOUR_SECRET",
-      "GET /index-status?secret=YOUR_SECRET",
-      "GET /reindex?secret=YOUR_SECRET",
-      "GET /admin/index-drive?secret=YOUR_SECRET",
-      "GET /vector-stats?secret=YOUR_SECRET",
-      "POST /ask",
-      "POST /tax",
-      "POST /review",
-      "POST /quiz",
-      "POST /diagnostic",
-      "POST /source",
-      "POST /audit",
-      "POST /case",
-      "POST /debug",
-      "POST /patch",
-      "POST /progress",
-      "POST /feedback"
-    ]
-  });
+  return res.status(ROUTE_NOT_FOUND_STATUS).json(buildRouteNotFound());
 });
 
+// PATCH-08S-FOLLOWUP-BACKEND-ROUTES-HEALTH-MINIMIZATION-1: public /health is now
+// LIVENESS ONLY. It returns a minimal {status:"ok", service:"tina-backend"} and
+// NO longer discloses commitSha, version, environment, model name, config flags,
+// vector-store counts, adaptive-stack internals, or which secrets are configured.
+// It performs a resilient readiness touch (getVectorStoreStats) but never fails
+// liveness on a DB error and never surfaces the result, so the endpoint cannot
+// leak internal state. It stays unauthenticated and rate-limit exempt so Render
+// health polling works. Detailed readiness/diagnostics (including deployment
+// commitSha) are intentionally NOT re-exposed here; a dedicated authenticated
+// diagnostic-health endpoint is deferred to a follow-up patch (see report).
 app.get("/health", async (req, res) => {
   try {
-    const vectorStats = await getVectorStoreStats();
-
-    return res.json({
-      success: true,
-      status: "ok",
-      version: SERVER_VERSION,
-      commitSha: process.env.RENDER_GIT_COMMIT || process.env.GIT_COMMIT || null,
-      serviceName: process.env.RENDER_SERVICE_NAME || null,
-      environment: NODE_ENV,
-      engine: "TINA Philippine Tax Intelligence Engine",
-      adaptiveArchitectureEnabled: true,
-      issueClassificationEnabled: true,
-      contextOrchestrationEnabled: true,
-      serverUsesDirectPromptAssembly: false,
-      openaiConfigured: Boolean(process.env.OPENAI_API_KEY),
-      openaiModel: OPENAI_MODEL,
-      supabaseConfigured: Boolean(
-        process.env.SUPABASE_URL &&
-          process.env.SUPABASE_SERVICE_ROLE_KEY
-      ),
-      googleDriveConfigured: Boolean(process.env.GOOGLE_DRIVE_FOLDER_ID),
-      googleDriveFolderIdPreview: maskValue(process.env.GOOGLE_DRIVE_FOLDER_ID),
-      googleServiceAccountJsonConfigured: Boolean(process.env.GOOGLE_SERVICE_ACCOUNT_JSON),
-      oldGoogleKeyFileConfigured: Boolean(process.env.GOOGLE_SERVICE_ACCOUNT_KEY_FILE),
-      indexSecretEnabled: Boolean(process.env.INDEX_SECRET),
-      indexingRunning: reindexController.isActive(),
-      vectorStore: vectorStats,
-      adaptiveStack: {
-        server: true,
-        pipeline: pipelineHealthCheck(),
-        askHandler: askHandlerHealthCheck(),
-        contextOrchestration: localContextOrchestrationHealthCheck(),
-        ragAnswerHandler: ragAnswerHandlerHealthCheck(),
-        issueClassificationEngine: issueClassificationEngineHealthCheck(),
-        queryIntentEngine: queryIntentEngineHealthCheck(),
-        adaptiveModeEngine: adaptiveModeHealthCheck(),
-        adaptiveResponsePlanner: adaptiveResponsePlannerHealthCheck(),
-        askHelpers: askHelpersHealthCheck(),
-        finalAnswerCompliance: finalAnswerComplianceHealthCheck(),
-        adaptiveMasterPrompt: adaptiveMasterPromptHealthCheck(),
-        legalValidationEngine: legalValidationEngineHealthCheck(),
-        jurisprudenceEngine: jurisprudenceEngineHealthCheck(),
-        conflictEngine: conflictEngineHealthCheck(),
-        answerRenderer: answerRendererHealthCheck(),
-        assessmentHandler: assessmentHandlerHealthCheck(),
-        feedbackLearning: feedbackLearningHealthCheck()
-      },
-      routeModes: {
-        ask: true,
-        tax: true,
-        review: true,
-        quiz: true,
-        diagnostic: true,
-        source: true,
-        audit: true,
-        case: true,
-        debug: true,
-        patch: true,
-        progress: true,
-        feedback: true
-      },
-      time: new Date().toISOString()
-    });
+    // Readiness touch only; the result is deliberately not included in the
+    // public response and a failure must not break liveness.
+    await getVectorStoreStats();
   } catch (error) {
-    console.error("Health check error:", error);
-    return sendError(res, 500, error.message || "Health check failed");
+    console.error("Health readiness touch error:", error.message || error);
   }
+  return res.status(200).json(buildPublicHealth());
 });
 
 /* ================= AUTH ROUTES ================= */

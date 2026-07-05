@@ -3921,3 +3921,60 @@ PATCH-08S-FOLLOWUP-INDEX-SECRET-QUERY-REMOVAL-1 OR
 PHASE-09A-PROFESSIONAL-WORKFLOW-COPILOT-DESIGN-1.
 Keep production unchanged; do not claim production readiness.
 ```
+
+Phase 8S follow-up BACKEND routes + health disclosure MINIMIZATION — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-05):
+
+```text
+PATCH-08S-FOLLOWUP-BACKEND-ROUTES-HEALTH-MINIMIZATION-1 is complete.
+Decision: BACKEND ROUTES HEALTH MINIMIZATION FOLLOWUP PASS WITH STRICT RECOMMENDATIONS.
+Type: backend exposed-surface minimization (runtime) / helpers / fixture / test / report.
+Base commit: 99326e9 PATCH-08S-FOLLOWUP-BACKEND-SECURITY-HEADERS-RATE-LIMITS-STAGING-SMOKE-1.
+
+public /health minimized: now LIVENESS ONLY -> {"status":"ok","service":"tina-backend"} via
+security/public-health.js buildPublicHealth(). No commitSha/version/environment/model/config-flags/
+vector-store counts/adaptiveStack/routeModes/secret-presence disclosure; unauthenticated; rate-limit exempt;
+always 200 (Render-compatible). /health keeps a RESILIENT readiness DB touch (getVectorStoreStats) whose result
+is not disclosed and whose failure never breaks liveness -- this preserves the Phase 8S route-inventory
+"health performs a DB read" fact so the SIX interlocked Phase 8S fixtures (inventory/policy/scaffold/risk/closure)
+stay consistent; only DISCLOSURE was removed. Detailed/deep health is INTENTIONALLY NOT re-exposed publicly and
+NO new route (e.g. /health/details) was added (would have caused route-inventory drift); a dedicated authenticated
+diagnostic-health endpoint is DEFERRED to a follow-up patch.
+
+public /routes minimized: now returns 404 {"error":"not_found"} via security/route-disclosure.js
+buildRouteNotFound() (404 chosen to reduce enumeration). No route inventory, method list, or internal
+module filenames. Root / trimmed to {success,name,message} (usefulRoutes enumeration removed). Actual
+route registration unchanged; /ask and all mode routes behave exactly as before.
+
+Previous backend headers/rate limits PRESERVED: createSecurityHeadersMiddleware and createRateLimitMiddleware
+still wired; app.disable("x-powered-by") intact; public /health still rate-limit exempt; OPTIONS bypass intact;
+/ask unauthenticated still 401. security/rate-limit.js and security/security-headers.js NOT modified.
+
+No env changes; no deployment; no DB/schema/RLS change; no package/lock change; no auth-model change;
+no ask/pipeline/classifier/retrieval/source-engine change; no memory change; no TINA_ENABLE_MEMORY_* introduced;
+INDEX_SECRET behavior unchanged. Runtime files changed: server.js, security/public-health.js (new),
+security/route-disclosure.js (new).
+
+Validation:
+node tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs - PASS / 19 / 0 / 77.
+node tests/patch-08s-followup-backend-security-headers-rate-limits-staging-smoke-1.test.mjs - PASS / 18 / 0 / 67.
+node tests/patch-08s-followup-backend-security-headers-rate-limits-1.test.mjs - PASS / 23 / 0 / 1055.
+node tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs - PASS / 17 / 0 / 127.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0 / 203.
+npm run guard:files - PASS. npm test - GATE PASSED / 141 suites / 0 failed (interlocked Phase 8S route-inventory
+fixtures kept consistent by preserving the /health DB-read fact; no inventory/consumer fixtures changed).
+
+Phase 8 closed; Phase 8S closed and NOT reopened; 08X remains CLOSED; Phase 9 not started; Phase 10/11 deferred;
+memory inactive.
+
+Limitations: NOT deployed; live staging smoke required to confirm public /health and /routes; deployment-freshness
+checks that previously used public /health commitSha are no longer possible publicly (a future authenticated
+diagnostic-health endpoint is DEFERRED); full decoupling of liveness from the DB deferred. Remaining Phase 8S items
+still open: INDEX_SECRET query-string removal, tenant isolation, full logging redaction, third-party/Langfuse egress
+controls, Phase 9 request-size policy.
+
+Next recommended task (user chooses priority):
+PATCH-08S-FOLLOWUP-BACKEND-ROUTES-HEALTH-MINIMIZATION-STAGING-SMOKE-1 OR
+PATCH-08S-FOLLOWUP-INDEX-SECRET-QUERY-REMOVAL-1 OR
+PHASE-09A-PROFESSIONAL-WORKFLOW-COPILOT-DESIGN-1.
+Keep production unchanged; do not claim production readiness.
+```

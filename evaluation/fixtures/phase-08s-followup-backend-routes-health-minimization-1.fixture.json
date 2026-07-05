@@ -1,0 +1,167 @@
+{
+  "patch": {
+    "id": "PATCH-08S-FOLLOWUP-BACKEND-ROUTES-HEALTH-MINIMIZATION-1",
+    "phase": "Phase 8S follow-up (backend exposed-surface minimization)",
+    "taskType": "routes_and_health_disclosure_minimization",
+    "title": "Backend Routes and Health Disclosure Minimization"
+  },
+  "decision": "BACKEND ROUTES HEALTH MINIMIZATION FOLLOWUP PASS WITH STRICT RECOMMENDATIONS",
+  "baseCommit": "99326e9 PATCH-08S-FOLLOWUP-BACKEND-SECURITY-HEADERS-RATE-LIMITS-STAGING-SMOKE-1 add staging smoke evidence",
+  "minimizationVersion": "1.0.0",
+  "runtimePatch": true,
+  "phaseStatus": {
+    "phase8Closed": true,
+    "phase8SClosed": true,
+    "phase8SReopened": false,
+    "phase08XClosed": true,
+    "phase9NotStarted": true,
+    "phase10Deferred": true,
+    "phase11Deferred": true,
+    "memoryInactive": true
+  },
+  "previousHardeningReference": {
+    "backendSecurityHeadersRateLimits": {
+      "patch": "PATCH-08S-FOLLOWUP-BACKEND-SECURITY-HEADERS-RATE-LIMITS-1",
+      "commit": "ee65dc6"
+    },
+    "backendStagingSmoke": {
+      "patch": "PATCH-08S-FOLLOWUP-BACKEND-SECURITY-HEADERS-RATE-LIMITS-STAGING-SMOKE-1",
+      "commit": "99326e9"
+    },
+    "frontendSecurityHeaders": {
+      "patch": "PATCH-08S-FOLLOWUP-FRONTEND-SECURITY-HEADERS-1",
+      "repo": "tina-ai",
+      "commit": "23503ba"
+    }
+  },
+  "currentPublicDisclosureIssue": {
+    "healthDisclosed": [
+      "version", "commitSha", "serviceName", "environment", "engine", "openaiModel",
+      "openaiConfigured", "supabaseConfigured", "googleDriveConfigured",
+      "googleDriveFolderIdPreview", "indexSecretEnabled", "vectorStore counts",
+      "full adaptiveStack readiness", "routeModes"
+    ],
+    "routesDisclosed": [
+      "full route inventory (GET/POST list)", "internal adaptive module filenames",
+      "admin/index routes with ?secret=YOUR_SECRET hint", "modeSupport list"
+    ],
+    "rootDisclosed": ["usefulRoutes enumeration", "version", "architecture", "internal flags"]
+  },
+  "publicHealthPolicy": {
+    "livenessOnly": true,
+    "publicResponse": { "status": "ok", "service": "tina-backend" },
+    "noCommitShaInPublicResponse": true,
+    "noModelEmbeddingSourceChunkDbDetails": true,
+    "noSecretOrConfigDisclosure": true,
+    "renderCompatible200": true,
+    "resilientDbTouchNeverFailsLiveness": true,
+    "dbResultNotDisclosed": true,
+    "unauthenticated": true,
+    "rateLimitExempt": true,
+    "helper": "security/public-health.js buildPublicHealth()",
+    "inventoryFactPreserved": "the route-inventory 'health performs a DB read' fact is preserved (resilient readiness touch retained) so the interlocked Phase 8S inventory/policy/scaffold fixtures remain consistent; only DISCLOSURE was removed"
+  },
+  "detailedHealthPolicy": {
+    "status": "detailed health intentionally not exposed publicly; deferred to a follow-up authenticated diagnostic-health patch",
+    "publiclyReExposed": false,
+    "note": "the previous public /health disclosure (commitSha, version, environment, model, config flags, vector-store counts, adaptive stack, routeModes, secret-presence booleans) is removed and NOT re-exposed on any public endpoint",
+    "deploymentFreshnessImpact": "deployment-freshness checks can no longer read commitSha from public /health; a future authenticated diagnostic endpoint is required for that",
+    "diagnosticOnly": true
+  },
+  "routeDisclosurePolicy": {
+    "publicRoutesDisclosesInventory": false,
+    "publicResponseStatus": 404,
+    "publicResponseBody": { "error": "not_found" },
+    "reasonFor404": "reduce endpoint enumeration (do not confirm the endpoint exists)",
+    "detailedRouteListingBehindControl": false,
+    "detailedRouteListingIntentionallyNotExposed": true,
+    "routeRegistrationUnchanged": true,
+    "developerRouteDocumentation": "routes/index.js (source), not a public endpoint",
+    "rootRouteEnumerationRemoved": true,
+    "helper": "security/route-disclosure.js buildRouteNotFound()"
+  },
+  "preservedHardening": {
+    "securityHeadersPreserved": true,
+    "xPoweredBySuppressionPreserved": true,
+    "rateLimitMiddlewarePreserved": true,
+    "healthRemainsExemptOrSafe": true,
+    "optionsBypassPreserved": true,
+    "askAuthBehaviorUnchanged": true,
+    "corsUnchanged": true,
+    "securityHeadersHelperUntouched": true,
+    "rateLimitHelperUntouched": true
+  },
+  "modifiedFiles": [
+    "server.js",
+    "security/public-health.js",
+    "security/route-disclosure.js",
+    "evaluation/fixtures/phase-08s-followup-backend-routes-health-minimization-1.fixture.json",
+    "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs",
+    "PATCH-08S-FOLLOWUP-BACKEND-ROUTES-HEALTH-MINIMIZATION-1_BACKEND_ROUTES_HEALTH_MINIMIZATION_REPORT.md",
+    "knowledge/CURRENT_STATE.md"
+  ],
+  "validationMatrix": {
+    "requiredPassingTests": [
+      "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs",
+      "tests/patch-08s-followup-backend-security-headers-rate-limits-staging-smoke-1.test.mjs",
+      "tests/patch-08s-followup-backend-security-headers-rate-limits-1.test.mjs",
+      "tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs",
+      "tests/patch-08s-final-closure-gate-1.test.mjs"
+    ],
+    "guardFiles": "npm run guard:files",
+    "fullRegression": "npm test"
+  },
+  "testCases": [
+    { "id": "fixture_valid", "expect": "fixture parses and patch id/decision valid" },
+    { "id": "phase_boundaries", "expect": "Phase 8S closed/not reopened; 08X closed; Phase 9 not started" },
+    { "id": "previous_hardening_ref", "expect": "references ee65dc6 and 99326e9" },
+    { "id": "public_health_liveness", "expect": "public health policy marks /health liveness only" },
+    { "id": "public_health_no_disclosure", "expect": "public health prohibits commitSha/model/chunk/source/db details" },
+    { "id": "detailed_health_policy", "expect": "detailed health deferred / not publicly re-exposed" },
+    { "id": "route_disclosure_policy", "expect": "public /routes does not disclose inventory (404)" },
+    { "id": "preserved_hardening", "expect": "headers, x-powered-by, rate limits, OPTIONS bypass, /ask auth preserved" },
+    { "id": "source_public_health_minimized", "expect": "server.js public /health delegates to buildPublicHealth" },
+    { "id": "source_routes_minimized", "expect": "server.js /routes returns buildRouteNotFound (404), no inventory" },
+    { "id": "source_hardening_referenced", "expect": "server.js still references security-headers and rate-limit helpers" },
+    { "id": "no_memory_flags", "expect": "no TINA_ENABLE_MEMORY_* introduced" }
+  ],
+  "limitations": [
+    "not deployed",
+    "live staging smoke required to confirm public /health and /routes behavior",
+    "INDEX_SECRET query-string removal not addressed",
+    "tenant/client/matter isolation not addressed",
+    "full logging redaction not completed",
+    "third-party/Langfuse egress controls not completed",
+    "Phase 9 request-size policy not implemented",
+    "deployment-freshness checks that previously used public /health commitSha are no longer possible publicly; a future authenticated diagnostic-health endpoint is required (deferred)"
+  ],
+  "outOfScopeItems": [
+    "INDEX_SECRET query-string removal",
+    "tenant/client/matter isolation",
+    "full logging redaction",
+    "third-party/Langfuse egress controls",
+    "Phase 9 request-size policy",
+    "production readiness",
+    "frontend headers",
+    "backend rate-limit tuning",
+    "distributed rate limiting"
+  ],
+  "prohibitedClaims": [
+    "Phase 8S reopened",
+    "production fully hardened",
+    "INDEX_SECRET fixed",
+    "tenant isolation implemented",
+    "logging redaction completed",
+    "/health deep readiness implemented",
+    "production deployed",
+    "Phase 9 started"
+  ],
+  "nextTask": {
+    "recommendedNextOptions": [
+      "PATCH-08S-FOLLOWUP-BACKEND-ROUTES-HEALTH-MINIMIZATION-STAGING-SMOKE-1",
+      "PATCH-08S-FOLLOWUP-INDEX-SECRET-QUERY-REMOVAL-1",
+      "PHASE-09A-PROFESSIONAL-WORKFLOW-COPILOT-DESIGN-1"
+    ],
+    "userChoosesPriority": true
+  }
+}
