@@ -1,0 +1,215 @@
+{
+  "patch": {
+    "id": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-DOMAIN-BOUNDARY-WIRING-1",
+    "phase": "Phase 8X (feature-flagged domain-boundary runtime wiring)",
+    "taskType": "feature_flagged_domain_boundary_carryover_wiring",
+    "title": "Feature-Flagged Domain Boundary Carryover Wiring"
+  },
+  "decision": "CHAT CONTEXT CARRYOVER DOMAIN BOUNDARY WIRING PASS WITH STRICT RECOMMENDATIONS",
+  "baseCommit": "16b35fe PATCH-08X-CHAT-CONTEXT-CARRYOVER-PIPELINE-WIRING-1 wire flag-gated standalone query",
+  "wiringVersion": "1.0.0",
+  "runtimePatch": {
+    "domainBoundaryRuntimeWiringAdded": true,
+    "liveBehaviorUnchangedByDefault": true,
+    "noDeployment": true,
+    "noEnvChanges": true,
+    "noPackageChanges": true,
+    "noDbSupabaseWrites": true,
+    "noPersistentMemory": true,
+    "noPhase9": true
+  },
+  "featureFlag": {
+    "name": "TINA_ENABLE_CHAT_CONTEXT_CARRYOVER",
+    "reusedFromPipelineWiring": true,
+    "default": false,
+    "enabledValues": ["1", "true", "on", "yes"],
+    "disabledValues": [null, "", "0", "false", "off", "no"],
+    "productionEnabled": false,
+    "stagingEnabled": false,
+    "envChanged": false
+  },
+  "phaseStatus": {
+    "phase8Closed": true,
+    "phase8SClosed": true,
+    "phase9NotStarted": true,
+    "phase10Deferred": true,
+    "phase11Deferred": true,
+    "phase8MemoryInactive": true
+  },
+  "logEvidence": {
+    "turn1": "Is tobacco subject to VAT?",
+    "turn1ReachedPipelineClassifiedVat": true,
+    "turn2Followup": "How about fresh frozen seafood?",
+    "sessionIdPresentInRouteLog": true,
+    "sessionIdExample": "d989e360-5657-488f-b009-fc54aa3f4032",
+    "domainBoundaryCheck": { "detectedDomain": "UNCLASSIFIED", "isPhilippineTax": false, "decision": "REJECT", "reason": "fail_closed_no_tax_signal", "confidence": 0.6 },
+    "blocked": true,
+    "pipelineReached": false,
+    "retrievalReached": false,
+    "openAIReached": false,
+    "rootCause": "DOMAIN_BOUNDARY_CONTEXT_GAP"
+  },
+  "scaffoldIntegration": {
+    "scaffoldPatchId": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-SCAFFOLD-1",
+    "scaffoldCommit": "ff07be7",
+    "helperFile": "helpers/chat-context-carryover.js"
+  },
+  "pipelineWiringIntegration": {
+    "pipelineWiringPatchId": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-PIPELINE-WIRING-1",
+    "pipelineWiringCommit": "16b35fe",
+    "sharedFlag": "TINA_ENABLE_CHAT_CONTEXT_CARRYOVER",
+    "sharedHelper": "buildShortTermContextCarryover",
+    "flagParserReusedFromPipeline": "isChatContextCarryoverEnabled"
+  },
+  "modifiedRuntimeFiles": ["ask-handler.js"],
+  "unmodifiedRuntimeFiles": ["server.js", "pipeline.js", "routes/index.js", "shared/mode-guards.js", "issue-classification-engine.js", "retrieval-engine.js", "source-availability-engine.js", "context-orchestration-engine.js", "conversation-memory.js", "services/philippine-tax-domain-boundary.js", "helpers/chat-context-carryover.js"],
+  "domainBoundaryProblem": {
+    "location": "ask-handler.js handleAsk — Philippine tax domain boundary (fail-closed) pre-check",
+    "boundaryFunction": "detectPhilippineTaxBoundary(query, hook_code) from services/philippine-tax-domain-boundary.js",
+    "ranBeforeHistoryFetch": true,
+    "priorMessagesFetchedLaterInHandleControlledRagRoute": true,
+    "issue": "The boundary evaluated the raw elliptical current query only, so a tax follow-up with no in-string tax signal was fail-closed rejected before the pipeline (and its own carryover) could run."
+  },
+  "domainBoundaryWiringContract": {
+    "flagParser": "isChatContextCarryoverEnabled() (imported from ./pipeline.js)",
+    "helper": "buildShortTermContextCarryover (imported from ./helpers/chat-context-carryover.js)",
+    "recentTurnsSource": "narrow, bounded, read-only getHistory(supabase, conversationId, 20) — only when flag ON and conversationId present",
+    "boundedForRewrite": { "maxRewriteTurns": 6, "hardMaxTurns": 20 },
+    "effectiveBoundaryQuery": "decision.applied ? decision.standaloneQuery : originalBoundaryQuery",
+    "boundaryStillDecidesAllowReject": true,
+    "noUnconditionalBypass": true,
+    "noPersistence": true
+  },
+  "flagOffBehavior": {
+    "domainBoundaryEvaluatesOriginalCurrentQuery": true,
+    "noHistoryFetchAdded": true,
+    "behaviorUnchanged": true,
+    "noLiveFixClaim": true,
+    "note": "When the flag is OFF (default), isChatContextCarryoverEnabled() is false, so no getHistory fetch runs and the boundary evaluates the original query exactly as before."
+  },
+  "flagOnBehavior": {
+    "boundedRecentTurnsConsidered": true,
+    "standaloneQueryUsedAsBoundaryQueryOnlyIfDecisionApplied": true,
+    "boundaryStillMustPassPhilippineTaxCriteria": true,
+    "eligibleVatFollowUpReachesPipeline": true,
+    "nonTaxResetJurisdictionSwitchNotAllowedByInheritance": true
+  },
+  "boundaryDecisionEvidence": {
+    "note": "Verified statically against detectPhilippineTaxBoundary (not run in the focused test to avoid side-effect imports).",
+    "rawElliptical": { "query": "How about fresh frozen seafood?", "decision": "REJECT", "isPhilippineTax": false },
+    "rewrittenStandalone": { "query": "Is fresh frozen seafood subject to VAT in the Philippines?", "decision": "ALLOW", "isPhilippineTax": true },
+    "nonTaxWeather": { "query": "What is the weather?", "decision": "REJECT" },
+    "seafoodRecipes": { "query": "Tell me about seafood recipes.", "decision": "REJECT" }
+  },
+  "domainBoundaryQueryFlow": [
+    "raw request",
+    "extract currentQuery / conversationId (getConversationId(req))",
+    "if flag ON and conversationId present: bounded read-only getHistory(supabase, conversationId, 20)",
+    "build contextCarryoverDecision (buildShortTermContextCarryover)",
+    "resolve domainBoundaryQuery = applied ? standaloneQuery : originalQuery",
+    "run existing detectPhilippineTaxBoundary on domainBoundaryQuery",
+    "reject or allow per boundary's own PH-tax criteria",
+    "pipeline receives original currentQuery and conversationHistory",
+    "pipeline resolves effectiveQuery for classification/retrieval (PATCH-08X-...-PIPELINE-WIRING-1)"
+  ],
+  "allowRejectRules": {
+    "eligibleTaxFollowUpAllowedViaStandalone": true,
+    "nonTaxRejected": true,
+    "resetNotInherited": true,
+    "jurisdictionSwitchNotInherited": true,
+    "noPriorTaxContextNotAutoAllowed": true,
+    "standaloneMustItselfPassBoundary": true
+  },
+  "safeTraceContract": {
+    "fields": ["domainBoundaryCarryoverEnabled", "domainBoundaryCarryoverApplied", "domainBoundaryStandaloneQueryUsed", "inheritedTaxType", "inheritedJurisdiction", "boundedTurnCount"],
+    "noRawRecentTurns": true,
+    "noPriorMessageContents": true,
+    "noRawConversationHistory": true
+  },
+  "sourceAuthorityDiscipline": {
+    "noCitationsFromHistory": true,
+    "noLegalConclusionFromHelper": true,
+    "noSourceAvailabilityFromHistory": true,
+    "saeSourceCardsUnchanged": true,
+    "retrievalStillFindsAuthorities": true,
+    "domainBoundaryCarryoverOnlyDeterminesReachability": true
+  },
+  "securityPrivacyControls": {
+    "noPersistentMemory": true,
+    "noMemoryFlags": true,
+    "noRawRecentTurnsLogging": true,
+    "noP1P2ThirdPartyEgressAdded": true,
+    "noDbPersistenceExpansion": true,
+    "historyReadOnlyAndBounded": true
+  },
+  "runtimeWiringStatus": {
+    "domainBoundaryWired": true,
+    "pipelineWiredAlready": true,
+    "featureFlagAddedPreviously": true,
+    "featureFlagDefaultEnabled": false,
+    "liveBehaviorChangedByDefault": false,
+    "askHandlerModified": true,
+    "pipelineModified": false
+  },
+  "liveBehaviorStatus": {
+    "liveBehaviorChangedByDefault": false,
+    "liveIssueFixed": false,
+    "note": "Not fixed in production until the flag is enabled in staging and a staging smoke passes."
+  },
+  "stagingStatus": { "stagingFlagEnabled": false, "deployed": false },
+  "productionStatus": { "productionFlagEnabled": false, "deployed": false },
+  "frontendContractStatus": {
+    "routeLogShowsSessionId": true,
+    "backendSupportsConversationIdSessionIdHeader": true,
+    "frontendFullyVerifiedInRepo": false,
+    "ifSessionIdMissingCarryoverNoOps": true,
+    "stagingSmokeStillNeeded": true
+  },
+  "testPlan": {
+    "approach": "Focused test imports the pure helper and statically verifies ask-handler.js domain-boundary wiring; it does NOT import ask-handler.js or services boundary (side-effect imports).",
+    "flagOnEligible": "VAT follow-up => helper applied true => boundary query becomes standalone (VAT + Philippines)",
+    "flagOnIneligible": "non-tax/reset/jurisdiction-switch => helper applied false => boundary query stays original => rejected"
+  },
+  "risks": [
+    "double history fetch when flag ON (boundary + pipeline) — bounded/read-only, acceptable",
+    "frontend not sending sessionId (carryover no-ops)",
+    "boundary allowing a rewritten query that later finds no authority (SAE still says so)",
+    "wrong inheritance if enabled without staging smoke"
+  ],
+  "prohibitedClaims": [
+    "production is fixed",
+    "staging is fixed",
+    "live behavior changed by default",
+    "frontend is fully verified",
+    "the domain boundary is bypassed",
+    "Phase 9 started",
+    "persistent memory is active",
+    "tenant isolation is implemented",
+    "logging redaction is implemented",
+    "source correctness is guaranteed"
+  ],
+  "validationMatrix": {
+    "requiredPassingTests": [
+      "tests/patch-08x-chat-context-carryover-domain-boundary-wiring-1.test.mjs",
+      "tests/patch-08x-chat-context-carryover-pipeline-wiring-1.test.mjs",
+      "tests/patch-08x-chat-context-carryover-scaffold-1.test.mjs",
+      "tests/patch-08x-chat-context-carryover-design-1.test.mjs",
+      "tests/patch-08x-chat-context-carryover-diagnostic-1.test.mjs",
+      "tests/patch-08s-final-closure-gate-1.test.mjs"
+    ],
+    "guardFilesRequiredPass": true,
+    "npmTestRequiredZeroFailed": true
+  },
+  "testCases": [
+    { "id": "flag_default_false", "expect": "TINA_ENABLE_CHAT_CONTEXT_CARRYOVER default false" },
+    { "id": "log_evidence_recorded", "expect": "fail_closed_no_tax_signal, pipelineReached false" },
+    { "id": "flag_off_original_query", "expect": "boundary evaluates original query when OFF" },
+    { "id": "flag_on_standalone_boundary_query", "expect": "eligible VAT follow-up => standalone boundary query" },
+    { "id": "non_tax_protected", "expect": "non-tax/reset/jurisdiction-switch not inherited" },
+    { "id": "carryover_before_boundary_reject", "expect": "carryover resolved before boundary reject" },
+    { "id": "ask_handler_wiring_static", "expect": "ask-handler.js imports helper + flag, resolves domainBoundaryQuery" },
+    { "id": "no_unconditional_bypass", "expect": "boundary still calls detectPhilippineTaxBoundary" },
+    { "id": "no_raw_turns_logged", "expect": "no raw recentTurns/conversationHistory logging" },
+    { "id": "only_ask_handler_modified", "expect": "only ask-handler.js runtime-modified" }
+  ]
+}

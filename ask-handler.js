@@ -57,7 +57,8 @@ import {
 } from "./context-orchestration-engine.js";
 
 // LAW 1: Individual engine imports removed — all engine calls go through pipeline.js only.
-import { runPipeline } from "./pipeline.js";
+import { runPipeline, isChatContextCarryoverEnabled } from "./pipeline.js";
+import { buildShortTermContextCarryover } from "./helpers/chat-context-carryover.js";
 import { applyVerifiedAuthorityGate } from "./answer-renderer.js";
 
 import {
@@ -2934,8 +2935,37 @@ export function createAskHandler({
       // pipeline, retrieval, assessment handler, or OpenAI call.
       // Default is REJECT — ALLOW is granted only when a PH-tax signal is found.
       {
-        const _boundaryQuery =
+        const _originalBoundaryQuery =
           String(compactHookConfig.cleanQuestion || compactHookConfig.originalQuestion || rawQuestion || "").trim();
+
+        // PATCH-08X-CHAT-CONTEXT-CARRYOVER-DOMAIN-BOUNDARY-WIRING-1
+        // Flag-gated (TINA_ENABLE_CHAT_CONTEXT_CARRYOVER) short-term context
+        // carryover for the domain boundary. OFF by default => the boundary
+        // evaluates the original query unchanged. When ON and an eligible bounded
+        // follow-up applies (prior tax context in bounded recent turns), the
+        // boundary evaluates the standaloneQuery so an elliptical tax follow-up
+        // ("How about fresh frozen seafood?") is not fail-closed-rejected before
+        // the pipeline can run. The boundary's own PH-tax criteria still decide
+        // ALLOW/REJECT; non-tax/reset/jurisdiction-switch follow-ups do not inherit
+        // (helper returns applied:false) and remain rejected. Narrow, bounded,
+        // read-only history reuse via the existing getHistory(); no persistence,
+        // no memory flags, no raw recent-turn logging.
+        let _boundaryQuery = _originalBoundaryQuery;
+        let _ccBoundaryDecision = null;
+        if (isChatContextCarryoverEnabled() && conversationId) {
+          const _ccRecentTurns = await getHistory(supabase, conversationId, 20).catch(() => []);
+          _ccBoundaryDecision = buildShortTermContextCarryover({
+            currentQuery: _originalBoundaryQuery,
+            recentTurns: _ccRecentTurns,
+            activeConversationId: conversationId,
+            maxRewriteTurns: 6,
+            jurisdictionDefault: "Philippines"
+          });
+          if (_ccBoundaryDecision.applied) {
+            _boundaryQuery = _ccBoundaryDecision.standaloneQuery;
+          }
+        }
+
         const _boundaryCheck = detectPhilippineTaxBoundary(_boundaryQuery, compactHookConfig.hook_code);
 
         console.log("[DOMAIN BOUNDARY CHECK]", {
@@ -2947,6 +2977,13 @@ export function createAskHandler({
           decision:        _boundaryCheck.decision,
           reason:          _boundaryCheck.reason,
           confidence:      _boundaryCheck.confidence,
+          // Safe carryover trace only — no raw recent turns / no prior message contents.
+          domainBoundaryCarryoverEnabled: _ccBoundaryDecision != null,
+          domainBoundaryCarryoverApplied: _ccBoundaryDecision ? _ccBoundaryDecision.applied : false,
+          domainBoundaryStandaloneQueryUsed: _ccBoundaryDecision ? _ccBoundaryDecision.applied : false,
+          inheritedTaxType: _ccBoundaryDecision ? _ccBoundaryDecision.inheritedTaxType : null,
+          inheritedJurisdiction: _ccBoundaryDecision ? _ccBoundaryDecision.inheritedJurisdiction : null,
+          boundedTurnCount: _ccBoundaryDecision ? _ccBoundaryDecision.boundedTurnCount : 0,
         });
 
         if (_boundaryCheck.decision === "REJECT" || _boundaryCheck.decision === "CLARIFY") {

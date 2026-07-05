@@ -3644,3 +3644,60 @@ Next recommended task:
 PATCH-08X-CHAT-CONTEXT-CARRYOVER-STAGING-SMOKE-1 (only after staging flag is explicitly enabled and frontend
 conversationId/sessionId behavior is confirmed or testable).
 ```
+
+Phase 8X chat-context carryover DOMAIN BOUNDARY WIRING — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-05):
+
+```text
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-DOMAIN-BOUNDARY-WIRING-1 is complete.
+Decision: CHAT CONTEXT CARRYOVER DOMAIN BOUNDARY WIRING PASS WITH STRICT RECOMMENDATIONS.
+Type: feature-flagged runtime wiring (ask-handler.js only) + fixture/test/report. Live behavior UNCHANGED by default.
+Base commit: 16b35fe PATCH-08X-CHAT-CONTEXT-CARRYOVER-PIPELINE-WIRING-1 wire flag-gated standalone query.
+
+Live-log evidence carried forward: after pipeline wiring, the follow-up "How about fresh frozen seafood?" was still
+rejected at the Philippine tax DOMAIN BOUNDARY (fail-closed) BEFORE pipeline — detectedDomain UNCLASSIFIED,
+isPhilippineTax false, decision REJECT, reason fail_closed_no_tax_signal, pipelineReached/retrievalReached/openAIReached
+all false. Route log showed a sessionId. Root cause: DOMAIN_BOUNDARY_CONTEXT_GAP (boundary was current-query-only).
+
+Feature flag reused: TINA_ENABLE_CHAT_CONTEXT_CARRYOVER (default OFF; not enabled in staging/production; no env changed).
+Flag parser isChatContextCarryoverEnabled imported from pipeline.js (single source of truth).
+
+Runtime files changed: ask-handler.js ONLY (pipeline.js unchanged this patch; server/routes/mode-guards/boundary/
+classifier/retrieval engines all unchanged).
+
+Wiring: in ask-handler.js handleAsk, immediately before the fail-closed domain boundary check, when the flag is ON and
+a conversationId is present, a narrow bounded read-only getHistory(supabase, conversationId, 20) supplies recent turns;
+buildShortTermContextCarryover builds a decision; the boundary query becomes decision.standaloneQuery when applied,
+else the original query. detectPhilippineTaxBoundary still runs and still decides ALLOW/REJECT (no unconditional bypass).
+Safe trace fields added to the existing [DOMAIN BOUNDARY CHECK] log: domainBoundaryCarryoverEnabled/Applied/
+StandaloneQueryUsed, inheritedTaxType, inheritedJurisdiction, boundedTurnCount — NO raw recent turns / prior message content.
+
+Verified against the real boundary: raw "How about fresh frozen seafood?" -> REJECT; rewritten "Is fresh frozen seafood
+subject to VAT in the Philippines?" -> ALLOW (isPhilippineTax true). Non-tax ("weather", "recipes") -> REJECT preserved;
+reset ("Forget VAT...") and jurisdiction switch ("In the US...") -> not inherited; no-prior-context -> not auto-allowed.
+
+Flag-OFF behavior (default): isChatContextCarryoverEnabled() false => no getHistory fetch, boundary evaluates the
+original query exactly as before => byte-identical behavior (full regression gate green; only Phase 8 memory diff-guard
+suites required staging, per convention; ask-handler.js not in any guard's forbidden list).
+
+Source authority discipline preserved: no citations/authority from history; SAE/source cards unchanged; retrieval must
+still find authorities. Security/privacy: no persistent memory; no TINA_ENABLE_MEMORY_* flags; no raw recentTurns
+logging; no P1/P2 third-party egress added; history read-only and bounded; no DB/persistence expansion.
+Frontend: sessionId present in route log; frontend repo still not fully verified; staging smoke still needed.
+
+Validation:
+node tests/patch-08x-chat-context-carryover-domain-boundary-wiring-1.test.mjs - PASS / 18 passed / 0 failed / 130 assertions.
+node tests/patch-08x-chat-context-carryover-pipeline-wiring-1.test.mjs - PASS / 19 / 0.
+node tests/patch-08x-chat-context-carryover-scaffold-1.test.mjs - PASS / 15 / 0.
+node tests/patch-08x-chat-context-carryover-design-1.test.mjs - PASS / 27 / 0.
+node tests/patch-08x-chat-context-carryover-diagnostic-1.test.mjs - PASS / 20 / 0.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0.
+npm run guard:files - PASS.
+npm test - GATE PASSED / 0 failed (run with ask-handler.js staged).
+
+No deployment; no env/package/DB/Supabase changes; no memory enablement; no Phase 9 implementation.
+Phase 8 remains closed; Phase 8S remains closed; Phase 9 remains not started; Phase 10 and Phase 11 remain deferred.
+The live issue is NOT considered fixed until the flag is enabled in staging and a staging smoke passes.
+
+Next recommended task:
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-STAGING-SMOKE-1 (only after staging flag is explicitly enabled).
+```
