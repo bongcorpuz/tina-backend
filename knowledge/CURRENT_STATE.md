@@ -3464,3 +3464,65 @@ PATCH-08X-CHAT-CONTEXT-CARRYOVER-DESIGN-1
 Next major phase (after 08X track):
 Phase 9 — Professional Workflow Co-Pilot (or Phase 9A design/scope gate)
 ```
+
+Phase 8X chat-context carryover DESIGN — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-05):
+
+```text
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-DESIGN-1 is complete.
+Decision: CHAT CONTEXT CARRYOVER DESIGN PASS WITH STRICT RECOMMENDATIONS.
+Type: design / fixture / test / report patch (non-runtime).
+Base commit: 38d5b9e PATCH-08X-CHAT-CONTEXT-CARRYOVER-DIAGNOSTIC-1 diagnose chat context carryover.
+Not persistent memory; not a runtime fix; not Phase 9 implementation.
+
+Files created:
+evaluation/fixtures/phase-08x-chat-context-carryover-design-1.fixture.json
+tests/patch-08x-chat-context-carryover-design-1.test.mjs
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-DESIGN-1_CHAT_CONTEXT_CARRYOVER_DESIGN_REPORT.md
+
+Files updated:
+knowledge/CURRENT_STATE.md
+
+Diagnostic root cause carried forward: CLASSIFICATION_CONTEXT_GAP + RETRIEVAL_REWRITE_GAP (contributing
+REQUEST_CONTRACT_GAP + CONVERSATION_PERSISTENCE_DISCONNECTED); PROMPT_CONTEXT_GAP is NOT the root cause
+(the prompt is already context-aware).
+
+Selected design: bounded short-term standaloneQuery/rewrite stage that runs BEFORE issue classification and
+retrieval, fed by bounded recent turns of the active conversation/session only. Short-term context model:
+currentQuery, recentTurns (<=6 for rewrite; never > 20 fetched), activeConversationId, optional bounded client
+recentTurns, shortTermContext, standaloneQuery, contextCarryoverDecision. Pipeline order: raw request → normalize
+currentQuery → fetch/bound recentTurns → build shortTermContext → build standaloneQuery/decision → classification
+(standaloneQuery) → retrieval (standaloneQuery) → SAE/source cards → final prompt → answer. Classifier and retrieval
+consume the standaloneQuery; the prompt (already context-aware) also receives the decision for coherence but still
+answers the current query.
+
+Authority discipline preserved: no citations/legal rules from memory/history alone; source cards remain controlling;
+SAE unchanged except better query context; if no authority found, TINA says so. Security/privacy: bounded + sanitized
+recentTurns, no raw logs, no P1/P2 third-party egress (aligns with PATCH-08S-SECRETS-ENV-LOGGING-SAFETY-GATE-1),
+tenant isolation still required before any persistence (PATCH-08S-TENANT-ISOLATION-GATE-1), no persistence expansion,
+no memory flags. False-positive controls: max age/turn distance, confidence threshold, topic-change and
+jurisdiction-change detectors, explicit reset phrases, ambiguity clarification fallback.
+
+Frontend/backend contract: backend supports conversationId/sessionId/x-conversation-id and prefers server-side
+history; frontend must consistently send an active conversationId/sessionId; frontend is a separate repo and is
+NOT verified here (future verification/integration patch required). Applies centrally to POST /ask + the 11 mode
+routes via askHandler; Phase 9 workflows reuse the same helper.
+
+Validation:
+node tests/patch-08x-chat-context-carryover-design-1.test.mjs - PASS / 27 passed / 0 failed / 168 assertions.
+node tests/patch-08x-chat-context-carryover-diagnostic-1.test.mjs - PASS / 20 / 0.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0.
+npm run guard:files - PASS.
+npm test - GATE PASSED / 0 failed.
+
+No runtime changes; no memory enablement; no Phase 9 implementation.
+Phase 8 remains closed; Phase 8S remains closed (Gemini review accepted); Phase 9 remains not started.
+Phase 10 remains deferred; Phase 11 remains deferred.
+
+Future implementation sequence (recommended): PATCH-08X-CHAT-CONTEXT-CARRYOVER-SCAFFOLD-1 (pure helper only) →
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-PIPELINE-WIRING-1 (feature-flagged wiring, OFF by default) →
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-STAGING-SMOKE-1 (synthetic non-client tax follow-ups) →
+optional PATCH-08X-CHAT-CONTEXT-CARRYOVER-FRONTEND-CONTRACT-1.
+
+Next recommended patch:
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-SCAFFOLD-1
+```

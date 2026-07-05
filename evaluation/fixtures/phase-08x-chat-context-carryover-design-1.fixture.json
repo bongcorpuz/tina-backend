@@ -1,0 +1,298 @@
+{
+  "patch": {
+    "id": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-DESIGN-1",
+    "phase": "Phase 8X (separate non-security design)",
+    "taskType": "short_term_chat_context_carryover_design",
+    "title": "Short-Term Chat / Session Context Carryover Design"
+  },
+  "decision": "CHAT CONTEXT CARRYOVER DESIGN PASS WITH STRICT RECOMMENDATIONS",
+  "baseCommit": "38d5b9e PATCH-08X-CHAT-CONTEXT-CARRYOVER-DIAGNOSTIC-1 diagnose chat context carryover",
+  "designVersion": "1.0.0",
+  "nonRuntimePatch": true,
+  "nonRuntimeDeclaration": {
+    "noRuntimeChange": true,
+    "noDeployment": true,
+    "noPackageChange": true,
+    "noEnvChange": true,
+    "noDbSupabaseChange": true,
+    "noMemoryEnablement": true,
+    "noPhase9Implementation": true,
+    "noPhase10Implementation": true,
+    "noPhase11Implementation": true
+  },
+  "phaseStatus": {
+    "phase8Closed": true,
+    "phase8SClosed": true,
+    "phase08XDiagnosticComplete": true,
+    "phase9NotStarted": true,
+    "phase10Deferred": true,
+    "phase11Deferred": true,
+    "phase8MemoryInactive": true,
+    "geminiPhase8SReviewAccepted": true
+  },
+  "diagnosticIntegration": {
+    "diagnosticPatchId": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-DIAGNOSTIC-1",
+    "diagnosticCommit": "38d5b9e",
+    "diagnosticFixture": "evaluation/fixtures/phase-08x-chat-context-carryover-diagnostic-1.fixture.json",
+    "diagnosticDecision": "CHAT CONTEXT CARRYOVER DIAGNOSTIC PASS WITH FINDINGS",
+    "rootCausePrimary": ["CLASSIFICATION_CONTEXT_GAP", "RETRIEVAL_REWRITE_GAP"],
+    "rootCauseContributing": ["REQUEST_CONTRACT_GAP", "CONVERSATION_PERSISTENCE_DISCONNECTED", "FRONTEND_AND_BACKEND"],
+    "notRootCause": ["PROMPT_CONTEXT_GAP"]
+  },
+  "problemStatement": {
+    "turn1": "Is tobacco subject to VAT?",
+    "turn2Followup": "How about fresh frozen seafood?",
+    "expectedStandaloneQuery": "Is fresh frozen seafood subject to VAT in the Philippines?",
+    "currentLikelyBehavior": "Classifier and retriever see only 'How about fresh frozen seafood?', losing the VAT issue before answer generation.",
+    "summary": "Classification and retrieval are current-query-only; conversationHistory reaches only the final prompt (too late). A standaloneQuery must be built before classification and retrieval."
+  },
+  "designGoals": [
+    "preserve short-term context for follow-up questions",
+    "rewrite elliptical query into a standaloneQuery before issue classification",
+    "use the standaloneQuery before retrieval query construction",
+    "preserve source-authority discipline (no authority from history alone)",
+    "avoid persistent memory entirely",
+    "minimize privacy/security risk (bounded, redacted, no unnecessary egress)",
+    "remain compatible with the existing askHandler and 12 mode routes",
+    "prepare Phase 9 multi-turn professional-workflow UX"
+  ],
+  "nonGoals": [
+    "no persistent memory",
+    "no durable user profile",
+    "no Phase 9 implementation",
+    "no Phase 10 source governance / currentness / court metadata",
+    "no Phase 11 performance / observability work",
+    "no tenant/client/matter persistence expansion",
+    "no runtime change in this patch"
+  ],
+  "shortTermContextModel": {
+    "currentQuery": "The raw current user message, e.g. 'How about fresh frozen seafood?'. Always preserved.",
+    "recentTurns": "A bounded list of recent user/assistant turns from the SAME active conversation/session only. Recommended <= 6 turns for rewrite/classification; never more than the 20 already-fetched history turns. Exact value finalized in implementation.",
+    "activeConversationId": "Optional conversationId/sessionId/x-conversation-id, used to fetch recent turns server-side when available.",
+    "optionalClientRecentTurns": "Optional future API contract: bounded recentTurns/messages sent by the frontend. Must be validated and bounded, and never trusted for authority.",
+    "shortTermContext": "A sanitized/bounded object containing only recent-turn context needed for follow-up resolution (prior issue type, jurisdiction, taxpayer/transaction type). No client-confidential facts beyond what is safely present in recentTurns.",
+    "standaloneQuery": "A rewritten standalone question used before classification and retrieval, e.g. 'Is fresh frozen seafood subject to VAT in the Philippines?'.",
+    "contextCarryoverDecision": {
+      "fields": ["applied", "reason", "inheritedIssueType", "inheritedTaxType", "inheritedJurisdiction", "sourceTurnIndexes", "confidence", "riskFlags", "originalQuery", "standaloneQuery"],
+      "note": "Explains whether rewrite was applied and why; carries no legal authority."
+    }
+  },
+  "inputContractDesign": {
+    "backendSupportsToday": ["conversationId", "sessionId", "x-conversation-id header"],
+    "serverSideHistoryPreferred": true,
+    "frontendMustSendConversationIdOrSessionId": true,
+    "optionalFutureClientRecentTurns": "messages[]/recentTurns[] may be supported ONLY if bounded and validated; requires a separate frontend patch.",
+    "precedenceRule": "If both server-side conversation history and client-supplied recentTurns exist, the server-side trusted conversation history takes precedence (or merges only under strict validation).",
+    "note": "Server-side history via getHistory(conversationId, 20) remains preferred when available."
+  },
+  "standaloneQueryDesign": {
+    "builtBeforeClassificationAndRetrieval": true,
+    "currentQueryPreserved": true,
+    "usedForClassification": true,
+    "usedForRetrieval": true,
+    "finalAnswerAnswersCurrentQuery": true,
+    "doesNotAlterLegalAuthorityRequirements": true,
+    "traceability": "contextCarryoverDecision links standaloneQuery to originalQuery and the sourceTurnIndexes used.",
+    "note": "The standaloneQuery improves query construction only; it never creates authority."
+  },
+  "followUpDetectionDesign": {
+    "positiveExamples": [
+      "How about fresh frozen seafood?",
+      "What about lease payments?",
+      "Same with non-resident alien?",
+      "And PEZA sales?",
+      "Does that apply to rent?",
+      "How about lease payments?",
+      "What if it is PEZA?",
+      "How about individual taxpayer?"
+    ],
+    "negativeExamples": [
+      "New question: what is NOLCO?",
+      "Forget VAT, explain EWT.",
+      "In the US, how is this taxed?",
+      "What is the weather?",
+      "Tell me about seafood recipes."
+    ],
+    "purity": "followUpDetector should be a pure, deterministic helper with no I/O."
+  },
+  "issueInheritanceDesign": {
+    "allowedInheritedAttributes": ["tax_type / issue_type (VAT, EWT, CWT, income tax, percentage tax, NOLCO, MCIT, PEZA zero-rating, withholding on rent)", "jurisdiction (e.g. Philippines)", "taxpayer_type if relevant", "transaction_type if relevant", "authority_family if relevant"],
+    "notInherited": ["citations", "legal conclusions", "amounts", "client facts not repeated within recentTurns and safe", "authority currentness", "final answer"]
+  },
+  "pipelinePlacementDesign": {
+    "placement": "After request parsing and conversationHistory fetch; BEFORE issue classification; BEFORE retrieval query construction; BEFORE source availability / source card decisioning; BEFORE final answer generation.",
+    "order": [
+      "raw request",
+      "normalize currentQuery",
+      "fetch/bound recentTurns",
+      "build shortTermContext",
+      "build standaloneQuery/contextCarryoverDecision",
+      "issue classification using standaloneQuery (+ currentQuery metadata)",
+      "retrieval using standaloneQuery",
+      "SAE/source cards using retrieved authorities",
+      "final prompt using currentQuery, standaloneQuery decision if needed, retrieved sources, and bounded history",
+      "answer"
+    ]
+  },
+  "classificationIntegrationDesign": {
+    "classifierReceivesStandaloneQuery": true,
+    "classifierMayReceiveOriginalQueryAndDecisionMetadata": true,
+    "classifierMustNotUseLongUnboundedHistory": true,
+    "classifierOutputsWhetherContextInherited": true,
+    "classifierRemainsAuthorityNeutral": true
+  },
+  "retrievalIntegrationDesign": {
+    "retrievalUsesStandaloneQuery": true,
+    "retrievalMetadataMayIncludeOriginalQueryForTrace": true,
+    "retrievalMustNotUseRawUnboundedRecentTurns": true,
+    "retrievalMustNotInferAuthorityFromConversationAlone": true
+  },
+  "promptIntegrationDesign": {
+    "promptAlreadyReceivesConversationHistory": true,
+    "promptWasNotRootCause": true,
+    "promptShouldReceiveStandaloneQueryDecisionForCoherence": true,
+    "promptMustAnswerCurrentQueryNotOnlyRewrittenQuery": true,
+    "promptShouldAvoidExposingInternalMachineryUnlessHelpful": true
+  },
+  "sourceAuthorityDiscipline": {
+    "noCitationsFromMemoryOrHistoryAlone": true,
+    "noLegalRuleFromPriorAssistantAnswerUnlessRegroundedInCurrentSources": true,
+    "sourceCardsRemainControlling": true,
+    "saeUnchangedExceptReceivesBetterQueryContext": true,
+    "ifNoAuthorityFoundTinaSaysSo": true,
+    "standaloneQueryChangesRetrievalButSourceCardsMustStayValid": true
+  },
+  "fallbackBehavior": {
+    "noConversationIdOrHistory": "Classify the current query normally; do not fabricate context.",
+    "emptyRecentTurns": "Do not pretend context exists; classify current query normally.",
+    "lowConfidenceRewrite": "Do not apply rewrite; optionally ask a clarifying question.",
+    "conflictingRecentContext": "Do not inherit; prefer clarification.",
+    "jurisdictionSwitch": "Do not inherit prior jurisdiction.",
+    "newTopicDetected": "Do not inherit; treat as a new query.",
+    "ambiguityClarificationExample": "For 'How about fresh frozen seafood?' with no VAT context: ask 'Are you asking whether fresh frozen seafood is subject to VAT in the Philippines?'"
+  },
+  "falsePositiveControls": {
+    "maxAgeOrTurnDistance": true,
+    "confidenceThreshold": true,
+    "topicChangeDetector": true,
+    "jurisdictionChangeDetector": true,
+    "explicitResetPhrases": ["new question", "forget VAT", "different topic", "unrelated question"],
+    "ambiguityClarificationFallback": true,
+    "noCarryoverWhenRisky": true,
+    "doNotInheritWhen": [
+      "prior turn too old",
+      "topic changed clearly",
+      "jurisdiction changed",
+      "user explicitly starts a new issue",
+      "prior assistant answer was uncertain",
+      "confidence is low",
+      "inherited issue would create legal/tax misclassification",
+      "current query is independently complete and different"
+    ]
+  },
+  "securityPrivacyControls": {
+    "boundRecentTurns": true,
+    "sanitizeMinimizeRecentTurns": true,
+    "avoidLoggingRawRecentTurns": true,
+    "avoidThirdPartyEgressOfP1P2": true,
+    "redactBeforeLangfuseWhereApplicable": true,
+    "preserveTenantClientIsolationConstraints": true,
+    "noPersistenceExpansion": true,
+    "noMemoryFlags": true,
+    "recentTurnsAreP1P2SensitiveDependingContent": true
+  },
+  "loggingEgressControls": {
+    "noRawRecentTurnsInLogs": true,
+    "redactBeforeObservability": true,
+    "aligimentWithPhase8SSecretsEnvLoggingGate": "PATCH-08S-SECRETS-ENV-LOGGING-SAFETY-GATE-1 log-redaction and third-party egress policies apply to recentTurns."
+  },
+  "tenantIsolationBoundary": {
+    "tenantIsolationStillRequiredBeforePersistenceExpansion": true,
+    "noClientMatterStorageExpansionInThisTrack": true,
+    "alignmentWithPhase8STenantIsolationGate": "PATCH-08S-TENANT-ISOLATION-GATE-1 remains mandatory before any user/client/matter persistence."
+  },
+  "frontendBackendContract": {
+    "backendSupportsConversationIdSessionIdHeader": true,
+    "frontendMustConsistentlySendActiveConversationIdOrSessionId": true,
+    "backendOnlyRepoCannotVerifyFrontend": true,
+    "frontendNotVerifiedInBackendRepo": true,
+    "futureFrontendVerificationOrIntegrationTestRequired": true,
+    "optionalRecentTurnsContractRequiresSeparateFrontendPatch": true
+  },
+  "modeCompatibility": {
+    "appliesToPostAsk": true,
+    "appliesTo12ModeRoutesViaAskHandler": true,
+    "centralPlacementInAskHandlerOrPipeline": true,
+    "phase9WorkflowsReuseSameStandaloneQueryHelper": true,
+    "note": "POST /ask and the 11 other mode routes (/tax /review /quiz /diagnostic /source /audit /case /debug /patch /progress /feedback) all delegate to askHandler; the standaloneQuery stage should be applied centrally."
+  },
+  "testPlan": {
+    "positiveCases": [
+      { "prior": "Is tobacco subject to VAT?", "followUp": "How about fresh frozen seafood?", "expectInheritedIssue": "VAT", "expectStandalone": "Is fresh frozen seafood subject to VAT in the Philippines?" },
+      { "prior": "Is rental income subject to expanded withholding (EWT)?", "followUp": "What about condominium dues?", "expectInheritedIssue": "EWT", "expectStandalone": "Are condominium dues subject to expanded withholding tax (EWT) in the Philippines?" },
+      { "prior": "How does NOLCO work?", "followUp": "What about a corporation with no income?", "expectInheritedIssue": "NOLCO", "expectStandalone": "How does NOLCO apply to a corporation with no income in the Philippines?" },
+      { "prior": "Are PEZA-registered export sales VAT zero-rated?", "followUp": "And local purchases?", "expectInheritedIssue": "PEZA zero-rating", "expectStandalone": "Are local purchases of a PEZA-registered enterprise VAT zero-rated in the Philippines?" },
+      { "prior": "How is MCIT computed?", "followUp": "How about a newly registered corporation?", "expectInheritedIssue": "MCIT", "expectStandalone": "How does MCIT apply to a newly registered corporation in the Philippines?" },
+      { "prior": "Is rent subject to withholding tax?", "followUp": "How about the security deposit?", "expectInheritedIssue": "withholding on rent", "expectStandalone": "Is a security deposit on a lease subject to withholding tax in the Philippines?" }
+    ],
+    "negativeCases": [
+      { "prior": "Is tobacco subject to VAT?", "followUp": "New question: what is NOLCO?", "expectApplied": false, "reason": "explicit new question" },
+      { "prior": "Is tobacco subject to VAT?", "followUp": "In the US, how is this taxed?", "expectApplied": false, "reason": "jurisdiction switch" },
+      { "prior": "Is tobacco subject to VAT?", "followUp": "Tell me about seafood recipes.", "expectApplied": false, "reason": "unrelated non-tax query" },
+      { "prior": "Is tobacco subject to VAT?", "followUp": "Is fresh frozen seafood subject to VAT in the Philippines?", "expectApplied": false, "reason": "already a complete standalone tax query" },
+      { "prior": "(prior turn is very old / beyond max turn distance)", "followUp": "How about seafood?", "expectApplied": false, "reason": "stale prior context" },
+      { "prior": "Is tobacco subject to VAT? (assistant answered uncertainly)", "followUp": "How about seafood?", "expectApplied": false, "reason": "low-confidence follow-up / uncertain prior answer" }
+    ]
+  },
+  "futurePatchSequence": [
+    { "id": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-SCAFFOLD-1", "description": "Pure helper only (followUpDetector + standaloneQuery builder + contextCarryoverDecision); no route/pipeline behavior change; unit tests + tax follow-up fixture cases.", "order": 1 },
+    { "id": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-PIPELINE-WIRING-1", "description": "Feature-flagged wiring of the standaloneQuery stage before classification/retrieval; bounded recentTurns only; no persistent memory; OFF by default.", "order": 2 },
+    { "id": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-STAGING-SMOKE-1", "description": "Live safe staging smoke with synthetic non-client tax follow-ups (e.g., tobacco VAT -> fresh frozen seafood).", "order": 3 },
+    { "id": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-FRONTEND-CONTRACT-1 (optional)", "description": "Frontend contract verification if/when the frontend repo is available: confirm conversationId/sessionId is sent, or add bounded recentTurns.", "order": 4, "optional": true }
+  ],
+  "risks": [
+    "wrong issue inheritance (inheriting the wrong tax type)",
+    "stale context (inheriting from an old turn)",
+    "jurisdiction contamination (carrying PH context into a non-PH question)",
+    "privacy/logging exposure of P1/P2 recentTurns",
+    "frontend not sending conversationId (context silently empty)",
+    "over-reliance on a prior uncertain assistant answer",
+    "retrieval drift from an incorrect standaloneQuery",
+    "source mismatch (retrieved sources not matching the rewritten intent)",
+    "Phase 9 sensitive-workflow exposure if recentTurns include client/matter facts"
+  ],
+  "prohibitedClaims": [
+    "the runtime issue is fixed",
+    "persistent memory is required",
+    "persistent memory is active",
+    "Phase 8 reopened",
+    "Phase 8S reopened",
+    "Phase 9 started",
+    "frontend behavior is confirmed",
+    "tenant isolation is implemented",
+    "logging redaction is implemented",
+    "production-ready context carryover exists",
+    "authority/retrieval correctness is guaranteed"
+  ],
+  "validationMatrix": {
+    "requiredPassingTests": [
+      "tests/patch-08x-chat-context-carryover-design-1.test.mjs",
+      "tests/patch-08x-chat-context-carryover-diagnostic-1.test.mjs",
+      "tests/patch-08s-final-closure-gate-1.test.mjs"
+    ],
+    "guardFilesRequiredPass": true,
+    "npmTestRequiredZeroFailed": true
+  },
+  "testCases": [
+    { "id": "decision_pass", "expect": "CHAT CONTEXT CARRYOVER DESIGN PASS WITH STRICT RECOMMENDATIONS" },
+    { "id": "diagnostic_integration", "expect": "references 38d5b9e and diagnostic root cause" },
+    { "id": "standalone_before_classification_and_retrieval", "expect": "pipeline order places standaloneQuery before classification and retrieval" },
+    { "id": "prompt_not_root_cause", "expect": "prompt integration states prompt was not the root cause" },
+    { "id": "authority_discipline", "expect": "no citations from memory/history alone" },
+    { "id": "false_positive_controls", "expect": "confidence/topic/jurisdiction/reset controls present" },
+    { "id": "security_controls", "expect": "bounded recentTurns, no raw logs, no P1/P2 egress, no memory flags" },
+    { "id": "frontend_unverified", "expect": "frontend not verified in backend repo" },
+    { "id": "future_sequence", "expect": "scaffold -> pipeline wiring -> staging smoke" },
+    { "id": "not_persistent_memory", "expect": "no persistent memory, no memory flags" }
+  ]
+}
