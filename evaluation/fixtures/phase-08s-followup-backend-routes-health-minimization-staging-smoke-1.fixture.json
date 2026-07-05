@@ -1,0 +1,301 @@
+{
+  "patch": {
+    "id": "PATCH-08S-FOLLOWUP-BACKEND-ROUTES-HEALTH-MINIMIZATION-STAGING-SMOKE-1",
+    "phase": "Phase 8S follow-up (backend exposed-surface minimization staging smoke)",
+    "taskType": "live_staging_smoke_evidence",
+    "title": "Backend Routes and Health Minimization Staging Smoke"
+  },
+  "decision": "BACKEND ROUTES HEALTH MINIMIZATION STAGING SMOKE PASS WITH STRICT RECOMMENDATIONS",
+  "baseCommit": "0b5b336 PATCH-08S-FOLLOWUP-BACKEND-ROUTES-HEALTH-MINIMIZATION-1 minimize health and route disclosure",
+  "smokeVersion": "1.0.0",
+  "nonRuntimePatch": {
+    "noRuntimeFilesChanged": true,
+    "noServerJsChange": true,
+    "noSecurityHelperChange": true,
+    "noEnvFilesChanged": true,
+    "noDeploymentPerformed": true,
+    "noPackageChange": true,
+    "noDbOrSupabaseChange": true,
+    "noMemoryEnablement": true,
+    "noPhase9Implementation": true,
+    "noIndexSecretBehaviorChange": true
+  },
+  "stagingTarget": "https://tina-backend-staging.onrender.com",
+  "deploymentFreshness": "behavioral_match_0b5b336_public_health_minimized",
+  "deploymentFreshnessNote": "public /health no longer exposes commitSha by design (0b5b336). Freshness is confirmed by strong behavioral match: public /health returns only {status,service}; public /routes returns 404 {error:not_found}; root / no longer lists usefulRoutes.",
+  "smokeTimestampUtc": "2026-07-05T23:19:03Z",
+  "phaseStatus": {
+    "phase8Closed": true,
+    "phase8SClosed": true,
+    "phase8SReopened": false,
+    "phase08XClosed": true,
+    "phase9NotStarted": true,
+    "phase10Deferred": true,
+    "phase11Deferred": true,
+    "memoryInactive": true
+  },
+  "prerequisiteStatus": {
+    "routesHealthMinimization": {
+      "patch": "PATCH-08S-FOLLOWUP-BACKEND-ROUTES-HEALTH-MINIMIZATION-1",
+      "commit": "0b5b336"
+    },
+    "backendStagingSmoke": {
+      "patch": "PATCH-08S-FOLLOWUP-BACKEND-SECURITY-HEADERS-RATE-LIMITS-STAGING-SMOKE-1",
+      "commit": "99326e9"
+    },
+    "backendSecurityHeadersRateLimits": {
+      "patch": "PATCH-08S-FOLLOWUP-BACKEND-SECURITY-HEADERS-RATE-LIMITS-1",
+      "commit": "ee65dc6"
+    },
+    "frontendSecurityHeaders": {
+      "patch": "PATCH-08S-FOLLOWUP-FRONTEND-SECURITY-HEADERS-1",
+      "repo": "tina-ai",
+      "commit": "23503ba"
+    }
+  },
+  "probes": [
+    {
+      "probeId": "A_health",
+      "method": "GET",
+      "path": "/health",
+      "statusCode": 200,
+      "responseShape": "{\"status\":\"ok\",\"service\":\"tina-backend\"}",
+      "requiredHeadersPresent": true,
+      "missingHeaders": [],
+      "xPoweredByAbsent": true,
+      "cspPresent": true,
+      "cacheControlPresent": true,
+      "minimizedDisclosure": true,
+      "forbiddenFieldsObserved": [],
+      "routeInventoryObserved": false,
+      "rateLimitHeadersPresent": false,
+      "rateLimitExemptConfirmed": true,
+      "result": "PASS"
+    },
+    {
+      "probeId": "B_routes",
+      "method": "GET",
+      "path": "/routes",
+      "statusCode": 404,
+      "responseShape": "{\"error\":\"not_found\"}",
+      "requiredHeadersPresent": true,
+      "missingHeaders": [],
+      "xPoweredByAbsent": true,
+      "cspPresent": true,
+      "cacheControlPresent": true,
+      "minimizedDisclosure": true,
+      "routeInventoryObserved": false,
+      "moduleFilenamesObserved": false,
+      "secretHintsObserved": false,
+      "rateLimitHeadersPresent": true,
+      "observedRateLimitLimit": 120,
+      "rateLimitTierObserved": "general",
+      "result": "PASS"
+    },
+    {
+      "probeId": "C_root",
+      "method": "GET",
+      "path": "/",
+      "statusCode": 200,
+      "responseShape": "{\"success\":true,\"name\":\"TINA Backend\",\"message\":\"Backend is running.\"}",
+      "usefulRoutesObserved": false,
+      "routeInventoryObserved": false,
+      "secretHintsObserved": false,
+      "result": "PASS"
+    },
+    {
+      "probeId": "D_options_ask",
+      "method": "OPTIONS",
+      "path": "/ask",
+      "statusCode": 204,
+      "optionsBlocked": false,
+      "corsOriginReflected": "https://tina-fawn.vercel.app",
+      "corsCredentials": true,
+      "corsRegressionObserved": false,
+      "result": "PASS"
+    },
+    {
+      "probeId": "E_ask_unauth",
+      "method": "POST",
+      "path": "/ask",
+      "statusCode": 401,
+      "responseShape": "{\"error\":\"Authentication required\"}",
+      "requiredHeadersPresent": true,
+      "missingHeaders": [],
+      "xPoweredByAbsent": true,
+      "cspPresent": true,
+      "cacheControlPresent": true,
+      "authProtected": true,
+      "rateLimitHeadersPresent": true,
+      "observedRateLimitLimit": 20,
+      "observedRateLimitRemaining": 19,
+      "rateLimitTierObserved": "expensive",
+      "bodySnippet": "{\"error\":\"Authentication required\"}",
+      "note": "synthetic non-client question only; no real data sent",
+      "result": "PASS"
+    },
+    {
+      "probeId": "F_unknown_route",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "statusCode": 404,
+      "responseShape": "{\"success\":false,\"error\":\"Route not found\",\"path\":\"/favicon.ico\",\"method\":\"GET\"}",
+      "xPoweredByAbsent": true,
+      "cspPresent": true,
+      "routeInventoryObserved": false,
+      "note": "fallback echoes only the requested path/method (not a route inventory)",
+      "result": "PASS"
+    }
+  ],
+  "healthProbe": {
+    "statusCode": 200,
+    "bodyMinimal": true,
+    "bodyShape": "{\"status\":\"ok\",\"service\":\"tina-backend\"}",
+    "forbiddenFieldsObserved": [],
+    "livenessPreserved": true,
+    "forbiddenHealthFields": [
+      "commitSha", "version", "environment", "model", "embeddings", "vector",
+      "chunk", "source", "drive", "indexSecretEnabled", "adaptiveStack",
+      "routeModes", "config", "database", "error.message", "route inventory"
+    ]
+  },
+  "routesProbe": {
+    "statusCode": 404,
+    "minimalNotFound": true,
+    "routeInventoryObserved": false,
+    "moduleFilenamesObserved": false,
+    "secretHintsObserved": false
+  },
+  "rootProbe": {
+    "statusCode": 200,
+    "usefulRoutesObserved": false,
+    "routeInventoryObserved": false,
+    "secretHintsObserved": false
+  },
+  "optionsProbe": {
+    "statusCode": 204,
+    "blockedBy429": false,
+    "corsRegressionObserved": false
+  },
+  "askUnauthProbe": {
+    "statusCode": 401,
+    "authProtected": true,
+    "securityHeadersPresent": true,
+    "xPoweredByAbsent": true,
+    "rateLimitHeadersPresent": true
+  },
+  "headerFindings": {
+    "Content-Security-Policy": "present",
+    "X-Content-Type-Options": "present",
+    "X-Frame-Options": "present",
+    "Referrer-Policy": "present",
+    "Permissions-Policy": "present",
+    "Cross-Origin-Opener-Policy": "present",
+    "Cross-Origin-Resource-Policy": "present",
+    "Cache-Control": "present",
+    "observedOn": ["GET /health", "GET /routes (404)", "POST /ask (401)", "GET /favicon.ico (404)"]
+  },
+  "disclosureFindings": {
+    "healthForbiddenFieldsObserved": [],
+    "routesInventoryObserved": false,
+    "rootUsefulRoutesObserved": false,
+    "secretHintsObservedAnywhere": false,
+    "errorMessageDisclosedOnHealth": false
+  },
+  "xPoweredByFinding": "absent",
+  "cspFinding": {
+    "present": true,
+    "value": "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'",
+    "apiConservative": true,
+    "containsUnsafe": false
+  },
+  "cacheControlFinding": {
+    "present": true,
+    "value": "no-store",
+    "observedOn": ["GET /health", "GET /routes", "POST /ask (401)"]
+  },
+  "rateLimitFinding": {
+    "askExpensiveHeadersPresent": true,
+    "askObservedLimit": 20,
+    "routesGeneralHeadersPresent": true,
+    "routesObservedLimit": 120,
+    "healthExemptConfirmed": true,
+    "status429Observed": false,
+    "status429NotForcedReason": "avoid load testing"
+  },
+  "corsFinding": {
+    "optionsNot429Blocked": true,
+    "corsRegressionObserved": false,
+    "allowlistedOriginReflected": true
+  },
+  "authProtectionFinding": {
+    "unauthenticatedAskProtected": true,
+    "statusCode": 401,
+    "message": "Authentication required"
+  },
+  "securityPrivacyObservations": [
+    "no JWTs, cookies, or authorization headers were sent, captured, or stored",
+    "no tokens stored",
+    "no real client data / TINs / financial statements used",
+    "only a synthetic non-client question was sent to /ask",
+    "no load testing performed; no admin/index routes probed; INDEX_SECRET not tested",
+    "production was not touched",
+    "only short minimal response bodies were recorded"
+  ],
+  "limitations": [
+    "public /health no longer exposes commitSha, so deployment freshness relied on Render behavioral match rather than a public commitSha",
+    "no diagnostic-health endpoint implemented (deferred)",
+    "INDEX_SECRET query-string removal not addressed",
+    "tenant isolation not addressed",
+    "logging redaction not completed",
+    "third-party/Langfuse egress controls not completed",
+    "Phase 9 request-size policy not implemented",
+    "not production readiness"
+  ],
+  "prohibitedClaims": [
+    "production fully hardened",
+    "production deployed",
+    "INDEX_SECRET fixed",
+    "tenant isolation implemented",
+    "logging redaction completed",
+    "egress controls completed",
+    "diagnostic health implemented",
+    "Phase 9 started"
+  ],
+  "validationMatrix": {
+    "requiredPassingTests": [
+      "tests/patch-08s-followup-backend-routes-health-minimization-staging-smoke-1.test.mjs",
+      "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs",
+      "tests/patch-08s-followup-backend-security-headers-rate-limits-staging-smoke-1.test.mjs",
+      "tests/patch-08s-followup-backend-security-headers-rate-limits-1.test.mjs",
+      "tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs",
+      "tests/patch-08s-final-closure-gate-1.test.mjs"
+    ],
+    "guardFiles": "npm run guard:files",
+    "fullRegression": "npm test"
+  },
+  "testCases": [
+    { "id": "fixture_valid", "expect": "fixture parses and patch id/decision valid" },
+    { "id": "non_runtime", "expect": "non-runtime declaration present" },
+    { "id": "staging_target", "expect": "staging target is the staging onrender URL" },
+    { "id": "deployment_fresh", "expect": "deploymentFreshness confirmed_commit_0b5b336 or behavioral_match for PASS" },
+    { "id": "phase_boundaries", "expect": "Phase 8S closed/not reopened; 08X closed; Phase 9 not started" },
+    { "id": "prerequisites", "expect": "references 0b5b336, 99326e9, ee65dc6" },
+    { "id": "probes_present", "expect": "health, routes, root, OPTIONS /ask, unauth /ask probes present" },
+    { "id": "health_minimal", "expect": "health 200 minimal body; no forbidden fields for PASS" },
+    { "id": "routes_no_inventory", "expect": "routes discloses no inventory for PASS" },
+    { "id": "root_no_useful_routes", "expect": "root discloses no usefulRoutes for PASS" },
+    { "id": "headers_present", "expect": "required headers present on non-OPTIONS API responses" },
+    { "id": "xpoweredby_absent", "expect": "X-Powered-By absent" },
+    { "id": "csp_default_none", "expect": "backend CSP includes default-src 'none'" },
+    { "id": "options_not_429", "expect": "OPTIONS not 429-blocked" },
+    { "id": "auth_protected", "expect": "unauthenticated /ask protected (401)" },
+    { "id": "rate_limit_finding", "expect": "rate-limit finding present (ask expensive headers; health exempt)" },
+    { "id": "limitations", "expect": "limitations include commitSha-not-public and INDEX_SECRET not addressed" },
+    { "id": "prohibited_claims", "expect": "prohibited claims include production fully hardened, INDEX_SECRET fixed, Phase 9 started" }
+  ],
+  "nextTask": {
+    "recommendedNext": "PATCH-08S-FOLLOWUP-INDEX-SECRET-QUERY-REMOVAL-1",
+    "userChoosesPriority": true
+  }
+}

@@ -3978,3 +3978,53 @@ PATCH-08S-FOLLOWUP-INDEX-SECRET-QUERY-REMOVAL-1 OR
 PHASE-09A-PROFESSIONAL-WORKFLOW-COPILOT-DESIGN-1.
 Keep production unchanged; do not claim production readiness.
 ```
+
+Phase 8S follow-up BACKEND routes + health minimization STAGING SMOKE — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-06):
+
+```text
+PATCH-08S-FOLLOWUP-BACKEND-ROUTES-HEALTH-MINIMIZATION-STAGING-SMOKE-1 is complete.
+Decision: BACKEND ROUTES HEALTH MINIMIZATION STAGING SMOKE PASS WITH STRICT RECOMMENDATIONS.
+Type: live staging smoke evidence only / fixture / test / report (NON-RUNTIME; no code, env, or deployment change;
+no INDEX_SECRET behavior change).
+Base commit: 0b5b336 PATCH-08S-FOLLOWUP-BACKEND-ROUTES-HEALTH-MINIMIZATION-1.
+
+Deployment freshness method: behavioral_match_0b5b336_public_health_minimized (public /health no longer exposes
+commitSha by design, so freshness confirmed by behavior: /health minimal, /routes 404, root no usefulRoutes).
+Verified live against https://tina-backend-staging.onrender.com.
+
+Live /health finding: GET /health -> 200, body EXACTLY {"status":"ok","service":"tina-backend"}; no forbidden fields
+(no commitSha/version/environment/model/vector/chunk/source/drive/indexSecretEnabled/adaptiveStack/routeModes/config/
+database/error.message); no X-RateLimit-* (exempt confirmed); all security headers present; X-Powered-By absent.
+Live /routes finding: GET /routes -> 404 {"error":"not_found"}; no inventory/module filenames/secret hints;
+X-RateLimit-Limit 120 (general tier).
+Live root finding: GET / -> 200 {"success":true,"name":"TINA Backend","message":"Backend is running."}; no usefulRoutes,
+no inventory, no secret hints.
+Security headers finding: all 8 present on non-OPTIONS API responses (/health, /routes 404, /ask 401, /favicon.ico 404).
+x-powered-by finding: ABSENT on all observed responses.
+OPTIONS finding: OPTIONS /ask -> 204 (NOT 429); allowlisted origin https://tina-fawn.vercel.app reflected with credentials;
+no CORS regression.
+unauthenticated /ask finding: POST /ask -> 401 {"error":"Authentication required"} (protected).
+rate-limit finding: /ask X-RateLimit-Limit 20 (expensive tier); /routes 120 (general); /health exempt; 429 not forced (safety).
+security/privacy: no JWTs/cookies/authorization sent or stored; no tokens stored; only a synthetic non-client question sent;
+no load testing; no admin/index routes; INDEX_SECRET not tested; production untouched.
+
+No runtime changes; no env changes; no deployment by this patch. INDEX_SECRET NOT addressed (next patch).
+Phase 8 closed; Phase 8S closed and NOT reopened; 08X remains CLOSED; Phase 9 not started; Phase 10/11 deferred;
+memory inactive.
+
+Limitations: public /health no longer exposes commitSha (freshness via Render behavioral match); diagnostic-health endpoint
+DEFERRED; not production readiness. Remaining Phase 8S items still open: INDEX_SECRET query-string removal, tenant isolation,
+full logging redaction, third-party/Langfuse egress controls, Phase 9 request-size policy.
+
+Validation:
+node tests/patch-08s-followup-backend-routes-health-minimization-staging-smoke-1.test.mjs - PASS / 21 / 0 / 78.
+node tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs - PASS / 19 / 0 / 77.
+node tests/patch-08s-followup-backend-security-headers-rate-limits-staging-smoke-1.test.mjs - PASS / 18 / 0 / 67.
+node tests/patch-08s-followup-backend-security-headers-rate-limits-1.test.mjs - PASS / 23 / 0 / 1055.
+node tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs - PASS / 17 / 0 / 127.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0 / 203.
+npm run guard:files - PASS. npm test - GATE PASSED / 0 failed.
+
+Next recommended task: PATCH-08S-FOLLOWUP-INDEX-SECRET-QUERY-REMOVAL-1 (next in approved sequence).
+Keep production unchanged; do not re-expose commitSha on public /health; do not claim production readiness.
+```
