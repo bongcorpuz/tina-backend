@@ -3813,3 +3813,60 @@ PHASE-09A-PROFESSIONAL-WORKFLOW-COPILOT-DESIGN-1 (begin Phase 9 design/scope gat
 PATCH-08S-FOLLOWUP-FRONTEND-SECURITY-HEADERS-1 (pick up a Phase 8S future hardening item first).
 Keep production flag OFF until a separate production readiness/rollout decision.
 ```
+
+Phase 8S follow-up FRONTEND security headers — COMPLETE / PUSHED (2026-07-05):
+
+```text
+PATCH-08S-FOLLOWUP-FRONTEND-SECURITY-HEADERS-1 is complete (repo: tina-ai, NOT backend).
+Decision: FRONTEND SECURITY HEADERS FOLLOWUP PASS WITH STRICT RECOMMENDATIONS.
+Frontend commit: 23503ba (branch main, pushed). Scope: frontend Vercel headers only via vercel.json
+(CSP, X-Frame-Options DENY, X-Content-Type-Options nosniff, Referrer-Policy, Permissions-Policy).
+No backend/env/deploy change. Phase 8S not reopened; Phase 9 not started; memory inactive.
+```
+
+Phase 8S follow-up BACKEND security headers + basic rate limits — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-05):
+
+```text
+PATCH-08S-FOLLOWUP-BACKEND-SECURITY-HEADERS-RATE-LIMITS-1 is complete.
+Decision: BACKEND SECURITY HEADERS RATE LIMITS FOLLOWUP PASS WITH STRICT RECOMMENDATIONS.
+Type: backend runtime hardening (headers + rate limits + x-powered-by suppression) / helpers / fixture / test / report.
+Base commit: ec7f455 PATCH-08X-CHAT-CONTEXT-CARRYOVER-FINAL-GATE-1 close chat context carryover.
+
+Backend security headers added (global middleware, after CORS, before body parser/routes):
+X-Content-Type-Options nosniff; X-Frame-Options DENY; Referrer-Policy strict-origin-when-cross-origin;
+Permissions-Policy camera=(), microphone=(), geolocation=(); Cross-Origin-Opener-Policy same-origin;
+Cross-Origin-Resource-Policy same-site; Cache-Control no-store; backend API-only CSP
+"default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'" (does NOT copy frontend CSP; no unsafe-inline/unsafe-eval).
+
+x-powered-by suppression: app.disable("x-powered-by") in server.js + defensive res.removeHeader per response. Added/verified.
+
+Rate limits added (dependency-free in-memory fixed-window, no express-rate-limit, no Redis):
+general 120/min; expensive (/ask + mode routes) 20/min; admin/index 10/min. 429 body {error:"rate_limited", message, retryAfterSeconds};
+headers Retry-After + X-RateLimit-Limit/Remaining/Reset; key prefers req.user.id else req.ip (IPs never logged).
+OPTIONS preflight and /health are exempt (Render health polling never throttled). Admin routes matched before expensive.
+
+Frontend headers already complete at 23503ba (tina-ai repo).
+
+No env changes; no deployment; no DB/schema/RLS change; no package/lock change; no dependency install; no auth-model change;
+no ask/pipeline/classifier/retrieval/source-engine change; no memory change; no TINA_ENABLE_MEMORY_* introduced.
+Runtime files changed: server.js, security/security-headers.js (new), security/rate-limit.js (new).
+
+Validation:
+node tests/patch-08s-followup-backend-security-headers-rate-limits-1.test.mjs - PASS / 23 passed / 0 failed / 1055 assertions.
+node tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs - PASS / 17 passed / 0 failed / 127 assertions.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 passed / 0 failed / 203 assertions.
+npm run guard:files - PASS. npm test - GATE PASSED / 0 failed.
+
+Phase 8 closed; Phase 8S closed and NOT reopened; 08X remains CLOSED; Phase 9 not started; Phase 10/11 deferred; memory inactive.
+
+Limitations: in-memory limiter is per-instance only (not distributed, no Redis/shared store); production tuning required;
+NOT deployed; post-deploy validation / scanner retest required. Remaining Phase 8S items still open: /routes minimization,
+/health minimization, INDEX_SECRET query-string removal, tenant isolation, full logging redaction, third-party/Langfuse
+egress controls, Phase 9 request-size policy.
+
+Next recommended task (user chooses priority):
+PATCH-08S-FOLLOWUP-BACKEND-ROUTES-HEALTH-MINIMIZATION-1 OR
+PATCH-08S-FOLLOWUP-INDEX-SECRET-QUERY-REMOVAL-1 OR
+PHASE-09A-PROFESSIONAL-WORKFLOW-COPILOT-DESIGN-1.
+Keep production flag OFF; deploy + curl/header smoke on staging as a separate approved step.
+```

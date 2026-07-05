@@ -7,6 +7,8 @@ import cors from "cors";
 import OpenAI from "openai";
 
 import { buildCorsOptionsDelegate } from "./security/cors-policy.js";
+import { createSecurityHeadersMiddleware } from "./security/security-headers.js";
+import { createRateLimitMiddleware } from "./security/rate-limit.js";
 import { createClient } from "@supabase/supabase-js";
 
 import {
@@ -90,6 +92,10 @@ const SERVER_VERSION = "5.0.0";
 
 const app = express();
 
+// PATCH-08S-FOLLOWUP-BACKEND-SECURITY-HEADERS-RATE-LIMITS-1: suppress the
+// Express framework disclosure header before any route or middleware responds.
+app.disable("x-powered-by");
+
 /* ================= CORS ================= */
 
 // PATCH-08S-CORS-STAGING-REMEDIATION-1: fail closed outside local/dev.
@@ -98,6 +104,22 @@ const app = express();
 // explicit CORS_ORIGIN / ALLOWED_ORIGINS allowlist is configured on hosted
 // infrastructure, unknown browser origins receive no credentialed CORS grant.
 app.use(cors(buildCorsOptionsDelegate(process.env)));
+
+/* ================= SECURITY HEADERS ================= */
+
+// PATCH-08S-FOLLOWUP-BACKEND-SECURITY-HEADERS-RATE-LIMITS-1: apply conservative
+// API-only security headers (nosniff, DENY framing, strict referrer, locked-down
+// Permissions-Policy, COOP/CORP, api-only CSP, no-store) to every response.
+// Placed after CORS (so preflight is unaffected) and before body parsing/routes.
+app.use(createSecurityHeadersMiddleware());
+
+/* ================= RATE LIMITING ================= */
+
+// PATCH-08S-FOLLOWUP-BACKEND-SECURITY-HEADERS-RATE-LIMITS-1: in-memory,
+// per-instance, fixed-window limiter. Tiers: general 120/min, expensive
+// (ask/mode) 20/min, admin/index 10/min. OPTIONS preflight and /health are
+// exempt. Not a distributed limiter; production scale should use a shared store.
+app.use(createRateLimitMiddleware());
 
 app.use(express.json({ limit: REQUEST_LIMIT }));
 app.use(express.urlencoded({ extended: true, limit: REQUEST_LIMIT }));

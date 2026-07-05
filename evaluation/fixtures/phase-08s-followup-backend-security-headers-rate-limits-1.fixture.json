@@ -1,0 +1,182 @@
+{
+  "patch": {
+    "id": "PATCH-08S-FOLLOWUP-BACKEND-SECURITY-HEADERS-RATE-LIMITS-1",
+    "phase": "Phase 8S follow-up (backend hardening)",
+    "taskType": "backend_security_headers_and_basic_rate_limits",
+    "title": "Backend Security Headers and Basic Rate Limits"
+  },
+  "decision": "BACKEND SECURITY HEADERS RATE LIMITS FOLLOWUP PASS WITH STRICT RECOMMENDATIONS",
+  "baseCommit": "ec7f455 PATCH-08X-CHAT-CONTEXT-CARRYOVER-FINAL-GATE-1 close chat context carryover",
+  "hardeningVersion": "1.0.0",
+  "runtimePatch": true,
+  "phaseStatus": {
+    "phase8Closed": true,
+    "phase8SClosed": true,
+    "phase8SReopened": false,
+    "phase08XClosed": true,
+    "phase9NotStarted": true,
+    "phase10Deferred": true,
+    "phase11Deferred": true,
+    "memoryInactive": true
+  },
+  "frontendSecurityHeadersReference": {
+    "patch": "PATCH-08S-FOLLOWUP-FRONTEND-SECURITY-HEADERS-1",
+    "repo": "tina-ai",
+    "commit": "23503ba",
+    "status": "complete",
+    "scope": "frontend Vercel headers only, not backend"
+  },
+  "securityHeaders": {
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+    "Cross-Origin-Opener-Policy": "same-origin",
+    "Cross-Origin-Resource-Policy": "same-site",
+    "Content-Security-Policy": "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'",
+    "Cache-Control": "no-store"
+  },
+  "cspPolicy": {
+    "scope": "backend API-only",
+    "value": "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'",
+    "requiredDirectives": [
+      "default-src 'none'",
+      "frame-ancestors 'none'",
+      "base-uri 'none'",
+      "form-action 'none'"
+    ],
+    "notes": [
+      "backend is API/JSON-only; no script/style/img/font/connect sources permitted",
+      "does NOT copy the frontend CSP",
+      "no unsafe-inline and no unsafe-eval in backend CSP"
+    ]
+  },
+  "xPoweredBySuppression": {
+    "method": "app.disable(\"x-powered-by\")",
+    "location": "server.js before CORS/middleware/routes",
+    "defensiveRemoveHeader": "security-headers middleware also removes X-Powered-By per response",
+    "suppressed": true
+  },
+  "rateLimitPolicy": {
+    "implementation": "dependency-free in-memory fixed-window",
+    "distributed": false,
+    "sharedStore": false,
+    "tiers": {
+      "general": { "windowMs": 60000, "max": 120 },
+      "expensive": { "windowMs": 60000, "max": 20 },
+      "admin": { "windowMs": 60000, "max": 10 }
+    },
+    "response429": {
+      "status": 429,
+      "body": {
+        "error": "rate_limited",
+        "message": "Too many requests. Please try again later.",
+        "retryAfterSeconds": "<number>"
+      }
+    },
+    "retryAfterHeader": "Retry-After",
+    "rateLimitHeaders": [
+      "X-RateLimit-Limit",
+      "X-RateLimit-Remaining",
+      "X-RateLimit-Reset"
+    ],
+    "keyingStrategy": "prefer authenticated req.user.id if present; otherwise req.ip; IPs are never logged; no new trust-proxy behavior introduced"
+  },
+  "routeTiering": {
+    "expensiveRoutes": ["/ask", "/tax", "/review", "/quiz", "/diagnostic", "/source", "/audit", "/case", "/debug", "/patch", "/progress", "/feedback"],
+    "adminRoutes": ["/index-drive", "/reindex", "/admin", "/reindex-targeted", "/index-status", "/debug/db-identity", "/list", "/read-drive", "/vector-stats"],
+    "generalRoutes": ["/", "/routes", "/register", "/login", "/conversations", "everything else"],
+    "matchers": ["isExpensiveRoute(path)", "isAdminRoute(path)", "getRateLimitTier(req)"],
+    "adminMatchedBeforeExpensive": true
+  },
+  "exclusions": {
+    "optionsPreflight": "OPTIONS requests bypass the limiter and are never counted or blocked",
+    "health": "/health is exempt from rate limiting so Render health polling is never throttled",
+    "askStrictLimiterNotAppliedToHealth": true,
+    "staticFavicon": "no static/favicon route defined on the API-only backend; nothing to block"
+  },
+  "middlewareOrder": [
+    "app.disable(x-powered-by)",
+    "cors (existing Phase 8S fail-closed delegate, unchanged)",
+    "security headers middleware",
+    "rate limiter",
+    "express.json / express.urlencoded body parser (existing)",
+    "routes"
+  ],
+  "modifiedFiles": [
+    "server.js",
+    "security/security-headers.js",
+    "security/rate-limit.js",
+    "evaluation/fixtures/phase-08s-followup-backend-security-headers-rate-limits-1.fixture.json",
+    "tests/patch-08s-followup-backend-security-headers-rate-limits-1.test.mjs",
+    "PATCH-08S-FOLLOWUP-BACKEND-SECURITY-HEADERS-RATE-LIMITS-1_BACKEND_SECURITY_HEADERS_RATE_LIMITS_REPORT.md",
+    "knowledge/CURRENT_STATE.md"
+  ],
+  "validationMatrix": {
+    "requiredPassingTests": [
+      "tests/patch-08s-followup-backend-security-headers-rate-limits-1.test.mjs",
+      "tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs",
+      "tests/patch-08s-final-closure-gate-1.test.mjs"
+    ],
+    "guardFiles": "npm run guard:files",
+    "fullRegression": "npm test"
+  },
+  "testCases": [
+    { "id": "fixture_valid", "expect": "fixture parses and patch id/decision valid" },
+    { "id": "phase_boundaries", "expect": "Phase 8S closed/not reopened; 08X closed; Phase 9 not started" },
+    { "id": "frontend_reference", "expect": "frontend header reference records commit 23503ba" },
+    { "id": "security_headers_recorded", "expect": "all required security headers recorded" },
+    { "id": "backend_csp", "expect": "backend CSP includes default-src none, frame-ancestors none, base-uri none, form-action none" },
+    { "id": "xpoweredby_disabled_in_source", "expect": "server.js disables x-powered-by" },
+    { "id": "headers_middleware_source", "expect": "security-headers helper sets all required headers" },
+    { "id": "rate_limit_source", "expect": "rate-limit helper emits 429, Retry-After, X-RateLimit-Limit/Remaining/Reset" },
+    { "id": "rate_limit_tiers", "expect": "general, expensive, and admin tiers present" },
+    { "id": "expensive_route_matching", "expect": "/ask matched as expensive" },
+    { "id": "health_options_exclusions", "expect": "/health and OPTIONS documented as exempt" },
+    { "id": "helper_allows_within_limit", "expect": "createRateLimitMiddleware allows within limit" },
+    { "id": "helper_blocks_above_limit", "expect": "createRateLimitMiddleware returns 429 above limit" },
+    { "id": "helper_options_no_quota", "expect": "OPTIONS does not consume strict quota" }
+  ],
+  "limitations": [
+    "in-memory limiter is per-instance only",
+    "not a distributed limiter",
+    "no Redis/shared store",
+    "production tuning required",
+    "post-deploy validation required",
+    "scanner/retest required after deployment",
+    "does not implement tenant isolation",
+    "does not remove INDEX_SECRET query-string",
+    "does not minimize /routes or /health"
+  ],
+  "outOfScopeItems": [
+    "/routes minimization",
+    "/health minimization",
+    "INDEX_SECRET query-string removal",
+    "tenant/client/matter isolation",
+    "full logging redaction",
+    "third-party/Langfuse egress controls",
+    "Phase 9 request-size policy",
+    "Phase 9 implementation",
+    "production launch readiness"
+  ],
+  "prohibitedClaims": [
+    "Phase 8S reopened",
+    "production fully hardened",
+    "distributed rate limiting implemented",
+    "tenant isolation implemented",
+    "logging redaction completed",
+    "INDEX_SECRET fixed",
+    "/routes minimized",
+    "/health minimized",
+    "Phase 9 started",
+    "production deployed"
+  ],
+  "nextTask": {
+    "recommendedNextOptions": [
+      "PATCH-08S-FOLLOWUP-BACKEND-ROUTES-HEALTH-MINIMIZATION-1",
+      "PATCH-08S-FOLLOWUP-INDEX-SECRET-QUERY-REMOVAL-1",
+      "PHASE-09A-PROFESSIONAL-WORKFLOW-COPILOT-DESIGN-1"
+    ],
+    "userChoosesPriority": true
+  }
+}
