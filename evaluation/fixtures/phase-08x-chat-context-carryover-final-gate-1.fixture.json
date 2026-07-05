@@ -1,0 +1,230 @@
+{
+  "patch": {
+    "id": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-FINAL-GATE-1",
+    "phase": "Phase 8X (final closure gate)",
+    "taskType": "final_closure_gate_evidence_consolidation",
+    "title": "Final Closure Gate for Short-Term Follow-Up Tax Context Carryover"
+  },
+  "decision": "CHAT CONTEXT CARRYOVER FINAL GATE PASS WITH STRICT RECOMMENDATIONS",
+  "baseCommit": "d77e811 PATCH-08X-CHAT-CONTEXT-CARRYOVER-PIPELINE-DOMAIN-BOUNDARY-REMEDIATION-1 use effective query for pipeline boundary",
+  "closureVersion": "1.0.0",
+  "nonRuntimePatch": true,
+  "nonRuntimeDeclaration": {
+    "noRuntimeFilesChanged": true,
+    "noEnvFilesChanged": true,
+    "noDeploymentPerformed": true,
+    "noPackageChange": true,
+    "noDbSupabaseChange": true,
+    "noMemoryEnablement": true,
+    "noPhase9Implementation": true
+  },
+  "phaseStatus": {
+    "phase8Closed": true,
+    "phase8SClosed": true,
+    "phase08XDiagnosticComplete": true,
+    "phase08XDesignComplete": true,
+    "phase08XScaffoldComplete": true,
+    "phase08XPipelineWiringComplete": true,
+    "phase08XDomainBoundaryWiringComplete": true,
+    "phase08XPipelineBoundaryRemediationComplete": true,
+    "phase9NotStarted": true,
+    "phase10Deferred": true,
+    "phase11Deferred": true,
+    "phase8MemoryInactive": true
+  },
+  "featureFlag": {
+    "name": "TINA_ENABLE_CHAT_CONTEXT_CARRYOVER",
+    "default": false,
+    "stagingQAMode": true,
+    "productionEnabled": false,
+    "envFileChanged": false,
+    "productionReadinessRequired": true
+  },
+  "evidenceLedger": [
+    { "patchId": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-DIAGNOSTIC-1", "commit": "38d5b9e", "decision": "CHAT CONTEXT CARRYOVER DIAGNOSTIC PASS WITH FINDINGS", "role": "diagnostic" },
+    { "patchId": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-DESIGN-1", "commit": "dae4128", "decision": "CHAT CONTEXT CARRYOVER DESIGN PASS WITH STRICT RECOMMENDATIONS", "role": "design" },
+    { "patchId": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-SCAFFOLD-1", "commit": "ff07be7", "decision": "CHAT CONTEXT CARRYOVER SCAFFOLD PASS WITH STRICT RECOMMENDATIONS", "role": "pure_helper_scaffold" },
+    { "patchId": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-PIPELINE-WIRING-1", "commit": "16b35fe", "decision": "CHAT CONTEXT CARRYOVER PIPELINE WIRING PASS WITH STRICT RECOMMENDATIONS", "role": "pipeline_effective_query_wiring" },
+    { "patchId": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-DOMAIN-BOUNDARY-WIRING-1", "commit": "56b20f3", "decision": "CHAT CONTEXT CARRYOVER DOMAIN BOUNDARY WIRING PASS WITH STRICT RECOMMENDATIONS", "role": "route_domain_boundary_wiring" },
+    { "patchId": "PATCH-08X-CHAT-CONTEXT-CARRYOVER-PIPELINE-DOMAIN-BOUNDARY-REMEDIATION-1", "commit": "d77e811", "decision": "CHAT CONTEXT CARRYOVER PIPELINE DOMAIN BOUNDARY REMEDIATION PASS WITH STRICT RECOMMENDATIONS", "role": "pipeline_domain_boundary_effective_query_remediation" }
+  ],
+  "problemHistory": {
+    "originalSymptom": {
+      "turn1": "Is tobacco subject to VAT?",
+      "turn2Followup": "How about fresh frozen seafood?",
+      "intendedMeaning": "Is fresh frozen seafood subject to VAT in the Philippines?"
+    },
+    "earlierBehavior": [
+      "raw follow-up had weak/no tax keywords",
+      "domain boundary rejected as non-tax (fail_closed_no_tax_signal)",
+      "pipeline did not reach retrieval/generation"
+    ],
+    "discoveredRootCauses": [
+      "CLASSIFICATION_CONTEXT_GAP",
+      "RETRIEVAL_REWRITE_GAP",
+      "DOMAIN_BOUNDARY_CONTEXT_GAP",
+      "PIPELINE_DOMAIN_BOUNDARY_CONTEXT_GAP"
+    ]
+  },
+  "implementedFixes": {
+    "pureHelperCreated": true,
+    "boundedRecentTurns": true,
+    "standaloneQueryGenerated": true,
+    "routeLevelDomainBoundaryUsesEffectiveQuery": true,
+    "pipelineBoundaryUsesEffectiveQuery": true,
+    "classificationUsesEffectiveQuery": true,
+    "retrievalUsesEffectiveQuery": true,
+    "finalAnswerPreservesOriginalQuery": true,
+    "nonTaxControlsRemainFailClosed": true
+  },
+  "finalRuntimeState": {
+    "routeBoundaryUsesCarryover": true,
+    "pipelineBoundaryUsesEffectiveQuery": true,
+    "classificationUsesEffectiveQuery": true,
+    "retrievalUsesEffectiveQuery": true,
+    "finalAnswerPreservesOriginalQuery": true,
+    "sourceAuthorityUnchanged": true,
+    "memoryUsed": false,
+    "persistentMemoryEnabled": false,
+    "phase9Started": false
+  },
+  "stagingObservation": {
+    "userObservedStagingSuccess": true,
+    "userObservationSummary": "TINA can now do follow-up questions, does not entertain non-Philippine-tax subjects, and is working correctly.",
+    "deploymentConfirmedCommit": "d77e811",
+    "deploymentConfirmedVia": "/health commitSha d77e8114... on tina-backend-staging (staging)",
+    "formalLogBackedRerunCommitted": false,
+    "classification": "user_observed_success_not_full_log_artifact"
+  },
+  "limitations": [
+    "formal staging smoke rerun logs were not committed as a separate artifact (both automated smoke attempts were BLOCKED on authenticated /ask access; success is user-observed)",
+    "production flag remains OFF",
+    "production readiness requires a separate decision",
+    "other follow-up patterns not exhaustively tested",
+    "frontend contract not fully audited as a separate frontend patch",
+    "Phase 8S hardening items remain open",
+    "Phase 9 not started"
+  ],
+  "sourceAuthorityDiscipline": {
+    "noCitationsFromHistory": true,
+    "noLegalConclusionFromHelperAlone": true,
+    "noSourceCardsFromHistory": true,
+    "retrievalSourceAvailabilityStillRequired": true,
+    "saeSourceCardsUnchanged": true
+  },
+  "securityPrivacyControls": {
+    "noPersistentMemory": true,
+    "noMemoryFlags": true,
+    "boundedRecentTurnsOnly": true,
+    "noRawRecentTurnLoggingIntended": true,
+    "noDbPersistenceExpansion": true,
+    "noP1P2EgressAdded": true,
+    "noTenantIsolationImplementationClaimed": true
+  },
+  "nonPhilippineTaxBoundary": {
+    "tinaRemainsConstrainedToPhilippineTax": true,
+    "unrelatedNonTaxQuestionsRemainRejected": true,
+    "nonPhilippineTaxRemainsRejectedOrClarifiedOrOutOfScope": true,
+    "carryoverDoesNotOverrideResetOrJurisdictionSwitchControls": true
+  },
+  "memoryBoundary": {
+    "memoryInactive": true,
+    "persistentMemoryEnabled": false,
+    "memoryFlagsMustRemainDisabled": [
+      "TINA_ENABLE_MEMORY_READS",
+      "TINA_ENABLE_MEMORY_WRITES",
+      "TINA_ENABLE_MATTER_MEMORY",
+      "TINA_ENABLE_MEMORY_SUGGESTIONS",
+      "TINA_ENABLE_MEMORY_DEBUG_TRACE"
+    ]
+  },
+  "phaseBoundaries": {
+    "phase8Closed": true,
+    "phase8SClosed": true,
+    "phase08XClosedIfPassOrWarning": true,
+    "phase9NotStarted": true,
+    "phase10Deferred": true,
+    "phase11Deferred": true,
+    "phase7BClarificationBoundaryTuningSeparate": true
+  },
+  "productionReadiness": {
+    "productionReady": false,
+    "productionFlagEnabled": false,
+    "productionRequires": [
+      "final approval",
+      "separate production rollout decision",
+      "production env change only after approval",
+      "monitoring/log review",
+      "rollback plan",
+      "Phase 8S hardening awareness"
+    ]
+  },
+  "closureCriteria": {
+    "diagnosticCompleted": "PASS",
+    "designCompleted": "PASS",
+    "scaffoldCompleted": "PASS",
+    "pipelineWiringCompleted": "PASS",
+    "routeBoundaryWiringCompleted": "PASS",
+    "pipelineBoundaryRemediationCompleted": "PASS",
+    "validationsPassed": "PASS",
+    "userObservedStagingSuccess": "PASS",
+    "memoryInactive": "PASS",
+    "sourceAuthorityPreserved": "PASS",
+    "phase9NotStarted": "PASS",
+    "productionNotEnabled": "PASS"
+  },
+  "strictRecommendations": [
+    "Close 08X with strict recommendations.",
+    "Keep the production flag OFF until a separate rollout approval.",
+    "Keep the staging flag ON only for QA unless otherwise decided.",
+    "Do not start Phase 9 runtime until this final gate is committed.",
+    "Do not enable persistent memory.",
+    "Keep source authority discipline unchanged.",
+    "Continue tracking Phase 8S hardening items.",
+    "Add a frontend contract audit later if needed.",
+    "Before production, prepare a rollback and monitoring plan.",
+    "Proceed next to Phase 9A design only after user approval."
+  ],
+  "prohibitedClaims": [
+    "production is fixed",
+    "production is enabled",
+    "all follow-up cases are guaranteed",
+    "persistent memory is active",
+    "tenant isolation is implemented",
+    "Phase 9 started",
+    "Phase 10 started",
+    "Phase 11 started",
+    "source correctness is guaranteed",
+    "full production security hardening is completed"
+  ],
+  "validationMatrix": {
+    "requiredPassingTests": [
+      "tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs",
+      "tests/patch-08x-chat-context-carryover-pipeline-domain-boundary-remediation-1.test.mjs",
+      "tests/patch-08x-chat-context-carryover-domain-boundary-wiring-1.test.mjs",
+      "tests/patch-08x-chat-context-carryover-pipeline-wiring-1.test.mjs",
+      "tests/patch-08x-chat-context-carryover-scaffold-1.test.mjs",
+      "tests/patch-08x-chat-context-carryover-design-1.test.mjs",
+      "tests/patch-08x-chat-context-carryover-diagnostic-1.test.mjs",
+      "tests/patch-08s-final-closure-gate-1.test.mjs"
+    ],
+    "guardFilesRequiredPass": true,
+    "npmTestRequiredZeroFailed": true
+  },
+  "testCases": [
+    { "id": "decision_pass", "expect": "CHAT CONTEXT CARRYOVER FINAL GATE PASS WITH STRICT RECOMMENDATIONS" },
+    { "id": "evidence_ledger_complete", "expect": "all 6 08X commits present" },
+    { "id": "root_causes_recorded", "expect": "all four root causes" },
+    { "id": "final_runtime_state", "expect": "route/pipeline boundary + classification + retrieval use effectiveQuery; original preserved" },
+    { "id": "user_observed_not_log_encoded", "expect": "userObservedStagingSuccess true; formalLogBackedRerunCommitted false" },
+    { "id": "memory_inactive", "expect": "memoryUsed false; persistentMemoryEnabled false" },
+    { "id": "production_not_ready", "expect": "productionReady false; productionFlagEnabled false" },
+    { "id": "non_ph_tax_boundary", "expect": "non-tax rejected; controls preserved" },
+    { "id": "phase9_not_started", "expect": "phase9Started false" }
+  ],
+  "nextTask": {
+    "if08XClosed": "08X CLOSED",
+    "recommendedNextOptions": ["PHASE-09A-PROFESSIONAL-WORKFLOW-COPILOT-DESIGN-1", "PATCH-08S-FOLLOWUP-FRONTEND-SECURITY-HEADERS-1"],
+    "userChoosesPriority": true
+  }
+}

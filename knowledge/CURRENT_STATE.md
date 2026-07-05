@@ -3756,3 +3756,60 @@ the smoke reruns.
 Next recommended task:
 PATCH-08X-CHAT-CONTEXT-CARRYOVER-STAGING-SMOKE-1-RERUN (after staging redeploy of this commit).
 ```
+
+Phase 8X chat-context carryover FINAL GATE — COMPLETE / PASS WITH STRICT RECOMMENDATIONS / 08X CLOSED (2026-07-05):
+
+```text
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-FINAL-GATE-1 is complete.
+Decision: CHAT CONTEXT CARRYOVER FINAL GATE PASS WITH STRICT RECOMMENDATIONS.
+08X STATUS: CLOSED (short-term follow-up tax context carryover track).
+Type: evidence-consolidation closure gate / fixture / test / report (non-runtime).
+Base commit: d77e811 PATCH-08X-CHAT-CONTEXT-CARRYOVER-PIPELINE-DOMAIN-BOUNDARY-REMEDIATION-1.
+
+Files created:
+evaluation/fixtures/phase-08x-chat-context-carryover-final-gate-1.fixture.json
+tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs
+PATCH-08X-CHAT-CONTEXT-CARRYOVER-FINAL-GATE-1_CHAT_CONTEXT_CARRYOVER_FINAL_GATE_REPORT.md
+
+Files updated:
+knowledge/CURRENT_STATE.md
+
+Evidence ledger (all committed, all tests passing): 38d5b9e diagnostic; dae4128 design; ff07be7 scaffold;
+16b35fe pipeline wiring; 56b20f3 domain-boundary wiring; d77e811 pipeline domain-boundary remediation.
+
+Root causes fixed across the track: CLASSIFICATION_CONTEXT_GAP, RETRIEVAL_REWRITE_GAP,
+DOMAIN_BOUNDARY_CONTEXT_GAP, PIPELINE_DOMAIN_BOUNDARY_CONTEXT_GAP.
+
+Final runtime state (flag TINA_ENABLE_CHAT_CONTEXT_CARRYOVER, default OFF): route domain boundary,
+pipeline defense-in-depth boundary, issue classification, and retrieval all evaluate the same effectiveQuery
+when carryover applies; final answer preserves the original query; source authority unchanged; memory not used;
+persistent memory not enabled; Phase 9 not started.
+
+User-observed staging success: TINA can now do follow-up questions, does not entertain non-Philippine-tax subjects,
+and is working correctly. Staging deployment of d77e811 confirmed via /health commitSha. FORMAL LOG-BACKED STAGING
+SMOKE RERUN ARTIFACT WAS NOT SEPARATELY COMMITTED (both automated smoke attempts were BLOCKED on authenticated /ask;
+success is user-observed, not log-encoded). This is the one accepted closure limitation.
+
+Source authority discipline preserved (no citations/source cards/source availability from history; retrieval still
+required; SAE/source cards unchanged). Non-Philippine-tax boundary preserved (unrelated/non-tax rejected; reset and
+jurisdiction-switch controls not overridden by carryover). Security/privacy: no persistent memory; no
+TINA_ENABLE_MEMORY_* flags; bounded recent turns only; no raw recentTurns logging; no DB/persistence expansion;
+no P1/P2 egress added.
+
+Production readiness: productionReady false; production flag OFF; production requires separate approval, rollout
+decision, monitoring, rollback plan, and Phase 8S hardening awareness.
+
+Validation:
+node tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs - PASS / 17 passed / 0 failed / 127 assertions.
+All prior 08X tests + patch-08s-final-closure-gate-1 - PASS.
+npm run guard:files - PASS.
+npm test - GATE PASSED / 0 failed.
+
+No runtime changes; no env files changed; no deployment; no memory enablement; no Phase 9 implementation.
+Phase 8 closed; Phase 8S closed; 08X CLOSED; Phase 9 not started; Phase 10 deferred; Phase 11 deferred; memory inactive.
+
+Next recommended task (user chooses priority):
+PHASE-09A-PROFESSIONAL-WORKFLOW-COPILOT-DESIGN-1 (begin Phase 9 design/scope gate) OR
+PATCH-08S-FOLLOWUP-FRONTEND-SECURITY-HEADERS-1 (pick up a Phase 8S future hardening item first).
+Keep production flag OFF until a separate production readiness/rollout decision.
+```
