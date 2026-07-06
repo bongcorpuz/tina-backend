@@ -4871,3 +4871,115 @@ tax_memo only; do not wire BIR/protest or audit-defense modes first; do not enab
 add new routes; do not implement Phase 10/11 inside any runtime-wiring patch; require the Phase 9G governance
 gate to pass before any workflow output is ever returned to a user.
 ```
+
+Phase 9I Requirements Request Letter Schema SCAFFOLD (optional completeness) — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-06):
+
+```text
+PHASE-09I-REQUIREMENTS-REQUEST-LETTER-SCHEMA-SCAFFOLD-1 is complete.
+Decision: PHASE 09I REQUIREMENTS REQUEST LETTER SCHEMA SCAFFOLD PASS WITH STRICT RECOMMENDATIONS.
+Type: PURE SCHEMA SCAFFOLD, optional six-mode completeness task (no runtime wiring, no route/server/pipeline/
+ask-handler changes, no package/env/DB/frontend changes, no deployment, no memory activation, no client/matter
+persistence, no generated work-product persistence, no external search, no n8n/Firecrawl/Crawlee, no live
+requirements request letter generation).
+Base commit: 6418f82 PHASE-09H-CONTROLLED-RUNTIME-WIRING-DESIGN-OR-SCAFFOLD-1 add runtime wiring policy.
+All eight existing Phase 9 workflow files (workflow-mode-registry.js, tax-memo-schema.js,
+audit-defense-matrix-schema.js, bir-reply-draft-schema.js, client-advisory-schema.js,
+compliance-checklist-schema.js, workflow-output-governance-gate.js, workflow-runtime-wiring-policy.js) were NOT
+modified by this patch.
+
+Requirements-request-letter schema file created: workflow/requirements-request-letter-schema.js. Pure,
+dependency-free, deterministic module: zero imports, no network/Supabase/OpenAI/Google Drive/n8n/Firecrawl/
+Crawlee dependency, no filesystem access, no process.env dependency, no Date.now/randomness, no side effects -
+verified by static source-scan in the accompanying test. Not imported by ask-handler.js, pipeline.js, server.js,
+routes, or frontend.
+
+Schema identity: mode=requirements_request_letter, schemaKey=requirementsRequestLetterOutput, phase=09,
+status=scaffolded, runtimeWiring=false, featureFlagDefault=off, humanReviewRequired=true,
+sourceCardsRequired=true, missingFactsRequired=true, assumptionsRequired=true, finalFiling=false,
+automaticSubmission=false, liveGeneration=false, persistentStorage=false.
+
+Required inputs: requestContext, recipientType, purpose, facts, requestedDocumentsOrInformation, intendedUse
+(plus 16 recommended optional inputs). Required output sections (stable canonical order): subject, salutation,
+openingContext, purposeOfRequest, requirementsRequested, deadlineOrTiming, submissionInstructions,
+closingStatement, assumptions, missingFacts, sourceCards, humanReviewNotice. Required top-level fields: mode,
+schemaKey, + the 12 output sections + metadata (generatedBy, workflowMode, schemaVersion, requestContext,
+recipientType, tone, retrievalPolicy, authorityPolicy, sourceCardPolicy, privacyPolicy, finalFiling,
+automaticSubmission, runtimeWiring, featureFlagDefault).
+
+Audience types: client, management, board, owner, accountant, employee, vendor, counterparty, government_office,
+legal, auditor, internal_team, unknown. Request contexts: tax_compliance, tax_audit, bir_assessment, accounting,
+audit, business_registration, business_closure, sec_compliance, lgu_permit, payroll, bookkeeping,
+engagement_requirements, due_diligence, other, unknown. Tone values: professional, formal, concise, firm, polite,
+urgent, neutral, unknown. Each set has alias normalization that defaults unsupported/blank/null input to unknown.
+
+Exports created: PHASE_09I_REQUIREMENTS_REQUEST_LETTER_SCHEMA_VERSION; REQUIREMENTS_REQUEST_LETTER_SCHEMA;
+REQUIREMENTS_REQUEST_LETTER_REQUIRED_TOP_LEVEL_FIELDS; REQUIREMENTS_REQUEST_LETTER_REQUIRED_INPUTS;
+REQUIREMENTS_REQUEST_LETTER_REQUIRED_OUTPUT_SECTIONS; REQUIREMENTS_REQUEST_LETTER_GOVERNANCE_RULES;
+REQUIREMENTS_REQUEST_LETTER_PROHIBITED_BEHAVIORS; REQUIREMENTS_REQUEST_LETTER_AUDIENCE_TYPES;
+REQUIREMENTS_REQUEST_LETTER_REQUEST_CONTEXTS; REQUIREMENTS_REQUEST_LETTER_TONE_VALUES;
+createEmptyRequirementsRequestLetterOutput() (fresh defensive object every call, requestContext/recipientType
+default "unknown", tone defaults "professional"); createEmptyRequirementsRequestItem() (fresh defensive item);
+getRequirementsRequestLetterSchema() (defensive deep clone); getRequirementsRequestLetterRequiredInputs();
+getRequirementsRequestLetterRequiredOutputSections(); getRequirementsRequestLetterGovernanceRules();
+getRequirementsRequestLetterAudienceTypes(); getRequirementsRequestLetterRequestContexts();
+getRequirementsRequestLetterToneValues(); getRequirementsRequestLetterSourceCardRequirement();
+validateRequirementsRequestLetterOutputShape(output) (never throws, validates every requirementsRequested item
+via item validator, warns on empty sections and unknown requestContext/recipientType);
+validateRequirementsRequestItemShape(item) (never throws, warns on empty requirement/purpose/authorityOrBasis/
+sourceCards/missingFacts/assumptions); validateRequirementsRequestLetterSchema() (never throws, returns
+valid/errors/warnings + counts); normalizeRequirementsRequestTopics(topics);
+normalizeRequirementsRequestAudienceType(input); normalizeRequirementsRequestContext(input);
+normalizeRequirementsRequestTone(input). All accessors return defensive deep-cloned copies; mutating a returned
+value never mutates the internal schema (verified by test).
+
+Source cards required; missing facts required; assumptions required; human review required; finalFiling false;
+automaticSubmission false; featureFlagDefault off; recipient type must be labeled; request context must be
+labeled; draft only, not final correspondence. Deadline boundary: a deadline may be included only if the user
+provides a date or reliable basis; timeliness assurance may not be claimed falsely; uncertainty disclosed if
+unknown; no automatic filing, submission, or sending. Existing retrieval only; no live web/search/intake; no
+n8n/Firecrawl/Crawlee. Current Phase 9 GDrive/archive source-card acceptable (officialUrl/canonicalSourceId NOT
+required in Phase 9); future Phase 10 officialUrl primary/archiveUrl secondary/canonicalSourceId internal source
+of truth recorded as a target only and NOT implemented. No Phase 10 implementation; no Phase 11 implementation;
+no memory activation; no production change.
+
+Governance gate note: Phase 9G currently recognized requirements_request_letter as a registry-only, pending-
+schema mode; this patch adds the dedicated schema file but does not modify workflow/workflow-output-governance-
+gate.js; a later, separately approved coverage refresh may update classification if desired.
+Runtime policy note: Phase 9H blocked requirements_request_letter from first runtime wiring because a dedicated
+schema was pending; this patch adds the schema only and does not modify workflow/workflow-runtime-wiring-
+policy.js; a later, separately approved runtime-policy refresh may reconsider that block only after explicit
+approval.
+
+Phase 8 closed; Phase 8S closed; 08X closed; Phase 9A-9H complete; Phase 9I requirements request letter schema
+scaffold complete (optional six-mode completeness task); memory inactive; production unchanged.
+
+Files (pure schema scaffold): workflow/requirements-request-letter-schema.js;
+evaluation/fixtures/phase-09i-requirements-request-letter-schema-scaffold-1.fixture.json;
+tests/phase-09i-requirements-request-letter-schema-scaffold-1.test.mjs;
+PHASE-09I-REQUIREMENTS-REQUEST-LETTER-SCHEMA-SCAFFOLD-1_REPORT.md; knowledge/CURRENT_STATE.md.
+
+Validation:
+node tests/phase-09i-requirements-request-letter-schema-scaffold-1.test.mjs - PASS / 56 / 0 / 333.
+node tests/phase-09h-controlled-runtime-wiring-design-or-scaffold-1.test.mjs - PASS / 69 / 0 / 172.
+node tests/phase-09g-workflow-output-governance-gate-1.test.mjs - PASS / 73 / 0 / 213.
+node tests/phase-09f-client-advisory-checklist-scaffold-1.test.mjs - PASS / 75 / 0 / 404.
+node tests/phase-09e-bir-reply-draft-scaffold-1.test.mjs - PASS / 45 / 0 / 243.
+node tests/phase-09d-audit-defense-matrix-scaffold-1.test.mjs - PASS / 45 / 0 / 203.
+node tests/phase-09c-tax-memo-schema-scaffold-1.test.mjs - PASS / 47 / 0 / 149.
+node tests/phase-09b-workflow-mode-registry-scaffold-1.test.mjs - PASS / 45 / 0 / 363.
+node tests/phase-09a-professional-workflow-copilot-design-1.test.mjs - PASS / 30 / 0 / 75.
+node tests/patch-08s-followup-index-secret-header-auth-staging-smoke-1.test.mjs - PASS / 23 / 0 / 92.
+node tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs - PASS / 17 / 0 / 127.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0 / 203.
+npm run guard:files - PASS. npm test - GATE PASSED / 154 suites / 0 failed.
+
+Next recommended task: PHASE-09R-TAX-MEMO-RUNTIME-WIRING-SCAFFOLD-1 (controlled runtime implementation for
+tax_memo behind the feature flag, still defaulting off).
+Optional later recommendations (not required, separate approval needed): PHASE-09J-WORKFLOW-GOVERNANCE-COVERAGE-
+REFRESH-1 (update Phase 9G schema-coverage classification for requirements_request_letter if desired);
+PHASE-09K-WORKFLOW-RUNTIME-POLICY-COVERAGE-REFRESH-1 (reconsider unblocking requirements_request_letter in the
+Phase 9H runtime-wiring policy only after explicit approval).
+Do not wire this schema into runtime; do not modify the Phase 9G governance gate or Phase 9H runtime policy
+without separate explicit approval; do not activate memory or persistence; do not claim live requirements
+request letter generation is implemented or that this mode's runtime is enabled.
+```
