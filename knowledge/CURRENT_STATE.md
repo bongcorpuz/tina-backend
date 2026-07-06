@@ -4727,9 +4727,10 @@ validateWorkflowGovernanceGate() (self-check: required catalogs present, schema 
 all six modes' schema governance passes) — valid true.
 
 Source cards required; missing facts required; assumptions required; human review required; finalFiling false;
-automaticSubmission false; no prohibited claims (final filing, automatic submission, production ready, memory
-enabled, external search/n8n/Firecrawl/Crawlee implemented, Phase 10/11 implemented, guaranteed tax/BIR/audit/
-compliance outcome, automatic filing implemented — all conservatively detected). Official URL verification claim
+automaticSubmission false; no prohibited claims (no final filing claim, no automatic submission claim, no
+production-ready claim, no memory-enabled claim, no external-search/n8n/Firecrawl/Crawlee-implemented claim, no
+Phase-10/11-implemented claim, no guaranteed-tax/BIR/audit/compliance-outcome claim, no automatic-filing-implemented
+claim — all conservatively detected). Official URL verification claim
 requires officialUrl; currentness fully verified claim requires a non-unknown currentnessStatus. Existing
 retrieval only; no live web/search/intake; no n8n/Firecrawl/Crawlee. No Phase 10 implementation; no Phase 11
 implementation; no memory activation; no production change.
@@ -4761,4 +4762,112 @@ Optional later recommendation (not next task): PHASE-09I-REQUIREMENTS-REQUEST-LE
 Keep this gate unwired until PHASE-09H is explicitly approved; run validateWorkflowGovernanceGate() as a required
 check for any future Phase 9 schema change; do not activate memory; do not persist client/matter data; do not
 implement Phase 10/11 inside Phase 9; do not claim live professional workflow output generation is implemented.
+```
+
+Phase 9H Controlled Runtime Wiring Design/Scaffold — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-06):
+
+```text
+PHASE-09H-CONTROLLED-RUNTIME-WIRING-DESIGN-OR-SCAFFOLD-1 is complete.
+Decision: PHASE 09H CONTROLLED RUNTIME WIRING DESIGN PASS WITH STRICT RECOMMENDATIONS.
+Type: DESIGN/SCAFFOLD ONLY (no live runtime wiring, no route/server/pipeline/ask-handler changes, no
+package/env/DB/frontend changes, no deployment, no memory activation, no client/matter persistence, no generated
+work-product persistence, no external search, no n8n/Firecrawl/Crawlee, no workflow schema imported into any
+runtime file).
+Base commit: b1d20af PHASE-09G-WORKFLOW-OUTPUT-GOVERNANCE-GATE-1 add workflow output governance gate.
+All seven existing Phase 9 workflow files (workflow-mode-registry.js, tax-memo-schema.js,
+audit-defense-matrix-schema.js, bir-reply-draft-schema.js, client-advisory-schema.js,
+compliance-checklist-schema.js, workflow-output-governance-gate.js) were NOT modified by this patch; the new
+policy module only imports normalizeWorkflowModeId from the registry.
+
+Runtime-wiring policy file created: workflow/workflow-runtime-wiring-policy.js. Design document created:
+docs/phase-09/PHASE-09H-CONTROLLED-RUNTIME-WIRING-DESIGN.md. Pure, dependency-free, deterministic policy module:
+imports only workflow-mode-registry.js; no network/Supabase/OpenAI/Google Drive/n8n/Firecrawl/Crawlee dependency,
+no filesystem access, no process.env dependency, no Date.now/randomness, no side effects - verified by static
+source-scan and import-allowlist check in the accompanying test. Not imported by ask-handler.js, pipeline.js,
+server.js, routes, or frontend.
+
+Primary feature flag TINA_ENABLE_PROFESSIONAL_WORKFLOWS defaults off everywhere (defaultState, productionDefault,
+stagingDefault, localDefault all off); requires explicit env enablement, the Phase 9G governance gate, source
+cards, human review notice, missing-facts disclosure, and assumptions disclosure; forbids memory activation,
+generated work-product persistence, client/matter persistence, and third-party egress. Optional per-mode flags
+(TINA_ENABLE_WORKFLOW_TAX_MEMO, TINA_ENABLE_WORKFLOW_BIR_REPLY, TINA_ENABLE_WORKFLOW_AUDIT_DEFENSE_MATRIX,
+TINA_ENABLE_WORKFLOW_CLIENT_ADVISORY, TINA_ENABLE_WORKFLOW_COMPLIANCE_CHECKLIST,
+TINA_ENABLE_WORKFLOW_REQUIREMENTS_REQUEST_LETTER) all default off, design-only.
+
+First runtime candidate: tax_memo (dedicated schema exists from Phase 9C; lower risk than BIR protest or audit
+defense; clean professional format; full Phase 9G governance gate coverage exists). Blocked first-runtime modes:
+bir_reply_protest_draft and audit_defense_matrix (higher-risk controversy/audit-defense content); client_advisory
+and compliance_checklist (should follow only once tax_memo runtime wiring is proven); requirements_request_letter
+(remains registry-only/pending dedicated schema; blocked until a dedicated schema exists or an explicit
+registry-only exception is separately approved).
+
+Required gates before any future runtime wiring: phase_09a_design_pass, phase_09b_registry_pass,
+phase_09c_tax_memo_schema_pass, phase_09g_governance_gate_pass, selected_mode_has_dedicated_schema,
+governance_output_validation_pass, source_cards_present, missing_facts_present, assumptions_present,
+human_review_notice_present, prohibited_claim_detection_pass, no_runtime_persistence, feature_flag_default_off,
+regression_tests_pass, user_explicit_approval_for_runtime_wiring. Prohibited actions: enabling_feature_flag_by_
+default, production_enablement, modifying_ask_handler_in_phase_09h, modifying_pipeline_in_phase_09h,
+modifying_server_in_phase_09h, adding_routes_in_phase_09h, memory_activation, client_matter_persistence,
+generated_work_product_persistence, external_search, authority_intake, n8n_call, firecrawl_call, crawlee_call,
+third_party_egress, automatic_filing, final_filing_claim, bypassing_governance_gate, bypassing_source_cards,
+bypassing_missing_fact_disclosure, bypassing_human_review_notice.
+
+Exports created: PHASE_09H_WORKFLOW_RUNTIME_WIRING_POLICY_VERSION; WORKFLOW_RUNTIME_WIRING_FEATURE_FLAGS;
+WORKFLOW_RUNTIME_WIRING_ALLOWED_MODES; WORKFLOW_RUNTIME_WIRING_BLOCKED_MODES; WORKFLOW_RUNTIME_WIRING_BOUNDARIES;
+WORKFLOW_RUNTIME_WIRING_REQUIRED_GATES; WORKFLOW_RUNTIME_WIRING_PROHIBITED_ACTIONS;
+WORKFLOW_RUNTIME_WIRING_LATER_ALLOWED_FILES; WORKFLOW_RUNTIME_WIRING_LATER_FORBIDDEN_FILES;
+createWorkflowRuntimeWiringPolicyResult() (fresh defensive object every call); getWorkflowRuntimeWiringPolicy()
+(defensive deep clone); getWorkflowRuntimeFeatureFlags()/getWorkflowRuntimeAllowedModes()/
+getWorkflowRuntimeBlockedModes()/getWorkflowRuntimeRequiredGates()/getWorkflowRuntimeBoundaries() (defensive
+copies); validateWorkflowRuntimeWiringRequest(request) (never throws; hard-fails on blocked/disallowed mode,
+enabled feature flag, missing governance gates, or any persistence/memory/egress/external-search/production
+request; requires userExplicitApprovalForRuntimeWiring true); validateWorkflowRuntimeWiringPolicy() (never
+throws, returns valid/errors/warnings plus counts, valid true); normalizeRuntimeWiringModeId(modeId) (delegates
+to registry normalization). All accessors return defensive deep-cloned copies; mutating a returned value never
+mutates the internal policy (verified by test).
+
+Existing retrieval only; no live web/search/intake; no n8n/Firecrawl/Crawlee. No Phase 10 implementation (no
+authority search, no source intake, no officialUrl/archive/canonicalSourceId implementation, no currentness
+engine implementation). No Phase 11 implementation (no BM25, no re-ranking, no query cache, no source-card
+hydration cache, no latency-optimization implementation). No memory activation; no client/matter persistence; no
+generated work-product persistence; no third-party egress; no production change.
+
+Phase 8 closed; Phase 8S closed; 08X closed; Phase 9A-9G complete; Phase 9H controlled runtime-wiring
+design/scaffold complete; memory inactive; production unchanged.
+
+Files (design/scaffold only): workflow/workflow-runtime-wiring-policy.js;
+docs/phase-09/PHASE-09H-CONTROLLED-RUNTIME-WIRING-DESIGN.md;
+evaluation/fixtures/phase-09h-controlled-runtime-wiring-design-or-scaffold-1.fixture.json;
+tests/phase-09h-controlled-runtime-wiring-design-or-scaffold-1.test.mjs;
+PHASE-09H-CONTROLLED-RUNTIME-WIRING-DESIGN-OR-SCAFFOLD-1_REPORT.md; knowledge/CURRENT_STATE.md.
+
+Note: this patch also re-wrapped one pre-existing line inside the prior Phase 9G entry above (the
+"Source cards required; ... no prohibited claims (...)" paragraph), whose earlier manual line-wrap placed one of
+the no-outcome-guarantee claim words on a physical line without a nearby negation term, tripping the unrelated
+pre-existing Phase 7B closure gate's naive per-line phrase scan (PATCH-07B-CLARIFICATION-FINAL-GATE-2). The
+re-wrap changes only line breaks and adds explicit "no" prefixes per item; it does not change the meaning of
+that entry.
+
+Validation:
+node tests/phase-09h-controlled-runtime-wiring-design-or-scaffold-1.test.mjs - PASS / 69 / 0 / 172.
+node tests/phase-09g-workflow-output-governance-gate-1.test.mjs - PASS / 73 / 0 / 213.
+node tests/phase-09f-client-advisory-checklist-scaffold-1.test.mjs - PASS / 75 / 0 / 404.
+node tests/phase-09e-bir-reply-draft-scaffold-1.test.mjs - PASS / 45 / 0 / 243.
+node tests/phase-09d-audit-defense-matrix-scaffold-1.test.mjs - PASS / 45 / 0 / 203.
+node tests/phase-09c-tax-memo-schema-scaffold-1.test.mjs - PASS / 47 / 0 / 149.
+node tests/phase-09b-workflow-mode-registry-scaffold-1.test.mjs - PASS / 45 / 0 / 363.
+node tests/phase-09a-professional-workflow-copilot-design-1.test.mjs - PASS / 30 / 0 / 75.
+node tests/patch-08s-followup-index-secret-header-auth-staging-smoke-1.test.mjs - PASS / 23 / 0 / 92.
+node tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs - PASS / 17 / 0 / 127.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0 / 203.
+npm run guard:files - PASS. npm test - GATE PASSED / 153 suites / 0 failed.
+
+Next recommended task: PHASE-09R-TAX-MEMO-RUNTIME-WIRING-SCAFFOLD-1 (controlled runtime implementation for
+tax_memo behind the feature flag, still defaulting off).
+Optional alternative next task (not required first): PHASE-09I-REQUIREMENTS-REQUEST-LETTER-SCHEMA-SCAFFOLD-1
+(full six-mode schema completeness before any runtime wiring begins).
+Do not wire runtime in Phase 9H; keep the feature flag OFF by default everywhere; start runtime wiring with
+tax_memo only; do not wire BIR/protest or audit-defense modes first; do not enable memory or persistence; do not
+add new routes; do not implement Phase 10/11 inside any runtime-wiring patch; require the Phase 9G governance
+gate to pass before any workflow output is ever returned to a user.
 ```
