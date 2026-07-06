@@ -4505,3 +4505,92 @@ Keep this schema unwired until PHASE-09H is explicitly approved; keep runtimeWir
 off; do not activate memory; do not persist client/matter data; do not implement Phase 10/11 inside Phase 9
 scaffolds; do not claim live audit defense matrix generation is implemented; do not claim guaranteed audit outcome.
 ```
+
+Phase 9E BIR Reply/Protest Draft Schema SCAFFOLD — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-06):
+
+```text
+PHASE-09E-BIR-REPLY-DRAFT-SCAFFOLD-1 is complete.
+Decision: PHASE 09E BIR REPLY DRAFT SCAFFOLD PASS WITH STRICT RECOMMENDATIONS.
+Type: PURE SCHEMA SCAFFOLD (no runtime wiring, no route/server/pipeline/ask-handler changes, no package/env/DB/
+frontend changes, no deployment, no memory activation, no client/matter persistence, no generated work-product
+persistence, no external search, no n8n/Firecrawl/Crawlee, no live BIR reply/protest generation).
+Base commit: 7ec444c PHASE-09D-AUDIT-DEFENSE-MATRIX-SCAFFOLD-1 add audit defense matrix schema.
+workflow/workflow-mode-registry.js, workflow/tax-memo-schema.js, and workflow/audit-defense-matrix-schema.js were
+NOT modified by this patch.
+
+BIR reply/protest draft schema file created: workflow/bir-reply-draft-schema.js. Pure, dependency-free,
+deterministic module: zero imports, no network/Supabase/OpenAI/Google Drive/n8n/Firecrawl/Crawlee dependency, no
+filesystem access, no process.env dependency, no Date.now/randomness, no side effects — verified by static
+source-scan in the accompanying test. Not imported by ask-handler.js, pipeline.js, server.js, routes, or frontend.
+
+Schema identity: mode=bir_reply_protest_draft, schemaKey=birReplyDraftOutput, phase=09, status=scaffolded,
+runtimeWiring=false, featureFlagDefault=off, humanReviewRequired=true, sourceCardsRequired=true,
+missingFactsRequired=true, assumptionsRequired=true, finalFiling=false, automaticSubmission=false,
+liveGeneration=false, persistentStorage=false.
+
+Required inputs: birDocumentType, assessmentStage, facts, issue, taxPeriod, amountInvolved, availableDocuments
+(plus 23 recommended optional inputs). Required output sections (stable canonical order): background,
+assessmentIssue, taxpayerPosition, legalBasis, factualDocumentaryBasis, requestedAction,
+attachmentsEvidenceChecklist, caveats, assumptions, missingFacts, sourceCards, humanReviewNotice. Required
+top-level fields: mode, schemaKey, + the 12 output sections + metadata (generatedBy, workflowMode, schemaVersion,
+birDocumentType, assessmentStage, retrievalPolicy, authorityPolicy, sourceCardPolicy, privacyPolicy, finalFiling,
+automaticSubmission, runtimeWiring, featureFlagDefault).
+
+BIR document types: loa, pan, fan, fdda, nod, subpoena, notice, assessment_notice, letter_notice,
+request_for_documents, other, unknown. Assessment stages: audit, loa, pan_reply, fan_protest, reinvestigation,
+reconsideration, fdda_appeal, nod_response, subpoena_response, document_submission, administrative_response,
+court_litigation, other, unknown.
+
+Exports created: PHASE_09E_BIR_REPLY_DRAFT_SCHEMA_VERSION; BIR_REPLY_DRAFT_SCHEMA;
+BIR_REPLY_DRAFT_REQUIRED_TOP_LEVEL_FIELDS; BIR_REPLY_DRAFT_REQUIRED_INPUTS; BIR_REPLY_DRAFT_REQUIRED_OUTPUT_SECTIONS;
+BIR_REPLY_DRAFT_GOVERNANCE_RULES; BIR_REPLY_DRAFT_PROHIBITED_BEHAVIORS; BIR_REPLY_DRAFT_DOCUMENT_TYPES;
+BIR_REPLY_DRAFT_ASSESSMENT_STAGES; createEmptyBirReplyDraftOutput() (fresh defensive object every call,
+birDocumentType/assessmentStage default "unknown"); getBirReplyDraftSchema() (defensive deep clone);
+getBirReplyDraftRequiredInputs(); getBirReplyDraftRequiredOutputSections(); getBirReplyDraftGovernanceRules();
+getBirReplyDraftDocumentTypes(); getBirReplyDraftAssessmentStages(); getBirReplyDraftSourceCardRequirement();
+validateBirReplyDraftOutputShape(output) (never throws, warns on empty sections and unknown
+birDocumentType/assessmentStage); validateBirReplyDraftSchema() (never throws, returns valid/errors/warnings +
+counts including documentTypeCount/assessmentStageCount); normalizeBirDocumentType(input) (maps LOA/PAN/FAN/FLD/
+FDDA/NOD/subpoena/notice/assessment notice/letter notice/request for documents aliases, unsupported->unknown);
+normalizeBirAssessmentStage(input) (maps audit/LOA/PAN reply/FAN protest/reinvestigation/reconsideration/FDDA
+appeal/NOD response/subpoena response/document submission/administrative response/court/CTA aliases,
+unsupported->unknown); normalizeBirReplyIssues(issues) (handles arrays/strings/blanks/null/unsupported input). All
+accessors return defensive deep-cloned copies; mutating a returned value never mutates the internal schema
+(verified by test).
+
+Source cards required; missing facts required; assumptions required; human review required; finalFiling false;
+automaticSubmission false; featureFlagDefault off; BIR document type must be labeled; assessment stage must be
+labeled; draft only, not final filing; no guaranteed BIR outcome. Deadline boundary: a deadline may be included
+only if the user provides a date or reliable basis; no false timeliness assurance; uncertainty disclosed if
+unknown; no automatic filing/submission. Existing retrieval only; no live web/search/intake; no
+n8n/Firecrawl/Crawlee. Current Phase 9 GDrive/archive source-card acceptable (officialUrl/canonicalSourceId NOT
+required in Phase 9); future Phase 10 officialUrl primary/archiveUrl secondary/canonicalSourceId internal source
+of truth recorded as a target only and NOT implemented. No Phase 10 implementation; no Phase 11 implementation; no
+memory activation; no production change.
+
+Phase 8 closed; Phase 8S closed; 08X closed; Phase 9A complete; Phase 9B complete; Phase 9C complete; Phase 9D
+complete; Phase 9E scaffold complete; memory inactive; production unchanged.
+
+Files (pure schema scaffold): workflow/bir-reply-draft-schema.js;
+evaluation/fixtures/phase-09e-bir-reply-draft-scaffold-1.fixture.json;
+tests/phase-09e-bir-reply-draft-scaffold-1.test.mjs;
+PHASE-09E-BIR-REPLY-DRAFT-SCAFFOLD-1_REPORT.md; knowledge/CURRENT_STATE.md.
+
+Validation:
+node tests/phase-09e-bir-reply-draft-scaffold-1.test.mjs - PASS / 45 / 0 / 243.
+node tests/phase-09d-audit-defense-matrix-scaffold-1.test.mjs - PASS / 45 / 0 / 203.
+node tests/phase-09c-tax-memo-schema-scaffold-1.test.mjs - PASS / 47 / 0 / 149.
+node tests/phase-09b-workflow-mode-registry-scaffold-1.test.mjs - PASS / 45 / 0 / 363.
+node tests/phase-09a-professional-workflow-copilot-design-1.test.mjs - PASS / 30 / 0 / 75.
+node tests/patch-08s-followup-index-secret-header-auth-staging-smoke-1.test.mjs - PASS / 23 / 0 / 92.
+node tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs - PASS / 17 / 0 / 127.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0 / 203.
+npm run guard:files - PASS. npm test - GATE PASSED / 150 suites / 0 failed.
+
+Next recommended task: PHASE-09F-CLIENT-ADVISORY-CHECKLIST-SCAFFOLD-1 (pure schema and fixture for Client Advisory
+and Compliance Checklist outputs).
+Keep this schema unwired until PHASE-09H is explicitly approved; keep runtimeWiring false and featureFlagDefault
+off; do not activate memory; do not persist client/matter data; do not implement Phase 10/11 inside Phase 9
+scaffolds; do not claim live BIR reply/protest generation is implemented; do not claim guaranteed BIR outcome; do
+not claim automatic filing is implemented.
+```
