@@ -4681,3 +4681,84 @@ off; do not activate memory; do not persist client/matter data; do not implement
 scaffolds; do not claim live client advisory or compliance checklist generation is implemented; do not claim
 guaranteed tax/compliance outcome; do not claim automatic filing is implemented.
 ```
+
+Phase 9G Workflow Output Governance Gate — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-06):
+
+```text
+PHASE-09G-WORKFLOW-OUTPUT-GOVERNANCE-GATE-1 is complete.
+Decision: PHASE 09G WORKFLOW OUTPUT GOVERNANCE GATE PASS WITH STRICT RECOMMENDATIONS.
+Type: PURE GOVERNANCE GATE (no runtime wiring, no route/server/pipeline/ask-handler changes, no package/env/DB/
+frontend changes, no deployment, no memory activation, no client/matter persistence, no generated work-product
+persistence, no external search, no n8n/Firecrawl/Crawlee, no live professional output generation).
+Base commit: 228fb5a PHASE-09F-CLIENT-ADVISORY-CHECKLIST-SCAFFOLD-1 add advisory checklist schemas.
+All six existing Phase 9 workflow files (workflow-mode-registry.js, tax-memo-schema.js,
+audit-defense-matrix-schema.js, bir-reply-draft-schema.js, client-advisory-schema.js,
+compliance-checklist-schema.js) were NOT modified by this patch — the gate only imports from them.
+
+Governance gate file created: workflow/workflow-output-governance-gate.js. Pure, deterministic module: imports
+only the six existing pure Phase 9 schema/registry files; no network/Supabase/OpenAI/Google Drive/n8n/Firecrawl/
+Crawlee dependency, no filesystem access, no process.env dependency, no Date.now/randomness, no side effects —
+verified by static source-scan and import-allowlist check in the accompanying test. Not imported by
+ask-handler.js, pipeline.js, server.js, routes, or frontend.
+
+Exports created: PHASE_09G_WORKFLOW_OUTPUT_GOVERNANCE_GATE_VERSION; WORKFLOW_OUTPUT_GOVERNANCE_REQUIRED_FLAGS (12
+flags: runtimeWiringFalse, featureFlagDefaultOff, humanReviewRequired, sourceCardsRequired, missingFactsRequired,
+assumptionsRequired, finalFilingFalse, automaticSubmissionFalse, liveGenerationFalse, persistentStorageFalse,
+memoryInactive, productionUnchanged); WORKFLOW_OUTPUT_GOVERNANCE_REQUIRED_POLICIES (19 policies, verified present
+in all five dedicated schemas' governanceRules); WORKFLOW_OUTPUT_GOVERNANCE_PROHIBITED_CLAIMS (19 claim ids with
+conservative deterministic lowercased-substring phrase definitions); WORKFLOW_OUTPUT_GOVERNANCE_PROHIBITED_BEHAVIORS
+(20 behaviors aggregated across all six modes); WORKFLOW_OUTPUT_GOVERNANCE_SCHEMA_COVERAGE (dedicated: tax_memo,
+bir_reply_protest_draft, audit_defense_matrix, client_advisory, compliance_checklist; registryOnlyPending:
+requirements_request_letter — does NOT claim requirements_request_letter has a dedicated schema);
+createWorkflowGovernanceResult() (fresh defensive object every call); validateWorkflowSchemaGovernance(modeId)
+(dedicated-schema check for the five covered modes; registry-level-only check with dedicated_schema_pending
+warning for requirements_request_letter); validateAllWorkflowSchemaGovernance() (runs across all six registry
+modes, valid true); validateWorkflowOutputGovernance(output, options) (validates mode/schemaKey pairing,
+sourceCards/missingFacts/assumptions/humanReviewNotice presence, metadata governance, source-card governance, and
+prohibited-claim absence; warns — does not fail — on empty arrays/notice; warns dedicated_schema_pending for
+requirements_request_letter); validateWorkflowSourceCards(sourceCards, options) (Phase 9 GDrive/archive-only
+acceptable by default; officialUrl/canonicalSourceId not required by default; fails on official-URL-verification
+or currentness-fully-verified claims made without the corresponding field); validateWorkflowMetadataGovernance(metadata)
+(hard-fails on finalFiling/automaticSubmission/runtimeWiring true or featureFlagDefault != off; warns on missing
+policy arrays); detectProhibitedWorkflowClaims(value, options) (recursive, deterministic, no AI/network, never
+mutates input, matchedText capped to 120 chars); normalizeGovernanceModeId(modeId) (delegates to registry
+normalization); getWorkflowGovernanceRequirements()/getWorkflowGovernanceSchemaCoverage() (defensive copies);
+validateWorkflowGovernanceGate() (self-check: required catalogs present, schema coverage correctly classified,
+all six modes' schema governance passes) — valid true.
+
+Source cards required; missing facts required; assumptions required; human review required; finalFiling false;
+automaticSubmission false; no prohibited claims (final filing, automatic submission, production ready, memory
+enabled, external search/n8n/Firecrawl/Crawlee implemented, Phase 10/11 implemented, guaranteed tax/BIR/audit/
+compliance outcome, automatic filing implemented — all conservatively detected). Official URL verification claim
+requires officialUrl; currentness fully verified claim requires a non-unknown currentnessStatus. Existing
+retrieval only; no live web/search/intake; no n8n/Firecrawl/Crawlee. No Phase 10 implementation; no Phase 11
+implementation; no memory activation; no production change.
+
+Phase 8 closed; Phase 8S closed; 08X closed; Phase 9A-9F complete; Phase 9G governance gate complete; memory
+inactive; production unchanged.
+
+Files (pure governance gate): workflow/workflow-output-governance-gate.js;
+evaluation/fixtures/phase-09g-workflow-output-governance-gate-1.fixture.json;
+tests/phase-09g-workflow-output-governance-gate-1.test.mjs;
+PHASE-09G-WORKFLOW-OUTPUT-GOVERNANCE-GATE-1_REPORT.md; knowledge/CURRENT_STATE.md.
+
+Validation:
+node tests/phase-09g-workflow-output-governance-gate-1.test.mjs - PASS / 73 / 0 / 213.
+node tests/phase-09f-client-advisory-checklist-scaffold-1.test.mjs - PASS / 75 / 0 / 404.
+node tests/phase-09e-bir-reply-draft-scaffold-1.test.mjs - PASS / 45 / 0 / 243.
+node tests/phase-09d-audit-defense-matrix-scaffold-1.test.mjs - PASS / 45 / 0 / 203.
+node tests/phase-09c-tax-memo-schema-scaffold-1.test.mjs - PASS / 47 / 0 / 149.
+node tests/phase-09b-workflow-mode-registry-scaffold-1.test.mjs - PASS / 45 / 0 / 363.
+node tests/phase-09a-professional-workflow-copilot-design-1.test.mjs - PASS / 30 / 0 / 75.
+node tests/patch-08s-followup-index-secret-header-auth-staging-smoke-1.test.mjs - PASS / 23 / 0 / 92.
+node tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs - PASS / 17 / 0 / 127.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0 / 203.
+npm run guard:files - PASS. npm test - GATE PASSED / 152 suites / 0 failed.
+
+Next recommended task: PHASE-09H-CONTROLLED-RUNTIME-WIRING-DESIGN-OR-SCAFFOLD-1 (design or scaffold controlled
+runtime wiring for one Phase 9 mode behind a feature flag OFF by default).
+Optional later recommendation (not next task): PHASE-09I-REQUIREMENTS-REQUEST-LETTER-SCHEMA-SCAFFOLD-1.
+Keep this gate unwired until PHASE-09H is explicitly approved; run validateWorkflowGovernanceGate() as a required
+check for any future Phase 9 schema change; do not activate memory; do not persist client/matter data; do not
+implement Phase 10/11 inside Phase 9; do not claim live professional workflow output generation is implemented.
+```
