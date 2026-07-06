@@ -4426,3 +4426,82 @@ Keep this schema unwired until PHASE-09H is explicitly approved; keep runtimeWir
 off; do not activate memory; do not persist client/matter data; do not implement Phase 10/11 inside Phase 9
 scaffolds; do not claim live tax memo generation is implemented.
 ```
+
+Phase 9D Audit Defense Matrix Schema SCAFFOLD — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-06):
+
+```text
+PHASE-09D-AUDIT-DEFENSE-MATRIX-SCAFFOLD-1 is complete.
+Decision: PHASE 09D AUDIT DEFENSE MATRIX SCAFFOLD PASS WITH STRICT RECOMMENDATIONS.
+Type: PURE SCHEMA SCAFFOLD (no runtime wiring, no route/server/pipeline/ask-handler changes, no package/env/DB/
+frontend changes, no deployment, no memory activation, no client/matter persistence, no generated work-product
+persistence, no external search, no n8n/Firecrawl/Crawlee, no live audit defense matrix generation).
+Base commit: 263d51a PHASE-09C-TAX-MEMO-SCHEMA-SCAFFOLD-1 add tax memo schema.
+workflow/workflow-mode-registry.js and workflow/tax-memo-schema.js were NOT modified by this patch.
+
+Audit-defense-matrix schema file created: workflow/audit-defense-matrix-schema.js. Pure, dependency-free,
+deterministic module: zero imports, no network/Supabase/OpenAI/Google Drive/n8n/Firecrawl/Crawlee dependency, no
+filesystem access, no process.env dependency, no Date.now/randomness, no side effects — verified by static
+source-scan in the accompanying test. Not imported by ask-handler.js, pipeline.js, server.js, routes, or frontend.
+
+Schema identity: mode=audit_defense_matrix, schemaKey=auditDefenseMatrixOutput, phase=09, status=scaffolded,
+runtimeWiring=false, featureFlagDefault=off, humanReviewRequired=true, sourceCardsRequired=true,
+missingFactsRequired=true, assumptionsRequired=true, finalFiling=false, automaticSubmission=false,
+liveGeneration=false, persistentStorage=false.
+
+Required inputs: issues, auditorPosition, facts, taxPeriod, availableDocuments, intendedUse (plus 17 recommended
+optional inputs). Required output columns (stable canonical order, per matrix row): issue, birAuditorPosition,
+taxpayerPosition, authority, evidenceNeeded, riskLevel, recommendedAction, assumptions, missingFacts, sourceCards,
+humanReviewNotice. Required top-level fields: mode, schemaKey, matrixRows, summary, overallRisks, assumptions,
+missingFacts, documentsNeeded, sourceCards, humanReviewNotice, metadata (generatedBy, workflowMode, schemaVersion,
+retrievalPolicy, authorityPolicy, sourceCardPolicy, privacyPolicy, finalFiling, automaticSubmission, runtimeWiring,
+featureFlagDefault). Risk levels: low, moderate, high, critical, unknown.
+
+Exports created: PHASE_09D_AUDIT_DEFENSE_MATRIX_SCHEMA_VERSION; AUDIT_DEFENSE_MATRIX_SCHEMA;
+AUDIT_DEFENSE_MATRIX_REQUIRED_TOP_LEVEL_FIELDS; AUDIT_DEFENSE_MATRIX_REQUIRED_INPUTS;
+AUDIT_DEFENSE_MATRIX_REQUIRED_OUTPUT_COLUMNS; AUDIT_DEFENSE_MATRIX_GOVERNANCE_RULES;
+AUDIT_DEFENSE_MATRIX_PROHIBITED_BEHAVIORS; AUDIT_DEFENSE_MATRIX_RISK_LEVELS;
+createEmptyAuditDefenseMatrixOutput() (fresh defensive object every call); createEmptyAuditDefenseMatrixRow()
+(fresh defensive row, riskLevel defaults "unknown"); getAuditDefenseMatrixSchema() (defensive deep clone);
+getAuditDefenseMatrixRequiredInputs(); getAuditDefenseMatrixRequiredOutputColumns();
+getAuditDefenseMatrixGovernanceRules(); getAuditDefenseMatrixRiskLevels(); getAuditDefenseMatrixSourceCardRequirement();
+validateAuditDefenseMatrixOutputShape(output) (never throws, validates every matrixRows item via row validator,
+warns on empty matrixRows/sourceCards/missingFacts/assumptions/overallRisks); validateAuditDefenseMatrixRowShape(row)
+(never throws, warns on empty authority/evidenceNeeded/sourceCards/missingFacts/assumptions/unknown risk level);
+validateAuditDefenseMatrixSchema() (never throws, returns valid/errors/warnings + counts including riskLevelCount);
+normalizeAuditDefenseMatrixIssues(issues) (handles arrays/strings/blanks/null/unsupported input);
+normalizeAuditDefenseRiskLevel(riskLevel) (maps medium/med->moderate, urgent->critical, blank/null/unsupported
+->unknown, never throws). All accessors return defensive deep-cloned copies; mutating a returned value never
+mutates the internal schema (verified by test).
+
+Source cards required; missing facts required; assumptions required; human review required; finalFiling false;
+automaticSubmission false; featureFlagDefault off; evidence-gap disclosure required; risk-level required; taxpayer
+position must depend on facts; BIR/auditor position must be labeled; no guaranteed audit outcome claim. Existing
+retrieval only; no live web/search/intake; no n8n/Firecrawl/Crawlee. Current Phase 9 GDrive/archive source-card
+acceptable (officialUrl/canonicalSourceId NOT required in Phase 9); future Phase 10 officialUrl
+primary/archiveUrl secondary/canonicalSourceId internal source of truth recorded as a target only and NOT
+implemented. No Phase 10 implementation; no Phase 11 implementation; no memory activation; no production change.
+
+Phase 8 closed; Phase 8S closed; 08X closed; Phase 9A complete; Phase 9B complete; Phase 9C complete; Phase 9D
+scaffold complete; memory inactive; production unchanged.
+
+Files (pure schema scaffold): workflow/audit-defense-matrix-schema.js;
+evaluation/fixtures/phase-09d-audit-defense-matrix-scaffold-1.fixture.json;
+tests/phase-09d-audit-defense-matrix-scaffold-1.test.mjs;
+PHASE-09D-AUDIT-DEFENSE-MATRIX-SCAFFOLD-1_REPORT.md; knowledge/CURRENT_STATE.md.
+
+Validation:
+node tests/phase-09d-audit-defense-matrix-scaffold-1.test.mjs - PASS / 45 / 0 / 203.
+node tests/phase-09c-tax-memo-schema-scaffold-1.test.mjs - PASS / 47 / 0 / 149.
+node tests/phase-09b-workflow-mode-registry-scaffold-1.test.mjs - PASS / 45 / 0 / 363.
+node tests/phase-09a-professional-workflow-copilot-design-1.test.mjs - PASS / 30 / 0 / 75.
+node tests/patch-08s-followup-index-secret-header-auth-staging-smoke-1.test.mjs - PASS / 23 / 0 / 92.
+node tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs - PASS / 17 / 0 / 127.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0 / 203.
+npm run guard:files - PASS. npm test - GATE PASSED / 149 suites / 0 failed.
+
+Next recommended task: PHASE-09E-BIR-REPLY-DRAFT-SCAFFOLD-1 (pure schema and fixture for BIR Reply/Protest Draft
+output).
+Keep this schema unwired until PHASE-09H is explicitly approved; keep runtimeWiring false and featureFlagDefault
+off; do not activate memory; do not persist client/matter data; do not implement Phase 10/11 inside Phase 9
+scaffolds; do not claim live audit defense matrix generation is implemented; do not claim guaranteed audit outcome.
+```
