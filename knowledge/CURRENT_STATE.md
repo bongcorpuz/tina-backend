@@ -5072,3 +5072,97 @@ Do not import this scaffold into ask-handler.js/pipeline.js/server.js/routes/fro
 explicitly approved integration patch; keep tax_memo as the only runtime-wired mode; do not activate memory or
 persistence; do not claim live tax memo generation is implemented or that any feature flag is enabled by default.
 ```
+
+Phase 9R Tax Memo Runtime Wiring INTEGRATION DESIGN — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-07):
+
+```text
+PHASE-09R-TAX-MEMO-RUNTIME-WIRING-INTEGRATION-DESIGN-1 is complete.
+Decision: PHASE 09R TAX MEMO RUNTIME WIRING INTEGRATION DESIGN PASS WITH STRICT RECOMMENDATIONS.
+Type: DESIGN ONLY (no live /ask wiring, no ask-handler/pipeline/server/route changes, no package/env/DB/frontend
+changes, no deployment, no memory activation, no client/matter persistence, no generated work-product
+persistence, no external search, no n8n/Firecrawl/Crawlee, no workflow generation activated, no feature flag
+enabled by default).
+Base commit: 36db1a7 PHASE-09R-TAX-MEMO-RUNTIME-WIRING-SCAFFOLD-1 add tax memo runtime scaffold.
+All eleven existing Phase 9 workflow files were NOT modified by this patch.
+
+Integration policy file created: workflow/tax-memo-runtime-integration-policy.js. Design document created:
+docs/phase-09/PHASE-09R-TAX-MEMO-RUNTIME-WIRING-INTEGRATION-DESIGN.md. Pure, dependency-free, deterministic
+module: imports only workflow-runtime-wiring-policy.js, tax-memo-runtime-orchestrator.js,
+tax-memo-runtime-renderer.js, and workflow-output-governance-gate.js; no network/Supabase/OpenAI/Google Drive/
+n8n/Firecrawl/Crawlee dependency, no filesystem access, no process.env dependency, no Date.now/randomness, no
+side effects - verified by static source-scan and import-allowlist check in the accompanying test. Not imported
+by ask-handler.js, pipeline.js, server.js, routes, or frontend.
+
+Target route: /ask. Allowed mode: tax_memo only. Blocked modes (future-only, no active runtime path designed):
+bir_reply_protest_draft, audit_defense_matrix, client_advisory, compliance_checklist, requirements_request_letter.
+
+Feature flags (both default off everywhere, policy module never reads process.env): primary
+TINA_ENABLE_PROFESSIONAL_WORKFLOWS; mode TINA_ENABLE_WORKFLOW_TAX_MEMO. Seven-stage rollout plan:
+design_only_current_patch (this patch) -> local_unit_integration_with_no_route_change ->
+ask_handler_guarded_integration_feature_flag_off -> staging_flag_on_tax_memo_only -> staging_smoke_evidence ->
+closure_gate -> production_consideration_only_after_explicit_approval. Current stage:
+design_only_current_patch.
+
+Required caller fields: modeId, runtimeOptions, userExplicitApprovalForRuntimeWiring, featureFlagEnabled,
+governanceGatePassed, prohibitedClaimDetectionPassed. Required pipeline output fields: facts, issues,
+taxpayerType, taxPeriod, intendedAudience, sourceCards, missingFacts, assumptions, humanReviewNotice
+(recommended optional future fields: analysisNotes, applicableAuthorities, conclusion, risksLimitations,
+documentsNeeded). Required governance gates (17): phase_09h_runtime_policy_pass,
+phase_09g_output_governance_gate_pass, phase_09r_orchestrator_validation_pass,
+phase_09r_renderer_validation_pass, selected_mode_tax_memo_only, source_cards_nonempty, missing_facts_present,
+assumptions_present, human_review_notice_present, no_prohibited_claims, no_final_filing_claim,
+no_automatic_submission, no_persistence, no_memory, no_external_search, no_third_party_egress,
+no_production_enablement. Forbidden runtime changes (20) include enabling_feature_flag_by_default,
+adding_new_route, modifying_server_in_this_patch, modifying_ask_handler_in_this_patch,
+modifying_pipeline_in_this_patch, enabling_memory, adding_persistence, calling_external_search, calling_n8n,
+calling_firecrawl, calling_crawlee, implementing_phase_10, implementing_phase_11, production_enablement.
+
+Exports created: PHASE_09R_TAX_MEMO_RUNTIME_INTEGRATION_POLICY_VERSION; TAX_MEMO_INTEGRATION_TARGET_ROUTE;
+TAX_MEMO_INTEGRATION_ALLOWED_MODE; TAX_MEMO_INTEGRATION_BLOCKED_MODES; TAX_MEMO_INTEGRATION_FEATURE_FLAGS;
+TAX_MEMO_INTEGRATION_REQUIRED_CALLER_FIELDS; TAX_MEMO_INTEGRATION_REQUIRED_PIPELINE_OUTPUT_FIELDS;
+TAX_MEMO_INTEGRATION_OPTIONAL_FUTURE_PIPELINE_FIELDS; TAX_MEMO_INTEGRATION_REQUIRED_GOVERNANCE_GATES;
+TAX_MEMO_INTEGRATION_FORBIDDEN_RUNTIME_CHANGES; TAX_MEMO_INTEGRATION_LATER_ALLOWED_FILES;
+TAX_MEMO_INTEGRATION_LATER_FORBIDDEN_FILES; TAX_MEMO_INTEGRATION_ROLLOUT_STAGES;
+TAX_MEMO_INTEGRATION_CURRENT_STAGE; createTaxMemoIntegrationPolicyResult() (fresh defensive object every call);
+getTaxMemoRuntimeIntegrationPolicy() (defensive deep clone); getTaxMemoIntegrationFeatureFlags();
+getTaxMemoIntegrationRequiredCallerFields(); getTaxMemoIntegrationRequiredPipelineOutputFields();
+getTaxMemoIntegrationRequiredGovernanceGates(); getTaxMemoIntegrationRolloutStages();
+validateTaxMemoIntegrationCandidate(candidate) (never throws; validates a future integration candidate's
+mode/route/pipeline-output/governance/change-scope; blocked by design while flags are off or rollout stage is
+design-only, even when otherwise valid); validateTaxMemoIntegrationPolicy() (never throws; self-checks this
+policy plus the Phase 9H runtime policy, Phase 9R orchestrator, Phase 9R renderer, and Phase 9G governance gate;
+valid true). All accessors return defensive deep-cloned copies; mutating a returned value never mutates the
+internal policy (verified by test).
+
+Phase 8 closed; Phase 8S closed; 08X closed; Phase 9A-9I complete; Phase 9R scaffold complete; Phase 9R
+integration design complete; memory inactive; production unchanged.
+
+Files (design only, no live wiring): workflow/tax-memo-runtime-integration-policy.js;
+docs/phase-09/PHASE-09R-TAX-MEMO-RUNTIME-WIRING-INTEGRATION-DESIGN.md;
+evaluation/fixtures/phase-09r-tax-memo-runtime-wiring-integration-design-1.fixture.json;
+tests/phase-09r-tax-memo-runtime-wiring-integration-design-1.test.mjs;
+PHASE-09R-TAX-MEMO-RUNTIME-WIRING-INTEGRATION-DESIGN-1_REPORT.md; knowledge/CURRENT_STATE.md.
+
+Validation:
+node tests/phase-09r-tax-memo-runtime-wiring-integration-design-1.test.mjs - PASS / 54 / 0 / 202.
+node tests/phase-09r-tax-memo-runtime-wiring-scaffold-1.test.mjs - PASS / 113 / 0 / 212.
+node tests/phase-09i-requirements-request-letter-schema-scaffold-1.test.mjs - PASS / 56 / 0 / 333.
+node tests/phase-09h-controlled-runtime-wiring-design-or-scaffold-1.test.mjs - PASS / 69 / 0 / 172.
+node tests/phase-09g-workflow-output-governance-gate-1.test.mjs - PASS / 73 / 0 / 213.
+node tests/phase-09f-client-advisory-checklist-scaffold-1.test.mjs - PASS / 75 / 0 / 404.
+node tests/phase-09e-bir-reply-draft-scaffold-1.test.mjs - PASS / 45 / 0 / 243.
+node tests/phase-09d-audit-defense-matrix-scaffold-1.test.mjs - PASS / 45 / 0 / 203.
+node tests/phase-09c-tax-memo-schema-scaffold-1.test.mjs - PASS / 47 / 0 / 149.
+node tests/phase-09b-workflow-mode-registry-scaffold-1.test.mjs - PASS / 45 / 0 / 363.
+node tests/phase-09a-professional-workflow-copilot-design-1.test.mjs - PASS / 30 / 0 / 75.
+node tests/patch-08s-followup-index-secret-header-auth-staging-smoke-1.test.mjs - PASS / 23 / 0 / 92.
+node tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs - PASS / 17 / 0 / 127.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0 / 203.
+npm run guard:files - PASS. npm test - GATE PASSED / 156 suites / 0 failed.
+
+Next recommended task: PHASE-09R-TAX-MEMO-RUNTIME-STAGING-SMOKE-1 (rollout stages 2-5: local integration through
+staging smoke evidence, under continued strict governance). Future plan also includes PHASE-09-GATE-CLOSURE-1.
+Do not wire tax_memo into /ask without a separate explicitly approved integration patch; keep both feature flags
+off by default everywhere; do not extend to any blocked mode without separate approval; do not implement Phase
+10/11 inside any integration patch; do not claim live tax memo generation or /ask runtime wiring is implemented.
+```
