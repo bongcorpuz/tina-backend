@@ -11,6 +11,11 @@ import { createSecurityHeadersMiddleware } from "./security/security-headers.js"
 import { createRateLimitMiddleware } from "./security/rate-limit.js";
 import { buildPublicHealth } from "./security/public-health.js";
 import { buildRouteNotFound, ROUTE_NOT_FOUND_STATUS } from "./security/route-disclosure.js";
+import {
+  hasQueryStringSecret,
+  validateIndexSecretRequest,
+  sanitizeIndexAuthFailure
+} from "./security/index-secret-auth.js";
 import { createClient } from "@supabase/supabase-js";
 
 import {
@@ -179,23 +184,22 @@ function sendError(res, status, message, extra = {}) {
   });
 }
 
-function getAdminSecret(req) {
-  return (
-    req.query.secret ||
-    req.headers["x-index-secret"] ||
-    req.headers["x-admin-secret"] ||
-    null
-  );
-}
-
+// PATCH-08S-FOLLOWUP-INDEX-SECRET-QUERY-REMOVAL-1: INDEX_SECRET is authorized
+// only via the X-TINA-INDEX-SECRET header or an Authorization: Bearer header
+// matching INDEX_SECRET. Previously req.query.secret (and header fallbacks
+// x-index-secret / x-admin-secret) accepted a query-string secret; that
+// accept path is removed. A query-string secret (?secret=, ?indexSecret=,
+// ?INDEX_SECRET=, ?token=, ?key=) is now rejected outright, even if correct,
+// since URLs can leak through logs, browser history, proxies, referrers,
+// screenshots, and monitoring tools. See security/index-secret-auth.js.
 function allowAuthenticatedOrIndexSecret(req, res, next) {
-  const providedSecret = getAdminSecret(req);
+  if (hasQueryStringSecret(req)) {
+    return res.status(401).json(sanitizeIndexAuthFailure("query_string_secret_rejected"));
+  }
 
-  if (
-    process.env.INDEX_SECRET &&
-    providedSecret &&
-    providedSecret === process.env.INDEX_SECRET
-  ) {
+  const result = validateIndexSecretRequest(req);
+
+  if (result.authorized) {
     req.user = {
       id: "index-secret-admin",
       username: "index-secret-admin",
@@ -462,7 +466,7 @@ async function startIndexingResponse(route) {
     lockAcquired: true,
     jobId,
     message: "Full reindex started in background. DB lock confirmed before this response.",
-    statusUrl: "/index-status?secret=YOUR_SECRET"
+    statusUrl: "/index-status (send X-TINA-INDEX-SECRET header)"
   };
 }
 

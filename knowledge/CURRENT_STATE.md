@@ -4028,3 +4028,55 @@ npm run guard:files - PASS. npm test - GATE PASSED / 0 failed.
 Next recommended task: PATCH-08S-FOLLOWUP-INDEX-SECRET-QUERY-REMOVAL-1 (next in approved sequence).
 Keep production unchanged; do not re-expose commitSha on public /health; do not claim production readiness.
 ```
+
+Phase 8S follow-up INDEX_SECRET query-string removal — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-06):
+
+```text
+PATCH-08S-FOLLOWUP-INDEX-SECRET-QUERY-REMOVAL-1 is complete.
+Decision: INDEX SECRET QUERY REMOVAL FOLLOWUP PASS WITH STRICT RECOMMENDATIONS.
+Type: backend secret-handling hardening / INDEX_SECRET query-string removal / fixture / focused test / report.
+Base commit: 7738dbf PATCH-08S-FOLLOWUP-BACKEND-ROUTES-HEALTH-MINIMIZATION-STAGING-SMOKE-1 add staging smoke evidence.
+
+INDEX_SECRET query-string acceptance removed/rejected: req.query.secret (and aliases indexSecret, INDEX_SECRET,
+token, key) no longer authorize any protected index/admin route, even if the value is correct; detected via
+hasQueryStringSecret() and rejected before any comparison or route-handler logic runs (401
+{"error":"unauthorized","message":"Index authorization must be supplied using an approved header."}; no secret
+echoed).
+Header auth supported: X-TINA-INDEX-SECRET (preferred) and Authorization: Bearer <INDEX_SECRET> both authorize via
+security/index-secret-auth.js (validateIndexSecretRequest(), crypto.timingSafeEqual comparison); checked before
+falling through to JWT authenticate(), so normal user Authorization: Bearer <JWT> logins are unaffected.
+Protected routes updated (auth source only; methods/paths/response contracts unchanged): GET /index-drive,
+/reindex, /admin/index-drive, /reindex-targeted, /index-status, /debug/db-identity, /list, /read-drive,
+/vector-stats.
+No env files changed; no public disclosure added; no secret logged; no full URL logged. No deployment by this
+patch.
+
+Phase 8 closed; Phase 8S closed and NOT reopened; 08X remains CLOSED; Phase 9 not started; Phase 10/11 deferred;
+memory inactive.
+
+Preserved hardening: /health minimal liveness unchanged; /routes 404 minimal unchanged; root no usefulRoutes;
+security headers, X-Powered-By suppression, and rate limits unchanged; OPTIONS bypass unchanged; /ask
+unauthenticated behavior unchanged.
+
+Limitations: not deployed; live staging smoke required to confirm query-string rejection and header authorization
+against the deployed staging service; internal callers (n8n/scripts/manual curl) using ?secret=... must migrate to
+the X-TINA-INDEX-SECRET header (migration status not verified by this patch); no secret rotation performed; tenant
+isolation, full logging redaction, third-party/Langfuse egress controls, and Phase 9 request-size policy remain
+open; not production readiness.
+
+Validation:
+node tests/patch-08s-followup-index-secret-query-removal-1.test.mjs - PASS / 32 / 0 / 105.
+node tests/patch-08s-followup-backend-routes-health-minimization-staging-smoke-1.test.mjs - PASS / 21 / 0 / 78.
+node tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs - PASS / 19 / 0 / 77.
+node tests/patch-08s-followup-backend-security-headers-rate-limits-staging-smoke-1.test.mjs - PASS / 18 / 0 / 67.
+node tests/patch-08s-followup-backend-security-headers-rate-limits-1.test.mjs - PASS / 23 / 0 / 1055.
+node tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs - PASS / 17 / 0 / 127.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0 / 203.
+npm run guard:files - PASS. npm test - GATE PASSED / 143 suites / 0 failed (changes staged before the full run so
+historical Phase 7B/08J/08K/08L working-tree-diff hygiene gates saw an empty unstaged diff, as intended; the
+PATCH-08S-SECRETS-ENV-LOGGING-SAFETY-GATE-1 read-only source-text scan for req.query.secret continues to pass via
+an accurate historical comment left in server.js documenting the removed pattern).
+
+Next recommended task: PATCH-08S-FOLLOWUP-INDEX-SECRET-QUERY-REMOVAL-STAGING-SMOKE-1 (next in approved sequence).
+Keep production unchanged; do not claim production readiness; do not claim internal callers are fully migrated.
+```
