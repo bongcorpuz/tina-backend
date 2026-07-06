@@ -4594,3 +4594,90 @@ off; do not activate memory; do not persist client/matter data; do not implement
 scaffolds; do not claim live BIR reply/protest generation is implemented; do not claim guaranteed BIR outcome; do
 not claim automatic filing is implemented.
 ```
+
+Phase 9F Client Advisory / Compliance Checklist Schema SCAFFOLD — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-06):
+
+```text
+PHASE-09F-CLIENT-ADVISORY-CHECKLIST-SCAFFOLD-1 is complete.
+Decision: PHASE 09F CLIENT ADVISORY CHECKLIST SCAFFOLD PASS WITH STRICT RECOMMENDATIONS.
+Type: PURE SCHEMA SCAFFOLD (no runtime wiring, no route/server/pipeline/ask-handler changes, no package/env/DB/
+frontend changes, no deployment, no memory activation, no client/matter persistence, no generated work-product
+persistence, no external search, no n8n/Firecrawl/Crawlee, no live client advisory or compliance checklist
+generation).
+Base commit: 3a1f393 PHASE-09E-BIR-REPLY-DRAFT-SCAFFOLD-1 add BIR reply draft schema.
+workflow/workflow-mode-registry.js, workflow/tax-memo-schema.js, workflow/audit-defense-matrix-schema.js, and
+workflow/bir-reply-draft-schema.js were NOT modified by this patch.
+
+Client Advisory schema file created: workflow/client-advisory-schema.js. Compliance Checklist schema file created:
+workflow/compliance-checklist-schema.js. Both pure, dependency-free, deterministic modules: zero imports, no
+network/Supabase/OpenAI/Google Drive/n8n/Firecrawl/Crawlee dependency, no filesystem access, no process.env
+dependency, no Date.now/randomness, no side effects — verified by static source-scan in the accompanying test.
+Neither is imported by ask-handler.js, pipeline.js, server.js, routes, or frontend.
+
+Client Advisory schema identity: mode=client_advisory, schemaKey=clientAdvisoryOutput, phase=09,
+status=scaffolded, runtimeWiring=false, featureFlagDefault=off, humanReviewRequired=true,
+sourceCardsRequired=true, missingFactsRequired=true, assumptionsRequired=true, finalFiling=false,
+automaticSubmission=false, liveGeneration=false, persistentStorage=false. Required inputs: issue, facts,
+taxpayerType, intendedAudience, urgency (plus 12 recommended optional inputs). Required output sections (stable
+order): plainLanguageAnswer, businessImpact, complianceAction, deadlinesIfKnown, risks, documentsNeeded,
+assumptions, missingFacts, sourceCards, humanReviewNotice. Audience types: client, management, board, owner,
+accountant, legal, operations, unknown (with alias normalization).
+
+Compliance Checklist schema identity: mode=compliance_checklist, schemaKey=complianceChecklistOutput, phase=09,
+status=scaffolded, runtimeWiring=false, featureFlagDefault=off, humanReviewRequired=true,
+sourceCardsRequired=true, missingFactsRequired=true, assumptionsRequired=true, finalFiling=false,
+automaticSubmission=false, liveGeneration=false, persistentStorage=false. Required inputs: complianceTopic,
+taxpayerType, taxPeriodOrDate, facts, intendedUse (plus 12 recommended optional inputs). Required output columns
+(stable order, per checklist task): task, responsibleParty, requiredDocument, deadlineTiming, authoritySource,
+status, priority, notes, assumptions, missingFacts, sourceCards, humanReviewNotice. Status values: not_started,
+in_progress, pending_client, pending_bir, pending_sec, pending_lgu, completed, blocked, not_applicable, unknown
+(with alias normalization). Priority values: low, normal, high, urgent, unknown (with alias normalization).
+
+Exports created for both schemas: version constants; SCHEMA objects; REQUIRED_TOP_LEVEL_FIELDS/REQUIRED_INPUTS/
+REQUIRED_OUTPUT_SECTIONS-or-COLUMNS/GOVERNANCE_RULES/PROHIBITED_BEHAVIORS lists; createEmpty*Output() (fresh
+defensive object every call); getSchema()/getRequiredInputs()/getRequiredOutputSections-or-Columns()/
+getGovernanceRules()/getSourceCardRequirement() (all defensive copies); validate*OutputShape(output) (never
+throws, warns on empty sections/unknown audience-type-or-status-or-priority); validate*Schema() (never throws,
+returns valid/errors/warnings + counts); normalize*Issues-or-Topics(input) (handles arrays/strings/blanks/null/
+unsupported). Compliance Checklist additionally exports createEmptyComplianceChecklistTask()
+(status/priority default "unknown"), validateComplianceChecklistTaskShape() (validates every checklistItems item),
+normalizeComplianceChecklistStatus(), and normalizeComplianceChecklistPriority(). All accessors return defensive
+deep-cloned copies; mutating a returned value never mutates the internal schema (verified by test).
+
+Source cards required; missing facts required; assumptions required; human review required; finalFiling false;
+automaticSubmission false; featureFlagDefault off; no guaranteed tax/compliance outcome. Deadline boundary
+(shared): a deadline may be included only if the user provides a date or reliable basis; no false timeliness
+assurance; uncertainty disclosed if unknown; no automatic filing/submission. Existing retrieval only; no live
+web/search/intake; no n8n/Firecrawl/Crawlee. Current Phase 9 GDrive/archive source-card acceptable
+(officialUrl/canonicalSourceId NOT required in Phase 9); future Phase 10 officialUrl primary/archiveUrl
+secondary/canonicalSourceId internal source of truth recorded as a target only and NOT implemented, identical
+across both schemas. No Phase 10 implementation; no Phase 11 implementation; no memory activation; no production
+change.
+
+Phase 8 closed; Phase 8S closed; 08X closed; Phase 9A complete; Phase 9B complete; Phase 9C complete; Phase 9D
+complete; Phase 9E complete; Phase 9F scaffold complete; memory inactive; production unchanged.
+
+Files (pure schema scaffold): workflow/client-advisory-schema.js; workflow/compliance-checklist-schema.js;
+evaluation/fixtures/phase-09f-client-advisory-checklist-scaffold-1.fixture.json;
+tests/phase-09f-client-advisory-checklist-scaffold-1.test.mjs;
+PHASE-09F-CLIENT-ADVISORY-CHECKLIST-SCAFFOLD-1_REPORT.md; knowledge/CURRENT_STATE.md.
+
+Validation:
+node tests/phase-09f-client-advisory-checklist-scaffold-1.test.mjs - PASS / 75 / 0 / 404.
+node tests/phase-09e-bir-reply-draft-scaffold-1.test.mjs - PASS / 45 / 0 / 243.
+node tests/phase-09d-audit-defense-matrix-scaffold-1.test.mjs - PASS / 45 / 0 / 203.
+node tests/phase-09c-tax-memo-schema-scaffold-1.test.mjs - PASS / 47 / 0 / 149.
+node tests/phase-09b-workflow-mode-registry-scaffold-1.test.mjs - PASS / 45 / 0 / 363.
+node tests/phase-09a-professional-workflow-copilot-design-1.test.mjs - PASS / 30 / 0 / 75.
+node tests/patch-08s-followup-index-secret-header-auth-staging-smoke-1.test.mjs - PASS / 23 / 0 / 92.
+node tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs - PASS / 17 / 0 / 127.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0 / 203.
+npm run guard:files - PASS. npm test - GATE PASSED / 151 suites / 0 failed.
+
+Next recommended task: PHASE-09G-WORKFLOW-OUTPUT-GOVERNANCE-GATE-1 (add tests/gates ensuring no unsupported
+citations, no final-filing claims, no missing source-card disclosure across all six Phase 9 mode schemas).
+Keep both schemas unwired until PHASE-09H is explicitly approved; keep runtimeWiring false and featureFlagDefault
+off; do not activate memory; do not persist client/matter data; do not implement Phase 10/11 inside Phase 9
+scaffolds; do not claim live client advisory or compliance checklist generation is implemented; do not claim
+guaranteed tax/compliance outcome; do not claim automatic filing is implemented.
+```
