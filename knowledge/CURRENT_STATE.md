@@ -4297,3 +4297,63 @@ Next recommended task: PHASE-09B-WORKFLOW-MODE-REGISTRY-SCAFFOLD-1 (pure mode re
 Keep Phase 9 design-only until scaffold patches pass; do not activate memory; do not store client/matter
 work-products; do not enable external crawling; keep any later runtime wiring behind feature flags OFF by default.
 ```
+
+Phase 9B Workflow Mode Registry SCAFFOLD — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-06):
+
+```text
+PHASE-09B-WORKFLOW-MODE-REGISTRY-SCAFFOLD-1 is complete.
+Decision: PHASE 09B WORKFLOW MODE REGISTRY SCAFFOLD PASS WITH STRICT RECOMMENDATIONS.
+Type: PURE SCAFFOLD (no runtime wiring, no route/server/pipeline/ask-handler changes, no package/env/DB/frontend
+changes, no deployment, no memory activation, no client/matter persistence, no generated work-product persistence,
+no external search, no n8n/Firecrawl/Crawlee).
+Base commit: f2cf292 PHASE-09A-PROFESSIONAL-WORKFLOW-COPILOT-DESIGN-1 add design foundation.
+
+Registry file created: workflow/workflow-mode-registry.js (workflow/ directory created). Pure, dependency-free,
+deterministic module: zero imports, no network/Supabase/OpenAI/Google Drive/n8n/Firecrawl/Crawlee dependency, no
+filesystem access, no process.env dependency, no Date.now/randomness, no side effects — verified by static
+source-scan in the accompanying test. Not imported by ask-handler.js, pipeline.js, server.js, routes, or frontend.
+
+Six workflow modes scaffolded (all from Phase 9A design): tax_memo; bir_reply_protest_draft; audit_defense_matrix;
+client_advisory; compliance_checklist; requirements_request_letter. Every mode carries phase="09",
+status="scaffolded", runtimeWiring=false, featureFlagDefault="off", humanReviewRequired=true,
+missingFactsRequired=true, assumptionsRequired=true, sourceCardsRequired=true, plus retrievalPolicy
+(existing_retrieval_only/no_live_web_search/no_new_authority_ingestion/...), authorityPolicy
+(no_fabricated_citations/controlling_authority_prioritized/...), sourceCardPolicy
+(current_phase9_gdrive_archive_acceptable/phase10_official_url_archive_url_canonical_source_id_future/...),
+privacyPolicy (no_persistent_client_matter_storage/no_memory_activation/no_third_party_egress/
+no_n8n_firecrawl_crawlee/no_production_change/...), and prohibitedBehaviors (final_filing_claim,
+automatic_submission, fabricated_authority, unsupported_legal_conclusion, live_web_search,
+new_authority_ingestion, memory_write, client_matter_persistence, third_party_egress, production_change).
+
+Exports created: PHASE_09B_WORKFLOW_REGISTRY_VERSION; WORKFLOW_MODE_IDS; WORKFLOW_MODE_REGISTRY; getWorkflowMode();
+listWorkflowModes(); isSupportedWorkflowMode(); normalizeWorkflowModeId() (resolves aliases like "tax memo"/"memo",
+"BIR reply"/"protest", "audit defense"/"defense matrix", "advisory", "checklist", "requirements letter"/"request
+letter"; returns null for unsupported input); getWorkflowModeOutputSchema() (sourceCardsRequired/
+missingFactsRequired/assumptionsRequired/humanReviewRequired true, finalFiling/automaticSubmission false);
+getWorkflowModeRequiredInputs(); getWorkflowModeSourceCardRequirement(); validateWorkflowModeRegistry() (structured
+result, never throws). All accessors return defensive deep-cloned copies; mutating a returned object never mutates
+the registry (verified by test).
+
+Existing retrieval only; no live web/search/intake; no n8n/Firecrawl/Crawlee; no Phase 10 source-governance
+implementation; no Phase 11 retrieval optimization implementation; no memory activation; no production change.
+Phase 8 closed; Phase 8S closed; 08X closed; Phase 9A complete; Phase 9B scaffold complete; memory inactive;
+production unchanged.
+
+Files (pure scaffold): workflow/workflow-mode-registry.js;
+evaluation/fixtures/phase-09b-workflow-mode-registry-scaffold-1.fixture.json;
+tests/phase-09b-workflow-mode-registry-scaffold-1.test.mjs;
+PHASE-09B-WORKFLOW-MODE-REGISTRY-SCAFFOLD-1_REPORT.md; knowledge/CURRENT_STATE.md.
+
+Validation:
+node tests/phase-09b-workflow-mode-registry-scaffold-1.test.mjs - PASS / 45 / 0 / 363.
+node tests/phase-09a-professional-workflow-copilot-design-1.test.mjs - PASS / 30 / 0 / 75.
+node tests/patch-08s-followup-index-secret-header-auth-staging-smoke-1.test.mjs - PASS / 23 / 0 / 92.
+node tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs - PASS / 17 / 0 / 127.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0 / 203.
+npm run guard:files - PASS. npm test - GATE PASSED / 147 suites / 0 failed.
+
+Next recommended task: PHASE-09C-TAX-MEMO-SCHEMA-SCAFFOLD-1 (pure schema and fixture for Tax Memo output).
+Keep this registry unwired until PHASE-09H is explicitly approved; keep runtimeWiring false and featureFlagDefault
+off on every mode; do not activate memory; do not persist client/matter data; do not implement Phase 10/11 inside
+Phase 9 scaffolds; do not claim Phase 9 runtime is implemented.
+```

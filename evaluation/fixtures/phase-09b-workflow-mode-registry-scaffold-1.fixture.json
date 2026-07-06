@@ -1,0 +1,186 @@
+{
+  "patch": {
+    "id": "PHASE-09B-WORKFLOW-MODE-REGISTRY-SCAFFOLD-1",
+    "phase": "09B",
+    "taskType": "pure_scaffold",
+    "title": "Workflow Mode Registry Scaffold"
+  },
+  "decision": "PHASE 09B WORKFLOW MODE REGISTRY SCAFFOLD PASS WITH STRICT RECOMMENDATIONS",
+  "phase": "09B",
+  "baseCommit": "f2cf292 PHASE-09A-PROFESSIONAL-WORKFLOW-COPILOT-DESIGN-1 add design foundation",
+  "registryFile": "workflow/workflow-mode-registry.js",
+  "nonRuntimePatch": {
+    "pureScaffold": true,
+    "noRuntimeWiring": true,
+    "noRouteChanges": true,
+    "noServerChanges": true,
+    "noPipelineChanges": true,
+    "noAskHandlerChanges": true,
+    "noPackageEnvDbFrontendChanges": true,
+    "noDeployment": true,
+    "noMemoryActivation": true,
+    "noClientMatterPersistence": true,
+    "noGeneratedWorkProductPersistence": true,
+    "noExternalSearch": true,
+    "noN8n": true,
+    "noFirecrawl": true,
+    "noCrawlee": true
+  },
+  "currentState": {
+    "phase8Closed": true,
+    "phase8SClosed": true,
+    "phase08XClosed": true,
+    "phase9AComplete": true,
+    "phase9BScaffoldComplete": true,
+    "memoryInactive": true,
+    "productionUnchanged": true,
+    "latestCommitBeforePatch": "f2cf292"
+  },
+  "scaffoldSummary": "Pure, side-effect-free registry of the six Phase 9 professional workflow modes designed in Phase 9A. No imports from runtime pipeline/server/routes; no network, Supabase, OpenAI, Google Drive, n8n, Firecrawl, or Crawlee dependency; no filesystem access; no process.env dependency; no Date.now/randomness; no side effects. Not wired into ask-handler.js, pipeline.js, server.js, routes, or the frontend.",
+  "implementedExports": [
+    "PHASE_09B_WORKFLOW_REGISTRY_VERSION",
+    "WORKFLOW_MODE_IDS",
+    "WORKFLOW_MODE_REGISTRY",
+    "getWorkflowMode",
+    "listWorkflowModes",
+    "isSupportedWorkflowMode",
+    "normalizeWorkflowModeId",
+    "getWorkflowModeOutputSchema",
+    "getWorkflowModeRequiredInputs",
+    "getWorkflowModeSourceCardRequirement",
+    "validateWorkflowModeRegistry"
+  ],
+  "modeIds": [
+    "tax_memo",
+    "bir_reply_protest_draft",
+    "audit_defense_matrix",
+    "client_advisory",
+    "compliance_checklist",
+    "requirements_request_letter"
+  ],
+  "modeCount": 6,
+  "modeSummaries": [
+    {
+      "id": "tax_memo",
+      "label": "Tax Memo",
+      "schemaKey": "taxMemoOutput",
+      "nextScaffoldPatch": "PHASE-09C-TAX-MEMO-SCHEMA-SCAFFOLD-1"
+    },
+    {
+      "id": "bir_reply_protest_draft",
+      "label": "BIR Reply / Protest Draft",
+      "schemaKey": "birReplyDraftOutput",
+      "nextScaffoldPatch": "PHASE-09E-BIR-REPLY-DRAFT-SCAFFOLD-1"
+    },
+    {
+      "id": "audit_defense_matrix",
+      "label": "Audit Defense Matrix",
+      "schemaKey": "auditDefenseMatrixOutput",
+      "nextScaffoldPatch": "PHASE-09D-AUDIT-DEFENSE-MATRIX-SCAFFOLD-1"
+    },
+    {
+      "id": "client_advisory",
+      "label": "Client Advisory",
+      "schemaKey": "clientAdvisoryOutput",
+      "nextScaffoldPatch": "PHASE-09F-CLIENT-ADVISORY-CHECKLIST-SCAFFOLD-1"
+    },
+    {
+      "id": "compliance_checklist",
+      "label": "Compliance Checklist",
+      "schemaKey": "complianceChecklistOutput",
+      "nextScaffoldPatch": "PHASE-09F-CLIENT-ADVISORY-CHECKLIST-SCAFFOLD-1"
+    },
+    {
+      "id": "requirements_request_letter",
+      "label": "Requirements Request Letter",
+      "schemaKey": "requirementsRequestLetterOutput",
+      "nextScaffoldPatch": "PHASE-09F-CLIENT-ADVISORY-CHECKLIST-SCAFFOLD-1"
+    }
+  ],
+  "registryPolicies": {
+    "sourceCardsRequiredForAllModes": true,
+    "missingFactsRequiredForAllModes": true,
+    "assumptionsRequiredForAllModes": true,
+    "humanReviewRequiredForAllModes": true,
+    "runtimeWiringFalseForAllModes": true,
+    "featureFlagDefaultOffForAllModes": true
+  },
+  "retrievalBoundary": {
+    "existingRetrievalOnly": true,
+    "noLiveWebSearch": true,
+    "noNewAuthorityIngestion": true,
+    "noUnapprovedSources": true,
+    "ifAuthorityUnavailableDisclose": true
+  },
+  "authorityBoundary": {
+    "noFabricatedCitations": true,
+    "controllingAuthorityPrioritized": true,
+    "relatedAuthorityDisclosedAsRelated": true,
+    "currentnessUnknownDisclosed": true,
+    "authorityTypeLabelRequired": true
+  },
+  "sourceCardBoundary": {
+    "currentPhase9GdriveArchiveAcceptable": true,
+    "futurePhase10OfficialUrlPrimaryArchiveUrlSecondaryCanonicalSourceIdInternal": true,
+    "noPhase10ImplementationInThisPatch": true
+  },
+  "privacySecurityBoundary": {
+    "noPersistentClientMatterStorage": true,
+    "noGeneratedWorkProductPersistence": true,
+    "noMemoryActivation": true,
+    "noThirdPartyEgress": true,
+    "noN8nFirecrawlCrawlee": true,
+    "noProductionChange": true
+  },
+  "excludedScope": [
+    "runtime wiring",
+    "route changes",
+    "frontend changes",
+    "DB migrations",
+    "memory",
+    "client/matter persistence",
+    "production deployment",
+    "external web search",
+    "n8n",
+    "Firecrawl",
+    "Crawlee",
+    "Phase 10 authority intake",
+    "Phase 11 retrieval optimization"
+  ],
+  "prohibitedClaims": [
+    "Phase 9 runtime implemented",
+    "professional outputs generated live",
+    "production ready",
+    "memory enabled",
+    "client/matter persistence implemented",
+    "external search implemented",
+    "n8n implemented",
+    "Firecrawl implemented",
+    "Crawlee implemented",
+    "Phase 10 source governance implemented",
+    "Phase 11 retrieval optimization implemented"
+  ],
+  "validationMatrix": {
+    "requiredPassingTests": [
+      "tests/phase-09b-workflow-mode-registry-scaffold-1.test.mjs",
+      "tests/phase-09a-professional-workflow-copilot-design-1.test.mjs",
+      "tests/patch-08s-followup-index-secret-header-auth-staging-smoke-1.test.mjs",
+      "tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs",
+      "tests/patch-08s-final-closure-gate-1.test.mjs"
+    ],
+    "guardFiles": "npm run guard:files",
+    "fullRegression": "npm test"
+  },
+  "futurePatchPlan": [
+    "PHASE-09C-TAX-MEMO-SCHEMA-SCAFFOLD-1",
+    "PHASE-09D-AUDIT-DEFENSE-MATRIX-SCAFFOLD-1",
+    "PHASE-09E-BIR-REPLY-DRAFT-SCAFFOLD-1",
+    "PHASE-09F-CLIENT-ADVISORY-CHECKLIST-SCAFFOLD-1",
+    "PHASE-09G-WORKFLOW-OUTPUT-GOVERNANCE-GATE-1",
+    "PHASE-09H-CONTROLLED-RUNTIME-WIRING-DESIGN-OR-SCAFFOLD-1"
+  ],
+  "nextTask": {
+    "recommendedNext": "PHASE-09C-TAX-MEMO-SCHEMA-SCAFFOLD-1",
+    "userChoosesPriority": true
+  }
+}
