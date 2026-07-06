@@ -4151,3 +4151,81 @@ callers to X-TINA-INDEX-SECRET header first if URL-leakage risk is material).
 Keep production unchanged; do not claim production readiness; do not claim internal callers are fully migrated;
 do not claim secret rotation completed.
 ```
+
+Phase 8S follow-up INDEX_SECRET header/bearer auth STAGING SMOKE — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-06):
+
+```text
+PATCH-08S-FOLLOWUP-INDEX-SECRET-HEADER-AUTH-STAGING-SMOKE-1 is complete.
+Decision: INDEX SECRET HEADER AUTH STAGING SMOKE PASS WITH STRICT RECOMMENDATIONS.
+Type: live staging smoke evidence only / fixture / test / report (NON-RUNTIME; no code, env, or deployment change).
+Base commit: cd4dbdb PATCH-08S-FOLLOWUP-INDEX-SECRET-QUERY-REMOVAL-STAGING-SMOKE-1 add staging smoke evidence.
+
+Gemini review: APPROVE WITH STRICT CHANGES (no critical issues). Required changes applied: PASS requires both
+X-TINA-INDEX-SECRET and Authorization Bearer success confirmed live (Bearer waivable only if code review confirms
+it is unimplemented — it is implemented here, so not waived); WARNING reserved for one method succeeding with the
+other inconclusive for executor/environment reasons; a definitive implemented-method failure would be FAIL.
+WWW-Authenticate: Bearer check added as a recommended, non-blocking addition.
+
+Deployment freshness method: behavioral match (public /health no longer exposes commitSha by design). GET
+/index-status with a safely supplied staging-only INDEX_SECRET returned 200 with the authorized payload shape via
+both auth methods below, matching the exact live behavior introduced by security/index-secret-auth.js (commit
+77f8160); query-string rejection and /health, /routes, root minimization were reconfirmed unchanged.
+
+X-TINA-INDEX-SECRET finding: GET /index-status with the header set to the staging-only secret returned 200 with
+the authorized response shape (success/engine/indexing/vectorStore/time); not the query-secret 401 body; not a JWT
+rejection; no secret echoed. headerAuthSuccess=true. Header value never printed, logged, or stored.
+
+Authorization Bearer finding: GET /index-status with Authorization: Bearer <staging-only secret> returned 200 with
+the same authorized response shape; no secret echoed. bearerAuthSuccess=true. Authorization header value never
+printed, logged, or stored.
+
+Query-secret rejection finding: GET /index-status?secret=<synthetic value> (not the real secret) returned 401 with
+the exact sanitizeIndexAuthFailure() body; no secret echoed; no protected payload returned; no operation performed.
+queryStringSecretAuthorizes=false, querySecretRejected=true.
+
+Wrong/missing secret finding: GET /index-status with no header, and with a wrong synthetic Authorization: Bearer
+value, both fell through allowAuthenticatedOrIndexSecret() to the existing JWT authenticate() middleware and
+returned 401 ({"error":"Authentication required"} / {"error":"Invalid or expired token"}); no operation executed;
+no secret echoed. WWW-Authenticate: Bearer was NOT observed on the 401; code review of
+security/index-secret-auth.js and server.js confirms no code path sets that header anywhere — a non-blocking
+recommendation per Gemini review, not a PASS blocker.
+
+Preserved hardening confirmed live: GET /health -> 200 minimal; GET /routes -> 404 minimal; GET / -> 200 no
+usefulRoutes; all 8 required security headers present; X-Powered-By absent; OPTIONS /ask -> 204 (not 429); POST
+/ask unauthenticated -> 401 {"error":"Authentication required"}.
+
+security/privacy: no secret, header, Authorization, or URL-with-secret value stored anywhere in fixture/report/
+CURRENT_STATE/chat/logs; only a boolean-level finding was recorded for each header/bearer probe; only synthetic
+non-client values used for rejection/wrong-secret cases; no admin/index write routes executed (/index-drive,
+/admin/index-drive, /reindex, /reindex-targeted were not triggered); no load testing; no brute forcing; no
+accounts created; production untouched. The staging secret was read once from a local environment variable inside
+a single isolated probe session and never printed, logged, or persisted by this patch.
+
+No runtime changes; no env changes; no deployment by this patch; no package/DB/Supabase change; no memory
+enablement; no Phase 9 implementation; no production access/change; no secret stored.
+Phase 8 closed; Phase 8S closed and NOT reopened; 08X remains CLOSED; Phase 9 not started; Phase 10/11 deferred;
+memory inactive. Scanner findings (server fingerprinting, frontend CSP tightening, security.txt) remain deferred
+until after Phase 10 unless later blocking.
+
+Remaining Phase 8S guardrails still open: internal callers (n8n/scripts/manual curl) migration to
+X-TINA-INDEX-SECRET not verified; no secret rotation performed; tenant isolation; full logging redaction;
+third-party/Langfuse egress controls; Phase 9 request-size policy; WWW-Authenticate: Bearer not implemented
+(non-blocking). Not a production readiness assessment.
+
+Validation:
+node tests/patch-08s-followup-index-secret-header-auth-staging-smoke-1.test.mjs - PASS / 23 / 0 / 92.
+node tests/patch-08s-followup-index-secret-query-removal-staging-smoke-1.test.mjs - PASS / 25 / 0 / 73.
+node tests/patch-08s-followup-index-secret-query-removal-1.test.mjs - PASS / 32 / 0 / 105.
+node tests/patch-08s-followup-backend-routes-health-minimization-staging-smoke-1.test.mjs - PASS / 21 / 0 / 78.
+node tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs - PASS / 19 / 0 / 77.
+node tests/patch-08s-followup-backend-security-headers-rate-limits-staging-smoke-1.test.mjs - PASS / 18 / 0 / 67.
+node tests/patch-08s-followup-backend-security-headers-rate-limits-1.test.mjs - PASS / 23 / 0 / 1055.
+node tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs - PASS / 17 / 0 / 127.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0 / 203.
+npm run guard:files - PASS. npm test - GATE PASSED / 145 suites / 0 failed.
+
+Next recommended task: PHASE-09A-PROFESSIONAL-WORKFLOW-COPILOT-DESIGN-1 (user chooses priority; migrate remaining
+internal callers to X-TINA-INDEX-SECRET header first if any still use query strings).
+Keep production unchanged; do not claim production readiness; do not claim internal callers are fully migrated;
+do not claim secret rotation completed; do not claim WWW-Authenticate: Bearer is implemented.
+```
