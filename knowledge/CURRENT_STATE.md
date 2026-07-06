@@ -4983,3 +4983,92 @@ Do not wire this schema into runtime; do not modify the Phase 9G governance gate
 without separate explicit approval; do not activate memory or persistence; do not claim live requirements
 request letter generation is implemented or that this mode's runtime is enabled.
 ```
+
+Phase 9R Tax Memo Runtime Wiring SCAFFOLD (tax_memo only) — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-06):
+
+```text
+PHASE-09R-TAX-MEMO-RUNTIME-WIRING-SCAFFOLD-1 is complete.
+Decision: PHASE 09R TAX MEMO RUNTIME WIRING SCAFFOLD PASS WITH STRICT RECOMMENDATIONS.
+Type: CONTROLLED RUNTIME SCAFFOLD, tax_memo mode only (no live runtime activation, no route/server/pipeline/
+ask-handler/frontend changes, no package/env/DB changes, no deployment, no memory activation, no client/matter
+persistence, no generated work-product persistence, no external search, no n8n/Firecrawl/Crawlee).
+Base commit: 48d4f63 PHASE-09I-REQUIREMENTS-REQUEST-LETTER-SCHEMA-SCAFFOLD-1 add requirements request letter schema.
+All nine existing Phase 9 workflow files were NOT modified by this patch.
+
+tax-memo-runtime-orchestrator.js created: pure, dependency-free scaffold that assembles a structured tax memo
+draft from already-retrieved content, existing source cards, missing facts, assumptions, and a human-review
+notice, then runs the Phase 9G workflow output governance gate. Imports only tax-memo-schema.js,
+workflow-output-governance-gate.js, and workflow-runtime-wiring-policy.js. No AI model calls, no retrieval, no
+persistence, no mutation of input, no process.env reads, no Date.now/randomness - verified by static source-scan
+and import-allowlist check in the accompanying test.
+
+tax-memo-runtime-renderer.js created: pure renderer for provided tax-memo output only. No new legal analysis, no
+fabricated authorities, no link fetching or verification, no official-URL-verification claim unless the source
+card's own currentnessStatus already supports it. Always includes a draft-only status notice and a human-review
+notice. Imports only workflow-output-governance-gate.js.
+
+tax_memo only. Blocked modes (never runtime-wired by this patch): bir_reply_protest_draft, audit_defense_matrix,
+client_advisory, compliance_checklist, requirements_request_letter. Default execution blocked: calling the
+scaffold with missing or partial runtimeOptions always returns blocked=true, valid=false. Explicit caller approval
+required: userExplicitApprovalForRuntimeWiring must be true, plus featureFlagEnabled, governanceGatePassed,
+sourceCardsPresent, missingFactsPresent, assumptionsPresent, humanReviewNoticePresent, and
+prohibitedClaimDetectionPassed must all be true, and persistenceRequested/memoryRequested/
+thirdPartyEgressRequested/externalSearchRequested/productionEnablementRequested must all be false, or the
+scaffold blocks.
+
+Design note: the orchestrator's own runtimeOptions.featureFlagEnabled (call-scoped explicit enablement) is
+validated separately from the Phase 9H policy's own featureFlagEnabled field (which asserts an environment
+default is on and must never be true); the orchestrator always passes featureFlagEnabled=false into the policy
+call while independently requiring the caller's featureFlagEnabled=true. Neither workflow-output-governance-
+gate.js nor workflow-runtime-wiring-policy.js was modified to accommodate this; both checks coexist without
+conflict.
+
+Exports created (orchestrator): PHASE_09R_TAX_MEMO_RUNTIME_ORCHESTRATOR_VERSION; TAX_MEMO_RUNTIME_MODE_ID;
+TAX_MEMO_RUNTIME_SCHEMA_KEY; TAX_MEMO_RUNTIME_REQUIRED_INPUTS; TAX_MEMO_RUNTIME_REQUIRED_RUNTIME_FLAGS;
+TAX_MEMO_RUNTIME_PROHIBITED_MODES; createTaxMemoRuntimeResult(); normalizeTaxMemoRuntimeInput(input);
+validateTaxMemoRuntimeInput(input); validateTaxMemoRuntimeOptions(runtimeOptions);
+buildTaxMemoDraftFromRuntimeInput(input); runTaxMemoRuntimeGovernance(output, options);
+runTaxMemoRuntimeScaffold(request); validateTaxMemoRuntimeScaffold(). Exports created (renderer):
+PHASE_09R_TAX_MEMO_RUNTIME_RENDERER_VERSION; TAX_MEMO_RUNTIME_RENDER_SECTIONS; createTaxMemoRuntimeRenderResult();
+renderTaxMemoDraftToMarkdown(output, options); renderTaxMemoSourceCards(sourceCards);
+validateTaxMemoRuntimeRenderedOutput(markdown, output); validateTaxMemoRuntimeRenderer().
+
+Governance gate required: every scaffold execution runs validateWorkflowOutputGovernance() from Phase 9G before
+returning a valid result; sourceCards/missingFacts/assumptions/humanReviewNotice required; metadata finalFiling
+false, automaticSubmission false, runtimeWiring false, featureFlagDefault off; no prohibited claims detected.
+No model calls; no retrieval calls; no external calls; no generated legal analysis beyond provided input; no
+fabricated authorities. Existing retrieval only, as a future caller's responsibility; no live web/search/intake;
+no n8n/Firecrawl/Crawlee. No Phase 10 implementation; no Phase 11 implementation; no memory activation; no
+client/matter persistence; no generated work-product persistence; no production change.
+
+Phase 8 closed; Phase 8S closed; 08X closed; Phase 9A-9I complete; Phase 9R tax memo runtime scaffold complete;
+memory inactive; production unchanged.
+
+Files (controlled runtime scaffold, no live wiring): workflow/tax-memo-runtime-orchestrator.js;
+workflow/tax-memo-runtime-renderer.js; evaluation/fixtures/phase-09r-tax-memo-runtime-wiring-scaffold-1.fixture.json;
+tests/phase-09r-tax-memo-runtime-wiring-scaffold-1.test.mjs;
+PHASE-09R-TAX-MEMO-RUNTIME-WIRING-SCAFFOLD-1_REPORT.md; knowledge/CURRENT_STATE.md.
+
+Validation:
+node tests/phase-09r-tax-memo-runtime-wiring-scaffold-1.test.mjs - PASS / 113 / 0 / 212.
+node tests/phase-09i-requirements-request-letter-schema-scaffold-1.test.mjs - PASS / 56 / 0 / 333.
+node tests/phase-09h-controlled-runtime-wiring-design-or-scaffold-1.test.mjs - PASS / 69 / 0 / 172.
+node tests/phase-09g-workflow-output-governance-gate-1.test.mjs - PASS / 73 / 0 / 213.
+node tests/phase-09f-client-advisory-checklist-scaffold-1.test.mjs - PASS / 75 / 0 / 404.
+node tests/phase-09e-bir-reply-draft-scaffold-1.test.mjs - PASS / 45 / 0 / 243.
+node tests/phase-09d-audit-defense-matrix-scaffold-1.test.mjs - PASS / 45 / 0 / 203.
+node tests/phase-09c-tax-memo-schema-scaffold-1.test.mjs - PASS / 47 / 0 / 149.
+node tests/phase-09b-workflow-mode-registry-scaffold-1.test.mjs - PASS / 45 / 0 / 363.
+node tests/phase-09a-professional-workflow-copilot-design-1.test.mjs - PASS / 30 / 0 / 75.
+node tests/patch-08s-followup-index-secret-header-auth-staging-smoke-1.test.mjs - PASS / 23 / 0 / 92.
+node tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs - PASS / 17 / 0 / 127.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0 / 203.
+npm run guard:files - PASS. npm test - GATE PASSED / 155 suites / 0 failed.
+
+Next recommended task: PHASE-09R-TAX-MEMO-RUNTIME-WIRING-INTEGRATION-DESIGN-1 (design, not implement, how this
+scaffold would eventually be integrated behind the feature flag into a real request path, still without live
+activation). Future plan also includes PHASE-09R-TAX-MEMO-RUNTIME-STAGING-SMOKE-1 and PHASE-09-GATE-CLOSURE-1.
+Do not import this scaffold into ask-handler.js/pipeline.js/server.js/routes/frontend without a separate
+explicitly approved integration patch; keep tax_memo as the only runtime-wired mode; do not activate memory or
+persistence; do not claim live tax memo generation is implemented or that any feature flag is enabled by default.
+```
