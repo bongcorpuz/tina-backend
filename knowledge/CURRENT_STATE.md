@@ -4229,3 +4229,71 @@ internal callers to X-TINA-INDEX-SECRET header first if any still use query stri
 Keep production unchanged; do not claim production readiness; do not claim internal callers are fully migrated;
 do not claim secret rotation completed; do not claim WWW-Authenticate: Bearer is implemented.
 ```
+
+Phase 9A Professional Workflow Co-Pilot DESIGN — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-06):
+
+```text
+PHASE-09A-PROFESSIONAL-WORKFLOW-COPILOT-DESIGN-1 is complete.
+Decision: PHASE 09A PROFESSIONAL WORKFLOW COPILOT DESIGN PASS WITH STRICT RECOMMENDATIONS.
+Type: DESIGN-ONLY (no runtime code, no routes, no frontend, no DB migration, no API/OpenAI/Supabase/Google Drive/
+n8n/Firecrawl/Crawlee calls, no deployment, no memory activation).
+Base commit: 5a6f2f9 PATCH-08S-FOLLOWUP-INDEX-SECRET-HEADER-AUTH-STAGING-SMOKE-1 add header auth smoke evidence.
+
+Phase 9 design begins. Phase 9 = Professional Workflow Co-Pilot: turns TINA from a Q&A tax assistant into a
+drafting co-pilot for professional tax work-products using EXISTING authority-grounded retrieval (query
+classification, authority detection, exact lookup, vector search, answer generation, GDrive source cards). Phase 9
+does NOT rebuild the search engine, does NOT implement Phase 10 (Authority Search and Research Engine), and does
+NOT implement Phase 11 (retrieval speed/quality optimization).
+
+Professional modes defined (6): Tax Memo; BIR Reply/Protest Draft (LOA/PAN/FAN/FDDA/NOD/subpoena/audit findings);
+Audit Defense Matrix; Client Advisory; Compliance Checklist; Requirements Request Letter. Conceptual JSON-like
+output schemas defined for all six, each carrying sourceCards and missingFacts (source-card + missing-fact
+disclosure enforced at schema level).
+
+Retrieval contract: existing retrieval only; no live web search; no new authority ingestion; no unapproved
+sources; no unsupported citations; if authority unavailable, say so. Authority discipline: controlling authority
+prioritized; correct labeling of BIR issuances vs jurisprudence; related != controlling; disclose unknown
+currentness; NO fabricated RR/RMC/RMO/case citations (upholds Authority Lock; source cards must survive drafting).
+
+Source-card policy: CURRENT Phase 9 accepts GDrive/archive source cards (existing mechanism preserved); FUTURE
+Phase 10 model (officialUrl primary, archiveUrl secondary, canonicalSourceId internal source of truth, plus
+retrievedAt/lastVerifiedAt/fileHash/currentnessStatus/reviewStatus/sourceLineage/supersedes/supersededBy) is
+recorded as a target only and NOT implemented here.
+
+Privacy/security boundary: no persistent client/matter storage; no client document storage; no memory activation;
+no generated work-product persistence; no third-party egress; no crawling; no production change. Request-size
+policy, tenant isolation, logging redaction, and egress controls remain OPEN (carried from Phase 8S).
+Request-size policy is a placeholder only (limits/max-length/attachment/P1-P2-redaction/logging/timeout/output
+controls) — not implemented.
+
+No Phase 10 source-governance implementation; no Phase 11 optimization implementation; no n8n/Firecrawl/Crawlee.
+Phase 8 closed; Phase 8S closed; 08X closed; memory inactive; production unchanged; Phase 10/11 boundaries
+preserved. Scanner findings (server fingerprinting, frontend CSP tightening, security.txt) remain deferred until
+after Phase 10 unless later blocking.
+
+Future Phase 9 patch plan: PHASE-09B-WORKFLOW-MODE-REGISTRY-SCAFFOLD-1; PHASE-09C-TAX-MEMO-SCHEMA-SCAFFOLD-1;
+PHASE-09D-AUDIT-DEFENSE-MATRIX-SCAFFOLD-1; PHASE-09E-BIR-REPLY-DRAFT-SCAFFOLD-1;
+PHASE-09F-CLIENT-ADVISORY-CHECKLIST-SCAFFOLD-1; PHASE-09G-WORKFLOW-OUTPUT-GOVERNANCE-GATE-1;
+PHASE-09H-CONTROLLED-RUNTIME-WIRING-DESIGN-OR-SCAFFOLD-1 (feature-flag OFF by default).
+
+Files (design-only): docs/phase-09/PHASE-09A-PROFESSIONAL-WORKFLOW-COPILOT-DESIGN.md;
+evaluation/fixtures/phase-09a-professional-workflow-copilot-design-1.fixture.json;
+tests/phase-09a-professional-workflow-copilot-design-1.test.mjs;
+PHASE-09A-PROFESSIONAL-WORKFLOW-COPILOT-DESIGN-1_REPORT.md; knowledge/CURRENT_STATE.md.
+
+Prohibited claims (must NOT be asserted): Phase 9 runtime implemented; production ready; memory enabled; external
+search implemented; n8n/Firecrawl/Crawlee implemented; tenant isolation implemented; logging redaction completed;
+egress controls completed; source-card Phase 10 upgrade implemented; official URL verification complete; hybrid
+BM25 retrieval implemented; re-ranking implemented.
+
+Validation:
+node tests/phase-09a-professional-workflow-copilot-design-1.test.mjs - PASS / 30 / 0 / 75.
+node tests/patch-08s-followup-index-secret-header-auth-staging-smoke-1.test.mjs - PASS / 23 / 0 / 92.
+node tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs - PASS / 17 / 0 / 127.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0 / 203.
+npm run guard:files - PASS. npm test - GATE PASSED / 146 suites / 0 failed.
+
+Next recommended task: PHASE-09B-WORKFLOW-MODE-REGISTRY-SCAFFOLD-1 (pure mode registry, no runtime wiring).
+Keep Phase 9 design-only until scaffold patches pass; do not activate memory; do not store client/matter
+work-products; do not enable external crawling; keep any later runtime wiring behind feature flags OFF by default.
+```
