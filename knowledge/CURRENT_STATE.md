@@ -4080,3 +4080,74 @@ an accurate historical comment left in server.js documenting the removed pattern
 Next recommended task: PATCH-08S-FOLLOWUP-INDEX-SECRET-QUERY-REMOVAL-STAGING-SMOKE-1 (next in approved sequence).
 Keep production unchanged; do not claim production readiness; do not claim internal callers are fully migrated.
 ```
+
+Phase 8S follow-up INDEX_SECRET query-removal STAGING SMOKE — COMPLETE / WARNING WITH STRICT RECOMMENDATIONS (2026-07-06):
+
+```text
+PATCH-08S-FOLLOWUP-INDEX-SECRET-QUERY-REMOVAL-STAGING-SMOKE-1 is complete.
+Decision: INDEX SECRET QUERY REMOVAL STAGING SMOKE WARNING WITH STRICT RECOMMENDATIONS.
+Type: live staging smoke evidence only / fixture / test / report (NON-RUNTIME; no code, env, or deployment change).
+Base commit: 77f8160 PATCH-08S-FOLLOWUP-INDEX-SECRET-QUERY-REMOVAL-1 remove query-string index secret auth.
+
+Deployment freshness method: behavioral_match_77f8160_query_secret_rejected (public /health no longer exposes
+commitSha by design, so a public/Render-dashboard commitSha was not consulted). The live /index-status
+query-secret rejection body is exactly {"error":"unauthorized","message":"Index authorization must be supplied
+using an approved header."} — the literal sanitizeIndexAuthFailure() output from security/index-secret-auth.js,
+a file confirmed (via git show 77f8160^:security/index-secret-auth.js) to not exist before 77f8160. This is a
+strong behavioral match, not a Render dashboard/log confirmation.
+
+Query-secret rejection finding: GET /index-status tested with all 5 recognized aliases (secret, indexSecret,
+INDEX_SECRET, token, key) as separate query params with synthetic values; ALL 5 returned 401 with the exact safe
+body above; no secret echoed; protected index-status payload (indexing/vectorStore fields) was never returned;
+no operation performed. queryStringSecretAuthorizes=false, querySecretRejected=true, aliasesRejectedCount=5.
+
+Header auth finding: SKIPPED — no safe staging INDEX_SECRET was supplied to this smoke, so X-TINA-INDEX-SECRET
+success was not exercised live. Header value not stored anywhere.
+Bearer auth finding: SKIPPED — same reason. Authorization: Bearer value not stored anywhere.
+
+Missing/wrong secret finding: GET /index-status with no header, and with a wrong synthetic X-TINA-INDEX-SECRET
+value, both fell through to existing JWT auth and returned 401 {"error":"Authentication required"}; no operation
+executed; no secret echoed.
+
+Stale hint finding: NOT live-checked (the historical "?secret=YOUR_SECRET" hint lived in the /reindex
+full-reindex-started response, a write-triggering route that was deliberately not probed). Source-confirmed
+removed via git show 77f8160 diff of server.js (statusUrl changed from "/index-status?secret=YOUR_SECRET" to
+"/index-status (send X-TINA-INDEX-SECRET header)"); the hint did not appear in any live response observed during
+this smoke either.
+
+Preserved hardening confirmed live: GET /health -> 200 minimal {"status":"ok","service":"tina-backend"}; GET
+/routes -> 404 {"error":"not_found"}; GET / -> 200 no usefulRoutes; all 8 required security headers present;
+X-Powered-By absent; OPTIONS /ask -> 204 (not 429), allowlisted origin reflected; POST /ask unauthenticated ->
+401 {"error":"Authentication required"}.
+
+security/privacy: no secret, token, cookie, or authorization header value stored anywhere in fixture/report; no
+real client data/TINs/financial statements used; only synthetic non-client values sent; no admin/index write
+routes executed (/index-drive, /admin/index-drive, /reindex, /reindex-targeted were not triggered); no load
+testing; no brute forcing; no accounts created; production untouched.
+
+No runtime changes; no env changes; no deployment by this patch; no package/DB/Supabase change; no memory
+enablement; no Phase 9 implementation; no production access/change; no secret stored.
+Phase 8 closed; Phase 8S closed and NOT reopened; 08X remains CLOSED; Phase 9 not started; Phase 10/11 deferred;
+memory inactive.
+
+Remaining Phase 8S guardrails still open: header/bearer auth success not yet confirmed live (no safe staging
+secret supplied); internal callers (n8n/scripts/manual curl) migration to X-TINA-INDEX-SECRET not verified; no
+secret rotation performed; tenant isolation; full logging redaction; third-party/Langfuse egress controls; Phase
+9 request-size policy. Not a production readiness assessment.
+
+Validation:
+node tests/patch-08s-followup-index-secret-query-removal-staging-smoke-1.test.mjs - PASS / 25 / 0 / 73.
+node tests/patch-08s-followup-index-secret-query-removal-1.test.mjs - PASS / 32 / 0 / 105.
+node tests/patch-08s-followup-backend-routes-health-minimization-staging-smoke-1.test.mjs - PASS / 21 / 0 / 78.
+node tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs - PASS / 19 / 0 / 77.
+node tests/patch-08s-followup-backend-security-headers-rate-limits-staging-smoke-1.test.mjs - PASS / 18 / 0 / 67.
+node tests/patch-08s-followup-backend-security-headers-rate-limits-1.test.mjs - PASS / 23 / 0 / 1055.
+node tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs - PASS / 17 / 0 / 127.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0 / 203.
+npm run guard:files - PASS. npm test - GATE PASSED / 144 suites / 0 failed.
+
+Next recommended task: PHASE-09A-PROFESSIONAL-WORKFLOW-COPILOT-DESIGN-1 (user chooses priority; migrate internal
+callers to X-TINA-INDEX-SECRET header first if URL-leakage risk is material).
+Keep production unchanged; do not claim production readiness; do not claim internal callers are fully migrated;
+do not claim secret rotation completed.
+```
