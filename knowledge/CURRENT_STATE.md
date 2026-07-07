@@ -5611,3 +5611,88 @@ PHASE-09S-2026-BIR-AUDIT-BASELINE-INTEGRATION-SCAFFOLD-1. Do not wire document c
 authority verification before legal conclusions; preserve 2026 audit-framework flags but do not convert them into
 validity conclusions.
 ```
+
+## Phase 9Q BIR Authority Corpus Research Design — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-07):
+
+```text
+PHASE-09Q-BIR-AUTHORITY-CORPUS-RESEARCH-DESIGN-1 completed. Decision: PHASE 09Q BIR AUTHORITY CORPUS RESEARCH DESIGN
+PASS WITH STRICT RECOMMENDATIONS. Base commit: c84d56b PHASE-09P-BIR-DOCUMENT-COMPLIANCE-TRANSMITTAL-SCAFFOLD-1.
+
+Scope: design-only, non-runtime-active research design for how TINA will eventually discover, prioritize, verify,
+classify, and cite official Philippine tax/audit authorities (BIR issuances, NIRC/statutory provisions, Supreme
+Court/CTA jurisprudence, DOF/PEZA/SEC/BOI issuances) needed for BIR audit defense workflows. New pure standalone
+module workflow/bir-authority-corpus-research-design.js, zero imports, no I/O, no network calls, no OCR, no
+process.env, no Date.now/randomness, no side effects. No existing Phase 9 workflow file was modified. This scaffold
+designs the authority corpus research layer only; it performs no live search, scraping, browsing, downloading,
+ingestion, embedding, or database storage, and reaches no final legal or tax conclusion.
+
+Supported authority source types (20): BIR_REVENUE_REGULATION, BIR_REVENUE_MEMORANDUM_CIRCULAR,
+BIR_REVENUE_MEMORANDUM_ORDER, BIR_REVENUE_AUDIT_MEMORANDUM_ORDER, BIR_RULING, BIR_FORM_OR_ANNEX, NIRC_PROVISION,
+TRAIN_OR_CREATE_OR_EOPT_STATUTE, SUPREME_COURT_DECISION, CTA_DECISION, CTA_EN_BANC_DECISION, DOF_ISSUANCE,
+PEZA_ISSUANCE, SEC_ISSUANCE, BOI_ISSUANCE, OFFICIAL_GAZETTE_RECORD, IMPLEMENTING_RULES, PRIVATE_REFERENCE_PATTERN,
+SECONDARY_RESEARCH_LEAD, UNKNOWN_SOURCE_TYPE. Supported authority tiers (10): controlling_primary_authority,
+persuasive_primary_authority, official_administrative_guidance, official_procedural_guidance,
+jurisprudential_authority, official_form_or_annex, private_uploaded_pattern, secondary_lead_only,
+future_verification_required, unknown_tier. Supported authority topics (43) and research workflow stages (12) cover
+LOA/eLA authority, the 2026 audit baseline (RMO 1-2026, RMO 6-2026, RMC 14-2026, RMC 5-2026, RMC 8-2026,
+RMC 107-2025), PAN/FAN/FLD/protest, prescription/waiver, VAT/withholding substantiation, CTA appeal-watch, source
+discovery, metadata design, verification design, topic mapping, citation policy, ingestion pipeline design,
+deduplication/versioning, conflict resolution, human review gate, and future runtime wiring design.
+
+Runtime changes: None. Ask-handler changes: None. Route/server/pipeline changes: None. Feature flags:
+unchanged/off by default. Memory: inactive. Persistence: none. Live retrieval/scraping/download/ingestion/embedding/
+database write: none performed. External search/OpenAI/Supabase/Google Drive/n8n/Firecrawl/Crawlee/MCP/OCR:
+untouched. Production: unchanged.
+
+Privacy: no real taxpayer names, TINs, LOA/eLA numbers, audit case numbers, BIR officer names, exact real assessment
+amounts, or taxpayer-specific facts used in fixtures; all examples reference synthetic taxpayers and public
+authority names only. The module additionally rejects any known real reference-corpus fragment on input, rejects
+liveVerified true on any candidate authority, rejects raw (non-domain-only) source URLs, rejects requests to scrape/
+download/search/ingest/embed/store authorities, and scans its own output for prohibited-claim phrases and real-data
+leakage.
+
+Legal safety: no final legal conclusions; no fabricated authorities; no claim that any authority was verified,
+downloaded, scraped, ingested, or that the corpus is complete. Human review notice preserved in every result; all
+thirteen metadata safety flags always scaffold-safe. A conservative prohibited-claim phrase scanner and a real-data-
+leak scanner are both run by the result validator.
+
+Authority boundary: bir.gov.ph, bir-cdn.bir.gov.ph, lawphil.net, sc.judiciary.gov.ph, cta.judiciary.gov.ph,
+officialgazette.gov.ph, dof.gov.ph, peza.gov.ph, sec.gov.ph, and boi.gov.ph listed as future official source
+priorities only, ranked ahead of a research-lead-only secondary-source category. No live authority retrieval
+implemented. Phase 10 authority search not implemented.
+
+Workflow capabilities: 09Q now models the official source priority list, the per-topic authority requirement map
+(with baseline coverage for LOA authority, the 2026 audit baseline, PAN/FAN/FLD/protest, prescription/waiver,
+VAT/withholding substantiation, and CTA appeal-watch), the authority metadata schema, the 12-stage research
+workflow design, verification rules, conflict resolution policy, future ingestion plan, and citation policy design.
+
+Validation:
+node tests/phase-09q-bir-authority-corpus-research-design-1.test.mjs - PASS / 30 / 0 / 466.
+node tests/phase-09p-bir-document-compliance-transmittal-scaffold-1.test.mjs - PASS / 36 / 0 / 332.
+node tests/phase-09o-bir-audit-defense-matrix-scaffold-1.test.mjs - PASS / 33 / 0 / 604.
+node tests/phase-09n-pan-fan-fld-protest-workflow-scaffold-1.test.mjs - PASS / 35 / 0 / 335.
+node tests/phase-09m-bir-notice-loa-triage-intent-scaffold-1.test.mjs - PASS / 47 / 0 / 398.
+node tests/phase-09l-authority-safe-procedural-fallback-scaffold-1.test.mjs - PASS / 33 / 0 / 184.
+node tests/phase-09r-tax-memo-runtime-staging-smoke-1.test.mjs - PASS / 36 / 0 / 179.
+node tests/phase-09r-tax-memo-runtime-wiring-integration-design-1.test.mjs - PASS / 54 / 0 / 202.
+node tests/phase-09r-tax-memo-runtime-wiring-scaffold-1.test.mjs - PASS / 113 / 0 / 212.
+node tests/phase-09i-requirements-request-letter-schema-scaffold-1.test.mjs - PASS / 56 / 0 / 333.
+node tests/phase-09h-controlled-runtime-wiring-design-or-scaffold-1.test.mjs - PASS / 69 / 0 / 172.
+node tests/phase-09g-workflow-output-governance-gate-1.test.mjs - PASS / 73 / 0 / 213.
+node tests/phase-09f-client-advisory-checklist-scaffold-1.test.mjs - PASS / 75 / 0 / 404.
+node tests/phase-09e-bir-reply-draft-scaffold-1.test.mjs - PASS / 45 / 0 / 243.
+node tests/phase-09d-audit-defense-matrix-scaffold-1.test.mjs - PASS / 45 / 0 / 203.
+node tests/phase-09c-tax-memo-schema-scaffold-1.test.mjs - PASS / 47 / 0 / 149.
+node tests/phase-09b-workflow-mode-registry-scaffold-1.test.mjs - PASS / 45 / 0 / 363.
+node tests/phase-09a-professional-workflow-copilot-design-1.test.mjs - PASS / 30 / 0 / 75.
+node tests/patch-08s-followup-index-secret-header-auth-staging-smoke-1.test.mjs - PASS / 23 / 0 / 92.
+node tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs - PASS / 17 / 0 / 127.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0 / 203.
+npm run guard:files - PASS. npm test - GATE PASSED / 163 suites / 0 failed.
+
+Next recommended task: PHASE-09S-2026-BIR-AUDIT-BASELINE-INTEGRATION-SCAFFOLD-1. Future plan also includes
+PHASE-09-GATE-CLOSURE-1. Do not wire this authority corpus research design to /ask until governance and runtime
+gates approve it; do not perform live scraping/downloading/ingestion until a separate authority ingestion phase is
+approved; require official-source verification before any legal/tax conclusion; treat secondary sources only as
+research leads.
+```

@@ -1,0 +1,4511 @@
+{
+  "patch": "PHASE-09Q-BIR-AUTHORITY-CORPUS-RESEARCH-DESIGN-1",
+  "decision": "PHASE 09Q BIR AUTHORITY CORPUS RESEARCH DESIGN PASS WITH STRICT RECOMMENDATIONS",
+  "phase": "09Q",
+  "baseCommit": "c84d56b PHASE-09P-BIR-DOCUMENT-COMPLIANCE-TRANSMITTAL-SCAFFOLD-1 add document compliance transmittal scaffold",
+  "nonRuntimePatch": {
+    "noRuntimeActivation": true,
+    "noAskHandlerWiring": true,
+    "noServerChanges": true,
+    "noRouteChanges": true,
+    "noPipelineChanges": true,
+    "noFeatureFlagEnabledByDefault": true,
+    "noMemoryActivation": true,
+    "noPersistence": true,
+    "noExternalSearch": true,
+    "noLiveRetrieval": true,
+    "noScraping": true,
+    "noDownload": true,
+    "noIngestion": true,
+    "noEmbedding": true,
+    "noDatabaseWrite": true,
+    "noOpenAiCalls": true,
+    "noSupabaseCalls": true,
+    "noGoogleDriveCalls": true,
+    "noN8n": true,
+    "noFirecrawl": true,
+    "noCrawlee": true,
+    "noMcp": true,
+    "noOcr": true,
+    "noPhase10Implementation": true,
+    "noPhase11Implementation": true,
+    "noProductionChange": true,
+    "noRealTaxpayerData": true,
+    "noFinalLegalConclusion": true,
+    "noFilingReadyDocument": true,
+    "noAutomaticSubmission": true
+  },
+  "currentState": {
+    "phase8Closed": true,
+    "phase8SClosed": true,
+    "phase08XClosed": true,
+    "phase9AComplete": true,
+    "phase9BComplete": true,
+    "phase9CComplete": true,
+    "phase9DComplete": true,
+    "phase9EComplete": true,
+    "phase9FComplete": true,
+    "phase9GComplete": true,
+    "phase9HComplete": true,
+    "phase9IComplete": true,
+    "phase9RRuntimeScaffoldComplete": true,
+    "phase9RIntegrationDesignComplete": true,
+    "phase9RStagingSmokeComplete": true,
+    "phase9LProceduralFallbackScaffoldComplete": true,
+    "phase9MNoticeLoaTriageIntentScaffoldComplete": true,
+    "phase9NPanFanFldProtestWorkflowScaffoldComplete": true,
+    "phase9OAuditDefenseMatrixScaffoldComplete": true,
+    "phase9PDocumentComplianceTransmittalScaffoldComplete": true,
+    "phase9QAuthorityCorpusResearchDesignComplete": true,
+    "memoryInactive": true,
+    "productionUnchanged": true,
+    "mcpDeferredUntilAfterFinalPlannedPhase": true,
+    "latestCommitBeforePatch": "c84d56b"
+  },
+  "objective": "Provide a design-only, non-runtime-active research design for how TINA will eventually discover, prioritize, verify, classify, and cite official Philippine tax/audit authorities (BIR issuances, NIRC/statutory provisions, Supreme Court/CTA jurisprudence, DOF/PEZA/SEC/BOI issuances) needed for BIR audit defense workflows. This scaffold designs the authority corpus research layer only; it performs no live search, scraping, browsing, downloading, ingestion, embedding, or database storage, and reaches no final legal or tax conclusion.",
+  "supportedAuthoritySourceTypes": [
+    "BIR_REVENUE_REGULATION",
+    "BIR_REVENUE_MEMORANDUM_CIRCULAR",
+    "BIR_REVENUE_MEMORANDUM_ORDER",
+    "BIR_REVENUE_AUDIT_MEMORANDUM_ORDER",
+    "BIR_RULING",
+    "BIR_FORM_OR_ANNEX",
+    "NIRC_PROVISION",
+    "TRAIN_OR_CREATE_OR_EOPT_STATUTE",
+    "SUPREME_COURT_DECISION",
+    "CTA_DECISION",
+    "CTA_EN_BANC_DECISION",
+    "DOF_ISSUANCE",
+    "PEZA_ISSUANCE",
+    "SEC_ISSUANCE",
+    "BOI_ISSUANCE",
+    "OFFICIAL_GAZETTE_RECORD",
+    "IMPLEMENTING_RULES",
+    "PRIVATE_REFERENCE_PATTERN",
+    "SECONDARY_RESEARCH_LEAD",
+    "UNKNOWN_SOURCE_TYPE"
+  ],
+  "supportedAuthorityTiers": [
+    "controlling_primary_authority",
+    "persuasive_primary_authority",
+    "official_administrative_guidance",
+    "official_procedural_guidance",
+    "jurisprudential_authority",
+    "official_form_or_annex",
+    "private_uploaded_pattern",
+    "secondary_lead_only",
+    "future_verification_required",
+    "unknown_tier"
+  ],
+  "supportedAuthorityTopics": [
+    "LOA_AUTHORITY",
+    "ELA_AUTHENTICITY",
+    "RMC_5_2026_LOA_VERIFIER",
+    "RMO_1_2026_SINGLE_INSTANCE_AUDIT",
+    "RMO_6_2026_CONSOLIDATION_SAFEGUARDS",
+    "RMC_14_2026_REPLACEMENT_ELA_CLARIFICATION",
+    "RMC_107_2025_AUDIT_SUSPENSION",
+    "RMC_8_2026_AUDIT_RESUMPTION",
+    "REPLACEMENT_ELA",
+    "CONSOLIDATED_ELA",
+    "VAT_NON_CONSOLIDATION",
+    "VATAS_LTVAU_TRANSITION",
+    "TAX_VERIFICATION_NOTICE_SCOPE",
+    "STANDARDIZED_CHECKLIST",
+    "ADDITIONAL_DOCUMENT_REQUEST_LIMITS",
+    "VOLUMINOUS_RECORDS_ON_PREMISE_EXAMINATION",
+    "CERTIFIED_COPY_SUBMISSION",
+    "SUBPOENA_DUCES_TECUM",
+    "NOD_DOD",
+    "PAN_REPLY",
+    "FAN_FLD_PROTEST",
+    "REQUEST_FOR_RECONSIDERATION",
+    "REQUEST_FOR_REINVESTIGATION",
+    "FDDA",
+    "CTA_APPEAL_PERIOD",
+    "CTA_INACTION_APPEAL",
+    "ASSESSMENT_PRESCRIPTION",
+    "COLLECTION_PRESCRIPTION",
+    "WAIVER_OF_PRESCRIPTION",
+    "DUE_PROCESS_FACTS_AND_LAW",
+    "PROPER_SERVICE",
+    "NO_REGRESSION_RULE",
+    "TERMINATION_LETTER_SCOPE",
+    "VAT_EXEMPT_VS_ZERO_RATED",
+    "PEZA_ZERO_RATING",
+    "INPUT_VAT_SUBSTANTIATION",
+    "CWT_SUBSTANTIATION",
+    "WITHHOLDING_TAX_DEDUCTIBILITY",
+    "DIVIDEND_FWT",
+    "COMPROMISE_PENALTY",
+    "SURCHARGE_AND_INTEREST",
+    "RELATED_PARTY_OR_INTERCOMPANY",
+    "UNKNOWN_TOPIC"
+  ],
+  "supportedResearchWorkflowStages": [
+    "SOURCE_DISCOVERY_DESIGN",
+    "OFFICIAL_SOURCE_PRIORITY_DESIGN",
+    "AUTHORITY_METADATA_DESIGN",
+    "AUTHORITY_VERIFICATION_DESIGN",
+    "AUTHORITY_TOPIC_MAPPING_DESIGN",
+    "CITATION_POLICY_DESIGN",
+    "INGESTION_PIPELINE_DESIGN",
+    "DEDUPLICATION_AND_VERSIONING_DESIGN",
+    "CONFLICT_RESOLUTION_DESIGN",
+    "HUMAN_REVIEW_GATE_DESIGN",
+    "FUTURE_RUNTIME_WIRING_DESIGN",
+    "UNKNOWN_STAGE"
+  ],
+  "supportedAuthorityVerificationStatuses": [
+    "not_verified_design_only",
+    "official_source_required",
+    "official_source_identified_design_only",
+    "secondary_lead_requires_primary_verification",
+    "conflict_requires_human_review",
+    "stale_or_superseded_risk",
+    "future_ingestion_required",
+    "unknown_status"
+  ],
+  "referenceCorpusBoundary": {
+    "privateReferenceMaterialsProvidedByUser": true,
+    "referenceMaterialsAreDevelopmentPatternsOnly": true,
+    "noRealTaxpayerNamesUsed": true,
+    "noRealTinsUsed": true,
+    "noRealLoaOrElaNumbersUsed": true,
+    "noRealAuditCaseNumbersUsed": true,
+    "noRealAddressesUsed": true,
+    "noRealBirOfficerNamesUsed": true,
+    "noRealClientNamesUsed": true,
+    "noRealAssessmentAmountsUsed": true,
+    "allExamplesSanitizedAndSynthetic": true,
+    "rmc5_2026TreatedAsLoaElaVerificationDesignReference": true,
+    "rmo1_2026TreatedAsAuditBaselineDesignReference": true
+  },
+  "authorityBoundary": {
+    "futureOfficialAuthoritySourcesNoted": [
+      "bir.gov.ph",
+      "bir-cdn.bir.gov.ph",
+      "lawphil.net",
+      "sc.judiciary.gov.ph",
+      "cta.judiciary.gov.ph",
+      "officialgazette.gov.ph",
+      "dof.gov.ph",
+      "peza.gov.ph",
+      "sec.gov.ph",
+      "boi.gov.ph"
+    ],
+    "liveSearchPerformed": false,
+    "liveScrapingPerformed": false,
+    "liveBrowsingPerformed": false,
+    "liveOcrPerformed": false,
+    "liveAuthorityRetrievalPerformed": false,
+    "liveDownloadPerformed": false,
+    "liveIngestionPerformed": false,
+    "liveEmbeddingPerformed": false,
+    "liveDatabaseWritePerformed": false,
+    "designOnly": true,
+    "phase10AuthoritySearchImplemented": false
+  },
+  "privacyBoundary": {
+    "sanitizedSyntheticTaxpayerNamesOnly": true,
+    "syntheticTaxpayerNameExamples": [
+      "SAMPLE TAXPAYER INC.",
+      "DEMO LOGISTICS CORP.",
+      "SYNTHETIC HOLDINGS INC.",
+      "MODEL VAT TAXPAYER CORP."
+    ],
+    "fakeSyntheticNumberExamples": [
+      "eLA20XX000000000",
+      "AUDM00-000-20XX-000000",
+      "TIN-XXX-XXX-XXX-XXX",
+      "PHP 0.00"
+    ],
+    "noRealTaxpayerDataInFixturesOrTests": true,
+    "noExactRealAssessmentAmountsUsed": true,
+    "knownRealFragmentsExcludedFromEverything": true
+  },
+  "runtimeBoundary": {
+    "runtimeActiveAlwaysFalse": true,
+    "scaffoldOnlyAlwaysTrue": true,
+    "allowLegalConclusionAlwaysFalse": true,
+    "allowLiveRetrievalAlwaysFalse": true,
+    "allowScrapingAlwaysFalse": true,
+    "allowDownloadAlwaysFalse": true,
+    "allowIngestionAlwaysFalse": true,
+    "allowEmbeddingAlwaysFalse": true,
+    "allowDatabaseWriteAlwaysFalse": true,
+    "allowRealTaxpayerDataAlwaysFalse": true,
+    "generateFilingReadyDocumentAlwaysFalse": true,
+    "automaticSubmissionAlwaysFalse": true,
+    "liveVerifiedAlwaysFalse": true,
+    "notWiredToAsk": true,
+    "noAuthenticationDependency": true,
+    "noExpressServerRuntimeDependency": true
+  },
+  "officialSourcePriorityShape": {
+    "requiredFields": [
+      "domainOrSource",
+      "priority",
+      "allowedUse",
+      "restrictions"
+    ],
+    "requiredDomains": [
+      "bir.gov.ph",
+      "bir-cdn.bir.gov.ph",
+      "lawphil.net",
+      "sc.judiciary.gov.ph",
+      "cta.judiciary.gov.ph",
+      "officialgazette.gov.ph",
+      "dof.gov.ph",
+      "peza.gov.ph",
+      "sec.gov.ph",
+      "boi.gov.ph"
+    ]
+  },
+  "authorityTopicMapShape": {
+    "requiredFields": [
+      "topic",
+      "requiredAuthorityTypes",
+      "candidateAuthorities",
+      "missingAuthorityGaps",
+      "verificationStatus",
+      "humanReviewRequired"
+    ],
+    "requiredBaselineTopics": [
+      "LOA_AUTHORITY",
+      "RMO_1_2026_SINGLE_INSTANCE_AUDIT",
+      "PAN_REPLY",
+      "FAN_FLD_PROTEST",
+      "ASSESSMENT_PRESCRIPTION",
+      "VAT_EXEMPT_VS_ZERO_RATED",
+      "CWT_SUBSTANTIATION"
+    ]
+  },
+  "authorityMetadataSchemaShape": {
+    "requiredFields": [
+      "requiredFields",
+      "recommendedFields",
+      "prohibitedFields",
+      "versioningFields",
+      "citationFields"
+    ]
+  },
+  "researchWorkflowDesignShape": {
+    "requiredFields": [
+      "stage",
+      "purpose",
+      "allowedActionsFutureOnly",
+      "prohibitedActionsThisPatch",
+      "outputExpectedInFuturePatch"
+    ]
+  },
+  "validationMatrix": {
+    "newBirAuthorityCorpusResearchDesignTest": "PASS",
+    "phase09PBirDocumentComplianceTransmittalTest": "PASS",
+    "phase09OBirAuditDefenseMatrixTest": "PASS",
+    "phase09NPanFanFldProtestWorkflowTest": "PASS",
+    "phase09MBirNoticeLoaTriageIntentTest": "PASS",
+    "phase09LProceduralFallbackScaffoldTest": "PASS",
+    "phase09RStagingSmokeTest": "PASS",
+    "phase09RIntegrationDesignTest": "PASS",
+    "phase09RRuntimeScaffoldTest": "PASS",
+    "phase09IRequirementsRequestLetterTest": "PASS",
+    "phase09HRuntimeWiringTest": "PASS",
+    "phase09GGovernanceGateTest": "PASS",
+    "phase09FClientAdvisoryComplianceChecklistTest": "PASS",
+    "phase09EBirReplyDraftTest": "PASS",
+    "phase09DAuditDefenseMatrixTest": "PASS",
+    "phase09CTaxMemoSchemaTest": "PASS",
+    "phase09BWorkflowModeRegistryTest": "PASS",
+    "phase09ADesignTest": "PASS",
+    "patch08SFollowupIndexSecretHeaderAuthStagingSmokeTest": "PASS",
+    "patch08XFinalGateTest": "PASS",
+    "patch08SFinalClosureGateTest": "PASS",
+    "guardFiles": "PASS",
+    "npmTest": "PASS"
+  },
+  "sampleInputs": {
+    "LOA_AUTHORITY_CORPUS": {
+      "userQuery": "What official authorities should we track for LOA validity and eLA authenticity research?",
+      "targetTopics": [
+        "LOA_AUTHORITY",
+        "ELA_AUTHENTICITY",
+        "RMC_5_2026_LOA_VERIFIER"
+      ],
+      "candidateAuthorities": [
+        {
+          "title": "NIRC Sec. 6(A)",
+          "sourceType": "NIRC_PROVISION",
+          "topicTags": [
+            "LOA_AUTHORITY"
+          ],
+          "authorityTier": "controlling_primary_authority",
+          "sourceDomain": "officialgazette.gov.ph",
+          "verificationStatus": "official_source_required",
+          "note": "Statutory basis for LOA issuance authority."
+        },
+        {
+          "title": "RMC No. 5-2026",
+          "sourceType": "BIR_REVENUE_MEMORANDUM_CIRCULAR",
+          "topicTags": [
+            "ELA_AUTHENTICITY",
+            "RMC_5_2026_LOA_VERIFIER"
+          ],
+          "authorityTier": "official_administrative_guidance",
+          "sourceDomain": "bir.gov.ph",
+          "verificationStatus": "official_source_required",
+          "note": "Governs the eLA/LOA verifier workflow."
+        }
+      ]
+    },
+    "AUDIT_BASELINE_2026_CORPUS": {
+      "userQuery": "Build the authority research design for the 2026 single-instance audit baseline (RMO 1-2026, RMO 6-2026, RMC 14-2026, RMC 5-2026, RMC 8-2026, RMC 107-2025).",
+      "targetTopics": [
+        "RMO_1_2026_SINGLE_INSTANCE_AUDIT",
+        "RMO_6_2026_CONSOLIDATION_SAFEGUARDS",
+        "RMC_14_2026_REPLACEMENT_ELA_CLARIFICATION",
+        "RMC_107_2025_AUDIT_SUSPENSION",
+        "RMC_8_2026_AUDIT_RESUMPTION",
+        "REPLACEMENT_ELA",
+        "CONSOLIDATED_ELA"
+      ],
+      "candidateAuthorities": [
+        {
+          "title": "RMO No. 1-2026",
+          "sourceType": "BIR_REVENUE_MEMORANDUM_ORDER",
+          "topicTags": [
+            "RMO_1_2026_SINGLE_INSTANCE_AUDIT",
+            "REPLACEMENT_ELA",
+            "CONSOLIDATED_ELA"
+          ],
+          "authorityTier": "official_procedural_guidance",
+          "sourceDomain": "bir.gov.ph",
+          "verificationStatus": "official_source_required",
+          "note": "Establishes single-instance audit framework."
+        },
+        {
+          "title": "RMO No. 6-2026",
+          "sourceType": "BIR_REVENUE_MEMORANDUM_ORDER",
+          "topicTags": [
+            "RMO_6_2026_CONSOLIDATION_SAFEGUARDS",
+            "CONSOLIDATED_ELA"
+          ],
+          "authorityTier": "official_procedural_guidance",
+          "sourceDomain": "bir.gov.ph",
+          "verificationStatus": "official_source_required",
+          "note": "Consolidation safeguards for eLA issuance."
+        },
+        {
+          "title": "RMC No. 14-2026",
+          "sourceType": "BIR_REVENUE_MEMORANDUM_CIRCULAR",
+          "topicTags": [
+            "RMC_14_2026_REPLACEMENT_ELA_CLARIFICATION",
+            "REPLACEMENT_ELA"
+          ],
+          "authorityTier": "official_administrative_guidance",
+          "sourceDomain": "bir.gov.ph",
+          "verificationStatus": "official_source_required",
+          "note": "Clarifies replacement eLA treatment."
+        }
+      ]
+    },
+    "PAN_FAN_FLD_PROTEST_AUTHORITY": {
+      "userQuery": "Map the authority requirements for a PAN reply and FAN/FLD protest workflow.",
+      "targetTopics": [
+        "PAN_REPLY",
+        "FAN_FLD_PROTEST",
+        "REQUEST_FOR_RECONSIDERATION",
+        "REQUEST_FOR_REINVESTIGATION",
+        "FDDA",
+        "DUE_PROCESS_FACTS_AND_LAW"
+      ],
+      "candidateAuthorities": [
+        {
+          "title": "NIRC Sec. 228",
+          "sourceType": "NIRC_PROVISION",
+          "topicTags": [
+            "PAN_REPLY",
+            "FAN_FLD_PROTEST",
+            "FDDA"
+          ],
+          "authorityTier": "controlling_primary_authority",
+          "sourceDomain": "officialgazette.gov.ph",
+          "verificationStatus": "official_source_required",
+          "note": "Statutory basis for assessment protest procedure."
+        },
+        {
+          "title": "RR No. 18-2013",
+          "sourceType": "BIR_REVENUE_REGULATION",
+          "topicTags": [
+            "PAN_REPLY",
+            "FAN_FLD_PROTEST",
+            "REQUEST_FOR_RECONSIDERATION",
+            "REQUEST_FOR_REINVESTIGATION"
+          ],
+          "authorityTier": "official_administrative_guidance",
+          "sourceDomain": "bir.gov.ph",
+          "verificationStatus": "official_source_required",
+          "note": "Implements the due-process assessment procedure."
+        }
+      ]
+    },
+    "VAT_ZERO_RATING_AUTHORITY": {
+      "userQuery": "What authorities govern VAT-exempt vs zero-rated treatment and PEZA zero-rating disputes?",
+      "targetTopics": [
+        "VAT_EXEMPT_VS_ZERO_RATED",
+        "PEZA_ZERO_RATING",
+        "INPUT_VAT_SUBSTANTIATION"
+      ],
+      "candidateAuthorities": [
+        {
+          "title": "NIRC Sec. 106/108/109",
+          "sourceType": "NIRC_PROVISION",
+          "topicTags": [
+            "VAT_EXEMPT_VS_ZERO_RATED"
+          ],
+          "authorityTier": "controlling_primary_authority",
+          "sourceDomain": "officialgazette.gov.ph",
+          "verificationStatus": "official_source_required",
+          "note": "Statutory VAT exemption/zero-rating provisions."
+        },
+        {
+          "title": "PEZA law/issuances",
+          "sourceType": "PEZA_ISSUANCE",
+          "topicTags": [
+            "PEZA_ZERO_RATING"
+          ],
+          "authorityTier": "official_administrative_guidance",
+          "sourceDomain": "peza.gov.ph",
+          "verificationStatus": "official_source_required",
+          "note": "PEZA incentive and zero-rating framework."
+        }
+      ]
+    },
+    "CWT_SUBSTANTIATION_AUTHORITY": {
+      "userQuery": "Map authority needs for creditable withholding tax substantiation defense.",
+      "targetTopics": [
+        "CWT_SUBSTANTIATION",
+        "WITHHOLDING_TAX_DEDUCTIBILITY",
+        "DIVIDEND_FWT"
+      ],
+      "candidateAuthorities": [
+        {
+          "title": "RR No. 2-98",
+          "sourceType": "BIR_REVENUE_REGULATION",
+          "topicTags": [
+            "CWT_SUBSTANTIATION",
+            "WITHHOLDING_TAX_DEDUCTIBILITY"
+          ],
+          "authorityTier": "official_administrative_guidance",
+          "sourceDomain": "bir.gov.ph",
+          "verificationStatus": "official_source_required",
+          "note": "Withholding tax regulations and Form 2307/SAWT basis."
+        }
+      ]
+    },
+    "PRESCRIPTION_WAIVER_AUTHORITY": {
+      "userQuery": "Research design for assessment prescription and waiver-of-prescription authority tracking.",
+      "targetTopics": [
+        "ASSESSMENT_PRESCRIPTION",
+        "COLLECTION_PRESCRIPTION",
+        "WAIVER_OF_PRESCRIPTION"
+      ],
+      "candidateAuthorities": [
+        {
+          "title": "NIRC Sec. 203",
+          "sourceType": "NIRC_PROVISION",
+          "topicTags": [
+            "ASSESSMENT_PRESCRIPTION"
+          ],
+          "authorityTier": "controlling_primary_authority",
+          "sourceDomain": "officialgazette.gov.ph",
+          "verificationStatus": "official_source_required",
+          "note": "Three-year prescriptive period for assessment."
+        },
+        {
+          "title": "NIRC Sec. 222",
+          "sourceType": "NIRC_PROVISION",
+          "topicTags": [
+            "ASSESSMENT_PRESCRIPTION",
+            "WAIVER_OF_PRESCRIPTION"
+          ],
+          "authorityTier": "controlling_primary_authority",
+          "sourceDomain": "officialgazette.gov.ph",
+          "verificationStatus": "official_source_required",
+          "note": "Exceptions to the prescriptive period and waiver basis."
+        }
+      ]
+    },
+    "DOCUMENT_REQUEST_SCOPE_AUTHORITY": {
+      "userQuery": "What authorities define the scope limits for additional document requests and standardized checklists?",
+      "targetTopics": [
+        "STANDARDIZED_CHECKLIST",
+        "ADDITIONAL_DOCUMENT_REQUEST_LIMITS",
+        "VOLUMINOUS_RECORDS_ON_PREMISE_EXAMINATION",
+        "CERTIFIED_COPY_SUBMISSION"
+      ],
+      "candidateAuthorities": [
+        {
+          "title": "RMO No. 1-2026",
+          "sourceType": "BIR_REVENUE_MEMORANDUM_ORDER",
+          "topicTags": [
+            "STANDARDIZED_CHECKLIST",
+            "ADDITIONAL_DOCUMENT_REQUEST_LIMITS"
+          ],
+          "authorityTier": "official_procedural_guidance",
+          "sourceDomain": "bir.gov.ph",
+          "verificationStatus": "official_source_required",
+          "note": "Standardized checklist and document-request scope limits."
+        }
+      ]
+    },
+    "CTA_APPEAL_WATCH_AUTHORITY": {
+      "userQuery": "Map authority requirements for CTA appeal-period and inaction-appeal watch tracking.",
+      "targetTopics": [
+        "CTA_APPEAL_PERIOD",
+        "CTA_INACTION_APPEAL",
+        "FDDA"
+      ],
+      "candidateAuthorities": [
+        {
+          "title": "CTA rules",
+          "sourceType": "CTA_DECISION",
+          "topicTags": [
+            "CTA_APPEAL_PERIOD",
+            "CTA_INACTION_APPEAL"
+          ],
+          "authorityTier": "jurisprudential_authority",
+          "sourceDomain": "cta.judiciary.gov.ph",
+          "verificationStatus": "official_source_required",
+          "note": "CTA appeal period and inaction-appeal jurisprudence."
+        }
+      ]
+    }
+  },
+  "sampleOutputs": {
+    "LOA_AUTHORITY_CORPUS": {
+      "phase": "09Q",
+      "mode": "bir_authority_corpus_research_design",
+      "version": "PHASE-09Q-BIR-AUTHORITY-CORPUS-RESEARCH-DESIGN-1",
+      "runtimeActive": false,
+      "corpusDesignSummary": {
+        "totalTopics": 3,
+        "totalCandidateAuthorities": 2,
+        "officialSourcePriorityRequired": true,
+        "liveRetrievalPerformed": false,
+        "ingestionPerformed": false,
+        "databaseWritePerformed": false,
+        "legalConclusionProvided": false,
+        "humanReviewRequired": true,
+        "confidence": "medium"
+      },
+      "officialSourcePriority": [
+        {
+          "domainOrSource": "bir.gov.ph",
+          "priority": 1,
+          "allowedUse": "BIR issuances and forms",
+          "restrictions": [
+            "must confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "bir-cdn.bir.gov.ph",
+          "priority": 2,
+          "allowedUse": "BIR issuances and forms (CDN-hosted copies)",
+          "restrictions": [
+            "must confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "lawphil.net",
+          "priority": 3,
+          "allowedUse": "NIRC/statutory records and case-law mirror",
+          "restrictions": [
+            "cross-check against official judicial source when available"
+          ]
+        },
+        {
+          "domainOrSource": "sc.judiciary.gov.ph",
+          "priority": 4,
+          "allowedUse": "Supreme Court decisions",
+          "restrictions": [
+            "confirm finality and any subsequent resolution"
+          ]
+        },
+        {
+          "domainOrSource": "cta.judiciary.gov.ph",
+          "priority": 5,
+          "allowedUse": "CTA decisions (division and en banc)",
+          "restrictions": [
+            "confirm finality and any appeal status"
+          ]
+        },
+        {
+          "domainOrSource": "officialgazette.gov.ph",
+          "priority": 6,
+          "allowedUse": "official record verification and statute publication",
+          "restrictions": [
+            "confirm effectivity date"
+          ]
+        },
+        {
+          "domainOrSource": "dof.gov.ph",
+          "priority": 7,
+          "allowedUse": "DOF issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "peza.gov.ph",
+          "priority": 8,
+          "allowedUse": "PEZA issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "sec.gov.ph",
+          "priority": 9,
+          "allowedUse": "SEC issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "boi.gov.ph",
+          "priority": 10,
+          "allowedUse": "BOI issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "secondary_research_sources_non_official",
+          "priority": 11,
+          "allowedUse": "research lead only; must verify against official source before use",
+          "restrictions": [
+            "must not be cited as final authority",
+            "requires primary official-source confirmation before any reliance"
+          ]
+        }
+      ],
+      "authorityTopicMap": [
+        {
+          "topic": "LOA_AUTHORITY",
+          "requiredAuthorityTypes": [
+            "NIRC Sec. 6(A)",
+            "BIR LOA issuances",
+            "Supreme Court LOA jurisprudence"
+          ],
+          "candidateAuthorities": [
+            "NIRC Sec. 6(A)"
+          ],
+          "missingAuthorityGaps": [
+            "BIR LOA issuances",
+            "Supreme Court LOA jurisprudence"
+          ],
+          "verificationStatus": "official_source_identified_design_only",
+          "humanReviewRequired": true
+        },
+        {
+          "topic": "ELA_AUTHENTICITY",
+          "requiredAuthorityTypes": [
+            "RMC No. 5-2026",
+            "BIR REVIE / LOA Verifier workflow"
+          ],
+          "candidateAuthorities": [
+            "RMC No. 5-2026"
+          ],
+          "missingAuthorityGaps": [
+            "BIR REVIE / LOA Verifier workflow"
+          ],
+          "verificationStatus": "official_source_identified_design_only",
+          "humanReviewRequired": true
+        },
+        {
+          "topic": "RMC_5_2026_LOA_VERIFIER",
+          "requiredAuthorityTypes": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "candidateAuthorities": [
+            "RMC No. 5-2026"
+          ],
+          "missingAuthorityGaps": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "verificationStatus": "official_source_identified_design_only",
+          "humanReviewRequired": true
+        }
+      ],
+      "authorityMetadataSchema": {
+        "requiredFields": [
+          "title",
+          "sourceType",
+          "authorityTier",
+          "topicTags",
+          "officialUrlOrDomain",
+          "issuanceOrDecisionDate",
+          "effectiveDate",
+          "citationFormat"
+        ],
+        "recommendedFields": [
+          "supersedesId",
+          "supersededById",
+          "summary",
+          "relatedCaseNumbers",
+          "jurisdiction"
+        ],
+        "prohibitedFields": [
+          "realTaxpayerName",
+          "realTin",
+          "realLoaOrElaNumber",
+          "realAuditCaseNumber",
+          "realBirOfficerName",
+          "exactAssessmentAmount"
+        ],
+        "versioningFields": [
+          "versionNumber",
+          "effectiveDate",
+          "supersededDate",
+          "supersedesId",
+          "supersededById"
+        ],
+        "citationFields": [
+          "citationFormat",
+          "officialUrlOrDomain",
+          "pinCiteOrSection",
+          "retrievalDateForReview"
+        ]
+      },
+      "researchWorkflowDesign": [
+        {
+          "stage": "SOURCE_DISCOVERY_DESIGN",
+          "purpose": "Define how future patches will discover candidate authorities from official sources.",
+          "allowedActionsFutureOnly": [
+            "Query official BIR/judicial/DOF/PEZA/SEC/BOI sites for issuance listings"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No live search performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A discovery pipeline design producing candidate authority leads."
+        },
+        {
+          "stage": "OFFICIAL_SOURCE_PRIORITY_DESIGN",
+          "purpose": "Define ranked trust priority among official domains.",
+          "allowedActionsFutureOnly": [
+            "Assign priority weighting to discovered sources"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No source ranking applied to live data"
+          ],
+          "outputExpectedInFuturePatch": "A prioritized source list consumed by future ingestion."
+        },
+        {
+          "stage": "AUTHORITY_METADATA_DESIGN",
+          "purpose": "Define required/recommended/prohibited metadata fields for each authority record.",
+          "allowedActionsFutureOnly": [
+            "Populate metadata fields from verified official records"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No metadata populated from live sources"
+          ],
+          "outputExpectedInFuturePatch": "A structured metadata schema implementation."
+        },
+        {
+          "stage": "AUTHORITY_VERIFICATION_DESIGN",
+          "purpose": "Define how future patches will verify authority authenticity, date, and version.",
+          "allowedActionsFutureOnly": [
+            "Cross-check issuance date/version against official source"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No verification performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A verification pipeline producing verified/unverified status."
+        },
+        {
+          "stage": "AUTHORITY_TOPIC_MAPPING_DESIGN",
+          "purpose": "Define baseline mapping between BIR audit-defense workflow topics and required authority types.",
+          "allowedActionsFutureOnly": [
+            "Expand topic map coverage as new authorities are verified"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No topic-authority mapping is treated as complete or final"
+          ],
+          "outputExpectedInFuturePatch": "A living topic-to-authority map with verified coverage."
+        },
+        {
+          "stage": "CITATION_POLICY_DESIGN",
+          "purpose": "Define citation discipline for legal/tax claims and deadlines.",
+          "allowedActionsFutureOnly": [
+            "Generate citations from verified authority metadata"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No citations generated from unverified authorities"
+          ],
+          "outputExpectedInFuturePatch": "A citation-formatting and sourcing policy implementation."
+        },
+        {
+          "stage": "INGESTION_PIPELINE_DESIGN",
+          "purpose": "Define how future patches will ingest verified authorities into the corpus.",
+          "allowedActionsFutureOnly": [
+            "Ingest verified official documents into a governed corpus store"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No ingestion, download, or storage performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "An approved ingestion pipeline with governance gates."
+        },
+        {
+          "stage": "DEDUPLICATION_AND_VERSIONING_DESIGN",
+          "purpose": "Define how duplicate or superseded authorities are identified and tracked.",
+          "allowedActionsFutureOnly": [
+            "Detect duplicate/superseded authority records"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No deduplication run against live data"
+          ],
+          "outputExpectedInFuturePatch": "A deduplication/versioning implementation."
+        },
+        {
+          "stage": "CONFLICT_RESOLUTION_DESIGN",
+          "purpose": "Define how conflicting authorities are flagged and resolved.",
+          "allowedActionsFutureOnly": [
+            "Flag conflicting authorities for human review"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No conflict resolution performed on live data"
+          ],
+          "outputExpectedInFuturePatch": "A conflict-detection and escalation implementation."
+        },
+        {
+          "stage": "HUMAN_REVIEW_GATE_DESIGN",
+          "purpose": "Define mandatory human review checkpoints before authority reliance.",
+          "allowedActionsFutureOnly": [
+            "Route flagged authorities to human tax/legal reviewers"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No human review workflow activated in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A human review gate implementation."
+        },
+        {
+          "stage": "FUTURE_RUNTIME_WIRING_DESIGN",
+          "purpose": "Define how the verified authority corpus will eventually be wired into runtime retrieval.",
+          "allowedActionsFutureOnly": [
+            "Wire verified corpus into retrieval behind governance gates"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No runtime wiring performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A controlled runtime integration patch, separately approved."
+        },
+        {
+          "stage": "UNKNOWN_STAGE",
+          "purpose": "Placeholder for unclassified research workflow activity.",
+          "allowedActionsFutureOnly": [],
+          "prohibitedActionsThisPatch": [
+            "No action taken"
+          ],
+          "outputExpectedInFuturePatch": "Reclassify into a known stage before proceeding."
+        }
+      ],
+      "verificationRules": {
+        "officialPrimarySourceRequired": true,
+        "secondarySourcesLeadOnly": true,
+        "requireDateAndVersionCheck": true,
+        "requireSupersessionCheck": true,
+        "requireTopicMapping": true,
+        "requireQuoteAndCitationDiscipline": true,
+        "requireHumanReviewForConflict": true,
+        "noFinalLegalConclusionFromUnverifiedAuthority": true
+      },
+      "conflictResolutionPolicy": {
+        "newerIssuanceCheck": true,
+        "statuteVsRegulationHierarchyCheck": true,
+        "jurisprudenceVsAdministrativeGuidanceCheck": true,
+        "specialLawVsGeneralLawCheck": true,
+        "taxpayerFactSpecificityCheck": true,
+        "humanReviewRequiredForConflict": true
+      },
+      "futureIngestionPlan": {
+        "allowedOfficialDomains": [
+          "bir.gov.ph",
+          "bir-cdn.bir.gov.ph",
+          "lawphil.net",
+          "sc.judiciary.gov.ph",
+          "cta.judiciary.gov.ph",
+          "officialgazette.gov.ph",
+          "dof.gov.ph",
+          "peza.gov.ph",
+          "sec.gov.ph",
+          "boi.gov.ph"
+        ],
+        "prohibitedSources": [
+          "SEO blogs as final authority",
+          "social media posts",
+          "unverified summaries",
+          "AI-generated summaries without source",
+          "commercial articles without primary-source verification",
+          "outdated reposted PDFs without official source confirmation"
+        ],
+        "futurePipelineStages": [
+          "SOURCE_DISCOVERY_DESIGN",
+          "OFFICIAL_SOURCE_PRIORITY_DESIGN",
+          "AUTHORITY_METADATA_DESIGN",
+          "AUTHORITY_VERIFICATION_DESIGN",
+          "AUTHORITY_TOPIC_MAPPING_DESIGN",
+          "CITATION_POLICY_DESIGN",
+          "INGESTION_PIPELINE_DESIGN",
+          "DEDUPLICATION_AND_VERSIONING_DESIGN",
+          "CONFLICT_RESOLUTION_DESIGN",
+          "HUMAN_REVIEW_GATE_DESIGN",
+          "FUTURE_RUNTIME_WIRING_DESIGN"
+        ],
+        "futureMetadataChecks": [
+          "date and version check",
+          "supersession check",
+          "topic mapping check",
+          "citation format check"
+        ],
+        "futureQualityGates": [
+          "human review gate",
+          "conflict resolution gate",
+          "official source confirmation gate"
+        ]
+      },
+      "citationPolicyDesign": {
+        "citationRequiredForLegalClaims": true,
+        "citationRequiredForDeadlines": true,
+        "citationRequiredForAuthorityStatus": true,
+        "rawUnsupportedCitationProhibited": true,
+        "sourceCardRequired": true,
+        "exactExcerptPolicy": "Exact excerpts must be sourced from verified official documents only; this design patch includes no live-sourced excerpts."
+      },
+      "sourceCards": [
+        {
+          "label": "BIR official authority corpus design",
+          "sourceType": "authority corpus design",
+          "authorityTier": "future_authority_corpus_required",
+          "note": "Future implementation must verify BIR issuances against bir.gov.ph or bir-cdn.bir.gov.ph. This patch performs no live retrieval."
+        },
+        {
+          "label": "Judicial authority corpus design",
+          "sourceType": "authority corpus design",
+          "authorityTier": "future_authority_corpus_required",
+          "note": "Future implementation must verify Supreme Court and CTA authorities against official judicial sources. This patch performs no live retrieval."
+        },
+        {
+          "label": "2026 BIR audit baseline authority design",
+          "sourceType": "authority corpus design",
+          "authorityTier": "official_reference_required",
+          "note": "RMO No. 1-2026, RMO No. 6-2026, RMC No. 14-2026, RMC No. 5-2026, RMC No. 8-2026, and RMC No. 107-2025 must be treated as priority audit-framework authorities in future corpus work."
+        },
+        {
+          "label": "Private audit workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "private_uploaded_pattern",
+          "note": "Private materials may guide workflow design only. They are not public authority and must never expose real taxpayer data."
+        }
+      ],
+      "riskWarnings": [
+        "This is a design-only authority mapping; official-source verification is required before use.",
+        "Future implementation must verify date, version, supersession, and official source for every candidate authority.",
+        "The available design is insufficient for a final legal conclusion.",
+        "Human tax/legal review remains required before relying on any topic for legal conclusions."
+      ],
+      "recommendedNextActions": [
+        "Verify each candidate authority against its official source domain.",
+        "Build the live ingestion pipeline in a separately approved patch.",
+        "Expand topic coverage before relying on any topic for legal conclusions.",
+        "Route conflicting authorities to human review."
+      ],
+      "prohibitedConclusions": [
+        "authority_verification_determination",
+        "corpus_completeness_claim",
+        "final_legal_opinion",
+        "live_ingestion_claim",
+        "live_retrieval_claim"
+      ],
+      "humanReviewNotice": "This scaffold provides a design-only authority corpus research plan and does not constitute a final legal or tax conclusion. No authority referenced here has been live-verified, downloaded, scraped, ingested, or embedded by this patch; official-source verification remains required, and this matter should be reviewed by a qualified tax professional before any legal or tax conclusion.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "scrapingPerformed": false,
+        "downloadPerformed": false,
+        "ingestionPerformed": false,
+        "embeddingPerformed": false,
+        "databaseWritePerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "AUDIT_BASELINE_2026_CORPUS": {
+      "phase": "09Q",
+      "mode": "bir_authority_corpus_research_design",
+      "version": "PHASE-09Q-BIR-AUTHORITY-CORPUS-RESEARCH-DESIGN-1",
+      "runtimeActive": false,
+      "corpusDesignSummary": {
+        "totalTopics": 7,
+        "totalCandidateAuthorities": 3,
+        "officialSourcePriorityRequired": true,
+        "liveRetrievalPerformed": false,
+        "ingestionPerformed": false,
+        "databaseWritePerformed": false,
+        "legalConclusionProvided": false,
+        "humanReviewRequired": true,
+        "confidence": "medium"
+      },
+      "officialSourcePriority": [
+        {
+          "domainOrSource": "bir.gov.ph",
+          "priority": 1,
+          "allowedUse": "BIR issuances and forms",
+          "restrictions": [
+            "must confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "bir-cdn.bir.gov.ph",
+          "priority": 2,
+          "allowedUse": "BIR issuances and forms (CDN-hosted copies)",
+          "restrictions": [
+            "must confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "lawphil.net",
+          "priority": 3,
+          "allowedUse": "NIRC/statutory records and case-law mirror",
+          "restrictions": [
+            "cross-check against official judicial source when available"
+          ]
+        },
+        {
+          "domainOrSource": "sc.judiciary.gov.ph",
+          "priority": 4,
+          "allowedUse": "Supreme Court decisions",
+          "restrictions": [
+            "confirm finality and any subsequent resolution"
+          ]
+        },
+        {
+          "domainOrSource": "cta.judiciary.gov.ph",
+          "priority": 5,
+          "allowedUse": "CTA decisions (division and en banc)",
+          "restrictions": [
+            "confirm finality and any appeal status"
+          ]
+        },
+        {
+          "domainOrSource": "officialgazette.gov.ph",
+          "priority": 6,
+          "allowedUse": "official record verification and statute publication",
+          "restrictions": [
+            "confirm effectivity date"
+          ]
+        },
+        {
+          "domainOrSource": "dof.gov.ph",
+          "priority": 7,
+          "allowedUse": "DOF issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "peza.gov.ph",
+          "priority": 8,
+          "allowedUse": "PEZA issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "sec.gov.ph",
+          "priority": 9,
+          "allowedUse": "SEC issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "boi.gov.ph",
+          "priority": 10,
+          "allowedUse": "BOI issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "secondary_research_sources_non_official",
+          "priority": 11,
+          "allowedUse": "research lead only; must verify against official source before use",
+          "restrictions": [
+            "must not be cited as final authority",
+            "requires primary official-source confirmation before any reliance"
+          ]
+        }
+      ],
+      "authorityTopicMap": [
+        {
+          "topic": "RMO_1_2026_SINGLE_INSTANCE_AUDIT",
+          "requiredAuthorityTypes": [
+            "RMO No. 1-2026",
+            "RMO No. 6-2026",
+            "RMC No. 14-2026"
+          ],
+          "candidateAuthorities": [
+            "RMO No. 1-2026"
+          ],
+          "missingAuthorityGaps": [
+            "RMO No. 6-2026",
+            "RMC No. 14-2026"
+          ],
+          "verificationStatus": "official_source_identified_design_only",
+          "humanReviewRequired": true
+        },
+        {
+          "topic": "RMO_6_2026_CONSOLIDATION_SAFEGUARDS",
+          "requiredAuthorityTypes": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "candidateAuthorities": [
+            "RMO No. 6-2026"
+          ],
+          "missingAuthorityGaps": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "verificationStatus": "official_source_identified_design_only",
+          "humanReviewRequired": true
+        },
+        {
+          "topic": "RMC_14_2026_REPLACEMENT_ELA_CLARIFICATION",
+          "requiredAuthorityTypes": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "candidateAuthorities": [
+            "RMC No. 14-2026"
+          ],
+          "missingAuthorityGaps": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "verificationStatus": "official_source_identified_design_only",
+          "humanReviewRequired": true
+        },
+        {
+          "topic": "RMC_107_2025_AUDIT_SUSPENSION",
+          "requiredAuthorityTypes": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "candidateAuthorities": [],
+          "missingAuthorityGaps": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "verificationStatus": "official_source_required",
+          "humanReviewRequired": true
+        },
+        {
+          "topic": "RMC_8_2026_AUDIT_RESUMPTION",
+          "requiredAuthorityTypes": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "candidateAuthorities": [],
+          "missingAuthorityGaps": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "verificationStatus": "official_source_required",
+          "humanReviewRequired": true
+        },
+        {
+          "topic": "REPLACEMENT_ELA",
+          "requiredAuthorityTypes": [
+            "RMO No. 1-2026",
+            "RMO No. 6-2026",
+            "RMC No. 14-2026",
+            "LOA jurisprudence"
+          ],
+          "candidateAuthorities": [
+            "RMO No. 1-2026",
+            "RMC No. 14-2026"
+          ],
+          "missingAuthorityGaps": [
+            "RMO No. 6-2026",
+            "LOA jurisprudence"
+          ],
+          "verificationStatus": "official_source_identified_design_only",
+          "humanReviewRequired": true
+        },
+        {
+          "topic": "CONSOLIDATED_ELA",
+          "requiredAuthorityTypes": [
+            "RMO No. 1-2026",
+            "RMO No. 6-2026",
+            "RMC No. 14-2026"
+          ],
+          "candidateAuthorities": [
+            "RMO No. 1-2026",
+            "RMO No. 6-2026"
+          ],
+          "missingAuthorityGaps": [
+            "RMC No. 14-2026"
+          ],
+          "verificationStatus": "official_source_identified_design_only",
+          "humanReviewRequired": true
+        }
+      ],
+      "authorityMetadataSchema": {
+        "requiredFields": [
+          "title",
+          "sourceType",
+          "authorityTier",
+          "topicTags",
+          "officialUrlOrDomain",
+          "issuanceOrDecisionDate",
+          "effectiveDate",
+          "citationFormat"
+        ],
+        "recommendedFields": [
+          "supersedesId",
+          "supersededById",
+          "summary",
+          "relatedCaseNumbers",
+          "jurisdiction"
+        ],
+        "prohibitedFields": [
+          "realTaxpayerName",
+          "realTin",
+          "realLoaOrElaNumber",
+          "realAuditCaseNumber",
+          "realBirOfficerName",
+          "exactAssessmentAmount"
+        ],
+        "versioningFields": [
+          "versionNumber",
+          "effectiveDate",
+          "supersededDate",
+          "supersedesId",
+          "supersededById"
+        ],
+        "citationFields": [
+          "citationFormat",
+          "officialUrlOrDomain",
+          "pinCiteOrSection",
+          "retrievalDateForReview"
+        ]
+      },
+      "researchWorkflowDesign": [
+        {
+          "stage": "SOURCE_DISCOVERY_DESIGN",
+          "purpose": "Define how future patches will discover candidate authorities from official sources.",
+          "allowedActionsFutureOnly": [
+            "Query official BIR/judicial/DOF/PEZA/SEC/BOI sites for issuance listings"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No live search performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A discovery pipeline design producing candidate authority leads."
+        },
+        {
+          "stage": "OFFICIAL_SOURCE_PRIORITY_DESIGN",
+          "purpose": "Define ranked trust priority among official domains.",
+          "allowedActionsFutureOnly": [
+            "Assign priority weighting to discovered sources"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No source ranking applied to live data"
+          ],
+          "outputExpectedInFuturePatch": "A prioritized source list consumed by future ingestion."
+        },
+        {
+          "stage": "AUTHORITY_METADATA_DESIGN",
+          "purpose": "Define required/recommended/prohibited metadata fields for each authority record.",
+          "allowedActionsFutureOnly": [
+            "Populate metadata fields from verified official records"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No metadata populated from live sources"
+          ],
+          "outputExpectedInFuturePatch": "A structured metadata schema implementation."
+        },
+        {
+          "stage": "AUTHORITY_VERIFICATION_DESIGN",
+          "purpose": "Define how future patches will verify authority authenticity, date, and version.",
+          "allowedActionsFutureOnly": [
+            "Cross-check issuance date/version against official source"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No verification performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A verification pipeline producing verified/unverified status."
+        },
+        {
+          "stage": "AUTHORITY_TOPIC_MAPPING_DESIGN",
+          "purpose": "Define baseline mapping between BIR audit-defense workflow topics and required authority types.",
+          "allowedActionsFutureOnly": [
+            "Expand topic map coverage as new authorities are verified"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No topic-authority mapping is treated as complete or final"
+          ],
+          "outputExpectedInFuturePatch": "A living topic-to-authority map with verified coverage."
+        },
+        {
+          "stage": "CITATION_POLICY_DESIGN",
+          "purpose": "Define citation discipline for legal/tax claims and deadlines.",
+          "allowedActionsFutureOnly": [
+            "Generate citations from verified authority metadata"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No citations generated from unverified authorities"
+          ],
+          "outputExpectedInFuturePatch": "A citation-formatting and sourcing policy implementation."
+        },
+        {
+          "stage": "INGESTION_PIPELINE_DESIGN",
+          "purpose": "Define how future patches will ingest verified authorities into the corpus.",
+          "allowedActionsFutureOnly": [
+            "Ingest verified official documents into a governed corpus store"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No ingestion, download, or storage performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "An approved ingestion pipeline with governance gates."
+        },
+        {
+          "stage": "DEDUPLICATION_AND_VERSIONING_DESIGN",
+          "purpose": "Define how duplicate or superseded authorities are identified and tracked.",
+          "allowedActionsFutureOnly": [
+            "Detect duplicate/superseded authority records"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No deduplication run against live data"
+          ],
+          "outputExpectedInFuturePatch": "A deduplication/versioning implementation."
+        },
+        {
+          "stage": "CONFLICT_RESOLUTION_DESIGN",
+          "purpose": "Define how conflicting authorities are flagged and resolved.",
+          "allowedActionsFutureOnly": [
+            "Flag conflicting authorities for human review"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No conflict resolution performed on live data"
+          ],
+          "outputExpectedInFuturePatch": "A conflict-detection and escalation implementation."
+        },
+        {
+          "stage": "HUMAN_REVIEW_GATE_DESIGN",
+          "purpose": "Define mandatory human review checkpoints before authority reliance.",
+          "allowedActionsFutureOnly": [
+            "Route flagged authorities to human tax/legal reviewers"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No human review workflow activated in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A human review gate implementation."
+        },
+        {
+          "stage": "FUTURE_RUNTIME_WIRING_DESIGN",
+          "purpose": "Define how the verified authority corpus will eventually be wired into runtime retrieval.",
+          "allowedActionsFutureOnly": [
+            "Wire verified corpus into retrieval behind governance gates"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No runtime wiring performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A controlled runtime integration patch, separately approved."
+        },
+        {
+          "stage": "UNKNOWN_STAGE",
+          "purpose": "Placeholder for unclassified research workflow activity.",
+          "allowedActionsFutureOnly": [],
+          "prohibitedActionsThisPatch": [
+            "No action taken"
+          ],
+          "outputExpectedInFuturePatch": "Reclassify into a known stage before proceeding."
+        }
+      ],
+      "verificationRules": {
+        "officialPrimarySourceRequired": true,
+        "secondarySourcesLeadOnly": true,
+        "requireDateAndVersionCheck": true,
+        "requireSupersessionCheck": true,
+        "requireTopicMapping": true,
+        "requireQuoteAndCitationDiscipline": true,
+        "requireHumanReviewForConflict": true,
+        "noFinalLegalConclusionFromUnverifiedAuthority": true
+      },
+      "conflictResolutionPolicy": {
+        "newerIssuanceCheck": true,
+        "statuteVsRegulationHierarchyCheck": true,
+        "jurisprudenceVsAdministrativeGuidanceCheck": true,
+        "specialLawVsGeneralLawCheck": true,
+        "taxpayerFactSpecificityCheck": true,
+        "humanReviewRequiredForConflict": true
+      },
+      "futureIngestionPlan": {
+        "allowedOfficialDomains": [
+          "bir.gov.ph",
+          "bir-cdn.bir.gov.ph",
+          "lawphil.net",
+          "sc.judiciary.gov.ph",
+          "cta.judiciary.gov.ph",
+          "officialgazette.gov.ph",
+          "dof.gov.ph",
+          "peza.gov.ph",
+          "sec.gov.ph",
+          "boi.gov.ph"
+        ],
+        "prohibitedSources": [
+          "SEO blogs as final authority",
+          "social media posts",
+          "unverified summaries",
+          "AI-generated summaries without source",
+          "commercial articles without primary-source verification",
+          "outdated reposted PDFs without official source confirmation"
+        ],
+        "futurePipelineStages": [
+          "SOURCE_DISCOVERY_DESIGN",
+          "OFFICIAL_SOURCE_PRIORITY_DESIGN",
+          "AUTHORITY_METADATA_DESIGN",
+          "AUTHORITY_VERIFICATION_DESIGN",
+          "AUTHORITY_TOPIC_MAPPING_DESIGN",
+          "CITATION_POLICY_DESIGN",
+          "INGESTION_PIPELINE_DESIGN",
+          "DEDUPLICATION_AND_VERSIONING_DESIGN",
+          "CONFLICT_RESOLUTION_DESIGN",
+          "HUMAN_REVIEW_GATE_DESIGN",
+          "FUTURE_RUNTIME_WIRING_DESIGN"
+        ],
+        "futureMetadataChecks": [
+          "date and version check",
+          "supersession check",
+          "topic mapping check",
+          "citation format check"
+        ],
+        "futureQualityGates": [
+          "human review gate",
+          "conflict resolution gate",
+          "official source confirmation gate"
+        ]
+      },
+      "citationPolicyDesign": {
+        "citationRequiredForLegalClaims": true,
+        "citationRequiredForDeadlines": true,
+        "citationRequiredForAuthorityStatus": true,
+        "rawUnsupportedCitationProhibited": true,
+        "sourceCardRequired": true,
+        "exactExcerptPolicy": "Exact excerpts must be sourced from verified official documents only; this design patch includes no live-sourced excerpts."
+      },
+      "sourceCards": [
+        {
+          "label": "BIR official authority corpus design",
+          "sourceType": "authority corpus design",
+          "authorityTier": "future_authority_corpus_required",
+          "note": "Future implementation must verify BIR issuances against bir.gov.ph or bir-cdn.bir.gov.ph. This patch performs no live retrieval."
+        },
+        {
+          "label": "Judicial authority corpus design",
+          "sourceType": "authority corpus design",
+          "authorityTier": "future_authority_corpus_required",
+          "note": "Future implementation must verify Supreme Court and CTA authorities against official judicial sources. This patch performs no live retrieval."
+        },
+        {
+          "label": "2026 BIR audit baseline authority design",
+          "sourceType": "authority corpus design",
+          "authorityTier": "official_reference_required",
+          "note": "RMO No. 1-2026, RMO No. 6-2026, RMC No. 14-2026, RMC No. 5-2026, RMC No. 8-2026, and RMC No. 107-2025 must be treated as priority audit-framework authorities in future corpus work."
+        },
+        {
+          "label": "Private audit workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "private_uploaded_pattern",
+          "note": "Private materials may guide workflow design only. They are not public authority and must never expose real taxpayer data."
+        }
+      ],
+      "riskWarnings": [
+        "This is a design-only authority mapping; official-source verification is required before use.",
+        "Future implementation must verify date, version, supersession, and official source for every candidate authority.",
+        "The available design is insufficient for a final legal conclusion.",
+        "Human tax/legal review remains required before relying on any topic for legal conclusions."
+      ],
+      "recommendedNextActions": [
+        "Verify each candidate authority against its official source domain.",
+        "Build the live ingestion pipeline in a separately approved patch.",
+        "Expand topic coverage before relying on any topic for legal conclusions.",
+        "Route conflicting authorities to human review."
+      ],
+      "prohibitedConclusions": [
+        "authority_verification_determination",
+        "corpus_completeness_claim",
+        "final_legal_opinion",
+        "live_ingestion_claim",
+        "live_retrieval_claim"
+      ],
+      "humanReviewNotice": "This scaffold provides a design-only authority corpus research plan and does not constitute a final legal or tax conclusion. No authority referenced here has been live-verified, downloaded, scraped, ingested, or embedded by this patch; official-source verification remains required, and this matter should be reviewed by a qualified tax professional before any legal or tax conclusion.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "scrapingPerformed": false,
+        "downloadPerformed": false,
+        "ingestionPerformed": false,
+        "embeddingPerformed": false,
+        "databaseWritePerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "PAN_FAN_FLD_PROTEST_AUTHORITY": {
+      "phase": "09Q",
+      "mode": "bir_authority_corpus_research_design",
+      "version": "PHASE-09Q-BIR-AUTHORITY-CORPUS-RESEARCH-DESIGN-1",
+      "runtimeActive": false,
+      "corpusDesignSummary": {
+        "totalTopics": 6,
+        "totalCandidateAuthorities": 2,
+        "officialSourcePriorityRequired": true,
+        "liveRetrievalPerformed": false,
+        "ingestionPerformed": false,
+        "databaseWritePerformed": false,
+        "legalConclusionProvided": false,
+        "humanReviewRequired": true,
+        "confidence": "medium"
+      },
+      "officialSourcePriority": [
+        {
+          "domainOrSource": "bir.gov.ph",
+          "priority": 1,
+          "allowedUse": "BIR issuances and forms",
+          "restrictions": [
+            "must confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "bir-cdn.bir.gov.ph",
+          "priority": 2,
+          "allowedUse": "BIR issuances and forms (CDN-hosted copies)",
+          "restrictions": [
+            "must confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "lawphil.net",
+          "priority": 3,
+          "allowedUse": "NIRC/statutory records and case-law mirror",
+          "restrictions": [
+            "cross-check against official judicial source when available"
+          ]
+        },
+        {
+          "domainOrSource": "sc.judiciary.gov.ph",
+          "priority": 4,
+          "allowedUse": "Supreme Court decisions",
+          "restrictions": [
+            "confirm finality and any subsequent resolution"
+          ]
+        },
+        {
+          "domainOrSource": "cta.judiciary.gov.ph",
+          "priority": 5,
+          "allowedUse": "CTA decisions (division and en banc)",
+          "restrictions": [
+            "confirm finality and any appeal status"
+          ]
+        },
+        {
+          "domainOrSource": "officialgazette.gov.ph",
+          "priority": 6,
+          "allowedUse": "official record verification and statute publication",
+          "restrictions": [
+            "confirm effectivity date"
+          ]
+        },
+        {
+          "domainOrSource": "dof.gov.ph",
+          "priority": 7,
+          "allowedUse": "DOF issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "peza.gov.ph",
+          "priority": 8,
+          "allowedUse": "PEZA issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "sec.gov.ph",
+          "priority": 9,
+          "allowedUse": "SEC issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "boi.gov.ph",
+          "priority": 10,
+          "allowedUse": "BOI issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "secondary_research_sources_non_official",
+          "priority": 11,
+          "allowedUse": "research lead only; must verify against official source before use",
+          "restrictions": [
+            "must not be cited as final authority",
+            "requires primary official-source confirmation before any reliance"
+          ]
+        }
+      ],
+      "authorityTopicMap": [
+        {
+          "topic": "PAN_REPLY",
+          "requiredAuthorityTypes": [
+            "NIRC Sec. 228",
+            "RR No. 18-2013",
+            "RR No. 12-99 as amended"
+          ],
+          "candidateAuthorities": [
+            "NIRC Sec. 228",
+            "RR No. 18-2013"
+          ],
+          "missingAuthorityGaps": [
+            "RR No. 12-99 as amended"
+          ],
+          "verificationStatus": "official_source_identified_design_only",
+          "humanReviewRequired": true
+        },
+        {
+          "topic": "FAN_FLD_PROTEST",
+          "requiredAuthorityTypes": [
+            "NIRC Sec. 228",
+            "RR No. 18-2013",
+            "RR No. 12-99 as amended",
+            "CTA rules"
+          ],
+          "candidateAuthorities": [
+            "NIRC Sec. 228",
+            "RR No. 18-2013"
+          ],
+          "missingAuthorityGaps": [
+            "RR No. 12-99 as amended",
+            "CTA rules"
+          ],
+          "verificationStatus": "official_source_identified_design_only",
+          "humanReviewRequired": true
+        },
+        {
+          "topic": "REQUEST_FOR_RECONSIDERATION",
+          "requiredAuthorityTypes": [
+            "RR No. 18-2013",
+            "CTA cases"
+          ],
+          "candidateAuthorities": [
+            "RR No. 18-2013"
+          ],
+          "missingAuthorityGaps": [
+            "CTA cases"
+          ],
+          "verificationStatus": "official_source_identified_design_only",
+          "humanReviewRequired": true
+        },
+        {
+          "topic": "REQUEST_FOR_REINVESTIGATION",
+          "requiredAuthorityTypes": [
+            "RR No. 18-2013",
+            "CTA cases"
+          ],
+          "candidateAuthorities": [
+            "RR No. 18-2013"
+          ],
+          "missingAuthorityGaps": [
+            "CTA cases"
+          ],
+          "verificationStatus": "official_source_identified_design_only",
+          "humanReviewRequired": true
+        },
+        {
+          "topic": "FDDA",
+          "requiredAuthorityTypes": [
+            "NIRC Sec. 228",
+            "RR No. 18-2013",
+            "CTA appeal rules"
+          ],
+          "candidateAuthorities": [
+            "NIRC Sec. 228"
+          ],
+          "missingAuthorityGaps": [
+            "RR No. 18-2013",
+            "CTA appeal rules"
+          ],
+          "verificationStatus": "official_source_identified_design_only",
+          "humanReviewRequired": true
+        },
+        {
+          "topic": "DUE_PROCESS_FACTS_AND_LAW",
+          "requiredAuthorityTypes": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "candidateAuthorities": [],
+          "missingAuthorityGaps": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "verificationStatus": "official_source_required",
+          "humanReviewRequired": true
+        }
+      ],
+      "authorityMetadataSchema": {
+        "requiredFields": [
+          "title",
+          "sourceType",
+          "authorityTier",
+          "topicTags",
+          "officialUrlOrDomain",
+          "issuanceOrDecisionDate",
+          "effectiveDate",
+          "citationFormat"
+        ],
+        "recommendedFields": [
+          "supersedesId",
+          "supersededById",
+          "summary",
+          "relatedCaseNumbers",
+          "jurisdiction"
+        ],
+        "prohibitedFields": [
+          "realTaxpayerName",
+          "realTin",
+          "realLoaOrElaNumber",
+          "realAuditCaseNumber",
+          "realBirOfficerName",
+          "exactAssessmentAmount"
+        ],
+        "versioningFields": [
+          "versionNumber",
+          "effectiveDate",
+          "supersededDate",
+          "supersedesId",
+          "supersededById"
+        ],
+        "citationFields": [
+          "citationFormat",
+          "officialUrlOrDomain",
+          "pinCiteOrSection",
+          "retrievalDateForReview"
+        ]
+      },
+      "researchWorkflowDesign": [
+        {
+          "stage": "SOURCE_DISCOVERY_DESIGN",
+          "purpose": "Define how future patches will discover candidate authorities from official sources.",
+          "allowedActionsFutureOnly": [
+            "Query official BIR/judicial/DOF/PEZA/SEC/BOI sites for issuance listings"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No live search performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A discovery pipeline design producing candidate authority leads."
+        },
+        {
+          "stage": "OFFICIAL_SOURCE_PRIORITY_DESIGN",
+          "purpose": "Define ranked trust priority among official domains.",
+          "allowedActionsFutureOnly": [
+            "Assign priority weighting to discovered sources"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No source ranking applied to live data"
+          ],
+          "outputExpectedInFuturePatch": "A prioritized source list consumed by future ingestion."
+        },
+        {
+          "stage": "AUTHORITY_METADATA_DESIGN",
+          "purpose": "Define required/recommended/prohibited metadata fields for each authority record.",
+          "allowedActionsFutureOnly": [
+            "Populate metadata fields from verified official records"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No metadata populated from live sources"
+          ],
+          "outputExpectedInFuturePatch": "A structured metadata schema implementation."
+        },
+        {
+          "stage": "AUTHORITY_VERIFICATION_DESIGN",
+          "purpose": "Define how future patches will verify authority authenticity, date, and version.",
+          "allowedActionsFutureOnly": [
+            "Cross-check issuance date/version against official source"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No verification performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A verification pipeline producing verified/unverified status."
+        },
+        {
+          "stage": "AUTHORITY_TOPIC_MAPPING_DESIGN",
+          "purpose": "Define baseline mapping between BIR audit-defense workflow topics and required authority types.",
+          "allowedActionsFutureOnly": [
+            "Expand topic map coverage as new authorities are verified"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No topic-authority mapping is treated as complete or final"
+          ],
+          "outputExpectedInFuturePatch": "A living topic-to-authority map with verified coverage."
+        },
+        {
+          "stage": "CITATION_POLICY_DESIGN",
+          "purpose": "Define citation discipline for legal/tax claims and deadlines.",
+          "allowedActionsFutureOnly": [
+            "Generate citations from verified authority metadata"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No citations generated from unverified authorities"
+          ],
+          "outputExpectedInFuturePatch": "A citation-formatting and sourcing policy implementation."
+        },
+        {
+          "stage": "INGESTION_PIPELINE_DESIGN",
+          "purpose": "Define how future patches will ingest verified authorities into the corpus.",
+          "allowedActionsFutureOnly": [
+            "Ingest verified official documents into a governed corpus store"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No ingestion, download, or storage performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "An approved ingestion pipeline with governance gates."
+        },
+        {
+          "stage": "DEDUPLICATION_AND_VERSIONING_DESIGN",
+          "purpose": "Define how duplicate or superseded authorities are identified and tracked.",
+          "allowedActionsFutureOnly": [
+            "Detect duplicate/superseded authority records"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No deduplication run against live data"
+          ],
+          "outputExpectedInFuturePatch": "A deduplication/versioning implementation."
+        },
+        {
+          "stage": "CONFLICT_RESOLUTION_DESIGN",
+          "purpose": "Define how conflicting authorities are flagged and resolved.",
+          "allowedActionsFutureOnly": [
+            "Flag conflicting authorities for human review"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No conflict resolution performed on live data"
+          ],
+          "outputExpectedInFuturePatch": "A conflict-detection and escalation implementation."
+        },
+        {
+          "stage": "HUMAN_REVIEW_GATE_DESIGN",
+          "purpose": "Define mandatory human review checkpoints before authority reliance.",
+          "allowedActionsFutureOnly": [
+            "Route flagged authorities to human tax/legal reviewers"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No human review workflow activated in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A human review gate implementation."
+        },
+        {
+          "stage": "FUTURE_RUNTIME_WIRING_DESIGN",
+          "purpose": "Define how the verified authority corpus will eventually be wired into runtime retrieval.",
+          "allowedActionsFutureOnly": [
+            "Wire verified corpus into retrieval behind governance gates"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No runtime wiring performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A controlled runtime integration patch, separately approved."
+        },
+        {
+          "stage": "UNKNOWN_STAGE",
+          "purpose": "Placeholder for unclassified research workflow activity.",
+          "allowedActionsFutureOnly": [],
+          "prohibitedActionsThisPatch": [
+            "No action taken"
+          ],
+          "outputExpectedInFuturePatch": "Reclassify into a known stage before proceeding."
+        }
+      ],
+      "verificationRules": {
+        "officialPrimarySourceRequired": true,
+        "secondarySourcesLeadOnly": true,
+        "requireDateAndVersionCheck": true,
+        "requireSupersessionCheck": true,
+        "requireTopicMapping": true,
+        "requireQuoteAndCitationDiscipline": true,
+        "requireHumanReviewForConflict": true,
+        "noFinalLegalConclusionFromUnverifiedAuthority": true
+      },
+      "conflictResolutionPolicy": {
+        "newerIssuanceCheck": true,
+        "statuteVsRegulationHierarchyCheck": true,
+        "jurisprudenceVsAdministrativeGuidanceCheck": true,
+        "specialLawVsGeneralLawCheck": true,
+        "taxpayerFactSpecificityCheck": true,
+        "humanReviewRequiredForConflict": true
+      },
+      "futureIngestionPlan": {
+        "allowedOfficialDomains": [
+          "bir.gov.ph",
+          "bir-cdn.bir.gov.ph",
+          "lawphil.net",
+          "sc.judiciary.gov.ph",
+          "cta.judiciary.gov.ph",
+          "officialgazette.gov.ph",
+          "dof.gov.ph",
+          "peza.gov.ph",
+          "sec.gov.ph",
+          "boi.gov.ph"
+        ],
+        "prohibitedSources": [
+          "SEO blogs as final authority",
+          "social media posts",
+          "unverified summaries",
+          "AI-generated summaries without source",
+          "commercial articles without primary-source verification",
+          "outdated reposted PDFs without official source confirmation"
+        ],
+        "futurePipelineStages": [
+          "SOURCE_DISCOVERY_DESIGN",
+          "OFFICIAL_SOURCE_PRIORITY_DESIGN",
+          "AUTHORITY_METADATA_DESIGN",
+          "AUTHORITY_VERIFICATION_DESIGN",
+          "AUTHORITY_TOPIC_MAPPING_DESIGN",
+          "CITATION_POLICY_DESIGN",
+          "INGESTION_PIPELINE_DESIGN",
+          "DEDUPLICATION_AND_VERSIONING_DESIGN",
+          "CONFLICT_RESOLUTION_DESIGN",
+          "HUMAN_REVIEW_GATE_DESIGN",
+          "FUTURE_RUNTIME_WIRING_DESIGN"
+        ],
+        "futureMetadataChecks": [
+          "date and version check",
+          "supersession check",
+          "topic mapping check",
+          "citation format check"
+        ],
+        "futureQualityGates": [
+          "human review gate",
+          "conflict resolution gate",
+          "official source confirmation gate"
+        ]
+      },
+      "citationPolicyDesign": {
+        "citationRequiredForLegalClaims": true,
+        "citationRequiredForDeadlines": true,
+        "citationRequiredForAuthorityStatus": true,
+        "rawUnsupportedCitationProhibited": true,
+        "sourceCardRequired": true,
+        "exactExcerptPolicy": "Exact excerpts must be sourced from verified official documents only; this design patch includes no live-sourced excerpts."
+      },
+      "sourceCards": [
+        {
+          "label": "BIR official authority corpus design",
+          "sourceType": "authority corpus design",
+          "authorityTier": "future_authority_corpus_required",
+          "note": "Future implementation must verify BIR issuances against bir.gov.ph or bir-cdn.bir.gov.ph. This patch performs no live retrieval."
+        },
+        {
+          "label": "Judicial authority corpus design",
+          "sourceType": "authority corpus design",
+          "authorityTier": "future_authority_corpus_required",
+          "note": "Future implementation must verify Supreme Court and CTA authorities against official judicial sources. This patch performs no live retrieval."
+        },
+        {
+          "label": "2026 BIR audit baseline authority design",
+          "sourceType": "authority corpus design",
+          "authorityTier": "official_reference_required",
+          "note": "RMO No. 1-2026, RMO No. 6-2026, RMC No. 14-2026, RMC No. 5-2026, RMC No. 8-2026, and RMC No. 107-2025 must be treated as priority audit-framework authorities in future corpus work."
+        },
+        {
+          "label": "Private audit workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "private_uploaded_pattern",
+          "note": "Private materials may guide workflow design only. They are not public authority and must never expose real taxpayer data."
+        }
+      ],
+      "riskWarnings": [
+        "This is a design-only authority mapping; official-source verification is required before use.",
+        "Future implementation must verify date, version, supersession, and official source for every candidate authority.",
+        "The available design is insufficient for a final legal conclusion.",
+        "Human tax/legal review remains required before relying on any topic for legal conclusions."
+      ],
+      "recommendedNextActions": [
+        "Verify each candidate authority against its official source domain.",
+        "Build the live ingestion pipeline in a separately approved patch.",
+        "Expand topic coverage before relying on any topic for legal conclusions.",
+        "Route conflicting authorities to human review."
+      ],
+      "prohibitedConclusions": [
+        "authority_verification_determination",
+        "corpus_completeness_claim",
+        "final_legal_opinion",
+        "live_ingestion_claim",
+        "live_retrieval_claim"
+      ],
+      "humanReviewNotice": "This scaffold provides a design-only authority corpus research plan and does not constitute a final legal or tax conclusion. No authority referenced here has been live-verified, downloaded, scraped, ingested, or embedded by this patch; official-source verification remains required, and this matter should be reviewed by a qualified tax professional before any legal or tax conclusion.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "scrapingPerformed": false,
+        "downloadPerformed": false,
+        "ingestionPerformed": false,
+        "embeddingPerformed": false,
+        "databaseWritePerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "VAT_ZERO_RATING_AUTHORITY": {
+      "phase": "09Q",
+      "mode": "bir_authority_corpus_research_design",
+      "version": "PHASE-09Q-BIR-AUTHORITY-CORPUS-RESEARCH-DESIGN-1",
+      "runtimeActive": false,
+      "corpusDesignSummary": {
+        "totalTopics": 3,
+        "totalCandidateAuthorities": 2,
+        "officialSourcePriorityRequired": true,
+        "liveRetrievalPerformed": false,
+        "ingestionPerformed": false,
+        "databaseWritePerformed": false,
+        "legalConclusionProvided": false,
+        "humanReviewRequired": true,
+        "confidence": "medium"
+      },
+      "officialSourcePriority": [
+        {
+          "domainOrSource": "bir.gov.ph",
+          "priority": 1,
+          "allowedUse": "BIR issuances and forms",
+          "restrictions": [
+            "must confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "bir-cdn.bir.gov.ph",
+          "priority": 2,
+          "allowedUse": "BIR issuances and forms (CDN-hosted copies)",
+          "restrictions": [
+            "must confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "lawphil.net",
+          "priority": 3,
+          "allowedUse": "NIRC/statutory records and case-law mirror",
+          "restrictions": [
+            "cross-check against official judicial source when available"
+          ]
+        },
+        {
+          "domainOrSource": "sc.judiciary.gov.ph",
+          "priority": 4,
+          "allowedUse": "Supreme Court decisions",
+          "restrictions": [
+            "confirm finality and any subsequent resolution"
+          ]
+        },
+        {
+          "domainOrSource": "cta.judiciary.gov.ph",
+          "priority": 5,
+          "allowedUse": "CTA decisions (division and en banc)",
+          "restrictions": [
+            "confirm finality and any appeal status"
+          ]
+        },
+        {
+          "domainOrSource": "officialgazette.gov.ph",
+          "priority": 6,
+          "allowedUse": "official record verification and statute publication",
+          "restrictions": [
+            "confirm effectivity date"
+          ]
+        },
+        {
+          "domainOrSource": "dof.gov.ph",
+          "priority": 7,
+          "allowedUse": "DOF issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "peza.gov.ph",
+          "priority": 8,
+          "allowedUse": "PEZA issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "sec.gov.ph",
+          "priority": 9,
+          "allowedUse": "SEC issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "boi.gov.ph",
+          "priority": 10,
+          "allowedUse": "BOI issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "secondary_research_sources_non_official",
+          "priority": 11,
+          "allowedUse": "research lead only; must verify against official source before use",
+          "restrictions": [
+            "must not be cited as final authority",
+            "requires primary official-source confirmation before any reliance"
+          ]
+        }
+      ],
+      "authorityTopicMap": [
+        {
+          "topic": "VAT_EXEMPT_VS_ZERO_RATED",
+          "requiredAuthorityTypes": [
+            "NIRC Sec. 106/108/109",
+            "VAT regulations",
+            "PEZA rules",
+            "jurisprudence"
+          ],
+          "candidateAuthorities": [
+            "NIRC Sec. 106/108/109"
+          ],
+          "missingAuthorityGaps": [
+            "VAT regulations",
+            "PEZA rules",
+            "jurisprudence"
+          ],
+          "verificationStatus": "official_source_identified_design_only",
+          "humanReviewRequired": true
+        },
+        {
+          "topic": "PEZA_ZERO_RATING",
+          "requiredAuthorityTypes": [
+            "NIRC VAT provisions",
+            "PEZA law/issuances",
+            "VAT regulations",
+            "jurisprudence"
+          ],
+          "candidateAuthorities": [
+            "PEZA law/issuances"
+          ],
+          "missingAuthorityGaps": [
+            "NIRC VAT provisions",
+            "VAT regulations",
+            "jurisprudence"
+          ],
+          "verificationStatus": "official_source_identified_design_only",
+          "humanReviewRequired": true
+        },
+        {
+          "topic": "INPUT_VAT_SUBSTANTIATION",
+          "requiredAuthorityTypes": [
+            "NIRC Sec. 110",
+            "VAT invoicing rules",
+            "jurisprudence"
+          ],
+          "candidateAuthorities": [],
+          "missingAuthorityGaps": [
+            "NIRC Sec. 110",
+            "VAT invoicing rules",
+            "jurisprudence"
+          ],
+          "verificationStatus": "official_source_required",
+          "humanReviewRequired": true
+        }
+      ],
+      "authorityMetadataSchema": {
+        "requiredFields": [
+          "title",
+          "sourceType",
+          "authorityTier",
+          "topicTags",
+          "officialUrlOrDomain",
+          "issuanceOrDecisionDate",
+          "effectiveDate",
+          "citationFormat"
+        ],
+        "recommendedFields": [
+          "supersedesId",
+          "supersededById",
+          "summary",
+          "relatedCaseNumbers",
+          "jurisdiction"
+        ],
+        "prohibitedFields": [
+          "realTaxpayerName",
+          "realTin",
+          "realLoaOrElaNumber",
+          "realAuditCaseNumber",
+          "realBirOfficerName",
+          "exactAssessmentAmount"
+        ],
+        "versioningFields": [
+          "versionNumber",
+          "effectiveDate",
+          "supersededDate",
+          "supersedesId",
+          "supersededById"
+        ],
+        "citationFields": [
+          "citationFormat",
+          "officialUrlOrDomain",
+          "pinCiteOrSection",
+          "retrievalDateForReview"
+        ]
+      },
+      "researchWorkflowDesign": [
+        {
+          "stage": "SOURCE_DISCOVERY_DESIGN",
+          "purpose": "Define how future patches will discover candidate authorities from official sources.",
+          "allowedActionsFutureOnly": [
+            "Query official BIR/judicial/DOF/PEZA/SEC/BOI sites for issuance listings"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No live search performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A discovery pipeline design producing candidate authority leads."
+        },
+        {
+          "stage": "OFFICIAL_SOURCE_PRIORITY_DESIGN",
+          "purpose": "Define ranked trust priority among official domains.",
+          "allowedActionsFutureOnly": [
+            "Assign priority weighting to discovered sources"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No source ranking applied to live data"
+          ],
+          "outputExpectedInFuturePatch": "A prioritized source list consumed by future ingestion."
+        },
+        {
+          "stage": "AUTHORITY_METADATA_DESIGN",
+          "purpose": "Define required/recommended/prohibited metadata fields for each authority record.",
+          "allowedActionsFutureOnly": [
+            "Populate metadata fields from verified official records"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No metadata populated from live sources"
+          ],
+          "outputExpectedInFuturePatch": "A structured metadata schema implementation."
+        },
+        {
+          "stage": "AUTHORITY_VERIFICATION_DESIGN",
+          "purpose": "Define how future patches will verify authority authenticity, date, and version.",
+          "allowedActionsFutureOnly": [
+            "Cross-check issuance date/version against official source"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No verification performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A verification pipeline producing verified/unverified status."
+        },
+        {
+          "stage": "AUTHORITY_TOPIC_MAPPING_DESIGN",
+          "purpose": "Define baseline mapping between BIR audit-defense workflow topics and required authority types.",
+          "allowedActionsFutureOnly": [
+            "Expand topic map coverage as new authorities are verified"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No topic-authority mapping is treated as complete or final"
+          ],
+          "outputExpectedInFuturePatch": "A living topic-to-authority map with verified coverage."
+        },
+        {
+          "stage": "CITATION_POLICY_DESIGN",
+          "purpose": "Define citation discipline for legal/tax claims and deadlines.",
+          "allowedActionsFutureOnly": [
+            "Generate citations from verified authority metadata"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No citations generated from unverified authorities"
+          ],
+          "outputExpectedInFuturePatch": "A citation-formatting and sourcing policy implementation."
+        },
+        {
+          "stage": "INGESTION_PIPELINE_DESIGN",
+          "purpose": "Define how future patches will ingest verified authorities into the corpus.",
+          "allowedActionsFutureOnly": [
+            "Ingest verified official documents into a governed corpus store"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No ingestion, download, or storage performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "An approved ingestion pipeline with governance gates."
+        },
+        {
+          "stage": "DEDUPLICATION_AND_VERSIONING_DESIGN",
+          "purpose": "Define how duplicate or superseded authorities are identified and tracked.",
+          "allowedActionsFutureOnly": [
+            "Detect duplicate/superseded authority records"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No deduplication run against live data"
+          ],
+          "outputExpectedInFuturePatch": "A deduplication/versioning implementation."
+        },
+        {
+          "stage": "CONFLICT_RESOLUTION_DESIGN",
+          "purpose": "Define how conflicting authorities are flagged and resolved.",
+          "allowedActionsFutureOnly": [
+            "Flag conflicting authorities for human review"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No conflict resolution performed on live data"
+          ],
+          "outputExpectedInFuturePatch": "A conflict-detection and escalation implementation."
+        },
+        {
+          "stage": "HUMAN_REVIEW_GATE_DESIGN",
+          "purpose": "Define mandatory human review checkpoints before authority reliance.",
+          "allowedActionsFutureOnly": [
+            "Route flagged authorities to human tax/legal reviewers"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No human review workflow activated in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A human review gate implementation."
+        },
+        {
+          "stage": "FUTURE_RUNTIME_WIRING_DESIGN",
+          "purpose": "Define how the verified authority corpus will eventually be wired into runtime retrieval.",
+          "allowedActionsFutureOnly": [
+            "Wire verified corpus into retrieval behind governance gates"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No runtime wiring performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A controlled runtime integration patch, separately approved."
+        },
+        {
+          "stage": "UNKNOWN_STAGE",
+          "purpose": "Placeholder for unclassified research workflow activity.",
+          "allowedActionsFutureOnly": [],
+          "prohibitedActionsThisPatch": [
+            "No action taken"
+          ],
+          "outputExpectedInFuturePatch": "Reclassify into a known stage before proceeding."
+        }
+      ],
+      "verificationRules": {
+        "officialPrimarySourceRequired": true,
+        "secondarySourcesLeadOnly": true,
+        "requireDateAndVersionCheck": true,
+        "requireSupersessionCheck": true,
+        "requireTopicMapping": true,
+        "requireQuoteAndCitationDiscipline": true,
+        "requireHumanReviewForConflict": true,
+        "noFinalLegalConclusionFromUnverifiedAuthority": true
+      },
+      "conflictResolutionPolicy": {
+        "newerIssuanceCheck": true,
+        "statuteVsRegulationHierarchyCheck": true,
+        "jurisprudenceVsAdministrativeGuidanceCheck": true,
+        "specialLawVsGeneralLawCheck": true,
+        "taxpayerFactSpecificityCheck": true,
+        "humanReviewRequiredForConflict": true
+      },
+      "futureIngestionPlan": {
+        "allowedOfficialDomains": [
+          "bir.gov.ph",
+          "bir-cdn.bir.gov.ph",
+          "lawphil.net",
+          "sc.judiciary.gov.ph",
+          "cta.judiciary.gov.ph",
+          "officialgazette.gov.ph",
+          "dof.gov.ph",
+          "peza.gov.ph",
+          "sec.gov.ph",
+          "boi.gov.ph"
+        ],
+        "prohibitedSources": [
+          "SEO blogs as final authority",
+          "social media posts",
+          "unverified summaries",
+          "AI-generated summaries without source",
+          "commercial articles without primary-source verification",
+          "outdated reposted PDFs without official source confirmation"
+        ],
+        "futurePipelineStages": [
+          "SOURCE_DISCOVERY_DESIGN",
+          "OFFICIAL_SOURCE_PRIORITY_DESIGN",
+          "AUTHORITY_METADATA_DESIGN",
+          "AUTHORITY_VERIFICATION_DESIGN",
+          "AUTHORITY_TOPIC_MAPPING_DESIGN",
+          "CITATION_POLICY_DESIGN",
+          "INGESTION_PIPELINE_DESIGN",
+          "DEDUPLICATION_AND_VERSIONING_DESIGN",
+          "CONFLICT_RESOLUTION_DESIGN",
+          "HUMAN_REVIEW_GATE_DESIGN",
+          "FUTURE_RUNTIME_WIRING_DESIGN"
+        ],
+        "futureMetadataChecks": [
+          "date and version check",
+          "supersession check",
+          "topic mapping check",
+          "citation format check"
+        ],
+        "futureQualityGates": [
+          "human review gate",
+          "conflict resolution gate",
+          "official source confirmation gate"
+        ]
+      },
+      "citationPolicyDesign": {
+        "citationRequiredForLegalClaims": true,
+        "citationRequiredForDeadlines": true,
+        "citationRequiredForAuthorityStatus": true,
+        "rawUnsupportedCitationProhibited": true,
+        "sourceCardRequired": true,
+        "exactExcerptPolicy": "Exact excerpts must be sourced from verified official documents only; this design patch includes no live-sourced excerpts."
+      },
+      "sourceCards": [
+        {
+          "label": "BIR official authority corpus design",
+          "sourceType": "authority corpus design",
+          "authorityTier": "future_authority_corpus_required",
+          "note": "Future implementation must verify BIR issuances against bir.gov.ph or bir-cdn.bir.gov.ph. This patch performs no live retrieval."
+        },
+        {
+          "label": "Judicial authority corpus design",
+          "sourceType": "authority corpus design",
+          "authorityTier": "future_authority_corpus_required",
+          "note": "Future implementation must verify Supreme Court and CTA authorities against official judicial sources. This patch performs no live retrieval."
+        },
+        {
+          "label": "2026 BIR audit baseline authority design",
+          "sourceType": "authority corpus design",
+          "authorityTier": "official_reference_required",
+          "note": "RMO No. 1-2026, RMO No. 6-2026, RMC No. 14-2026, RMC No. 5-2026, RMC No. 8-2026, and RMC No. 107-2025 must be treated as priority audit-framework authorities in future corpus work."
+        },
+        {
+          "label": "Private audit workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "private_uploaded_pattern",
+          "note": "Private materials may guide workflow design only. They are not public authority and must never expose real taxpayer data."
+        }
+      ],
+      "riskWarnings": [
+        "This is a design-only authority mapping; official-source verification is required before use.",
+        "Future implementation must verify date, version, supersession, and official source for every candidate authority.",
+        "The available design is insufficient for a final legal conclusion.",
+        "Human tax/legal review remains required before relying on any topic for legal conclusions."
+      ],
+      "recommendedNextActions": [
+        "Verify each candidate authority against its official source domain.",
+        "Build the live ingestion pipeline in a separately approved patch.",
+        "Expand topic coverage before relying on any topic for legal conclusions.",
+        "Route conflicting authorities to human review."
+      ],
+      "prohibitedConclusions": [
+        "authority_verification_determination",
+        "corpus_completeness_claim",
+        "final_legal_opinion",
+        "live_ingestion_claim",
+        "live_retrieval_claim"
+      ],
+      "humanReviewNotice": "This scaffold provides a design-only authority corpus research plan and does not constitute a final legal or tax conclusion. No authority referenced here has been live-verified, downloaded, scraped, ingested, or embedded by this patch; official-source verification remains required, and this matter should be reviewed by a qualified tax professional before any legal or tax conclusion.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "scrapingPerformed": false,
+        "downloadPerformed": false,
+        "ingestionPerformed": false,
+        "embeddingPerformed": false,
+        "databaseWritePerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "CWT_SUBSTANTIATION_AUTHORITY": {
+      "phase": "09Q",
+      "mode": "bir_authority_corpus_research_design",
+      "version": "PHASE-09Q-BIR-AUTHORITY-CORPUS-RESEARCH-DESIGN-1",
+      "runtimeActive": false,
+      "corpusDesignSummary": {
+        "totalTopics": 3,
+        "totalCandidateAuthorities": 1,
+        "officialSourcePriorityRequired": true,
+        "liveRetrievalPerformed": false,
+        "ingestionPerformed": false,
+        "databaseWritePerformed": false,
+        "legalConclusionProvided": false,
+        "humanReviewRequired": true,
+        "confidence": "medium"
+      },
+      "officialSourcePriority": [
+        {
+          "domainOrSource": "bir.gov.ph",
+          "priority": 1,
+          "allowedUse": "BIR issuances and forms",
+          "restrictions": [
+            "must confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "bir-cdn.bir.gov.ph",
+          "priority": 2,
+          "allowedUse": "BIR issuances and forms (CDN-hosted copies)",
+          "restrictions": [
+            "must confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "lawphil.net",
+          "priority": 3,
+          "allowedUse": "NIRC/statutory records and case-law mirror",
+          "restrictions": [
+            "cross-check against official judicial source when available"
+          ]
+        },
+        {
+          "domainOrSource": "sc.judiciary.gov.ph",
+          "priority": 4,
+          "allowedUse": "Supreme Court decisions",
+          "restrictions": [
+            "confirm finality and any subsequent resolution"
+          ]
+        },
+        {
+          "domainOrSource": "cta.judiciary.gov.ph",
+          "priority": 5,
+          "allowedUse": "CTA decisions (division and en banc)",
+          "restrictions": [
+            "confirm finality and any appeal status"
+          ]
+        },
+        {
+          "domainOrSource": "officialgazette.gov.ph",
+          "priority": 6,
+          "allowedUse": "official record verification and statute publication",
+          "restrictions": [
+            "confirm effectivity date"
+          ]
+        },
+        {
+          "domainOrSource": "dof.gov.ph",
+          "priority": 7,
+          "allowedUse": "DOF issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "peza.gov.ph",
+          "priority": 8,
+          "allowedUse": "PEZA issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "sec.gov.ph",
+          "priority": 9,
+          "allowedUse": "SEC issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "boi.gov.ph",
+          "priority": 10,
+          "allowedUse": "BOI issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "secondary_research_sources_non_official",
+          "priority": 11,
+          "allowedUse": "research lead only; must verify against official source before use",
+          "restrictions": [
+            "must not be cited as final authority",
+            "requires primary official-source confirmation before any reliance"
+          ]
+        }
+      ],
+      "authorityTopicMap": [
+        {
+          "topic": "CWT_SUBSTANTIATION",
+          "requiredAuthorityTypes": [
+            "RR No. 2-98",
+            "Form 2307/SAWT rules",
+            "NIRC tax credit provisions",
+            "jurisprudence"
+          ],
+          "candidateAuthorities": [
+            "RR No. 2-98"
+          ],
+          "missingAuthorityGaps": [
+            "Form 2307/SAWT rules",
+            "NIRC tax credit provisions",
+            "jurisprudence"
+          ],
+          "verificationStatus": "official_source_identified_design_only",
+          "humanReviewRequired": true
+        },
+        {
+          "topic": "WITHHOLDING_TAX_DEDUCTIBILITY",
+          "requiredAuthorityTypes": [
+            "NIRC Sec. 34(K)",
+            "RR No. 2-98",
+            "withholding regulations",
+            "jurisprudence"
+          ],
+          "candidateAuthorities": [
+            "RR No. 2-98"
+          ],
+          "missingAuthorityGaps": [
+            "NIRC Sec. 34(K)",
+            "withholding regulations",
+            "jurisprudence"
+          ],
+          "verificationStatus": "official_source_identified_design_only",
+          "humanReviewRequired": true
+        },
+        {
+          "topic": "DIVIDEND_FWT",
+          "requiredAuthorityTypes": [
+            "NIRC final withholding tax provisions",
+            "dividend tax rules",
+            "withholding remittance rules"
+          ],
+          "candidateAuthorities": [],
+          "missingAuthorityGaps": [
+            "NIRC final withholding tax provisions",
+            "dividend tax rules",
+            "withholding remittance rules"
+          ],
+          "verificationStatus": "official_source_required",
+          "humanReviewRequired": true
+        }
+      ],
+      "authorityMetadataSchema": {
+        "requiredFields": [
+          "title",
+          "sourceType",
+          "authorityTier",
+          "topicTags",
+          "officialUrlOrDomain",
+          "issuanceOrDecisionDate",
+          "effectiveDate",
+          "citationFormat"
+        ],
+        "recommendedFields": [
+          "supersedesId",
+          "supersededById",
+          "summary",
+          "relatedCaseNumbers",
+          "jurisdiction"
+        ],
+        "prohibitedFields": [
+          "realTaxpayerName",
+          "realTin",
+          "realLoaOrElaNumber",
+          "realAuditCaseNumber",
+          "realBirOfficerName",
+          "exactAssessmentAmount"
+        ],
+        "versioningFields": [
+          "versionNumber",
+          "effectiveDate",
+          "supersededDate",
+          "supersedesId",
+          "supersededById"
+        ],
+        "citationFields": [
+          "citationFormat",
+          "officialUrlOrDomain",
+          "pinCiteOrSection",
+          "retrievalDateForReview"
+        ]
+      },
+      "researchWorkflowDesign": [
+        {
+          "stage": "SOURCE_DISCOVERY_DESIGN",
+          "purpose": "Define how future patches will discover candidate authorities from official sources.",
+          "allowedActionsFutureOnly": [
+            "Query official BIR/judicial/DOF/PEZA/SEC/BOI sites for issuance listings"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No live search performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A discovery pipeline design producing candidate authority leads."
+        },
+        {
+          "stage": "OFFICIAL_SOURCE_PRIORITY_DESIGN",
+          "purpose": "Define ranked trust priority among official domains.",
+          "allowedActionsFutureOnly": [
+            "Assign priority weighting to discovered sources"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No source ranking applied to live data"
+          ],
+          "outputExpectedInFuturePatch": "A prioritized source list consumed by future ingestion."
+        },
+        {
+          "stage": "AUTHORITY_METADATA_DESIGN",
+          "purpose": "Define required/recommended/prohibited metadata fields for each authority record.",
+          "allowedActionsFutureOnly": [
+            "Populate metadata fields from verified official records"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No metadata populated from live sources"
+          ],
+          "outputExpectedInFuturePatch": "A structured metadata schema implementation."
+        },
+        {
+          "stage": "AUTHORITY_VERIFICATION_DESIGN",
+          "purpose": "Define how future patches will verify authority authenticity, date, and version.",
+          "allowedActionsFutureOnly": [
+            "Cross-check issuance date/version against official source"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No verification performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A verification pipeline producing verified/unverified status."
+        },
+        {
+          "stage": "AUTHORITY_TOPIC_MAPPING_DESIGN",
+          "purpose": "Define baseline mapping between BIR audit-defense workflow topics and required authority types.",
+          "allowedActionsFutureOnly": [
+            "Expand topic map coverage as new authorities are verified"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No topic-authority mapping is treated as complete or final"
+          ],
+          "outputExpectedInFuturePatch": "A living topic-to-authority map with verified coverage."
+        },
+        {
+          "stage": "CITATION_POLICY_DESIGN",
+          "purpose": "Define citation discipline for legal/tax claims and deadlines.",
+          "allowedActionsFutureOnly": [
+            "Generate citations from verified authority metadata"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No citations generated from unverified authorities"
+          ],
+          "outputExpectedInFuturePatch": "A citation-formatting and sourcing policy implementation."
+        },
+        {
+          "stage": "INGESTION_PIPELINE_DESIGN",
+          "purpose": "Define how future patches will ingest verified authorities into the corpus.",
+          "allowedActionsFutureOnly": [
+            "Ingest verified official documents into a governed corpus store"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No ingestion, download, or storage performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "An approved ingestion pipeline with governance gates."
+        },
+        {
+          "stage": "DEDUPLICATION_AND_VERSIONING_DESIGN",
+          "purpose": "Define how duplicate or superseded authorities are identified and tracked.",
+          "allowedActionsFutureOnly": [
+            "Detect duplicate/superseded authority records"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No deduplication run against live data"
+          ],
+          "outputExpectedInFuturePatch": "A deduplication/versioning implementation."
+        },
+        {
+          "stage": "CONFLICT_RESOLUTION_DESIGN",
+          "purpose": "Define how conflicting authorities are flagged and resolved.",
+          "allowedActionsFutureOnly": [
+            "Flag conflicting authorities for human review"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No conflict resolution performed on live data"
+          ],
+          "outputExpectedInFuturePatch": "A conflict-detection and escalation implementation."
+        },
+        {
+          "stage": "HUMAN_REVIEW_GATE_DESIGN",
+          "purpose": "Define mandatory human review checkpoints before authority reliance.",
+          "allowedActionsFutureOnly": [
+            "Route flagged authorities to human tax/legal reviewers"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No human review workflow activated in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A human review gate implementation."
+        },
+        {
+          "stage": "FUTURE_RUNTIME_WIRING_DESIGN",
+          "purpose": "Define how the verified authority corpus will eventually be wired into runtime retrieval.",
+          "allowedActionsFutureOnly": [
+            "Wire verified corpus into retrieval behind governance gates"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No runtime wiring performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A controlled runtime integration patch, separately approved."
+        },
+        {
+          "stage": "UNKNOWN_STAGE",
+          "purpose": "Placeholder for unclassified research workflow activity.",
+          "allowedActionsFutureOnly": [],
+          "prohibitedActionsThisPatch": [
+            "No action taken"
+          ],
+          "outputExpectedInFuturePatch": "Reclassify into a known stage before proceeding."
+        }
+      ],
+      "verificationRules": {
+        "officialPrimarySourceRequired": true,
+        "secondarySourcesLeadOnly": true,
+        "requireDateAndVersionCheck": true,
+        "requireSupersessionCheck": true,
+        "requireTopicMapping": true,
+        "requireQuoteAndCitationDiscipline": true,
+        "requireHumanReviewForConflict": true,
+        "noFinalLegalConclusionFromUnverifiedAuthority": true
+      },
+      "conflictResolutionPolicy": {
+        "newerIssuanceCheck": true,
+        "statuteVsRegulationHierarchyCheck": true,
+        "jurisprudenceVsAdministrativeGuidanceCheck": true,
+        "specialLawVsGeneralLawCheck": true,
+        "taxpayerFactSpecificityCheck": true,
+        "humanReviewRequiredForConflict": true
+      },
+      "futureIngestionPlan": {
+        "allowedOfficialDomains": [
+          "bir.gov.ph",
+          "bir-cdn.bir.gov.ph",
+          "lawphil.net",
+          "sc.judiciary.gov.ph",
+          "cta.judiciary.gov.ph",
+          "officialgazette.gov.ph",
+          "dof.gov.ph",
+          "peza.gov.ph",
+          "sec.gov.ph",
+          "boi.gov.ph"
+        ],
+        "prohibitedSources": [
+          "SEO blogs as final authority",
+          "social media posts",
+          "unverified summaries",
+          "AI-generated summaries without source",
+          "commercial articles without primary-source verification",
+          "outdated reposted PDFs without official source confirmation"
+        ],
+        "futurePipelineStages": [
+          "SOURCE_DISCOVERY_DESIGN",
+          "OFFICIAL_SOURCE_PRIORITY_DESIGN",
+          "AUTHORITY_METADATA_DESIGN",
+          "AUTHORITY_VERIFICATION_DESIGN",
+          "AUTHORITY_TOPIC_MAPPING_DESIGN",
+          "CITATION_POLICY_DESIGN",
+          "INGESTION_PIPELINE_DESIGN",
+          "DEDUPLICATION_AND_VERSIONING_DESIGN",
+          "CONFLICT_RESOLUTION_DESIGN",
+          "HUMAN_REVIEW_GATE_DESIGN",
+          "FUTURE_RUNTIME_WIRING_DESIGN"
+        ],
+        "futureMetadataChecks": [
+          "date and version check",
+          "supersession check",
+          "topic mapping check",
+          "citation format check"
+        ],
+        "futureQualityGates": [
+          "human review gate",
+          "conflict resolution gate",
+          "official source confirmation gate"
+        ]
+      },
+      "citationPolicyDesign": {
+        "citationRequiredForLegalClaims": true,
+        "citationRequiredForDeadlines": true,
+        "citationRequiredForAuthorityStatus": true,
+        "rawUnsupportedCitationProhibited": true,
+        "sourceCardRequired": true,
+        "exactExcerptPolicy": "Exact excerpts must be sourced from verified official documents only; this design patch includes no live-sourced excerpts."
+      },
+      "sourceCards": [
+        {
+          "label": "BIR official authority corpus design",
+          "sourceType": "authority corpus design",
+          "authorityTier": "future_authority_corpus_required",
+          "note": "Future implementation must verify BIR issuances against bir.gov.ph or bir-cdn.bir.gov.ph. This patch performs no live retrieval."
+        },
+        {
+          "label": "Judicial authority corpus design",
+          "sourceType": "authority corpus design",
+          "authorityTier": "future_authority_corpus_required",
+          "note": "Future implementation must verify Supreme Court and CTA authorities against official judicial sources. This patch performs no live retrieval."
+        },
+        {
+          "label": "2026 BIR audit baseline authority design",
+          "sourceType": "authority corpus design",
+          "authorityTier": "official_reference_required",
+          "note": "RMO No. 1-2026, RMO No. 6-2026, RMC No. 14-2026, RMC No. 5-2026, RMC No. 8-2026, and RMC No. 107-2025 must be treated as priority audit-framework authorities in future corpus work."
+        },
+        {
+          "label": "Private audit workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "private_uploaded_pattern",
+          "note": "Private materials may guide workflow design only. They are not public authority and must never expose real taxpayer data."
+        }
+      ],
+      "riskWarnings": [
+        "This is a design-only authority mapping; official-source verification is required before use.",
+        "Future implementation must verify date, version, supersession, and official source for every candidate authority.",
+        "The available design is insufficient for a final legal conclusion.",
+        "Human tax/legal review remains required before relying on any topic for legal conclusions."
+      ],
+      "recommendedNextActions": [
+        "Verify each candidate authority against its official source domain.",
+        "Build the live ingestion pipeline in a separately approved patch.",
+        "Expand topic coverage before relying on any topic for legal conclusions.",
+        "Route conflicting authorities to human review."
+      ],
+      "prohibitedConclusions": [
+        "authority_verification_determination",
+        "corpus_completeness_claim",
+        "final_legal_opinion",
+        "live_ingestion_claim",
+        "live_retrieval_claim"
+      ],
+      "humanReviewNotice": "This scaffold provides a design-only authority corpus research plan and does not constitute a final legal or tax conclusion. No authority referenced here has been live-verified, downloaded, scraped, ingested, or embedded by this patch; official-source verification remains required, and this matter should be reviewed by a qualified tax professional before any legal or tax conclusion.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "scrapingPerformed": false,
+        "downloadPerformed": false,
+        "ingestionPerformed": false,
+        "embeddingPerformed": false,
+        "databaseWritePerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "PRESCRIPTION_WAIVER_AUTHORITY": {
+      "phase": "09Q",
+      "mode": "bir_authority_corpus_research_design",
+      "version": "PHASE-09Q-BIR-AUTHORITY-CORPUS-RESEARCH-DESIGN-1",
+      "runtimeActive": false,
+      "corpusDesignSummary": {
+        "totalTopics": 3,
+        "totalCandidateAuthorities": 2,
+        "officialSourcePriorityRequired": true,
+        "liveRetrievalPerformed": false,
+        "ingestionPerformed": false,
+        "databaseWritePerformed": false,
+        "legalConclusionProvided": false,
+        "humanReviewRequired": true,
+        "confidence": "medium"
+      },
+      "officialSourcePriority": [
+        {
+          "domainOrSource": "bir.gov.ph",
+          "priority": 1,
+          "allowedUse": "BIR issuances and forms",
+          "restrictions": [
+            "must confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "bir-cdn.bir.gov.ph",
+          "priority": 2,
+          "allowedUse": "BIR issuances and forms (CDN-hosted copies)",
+          "restrictions": [
+            "must confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "lawphil.net",
+          "priority": 3,
+          "allowedUse": "NIRC/statutory records and case-law mirror",
+          "restrictions": [
+            "cross-check against official judicial source when available"
+          ]
+        },
+        {
+          "domainOrSource": "sc.judiciary.gov.ph",
+          "priority": 4,
+          "allowedUse": "Supreme Court decisions",
+          "restrictions": [
+            "confirm finality and any subsequent resolution"
+          ]
+        },
+        {
+          "domainOrSource": "cta.judiciary.gov.ph",
+          "priority": 5,
+          "allowedUse": "CTA decisions (division and en banc)",
+          "restrictions": [
+            "confirm finality and any appeal status"
+          ]
+        },
+        {
+          "domainOrSource": "officialgazette.gov.ph",
+          "priority": 6,
+          "allowedUse": "official record verification and statute publication",
+          "restrictions": [
+            "confirm effectivity date"
+          ]
+        },
+        {
+          "domainOrSource": "dof.gov.ph",
+          "priority": 7,
+          "allowedUse": "DOF issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "peza.gov.ph",
+          "priority": 8,
+          "allowedUse": "PEZA issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "sec.gov.ph",
+          "priority": 9,
+          "allowedUse": "SEC issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "boi.gov.ph",
+          "priority": 10,
+          "allowedUse": "BOI issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "secondary_research_sources_non_official",
+          "priority": 11,
+          "allowedUse": "research lead only; must verify against official source before use",
+          "restrictions": [
+            "must not be cited as final authority",
+            "requires primary official-source confirmation before any reliance"
+          ]
+        }
+      ],
+      "authorityTopicMap": [
+        {
+          "topic": "ASSESSMENT_PRESCRIPTION",
+          "requiredAuthorityTypes": [
+            "NIRC Sec. 203",
+            "NIRC Sec. 222",
+            "waiver issuances",
+            "jurisprudence"
+          ],
+          "candidateAuthorities": [
+            "NIRC Sec. 203",
+            "NIRC Sec. 222"
+          ],
+          "missingAuthorityGaps": [
+            "waiver issuances",
+            "jurisprudence"
+          ],
+          "verificationStatus": "official_source_identified_design_only",
+          "humanReviewRequired": true
+        },
+        {
+          "topic": "COLLECTION_PRESCRIPTION",
+          "requiredAuthorityTypes": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "candidateAuthorities": [],
+          "missingAuthorityGaps": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "verificationStatus": "official_source_required",
+          "humanReviewRequired": true
+        },
+        {
+          "topic": "WAIVER_OF_PRESCRIPTION",
+          "requiredAuthorityTypes": [
+            "NIRC Sec. 222",
+            "RMO No. 14-2016",
+            "RMC No. 141-2019",
+            "jurisprudence"
+          ],
+          "candidateAuthorities": [
+            "NIRC Sec. 222"
+          ],
+          "missingAuthorityGaps": [
+            "RMO No. 14-2016",
+            "RMC No. 141-2019",
+            "jurisprudence"
+          ],
+          "verificationStatus": "official_source_identified_design_only",
+          "humanReviewRequired": true
+        }
+      ],
+      "authorityMetadataSchema": {
+        "requiredFields": [
+          "title",
+          "sourceType",
+          "authorityTier",
+          "topicTags",
+          "officialUrlOrDomain",
+          "issuanceOrDecisionDate",
+          "effectiveDate",
+          "citationFormat"
+        ],
+        "recommendedFields": [
+          "supersedesId",
+          "supersededById",
+          "summary",
+          "relatedCaseNumbers",
+          "jurisdiction"
+        ],
+        "prohibitedFields": [
+          "realTaxpayerName",
+          "realTin",
+          "realLoaOrElaNumber",
+          "realAuditCaseNumber",
+          "realBirOfficerName",
+          "exactAssessmentAmount"
+        ],
+        "versioningFields": [
+          "versionNumber",
+          "effectiveDate",
+          "supersededDate",
+          "supersedesId",
+          "supersededById"
+        ],
+        "citationFields": [
+          "citationFormat",
+          "officialUrlOrDomain",
+          "pinCiteOrSection",
+          "retrievalDateForReview"
+        ]
+      },
+      "researchWorkflowDesign": [
+        {
+          "stage": "SOURCE_DISCOVERY_DESIGN",
+          "purpose": "Define how future patches will discover candidate authorities from official sources.",
+          "allowedActionsFutureOnly": [
+            "Query official BIR/judicial/DOF/PEZA/SEC/BOI sites for issuance listings"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No live search performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A discovery pipeline design producing candidate authority leads."
+        },
+        {
+          "stage": "OFFICIAL_SOURCE_PRIORITY_DESIGN",
+          "purpose": "Define ranked trust priority among official domains.",
+          "allowedActionsFutureOnly": [
+            "Assign priority weighting to discovered sources"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No source ranking applied to live data"
+          ],
+          "outputExpectedInFuturePatch": "A prioritized source list consumed by future ingestion."
+        },
+        {
+          "stage": "AUTHORITY_METADATA_DESIGN",
+          "purpose": "Define required/recommended/prohibited metadata fields for each authority record.",
+          "allowedActionsFutureOnly": [
+            "Populate metadata fields from verified official records"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No metadata populated from live sources"
+          ],
+          "outputExpectedInFuturePatch": "A structured metadata schema implementation."
+        },
+        {
+          "stage": "AUTHORITY_VERIFICATION_DESIGN",
+          "purpose": "Define how future patches will verify authority authenticity, date, and version.",
+          "allowedActionsFutureOnly": [
+            "Cross-check issuance date/version against official source"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No verification performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A verification pipeline producing verified/unverified status."
+        },
+        {
+          "stage": "AUTHORITY_TOPIC_MAPPING_DESIGN",
+          "purpose": "Define baseline mapping between BIR audit-defense workflow topics and required authority types.",
+          "allowedActionsFutureOnly": [
+            "Expand topic map coverage as new authorities are verified"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No topic-authority mapping is treated as complete or final"
+          ],
+          "outputExpectedInFuturePatch": "A living topic-to-authority map with verified coverage."
+        },
+        {
+          "stage": "CITATION_POLICY_DESIGN",
+          "purpose": "Define citation discipline for legal/tax claims and deadlines.",
+          "allowedActionsFutureOnly": [
+            "Generate citations from verified authority metadata"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No citations generated from unverified authorities"
+          ],
+          "outputExpectedInFuturePatch": "A citation-formatting and sourcing policy implementation."
+        },
+        {
+          "stage": "INGESTION_PIPELINE_DESIGN",
+          "purpose": "Define how future patches will ingest verified authorities into the corpus.",
+          "allowedActionsFutureOnly": [
+            "Ingest verified official documents into a governed corpus store"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No ingestion, download, or storage performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "An approved ingestion pipeline with governance gates."
+        },
+        {
+          "stage": "DEDUPLICATION_AND_VERSIONING_DESIGN",
+          "purpose": "Define how duplicate or superseded authorities are identified and tracked.",
+          "allowedActionsFutureOnly": [
+            "Detect duplicate/superseded authority records"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No deduplication run against live data"
+          ],
+          "outputExpectedInFuturePatch": "A deduplication/versioning implementation."
+        },
+        {
+          "stage": "CONFLICT_RESOLUTION_DESIGN",
+          "purpose": "Define how conflicting authorities are flagged and resolved.",
+          "allowedActionsFutureOnly": [
+            "Flag conflicting authorities for human review"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No conflict resolution performed on live data"
+          ],
+          "outputExpectedInFuturePatch": "A conflict-detection and escalation implementation."
+        },
+        {
+          "stage": "HUMAN_REVIEW_GATE_DESIGN",
+          "purpose": "Define mandatory human review checkpoints before authority reliance.",
+          "allowedActionsFutureOnly": [
+            "Route flagged authorities to human tax/legal reviewers"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No human review workflow activated in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A human review gate implementation."
+        },
+        {
+          "stage": "FUTURE_RUNTIME_WIRING_DESIGN",
+          "purpose": "Define how the verified authority corpus will eventually be wired into runtime retrieval.",
+          "allowedActionsFutureOnly": [
+            "Wire verified corpus into retrieval behind governance gates"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No runtime wiring performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A controlled runtime integration patch, separately approved."
+        },
+        {
+          "stage": "UNKNOWN_STAGE",
+          "purpose": "Placeholder for unclassified research workflow activity.",
+          "allowedActionsFutureOnly": [],
+          "prohibitedActionsThisPatch": [
+            "No action taken"
+          ],
+          "outputExpectedInFuturePatch": "Reclassify into a known stage before proceeding."
+        }
+      ],
+      "verificationRules": {
+        "officialPrimarySourceRequired": true,
+        "secondarySourcesLeadOnly": true,
+        "requireDateAndVersionCheck": true,
+        "requireSupersessionCheck": true,
+        "requireTopicMapping": true,
+        "requireQuoteAndCitationDiscipline": true,
+        "requireHumanReviewForConflict": true,
+        "noFinalLegalConclusionFromUnverifiedAuthority": true
+      },
+      "conflictResolutionPolicy": {
+        "newerIssuanceCheck": true,
+        "statuteVsRegulationHierarchyCheck": true,
+        "jurisprudenceVsAdministrativeGuidanceCheck": true,
+        "specialLawVsGeneralLawCheck": true,
+        "taxpayerFactSpecificityCheck": true,
+        "humanReviewRequiredForConflict": true
+      },
+      "futureIngestionPlan": {
+        "allowedOfficialDomains": [
+          "bir.gov.ph",
+          "bir-cdn.bir.gov.ph",
+          "lawphil.net",
+          "sc.judiciary.gov.ph",
+          "cta.judiciary.gov.ph",
+          "officialgazette.gov.ph",
+          "dof.gov.ph",
+          "peza.gov.ph",
+          "sec.gov.ph",
+          "boi.gov.ph"
+        ],
+        "prohibitedSources": [
+          "SEO blogs as final authority",
+          "social media posts",
+          "unverified summaries",
+          "AI-generated summaries without source",
+          "commercial articles without primary-source verification",
+          "outdated reposted PDFs without official source confirmation"
+        ],
+        "futurePipelineStages": [
+          "SOURCE_DISCOVERY_DESIGN",
+          "OFFICIAL_SOURCE_PRIORITY_DESIGN",
+          "AUTHORITY_METADATA_DESIGN",
+          "AUTHORITY_VERIFICATION_DESIGN",
+          "AUTHORITY_TOPIC_MAPPING_DESIGN",
+          "CITATION_POLICY_DESIGN",
+          "INGESTION_PIPELINE_DESIGN",
+          "DEDUPLICATION_AND_VERSIONING_DESIGN",
+          "CONFLICT_RESOLUTION_DESIGN",
+          "HUMAN_REVIEW_GATE_DESIGN",
+          "FUTURE_RUNTIME_WIRING_DESIGN"
+        ],
+        "futureMetadataChecks": [
+          "date and version check",
+          "supersession check",
+          "topic mapping check",
+          "citation format check"
+        ],
+        "futureQualityGates": [
+          "human review gate",
+          "conflict resolution gate",
+          "official source confirmation gate"
+        ]
+      },
+      "citationPolicyDesign": {
+        "citationRequiredForLegalClaims": true,
+        "citationRequiredForDeadlines": true,
+        "citationRequiredForAuthorityStatus": true,
+        "rawUnsupportedCitationProhibited": true,
+        "sourceCardRequired": true,
+        "exactExcerptPolicy": "Exact excerpts must be sourced from verified official documents only; this design patch includes no live-sourced excerpts."
+      },
+      "sourceCards": [
+        {
+          "label": "BIR official authority corpus design",
+          "sourceType": "authority corpus design",
+          "authorityTier": "future_authority_corpus_required",
+          "note": "Future implementation must verify BIR issuances against bir.gov.ph or bir-cdn.bir.gov.ph. This patch performs no live retrieval."
+        },
+        {
+          "label": "Judicial authority corpus design",
+          "sourceType": "authority corpus design",
+          "authorityTier": "future_authority_corpus_required",
+          "note": "Future implementation must verify Supreme Court and CTA authorities against official judicial sources. This patch performs no live retrieval."
+        },
+        {
+          "label": "2026 BIR audit baseline authority design",
+          "sourceType": "authority corpus design",
+          "authorityTier": "official_reference_required",
+          "note": "RMO No. 1-2026, RMO No. 6-2026, RMC No. 14-2026, RMC No. 5-2026, RMC No. 8-2026, and RMC No. 107-2025 must be treated as priority audit-framework authorities in future corpus work."
+        },
+        {
+          "label": "Private audit workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "private_uploaded_pattern",
+          "note": "Private materials may guide workflow design only. They are not public authority and must never expose real taxpayer data."
+        }
+      ],
+      "riskWarnings": [
+        "This is a design-only authority mapping; official-source verification is required before use.",
+        "Future implementation must verify date, version, supersession, and official source for every candidate authority.",
+        "The available design is insufficient for a final legal conclusion.",
+        "Human tax/legal review remains required before relying on any topic for legal conclusions."
+      ],
+      "recommendedNextActions": [
+        "Verify each candidate authority against its official source domain.",
+        "Build the live ingestion pipeline in a separately approved patch.",
+        "Expand topic coverage before relying on any topic for legal conclusions.",
+        "Route conflicting authorities to human review."
+      ],
+      "prohibitedConclusions": [
+        "authority_verification_determination",
+        "corpus_completeness_claim",
+        "final_legal_opinion",
+        "live_ingestion_claim",
+        "live_retrieval_claim"
+      ],
+      "humanReviewNotice": "This scaffold provides a design-only authority corpus research plan and does not constitute a final legal or tax conclusion. No authority referenced here has been live-verified, downloaded, scraped, ingested, or embedded by this patch; official-source verification remains required, and this matter should be reviewed by a qualified tax professional before any legal or tax conclusion.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "scrapingPerformed": false,
+        "downloadPerformed": false,
+        "ingestionPerformed": false,
+        "embeddingPerformed": false,
+        "databaseWritePerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "DOCUMENT_REQUEST_SCOPE_AUTHORITY": {
+      "phase": "09Q",
+      "mode": "bir_authority_corpus_research_design",
+      "version": "PHASE-09Q-BIR-AUTHORITY-CORPUS-RESEARCH-DESIGN-1",
+      "runtimeActive": false,
+      "corpusDesignSummary": {
+        "totalTopics": 4,
+        "totalCandidateAuthorities": 1,
+        "officialSourcePriorityRequired": true,
+        "liveRetrievalPerformed": false,
+        "ingestionPerformed": false,
+        "databaseWritePerformed": false,
+        "legalConclusionProvided": false,
+        "humanReviewRequired": true,
+        "confidence": "medium"
+      },
+      "officialSourcePriority": [
+        {
+          "domainOrSource": "bir.gov.ph",
+          "priority": 1,
+          "allowedUse": "BIR issuances and forms",
+          "restrictions": [
+            "must confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "bir-cdn.bir.gov.ph",
+          "priority": 2,
+          "allowedUse": "BIR issuances and forms (CDN-hosted copies)",
+          "restrictions": [
+            "must confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "lawphil.net",
+          "priority": 3,
+          "allowedUse": "NIRC/statutory records and case-law mirror",
+          "restrictions": [
+            "cross-check against official judicial source when available"
+          ]
+        },
+        {
+          "domainOrSource": "sc.judiciary.gov.ph",
+          "priority": 4,
+          "allowedUse": "Supreme Court decisions",
+          "restrictions": [
+            "confirm finality and any subsequent resolution"
+          ]
+        },
+        {
+          "domainOrSource": "cta.judiciary.gov.ph",
+          "priority": 5,
+          "allowedUse": "CTA decisions (division and en banc)",
+          "restrictions": [
+            "confirm finality and any appeal status"
+          ]
+        },
+        {
+          "domainOrSource": "officialgazette.gov.ph",
+          "priority": 6,
+          "allowedUse": "official record verification and statute publication",
+          "restrictions": [
+            "confirm effectivity date"
+          ]
+        },
+        {
+          "domainOrSource": "dof.gov.ph",
+          "priority": 7,
+          "allowedUse": "DOF issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "peza.gov.ph",
+          "priority": 8,
+          "allowedUse": "PEZA issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "sec.gov.ph",
+          "priority": 9,
+          "allowedUse": "SEC issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "boi.gov.ph",
+          "priority": 10,
+          "allowedUse": "BOI issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "secondary_research_sources_non_official",
+          "priority": 11,
+          "allowedUse": "research lead only; must verify against official source before use",
+          "restrictions": [
+            "must not be cited as final authority",
+            "requires primary official-source confirmation before any reliance"
+          ]
+        }
+      ],
+      "authorityTopicMap": [
+        {
+          "topic": "STANDARDIZED_CHECKLIST",
+          "requiredAuthorityTypes": [
+            "RMO No. 1-2026"
+          ],
+          "candidateAuthorities": [
+            "RMO No. 1-2026"
+          ],
+          "missingAuthorityGaps": [],
+          "verificationStatus": "official_source_identified_design_only",
+          "humanReviewRequired": true
+        },
+        {
+          "topic": "ADDITIONAL_DOCUMENT_REQUEST_LIMITS",
+          "requiredAuthorityTypes": [
+            "RMO No. 1-2026"
+          ],
+          "candidateAuthorities": [
+            "RMO No. 1-2026"
+          ],
+          "missingAuthorityGaps": [],
+          "verificationStatus": "official_source_identified_design_only",
+          "humanReviewRequired": true
+        },
+        {
+          "topic": "VOLUMINOUS_RECORDS_ON_PREMISE_EXAMINATION",
+          "requiredAuthorityTypes": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "candidateAuthorities": [],
+          "missingAuthorityGaps": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "verificationStatus": "official_source_required",
+          "humanReviewRequired": true
+        },
+        {
+          "topic": "CERTIFIED_COPY_SUBMISSION",
+          "requiredAuthorityTypes": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "candidateAuthorities": [],
+          "missingAuthorityGaps": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "verificationStatus": "official_source_required",
+          "humanReviewRequired": true
+        }
+      ],
+      "authorityMetadataSchema": {
+        "requiredFields": [
+          "title",
+          "sourceType",
+          "authorityTier",
+          "topicTags",
+          "officialUrlOrDomain",
+          "issuanceOrDecisionDate",
+          "effectiveDate",
+          "citationFormat"
+        ],
+        "recommendedFields": [
+          "supersedesId",
+          "supersededById",
+          "summary",
+          "relatedCaseNumbers",
+          "jurisdiction"
+        ],
+        "prohibitedFields": [
+          "realTaxpayerName",
+          "realTin",
+          "realLoaOrElaNumber",
+          "realAuditCaseNumber",
+          "realBirOfficerName",
+          "exactAssessmentAmount"
+        ],
+        "versioningFields": [
+          "versionNumber",
+          "effectiveDate",
+          "supersededDate",
+          "supersedesId",
+          "supersededById"
+        ],
+        "citationFields": [
+          "citationFormat",
+          "officialUrlOrDomain",
+          "pinCiteOrSection",
+          "retrievalDateForReview"
+        ]
+      },
+      "researchWorkflowDesign": [
+        {
+          "stage": "SOURCE_DISCOVERY_DESIGN",
+          "purpose": "Define how future patches will discover candidate authorities from official sources.",
+          "allowedActionsFutureOnly": [
+            "Query official BIR/judicial/DOF/PEZA/SEC/BOI sites for issuance listings"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No live search performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A discovery pipeline design producing candidate authority leads."
+        },
+        {
+          "stage": "OFFICIAL_SOURCE_PRIORITY_DESIGN",
+          "purpose": "Define ranked trust priority among official domains.",
+          "allowedActionsFutureOnly": [
+            "Assign priority weighting to discovered sources"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No source ranking applied to live data"
+          ],
+          "outputExpectedInFuturePatch": "A prioritized source list consumed by future ingestion."
+        },
+        {
+          "stage": "AUTHORITY_METADATA_DESIGN",
+          "purpose": "Define required/recommended/prohibited metadata fields for each authority record.",
+          "allowedActionsFutureOnly": [
+            "Populate metadata fields from verified official records"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No metadata populated from live sources"
+          ],
+          "outputExpectedInFuturePatch": "A structured metadata schema implementation."
+        },
+        {
+          "stage": "AUTHORITY_VERIFICATION_DESIGN",
+          "purpose": "Define how future patches will verify authority authenticity, date, and version.",
+          "allowedActionsFutureOnly": [
+            "Cross-check issuance date/version against official source"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No verification performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A verification pipeline producing verified/unverified status."
+        },
+        {
+          "stage": "AUTHORITY_TOPIC_MAPPING_DESIGN",
+          "purpose": "Define baseline mapping between BIR audit-defense workflow topics and required authority types.",
+          "allowedActionsFutureOnly": [
+            "Expand topic map coverage as new authorities are verified"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No topic-authority mapping is treated as complete or final"
+          ],
+          "outputExpectedInFuturePatch": "A living topic-to-authority map with verified coverage."
+        },
+        {
+          "stage": "CITATION_POLICY_DESIGN",
+          "purpose": "Define citation discipline for legal/tax claims and deadlines.",
+          "allowedActionsFutureOnly": [
+            "Generate citations from verified authority metadata"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No citations generated from unverified authorities"
+          ],
+          "outputExpectedInFuturePatch": "A citation-formatting and sourcing policy implementation."
+        },
+        {
+          "stage": "INGESTION_PIPELINE_DESIGN",
+          "purpose": "Define how future patches will ingest verified authorities into the corpus.",
+          "allowedActionsFutureOnly": [
+            "Ingest verified official documents into a governed corpus store"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No ingestion, download, or storage performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "An approved ingestion pipeline with governance gates."
+        },
+        {
+          "stage": "DEDUPLICATION_AND_VERSIONING_DESIGN",
+          "purpose": "Define how duplicate or superseded authorities are identified and tracked.",
+          "allowedActionsFutureOnly": [
+            "Detect duplicate/superseded authority records"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No deduplication run against live data"
+          ],
+          "outputExpectedInFuturePatch": "A deduplication/versioning implementation."
+        },
+        {
+          "stage": "CONFLICT_RESOLUTION_DESIGN",
+          "purpose": "Define how conflicting authorities are flagged and resolved.",
+          "allowedActionsFutureOnly": [
+            "Flag conflicting authorities for human review"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No conflict resolution performed on live data"
+          ],
+          "outputExpectedInFuturePatch": "A conflict-detection and escalation implementation."
+        },
+        {
+          "stage": "HUMAN_REVIEW_GATE_DESIGN",
+          "purpose": "Define mandatory human review checkpoints before authority reliance.",
+          "allowedActionsFutureOnly": [
+            "Route flagged authorities to human tax/legal reviewers"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No human review workflow activated in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A human review gate implementation."
+        },
+        {
+          "stage": "FUTURE_RUNTIME_WIRING_DESIGN",
+          "purpose": "Define how the verified authority corpus will eventually be wired into runtime retrieval.",
+          "allowedActionsFutureOnly": [
+            "Wire verified corpus into retrieval behind governance gates"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No runtime wiring performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A controlled runtime integration patch, separately approved."
+        },
+        {
+          "stage": "UNKNOWN_STAGE",
+          "purpose": "Placeholder for unclassified research workflow activity.",
+          "allowedActionsFutureOnly": [],
+          "prohibitedActionsThisPatch": [
+            "No action taken"
+          ],
+          "outputExpectedInFuturePatch": "Reclassify into a known stage before proceeding."
+        }
+      ],
+      "verificationRules": {
+        "officialPrimarySourceRequired": true,
+        "secondarySourcesLeadOnly": true,
+        "requireDateAndVersionCheck": true,
+        "requireSupersessionCheck": true,
+        "requireTopicMapping": true,
+        "requireQuoteAndCitationDiscipline": true,
+        "requireHumanReviewForConflict": true,
+        "noFinalLegalConclusionFromUnverifiedAuthority": true
+      },
+      "conflictResolutionPolicy": {
+        "newerIssuanceCheck": true,
+        "statuteVsRegulationHierarchyCheck": true,
+        "jurisprudenceVsAdministrativeGuidanceCheck": true,
+        "specialLawVsGeneralLawCheck": true,
+        "taxpayerFactSpecificityCheck": true,
+        "humanReviewRequiredForConflict": true
+      },
+      "futureIngestionPlan": {
+        "allowedOfficialDomains": [
+          "bir.gov.ph",
+          "bir-cdn.bir.gov.ph",
+          "lawphil.net",
+          "sc.judiciary.gov.ph",
+          "cta.judiciary.gov.ph",
+          "officialgazette.gov.ph",
+          "dof.gov.ph",
+          "peza.gov.ph",
+          "sec.gov.ph",
+          "boi.gov.ph"
+        ],
+        "prohibitedSources": [
+          "SEO blogs as final authority",
+          "social media posts",
+          "unverified summaries",
+          "AI-generated summaries without source",
+          "commercial articles without primary-source verification",
+          "outdated reposted PDFs without official source confirmation"
+        ],
+        "futurePipelineStages": [
+          "SOURCE_DISCOVERY_DESIGN",
+          "OFFICIAL_SOURCE_PRIORITY_DESIGN",
+          "AUTHORITY_METADATA_DESIGN",
+          "AUTHORITY_VERIFICATION_DESIGN",
+          "AUTHORITY_TOPIC_MAPPING_DESIGN",
+          "CITATION_POLICY_DESIGN",
+          "INGESTION_PIPELINE_DESIGN",
+          "DEDUPLICATION_AND_VERSIONING_DESIGN",
+          "CONFLICT_RESOLUTION_DESIGN",
+          "HUMAN_REVIEW_GATE_DESIGN",
+          "FUTURE_RUNTIME_WIRING_DESIGN"
+        ],
+        "futureMetadataChecks": [
+          "date and version check",
+          "supersession check",
+          "topic mapping check",
+          "citation format check"
+        ],
+        "futureQualityGates": [
+          "human review gate",
+          "conflict resolution gate",
+          "official source confirmation gate"
+        ]
+      },
+      "citationPolicyDesign": {
+        "citationRequiredForLegalClaims": true,
+        "citationRequiredForDeadlines": true,
+        "citationRequiredForAuthorityStatus": true,
+        "rawUnsupportedCitationProhibited": true,
+        "sourceCardRequired": true,
+        "exactExcerptPolicy": "Exact excerpts must be sourced from verified official documents only; this design patch includes no live-sourced excerpts."
+      },
+      "sourceCards": [
+        {
+          "label": "BIR official authority corpus design",
+          "sourceType": "authority corpus design",
+          "authorityTier": "future_authority_corpus_required",
+          "note": "Future implementation must verify BIR issuances against bir.gov.ph or bir-cdn.bir.gov.ph. This patch performs no live retrieval."
+        },
+        {
+          "label": "Judicial authority corpus design",
+          "sourceType": "authority corpus design",
+          "authorityTier": "future_authority_corpus_required",
+          "note": "Future implementation must verify Supreme Court and CTA authorities against official judicial sources. This patch performs no live retrieval."
+        },
+        {
+          "label": "2026 BIR audit baseline authority design",
+          "sourceType": "authority corpus design",
+          "authorityTier": "official_reference_required",
+          "note": "RMO No. 1-2026, RMO No. 6-2026, RMC No. 14-2026, RMC No. 5-2026, RMC No. 8-2026, and RMC No. 107-2025 must be treated as priority audit-framework authorities in future corpus work."
+        },
+        {
+          "label": "Private audit workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "private_uploaded_pattern",
+          "note": "Private materials may guide workflow design only. They are not public authority and must never expose real taxpayer data."
+        }
+      ],
+      "riskWarnings": [
+        "This is a design-only authority mapping; official-source verification is required before use.",
+        "Future implementation must verify date, version, supersession, and official source for every candidate authority.",
+        "The available design is insufficient for a final legal conclusion.",
+        "Human tax/legal review remains required before relying on any topic for legal conclusions."
+      ],
+      "recommendedNextActions": [
+        "Verify each candidate authority against its official source domain.",
+        "Build the live ingestion pipeline in a separately approved patch.",
+        "Expand topic coverage before relying on any topic for legal conclusions.",
+        "Route conflicting authorities to human review."
+      ],
+      "prohibitedConclusions": [
+        "authority_verification_determination",
+        "corpus_completeness_claim",
+        "final_legal_opinion",
+        "live_ingestion_claim",
+        "live_retrieval_claim"
+      ],
+      "humanReviewNotice": "This scaffold provides a design-only authority corpus research plan and does not constitute a final legal or tax conclusion. No authority referenced here has been live-verified, downloaded, scraped, ingested, or embedded by this patch; official-source verification remains required, and this matter should be reviewed by a qualified tax professional before any legal or tax conclusion.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "scrapingPerformed": false,
+        "downloadPerformed": false,
+        "ingestionPerformed": false,
+        "embeddingPerformed": false,
+        "databaseWritePerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "CTA_APPEAL_WATCH_AUTHORITY": {
+      "phase": "09Q",
+      "mode": "bir_authority_corpus_research_design",
+      "version": "PHASE-09Q-BIR-AUTHORITY-CORPUS-RESEARCH-DESIGN-1",
+      "runtimeActive": false,
+      "corpusDesignSummary": {
+        "totalTopics": 3,
+        "totalCandidateAuthorities": 1,
+        "officialSourcePriorityRequired": true,
+        "liveRetrievalPerformed": false,
+        "ingestionPerformed": false,
+        "databaseWritePerformed": false,
+        "legalConclusionProvided": false,
+        "humanReviewRequired": true,
+        "confidence": "medium"
+      },
+      "officialSourcePriority": [
+        {
+          "domainOrSource": "bir.gov.ph",
+          "priority": 1,
+          "allowedUse": "BIR issuances and forms",
+          "restrictions": [
+            "must confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "bir-cdn.bir.gov.ph",
+          "priority": 2,
+          "allowedUse": "BIR issuances and forms (CDN-hosted copies)",
+          "restrictions": [
+            "must confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "lawphil.net",
+          "priority": 3,
+          "allowedUse": "NIRC/statutory records and case-law mirror",
+          "restrictions": [
+            "cross-check against official judicial source when available"
+          ]
+        },
+        {
+          "domainOrSource": "sc.judiciary.gov.ph",
+          "priority": 4,
+          "allowedUse": "Supreme Court decisions",
+          "restrictions": [
+            "confirm finality and any subsequent resolution"
+          ]
+        },
+        {
+          "domainOrSource": "cta.judiciary.gov.ph",
+          "priority": 5,
+          "allowedUse": "CTA decisions (division and en banc)",
+          "restrictions": [
+            "confirm finality and any appeal status"
+          ]
+        },
+        {
+          "domainOrSource": "officialgazette.gov.ph",
+          "priority": 6,
+          "allowedUse": "official record verification and statute publication",
+          "restrictions": [
+            "confirm effectivity date"
+          ]
+        },
+        {
+          "domainOrSource": "dof.gov.ph",
+          "priority": 7,
+          "allowedUse": "DOF issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "peza.gov.ph",
+          "priority": 8,
+          "allowedUse": "PEZA issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "sec.gov.ph",
+          "priority": 9,
+          "allowedUse": "SEC issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "boi.gov.ph",
+          "priority": 10,
+          "allowedUse": "BOI issuances",
+          "restrictions": [
+            "confirm current version before citation"
+          ]
+        },
+        {
+          "domainOrSource": "secondary_research_sources_non_official",
+          "priority": 11,
+          "allowedUse": "research lead only; must verify against official source before use",
+          "restrictions": [
+            "must not be cited as final authority",
+            "requires primary official-source confirmation before any reliance"
+          ]
+        }
+      ],
+      "authorityTopicMap": [
+        {
+          "topic": "CTA_APPEAL_PERIOD",
+          "requiredAuthorityTypes": [
+            "CTA rules",
+            "NIRC Sec. 228",
+            "jurisprudence"
+          ],
+          "candidateAuthorities": [
+            "CTA rules"
+          ],
+          "missingAuthorityGaps": [
+            "NIRC Sec. 228",
+            "jurisprudence"
+          ],
+          "verificationStatus": "official_source_identified_design_only",
+          "humanReviewRequired": true
+        },
+        {
+          "topic": "CTA_INACTION_APPEAL",
+          "requiredAuthorityTypes": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "candidateAuthorities": [
+            "CTA rules"
+          ],
+          "missingAuthorityGaps": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "verificationStatus": "official_source_identified_design_only",
+          "humanReviewRequired": true
+        },
+        {
+          "topic": "FDDA",
+          "requiredAuthorityTypes": [
+            "NIRC Sec. 228",
+            "RR No. 18-2013",
+            "CTA appeal rules"
+          ],
+          "candidateAuthorities": [],
+          "missingAuthorityGaps": [
+            "NIRC Sec. 228",
+            "RR No. 18-2013",
+            "CTA appeal rules"
+          ],
+          "verificationStatus": "official_source_required",
+          "humanReviewRequired": true
+        }
+      ],
+      "authorityMetadataSchema": {
+        "requiredFields": [
+          "title",
+          "sourceType",
+          "authorityTier",
+          "topicTags",
+          "officialUrlOrDomain",
+          "issuanceOrDecisionDate",
+          "effectiveDate",
+          "citationFormat"
+        ],
+        "recommendedFields": [
+          "supersedesId",
+          "supersededById",
+          "summary",
+          "relatedCaseNumbers",
+          "jurisdiction"
+        ],
+        "prohibitedFields": [
+          "realTaxpayerName",
+          "realTin",
+          "realLoaOrElaNumber",
+          "realAuditCaseNumber",
+          "realBirOfficerName",
+          "exactAssessmentAmount"
+        ],
+        "versioningFields": [
+          "versionNumber",
+          "effectiveDate",
+          "supersededDate",
+          "supersedesId",
+          "supersededById"
+        ],
+        "citationFields": [
+          "citationFormat",
+          "officialUrlOrDomain",
+          "pinCiteOrSection",
+          "retrievalDateForReview"
+        ]
+      },
+      "researchWorkflowDesign": [
+        {
+          "stage": "SOURCE_DISCOVERY_DESIGN",
+          "purpose": "Define how future patches will discover candidate authorities from official sources.",
+          "allowedActionsFutureOnly": [
+            "Query official BIR/judicial/DOF/PEZA/SEC/BOI sites for issuance listings"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No live search performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A discovery pipeline design producing candidate authority leads."
+        },
+        {
+          "stage": "OFFICIAL_SOURCE_PRIORITY_DESIGN",
+          "purpose": "Define ranked trust priority among official domains.",
+          "allowedActionsFutureOnly": [
+            "Assign priority weighting to discovered sources"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No source ranking applied to live data"
+          ],
+          "outputExpectedInFuturePatch": "A prioritized source list consumed by future ingestion."
+        },
+        {
+          "stage": "AUTHORITY_METADATA_DESIGN",
+          "purpose": "Define required/recommended/prohibited metadata fields for each authority record.",
+          "allowedActionsFutureOnly": [
+            "Populate metadata fields from verified official records"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No metadata populated from live sources"
+          ],
+          "outputExpectedInFuturePatch": "A structured metadata schema implementation."
+        },
+        {
+          "stage": "AUTHORITY_VERIFICATION_DESIGN",
+          "purpose": "Define how future patches will verify authority authenticity, date, and version.",
+          "allowedActionsFutureOnly": [
+            "Cross-check issuance date/version against official source"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No verification performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A verification pipeline producing verified/unverified status."
+        },
+        {
+          "stage": "AUTHORITY_TOPIC_MAPPING_DESIGN",
+          "purpose": "Define baseline mapping between BIR audit-defense workflow topics and required authority types.",
+          "allowedActionsFutureOnly": [
+            "Expand topic map coverage as new authorities are verified"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No topic-authority mapping is treated as complete or final"
+          ],
+          "outputExpectedInFuturePatch": "A living topic-to-authority map with verified coverage."
+        },
+        {
+          "stage": "CITATION_POLICY_DESIGN",
+          "purpose": "Define citation discipline for legal/tax claims and deadlines.",
+          "allowedActionsFutureOnly": [
+            "Generate citations from verified authority metadata"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No citations generated from unverified authorities"
+          ],
+          "outputExpectedInFuturePatch": "A citation-formatting and sourcing policy implementation."
+        },
+        {
+          "stage": "INGESTION_PIPELINE_DESIGN",
+          "purpose": "Define how future patches will ingest verified authorities into the corpus.",
+          "allowedActionsFutureOnly": [
+            "Ingest verified official documents into a governed corpus store"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No ingestion, download, or storage performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "An approved ingestion pipeline with governance gates."
+        },
+        {
+          "stage": "DEDUPLICATION_AND_VERSIONING_DESIGN",
+          "purpose": "Define how duplicate or superseded authorities are identified and tracked.",
+          "allowedActionsFutureOnly": [
+            "Detect duplicate/superseded authority records"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No deduplication run against live data"
+          ],
+          "outputExpectedInFuturePatch": "A deduplication/versioning implementation."
+        },
+        {
+          "stage": "CONFLICT_RESOLUTION_DESIGN",
+          "purpose": "Define how conflicting authorities are flagged and resolved.",
+          "allowedActionsFutureOnly": [
+            "Flag conflicting authorities for human review"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No conflict resolution performed on live data"
+          ],
+          "outputExpectedInFuturePatch": "A conflict-detection and escalation implementation."
+        },
+        {
+          "stage": "HUMAN_REVIEW_GATE_DESIGN",
+          "purpose": "Define mandatory human review checkpoints before authority reliance.",
+          "allowedActionsFutureOnly": [
+            "Route flagged authorities to human tax/legal reviewers"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No human review workflow activated in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A human review gate implementation."
+        },
+        {
+          "stage": "FUTURE_RUNTIME_WIRING_DESIGN",
+          "purpose": "Define how the verified authority corpus will eventually be wired into runtime retrieval.",
+          "allowedActionsFutureOnly": [
+            "Wire verified corpus into retrieval behind governance gates"
+          ],
+          "prohibitedActionsThisPatch": [
+            "No runtime wiring performed in this patch"
+          ],
+          "outputExpectedInFuturePatch": "A controlled runtime integration patch, separately approved."
+        },
+        {
+          "stage": "UNKNOWN_STAGE",
+          "purpose": "Placeholder for unclassified research workflow activity.",
+          "allowedActionsFutureOnly": [],
+          "prohibitedActionsThisPatch": [
+            "No action taken"
+          ],
+          "outputExpectedInFuturePatch": "Reclassify into a known stage before proceeding."
+        }
+      ],
+      "verificationRules": {
+        "officialPrimarySourceRequired": true,
+        "secondarySourcesLeadOnly": true,
+        "requireDateAndVersionCheck": true,
+        "requireSupersessionCheck": true,
+        "requireTopicMapping": true,
+        "requireQuoteAndCitationDiscipline": true,
+        "requireHumanReviewForConflict": true,
+        "noFinalLegalConclusionFromUnverifiedAuthority": true
+      },
+      "conflictResolutionPolicy": {
+        "newerIssuanceCheck": true,
+        "statuteVsRegulationHierarchyCheck": true,
+        "jurisprudenceVsAdministrativeGuidanceCheck": true,
+        "specialLawVsGeneralLawCheck": true,
+        "taxpayerFactSpecificityCheck": true,
+        "humanReviewRequiredForConflict": true
+      },
+      "futureIngestionPlan": {
+        "allowedOfficialDomains": [
+          "bir.gov.ph",
+          "bir-cdn.bir.gov.ph",
+          "lawphil.net",
+          "sc.judiciary.gov.ph",
+          "cta.judiciary.gov.ph",
+          "officialgazette.gov.ph",
+          "dof.gov.ph",
+          "peza.gov.ph",
+          "sec.gov.ph",
+          "boi.gov.ph"
+        ],
+        "prohibitedSources": [
+          "SEO blogs as final authority",
+          "social media posts",
+          "unverified summaries",
+          "AI-generated summaries without source",
+          "commercial articles without primary-source verification",
+          "outdated reposted PDFs without official source confirmation"
+        ],
+        "futurePipelineStages": [
+          "SOURCE_DISCOVERY_DESIGN",
+          "OFFICIAL_SOURCE_PRIORITY_DESIGN",
+          "AUTHORITY_METADATA_DESIGN",
+          "AUTHORITY_VERIFICATION_DESIGN",
+          "AUTHORITY_TOPIC_MAPPING_DESIGN",
+          "CITATION_POLICY_DESIGN",
+          "INGESTION_PIPELINE_DESIGN",
+          "DEDUPLICATION_AND_VERSIONING_DESIGN",
+          "CONFLICT_RESOLUTION_DESIGN",
+          "HUMAN_REVIEW_GATE_DESIGN",
+          "FUTURE_RUNTIME_WIRING_DESIGN"
+        ],
+        "futureMetadataChecks": [
+          "date and version check",
+          "supersession check",
+          "topic mapping check",
+          "citation format check"
+        ],
+        "futureQualityGates": [
+          "human review gate",
+          "conflict resolution gate",
+          "official source confirmation gate"
+        ]
+      },
+      "citationPolicyDesign": {
+        "citationRequiredForLegalClaims": true,
+        "citationRequiredForDeadlines": true,
+        "citationRequiredForAuthorityStatus": true,
+        "rawUnsupportedCitationProhibited": true,
+        "sourceCardRequired": true,
+        "exactExcerptPolicy": "Exact excerpts must be sourced from verified official documents only; this design patch includes no live-sourced excerpts."
+      },
+      "sourceCards": [
+        {
+          "label": "BIR official authority corpus design",
+          "sourceType": "authority corpus design",
+          "authorityTier": "future_authority_corpus_required",
+          "note": "Future implementation must verify BIR issuances against bir.gov.ph or bir-cdn.bir.gov.ph. This patch performs no live retrieval."
+        },
+        {
+          "label": "Judicial authority corpus design",
+          "sourceType": "authority corpus design",
+          "authorityTier": "future_authority_corpus_required",
+          "note": "Future implementation must verify Supreme Court and CTA authorities against official judicial sources. This patch performs no live retrieval."
+        },
+        {
+          "label": "2026 BIR audit baseline authority design",
+          "sourceType": "authority corpus design",
+          "authorityTier": "official_reference_required",
+          "note": "RMO No. 1-2026, RMO No. 6-2026, RMC No. 14-2026, RMC No. 5-2026, RMC No. 8-2026, and RMC No. 107-2025 must be treated as priority audit-framework authorities in future corpus work."
+        },
+        {
+          "label": "Private audit workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "private_uploaded_pattern",
+          "note": "Private materials may guide workflow design only. They are not public authority and must never expose real taxpayer data."
+        }
+      ],
+      "riskWarnings": [
+        "This is a design-only authority mapping; official-source verification is required before use.",
+        "Future implementation must verify date, version, supersession, and official source for every candidate authority.",
+        "The available design is insufficient for a final legal conclusion.",
+        "Human tax/legal review remains required before relying on any topic for legal conclusions."
+      ],
+      "recommendedNextActions": [
+        "Verify each candidate authority against its official source domain.",
+        "Build the live ingestion pipeline in a separately approved patch.",
+        "Expand topic coverage before relying on any topic for legal conclusions.",
+        "Route conflicting authorities to human review."
+      ],
+      "prohibitedConclusions": [
+        "authority_verification_determination",
+        "corpus_completeness_claim",
+        "final_legal_opinion",
+        "live_ingestion_claim",
+        "live_retrieval_claim"
+      ],
+      "humanReviewNotice": "This scaffold provides a design-only authority corpus research plan and does not constitute a final legal or tax conclusion. No authority referenced here has been live-verified, downloaded, scraped, ingested, or embedded by this patch; official-source verification remains required, and this matter should be reviewed by a qualified tax professional before any legal or tax conclusion.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "scrapingPerformed": false,
+        "downloadPerformed": false,
+        "ingestionPerformed": false,
+        "embeddingPerformed": false,
+        "databaseWritePerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    }
+  },
+  "prohibitedClaims": [
+    "this authority was verified",
+    "this source was downloaded",
+    "this case was ingested",
+    "this regulation was scraped",
+    "the corpus is complete",
+    "this is final legal authority",
+    "this assessment is void",
+    "this loa is invalid",
+    "this ela is invalid",
+    "this replacement ela is invalid",
+    "this fan is invalid",
+    "this fld is invalid",
+    "this pan is invalid",
+    "this fdda is invalid",
+    "the bir cannot assess you",
+    "the case is fully cancelled",
+    "the assessment is cancelled",
+    "you are permanently cleared",
+    "no need to consult a professional",
+    "you will win",
+    "guaranteed cancellation",
+    "final legal opinion",
+    "official legal advice",
+    "court-tested defense",
+    "foolproof defense"
+  ],
+  "sourceCardRules": {
+    "allowedAuthorityTiers": [
+      "official_reference_required",
+      "uploaded_reference_pattern",
+      "future_authority_corpus_required",
+      "procedural_design_reference"
+    ],
+    "mustNotClaimFinalAuthorityVerificationComplete": true,
+    "mustNotClaimFinalLegalConclusion": true,
+    "requiredBaselineSourceCards": [
+      {
+        "label": "BIR official authority corpus design",
+        "sourceType": "authority corpus design",
+        "authorityTier": "future_authority_corpus_required"
+      },
+      {
+        "label": "Judicial authority corpus design",
+        "sourceType": "authority corpus design",
+        "authorityTier": "future_authority_corpus_required"
+      },
+      {
+        "label": "2026 BIR audit baseline authority design",
+        "sourceType": "authority corpus design",
+        "authorityTier": "official_reference_required"
+      },
+      {
+        "label": "Private audit workflow reference pattern",
+        "sourceType": "private uploaded reference",
+        "authorityTier": "private_uploaded_pattern"
+      }
+    ]
+  },
+  "futurePatchPlan": [
+    "PHASE-09Q-BIR-AUTHORITY-CORPUS-RESEARCH-DESIGN-1",
+    "PHASE-09S-2026-BIR-AUDIT-BASELINE-INTEGRATION-SCAFFOLD-1",
+    "PHASE-09-GATE-CLOSURE-1"
+  ],
+  "nextTask": "PHASE-09S-2026-BIR-AUDIT-BASELINE-INTEGRATION-SCAFFOLD-1"
+}
