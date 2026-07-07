@@ -5453,3 +5453,83 @@ PHASE-09-GATE-CLOSURE-1. Do not wire PAN/FAN/FLD protest workflow to /ask until 
 gates approve it; keep real taxpayer data out of fixtures; require authority verification before legal conclusions;
 preserve 2026 audit-framework flags but do not convert them into validity conclusions.
 ```
+
+## Phase 9O BIR Audit Defense Matrix Scaffold — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-07):
+
+```text
+PHASE-09O-BIR-AUDIT-DEFENSE-MATRIX-SCAFFOLD-1 completed. Decision: PHASE 09O BIR AUDIT DEFENSE MATRIX SCAFFOLD PASS
+WITH STRICT RECOMMENDATIONS. Base commit: c27a1e3 PHASE-09N-PAN-FAN-FLD-PROTEST-WORKFLOW-SCAFFOLD-1.
+
+Scope: design-only, non-runtime-active scaffold structuring BIR audit-defense issues into a professional matrix
+connecting BIR findings, taxpayer facts, documents, missing evidence, substitute proof, procedural defenses,
+substantive defenses, authority needs, risk level, and recommended safe next actions. New pure standalone module
+workflow/bir-audit-defense-matrix.js, zero imports, no I/O, no network calls, no OCR, no process.env, no
+Date.now/randomness, no side effects. No existing Phase 9 workflow file was modified. This scaffold models defense
+strategy only; it does not decide the defense, generates no final legal conclusion, and generates no filing-ready
+protest/BIR submission/CTA pleading/tax memo.
+
+Supported issue types (31): INCOME_TAX, VALUE_ADDED_TAX, EXPANDED_WITHHOLDING_TAX, FINAL_WITHHOLDING_TAX,
+WITHHOLDING_TAX_DEDUCTIBILITY, CWT_SUBSTANTIATION, INPUT_VAT_SUBSTANTIATION, VAT_EXEMPT_VS_ZERO_RATED,
+PEZA_ZERO_RATING, OUTPUT_VAT, UNSUPPORTED_SALES_CLASSIFICATION, UNSUPPORTED_EXPENSES,
+RELATED_PARTY_OR_INTERCOMPANY, DIVIDEND_FWT, COMPROMISE_PENALTY, SURCHARGE, INTEREST, PRESCRIPTION,
+LOA_OR_ELA_AUTHORITY, REPLACEMENT_ELA, CONSOLIDATED_NOTICE, DUE_PROCESS, PROPER_SERVICE, DOCUMENT_REQUEST_SCOPE,
+SUBPOENA_OR_PRE_SUBPOENA, NOD_DOD_PROCESS, PAN_REPLY, FAN_FLD_PROTEST, FDDA_APPEAL_WATCH, TERMINATION_LETTER_SCOPE,
+UNKNOWN_ISSUE. Risk levels (5): low, medium, high, critical, unknown. Evidence statuses (8): available, partial,
+missing, not_applicable, non_existent, substitute_available, requires_reconciliation, unknown. Routes (6):
+AUTHORITY_SAFE_PROCEDURAL_FALLBACK, BIR_NOTICE_TRIAGE, PAN_FAN_FLD_PROTEST_WORKFLOW,
+DOCUMENT_COMPLIANCE_TRANSMITTAL, AUTHORITY_CORPUS_RESEARCH, HUMAN_TAX_LEGAL_REVIEW.
+
+Runtime: none. Ask-handler: none. Route/server/pipeline: none. Feature flags: unchanged/off by default. Memory:
+inactive. Persistence: none. External search/OpenAI/Supabase/Google Drive/n8n/Firecrawl/Crawlee/MCP/OCR: untouched.
+Production: unchanged.
+
+Privacy: sanitized/synthetic examples only (SAMPLE TAXPAYER INC., DEMO LOGISTICS CORP., SYNTHETIC HOLDINGS INC.,
+MODEL VAT TAXPAYER CORP.); no real taxpayer names, TINs, LOA/eLA numbers, audit case numbers, BIR officer names, or
+exact real assessment amounts anywhere in this patch. The module additionally rejects any known real
+reference-corpus fragment or exact real assessment amount on input and scans its own output for leakage.
+
+Legal safety: no final legal conclusions; no fabricated authorities; no claim that a notice, LOA, eLA, PAN, FAN,
+FLD, FDDA, assessment, or protest is void, invalid, cancelled, final, enforceable, appealable, or legally
+conclusive. No filing-ready protest/BIR submission/CTA pleading/tax memo generated. No automatic submission. Human
+review notice preserved in every result; all eight metadata safety flags always scaffold-safe. A conservative
+prohibited-claim phrase scanner and a real-data-leak scanner are both run by the result validator.
+
+Authority boundary: RR No. 18-2013, NIRC Sec. 228, RMO No. 1-2026, RMO No. 6-2026, RMC No. 14-2026, and RMC No.
+5-2026 referenced as design source-card requirements only. No live authority retrieval, search, scraping, browsing,
+or OCR implemented. Phase 10 authority search not implemented. Phase 11 retrieval optimization not implemented. MCP
+deferred and not used.
+
+Capabilities added: per-issue defense matrix rows (evidence, substitute proof, authority needs, procedural/
+substantive defense topics, risk level, recommended safe actions); aggregated evidence plan, procedural defense
+plan, substantive defense plan, and authority needs across the full matrix; issue-specific guidance for 13 detailed
+issue-rule groups (VAT exempt/zero-rated + PEZA, CWT substantiation, withholding deductibility + EWT, input VAT
+substantiation, dividend FWT, LOA/eLA authority + replacement eLA, consolidated notice, document request scope, PAN
+reply, FAN/FLD protest, FDDA appeal watch, termination letter scope).
+
+Validation:
+node tests/phase-09o-bir-audit-defense-matrix-scaffold-1.test.mjs - PASS / 33 / 0 / 604.
+node tests/phase-09n-pan-fan-fld-protest-workflow-scaffold-1.test.mjs - PASS / 35 / 0 / 335.
+node tests/phase-09m-bir-notice-loa-triage-intent-scaffold-1.test.mjs - PASS / 47 / 0 / 398.
+node tests/phase-09l-authority-safe-procedural-fallback-scaffold-1.test.mjs - PASS / 33 / 0 / 184.
+node tests/phase-09r-tax-memo-runtime-staging-smoke-1.test.mjs - PASS / 36 / 0 / 179.
+node tests/phase-09r-tax-memo-runtime-wiring-integration-design-1.test.mjs - PASS / 54 / 0 / 202.
+node tests/phase-09r-tax-memo-runtime-wiring-scaffold-1.test.mjs - PASS / 113 / 0 / 212.
+node tests/phase-09i-requirements-request-letter-schema-scaffold-1.test.mjs - PASS / 56 / 0 / 333.
+node tests/phase-09h-controlled-runtime-wiring-design-or-scaffold-1.test.mjs - PASS / 69 / 0 / 172.
+node tests/phase-09g-workflow-output-governance-gate-1.test.mjs - PASS / 73 / 0 / 213.
+node tests/phase-09f-client-advisory-checklist-scaffold-1.test.mjs - PASS / 75 / 0 / 404.
+node tests/phase-09e-bir-reply-draft-scaffold-1.test.mjs - PASS / 45 / 0 / 243.
+node tests/phase-09d-audit-defense-matrix-scaffold-1.test.mjs - PASS / 45 / 0 / 203.
+node tests/phase-09c-tax-memo-schema-scaffold-1.test.mjs - PASS / 47 / 0 / 149.
+node tests/phase-09b-workflow-mode-registry-scaffold-1.test.mjs - PASS / 45 / 0 / 363.
+node tests/phase-09a-professional-workflow-copilot-design-1.test.mjs - PASS / 30 / 0 / 75.
+node tests/patch-08s-followup-index-secret-header-auth-staging-smoke-1.test.mjs - PASS / 23 / 0 / 92.
+node tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs - PASS / 17 / 0 / 127.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0 / 203.
+npm run guard:files - PASS. npm test - GATE PASSED / 161 suites / 0 failed.
+
+Next recommended task: PHASE-09P-BIR-DOCUMENT-COMPLIANCE-TRANSMITTAL-SCAFFOLD-1. Future plan also includes
+PHASE-09-GATE-CLOSURE-1. Do not wire the audit defense matrix to /ask until workflow governance and runtime gates
+approve it; keep real taxpayer data out of fixtures; require authority verification before legal conclusions;
+preserve 2026 audit-framework flags but do not convert them into validity conclusions.
+```

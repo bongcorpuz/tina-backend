@@ -1,0 +1,3074 @@
+{
+  "patch": "PHASE-09O-BIR-AUDIT-DEFENSE-MATRIX-SCAFFOLD-1",
+  "decision": "PHASE 09O BIR AUDIT DEFENSE MATRIX SCAFFOLD PASS WITH STRICT RECOMMENDATIONS",
+  "phase": "09O",
+  "baseCommit": "c27a1e3 PHASE-09N-PAN-FAN-FLD-PROTEST-WORKFLOW-SCAFFOLD-1 add PAN/FAN/FLD/protest workflow scaffold",
+  "nonRuntimePatch": {
+    "noRuntimeActivation": true,
+    "noAskHandlerWiring": true,
+    "noServerChanges": true,
+    "noRouteChanges": true,
+    "noPipelineChanges": true,
+    "noFeatureFlagEnabledByDefault": true,
+    "noMemoryActivation": true,
+    "noPersistence": true,
+    "noExternalSearch": true,
+    "noOpenAiCalls": true,
+    "noSupabaseCalls": true,
+    "noGoogleDriveCalls": true,
+    "noN8n": true,
+    "noFirecrawl": true,
+    "noCrawlee": true,
+    "noMcp": true,
+    "noOcr": true,
+    "noPhase10Implementation": true,
+    "noPhase11Implementation": true,
+    "noProductionChange": true,
+    "noRealTaxpayerData": true,
+    "noFinalLegalConclusion": true,
+    "noFilingReadyDocument": true,
+    "noAutomaticSubmission": true
+  },
+  "currentState": {
+    "phase8Closed": true,
+    "phase8SClosed": true,
+    "phase08XClosed": true,
+    "phase9AComplete": true,
+    "phase9BComplete": true,
+    "phase9CComplete": true,
+    "phase9DComplete": true,
+    "phase9EComplete": true,
+    "phase9FComplete": true,
+    "phase9GComplete": true,
+    "phase9HComplete": true,
+    "phase9IComplete": true,
+    "phase9RRuntimeScaffoldComplete": true,
+    "phase9RIntegrationDesignComplete": true,
+    "phase9RStagingSmokeComplete": true,
+    "phase9LProceduralFallbackScaffoldComplete": true,
+    "phase9MNoticeLoaTriageIntentScaffoldComplete": true,
+    "phase9NPanFanFldProtestWorkflowScaffoldComplete": true,
+    "phase9OAuditDefenseMatrixScaffoldComplete": true,
+    "memoryInactive": true,
+    "productionUnchanged": true,
+    "mcpDeferredUntilAfterFinalPlannedPhase": true,
+    "latestCommitBeforePatch": "c27a1e3"
+  },
+  "objective": "Provide a design-only, non-runtime-active scaffold structuring BIR audit-defense issues into a professional matrix connecting BIR findings, taxpayer facts, documents, missing evidence, substitute proof, procedural defenses, substantive defenses, authority needs, risk level, and recommended safe next actions. This scaffold models defense strategy; it does not decide the defense.",
+  "supportedDefenseMatrixIssueTypes": [
+    "INCOME_TAX",
+    "VALUE_ADDED_TAX",
+    "EXPANDED_WITHHOLDING_TAX",
+    "FINAL_WITHHOLDING_TAX",
+    "WITHHOLDING_TAX_DEDUCTIBILITY",
+    "CWT_SUBSTANTIATION",
+    "INPUT_VAT_SUBSTANTIATION",
+    "VAT_EXEMPT_VS_ZERO_RATED",
+    "PEZA_ZERO_RATING",
+    "OUTPUT_VAT",
+    "UNSUPPORTED_SALES_CLASSIFICATION",
+    "UNSUPPORTED_EXPENSES",
+    "RELATED_PARTY_OR_INTERCOMPANY",
+    "DIVIDEND_FWT",
+    "COMPROMISE_PENALTY",
+    "SURCHARGE",
+    "INTEREST",
+    "PRESCRIPTION",
+    "LOA_OR_ELA_AUTHORITY",
+    "REPLACEMENT_ELA",
+    "CONSOLIDATED_NOTICE",
+    "DUE_PROCESS",
+    "PROPER_SERVICE",
+    "DOCUMENT_REQUEST_SCOPE",
+    "SUBPOENA_OR_PRE_SUBPOENA",
+    "NOD_DOD_PROCESS",
+    "PAN_REPLY",
+    "FAN_FLD_PROTEST",
+    "FDDA_APPEAL_WATCH",
+    "TERMINATION_LETTER_SCOPE",
+    "UNKNOWN_ISSUE"
+  ],
+  "supportedDefenseMatrixRiskLevels": [
+    "low",
+    "medium",
+    "high",
+    "critical",
+    "unknown"
+  ],
+  "supportedDefenseMatrixEvidenceStatuses": [
+    "available",
+    "partial",
+    "missing",
+    "not_applicable",
+    "non_existent",
+    "substitute_available",
+    "requires_reconciliation",
+    "unknown"
+  ],
+  "supportedDefenseMatrixRoutes": [
+    "AUTHORITY_SAFE_PROCEDURAL_FALLBACK",
+    "BIR_NOTICE_TRIAGE",
+    "PAN_FAN_FLD_PROTEST_WORKFLOW",
+    "DOCUMENT_COMPLIANCE_TRANSMITTAL",
+    "AUTHORITY_CORPUS_RESEARCH",
+    "HUMAN_TAX_LEGAL_REVIEW"
+  ],
+  "referenceCorpusBoundary": {
+    "privateReferenceMaterialsProvidedByUser": true,
+    "referenceMaterialsAreDevelopmentPatternsOnly": true,
+    "noRealTaxpayerNamesUsed": true,
+    "noRealTinsUsed": true,
+    "noRealLoaOrElaNumbersUsed": true,
+    "noRealAuditCaseNumbersUsed": true,
+    "noRealAddressesUsed": true,
+    "noRealBirOfficerNamesUsed": true,
+    "noRealClientNamesUsed": true,
+    "noRealAssessmentAmountsUsed": true,
+    "allExamplesSanitizedAndSynthetic": true,
+    "rmc5_2026TreatedAsLoaElaVerificationDesignReference": true,
+    "rmo1_2026TreatedAsRequired2026AuditBaselineReference": true,
+    "rmo6_2026TreatedAsRequiredConsolidationSafeguardReference": true,
+    "rmc14_2026TreatedAsRequiredReplacementElaClarificationReference": true
+  },
+  "authorityBoundary": {
+    "futureOfficialAuthoritySourcesNoted": [
+      "bir.gov.ph",
+      "bir-cdn.bir.gov.ph",
+      "lawphil.net",
+      "sc.judiciary.gov.ph",
+      "cta.judiciary.gov.ph",
+      "officialgazette.gov.ph",
+      "dof.gov.ph",
+      "peza.gov.ph",
+      "sec.gov.ph",
+      "boi.gov.ph"
+    ],
+    "liveSearchPerformed": false,
+    "liveScrapingPerformed": false,
+    "liveBrowsingPerformed": false,
+    "liveOcrPerformed": false,
+    "liveAuthorityRetrievalPerformed": false,
+    "designOnly": true,
+    "phase10AuthoritySearchImplemented": false,
+    "phase11RetrievalOptimizationImplemented": false
+  },
+  "privacyBoundary": {
+    "sanitizedSyntheticTaxpayerNamesOnly": true,
+    "syntheticTaxpayerNameExamples": [
+      "SAMPLE TAXPAYER INC.",
+      "DEMO LOGISTICS CORP.",
+      "SYNTHETIC HOLDINGS INC.",
+      "MODEL VAT TAXPAYER CORP."
+    ],
+    "fakeSyntheticNumberExamples": [
+      "eLA20XX000000000",
+      "AUDM00-000-20XX-000000",
+      "TIN-XXX-XXX-XXX-XXX",
+      "PHP 0.00"
+    ],
+    "noRealTaxpayerDataInFixturesOrTests": true,
+    "noExactRealAssessmentAmountsUsed": true,
+    "knownRealFragmentsExcludedFromEverything": true
+  },
+  "runtimeBoundary": {
+    "runtimeActiveAlwaysFalse": true,
+    "scaffoldOnlyAlwaysTrue": true,
+    "allowLegalConclusionAlwaysFalse": true,
+    "allowLiveRetrievalAlwaysFalse": true,
+    "allowRealTaxpayerDataAlwaysFalse": true,
+    "generateFilingReadyDocumentAlwaysFalse": true,
+    "automaticSubmissionAlwaysFalse": true,
+    "notWiredToAsk": true,
+    "noAuthenticationDependency": true,
+    "noExpressServerRuntimeDependency": true
+  },
+  "matrixSummaryShape": {
+    "fields": [
+      "noticeType",
+      "noticeStage",
+      "totalIssues",
+      "highRiskIssueCount",
+      "evidenceGapCount",
+      "authorityResearchNeeded",
+      "humanReviewRequired",
+      "confidence"
+    ]
+  },
+  "defenseMatrixRowShape": {
+    "fields": [
+      "issueType",
+      "birFinding",
+      "taxpayerPosition",
+      "documentsAvailable",
+      "documentsMissing",
+      "substituteProofOptions",
+      "evidenceStatus",
+      "reconciliationNeeded",
+      "authorityNeeded",
+      "jurisprudenceNeeded",
+      "proceduralDefenseTopics",
+      "substantiveDefenseTopics",
+      "riskLevel",
+      "riskReason",
+      "recommendedSafeAction",
+      "prohibitedOverreach",
+      "humanReviewRequired"
+    ]
+  },
+  "evidencePlanShape": {
+    "fields": [
+      "documentsToSubmit",
+      "documentsToReconcile",
+      "substituteProofToPrepare",
+      "nonApplicableItemsToExplain",
+      "receivingProofNeeded",
+      "gapsToEscalate"
+    ]
+  },
+  "proceduralDefensePlanShape": {
+    "fields": [
+      "loaOrElaAuthorityCheckNeeded",
+      "replacementElaCheckNeeded",
+      "consolidatedNoticeCheckNeeded",
+      "properServiceCheckNeeded",
+      "dueProcessCheckNeeded",
+      "statementOfFactsAndLawCheckNeeded",
+      "prescriptionCheckNeeded",
+      "documentRequestScopeCheckNeeded",
+      "noRegressionRuleCheckNeeded",
+      "priorNoticeConsistencyCheckNeeded"
+    ]
+  },
+  "substantiveDefensePlanShape": {
+    "fields": [
+      "vatClassificationReviewNeeded",
+      "cwtSubstantiationReviewNeeded",
+      "withholdingDeductibilityReviewNeeded",
+      "inputVatSupportReviewNeeded",
+      "dividendFwtReviewNeeded",
+      "relatedPartyReviewNeeded",
+      "incomeTaxExpenseSupportReviewNeeded"
+    ]
+  },
+  "authorityNeedsShape": {
+    "fields": [
+      "controllingAuthoritiesNeeded",
+      "birIssuancesNeeded",
+      "jurisprudenceNeeded",
+      "ctaRulesNeeded",
+      "authorityStatus"
+    ]
+  },
+  "validationMatrix": {
+    "newBirAuditDefenseMatrixTest": "PASS",
+    "phase09NPanFanFldProtestWorkflowTest": "PASS",
+    "phase09MBirNoticeLoaTriageIntentTest": "PASS",
+    "phase09LProceduralFallbackScaffoldTest": "PASS",
+    "phase09RStagingSmokeTest": "PASS",
+    "phase09RIntegrationDesignTest": "PASS",
+    "phase09RRuntimeScaffoldTest": "PASS",
+    "phase09IRequirementsRequestLetterTest": "PASS",
+    "phase09HRuntimeWiringTest": "PASS",
+    "phase09GGovernanceGateTest": "PASS",
+    "phase09FClientAdvisoryComplianceChecklistTest": "PASS",
+    "phase09EBirReplyDraftTest": "PASS",
+    "phase09DAuditDefenseMatrixTest": "PASS",
+    "phase09CTaxMemoSchemaTest": "PASS",
+    "phase09BWorkflowModeRegistryTest": "PASS",
+    "phase09ADesignTest": "PASS",
+    "patch08SFollowupIndexSecretHeaderAuthStagingSmokeTest": "PASS",
+    "patch08XFinalGateTest": "PASS",
+    "patch08SFinalClosureGateTest": "PASS",
+    "guardFiles": "PASS",
+    "npmTest": "PASS"
+  },
+  "sampleInputs": {
+    "VAT_EXEMPT_VS_ZERO_RATED": {
+      "userQuery": "Build a defense matrix for SYNTHETIC HOLDINGS INC.'s VAT exempt vs zero-rated finding.",
+      "workflowContext": {
+        "noticeType": "BIR_PAN",
+        "noticeStage": "PRE_ASSESSMENT",
+        "taxablePeriod": "CY2025",
+        "taxTypes": [
+          "VAT"
+        ],
+        "receiptDateKnown": true
+      },
+      "findings": [
+        {
+          "issueType": "VAT_EXEMPT_VS_ZERO_RATED",
+          "birFinding": "Synthetic finding only.",
+          "taxpayerPosition": "Synthetic position only.",
+          "amountPresent": false,
+          "documentsAvailable": [
+            "Synthetic supporting document"
+          ],
+          "documentsMissing": [
+            "Synthetic missing document"
+          ],
+          "evidenceStatus": "partial",
+          "authorityNeeded": [],
+          "proceduralDefenseTopics": [],
+          "substantiveDefenseTopics": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "CWT_SUBSTANTIATION": {
+      "userQuery": "Build a defense matrix for MODEL VAT TAXPAYER CORP.'s unsupported CWT finding.",
+      "workflowContext": {
+        "noticeType": "BIR_PAN",
+        "noticeStage": "PRE_ASSESSMENT",
+        "taxablePeriod": "CY2025",
+        "receiptDateKnown": true
+      },
+      "findings": [
+        {
+          "issueType": "CWT_SUBSTANTIATION",
+          "birFinding": "Synthetic finding only.",
+          "taxpayerPosition": "Synthetic position only.",
+          "amountPresent": false,
+          "documentsAvailable": [
+            "Synthetic supporting document"
+          ],
+          "documentsMissing": [
+            "Synthetic missing document"
+          ],
+          "evidenceStatus": "partial",
+          "authorityNeeded": [],
+          "proceduralDefenseTopics": [],
+          "substantiveDefenseTopics": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "WITHHOLDING_TAX_DEDUCTIBILITY": {
+      "userQuery": "Build a defense matrix for DEMO LOGISTICS CORP.'s withholding tax deductibility finding.",
+      "workflowContext": {
+        "noticeType": "BIR_PAN",
+        "noticeStage": "PRE_ASSESSMENT",
+        "taxablePeriod": "CY2025",
+        "receiptDateKnown": true
+      },
+      "findings": [
+        {
+          "issueType": "WITHHOLDING_TAX_DEDUCTIBILITY",
+          "birFinding": "Synthetic finding only.",
+          "taxpayerPosition": "Synthetic position only.",
+          "amountPresent": false,
+          "documentsAvailable": [
+            "Synthetic supporting document"
+          ],
+          "documentsMissing": [
+            "Synthetic missing document"
+          ],
+          "evidenceStatus": "partial",
+          "authorityNeeded": [],
+          "proceduralDefenseTopics": [],
+          "substantiveDefenseTopics": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "INPUT_VAT_SUBSTANTIATION": {
+      "userQuery": "Build a defense matrix for SAMPLE TAXPAYER INC.'s disallowed input VAT finding.",
+      "workflowContext": {
+        "noticeType": "BIR_PAN",
+        "noticeStage": "PRE_ASSESSMENT",
+        "taxablePeriod": "CY2025",
+        "taxTypes": [
+          "VAT"
+        ],
+        "receiptDateKnown": true
+      },
+      "findings": [
+        {
+          "issueType": "INPUT_VAT_SUBSTANTIATION",
+          "birFinding": "Synthetic finding only.",
+          "taxpayerPosition": "Synthetic position only.",
+          "amountPresent": false,
+          "documentsAvailable": [
+            "Synthetic supporting document"
+          ],
+          "documentsMissing": [
+            "Synthetic missing document"
+          ],
+          "evidenceStatus": "partial",
+          "authorityNeeded": [],
+          "proceduralDefenseTopics": [],
+          "substantiveDefenseTopics": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "DIVIDEND_FWT": {
+      "userQuery": "Build a defense matrix for SYNTHETIC HOLDINGS INC.'s dividend FWT finding.",
+      "workflowContext": {
+        "noticeType": "BIR_PAN",
+        "noticeStage": "PRE_ASSESSMENT",
+        "taxablePeriod": "CY2025",
+        "receiptDateKnown": true
+      },
+      "findings": [
+        {
+          "issueType": "DIVIDEND_FWT",
+          "birFinding": "Synthetic finding only.",
+          "taxpayerPosition": "Synthetic position only.",
+          "amountPresent": false,
+          "documentsAvailable": [
+            "Synthetic supporting document"
+          ],
+          "documentsMissing": [
+            "Synthetic missing document"
+          ],
+          "evidenceStatus": "partial",
+          "authorityNeeded": [],
+          "proceduralDefenseTopics": [],
+          "substantiveDefenseTopics": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "LOA_OR_ELA_AUTHORITY": {
+      "userQuery": "Build a defense matrix for DEMO LOGISTICS CORP.'s LOA/eLA authority question.",
+      "workflowContext": {
+        "noticeType": "BIR_FAN_FLD",
+        "noticeStage": "FINAL_ASSESSMENT",
+        "taxablePeriod": "CY2025",
+        "loaAuthorityIssue": true,
+        "receiptDateKnown": true
+      },
+      "findings": [
+        {
+          "issueType": "LOA_OR_ELA_AUTHORITY",
+          "birFinding": "Synthetic finding only.",
+          "taxpayerPosition": "Synthetic position only.",
+          "amountPresent": false,
+          "documentsAvailable": [
+            "Synthetic supporting document"
+          ],
+          "documentsMissing": [
+            "Synthetic missing document"
+          ],
+          "evidenceStatus": "partial",
+          "authorityNeeded": [],
+          "proceduralDefenseTopics": [],
+          "substantiveDefenseTopics": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "REPLACEMENT_ELA": {
+      "userQuery": "Build a defense matrix for SAMPLE TAXPAYER INC.'s replacement eLA continuity question.",
+      "workflowContext": {
+        "noticeType": "BIR_FAN_FLD",
+        "noticeStage": "FINAL_ASSESSMENT",
+        "taxablePeriod": "CY2025",
+        "replacementElaIssue": true,
+        "receiptDateKnown": true
+      },
+      "findings": [
+        {
+          "issueType": "REPLACEMENT_ELA",
+          "birFinding": "Synthetic finding only.",
+          "taxpayerPosition": "Synthetic position only.",
+          "amountPresent": false,
+          "documentsAvailable": [
+            "Synthetic supporting document"
+          ],
+          "documentsMissing": [
+            "Synthetic missing document"
+          ],
+          "evidenceStatus": "partial",
+          "authorityNeeded": [],
+          "proceduralDefenseTopics": [],
+          "substantiveDefenseTopics": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "CONSOLIDATED_NOTICE": {
+      "userQuery": "Build a defense matrix for MODEL VAT TAXPAYER CORP.'s consolidated notice question.",
+      "workflowContext": {
+        "noticeType": "BIR_CONSOLIDATED_FAN",
+        "noticeStage": "FINAL_ASSESSMENT",
+        "taxablePeriod": "CY2025",
+        "consolidatedNotice": true,
+        "receiptDateKnown": true
+      },
+      "findings": [
+        {
+          "issueType": "CONSOLIDATED_NOTICE",
+          "birFinding": "Synthetic finding only.",
+          "taxpayerPosition": "Synthetic position only.",
+          "amountPresent": false,
+          "documentsAvailable": [
+            "Synthetic supporting document"
+          ],
+          "documentsMissing": [
+            "Synthetic missing document"
+          ],
+          "evidenceStatus": "partial",
+          "authorityNeeded": [],
+          "proceduralDefenseTopics": [],
+          "substantiveDefenseTopics": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "DOCUMENT_REQUEST_SCOPE": {
+      "userQuery": "Build a defense matrix for SYNTHETIC HOLDINGS INC.'s additional document request scope question.",
+      "workflowContext": {
+        "noticeType": "BIR_ADDITIONAL_DOCUMENT_REQUEST",
+        "noticeStage": "DOCUMENT_REQUEST",
+        "taxablePeriod": "CY2025",
+        "receiptDateKnown": true
+      },
+      "findings": [
+        {
+          "issueType": "DOCUMENT_REQUEST_SCOPE",
+          "birFinding": "Synthetic finding only.",
+          "taxpayerPosition": "Synthetic position only.",
+          "amountPresent": false,
+          "documentsAvailable": [
+            "Synthetic supporting document"
+          ],
+          "documentsMissing": [
+            "Synthetic missing document"
+          ],
+          "evidenceStatus": "partial",
+          "authorityNeeded": [],
+          "proceduralDefenseTopics": [],
+          "substantiveDefenseTopics": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "PAN_REPLY": {
+      "userQuery": "Build a defense matrix for DEMO LOGISTICS CORP.'s PAN reply.",
+      "workflowContext": {
+        "noticeType": "BIR_PAN",
+        "noticeStage": "PRE_ASSESSMENT",
+        "taxablePeriod": "CY2025",
+        "receiptDateKnown": true,
+        "deadlineSignalsKnown": true
+      },
+      "findings": [
+        {
+          "issueType": "PAN_REPLY",
+          "birFinding": "Synthetic finding only.",
+          "taxpayerPosition": "Synthetic position only.",
+          "amountPresent": false,
+          "documentsAvailable": [
+            "Synthetic supporting document"
+          ],
+          "documentsMissing": [
+            "Synthetic missing document"
+          ],
+          "evidenceStatus": "partial",
+          "authorityNeeded": [],
+          "proceduralDefenseTopics": [],
+          "substantiveDefenseTopics": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "FAN_FLD_PROTEST": {
+      "userQuery": "Build a defense matrix for SAMPLE TAXPAYER INC.'s FAN/FLD protest.",
+      "workflowContext": {
+        "noticeType": "BIR_FAN_FLD",
+        "noticeStage": "FINAL_ASSESSMENT",
+        "taxablePeriod": "CY2025",
+        "receiptDateKnown": true,
+        "deadlineSignalsKnown": true
+      },
+      "findings": [
+        {
+          "issueType": "FAN_FLD_PROTEST",
+          "birFinding": "Synthetic finding only.",
+          "taxpayerPosition": "Synthetic position only.",
+          "amountPresent": false,
+          "documentsAvailable": [
+            "Synthetic supporting document"
+          ],
+          "documentsMissing": [
+            "Synthetic missing document"
+          ],
+          "evidenceStatus": "partial",
+          "authorityNeeded": [],
+          "proceduralDefenseTopics": [],
+          "substantiveDefenseTopics": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "FDDA_APPEAL_WATCH": {
+      "userQuery": "Build a defense matrix for SYNTHETIC HOLDINGS INC.'s FDDA appeal-watch.",
+      "workflowContext": {
+        "noticeType": "BIR_FDDA",
+        "noticeStage": "APPEAL_WATCH",
+        "taxablePeriod": "CY2025",
+        "receiptDateKnown": true
+      },
+      "findings": [
+        {
+          "issueType": "FDDA_APPEAL_WATCH",
+          "birFinding": "Synthetic finding only.",
+          "taxpayerPosition": "Synthetic position only.",
+          "amountPresent": false,
+          "documentsAvailable": [
+            "Synthetic supporting document"
+          ],
+          "documentsMissing": [
+            "Synthetic missing document"
+          ],
+          "evidenceStatus": "partial",
+          "authorityNeeded": [],
+          "proceduralDefenseTopics": [],
+          "substantiveDefenseTopics": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "TERMINATION_LETTER_SCOPE": {
+      "userQuery": "Build a defense matrix for MODEL VAT TAXPAYER CORP.'s termination letter scope.",
+      "workflowContext": {
+        "noticeType": "BIR_AUDIT_TERMINATION_LETTER",
+        "noticeStage": "AUDIT_CLOSURE",
+        "taxablePeriod": "CY2025",
+        "receiptDateKnown": true
+      },
+      "findings": [
+        {
+          "issueType": "TERMINATION_LETTER_SCOPE",
+          "birFinding": "Synthetic finding only.",
+          "taxpayerPosition": "Synthetic position only.",
+          "amountPresent": false,
+          "documentsAvailable": [
+            "Synthetic supporting document"
+          ],
+          "documentsMissing": [
+            "Synthetic missing document"
+          ],
+          "evidenceStatus": "partial",
+          "authorityNeeded": [],
+          "proceduralDefenseTopics": [],
+          "substantiveDefenseTopics": [],
+          "riskLevel": "medium"
+        }
+      ]
+    }
+  },
+  "sampleOutputs": {
+    "VAT_EXEMPT_VS_ZERO_RATED": {
+      "phase": "09O",
+      "mode": "bir_audit_defense_matrix",
+      "version": "PHASE-09O-BIR-AUDIT-DEFENSE-MATRIX-SCAFFOLD-1",
+      "runtimeActive": false,
+      "matrixSummary": {
+        "noticeType": "BIR_PAN",
+        "noticeStage": "PRE_ASSESSMENT",
+        "totalIssues": 1,
+        "highRiskIssueCount": 0,
+        "evidenceGapCount": 1,
+        "authorityResearchNeeded": true,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "defenseMatrix": [
+        {
+          "issueType": "VAT_EXEMPT_VS_ZERO_RATED",
+          "birFinding": "Synthetic finding only.",
+          "taxpayerPosition": "Synthetic position only.",
+          "documentsAvailable": [
+            "Synthetic supporting document"
+          ],
+          "documentsMissing": [
+            "Synthetic missing document"
+          ],
+          "substituteProofOptions": [
+            "sales invoices",
+            "contracts",
+            "client registration/support",
+            "PEZA or incentive documents if applicable",
+            "export/foreign currency/remittance support if applicable",
+            "SLSP reconciliation",
+            "VAT return reconciliation"
+          ],
+          "evidenceStatus": "partial",
+          "reconciliationNeeded": [
+            "SLSP reconciliation",
+            "VAT return reconciliation"
+          ],
+          "authorityNeeded": [
+            "NIRC VAT provisions",
+            "BIR VAT zero-rating rules",
+            "PEZA / export rules if applicable",
+            "VAT invoicing/substantiation rules",
+            "CTA / Supreme Court jurisprudence"
+          ],
+          "jurisprudenceNeeded": [
+            "CTA / Supreme Court jurisprudence"
+          ],
+          "proceduralDefenseTopics": [
+            "due process on discrepancy characterization",
+            "stated legal/factual basis for reclassification"
+          ],
+          "substantiveDefenseTopics": [
+            "VAT invoicing compliance",
+            "zero-rating/exemption documentary support",
+            "sales classification basis"
+          ],
+          "riskLevel": "medium",
+          "riskReason": "risk level as assessed from provided facts, pending professional review",
+          "recommendedSafeAction": [
+            "Gather sales invoices and supporting contracts.",
+            "Reconcile SLSP and VAT return figures.",
+            "Escalate classification basis to professional review."
+          ],
+          "prohibitedOverreach": [
+            "Do not conclude this issue is resolved in the taxpayer's favor.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "evidencePlan": {
+        "documentsToSubmit": [
+          "Synthetic supporting document"
+        ],
+        "documentsToReconcile": [
+          "SLSP reconciliation",
+          "VAT return reconciliation"
+        ],
+        "substituteProofToPrepare": [
+          "sales invoices",
+          "contracts",
+          "client registration/support",
+          "PEZA or incentive documents if applicable",
+          "export/foreign currency/remittance support if applicable",
+          "SLSP reconciliation",
+          "VAT return reconciliation"
+        ],
+        "nonApplicableItemsToExplain": [],
+        "receivingProofNeeded": [
+          "Proof of filing/submission with receiving stamp or acknowledgment"
+        ],
+        "gapsToEscalate": []
+      },
+      "proceduralDefensePlan": {
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": false,
+        "properServiceCheckNeeded": false,
+        "dueProcessCheckNeeded": true,
+        "statementOfFactsAndLawCheckNeeded": true,
+        "prescriptionCheckNeeded": false,
+        "documentRequestScopeCheckNeeded": false,
+        "noRegressionRuleCheckNeeded": false,
+        "priorNoticeConsistencyCheckNeeded": false
+      },
+      "substantiveDefensePlan": {
+        "vatClassificationReviewNeeded": true,
+        "cwtSubstantiationReviewNeeded": false,
+        "withholdingDeductibilityReviewNeeded": false,
+        "inputVatSupportReviewNeeded": false,
+        "dividendFwtReviewNeeded": false,
+        "relatedPartyReviewNeeded": false,
+        "incomeTaxExpenseSupportReviewNeeded": false
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [
+          "NIRC VAT provisions"
+        ],
+        "birIssuancesNeeded": [],
+        "jurisprudenceNeeded": [
+          "CTA / Supreme Court jurisprudence"
+        ],
+        "ctaRulesNeeded": [
+          "CTA / Supreme Court jurisprudence"
+        ],
+        "authorityStatus": "authority_required"
+      },
+      "riskWarnings": [
+        "Do not treat accounting-system tagging alone as conclusive tax treatment."
+      ],
+      "recommendedNextActions": [
+        "Gather sales invoices and supporting contracts.",
+        "Reconcile SLSP and VAT return figures.",
+        "Escalate classification basis to professional review."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 1-2026 single-instance audit framework",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for 2026-and-later audit authority, eLA consolidation, standardized checklist, document request limits, and audit safeguards."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidation safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidation prohibitions, FAN-level consolidation, written conformity, waiver of prescription, proper service, and no-regression rule."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional audit-defense workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe matrix guidance only and does not constitute a final legal or tax conclusion. The available facts are insufficient for a final legal conclusion; this matter should be reviewed against applicable BIR issuances and jurisprudence by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "CWT_SUBSTANTIATION": {
+      "phase": "09O",
+      "mode": "bir_audit_defense_matrix",
+      "version": "PHASE-09O-BIR-AUDIT-DEFENSE-MATRIX-SCAFFOLD-1",
+      "runtimeActive": false,
+      "matrixSummary": {
+        "noticeType": "BIR_PAN",
+        "noticeStage": "PRE_ASSESSMENT",
+        "totalIssues": 1,
+        "highRiskIssueCount": 0,
+        "evidenceGapCount": 1,
+        "authorityResearchNeeded": true,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "defenseMatrix": [
+        {
+          "issueType": "CWT_SUBSTANTIATION",
+          "birFinding": "Synthetic finding only.",
+          "taxpayerPosition": "Synthetic position only.",
+          "documentsAvailable": [
+            "Synthetic supporting document"
+          ],
+          "documentsMissing": [
+            "Synthetic missing document"
+          ],
+          "substituteProofOptions": [
+            "BIR Form 2307",
+            "SAWT",
+            "income tax return",
+            "sales/collection records",
+            "withholding agent confirmation",
+            "reconciliation schedule"
+          ],
+          "evidenceStatus": "partial",
+          "reconciliationNeeded": [
+            "reconciliation schedule"
+          ],
+          "authorityNeeded": [
+            "RR No. 2-98",
+            "BIR Form 2307 rules",
+            "NIRC income tax credit provisions",
+            "jurisprudence on withholding tax credits"
+          ],
+          "jurisprudenceNeeded": [
+            "jurisprudence on withholding tax credits"
+          ],
+          "proceduralDefenseTopics": [
+            "documentary matching between certificates and returns"
+          ],
+          "substantiveDefenseTopics": [
+            "timeliness and receipt of withholding certificates",
+            "substantiation of creditable withholding tax"
+          ],
+          "riskLevel": "medium",
+          "riskReason": "risk level as assessed from provided facts, pending professional review",
+          "recommendedSafeAction": [
+            "Collect BIR Form 2307 and SAWT records.",
+            "Reconcile CWT claimed against the income tax return.",
+            "Escalate timing/receipt issues to professional review."
+          ],
+          "prohibitedOverreach": [
+            "Do not conclude this issue is resolved in the taxpayer's favor.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "evidencePlan": {
+        "documentsToSubmit": [
+          "Synthetic supporting document"
+        ],
+        "documentsToReconcile": [
+          "reconciliation schedule"
+        ],
+        "substituteProofToPrepare": [
+          "BIR Form 2307",
+          "SAWT",
+          "income tax return",
+          "sales/collection records",
+          "withholding agent confirmation",
+          "reconciliation schedule"
+        ],
+        "nonApplicableItemsToExplain": [],
+        "receivingProofNeeded": [
+          "Proof of filing/submission with receiving stamp or acknowledgment"
+        ],
+        "gapsToEscalate": []
+      },
+      "proceduralDefensePlan": {
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": false,
+        "properServiceCheckNeeded": false,
+        "dueProcessCheckNeeded": true,
+        "statementOfFactsAndLawCheckNeeded": true,
+        "prescriptionCheckNeeded": false,
+        "documentRequestScopeCheckNeeded": false,
+        "noRegressionRuleCheckNeeded": false,
+        "priorNoticeConsistencyCheckNeeded": false
+      },
+      "substantiveDefensePlan": {
+        "vatClassificationReviewNeeded": false,
+        "cwtSubstantiationReviewNeeded": true,
+        "withholdingDeductibilityReviewNeeded": false,
+        "inputVatSupportReviewNeeded": false,
+        "dividendFwtReviewNeeded": false,
+        "relatedPartyReviewNeeded": false,
+        "incomeTaxExpenseSupportReviewNeeded": false
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [
+          "NIRC income tax credit provisions"
+        ],
+        "birIssuancesNeeded": [
+          "RR No. 2-98"
+        ],
+        "jurisprudenceNeeded": [
+          "jurisprudence on withholding tax credits"
+        ],
+        "ctaRulesNeeded": [],
+        "authorityStatus": "authority_required"
+      },
+      "riskWarnings": [
+        "Unsupported CWT claims require documentary matching; timing and receipt of certificates may require legal review."
+      ],
+      "recommendedNextActions": [
+        "Collect BIR Form 2307 and SAWT records.",
+        "Reconcile CWT claimed against the income tax return.",
+        "Escalate timing/receipt issues to professional review."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 1-2026 single-instance audit framework",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for 2026-and-later audit authority, eLA consolidation, standardized checklist, document request limits, and audit safeguards."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidation safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidation prohibitions, FAN-level consolidation, written conformity, waiver of prescription, proper service, and no-regression rule."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional audit-defense workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe matrix guidance only and does not constitute a final legal or tax conclusion. The available facts are insufficient for a final legal conclusion; this matter should be reviewed against applicable BIR issuances and jurisprudence by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "WITHHOLDING_TAX_DEDUCTIBILITY": {
+      "phase": "09O",
+      "mode": "bir_audit_defense_matrix",
+      "version": "PHASE-09O-BIR-AUDIT-DEFENSE-MATRIX-SCAFFOLD-1",
+      "runtimeActive": false,
+      "matrixSummary": {
+        "noticeType": "BIR_PAN",
+        "noticeStage": "PRE_ASSESSMENT",
+        "totalIssues": 1,
+        "highRiskIssueCount": 0,
+        "evidenceGapCount": 1,
+        "authorityResearchNeeded": true,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "defenseMatrix": [
+        {
+          "issueType": "WITHHOLDING_TAX_DEDUCTIBILITY",
+          "birFinding": "Synthetic finding only.",
+          "taxpayerPosition": "Synthetic position only.",
+          "documentsAvailable": [
+            "Synthetic supporting document"
+          ],
+          "documentsMissing": [
+            "Synthetic missing document"
+          ],
+          "substituteProofOptions": [
+            "expense schedule",
+            "supplier invoices",
+            "withholding tax returns",
+            "proof of remittance",
+            "reconciliation of per-books vs. per-return amounts"
+          ],
+          "evidenceStatus": "partial",
+          "reconciliationNeeded": [
+            "reconciliation of per-books vs. per-return amounts"
+          ],
+          "authorityNeeded": [
+            "NIRC Sec. 34(K)",
+            "RR No. 2-98",
+            "withholding tax regulations",
+            "jurisprudence on deductibility and withholding"
+          ],
+          "jurisprudenceNeeded": [
+            "jurisprudence on deductibility and withholding"
+          ],
+          "proceduralDefenseTopics": [
+            "basis for disallowance stated by BIR"
+          ],
+          "substantiveDefenseTopics": [
+            "deductibility conditioned on withholding compliance"
+          ],
+          "riskLevel": "medium",
+          "riskReason": "risk level as assessed from provided facts, pending professional review",
+          "recommendedSafeAction": [
+            "Gather expense schedule and supplier invoices.",
+            "Reconcile per-books vs. per-return withholding amounts.",
+            "Escalate deductibility basis to professional review."
+          ],
+          "prohibitedOverreach": [
+            "Do not conclude this issue is resolved in the taxpayer's favor.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "evidencePlan": {
+        "documentsToSubmit": [
+          "Synthetic supporting document"
+        ],
+        "documentsToReconcile": [
+          "reconciliation of per-books vs. per-return amounts"
+        ],
+        "substituteProofToPrepare": [
+          "expense schedule",
+          "supplier invoices",
+          "withholding tax returns",
+          "proof of remittance",
+          "reconciliation of per-books vs. per-return amounts"
+        ],
+        "nonApplicableItemsToExplain": [],
+        "receivingProofNeeded": [
+          "Proof of filing/submission with receiving stamp or acknowledgment"
+        ],
+        "gapsToEscalate": []
+      },
+      "proceduralDefensePlan": {
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": false,
+        "properServiceCheckNeeded": false,
+        "dueProcessCheckNeeded": true,
+        "statementOfFactsAndLawCheckNeeded": true,
+        "prescriptionCheckNeeded": false,
+        "documentRequestScopeCheckNeeded": false,
+        "noRegressionRuleCheckNeeded": false,
+        "priorNoticeConsistencyCheckNeeded": false
+      },
+      "substantiveDefensePlan": {
+        "vatClassificationReviewNeeded": false,
+        "cwtSubstantiationReviewNeeded": false,
+        "withholdingDeductibilityReviewNeeded": true,
+        "inputVatSupportReviewNeeded": false,
+        "dividendFwtReviewNeeded": false,
+        "relatedPartyReviewNeeded": false,
+        "incomeTaxExpenseSupportReviewNeeded": false
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [
+          "NIRC Sec. 34(K)"
+        ],
+        "birIssuancesNeeded": [
+          "RR No. 2-98"
+        ],
+        "jurisprudenceNeeded": [
+          "jurisprudence on deductibility and withholding"
+        ],
+        "ctaRulesNeeded": [],
+        "authorityStatus": "authority_required"
+      },
+      "riskWarnings": [],
+      "recommendedNextActions": [
+        "Gather expense schedule and supplier invoices.",
+        "Reconcile per-books vs. per-return withholding amounts.",
+        "Escalate deductibility basis to professional review."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 1-2026 single-instance audit framework",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for 2026-and-later audit authority, eLA consolidation, standardized checklist, document request limits, and audit safeguards."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidation safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidation prohibitions, FAN-level consolidation, written conformity, waiver of prescription, proper service, and no-regression rule."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional audit-defense workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe matrix guidance only and does not constitute a final legal or tax conclusion. The available facts are insufficient for a final legal conclusion; this matter should be reviewed against applicable BIR issuances and jurisprudence by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "INPUT_VAT_SUBSTANTIATION": {
+      "phase": "09O",
+      "mode": "bir_audit_defense_matrix",
+      "version": "PHASE-09O-BIR-AUDIT-DEFENSE-MATRIX-SCAFFOLD-1",
+      "runtimeActive": false,
+      "matrixSummary": {
+        "noticeType": "BIR_PAN",
+        "noticeStage": "PRE_ASSESSMENT",
+        "totalIssues": 1,
+        "highRiskIssueCount": 0,
+        "evidenceGapCount": 1,
+        "authorityResearchNeeded": true,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "defenseMatrix": [
+        {
+          "issueType": "INPUT_VAT_SUBSTANTIATION",
+          "birFinding": "Synthetic finding only.",
+          "taxpayerPosition": "Synthetic position only.",
+          "documentsAvailable": [
+            "Synthetic supporting document"
+          ],
+          "documentsMissing": [
+            "Synthetic missing document"
+          ],
+          "substituteProofOptions": [
+            "supplier invoices",
+            "VAT registration support",
+            "purchase journal",
+            "input VAT schedule",
+            "proof of payment if relevant",
+            "VAT return reconciliation"
+          ],
+          "evidenceStatus": "partial",
+          "reconciliationNeeded": [
+            "VAT return reconciliation"
+          ],
+          "authorityNeeded": [
+            "NIRC Sec. 110",
+            "VAT invoicing requirements",
+            "input VAT substantiation rules",
+            "jurisprudence"
+          ],
+          "jurisprudenceNeeded": [
+            "jurisprudence"
+          ],
+          "proceduralDefenseTopics": [
+            "documentary basis for input VAT disallowance"
+          ],
+          "substantiveDefenseTopics": [
+            "input VAT invoicing and substantiation compliance"
+          ],
+          "riskLevel": "medium",
+          "riskReason": "risk level as assessed from provided facts, pending professional review",
+          "recommendedSafeAction": [
+            "Gather supplier invoices and purchase journal.",
+            "Reconcile input VAT schedule against VAT returns.",
+            "Escalate invoicing compliance issues to professional review."
+          ],
+          "prohibitedOverreach": [
+            "Do not conclude this issue is resolved in the taxpayer's favor.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "evidencePlan": {
+        "documentsToSubmit": [
+          "Synthetic supporting document"
+        ],
+        "documentsToReconcile": [
+          "VAT return reconciliation"
+        ],
+        "substituteProofToPrepare": [
+          "supplier invoices",
+          "VAT registration support",
+          "purchase journal",
+          "input VAT schedule",
+          "proof of payment if relevant",
+          "VAT return reconciliation"
+        ],
+        "nonApplicableItemsToExplain": [],
+        "receivingProofNeeded": [
+          "Proof of filing/submission with receiving stamp or acknowledgment"
+        ],
+        "gapsToEscalate": []
+      },
+      "proceduralDefensePlan": {
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": false,
+        "properServiceCheckNeeded": false,
+        "dueProcessCheckNeeded": true,
+        "statementOfFactsAndLawCheckNeeded": true,
+        "prescriptionCheckNeeded": false,
+        "documentRequestScopeCheckNeeded": false,
+        "noRegressionRuleCheckNeeded": false,
+        "priorNoticeConsistencyCheckNeeded": false
+      },
+      "substantiveDefensePlan": {
+        "vatClassificationReviewNeeded": false,
+        "cwtSubstantiationReviewNeeded": false,
+        "withholdingDeductibilityReviewNeeded": false,
+        "inputVatSupportReviewNeeded": true,
+        "dividendFwtReviewNeeded": false,
+        "relatedPartyReviewNeeded": false,
+        "incomeTaxExpenseSupportReviewNeeded": false
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [
+          "NIRC Sec. 110"
+        ],
+        "birIssuancesNeeded": [],
+        "jurisprudenceNeeded": [
+          "jurisprudence"
+        ],
+        "ctaRulesNeeded": [],
+        "authorityStatus": "authority_required"
+      },
+      "riskWarnings": [],
+      "recommendedNextActions": [
+        "Gather supplier invoices and purchase journal.",
+        "Reconcile input VAT schedule against VAT returns.",
+        "Escalate invoicing compliance issues to professional review."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 1-2026 single-instance audit framework",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for 2026-and-later audit authority, eLA consolidation, standardized checklist, document request limits, and audit safeguards."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidation safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidation prohibitions, FAN-level consolidation, written conformity, waiver of prescription, proper service, and no-regression rule."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional audit-defense workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe matrix guidance only and does not constitute a final legal or tax conclusion. The available facts are insufficient for a final legal conclusion; this matter should be reviewed against applicable BIR issuances and jurisprudence by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "DIVIDEND_FWT": {
+      "phase": "09O",
+      "mode": "bir_audit_defense_matrix",
+      "version": "PHASE-09O-BIR-AUDIT-DEFENSE-MATRIX-SCAFFOLD-1",
+      "runtimeActive": false,
+      "matrixSummary": {
+        "noticeType": "BIR_PAN",
+        "noticeStage": "PRE_ASSESSMENT",
+        "totalIssues": 1,
+        "highRiskIssueCount": 0,
+        "evidenceGapCount": 1,
+        "authorityResearchNeeded": true,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "defenseMatrix": [
+        {
+          "issueType": "DIVIDEND_FWT",
+          "birFinding": "Synthetic finding only.",
+          "taxpayerPosition": "Synthetic position only.",
+          "documentsAvailable": [
+            "Synthetic supporting document"
+          ],
+          "documentsMissing": [
+            "Synthetic missing document"
+          ],
+          "substituteProofOptions": [
+            "board resolution",
+            "dividend declaration records",
+            "shareholder ledger",
+            "withholding tax return",
+            "proof of remittance",
+            "general ledger"
+          ],
+          "evidenceStatus": "partial",
+          "reconciliationNeeded": [],
+          "authorityNeeded": [
+            "NIRC final withholding tax provisions",
+            "dividend tax rules",
+            "withholding remittance rules",
+            "corporate records"
+          ],
+          "jurisprudenceNeeded": [],
+          "proceduralDefenseTopics": [],
+          "substantiveDefenseTopics": [
+            "dividend characterization and withholding compliance"
+          ],
+          "riskLevel": "medium",
+          "riskReason": "risk level as assessed from provided facts, pending professional review",
+          "recommendedSafeAction": [
+            "Gather board resolution and dividend declaration records.",
+            "Confirm withholding tax remittance.",
+            "Escalate dividend characterization to professional review."
+          ],
+          "prohibitedOverreach": [
+            "Do not conclude this issue is resolved in the taxpayer's favor.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "evidencePlan": {
+        "documentsToSubmit": [
+          "Synthetic supporting document"
+        ],
+        "documentsToReconcile": [],
+        "substituteProofToPrepare": [
+          "board resolution",
+          "dividend declaration records",
+          "shareholder ledger",
+          "withholding tax return",
+          "proof of remittance",
+          "general ledger"
+        ],
+        "nonApplicableItemsToExplain": [],
+        "receivingProofNeeded": [
+          "Proof of filing/submission with receiving stamp or acknowledgment"
+        ],
+        "gapsToEscalate": []
+      },
+      "proceduralDefensePlan": {
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": false,
+        "properServiceCheckNeeded": false,
+        "dueProcessCheckNeeded": true,
+        "statementOfFactsAndLawCheckNeeded": true,
+        "prescriptionCheckNeeded": false,
+        "documentRequestScopeCheckNeeded": false,
+        "noRegressionRuleCheckNeeded": false,
+        "priorNoticeConsistencyCheckNeeded": false
+      },
+      "substantiveDefensePlan": {
+        "vatClassificationReviewNeeded": false,
+        "cwtSubstantiationReviewNeeded": false,
+        "withholdingDeductibilityReviewNeeded": false,
+        "inputVatSupportReviewNeeded": false,
+        "dividendFwtReviewNeeded": true,
+        "relatedPartyReviewNeeded": false,
+        "incomeTaxExpenseSupportReviewNeeded": false
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [
+          "NIRC final withholding tax provisions"
+        ],
+        "birIssuancesNeeded": [],
+        "jurisprudenceNeeded": [],
+        "ctaRulesNeeded": [],
+        "authorityStatus": "authority_required"
+      },
+      "riskWarnings": [],
+      "recommendedNextActions": [
+        "Gather board resolution and dividend declaration records.",
+        "Confirm withholding tax remittance.",
+        "Escalate dividend characterization to professional review."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 1-2026 single-instance audit framework",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for 2026-and-later audit authority, eLA consolidation, standardized checklist, document request limits, and audit safeguards."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidation safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidation prohibitions, FAN-level consolidation, written conformity, waiver of prescription, proper service, and no-regression rule."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional audit-defense workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe matrix guidance only and does not constitute a final legal or tax conclusion. The available facts are insufficient for a final legal conclusion; this matter should be reviewed against applicable BIR issuances and jurisprudence by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "LOA_OR_ELA_AUTHORITY": {
+      "phase": "09O",
+      "mode": "bir_audit_defense_matrix",
+      "version": "PHASE-09O-BIR-AUDIT-DEFENSE-MATRIX-SCAFFOLD-1",
+      "runtimeActive": false,
+      "matrixSummary": {
+        "noticeType": "BIR_FAN_FLD",
+        "noticeStage": "FINAL_ASSESSMENT",
+        "totalIssues": 1,
+        "highRiskIssueCount": 0,
+        "evidenceGapCount": 1,
+        "authorityResearchNeeded": true,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "defenseMatrix": [
+        {
+          "issueType": "LOA_OR_ELA_AUTHORITY",
+          "birFinding": "Synthetic finding only.",
+          "taxpayerPosition": "Synthetic position only.",
+          "documentsAvailable": [
+            "Synthetic supporting document"
+          ],
+          "documentsMissing": [
+            "Synthetic missing document"
+          ],
+          "substituteProofOptions": [],
+          "evidenceStatus": "partial",
+          "reconciliationNeeded": [],
+          "authorityNeeded": [
+            "RMC No. 5-2026",
+            "RMO No. 1-2026",
+            "RMO No. 6-2026",
+            "RMC No. 14-2026",
+            "LOA/eLA jurisprudence"
+          ],
+          "jurisprudenceNeeded": [
+            "LOA/eLA jurisprudence"
+          ],
+          "proceduralDefenseTopics": [
+            "LOA/eLA authenticity and scope verification"
+          ],
+          "substantiveDefenseTopics": [],
+          "riskLevel": "medium",
+          "riskReason": "risk level as assessed from provided facts, pending professional review",
+          "recommendedSafeAction": [
+            "Verify LOA/eLA authenticity and scope.",
+            "Escalate to professional review before relying on this classification."
+          ],
+          "prohibitedOverreach": [
+            "Do not conclude this issue is resolved in the taxpayer's favor.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "evidencePlan": {
+        "documentsToSubmit": [
+          "Synthetic supporting document"
+        ],
+        "documentsToReconcile": [],
+        "substituteProofToPrepare": [],
+        "nonApplicableItemsToExplain": [],
+        "receivingProofNeeded": [
+          "Proof of filing/submission with receiving stamp or acknowledgment"
+        ],
+        "gapsToEscalate": []
+      },
+      "proceduralDefensePlan": {
+        "loaOrElaAuthorityCheckNeeded": true,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": false,
+        "properServiceCheckNeeded": false,
+        "dueProcessCheckNeeded": true,
+        "statementOfFactsAndLawCheckNeeded": true,
+        "prescriptionCheckNeeded": false,
+        "documentRequestScopeCheckNeeded": false,
+        "noRegressionRuleCheckNeeded": false,
+        "priorNoticeConsistencyCheckNeeded": false
+      },
+      "substantiveDefensePlan": {
+        "vatClassificationReviewNeeded": false,
+        "cwtSubstantiationReviewNeeded": false,
+        "withholdingDeductibilityReviewNeeded": false,
+        "inputVatSupportReviewNeeded": false,
+        "dividendFwtReviewNeeded": false,
+        "relatedPartyReviewNeeded": false,
+        "incomeTaxExpenseSupportReviewNeeded": false
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [],
+        "birIssuancesNeeded": [
+          "RMC No. 5-2026",
+          "RMO No. 1-2026",
+          "RMO No. 6-2026",
+          "RMC No. 14-2026"
+        ],
+        "jurisprudenceNeeded": [
+          "LOA/eLA jurisprudence"
+        ],
+        "ctaRulesNeeded": [],
+        "authorityStatus": "authority_required"
+      },
+      "riskWarnings": [
+        "Do not conclude invalidity from the scaffold alone."
+      ],
+      "recommendedNextActions": [
+        "Verify LOA/eLA authenticity and scope.",
+        "Escalate to professional review before relying on this classification."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 1-2026 single-instance audit framework",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for 2026-and-later audit authority, eLA consolidation, standardized checklist, document request limits, and audit safeguards."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidation safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidation prohibitions, FAN-level consolidation, written conformity, waiver of prescription, proper service, and no-regression rule."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional audit-defense workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe matrix guidance only and does not constitute a final legal or tax conclusion. The available facts are insufficient for a final legal conclusion; this matter should be reviewed against applicable BIR issuances and jurisprudence by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "REPLACEMENT_ELA": {
+      "phase": "09O",
+      "mode": "bir_audit_defense_matrix",
+      "version": "PHASE-09O-BIR-AUDIT-DEFENSE-MATRIX-SCAFFOLD-1",
+      "runtimeActive": false,
+      "matrixSummary": {
+        "noticeType": "BIR_FAN_FLD",
+        "noticeStage": "FINAL_ASSESSMENT",
+        "totalIssues": 1,
+        "highRiskIssueCount": 0,
+        "evidenceGapCount": 1,
+        "authorityResearchNeeded": true,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "defenseMatrix": [
+        {
+          "issueType": "REPLACEMENT_ELA",
+          "birFinding": "Synthetic finding only.",
+          "taxpayerPosition": "Synthetic position only.",
+          "documentsAvailable": [
+            "Synthetic supporting document"
+          ],
+          "documentsMissing": [
+            "Synthetic missing document"
+          ],
+          "substituteProofOptions": [],
+          "evidenceStatus": "partial",
+          "reconciliationNeeded": [],
+          "authorityNeeded": [
+            "RMC No. 5-2026",
+            "RMO No. 1-2026",
+            "RMO No. 6-2026",
+            "RMC No. 14-2026",
+            "LOA/eLA jurisprudence"
+          ],
+          "jurisprudenceNeeded": [
+            "LOA/eLA jurisprudence"
+          ],
+          "proceduralDefenseTopics": [
+            "replacement eLA continuity and proper service verification"
+          ],
+          "substantiveDefenseTopics": [],
+          "riskLevel": "medium",
+          "riskReason": "risk level as assessed from provided facts, pending professional review",
+          "recommendedSafeAction": [
+            "Verify replacement eLA continuity and proper service.",
+            "Escalate to professional review before relying on this classification."
+          ],
+          "prohibitedOverreach": [
+            "Do not conclude this issue is resolved in the taxpayer's favor.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "evidencePlan": {
+        "documentsToSubmit": [
+          "Synthetic supporting document"
+        ],
+        "documentsToReconcile": [],
+        "substituteProofToPrepare": [],
+        "nonApplicableItemsToExplain": [],
+        "receivingProofNeeded": [
+          "Proof of filing/submission with receiving stamp or acknowledgment"
+        ],
+        "gapsToEscalate": []
+      },
+      "proceduralDefensePlan": {
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": true,
+        "consolidatedNoticeCheckNeeded": false,
+        "properServiceCheckNeeded": false,
+        "dueProcessCheckNeeded": true,
+        "statementOfFactsAndLawCheckNeeded": true,
+        "prescriptionCheckNeeded": false,
+        "documentRequestScopeCheckNeeded": false,
+        "noRegressionRuleCheckNeeded": false,
+        "priorNoticeConsistencyCheckNeeded": false
+      },
+      "substantiveDefensePlan": {
+        "vatClassificationReviewNeeded": false,
+        "cwtSubstantiationReviewNeeded": false,
+        "withholdingDeductibilityReviewNeeded": false,
+        "inputVatSupportReviewNeeded": false,
+        "dividendFwtReviewNeeded": false,
+        "relatedPartyReviewNeeded": false,
+        "incomeTaxExpenseSupportReviewNeeded": false
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [],
+        "birIssuancesNeeded": [
+          "RMC No. 5-2026",
+          "RMO No. 1-2026",
+          "RMO No. 6-2026",
+          "RMC No. 14-2026"
+        ],
+        "jurisprudenceNeeded": [
+          "LOA/eLA jurisprudence"
+        ],
+        "ctaRulesNeeded": [],
+        "authorityStatus": "authority_required"
+      },
+      "riskWarnings": [
+        "Do not conclude invalidity from the scaffold alone."
+      ],
+      "recommendedNextActions": [
+        "Verify replacement eLA continuity and proper service.",
+        "Escalate to professional review before relying on this classification."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 1-2026 single-instance audit framework",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for 2026-and-later audit authority, eLA consolidation, standardized checklist, document request limits, and audit safeguards."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidation safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidation prohibitions, FAN-level consolidation, written conformity, waiver of prescription, proper service, and no-regression rule."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional audit-defense workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe matrix guidance only and does not constitute a final legal or tax conclusion. The available facts are insufficient for a final legal conclusion; this matter should be reviewed against applicable BIR issuances and jurisprudence by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "CONSOLIDATED_NOTICE": {
+      "phase": "09O",
+      "mode": "bir_audit_defense_matrix",
+      "version": "PHASE-09O-BIR-AUDIT-DEFENSE-MATRIX-SCAFFOLD-1",
+      "runtimeActive": false,
+      "matrixSummary": {
+        "noticeType": "BIR_CONSOLIDATED_FAN",
+        "noticeStage": "FINAL_ASSESSMENT",
+        "totalIssues": 1,
+        "highRiskIssueCount": 0,
+        "evidenceGapCount": 1,
+        "authorityResearchNeeded": true,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "defenseMatrix": [
+        {
+          "issueType": "CONSOLIDATED_NOTICE",
+          "birFinding": "Synthetic finding only.",
+          "taxpayerPosition": "Synthetic position only.",
+          "documentsAvailable": [
+            "Synthetic supporting document"
+          ],
+          "documentsMissing": [
+            "Synthetic missing document"
+          ],
+          "substituteProofOptions": [],
+          "evidenceStatus": "partial",
+          "reconciliationNeeded": [],
+          "authorityNeeded": [
+            "RMO No. 1-2026",
+            "RMO No. 6-2026",
+            "RMC No. 14-2026",
+            "NIRC Sec. 228",
+            "RR No. 18-2013"
+          ],
+          "jurisprudenceNeeded": [],
+          "proceduralDefenseTopics": [
+            "consolidation stage, service, and prior-notice review"
+          ],
+          "substantiveDefenseTopics": [],
+          "riskLevel": "medium",
+          "riskReason": "risk level as assessed from provided facts, pending professional review",
+          "recommendedSafeAction": [
+            "Confirm consolidation stage and proper service.",
+            "Check prior-notice consistency and fresh response/protest period.",
+            "Escalate to professional review."
+          ],
+          "prohibitedOverreach": [
+            "Do not conclude this issue is resolved in the taxpayer's favor.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "evidencePlan": {
+        "documentsToSubmit": [
+          "Synthetic supporting document"
+        ],
+        "documentsToReconcile": [],
+        "substituteProofToPrepare": [],
+        "nonApplicableItemsToExplain": [],
+        "receivingProofNeeded": [
+          "Proof of filing/submission with receiving stamp or acknowledgment"
+        ],
+        "gapsToEscalate": []
+      },
+      "proceduralDefensePlan": {
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": true,
+        "properServiceCheckNeeded": true,
+        "dueProcessCheckNeeded": true,
+        "statementOfFactsAndLawCheckNeeded": true,
+        "prescriptionCheckNeeded": false,
+        "documentRequestScopeCheckNeeded": false,
+        "noRegressionRuleCheckNeeded": true,
+        "priorNoticeConsistencyCheckNeeded": true
+      },
+      "substantiveDefensePlan": {
+        "vatClassificationReviewNeeded": false,
+        "cwtSubstantiationReviewNeeded": false,
+        "withholdingDeductibilityReviewNeeded": false,
+        "inputVatSupportReviewNeeded": false,
+        "dividendFwtReviewNeeded": false,
+        "relatedPartyReviewNeeded": false,
+        "incomeTaxExpenseSupportReviewNeeded": false
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [
+          "NIRC Sec. 228"
+        ],
+        "birIssuancesNeeded": [
+          "RMO No. 1-2026",
+          "RMO No. 6-2026",
+          "RMC No. 14-2026",
+          "RR No. 18-2013"
+        ],
+        "jurisprudenceNeeded": [],
+        "ctaRulesNeeded": [],
+        "authorityStatus": "authority_required"
+      },
+      "riskWarnings": [
+        "Consolidated notices require stage, service, prior notice, and deadline review."
+      ],
+      "recommendedNextActions": [
+        "Confirm consolidation stage and proper service.",
+        "Check prior-notice consistency and fresh response/protest period.",
+        "Escalate to professional review."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 1-2026 single-instance audit framework",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for 2026-and-later audit authority, eLA consolidation, standardized checklist, document request limits, and audit safeguards."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidation safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidation prohibitions, FAN-level consolidation, written conformity, waiver of prescription, proper service, and no-regression rule."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional audit-defense workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe matrix guidance only and does not constitute a final legal or tax conclusion. The available facts are insufficient for a final legal conclusion; this matter should be reviewed against applicable BIR issuances and jurisprudence by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "DOCUMENT_REQUEST_SCOPE": {
+      "phase": "09O",
+      "mode": "bir_audit_defense_matrix",
+      "version": "PHASE-09O-BIR-AUDIT-DEFENSE-MATRIX-SCAFFOLD-1",
+      "runtimeActive": false,
+      "matrixSummary": {
+        "noticeType": "BIR_ADDITIONAL_DOCUMENT_REQUEST",
+        "noticeStage": "DOCUMENT_REQUEST",
+        "totalIssues": 1,
+        "highRiskIssueCount": 0,
+        "evidenceGapCount": 1,
+        "authorityResearchNeeded": true,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "defenseMatrix": [
+        {
+          "issueType": "DOCUMENT_REQUEST_SCOPE",
+          "birFinding": "Synthetic finding only.",
+          "taxpayerPosition": "Synthetic position only.",
+          "documentsAvailable": [
+            "Synthetic supporting document"
+          ],
+          "documentsMissing": [
+            "Synthetic missing document"
+          ],
+          "substituteProofOptions": [],
+          "evidenceStatus": "partial",
+          "reconciliationNeeded": [],
+          "authorityNeeded": [
+            "RMO No. 1-2026 standardized checklist and request-limit rules"
+          ],
+          "jurisprudenceNeeded": [],
+          "proceduralDefenseTopics": [
+            "relevance, necessity, and audit-scope basis for the request",
+            "voluminous-record/on-premise/certified-copy review"
+          ],
+          "substantiveDefenseTopics": [],
+          "riskLevel": "medium",
+          "riskReason": "risk level as assessed from provided facts, pending professional review",
+          "recommendedSafeAction": [
+            "Classify each requested item against audit scope.",
+            "Check relevance, necessity, and documentation of the request.",
+            "Escalate voluminous-record handling to professional review."
+          ],
+          "prohibitedOverreach": [
+            "Do not conclude this issue is resolved in the taxpayer's favor.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "evidencePlan": {
+        "documentsToSubmit": [
+          "Synthetic supporting document"
+        ],
+        "documentsToReconcile": [],
+        "substituteProofToPrepare": [],
+        "nonApplicableItemsToExplain": [],
+        "receivingProofNeeded": [
+          "Proof of filing/submission with receiving stamp or acknowledgment"
+        ],
+        "gapsToEscalate": []
+      },
+      "proceduralDefensePlan": {
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": false,
+        "properServiceCheckNeeded": false,
+        "dueProcessCheckNeeded": true,
+        "statementOfFactsAndLawCheckNeeded": true,
+        "prescriptionCheckNeeded": false,
+        "documentRequestScopeCheckNeeded": true,
+        "noRegressionRuleCheckNeeded": false,
+        "priorNoticeConsistencyCheckNeeded": false
+      },
+      "substantiveDefensePlan": {
+        "vatClassificationReviewNeeded": false,
+        "cwtSubstantiationReviewNeeded": false,
+        "withholdingDeductibilityReviewNeeded": false,
+        "inputVatSupportReviewNeeded": false,
+        "dividendFwtReviewNeeded": false,
+        "relatedPartyReviewNeeded": false,
+        "incomeTaxExpenseSupportReviewNeeded": false
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [],
+        "birIssuancesNeeded": [
+          "RMO No. 1-2026 standardized checklist and request-limit rules"
+        ],
+        "jurisprudenceNeeded": [],
+        "ctaRulesNeeded": [],
+        "authorityStatus": "authority_required"
+      },
+      "riskWarnings": [
+        "Do not assume every additional document request is automatically within audit scope."
+      ],
+      "recommendedNextActions": [
+        "Classify each requested item against audit scope.",
+        "Check relevance, necessity, and documentation of the request.",
+        "Escalate voluminous-record handling to professional review."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 1-2026 single-instance audit framework",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for 2026-and-later audit authority, eLA consolidation, standardized checklist, document request limits, and audit safeguards."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidation safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidation prohibitions, FAN-level consolidation, written conformity, waiver of prescription, proper service, and no-regression rule."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional audit-defense workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe matrix guidance only and does not constitute a final legal or tax conclusion. The available facts are insufficient for a final legal conclusion; this matter should be reviewed against applicable BIR issuances and jurisprudence by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "PAN_REPLY": {
+      "phase": "09O",
+      "mode": "bir_audit_defense_matrix",
+      "version": "PHASE-09O-BIR-AUDIT-DEFENSE-MATRIX-SCAFFOLD-1",
+      "runtimeActive": false,
+      "matrixSummary": {
+        "noticeType": "BIR_PAN",
+        "noticeStage": "PRE_ASSESSMENT",
+        "totalIssues": 1,
+        "highRiskIssueCount": 0,
+        "evidenceGapCount": 1,
+        "authorityResearchNeeded": true,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "defenseMatrix": [
+        {
+          "issueType": "PAN_REPLY",
+          "birFinding": "Synthetic finding only.",
+          "taxpayerPosition": "Synthetic position only.",
+          "documentsAvailable": [
+            "Synthetic supporting document"
+          ],
+          "documentsMissing": [
+            "Synthetic missing document"
+          ],
+          "substituteProofOptions": [],
+          "evidenceStatus": "partial",
+          "reconciliationNeeded": [],
+          "authorityNeeded": [
+            "RR No. 18-2013",
+            "NIRC Sec. 228"
+          ],
+          "jurisprudenceNeeded": [],
+          "proceduralDefenseTopics": [
+            "15-day reply period review",
+            "prior NOD/DOD consistency"
+          ],
+          "substantiveDefenseTopics": [],
+          "riskLevel": "medium",
+          "riskReason": "risk level as assessed from provided facts, pending professional review",
+          "recommendedSafeAction": [
+            "Build an issue-by-issue reply matrix.",
+            "Check prior NOD/DOD consistency.",
+            "Preserve proof of filing."
+          ],
+          "prohibitedOverreach": [
+            "Do not conclude this issue is resolved in the taxpayer's favor.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "evidencePlan": {
+        "documentsToSubmit": [
+          "Synthetic supporting document"
+        ],
+        "documentsToReconcile": [],
+        "substituteProofToPrepare": [],
+        "nonApplicableItemsToExplain": [],
+        "receivingProofNeeded": [
+          "Proof of filing/submission with receiving stamp or acknowledgment"
+        ],
+        "gapsToEscalate": []
+      },
+      "proceduralDefensePlan": {
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": false,
+        "properServiceCheckNeeded": false,
+        "dueProcessCheckNeeded": true,
+        "statementOfFactsAndLawCheckNeeded": true,
+        "prescriptionCheckNeeded": false,
+        "documentRequestScopeCheckNeeded": false,
+        "noRegressionRuleCheckNeeded": false,
+        "priorNoticeConsistencyCheckNeeded": true
+      },
+      "substantiveDefensePlan": {
+        "vatClassificationReviewNeeded": false,
+        "cwtSubstantiationReviewNeeded": false,
+        "withholdingDeductibilityReviewNeeded": false,
+        "inputVatSupportReviewNeeded": false,
+        "dividendFwtReviewNeeded": false,
+        "relatedPartyReviewNeeded": false,
+        "incomeTaxExpenseSupportReviewNeeded": false
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [
+          "NIRC Sec. 228"
+        ],
+        "birIssuancesNeeded": [
+          "RR No. 18-2013"
+        ],
+        "jurisprudenceNeeded": [],
+        "ctaRulesNeeded": [],
+        "authorityStatus": "authority_required"
+      },
+      "riskWarnings": [
+        "This scaffold does not determine the final reply deadline or legal sufficiency of the PAN."
+      ],
+      "recommendedNextActions": [
+        "Build an issue-by-issue reply matrix.",
+        "Check prior NOD/DOD consistency.",
+        "Preserve proof of filing."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 1-2026 single-instance audit framework",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for 2026-and-later audit authority, eLA consolidation, standardized checklist, document request limits, and audit safeguards."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidation safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidation prohibitions, FAN-level consolidation, written conformity, waiver of prescription, proper service, and no-regression rule."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional audit-defense workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe matrix guidance only and does not constitute a final legal or tax conclusion. The available facts are insufficient for a final legal conclusion; this matter should be reviewed against applicable BIR issuances and jurisprudence by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "FAN_FLD_PROTEST": {
+      "phase": "09O",
+      "mode": "bir_audit_defense_matrix",
+      "version": "PHASE-09O-BIR-AUDIT-DEFENSE-MATRIX-SCAFFOLD-1",
+      "runtimeActive": false,
+      "matrixSummary": {
+        "noticeType": "BIR_FAN_FLD",
+        "noticeStage": "FINAL_ASSESSMENT",
+        "totalIssues": 1,
+        "highRiskIssueCount": 0,
+        "evidenceGapCount": 1,
+        "authorityResearchNeeded": true,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "defenseMatrix": [
+        {
+          "issueType": "FAN_FLD_PROTEST",
+          "birFinding": "Synthetic finding only.",
+          "taxpayerPosition": "Synthetic position only.",
+          "documentsAvailable": [
+            "Synthetic supporting document"
+          ],
+          "documentsMissing": [
+            "Synthetic missing document"
+          ],
+          "substituteProofOptions": [],
+          "evidenceStatus": "partial",
+          "reconciliationNeeded": [],
+          "authorityNeeded": [
+            "RR No. 18-2013",
+            "NIRC Sec. 228",
+            "CTA appeal rules"
+          ],
+          "jurisprudenceNeeded": [],
+          "proceduralDefenseTopics": [
+            "30-day protest period review",
+            "reconsideration vs. reinvestigation path",
+            "60-day reinvestigation document period",
+            "180-day inaction watch",
+            "FDDA/CTA watch"
+          ],
+          "substantiveDefenseTopics": [],
+          "riskLevel": "medium",
+          "riskReason": "risk level as assessed from provided facts, pending professional review",
+          "recommendedSafeAction": [
+            "Determine whether reconsideration or reinvestigation is appropriate.",
+            "Track the 60-day reinvestigation document period if applicable.",
+            "Monitor FDDA, denial, or inaction."
+          ],
+          "prohibitedOverreach": [
+            "Do not conclude this issue is resolved in the taxpayer's favor.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "evidencePlan": {
+        "documentsToSubmit": [
+          "Synthetic supporting document"
+        ],
+        "documentsToReconcile": [],
+        "substituteProofToPrepare": [],
+        "nonApplicableItemsToExplain": [],
+        "receivingProofNeeded": [
+          "Proof of filing/submission with receiving stamp or acknowledgment"
+        ],
+        "gapsToEscalate": []
+      },
+      "proceduralDefensePlan": {
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": false,
+        "properServiceCheckNeeded": true,
+        "dueProcessCheckNeeded": true,
+        "statementOfFactsAndLawCheckNeeded": true,
+        "prescriptionCheckNeeded": false,
+        "documentRequestScopeCheckNeeded": false,
+        "noRegressionRuleCheckNeeded": false,
+        "priorNoticeConsistencyCheckNeeded": false
+      },
+      "substantiveDefensePlan": {
+        "vatClassificationReviewNeeded": false,
+        "cwtSubstantiationReviewNeeded": false,
+        "withholdingDeductibilityReviewNeeded": false,
+        "inputVatSupportReviewNeeded": false,
+        "dividendFwtReviewNeeded": false,
+        "relatedPartyReviewNeeded": false,
+        "incomeTaxExpenseSupportReviewNeeded": false
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [
+          "NIRC Sec. 228"
+        ],
+        "birIssuancesNeeded": [
+          "RR No. 18-2013"
+        ],
+        "jurisprudenceNeeded": [],
+        "ctaRulesNeeded": [
+          "CTA appeal rules"
+        ],
+        "authorityStatus": "authority_required"
+      },
+      "riskWarnings": [
+        "This scaffold does not determine whether the FAN/FLD is valid, final, void, or appealable."
+      ],
+      "recommendedNextActions": [
+        "Determine whether reconsideration or reinvestigation is appropriate.",
+        "Track the 60-day reinvestigation document period if applicable.",
+        "Monitor FDDA, denial, or inaction."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 1-2026 single-instance audit framework",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for 2026-and-later audit authority, eLA consolidation, standardized checklist, document request limits, and audit safeguards."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidation safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidation prohibitions, FAN-level consolidation, written conformity, waiver of prescription, proper service, and no-regression rule."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional audit-defense workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe matrix guidance only and does not constitute a final legal or tax conclusion. The available facts are insufficient for a final legal conclusion; this matter should be reviewed against applicable BIR issuances and jurisprudence by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "FDDA_APPEAL_WATCH": {
+      "phase": "09O",
+      "mode": "bir_audit_defense_matrix",
+      "version": "PHASE-09O-BIR-AUDIT-DEFENSE-MATRIX-SCAFFOLD-1",
+      "runtimeActive": false,
+      "matrixSummary": {
+        "noticeType": "BIR_FDDA",
+        "noticeStage": "APPEAL_WATCH",
+        "totalIssues": 1,
+        "highRiskIssueCount": 0,
+        "evidenceGapCount": 1,
+        "authorityResearchNeeded": true,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "defenseMatrix": [
+        {
+          "issueType": "FDDA_APPEAL_WATCH",
+          "birFinding": "Synthetic finding only.",
+          "taxpayerPosition": "Synthetic position only.",
+          "documentsAvailable": [
+            "Synthetic supporting document"
+          ],
+          "documentsMissing": [
+            "Synthetic missing document"
+          ],
+          "substituteProofOptions": [],
+          "evidenceStatus": "partial",
+          "reconciliationNeeded": [],
+          "authorityNeeded": [
+            "NIRC Sec. 228",
+            "RR No. 18-2013",
+            "CTA rules",
+            "jurisdictional appeal-period jurisprudence"
+          ],
+          "jurisprudenceNeeded": [
+            "jurisdictional appeal-period jurisprudence"
+          ],
+          "proceduralDefenseTopics": [
+            "CTA appeal-watch",
+            "proper service",
+            "statement of facts and law",
+            "jurisdictional deadline review"
+          ],
+          "substantiveDefenseTopics": [],
+          "riskLevel": "medium",
+          "riskReason": "risk level as assessed from provided facts, pending professional review",
+          "recommendedSafeAction": [
+            "Calendar the CTA appeal-watch period for review.",
+            "Confirm proper service of the FDDA.",
+            "Escalate to professional legal/tax review."
+          ],
+          "prohibitedOverreach": [
+            "Do not conclude this issue is resolved in the taxpayer's favor.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "evidencePlan": {
+        "documentsToSubmit": [
+          "Synthetic supporting document"
+        ],
+        "documentsToReconcile": [],
+        "substituteProofToPrepare": [],
+        "nonApplicableItemsToExplain": [],
+        "receivingProofNeeded": [
+          "Proof of filing/submission with receiving stamp or acknowledgment"
+        ],
+        "gapsToEscalate": []
+      },
+      "proceduralDefensePlan": {
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": false,
+        "properServiceCheckNeeded": true,
+        "dueProcessCheckNeeded": true,
+        "statementOfFactsAndLawCheckNeeded": true,
+        "prescriptionCheckNeeded": false,
+        "documentRequestScopeCheckNeeded": false,
+        "noRegressionRuleCheckNeeded": false,
+        "priorNoticeConsistencyCheckNeeded": false
+      },
+      "substantiveDefensePlan": {
+        "vatClassificationReviewNeeded": false,
+        "cwtSubstantiationReviewNeeded": false,
+        "withholdingDeductibilityReviewNeeded": false,
+        "inputVatSupportReviewNeeded": false,
+        "dividendFwtReviewNeeded": false,
+        "relatedPartyReviewNeeded": false,
+        "incomeTaxExpenseSupportReviewNeeded": false
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [
+          "NIRC Sec. 228"
+        ],
+        "birIssuancesNeeded": [
+          "RR No. 18-2013"
+        ],
+        "jurisprudenceNeeded": [
+          "jurisdictional appeal-period jurisprudence"
+        ],
+        "ctaRulesNeeded": [
+          "CTA rules"
+        ],
+        "authorityStatus": "authority_required"
+      },
+      "riskWarnings": [
+        "This scaffold does not determine the final appeal deadline or legal sufficiency of the FDDA."
+      ],
+      "recommendedNextActions": [
+        "Calendar the CTA appeal-watch period for review.",
+        "Confirm proper service of the FDDA.",
+        "Escalate to professional legal/tax review."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 1-2026 single-instance audit framework",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for 2026-and-later audit authority, eLA consolidation, standardized checklist, document request limits, and audit safeguards."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidation safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidation prohibitions, FAN-level consolidation, written conformity, waiver of prescription, proper service, and no-regression rule."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional audit-defense workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe matrix guidance only and does not constitute a final legal or tax conclusion. The available facts are insufficient for a final legal conclusion; this matter should be reviewed against applicable BIR issuances and jurisprudence by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "TERMINATION_LETTER_SCOPE": {
+      "phase": "09O",
+      "mode": "bir_audit_defense_matrix",
+      "version": "PHASE-09O-BIR-AUDIT-DEFENSE-MATRIX-SCAFFOLD-1",
+      "runtimeActive": false,
+      "matrixSummary": {
+        "noticeType": "BIR_AUDIT_TERMINATION_LETTER",
+        "noticeStage": "AUDIT_CLOSURE",
+        "totalIssues": 1,
+        "highRiskIssueCount": 0,
+        "evidenceGapCount": 1,
+        "authorityResearchNeeded": true,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "defenseMatrix": [
+        {
+          "issueType": "TERMINATION_LETTER_SCOPE",
+          "birFinding": "Synthetic finding only.",
+          "taxpayerPosition": "Synthetic position only.",
+          "documentsAvailable": [
+            "Synthetic supporting document"
+          ],
+          "documentsMissing": [
+            "Synthetic missing document"
+          ],
+          "substituteProofOptions": [],
+          "evidenceStatus": "partial",
+          "reconciliationNeeded": [],
+          "authorityNeeded": [
+            "Applicable RMO/RR on audit closure and reopening grounds"
+          ],
+          "jurisprudenceNeeded": [],
+          "proceduralDefenseTopics": [
+            "matching closure to LOA/eLA, tax period, and tax types",
+            "without-prejudice language review"
+          ],
+          "substantiveDefenseTopics": [],
+          "riskLevel": "medium",
+          "riskReason": "risk level as assessed from provided facts, pending professional review",
+          "recommendedSafeAction": [
+            "Match the termination letter to its covered LOA/eLA, period, and tax types.",
+            "Retain payment proof and related records permanently."
+          ],
+          "prohibitedOverreach": [
+            "Do not conclude this issue is resolved in the taxpayer's favor.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "evidencePlan": {
+        "documentsToSubmit": [
+          "Synthetic supporting document"
+        ],
+        "documentsToReconcile": [],
+        "substituteProofToPrepare": [],
+        "nonApplicableItemsToExplain": [],
+        "receivingProofNeeded": [
+          "Proof of filing/submission with receiving stamp or acknowledgment"
+        ],
+        "gapsToEscalate": []
+      },
+      "proceduralDefensePlan": {
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": false,
+        "properServiceCheckNeeded": false,
+        "dueProcessCheckNeeded": true,
+        "statementOfFactsAndLawCheckNeeded": true,
+        "prescriptionCheckNeeded": false,
+        "documentRequestScopeCheckNeeded": false,
+        "noRegressionRuleCheckNeeded": false,
+        "priorNoticeConsistencyCheckNeeded": false
+      },
+      "substantiveDefensePlan": {
+        "vatClassificationReviewNeeded": false,
+        "cwtSubstantiationReviewNeeded": false,
+        "withholdingDeductibilityReviewNeeded": false,
+        "inputVatSupportReviewNeeded": false,
+        "dividendFwtReviewNeeded": false,
+        "relatedPartyReviewNeeded": false,
+        "incomeTaxExpenseSupportReviewNeeded": false
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [],
+        "birIssuancesNeeded": [],
+        "jurisprudenceNeeded": [],
+        "ctaRulesNeeded": [],
+        "authorityStatus": "authority_required"
+      },
+      "riskWarnings": [
+        "Do not treat a termination letter as blanket clearance for unrelated periods, tax types, fraud, false returns, or refund issues."
+      ],
+      "recommendedNextActions": [
+        "Match the termination letter to its covered LOA/eLA, period, and tax types.",
+        "Retain payment proof and related records permanently."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 1-2026 single-instance audit framework",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for 2026-and-later audit authority, eLA consolidation, standardized checklist, document request limits, and audit safeguards."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidation safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidation prohibitions, FAN-level consolidation, written conformity, waiver of prescription, proper service, and no-regression rule."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional audit-defense workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe matrix guidance only and does not constitute a final legal or tax conclusion. The available facts are insufficient for a final legal conclusion; this matter should be reviewed against applicable BIR issuances and jurisprudence by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    }
+  },
+  "prohibitedClaims": [
+    "this assessment is void",
+    "this loa is invalid",
+    "this ela is invalid",
+    "this replacement ela is invalid",
+    "this fan is invalid",
+    "this fld is invalid",
+    "this pan is invalid",
+    "this fdda is invalid",
+    "the bir cannot assess you",
+    "the case is fully cancelled",
+    "the assessment is cancelled",
+    "you are permanently cleared",
+    "no need to consult a professional",
+    "submit everything without review",
+    "ignore the notice",
+    "you will win",
+    "guaranteed cancellation",
+    "final legal opinion",
+    "official legal advice",
+    "court-tested defense",
+    "foolproof defense",
+    "the protest is guaranteed to succeed",
+    "cta appeal is definitely available",
+    "the assessment is final",
+    "the assessment is not final",
+    "the deadline is definitely"
+  ],
+  "sourceCardRules": {
+    "allowedAuthorityTiers": [
+      "official_reference_required",
+      "uploaded_reference_pattern",
+      "future_authority_corpus_required",
+      "procedural_design_reference"
+    ],
+    "mustNotClaimFinalAuthorityVerificationComplete": true,
+    "mustNotClaimFinalLegalConclusion": true,
+    "requiredBaselineSourceCards": [
+      {
+        "label": "RR No. 18-2013 assessment protest procedure reference",
+        "sourceType": "BIR regulation",
+        "authorityTier": "official_reference_required"
+      },
+      {
+        "label": "NIRC Sec. 228 assessment due process reference",
+        "sourceType": "Tax Code",
+        "authorityTier": "official_reference_required"
+      },
+      {
+        "label": "RMO No. 1-2026 single-instance audit framework",
+        "sourceType": "BIR issuance",
+        "authorityTier": "official_reference_required"
+      },
+      {
+        "label": "RMO No. 6-2026 consolidation safeguards",
+        "sourceType": "BIR issuance",
+        "authorityTier": "official_reference_required"
+      },
+      {
+        "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+        "sourceType": "BIR issuance",
+        "authorityTier": "official_reference_required"
+      },
+      {
+        "label": "RMC No. 5-2026 LOA/eLA verification reference",
+        "sourceType": "BIR issuance",
+        "authorityTier": "official_reference_required"
+      },
+      {
+        "label": "Uploaded professional audit-defense workflow reference pattern",
+        "sourceType": "private uploaded reference",
+        "authorityTier": "uploaded_reference_pattern"
+      }
+    ]
+  },
+  "futurePatchPlan": [
+    "PHASE-09P-BIR-DOCUMENT-COMPLIANCE-TRANSMITTAL-SCAFFOLD-1",
+    "PHASE-09-GATE-CLOSURE-1"
+  ],
+  "nextTask": "PHASE-09P-BIR-DOCUMENT-COMPLIANCE-TRANSMITTAL-SCAFFOLD-1"
+}
