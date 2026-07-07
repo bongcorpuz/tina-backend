@@ -1,0 +1,254 @@
+{
+  "patch": "PHASE-09X-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-DESIGN-1",
+  "decision": "PHASE 09X CONTROLLED LOA ANSWER RUNTIME WIRING DESIGN PASS WITH STRICT RECOMMENDATIONS",
+  "phase": "09X",
+  "baseCommit": "134678e PHASE-09-GATE-CLOSURE-1 close phase 9 scaffold gate",
+  "designType": "controlled runtime wiring design",
+  "currentState": {
+    "phase8Closed": true,
+    "phase8SClosed": true,
+    "phase08XClosed": true,
+    "phase9FormallyClosed": true,
+    "phase9ScaffoldComplete": true,
+    "phase9GovernanceSafe": true,
+    "phase9NonRuntimeActive": true,
+    "phase9GateClosureComplete": true,
+    "runtimeGovernanceRecommendationFromClosureGate": "PASS_WITH_RUNTIME_WIRING_DEFERRED",
+    "internalLoaAnswerModelingReadiness": "PASS",
+    "liveAskLoaAnswerReadiness": "NOT APPROVED IN PHASE-09-GATE-CLOSURE-1",
+    "runtimeActivationApproved": false,
+    "memoryInactive": true,
+    "productionUnchanged": true,
+    "mcpDeferredUntilAfterFinalPlannedPhase": true,
+    "mobileAppDeferredUntilAfterPhase13": true,
+    "latestCommitBeforeThisPatch": "134678e"
+  },
+  "objective": "Create a design-only controlled runtime-wiring plan for a future implementation patch to safely answer the narrow live /ask query family \"I received a BIR LOA, what should I do?\" by routing through the closed Phase 9 scaffold stack (09L, 09M, 09O, 09P, 09Q, 09S) behind an intent guard and scope guard, without wiring anything to /ask, without activating runtime behavior, and without producing final legal conclusions or filing-ready output. This patch prepares PHASE-09Y-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-SCAFFOLD-1; it does not implement it.",
+  "supportedFutureQueryIntents": [
+    "I received a BIR LOA, what should I do?",
+    "I received a BIR eLA, what should I do?",
+    "What should I do after receiving a Letter of Authority from BIR?",
+    "BIR issued an LOA to my company, what are the first steps?",
+    "I got an electronic LOA from BIR. What should I check?",
+    "What documents should I prepare after receiving a BIR LOA?",
+    "I received a replacement eLA, what should I do?",
+    "I received a consolidated eLA, what should I do?",
+    "I received a BIR LOA checklist of requirements, what should I do?",
+    "I received a notice for presentation/submission, what should I do?",
+    "I received a reminder before issuance of subpoena duces tecum (pre-subpoena reminder), what should I do?",
+    "I received a pre-subpoena document reminder, what should I do?"
+  ],
+  "excludedFutureQueryIntents": [
+    "Is my LOA invalid?",
+    "Is this eLA void?",
+    "Can I ignore the LOA?",
+    "Can the BIR assess me?",
+    "Is the assessment final?",
+    "Should I appeal to CTA? (CTA final strategy question)",
+    "Is the FAN void?",
+    "Is the FDDA appealable?",
+    "Will I win?",
+    "Can you draft the protest now? (filing-ready protest request)",
+    "Can you submit this to BIR? (automatic submission request)"
+  ],
+  "futureRuntimeRoutingDesign": [
+    {
+      "step": 1,
+      "title": "Intent guard",
+      "description": "Detect generic procedural LOA-help intent only, using a narrow LOA/eLA-received pattern; never widen to validity, finality, protest, or CTA-strategy phrasing."
+    },
+    {
+      "step": 2,
+      "title": "Scope guard",
+      "description": "Confirm the user is asking what to do after receiving a LOA/eLA, not asking for a final validity, protest, or CTA conclusion; route excluded intents to fallback."
+    },
+    {
+      "step": 3,
+      "title": "Authority-safe procedural fallback (09L)",
+      "description": "Use 09L authority-safe procedural fallback concepts to provide safe first steps when controlling authority cannot yet be confirmed."
+    },
+    {
+      "step": 4,
+      "title": "Notice triage (09M)",
+      "description": "Use 09M BIR notice/LOA triage intent concepts to classify original LOA/eLA, replacement eLA, consolidated eLA, checklist, notice for presentation, pre-subpoena reminder, TVN, Mission Order, or unknown notice."
+    },
+    {
+      "step": 5,
+      "title": "2026 audit baseline signals (09S)",
+      "description": "Use 09S 2026 BIR audit baseline integration concepts to flag RMO No. 1-2026, RMO No. 6-2026, RMC No. 14-2026, RMC No. 5-2026, and related 2026 review signals when relevant."
+    },
+    {
+      "step": 6,
+      "title": "Document compliance plan (09P)",
+      "description": "Use 09P BIR document compliance/transmittal concepts for the document matrix, controlled transmittal, receiving proof, non-applicable/unavailable/non-existent documents, substitute proof, clarification requests, voluminous records, certified copies, and on-premise review."
+    },
+    {
+      "step": 7,
+      "title": "Audit defense matrix (09O)",
+      "description": "Use 09O BIR audit defense matrix concepts only as issue organization, never as a legal conclusion."
+    },
+    {
+      "step": 8,
+      "title": "Authority corpus requirement (09Q)",
+      "description": "Use 09Q BIR authority corpus research design concepts to state that official-source verification is required before any legal conclusion."
+    },
+    {
+      "step": 9,
+      "title": "Safe response renderer",
+      "description": "Produce a procedural-safe answer with no final legal conclusion, no filing-ready output, no automatic submission, and a preserved human review notice."
+    },
+    {
+      "step": 10,
+      "title": "Source-card discipline",
+      "description": "Use design/source-card references only unless a future implementation confirms verified source-card availability from the existing retrieval/SAE/source-card systems."
+    }
+  ],
+  "futureSafeResponseTemplate": {
+    "templateText": "If you received a BIR LOA/eLA, do not ignore it. First, preserve the date and manner of receipt and keep a clear copy of the notice and attachments. Check the LOA/eLA details: taxpayer name, TIN, taxable period, tax types covered, issuing office, LOA/eLA number, audit case number, Revenue Officer, Group Supervisor, approving/signing official, and the documents requested. Next, verify the LOA/eLA through the available BIR verification process where applicable, including the BIR REVIE / LOA Verifier process under RMC No. 5-2026 when relevant. Determine whether the document is an original eLA, replacement eLA, consolidated eLA, TVN, Mission Order, checklist, notice for presentation/submission, or pre-subpoena reminder. If it involves a replacement eLA, consolidated eLA, multiple eLAs for the same taxable year, VATAS/LTVAU, TVN scope, or additional document requests, treat it as a 2026 audit-framework review issue and verify against the applicable BIR issuances. Prepare a document compliance matrix. Classify each requested document as provided, to-follow, not applicable, unavailable, non-existent, substitute proof available, requires reconciliation, requires certified copy, requires on-premise review, or requires BIR clarification. Submit documents through controlled transmittal. Keep proof of submission, such as BIR receiving stamp, email acknowledgement, courier proof, attachment list, receiving office/officer, and date/time of submission. If a document is not applicable, unavailable, or does not exist, do not fabricate it. Prepare a factual explanation and, where appropriate, substitute proof such as management certification, affidavit, AFS note, tax return support, official record, or third-party confirmation. Avoid unnecessary admissions. Respond in writing when needed, preserve all defenses, and monitor possible next stages: additional document request, NOD/DOD, PAN, FAN/FLD, protest, FDDA, and CTA appeal-watch. This is procedural guidance only. Validity, prescription, finality, appealability, protest strategy, CTA strategy, and legal conclusions require official-source verification and human tax/legal review.",
+    "prohibitedResponsePatternCategories": [
+      "claims that the LOA/eLA is valid or invalid",
+      "claims that the BIR cannot assess the taxpayer",
+      "claims that the notice may be safely disregarded",
+      "predictions of a winning outcome",
+      "claims that the assessment has been resolved in the taxpayer's favor",
+      "assertions of a compliance deadline stated with unwarranted certainty"
+    ]
+  },
+  "futureResponseModes": [
+    { "mode": "SAFE_BASIC_LOA_GUIDANCE", "description": "Default procedural-safe guidance for a plain original LOA/eLA receipt question." },
+    { "mode": "REPLACEMENT_ELA_REVIEW_GUIDANCE", "description": "Guidance branch for a replacement eLA scenario, routed through 09M/09S replacement-eLA signals." },
+    { "mode": "CONSOLIDATED_ELA_REVIEW_GUIDANCE", "description": "Guidance branch for a consolidated eLA / multiple-eLA scenario, routed through 09M/09S/09O consolidation signals." },
+    { "mode": "DOCUMENT_CHECKLIST_GUIDANCE", "description": "Guidance branch for a standardized checklist or document-request scenario, routed through 09P." },
+    { "mode": "PRE_SUBPOENA_ESCALATION_GUIDANCE", "description": "Guidance branch for a pre-subpoena or subpoena-adjacent reminder, routed through 09P with an escalation warning." },
+    { "mode": "UNKNOWN_BIR_NOTICE_GUIDANCE", "description": "Guidance branch for a notice type that cannot be confidently classified, routed through 09L fallback." },
+    { "mode": "HUMAN_REVIEW_REQUIRED", "description": "Terminal mode for any excluded intent (validity/finality/protest/CTA/filing-ready/automatic-submission questions), routed to authority-safe procedural fallback and human tax/legal review." }
+  ],
+  "futureSourceCardPolicy": {
+    "policyStatement": "Future runtime answers may cite or display source cards only if the source cards are verified by the existing retrieval/SAE/source-card systems. If verified cards are not available, the future answer must avoid legal citation phrasing, use procedural-safe language, state that official-source verification is required, and avoid any final authority claim.",
+    "requiredFutureSourceCategories": [
+      { "authority": "RMC No. 5-2026", "purpose": "LOA/eLA verification (BIR REVIE / LOA Verifier)" },
+      { "authority": "RMO No. 1-2026", "purpose": "single-instance audit framework / standardized checklist / document request limits" },
+      { "authority": "RMO No. 6-2026", "purpose": "consolidation safeguards / FDDA and final-FAN limits / proper service / no-regression rule" },
+      { "authority": "RMC No. 14-2026", "purpose": "replacement eLA / TVN scope / prior notices / VATAS-LTVAU transition" },
+      { "authority": "RR No. 18-2013", "purpose": "PAN/FAN/protest/reinvestigation procedure" },
+      { "authority": "NIRC Sec. 228", "purpose": "due process for assessment" },
+      { "authority": "RR No. 12-99, as amended", "purpose": "service / assessment procedure" },
+      { "authority": "CTA rules", "purpose": "appeal-watch only, not a conclusion" }
+    ]
+  },
+  "futureRuntimeSafetyGates": [
+    "runtimeActive remains false until a separately approved implementation patch changes it",
+    "feature flag remains off by default unless separately approved",
+    "LOA intent guard must remain narrow (procedural-help questions only)",
+    "validity/finality/protest/CTA-strategy questions must never be answered as final conclusions",
+    "no automatic filing-ready output is ever produced",
+    "no automatic BIR submission is ever performed",
+    "no real taxpayer data may appear in tests or fixtures",
+    "no live authority claim may be made unless verified source cards are present",
+    "a safe fallback must trigger whenever retrieval cannot verify controlling authority",
+    "human review notice must always be present in the rendered answer",
+    "security headers and authentication behavior remain unchanged",
+    "unrelated /ask behavior remains unchanged"
+  ],
+  "screenshotEvidenceNote": "Observed live behavior: The current live app returned the authority fallback message for \"I received a BIR LOA, what should I do?\" This is expected because Phase 9 scaffolds are closed but not wired to /ask. 09X does not change that behavior; it designs the future controlled wiring path.",
+  "nonRuntimeBoundary": {
+    "designOnly": true,
+    "noRuntimeImplementation": true,
+    "noRouteBehaviorChange": true,
+    "runtimeActiveRemainsFalse": true,
+    "notWiredToAsk": true,
+    "notWiredToRoutes": true,
+    "notWiredToServer": true,
+    "notWiredToPipeline": true,
+    "notEnabledByFeatureFlag": true,
+    "notPersisted": true,
+    "notMemoryEnabled": true,
+    "notProductionActive": true,
+    "liveLoaAskBehaviorUnchanged": true
+  },
+  "externalOperationBoundary": {
+    "noLiveRetrieval": true,
+    "noExternalSearch": true,
+    "noScraping": true,
+    "noDownload": true,
+    "noOcr": true,
+    "noIngestion": true,
+    "noEmbedding": true,
+    "noDatabaseWrite": true,
+    "noOpenAiCall": true,
+    "noSupabaseCall": true,
+    "noGoogleDriveCall": true,
+    "noN8nCall": true,
+    "noFirecrawlCall": true,
+    "noCrawleeCall": true,
+    "noMcpCall": true,
+    "noExternalHttpCall": true,
+    "noEnvironmentSecretAccess": true
+  },
+  "privacyBoundary": {
+    "noRealTaxpayerNamesInFixtureOrReport": true,
+    "noRealOfficerNamesInFixtureOrReport": true,
+    "noRealLoaOrElaNumbersInFixtureOrReport": true,
+    "noRealAuditCaseNumbersInFixtureOrReport": true,
+    "noRealTinsInFixtureOrReport": true,
+    "noRealAssessmentAmountsInFixtureOrReport": true,
+    "allExamplesGenericOrSynthetic": true
+  },
+  "legalSafetyBoundary": {
+    "noFinalLegalConclusions": true,
+    "noValidityDeterminationClaims": true,
+    "noInvalidityDeterminationClaims": true,
+    "noVoidnessOrCancellationClaims": true,
+    "noFinalityOrEnforceabilityClaims": true,
+    "noAppealabilityClaims": true,
+    "noGuaranteedOutcomeClaims": true,
+    "noFilingReadyOutput": true,
+    "noAutomaticSubmission": true,
+    "humanReviewNoticePreservedInFutureTemplate": true
+  },
+  "runtimeGovernanceBoundary": {
+    "thisPatchIsDesignOnly": true,
+    "doesNotConstituteRuntimeApproval": true,
+    "futureImplementationRequiresSeparateApprovedPatch": true,
+    "futurePatchIdentifier": "PHASE-09Y-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-SCAFFOLD-1",
+    "runtimeActivationStillNotApproved": true
+  },
+  "validationMatrix": {
+    "newPhase09XControlledLoaAnswerRuntimeWiringDesignTest": "PASS",
+    "phase09GateClosureTest": "PASS",
+    "phase09SBir2026AuditBaselineIntegrationTest": "PASS",
+    "phase09QBirAuthorityCorpusResearchDesignTest": "PASS",
+    "phase09PBirDocumentComplianceTransmittalTest": "PASS",
+    "phase09OBirAuditDefenseMatrixTest": "PASS",
+    "phase09NPanFanFldProtestWorkflowTest": "PASS",
+    "phase09MBirNoticeLoaTriageIntentTest": "PASS",
+    "phase09LProceduralFallbackScaffoldTest": "PASS",
+    "phase09RStagingSmokeTest": "PASS",
+    "phase09RIntegrationDesignTest": "PASS",
+    "phase09RRuntimeScaffoldTest": "PASS",
+    "phase09IRequirementsRequestLetterTest": "PASS",
+    "phase09HRuntimeWiringTest": "PASS",
+    "phase09GGovernanceGateTest": "PASS",
+    "phase09FClientAdvisoryComplianceChecklistTest": "PASS",
+    "phase09EBirReplyDraftTest": "PASS",
+    "phase09DAuditDefenseMatrixTest": "PASS",
+    "phase09CTaxMemoSchemaTest": "PASS",
+    "phase09BWorkflowModeRegistryTest": "PASS",
+    "phase09ADesignTest": "PASS",
+    "patch08SFollowupIndexSecretHeaderAuthStagingSmokeTest": "PASS",
+    "patch08XFinalGateTest": "PASS",
+    "patch08SFinalClosureGateTest": "PASS",
+    "guardFiles": "PASS",
+    "npmTest": "PASS"
+  },
+  "futurePatchPlan": [
+    "09Y controlled LOA answer runtime wiring scaffold",
+    "future guarded implementation only after design approval",
+    "future Phase 10 evaluation/fact-check/legal-tax QA",
+    "future authority ingestion/search/retrieval only if separately approved",
+    "future memory/persistence only if separately approved",
+    "MCP deferred until after final planned phase",
+    "mobile app deferred until after Phase 13"
+  ],
+  "nextTask": "PHASE-09Y-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-SCAFFOLD-1"
+}

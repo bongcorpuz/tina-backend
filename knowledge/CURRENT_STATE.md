@@ -5914,3 +5914,116 @@ PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System.
 Optional future before Phase 10, only if separately approved:
 PHASE-09X-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-DESIGN-1.
 ```
+
+## Phase 9X Controlled LOA Answer Runtime Wiring Design — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-07):
+
+```text
+PHASE-09X-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-DESIGN-1 completed.
+
+Decision:
+PHASE 09X CONTROLLED LOA ANSWER RUNTIME WIRING DESIGN PASS WITH STRICT RECOMMENDATIONS
+
+Base commit:
+134678e
+
+Scope:
+Design-only controlled runtime-wiring plan for the narrow live /ask query family:
+"I received a BIR LOA/eLA, what should I do?"
+
+Purpose:
+09X designs how a future implementation patch may route a narrow LOA-help question through the closed Phase 9
+scaffold stack without producing final legal conclusions or unsafe filing-ready output.
+
+Screenshot/live behavior note:
+The live app currently returns the authority fallback message for the LOA question. This is expected because
+Phase 9 scaffolds are closed but not wired to /ask. 09X does not change live behavior.
+
+Internal modeling:
+PASS remains preserved from Phase 9 closure.
+
+Live /ask answer:
+Not changed by 09X.
+
+Runtime activation:
+Not approved by 09X.
+
+Runtime changes:
+None.
+
+Ask-handler changes:
+None.
+
+Route/server/pipeline changes:
+None.
+
+Feature flags:
+Unchanged/off by default.
+
+Memory:
+Inactive.
+
+Persistence:
+None.
+
+External search/live retrieval/scraping/download/ingestion/embedding/database writes/OpenAI/Supabase/Google Drive/n8n/Firecrawl/Crawlee/MCP/OCR:
+Untouched.
+
+Production:
+Unchanged.
+
+Legal safety:
+No final legal conclusions.
+No claim that any LOA/eLA/PAN/FAN/FLD/FDDA/assessment/protest/BIR action is valid, invalid, void, cancelled, final,
+enforceable, or appealable.
+No filing-ready output.
+No automatic BIR submission.
+Human review notice preserved.
+
+Future runtime design:
+Future 09Y should use a narrow LOA intent guard and route safe procedural LOA-help questions through:
+09L authority-safe procedural fallback
+09M BIR notice / LOA triage
+09S 2026 BIR audit baseline signals
+09P document compliance/transmittal planning
+09O audit defense matrix
+09Q authority corpus verification requirement
+safe response renderer
+source-card discipline
+
+Future 09Y must preserve fallback/human-review behavior for validity, finality, prescription, CTA, protest strategy,
+and filing-ready document requests.
+
+Validation:
+node tests/phase-09x-controlled-loa-answer-runtime-wiring-design-1.test.mjs - PASS / 32 / 0 / 195.
+node tests/phase-09-gate-closure-1.test.mjs - PASS / 29 / 0 / 1475.
+node tests/phase-09s-2026-bir-audit-baseline-integration-scaffold-1.test.mjs - PASS / 76 / 0 / 363.
+node tests/phase-09q-bir-authority-corpus-research-design-1.test.mjs - PASS / 30 / 0 / 467.
+node tests/phase-09p-bir-document-compliance-transmittal-scaffold-1.test.mjs - PASS / 36 / 0 / 333.
+node tests/phase-09o-bir-audit-defense-matrix-scaffold-1.test.mjs - PASS / 33 / 0 / 605.
+node tests/phase-09n-pan-fan-fld-protest-workflow-scaffold-1.test.mjs - PASS / 35 / 0 / 336.
+node tests/phase-09m-bir-notice-loa-triage-intent-scaffold-1.test.mjs - PASS / 47 / 0 / 398.
+node tests/phase-09l-authority-safe-procedural-fallback-scaffold-1.test.mjs - PASS / 33 / 0 / 184.
+node tests/phase-09r-tax-memo-runtime-staging-smoke-1.test.mjs - PASS / 36 / 0 / 179.
+node tests/phase-09r-tax-memo-runtime-wiring-integration-design-1.test.mjs - PASS / 54 / 0 / 202.
+node tests/phase-09r-tax-memo-runtime-wiring-scaffold-1.test.mjs - PASS / 113 / 0 / 212.
+node tests/phase-09i-requirements-request-letter-schema-scaffold-1.test.mjs - PASS / 56 / 0 / 333.
+node tests/phase-09h-controlled-runtime-wiring-design-or-scaffold-1.test.mjs - PASS / 69 / 0 / 172.
+node tests/phase-09g-workflow-output-governance-gate-1.test.mjs - PASS / 73 / 0 / 213.
+node tests/phase-09f-client-advisory-checklist-scaffold-1.test.mjs - PASS / 75 / 0 / 404.
+node tests/phase-09e-bir-reply-draft-scaffold-1.test.mjs - PASS / 45 / 0 / 243.
+node tests/phase-09d-audit-defense-matrix-scaffold-1.test.mjs - PASS / 45 / 0 / 203.
+node tests/phase-09c-tax-memo-schema-scaffold-1.test.mjs - PASS / 47 / 0 / 149.
+node tests/phase-09b-workflow-mode-registry-scaffold-1.test.mjs - PASS / 45 / 0 / 363.
+node tests/phase-09a-professional-workflow-copilot-design-1.test.mjs - PASS / 30 / 0 / 75.
+node tests/patch-08s-followup-index-secret-header-auth-staging-smoke-1.test.mjs - PASS / 23 / 0 / 92.
+node tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs - PASS / 17 / 0 / 127.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0 / 203.
+npm run guard:files - PASS. npm test - GATE PASSED / 166 suites / 0 failed.
+
+Next:
+PHASE-09Y-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-SCAFFOLD-1, if controlled live LOA answering remains the immediate
+priority.
+
+Alternative:
+Proceed to PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System before runtime activation.
+```
