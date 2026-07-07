@@ -5796,3 +5796,121 @@ npm run guard:files - PASS. npm test - GATE PASSED / 164 suites / 0 failed.
 Next:
 PHASE-09-GATE-CLOSURE-1.
 ```
+
+## Phase 9 Gate Closure — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-07):
+
+```text
+PHASE-09-GATE-CLOSURE-1 completed.
+
+Decision:
+PHASE 09 GATE CLOSURE PASS WITH STRICT RECOMMENDATIONS
+
+Base commit:
+444a11f
+
+Gate result:
+Phase 9 is scaffold-complete and governance-safe.
+
+Runtime governance recommendation:
+PASS_WITH_RUNTIME_WIRING_DEFERRED
+
+Completed Phase 9 BIR audit-defense scaffold inventory:
+09L authority-safe procedural fallback
+09M BIR notice / LOA triage intent
+09N PAN/FAN/FLD/protest workflow
+09O BIR audit defense matrix
+09P BIR document compliance/transmittal
+09Q BIR authority corpus research design
+09S 2026 BIR audit baseline integration
+
+LOA question readiness:
+Internal LOA answer modeling readiness: PASS.
+Live /ask LOA answer readiness: NOT APPROVED IN THIS GATE.
+Runtime activation: NOT APPROVED IN THIS GATE.
+
+TINA can internally model a safe answer to:
+"I received a BIR LOA, what should I do?"
+
+Internal modeling can combine:
+09L safe procedural fallback
+09M LOA/eLA triage
+09O audit defense matrix
+09P document compliance/transmittal planning
+09Q authority corpus design
+09S 2026 BIR audit baseline integration
+
+Runtime changes:
+None.
+
+Ask-handler changes:
+None.
+
+Route/server/pipeline changes:
+None.
+
+Feature flags:
+Unchanged/off by default.
+
+Memory:
+Inactive.
+
+Persistence:
+None.
+
+External search/live retrieval/scraping/download/ingestion/embedding/database writes/OpenAI/Supabase/Google Drive/n8n/Firecrawl/Crawlee/MCP/OCR:
+Untouched.
+
+Production:
+Unchanged.
+
+Privacy:
+No real taxpayer names, TINs, LOA/eLA numbers, audit case numbers, BIR officer names, exact assessment amounts, or
+taxpayer-specific facts used in fixtures.
+
+Legal safety:
+No final legal conclusions.
+No fabricated authorities.
+No claim that any authority was live-verified, downloaded, scraped, ingested, indexed, embedded, or stored.
+No claim that any LOA/eLA/PAN/FAN/FLD/FDDA/assessment/protest/BIR action is valid, invalid, void, cancelled, final,
+enforceable, or appealable.
+No filing-ready output.
+No automatic submission.
+Human review notice preserved.
+
+Authority boundary:
+Phase 9 authority support remains design/scaffold level.
+No live authority retrieval implemented.
+Phase 10 authority evaluation/fact-check/QA not yet implemented.
+
+Validation:
+node tests/phase-09-gate-closure-1.test.mjs - PASS / 42 / 0 / 210.
+node tests/phase-09s-2026-bir-audit-baseline-integration-scaffold-1.test.mjs - PASS / 76 / 0 / 362.
+node tests/phase-09q-bir-authority-corpus-research-design-1.test.mjs - PASS / 30 / 0 / 467.
+node tests/phase-09p-bir-document-compliance-transmittal-scaffold-1.test.mjs - PASS / 36 / 0 / 333.
+node tests/phase-09o-bir-audit-defense-matrix-scaffold-1.test.mjs - PASS / 33 / 0 / 605.
+node tests/phase-09n-pan-fan-fld-protest-workflow-scaffold-1.test.mjs - PASS / 35 / 0 / 336.
+node tests/phase-09m-bir-notice-loa-triage-intent-scaffold-1.test.mjs - PASS / 47 / 0 / 398.
+node tests/phase-09l-authority-safe-procedural-fallback-scaffold-1.test.mjs - PASS / 33 / 0 / 184.
+node tests/phase-09r-tax-memo-runtime-staging-smoke-1.test.mjs - PASS / 36 / 0 / 179.
+node tests/phase-09r-tax-memo-runtime-wiring-integration-design-1.test.mjs - PASS / 54 / 0 / 202.
+node tests/phase-09r-tax-memo-runtime-wiring-scaffold-1.test.mjs - PASS / 113 / 0 / 212.
+node tests/phase-09i-requirements-request-letter-schema-scaffold-1.test.mjs - PASS / 56 / 0 / 333.
+node tests/phase-09h-controlled-runtime-wiring-design-or-scaffold-1.test.mjs - PASS / 69 / 0 / 172.
+node tests/phase-09g-workflow-output-governance-gate-1.test.mjs - PASS / 73 / 0 / 213.
+node tests/phase-09f-client-advisory-checklist-scaffold-1.test.mjs - PASS / 75 / 0 / 404.
+node tests/phase-09e-bir-reply-draft-scaffold-1.test.mjs - PASS / 45 / 0 / 243.
+node tests/phase-09d-audit-defense-matrix-scaffold-1.test.mjs - PASS / 45 / 0 / 203.
+node tests/phase-09c-tax-memo-schema-scaffold-1.test.mjs - PASS / 47 / 0 / 149.
+node tests/phase-09b-workflow-mode-registry-scaffold-1.test.mjs - PASS / 45 / 0 / 363.
+node tests/phase-09a-professional-workflow-copilot-design-1.test.mjs - PASS / 30 / 0 / 75.
+node tests/patch-08s-followup-index-secret-header-auth-staging-smoke-1.test.mjs - PASS / 23 / 0 / 92.
+node tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs - PASS / 17 / 0 / 127.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0 / 203.
+npm run guard:files - PASS. npm test - GATE PASSED / 165 suites / 0 failed.
+
+Next:
+PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System.
+
+Optional future before Phase 10, only if separately approved:
+PHASE-09X-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-DESIGN-1.
+```
