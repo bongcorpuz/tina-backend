@@ -5166,3 +5166,72 @@ Do not wire tax_memo into /ask without a separate explicitly approved integratio
 off by default everywhere; do not extend to any blocked mode without separate approval; do not implement Phase
 10/11 inside any integration patch; do not claim live tax memo generation or /ask runtime wiring is implemented.
 ```
+
+## Phase 9R Tax Memo Runtime Staging Smoke / Evidence Gate — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-07):
+
+```text
+PHASE-09R-TAX-MEMO-RUNTIME-STAGING-SMOKE-1 completed. Decision: PHASE 09R TAX MEMO RUNTIME STAGING SMOKE PASS WITH
+STRICT RECOMMENDATIONS. Base commit: 0f68a37 PHASE-09R-TAX-MEMO-RUNTIME-WIRING-INTEGRATION-DESIGN-1. Staging
+smoke/evidence gate only: no live tax memo activation, no /ask runtime wiring, no route/server/pipeline/
+ask-handler/frontend changes. No existing Phase 9 workflow file was modified.
+
+Local scaffold validation results: orchestrator/renderer/integration-policy files exist; validateTaxMemoRuntimeScaffold,
+validateTaxMemoRuntimeRenderer, validateTaxMemoIntegrationPolicy, validateWorkflowGovernanceGate, and
+validateWorkflowRuntimeWiringPolicy self-checks all valid true. runTaxMemoRuntimeScaffold blocks the default request,
+missing runtimeOptions, featureFlagEnabled false, explicit-approval false, missing sourceCards, an unsupported mode,
+and all five prohibited modes (bir_reply_protest_draft, audit_defense_matrix, client_advisory, compliance_checklist,
+requirements_request_letter); it passes only for an explicitly safe tax_memo request, whose output has mode
+tax_memo, schemaKey taxMemoOutput, nonempty sourceCards, missingFacts/assumptions arrays, a humanReviewNotice,
+metadata.finalFiling false, metadata.automaticSubmission false, and no final-filing/automatic-submission/production-ready/guaranteed-outcome claims.
+renderTaxMemoDraftToMarkdown renders draft-only, human-review,
+source-card, missing-facts, and assumptions sections with no prohibited claims, and validateTaxMemoRuntimeRenderedOutput
+passes. validateTaxMemoIntegrationCandidate validates a safe design candidate as policy-valid but still blocked for
+live execution (flags off, design_only_current_patch stage), fails when any forbidden change-scope field
+(askHandlerModified, pipelineModified, serverModified, routeAdded, memoryEnabled, persistenceAdded,
+externalSearchAdded, thirdPartyEgressAdded, productionEnabled) is true, and fails for every blocked mode. git diff
+confirmed only this patch's four allowed files changed; no route/server/pipeline/ask-handler/package/env/DB/
+frontend/existing-workflow/MCP files were modified.
+
+Staging public endpoint smoke results (https://tina-backend-staging.onrender.com, live, reachable): GET /health ->
+200, {"status":"ok","service":"tina-backend"}, no commitSha exposed, full security-header set present
+(Content-Security-Policy, X-Content-Type-Options, X-Frame-Options, Referrer-Policy, Permissions-Policy,
+Cross-Origin-Opener-Policy, Cross-Origin-Resource-Policy, Cache-Control), X-Powered-By absent. GET / -> 200, no
+route-inventory disclosure, security headers present, X-Powered-By absent. GET /routes -> 404 not_found, minimized,
+no route-inventory disclosure, security headers present, X-Powered-By absent. OPTIONS /ask -> 204 No Content, safe
+CORS preflight, not rate-limit-blocked, X-Powered-By absent. POST /ask unauthenticated with a harmless
+non-taxpayer ping payload -> 401 Unauthorized, {"error":"Authentication required"}, no taxMemoOutput schemaKey, no
+professional workflow output, no source-card section, security headers present, X-Powered-By absent. /ask remains
+protected and does not expose tax memo runtime behavior to an unauthenticated caller.
+
+Feature flags TINA_ENABLE_PROFESSIONAL_WORKFLOWS and TINA_ENABLE_WORKFLOW_TAX_MEMO not enabled by default. Phase 9G
+governance gate still required for every future execution; sourceCards/missingFacts/assumptions/humanReviewNotice
+remain required. No generated legal analysis beyond provided input; no fabricated authorities; no model calls; no
+retrieval calls; no external calls; no persistence; no memory activation; no client/matter persistence; no
+generated work-product persistence; no live web/search/intake; no n8n/Firecrawl/Crawlee; MCP deferred and not used;
+no Phase 10 implementation; no Phase 11 implementation; no production change.
+
+Validation:
+node tests/phase-09r-tax-memo-runtime-staging-smoke-1.test.mjs - PASS / 36 / 0 / 178 (includes 5 live staging HTTP
+smoke checks, all reachable and safe).
+node tests/phase-09r-tax-memo-runtime-wiring-integration-design-1.test.mjs - PASS / 54 / 0 / 202.
+node tests/phase-09r-tax-memo-runtime-wiring-scaffold-1.test.mjs - PASS / 113 / 0 / 212.
+node tests/phase-09i-requirements-request-letter-schema-scaffold-1.test.mjs - PASS / 56 / 0 / 333.
+node tests/phase-09h-controlled-runtime-wiring-design-or-scaffold-1.test.mjs - PASS / 69 / 0 / 172.
+node tests/phase-09g-workflow-output-governance-gate-1.test.mjs - PASS / 73 / 0 / 213.
+node tests/phase-09f-client-advisory-checklist-scaffold-1.test.mjs - PASS / 75 / 0 / 404.
+node tests/phase-09e-bir-reply-draft-scaffold-1.test.mjs - PASS / 45 / 0 / 243.
+node tests/phase-09d-audit-defense-matrix-scaffold-1.test.mjs - PASS / 45 / 0 / 203.
+node tests/phase-09c-tax-memo-schema-scaffold-1.test.mjs - PASS / 47 / 0 / 149.
+node tests/phase-09b-workflow-mode-registry-scaffold-1.test.mjs - PASS / 45 / 0 / 363.
+node tests/phase-09a-professional-workflow-copilot-design-1.test.mjs - PASS / 30 / 0 / 75.
+node tests/patch-08s-followup-index-secret-header-auth-staging-smoke-1.test.mjs - PASS / 23 / 0 / 92.
+node tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs - PASS / 17 / 0 / 127.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0 / 203.
+npm run guard:files - PASS. npm test - GATE PASSED / 157 suites / 0 failed.
+
+Next recommended task: PHASE-09L-AUTHORITY-SAFE-PROCEDURAL-FALLBACK-SCAFFOLD-1. Future plan also includes
+PHASE-09-GATE-CLOSURE-1. Do not wire tax_memo into /ask based on this smoke gate alone; keep both feature flags off
+by default everywhere; do not extend staging smoke coverage to any blocked mode; do not implement Phase 10/11 inside
+any smoke-evidence patch; do not introduce MCP; do not claim live tax memo generation, /ask runtime wiring, or
+production readiness is implemented.
+```

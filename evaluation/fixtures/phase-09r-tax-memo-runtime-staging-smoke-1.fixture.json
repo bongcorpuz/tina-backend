@@ -1,0 +1,291 @@
+{
+  "patch": "PHASE-09R-TAX-MEMO-RUNTIME-STAGING-SMOKE-1",
+  "decision": "PHASE 09R TAX MEMO RUNTIME STAGING SMOKE PASS WITH STRICT RECOMMENDATIONS",
+  "phase": "09R",
+  "baseCommit": "0f68a37 PHASE-09R-TAX-MEMO-RUNTIME-WIRING-INTEGRATION-DESIGN-1 add tax memo runtime integration policy",
+  "nonRuntimePatch": {
+    "noRouteChanges": true,
+    "noAskHandlerChanges": true,
+    "noPipelineChanges": true,
+    "noServerChanges": true,
+    "noPackageEnvDbFrontendChanges": true,
+    "noDeployment": true,
+    "noFeatureFlagEnabledByDefault": true,
+    "productionUnchanged": true,
+    "noMemoryActivation": true,
+    "noClientMatterPersistence": true,
+    "noGeneratedWorkProductPersistence": true,
+    "noExternalSearch": true,
+    "noN8n": true,
+    "noFirecrawl": true,
+    "noCrawlee": true,
+    "noMcp": true,
+    "noLiveActivation": true
+  },
+  "currentState": {
+    "phase8Closed": true,
+    "phase8SClosed": true,
+    "phase08XClosed": true,
+    "phase9AComplete": true,
+    "phase9BComplete": true,
+    "phase9CComplete": true,
+    "phase9DComplete": true,
+    "phase9EComplete": true,
+    "phase9FComplete": true,
+    "phase9GComplete": true,
+    "phase9HComplete": true,
+    "phase9IComplete": true,
+    "phase9RRuntimeScaffoldComplete": true,
+    "phase9RIntegrationDesignComplete": true,
+    "phase9RStagingSmokeComplete": true,
+    "memoryInactive": true,
+    "productionUnchanged": true,
+    "mcpDeferredUntilAfterFinalPlannedPhase": true,
+    "latestCommitBeforePatch": "0f68a37"
+  },
+  "smokeSummary": "Local scaffold safety validations for the tax_memo runtime scaffold, renderer, and integration policy all pass; safe unauthenticated public staging smoke checks against tina-backend-staging.onrender.com confirm /health and / return minimized safe responses, /routes returns a minimized not_found response, OPTIONS /ask returns a safe CORS preflight response, and POST /ask remains protected (401 Authentication required) with no tax-memo or professional-workflow output exposed. No route/server/pipeline/ask-handler files were changed. No feature flag is enabled by default. No memory, persistence, external search, n8n, Firecrawl, Crawlee, or MCP involvement.",
+  "localValidationSummary": {
+    "orchestratorFileExists": true,
+    "rendererFileExists": true,
+    "integrationPolicyFileExists": true,
+    "validateTaxMemoRuntimeScaffoldValid": true,
+    "validateTaxMemoRuntimeRendererValid": true,
+    "validateTaxMemoIntegrationPolicyValid": true,
+    "validateWorkflowGovernanceGateValid": true,
+    "validateWorkflowRuntimeWiringPolicyValid": true,
+    "defaultScaffoldRequestBlocked": true,
+    "missingRuntimeOptionsBlocked": true,
+    "featureFlagEnabledFalseBlocked": true,
+    "explicitApprovalFalseBlocked": true,
+    "missingSourceCardsBlocked": true,
+    "unsupportedModeBlocked": true,
+    "allFiveProhibitedModesBlocked": true,
+    "safeExplicitRequestPasses": true,
+    "safeOutputShapeValid": true,
+    "safeOutputNoProhibitedClaims": true,
+    "rendererProducesRequiredSections": true,
+    "renderedOutputValidationPasses": true,
+    "integrationCandidateDesignOnlyBlockedForLiveExecution": true,
+    "integrationCandidateFailsOnAnyForbiddenChangeScopeField": true,
+    "integrationCandidateFailsForBlockedModes": true,
+    "gitDiffScopeConfirmedToAllowedFilesOnly": true,
+    "noWorkflowFilesModified": true,
+    "noMcpFilesAdded": true,
+    "selfScanNoSecretsOrForbiddenCalls": true
+  },
+  "stagingValidationSummary": {
+    "healthReachable": true,
+    "rootMinimized": true,
+    "routesHidden": true,
+    "askOptionsSafe": true,
+    "askUnauthenticatedProtected": true,
+    "noTaxMemoOutputFromAsk": true,
+    "securityHeadersPresent": true,
+    "xPoweredByAbsent": true,
+    "noRouteInventoryDisclosure": true,
+    "noSecretsObserved": true
+  },
+  "stagingBaseUrl": "https://tina-backend-staging.onrender.com",
+  "allowedHttpChecks": [
+    "GET /health",
+    "GET /",
+    "GET /routes",
+    "OPTIONS /ask",
+    "POST /ask unauthenticated harmless ping only"
+  ],
+  "forbiddenHttpChecks": [
+    "protected admin/indexing endpoints",
+    "authenticated /ask",
+    "INDEX_SECRET usage",
+    "Authorization usage",
+    "tax memo runtime payload to /ask",
+    "real taxpayer/client data",
+    "OpenAI/Supabase/Google Drive/n8n/Firecrawl/Crawlee/MCP calls"
+  ],
+  "runtimeScaffoldEvidence": {
+    "modeId": "tax_memo",
+    "schemaKey": "taxMemoOutput",
+    "defaultRequestBlocked": true,
+    "safeExplicitApprovalRequestPasses": true,
+    "prohibitedModesAllBlocked": [
+      "bir_reply_protest_draft",
+      "audit_defense_matrix",
+      "client_advisory",
+      "compliance_checklist",
+      "requirements_request_letter"
+    ],
+    "metadataFinalFilingFalse": true,
+    "metadataAutomaticSubmissionFalse": true
+  },
+  "integrationDesignEvidence": {
+    "targetRoute": "/ask",
+    "allowedMode": "tax_memo",
+    "currentStage": "design_only_current_patch",
+    "designOnlyCandidateBlockedForLiveExecution": true,
+    "candidateFailsWhenChangeScopeViolated": true,
+    "candidateFailsForBlockedModes": true
+  },
+  "rendererEvidence": {
+    "rendersDraftOnlyNotice": true,
+    "rendersHumanReviewNotice": true,
+    "rendersSourceCardSection": true,
+    "rendersMissingFactsSection": true,
+    "rendersAssumptionsSection": true,
+    "noProhibitedClaimsInRenderedOutput": true
+  },
+  "governanceGateEvidence": {
+    "phase09gGateValid": true,
+    "phase09hRuntimePolicyValid": true,
+    "requiredGovernanceGatesEnforcedAtDesignTime": [
+      "phase_09h_runtime_policy_pass",
+      "phase_09g_output_governance_gate_pass",
+      "phase_09r_orchestrator_validation_pass",
+      "phase_09r_renderer_validation_pass",
+      "selected_mode_tax_memo_only",
+      "source_cards_nonempty",
+      "missing_facts_present",
+      "assumptions_present",
+      "human_review_notice_present",
+      "no_prohibited_claims",
+      "no_final_filing_claim",
+      "no_automatic_submission",
+      "no_persistence",
+      "no_memory",
+      "no_external_search",
+      "no_third_party_egress",
+      "no_production_enablement"
+    ]
+  },
+  "featureFlagEvidence": {
+    "primaryFlag": "TINA_ENABLE_PROFESSIONAL_WORKFLOWS",
+    "modeFlag": "TINA_ENABLE_WORKFLOW_TAX_MEMO",
+    "bothDefaultOffEverywhere": true,
+    "notEnabledInThisPatch": true
+  },
+  "routeBehaviorEvidence": {
+    "noNewRouteAdded": true,
+    "askRouteUnchanged": true,
+    "serverJsUnchanged": true,
+    "pipelineJsUnchanged": true,
+    "askHandlerJsUnchanged": true
+  },
+  "askBehaviorEvidence": {
+    "unauthenticatedAskReturnsProtectedStatus": true,
+    "unauthenticatedAskReturnsNoTaxMemoOutput": true,
+    "unauthenticatedAskReturnsNoProfessionalWorkflowOutput": true,
+    "optionsAskSafePreflight": true
+  },
+  "securityHeaderEvidence": {
+    "requiredHeaders": [
+      "Content-Security-Policy",
+      "X-Content-Type-Options",
+      "X-Frame-Options",
+      "Referrer-Policy",
+      "Permissions-Policy",
+      "Cross-Origin-Opener-Policy",
+      "Cross-Origin-Resource-Policy",
+      "Cache-Control"
+    ],
+    "presentOnHealthRootRoutesAndAsk": true,
+    "xPoweredByAbsentEverywhere": true
+  },
+  "mcpDeferralEvidence": {
+    "deferredUntilAfterFinalPlannedPhase": true,
+    "filesOrConfigsIntroduced": false,
+    "runtimeIntegration": false,
+    "testCallsMade": false
+  },
+  "sourceCardBoundary": {
+    "sourceCardsRequiredNonEmpty": true,
+    "noFabricatedSourceCards": true,
+    "existingSourceCardEngineUntouched": true
+  },
+  "retrievalBoundary": {
+    "existingRetrievalOnly": true,
+    "noLiveWebSearch": true,
+    "noNewAuthorityIngestion": true,
+    "retrievalEngineUntouched": true
+  },
+  "authorityBoundary": {
+    "noFabricatedCitations": true,
+    "controllingAuthorityPrioritizationUnaffected": true,
+    "currentnessUnknownDisclosed": true,
+    "noGuaranteedTaxOutcome": true
+  },
+  "privacySecurityBoundary": {
+    "noPersistentClientMatterStorage": true,
+    "noGeneratedWorkProductPersistence": true,
+    "noMemoryActivation": true,
+    "noThirdPartyEgress": true,
+    "noN8nFirecrawlCrawlee": true,
+    "noProductionEnablement": true
+  },
+  "phase10Boundary": {
+    "authoritySearchAndResearchEngineNotImplemented": true
+  },
+  "phase11Boundary": {
+    "retrievalSpeedQualityOptimizationNotImplemented": true
+  },
+  "excludedScope": [
+    "live tax memo generation",
+    "/ask runtime wiring",
+    "route/server/pipeline/ask-handler modification",
+    "feature flag default enablement",
+    "production activation",
+    "memory activation",
+    "client/matter persistence",
+    "generated work-product persistence",
+    "external search / n8n / Firecrawl / Crawlee",
+    "MCP",
+    "Phase 10 implementation",
+    "Phase 11 implementation"
+  ],
+  "validationMatrix": {
+    "newStagingSmokeTest": "PASS",
+    "phase09RIntegrationDesignTest": "PASS",
+    "phase09RRuntimeScaffoldTest": "PASS",
+    "phase09IRequirementsRequestLetterTest": "PASS",
+    "phase09HRuntimeWiringTest": "PASS",
+    "phase09GGovernanceGateTest": "PASS",
+    "phase09FClientAdvisoryComplianceChecklistTest": "PASS",
+    "phase09EBirReplyDraftTest": "PASS",
+    "phase09DAuditDefenseMatrixTest": "PASS",
+    "phase09CTaxMemoSchemaTest": "PASS",
+    "phase09BWorkflowModeRegistryTest": "PASS",
+    "phase09ADesignTest": "PASS",
+    "patch08SFollowupIndexSecretHeaderAuthStagingSmokeTest": "PASS",
+    "patch08XFinalGateTest": "PASS",
+    "patch08SFinalClosureGateTest": "PASS",
+    "guardFiles": "PASS",
+    "npmTest": "PASS"
+  },
+  "futurePatchPlan": [
+    "PHASE-09L-AUTHORITY-SAFE-PROCEDURAL-FALLBACK-SCAFFOLD-1",
+    "PHASE-09-GATE-CLOSURE-1"
+  ],
+  "optionalFutureAfterClosure": [
+    "Phase 10 authority source registry and search governance",
+    "MCP study deferred until after final planned phase only"
+  ],
+  "prohibitedClaimsForReport": [
+    "live tax memo generation implemented",
+    "/ask runtime wiring implemented",
+    "production ready",
+    "feature flag enabled by default",
+    "memory enabled",
+    "client/matter persistence implemented",
+    "generated work-product persistence implemented",
+    "external search implemented",
+    "n8n implemented",
+    "Firecrawl implemented",
+    "Crawlee implemented",
+    "MCP implemented",
+    "Phase 10 source governance implemented",
+    "Phase 11 retrieval optimization implemented",
+    "official URL verification complete",
+    "currentness fully verified",
+    "automatic filing implemented",
+    "final filing implemented"
+  ],
+  "nextTask": "PHASE-09L-AUTHORITY-SAFE-PROCEDURAL-FALLBACK-SCAFFOLD-1"
+}
