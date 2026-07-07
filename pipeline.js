@@ -72,6 +72,11 @@ import { assessQualitativeAuditRisk }             from "./audit-risk-language-he
 import { assessClarificationNeed }                from "./clarification-boundary-policy.js";
 import { buildClarificationRouteDecision }        from "./clarification-route-orchestrator-helper.js";
 import {
+  classifyControlledLoaIntent,
+  normalizeControlledLoaAnswerInput,
+  createControlledLoaAnswerRuntimeScaffoldResult
+}                                                 from "./workflow/controlled-loa-answer-runtime-scaffold.js";
+import {
   inferIssuanceNumber,
   sourceTitleOf,
   canonicalSourceKey,
@@ -591,6 +596,174 @@ export function evaluateClarificationRouteGate({
     structuredClarificationObject: routeDecision?.structuredClarificationObject || null,
     responseType: routeDecision?.responseType || null,
     earlyExitResponse: null
+  };
+}
+
+// PHASE-09ZA-CONTROLLED-LOA-ANSWER-ASK-WIRING-IMPLEMENTATION-1
+// Feature flag: TINA_ENABLE_CONTROLLED_LOA_ASK_GATE. Default OFF. Only
+// "1"/"true"/"on"/"yes" enable it; absent/empty/"0"/"false"/"off"/"no"
+// disable it. Narrow, pure, non-authority-verifying adapter over the
+// Phase 9Y scaffold (workflow/controlled-loa-answer-runtime-scaffold.js).
+// Matches ONLY the narrow LOA/eLA procedural-help intent family; every
+// other query (including validity/finality/prescription/CTA-strategy/
+// filing-ready/automatic-submission/legal-opinion requests) falls through
+// to the existing /ask flow unchanged. No live retrieval, no authority
+// verification claim, no filing-ready output, no automatic submission.
+const CONTROLLED_LOA_ASK_GATE_TRUE_VALUES = new Set(["1", "true", "on", "yes"]);
+const CONTROLLED_LOA_ASK_SAFE_RESPONSE_MODES = new Set([
+  "SAFE_BASIC_LOA_GUIDANCE",
+  "REPLACEMENT_ELA_REVIEW_GUIDANCE",
+  "CONSOLIDATED_ELA_REVIEW_GUIDANCE",
+  "DOCUMENT_CHECKLIST_GUIDANCE",
+  "PRE_SUBPOENA_ESCALATION_GUIDANCE",
+  "UNKNOWN_BIR_NOTICE_GUIDANCE"
+]);
+// The 09Y scaffold's UNKNOWN_BIR_NOTICE_GUIDANCE mode is a low-confidence
+// catch-all for text it cannot confidently classify -- by itself it is NOT
+// a safe signal that a query is LOA/eLA-related. This keyword gate keeps
+// the /ask wiring narrow: UNKNOWN_BIR_NOTICE_GUIDANCE is only honored here
+// if the raw query text also contains an LOA/eLA/BIR-notice-related term,
+// so genuinely unrelated tax questions (VAT, EWT, estate tax, etc.) always
+// fall through to the existing /ask flow untouched.
+const CONTROLLED_LOA_ASK_NOTICE_KEYWORD_PATTERN =
+  /\bLOA\b|\bela\b|Letter of Authority|electronic Letter of Authority|Mission Order|\bTVN\b|checklist|subpoena|notice for presentation|BIR notice/i;
+
+export function isControlledLoaAskGateEnabled(env = process.env) {
+  const value = String(env?.TINA_ENABLE_CONTROLLED_LOA_ASK_GATE || "").trim().toLowerCase();
+  return CONTROLLED_LOA_ASK_GATE_TRUE_VALUES.has(value);
+}
+
+function buildControlledLoaAnswerText(scaffoldResult) {
+  // Composes the /ask-facing answer from the pure 09Y scaffold's own
+  // structured controlledAnswer fields only -- no new prose is authored
+  // here. safeResponsePreview is deliberately terse and omits a few
+  // concepts (avoid-unnecessary-admissions, the audit-stage watch list)
+  // that this patch's requirements also need visible in the live answer,
+  // so those verbatim scaffold sentences are appended.
+  const preview = scaffoldResult.safeResponsePreview || "";
+  const controlledAnswer = scaffoldResult.controlledAnswer || {};
+  const details = Array.isArray(controlledAnswer.detailsToCheck) ? controlledAnswer.detailsToCheck : [];
+  const auditStageWatch = Array.isArray(controlledAnswer.auditStageWatch) ? controlledAnswer.auditStageWatch : [];
+  const authorityVerificationNotice = controlledAnswer.authorityVerificationNotice || "";
+
+  const detailsSentence = details.length ? ` Check the following details: ${details.join(", ")}.` : "";
+  const admissionsSentence = " Avoid unnecessary admissions.";
+  const auditStageSentence = auditStageWatch.length ? ` ${auditStageWatch.join(" ")}` : "";
+  const authorityNoticeSentence = authorityVerificationNotice ? ` ${authorityVerificationNotice}` : "";
+
+  return `${preview}${detailsSentence}${admissionsSentence}${auditStageSentence}${authorityNoticeSentence}`;
+}
+
+export function buildControlledLoaAskEarlyExitResponse(ctx = {}, scaffoldResult = {}) {
+  return {
+    answer: buildControlledLoaAnswerText(scaffoldResult),
+    sources: [],
+    sourcesUsed: [],
+    sourceCards: [],
+    retrievedSourceCount: 0,
+    displayedSourceCount: 0,
+    saeStatus: ctx.saeStatus,
+    sourceAvailabilityMetadata: ctx.sourceAvailability,
+    eligibleCandidates: [],
+    suppressedCandidates: [],
+    limitationRequired: true,
+    disclosureType: ctx.disclosureType,
+    statusReason: ctx.statusReason,
+    sourceAvailability: ctx.saeStatus,
+    sourceStatus: ctx.saeStatus,
+    sourceAvailabilityReason: ctx.statusReason,
+    retrievalTimedOut: Boolean(ctx.retrievalDiagnostics?.timedOut),
+    relatedSourceCount: 0,
+    issueClassification: ctx.issueClassification,
+    conflictAnalysis: ctx.conflictAnalysis,
+    riskScore: ctx.riskScore,
+    mode: ctx.mode,
+    orchestrationMode: ctx.mode,
+    responseMode: ctx.mode,
+    pipelineVersion: PIPELINE_VERSION,
+    responseType: "controlled_loa_answer",
+    answerAllowed: true,
+    questions: [],
+    documentRequests: [],
+    sourceCoverageLimitations: [],
+    phase10Deferrals: [],
+    controlledLoaAnswer: {
+      controlledLoaAnswer: true,
+      phase: "09ZA",
+      intent: scaffoldResult.intentClassification?.intent || null,
+      responseMode: scaffoldResult.intentClassification?.responseMode || null,
+      sourceCardVerification: "not_performed",
+      legalCitationAllowed: false,
+      filingReadyDocumentGenerated: false,
+      automaticSubmission: false,
+      runtimeActive: scaffoldResult.runtimeActive === true
+    },
+    trace: {
+      steps: [{ step: "12.65", name: "controlledLoaAskGate", done: true, earlyExit: true }]
+    },
+    openaiCalls: []
+  };
+}
+
+export function evaluateControlledLoaAskGate({
+  ctx = {},
+  query = "",
+  hook = "/ask",
+  env = process.env,
+  intentClassifier = classifyControlledLoaIntent,
+  inputNormalizer = normalizeControlledLoaAnswerInput,
+  resultBuilder = createControlledLoaAnswerRuntimeScaffoldResult
+} = {}) {
+  if (!isControlledLoaAskGateEnabled(env)) {
+    return { enabled: false, matched: false, intentClassification: null, earlyExitResponse: null };
+  }
+  if (hook !== "/ask" && hook) {
+    return { enabled: true, matched: false, intentClassification: null, earlyExitResponse: null };
+  }
+
+  let intentClassification;
+  let scaffoldResult;
+  try {
+    const normalizedInput = inputNormalizer({ userQuery: query });
+    intentClassification = intentClassifier(normalizedInput);
+    if (
+      !intentClassification ||
+      intentClassification.supported !== true ||
+      intentClassification.excluded === true ||
+      !CONTROLLED_LOA_ASK_SAFE_RESPONSE_MODES.has(intentClassification.responseMode)
+    ) {
+      return { enabled: true, matched: false, intentClassification, earlyExitResponse: null };
+    }
+    if (intentClassification.responseMode === "UNKNOWN_BIR_NOTICE_GUIDANCE" && !CONTROLLED_LOA_ASK_NOTICE_KEYWORD_PATTERN.test(String(query || ""))) {
+      return { enabled: true, matched: false, intentClassification, earlyExitResponse: null };
+    }
+    scaffoldResult = resultBuilder({ userQuery: query });
+    if (scaffoldResult.runtimeActive !== false || scaffoldResult.liveAskWired !== false) {
+      return {
+        enabled: true,
+        matched: false,
+        intentClassification,
+        failOpen: true,
+        warning: "controlledLoaAskGate fail-open: unexpected scaffold runtime flags",
+        earlyExitResponse: null
+      };
+    }
+  } catch (e) {
+    return {
+      enabled: true,
+      matched: false,
+      intentClassification: null,
+      failOpen: true,
+      warning: `controlledLoaAskGate fail-open: ${e?.message || e}`,
+      earlyExitResponse: null
+    };
+  }
+
+  return {
+    enabled: true,
+    matched: true,
+    intentClassification,
+    earlyExitResponse: buildControlledLoaAskEarlyExitResponse(ctx, scaffoldResult)
   };
 }
 
@@ -3664,6 +3837,84 @@ export async function runPipeline({
     const warning = `clarificationRouteGate fail-open: ${e?.message || e}`;
     trace.warnings.push({ step: "12.6", warning });
     console.warn("[CLARIFICATION_ROUTE_GATE_FAIL_OPEN]", {
+      message: e?.message || String(e)
+    });
+  }
+
+  // ── Step 12.65: Controlled LOA/eLA procedural-help /ask gate (flagged). ──
+  // Runs only if the clarification route gate above did not already early-
+  // exit. Off by default; enabled only via TINA_ENABLE_CONTROLLED_LOA_ASK_GATE.
+  // Matches only a narrow LOA/eLA procedural-help intent family (see
+  // workflow/controlled-loa-answer-runtime-scaffold.js) and returns a
+  // procedural-guidance-only answer. No live retrieval, no authority
+  // verification claim, no filing-ready output, no automatic submission.
+  try {
+    const controlledLoaAskGate = evaluateControlledLoaAskGate({ ctx, query, hook });
+    if (controlledLoaAskGate.enabled) {
+      if (controlledLoaAskGate.failOpen) {
+        trace.warnings.push({ step: "12.65", warning: controlledLoaAskGate.warning });
+        console.warn("[CONTROLLED_LOA_ASK_GATE_FAIL_OPEN]", {
+          message: controlledLoaAskGate.warning
+        });
+      }
+      trace.steps.push({
+        step: "12.65",
+        name: "controlledLoaAskGate",
+        done: true,
+        matched: controlledLoaAskGate.matched === true,
+        intent: controlledLoaAskGate.intentClassification?.intent || null,
+        earlyExit: Boolean(controlledLoaAskGate.earlyExitResponse)
+      });
+    }
+    if (controlledLoaAskGate.earlyExitResponse) {
+      endTrace({
+        traceId,
+        metadata: {
+          mode: ctx.mode,
+          primaryIssue: ctx.issueClassification?.primaryIssue || null,
+          sourceCount: ctx.rerankedChunks?.length || 0,
+          warnings: trace.warnings.length,
+          pipelineLatencyMs: Date.now() - pipelineStartMs,
+          controlledLoaAskGateEarlyExit: true
+        }
+      });
+      await Promise.race([
+        flushObservability(),
+        new Promise(resolve => setTimeout(resolve, 2000))
+      ]);
+      markPipelineCheckpoint(diagnostics, "RESPONSE_COMPLETE", {
+        timingField: "responseCompletedAt",
+        mode: ctx.mode,
+        route: hook,
+        model,
+        sourceAvailabilityStatus: ctx.saeStatus,
+        retrievedCount: ctx.rerankedChunks?.length || 0,
+        displayedSourceCardCount: controlledLoaAskGate.earlyExitResponse.sourceCards?.length || 0
+      });
+      finalizePipelineDiagnostics(diagnostics);
+      timing.checkpoint("RESPONSE_COMPLETE", "response");
+      const finalDiagnostics = publishDiagnostics(false);
+      return {
+        ...controlledLoaAskGate.earlyExitResponse,
+        diagnostics: finalDiagnostics,
+        pipelineTimings: diagnostics.pipelineTimings,
+        pipelineStageDurations: diagnostics.pipelineStageDurations,
+        partialPipelineState: diagnostics.partialPipelineState,
+        openaiCalls: diagnostics.openaiCalls,
+        trace: {
+          ...trace,
+          steps: [
+            ...trace.steps,
+            { step: "12.65", name: "controlledLoaAskGateEarlyExit", done: true }
+          ]
+        },
+        traceId
+      };
+    }
+  } catch (e) {
+    const warning = `controlledLoaAskGate fail-open: ${e?.message || e}`;
+    trace.warnings.push({ step: "12.65", warning });
+    console.warn("[CONTROLLED_LOA_ASK_GATE_FAIL_OPEN]", {
       message: e?.message || String(e)
     });
   }
