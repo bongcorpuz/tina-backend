@@ -5299,3 +5299,83 @@ PHASE-09-GATE-CLOSURE-1. Do not wire procedural fallback to /ask until notice tr
 complete; keep real taxpayer data out of fixtures; require authority verification before final legal conclusions;
 preserve human review notices for LOA/PAN/FAN/FLD/protest workflows.
 ```
+
+## Phase 9M BIR Notice / LOA Triage Intent Scaffold — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-07):
+
+```text
+PHASE-09M-BIR-NOTICE-LOA-TRIAGE-INTENT-SCAFFOLD-1 completed. Decision: PHASE 09M BIR NOTICE LOA TRIAGE INTENT
+SCAFFOLD PASS WITH STRICT RECOMMENDATIONS. Base commit: e60f42d PHASE-09L-AUTHORITY-SAFE-PROCEDURAL-FALLBACK-
+SCAFFOLD-1.
+
+Scope: design-only, non-runtime-active scaffold classifying Philippine BIR audit-related documents/notices into
+safe workflow intent classes (notice type, procedural stage, routing targets), new pure standalone module
+workflow/bir-notice-loa-triage-intent.js, zero imports, no I/O, no network calls, no OCR, no process.env, no
+Date.now/randomness, no side effects. No existing Phase 9 workflow file was modified. This scaffold classifies and
+routes; it does not decide.
+
+Supported notice types (30): BIR_LOA_FULL_EXAMINATION, BIR_ELECTRONIC_LOA, BIR_REPLACEMENT_ELA,
+BIR_CONSOLIDATED_ELA, BIR_MISSION_ORDER, BIR_TAX_VERIFICATION_NOTICE,
+BIR_NOTICE_PRESENTATION_SUBMISSION_DOCUMENTS, BIR_CHECKLIST_REQUIREMENTS_PRESENTATION_SUBMISSION,
+BIR_INITIAL_DOCUMENT_REQUEST, BIR_ADDITIONAL_DOCUMENT_REQUEST, BIR_PRE_SUBPOENA_DUCES_TECUM_REMINDER,
+BIR_SUBPOENA_DUCES_TECUM, BIR_NOD, BIR_DOD, BIR_PAN, BIR_CONSOLIDATED_PAN, BIR_FAN, BIR_CONSOLIDATED_FAN, BIR_FLD,
+BIR_FDDA, BIR_PROTEST_REQUEST_RECONSIDERATION, BIR_PROTEST_REQUEST_REINVESTIGATION, BIR_ACTION_ON_PROTEST,
+BIR_AUDIT_TERMINATION_LETTER, BIR_REQUEST_FOR_NON_CONSOLIDATION_VAT, BIR_WRITTEN_CONFORMITY_TO_CONSOLIDATION,
+BIR_WAIVER_OF_PRESCRIPTION, BIR_VATAS_LTVAU_TRANSITION_NOTICE, BIR_VAT_REFUND_TRANSITION_NOTICE,
+UNKNOWN_BIR_NOTICE. Supported stages (14): AUDIT_AUTHORITY, DOCUMENT_REQUEST, DOCUMENT_ESCALATION,
+DISCREPANCY_DISCUSSION, PRE_ASSESSMENT, FINAL_ASSESSMENT, ADMINISTRATIVE_PROTEST, POST_PROTEST, APPEAL_WATCH,
+AUDIT_CLOSURE, CONSOLIDATION, PRESCRIPTION, VAT_TRANSITION, UNKNOWN_STAGE. Supported routing targets (11):
+AUTHORITY_SAFE_PROCEDURAL_FALLBACK, LOA_AUTHENTICITY_CHECK, RMO_1_2026_SINGLE_INSTANCE_AUDIT_REVIEW,
+RMC_14_2026_REPLACEMENT_ELA_REVIEW, RMO_6_2026_CONSOLIDATION_REVIEW, DOCUMENT_COMPLIANCE_MATRIX,
+PAN_REPLY_WORKFLOW, FAN_FLD_PROTEST_WORKFLOW, FDDA_CTA_APPEAL_WATCH, AUDIT_TERMINATION_REVIEW,
+HUMAN_TAX_LEGAL_REVIEW.
+
+Runtime changes: None. Ask-handler changes: None. Route/server/pipeline changes: None. Feature flags:
+unchanged/off by default. Memory: inactive. Persistence: none. External search/OpenAI/Supabase/Google Drive/n8n/
+Firecrawl/Crawlee/MCP/OCR: untouched. Production: unchanged.
+
+Privacy: no real taxpayer names, TINs, LOA/eLA numbers, audit case numbers, BIR officer names, or real assessment
+amounts used in fixtures; all examples sanitized/synthetic (SAMPLE TAXPAYER INC., DEMO LOGISTICS CORP., SYNTHETIC
+HOLDINGS INC., MODEL VAT TAXPAYER CORP.). The module additionally rejects any known real reference-corpus fragment
+on input and scans its own output for leakage.
+
+Legal safety: no final legal conclusions; no fabricated authorities; no claim that a notice, LOA, eLA, replacement
+eLA, PAN, FAN, FLD, FDDA, assessment, protest action, or BIR audit action is void, invalid, cancelled, final,
+enforceable, or legally conclusive. Action-on-protest states acceptance for re-evaluation does not, by itself, mean
+the assessment was resolved in the taxpayer's favor. Termination-letter states closure is scoped to the covered
+LOA/eLA, period, and tax types only, without prejudice to future action on fraud, false returns, refund issues, or
+other legally recognized grounds; it never claims permanent clearance. Human review notice preserved in every
+result; all seven metadata safety flags always scaffold-safe. A conservative prohibited-claim phrase scanner
+(detectProhibitedBirNoticeClaims) and a real-data-leak scanner are both run by the result validator.
+
+Authority boundary: RMC No. 5-2026, RMO No. 1-2026, RMO No. 6-2026, and RMC No. 14-2026 referenced as design
+source-card requirements only. No live authority retrieval, search, scraping, browsing, or OCR implemented. Future
+official authority sources (bir.gov.ph, lawphil.net, sc.judiciary.gov.ph, cta.judiciary.gov.ph,
+officialgazette.gov.ph, dof.gov.ph, peza.gov.ph, sec.gov.ph, boi.gov.ph) noted only as later verification targets.
+Phase 10 authority search not implemented. Phase 11 retrieval optimization not implemented. MCP deferred and not
+used.
+
+Validation:
+node tests/phase-09m-bir-notice-loa-triage-intent-scaffold-1.test.mjs - PASS / 47 / 0 / 397.
+node tests/phase-09l-authority-safe-procedural-fallback-scaffold-1.test.mjs - PASS / 33 / 0 / 184.
+node tests/phase-09r-tax-memo-runtime-staging-smoke-1.test.mjs - PASS / 36 / 0 / 179.
+node tests/phase-09r-tax-memo-runtime-wiring-integration-design-1.test.mjs - PASS / 54 / 0 / 202.
+node tests/phase-09r-tax-memo-runtime-wiring-scaffold-1.test.mjs - PASS / 113 / 0 / 212.
+node tests/phase-09i-requirements-request-letter-schema-scaffold-1.test.mjs - PASS / 56 / 0 / 333.
+node tests/phase-09h-controlled-runtime-wiring-design-or-scaffold-1.test.mjs - PASS / 69 / 0 / 172.
+node tests/phase-09g-workflow-output-governance-gate-1.test.mjs - PASS / 73 / 0 / 213.
+node tests/phase-09f-client-advisory-checklist-scaffold-1.test.mjs - PASS / 75 / 0 / 404.
+node tests/phase-09e-bir-reply-draft-scaffold-1.test.mjs - PASS / 45 / 0 / 243.
+node tests/phase-09d-audit-defense-matrix-scaffold-1.test.mjs - PASS / 45 / 0 / 203.
+node tests/phase-09c-tax-memo-schema-scaffold-1.test.mjs - PASS / 47 / 0 / 149.
+node tests/phase-09b-workflow-mode-registry-scaffold-1.test.mjs - PASS / 45 / 0 / 363.
+node tests/phase-09a-professional-workflow-copilot-design-1.test.mjs - PASS / 30 / 0 / 75.
+node tests/patch-08s-followup-index-secret-header-auth-staging-smoke-1.test.mjs - PASS / 23 / 0 / 92.
+node tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs - PASS / 17 / 0 / 127.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0 / 203.
+npm run guard:files - PASS. npm test - GATE PASSED / 159 suites / 0 failed.
+
+Next recommended task: PHASE-09N-PAN-FAN-FLD-PROTEST-WORKFLOW-SCAFFOLD-1. Future plan also includes
+PHASE-09-GATE-CLOSURE-1. Do not wire BIR notice triage to /ask until workflow governance and runtime gates approve
+it; keep real taxpayer data out of fixtures; require authority verification before legal conclusions; preserve 2026
+audit-framework flags but do not convert them into validity conclusions.
+```
