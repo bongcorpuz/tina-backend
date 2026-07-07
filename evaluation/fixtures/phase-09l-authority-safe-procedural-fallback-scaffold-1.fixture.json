@@ -1,0 +1,341 @@
+{
+  "patch": "PHASE-09L-AUTHORITY-SAFE-PROCEDURAL-FALLBACK-SCAFFOLD-1",
+  "decision": "PHASE 09L AUTHORITY SAFE PROCEDURAL FALLBACK SCAFFOLD PASS WITH STRICT RECOMMENDATIONS",
+  "phase": "09L",
+  "baseCommit": "0f35b61 PHASE-09R-TAX-MEMO-RUNTIME-STAGING-SMOKE-1 add tax memo runtime smoke evidence",
+  "nonRuntimePatch": {
+    "noRuntimeActivation": true,
+    "noAskHandlerWiring": true,
+    "noServerChanges": true,
+    "noRouteChanges": true,
+    "noPipelineChanges": true,
+    "noFeatureFlagEnabledByDefault": true,
+    "noMemoryActivation": true,
+    "noPersistence": true,
+    "noExternalSearch": true,
+    "noOpenAiCalls": true,
+    "noSupabaseCalls": true,
+    "noGoogleDriveCalls": true,
+    "noN8n": true,
+    "noFirecrawl": true,
+    "noCrawlee": true,
+    "noMcp": true,
+    "noPhase10Implementation": true,
+    "noPhase11Implementation": true,
+    "noProductionChange": true,
+    "noRealTaxpayerData": true,
+    "noFinalLegalConclusion": true
+  },
+  "currentState": {
+    "phase8Closed": true,
+    "phase8SClosed": true,
+    "phase08XClosed": true,
+    "phase9AComplete": true,
+    "phase9BComplete": true,
+    "phase9CComplete": true,
+    "phase9DComplete": true,
+    "phase9EComplete": true,
+    "phase9FComplete": true,
+    "phase9GComplete": true,
+    "phase9HComplete": true,
+    "phase9IComplete": true,
+    "phase9RRuntimeScaffoldComplete": true,
+    "phase9RIntegrationDesignComplete": true,
+    "phase9RStagingSmokeComplete": true,
+    "phase9LProceduralFallbackScaffoldComplete": true,
+    "memoryInactive": true,
+    "productionUnchanged": true,
+    "mcpDeferredUntilAfterFinalPlannedPhase": true,
+    "latestCommitBeforePatch": "0f35b61"
+  },
+  "objective": "Provide a design-only, non-runtime-active scaffold enabling TINA to safely answer practical Philippine BIR audit workflow questions with authority-safe procedural triage (authorityStatus, proceduralContext, immediateSafeSteps, missingFacts, documentsNeeded, riskWarnings, workflowRecommendation, humanReviewNotice, sourceCards) instead of stopping at 'consult a tax professional,' when controlling authority is incomplete, unavailable, insufficiently retrieved, or not yet wired.",
+  "supportedFallbackTypes": [
+    "LOA_RECEIVED_WHAT_TO_DO",
+    "BIR_DOCUMENT_CHECKLIST_RECEIVED",
+    "BIR_DOCUMENTS_UNAVAILABLE_OR_NOT_APPLICABLE",
+    "PRE_SUBPOENA_REMINDER_RECEIVED",
+    "PAN_RECEIVED_WHAT_TO_DO",
+    "FAN_FLD_RECEIVED_WHAT_TO_DO",
+    "ACTION_ON_PROTEST_RECEIVED",
+    "TERMINATION_LETTER_RECEIVED",
+    "REPLACEMENT_LOA_RECEIVED",
+    "ADDITIONAL_DOCUMENT_REQUEST_RECEIVED",
+    "FDDA_RECEIVED",
+    "REQUEST_FOR_RECONSIDERATION_OR_REINVESTIGATION"
+  ],
+  "referenceCorpusBoundary": {
+    "privateReferenceMaterialsProvidedByUser": true,
+    "referenceMaterialsAreDevelopmentPatternsOnly": true,
+    "noRealTaxpayerNamesUsed": true,
+    "noRealTinsUsed": true,
+    "noRealLoaNumbersUsed": true,
+    "noRealAuditCaseNumbersUsed": true,
+    "noRealAddressesUsed": true,
+    "noRealBirOfficerNamesUsed": true,
+    "noRealClientNamesUsed": true,
+    "noRealAssessmentAmountsUsed": true,
+    "allExamplesSanitizedAndSynthetic": true
+  },
+  "authorityBoundary": {
+    "futureOfficialAuthoritySourcesNoted": [
+      "bir.gov.ph",
+      "bir-cdn.bir.gov.ph",
+      "lawphil.net",
+      "sc.judiciary.gov.ph",
+      "cta.judiciary.gov.ph",
+      "officialgazette.gov.ph",
+      "dof.gov.ph",
+      "peza.gov.ph",
+      "sec.gov.ph",
+      "boi.gov.ph"
+    ],
+    "liveSearchPerformed": false,
+    "liveScrapingPerformed": false,
+    "liveBrowsingPerformed": false,
+    "liveAuthorityRetrievalPerformed": false,
+    "designOnly": true,
+    "phase10AuthoritySearchImplemented": false,
+    "phase11RetrievalOptimizationImplemented": false
+  },
+  "privacyBoundary": {
+    "sanitizedSyntheticTaxpayerNamesOnly": true,
+    "syntheticTaxpayerNameExamples": ["SAMPLE TAXPAYER INC.", "DEMO LOGISTICS CORP.", "SYNTHETIC HOLDINGS INC."],
+    "fakeSyntheticLoaNumberExamples": ["eLA20XX000000000", "AUDM00-000-20XX-000000"],
+    "noRealTaxpayerDataInFixturesOrTests": true
+  },
+  "runtimeBoundary": {
+    "runtimeActiveAlwaysFalse": true,
+    "scaffoldOnlyAlwaysTrue": true,
+    "allowLegalConclusionAlwaysFalse": true,
+    "allowLiveRetrievalAlwaysFalse": true,
+    "notWiredToAsk": true,
+    "noAuthenticationDependency": true,
+    "noExpressServerRuntimeDependency": true
+  },
+  "fallbackShape": {
+    "requiredExports": [
+      "PHASE_09L_AUTHORITY_SAFE_PROCEDURAL_FALLBACK_VERSION",
+      "AUTHORITY_SAFE_PROCEDURAL_FALLBACK_MODE_ID",
+      "SUPPORTED_PROCEDURAL_FALLBACK_TYPES",
+      "createAuthoritySafeProceduralFallbackResult",
+      "normalizeAuthoritySafeProceduralFallbackInput",
+      "validateAuthoritySafeProceduralFallbackInput",
+      "validateAuthoritySafeProceduralFallbackResult"
+    ],
+    "additionalExport": "detectProhibitedProceduralFallbackClaims",
+    "outputFields": [
+      "phase",
+      "mode",
+      "version",
+      "runtimeActive",
+      "authorityStatus",
+      "proceduralContext",
+      "immediateSafeSteps",
+      "missingFacts",
+      "documentsNeeded",
+      "riskWarnings",
+      "workflowRecommendation",
+      "humanReviewNotice",
+      "sourceCards",
+      "metadata"
+    ]
+  },
+  "validationMatrix": {
+    "newProceduralFallbackScaffoldTest": "PASS",
+    "phase09RStagingSmokeTest": "PASS",
+    "phase09RIntegrationDesignTest": "PASS",
+    "phase09RRuntimeScaffoldTest": "PASS",
+    "phase09IRequirementsRequestLetterTest": "PASS",
+    "phase09HRuntimeWiringTest": "PASS",
+    "phase09GGovernanceGateTest": "PASS",
+    "phase09FClientAdvisoryComplianceChecklistTest": "PASS",
+    "phase09EBirReplyDraftTest": "PASS",
+    "phase09DAuditDefenseMatrixTest": "PASS",
+    "phase09CTaxMemoSchemaTest": "PASS",
+    "phase09BWorkflowModeRegistryTest": "PASS",
+    "phase09ADesignTest": "PASS",
+    "patch08SFollowupIndexSecretHeaderAuthStagingSmokeTest": "PASS",
+    "patch08XFinalGateTest": "PASS",
+    "patch08SFinalClosureGateTest": "PASS",
+    "guardFiles": "PASS",
+    "npmTest": "PASS"
+  },
+  "sampleInputs": {
+    "LOA_RECEIVED_WHAT_TO_DO": {
+      "fallbackType": "LOA_RECEIVED_WHAT_TO_DO",
+      "userQuery": "I received an LOA from the BIR, what should I do?",
+      "noticeFacts": { "noticeType": "LOA", "taxablePeriodKnown": false, "receiptDateKnown": false, "authorityDocumentKnown": false },
+      "sourceCards": []
+    },
+    "BIR_DOCUMENT_CHECKLIST_RECEIVED": {
+      "fallbackType": "BIR_DOCUMENT_CHECKLIST_RECEIVED",
+      "userQuery": "SAMPLE TAXPAYER INC. received a checklist of documents to submit, what should we do?",
+      "noticeFacts": { "noticeType": "Notice for Presentation/Submission of Documents", "taxablePeriodKnown": true, "receiptDateKnown": true, "authorityDocumentKnown": true },
+      "sourceCards": []
+    },
+    "BIR_DOCUMENTS_UNAVAILABLE_OR_NOT_APPLICABLE": {
+      "fallbackType": "BIR_DOCUMENTS_UNAVAILABLE_OR_NOT_APPLICABLE",
+      "userQuery": "DEMO LOGISTICS CORP. does not have one of the requested documents, what should we do?",
+      "noticeFacts": { "noticeType": "Notice for Presentation/Submission of Documents", "taxablePeriodKnown": true, "receiptDateKnown": true, "authorityDocumentKnown": true },
+      "sourceCards": []
+    },
+    "PRE_SUBPOENA_REMINDER_RECEIVED": {
+      "fallbackType": "PRE_SUBPOENA_REMINDER_RECEIVED",
+      "userQuery": "SYNTHETIC HOLDINGS INC. received a reminder before issuance of subpoena duces tecum, what should we do?",
+      "noticeFacts": { "noticeType": "Reminder Before Issuance of Subpoena Duces Tecum", "taxablePeriodKnown": true, "receiptDateKnown": false, "authorityDocumentKnown": true },
+      "sourceCards": []
+    },
+    "PAN_RECEIVED_WHAT_TO_DO": {
+      "fallbackType": "PAN_RECEIVED_WHAT_TO_DO",
+      "userQuery": "SAMPLE TAXPAYER INC. received a PAN, what should we do?",
+      "noticeFacts": { "noticeType": "PAN", "taxablePeriodKnown": true, "receiptDateKnown": false, "authorityDocumentKnown": true },
+      "sourceCards": []
+    },
+    "FAN_FLD_RECEIVED_WHAT_TO_DO": {
+      "fallbackType": "FAN_FLD_RECEIVED_WHAT_TO_DO",
+      "userQuery": "DEMO LOGISTICS CORP. received a FAN/FLD, what should we do?",
+      "noticeFacts": { "noticeType": "FAN/FLD", "taxablePeriodKnown": true, "receiptDateKnown": false, "authorityDocumentKnown": true },
+      "sourceCards": []
+    },
+    "ACTION_ON_PROTEST_RECEIVED": {
+      "fallbackType": "ACTION_ON_PROTEST_RECEIVED",
+      "userQuery": "SYNTHETIC HOLDINGS INC. received an action letter granting reconsideration, what does that mean?",
+      "noticeFacts": { "noticeType": "Action on Protest", "taxablePeriodKnown": true, "receiptDateKnown": true, "authorityDocumentKnown": false },
+      "sourceCards": []
+    },
+    "TERMINATION_LETTER_RECEIVED": {
+      "fallbackType": "TERMINATION_LETTER_RECEIVED",
+      "userQuery": "SAMPLE TAXPAYER INC. received a termination letter, what does that mean?",
+      "noticeFacts": { "noticeType": "Termination Letter", "taxablePeriodKnown": true, "receiptDateKnown": true, "authorityDocumentKnown": true },
+      "sourceCards": []
+    }
+  },
+  "sampleOutputs": {
+    "LOA_RECEIVED_WHAT_TO_DO": {
+      "phase": "09L",
+      "mode": "authority_safe_procedural_fallback",
+      "version": "PHASE-09L-AUTHORITY-SAFE-PROCEDURAL-FALLBACK-SCAFFOLD-1",
+      "runtimeActive": false,
+      "authorityStatus": {
+        "status": "authority_limited",
+        "limitationNotice": "Authority corpus for live LOA verification is not yet wired; this guidance reflects design-only procedural patterns pending official authority confirmation.",
+        "controllingAuthorityNeeded": [
+          "NIRC authority to examine",
+          "BIR LOA/eLA rules",
+          "RMC No. 5-2026 or current LOA verification issuance",
+          "Applicable RMO/RR on audit procedures",
+          "Relevant jurisprudence on LOA authority and due process"
+        ]
+      },
+      "proceduralContext": { "noticeType": "LOA", "taxablePeriodKnown": false, "receiptDateKnown": false, "deadlineComputable": false, "authorityDocumentKnown": false },
+      "immediateSafeSteps": [
+        "Verify LOA authenticity.",
+        "Record date of receipt.",
+        "Identify LOA number, audit case number, taxable period, tax types, RO, GS, office, and signatory.",
+        "Confirm scope of audit.",
+        "Calendar document submission deadline.",
+        "Prepare document compliance matrix.",
+        "Submit available documents with transmittal and receiving proof.",
+        "Mark unavailable, non-applicable, or non-existent documents clearly.",
+        "Avoid unnecessary admissions.",
+        "Escalate to professional review for legal conclusions."
+      ],
+      "missingFacts": [
+        "LOA number and audit case number",
+        "taxable period covered by the LOA",
+        "date of receipt of the LOA",
+        "confirmed scope of examination (tax types covered)",
+        "responsible revenue officer(s) and group supervisor names",
+        "taxable period covered by the notice",
+        "date of receipt of the notice",
+        "specific authority document number/reference"
+      ],
+      "documentsNeeded": ["Certified true copy of the LOA", "Document compliance matrix", "List of requested documents with availability status", "Prior BIR correspondence, if any"],
+      "riskWarnings": [
+        "Avoid unnecessary admissions when responding to the LOA or during any related discussion with the examining office.",
+        "Failure to verify LOA authenticity or respond within the requested scope may weaken the taxpayer's procedural position."
+      ],
+      "workflowRecommendation": {
+        "nextStep": "Verify LOA authenticity and calendar the document submission deadline before responding.",
+        "recommendedWorkflow": ["BIR_DOCUMENT_CHECKLIST_RECEIVED", "BIR_DOCUMENTS_UNAVAILABLE_OR_NOT_APPLICABLE"],
+        "prohibitedOverreach": ["Do not claim the LOA is invalid without authority verification.", "Do not provide a final legal conclusion.", "Do not guarantee any outcome."]
+      },
+      "humanReviewNotice": "This scaffold provides procedural-safe guidance only. The available facts are insufficient for a final legal conclusion; the taxpayer should have this matter reviewed against the applicable BIR issuance and jurisprudence by a qualified tax professional before any filing deadline.",
+      "sourceCards": [
+        { "label": "BIR LOA authenticity verification reference", "sourceType": "BIR issuance", "authorityTier": "official_reference_required", "note": "Use RMC No. 5-2026 / REVIE LOA verification workflow when authority corpus is wired." },
+        { "label": "BIR assessment and protest procedure reference", "sourceType": "BIR regulation / NIRC / jurisprudence", "authorityTier": "official_reference_required", "note": "Verify PAN/FAN/FLD protest periods against current BIR rules and applicable jurisprudence before final legal advice." },
+        { "label": "Uploaded professional BIR audit workflow reference pattern", "sourceType": "private uploaded reference", "authorityTier": "uploaded_reference_pattern", "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data." }
+      ],
+      "metadata": { "scaffoldOnly": true, "legalConclusionProvided": false, "liveRetrievalPerformed": false, "externalSearchPerformed": false, "generatedFilingReadyDocument": false, "automaticSubmission": false, "finalOutcomeGuaranteed": false }
+    },
+    "TERMINATION_LETTER_RECEIVED": {
+      "phase": "09L",
+      "mode": "authority_safe_procedural_fallback",
+      "version": "PHASE-09L-AUTHORITY-SAFE-PROCEDURAL-FALLBACK-SCAFFOLD-1",
+      "runtimeActive": false,
+      "authorityStatus": {
+        "status": "authority_limited",
+        "limitationNotice": "Authority corpus for live verification of the scope of the termination letter is not yet wired; confirm the covered LOA, period, and tax types before relying on this guidance.",
+        "controllingAuthorityNeeded": ["Applicable RMO/RR on audit closure and reopening grounds", "NIRC provisions on fraud, false returns, and refund-related exceptions"]
+      },
+      "proceduralContext": { "noticeType": "Termination Letter", "taxablePeriodKnown": true, "receiptDateKnown": true, "deadlineComputable": true, "authorityDocumentKnown": true },
+      "immediateSafeSteps": [
+        "The audit case is closed for the covered LOA, tax period, and tax types, but the closure may be without prejudice to future action if fraud, false return, or refund-related issues later arise.",
+        "Keep the termination letter permanently.",
+        "Match it to the LOA, audit case number, taxable period, and tax types.",
+        "Keep payment proof and BIR receipts.",
+        "Preserve transmittals, notices, returns, AFS, schedules, and prior correspondence.",
+        "Do not treat it as blanket immunity for unrelated periods, unrelated tax types, fraud, false returns, or refund issues."
+      ],
+      "missingFacts": ["exact LOA, audit case number, taxable period, and tax types covered by the termination letter"],
+      "documentsNeeded": ["Copy of the termination letter", "Payment proof and BIR receipts", "Prior transmittals, notices, returns, AFS, and schedules"],
+      "riskWarnings": ["This closure is scoped to the covered LOA, period, and tax types only; it is not blanket protection against unrelated periods, unrelated tax types, fraud, false returns, or refund issues."],
+      "workflowRecommendation": {
+        "nextStep": "Match the termination letter to its covered LOA, period, and tax types, and retain all related records permanently.",
+        "recommendedWorkflow": [],
+        "prohibitedOverreach": ["Do not claim permanent, unconditional protection from every future BIR inquiry.", "Do not claim the Bureau is permanently barred from revisiting related matters.", "Do not provide a final legal conclusion."]
+      },
+      "humanReviewNotice": "This scaffold provides procedural-safe guidance only. The available facts are insufficient for a final legal conclusion; the taxpayer should have this matter reviewed against the applicable BIR issuance and jurisprudence by a qualified tax professional before any filing deadline.",
+      "sourceCards": [
+        { "label": "BIR LOA authenticity verification reference", "sourceType": "BIR issuance", "authorityTier": "official_reference_required", "note": "Use RMC No. 5-2026 / REVIE LOA verification workflow when authority corpus is wired." },
+        { "label": "BIR assessment and protest procedure reference", "sourceType": "BIR regulation / NIRC / jurisprudence", "authorityTier": "official_reference_required", "note": "Verify PAN/FAN/FLD protest periods against current BIR rules and applicable jurisprudence before final legal advice." },
+        { "label": "Uploaded professional BIR audit workflow reference pattern", "sourceType": "private uploaded reference", "authorityTier": "uploaded_reference_pattern", "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data." }
+      ],
+      "metadata": { "scaffoldOnly": true, "legalConclusionProvided": false, "liveRetrievalPerformed": false, "externalSearchPerformed": false, "generatedFilingReadyDocument": false, "automaticSubmission": false, "finalOutcomeGuaranteed": false }
+    }
+  },
+  "prohibitedClaims": [
+    "this assessment is void",
+    "this loa is invalid",
+    "this fan is invalid",
+    "this pan is invalid",
+    "the bir cannot assess you",
+    "the case is fully cancelled",
+    "the assessment is cancelled",
+    "you are permanently cleared",
+    "no need to consult a professional",
+    "submit everything without review",
+    "ignore the notice",
+    "you will win",
+    "guaranteed cancellation",
+    "final legal opinion",
+    "official legal advice",
+    "court-tested defense",
+    "foolproof defense",
+    "the case is won",
+    "no further action is needed",
+    "the bir can never reopen anything",
+    "this is full immunity"
+  ],
+  "sourceCardRules": {
+    "allowedAuthorityTiers": ["official_reference_required", "uploaded_reference_pattern", "future_authority_corpus_required", "procedural_design_reference"],
+    "mustNotClaimFinalAuthorityVerificationComplete": true,
+    "requiredBaselineSourceCards": [
+      { "label": "BIR LOA authenticity verification reference", "sourceType": "BIR issuance", "authorityTier": "official_reference_required", "note": "Use RMC No. 5-2026 / REVIE LOA verification workflow when authority corpus is wired." },
+      { "label": "BIR assessment and protest procedure reference", "sourceType": "BIR regulation / NIRC / jurisprudence", "authorityTier": "official_reference_required", "note": "Verify PAN/FAN/FLD protest periods against current BIR rules and applicable jurisprudence before final legal advice." },
+      { "label": "Uploaded professional BIR audit workflow reference pattern", "sourceType": "private uploaded reference", "authorityTier": "uploaded_reference_pattern", "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data." }
+    ]
+  },
+  "futurePatchPlan": ["PHASE-09M-BIR-NOTICE-LOA-TRIAGE-INTENT-SCAFFOLD-1", "PHASE-09-GATE-CLOSURE-1"],
+  "nextTask": "PHASE-09M-BIR-NOTICE-LOA-TRIAGE-INTENT-SCAFFOLD-1"
+}

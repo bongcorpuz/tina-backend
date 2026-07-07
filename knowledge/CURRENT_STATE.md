@@ -5235,3 +5235,67 @@ by default everywhere; do not extend staging smoke coverage to any blocked mode;
 any smoke-evidence patch; do not introduce MCP; do not claim live tax memo generation, /ask runtime wiring, or
 production readiness is implemented.
 ```
+
+## Phase 9L Authority-Safe Procedural Fallback Scaffold — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-07):
+
+```text
+PHASE-09L-AUTHORITY-SAFE-PROCEDURAL-FALLBACK-SCAFFOLD-1 completed. Decision: PHASE 09L AUTHORITY SAFE PROCEDURAL
+FALLBACK SCAFFOLD PASS WITH STRICT RECOMMENDATIONS. Base commit: 0f35b61 PHASE-09R-TAX-MEMO-RUNTIME-STAGING-SMOKE-1.
+
+Scope: design-only, non-runtime-active authority-safe procedural fallback scaffold for BIR audit workflow questions
+(new pure standalone module workflow/authority-safe-procedural-fallback.js, zero imports, no I/O, no network calls,
+no process.env, no Date.now/randomness, no side effects). No existing Phase 9 workflow file was modified.
+
+Supported fallback types: LOA_RECEIVED_WHAT_TO_DO, BIR_DOCUMENT_CHECKLIST_RECEIVED,
+BIR_DOCUMENTS_UNAVAILABLE_OR_NOT_APPLICABLE, PRE_SUBPOENA_REMINDER_RECEIVED, PAN_RECEIVED_WHAT_TO_DO,
+FAN_FLD_RECEIVED_WHAT_TO_DO, ACTION_ON_PROTEST_RECEIVED, TERMINATION_LETTER_RECEIVED (required 8), plus optional
+REPLACEMENT_LOA_RECEIVED, ADDITIONAL_DOCUMENT_REQUEST_RECEIVED, FDDA_RECEIVED,
+REQUEST_FOR_RECONSIDERATION_OR_REINVESTIGATION (12 total).
+
+Runtime changes: None. Ask-handler changes: None. Route/server/pipeline changes: None. Feature flags: unchanged/off
+by default. Memory: inactive. Persistence: none. External search/OpenAI/Supabase/Google Drive/n8n/Firecrawl/
+Crawlee/MCP: untouched. Production: unchanged.
+
+Privacy: no real taxpayer names, TINs, LOA numbers, audit case numbers, BIR officer names, or real assessment
+amounts used in fixtures; all examples sanitized/synthetic (SAMPLE TAXPAYER INC., DEMO LOGISTICS CORP., SYNTHETIC
+HOLDINGS INC.; placeholder LOA numbers eLA20XX000000000 / AUDM00-000-20XX-000000).
+
+Legal safety: no final legal conclusions; no fabricated authorities; no claim that a LOA/PAN/FAN/FLD/protest/assessment is void, invalid, cancelled, or final.
+Action-on-protest fallback states acceptance for re-evaluation
+does not automatically mean the assessment was cancelled. Termination-letter fallback states closure is scoped to
+the covered LOA/period/tax types only, without prejudice to future action on fraud, false return, or refund-related
+issues; it never claims permanent, full, or blanket immunity. Human review notice preserved in every result;
+metadata.legalConclusionProvided, liveRetrievalPerformed, externalSearchPerformed, automaticSubmission, and
+finalOutcomeGuaranteed are all always false. A conservative prohibited-claim phrase scanner
+(detectProhibitedProceduralFallbackClaims) is run by the result validator on every result.
+
+Authority boundary: RMC No. 5-2026 / REVIE LOA verification referenced as a design source-card requirement only.
+No live authority retrieval, search, scraping, or browsing implemented. Future official authority sources
+(bir.gov.ph, lawphil.net, sc.judiciary.gov.ph, cta.judiciary.gov.ph, officialgazette.gov.ph, dof.gov.ph, peza.gov.ph,
+sec.gov.ph, boi.gov.ph) noted only as later verification targets. Phase 10 authority search not implemented. Phase
+11 retrieval optimization not implemented. MCP deferred and not used.
+
+Validation:
+node tests/phase-09l-authority-safe-procedural-fallback-scaffold-1.test.mjs - PASS / 33 / 0 / 183.
+node tests/phase-09r-tax-memo-runtime-staging-smoke-1.test.mjs - PASS / 36 / 0 / 179.
+node tests/phase-09r-tax-memo-runtime-wiring-integration-design-1.test.mjs - PASS / 54 / 0 / 202.
+node tests/phase-09r-tax-memo-runtime-wiring-scaffold-1.test.mjs - PASS / 113 / 0 / 212.
+node tests/phase-09i-requirements-request-letter-schema-scaffold-1.test.mjs - PASS / 56 / 0 / 333.
+node tests/phase-09h-controlled-runtime-wiring-design-or-scaffold-1.test.mjs - PASS / 69 / 0 / 172.
+node tests/phase-09g-workflow-output-governance-gate-1.test.mjs - PASS / 73 / 0 / 213.
+node tests/phase-09f-client-advisory-checklist-scaffold-1.test.mjs - PASS / 75 / 0 / 404.
+node tests/phase-09e-bir-reply-draft-scaffold-1.test.mjs - PASS / 45 / 0 / 243.
+node tests/phase-09d-audit-defense-matrix-scaffold-1.test.mjs - PASS / 45 / 0 / 203.
+node tests/phase-09c-tax-memo-schema-scaffold-1.test.mjs - PASS / 47 / 0 / 149.
+node tests/phase-09b-workflow-mode-registry-scaffold-1.test.mjs - PASS / 45 / 0 / 363.
+node tests/phase-09a-professional-workflow-copilot-design-1.test.mjs - PASS / 30 / 0 / 75.
+node tests/patch-08s-followup-index-secret-header-auth-staging-smoke-1.test.mjs - PASS / 23 / 0 / 92.
+node tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs - PASS / 17 / 0 / 127.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0 / 203.
+npm run guard:files - PASS. npm test - GATE PASSED / 158 suites / 0 failed.
+
+Next recommended task: PHASE-09M-BIR-NOTICE-LOA-TRIAGE-INTENT-SCAFFOLD-1. Future plan also includes
+PHASE-09-GATE-CLOSURE-1. Do not wire procedural fallback to /ask until notice triage and governance gates are
+complete; keep real taxpayer data out of fixtures; require authority verification before final legal conclusions;
+preserve human review notices for LOA/PAN/FAN/FLD/protest workflows.
+```
