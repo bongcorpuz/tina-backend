@@ -1,0 +1,1862 @@
+{
+  "patch": "PHASE-09Y-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-SCAFFOLD-1",
+  "decision": "PHASE 09Y CONTROLLED LOA ANSWER RUNTIME WIRING SCAFFOLD PASS WITH STRICT RECOMMENDATIONS",
+  "phase": "09Y",
+  "baseCommit": "1324061 PHASE-09X-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-DESIGN-1 design controlled loa answer wiring",
+  "scaffoldType": "controlled runtime-wiring scaffold",
+  "currentState": {
+    "phase8Closed": true,
+    "phase8SClosed": true,
+    "phase08XClosed": true,
+    "phase9FormallyClosed": true,
+    "phase9ScaffoldComplete": true,
+    "phase9GovernanceSafe": true,
+    "phase9NonRuntimeActive": true,
+    "phase9GateClosureComplete": true,
+    "phase9XControlledLoaRuntimeWiringDesignComplete": true,
+    "internalLoaAnswerModeling": "PASS",
+    "runtimeWiringDesign": "PASS",
+    "liveAskImplementation": "NOT YET",
+    "runtimeActivationApproved": false,
+    "memoryInactive": true,
+    "productionUnchanged": true,
+    "mcpDeferredUntilAfterFinalPlannedPhase": true,
+    "mobileAppDeferredUntilAfterPhase13": true,
+    "latestCommitBeforeThisPatch": "1324061"
+  },
+  "objective": "Implement a controlled, non-live runtime-wiring scaffold for the narrow LOA/eLA live-answer query family \"I received a BIR LOA, what should I do?\". This patch creates a pure, callable module that can classify narrow LOA/eLA procedural-help intent, reject/downgrade validity/finality/CTA/protest/filing-ready/automatic-submission requests, and generate a procedural-safe LOA answer preview drawing on 09L/09M/09S/09P/09O/09Q concepts, without wiring anything to /ask, ask-handler.js, pipeline.js, server routes, auth, retrieval, or source-card engines. Live /ask behavior remains unchanged until a separately approved future runtime activation patch.",
+  "supportedControlledLoaIntents": [
+    "BIR_LOA_RECEIVED_WHAT_TO_DO",
+    "BIR_ELA_RECEIVED_WHAT_TO_DO",
+    "LETTER_OF_AUTHORITY_FIRST_STEPS",
+    "BIR_LOA_DOCUMENTS_TO_PREPARE",
+    "BIR_ELA_DETAILS_TO_CHECK",
+    "REPLACEMENT_ELA_RECEIVED_PROCEDURAL_REVIEW",
+    "CONSOLIDATED_ELA_RECEIVED_PROCEDURAL_REVIEW",
+    "LOA_CHECKLIST_RECEIVED",
+    "NOTICE_FOR_PRESENTATION_SUBMISSION_RECEIVED",
+    "PRE_SUBPOENA_REMINDER_RECEIVED",
+    "UNKNOWN_SAFE_LOA_HELP"
+  ],
+  "excludedControlledLoaIntents": [
+    "LOA_VALIDITY_CONCLUSION_REQUEST",
+    "ELA_VOIDNESS_CONCLUSION_REQUEST",
+    "IGNORE_LOA_REQUEST",
+    "BIR_ASSESSMENT_POWER_CONCLUSION_REQUEST",
+    "ASSESSMENT_FINALITY_REQUEST",
+    "CTA_STRATEGY_REQUEST",
+    "FAN_VOIDNESS_REQUEST",
+    "FDDA_APPEALABILITY_CONCLUSION_REQUEST",
+    "OUTCOME_PREDICTION_REQUEST",
+    "FILING_READY_PROTEST_REQUEST",
+    "AUTOMATIC_BIR_SUBMISSION_REQUEST",
+    "LEGAL_OPINION_REQUEST",
+    "UNKNOWN_UNSAFE_REQUEST"
+  ],
+  "supportedResponseModes": [
+    "SAFE_BASIC_LOA_GUIDANCE",
+    "REPLACEMENT_ELA_REVIEW_GUIDANCE",
+    "CONSOLIDATED_ELA_REVIEW_GUIDANCE",
+    "DOCUMENT_CHECKLIST_GUIDANCE",
+    "PRE_SUBPOENA_ESCALATION_GUIDANCE",
+    "UNKNOWN_BIR_NOTICE_GUIDANCE",
+    "HUMAN_REVIEW_REQUIRED",
+    "AUTHORITY_FALLBACK_REQUIRED"
+  ],
+  "supportedSafetyGates": [
+    "NARROW_LOA_INTENT_GUARD",
+    "SCOPE_GUARD",
+    "NO_VALIDITY_CONCLUSION_GATE",
+    "NO_FINALITY_CONCLUSION_GATE",
+    "NO_PRESCRIPTION_CONCLUSION_GATE",
+    "NO_CTA_STRATEGY_CONCLUSION_GATE",
+    "NO_FILING_READY_OUTPUT_GATE",
+    "NO_AUTOMATIC_SUBMISSION_GATE",
+    "NO_REAL_TAXPAYER_DATA_GATE",
+    "SOURCE_CARD_DISCIPLINE_GATE",
+    "HUMAN_REVIEW_NOTICE_GATE",
+    "RUNTIME_NOT_WIRED_GATE"
+  ],
+  "inputShape": {
+    "requiredFields": [
+      "userQuery"
+    ],
+    "optionalFields": [
+      "context",
+      "options",
+      "sourceCards"
+    ],
+    "contextFields": [
+      "noticeType",
+      "hasUploadedNotice",
+      "receiptDateKnown",
+      "replacementElaMentioned",
+      "consolidatedElaMentioned",
+      "checklistMentioned",
+      "noticeForPresentationMentioned",
+      "preSubpoenaMentioned",
+      "asksValidity",
+      "asksFinality",
+      "asksPrescription",
+      "asksCtaStrategy",
+      "asksFilingReadyOutput",
+      "asksAutomaticSubmission"
+    ],
+    "optionsFieldsForcedSafe": [
+      "scaffoldOnly",
+      "runtimeActive",
+      "liveAskWired",
+      "allowLegalConclusion",
+      "allowLiveRetrieval",
+      "allowRealTaxpayerData",
+      "generateFilingReadyDocument",
+      "automaticSubmission"
+    ]
+  },
+  "outputShape": {
+    "topLevelFields": [
+      "phase",
+      "mode",
+      "version",
+      "runtimeActive",
+      "liveAskWired",
+      "intentClassification",
+      "controlledAnswer",
+      "phase9ScaffoldUsePlan",
+      "safetyGateResults",
+      "sourceCardPolicy",
+      "safeResponsePreview",
+      "prohibitedConclusions",
+      "recommendedNextActions",
+      "metadata"
+    ]
+  },
+  "controlledAnswerRequirements": {
+    "proceduralGuidanceMustInclude": [
+      "do not ignore the LOA/eLA",
+      "preserve the date and manner of receipt",
+      "keep a clear copy of the notice and attachments",
+      "verify the LOA/eLA through available BIR verification process",
+      "determine whether the document is original/replacement/consolidated eLA, TVN, Mission Order, checklist, notice for presentation/submission, or pre-subpoena reminder",
+      "avoid unnecessary admissions",
+      "human tax/legal review required for validity/prescription/finality/appealability/protest strategy/CTA strategy/legal conclusions"
+    ],
+    "detailsToCheckMustInclude": [
+      "taxpayer name",
+      "TIN",
+      "taxable period",
+      "tax types",
+      "issuing office",
+      "LOA/eLA number",
+      "audit case number",
+      "Revenue Officer",
+      "Group Supervisor",
+      "signatory",
+      "documents requested"
+    ],
+    "documentComplianceStepsMustInclude": [
+      "document compliance matrix",
+      "classify requested documents by status",
+      "controlled transmittal"
+    ],
+    "receivingProofStepsMustInclude": [
+      "BIR receiving stamp or email acknowledgement"
+    ],
+    "substituteProofWarningsMustInclude": [
+      "do not fabricate non-existent/unavailable/not-applicable documents",
+      "substitute proof where appropriate"
+    ],
+    "auditStageWatchMustInclude": [
+      "additional document request, NOD/DOD, PAN, FAN/FLD, protest, FDDA, CTA appeal-watch"
+    ]
+  },
+  "sourceCardPolicy": {
+    "verifiedSourceCardsAvailable": false,
+    "legalCitationAllowed": false,
+    "requiredFutureAuthorityCategories": [
+      "RMC No. 5-2026 — LOA/eLA verification",
+      "RMO No. 1-2026 — single-instance audit framework / standardized checklist / document request limits",
+      "RMO No. 6-2026 — consolidation safeguards / FDDA and final-FAN limits / proper service / no-regression",
+      "RMC No. 14-2026 — replacement eLA / TVN scope / prior notices / VATAS-LTVAU transition",
+      "RR No. 18-2013 — PAN/FAN/protest/reinvestigation procedure",
+      "NIRC Sec. 228 — due process for assessment",
+      "RR No. 12-99, as amended — service / assessment procedure",
+      "CTA rules — appeal-watch only, not conclusion"
+    ]
+  },
+  "privacyBoundary": {
+    "noRealTaxpayerNamesInFixtureOrReport": true,
+    "noRealOfficerNamesInFixtureOrReport": true,
+    "noRealLoaOrElaNumbersInFixtureOrReport": true,
+    "noRealAuditCaseNumbersInFixtureOrReport": true,
+    "noRealTinsInFixtureOrReport": true,
+    "noRealAssessmentAmountsInFixtureOrReport": true,
+    "allSampleDataSynthetic": true
+  },
+  "legalSafetyBoundary": {
+    "noFinalLegalConclusions": true,
+    "noValidityDeterminationClaims": true,
+    "noInvalidityDeterminationClaims": true,
+    "noVoidnessOrCancellationClaims": true,
+    "noFinalityOrEnforceabilityClaims": true,
+    "noAppealabilityClaims": true,
+    "noGuaranteedOutcomeClaims": true,
+    "noFilingReadyOutput": true,
+    "noAutomaticSubmission": true,
+    "humanReviewNoticePreservedInEveryResult": true
+  },
+  "runtimeBoundary": {
+    "runtimeActiveAlwaysFalse": true,
+    "liveAskWiredAlwaysFalse": true,
+    "scaffoldOnlyAlwaysTrue": true,
+    "notWiredToAsk": true,
+    "notWiredToRoutes": true,
+    "notWiredToServer": true,
+    "notWiredToPipeline": true,
+    "liveLoaAskBehaviorUnchanged": true,
+    "runtimeImplementationImpact": "Scaffold only"
+  },
+  "externalOperationBoundary": {
+    "noLiveRetrieval": true,
+    "noExternalSearch": true,
+    "noScraping": true,
+    "noDownload": true,
+    "noOcr": true,
+    "noIngestion": true,
+    "noEmbedding": true,
+    "noDatabaseWrite": true,
+    "noOpenAiCall": true,
+    "noSupabaseCall": true,
+    "noGoogleDriveCall": true,
+    "noN8nCall": true,
+    "noFirecrawlCall": true,
+    "noCrawleeCall": true,
+    "noMcpCall": true,
+    "noExternalHttpCall": true,
+    "noEnvironmentSecretAccess": true
+  },
+  "sampleInputs": {
+    "BASIC_LOA_RECEIVED": {
+      "userQuery": "I received a BIR LOA, what should I do?"
+    },
+    "BASIC_ELA_RECEIVED": {
+      "userQuery": "I received a BIR eLA, what should I do?"
+    },
+    "LOA_DOCUMENTS_TO_PREPARE": {
+      "userQuery": "What documents should I prepare after receiving a BIR LOA?"
+    },
+    "REPLACEMENT_ELA_RECEIVED": {
+      "userQuery": "I received a replacement eLA, what should I check first?"
+    },
+    "CONSOLIDATED_ELA_RECEIVED": {
+      "userQuery": "I received a consolidated eLA, what should I do?"
+    },
+    "LOA_CHECKLIST_RECEIVED": {
+      "userQuery": "I received a BIR LOA checklist of requirements, what should I do?"
+    },
+    "NOTICE_FOR_PRESENTATION_RECEIVED": {
+      "userQuery": "I received a notice for presentation/submission of documents."
+    },
+    "PRE_SUBPOENA_REMINDER_RECEIVED": {
+      "userQuery": "I received a reminder before subpoena."
+    },
+    "LOA_VALIDITY_QUESTION_EXCLUDED": {
+      "userQuery": "Is my LOA invalid?"
+    },
+    "IGNORE_LOA_QUESTION_EXCLUDED": {
+      "userQuery": "Can I ignore the LOA?"
+    },
+    "FILING_READY_PROTEST_REQUEST_EXCLUDED": {
+      "userQuery": "Can you draft the protest now?"
+    },
+    "AUTOMATIC_SUBMISSION_REQUEST_EXCLUDED": {
+      "userQuery": "Can you submit this to BIR?"
+    }
+  },
+  "sampleOutputs": {
+    "BASIC_LOA_RECEIVED": {
+      "phase": "09Y",
+      "mode": "controlled_loa_answer_runtime_scaffold",
+      "version": "PHASE-09Y-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-SCAFFOLD-1",
+      "runtimeActive": false,
+      "liveAskWired": false,
+      "intentClassification": {
+        "supported": true,
+        "excluded": false,
+        "intent": "BIR_LOA_RECEIVED_WHAT_TO_DO",
+        "responseMode": "SAFE_BASIC_LOA_GUIDANCE",
+        "confidence": "high",
+        "reasons": [
+          "Query describes receiving a BIR LOA and asks for procedural next steps."
+        ],
+        "safetyGatesTriggered": [
+          "NARROW_LOA_INTENT_GUARD",
+          "SCOPE_GUARD",
+          "SOURCE_CARD_DISCIPLINE_GATE",
+          "HUMAN_REVIEW_NOTICE_GATE"
+        ]
+      },
+      "controlledAnswer": {
+        "answerType": "SAFE_BASIC_LOA_GUIDANCE",
+        "proceduralGuidance": [
+          "Do not ignore the LOA/eLA.",
+          "Preserve the date and manner of receipt.",
+          "Keep a clear copy of the notice and attachments.",
+          "Verify the LOA/eLA through the available BIR verification process where applicable, including the BIR REVIE / LOA Verifier process under RMC No. 5-2026 when relevant.",
+          "Determine whether the document is an original eLA, replacement eLA, consolidated eLA, TVN, Mission Order, checklist, notice for presentation/submission, or pre-subpoena reminder.",
+          "Avoid unnecessary admissions.",
+          "Validity, prescription, finality, appealability, protest strategy, CTA strategy, and legal conclusions require official-source verification and human tax/legal review."
+        ],
+        "detailsToCheck": [
+          "Taxpayer name",
+          "TIN",
+          "Taxable period",
+          "Tax types covered",
+          "Issuing office",
+          "LOA/eLA number",
+          "Audit case number",
+          "Revenue Officer (RO)",
+          "Group Supervisor (GS)",
+          "Approving/signing official",
+          "Documents requested"
+        ],
+        "documentComplianceSteps": [
+          "Prepare a document compliance matrix.",
+          "Classify each requested document as provided, to-follow, not applicable, unavailable, non-existent, substitute proof available, requires reconciliation, requires certified copy, requires on-premise review, or requires BIR clarification.",
+          "Submit documents through controlled transmittal."
+        ],
+        "receivingProofSteps": [
+          "Keep proof of submission, such as BIR receiving stamp, email acknowledgement, courier proof, attachment list, receiving office/officer, and date/time of submission."
+        ],
+        "substituteProofWarnings": [
+          "Do not fabricate non-existent, unavailable, or not-applicable documents.",
+          "Prepare a factual explanation and, where appropriate, substitute proof such as management certification, affidavit, AFS note, tax return support, official record, or third-party confirmation."
+        ],
+        "auditStageWatch": [
+          "Monitor possible next stages: additional document request, NOD/DOD, PAN, FAN/FLD, protest, FDDA, and CTA appeal-watch."
+        ],
+        "authorityVerificationNotice": "Official-source verification is required before relying on any authority referenced in this guidance; no source has been live-verified by this scaffold.",
+        "humanReviewNotice": "Validity, prescription, finality, appealability, protest strategy, CTA strategy, and legal conclusions require official-source verification and human tax/legal review."
+      },
+      "phase9ScaffoldUsePlan": {
+        "use09LProceduralFallback": true,
+        "use09MNoticeTriage": true,
+        "use09S2026BaselineSignals": true,
+        "use09PDocumentCompliance": true,
+        "use09OAuditDefenseMatrix": true,
+        "use09QAuthorityCorpusRequirement": true,
+        "runtimeWiredNow": false
+      },
+      "safetyGateResults": {
+        "narrowLoaIntentGuard": true,
+        "scopeGuard": true,
+        "noValidityConclusion": true,
+        "noFinalityConclusion": true,
+        "noPrescriptionConclusion": true,
+        "noCtaStrategyConclusion": true,
+        "noFilingReadyOutput": true,
+        "noAutomaticSubmission": true,
+        "noRealTaxpayerData": true,
+        "sourceCardDiscipline": true,
+        "humanReviewNoticePresent": true,
+        "runtimeNotWired": true
+      },
+      "sourceCardPolicy": {
+        "verifiedSourceCardsAvailable": false,
+        "legalCitationAllowed": false,
+        "sourceCardsRequiredForFutureLegalClaims": true,
+        "fallbackIfUnverified": "Use procedural-safe language and state that official-source verification is required; avoid legal citation and final authority claims.",
+        "requiredFutureAuthorityCategories": [
+          "RMC No. 5-2026 — LOA/eLA verification",
+          "RMO No. 1-2026 — single-instance audit framework / standardized checklist / document request limits",
+          "RMO No. 6-2026 — consolidation safeguards / FDDA and final-FAN limits / proper service / no-regression",
+          "RMC No. 14-2026 — replacement eLA / TVN scope / prior notices / VATAS-LTVAU transition",
+          "RR No. 18-2013 — PAN/FAN/protest/reinvestigation procedure",
+          "NIRC Sec. 228 — due process for assessment",
+          "RR No. 12-99, as amended — service / assessment procedure",
+          "CTA rules — appeal-watch only, not conclusion"
+        ]
+      },
+      "safeResponsePreview": "If you received a BIR LOA/eLA, do not ignore it. Preserve the date and manner of receipt, keep a copy of the notice, and verify it through the available BIR verification process (for example, the REVIE / LOA Verifier process under RMC No. 5-2026) where applicable. Prepare a document compliance matrix, submit through controlled transmittal, and keep proof of submission. Do not fabricate unavailable or non-existent documents; use substitute proof where appropriate. This is procedural guidance only. Human tax/legal review remains required for validity, prescription, finality, appealability, protest strategy, CTA strategy, or legal conclusions.",
+      "prohibitedConclusions": [
+        "loa_validity_determination",
+        "ela_voidness_determination",
+        "assessment_finality_determination",
+        "cta_strategy_conclusion",
+        "outcome_prediction_claim",
+        "filing_ready_document_claim",
+        "automatic_submission_claim",
+        "final_legal_opinion_claim"
+      ],
+      "recommendedNextActions": [
+        "Verify the LOA/eLA and any related notice against official BIR sources before relying on it.",
+        "Route replacement/consolidated eLA, 2026 baseline, and document-request signals to the appropriate Phase 9 workflow for further structuring.",
+        "Escalate validity, finality, prescription, CTA-strategy, or filing-ready requests to human tax/legal review.",
+        "Do not activate this scaffold in live /ask without a separate approved wiring gate."
+      ],
+      "metadata": {
+        "scaffoldOnly": true,
+        "runtimeActive": false,
+        "liveAskWired": false,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "scrapingPerformed": false,
+        "downloadPerformed": false,
+        "ingestionPerformed": false,
+        "embeddingPerformed": false,
+        "databaseWritePerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "BASIC_ELA_RECEIVED": {
+      "phase": "09Y",
+      "mode": "controlled_loa_answer_runtime_scaffold",
+      "version": "PHASE-09Y-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-SCAFFOLD-1",
+      "runtimeActive": false,
+      "liveAskWired": false,
+      "intentClassification": {
+        "supported": true,
+        "excluded": false,
+        "intent": "BIR_ELA_RECEIVED_WHAT_TO_DO",
+        "responseMode": "SAFE_BASIC_LOA_GUIDANCE",
+        "confidence": "high",
+        "reasons": [
+          "Query describes receiving a BIR eLA and asks for procedural next steps."
+        ],
+        "safetyGatesTriggered": [
+          "NARROW_LOA_INTENT_GUARD",
+          "SCOPE_GUARD",
+          "SOURCE_CARD_DISCIPLINE_GATE",
+          "HUMAN_REVIEW_NOTICE_GATE"
+        ]
+      },
+      "controlledAnswer": {
+        "answerType": "SAFE_BASIC_LOA_GUIDANCE",
+        "proceduralGuidance": [
+          "Do not ignore the LOA/eLA.",
+          "Preserve the date and manner of receipt.",
+          "Keep a clear copy of the notice and attachments.",
+          "Verify the LOA/eLA through the available BIR verification process where applicable, including the BIR REVIE / LOA Verifier process under RMC No. 5-2026 when relevant.",
+          "Determine whether the document is an original eLA, replacement eLA, consolidated eLA, TVN, Mission Order, checklist, notice for presentation/submission, or pre-subpoena reminder.",
+          "Avoid unnecessary admissions.",
+          "Validity, prescription, finality, appealability, protest strategy, CTA strategy, and legal conclusions require official-source verification and human tax/legal review."
+        ],
+        "detailsToCheck": [
+          "Taxpayer name",
+          "TIN",
+          "Taxable period",
+          "Tax types covered",
+          "Issuing office",
+          "LOA/eLA number",
+          "Audit case number",
+          "Revenue Officer (RO)",
+          "Group Supervisor (GS)",
+          "Approving/signing official",
+          "Documents requested"
+        ],
+        "documentComplianceSteps": [
+          "Prepare a document compliance matrix.",
+          "Classify each requested document as provided, to-follow, not applicable, unavailable, non-existent, substitute proof available, requires reconciliation, requires certified copy, requires on-premise review, or requires BIR clarification.",
+          "Submit documents through controlled transmittal."
+        ],
+        "receivingProofSteps": [
+          "Keep proof of submission, such as BIR receiving stamp, email acknowledgement, courier proof, attachment list, receiving office/officer, and date/time of submission."
+        ],
+        "substituteProofWarnings": [
+          "Do not fabricate non-existent, unavailable, or not-applicable documents.",
+          "Prepare a factual explanation and, where appropriate, substitute proof such as management certification, affidavit, AFS note, tax return support, official record, or third-party confirmation."
+        ],
+        "auditStageWatch": [
+          "Monitor possible next stages: additional document request, NOD/DOD, PAN, FAN/FLD, protest, FDDA, and CTA appeal-watch."
+        ],
+        "authorityVerificationNotice": "Official-source verification is required before relying on any authority referenced in this guidance; no source has been live-verified by this scaffold.",
+        "humanReviewNotice": "Validity, prescription, finality, appealability, protest strategy, CTA strategy, and legal conclusions require official-source verification and human tax/legal review."
+      },
+      "phase9ScaffoldUsePlan": {
+        "use09LProceduralFallback": true,
+        "use09MNoticeTriage": true,
+        "use09S2026BaselineSignals": true,
+        "use09PDocumentCompliance": true,
+        "use09OAuditDefenseMatrix": true,
+        "use09QAuthorityCorpusRequirement": true,
+        "runtimeWiredNow": false
+      },
+      "safetyGateResults": {
+        "narrowLoaIntentGuard": true,
+        "scopeGuard": true,
+        "noValidityConclusion": true,
+        "noFinalityConclusion": true,
+        "noPrescriptionConclusion": true,
+        "noCtaStrategyConclusion": true,
+        "noFilingReadyOutput": true,
+        "noAutomaticSubmission": true,
+        "noRealTaxpayerData": true,
+        "sourceCardDiscipline": true,
+        "humanReviewNoticePresent": true,
+        "runtimeNotWired": true
+      },
+      "sourceCardPolicy": {
+        "verifiedSourceCardsAvailable": false,
+        "legalCitationAllowed": false,
+        "sourceCardsRequiredForFutureLegalClaims": true,
+        "fallbackIfUnverified": "Use procedural-safe language and state that official-source verification is required; avoid legal citation and final authority claims.",
+        "requiredFutureAuthorityCategories": [
+          "RMC No. 5-2026 — LOA/eLA verification",
+          "RMO No. 1-2026 — single-instance audit framework / standardized checklist / document request limits",
+          "RMO No. 6-2026 — consolidation safeguards / FDDA and final-FAN limits / proper service / no-regression",
+          "RMC No. 14-2026 — replacement eLA / TVN scope / prior notices / VATAS-LTVAU transition",
+          "RR No. 18-2013 — PAN/FAN/protest/reinvestigation procedure",
+          "NIRC Sec. 228 — due process for assessment",
+          "RR No. 12-99, as amended — service / assessment procedure",
+          "CTA rules — appeal-watch only, not conclusion"
+        ]
+      },
+      "safeResponsePreview": "If you received a BIR LOA/eLA, do not ignore it. Preserve the date and manner of receipt, keep a copy of the notice, and verify it through the available BIR verification process (for example, the REVIE / LOA Verifier process under RMC No. 5-2026) where applicable. Prepare a document compliance matrix, submit through controlled transmittal, and keep proof of submission. Do not fabricate unavailable or non-existent documents; use substitute proof where appropriate. This is procedural guidance only. Human tax/legal review remains required for validity, prescription, finality, appealability, protest strategy, CTA strategy, or legal conclusions.",
+      "prohibitedConclusions": [
+        "loa_validity_determination",
+        "ela_voidness_determination",
+        "assessment_finality_determination",
+        "cta_strategy_conclusion",
+        "outcome_prediction_claim",
+        "filing_ready_document_claim",
+        "automatic_submission_claim",
+        "final_legal_opinion_claim"
+      ],
+      "recommendedNextActions": [
+        "Verify the LOA/eLA and any related notice against official BIR sources before relying on it.",
+        "Route replacement/consolidated eLA, 2026 baseline, and document-request signals to the appropriate Phase 9 workflow for further structuring.",
+        "Escalate validity, finality, prescription, CTA-strategy, or filing-ready requests to human tax/legal review.",
+        "Do not activate this scaffold in live /ask without a separate approved wiring gate."
+      ],
+      "metadata": {
+        "scaffoldOnly": true,
+        "runtimeActive": false,
+        "liveAskWired": false,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "scrapingPerformed": false,
+        "downloadPerformed": false,
+        "ingestionPerformed": false,
+        "embeddingPerformed": false,
+        "databaseWritePerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "LOA_DOCUMENTS_TO_PREPARE": {
+      "phase": "09Y",
+      "mode": "controlled_loa_answer_runtime_scaffold",
+      "version": "PHASE-09Y-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-SCAFFOLD-1",
+      "runtimeActive": false,
+      "liveAskWired": false,
+      "intentClassification": {
+        "supported": true,
+        "excluded": false,
+        "intent": "BIR_LOA_DOCUMENTS_TO_PREPARE",
+        "responseMode": "SAFE_BASIC_LOA_GUIDANCE",
+        "confidence": "high",
+        "reasons": [
+          "Query asks which documents to prepare after receiving a BIR LOA."
+        ],
+        "safetyGatesTriggered": [
+          "NARROW_LOA_INTENT_GUARD",
+          "SCOPE_GUARD",
+          "SOURCE_CARD_DISCIPLINE_GATE",
+          "HUMAN_REVIEW_NOTICE_GATE"
+        ]
+      },
+      "controlledAnswer": {
+        "answerType": "SAFE_BASIC_LOA_GUIDANCE",
+        "proceduralGuidance": [
+          "Do not ignore the LOA/eLA.",
+          "Preserve the date and manner of receipt.",
+          "Keep a clear copy of the notice and attachments.",
+          "Verify the LOA/eLA through the available BIR verification process where applicable, including the BIR REVIE / LOA Verifier process under RMC No. 5-2026 when relevant.",
+          "Determine whether the document is an original eLA, replacement eLA, consolidated eLA, TVN, Mission Order, checklist, notice for presentation/submission, or pre-subpoena reminder.",
+          "Avoid unnecessary admissions.",
+          "Validity, prescription, finality, appealability, protest strategy, CTA strategy, and legal conclusions require official-source verification and human tax/legal review."
+        ],
+        "detailsToCheck": [
+          "Taxpayer name",
+          "TIN",
+          "Taxable period",
+          "Tax types covered",
+          "Issuing office",
+          "LOA/eLA number",
+          "Audit case number",
+          "Revenue Officer (RO)",
+          "Group Supervisor (GS)",
+          "Approving/signing official",
+          "Documents requested"
+        ],
+        "documentComplianceSteps": [
+          "Prepare a document compliance matrix.",
+          "Classify each requested document as provided, to-follow, not applicable, unavailable, non-existent, substitute proof available, requires reconciliation, requires certified copy, requires on-premise review, or requires BIR clarification.",
+          "Submit documents through controlled transmittal."
+        ],
+        "receivingProofSteps": [
+          "Keep proof of submission, such as BIR receiving stamp, email acknowledgement, courier proof, attachment list, receiving office/officer, and date/time of submission."
+        ],
+        "substituteProofWarnings": [
+          "Do not fabricate non-existent, unavailable, or not-applicable documents.",
+          "Prepare a factual explanation and, where appropriate, substitute proof such as management certification, affidavit, AFS note, tax return support, official record, or third-party confirmation."
+        ],
+        "auditStageWatch": [
+          "Monitor possible next stages: additional document request, NOD/DOD, PAN, FAN/FLD, protest, FDDA, and CTA appeal-watch."
+        ],
+        "authorityVerificationNotice": "Official-source verification is required before relying on any authority referenced in this guidance; no source has been live-verified by this scaffold.",
+        "humanReviewNotice": "Validity, prescription, finality, appealability, protest strategy, CTA strategy, and legal conclusions require official-source verification and human tax/legal review."
+      },
+      "phase9ScaffoldUsePlan": {
+        "use09LProceduralFallback": true,
+        "use09MNoticeTriage": true,
+        "use09S2026BaselineSignals": true,
+        "use09PDocumentCompliance": true,
+        "use09OAuditDefenseMatrix": true,
+        "use09QAuthorityCorpusRequirement": true,
+        "runtimeWiredNow": false
+      },
+      "safetyGateResults": {
+        "narrowLoaIntentGuard": true,
+        "scopeGuard": true,
+        "noValidityConclusion": true,
+        "noFinalityConclusion": true,
+        "noPrescriptionConclusion": true,
+        "noCtaStrategyConclusion": true,
+        "noFilingReadyOutput": true,
+        "noAutomaticSubmission": true,
+        "noRealTaxpayerData": true,
+        "sourceCardDiscipline": true,
+        "humanReviewNoticePresent": true,
+        "runtimeNotWired": true
+      },
+      "sourceCardPolicy": {
+        "verifiedSourceCardsAvailable": false,
+        "legalCitationAllowed": false,
+        "sourceCardsRequiredForFutureLegalClaims": true,
+        "fallbackIfUnverified": "Use procedural-safe language and state that official-source verification is required; avoid legal citation and final authority claims.",
+        "requiredFutureAuthorityCategories": [
+          "RMC No. 5-2026 — LOA/eLA verification",
+          "RMO No. 1-2026 — single-instance audit framework / standardized checklist / document request limits",
+          "RMO No. 6-2026 — consolidation safeguards / FDDA and final-FAN limits / proper service / no-regression",
+          "RMC No. 14-2026 — replacement eLA / TVN scope / prior notices / VATAS-LTVAU transition",
+          "RR No. 18-2013 — PAN/FAN/protest/reinvestigation procedure",
+          "NIRC Sec. 228 — due process for assessment",
+          "RR No. 12-99, as amended — service / assessment procedure",
+          "CTA rules — appeal-watch only, not conclusion"
+        ]
+      },
+      "safeResponsePreview": "If you received a BIR LOA/eLA, do not ignore it. Preserve the date and manner of receipt, keep a copy of the notice, and verify it through the available BIR verification process (for example, the REVIE / LOA Verifier process under RMC No. 5-2026) where applicable. Prepare a document compliance matrix, submit through controlled transmittal, and keep proof of submission. Do not fabricate unavailable or non-existent documents; use substitute proof where appropriate. This is procedural guidance only. Human tax/legal review remains required for validity, prescription, finality, appealability, protest strategy, CTA strategy, or legal conclusions.",
+      "prohibitedConclusions": [
+        "loa_validity_determination",
+        "ela_voidness_determination",
+        "assessment_finality_determination",
+        "cta_strategy_conclusion",
+        "outcome_prediction_claim",
+        "filing_ready_document_claim",
+        "automatic_submission_claim",
+        "final_legal_opinion_claim"
+      ],
+      "recommendedNextActions": [
+        "Verify the LOA/eLA and any related notice against official BIR sources before relying on it.",
+        "Route replacement/consolidated eLA, 2026 baseline, and document-request signals to the appropriate Phase 9 workflow for further structuring.",
+        "Escalate validity, finality, prescription, CTA-strategy, or filing-ready requests to human tax/legal review.",
+        "Do not activate this scaffold in live /ask without a separate approved wiring gate."
+      ],
+      "metadata": {
+        "scaffoldOnly": true,
+        "runtimeActive": false,
+        "liveAskWired": false,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "scrapingPerformed": false,
+        "downloadPerformed": false,
+        "ingestionPerformed": false,
+        "embeddingPerformed": false,
+        "databaseWritePerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "REPLACEMENT_ELA_RECEIVED": {
+      "phase": "09Y",
+      "mode": "controlled_loa_answer_runtime_scaffold",
+      "version": "PHASE-09Y-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-SCAFFOLD-1",
+      "runtimeActive": false,
+      "liveAskWired": false,
+      "intentClassification": {
+        "supported": true,
+        "excluded": false,
+        "intent": "REPLACEMENT_ELA_RECEIVED_PROCEDURAL_REVIEW",
+        "responseMode": "REPLACEMENT_ELA_REVIEW_GUIDANCE",
+        "confidence": "high",
+        "reasons": [
+          "Query describes receiving a replacement eLA and asks for procedural next steps."
+        ],
+        "safetyGatesTriggered": [
+          "NARROW_LOA_INTENT_GUARD",
+          "SCOPE_GUARD",
+          "SOURCE_CARD_DISCIPLINE_GATE",
+          "HUMAN_REVIEW_NOTICE_GATE"
+        ]
+      },
+      "controlledAnswer": {
+        "answerType": "REPLACEMENT_ELA_REVIEW_GUIDANCE",
+        "proceduralGuidance": [
+          "Do not ignore the LOA/eLA.",
+          "Preserve the date and manner of receipt.",
+          "Keep a clear copy of the notice and attachments.",
+          "Verify the LOA/eLA through the available BIR verification process where applicable, including the BIR REVIE / LOA Verifier process under RMC No. 5-2026 when relevant.",
+          "Determine whether the document is an original eLA, replacement eLA, consolidated eLA, TVN, Mission Order, checklist, notice for presentation/submission, or pre-subpoena reminder.",
+          "Avoid unnecessary admissions.",
+          "Validity, prescription, finality, appealability, protest strategy, CTA strategy, and legal conclusions require official-source verification and human tax/legal review."
+        ],
+        "detailsToCheck": [
+          "Taxpayer name",
+          "TIN",
+          "Taxable period",
+          "Tax types covered",
+          "Issuing office",
+          "LOA/eLA number",
+          "Audit case number",
+          "Revenue Officer (RO)",
+          "Group Supervisor (GS)",
+          "Approving/signing official",
+          "Documents requested"
+        ],
+        "documentComplianceSteps": [
+          "Prepare a document compliance matrix.",
+          "Classify each requested document as provided, to-follow, not applicable, unavailable, non-existent, substitute proof available, requires reconciliation, requires certified copy, requires on-premise review, or requires BIR clarification.",
+          "Submit documents through controlled transmittal."
+        ],
+        "receivingProofSteps": [
+          "Keep proof of submission, such as BIR receiving stamp, email acknowledgement, courier proof, attachment list, receiving office/officer, and date/time of submission."
+        ],
+        "substituteProofWarnings": [
+          "Do not fabricate non-existent, unavailable, or not-applicable documents.",
+          "Prepare a factual explanation and, where appropriate, substitute proof such as management certification, affidavit, AFS note, tax return support, official record, or third-party confirmation."
+        ],
+        "auditStageWatch": [
+          "Monitor possible next stages: additional document request, NOD/DOD, PAN, FAN/FLD, protest, FDDA, and CTA appeal-watch."
+        ],
+        "authorityVerificationNotice": "Official-source verification is required before relying on any authority referenced in this guidance; no source has been live-verified by this scaffold.",
+        "humanReviewNotice": "Validity, prescription, finality, appealability, protest strategy, CTA strategy, and legal conclusions require official-source verification and human tax/legal review."
+      },
+      "phase9ScaffoldUsePlan": {
+        "use09LProceduralFallback": true,
+        "use09MNoticeTriage": true,
+        "use09S2026BaselineSignals": true,
+        "use09PDocumentCompliance": true,
+        "use09OAuditDefenseMatrix": true,
+        "use09QAuthorityCorpusRequirement": true,
+        "runtimeWiredNow": false
+      },
+      "safetyGateResults": {
+        "narrowLoaIntentGuard": true,
+        "scopeGuard": true,
+        "noValidityConclusion": true,
+        "noFinalityConclusion": true,
+        "noPrescriptionConclusion": true,
+        "noCtaStrategyConclusion": true,
+        "noFilingReadyOutput": true,
+        "noAutomaticSubmission": true,
+        "noRealTaxpayerData": true,
+        "sourceCardDiscipline": true,
+        "humanReviewNoticePresent": true,
+        "runtimeNotWired": true
+      },
+      "sourceCardPolicy": {
+        "verifiedSourceCardsAvailable": false,
+        "legalCitationAllowed": false,
+        "sourceCardsRequiredForFutureLegalClaims": true,
+        "fallbackIfUnverified": "Use procedural-safe language and state that official-source verification is required; avoid legal citation and final authority claims.",
+        "requiredFutureAuthorityCategories": [
+          "RMC No. 5-2026 — LOA/eLA verification",
+          "RMO No. 1-2026 — single-instance audit framework / standardized checklist / document request limits",
+          "RMO No. 6-2026 — consolidation safeguards / FDDA and final-FAN limits / proper service / no-regression",
+          "RMC No. 14-2026 — replacement eLA / TVN scope / prior notices / VATAS-LTVAU transition",
+          "RR No. 18-2013 — PAN/FAN/protest/reinvestigation procedure",
+          "NIRC Sec. 228 — due process for assessment",
+          "RR No. 12-99, as amended — service / assessment procedure",
+          "CTA rules — appeal-watch only, not conclusion"
+        ]
+      },
+      "safeResponsePreview": "If you received a BIR LOA/eLA, do not ignore it. Preserve the date and manner of receipt, keep a copy of the notice, and verify it through the available BIR verification process (for example, the REVIE / LOA Verifier process under RMC No. 5-2026) where applicable. Prepare a document compliance matrix, submit through controlled transmittal, and keep proof of submission. Do not fabricate unavailable or non-existent documents; use substitute proof where appropriate. This is procedural guidance only. Human tax/legal review remains required for validity, prescription, finality, appealability, protest strategy, CTA strategy, or legal conclusions.",
+      "prohibitedConclusions": [
+        "loa_validity_determination",
+        "ela_voidness_determination",
+        "assessment_finality_determination",
+        "cta_strategy_conclusion",
+        "outcome_prediction_claim",
+        "filing_ready_document_claim",
+        "automatic_submission_claim",
+        "final_legal_opinion_claim"
+      ],
+      "recommendedNextActions": [
+        "Verify the LOA/eLA and any related notice against official BIR sources before relying on it.",
+        "Route replacement/consolidated eLA, 2026 baseline, and document-request signals to the appropriate Phase 9 workflow for further structuring.",
+        "Escalate validity, finality, prescription, CTA-strategy, or filing-ready requests to human tax/legal review.",
+        "Do not activate this scaffold in live /ask without a separate approved wiring gate."
+      ],
+      "metadata": {
+        "scaffoldOnly": true,
+        "runtimeActive": false,
+        "liveAskWired": false,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "scrapingPerformed": false,
+        "downloadPerformed": false,
+        "ingestionPerformed": false,
+        "embeddingPerformed": false,
+        "databaseWritePerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "CONSOLIDATED_ELA_RECEIVED": {
+      "phase": "09Y",
+      "mode": "controlled_loa_answer_runtime_scaffold",
+      "version": "PHASE-09Y-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-SCAFFOLD-1",
+      "runtimeActive": false,
+      "liveAskWired": false,
+      "intentClassification": {
+        "supported": true,
+        "excluded": false,
+        "intent": "CONSOLIDATED_ELA_RECEIVED_PROCEDURAL_REVIEW",
+        "responseMode": "CONSOLIDATED_ELA_REVIEW_GUIDANCE",
+        "confidence": "high",
+        "reasons": [
+          "Query describes receiving a consolidated eLA and asks for procedural next steps."
+        ],
+        "safetyGatesTriggered": [
+          "NARROW_LOA_INTENT_GUARD",
+          "SCOPE_GUARD",
+          "SOURCE_CARD_DISCIPLINE_GATE",
+          "HUMAN_REVIEW_NOTICE_GATE"
+        ]
+      },
+      "controlledAnswer": {
+        "answerType": "CONSOLIDATED_ELA_REVIEW_GUIDANCE",
+        "proceduralGuidance": [
+          "Do not ignore the LOA/eLA.",
+          "Preserve the date and manner of receipt.",
+          "Keep a clear copy of the notice and attachments.",
+          "Verify the LOA/eLA through the available BIR verification process where applicable, including the BIR REVIE / LOA Verifier process under RMC No. 5-2026 when relevant.",
+          "Determine whether the document is an original eLA, replacement eLA, consolidated eLA, TVN, Mission Order, checklist, notice for presentation/submission, or pre-subpoena reminder.",
+          "Avoid unnecessary admissions.",
+          "Validity, prescription, finality, appealability, protest strategy, CTA strategy, and legal conclusions require official-source verification and human tax/legal review."
+        ],
+        "detailsToCheck": [
+          "Taxpayer name",
+          "TIN",
+          "Taxable period",
+          "Tax types covered",
+          "Issuing office",
+          "LOA/eLA number",
+          "Audit case number",
+          "Revenue Officer (RO)",
+          "Group Supervisor (GS)",
+          "Approving/signing official",
+          "Documents requested"
+        ],
+        "documentComplianceSteps": [
+          "Prepare a document compliance matrix.",
+          "Classify each requested document as provided, to-follow, not applicable, unavailable, non-existent, substitute proof available, requires reconciliation, requires certified copy, requires on-premise review, or requires BIR clarification.",
+          "Submit documents through controlled transmittal."
+        ],
+        "receivingProofSteps": [
+          "Keep proof of submission, such as BIR receiving stamp, email acknowledgement, courier proof, attachment list, receiving office/officer, and date/time of submission."
+        ],
+        "substituteProofWarnings": [
+          "Do not fabricate non-existent, unavailable, or not-applicable documents.",
+          "Prepare a factual explanation and, where appropriate, substitute proof such as management certification, affidavit, AFS note, tax return support, official record, or third-party confirmation."
+        ],
+        "auditStageWatch": [
+          "Monitor possible next stages: additional document request, NOD/DOD, PAN, FAN/FLD, protest, FDDA, and CTA appeal-watch."
+        ],
+        "authorityVerificationNotice": "Official-source verification is required before relying on any authority referenced in this guidance; no source has been live-verified by this scaffold.",
+        "humanReviewNotice": "Validity, prescription, finality, appealability, protest strategy, CTA strategy, and legal conclusions require official-source verification and human tax/legal review."
+      },
+      "phase9ScaffoldUsePlan": {
+        "use09LProceduralFallback": true,
+        "use09MNoticeTriage": true,
+        "use09S2026BaselineSignals": true,
+        "use09PDocumentCompliance": true,
+        "use09OAuditDefenseMatrix": true,
+        "use09QAuthorityCorpusRequirement": true,
+        "runtimeWiredNow": false
+      },
+      "safetyGateResults": {
+        "narrowLoaIntentGuard": true,
+        "scopeGuard": true,
+        "noValidityConclusion": true,
+        "noFinalityConclusion": true,
+        "noPrescriptionConclusion": true,
+        "noCtaStrategyConclusion": true,
+        "noFilingReadyOutput": true,
+        "noAutomaticSubmission": true,
+        "noRealTaxpayerData": true,
+        "sourceCardDiscipline": true,
+        "humanReviewNoticePresent": true,
+        "runtimeNotWired": true
+      },
+      "sourceCardPolicy": {
+        "verifiedSourceCardsAvailable": false,
+        "legalCitationAllowed": false,
+        "sourceCardsRequiredForFutureLegalClaims": true,
+        "fallbackIfUnverified": "Use procedural-safe language and state that official-source verification is required; avoid legal citation and final authority claims.",
+        "requiredFutureAuthorityCategories": [
+          "RMC No. 5-2026 — LOA/eLA verification",
+          "RMO No. 1-2026 — single-instance audit framework / standardized checklist / document request limits",
+          "RMO No. 6-2026 — consolidation safeguards / FDDA and final-FAN limits / proper service / no-regression",
+          "RMC No. 14-2026 — replacement eLA / TVN scope / prior notices / VATAS-LTVAU transition",
+          "RR No. 18-2013 — PAN/FAN/protest/reinvestigation procedure",
+          "NIRC Sec. 228 — due process for assessment",
+          "RR No. 12-99, as amended — service / assessment procedure",
+          "CTA rules — appeal-watch only, not conclusion"
+        ]
+      },
+      "safeResponsePreview": "If you received a BIR LOA/eLA, do not ignore it. Preserve the date and manner of receipt, keep a copy of the notice, and verify it through the available BIR verification process (for example, the REVIE / LOA Verifier process under RMC No. 5-2026) where applicable. Prepare a document compliance matrix, submit through controlled transmittal, and keep proof of submission. Do not fabricate unavailable or non-existent documents; use substitute proof where appropriate. This is procedural guidance only. Human tax/legal review remains required for validity, prescription, finality, appealability, protest strategy, CTA strategy, or legal conclusions.",
+      "prohibitedConclusions": [
+        "loa_validity_determination",
+        "ela_voidness_determination",
+        "assessment_finality_determination",
+        "cta_strategy_conclusion",
+        "outcome_prediction_claim",
+        "filing_ready_document_claim",
+        "automatic_submission_claim",
+        "final_legal_opinion_claim"
+      ],
+      "recommendedNextActions": [
+        "Verify the LOA/eLA and any related notice against official BIR sources before relying on it.",
+        "Route replacement/consolidated eLA, 2026 baseline, and document-request signals to the appropriate Phase 9 workflow for further structuring.",
+        "Escalate validity, finality, prescription, CTA-strategy, or filing-ready requests to human tax/legal review.",
+        "Do not activate this scaffold in live /ask without a separate approved wiring gate."
+      ],
+      "metadata": {
+        "scaffoldOnly": true,
+        "runtimeActive": false,
+        "liveAskWired": false,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "scrapingPerformed": false,
+        "downloadPerformed": false,
+        "ingestionPerformed": false,
+        "embeddingPerformed": false,
+        "databaseWritePerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "LOA_CHECKLIST_RECEIVED": {
+      "phase": "09Y",
+      "mode": "controlled_loa_answer_runtime_scaffold",
+      "version": "PHASE-09Y-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-SCAFFOLD-1",
+      "runtimeActive": false,
+      "liveAskWired": false,
+      "intentClassification": {
+        "supported": true,
+        "excluded": false,
+        "intent": "LOA_CHECKLIST_RECEIVED",
+        "responseMode": "DOCUMENT_CHECKLIST_GUIDANCE",
+        "confidence": "high",
+        "reasons": [
+          "Query describes receiving a standardized checklist of requirements."
+        ],
+        "safetyGatesTriggered": [
+          "NARROW_LOA_INTENT_GUARD",
+          "SCOPE_GUARD",
+          "SOURCE_CARD_DISCIPLINE_GATE",
+          "HUMAN_REVIEW_NOTICE_GATE"
+        ]
+      },
+      "controlledAnswer": {
+        "answerType": "DOCUMENT_CHECKLIST_GUIDANCE",
+        "proceduralGuidance": [
+          "Do not ignore the LOA/eLA.",
+          "Preserve the date and manner of receipt.",
+          "Keep a clear copy of the notice and attachments.",
+          "Verify the LOA/eLA through the available BIR verification process where applicable, including the BIR REVIE / LOA Verifier process under RMC No. 5-2026 when relevant.",
+          "Determine whether the document is an original eLA, replacement eLA, consolidated eLA, TVN, Mission Order, checklist, notice for presentation/submission, or pre-subpoena reminder.",
+          "Avoid unnecessary admissions.",
+          "Validity, prescription, finality, appealability, protest strategy, CTA strategy, and legal conclusions require official-source verification and human tax/legal review."
+        ],
+        "detailsToCheck": [
+          "Taxpayer name",
+          "TIN",
+          "Taxable period",
+          "Tax types covered",
+          "Issuing office",
+          "LOA/eLA number",
+          "Audit case number",
+          "Revenue Officer (RO)",
+          "Group Supervisor (GS)",
+          "Approving/signing official",
+          "Documents requested"
+        ],
+        "documentComplianceSteps": [
+          "Prepare a document compliance matrix.",
+          "Classify each requested document as provided, to-follow, not applicable, unavailable, non-existent, substitute proof available, requires reconciliation, requires certified copy, requires on-premise review, or requires BIR clarification.",
+          "Submit documents through controlled transmittal."
+        ],
+        "receivingProofSteps": [
+          "Keep proof of submission, such as BIR receiving stamp, email acknowledgement, courier proof, attachment list, receiving office/officer, and date/time of submission."
+        ],
+        "substituteProofWarnings": [
+          "Do not fabricate non-existent, unavailable, or not-applicable documents.",
+          "Prepare a factual explanation and, where appropriate, substitute proof such as management certification, affidavit, AFS note, tax return support, official record, or third-party confirmation."
+        ],
+        "auditStageWatch": [
+          "Monitor possible next stages: additional document request, NOD/DOD, PAN, FAN/FLD, protest, FDDA, and CTA appeal-watch."
+        ],
+        "authorityVerificationNotice": "Official-source verification is required before relying on any authority referenced in this guidance; no source has been live-verified by this scaffold.",
+        "humanReviewNotice": "Validity, prescription, finality, appealability, protest strategy, CTA strategy, and legal conclusions require official-source verification and human tax/legal review."
+      },
+      "phase9ScaffoldUsePlan": {
+        "use09LProceduralFallback": true,
+        "use09MNoticeTriage": true,
+        "use09S2026BaselineSignals": true,
+        "use09PDocumentCompliance": true,
+        "use09OAuditDefenseMatrix": true,
+        "use09QAuthorityCorpusRequirement": true,
+        "runtimeWiredNow": false
+      },
+      "safetyGateResults": {
+        "narrowLoaIntentGuard": true,
+        "scopeGuard": true,
+        "noValidityConclusion": true,
+        "noFinalityConclusion": true,
+        "noPrescriptionConclusion": true,
+        "noCtaStrategyConclusion": true,
+        "noFilingReadyOutput": true,
+        "noAutomaticSubmission": true,
+        "noRealTaxpayerData": true,
+        "sourceCardDiscipline": true,
+        "humanReviewNoticePresent": true,
+        "runtimeNotWired": true
+      },
+      "sourceCardPolicy": {
+        "verifiedSourceCardsAvailable": false,
+        "legalCitationAllowed": false,
+        "sourceCardsRequiredForFutureLegalClaims": true,
+        "fallbackIfUnverified": "Use procedural-safe language and state that official-source verification is required; avoid legal citation and final authority claims.",
+        "requiredFutureAuthorityCategories": [
+          "RMC No. 5-2026 — LOA/eLA verification",
+          "RMO No. 1-2026 — single-instance audit framework / standardized checklist / document request limits",
+          "RMO No. 6-2026 — consolidation safeguards / FDDA and final-FAN limits / proper service / no-regression",
+          "RMC No. 14-2026 — replacement eLA / TVN scope / prior notices / VATAS-LTVAU transition",
+          "RR No. 18-2013 — PAN/FAN/protest/reinvestigation procedure",
+          "NIRC Sec. 228 — due process for assessment",
+          "RR No. 12-99, as amended — service / assessment procedure",
+          "CTA rules — appeal-watch only, not conclusion"
+        ]
+      },
+      "safeResponsePreview": "If you received a BIR LOA/eLA, do not ignore it. Preserve the date and manner of receipt, keep a copy of the notice, and verify it through the available BIR verification process (for example, the REVIE / LOA Verifier process under RMC No. 5-2026) where applicable. Prepare a document compliance matrix, submit through controlled transmittal, and keep proof of submission. Do not fabricate unavailable or non-existent documents; use substitute proof where appropriate. This is procedural guidance only. Human tax/legal review remains required for validity, prescription, finality, appealability, protest strategy, CTA strategy, or legal conclusions.",
+      "prohibitedConclusions": [
+        "loa_validity_determination",
+        "ela_voidness_determination",
+        "assessment_finality_determination",
+        "cta_strategy_conclusion",
+        "outcome_prediction_claim",
+        "filing_ready_document_claim",
+        "automatic_submission_claim",
+        "final_legal_opinion_claim"
+      ],
+      "recommendedNextActions": [
+        "Verify the LOA/eLA and any related notice against official BIR sources before relying on it.",
+        "Route replacement/consolidated eLA, 2026 baseline, and document-request signals to the appropriate Phase 9 workflow for further structuring.",
+        "Escalate validity, finality, prescription, CTA-strategy, or filing-ready requests to human tax/legal review.",
+        "Do not activate this scaffold in live /ask without a separate approved wiring gate."
+      ],
+      "metadata": {
+        "scaffoldOnly": true,
+        "runtimeActive": false,
+        "liveAskWired": false,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "scrapingPerformed": false,
+        "downloadPerformed": false,
+        "ingestionPerformed": false,
+        "embeddingPerformed": false,
+        "databaseWritePerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "NOTICE_FOR_PRESENTATION_RECEIVED": {
+      "phase": "09Y",
+      "mode": "controlled_loa_answer_runtime_scaffold",
+      "version": "PHASE-09Y-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-SCAFFOLD-1",
+      "runtimeActive": false,
+      "liveAskWired": false,
+      "intentClassification": {
+        "supported": true,
+        "excluded": false,
+        "intent": "NOTICE_FOR_PRESENTATION_SUBMISSION_RECEIVED",
+        "responseMode": "DOCUMENT_CHECKLIST_GUIDANCE",
+        "confidence": "high",
+        "reasons": [
+          "Query describes receiving a notice for presentation/submission of documents."
+        ],
+        "safetyGatesTriggered": [
+          "NARROW_LOA_INTENT_GUARD",
+          "SCOPE_GUARD",
+          "SOURCE_CARD_DISCIPLINE_GATE",
+          "HUMAN_REVIEW_NOTICE_GATE"
+        ]
+      },
+      "controlledAnswer": {
+        "answerType": "DOCUMENT_CHECKLIST_GUIDANCE",
+        "proceduralGuidance": [
+          "Do not ignore the LOA/eLA.",
+          "Preserve the date and manner of receipt.",
+          "Keep a clear copy of the notice and attachments.",
+          "Verify the LOA/eLA through the available BIR verification process where applicable, including the BIR REVIE / LOA Verifier process under RMC No. 5-2026 when relevant.",
+          "Determine whether the document is an original eLA, replacement eLA, consolidated eLA, TVN, Mission Order, checklist, notice for presentation/submission, or pre-subpoena reminder.",
+          "Avoid unnecessary admissions.",
+          "Validity, prescription, finality, appealability, protest strategy, CTA strategy, and legal conclusions require official-source verification and human tax/legal review."
+        ],
+        "detailsToCheck": [
+          "Taxpayer name",
+          "TIN",
+          "Taxable period",
+          "Tax types covered",
+          "Issuing office",
+          "LOA/eLA number",
+          "Audit case number",
+          "Revenue Officer (RO)",
+          "Group Supervisor (GS)",
+          "Approving/signing official",
+          "Documents requested"
+        ],
+        "documentComplianceSteps": [
+          "Prepare a document compliance matrix.",
+          "Classify each requested document as provided, to-follow, not applicable, unavailable, non-existent, substitute proof available, requires reconciliation, requires certified copy, requires on-premise review, or requires BIR clarification.",
+          "Submit documents through controlled transmittal."
+        ],
+        "receivingProofSteps": [
+          "Keep proof of submission, such as BIR receiving stamp, email acknowledgement, courier proof, attachment list, receiving office/officer, and date/time of submission."
+        ],
+        "substituteProofWarnings": [
+          "Do not fabricate non-existent, unavailable, or not-applicable documents.",
+          "Prepare a factual explanation and, where appropriate, substitute proof such as management certification, affidavit, AFS note, tax return support, official record, or third-party confirmation."
+        ],
+        "auditStageWatch": [
+          "Monitor possible next stages: additional document request, NOD/DOD, PAN, FAN/FLD, protest, FDDA, and CTA appeal-watch."
+        ],
+        "authorityVerificationNotice": "Official-source verification is required before relying on any authority referenced in this guidance; no source has been live-verified by this scaffold.",
+        "humanReviewNotice": "Validity, prescription, finality, appealability, protest strategy, CTA strategy, and legal conclusions require official-source verification and human tax/legal review."
+      },
+      "phase9ScaffoldUsePlan": {
+        "use09LProceduralFallback": true,
+        "use09MNoticeTriage": true,
+        "use09S2026BaselineSignals": true,
+        "use09PDocumentCompliance": true,
+        "use09OAuditDefenseMatrix": true,
+        "use09QAuthorityCorpusRequirement": true,
+        "runtimeWiredNow": false
+      },
+      "safetyGateResults": {
+        "narrowLoaIntentGuard": true,
+        "scopeGuard": true,
+        "noValidityConclusion": true,
+        "noFinalityConclusion": true,
+        "noPrescriptionConclusion": true,
+        "noCtaStrategyConclusion": true,
+        "noFilingReadyOutput": true,
+        "noAutomaticSubmission": true,
+        "noRealTaxpayerData": true,
+        "sourceCardDiscipline": true,
+        "humanReviewNoticePresent": true,
+        "runtimeNotWired": true
+      },
+      "sourceCardPolicy": {
+        "verifiedSourceCardsAvailable": false,
+        "legalCitationAllowed": false,
+        "sourceCardsRequiredForFutureLegalClaims": true,
+        "fallbackIfUnverified": "Use procedural-safe language and state that official-source verification is required; avoid legal citation and final authority claims.",
+        "requiredFutureAuthorityCategories": [
+          "RMC No. 5-2026 — LOA/eLA verification",
+          "RMO No. 1-2026 — single-instance audit framework / standardized checklist / document request limits",
+          "RMO No. 6-2026 — consolidation safeguards / FDDA and final-FAN limits / proper service / no-regression",
+          "RMC No. 14-2026 — replacement eLA / TVN scope / prior notices / VATAS-LTVAU transition",
+          "RR No. 18-2013 — PAN/FAN/protest/reinvestigation procedure",
+          "NIRC Sec. 228 — due process for assessment",
+          "RR No. 12-99, as amended — service / assessment procedure",
+          "CTA rules — appeal-watch only, not conclusion"
+        ]
+      },
+      "safeResponsePreview": "If you received a BIR LOA/eLA, do not ignore it. Preserve the date and manner of receipt, keep a copy of the notice, and verify it through the available BIR verification process (for example, the REVIE / LOA Verifier process under RMC No. 5-2026) where applicable. Prepare a document compliance matrix, submit through controlled transmittal, and keep proof of submission. Do not fabricate unavailable or non-existent documents; use substitute proof where appropriate. This is procedural guidance only. Human tax/legal review remains required for validity, prescription, finality, appealability, protest strategy, CTA strategy, or legal conclusions.",
+      "prohibitedConclusions": [
+        "loa_validity_determination",
+        "ela_voidness_determination",
+        "assessment_finality_determination",
+        "cta_strategy_conclusion",
+        "outcome_prediction_claim",
+        "filing_ready_document_claim",
+        "automatic_submission_claim",
+        "final_legal_opinion_claim"
+      ],
+      "recommendedNextActions": [
+        "Verify the LOA/eLA and any related notice against official BIR sources before relying on it.",
+        "Route replacement/consolidated eLA, 2026 baseline, and document-request signals to the appropriate Phase 9 workflow for further structuring.",
+        "Escalate validity, finality, prescription, CTA-strategy, or filing-ready requests to human tax/legal review.",
+        "Do not activate this scaffold in live /ask without a separate approved wiring gate."
+      ],
+      "metadata": {
+        "scaffoldOnly": true,
+        "runtimeActive": false,
+        "liveAskWired": false,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "scrapingPerformed": false,
+        "downloadPerformed": false,
+        "ingestionPerformed": false,
+        "embeddingPerformed": false,
+        "databaseWritePerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "PRE_SUBPOENA_REMINDER_RECEIVED": {
+      "phase": "09Y",
+      "mode": "controlled_loa_answer_runtime_scaffold",
+      "version": "PHASE-09Y-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-SCAFFOLD-1",
+      "runtimeActive": false,
+      "liveAskWired": false,
+      "intentClassification": {
+        "supported": true,
+        "excluded": false,
+        "intent": "PRE_SUBPOENA_REMINDER_RECEIVED",
+        "responseMode": "PRE_SUBPOENA_ESCALATION_GUIDANCE",
+        "confidence": "high",
+        "reasons": [
+          "Query describes a pre-subpoena / reminder-before-subpoena scenario."
+        ],
+        "safetyGatesTriggered": [
+          "NARROW_LOA_INTENT_GUARD",
+          "SCOPE_GUARD",
+          "SOURCE_CARD_DISCIPLINE_GATE",
+          "HUMAN_REVIEW_NOTICE_GATE"
+        ]
+      },
+      "controlledAnswer": {
+        "answerType": "PRE_SUBPOENA_ESCALATION_GUIDANCE",
+        "proceduralGuidance": [
+          "Do not ignore the LOA/eLA.",
+          "Preserve the date and manner of receipt.",
+          "Keep a clear copy of the notice and attachments.",
+          "Verify the LOA/eLA through the available BIR verification process where applicable, including the BIR REVIE / LOA Verifier process under RMC No. 5-2026 when relevant.",
+          "Determine whether the document is an original eLA, replacement eLA, consolidated eLA, TVN, Mission Order, checklist, notice for presentation/submission, or pre-subpoena reminder.",
+          "Avoid unnecessary admissions.",
+          "Validity, prescription, finality, appealability, protest strategy, CTA strategy, and legal conclusions require official-source verification and human tax/legal review."
+        ],
+        "detailsToCheck": [
+          "Taxpayer name",
+          "TIN",
+          "Taxable period",
+          "Tax types covered",
+          "Issuing office",
+          "LOA/eLA number",
+          "Audit case number",
+          "Revenue Officer (RO)",
+          "Group Supervisor (GS)",
+          "Approving/signing official",
+          "Documents requested"
+        ],
+        "documentComplianceSteps": [
+          "Prepare a document compliance matrix.",
+          "Classify each requested document as provided, to-follow, not applicable, unavailable, non-existent, substitute proof available, requires reconciliation, requires certified copy, requires on-premise review, or requires BIR clarification.",
+          "Submit documents through controlled transmittal."
+        ],
+        "receivingProofSteps": [
+          "Keep proof of submission, such as BIR receiving stamp, email acknowledgement, courier proof, attachment list, receiving office/officer, and date/time of submission."
+        ],
+        "substituteProofWarnings": [
+          "Do not fabricate non-existent, unavailable, or not-applicable documents.",
+          "Prepare a factual explanation and, where appropriate, substitute proof such as management certification, affidavit, AFS note, tax return support, official record, or third-party confirmation."
+        ],
+        "auditStageWatch": [
+          "Monitor possible next stages: additional document request, NOD/DOD, PAN, FAN/FLD, protest, FDDA, and CTA appeal-watch."
+        ],
+        "authorityVerificationNotice": "Official-source verification is required before relying on any authority referenced in this guidance; no source has been live-verified by this scaffold.",
+        "humanReviewNotice": "Validity, prescription, finality, appealability, protest strategy, CTA strategy, and legal conclusions require official-source verification and human tax/legal review."
+      },
+      "phase9ScaffoldUsePlan": {
+        "use09LProceduralFallback": true,
+        "use09MNoticeTriage": true,
+        "use09S2026BaselineSignals": true,
+        "use09PDocumentCompliance": true,
+        "use09OAuditDefenseMatrix": true,
+        "use09QAuthorityCorpusRequirement": true,
+        "runtimeWiredNow": false
+      },
+      "safetyGateResults": {
+        "narrowLoaIntentGuard": true,
+        "scopeGuard": true,
+        "noValidityConclusion": true,
+        "noFinalityConclusion": true,
+        "noPrescriptionConclusion": true,
+        "noCtaStrategyConclusion": true,
+        "noFilingReadyOutput": true,
+        "noAutomaticSubmission": true,
+        "noRealTaxpayerData": true,
+        "sourceCardDiscipline": true,
+        "humanReviewNoticePresent": true,
+        "runtimeNotWired": true
+      },
+      "sourceCardPolicy": {
+        "verifiedSourceCardsAvailable": false,
+        "legalCitationAllowed": false,
+        "sourceCardsRequiredForFutureLegalClaims": true,
+        "fallbackIfUnverified": "Use procedural-safe language and state that official-source verification is required; avoid legal citation and final authority claims.",
+        "requiredFutureAuthorityCategories": [
+          "RMC No. 5-2026 — LOA/eLA verification",
+          "RMO No. 1-2026 — single-instance audit framework / standardized checklist / document request limits",
+          "RMO No. 6-2026 — consolidation safeguards / FDDA and final-FAN limits / proper service / no-regression",
+          "RMC No. 14-2026 — replacement eLA / TVN scope / prior notices / VATAS-LTVAU transition",
+          "RR No. 18-2013 — PAN/FAN/protest/reinvestigation procedure",
+          "NIRC Sec. 228 — due process for assessment",
+          "RR No. 12-99, as amended — service / assessment procedure",
+          "CTA rules — appeal-watch only, not conclusion"
+        ]
+      },
+      "safeResponsePreview": "If you received a BIR LOA/eLA, do not ignore it. Preserve the date and manner of receipt, keep a copy of the notice, and verify it through the available BIR verification process (for example, the REVIE / LOA Verifier process under RMC No. 5-2026) where applicable. Prepare a document compliance matrix, submit through controlled transmittal, and keep proof of submission. Do not fabricate unavailable or non-existent documents; use substitute proof where appropriate. This is procedural guidance only. Human tax/legal review remains required for validity, prescription, finality, appealability, protest strategy, CTA strategy, or legal conclusions.",
+      "prohibitedConclusions": [
+        "loa_validity_determination",
+        "ela_voidness_determination",
+        "assessment_finality_determination",
+        "cta_strategy_conclusion",
+        "outcome_prediction_claim",
+        "filing_ready_document_claim",
+        "automatic_submission_claim",
+        "final_legal_opinion_claim"
+      ],
+      "recommendedNextActions": [
+        "Verify the LOA/eLA and any related notice against official BIR sources before relying on it.",
+        "Route replacement/consolidated eLA, 2026 baseline, and document-request signals to the appropriate Phase 9 workflow for further structuring.",
+        "Escalate validity, finality, prescription, CTA-strategy, or filing-ready requests to human tax/legal review.",
+        "Do not activate this scaffold in live /ask without a separate approved wiring gate."
+      ],
+      "metadata": {
+        "scaffoldOnly": true,
+        "runtimeActive": false,
+        "liveAskWired": false,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "scrapingPerformed": false,
+        "downloadPerformed": false,
+        "ingestionPerformed": false,
+        "embeddingPerformed": false,
+        "databaseWritePerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "LOA_VALIDITY_QUESTION_EXCLUDED": {
+      "phase": "09Y",
+      "mode": "controlled_loa_answer_runtime_scaffold",
+      "version": "PHASE-09Y-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-SCAFFOLD-1",
+      "runtimeActive": false,
+      "liveAskWired": false,
+      "intentClassification": {
+        "supported": false,
+        "excluded": true,
+        "intent": "LOA_VALIDITY_CONCLUSION_REQUEST",
+        "responseMode": "AUTHORITY_FALLBACK_REQUIRED",
+        "confidence": "high",
+        "reasons": [
+          "Query asks for a validity/voidness conclusion, which requires official-source verification not yet available to this scaffold."
+        ],
+        "safetyGatesTriggered": [
+          "NARROW_LOA_INTENT_GUARD",
+          "SCOPE_GUARD",
+          "NO_VALIDITY_CONCLUSION_GATE",
+          "SOURCE_CARD_DISCIPLINE_GATE",
+          "HUMAN_REVIEW_NOTICE_GATE"
+        ]
+      },
+      "controlledAnswer": {
+        "answerType": "AUTHORITY_FALLBACK_REQUIRED",
+        "proceduralGuidance": [
+          "This question requires official-source verification and human tax/legal review before any conclusion.",
+          "This scaffold does not provide a final validity, finality, prescription, CTA-strategy, protest-strategy, filing-ready, or automatic-submission response."
+        ],
+        "detailsToCheck": [],
+        "documentComplianceSteps": [],
+        "receivingProofSteps": [],
+        "substituteProofWarnings": [],
+        "auditStageWatch": [],
+        "authorityVerificationNotice": "Official-source verification is required before relying on any authority referenced in this guidance; no source has been live-verified by this scaffold.",
+        "humanReviewNotice": "Validity, prescription, finality, appealability, protest strategy, CTA strategy, and legal conclusions require official-source verification and human tax/legal review."
+      },
+      "phase9ScaffoldUsePlan": {
+        "use09LProceduralFallback": true,
+        "use09MNoticeTriage": true,
+        "use09S2026BaselineSignals": true,
+        "use09PDocumentCompliance": true,
+        "use09OAuditDefenseMatrix": true,
+        "use09QAuthorityCorpusRequirement": true,
+        "runtimeWiredNow": false
+      },
+      "safetyGateResults": {
+        "narrowLoaIntentGuard": true,
+        "scopeGuard": true,
+        "noValidityConclusion": true,
+        "noFinalityConclusion": true,
+        "noPrescriptionConclusion": true,
+        "noCtaStrategyConclusion": true,
+        "noFilingReadyOutput": true,
+        "noAutomaticSubmission": true,
+        "noRealTaxpayerData": true,
+        "sourceCardDiscipline": true,
+        "humanReviewNoticePresent": true,
+        "runtimeNotWired": true
+      },
+      "sourceCardPolicy": {
+        "verifiedSourceCardsAvailable": false,
+        "legalCitationAllowed": false,
+        "sourceCardsRequiredForFutureLegalClaims": true,
+        "fallbackIfUnverified": "Use procedural-safe language and state that official-source verification is required; avoid legal citation and final authority claims.",
+        "requiredFutureAuthorityCategories": [
+          "RMC No. 5-2026 — LOA/eLA verification",
+          "RMO No. 1-2026 — single-instance audit framework / standardized checklist / document request limits",
+          "RMO No. 6-2026 — consolidation safeguards / FDDA and final-FAN limits / proper service / no-regression",
+          "RMC No. 14-2026 — replacement eLA / TVN scope / prior notices / VATAS-LTVAU transition",
+          "RR No. 18-2013 — PAN/FAN/protest/reinvestigation procedure",
+          "NIRC Sec. 228 — due process for assessment",
+          "RR No. 12-99, as amended — service / assessment procedure",
+          "CTA rules — appeal-watch only, not conclusion"
+        ]
+      },
+      "safeResponsePreview": "This question requires official-source verification and cannot be answered as a final conclusion here. This is procedural guidance only. Human tax/legal review remains required for validity, prescription, finality, appealability, protest strategy, CTA strategy, or legal conclusions.",
+      "prohibitedConclusions": [
+        "loa_validity_determination",
+        "ela_voidness_determination",
+        "assessment_finality_determination",
+        "cta_strategy_conclusion",
+        "outcome_prediction_claim",
+        "filing_ready_document_claim",
+        "automatic_submission_claim",
+        "final_legal_opinion_claim"
+      ],
+      "recommendedNextActions": [
+        "Verify the LOA/eLA and any related notice against official BIR sources before relying on it.",
+        "Route replacement/consolidated eLA, 2026 baseline, and document-request signals to the appropriate Phase 9 workflow for further structuring.",
+        "Escalate validity, finality, prescription, CTA-strategy, or filing-ready requests to human tax/legal review.",
+        "Do not activate this scaffold in live /ask without a separate approved wiring gate."
+      ],
+      "metadata": {
+        "scaffoldOnly": true,
+        "runtimeActive": false,
+        "liveAskWired": false,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "scrapingPerformed": false,
+        "downloadPerformed": false,
+        "ingestionPerformed": false,
+        "embeddingPerformed": false,
+        "databaseWritePerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "IGNORE_LOA_QUESTION_EXCLUDED": {
+      "phase": "09Y",
+      "mode": "controlled_loa_answer_runtime_scaffold",
+      "version": "PHASE-09Y-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-SCAFFOLD-1",
+      "runtimeActive": false,
+      "liveAskWired": false,
+      "intentClassification": {
+        "supported": false,
+        "excluded": true,
+        "intent": "IGNORE_LOA_REQUEST",
+        "responseMode": "HUMAN_REVIEW_REQUIRED",
+        "confidence": "high",
+        "reasons": [
+          "Query asks whether the notice may be disregarded; this scaffold never recommends ignoring a BIR notice."
+        ],
+        "safetyGatesTriggered": [
+          "NARROW_LOA_INTENT_GUARD",
+          "SCOPE_GUARD",
+          "HUMAN_REVIEW_NOTICE_GATE"
+        ]
+      },
+      "controlledAnswer": {
+        "answerType": "HUMAN_REVIEW_REQUIRED",
+        "proceduralGuidance": [
+          "This question requires official-source verification and human tax/legal review before any conclusion.",
+          "This scaffold does not provide a final validity, finality, prescription, CTA-strategy, protest-strategy, filing-ready, or automatic-submission response."
+        ],
+        "detailsToCheck": [],
+        "documentComplianceSteps": [],
+        "receivingProofSteps": [],
+        "substituteProofWarnings": [],
+        "auditStageWatch": [],
+        "authorityVerificationNotice": "Official-source verification is required before relying on any authority referenced in this guidance; no source has been live-verified by this scaffold.",
+        "humanReviewNotice": "Validity, prescription, finality, appealability, protest strategy, CTA strategy, and legal conclusions require official-source verification and human tax/legal review."
+      },
+      "phase9ScaffoldUsePlan": {
+        "use09LProceduralFallback": true,
+        "use09MNoticeTriage": true,
+        "use09S2026BaselineSignals": true,
+        "use09PDocumentCompliance": true,
+        "use09OAuditDefenseMatrix": true,
+        "use09QAuthorityCorpusRequirement": true,
+        "runtimeWiredNow": false
+      },
+      "safetyGateResults": {
+        "narrowLoaIntentGuard": true,
+        "scopeGuard": true,
+        "noValidityConclusion": true,
+        "noFinalityConclusion": true,
+        "noPrescriptionConclusion": true,
+        "noCtaStrategyConclusion": true,
+        "noFilingReadyOutput": true,
+        "noAutomaticSubmission": true,
+        "noRealTaxpayerData": true,
+        "sourceCardDiscipline": true,
+        "humanReviewNoticePresent": true,
+        "runtimeNotWired": true
+      },
+      "sourceCardPolicy": {
+        "verifiedSourceCardsAvailable": false,
+        "legalCitationAllowed": false,
+        "sourceCardsRequiredForFutureLegalClaims": true,
+        "fallbackIfUnverified": "Use procedural-safe language and state that official-source verification is required; avoid legal citation and final authority claims.",
+        "requiredFutureAuthorityCategories": [
+          "RMC No. 5-2026 — LOA/eLA verification",
+          "RMO No. 1-2026 — single-instance audit framework / standardized checklist / document request limits",
+          "RMO No. 6-2026 — consolidation safeguards / FDDA and final-FAN limits / proper service / no-regression",
+          "RMC No. 14-2026 — replacement eLA / TVN scope / prior notices / VATAS-LTVAU transition",
+          "RR No. 18-2013 — PAN/FAN/protest/reinvestigation procedure",
+          "NIRC Sec. 228 — due process for assessment",
+          "RR No. 12-99, as amended — service / assessment procedure",
+          "CTA rules — appeal-watch only, not conclusion"
+        ]
+      },
+      "safeResponsePreview": "This question requires official-source verification and cannot be answered as a final conclusion here. This is procedural guidance only. Human tax/legal review remains required for validity, prescription, finality, appealability, protest strategy, CTA strategy, or legal conclusions.",
+      "prohibitedConclusions": [
+        "loa_validity_determination",
+        "ela_voidness_determination",
+        "assessment_finality_determination",
+        "cta_strategy_conclusion",
+        "outcome_prediction_claim",
+        "filing_ready_document_claim",
+        "automatic_submission_claim",
+        "final_legal_opinion_claim"
+      ],
+      "recommendedNextActions": [
+        "Verify the LOA/eLA and any related notice against official BIR sources before relying on it.",
+        "Route replacement/consolidated eLA, 2026 baseline, and document-request signals to the appropriate Phase 9 workflow for further structuring.",
+        "Escalate validity, finality, prescription, CTA-strategy, or filing-ready requests to human tax/legal review.",
+        "Do not activate this scaffold in live /ask without a separate approved wiring gate."
+      ],
+      "metadata": {
+        "scaffoldOnly": true,
+        "runtimeActive": false,
+        "liveAskWired": false,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "scrapingPerformed": false,
+        "downloadPerformed": false,
+        "ingestionPerformed": false,
+        "embeddingPerformed": false,
+        "databaseWritePerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "FILING_READY_PROTEST_REQUEST_EXCLUDED": {
+      "phase": "09Y",
+      "mode": "controlled_loa_answer_runtime_scaffold",
+      "version": "PHASE-09Y-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-SCAFFOLD-1",
+      "runtimeActive": false,
+      "liveAskWired": false,
+      "intentClassification": {
+        "supported": false,
+        "excluded": true,
+        "intent": "FILING_READY_PROTEST_REQUEST",
+        "responseMode": "HUMAN_REVIEW_REQUIRED",
+        "confidence": "high",
+        "reasons": [
+          "Query requests a filing-ready protest/reply/letter/affidavit/certification, which this scaffold never generates."
+        ],
+        "safetyGatesTriggered": [
+          "NARROW_LOA_INTENT_GUARD",
+          "SCOPE_GUARD",
+          "NO_FILING_READY_OUTPUT_GATE",
+          "HUMAN_REVIEW_NOTICE_GATE"
+        ]
+      },
+      "controlledAnswer": {
+        "answerType": "HUMAN_REVIEW_REQUIRED",
+        "proceduralGuidance": [
+          "This question requires official-source verification and human tax/legal review before any conclusion.",
+          "This scaffold does not provide a final validity, finality, prescription, CTA-strategy, protest-strategy, filing-ready, or automatic-submission response."
+        ],
+        "detailsToCheck": [],
+        "documentComplianceSteps": [],
+        "receivingProofSteps": [],
+        "substituteProofWarnings": [],
+        "auditStageWatch": [],
+        "authorityVerificationNotice": "Official-source verification is required before relying on any authority referenced in this guidance; no source has been live-verified by this scaffold.",
+        "humanReviewNotice": "Validity, prescription, finality, appealability, protest strategy, CTA strategy, and legal conclusions require official-source verification and human tax/legal review."
+      },
+      "phase9ScaffoldUsePlan": {
+        "use09LProceduralFallback": true,
+        "use09MNoticeTriage": true,
+        "use09S2026BaselineSignals": true,
+        "use09PDocumentCompliance": true,
+        "use09OAuditDefenseMatrix": true,
+        "use09QAuthorityCorpusRequirement": true,
+        "runtimeWiredNow": false
+      },
+      "safetyGateResults": {
+        "narrowLoaIntentGuard": true,
+        "scopeGuard": true,
+        "noValidityConclusion": true,
+        "noFinalityConclusion": true,
+        "noPrescriptionConclusion": true,
+        "noCtaStrategyConclusion": true,
+        "noFilingReadyOutput": true,
+        "noAutomaticSubmission": true,
+        "noRealTaxpayerData": true,
+        "sourceCardDiscipline": true,
+        "humanReviewNoticePresent": true,
+        "runtimeNotWired": true
+      },
+      "sourceCardPolicy": {
+        "verifiedSourceCardsAvailable": false,
+        "legalCitationAllowed": false,
+        "sourceCardsRequiredForFutureLegalClaims": true,
+        "fallbackIfUnverified": "Use procedural-safe language and state that official-source verification is required; avoid legal citation and final authority claims.",
+        "requiredFutureAuthorityCategories": [
+          "RMC No. 5-2026 — LOA/eLA verification",
+          "RMO No. 1-2026 — single-instance audit framework / standardized checklist / document request limits",
+          "RMO No. 6-2026 — consolidation safeguards / FDDA and final-FAN limits / proper service / no-regression",
+          "RMC No. 14-2026 — replacement eLA / TVN scope / prior notices / VATAS-LTVAU transition",
+          "RR No. 18-2013 — PAN/FAN/protest/reinvestigation procedure",
+          "NIRC Sec. 228 — due process for assessment",
+          "RR No. 12-99, as amended — service / assessment procedure",
+          "CTA rules — appeal-watch only, not conclusion"
+        ]
+      },
+      "safeResponsePreview": "This question requires official-source verification and cannot be answered as a final conclusion here. This is procedural guidance only. Human tax/legal review remains required for validity, prescription, finality, appealability, protest strategy, CTA strategy, or legal conclusions.",
+      "prohibitedConclusions": [
+        "loa_validity_determination",
+        "ela_voidness_determination",
+        "assessment_finality_determination",
+        "cta_strategy_conclusion",
+        "outcome_prediction_claim",
+        "filing_ready_document_claim",
+        "automatic_submission_claim",
+        "final_legal_opinion_claim"
+      ],
+      "recommendedNextActions": [
+        "Verify the LOA/eLA and any related notice against official BIR sources before relying on it.",
+        "Route replacement/consolidated eLA, 2026 baseline, and document-request signals to the appropriate Phase 9 workflow for further structuring.",
+        "Escalate validity, finality, prescription, CTA-strategy, or filing-ready requests to human tax/legal review.",
+        "Do not activate this scaffold in live /ask without a separate approved wiring gate."
+      ],
+      "metadata": {
+        "scaffoldOnly": true,
+        "runtimeActive": false,
+        "liveAskWired": false,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "scrapingPerformed": false,
+        "downloadPerformed": false,
+        "ingestionPerformed": false,
+        "embeddingPerformed": false,
+        "databaseWritePerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "AUTOMATIC_SUBMISSION_REQUEST_EXCLUDED": {
+      "phase": "09Y",
+      "mode": "controlled_loa_answer_runtime_scaffold",
+      "version": "PHASE-09Y-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-SCAFFOLD-1",
+      "runtimeActive": false,
+      "liveAskWired": false,
+      "intentClassification": {
+        "supported": false,
+        "excluded": true,
+        "intent": "AUTOMATIC_BIR_SUBMISSION_REQUEST",
+        "responseMode": "HUMAN_REVIEW_REQUIRED",
+        "confidence": "high",
+        "reasons": [
+          "Query requests automatic submission to the BIR, which this scaffold never performs."
+        ],
+        "safetyGatesTriggered": [
+          "NARROW_LOA_INTENT_GUARD",
+          "SCOPE_GUARD",
+          "NO_AUTOMATIC_SUBMISSION_GATE",
+          "HUMAN_REVIEW_NOTICE_GATE"
+        ]
+      },
+      "controlledAnswer": {
+        "answerType": "HUMAN_REVIEW_REQUIRED",
+        "proceduralGuidance": [
+          "This question requires official-source verification and human tax/legal review before any conclusion.",
+          "This scaffold does not provide a final validity, finality, prescription, CTA-strategy, protest-strategy, filing-ready, or automatic-submission response."
+        ],
+        "detailsToCheck": [],
+        "documentComplianceSteps": [],
+        "receivingProofSteps": [],
+        "substituteProofWarnings": [],
+        "auditStageWatch": [],
+        "authorityVerificationNotice": "Official-source verification is required before relying on any authority referenced in this guidance; no source has been live-verified by this scaffold.",
+        "humanReviewNotice": "Validity, prescription, finality, appealability, protest strategy, CTA strategy, and legal conclusions require official-source verification and human tax/legal review."
+      },
+      "phase9ScaffoldUsePlan": {
+        "use09LProceduralFallback": true,
+        "use09MNoticeTriage": true,
+        "use09S2026BaselineSignals": true,
+        "use09PDocumentCompliance": true,
+        "use09OAuditDefenseMatrix": true,
+        "use09QAuthorityCorpusRequirement": true,
+        "runtimeWiredNow": false
+      },
+      "safetyGateResults": {
+        "narrowLoaIntentGuard": true,
+        "scopeGuard": true,
+        "noValidityConclusion": true,
+        "noFinalityConclusion": true,
+        "noPrescriptionConclusion": true,
+        "noCtaStrategyConclusion": true,
+        "noFilingReadyOutput": true,
+        "noAutomaticSubmission": true,
+        "noRealTaxpayerData": true,
+        "sourceCardDiscipline": true,
+        "humanReviewNoticePresent": true,
+        "runtimeNotWired": true
+      },
+      "sourceCardPolicy": {
+        "verifiedSourceCardsAvailable": false,
+        "legalCitationAllowed": false,
+        "sourceCardsRequiredForFutureLegalClaims": true,
+        "fallbackIfUnverified": "Use procedural-safe language and state that official-source verification is required; avoid legal citation and final authority claims.",
+        "requiredFutureAuthorityCategories": [
+          "RMC No. 5-2026 — LOA/eLA verification",
+          "RMO No. 1-2026 — single-instance audit framework / standardized checklist / document request limits",
+          "RMO No. 6-2026 — consolidation safeguards / FDDA and final-FAN limits / proper service / no-regression",
+          "RMC No. 14-2026 — replacement eLA / TVN scope / prior notices / VATAS-LTVAU transition",
+          "RR No. 18-2013 — PAN/FAN/protest/reinvestigation procedure",
+          "NIRC Sec. 228 — due process for assessment",
+          "RR No. 12-99, as amended — service / assessment procedure",
+          "CTA rules — appeal-watch only, not conclusion"
+        ]
+      },
+      "safeResponsePreview": "This question requires official-source verification and cannot be answered as a final conclusion here. This is procedural guidance only. Human tax/legal review remains required for validity, prescription, finality, appealability, protest strategy, CTA strategy, or legal conclusions.",
+      "prohibitedConclusions": [
+        "loa_validity_determination",
+        "ela_voidness_determination",
+        "assessment_finality_determination",
+        "cta_strategy_conclusion",
+        "outcome_prediction_claim",
+        "filing_ready_document_claim",
+        "automatic_submission_claim",
+        "final_legal_opinion_claim"
+      ],
+      "recommendedNextActions": [
+        "Verify the LOA/eLA and any related notice against official BIR sources before relying on it.",
+        "Route replacement/consolidated eLA, 2026 baseline, and document-request signals to the appropriate Phase 9 workflow for further structuring.",
+        "Escalate validity, finality, prescription, CTA-strategy, or filing-ready requests to human tax/legal review.",
+        "Do not activate this scaffold in live /ask without a separate approved wiring gate."
+      ],
+      "metadata": {
+        "scaffoldOnly": true,
+        "runtimeActive": false,
+        "liveAskWired": false,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "scrapingPerformed": false,
+        "downloadPerformed": false,
+        "ingestionPerformed": false,
+        "embeddingPerformed": false,
+        "databaseWritePerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    }
+  },
+  "validationMatrix": {
+    "newPhase09YControlledLoaAnswerRuntimeWiringScaffoldTest": "PASS",
+    "phase09XControlledLoaAnswerRuntimeWiringDesignTest": "PASS",
+    "phase09GateClosureTest": "PASS",
+    "phase09SBir2026AuditBaselineIntegrationTest": "PASS",
+    "phase09QBirAuthorityCorpusResearchDesignTest": "PASS",
+    "phase09PBirDocumentComplianceTransmittalTest": "PASS",
+    "phase09OBirAuditDefenseMatrixTest": "PASS",
+    "phase09NPanFanFldProtestWorkflowTest": "PASS",
+    "phase09MBirNoticeLoaTriageIntentTest": "PASS",
+    "phase09LProceduralFallbackScaffoldTest": "PASS",
+    "phase09RStagingSmokeTest": "PASS",
+    "phase09RIntegrationDesignTest": "PASS",
+    "phase09RRuntimeScaffoldTest": "PASS",
+    "phase09IRequirementsRequestLetterTest": "PASS",
+    "phase09HRuntimeWiringTest": "PASS",
+    "phase09GGovernanceGateTest": "PASS",
+    "phase09FClientAdvisoryComplianceChecklistTest": "PASS",
+    "phase09EBirReplyDraftTest": "PASS",
+    "phase09DAuditDefenseMatrixTest": "PASS",
+    "phase09CTaxMemoSchemaTest": "PASS",
+    "phase09BWorkflowModeRegistryTest": "PASS",
+    "phase09ADesignTest": "PASS",
+    "patch08SFollowupIndexSecretHeaderAuthStagingSmokeTest": "PASS",
+    "patch08XFinalGateTest": "PASS",
+    "patch08SFinalClosureGateTest": "PASS",
+    "guardFiles": "PASS",
+    "npmTest": "PASS"
+  },
+  "futurePatchPlan": [
+    "PHASE-09Z-CONTROLLED-LOA-ANSWER-ASK-WIRING-GATE-1, if controlled live LOA answering remains the immediate priority",
+    "future guarded /ask activation only after a separately approved wiring gate",
+    "future Phase 10 evaluation/fact-check/legal-tax QA",
+    "future authority ingestion/search/retrieval only if separately approved",
+    "future memory/persistence only if separately approved",
+    "MCP deferred until after final planned phase",
+    "mobile app deferred until after Phase 13"
+  ],
+  "nextTask": "PHASE-09Z-CONTROLLED-LOA-ANSWER-ASK-WIRING-GATE-1",
+  "alternativeNextPhase": "PHASE 10 — Evaluation / Fact-Check / Legal-Tax QA System"
+}
