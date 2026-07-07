@@ -25,6 +25,7 @@ Verify the staging-only controlled LOA/eLA `/ask` branch from PHASE-09ZA when `T
 - Required flag: `TINA_ENABLE_CONTROLLED_LOA_ASK_GATE=true` in staging only.
 - Production boundary: production was not modified.
 - Rerun status after blocker commit `57ba035`: still blocked because `RUN_TINA_STAGING_SMOKE`, `TINA_STAGING_ASK_URL`, `TINA_STAGING_AUTH_HEADER_NAME`, and `TINA_STAGING_AUTH_HEADER_VALUE` were not available in the process environment.
+- Second rerun status after blocker update commit `71851c4`: still blocked because the same required live staging env vars were not available in the process environment.
 - Prior blocker status: `BLOCKED_PENDING_STAGING_ACCESS`.
 - Current blocker status: `BLOCKED_PENDING_STAGING_ACCESS`.
 
@@ -81,6 +82,9 @@ Live staging LOA /ask behavior verified: BLOCKED_PENDING_STAGING_ACCESS.
 - Rerun env presence check: required live staging env vars were missing; no secret values were printed or committed.
 - Rerun local static test: `node tests/phase-09zb-controlled-loa-answer-staging-smoke-1.test.mjs` - PASS / 7 / 0 / 44; live staging smoke skipped because required staging env vars were not provided.
 - Rerun missing-access live gate: `RUN_TINA_STAGING_SMOKE=true` without URL/auth env vars failed as expected with `BLOCKED_PENDING_STAGING_ACCESS`.
+- Second rerun pre-checks: branch `feature/source-availability-engine-v1`, sync `0 0`, latest commit before second rerun `71851c4`.
+- Second rerun local static test: `node tests/phase-09zb-controlled-loa-answer-staging-smoke-1.test.mjs` - PASS / 7 / 0 / 44; live staging smoke skipped because required staging env vars were not provided.
+- Second rerun missing-access live gate: `RUN_TINA_STAGING_SMOKE=true` without URL/auth env vars failed as expected with `BLOCKED_PENDING_STAGING_ACCESS`.
 - `node tests/phase-09zb-controlled-loa-answer-staging-smoke-1.test.mjs` - PASS / 7 / 0 / 45; live 09ZB staging smoke skipped because required staging env vars were not provided.
 - `node tests/phase-09za-controlled-loa-answer-ask-wiring-implementation-1.test.mjs` - PASS / 20 / 0 / 273.
 - `node tests/phase-09z-controlled-loa-answer-ask-wiring-gate-1.test.mjs` - PASS / 25 / 0 / 320.

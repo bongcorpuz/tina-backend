@@ -6187,6 +6187,39 @@ Resolve blocker and rerun PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1.
 Do not proceed to PHASE-09ZC until 09ZB passes.
 ```
 
+## Phase 9ZB Controlled LOA Answer Staging Smoke Second Rerun -- REMAINS BLOCKED (2026-07-08):
+
+```text
+PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1 remains blocked after second rerun.
+
+Decision:
+PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE BLOCKED
+
+Prior blocker:
+BLOCKED_PENDING_STAGING_ACCESS at commit 57ba035 and rerun update commit 71851c4.
+
+Current blocker:
+BLOCKED_PENDING_STAGING_ACCESS
+
+Scope:
+Staging smoke verification still could not be completed because the required live staging /ask endpoint and auth/header environment variables were unavailable.
+
+Rerun validation:
+Local static/unit layer passed.
+Explicit live-smoke missing-access path failed as expected with BLOCKED_PENDING_STAGING_ACCESS when RUN_TINA_STAGING_SMOKE=true was set without staging URL/auth values.
+
+Runtime changes:
+None.
+
+Production:
+Unchanged.
+
+Next:
+Resolve blocker and rerun PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1.
+
+Do not proceed to PHASE-09ZC until 09ZB passes.
+```
+
 ## Phase 9Z Controlled LOA Answer /ask Wiring Gate — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-07):
 
 ```text

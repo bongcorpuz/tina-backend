@@ -9,6 +9,8 @@
   "rerunStatus": {
     "rerunAfterCommit": "57ba035",
     "currentBlocker": "BLOCKED_PENDING_STAGING_ACCESS",
+    "latestRerunAfterCommit": "71851c4",
+    "latestRerunStatus": "BLOCKED_PENDING_STAGING_ACCESS",
     "requiredEnvPresence": {
       "RUN_TINA_STAGING_SMOKE": "missing",
       "TINA_STAGING_ASK_URL": "missing",
