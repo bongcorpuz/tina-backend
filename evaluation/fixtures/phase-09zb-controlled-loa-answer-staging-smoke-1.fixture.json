@@ -4,6 +4,21 @@
   "phase": "09ZB",
   "baseCommit": "23eb7dd",
   "smokeType": "controlled loa answer staging smoke",
+  "liveStagingSmokeStatus": "BLOCKED_PENDING_STAGING_ACCESS",
+  "previousBlocker": "BLOCKED_PENDING_STAGING_ACCESS",
+  "rerunStatus": {
+    "rerunAfterCommit": "57ba035",
+    "currentBlocker": "BLOCKED_PENDING_STAGING_ACCESS",
+    "requiredEnvPresence": {
+      "RUN_TINA_STAGING_SMOKE": "missing",
+      "TINA_STAGING_ASK_URL": "missing",
+      "TINA_STAGING_AUTH_HEADER_NAME": "missing",
+      "TINA_STAGING_AUTH_HEADER_VALUE": "missing"
+    },
+    "localStaticValidation": "PASS",
+    "liveValidation": "not run because staging endpoint/auth/header env vars were unavailable",
+    "production": "unchanged"
+  },
   "currentState": {
     "latestCompletedTask": "PHASE-09ZA-CONTROLLED-LOA-ANSWER-ASK-WIRING-IMPLEMENTATION-1",
     "latestDecision": "PHASE 09ZA CONTROLLED LOA ANSWER ASK WIRING IMPLEMENTATION PASS WITH STRICT RECOMMENDATIONS",

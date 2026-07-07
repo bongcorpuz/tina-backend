@@ -6403,3 +6403,36 @@ PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1.
 Alternative:
 PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System.
 ```
+
+## Phase 9ZB Controlled LOA Answer Staging Smoke Rerun -- REMAINS BLOCKED (2026-07-08):
+
+```text
+PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1 remains blocked.
+
+Decision:
+PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE BLOCKED
+
+Prior blocker:
+BLOCKED_PENDING_STAGING_ACCESS at commit 57ba035.
+
+Current blocker:
+BLOCKED_PENDING_STAGING_ACCESS
+
+Scope:
+Staging smoke verification could not be completed because the required live staging /ask endpoint and auth/header environment variables were unavailable.
+
+Rerun validation:
+Local static/unit layer passed.
+Explicit live-smoke missing-access path failed as expected with BLOCKED_PENDING_STAGING_ACCESS when RUN_TINA_STAGING_SMOKE=true was set without staging URL/auth values.
+
+Runtime changes:
+None.
+
+Production:
+Unchanged.
+
+Next:
+Resolve blocker and rerun PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1.
+
+Do not proceed to PHASE-09ZC until 09ZB passes.
+```
