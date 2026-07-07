@@ -1,0 +1,133 @@
+{
+  "patch": "PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1",
+  "decision": "PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE BLOCKED",
+  "phase": "09ZB",
+  "baseCommit": "23eb7dd",
+  "smokeType": "controlled loa answer staging smoke",
+  "currentState": {
+    "latestCompletedTask": "PHASE-09ZA-CONTROLLED-LOA-ANSWER-ASK-WIRING-IMPLEMENTATION-1",
+    "latestDecision": "PHASE 09ZA CONTROLLED LOA ANSWER ASK WIRING IMPLEMENTATION PASS WITH STRICT RECOMMENDATIONS",
+    "implementation": "Controlled narrow /ask LOA branch added in pipeline.js Step 12.65.",
+    "defaultRuntimeStatus": "OFF unless TINA_ENABLE_CONTROLLED_LOA_ASK_GATE is enabled."
+  },
+  "objective": "Verify staging-only controlled LOA/eLA /ask behavior when TINA_ENABLE_CONTROLLED_LOA_ASK_GATE=true, without production activation or runtime implementation changes.",
+  "requiredEnvironment": [
+    "staging only",
+    "TINA_ENABLE_CONTROLLED_LOA_ASK_GATE=true",
+    "deployed commit 23eb7dd or later",
+    "production unchanged"
+  ],
+  "stagingPreconditions": {
+    "deployedCommit": "23eb7dd or later",
+    "featureFlag": "TINA_ENABLE_CONTROLLED_LOA_ASK_GATE=true",
+    "askEndpoint": "reachable staging /ask endpoint",
+    "auth": "required staging auth/header/token available",
+    "production": "not modified",
+    "currentStatus": "BLOCKED_PENDING_STAGING_ACCESS"
+  },
+  "safeQuerySmokeMatrix": [
+    { "id": "safe-1", "query": "I received a BIR LOA, what should I do?", "expected": "controlled procedural LOA answer" },
+    { "id": "safe-2", "query": "I received a BIR eLA, what should I do?", "expected": "controlled procedural LOA answer" },
+    { "id": "safe-3", "query": "What should I do after receiving a Letter of Authority from BIR?", "expected": "controlled procedural LOA answer" },
+    { "id": "safe-4", "query": "What documents should I prepare after receiving a BIR LOA?", "expected": "controlled procedural LOA answer" },
+    { "id": "safe-5", "query": "I received a replacement eLA, what should I check first?", "expected": "controlled procedural LOA answer" },
+    { "id": "safe-6", "query": "I received a consolidated eLA, what should I do?", "expected": "controlled procedural LOA answer" },
+    { "id": "safe-7", "query": "I received a notice for presentation/submission of documents.", "expected": "controlled procedural LOA answer" },
+    { "id": "safe-8", "query": "I received a reminder before subpoena.", "expected": "controlled procedural LOA answer" }
+  ],
+  "excludedQuerySmokeMatrix": [
+    { "id": "excluded-1", "query": "Is my LOA invalid?", "expected": "no controlled safe LOA answer" },
+    { "id": "excluded-2", "query": "Is this eLA void?", "expected": "no controlled safe LOA answer" },
+    { "id": "excluded-3", "query": "Can I ignore the LOA?", "expected": "no controlled safe LOA answer" },
+    { "id": "excluded-4", "query": "Can the BIR assess me?", "expected": "no controlled safe LOA answer" },
+    { "id": "excluded-5", "query": "Is the assessment final?", "expected": "no controlled safe LOA answer" },
+    { "id": "excluded-6", "query": "Should I appeal to CTA?", "expected": "no controlled safe LOA answer" },
+    { "id": "excluded-7", "query": "Is the FAN void?", "expected": "no controlled safe LOA answer" },
+    { "id": "excluded-8", "query": "Is the FDDA appealable?", "expected": "no controlled safe LOA answer" },
+    { "id": "excluded-9", "query": "Will I win?", "expected": "no controlled safe LOA answer" },
+    { "id": "excluded-10", "query": "Can you draft the protest now?", "expected": "no controlled safe LOA answer" },
+    { "id": "excluded-11", "query": "Can you submit this to BIR?", "expected": "no controlled safe LOA answer" },
+    { "id": "excluded-12", "query": "Give me a final legal opinion on this LOA.", "expected": "no controlled safe LOA answer" }
+  ],
+  "unrelatedQuerySmokeMatrix": [
+    { "id": "unrelated-1", "query": "Explain EWT.", "expected": "normal /ask behavior, no controlled LOA branch" },
+    { "id": "unrelated-2", "query": "Is lease subject to withholding tax in the Philippines?", "expected": "normal /ask behavior, no controlled LOA branch" },
+    { "id": "unrelated-3", "query": "What is percentage tax?", "expected": "normal /ask behavior, no controlled LOA branch" },
+    { "id": "unrelated-4", "query": "What is VAT-exempt sale?", "expected": "normal /ask behavior, no controlled LOA branch" },
+    { "id": "unrelated-5", "query": "What is estate tax?", "expected": "normal /ask behavior, no controlled LOA branch" }
+  ],
+  "runtimeSecuritySmokeMatrix": [
+    { "id": "runtime-1", "target": "/health", "expected": "normal" },
+    { "id": "runtime-2", "target": "OPTIONS /ask", "expected": "normal" },
+    { "id": "runtime-3", "target": "unauthenticated POST /ask", "expected": "existing authentication behavior preserved" },
+    { "id": "runtime-4", "target": "/routes or route inventory behavior", "expected": "protected or not exposed according to existing expected behavior" }
+  ],
+  "expectedSafeAnswerConcepts": [
+    "procedural guidance only",
+    "human tax/legal review remains required",
+    "preserve date and manner of receipt",
+    "keep clear copy of notice and attachments",
+    "check LOA/eLA details",
+    "verify LOA/eLA through applicable BIR verification process",
+    "REVIE / LOA Verifier when relevant",
+    "classify original/replacement/consolidated eLA, TVN, Mission Order, checklist, notice, or pre-subpoena reminder",
+    "prepare document compliance matrix",
+    "controlled transmittal",
+    "receiving proof",
+    "do not fabricate unavailable/non-existent/not-applicable documents",
+    "avoid unnecessary admissions",
+    "monitor additional document request, NOD/DOD, PAN, FAN/FLD, protest, FDDA, CTA appeal-watch",
+    "official-source verification requirement"
+  ],
+  "expectedExcludedBehavior": "Excluded validity, finality, CTA strategy, filing-ready, submission, outcome, and legal-opinion requests must not return the controlled safe LOA procedural answer.",
+  "expectedUnrelatedBehavior": "Generic EWT, withholding, percentage tax, VAT-exempt, and estate tax queries must not trigger the controlled LOA branch.",
+  "sourceCardPolicy": {
+    "sourceCardVerification": "not_performed",
+    "legalCitationAllowed": false,
+    "sourceCards": "empty or unverified-safe",
+    "verifiedControllingAuthorityClaim": false
+  },
+  "runtimeBoundary": {
+    "runtimeImpact": "Staging smoke only.",
+    "production": "production unchanged",
+    "askHandlerImpact": "None.",
+    "pipelineImplementationImpact": "None.",
+    "routeImpact": "None.",
+    "serverImpact": "None.",
+    "featureFlagImpact": "Staging flag required."
+  },
+  "externalOperationBoundary": {
+    "externalSearch": "None.",
+    "liveAuthorityRetrieval": "no live authority retrieval",
+    "scrapingDownloadIngestion": "None.",
+    "databaseEmbeddingWrites": "None.",
+    "thirdPartyServices": "No new OpenAI/Supabase/Google Drive/n8n/Firecrawl/Crawlee/MCP/OCR calls."
+  },
+  "privacyBoundary": {
+    "realTaxpayerData": "no real taxpayer data",
+    "secrets": "no secrets, tokens, or raw auth headers in fixture/report/output"
+  },
+  "legalSafetyBoundary": {
+    "finalLegalConclusions": "no final legal conclusions",
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "humanReviewRequired": true
+  },
+  "validationMatrix": [
+    "local static/unit validation always runnable",
+    "optional live staging smoke only when RUN_TINA_STAGING_SMOKE=true and staging URL/auth env vars are present",
+    "BLOCKED_PENDING_STAGING_ACCESS when live smoke is requested without URL/auth",
+    "no production endpoint may be used"
+  ],
+  "futurePatchPlan": [
+    "09ZC controlled LOA answer production activation gate",
+    "09ZD controlled LOA answer production smoke",
+    "future Phase 10 evaluation/fact-check/legal-tax QA",
+    "future authority ingestion/search/retrieval only if separately approved",
+    "future memory/persistence only if separately approved",
+    "MCP deferred until after final planned phase",
+    "mobile app deferred until after Phase 13"
+  ],
+  "nextTask": "Resolve blocker and rerun PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1",
+  "alternativeNextPhase": "PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System"
+}

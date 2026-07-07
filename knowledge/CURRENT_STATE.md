@@ -6158,6 +6158,35 @@ Alternative:
 PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System.
 ```
 
+## Phase 9ZB Controlled LOA Answer Staging Smoke -- BLOCKED (2026-07-08):
+
+```text
+PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1 blocked.
+
+Decision:
+PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE BLOCKED
+
+Base commit:
+23eb7dd
+
+Blocker:
+BLOCKED_PENDING_STAGING_ACCESS
+
+Scope:
+Staging smoke verification could not be completed.
+
+Runtime changes:
+None.
+
+Production:
+Unchanged.
+
+Next:
+Resolve blocker and rerun PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1.
+
+Do not proceed to PHASE-09ZC until 09ZB passes.
+```
+
 ## Phase 9Z Controlled LOA Answer /ask Wiring Gate — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-07):
 
 ```text
