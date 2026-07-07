@@ -5379,3 +5379,77 @@ PHASE-09-GATE-CLOSURE-1. Do not wire BIR notice triage to /ask until workflow go
 it; keep real taxpayer data out of fixtures; require authority verification before legal conclusions; preserve 2026
 audit-framework flags but do not convert them into validity conclusions.
 ```
+
+## Phase 9N PAN/FAN/FLD/Protest Workflow Scaffold — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-07):
+
+```text
+PHASE-09N-PAN-FAN-FLD-PROTEST-WORKFLOW-SCAFFOLD-1 completed. Decision: PHASE 09N PAN FAN FLD PROTEST WORKFLOW
+SCAFFOLD PASS WITH STRICT RECOMMENDATIONS. Base commit: 6119ddd PHASE-09M-BIR-NOTICE-LOA-TRIAGE-INTENT-SCAFFOLD-1.
+
+Scope: design-only, non-runtime-active scaffold modeling the Philippine BIR administrative assessment-defense
+workflow (PAN, consolidated PAN, FAN, consolidated FAN, FLD, FAN/FLD, FDDA, protest reconsideration/reinvestigation,
+action on protest, CTA appeal-watch) after the Phase 9M notice triage layer detects an assessment notice. New pure
+standalone module workflow/pan-fan-fld-protest-workflow.js, zero imports, no I/O, no network calls, no OCR, no
+process.env, no Date.now/randomness, no side effects. No existing Phase 9 workflow file was modified. This scaffold
+models workflow only; it does not decide, generates no final legal conclusion, and generates no filing-ready
+protest document.
+
+Supported assessment notice types (11): BIR_PAN, BIR_CONSOLIDATED_PAN, BIR_FAN, BIR_CONSOLIDATED_FAN, BIR_FLD,
+BIR_FAN_FLD, BIR_FDDA, BIR_PROTEST_REQUEST_RECONSIDERATION, BIR_PROTEST_REQUEST_REINVESTIGATION,
+BIR_ACTION_ON_PROTEST, UNKNOWN_ASSESSMENT_NOTICE. Supported protest paths (8): PAN_REPLY,
+REQUEST_FOR_RECONSIDERATION, REQUEST_FOR_REINVESTIGATION, FDDA_CTA_APPEAL_WATCH, CTA_INACTION_APPEAL_WATCH,
+POST_PROTEST_REEVALUATION_MONITORING, NO_PROTEST_PATH_YET, HUMAN_REVIEW_REQUIRED. Supported workflow stages (10):
+PAN_REPLY_STAGE, FAN_FLD_PROTEST_STAGE, REINVESTIGATION_DOCUMENT_SUBMISSION_STAGE, PROTEST_PENDING_STAGE,
+FDDA_RECEIVED_STAGE, CTA_APPEAL_WATCH_STAGE, ACTION_ON_PROTEST_STAGE, POST_PROTEST_REEVALUATION_STAGE,
+FINALITY_RISK_STAGE, UNKNOWN_STAGE. Supported assessment issue types (24) include VAT_EXEMPT_VS_ZERO_RATED,
+CWT_SUBSTANTIATION, WITHHOLDING_TAX_DEDUCTIBILITY, INPUT_VAT_SUBSTANTIATION, DIVIDEND_FWT, LOA_OR_ELA_AUTHORITY,
+REPLACEMENT_ELA, CONSOLIDATED_NOTICE, and 16 others.
+
+Runtime changes: None. Ask-handler changes: None. Route/server/pipeline changes: None. Feature flags:
+unchanged/off by default. Memory: inactive. Persistence: none. External search/OpenAI/Supabase/Google Drive/n8n/
+Firecrawl/Crawlee/MCP/OCR: untouched. Production: unchanged. Filing-ready document: none generated. Automatic
+submission: none.
+
+Privacy: no real taxpayer names, TINs, LOA/eLA numbers, audit case numbers, BIR officer names, or exact real
+assessment amounts used in fixtures; all examples sanitized/synthetic (SAMPLE TAXPAYER INC., DEMO LOGISTICS CORP.,
+SYNTHETIC HOLDINGS INC., MODEL VAT TAXPAYER CORP.). The module additionally rejects any known real reference-corpus
+fragment or exact real assessment amount on input and scans its own output for leakage.
+
+Legal safety: no final legal conclusions; no fabricated authorities; no claim that a PAN, FAN, FLD, FDDA, protest,
+assessment, LOA/eLA, or BIR audit action is void, invalid, cancelled, final, enforceable, appealable, or legally
+conclusive. Action-on-protest distinguishes procedural acceptance from substantive cancellation and never claims
+the assessment is cancelled. FDDA workflow never asserts a definite final appeal deadline. Human review notice
+preserved in every result; all eight metadata safety flags always scaffold-safe. A conservative prohibited-claim
+phrase scanner (detectProhibitedPanFanFldProtestClaims) and a real-data-leak scanner are both run by the result
+validator.
+
+Authority boundary: RR No. 18-2013, NIRC Sec. 228, RMO No. 6-2026, and RMC No. 14-2026 referenced as design
+source-card requirements only. No live authority retrieval, search, scraping, browsing, or OCR implemented. Phase
+10 authority search not implemented. Phase 11 retrieval optimization not implemented. MCP deferred and not used.
+
+Validation:
+node tests/phase-09n-pan-fan-fld-protest-workflow-scaffold-1.test.mjs - PASS / 35 / 0 / 335.
+node tests/phase-09m-bir-notice-loa-triage-intent-scaffold-1.test.mjs - PASS / 47 / 0 / 398.
+node tests/phase-09l-authority-safe-procedural-fallback-scaffold-1.test.mjs - PASS / 33 / 0 / 184.
+node tests/phase-09r-tax-memo-runtime-staging-smoke-1.test.mjs - PASS / 36 / 0 / 179.
+node tests/phase-09r-tax-memo-runtime-wiring-integration-design-1.test.mjs - PASS / 54 / 0 / 202.
+node tests/phase-09r-tax-memo-runtime-wiring-scaffold-1.test.mjs - PASS / 113 / 0 / 212.
+node tests/phase-09i-requirements-request-letter-schema-scaffold-1.test.mjs - PASS / 56 / 0 / 333.
+node tests/phase-09h-controlled-runtime-wiring-design-or-scaffold-1.test.mjs - PASS / 69 / 0 / 172.
+node tests/phase-09g-workflow-output-governance-gate-1.test.mjs - PASS / 73 / 0 / 213.
+node tests/phase-09f-client-advisory-checklist-scaffold-1.test.mjs - PASS / 75 / 0 / 404.
+node tests/phase-09e-bir-reply-draft-scaffold-1.test.mjs - PASS / 45 / 0 / 243.
+node tests/phase-09d-audit-defense-matrix-scaffold-1.test.mjs - PASS / 45 / 0 / 203.
+node tests/phase-09c-tax-memo-schema-scaffold-1.test.mjs - PASS / 47 / 0 / 149.
+node tests/phase-09b-workflow-mode-registry-scaffold-1.test.mjs - PASS / 45 / 0 / 363.
+node tests/phase-09a-professional-workflow-copilot-design-1.test.mjs - PASS / 30 / 0 / 75.
+node tests/patch-08s-followup-index-secret-header-auth-staging-smoke-1.test.mjs - PASS / 23 / 0 / 92.
+node tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs - PASS / 17 / 0 / 127.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0 / 203.
+npm run guard:files - PASS. npm test - GATE PASSED / 160 suites / 0 failed.
+
+Next recommended task: PHASE-09O-BIR-AUDIT-DEFENSE-MATRIX-SCAFFOLD-1. Future plan also includes
+PHASE-09-GATE-CLOSURE-1. Do not wire PAN/FAN/FLD protest workflow to /ask until workflow governance and runtime
+gates approve it; keep real taxpayer data out of fixtures; require authority verification before legal conclusions;
+preserve 2026 audit-framework flags but do not convert them into validity conclusions.
+```

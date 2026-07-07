@@ -1,0 +1,3553 @@
+{
+  "patch": "PHASE-09N-PAN-FAN-FLD-PROTEST-WORKFLOW-SCAFFOLD-1",
+  "decision": "PHASE 09N PAN FAN FLD PROTEST WORKFLOW SCAFFOLD PASS WITH STRICT RECOMMENDATIONS",
+  "phase": "09N",
+  "baseCommit": "6119ddd PHASE-09M-BIR-NOTICE-LOA-TRIAGE-INTENT-SCAFFOLD-1 add BIR notice/LOA triage intent scaffold",
+  "nonRuntimePatch": {
+    "noRuntimeActivation": true,
+    "noAskHandlerWiring": true,
+    "noServerChanges": true,
+    "noRouteChanges": true,
+    "noPipelineChanges": true,
+    "noFeatureFlagEnabledByDefault": true,
+    "noMemoryActivation": true,
+    "noPersistence": true,
+    "noExternalSearch": true,
+    "noOpenAiCalls": true,
+    "noSupabaseCalls": true,
+    "noGoogleDriveCalls": true,
+    "noN8n": true,
+    "noFirecrawl": true,
+    "noCrawlee": true,
+    "noMcp": true,
+    "noOcr": true,
+    "noPhase10Implementation": true,
+    "noPhase11Implementation": true,
+    "noProductionChange": true,
+    "noRealTaxpayerData": true,
+    "noFinalLegalConclusion": true,
+    "noFilingReadyProtestDocument": true,
+    "noAutomaticSubmission": true
+  },
+  "currentState": {
+    "phase8Closed": true,
+    "phase8SClosed": true,
+    "phase08XClosed": true,
+    "phase9AComplete": true,
+    "phase9BComplete": true,
+    "phase9CComplete": true,
+    "phase9DComplete": true,
+    "phase9EComplete": true,
+    "phase9FComplete": true,
+    "phase9GComplete": true,
+    "phase9HComplete": true,
+    "phase9IComplete": true,
+    "phase9RRuntimeScaffoldComplete": true,
+    "phase9RIntegrationDesignComplete": true,
+    "phase9RStagingSmokeComplete": true,
+    "phase9LProceduralFallbackScaffoldComplete": true,
+    "phase9MNoticeLoaTriageIntentScaffoldComplete": true,
+    "phase9NPanFanFldProtestWorkflowScaffoldComplete": true,
+    "memoryInactive": true,
+    "productionUnchanged": true,
+    "mcpDeferredUntilAfterFinalPlannedPhase": true,
+    "latestCommitBeforePatch": "6119ddd"
+  },
+  "objective": "Provide a design-only, non-runtime-active scaffold modeling the Philippine BIR administrative assessment-defense workflow (PAN, consolidated PAN, FAN, consolidated FAN, FLD, FAN/FLD, FDDA, protest, reconsideration, reinvestigation, action on protest, CTA appeal-watch) after the BIR notice triage layer detects an assessment notice, without generating final legal conclusions or filing-ready protest documents. This scaffold models workflow; it does not decide.",
+  "supportedAssessmentNoticeTypes": [
+    "BIR_PAN",
+    "BIR_CONSOLIDATED_PAN",
+    "BIR_FAN",
+    "BIR_CONSOLIDATED_FAN",
+    "BIR_FLD",
+    "BIR_FAN_FLD",
+    "BIR_FDDA",
+    "BIR_PROTEST_REQUEST_RECONSIDERATION",
+    "BIR_PROTEST_REQUEST_REINVESTIGATION",
+    "BIR_ACTION_ON_PROTEST",
+    "UNKNOWN_ASSESSMENT_NOTICE"
+  ],
+  "supportedProtestPaths": [
+    "PAN_REPLY",
+    "REQUEST_FOR_RECONSIDERATION",
+    "REQUEST_FOR_REINVESTIGATION",
+    "FDDA_CTA_APPEAL_WATCH",
+    "CTA_INACTION_APPEAL_WATCH",
+    "POST_PROTEST_REEVALUATION_MONITORING",
+    "NO_PROTEST_PATH_YET",
+    "HUMAN_REVIEW_REQUIRED"
+  ],
+  "supportedWorkflowStages": [
+    "PAN_REPLY_STAGE",
+    "FAN_FLD_PROTEST_STAGE",
+    "REINVESTIGATION_DOCUMENT_SUBMISSION_STAGE",
+    "PROTEST_PENDING_STAGE",
+    "FDDA_RECEIVED_STAGE",
+    "CTA_APPEAL_WATCH_STAGE",
+    "ACTION_ON_PROTEST_STAGE",
+    "POST_PROTEST_REEVALUATION_STAGE",
+    "FINALITY_RISK_STAGE",
+    "UNKNOWN_STAGE"
+  ],
+  "supportedAssessmentIssueTypes": [
+    "INCOME_TAX",
+    "VALUE_ADDED_TAX",
+    "EXPANDED_WITHHOLDING_TAX",
+    "FINAL_WITHHOLDING_TAX",
+    "WITHHOLDING_TAX_DEDUCTIBILITY",
+    "CWT_SUBSTANTIATION",
+    "INPUT_VAT_SUBSTANTIATION",
+    "VAT_EXEMPT_VS_ZERO_RATED",
+    "PEZA_ZERO_RATING",
+    "OUTPUT_VAT",
+    "UNSUPPORTED_SALES_CLASSIFICATION",
+    "UNSUPPORTED_EXPENSES",
+    "RELATED_PARTY_OR_INTERCOMPANY",
+    "DIVIDEND_FWT",
+    "COMPROMISE_PENALTY",
+    "SURCHARGE",
+    "INTEREST",
+    "PRESCRIPTION",
+    "LOA_OR_ELA_AUTHORITY",
+    "REPLACEMENT_ELA",
+    "CONSOLIDATED_NOTICE",
+    "DUE_PROCESS",
+    "PROPER_SERVICE",
+    "UNKNOWN_ISSUE"
+  ],
+  "referenceCorpusBoundary": {
+    "privateReferenceMaterialsProvidedByUser": true,
+    "referenceMaterialsAreDevelopmentPatternsOnly": true,
+    "noRealTaxpayerNamesUsed": true,
+    "noRealTinsUsed": true,
+    "noRealLoaOrElaNumbersUsed": true,
+    "noRealAuditCaseNumbersUsed": true,
+    "noRealAddressesUsed": true,
+    "noRealBirOfficerNamesUsed": true,
+    "noRealClientNamesUsed": true,
+    "noRealAssessmentAmountsUsed": true,
+    "allExamplesSanitizedAndSynthetic": true,
+    "rmo6_2026TreatedAsRequiredConsolidatedPanFanSafeguardReference": true,
+    "rmc14_2026TreatedAsRequiredReplacementElaAndConsolidationReference": true,
+    "rmo1_2026TreatedAsRequired2026AuditBaselineReference": true,
+    "rmc5_2026TreatedAsLoaElaVerificationDesignReference": true
+  },
+  "authorityBoundary": {
+    "futureOfficialAuthoritySourcesNoted": [
+      "bir.gov.ph",
+      "bir-cdn.bir.gov.ph",
+      "lawphil.net",
+      "sc.judiciary.gov.ph",
+      "cta.judiciary.gov.ph",
+      "officialgazette.gov.ph",
+      "dof.gov.ph",
+      "peza.gov.ph",
+      "sec.gov.ph",
+      "boi.gov.ph"
+    ],
+    "liveSearchPerformed": false,
+    "liveScrapingPerformed": false,
+    "liveBrowsingPerformed": false,
+    "liveOcrPerformed": false,
+    "liveAuthorityRetrievalPerformed": false,
+    "designOnly": true,
+    "phase10AuthoritySearchImplemented": false,
+    "phase11RetrievalOptimizationImplemented": false
+  },
+  "privacyBoundary": {
+    "sanitizedSyntheticTaxpayerNamesOnly": true,
+    "syntheticTaxpayerNameExamples": [
+      "SAMPLE TAXPAYER INC.",
+      "DEMO LOGISTICS CORP.",
+      "SYNTHETIC HOLDINGS INC.",
+      "MODEL VAT TAXPAYER CORP."
+    ],
+    "fakeSyntheticNumberExamples": [
+      "eLA20XX000000000",
+      "AUDM00-000-20XX-000000",
+      "TIN-XXX-XXX-XXX-XXX",
+      "PHP 0.00"
+    ],
+    "noRealTaxpayerDataInFixturesOrTests": true,
+    "noExactRealAssessmentAmountsUsed": true,
+    "knownRealFragmentsExcludedFromEverything": true
+  },
+  "runtimeBoundary": {
+    "runtimeActiveAlwaysFalse": true,
+    "scaffoldOnlyAlwaysTrue": true,
+    "allowLegalConclusionAlwaysFalse": true,
+    "allowLiveRetrievalAlwaysFalse": true,
+    "allowRealTaxpayerDataAlwaysFalse": true,
+    "generateFilingReadyDocumentAlwaysFalse": true,
+    "automaticSubmissionAlwaysFalse": true,
+    "notWiredToAsk": true,
+    "noAuthenticationDependency": true,
+    "noExpressServerRuntimeDependency": true
+  },
+  "workflowShape": {
+    "fields": [
+      "noticeType",
+      "workflowStage",
+      "protestPath",
+      "confidence",
+      "reasonCodes"
+    ]
+  },
+  "deadlineSignalsShape": {
+    "fields": [
+      "receiptDateKnown",
+      "dateIssuedKnown",
+      "panReply15DayPotential",
+      "fanFldProtest30DayPotential",
+      "reinvestigation60DayPotential",
+      "inaction180DayPotential",
+      "fddaAppeal30DayPotential",
+      "ctaInactionAppealPotential",
+      "freshPanResponsePeriodPotential",
+      "freshFanProtestPeriodPotential",
+      "deadlineComputationStatus",
+      "deadlineCannotBeComputedReason"
+    ]
+  },
+  "assessmentIssueMatrixShape": {
+    "fields": [
+      "issueType",
+      "birFinding",
+      "taxpayerPosition",
+      "documentsAvailable",
+      "documentsMissing",
+      "substituteProofOptions",
+      "authorityNeeded",
+      "proceduralDefenseTopics",
+      "substantiveDefenseTopics",
+      "riskLevel",
+      "humanReviewRequired"
+    ]
+  },
+  "protestStrategyShape": {
+    "fields": [
+      "recommendedPath",
+      "reconsiderationAppropriateWhen",
+      "reinvestigationAppropriateWhen",
+      "requiredAttachments",
+      "filingProofRequirements",
+      "monitoringEvents",
+      "prohibitedOverreach"
+    ]
+  },
+  "proceduralSafeguardsShape": {
+    "fields": [
+      "dueProcessCheckNeeded",
+      "properServiceCheckNeeded",
+      "statementOfFactsAndLawCheckNeeded",
+      "loaOrElaAuthorityCheckNeeded",
+      "replacementElaCheckNeeded",
+      "consolidatedNoticeCheckNeeded",
+      "prescriptionCheckNeeded",
+      "noRegressionRuleCheckNeeded",
+      "priorNoticeConsistencyCheckNeeded"
+    ]
+  },
+  "authorityNeedsShape": {
+    "fields": [
+      "controllingAuthoritiesNeeded",
+      "jurisprudenceNeeded",
+      "birIssuancesNeeded",
+      "ctaRulesNeeded",
+      "authorityStatus"
+    ]
+  },
+  "validationMatrix": {
+    "newPanFanFldProtestWorkflowTest": "PASS",
+    "phase09MBirNoticeLoaTriageIntentTest": "PASS",
+    "phase09LProceduralFallbackScaffoldTest": "PASS",
+    "phase09RStagingSmokeTest": "PASS",
+    "phase09RIntegrationDesignTest": "PASS",
+    "phase09RRuntimeScaffoldTest": "PASS",
+    "phase09IRequirementsRequestLetterTest": "PASS",
+    "phase09HRuntimeWiringTest": "PASS",
+    "phase09GGovernanceGateTest": "PASS",
+    "phase09FClientAdvisoryComplianceChecklistTest": "PASS",
+    "phase09EBirReplyDraftTest": "PASS",
+    "phase09DAuditDefenseMatrixTest": "PASS",
+    "phase09CTaxMemoSchemaTest": "PASS",
+    "phase09BWorkflowModeRegistryTest": "PASS",
+    "phase09ADesignTest": "PASS",
+    "patch08SFollowupIndexSecretHeaderAuthStagingSmokeTest": "PASS",
+    "patch08XFinalGateTest": "PASS",
+    "patch08SFinalClosureGateTest": "PASS",
+    "guardFiles": "PASS",
+    "npmTest": "PASS"
+  },
+  "sampleInputs": {
+    "BIR_PAN": {
+      "noticeType": "BIR_PAN",
+      "userQuery": "SAMPLE TAXPAYER INC. received a PAN. What is the reply workflow?",
+      "knownFacts": {
+        "dateIssued": "2026-04-01",
+        "dateReceived": "2026-04-05",
+        "taxablePeriod": "CY2025",
+        "taxTypes": [
+          "INCOME_TAX",
+          "VAT"
+        ],
+        "amountsPresent": true,
+        "protestLanguagePresent": true,
+        "priorNodDodReceived": true,
+        "receiptDateKnown": true
+      },
+      "assessmentIssues": []
+    },
+    "BIR_CONSOLIDATED_PAN": {
+      "noticeType": "BIR_CONSOLIDATED_PAN",
+      "userQuery": "DEMO LOGISTICS CORP. received a consolidated PAN covering two eLAs. What is the reply workflow?",
+      "knownFacts": {
+        "dateReceived": "2026-04-10",
+        "taxablePeriod": "CY2025",
+        "consolidatedNotice": true,
+        "properlyServed": true,
+        "receiptDateKnown": true
+      },
+      "assessmentIssues": []
+    },
+    "BIR_FAN": {
+      "noticeType": "BIR_FAN",
+      "userQuery": "SYNTHETIC HOLDINGS INC. received a FAN. What is the protest workflow?",
+      "knownFacts": {
+        "dateReceived": "2026-05-01",
+        "taxablePeriod": "CY2025",
+        "protestLanguagePresent": true,
+        "appealLanguagePresent": true,
+        "receiptDateKnown": true
+      },
+      "assessmentIssues": []
+    },
+    "BIR_CONSOLIDATED_FAN": {
+      "noticeType": "BIR_CONSOLIDATED_FAN",
+      "userQuery": "SAMPLE TAXPAYER INC. received a consolidated FAN covering two eLAs. What is the protest workflow?",
+      "knownFacts": {
+        "dateReceived": "2026-05-05",
+        "taxablePeriod": "CY2025",
+        "consolidatedNotice": true,
+        "properlyServed": true,
+        "receiptDateKnown": true
+      },
+      "assessmentIssues": []
+    },
+    "BIR_FLD": {
+      "noticeType": "BIR_FLD",
+      "userQuery": "DEMO LOGISTICS CORP. received an FLD. What is the protest workflow?",
+      "knownFacts": {
+        "dateReceived": "2026-05-10",
+        "taxablePeriod": "CY2025",
+        "receiptDateKnown": true
+      },
+      "assessmentIssues": []
+    },
+    "BIR_FAN_FLD": {
+      "noticeType": "BIR_FAN_FLD",
+      "userQuery": "SYNTHETIC HOLDINGS INC. received a combined FAN/FLD. What is the protest workflow?",
+      "knownFacts": {
+        "dateReceived": "2026-05-12",
+        "taxablePeriod": "CY2025",
+        "receiptDateKnown": true
+      },
+      "assessmentIssues": []
+    },
+    "BIR_FDDA": {
+      "noticeType": "BIR_FDDA",
+      "userQuery": "SAMPLE TAXPAYER INC. received an FDDA. What is the appeal-watch workflow?",
+      "knownFacts": {
+        "dateReceived": "2026-06-01",
+        "taxablePeriod": "CY2025",
+        "receiptDateKnown": true
+      },
+      "assessmentIssues": []
+    },
+    "BIR_PROTEST_REQUEST_RECONSIDERATION": {
+      "noticeType": "BIR_PROTEST_REQUEST_RECONSIDERATION",
+      "userQuery": "DEMO LOGISTICS CORP. wants to file a request for reconsideration. What is the workflow?",
+      "knownFacts": {
+        "taxablePeriod": "CY2025",
+        "protestLanguagePresent": true,
+        "requestTypeKnown": true
+      },
+      "assessmentIssues": []
+    },
+    "BIR_PROTEST_REQUEST_REINVESTIGATION": {
+      "noticeType": "BIR_PROTEST_REQUEST_REINVESTIGATION",
+      "userQuery": "SYNTHETIC HOLDINGS INC. wants to file a request for reinvestigation with new evidence. What is the workflow?",
+      "knownFacts": {
+        "taxablePeriod": "CY2025",
+        "protestLanguagePresent": true,
+        "requestTypeKnown": true,
+        "identifiesReinvestigation": true
+      },
+      "assessmentIssues": []
+    },
+    "BIR_ACTION_ON_PROTEST": {
+      "noticeType": "BIR_ACTION_ON_PROTEST",
+      "userQuery": "SAMPLE TAXPAYER INC. received an action letter granting reconsideration. What does that mean?",
+      "knownFacts": {
+        "taxablePeriod": "CY2025",
+        "appealLanguagePresent": true,
+        "actionOnProtestReceived": true
+      },
+      "assessmentIssues": []
+    },
+    "CTA_INACTION_APPEAL_WATCH": {
+      "noticeType": "BIR_PROTEST_REQUEST_RECONSIDERATION",
+      "userQuery": "DEMO LOGISTICS CORP. filed a protest and there has been no BIR action for over 180 days. What should we do?",
+      "knownFacts": {
+        "taxablePeriod": "CY2025",
+        "protestLanguagePresent": true,
+        "ctaInactionScenario": true
+      },
+      "assessmentIssues": []
+    },
+    "VAT_EXEMPT_VS_ZERO_RATED_ISSUE": {
+      "noticeType": "BIR_PAN",
+      "userQuery": "SYNTHETIC HOLDINGS INC. is assessed for VAT exempt vs zero-rated sales classification. What is the workflow?",
+      "knownFacts": {
+        "taxablePeriod": "CY2025",
+        "taxTypes": [
+          "VAT"
+        ],
+        "receiptDateKnown": true
+      },
+      "assessmentIssues": [
+        {
+          "issueType": "VAT_EXEMPT_VS_ZERO_RATED",
+          "birFinding": "Synthetic finding: sales reclassified from zero-rated to exempt.",
+          "taxpayerPosition": "Synthetic position: sales are properly zero-rated export sales.",
+          "documentsAvailable": [
+            "Synthetic sales invoice schedule"
+          ],
+          "documentsMissing": [
+            "Synthetic client foreign-currency remittance support"
+          ],
+          "authorityNeeded": [
+            "NIRC VAT provisions"
+          ],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "CWT_SUBSTANTIATION_ISSUE": {
+      "noticeType": "BIR_PAN",
+      "userQuery": "MODEL VAT TAXPAYER CORP. is assessed for unsupported creditable withholding tax. What is the workflow?",
+      "knownFacts": {
+        "taxablePeriod": "CY2025",
+        "receiptDateKnown": true
+      },
+      "assessmentIssues": [
+        {
+          "issueType": "CWT_SUBSTANTIATION",
+          "birFinding": "Synthetic finding: CWT claimed without matching BIR Form 2307.",
+          "taxpayerPosition": "Synthetic position: certificates were received late from withholding agents.",
+          "documentsAvailable": [
+            "Synthetic partial BIR Form 2307 set"
+          ],
+          "documentsMissing": [
+            "Synthetic complete SAWT reconciliation"
+          ],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "WITHHOLDING_TAX_DEDUCTIBILITY_ISSUE": {
+      "noticeType": "BIR_PAN",
+      "userQuery": "DEMO LOGISTICS CORP. is assessed for disallowed expenses due to withholding tax deductibility. What is the workflow?",
+      "knownFacts": {
+        "taxablePeriod": "CY2025",
+        "receiptDateKnown": true
+      },
+      "assessmentIssues": [
+        {
+          "issueType": "WITHHOLDING_TAX_DEDUCTIBILITY",
+          "birFinding": "Synthetic finding: expenses disallowed for lack of withholding.",
+          "taxpayerPosition": "Synthetic position: withholding was remitted under a different account code.",
+          "documentsAvailable": [
+            "Synthetic expense schedule"
+          ],
+          "documentsMissing": [
+            "Synthetic proof of remittance"
+          ],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "INPUT_VAT_SUBSTANTIATION_ISSUE": {
+      "noticeType": "BIR_PAN",
+      "userQuery": "SAMPLE TAXPAYER INC. is assessed for disallowed input VAT. What is the workflow?",
+      "knownFacts": {
+        "taxablePeriod": "CY2025",
+        "taxTypes": [
+          "VAT"
+        ],
+        "receiptDateKnown": true
+      },
+      "assessmentIssues": [
+        {
+          "issueType": "INPUT_VAT_SUBSTANTIATION",
+          "birFinding": "Synthetic finding: input VAT disallowed for invoicing deficiencies.",
+          "taxpayerPosition": "Synthetic position: supplier invoices substantially comply with invoicing rules.",
+          "documentsAvailable": [
+            "Synthetic supplier invoice sample"
+          ],
+          "documentsMissing": [
+            "Synthetic complete purchase journal"
+          ],
+          "riskLevel": "low"
+        }
+      ]
+    },
+    "DIVIDEND_FWT_ISSUE": {
+      "noticeType": "BIR_PAN",
+      "userQuery": "SYNTHETIC HOLDINGS INC. is assessed for unremitted final withholding tax on dividends. What is the workflow?",
+      "knownFacts": {
+        "taxablePeriod": "CY2025",
+        "receiptDateKnown": true
+      },
+      "assessmentIssues": [
+        {
+          "issueType": "DIVIDEND_FWT",
+          "birFinding": "Synthetic finding: dividend declared without corresponding FWT remittance.",
+          "taxpayerPosition": "Synthetic position: no dividend was actually declared or paid during the period.",
+          "documentsAvailable": [
+            "Synthetic general ledger excerpt"
+          ],
+          "documentsMissing": [
+            "Synthetic board resolution"
+          ],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "LOA_OR_ELA_AUTHORITY_ISSUE": {
+      "noticeType": "BIR_PAN",
+      "userQuery": "DEMO LOGISTICS CORP. questions whether the underlying eLA authority was valid. What is the workflow?",
+      "knownFacts": {
+        "taxablePeriod": "CY2025",
+        "loaAuthorityIssue": true,
+        "receiptDateKnown": true
+      },
+      "assessmentIssues": [
+        {
+          "issueType": "LOA_OR_ELA_AUTHORITY",
+          "birFinding": "Synthetic finding: assessment based on original eLA authority.",
+          "taxpayerPosition": "Synthetic position: eLA authenticity and scope require verification.",
+          "documentsAvailable": [
+            "Synthetic eLA copy"
+          ],
+          "documentsMissing": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "CONSOLIDATED_NOTICE_ISSUE": {
+      "noticeType": "BIR_CONSOLIDATED_PAN",
+      "userQuery": "SAMPLE TAXPAYER INC. questions the consolidated notice covering multiple eLAs. What is the workflow?",
+      "knownFacts": {
+        "taxablePeriod": "CY2025",
+        "consolidatedNotice": true,
+        "receiptDateKnown": true
+      },
+      "assessmentIssues": [
+        {
+          "issueType": "CONSOLIDATED_NOTICE",
+          "birFinding": "Synthetic finding: findings consolidated from two eLAs.",
+          "taxpayerPosition": "Synthetic position: consolidation stage and service require verification.",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "riskLevel": "medium"
+        }
+      ]
+    }
+  },
+  "sampleOutputs": {
+    "BIR_PAN": {
+      "phase": "09N",
+      "mode": "pan_fan_fld_protest_workflow",
+      "version": "PHASE-09N-PAN-FAN-FLD-PROTEST-WORKFLOW-SCAFFOLD-1",
+      "runtimeActive": false,
+      "workflow": {
+        "noticeType": "BIR_PAN",
+        "workflowStage": "PAN_REPLY_STAGE",
+        "protestPath": "PAN_REPLY",
+        "confidence": "high",
+        "reasonCodes": [
+          "explicit_notice_type"
+        ]
+      },
+      "deadlineSignals": {
+        "receiptDateKnown": true,
+        "dateIssuedKnown": true,
+        "panReply15DayPotential": true,
+        "fanFldProtest30DayPotential": false,
+        "reinvestigation60DayPotential": false,
+        "inaction180DayPotential": false,
+        "fddaAppeal30DayPotential": false,
+        "ctaInactionAppealPotential": false,
+        "freshPanResponsePeriodPotential": false,
+        "freshFanProtestPeriodPotential": false,
+        "deadlineComputationStatus": "rule_identified_no_final_deadline",
+        "deadlineCannotBeComputedReason": null
+      },
+      "assessmentIssueMatrix": [
+        {
+          "issueType": "UNKNOWN_ISSUE",
+          "birFinding": null,
+          "taxpayerPosition": null,
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "authorityNeeded": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "proceduralDefenseTopics": [
+            "due process and documentary basis review"
+          ],
+          "substantiveDefenseTopics": [
+            "substantiation and legal basis review"
+          ],
+          "riskLevel": "unknown",
+          "humanReviewRequired": true
+        }
+      ],
+      "protestStrategy": {
+        "recommendedPath": "PAN_REPLY",
+        "reconsiderationAppropriateWhen": [],
+        "reinvestigationAppropriateWhen": [],
+        "requiredAttachments": [
+          "Issue-by-issue reply matrix",
+          "Supporting documents for each finding"
+        ],
+        "filingProofRequirements": [
+          "Proof of filing of PAN reply"
+        ],
+        "monitoringEvents": [
+          "FAN/FLD issuance"
+        ],
+        "prohibitedOverreach": [
+          "Do not treat this workflow model as a final legal conclusion.",
+          "Do not generate a filing-ready protest document from this scaffold."
+        ]
+      },
+      "proceduralSafeguards": {
+        "dueProcessCheckNeeded": true,
+        "properServiceCheckNeeded": false,
+        "statementOfFactsAndLawCheckNeeded": true,
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": false,
+        "prescriptionCheckNeeded": false,
+        "noRegressionRuleCheckNeeded": false,
+        "priorNoticeConsistencyCheckNeeded": true
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [
+          "NIRC Sec. 228"
+        ],
+        "jurisprudenceNeeded": [],
+        "birIssuancesNeeded": [
+          "RR No. 18-2013"
+        ],
+        "ctaRulesNeeded": [],
+        "authorityStatus": "authority_limited"
+      },
+      "safeWarnings": [
+        "A PAN generally requires a timely response.",
+        "Failure to respond may lead to FAN/FLD issuance and may weaken the taxpayer's procedural position.",
+        "This scaffold does not determine the final deadline or legal sufficiency of the PAN."
+      ],
+      "recommendedNextActions": [
+        "Record date of receipt.",
+        "Identify tax types and issues.",
+        "Build issue-by-issue reply matrix.",
+        "Match each BIR finding to taxpayer facts and documents.",
+        "Prepare supporting documents.",
+        "Preserve proof of filing.",
+        "Do not ignore the PAN."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, supporting document period, inaction, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidated PAN/FAN safeguard reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidated PAN/FAN safeguards, fresh response/protest periods, proper service, no-regression rule, and FDDA/finality limitations."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "Uploaded professional PAN/FAN/FLD/protest workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe workflow guidance only and does not constitute a final legal or tax conclusion. Receipt date, notice type, protest type, and applicable rules must be verified before final deadline computation, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "BIR_CONSOLIDATED_PAN": {
+      "phase": "09N",
+      "mode": "pan_fan_fld_protest_workflow",
+      "version": "PHASE-09N-PAN-FAN-FLD-PROTEST-WORKFLOW-SCAFFOLD-1",
+      "runtimeActive": false,
+      "workflow": {
+        "noticeType": "BIR_CONSOLIDATED_PAN",
+        "workflowStage": "PAN_REPLY_STAGE",
+        "protestPath": "PAN_REPLY",
+        "confidence": "high",
+        "reasonCodes": [
+          "explicit_notice_type"
+        ]
+      },
+      "deadlineSignals": {
+        "receiptDateKnown": true,
+        "dateIssuedKnown": false,
+        "panReply15DayPotential": true,
+        "fanFldProtest30DayPotential": false,
+        "reinvestigation60DayPotential": false,
+        "inaction180DayPotential": false,
+        "fddaAppeal30DayPotential": false,
+        "ctaInactionAppealPotential": false,
+        "freshPanResponsePeriodPotential": true,
+        "freshFanProtestPeriodPotential": false,
+        "deadlineComputationStatus": "rule_identified_no_final_deadline",
+        "deadlineCannotBeComputedReason": null
+      },
+      "assessmentIssueMatrix": [
+        {
+          "issueType": "UNKNOWN_ISSUE",
+          "birFinding": null,
+          "taxpayerPosition": null,
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "authorityNeeded": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "proceduralDefenseTopics": [
+            "due process and documentary basis review"
+          ],
+          "substantiveDefenseTopics": [
+            "substantiation and legal basis review"
+          ],
+          "riskLevel": "unknown",
+          "humanReviewRequired": true
+        }
+      ],
+      "protestStrategy": {
+        "recommendedPath": "PAN_REPLY",
+        "reconsiderationAppropriateWhen": [],
+        "reinvestigationAppropriateWhen": [],
+        "requiredAttachments": [
+          "Issue-by-issue reply matrix",
+          "Supporting documents for each finding"
+        ],
+        "filingProofRequirements": [
+          "Proof of filing of consolidated PAN reply"
+        ],
+        "monitoringEvents": [
+          "FAN/FLD issuance"
+        ],
+        "prohibitedOverreach": [
+          "Do not treat this workflow model as a final legal conclusion.",
+          "Do not generate a filing-ready protest document from this scaffold."
+        ]
+      },
+      "proceduralSafeguards": {
+        "dueProcessCheckNeeded": false,
+        "properServiceCheckNeeded": true,
+        "statementOfFactsAndLawCheckNeeded": false,
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": true,
+        "prescriptionCheckNeeded": false,
+        "noRegressionRuleCheckNeeded": true,
+        "priorNoticeConsistencyCheckNeeded": true
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [
+          "NIRC Sec. 228"
+        ],
+        "jurisprudenceNeeded": [],
+        "birIssuancesNeeded": [
+          "RMO No. 6-2026 consolidation safeguards",
+          "RMO No. 1-2026 single-instance audit framework",
+          "RR No. 18-2013"
+        ],
+        "ctaRulesNeeded": [],
+        "authorityStatus": "authority_required"
+      },
+      "safeWarnings": [
+        "A consolidated PAN may create a fresh response period only if proper service and consolidation safeguards apply."
+      ],
+      "recommendedNextActions": [
+        "Record date of receipt.",
+        "Confirm proper service of the consolidated PAN.",
+        "Build an issue-by-issue reply matrix.",
+        "Preserve proof of filing."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, supporting document period, inaction, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidated PAN/FAN safeguard reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidated PAN/FAN safeguards, fresh response/protest periods, proper service, no-regression rule, and FDDA/finality limitations."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "Uploaded professional PAN/FAN/FLD/protest workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe workflow guidance only and does not constitute a final legal or tax conclusion. Receipt date, notice type, protest type, and applicable rules must be verified before final deadline computation, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "BIR_FAN": {
+      "phase": "09N",
+      "mode": "pan_fan_fld_protest_workflow",
+      "version": "PHASE-09N-PAN-FAN-FLD-PROTEST-WORKFLOW-SCAFFOLD-1",
+      "runtimeActive": false,
+      "workflow": {
+        "noticeType": "BIR_FAN",
+        "workflowStage": "FAN_FLD_PROTEST_STAGE",
+        "protestPath": "HUMAN_REVIEW_REQUIRED",
+        "confidence": "high",
+        "reasonCodes": [
+          "explicit_notice_type"
+        ]
+      },
+      "deadlineSignals": {
+        "receiptDateKnown": true,
+        "dateIssuedKnown": false,
+        "panReply15DayPotential": false,
+        "fanFldProtest30DayPotential": true,
+        "reinvestigation60DayPotential": true,
+        "inaction180DayPotential": true,
+        "fddaAppeal30DayPotential": true,
+        "ctaInactionAppealPotential": true,
+        "freshPanResponsePeriodPotential": false,
+        "freshFanProtestPeriodPotential": false,
+        "deadlineComputationStatus": "rule_identified_no_final_deadline",
+        "deadlineCannotBeComputedReason": null
+      },
+      "assessmentIssueMatrix": [
+        {
+          "issueType": "UNKNOWN_ISSUE",
+          "birFinding": null,
+          "taxpayerPosition": null,
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "authorityNeeded": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "proceduralDefenseTopics": [
+            "due process and documentary basis review"
+          ],
+          "substantiveDefenseTopics": [
+            "substantiation and legal basis review"
+          ],
+          "riskLevel": "unknown",
+          "humanReviewRequired": true
+        }
+      ],
+      "protestStrategy": {
+        "recommendedPath": "HUMAN_REVIEW_REQUIRED",
+        "reconsiderationAppropriateWhen": [],
+        "reinvestigationAppropriateWhen": [],
+        "requiredAttachments": [
+          "Issue-by-issue protest matrix",
+          "Supporting documents for each finding"
+        ],
+        "filingProofRequirements": [
+          "Proof of filing of the protest"
+        ],
+        "monitoringEvents": [
+          "FDDA",
+          "denial",
+          "inaction"
+        ],
+        "prohibitedOverreach": [
+          "Do not treat this workflow model as a final legal conclusion.",
+          "Do not generate a filing-ready protest document from this scaffold."
+        ]
+      },
+      "proceduralSafeguards": {
+        "dueProcessCheckNeeded": true,
+        "properServiceCheckNeeded": true,
+        "statementOfFactsAndLawCheckNeeded": true,
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": false,
+        "prescriptionCheckNeeded": true,
+        "noRegressionRuleCheckNeeded": false,
+        "priorNoticeConsistencyCheckNeeded": false
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [
+          "NIRC Sec. 228"
+        ],
+        "jurisprudenceNeeded": [],
+        "birIssuancesNeeded": [
+          "RR No. 18-2013"
+        ],
+        "ctaRulesNeeded": [],
+        "authorityStatus": "authority_required"
+      },
+      "safeWarnings": [
+        "Failure to file a valid protest within the applicable period may cause finality risk.",
+        "This scaffold does not determine whether the FAN/FLD is valid, final, void, or appealable."
+      ],
+      "recommendedNextActions": [
+        "Record date of receipt.",
+        "Calendar the protest period for review.",
+        "Determine whether reconsideration or reinvestigation is appropriate.",
+        "Identify procedural defenses.",
+        "Identify substantive tax defenses.",
+        "Prepare an issue-by-issue protest matrix.",
+        "Preserve proof of filing.",
+        "Monitor FDDA, denial, or inaction.",
+        "Escalate for professional legal/tax review."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, supporting document period, inaction, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidated PAN/FAN safeguard reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidated PAN/FAN safeguards, fresh response/protest periods, proper service, no-regression rule, and FDDA/finality limitations."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "Uploaded professional PAN/FAN/FLD/protest workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe workflow guidance only and does not constitute a final legal or tax conclusion. Receipt date, notice type, protest type, and applicable rules must be verified before final deadline computation, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "BIR_CONSOLIDATED_FAN": {
+      "phase": "09N",
+      "mode": "pan_fan_fld_protest_workflow",
+      "version": "PHASE-09N-PAN-FAN-FLD-PROTEST-WORKFLOW-SCAFFOLD-1",
+      "runtimeActive": false,
+      "workflow": {
+        "noticeType": "BIR_CONSOLIDATED_FAN",
+        "workflowStage": "FAN_FLD_PROTEST_STAGE",
+        "protestPath": "HUMAN_REVIEW_REQUIRED",
+        "confidence": "high",
+        "reasonCodes": [
+          "explicit_notice_type"
+        ]
+      },
+      "deadlineSignals": {
+        "receiptDateKnown": true,
+        "dateIssuedKnown": false,
+        "panReply15DayPotential": false,
+        "fanFldProtest30DayPotential": true,
+        "reinvestigation60DayPotential": false,
+        "inaction180DayPotential": true,
+        "fddaAppeal30DayPotential": true,
+        "ctaInactionAppealPotential": true,
+        "freshPanResponsePeriodPotential": false,
+        "freshFanProtestPeriodPotential": true,
+        "deadlineComputationStatus": "rule_identified_no_final_deadline",
+        "deadlineCannotBeComputedReason": null
+      },
+      "assessmentIssueMatrix": [
+        {
+          "issueType": "UNKNOWN_ISSUE",
+          "birFinding": null,
+          "taxpayerPosition": null,
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "authorityNeeded": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "proceduralDefenseTopics": [
+            "due process and documentary basis review"
+          ],
+          "substantiveDefenseTopics": [
+            "substantiation and legal basis review"
+          ],
+          "riskLevel": "unknown",
+          "humanReviewRequired": true
+        }
+      ],
+      "protestStrategy": {
+        "recommendedPath": "HUMAN_REVIEW_REQUIRED",
+        "reconsiderationAppropriateWhen": [],
+        "reinvestigationAppropriateWhen": [],
+        "requiredAttachments": [
+          "Issue-by-issue protest matrix",
+          "Supporting documents for each finding"
+        ],
+        "filingProofRequirements": [
+          "Proof of filing of the consolidated protest"
+        ],
+        "monitoringEvents": [
+          "FDDA",
+          "denial",
+          "inaction"
+        ],
+        "prohibitedOverreach": [
+          "Do not treat this workflow model as a final legal conclusion.",
+          "Do not generate a filing-ready protest document from this scaffold."
+        ]
+      },
+      "proceduralSafeguards": {
+        "dueProcessCheckNeeded": false,
+        "properServiceCheckNeeded": true,
+        "statementOfFactsAndLawCheckNeeded": false,
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": true,
+        "prescriptionCheckNeeded": true,
+        "noRegressionRuleCheckNeeded": true,
+        "priorNoticeConsistencyCheckNeeded": true
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [
+          "NIRC Sec. 228"
+        ],
+        "jurisprudenceNeeded": [],
+        "birIssuancesNeeded": [
+          "RMO No. 6-2026 FAN-level consolidation safeguards",
+          "RMO No. 1-2026 single-instance audit framework",
+          "RR No. 18-2013"
+        ],
+        "ctaRulesNeeded": [
+          "CTA appeal rules"
+        ],
+        "authorityStatus": "authority_required"
+      },
+      "safeWarnings": [
+        "Consolidated FAN treatment depends on valid service, non-finality, protest timing, written conformity, waiver of prescription where needed, and no-regression safeguards."
+      ],
+      "recommendedNextActions": [
+        "Record date of receipt.",
+        "Confirm proper service of the consolidated FAN.",
+        "Prepare an issue-by-issue protest matrix.",
+        "Preserve proof of filing.",
+        "Escalate for professional legal/tax review."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, supporting document period, inaction, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidated PAN/FAN safeguard reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidated PAN/FAN safeguards, fresh response/protest periods, proper service, no-regression rule, and FDDA/finality limitations."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "Uploaded professional PAN/FAN/FLD/protest workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe workflow guidance only and does not constitute a final legal or tax conclusion. Receipt date, notice type, protest type, and applicable rules must be verified before final deadline computation, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "BIR_FLD": {
+      "phase": "09N",
+      "mode": "pan_fan_fld_protest_workflow",
+      "version": "PHASE-09N-PAN-FAN-FLD-PROTEST-WORKFLOW-SCAFFOLD-1",
+      "runtimeActive": false,
+      "workflow": {
+        "noticeType": "BIR_FLD",
+        "workflowStage": "FAN_FLD_PROTEST_STAGE",
+        "protestPath": "HUMAN_REVIEW_REQUIRED",
+        "confidence": "high",
+        "reasonCodes": [
+          "explicit_notice_type"
+        ]
+      },
+      "deadlineSignals": {
+        "receiptDateKnown": true,
+        "dateIssuedKnown": false,
+        "panReply15DayPotential": false,
+        "fanFldProtest30DayPotential": true,
+        "reinvestigation60DayPotential": true,
+        "inaction180DayPotential": true,
+        "fddaAppeal30DayPotential": true,
+        "ctaInactionAppealPotential": true,
+        "freshPanResponsePeriodPotential": false,
+        "freshFanProtestPeriodPotential": false,
+        "deadlineComputationStatus": "rule_identified_no_final_deadline",
+        "deadlineCannotBeComputedReason": null
+      },
+      "assessmentIssueMatrix": [
+        {
+          "issueType": "UNKNOWN_ISSUE",
+          "birFinding": null,
+          "taxpayerPosition": null,
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "authorityNeeded": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "proceduralDefenseTopics": [
+            "due process and documentary basis review"
+          ],
+          "substantiveDefenseTopics": [
+            "substantiation and legal basis review"
+          ],
+          "riskLevel": "unknown",
+          "humanReviewRequired": true
+        }
+      ],
+      "protestStrategy": {
+        "recommendedPath": "HUMAN_REVIEW_REQUIRED",
+        "reconsiderationAppropriateWhen": [],
+        "reinvestigationAppropriateWhen": [],
+        "requiredAttachments": [
+          "Issue-by-issue protest matrix",
+          "Supporting documents for each finding"
+        ],
+        "filingProofRequirements": [
+          "Proof of filing of the protest"
+        ],
+        "monitoringEvents": [
+          "FDDA",
+          "denial",
+          "inaction"
+        ],
+        "prohibitedOverreach": [
+          "Do not treat this workflow model as a final legal conclusion.",
+          "Do not generate a filing-ready protest document from this scaffold."
+        ]
+      },
+      "proceduralSafeguards": {
+        "dueProcessCheckNeeded": true,
+        "properServiceCheckNeeded": true,
+        "statementOfFactsAndLawCheckNeeded": true,
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": false,
+        "prescriptionCheckNeeded": true,
+        "noRegressionRuleCheckNeeded": false,
+        "priorNoticeConsistencyCheckNeeded": false
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [
+          "NIRC Sec. 228"
+        ],
+        "jurisprudenceNeeded": [],
+        "birIssuancesNeeded": [
+          "RR No. 18-2013"
+        ],
+        "ctaRulesNeeded": [],
+        "authorityStatus": "authority_required"
+      },
+      "safeWarnings": [
+        "Failure to file a valid protest within the applicable period may cause finality risk.",
+        "This scaffold does not determine whether the FAN/FLD is valid, final, void, or appealable."
+      ],
+      "recommendedNextActions": [
+        "Record date of receipt.",
+        "Calendar the protest period for review.",
+        "Determine whether reconsideration or reinvestigation is appropriate.",
+        "Identify procedural defenses.",
+        "Identify substantive tax defenses.",
+        "Prepare an issue-by-issue protest matrix.",
+        "Preserve proof of filing.",
+        "Monitor FDDA, denial, or inaction.",
+        "Escalate for professional legal/tax review."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, supporting document period, inaction, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidated PAN/FAN safeguard reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidated PAN/FAN safeguards, fresh response/protest periods, proper service, no-regression rule, and FDDA/finality limitations."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "Uploaded professional PAN/FAN/FLD/protest workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe workflow guidance only and does not constitute a final legal or tax conclusion. Receipt date, notice type, protest type, and applicable rules must be verified before final deadline computation, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "BIR_FAN_FLD": {
+      "phase": "09N",
+      "mode": "pan_fan_fld_protest_workflow",
+      "version": "PHASE-09N-PAN-FAN-FLD-PROTEST-WORKFLOW-SCAFFOLD-1",
+      "runtimeActive": false,
+      "workflow": {
+        "noticeType": "BIR_FAN_FLD",
+        "workflowStage": "FAN_FLD_PROTEST_STAGE",
+        "protestPath": "HUMAN_REVIEW_REQUIRED",
+        "confidence": "high",
+        "reasonCodes": [
+          "explicit_notice_type"
+        ]
+      },
+      "deadlineSignals": {
+        "receiptDateKnown": true,
+        "dateIssuedKnown": false,
+        "panReply15DayPotential": false,
+        "fanFldProtest30DayPotential": true,
+        "reinvestigation60DayPotential": true,
+        "inaction180DayPotential": true,
+        "fddaAppeal30DayPotential": true,
+        "ctaInactionAppealPotential": true,
+        "freshPanResponsePeriodPotential": false,
+        "freshFanProtestPeriodPotential": false,
+        "deadlineComputationStatus": "rule_identified_no_final_deadline",
+        "deadlineCannotBeComputedReason": null
+      },
+      "assessmentIssueMatrix": [
+        {
+          "issueType": "UNKNOWN_ISSUE",
+          "birFinding": null,
+          "taxpayerPosition": null,
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "authorityNeeded": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "proceduralDefenseTopics": [
+            "due process and documentary basis review"
+          ],
+          "substantiveDefenseTopics": [
+            "substantiation and legal basis review"
+          ],
+          "riskLevel": "unknown",
+          "humanReviewRequired": true
+        }
+      ],
+      "protestStrategy": {
+        "recommendedPath": "HUMAN_REVIEW_REQUIRED",
+        "reconsiderationAppropriateWhen": [],
+        "reinvestigationAppropriateWhen": [],
+        "requiredAttachments": [
+          "Issue-by-issue protest matrix",
+          "Supporting documents for each finding"
+        ],
+        "filingProofRequirements": [
+          "Proof of filing of the protest"
+        ],
+        "monitoringEvents": [
+          "FDDA",
+          "denial",
+          "inaction"
+        ],
+        "prohibitedOverreach": [
+          "Do not treat this workflow model as a final legal conclusion.",
+          "Do not generate a filing-ready protest document from this scaffold."
+        ]
+      },
+      "proceduralSafeguards": {
+        "dueProcessCheckNeeded": true,
+        "properServiceCheckNeeded": true,
+        "statementOfFactsAndLawCheckNeeded": true,
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": false,
+        "prescriptionCheckNeeded": true,
+        "noRegressionRuleCheckNeeded": false,
+        "priorNoticeConsistencyCheckNeeded": false
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [
+          "NIRC Sec. 228"
+        ],
+        "jurisprudenceNeeded": [],
+        "birIssuancesNeeded": [
+          "RR No. 18-2013"
+        ],
+        "ctaRulesNeeded": [],
+        "authorityStatus": "authority_required"
+      },
+      "safeWarnings": [
+        "Failure to file a valid protest within the applicable period may cause finality risk.",
+        "This scaffold does not determine whether the FAN/FLD is valid, final, void, or appealable."
+      ],
+      "recommendedNextActions": [
+        "Record date of receipt.",
+        "Calendar the protest period for review.",
+        "Determine whether reconsideration or reinvestigation is appropriate.",
+        "Identify procedural defenses.",
+        "Identify substantive tax defenses.",
+        "Prepare an issue-by-issue protest matrix.",
+        "Preserve proof of filing.",
+        "Monitor FDDA, denial, or inaction.",
+        "Escalate for professional legal/tax review."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, supporting document period, inaction, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidated PAN/FAN safeguard reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidated PAN/FAN safeguards, fresh response/protest periods, proper service, no-regression rule, and FDDA/finality limitations."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "Uploaded professional PAN/FAN/FLD/protest workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe workflow guidance only and does not constitute a final legal or tax conclusion. Receipt date, notice type, protest type, and applicable rules must be verified before final deadline computation, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "BIR_FDDA": {
+      "phase": "09N",
+      "mode": "pan_fan_fld_protest_workflow",
+      "version": "PHASE-09N-PAN-FAN-FLD-PROTEST-WORKFLOW-SCAFFOLD-1",
+      "runtimeActive": false,
+      "workflow": {
+        "noticeType": "BIR_FDDA",
+        "workflowStage": "FDDA_RECEIVED_STAGE",
+        "protestPath": "FDDA_CTA_APPEAL_WATCH",
+        "confidence": "high",
+        "reasonCodes": [
+          "explicit_notice_type"
+        ]
+      },
+      "deadlineSignals": {
+        "receiptDateKnown": true,
+        "dateIssuedKnown": false,
+        "panReply15DayPotential": false,
+        "fanFldProtest30DayPotential": false,
+        "reinvestigation60DayPotential": false,
+        "inaction180DayPotential": false,
+        "fddaAppeal30DayPotential": true,
+        "ctaInactionAppealPotential": false,
+        "freshPanResponsePeriodPotential": false,
+        "freshFanProtestPeriodPotential": false,
+        "deadlineComputationStatus": "rule_identified_no_final_deadline",
+        "deadlineCannotBeComputedReason": null
+      },
+      "assessmentIssueMatrix": [
+        {
+          "issueType": "UNKNOWN_ISSUE",
+          "birFinding": null,
+          "taxpayerPosition": null,
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "authorityNeeded": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "proceduralDefenseTopics": [
+            "due process and documentary basis review"
+          ],
+          "substantiveDefenseTopics": [
+            "substantiation and legal basis review"
+          ],
+          "riskLevel": "unknown",
+          "humanReviewRequired": true
+        }
+      ],
+      "protestStrategy": {
+        "recommendedPath": "FDDA_CTA_APPEAL_WATCH",
+        "reconsiderationAppropriateWhen": [],
+        "reinvestigationAppropriateWhen": [],
+        "requiredAttachments": [],
+        "filingProofRequirements": [
+          "Proof of the prior protest filing"
+        ],
+        "monitoringEvents": [
+          "CTA appeal-watch period"
+        ],
+        "prohibitedOverreach": [
+          "Do not treat this workflow model as a final legal conclusion.",
+          "Do not generate a filing-ready protest document from this scaffold."
+        ]
+      },
+      "proceduralSafeguards": {
+        "dueProcessCheckNeeded": true,
+        "properServiceCheckNeeded": true,
+        "statementOfFactsAndLawCheckNeeded": true,
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": false,
+        "prescriptionCheckNeeded": false,
+        "noRegressionRuleCheckNeeded": false,
+        "priorNoticeConsistencyCheckNeeded": false
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [
+          "NIRC Sec. 228"
+        ],
+        "jurisprudenceNeeded": [
+          "Jurisdictional appeal-period jurisprudence"
+        ],
+        "birIssuancesNeeded": [
+          "RR No. 18-2013"
+        ],
+        "ctaRulesNeeded": [
+          "CTA rules"
+        ],
+        "authorityStatus": "authority_required"
+      },
+      "safeWarnings": [
+        "FDDA receipt may trigger CTA appeal-watch.",
+        "This scaffold does not determine the final appeal deadline or legal sufficiency of the FDDA."
+      ],
+      "recommendedNextActions": [
+        "Record date of receipt.",
+        "Calendar the CTA appeal-watch period for review.",
+        "Preserve proof of the prior protest filing.",
+        "Escalate for professional legal/tax review."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, supporting document period, inaction, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidated PAN/FAN safeguard reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidated PAN/FAN safeguards, fresh response/protest periods, proper service, no-regression rule, and FDDA/finality limitations."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "Uploaded professional PAN/FAN/FLD/protest workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe workflow guidance only and does not constitute a final legal or tax conclusion. Receipt date, notice type, protest type, and applicable rules must be verified before final deadline computation, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "BIR_PROTEST_REQUEST_RECONSIDERATION": {
+      "phase": "09N",
+      "mode": "pan_fan_fld_protest_workflow",
+      "version": "PHASE-09N-PAN-FAN-FLD-PROTEST-WORKFLOW-SCAFFOLD-1",
+      "runtimeActive": false,
+      "workflow": {
+        "noticeType": "BIR_PROTEST_REQUEST_RECONSIDERATION",
+        "workflowStage": "FAN_FLD_PROTEST_STAGE",
+        "protestPath": "REQUEST_FOR_RECONSIDERATION",
+        "confidence": "high",
+        "reasonCodes": [
+          "explicit_notice_type"
+        ]
+      },
+      "deadlineSignals": {
+        "receiptDateKnown": false,
+        "dateIssuedKnown": false,
+        "panReply15DayPotential": false,
+        "fanFldProtest30DayPotential": false,
+        "reinvestigation60DayPotential": false,
+        "inaction180DayPotential": false,
+        "fddaAppeal30DayPotential": false,
+        "ctaInactionAppealPotential": false,
+        "freshPanResponsePeriodPotential": false,
+        "freshFanProtestPeriodPotential": false,
+        "deadlineComputationStatus": "facts_missing",
+        "deadlineCannotBeComputedReason": "date of receipt not provided"
+      },
+      "assessmentIssueMatrix": [
+        {
+          "issueType": "UNKNOWN_ISSUE",
+          "birFinding": null,
+          "taxpayerPosition": null,
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "authorityNeeded": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "proceduralDefenseTopics": [
+            "due process and documentary basis review"
+          ],
+          "substantiveDefenseTopics": [
+            "substantiation and legal basis review"
+          ],
+          "riskLevel": "unknown",
+          "humanReviewRequired": true
+        }
+      ],
+      "protestStrategy": {
+        "recommendedPath": "REQUEST_FOR_RECONSIDERATION",
+        "reconsiderationAppropriateWhen": [
+          "the protest relies on existing records already submitted",
+          "the protest relies on legal arguments only",
+          "no new investigation of facts is required"
+        ],
+        "reinvestigationAppropriateWhen": [],
+        "requiredAttachments": [],
+        "filingProofRequirements": [
+          "Proof of filing of the request for reconsideration"
+        ],
+        "monitoringEvents": [
+          "FDDA",
+          "denial",
+          "inaction",
+          "re-evaluation"
+        ],
+        "prohibitedOverreach": [
+          "Do not treat this workflow model as a final legal conclusion.",
+          "Do not generate a filing-ready protest document from this scaffold."
+        ]
+      },
+      "proceduralSafeguards": {
+        "dueProcessCheckNeeded": false,
+        "properServiceCheckNeeded": false,
+        "statementOfFactsAndLawCheckNeeded": false,
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": false,
+        "prescriptionCheckNeeded": false,
+        "noRegressionRuleCheckNeeded": false,
+        "priorNoticeConsistencyCheckNeeded": false
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [
+          "NIRC Sec. 228"
+        ],
+        "jurisprudenceNeeded": [],
+        "birIssuancesNeeded": [
+          "RR No. 18-2013"
+        ],
+        "ctaRulesNeeded": [],
+        "authorityStatus": "authority_required"
+      },
+      "safeWarnings": [
+        "The proper protest path depends on facts and supporting documents; human review is required.",
+        "This path generally does not require a new investigation of facts unless the facts themselves require it."
+      ],
+      "recommendedNextActions": [
+        "Preserve proof of filing.",
+        "Monitor FDDA, denial, inaction, or re-evaluation."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, supporting document period, inaction, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidated PAN/FAN safeguard reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidated PAN/FAN safeguards, fresh response/protest periods, proper service, no-regression rule, and FDDA/finality limitations."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "Uploaded professional PAN/FAN/FLD/protest workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe workflow guidance only and does not constitute a final legal or tax conclusion. Receipt date, notice type, protest type, and applicable rules must be verified before final deadline computation, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "BIR_PROTEST_REQUEST_REINVESTIGATION": {
+      "phase": "09N",
+      "mode": "pan_fan_fld_protest_workflow",
+      "version": "PHASE-09N-PAN-FAN-FLD-PROTEST-WORKFLOW-SCAFFOLD-1",
+      "runtimeActive": false,
+      "workflow": {
+        "noticeType": "BIR_PROTEST_REQUEST_REINVESTIGATION",
+        "workflowStage": "REINVESTIGATION_DOCUMENT_SUBMISSION_STAGE",
+        "protestPath": "REQUEST_FOR_REINVESTIGATION",
+        "confidence": "high",
+        "reasonCodes": [
+          "explicit_notice_type"
+        ]
+      },
+      "deadlineSignals": {
+        "receiptDateKnown": false,
+        "dateIssuedKnown": false,
+        "panReply15DayPotential": false,
+        "fanFldProtest30DayPotential": false,
+        "reinvestigation60DayPotential": true,
+        "inaction180DayPotential": true,
+        "fddaAppeal30DayPotential": true,
+        "ctaInactionAppealPotential": true,
+        "freshPanResponsePeriodPotential": false,
+        "freshFanProtestPeriodPotential": false,
+        "deadlineComputationStatus": "facts_missing",
+        "deadlineCannotBeComputedReason": "date of receipt not provided"
+      },
+      "assessmentIssueMatrix": [
+        {
+          "issueType": "UNKNOWN_ISSUE",
+          "birFinding": null,
+          "taxpayerPosition": null,
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "authorityNeeded": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "proceduralDefenseTopics": [
+            "due process and documentary basis review"
+          ],
+          "substantiveDefenseTopics": [
+            "substantiation and legal basis review"
+          ],
+          "riskLevel": "unknown",
+          "humanReviewRequired": true
+        }
+      ],
+      "protestStrategy": {
+        "recommendedPath": "REQUEST_FOR_REINVESTIGATION",
+        "reconsiderationAppropriateWhen": [],
+        "reinvestigationAppropriateWhen": [
+          "additional evidence is needed",
+          "newly submitted documents support the protest",
+          "further factual examination is required"
+        ],
+        "requiredAttachments": [],
+        "filingProofRequirements": [
+          "Proof of filing of the request for reinvestigation",
+          "Proof of supporting-document submission"
+        ],
+        "monitoringEvents": [
+          "FDDA",
+          "denial",
+          "inaction",
+          "re-evaluation"
+        ],
+        "prohibitedOverreach": [
+          "Do not treat this workflow model as a final legal conclusion.",
+          "Do not generate a filing-ready protest document from this scaffold."
+        ]
+      },
+      "proceduralSafeguards": {
+        "dueProcessCheckNeeded": false,
+        "properServiceCheckNeeded": false,
+        "statementOfFactsAndLawCheckNeeded": false,
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": false,
+        "prescriptionCheckNeeded": false,
+        "noRegressionRuleCheckNeeded": false,
+        "priorNoticeConsistencyCheckNeeded": false
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [
+          "NIRC Sec. 228"
+        ],
+        "jurisprudenceNeeded": [],
+        "birIssuancesNeeded": [
+          "RR No. 18-2013"
+        ],
+        "ctaRulesNeeded": [],
+        "authorityStatus": "authority_required"
+      },
+      "safeWarnings": [
+        "Failure to submit relevant supporting documents within the applicable period may create finality risk."
+      ],
+      "recommendedNextActions": [
+        "Track the supporting-document submission period.",
+        "Preserve proof of filing and attachment submission.",
+        "Monitor FDDA, denial, inaction, or re-evaluation."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, supporting document period, inaction, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidated PAN/FAN safeguard reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidated PAN/FAN safeguards, fresh response/protest periods, proper service, no-regression rule, and FDDA/finality limitations."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "Uploaded professional PAN/FAN/FLD/protest workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe workflow guidance only and does not constitute a final legal or tax conclusion. Receipt date, notice type, protest type, and applicable rules must be verified before final deadline computation, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "BIR_ACTION_ON_PROTEST": {
+      "phase": "09N",
+      "mode": "pan_fan_fld_protest_workflow",
+      "version": "PHASE-09N-PAN-FAN-FLD-PROTEST-WORKFLOW-SCAFFOLD-1",
+      "runtimeActive": false,
+      "workflow": {
+        "noticeType": "BIR_ACTION_ON_PROTEST",
+        "workflowStage": "ACTION_ON_PROTEST_STAGE",
+        "protestPath": "POST_PROTEST_REEVALUATION_MONITORING",
+        "confidence": "high",
+        "reasonCodes": [
+          "explicit_notice_type"
+        ]
+      },
+      "deadlineSignals": {
+        "receiptDateKnown": false,
+        "dateIssuedKnown": false,
+        "panReply15DayPotential": false,
+        "fanFldProtest30DayPotential": false,
+        "reinvestigation60DayPotential": false,
+        "inaction180DayPotential": false,
+        "fddaAppeal30DayPotential": false,
+        "ctaInactionAppealPotential": false,
+        "freshPanResponsePeriodPotential": false,
+        "freshFanProtestPeriodPotential": false,
+        "deadlineComputationStatus": "facts_missing",
+        "deadlineCannotBeComputedReason": "date of receipt not provided"
+      },
+      "assessmentIssueMatrix": [
+        {
+          "issueType": "UNKNOWN_ISSUE",
+          "birFinding": null,
+          "taxpayerPosition": null,
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "authorityNeeded": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "proceduralDefenseTopics": [
+            "due process and documentary basis review"
+          ],
+          "substantiveDefenseTopics": [
+            "substantiation and legal basis review"
+          ],
+          "riskLevel": "unknown",
+          "humanReviewRequired": true
+        }
+      ],
+      "protestStrategy": {
+        "recommendedPath": "POST_PROTEST_REEVALUATION_MONITORING",
+        "reconsiderationAppropriateWhen": [],
+        "reinvestigationAppropriateWhen": [],
+        "requiredAttachments": [],
+        "filingProofRequirements": [
+          "Proof of the original protest filing and attachments"
+        ],
+        "monitoringEvents": [
+          "re-evaluation result",
+          "amended assessment",
+          "denial",
+          "FDDA",
+          "inaction"
+        ],
+        "prohibitedOverreach": [
+          "Do not treat this workflow model as a final legal conclusion.",
+          "Do not generate a filing-ready protest document from this scaffold."
+        ]
+      },
+      "proceduralSafeguards": {
+        "dueProcessCheckNeeded": false,
+        "properServiceCheckNeeded": false,
+        "statementOfFactsAndLawCheckNeeded": false,
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": false,
+        "prescriptionCheckNeeded": false,
+        "noRegressionRuleCheckNeeded": false,
+        "priorNoticeConsistencyCheckNeeded": false
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [
+          "NIRC Sec. 228"
+        ],
+        "jurisprudenceNeeded": [],
+        "birIssuancesNeeded": [
+          "RR No. 18-2013"
+        ],
+        "ctaRulesNeeded": [],
+        "authorityStatus": "authority_limited"
+      },
+      "safeWarnings": [
+        "Acceptance or grant of a protest request for re-evaluation does not automatically mean substantive cancellation.",
+        "Do not treat the matter as substantively resolved without further authority and BIR action."
+      ],
+      "recommendedNextActions": [
+        "Confirm what the BIR granted or acted upon.",
+        "Distinguish procedural acceptance from substantive cancellation.",
+        "Monitor re-evaluation, amended assessment, denial, FDDA, or inaction.",
+        "Keep proof of the original protest and attachments."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, supporting document period, inaction, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidated PAN/FAN safeguard reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidated PAN/FAN safeguards, fresh response/protest periods, proper service, no-regression rule, and FDDA/finality limitations."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "Uploaded professional PAN/FAN/FLD/protest workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe workflow guidance only and does not constitute a final legal or tax conclusion. Receipt date, notice type, protest type, and applicable rules must be verified before final deadline computation, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "CTA_INACTION_APPEAL_WATCH": {
+      "phase": "09N",
+      "mode": "pan_fan_fld_protest_workflow",
+      "version": "PHASE-09N-PAN-FAN-FLD-PROTEST-WORKFLOW-SCAFFOLD-1",
+      "runtimeActive": false,
+      "workflow": {
+        "noticeType": "BIR_PROTEST_REQUEST_RECONSIDERATION",
+        "workflowStage": "CTA_APPEAL_WATCH_STAGE",
+        "protestPath": "CTA_INACTION_APPEAL_WATCH",
+        "confidence": "high",
+        "reasonCodes": [
+          "explicit_notice_type"
+        ]
+      },
+      "deadlineSignals": {
+        "receiptDateKnown": false,
+        "dateIssuedKnown": false,
+        "panReply15DayPotential": false,
+        "fanFldProtest30DayPotential": false,
+        "reinvestigation60DayPotential": false,
+        "inaction180DayPotential": true,
+        "fddaAppeal30DayPotential": false,
+        "ctaInactionAppealPotential": true,
+        "freshPanResponsePeriodPotential": false,
+        "freshFanProtestPeriodPotential": false,
+        "deadlineComputationStatus": "facts_missing",
+        "deadlineCannotBeComputedReason": "date of receipt not provided"
+      },
+      "assessmentIssueMatrix": [
+        {
+          "issueType": "UNKNOWN_ISSUE",
+          "birFinding": null,
+          "taxpayerPosition": null,
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "authorityNeeded": [
+            "Applicable NIRC provisions",
+            "Applicable BIR issuances",
+            "Applicable jurisprudence"
+          ],
+          "proceduralDefenseTopics": [
+            "due process and documentary basis review"
+          ],
+          "substantiveDefenseTopics": [
+            "substantiation and legal basis review"
+          ],
+          "riskLevel": "unknown",
+          "humanReviewRequired": true
+        }
+      ],
+      "protestStrategy": {
+        "recommendedPath": "CTA_INACTION_APPEAL_WATCH",
+        "reconsiderationAppropriateWhen": [
+          "the protest relies on existing records already submitted",
+          "the protest relies on legal arguments only",
+          "no new investigation of facts is required"
+        ],
+        "reinvestigationAppropriateWhen": [],
+        "requiredAttachments": [],
+        "filingProofRequirements": [
+          "Proof of filing of the request for reconsideration"
+        ],
+        "monitoringEvents": [
+          "FDDA",
+          "denial",
+          "inaction",
+          "re-evaluation"
+        ],
+        "prohibitedOverreach": [
+          "Do not treat this workflow model as a final legal conclusion.",
+          "Do not generate a filing-ready protest document from this scaffold."
+        ]
+      },
+      "proceduralSafeguards": {
+        "dueProcessCheckNeeded": false,
+        "properServiceCheckNeeded": false,
+        "statementOfFactsAndLawCheckNeeded": false,
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": false,
+        "prescriptionCheckNeeded": false,
+        "noRegressionRuleCheckNeeded": false,
+        "priorNoticeConsistencyCheckNeeded": false
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [
+          "NIRC Sec. 228"
+        ],
+        "jurisprudenceNeeded": [],
+        "birIssuancesNeeded": [
+          "RR No. 18-2013"
+        ],
+        "ctaRulesNeeded": [],
+        "authorityStatus": "authority_required"
+      },
+      "safeWarnings": [
+        "The proper protest path depends on facts and supporting documents; human review is required.",
+        "This path generally does not require a new investigation of facts unless the facts themselves require it.",
+        "Inaction appeal strategy depends on filing date, protest type, supporting document submission, and controlling CTA rules; human review is required."
+      ],
+      "recommendedNextActions": [
+        "Preserve proof of filing.",
+        "Monitor FDDA, denial, inaction, or re-evaluation."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, supporting document period, inaction, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidated PAN/FAN safeguard reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidated PAN/FAN safeguards, fresh response/protest periods, proper service, no-regression rule, and FDDA/finality limitations."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "Uploaded professional PAN/FAN/FLD/protest workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe workflow guidance only and does not constitute a final legal or tax conclusion. Receipt date, notice type, protest type, and applicable rules must be verified before final deadline computation, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "VAT_EXEMPT_VS_ZERO_RATED_ISSUE": {
+      "phase": "09N",
+      "mode": "pan_fan_fld_protest_workflow",
+      "version": "PHASE-09N-PAN-FAN-FLD-PROTEST-WORKFLOW-SCAFFOLD-1",
+      "runtimeActive": false,
+      "workflow": {
+        "noticeType": "BIR_PAN",
+        "workflowStage": "PAN_REPLY_STAGE",
+        "protestPath": "PAN_REPLY",
+        "confidence": "high",
+        "reasonCodes": [
+          "explicit_notice_type"
+        ]
+      },
+      "deadlineSignals": {
+        "receiptDateKnown": true,
+        "dateIssuedKnown": false,
+        "panReply15DayPotential": true,
+        "fanFldProtest30DayPotential": false,
+        "reinvestigation60DayPotential": false,
+        "inaction180DayPotential": false,
+        "fddaAppeal30DayPotential": false,
+        "ctaInactionAppealPotential": false,
+        "freshPanResponsePeriodPotential": false,
+        "freshFanProtestPeriodPotential": false,
+        "deadlineComputationStatus": "rule_identified_no_final_deadline",
+        "deadlineCannotBeComputedReason": null
+      },
+      "assessmentIssueMatrix": [
+        {
+          "issueType": "VAT_EXEMPT_VS_ZERO_RATED",
+          "birFinding": "Synthetic finding: sales reclassified from zero-rated to exempt.",
+          "taxpayerPosition": "Synthetic position: sales are properly zero-rated export sales.",
+          "documentsAvailable": [
+            "Synthetic sales invoice schedule"
+          ],
+          "documentsMissing": [
+            "Synthetic client foreign-currency remittance support"
+          ],
+          "substituteProofOptions": [
+            "sales invoices",
+            "contracts",
+            "client registration/support",
+            "export/foreign currency/remittance support if applicable",
+            "PEZA or incentive documents if applicable",
+            "SLSP reconciliation",
+            "VAT return reconciliation"
+          ],
+          "authorityNeeded": [
+            "NIRC VAT provisions",
+            "BIR VAT zero-rating rules",
+            "PEZA / export rules if applicable",
+            "VAT invoicing/substantiation rules",
+            "CTA / Supreme Court jurisprudence"
+          ],
+          "proceduralDefenseTopics": [
+            "due process on discrepancy characterization",
+            "stated legal/factual basis for reclassification"
+          ],
+          "substantiveDefenseTopics": [
+            "VAT invoicing compliance",
+            "zero-rating/exemption documentary support",
+            "sales classification basis"
+          ],
+          "riskLevel": "medium",
+          "humanReviewRequired": true
+        }
+      ],
+      "protestStrategy": {
+        "recommendedPath": "PAN_REPLY",
+        "reconsiderationAppropriateWhen": [],
+        "reinvestigationAppropriateWhen": [],
+        "requiredAttachments": [
+          "Issue-by-issue reply matrix",
+          "Supporting documents for each finding"
+        ],
+        "filingProofRequirements": [
+          "Proof of filing of PAN reply"
+        ],
+        "monitoringEvents": [
+          "FAN/FLD issuance"
+        ],
+        "prohibitedOverreach": [
+          "Do not treat this workflow model as a final legal conclusion.",
+          "Do not generate a filing-ready protest document from this scaffold."
+        ]
+      },
+      "proceduralSafeguards": {
+        "dueProcessCheckNeeded": true,
+        "properServiceCheckNeeded": false,
+        "statementOfFactsAndLawCheckNeeded": true,
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": false,
+        "prescriptionCheckNeeded": false,
+        "noRegressionRuleCheckNeeded": false,
+        "priorNoticeConsistencyCheckNeeded": true
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [
+          "NIRC Sec. 228"
+        ],
+        "jurisprudenceNeeded": [],
+        "birIssuancesNeeded": [
+          "RR No. 18-2013"
+        ],
+        "ctaRulesNeeded": [],
+        "authorityStatus": "authority_limited"
+      },
+      "safeWarnings": [
+        "A PAN generally requires a timely response.",
+        "Failure to respond may lead to FAN/FLD issuance and may weaken the taxpayer's procedural position.",
+        "This scaffold does not determine the final deadline or legal sufficiency of the PAN.",
+        "Do not treat accounting-system tagging alone as conclusive tax treatment."
+      ],
+      "recommendedNextActions": [
+        "Record date of receipt.",
+        "Identify tax types and issues.",
+        "Build issue-by-issue reply matrix.",
+        "Match each BIR finding to taxpayer facts and documents.",
+        "Prepare supporting documents.",
+        "Preserve proof of filing.",
+        "Do not ignore the PAN."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, supporting document period, inaction, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidated PAN/FAN safeguard reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidated PAN/FAN safeguards, fresh response/protest periods, proper service, no-regression rule, and FDDA/finality limitations."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "Uploaded professional PAN/FAN/FLD/protest workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe workflow guidance only and does not constitute a final legal or tax conclusion. Receipt date, notice type, protest type, and applicable rules must be verified before final deadline computation, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "CWT_SUBSTANTIATION_ISSUE": {
+      "phase": "09N",
+      "mode": "pan_fan_fld_protest_workflow",
+      "version": "PHASE-09N-PAN-FAN-FLD-PROTEST-WORKFLOW-SCAFFOLD-1",
+      "runtimeActive": false,
+      "workflow": {
+        "noticeType": "BIR_PAN",
+        "workflowStage": "PAN_REPLY_STAGE",
+        "protestPath": "PAN_REPLY",
+        "confidence": "high",
+        "reasonCodes": [
+          "explicit_notice_type"
+        ]
+      },
+      "deadlineSignals": {
+        "receiptDateKnown": true,
+        "dateIssuedKnown": false,
+        "panReply15DayPotential": true,
+        "fanFldProtest30DayPotential": false,
+        "reinvestigation60DayPotential": false,
+        "inaction180DayPotential": false,
+        "fddaAppeal30DayPotential": false,
+        "ctaInactionAppealPotential": false,
+        "freshPanResponsePeriodPotential": false,
+        "freshFanProtestPeriodPotential": false,
+        "deadlineComputationStatus": "rule_identified_no_final_deadline",
+        "deadlineCannotBeComputedReason": null
+      },
+      "assessmentIssueMatrix": [
+        {
+          "issueType": "CWT_SUBSTANTIATION",
+          "birFinding": "Synthetic finding: CWT claimed without matching BIR Form 2307.",
+          "taxpayerPosition": "Synthetic position: certificates were received late from withholding agents.",
+          "documentsAvailable": [
+            "Synthetic partial BIR Form 2307 set"
+          ],
+          "documentsMissing": [
+            "Synthetic complete SAWT reconciliation"
+          ],
+          "substituteProofOptions": [
+            "BIR Form 2307",
+            "SAWT",
+            "income tax return",
+            "sales/collection records",
+            "withholding agent confirmation",
+            "reconciliation schedule"
+          ],
+          "authorityNeeded": [
+            "RR No. 2-98",
+            "BIR Form 2307 rules",
+            "NIRC income tax credit provisions",
+            "jurisprudence on withholding tax credits"
+          ],
+          "proceduralDefenseTopics": [
+            "documentary matching between certificates and returns"
+          ],
+          "substantiveDefenseTopics": [
+            "timeliness and receipt of withholding certificates",
+            "substantiation of creditable withholding tax"
+          ],
+          "riskLevel": "medium",
+          "humanReviewRequired": true
+        }
+      ],
+      "protestStrategy": {
+        "recommendedPath": "PAN_REPLY",
+        "reconsiderationAppropriateWhen": [],
+        "reinvestigationAppropriateWhen": [],
+        "requiredAttachments": [
+          "Issue-by-issue reply matrix",
+          "Supporting documents for each finding"
+        ],
+        "filingProofRequirements": [
+          "Proof of filing of PAN reply"
+        ],
+        "monitoringEvents": [
+          "FAN/FLD issuance"
+        ],
+        "prohibitedOverreach": [
+          "Do not treat this workflow model as a final legal conclusion.",
+          "Do not generate a filing-ready protest document from this scaffold."
+        ]
+      },
+      "proceduralSafeguards": {
+        "dueProcessCheckNeeded": true,
+        "properServiceCheckNeeded": false,
+        "statementOfFactsAndLawCheckNeeded": true,
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": false,
+        "prescriptionCheckNeeded": false,
+        "noRegressionRuleCheckNeeded": false,
+        "priorNoticeConsistencyCheckNeeded": true
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [
+          "NIRC Sec. 228"
+        ],
+        "jurisprudenceNeeded": [],
+        "birIssuancesNeeded": [
+          "RR No. 18-2013"
+        ],
+        "ctaRulesNeeded": [],
+        "authorityStatus": "authority_limited"
+      },
+      "safeWarnings": [
+        "A PAN generally requires a timely response.",
+        "Failure to respond may lead to FAN/FLD issuance and may weaken the taxpayer's procedural position.",
+        "This scaffold does not determine the final deadline or legal sufficiency of the PAN.",
+        "Unsupported CWT claims require documentary matching; timing and receipt of certificates may require legal review."
+      ],
+      "recommendedNextActions": [
+        "Record date of receipt.",
+        "Identify tax types and issues.",
+        "Build issue-by-issue reply matrix.",
+        "Match each BIR finding to taxpayer facts and documents.",
+        "Prepare supporting documents.",
+        "Preserve proof of filing.",
+        "Do not ignore the PAN."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, supporting document period, inaction, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidated PAN/FAN safeguard reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidated PAN/FAN safeguards, fresh response/protest periods, proper service, no-regression rule, and FDDA/finality limitations."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "Uploaded professional PAN/FAN/FLD/protest workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe workflow guidance only and does not constitute a final legal or tax conclusion. Receipt date, notice type, protest type, and applicable rules must be verified before final deadline computation, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "WITHHOLDING_TAX_DEDUCTIBILITY_ISSUE": {
+      "phase": "09N",
+      "mode": "pan_fan_fld_protest_workflow",
+      "version": "PHASE-09N-PAN-FAN-FLD-PROTEST-WORKFLOW-SCAFFOLD-1",
+      "runtimeActive": false,
+      "workflow": {
+        "noticeType": "BIR_PAN",
+        "workflowStage": "PAN_REPLY_STAGE",
+        "protestPath": "PAN_REPLY",
+        "confidence": "high",
+        "reasonCodes": [
+          "explicit_notice_type"
+        ]
+      },
+      "deadlineSignals": {
+        "receiptDateKnown": true,
+        "dateIssuedKnown": false,
+        "panReply15DayPotential": true,
+        "fanFldProtest30DayPotential": false,
+        "reinvestigation60DayPotential": false,
+        "inaction180DayPotential": false,
+        "fddaAppeal30DayPotential": false,
+        "ctaInactionAppealPotential": false,
+        "freshPanResponsePeriodPotential": false,
+        "freshFanProtestPeriodPotential": false,
+        "deadlineComputationStatus": "rule_identified_no_final_deadline",
+        "deadlineCannotBeComputedReason": null
+      },
+      "assessmentIssueMatrix": [
+        {
+          "issueType": "WITHHOLDING_TAX_DEDUCTIBILITY",
+          "birFinding": "Synthetic finding: expenses disallowed for lack of withholding.",
+          "taxpayerPosition": "Synthetic position: withholding was remitted under a different account code.",
+          "documentsAvailable": [
+            "Synthetic expense schedule"
+          ],
+          "documentsMissing": [
+            "Synthetic proof of remittance"
+          ],
+          "substituteProofOptions": [
+            "expense schedule",
+            "supplier invoices",
+            "withholding tax returns",
+            "proof of remittance",
+            "reconciliation of per-books vs. per-return amounts"
+          ],
+          "authorityNeeded": [
+            "NIRC Sec. 34(K)",
+            "RR No. 2-98",
+            "withholding tax regulations",
+            "jurisprudence on deductibility and withholding"
+          ],
+          "proceduralDefenseTopics": [
+            "basis for disallowance stated by BIR"
+          ],
+          "substantiveDefenseTopics": [
+            "deductibility conditioned on withholding compliance"
+          ],
+          "riskLevel": "medium",
+          "humanReviewRequired": true
+        }
+      ],
+      "protestStrategy": {
+        "recommendedPath": "PAN_REPLY",
+        "reconsiderationAppropriateWhen": [],
+        "reinvestigationAppropriateWhen": [],
+        "requiredAttachments": [
+          "Issue-by-issue reply matrix",
+          "Supporting documents for each finding"
+        ],
+        "filingProofRequirements": [
+          "Proof of filing of PAN reply"
+        ],
+        "monitoringEvents": [
+          "FAN/FLD issuance"
+        ],
+        "prohibitedOverreach": [
+          "Do not treat this workflow model as a final legal conclusion.",
+          "Do not generate a filing-ready protest document from this scaffold."
+        ]
+      },
+      "proceduralSafeguards": {
+        "dueProcessCheckNeeded": true,
+        "properServiceCheckNeeded": false,
+        "statementOfFactsAndLawCheckNeeded": true,
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": false,
+        "prescriptionCheckNeeded": false,
+        "noRegressionRuleCheckNeeded": false,
+        "priorNoticeConsistencyCheckNeeded": true
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [
+          "NIRC Sec. 228"
+        ],
+        "jurisprudenceNeeded": [],
+        "birIssuancesNeeded": [
+          "RR No. 18-2013"
+        ],
+        "ctaRulesNeeded": [],
+        "authorityStatus": "authority_limited"
+      },
+      "safeWarnings": [
+        "A PAN generally requires a timely response.",
+        "Failure to respond may lead to FAN/FLD issuance and may weaken the taxpayer's procedural position.",
+        "This scaffold does not determine the final deadline or legal sufficiency of the PAN."
+      ],
+      "recommendedNextActions": [
+        "Record date of receipt.",
+        "Identify tax types and issues.",
+        "Build issue-by-issue reply matrix.",
+        "Match each BIR finding to taxpayer facts and documents.",
+        "Prepare supporting documents.",
+        "Preserve proof of filing.",
+        "Do not ignore the PAN."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, supporting document period, inaction, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidated PAN/FAN safeguard reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidated PAN/FAN safeguards, fresh response/protest periods, proper service, no-regression rule, and FDDA/finality limitations."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "Uploaded professional PAN/FAN/FLD/protest workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe workflow guidance only and does not constitute a final legal or tax conclusion. Receipt date, notice type, protest type, and applicable rules must be verified before final deadline computation, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "INPUT_VAT_SUBSTANTIATION_ISSUE": {
+      "phase": "09N",
+      "mode": "pan_fan_fld_protest_workflow",
+      "version": "PHASE-09N-PAN-FAN-FLD-PROTEST-WORKFLOW-SCAFFOLD-1",
+      "runtimeActive": false,
+      "workflow": {
+        "noticeType": "BIR_PAN",
+        "workflowStage": "PAN_REPLY_STAGE",
+        "protestPath": "PAN_REPLY",
+        "confidence": "high",
+        "reasonCodes": [
+          "explicit_notice_type"
+        ]
+      },
+      "deadlineSignals": {
+        "receiptDateKnown": true,
+        "dateIssuedKnown": false,
+        "panReply15DayPotential": true,
+        "fanFldProtest30DayPotential": false,
+        "reinvestigation60DayPotential": false,
+        "inaction180DayPotential": false,
+        "fddaAppeal30DayPotential": false,
+        "ctaInactionAppealPotential": false,
+        "freshPanResponsePeriodPotential": false,
+        "freshFanProtestPeriodPotential": false,
+        "deadlineComputationStatus": "rule_identified_no_final_deadline",
+        "deadlineCannotBeComputedReason": null
+      },
+      "assessmentIssueMatrix": [
+        {
+          "issueType": "INPUT_VAT_SUBSTANTIATION",
+          "birFinding": "Synthetic finding: input VAT disallowed for invoicing deficiencies.",
+          "taxpayerPosition": "Synthetic position: supplier invoices substantially comply with invoicing rules.",
+          "documentsAvailable": [
+            "Synthetic supplier invoice sample"
+          ],
+          "documentsMissing": [
+            "Synthetic complete purchase journal"
+          ],
+          "substituteProofOptions": [
+            "supplier invoices",
+            "VAT registration support",
+            "purchase journal",
+            "input VAT schedule",
+            "proof of payment if relevant",
+            "VAT return reconciliation"
+          ],
+          "authorityNeeded": [
+            "NIRC Sec. 110",
+            "VAT invoicing requirements",
+            "input VAT substantiation rules",
+            "jurisprudence"
+          ],
+          "proceduralDefenseTopics": [
+            "documentary basis for input VAT disallowance"
+          ],
+          "substantiveDefenseTopics": [
+            "input VAT invoicing and substantiation compliance"
+          ],
+          "riskLevel": "low",
+          "humanReviewRequired": true
+        }
+      ],
+      "protestStrategy": {
+        "recommendedPath": "PAN_REPLY",
+        "reconsiderationAppropriateWhen": [],
+        "reinvestigationAppropriateWhen": [],
+        "requiredAttachments": [
+          "Issue-by-issue reply matrix",
+          "Supporting documents for each finding"
+        ],
+        "filingProofRequirements": [
+          "Proof of filing of PAN reply"
+        ],
+        "monitoringEvents": [
+          "FAN/FLD issuance"
+        ],
+        "prohibitedOverreach": [
+          "Do not treat this workflow model as a final legal conclusion.",
+          "Do not generate a filing-ready protest document from this scaffold."
+        ]
+      },
+      "proceduralSafeguards": {
+        "dueProcessCheckNeeded": true,
+        "properServiceCheckNeeded": false,
+        "statementOfFactsAndLawCheckNeeded": true,
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": false,
+        "prescriptionCheckNeeded": false,
+        "noRegressionRuleCheckNeeded": false,
+        "priorNoticeConsistencyCheckNeeded": true
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [
+          "NIRC Sec. 228"
+        ],
+        "jurisprudenceNeeded": [],
+        "birIssuancesNeeded": [
+          "RR No. 18-2013"
+        ],
+        "ctaRulesNeeded": [],
+        "authorityStatus": "authority_limited"
+      },
+      "safeWarnings": [
+        "A PAN generally requires a timely response.",
+        "Failure to respond may lead to FAN/FLD issuance and may weaken the taxpayer's procedural position.",
+        "This scaffold does not determine the final deadline or legal sufficiency of the PAN."
+      ],
+      "recommendedNextActions": [
+        "Record date of receipt.",
+        "Identify tax types and issues.",
+        "Build issue-by-issue reply matrix.",
+        "Match each BIR finding to taxpayer facts and documents.",
+        "Prepare supporting documents.",
+        "Preserve proof of filing.",
+        "Do not ignore the PAN."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, supporting document period, inaction, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidated PAN/FAN safeguard reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidated PAN/FAN safeguards, fresh response/protest periods, proper service, no-regression rule, and FDDA/finality limitations."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "Uploaded professional PAN/FAN/FLD/protest workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe workflow guidance only and does not constitute a final legal or tax conclusion. Receipt date, notice type, protest type, and applicable rules must be verified before final deadline computation, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "DIVIDEND_FWT_ISSUE": {
+      "phase": "09N",
+      "mode": "pan_fan_fld_protest_workflow",
+      "version": "PHASE-09N-PAN-FAN-FLD-PROTEST-WORKFLOW-SCAFFOLD-1",
+      "runtimeActive": false,
+      "workflow": {
+        "noticeType": "BIR_PAN",
+        "workflowStage": "PAN_REPLY_STAGE",
+        "protestPath": "PAN_REPLY",
+        "confidence": "high",
+        "reasonCodes": [
+          "explicit_notice_type"
+        ]
+      },
+      "deadlineSignals": {
+        "receiptDateKnown": true,
+        "dateIssuedKnown": false,
+        "panReply15DayPotential": true,
+        "fanFldProtest30DayPotential": false,
+        "reinvestigation60DayPotential": false,
+        "inaction180DayPotential": false,
+        "fddaAppeal30DayPotential": false,
+        "ctaInactionAppealPotential": false,
+        "freshPanResponsePeriodPotential": false,
+        "freshFanProtestPeriodPotential": false,
+        "deadlineComputationStatus": "rule_identified_no_final_deadline",
+        "deadlineCannotBeComputedReason": null
+      },
+      "assessmentIssueMatrix": [
+        {
+          "issueType": "DIVIDEND_FWT",
+          "birFinding": "Synthetic finding: dividend declared without corresponding FWT remittance.",
+          "taxpayerPosition": "Synthetic position: no dividend was actually declared or paid during the period.",
+          "documentsAvailable": [
+            "Synthetic general ledger excerpt"
+          ],
+          "documentsMissing": [
+            "Synthetic board resolution"
+          ],
+          "substituteProofOptions": [
+            "board resolution",
+            "dividend declaration records",
+            "shareholder ledger",
+            "withholding tax return",
+            "proof of remittance",
+            "general ledger"
+          ],
+          "authorityNeeded": [
+            "NIRC final withholding tax provisions",
+            "dividend tax rules",
+            "withholding remittance rules",
+            "corporate records"
+          ],
+          "proceduralDefenseTopics": [],
+          "substantiveDefenseTopics": [
+            "dividend characterization and withholding compliance"
+          ],
+          "riskLevel": "medium",
+          "humanReviewRequired": true
+        }
+      ],
+      "protestStrategy": {
+        "recommendedPath": "PAN_REPLY",
+        "reconsiderationAppropriateWhen": [],
+        "reinvestigationAppropriateWhen": [],
+        "requiredAttachments": [
+          "Issue-by-issue reply matrix",
+          "Supporting documents for each finding"
+        ],
+        "filingProofRequirements": [
+          "Proof of filing of PAN reply"
+        ],
+        "monitoringEvents": [
+          "FAN/FLD issuance"
+        ],
+        "prohibitedOverreach": [
+          "Do not treat this workflow model as a final legal conclusion.",
+          "Do not generate a filing-ready protest document from this scaffold."
+        ]
+      },
+      "proceduralSafeguards": {
+        "dueProcessCheckNeeded": true,
+        "properServiceCheckNeeded": false,
+        "statementOfFactsAndLawCheckNeeded": true,
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": false,
+        "prescriptionCheckNeeded": false,
+        "noRegressionRuleCheckNeeded": false,
+        "priorNoticeConsistencyCheckNeeded": true
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [
+          "NIRC Sec. 228"
+        ],
+        "jurisprudenceNeeded": [],
+        "birIssuancesNeeded": [
+          "RR No. 18-2013"
+        ],
+        "ctaRulesNeeded": [],
+        "authorityStatus": "authority_limited"
+      },
+      "safeWarnings": [
+        "A PAN generally requires a timely response.",
+        "Failure to respond may lead to FAN/FLD issuance and may weaken the taxpayer's procedural position.",
+        "This scaffold does not determine the final deadline or legal sufficiency of the PAN."
+      ],
+      "recommendedNextActions": [
+        "Record date of receipt.",
+        "Identify tax types and issues.",
+        "Build issue-by-issue reply matrix.",
+        "Match each BIR finding to taxpayer facts and documents.",
+        "Prepare supporting documents.",
+        "Preserve proof of filing.",
+        "Do not ignore the PAN."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, supporting document period, inaction, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidated PAN/FAN safeguard reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidated PAN/FAN safeguards, fresh response/protest periods, proper service, no-regression rule, and FDDA/finality limitations."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "Uploaded professional PAN/FAN/FLD/protest workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe workflow guidance only and does not constitute a final legal or tax conclusion. Receipt date, notice type, protest type, and applicable rules must be verified before final deadline computation, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "LOA_OR_ELA_AUTHORITY_ISSUE": {
+      "phase": "09N",
+      "mode": "pan_fan_fld_protest_workflow",
+      "version": "PHASE-09N-PAN-FAN-FLD-PROTEST-WORKFLOW-SCAFFOLD-1",
+      "runtimeActive": false,
+      "workflow": {
+        "noticeType": "BIR_PAN",
+        "workflowStage": "PAN_REPLY_STAGE",
+        "protestPath": "PAN_REPLY",
+        "confidence": "high",
+        "reasonCodes": [
+          "explicit_notice_type"
+        ]
+      },
+      "deadlineSignals": {
+        "receiptDateKnown": true,
+        "dateIssuedKnown": false,
+        "panReply15DayPotential": true,
+        "fanFldProtest30DayPotential": false,
+        "reinvestigation60DayPotential": false,
+        "inaction180DayPotential": false,
+        "fddaAppeal30DayPotential": false,
+        "ctaInactionAppealPotential": false,
+        "freshPanResponsePeriodPotential": false,
+        "freshFanProtestPeriodPotential": false,
+        "deadlineComputationStatus": "rule_identified_no_final_deadline",
+        "deadlineCannotBeComputedReason": null
+      },
+      "assessmentIssueMatrix": [
+        {
+          "issueType": "LOA_OR_ELA_AUTHORITY",
+          "birFinding": "Synthetic finding: assessment based on original eLA authority.",
+          "taxpayerPosition": "Synthetic position: eLA authenticity and scope require verification.",
+          "documentsAvailable": [
+            "Synthetic eLA copy"
+          ],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "authorityNeeded": [
+            "RMC No. 5-2026",
+            "RMO No. 1-2026",
+            "RMO No. 6-2026",
+            "RMC No. 14-2026",
+            "LOA/eLA jurisprudence"
+          ],
+          "proceduralDefenseTopics": [
+            "LOA/eLA authenticity and scope verification"
+          ],
+          "substantiveDefenseTopics": [],
+          "riskLevel": "medium",
+          "humanReviewRequired": true
+        }
+      ],
+      "protestStrategy": {
+        "recommendedPath": "PAN_REPLY",
+        "reconsiderationAppropriateWhen": [],
+        "reinvestigationAppropriateWhen": [],
+        "requiredAttachments": [
+          "Issue-by-issue reply matrix",
+          "Supporting documents for each finding"
+        ],
+        "filingProofRequirements": [
+          "Proof of filing of PAN reply"
+        ],
+        "monitoringEvents": [
+          "FAN/FLD issuance"
+        ],
+        "prohibitedOverreach": [
+          "Do not treat this workflow model as a final legal conclusion.",
+          "Do not generate a filing-ready protest document from this scaffold."
+        ]
+      },
+      "proceduralSafeguards": {
+        "dueProcessCheckNeeded": true,
+        "properServiceCheckNeeded": false,
+        "statementOfFactsAndLawCheckNeeded": true,
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": false,
+        "prescriptionCheckNeeded": false,
+        "noRegressionRuleCheckNeeded": false,
+        "priorNoticeConsistencyCheckNeeded": true
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [
+          "NIRC Sec. 228"
+        ],
+        "jurisprudenceNeeded": [],
+        "birIssuancesNeeded": [
+          "RR No. 18-2013"
+        ],
+        "ctaRulesNeeded": [],
+        "authorityStatus": "authority_limited"
+      },
+      "safeWarnings": [
+        "A PAN generally requires a timely response.",
+        "Failure to respond may lead to FAN/FLD issuance and may weaken the taxpayer's procedural position.",
+        "This scaffold does not determine the final deadline or legal sufficiency of the PAN.",
+        "Do not conclude invalidity from the scaffold alone."
+      ],
+      "recommendedNextActions": [
+        "Record date of receipt.",
+        "Identify tax types and issues.",
+        "Build issue-by-issue reply matrix.",
+        "Match each BIR finding to taxpayer facts and documents.",
+        "Prepare supporting documents.",
+        "Preserve proof of filing.",
+        "Do not ignore the PAN."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, supporting document period, inaction, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidated PAN/FAN safeguard reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidated PAN/FAN safeguards, fresh response/protest periods, proper service, no-regression rule, and FDDA/finality limitations."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "Uploaded professional PAN/FAN/FLD/protest workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe workflow guidance only and does not constitute a final legal or tax conclusion. Receipt date, notice type, protest type, and applicable rules must be verified before final deadline computation, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "CONSOLIDATED_NOTICE_ISSUE": {
+      "phase": "09N",
+      "mode": "pan_fan_fld_protest_workflow",
+      "version": "PHASE-09N-PAN-FAN-FLD-PROTEST-WORKFLOW-SCAFFOLD-1",
+      "runtimeActive": false,
+      "workflow": {
+        "noticeType": "BIR_CONSOLIDATED_PAN",
+        "workflowStage": "PAN_REPLY_STAGE",
+        "protestPath": "PAN_REPLY",
+        "confidence": "high",
+        "reasonCodes": [
+          "explicit_notice_type"
+        ]
+      },
+      "deadlineSignals": {
+        "receiptDateKnown": true,
+        "dateIssuedKnown": false,
+        "panReply15DayPotential": true,
+        "fanFldProtest30DayPotential": false,
+        "reinvestigation60DayPotential": false,
+        "inaction180DayPotential": false,
+        "fddaAppeal30DayPotential": false,
+        "ctaInactionAppealPotential": false,
+        "freshPanResponsePeriodPotential": true,
+        "freshFanProtestPeriodPotential": false,
+        "deadlineComputationStatus": "rule_identified_no_final_deadline",
+        "deadlineCannotBeComputedReason": null
+      },
+      "assessmentIssueMatrix": [
+        {
+          "issueType": "CONSOLIDATED_NOTICE",
+          "birFinding": "Synthetic finding: findings consolidated from two eLAs.",
+          "taxpayerPosition": "Synthetic position: consolidation stage and service require verification.",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "authorityNeeded": [
+            "RMO No. 1-2026",
+            "RMO No. 6-2026",
+            "RMC No. 14-2026",
+            "NIRC Sec. 228",
+            "RR No. 18-2013"
+          ],
+          "proceduralDefenseTopics": [
+            "consolidation stage, service, and prior-notice review"
+          ],
+          "substantiveDefenseTopics": [],
+          "riskLevel": "medium",
+          "humanReviewRequired": true
+        }
+      ],
+      "protestStrategy": {
+        "recommendedPath": "PAN_REPLY",
+        "reconsiderationAppropriateWhen": [],
+        "reinvestigationAppropriateWhen": [],
+        "requiredAttachments": [
+          "Issue-by-issue reply matrix",
+          "Supporting documents for each finding"
+        ],
+        "filingProofRequirements": [
+          "Proof of filing of consolidated PAN reply"
+        ],
+        "monitoringEvents": [
+          "FAN/FLD issuance"
+        ],
+        "prohibitedOverreach": [
+          "Do not treat this workflow model as a final legal conclusion.",
+          "Do not generate a filing-ready protest document from this scaffold."
+        ]
+      },
+      "proceduralSafeguards": {
+        "dueProcessCheckNeeded": false,
+        "properServiceCheckNeeded": true,
+        "statementOfFactsAndLawCheckNeeded": false,
+        "loaOrElaAuthorityCheckNeeded": false,
+        "replacementElaCheckNeeded": false,
+        "consolidatedNoticeCheckNeeded": true,
+        "prescriptionCheckNeeded": false,
+        "noRegressionRuleCheckNeeded": true,
+        "priorNoticeConsistencyCheckNeeded": true
+      },
+      "authorityNeeds": {
+        "controllingAuthoritiesNeeded": [
+          "NIRC Sec. 228"
+        ],
+        "jurisprudenceNeeded": [],
+        "birIssuancesNeeded": [
+          "RMO No. 6-2026 consolidation safeguards",
+          "RMO No. 1-2026 single-instance audit framework",
+          "RR No. 18-2013"
+        ],
+        "ctaRulesNeeded": [],
+        "authorityStatus": "authority_required"
+      },
+      "safeWarnings": [
+        "A consolidated PAN may create a fresh response period only if proper service and consolidation safeguards apply.",
+        "Consolidated notices require stage, service, prior notice, and deadline review."
+      ],
+      "recommendedNextActions": [
+        "Record date of receipt.",
+        "Confirm proper service of the consolidated PAN.",
+        "Build an issue-by-issue reply matrix.",
+        "Preserve proof of filing."
+      ],
+      "prohibitedConclusions": [
+        "notice_validity_determination",
+        "assessment_finality_determination",
+        "protest_outcome_guarantee",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 18-2013 assessment protest procedure reference",
+          "sourceType": "BIR regulation",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, supporting document period, inaction, and CTA appeal-watch rules. This scaffold does not perform live verification."
+        },
+        {
+          "label": "NIRC Sec. 228 assessment due process reference",
+          "sourceType": "Tax Code",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+        },
+        {
+          "label": "RMO No. 6-2026 consolidated PAN/FAN safeguard reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for consolidated PAN/FAN safeguards, fresh response/protest periods, proper service, no-regression rule, and FDDA/finality limitations."
+        },
+        {
+          "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+        },
+        {
+          "label": "Uploaded professional PAN/FAN/FLD/protest workflow reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe workflow guidance only and does not constitute a final legal or tax conclusion. Receipt date, notice type, protest type, and applicable rules must be verified before final deadline computation, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    }
+  },
+  "prohibitedClaims": [
+    "this assessment is void",
+    "this loa is invalid",
+    "this ela is invalid",
+    "this replacement ela is invalid",
+    "this fan is invalid",
+    "this fld is invalid",
+    "this pan is invalid",
+    "this fdda is invalid",
+    "the bir cannot assess you",
+    "the case is fully cancelled",
+    "the assessment is cancelled",
+    "you are permanently cleared",
+    "no need to consult a professional",
+    "submit everything without review",
+    "ignore the notice",
+    "you will win",
+    "guaranteed cancellation",
+    "final legal opinion",
+    "official legal advice",
+    "court-tested defense",
+    "foolproof defense",
+    "the protest is guaranteed to succeed",
+    "cta appeal is definitely available",
+    "the assessment is final",
+    "the assessment is not final",
+    "the deadline is definitely"
+  ],
+  "sourceCardRules": {
+    "allowedAuthorityTiers": [
+      "official_reference_required",
+      "uploaded_reference_pattern",
+      "future_authority_corpus_required",
+      "procedural_design_reference"
+    ],
+    "mustNotClaimFinalAuthorityVerificationComplete": true,
+    "mustNotClaimFinalLegalConclusion": true,
+    "requiredBaselineSourceCards": [
+      {
+        "label": "RR No. 18-2013 assessment protest procedure reference",
+        "sourceType": "BIR regulation",
+        "authorityTier": "official_reference_required",
+        "note": "Required checkpoint for PAN reply, FAN/FLD protest, reconsideration, reinvestigation, supporting document period, inaction, and CTA appeal-watch rules. This scaffold does not perform live verification."
+      },
+      {
+        "label": "NIRC Sec. 228 assessment due process reference",
+        "sourceType": "Tax Code",
+        "authorityTier": "official_reference_required",
+        "note": "Required checkpoint for assessment notices stating facts, law, rules, regulations, or jurisprudence. This scaffold does not provide final legal conclusions."
+      },
+      {
+        "label": "RMO No. 6-2026 consolidated PAN/FAN safeguard reference",
+        "sourceType": "BIR issuance",
+        "authorityTier": "official_reference_required",
+        "note": "Required checkpoint for consolidated PAN/FAN safeguards, fresh response/protest periods, proper service, no-regression rule, and FDDA/finality limitations."
+      },
+      {
+        "label": "RMC No. 14-2026 replacement eLA and consolidation clarification",
+        "sourceType": "BIR issuance",
+        "authorityTier": "official_reference_required",
+        "note": "Required checkpoint for replacement eLA continuity, prior LOA/eLA validity, and consolidation transition issues."
+      },
+      {
+        "label": "Uploaded professional PAN/FAN/FLD/protest workflow reference pattern",
+        "sourceType": "private uploaded reference",
+        "authorityTier": "uploaded_reference_pattern",
+        "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+      }
+    ]
+  },
+  "futurePatchPlan": [
+    "PHASE-09O-BIR-AUDIT-DEFENSE-MATRIX-SCAFFOLD-1",
+    "PHASE-09-GATE-CLOSURE-1"
+  ],
+  "nextTask": "PHASE-09O-BIR-AUDIT-DEFENSE-MATRIX-SCAFFOLD-1"
+}
