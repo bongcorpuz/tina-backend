@@ -1,0 +1,4188 @@
+{
+  "patch": "PHASE-09P-BIR-DOCUMENT-COMPLIANCE-TRANSMITTAL-SCAFFOLD-1",
+  "decision": "PHASE 09P BIR DOCUMENT COMPLIANCE TRANSMITTAL SCAFFOLD PASS WITH STRICT RECOMMENDATIONS",
+  "phase": "09P",
+  "baseCommit": "8d76c1d PHASE-09O-BIR-AUDIT-DEFENSE-MATRIX-SCAFFOLD-1 add audit defense matrix scaffold",
+  "nonRuntimePatch": {
+    "noRuntimeActivation": true,
+    "noAskHandlerWiring": true,
+    "noServerChanges": true,
+    "noRouteChanges": true,
+    "noPipelineChanges": true,
+    "noFeatureFlagEnabledByDefault": true,
+    "noMemoryActivation": true,
+    "noPersistence": true,
+    "noExternalSearch": true,
+    "noOpenAiCalls": true,
+    "noSupabaseCalls": true,
+    "noGoogleDriveCalls": true,
+    "noN8n": true,
+    "noFirecrawl": true,
+    "noCrawlee": true,
+    "noMcp": true,
+    "noOcr": true,
+    "noPhase10Implementation": true,
+    "noPhase11Implementation": true,
+    "noProductionChange": true,
+    "noRealTaxpayerData": true,
+    "noFinalLegalConclusion": true,
+    "noFilingReadyTransmittalLetter": true,
+    "noFilingReadyAffidavit": true,
+    "noFilingReadyCertification": true,
+    "noFilingReadyEmail": true,
+    "noAutomaticSubmission": true
+  },
+  "currentState": {
+    "phase8Closed": true,
+    "phase8SClosed": true,
+    "phase08XClosed": true,
+    "phase9AComplete": true,
+    "phase9BComplete": true,
+    "phase9CComplete": true,
+    "phase9DComplete": true,
+    "phase9EComplete": true,
+    "phase9FComplete": true,
+    "phase9GComplete": true,
+    "phase9HComplete": true,
+    "phase9IComplete": true,
+    "phase9RRuntimeScaffoldComplete": true,
+    "phase9RIntegrationDesignComplete": true,
+    "phase9RStagingSmokeComplete": true,
+    "phase9LProceduralFallbackScaffoldComplete": true,
+    "phase9MNoticeLoaTriageIntentScaffoldComplete": true,
+    "phase9NPanFanFldProtestWorkflowScaffoldComplete": true,
+    "phase9OAuditDefenseMatrixScaffoldComplete": true,
+    "phase9PDocumentComplianceTransmittalScaffoldComplete": true,
+    "memoryInactive": true,
+    "productionUnchanged": true,
+    "mcpDeferredUntilAfterFinalPlannedPhase": true,
+    "latestCommitBeforePatch": "8d76c1d"
+  },
+  "objective": "Provide a design-only, non-runtime-active scaffold structuring BIR document submission responses (LOA checklists, notices for presentation/submission, additional document requests, pre-subpoena/subpoena document organization, NOD/DOD/PAN/FAN/FLD/reinvestigation/FDDA supporting documents, termination supporting documents) into a controlled document compliance and transmittal plan. This scaffold creates a structured compliance/transmittal plan only; it does not decide legal validity and does not draft final submissions.",
+  "supportedItemStatuses": [
+    "provided",
+    "to_follow",
+    "not_applicable",
+    "unavailable",
+    "non_existent",
+    "substitute_proof_available",
+    "requires_reconciliation",
+    "requires_certified_copy",
+    "requires_on_premise_review",
+    "requires_bir_clarification",
+    "unknown"
+  ],
+  "supportedRequestTypes": [
+    "LOA_INITIAL_CHECKLIST",
+    "NOTICE_FOR_PRESENTATION_SUBMISSION",
+    "CHECKLIST_OF_REQUIREMENTS",
+    "ADDITIONAL_DOCUMENT_REQUEST",
+    "PRE_SUBPOENA_REMINDER",
+    "SUBPOENA_DUCES_TECUM",
+    "NOD_DOD_SUPPORTING_DOCUMENTS",
+    "PAN_REPLY_SUPPORTING_DOCUMENTS",
+    "FAN_FLD_PROTEST_SUPPORTING_DOCUMENTS",
+    "REINVESTIGATION_SUPPORTING_DOCUMENTS",
+    "FDDA_APPEAL_SUPPORTING_DOCUMENTS",
+    "TERMINATION_LETTER_SUPPORTING_DOCUMENTS",
+    "UNKNOWN_DOCUMENT_REQUEST"
+  ],
+  "supportedResponseTypes": [
+    "DOCUMENT_TRANSMITTAL_MATRIX",
+    "ITEMIZED_STATUS_RESPONSE",
+    "NON_APPLICABILITY_EXPLANATION",
+    "UNAVAILABLE_DOCUMENT_EXPLANATION",
+    "NON_EXISTENT_DOCUMENT_EXPLANATION",
+    "SUBSTITUTE_PROOF_PLAN",
+    "AFFIDAVIT_OR_CERTIFICATION_PLAN",
+    "REQUEST_FOR_CLARIFICATION",
+    "REQUEST_FOR_EXTENSION",
+    "RECEIVING_PROOF_TRACKER",
+    "CLIENT_STATUS_UPDATE",
+    "HUMAN_REVIEW_REQUIRED"
+  ],
+  "supportedRoutes": [
+    "AUTHORITY_SAFE_PROCEDURAL_FALLBACK",
+    "BIR_NOTICE_TRIAGE",
+    "BIR_AUDIT_DEFENSE_MATRIX",
+    "PAN_FAN_FLD_PROTEST_WORKFLOW",
+    "DOCUMENT_COMPLIANCE_TRANSMITTAL",
+    "AUTHORITY_CORPUS_RESEARCH",
+    "HUMAN_TAX_LEGAL_REVIEW"
+  ],
+  "referenceCorpusBoundary": {
+    "privateReferenceMaterialsProvidedByUser": true,
+    "referenceMaterialsAreDevelopmentPatternsOnly": true,
+    "noRealTaxpayerNamesUsed": true,
+    "noRealTinsUsed": true,
+    "noRealLoaOrElaNumbersUsed": true,
+    "noRealAuditCaseNumbersUsed": true,
+    "noRealAddressesUsed": true,
+    "noRealBirOfficerNamesUsed": true,
+    "noRealClientNamesUsed": true,
+    "noRealAssessmentAmountsUsed": true,
+    "allExamplesSanitizedAndSynthetic": true,
+    "rmc5_2026TreatedAsLoaElaVerificationDesignReference": true,
+    "rmo1_2026TreatedAsRequired2026AuditBaselineReference": true,
+    "rmo6_2026TreatedAsRequiredConsolidationSafeguardReference": true,
+    "rmc14_2026TreatedAsRequiredReplacementElaClarificationReference": true
+  },
+  "authorityBoundary": {
+    "futureOfficialAuthoritySourcesNoted": [
+      "bir.gov.ph",
+      "bir-cdn.bir.gov.ph",
+      "lawphil.net",
+      "sc.judiciary.gov.ph",
+      "cta.judiciary.gov.ph",
+      "officialgazette.gov.ph",
+      "dof.gov.ph",
+      "peza.gov.ph",
+      "sec.gov.ph",
+      "boi.gov.ph"
+    ],
+    "liveSearchPerformed": false,
+    "liveScrapingPerformed": false,
+    "liveBrowsingPerformed": false,
+    "liveOcrPerformed": false,
+    "liveAuthorityRetrievalPerformed": false,
+    "designOnly": true,
+    "phase10AuthoritySearchImplemented": false,
+    "phase11RetrievalOptimizationImplemented": false
+  },
+  "privacyBoundary": {
+    "sanitizedSyntheticTaxpayerNamesOnly": true,
+    "syntheticTaxpayerNameExamples": [
+      "SAMPLE TAXPAYER INC.",
+      "DEMO LOGISTICS CORP.",
+      "SYNTHETIC HOLDINGS INC.",
+      "MODEL VAT TAXPAYER CORP."
+    ],
+    "fakeSyntheticNumberExamples": [
+      "eLA20XX000000000",
+      "AUDM00-000-20XX-000000",
+      "TIN-XXX-XXX-XXX-XXX",
+      "PHP 0.00"
+    ],
+    "noRealTaxpayerDataInFixturesOrTests": true,
+    "noExactRealAssessmentAmountsUsed": true,
+    "knownRealFragmentsExcludedFromEverything": true
+  },
+  "runtimeBoundary": {
+    "runtimeActiveAlwaysFalse": true,
+    "scaffoldOnlyAlwaysTrue": true,
+    "allowLegalConclusionAlwaysFalse": true,
+    "allowLiveRetrievalAlwaysFalse": true,
+    "allowRealTaxpayerDataAlwaysFalse": true,
+    "generateFilingReadyDocumentAlwaysFalse": true,
+    "automaticSubmissionAlwaysFalse": true,
+    "notWiredToAsk": true,
+    "noAuthenticationDependency": true,
+    "noExpressServerRuntimeDependency": true
+  },
+  "complianceSummaryShape": {
+    "fields": [
+      "requestType",
+      "totalItems",
+      "providedCount",
+      "toFollowCount",
+      "notApplicableCount",
+      "unavailableCount",
+      "nonExistentCount",
+      "substituteProofCount",
+      "clarificationNeededCount",
+      "reconciliationNeededCount",
+      "certifiedCopyNeededCount",
+      "onPremiseReviewNeededCount",
+      "highRiskItemCount",
+      "humanReviewRequired",
+      "confidence"
+    ]
+  },
+  "documentMatrixShape": {
+    "fields": [
+      "itemName",
+      "itemCategory",
+      "requestedByBir",
+      "status",
+      "documentsAvailable",
+      "documentsMissing",
+      "substituteProofOptions",
+      "explanationNeeded",
+      "explanationType",
+      "reconciliationNeeded",
+      "certifiedCopyNeeded",
+      "onPremiseReviewNeeded",
+      "birClarificationNeeded",
+      "receivingProofNeeded",
+      "withoutPrejudiceLanguageNeeded",
+      "riskLevel",
+      "riskReason",
+      "recommendedSafeAction",
+      "prohibitedOverreach",
+      "humanReviewRequired"
+    ]
+  },
+  "transmittalPlanShape": {
+    "fields": [
+      "responseType",
+      "transmittalModeOptions",
+      "itemizedScheduleNeeded",
+      "receivingProofRequired",
+      "birStampedCopyRequired",
+      "emailAcknowledgmentRequired",
+      "authorizedRepresentativeCheckNeeded",
+      "deadlineTrackingNeeded",
+      "withoutPrejudiceLanguageNeeded",
+      "clarificationRequestNeeded",
+      "extensionRequestPotential",
+      "clientStatusUpdateRecommended"
+    ]
+  },
+  "substituteProofPlanShape": {
+    "fields": [
+      "affidavitPotentialItems",
+      "managementCertificationPotentialItems",
+      "afsNotePotentialItems",
+      "taxReturnSupportPotentialItems",
+      "officialRecordPotentialItems",
+      "thirdPartyConfirmationPotentialItems"
+    ]
+  },
+  "receivingProofTrackerShape": {
+    "fields": [
+      "birStampedSubmission",
+      "emailTrail",
+      "courierProof",
+      "uploadConfirmation",
+      "receivingOfficerOrOfficeCaptured",
+      "dateTimeCaptured",
+      "attachmentListCaptured",
+      "proofGapWarnings"
+    ]
+  },
+  "scopeAndAuthorityChecksShape": {
+    "fields": [
+      "standardizedChecklistCheckNeeded",
+      "additionalRequestLimitCheckNeeded",
+      "relevanceCheckNeeded",
+      "necessityCheckNeeded",
+      "auditScopeCheckNeeded",
+      "explanationDocumentationCheckNeeded",
+      "voluminousRecordsCheckNeeded",
+      "onPremiseExaminationPotential",
+      "certifiedCopySubmissionPotential",
+      "preSubpoenaEscalationRisk",
+      "subpoenaEscalationRisk"
+    ]
+  },
+  "validationMatrix": {
+    "newBirDocumentComplianceTransmittalTest": "PASS",
+    "phase09OBirAuditDefenseMatrixTest": "PASS",
+    "phase09NPanFanFldProtestWorkflowTest": "PASS",
+    "phase09MBirNoticeLoaTriageIntentTest": "PASS",
+    "phase09LProceduralFallbackScaffoldTest": "PASS",
+    "phase09RStagingSmokeTest": "PASS",
+    "phase09RIntegrationDesignTest": "PASS",
+    "phase09RRuntimeScaffoldTest": "PASS",
+    "phase09IRequirementsRequestLetterTest": "PASS",
+    "phase09HRuntimeWiringTest": "PASS",
+    "phase09GGovernanceGateTest": "PASS",
+    "phase09FClientAdvisoryComplianceChecklistTest": "PASS",
+    "phase09EBirReplyDraftTest": "PASS",
+    "phase09DAuditDefenseMatrixTest": "PASS",
+    "phase09CTaxMemoSchemaTest": "PASS",
+    "phase09BWorkflowModeRegistryTest": "PASS",
+    "phase09ADesignTest": "PASS",
+    "patch08SFollowupIndexSecretHeaderAuthStagingSmokeTest": "PASS",
+    "patch08XFinalGateTest": "PASS",
+    "patch08SFinalClosureGateTest": "PASS",
+    "guardFiles": "PASS",
+    "npmTest": "PASS"
+  },
+  "sampleInputs": {
+    "LOA_INITIAL_CHECKLIST": {
+      "userQuery": "Prepare a document compliance matrix for SAMPLE TAXPAYER INC.'s BIR LOA checklist.",
+      "requestType": "LOA_INITIAL_CHECKLIST",
+      "workflowContext": {
+        "noticeType": "BIR_ELECTRONIC_LOA",
+        "noticeStage": "AUDIT_AUTHORITY",
+        "taxablePeriod": "CY2025",
+        "receiptDateKnown": true,
+        "voluminousRecords": true,
+        "onPremiseReviewPotential": true
+      },
+      "requestedDocuments": [
+        {
+          "itemName": "Synthetic audited financial statements",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "provided",
+          "documentsAvailable": [
+            "Synthetic AFS copy"
+          ],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "NOTICE_FOR_PRESENTATION_SUBMISSION": {
+      "userQuery": "Prepare a document compliance matrix for DEMO LOGISTICS CORP.'s notice for presentation/submission of documents.",
+      "requestType": "NOTICE_FOR_PRESENTATION_SUBMISSION",
+      "workflowContext": {
+        "noticeType": "BIR_NOTICE_PRESENTATION_SUBMISSION_DOCUMENTS",
+        "noticeStage": "DOCUMENT_REQUEST",
+        "taxablePeriod": "CY2025",
+        "receiptDateKnown": true
+      },
+      "requestedDocuments": [
+        {
+          "itemName": "Synthetic sales invoice schedule",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "to_follow",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "CHECKLIST_OF_REQUIREMENTS": {
+      "userQuery": "Prepare a document compliance matrix for SYNTHETIC HOLDINGS INC.'s checklist of requirements.",
+      "requestType": "CHECKLIST_OF_REQUIREMENTS",
+      "workflowContext": {
+        "noticeType": "BIR_CHECKLIST_REQUIREMENTS_PRESENTATION_SUBMISSION",
+        "noticeStage": "DOCUMENT_REQUEST",
+        "taxablePeriod": "CY2025",
+        "receiptDateKnown": true
+      },
+      "requestedDocuments": [
+        {
+          "itemName": "Synthetic general ledger export",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "provided",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "ADDITIONAL_DOCUMENT_REQUEST": {
+      "userQuery": "MODEL VAT TAXPAYER CORP. received an additional document request beyond the original checklist.",
+      "requestType": "ADDITIONAL_DOCUMENT_REQUEST",
+      "workflowContext": {
+        "noticeType": "BIR_ADDITIONAL_DOCUMENT_REQUEST",
+        "noticeStage": "DOCUMENT_REQUEST",
+        "taxablePeriod": "CY2025",
+        "additionalRequest": true,
+        "receiptDateKnown": true
+      },
+      "requestedDocuments": [
+        {
+          "itemName": "Synthetic unclear supplemental schedule",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "requires_bir_clarification",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "PRE_SUBPOENA_REMINDER": {
+      "userQuery": "SAMPLE TAXPAYER INC. received a reminder before issuance of subpoena duces tecum.",
+      "requestType": "PRE_SUBPOENA_REMINDER",
+      "workflowContext": {
+        "noticeType": "BIR_PRE_SUBPOENA_DUCES_TECUM_REMINDER",
+        "noticeStage": "DOCUMENT_ESCALATION",
+        "taxablePeriod": "CY2025",
+        "preSubpoenaReminderReceived": true,
+        "receiptDateKnown": true
+      },
+      "requestedDocuments": [
+        {
+          "itemName": "Synthetic unsubmitted checklist item",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "to_follow",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "SUBPOENA_DUCES_TECUM": {
+      "userQuery": "DEMO LOGISTICS CORP. received a subpoena duces tecum.",
+      "requestType": "SUBPOENA_DUCES_TECUM",
+      "workflowContext": {
+        "noticeType": "BIR_SUBPOENA_DUCES_TECUM",
+        "noticeStage": "DOCUMENT_ESCALATION",
+        "taxablePeriod": "CY2025",
+        "subpoenaReceived": true,
+        "receiptDateKnown": true
+      },
+      "requestedDocuments": [
+        {
+          "itemName": "Synthetic specified record",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "provided",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "PAN_REPLY_SUPPORTING_DOCUMENTS": {
+      "userQuery": "SYNTHETIC HOLDINGS INC. needs supporting documents for a PAN reply.",
+      "requestType": "PAN_REPLY_SUPPORTING_DOCUMENTS",
+      "workflowContext": {
+        "noticeType": "BIR_PAN",
+        "noticeStage": "PRE_ASSESSMENT",
+        "taxablePeriod": "CY2025",
+        "deadlineSignalsKnown": true,
+        "receiptDateKnown": true
+      },
+      "requestedDocuments": [
+        {
+          "itemName": "Synthetic supporting schedule for PAN issue",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "provided",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "FAN_FLD_PROTEST_SUPPORTING_DOCUMENTS": {
+      "userQuery": "SAMPLE TAXPAYER INC. needs supporting documents for a FAN/FLD protest.",
+      "requestType": "FAN_FLD_PROTEST_SUPPORTING_DOCUMENTS",
+      "workflowContext": {
+        "noticeType": "BIR_FAN_FLD",
+        "noticeStage": "FINAL_ASSESSMENT",
+        "taxablePeriod": "CY2025",
+        "deadlineSignalsKnown": true,
+        "receiptDateKnown": true
+      },
+      "requestedDocuments": [
+        {
+          "itemName": "Synthetic supporting schedule for FAN/FLD issue",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "provided",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "REINVESTIGATION_SUPPORTING_DOCUMENTS": {
+      "userQuery": "DEMO LOGISTICS CORP. needs supporting documents for a reinvestigation.",
+      "requestType": "REINVESTIGATION_SUPPORTING_DOCUMENTS",
+      "workflowContext": {
+        "noticeType": "BIR_PROTEST_REQUEST_REINVESTIGATION",
+        "noticeStage": "ADMINISTRATIVE_PROTEST",
+        "taxablePeriod": "CY2025",
+        "deadlineSignalsKnown": true,
+        "receiptDateKnown": true
+      },
+      "requestedDocuments": [
+        {
+          "itemName": "Synthetic new supporting evidence",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "to_follow",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "TERMINATION_LETTER_SUPPORTING_DOCUMENTS": {
+      "userQuery": "MODEL VAT TAXPAYER CORP. needs to organize records after a termination letter.",
+      "requestType": "TERMINATION_LETTER_SUPPORTING_DOCUMENTS",
+      "workflowContext": {
+        "noticeType": "BIR_AUDIT_TERMINATION_LETTER",
+        "noticeStage": "AUDIT_CLOSURE",
+        "taxablePeriod": "CY2025",
+        "receiptDateKnown": true
+      },
+      "requestedDocuments": [
+        {
+          "itemName": "Synthetic payment proof and BIR receipts",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "provided",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "PROVIDED_ITEM": {
+      "userQuery": "Document compliance matrix with a provided item for SAMPLE TAXPAYER INC.",
+      "requestType": "CHECKLIST_OF_REQUIREMENTS",
+      "workflowContext": {
+        "taxablePeriod": "CY2025"
+      },
+      "requestedDocuments": [
+        {
+          "itemName": "Synthetic AFS copy",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "provided",
+          "documentsAvailable": [
+            "Synthetic AFS copy"
+          ],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "TO_FOLLOW_ITEM": {
+      "userQuery": "Document compliance matrix with a to-follow item for DEMO LOGISTICS CORP.",
+      "requestType": "CHECKLIST_OF_REQUIREMENTS",
+      "workflowContext": {
+        "taxablePeriod": "CY2025"
+      },
+      "requestedDocuments": [
+        {
+          "itemName": "Synthetic late supplier confirmation",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "to_follow",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "NOT_APPLICABLE_ITEM": {
+      "userQuery": "Document compliance matrix with a not-applicable item for SYNTHETIC HOLDINGS INC.",
+      "requestType": "CHECKLIST_OF_REQUIREMENTS",
+      "workflowContext": {
+        "taxablePeriod": "CY2025"
+      },
+      "requestedDocuments": [
+        {
+          "itemName": "Synthetic import documents (not an importer)",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "not_applicable",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "UNAVAILABLE_ITEM": {
+      "userQuery": "Document compliance matrix with an unavailable item for MODEL VAT TAXPAYER CORP.",
+      "requestType": "CHECKLIST_OF_REQUIREMENTS",
+      "workflowContext": {
+        "taxablePeriod": "CY2025"
+      },
+      "requestedDocuments": [
+        {
+          "itemName": "Synthetic archived correspondence",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "unavailable",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "NON_EXISTENT_ITEM": {
+      "userQuery": "Document compliance matrix with a non-existent item for SAMPLE TAXPAYER INC.",
+      "requestType": "CHECKLIST_OF_REQUIREMENTS",
+      "workflowContext": {
+        "taxablePeriod": "CY2025"
+      },
+      "requestedDocuments": [
+        {
+          "itemName": "Synthetic lease contract",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "non_existent",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [
+            "management certification",
+            "affidavit",
+            "space-sharing certification"
+          ],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "SUBSTITUTE_PROOF_AVAILABLE_ITEM": {
+      "userQuery": "Document compliance matrix with a substitute-proof item for DEMO LOGISTICS CORP.",
+      "requestType": "CHECKLIST_OF_REQUIREMENTS",
+      "workflowContext": {
+        "taxablePeriod": "CY2025"
+      },
+      "requestedDocuments": [
+        {
+          "itemName": "Synthetic affidavit of no rental",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "substitute_proof_available",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [
+            "affidavit"
+          ],
+          "riskLevel": "medium",
+          "substituteProofContext": "non_existent"
+        }
+      ]
+    },
+    "REQUIRES_RECONCILIATION_ITEM": {
+      "userQuery": "Document compliance matrix with a reconciliation item for SYNTHETIC HOLDINGS INC.",
+      "requestType": "CHECKLIST_OF_REQUIREMENTS",
+      "workflowContext": {
+        "taxablePeriod": "CY2025"
+      },
+      "requestedDocuments": [
+        {
+          "itemName": "Synthetic sales figures per books vs. per return",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "requires_reconciliation",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "REQUIRES_CERTIFIED_COPY_ITEM": {
+      "userQuery": "Document compliance matrix with a certified-copy item for MODEL VAT TAXPAYER CORP.",
+      "requestType": "CHECKLIST_OF_REQUIREMENTS",
+      "workflowContext": {
+        "taxablePeriod": "CY2025",
+        "certifiedCopySubmissionPotential": true
+      },
+      "requestedDocuments": [
+        {
+          "itemName": "Synthetic certified AFS copy",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "requires_certified_copy",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "REQUIRES_ON_PREMISE_REVIEW_ITEM": {
+      "userQuery": "Document compliance matrix with an on-premise review item for SAMPLE TAXPAYER INC.",
+      "requestType": "CHECKLIST_OF_REQUIREMENTS",
+      "workflowContext": {
+        "taxablePeriod": "CY2025",
+        "voluminousRecords": true,
+        "onPremiseReviewPotential": true
+      },
+      "requestedDocuments": [
+        {
+          "itemName": "Synthetic voluminous general ledger",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "requires_on_premise_review",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "REQUIRES_BIR_CLARIFICATION_ITEM": {
+      "userQuery": "Document compliance matrix with a clarification-needed item for DEMO LOGISTICS CORP.",
+      "requestType": "ADDITIONAL_DOCUMENT_REQUEST",
+      "workflowContext": {
+        "taxablePeriod": "CY2025",
+        "additionalRequest": true
+      },
+      "requestedDocuments": [
+        {
+          "itemName": "Synthetic unclear additional schedule",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "requires_bir_clarification",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "riskLevel": "medium"
+        }
+      ]
+    }
+  },
+  "sampleOutputs": {
+    "LOA_INITIAL_CHECKLIST": {
+      "phase": "09P",
+      "mode": "bir_document_compliance_transmittal",
+      "version": "PHASE-09P-BIR-DOCUMENT-COMPLIANCE-TRANSMITTAL-SCAFFOLD-1",
+      "runtimeActive": false,
+      "complianceSummary": {
+        "requestType": "LOA_INITIAL_CHECKLIST",
+        "totalItems": 1,
+        "providedCount": 1,
+        "toFollowCount": 0,
+        "notApplicableCount": 0,
+        "unavailableCount": 0,
+        "nonExistentCount": 0,
+        "substituteProofCount": 0,
+        "clarificationNeededCount": 0,
+        "reconciliationNeededCount": 0,
+        "certifiedCopyNeededCount": 0,
+        "onPremiseReviewNeededCount": 0,
+        "highRiskItemCount": 0,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "documentMatrix": [
+        {
+          "itemName": "Synthetic audited financial statements",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "provided",
+          "documentsAvailable": [
+            "Synthetic AFS copy"
+          ],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "explanationNeeded": false,
+          "explanationType": "none",
+          "reconciliationNeeded": false,
+          "certifiedCopyNeeded": false,
+          "onPremiseReviewNeeded": false,
+          "birClarificationNeeded": false,
+          "receivingProofNeeded": true,
+          "withoutPrejudiceLanguageNeeded": false,
+          "riskLevel": "medium",
+          "riskReason": "documentary support is available; preserve proof of submission",
+          "recommendedSafeAction": [
+            "Include this item in the itemized transmittal schedule.",
+            "Preserve BIR-stamped or email proof of submission."
+          ],
+          "prohibitedOverreach": [
+            "Do not claim this item guarantees BIR acceptance.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "transmittalPlan": {
+        "responseType": "DOCUMENT_TRANSMITTAL_MATRIX",
+        "transmittalModeOptions": [
+          "in-person filing with receiving stamp",
+          "registered mail",
+          "email submission with acknowledgment"
+        ],
+        "itemizedScheduleNeeded": true,
+        "receivingProofRequired": true,
+        "birStampedCopyRequired": true,
+        "emailAcknowledgmentRequired": true,
+        "authorizedRepresentativeCheckNeeded": true,
+        "deadlineTrackingNeeded": false,
+        "withoutPrejudiceLanguageNeeded": false,
+        "clarificationRequestNeeded": false,
+        "extensionRequestPotential": false,
+        "clientStatusUpdateRecommended": true
+      },
+      "substituteProofPlan": {
+        "affidavitPotentialItems": [],
+        "managementCertificationPotentialItems": [],
+        "afsNotePotentialItems": [],
+        "taxReturnSupportPotentialItems": [],
+        "officialRecordPotentialItems": [],
+        "thirdPartyConfirmationPotentialItems": []
+      },
+      "receivingProofTracker": {
+        "birStampedSubmission": false,
+        "emailTrail": false,
+        "courierProof": false,
+        "uploadConfirmation": false,
+        "receivingOfficerOrOfficeCaptured": false,
+        "dateTimeCaptured": false,
+        "attachmentListCaptured": true,
+        "proofGapWarnings": [
+          "No BIR-stamped, email, or other receiving proof has been confirmed yet for items requiring proof of submission."
+        ]
+      },
+      "scopeAndAuthorityChecks": {
+        "standardizedChecklistCheckNeeded": true,
+        "additionalRequestLimitCheckNeeded": false,
+        "relevanceCheckNeeded": false,
+        "necessityCheckNeeded": false,
+        "auditScopeCheckNeeded": true,
+        "explanationDocumentationCheckNeeded": false,
+        "voluminousRecordsCheckNeeded": true,
+        "onPremiseExaminationPotential": true,
+        "certifiedCopySubmissionPotential": false,
+        "preSubpoenaEscalationRisk": false,
+        "subpoenaEscalationRisk": false
+      },
+      "safeWarnings": [
+        "Do not blindly submit every requested item without review.",
+        "Classify each item and prepare a controlled written transmittal."
+      ],
+      "recommendedNextActions": [
+        "Match each checklist item to available records.",
+        "Prepare an itemized transmittal schedule.",
+        "Preserve BIR-stamped or email proof of submission."
+      ],
+      "prohibitedConclusions": [
+        "document_acceptance_guarantee",
+        "full_compliance_determination",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RMO No. 1-2026 standardized checklist and document request safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for standardized checklist, additional document request limits, relevance, necessity, audit scope, and documented explanation. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMO No. 1-2026 voluminous records and certified copy reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for voluminous books/records, on-premise examination potential, and certified-copy submission concepts. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 14-2026 prior notices/checklists/subpoenas under replacement eLA reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for treatment of prior notices, checklists, and subpoenas when a replacement eLA is issued for continuity. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional document transmittal reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        },
+        {
+          "label": "Uploaded affidavit / substitute proof reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern for non-existent or unavailable documents; no real taxpayer data may be used."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe document compliance planning only and does not constitute a final legal or tax conclusion. Document status, submission proof, and BIR response should be verified, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "NOTICE_FOR_PRESENTATION_SUBMISSION": {
+      "phase": "09P",
+      "mode": "bir_document_compliance_transmittal",
+      "version": "PHASE-09P-BIR-DOCUMENT-COMPLIANCE-TRANSMITTAL-SCAFFOLD-1",
+      "runtimeActive": false,
+      "complianceSummary": {
+        "requestType": "NOTICE_FOR_PRESENTATION_SUBMISSION",
+        "totalItems": 1,
+        "providedCount": 0,
+        "toFollowCount": 1,
+        "notApplicableCount": 0,
+        "unavailableCount": 0,
+        "nonExistentCount": 0,
+        "substituteProofCount": 0,
+        "clarificationNeededCount": 0,
+        "reconciliationNeededCount": 0,
+        "certifiedCopyNeededCount": 0,
+        "onPremiseReviewNeededCount": 0,
+        "highRiskItemCount": 0,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "documentMatrix": [
+        {
+          "itemName": "Synthetic sales invoice schedule",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "to_follow",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "explanationNeeded": false,
+          "explanationType": "to_follow",
+          "reconciliationNeeded": false,
+          "certifiedCopyNeeded": false,
+          "onPremiseReviewNeeded": false,
+          "birClarificationNeeded": false,
+          "receivingProofNeeded": false,
+          "withoutPrejudiceLanguageNeeded": false,
+          "riskLevel": "medium",
+          "riskReason": "document is not yet available; track submission deadline",
+          "recommendedSafeAction": [
+            "List this item with a target submission date for review.",
+            "Preserve proof of the later submission."
+          ],
+          "prohibitedOverreach": [
+            "Do not claim this item guarantees BIR acceptance.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "transmittalPlan": {
+        "responseType": "DOCUMENT_TRANSMITTAL_MATRIX",
+        "transmittalModeOptions": [
+          "in-person filing with receiving stamp",
+          "registered mail",
+          "email submission with acknowledgment"
+        ],
+        "itemizedScheduleNeeded": true,
+        "receivingProofRequired": true,
+        "birStampedCopyRequired": true,
+        "emailAcknowledgmentRequired": true,
+        "authorizedRepresentativeCheckNeeded": true,
+        "deadlineTrackingNeeded": true,
+        "withoutPrejudiceLanguageNeeded": false,
+        "clarificationRequestNeeded": false,
+        "extensionRequestPotential": true,
+        "clientStatusUpdateRecommended": true
+      },
+      "substituteProofPlan": {
+        "affidavitPotentialItems": [],
+        "managementCertificationPotentialItems": [],
+        "afsNotePotentialItems": [],
+        "taxReturnSupportPotentialItems": [],
+        "officialRecordPotentialItems": [],
+        "thirdPartyConfirmationPotentialItems": []
+      },
+      "receivingProofTracker": {
+        "birStampedSubmission": false,
+        "emailTrail": false,
+        "courierProof": false,
+        "uploadConfirmation": false,
+        "receivingOfficerOrOfficeCaptured": false,
+        "dateTimeCaptured": false,
+        "attachmentListCaptured": true,
+        "proofGapWarnings": []
+      },
+      "scopeAndAuthorityChecks": {
+        "standardizedChecklistCheckNeeded": true,
+        "additionalRequestLimitCheckNeeded": false,
+        "relevanceCheckNeeded": false,
+        "necessityCheckNeeded": false,
+        "auditScopeCheckNeeded": true,
+        "explanationDocumentationCheckNeeded": false,
+        "voluminousRecordsCheckNeeded": false,
+        "onPremiseExaminationPotential": false,
+        "certifiedCopySubmissionPotential": false,
+        "preSubpoenaEscalationRisk": false,
+        "subpoenaEscalationRisk": false
+      },
+      "safeWarnings": [
+        "Do not blindly submit every requested item without review.",
+        "Classify each item and prepare a controlled written transmittal."
+      ],
+      "recommendedNextActions": [
+        "Match each requested item to available records.",
+        "Prepare an itemized transmittal schedule.",
+        "Preserve BIR-stamped or email proof of submission."
+      ],
+      "prohibitedConclusions": [
+        "document_acceptance_guarantee",
+        "full_compliance_determination",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RMO No. 1-2026 standardized checklist and document request safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for standardized checklist, additional document request limits, relevance, necessity, audit scope, and documented explanation. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMO No. 1-2026 voluminous records and certified copy reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for voluminous books/records, on-premise examination potential, and certified-copy submission concepts. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 14-2026 prior notices/checklists/subpoenas under replacement eLA reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for treatment of prior notices, checklists, and subpoenas when a replacement eLA is issued for continuity. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional document transmittal reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        },
+        {
+          "label": "Uploaded affidavit / substitute proof reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern for non-existent or unavailable documents; no real taxpayer data may be used."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe document compliance planning only and does not constitute a final legal or tax conclusion. Document status, submission proof, and BIR response should be verified, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "CHECKLIST_OF_REQUIREMENTS": {
+      "phase": "09P",
+      "mode": "bir_document_compliance_transmittal",
+      "version": "PHASE-09P-BIR-DOCUMENT-COMPLIANCE-TRANSMITTAL-SCAFFOLD-1",
+      "runtimeActive": false,
+      "complianceSummary": {
+        "requestType": "CHECKLIST_OF_REQUIREMENTS",
+        "totalItems": 1,
+        "providedCount": 1,
+        "toFollowCount": 0,
+        "notApplicableCount": 0,
+        "unavailableCount": 0,
+        "nonExistentCount": 0,
+        "substituteProofCount": 0,
+        "clarificationNeededCount": 0,
+        "reconciliationNeededCount": 0,
+        "certifiedCopyNeededCount": 0,
+        "onPremiseReviewNeededCount": 0,
+        "highRiskItemCount": 0,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "documentMatrix": [
+        {
+          "itemName": "Synthetic general ledger export",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "provided",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "explanationNeeded": false,
+          "explanationType": "none",
+          "reconciliationNeeded": false,
+          "certifiedCopyNeeded": false,
+          "onPremiseReviewNeeded": false,
+          "birClarificationNeeded": false,
+          "receivingProofNeeded": true,
+          "withoutPrejudiceLanguageNeeded": false,
+          "riskLevel": "medium",
+          "riskReason": "documentary support is available; preserve proof of submission",
+          "recommendedSafeAction": [
+            "Include this item in the itemized transmittal schedule.",
+            "Preserve BIR-stamped or email proof of submission."
+          ],
+          "prohibitedOverreach": [
+            "Do not claim this item guarantees BIR acceptance.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "transmittalPlan": {
+        "responseType": "DOCUMENT_TRANSMITTAL_MATRIX",
+        "transmittalModeOptions": [
+          "in-person filing with receiving stamp",
+          "registered mail",
+          "email submission with acknowledgment"
+        ],
+        "itemizedScheduleNeeded": true,
+        "receivingProofRequired": true,
+        "birStampedCopyRequired": true,
+        "emailAcknowledgmentRequired": true,
+        "authorizedRepresentativeCheckNeeded": true,
+        "deadlineTrackingNeeded": false,
+        "withoutPrejudiceLanguageNeeded": false,
+        "clarificationRequestNeeded": false,
+        "extensionRequestPotential": false,
+        "clientStatusUpdateRecommended": true
+      },
+      "substituteProofPlan": {
+        "affidavitPotentialItems": [],
+        "managementCertificationPotentialItems": [],
+        "afsNotePotentialItems": [],
+        "taxReturnSupportPotentialItems": [],
+        "officialRecordPotentialItems": [],
+        "thirdPartyConfirmationPotentialItems": []
+      },
+      "receivingProofTracker": {
+        "birStampedSubmission": false,
+        "emailTrail": false,
+        "courierProof": false,
+        "uploadConfirmation": false,
+        "receivingOfficerOrOfficeCaptured": false,
+        "dateTimeCaptured": false,
+        "attachmentListCaptured": true,
+        "proofGapWarnings": [
+          "No BIR-stamped, email, or other receiving proof has been confirmed yet for items requiring proof of submission."
+        ]
+      },
+      "scopeAndAuthorityChecks": {
+        "standardizedChecklistCheckNeeded": true,
+        "additionalRequestLimitCheckNeeded": false,
+        "relevanceCheckNeeded": false,
+        "necessityCheckNeeded": false,
+        "auditScopeCheckNeeded": true,
+        "explanationDocumentationCheckNeeded": false,
+        "voluminousRecordsCheckNeeded": false,
+        "onPremiseExaminationPotential": false,
+        "certifiedCopySubmissionPotential": false,
+        "preSubpoenaEscalationRisk": false,
+        "subpoenaEscalationRisk": false
+      },
+      "safeWarnings": [
+        "Do not blindly submit every requested item without review.",
+        "Classify each item and prepare a controlled written transmittal."
+      ],
+      "recommendedNextActions": [
+        "Match each checklist item to available records.",
+        "Prepare an itemized transmittal schedule.",
+        "Preserve BIR-stamped or email proof of submission."
+      ],
+      "prohibitedConclusions": [
+        "document_acceptance_guarantee",
+        "full_compliance_determination",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RMO No. 1-2026 standardized checklist and document request safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for standardized checklist, additional document request limits, relevance, necessity, audit scope, and documented explanation. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMO No. 1-2026 voluminous records and certified copy reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for voluminous books/records, on-premise examination potential, and certified-copy submission concepts. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 14-2026 prior notices/checklists/subpoenas under replacement eLA reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for treatment of prior notices, checklists, and subpoenas when a replacement eLA is issued for continuity. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional document transmittal reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        },
+        {
+          "label": "Uploaded affidavit / substitute proof reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern for non-existent or unavailable documents; no real taxpayer data may be used."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe document compliance planning only and does not constitute a final legal or tax conclusion. Document status, submission proof, and BIR response should be verified, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "ADDITIONAL_DOCUMENT_REQUEST": {
+      "phase": "09P",
+      "mode": "bir_document_compliance_transmittal",
+      "version": "PHASE-09P-BIR-DOCUMENT-COMPLIANCE-TRANSMITTAL-SCAFFOLD-1",
+      "runtimeActive": false,
+      "complianceSummary": {
+        "requestType": "ADDITIONAL_DOCUMENT_REQUEST",
+        "totalItems": 1,
+        "providedCount": 0,
+        "toFollowCount": 0,
+        "notApplicableCount": 0,
+        "unavailableCount": 0,
+        "nonExistentCount": 0,
+        "substituteProofCount": 0,
+        "clarificationNeededCount": 1,
+        "reconciliationNeededCount": 0,
+        "certifiedCopyNeededCount": 0,
+        "onPremiseReviewNeededCount": 0,
+        "highRiskItemCount": 0,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "documentMatrix": [
+        {
+          "itemName": "Synthetic unclear supplemental schedule",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "requires_bir_clarification",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "explanationNeeded": false,
+          "explanationType": "requires_clarification",
+          "reconciliationNeeded": false,
+          "certifiedCopyNeeded": false,
+          "onPremiseReviewNeeded": false,
+          "birClarificationNeeded": true,
+          "receivingProofNeeded": false,
+          "withoutPrejudiceLanguageNeeded": false,
+          "riskLevel": "medium",
+          "riskReason": "request scope is unclear; clarification is needed before full compliance",
+          "recommendedSafeAction": [
+            "Ask BIR to identify the specific document, audit issue, relevance, necessity, scope, and basis.",
+            "Do not refuse compliance outright while clarification is pending."
+          ],
+          "prohibitedOverreach": [
+            "Do not claim this item guarantees BIR acceptance.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "transmittalPlan": {
+        "responseType": "REQUEST_FOR_CLARIFICATION",
+        "transmittalModeOptions": [
+          "in-person filing with receiving stamp",
+          "registered mail",
+          "email submission with acknowledgment"
+        ],
+        "itemizedScheduleNeeded": true,
+        "receivingProofRequired": true,
+        "birStampedCopyRequired": true,
+        "emailAcknowledgmentRequired": true,
+        "authorizedRepresentativeCheckNeeded": true,
+        "deadlineTrackingNeeded": false,
+        "withoutPrejudiceLanguageNeeded": false,
+        "clarificationRequestNeeded": true,
+        "extensionRequestPotential": false,
+        "clientStatusUpdateRecommended": true
+      },
+      "substituteProofPlan": {
+        "affidavitPotentialItems": [],
+        "managementCertificationPotentialItems": [],
+        "afsNotePotentialItems": [],
+        "taxReturnSupportPotentialItems": [],
+        "officialRecordPotentialItems": [],
+        "thirdPartyConfirmationPotentialItems": []
+      },
+      "receivingProofTracker": {
+        "birStampedSubmission": false,
+        "emailTrail": false,
+        "courierProof": false,
+        "uploadConfirmation": false,
+        "receivingOfficerOrOfficeCaptured": false,
+        "dateTimeCaptured": false,
+        "attachmentListCaptured": true,
+        "proofGapWarnings": []
+      },
+      "scopeAndAuthorityChecks": {
+        "standardizedChecklistCheckNeeded": false,
+        "additionalRequestLimitCheckNeeded": true,
+        "relevanceCheckNeeded": true,
+        "necessityCheckNeeded": true,
+        "auditScopeCheckNeeded": true,
+        "explanationDocumentationCheckNeeded": true,
+        "voluminousRecordsCheckNeeded": false,
+        "onPremiseExaminationPotential": false,
+        "certifiedCopySubmissionPotential": false,
+        "preSubpoenaEscalationRisk": false,
+        "subpoenaEscalationRisk": false
+      },
+      "safeWarnings": [
+        "Additional requests should be checked for relevance, necessity, audit scope, and documentation before compliance."
+      ],
+      "recommendedNextActions": [
+        "Confirm the stated basis for the additional request.",
+        "Classify each additional item and prepare a written transmittal.",
+        "Ask BIR to identify scope and basis if unclear."
+      ],
+      "prohibitedConclusions": [
+        "document_acceptance_guarantee",
+        "full_compliance_determination",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RMO No. 1-2026 standardized checklist and document request safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for standardized checklist, additional document request limits, relevance, necessity, audit scope, and documented explanation. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMO No. 1-2026 voluminous records and certified copy reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for voluminous books/records, on-premise examination potential, and certified-copy submission concepts. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 14-2026 prior notices/checklists/subpoenas under replacement eLA reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for treatment of prior notices, checklists, and subpoenas when a replacement eLA is issued for continuity. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional document transmittal reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        },
+        {
+          "label": "Uploaded affidavit / substitute proof reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern for non-existent or unavailable documents; no real taxpayer data may be used."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe document compliance planning only and does not constitute a final legal or tax conclusion. Document status, submission proof, and BIR response should be verified, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "PRE_SUBPOENA_REMINDER": {
+      "phase": "09P",
+      "mode": "bir_document_compliance_transmittal",
+      "version": "PHASE-09P-BIR-DOCUMENT-COMPLIANCE-TRANSMITTAL-SCAFFOLD-1",
+      "runtimeActive": false,
+      "complianceSummary": {
+        "requestType": "PRE_SUBPOENA_REMINDER",
+        "totalItems": 1,
+        "providedCount": 0,
+        "toFollowCount": 1,
+        "notApplicableCount": 0,
+        "unavailableCount": 0,
+        "nonExistentCount": 0,
+        "substituteProofCount": 0,
+        "clarificationNeededCount": 0,
+        "reconciliationNeededCount": 0,
+        "certifiedCopyNeededCount": 0,
+        "onPremiseReviewNeededCount": 0,
+        "highRiskItemCount": 0,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "documentMatrix": [
+        {
+          "itemName": "Synthetic unsubmitted checklist item",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "to_follow",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "explanationNeeded": false,
+          "explanationType": "to_follow",
+          "reconciliationNeeded": false,
+          "certifiedCopyNeeded": false,
+          "onPremiseReviewNeeded": false,
+          "birClarificationNeeded": false,
+          "receivingProofNeeded": false,
+          "withoutPrejudiceLanguageNeeded": false,
+          "riskLevel": "medium",
+          "riskReason": "document is not yet available; track submission deadline",
+          "recommendedSafeAction": [
+            "List this item with a target submission date for review.",
+            "Preserve proof of the later submission."
+          ],
+          "prohibitedOverreach": [
+            "Do not claim this item guarantees BIR acceptance.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "transmittalPlan": {
+        "responseType": "ITEMIZED_STATUS_RESPONSE",
+        "transmittalModeOptions": [
+          "in-person filing with receiving stamp",
+          "registered mail",
+          "email submission with acknowledgment"
+        ],
+        "itemizedScheduleNeeded": true,
+        "receivingProofRequired": true,
+        "birStampedCopyRequired": true,
+        "emailAcknowledgmentRequired": true,
+        "authorizedRepresentativeCheckNeeded": true,
+        "deadlineTrackingNeeded": true,
+        "withoutPrejudiceLanguageNeeded": false,
+        "clarificationRequestNeeded": false,
+        "extensionRequestPotential": true,
+        "clientStatusUpdateRecommended": true
+      },
+      "substituteProofPlan": {
+        "affidavitPotentialItems": [],
+        "managementCertificationPotentialItems": [],
+        "afsNotePotentialItems": [],
+        "taxReturnSupportPotentialItems": [],
+        "officialRecordPotentialItems": [],
+        "thirdPartyConfirmationPotentialItems": []
+      },
+      "receivingProofTracker": {
+        "birStampedSubmission": false,
+        "emailTrail": false,
+        "courierProof": false,
+        "uploadConfirmation": false,
+        "receivingOfficerOrOfficeCaptured": false,
+        "dateTimeCaptured": false,
+        "attachmentListCaptured": true,
+        "proofGapWarnings": []
+      },
+      "scopeAndAuthorityChecks": {
+        "standardizedChecklistCheckNeeded": false,
+        "additionalRequestLimitCheckNeeded": false,
+        "relevanceCheckNeeded": false,
+        "necessityCheckNeeded": false,
+        "auditScopeCheckNeeded": false,
+        "explanationDocumentationCheckNeeded": false,
+        "voluminousRecordsCheckNeeded": false,
+        "onPremiseExaminationPotential": false,
+        "certifiedCopySubmissionPotential": false,
+        "preSubpoenaEscalationRisk": true,
+        "subpoenaEscalationRisk": false
+      },
+      "safeWarnings": [
+        "Treat this reminder as an escalation risk.",
+        "Do not disregard the reminder."
+      ],
+      "recommendedNextActions": [
+        "Prepare an itemized status response covering every previously requested item.",
+        "Attach proof of prior submission where available.",
+        "Submit or file a response promptly."
+      ],
+      "prohibitedConclusions": [
+        "document_acceptance_guarantee",
+        "full_compliance_determination",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RMO No. 1-2026 standardized checklist and document request safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for standardized checklist, additional document request limits, relevance, necessity, audit scope, and documented explanation. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMO No. 1-2026 voluminous records and certified copy reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for voluminous books/records, on-premise examination potential, and certified-copy submission concepts. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 14-2026 prior notices/checklists/subpoenas under replacement eLA reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for treatment of prior notices, checklists, and subpoenas when a replacement eLA is issued for continuity. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional document transmittal reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        },
+        {
+          "label": "Uploaded affidavit / substitute proof reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern for non-existent or unavailable documents; no real taxpayer data may be used."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe document compliance planning only and does not constitute a final legal or tax conclusion. Document status, submission proof, and BIR response should be verified, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "SUBPOENA_DUCES_TECUM": {
+      "phase": "09P",
+      "mode": "bir_document_compliance_transmittal",
+      "version": "PHASE-09P-BIR-DOCUMENT-COMPLIANCE-TRANSMITTAL-SCAFFOLD-1",
+      "runtimeActive": false,
+      "complianceSummary": {
+        "requestType": "SUBPOENA_DUCES_TECUM",
+        "totalItems": 1,
+        "providedCount": 1,
+        "toFollowCount": 0,
+        "notApplicableCount": 0,
+        "unavailableCount": 0,
+        "nonExistentCount": 0,
+        "substituteProofCount": 0,
+        "clarificationNeededCount": 0,
+        "reconciliationNeededCount": 0,
+        "certifiedCopyNeededCount": 0,
+        "onPremiseReviewNeededCount": 0,
+        "highRiskItemCount": 0,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "documentMatrix": [
+        {
+          "itemName": "Synthetic specified record",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "provided",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "explanationNeeded": false,
+          "explanationType": "none",
+          "reconciliationNeeded": false,
+          "certifiedCopyNeeded": false,
+          "onPremiseReviewNeeded": false,
+          "birClarificationNeeded": false,
+          "receivingProofNeeded": true,
+          "withoutPrejudiceLanguageNeeded": false,
+          "riskLevel": "medium",
+          "riskReason": "documentary support is available; preserve proof of submission",
+          "recommendedSafeAction": [
+            "Include this item in the itemized transmittal schedule.",
+            "Preserve BIR-stamped or email proof of submission."
+          ],
+          "prohibitedOverreach": [
+            "Do not claim this item guarantees BIR acceptance.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "transmittalPlan": {
+        "responseType": "HUMAN_REVIEW_REQUIRED",
+        "transmittalModeOptions": [
+          "in-person filing with receiving stamp",
+          "registered mail",
+          "email submission with acknowledgment"
+        ],
+        "itemizedScheduleNeeded": true,
+        "receivingProofRequired": true,
+        "birStampedCopyRequired": true,
+        "emailAcknowledgmentRequired": true,
+        "authorizedRepresentativeCheckNeeded": true,
+        "deadlineTrackingNeeded": false,
+        "withoutPrejudiceLanguageNeeded": false,
+        "clarificationRequestNeeded": false,
+        "extensionRequestPotential": false,
+        "clientStatusUpdateRecommended": true
+      },
+      "substituteProofPlan": {
+        "affidavitPotentialItems": [],
+        "managementCertificationPotentialItems": [],
+        "afsNotePotentialItems": [],
+        "taxReturnSupportPotentialItems": [],
+        "officialRecordPotentialItems": [],
+        "thirdPartyConfirmationPotentialItems": []
+      },
+      "receivingProofTracker": {
+        "birStampedSubmission": false,
+        "emailTrail": false,
+        "courierProof": false,
+        "uploadConfirmation": false,
+        "receivingOfficerOrOfficeCaptured": false,
+        "dateTimeCaptured": false,
+        "attachmentListCaptured": true,
+        "proofGapWarnings": [
+          "No BIR-stamped, email, or other receiving proof has been confirmed yet for items requiring proof of submission."
+        ]
+      },
+      "scopeAndAuthorityChecks": {
+        "standardizedChecklistCheckNeeded": false,
+        "additionalRequestLimitCheckNeeded": false,
+        "relevanceCheckNeeded": false,
+        "necessityCheckNeeded": false,
+        "auditScopeCheckNeeded": false,
+        "explanationDocumentationCheckNeeded": false,
+        "voluminousRecordsCheckNeeded": false,
+        "onPremiseExaminationPotential": false,
+        "certifiedCopySubmissionPotential": false,
+        "preSubpoenaEscalationRisk": false,
+        "subpoenaEscalationRisk": true
+      },
+      "safeWarnings": [
+        "This is a formal escalation instrument.",
+        "Immediate professional review is recommended before any response."
+      ],
+      "recommendedNextActions": [
+        "Escalate to professional legal/tax review immediately.",
+        "Preserve proof of all prior submissions.",
+        "Do not respond without professional guidance."
+      ],
+      "prohibitedConclusions": [
+        "document_acceptance_guarantee",
+        "full_compliance_determination",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RMO No. 1-2026 standardized checklist and document request safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for standardized checklist, additional document request limits, relevance, necessity, audit scope, and documented explanation. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMO No. 1-2026 voluminous records and certified copy reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for voluminous books/records, on-premise examination potential, and certified-copy submission concepts. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 14-2026 prior notices/checklists/subpoenas under replacement eLA reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for treatment of prior notices, checklists, and subpoenas when a replacement eLA is issued for continuity. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional document transmittal reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        },
+        {
+          "label": "Uploaded affidavit / substitute proof reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern for non-existent or unavailable documents; no real taxpayer data may be used."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe document compliance planning only and does not constitute a final legal or tax conclusion. Document status, submission proof, and BIR response should be verified, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "PAN_REPLY_SUPPORTING_DOCUMENTS": {
+      "phase": "09P",
+      "mode": "bir_document_compliance_transmittal",
+      "version": "PHASE-09P-BIR-DOCUMENT-COMPLIANCE-TRANSMITTAL-SCAFFOLD-1",
+      "runtimeActive": false,
+      "complianceSummary": {
+        "requestType": "PAN_REPLY_SUPPORTING_DOCUMENTS",
+        "totalItems": 1,
+        "providedCount": 1,
+        "toFollowCount": 0,
+        "notApplicableCount": 0,
+        "unavailableCount": 0,
+        "nonExistentCount": 0,
+        "substituteProofCount": 0,
+        "clarificationNeededCount": 0,
+        "reconciliationNeededCount": 0,
+        "certifiedCopyNeededCount": 0,
+        "onPremiseReviewNeededCount": 0,
+        "highRiskItemCount": 0,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "documentMatrix": [
+        {
+          "itemName": "Synthetic supporting schedule for PAN issue",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "provided",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "explanationNeeded": false,
+          "explanationType": "none",
+          "reconciliationNeeded": false,
+          "certifiedCopyNeeded": false,
+          "onPremiseReviewNeeded": false,
+          "birClarificationNeeded": false,
+          "receivingProofNeeded": true,
+          "withoutPrejudiceLanguageNeeded": false,
+          "riskLevel": "medium",
+          "riskReason": "documentary support is available; preserve proof of submission",
+          "recommendedSafeAction": [
+            "Include this item in the itemized transmittal schedule.",
+            "Preserve BIR-stamped or email proof of submission."
+          ],
+          "prohibitedOverreach": [
+            "Do not claim this item guarantees BIR acceptance.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "transmittalPlan": {
+        "responseType": "DOCUMENT_TRANSMITTAL_MATRIX",
+        "transmittalModeOptions": [
+          "in-person filing with receiving stamp",
+          "registered mail",
+          "email submission with acknowledgment"
+        ],
+        "itemizedScheduleNeeded": true,
+        "receivingProofRequired": true,
+        "birStampedCopyRequired": true,
+        "emailAcknowledgmentRequired": true,
+        "authorizedRepresentativeCheckNeeded": true,
+        "deadlineTrackingNeeded": true,
+        "withoutPrejudiceLanguageNeeded": false,
+        "clarificationRequestNeeded": false,
+        "extensionRequestPotential": false,
+        "clientStatusUpdateRecommended": true
+      },
+      "substituteProofPlan": {
+        "affidavitPotentialItems": [],
+        "managementCertificationPotentialItems": [],
+        "afsNotePotentialItems": [],
+        "taxReturnSupportPotentialItems": [],
+        "officialRecordPotentialItems": [],
+        "thirdPartyConfirmationPotentialItems": []
+      },
+      "receivingProofTracker": {
+        "birStampedSubmission": false,
+        "emailTrail": false,
+        "courierProof": false,
+        "uploadConfirmation": false,
+        "receivingOfficerOrOfficeCaptured": false,
+        "dateTimeCaptured": false,
+        "attachmentListCaptured": true,
+        "proofGapWarnings": [
+          "No BIR-stamped, email, or other receiving proof has been confirmed yet for items requiring proof of submission."
+        ]
+      },
+      "scopeAndAuthorityChecks": {
+        "standardizedChecklistCheckNeeded": false,
+        "additionalRequestLimitCheckNeeded": false,
+        "relevanceCheckNeeded": false,
+        "necessityCheckNeeded": false,
+        "auditScopeCheckNeeded": false,
+        "explanationDocumentationCheckNeeded": false,
+        "voluminousRecordsCheckNeeded": false,
+        "onPremiseExaminationPotential": false,
+        "certifiedCopySubmissionPotential": false,
+        "preSubpoenaEscalationRisk": false,
+        "subpoenaEscalationRisk": false
+      },
+      "safeWarnings": [
+        "Preserve proof of filing for PAN reply supporting documents."
+      ],
+      "recommendedNextActions": [
+        "Match each supporting document to the issue-by-issue reply matrix.",
+        "Capture the complete attachment list.",
+        "Preserve proof of filing."
+      ],
+      "prohibitedConclusions": [
+        "document_acceptance_guarantee",
+        "full_compliance_determination",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RMO No. 1-2026 standardized checklist and document request safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for standardized checklist, additional document request limits, relevance, necessity, audit scope, and documented explanation. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMO No. 1-2026 voluminous records and certified copy reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for voluminous books/records, on-premise examination potential, and certified-copy submission concepts. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 14-2026 prior notices/checklists/subpoenas under replacement eLA reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for treatment of prior notices, checklists, and subpoenas when a replacement eLA is issued for continuity. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional document transmittal reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        },
+        {
+          "label": "Uploaded affidavit / substitute proof reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern for non-existent or unavailable documents; no real taxpayer data may be used."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe document compliance planning only and does not constitute a final legal or tax conclusion. Document status, submission proof, and BIR response should be verified, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "FAN_FLD_PROTEST_SUPPORTING_DOCUMENTS": {
+      "phase": "09P",
+      "mode": "bir_document_compliance_transmittal",
+      "version": "PHASE-09P-BIR-DOCUMENT-COMPLIANCE-TRANSMITTAL-SCAFFOLD-1",
+      "runtimeActive": false,
+      "complianceSummary": {
+        "requestType": "FAN_FLD_PROTEST_SUPPORTING_DOCUMENTS",
+        "totalItems": 1,
+        "providedCount": 1,
+        "toFollowCount": 0,
+        "notApplicableCount": 0,
+        "unavailableCount": 0,
+        "nonExistentCount": 0,
+        "substituteProofCount": 0,
+        "clarificationNeededCount": 0,
+        "reconciliationNeededCount": 0,
+        "certifiedCopyNeededCount": 0,
+        "onPremiseReviewNeededCount": 0,
+        "highRiskItemCount": 0,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "documentMatrix": [
+        {
+          "itemName": "Synthetic supporting schedule for FAN/FLD issue",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "provided",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "explanationNeeded": false,
+          "explanationType": "none",
+          "reconciliationNeeded": false,
+          "certifiedCopyNeeded": false,
+          "onPremiseReviewNeeded": false,
+          "birClarificationNeeded": false,
+          "receivingProofNeeded": true,
+          "withoutPrejudiceLanguageNeeded": false,
+          "riskLevel": "medium",
+          "riskReason": "documentary support is available; preserve proof of submission",
+          "recommendedSafeAction": [
+            "Include this item in the itemized transmittal schedule.",
+            "Preserve BIR-stamped or email proof of submission."
+          ],
+          "prohibitedOverreach": [
+            "Do not claim this item guarantees BIR acceptance.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "transmittalPlan": {
+        "responseType": "DOCUMENT_TRANSMITTAL_MATRIX",
+        "transmittalModeOptions": [
+          "in-person filing with receiving stamp",
+          "registered mail",
+          "email submission with acknowledgment"
+        ],
+        "itemizedScheduleNeeded": true,
+        "receivingProofRequired": true,
+        "birStampedCopyRequired": true,
+        "emailAcknowledgmentRequired": true,
+        "authorizedRepresentativeCheckNeeded": true,
+        "deadlineTrackingNeeded": true,
+        "withoutPrejudiceLanguageNeeded": false,
+        "clarificationRequestNeeded": false,
+        "extensionRequestPotential": false,
+        "clientStatusUpdateRecommended": true
+      },
+      "substituteProofPlan": {
+        "affidavitPotentialItems": [],
+        "managementCertificationPotentialItems": [],
+        "afsNotePotentialItems": [],
+        "taxReturnSupportPotentialItems": [],
+        "officialRecordPotentialItems": [],
+        "thirdPartyConfirmationPotentialItems": []
+      },
+      "receivingProofTracker": {
+        "birStampedSubmission": false,
+        "emailTrail": false,
+        "courierProof": false,
+        "uploadConfirmation": false,
+        "receivingOfficerOrOfficeCaptured": false,
+        "dateTimeCaptured": false,
+        "attachmentListCaptured": true,
+        "proofGapWarnings": [
+          "No BIR-stamped, email, or other receiving proof has been confirmed yet for items requiring proof of submission."
+        ]
+      },
+      "scopeAndAuthorityChecks": {
+        "standardizedChecklistCheckNeeded": false,
+        "additionalRequestLimitCheckNeeded": false,
+        "relevanceCheckNeeded": false,
+        "necessityCheckNeeded": false,
+        "auditScopeCheckNeeded": false,
+        "explanationDocumentationCheckNeeded": false,
+        "voluminousRecordsCheckNeeded": false,
+        "onPremiseExaminationPotential": false,
+        "certifiedCopySubmissionPotential": false,
+        "preSubpoenaEscalationRisk": false,
+        "subpoenaEscalationRisk": false
+      },
+      "safeWarnings": [
+        "Preserve proof of filing for FAN/FLD protest supporting documents."
+      ],
+      "recommendedNextActions": [
+        "Match each supporting document to the issue-by-issue protest matrix.",
+        "Capture the complete attachment list.",
+        "Preserve proof of filing."
+      ],
+      "prohibitedConclusions": [
+        "document_acceptance_guarantee",
+        "full_compliance_determination",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RMO No. 1-2026 standardized checklist and document request safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for standardized checklist, additional document request limits, relevance, necessity, audit scope, and documented explanation. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMO No. 1-2026 voluminous records and certified copy reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for voluminous books/records, on-premise examination potential, and certified-copy submission concepts. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 14-2026 prior notices/checklists/subpoenas under replacement eLA reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for treatment of prior notices, checklists, and subpoenas when a replacement eLA is issued for continuity. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional document transmittal reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        },
+        {
+          "label": "Uploaded affidavit / substitute proof reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern for non-existent or unavailable documents; no real taxpayer data may be used."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe document compliance planning only and does not constitute a final legal or tax conclusion. Document status, submission proof, and BIR response should be verified, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "REINVESTIGATION_SUPPORTING_DOCUMENTS": {
+      "phase": "09P",
+      "mode": "bir_document_compliance_transmittal",
+      "version": "PHASE-09P-BIR-DOCUMENT-COMPLIANCE-TRANSMITTAL-SCAFFOLD-1",
+      "runtimeActive": false,
+      "complianceSummary": {
+        "requestType": "REINVESTIGATION_SUPPORTING_DOCUMENTS",
+        "totalItems": 1,
+        "providedCount": 0,
+        "toFollowCount": 1,
+        "notApplicableCount": 0,
+        "unavailableCount": 0,
+        "nonExistentCount": 0,
+        "substituteProofCount": 0,
+        "clarificationNeededCount": 0,
+        "reconciliationNeededCount": 0,
+        "certifiedCopyNeededCount": 0,
+        "onPremiseReviewNeededCount": 0,
+        "highRiskItemCount": 0,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "documentMatrix": [
+        {
+          "itemName": "Synthetic new supporting evidence",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "to_follow",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "explanationNeeded": false,
+          "explanationType": "to_follow",
+          "reconciliationNeeded": false,
+          "certifiedCopyNeeded": false,
+          "onPremiseReviewNeeded": false,
+          "birClarificationNeeded": false,
+          "receivingProofNeeded": false,
+          "withoutPrejudiceLanguageNeeded": false,
+          "riskLevel": "medium",
+          "riskReason": "document is not yet available; track submission deadline",
+          "recommendedSafeAction": [
+            "List this item with a target submission date for review.",
+            "Preserve proof of the later submission."
+          ],
+          "prohibitedOverreach": [
+            "Do not claim this item guarantees BIR acceptance.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "transmittalPlan": {
+        "responseType": "DOCUMENT_TRANSMITTAL_MATRIX",
+        "transmittalModeOptions": [
+          "in-person filing with receiving stamp",
+          "registered mail",
+          "email submission with acknowledgment"
+        ],
+        "itemizedScheduleNeeded": true,
+        "receivingProofRequired": true,
+        "birStampedCopyRequired": true,
+        "emailAcknowledgmentRequired": true,
+        "authorizedRepresentativeCheckNeeded": true,
+        "deadlineTrackingNeeded": true,
+        "withoutPrejudiceLanguageNeeded": false,
+        "clarificationRequestNeeded": false,
+        "extensionRequestPotential": true,
+        "clientStatusUpdateRecommended": true
+      },
+      "substituteProofPlan": {
+        "affidavitPotentialItems": [],
+        "managementCertificationPotentialItems": [],
+        "afsNotePotentialItems": [],
+        "taxReturnSupportPotentialItems": [],
+        "officialRecordPotentialItems": [],
+        "thirdPartyConfirmationPotentialItems": []
+      },
+      "receivingProofTracker": {
+        "birStampedSubmission": false,
+        "emailTrail": false,
+        "courierProof": false,
+        "uploadConfirmation": false,
+        "receivingOfficerOrOfficeCaptured": false,
+        "dateTimeCaptured": false,
+        "attachmentListCaptured": true,
+        "proofGapWarnings": []
+      },
+      "scopeAndAuthorityChecks": {
+        "standardizedChecklistCheckNeeded": false,
+        "additionalRequestLimitCheckNeeded": false,
+        "relevanceCheckNeeded": false,
+        "necessityCheckNeeded": false,
+        "auditScopeCheckNeeded": false,
+        "explanationDocumentationCheckNeeded": false,
+        "voluminousRecordsCheckNeeded": false,
+        "onPremiseExaminationPotential": false,
+        "certifiedCopySubmissionPotential": false,
+        "preSubpoenaEscalationRisk": false,
+        "subpoenaEscalationRisk": false
+      },
+      "safeWarnings": [
+        "Track the supporting-document submission period for reinvestigation."
+      ],
+      "recommendedNextActions": [
+        "Match each supporting document to the reinvestigation issues.",
+        "Capture the complete attachment list.",
+        "Preserve proof of filing and attachment submission."
+      ],
+      "prohibitedConclusions": [
+        "document_acceptance_guarantee",
+        "full_compliance_determination",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RMO No. 1-2026 standardized checklist and document request safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for standardized checklist, additional document request limits, relevance, necessity, audit scope, and documented explanation. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMO No. 1-2026 voluminous records and certified copy reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for voluminous books/records, on-premise examination potential, and certified-copy submission concepts. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 14-2026 prior notices/checklists/subpoenas under replacement eLA reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for treatment of prior notices, checklists, and subpoenas when a replacement eLA is issued for continuity. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional document transmittal reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        },
+        {
+          "label": "Uploaded affidavit / substitute proof reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern for non-existent or unavailable documents; no real taxpayer data may be used."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe document compliance planning only and does not constitute a final legal or tax conclusion. Document status, submission proof, and BIR response should be verified, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "TERMINATION_LETTER_SUPPORTING_DOCUMENTS": {
+      "phase": "09P",
+      "mode": "bir_document_compliance_transmittal",
+      "version": "PHASE-09P-BIR-DOCUMENT-COMPLIANCE-TRANSMITTAL-SCAFFOLD-1",
+      "runtimeActive": false,
+      "complianceSummary": {
+        "requestType": "TERMINATION_LETTER_SUPPORTING_DOCUMENTS",
+        "totalItems": 1,
+        "providedCount": 1,
+        "toFollowCount": 0,
+        "notApplicableCount": 0,
+        "unavailableCount": 0,
+        "nonExistentCount": 0,
+        "substituteProofCount": 0,
+        "clarificationNeededCount": 0,
+        "reconciliationNeededCount": 0,
+        "certifiedCopyNeededCount": 0,
+        "onPremiseReviewNeededCount": 0,
+        "highRiskItemCount": 0,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "documentMatrix": [
+        {
+          "itemName": "Synthetic payment proof and BIR receipts",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "provided",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "explanationNeeded": false,
+          "explanationType": "none",
+          "reconciliationNeeded": false,
+          "certifiedCopyNeeded": false,
+          "onPremiseReviewNeeded": false,
+          "birClarificationNeeded": false,
+          "receivingProofNeeded": true,
+          "withoutPrejudiceLanguageNeeded": false,
+          "riskLevel": "medium",
+          "riskReason": "documentary support is available; preserve proof of submission",
+          "recommendedSafeAction": [
+            "Include this item in the itemized transmittal schedule.",
+            "Preserve BIR-stamped or email proof of submission."
+          ],
+          "prohibitedOverreach": [
+            "Do not claim this item guarantees BIR acceptance.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "transmittalPlan": {
+        "responseType": "RECEIVING_PROOF_TRACKER",
+        "transmittalModeOptions": [
+          "in-person filing with receiving stamp",
+          "registered mail",
+          "email submission with acknowledgment"
+        ],
+        "itemizedScheduleNeeded": true,
+        "receivingProofRequired": true,
+        "birStampedCopyRequired": true,
+        "emailAcknowledgmentRequired": true,
+        "authorizedRepresentativeCheckNeeded": true,
+        "deadlineTrackingNeeded": false,
+        "withoutPrejudiceLanguageNeeded": true,
+        "clarificationRequestNeeded": false,
+        "extensionRequestPotential": false,
+        "clientStatusUpdateRecommended": true
+      },
+      "substituteProofPlan": {
+        "affidavitPotentialItems": [],
+        "managementCertificationPotentialItems": [],
+        "afsNotePotentialItems": [],
+        "taxReturnSupportPotentialItems": [],
+        "officialRecordPotentialItems": [],
+        "thirdPartyConfirmationPotentialItems": []
+      },
+      "receivingProofTracker": {
+        "birStampedSubmission": false,
+        "emailTrail": false,
+        "courierProof": false,
+        "uploadConfirmation": false,
+        "receivingOfficerOrOfficeCaptured": false,
+        "dateTimeCaptured": false,
+        "attachmentListCaptured": true,
+        "proofGapWarnings": [
+          "No BIR-stamped, email, or other receiving proof has been confirmed yet for items requiring proof of submission."
+        ]
+      },
+      "scopeAndAuthorityChecks": {
+        "standardizedChecklistCheckNeeded": false,
+        "additionalRequestLimitCheckNeeded": false,
+        "relevanceCheckNeeded": false,
+        "necessityCheckNeeded": false,
+        "auditScopeCheckNeeded": false,
+        "explanationDocumentationCheckNeeded": false,
+        "voluminousRecordsCheckNeeded": false,
+        "onPremiseExaminationPotential": false,
+        "certifiedCopySubmissionPotential": false,
+        "preSubpoenaEscalationRisk": false,
+        "subpoenaEscalationRisk": false
+      },
+      "safeWarnings": [
+        "Match closure scope to the covered LOA/eLA, taxable period, and tax types.",
+        "Do not treat this as blanket or permanent clearance for unrelated periods, tax types, fraud, false returns, or refund issues."
+      ],
+      "recommendedNextActions": [
+        "Preserve payment proof and related records permanently.",
+        "Match the termination letter to its covered LOA/eLA, period, and tax types."
+      ],
+      "prohibitedConclusions": [
+        "document_acceptance_guarantee",
+        "full_compliance_determination",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RMO No. 1-2026 standardized checklist and document request safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for standardized checklist, additional document request limits, relevance, necessity, audit scope, and documented explanation. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMO No. 1-2026 voluminous records and certified copy reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for voluminous books/records, on-premise examination potential, and certified-copy submission concepts. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 14-2026 prior notices/checklists/subpoenas under replacement eLA reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for treatment of prior notices, checklists, and subpoenas when a replacement eLA is issued for continuity. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional document transmittal reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        },
+        {
+          "label": "Uploaded affidavit / substitute proof reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern for non-existent or unavailable documents; no real taxpayer data may be used."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe document compliance planning only and does not constitute a final legal or tax conclusion. Document status, submission proof, and BIR response should be verified, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "PROVIDED_ITEM": {
+      "phase": "09P",
+      "mode": "bir_document_compliance_transmittal",
+      "version": "PHASE-09P-BIR-DOCUMENT-COMPLIANCE-TRANSMITTAL-SCAFFOLD-1",
+      "runtimeActive": false,
+      "complianceSummary": {
+        "requestType": "CHECKLIST_OF_REQUIREMENTS",
+        "totalItems": 1,
+        "providedCount": 1,
+        "toFollowCount": 0,
+        "notApplicableCount": 0,
+        "unavailableCount": 0,
+        "nonExistentCount": 0,
+        "substituteProofCount": 0,
+        "clarificationNeededCount": 0,
+        "reconciliationNeededCount": 0,
+        "certifiedCopyNeededCount": 0,
+        "onPremiseReviewNeededCount": 0,
+        "highRiskItemCount": 0,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "documentMatrix": [
+        {
+          "itemName": "Synthetic AFS copy",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "provided",
+          "documentsAvailable": [
+            "Synthetic AFS copy"
+          ],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "explanationNeeded": false,
+          "explanationType": "none",
+          "reconciliationNeeded": false,
+          "certifiedCopyNeeded": false,
+          "onPremiseReviewNeeded": false,
+          "birClarificationNeeded": false,
+          "receivingProofNeeded": true,
+          "withoutPrejudiceLanguageNeeded": false,
+          "riskLevel": "medium",
+          "riskReason": "documentary support is available; preserve proof of submission",
+          "recommendedSafeAction": [
+            "Include this item in the itemized transmittal schedule.",
+            "Preserve BIR-stamped or email proof of submission."
+          ],
+          "prohibitedOverreach": [
+            "Do not claim this item guarantees BIR acceptance.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "transmittalPlan": {
+        "responseType": "DOCUMENT_TRANSMITTAL_MATRIX",
+        "transmittalModeOptions": [
+          "in-person filing with receiving stamp",
+          "registered mail",
+          "email submission with acknowledgment"
+        ],
+        "itemizedScheduleNeeded": true,
+        "receivingProofRequired": true,
+        "birStampedCopyRequired": true,
+        "emailAcknowledgmentRequired": true,
+        "authorizedRepresentativeCheckNeeded": true,
+        "deadlineTrackingNeeded": false,
+        "withoutPrejudiceLanguageNeeded": false,
+        "clarificationRequestNeeded": false,
+        "extensionRequestPotential": false,
+        "clientStatusUpdateRecommended": true
+      },
+      "substituteProofPlan": {
+        "affidavitPotentialItems": [],
+        "managementCertificationPotentialItems": [],
+        "afsNotePotentialItems": [],
+        "taxReturnSupportPotentialItems": [],
+        "officialRecordPotentialItems": [],
+        "thirdPartyConfirmationPotentialItems": []
+      },
+      "receivingProofTracker": {
+        "birStampedSubmission": false,
+        "emailTrail": false,
+        "courierProof": false,
+        "uploadConfirmation": false,
+        "receivingOfficerOrOfficeCaptured": false,
+        "dateTimeCaptured": false,
+        "attachmentListCaptured": true,
+        "proofGapWarnings": [
+          "No BIR-stamped, email, or other receiving proof has been confirmed yet for items requiring proof of submission."
+        ]
+      },
+      "scopeAndAuthorityChecks": {
+        "standardizedChecklistCheckNeeded": true,
+        "additionalRequestLimitCheckNeeded": false,
+        "relevanceCheckNeeded": false,
+        "necessityCheckNeeded": false,
+        "auditScopeCheckNeeded": true,
+        "explanationDocumentationCheckNeeded": false,
+        "voluminousRecordsCheckNeeded": false,
+        "onPremiseExaminationPotential": false,
+        "certifiedCopySubmissionPotential": false,
+        "preSubpoenaEscalationRisk": false,
+        "subpoenaEscalationRisk": false
+      },
+      "safeWarnings": [
+        "Do not blindly submit every requested item without review.",
+        "Classify each item and prepare a controlled written transmittal."
+      ],
+      "recommendedNextActions": [
+        "Match each checklist item to available records.",
+        "Prepare an itemized transmittal schedule.",
+        "Preserve BIR-stamped or email proof of submission."
+      ],
+      "prohibitedConclusions": [
+        "document_acceptance_guarantee",
+        "full_compliance_determination",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RMO No. 1-2026 standardized checklist and document request safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for standardized checklist, additional document request limits, relevance, necessity, audit scope, and documented explanation. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMO No. 1-2026 voluminous records and certified copy reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for voluminous books/records, on-premise examination potential, and certified-copy submission concepts. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 14-2026 prior notices/checklists/subpoenas under replacement eLA reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for treatment of prior notices, checklists, and subpoenas when a replacement eLA is issued for continuity. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional document transmittal reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        },
+        {
+          "label": "Uploaded affidavit / substitute proof reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern for non-existent or unavailable documents; no real taxpayer data may be used."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe document compliance planning only and does not constitute a final legal or tax conclusion. Document status, submission proof, and BIR response should be verified, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "TO_FOLLOW_ITEM": {
+      "phase": "09P",
+      "mode": "bir_document_compliance_transmittal",
+      "version": "PHASE-09P-BIR-DOCUMENT-COMPLIANCE-TRANSMITTAL-SCAFFOLD-1",
+      "runtimeActive": false,
+      "complianceSummary": {
+        "requestType": "CHECKLIST_OF_REQUIREMENTS",
+        "totalItems": 1,
+        "providedCount": 0,
+        "toFollowCount": 1,
+        "notApplicableCount": 0,
+        "unavailableCount": 0,
+        "nonExistentCount": 0,
+        "substituteProofCount": 0,
+        "clarificationNeededCount": 0,
+        "reconciliationNeededCount": 0,
+        "certifiedCopyNeededCount": 0,
+        "onPremiseReviewNeededCount": 0,
+        "highRiskItemCount": 0,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "documentMatrix": [
+        {
+          "itemName": "Synthetic late supplier confirmation",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "to_follow",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "explanationNeeded": false,
+          "explanationType": "to_follow",
+          "reconciliationNeeded": false,
+          "certifiedCopyNeeded": false,
+          "onPremiseReviewNeeded": false,
+          "birClarificationNeeded": false,
+          "receivingProofNeeded": false,
+          "withoutPrejudiceLanguageNeeded": false,
+          "riskLevel": "medium",
+          "riskReason": "document is not yet available; track submission deadline",
+          "recommendedSafeAction": [
+            "List this item with a target submission date for review.",
+            "Preserve proof of the later submission."
+          ],
+          "prohibitedOverreach": [
+            "Do not claim this item guarantees BIR acceptance.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "transmittalPlan": {
+        "responseType": "DOCUMENT_TRANSMITTAL_MATRIX",
+        "transmittalModeOptions": [
+          "in-person filing with receiving stamp",
+          "registered mail",
+          "email submission with acknowledgment"
+        ],
+        "itemizedScheduleNeeded": true,
+        "receivingProofRequired": true,
+        "birStampedCopyRequired": true,
+        "emailAcknowledgmentRequired": true,
+        "authorizedRepresentativeCheckNeeded": true,
+        "deadlineTrackingNeeded": true,
+        "withoutPrejudiceLanguageNeeded": false,
+        "clarificationRequestNeeded": false,
+        "extensionRequestPotential": true,
+        "clientStatusUpdateRecommended": true
+      },
+      "substituteProofPlan": {
+        "affidavitPotentialItems": [],
+        "managementCertificationPotentialItems": [],
+        "afsNotePotentialItems": [],
+        "taxReturnSupportPotentialItems": [],
+        "officialRecordPotentialItems": [],
+        "thirdPartyConfirmationPotentialItems": []
+      },
+      "receivingProofTracker": {
+        "birStampedSubmission": false,
+        "emailTrail": false,
+        "courierProof": false,
+        "uploadConfirmation": false,
+        "receivingOfficerOrOfficeCaptured": false,
+        "dateTimeCaptured": false,
+        "attachmentListCaptured": true,
+        "proofGapWarnings": []
+      },
+      "scopeAndAuthorityChecks": {
+        "standardizedChecklistCheckNeeded": true,
+        "additionalRequestLimitCheckNeeded": false,
+        "relevanceCheckNeeded": false,
+        "necessityCheckNeeded": false,
+        "auditScopeCheckNeeded": true,
+        "explanationDocumentationCheckNeeded": false,
+        "voluminousRecordsCheckNeeded": false,
+        "onPremiseExaminationPotential": false,
+        "certifiedCopySubmissionPotential": false,
+        "preSubpoenaEscalationRisk": false,
+        "subpoenaEscalationRisk": false
+      },
+      "safeWarnings": [
+        "Do not blindly submit every requested item without review.",
+        "Classify each item and prepare a controlled written transmittal."
+      ],
+      "recommendedNextActions": [
+        "Match each checklist item to available records.",
+        "Prepare an itemized transmittal schedule.",
+        "Preserve BIR-stamped or email proof of submission."
+      ],
+      "prohibitedConclusions": [
+        "document_acceptance_guarantee",
+        "full_compliance_determination",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RMO No. 1-2026 standardized checklist and document request safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for standardized checklist, additional document request limits, relevance, necessity, audit scope, and documented explanation. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMO No. 1-2026 voluminous records and certified copy reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for voluminous books/records, on-premise examination potential, and certified-copy submission concepts. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 14-2026 prior notices/checklists/subpoenas under replacement eLA reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for treatment of prior notices, checklists, and subpoenas when a replacement eLA is issued for continuity. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional document transmittal reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        },
+        {
+          "label": "Uploaded affidavit / substitute proof reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern for non-existent or unavailable documents; no real taxpayer data may be used."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe document compliance planning only and does not constitute a final legal or tax conclusion. Document status, submission proof, and BIR response should be verified, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "NOT_APPLICABLE_ITEM": {
+      "phase": "09P",
+      "mode": "bir_document_compliance_transmittal",
+      "version": "PHASE-09P-BIR-DOCUMENT-COMPLIANCE-TRANSMITTAL-SCAFFOLD-1",
+      "runtimeActive": false,
+      "complianceSummary": {
+        "requestType": "CHECKLIST_OF_REQUIREMENTS",
+        "totalItems": 1,
+        "providedCount": 0,
+        "toFollowCount": 0,
+        "notApplicableCount": 1,
+        "unavailableCount": 0,
+        "nonExistentCount": 0,
+        "substituteProofCount": 0,
+        "clarificationNeededCount": 0,
+        "reconciliationNeededCount": 0,
+        "certifiedCopyNeededCount": 0,
+        "onPremiseReviewNeededCount": 0,
+        "highRiskItemCount": 0,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "documentMatrix": [
+        {
+          "itemName": "Synthetic import documents (not an importer)",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "not_applicable",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "explanationNeeded": true,
+          "explanationType": "not_applicable",
+          "reconciliationNeeded": false,
+          "certifiedCopyNeeded": false,
+          "onPremiseReviewNeeded": false,
+          "birClarificationNeeded": false,
+          "receivingProofNeeded": false,
+          "withoutPrejudiceLanguageNeeded": true,
+          "riskLevel": "medium",
+          "riskReason": "item does not apply on the stated facts; a factual explanation is required",
+          "recommendedSafeAction": [
+            "Prepare a factual explanation of non-applicability.",
+            "Support with AFS note, tax return, registration date, activity status, or official record where applicable."
+          ],
+          "prohibitedOverreach": [
+            "Do not claim this item guarantees BIR acceptance.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "transmittalPlan": {
+        "responseType": "DOCUMENT_TRANSMITTAL_MATRIX",
+        "transmittalModeOptions": [
+          "in-person filing with receiving stamp",
+          "registered mail",
+          "email submission with acknowledgment"
+        ],
+        "itemizedScheduleNeeded": true,
+        "receivingProofRequired": true,
+        "birStampedCopyRequired": true,
+        "emailAcknowledgmentRequired": true,
+        "authorizedRepresentativeCheckNeeded": true,
+        "deadlineTrackingNeeded": false,
+        "withoutPrejudiceLanguageNeeded": true,
+        "clarificationRequestNeeded": false,
+        "extensionRequestPotential": false,
+        "clientStatusUpdateRecommended": true
+      },
+      "substituteProofPlan": {
+        "affidavitPotentialItems": [
+          "Synthetic import documents (not an importer)"
+        ],
+        "managementCertificationPotentialItems": [],
+        "afsNotePotentialItems": [],
+        "taxReturnSupportPotentialItems": [],
+        "officialRecordPotentialItems": [],
+        "thirdPartyConfirmationPotentialItems": []
+      },
+      "receivingProofTracker": {
+        "birStampedSubmission": false,
+        "emailTrail": false,
+        "courierProof": false,
+        "uploadConfirmation": false,
+        "receivingOfficerOrOfficeCaptured": false,
+        "dateTimeCaptured": false,
+        "attachmentListCaptured": true,
+        "proofGapWarnings": []
+      },
+      "scopeAndAuthorityChecks": {
+        "standardizedChecklistCheckNeeded": true,
+        "additionalRequestLimitCheckNeeded": false,
+        "relevanceCheckNeeded": false,
+        "necessityCheckNeeded": false,
+        "auditScopeCheckNeeded": true,
+        "explanationDocumentationCheckNeeded": false,
+        "voluminousRecordsCheckNeeded": false,
+        "onPremiseExaminationPotential": false,
+        "certifiedCopySubmissionPotential": false,
+        "preSubpoenaEscalationRisk": false,
+        "subpoenaEscalationRisk": false
+      },
+      "safeWarnings": [
+        "Do not blindly submit every requested item without review.",
+        "Classify each item and prepare a controlled written transmittal."
+      ],
+      "recommendedNextActions": [
+        "Match each checklist item to available records.",
+        "Prepare an itemized transmittal schedule.",
+        "Preserve BIR-stamped or email proof of submission."
+      ],
+      "prohibitedConclusions": [
+        "document_acceptance_guarantee",
+        "full_compliance_determination",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RMO No. 1-2026 standardized checklist and document request safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for standardized checklist, additional document request limits, relevance, necessity, audit scope, and documented explanation. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMO No. 1-2026 voluminous records and certified copy reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for voluminous books/records, on-premise examination potential, and certified-copy submission concepts. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 14-2026 prior notices/checklists/subpoenas under replacement eLA reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for treatment of prior notices, checklists, and subpoenas when a replacement eLA is issued for continuity. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional document transmittal reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        },
+        {
+          "label": "Uploaded affidavit / substitute proof reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern for non-existent or unavailable documents; no real taxpayer data may be used."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe document compliance planning only and does not constitute a final legal or tax conclusion. Document status, submission proof, and BIR response should be verified, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "UNAVAILABLE_ITEM": {
+      "phase": "09P",
+      "mode": "bir_document_compliance_transmittal",
+      "version": "PHASE-09P-BIR-DOCUMENT-COMPLIANCE-TRANSMITTAL-SCAFFOLD-1",
+      "runtimeActive": false,
+      "complianceSummary": {
+        "requestType": "CHECKLIST_OF_REQUIREMENTS",
+        "totalItems": 1,
+        "providedCount": 0,
+        "toFollowCount": 0,
+        "notApplicableCount": 0,
+        "unavailableCount": 1,
+        "nonExistentCount": 0,
+        "substituteProofCount": 0,
+        "clarificationNeededCount": 0,
+        "reconciliationNeededCount": 0,
+        "certifiedCopyNeededCount": 0,
+        "onPremiseReviewNeededCount": 0,
+        "highRiskItemCount": 0,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "documentMatrix": [
+        {
+          "itemName": "Synthetic archived correspondence",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "unavailable",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "explanationNeeded": true,
+          "explanationType": "unavailable",
+          "reconciliationNeeded": false,
+          "certifiedCopyNeeded": false,
+          "onPremiseReviewNeeded": false,
+          "birClarificationNeeded": false,
+          "receivingProofNeeded": false,
+          "withoutPrejudiceLanguageNeeded": true,
+          "riskLevel": "medium",
+          "riskReason": "documentary support is unavailable; escalate to professional review if material",
+          "recommendedSafeAction": [
+            "Prepare a factual explanation of unavailability.",
+            "Identify substitute proof options for professional review."
+          ],
+          "prohibitedOverreach": [
+            "Do not claim this item guarantees BIR acceptance.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "transmittalPlan": {
+        "responseType": "DOCUMENT_TRANSMITTAL_MATRIX",
+        "transmittalModeOptions": [
+          "in-person filing with receiving stamp",
+          "registered mail",
+          "email submission with acknowledgment"
+        ],
+        "itemizedScheduleNeeded": true,
+        "receivingProofRequired": true,
+        "birStampedCopyRequired": true,
+        "emailAcknowledgmentRequired": true,
+        "authorizedRepresentativeCheckNeeded": true,
+        "deadlineTrackingNeeded": false,
+        "withoutPrejudiceLanguageNeeded": true,
+        "clarificationRequestNeeded": false,
+        "extensionRequestPotential": false,
+        "clientStatusUpdateRecommended": true
+      },
+      "substituteProofPlan": {
+        "affidavitPotentialItems": [
+          "Synthetic archived correspondence"
+        ],
+        "managementCertificationPotentialItems": [],
+        "afsNotePotentialItems": [],
+        "taxReturnSupportPotentialItems": [],
+        "officialRecordPotentialItems": [],
+        "thirdPartyConfirmationPotentialItems": []
+      },
+      "receivingProofTracker": {
+        "birStampedSubmission": false,
+        "emailTrail": false,
+        "courierProof": false,
+        "uploadConfirmation": false,
+        "receivingOfficerOrOfficeCaptured": false,
+        "dateTimeCaptured": false,
+        "attachmentListCaptured": true,
+        "proofGapWarnings": []
+      },
+      "scopeAndAuthorityChecks": {
+        "standardizedChecklistCheckNeeded": true,
+        "additionalRequestLimitCheckNeeded": false,
+        "relevanceCheckNeeded": false,
+        "necessityCheckNeeded": false,
+        "auditScopeCheckNeeded": true,
+        "explanationDocumentationCheckNeeded": false,
+        "voluminousRecordsCheckNeeded": false,
+        "onPremiseExaminationPotential": false,
+        "certifiedCopySubmissionPotential": false,
+        "preSubpoenaEscalationRisk": false,
+        "subpoenaEscalationRisk": false
+      },
+      "safeWarnings": [
+        "Do not blindly submit every requested item without review.",
+        "Classify each item and prepare a controlled written transmittal."
+      ],
+      "recommendedNextActions": [
+        "Match each checklist item to available records.",
+        "Prepare an itemized transmittal schedule.",
+        "Preserve BIR-stamped or email proof of submission."
+      ],
+      "prohibitedConclusions": [
+        "document_acceptance_guarantee",
+        "full_compliance_determination",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RMO No. 1-2026 standardized checklist and document request safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for standardized checklist, additional document request limits, relevance, necessity, audit scope, and documented explanation. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMO No. 1-2026 voluminous records and certified copy reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for voluminous books/records, on-premise examination potential, and certified-copy submission concepts. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 14-2026 prior notices/checklists/subpoenas under replacement eLA reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for treatment of prior notices, checklists, and subpoenas when a replacement eLA is issued for continuity. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional document transmittal reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        },
+        {
+          "label": "Uploaded affidavit / substitute proof reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern for non-existent or unavailable documents; no real taxpayer data may be used."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe document compliance planning only and does not constitute a final legal or tax conclusion. Document status, submission proof, and BIR response should be verified, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "NON_EXISTENT_ITEM": {
+      "phase": "09P",
+      "mode": "bir_document_compliance_transmittal",
+      "version": "PHASE-09P-BIR-DOCUMENT-COMPLIANCE-TRANSMITTAL-SCAFFOLD-1",
+      "runtimeActive": false,
+      "complianceSummary": {
+        "requestType": "CHECKLIST_OF_REQUIREMENTS",
+        "totalItems": 1,
+        "providedCount": 0,
+        "toFollowCount": 0,
+        "notApplicableCount": 0,
+        "unavailableCount": 0,
+        "nonExistentCount": 1,
+        "substituteProofCount": 0,
+        "clarificationNeededCount": 0,
+        "reconciliationNeededCount": 0,
+        "certifiedCopyNeededCount": 0,
+        "onPremiseReviewNeededCount": 0,
+        "highRiskItemCount": 0,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "documentMatrix": [
+        {
+          "itemName": "Synthetic lease contract",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "non_existent",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [
+            "management certification",
+            "affidavit",
+            "space-sharing certification"
+          ],
+          "explanationNeeded": true,
+          "explanationType": "non_existent",
+          "reconciliationNeeded": false,
+          "certifiedCopyNeeded": false,
+          "onPremiseReviewNeeded": false,
+          "birClarificationNeeded": false,
+          "receivingProofNeeded": false,
+          "withoutPrejudiceLanguageNeeded": true,
+          "riskLevel": "medium",
+          "riskReason": "the document does not exist; do not fabricate it, prepare substitute proof instead",
+          "recommendedSafeAction": [
+            "Prepare a factual explanation that the document does not exist.",
+            "Prepare an affidavit/certification/substitute proof plan for professional review.",
+            "Ask BIR to identify the specific document and basis if it insists the document exists."
+          ],
+          "prohibitedOverreach": [
+            "Do not claim this item guarantees BIR acceptance.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "transmittalPlan": {
+        "responseType": "DOCUMENT_TRANSMITTAL_MATRIX",
+        "transmittalModeOptions": [
+          "in-person filing with receiving stamp",
+          "registered mail",
+          "email submission with acknowledgment"
+        ],
+        "itemizedScheduleNeeded": true,
+        "receivingProofRequired": true,
+        "birStampedCopyRequired": true,
+        "emailAcknowledgmentRequired": true,
+        "authorizedRepresentativeCheckNeeded": true,
+        "deadlineTrackingNeeded": false,
+        "withoutPrejudiceLanguageNeeded": true,
+        "clarificationRequestNeeded": false,
+        "extensionRequestPotential": false,
+        "clientStatusUpdateRecommended": true
+      },
+      "substituteProofPlan": {
+        "affidavitPotentialItems": [
+          "Synthetic lease contract"
+        ],
+        "managementCertificationPotentialItems": [
+          "Synthetic lease contract"
+        ],
+        "afsNotePotentialItems": [],
+        "taxReturnSupportPotentialItems": [],
+        "officialRecordPotentialItems": [],
+        "thirdPartyConfirmationPotentialItems": []
+      },
+      "receivingProofTracker": {
+        "birStampedSubmission": false,
+        "emailTrail": false,
+        "courierProof": false,
+        "uploadConfirmation": false,
+        "receivingOfficerOrOfficeCaptured": false,
+        "dateTimeCaptured": false,
+        "attachmentListCaptured": true,
+        "proofGapWarnings": []
+      },
+      "scopeAndAuthorityChecks": {
+        "standardizedChecklistCheckNeeded": true,
+        "additionalRequestLimitCheckNeeded": false,
+        "relevanceCheckNeeded": false,
+        "necessityCheckNeeded": false,
+        "auditScopeCheckNeeded": true,
+        "explanationDocumentationCheckNeeded": false,
+        "voluminousRecordsCheckNeeded": false,
+        "onPremiseExaminationPotential": false,
+        "certifiedCopySubmissionPotential": false,
+        "preSubpoenaEscalationRisk": false,
+        "subpoenaEscalationRisk": false
+      },
+      "safeWarnings": [
+        "Do not blindly submit every requested item without review.",
+        "Classify each item and prepare a controlled written transmittal."
+      ],
+      "recommendedNextActions": [
+        "Match each checklist item to available records.",
+        "Prepare an itemized transmittal schedule.",
+        "Preserve BIR-stamped or email proof of submission."
+      ],
+      "prohibitedConclusions": [
+        "document_acceptance_guarantee",
+        "full_compliance_determination",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RMO No. 1-2026 standardized checklist and document request safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for standardized checklist, additional document request limits, relevance, necessity, audit scope, and documented explanation. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMO No. 1-2026 voluminous records and certified copy reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for voluminous books/records, on-premise examination potential, and certified-copy submission concepts. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 14-2026 prior notices/checklists/subpoenas under replacement eLA reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for treatment of prior notices, checklists, and subpoenas when a replacement eLA is issued for continuity. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional document transmittal reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        },
+        {
+          "label": "Uploaded affidavit / substitute proof reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern for non-existent or unavailable documents; no real taxpayer data may be used."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe document compliance planning only and does not constitute a final legal or tax conclusion. Document status, submission proof, and BIR response should be verified, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "SUBSTITUTE_PROOF_AVAILABLE_ITEM": {
+      "phase": "09P",
+      "mode": "bir_document_compliance_transmittal",
+      "version": "PHASE-09P-BIR-DOCUMENT-COMPLIANCE-TRANSMITTAL-SCAFFOLD-1",
+      "runtimeActive": false,
+      "complianceSummary": {
+        "requestType": "CHECKLIST_OF_REQUIREMENTS",
+        "totalItems": 1,
+        "providedCount": 0,
+        "toFollowCount": 0,
+        "notApplicableCount": 0,
+        "unavailableCount": 0,
+        "nonExistentCount": 0,
+        "substituteProofCount": 1,
+        "clarificationNeededCount": 0,
+        "reconciliationNeededCount": 0,
+        "certifiedCopyNeededCount": 0,
+        "onPremiseReviewNeededCount": 0,
+        "highRiskItemCount": 0,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "documentMatrix": [
+        {
+          "itemName": "Synthetic affidavit of no rental",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "substitute_proof_available",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [
+            "affidavit"
+          ],
+          "explanationNeeded": false,
+          "explanationType": "non_existent",
+          "reconciliationNeeded": false,
+          "certifiedCopyNeeded": false,
+          "onPremiseReviewNeeded": false,
+          "birClarificationNeeded": false,
+          "receivingProofNeeded": false,
+          "withoutPrejudiceLanguageNeeded": true,
+          "riskLevel": "medium",
+          "riskReason": "substitute proof identified; escalate for professional review before submission",
+          "recommendedSafeAction": [
+            "Prepare substitute proof (affidavit, management certification, AFS note, tax return support, official record, or third-party confirmation) for professional review."
+          ],
+          "prohibitedOverreach": [
+            "Do not claim this item guarantees BIR acceptance.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "transmittalPlan": {
+        "responseType": "DOCUMENT_TRANSMITTAL_MATRIX",
+        "transmittalModeOptions": [
+          "in-person filing with receiving stamp",
+          "registered mail",
+          "email submission with acknowledgment"
+        ],
+        "itemizedScheduleNeeded": true,
+        "receivingProofRequired": true,
+        "birStampedCopyRequired": true,
+        "emailAcknowledgmentRequired": true,
+        "authorizedRepresentativeCheckNeeded": true,
+        "deadlineTrackingNeeded": false,
+        "withoutPrejudiceLanguageNeeded": true,
+        "clarificationRequestNeeded": false,
+        "extensionRequestPotential": false,
+        "clientStatusUpdateRecommended": true
+      },
+      "substituteProofPlan": {
+        "affidavitPotentialItems": [
+          "Synthetic affidavit of no rental"
+        ],
+        "managementCertificationPotentialItems": [],
+        "afsNotePotentialItems": [],
+        "taxReturnSupportPotentialItems": [],
+        "officialRecordPotentialItems": [],
+        "thirdPartyConfirmationPotentialItems": []
+      },
+      "receivingProofTracker": {
+        "birStampedSubmission": false,
+        "emailTrail": false,
+        "courierProof": false,
+        "uploadConfirmation": false,
+        "receivingOfficerOrOfficeCaptured": false,
+        "dateTimeCaptured": false,
+        "attachmentListCaptured": true,
+        "proofGapWarnings": []
+      },
+      "scopeAndAuthorityChecks": {
+        "standardizedChecklistCheckNeeded": true,
+        "additionalRequestLimitCheckNeeded": false,
+        "relevanceCheckNeeded": false,
+        "necessityCheckNeeded": false,
+        "auditScopeCheckNeeded": true,
+        "explanationDocumentationCheckNeeded": false,
+        "voluminousRecordsCheckNeeded": false,
+        "onPremiseExaminationPotential": false,
+        "certifiedCopySubmissionPotential": false,
+        "preSubpoenaEscalationRisk": false,
+        "subpoenaEscalationRisk": false
+      },
+      "safeWarnings": [
+        "Do not blindly submit every requested item without review.",
+        "Classify each item and prepare a controlled written transmittal."
+      ],
+      "recommendedNextActions": [
+        "Match each checklist item to available records.",
+        "Prepare an itemized transmittal schedule.",
+        "Preserve BIR-stamped or email proof of submission."
+      ],
+      "prohibitedConclusions": [
+        "document_acceptance_guarantee",
+        "full_compliance_determination",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RMO No. 1-2026 standardized checklist and document request safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for standardized checklist, additional document request limits, relevance, necessity, audit scope, and documented explanation. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMO No. 1-2026 voluminous records and certified copy reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for voluminous books/records, on-premise examination potential, and certified-copy submission concepts. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 14-2026 prior notices/checklists/subpoenas under replacement eLA reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for treatment of prior notices, checklists, and subpoenas when a replacement eLA is issued for continuity. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional document transmittal reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        },
+        {
+          "label": "Uploaded affidavit / substitute proof reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern for non-existent or unavailable documents; no real taxpayer data may be used."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe document compliance planning only and does not constitute a final legal or tax conclusion. Document status, submission proof, and BIR response should be verified, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "REQUIRES_RECONCILIATION_ITEM": {
+      "phase": "09P",
+      "mode": "bir_document_compliance_transmittal",
+      "version": "PHASE-09P-BIR-DOCUMENT-COMPLIANCE-TRANSMITTAL-SCAFFOLD-1",
+      "runtimeActive": false,
+      "complianceSummary": {
+        "requestType": "CHECKLIST_OF_REQUIREMENTS",
+        "totalItems": 1,
+        "providedCount": 0,
+        "toFollowCount": 0,
+        "notApplicableCount": 0,
+        "unavailableCount": 0,
+        "nonExistentCount": 0,
+        "substituteProofCount": 0,
+        "clarificationNeededCount": 0,
+        "reconciliationNeededCount": 1,
+        "certifiedCopyNeededCount": 0,
+        "onPremiseReviewNeededCount": 0,
+        "highRiskItemCount": 0,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "documentMatrix": [
+        {
+          "itemName": "Synthetic sales figures per books vs. per return",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "requires_reconciliation",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "explanationNeeded": false,
+          "explanationType": "requires_reconciliation",
+          "reconciliationNeeded": true,
+          "certifiedCopyNeeded": false,
+          "onPremiseReviewNeeded": false,
+          "birClarificationNeeded": false,
+          "receivingProofNeeded": false,
+          "withoutPrejudiceLanguageNeeded": false,
+          "riskLevel": "medium",
+          "riskReason": "documentary figures require reconciliation before submission",
+          "recommendedSafeAction": [
+            "Reconcile per-books vs. per-return vs. attachment vs. third-party support before submission."
+          ],
+          "prohibitedOverreach": [
+            "Do not claim this item guarantees BIR acceptance.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "transmittalPlan": {
+        "responseType": "DOCUMENT_TRANSMITTAL_MATRIX",
+        "transmittalModeOptions": [
+          "in-person filing with receiving stamp",
+          "registered mail",
+          "email submission with acknowledgment"
+        ],
+        "itemizedScheduleNeeded": true,
+        "receivingProofRequired": true,
+        "birStampedCopyRequired": true,
+        "emailAcknowledgmentRequired": true,
+        "authorizedRepresentativeCheckNeeded": true,
+        "deadlineTrackingNeeded": false,
+        "withoutPrejudiceLanguageNeeded": false,
+        "clarificationRequestNeeded": false,
+        "extensionRequestPotential": false,
+        "clientStatusUpdateRecommended": true
+      },
+      "substituteProofPlan": {
+        "affidavitPotentialItems": [],
+        "managementCertificationPotentialItems": [],
+        "afsNotePotentialItems": [],
+        "taxReturnSupportPotentialItems": [],
+        "officialRecordPotentialItems": [],
+        "thirdPartyConfirmationPotentialItems": []
+      },
+      "receivingProofTracker": {
+        "birStampedSubmission": false,
+        "emailTrail": false,
+        "courierProof": false,
+        "uploadConfirmation": false,
+        "receivingOfficerOrOfficeCaptured": false,
+        "dateTimeCaptured": false,
+        "attachmentListCaptured": true,
+        "proofGapWarnings": []
+      },
+      "scopeAndAuthorityChecks": {
+        "standardizedChecklistCheckNeeded": true,
+        "additionalRequestLimitCheckNeeded": false,
+        "relevanceCheckNeeded": false,
+        "necessityCheckNeeded": false,
+        "auditScopeCheckNeeded": true,
+        "explanationDocumentationCheckNeeded": false,
+        "voluminousRecordsCheckNeeded": false,
+        "onPremiseExaminationPotential": false,
+        "certifiedCopySubmissionPotential": false,
+        "preSubpoenaEscalationRisk": false,
+        "subpoenaEscalationRisk": false
+      },
+      "safeWarnings": [
+        "Do not blindly submit every requested item without review.",
+        "Classify each item and prepare a controlled written transmittal."
+      ],
+      "recommendedNextActions": [
+        "Match each checklist item to available records.",
+        "Prepare an itemized transmittal schedule.",
+        "Preserve BIR-stamped or email proof of submission."
+      ],
+      "prohibitedConclusions": [
+        "document_acceptance_guarantee",
+        "full_compliance_determination",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RMO No. 1-2026 standardized checklist and document request safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for standardized checklist, additional document request limits, relevance, necessity, audit scope, and documented explanation. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMO No. 1-2026 voluminous records and certified copy reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for voluminous books/records, on-premise examination potential, and certified-copy submission concepts. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 14-2026 prior notices/checklists/subpoenas under replacement eLA reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for treatment of prior notices, checklists, and subpoenas when a replacement eLA is issued for continuity. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional document transmittal reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        },
+        {
+          "label": "Uploaded affidavit / substitute proof reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern for non-existent or unavailable documents; no real taxpayer data may be used."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe document compliance planning only and does not constitute a final legal or tax conclusion. Document status, submission proof, and BIR response should be verified, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "REQUIRES_CERTIFIED_COPY_ITEM": {
+      "phase": "09P",
+      "mode": "bir_document_compliance_transmittal",
+      "version": "PHASE-09P-BIR-DOCUMENT-COMPLIANCE-TRANSMITTAL-SCAFFOLD-1",
+      "runtimeActive": false,
+      "complianceSummary": {
+        "requestType": "CHECKLIST_OF_REQUIREMENTS",
+        "totalItems": 1,
+        "providedCount": 0,
+        "toFollowCount": 0,
+        "notApplicableCount": 0,
+        "unavailableCount": 0,
+        "nonExistentCount": 0,
+        "substituteProofCount": 0,
+        "clarificationNeededCount": 0,
+        "reconciliationNeededCount": 0,
+        "certifiedCopyNeededCount": 1,
+        "onPremiseReviewNeededCount": 0,
+        "highRiskItemCount": 0,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "documentMatrix": [
+        {
+          "itemName": "Synthetic certified AFS copy",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "requires_certified_copy",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "explanationNeeded": false,
+          "explanationType": "none",
+          "reconciliationNeeded": false,
+          "certifiedCopyNeeded": true,
+          "onPremiseReviewNeeded": false,
+          "birClarificationNeeded": false,
+          "receivingProofNeeded": true,
+          "withoutPrejudiceLanguageNeeded": false,
+          "riskLevel": "medium",
+          "riskReason": "a certified copy is required before submission",
+          "recommendedSafeAction": [
+            "Track certified-copy submission and preserve proof of certification."
+          ],
+          "prohibitedOverreach": [
+            "Do not claim this item guarantees BIR acceptance.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "transmittalPlan": {
+        "responseType": "DOCUMENT_TRANSMITTAL_MATRIX",
+        "transmittalModeOptions": [
+          "in-person filing with receiving stamp",
+          "registered mail",
+          "email submission with acknowledgment"
+        ],
+        "itemizedScheduleNeeded": true,
+        "receivingProofRequired": true,
+        "birStampedCopyRequired": true,
+        "emailAcknowledgmentRequired": true,
+        "authorizedRepresentativeCheckNeeded": true,
+        "deadlineTrackingNeeded": false,
+        "withoutPrejudiceLanguageNeeded": false,
+        "clarificationRequestNeeded": false,
+        "extensionRequestPotential": false,
+        "clientStatusUpdateRecommended": true
+      },
+      "substituteProofPlan": {
+        "affidavitPotentialItems": [],
+        "managementCertificationPotentialItems": [],
+        "afsNotePotentialItems": [],
+        "taxReturnSupportPotentialItems": [],
+        "officialRecordPotentialItems": [],
+        "thirdPartyConfirmationPotentialItems": []
+      },
+      "receivingProofTracker": {
+        "birStampedSubmission": false,
+        "emailTrail": false,
+        "courierProof": false,
+        "uploadConfirmation": false,
+        "receivingOfficerOrOfficeCaptured": false,
+        "dateTimeCaptured": false,
+        "attachmentListCaptured": true,
+        "proofGapWarnings": [
+          "No BIR-stamped, email, or other receiving proof has been confirmed yet for items requiring proof of submission."
+        ]
+      },
+      "scopeAndAuthorityChecks": {
+        "standardizedChecklistCheckNeeded": true,
+        "additionalRequestLimitCheckNeeded": false,
+        "relevanceCheckNeeded": false,
+        "necessityCheckNeeded": false,
+        "auditScopeCheckNeeded": true,
+        "explanationDocumentationCheckNeeded": false,
+        "voluminousRecordsCheckNeeded": false,
+        "onPremiseExaminationPotential": false,
+        "certifiedCopySubmissionPotential": true,
+        "preSubpoenaEscalationRisk": false,
+        "subpoenaEscalationRisk": false
+      },
+      "safeWarnings": [
+        "Do not blindly submit every requested item without review.",
+        "Classify each item and prepare a controlled written transmittal."
+      ],
+      "recommendedNextActions": [
+        "Match each checklist item to available records.",
+        "Prepare an itemized transmittal schedule.",
+        "Preserve BIR-stamped or email proof of submission."
+      ],
+      "prohibitedConclusions": [
+        "document_acceptance_guarantee",
+        "full_compliance_determination",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RMO No. 1-2026 standardized checklist and document request safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for standardized checklist, additional document request limits, relevance, necessity, audit scope, and documented explanation. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMO No. 1-2026 voluminous records and certified copy reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for voluminous books/records, on-premise examination potential, and certified-copy submission concepts. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 14-2026 prior notices/checklists/subpoenas under replacement eLA reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for treatment of prior notices, checklists, and subpoenas when a replacement eLA is issued for continuity. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional document transmittal reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        },
+        {
+          "label": "Uploaded affidavit / substitute proof reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern for non-existent or unavailable documents; no real taxpayer data may be used."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe document compliance planning only and does not constitute a final legal or tax conclusion. Document status, submission proof, and BIR response should be verified, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "REQUIRES_ON_PREMISE_REVIEW_ITEM": {
+      "phase": "09P",
+      "mode": "bir_document_compliance_transmittal",
+      "version": "PHASE-09P-BIR-DOCUMENT-COMPLIANCE-TRANSMITTAL-SCAFFOLD-1",
+      "runtimeActive": false,
+      "complianceSummary": {
+        "requestType": "CHECKLIST_OF_REQUIREMENTS",
+        "totalItems": 1,
+        "providedCount": 0,
+        "toFollowCount": 0,
+        "notApplicableCount": 0,
+        "unavailableCount": 0,
+        "nonExistentCount": 0,
+        "substituteProofCount": 0,
+        "clarificationNeededCount": 0,
+        "reconciliationNeededCount": 0,
+        "certifiedCopyNeededCount": 0,
+        "onPremiseReviewNeededCount": 1,
+        "highRiskItemCount": 0,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "documentMatrix": [
+        {
+          "itemName": "Synthetic voluminous general ledger",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "requires_on_premise_review",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "explanationNeeded": false,
+          "explanationType": "none",
+          "reconciliationNeeded": false,
+          "certifiedCopyNeeded": false,
+          "onPremiseReviewNeeded": true,
+          "birClarificationNeeded": false,
+          "receivingProofNeeded": false,
+          "withoutPrejudiceLanguageNeeded": false,
+          "riskLevel": "medium",
+          "riskReason": "voluminous records may require on-premise review",
+          "recommendedSafeAction": [
+            "Consider on-premise review for voluminous books/records.",
+            "Do not assume books/records can be withheld entirely from BIR examination."
+          ],
+          "prohibitedOverreach": [
+            "Do not claim this item guarantees BIR acceptance.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "transmittalPlan": {
+        "responseType": "DOCUMENT_TRANSMITTAL_MATRIX",
+        "transmittalModeOptions": [
+          "in-person filing with receiving stamp",
+          "registered mail",
+          "email submission with acknowledgment"
+        ],
+        "itemizedScheduleNeeded": true,
+        "receivingProofRequired": true,
+        "birStampedCopyRequired": true,
+        "emailAcknowledgmentRequired": true,
+        "authorizedRepresentativeCheckNeeded": true,
+        "deadlineTrackingNeeded": false,
+        "withoutPrejudiceLanguageNeeded": false,
+        "clarificationRequestNeeded": false,
+        "extensionRequestPotential": false,
+        "clientStatusUpdateRecommended": true
+      },
+      "substituteProofPlan": {
+        "affidavitPotentialItems": [],
+        "managementCertificationPotentialItems": [],
+        "afsNotePotentialItems": [],
+        "taxReturnSupportPotentialItems": [],
+        "officialRecordPotentialItems": [],
+        "thirdPartyConfirmationPotentialItems": []
+      },
+      "receivingProofTracker": {
+        "birStampedSubmission": false,
+        "emailTrail": false,
+        "courierProof": false,
+        "uploadConfirmation": false,
+        "receivingOfficerOrOfficeCaptured": false,
+        "dateTimeCaptured": false,
+        "attachmentListCaptured": true,
+        "proofGapWarnings": []
+      },
+      "scopeAndAuthorityChecks": {
+        "standardizedChecklistCheckNeeded": true,
+        "additionalRequestLimitCheckNeeded": false,
+        "relevanceCheckNeeded": false,
+        "necessityCheckNeeded": false,
+        "auditScopeCheckNeeded": true,
+        "explanationDocumentationCheckNeeded": false,
+        "voluminousRecordsCheckNeeded": true,
+        "onPremiseExaminationPotential": true,
+        "certifiedCopySubmissionPotential": false,
+        "preSubpoenaEscalationRisk": false,
+        "subpoenaEscalationRisk": false
+      },
+      "safeWarnings": [
+        "Do not blindly submit every requested item without review.",
+        "Classify each item and prepare a controlled written transmittal."
+      ],
+      "recommendedNextActions": [
+        "Match each checklist item to available records.",
+        "Prepare an itemized transmittal schedule.",
+        "Preserve BIR-stamped or email proof of submission."
+      ],
+      "prohibitedConclusions": [
+        "document_acceptance_guarantee",
+        "full_compliance_determination",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RMO No. 1-2026 standardized checklist and document request safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for standardized checklist, additional document request limits, relevance, necessity, audit scope, and documented explanation. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMO No. 1-2026 voluminous records and certified copy reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for voluminous books/records, on-premise examination potential, and certified-copy submission concepts. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 14-2026 prior notices/checklists/subpoenas under replacement eLA reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for treatment of prior notices, checklists, and subpoenas when a replacement eLA is issued for continuity. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional document transmittal reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        },
+        {
+          "label": "Uploaded affidavit / substitute proof reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern for non-existent or unavailable documents; no real taxpayer data may be used."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe document compliance planning only and does not constitute a final legal or tax conclusion. Document status, submission proof, and BIR response should be verified, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    },
+    "REQUIRES_BIR_CLARIFICATION_ITEM": {
+      "phase": "09P",
+      "mode": "bir_document_compliance_transmittal",
+      "version": "PHASE-09P-BIR-DOCUMENT-COMPLIANCE-TRANSMITTAL-SCAFFOLD-1",
+      "runtimeActive": false,
+      "complianceSummary": {
+        "requestType": "ADDITIONAL_DOCUMENT_REQUEST",
+        "totalItems": 1,
+        "providedCount": 0,
+        "toFollowCount": 0,
+        "notApplicableCount": 0,
+        "unavailableCount": 0,
+        "nonExistentCount": 0,
+        "substituteProofCount": 0,
+        "clarificationNeededCount": 1,
+        "reconciliationNeededCount": 0,
+        "certifiedCopyNeededCount": 0,
+        "onPremiseReviewNeededCount": 0,
+        "highRiskItemCount": 0,
+        "humanReviewRequired": true,
+        "confidence": "high"
+      },
+      "documentMatrix": [
+        {
+          "itemName": "Synthetic unclear additional schedule",
+          "itemCategory": "general",
+          "requestedByBir": true,
+          "status": "requires_bir_clarification",
+          "documentsAvailable": [],
+          "documentsMissing": [],
+          "substituteProofOptions": [],
+          "explanationNeeded": false,
+          "explanationType": "requires_clarification",
+          "reconciliationNeeded": false,
+          "certifiedCopyNeeded": false,
+          "onPremiseReviewNeeded": false,
+          "birClarificationNeeded": true,
+          "receivingProofNeeded": false,
+          "withoutPrejudiceLanguageNeeded": false,
+          "riskLevel": "medium",
+          "riskReason": "request scope is unclear; clarification is needed before full compliance",
+          "recommendedSafeAction": [
+            "Ask BIR to identify the specific document, audit issue, relevance, necessity, scope, and basis.",
+            "Do not refuse compliance outright while clarification is pending."
+          ],
+          "prohibitedOverreach": [
+            "Do not claim this item guarantees BIR acceptance.",
+            "Do not treat this matrix entry as a final legal conclusion."
+          ],
+          "humanReviewRequired": true
+        }
+      ],
+      "transmittalPlan": {
+        "responseType": "REQUEST_FOR_CLARIFICATION",
+        "transmittalModeOptions": [
+          "in-person filing with receiving stamp",
+          "registered mail",
+          "email submission with acknowledgment"
+        ],
+        "itemizedScheduleNeeded": true,
+        "receivingProofRequired": true,
+        "birStampedCopyRequired": true,
+        "emailAcknowledgmentRequired": true,
+        "authorizedRepresentativeCheckNeeded": true,
+        "deadlineTrackingNeeded": false,
+        "withoutPrejudiceLanguageNeeded": false,
+        "clarificationRequestNeeded": true,
+        "extensionRequestPotential": false,
+        "clientStatusUpdateRecommended": true
+      },
+      "substituteProofPlan": {
+        "affidavitPotentialItems": [],
+        "managementCertificationPotentialItems": [],
+        "afsNotePotentialItems": [],
+        "taxReturnSupportPotentialItems": [],
+        "officialRecordPotentialItems": [],
+        "thirdPartyConfirmationPotentialItems": []
+      },
+      "receivingProofTracker": {
+        "birStampedSubmission": false,
+        "emailTrail": false,
+        "courierProof": false,
+        "uploadConfirmation": false,
+        "receivingOfficerOrOfficeCaptured": false,
+        "dateTimeCaptured": false,
+        "attachmentListCaptured": true,
+        "proofGapWarnings": []
+      },
+      "scopeAndAuthorityChecks": {
+        "standardizedChecklistCheckNeeded": false,
+        "additionalRequestLimitCheckNeeded": true,
+        "relevanceCheckNeeded": true,
+        "necessityCheckNeeded": true,
+        "auditScopeCheckNeeded": true,
+        "explanationDocumentationCheckNeeded": true,
+        "voluminousRecordsCheckNeeded": false,
+        "onPremiseExaminationPotential": false,
+        "certifiedCopySubmissionPotential": false,
+        "preSubpoenaEscalationRisk": false,
+        "subpoenaEscalationRisk": false
+      },
+      "safeWarnings": [
+        "Additional requests should be checked for relevance, necessity, audit scope, and documentation before compliance."
+      ],
+      "recommendedNextActions": [
+        "Confirm the stated basis for the additional request.",
+        "Classify each additional item and prepare a written transmittal.",
+        "Ask BIR to identify scope and basis if unclear."
+      ],
+      "prohibitedConclusions": [
+        "document_acceptance_guarantee",
+        "full_compliance_determination",
+        "final_legal_opinion",
+        "filing_ready_document_generation",
+        "automatic_submission_determination"
+      ],
+      "sourceCards": [
+        {
+          "label": "RMO No. 1-2026 standardized checklist and document request safeguards",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for standardized checklist, additional document request limits, relevance, necessity, audit scope, and documented explanation. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMO No. 1-2026 voluminous records and certified copy reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for voluminous books/records, on-premise examination potential, and certified-copy submission concepts. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 14-2026 prior notices/checklists/subpoenas under replacement eLA reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Required checkpoint for treatment of prior notices, checklists, and subpoenas when a replacement eLA is issued for continuity. This scaffold does not perform live verification."
+        },
+        {
+          "label": "RMC No. 5-2026 LOA/eLA verification reference",
+          "sourceType": "BIR issuance",
+          "authorityTier": "official_reference_required",
+          "note": "Use BIR REVIE / LOA Verifier workflow when authority corpus is wired. This scaffold does not perform live verification."
+        },
+        {
+          "label": "Uploaded professional document transmittal reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern; fixtures must be sanitized and must not expose real taxpayer data."
+        },
+        {
+          "label": "Uploaded affidavit / substitute proof reference pattern",
+          "sourceType": "private uploaded reference",
+          "authorityTier": "uploaded_reference_pattern",
+          "note": "Use only as private development pattern for non-existent or unavailable documents; no real taxpayer data may be used."
+        }
+      ],
+      "humanReviewNotice": "This scaffold provides procedural-safe document compliance planning only and does not constitute a final legal or tax conclusion. Document status, submission proof, and BIR response should be verified, and this matter should be reviewed by a qualified tax professional before any filing deadline.",
+      "metadata": {
+        "scaffoldOnly": true,
+        "legalConclusionProvided": false,
+        "liveRetrievalPerformed": false,
+        "externalSearchPerformed": false,
+        "realTaxpayerDataUsed": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "finalOutcomeGuaranteed": false
+      }
+    }
+  },
+  "prohibitedClaims": [
+    "this assessment is void",
+    "this loa is invalid",
+    "this ela is invalid",
+    "this replacement ela is invalid",
+    "this fan is invalid",
+    "this fld is invalid",
+    "this pan is invalid",
+    "this fdda is invalid",
+    "the bir cannot assess you",
+    "the case is fully cancelled",
+    "the assessment is cancelled",
+    "you are permanently cleared",
+    "no need to consult a professional",
+    "submit everything without review",
+    "ignore the notice",
+    "you will win",
+    "guaranteed cancellation",
+    "final legal opinion",
+    "official legal advice",
+    "court-tested defense",
+    "foolproof defense",
+    "the protest is guaranteed to succeed",
+    "cta appeal is definitely available",
+    "the assessment is final",
+    "the assessment is not final",
+    "the deadline is definitely",
+    "bir will accept this document",
+    "this submission fully complies",
+    "no further action is needed",
+    "records never need to be brought to the bir",
+    "all additional document requests are improper"
+  ],
+  "sourceCardRules": {
+    "allowedAuthorityTiers": [
+      "official_reference_required",
+      "uploaded_reference_pattern",
+      "future_authority_corpus_required",
+      "procedural_design_reference"
+    ],
+    "mustNotClaimFinalAuthorityVerificationComplete": true,
+    "mustNotClaimFinalLegalConclusion": true,
+    "requiredBaselineSourceCards": [
+      {
+        "label": "RMO No. 1-2026 standardized checklist and document request safeguards",
+        "sourceType": "BIR issuance",
+        "authorityTier": "official_reference_required"
+      },
+      {
+        "label": "RMO No. 1-2026 voluminous records and certified copy reference",
+        "sourceType": "BIR issuance",
+        "authorityTier": "official_reference_required"
+      },
+      {
+        "label": "RMC No. 14-2026 prior notices/checklists/subpoenas under replacement eLA reference",
+        "sourceType": "BIR issuance",
+        "authorityTier": "official_reference_required"
+      },
+      {
+        "label": "RMC No. 5-2026 LOA/eLA verification reference",
+        "sourceType": "BIR issuance",
+        "authorityTier": "official_reference_required"
+      },
+      {
+        "label": "Uploaded professional document transmittal reference pattern",
+        "sourceType": "private uploaded reference",
+        "authorityTier": "uploaded_reference_pattern"
+      },
+      {
+        "label": "Uploaded affidavit / substitute proof reference pattern",
+        "sourceType": "private uploaded reference",
+        "authorityTier": "uploaded_reference_pattern"
+      }
+    ]
+  },
+  "futurePatchPlan": [
+    "PHASE-09Q-BIR-AUTHORITY-CORPUS-RESEARCH-DESIGN-1",
+    "PHASE-09S-2026-BIR-AUDIT-BASELINE-INTEGRATION-SCAFFOLD-1",
+    "PHASE-09-GATE-CLOSURE-1"
+  ],
+  "nextTask": "PHASE-09Q-BIR-AUTHORITY-CORPUS-RESEARCH-DESIGN-1"
+}

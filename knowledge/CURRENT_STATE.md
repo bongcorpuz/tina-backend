@@ -5533,3 +5533,81 @@ PHASE-09-GATE-CLOSURE-1. Do not wire the audit defense matrix to /ask until work
 approve it; keep real taxpayer data out of fixtures; require authority verification before legal conclusions;
 preserve 2026 audit-framework flags but do not convert them into validity conclusions.
 ```
+
+## Phase 9P BIR Document Compliance / Transmittal Scaffold — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-07):
+
+```text
+PHASE-09P-BIR-DOCUMENT-COMPLIANCE-TRANSMITTAL-SCAFFOLD-1 completed. Decision: PHASE 09P BIR DOCUMENT COMPLIANCE
+TRANSMITTAL SCAFFOLD PASS WITH STRICT RECOMMENDATIONS. Base commit: 8d76c1d PHASE-09O-BIR-AUDIT-DEFENSE-MATRIX-
+SCAFFOLD-1.
+
+Scope: design-only, non-runtime-active BIR document compliance/transmittal scaffold for LOA checklists, notices for
+presentation/submission, additional document requests, pre-subpoena reminders, subpoena-related document
+organization, NOD/DOD/PAN/FAN/FLD/reinvestigation/FDDA supporting documents, termination supporting documents,
+non-applicable/unavailable/non-existent documents, substitute proof, receiving proof, and controlled transmittal
+planning. New pure standalone module workflow/bir-document-compliance-transmittal.js, zero imports, no I/O, no
+network calls, no OCR, no process.env, no Date.now/randomness, no side effects. No existing Phase 9 workflow file
+was modified. This scaffold creates a structured compliance/transmittal plan only; it does not decide legal
+validity and does not draft final submissions.
+
+Supported item statuses (11): provided, to_follow, not_applicable, unavailable, non_existent,
+substitute_proof_available, requires_reconciliation, requires_certified_copy, requires_on_premise_review,
+requires_bir_clarification, unknown. Supported request types (13): LOA_INITIAL_CHECKLIST,
+NOTICE_FOR_PRESENTATION_SUBMISSION, CHECKLIST_OF_REQUIREMENTS, ADDITIONAL_DOCUMENT_REQUEST, PRE_SUBPOENA_REMINDER,
+SUBPOENA_DUCES_TECUM, NOD_DOD_SUPPORTING_DOCUMENTS, PAN_REPLY_SUPPORTING_DOCUMENTS,
+FAN_FLD_PROTEST_SUPPORTING_DOCUMENTS, REINVESTIGATION_SUPPORTING_DOCUMENTS, FDDA_APPEAL_SUPPORTING_DOCUMENTS,
+TERMINATION_LETTER_SUPPORTING_DOCUMENTS, UNKNOWN_DOCUMENT_REQUEST.
+
+Runtime changes: None. Ask-handler changes: None. Route/server/pipeline changes: None. Feature flags:
+unchanged/off by default. Memory: inactive. Persistence: none. External search/OpenAI/Supabase/Google Drive/n8n/
+Firecrawl/Crawlee/MCP/OCR: untouched. Production: unchanged.
+
+Privacy: no real taxpayer names, TINs, LOA/eLA numbers, audit case numbers, BIR officer names, exact real
+assessment amounts, or taxpayer-specific facts used in fixtures; all examples sanitized/synthetic (SAMPLE TAXPAYER
+INC., DEMO LOGISTICS CORP., SYNTHETIC HOLDINGS INC., MODEL VAT TAXPAYER CORP.). The module additionally rejects any
+known real reference-corpus fragment on input and scans its own output for leakage.
+
+Legal safety: no final legal conclusions; no fabricated authorities; no filing-ready transmittal letter, affidavit,
+certification, email, protest, CTA pleading, tax opinion, or legal opinion generated; no automatic BIR submission;
+no claim that documents are accepted, fully compliant, final, legally sufficient, or conclusive. Human review
+notice preserved in every result; all eight metadata safety flags always scaffold-safe. A conservative
+prohibited-claim phrase scanner and a real-data-leak scanner are both run by the result validator, and input
+validation additionally rejects natural-language requests for filing-ready output or automatic BIR submission.
+
+Authority boundary: RMO No. 1-2026, RMO No. 6-2026, RMC No. 14-2026, and RMC No. 5-2026 referenced as design
+source-card requirements only. No live authority retrieval implemented. Phase 10 authority search not implemented.
+
+Workflow capabilities: 09P now models the document compliance matrix, controlled transmittal planning, unavailable/
+non-applicable/non-existent document handling, substitute proof plan, affidavit/certification planning,
+reconciliation tracking, receiving-proof tracker, certified-copy/on-premise review signals, additional document
+request scope checks, pre-subpoena/subpoena escalation warnings, and client-status update recommendation.
+
+Validation:
+node tests/phase-09p-bir-document-compliance-transmittal-scaffold-1.test.mjs - PASS / 36 / 0 / 332.
+node tests/phase-09o-bir-audit-defense-matrix-scaffold-1.test.mjs - PASS / 33 / 0 / 604.
+node tests/phase-09n-pan-fan-fld-protest-workflow-scaffold-1.test.mjs - PASS / 35 / 0 / 335.
+node tests/phase-09m-bir-notice-loa-triage-intent-scaffold-1.test.mjs - PASS / 47 / 0 / 398.
+node tests/phase-09l-authority-safe-procedural-fallback-scaffold-1.test.mjs - PASS / 33 / 0 / 184.
+node tests/phase-09r-tax-memo-runtime-staging-smoke-1.test.mjs - PASS / 36 / 0 / 179.
+node tests/phase-09r-tax-memo-runtime-wiring-integration-design-1.test.mjs - PASS / 54 / 0 / 202.
+node tests/phase-09r-tax-memo-runtime-wiring-scaffold-1.test.mjs - PASS / 113 / 0 / 212.
+node tests/phase-09i-requirements-request-letter-schema-scaffold-1.test.mjs - PASS / 56 / 0 / 333.
+node tests/phase-09h-controlled-runtime-wiring-design-or-scaffold-1.test.mjs - PASS / 69 / 0 / 172.
+node tests/phase-09g-workflow-output-governance-gate-1.test.mjs - PASS / 73 / 0 / 213.
+node tests/phase-09f-client-advisory-checklist-scaffold-1.test.mjs - PASS / 75 / 0 / 404.
+node tests/phase-09e-bir-reply-draft-scaffold-1.test.mjs - PASS / 45 / 0 / 243.
+node tests/phase-09d-audit-defense-matrix-scaffold-1.test.mjs - PASS / 45 / 0 / 203.
+node tests/phase-09c-tax-memo-schema-scaffold-1.test.mjs - PASS / 47 / 0 / 149.
+node tests/phase-09b-workflow-mode-registry-scaffold-1.test.mjs - PASS / 45 / 0 / 363.
+node tests/phase-09a-professional-workflow-copilot-design-1.test.mjs - PASS / 30 / 0 / 75.
+node tests/patch-08s-followup-index-secret-header-auth-staging-smoke-1.test.mjs - PASS / 23 / 0 / 92.
+node tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs - PASS / 17 / 0 / 127.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0 / 203.
+npm run guard:files - PASS. npm test - GATE PASSED / 162 suites / 0 failed.
+
+Next recommended task: PHASE-09Q-BIR-AUTHORITY-CORPUS-RESEARCH-DESIGN-1. Future required task:
+PHASE-09S-2026-BIR-AUDIT-BASELINE-INTEGRATION-SCAFFOLD-1. Do not wire document compliance/transmittal workflow to
+/ask until workflow governance and runtime gates approve it; keep real taxpayer data out of fixtures; require
+authority verification before legal conclusions; preserve 2026 audit-framework flags but do not convert them into
+validity conclusions.
+```
