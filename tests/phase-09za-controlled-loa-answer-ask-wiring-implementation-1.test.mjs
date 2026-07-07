@@ -399,7 +399,11 @@ await test("git diff confirms only allowed files plus the single approved pipeli
   for (const name of diffNames) {
     check(allowedChanged.has(name), `changed file is allowed by this patch's scope: ${name}`);
   }
-  check(diffNames.includes("pipeline.js"), "pipeline.js is the (only) approved runtime hook file changed");
+  // Note: diffNames reflects only the *currently uncommitted* working-tree
+  // diff, so it is empty once this patch is committed (a clean tree) -- it
+  // is not asserted to contain pipeline.js. The runtime-hook file itself is
+  // independently confirmed via the "pipeline.js references the 09Y
+  // scaffold" test above.
   check(!diffNames.includes("ask-handler.js"), "ask-handler.js not changed");
   check(!diffNames.includes("server.js"), "server.js not changed");
 });
