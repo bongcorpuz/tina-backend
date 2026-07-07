@@ -5696,3 +5696,103 @@ gates approve it; do not perform live scraping/downloading/ingestion until a sep
 approved; require official-source verification before any legal/tax conclusion; treat secondary sources only as
 research leads.
 ```
+
+## Phase 9S 2026 BIR Audit Baseline Integration Scaffold — COMPLETE / PASS WITH STRICT RECOMMENDATIONS (2026-07-07):
+
+```text
+PHASE-09S-2026-BIR-AUDIT-BASELINE-INTEGRATION-SCAFFOLD-1 completed.
+
+Decision:
+PHASE 09S 2026 BIR AUDIT BASELINE INTEGRATION SCAFFOLD PASS WITH STRICT RECOMMENDATIONS
+
+Base commit:
+4d88ee6
+
+Scope:
+Design-only, non-runtime-active 2026 BIR audit baseline integration scaffold for RMO No. 1-2026, RMO No. 6-2026,
+RMC No. 14-2026, RMC No. 5-2026, RMC No. 8-2026, RMC No. 107-2025, RR No. 18-2013, RR No. 12-99 as amended, NIRC
+Sec. 203, NIRC Sec. 222, NIRC Sec. 228, NIRC Sec. 232, CTA rules, and related LOA/eLA/due-process/prescription
+authorities. New pure standalone module workflow/bir-2026-audit-baseline-integration.js, zero imports, no I/O, no
+network calls, no OCR, no process.env, no Date.now/randomness, no side effects. No existing Phase 9 workflow file
+was modified. Supported baseline topics (36 including UNKNOWN_2026_BASELINE_TOPIC), authority references (17),
+signal types (13), routes (8), and risk levels (5) are all exported and enumerated.
+
+Runtime changes:
+None.
+
+Ask-handler changes:
+None.
+
+Route/server/pipeline changes:
+None.
+
+Feature flags:
+Unchanged/off by default.
+
+Memory:
+Inactive.
+
+Persistence:
+None.
+
+External search/live retrieval/scraping/download/ingestion/embedding/database writes/OpenAI/Supabase/Google Drive/n8n/Firecrawl/Crawlee/MCP/OCR:
+Untouched.
+
+Production:
+Unchanged.
+
+Privacy:
+No real taxpayer names, TINs, LOA/eLA numbers, audit case numbers, BIR officer names, exact assessment amounts, or
+taxpayer-specific facts used in fixtures. The module additionally rejects any known real reference-corpus fragment
+on input and scans its own output for leakage.
+
+Legal safety:
+No final legal conclusions.
+No fabricated authorities.
+No claim that any authority was live-verified, downloaded, scraped, ingested, indexed, embedded, or stored.
+No claim that a replacement eLA, consolidated notice, LOA/eLA, PAN, FAN, FLD, FDDA, assessment, or BIR action is
+valid, invalid, void, cancelled, final, enforceable, or appealable.
+No filing-ready output.
+No automatic submission.
+Human review notice preserved.
+
+Authority boundary:
+09S integrates 2026 BIR audit-baseline concepts as design review signals only.
+No live authority retrieval implemented.
+Phase 10 authority search not implemented.
+
+Workflow capability:
+09S prepares 2026 audit-baseline issue detection for replacement eLA, consolidation, VATAS/LTVAU transition, VAT
+refund transition, TVN limited scope, standardized checklist, additional document request limits, voluminous
+records, on-premise examination, certified copy submission, PAN/FAN consolidation safeguards, FDDA/finality limits,
+proper service, written conformity, waiver of prescription, no-regression rule, prior notices/checklists/subpoenas
+under replacement eLA, and human review routing.
+
+Validation:
+node tests/phase-09s-2026-bir-audit-baseline-integration-scaffold-1.test.mjs - PASS / 76 / 0 / 362.
+node tests/phase-09q-bir-authority-corpus-research-design-1.test.mjs - PASS / 30 / 0 / 466.
+node tests/phase-09p-bir-document-compliance-transmittal-scaffold-1.test.mjs - PASS / 36 / 0 / 332.
+node tests/phase-09o-bir-audit-defense-matrix-scaffold-1.test.mjs - PASS / 33 / 0 / 604.
+node tests/phase-09n-pan-fan-fld-protest-workflow-scaffold-1.test.mjs - PASS / 35 / 0 / 335.
+node tests/phase-09m-bir-notice-loa-triage-intent-scaffold-1.test.mjs - PASS / 47 / 0 / 398.
+node tests/phase-09l-authority-safe-procedural-fallback-scaffold-1.test.mjs - PASS / 33 / 0 / 184.
+node tests/phase-09r-tax-memo-runtime-staging-smoke-1.test.mjs - PASS / 36 / 0 / 179.
+node tests/phase-09r-tax-memo-runtime-wiring-integration-design-1.test.mjs - PASS / 54 / 0 / 202.
+node tests/phase-09r-tax-memo-runtime-wiring-scaffold-1.test.mjs - PASS / 113 / 0 / 212.
+node tests/phase-09i-requirements-request-letter-schema-scaffold-1.test.mjs - PASS / 56 / 0 / 333.
+node tests/phase-09h-controlled-runtime-wiring-design-or-scaffold-1.test.mjs - PASS / 69 / 0 / 172.
+node tests/phase-09g-workflow-output-governance-gate-1.test.mjs - PASS / 73 / 0 / 213.
+node tests/phase-09f-client-advisory-checklist-scaffold-1.test.mjs - PASS / 75 / 0 / 404.
+node tests/phase-09e-bir-reply-draft-scaffold-1.test.mjs - PASS / 45 / 0 / 243.
+node tests/phase-09d-audit-defense-matrix-scaffold-1.test.mjs - PASS / 45 / 0 / 203.
+node tests/phase-09c-tax-memo-schema-scaffold-1.test.mjs - PASS / 47 / 0 / 149.
+node tests/phase-09b-workflow-mode-registry-scaffold-1.test.mjs - PASS / 45 / 0 / 363.
+node tests/phase-09a-professional-workflow-copilot-design-1.test.mjs - PASS / 30 / 0 / 75.
+node tests/patch-08s-followup-index-secret-header-auth-staging-smoke-1.test.mjs - PASS / 23 / 0 / 92.
+node tests/patch-08x-chat-context-carryover-final-gate-1.test.mjs - PASS / 17 / 0 / 127.
+node tests/patch-08s-final-closure-gate-1.test.mjs - PASS / 22 / 0 / 203.
+npm run guard:files - PASS. npm test - GATE PASSED / 164 suites / 0 failed.
+
+Next:
+PHASE-09-GATE-CLOSURE-1.
+```
