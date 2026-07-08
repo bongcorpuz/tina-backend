@@ -6187,6 +6187,94 @@ Resolve blocker and rerun PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1.
 Do not proceed to PHASE-09ZC until 09ZB passes.
 ```
 
+## Phase 9ZB Controlled LOA Answer Staging Smoke Rerun -- POST-09ZE FAIL (2026-07-08):
+
+```text
+PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1 post-09ZE rerun completed.
+
+Decision:
+PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE FAIL
+
+Prior 09ZB result:
+30c1cbb recorded PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE FAIL because 4 of 8 mandated safe LOA/eLA staging smoke queries did not trigger the controlled LOA branch.
+
+Remediation prerequisite:
+PHASE-09ZE-CONTROLLED-LOA-DOMAIN-BOUNDARY-REMEDIATION-1 completed at commit 339c448 and added a narrow Philippine tax audit-procedure boundary overlay.
+
+Scope:
+Live staging smoke verification for the controlled LOA/eLA /ask branch after 09ZE remediation.
+
+Staging environment:
+Staging deployed commit 339c448aee0188ffd62beecc126567ee6a30a6b7 verified.
+TINA_ENABLE_CONTROLLED_LOA_ASK_GATE=true verified empirically because BIR-worded safe LOA/eLA queries triggered responseType controlled_loa_answer.
+Authorization: Bearer <staging JWT> was used from ignored local .env; the JWT was not printed, committed, or written to evidence.
+Production unchanged.
+
+Smoke result:
+Live staging LOA /ask behavior verified: FAIL.
+
+Safe LOA/eLA query behavior:
+4 of 8 mandated safe LOA/eLA procedural-help queries triggered the controlled LOA answer branch.
+The replacement eLA, consolidated eLA, notice for presentation/submission, and reminder before subpoena queries did not trigger the controlled branch after 09ZE and returned the generic Philippine-tax fallback.
+
+Excluded unsafe query behavior:
+Validity, voidness, ignore-LOA, assessment power, finality, CTA strategy, FAN/FDDA appealability, outcome prediction, filing-ready protest, automatic submission, and legal-opinion queries did not receive the controlled safe LOA answer.
+
+Unrelated query behavior:
+Generic EWT, VAT, percentage tax, VAT-exempt, and estate tax queries did not trigger the controlled LOA branch.
+
+Runtime/security behavior:
+The formal rerun stopped at the first safe-query failure before repeating runtime/security checks. Prior 09ZB runtime/security smoke remained PASS, and no route/server/security files were changed in this rerun.
+
+Runtime changes:
+None in this rerun.
+
+Ask-handler changes:
+None.
+
+Pipeline implementation changes:
+None.
+
+Route/server changes:
+None.
+
+Feature flags:
+Staging flag required and empirically verified.
+
+Memory:
+Inactive.
+
+Persistence:
+None.
+
+External search/live retrieval/scraping/download/ingestion/embedding/database writes/OpenAI/Supabase/Google Drive/n8n/Firecrawl/Crawlee/MCP/OCR:
+Untouched.
+
+Production:
+Unchanged.
+
+Legal safety:
+No final legal conclusions.
+No claim that any LOA/eLA/PAN/FAN/FLD/FDDA/assessment/protest/BIR action is valid, invalid, void, cancelled, final, enforceable, or appealable.
+No filing-ready output.
+No automatic BIR submission.
+Human tax/legal review notice preserved for triggered controlled responses.
+
+Source-card boundary:
+No live retrieval.
+No verified source-card claim.
+No legal citation allowed unless future verified source cards are available.
+
+Next:
+Resolve post-09ZE staging safe-query trigger gap and rerun PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1.
+
+09ZC status:
+PHASE-09ZC-CONTROLLED-LOA-ANSWER-PRODUCTION-ACTIVATION-GATE-1 remains blocked until 09ZB passes.
+
+Alternative:
+PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System.
+```
+
 ## Phase 9ZE Controlled LOA Domain Boundary Remediation -- COMPLETE (2026-07-08):
 
 ```text

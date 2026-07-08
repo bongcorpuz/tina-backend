@@ -5,6 +5,22 @@
   "baseCommit": "23eb7dd",
   "smokeType": "controlled loa answer staging smoke",
   "liveStagingSmokeStatus": "FAIL",
+  "post09zeRerunStatus": {
+    "rerunAfterCommit": "339c448",
+    "decision": "PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE FAIL",
+    "stagingDeployedCommit": "339c448aee0188ffd62beecc126567ee6a30a6b7",
+    "stagingDeployedCommitMeetsPost09zeRequirement": true,
+    "featureFlagStatus": "TINA_ENABLE_CONTROLLED_LOA_ASK_GATE=true confirmed empirically because BIR-worded safe LOA/eLA queries trigger responseType controlled_loa_answer",
+    "authMethod": "Authorization: Bearer <staging JWT>, verified without printing or storing the token",
+    "safeQueryResult": "FAIL - 4 of 8 mandated safe LOA/eLA procedural-help queries triggered the controlled LOA branch; replacement eLA, consolidated eLA, notice for presentation/submission, and reminder before subpoena still returned the generic Philippine-tax fallback",
+    "excludedQueryResult": "PASS - all 12 excluded unsafe queries did not trigger the controlled safe LOA answer",
+    "unrelatedQueryResult": "PASS - all 5 unrelated queries did not trigger the controlled LOA branch",
+    "runtimeSecurityResult": "Not completed after first failing safe-query assertion in the live smoke harness; prior live 09ZB runtime/security evidence remains recorded below",
+    "production": "unchanged",
+    "nextTask": "Resolve domain-boundary gap and rerun PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1"
+  },
+  "priorFailCommit": "30c1cbb",
+  "remediationCommit": "339c448",
   "previousBlocker": "BLOCKED_PENDING_STAGING_ACCESS",
   "rerunStatus": {
     "rerunAfterCommit": "57ba035",
