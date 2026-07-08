@@ -6187,6 +6187,85 @@ Resolve blocker and rerun PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1.
 Do not proceed to PHASE-09ZC until 09ZB passes.
 ```
 
+## Phase 9ZE Controlled LOA Domain Boundary Remediation -- COMPLETE (2026-07-08):
+
+```text
+PHASE-09ZE-CONTROLLED-LOA-DOMAIN-BOUNDARY-REMEDIATION-1 completed.
+
+Decision:
+PHASE 09ZE CONTROLLED LOA DOMAIN BOUNDARY REMEDIATION PASS WITH STRICT RECOMMENDATIONS
+
+Base commit:
+30c1cbb
+
+Scope:
+Controlled remediation of the Philippine tax-domain boundary so narrow LOA/eLA audit-procedure queries can reach the existing 09ZA controlled LOA /ask gate.
+
+09ZB failure being remediated:
+PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1 failed because 4 of 8 mandated safe LOA/eLA staging smoke queries did not trigger the controlled LOA branch.
+
+Root cause:
+detectPhilippineTaxBoundary() ran before pipeline Step 12.65 and rejected narrow audit-procedure queries that did not contain literal BIR or LOA wording.
+
+Remediation:
+Extended pipeline.js with a narrow /ask-only Philippine tax audit-procedure boundary overlay for LOA/eLA procedural signals. The existing controlled LOA gate remains responsible for safe, excluded, and unrelated classification.
+
+Previously failing safe queries now covered:
+I received a replacement eLA, what should I check first?
+I received a consolidated eLA, what should I do?
+I received a notice for presentation/submission of documents.
+I received a reminder before subpoena.
+
+Runtime changes:
+Controlled domain-boundary remediation only.
+
+Ask-handler changes:
+None.
+
+Pipeline changes:
+Controlled domain-boundary remediation only.
+
+Route/server changes:
+None.
+
+Feature flags:
+Unchanged.
+
+Memory:
+Inactive.
+
+Persistence:
+None.
+
+External search/live retrieval/scraping/download/ingestion/embedding/database writes/OpenAI/Supabase/Google Drive/n8n/Firecrawl/Crawlee/MCP/OCR:
+Untouched.
+
+Production:
+Unchanged.
+
+Legal safety:
+No final legal conclusions.
+No claim that any LOA/eLA/PAN/FAN/FLD/FDDA/assessment/protest/BIR action is valid, invalid, void, cancelled, final, enforceable, or appealable.
+No filing-ready output.
+No automatic BIR submission.
+Human tax/legal review notice preserved.
+
+Source-card boundary:
+No live retrieval.
+No verified source-card claim.
+No legal citation allowed unless future verified source cards are available.
+
+Next:
+Rerun PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1.
+
+Do not proceed to PHASE-09ZC-CONTROLLED-LOA-ANSWER-PRODUCTION-ACTIVATION-GATE-1 until 09ZB passes.
+
+Alternative:
+PHASE 10 — Evaluation / Fact-Check / Legal-Tax QA System.
+
+If final commit hash differs, update with actual commit hash after commit.
+```
+
 ## Phase 9ZB Controlled LOA Answer Live .env Rerun -- REMAINS BLOCKED (2026-07-08):
 
 ```text

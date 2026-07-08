@@ -84,7 +84,7 @@ import {
   shouldHideSource
 }                                                 from "./source-visibility-engine.js";
 import {
-  detectPhilippineTaxBoundary,
+  detectPhilippineTaxBoundary as baseDetectPhilippineTaxBoundary,
   BOUNDARY_REJECTION_MESSAGE,
   BOUNDARY_CLARIFY_MESSAGE
 }                                                 from "./services/philippine-tax-domain-boundary.js";
@@ -111,6 +111,53 @@ import {
 
 const PIPELINE_VERSION = "1.0.0";
 const ROUTE_BUDGET_MS = 90_000;
+
+// PHASE-09ZE-CONTROLLED-LOA-DOMAIN-BOUNDARY-REMEDIATION-1
+// Narrow Philippine tax/audit boundary signals for LOA/eLA procedural
+// queries that otherwise lack literal "BIR" or "LOA" wording. This does
+// not classify a query as safe for the controlled LOA answer; it only lets
+// audit-procedure phrasing reach Step 12.65, where the existing controlled
+// LOA gate still performs supported/excluded/unrelated classification.
+const CONTROLLED_LOA_AUDIT_PROCEDURE_BOUNDARY_PATTERNS = Object.freeze([
+  /\be-?la\b/i,
+  /electronic\s+letter\s+of\s+authority/i,
+  /replacement\s+e-?la/i,
+  /consolidated\s+e-?la/i,
+  /notice\s+for\s+presentation/i,
+  /notice\s+for\s+presentation\/submission/i,
+  /presentation\/submission\s+of\s+documents/i,
+  /presentation\s+or\s+submission\s+of\s+documents/i,
+  /reminder\s+before\s+subpoena/i,
+  /pre-subpoena/i,
+  /subpoena\s+duces\s+tecum/i,
+  /tax\s+verification\s+notice/i,
+  /\bTVN\b/i,
+  /mission\s+order/i,
+  /audit\s+checklist/i,
+  /document\s+checklist/i,
+  /audit\s+case/i,
+  /group\s+supervisor/i,
+  /revenue\s+officer/i
+]);
+
+export function detectPhilippineTaxBoundary(query = "", routeMode = "/ask", context = {}) {
+  const baseDecision = baseDetectPhilippineTaxBoundary(query, routeMode, context);
+  if (baseDecision?.decision === "ALLOW") return baseDecision;
+
+  const q = String(query || "");
+  const h = String(routeMode || "/ask").toLowerCase();
+  if (h === "/ask" && CONTROLLED_LOA_AUDIT_PROCEDURE_BOUNDARY_PATTERNS.some((pattern) => pattern.test(q))) {
+    return {
+      isPhilippineTax: true,
+      decision: "ALLOW",
+      detectedDomain: "PHILIPPINE_TAX_AUDIT_PROCEDURE",
+      reason: "controlled_loa_audit_procedure_boundary_signal",
+      confidence: 0.90
+    };
+  }
+
+  return baseDecision;
+}
 
 // ─── helpers ──────────────────────────────────────────────────────────────────
 

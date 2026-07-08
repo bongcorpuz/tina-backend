@@ -1,0 +1,95 @@
+{
+  "patch": "PHASE-09ZE-CONTROLLED-LOA-DOMAIN-BOUNDARY-REMEDIATION-1",
+  "decision": "PHASE 09ZE CONTROLLED LOA DOMAIN BOUNDARY REMEDIATION PASS WITH STRICT RECOMMENDATIONS",
+  "phase": "09ZE",
+  "baseCommit": "30c1cbb",
+  "remediationType": "controlled loa domain-boundary remediation",
+  "currentState": "09ZB staging smoke failed because four narrow LOA/eLA audit-procedure queries were rejected before the controlled LOA gate.",
+  "objective": "Allow narrow LOA/eLA audit-procedure queries to pass the Philippine tax domain boundary and reach the existing Step 12.65 controlled LOA gate.",
+  "rootCause": "detectPhilippineTaxBoundary() ran before Step 12.65 and rejected narrow audit-procedure queries that lacked literal BIR or LOA wording.",
+  "chosenRemediation": "Extended pipeline.js with a narrow /ask-only Philippine tax audit-procedure boundary overlay for LOA/eLA procedural signals. The existing controlled LOA gate remains responsible for safe, excluded, and unrelated classification.",
+  "safeQueriesPreviouslyFailed": [
+    "I received a replacement eLA, what should I check first?",
+    "I received a consolidated eLA, what should I do?",
+    "I received a notice for presentation/submission of documents.",
+    "I received a reminder before subpoena."
+  ],
+  "safeQueryMatrix": [
+    "I received a BIR LOA, what should I do?",
+    "I received a BIR eLA, what should I do?",
+    "What should I do after receiving a Letter of Authority from BIR?",
+    "What documents should I prepare after receiving a BIR LOA?",
+    "I received a replacement eLA, what should I check first?",
+    "I received a consolidated eLA, what should I do?",
+    "I received a notice for presentation/submission of documents.",
+    "I received a reminder before subpoena."
+  ],
+  "excludedQueryMatrix": [
+    "validity conclusion request",
+    "voidness conclusion request",
+    "ignore notice request",
+    "assessment-power conclusion request",
+    "assessment-finality request",
+    "CTA strategy request",
+    "FAN voidness request",
+    "FDDA appealability request",
+    "outcome prediction request",
+    "filing-ready protest request",
+    "automatic submission request",
+    "final legal opinion request"
+  ],
+  "unrelatedQueryMatrix": [
+    "Explain EWT.",
+    "Is lease subject to withholding tax in the Philippines?",
+    "What is percentage tax?",
+    "What is VAT-exempt sale?",
+    "What is estate tax?",
+    "What are the rules on withholding tax on professional fees?",
+    "How to compute percentage tax?",
+    "Is sale of fresh frozen seafood VAT exempt?"
+  ],
+  "domainBoundaryExpectedBehavior": {
+    "safeAuditProcedureQueries": "ALLOW to reach Step 12.65",
+    "excludedQueries": "No safe controlled LOA answer",
+    "unrelatedQueries": "No controlled LOA branch trigger"
+  },
+  "controlledLoaGateExpectedBehavior": {
+    "safeQueries": "matched controlled_loa_answer",
+    "excludedQueries": "matched false",
+    "unrelatedQueries": "matched false"
+  },
+  "sourceCardPolicy": {
+    "sourceCards": [],
+    "sourceCardVerification": "not_performed",
+    "legalCitationAllowed": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false
+  },
+  "runtimeBoundary": "Controlled domain-boundary remediation only.",
+  "externalOperationBoundary": "No live authority retrieval, external search, scraping, download, ingestion, embedding, database write, model call, connector call, or OCR.",
+  "privacyBoundary": "No real taxpayer data.",
+  "legalSafetyBoundary": "Procedural-only routing; no final legal conclusions, filing-ready output, or automatic submission.",
+  "productionBoundary": "Production unchanged.",
+  "validationMatrix": [
+    "09ZE static/runtime helper test",
+    "09ZA controlled LOA ask wiring regression",
+    "09Z controlled LOA gate regression",
+    "09Y scaffold regression",
+    "09X design regression",
+    "09 gate closure regression",
+    "guard:files",
+    "npm test"
+  ],
+  "futurePatchPlan": [
+    "Rerun 09ZB staging smoke",
+    "09ZC controlled LOA production activation gate only if 09ZB passes",
+    "09ZD controlled LOA production smoke only after 09ZC",
+    "future Phase 10 evaluation/fact-check/legal-tax QA",
+    "future authority ingestion/search/retrieval only if separately approved",
+    "future memory/persistence only if separately approved",
+    "MCP deferred until after final planned phase",
+    "mobile app deferred until after Phase 13"
+  ],
+  "nextTask": "PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1-RERUN",
+  "alternativeNextPhase": "PHASE 10 — Evaluation / Fact-Check / Legal-Tax QA System"
+}
