@@ -13,6 +13,31 @@ import { resolve } from "node:path";
 import { evaluateControlledLoaAskGate } from "../pipeline.js";
 import { classifyControlledLoaIntent, normalizeControlledLoaAnswerInput } from "../workflow/controlled-loa-answer-runtime-scaffold.js";
 
+function loadLocalDotEnvIfPresent() {
+  const envPath = resolve(".env");
+  if (!existsSync(envPath)) return;
+
+  const raw = readFileSync(envPath, "utf8");
+  for (const line of raw.split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+    const idx = trimmed.indexOf("=");
+    if (idx <= 0) continue;
+
+    const key = trimmed.slice(0, idx).trim();
+    let value = trimmed.slice(idx + 1).trim();
+    if (
+      (value.startsWith("\"") && value.endsWith("\"")) ||
+      (value.startsWith("'") && value.endsWith("'"))
+    ) {
+      value = value.slice(1, -1);
+    }
+    if (!process.env[key]) process.env[key] = value;
+  }
+}
+
+loadLocalDotEnvIfPresent();
+
 const FIXTURE_PATH = "evaluation/fixtures/phase-09zb-controlled-loa-answer-staging-smoke-1.fixture.json";
 const REPORT_PATH = "PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1_REPORT.md";
 const CURRENT_STATE_PATH = "knowledge/CURRENT_STATE.md";
@@ -21,6 +46,7 @@ const SCAFFOLD_PATH = "workflow/controlled-loa-answer-runtime-scaffold.js";
 const EXPECTED_PATCH = "PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1";
 const PASS_DECISION = "PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE PASS WITH STRICT RECOMMENDATIONS";
 const BLOCKED_DECISION = "PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE BLOCKED";
+const FAIL_DECISION = "PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE FAIL";
 const EXPECTED_PASS_NEXT_TASK = "PHASE-09ZC-CONTROLLED-LOA-ANSWER-PRODUCTION-ACTIVATION-GATE-1";
 const STAGING_BLOCKED_ACCESS = "BLOCKED_PENDING_STAGING_ACCESS";
 const FETCH_TIMEOUT_MS = 20000;
@@ -148,7 +174,11 @@ function assertSafeControlledResponse(json, rawText) {
   check(/official-source verification/i.test(text), "safe response includes official-source verification requirement");
   check(!/filing-ready|ready for filing/i.test(text), "safe response avoids filing-ready output");
   check(!/automatic submission|submit this to BIR for you|I will submit/i.test(text), "safe response avoids automatic submission");
-  check(!/verified legal citation|live-verified/i.test(text), "safe response avoids verified citation claim");
+  // Negation-aware: the safe scaffold phrasing is "no source has been
+  // live-verified by this scaffold" -- a disclaimer, not a positive claim.
+  // Only flag an actual positive verification claim (no preceding "no"/"not").
+  check(!/verified legal citation/i.test(text), "safe response avoids verified legal citation claim");
+  check(!/(?<!no )(?<!not )\bsource(?:s)? (?:has|have) been live-verified\b/i.test(text), "safe response avoids positive live-verification claim");
 }
 
 function assertNotControlledSafeAnswer(json, rawText, label) {
@@ -166,10 +196,12 @@ await test("fixture exists, parses, and core fields match the phase contract", (
   check(fx.patch === EXPECTED_PATCH, "fixture patch id matches");
   check(fx.phase === "09ZB", "fixture phase equals 09ZB");
   check(fx.baseCommit === "23eb7dd", "fixture baseCommit equals 23eb7dd");
-  check([PASS_DECISION, BLOCKED_DECISION].includes(fx.decision), "fixture decision is status-aware");
+  check([PASS_DECISION, BLOCKED_DECISION, FAIL_DECISION].includes(fx.decision), "fixture decision is status-aware");
   check(
-    fx.nextTask === EXPECTED_PASS_NEXT_TASK || /^Resolve blocker and rerun PHASE-09ZB/.test(fx.nextTask),
-    "fixture nextTask is pass task or blocker rerun task"
+    fx.nextTask === EXPECTED_PASS_NEXT_TASK ||
+      /^Resolve blocker and rerun PHASE-09ZB/.test(fx.nextTask) ||
+      /^Resolve domain-boundary gap and rerun PHASE-09ZB/.test(fx.nextTask),
+    "fixture nextTask is pass task, blocker rerun task, or fail remediation rerun task"
   );
 });
 
@@ -220,7 +252,7 @@ await test("report exists and contains required impact/status statements", () =>
   ]) {
     check(report.includes(statement), `report states ${statement}`);
   }
-  check(/Live staging LOA \/ask behavior verified: (PASS|BLOCKED_PENDING_STAGING_ACCESS|BLOCKED_PENDING_STAGING_FLAG|BLOCKED_PENDING_STAGING_DEPLOY)/.test(report), "report has live staging status");
+  check(/Live staging LOA \/ask behavior verified: (PASS|FAIL|BLOCKED_PENDING_STAGING_ACCESS|BLOCKED_PENDING_STAGING_FLAG|BLOCKED_PENDING_STAGING_DEPLOY)/.test(report), "report has live staging status");
 });
 
 // 38-42. Static scans for changed files, external operations, taxpayer data, and final-conclusion prose.
@@ -268,22 +300,59 @@ await test("optional live staging smoke is skipped unless explicitly enabled", a
   check(safeMain.res.status >= 200 && safeMain.res.status < 300, "staging safe LOA query returns 2xx");
   assertSafeControlledResponse(safeMain.json, safeMain.bodyText);
 
+  // Full mandated 8-query safe LOA/eLA smoke matrix. Some of these are
+  // expected to fail to trigger the controlled branch on live staging
+  // because of a pre-existing, out-of-scope domain-boundary check in
+  // pipeline.js that runs before the Step 12.65 gate and rejects queries
+  // that lack a recognizable Philippine-tax/BIR keyword. Each query is
+  // checked independently so the real pass/fail split is visible in the
+  // test log rather than masked by a single aggregate assertion.
+  const safeMatrixResults = [];
   for (const query of [
     "I received a BIR eLA, what should I do?",
-    "I received a replacement eLA, what should I check first?",
+    "What should I do after receiving a Letter of Authority from BIR?",
     "What documents should I prepare after receiving a BIR LOA?",
+    "I received a replacement eLA, what should I check first?",
+    "I received a consolidated eLA, what should I do?",
+    "I received a notice for presentation/submission of documents.",
     "I received a reminder before subpoena."
   ]) {
     const response = await postAsk(query);
+    const triggered = response.json && response.json.responseType === "controlled_loa_answer";
+    safeMatrixResults.push({ query, status: response.res.status, triggered });
     check(response.res.status >= 200 && response.res.status < 300, `safe variant returns 2xx: ${query}`);
-    assertSafeControlledResponse(response.json, response.bodyText);
+    check(triggered, `safe variant triggers controlled LOA branch: ${query}`);
+    if (triggered) {
+      assertSafeControlledResponse(response.json, response.bodyText);
+    }
   }
+  console.log("SAFE_MATRIX_RESULTS", JSON.stringify(safeMatrixResults));
 
+  // Full mandated 12-query excluded/unsafe matrix.
   for (const [query, label] of [
     ["Is my LOA invalid?", "invalidity query"],
+    ["Is this eLA void?", "eLA voidness query"],
+    ["Can I ignore the LOA?", "ignore-LOA query"],
+    ["Can the BIR assess me?", "assessment-outcome query"],
+    ["Is the assessment final?", "assessment-finality query"],
+    ["Should I appeal to CTA?", "CTA appeal strategy query"],
+    ["Is the FAN void?", "FAN voidness query"],
+    ["Is the FDDA appealable?", "FDDA appealability query"],
+    ["Will I win?", "case-outcome query"],
     ["Can you draft the protest now?", "filing-ready protest query"],
     ["Can you submit this to BIR?", "automatic submission query"],
+    ["Give me a final legal opinion on this LOA.", "final legal opinion query"]
+  ]) {
+    const response = await postAsk(query);
+    check(response.res.status < 500, `${label} returns non-5xx`);
+    assertNotControlledSafeAnswer(response.json, response.bodyText, label);
+  }
+
+  // Full mandated 5-query unrelated matrix.
+  for (const [query, label] of [
     ["Explain EWT.", "unrelated EWT query"],
+    ["Is lease subject to withholding tax in the Philippines?", "unrelated lease withholding query"],
+    ["What is percentage tax?", "unrelated percentage tax query"],
     ["What is VAT-exempt sale?", "unrelated VAT query"],
     ["What is estate tax?", "unrelated estate tax query"]
   ]) {
@@ -301,6 +370,9 @@ await test("optional live staging smoke is skipped unless explicitly enabled", a
 
   const unauth = await postAsk("I received a BIR LOA, what should I do?", false);
   check([401, 403].includes(unauth.res.status) || unauth.res.status >= 400, "staging unauthenticated POST /ask preserves auth behavior");
+
+  const routesInventory = await fetchWithTimeout(`${askUrl.origin}/routes`, { method: "GET" });
+  check(routesInventory.res.status === 404 || routesInventory.res.status === 401 || routesInventory.res.status === 403, "staging route inventory remains protected or not exposed");
 });
 
 console.log(`\n${EXPECTED_PATCH} tests: ${passed} passed, ${failed} failed, ${assertions} assertions`);

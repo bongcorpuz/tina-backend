@@ -6187,6 +6187,43 @@ Resolve blocker and rerun PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1.
 Do not proceed to PHASE-09ZC until 09ZB passes.
 ```
 
+## Phase 9ZB Controlled LOA Answer Live .env Rerun -- REMAINS BLOCKED (2026-07-08):
+
+```text
+PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1 remains blocked after live .env rerun.
+
+Decision:
+PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE BLOCKED
+
+Prior blockers:
+57ba035 recorded BLOCKED_PENDING_STAGING_ACCESS.
+71851c4 recorded BLOCKED_PENDING_STAGING_ACCESS.
+fde5e39 recorded a second rerun that remained BLOCKED_PENDING_STAGING_ACCESS.
+
+Current blocker:
+BLOCKED_PENDING_STAGING_ACCESS
+
+Scope:
+Staging smoke verification could not be completed. The local .env file was present, ignored, untracked, and contained the required keys, but staging /ask rejected the configured x-index-secret header with HTTP 401 before the controlled LOA branch could be verified.
+
+Rerun validation:
+Local static/unit layer passed when live smoke was disabled.
+Live staging /ask was reachable but authenticated POST /ask using the provided header did not return 2xx.
+Unauthenticated POST /ask also returned 401, confirming auth remained protected.
+No secret values were printed or committed.
+
+Runtime changes:
+None.
+
+Production:
+Unchanged.
+
+Next:
+Provide the auth mechanism accepted by staging /ask, likely a valid Authorization: Bearer token for the deployed authenticate middleware, or update the staging smoke env vars accordingly, then rerun PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1.
+
+Do not proceed to PHASE-09ZC until 09ZB passes.
+```
+
 ## Phase 9ZB Controlled LOA Answer Staging Smoke Second Rerun -- REMAINS BLOCKED (2026-07-08):
 
 ```text
@@ -6466,6 +6503,43 @@ Unchanged.
 
 Next:
 Resolve blocker and rerun PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1.
+
+Do not proceed to PHASE-09ZC until 09ZB passes.
+```
+
+## Phase 9ZB Controlled LOA Answer Staging Smoke Rerun -- FAIL (2026-07-08):
+
+```text
+PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1 fails full live staging smoke.
+
+Decision:
+PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE FAIL
+
+Prior blockers:
+BLOCKED_PENDING_STAGING_ACCESS at commit 57ba035.
+BLOCKED_PENDING_STAGING_ACCESS at commit 71851c4.
+BLOCKED_PENDING_STAGING_ACCESS at commit fde5e39 (x-index-secret header rejected by deployed /ask auth path).
+
+Access resolution:
+Switching the staging auth header to Authorization: Bearer <staging JWT> resolved the access blocker. Authenticated /debug/db-identity and /ask both returned 200; unauthenticated /ask returned 401. Staging deployed commit confirmed as fde5e3968259fe6be050bd2fb33a6651569b504e (at or later than required 23eb7dd). TINA_ENABLE_CONTROLLED_LOA_ASK_GATE=true confirmed enabled empirically. No secret value was printed or committed at any point.
+
+Smoke matrix results:
+Safe LOA/eLA queries: 4 of 8 PASS, 4 of 8 FAIL to trigger the controlled branch.
+Excluded unsafe queries: all 12 PASS (controlled branch correctly not triggered).
+Unrelated queries: all 5 PASS (controlled branch correctly not triggered).
+Runtime/security smoke: all PASS (/health 200, OPTIONS /ask 204, unauthenticated POST /ask 401, /routes 404).
+
+Root cause of safe-query failures:
+A pre-existing, out-of-scope Philippine-tax-domain-boundary check in pipeline.js (detectPhilippineTaxBoundary) runs before the Step 12.65 controlled-LOA gate and intercepts queries lacking a recognizable Philippine-tax/BIR keyword (e.g. "replacement eLA", "consolidated eLA", "notice for presentation", "reminder before subpoena"), returning a generic fallback before the gate is ever reached. Confirmed via isolated evaluateControlledLoaAskGate() calls that the gate's own classification logic is correct for all 4 affected queries -- this is not a defect introduced by 09ZA/09ZB, and is out of scope for 09ZB's allowed file list.
+
+Runtime changes:
+None.
+
+Production:
+Unchanged.
+
+Next:
+Resolve domain-boundary gap and rerun PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1.
 
 Do not proceed to PHASE-09ZC until 09ZB passes.
 ```
