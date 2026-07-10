@@ -59,11 +59,28 @@
   "persistenceBoundary": "No persistence or database writes. Trace events exist only in request-local memory and console.log output.",
   "secretBoundary": "No JWT, Authorization header, password, token, or environment secret logging. The trace collector sanitizes any field key matching authorization/jwt/token/password/secret/cookie/headers/reqbody/envvars before logging.",
   "legalSafetyBoundary": "No final legal conclusion, filing-ready output, automatic submission, or verified citation claim. No change to evaluateControlledLoaAskGate or evaluateClarificationRouteGate classification logic.",
-  "decision": "Leave as diagnostic pending until live trace evidence is captured.",
-  "liveTraceEvidence": null,
-  "firstDivergence": null,
-  "rootCauseFinding": null,
-  "confidenceLevel": null,
+  "decision": "PHASE 09ZG CONTROLLED LOA LIVE PATH INSTRUMENTATION DIAGNOSTIC PASS WITH ROOT CAUSE IDENTIFIED",
+  "deploymentVerification": {
+    "endpoint": "https://tina-backend-staging.onrender.com/debug/db-identity",
+    "renderGitCommit": "d899b35497fb55a1f6c98c3d5a3304f5e65ea114",
+    "renderServiceName": "tina-backend-staging",
+    "nodeEnv": "staging",
+    "matchesInstrumentationCommit": true
+  },
+  "liveTraceEvidence": {
+    "baseline_1_bir_loa": { "routeKind": "NORMAL_RAG", "responseType": "controlled_loa_answer", "sourceStatus": "RELATED_AUTHORITY_ONLY", "elapsedMs": 16086, "pipelineReached": true },
+    "baseline_2_bir_ela": { "routeKind": "NORMAL_RAG", "responseType": "controlled_loa_answer", "sourceStatus": "AUTHORITY_FOUND", "elapsedMs": 15589, "pipelineReached": true },
+    "failing_1_replacement_ela": { "routeKind": "DOMAIN_BOUNDARY", "responseType": null, "sourceStatus": "DOMAIN_BOUNDARY_REJECT", "elapsedMs": 910, "pipelineReached": false },
+    "failing_2_consolidated_ela": { "routeKind": "DOMAIN_BOUNDARY", "responseType": null, "sourceStatus": "DOMAIN_BOUNDARY_REJECT", "elapsedMs": 993, "pipelineReached": false },
+    "failing_3_notice_presentation": { "routeKind": "DOMAIN_BOUNDARY", "responseType": null, "sourceStatus": "DOMAIN_BOUNDARY_REJECT", "elapsedMs": 1089, "pipelineReached": false },
+    "failing_4_reminder_subpoena": { "routeKind": "DOMAIN_BOUNDARY", "responseType": null, "sourceStatus": "DOMAIN_BOUNDARY_REJECT", "elapsedMs": 919, "pipelineReached": false }
+  },
+  "firstDivergence": "All four failing queries never reach pipeline.js: runPipeline() at all. ask-handler.js (line ~2969) runs its own separate Philippine-tax domain-boundary check using the BASE detectPhilippineTaxBoundary() imported directly from services/philippine-tax-domain-boundary.js -- not pipeline.js's exported wrapper, which is the only place the PHASE-09ZE audit-procedure overlay patterns exist. That base allowlist-only check rejects all four phrasings (none contain a recognized keyword such as 'BIR' or 'tax') and ask-handler.js returns immediately with routeKind: DOMAIN_BOUNDARY, before handleControlledRagRoute()/runPipeline() is ever called.",
+  "rootCauseFinding": "ask-handler.js contains a duplicate, un-overlaid Philippine-tax domain-boundary check that runs before the pipeline and rejects the four audit-procedure queries prior to reaching Step 12.65, pipeline.js's own boundary wrapper, or any 09ZG trace checkpoint. PHASE-09ZE and PHASE-09ZF both correctly modified pipeline.js but neither could have fixed this, since the request never reaches pipeline.js for these four queries.",
+  "confidenceLevel": "High -- corroborated by static code (ask-handler.js's separate boundary call site and early-return path), live HTTP response fields (routeKind, sourceStatus, responseType, exact BOUNDARY_REJECTION_MESSAGE answer text) for all 6 queries against a verified staging deployment of this exact commit, and elapsed-time evidence (~1s rejection vs ~15-16s full pipeline run).",
+  "evidenceLimitations": "The [TINA_09ZG_LOA_PATH] events are logged as multi-line console.log output; the Render Logs API's text filter only reliably matched the opening brace line of each event, so full field-level trace reconstruction from the Render log stream was not achieved for every query (a single-line JSON.stringify logging format would resolve this but is a code change out of scope for this findings-only commit). This affected only the log-stream corroboration layer, not the HTTP-response-level evidence, which was captured completely and reliably for all 6 queries.",
+  "diagnosticFlagDisabledOnStaging": true,
+  "diagnosticFlagDisabledVia": "Render API env-var update, confirmed by read-back (value: false)",
   "nextTaskIfRootCauseFound": "PHASE-09ZH-CONTROLLED-LOA-LIVE-PATH-REMEDIATION-1",
   "blockedTask": "PHASE-09ZC-CONTROLLED-LOA-ANSWER-PRODUCTION-ACTIVATION-GATE-1",
   "alternativeNextPhase": "PHASE 10 — Evaluation / Fact-Check / Legal-Tax QA System"

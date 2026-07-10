@@ -6931,10 +6931,13 @@ Alternative:
 PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System.
 ```
 
-## Phase 9ZG Controlled LOA Live Path Instrumentation Diagnostic -- INSTRUMENTATION BUILT, LIVE EVIDENCE PENDING (2026-07-10):
+## Phase 9ZG Controlled LOA Live Path Instrumentation Diagnostic -- PASS WITH ROOT CAUSE IDENTIFIED (2026-07-10):
 
 ```text
-PHASE-09ZG-CONTROLLED-LOA-LIVE-PATH-INSTRUMENTATION-DIAGNOSTIC-1 active.
+PHASE-09ZG-CONTROLLED-LOA-LIVE-PATH-INSTRUMENTATION-DIAGNOSTIC-1 completed.
+
+Decision:
+PHASE 09ZG CONTROLLED LOA LIVE PATH INSTRUMENTATION DIAGNOSTIC PASS WITH ROOT CAUSE IDENTIFIED
 
 Base:
 b0031c2
@@ -6948,23 +6951,26 @@ Instrument and compare the actual live /ask runtime path for one passing control
 Diagnostic flag:
 TINA_ENABLE_09ZG_LOA_PATH_DIAGNOSTIC
 Default false.
-Staging only.
+Staging only. Enabled on staging for the live capture window, then disabled via Render API (confirmed value: false) immediately after evidence capture.
 Production unchanged.
 
-Trace fields:
-request received, query normalization, feature flag, Philippine-tax boundary, audit-procedure overlay, controlled LOA gate entry/input/result, early-exit construction, downstream branch, final response selection.
+Deployment verification:
+GET /debug/db-identity confirmed RENDER_GIT_COMMIT d899b35497fb55a1f6c98c3d5a3304f5e65ea114 (this patch's commit exactly) on tina-backend-staging.
 
 Live evidence:
-Not yet captured. Instrumentation built and locally validated (no-op when disabled, verified secret-safe field sanitization); live staging deploy and diagnostic run pending explicit approval.
+Baseline queries (BIR LOA, BIR eLA) returned routeKind: NORMAL_RAG, responseType: controlled_loa_answer, elapsed ~15.6-16.1s (full pipeline ran). All 4 failing queries (replacement eLA, consolidated eLA, notice for presentation/submission, reminder before subpoena) returned routeKind: DOMAIN_BOUNDARY, responseType: null, sourceStatus: DOMAIN_BOUNDARY_REJECT, elapsed ~0.9-1.1s (an order of magnitude faster -- no retrieval occurred), with the generic BOUNDARY_REJECTION_MESSAGE as the answer text.
 
 First divergence:
-Not yet determined.
+The four failing queries never reach pipeline.js at all. ask-handler.js runs its own separate Philippine-tax domain-boundary check (line ~2969) using the BASE detectPhilippineTaxBoundary() imported directly from services/philippine-tax-domain-boundary.js -- not pipeline.js's exported wrapper, which is the only place the PHASE-09ZE audit-procedure overlay patterns exist. That base allowlist-only check rejects all four phrasings (none contain a recognized keyword such as "BIR") and ask-handler.js returns immediately, before handleControlledRagRoute()/pipeline.js:runPipeline() is ever called.
 
 Root cause:
-Not yet proven. Static investigation narrowed the candidate list (single live /ask route; query is not transformed for /ask; controlled LOA and clarification gates read the raw query, not the chat-context-carryover effective query; Step 12.65 sits deep in runPipeline after Steps 1-12.5, so a timeout/exception earlier in the pipeline remains an open, unconfirmed hypothesis alongside the others in the fixture's diagnosticHypotheses list).
+ask-handler.js contains a duplicate, un-overlaid Philippine-tax domain-boundary check that runs before the pipeline and rejects the four audit-procedure queries prior to reaching pipeline.js's own boundary wrapper, Step 12.65, or any 09ZG trace checkpoint. PHASE-09ZE and PHASE-09ZF both correctly modified pipeline.js but neither could have fixed this, since the request never reaches pipeline.js for these four queries. This explains why both prior remediations had zero live effect.
+
+Confidence:
+High -- corroborated by static code, live HTTP response fields for all 6 diagnostic queries against a verified staging deployment, and elapsed-time evidence.
 
 Runtime changes:
-Diagnostic instrumentation only.
+Diagnostic instrumentation only. No routing/classification fix implemented in this task.
 
 Answer/classification behavior:
 Unchanged.
@@ -6985,5 +6991,5 @@ Unchanged.
 Blocked.
 
 Next:
-PHASE-09ZH-CONTROLLED-LOA-LIVE-PATH-REMEDIATION-1, only if root cause is identified via live trace evidence. Not implemented in this task.
+PHASE-09ZH-CONTROLLED-LOA-LIVE-PATH-REMEDIATION-1 -- target ask-handler.js's duplicate boundary check (have it use pipeline.js's overlaid wrapper, or move the 09ZE overlay into services/philippine-tax-domain-boundary.js so both call sites share one definition). Not implemented in this task.
 ```
