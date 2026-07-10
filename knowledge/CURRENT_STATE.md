@@ -7492,3 +7492,66 @@ PHASE-09ZD-CONTROLLED-LOA-ANSWER-PRODUCTION-SMOKE-1, pending explicit approval t
 Alternative:
 PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System.
 ```
+
+## Phase 9ZD Controlled LOA Answer Production Smoke -- BLOCKED (2026-07-10):
+
+```text
+PHASE-09ZD-CONTROLLED-LOA-ANSWER-PRODUCTION-SMOKE-1 was started as a validation-only production smoke.
+
+Base:
+db03406
+
+Production service:
+tina-backend
+
+Production URL:
+https://tina-backend-y11x.onrender.com
+
+Production frontend:
+https://app.tina.bentoph.com
+
+Production branch:
+feature/source-availability-engine-v1
+
+Blocker:
+BLOCKED_WORKSPACE_ACCESS
+
+Reason:
+The local .env exists, remains untracked and unstaged, but does not contain the required production smoke auth keys for the Authorization header. Production JWT access was therefore unavailable from this workspace.
+
+Production access:
+Not attempted.
+
+Production deploy verification:
+Not run.
+
+Controlled LOA flag verification:
+Not run.
+
+Diagnostic flag verification:
+Not run.
+
+Smoke matrices:
+Not run.
+
+Runtime/security checks:
+Not run.
+
+Frontend compatibility checks:
+Not run.
+
+Production mutation:
+None.
+
+Rollback executed:
+No.
+
+Decision:
+PHASE 09ZD CONTROLLED LOA ANSWER PRODUCTION SMOKE BLOCKED
+
+Next after a future 09ZD PASS:
+PHASE-09-GATE-CLOSURE-2.
+
+Alternative:
+PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System.
+```
