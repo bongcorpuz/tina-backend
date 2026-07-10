@@ -7806,3 +7806,73 @@ PHASE-10A-TRUST-LIMITATION-AUTHORITY-CONFIDENCE-RELEASE-GATE-1.
 
 Do not start Phase 10 implementation in this closure task.
 ```
+
+## Phase 10A Trust/Limitation/Authority-Confidence Release Gate -- VALIDATION REMEDIATION REQUIRED (2026-07-10):
+
+```text
+PHASE-10A-TRUST-LIMITATION-AUTHORITY-CONFIDENCE-RELEASE-GATE-1 local + staging validation completed.
+Independent Codex review is required before this phase may be marked closed. NOT closed by this entry.
+
+Phase 9 status:
+Remains COMPLETE. Not reopened. No regression proven or claimed against Phase 9 runtime.
+
+Phase 10 status:
+Active. Phase 10A validation stage completed (local deterministic + controlled staging matrix). No runtime or frontend remediation implemented.
+
+Decision:
+PHASE 10A VALIDATION REMEDIATION REQUIRED
+
+Local validation result:
+18/18 test assertions pass, directly executing real pure functions (applyVerifiedAuthorityGate, conflictMetadataIsComplete, evaluateControlledLoaAskGate, evaluateControlledLoaLegalConclusionSafetyGate, detectPhilippineTaxBoundary) against representative synthetic states, not merely static string scans. Corroborating existing suites re-confirmed passing: patch-024c-verified-authority-gate (133/133), patch-06f-005-exact-source-limitation-wording (10/10), patch-07a-003 (18/18), patch-07a-008 (23/23).
+
+Staging validation result:
+13 queries run against tina-backend-staging (never production), all HTTP 200, covering all 10 required categories. Two confirmed live findings beyond the initial static assessment (see below). Two evidence gaps acknowledged (no true multi-authority conflict exercised; one no-authority query was unexpectedly answerable).
+
+Confirmed P0-P3 findings:
+No P0 release blocker. Four P1 findings:
+1. Frontend cannot visually distinguish controlling vs. related/supporting source-card chips (static evidence).
+2. Conflicting-authority state not exposed to frontend, no post-generation deterministic enforcement analogous to PATCH-019A (static evidence; true-conflict live case remains unverified).
+3. CONFIRMED LIVE: ask-handler.js never forwards controlledLoaAnswer/requiresHumanReview/filingReadyDocumentGenerated/automaticSubmission to the API response -- zero references in ask-handler.js, and all four fields null in every one of the 13 live staging responses, including both controlled-LOA-path responses that pipeline.js internally computes them for.
+4. CONFIRMED LIVE, REPRODUCIBLE: "Will I win my BIR case?" bypassed Step 12.65/12.66 entirely under a route-level timeout (93.5s, reproduced identically on retry), returning a generic (still-safe) RETRIEVAL_TIMEOUT fallback instead of the deterministic controlled_loa_legal_conclusion_restricted response the pure-function classifier confirms it should receive.
+
+Remediation required:
+Yes. Recommended follow-up tasks (not implemented in this task): PHASE-10A1 (ask-handler trust-metadata forwarding fix, highest priority), PHASE-10A2 (move Step 12.65/12.66 earlier, before Steps 3-9, mirroring the 09ZF precedent), PHASE-10A3 (frontend metadata consumption), PHASE-10A4 (authority-role/conflict visual display), PHASE-10A5 (optional AUTHORITY_FOUND empty-answer edge-case hardening).
+
+Frontend trust-disclosure status:
+Backend text-level disclosure (via applyVerifiedAuthorityGate/PATCH-019A and the controlled-LOA/restricted-response scaffolds) is mature, deterministic, and rendered with markdown formatting preserved. Structured metadata consumption by the frontend is absent, and for a subset of fields (P1-3) is currently impossible without a backend forwarding fix first.
+
+Conflict-disclosure status:
+Detection (Four-Part Doctrine Test) and metadata propagation are strong and categorical. Answer-level disclosure is prompt-mandated (TINA_CONFLICT_RULE) but not post-generation-enforced. Live verification of a true multi-authority conflict scenario remains an open item.
+
+Incomplete-facts status:
+An always-on prompt-level safeguard exists (TINA_FACTUAL_REASONING_RULE) independent of any feature flag. The dedicated interactive clarification flow did not fire for either representative incomplete-facts query in this staging matrix; both received a generic deterministic fallback instead. Historical observation that TINA_ENABLE_CLARIFICATION_ROUTE_GATE=false on production (from PHASE-09ZC) is treated strictly as historical evidence, not revalidated current evidence, per this task's explicit correction; production was not called in this task.
+
+Canonical trust contract:
+Recommended as a follow-up task. The existing field set is sufficient in principle inside pipeline.js's internal return object, but a subset (per P1-3) does not reach the API surface; a canonical contract requires both a naming-consolidation pass and the ask-handler.js forwarding fix.
+
+Production validation:
+Not performed. Not required for this assessment gate. Required later, after approved remediation for the P1 findings and a separately approved production-validation task.
+
+Runtime remediation implemented:
+None. No pipeline.js, ask-handler.js, answer-renderer.js, final-answer-compliance.js, adaptive-tina-master-prompt.js, or controlled-LOA service module was modified.
+
+Frontend remediation implemented:
+None. No tina-ai/src file was modified.
+
+Feature flags:
+Unchanged. TINA_ENABLE_CONTROLLED_LOA_ASK_GATE and TINA_ENABLE_09ZG_LOA_PATH_DIAGNOSTIC were not changed by this task.
+
+Production:
+Not called. Not modified.
+
+Known technical debt not caused by Phase 10A:
+09ZF self-referential test-scope assertion; older patch-specific dirty-diff allowlists; 09R staging reachability/fixture issue; NODE_ENV=staging error-disclosure hardening (recommend a separate PHASE-10-SECURITY-ERROR-DISCLOSURE-HARDENING-1 task, not conflated with authority-confidence remediation); same-branch staging/production deployment-governance risk.
+
+Independent review:
+MANDATORY before Phase 10A may be considered closed. Codex must verify: whether evidence supports each conclusion; whether any P0/P1 issue was understated; whether the test matrix is sufficient; whether frontend trust-state conclusions are grounded in actual code reading; whether conflict and incomplete-facts conclusions are supported; whether the proposed remediation scope is minimal and appropriate; whether this CURRENT_STATE.md entry accurately records the controlling status; whether Claude improperly changed runtime behavior (it did not).
+
+Next:
+Independent Codex review of this assessment. Then scope and separately approve PHASE-10A1 through PHASE-10A5 as tracked remediation tasks.
+
+Do not mark Phase 10A complete before independent review and any approved remediation are finished.
+```
