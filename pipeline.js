@@ -113,55 +113,25 @@ import {
   createControlledLoaLivePathTrace,
   queryFingerprint as diagnosticQueryFingerprint
 }                                                 from "./diagnostics/controlled-loa-live-path-trace.js";
+import {
+  isControlledLoaAuditProcedureBoundaryCandidate,
+  applyControlledLoaAuditProcedureBoundaryOverlay
+}                                                 from "./services/controlled-loa-audit-procedure-boundary.js";
 
 const PIPELINE_VERSION = "1.0.0";
 const ROUTE_BUDGET_MS = 90_000;
 
-// PHASE-09ZE-CONTROLLED-LOA-DOMAIN-BOUNDARY-REMEDIATION-1
-// Narrow Philippine tax/audit boundary signals for LOA/eLA procedural
-// queries that otherwise lack literal "BIR" or "LOA" wording. This does
-// not classify a query as safe for the controlled LOA answer; it only lets
-// audit-procedure phrasing reach Step 12.65, where the existing controlled
-// LOA gate still performs supported/excluded/unrelated classification.
-const CONTROLLED_LOA_AUDIT_PROCEDURE_BOUNDARY_PATTERNS = Object.freeze([
-  /\be-?la\b/i,
-  /electronic\s+letter\s+of\s+authority/i,
-  /replacement\s+e-?la/i,
-  /consolidated\s+e-?la/i,
-  /notice\s+for\s+presentation/i,
-  /notice\s+for\s+presentation\/submission/i,
-  /presentation\/submission\s+of\s+documents/i,
-  /presentation\s+or\s+submission\s+of\s+documents/i,
-  /reminder\s+before\s+subpoena/i,
-  /pre-subpoena/i,
-  /subpoena\s+duces\s+tecum/i,
-  /tax\s+verification\s+notice/i,
-  /\bTVN\b/i,
-  /mission\s+order/i,
-  /audit\s+checklist/i,
-  /document\s+checklist/i,
-  /audit\s+case/i,
-  /group\s+supervisor/i,
-  /revenue\s+officer/i
-]);
-
+// PHASE-09ZH-CONTROLLED-LOA-LIVE-PATH-REMEDIATION-1
+// The narrow audit-procedure overlay (originally PHASE-09ZE) now lives in
+// services/controlled-loa-audit-procedure-boundary.js so ask-handler.js's
+// upstream domain-boundary check and this pipeline-level check share one
+// rule. This does not classify a query as safe for the controlled LOA
+// answer; it only lets audit-procedure phrasing reach Step 12.65, where the
+// existing controlled LOA gate still performs supported/excluded/unrelated
+// classification.
 export function detectPhilippineTaxBoundary(query = "", routeMode = "/ask", context = {}) {
   const baseDecision = baseDetectPhilippineTaxBoundary(query, routeMode, context);
-  if (baseDecision?.decision === "ALLOW") return baseDecision;
-
-  const q = String(query || "");
-  const h = String(routeMode || "/ask").toLowerCase();
-  if (h === "/ask" && CONTROLLED_LOA_AUDIT_PROCEDURE_BOUNDARY_PATTERNS.some((pattern) => pattern.test(q))) {
-    return {
-      isPhilippineTax: true,
-      decision: "ALLOW",
-      detectedDomain: "PHILIPPINE_TAX_AUDIT_PROCEDURE",
-      reason: "controlled_loa_audit_procedure_boundary_signal",
-      confidence: 0.90
-    };
-  }
-
-  return baseDecision;
+  return applyControlledLoaAuditProcedureBoundaryOverlay(baseDecision, query, routeMode);
 }
 
 // ─── helpers ──────────────────────────────────────────────────────────────────
@@ -2347,8 +2317,7 @@ export async function runPipeline({
     // without changing the boundary decision itself.
     _09zgTrace.record("AUDIT_PROCEDURE_OVERLAY_EVALUATED", () => ({
       overlayEligibleRoute: (hook || "/ask") === "/ask",
-      overlayPatternMatch: (hook || "/ask") === "/ask" &&
-        CONTROLLED_LOA_AUDIT_PROCEDURE_BOUNDARY_PATTERNS.some((pattern) => pattern.test(String(effectiveQuery || "")))
+      overlayPatternMatch: isControlledLoaAuditProcedureBoundaryCandidate(effectiveQuery, hook)
     }));
     console.log("[PIPELINE DOMAIN BOUNDARY CHECK]", {
       query:           (effectiveQuery || "").slice(0, 120),

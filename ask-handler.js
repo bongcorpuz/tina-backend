@@ -66,6 +66,7 @@ import {
   BOUNDARY_REJECTION_MESSAGE,
   BOUNDARY_CLARIFY_MESSAGE
 } from "./services/philippine-tax-domain-boundary.js";
+import { applyControlledLoaAuditProcedureBoundaryOverlay } from "./services/controlled-loa-audit-procedure-boundary.js";
 
 import { sanitizePublicSourceCards } from "./services/ask-handler-public-source-sanitizer.js";
 
@@ -2966,7 +2967,17 @@ export function createAskHandler({
           }
         }
 
-        const _boundaryCheck = detectPhilippineTaxBoundary(_boundaryQuery, compactHookConfig.hook_code);
+        // PHASE-09ZH-CONTROLLED-LOA-LIVE-PATH-REMEDIATION-1: apply the same
+        // shared narrow audit-procedure boundary overlay pipeline.js uses, so
+        // safe LOA/eLA procedural-help candidates are not rejected here
+        // before reaching the controlled LOA gate. This does not generate an
+        // answer and does not decide legal safety -- final classification
+        // stays in pipeline.js's controlled LOA gate.
+        const _boundaryCheck = applyControlledLoaAuditProcedureBoundaryOverlay(
+          detectPhilippineTaxBoundary(_boundaryQuery, compactHookConfig.hook_code),
+          _boundaryQuery,
+          compactHookConfig.hook_code
+        );
 
         console.log("[DOMAIN BOUNDARY CHECK]", {
           query:           _boundaryQuery.slice(0, 120),

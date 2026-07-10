@@ -20,6 +20,12 @@ const FIXTURE_PATH = "evaluation/fixtures/phase-09ze-controlled-loa-domain-bound
 const REPORT_PATH = "PHASE-09ZE-CONTROLLED-LOA-DOMAIN-BOUNDARY-REMEDIATION-1_REPORT.md";
 const PIPELINE_PATH = "pipeline.js";
 const CURRENT_STATE_PATH = "knowledge/CURRENT_STATE.md";
+// PHASE-09ZH-CONTROLLED-LOA-LIVE-PATH-REMEDIATION-1 moved the narrow
+// audit-procedure pattern list out of pipeline.js into this shared module so
+// ask-handler.js's upstream boundary check and pipeline.js's boundary check
+// use one rule. The patterns still exist and are still reachable -- just
+// from a shared file instead of duplicated inline.
+const AUDIT_PROCEDURE_BOUNDARY_MODULE_PATH = "services/controlled-loa-audit-procedure-boundary.js";
 
 let passed = 0;
 let failed = 0;
@@ -149,9 +155,12 @@ await test("pipeline keeps Step 12.65 controlled LOA gate and feature flag marke
   check(/TINA_ENABLE_CONTROLLED_LOA_ASK_GATE/.test(src), "pipeline contains TINA_ENABLE_CONTROLLED_LOA_ASK_GATE");
 });
 
-await test("pipeline contains the chosen narrow audit-procedure boundary signals", () => {
-  const src = readFileSync(resolve(PIPELINE_PATH), "utf8");
-  check(/CONTROLLED_LOA_AUDIT_PROCEDURE_BOUNDARY_PATTERNS/.test(src), "pipeline contains narrow boundary signal list");
+await test("pipeline (or the shared audit-procedure boundary module) contains the chosen narrow signals", () => {
+  const pipelineSrc = readFileSync(resolve(PIPELINE_PATH), "utf8");
+  const sharedModulePath = resolve(AUDIT_PROCEDURE_BOUNDARY_MODULE_PATH);
+  const sharedSrc = existsSync(sharedModulePath) ? readFileSync(sharedModulePath, "utf8") : "";
+  const src = pipelineSrc + "\n" + sharedSrc;
+  check(/CONTROLLED_LOA_AUDIT_PROCEDURE_BOUNDARY_PATTERNS/.test(src), "narrow boundary signal list is reachable from pipeline.js or the shared module");
   check(/replacement\\s\+e-\?la/.test(src), "boundary includes replacement eLA");
   check(/consolidated\\s\+e-\?la/.test(src), "boundary includes consolidated eLA");
   check(/notice\\s\+for\\s\+presentation/.test(src), "boundary includes notice for presentation");

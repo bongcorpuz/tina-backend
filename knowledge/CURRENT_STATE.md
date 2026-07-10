@@ -6993,3 +6993,92 @@ Blocked.
 Next:
 PHASE-09ZH-CONTROLLED-LOA-LIVE-PATH-REMEDIATION-1 -- target ask-handler.js's duplicate boundary check (have it use pipeline.js's overlaid wrapper, or move the 09ZE overlay into services/philippine-tax-domain-boundary.js so both call sites share one definition). Not implemented in this task.
 ```
+
+## Phase 9ZH Controlled LOA Live Path Remediation -- PASS WITH STRICT RECOMMENDATIONS (2026-07-10):
+
+```text
+PHASE-09ZH-CONTROLLED-LOA-LIVE-PATH-REMEDIATION-1 completed.
+
+Decision:
+PHASE 09ZH CONTROLLED LOA LIVE PATH REMEDIATION PASS WITH STRICT RECOMMENDATIONS
+
+Base:
+42bfcab
+
+09ZG proven root cause:
+ask-handler.js performed an upstream Philippine-tax domain-boundary check using the base detector without the pipeline-level 09ZE audit-procedure overlay. The four safe audit-procedure queries were rejected before pipeline.js and Step 12.65 executed.
+
+Remediation:
+Extracted the 09ZE audit-procedure overlay pattern list and its ALLOW-composition logic out of pipeline.js into a new shared pure module, services/controlled-loa-audit-procedure-boundary.js, exporting isControlledLoaAuditProcedureBoundaryCandidate() and applyControlledLoaAuditProcedureBoundaryOverlay(). pipeline.js's detectPhilippineTaxBoundary() wrapper now delegates to the shared overlay (byte-identical decisions). ask-handler.js's upstream boundary check now wraps its existing base-detector result through the same shared overlay before deciding REJECT/CLARIFY/continue. No other logic changed in either file.
+
+Architectural result:
+ask-handler.js and pipeline.js now use the same narrow audit-procedure boundary rule. No duplicated keyword list remains in either file.
+
+Upstream behavior:
+Safe LOA/eLA audit-procedure candidates may continue into the pipeline.
+Unrelated boundary-rejected queries remain rejected.
+
+Final controlled LOA gate:
+evaluateControlledLoaAskGate remains authoritative.
+No controlled answer is generated in ask-handler.js.
+
+Safe query family:
+All eight required safe LOA/eLA procedural-help queries are covered.
+
+Previously rejected query family:
+replacement eLA
+consolidated eLA
+notice for presentation/submission
+reminder before subpoena
+
+Excluded queries:
+Validity, voidness, ignore-LOA, assessment power, finality, CTA strategy, FAN/FDDA appealability, outcome prediction, protest drafting, automatic submission, and final legal-opinion requests remain excluded from safe controlled LOA answers.
+
+Unrelated queries:
+EWT, withholding, VAT, percentage tax, VAT-exempt, estate tax, professional-fee withholding, and frozen-seafood VAT queries remain outside the controlled LOA branch.
+
+Runtime changes:
+Narrow upstream domain-boundary remediation only.
+
+Answer-content changes:
+None.
+
+Route/server/auth:
+Unchanged.
+
+Diagnostic flag:
+TINA_ENABLE_09ZG_LOA_PATH_DIAGNOSTIC remains false.
+
+Memory:
+Inactive.
+
+Persistence:
+None.
+
+External search/live retrieval/scraping/download/ingestion/embedding/database writes/OpenAI/Supabase/Google Drive/n8n/Firecrawl/Crawlee/MCP/OCR:
+Untouched.
+
+Production:
+Unchanged.
+
+Legal safety:
+No final legal conclusions.
+No filing-ready output.
+No automatic BIR submission.
+Human tax/legal review notice preserved.
+
+Source-card boundary:
+No new retrieval.
+No verified source-card claim.
+No legal citation unless future verified source cards exist.
+Controlled branch source-card discipline preserved.
+
+Next:
+PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1-RERUN-AFTER-09ZH.
+
+Blocked:
+PHASE-09ZC-CONTROLLED-LOA-ANSWER-PRODUCTION-ACTIVATION-GATE-1.
+
+Alternative:
+PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System.
+```

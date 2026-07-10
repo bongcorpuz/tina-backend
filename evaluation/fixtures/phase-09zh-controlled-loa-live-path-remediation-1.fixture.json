@@ -1,0 +1,96 @@
+{
+  "patch": "PHASE-09ZH-CONTROLLED-LOA-LIVE-PATH-REMEDIATION-1",
+  "phase": "09ZH",
+  "baseCommit": "42bfcab",
+  "instrumentationCommit": "d899b35",
+  "diagnosticFindingsCommit": "42bfcab",
+  "priorSmokeFailCommit": "b0031c2",
+  "priorOrderingRemediationCommit": "dd991cc",
+  "priorDomainBoundaryRemediationCommit": "339c448",
+  "priorDecision": "PHASE 09ZG CONTROLLED LOA LIVE PATH INSTRUMENTATION DIAGNOSTIC PASS WITH ROOT CAUSE IDENTIFIED",
+  "provenRootCause": "The ask-handler.js upstream Philippine-tax domain-boundary check uses the base detector without the pipeline-level 09ZE audit-procedure overlay and rejects the four queries before pipeline.js runs.",
+  "chosenRemediation": "Extracted the narrow 09ZE audit-procedure overlay pattern list and its ALLOW-composition logic out of pipeline.js into a new shared pure module, services/controlled-loa-audit-procedure-boundary.js, exporting isControlledLoaAuditProcedureBoundaryCandidate() and applyControlledLoaAuditProcedureBoundaryOverlay(). pipeline.js's detectPhilippineTaxBoundary() wrapper now delegates to the shared overlay function instead of holding its own copy of the pattern list. ask-handler.js's upstream boundary check (the exact call site that previously returned DOMAIN_BOUNDARY_REJECT for the four failing queries) now wraps its existing base-detector result through the same shared overlay function before deciding REJECT/CLARIFY/continue. No other logic in either file changed.",
+  "architecturalRule": "A single shared narrow audit-procedure boundary rule (services/controlled-loa-audit-procedure-boundary.js) is used by both ask-handler.js and pipeline.js. Neither file maintains an independent copy of the pattern list.",
+  "safeQueryMatrix": [
+    "I received a BIR LOA, what should I do?",
+    "I received a BIR eLA, what should I do?",
+    "What should I do after receiving a Letter of Authority from BIR?",
+    "What documents should I prepare after receiving a BIR LOA?",
+    "I received a replacement eLA, what should I check first?",
+    "I received a consolidated eLA, what should I do?",
+    "I received a notice for presentation/submission of documents.",
+    "I received a reminder before subpoena."
+  ],
+  "previouslyRejectedQueries": [
+    "I received a replacement eLA, what should I check first?",
+    "I received a consolidated eLA, what should I do?",
+    "I received a notice for presentation/submission of documents.",
+    "I received a reminder before subpoena."
+  ],
+  "excludedQueryMatrix": [
+    "Is my LOA invalid?",
+    "Is this eLA void?",
+    "Can I ignore the LOA?",
+    "Can the BIR assess me?",
+    "Is the assessment final?",
+    "Should I appeal to CTA?",
+    "Is the FAN void?",
+    "Is the FDDA appealable?",
+    "Will I win?",
+    "Can you draft the protest now?",
+    "Can you submit this to BIR?",
+    "Give me a final legal opinion on this LOA."
+  ],
+  "unrelatedQueryMatrix": [
+    "Explain EWT.",
+    "Is lease subject to withholding tax in the Philippines?",
+    "What is percentage tax?",
+    "What is VAT-exempt sale?",
+    "What is estate tax?",
+    "What are the rules on withholding tax on professional fees?",
+    "How to compute percentage tax?",
+    "Is sale of fresh frozen seafood VAT exempt?"
+  ],
+  "sharedModule": "services/controlled-loa-audit-procedure-boundary.js",
+  "sharedModuleExports": [
+    "CONTROLLED_LOA_AUDIT_PROCEDURE_BOUNDARY_PATTERNS",
+    "isControlledLoaAuditProcedureBoundaryCandidate",
+    "applyControlledLoaAuditProcedureBoundaryOverlay"
+  ],
+  "upstreamBoundaryBehavior": "In ask-handler.js, the existing base detectPhilippineTaxBoundary() call result is passed through applyControlledLoaAuditProcedureBoundaryOverlay() before the REJECT/CLARIFY check. Safe audit-procedure candidates that the base detector would reject now continue into handleControlledRagRoute()/pipeline.js instead of returning DOMAIN_BOUNDARY early. Inputs the shared overlay does not recognize remain rejected exactly as before.",
+  "finalGateBehavior": "evaluateControlledLoaAskGate() in pipeline.js is unchanged and remains the sole authority for matched/excluded/unrelated classification and for constructing responseType: controlled_loa_answer.",
+  "sourceCardPolicy": {
+    "sourceCards": [],
+    "sourceCardVerification": "not_performed",
+    "legalCitationAllowed": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false
+  },
+  "legalSafetyPolicy": {
+    "finalLegalConclusion": false,
+    "filingReadyDocument": false,
+    "automaticBirSubmission": false,
+    "humanReviewRequired": true
+  },
+  "diagnosticFlag": "TINA_ENABLE_09ZG_LOA_PATH_DIAGNOSTIC",
+  "diagnosticFlagRequiredState": false,
+  "productionBoundary": "Production unchanged.",
+  "validationMatrix": [
+    "09ZH shared-module unit tests and static/runtime helper test",
+    "09ZG regression",
+    "09ZB staging smoke local/static regression (live staging disabled)",
+    "09ZF regression",
+    "09ZE regression (updated to follow the moved pattern list)",
+    "09ZA regression",
+    "09Z regression",
+    "09Y regression",
+    "09X regression",
+    "09 gate closure regression",
+    "guard:files",
+    "npm test"
+  ],
+  "decision": "PHASE 09ZH CONTROLLED LOA LIVE PATH REMEDIATION PASS WITH STRICT RECOMMENDATIONS",
+  "nextTask": "PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1-RERUN-AFTER-09ZH",
+  "blockedTask": "PHASE-09ZC-CONTROLLED-LOA-ANSWER-PRODUCTION-ACTIVATION-GATE-1",
+  "alternativeNextPhase": "PHASE 10 — Evaluation / Fact-Check / Legal-Tax QA System"
+}
