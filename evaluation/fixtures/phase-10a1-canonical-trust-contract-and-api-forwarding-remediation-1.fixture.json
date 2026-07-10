@@ -1,0 +1,305 @@
+{
+  "description": "PHASE-10A1 canonical trust contract fixtures. Each entry's `input` is fed directly to services/trust-contract.js buildTrustContract(); `expected` is the exact required output object. Values were hand-derived by walking the helper's deterministic branches, not guessed.",
+  "materialResponsePaths": [
+    {
+      "id": "1-verified-controlling-authority",
+      "description": "AUTHORITY_FOUND with displayed source cards maps to VERIFIED_CONTROLLING (AUTHORITY_FOUND is only reachable when governing-authority cards survive the SAE eligibility filter).",
+      "input": { "responseType": "rag_answer", "sourceStatus": "AUTHORITY_FOUND", "displayedSourceCount": 2 },
+      "expected": {
+        "version": "1.0",
+        "authoritySupport": "VERIFIED_CONTROLLING",
+        "sourceState": "AUTHORITY_FOUND",
+        "legalConclusion": "ALLOWED",
+        "humanReviewRequired": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "limitations": [],
+        "responseKind": "GENERAL_TAX"
+      }
+    },
+    {
+      "id": "2-verified-supporting-authority-known-limitation",
+      "description": "KNOWN LIMITATION: the runtime does not currently expose a field distinguishing 'verified supporting' from 'verified controlling' within AUTHORITY_FOUND, so this path also maps to VERIFIED_CONTROLLING today. VERIFIED_SUPPORTING is defined in the enum but is not yet reachable; forcing a heuristic distinction here would be inventing semantics not backed by runtime evidence, which this task prohibits.",
+      "input": { "responseType": "rag_answer", "sourceStatus": "AUTHORITY_FOUND", "displayedSourceCount": 1 },
+      "expected": {
+        "version": "1.0",
+        "authoritySupport": "VERIFIED_CONTROLLING",
+        "sourceState": "AUTHORITY_FOUND",
+        "legalConclusion": "ALLOWED",
+        "humanReviewRequired": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "limitations": [],
+        "responseKind": "GENERAL_TAX"
+      }
+    },
+    {
+      "id": "3-related-authority-only",
+      "description": "RELATED_AUTHORITY_ONLY must never be presented as controlling authority (Invariant 2).",
+      "input": { "responseType": "rag_answer", "sourceStatus": "RELATED_AUTHORITY_ONLY", "displayedSourceCount": 0 },
+      "expected": {
+        "version": "1.0",
+        "authoritySupport": "RELATED_AUTHORITY_ONLY",
+        "sourceState": "RELATED_AUTHORITY_ONLY",
+        "legalConclusion": "ALLOWED",
+        "humanReviewRequired": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "limitations": ["RELATED_AUTHORITY_ONLY"],
+        "responseKind": "GENERAL_TAX"
+      }
+    },
+    {
+      "id": "4-no-verified-authority",
+      "description": "AUTHORITY_FOUND status with zero displayed cards (defensive SAE inconsistency) must never yield VERIFIED_CONTROLLING (Invariant 1).",
+      "input": { "responseType": "rag_answer", "sourceStatus": "AUTHORITY_FOUND", "displayedSourceCount": 0 },
+      "expected": {
+        "version": "1.0",
+        "authoritySupport": "NO_VERIFIED_AUTHORITY",
+        "sourceState": "AUTHORITY_FOUND",
+        "legalConclusion": "ALLOWED",
+        "humanReviewRequired": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "limitations": [],
+        "responseKind": "GENERAL_TAX"
+      }
+    },
+    {
+      "id": "5-retrieval-timeout",
+      "description": "RETRIEVAL_TIMEOUT is an unsafe source state and must never yield VERIFIED_CONTROLLING (Invariant 3).",
+      "input": { "sourceStatus": "RETRIEVAL_TIMEOUT", "displayedSourceCount": 0 },
+      "expected": {
+        "version": "1.0",
+        "authoritySupport": "NO_VERIFIED_AUTHORITY",
+        "sourceState": "RETRIEVAL_TIMEOUT",
+        "legalConclusion": "UNKNOWN",
+        "humanReviewRequired": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "limitations": ["RETRIEVAL_TIMEOUT"],
+        "responseKind": "FALLBACK"
+      }
+    },
+    {
+      "id": "6-source-lookup-empty",
+      "description": "SOURCE_LOOKUP_EMPTY is an unsafe source state and must never yield VERIFIED_CONTROLLING (Invariant 3).",
+      "input": { "sourceStatus": "SOURCE_LOOKUP_EMPTY", "displayedSourceCount": 0 },
+      "expected": {
+        "version": "1.0",
+        "authoritySupport": "NO_VERIFIED_AUTHORITY",
+        "sourceState": "SOURCE_LOOKUP_EMPTY",
+        "legalConclusion": "UNKNOWN",
+        "humanReviewRequired": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "limitations": ["SOURCE_LOOKUP_EMPTY"],
+        "responseKind": "FALLBACK"
+      }
+    },
+    {
+      "id": "7-source-parse-error",
+      "description": "SOURCE_PARSE_ERROR is an unsafe source state and must never yield VERIFIED_CONTROLLING (Invariant 3).",
+      "input": { "sourceStatus": "SOURCE_PARSE_ERROR", "displayedSourceCount": 0 },
+      "expected": {
+        "version": "1.0",
+        "authoritySupport": "NO_VERIFIED_AUTHORITY",
+        "sourceState": "SOURCE_PARSE_ERROR",
+        "legalConclusion": "UNKNOWN",
+        "humanReviewRequired": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "limitations": ["SOURCE_PARSE_ERROR"],
+        "responseKind": "FALLBACK"
+      }
+    },
+    {
+      "id": "8-no-indexed-source",
+      "description": "NO_INDEXED_SOURCE is an unsafe source state and must never yield VERIFIED_CONTROLLING (Invariant 3).",
+      "input": { "sourceStatus": "NO_INDEXED_SOURCE", "displayedSourceCount": 0 },
+      "expected": {
+        "version": "1.0",
+        "authoritySupport": "NO_VERIFIED_AUTHORITY",
+        "sourceState": "NO_INDEXED_SOURCE",
+        "legalConclusion": "UNKNOWN",
+        "humanReviewRequired": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "limitations": ["NO_INDEXED_SOURCE"],
+        "responseKind": "FALLBACK"
+      }
+    },
+    {
+      "id": "9-genuine-conflicting-authority",
+      "description": "hasConflict must come from the already-deterministic conflict result (result.conflict.hasConflict), not be inferred from source count (Invariant 6).",
+      "input": { "responseType": "rag_answer", "sourceStatus": "AUTHORITY_FOUND", "displayedSourceCount": 2, "conflict": { "hasConflict": true } },
+      "expected": {
+        "version": "1.0",
+        "authoritySupport": "CONFLICTING_AUTHORITY",
+        "sourceState": "AUTHORITY_FOUND",
+        "legalConclusion": "ALLOWED",
+        "humanReviewRequired": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": true,
+        "limitations": ["CONFLICTING_AUTHORITY"],
+        "responseKind": "GENERAL_TAX"
+      }
+    },
+    {
+      "id": "10-controlled-loa-procedural",
+      "description": "Controlled LOA procedural (Phase 09ZA) answers make no legal conclusion and never permit filing-ready/auto-submission output (Invariant 5).",
+      "input": {
+        "responseType": "controlled_loa_answer",
+        "controlledLoaAnswer": { "controlledLoaAnswer": true, "phase": "09ZA", "filingReadyDocumentGenerated": false, "automaticSubmission": false }
+      },
+      "expected": {
+        "version": "1.0",
+        "authoritySupport": "NOT_APPLICABLE",
+        "sourceState": "NOT_APPLICABLE",
+        "legalConclusion": "NOT_APPLICABLE",
+        "humanReviewRequired": true,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "limitations": [],
+        "responseKind": "CONTROLLED_PROCEDURAL"
+      }
+    },
+    {
+      "id": "11-restricted-legal-conclusion",
+      "description": "Restricted legal-conclusion (Phase 09ZI) responses always require human review and never permit filing-ready/auto-submission output (Invariant 4).",
+      "input": {
+        "responseType": "controlled_loa_legal_conclusion_restricted",
+        "controlledLoaAnswer": { "controlledLoaAnswer": false, "phase": "09ZI", "requiresHumanReview": true, "filingReadyDocumentGenerated": false, "automaticSubmission": false }
+      },
+      "expected": {
+        "version": "1.0",
+        "authoritySupport": "NOT_APPLICABLE",
+        "sourceState": "NOT_APPLICABLE",
+        "legalConclusion": "RESTRICTED",
+        "humanReviewRequired": true,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "limitations": [],
+        "responseKind": "RESTRICTED_LEGAL_CONCLUSION"
+      }
+    },
+    {
+      "id": "12-general-tax-response",
+      "description": "Normal verified-authority general tax response; also proves multiple sources with an explicit non-conflict result do not get treated as conflicting (Invariant 6 corollary).",
+      "input": { "responseType": "rag_answer", "sourceStatus": "AUTHORITY_FOUND", "displayedSourceCount": 5, "conflict": { "hasConflict": false } },
+      "expected": {
+        "version": "1.0",
+        "authoritySupport": "VERIFIED_CONTROLLING",
+        "sourceState": "AUTHORITY_FOUND",
+        "legalConclusion": "ALLOWED",
+        "humanReviewRequired": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "limitations": [],
+        "responseKind": "GENERAL_TAX"
+      }
+    },
+    {
+      "id": "13-domain-boundary-rejection",
+      "description": "Non-tax domain-boundary rejections must invent no tax-authority confidence (Invariant 7). Matches the exact object ask-handler.js builds at the PHILIPPINE TAX DOMAIN BOUNDARY early return.",
+      "input": { "domainBoundary": true, "sourceStatus": "DOMAIN_BOUNDARY_REJECT" },
+      "expected": {
+        "version": "1.0",
+        "authoritySupport": "NOT_APPLICABLE",
+        "sourceState": "NOT_APPLICABLE",
+        "legalConclusion": "NOT_APPLICABLE",
+        "humanReviewRequired": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "limitations": [],
+        "responseKind": "DOMAIN_BOUNDARY"
+      }
+    },
+    {
+      "id": "14-route-or-pipeline-fallback",
+      "description": "Internal-error/pipeline-error paths must default safely without claiming any authority state.",
+      "input": { "internalError": true, "sourceStatus": "PIPELINE_ERROR" },
+      "expected": {
+        "version": "1.0",
+        "authoritySupport": "UNKNOWN",
+        "sourceState": "UNKNOWN",
+        "legalConclusion": "UNKNOWN",
+        "humanReviewRequired": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "limitations": ["FALLBACK"],
+        "responseKind": "FALLBACK"
+      }
+    },
+    {
+      "id": "15-unknown-legacy-response-path",
+      "description": "A completely empty/legacy result object (no known fields) must default safely to UNKNOWN/NOT_APPLICABLE values and must never throw.",
+      "input": {},
+      "expected": {
+        "version": "1.0",
+        "authoritySupport": "UNKNOWN",
+        "sourceState": "UNKNOWN",
+        "legalConclusion": "UNKNOWN",
+        "humanReviewRequired": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "limitations": [],
+        "responseKind": "UNKNOWN"
+      }
+    }
+  ],
+  "invariantEdgeCases": [
+    {
+      "id": "edge-domain-boundary-overrides-stray-conflict-field",
+      "description": "Even if an upstream object incorrectly carries a conflict field alongside domainBoundary:true, the domain-boundary override (Invariant 7) must still zero it out.",
+      "input": { "domainBoundary": true, "sourceStatus": "DOMAIN_BOUNDARY_CLARIFY", "conflict": { "hasConflict": true } },
+      "expected": {
+        "version": "1.0",
+        "authoritySupport": "NOT_APPLICABLE",
+        "sourceState": "NOT_APPLICABLE",
+        "legalConclusion": "NOT_APPLICABLE",
+        "humanReviewRequired": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "limitations": [],
+        "responseKind": "DOMAIN_BOUNDARY"
+      }
+    },
+    {
+      "id": "edge-controlled-loa-cannot-be-forced-restricted",
+      "description": "Even if a stray requiresHumanReview-style restricted marker leaked into a controlled-procedural result, responseKind CONTROLLED_PROCEDURAL must still force legalConclusion to NOT_APPLICABLE and filing/auto-submission to false (Invariant 5 defensive re-assertion).",
+      "input": {
+        "responseType": "controlled_loa_answer",
+        "controlledLoaAnswer": { "controlledLoaAnswer": true, "phase": "09ZA", "filingReadyDocumentGenerated": true, "automaticSubmission": true }
+      },
+      "expected": {
+        "version": "1.0",
+        "authoritySupport": "NOT_APPLICABLE",
+        "sourceState": "NOT_APPLICABLE",
+        "legalConclusion": "NOT_APPLICABLE",
+        "humanReviewRequired": true,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "limitations": [],
+        "responseKind": "CONTROLLED_PROCEDURAL"
+      }
+    }
+  ]
+}
