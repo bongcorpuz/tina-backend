@@ -6710,3 +6710,81 @@ Resolve domain-boundary gap and rerun PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-S
 
 Do not proceed to PHASE-09ZC until 09ZB passes.
 ```
+
+## Phase 9ZF Controlled LOA Gate Ordering Remediation -- PASS WITH STRICT RECOMMENDATIONS (2026-07-10):
+
+```text
+PHASE-09ZF-CONTROLLED-LOA-GATE-ORDERING-REMEDIATION-1 completed.
+
+Decision:
+PHASE 09ZF CONTROLLED LOA GATE ORDERING REMEDIATION PASS WITH STRICT RECOMMENDATIONS
+
+Base state:
+PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1 rerun failed at commit dc8e882 after 09ZE remediation.
+
+Prior failure:
+30c1cbb recorded 09ZB staging smoke FAIL because 4 of 8 safe LOA/eLA audit-procedure queries did not trigger controlled_loa_answer.
+
+Prior remediation:
+339c448 completed 09ZE domain-boundary remediation but live staging still reproduced the same 4-query failure family.
+
+Root cause:
+In pipeline.js, Step 12.6 (the clarification route gate, evaluateClarificationRouteGate) ran and could early-exit with a generic clarification fallback before Step 12.65 (the controlled LOA gate, evaluateControlledLoaAskGate) ever executed. The 09ZE overlay correctly fixed the defense-in-depth domain-boundary ALLOW decision for the four affected queries but did not change this later ordering, so Step 12.6 continued to intercept them with its own generic fallback before Step 12.65 could classify them as safe. evaluateControlledLoaAskGate() called in isolation always classified the four queries correctly, which is why the 09ZE local test suite passed while live staging kept failing -- only the full runPipeline() path could surface the ordering defect.
+
+Remediation:
+Reordered the two existing gate blocks in pipeline.js (Acceptable Pattern B) so Step 12.65 (controlled LOA gate) now executes before Step 12.6 (clarification route gate). No change to either gate's internal classification logic, to evaluateControlledLoaAskGate, to buildControlledLoaAskEarlyExitResponse, to evaluateClarificationRouteGate, or to clarification-route-orchestrator-helper.js.
+
+Safe query family now covered:
+I received a replacement eLA, what should I check first?
+I received a consolidated eLA, what should I do?
+I received a notice for presentation/submission of documents.
+I received a reminder before subpoena.
+
+Runtime changes:
+Controlled LOA gate-ordering remediation only.
+
+Ask-handler changes:
+None.
+
+Route/server/auth changes:
+None.
+
+Feature flags:
+Existing TINA_ENABLE_CONTROLLED_LOA_ASK_GATE behavior preserved.
+
+Memory:
+Inactive.
+
+Persistence:
+None.
+
+External search/live retrieval/scraping/download/ingestion/embedding/database writes/OpenAI/Supabase/Google Drive/n8n/Firecrawl/Crawlee/MCP/OCR:
+Untouched.
+
+Production:
+Unchanged.
+
+Legal safety:
+No final legal conclusions.
+No claim that any LOA/eLA/PAN/FAN/FLD/FDDA/assessment/protest/BIR action is valid, invalid, void, cancelled, final, enforceable, or appealable.
+No filing-ready output.
+No automatic BIR submission.
+Human tax/legal review notice preserved.
+
+Source-card boundary:
+No live retrieval.
+No verified source-card claim.
+No legal citation allowed unless future verified source cards are available.
+Controlled branch source-card discipline preserved.
+
+Next:
+PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1-RERUN.
+
+Do not proceed to:
+PHASE-09ZC-CONTROLLED-LOA-ANSWER-PRODUCTION-ACTIVATION-GATE-1
+
+until 09ZB passes.
+
+Alternative:
+PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System.
+```

@@ -3809,8 +3809,105 @@ export async function runPipeline({
   trace.steps.push({ step: "12.5", name: "adaptiveResponsePlan", done: true, askProfile: ctx.responsePlan?.askProfile || null });
 
   // ── Step 13: Build Adaptive Master Prompt ────────────────────────────────
+  // PHASE-09ZF-CONTROLLED-LOA-GATE-ORDERING-REMEDIATION-1
+  // Root cause of the 09ZB post-09ZE staging failure: the Step 12.6
+  // clarification route gate ran BEFORE the Step 12.65 controlled LOA gate
+  // and could early-exit with a generic clarification fallback for narrow
+  // audit-procedure phrasing (replacement/consolidated eLA, notice for
+  // presentation/submission, reminder before subpoena) before the controlled
+  // LOA gate ever had a chance to classify the query as safe. This is a
+  // pre-generic-fallback ordering fix only: the Step 12.65 controlled LOA
+  // gate block below is now evaluated first, so any query it classifies as
+  // safe controlled LOA/eLA procedural-help early-exits here, before Step
+  // 12.6 can intercept it. No change to either gate's internal classification
+  // logic -- excluded/unsafe queries and unrelated tax queries still fall
+  // through unchanged (evaluateControlledLoaAskGate still returns
+  // matched:false for them, exactly as before), and still reach the
+  // unmodified Step 12.6 clarification gate and existing fallback/human-
+  // review behavior.
+  // ── Step 12.65: Controlled LOA/eLA procedural-help /ask gate (flagged). ──
+  // Moved ahead of Step 12.6 by PHASE-09ZF so safe LOA/eLA audit-procedure
+  // queries are evaluated before the generic Philippine-tax/clarification
+  // fallback. Off by default; enabled only via TINA_ENABLE_CONTROLLED_LOA_ASK_GATE.
+  // Matches only a narrow LOA/eLA procedural-help intent family (see
+  // workflow/controlled-loa-answer-runtime-scaffold.js) and returns a
+  // procedural-guidance-only answer. No live retrieval, no authority
+  // verification claim, no filing-ready output, no automatic submission.
+  try {
+    const controlledLoaAskGate = evaluateControlledLoaAskGate({ ctx, query, hook });
+    if (controlledLoaAskGate.enabled) {
+      if (controlledLoaAskGate.failOpen) {
+        trace.warnings.push({ step: "12.65", warning: controlledLoaAskGate.warning });
+        console.warn("[CONTROLLED_LOA_ASK_GATE_FAIL_OPEN]", {
+          message: controlledLoaAskGate.warning
+        });
+      }
+      trace.steps.push({
+        step: "12.65",
+        name: "controlledLoaAskGate",
+        done: true,
+        matched: controlledLoaAskGate.matched === true,
+        intent: controlledLoaAskGate.intentClassification?.intent || null,
+        earlyExit: Boolean(controlledLoaAskGate.earlyExitResponse)
+      });
+    }
+    if (controlledLoaAskGate.earlyExitResponse) {
+      endTrace({
+        traceId,
+        metadata: {
+          mode: ctx.mode,
+          primaryIssue: ctx.issueClassification?.primaryIssue || null,
+          sourceCount: ctx.rerankedChunks?.length || 0,
+          warnings: trace.warnings.length,
+          pipelineLatencyMs: Date.now() - pipelineStartMs,
+          controlledLoaAskGateEarlyExit: true
+        }
+      });
+      await Promise.race([
+        flushObservability(),
+        new Promise(resolve => setTimeout(resolve, 2000))
+      ]);
+      markPipelineCheckpoint(diagnostics, "RESPONSE_COMPLETE", {
+        timingField: "responseCompletedAt",
+        mode: ctx.mode,
+        route: hook,
+        model,
+        sourceAvailabilityStatus: ctx.saeStatus,
+        retrievedCount: ctx.rerankedChunks?.length || 0,
+        displayedSourceCardCount: controlledLoaAskGate.earlyExitResponse.sourceCards?.length || 0
+      });
+      finalizePipelineDiagnostics(diagnostics);
+      timing.checkpoint("RESPONSE_COMPLETE", "response");
+      const finalDiagnostics = publishDiagnostics(false);
+      return {
+        ...controlledLoaAskGate.earlyExitResponse,
+        diagnostics: finalDiagnostics,
+        pipelineTimings: diagnostics.pipelineTimings,
+        pipelineStageDurations: diagnostics.pipelineStageDurations,
+        partialPipelineState: diagnostics.partialPipelineState,
+        openaiCalls: diagnostics.openaiCalls,
+        trace: {
+          ...trace,
+          steps: [
+            ...trace.steps,
+            { step: "12.65", name: "controlledLoaAskGateEarlyExit", done: true }
+          ]
+        },
+        traceId
+      };
+    }
+  } catch (e) {
+    const warning = `controlledLoaAskGate fail-open: ${e?.message || e}`;
+    trace.warnings.push({ step: "12.65", warning });
+    console.warn("[CONTROLLED_LOA_ASK_GATE_FAIL_OPEN]", {
+      message: e?.message || String(e)
+    });
+  }
+
   // Step 12.6: Live clarification route gate (flagged).
-  // Runs after SAE state is available and before prompt construction/OpenAI generation.
+  // Runs only if the Step 12.65 controlled LOA gate above did not already
+  // early-exit. Runs after SAE state is available and before prompt
+  // construction/model-completion generation.
   try {
     const clarificationGate = evaluateClarificationRouteGate({ ctx, query, hook });
     if (clarificationGate.enabled) {
@@ -3884,84 +3981,6 @@ export async function runPipeline({
     const warning = `clarificationRouteGate fail-open: ${e?.message || e}`;
     trace.warnings.push({ step: "12.6", warning });
     console.warn("[CLARIFICATION_ROUTE_GATE_FAIL_OPEN]", {
-      message: e?.message || String(e)
-    });
-  }
-
-  // ── Step 12.65: Controlled LOA/eLA procedural-help /ask gate (flagged). ──
-  // Runs only if the clarification route gate above did not already early-
-  // exit. Off by default; enabled only via TINA_ENABLE_CONTROLLED_LOA_ASK_GATE.
-  // Matches only a narrow LOA/eLA procedural-help intent family (see
-  // workflow/controlled-loa-answer-runtime-scaffold.js) and returns a
-  // procedural-guidance-only answer. No live retrieval, no authority
-  // verification claim, no filing-ready output, no automatic submission.
-  try {
-    const controlledLoaAskGate = evaluateControlledLoaAskGate({ ctx, query, hook });
-    if (controlledLoaAskGate.enabled) {
-      if (controlledLoaAskGate.failOpen) {
-        trace.warnings.push({ step: "12.65", warning: controlledLoaAskGate.warning });
-        console.warn("[CONTROLLED_LOA_ASK_GATE_FAIL_OPEN]", {
-          message: controlledLoaAskGate.warning
-        });
-      }
-      trace.steps.push({
-        step: "12.65",
-        name: "controlledLoaAskGate",
-        done: true,
-        matched: controlledLoaAskGate.matched === true,
-        intent: controlledLoaAskGate.intentClassification?.intent || null,
-        earlyExit: Boolean(controlledLoaAskGate.earlyExitResponse)
-      });
-    }
-    if (controlledLoaAskGate.earlyExitResponse) {
-      endTrace({
-        traceId,
-        metadata: {
-          mode: ctx.mode,
-          primaryIssue: ctx.issueClassification?.primaryIssue || null,
-          sourceCount: ctx.rerankedChunks?.length || 0,
-          warnings: trace.warnings.length,
-          pipelineLatencyMs: Date.now() - pipelineStartMs,
-          controlledLoaAskGateEarlyExit: true
-        }
-      });
-      await Promise.race([
-        flushObservability(),
-        new Promise(resolve => setTimeout(resolve, 2000))
-      ]);
-      markPipelineCheckpoint(diagnostics, "RESPONSE_COMPLETE", {
-        timingField: "responseCompletedAt",
-        mode: ctx.mode,
-        route: hook,
-        model,
-        sourceAvailabilityStatus: ctx.saeStatus,
-        retrievedCount: ctx.rerankedChunks?.length || 0,
-        displayedSourceCardCount: controlledLoaAskGate.earlyExitResponse.sourceCards?.length || 0
-      });
-      finalizePipelineDiagnostics(diagnostics);
-      timing.checkpoint("RESPONSE_COMPLETE", "response");
-      const finalDiagnostics = publishDiagnostics(false);
-      return {
-        ...controlledLoaAskGate.earlyExitResponse,
-        diagnostics: finalDiagnostics,
-        pipelineTimings: diagnostics.pipelineTimings,
-        pipelineStageDurations: diagnostics.pipelineStageDurations,
-        partialPipelineState: diagnostics.partialPipelineState,
-        openaiCalls: diagnostics.openaiCalls,
-        trace: {
-          ...trace,
-          steps: [
-            ...trace.steps,
-            { step: "12.65", name: "controlledLoaAskGateEarlyExit", done: true }
-          ]
-        },
-        traceId
-      };
-    }
-  } catch (e) {
-    const warning = `controlledLoaAskGate fail-open: ${e?.message || e}`;
-    trace.warnings.push({ step: "12.65", warning });
-    console.warn("[CONTROLLED_LOA_ASK_GATE_FAIL_OPEN]", {
       message: e?.message || String(e)
     });
   }

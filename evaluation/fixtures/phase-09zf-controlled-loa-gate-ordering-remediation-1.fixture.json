@@ -1,0 +1,98 @@
+{
+  "patch": "PHASE-09ZF-CONTROLLED-LOA-GATE-ORDERING-REMEDIATION-1",
+  "phase": "09ZF",
+  "decision": "PHASE 09ZF CONTROLLED LOA GATE ORDERING REMEDIATION PASS WITH STRICT RECOMMENDATIONS",
+  "baseCommit": "dc8e882",
+  "priorFailCommit": "30c1cbb",
+  "priorRemediationCommit": "339c448",
+  "currentFailureCommit": "dc8e882",
+  "rootCause": "In pipeline.js, the Step 12.6 clarification route gate executed and could early-exit with a generic clarification fallback BEFORE the Step 12.65 controlled LOA gate ever ran. The 09ZE domain-boundary overlay correctly let the four narrow audit-procedure queries (replacement eLA, consolidated eLA, notice for presentation/submission, reminder before subpoena) reach the defense-in-depth boundary check with an ALLOW decision, but it did not change the later Step 12.6-before-Step-12.65 ordering, so those four queries were still intercepted by the clarification gate's generic fallback before Step 12.65 could classify them as safe controlled LOA/eLA procedural-help.",
+  "chosenRemediation": "Reordered the two existing gate blocks in pipeline.js so the Step 12.65 controlled LOA gate (evaluateControlledLoaAskGate / buildControlledLoaAskEarlyExitResponse) now executes before the Step 12.6 clarification route gate (evaluateClarificationRouteGate). Neither gate's internal classification logic was changed. A query the controlled LOA gate classifies as safe now early-exits with controlled_loa_answer before the clarification gate can intercept it. A query the controlled LOA gate classifies as excluded or unrelated (matched:false) falls through unchanged to the unmodified Step 12.6 clarification gate and existing fallback/human-review behavior, exactly as before this reordering.",
+  "safeQueryMatrix": [
+    "I received a BIR LOA, what should I do?",
+    "I received a BIR eLA, what should I do?",
+    "What should I do after receiving a Letter of Authority from BIR?",
+    "What documents should I prepare after receiving a BIR LOA?",
+    "I received a replacement eLA, what should I check first?",
+    "I received a consolidated eLA, what should I do?",
+    "I received a notice for presentation/submission of documents.",
+    "I received a reminder before subpoena."
+  ],
+  "previouslyFailingSafeQueries": [
+    "I received a replacement eLA, what should I check first?",
+    "I received a consolidated eLA, what should I do?",
+    "I received a notice for presentation/submission of documents.",
+    "I received a reminder before subpoena."
+  ],
+  "excludedQueryMatrix": [
+    "Is my LOA invalid?",
+    "Is this eLA void?",
+    "Can I ignore the LOA?",
+    "Can the BIR assess me?",
+    "Is the assessment final?",
+    "Should I appeal to CTA?",
+    "Is the FAN void?",
+    "Is the FDDA appealable?",
+    "Will I win?",
+    "Can you draft the protest now?",
+    "Can you submit this to BIR?",
+    "Give me a final legal opinion on this LOA."
+  ],
+  "unrelatedQueryMatrix": [
+    "Explain EWT.",
+    "Is lease subject to withholding tax in the Philippines?",
+    "What is percentage tax?",
+    "What is VAT-exempt sale?",
+    "What is estate tax?",
+    "What are the rules on withholding tax on professional fees?",
+    "How to compute percentage tax?",
+    "Is sale of fresh frozen seafood VAT exempt?"
+  ],
+  "runtimeOrderingEvidence": {
+    "priorOrder": "Step 12.6 clarification route gate (evaluateClarificationRouteGate) ran first; Step 12.65 controlled LOA gate (evaluateControlledLoaAskGate) ran second and was unreachable for queries the clarification gate early-exited on.",
+    "newOrder": "Step 12.65 controlled LOA gate (evaluateControlledLoaAskGate) now runs first; Step 12.6 clarification route gate (evaluateClarificationRouteGate) now runs second and only executes if the controlled LOA gate did not already early-exit.",
+    "whyThisExplainsStagingFailure": "evaluateControlledLoaAskGate(), called in isolation, correctly classified all four previously-failing queries as matched:true / controlled_loa_answer. The 09ZE local test suite only exercised the gate function directly and therefore could not observe the ordering defect. Only the full runPipeline() code path, exercised by live staging smoke, could surface the ordering bug -- consistent with the 09ZB post-09ZE staging fail evidence recorded in knowledge/CURRENT_STATE.md.",
+    "changeScope": "pipeline.js only; no change to evaluateControlledLoaAskGate, buildControlledLoaAskEarlyExitResponse, evaluateClarificationRouteGate, or clarification-route-orchestrator-helper.js internals."
+  },
+  "sourceCardPolicy": {
+    "sourceCards": [],
+    "sourceCardVerification": "not_performed",
+    "legalCitationAllowed": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false
+  },
+  "legalSafetyPolicy": {
+    "finalLegalConclusion": false,
+    "validityVoidnessFinalityClaims": false,
+    "filingReadyDocument": false,
+    "automaticBirSubmission": false,
+    "humanReviewPreserved": true
+  },
+  "externalOperationBoundary": "No live authority retrieval, external search, scraping, download, ingestion, embedding, database write, OpenAI/Supabase/Google Drive/n8n/Firecrawl/Crawlee/MCP/OCR call, or connector call introduced.",
+  "privacyBoundary": "No real taxpayer data used; fixture and test queries are synthetic procedural-help phrasing only.",
+  "productionBoundary": "Production unchanged.",
+  "validationMatrix": [
+    "09ZF gate-ordering static/runtime helper test",
+    "09ZE domain-boundary regression",
+    "09ZB staging smoke local/static regression (live staging disabled)",
+    "09ZA controlled LOA ask wiring regression",
+    "09Z controlled LOA gate regression",
+    "09Y scaffold regression",
+    "09X design regression",
+    "09 gate closure regression",
+    "guard:files",
+    "npm test"
+  ],
+  "futurePatchPlan": [
+    "Rerun PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1 live staging smoke",
+    "09ZC controlled LOA production activation gate only if 09ZB passes",
+    "09ZD controlled LOA production smoke only after 09ZC",
+    "future Phase 10 evaluation/fact-check/legal-tax QA",
+    "future authority ingestion/search/retrieval only if separately approved",
+    "future memory/persistence only if separately approved",
+    "MCP deferred until after final planned phase",
+    "mobile app deferred until after Phase 13"
+  ],
+  "nextTask": "PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1-RERUN",
+  "alternativeNextPhase": "PHASE 10 — Evaluation / Fact-Check / Legal-Tax QA System"
+}
