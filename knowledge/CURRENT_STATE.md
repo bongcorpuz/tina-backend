@@ -7831,7 +7831,7 @@ Staging validation result:
 Confirmed P0-P3 findings:
 No P0 release blocker. Four P1 findings:
 1. Frontend cannot visually distinguish controlling vs. related/supporting source-card chips (static evidence).
-2. Conflicting-authority state not exposed to frontend, no post-generation deterministic enforcement analogous to PATCH-019A (static evidence; true-conflict live case remains unverified).
+2. Conflicting-authority state is not exposed to the frontend, and true-conflict live coverage remains unverified. Independent review correction: backend conflict disclosure is not prompt-only; answer-renderer.js and final-answer-compliance.js include deterministic post-generation conflict-language sanitation/validation, so this item should be treated as frontend/evidence-gap remediation rather than a confirmed absence of backend post-generation enforcement.
 3. CONFIRMED LIVE: ask-handler.js never forwards controlledLoaAnswer/requiresHumanReview/filingReadyDocumentGenerated/automaticSubmission to the API response -- zero references in ask-handler.js, and all four fields null in every one of the 13 live staging responses, including both controlled-LOA-path responses that pipeline.js internally computes them for.
 4. CONFIRMED LIVE, REPRODUCIBLE: "Will I win my BIR case?" bypassed Step 12.65/12.66 entirely under a route-level timeout (93.5s, reproduced identically on retry), returning a generic (still-safe) RETRIEVAL_TIMEOUT fallback instead of the deterministic controlled_loa_legal_conclusion_restricted response the pure-function classifier confirms it should receive.
 
@@ -7842,7 +7842,7 @@ Frontend trust-disclosure status:
 Backend text-level disclosure (via applyVerifiedAuthorityGate/PATCH-019A and the controlled-LOA/restricted-response scaffolds) is mature, deterministic, and rendered with markdown formatting preserved. Structured metadata consumption by the frontend is absent, and for a subset of fields (P1-3) is currently impossible without a backend forwarding fix first.
 
 Conflict-disclosure status:
-Detection (Four-Part Doctrine Test) and metadata propagation are strong and categorical. Answer-level disclosure is prompt-mandated (TINA_CONFLICT_RULE) but not post-generation-enforced. Live verification of a true multi-authority conflict scenario remains an open item.
+Detection (Four-Part Doctrine Test) and metadata propagation are strong and categorical. Answer-level disclosure is prompt-mandated (TINA_CONFLICT_RULE) and independently supported by deterministic post-generation conflict-language sanitation/validation in answer-renderer.js and final-answer-compliance.js. Live verification of a true multi-authority conflict scenario, plus frontend conflict-state display, remains open.
 
 Incomplete-facts status:
 An always-on prompt-level safeguard exists (TINA_FACTUAL_REASONING_RULE) independent of any feature flag. The dedicated interactive clarification flow did not fire for either representative incomplete-facts query in this staging matrix; both received a generic deterministic fallback instead. Historical observation that TINA_ENABLE_CLARIFICATION_ROUTE_GATE=false on production (from PHASE-09ZC) is treated strictly as historical evidence, not revalidated current evidence, per this task's explicit correction; production was not called in this task.
