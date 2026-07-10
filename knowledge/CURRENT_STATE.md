@@ -7420,3 +7420,75 @@ PHASE-09ZC-CONTROLLED-LOA-ANSWER-PRODUCTION-ACTIVATION-GATE-1.
 Alternative:
 PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System.
 ```
+
+## Phase 9ZC Controlled LOA Answer Production Activation Gate -- PASS WITH STRICT RECOMMENDATIONS (2026-07-10):
+
+```text
+PHASE-09ZC-CONTROLLED-LOA-ANSWER-PRODUCTION-ACTIVATION-GATE-1 readiness assessment completed.
+
+Base:
+7b892ed
+
+Staging decision:
+PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE PASS WITH STRICT RECOMMENDATIONS
+
+Staging results:
+8/8 safe queries passed.
+4/4 previously failing audit-procedure queries passed.
+12/12 unsafe queries remained outside controlled_loa_answer.
+3/3 restricted legal-conclusion queries passed.
+8/8 unrelated tax queries remained non-triggering.
+2/2 non-tax queries remained domain-boundary rejected.
+Runtime/security and source-card/legal-safety checks passed.
+
+Production service:
+tina-backend
+
+Production URL:
+https://tina-backend-y11x.onrender.com
+
+Production frontend:
+https://app.tina.bentoph.com
+
+Critical discovery:
+This task's brief assumed production (tina-backend) tracks main and requires a merge before activation. Direct inspection (Render API plus the live server's own /debug/db-identity) shows tina-backend is instead configured with branch=feature/source-availability-engine-v1 and autoDeploy=yes, has been deploying that branch since 2026-07-09 (a branch switch away from main occurred between 2026-06-17 and 2026-07-09), and its latest live deploy is commit 7b892ed -- runtime-identical to the verified 09ZB staging PASS. TINA_ENABLE_CONTROLLED_LOA_ASK_GATE is already TRUE on tina-backend. The user confirmed this is the intentional current release process, not accidental drift. main is therefore not the deploy source for production, and no merge/cherry-pick/fast-forward strategy applies to actual activation.
+
+Branch comparison (retained for audit only, not the operative deployment path):
+main is 3 commits ahead of the merge-base; feature is 286 commits ahead. 532 files / ~198,602 insertions differ. Fast-forward is impossible; a full merge would be unsafe (near-total unrelated architecture rewrite); literal cherry-pick of 09X-09ZI commits onto main would likely fail due to massive surrounding-code drift.
+
+Recommended release strategy:
+None needed. tina-backend already runs the exact staging-verified commit with the flag already enabled via its existing auto-deploy configuration. This gate confirms that state is correct rather than performing a new deploy or flag change.
+
+Candidate runtime commits (already live):
+339c448, dd991cc, d899b35 (diagnostic, flag false), cd6280f, 13fec28.
+
+Documentation-only commits:
+42bfcab, 571ca05, b0031c2, 9d19542, 52e133f, 7b892ed.
+
+Feature flag plan:
+TINA_ENABLE_CONTROLLED_LOA_ASK_GATE already TRUE on tina-backend; no change made or requested by this task.
+
+Diagnostic flag:
+TINA_ENABLE_09ZG_LOA_PATH_DIAGNOSTIC=false required and confirmed unset on tina-backend.
+
+Separately discovered pre-existing issue (unrelated to controlled LOA):
+server.js returns raw error.message to clients on unhandled 500s unless NODE_ENV is exactly "production". tina-backend currently has NODE_ENV=staging, so unhandled-error responses on the real customer frontend currently leak internal error detail. Recommended for prompt separate remediation; not a blocker for this gate.
+
+Rollback plan:
+Prior known-good deploy dep-d98creuq1p3s739lle50 (commit 52e133f). Flag rollback: TINA_ENABLE_CONTROLLED_LOA_ASK_GATE=false. Code rollback: Render redeploy of a prior deploy id, or git revert + autoDeploy. Expected time 5-10 minutes.
+
+Production activation:
+Not executed during readiness assessment. Flag was already TRUE before this task began; this task made no Render configuration changes (read-only verification only).
+
+Production smoke:
+Not executed.
+
+Decision:
+PHASE 09ZC CONTROLLED LOA ANSWER PRODUCTION ACTIVATION GATE PASS WITH STRICT RECOMMENDATIONS
+
+Next:
+PHASE-09ZD-CONTROLLED-LOA-ANSWER-PRODUCTION-SMOKE-1, pending explicit approval to run it.
+
+Alternative:
+PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System.
+```
