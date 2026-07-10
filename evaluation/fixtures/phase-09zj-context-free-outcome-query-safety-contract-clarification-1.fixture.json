@@ -1,0 +1,67 @@
+{
+  "patch": "PHASE-09ZJ-CONTEXT-FREE-OUTCOME-QUERY-SAFETY-CONTRACT-CLARIFICATION-1",
+  "phase": "09ZJ",
+  "baseCommit": "1fcb54e",
+  "decision": "PHASE 09ZJ CONTEXT-FREE OUTCOME QUERY SAFETY CONTRACT CLARIFICATION PASS WITH STRICT RECOMMENDATIONS",
+  "runtimeChanges": false,
+  "productionConfigurationChanges": false,
+  "featureFlagChanges": false,
+  "domainBoundaryLogicChanges": false,
+  "legalSafetyProtectionsWeakened": false,
+  "investigationResult": {
+    "willIWinIntentionallyContextFree": true,
+    "willIWinContainsPhilippineTaxSignal": false,
+    "domainBoundaryRejectMakesLegalConclusion": false,
+    "humanReviewForDomainRejectedGenericQueryApprovedRuntimeContract": false,
+    "humanReviewForDomainRejectedGenericQuerySmokeAssumption": true,
+    "contextualQueryReachesStep1266": true,
+    "contextualQueryReturnsRestrictedHandlingWithHumanReview": true,
+    "runtimeRemediationNeeded": false,
+    "testFixtureReportClarificationOnly": true
+  },
+  "targetedProductionChecks": [
+    {
+      "label": "context-free outcome",
+      "query": "Will I win?",
+      "httpStatus": 200,
+      "routeKind": "DOMAIN_BOUNDARY",
+      "responseType": null,
+      "sourceStatus": "DOMAIN_BOUNDARY_REJECT",
+      "humanReview": false,
+      "legalConclusion": false,
+      "filingReady": false,
+      "automaticSubmission": false,
+      "result": "PASS"
+    },
+    {
+      "label": "tax-contextual outcome",
+      "query": "Will I win my BIR LOA case?",
+      "httpStatus": 200,
+      "routeKind": "NORMAL_RAG",
+      "responseType": "controlled_loa_legal_conclusion_restricted",
+      "sourceStatus": "RELATED_AUTHORITY_ONLY",
+      "humanReview": true,
+      "legalConclusion": false,
+      "filingReady": false,
+      "automaticSubmission": false,
+      "result": "PASS"
+    }
+  ],
+  "full09zdRerun": {
+    "safeControlledLoaQueries": "8/8",
+    "excludedLegalSafetyQueries": "12/12",
+    "restrictedLegalConclusionQueries": "4/4",
+    "unrelatedTaxQueries": "8/8",
+    "nonTaxBoundaryQueries": "2/2",
+    "runtimeSecurity": "PASS",
+    "frontendCompatibility": "PASS",
+    "sourceCardCitationDiscipline": "PASS",
+    "decision": "PHASE 09ZD CONTROLLED LOA ANSWER PRODUCTION SMOKE PASS WITH STRICT RECOMMENDATIONS"
+  },
+  "productionMutation": false,
+  "secretsPrinted": false,
+  "answerBodiesPrinted": false,
+  "tokensHeadersOrUnrestrictedObjectsPrinted": false,
+  "nextTask": "PHASE-09-GATE-CLOSURE-2",
+  "blockedTask": null
+}

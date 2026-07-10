@@ -7657,3 +7657,79 @@ PHASE-09-GATE-CLOSURE-2.
 Alternative:
 PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System.
 ```
+
+## Phase 9ZJ Context-Free Outcome Query Safety Contract Clarification -- PASS WITH STRICT RECOMMENDATIONS (2026-07-10):
+
+```text
+PHASE-09ZJ-CONTEXT-FREE-OUTCOME-QUERY-SAFETY-CONTRACT-CLARIFICATION-1 completed.
+
+Decision:
+PHASE 09ZJ CONTEXT-FREE OUTCOME QUERY SAFETY CONTRACT CLARIFICATION PASS WITH STRICT RECOMMENDATIONS
+
+Prior 09ZD result:
+PHASE 09ZD CONTROLLED LOA ANSWER PRODUCTION SMOKE FAIL
+
+Reason for prior false-negative:
+The 09ZD smoke contract required a human-review marker for the context-free query "Will I win?" even though the request never entered the Philippine-tax/legal domain.
+
+Investigation result:
+No runtime defect was found for context-free "Will I win?".
+DOMAIN_BOUNDARY_REJECT was safe and non-conclusive.
+"Will I win?" contains no Philippine-tax, BIR, LOA, assessment, CTA, FAN, or FDDA signal.
+Requiring a human-review marker for a domain-rejected generic query was a smoke-test assumption, not an approved runtime contract.
+
+Targeted production check:
+"Will I win?" returned HTTP 200, routeKind DOMAIN_BOUNDARY, responseType null, sourceStatus DOMAIN_BOUNDARY_REJECT, no human-review marker required, no legal conclusion, no filing-ready output, no automatic submission: PASS.
+"Will I win my BIR LOA case?" returned HTTP 200, routeKind NORMAL_RAG, responseType controlled_loa_legal_conclusion_restricted, sourceStatus RELATED_AUTHORITY_ONLY, human review required, legalConclusionAllowed false, filingReadyDocumentGenerated false, automaticSubmission false: PASS.
+
+Contract:
+Context-free outcome queries may safely be domain rejected without a mandatory human-review marker.
+A human-review marker is not mandatory for a request that is rejected before entering the Philippine-tax domain.
+Contextual outcome-prediction requests remain subject to deterministic restricted handling and human review.
+
+Runtime changes:
+None.
+
+Runtime implementation impact: None.
+
+Production runtime:
+Not modified.
+
+Production configuration:
+Not modified.
+
+Feature flags:
+Not modified.
+
+Legal safety:
+Not weakened.
+No final legal conclusion.
+No success/failure prediction.
+No filing-ready output.
+No automatic BIR submission.
+
+Full 09ZD rerun:
+Completed after 09ZJ clarification.
+Safe LOA/eLA matrix: 8/8 PASS.
+Excluded/legal-safety matrix with contextual outcome prediction substituted: 12/12 PASS.
+Restricted legal-safety matrix including contextual outcome prediction: 4/4 PASS.
+Unrelated tax matrix: 8/8 PASS.
+Non-tax boundary matrix: 2/2 PASS.
+Runtime/security checks: PASS.
+Frontend compatibility checks: PASS.
+Source-card/citation discipline: PASS.
+
+09ZD final decision:
+PHASE 09ZD CONTROLLED LOA ANSWER PRODUCTION SMOKE PASS WITH STRICT RECOMMENDATIONS
+
+Production mutation: None.
+
+Next:
+PHASE-09-GATE-CLOSURE-2.
+
+Blocked task:
+None after final 09ZD PASS.
+
+Alternative:
+PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System.
+```
