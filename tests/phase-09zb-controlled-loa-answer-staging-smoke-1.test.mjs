@@ -212,32 +212,36 @@ await test("fixture exists, parses, and core fields match the phase contract", (
   check(fx.patch === EXPECTED_PATCH, "fixture patch id matches");
   check(fx.phase === "09ZB", "fixture phase equals 09ZB");
   check(fx.baseCommit === "23eb7dd", "fixture baseCommit equals 23eb7dd");
-  check(fx.decision === FAIL_DECISION, "fixture decision is final 09ZB FAIL");
-  check(fx.liveStagingSmokeStatus === "FAIL", "fixture live staging smoke status is FAIL");
+  check(fx.decision === BLOCKED_DECISION, "fixture decision is final 09ZB BLOCKED");
+  check(fx.liveStagingSmokeStatus === STAGING_BLOCKED_ACCESS, "fixture live staging smoke status is BLOCKED_PENDING_STAGING_ACCESS");
+  check(fx.blocker === STAGING_BLOCKED_ACCESS, "fixture blocker is BLOCKED_PENDING_STAGING_ACCESS");
   check(fx.jwtRefreshRerun === true, "fixture records JWT refresh rerun");
-  check(fx.jwtAccepted === true, "fixture records JWT accepted");
-  check(fx.stagingAccessStatus === "PASS", "fixture records staging access PASS");
-  check(fx.featureFlagVerified === true, "fixture records feature flag verified");
-  check(fx.deploymentVerified === true, "fixture records deployment verified");
+  check(fx.jwtAccepted === false, "fixture records JWT rejected");
+  check(fx.stagingAccessStatus === STAGING_BLOCKED_ACCESS, "fixture records staging access blocker");
+  check(fx.deploymentVerified === false, "fixture records deployment not verified");
   check(fx.rerunAfter09ZH === true, "fixture records post-09ZH rerun");
   check(fx["09zhCommit"] === "571ca05", "fixture records 09ZH commit");
   check(fx["09zhPrimaryRemediationCommit"] === "cd6280f", "fixture records 09ZH primary remediation commit");
-  check(fx.freshJwtAccepted === true, "fixture records fresh JWT accepted");
-  check(fx.controlledLoaFlagVerified === true, "fixture records controlled LOA flag verified");
-  check(fx.diagnosticFlagVerifiedDisabled === true, "fixture records 09ZG diagnostic flag disabled");
-  check(fx.safeQueryPassCount === 8, "fixture records eight passing safe queries");
+  check(fx.rerunAfter09ZI === true, "fixture records post-09ZI rerun");
+  check(fx["09ziCommit"] === "13fec28", "fixture records 09ZI commit");
+  check(fx.freshJwtAccepted === false, "fixture records fresh JWT not accepted");
+  check(fx.controlledLoaBehaviorVerified === false, "fixture records controlled LOA behavior not verified");
+  check(fx.diagnosticBehaviorDisabled === false, "fixture records diagnostic behavior not verified");
+  check(fx.safeQueryPassCount === 0, "fixture records zero post-09ZI safe passes because matrix did not run");
   check(fx.safeQueryFailCount === 0, "fixture records zero failing safe queries");
-  check(fx.previouslyFailingQueryPassCount === 4, "fixture records four previously failing queries now pass");
-  check(fx.excludedControlledBranchExclusionCount === 12, "fixture records all unsafe queries excluded from controlled branch");
-  check(fx.excludedLegalSafetyFailCount === 3, "fixture records three unsafe legal-safety failures");
-  check(fx.unrelatedTaxQueryPassCount === 8, "fixture records eight unrelated tax non-triggers");
-  check(fx.nonTaxBoundaryPreserved === true, "fixture records non-tax boundary preserved");
+  check(fx.previouslyFailingSafeQueryPassCount === 0, "fixture records zero post-09ZI previously failing passes because matrix did not run");
+  check(fx.excludedRoutingPassCount === 0, "fixture records zero post-09ZI excluded routing passes because matrix did not run");
+  check(fx.restrictedLegalWordingPassCount === 0, "fixture records zero restricted wording passes because matrix did not run");
+  check(fx.restrictedLegalWordingFailCount === 0, "fixture records zero restricted wording failures because matrix did not run");
+  check(fx.unrelatedTaxPassCount === 0, "fixture records zero unrelated tax passes because matrix did not run");
+  check(fx.nonTaxBoundaryPassCount === 0, "fixture records zero non-tax boundary passes because matrix did not run");
   check(JSON.stringify(fx.passingSafeQueries) === JSON.stringify(EXPECTED_SAFE_QUERIES), "fixture records exact passing safe queries");
   check(Array.isArray(fx.failingSafeQueries) && fx.failingSafeQueries.length === 0, "fixture records no failing safe queries");
-  check(fx.runtimeSecurityStatus === "PASS", "fixture records runtime/security PASS");
+  check(fx.runtimeSecurityStatus === "NOT_RUN_AFTER_ACCESS_BLOCKER", "fixture records runtime/security not run after access blocker");
   check(fx.productionBoundary === "Production unchanged.", "fixture records production unchanged");
   check(fx.blockedTask === EXPECTED_BLOCKED_TASK, "fixture records 09ZC blocked");
-  check(/^Resolve post-09ZH unsafe-query legal-safety wording and rerun PHASE-09ZB/.test(fx.nextTask), "fixture next task is post-09ZH legal-safety remediation rerun");
+  check(/^Refresh staging access and rerun PHASE-09ZB/.test(fx.nextTask), "fixture next task is staging access refresh rerun");
+  check(fx.productionSmokeTask === "PHASE-09ZD-CONTROLLED-LOA-ANSWER-PRODUCTION-SMOKE-1", "fixture records production smoke as separate task");
 });
 
 // 7-14. Prior artifacts and local scaffold/gate behavior.
@@ -275,21 +279,20 @@ await test("report exists and contains required impact/status statements", () =>
   check(existsSync(resolve(REPORT_PATH)), "report exists");
   const report = read(REPORT_PATH);
   for (const statement of [
-    "PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE FAIL",
-    "All 8 safe queries returned",
-    "Previously failing family now passed",
-    "legal-safety scan found finality/voidness/appealability wording",
-    "The non-tax boundary was preserved",
+    "PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE BLOCKED",
+    "Blocker: `BLOCKED_PENDING_STAGING_ACCESS`",
+    "authenticated staging deployment probe returned HTTP 401",
+    "The post-09ZI live smoke matrix was not executed",
     "09ZC remains blocked.",
     "Runtime impact: Live staging smoke only.",
     "Production impact: None.",
     "Ask-handler implementation impact: None in this rerun.",
     "Pipeline implementation impact: None in this rerun.",
     "Shared boundary helper impact: None in this rerun.",
-    "Feature flag impact: Existing staging controlled LOA flag only.",
-    "09ZG diagnostic flag impact: Disabled.",
+    "Feature flag impact: Existing staging controlled LOA flag only, not verified in this blocked rerun.",
+    "09ZG diagnostic impact: Not verified in this blocked rerun.",
     "External search impact: None.",
-    "Live retrieval impact: Existing normal staging behavior only.",
+    "Live retrieval impact: None in this blocked rerun.",
     "Filing-ready document impact: None.",
     "Automatic submission impact: None."
   ]) {
@@ -321,9 +324,9 @@ await test("static scan confirms allowed file scope and no new external-operatio
 await test("CURRENT_STATE contains 09ZB entry and next/rerun state", () => {
   const currentState = read(CURRENT_STATE_PATH);
   check(/PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1/.test(currentState), "CURRENT_STATE.md contains 09ZB staging smoke entry");
-  check(/PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE FAIL/.test(currentState), "CURRENT_STATE.md contains final 09ZB FAIL decision");
-  check(/post-09ZH live staging rerun completed/i.test(currentState), "CURRENT_STATE.md contains post-09ZH rerun entry");
-  check(/legal-safety wording/i.test(currentState), "CURRENT_STATE.md records legal-safety wording failure");
+  check(/PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE BLOCKED/.test(currentState), "CURRENT_STATE.md contains final 09ZB BLOCKED decision");
+  check(/post-09ZI staging rerun blocked/i.test(currentState), "CURRENT_STATE.md contains post-09ZI blocked rerun entry");
+  check(/BLOCKED_PENDING_STAGING_ACCESS/.test(currentState), "CURRENT_STATE.md records staging access blocker");
   check(/09ZC:\s*\nBlocked\./.test(currentState), "CURRENT_STATE.md states 09ZC blocked");
 });
 

@@ -6158,6 +6158,97 @@ Alternative:
 PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System.
 ```
 
+## Phase 9ZB Controlled LOA Answer Staging Smoke Rerun After 09ZI -- BLOCKED (2026-07-10):
+
+```text
+PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1 post-09ZI staging rerun blocked.
+
+Decision:
+PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE BLOCKED
+
+Blocker:
+BLOCKED_PENDING_STAGING_ACCESS
+
+09ZI prerequisite:
+13fec28 completed deterministic unsafe legal-wording remediation.
+
+Pre-check:
+Branch feature/source-availability-engine-v1 confirmed.
+Origin sync confirmed at 0 0.
+Required history confirmed through 13fec28.
+
+Environment safety:
+.env exists, is ignored, is not tracked, and was not staged.
+Required staging-smoke keys were present.
+Authorization header name was correct.
+Bearer value was present.
+Token was not printed, logged, or committed.
+
+Staging access:
+The sanitized authenticated deployment probe returned HTTP 401.
+The deployed staging commit could not be verified.
+Controlled LOA behavior could not be verified.
+09ZG diagnostic trace-marker behavior could not be verified.
+The live smoke matrix was not executed after the required access hard stop.
+
+Safe query result:
+Not run in this post-09ZI blocked rerun.
+
+Previously failing safe query result:
+Not run in this post-09ZI blocked rerun.
+
+Excluded routing result:
+Not run in this post-09ZI blocked rerun.
+
+Restricted legal-safety result:
+Not run in this post-09ZI blocked rerun.
+
+Unrelated tax result:
+Not run in this post-09ZI blocked rerun.
+
+Non-tax boundary:
+Not run in this post-09ZI blocked rerun.
+
+Runtime/security:
+Not run after the access hard stop.
+
+Runtime changes:
+None in this rerun.
+
+Pipeline/ask-handler/helper changes:
+None in this rerun.
+
+Route/server/auth:
+Unchanged.
+
+Diagnostic flag:
+Not verified in this blocked rerun.
+
+Persistence:
+None.
+
+Production:
+Unchanged.
+
+Legal safety:
+No new live legal-safety evidence collected in this blocked rerun.
+
+Source-card/citation discipline:
+No new live source-card evidence collected in this blocked rerun.
+
+09ZC:
+Blocked.
+
+Next:
+Refresh staging access and rerun PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1-RERUN-AFTER-09ZI.
+
+Production smoke:
+PHASE-09ZD-CONTROLLED-LOA-ANSWER-PRODUCTION-SMOKE-1 remains separate.
+
+Alternative:
+PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System.
+```
+
 ## Phase 9ZB Controlled LOA Answer Staging Smoke Rerun After 09ZH -- FAIL (2026-07-10):
 
 ```text
