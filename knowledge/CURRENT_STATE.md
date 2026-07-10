@@ -6158,6 +6158,93 @@ Alternative:
 PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System.
 ```
 
+## Phase 9ZB Controlled LOA Answer Staging Smoke Rerun After 09ZH -- FAIL (2026-07-10):
+
+```text
+PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1 post-09ZH live staging rerun completed.
+
+Decision:
+PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE FAIL
+
+09ZH prerequisite:
+571ca05 completed the live-path remediation.
+Primary remediation commit: cd6280f.
+
+Architecture:
+ask-handler.js and pipeline.js use the same shared narrow audit-procedure boundary rule.
+evaluateControlledLoaAskGate remains the final authority for controlled_loa_answer.
+
+Staging deployment:
+571ca050db67b55948489136700297c39abbcd20 verified on tina-backend-staging.
+
+Authentication:
+Fresh rotated staging JWT accepted.
+No token was printed, logged, or committed.
+
+Feature flags:
+TINA_ENABLE_CONTROLLED_LOA_ASK_GATE=true verified empirically.
+TINA_ENABLE_09ZG_LOA_PATH_DIAGNOSTIC=false verified by absence of 09ZG trace markers in live responses; debug identity did not expose the raw flag.
+
+Safe-query result:
+All 8 required LOA/eLA procedural-help queries returned controlled_loa_answer.
+
+Previously failing query result:
+replacement eLA, consolidated eLA, notice for presentation/submission, and reminder before subpoena now pass.
+
+Excluded-query result:
+All 12 unsafe/legal-conclusion queries remained excluded from controlled_loa_answer and did not return the controlled checklist.
+However, assessment-finality, FAN-voidness, and FDDA-appealability responses included legal-safety wording, so the 09ZB rerun fails.
+
+Unrelated-tax result:
+All 8 unrelated tax queries remained non-triggering.
+
+Non-tax boundary:
+Preserved. Chocolate-cake and Tokyo-weather queries returned DOMAIN_BOUNDARY_REJECT and did not trigger controlled_loa_answer.
+
+Runtime/security:
+PASS.
+
+Runtime changes:
+None in this rerun.
+
+Ask-handler/pipeline/shared-helper changes:
+None in this rerun.
+
+Route/server/auth implementation:
+Unchanged.
+
+Persistence:
+None.
+
+External operations:
+None added.
+
+Production:
+Unchanged.
+
+Legal safety:
+No filing-ready output.
+No automatic BIR submission.
+Human legal/tax review notice preserved.
+Unsafe-query legal-safety wording requires remediation before 09ZC.
+
+Source-card discipline:
+No verified citation claim.
+Controlled branch source-card policy preserved.
+
+09ZC:
+Blocked.
+
+Next:
+Resolve post-09ZH unsafe-query legal-safety wording and rerun PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1.
+
+Production smoke:
+Still separate and not part of this task.
+
+Alternative:
+PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System.
+```
+
 ## Phase 9ZB Controlled LOA Answer Staging Smoke Refreshed-JWT Rerun -- FAIL (2026-07-10):
 
 ```text

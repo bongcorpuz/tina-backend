@@ -56,13 +56,11 @@ const EXPECTED_FAIL_NEXT_TASK = "PHASE-09ZG-CONTROLLED-LOA-LIVE-PATH-INSTRUMENTA
 const EXPECTED_BLOCKED_TASK = "PHASE-09ZC-CONTROLLED-LOA-ANSWER-PRODUCTION-ACTIVATION-GATE-1";
 const STAGING_BLOCKED_ACCESS = "BLOCKED_PENDING_STAGING_ACCESS";
 const FETCH_TIMEOUT_MS = 20000;
-const EXPECTED_PASSING_SAFE_QUERIES = [
+const EXPECTED_SAFE_QUERIES = [
   "I received a BIR LOA, what should I do?",
   "I received a BIR eLA, what should I do?",
   "What should I do after receiving a Letter of Authority from BIR?",
-  "What documents should I prepare after receiving a BIR LOA?"
-];
-const EXPECTED_FAILING_SAFE_QUERIES = [
+  "What documents should I prepare after receiving a BIR LOA?",
   "I received a replacement eLA, what should I check first?",
   "I received a consolidated eLA, what should I do?",
   "I received a notice for presentation/submission of documents.",
@@ -221,14 +219,25 @@ await test("fixture exists, parses, and core fields match the phase contract", (
   check(fx.stagingAccessStatus === "PASS", "fixture records staging access PASS");
   check(fx.featureFlagVerified === true, "fixture records feature flag verified");
   check(fx.deploymentVerified === true, "fixture records deployment verified");
-  check(fx.safeQueryPassCount === 4, "fixture records four passing safe queries");
-  check(fx.safeQueryFailCount === 4, "fixture records four failing safe queries");
-  check(JSON.stringify(fx.passingSafeQueries) === JSON.stringify(EXPECTED_PASSING_SAFE_QUERIES), "fixture records exact passing safe queries");
-  check(JSON.stringify(fx.failingSafeQueries) === JSON.stringify(EXPECTED_FAILING_SAFE_QUERIES), "fixture records exact failing safe queries");
+  check(fx.rerunAfter09ZH === true, "fixture records post-09ZH rerun");
+  check(fx["09zhCommit"] === "571ca05", "fixture records 09ZH commit");
+  check(fx["09zhPrimaryRemediationCommit"] === "cd6280f", "fixture records 09ZH primary remediation commit");
+  check(fx.freshJwtAccepted === true, "fixture records fresh JWT accepted");
+  check(fx.controlledLoaFlagVerified === true, "fixture records controlled LOA flag verified");
+  check(fx.diagnosticFlagVerifiedDisabled === true, "fixture records 09ZG diagnostic flag disabled");
+  check(fx.safeQueryPassCount === 8, "fixture records eight passing safe queries");
+  check(fx.safeQueryFailCount === 0, "fixture records zero failing safe queries");
+  check(fx.previouslyFailingQueryPassCount === 4, "fixture records four previously failing queries now pass");
+  check(fx.excludedControlledBranchExclusionCount === 12, "fixture records all unsafe queries excluded from controlled branch");
+  check(fx.excludedLegalSafetyFailCount === 3, "fixture records three unsafe legal-safety failures");
+  check(fx.unrelatedTaxQueryPassCount === 8, "fixture records eight unrelated tax non-triggers");
+  check(fx.nonTaxBoundaryPreserved === true, "fixture records non-tax boundary preserved");
+  check(JSON.stringify(fx.passingSafeQueries) === JSON.stringify(EXPECTED_SAFE_QUERIES), "fixture records exact passing safe queries");
+  check(Array.isArray(fx.failingSafeQueries) && fx.failingSafeQueries.length === 0, "fixture records no failing safe queries");
   check(fx.runtimeSecurityStatus === "PASS", "fixture records runtime/security PASS");
   check(fx.productionBoundary === "Production unchanged.", "fixture records production unchanged");
   check(fx.blockedTask === EXPECTED_BLOCKED_TASK, "fixture records 09ZC blocked");
-  check(fx.nextTask === EXPECTED_FAIL_NEXT_TASK, "fixture next task is 09ZG");
+  check(/^Resolve post-09ZH unsafe-query legal-safety wording and rerun PHASE-09ZB/.test(fx.nextTask), "fixture next task is post-09ZH legal-safety remediation rerun");
 });
 
 // 7-14. Prior artifacts and local scaffold/gate behavior.
@@ -267,19 +276,20 @@ await test("report exists and contains required impact/status statements", () =>
   const report = read(REPORT_PATH);
   for (const statement of [
     "PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE FAIL",
-    "I received a replacement eLA, what should I check first?",
-    "I received a consolidated eLA, what should I do?",
-    "I received a notice for presentation/submission of documents.",
-    "I received a reminder before subpoena.",
+    "All 8 safe queries returned",
+    "Previously failing family now passed",
+    "legal-safety scan found finality/voidness/appealability wording",
+    "The non-tax boundary was preserved",
     "09ZC remains blocked.",
-    "Next task is PHASE-09ZG-CONTROLLED-LOA-LIVE-PATH-INSTRUMENTATION-DIAGNOSTIC-1.",
-    "Runtime impact: Staging smoke evidence only.",
+    "Runtime impact: Live staging smoke only.",
     "Production impact: None.",
-    "Ask-handler impact: None.",
-    "Pipeline implementation impact: None in this recovery task.",
-    "Feature flag impact: Existing staging flag verified.",
+    "Ask-handler implementation impact: None in this rerun.",
+    "Pipeline implementation impact: None in this rerun.",
+    "Shared boundary helper impact: None in this rerun.",
+    "Feature flag impact: Existing staging controlled LOA flag only.",
+    "09ZG diagnostic flag impact: Disabled.",
     "External search impact: None.",
-    "Live retrieval impact: None.",
+    "Live retrieval impact: Existing normal staging behavior only.",
     "Filing-ready document impact: None.",
     "Automatic submission impact: None."
   ]) {
@@ -312,7 +322,8 @@ await test("CURRENT_STATE contains 09ZB entry and next/rerun state", () => {
   const currentState = read(CURRENT_STATE_PATH);
   check(/PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1/.test(currentState), "CURRENT_STATE.md contains 09ZB staging smoke entry");
   check(/PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE FAIL/.test(currentState), "CURRENT_STATE.md contains final 09ZB FAIL decision");
-  check(/PHASE-09ZG-CONTROLLED-LOA-LIVE-PATH-INSTRUMENTATION-DIAGNOSTIC-1/.test(currentState), "CURRENT_STATE.md next task is 09ZG");
+  check(/post-09ZH live staging rerun completed/i.test(currentState), "CURRENT_STATE.md contains post-09ZH rerun entry");
+  check(/legal-safety wording/i.test(currentState), "CURRENT_STATE.md records legal-safety wording failure");
   check(/09ZC:\s*\nBlocked\./.test(currentState), "CURRENT_STATE.md states 09ZC blocked");
 });
 
