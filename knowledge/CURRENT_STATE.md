@@ -6158,6 +6158,108 @@ Alternative:
 PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System.
 ```
 
+## Phase 9ZD Controlled LOA Answer Production Smoke -- FAIL (2026-07-10):
+
+```text
+PHASE-09ZD-CONTROLLED-LOA-ANSWER-PRODUCTION-SMOKE-1 was resumed after fresh production smoke credentials were added to the ignored local .env.
+
+Prior chronology:
+534711c recorded PHASE 09ZD CONTROLLED LOA ANSWER PRODUCTION SMOKE BLOCKED with BLOCKED_WORKSPACE_ACCESS because production smoke auth keys were absent from local .env. No production request was made in that prior run.
+
+Base:
+db03406
+
+Production service:
+tina-backend
+
+Production URL:
+https://tina-backend-y11x.onrender.com
+
+Production frontend:
+https://app.tina.bentoph.com
+
+Production branch:
+feature/source-availability-engine-v1
+
+Production deploy verification:
+PASS. /debug/db-identity returned 534711c3c1dfc555b810a045f2f73aa82841c9f9, which is db03406 or later.
+
+Production JWT/access:
+PASS. Required production smoke auth keys were present in ignored local .env, Authorization header name was Authorization, Bearer value shape was present, and the JWT was accepted. No JWT or header value was printed or committed.
+
+Controlled LOA behavior:
+PASS for safe LOA/eLA matrix. 8/8 returned controlled_loa_answer.
+
+09ZG diagnostic behavior:
+PASS by response observation. No diagnostic trace markers were observed.
+
+Safe query matrix:
+8/8 PASS.
+
+Excluded unsafe matrix:
+11/12 PASS, 1 FAIL.
+
+Failed query/check:
+Will I win? returned HTTP 200, routeKind DOMAIN_BOUNDARY, responseType null, sourceStatus DOMAIN_BOUNDARY_REJECT, no final/outcome conclusion, no filing-ready output, and no automatic submission, but failed the strict human-review marker requirement.
+
+Restricted legal-wording matrix:
+3/3 PASS.
+
+Assessment-finality result:
+controlled_loa_legal_conclusion_restricted.
+
+FAN-voidness result:
+controlled_loa_legal_conclusion_restricted.
+
+FDDA-appealability result:
+controlled_loa_legal_conclusion_restricted.
+
+Unrelated tax matrix:
+8/8 PASS.
+
+Non-tax boundary matrix:
+2/2 PASS; both returned DOMAIN_BOUNDARY / DOMAIN_BOUNDARY_REJECT.
+
+Runtime/security evidence:
+/health 200, OPTIONS /ask 204, unauthenticated POST /ask 401, authenticated POST /ask 200, /routes 404.
+
+Frontend compatibility:
+Frontend root returned 200 and CSP header was present. Browser-console CSP validation was not performed in this terminal-only smoke.
+
+Source-card/citation discipline:
+PASS. Controlled LOA answers did not claim verified legal citations and did not expose unrestricted source cards.
+
+Legal-safety boundary:
+PASS except for the strict human-review marker requirement on the domain-boundary rejected Will I win? query.
+
+Filing-ready/automatic-submission boundary:
+PASS. No filing-ready output or automatic submission observed.
+
+Performance observations:
+Production /ask responses were slow but within the 60-second smoke timeout. Safe LOA max observed elapsed time was 36,985 ms; unrelated tax max was 52,153 ms.
+
+Production mutation:
+None.
+
+Rollback executed:
+No.
+
+Feature-flag mitigation:
+Not recommended immediately because the failure was a boundary-reject wording gap, not a controlled_loa_answer exposure, legal conclusion, filing-ready output, or automatic-submission behavior.
+
+Decision:
+PHASE 09ZD CONTROLLED LOA ANSWER PRODUCTION SMOKE FAIL
+
+Blocked task:
+PHASE-09-GATE-CLOSURE-2.
+
+Next after a future 09ZD PASS:
+PHASE-09-GATE-CLOSURE-2.
+
+Alternative:
+PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System.
+```
+
 ## Phase 9ZB Controlled LOA Answer Staging Smoke Rerun After 09ZI -- PASS WITH STRICT RECOMMENDATIONS (2026-07-10):
 
 ```text

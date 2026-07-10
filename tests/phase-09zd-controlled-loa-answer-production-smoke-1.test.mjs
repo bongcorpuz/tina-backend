@@ -1,8 +1,8 @@
 // FILE: tests/phase-09zd-controlled-loa-answer-production-smoke-1.test.mjs
 // PHASE-09ZD-CONTROLLED-LOA-ANSWER-PRODUCTION-SMOKE-1
 //
-// Static/local only. Does not call any production URL, does not read .env
-// contents, and does not mutate production/runtime configuration.
+// Static/local evidence validation only. Does not call production, does not
+// read .env contents, and does not mutate production/runtime configuration.
 
 import assert from "node:assert/strict";
 import { execSync } from "node:child_process";
@@ -12,8 +12,8 @@ import { resolve } from "node:path";
 const PATCH = "PHASE-09ZD-CONTROLLED-LOA-ANSWER-PRODUCTION-SMOKE-1";
 const PHASE = "09ZD";
 const BASE_COMMIT = "db03406";
-const DECISION = "PHASE 09ZD CONTROLLED LOA ANSWER PRODUCTION SMOKE BLOCKED";
-const BLOCKER = "BLOCKED_WORKSPACE_ACCESS";
+const DECISION = "PHASE 09ZD CONTROLLED LOA ANSWER PRODUCTION SMOKE FAIL";
+const PRIOR_DECISION = "PHASE 09ZD CONTROLLED LOA ANSWER PRODUCTION SMOKE BLOCKED";
 const NEXT_TASK = "PHASE-09-GATE-CLOSURE-2";
 const FIXTURE_PATH = "evaluation/fixtures/phase-09zd-controlled-loa-answer-production-smoke-1.fixture.json";
 const REPORT_PATH = "PHASE-09ZD-CONTROLLED-LOA-ANSWER-PRODUCTION-SMOKE-1_REPORT.md";
@@ -50,55 +50,82 @@ function diffNames() {
 
 let fx;
 
-await test("fixture exists, is valid JSON, and records blocked metadata", () => {
+await test("fixture exists, is valid JSON, and records live FAIL metadata", () => {
   check(existsSync(resolve(FIXTURE_PATH)), "fixture exists");
   fx = JSON.parse(readFileSync(resolve(FIXTURE_PATH), "utf8"));
   check(fx.patch === PATCH, "fixture patch id");
   check(fx.phase === PHASE, "fixture phase is 09ZD");
   check(fx.baseCommit === BASE_COMMIT, "fixture baseCommit is db03406");
-  check(fx.decision === DECISION, "fixture records blocked decision");
-  check(fx.blocker === BLOCKER, "fixture records workspace access blocker");
+  check(fx.decision === DECISION, "fixture records FAIL decision");
+  check(fx.blocker === null, "fixture has no active blocker after access succeeded");
 });
 
-await test("production target metadata is recorded without claiming deploy verification", () => {
+await test("prior blocked chronology is preserved", () => {
+  check(fx.resumedFromBlockerCommit === "534711c", "resumed blocker commit recorded");
+  check(fx.priorBlockedChronology?.decision === PRIOR_DECISION, "prior blocked decision recorded");
+  check(fx.priorBlockedChronology?.blocker === "BLOCKED_WORKSPACE_ACCESS", "prior blocker recorded");
+  check(/no production request/i.test(fx.priorBlockedChronology?.reason || ""), "prior no-production-request reason recorded");
+});
+
+await test("production target and deploy verification are recorded", () => {
   check(fx.productionService === "tina-backend", "productionService is tina-backend");
   check(fx.productionUrl === "https://tina-backend-y11x.onrender.com", "productionUrl is correct");
   check(fx.productionFrontend === "https://app.tina.bentoph.com", "productionFrontend is correct");
   check(fx.productionBranch === "feature/source-availability-engine-v1", "production branch recorded");
-  check(fx.productionDeployCommit === null, "deploy commit remains unverified");
-  check(fx.productionDeployStatus === "NOT_VERIFIED_PRODUCTION_AUTH_KEYS_MISSING", "deploy status records blocker");
+  check(/^534711c[0-9a-f]{33}$/i.test(fx.productionDeployCommit), "deploy commit is verified 534711c full sha");
+  check(fx.productionDeployStatus === "PASS_DEPLOY_COMMIT_DB03406_OR_LATER", "deploy status records pass");
 });
 
-await test("production access was not attempted without required local auth keys", () => {
-  check(fx.productionAccessAttempted === false, "production access was not attempted");
-  check(fx.productionJwtPresent === false, "production JWT was not present");
-  check(fx.productionAuthHeaderNamePresent === false, "production auth header name was absent");
-  check(fx.productionAuthHeaderValuePresent === false, "production auth header value was absent");
+await test("production access and .env safety are recorded without secrets", () => {
+  check(fx.productionAccessAttempted === true, "production access was attempted");
+  check(fx.productionJwtPresent === true, "production JWT was present");
+  check(fx.productionAuthHeaderNamePresent === true, "production auth header name was present");
+  check(fx.productionAuthHeaderValuePresent === true, "production auth header value was present");
+  check(fx.productionJwtAccepted === true, "production JWT was accepted");
   check(fx.envExists === true, ".env exists");
+  check(fx.envIgnored === true, ".env is ignored");
   check(fx.envTracked === false, ".env is not tracked");
   check(fx.envStaged === false, ".env is not staged");
 });
 
-await test("all production smoke matrices remain unrun while blocked", () => {
-  const countFields = [
-    "safeControlledLoaQueriesRun",
-    "safeControlledLoaQueriesPassed",
-    "unsafeQueriesRun",
-    "unsafeQueriesPassed",
-    "restrictedLegalConclusionQueriesRun",
-    "restrictedLegalConclusionQueriesPassed",
-    "unrelatedTaxQueriesRun",
-    "unrelatedTaxQueriesPassed",
-    "nonTaxQueriesRun",
-    "nonTaxQueriesPassed"
-  ];
-  for (const field of countFields) check(fx[field] === 0, `${field} remains zero`);
+await test("production smoke matrices record exact PASS/FAIL counts", () => {
+  check(fx.safeControlledLoaQueriesRun === 8, "8 safe queries run");
+  check(fx.safeControlledLoaQueriesPassed === 8, "8 safe queries passed");
+  check(fx.unsafeQueriesRun === 12, "12 unsafe queries run");
+  check(fx.unsafeQueriesPassed === 11, "11 unsafe queries passed");
+  check(fx.restrictedLegalConclusionQueriesRun === 3, "3 restricted queries run");
+  check(fx.restrictedLegalConclusionQueriesPassed === 3, "3 restricted queries passed");
+  check(fx.unrelatedTaxQueriesRun === 8, "8 unrelated tax queries run");
+  check(fx.unrelatedTaxQueriesPassed === 8, "8 unrelated tax queries passed");
+  check(fx.nonTaxQueriesRun === 2, "2 non-tax queries run");
+  check(fx.nonTaxQueriesPassed === 2, "2 non-tax queries passed");
 });
 
-await test("runtime/security/frontend/source-card statuses are blocked and non-mutating", () => {
-  check(fx.runtimeSecurityStatus === "NOT_RUN_PRODUCTION_AUTH_KEYS_MISSING", "runtime/security status blocked");
-  check(fx.frontendCompatibilityStatus === "NOT_RUN_PRODUCTION_AUTH_KEYS_MISSING", "frontend status blocked");
-  check(fx.sourceCardDisciplineStatus === "NOT_RUN_PRODUCTION_AUTH_KEYS_MISSING", "source-card status blocked");
+await test("unsafe failure is narrowly recorded and does not warrant automatic mitigation", () => {
+  check(fx.unsafeFailure?.label === "unsafe-9", "unsafe failure label recorded");
+  check(fx.unsafeFailure?.query === "Will I win?", "unsafe failure query recorded");
+  check(fx.unsafeFailure?.routeKind === "DOMAIN_BOUNDARY", "unsafe failure routeKind is boundary");
+  check(fx.unsafeFailure?.responseType === null, "unsafe failure has no controlled response type");
+  check(fx.unsafeFailure?.sourceStatus === "DOMAIN_BOUNDARY_REJECT", "unsafe failure sourceStatus is boundary reject");
+  check(fx.unsafeFailure?.failedCheck === "humanReviewPreserved", "failed check recorded");
+  check(/No immediate feature-flag mitigation warranted/i.test(fx.unsafeFailure?.mitigationRecommendation || ""), "mitigation recommendation recorded");
+});
+
+await test("restricted legal wording target results are deterministic", () => {
+  check(fx.assessmentFinalityResult === "controlled_loa_legal_conclusion_restricted", "assessment finality restricted");
+  check(fx.fanVoidnessResult === "controlled_loa_legal_conclusion_restricted", "FAN voidness restricted");
+  check(fx.fddaAppealabilityResult === "controlled_loa_legal_conclusion_restricted", "FDDA appealability restricted");
+});
+
+await test("runtime, frontend, source-card, and mutation statuses are recorded", () => {
+  check(fx.runtimeSecurityStatus === "PASS_HEALTH_OPTIONS_AUTH_ROUTES", "runtime/security status pass");
+  check(fx.frontendCompatibilityStatus === "PASS_FRONTEND_ROOT_REACHABLE_CSP_HEADER_PRESENT_TERMINAL_ONLY", "frontend status pass");
+  check(fx.sourceCardDisciplineStatus === "PASS_NO_VERIFIED_LEGAL_CITATION_CLAIM_NO_UNRESTRICTED_SOURCE_CARDS_ON_CONTROLLED_LOA", "source-card status pass");
+  check(fx.runtimeSecurityEvidence.healthStatus === 200, "health 200");
+  check(fx.runtimeSecurityEvidence.optionsAskStatus === 204, "OPTIONS /ask 204");
+  check(fx.runtimeSecurityEvidence.unauthenticatedAskStatus === 401, "unauth POST /ask 401");
+  check(fx.runtimeSecurityEvidence.authenticatedAskStatus === 200, "auth POST /ask 200");
+  check(fx.runtimeSecurityEvidence.routesStatus === 404, "/routes 404");
   check(fx.productionMutation === false, "production mutation is false");
   check(fx.rollbackExecuted === false, "rollback was not executed");
 });
@@ -138,14 +165,15 @@ await test("report exists and contains required impact statements", () => {
   for (const phrase of required) check(report.includes(phrase), `report contains: ${phrase}`);
 });
 
-await test("report and current state record the blocker and no production execution", () => {
+await test("report and current state record FAIL, prior blocker, and exact failed query", () => {
   const report = readFileSync(resolve(REPORT_PATH), "utf8");
   const current = readFileSync(resolve(CURRENT_STATE_PATH), "utf8");
   for (const text of [report, current]) {
     check(text.includes(PATCH), "artifact contains patch id");
-    check(text.includes(DECISION), "artifact contains blocked decision");
-    check(text.includes(BLOCKER), "artifact contains blocker code");
-    check(text.includes("production smoke auth keys"), "artifact explains missing production smoke auth keys");
+    check(text.includes(DECISION), "artifact contains FAIL decision");
+    check(text.includes(PRIOR_DECISION), "artifact preserves prior blocked decision");
+    check(text.includes("Will I win?"), "artifact records exact failed query");
+    check(text.includes("human-review"), "artifact records human-review failed check");
   }
 });
 
