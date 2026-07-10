@@ -7032,7 +7032,7 @@ notice for presentation/submission
 reminder before subpoena
 
 Excluded queries:
-Validity, voidness, ignore-LOA, assessment power, finality, CTA strategy, FAN/FDDA appealability, outcome prediction, protest drafting, automatic submission, and final legal-opinion requests remain excluded from safe controlled LOA answers.
+Validity, voidness, ignore-LOA, assessment power, finality, CTA strategy, FAN/FDDA appealability, outcome prediction, protest drafting, automatic submission, and final legal-opinion requests did not receive the controlled safe LOA answer.
 
 Unrelated queries:
 EWT, withholding, VAT, percentage tax, VAT-exempt, estate tax, professional-fee withholding, and frozen-seafood VAT queries remain outside the controlled LOA branch.

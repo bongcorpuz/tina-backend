@@ -50,7 +50,7 @@ All 8 required safe queries -- the 4 baseline (already passing) plus the 4 previ
 Replacement eLA, consolidated eLA, notice for presentation/submission, and reminder before subpoena are individually verified as boundary-eligible via `isControlledLoaAuditProcedureBoundaryCandidate()` and `detectPhilippineTaxBoundary()`.
 
 ## 15. Excluded-Query Preservation
-All 12 excluded/unsafe queries (invalidity, voidness, ignore-LOA, assessment power, finality, CTA strategy, FAN/FDDA appealability, outcome prediction, draft-protest, automatic submission, final legal opinion) are individually verified to still return `matched: false` and `earlyExitResponse: null` from `evaluateControlledLoaAskGate()` -- unchanged, because the overlay only affects boundary reachability, never the gate's own classification.
+Validity, voidness, ignore-LOA, assessment power, finality, CTA strategy, FAN/FDDA appealability, outcome prediction, draft-protest, automatic submission, and final-legal-opinion queries did not receive the controlled safe LOA answer. All 12 excluded/unsafe queries are individually verified to still return `matched: false` and `earlyExitResponse: null` from `evaluateControlledLoaAskGate()`; the overlay does not change the gate's own classification, only boundary reachability.
 
 ## 16. Unrelated-Query Preservation
 All 8 unrelated tax queries (EWT, lease withholding, percentage tax, VAT-exempt, estate tax, professional-fee withholding, computing percentage tax, frozen-seafood VAT) are individually verified to not match `isControlledLoaAuditProcedureBoundaryCandidate()` and to not trigger the controlled LOA branch.
