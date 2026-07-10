@@ -108,6 +108,11 @@ import {
   findAuthorityRestorationCandidate,
   inferRestorationAuthorityType
 }                                                 from "./authority-restoration-engine.js";
+import {
+  isControlledLoaLivePathDiagnosticEnabled,
+  createControlledLoaLivePathTrace,
+  queryFingerprint as diagnosticQueryFingerprint
+}                                                 from "./diagnostics/controlled-loa-live-path-trace.js";
 
 const PIPELINE_VERSION = "1.0.0";
 const ROUTE_BUDGET_MS = 90_000;
@@ -2248,6 +2253,24 @@ export async function runPipeline({
   const pipelineStartMs = Date.now();
   const timing         = createPipelineInstrumentation({ budgetMs: routeBudgetMs });
 
+  // PHASE-09ZG-CONTROLLED-LOA-LIVE-PATH-INSTRUMENTATION-DIAGNOSTIC-1
+  // Diagnostic-only, staging-gated request trace. Default disabled (no-op,
+  // zero behavior/timing/content impact). Enabled only via
+  // TINA_ENABLE_09ZG_LOA_PATH_DIAGNOSTIC to trace which branch a request
+  // actually takes through the controlled LOA / clarification gates. Each
+  // event is logged immediately (not buffered) so a mid-request timeout or
+  // exception still leaves a partial trace showing how far the request got.
+  const _09zgDiagnosticEnabled = isControlledLoaLivePathDiagnosticEnabled();
+  const _09zgTrace = createControlledLoaLivePathTrace({
+    enabled: _09zgDiagnosticEnabled,
+    correlationId: traceId
+  });
+  _09zgTrace.record("REQUEST_RECEIVED", () => ({
+    route: "pipeline.runPipeline",
+    hook,
+    queryFingerprint: diagnosticQueryFingerprint(query)
+  }));
+
   // PATCH-08X-CHAT-CONTEXT-CARRYOVER-PIPELINE-WIRING-1: flag-gated short-term
   // context carryover. OFF by default => effectiveQuery === query (no behavior
   // change). When enabled and a bounded follow-up rewrite applies, effectiveQuery
@@ -2260,6 +2283,12 @@ export async function runPipeline({
   });
   const effectiveQuery = _chatContextCarryover.effectiveQuery;
   ctx.chatContextCarryover = _chatContextCarryover.trace;
+  _09zgTrace.record("QUERY_NORMALIZED", () => ({
+    rawQueryFingerprint: diagnosticQueryFingerprint(query),
+    normalizedQueryFingerprint: diagnosticQueryFingerprint(effectiveQuery),
+    changed: effectiveQuery !== query,
+    chatContextCarryoverApplied: _chatContextCarryover.trace?.chatContextCarryoverApplied === true
+  }));
   const publishDiagnostics = (timeout = false) => {
     const diagnostics = timing.diagnostics(timeout);
     if (typeof instrumentationReceiver === "function") {
@@ -2299,7 +2328,28 @@ export async function runPipeline({
     // this boundary is byte-identical to prior behavior. The boundary still RUNS
     // and still decides ALLOW/REJECT — no bypass; non-tax/reset/jurisdiction-switch
     // follow-ups do not inherit (helper returns applied:false) and remain rejected.
+    _09zgTrace.record("FEATURE_FLAG_CHECKED", () => ({
+      controlledLoaAskGateEnabled: isControlledLoaAskGateEnabled(),
+      diagnosticEnabled: _09zgDiagnosticEnabled
+    }));
     const _pipelineBoundaryCheck = detectPhilippineTaxBoundary(effectiveQuery || "", hook || "/ask");
+    _09zgTrace.record("PH_TAX_BOUNDARY_EVALUATED", () => ({
+      decision: _pipelineBoundaryCheck.decision,
+      reason: _pipelineBoundaryCheck.reason,
+      detectedDomain: _pipelineBoundaryCheck.detectedDomain,
+      isPhilippineTax: _pipelineBoundaryCheck.isPhilippineTax
+    }));
+    // Read-only diagnostic re-check of the 09ZE audit-procedure overlay signal
+    // set. This does not call or alter detectPhilippineTaxBoundary()'s actual
+    // decision above -- it only reports, for observability, whether the
+    // overlay pattern list would independently match the same effective
+    // query, so a live trace can show whether the overlay ran/matched
+    // without changing the boundary decision itself.
+    _09zgTrace.record("AUDIT_PROCEDURE_OVERLAY_EVALUATED", () => ({
+      overlayEligibleRoute: (hook || "/ask") === "/ask",
+      overlayPatternMatch: (hook || "/ask") === "/ask" &&
+        CONTROLLED_LOA_AUDIT_PROCEDURE_BOUNDARY_PATTERNS.some((pattern) => pattern.test(String(effectiveQuery || "")))
+    }));
     console.log("[PIPELINE DOMAIN BOUNDARY CHECK]", {
       query:           (effectiveQuery || "").slice(0, 120),
       hook,
@@ -3833,8 +3883,22 @@ export async function runPipeline({
   // workflow/controlled-loa-answer-runtime-scaffold.js) and returns a
   // procedural-guidance-only answer. No live retrieval, no authority
   // verification claim, no filing-ready output, no automatic submission.
+  _09zgTrace.record("CONTROLLED_LOA_GATE_ENTERED", () => ({ entered: true }));
+  _09zgTrace.record("CONTROLLED_LOA_GATE_INPUT", () => ({
+    queryFingerprint: diagnosticQueryFingerprint(query),
+    hook
+  }));
   try {
     const controlledLoaAskGate = evaluateControlledLoaAskGate({ ctx, query, hook });
+    _09zgTrace.record("CONTROLLED_LOA_GATE_RESULT", () => ({
+      enabled: controlledLoaAskGate.enabled === true,
+      matched: controlledLoaAskGate.matched === true,
+      failOpen: controlledLoaAskGate.failOpen === true,
+      intent: controlledLoaAskGate.intentClassification?.intent || null,
+      responseMode: controlledLoaAskGate.intentClassification?.responseMode || null,
+      hasEarlyExit: Boolean(controlledLoaAskGate.earlyExitResponse),
+      responseType: controlledLoaAskGate.earlyExitResponse?.responseType || null
+    }));
     if (controlledLoaAskGate.enabled) {
       if (controlledLoaAskGate.failOpen) {
         trace.warnings.push({ step: "12.65", warning: controlledLoaAskGate.warning });
@@ -3852,6 +3916,19 @@ export async function runPipeline({
       });
     }
     if (controlledLoaAskGate.earlyExitResponse) {
+      _09zgTrace.record("CONTROLLED_LOA_EARLY_EXIT_BUILT", () => ({
+        built: true,
+        responseType: controlledLoaAskGate.earlyExitResponse.responseType,
+        legalCitationAllowed: controlledLoaAskGate.earlyExitResponse.controlledLoaAnswer?.legalCitationAllowed,
+        sourceCardVerification: controlledLoaAskGate.earlyExitResponse.controlledLoaAnswer?.sourceCardVerification,
+        filingReadyDocumentGenerated: controlledLoaAskGate.earlyExitResponse.controlledLoaAnswer?.filingReadyDocumentGenerated,
+        automaticSubmission: controlledLoaAskGate.earlyExitResponse.controlledLoaAnswer?.automaticSubmission
+      }));
+      _09zgTrace.record("FINAL_RESPONSE_SELECTED", () => ({
+        finalBranch: "controlledLoaGate",
+        finalResponseType: controlledLoaAskGate.earlyExitResponse.responseType
+      }));
+      _09zgTrace.record("REQUEST_COMPLETED", () => ({ finalStatus: "controlled_loa_early_exit" }));
       endTrace({
         traceId,
         metadata: {
@@ -3908,6 +3985,7 @@ export async function runPipeline({
   // Runs only if the Step 12.65 controlled LOA gate above did not already
   // early-exit. Runs after SAE state is available and before prompt
   // construction/model-completion generation.
+  _09zgTrace.record("SUBSEQUENT_BRANCH_ENTERED", () => ({ branch: "clarificationRouteGate" }));
   try {
     const clarificationGate = evaluateClarificationRouteGate({ ctx, query, hook });
     if (clarificationGate.enabled) {
@@ -3928,6 +4006,11 @@ export async function runPipeline({
       });
     }
     if (clarificationGate.earlyExitResponse) {
+      _09zgTrace.record("FINAL_RESPONSE_SELECTED", () => ({
+        finalBranch: "clarificationRouteGate",
+        finalResponseType: clarificationGate.earlyExitResponse.responseType || "clarification"
+      }));
+      _09zgTrace.record("REQUEST_COMPLETED", () => ({ finalStatus: "clarification_early_exit" }));
       endTrace({
         traceId,
         metadata: {
@@ -5528,6 +5611,13 @@ export async function runPipeline({
 
   timing.checkpoint("RESPONSE_COMPLETE", "response");
   const finalDiagnostics = publishDiagnostics(false);
+
+  _09zgTrace.record("SUBSEQUENT_BRANCH_ENTERED", () => ({ branch: "fullGenerationPipeline" }));
+  _09zgTrace.record("FINAL_RESPONSE_SELECTED", () => ({
+    finalBranch: "fullGenerationPipeline",
+    finalResponseType: ctx.responseType || null
+  }));
+  _09zgTrace.record("REQUEST_COMPLETED", () => ({ finalStatus: "full_generation_complete" }));
 
   return {
     answer:                           _outputAnswer,

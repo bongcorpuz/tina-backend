@@ -1,0 +1,70 @@
+{
+  "patch": "PHASE-09ZG-CONTROLLED-LOA-LIVE-PATH-INSTRUMENTATION-DIAGNOSTIC-1",
+  "phase": "09ZG",
+  "baseCommit": "b0031c2",
+  "priorOrderingRemediationCommit": "dd991cc",
+  "priorSmokeDecision": "PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE FAIL",
+  "objective": "Trace the actual live runtime path for the four failing controlled LOA audit-procedure queries.",
+  "diagnosticHypotheses": [
+    "live staging is executing a different pipeline path",
+    "another early exit executes before the instrumented section",
+    "controlled LOA gate receives a transformed or different query",
+    "normalized query differs from expected input",
+    "issue/domain classification mutates or replaces the query",
+    "runtime feature flag is read differently in the live path",
+    "evaluateControlledLoaAskGate returns a non-trigger result",
+    "a separate /ask handler bypasses the expected pipeline block",
+    "a fallback response is produced after a controlled result is generated",
+    "response normalization overwrites responseType",
+    "deployed staging commit differs from expected source state",
+    "branching or middleware behavior differs for audit-procedure terms",
+    "request never reaches Step 12.65 due to a timeout or exception in an earlier pipeline step (Steps 1-12.5 run before Step 12.65)"
+  ],
+  "passingBaselineQueries": [
+    "I received a BIR LOA, what should I do?",
+    "I received a BIR eLA, what should I do?"
+  ],
+  "failingQueries": [
+    "I received a replacement eLA, what should I check first?",
+    "I received a consolidated eLA, what should I do?",
+    "I received a notice for presentation/submission of documents.",
+    "I received a reminder before subpoena."
+  ],
+  "requiredTraceEvents": [
+    "REQUEST_RECEIVED",
+    "QUERY_NORMALIZED",
+    "FEATURE_FLAG_CHECKED",
+    "PH_TAX_BOUNDARY_EVALUATED",
+    "AUDIT_PROCEDURE_OVERLAY_EVALUATED",
+    "CONTROLLED_LOA_GATE_ENTERED",
+    "CONTROLLED_LOA_GATE_INPUT",
+    "CONTROLLED_LOA_GATE_RESULT",
+    "CONTROLLED_LOA_EARLY_EXIT_BUILT",
+    "SUBSEQUENT_BRANCH_ENTERED",
+    "FINAL_RESPONSE_SELECTED",
+    "REQUEST_COMPLETED"
+  ],
+  "diagnosticFlag": "TINA_ENABLE_09ZG_LOA_PATH_DIAGNOSTIC",
+  "diagnosticDefault": false,
+  "diagnosticModule": "diagnostics/controlled-loa-live-path-trace.js",
+  "diagnosticLogPrefix": "[TINA_09ZG_LOA_PATH]",
+  "instrumentationPlacement": [
+    "pipeline.js runPipeline(): REQUEST_RECEIVED and QUERY_NORMALIZED near the top, before the Philippine-tax domain boundary check",
+    "pipeline.js runPipeline(): FEATURE_FLAG_CHECKED, PH_TAX_BOUNDARY_EVALUATED, AUDIT_PROCEDURE_OVERLAY_EVALUATED inside the defense-in-depth boundary block",
+    "pipeline.js runPipeline(): CONTROLLED_LOA_GATE_ENTERED, CONTROLLED_LOA_GATE_INPUT, CONTROLLED_LOA_GATE_RESULT, CONTROLLED_LOA_EARLY_EXIT_BUILT at Step 12.65",
+    "pipeline.js runPipeline(): SUBSEQUENT_BRANCH_ENTERED at Step 12.6 entry (only reached if Step 12.65 did not early-exit)",
+    "pipeline.js runPipeline(): FINAL_RESPONSE_SELECTED and REQUEST_COMPLETED at each of the three possible exit points -- the Step 12.65 early exit, the Step 12.6 early exit, and the final full-generation return at the end of runPipeline()"
+  ],
+  "productionBoundary": "Production unchanged and diagnostic flag disabled.",
+  "persistenceBoundary": "No persistence or database writes. Trace events exist only in request-local memory and console.log output.",
+  "secretBoundary": "No JWT, Authorization header, password, token, or environment secret logging. The trace collector sanitizes any field key matching authorization/jwt/token/password/secret/cookie/headers/reqbody/envvars before logging.",
+  "legalSafetyBoundary": "No final legal conclusion, filing-ready output, automatic submission, or verified citation claim. No change to evaluateControlledLoaAskGate or evaluateClarificationRouteGate classification logic.",
+  "decision": "Leave as diagnostic pending until live trace evidence is captured.",
+  "liveTraceEvidence": null,
+  "firstDivergence": null,
+  "rootCauseFinding": null,
+  "confidenceLevel": null,
+  "nextTaskIfRootCauseFound": "PHASE-09ZH-CONTROLLED-LOA-LIVE-PATH-REMEDIATION-1",
+  "blockedTask": "PHASE-09ZC-CONTROLLED-LOA-ANSWER-PRODUCTION-ACTIVATION-GATE-1",
+  "alternativeNextPhase": "PHASE 10 — Evaluation / Fact-Check / Legal-Tax QA System"
+}

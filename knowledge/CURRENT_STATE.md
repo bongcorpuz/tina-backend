@@ -6930,3 +6930,60 @@ PHASE-09ZC-CONTROLLED-LOA-ANSWER-PRODUCTION-ACTIVATION-GATE-1 remains blocked un
 Alternative:
 PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System.
 ```
+
+## Phase 9ZG Controlled LOA Live Path Instrumentation Diagnostic -- INSTRUMENTATION BUILT, LIVE EVIDENCE PENDING (2026-07-10):
+
+```text
+PHASE-09ZG-CONTROLLED-LOA-LIVE-PATH-INSTRUMENTATION-DIAGNOSTIC-1 active.
+
+Base:
+b0031c2
+
+Prior decision:
+PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE FAIL
+
+Purpose:
+Instrument and compare the actual live /ask runtime path for one passing controlled LOA query and the four failing audit-procedure queries. Diagnostic only -- no routing remediation implemented in this phase.
+
+Diagnostic flag:
+TINA_ENABLE_09ZG_LOA_PATH_DIAGNOSTIC
+Default false.
+Staging only.
+Production unchanged.
+
+Trace fields:
+request received, query normalization, feature flag, Philippine-tax boundary, audit-procedure overlay, controlled LOA gate entry/input/result, early-exit construction, downstream branch, final response selection.
+
+Live evidence:
+Not yet captured. Instrumentation built and locally validated (no-op when disabled, verified secret-safe field sanitization); live staging deploy and diagnostic run pending explicit approval.
+
+First divergence:
+Not yet determined.
+
+Root cause:
+Not yet proven. Static investigation narrowed the candidate list (single live /ask route; query is not transformed for /ask; controlled LOA and clarification gates read the raw query, not the chat-context-carryover effective query; Step 12.65 sits deep in runPipeline after Steps 1-12.5, so a timeout/exception earlier in the pipeline remains an open, unconfirmed hypothesis alongside the others in the fixture's diagnosticHypotheses list).
+
+Runtime changes:
+Diagnostic instrumentation only.
+
+Answer/classification behavior:
+Unchanged.
+
+Auth:
+Unchanged.
+
+Persistence:
+None.
+
+External operations:
+None.
+
+Production:
+Unchanged.
+
+09ZC:
+Blocked.
+
+Next:
+PHASE-09ZH-CONTROLLED-LOA-LIVE-PATH-REMEDIATION-1, only if root cause is identified via live trace evidence. Not implemented in this task.
+```
