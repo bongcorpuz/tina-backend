@@ -7169,3 +7169,87 @@ PHASE-09ZC-CONTROLLED-LOA-ANSWER-PRODUCTION-ACTIVATION-GATE-1.
 Alternative:
 PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System.
 ```
+
+## Phase 9ZI Controlled LOA Unsafe Legal Wording Remediation -- PASS WITH STRICT RECOMMENDATIONS (2026-07-10):
+
+```text
+PHASE-09ZI-CONTROLLED-LOA-UNSAFE-LEGAL-WORDING-REMEDIATION-1 completed.
+
+Decision:
+PHASE 09ZI CONTROLLED LOA UNSAFE LEGAL WORDING REMEDIATION PASS WITH STRICT RECOMMENDATIONS
+
+Base:
+9d19542
+
+Prior live result:
+The post-09ZH 09ZB staging smoke confirmed all eight safe queries passed, including the four previously rejected audit-procedure queries. All twelve unsafe queries remained outside controlled_loa_answer. The smoke failed because assessment-finality, FAN-voidness, and FDDA-appealability responses used legally unsafe or overly conclusive wording.
+
+Proven response path:
+routes/ask-route.js -> ask-handler.js upstream boundary (base detector ALLOWs; no rejection) -> handleControlledRagRoute() -> pipeline.js: runPipeline() -> Steps 1-11 retrieval finds real authority (sourceStatus: AUTHORITY_FOUND) -> Step 12.65 evaluateControlledLoaAskGate() correctly classifies the query as excluded (ASSESSMENT_FINALITY_REQUEST / FAN_VOIDNESS_REQUEST / FDDA_APPEALABILITY_CONCLUSION_REQUEST) -> falls through to normal full OpenAI generation grounded in the retrieved authority, which answers the direct legal question conclusively.
+
+Proven wording source:
+Model-generated text in the normal full-generation path, composed from genuinely retrieved NIRC/RR/CTA-related authority, with no deterministic guard intercepting an already-excluded intent before generation.
+
+Remediation:
+Added a new deterministic Step 12.66 in pipeline.js (evaluateControlledLoaLegalConclusionSafetyGate), which reuses the intentClassification Step 12.65 already computed. If the query was already excluded, it returns a deterministic neutral procedural-limitation response (responseType: controlled_loa_legal_conclusion_restricted, never controlled_loa_answer) via the new pure module services/controlled-loa-legal-conclusion-safety.js, instead of letting the query reach full generation. Gated by the existing TINA_ENABLE_CONTROLLED_LOA_ASK_GATE flag; no new flag. ask-handler.js, services/controlled-loa-audit-procedure-boundary.js, evaluateControlledLoaAskGate's own classification, and workflow/controlled-loa-answer-runtime-scaffold.js are unchanged.
+
+Legal-safety result:
+Restricted legal-conclusion queries now receive neutral procedural-limitation wording.
+No finality determination.
+No validity or voidness determination.
+No appealability determination.
+No enforceability determination.
+No guaranteed outcome.
+No final legal opinion.
+
+Routing:
+Unchanged.
+
+09ZH shared boundary:
+Unchanged.
+
+Safe queries:
+All eight remain covered.
+
+Excluded queries:
+All twelve remain outside controlled_loa_answer.
+
+Unrelated queries:
+Unchanged.
+
+Non-tax boundary:
+Unchanged.
+
+Source cards:
+Unchanged.
+
+Filing-ready output:
+None.
+
+Automatic submission:
+None.
+
+Route/server/auth:
+Unchanged.
+
+Diagnostic flag:
+TINA_ENABLE_09ZG_LOA_PATH_DIAGNOSTIC remains false.
+
+Persistence:
+None.
+
+External operations:
+None added.
+
+Production:
+Unchanged.
+
+Next:
+PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1-RERUN-AFTER-09ZI.
+
+Blocked:
+PHASE-09ZC-CONTROLLED-LOA-ANSWER-PRODUCTION-ACTIVATION-GATE-1.
+
+Alternative:
+PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System.
+```

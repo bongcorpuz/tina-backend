@@ -117,6 +117,10 @@ import {
   isControlledLoaAuditProcedureBoundaryCandidate,
   applyControlledLoaAuditProcedureBoundaryOverlay
 }                                                 from "./services/controlled-loa-audit-procedure-boundary.js";
+import {
+  isControlledLoaLegalConclusionRestrictedIntent,
+  buildControlledLoaLegalConclusionLimitationResponse
+}                                                 from "./services/controlled-loa-legal-conclusion-safety.js";
 
 const PIPELINE_VERSION = "1.0.0";
 const ROUTE_BUDGET_MS = 90_000;
@@ -787,6 +791,59 @@ export function evaluateControlledLoaAskGate({
     intentClassification,
     earlyExitResponse: buildControlledLoaAskEarlyExitResponse(ctx, scaffoldResult)
   };
+}
+
+// PHASE-09ZI-CONTROLLED-LOA-UNSAFE-LEGAL-WORDING-REMEDIATION-1
+// Runs only after Step 12.65 (evaluateControlledLoaAskGate) did not already
+// match. Reuses the intentClassification Step 12.65 already computed -- no
+// requery, no new keyword list. When the existing classifier already
+// excluded the query (validity, invalidity, voidness, finality,
+// appealability, enforceability, CTA strategy, outcome prediction,
+// filing-ready, automatic-submission, or legal-opinion requests), returns a
+// deterministic neutral procedural-limitation response instead of letting
+// the query fall through to full generation, where a model answer grounded
+// in real retrieved authority could otherwise read as a legal conclusion.
+// The controlled-LOA-answer responseType is never used here; this gate
+// never determines validity, voidness, finality, or appealability, and
+// never generates a filing-ready document or automatic submission. Gated
+// by the same existing TINA_ENABLE_CONTROLLED_LOA_ASK_GATE flag -- no new
+// feature flag.
+export function evaluateControlledLoaLegalConclusionSafetyGate({
+  ctx = {},
+  query = "",
+  hook = "/ask",
+  env = process.env,
+  intentClassification = null,
+  resultBuilder = createControlledLoaAnswerRuntimeScaffoldResult
+} = {}) {
+  if (!isControlledLoaAskGateEnabled(env)) {
+    return { enabled: false, matched: false, intentClassification, earlyExitResponse: null };
+  }
+  if (hook !== "/ask" && hook) {
+    return { enabled: true, matched: false, intentClassification, earlyExitResponse: null };
+  }
+  if (!isControlledLoaLegalConclusionRestrictedIntent(intentClassification)) {
+    return { enabled: true, matched: false, intentClassification, earlyExitResponse: null };
+  }
+
+  try {
+    const scaffoldResult = resultBuilder({ userQuery: query });
+    return {
+      enabled: true,
+      matched: true,
+      intentClassification,
+      earlyExitResponse: buildControlledLoaLegalConclusionLimitationResponse(ctx, intentClassification, scaffoldResult)
+    };
+  } catch (e) {
+    return {
+      enabled: true,
+      matched: false,
+      intentClassification,
+      failOpen: true,
+      warning: `controlledLoaLegalConclusionSafetyGate fail-open: ${e?.message || e}`,
+      earlyExitResponse: null
+    };
+  }
 }
 
 function buildOpenAiFailureRetrievalAnswer(ctx = {}, query = "") {
@@ -3857,8 +3914,11 @@ export async function runPipeline({
     queryFingerprint: diagnosticQueryFingerprint(query),
     hook
   }));
+  // Hoisted (PHASE-09ZI) so Step 12.66 below can reuse the intentClassification
+  // this gate already computed, without a second classification pass.
+  let controlledLoaAskGate = null;
   try {
-    const controlledLoaAskGate = evaluateControlledLoaAskGate({ ctx, query, hook });
+    controlledLoaAskGate = evaluateControlledLoaAskGate({ ctx, query, hook });
     _09zgTrace.record("CONTROLLED_LOA_GATE_RESULT", () => ({
       enabled: controlledLoaAskGate.enabled === true,
       matched: controlledLoaAskGate.matched === true,
@@ -3946,6 +4006,92 @@ export async function runPipeline({
     const warning = `controlledLoaAskGate fail-open: ${e?.message || e}`;
     trace.warnings.push({ step: "12.65", warning });
     console.warn("[CONTROLLED_LOA_ASK_GATE_FAIL_OPEN]", {
+      message: e?.message || String(e)
+    });
+  }
+
+  // ── Step 12.66: Controlled LOA/eLA legal-conclusion safety gate ──────────
+  // (flagged, PHASE-09ZI). Runs only if Step 12.65 above did not already
+  // early-exit. Reuses the intentClassification Step 12.65 already computed.
+  // If that classification excluded the query (validity, invalidity,
+  // voidness, finality, appealability, CTA strategy, outcome prediction,
+  // filing-ready, automatic-submission, or legal-opinion requests), returns
+  // a deterministic neutral procedural-limitation response instead of
+  // falling through to full generation. The controlled-LOA-answer
+  // responseType is never used here; this gate never determines validity,
+  // voidness, finality, or appealability.
+  try {
+    const legalConclusionGate = evaluateControlledLoaLegalConclusionSafetyGate({
+      ctx,
+      query,
+      hook,
+      intentClassification: controlledLoaAskGate?.intentClassification || null
+    });
+    if (legalConclusionGate.enabled) {
+      if (legalConclusionGate.failOpen) {
+        trace.warnings.push({ step: "12.66", warning: legalConclusionGate.warning });
+        console.warn("[CONTROLLED_LOA_LEGAL_CONCLUSION_SAFETY_GATE_FAIL_OPEN]", {
+          message: legalConclusionGate.warning
+        });
+      }
+      trace.steps.push({
+        step: "12.66",
+        name: "controlledLoaLegalConclusionSafetyGate",
+        done: true,
+        matched: legalConclusionGate.matched === true,
+        intent: legalConclusionGate.intentClassification?.intent || null,
+        earlyExit: Boolean(legalConclusionGate.earlyExitResponse)
+      });
+    }
+    if (legalConclusionGate.earlyExitResponse) {
+      endTrace({
+        traceId,
+        metadata: {
+          mode: ctx.mode,
+          primaryIssue: ctx.issueClassification?.primaryIssue || null,
+          sourceCount: ctx.rerankedChunks?.length || 0,
+          warnings: trace.warnings.length,
+          pipelineLatencyMs: Date.now() - pipelineStartMs,
+          controlledLoaLegalConclusionSafetyGateEarlyExit: true
+        }
+      });
+      await Promise.race([
+        flushObservability(),
+        new Promise(resolve => setTimeout(resolve, 2000))
+      ]);
+      markPipelineCheckpoint(diagnostics, "RESPONSE_COMPLETE", {
+        timingField: "responseCompletedAt",
+        mode: ctx.mode,
+        route: hook,
+        model,
+        sourceAvailabilityStatus: ctx.saeStatus,
+        retrievedCount: ctx.rerankedChunks?.length || 0,
+        displayedSourceCardCount: legalConclusionGate.earlyExitResponse.sourceCards?.length || 0
+      });
+      finalizePipelineDiagnostics(diagnostics);
+      timing.checkpoint("RESPONSE_COMPLETE", "response");
+      const finalDiagnostics = publishDiagnostics(false);
+      return {
+        ...legalConclusionGate.earlyExitResponse,
+        diagnostics: finalDiagnostics,
+        pipelineTimings: diagnostics.pipelineTimings,
+        pipelineStageDurations: diagnostics.pipelineStageDurations,
+        partialPipelineState: diagnostics.partialPipelineState,
+        openaiCalls: diagnostics.openaiCalls,
+        trace: {
+          ...trace,
+          steps: [
+            ...trace.steps,
+            { step: "12.66", name: "controlledLoaLegalConclusionSafetyGateEarlyExit", done: true }
+          ]
+        },
+        traceId
+      };
+    }
+  } catch (e) {
+    const warning = `controlledLoaLegalConclusionSafetyGate fail-open: ${e?.message || e}`;
+    trace.warnings.push({ step: "12.66", warning });
+    console.warn("[CONTROLLED_LOA_LEGAL_CONCLUSION_SAFETY_GATE_FAIL_OPEN]", {
       message: e?.message || String(e)
     });
   }
