@@ -7875,4 +7875,86 @@ Next:
 Independent Codex review of this assessment. Then scope and separately approve PHASE-10A1 through PHASE-10A5 as tracked remediation tasks.
 
 Do not mark Phase 10A complete before independent review and any approved remediation are finished.
+
+## Phase 10A1 Canonical Trust Contract and API Forwarding Remediation -- PASS WITH STRICT RECOMMENDATIONS (2026-07-11):
+
+```text
+PHASE-10A1-CANONICAL-TRUST-CONTRACT-AND-API-FORWARDING-REMEDIATION-1 implemented, local-tested, and staging-validated.
+Independent Codex review is required before Phase 10A may be considered closed. NOT closed by this entry.
+
+Phase 9 status:
+Remains COMPLETE. Not reopened. No regression proven or claimed against Phase 9 runtime.
+
+Phase 10 status:
+Active. Phase 10A remains VALIDATION REMEDIATION REQUIRED as recorded by the prior entry; this task closes the highest-priority remediation item (P1-3: controlledLoaAnswer/requiresHumanReview/filingReadyDocumentGenerated/automaticSubmission never reaching the API response) via an additive canonical contract, not by touching conflict-engine, timeout, or gate-ordering logic.
+
+Decision:
+PHASE 10A1 REMEDIATION PASS WITH STRICT RECOMMENDATIONS
+
+What was implemented:
+services/trust-contract.js -- a new, pure, deterministic, side-effect-free helper (buildTrustContract) that derives one canonical `trust` object from the existing pipeline/response result object. It performs no retrieval, no model calls, no I/O, and does not mutate its input. It introduces no new authority/conflict/legal-safety decisions; it only summarizes already-computed runtime signals (sourceStatus/sourceAvailability/saeStatus, result.conflict/conflictAnalysis.hasConflict, result.controlledLoaAnswer, result.responseType, result.domainBoundary, result.internalError) into the categorical shape:
+{ version, authoritySupport, sourceState, legalConclusion, humanReviewRequired, filingReadyDocumentGenerated, automaticSubmission, hasConflict, limitations[], responseKind }
+All values are categorical strings/booleans/arrays; no numeric confidence is used anywhere. A final defensive enforceInvariants() pass re-asserts all 8 required invariants regardless of how the candidate values were derived, so a future change to the derivation logic cannot silently violate a safety invariant.
+
+Known, explicitly documented limitation: the runtime currently exposes no field distinguishing "verified controlling" from "verified supporting" authority within the AUTHORITY_FOUND state (AUTHORITY_FOUND is itself only reachable via governing-authority source cards surviving the SAE eligibility filter, so it is mapped to VERIFIED_CONTROLLING). VERIFIED_SUPPORTING is defined in the enum but is not currently reachable; this was a deliberate choice to avoid inventing an unbacked heuristic distinction, per this task's explicit prohibition on inventing semantics.
+
+API forwarding (ask-handler.js, additive only, both existing response-construction locations retained verbatim otherwise):
+1. Main payload object inside handleControlledRagRoute (~line 2232): added `trust: buildTrustContract({...result, displayedSourceCount: <the same resolved value already used for the payload's own displayedSourceCount field>, sourceStatus: <the same resolved value already used for the payload's own sourceStatus field>})` so the trust object is internally consistent with the rest of the same payload (Invariant 8), rather than reading raw/possibly-undefined fields off `result` directly.
+2. Philippine Tax Domain Boundary early-return response (~line 3029): added `trust: buildTrustContract({ domainBoundary: true, sourceStatus: _boundaryStatus })`.
+No other ask-handler.js code path constructs or returns a response object (verified by exhaustive grep for controlledLoaAnswer/controlled_loa_answer/controlled_loa_legal_conclusion_restricted/buildControlledLoaAskEarlyExitResponse/buildControlledLoaLegalConclusionLimitationResponse -- zero matches outside the one already-patched payload object), so these two insertion points are exhaustive for all 15 required material response paths.
+
+Backward compatibility:
+All previously existing top-level fields (responseType, sourceStatus, sourceAvailability, saeStatus, sourceCards and all source-card fields, domainBoundary and all domain-boundary fields, answer fields) are unchanged and verified present by both static source inspection and live staging responses. `trust` is a new, additive top-level field only. Per this task's explicit preference, requiresHumanReview/filingReadyDocumentGenerated/automaticSubmission are forwarded INSIDE the new `trust` object (as humanReviewRequired/filingReadyDocumentGenerated/automaticSubmission) rather than as new duplicate top-level fields, since no compatibility requirement forces separate top-level exposure.
+
+Files created:
+- services/trust-contract.js
+- evaluation/fixtures/phase-10a1-canonical-trust-contract-and-api-forwarding-remediation-1.fixture.json (15 material response paths + invariant edge cases, each an exact input/expected pair)
+- tests/phase-10a1-canonical-trust-contract-and-api-forwarding-remediation-1.test.mjs
+
+Files modified:
+- ask-handler.js (two additive insertion points only, as described above; one new import line)
+
+Local test result:
+tests/phase-10a1-canonical-trust-contract-and-api-forwarding-remediation-1.test.mjs: 18/18 test blocks pass, real execution of buildTrustContract() against all 15 material response paths plus invariant edge cases (not string scans), including a no-mutation check, an unsafe-source-state check, a conflict-vs-source-count-independence check, and a static (grep-based) verification that ask-handler.js actually imports and calls buildTrustContract at both response-construction locations with the previously-existing fields still present alongside it.
+
+Corroborating regression result:
+patch-024c-verified-authority-gate (133/133), patch-06f-005 (10/10), patch-07a-003 (18/18), patch-07a-008 (23/23), phase-10a-trust-limitation-authority-confidence-release-gate-1 (17/18 -- the 1 failure is that task's own "no runtime file changed" self-check, which now fails purely because ask-handler.js was legitimately, additively modified again by this task; no functional assertion in that suite failed), phase-09z (24/25, same class of self-referential diff-scope failure), phase-09zh (20/20), phase-09zi (20/22, same class, 2 self-referential diff-scope failures), phase-09-gate-closure-2 (10/11, same class), patch-025a-rev3-ask-handler-mapper (16/16). No functional/behavioral regression was found in any suite; only each earlier phase's own "ask-handler.js must remain byte-identical to that phase's historical checkpoint" assertion breaks, which is expected and is the same class of test debt as the previously-classified 09ZF self-referential diff-scope failure.
+
+Staging validation result (tina-backend-staging only, never production; commit c32feac):
+All 7 required query categories returned HTTP 200 with a present, internally-consistent `trust` object after the Render redeploy fully rolled out (an initial partial-rollout artifact where 2/7 queries briefly lacked `trust` was reproduced and resolved by retesting after full rollout, not a code defect):
+1. Controlled LOA procedural ("How do I prepare a Letter of Authority for a BIR audit?") -> responseType controlled_loa_answer, trust.responseKind CONTROLLED_PROCEDURAL, humanReviewRequired true, filingReadyDocumentGenerated/automaticSubmission false, authoritySupport/sourceState/legalConclusion NOT_APPLICABLE.
+2. Restricted legal-conclusion ("Is my Letter of Authority void because it was not served within 30 days?", the deterministic path, NOT the known route-timeout query) -> responseType controlled_loa_legal_conclusion_restricted, trust.legalConclusion RESTRICTED, humanReviewRequired true, filingReadyDocumentGenerated/automaticSubmission false.
+3. Verified statutory authority ("What is the VAT rate under the NIRC as amended by the TRAIN law?") -> sourceStatus AUTHORITY_FOUND, trust.hasConflict true / authoritySupport CONFLICTING_AUTHORITY (faithfully forwarded from the pipeline's own internal, pre-existing conflict determination -- ask-handler.js's public payload never separately exposed a top-level `conflict` field before this task, so this is a previously-invisible signal now surfaced; conflict-engine.js itself was not touched or re-evaluated).
+4. Related authority only ("Is there jurisprudence on withholding tax and lease payments?") -> sourceStatus RELATED_AUTHORITY_ONLY, trust.authoritySupport RELATED_AUTHORITY_ONLY, limitations ["RELATED_AUTHORITY_ONLY"].
+5. General tax ("What is the difference between input VAT and output VAT?") -> sourceStatus AUTHORITY_FOUND, trust.hasConflict true / authoritySupport CONFLICTING_AUTHORITY (same previously-invisible internal-conflict-signal observation as #3).
+6. Non-tax domain boundary ("What is the capital of France?") -> domainBoundary true, trust.responseKind DOMAIN_BOUNDARY, authoritySupport/sourceState/legalConclusion NOT_APPLICABLE, hasConflict false, limitations [].
+7. Safe fallback / no indexed authority ("Is this taxable?") -> sourceStatus NO_INDEXED_SOURCE, trust.responseKind FALLBACK, authoritySupport NO_VERIFIED_AUTHORITY, limitations ["NO_INDEXED_SOURCE"].
+All 7 trust objects were consistent with their respective answer text, sourceStatus, and responseType. No secret, JWT, or credential value was printed or recorded.
+
+Known unresolved observation (not remediated in this task, out of scope):
+Queries #3 and #5 above show the pipeline's internal conflict-analysis flagging hasConflict:true for what read as straightforward, non-conflicting statutory questions (VAT rate; input vs. output VAT). This may reflect a genuine doctrinal conflict the Four-Part Doctrine Test found among retrieved sources, or it may indicate conflict-engine.js is over-flagging on these query shapes. This task does not investigate or change conflict-engine.js (explicitly prohibited); it only forwards the existing determination faithfully. Recommended as a follow-up investigation, separate from PHASE-10A1 and PHASE-10A2.
+
+Runtime remediation NOT implemented in this task:
+No change to pipeline.js, answer-renderer.js, final-answer-compliance.js, conflict-engine.js, server.js, or any controlled-LOA service module. Step 12.65/12.66 ordering and timeout values are unchanged (reserved for PHASE-10A2). The known route-timeout query ("Will I win my BIR case?") was not used as the primary restricted-path validation query and was not re-tested in this task.
+
+Frontend remediation:
+None. No tina-ai/src or other frontend file was modified.
+
+Production validation:
+Not performed. Only tina-backend-staging was called, using locally stored, non-printed credentials.
+
+Feature flags:
+Unchanged.
+
+Commit:
+c32feac (code: services/trust-contract.js, ask-handler.js, fixture, test) on feature/source-availability-engine-v1, pushed and confirmed in sync (0 0) with origin before this CURRENT_STATE.md/report update commit.
+
+Next task:
+PHASE-10A2-RESTRICTED-LEGAL-CONCLUSION-TIMEOUT-GATE-REMEDIATION-1 (move Step 12.65/12.66 earlier, before Steps 3-9, mirroring the 09ZF precedent, to fix the confirmed route-level timeout bypass for restricted-legal-conclusion queries). Not started by this task.
+
+Independent review:
+MANDATORY before Phase 10A may be considered closed or before PHASE-10A2 begins. Codex must verify: whether the trust-contract field mappings are faithful to existing runtime evidence and invent no new semantics; whether the 8 invariants are actually enforced for all 15 material response paths; whether the two ask-handler.js insertion points are exhaustive; whether backward compatibility is genuinely preserved; whether the observed hasConflict:true findings on queries #3/#5 warrant urgent escalation; whether this CURRENT_STATE.md entry accurately records the controlling status; whether Claude improperly changed conflict-engine, timeout, gate-ordering, or frontend behavior (it did not).
+
+Do not mark Phase 10A complete before independent review and PHASE-10A2 (and any further approved remediation) are finished.
+```
 ```
