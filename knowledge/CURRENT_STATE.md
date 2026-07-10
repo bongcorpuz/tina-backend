@@ -6788,3 +6788,99 @@ until 09ZB passes.
 Alternative:
 PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System.
 ```
+
+## Phase 9ZB Controlled LOA Answer Staging Smoke Post-09ZF Rerun -- BLOCKED (2026-07-10):
+
+```text
+PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1 rerun stopped at the staging access precheck after 09ZF.
+
+Decision:
+PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE BLOCKED
+
+Blocker:
+BLOCKED_PENDING_STAGING_ACCESS
+
+Prior 09ZB result:
+30c1cbb recorded the initial 09ZB staging smoke FAIL.
+
+09ZE result:
+339c448 completed domain-boundary remediation, but the post-09ZE rerun still failed.
+
+Post-09ZE failure:
+dc8e882 recorded live staging smoke FAIL because the four safe audit-procedure queries still fell to generic fallback.
+
+09ZF prerequisite:
+dd991cc completed gate-ordering remediation by moving Step 12.65 controlled LOA gate before Step 12.6 clarification route gate.
+
+Scope:
+Attempted live staging smoke verification for the controlled LOA/eLA /ask branch after 09ZF.
+
+Environment safety:
+The local .env was present, ignored, untracked, and unstaged. All required staging variables were present and safely formatted. The Authorization Bearer value was not printed, logged, committed, or copied into evidence.
+
+Staging access:
+The authenticated /debug/db-identity deployment probe returned HTTP 401. The required staging deploy commit dd991cc or later could not be verified, and the staging feature flag could not be verified. Per the phase hard stop, the live /ask query matrix and remaining runtime/security requests were not run.
+
+Smoke result:
+Live staging LOA /ask behavior not verified: BLOCKED_PENDING_STAGING_ACCESS.
+
+Safe LOA/eLA query behavior:
+Not run in this post-09ZF rerun.
+
+Excluded unsafe query behavior:
+Not run in this post-09ZF rerun.
+
+Unrelated query behavior:
+Not run in this post-09ZF rerun.
+
+Runtime/security behavior:
+Not run after the required access hard stop.
+
+Runtime changes:
+None in this rerun.
+
+Ask-handler changes:
+None.
+
+Pipeline implementation changes:
+None in this rerun. The 09ZF ordering remains unchanged locally.
+
+Route/server/auth changes:
+None.
+
+Feature flags:
+Staging flag required but not verified because staging access was rejected.
+
+Memory:
+Inactive.
+
+Persistence:
+None.
+
+External search/live retrieval/scraping/download/ingestion/embedding/database writes/OpenAI/Supabase writes/Google Drive/n8n/Firecrawl/Crawlee/MCP/OCR:
+Untouched.
+
+Production:
+Unchanged.
+
+Legal safety:
+No final legal conclusions.
+No claim that any LOA/eLA/PAN/FAN/FLD/FDDA/assessment/protest/BIR action is valid, invalid, void, cancelled, final, enforceable, or appealable.
+No filing-ready output.
+No automatic BIR submission.
+Human tax/legal review remains required.
+
+Source-card boundary:
+No live retrieval.
+No verified source-card claim.
+No legal citation allowed.
+Controlled-branch source-card behavior was not exercised in this blocked rerun.
+
+Next:
+Refresh or replace the staging Authorization Bearer JWT, then rerun PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1 from the deployment precheck.
+
+PHASE-09ZC-CONTROLLED-LOA-ANSWER-PRODUCTION-ACTIVATION-GATE-1 remains blocked until 09ZB passes.
+
+Alternative:
+PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System.
+```

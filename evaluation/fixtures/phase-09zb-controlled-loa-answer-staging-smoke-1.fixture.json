@@ -1,10 +1,31 @@
 {
   "patch": "PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1",
-  "decision": "PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE FAIL",
+  "decision": "PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE BLOCKED",
   "phase": "09ZB",
   "baseCommit": "23eb7dd",
   "smokeType": "controlled loa answer staging smoke",
-  "liveStagingSmokeStatus": "FAIL",
+  "liveStagingSmokeStatus": "BLOCKED_PENDING_STAGING_ACCESS",
+  "priorFailCommit": "30c1cbb",
+  "post09zeFailCommit": "dc8e882",
+  "domainBoundaryRemediationCommit": "339c448",
+  "gateOrderingRemediationCommit": "dd991cc",
+  "verifiedStagingDeployCommit": null,
+  "post09zfRerunStatus": {
+    "rerunAfterCommit": "dd991cc",
+    "decision": "PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE BLOCKED",
+    "blocker": "BLOCKED_PENDING_STAGING_ACCESS",
+    "dotEnvFile": "present, ignored, untracked, and unstaged",
+    "requiredEnvVars": "present and safely formatted",
+    "authMethod": "Authorization: Bearer <staging JWT>, checked without printing or storing the token",
+    "authenticatedDeployProbeStatus": 401,
+    "stagingDeployStatus": "not verified because authenticated deployment probe was rejected",
+    "featureFlagStatus": "not verified because staging access was rejected before live smoke",
+    "liveQueryMatrixExecuted": false,
+    "runtimeSecurityMatrixExecuted": false,
+    "secretPrintedOrCommitted": false,
+    "production": "unchanged",
+    "nextTask": "Resolve blocker and rerun PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1"
+  },
   "post09zeRerunStatus": {
     "rerunAfterCommit": "339c448",
     "decision": "PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE FAIL",
@@ -19,7 +40,6 @@
     "production": "unchanged",
     "nextTask": "Resolve domain-boundary gap and rerun PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1"
   },
-  "priorFailCommit": "30c1cbb",
   "remediationCommit": "339c448",
   "previousBlocker": "BLOCKED_PENDING_STAGING_ACCESS",
   "rerunStatus": {
@@ -86,27 +106,27 @@
     }
   },
   "currentState": {
-    "latestCompletedTask": "PHASE-09ZA-CONTROLLED-LOA-ANSWER-ASK-WIRING-IMPLEMENTATION-1",
-    "latestDecision": "PHASE 09ZA CONTROLLED LOA ANSWER ASK WIRING IMPLEMENTATION PASS WITH STRICT RECOMMENDATIONS",
-    "implementation": "Controlled narrow /ask LOA branch added in pipeline.js Step 12.65.",
+    "latestCompletedTask": "PHASE-09ZF-CONTROLLED-LOA-GATE-ORDERING-REMEDIATION-1",
+    "latestDecision": "PHASE 09ZF CONTROLLED LOA GATE ORDERING REMEDIATION PASS WITH STRICT RECOMMENDATIONS",
+    "implementation": "Step 12.65 controlled LOA gate now runs before Step 12.6 clarification route gate.",
     "defaultRuntimeStatus": "OFF unless TINA_ENABLE_CONTROLLED_LOA_ASK_GATE is enabled."
   },
   "objective": "Verify staging-only controlled LOA/eLA /ask behavior when TINA_ENABLE_CONTROLLED_LOA_ASK_GATE=true, without production activation or runtime implementation changes.",
   "requiredEnvironment": [
     "staging only",
     "TINA_ENABLE_CONTROLLED_LOA_ASK_GATE=true",
-    "deployed commit 23eb7dd or later",
+    "deployed commit dd991cc or later",
     "production unchanged"
   ],
   "stagingPreconditions": {
-    "deployedCommit": "23eb7dd or later",
+    "deployedCommit": "dd991cc or later",
     "featureFlag": "TINA_ENABLE_CONTROLLED_LOA_ASK_GATE=true",
     "askEndpoint": "reachable staging /ask endpoint",
     "auth": "required staging auth/header/token available",
     "production": "not modified",
-    "currentStatus": "FAIL",
-    "deployedCommitObserved": "fde5e3968259fe6be050bd2fb33a6651569b504e",
-    "featureFlagObserved": "confirmed enabled (empirically, via successful controlled-branch triggers on BIR-worded safe queries)"
+    "currentStatus": "BLOCKED_PENDING_STAGING_ACCESS",
+    "deployedCommitObserved": "not verified during post-09ZF rerun because authenticated deployment probe returned 401",
+    "featureFlagObserved": "not verified during post-09ZF rerun because staging access was rejected"
   },
   "safeQuerySmokeMatrix": [
     { "id": "safe-1", "query": "I received a BIR LOA, what should I do?", "expected": "controlled procedural LOA answer", "actualResult": "PASS - controlled branch triggered, full procedural content present" },
@@ -199,7 +219,7 @@
   "validationMatrix": [
     "local static/unit validation always runnable",
     "optional live staging smoke only when RUN_TINA_STAGING_SMOKE=true and staging URL/auth env vars are present",
-    "BLOCKED_PENDING_STAGING_ACCESS when live smoke is requested without URL/auth",
+    "BLOCKED_PENDING_STAGING_ACCESS when live smoke is requested without URL/auth or when the configured credential is rejected",
     "no production endpoint may be used"
   ],
   "futurePatchPlan": [
@@ -211,6 +231,6 @@
     "MCP deferred until after final planned phase",
     "mobile app deferred until after Phase 13"
   ],
-  "nextTask": "Resolve domain-boundary gap and rerun PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1",
+  "nextTask": "Resolve blocker and rerun PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1",
   "alternativeNextPhase": "PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System"
 }
