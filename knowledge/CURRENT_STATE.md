@@ -7733,3 +7733,76 @@ None after final 09ZD PASS.
 Alternative:
 PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System.
 ```
+
+## Phase 9 Gate Closure 2 -- PASS WITH STRICT RECOMMENDATIONS (2026-07-10):
+
+```text
+PHASE-09-GATE-CLOSURE-2 completed.
+
+Decision:
+PHASE 09 GATE CLOSURE 2 PASS WITH STRICT RECOMMENDATIONS
+
+Phase 9 status:
+COMPLETE.
+
+Final staging evidence:
+PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE PASS WITH STRICT RECOMMENDATIONS.
+Commit: 7b892ed.
+
+Production activation evidence:
+PHASE 09ZC CONTROLLED LOA ANSWER PRODUCTION ACTIVATION GATE PASS WITH STRICT RECOMMENDATIONS.
+Commit: db03406.
+
+Final production smoke evidence:
+PHASE 09ZD CONTROLLED LOA ANSWER PRODUCTION SMOKE PASS WITH STRICT RECOMMENDATIONS.
+
+Outcome-query contract:
+PHASE 09ZJ CONTEXT-FREE OUTCOME QUERY SAFETY CONTRACT CLARIFICATION PASS WITH STRICT RECOMMENDATIONS.
+Commit: cd3e18b.
+
+Final production result:
+8/8 safe queries passed.
+12/12 unsafe queries remained outside controlled_loa_answer.
+4/4 restricted legal-conclusion queries passed.
+8/8 unrelated tax queries remained non-triggering.
+2/2 non-tax queries remained domain-boundary rejected.
+Runtime/security, frontend compatibility, and source-card/legal-safety checks passed.
+
+Runtime architecture:
+Shared upstream/pipeline audit-procedure boundary helper.
+Step 12.65 controlled safe-answer gate.
+Step 12.66 deterministic restricted legal-conclusion gate.
+Controlled LOA runtime scaffold.
+Diagnostic instrumentation disabled.
+
+Final safety contract:
+Context-free Will I win? may be safely domain rejected without a human-review marker when no legal conclusion or prediction is made.
+Tax-contextual Will I win my BIR LOA case? requires deterministic restricted handling and human review.
+
+Production flags:
+TINA_ENABLE_CONTROLLED_LOA_ASK_GATE=true.
+TINA_ENABLE_09ZG_LOA_PATH_DIAGNOSTIC=false or unset.
+
+Production:
+Live.
+No pending mutation.
+No pending rollback.
+
+Runtime blockers:
+None.
+
+Known non-blocking debt:
+- 09ZF self-referential test
+- older dirty-diff test guards
+- 09R staging reachability/fixture issue
+- NODE_ENV=staging error-disclosure hardening
+- same-branch staging/production deployment governance risk
+
+Next phase:
+PHASE 10 — V1 User-Readiness Release Gates.
+
+Next task:
+PHASE-10A-TRUST-LIMITATION-AUTHORITY-CONFIDENCE-RELEASE-GATE-1.
+
+Do not start Phase 10 implementation in this closure task.
+```
