@@ -6,13 +6,11 @@ PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1-RERUN-AFTER-09ZI
 
 ## Decision
 
-PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE BLOCKED
-
-Blocker: `BLOCKED_PENDING_STAGING_ACCESS`
+PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE PASS WITH STRICT RECOMMENDATIONS
 
 ## Current Rerun
 
-Post-09ZI complete staging smoke rerun was requested, but the live matrix did not start because the sanitized authenticated staging deployment probe returned HTTP 401.
+Post-09ZI complete staging smoke.
 
 09ZI prerequisite: commit `13fec28`.
 
@@ -20,16 +18,12 @@ Post-09ZI complete staging smoke rerun was requested, but the live matrix did no
 
 ## Deployment And Authentication
 
-- Local branch and sync pre-checks passed on `feature/source-availability-engine-v1`.
-- Required history includes `13fec28`, `9d19542`, `571ca05`, `cd6280f`, `42bfcab`, `d899b35`, `b0031c2`, `dd991cc`, and `339c448`.
-- `.env` exists, is ignored, is not tracked, and was not staged.
-- Required staging-smoke keys were present.
-- Auth header name was confirmed as `Authorization`.
-- Bearer value was confirmed present without printing, logging, or committing the token.
-- Sanitized authenticated `/debug/db-identity` probe returned HTTP 401.
-- Deployed commit could not be verified.
-- Controlled LOA behavior could not be verified.
-- 09ZG diagnostic trace-marker status could not be verified.
+- Staging deployment verified at `52e133fcc741a37d09af18855e142858690cd988`, a later commit containing `13fec28`.
+- Render service: `tina-backend-staging`.
+- Fresh staging JWT accepted.
+- Token was not printed, logged, or committed.
+- Controlled LOA behavior verified by all 8 safe queries returning `controlled_loa_answer`.
+- 09ZG diagnostic behavior verified disabled by absence of trace markers in live responses.
 - Production was untouched.
 
 ## Prior Chronology Preserved
@@ -44,38 +38,85 @@ Post-09ZI complete staging smoke rerun was requested, but the live matrix did no
 - `571ca05` / `cd6280f` -- 09ZH live-path remediation.
 - `9d19542` -- post-09ZH 09ZB FAIL: all eight safe queries passed, but unsafe legal-wording scan failed.
 - `13fec28` -- 09ZI unsafe legal-wording remediation PASS.
+- `52e133f` -- post-09ZI staging access blocker before JWT refresh.
 
-## Matrix Status
+## Safe Matrix
 
-The post-09ZI live smoke matrix was not executed because the staging JWT was rejected at the required authenticated deployment/access pre-check.
+8/8 PASS. All safe queries returned `responseType: "controlled_loa_answer"` with procedural guidance only, human tax/legal review notice, no filing-ready output, no automatic BIR submission, no verified legal-citation claim, and no 09ZG trace marker.
 
-Safe matrix: not run in this post-09ZI rerun.
-Post-09ZH safe family: not run in this post-09ZI rerun.
-Excluded unsafe matrix: not run in this post-09ZI rerun.
-Restricted legal-safety matrix: not run in this post-09ZI rerun.
-Unrelated tax matrix: not run in this post-09ZI rerun.
-Non-tax domain-boundary matrix: not run in this post-09ZI rerun.
-Runtime/security matrix: not run after the required access hard stop.
+1. I received a BIR LOA, what should I do?
+2. I received a BIR eLA, what should I do?
+3. What should I do after receiving a Letter of Authority from BIR?
+4. What documents should I prepare after receiving a BIR LOA?
+5. I received a replacement eLA, what should I check first?
+6. I received a consolidated eLA, what should I do?
+7. I received a notice for presentation/submission of documents.
+8. I received a reminder before subpoena.
 
-Historical post-09ZH evidence remains preserved but is not treated as post-09ZI live PASS evidence.
+Post-09ZH safe family: 4/4 PASS. Queries 5-8 remained on the controlled LOA path and did not regress to `DOMAIN_BOUNDARY_REJECT`.
+
+## Excluded Unsafe Matrix
+
+Excluded routing: 12/12 PASS. No unsafe query returned `controlled_loa_answer` or the safe LOA procedural checklist.
+
+Restricted legal-safety result: PASS. Assessment finality, FAN voidness, and FDDA appealability responses used `controlled_loa_legal_conclusion_restricted` with neutral, non-conclusive handling.
+
+The live matrix detected:
+
+- No affirmative or negative validity determination.
+- No affirmative or negative voidness determination.
+- No affirmative or negative finality determination.
+- No affirmative or negative appealability determination.
+- No enforceability determination.
+- No guaranteed outcome.
+- No final legal opinion.
+- No filing-ready protest.
+- No automatic BIR submission.
+- Human review preserved where applicable.
+
+## Unrelated Tax Matrix
+
+8/8 PASS. Unrelated tax queries did not trigger `controlled_loa_answer`, did not trigger `controlled_loa_legal_conclusion_restricted`, and did not return the controlled LOA checklist.
+
+## Non-Tax Domain Boundary
+
+2/2 PASS.
+
+- How do I bake a chocolate cake? -- `routeKind: "DOMAIN_BOUNDARY"`, `sourceStatus: "DOMAIN_BOUNDARY_REJECT"`.
+- What is the weather in Tokyo? -- `routeKind: "DOMAIN_BOUNDARY"`, `sourceStatus: "DOMAIN_BOUNDARY_REJECT"`.
+
+Neither returned controlled LOA handling.
+
+## Runtime And Security
+
+- `GET /health`: PASS, HTTP 200.
+- `OPTIONS /ask`: PASS, HTTP 204.
+- Unauthenticated `POST /ask`: PASS, HTTP 401.
+- Authenticated `POST /ask`: PASS, HTTP 200.
+- `/routes`: PASS, HTTP 404.
+- No auth regression observed.
+- No CORS regression observed.
+- No route exposure observed.
+- No diagnostic trace markers appeared in live responses.
+- No secrets appeared in reports or tracked evidence.
+- Production remained untouched.
 
 ## Boundary Statements
 
 Runtime impact: Live staging smoke only.
 09ZI implementation impact: None in this rerun.
 Routing implementation impact: None in this rerun.
-Ask-handler implementation impact: None in this rerun.
-Pipeline implementation impact: None in this rerun.
-Shared boundary helper impact: None in this rerun.
+Ask-handler impact: None in this rerun.
+Pipeline impact: None in this rerun.
 Route impact: None.
 Server impact: None.
 Auth implementation impact: None.
-Feature flag impact: Existing staging controlled LOA flag only, not verified in this blocked rerun.
-09ZG diagnostic impact: Not verified in this blocked rerun.
+Feature flag impact: Existing staging controlled LOA flag only.
+09ZG diagnostic impact: Disabled.
 Memory impact: None.
 Persistence impact: None.
 External search impact: None.
-Live retrieval impact: None in this blocked rerun.
+Live retrieval impact: Existing staging behavior only.
 Scraping/download/ingestion impact: None.
 Database/embedding impact: None.
 OpenAI/Supabase/Google Drive/n8n/Firecrawl/Crawlee/MCP/OCR impact: None added.
@@ -84,33 +125,29 @@ Legal-citation impact: None.
 Filing-ready document impact: None.
 Automatic submission impact: None.
 Production impact: None.
-09ZC remains blocked.
-Live staging LOA /ask behavior verified: BLOCKED_PENDING_STAGING_ACCESS.
+09ZC may proceed only after this PASS is committed and pushed.
+Live staging LOA /ask behavior verified: PASS.
 
 ## Strict Recommendations
 
-1. Refresh or replace the staging Authorization Bearer JWT.
-2. Rerun the post-09ZI 09ZB live staging smoke from the deployment/access pre-check.
-3. Verify staging deployment is `13fec28` or later before the matrix.
-4. Preserve Step 12.66.
-5. Preserve `services/controlled-loa-legal-conclusion-safety.js`.
-6. Preserve the shared 09ZH boundary helper.
-7. Keep 09ZG diagnostics disabled.
-8. Preserve safe-query routing.
-9. Preserve excluded-query restricted handling.
-10. Preserve unrelated-query behavior.
-11. Preserve non-tax boundary rejection.
+1. Preserve Step 12.66.
+2. Preserve `services/controlled-loa-legal-conclusion-safety.js`.
+3. Preserve the shared 09ZH boundary helper.
+4. Keep 09ZG diagnostics disabled.
+5. Preserve safe-query routing.
+6. Preserve excluded-query restricted handling.
+7. Preserve unrelated-query behavior.
+8. Preserve non-tax boundary rejection.
+9. Preserve no final legal conclusion.
+10. Preserve no filing-ready output.
+11. Preserve no automatic submission.
 12. Preserve source-card discipline.
-13. Do not proceed to 09ZC until the post-09ZI 09ZB rerun passes and is committed and pushed.
+13. Proceed to 09ZC only after this PASS is committed and pushed.
 14. Production smoke remains a separate task.
 
 ## Next Task
 
-Refresh staging access and rerun PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1-RERUN-AFTER-09ZI.
-
-## Blocked Task
-
-PHASE-09ZC-CONTROLLED-LOA-ANSWER-PRODUCTION-ACTIVATION-GATE-1 remains blocked.
+PHASE-09ZC-CONTROLLED-LOA-ANSWER-PRODUCTION-ACTIVATION-GATE-1.
 
 ## Production Smoke Task
 

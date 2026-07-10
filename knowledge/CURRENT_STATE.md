@@ -6158,6 +6158,82 @@ Alternative:
 PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System.
 ```
 
+## Phase 9ZB Controlled LOA Answer Staging Smoke Rerun After 09ZI -- PASS WITH STRICT RECOMMENDATIONS (2026-07-10):
+
+```text
+PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1 rerun after 09ZI completed.
+
+Decision:
+PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE PASS WITH STRICT RECOMMENDATIONS
+
+09ZI prerequisite:
+13fec28 completed deterministic unsafe legal-wording remediation.
+
+Staging deployment:
+52e133fcc741a37d09af18855e142858690cd988 verified on tina-backend-staging; this is later than and contains 13fec28.
+
+Authentication:
+Fresh staging JWT accepted.
+Token was not printed, logged, or committed.
+
+Safe query result:
+All 8 required LOA/eLA procedural queries returned controlled_loa_answer.
+
+Previously failing safe query result:
+replacement eLA, consolidated eLA, presentation/submission notice, and reminder before subpoena all passed.
+
+Excluded routing result:
+All 12 unsafe queries remained outside controlled_loa_answer.
+
+Restricted legal-safety result:
+Assessment-finality, FAN-voidness, and FDDA-appealability requests returned neutral restricted handling without affirmative or negative legal conclusions.
+
+Unrelated tax result:
+All 8 remained non-triggering.
+
+Non-tax boundary:
+Both test queries remained domain-boundary rejected.
+
+Runtime/security:
+PASS.
+
+Source-card/citation discipline:
+PASS.
+
+Runtime changes:
+None in this rerun.
+
+Pipeline/ask-handler/helper changes:
+None in this rerun.
+
+Route/server/auth:
+Unchanged.
+
+Diagnostic flag:
+09ZG diagnostic behavior remained disabled.
+
+Persistence:
+None.
+
+Production:
+Unchanged.
+
+Legal safety:
+No final legal conclusion.
+No filing-ready output.
+No automatic submission.
+Human professional review preserved.
+
+Next:
+PHASE-09ZC-CONTROLLED-LOA-ANSWER-PRODUCTION-ACTIVATION-GATE-1.
+
+Production smoke:
+PHASE-09ZD-CONTROLLED-LOA-ANSWER-PRODUCTION-SMOKE-1 remains separate.
+
+Alternative:
+PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System.
+```
+
 ## Phase 9ZB Controlled LOA Answer Staging Smoke Rerun After 09ZI -- BLOCKED (2026-07-10):
 
 ```text

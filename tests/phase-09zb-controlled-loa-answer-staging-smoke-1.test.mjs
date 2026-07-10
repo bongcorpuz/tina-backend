@@ -212,35 +212,36 @@ await test("fixture exists, parses, and core fields match the phase contract", (
   check(fx.patch === EXPECTED_PATCH, "fixture patch id matches");
   check(fx.phase === "09ZB", "fixture phase equals 09ZB");
   check(fx.baseCommit === "23eb7dd", "fixture baseCommit equals 23eb7dd");
-  check(fx.decision === BLOCKED_DECISION, "fixture decision is final 09ZB BLOCKED");
-  check(fx.liveStagingSmokeStatus === STAGING_BLOCKED_ACCESS, "fixture live staging smoke status is BLOCKED_PENDING_STAGING_ACCESS");
-  check(fx.blocker === STAGING_BLOCKED_ACCESS, "fixture blocker is BLOCKED_PENDING_STAGING_ACCESS");
+  check(fx.decision === PASS_DECISION, "fixture decision is final 09ZB PASS");
+  check(fx.liveStagingSmokeStatus === "PASS", "fixture live staging smoke status is PASS");
+  check(fx.blocker === null, "fixture has no active blocker");
   check(fx.jwtRefreshRerun === true, "fixture records JWT refresh rerun");
-  check(fx.jwtAccepted === false, "fixture records JWT rejected");
-  check(fx.stagingAccessStatus === STAGING_BLOCKED_ACCESS, "fixture records staging access blocker");
-  check(fx.deploymentVerified === false, "fixture records deployment not verified");
+  check(fx.jwtAccepted === true, "fixture records JWT accepted");
+  check(fx.stagingAccessStatus === "PASS", "fixture records staging access PASS");
+  check(fx.deploymentVerified === true, "fixture records deployment verified");
   check(fx.rerunAfter09ZH === true, "fixture records post-09ZH rerun");
   check(fx["09zhCommit"] === "571ca05", "fixture records 09ZH commit");
   check(fx["09zhPrimaryRemediationCommit"] === "cd6280f", "fixture records 09ZH primary remediation commit");
   check(fx.rerunAfter09ZI === true, "fixture records post-09ZI rerun");
   check(fx["09ziCommit"] === "13fec28", "fixture records 09ZI commit");
-  check(fx.freshJwtAccepted === false, "fixture records fresh JWT not accepted");
-  check(fx.controlledLoaBehaviorVerified === false, "fixture records controlled LOA behavior not verified");
-  check(fx.diagnosticBehaviorDisabled === false, "fixture records diagnostic behavior not verified");
-  check(fx.safeQueryPassCount === 0, "fixture records zero post-09ZI safe passes because matrix did not run");
+  check(fx.freshJwtAccepted === true, "fixture records fresh JWT accepted");
+  check(fx.controlledLoaBehaviorVerified === true, "fixture records controlled LOA behavior verified");
+  check(fx.diagnosticBehaviorDisabled === true, "fixture records diagnostic behavior disabled");
+  check(/^52e133f/.test(fx.verifiedStagingDeployCommit), "fixture records deployed staging commit after 13fec28");
+  check(fx.safeQueryPassCount === 8, "fixture records eight safe passes");
   check(fx.safeQueryFailCount === 0, "fixture records zero failing safe queries");
-  check(fx.previouslyFailingSafeQueryPassCount === 0, "fixture records zero post-09ZI previously failing passes because matrix did not run");
-  check(fx.excludedRoutingPassCount === 0, "fixture records zero post-09ZI excluded routing passes because matrix did not run");
-  check(fx.restrictedLegalWordingPassCount === 0, "fixture records zero restricted wording passes because matrix did not run");
+  check(fx.previouslyFailingSafeQueryPassCount === 4, "fixture records four previously failing safe passes");
+  check(fx.excludedRoutingPassCount === 12, "fixture records twelve excluded routing passes");
+  check(fx.restrictedLegalWordingPassCount === 3, "fixture records three restricted wording passes");
   check(fx.restrictedLegalWordingFailCount === 0, "fixture records zero restricted wording failures because matrix did not run");
-  check(fx.unrelatedTaxPassCount === 0, "fixture records zero unrelated tax passes because matrix did not run");
-  check(fx.nonTaxBoundaryPassCount === 0, "fixture records zero non-tax boundary passes because matrix did not run");
+  check(fx.unrelatedTaxPassCount === 8, "fixture records eight unrelated tax passes");
+  check(fx.nonTaxBoundaryPassCount === 2, "fixture records two non-tax boundary passes");
   check(JSON.stringify(fx.passingSafeQueries) === JSON.stringify(EXPECTED_SAFE_QUERIES), "fixture records exact passing safe queries");
   check(Array.isArray(fx.failingSafeQueries) && fx.failingSafeQueries.length === 0, "fixture records no failing safe queries");
-  check(fx.runtimeSecurityStatus === "NOT_RUN_AFTER_ACCESS_BLOCKER", "fixture records runtime/security not run after access blocker");
+  check(fx.runtimeSecurityStatus === "PASS", "fixture records runtime/security PASS");
+  check(fx.sourceCardDisciplineStatus === "PASS", "fixture records source-card discipline PASS");
   check(fx.productionBoundary === "Production unchanged.", "fixture records production unchanged");
-  check(fx.blockedTask === EXPECTED_BLOCKED_TASK, "fixture records 09ZC blocked");
-  check(/^Refresh staging access and rerun PHASE-09ZB/.test(fx.nextTask), "fixture next task is staging access refresh rerun");
+  check(fx.nextTask === EXPECTED_PASS_NEXT_TASK, "fixture next task is 09ZC");
   check(fx.productionSmokeTask === "PHASE-09ZD-CONTROLLED-LOA-ANSWER-PRODUCTION-SMOKE-1", "fixture records production smoke as separate task");
 });
 
@@ -279,20 +280,23 @@ await test("report exists and contains required impact/status statements", () =>
   check(existsSync(resolve(REPORT_PATH)), "report exists");
   const report = read(REPORT_PATH);
   for (const statement of [
-    "PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE BLOCKED",
-    "Blocker: `BLOCKED_PENDING_STAGING_ACCESS`",
-    "authenticated staging deployment probe returned HTTP 401",
-    "The post-09ZI live smoke matrix was not executed",
-    "09ZC remains blocked.",
+    "PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE PASS WITH STRICT RECOMMENDATIONS",
+    "Post-09ZI complete staging smoke.",
+    "8/8 PASS",
+    "Restricted legal-safety result: PASS.",
+    "PHASE-09ZC-CONTROLLED-LOA-ANSWER-PRODUCTION-ACTIVATION-GATE-1.",
     "Runtime impact: Live staging smoke only.",
     "Production impact: None.",
-    "Ask-handler implementation impact: None in this rerun.",
-    "Pipeline implementation impact: None in this rerun.",
-    "Shared boundary helper impact: None in this rerun.",
-    "Feature flag impact: Existing staging controlled LOA flag only, not verified in this blocked rerun.",
-    "09ZG diagnostic impact: Not verified in this blocked rerun.",
+    "09ZI implementation impact: None in this rerun.",
+    "Routing implementation impact: None in this rerun.",
+    "Ask-handler impact: None in this rerun.",
+    "Pipeline impact: None in this rerun.",
+    "Feature flag impact: Existing staging controlled LOA flag only.",
+    "09ZG diagnostic impact: Disabled.",
     "External search impact: None.",
-    "Live retrieval impact: None in this blocked rerun.",
+    "Live retrieval impact: Existing staging behavior only.",
+    "Source-card impact: None.",
+    "Legal-citation impact: None.",
     "Filing-ready document impact: None.",
     "Automatic submission impact: None."
   ]) {
@@ -324,10 +328,10 @@ await test("static scan confirms allowed file scope and no new external-operatio
 await test("CURRENT_STATE contains 09ZB entry and next/rerun state", () => {
   const currentState = read(CURRENT_STATE_PATH);
   check(/PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1/.test(currentState), "CURRENT_STATE.md contains 09ZB staging smoke entry");
-  check(/PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE BLOCKED/.test(currentState), "CURRENT_STATE.md contains final 09ZB BLOCKED decision");
-  check(/post-09ZI staging rerun blocked/i.test(currentState), "CURRENT_STATE.md contains post-09ZI blocked rerun entry");
-  check(/BLOCKED_PENDING_STAGING_ACCESS/.test(currentState), "CURRENT_STATE.md records staging access blocker");
-  check(/09ZC:\s*\nBlocked\./.test(currentState), "CURRENT_STATE.md states 09ZC blocked");
+  check(/PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE PASS WITH STRICT RECOMMENDATIONS/.test(currentState), "CURRENT_STATE.md contains final 09ZB PASS decision");
+  check(/rerun after 09ZI completed/i.test(currentState), "CURRENT_STATE.md contains post-09ZI completed rerun entry");
+  check(/PHASE-09ZC-CONTROLLED-LOA-ANSWER-PRODUCTION-ACTIVATION-GATE-1/.test(currentState), "CURRENT_STATE.md states 09ZC next");
+  check(/PHASE-09ZD-CONTROLLED-LOA-ANSWER-PRODUCTION-SMOKE-1/.test(currentState), "CURRENT_STATE.md keeps production smoke separate");
 });
 
 // Optional live staging smoke, assertions 45-75 when enabled.
