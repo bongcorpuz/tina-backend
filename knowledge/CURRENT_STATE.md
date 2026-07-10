@@ -6158,6 +6158,52 @@ Alternative:
 PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System.
 ```
 
+## Phase 9ZB Controlled LOA Answer Staging Smoke Refreshed-JWT Rerun -- FAIL (2026-07-10):
+
+```text
+PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1 refreshed-JWT rerun completed.
+
+Decision:
+PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE FAIL
+
+Prior blocked record:
+431ba5b recorded BLOCKED_PENDING_STAGING_ACCESS.
+
+Current rerun:
+The refreshed staging JWT was accepted.
+The deployed staging commit and controlled LOA feature flag were verified.
+The live smoke matrix executed.
+
+Results:
+The first four baseline LOA/eLA queries returned controlled_loa_answer.
+The replacement eLA, consolidated eLA, notice for presentation/submission, and reminder-before-subpoena queries still failed to return controlled_loa_answer.
+
+Runtime/security:
+PASS.
+
+Conclusion:
+09ZF gate reordering did not resolve the actual live path for the four audit-procedure queries.
+The next step is live-path instrumentation, not another unverified routing patch.
+
+Runtime changes:
+None in this recovery task.
+
+Pipeline changes:
+None in this recovery task.
+
+Auth:
+Refreshed staging JWT accepted. Token not printed, logged, or committed.
+
+Production:
+Unchanged.
+
+09ZC:
+Blocked.
+
+Next:
+PHASE-09ZG-CONTROLLED-LOA-LIVE-PATH-INSTRUMENTATION-DIAGNOSTIC-1.
+```
+
 ## Phase 9ZB Controlled LOA Answer Staging Smoke -- BLOCKED (2026-07-08):
 
 ```text

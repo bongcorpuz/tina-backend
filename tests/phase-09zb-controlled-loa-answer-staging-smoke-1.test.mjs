@@ -13,6 +13,10 @@ import { resolve } from "node:path";
 import { evaluateControlledLoaAskGate } from "../pipeline.js";
 import { classifyControlledLoaIntent, normalizeControlledLoaAnswerInput } from "../workflow/controlled-loa-answer-runtime-scaffold.js";
 
+const LIVE_SMOKE_EXPLICITLY_REQUESTED =
+  process.env.RUN_TINA_STAGING_SMOKE === "true" &&
+  process.env.RUN_TINA_09ZB_LIVE_SMOKE === "true";
+
 function loadLocalDotEnvIfPresent() {
   const envPath = resolve(".env");
   if (!existsSync(envPath)) return;
@@ -48,8 +52,22 @@ const PASS_DECISION = "PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE PASS WITH 
 const BLOCKED_DECISION = "PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE BLOCKED";
 const FAIL_DECISION = "PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE FAIL";
 const EXPECTED_PASS_NEXT_TASK = "PHASE-09ZC-CONTROLLED-LOA-ANSWER-PRODUCTION-ACTIVATION-GATE-1";
+const EXPECTED_FAIL_NEXT_TASK = "PHASE-09ZG-CONTROLLED-LOA-LIVE-PATH-INSTRUMENTATION-DIAGNOSTIC-1";
+const EXPECTED_BLOCKED_TASK = "PHASE-09ZC-CONTROLLED-LOA-ANSWER-PRODUCTION-ACTIVATION-GATE-1";
 const STAGING_BLOCKED_ACCESS = "BLOCKED_PENDING_STAGING_ACCESS";
 const FETCH_TIMEOUT_MS = 20000;
+const EXPECTED_PASSING_SAFE_QUERIES = [
+  "I received a BIR LOA, what should I do?",
+  "I received a BIR eLA, what should I do?",
+  "What should I do after receiving a Letter of Authority from BIR?",
+  "What documents should I prepare after receiving a BIR LOA?"
+];
+const EXPECTED_FAILING_SAFE_QUERIES = [
+  "I received a replacement eLA, what should I check first?",
+  "I received a consolidated eLA, what should I do?",
+  "I received a notice for presentation/submission of documents.",
+  "I received a reminder before subpoena."
+];
 
 let passed = 0;
 let failed = 0;
@@ -196,13 +214,21 @@ await test("fixture exists, parses, and core fields match the phase contract", (
   check(fx.patch === EXPECTED_PATCH, "fixture patch id matches");
   check(fx.phase === "09ZB", "fixture phase equals 09ZB");
   check(fx.baseCommit === "23eb7dd", "fixture baseCommit equals 23eb7dd");
-  check([PASS_DECISION, BLOCKED_DECISION, FAIL_DECISION].includes(fx.decision), "fixture decision is status-aware");
-  check(
-    fx.nextTask === EXPECTED_PASS_NEXT_TASK ||
-      /^Resolve blocker and rerun PHASE-09ZB/.test(fx.nextTask) ||
-      /^Resolve domain-boundary gap and rerun PHASE-09ZB/.test(fx.nextTask),
-    "fixture nextTask is pass task, blocker rerun task, or fail remediation rerun task"
-  );
+  check(fx.decision === FAIL_DECISION, "fixture decision is final 09ZB FAIL");
+  check(fx.liveStagingSmokeStatus === "FAIL", "fixture live staging smoke status is FAIL");
+  check(fx.jwtRefreshRerun === true, "fixture records JWT refresh rerun");
+  check(fx.jwtAccepted === true, "fixture records JWT accepted");
+  check(fx.stagingAccessStatus === "PASS", "fixture records staging access PASS");
+  check(fx.featureFlagVerified === true, "fixture records feature flag verified");
+  check(fx.deploymentVerified === true, "fixture records deployment verified");
+  check(fx.safeQueryPassCount === 4, "fixture records four passing safe queries");
+  check(fx.safeQueryFailCount === 4, "fixture records four failing safe queries");
+  check(JSON.stringify(fx.passingSafeQueries) === JSON.stringify(EXPECTED_PASSING_SAFE_QUERIES), "fixture records exact passing safe queries");
+  check(JSON.stringify(fx.failingSafeQueries) === JSON.stringify(EXPECTED_FAILING_SAFE_QUERIES), "fixture records exact failing safe queries");
+  check(fx.runtimeSecurityStatus === "PASS", "fixture records runtime/security PASS");
+  check(fx.productionBoundary === "Production unchanged.", "fixture records production unchanged");
+  check(fx.blockedTask === EXPECTED_BLOCKED_TASK, "fixture records 09ZC blocked");
+  check(fx.nextTask === EXPECTED_FAIL_NEXT_TASK, "fixture next task is 09ZG");
 });
 
 // 7-14. Prior artifacts and local scaffold/gate behavior.
@@ -240,11 +266,18 @@ await test("report exists and contains required impact/status statements", () =>
   check(existsSync(resolve(REPORT_PATH)), "report exists");
   const report = read(REPORT_PATH);
   for (const statement of [
-    "Runtime impact: Staging smoke only.",
+    "PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE FAIL",
+    "I received a replacement eLA, what should I check first?",
+    "I received a consolidated eLA, what should I do?",
+    "I received a notice for presentation/submission of documents.",
+    "I received a reminder before subpoena.",
+    "09ZC remains blocked.",
+    "Next task is PHASE-09ZG-CONTROLLED-LOA-LIVE-PATH-INSTRUMENTATION-DIAGNOSTIC-1.",
+    "Runtime impact: Staging smoke evidence only.",
     "Production impact: None.",
     "Ask-handler impact: None.",
-    "Pipeline implementation impact: None.",
-    "Feature flag impact: Staging flag required.",
+    "Pipeline implementation impact: None in this recovery task.",
+    "Feature flag impact: Existing staging flag verified.",
     "External search impact: None.",
     "Live retrieval impact: None.",
     "Filing-ready document impact: None.",
@@ -278,13 +311,15 @@ await test("static scan confirms allowed file scope and no new external-operatio
 await test("CURRENT_STATE contains 09ZB entry and next/rerun state", () => {
   const currentState = read(CURRENT_STATE_PATH);
   check(/PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1/.test(currentState), "CURRENT_STATE.md contains 09ZB staging smoke entry");
-  check(/PHASE-09ZC-CONTROLLED-LOA-ANSWER-PRODUCTION-ACTIVATION-GATE-1|Resolve blocker and rerun PHASE-09ZB/.test(currentState), "CURRENT_STATE.md next task is 09ZC or blocker rerun");
+  check(/PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE FAIL/.test(currentState), "CURRENT_STATE.md contains final 09ZB FAIL decision");
+  check(/PHASE-09ZG-CONTROLLED-LOA-LIVE-PATH-INSTRUMENTATION-DIAGNOSTIC-1/.test(currentState), "CURRENT_STATE.md next task is 09ZG");
+  check(/09ZC:\s*\nBlocked\./.test(currentState), "CURRENT_STATE.md states 09ZC blocked");
 });
 
 // Optional live staging smoke, assertions 45-75 when enabled.
 await test("optional live staging smoke is skipped unless explicitly enabled", async () => {
-  if (process.env.RUN_TINA_STAGING_SMOKE !== "true") {
-    console.log("SKIP live staging smoke: set RUN_TINA_STAGING_SMOKE=true with TINA_STAGING_ASK_URL and auth header env vars to run.");
+  if (!LIVE_SMOKE_EXPLICITLY_REQUESTED) {
+    console.log("SKIP live staging smoke: set RUN_TINA_STAGING_SMOKE=true and RUN_TINA_09ZB_LIVE_SMOKE=true in the process environment with TINA_STAGING_ASK_URL and auth header env vars to run.");
     check(true, "live staging smoke skipped by default");
     return;
   }
@@ -298,6 +333,7 @@ await test("optional live staging smoke is skipped unless explicitly enabled", a
 
   const safeMain = await postAsk("I received a BIR LOA, what should I do?");
   check(safeMain.res.status >= 200 && safeMain.res.status < 300, "staging safe LOA query returns 2xx");
+  check(safeMain.json && safeMain.json.responseType === "controlled_loa_answer", "primary safe query triggers controlled LOA branch");
   assertSafeControlledResponse(safeMain.json, safeMain.bodyText);
 
   // Full mandated 8-query safe LOA/eLA smoke matrix. Some of these are
@@ -348,13 +384,16 @@ await test("optional live staging smoke is skipped unless explicitly enabled", a
     assertNotControlledSafeAnswer(response.json, response.bodyText, label);
   }
 
-  // Full mandated 5-query unrelated matrix.
+  // Full mandated 8-query unrelated matrix.
   for (const [query, label] of [
     ["Explain EWT.", "unrelated EWT query"],
     ["Is lease subject to withholding tax in the Philippines?", "unrelated lease withholding query"],
     ["What is percentage tax?", "unrelated percentage tax query"],
     ["What is VAT-exempt sale?", "unrelated VAT query"],
-    ["What is estate tax?", "unrelated estate tax query"]
+    ["What is estate tax?", "unrelated estate tax query"],
+    ["What are the rules on withholding tax on professional fees?", "unrelated professional-fee withholding query"],
+    ["How to compute percentage tax?", "unrelated percentage-tax computation query"],
+    ["Is sale of fresh frozen seafood VAT exempt?", "unrelated frozen-seafood VAT query"]
   ]) {
     const response = await postAsk(query);
     check(response.res.status < 500, `${label} returns non-5xx`);

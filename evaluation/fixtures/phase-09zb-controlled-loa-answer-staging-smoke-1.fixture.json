@@ -1,15 +1,55 @@
 {
   "patch": "PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1",
-  "decision": "PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE BLOCKED",
+  "decision": "PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE FAIL",
   "phase": "09ZB",
   "baseCommit": "23eb7dd",
   "smokeType": "controlled loa answer staging smoke",
-  "liveStagingSmokeStatus": "BLOCKED_PENDING_STAGING_ACCESS",
+  "liveStagingSmokeStatus": "FAIL",
+  "jwtRefreshRerun": true,
+  "jwtAccepted": true,
+  "stagingAccessStatus": "PASS",
+  "featureFlagVerified": true,
+  "deploymentVerified": true,
+  "priorBlockedCommit": "431ba5b",
   "priorFailCommit": "30c1cbb",
   "post09zeFailCommit": "dc8e882",
   "domainBoundaryRemediationCommit": "339c448",
   "gateOrderingRemediationCommit": "dd991cc",
-  "verifiedStagingDeployCommit": null,
+  "verifiedStagingDeployCommit": "431ba5bfd8295af3fc32afdc62cbefb3336ef064",
+  "safeQueryPassCount": 4,
+  "safeQueryFailCount": 4,
+  "passingSafeQueries": [
+    "I received a BIR LOA, what should I do?",
+    "I received a BIR eLA, what should I do?",
+    "What should I do after receiving a Letter of Authority from BIR?",
+    "What documents should I prepare after receiving a BIR LOA?"
+  ],
+  "failingSafeQueries": [
+    "I received a replacement eLA, what should I check first?",
+    "I received a consolidated eLA, what should I do?",
+    "I received a notice for presentation/submission of documents.",
+    "I received a reminder before subpoena."
+  ],
+  "runtimeSecurityStatus": "PASS",
+  "productionBoundary": "Production unchanged.",
+  "blockedTask": "PHASE-09ZC-CONTROLLED-LOA-ANSWER-PRODUCTION-ACTIVATION-GATE-1",
+  "jwtRefreshRerunStatus": {
+    "rerunAfterCommit": "431ba5b",
+    "decision": "PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE FAIL",
+    "jwtRefreshStatus": "refreshed credential accepted; token not printed, logged, or committed",
+    "authenticatedDeployProbeStatus": 200,
+    "stagingService": "tina-backend-staging",
+    "stagingEnvironment": "staging",
+    "verifiedStagingDeployCommit": "431ba5bfd8295af3fc32afdc62cbefb3336ef064",
+    "stagingDeployMeetsDd991ccRequirement": true,
+    "featureFlagStatus": "TINA_ENABLE_CONTROLLED_LOA_ASK_GATE=true verified empirically by a controlled_loa_answer response",
+    "safeQueryResult": "FAIL - 4 of 8 safe queries triggered controlled_loa_answer; replacement eLA, consolidated eLA, notice for presentation/submission, and reminder before subpoena returned HTTP 200 without the controlled response type or checklist",
+    "excludedQueryResult": "Prior refreshed-JWT run evidence recorded all 12 remained outside the controlled branch and returned no controlled checklist, filing-ready output, or automatic-submission offer; strict sentence-level legal-safety scanning flagged unqualified conclusory wording in the assessment-finality and FAN-voidness responses. Not independently re-executed in this recovery pass.",
+    "unrelatedQueryResult": "PASS - all 8 unrelated tax queries remained outside the controlled LOA branch; one transient timeout passed on retry",
+    "runtimeSecurityResult": "PASS - health 200, OPTIONS /ask 204, unauthenticated /ask 401, routes 404",
+    "production": "unchanged",
+    "nextTask": "PHASE-09ZG-CONTROLLED-LOA-LIVE-PATH-INSTRUMENTATION-DIAGNOSTIC-1"
+  },
   "post09zfRerunStatus": {
     "rerunAfterCommit": "dd991cc",
     "decision": "PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE BLOCKED",
@@ -124,28 +164,28 @@
     "askEndpoint": "reachable staging /ask endpoint",
     "auth": "required staging auth/header/token available",
     "production": "not modified",
-    "currentStatus": "BLOCKED_PENDING_STAGING_ACCESS",
-    "deployedCommitObserved": "not verified during post-09ZF rerun because authenticated deployment probe returned 401",
-    "featureFlagObserved": "not verified during post-09ZF rerun because staging access was rejected"
+    "currentStatus": "FAIL",
+    "deployedCommitObserved": "431ba5bfd8295af3fc32afdc62cbefb3336ef064",
+    "featureFlagObserved": "confirmed enabled via responseType controlled_loa_answer on the primary safe query"
   },
   "safeQuerySmokeMatrix": [
     { "id": "safe-1", "query": "I received a BIR LOA, what should I do?", "expected": "controlled procedural LOA answer", "actualResult": "PASS - controlled branch triggered, full procedural content present" },
     { "id": "safe-2", "query": "I received a BIR eLA, what should I do?", "expected": "controlled procedural LOA answer", "actualResult": "PASS - controlled branch triggered, full procedural content present" },
     { "id": "safe-3", "query": "What should I do after receiving a Letter of Authority from BIR?", "expected": "controlled procedural LOA answer", "actualResult": "PASS - controlled branch triggered, full procedural content present" },
     { "id": "safe-4", "query": "What documents should I prepare after receiving a BIR LOA?", "expected": "controlled procedural LOA answer", "actualResult": "PASS - controlled branch triggered, full procedural content present" },
-    { "id": "safe-5", "query": "I received a replacement eLA, what should I check first?", "expected": "controlled procedural LOA answer", "actualResult": "FAIL - intercepted by pre-existing Philippine-tax-domain-boundary check before reaching the controlled-LOA gate; generic fallback returned instead" },
-    { "id": "safe-6", "query": "I received a consolidated eLA, what should I do?", "expected": "controlled procedural LOA answer", "actualResult": "FAIL - intercepted by pre-existing Philippine-tax-domain-boundary check before reaching the controlled-LOA gate; generic fallback returned instead" },
-    { "id": "safe-7", "query": "I received a notice for presentation/submission of documents.", "expected": "controlled procedural LOA answer", "actualResult": "FAIL - intercepted by pre-existing Philippine-tax-domain-boundary check before reaching the controlled-LOA gate; generic fallback returned instead" },
-    { "id": "safe-8", "query": "I received a reminder before subpoena.", "expected": "controlled procedural LOA answer", "actualResult": "FAIL - intercepted by pre-existing Philippine-tax-domain-boundary check before reaching the controlled-LOA gate; generic fallback returned instead" }
+    { "id": "safe-5", "query": "I received a replacement eLA, what should I check first?", "expected": "controlled procedural LOA answer", "actualResult": "FAIL - HTTP 200 without responseType controlled_loa_answer or controlled procedural content on deployed commit 431ba5b" },
+    { "id": "safe-6", "query": "I received a consolidated eLA, what should I do?", "expected": "controlled procedural LOA answer", "actualResult": "FAIL - HTTP 200 without responseType controlled_loa_answer or controlled procedural content on deployed commit 431ba5b" },
+    { "id": "safe-7", "query": "I received a notice for presentation/submission of documents.", "expected": "controlled procedural LOA answer", "actualResult": "FAIL - HTTP 200 without responseType controlled_loa_answer or controlled procedural content on deployed commit 431ba5b" },
+    { "id": "safe-8", "query": "I received a reminder before subpoena.", "expected": "controlled procedural LOA answer", "actualResult": "FAIL - HTTP 200 without responseType controlled_loa_answer or controlled procedural content on deployed commit 431ba5b" }
   ],
   "excludedQuerySmokeMatrix": [
     { "id": "excluded-1", "query": "Is my LOA invalid?", "expected": "no controlled safe LOA answer", "actualResult": "PASS - controlled branch not triggered" },
     { "id": "excluded-2", "query": "Is this eLA void?", "expected": "no controlled safe LOA answer", "actualResult": "PASS - controlled branch not triggered" },
     { "id": "excluded-3", "query": "Can I ignore the LOA?", "expected": "no controlled safe LOA answer", "actualResult": "PASS - controlled branch not triggered" },
     { "id": "excluded-4", "query": "Can the BIR assess me?", "expected": "no controlled safe LOA answer", "actualResult": "PASS - controlled branch not triggered" },
-    { "id": "excluded-5", "query": "Is the assessment final?", "expected": "no controlled safe LOA answer", "actualResult": "PASS - controlled branch not triggered" },
+    { "id": "excluded-5", "query": "Is the assessment final?", "expected": "no controlled safe LOA answer and no unqualified legal conclusion", "actualResult": "FAIL legal-safety wording scan - controlled branch and checklist did not trigger, but a negation-aware sentence scan found one unqualified conclusory pattern" },
     { "id": "excluded-6", "query": "Should I appeal to CTA?", "expected": "no controlled safe LOA answer", "actualResult": "PASS - controlled branch not triggered" },
-    { "id": "excluded-7", "query": "Is the FAN void?", "expected": "no controlled safe LOA answer", "actualResult": "PASS - controlled branch not triggered" },
+    { "id": "excluded-7", "query": "Is the FAN void?", "expected": "no controlled safe LOA answer and no unqualified legal conclusion", "actualResult": "FAIL legal-safety wording scan - controlled branch and checklist did not trigger, but a negation-aware sentence scan found one unqualified conclusory pattern" },
     { "id": "excluded-8", "query": "Is the FDDA appealable?", "expected": "no controlled safe LOA answer", "actualResult": "PASS - controlled branch not triggered" },
     { "id": "excluded-9", "query": "Will I win?", "expected": "no controlled safe LOA answer", "actualResult": "PASS - controlled branch not triggered" },
     { "id": "excluded-10", "query": "Can you draft the protest now?", "expected": "no controlled safe LOA answer", "actualResult": "PASS - controlled branch not triggered" },
@@ -157,7 +197,10 @@
     { "id": "unrelated-2", "query": "Is lease subject to withholding tax in the Philippines?", "expected": "normal /ask behavior, no controlled LOA branch", "actualResult": "PASS - controlled branch not triggered" },
     { "id": "unrelated-3", "query": "What is percentage tax?", "expected": "normal /ask behavior, no controlled LOA branch", "actualResult": "PASS - controlled branch not triggered" },
     { "id": "unrelated-4", "query": "What is VAT-exempt sale?", "expected": "normal /ask behavior, no controlled LOA branch", "actualResult": "PASS - controlled branch not triggered" },
-    { "id": "unrelated-5", "query": "What is estate tax?", "expected": "normal /ask behavior, no controlled LOA branch", "actualResult": "PASS - controlled branch not triggered" }
+    { "id": "unrelated-5", "query": "What is estate tax?", "expected": "normal /ask behavior, no controlled LOA branch", "actualResult": "PASS - controlled branch not triggered" },
+    { "id": "unrelated-6", "query": "What are the rules on withholding tax on professional fees?", "expected": "normal /ask behavior, no controlled LOA branch", "actualResult": "PASS - controlled branch not triggered" },
+    { "id": "unrelated-7", "query": "How to compute percentage tax?", "expected": "normal /ask behavior, no controlled LOA branch", "actualResult": "PASS - controlled branch not triggered after one transient timeout and successful retry" },
+    { "id": "unrelated-8", "query": "Is sale of fresh frozen seafood VAT exempt?", "expected": "normal /ask behavior, no controlled LOA branch", "actualResult": "PASS - controlled branch not triggered" }
   ],
   "runtimeSecuritySmokeMatrix": [
     { "id": "runtime-1", "target": "/health", "expected": "normal", "actualResult": "PASS - HTTP 200, {\"status\":\"ok\",\"service\":\"tina-backend\"}" },
@@ -191,13 +234,14 @@
     "verifiedControllingAuthorityClaim": false
   },
   "runtimeBoundary": {
-    "runtimeImpact": "Staging smoke only.",
+    "runtimeImpact": "Staging smoke evidence only.",
     "production": "production unchanged",
     "askHandlerImpact": "None.",
-    "pipelineImplementationImpact": "None.",
+    "pipelineImplementationImpact": "None in this recovery task.",
     "routeImpact": "None.",
     "serverImpact": "None.",
-    "featureFlagImpact": "Staging flag required."
+    "authImpact": "None beyond use of refreshed staging JWT.",
+    "featureFlagImpact": "Existing staging flag verified."
   },
   "externalOperationBoundary": {
     "externalSearch": "None.",
@@ -231,6 +275,6 @@
     "MCP deferred until after final planned phase",
     "mobile app deferred until after Phase 13"
   ],
-  "nextTask": "Resolve blocker and rerun PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1",
+  "nextTask": "PHASE-09ZG-CONTROLLED-LOA-LIVE-PATH-INSTRUMENTATION-DIAGNOSTIC-1",
   "alternativeNextPhase": "PHASE 10 -- Evaluation / Fact-Check / Legal-Tax QA System"
 }
