@@ -1,0 +1,127 @@
+{
+  "patch": "PHASE-10A1-R1-CONFLICT-TRUST-CONTRACT-CORRECTION-1",
+  "commit": "be73f97",
+  "generatedAt": "2026-07-11T00:17:29.620Z",
+  "service": "tina-backend-staging",
+  "note": "Sanitized evidence for independent replay. No credentials, JWTs, authorization headers, or .env content included.",
+  "results": [
+    {
+      "id": "ordinary-no-conflict",
+      "category": "no-conflict",
+      "query": "What is the standard corporate income tax rate in the Philippines?",
+      "httpStatus": 200,
+      "responseType": null,
+      "sourceStatus": "AUTHORITY_FOUND",
+      "trustHasConflict": false,
+      "trustConflictState": "NO_CONFLICT",
+      "trustAuthoritySupport": "VERIFIED_CONTROLLING",
+      "trustLimitations": [],
+      "rendererDisclosedConflict": false,
+      "answerTrustConsistent": true,
+      "sourceCardIdentities": [
+        "NIRC Sec. 27",
+        "NIRC Sec. 23",
+        "NIRC Sec. 24"
+      ],
+      "answerSnippet": "### Short Answer\nThe standard corporate income tax rate in the Philippines is twenty-five percent (25%) on taxable income derived from all sources within and without the Philippines.\n\n### Interpretation\n\n### Practical Me",
+      "latencyMs": 17046
+    },
+    {
+      "id": "statutory-prior-hasConflict-true",
+      "category": "potential-conflict-regression",
+      "query": "What is the difference between input VAT and output VAT?",
+      "httpStatus": 200,
+      "responseType": null,
+      "sourceStatus": "AUTHORITY_FOUND",
+      "trustHasConflict": false,
+      "trustConflictState": "POTENTIAL_CONFLICT",
+      "trustAuthoritySupport": "VERIFIED_CONTROLLING",
+      "trustLimitations": [
+        "POTENTIAL_CONFLICT"
+      ],
+      "rendererDisclosedConflict": false,
+      "answerTrustConsistent": true,
+      "sourceCardIdentities": [
+        "NIRC Sec. 106",
+        "RR 16-2005"
+      ],
+      "answerSnippet": "### Short Answer\nInput VAT refers to the value-added tax that a business pays on its purchases of goods and services, which can be credited against its output VAT. Output VAT, on the other hand, is the tax collected by a",
+      "latencyMs": 18390
+    },
+    {
+      "id": "statutory-vat-rate-prior-hasConflict-true",
+      "category": "potential-conflict-regression",
+      "query": "What is the VAT rate under the NIRC as amended by the TRAIN law?",
+      "httpStatus": 200,
+      "responseType": null,
+      "sourceStatus": "AUTHORITY_FOUND",
+      "trustHasConflict": false,
+      "trustConflictState": "POTENTIAL_CONFLICT",
+      "trustAuthoritySupport": "VERIFIED_CONTROLLING",
+      "trustLimitations": [
+        "POTENTIAL_CONFLICT"
+      ],
+      "rendererDisclosedConflict": false,
+      "answerTrustConsistent": true,
+      "sourceCardIdentities": [
+        "NIRC Sec. 106",
+        "NIRC Sec. 105",
+        "NIRC Sec. 108",
+        "RR 16-2005"
+      ],
+      "answerSnippet": "### Short Answer\nThe VAT rate under the NIRC, as amended by the TRAIN Law, is twelve percent (12%) of the gross sales or receipts from the sale of goods, properties, and services.\n\n### Controlling Authorities\nThe control",
+      "latencyMs": 16357
+    },
+    {
+      "id": "controlled-loa-procedural",
+      "category": "controlled-loa",
+      "query": "How do I prepare a Letter of Authority for a BIR audit?",
+      "httpStatus": 200,
+      "responseType": "controlled_loa_answer",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "trustHasConflict": false,
+      "trustConflictState": "NOT_APPLICABLE",
+      "trustAuthoritySupport": "NOT_APPLICABLE",
+      "trustLimitations": [],
+      "rendererDisclosedConflict": false,
+      "answerTrustConsistent": true,
+      "sourceCardIdentities": [],
+      "answerSnippet": "If you received a BIR LOA/eLA, do not ignore it. Preserve the date and manner of receipt, keep a copy of the notice, and verify it through the available BIR verification process (for example, the REVIE / LOA Verifier pro",
+      "latencyMs": 18798
+    },
+    {
+      "id": "restricted-legal-conclusion",
+      "category": "restricted-legal-conclusion",
+      "query": "Is my Letter of Authority void because it was not served within 30 days?",
+      "httpStatus": 200,
+      "responseType": "controlled_loa_legal_conclusion_restricted",
+      "sourceStatus": "RELATED_AUTHORITY_ONLY",
+      "trustHasConflict": false,
+      "trustConflictState": "NOT_APPLICABLE",
+      "trustAuthoritySupport": "NOT_APPLICABLE",
+      "trustLimitations": [],
+      "rendererDisclosedConflict": false,
+      "answerTrustConsistent": true,
+      "sourceCardIdentities": [],
+      "answerSnippet": "A conclusive determination of validity, invalidity, voidness, finality, or appealability cannot be made from the limited information in this question. The actual document, its issuance and service details, the assessment",
+      "latencyMs": 19623
+    },
+    {
+      "id": "domain-boundary",
+      "category": "domain-boundary",
+      "query": "What is the capital of France?",
+      "httpStatus": 200,
+      "responseType": null,
+      "sourceStatus": "DOMAIN_BOUNDARY_REJECT",
+      "trustHasConflict": false,
+      "trustConflictState": "NOT_APPLICABLE",
+      "trustAuthoritySupport": "NOT_APPLICABLE",
+      "trustLimitations": [],
+      "rendererDisclosedConflict": false,
+      "answerTrustConsistent": true,
+      "sourceCardIdentities": [],
+      "answerSnippet": "TINA is designed to answer questions about Philippine taxation. Please ask a Philippine tax-related question, such as VAT, income tax, withholding tax, BIR compliance, local tax, customs duties, or tax remedies.",
+      "latencyMs": 1161
+    }
+  ]
+}

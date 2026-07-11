@@ -7957,4 +7957,82 @@ MANDATORY before Phase 10A may be considered closed or before PHASE-10A2 begins.
 
 Do not mark Phase 10A complete before independent review and PHASE-10A2 (and any further approved remediation) are finished.
 ```
+
+## Phase 10A1-R1 Conflict Trust Contract Correction -- PASS WITH STRICT RECOMMENDATIONS (2026-07-11):
+
+```text
+PHASE-10A1-R1-CONFLICT-TRUST-CONTRACT-CORRECTION-1 implemented, local-tested, staging-validated, sanitized evidence retained.
+Independent GPT-5.5 review is required before Phase 10A may be considered closed or before PHASE-10A2 begins. NOT closed by this entry.
+
+Phase 9 status:
+Remains COMPLETE. Not reopened.
+
+Phase 10 status:
+Active. Phase 10A remains OPEN -- remediation in progress.
+
+Independent-review correction commit 324122a recorded the P1 contradiction:
+pipeline.js exposes only ctx.conflictAnalysis = {trueConflicts, count, hasConflict} as its conflict signal; the renderer/compliance conflict-disclosure standard (answer-renderer.js conflictMetadataIsComplete) requires a structurally different, richer shape (conflict===true, conflictType, exactIssue, oppositeHoldingGate, resolutionBasis, etc.). The prior trust-contract.js forwarded the raw ctx.conflictAnalysis.hasConflict boolean directly as trust.hasConflict, so trust.hasConflict could be true while the rendered answer never disclosed any conflict -- a public contract/answer contradiction.
+
+Proven root cause (by direct execution, not inference):
+node -e confirmed conflictMetadataIsComplete({trueConflicts:[...], count:1, hasConflict:true}) === false for the exact shape pipeline.js's Step 9 Four-Part Doctrine Test produces, while a genuinely complete conflict object returns true. Exhaustive grep confirmed nothing in pipeline.js ever sets ctx.conflict, ctx.conflictReview, ctx.hierarchyConflict, ctx.jurisprudenceConflict, or ctx.jurisprudencePayload. Therefore a renderer-displayable conflict was CURRENTLY UNREACHABLE under the prior wiring for every conflict Step 9 could ever find -- not merely "sometimes incomplete."
+
+Correction implemented:
+New services/conflict-trust-classifier.js exports classifyConflictState(result), a pure function that imports and reuses answer-renderer.js's own conflictMetadataIsComplete() (not a reimplementation) to classify the conflict signal into {hasConflict, conflictState}. It evaluates completeness on the identical candidate pipeline.js's own renderTinaAnswer call already passes to the renderer (conflict: ctx.conflictAnalysis?.hasConflict ? ctx.conflictAnalysis : null), so trust.conflictState can never disagree with what the renderer/compliance path actually did for the same request. services/trust-contract.js now calls this classifier instead of forwarding the raw boolean, adds the new additive trust.conflictState field (VERIFIED_CONFLICT | POTENTIAL_CONFLICT | NO_CONFLICT | UNKNOWN | NOT_APPLICABLE), and redefines trust.hasConflict strictly: true only when conflictState is VERIFIED_CONFLICT. Incomplete upstream evidence is never discarded -- it surfaces as conflictState:POTENTIAL_CONFLICT and limitations:["POTENTIAL_CONFLICT"], never as a verified claim.
+
+API forwarding refactor (P2 correction):
+A new exported pure builder, buildResponseTrust(result, displayedSourceCount, sourceStatus), was added to services/trust-contract.js and is now called from both of ask-handler.js's response-construction locations (previously they called buildTrustContract directly with inline object-spread merges). This lets tests execute the exact production trust-forwarding wiring directly (real behavioral coverage), not merely confirm it via source-text inspection, without altering runtime architecture.
+
+VERIFIED_SUPPORTING:
+Remains reserved but unreachable. New finding: authority-utils.js's annotateAuthorityCandidates() (called by pipeline.js on ctx.rerankedChunks) does assign a genuine authorityRole:"SUPPORTING" value to non-governing candidates when a GOVERNING peer exists. However, whether this per-candidate role survives, unambiguously and consistently, through every finalSourceCards assignment branch to the API surface trust-contract.js consumes is not confirmed, and wiring it in would require a new, non-trivial aggregation rule -- a distinct design decision outside this conflict-focused correction's explicitly bounded scope. Documented as the most concrete lead for a future, separately-scoped task. A test confirms it cannot be produced accidentally today.
+
+Files created:
+- services/conflict-trust-classifier.js
+- evaluation/fixtures/phase-10a1-r1-conflict-trust-contract-correction-1.fixture.json
+- tests/phase-10a1-r1-conflict-trust-contract-correction-1.test.mjs
+- evaluation/results/phase-10a1-r1-conflict-trust-contract-correction-1-staging.json (sanitized staging evidence, tracked in-repo, no secrets/JWTs/tokens)
+- PHASE-10A1-R1-CONFLICT-TRUST-CONTRACT-CORRECTION-1_REPORT.md
+
+Files modified:
+- services/trust-contract.js (consumes the new classifier; adds conflictState; adds buildResponseTrust)
+- ask-handler.js (both insertion points now call buildResponseTrust instead of buildTrustContract directly; no other change)
+- evaluation/fixtures/phase-10a1-canonical-trust-contract-and-api-forwarding-remediation-1.fixture.json (added conflictState to every expected object; corrected case 9's expected values, which had encoded the pre-correction bug as "correct")
+- tests/phase-10a1-canonical-trust-contract-and-api-forwarding-remediation-1.test.mjs (updated the conflict-specific assertions and API-forwarding assertions to match the corrected wiring)
+
+No change to pipeline.js, conflict-engine.js, answer-renderer.js, final-answer-compliance.js, controlled-LOA service modules, Step 12.65/12.66, timeout values, route ordering, feature flags, frontend files, or production.
+
+Local test result:
+tests/phase-10a1-r1-conflict-trust-contract-correction-1.test.mjs: 20/20 pass, 106+ assertions, covering categories A-J (verified conflict, potential/incomplete conflict, no conflict, unknown/malformed, domain boundary, contradictory inputs, VERIFIED_SUPPORTING non-production, mutation safety, real behavioral response-construction execution via buildResponseTrust, backward compatibility) plus a direct-execution proof of the root cause and a diff-scope check.
+tests/phase-10a1-canonical-trust-contract-and-api-forwarding-remediation-1.test.mjs (updated): 17/18 pass -- the 1 failure is that suite's own "no unexpected file changed since PHASE-10A1's baseline" self-check, which now legitimately fails because R1 authorized changes to its own files; no functional assertion failed.
+
+Regression result:
+patch-024c (133/133), patch-06f-005 (10/10), patch-07a-003 (18/18), patch-07a-008 (23/23), patch-025a-rev3 (16/16) all pass unchanged. phase-10a-trust-limitation-authority-confidence-release-gate-1 (17/18), phase-09z (24/25), phase-09zh (19/20), phase-09zi (20/22), phase-09-gate-closure-2 (10/11) -- every failure in this group is the same self-referential "ask-handler.js/trust-contract.js must remain byte-identical to that phase's historical checkpoint" class of test debt (same class as the previously-classified 09ZF pattern), now recurring because this authorized correction legitimately modified those files again. No functional/behavioral assertion failed in any suite.
+
+Staging validation result (tina-backend-staging only, never production; commit be73f97; sanitized evidence retained at evaluation/results/phase-10a1-r1-conflict-trust-contract-correction-1-staging.json):
+6 queries, all HTTP 200, all trust.conflictState present and consistent with the rendered answer and sourceStatus:
+1. Ordinary no-conflict (corporate income tax rate) -> conflictState NO_CONFLICT, hasConflict false.
+2/3. The two statutory queries that previously exposed trust.hasConflict:true under the pre-correction code (input/output VAT; VAT rate under TRAIN) -> now correctly conflictState POTENTIAL_CONFLICT, hasConflict false, limitations:["POTENTIAL_CONFLICT"] -- confirming the P1 fix is live and the evidence is preserved, not discarded.
+4. Controlled LOA procedural -> conflictState NOT_APPLICABLE.
+5. Restricted legal-conclusion (deterministic path, not the known route-timeout query) -> conflictState NOT_APPLICABLE.
+6. Domain boundary -> conflictState NOT_APPLICABLE.
+No answer/trust contradiction found in any of the 6 responses.
+
+Known unresolved issues:
+The route-level timeout bypass for restricted-legal-conclusion queries (PHASE-10A2) remains unresolved and untouched. Whether pipeline.js's conflict-engine.js is over-flagging POTENTIAL_CONFLICT on straightforward statutory queries, versus correctly detecting genuine (if incomplete-for-display) doctrinal tension, remains an open question for a separate investigation -- this task did not change or re-evaluate conflict-engine.js.
+
+Production validation:
+Not performed. Only tina-backend-staging was called, using a refreshed, non-printed local credential. Note: an earlier operational mistake in this task caused a background shell command to transiently print the (now-superseded) staging JWT into the conversation transcript; the offending local output file was deleted immediately, the user was notified, and the token was treated as compromised and rotated before this staging validation ran.
+
+Frontend remediation:
+None.
+
+Commit:
+be73f97 (code: services/trust-contract.js, services/conflict-trust-classifier.js, ask-handler.js, both fixtures, both test files) on feature/source-availability-engine-v1, pushed and confirmed in sync (0 0) with origin before this CURRENT_STATE.md/report/staging-evidence commit.
+
+Next task:
+PHASE-10A2-RESTRICTED-LEGAL-CONCLUSION-TIMEOUT-GATE-REMEDIATION-1. Remains blocked until this correction's independent GPT-5.5 review is accepted. Not started by this task. Phase 10B has not started.
+
+Independent review:
+MANDATORY before Phase 10A may be considered closed or before PHASE-10A2 begins. GPT-5.5 must verify: whether classifyConflictState's completeness evaluation genuinely mirrors pipeline.js's real render-time wiring; whether trust.hasConflict's stricter redefinition is safe for any existing consumer; whether the VERIFIED_SUPPORTING conclusion is sound; whether the response-construction test coverage is genuinely behavioral; whether this CURRENT_STATE.md entry accurately records the controlling status; whether Claude improperly changed conflict-engine, renderer/compliance, timeout, gate-ordering, retrieval, source-card, citation, feature-flag, database, ingestion, or production behavior (it did not).
+
+Do not mark Phase 10A complete before independent review and PHASE-10A2 (and any further approved remediation) are finished.
 ```
