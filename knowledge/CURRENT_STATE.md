@@ -8036,3 +8036,67 @@ MANDATORY before Phase 10A may be considered closed or before PHASE-10A2 begins.
 
 Do not mark Phase 10A complete before independent review and PHASE-10A2 (and any further approved remediation) are finished.
 ```
+
+## Phase 10A2 Restricted Legal-Conclusion Timeout-Gate Remediation -- PASS WITH STRICT RECOMMENDATIONS (2026-07-11):
+
+```text
+PHASE-10A2-RESTRICTED-LEGAL-CONCLUSION-TIMEOUT-GATE-REMEDIATION-1 implemented, local-tested, staging-validated, sanitized evidence retained.
+PHASE-10A1-R1 independent GPT-5.5 review PASSED WITH STRICT RECOMMENDATIONS, authorizing this task to begin.
+Independent GPT-5.5 review of THIS task is required before Phase 10A may be considered closed or PHASE-10A3 begins. NOT closed by this entry.
+
+Phase 9 status: Remains COMPLETE. Not reopened.
+Phase 10 status: Active. Phase 10A remains OPEN.
+PHASE-10A1 status: PHASE 10A1 REMEDIATION PASS WITH STRICT RECOMMENDATIONS (unchanged).
+PHASE-10A1-R1 status: PHASE 10A1 R1 CORRECTION PASS WITH STRICT RECOMMENDATIONS, independent review PASS WITH STRICT RECOMMENDATIONS (unchanged).
+
+Proven root cause:
+pipeline.js's Step 12.65 (evaluateControlledLoaAskGate) and Step 12.66 (evaluateControlledLoaLegalConclusionSafetyGate) -- the only place a restricted legal-conclusion query was ever classified -- run at lines ~3904/4013, AFTER Step 5 (Issue-Targeted Retrieval, line ~2498) and Step 6 (Reranker, line ~3344), inside the single runPipeline() call. ask-handler.js's handleControlledRagRoute races that entire call against RAG_TIMEOUT_MS=90000ms (withTimeout(runPipeline(...), 90000, "TINA 16-step pipeline")). For a query shape where retrieval/reranking is slow (confirmed live in PHASE-10A validation: "Will I win my BIR case?" took ~93.5s, logged sourceAvailabilityStatusBeforeTimeout: RETRIEVAL_TIMEOUT), the race rejects before runPipeline() ever reaches Step 12.65/12.66, discarding whatever restricted classification it would have computed and substituting ask-handler.js's generic buildRouteTimeoutFallback() response instead -- wrong response taxonomy, lost requiresHumanReview/restricted trust metadata, no gate ever having weakened, simply never having been reached in time. Root cause confirmed by direct code inspection of the exact line numbers and the RAG_TIMEOUT_MS constant, not merely inferred from the symptom.
+
+Remediation implemented:
+1. workflow/controlled-loa-answer-runtime-scaffold.js's categorize() -- the single shared query classifier both Step 12.65/12.66 and the new upstream gate use -- was corrected in four places (still the same function, no duplicate keyword list): (a) asksCta narrowed from a bare `\bcta\b` mention to require an appeal/strategy verb near CTA, fixing a real false positive ("What did CTA Case No. 9369 rule?" was previously CTA_STRATEGY_REQUEST/excluded:true; confirmed live in staging it is now correctly routed as a general jurisprudence answer); (b) asksOutcome broadened to also catch "chances of winning" / "likely to succeed/win" phrasing (required test queries that the original `\bwill\s+(?:i|we)\s+win\b` alone did not catch); (c) new asksDefinitiveConclusion category ("conclusively", "decide whether") and (d) new asksGuaranteedStrategy category ("best legal strategy", "guarantees success") added as new excluded intents (DEFINITIVE_LEGAL_CONCLUSION_REQUEST, DEFINITIVE_STRATEGY_REQUEST).
+2. services/controlled-loa-legal-conclusion-safety.js gained a new exported evaluateUpstreamRestrictedLegalConclusionGate({query, isPhilippineTax, ctx}) -- a pure, synchronous function (zero supabase/openai/fetch/await references, verified by grep) that reuses the identical classifyControlledLoaIntent() classifier and buildControlledLoaLegalConclusionLimitationResponse() builder Step 12.66 already uses, gated strictly on an already-established Philippine-tax context signal so isolated keywords in a context-free query (Invariant 8) can never trigger it.
+3. ask-handler.js's handleControlledRagRoute now calls this gate BEFORE computing requestId/pipelineDiagnostics/priorMessages and BEFORE the withTimeout(runPipeline(...)) race, restricted to hook==="/ask" and gated by the existing TINA_ENABLE_CONTROLLED_LOA_ASK_GATE flag (no new flag). On a match, `result` is set directly to the gate's earlyExitResponse and runPipeline() is never called for that request -- the existing downstream payload-construction/trust-forwarding code (unchanged) then runs exactly as it already did for every other response shape, so there is zero response-shape duplication between the upstream fast path and the Step 12.66 downstream path. The domain-boundary block's already-computed isPhilippineTax signal is threaded through a hoisted `_isPhilippineTaxContext` variable to avoid recomputing detectPhilippineTaxBoundary.
+4. A real defect was caught by staging validation, not local tests: the restricted-gate response initially left ctx.saeStatus unset, so ask-handler.js's payload construction fell through to its generic no-signal default, which is literally the string "RETRIEVAL_TIMEOUT" -- falsely implying a timeout occurred on a response that never touched retrieval. Fixed by explicitly setting ctx.saeStatus:"NOT_APPLICABLE" in the gate call; verified fixed in a second staging deploy (commit eb656f3) and covered by a new regression assertion.
+
+Step 12.65/12.66 and RAG_TIMEOUT_MS=90000 are byte-for-byte unchanged; conflict-engine.js, answer-renderer.js, final-answer-compliance.js, source-card logic, citation verification, retrieval relevance logic, and frontend files were not touched. No feature flag was changed or added.
+
+Files created:
+- evaluation/fixtures/phase-10a2-restricted-legal-conclusion-timeout-gate-remediation-1.fixture.json
+- tests/phase-10a2-restricted-legal-conclusion-timeout-gate-remediation-1.test.mjs
+- evaluation/results/phase-10a2-restricted-legal-conclusion-timeout-gate-remediation-1-staging.json (sanitized)
+- PHASE-10A2-RESTRICTED-LEGAL-CONCLUSION-TIMEOUT-GATE-REMEDIATION-1_REPORT.md
+
+Files modified (minimal, all required by the proven root cause):
+- ask-handler.js (upstream gate call + control-flow fork before the timeout race; no other change)
+- services/controlled-loa-legal-conclusion-safety.js (new exported gate function only)
+- workflow/controlled-loa-answer-runtime-scaffold.js (four categorize() regex corrections, two new excluded-intent branches)
+
+Local test result:
+tests/phase-10a2-restricted-legal-conclusion-timeout-gate-remediation-1.test.mjs: 21/21 pass, 190+ assertions, covering categories A-K plus mutation safety, hook/feature-flag scope, diff scope, and a dedicated regression test for the sourceStatus default defect. Real execution throughout (classifyControlledLoaIntent, evaluateUpstreamRestrictedLegalConclusionGate, evaluateControlledLoaLegalConclusionSafetyGate, buildResponseTrust), not string scans; early-interception proven via dependency-injection spies (classifier/result-builder call counts) plus an I/O-reference absence check, not elapsed time alone.
+
+Regression result:
+patch-024c (133/133), patch-06f-005 (10/10), patch-07a-003 (18/18), patch-07a-008 (23/23), patch-025a-rev3 (16/16) pass unchanged. phase-10a (17/18), phase-10a1 (17/18), phase-10a1-r1 (19/20), phase-09z (24/25), phase-09zh (19/20), phase-09zi (20/22), phase-09zj (8/9), phase-09-gate-closure-2 (10/11) -- every failure is the same self-referential "file must remain byte-identical to that phase's historical checkpoint" test-debt class (same as the previously-classified 09ZF pattern), now recurring because ask-handler.js/services/controlled-loa-legal-conclusion-safety.js/workflow/controlled-loa-answer-runtime-scaffold.js were legitimately, additively modified. No functional/behavioral assertion failed in any suite -- individually re-verified per suite.
+
+Staging validation result (tina-backend-staging only, never production; commit eb656f3; sanitized evidence at evaluation/results/phase-10a2-restricted-legal-conclusion-timeout-gate-remediation-1-staging.json):
+14/14 queries HTTP 200. All 6 restricted queries ("Will I win my BIR case?", "Will I win my LOA case?", "Is my LOA invalid?", "Is the FAN void?", "Is the assessment final?", "Should I appeal to the CTA?") returned responseType controlled_loa_legal_conclusion_restricted with correct trust (legalConclusion:RESTRICTED, humanReviewRequired:true, filingReadyDocumentGenerated:false, automaticSubmission:false, responseKind:RESTRICTED_LEGAL_CONCLUSION, sourceStatus:NOT_APPLICABLE) at 2.6s-5.5s latency -- versus the prior ~93.5s timeout-fallback baseline. Both procedural controls preserved existing behavior (one controlled_loa_answer, one domain-boundary-rejected for lack of standalone tax context, both pre-existing and unrelated to this change). All 3 jurisprudence controls were NOT falsely restricted; "What did CTA Case No. 9369 rule?" in particular is now live confirmation that the asksCta false-positive fix works end-to-end (routed as a normal GENERAL_TAX/RELATED_AUTHORITY_ONLY answer, not CTA_STRATEGY_REQUEST). The general-tax control and both boundary controls ("Will I win?", "How do I bake a cake?") behaved exactly as before -- context-free "Will I win?" was domain-boundary-rejected, never reaching the restricted gate, confirming Invariant 8 end-to-end.
+
+Repeated restricted-query validation ("Will I win my BIR case?", 3 consecutive runs post-deploy): 2755ms, 1879ms, 3068ms. All three returned the identical deterministic controlled_loa_legal_conclusion_restricted response with correct trust metadata and no rollout inconsistency.
+
+Latency comparison: prior ~93,479ms (timeout fallback) -> now min 1879ms / max 5516ms / avg ~3200ms across all restricted-path staging calls in this task. The deterministic response no longer approaches the 90s route budget.
+
+Trust-contract consistency: confirmed identical and correct across every restricted-path response, matching the PHASE-10A1/PHASE-10A1-R1 canonical contract exactly (RESTRICTED_LEGAL_CONCLUSION responseKind, NOT_APPLICABLE authoritySupport/sourceState/conflictState, RESTRICTED legalConclusion, humanReviewRequired true, filing-ready/auto-submission false).
+
+Known unresolved issue (pre-existing, not a regression, not touched by this task): "What is the Supreme Court doctrine on LOA validity?" is classified as a controlled-LOA procedural intent (BIR_LOA_RECEIVED_WHAT_TO_DO) rather than routed as a general jurisprudence answer, because it mentions "LOA" and matches no more specific supported branch. It is NOT falsely restricted (the safety-critical requirement), just imprecisely bucketed. Recommended as a separate, narrowly-scoped follow-up, not folded into this timeout-focused remediation.
+
+Security scan: a secret-pattern match was found during the pre-commit quiet scan, confirmed to be this task's own test file's secret-detection regex definition (the same self-referential false-positive class handled in PHASE-10A1-R1), not a real credential. All other changed files scanned clean. No P0.
+
+No frontend remediation. No conflict-engine remediation. No production validation performed -- only tina-backend-staging was called, using a valid, non-printed local credential (confirmed still valid before use; not the same incident as the PHASE-10A1-R1 exposure).
+
+Commits: e6afbee (initial upstream gate + categorize fixes), 37ac192 (sourceStatus default fix caught by staging validation), eb656f3 (regression test for that fix) on feature/source-availability-engine-v1, pushed and confirmed in sync (0 0) with origin before this CURRENT_STATE.md/report/staging-evidence commit.
+
+Next task: PHASE-10A3 (scope not yet defined in this task). Remains blocked until this task's independent GPT-5.5 review is accepted. Not started by this task. Phase 10B has not started.
+
+Independent review: MANDATORY before Phase 10A may be considered closed or PHASE-10A3 begins. GPT-5.5 must verify: whether the upstream gate's context/intent preconditions are sufficient to prevent false positives on non-restricted, non-tax, and jurisprudence queries; whether the categorize() regex corrections are precise and complete; whether Step 12.66 genuinely remains functional defense in depth; whether the sourceStatus fix is complete and correctly reasoned; whether the reported latency improvement and repeated-run evidence are sufficient; whether this CURRENT_STATE.md entry accurately records the controlling status; whether Claude improperly changed conflict-engine, timeout value, gate ordering, retrieval, source-card, citation, feature-flag, database, ingestion, frontend, or production behavior (it did not).
+
+Do not mark Phase 10A complete before independent review and PHASE-10A3 (and any further approved remediation) are finished.
+```
