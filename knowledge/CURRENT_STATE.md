@@ -8243,3 +8243,78 @@ P3: frontend top-level malformed trust can suppress metadata fallback, though cu
 Current status:
 Phase 9 remains COMPLETE. Phase 10 remains ACTIVE. Phase 10A remains OPEN. Phase 10B NOT STARTED. Phase 10C NOT STARTED. Phase 10A may not close until authenticated staging validation and Gemini rendered UX review are accepted. Gemini 2.5 Pro rendered UX review may begin using the available screenshots, preferably supplemented with authenticated staging UI evidence.
 ```
+
+## Phase 10A4 Authenticated Staging Trust Integration And Closure Gate 1 -- BLOCKED (2026-07-12):
+
+```text
+PHASE-10A4-AUTHENTICATED-STAGING-TRUST-INTEGRATION-AND-CLOSURE-GATE-1 attempted as the final authenticated staging validation for Phase 10A.
+
+Backend repository: C:\Projects\tina-backend.
+Backend branch: feature/source-availability-engine-v1.
+Backend HEAD before mandatory push: e74dec9aee26f2394919e34e3916998517b07d25.
+Mandatory backend push result: Everything up-to-date.
+Backend final sync: origin/feature/source-availability-engine-v1...HEAD = 0 0.
+
+Frontend repository: C:\Projects\tina-ai.
+Frontend branch: phase-10a3-r1-trust-persistence-accessibility.
+Frontend HEAD: 1748788ee5314eb495710f9b281ab6621b943109.
+Frontend final sync: origin/phase-10a3-r1-trust-persistence-accessibility...HEAD = 0 0.
+Frontend feature branch remains unmerged.
+
+Backend staging health: https://tina-backend-staging.onrender.com/health returned 200 with status ok and service tina-backend.
+No production API call. No production frontend used. No production mutation. No real taxpayer or confidential client data used.
+
+Deployment mapping investigation:
+- tina-ai has vercel.json but no local .vercel project link.
+- Historical frontend URL https://tina-fawn.vercel.app now returns Vercel 404 DEPLOYMENT_NOT_FOUND.
+- GitHub status checks for frontend commit 1748788 show two successful Vercel statuses: Vercel - tina-ai and Vercel - tina.
+- The GitHub target URLs are Vercel dashboard/status pages, not an approved authenticated app URL.
+- Vercel deployment API lookup returned 403 missing authentication token.
+- Production branch mapping, preview branch mapping, separate staging project status, main-to-production behavior, deployment protection, public preview URL, and feature-branch customer exposure remain unconfirmed.
+
+Deployment governance classification: P1 RELEASE-GOVERNANCE VIOLATION for the closure gate, because final authenticated staging validation cannot proceed without confirmed safe deployment mapping and an accessible approved frontend environment.
+
+Authenticated staging validation result: BLOCKED.
+Authentication/login: BLOCKED because no approved accessible authenticated frontend staging or preview URL was available.
+Trust matrix: BLOCKED for restricted, controlled procedural, related authority, verified authority, potential conflict, verified conflict, no verified authority, source limitation, domain boundary, and legacy-history scenarios.
+History reload validation: BLOCKED because no authenticated frontend could save/reload conversations.
+Mobile/desktop validation: BLOCKED at 320px, 375px, 430px, tablet, and desktop.
+Accessibility validation: BLOCKED for actual authenticated app; previous local R1 fixture evidence remains accepted but is not a substitute for this gate.
+Browser console/network validation: BLOCKED for authenticated frontend; backend health public probe succeeded.
+
+Security result: no passwords, JWTs, bearer tokens, authorization headers, service-role keys, Vercel tokens, private keys, .env values, screenshots, taxpayer data, or client records were committed. Public Vercel dashboard HEAD responses emitted cookies, but those cookies are not recorded in the artifact/report.
+
+Focused validation:
+- PHASE-10A1 canonical trust/API forwarding: PASS 18/18.
+- PHASE-10A1-R1 conflict trust contract: PASS 20/20.
+- PHASE-10A2 restricted legal conclusion timeout gate: PASS 21/21.
+- PHASE-10A3-R1 persistence: PASS 5/5.
+- PHASE-10A release gate: PASS 18/18.
+- Controlled LOA implementation regression: PASS 20/20.
+- Controlled LOA staging-smoke test: PASS 7/7 with optional live mode skipped because explicit auth env vars were not set.
+- Backend npm run check: PASS.
+- Backend npm run guard:files: PASS.
+- Backend npm test: 184 suites run, 182 passed, 2 historical fixture/diff-scope consistency failures separated from Phase 10A functional trust behavior.
+- Frontend PHASE-10A3 test: PASS 20/20.
+- Frontend PHASE-10A3-R1 test: PASS 4/4.
+- Frontend security-header test: PASS 13/13.
+- Frontend npm run lint: PASS with one pre-existing react-hooks/exhaustive-deps warning.
+- Frontend npm run build: PASS after sandbox escalation for Vite temporary-file write.
+
+Artifacts:
+- evaluation/results/phase-10a4-authenticated-staging-trust-integration-and-closure-gate-1-staging.json
+- PHASE-10A4-AUTHENTICATED-STAGING-TRUST-INTEGRATION-AND-CLOSURE-GATE-1_REPORT.md
+
+Findings:
+P0: none.
+P1: approved authenticated frontend staging/preview URL unavailable; Vercel production/preview/deployment-protection mapping not confirmable from available access.
+P2: backend full npm test has two historical non-Phase-10A fixture/diff-scope failures.
+P3: frontend lint has one pre-existing hook dependency warning.
+
+Closure recommendation: Phase 10A closure criteria are NOT satisfied. Phase 10A closure is NOT recommended.
+Phase 10B remains NOT STARTED and may not begin.
+Phase 10C remains NOT STARTED and blocked.
+Mandatory Opus 4.5 independent review remains required before any closure decision.
+
+Next required remediation: provide Vercel project access or an approved protected preview/staging app URL for commit 1748788, then rerun PHASE-10A4 authenticated staging validation end to end.
+```
