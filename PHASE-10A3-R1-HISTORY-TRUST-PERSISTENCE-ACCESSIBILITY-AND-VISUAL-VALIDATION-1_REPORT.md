@@ -4,6 +4,10 @@ Date: 2026-07-11
 
 Decision: PHASE 10A3-R1 REMEDIATION PASS WITH STRICT RECOMMENDATIONS
 
+Backend commit: `07ebae32a0490507df4bfb78564c4be818888615` on `feature/source-availability-engine-v1`.
+
+Frontend commit: `1748788ee5314eb495710f9b281ab6621b943109` on `phase-10a3-r1-trust-persistence-accessibility`.
+
 Root cause: live `/ask` responses contained canonical `trust`, but `saveConversationTurn()` never passed it into `saveMessage()`. `saveMessage()` persisted message content, sources, references, and adaptive metadata only. `GET /conversations/:id/messages` returned rows without any normalized top-level trust field, and the frontend reconstructed reload messages with `trust: null`.
 
 Persistence design: no schema migration. Assistant-message trust is stored as sanitized JSON at `messages.metadata.trust`, preserving the original canonical object and unknown future JSON fields. History retrieval exposes `message.trust` from that metadata only when it is a JSON object. Legacy or malformed trust loads as `null`; no trust is inferred from prose.
@@ -17,6 +21,8 @@ Contrast: confirmed failing selector/use was trust warning/review text using `#9
 ARIA: critical and warning trust banners use `role="alert"`; lower-emphasis info/positive/procedural states use `role="status"`. Markers are decorative with `aria-hidden="true"`. One primary banner is rendered per message.
 
 Visual evidence: sanitized local Chrome screenshots were captured at 320, 375, 430, tablet, and desktop widths. These are local rendered fixtures using the production trust CSS classes, not authenticated staging screenshots.
+
+Evidence environment classification: `LOCAL_SIMULATION`. The file named `phase-10a3-r1-history-trust-persistence-accessibility-and-visual-validation-1-staging.json` is retained for the required artifact path but explicitly records `stagingApiCalled:false`.
 
 Deployment mapping: local `vercel.json` exists but does not identify production branch mapping. No `.vercel/project.json` was present locally. `main` production/staging mapping is therefore unconfirmed; frontend work was moved off `main` to branch `phase-10a3-r1-trust-persistence-accessibility`.
 

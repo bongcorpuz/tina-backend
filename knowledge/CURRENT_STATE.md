@@ -8149,6 +8149,9 @@ Do not mark Phase 10A complete before independent review and any further approve
 ```text
 PHASE-10A3-R1-HISTORY-TRUST-PERSISTENCE-ACCESSIBILITY-AND-VISUAL-VALIDATION-1 implemented across tina-backend and tina-ai.
 
+Backend commit: 07ebae32a0490507df4bfb78564c4be818888615 on feature/source-availability-engine-v1.
+Frontend commit: 1748788ee5314eb495710f9b281ab6621b943109 on phase-10a3-r1-trust-persistence-accessibility.
+
 Phase 9 status: Remains COMPLETE.
 Phase 10 status: Active.
 Phase 10A status: OPEN.
@@ -8185,7 +8188,7 @@ Validation:
 Backend focused R1 test PASS (5/5). Frontend focused R1 test PASS (4/4). Existing frontend PHASE-10A3 test PASS (20/20, 218 assertions). npm run lint PASS with one pre-existing react-hooks/exhaustive-deps warning. npm run build PASS. Backend PHASE-10A1 functional trust/API assertions PASS, with one expected self-referential historical diff-scope failure because this R1 task legitimately modifies conversation-memory.js. PHASE-10A1-R1 and PHASE-10A2 functional suites passed in this implementation run.
 
 Staging:
-No production API call was made. No authenticated staging API call was made in this turn; local persistence equivalence used an in-memory Supabase double executing the real saveMessage() and getConversationMessages() paths. This is sufficient to prove the serialization boundary locally but should be followed by authenticated staging validation before final release closure.
+No production API call was made. No authenticated staging API call was made in this turn; local persistence equivalence used an in-memory Supabase double executing the real saveMessage() and getConversationMessages() paths. The result artifact is classified as LOCAL_SIMULATION even though the required filename contains "staging"; stagingApiCalled=false. This is sufficient to prove the serialization boundary locally but should be followed by authenticated staging validation before final release closure.
 
 Security:
 No JWT, bearer token, authorization header, service-role key, Vercel token, private key, .env value, or confidential taxpayer data was printed or committed. Screenshot fixture content is synthetic and sanitized.
@@ -8200,4 +8203,43 @@ Decision:
 PHASE 10A3-R1 REMEDIATION PASS WITH STRICT RECOMMENDATIONS.
 
 Do not mark Phase 10A complete before independent GPT-5.5 review and Gemini UX re-review are accepted. Do not begin Phase 10B or Phase 10C from this task.
+```
+
+## Phase 10A3-R1 Independent Technical Review -- PASS WITH STRICT RECOMMENDATIONS (2026-07-11):
+
+```text
+Mandatory independent technical review completed for PHASE-10A3-R1-HISTORY-TRUST-PERSISTENCE-ACCESSIBILITY-AND-VISUAL-VALIDATION-1.
+
+Reviewed backend commit: 07ebae32a0490507df4bfb78564c4be818888615 on feature/source-availability-engine-v1, remote sync 0 0.
+Reviewed frontend commit: 1748788ee5314eb495710f9b281ab6621b943109 on phase-10a3-r1-trust-persistence-accessibility, remote sync 0 0.
+
+Decision:
+INDEPENDENT REVIEW PASS WITH STRICT RECOMMENDATIONS.
+
+Technical acceptance:
+Accepted. The root cause is correctly proven: canonical trust existed in live /ask responses but was not passed into saveMessage() or exposed on history reload. The R1 fix persists canonical payload.trust as messages.metadata.trust, exposes top-level history message.trust from that metadata, and restores trust in the frontend reload mapper without recomputation or inference from prose, citations, source count, or source titles.
+
+Compatibility:
+Accepted. Legacy rows and malformed trust load neutrally. Unknown future JSON fields are preserved at the backend persistence boundary; frontend unknown enum values normalize safely and do not create false verified states.
+
+Accessibility:
+Accepted with recommendation. Confirmed trust warning/review contrast corrected from 3.49:1 (#9a741e on #f4e7c1) to 5.73:1 (#735313 on #f4e7c1). Critical/warning states use role=alert; info/positive/procedural states use role=status; decorative markers use aria-hidden=true. Repeated role=alert warnings may produce screen-reader noise in long histories and should be reviewed by Gemini.
+
+Evidence:
+Accepted with strict caveat. Local headless-Chrome screenshots at 320, 375, 430, tablet, and desktop are real rendered evidence from a sanitized static fixture using app CSS classes. They are not authenticated staging UI screenshots and not a live React app history reload. The result artifact is now explicitly classified as LOCAL_SIMULATION with stagingApiCalled=false.
+
+Deployment governance:
+Frontend R1 is on the feature branch and not on main. No merge or cherry-pick into main occurred. Vercel production/staging mapping remains unconfirmed and is P2 governance debt before merge/release.
+
+Tests:
+Backend focused R1 PASS 5/5. PHASE-10A1 PASS 18/18. PHASE-10A1-R1 PASS 20/20. PHASE-10A2 PASS 21/21. PHASE-10A release gate PASS 18/18. Controlled LOA suites had functional assertions pass; historical diff-scope assertions failed only because this review's documentation files are present. Frontend R1 PASS 4/4. Frontend PHASE-10A3 PASS 20/20. Frontend security-header PASS 13/13. npm run lint PASS with one pre-existing React hook warning. npm run build PASS after allowing Vite temporary-file write.
+
+Findings:
+P0: none.
+P1: none.
+P2: authenticated staging UI validation remains required; Vercel branch/deployment mapping remains unconfirmed; visual evidence is static fixture rendering rather than actual authenticated React app history; warning-density/screen-reader behavior needs Gemini review.
+P3: frontend top-level malformed trust can suppress metadata fallback, though current backend derives top-level trust from metadata; domain-boundary early responses return trust but do not enter the main persistence path, not material because domain-boundary trust renders no tax-trust banner.
+
+Current status:
+Phase 9 remains COMPLETE. Phase 10 remains ACTIVE. Phase 10A remains OPEN. Phase 10B NOT STARTED. Phase 10C NOT STARTED. Phase 10A may not close until authenticated staging validation and Gemini rendered UX review are accepted. Gemini 2.5 Pro rendered UX review may begin using the available screenshots, preferably supplemented with authenticated staging UI evidence.
 ```
