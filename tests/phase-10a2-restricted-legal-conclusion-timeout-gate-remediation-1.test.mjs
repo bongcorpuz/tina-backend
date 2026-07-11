@@ -243,6 +243,29 @@ await test("J. timeout preservation: the gate's response never depends on route 
   check(gate.earlyExitResponse.sourceStatus !== "RETRIEVAL_TIMEOUT", "restricted response is not the generic timeout fallback status");
   check(gate.earlyExitResponse.retrievalTimedOut !== true, "restricted response does not claim a retrieval timeout occurred");
   check(gate.earlyExitResponse.responseType === "controlled_loa_legal_conclusion_restricted", "correct deterministic response type, not a fallback");
+
+  // Regression test for a real defect caught during PHASE-10A2 staging
+  // validation: ask-handler.js's payload construction defaults an unset
+  // top-level sourceStatus to the string "RETRIEVAL_TIMEOUT" (its generic
+  // no-signal fallback). ask-handler.js must pass an explicit
+  // ctx.saeStatus so this response never falls through to that misleading
+  // default.
+  const askSrc = readFileSync(resolve(ASK_HANDLER_PATH), "utf8");
+  check(/ctx:\s*\{\s*mode:\s*hookConfig\.mode,\s*saeStatus:\s*"NOT_APPLICABLE"\s*\}/.test(askSrc),
+    "ask-handler.js passes an explicit non-misleading ctx.saeStatus to the upstream gate");
+  const productionShapedGate = evaluateUpstreamRestrictedLegalConclusionGate({
+    query: "Will I win my BIR case?",
+    isPhilippineTax: true,
+    ctx: { mode: "ASK", saeStatus: "NOT_APPLICABLE" }
+  });
+  const resultSourcesLength = 0;
+  const simulatedPayloadSourceStatus = productionShapedGate.earlyExitResponse.sourceStatus ||
+    productionShapedGate.earlyExitResponse.sourceAvailability ||
+    (productionShapedGate.earlyExitResponse.internalError === true
+      ? "PIPELINE_ERROR"
+      : resultSourcesLength ? "ISSUE_MATCHED_CONTEXT_USED" : "RETRIEVAL_TIMEOUT");
+  check(simulatedPayloadSourceStatus === "NOT_APPLICABLE",
+    `simulated top-level payload sourceStatus must not fall back to RETRIEVAL_TIMEOUT (got ${simulatedPayloadSourceStatus})`);
 });
 
 await test("K. no prohibited language in the restricted answer text", () => {
