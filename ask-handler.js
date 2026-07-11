@@ -2116,7 +2116,12 @@ export function createAskHandler({
       ? evaluateUpstreamRestrictedLegalConclusionGate({
           query: question,
           isPhilippineTax: isPhilippineTaxContext,
-          ctx: { mode: hookConfig.mode }
+          // saeStatus explicitly set to NOT_APPLICABLE (not left undefined):
+          // no retrieval was attempted for this deterministic response, and
+          // the payload construction below defaults an unset sourceStatus to
+          // the misleading string "RETRIEVAL_TIMEOUT" (its generic no-signal
+          // fallback), which would falsely claim a timeout occurred here.
+          ctx: { mode: hookConfig.mode, saeStatus: "NOT_APPLICABLE" }
         })
       : { matched: false, intentClassification: null, earlyExitResponse: null };
     if (upstreamRestrictedGate.matched) {
