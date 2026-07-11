@@ -1,5 +1,6 @@
 // FILE: services/trust-contract.js
 // PHASE-10A1-CANONICAL-TRUST-CONTRACT-AND-API-FORWARDING-REMEDIATION-1
+// Corrected by PHASE-10A1-R1-CONFLICT-TRUST-CONTRACT-CORRECTION-1
 //
 // Pure, deterministic helper that derives one canonical, categorical,
 // frontend-facing trust object from an already-computed pipeline/response
@@ -12,8 +13,26 @@
 // existing authoritative evidence; UNKNOWN/NOT_APPLICABLE is used whenever
 // the runtime cannot prove a stronger categorical state. No numeric
 // confidence is introduced.
+//
+// PHASE-10A1-R1 correction: trust.hasConflict previously forwarded the raw
+// ctx.conflictAnalysis.hasConflict boolean directly, which could be true even
+// when the renderer/compliance path's own completeness standard
+// (conflictMetadataIsComplete in answer-renderer.js) would never disclose
+// that conflict in the rendered answer -- a public contract/answer
+// contradiction (independent-review P1). trust.hasConflict is now strictly
+// true only when conflictClassification.classifyConflictState() (which
+// reuses answer-renderer.js's own conflictMetadataIsComplete(), not a
+// reimplementation) determines the conflict is verified/displayable.
+// trust.conflictState is a new, additive categorical field distinguishing
+// VERIFIED_CONFLICT / POTENTIAL_CONFLICT / NO_CONFLICT / UNKNOWN /
+// NOT_APPLICABLE, so incomplete upstream conflict evidence is never silently
+// discarded, only never overstated as verified.
+
+import { classifyConflictState, CONFLICT_STATE_VALUES } from "./conflict-trust-classifier.js";
 
 export const TRUST_CONTRACT_VERSION = "1.0";
+
+export { CONFLICT_STATE_VALUES };
 
 export const AUTHORITY_SUPPORT_VALUES = Object.freeze([
   "VERIFIED_CONTROLLING",
@@ -86,10 +105,6 @@ function deriveSourceState(result, responseKind) {
   return normalizeRawSourceState(result);
 }
 
-function deriveHasConflict(result) {
-  return safeBool(result.conflict?.hasConflict) || safeBool(result.conflictAnalysis?.hasConflict);
-}
-
 function deriveAuthoritySupport(result, sourceState, responseKind, hasConflict) {
   if (responseKind === "DOMAIN_BOUNDARY" || responseKind === "CONTROLLED_PROCEDURAL" || responseKind === "RESTRICTED_LEGAL_CONCLUSION") {
     return "NOT_APPLICABLE";
@@ -143,9 +158,12 @@ function deriveAutomaticSubmission(result) {
   return false;
 }
 
-function deriveLimitations(sourceState, hasConflict, responseKind) {
+function deriveLimitations(sourceState, hasConflict, responseKind, conflictState) {
   const limitations = [];
   if (hasConflict) limitations.push("CONFLICTING_AUTHORITY");
+  // Potential (incomplete-evidence) conflicts are never discarded, only
+  // never overstated as a verified, user-displayable conflict.
+  if (conflictState === "POTENTIAL_CONFLICT") limitations.push("POTENTIAL_CONFLICT");
   if (UNSAFE_SOURCE_STATES.has(sourceState)) limitations.push(sourceState);
   if (sourceState === "RELATED_AUTHORITY_ONLY") limitations.push("RELATED_AUTHORITY_ONLY");
   if (responseKind === "FALLBACK" && limitations.length === 0) limitations.push("FALLBACK");
@@ -193,7 +211,27 @@ function enforceInvariants(candidate) {
     out.sourceState = "NOT_APPLICABLE";
     out.legalConclusion = "NOT_APPLICABLE";
     out.hasConflict = false;
+    out.conflictState = "NOT_APPLICABLE";
     out.limitations = [];
+  }
+
+  // Controlled-procedural and restricted-legal-conclusion paths are
+  // deterministic, dedicated response shapes that do not carry general RAG
+  // conflict-analysis state; any leftover conflict signal from an earlier
+  // pipeline stage is not meaningful here and must not be surfaced.
+  if (out.responseKind === "CONTROLLED_PROCEDURAL" || out.responseKind === "RESTRICTED_LEGAL_CONCLUSION") {
+    out.hasConflict = false;
+    out.conflictState = "NOT_APPLICABLE";
+    out.limitations = out.limitations.filter((l) => l !== "CONFLICTING_AUTHORITY" && l !== "POTENTIAL_CONFLICT");
+  }
+
+  // Invariant 1 (conflict): trust.hasConflict is true if and only if
+  // conflictState is VERIFIED_CONFLICT -- never independently true/false.
+  if (out.hasConflict === true && out.conflictState !== "VERIFIED_CONFLICT") {
+    out.hasConflict = false;
+  }
+  if (out.conflictState === "VERIFIED_CONFLICT" && out.hasConflict !== true) {
+    out.conflictState = "POTENTIAL_CONFLICT";
   }
 
   return out;
@@ -213,13 +251,13 @@ export function buildTrustContract(result = {}) {
 
   const responseKind = deriveResponseKind(safeResult);
   const sourceState = deriveSourceState(safeResult, responseKind);
-  const hasConflict = responseKind === "DOMAIN_BOUNDARY" ? false : deriveHasConflict(safeResult);
+  const { hasConflict, conflictState } = classifyConflictState(safeResult);
   const authoritySupport = deriveAuthoritySupport(safeResult, sourceState, responseKind, hasConflict);
   const legalConclusion = deriveLegalConclusion(responseKind);
   const humanReviewRequired = deriveHumanReviewRequired(safeResult, responseKind);
   const filingReadyDocumentGenerated = deriveFilingReadyDocumentGenerated(safeResult);
   const automaticSubmission = deriveAutomaticSubmission(safeResult);
-  const limitations = deriveLimitations(sourceState, hasConflict, responseKind);
+  const limitations = deriveLimitations(sourceState, hasConflict, responseKind, conflictState);
 
   const candidate = {
     version: TRUST_CONTRACT_VERSION,
@@ -230,9 +268,36 @@ export function buildTrustContract(result = {}) {
     filingReadyDocumentGenerated,
     automaticSubmission,
     hasConflict,
+    conflictState,
     limitations,
     responseKind
   };
 
   return enforceInvariants(candidate);
+}
+
+/**
+ * PHASE-10A1-R1: extractable pure builder so tests can execute the exact
+ * production trust-forwarding wiring directly (real behavioral coverage of
+ * ask-handler.js's response construction), not merely confirm it via
+ * source-text inspection. Both of ask-handler.js's response-construction
+ * locations call this instead of buildTrustContract() directly, so this
+ * function is the single source of truth for how a raw pipeline/response
+ * result and its resolved displayedSourceCount/sourceStatus are normalized
+ * into the trust input. Pure -- never mutates `result`, never performs I/O.
+ *
+ * @param {object} result - the raw pipeline/response object.
+ * @param {number} displayedSourceCount - the already-resolved display count
+ *   (matching whatever the response payload itself uses).
+ * @param {string} sourceStatus - the already-resolved source status
+ *   (matching whatever the response payload itself uses).
+ * @returns {object} the canonical trust object.
+ */
+export function buildResponseTrust(result, displayedSourceCount, sourceStatus) {
+  const safeResult = result && typeof result === "object" ? result : {};
+  return buildTrustContract({
+    ...safeResult,
+    displayedSourceCount,
+    sourceStatus
+  });
 }

@@ -16,6 +16,7 @@ import { resolve } from "node:path";
 
 import {
   buildTrustContract,
+  buildResponseTrust,
   TRUST_CONTRACT_VERSION,
   AUTHORITY_SUPPORT_VALUES,
   SOURCE_STATE_VALUES,
@@ -137,16 +138,49 @@ await test("controlled procedural responses never claim a restricted legal concl
   check(out.automaticSubmission === false, "automaticSubmission forced false even if upstream said true");
 });
 
-await test("conflict: genuine conflict sets hasConflict true; multiple sources alone do not; conflict never implies fully settled controlling authority", () => {
-  const genuineConflict = buildTrustContract({ sourceStatus: "AUTHORITY_FOUND", displayedSourceCount: 2, conflict: { hasConflict: true } });
-  check(genuineConflict.hasConflict === true, "genuine conflict result sets hasConflict true");
-  check(genuineConflict.authoritySupport === "CONFLICTING_AUTHORITY", "conflict is never presented as a fully settled controlling position");
+await test("conflict (corrected by PHASE-10A1-R1): raw upstream conflict signals alone never yield hasConflict:true; only renderer-complete metadata does; conflict never implies fully settled controlling authority", () => {
+  // A raw conflict.hasConflict:true boolean, with no conflictType/exactIssue/
+  // oppositeHoldingGate/resolutionBasis, is exactly the shape pipeline.js's
+  // Step 9 Four-Part Doctrine Test actually produces today. It is real
+  // upstream evidence, but it is NOT complete under the renderer/compliance
+  // standard (answer-renderer.js's conflictMetadataIsComplete), so it must
+  // not be exposed as a verified, user-displayable conflict.
+  const incompleteConflict = buildTrustContract({ sourceStatus: "AUTHORITY_FOUND", displayedSourceCount: 2, conflict: { hasConflict: true } });
+  check(incompleteConflict.hasConflict === false, "incomplete upstream conflict evidence does not set hasConflict true");
+  check(incompleteConflict.conflictState === "POTENTIAL_CONFLICT", "incomplete upstream conflict evidence maps to POTENTIAL_CONFLICT");
+  check(incompleteConflict.limitations.includes("POTENTIAL_CONFLICT"), "incomplete conflict evidence is not discarded, it is surfaced as a limitation");
+  check(incompleteConflict.authoritySupport !== "CONFLICTING_AUTHORITY", "an unverified conflict is never presented as CONFLICTING_AUTHORITY");
+
+  // Only a conflict object satisfying the real renderer/compliance
+  // completeness standard (imported, not reimplemented) yields a verified,
+  // user-displayable conflict.
+  const completeConflict = buildTrustContract({
+    sourceStatus: "AUTHORITY_FOUND",
+    displayedSourceCount: 2,
+    conflictAnalysis: {
+      hasConflict: true,
+      trueConflicts: [1],
+      count: 1,
+      conflict: true,
+      conflictType: "DOCTRINAL_CONFLICT",
+      exactIssue: "whether the rule applies",
+      exactLegalDimension: "timing of assessment",
+      sameIssueGate: { passed: true },
+      oppositeHoldingGate: { passed: true },
+      resolutionBasis: "later ruling controls"
+    }
+  });
+  check(completeConflict.hasConflict === true, "complete renderer-grade conflict metadata sets hasConflict true");
+  check(completeConflict.conflictState === "VERIFIED_CONFLICT", "complete renderer-grade conflict metadata maps to VERIFIED_CONFLICT");
+  check(completeConflict.authoritySupport === "CONFLICTING_AUTHORITY", "a verified conflict is never presented as a fully settled controlling position");
 
   const manySourcesNoConflict = buildTrustContract({ sourceStatus: "AUTHORITY_FOUND", displayedSourceCount: 5 });
   check(manySourcesNoConflict.hasConflict === false, "multiple displayed sources alone do not imply a conflict");
+  check(manySourcesNoConflict.conflictState === "UNKNOWN", "no conflict signal at all is UNKNOWN, not silently NO_CONFLICT");
 
   const explicitNonConflict = buildTrustContract({ sourceStatus: "AUTHORITY_FOUND", displayedSourceCount: 5, conflict: { hasConflict: false } });
   check(explicitNonConflict.hasConflict === false, "an explicit non-conflict result is respected, not overridden by source count");
+  check(explicitNonConflict.conflictState === "NO_CONFLICT", "an explicit non-conflict result maps to NO_CONFLICT");
 });
 
 await test("domain boundary: NOT_APPLICABLE everywhere, no invented tax authority confidence", () => {
@@ -175,15 +209,15 @@ await test("legacy/missing fields: safe UNKNOWN/NOT_APPLICABLE defaults, never t
   check(before === after, "input object is not mutated by buildTrustContract");
 });
 
-await test("API forwarding: ask-handler.js imports and calls buildTrustContract at both response-construction locations", () => {
+await test("API forwarding: ask-handler.js imports and calls the real, extractable buildResponseTrust builder at both response-construction locations", () => {
   const src = readFileSync(resolve(ASK_HANDLER_PATH), "utf8");
-  check(/import\s*\{\s*buildTrustContract\s*\}\s*from\s*"\.\/services\/trust-contract\.js"/.test(src),
-    "ask-handler.js imports buildTrustContract from services/trust-contract.js");
+  check(/import\s*\{\s*buildResponseTrust\s*\}\s*from\s*"\.\/services\/trust-contract\.js"/.test(src),
+    "ask-handler.js imports buildResponseTrust from services/trust-contract.js");
 
   const payloadStart = src.indexOf("const payload = {");
   const saveTurnStart = src.indexOf("await saveConversationTurn({", payloadStart);
   const mainPayloadBlock = src.slice(payloadStart, saveTurnStart);
-  check(mainPayloadBlock.includes("trust: buildTrustContract("), "main payload object forwards trust: buildTrustContract(...)");
+  check(mainPayloadBlock.includes("trust: buildResponseTrust("), "main payload object forwards trust: buildResponseTrust(...)");
   check(mainPayloadBlock.includes("responseType: result.responseType"), "responseType field preserved in main payload (backward compatibility)");
   check(mainPayloadBlock.includes("sourceCards:"), "sourceCards field preserved in main payload (backward compatibility)");
   check(mainPayloadBlock.includes("sourceStatus:"), "sourceStatus field preserved in main payload (backward compatibility)");
@@ -191,9 +225,18 @@ await test("API forwarding: ask-handler.js imports and calls buildTrustContract 
   const domainBoundaryBlockStart = src.indexOf('routeKind:              "DOMAIN_BOUNDARY"');
   check(domainBoundaryBlockStart !== -1, "domain-boundary response block located");
   const domainBoundaryBlock = src.slice(domainBoundaryBlockStart, domainBoundaryBlockStart + 900);
-  check(domainBoundaryBlock.includes("trust:                  buildTrustContract("), "domain-boundary response forwards trust: buildTrustContract(...)");
+  check(domainBoundaryBlock.includes("trust:                  buildResponseTrust("), "domain-boundary response forwards trust: buildResponseTrust(...)");
   check(domainBoundaryBlock.includes("domainBoundary:         true"), "domainBoundary field preserved in domain-boundary response (backward compatibility)");
   check(domainBoundaryBlock.includes("sourceStatus:           _boundaryStatus"), "sourceStatus field preserved in domain-boundary response (backward compatibility)");
+
+  // Real behavioral execution (PHASE-10A1-R1 P2 correction): actually invoke
+  // the exact extractable builder ask-handler.js calls, with the same
+  // argument shapes it uses, rather than relying on source-text inspection
+  // alone for the forwarding claim itself.
+  const mainPayloadTrust = buildResponseTrust({ sourceStatus: "AUTHORITY_FOUND" }, 2, "AUTHORITY_FOUND");
+  check(mainPayloadTrust.version === TRUST_CONTRACT_VERSION, "buildResponseTrust (main payload shape) really executes and returns a valid trust object");
+  const domainBoundaryTrust = buildResponseTrust({ domainBoundary: true }, 0, "DOMAIN_BOUNDARY_REJECT");
+  check(domainBoundaryTrust.responseKind === "DOMAIN_BOUNDARY", "buildResponseTrust (domain-boundary shape) really executes and returns DOMAIN_BOUNDARY");
 });
 
 await test("API forwarding: trust appears for controlled LOA procedural, restricted legal-conclusion, verified-authority, related-authority, no-authority, domain-boundary, and safe fallback response shapes", () => {

@@ -1,0 +1,269 @@
+{
+  "description": "PHASE-10A1-R1-CONFLICT-TRUST-CONTRACT-CORRECTION-1 fixtures. Each entry's `input` is fed directly to services/trust-contract.js buildTrustContract(); `expected` is the exact required output object. Root cause (proven by direct execution against answer-renderer.js's real conflictMetadataIsComplete()): pipeline.js's only conflict signal (ctx.conflictAnalysis = {trueConflicts, count, hasConflict}, Step 9 Four-Part Doctrine Test) never satisfies the renderer/compliance completeness standard, because nothing in pipeline.js ever sets ctx.conflict/ctx.conflictReview/ctx.hierarchyConflict/ctx.jurisprudenceConflict with the richer shape conflictMetadataIsComplete requires (conflict===true, conflictType, exactIssue, oppositeHoldingGate, resolutionBasis). A verified/displayable conflict is therefore currently reachable only if a conflict object satisfying that exact standard is supplied.",
+  "conflictCases": [
+    {
+      "id": "A-verified-displayable-conflict",
+      "category": "A",
+      "description": "Complete conflict metadata satisfying the real renderer/compliance standard (answer-renderer.js conflictMetadataIsComplete, imported not reimplemented) yields VERIFIED_CONFLICT and hasConflict:true.",
+      "input": {
+        "sourceStatus": "AUTHORITY_FOUND",
+        "displayedSourceCount": 2,
+        "conflictAnalysis": {
+          "hasConflict": true,
+          "trueConflicts": [{ "trueConflict": true }],
+          "count": 1,
+          "conflict": true,
+          "conflictType": "DOCTRINAL_CONFLICT",
+          "exactIssue": "whether the withholding obligation attaches at payment or accrual",
+          "exactLegalDimension": "timing of the withholding obligation",
+          "sameIssueGate": { "passed": true },
+          "oppositeHoldingGate": { "passed": true },
+          "resolutionBasis": "the later en banc ruling controls under the hierarchy-of-authority rule"
+        }
+      },
+      "expected": {
+        "version": "1.0",
+        "authoritySupport": "CONFLICTING_AUTHORITY",
+        "sourceState": "AUTHORITY_FOUND",
+        "legalConclusion": "ALLOWED",
+        "humanReviewRequired": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": true,
+        "conflictState": "VERIFIED_CONFLICT",
+        "limitations": ["CONFLICTING_AUTHORITY"],
+        "responseKind": "GENERAL_TAX"
+      }
+    },
+    {
+      "id": "B-potential-incomplete-conflict-raw-boolean",
+      "category": "B",
+      "description": "Upstream evidence exists (hasConflict:true, trueConflicts, count) but lacks required displayability fields -- exactly the real shape pipeline.js's Step 9 Four-Part Doctrine Test produces today. Must not be exposed as verified.",
+      "input": {
+        "sourceStatus": "AUTHORITY_FOUND",
+        "displayedSourceCount": 2,
+        "conflictAnalysis": {
+          "hasConflict": true,
+          "trueConflicts": [{ "trueConflict": true, "parts": { "sameIssue": true, "sameMaterialFacts": true, "sameStatute": true, "oppositeHolding": true } }],
+          "count": 1
+        }
+      },
+      "expected": {
+        "version": "1.0",
+        "authoritySupport": "VERIFIED_CONTROLLING",
+        "sourceState": "AUTHORITY_FOUND",
+        "legalConclusion": "ALLOWED",
+        "humanReviewRequired": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "conflictState": "POTENTIAL_CONFLICT",
+        "limitations": ["POTENTIAL_CONFLICT"],
+        "responseKind": "GENERAL_TAX"
+      }
+    },
+    {
+      "id": "B2-potential-incomplete-conflict-nonempty-trueConflicts-only",
+      "category": "B",
+      "description": "trueConflicts has entries but the top-level hasConflict boolean is (contradictorily) absent -- still real evidence, still incomplete for display, must still surface as POTENTIAL_CONFLICT rather than being silently dropped.",
+      "input": {
+        "sourceStatus": "AUTHORITY_FOUND",
+        "displayedSourceCount": 1,
+        "conflictAnalysis": {
+          "trueConflicts": [{ "trueConflict": true }],
+          "count": 1
+        }
+      },
+      "expected": {
+        "version": "1.0",
+        "authoritySupport": "VERIFIED_CONTROLLING",
+        "sourceState": "AUTHORITY_FOUND",
+        "legalConclusion": "ALLOWED",
+        "humanReviewRequired": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "conflictState": "POTENTIAL_CONFLICT",
+        "limitations": ["POTENTIAL_CONFLICT"],
+        "responseKind": "GENERAL_TAX"
+      }
+    },
+    {
+      "id": "C-no-conflict",
+      "category": "C",
+      "description": "Deterministic analysis explicitly establishes no conflict.",
+      "input": {
+        "sourceStatus": "AUTHORITY_FOUND",
+        "displayedSourceCount": 3,
+        "conflictAnalysis": { "hasConflict": false, "trueConflicts": [], "count": 0 }
+      },
+      "expected": {
+        "version": "1.0",
+        "authoritySupport": "VERIFIED_CONTROLLING",
+        "sourceState": "AUTHORITY_FOUND",
+        "legalConclusion": "ALLOWED",
+        "humanReviewRequired": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "conflictState": "NO_CONFLICT",
+        "limitations": [],
+        "responseKind": "GENERAL_TAX"
+      }
+    },
+    {
+      "id": "D-unknown-missing-conflict-fields",
+      "category": "D",
+      "description": "No conflict/conflictAnalysis field present at all (legacy/missing) must default safely to UNKNOWN, never throw.",
+      "input": { "sourceStatus": "AUTHORITY_FOUND", "displayedSourceCount": 2 },
+      "expected": {
+        "version": "1.0",
+        "authoritySupport": "VERIFIED_CONTROLLING",
+        "sourceState": "AUTHORITY_FOUND",
+        "legalConclusion": "ALLOWED",
+        "humanReviewRequired": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "conflictState": "UNKNOWN",
+        "limitations": [],
+        "responseKind": "GENERAL_TAX"
+      }
+    },
+    {
+      "id": "D2-unknown-malformed-conflictAnalysis",
+      "category": "D",
+      "description": "conflictAnalysis present but malformed (a string, not an object) must default safely to UNKNOWN, never throw.",
+      "input": { "sourceStatus": "AUTHORITY_FOUND", "displayedSourceCount": 2, "conflictAnalysis": "not-an-object" },
+      "expected": {
+        "version": "1.0",
+        "authoritySupport": "VERIFIED_CONTROLLING",
+        "sourceState": "AUTHORITY_FOUND",
+        "legalConclusion": "ALLOWED",
+        "humanReviewRequired": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "conflictState": "UNKNOWN",
+        "limitations": [],
+        "responseKind": "GENERAL_TAX"
+      }
+    },
+    {
+      "id": "E-domain-boundary",
+      "category": "E",
+      "description": "Non-tax domain-boundary response invents no conflict state, regardless of any stray upstream conflict field.",
+      "input": { "domainBoundary": true, "sourceStatus": "DOMAIN_BOUNDARY_REJECT", "conflictAnalysis": { "hasConflict": true, "trueConflicts": [1], "count": 1 } },
+      "expected": {
+        "version": "1.0",
+        "authoritySupport": "NOT_APPLICABLE",
+        "sourceState": "NOT_APPLICABLE",
+        "legalConclusion": "NOT_APPLICABLE",
+        "humanReviewRequired": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "conflictState": "NOT_APPLICABLE",
+        "limitations": [],
+        "responseKind": "DOMAIN_BOUNDARY"
+      }
+    },
+    {
+      "id": "F-contradictory-hasConflict-false-but-trueConflicts-nonempty",
+      "category": "F",
+      "description": "Contradictory upstream input: hasConflict says false, but trueConflicts is non-empty. The defensive classification must not silently trust the false boolean over the non-empty evidence array -- it must surface as POTENTIAL_CONFLICT, never NO_CONFLICT and never VERIFIED_CONFLICT.",
+      "input": {
+        "sourceStatus": "AUTHORITY_FOUND",
+        "displayedSourceCount": 2,
+        "conflictAnalysis": { "hasConflict": false, "trueConflicts": [{ "trueConflict": true }], "count": 1 }
+      },
+      "expected": {
+        "version": "1.0",
+        "authoritySupport": "VERIFIED_CONTROLLING",
+        "sourceState": "AUTHORITY_FOUND",
+        "legalConclusion": "ALLOWED",
+        "humanReviewRequired": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "conflictState": "POTENTIAL_CONFLICT",
+        "limitations": ["POTENTIAL_CONFLICT"],
+        "responseKind": "GENERAL_TAX"
+      }
+    },
+    {
+      "id": "F2-contradictory-conflict-and-conflictAnalysis-disagree",
+      "category": "F",
+      "description": "Contradictory upstream input: a raw conflict object claims hasConflict:false while conflictAnalysis claims hasConflict:true. The stricter/more cautious signal must win: POTENTIAL_CONFLICT, never a silent NO_CONFLICT.",
+      "input": {
+        "sourceStatus": "AUTHORITY_FOUND",
+        "displayedSourceCount": 2,
+        "conflict": { "hasConflict": false },
+        "conflictAnalysis": { "hasConflict": true, "trueConflicts": [1], "count": 1 }
+      },
+      "expected": {
+        "version": "1.0",
+        "authoritySupport": "VERIFIED_CONTROLLING",
+        "sourceState": "AUTHORITY_FOUND",
+        "legalConclusion": "ALLOWED",
+        "humanReviewRequired": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "conflictState": "POTENTIAL_CONFLICT",
+        "limitations": ["POTENTIAL_CONFLICT"],
+        "responseKind": "GENERAL_TAX"
+      }
+    },
+    {
+      "id": "controlled-procedural-conflict-not-applicable",
+      "category": "invariant",
+      "description": "Controlled-procedural responses do not carry general RAG conflict-analysis state; any leftover conflict signal must not be surfaced.",
+      "input": {
+        "responseType": "controlled_loa_answer",
+        "controlledLoaAnswer": { "controlledLoaAnswer": true },
+        "conflictAnalysis": { "hasConflict": true, "trueConflicts": [1], "count": 1 }
+      },
+      "expected": {
+        "version": "1.0",
+        "authoritySupport": "NOT_APPLICABLE",
+        "sourceState": "NOT_APPLICABLE",
+        "legalConclusion": "NOT_APPLICABLE",
+        "humanReviewRequired": true,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "conflictState": "NOT_APPLICABLE",
+        "limitations": [],
+        "responseKind": "CONTROLLED_PROCEDURAL"
+      }
+    },
+    {
+      "id": "restricted-legal-conclusion-conflict-not-applicable",
+      "category": "invariant",
+      "description": "Restricted-legal-conclusion responses do not carry general RAG conflict-analysis state; any leftover conflict signal must not be surfaced.",
+      "input": {
+        "responseType": "controlled_loa_legal_conclusion_restricted",
+        "controlledLoaAnswer": { "requiresHumanReview": true },
+        "conflictAnalysis": { "hasConflict": true, "trueConflicts": [1], "count": 1 }
+      },
+      "expected": {
+        "version": "1.0",
+        "authoritySupport": "NOT_APPLICABLE",
+        "sourceState": "NOT_APPLICABLE",
+        "legalConclusion": "RESTRICTED",
+        "humanReviewRequired": true,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "conflictState": "NOT_APPLICABLE",
+        "limitations": [],
+        "responseKind": "RESTRICTED_LEGAL_CONCLUSION"
+      }
+    }
+  ],
+  "verifiedSupportingConclusion": {
+    "status": "RESERVED_UNREACHABLE",
+    "summary": "authority-utils.js's annotateAuthorityCandidates() does assign a genuine authorityRole:'SUPPORTING' value to non-governing candidates when at least one GOVERNING peer exists, and pipeline.js calls it (line ~3376) on ctx.rerankedChunks. However, this per-candidate role is not confirmed to survive, unambiguously and consistently, through every finalSourceCards assignment branch to the API surface trust-contract.js consumes (displayedSourceCount/sourceCards), and wiring it in would require a new, non-trivial aggregation rule (e.g. 'SUPPORTING only if every displayed card is non-governing') that is a distinct design decision beyond this conflict-focused correction's scope. Per this task's explicit instruction not to expand the patch beyond the conflict correction and not to manufacture a classification from weak/indirect evidence, VERIFIED_SUPPORTING remains reserved but unreachable. This is the most concrete lead for a future, separately-scoped task."
+  }
+}

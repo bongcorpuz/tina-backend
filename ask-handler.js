@@ -69,7 +69,7 @@ import {
 import { applyControlledLoaAuditProcedureBoundaryOverlay } from "./services/controlled-loa-audit-procedure-boundary.js";
 
 import { sanitizePublicSourceCards } from "./services/ask-handler-public-source-sanitizer.js";
-import { buildTrustContract } from "./services/trust-contract.js";
+import { buildResponseTrust } from "./services/trust-contract.js";
 
 const ENGINE_VERSION = "9.0.0";
 
@@ -2255,14 +2255,14 @@ export function createAskHandler({
         ? { clarificationRouteGate: result.clarificationRouteGate }
         : {}),
 
-      trust: buildTrustContract({
-        ...result,
-        displayedSourceCount: result.displayedSourceCount ?? visibleSources.length,
-        sourceStatus: result.sourceStatus || result.sourceAvailability ||
+      trust: buildResponseTrust(
+        result,
+        result.displayedSourceCount ?? visibleSources.length,
+        result.sourceStatus || result.sourceAvailability ||
           (result.internalError === true
             ? "PIPELINE_ERROR"
             : resultSources.length ? "ISSUE_MATCHED_CONTEXT_USED" : "RETRIEVAL_TIMEOUT")
-      }),
+      ),
 
       retrievedSourceCount: result.retrievedSourceCount ?? resultSources.length,
       displayedSourceCount: result.displayedSourceCount ?? visibleSources.length,
@@ -3049,7 +3049,7 @@ export function createAskHandler({
             detectedDomain:         _boundaryCheck.detectedDomain,
             askHandlerVersion:      ENGINE_VERSION,
             contextOrchestrationEnabled: true,
-            trust:                  buildTrustContract({ domainBoundary: true, sourceStatus: _boundaryStatus }),
+            trust:                  buildResponseTrust({ domainBoundary: true }, 0, _boundaryStatus),
           });
         }
       }
