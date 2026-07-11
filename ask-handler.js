@@ -57,7 +57,7 @@ import {
 } from "./context-orchestration-engine.js";
 
 // LAW 1: Individual engine imports removed — all engine calls go through pipeline.js only.
-import { runPipeline, isChatContextCarryoverEnabled } from "./pipeline.js";
+import { runPipeline, isChatContextCarryoverEnabled, isControlledLoaAskGateEnabled } from "./pipeline.js";
 import { buildShortTermContextCarryover } from "./helpers/chat-context-carryover.js";
 import { applyVerifiedAuthorityGate } from "./answer-renderer.js";
 
@@ -67,6 +67,7 @@ import {
   BOUNDARY_CLARIFY_MESSAGE
 } from "./services/philippine-tax-domain-boundary.js";
 import { applyControlledLoaAuditProcedureBoundaryOverlay } from "./services/controlled-loa-audit-procedure-boundary.js";
+import { evaluateUpstreamRestrictedLegalConclusionGate } from "./services/controlled-loa-legal-conclusion-safety.js";
 
 import { sanitizePublicSourceCards } from "./services/ask-handler-public-source-sanitizer.js";
 import { buildResponseTrust } from "./services/trust-contract.js";
@@ -2080,9 +2081,52 @@ export function createAskHandler({
     conversationId,
     hookConfig,
     adaptiveContext,
-    orchestrationMetadata
+    orchestrationMetadata,
+    isPhilippineTaxContext = false
   }) {
     const question = hookConfig.cleanQuestion || hookConfig.originalQuestion;
+
+    // PHASE-10A2-RESTRICTED-LEGAL-CONCLUSION-TIMEOUT-GATE-REMEDIATION-1
+    // Root cause: pipeline.js's Step 12.65/12.66 controlled-LOA gates run
+    // AFTER Step 5 (retrieval) and Step 6 (reranker), inside the single
+    // runPipeline() call that is raced against the 90s RAG_TIMEOUT_MS below.
+    // For query shapes where retrieval/reranking is slow, the race can
+    // reject with "TINA 16-step pipeline timed out" before runPipeline()
+    // ever reaches Step 12.65/12.66, discarding whatever restricted-intent
+    // classification it would have produced and substituting the generic
+    // RETRIEVAL_TIMEOUT fallback instead (wrong response taxonomy, lost
+    // requiresHumanReview / restricted trust metadata).
+    //
+    // Fix: evaluate the identical Step 12.66 classifier here, before
+    // retrieval/generation/the timeout race begin, gated on the same
+    // already-established Philippine-tax context signal (Invariant 8) so
+    // isolated keywords in a context-free query can never trigger this.
+    // On a match, `result` is set directly to the same deterministic
+    // response shape Step 12.66 would have produced, and the code below
+    // (payload construction, trust forwarding) runs completely unchanged --
+    // no response-shape duplication. Step 12.66 itself is untouched and
+    // remains defense in depth if this upstream check is ever bypassed.
+    // Restricted to /ask only, and gated by the same existing
+    // TINA_ENABLE_CONTROLLED_LOA_ASK_GATE flag Step 12.65/12.66 already use
+    // (no new feature flag) -- identical scope/enablement to
+    // evaluateControlledLoaAskGate/evaluateControlledLoaLegalConclusionSafetyGate
+    // inside pipeline.js, so this upstream check never changes behavior for
+    // /tax, /case, /audit, other non-/ask routes, or when the flag is off.
+    const upstreamRestrictedGate = (hookConfig.hook_code === "/ask" && isControlledLoaAskGateEnabled())
+      ? evaluateUpstreamRestrictedLegalConclusionGate({
+          query: question,
+          isPhilippineTax: isPhilippineTaxContext,
+          ctx: { mode: hookConfig.mode }
+        })
+      : { matched: false, intentClassification: null, earlyExitResponse: null };
+    if (upstreamRestrictedGate.matched) {
+      console.log("[UPSTREAM RESTRICTED LEGAL CONCLUSION GATE]", {
+        query: String(question || "").slice(0, 120),
+        route: hookConfig.hook_code,
+        intent: upstreamRestrictedGate.intentClassification?.intent || null
+      });
+    }
+
     const requestId = `route-${Date.now()}-${Math.random().toString(16).slice(2, 10)}`;
     const pipelineDiagnostics = createRoutePipelineDiagnostics({
       requestId,
@@ -2092,11 +2136,18 @@ export function createAskHandler({
     });
 
     // LAW 1: ask-handler calls ONLY pipeline.runPipeline(). No engine called here.
-    const priorMessages = conversationId
+    // PHASE-10A2: when the upstream restricted gate above already matched,
+    // `result` is the identical deterministic Step-12.66-shaped response --
+    // runPipeline() (retrieval, reranking, generation, and the 90s timeout
+    // race) is never invoked for this request.
+    const priorMessages = (!upstreamRestrictedGate.matched && conversationId)
       ? await getHistory(supabase, conversationId, 20).catch(() => [])
       : [];
     let result;
     let latestPipelineDiagnostics = null;
+    if (upstreamRestrictedGate.matched) {
+      result = upstreamRestrictedGate.earlyExitResponse;
+    } else {
     try {
       result = await withTimeout(
         runPipeline({
@@ -2179,6 +2230,7 @@ export function createAskHandler({
           diagnostics: timeoutDiagnostics
         }
       };
+    }
     }
 
     const resultSources            = safeArray(result.sources || result.sourcesUsed);
@@ -2941,6 +2993,12 @@ export function createAskHandler({
       }
       // ─── END LEARNING DOMAIN RESOLVED INTERCEPT ──────────────────────────────
 
+      // PHASE-10A2: carries the domain boundary's isPhilippineTax signal past
+      // this block's closing brace so handleControlledRagRoute can gate the
+      // upstream restricted-legal-conclusion check on it without
+      // recomputing detectPhilippineTaxBoundary a second time.
+      let _isPhilippineTaxContext = false;
+
       // ─── PHILIPPINE TAX DOMAIN BOUNDARY (FAIL-CLOSED) ───────────────────────
       // Pre-retrieval check: reject non-Philippine-tax queries before any
       // pipeline, retrieval, assessment handler, or OpenAI call.
@@ -2988,6 +3046,7 @@ export function createAskHandler({
           _boundaryQuery,
           compactHookConfig.hook_code
         );
+        _isPhilippineTaxContext = _boundaryCheck.isPhilippineTax === true;
 
         console.log("[DOMAIN BOUNDARY CHECK]", {
           query:           _boundaryQuery.slice(0, 120),
@@ -3248,7 +3307,8 @@ export function createAskHandler({
         conversationId,
         hookConfig: compactHookConfig,
         adaptiveContext,
-        orchestrationMetadata
+        orchestrationMetadata,
+        isPhilippineTaxContext: _isPhilippineTaxContext
       });
     } catch (error) {
       console.error("Ask dispatcher error:", error);

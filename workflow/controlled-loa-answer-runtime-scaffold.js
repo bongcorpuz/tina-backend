@@ -341,13 +341,28 @@ function categorize(normalized) {
   const asksAssessmentPower = /\bcan\s+(?:the\s+)?bir\s+assess\b|\bbir\s+cannot\s+assess\b/i.test(q);
   const asksFinality = ctx.asksFinality || /\bis\s+the\s+assessment\s+final\b|\bassessment\b[^.?!]*\bfinal\b/i.test(q);
   const asksPrescription = ctx.asksPrescription || /\bprescri(?:be|ption|bed)\b/i.test(q);
-  const asksCta = ctx.asksCtaStrategy || /\bcta\b/i.test(q);
+  // PHASE-10A2: narrowed from a bare `\bcta\b` mention to require an
+  // action/strategy verb near "CTA" -- a bare mention (e.g. "What did CTA
+  // Case No. 9369 rule?") is a legitimate jurisprudence/case-law question,
+  // not a request for the user's own appeal strategy.
+  const asksCta = ctx.asksCtaStrategy ||
+    /\b(?:should|shall|do)\s+(?:i|we)\s+appeal\b[^.?!]*\bcta\b|\bappeal\s+to\s+(?:the\s+)?cta\b|\bcta\s+strategy\b|\bmy\s+cta\s+(?:case|appeal)\b/i.test(q);
   const asksFanVoid = /\bfan\b[^.?!]*\b(?:void|invalid)\b/i.test(q);
   const asksFddaAppeal = /\bfdda\b[^.?!]*\bappeal/i.test(q);
-  const asksOutcome = /\bwill\s+(?:i|we)\s+win\b/i.test(q);
+  // PHASE-10A2: broadened beyond the literal "will I/we win" phrasing to
+  // also catch "chances of winning" and "likely to succeed/win" wording.
+  const asksOutcome = /\bwill\s+(?:i|we)\s+win\b|\bchances?\s+of\s+winning\b|\blikely\s+to\s+(?:succeed|win)\b/i.test(q);
   const asksFilingReady = ctx.asksFilingReadyOutput || /\bdraft\b[^.?!]*\bprotest\b|\bfiling-ready\b|\bwrite\b[^.?!]*\bprotest\b now/i.test(q);
   const asksAutoSubmit = ctx.asksAutomaticSubmission || /\bsubmit\b[^.?!]*\bbir\b|\bautomatically\s+submit\b/i.test(q);
   const asksLegalOpinion = /\blegal opinion\b|\bofficial legal advice\b/i.test(q);
+  // PHASE-10A2: catches definitive-conclusion phrasing ("tell me
+  // conclusively", "decide whether") that asks for a final determination
+  // without naming a specific validity/finality/CTA keyword.
+  const asksDefinitiveConclusion = /\bconclusively\b|\bdecide\s+whether\b|\bdetermine\s+(?:conclusively|definitively)\b/i.test(q);
+  // PHASE-10A2: catches guaranteed-outcome strategy requests ("best legal
+  // strategy", "legal action [that] guarantees success") distinct from the
+  // CTA-specific and outcome-prediction patterns above.
+  const asksGuaranteedStrategy = /\bbest\s+(?:legal\s+)?strategy\b|\bguarantees?\s+success\b|\blegal\s+action\b[^.?!]*\bguarantees?\b/i.test(q);
 
   return {
     mentionsEla,
@@ -371,7 +386,9 @@ function categorize(normalized) {
     asksOutcome,
     asksFilingReady,
     asksAutoSubmit,
-    asksLegalOpinion
+    asksLegalOpinion,
+    asksDefinitiveConclusion,
+    asksGuaranteedStrategy
   };
 }
 
@@ -412,6 +429,28 @@ export function classifyControlledLoaIntent(normalizedInput) {
       confidence: "high",
       reasons: ["Query requests automatic submission to the BIR, which this scaffold never performs."],
       safetyGatesTriggered: [...baseGates, "NO_AUTOMATIC_SUBMISSION_GATE", "HUMAN_REVIEW_NOTICE_GATE"]
+    };
+  }
+  if (s.asksGuaranteedStrategy) {
+    return {
+      supported: false,
+      excluded: true,
+      intent: "DEFINITIVE_STRATEGY_REQUEST",
+      responseMode: "HUMAN_REVIEW_REQUIRED",
+      confidence: "high",
+      reasons: ["Query requests a guaranteed-success legal strategy, which this scaffold never provides."],
+      safetyGatesTriggered: [...baseGates, "NO_VALIDITY_CONCLUSION_GATE", "HUMAN_REVIEW_NOTICE_GATE"]
+    };
+  }
+  if (s.asksDefinitiveConclusion) {
+    return {
+      supported: false,
+      excluded: true,
+      intent: "DEFINITIVE_LEGAL_CONCLUSION_REQUEST",
+      responseMode: "HUMAN_REVIEW_REQUIRED",
+      confidence: "high",
+      reasons: ["Query requests a conclusive/definitive legal determination, which requires official-source verification and human review."],
+      safetyGatesTriggered: [...baseGates, "NO_VALIDITY_CONCLUSION_GATE", "HUMAN_REVIEW_NOTICE_GATE"]
     };
   }
   if (s.asksLegalOpinion) {

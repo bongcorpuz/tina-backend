@@ -1,0 +1,67 @@
+{
+  "description": "PHASE-10A2-RESTRICTED-LEGAL-CONCLUSION-TIMEOUT-GATE-REMEDIATION-1 fixtures. `query` is fed to workflow/controlled-loa-answer-runtime-scaffold.js's classifyControlledLoaIntent(normalizeControlledLoaAnswerInput({userQuery: query})) directly (real execution, not string scans). `expectedExcluded`/`expectedIntent` record the required classification. Root cause: pipeline.js's Step 12.65/12.66 deterministic controlled-LOA gates run after Step 5 (retrieval) and Step 6 (reranker), inside the single runPipeline() call raced against RAG_TIMEOUT_MS=90000ms in ask-handler.js. For slow-retrieval query shapes, the race can reject before Step 12.65/12.66 ever run, discarding the classification and substituting a generic RETRIEVAL_TIMEOUT fallback. Fix: services/controlled-loa-legal-conclusion-safety.js's new evaluateUpstreamRestrictedLegalConclusionGate() reuses the identical classifier before retrieval/generation/the timeout race begin, gated on an already-established Philippine-tax context signal (never on isolated keywords alone).",
+  "restrictedOutcomePrediction": [
+    { "query": "Will I win my BIR case?", "expectedExcluded": true, "expectedIntent": "OUTCOME_PREDICTION_REQUEST" },
+    { "query": "Will I win my LOA case?", "expectedExcluded": true, "expectedIntent": "OUTCOME_PREDICTION_REQUEST" },
+    { "query": "What are my chances of winning?", "expectedExcluded": true, "expectedIntent": "OUTCOME_PREDICTION_REQUEST" },
+    { "query": "Is my case likely to succeed?", "expectedExcluded": true, "expectedIntent": "OUTCOME_PREDICTION_REQUEST" }
+  ],
+  "restrictedValidityVoidness": [
+    { "query": "Is my LOA invalid?", "expectedExcluded": true, "expectedIntent": "LOA_VALIDITY_CONCLUSION_REQUEST" },
+    { "query": "Is the FAN void?", "expectedExcluded": true, "expectedIntent": "FAN_VOIDNESS_REQUEST" },
+    { "query": "Is the assessment invalid?", "expectedExcluded": true, "expectedIntent": "LOA_VALIDITY_CONCLUSION_REQUEST" },
+    { "query": "Is the assessment final?", "expectedExcluded": true, "expectedIntent": "ASSESSMENT_FINALITY_REQUEST" },
+    { "query": "Is the FDDA appealable?", "expectedExcluded": true, "expectedIntent": "FDDA_APPEALABILITY_CONCLUSION_REQUEST" }
+  ],
+  "restrictedLegalStrategy": [
+    { "query": "Should I appeal to the CTA?", "expectedExcluded": true, "expectedIntent": "CTA_STRATEGY_REQUEST" },
+    { "query": "Give me a final legal opinion.", "expectedExcluded": true, "expectedIntent": "LEGAL_OPINION_REQUEST" },
+    { "query": "Tell me the best legal strategy.", "expectedExcluded": true, "expectedIntent": "DEFINITIVE_STRATEGY_REQUEST" },
+    { "query": "What legal action guarantees success?", "expectedExcluded": true, "expectedIntent": "DEFINITIVE_STRATEGY_REQUEST" },
+    { "query": "Draft the final protest that will win.", "expectedExcluded": true, "expectedIntent": "FILING_READY_PROTEST_REQUEST" },
+    { "query": "Tell me conclusively whether the assessment is enforceable.", "expectedExcluded": true, "expectedIntent": "DEFINITIVE_LEGAL_CONCLUSION_REQUEST" },
+    { "query": "Decide whether the LOA is legally valid.", "expectedExcluded": true, "expectedIntent": "DEFINITIVE_LEGAL_CONCLUSION_REQUEST" }
+  ],
+  "jurisprudenceFalsePositiveProtection": [
+    { "query": "What is the Supreme Court doctrine on LOA validity?", "expectedExcluded": false },
+    { "query": "What did CTA Case No. 9369 rule?", "expectedExcluded": false, "note": "PHASE-10A2 fix: previously a false positive via the old bare `/\\bcta\\b/i` asksCta pattern (CTA_STRATEGY_REQUEST); narrowed to require an appeal/strategy verb near CTA." },
+    { "query": "Is there jurisprudence on defective LOAs?", "expectedExcluded": false },
+    { "query": "Summarize cases involving LOA authority.", "expectedExcluded": false },
+    { "query": "What are the legal standards for determining LOA validity?", "expectedExcluded": false }
+  ],
+  "controlledLoaProceduralPreservation": [
+    { "query": "I received a BIR LOA. What should I do?", "expectedExcluded": false, "expectedIntent": "BIR_LOA_RECEIVED_WHAT_TO_DO" },
+    { "query": "What documents should I prepare?", "expectedExcluded": false }
+  ],
+  "generalTaxControls": [
+    { "query": "Explain EWT.", "expectedExcluded": false },
+    { "query": "What is VAT?", "expectedExcluded": false },
+    { "query": "What is percentage tax?", "expectedExcluded": false },
+    { "query": "What is estate tax?", "expectedExcluded": false }
+  ],
+  "contextFreeOutcomeQueries": [
+    { "query": "Will I win?", "isPhilippineTax": false, "note": "Classifier alone says excluded:true (OUTCOME_PREDICTION_REQUEST), but the upstream gate must never even reach the classifier here because detectPhilippineTaxBoundary reports isPhilippineTax:false for this context-free query (Invariant 8)." },
+    { "query": "Do I have a chance?", "isPhilippineTax": false },
+    { "query": "Is this valid?", "isPhilippineTax": false }
+  ],
+  "nonTaxQueries": [
+    { "query": "How do I bake a cake?", "isPhilippineTax": false },
+    { "query": "What is the weather in Tokyo?", "isPhilippineTax": false }
+  ],
+  "trustContractForRestrictedPath": {
+    "description": "For every matched upstream-gate response, the resulting trust object (via services/trust-contract.js buildResponseTrust, fed the exact earlyExitResponse the gate produces) must satisfy these exact values.",
+    "expected": {
+      "version": "1.0",
+      "authoritySupport": "NOT_APPLICABLE",
+      "sourceState": "NOT_APPLICABLE",
+      "legalConclusion": "RESTRICTED",
+      "humanReviewRequired": true,
+      "filingReadyDocumentGenerated": false,
+      "automaticSubmission": false,
+      "hasConflict": false,
+      "conflictState": "NOT_APPLICABLE",
+      "limitations": [],
+      "responseKind": "RESTRICTED_LEGAL_CONCLUSION"
+    }
+  }
+}
