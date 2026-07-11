@@ -1893,7 +1893,8 @@ export function createAskHandler({
     question,
     answerText,
     sourcesUsed = [],
-    fallbackReferences = []
+    fallbackReferences = [],
+    trust = null
   }) {
     if (!conversationId || !userId) return;
 
@@ -1905,7 +1906,8 @@ export function createAskHandler({
         role: "assistant",
         content: answerText,
         sourcesUsed,
-        fallbackReferences
+        fallbackReferences,
+        trustMetadata: trust
       });
 
       await saveMemoryHooks(supabase, userId, extractMemoryHooks(question));
@@ -2287,6 +2289,11 @@ export function createAskHandler({
       rendererMode: result.mode || hookConfig.mode
     });
 
+    const responseSourceStatus = result.sourceStatus || result.sourceAvailability ||
+      (result.internalError === true
+        ? "PIPELINE_ERROR"
+        : resultSources.length ? "ISSUE_MATCHED_CONTEXT_USED" : "RETRIEVAL_TIMEOUT");
+
     const payload = {
       success: true,
       engine: "TINA_ASK_HANDLER",
@@ -2315,20 +2322,14 @@ export function createAskHandler({
       trust: buildResponseTrust(
         result,
         result.displayedSourceCount ?? visibleSources.length,
-        result.sourceStatus || result.sourceAvailability ||
-          (result.internalError === true
-            ? "PIPELINE_ERROR"
-            : resultSources.length ? "ISSUE_MATCHED_CONTEXT_USED" : "RETRIEVAL_TIMEOUT")
+        responseSourceStatus
       ),
 
       retrievedSourceCount: result.retrievedSourceCount ?? resultSources.length,
       displayedSourceCount: result.displayedSourceCount ?? visibleSources.length,
 
       // PATCH-018C: internal errors must never default into RETRIEVAL_TIMEOUT.
-      sourceStatus:             result.sourceStatus || result.sourceAvailability ||
-                                  (result.internalError === true
-                                    ? "PIPELINE_ERROR"
-                                    : resultSources.length ? "ISSUE_MATCHED_CONTEXT_USED" : "RETRIEVAL_TIMEOUT"),
+      sourceStatus:             responseSourceStatus,
       sourceAvailability:       result.sourceAvailability        || null,
       saeStatus:                result.saeStatus                 ?? null,
       patch024cPostSourcecard:  result.patch024cPostSourcecard   || null,
@@ -2402,7 +2403,8 @@ export function createAskHandler({
       question: hookConfig.originalQuestion,
       answerText: payload.answer,
       sourcesUsed: payload.sourcesUsed,
-      fallbackReferences: []
+      fallbackReferences: [],
+      trust: payload.trust
     });
 
     await saveModeState(supabase, {

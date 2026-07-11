@@ -8143,3 +8143,61 @@ Independent review: MANDATORY before Phase 10A may be considered closed or Phase
 
 Do not mark Phase 10A complete before independent review and any further approved remediation (including the disclosed visual/Gemini follow-ups) are finished.
 ```
+
+## Phase 10A3-R1 History Trust Persistence, Accessibility, And Visual Validation -- PASS WITH STRICT RECOMMENDATIONS (2026-07-11):
+
+```text
+PHASE-10A3-R1-HISTORY-TRUST-PERSISTENCE-ACCESSIBILITY-AND-VISUAL-VALIDATION-1 implemented across tina-backend and tina-ai.
+
+Phase 9 status: Remains COMPLETE.
+Phase 10 status: Active.
+Phase 10A status: OPEN.
+Phase 10B status: NOT STARTED.
+Phase 10C status: NOT STARTED.
+PHASE-10A3 technical review result: independent review PASS WITH STRICT RECOMMENDATIONS.
+PHASE-10A3 Gemini UX review result: REVISIONS REQUIRED.
+
+Root cause:
+Live /ask responses returned canonical trust from buildResponseTrust(), and the frontend stored data.trust on the live assistant message. Conversation persistence did not pass trust into saveMessage(); saveMessage persisted content, sources, fallback references, and adaptive metadata only. GET /conversations/:conversationId/messages returned message rows without a normalized trust field, and frontend reload reconstruction set trust:null. Therefore restricted, conflict, source-limitation, procedural, and human-review warnings could disappear after reload.
+
+Persistence design:
+No schema migration. Assistant trust is persisted as sanitized JSON at messages.metadata.trust. getConversationMessages() exposes a top-level message.trust copied from metadata.trust when it is a JSON object. Old messages and malformed trust payloads load with trust:null. Unknown future JSON fields are preserved at the persistence boundary; frontend presentation still normalizes unknown enum values safely and does not infer trust from prose.
+
+Backend changes:
+ask-handler.js now persists payload.trust with the assistant message. conversation-memory.js accepts trustMetadata, stores metadata.trust, and normalizes history message trust. Focused backend test added at tests/phase-10a3-r1-history-trust-persistence-accessibility-and-visual-validation-1.test.mjs. Fixture/result/report artifacts added for this R1 task.
+
+Frontend changes:
+src/App.jsx reload reconstruction now reads row.trust or row.metadata.trust through normalizeReloadedTrust(). TrustBanner and SourceTrustSummary were cleaned to ASCII-safe markers/separators. TrustBanner uses role=alert for critical/warning states and role=status for lower-emphasis states. src/App.css corrects warning contrast and improves narrow-width wrapping.
+
+Contrast:
+Confirmed selector/use: trust warning/review ink using #9a741e (--gold-dark) on #f4e7c1 (--accent-soft), measured 3.49:1. Corrected trust warning ink to #735313, measured 5.73:1 against #f4e7c1. Normal-size essential trust text now meets WCAG AA 4.5:1.
+
+Browser/mobile validation:
+Sanitized local Chrome screenshots captured at 320px, 375px, 430px, tablet, and desktop widths under tina-ai/evaluation/results/phase-10a3-r1-history-trust-persistence-accessibility-and-visual-validation-1/. Covered restricted before/after reload, verified conflict, potential conflict, source limitation, related authority, verified authority, procedural guidance, legacy no-trust, long authority label, and empty source cards. Evidence is local rendered fixture evidence using the app CSS classes, not authenticated Vercel staging UI.
+
+ARIA/semantic result:
+One primary trust banner per message. Critical/warning states use alert; info/positive/procedural states use status. Decorative markers use aria-hidden=true. No dangerouslySetInnerHTML added; trust text remains plain text.
+
+Deployment mapping:
+Local vercel.json was inspected. No .vercel/project.json was available, and local config does not reveal production branch mapping. main-to-production/staging mapping remains unconfirmed. Frontend work was therefore moved off main to branch phase-10a3-r1-trust-persistence-accessibility. Release-governance classification: P2 governance debt until Vercel project settings are confirmed; no evidence of P0/P1 unauthorized deployment from this R1 branch.
+
+Validation:
+Backend focused R1 test PASS (5/5). Frontend focused R1 test PASS (4/4). Existing frontend PHASE-10A3 test PASS (20/20, 218 assertions). npm run lint PASS with one pre-existing react-hooks/exhaustive-deps warning. npm run build PASS. Backend PHASE-10A1 functional trust/API assertions PASS, with one expected self-referential historical diff-scope failure because this R1 task legitimately modifies conversation-memory.js. PHASE-10A1-R1 and PHASE-10A2 functional suites passed in this implementation run.
+
+Staging:
+No production API call was made. No authenticated staging API call was made in this turn; local persistence equivalence used an in-memory Supabase double executing the real saveMessage() and getConversationMessages() paths. This is sufficient to prove the serialization boundary locally but should be followed by authenticated staging validation before final release closure.
+
+Security:
+No JWT, bearer token, authorization header, service-role key, Vercel token, private key, .env value, or confidential taxpayer data was printed or committed. Screenshot fixture content is synthetic and sanitized.
+
+Known unresolved issues:
+1. Vercel branch/deployment mapping remains unconfirmed from local evidence.
+2. Authenticated staging UI validation remains required before release closure.
+3. Mandatory GPT-5.5 independent technical review remains required.
+4. Gemini 2.5 Pro must re-review using actual rendered evidence after technical acceptance.
+
+Decision:
+PHASE 10A3-R1 REMEDIATION PASS WITH STRICT RECOMMENDATIONS.
+
+Do not mark Phase 10A complete before independent GPT-5.5 review and Gemini UX re-review are accepted. Do not begin Phase 10B or Phase 10C from this task.
+```

@@ -61,6 +61,22 @@ function normalizeJsonObject(value, fallback = null) {
   return sanitized && isPlainObject(sanitized) ? sanitized : fallback;
 }
 
+export function normalizePersistedTrust(value, fallback = null) {
+  return normalizeJsonObject(value, fallback);
+}
+
+function normalizeHistoryMessage(message) {
+  if (!isPlainObject(message)) return message;
+
+  const metadata = normalizeJsonObject(message.metadata, null);
+  const trust = normalizePersistedTrust(metadata?.trust, null);
+
+  return {
+    ...message,
+    trust
+  };
+}
+
 function normalizeAdaptiveMode(mode = null) {
   const value = String(mode || "").trim().toUpperCase();
 
@@ -180,7 +196,7 @@ export async function getConversationMessages(
 
   if (error) throw error;
 
-  return data || [];
+  return (data || []).map(normalizeHistoryMessage);
 }
 
 export async function saveMessage(
@@ -206,7 +222,8 @@ export async function saveMessage(
     supersessionAudit = null,
     authorityUsed = null,
     confidenceLevel = null,
-    messageMetadata = null
+    messageMetadata = null,
+    trustMetadata = null
   } = {}
 ) {
   if (!isSupabaseClient(supabase)) return null;
@@ -248,10 +265,16 @@ export async function saveMessage(
 
   const cleanMessageMetadata = normalizeJsonObject(messageMetadata, {});
 
+  const cleanTrustMetadata = normalizePersistedTrust(trustMetadata, null);
+
   payload.metadata = {
     ...cleanMessageMetadata,
     adaptive: sanitizeJsonValue(adaptivePayload)
   };
+
+  if (cleanTrustMetadata) {
+    payload.metadata.trust = cleanTrustMetadata;
+  }
 
   const { data, error } = await supabase
     .from("messages")

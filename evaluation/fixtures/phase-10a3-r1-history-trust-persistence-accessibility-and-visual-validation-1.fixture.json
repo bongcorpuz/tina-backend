@@ -1,0 +1,31 @@
+{
+  "phase": "PHASE-10A3-R1-HISTORY-TRUST-PERSISTENCE-ACCESSIBILITY-AND-VISUAL-VALIDATION-1",
+  "date": "2026-07-11",
+  "purpose": "Focused fixture describing trust metadata persistence and reload equivalence cases.",
+  "persistenceDesign": {
+    "schemaMigrationRequired": false,
+    "storageLocation": "messages.metadata.trust",
+    "historyExposure": "getConversationMessages returns message.trust copied from metadata.trust when it is a JSON object",
+    "legacyBehavior": "old or malformed messages return trust:null",
+    "futureFieldBehavior": "unknown future JSON fields are preserved at persistence boundaries; frontend presentation safely normalizes unknown enums"
+  },
+  "coveredTrustStates": [
+    "RESTRICTED_LEGAL_CONCLUSION",
+    "POTENTIAL_CONFLICT",
+    "VERIFIED_CONFLICT",
+    "NO_VERIFIED_AUTHORITY",
+    "RETRIEVAL_TIMEOUT",
+    "CONTROLLED_PROCEDURAL",
+    "VERIFIED_CONTROLLING",
+    "RELATED_AUTHORITY_ONLY",
+    "DOMAIN_BOUNDARY",
+    "legacy_missing_trust",
+    "malformed_trust_payload",
+    "unknown_future_trust_enum"
+  ],
+  "security": {
+    "syntheticOnly": true,
+    "containsSecrets": false,
+    "productionApiCalled": false
+  }
+}
