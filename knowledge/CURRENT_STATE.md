@@ -8100,3 +8100,46 @@ Independent review: MANDATORY before Phase 10A may be considered closed or PHASE
 
 Do not mark Phase 10A complete before independent review and PHASE-10A3 (and any further approved remediation) are finished.
 ```
+
+## Phase 10A3 Frontend Trust Metadata Consumption Remediation -- PASS WITH STRICT RECOMMENDATIONS (2026-07-11):
+
+```text
+PHASE-10A3-FRONTEND-TRUST-METADATA-CONSUMPTION-REMEDIATION-1 implemented in c:\Projects\tina-ai (separate repository), local-tested, backend-compatibility-tested against real staging payloads.
+PHASE-10A2 independent GPT-5.5 review PASSED WITH STRICT RECOMMENDATIONS, authorizing this task to begin.
+Independent GPT-5.5 review of THIS task is required before Phase 10A may be considered closed or Phase 10B begins. NOT closed by this entry.
+
+Phase 9 status: Remains COMPLETE. Not reopened.
+Phase 10 status: Active. Phase 10A remains OPEN.
+PHASE-10A1 / PHASE-10A1-R1 / PHASE-10A2 statuses: unchanged, all PASS WITH STRICT RECOMMENDATIONS, independent reviews passed.
+
+Frontend repository: c:\Projects\tina-ai, branch main (this repository's established convention is direct-to-main commits, unlike tina-backend's feature-branch convention -- confirmed from its own commit history before proceeding). Commit: 9f0a0f5.
+
+Backend runtime: UNCHANGED. No file in tina-backend was modified by this task -- this entry is documentation-only, added because PHASE-10A3 is a frontend-consumption task against the already-shipped PHASE-10A1/R1/A2 canonical trust contract.
+
+Implementation summary:
+A new pure, deterministic frontend adapter (src/lib/trustPresentation.js) converts the backend's canonical `trust` object into a presentation model via buildTrustPresentation(), implementing the required 7-tier priority order (restricted > verified conflict > potential conflict > no-verified-authority/source-failure > related-authority-only > verified-authority > controlled-procedural) with combination rules (restricted+human-review as one notice; potential-conflict primary with related-authority as a secondary label). Unrecognized/future enum values degrade to UNKNOWN and render nothing rather than being misinterpreted. Two new components (TrustBanner.jsx, SourceTrustSummary.jsx) render the result with non-color text markers alongside severity color, `role="alert"`/`role="status"` for assistive technology, and no more than one primary banner per message. src/App.jsx captures `data.trust` from the live /ask response and renders TrustBanner per tina message; reloaded conversation history explicitly sets `trust: null` with a documenting comment, since an Explore-agent-confirmed investigation established the backend never persists `trust` to the messages table and GET /conversations/:id/messages never returns it -- this is a correctly-scoped, disclosed limitation, not a bug.
+
+Source-card role handling:
+A live staging query was fetched and inspected before design: the actual public sourceCards payload has no per-card role field (no GOVERNING/SUPPORTING/authorityRole), confirming the PHASE-10A1-R1 finding that this internal pipeline signal never reaches the API. Per the task's own instruction, individual chips remain neutral; a group-level qualifier (from trust.authoritySupport) was added next to the existing SOURCE/SOURCES heading instead, plus an honest per-card `authorityType`-derived title attribute (Statute/Regulation/Ruling/Case Law) using only the real field that does exist.
+
+Local test result:
+tests/phase-10a3-frontend-trust-metadata-consumption-remediation-1.test.mjs: 20/20 pass, 215 assertions, real execution of buildTrustPresentation/normalizeTrust/getAuthorityTypeLabel against all 18 required scenarios plus determinism, forbidden-language, and component-wiring checks. No React Testing Library/Vitest was introduced (repository convention is plain node:assert scripts against pure logic, matching the existing tests/patch-08s-...test.mjs pattern; a rendering framework was judged not justified for this task).
+
+Build result:
+npm run lint: 0 errors, 1 pre-existing unrelated warning. npm run build: success, 380.35 kB JS / 16.89 kB CSS gzip, no warnings; new CSS classes and label strings confirmed present in the built bundle via grep (not tree-shaken). Dev server confirmed serving HTTP 200 with a clean startup log.
+
+Backend-compatibility result:
+6 real trust payloads fetched live from tina-backend-staging (controlled LOA, restricted legal conclusion, verified authority, related authority [which also exercised the live POTENTIAL_CONFLICT + secondary-label combination rule], no-authority/fallback, domain boundary) were fed directly into the real buildTrustPresentation() and each produced exactly the expected state. Sanitized evidence retained at tina-ai/evaluation/results/phase-10a3-frontend-trust-metadata-consumption-remediation-1-backend-compat.json.
+
+Staging UI validation: NOT PERFORMED AS LITERAL SCREENSHOTS. This execution environment has no browser automation/screenshot tool and no Vercel staging URL was available without guessing (prohibited). Disclosed honestly in the report rather than fabricated. Substituted with: real-payload compatibility testing (above), a clean production build with bundle-presence verification, and a dev-server smoke test. A real browser/mobile-width visual validation pass by a human or a future browser-tooling-equipped session remains a required follow-up before full V1 visual sign-off.
+
+Gemini UX review: NOT PERFORMED BY GEMINI 2.5 PRO. No tool in this environment can invoke that model. A self-review (by the implementing model, Sonnet 5) against the same criteria was performed and disclosed as such in the report (section O), not presented as an independent Gemini finding. An actual Gemini 2.5 Pro review remains a recommended follow-up.
+
+No backend trust-contract semantics were changed. No conflict-engine change. No timeout logic change. No retrieval change. No backend source-card generation change (only frontend display of the existing authorityType field). No citation-verification change. No production call was made (only tina-backend-staging). Phase 10B has not started. Phase 10C has not started.
+
+Next task: not yet defined; blocked until this task's independent GPT-5.5 review is accepted, and ideally until the disclosed visual/Gemini follow-ups are completed.
+
+Independent review: MANDATORY before Phase 10A may be considered closed or Phase 10B begins. GPT-5.5 must verify: whether the priority-order and combination-rule logic is correctly implemented; whether normalizeTrust() genuinely degrades unrecognized/future enum values safely; whether the source-card role-handling decision is correctly reasoned from the actual payload shape; whether trust.hasConflict is never trusted independently of trust.conflictState; whether the disclosed gaps (no real browser validation, no actual Gemini review, trust not persisted server-side) are acceptable to carry forward as documented known issues; whether this CURRENT_STATE.md entry accurately records the controlling status; whether Claude improperly changed backend trust-contract, conflict-engine, timeout, retrieval, citation, or production behavior (it did not -- this task touched only c:\Projects\tina-ai).
+
+Do not mark Phase 10A complete before independent review and any further approved remediation (including the disclosed visual/Gemini follow-ups) are finished.
+```
