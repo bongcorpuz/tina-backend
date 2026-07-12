@@ -8387,3 +8387,15 @@ Artifacts:
 
 No production deployment created. No production API called. No production data contacted. Runtime code not modified. Frontend main not modified. Phase 10A remains OPEN. PHASE-10A4 authorization remains pending mandatory Opus 4.8 low-speed independent review; phase10A4RerunAuthorized = false.
 ```
+
+## Phase 10A4 PRE2 Independent Review Outcome (2026-07-12):
+
+```text
+The first PRE2 evidence package (uncommitted draft) was independently reviewed and returned INDEPENDENT REVIEW REVISIONS REQUIRED -- no committed evidence commit, no JSON result artifact, no CURRENT_STATE update existed, and the reviewer's own live secret-presence checks contradicted the draft's claims. PRE2 was then re-executed from a clean evidence baseline; the prior draft was not treated as controlling.
+
+Commit d3531ef66ca0f3612f7b297613b2165ccb599eac (backend, feature/source-availability-engine-v1) was independently reviewed: report, main result JSON, execution-summary.json, sanitized-http-results.json, and security-scan-summary.json. Final review decision: INDEPENDENT REVIEW PASS WITH STRICT RECOMMENDATIONS.
+
+PHASE-10A4 authenticated-staging rerun is conditionally authorized: it must produce its own durable, committed, sanitized evidence to the same standard and pass its own mandatory Opus 4.8 low-speed independent review before Phase 10A may close.
+
+Phase 10A remains OPEN. Phase 10B remains NOT STARTED / blocked. Phase 10C remains NOT STARTED / blocked.
+```

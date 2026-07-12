@@ -96,8 +96,8 @@
     "rawConversationContentExposed": false,
     "envFilesOpened": false,
     "correlationIdentifiers": "one-way SHA-256-derived synthetic conversation ref only",
-    "gitDiffCheck": "pending pre-commit",
-    "secretScan": "pending pre-commit"
+    "gitDiffCheck": "PASS",
+    "secretScan": "PASS - see security-scan-summary.json"
   },
   "transientCleanup": {
     "cookieJars": "deleted",
@@ -106,7 +106,7 @@
     "temporaryScripts": "deleted",
     "resolvedPreviewUrlFile": "deleted",
     "tokensPersisted": false,
-    "result": "pending final sweep"
+    "result": "complete - 0 residual transient files, see security-scan-summary.json"
   },
   "findings": [
     {
