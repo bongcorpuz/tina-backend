@@ -8426,3 +8426,20 @@ Artifacts:
 
 Technical independent review (Opus 4.8 low speed) pending. Gemini rendered-UX acceptance pending. Phase 10A remains OPEN. Phase 10B and 10C remain BLOCKED. Phase 10A is NOT marked complete.
 ```
+
+## Phase 10A4 Rerun 1 Independent Technical Review -- INDEPENDENT REVIEW PASS WITH STRICT RECOMMENDATIONS (2026-07-12):
+
+Commit c766c01b4dc5d6ac76080dbf66b9f92ca4e939c3 (PHASE-10A4-AUTHENTICATED-STAGING-TRUST-INTEGRATION-RERUN-1) independently reviewed by Opus 4.8 (low speed), independent of the Sonnet 5 executor session. The review re-derived the executor's headline claims from live sources rather than trusting the report.
+
+Independently reproduced (all match executor): runtime vars present (boolean only); Preview protection 302 no-bypass / 200 with approved bypass; canonical Preview deployment sha == frontend HEAD 1748788; Preview bundle references tina-backend-staging.onrender.com (1x) and not y11x (0x); staging login success + token; restricted Case E pre-intercept (independent 4987ms vs executor 2700ms -- both far below the ~90s path, gate holds); verified Case A VERIFIED_CONTROLLING/AUTHORITY_FOUND/1 card; persistence roles user,assistant with persisted trust == live. Committed diff secret scan clean (no JWT/bearer/bypass value/dpl_/prj_/team_/UUID/private vercel host). Main-JSON booleans honest and consistent: rendered/accessibility/reload/semantic = false; closure/10B/10C = false. Backend HEAD c766c01 sync 0 0, no runtime code; frontend 1748788 unchanged, main untouched.
+
+Governance: honesty/non-fabrication PASS (rendered, accessibility, in-browser reload were truthfully marked NOT EXECUTED and deferred to Gemini, not fabricated); secret discipline PASS; production safety PASS. The one tension -- the "PASS" label while rendered/accessibility success criteria were unexecuted -- is accepted ONLY because the task's own model assignment delegates rendered UX to a downstream Gemini gate and closure stays false; the executor decision is a backend/executor-layer pass, NOT a rendered validation, and must not be read as full 10A4 validation downstream.
+
+Findings: P0/P1 none; P2 none confirmed as defect; P3 concur on Case C (non-existent-issuance query returns VERIFIED_CONTROLLING backed by general NIRC with a correct prose disclaimer -- internally consistent, no fabricated issuance -- but flagged as a trust-calibration question for the rendered review; re-baseline the fixture). Observation: only 3/7 intended distinct states (A,E,G) reproduced end-to-end live; trustMatrixPassedCount=7 denotes contract-layer well-formedness, not intended-state reproduction.
+
+Strict recommendations (conditions before Phase 10A closure): (1) Gemini rendered-UX + accessibility + in-browser reload acceptance is a hard gate; (2) exercise related-only/no-verified/timeout/conflict distinct states via the phase-10a / phase-10a1-r1 / phase-10a2 controlled fixtures; (3) re-baseline the Case C no-verified fixture and decide whether a high-confidence banner suits a non-existent-issuance query; (4) preserve the backend-layer-pass reading; (5) provision an auditable authenticated-preview browser-driver harness and tolerate one Render cold-start retry.
+
+Review record: c:\Projects\tina-dev-factory\reviews\records\PHASE-10A4-AUTHENTICATED-STAGING-TRUST-INTEGRATION-RERUN-1_INDEPENDENT_REVIEW.md
+
+Determination: the mandatory independent-review gate is CLEARED at the executor/backend layer. Phase 10A closure is NOT authorized by this review. Next required step: Gemini rendered-UX acceptance. Phase 10A remains OPEN; Phase 10B and 10C remain BLOCKED.
+```
