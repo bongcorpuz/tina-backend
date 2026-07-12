@@ -1,0 +1,126 @@
+{
+  "environmentTask": "PHASE-10A4-PRE1",
+  "decision": "PHASE 10A4 PRE1 BLOCKED",
+  "productionDeploymentCreated": false,
+  "productionApiCalled": false,
+  "frontendMainModified": false,
+  "approvedPreviewAvailable": true,
+  "deploymentMappingConfirmed": true,
+  "stagingBackendConfirmed": false,
+  "stagingTestAccountAvailable": false,
+  "phase10A4RerunAuthorized": false,
+  "vercel": {
+    "account": "bongcorpuz",
+    "team": "bongcorpuzs-projects",
+    "primaryProject": {
+      "name": "tina-ai",
+      "id": "[REDACTED - internal Vercel project ID, not published in this public repository]",
+      "productionUrl": "https://tina-ai.vercel.app"
+    },
+    "secondaryProject": {
+      "name": "tina",
+      "id": "[REDACTED - internal Vercel project ID, not published in this public repository]",
+      "productionUrl": "https://app.tina.bentoph.com",
+      "note": "connected to the same GitHub repo; not used as primary evidence in this task"
+    },
+    "githubRepo": "bongcorpuz/tina-ai",
+    "githubDefaultBranch": "main",
+    "productionBranch": "main",
+    "productionBranchConfirmationMethod": "GitHub API default_branch (corroborating, not a direct Vercel dashboard read)",
+    "previewBehaviorConfirmed": true,
+    "previewBehaviorNote": "feature branch phase-10a3-r1-trust-persistence-accessibility auto-produced a Preview deployment (not Production) in both tina-ai and tina projects",
+    "deployment": {
+      "id": "[REDACTED - internal Vercel deployment ID, not published in this public repository]",
+      "project": "tina-ai",
+      "target": "preview",
+      "url": "[REDACTED - generated preview URL, not published in this public repository; available to project owner via Vercel dashboard]",
+      "branchAliasUrl": "[REDACTED - same reason]",
+      "status": "Ready",
+      "confirmedBranch": "phase-10a3-r1-trust-persistence-accessibility",
+      "confirmedCommitPrefix": "1748788",
+      "matchesExpectedHead": true
+    },
+    "deploymentProtection": {
+      "enabled": true,
+      "type": "Vercel Authentication (SSO)",
+      "evidence": "unauthenticated HTTP request to the preview URL returns 302 to https://vercel.com/sso-api",
+      "accessPath": "an authenticated browser session under the bongcorpuzs-projects Vercel account passes through automatically; headless/automated access requires a project-owner-issued Protection Bypass for Automation secret (not generated or requested by this task)"
+    },
+    "envVars": {
+      "namesOnly": ["VITE_API_BASE", "VITE_API_URL"],
+      "environmentsScoped": ["Preview", "Production"],
+      "valuesExtracted": false,
+      "extractionAttemptBlocked": true,
+      "note": "vercel env pull was blocked by this session's own safety controls before execution; values were never read or printed"
+    }
+  },
+  "stagingBackend": {
+    "url": "https://tina-backend-staging.onrender.com/health",
+    "statusCode": 200,
+    "body": { "status": "ok", "service": "tina-backend" },
+    "frontendPointsToStagingBackend": "unconfirmed",
+    "note": "CSP connect-src in committed vercel.json allow-lists both the staging and a second (likely production) backend host; the actual VITE_API_BASE/VITE_API_URL value baked into the Preview build was not extracted, so which host the Preview frontend actually calls is not empirically confirmed"
+  },
+  "stagingTestAccount": {
+    "documented": false,
+    "exists": false,
+    "loginValidated": false,
+    "roleCategory": null,
+    "note": "no sanitized staging test account is referenced anywhere in either repository; backend exposes a /login and registration path but no account was created during this task because that would mutate staging state without explicit user authorization"
+  },
+  "limitedHealthCheck": {
+    "urlResolves": true,
+    "tlsValid": true,
+    "frontendShellLoaded": false,
+    "reason": "blocked by Vercel deployment protection (SSO redirect) for unauthenticated/headless requests",
+    "productionEndpointContacted": false
+  },
+  "security": {
+    "tokensExposed": false,
+    "cookiesExposed": false,
+    "passwordsExposed": false,
+    "envValuesPrinted": false,
+    "taxpayerDataUsed": false,
+    "notes": [
+      "vercel link created a local .env.local (OIDC token) and .vercel/project.json; both are gitignored, untracked, and not committed",
+      "an attempt to pull decrypted environment-variable values to a local file was blocked before execution",
+      "an attempt to read raw local Vercel CLI credential storage was blocked before execution"
+    ]
+  },
+  "findings": [
+    {
+      "severity": "P1",
+      "title": "Deployment protection blocks automated/headless access to the approved preview",
+      "impact": "PHASE-10A4 executor cannot load the authenticated frontend without either a real authenticated browser session under the Vercel account or a project-owner-issued Protection Bypass for Automation secret"
+    },
+    {
+      "severity": "P1",
+      "title": "No sanitized staging test account exists",
+      "impact": "Authenticated login cannot be exercised in the PHASE-10A4 rerun until a test account is created or provided"
+    },
+    {
+      "severity": "P2",
+      "title": "Preview frontend's actual backend target (staging vs. non-staging host) not empirically confirmed",
+      "impact": "CSP allows both hosts; the baked-in VITE_API_BASE/VITE_API_URL value for Preview was not read. Must be confirmed via Network-tab inspection during the rerun or via an out-of-band owner confirmation"
+    },
+    {
+      "severity": "P2",
+      "title": "Two parallel Vercel projects (tina-ai and tina) are both connected to the same GitHub repo",
+      "impact": "Ambiguous canonical project; both deploy previews for the same commits. tina-ai was treated as primary based on name match, but this duplication should be resolved as a governance cleanup item"
+    },
+    {
+      "severity": "P3",
+      "title": "Vercel per-project Production Branch setting not directly readable via CLI",
+      "impact": "main was inferred via GitHub's default_branch and is uncontradicted, but not a first-party Vercel dashboard confirmation"
+    }
+  ],
+  "remainingBlockers": [
+    "Protection Bypass for Automation secret (or equivalent authenticated-browser access) must be provided/configured by the project owner",
+    "A sanitized staging test account must be created or provided",
+    "Preview build's actual backend target host must be confirmed"
+  ],
+  "phase10aStatus": "OPEN",
+  "phase10bStatus": "BLOCKED",
+  "phase10cStatus": "BLOCKED",
+  "independentReviewRequired": "OPUS 4.8 LOW SPEED"
+}
