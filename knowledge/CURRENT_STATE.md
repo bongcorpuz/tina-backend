@@ -8399,3 +8399,30 @@ PHASE-10A4 authenticated-staging rerun is conditionally authorized: it must prod
 
 Phase 10A remains OPEN. Phase 10B remains NOT STARTED / blocked. Phase 10C remains NOT STARTED / blocked.
 ```
+
+## Phase 10A4 Authenticated Staging Trust Integration Rerun 1 -- PHASE 10A4 RERUN PASS WITH STRICT RECOMMENDATIONS (2026-07-12):
+
+PHASE-10A4-AUTHENTICATED-STAGING-TRUST-INTEGRATION-RERUN-1 executed by Claude Code (Sonnet 5, medium speed) under governance LIVE EVIDENCE > THEORY > PATCH. Backend start HEAD 9ee20d7323f334398e498949b9f03e25e449f9ce (feature/source-availability-engine-v1); frontend HEAD 1748788ee5314eb495710f9b281ab6621b943109 (phase-10a3-r1-trust-persistence-accessibility). Frontend main untouched; runtime code not modified. Environment: PROTECTED_VERCEL_PREVIEW_WITH_STAGING_BACKEND.
+
+Live evidence validated (executor layer):
+- Runtime vars present (boolean only): VERCEL_AUTOMATION_BYPASS_SECRET, TINA_STAGING_TEST_USERNAME, TINA_STAGING_TEST_PASSWORD.
+- Preview protection: 302 to Vercel auth without bypass; 200 + app shell with the approved bypass; protection not weakened. Private Preview URL resolved via public GitHub deployment-status API, kept private.
+- Canonical Preview commit: GitHub Preview-tina-ai deployment sha == frontend HEAD 1748788; Preview bundle references tina-backend-staging.onrender.com (1x) and not tina-backend-y11x (0x). previewUsesStagingBackend=true.
+- Staging login: 200, success true, token present (not recorded).
+- Trust matrix (7 cases A-G) at the backend/API contract layer: all executed, trust object present + forwarded + persisted + stable across two independent history reads; data-layer semantic-consistency invariants held for all 7 (displayedSourceCount==sourceCardCount; verified->cards>=1; NOT_APPLICABLE->0 cards; no high-confidence-without-source; no conflict-as-high-confidence). Intended distinct states reproduced live: A (verified, VERIFIED_CONTROLLING), E (restricted, NOT_APPLICABLE + RESTRICTED, pre-intercept at 2700ms validating PHASE-10A2), G (general + limitation). Not reproduced via natural queries: B (related-only -> live corpus has verified EWT definition), C (no-verified -> general NIRC with correct prose disclaimer; internally consistent trust), D (timeout -> no deterministic natural trigger), F (conflict -> no live conflict; synthetic fixture only).
+- Persistence + history reopen: user+assistant turns persisted and trust stable for all 7 cases (data-layer reload-equivalence). Restricted latency gate passed (2.7s vs ~90s).
+- Production safety: preview + staging only; no production backend/frontend/deployment/data/DB mutation/client notification. No secret exposed.
+
+NOT executed in the executor session (no authenticated-SPA browser-driver harness; not fabricated; assigned to the mandatory downstream Gemini rendered-UX acceptance): rendered desktop/tablet/mobile trust presentation, accessibility (contrast/keyboard/screen-reader/touch), and in-browser page reload. Corresponding result-JSON booleans (trustMetadataRenderedCorrectly, pageReloadValidated, desktop/tablet/mobileRenderingValidated, accessibilityValidated, semanticConsistencyValidated) are FALSE by design.
+
+Findings: P0 none; P1 none; P2 none confirmed as defect; P3 observation on Case C (re-baseline the no-verified fixture expectation; general-authority-with-disclaimer behavior is internally consistent). No patch (validation task).
+
+Decision: PHASE 10A4 RERUN PASS WITH STRICT RECOMMENDATIONS. Strict recommendations: (1) Gemini rendered-UX + accessibility acceptance is a hard gate before Phase 10A closure; (2) reproduce related-only/no-verified/timeout/conflict distinct states in the rendered UI using the phase-10a / phase-10a1-r1 / phase-10a2 controlled fixtures; (3) re-baseline the Case C no-verified fixture; (4) provision an auditable authenticated-preview browser-driver harness and tolerate one Render cold-start retry.
+
+Artifacts:
+- PHASE-10A4-AUTHENTICATED-STAGING-TRUST-INTEGRATION-RERUN-1_REPORT.md
+- evaluation/results/phase-10a4-authenticated-staging-trust-integration-rerun-1.json
+- evaluation/results/phase-10a4-authenticated-staging-trust-integration-rerun-1/ (execution-summary, trust-matrix-results, persistence-reload-results, responsive-render-results, accessibility-results, performance-results, production-safety-summary, security-scan-summary, screenshot-manifest)
+
+Technical independent review (Opus 4.8 low speed) pending. Gemini rendered-UX acceptance pending. Phase 10A remains OPEN. Phase 10B and 10C remain BLOCKED. Phase 10A is NOT marked complete.
+```

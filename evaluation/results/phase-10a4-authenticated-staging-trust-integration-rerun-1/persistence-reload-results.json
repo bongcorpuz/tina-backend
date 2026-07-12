@@ -1,0 +1,22 @@
+{
+  "task": "PHASE-10A4",
+  "executionTimestampUtc": "2026-07-12T06:01:23Z",
+  "method": "For each matrix case: POST /conversations, POST /ask (persists user+assistant turns), then two independent GET /conversations/:id/messages calls to prove the persisted trust metadata is stable across independent reads (data-layer reload-equivalence). In-browser page reload of the rendered trust UI is deferred to Gemini rendered-UX acceptance.",
+  "perCase": [
+    { "matrixCaseId": "A", "persistedRoles": "user,assistant", "userTurnPersisted": true, "assistantTurnPersisted": true, "initialTrust": "VERIFIED_CONTROLLING", "reopenedTrust": "VERIFIED_CONTROLLING", "reFetchTrust": "VERIFIED_CONTROLLING", "trustEqualityAcrossReads": true },
+    { "matrixCaseId": "B", "persistedRoles": "user,assistant", "userTurnPersisted": true, "assistantTurnPersisted": true, "initialTrust": "VERIFIED_CONTROLLING", "reopenedTrust": "VERIFIED_CONTROLLING", "reFetchTrust": "VERIFIED_CONTROLLING", "trustEqualityAcrossReads": true },
+    { "matrixCaseId": "C", "persistedRoles": "user,assistant", "userTurnPersisted": true, "assistantTurnPersisted": true, "initialTrust": "VERIFIED_CONTROLLING", "reopenedTrust": "VERIFIED_CONTROLLING", "reFetchTrust": "VERIFIED_CONTROLLING", "trustEqualityAcrossReads": true },
+    { "matrixCaseId": "D", "persistedRoles": "user,assistant", "userTurnPersisted": true, "assistantTurnPersisted": true, "initialTrust": "NOT_APPLICABLE", "reopenedTrust": "NOT_APPLICABLE", "reFetchTrust": "NOT_APPLICABLE", "trustEqualityAcrossReads": true },
+    { "matrixCaseId": "E", "persistedRoles": "user,assistant", "userTurnPersisted": true, "assistantTurnPersisted": true, "initialTrust": "NOT_APPLICABLE", "reopenedTrust": "NOT_APPLICABLE", "reFetchTrust": "NOT_APPLICABLE", "trustEqualityAcrossReads": true },
+    { "matrixCaseId": "F", "persistedRoles": "user,assistant", "userTurnPersisted": true, "assistantTurnPersisted": true, "initialTrust": "VERIFIED_CONTROLLING", "reopenedTrust": "VERIFIED_CONTROLLING", "reFetchTrust": "VERIFIED_CONTROLLING", "trustEqualityAcrossReads": true },
+    { "matrixCaseId": "G", "persistedRoles": "user,assistant", "userTurnPersisted": true, "assistantTurnPersisted": true, "initialTrust": "VERIFIED_CONTROLLING", "reopenedTrust": "VERIFIED_CONTROLLING", "reFetchTrust": "VERIFIED_CONTROLLING", "trustEqualityAcrossReads": true }
+  ],
+  "summary": {
+    "allCasesUserAndAssistantPersisted": true,
+    "allCasesTrustStableAcrossIndependentReads": true,
+    "materialTrustStateChangeAfterReopen": false,
+    "dataLayerReloadEquivalenceValidated": true,
+    "browserPageReloadValidated": false,
+    "browserPageReloadDeferredTo": "GEMINI rendered-UX acceptance"
+  }
+}

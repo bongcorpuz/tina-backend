@@ -1,0 +1,24 @@
+{
+  "task": "PHASE-10A4",
+  "executionTimestampUtc": "2026-07-12T06:01:23Z",
+  "note": "Sanitized live response timings from tina-backend-staging /ask, authenticated. No new performance gates were defined; only the prior Phase-10A restricted-query latency expectation is applied.",
+  "perCaseResponseTimeMs": {
+    "A": 16211, "B": 14262, "C": 17948, "D": 10978, "E": 2700, "F": 12535, "G": 17396
+  },
+  "restrictedQueryLatency": {
+    "caseId": "E",
+    "responseTimeMs": 2700,
+    "priorTimeoutPathApproxMs": 90000,
+    "preInterceptFired": true,
+    "gatePassed": true,
+    "interpretation": "Restricted outcome-prediction query intercepted at ~2.7s, far below the prior ~90s timeout path; PHASE-10A2 pre-intercept gate holds under authenticated staging."
+  },
+  "flags": {
+    "restrictedQueryLatencyRegression": false,
+    "renderCstartConnectionResetsObserved": true,
+    "renderColdStartNote": "tina-backend-staging (Render free tier) intermittently reset connections at the TCP layer during cold start; requests were retried on connection-level failure only (never on HTTP errors). One documented cold-start warm-up was required before the matrix run.",
+    "uiRenderingDelay": "not measured (rendered UX deferred to Gemini)",
+    "persistenceDelay": "none observed at API layer",
+    "reloadDelay": "not measured in browser (data-layer re-fetch immediate)"
+  }
+}

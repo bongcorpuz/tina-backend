@@ -1,0 +1,13 @@
+{
+  "task": "PHASE-10A4",
+  "executionTimestampUtc": "2026-07-12T06:01:23Z",
+  "screenshotsCaptured": 0,
+  "screenshots": [],
+  "reason": "No authenticated rendered screenshots were captured in this executor session because no browser-driver harness for the protected authenticated SPA is provisioned here, and the executor did not fabricate rendered evidence. Rendered desktop/tablet/mobile screenshots for each trust state are the scope of the mandatory downstream Gemini rendered-UX acceptance.",
+  "sanitizationPolicyForFutureCaptures": [
+    "no identity fields", "no usernames", "no private Preview URL in address bar",
+    "no cookies/tokens/authorization headers", "no dev-tools panels showing headers",
+    "no confidential prompt content"
+  ],
+  "screenshotDirectory": "evaluation/results/phase-10a4-authenticated-staging-trust-integration-rerun-1/screenshots/ (empty; reserved for Gemini rendered-UX acceptance)"
+}

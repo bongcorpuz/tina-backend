@@ -1,0 +1,44 @@
+{
+  "task": "PHASE-10A4",
+  "executionTimestampUtc": "2026-07-12T06:01:23Z",
+  "secretHandling": {
+    "runtimeVariablesCheckedBy": "boolean presence only",
+    "valuesRead": false, "valuesHashedOrMeasured": false, "valuesLoggedOrPrinted": false,
+    "envFilesOpened": false,
+    "bypassSecretPassedVia": "x-vercel-protection-bypass request header sourced from env (never a command literal)",
+    "credentialsPassedVia": "environment-variable references inside request bodies (never literals, never stored in committed scripts)"
+  },
+  "exposureFlags": {
+    "vercelBypassValueExposed": false,
+    "usernameExposed": false,
+    "emailExposed": false,
+    "passwordExposed": false,
+    "jwtExposed": false,
+    "tokenExposed": false,
+    "cookieExposed": false,
+    "authorizationHeaderExposed": false,
+    "privatePreviewHostnameExposed": false,
+    "deploymentIdExposed": false,
+    "projectIdExposed": false,
+    "teamIdExposed": false,
+    "rawConversationIdExposed": false,
+    "privateKeyExposed": false,
+    "taxpayerDataExposed": false,
+    "clientInformationExposed": false
+  },
+  "scanScope": ["main result JSON", "all evidence JSON in the rerun-1 directory", "the report markdown", "the staged git diff"],
+  "scanResult": {
+    "classification": "no credential exposure",
+    "falsePositives": [
+      "security-scan-summary.json enumerates the scanned pattern NAMES (e.g. 'jwt', 'cookie', 'token') as documentation; these are field labels, not values"
+    ],
+    "sensitiveMetadataRequiringRedaction": "none remaining; private Preview host, deployment/project/team IDs, and raw conversation IDs were kept out of all committed artifacts by design",
+    "trackedSecret": false
+  },
+  "transientArtifacts": {
+    "githubApiResponses": "deleted", "resolvedPreviewUrlFile": "deleted", "cookieJar": "deleted",
+    "downloadedShellHtml": "deleted", "downloadedBundle": "deleted", "matrixRawJson": "deleted after aggregation",
+    "temporaryScripts": "deleted", "residualTransientFiles": 0
+  },
+  "result": "NO SECRET OR INFRASTRUCTURE-METADATA EXPOSURE DETECTED"
+}

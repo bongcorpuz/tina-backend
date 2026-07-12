@@ -1,0 +1,23 @@
+{
+  "task": "PHASE-10A4",
+  "executionTimestampUtc": "2026-07-12T06:01:23Z",
+  "previewEnvironmentOnly": true,
+  "stagingBackendOnly": true,
+  "hostsContacted": [
+    "api.github.com (public deployment-status API, to resolve the private Preview URL; read-only)",
+    "<private tina-ai preview host> (Vercel, target=preview, non-production; accessed only with the approved bypass)",
+    "tina-backend-staging.onrender.com (staging API)"
+  ],
+  "productionBackendContacted": false,
+  "alternateBackendHostContacted_y11x": false,
+  "productionFrontendContacted": false,
+  "productionDeploymentCreated": false,
+  "mainMergePerformed": false,
+  "realUserDataUsed": false,
+  "productionDatabaseMutated": false,
+  "productionAuthenticationAccountUsed": false,
+  "externalClientNotificationSent": false,
+  "syntheticPromptsOnly": true,
+  "confidentialIdentifiersUsed": false,
+  "note": "All prompts were sanitized general-tax or canonical Phase-10A fixture queries. No client names, TINs, LOAs, assessment values, payroll, or confidential facts were used. Conversations created were synthetic test conversations on the staging database only."
+}

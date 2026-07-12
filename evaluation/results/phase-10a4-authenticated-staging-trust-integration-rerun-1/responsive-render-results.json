@@ -1,0 +1,30 @@
+{
+  "task": "PHASE-10A4",
+  "executionTimestampUtc": "2026-07-12T06:01:23Z",
+  "status": "NOT_EXECUTED_IN_EXECUTOR_SESSION",
+  "reason": "Rendered desktop/tablet/mobile validation of the AUTHENTICATED trust UI requires driving the protected Vercel Preview React SPA through login and per-state prompts in a real browser and capturing sanitized screenshots. No authenticated-SPA browser-driver harness (Playwright/Puppeteer) is provisioned in this executor environment, and the executor did not fabricate rendered results. Per the task's own model assignment, rendered desktop/mobile UX acceptance is the scope of the mandatory downstream Gemini review.",
+  "capabilityProbe": {
+    "node": "v22.18.0 present",
+    "chromePresent": true,
+    "edgePresent": true,
+    "playwrightInstalled": false,
+    "puppeteerInstalled": false
+  },
+  "plannedViewports": [
+    { "name": "desktop", "width": 1440, "height": 900 },
+    { "name": "tablet", "width": 768, "height": 1024 },
+    { "name": "mobile-large", "width": 430, "height": 932 },
+    { "name": "mobile-medium", "width": 375, "height": 812 },
+    { "name": "mobile-small", "width": 320, "height": 568 }
+  ],
+  "checksToPerform": [
+    "no horizontal overflow", "no clipped trust text", "no overlapping source cards",
+    "no banner collision", "readable line length", "stable spacing",
+    "source summary usable", "buttons/links reachable", "trust state understandable without hover",
+    "mobile usable after history reopen"
+  ],
+  "desktopRenderingValidated": false,
+  "tabletRenderingValidated": false,
+  "mobileRenderingValidated": false,
+  "deferredTo": "GEMINI rendered-UX acceptance (mandatory downstream gate; Phase 10A closure remains blocked until complete)"
+}

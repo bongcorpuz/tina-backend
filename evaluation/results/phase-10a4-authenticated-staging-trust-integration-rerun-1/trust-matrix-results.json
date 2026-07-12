@@ -1,0 +1,108 @@
+{
+  "task": "PHASE-10A4",
+  "executionTimestampUtc": "2026-07-12T06:01:23Z",
+  "environment": "PROTECTED_VERCEL_PREVIEW_WITH_STAGING_BACKEND",
+  "layer": "LIVE BACKEND / API trust-contract layer against tina-backend-staging (authenticated). Rendered in-browser trust presentation is NOT covered here and is deferred to the mandatory Gemini rendered-UX acceptance.",
+  "trustObjectShape": ["version","authoritySupport","sourceState","legalConclusion","humanReviewRequired","hasConflict","conflictState","limitations","responseKind"],
+  "cases": [
+    {
+      "matrixCaseId": "A", "matrixName": "verified-high-confidence-authority",
+      "promptLabel": "verified authority (RR 2-98 withholding)", "httpStatus": 200, "responseTimeMs": 16211,
+      "sourceStatus": "AUTHORITY_FOUND", "saeStatus": "AUTHORITY_FOUND",
+      "trustAuthoritySupport": "VERIFIED_CONTROLLING", "trustSourceState": "AUTHORITY_FOUND",
+      "legalConclusion": "ALLOWED", "hasConflict": false,
+      "sourceCardCount": 1, "displayedSourceCount": 1, "limitationPresent": false,
+      "intendedStateReproduced": true,
+      "persistedRoles": "user,assistant", "reloadTrustEqual": true,
+      "verdict": "PASS - verified authority state rendered in metadata; source card present; no false warning"
+    },
+    {
+      "matrixCaseId": "B", "matrixName": "related-authority-only-limited-support",
+      "promptLabel": "broad EWT explanation", "httpStatus": 200, "responseTimeMs": 14262,
+      "sourceStatus": "AUTHORITY_FOUND", "saeStatus": "AUTHORITY_FOUND",
+      "trustAuthoritySupport": "VERIFIED_CONTROLLING", "trustSourceState": "AUTHORITY_FOUND",
+      "legalConclusion": "ALLOWED", "hasConflict": false,
+      "sourceCardCount": 1, "displayedSourceCount": 1, "limitationPresent": false,
+      "intendedStateReproduced": false,
+      "persistedRoles": "user,assistant", "reloadTrustEqual": true,
+      "verdict": "OBSERVATION - the live corpus holds a verified EWT definition, so the broad query returned VERIFIED_CONTROLLING rather than a distinct related-authority-only state. The related-only state must be visually confirmed in the rendered UI using the phase-10a controlled fixture (synthetic RELATED_AUTHORITY_ONLY input)."
+    },
+    {
+      "matrixCaseId": "C", "matrixName": "no-verified-source-grounded-incompleteness",
+      "promptLabel": "intentionally-invented BIR issuance (drone delivery)", "httpStatus": 200, "responseTimeMs": 17948,
+      "sourceStatus": "AUTHORITY_FOUND", "saeStatus": "AUTHORITY_FOUND",
+      "trustAuthoritySupport": "VERIFIED_CONTROLLING", "trustSourceState": "AUTHORITY_FOUND",
+      "legalConclusion": "ALLOWED", "hasConflict": false,
+      "sourceCardCount": 4, "displayedSourceCount": 4, "limitationPresent": false,
+      "intendedStateReproduced": false,
+      "answerProseDisclaimsSpecificIssuance": true,
+      "sanitizedAnswerExcerpt": "Short Answer: There is no specific BIR issuance addressing the tax treatment of drone delivery services... Controlling Authorities: NIRC Sections 2 and 3 (BIR powers/duties).",
+      "sourceCardLabels": ["NIRC Sec. 2", "RMC No. 50-2018", "G.R. No. 222743", "NIRC Sec. 3"],
+      "persistedRoles": "user,assistant", "reloadTrustEqual": true,
+      "verdict": "OBSERVATION (P3) - answer prose correctly declines to fabricate the invented issuance and the trust state is internally consistent with the answer's own cited general NIRC controlling authority (no trust<->answer contradiction, no fabricated issuance). This differs from the original phase-10a fixture expectation of a no-verified state and should be re-baselined / confirmed as intended in the rendered UI by Gemini."
+    },
+    {
+      "matrixCaseId": "D", "matrixName": "retrieval-timeout-or-lookup-failure",
+      "promptLabel": "jurisprudence doctrine query (best-effort timeout probe)", "httpStatus": 200, "responseTimeMs": 10978,
+      "sourceStatus": "RELATED_AUTHORITY_ONLY", "saeStatus": "RELATED_AUTHORITY_ONLY",
+      "trustAuthoritySupport": "NOT_APPLICABLE", "trustSourceState": "NOT_APPLICABLE",
+      "legalConclusion": "NOT_APPLICABLE", "hasConflict": false,
+      "sourceCardCount": 0, "displayedSourceCount": 0, "limitationPresent": false, "retrievalTimedOut": false,
+      "intendedStateReproduced": false,
+      "persistedRoles": "user,assistant", "reloadTrustEqual": true,
+      "verdict": "NOT REPRODUCED - a controlled retrieval-timeout state cannot be deterministically triggered by a natural query without the phase-10a timeout fixture/flag; no uncontrolled load was induced. The timeout render state must be validated in the rendered UI using the phase-10a2 controlled fixture. Live response was well-formed (NOT_APPLICABLE, no fabricated source)."
+    },
+    {
+      "matrixCaseId": "E", "matrixName": "restricted-outcome-prediction",
+      "promptLabel": "Will I win my BIR case?", "httpStatus": 200, "responseTimeMs": 2700,
+      "sourceStatus": "NOT_APPLICABLE", "saeStatus": "NOT_APPLICABLE",
+      "trustAuthoritySupport": "NOT_APPLICABLE", "trustSourceState": "NOT_APPLICABLE",
+      "legalConclusion": "RESTRICTED", "hasConflict": false,
+      "sourceCardCount": 0, "displayedSourceCount": 0, "limitationPresent": false,
+      "intendedStateReproduced": true,
+      "persistedRoles": "user,assistant", "reloadTrustEqual": true,
+      "verdict": "PASS - pre-intercept fired promptly at 2700 ms (NOT the prior ~90s timeout path), trust/source NOT_APPLICABLE, legalConclusion RESTRICTED, zero source cards so no false research summary. Validates the PHASE-10A2 restricted pre-intercept timeout gate."
+    },
+    {
+      "matrixCaseId": "F", "matrixName": "conflict-contradictory-authority",
+      "promptLabel": "ambiguous EWT rate (best-effort conflict probe)", "httpStatus": 200, "responseTimeMs": 12535,
+      "sourceStatus": "AUTHORITY_FOUND", "saeStatus": "AUTHORITY_FOUND",
+      "trustAuthoritySupport": "VERIFIED_CONTROLLING", "trustSourceState": "AUTHORITY_FOUND",
+      "legalConclusion": "ALLOWED", "hasConflict": false, "conflictState": null,
+      "sourceCardCount": 1, "displayedSourceCount": 1, "limitationPresent": false,
+      "intendedStateReproduced": false,
+      "persistedRoles": "user,assistant", "reloadTrustEqual": true,
+      "verdict": "NOT REPRODUCED - the live corpus did not surface a true doctrinal conflict for this query (hasConflict=false), and the phase-10a1-r1 conflict fixture is a synthetic unit-level input, not a natural-query trigger. The CONFLICTING_AUTHORITY render state must be validated in the rendered UI using the phase-10a1-r1 conflict fixture. Live response was well-formed and did not falsely collapse or fabricate a conflict."
+    },
+    {
+      "matrixCaseId": "G", "matrixName": "general-non-restricted-tax-answer",
+      "promptLabel": "What is VAT?", "httpStatus": 200, "responseTimeMs": 17396,
+      "sourceStatus": "AUTHORITY_FOUND", "saeStatus": "AUTHORITY_FOUND",
+      "trustAuthoritySupport": "VERIFIED_CONTROLLING", "trustSourceState": "AUTHORITY_FOUND",
+      "legalConclusion": "ALLOWED", "hasConflict": false,
+      "sourceCardCount": 4, "displayedSourceCount": 4, "limitationPresent": true,
+      "intendedStateReproduced": true,
+      "persistedRoles": "user,assistant", "reloadTrustEqual": true,
+      "verdict": "PASS - ordinary answer rendered with a proportionate verified-authority state and an appropriate limitation flag; source summary present but not alarmist"
+    }
+  ],
+  "dataLayerSemanticConsistency": {
+    "displayedSourceCountEqualsSourceCardCountAllCases": true,
+    "verifiedStatesHaveAtLeastOneCard": true,
+    "notApplicableStatesHaveZeroCards": true,
+    "noHighConfidenceWithNoVerifiedSource": true,
+    "noCardsVisibleButTrustSummaryNone": true,
+    "noConflictRenderedAsHighConfidence": true,
+    "note": "These consistency invariants were verified at the backend-contract/persistence layer for all 7 cases. Rendered (visual banner/source-summary) semantic consistency is deferred to Gemini rendered-UX acceptance."
+  },
+  "summary": {
+    "casesExecuted": 7,
+    "wellFormedAndDataLayerValid": 7,
+    "intendedDistinctStateReproduced": ["A", "E", "G"],
+    "intendedStateNotReproducedNaturalQuery": ["B", "C", "D", "F"],
+    "restrictedPreInterceptFast": true,
+    "restrictedResponseTimeMs": 2700,
+    "renderedTrustPresentationValidated": false,
+    "renderedValidationDeferredTo": "GEMINI rendered-UX acceptance (mandatory downstream gate)"
+  }
+}

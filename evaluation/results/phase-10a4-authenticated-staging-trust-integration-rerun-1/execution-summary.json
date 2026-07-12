@@ -1,0 +1,58 @@
+{
+  "task": "PHASE-10A4",
+  "title": "Authenticated Staging Trust Integration Rerun 1",
+  "executionType": "AUTHENTICATED_STAGING_TRUST_INTEGRATION_RERUN",
+  "model": "Claude Code - Sonnet 5 - medium speed (as assigned)",
+  "executorNote": "Executed by the Claude Code session under the PHASE-10A4 rerun brief. Rendered desktop/mobile UX acceptance is explicitly assigned to a downstream Gemini review and was not performed here.",
+  "environment": "PROTECTED_VERCEL_PREVIEW_WITH_STAGING_BACKEND",
+  "executionTimestampUtc": "2026-07-12T06:01:23Z",
+  "governance": "LIVE EVIDENCE > THEORY > PATCH",
+  "repositories": {
+    "backendBranch": "feature/source-availability-engine-v1",
+    "backendStartHead": "9ee20d7323f334398e498949b9f03e25e449f9ce",
+    "frontendBranch": "phase-10a3-r1-trust-persistence-accessibility",
+    "frontendHead": "1748788ee5314eb495710f9b281ab6621b943109",
+    "frontendMainModified": false,
+    "runtimeCodeModified": false
+  },
+  "layer1_liveEvidence_validated": {
+    "runtimeVariablesPresent": true,
+    "previewProtectionEnforcedWithoutBypass_302": true,
+    "approvedBypassAccess_200_appShell": true,
+    "canonicalPreviewCommitEqualsFrontendHead": true,
+    "previewUsesStagingBackend": true,
+    "stagingLogin": true,
+    "trustMatrixExecuted": true,
+    "trustContractPresentAndForwardedAllCases": true,
+    "restrictedPreInterceptFast_2700ms": true,
+    "persistenceAllCases": true,
+    "dataLayerReloadEquivalenceAllCases": true,
+    "dataLayerSemanticConsistencyAllCases": true,
+    "noProductionContacted": true,
+    "noSecretExposed": true
+  },
+  "layer2_renderedUx_NOT_executed_in_session": {
+    "authenticatedInBrowserTrustRendering": false,
+    "desktopResponsive": false,
+    "tabletResponsive": false,
+    "mobileResponsive": false,
+    "accessibility": false,
+    "inBrowserPageReload": false,
+    "reason": "no authenticated-SPA browser-driver harness provisioned; not fabricated",
+    "assignedTo": "GEMINI rendered-UX acceptance (mandatory downstream gate)"
+  },
+  "trustMatrix": {
+    "caseCount": 7,
+    "wellFormedAndDataLayerValid": 7,
+    "intendedDistinctStateReproduced": ["A", "E", "G"],
+    "intendedStateNotReproducedNaturalQuery": ["B", "C", "D", "F"],
+    "notReproducedReason": "conflict (F) and timeout (D) are covered by synthetic unit-level fixtures, not natural-query triggers; related-only (B) and no-verified (C) natural queries resolved to verified general authority in the live corpus with internally-consistent trust. These distinct render states must be visually confirmed by Gemini using the phase-10a / phase-10a1-r1 / phase-10a2 controlled fixtures."
+  },
+  "decision": "PHASE 10A4 RERUN PASS WITH STRICT RECOMMENDATIONS",
+  "phase10AClosureAuthorized": false,
+  "phase10BAuthorized": false,
+  "phase10CAuthorized": false,
+  "technicalIndependentReviewReady": true,
+  "geminiRenderedUxReviewReady": true,
+  "nextTask": "OPUS 4.8 low-speed independent technical/governance review, then GEMINI rendered desktop/mobile UX acceptance using controlled trust-state fixtures; only after both may Phase 10A closure be considered."
+}
