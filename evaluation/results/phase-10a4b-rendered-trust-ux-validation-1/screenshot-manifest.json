@@ -1,0 +1,20 @@
+{
+  "task": "PHASE-10A4B",
+  "executionTimestampUtc": "2026-07-12T07:06:12Z",
+  "conditions": "Captured under the CORS-DISABLED RENDERING PROBE (non-representative). All post-login chat-view only; profile username redacted to 'User' before every capture; login view never captured.",
+  "screenshotsCaptured": 10,
+  "screenshots": [
+    { "file": "desktop-A.png",                  "state": "verified-controlling (Case A)",  "viewport": "1440x900" },
+    { "file": "desktop-C.png",                  "state": "verified-controlling (Case C calibration)", "viewport": "1440x900" },
+    { "file": "desktop-E.png",                  "state": "restricted (Case E) + verified above", "viewport": "1440x900" },
+    { "file": "desktop-G.png",                  "state": "potential-conflict (Case G)",    "viewport": "1440x900" },
+    { "file": "desktop-after-hard-refresh.png", "state": "all banners persist after hard refresh", "viewport": "1440x900" },
+    { "file": "desktop-full.png",               "state": "full conversation",              "viewport": "1440x900" },
+    { "file": "tablet-full.png",                "state": "full conversation (potential-conflict visible)", "viewport": "768x1024" },
+    { "file": "mobile-430-full.png",            "state": "full conversation",              "viewport": "430x932" },
+    { "file": "mobile-375-full.png",            "state": "full conversation",              "viewport": "375x812" },
+    { "file": "mobile-320-full.png",            "state": "verified-controlling + source cards", "viewport": "320x568" }
+  ],
+  "sanitizationConfirmed": true,
+  "usernameVisibleInAnyScreenshot": false
+}

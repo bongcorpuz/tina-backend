@@ -1,0 +1,18 @@
+{
+  "task": "PHASE-10A4B",
+  "executionTimestampUtc": "2026-07-12T07:06:12Z",
+  "hostsContacted": [
+    "api.github.com (public deployment-status API; resolve private Preview URL; read-only)",
+    "<private tina-ai preview host> (Vercel, target=preview, non-production; accessed only with the approved bypass)",
+    "tina-backend-staging.onrender.com (staging API)"
+  ],
+  "productionBackendContacted": false,
+  "alternateBackendHost_y11x_Contacted": false,
+  "productionFrontendContacted": false,
+  "productionDeploymentCreated": false,
+  "mainMergePerformed": false,
+  "realUserDataUsed": false,
+  "productionDatabaseMutated": false,
+  "syntheticPromptsOnly": true,
+  "note": "Only staging + a non-production Preview + the public GitHub API were contacted. Prompts were sanitized general-tax or canonical Phase-10A fixture queries. The production origin https://tina-ai.vercel.app appears only as a CORS preflight control target (no production deployment was loaded or its data accessed)."
+}

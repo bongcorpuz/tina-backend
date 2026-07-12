@@ -1,0 +1,29 @@
+{
+  "task": "PHASE-10A4B",
+  "executionTimestampUtc": "2026-07-12T07:06:12Z",
+  "finding": "P1 - staging backend does not grant CORS to the ephemeral Vercel Preview origin",
+  "howDiscovered": "Live headless-browser execution of the authenticated login flow; the app surfaced 'Cannot connect to TINA backend'.",
+  "preflightEvidence": {
+    "method": "OPTIONS /login with Origin + Access-Control-Request-Method headers (origins redacted)",
+    "previewOrigin_AccessControlAllowOrigin_present": false,
+    "productionOrigin_AccessControlAllowOrigin_present": true,
+    "productionOriginTested": "https://tina-ai.vercel.app"
+  },
+  "inBrowserIsolation": {
+    "corsEnforced_inPageHealth": "failed (browser CORS block)",
+    "corsDisabled_inPageHealthStatus": 200,
+    "corsDisabled_inPageLoginStatus": 200,
+    "corsDisabled_inPageLoginTokenPresent": true,
+    "conclusion": "Connectivity and credentials are valid; the sole blocker to representative browser use is the missing CORS grant for the Preview origin."
+  },
+  "rootCause": "security/cors-policy.js fails closed for origins not present in the staging CORS_ORIGIN/ALLOWED_ORIGINS allowlist (correct security behavior). The allowlist includes the production origin but not the per-deployment Preview origins.",
+  "codeDefect": false,
+  "configurationOrInfraIssue": true,
+  "remediationOptions": [
+    "Add a stable Preview alias/origin to staging ALLOWED_ORIGINS",
+    "Extend security/cors-policy.js to allowlist the project's Preview-origin pattern under a controlled credential-safe flag (separate approved task)",
+    "Validate rendered UX against a backend whose CORS allows the Preview origin"
+  ],
+  "patched": false,
+  "governanceNote": "No runtime code modified. The fix is deployment/config or a separately-approved cors-policy change."
+}

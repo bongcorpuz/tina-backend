@@ -1,0 +1,20 @@
+{
+  "task": "PHASE-10A4B",
+  "executionTimestampUtc": "2026-07-12T07:06:12Z",
+  "conditions": "CORS-DISABLED RENDERING PROBE (non-representative). Full authenticated conversation (verified + restricted + potential-conflict banners + source cards) rendered at each viewport via CDP Emulation.setDeviceMetricsOverride; horizontal overflow measured as scrollingElement.scrollWidth > innerWidth; banner clipping measured per .trust-banner scrollWidth vs clientWidth.",
+  "viewports": [
+    { "name": "desktop",     "width": 1440, "height": 900,  "horizontalOverflow": false, "bannerClipped": false, "screenshot": "desktop-full.png" },
+    { "name": "tablet",      "width": 768,  "height": 1024, "horizontalOverflow": false, "bannerClipped": false, "screenshot": "tablet-full.png" },
+    { "name": "mobile-430",  "width": 430,  "height": 932,  "horizontalOverflow": false, "bannerClipped": false, "screenshot": "mobile-430-full.png" },
+    { "name": "mobile-375",  "width": 375,  "height": 812,  "horizontalOverflow": false, "bannerClipped": false, "screenshot": "mobile-375-full.png" },
+    { "name": "mobile-320",  "width": 320,  "height": 568,  "horizontalOverflow": false, "bannerClipped": false, "screenshot": "mobile-320-full.png" }
+  ],
+  "summary": {
+    "noHorizontalOverflowAnyViewport": true,
+    "noTrustBannerClippingAnyViewport": true,
+    "sourceCardsWrapOnMobile": true,
+    "trustBannerReadableAllViewports_visual": true,
+    "representativeAcceptance": false,
+    "note": "Layout is clean at all target widths under the CORS-disabled probe. Representative acceptance is deferred until the CORS blocker is fixed and re-validated."
+  }
+}

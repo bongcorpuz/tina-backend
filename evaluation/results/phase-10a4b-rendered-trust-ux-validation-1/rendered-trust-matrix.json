@@ -1,0 +1,46 @@
+{
+  "task": "PHASE-10A4B",
+  "executionTimestampUtc": "2026-07-12T07:06:12Z",
+  "conditions": "CORS-DISABLED RENDERING PROBE (non-representative, not acceptance). Representative flow is BLOCKED by the P1 CORS finding. Captured via headless Chrome (CDP) driving the actual authenticated SPA UI on the protected Preview.",
+  "trustBannerContract": {
+    "selector": ".trust-banner[data-trust-kind]",
+    "nonColorSignal": ".trust-banner-marker (aria-hidden) text: OK/!/i",
+    "ariaRole": "status (positive/info) or alert (warning/critical)"
+  },
+  "cases": [
+    {
+      "id": "A", "prompt": "What does RR No. 2-98 provide on withholding tax?",
+      "renderedKind": "verified-controlling", "role": "status", "marker": "OK", "markerAriaHidden": "true",
+      "severityClass": "trust-banner-positive", "sourceCardsRendered": true, "screenshot": "desktop-A.png",
+      "verdict": "verified-authority state rendered correctly with source summary; no false warning"
+    },
+    {
+      "id": "C", "prompt": "Is there a specific BIR issuance on drone delivery service tax treatment invented for this test?",
+      "renderedKind": "verified-controlling", "role": "status", "marker": "OK", "markerAriaHidden": "true",
+      "severityClass": "trust-banner-positive", "sourceCardsRendered": true, "screenshot": "desktop-C.png",
+      "answerProseDisclaimsSpecificIssuance": true,
+      "verdict": "TRUST-CALIBRATION (P3): green high-confidence banner renders on a non-existent-issuance query; prose correctly disclaims the specific issuance and cites general NIRC authority. No fabricated issuance; internally consistent, but calibration-worthy."
+    },
+    {
+      "id": "E", "prompt": "Will I win my BIR case?",
+      "renderedKind": "restricted", "role": "alert", "marker": "!", "markerAriaHidden": "true",
+      "severityClass": "trust-banner-critical", "sourceCardsRendered": false, "humanReviewTag": true, "screenshot": "desktop-E.png",
+      "verdict": "restricted state rendered correctly: 'Final legal conclusion not provided' + 'Human review required'; description states no win/loss prediction; no source-research summary implied"
+    },
+    {
+      "id": "G", "prompt": "What is VAT?",
+      "renderedKind": "potential-conflict", "role": "alert", "marker": "!", "markerAriaHidden": "true",
+      "severityClass": "trust-banner-warning", "sourceCardsRendered": true, "screenshot": "desktop-G.png",
+      "verdict": "this response surfaced a potential-conflict state (amber 'Possible authority conflict', 'not a confirmed conflict, review professionally'); rendered correctly, not collapsed to high confidence; live variance vs the API-layer 10A4 run which showed verified-controlling for the same prompt"
+    }
+  ],
+  "distinctRenderedStates": ["verified-controlling", "restricted", "potential-conflict"],
+  "statesNotExercisedThisRun": ["verified-supporting", "related-authority-only", "no-verified-authority", "verified-conflict", "source-failure", "procedural"],
+  "statesNote": "Distinct edge states not surfaced by natural queries must be exercised with the phase-10a / phase-10a1-r1 / phase-10a2 controlled fixtures once the CORS blocker is resolved.",
+  "semanticConsistencyRendered": {
+    "verifiedStatesShowSourceSummary": true,
+    "restrictedStateShowsNoSourceResearchSummary": true,
+    "conflictStateNotRenderedAsHighConfidence": true,
+    "trustBannerMatchesBackendKind": true
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "task": "PHASE-10A4B",
+  "executionTimestampUtc": "2026-07-12T07:06:12Z",
+  "conditions": "CORS-DISABLED RENDERING PROBE (non-representative). Checks performed via CDP against the live authenticated DOM.",
+  "checks": {
+    "trustStateNotColorAlone": { "result": "PASS", "evidence": ".trust-banner-marker text (OK / ! / i) plus a text label accompany every banner; not signalled by color alone" },
+    "ariaRolesPresent": { "result": "PASS", "evidence": "role=status for positive/info banners, role=alert for warning/critical banners; enables screen-reader announcement of trust state" },
+    "markersAriaHidden": { "result": "PASS", "evidence": "decorative markers carry aria-hidden=true so screen readers announce the label/description, not the glyph" },
+    "keyboardFocusReachesControls": { "result": "PASS", "evidence": "Tab traversal (Input.dispatchKeyEvent) reached interactive controls (composer/send/profile)" },
+    "focusVisibleOutline": { "result": "PASS", "evidence": "a non-'none' outline was observed on focused controls during Tab traversal" },
+    "sourceCardLinkFocusable": { "result": "NOT_CONFIRMED", "evidence": "the Tab probe started at the composer and moved forward; source-card pills above were not reached in this pass. Reachability/role of source-card pills should be confirmed explicitly." },
+    "contrastMinimum_5p73": { "result": "INCONCLUSIVE", "evidence": "in-page WCAG contrast computation returned inconsistent values (1.11 for positive/critical, 15.3 for warning) indicating a measurement bug; visual inspection shows readable dark-on-tint text at all sizes. The PHASE-10A3-R1 ~5.73:1 claim was NOT independently re-measured." },
+    "touchTargetSizing": { "result": "NOT_MEASURED", "evidence": "deferred; recommend measuring composer/send/source-card hit areas at mobile widths" },
+    "readingOrderReducedWidth": { "result": "PASS_visual", "evidence": "mobile-320 screenshot shows preserved reading order (answer -> trust banner -> source summary)" },
+    "focusTrapOnSourceCardExpansion": { "result": "NOT_TESTED", "evidence": "deferred" }
+  },
+  "toolUsed": "custom CDP DOM/keyboard probe (no axe available in-session)",
+  "accessibilityValidated": false,
+  "recommendation": "Complete accessibility acceptance with axe + manual keyboard/screen-reader passes after the CORS blocker is fixed, including a corrected WCAG contrast measurement to confirm the ~5.73:1 target and explicit source-card focus/touch-target checks."
+}

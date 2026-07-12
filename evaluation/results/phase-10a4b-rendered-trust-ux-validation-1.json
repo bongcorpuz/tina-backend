@@ -1,0 +1,108 @@
+{
+  "task": "PHASE-10A4B",
+  "executionType": "AUTHENTICATED_PREVIEW_RENDERED_TRUST_UX_VALIDATION",
+  "environment": "PROTECTED_VERCEL_PREVIEW_WITH_STAGING_BACKEND",
+  "decision": "PHASE 10A4B BLOCKED",
+  "executionTimestampUtc": "2026-07-12T07:06:12Z",
+  "governance": "LIVE EVIDENCE > THEORY > PATCH",
+  "model": "CLAUDE CODE - SONNET 5 - MEDIUM SPEED",
+
+  "requiredRuntimeVariablesPresent": true,
+  "previewProtectionValidated": true,
+  "approvedPreviewAccessValidated": true,
+  "canonicalPreviewCommitConfirmed": true,
+  "previewUsesStagingBackend": true,
+
+  "browserExecutionAttempted": true,
+  "browserLoginThroughUi_representative": false,
+  "corsBlocksPreviewOriginToStaging": true,
+
+  "renderedTrustStatesValidated_representative": false,
+  "browserHistoryReopenValidated_representative": false,
+  "hardRefreshPersistenceValidated_representative": false,
+  "desktopRenderingValidated_representative": false,
+  "tabletRenderingValidated_representative": false,
+  "mobileRenderingValidated_representative": false,
+  "accessibilityValidated_representative": false,
+
+  "corsDisabledRenderingProbe": {
+    "note": "NON-REPRESENTATIVE, NOT ACCEPTANCE. Chrome launched with web security disabled SOLELY to isolate the confirmed CORS blocker and verify the trust UI itself renders. All booleans below describe rendering under CORS enforcement disabled.",
+    "browserLoginSucceeded": true,
+    "renderedTrustStates": ["verified-controlling", "restricted", "potential-conflict"],
+    "caseCVerifiedControllingOnNonexistentIssuance": true,
+    "hardRefreshTrustPersistIdentical": true,
+    "desktopNoOverflowNoClipping": true,
+    "tabletNoOverflowNoClipping": true,
+    "mobile430NoOverflowNoClipping": true,
+    "mobile375NoOverflowNoClipping": true,
+    "mobile320NoOverflowNoClipping": true,
+    "nonColorTrustMarkersPresent": true,
+    "ariaRolesPresent": true,
+    "keyboardFocusReachesControls": true,
+    "focusVisibleOutlineSeen": true,
+    "contrastNumericMeasurement": "INCONCLUSIVE (tool bug: inconsistent 1.11 vs 15.3); visual inspection shows readable dark-on-tint text; precise WCAG re-measurement recommended",
+    "usernameRedactedInAllScreenshots": true
+  },
+
+  "productionDeploymentCreated": false,
+  "productionApiCalled": false,
+  "productionDataAccessed": false,
+  "frontendMainModified": false,
+  "runtimeCodeModified": false,
+  "secretExposureDetected": false,
+
+  "phase10AClosureAuthorized": false,
+  "phase10BAuthorized": false,
+  "phase10CAuthorized": false,
+
+  "blockingFinding": {
+    "id": "P1-10A4B-CORS",
+    "severity": "P1",
+    "category": "deployment-configuration",
+    "title": "Staging backend does not grant CORS to the ephemeral Vercel Preview origin",
+    "evidence": "CORS preflight (OPTIONS /login) from the private Preview origin returns NO Access-Control-Allow-Origin; the same preflight from the production origin https://tina-ai.vercel.app returns an ACAO grant. In-browser, every credentialed call from the Preview app to tina-backend-staging.onrender.com fails ('Cannot connect to TINA backend'). With CORS enforcement disabled, in-page /health and /login return 200 and the UI login succeeds - isolating the blocker to CORS alone.",
+    "rootCause": "Staging ALLOWED_ORIGINS/CORS_ORIGIN allowlists the production origin but not the per-deployment Preview origins; security/cors-policy.js correctly fails closed for unlisted origins (this is correct security behavior, not a code defect).",
+    "impact": "Representative authenticated browser validation of the trust UI via the protected Preview against staging cannot be completed. The bundle targets staging and direct API login works, but a real browser on the Preview origin is CORS-blocked.",
+    "remediationOptions_ownerOrSeparateApprovedTask": [
+      "Add a stable Preview alias/origin to the staging ALLOWED_ORIGINS allowlist",
+      "Extend security/cors-policy.js to allowlist the project's Preview-origin pattern under a controlled, credential-safe flag (code change; separate approved task)",
+      "Run rendered validation against a backend whose CORS allows the Preview origin"
+    ],
+    "patched": false
+  },
+
+  "secondaryFindings": [
+    {
+      "id": "P3-10A4B-CASE-C-CALIBRATION",
+      "severity": "P3",
+      "title": "Verified-controlling (high-confidence/green) trust banner renders on a non-existent-issuance query",
+      "evidence": "Case C ('...drone delivery service tax treatment invented for this test') renders a green 'Verified controlling authority' banner (role=status, OK marker) with general NIRC source cards, while the answer prose correctly states no specific issuance exists. Confirmed visually in the rendered UI (desktop-C.png, mobile-320-full.png).",
+      "assessment": "No fabricated issuance; trust is internally consistent with the answer's cited general authority. Trust-CALIBRATION concern: a lay user could over-trust a high-confidence banner on a non-existent-issuance query. Recommend calibration review and re-baseline of the phase-10a no-verified fixture.",
+      "patched": false
+    },
+    {
+      "id": "OBS-10A4B-CONTRAST",
+      "severity": "observation",
+      "title": "Automated contrast measurement inconclusive",
+      "evidence": "In-page WCAG contrast computation returned inconsistent values (1.11 for positive/critical banners vs 15.3 for warning). Visual inspection shows readable dark-on-tint text at all sizes.",
+      "assessment": "The PHASE-10A3-R1 ~5.73:1 claim was NOT independently re-measured due to the tool bug. Recommend a corrected contrast measurement or axe-based verification (part of accessibility acceptance)."
+    }
+  ],
+
+  "evidenceReferences": [
+    "PHASE-10A4B-RENDERED-TRUST-UX-VALIDATION-1_REPORT.md",
+    "evaluation/results/phase-10a4b-rendered-trust-ux-validation-1/rendered-trust-matrix.json",
+    "evaluation/results/phase-10a4b-rendered-trust-ux-validation-1/responsive-render-results.json",
+    "evaluation/results/phase-10a4b-rendered-trust-ux-validation-1/accessibility-results.json",
+    "evaluation/results/phase-10a4b-rendered-trust-ux-validation-1/persistence-refresh-results.json",
+    "evaluation/results/phase-10a4b-rendered-trust-ux-validation-1/cors-blocking-finding.json",
+    "evaluation/results/phase-10a4b-rendered-trust-ux-validation-1/production-safety-summary.json",
+    "evaluation/results/phase-10a4b-rendered-trust-ux-validation-1/security-scan-summary.json",
+    "evaluation/results/phase-10a4b-rendered-trust-ux-validation-1/screenshot-manifest.json",
+    "evaluation/results/phase-10a4b-rendered-trust-ux-validation-1/screenshots/"
+  ],
+  "phase10AStatus": "OPEN",
+  "phase10BStatus": "BLOCKED",
+  "phase10CStatus": "BLOCKED",
+  "nextRequiredStep": "Owner/infra remediation of staging CORS for the Preview origin (or an approved cors-policy change), then re-run PHASE-10A4B representative browser validation; independent review + Gemini rendered-UX acceptance remain required before Phase 10A closure."
+}

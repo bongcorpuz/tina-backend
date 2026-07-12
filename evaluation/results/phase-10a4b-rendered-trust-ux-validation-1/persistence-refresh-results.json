@@ -1,0 +1,23 @@
+{
+  "task": "PHASE-10A4B",
+  "executionTimestampUtc": "2026-07-12T07:06:12Z",
+  "conditions": "CORS-DISABLED RENDERING PROBE (non-representative). Real browser hard refresh via CDP Page.reload({ignoreCache:true}).",
+  "method": "Rendered 4 assistant turns in one authenticated conversation, captured trust-banner kinds, then performed a genuine hard refresh (ignoreCache) and re-read the DOM. History reopen is implicit: on reload the app re-hydrates the active conversation from localStorage.tinaConversationId and re-fetches messages.",
+  "preRefresh": {
+    "trustBannerCount": 4,
+    "kinds": ["verified-controlling", "verified-controlling", "restricted", "potential-conflict"]
+  },
+  "postHardRefresh": {
+    "trustBannerCount": 4,
+    "kinds": ["verified-controlling", "verified-controlling", "restricted", "potential-conflict"],
+    "tokenSurvives": true,
+    "screenshot": "desktop-after-hard-refresh.png"
+  },
+  "summary": {
+    "trustKindsIdenticalAfterHardRefresh": true,
+    "materialTrustStateChangeAfterReload": false,
+    "trustPresentationSurvivesHardRefresh": true,
+    "representativeAcceptance": false,
+    "note": "Trust presentation persisted identically through a real browser hard refresh under the CORS-disabled probe. Representative acceptance deferred until CORS blocker resolved."
+  }
+}

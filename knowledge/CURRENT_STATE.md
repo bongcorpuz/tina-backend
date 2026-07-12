@@ -8443,3 +8443,20 @@ Review record: c:\Projects\tina-dev-factory\reviews\records\PHASE-10A4-AUTHENTIC
 
 Determination: the mandatory independent-review gate is CLEARED at the executor/backend layer. Phase 10A closure is NOT authorized by this review. Next required step: Gemini rendered-UX acceptance. Phase 10A remains OPEN; Phase 10B and 10C remain BLOCKED.
 ```
+
+## Phase 10A4B Rendered Trust-UX Validation 1 (real browser) -- PHASE 10A4B BLOCKED (2026-07-12):
+
+PHASE-10A4B executed by Claude Code (Sonnet 5, medium) as a genuine headless-Chrome (CDP) execution driving the actual authenticated SPA on the protected Preview. Preflight PASS: runtime vars present (boolean only); backend HEAD 1715ef98a7098de729fa5c678ab558ebc1280ac8 sync 0 0 (c766c01, 1715ef9 ancestors); frontend HEAD 1748788 sync 0 0, main untouched, .gitignore M preserved; dev-factory HEAD 9167002.
+
+BLOCKING FINDING (P1, deployment-config, no patch): the staging backend does NOT grant CORS to the ephemeral Vercel Preview origin. CORS preflight (OPTIONS /login) from the Preview origin returns no Access-Control-Allow-Origin, while the production origin https://tina-ai.vercel.app receives an ACAO grant. In-browser, credentialed calls from the Preview app to tina-backend-staging.onrender.com fail ("Cannot connect to TINA backend"). With CORS enforcement disabled, in-page /health and /login return 200 with a token and UI login succeeds -- isolating the sole blocker to CORS. Root cause: security/cors-policy.js fails closed for origins not in the staging ALLOWED_ORIGINS/CORS_ORIGIN allowlist (correct security behavior); the allowlist includes production but not per-deployment Preview origins. Only genuine browser execution surfaced this; the API-layer 10A4 rerun could not.
+
+Protected Preview access PASS (302 without bypass, 200 with approved bypass). A clearly-labeled CORS-DISABLED RENDERING PROBE (non-representative, NOT acceptance) confirmed the trust UI renders correctly: verified-controlling (green, role=status, OK marker), restricted (red, role=alert, ! marker, "Human review required"), potential-conflict (amber, role=alert). Non-color signalling PASS (text marker + ARIA role). Hard refresh (Page.reload ignoreCache) PASS: 4 trust-banner kinds identical pre/post, token survives. Responsive PASS: no horizontal overflow, no banner clipping at 1440/768/430/375/320; source cards wrap on mobile. Keyboard: reaches controls with visible focus; source-card focus/touch-targets not confirmed. Contrast measurement INCONCLUSIVE (tool bug 1.11 vs 15.3); visual inspection readable; 10A3-R1 ~5.73:1 not independently re-measured. Case C trust-calibration (P3) confirmed in rendered UI: green verified-controlling banner on the non-existent drone-delivery issuance query (prose disclaims; no fabricated issuance; internally consistent; calibration-worthy).
+
+Secret/production discipline: boolean-only var checks; bypass via header + in-memory CDP cookie; credentials via CDP structured args (never literaled/printed); all 10 committed screenshots are post-login chat views with username redacted to "User" (login view never captured); no secret/token/cookie/private-URL/ID in any artifact. Only staging + non-production Preview + public GitHub API contacted (production origin only as a CORS preflight control target). No runtime code modified; frontend main untouched.
+
+Decision: PHASE 10A4B BLOCKED. Next required step: owner/infra remediation of staging CORS for the Preview origin (or an approved cors-policy change), then re-run PHASE-10A4B representative browser validation. Independent review + Gemini rendered-UX acceptance still required before any Phase 10A closure.
+
+Artifacts: PHASE-10A4B-RENDERED-TRUST-UX-VALIDATION-1_REPORT.md; evaluation/results/phase-10a4b-rendered-trust-ux-validation-1.json; evaluation/results/phase-10a4b-rendered-trust-ux-validation-1/ (cors-blocking-finding, rendered-trust-matrix, responsive-render-results, accessibility-results, persistence-refresh-results, production-safety-summary, security-scan-summary, screenshot-manifest, screenshots/ x10).
+
+Phase 10A remains OPEN. Phase 10B and 10C remain BLOCKED. Phase 10A is NOT marked complete.
+```
