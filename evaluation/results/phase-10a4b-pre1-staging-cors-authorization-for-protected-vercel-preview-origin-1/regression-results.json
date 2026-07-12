@@ -1,0 +1,26 @@
+{
+  "task": "PHASE-10A4B-PRE1",
+  "executionTimestampUtc": "2026-07-12T07:41:33Z",
+  "gate": "npm test (scripts/run-regressions.mjs): syntax checks + tests/*.test.mjs + *_stage*_test.mjs",
+  "newTests": {
+    "file": "tests/phase-10a4b-pre1-staging-cors-preview-origin-1.test.mjs",
+    "result": "11 passed, 0 failed, 21 assertions",
+    "covers": ["approved preview allowed+credentialed+reflected on staging", "production preserved", "production never authorizes preview", "unknown vercel denied", "malformed lookalike denied", "http denied", "non-vercel denied", "wrong-team denied", "localhost bounded", "no wildcard-with-credentials / no arbitrary reflection", "isStagingBackendRuntime detection"]
+  },
+  "existingCorsTests": { "file": "tests/patch-08s-cors-staging-remediation-1.test.mjs", "result": "12 passed, 0 failed, 42 assertions (preserved)" },
+  "trustContractSuites": "pass (PHASE-10A1/10A1-R1/10A2/10A3-R1 functional tests pass)",
+  "fileScopeGuards": {
+    "behavior": "prior-phase suites run `git diff --name-only HEAD` and assert only their own files changed; they fail on ANY uncommitted change outside their set",
+    "beforeCommit": "31 scope guards failed (my uncommitted cors-policy.js + new test appeared in the working-tree diff)",
+    "afterCommit": "all 31 pass (clean working tree vs HEAD)"
+  },
+  "preExistingUnrelatedFailure": {
+    "suite": "tests/phase-09zf-controlled-loa-gate-ordering-remediation-1.test.mjs",
+    "assertion": "'pipeline.js is part of the reported diff scope (working tree or last commit)'",
+    "cause": "self-referential guard using `git show --name-only` (LAST commit); passes ONLY when HEAD is exactly the 09ZF commit. Fails for baseline 65f9a34 (0 pipeline.js) identically to HEAD.",
+    "introducedByThisTask": false,
+    "recommendation": "repair the 09zf guard separately (gate hygiene)"
+  },
+  "gateStatusExcludingPreExisting": "PASS",
+  "runtimeCodeModified": true
+}

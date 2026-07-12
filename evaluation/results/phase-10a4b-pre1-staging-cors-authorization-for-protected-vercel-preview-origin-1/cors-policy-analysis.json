@@ -1,0 +1,23 @@
+{
+  "task": "PHASE-10A4B-PRE1",
+  "executionTimestampUtc": "2026-07-12T07:41:33Z",
+  "module": "security/cors-policy.js",
+  "priorBehavior": {
+    "allowlistSource": "CORS_ORIGIN or ALLOWED_ORIGINS env (comma-separated exact origins); set on Render dashboard, not committed (no render.yaml)",
+    "matching": "exact-string allowlist.includes(origin); credentials + exact reflection on match",
+    "failClosed": "production/staging: any non-allowlisted origin -> {origin:false, credentials:false}",
+    "credentialedRequestPolicy": "credentials granted ONLY to explicitly allowed origins; never wildcard-with-credentials; never reflects arbitrary Origin",
+    "gap": "the ephemeral per-deployment Vercel Preview origin was not in the staging allowlist, so the browser blocked credentialed Preview->staging requests"
+  },
+  "previewAliasBehavior": {
+    "ephemeralDeployOrigin": "https://tina-<hash>-<team>.vercel.app (changes per deployment)",
+    "stableBranchAlias": "https://tina-ai-git-<branch>-<team>.vercel.app (stable per branch; ideal exact-allowlist target)",
+    "teamSuffix": "owner Vercel team slug is globally unique and owner-controlled; a third party cannot register it",
+    "protection": "all Preview deployments are Vercel SSO-protected (non-production)"
+  },
+  "stagingVsProductionSeparation": {
+    "detection": "server-injected Render markers (RENDER_SERVICE_NAME contains 'staging' OR RENDER_EXTERNAL_URL host is the staging host); never the client Host header",
+    "productionUnaffected": "on production the staging gate is false; the exact env allowlist alone governs (unchanged)"
+  },
+  "credentialedRequestPolicyAfterFix": "unchanged for production; on staging, the approved Preview origin additionally receives credentials + exact reflection; all other origins still fail closed"
+}

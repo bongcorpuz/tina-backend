@@ -1,0 +1,25 @@
+{
+  "task": "PHASE-10A4B-PRE1",
+  "executionTimestampUtc": "2026-07-12T07:41:33Z",
+  "method": "Live OPTIONS /login preflight against tina-backend-staging.onrender.com with each test Origin. Raw origins are never printed; only case labels + booleans.",
+  "cases": [
+    { "case": "1_approved_protected_preview", "httpStatus": 204, "allowOriginGrantedToRequestingOrigin": true, "allowCredentials": "true", "allowMethodsPresent": true, "verdict": "PASS - preflight succeeds; ACAO matches the requesting approved origin; credentials true" },
+    { "case": "2_production_frontend_origin", "httpStatus": 204, "allowOriginGrantedToRequestingOrigin": true, "allowCredentials": "true", "allowMethodsPresent": true, "verdict": "PASS - existing production-origin behavior unchanged" },
+    { "case": "3_unknown_vercel_origin", "httpStatus": 404, "allowOriginGrantedToRequestingOrigin": false, "allowCredentials": null, "verdict": "PASS - denied (no allow-origin)" },
+    { "case": "4_malformed_lookalike_origin", "httpStatus": 404, "allowOriginGrantedToRequestingOrigin": false, "allowCredentials": null, "verdict": "PASS - denied" },
+    { "case": "5_http_not_https", "httpStatus": 404, "allowOriginGrantedToRequestingOrigin": false, "allowCredentials": null, "verdict": "PASS - denied" },
+    { "case": "6_non_vercel_origin", "httpStatus": 404, "allowOriginGrantedToRequestingOrigin": false, "allowCredentials": null, "verdict": "PASS - denied" },
+    { "case": "7_localhost_dev_origin", "httpStatus": 404, "allowOriginGrantedToRequestingOrigin": false, "allowCredentials": null, "verdict": "PASS - denied on staging (localhost is authorized only in local dev; staging/production behavior preserved)" }
+  ],
+  "summary": {
+    "approvedPreviewGrantedCredentialed": true,
+    "productionPreserved": true,
+    "unknownDenied": true,
+    "malformedDenied": true,
+    "httpDenied": true,
+    "nonVercelDenied": true,
+    "localhostDeniedOnStaging": true,
+    "noWildcardWithCredentials": true,
+    "noArbitraryReflection": true
+  }
+}

@@ -8460,3 +8460,22 @@ Artifacts: PHASE-10A4B-RENDERED-TRUST-UX-VALIDATION-1_REPORT.md; evaluation/resu
 
 Phase 10A remains OPEN. Phase 10B and 10C remain BLOCKED. Phase 10A is NOT marked complete.
 ```
+
+## Phase 10A4B PRE1 Staging CORS Authorization for Protected Vercel Preview Origin 1 -- PHASE 10A4B PRE1 PASS WITH STRICT RECOMMENDATIONS (2026-07-12):
+
+PHASE-10A4B-PRE1 remediates the PHASE-10A4B BLOCKED finding (staging CORS did not grant the protected Vercel Preview origin). Executed by Claude Code (Sonnet 5, medium). Backend start HEAD 65f9a34, remediation commit 4600fb2, sync 0 0; frontend 1748788 untouched, main untouched; dev-factory 9167002.
+
+Root cause confirmed: security/cors-policy.js authorizes only exact origins from the staging CORS_ORIGIN/ALLOWED_ORIGINS env allowlist (Render dashboard; no committed render.yaml) and fails closed otherwise; the ephemeral Preview origin was absent. Config fix (priority 1: add the stable Preview alias to staging ALLOWED_ORIGINS) is ideal/narrowest but requires Render dashboard access not available to the executor -> recommended owner follow-up. Implemented priority 3: a narrow, STAGING-ONLY authorization branch in security/cors-policy.js for the owner-team-anchored, SSO-protected tina-ai Preview origin -- gated on server-injected Render markers (never the client Host header), https-only, team+project anchored (not arbitrary *.vercel.app), exact-anchored (blocks lookalikes), reflecting only the specific validated origin (no wildcard-with-credentials, no arbitrary reflection), never applies on production. Added unit tests (tests/phase-10a4b-pre1-staging-cors-preview-origin-1.test.mjs, 11 tests/21 assertions); preserved existing patch-08s CORS tests (12 pass). No ephemeral private hostname or secret embedded in code.
+
+Live evidence (staging redeployed from the push): preflight matrix against tina-backend-staging -- approved preview 204 granted+credentials; production origin 204 preserved/unchanged; unknown-vercel/malformed-lookalike/http/non-vercel/localhost all denied (404, no allow-origin). Actual browser smoke with CORS ENFORCED (not disabled): UI login through the real form succeeded, one authenticated GET /conversations from the browser returned 200, 0 CORS console errors, 0 connect errors; sanitized screenshot (username redacted). Regression: functional trust suites pass; all prior-phase file-scope guards pass after commit (clean tree); one PRE-EXISTING unrelated failure (phase-09zf self-referential last-commit guard, fails for any non-09ZF HEAD incl. baseline 65f9a34) -- not introduced here.
+
+Production safety: only GitHub API + non-production Preview + staging contacted; production origin used only as a preflight Origin control against staging; no production API/deployment/data; frontend main untouched. No secret exposure.
+
+Decision: PHASE 10A4B PRE1 PASS WITH STRICT RECOMMENDATIONS. Strict recommendations: (1) tighten to an exact-origin env allowlist of the stable Preview branch alias (priority-1 config) when Render access is available, then narrow/remove the code branch; (2) the code branch is team-scoped (incl. sibling 'tina' project) -- broader than exact-origin; (3) staging gate relies on Render service identifiers; (4) repair the pre-existing phase-09zf self-referential gate guard.
+
+phase10A4BRerunAuthorized = false pending mandatory Opus 4.8 low-speed independent review. On review pass, PHASE-10A4B representative rendered validation may re-run against the now-CORS-authorized preview.
+
+Artifacts: PHASE-10A4B-PRE1-STAGING-CORS-AUTHORIZATION-FOR-PROTECTED-VERCEL-PREVIEW-ORIGIN-1_REPORT.md; evaluation/results/phase-10a4b-pre1-staging-cors-authorization-for-protected-vercel-preview-origin-1.json; evaluation/results/phase-10a4b-pre1-staging-cors-authorization-for-protected-vercel-preview-origin-1/ (cors-policy-analysis, remediation-decision, preflight-results, browser-smoke-results, regression-results, production-safety-summary, security-scan-summary, screenshots/authenticated-preview-smoke.png). Code: security/cors-policy.js, tests/phase-10a4b-pre1-staging-cors-preview-origin-1.test.mjs (commit 4600fb2).
+
+Phase 10A remains OPEN. Phase 10B and 10C remain BLOCKED. Phase 10A is NOT marked complete.
+```

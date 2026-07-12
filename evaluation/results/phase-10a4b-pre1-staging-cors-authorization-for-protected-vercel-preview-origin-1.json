@@ -1,0 +1,95 @@
+{
+  "task": "PHASE-10A4B-PRE1",
+  "title": "Staging CORS authorization for the protected tina-ai Vercel Preview origin",
+  "environment": "STAGING_BACKEND_WITH_PROTECTED_VERCEL_PREVIEW",
+  "executionTimestampUtc": "2026-07-12T07:41:33Z",
+  "governance": "LIVE EVIDENCE > THEORY > PATCH",
+  "model": "CLAUDE CODE - SONNET 5 - MEDIUM SPEED",
+  "decision": "PHASE 10A4B PRE1 PASS WITH STRICT RECOMMENDATIONS",
+
+  "corsBlockerReproduced": true,
+  "rootCauseConfirmed": true,
+  "remediationType": "narrow_runtime_code_change_staging_scoped_preview_authorization",
+  "approvedPreviewOriginAuthorized": true,
+  "unknownPreviewOriginDenied": true,
+  "productionOriginBehaviorPreserved": true,
+  "credentialedCorsValidated": true,
+  "actualBrowserSmokePassed": true,
+  "stagingBackendOnly": true,
+  "productionApiCalled": false,
+  "runtimeCodeModified": true,
+  "secretExposureDetected": false,
+  "phase10A4BRerunAuthorized": false,
+
+  "rootCause": "security/cors-policy.js authorizes only exact origins from the staging CORS_ORIGIN/ALLOWED_ORIGINS env allowlist and fails closed otherwise (correct). The allowlist contained the production origin but not the ephemeral, per-deployment Vercel Preview origin, so the browser blocked all credentialed Preview->staging requests.",
+
+  "remediation": {
+    "file": "security/cors-policy.js",
+    "change": "Added a staging-ONLY authorization branch for the owner-team-anchored, SSO-protected tina-ai Preview origin. Gated on server-injected Render markers (RENDER_SERVICE_NAME/RENDER_EXTERNAL_URL), NOT the client Host header. https-only; anchored to the owner's globally-unique Vercel team suffix; 'tina-' project prefix; exact ($) hostname anchors prevent suffix/lookalike injection. Reflects only the specific pattern-validated origin (never a wildcard with credentials). Never applies on production.",
+    "decisionOrder": "Config (priority 1: add the stable Preview alias to staging ALLOWED_ORIGINS) is the ideal minimal fix but requires Render dashboard access not available to the executor; there is no committed render.yaml. Option 3 (strictly constrained canonical tina-ai Preview-host validation) was therefore implemented as the narrowest self-contained, deployable, testable path.",
+    "productionSafety": "The new branch is gated to the staging runtime; production CORS behavior is unchanged (verified live: production origin still granted; the exact env allowlist still governs).",
+    "runtimeCodeModified": true,
+    "commit": "4600fb2"
+  },
+
+  "preflightMatrix": {
+    "note": "Live OPTIONS /login against tina-backend-staging with each Origin (raw origins never printed).",
+    "approvedPreview": { "status": 204, "allowOriginGranted": true, "allowCredentials": "true", "methodsPresent": true },
+    "productionOrigin": { "status": 204, "allowOriginGranted": true, "allowCredentials": "true", "note": "unchanged / preserved" },
+    "unknownVercel": { "status": 404, "allowOriginGranted": false, "denied": true },
+    "malformedLookalike": { "status": 404, "allowOriginGranted": false, "denied": true },
+    "httpScheme": { "status": 404, "allowOriginGranted": false, "denied": true },
+    "nonVercel": { "status": 404, "allowOriginGranted": false, "denied": true },
+    "localhost": { "status": 404, "allowOriginGranted": false, "denied": true }
+  },
+
+  "browserSmoke": {
+    "corsEnforced": true,
+    "corsDisabled": false,
+    "uiLoginSucceeded": true,
+    "authenticatedApiCallStatus": 200,
+    "corsConsoleErrorCount": 0,
+    "appConnectErrorCount": 0,
+    "screenshot": "screenshots/authenticated-preview-smoke.png",
+    "note": "Real headless Chrome with web security ENABLED. Bypass cookie for the protected Preview; login through the actual UI; one sanitized authenticated GET /conversations from the browser returned 200 with no CORS error."
+  },
+
+  "regression": {
+    "functionalTestsPass": true,
+    "newCorsTests": "tests/phase-10a4b-pre1-staging-cors-preview-origin-1.test.mjs (11 tests, 21 assertions, all pass)",
+    "existingCorsTestsPreserved": "tests/patch-08s-cors-staging-remediation-1.test.mjs (12 tests pass)",
+    "fileScopeGuardsPassAfterCommit": true,
+    "preExistingUnrelatedFailure": "tests/phase-09zf-...: a self-referential guard requiring pipeline.js in the LAST commit; fails for any commit that is not the 09ZF commit (also fails at baseline 65f9a34). Not introduced by this task.",
+    "gateStatusExcludingPreExisting": "PASS"
+  },
+
+  "productionSafety": {
+    "hostsContacted": ["api.github.com (read-only)", "<private tina-ai preview host> (non-production, bypass)", "tina-backend-staging.onrender.com"],
+    "productionApiCalled": false,
+    "productionOriginUsage": "only as an Origin header on a preflight to STAGING (control); no request was made to any production deployment",
+    "frontendMainModified": false
+  },
+
+  "strictRecommendations": [
+    "Tighten to an EXACT-origin allowlist of the stable Preview branch alias in the staging ALLOWED_ORIGINS env (priority-1 config) once Render dashboard access is available; then the code branch can be narrowed or removed.",
+    "The current code branch is team-SCOPED (authorizes owner-team tina-* previews, including the sibling 'tina' project); the exact-origin config is narrower.",
+    "The staging gate relies on Render service identifiers; re-verify if the staging service is renamed.",
+    "Gate-hygiene: the pre-existing phase-09zf self-referential last-commit guard fails for any non-09ZF HEAD and should be repaired separately."
+  ],
+
+  "evidenceReferences": [
+    "PHASE-10A4B-PRE1-STAGING-CORS-AUTHORIZATION-FOR-PROTECTED-VERCEL-PREVIEW-ORIGIN-1_REPORT.md",
+    "evaluation/results/phase-10a4b-pre1-staging-cors-authorization-for-protected-vercel-preview-origin-1/cors-policy-analysis.json",
+    "evaluation/results/phase-10a4b-pre1-staging-cors-authorization-for-protected-vercel-preview-origin-1/remediation-decision.json",
+    "evaluation/results/phase-10a4b-pre1-staging-cors-authorization-for-protected-vercel-preview-origin-1/preflight-results.json",
+    "evaluation/results/phase-10a4b-pre1-staging-cors-authorization-for-protected-vercel-preview-origin-1/browser-smoke-results.json",
+    "evaluation/results/phase-10a4b-pre1-staging-cors-authorization-for-protected-vercel-preview-origin-1/regression-results.json",
+    "evaluation/results/phase-10a4b-pre1-staging-cors-authorization-for-protected-vercel-preview-origin-1/production-safety-summary.json",
+    "evaluation/results/phase-10a4b-pre1-staging-cors-authorization-for-protected-vercel-preview-origin-1/security-scan-summary.json",
+    "evaluation/results/phase-10a4b-pre1-staging-cors-authorization-for-protected-vercel-preview-origin-1/screenshots/authenticated-preview-smoke.png"
+  ],
+  "phase10AStatus": "OPEN",
+  "phase10BStatus": "BLOCKED",
+  "phase10CStatus": "BLOCKED",
+  "nextRequiredStep": "Mandatory Opus 4.8 low-speed independent review of this remediation. On pass, PHASE-10A4B representative rendered validation may be re-run against the Preview branch alias / preview origin (now CORS-authorized on staging)."
+}

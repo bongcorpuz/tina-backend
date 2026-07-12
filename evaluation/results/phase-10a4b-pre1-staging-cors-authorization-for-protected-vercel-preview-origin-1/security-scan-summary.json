@@ -1,0 +1,36 @@
+{
+  "task": "PHASE-10A4B-PRE1",
+  "executionTimestampUtc": "2026-07-12T07:41:33Z",
+  "secretHandling": {
+    "runtimeVariablesCheckedBy": "boolean presence only",
+    "bypassSecretUsage": "x-vercel-protection-bypass header from env + in-memory CDP cookie; never printed/committed",
+    "credentialsUsage": "username/password passed to the login form via CDP structured args; never literaled into committed code/scripts; never printed",
+    "envFilesOpened": false,
+    "privatePreviewHostInArtifacts": false,
+    "privatePreviewHostInCode": false
+  },
+  "codeChangeReview": {
+    "file": "security/cors-policy.js",
+    "embedsEphemeralPreviewHostname": false,
+    "embedsPublicProjectAndTeamPolicyShape": true,
+    "note": "The regex encodes only the stable, public project+team policy shape (tina- prefix, owner team suffix). The Vercel team slug is already present in committed prior artifacts (PRE1). No secret, token, or ephemeral hostname is embedded.",
+    "logsEnvOrSecrets": false,
+    "wildcardWithCredentials": false,
+    "arbitraryOriginReflection": false
+  },
+  "exposureFlags": {
+    "bypassValueExposed": false,
+    "usernameExposed": false,
+    "passwordExposed": false,
+    "jwtOrTokenExposed": false,
+    "cookieExposed": false,
+    "authorizationHeaderExposed": false,
+    "privatePreviewHostnameExposed": false,
+    "deploymentIdExposed": false,
+    "projectIdExposed": false,
+    "teamIdExposed": false
+  },
+  "screenshotSanitization": { "usernameRedacted": true, "loginViewNotCaptured": true },
+  "transientArtifacts": { "cdpDriversAndProfiles": "kept under non-committed C:/Projects/_pre1_work; deleted at task end", "githubApiResponses": "deleted", "resolvedPreviewUrlFiles": "deleted" },
+  "result": "NO SECRET OR PRIVATE-PREVIEW-HOSTNAME EXPOSURE IN COMMITTED CODE OR EVIDENCE"
+}

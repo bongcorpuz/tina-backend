@@ -1,0 +1,21 @@
+{
+  "task": "PHASE-10A4B-PRE1",
+  "executionTimestampUtc": "2026-07-12T07:41:33Z",
+  "conditions": "REPRESENTATIVE: real headless Chrome (CDP) with web security ENABLED (no --disable-web-security). Bypass cookie for the protected Preview only. Staging backend only.",
+  "steps": {
+    "protectedPreviewLoadedWithBypass": true,
+    "uiLoginThroughActualForm": true,
+    "loginSucceeded": true,
+    "tokenPresentAfterLogin": true,
+    "authenticatedShellLoaded": true,
+    "oneSanitizedAuthenticatedApiCall": { "endpoint": "GET /conversations", "httpStatus": 200 },
+    "corsConsoleErrorCount": 0,
+    "appConnectErrorCount": 0
+  },
+  "productionContact": false,
+  "stagingOnly": true,
+  "corsDisabled": false,
+  "screenshot": "screenshots/authenticated-preview-smoke.png",
+  "screenshotSanitized": { "profileUsernameRedactedToUser": true, "loginViewNotCaptured": true, "authenticatedChatViewOnly": true },
+  "verdict": "PASS - the authenticated protected Preview makes credentialed browser requests to staging WITHOUT disabling CORS; login and one authenticated API call succeed with zero CORS errors."
+}

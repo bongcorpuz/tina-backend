@@ -1,0 +1,41 @@
+{
+  "task": "PHASE-10A4B-PRE1",
+  "executionTimestampUtc": "2026-07-12T07:41:33Z",
+  "decisionOrderEvaluated": [
+    {
+      "priority": 1,
+      "option": "Deployment/env config: add the stable Preview alias to staging ALLOWED_ORIGINS",
+      "selected": false,
+      "why": "Ideal minimal fix and NARROWEST (one exact origin), but staging CORS env is set on the Render dashboard (no committed render.yaml) and no Render API key/CLI is available to the executor. Cannot be applied or live-smoke-tested in this context. RECOMMENDED as the owner follow-up to tighten scope."
+    },
+    {
+      "priority": 2,
+      "option": "Exact approved Preview-origin allowlist",
+      "selected": false,
+      "why": "Same access limitation as priority 1 (env-driven, Render dashboard only)."
+    },
+    {
+      "priority": 3,
+      "option": "Strictly constrained canonical tina-ai Preview-host validation (code)",
+      "selected": true,
+      "why": "The narrowest SELF-CONTAINED, deployable, and testable path given no config access. Implemented in security/cors-policy.js, gated to the staging runtime, https-only, owner-team-anchored, fail-closed for everything else."
+    },
+    {
+      "priority": 4,
+      "option": "Broader runtime change",
+      "selected": false,
+      "why": "Not needed; the priority-3 constrained validation expresses the policy safely."
+    }
+  ],
+  "whyNarrowerAndSaferThanAlternatives": [
+    "Does NOT authorize arbitrary *.vercel.app: anchored to the owner's globally-unique Vercel team suffix + 'tina-' project prefix + https + exact ($) hostname anchors.",
+    "Does NOT weaken production: gated to the staging runtime via server-injected Render markers; production keeps its exact env allowlist behavior unchanged (verified live).",
+    "Does NOT introduce wildcard-with-credentials or arbitrary Origin reflection: reflects only the specific pattern-validated origin.",
+    "Fails closed for unknown, malformed, http, wrong-team, and non-vercel origins (verified live).",
+    "Does NOT embed the private ephemeral Preview hostname in a public artifact: only the stable, public project+team policy shape."
+  ],
+  "residualBreadth": "The code branch is team-SCOPED (authorizes owner-team tina-* previews, incl. the sibling 'tina' project). The priority-1 exact-origin config is narrower and is the recommended tightening.",
+  "runtimeCodeModified": true,
+  "unitTestsAdded": "tests/phase-10a4b-pre1-staging-cors-preview-origin-1.test.mjs",
+  "existingTestsPreserved": true
+}
