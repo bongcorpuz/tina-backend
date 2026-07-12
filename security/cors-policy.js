@@ -18,6 +18,49 @@
 
 const LOCAL_LOOPBACK_RE = /^https?:\/\/(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/i;
 
+// PHASE-10A4B-PRE1-STAGING-CORS-AUTHORIZATION-FOR-PROTECTED-VERCEL-PREVIEW-ORIGIN-1
+//
+// Authorize the owner-team-scoped, SSO-protected tina-ai Vercel Preview origin so
+// the authenticated Preview can make credentialed browser requests to
+// tina-backend-staging. Constraints (fail-closed by default):
+//   - STAGING backend runtime ONLY (never production; see isStagingBackendRuntime).
+//   - https scheme only.
+//   - anchored to the owner's Vercel team suffix "-bongcorpuzs-projects.vercel.app".
+//     Vercel team slugs are globally unique and owner-controlled, so this is NOT an
+//     arbitrary *.vercel.app grant and cannot be forged by a third party.
+//   - "tina-" project prefix; exact hostname anchors ($) prevent suffix/lookalike
+//     injection (e.g. ...vercel.app.evil.com).
+// The specific ephemeral Preview hostname is never embedded here; only the stable,
+// public project+team policy shape. The narrower long-term fix is an exact-origin
+// entry in the staging ALLOWED_ORIGINS env (requires Render dashboard access).
+const TINA_STAGING_PREVIEW_ORIGIN_RE =
+  /^https:\/\/tina-[a-z0-9][a-z0-9-]*-bongcorpuzs-projects\.vercel\.app$/;
+
+const STAGING_BACKEND_HOST_RE = /(^|\.)tina-backend-staging\.onrender\.com$/i;
+
+/**
+ * Trustworthy (server-injected, not client-controlled) detection of the staging
+ * backend runtime. Uses Render-provided RENDER_SERVICE_NAME / RENDER_EXTERNAL_URL,
+ * never the request Host header. Returns false on production and locally.
+ *
+ * @param {object} [env=process.env]
+ * @returns {boolean}
+ */
+export function isStagingBackendRuntime(env = process.env) {
+  const e = env || {};
+  const svc = String(e.RENDER_SERVICE_NAME || "").toLowerCase();
+  if (svc.includes("staging")) return true;
+  const ext = String(e.RENDER_EXTERNAL_URL || "");
+  if (ext) {
+    try {
+      if (STAGING_BACKEND_HOST_RE.test(new URL(ext).hostname)) return true;
+    } catch (_e) {
+      // ignore malformed RENDER_EXTERNAL_URL; fall through to false (fail closed)
+    }
+  }
+  return false;
+}
+
 /**
  * Parse a raw CORS_ORIGIN / ALLOWED_ORIGINS value into an explicit allowlist.
  * Comma-separated; whitespace trimmed; empty entries ignored. "*" is treated
@@ -84,6 +127,7 @@ export function resolveCorsPolicy(env = process.env) {
   return Object.freeze({
     environmentClass: isLocal ? "local" : "production_staging",
     isLocal,
+    stagingBackend: isStagingBackendRuntime(e),
     wildcardRequested: parsed.wildcard || (!parsed.origins.length && !e.CORS_ORIGIN && !e.ALLOWED_ORIGINS),
     allowlist: parsed.origins,
     credentials: true
@@ -115,6 +159,15 @@ export function corsOriginDecision(origin, policy) {
 
   if (allowlist.includes(origin)) {
     return { allow: true, credentials: true, reflect: true, reason: p.isLocal ? "EXPLICIT_ALLOWLIST_MATCH_LOCAL" : "EXPLICIT_ALLOWLIST_MATCH" };
+  }
+
+  // PHASE-10A4B-PRE1: staging-only authorization of the owner-team protected
+  // tina-ai Preview origin. Never applies on production (p.stagingBackend is
+  // derived from server-injected Render env, not the client Host header) and
+  // never widens the exact allowlist above. Reflects only the specific, already
+  // pattern-validated origin (never a wildcard with credentials).
+  if (!p.isLocal && p.stagingBackend && TINA_STAGING_PREVIEW_ORIGIN_RE.test(origin)) {
+    return { allow: true, credentials: true, reflect: true, reason: "STAGING_TINA_PREVIEW_MATCH" };
   }
 
   if (p.isLocal) {
@@ -173,6 +226,7 @@ export function summarizeCorsPolicy(env = process.env) {
     failClosed,
     wildcardRequested: p.wildcardRequested,
     allowlistCount: p.allowlist.length,
+    stagingPreviewAuthorization: p.stagingBackend === true,
     credentials: p.credentials
   };
 }
