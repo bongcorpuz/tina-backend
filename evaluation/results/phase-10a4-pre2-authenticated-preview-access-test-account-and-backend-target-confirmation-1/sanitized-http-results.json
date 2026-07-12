@@ -1,0 +1,38 @@
+{
+  "task": "PHASE-10A4-PRE2",
+  "executionTimestampUtc": "2026-07-12T03:29:03Z",
+  "note": "All values sanitized. No secret values, tokens, cookies, private Preview URLs, deployment IDs, or raw conversation content are included. Hosts are shown only where non-secret; the private Preview host is redacted.",
+  "previewAccess": {
+    "targetHostRedacted": "tina-<preview-hash>-<team>.vercel.app (redacted)",
+    "target": "preview",
+    "requests": [
+      { "label": "unauthenticated", "headers": "none", "httpStatus": 302, "meaning": "redirect to Vercel SSO; protection enforced" },
+      { "label": "authorized-bypass-handshake", "headers": "x-vercel-protection-bypass (env), x-vercel-set-bypass-cookie", "httpStatus": 307, "meaning": "cookie handshake" },
+      { "label": "authorized-final", "headers": "bypass cookie (jar)", "httpStatus": 200, "redirectHops": 1, "appShellServed": true }
+    ]
+  },
+  "previewBundleScan": {
+    "asset": "/assets/index-<contenthash>.js",
+    "bundleBytes": 380484,
+    "hostMatches": [
+      { "host": "tina-backend-staging.onrender.com", "occurrences": 1 },
+      { "host": "tina-backend-y11x.onrender.com", "occurrences": 0 }
+    ]
+  },
+  "stagingApi": {
+    "hostContacted": "tina-backend-staging.onrender.com",
+    "onlyStagingContacted": true,
+    "calls": [
+      { "method": "GET",  "path": "/health",                         "httpStatus": 200, "shape": { "status": "ok" } },
+      { "method": "POST", "path": "/login",                          "httpStatus": 200, "shape": { "success": true, "tokenPresent": true } },
+      { "method": "POST", "path": "/conversations",                  "httpStatus": 201, "shape": { "conversationCreated": true } },
+      { "method": "POST", "path": "/ask",                            "httpStatus": 200, "shape": { "hasAnswer": true, "answerLength": 575, "hasTrust": true, "hasSourceCards": true } },
+      { "method": "GET",  "path": "/conversations",                  "httpStatus": 200, "shape": { "success": true, "syntheticConversationFound": true } },
+      { "method": "GET",  "path": "/conversations/:id/messages",     "httpStatus": 200, "shape": { "messageCount": 2, "roles": ["user", "assistant"] } }
+    ],
+    "coldStartNote": "one prior POST /login returned no HTTP response (connection-level, Render cold start); succeeded on warm retry"
+  },
+  "syntheticConversationRef": "conv-8293b4f99abb",
+  "productionHostContacted": false,
+  "productionApiCalled": false
+}

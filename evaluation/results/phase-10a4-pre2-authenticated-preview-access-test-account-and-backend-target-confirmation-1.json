@@ -1,0 +1,136 @@
+{
+  "environmentTask": "PHASE-10A4-PRE2",
+  "environment": "AUTHENTICATED_PREVIEW_STAGING",
+  "decision": "PHASE 10A4 PRE2 PASS WITH STRICT RECOMMENDATIONS",
+  "executionTimestampUtc": "2026-07-12T03:29:03Z",
+  "requiredRuntimeVariablesPresent": true,
+  "approvedPreviewAccessAvailable": true,
+  "deploymentProtectionAccessValidated": true,
+  "stagingTestAccountAvailable": true,
+  "stagingTestAccountLoginValidated": true,
+  "previewBackendTargetConfirmed": true,
+  "previewUsesStagingBackend": true,
+  "limitedPreviewSmokePassed": true,
+  "conversationSaveValidated": true,
+  "historyReopenValidated": true,
+  "productionDeploymentCreated": false,
+  "productionApiCalled": false,
+  "frontendMainModified": false,
+  "bypassSecretExposed": false,
+  "testCredentialsExposed": false,
+  "phase10A4RerunAuthorized": false,
+  "runtimeVariablePresence": {
+    "method": "boolean presence only; no value, length, hash, or derivative read or emitted",
+    "VERCEL_AUTOMATION_BYPASS_SECRET": true,
+    "TINA_STAGING_TEST_USERNAME": true,
+    "TINA_STAGING_TEST_PASSWORD": true
+  },
+  "repository": {
+    "backendBranch": "feature/source-availability-engine-v1",
+    "backendHead": "19e45638eec2b576d5456def2531d9ba642b3ac0",
+    "frontendBranch": "phase-10a3-r1-trust-persistence-accessibility",
+    "frontendHead": "1748788ee5314eb495710f9b281ab6621b943109",
+    "runtimeCodeModified": false,
+    "frontendMergedToMain": false
+  },
+  "previewAccess": {
+    "urlResolutionMethod": "public GitHub deployment-status API for the frontend commit (Vercel CLI/token not provisioned to this environment); private Preview URL captured to a transient local file, never printed, deleted at cleanup",
+    "deploymentSelected": "GitHub deployment environment 'Preview - tina-ai' for commit 1748788",
+    "unauthenticatedHttpStatus": 302,
+    "unauthenticatedMeaning": "redirect to Vercel SSO; Deployment Protection genuinely enforced",
+    "authorizedBypassMechanism": "x-vercel-protection-bypass header (from env) + x-vercel-set-bypass-cookie handshake, cookie persisted in a transient jar",
+    "authorizedHttpStatus": 200,
+    "authorizedRedirectHops": 1,
+    "appShellServed": true,
+    "ssoWallDefeated": false
+  },
+  "previewBackendTarget": {
+    "method": "fetched the Preview production JS bundle with the authorized bypass cookie and searched for backend hosts",
+    "bundleAsset": "/assets/index-<contenthash>.js",
+    "bundleBytes": 380484,
+    "stagingHostOccurrences": 1,
+    "stagingHost": "tina-backend-staging.onrender.com",
+    "productionAltHostOccurrences": 0,
+    "productionAltHost": "tina-backend-y11x.onrender.com",
+    "conclusion": "Preview build compiles in the staging backend only; the alternate/production host is absent from the shipped bundle"
+  },
+  "stagingSmoke": {
+    "hostContacted": "tina-backend-staging.onrender.com",
+    "onlyStagingContacted": true,
+    "healthStatus": "ok",
+    "loginHttpStatus": 200,
+    "loginSuccess": true,
+    "loginTokenPresent": true,
+    "conversationCreateHttpStatus": 201,
+    "conversationCreated": true,
+    "askHttpStatus": 200,
+    "askHasAnswer": true,
+    "askAnswerLength": 575,
+    "askResponseShapeHasTrust": true,
+    "askResponseShapeHasSourceCards": true,
+    "conversationListHttpStatus": 200,
+    "conversationListSuccess": true,
+    "syntheticConversationFoundInList": true,
+    "historyMessagesHttpStatus": 200,
+    "historyMessageCount": 2,
+    "historyRoles": ["user", "assistant"],
+    "userTurnPersisted": true,
+    "assistantTurnPersisted": true,
+    "syntheticConversationRef": "conv-8293b4f99abb",
+    "noteColdStart": "an initial POST /login returned a connection-level failure (no HTTP response) consistent with Render free-tier cold start; the request succeeded on warm retry"
+  },
+  "productionIsolation": {
+    "productionHostContacted": false,
+    "productionApiCalled": false,
+    "productionDeploymentCreated": false,
+    "alternateBackendHostContacted": false,
+    "onlyNonProductionPreviewAccessed": true
+  },
+  "security": {
+    "bypassSecretExposed": false,
+    "testCredentialsExposed": false,
+    "tokensExposed": false,
+    "cookiesExposed": false,
+    "privatePreviewUrlExposed": false,
+    "deploymentIdsExposed": false,
+    "rawConversationContentExposed": false,
+    "envFilesOpened": false,
+    "correlationIdentifiers": "one-way SHA-256-derived synthetic conversation ref only",
+    "gitDiffCheck": "pending pre-commit",
+    "secretScan": "pending pre-commit"
+  },
+  "transientCleanup": {
+    "cookieJars": "deleted",
+    "downloadedBundles": "deleted",
+    "downloadedHtml": "deleted",
+    "temporaryScripts": "deleted",
+    "resolvedPreviewUrlFile": "deleted",
+    "tokensPersisted": false,
+    "result": "pending final sweep"
+  },
+  "findings": [
+    {
+      "severity": "P2",
+      "title": "Preview URL resolution depends on the public GitHub deployment-status API",
+      "impact": "No Vercel CLI session or token is provisioned to the agent environment, so the private Preview URL was resolved via GitHub. Acceptable for read-only access, but a first-party Vercel bypass-URL provisioning path would be more robust and auditable."
+    },
+    {
+      "severity": "P2",
+      "title": "Two parallel Vercel projects (tina-ai and tina) deploy Previews for the same commit",
+      "impact": "Carried from PRE1. tina-ai was selected as canonical by name match. Duplication should be resolved as a governance cleanup item."
+    },
+    {
+      "severity": "P3",
+      "title": "Render staging exhibits free-tier cold-start connection resets",
+      "impact": "First heavy POST after idle can fail at the connection level and needs a warm retry; smoke harnesses should tolerate one cold-start retry."
+    }
+  ],
+  "evidenceReferences": [
+    "PHASE-10A4-PRE2-AUTHENTICATED-PREVIEW-ACCESS-TEST-ACCOUNT-AND-BACKEND-TARGET-CONFIRMATION-1_REPORT.md",
+    "evaluation/results/phase-10a4-pre2-authenticated-preview-access-test-account-and-backend-target-confirmation-1/execution-summary.json",
+    "evaluation/results/phase-10a4-pre2-authenticated-preview-access-test-account-and-backend-target-confirmation-1/sanitized-http-results.json",
+    "evaluation/results/phase-10a4-pre2-authenticated-preview-access-test-account-and-backend-target-confirmation-1/security-scan-summary.json"
+  ],
+  "phase10A4Status": "PENDING MANDATORY OPUS 4.8 INDEPENDENT REVIEW",
+  "independentReviewRequired": "OPUS 4.8 LOW SPEED"
+}

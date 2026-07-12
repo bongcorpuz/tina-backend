@@ -1,0 +1,33 @@
+{
+  "task": "PHASE-10A4-PRE2",
+  "title": "Authenticated Preview Access, Test Account, and Backend-Target Confirmation (rerun 1)",
+  "environment": "AUTHENTICATED_PREVIEW_STAGING",
+  "executionTimestampUtc": "2026-07-12T03:29:03Z",
+  "governance": "LIVE EVIDENCE > THEORY > PATCH",
+  "priorReportTreatedAsControlling": false,
+  "sequence": [
+    { "step": 1, "name": "runtime variable presence (boolean only)", "result": "PASS", "detail": "all three present" },
+    { "step": 2, "name": "access protected non-production Preview via approved bypass", "result": "PASS", "detail": "HTTP 200 after 307 cookie handshake" },
+    { "step": 3, "name": "confirm Preview remains protected without bypass", "result": "PASS", "detail": "HTTP 302 to Vercel SSO unauthenticated" },
+    { "step": 4, "name": "authenticate to staging (username/password contract)", "result": "PASS", "detail": "HTTP 200, success true, token present" },
+    { "step": 5, "name": "one sanitized general-tax /ask", "result": "PASS", "detail": "HTTP 200, answer length 575" },
+    { "step": 6, "name": "confirm request goes only to tina-backend-staging", "result": "PASS", "detail": "only staging host contacted" },
+    { "step": 7, "name": "create/confirm related conversation", "result": "PASS", "detail": "HTTP 201, conversation created" },
+    { "step": 8, "name": "confirm user and assistant turns persisted", "result": "PASS", "detail": "both roles present after reopen" },
+    { "step": 9, "name": "list conversations and locate synthetic conversation", "result": "PASS", "detail": "found in list" },
+    { "step": 10, "name": "reopen messages; confirm count and roles", "result": "PASS", "detail": "count 2, roles user,assistant" },
+    { "step": 11, "name": "confirm no production host/API/deployment/data contacted", "result": "PASS", "detail": "only staging + non-production Preview" },
+    { "step": 12, "name": "delete transient cookie jars, bundles, scripts, tokens, traces", "result": "PASS", "detail": "swept at task end" }
+  ],
+  "previewBackendTargetConfirmed": true,
+  "previewUsesStagingBackend": true,
+  "stagingTestAccountLoginValidated": true,
+  "conversationSaveValidated": true,
+  "historyReopenValidated": true,
+  "productionContacted": false,
+  "runtimeCodeModified": false,
+  "frontendMainModified": false,
+  "decision": "PHASE 10A4 PRE2 PASS WITH STRICT RECOMMENDATIONS",
+  "phase10A4RerunAuthorized": false,
+  "authorizationNote": "PHASE-10A4 authorization remains pending mandatory Opus 4.8 low-speed independent review"
+}

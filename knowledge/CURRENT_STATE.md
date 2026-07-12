@@ -8362,4 +8362,28 @@ Artifacts:
 - evaluation/results/phase-10a4-pre1-staging-preview-access-and-deployment-mapping-1/deployment-mapping-summary.md
 
 No production deployment created. No production API called. Frontend main not modified. Phase 10A remains OPEN. Phase 10B remains NOT STARTED / blocked. Phase 10C remains NOT STARTED / blocked. Mandatory Opus 4.8 independent review of this PRE1 task remains required before any PHASE-10A4 rerun is authorized.
+
+## Phase 10A4 PRE2 Authenticated Preview Access, Test Account, and Backend-Target Confirmation 1 -- PHASE 10A4 PRE2 PASS WITH STRICT RECOMMENDATIONS (2026-07-12):
+
+PHASE-10A4-PRE2-AUTHENTICATED-PREVIEW-ACCESS-TEST-ACCOUNT-AND-BACKEND-TARGET-CONFIRMATION-1 re-executed from a clean evidence baseline under governance LIVE EVIDENCE > THEORY > PATCH. The prior PRE2 draft was not treated as controlling; every claim was re-established live this session. Environment: AUTHENTICATED_PREVIEW_STAGING. Backend HEAD 19e45638eec2b576d5456def2531d9ba642b3ac0; frontend HEAD 1748788ee5314eb495710f9b281ab6621b943109.
+
+All three PRE1 owner-prerequisites are now satisfied and validated live:
+- Approved preview access: the private Preview URL (deployment env Preview-tina-ai for commit 1748788) was resolved via the public GitHub deployment-status API (no Vercel CLI/token provisioned to the agent env), captured to a transient file, never printed, deleted at cleanup. Unauthenticated request returned 302 to Vercel SSO (protection enforced); the owner-provided x-vercel-protection-bypass header plus cookie handshake returned 200 with the HTML app shell. No SSO wall defeated.
+- Preview backend target confirmed: the Preview production bundle (/assets/index-<contenthash>.js, 380484 bytes) references tina-backend-staging.onrender.com exactly once and does not reference tina-backend-y11x.onrender.com. previewUsesStagingBackend = true. Resolves PRE1 P2.
+- Staging test account validated: POST /login 200, success true, token present, using TINA_STAGING_TEST_USERNAME / TINA_STAGING_TEST_PASSWORD (boolean-presence checks only; no values read).
+
+Limited smoke (staging only): POST /conversations 201; POST /ask 200 with a 575-char answer carrying trust + sourceCards metadata; GET /conversations 200 with the synthetic conversation present; GET /conversations/:id/messages 200 returning 2 messages, roles user,assistant -- both user and assistant turns persisted across save-and-reopen. Synthetic one-way reference conv-8293b4f99abb. An initial POST /login connection-level failure was a Render free-tier cold start and succeeded on warm retry.
+
+Secret discipline: three runtime variables confirmed by boolean presence only; no value/length/hash/token/cookie/credential/private-URL/deployment-ID emitted or committed. Transient cookie jars, downloaded bundle/HTML, resolved-URL file, and temporary scripts deleted.
+
+Decision: PHASE 10A4 PRE2 PASS WITH STRICT RECOMMENDATIONS. Strict recommendations: provision a first-party auditable Vercel bypass-URL path for automated preview verification (P2); resolve the two-parallel-project (tina-ai/tina) ambiguity as governance cleanup (P2, carried from PRE1); smoke harnesses should tolerate one Render cold-start retry (P3).
+
+Artifacts:
+- PHASE-10A4-PRE2-AUTHENTICATED-PREVIEW-ACCESS-TEST-ACCOUNT-AND-BACKEND-TARGET-CONFIRMATION-1_REPORT.md
+- evaluation/results/phase-10a4-pre2-authenticated-preview-access-test-account-and-backend-target-confirmation-1.json
+- evaluation/results/phase-10a4-pre2-authenticated-preview-access-test-account-and-backend-target-confirmation-1/execution-summary.json
+- evaluation/results/phase-10a4-pre2-authenticated-preview-access-test-account-and-backend-target-confirmation-1/sanitized-http-results.json
+- evaluation/results/phase-10a4-pre2-authenticated-preview-access-test-account-and-backend-target-confirmation-1/security-scan-summary.json
+
+No production deployment created. No production API called. No production data contacted. Runtime code not modified. Frontend main not modified. Phase 10A remains OPEN. PHASE-10A4 authorization remains pending mandatory Opus 4.8 low-speed independent review; phase10A4RerunAuthorized = false.
 ```
