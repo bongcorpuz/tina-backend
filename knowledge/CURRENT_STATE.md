@@ -8619,3 +8619,69 @@ Decision: PHASE-10A4C-FIXTURE-REGISTRY-OWN-PROPERTY-HARDENING-1 COMPLETE. Phase 
 
 Artifacts: services/staging-trust-fixtures.js (Object.hasOwn check), tests/phase-10a4c-trust-calibration-conflict-accessibility-keyboard-fixture-remediation-1.test.mjs (new regression test). Commit: 807ec3f.
 ```
+
+## Phase 10A5 Final Closure Gate 1 -- REVISIONS REQUIRED (2026-07-14)
+
+```text
+PHASE-10A5-FINAL-CLOSURE-GATE-1 executed as final Phase 10A closure-gate review.
+
+Decision: PHASE 10A FINAL CLOSURE GATE REVISIONS REQUIRED.
+
+Backend repository: C:\Projects\tina-backend.
+Backend branch: feature/source-availability-engine-v1.
+Starting backend HEAD: 173c5add8c4262a00bf5a1fcf14cbec7bd40917e.
+Pre-task backend sync: origin/feature/source-availability-engine-v1...HEAD = 0 0.
+
+Frontend repository: C:\Projects\tina-ai.
+Frontend branch: phase-10a3-r1-trust-persistence-accessibility.
+Frontend HEAD: 0816ac865b4ee55d5bb92534834dadbb0dcfba87.
+Frontend sync: 0 0.
+Frontend main untouched.
+Existing frontend .gitignore modification was untouched.
+
+Dev Factory repository: C:\Projects\tina-dev-factory.
+Dev Factory HEAD: 91670029ccae10a76385533a283f3c96c7411577.
+Dev Factory not modified.
+
+Accepted gates verified from committed evidence:
+- PHASE-10A4A backend/API trust contract accepted with strict recommendations.
+- PHASE-10A4B representative browser validation accepted with strict recommendations.
+- PHASE-10A4C remediation accepted with strict recommendations.
+- Fixture registry own-property hardening independently accepted with strict recommendations.
+- All seven canonical rendered trust states passed in PHASE-10A4C evidence.
+- Case C rendered UX passed in PHASE-10A4C evidence.
+- Case F deterministic rendered conflict UX passed in PHASE-10A4C evidence.
+- History reopen passed.
+- Hard refresh passed.
+- Responsive desktop/tablet/mobile rendering passed.
+- Accessibility passed with 0 critical, 0 serious, 0 moderate, 0 minor axe findings.
+- Contrast passed.
+- Keyboard workflow passed.
+- Security and production-safety gates passed.
+- Fixture registry hardening-specific JSON was missing and was created as documentation/evidence only.
+
+Blocking closure issue:
+The closure prompt states that genuine Gemini 2.5 Pro rendered-UX review completed with GEMINI RENDERED-UX ACCEPT WITH STRICT RECOMMENDATIONS. That status was NOT verified from committed evidence. Existing committed evidence still says genuine Gemini review is pending/not performed, including the PHASE-10A4C result JSON, gemini-revisions-required-summary.json, PHASE-10A4C report, and prior CURRENT_STATE entries.
+
+Governance decision:
+Because LIVE EVIDENCE > THEORY > PATCH, Phase 10A cannot be closed until a genuine Gemini rendered-UX acceptance artifact is provided or committed and CURRENT_STATE is updated consistently. The reviewer did not manufacture Gemini acceptance and did not remove contradictory pending-Gemini language.
+
+Formal deferrals that remain acceptable only after Gemini evidence exists:
+1. Case C structured specific-authority signal -- P2 technical robustness debt. Current Case C detector relies partly on generated-answer prose, can produce conservative false positives, and alternate wording may produce false negatives. Long-term correction: structured backend field such as specificAuthorityMatched, specificAuthorityStatus, or requestedAuthorityFound. Follow-up: PHASE-10A-FOLLOWUP-STRUCTURED-SPECIFIC-AUTHORITY-SIGNAL-1.
+2. Live conflict-detection enrichment -- P2 coverage limitation. Deterministic Case F rendering passed, and conflict trust construction/persistence/hydration/frontend rendering passed, but live doctrine-engine conflict discovery is not proven complete. Current behavior under-claims rather than falsely asserting settled authority. Follow-up: PHASE-10A-FOLLOWUP-LIVE-CONFLICT-DETECTION-ENRICHMENT-1.
+3. phase-09zf guard stabilization -- P3 test-governance debt. The guard failure was reproduced at parent commit 07f97f9 and hardening commit 807ec3f; it is pre-existing, self-referential/diff-scope-sensitive, and unrelated to Phase 10A trust-UX acceptance. Follow-up: PHASE-TEST-GOVERNANCE-09ZF-GUARD-STABILIZATION-1.
+4. Optional visible focus-ring screenshot enhancement -- P3.
+
+Artifacts created:
+- evaluation/results/phase-10a4c-fixture-registry-own-property-hardening-1.json
+- evaluation/results/phase-10a5-final-closure-gate-1.json
+- PHASE-10A5-FINAL-CLOSURE-GATE-1_REPORT.md
+
+Phase status after this gate:
+- Phase 10A remains OPEN.
+- Phase 10B remains BLOCKED and is NOT authorized to begin.
+- Phase 10C remains BLOCKED.
+
+Exact next task:
+Provide or commit the genuine Gemini 2.5 Pro rendered-UX acceptance artifact and rerun PHASE-10A5-FINAL-CLOSURE-GATE-1. Only after Gemini evidence is present may CURRENT_STATE be updated to remove pending-Gemini language and consider Phase 10A closure.
+```
