@@ -8819,3 +8819,27 @@ Mandatory independent review readiness: READY. The independent review must verif
 Next authorized task: PHASE-10B-FOUNDATION-PLANNING-1.
 Do not begin Phase 10B implementation in this closure-gate task.
 ```
+
+## Phase 10A6 Live Authority Calibration Validation 1 -- PHASE 10A REOPENED (2026-07-15):
+
+```text
+CONTROLLING UPDATE: This entry SUPERSEDES the PHASE-10A5 closure (commit 91b91b8 "close Phase 10A with documented P2 deferrals"). Phase 10A is REOPENED for remediation. The prior closure record is preserved above as history, not erased.
+
+PHASE-10A6-LIVE-AUTHORITY-CALIBRATION-VALIDATION-1 executed by Claude Code (Opus 4.8, low speed) as an evidence-first live-runtime validation, triggered by a reported live Q9 incident. Ten difficult Philippine tax questions were run against the REAL authenticated staging runtime (protected Vercel Preview = frontend commit 0816ac8, + tina-backend-staging.onrender.com), each in a fresh conversation via live /ask (NOT fixtures). The backend /ask trust payload was captured per question.
+
+HEADLINE FINDING (P1, closure-blocking): Q9 REPRODUCED 3/3 as a FALSE HIGH-CONFIDENCE OVERCLAIM. For a prompt that explicitly states the requested BIR ruling cannot be located and that authorities point in different directions, the backend returned authoritySupport=VERIFIED_CONTROLLING, conflictState=NO_CONFLICT, specificAuthorityNotFound=false, and the UI rendered a green "Verified controlling authority" banner over a bare two-item source list (NIRC Sec. 2, G.R. No. 226592) that does not resolve the question, disclose the missing ruling, or present the conflict.
+
+This CONTRADICTS the Phase 10A closure assumption that the residual Case C and Case F limitations fail safe by under-claiming. Live evidence shows they combine to OVER-claim.
+
+Root causes: (1) source-presence override -- deriveAuthoritySupport() maps AUTHORITY_FOUND + displayedSourceCount>0 to VERIFIED_CONTROLLING regardless of whether retrieved sources match the requested authority; (2) Case C prose-based specificAuthorityNotFound detector false-negatives on bare source-listing answers (flagged P2 by the PHASE-10A4C Opus review, EXPECTED to fail safe, now shown to fail UNSAFE); (3) Case F live conflict detection did not fire (Step 9 doctrine-engine limitation).
+
+Matrix: 7 pass, 2 partial (Q4 mild over-claim P2; Q2 RELATED_AUTHORITY_ONLY without banner/specific-not-found disclosure P2), 1 fail (Q9 P1), 0 timeouts. What works: Q10 restricted/outcome-restriction PASSES; Q8 POTENTIAL_CONFLICT correctly surfaced; Q6 honest source-failure; Q1/Q7 controlled-LOA procedural. The defect is specific to the VERIFIED_CONTROLLING path, not a total calibration collapse.
+
+Severity: P0=0, P1=1 (Q9 overclaim), P2=2, P3=1. No secret exposure; private preview host redacted; screenshots username-redacted. No runtime code changed in this triage task.
+
+Decision: PHASE 10A6 LIVE VALIDATION REMEDIATION REQUIRED. Phase 10A: REOPENED. Phase 10B: BLOCKED / DO NOT START. Phase 10C: BLOCKED. Independent closure review: DEFERRED until the P1 is remediated and re-validated live. The prior "Next authorized task: PHASE-10B-FOUNDATION-PLANNING-1" is SUPERSEDED.
+
+Exact next task: PHASE-10A6-R1-SOURCE-PRESENCE-OVERCLAIM-REMEDIATION-1 -- a separately-authorized runtime remediation gating VERIFIED_CONTROLLING behind a structured "requested-authority-matched / specific-authority-status" signal (replacing sole reliance on the prose heuristic) and off bare source-listing answers, then mandatory Opus 4.8 independent review, then a live re-validation (Q9 3x) before any Phase 10A re-closure.
+
+Artifacts: PHASE-10A6-LIVE-AUTHORITY-CALIBRATION-VALIDATION-1_REPORT.md; evaluation/results/phase-10a6-live-authority-calibration-validation-1.json; evaluation/results/phase-10a6-live-authority-calibration-validation-1/ (raw-live-output.json + screenshots/ Q1-Q10).
+```

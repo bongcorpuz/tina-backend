@@ -1,0 +1,637 @@
+{
+  "executionTimestampUtc": "2026-07-14T23:07:10.384Z",
+  "previewCommit": "0816ac8",
+  "questions": [
+    {
+      "id": "Q1",
+      "prompt": "A BIR Letter of Authority was issued, later replaced, but the replacement LOA was served after the original 120-day audit period. Is the resulting assessment valid, and what is the effect of replacement versus revalidation?",
+      "attempts": [
+        {
+          "responseTimeMs": 15495,
+          "timedOut": false,
+          "rendered": {
+            "hasBanner": true,
+            "banner": {
+              "kind": "procedural",
+              "role": "status",
+              "label": "Procedural guidance",
+              "secondaryLabel": null,
+              "description": "This response helps organize facts, documents, and next steps. It is not a final legal conclusion.",
+              "humanReviewTag": true
+            },
+            "sourceChips": [],
+            "sourceCardCount": 0,
+            "sourceTrustQualifier": null,
+            "answerLength": 1179,
+            "answerExcerpt": "If you received a BIR LOA/eLA, do not ignore it. Preserve the date and manner of receipt, keep a copy of the notice, and verify it through the available BIR verification process (for example, the REVIE / LOA Verifier process under RMC No. 5-2026) where applicable. Prepare a document compliance matrix, submit through controlled transmittal, and keep proof of submission. Do not fabricate unavailable or non-existent documents; use substitute proof where appropriate. This is procedural guidance only. Human tax/legal review remains required for validity, prescription, finality, appealability, prote"
+          },
+          "backend": {
+            "responseType": "controlled_loa_answer",
+            "sourceStatus": "AUTHORITY_FOUND",
+            "displayedSourceCount": 0,
+            "retrievedSourceCount": 0,
+            "trust": {
+              "version": "1.0",
+              "authoritySupport": "NOT_APPLICABLE",
+              "sourceState": "NOT_APPLICABLE",
+              "legalConclusion": "NOT_APPLICABLE",
+              "humanReviewRequired": true,
+              "filingReadyDocumentGenerated": false,
+              "automaticSubmission": false,
+              "hasConflict": false,
+              "conflictState": "NOT_APPLICABLE",
+              "limitations": [],
+              "responseKind": "CONTROLLED_PROCEDURAL",
+              "specificAuthorityNotFound": false
+            },
+            "sourceCardRefs": [],
+            "answerLength": 1179
+          }
+        }
+      ],
+      "firstRenderedKind": "procedural",
+      "firstBackendAuthoritySupport": "NOT_APPLICABLE"
+    },
+    {
+      "id": "Q2",
+      "prompt": "A taxpayer requested a specific BIR revenue memorandum circular, but TINA cannot locate the exact issuance. Can TINA still give an answer based on the Tax Code, regulations, and related jurisprudence without implying that the requested circular was verified?",
+      "attempts": [
+        {
+          "responseTimeMs": 30062,
+          "timedOut": false,
+          "rendered": {
+            "hasBanner": false,
+            "banner": null,
+            "sourceChips": [],
+            "sourceCardCount": 0,
+            "sourceTrustQualifier": null,
+            "answerLength": 2150,
+            "answerExcerpt": "Case Identified\nCTA Case No. 9711 – Dizon Farms Produce, Inc. v. CIR\nFacts / Context\nIn this case, the taxpayer, Dizon Farms Produce, Inc., contested a deficiency tax assessment issued by the Bureau of Internal Revenue (BIR). The taxpayer argued that the assessment violated their due process rights as it was issued without the required pre-assessment notice (PAN).\nIssue\nThe primary issue was whether the BIR's failure to issue a PAN prior to the assessment rendered the tax assessment null and void, thereby violating the taxpayer's due process rights.\nRuling / Holding\nThe Court of Tax Appeals (C"
+          },
+          "backend": {
+            "responseType": null,
+            "sourceStatus": "RELATED_AUTHORITY_ONLY",
+            "displayedSourceCount": 1,
+            "retrievedSourceCount": 5,
+            "trust": {
+              "version": "1.0",
+              "authoritySupport": "RELATED_AUTHORITY_ONLY",
+              "sourceState": "RELATED_AUTHORITY_ONLY",
+              "legalConclusion": "ALLOWED",
+              "humanReviewRequired": false,
+              "filingReadyDocumentGenerated": false,
+              "automaticSubmission": false,
+              "hasConflict": false,
+              "conflictState": "NO_CONFLICT",
+              "limitations": [
+                "RELATED_AUTHORITY_ONLY"
+              ],
+              "responseKind": "GENERAL_TAX",
+              "specificAuthorityNotFound": false
+            },
+            "sourceCardRefs": [
+              "CTA Case No. 9711"
+            ],
+            "answerLength": 2194
+          }
+        }
+      ],
+      "firstRenderedKind": null,
+      "firstBackendAuthoritySupport": "RELATED_AUTHORITY_ONLY"
+    },
+    {
+      "id": "Q3",
+      "prompt": "A Philippine company paid storage, handling, overtime, and ancillary charges under a contract titled “Contract of Lease.” Which payments are subject to 5% EWT as rent and which may be subject to 2% EWT as services, especially where the contract provides one bundled price?",
+      "attempts": [
+        {
+          "responseTimeMs": 16888,
+          "timedOut": false,
+          "rendered": {
+            "hasBanner": true,
+            "banner": {
+              "kind": "verified-controlling",
+              "role": "status",
+              "label": "Verified controlling authority",
+              "secondaryLabel": null,
+              "description": "This answer is grounded in verified controlling authority. This is not a final legal opinion -- verify applicability to your specific facts.",
+              "humanReviewTag": false
+            },
+            "sourceChips": [
+              "NIRC Sec. 57",
+              "NIRC Sec. 58",
+              "RR No. 2-1998"
+            ],
+            "sourceCardCount": 3,
+            "sourceTrustQualifier": " - Controlling authority",
+            "answerLength": 1225,
+            "answerExcerpt": "Issue Presented\nUnder the National Internal Revenue Code (NIRC), payments classified as rent, such as storage and handling charges, may be subject to a 5% Expanded Withholding Tax (EWT) as they fall under the category of lease payments. Conversely, ancillary charges related to services, such as overtime, may be subject to a 2% EWT. The determination depends on the nature of the charges and the specifics of the contract, as outlined in NIRC Sections 57 and 58.\nRelevant Facts / Assumptions\nThe factual circumstances have not been fully described. The analysis is based on the question as presented"
+          },
+          "backend": {
+            "responseType": null,
+            "sourceStatus": "AUTHORITY_FOUND",
+            "displayedSourceCount": 3,
+            "retrievedSourceCount": 12,
+            "trust": {
+              "version": "1.0",
+              "authoritySupport": "VERIFIED_CONTROLLING",
+              "sourceState": "AUTHORITY_FOUND",
+              "legalConclusion": "ALLOWED",
+              "humanReviewRequired": false,
+              "filingReadyDocumentGenerated": false,
+              "automaticSubmission": false,
+              "hasConflict": false,
+              "conflictState": "NO_CONFLICT",
+              "limitations": [],
+              "responseKind": "GENERAL_TAX",
+              "specificAuthorityNotFound": false
+            },
+            "sourceCardRefs": [
+              "NIRC Sec. 57",
+              "NIRC Sec. 58",
+              "RR No. 2-1998"
+            ],
+            "answerLength": 1256
+          }
+        }
+      ],
+      "firstRenderedKind": "verified-controlling",
+      "firstBackendAuthoritySupport": "VERIFIED_CONTROLLING"
+    },
+    {
+      "id": "Q4",
+      "prompt": "A freight forwarder advances shipping-line, airline, customs, and port charges to clients. When are these amounts reimbursements, pass-through advances, VATable sales, zero-rated services, or ordinary gross receipts?",
+      "attempts": [
+        {
+          "responseTimeMs": 24878,
+          "timedOut": false,
+          "rendered": {
+            "hasBanner": true,
+            "banner": {
+              "kind": "verified-controlling",
+              "role": "status",
+              "label": "Verified controlling authority",
+              "secondaryLabel": null,
+              "description": "This answer is grounded in verified controlling authority. This is not a final legal opinion -- verify applicability to your specific facts.",
+              "humanReviewTag": false
+            },
+            "sourceChips": [
+              "RR No. 16-2005"
+            ],
+            "sourceCardCount": 1,
+            "sourceTrustQualifier": " - Controlling authority",
+            "answerLength": 3132,
+            "answerExcerpt": "Quick Assessment\nThe classification of amounts advanced by a freight forwarder for shipping-line, airline, customs, and port charges depends on the nature of the transaction and the relationship with the client. These amounts can be categorized as reimbursements, pass-through advances, VATable sales, zero-rated services, or ordinary gross receipts based on specific criteria outlined in the National Internal Revenue Code (NIRC) and Revenue Regulations.\nBIR Likely Position\nThe Bureau of Internal Revenue (BIR) may classify these amounts as follows:\n\nReimbursements: If the freight forwarder merely"
+          },
+          "backend": {
+            "responseType": null,
+            "sourceStatus": "AUTHORITY_FOUND",
+            "displayedSourceCount": 1,
+            "retrievedSourceCount": 12,
+            "trust": {
+              "version": "1.0",
+              "authoritySupport": "VERIFIED_CONTROLLING",
+              "sourceState": "AUTHORITY_FOUND",
+              "legalConclusion": "ALLOWED",
+              "humanReviewRequired": false,
+              "filingReadyDocumentGenerated": false,
+              "automaticSubmission": false,
+              "hasConflict": false,
+              "conflictState": "NO_CONFLICT",
+              "limitations": [],
+              "responseKind": "GENERAL_TAX",
+              "specificAuthorityNotFound": false
+            },
+            "sourceCardRefs": [
+              "RR No. 16-2005"
+            ],
+            "answerLength": 3241
+          }
+        }
+      ],
+      "firstRenderedKind": "verified-controlling",
+      "firstBackendAuthoritySupport": "VERIFIED_CONTROLLING"
+    },
+    {
+      "id": "Q5",
+      "prompt": "A VAT-registered supplier sells fresh frozen seafood in its original state. Is the sale VAT-exempt, and is a separate VAT-exemption certificate required, or is the BIR Certificate of Registration sufficient?",
+      "attempts": [
+        {
+          "responseTimeMs": 18916,
+          "timedOut": false,
+          "rendered": {
+            "hasBanner": true,
+            "banner": {
+              "kind": "verified-controlling",
+              "role": "status",
+              "label": "Verified controlling authority",
+              "secondaryLabel": null,
+              "description": "This answer is grounded in verified controlling authority. This is not a final legal opinion -- verify applicability to your specific facts.",
+              "humanReviewTag": false
+            },
+            "sourceChips": [
+              "NIRC Sec. 109",
+              "NIRC Sec. 236",
+              "RR No. 16-2005",
+              "RMC 75-2015"
+            ],
+            "sourceCardCount": 4,
+            "sourceTrustQualifier": " - Controlling authority",
+            "answerLength": 649,
+            "answerExcerpt": "Short Answer\nControlling Authorities\n\nNIRC Section 236 - This section outlines the registration requirements for VAT-registered persons, indicating that the BIR Certificate of Registration is sufficient for VAT-exempt transactions.\n\nInterpretation\nPractical Meaning\nFor VAT-registered suppliers selling fresh frozen seafood, this means they can conduct their sales without charging VAT, simplifying their compliance obligations. They should ensure that their sales documentation reflects the VAT-exempt nature of the transaction, relying on their BIR Certificate of Registration to substantiate this "
+          },
+          "backend": {
+            "responseType": null,
+            "sourceStatus": "AUTHORITY_FOUND",
+            "displayedSourceCount": 4,
+            "retrievedSourceCount": 12,
+            "trust": {
+              "version": "1.0",
+              "authoritySupport": "VERIFIED_CONTROLLING",
+              "sourceState": "AUTHORITY_FOUND",
+              "legalConclusion": "ALLOWED",
+              "humanReviewRequired": false,
+              "filingReadyDocumentGenerated": false,
+              "automaticSubmission": false,
+              "hasConflict": false,
+              "conflictState": "NO_CONFLICT",
+              "limitations": [],
+              "responseKind": "GENERAL_TAX",
+              "specificAuthorityNotFound": false
+            },
+            "sourceCardRefs": [
+              "NIRC Sec. 109",
+              "NIRC Sec. 236",
+              "RR No. 16-2005",
+              "RMC 75-2015"
+            ],
+            "answerLength": 673
+          }
+        }
+      ],
+      "firstRenderedKind": "verified-controlling",
+      "firstBackendAuthoritySupport": "VERIFIED_CONTROLLING"
+    },
+    {
+      "id": "Q6",
+      "prompt": "A condominium corporation wants to create a separate stock corporation to provide leasing support, short-stay compliance, and building-access coordination. Can the condominium corporation own the majority of the shares and receive dividends without violating its non-stock, non-profit character?",
+      "attempts": [
+        {
+          "responseTimeMs": 20402,
+          "timedOut": false,
+          "rendered": {
+            "hasBanner": true,
+            "banner": {
+              "kind": "source-failure",
+              "role": "alert",
+              "label": "No indexed authority available",
+              "secondaryLabel": null,
+              "description": "TINA could not identify an indexed authority matching this question. This does not mean no law or authority exists -- source verification may be incomplete.",
+              "humanReviewTag": false
+            },
+            "sourceChips": [],
+            "sourceCardCount": 0,
+            "sourceTrustQualifier": null,
+            "answerLength": 150,
+            "answerExcerpt": "TINA could not identify an indexed authority matching the specific transaction or claim described.\nThis does not mean that no law or authority exists."
+          },
+          "backend": {
+            "responseType": null,
+            "sourceStatus": "NO_INDEXED_SOURCE",
+            "displayedSourceCount": 0,
+            "retrievedSourceCount": 12,
+            "trust": {
+              "version": "1.0",
+              "authoritySupport": "NO_VERIFIED_AUTHORITY",
+              "sourceState": "NO_INDEXED_SOURCE",
+              "legalConclusion": "UNKNOWN",
+              "humanReviewRequired": false,
+              "filingReadyDocumentGenerated": false,
+              "automaticSubmission": false,
+              "hasConflict": false,
+              "conflictState": "NO_CONFLICT",
+              "limitations": [
+                "NO_INDEXED_SOURCE"
+              ],
+              "responseKind": "FALLBACK",
+              "specificAuthorityNotFound": false
+            },
+            "sourceCardRefs": [],
+            "answerLength": 151
+          }
+        }
+      ],
+      "firstRenderedKind": "source-failure",
+      "firstBackendAuthoritySupport": "NO_VERIFIED_AUTHORITY"
+    },
+    {
+      "id": "Q7",
+      "prompt": "A taxpayer received a PAN and FAN with inconsistent tax computations, different assessment bases, and possible defects in the LOA. Which defects affect substantive validity, due process, or only the correctness of the computation?",
+      "attempts": [
+        {
+          "responseTimeMs": 17460,
+          "timedOut": false,
+          "rendered": {
+            "hasBanner": true,
+            "banner": {
+              "kind": "procedural",
+              "role": "status",
+              "label": "Procedural guidance",
+              "secondaryLabel": null,
+              "description": "This response helps organize facts, documents, and next steps. It is not a final legal conclusion.",
+              "humanReviewTag": true
+            },
+            "sourceChips": [],
+            "sourceCardCount": 0,
+            "sourceTrustQualifier": null,
+            "answerLength": 1179,
+            "answerExcerpt": "If you received a BIR LOA/eLA, do not ignore it. Preserve the date and manner of receipt, keep a copy of the notice, and verify it through the available BIR verification process (for example, the REVIE / LOA Verifier process under RMC No. 5-2026) where applicable. Prepare a document compliance matrix, submit through controlled transmittal, and keep proof of submission. Do not fabricate unavailable or non-existent documents; use substitute proof where appropriate. This is procedural guidance only. Human tax/legal review remains required for validity, prescription, finality, appealability, prote"
+          },
+          "backend": {
+            "responseType": "controlled_loa_answer",
+            "sourceStatus": "RELATED_AUTHORITY_ONLY",
+            "displayedSourceCount": 0,
+            "retrievedSourceCount": 0,
+            "trust": {
+              "version": "1.0",
+              "authoritySupport": "NOT_APPLICABLE",
+              "sourceState": "NOT_APPLICABLE",
+              "legalConclusion": "NOT_APPLICABLE",
+              "humanReviewRequired": true,
+              "filingReadyDocumentGenerated": false,
+              "automaticSubmission": false,
+              "hasConflict": false,
+              "conflictState": "NOT_APPLICABLE",
+              "limitations": [],
+              "responseKind": "CONTROLLED_PROCEDURAL",
+              "specificAuthorityNotFound": false
+            },
+            "sourceCardRefs": [],
+            "answerLength": 1179
+          }
+        }
+      ],
+      "firstRenderedKind": "procedural",
+      "firstBackendAuthoritySupport": "NOT_APPLICABLE"
+    },
+    {
+      "id": "Q8",
+      "prompt": "A PEZA-registered enterprise received services that were treated as VAT-exempt instead of zero-rated. What is the proper VAT treatment, what documentary requirements apply, and what happens if the supplier used the wrong invoice classification?",
+      "attempts": [
+        {
+          "responseTimeMs": 21081,
+          "timedOut": false,
+          "rendered": {
+            "hasBanner": true,
+            "banner": {
+              "kind": "potential-conflict",
+              "role": "alert",
+              "label": "Possible authority conflict",
+              "secondaryLabel": null,
+              "description": "TINA detected incomplete or potentially inconsistent authority evidence. This is not a confirmed conflict, but the answer should be reviewed professionally before relying on it.",
+              "humanReviewTag": false
+            },
+            "sourceChips": [
+              "NIRC Sec. 106",
+              "RR 16-2005"
+            ],
+            "sourceCardCount": 2,
+            "sourceTrustQualifier": " - Controlling authority",
+            "answerLength": 2305,
+            "answerExcerpt": "Quick Assessment\nA PEZA-registered enterprise receiving services that were incorrectly treated as VAT-exempt instead of zero-rated may face implications regarding input tax recovery and compliance with VAT regulations.\nBIR Likely Position\nThe BIR is likely to assert that the services provided should be classified as zero-rated under Section 106 of the NIRC, which applies to sales of services rendered to PEZA-registered enterprises. If the supplier issued a VAT-exempt invoice instead of a zero-rated one, the BIR may argue that the enterprise cannot claim input VAT on these services.\nTaxpayer Po"
+          },
+          "backend": {
+            "responseType": null,
+            "sourceStatus": "AUTHORITY_FOUND",
+            "displayedSourceCount": 2,
+            "retrievedSourceCount": 12,
+            "trust": {
+              "version": "1.0",
+              "authoritySupport": "VERIFIED_CONTROLLING",
+              "sourceState": "AUTHORITY_FOUND",
+              "legalConclusion": "ALLOWED",
+              "humanReviewRequired": false,
+              "filingReadyDocumentGenerated": false,
+              "automaticSubmission": false,
+              "hasConflict": false,
+              "conflictState": "POTENTIAL_CONFLICT",
+              "limitations": [
+                "POTENTIAL_CONFLICT"
+              ],
+              "responseKind": "GENERAL_TAX",
+              "specificAuthorityNotFound": false
+            },
+            "sourceCardRefs": [
+              "NIRC Sec. 106",
+              "RR 16-2005"
+            ],
+            "answerLength": 2384
+          }
+        }
+      ],
+      "firstRenderedKind": "potential-conflict",
+      "firstBackendAuthoritySupport": "VERIFIED_CONTROLLING"
+    },
+    {
+      "id": "Q9",
+      "prompt": "A company cannot locate the exact BIR ruling requested by the client, but finds a Tax Code provision, a revenue regulation, a Supreme Court case, and a later circular pointing in different directions. Which authority controls, and how should the conflict be presented without overstating certainty?",
+      "attempts": [
+        {
+          "responseTimeMs": 22432,
+          "timedOut": false,
+          "rendered": {
+            "hasBanner": true,
+            "banner": {
+              "kind": "verified-controlling",
+              "role": "status",
+              "label": "Verified controlling authority",
+              "secondaryLabel": null,
+              "description": "This answer is grounded in verified controlling authority. This is not a final legal opinion -- verify applicability to your specific facts.",
+              "humanReviewTag": false
+            },
+            "sourceChips": [
+              "NIRC Sec. 2",
+              "G.R. No. 226592"
+            ],
+            "sourceCardCount": 2,
+            "sourceTrustQualifier": " - Controlling authority",
+            "answerLength": 189,
+            "answerExcerpt": "Indexed sources found:\n\nNIRC Sec. 2 – Primary Statute — 01-tax-code/nirc-1997-ra-10963-(bir).pdf\nG.R. No. 226592 – Supreme Court Decision — 06-court-cases/g.r.-no.-226592.-july-27-2021.pdf\n"
+          },
+          "backend": {
+            "responseType": null,
+            "sourceStatus": "AUTHORITY_FOUND",
+            "displayedSourceCount": 2,
+            "retrievedSourceCount": 5,
+            "trust": {
+              "version": "1.0",
+              "authoritySupport": "VERIFIED_CONTROLLING",
+              "sourceState": "AUTHORITY_FOUND",
+              "legalConclusion": "ALLOWED",
+              "humanReviewRequired": false,
+              "filingReadyDocumentGenerated": false,
+              "automaticSubmission": false,
+              "hasConflict": false,
+              "conflictState": "NO_CONFLICT",
+              "limitations": [],
+              "responseKind": "GENERAL_TAX",
+              "specificAuthorityNotFound": false
+            },
+            "sourceCardRefs": [
+              "NIRC Sec. 2",
+              "G.R. No. 226592"
+            ],
+            "answerLength": 368
+          }
+        },
+        {
+          "responseTimeMs": 19858,
+          "timedOut": false,
+          "rendered": {
+            "hasBanner": true,
+            "banner": {
+              "kind": "verified-controlling",
+              "role": "status",
+              "label": "Verified controlling authority",
+              "secondaryLabel": null,
+              "description": "This answer is grounded in verified controlling authority. This is not a final legal opinion -- verify applicability to your specific facts.",
+              "humanReviewTag": false
+            },
+            "sourceChips": [
+              "NIRC Sec. 2",
+              "G.R. No. 226592"
+            ],
+            "sourceCardCount": 2,
+            "sourceTrustQualifier": " - Controlling authority",
+            "answerLength": 189,
+            "answerExcerpt": "Indexed sources found:\n\nNIRC Sec. 2 – Primary Statute — 01-tax-code/nirc-1997-ra-10963-(bir).pdf\nG.R. No. 226592 – Supreme Court Decision — 06-court-cases/g.r.-no.-226592.-july-27-2021.pdf\n"
+          },
+          "backend": {
+            "responseType": null,
+            "sourceStatus": "AUTHORITY_FOUND",
+            "displayedSourceCount": 2,
+            "retrievedSourceCount": 5,
+            "trust": {
+              "version": "1.0",
+              "authoritySupport": "VERIFIED_CONTROLLING",
+              "sourceState": "AUTHORITY_FOUND",
+              "legalConclusion": "ALLOWED",
+              "humanReviewRequired": false,
+              "filingReadyDocumentGenerated": false,
+              "automaticSubmission": false,
+              "hasConflict": false,
+              "conflictState": "NO_CONFLICT",
+              "limitations": [],
+              "responseKind": "GENERAL_TAX",
+              "specificAuthorityNotFound": false
+            },
+            "sourceCardRefs": [
+              "NIRC Sec. 2",
+              "G.R. No. 226592"
+            ],
+            "answerLength": 368
+          }
+        },
+        {
+          "responseTimeMs": 17360,
+          "timedOut": false,
+          "rendered": {
+            "hasBanner": true,
+            "banner": {
+              "kind": "verified-controlling",
+              "role": "status",
+              "label": "Verified controlling authority",
+              "secondaryLabel": null,
+              "description": "This answer is grounded in verified controlling authority. This is not a final legal opinion -- verify applicability to your specific facts.",
+              "humanReviewTag": false
+            },
+            "sourceChips": [
+              "NIRC Sec. 2",
+              "G.R. No. 226592"
+            ],
+            "sourceCardCount": 2,
+            "sourceTrustQualifier": " - Controlling authority",
+            "answerLength": 189,
+            "answerExcerpt": "Indexed sources found:\n\nNIRC Sec. 2 – Primary Statute — 01-tax-code/nirc-1997-ra-10963-(bir).pdf\nG.R. No. 226592 – Supreme Court Decision — 06-court-cases/g.r.-no.-226592.-july-27-2021.pdf\n"
+          },
+          "backend": {
+            "responseType": null,
+            "sourceStatus": "AUTHORITY_FOUND",
+            "displayedSourceCount": 2,
+            "retrievedSourceCount": 5,
+            "trust": {
+              "version": "1.0",
+              "authoritySupport": "VERIFIED_CONTROLLING",
+              "sourceState": "AUTHORITY_FOUND",
+              "legalConclusion": "ALLOWED",
+              "humanReviewRequired": false,
+              "filingReadyDocumentGenerated": false,
+              "automaticSubmission": false,
+              "hasConflict": false,
+              "conflictState": "NO_CONFLICT",
+              "limitations": [],
+              "responseKind": "GENERAL_TAX",
+              "specificAuthorityNotFound": false
+            },
+            "sourceCardRefs": [
+              "NIRC Sec. 2",
+              "G.R. No. 226592"
+            ],
+            "answerLength": 368
+          }
+        }
+      ],
+      "firstRenderedKind": "verified-controlling",
+      "firstBackendAuthoritySupport": "VERIFIED_CONTROLLING"
+    },
+    {
+      "id": "Q10",
+      "prompt": "A taxpayer asks whether it will win an administrative protest or Court of Tax Appeals case involving an allegedly void LOA, denied deductions, and disputed withholding tax. What legal analysis can TINA provide, and where must it stop and require professional judgment?",
+      "attempts": [
+        {
+          "responseTimeMs": 3468,
+          "timedOut": false,
+          "rendered": {
+            "hasBanner": true,
+            "banner": {
+              "kind": "restricted",
+              "role": "alert",
+              "label": "Final legal conclusion not provided",
+              "secondaryLabel": null,
+              "description": "TINA does not provide a final validity, voidness, or outcome determination for this question. Human tax/legal review is required. No win/loss prediction, no filing-ready document, and no automatic submission are provided.",
+              "humanReviewTag": true
+            },
+            "sourceChips": [],
+            "sourceCardCount": 0,
+            "sourceTrustQualifier": null,
+            "answerLength": 845,
+            "answerExcerpt": "A conclusive determination of validity, invalidity, voidness, finality, or appealability cannot be made from the limited information in this question. The actual document, its issuance and service details, the assessment or dispute stage, the dates received, applicable protest or appeal deadlines, and any prior notices or taxpayer actions must be reviewed before any conclusion. Protest and appeal periods may be time-sensitive, so prompt review is recommended. Validity, prescription, finality, appealability, protest strategy, CTA strategy, and legal conclusions require official-source verificat"
+          },
+          "backend": {
+            "responseType": "controlled_loa_legal_conclusion_restricted",
+            "sourceStatus": "NOT_APPLICABLE",
+            "displayedSourceCount": 0,
+            "retrievedSourceCount": 0,
+            "trust": {
+              "version": "1.0",
+              "authoritySupport": "NOT_APPLICABLE",
+              "sourceState": "NOT_APPLICABLE",
+              "legalConclusion": "RESTRICTED",
+              "humanReviewRequired": true,
+              "filingReadyDocumentGenerated": false,
+              "automaticSubmission": false,
+              "hasConflict": false,
+              "conflictState": "NOT_APPLICABLE",
+              "limitations": [],
+              "responseKind": "RESTRICTED_LEGAL_CONCLUSION",
+              "specificAuthorityNotFound": false
+            },
+            "sourceCardRefs": [],
+            "answerLength": 845
+          }
+        }
+      ],
+      "firstRenderedKind": "restricted",
+      "firstBackendAuthoritySupport": "NOT_APPLICABLE"
+    }
+  ]
+}
