@@ -131,8 +131,20 @@ export const STAGING_TRUST_FIXTURES = Object.freeze({
 
 /**
  * Resolves a requested staging fixture. Returns null (fail closed) unless
- * the runtime is genuinely staging AND fixtureId exactly matches a fixed
- * registry key. Never trusts client-supplied content beyond the lookup key.
+ * the runtime is genuinely staging AND fixtureId exactly matches an OWN
+ * property of the fixed registry. Never trusts client-supplied content
+ * beyond the lookup key.
+ *
+ * PHASE-10A4C-FIXTURE-REGISTRY-OWN-PROPERTY-HARDENING-1: bracket-notation
+ * property access (STAGING_TRUST_FIXTURES[fixtureId]) walks the full
+ * prototype chain, not just the registry's own keys. Since
+ * STAGING_TRUST_FIXTURES is a plain object, inherited Object.prototype
+ * members (toString, constructor, valueOf, hasOwnProperty, isPrototypeOf,
+ * and the __proto__ accessor) are themselves truthy values, so a fixtureId
+ * equal to one of those names previously resolved to an inherited function/
+ * object instead of undefined. Object.hasOwn() restricts resolution to the
+ * registry's own enumerable keys only (the exact 7 canonical fixture IDs),
+ * closing this off before ever touching the object.
  *
  * @param {unknown} fixtureId
  * @param {object} [env=process.env]
@@ -141,6 +153,7 @@ export const STAGING_TRUST_FIXTURES = Object.freeze({
 export function resolveStagingFixture(fixtureId, env = process.env) {
   if (!isStagingBackendRuntime(env)) return null;
   if (typeof fixtureId !== "string") return null;
+  if (!Object.hasOwn(STAGING_TRUST_FIXTURES, fixtureId)) return null;
   const fixture = STAGING_TRUST_FIXTURES[fixtureId];
-  return fixture ? { ...fixture, fixtureId } : null;
+  return { ...fixture, fixtureId };
 }

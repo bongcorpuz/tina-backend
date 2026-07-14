@@ -142,6 +142,20 @@ await test("staging fixture registry denies unknown fixture IDs even on staging"
   check(resolveStagingFixture({ malicious: "object" }, STAGING_ENV) === null, "non-string id denied (no free-form object injection)");
 });
 
+// PHASE-10A4C-FIXTURE-REGISTRY-OWN-PROPERTY-HARDENING-1
+await test("staging fixture registry rejects inherited Object.prototype keys (own-property hardening)", () => {
+  const prototypeKeys = ["__proto__", "constructor", "toString", "hasOwnProperty", "valueOf", "isPrototypeOf", "propertyIsEnumerable", "toLocaleString"];
+  for (const key of prototypeKeys) {
+    check(resolveStagingFixture(key, STAGING_ENV) === null, `${key}: inherited Object.prototype member denied, not resolved to an inherited value`);
+  }
+  // Also confirm denial holds on production (defense in depth -- the staging
+  // gate alone already fails closed here, but this proves the own-property
+  // check does not weaken that).
+  for (const key of prototypeKeys) {
+    check(resolveStagingFixture(key, PROD_ENV) === null, `${key}: also denied on production`);
+  }
+});
+
 await test("staging fixture registry resolves every known ID on staging with no client-controlled content beyond the ID", () => {
   for (const id of Object.keys(STAGING_TRUST_FIXTURES)) {
     const resolved = resolveStagingFixture(id, STAGING_ENV);
