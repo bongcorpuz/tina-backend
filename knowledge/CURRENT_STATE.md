@@ -8587,3 +8587,35 @@ Phase 10A remains OPEN -- NOT authorized to close pending the mandatory PHASE-10
 
 Artifacts: PHASE-10A4C-TRUST-CALIBRATION-CONFLICT-ACCESSIBILITY-KEYBOARD-AND-DETERMINISTIC-FIXTURE-REMEDIATION-1_REPORT.md; evaluation/results/phase-10a4c-trust-calibration-conflict-accessibility-keyboard-fixture-remediation-1.json; evaluation/results/phase-10a4c-trust-calibration-conflict-accessibility-keyboard-fixture-remediation-1/ (19 JSON evidence files + screenshots/ x23). Code: services/trust-contract.js, services/staging-trust-fixtures.js, ask-handler.js, tests/phase-10a4c-....test.mjs (backend); src/lib/trustPresentation.js, src/components/TrustBanner.jsx, src/components/SourceTrustSummary.jsx, src/index.css, src/App.css, src/App.jsx (frontend).
 ```
+
+### PHASE-10A4C -- Independent Technical/Security/Accessibility/Fixture-Governance Review Outcome (2026-07-14)
+
+```text
+Independent review: INDEPENDENT REVIEW PASS WITH STRICT RECOMMENDATIONS. Reviewer: Claude Code -- Opus 4.8 -- Low Speed. Executed as Sonnet 5; independence preserved.
+
+Independently confirmed: Case C remediated (verified live, no regression to legitimate verified answers, detector errs safe on residual false-positive/negative edge cases); Case F rendering chain proven correct via a fixture that genuinely exercises trust-contract construction, persistence, hydration, and frontend mapping (not merely injected rendered text); the live Step 9 conflict-detection limitation is honestly carried, not concealed, and under-claims rather than overstates; contrast and all four prior accessibility findings resolved, plus a newly-discovered scrollable-region-focusable finding fixed mid-task (0/0/0/0 final axe count, not via exclusions); keyboard workflow validated; all 7 canonical states reproduced and passed with identical persistence/reopen/hard-refresh; commit discipline clean; no production contact; no committed secret (independently re-scanned); Gemini attribution accurately recorded as a self-review, not an authentic Gemini output.
+
+One P2 finding identified: the staging fixture resolver used bracket-notation lookup (STAGING_TRUST_FIXTURES[fixtureId]), which walks the prototype chain -- inherited Object.prototype keys (__proto__, constructor, toString, hasOwnProperty, valueOf, isPrototypeOf) resolved to inherited values instead of being denied. Explicitly classified: not prototype pollution (a read, not a write), not production-reachable (isStagingBackendRuntime fails closed first, independently verified), not P0/P1 -- correctable hardening item.
+
+Phase 10A closure assessment: the live Step 9 conflict-detection enrichment is classified as MAY DEFER to a later phase with an explicit documented limitation (not mandatory before closure) because live queries under-claim rather than falsely assert settled authority -- a coverage gap, not a trust-integrity hazard. The primary remaining gate before Phase 10A closure is a genuine Gemini rendered-UX review, authorized to proceed.
+
+Decision: PHASE-10A4C technically accepted. Phase 10A remains OPEN. Phase 10B and Phase 10C remain BLOCKED. Phase 10A is NOT marked complete. Phase 10A closure NOT authorized by this review.
+```
+
+## Phase 10A4C Fixture-Registry Own-Property Hardening 1 (2026-07-14):
+
+```text
+PHASE-10A4C-FIXTURE-REGISTRY-OWN-PROPERTY-HARDENING-1 executed by Claude Code (Sonnet 5, medium), remediating the single P2 finding from the PHASE-10A4C independent review above. Backend feature/source-availability-engine-v1, starting HEAD 07f97f9, final HEAD 807ec3f, sync 0 0. Frontend not modified (HEAD remains 0816ac8, sync 0 0, main untouched); Dev Factory not modified.
+
+Exact mechanism confirmed before patching (not merely repeating the reviewer's description): STAGING_TRUST_FIXTURES[fixtureId] is bracket-notation access on a plain object, which walks the full prototype chain rather than checking only the registry's own keys. Since STAGING_TRUST_FIXTURES is a plain frozen object, fixtureId values matching inherited Object.prototype members (toString, constructor, valueOf, hasOwnProperty, isPrototypeOf, and the __proto__ accessor) resolved to those inherited (truthy) values; spreading them via {...fixture} yielded no enumerable own properties, producing a degenerate {fixtureId} object instead of null.
+
+Fix: added an Object.hasOwn(STAGING_TRUST_FIXTURES, fixtureId) own-property check before the lookup, restricting resolution strictly to the registry's 7 canonical fixture-ID keys. Empirically re-verified on both environments: all 6 prototype-key names (plus 2 additional -- propertyIsEnumerable, toLocaleString) now return null on staging; all 7 valid A-G IDs still resolve correctly; unknown/empty/whitespace/wrong-case/non-string IDs remain denied; production remains fail-closed for every input tested including prototype keys (isStagingBackendRuntime gate fires first, unchanged).
+
+Regression test added (tests/phase-10a4c-....test.mjs): "staging fixture registry rejects inherited Object.prototype keys (own-property hardening)" -- 8 prototype-key names tested on both staging and production environments (16 new assertions). Full suite: 15/15 pass, 92 assertions. Full backend regression: 186 run, 1 failed after commit -- the single pre-existing phase-09zf self-referential guard (unrelated, documented since PHASE-10A4B-PRE1); the same transient 32-failure-while-uncommitted pattern was observed and confirmed to clear on commit, consistent with every prior task this session.
+
+No unrelated runtime or frontend change. No secret exposure (re-scanned). No production contact.
+
+Decision: PHASE-10A4C-FIXTURE-REGISTRY-OWN-PROPERTY-HARDENING-1 COMPLETE. Phase 10A remains OPEN. Phase 10B and Phase 10C remain BLOCKED. Phase 10A is NOT marked complete. Next required step: mandatory independent review of this hardening, then the genuine Gemini rendered-UX review (still pending, still never performed for this project).
+
+Artifacts: services/staging-trust-fixtures.js (Object.hasOwn check), tests/phase-10a4c-trust-calibration-conflict-accessibility-keyboard-fixture-remediation-1.test.mjs (new regression test). Commit: 807ec3f.
+```
