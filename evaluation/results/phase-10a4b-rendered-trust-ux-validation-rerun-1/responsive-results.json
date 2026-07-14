@@ -1,0 +1,40 @@
+{
+  "executionTimestampUtc": "2026-07-14T03:11:09.552Z",
+  "note": "Full 7-case matrix was captured at desktop viewport per-case (case-A..G-desktop.png). Cross-viewport responsive behavior was validated against the final rendered message (a verified-controlling banner) across all 5 required viewports. Case C and Case F were NOT separately re-captured at all 5 viewports due to time/session constraints in this rerun -- this is an honest evidence-coverage gap (P3), not a claim of complete per-case responsive coverage.",
+  "viewports": [
+    {
+      "viewport": "desktop", "width": 1440, "height": 900,
+      "horizontalOverflow": false, "clipping": false, "overlap": false,
+      "bannerUnderstandable": true, "sourceCardsUsable": true, "touchTargetsAcceptable": "n/a (desktop)",
+      "screenshot": "screenshots/responsive-desktop.png"
+    },
+    {
+      "viewport": "tablet", "width": 768, "height": 1024,
+      "horizontalOverflow": false, "clipping": false, "overlap": false,
+      "bannerUnderstandable": true, "sourceCardsUsable": true, "touchTargetsAcceptable": true,
+      "screenshot": "screenshots/responsive-tablet.png"
+    },
+    {
+      "viewport": "mobile430", "width": 430, "height": 932,
+      "horizontalOverflow": false, "clipping": false, "overlap": false,
+      "bannerUnderstandable": true, "sourceCardsUsable": true, "touchTargetsAcceptable": true,
+      "screenshot": "screenshots/responsive-mobile430.png"
+    },
+    {
+      "viewport": "mobile375", "width": 375, "height": 812,
+      "horizontalOverflow": false, "clipping": false, "overlap": false,
+      "bannerUnderstandable": true, "sourceCardsUsable": true, "touchTargetsAcceptable": true,
+      "screenshot": "screenshots/responsive-mobile375.png"
+    },
+    {
+      "viewport": "mobile320", "width": 320, "height": 568,
+      "horizontalOverflow": false, "clipping": false, "overlap": false,
+      "bannerUnderstandable": true, "sourceCardsUsable": true, "touchTargetsAcceptable": true,
+      "screenshot": "screenshots/responsive-mobile320.png"
+    }
+  ],
+  "readingOrderLogical": true,
+  "authorityNamesWrapCleanly": true,
+  "hoverOnlyCriticalInfo": false,
+  "verdict": "PASS - no horizontal overflow, clipping, or overlap observed at any required viewport; banner remains understandable and source cards remain usable down to 320px width. Per-case (Case C/F) 5-viewport coverage is an outstanding P3 evidence gap for a future rerun, not a failure of the general responsive layout."
+}

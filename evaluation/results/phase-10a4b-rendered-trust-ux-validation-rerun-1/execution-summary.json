@@ -1,0 +1,43 @@
+{
+  "task": "PHASE-10A4B-RENDERED-TRUST-UX-VALIDATION-RERUN-1",
+  "executionTimestampUtc": "2026-07-14T03:11:09.552Z",
+  "model": "Claude Code - Sonnet 5 - medium speed",
+  "browserHarness": "Playwright 1.61.1, Chromium, normal web security enabled",
+  "authorizationBasis": {
+    "corsRemediationCommits": ["65f9a34 (original CORS block evidence)", "4600fb2 (CORS remediation code+tests)", "5a32cba (CORS remediation evidence)"],
+    "corsIndependentReview": "INDEPENDENT REVIEW PASS WITH STRICT RECOMMENDATIONS"
+  },
+  "runtimeVariablePresence": {
+    "method": "boolean only; values read only in-memory via node --env-file",
+    "VERCEL_AUTOMATION_BYPASS_SECRET": true,
+    "TINA_STAGING_TEST_USERNAME": true,
+    "TINA_STAGING_TEST_PASSWORD": true,
+    "TINA_PREVIEW_URL": "resolved dynamically via authenticated Vercel CLI (not a stored secret; not from .env)"
+  },
+  "stepsExecuted": [
+    "Preview protection check (no bypass) -> redirected to Vercel SSO, confirmed enforced",
+    "Preview access with approved bypass -> app shell rendered",
+    "Real UI login (username/password through actual form fields)",
+    "7-case trust-state matrix executed live against tina-backend-staging",
+    "History reopen (in-session navigation) + real browser hard refresh, twice (full matrix conversation + confirmation single-query conversation)",
+    "Responsive checks at 5 required viewports",
+    "axe-core accessibility scan",
+    "WCAG contrast remeasurement of the primary trust banner + axe cross-check",
+    "Keyboard reachability check (composer, source-chip links)",
+    "Screenshot sanitization review (found and fixed a redaction defect before commit)"
+  ],
+  "highLevelResult": {
+    "matrixResponsesReceived": 7,
+    "matrixIntendedStatesReproduced": 3,
+    "matrixIntendedStatesNotReproduced": 4,
+    "persistenceAndHardRefresh": "PASS (2/2 runs, trust state identical)",
+    "responsive5Viewports": "PASS (no overflow/clipping/overlap at any viewport)",
+    "accessibilityCriticalViolations": 0,
+    "accessibilitySeriousViolations": 1,
+    "primaryTrustBannerContrastRatio": 18.85,
+    "productionContact": false,
+    "secretExposureInCommittedEvidence": false,
+    "screenshotSanitizationDefectFoundAndFixedBeforeCommit": true
+  },
+  "decision": "PHASE 10A4B RERUN PASS WITH STRICT RECOMMENDATIONS"
+}

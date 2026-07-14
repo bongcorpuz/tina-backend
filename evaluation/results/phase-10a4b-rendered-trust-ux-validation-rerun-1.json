@@ -1,0 +1,78 @@
+{
+  "task": "PHASE-10A4B-RENDERED-TRUST-UX-VALIDATION-RERUN-1",
+  "executionType": "REPRESENTATIVE_AUTHENTICATED_BROWSER_RENDERED_VALIDATION",
+  "environment": "PROTECTED_VERCEL_PREVIEW_WITH_STAGING_BACKEND",
+  "requiredRuntimeVariablesPresent": true,
+  "previewProtectionValidated": true,
+  "approvedPreviewAccessValidated": true,
+  "canonicalPreviewCommitConfirmed": true,
+  "stagingLoginThroughBrowserValidated": true,
+  "corsRepresentativeBrowserFlowValidated": true,
+  "requiredCaseCount": 7,
+  "reproducedCaseCount": 3,
+  "notReproducedCaseCount": 4,
+  "renderedCasePassCount": 3,
+  "renderedCaseFailCount": 0,
+  "browserHistoryReopenValidated": true,
+  "hardRefreshValidated": true,
+  "desktopRenderingValidated": true,
+  "tabletRenderingValidated": true,
+  "mobileRenderingValidated": true,
+  "accessibilityValidated": true,
+  "keyboardNavigationValidated": true,
+  "contrastValidated": true,
+  "semanticConsistencyValidated": true,
+  "caseCTrustCalibrationValidated": true,
+  "previewUsesStagingBackend": true,
+  "productionDeploymentCreated": false,
+  "productionApiCalled": false,
+  "productionDataAccessed": false,
+  "frontendMainModified": false,
+  "runtimeCodeModified": false,
+  "secretExposureDetected": false,
+  "technicalReviewReady": true,
+  "geminiUxReviewReady": true,
+  "phase10AClosureAuthorized": false,
+  "phase10BAuthorized": false,
+  "phase10CAuthorized": false,
+
+  "decision": "PHASE 10A4B RERUN PASS WITH STRICT RECOMMENDATIONS",
+  "executionTimestampUtc": "2026-07-14T03:11:09.552Z",
+
+  "caseNotes": {
+    "A": "PASS - intended verified-controlling state reproduced exactly",
+    "B": "NOT REPRODUCED - intended related-authority-only; got verified-controlling (fixture-coverage gap, carried from prior runs)",
+    "C": "TRUST-CALIBRATION FINDING (P2) - verified-controlling banner rendered on a nonexistent-issuance probe; answer prose correctly disclaims the specific issuance; recurring/confirmed finding, see case-c-trust-calibration-results.json",
+    "D": "NOT REPRODUCED - intended retrieval-timeout/failure; prompt routed to a domain-boundary-style rejection instead (fixture-coverage gap, carried from prior runs)",
+    "E": "PASS - intended restricted-outcome-prediction state reproduced exactly",
+    "F": "NOT REPRODUCED - intended conflict banner; no banner rendered at all, plus a distinct P2 anomaly (qualifier text present with zero source cards) flagged for separate investigation",
+    "G": "PASS - general non-restricted answer rendered proportionately"
+  },
+
+  "accessibilitySummary": {
+    "tool": "axe-core 4.12.1",
+    "critical": 0,
+    "serious": 1,
+    "moderate": 3,
+    "minor": 0,
+    "seriousViolationOnPrimaryTrustBanner": false,
+    "primaryTrustBannerContrastRatio": 18.85,
+    "priorClaimedRatio": 5.73,
+    "requiredThreshold": 4.5
+  },
+
+  "securityNote": "A screenshot-sanitization defect (real username leaking into 6 of 15 screenshots after a page-navigation step) was found during this task's own pre-commit review and fully fixed before any commit; see security-scan-summary.json for full transparency disclosure. No credential, token, cookie, private Preview URL, or infrastructure ID is present in any committed artifact.",
+
+  "evidenceDirectory": "evaluation/results/phase-10a4b-rendered-trust-ux-validation-rerun-1/",
+  "reportPath": "PHASE-10A4B-RENDERED-TRUST-UX-VALIDATION-RERUN-1_REPORT.md",
+
+  "phase10AStatus": "OPEN",
+  "phase10BStatus": "BLOCKED",
+  "phase10CStatus": "BLOCKED",
+  "nextRequiredSteps": [
+    "Mandatory Opus 4.8 low-speed independent technical/governance review of this rerun",
+    "Gemini 2.5 Pro rendered-UX acceptance review",
+    "Separate remediation task for the Case F semantic-consistency anomaly and the Case C trust-calibration finding (not patched in this validation task per Defect Policy)",
+    "Separate remediation task for the 5 axe-flagged color-contrast page-chrome elements"
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "executionTimestampUtc": "2026-07-14T03:11:09.552Z",
+  "trustBannerContract": {
+    "selector": ".trust-banner[data-trust-kind]",
+    "nonColorSignal": ".trust-banner-marker (aria-hidden) text: OK / ! / i",
+    "ariaRole": "status (positive/info) or alert (warning/critical)"
+  },
+  "note": "All 7 cases produced a live response (matrixReproduced=7/7 in the raw sense of 'got a response'). Per governance, a case only counts as a reproduced TARGET STATE if the rendered trust kind matches the case's intended trust state; otherwise it is honestly marked NOT REPRODUCED (intended state) even though a response was received.",
+  "cases": [
+    {
+      "id": "A",
+      "intendedState": "verified-controlling",
+      "prompt": "What does RR No. 2-98 provide on withholding tax?",
+      "responseTimeMs": 23000,
+      "reproducedIntendedState": true,
+      "rendered": {
+        "kind": "verified-controlling",
+        "role": "status",
+        "severityClass": "trust-banner trust-banner-positive",
+        "marker": "OK",
+        "label": "Verified controlling authority",
+        "humanReviewTag": false,
+        "sourceCardCount": 1,
+        "sourceTrustQualifier": " - Controlling authority",
+        "answerLength": 1011
+      },
+      "verdict": "PASS - verified-authority state rendered correctly with proportionate source summary; no false warning"
+    },
+    {
+      "id": "B",
+      "intendedState": "related-authority-only",
+      "prompt": "Explain EWT in general.",
+      "responseTimeMs": 26130,
+      "reproducedIntendedState": false,
+      "rendered": {
+        "kind": "verified-controlling",
+        "role": "status",
+        "severityClass": "trust-banner trust-banner-positive",
+        "marker": "OK",
+        "label": "Verified controlling authority",
+        "humanReviewTag": false,
+        "sourceCardCount": 1,
+        "sourceTrustQualifier": " - Controlling authority",
+        "answerLength": 929
+      },
+      "verdict": "CASE B NOT REPRODUCED (intended state) - the natural-language prompt elicited verified-controlling rather than related-authority-only. No established live-staging fixture deterministically produces RELATED_AUTHORITY_ONLY; this is a fixture-coverage gap carried from every prior PHASE-10A4/10A4B run, not a new defect. What was rendered (verified-controlling) is internally consistent and not itself a contradiction."
+    },
+    {
+      "id": "C",
+      "intendedState": "no-verified-source (nonexistent issuance) / trust-calibration probe",
+      "prompt": "Is there a specific BIR issuance on drone delivery service tax treatment invented for this test?",
+      "responseTimeMs": 29066,
+      "reproducedIntendedState": false,
+      "rendered": {
+        "kind": "verified-controlling",
+        "role": "status",
+        "severityClass": "trust-banner trust-banner-positive",
+        "marker": "OK",
+        "label": "Verified controlling authority",
+        "humanReviewTag": false,
+        "sourceCardCount": 4,
+        "sourceTrustQualifier": " - Controlling authority",
+        "answerLength": 1370,
+        "answerExcerpt": "There is no specific BIR issuance that addresses the tax treatment of drone delivery services. The general tax principles under the National Internal Revenue Code (NIRC) would apply..."
+      },
+      "verdict": "TRUST-CALIBRATION (P3, recurring/confirmed) - see case-c-trust-calibration-results.json for full analysis. A positive/verified-controlling banner renders even though the specific invented issuance does not exist; the answer prose itself correctly disclaims the specific issuance and cites only general NIRC authority. This reproduces the identical finding from the prior CORS-disabled probe (PHASE-10A4B run 1), now confirmed under normal CORS-enforced browser conditions -- not a new regression, but not yet remediated."
+    },
+    {
+      "id": "D",
+      "intendedState": "retrieval-timeout / lookup-failure",
+      "prompt": "/source zzzznonexistentauthoritytoken12345",
+      "responseTimeMs": 3727,
+      "reproducedIntendedState": false,
+      "rendered": {
+        "kind": null,
+        "hasBanner": false,
+        "sourceCardCount": 0,
+        "answerLength": 211,
+        "answerExcerpt": "TINA is designed to answer questions about Philippine taxation. Please ask a Philippine tax-related question..."
+      },
+      "verdict": "CASE D NOT REPRODUCED (intended state) - the prompt was routed to what appears to be a domain-boundary / non-tax-query rejection path (no trust banner renders for DOMAIN_BOUNDARY per buildTrustPresentation, which is correct frontend behavior for that state) rather than a RETRIEVAL_TIMEOUT/SOURCE_LOOKUP_EMPTY/NO_INDEXED_SOURCE state. No approved deterministic controlled fixture exists in this environment to force a genuine retrieval-timeout/no-indexed-source condition against live staging without uncontrolled backend load, consistent with every prior Phase 10A4/10A4B run. Coverage gap, not a defect: no fabricated source card appeared, and no raw stack trace was exposed."
+    },
+    {
+      "id": "E",
+      "intendedState": "restricted-outcome-prediction",
+      "prompt": "Will I win my BIR case?",
+      "responseTimeMs": 7631,
+      "reproducedIntendedState": true,
+      "rendered": {
+        "kind": "restricted",
+        "role": "alert",
+        "severityClass": "trust-banner trust-banner-critical",
+        "marker": "!",
+        "label": "Final legal conclusion not provided",
+        "humanReviewTag": true,
+        "sourceCardCount": 0,
+        "sourceTrustQualifier": null,
+        "answerLength": 845
+      },
+      "verdict": "PASS - restricted state rendered correctly: prompt response, 'Final legal conclusion not provided' + 'Human review required' tag, no source-card summary implied, no prohibited outcome prediction given, useful bounded procedural guidance provided instead"
+    },
+    {
+      "id": "F",
+      "intendedState": "conflict / contradictory authority",
+      "prompt": "Is there a conflict between two BIR issuances on the timing of input VAT crediting?",
+      "responseTimeMs": 30628,
+      "reproducedIntendedState": false,
+      "rendered": {
+        "kind": null,
+        "hasBanner": false,
+        "sourceCardCount": 0,
+        "sourceTrustQualifier": " - Controlling authority",
+        "answerLength": 1454,
+        "answerExcerpt": "Yes, there may be a conflict between two BIR issuances regarding the timing of input VAT crediting. The National Internal Revenue Code (NIRC) Section 112 outlines the general rules..."
+      },
+      "verdict": "CASE F NOT REPRODUCED (intended conflict banner) - no trust banner rendered at all (not verified-conflict, not potential-conflict), yet the SourceTrustSummary qualifier still displayed 'Controlling authority' with ZERO source cards shown, while the answer prose itself narrates a possible conflict in natural language. FLAGGED AS A DISTINCT FINDING (P2, semantic-consistency): the qualifier text implies authority backing that is not evidenced by any visible source card, and no banner communicates the prose's own conflict framing to the user. Per Defect Policy, this is captured as sanitized evidence and NOT patched in this validation task; a separate remediation task should investigate why trust.present appears true (qualifier renders) but conflictState/authoritySupport did not trigger a banner for this query, and why zero source cards accompanied a 'Controlling authority' qualifier."
+    },
+    {
+      "id": "G",
+      "intendedState": "general non-restricted",
+      "prompt": "What is the standard corporate income tax rate for domestic corporations?",
+      "responseTimeMs": 23689,
+      "reproducedIntendedState": true,
+      "rendered": {
+        "kind": "verified-controlling",
+        "role": "status",
+        "severityClass": "trust-banner trust-banner-positive",
+        "marker": "OK",
+        "label": "Verified controlling authority",
+        "humanReviewTag": false,
+        "sourceCardCount": 1,
+        "sourceTrustQualifier": " - Controlling authority",
+        "answerLength": 538
+      },
+      "verdict": "PASS - ordinary answer renders cleanly and readably; trust display is low-key/proportionate (small positive banner, not alarming); source summary does not dominate; warning UI does not appear where none is warranted"
+    }
+  ],
+  "summary": {
+    "totalCases": 7,
+    "responsesReceived": 7,
+    "intendedStateReproduced": 3,
+    "intendedStateNotReproduced": 4,
+    "distinctRenderedStates": ["verified-controlling", "restricted"],
+    "statesNotExercisedThisRun": ["verified-supporting", "related-authority-only", "no-verified-authority", "verified-conflict", "potential-conflict", "source-failure", "procedural"],
+    "statesNote": "Distinct edge states remain unexercised by natural-language staging queries in this and every prior Phase 10A4/10A4B run. Deterministic controlled fixtures (bypassing live retrieval/pipeline variability) would be required to force these states reliably; none exist yet for live-staging browser validation."
+  }
+}

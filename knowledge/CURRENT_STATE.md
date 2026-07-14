@@ -8479,3 +8479,37 @@ Artifacts: PHASE-10A4B-PRE1-STAGING-CORS-AUTHORIZATION-FOR-PROTECTED-VERCEL-PREV
 
 Phase 10A remains OPEN. Phase 10B and 10C remain BLOCKED. Phase 10A is NOT marked complete.
 ```
+
+## Phase 10A4B Rendered Trust-UX Validation Rerun 1 -- PHASE 10A4B RERUN PASS WITH STRICT RECOMMENDATIONS (2026-07-14):
+
+```text
+PHASE-10A4B-RENDERED-TRUST-UX-VALIDATION-RERUN-1 executed by Claude Code (Sonnet 5, medium) as a genuine authenticated-browser rerun (Playwright/Chromium, normal web security enabled) against the protected tina-ai Vercel Preview and tina-backend-staging, authorized on the basis of the CORS remediation independent review (INDEPENDENT REVIEW PASS WITH STRICT RECOMMENDATIONS, commits 65f9a34/4600fb2/5a32cba). Backend HEAD 5a32cba (all required ancestors present), sync 0 0. Frontend HEAD 1748788 unchanged, sync 0 0, main untouched.
+
+Runtime variables (VERCEL_AUTOMATION_BYPASS_SECRET, TINA_STAGING_TEST_USERNAME, TINA_STAGING_TEST_PASSWORD) confirmed present by boolean check only. Preview protection confirmed genuinely enforced (302->SSO without bypass); approved bypass access succeeded (200, app shell rendered); real UI login succeeded through the actual form; representative CORS-enforced browser flow validated end to end (0 CORS console errors, 0 backend-connect errors) -- the blocker this entire CORS remediation chain existed to resolve is now confirmed working under normal browser security enforcement.
+
+7-case trust matrix: all 7 prompts received live responses; 3/7 reproduced their INTENDED trust state exactly (A verified-controlling, E restricted, G general-proportionate); 4/7 honestly marked NOT REPRODUCED for intended state (B related-authority-only, D retrieval-timeout, F conflict -- all fixture-coverage gaps carried from every prior Phase 10A4/10A4B run, not new defects). Case C (trust-calibration probe, nonexistent drone-delivery issuance) reproduced the SAME finding as the prior CORS-disabled probe: a verified-controlling banner renders while the answer prose correctly disclaims the specific issuance; now confirmed under normal CORS-enforced conditions and raised to P2 given its direct relevance to Phase 10A trust-integrity goals. Case F surfaced a DISTINCT P2 semantic-consistency anomaly: a "Controlling authority" qualifier rendered with zero source cards and no trust banner despite conflict-describing answer prose -- captured as evidence, not patched, per Defect Policy; referred to a separate investigation task.
+
+Persistence/history-reopen/hard-refresh: validated twice (full 7-case conversation + a second independent single-query conversation) -- trust banner kind, presence, and message count identical before reopen, after reopen, and after a real browser hard refresh in both runs. PASS.
+
+Responsive: no horizontal overflow/clipping/overlap at any of the 5 required viewports (1440x900, 768x1024, 430x932, 375x812, 320x568). Gap honestly disclosed: Case C/F were not separately captured at all 5 viewports (P3 evidence gap for a future rerun).
+
+Accessibility: axe-core 4.12.1 found 0 critical, 1 serious (color-contrast, 5 page-chrome elements -- header tagline, footer x2, source-chip links, and the SOURCE(S) heading containing the trust qualifier text -- NONE on the primary TrustBanner), 3 moderate (heading-order, landmark-one-main, region). Classified P2, not a release blocker for this gate.
+
+Contrast remeasurement: the prior probe's inconclusive contrast result is now RESOLVED. The primary trust-banner label independently measured 18.85:1 (WCAG relative-luminance formula), far exceeding both the 4.5:1 AA threshold and the prior ~5.73:1 claim.
+
+Keyboard: composer reachable by Tab; source-chip link focusable. PASS with recommendation for a fuller manual walkthrough.
+
+SCREENSHOT SANITIZATION DEFECT FOUND AND FIXED PRE-COMMIT (disclosed transparently): a one-time DOM redaction of the displayed username did not survive a full page navigation (React remounts), causing 6 of 15 initially-captured screenshots (history-reopen/hard-refresh + all 5 responsive captures) to show the REAL staging test account username instead of the redacted "User" label. Caught by this task's own pre-commit visual review before any commit or push occurred -- no leaking screenshot was ever committed or shared. Fixed via a persistent context.addInitScript() MutationObserver that survives navigation; all 6 files regenerated and re-verified both programmatically and visually. No residual exposure in the final committed evidence.
+
+Production safety: only the non-production Preview and tina-backend-staging.onrender.com contacted (plus public GitHub/Vercel CLI metadata lookups); tina-backend-y11x.onrender.com (production) never contacted; no production deployment/API/data; no runtime code modified; frontend main untouched.
+
+Security scan: no credential, token, cookie, private Preview URL, or infrastructure ID in any committed artifact (independently pattern-scanned). No P0.
+
+Decision: PHASE 10A4B RERUN PASS WITH STRICT RECOMMENDATIONS. Strict recommendations: (1) separate remediation task for the Case F semantic-consistency anomaly; (2) separate remediation task for the Case C trust-calibration presentation (banner strength vs. issuance-specific verification); (3) separate remediation task for the 5 axe-flagged color-contrast page-chrome elements; (4) deterministic controlled fixtures still needed for related-authority-only/no-verified-authority/verified-conflict/potential-conflict/source-failure/procedural/verified-supporting states; (5) Case C/F per-viewport screenshot coverage for a future rerun; (6) fuller keyboard Tab-order walkthrough with focus-ring screenshot.
+
+Technical independent review: READY. Gemini rendered-UX review: READY (sanitized screenshots, responsive, accessibility, contrast, Case C, and hard-refresh evidence all present).
+
+Phase 10A remains OPEN -- NOT authorized to close pending both the mandatory Opus 4.8 independent review and Gemini rendered-UX acceptance. Phase 10B and Phase 10C remain BLOCKED. Phase 10A is NOT marked complete.
+
+Artifacts: PHASE-10A4B-RENDERED-TRUST-UX-VALIDATION-RERUN-1_REPORT.md; evaluation/results/phase-10a4b-rendered-trust-ux-validation-rerun-1.json; evaluation/results/phase-10a4b-rendered-trust-ux-validation-rerun-1/ (execution-summary, preview-browser-access-results, rendered-trust-matrix-results, backend-render-correlation-results, persistence-history-reopen-results, hard-refresh-results, responsive-results, accessibility-results, keyboard-navigation-results, contrast-results, case-c-trust-calibration-results, production-safety-summary, security-scan-summary, screenshot-manifest, screenshots/ x15).
+```

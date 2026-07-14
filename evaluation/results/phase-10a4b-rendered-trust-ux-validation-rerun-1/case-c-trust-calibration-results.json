@@ -1,0 +1,26 @@
+{
+  "executionTimestampUtc": "2026-07-14T03:11:09.552Z",
+  "prompt": "Is there a specific BIR issuance on drone delivery service tax treatment invented for this test?",
+  "purpose": "Mandatory trust-calibration test: determine whether the UI clearly distinguishes verified GENERAL authority supporting a general explanation from verification of the SPECIFIC requested issuance itself.",
+  "rendered": {
+    "bannerKind": "verified-controlling",
+    "bannerSeverityClass": "trust-banner-positive",
+    "bannerMarker": "OK",
+    "bannerLabel": "Verified controlling authority",
+    "bannerDescription": "This answer is grounded in verified controlling authority. This is not a final legal opinion -- verify applicability to your specific facts.",
+    "sourceCardCount": 4,
+    "answerProse": "There is no specific BIR issuance that addresses the tax treatment of drone delivery services. The general tax principles under the National Internal Revenue Code (NIRC) would apply, and any specific tax treatment would depend on the nature of the services provided and the applicable tax laws."
+  },
+  "couldAReasonableUserIncorrectlyInfer": "\"The requested (drone delivery) issuance was verified\"",
+  "analysis": {
+    "bannerVisualEmphasis": "high (green, 'OK' marker, role=status, positive severity) -- the strongest positive signal the UI has",
+    "answerProseDisclaimsSpecificIssuance": true,
+    "hierarchyIssue": "The banner's visual strength (green/positive/OK) is calibrated to the GENERAL authority backing (NIRC provisions), not to the ABSENCE of the specific requested issuance. A user who reads only the banner (not the full prose) could reasonably come away believing the drone-delivery-specific question was affirmatively and confidently answered, when in fact no such specific issuance exists.",
+    "sourceCardLabeling": "the 4 source cards shown are general NIRC/BIR sections, not a drone-delivery-specific issuance -- they do not themselves claim to address the specific fact pattern, but their presence alongside a strong positive banner compounds the risk of over-inference"
+  },
+  "severity": "P2",
+  "classification": "trust-calibration - recurring, confirmed finding (not a new regression)",
+  "priorOccurrence": "Identical finding first observed in PHASE-10A4B run 1 (CORS-disabled rendering probe) at P3. Now independently reproduced under normal CORS-enforced browser conditions in this rerun. Given it has now been confirmed reproducible across two independent runs and directly concerns whether users can distinguish general-authority backing from issuance-specific verification (a core Phase 10A trust-integrity goal), this rerun classifies it as P2 rather than P3 to raise its priority for remediation.",
+  "recommendation": "Consider a distinct trust presentation (or a supplementary qualifier) for cases where the answer prose itself disclaims the specific requested authority/issuance while still citing general supporting authority, so the banner's visual strength does not outpace what was actually verified for the specific question asked. Not patched in this validation task per Defect Policy.",
+  "notAFailure": "The answer content itself is honest and internally consistent (it correctly states no specific issuance exists); this is a presentation/calibration concern about banner-vs-prose hierarchy, not a fabrication of authority."
+}

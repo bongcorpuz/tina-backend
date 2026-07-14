@@ -1,0 +1,13 @@
+{
+  "executionTimestampUtc": "2026-07-14T03:11:09.552Z",
+  "firstTabTarget": "TEXTAREA (the message composer received early keyboard focus)",
+  "composerReachableByTab": true,
+  "sourceChipFocusable": true,
+  "sourceChipFocusMethod": "programmatic .focus() + document.activeElement equality check on the first a.source-chip[href]",
+  "focusIndicatorVisible": "not independently screenshotted in this run (composer/source-chip reachability confirmed programmatically; visual focus-ring screenshot is a follow-up recommendation)",
+  "keyboardTrapObserved": false,
+  "notesOnGaps": [
+    "This run confirmed Tab reaches the composer and that a source-chip link can receive programmatic focus. It did NOT exhaustively walk every login-field-to-submit Tab order, nor did it test Enter/Space activation of a source-card expansion control (this frontend's source chips are plain anchor tags that open in a new tab via target=\"_blank\", not an expandable/collapsible control, so there is no focus-trap-on-expansion risk to test for this UI)."
+  ],
+  "verdict": "PASS WITH RECOMMENDATIONS - core keyboard reachability (composer, source-chip links) confirmed; a full manual Tab-order walkthrough with visible focus-ring screenshots remains a P3 follow-up for completeness"
+}

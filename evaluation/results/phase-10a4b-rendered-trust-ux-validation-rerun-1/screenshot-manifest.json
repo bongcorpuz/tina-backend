@@ -1,0 +1,22 @@
+{
+  "screenshots": [
+    { "file": "screenshots/00-preview-shell.png", "content": "unauthenticated login screen of the protected Preview, loaded via approved bypass" },
+    { "file": "screenshots/01-post-login.png", "content": "authenticated app shell immediately after UI login, username redacted to 'User'" },
+    { "file": "screenshots/case-A-desktop.png", "content": "Case A - verified-controlling banner rendered" },
+    { "file": "screenshots/case-B-desktop.png", "content": "Case B - rendered response (verified-controlling; intended related-authority-only state not reproduced)" },
+    { "file": "screenshots/case-C-desktop.png", "content": "Case C - trust-calibration probe; verified-controlling banner with prose disclaiming the specific invented issuance" },
+    { "file": "screenshots/case-D-desktop.png", "content": "Case D - rendered response (domain-boundary-style rejection, no banner; intended retrieval-timeout state not reproduced)" },
+    { "file": "screenshots/case-E-desktop.png", "content": "Case E - restricted banner rendered correctly with Human Review Required tag" },
+    { "file": "screenshots/case-F-desktop.png", "content": "Case F - rendered response (no banner despite conflict-describing prose; flagged P2 anomaly)" },
+    { "file": "screenshots/case-G-desktop.png", "content": "Case G - general non-restricted answer, proportionate trust display" },
+    { "file": "screenshots/history-reopen-hard-refresh.png", "content": "post-reopen and post-hard-refresh state showing identical trust banner; username redacted to 'User' (regenerated after fixing a redaction defect, see security-scan-summary.json)" },
+    { "file": "screenshots/responsive-desktop.png", "content": "1440x900 viewport, username redacted (regenerated)" },
+    { "file": "screenshots/responsive-tablet.png", "content": "768x1024 viewport, username redacted (regenerated)" },
+    { "file": "screenshots/responsive-mobile430.png", "content": "430x932 viewport, username redacted (regenerated)" },
+    { "file": "screenshots/responsive-mobile375.png", "content": "375x812 viewport, username redacted (regenerated)" },
+    { "file": "screenshots/responsive-mobile320.png", "content": "320x568 viewport, username redacted (regenerated)" }
+  ],
+  "totalScreenshots": 15,
+  "allVisuallyReviewedForSanitizationBeforeCommit": true,
+  "exclusionsConfirmed": ["no username (all redacted to 'User')", "no password", "no token/cookie", "no private Preview URL/address bar (headless viewport screenshots only)", "no developer tools", "no project/deployment/team ID", "no raw conversation ID", "no confidential prompt content (all prompts sanitized)"]
+}

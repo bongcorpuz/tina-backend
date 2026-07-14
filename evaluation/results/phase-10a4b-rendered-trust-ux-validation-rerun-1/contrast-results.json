@@ -1,0 +1,20 @@
+{
+  "executionTimestampUtc": "2026-07-14T03:11:09.552Z",
+  "method": "WCAG 2.x relative-luminance contrast formula computed from getComputedStyle() colors read live from the authenticated page, walking up the DOM to the first non-transparent ancestor background where necessary. Cross-checked against axe-core's own independently-computed contrastRatio field for the same page.",
+  "priorClaim": "PHASE-10A3-R1 claimed an improvement from ~3.49:1 to ~5.73:1 for the trust-banner text. The prior CORS-disabled probe (PHASE-10A4B run 1) reported this measurement as INCONCLUSIVE due to a tool bug.",
+  "primaryTrustBannerMeasurement": {
+    "element": ".trust-banner-label (verified-controlling / positive banner)",
+    "foregroundColor": "rgb(17, 17, 20)",
+    "backgroundColor": "rgb(255, 255, 255)",
+    "measuredRatio": 18.85,
+    "requiredThreshold": 4.5,
+    "priorClaimedRatio": 5.73,
+    "pass": true,
+    "note": "The measured ratio (18.85:1) independently CONFIRMS and substantially EXCEEDS the prior ~5.73:1 claim and the 4.5:1 AA threshold for the primary trust-communication element. The prior 'inconclusive' result is now resolved with a working measurement method."
+  },
+  "otherElementsBelowThreshold": {
+    "note": "See accessibility-results.json for the 5 axe-flagged color-contrast violations. None are the primary trust banner. The closest trust-adjacent element is '.sources > strong' (contains the SourceTrustSummary qualifier text) at 3.95:1, below the 4.5:1 AA threshold.",
+    "recommendedFollowUp": "Tighten foreground color or increase font-weight/size for .header-brand p, .sources > strong, a.source-chip, and .footer (and .footer > strong) to reach 4.5:1."
+  },
+  "verdict": "PASS for the primary trust-banner surface (18.85:1, far exceeding both the prior claim and the AA threshold); STRICT RECOMMENDATION to fix the 5 other page elements found below threshold by axe-core, particularly the trust-adjacent SOURCE(S) heading/qualifier text"
+}

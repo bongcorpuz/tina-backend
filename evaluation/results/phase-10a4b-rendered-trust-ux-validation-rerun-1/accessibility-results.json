@@ -1,0 +1,32 @@
+{
+  "executionTimestampUtc": "2026-07-14T03:11:09.552Z",
+  "tool": "axe-core",
+  "version": "4.12.1",
+  "invocationMethod": "axe.min.js injected into the live authenticated page via page.addScriptTag and executed with axe.run(document, { resultTypes: ['violations'] })",
+  "violationCounts": { "critical": 0, "serious": 1, "moderate": 3, "minor": 0 },
+  "totalViolations": 4,
+  "violations": [
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "nodeCountFullMatrixRun": 8,
+      "nodeCountFocusedRerun": 5,
+      "affectedElements": [
+        { "selector": ".header-brand > div > p", "description": "app tagline text under the TINA logo", "contrastRatio": 3.95, "required": "4.5:1", "onTrustBanner": false },
+        { "selector": ".sources > strong", "description": "the SOURCE/SOURCES heading, which also contains the SourceTrustSummary trust qualifier text (e.g. '- Controlling authority')", "contrastRatio": 3.95, "required": "4.5:1", "onTrustBanner": false, "note": "trust-adjacent: this element contains part of the trust-confidence qualifier text, though not the primary TrustBanner component" },
+        { "selector": "a.source-chip", "description": "authority source-card chip links (gold/tan text)", "contrastRatio": 4.29, "required": "4.5:1", "onTrustBanner": false },
+        { "selector": ".footer", "description": "'Powered by BENTO PH' footer text", "contrastRatio": 3.78, "required": "4.5:1", "onTrustBanner": false },
+        { "selector": ".footer > strong", "description": "bold 'BENTO PH' portion of footer", "contrastRatio": 3.78, "required": "4.5:1", "onTrustBanner": false }
+      ],
+      "noneOnPrimaryTrustBanner": true
+    },
+    { "id": "heading-order", "impact": "moderate", "nodeCount": 1 },
+    { "id": "landmark-one-main", "impact": "moderate", "nodeCount": 1 },
+    { "id": "region", "impact": "moderate", "nodeCount": 22 }
+  ],
+  "criticalViolationsAffectingTrustMeaning": 0,
+  "seriousViolationsOnPrimaryTrustBanner": 0,
+  "seriousViolationsElsewhereOnPage": 1,
+  "classification": "P2 - a real, serious (per axe) WCAG AA color-contrast defect exists on 5 page-chrome/branding elements (header tagline, footer x2, source-chip authority links, and the SOURCE(S) heading containing the trust qualifier text). None of these is the primary TrustBanner component itself (see contrast-results.json: the banner's own label measures 18.85:1). The moderate structural findings (heading-order, landmark-one-main, region) are general page-structure issues, not trust-specific.",
+  "verdict": "PASS WITH STRICT RECOMMENDATIONS - 0 critical violations; the 1 serious violation does not sit on the primary trust-communication surface but does include one trust-adjacent element (the SourceTrustSummary qualifier text) and should be remediated as a P2 follow-up, not treated as a release blocker for this validation gate"
+}

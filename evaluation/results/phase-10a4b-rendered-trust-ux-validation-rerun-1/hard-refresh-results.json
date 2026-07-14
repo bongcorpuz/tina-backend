@@ -1,0 +1,28 @@
+{
+  "executionTimestampUtc": "2026-07-14T03:11:09.552Z",
+  "method": "page.reload({ waitUntil: 'networkidle' }) - a genuine full browser reload/reparse, not a soft client-side re-render",
+  "runs": [
+    {
+      "run": "initial (post-full-matrix conversation)",
+      "sessionSurvivedRefresh": true,
+      "tokenPersistedViaLocalStorage": true,
+      "conversationReloadedFromBackend": true,
+      "trustBannerKindBeforeRefresh": "verified-controlling",
+      "trustBannerKindAfterRefresh": "verified-controlling",
+      "messageCountBeforeRefresh": 15,
+      "messageCountAfterRefresh": 15,
+      "trustStateIdentical": true
+    },
+    {
+      "run": "confirmation (fresh single-query conversation, correctly-redacted screenshot capture)",
+      "sessionSurvivedRefresh": true,
+      "tokenPersistedViaLocalStorage": true,
+      "conversationReloadedFromBackend": true,
+      "trustBannerKindBeforeRefresh": "verified-controlling",
+      "trustBannerKindAfterRefresh": "verified-controlling",
+      "trustStateIdentical": true
+    }
+  ],
+  "noProductionEndpointContactedDuringRefresh": true,
+  "verdict": "PASS - hard refresh (real browser reload, cache not force-cleared beyond normal reload semantics) preserves session, conversation, and trust presentation identically in both runs"
+}

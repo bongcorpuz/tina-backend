@@ -1,0 +1,23 @@
+{
+  "executionTimestampUtc": "2026-07-14T03:11:09.552Z",
+  "browserHarness": "Playwright 1.61.1, Chromium (headless), normal web security enabled (no --disable-web-security, no CORS-bypass extension, no disabled site isolation)",
+  "canonicalPreviewCommitConfirmed": true,
+  "canonicalPreviewCommitMethod": "vercel inspect --logs on the tina-ai project's Preview deployment for branch phase-10a3-r1-trust-persistence-accessibility; build log shows Cloning github.com/bongcorpuz/tina-ai (Branch: phase-10a3-r1-trust-persistence-accessibility, Commit: 1748788), matching expected frontend HEAD 1748788ee5314eb495710f9b281ab6621b943109",
+  "deploymentIsPreviewNotProduction": true,
+  "noBypassAccess": {
+    "httpStatus": 200,
+    "redirectedToVercelSso": true,
+    "meaning": "Deployment Protection genuinely enforced; unauthenticated request cannot reach the app shell"
+  },
+  "withBypassAccess": {
+    "httpStatus": 200,
+    "finalUrlIsPreviewApp": true,
+    "appShellRendered": true,
+    "mechanism": "x-vercel-protection-bypass header + x-vercel-set-bypass-cookie handshake, sourced only from process.env.VERCEL_AUTOMATION_BYPASS_SECRET; header removed from all subsequent requests after the initial authorized load (cookie carries auth thereafter)"
+  },
+  "corsRepresentativeBrowserFlowValidated": true,
+  "corsConsoleErrorCount": 0,
+  "backendConnectErrorCount": 0,
+  "productionBackendHostContacted": false,
+  "privatePreviewHostname": "REDACTED - not recorded in any committed evidence; resolved in-memory only via authenticated Vercel CLI session (vercel ls / vercel inspect), never printed or written to a tracked file"
+}

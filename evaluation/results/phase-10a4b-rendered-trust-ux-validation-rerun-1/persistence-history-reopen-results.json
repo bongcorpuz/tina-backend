@@ -1,0 +1,22 @@
+{
+  "executionTimestampUtc": "2026-07-14T03:11:09.552Z",
+  "applicationArchitectureNote": "This frontend (src/App.jsx) has no multi-conversation list/browse UI. The single active conversation is tracked via localStorage.tinaConversationId within one authenticated browser session. 'History reopen' for this app means: navigate away and back (or reload) within the same session, which re-fetches GET /conversations/:id/messages and re-hydrates messages via loadConversationMessages/normalizeReloadedTrust. This was validated as designed, not as a gap.",
+  "initialRun": {
+    "conversationAfterFullMatrix": {
+      "preReload": { "bannerPresent": true, "bannerKind": "verified-controlling" },
+      "postReopen": { "bannerPresent": true, "bannerKind": "verified-controlling", "messageCountVisible": 15 },
+      "postHardRefresh": { "bannerPresent": true, "bannerKind": "verified-controlling", "messageCountVisible": 15 },
+      "persistenceEquality": true
+    }
+  },
+  "confirmationRun": {
+    "note": "A second, independent conversation (fresh login) was used to regenerate sanitized screenshots after a username-redaction defect was found and fixed in the evidence capture (see security-scan-summary.json). This run independently re-confirms persistence.",
+    "prompt": "What is the standard corporate income tax rate for domestic corporations?",
+    "preReload": { "bannerPresent": true, "bannerKind": "verified-controlling" },
+    "postReopen": { "bannerPresent": true, "bannerKind": "verified-controlling" },
+    "postHardRefresh": { "bannerPresent": true, "bannerKind": "verified-controlling" },
+    "persistenceEquality": true
+  },
+  "materialTrustStateChangeAfterReopenOrRefresh": false,
+  "verdict": "PASS - trust banner kind, presence, and message content were identical before reopen, after reopen, and after a real browser hard refresh, in two independent conversations"
+}

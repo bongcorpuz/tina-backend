@@ -1,0 +1,24 @@
+{
+  "executionTimestampUtc": "2026-07-14T03:11:09.552Z",
+  "method": "Correlated the frontend-rendered trust banner / source-trust qualifier / source-card count against the response shape observed in the browser DOM after each live /ask call (no raw backend trust JSON was separately captured out-of-band in this task; correlation is DOM-observed rendered state vs. expected frontend contract from src/lib/trustPresentation.js).",
+  "prohibitedContradictionChecks": [
+    { "check": "high confidence + no verified support", "found": false },
+    { "check": "NOT_APPLICABLE + visible source-research summary", "found": false, "note": "Case D (domain-boundary-like) correctly showed no banner and no source cards" },
+    { "check": "conflict rendered as ordinary verified high-confidence", "found": false, "note": "Case F did not render ANY banner (not falsely rendered as verified either); see distinct P2 finding below" },
+    { "check": "timeout rendered as no-source", "found": "NOT APPLICABLE", "note": "Case D did not reproduce a genuine timeout/no-source state; see rendered-trust-matrix-results.json Case D" },
+    { "check": "source cards visible but trust summary says none", "found": false },
+    { "check": "trust metadata present before reload but absent after reload", "found": false, "note": "see persistence-history-reopen-results.json / hard-refresh-results.json - trust state was identical pre/post reopen and pre/post hard refresh" }
+  ],
+  "distinctFindingNotOnProhibitedList": {
+    "case": "F",
+    "title": "SourceTrustSummary qualifier ('- Controlling authority') rendered with zero visible source cards and no trust banner, while answer prose describes a possible conflict",
+    "severity": "P2",
+    "classification": "semantic-consistency / trust-mapping investigation",
+    "layer": "likely frontend trust mapping or backend trust-object computation for this specific query shape; root cause not diagnosed in this validation task per Defect Policy (do not patch automatically)",
+    "recommendedNextStep": "separate remediation/investigation task to trace why trust.present && authoritySupport mapped to a qualifier-only render (SourceTrustSummary requires only trust.present + authoritySupport in QUALIFIER_LABEL) without a corresponding TrustBanner render or any source cards for this query"
+  },
+  "verifiedStatesShowSourceSummary": true,
+  "restrictedStateShowsNoSourceResearchSummary": true,
+  "trustBannerMatchesBackendKindWhereBannerRendered": true,
+  "overallSemanticConsistency": "PASS WITH ONE FLAGGED P2 ANOMALY (Case F) - no prohibited high-severity contradiction (per the task's explicit list) was found; the Case F anomaly is a real, distinct, lower-severity inconsistency between the source-trust qualifier and the absence of a banner/source cards, captured as evidence and referred for separate investigation rather than patched here"
+}
