@@ -8685,3 +8685,68 @@ Phase status after this gate:
 Exact next task:
 Provide or commit the genuine Gemini 2.5 Pro rendered-UX acceptance artifact and rerun PHASE-10A5-FINAL-CLOSURE-GATE-1. Only after Gemini evidence is present may CURRENT_STATE be updated to remove pending-Gemini language and consider Phase 10A closure.
 ```
+## PHASE-10A4C — Genuine Gemini Rendered-UX Review
+
+**Source artifact:**
+
+`evaluation/results/phase-10a4c-genuine-gemini-rendered-ux-acceptance-1/gemini-original-response.md`
+
+**Reviewer-declared model:**
+
+Gemini 2.5 Pro
+
+**Reviewer-declared reasoning mode:**
+
+Highest Available Reasoning Mode
+
+**Reviewer-declared delegation:**
+
+None
+
+**Execution-verification qualification:**
+
+The model identity, reasoning mode, delegation status, and execution attestation are declared in the supplied original review response. The repository recording executor did not independently verify Gemini runtime execution.
+
+**Decision:**
+
+GEMINI RENDERED-UX ACCEPT WITH STRICT RECOMMENDATIONS
+
+**Accepted rendered gates:**
+
+- all seven canonical A–G rendered trust states;
+- Case A verified-controlling UX;
+- Case B related-authority-only UX;
+- Case C calibrated specific-authority-not-found UX;
+- Case D source-failure UX;
+- Case E restricted-outcome-prediction UX;
+- Case F rendered conflict UX;
+- Case G general-answer UX;
+- desktop, tablet, and mobile rendering;
+- responsive semantic stability;
+- source-card usability;
+- limitation prominence;
+- accessibility presentation;
+- contrast;
+- keyboard-focus presentation;
+- history reopen;
+- hard refresh;
+- screenshot completeness and sanitization.
+
+**Remaining technical limitations:**
+
+1. **Case C structured specific-authority signal — P2 robustness debt.**  
+   The rendered UX is accepted, but the prose-based detector should eventually be replaced by structured backend metadata. Follow-up: `PHASE-10A-FOLLOWUP-STRUCTURED-SPECIFIC-AUTHORITY-SIGNAL-1`.
+
+2. **Live conflict-detection enrichment — P2 coverage limitation.**  
+   The rendered conflict state is accepted, but live detection completeness is not established. This may defer with an explicit documented limitation. Follow-up: `PHASE-10A-FOLLOWUP-LIVE-CONFLICT-DETECTION-ENRICHMENT-1`.
+
+**Current gate status:**
+
+- Genuine Gemini rendered-UX gate: ACCEPTED WITH STRICT RECOMMENDATIONS;
+- PHASE-10A4C rendered UX: ACCEPTED;
+- PHASE-10A5 final closure-gate rerun: AUTHORIZED;
+- Phase 10A: OPEN pending the formal closure-gate rerun;
+- Phase 10B: BLOCKED;
+- Phase 10C: BLOCKED.
+
+Historical records stating that Gemini evidence was missing or pending remain valid as historical entries only and are superseded by this later source artifact.
