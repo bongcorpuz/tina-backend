@@ -38,12 +38,12 @@
 
 import { isStagingBackendRuntime } from "../security/cors-policy.js";
 
-function sourceCard({ title, normalizedReference, authorityType }) {
+function sourceCard({ title, normalizedReference, authorityType, publicUrl = null }) {
   return {
     title,
     normalized_reference: normalizedReference,
     authorityType,
-    publicUrl: null
+    publicUrl
   };
 }
 
@@ -58,7 +58,7 @@ export const STAGING_TRUST_FIXTURES = Object.freeze({
       "Short Answer\nRevenue Regulation No. 2-98 governs the general rules on withholding tax in the Philippines, including the obligation of withholding agents to deduct and remit tax on specified income payments.",
     sourceStatus: "AUTHORITY_FOUND",
     displayedSourceCount: 1,
-    sourceCards: [sourceCard({ title: "RR No. 2-98", normalizedReference: "RR No. 2-98", authorityType: "REVENUE_REGULATION" })]
+    sourceCards: [sourceCard({ title: "RR No. 2-98", normalizedReference: "RR No. 2-98", authorityType: "REVENUE_REGULATION", publicUrl: "https://www.bir.gov.ph/" })]
   },
   "B-RELATED-AUTHORITY-ONLY": {
     answer:
