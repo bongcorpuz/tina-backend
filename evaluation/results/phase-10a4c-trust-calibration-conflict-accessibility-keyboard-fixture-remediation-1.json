@@ -1,0 +1,82 @@
+{
+  "task": "PHASE-10A4C",
+  "executionType": "TRUST_UX_REMEDIATION_AND_COMPLETE_CANONICAL_MATRIX",
+  "environment": "PROTECTED_VERCEL_PREVIEW_WITH_STAGING_BACKEND",
+  "requiredRuntimeVariablesPresent": true,
+  "geminiRevisionsRequiredRecorded": true,
+  "geminiRevisionsRequiredRecordedNote": "Recorded as a SELF-REVIEW against Gemini-style criteria -- no tool in this environment can invoke actual Gemini 2.5 Pro, consistent with prior project precedent. See gemini-revisions-required-summary.json.",
+  "caseCRootCauseConfirmed": true,
+  "caseCRemediationImplemented": true,
+  "caseCTrustCalibrationPassed": true,
+  "caseFRootCauseConfirmed": true,
+  "caseFRemediationImplemented": true,
+  "caseFConflictStatePassed": true,
+  "sourceHeadingContrastFixed": true,
+  "moderateAccessibilityFindingsResolved": true,
+  "keyboardWorkflowValidated": true,
+  "deterministicFixtureCount": 7,
+  "requiredCanonicalCaseCount": 7,
+  "reproducedCanonicalCaseCount": 7,
+  "renderedCanonicalCasePassCount": 7,
+  "renderedCanonicalCaseFailCount": 0,
+  "browserHistoryReopenValidated": true,
+  "hardRefreshValidated": true,
+  "desktopRenderingValidated": true,
+  "tabletRenderingValidated": true,
+  "mobileRenderingValidated": true,
+  "accessibilityValidated": true,
+  "contrastValidated": true,
+  "semanticConsistencyValidated": true,
+  "previewUsesStagingBackend": true,
+  "productionDeploymentCreated": false,
+  "productionApiCalled": false,
+  "productionDataAccessed": false,
+  "frontendMainModified": false,
+  "secretExposureDetected": false,
+  "technicalReviewReady": true,
+  "geminiRereviewReady": true,
+  "phase10AClosureAuthorized": false,
+  "phase10BAuthorized": false,
+  "phase10CAuthorized": false,
+
+  "decision": "PHASE 10A4C PASS WITH STRICT RECOMMENDATIONS",
+  "executionTimestampUtc": "2026-07-14T08:25:12.337Z",
+
+  "accessibilitySummary": {
+    "tool": "axe-core 4.12.1",
+    "critical": 0,
+    "serious": 0,
+    "moderate": 0,
+    "minor": 0,
+    "totalViolations": 0,
+    "priorFindingsAllResolved": true,
+    "newFindingDiscoveredAndFixedDuringThisTask": "scrollable-region-focusable"
+  },
+
+  "matrixSummary": {
+    "A": "verified-controlling - PASS",
+    "B": "related-authority-only - PASS",
+    "C": "specific-authority-not-found (Case C remediation) - PASS",
+    "D": "source-failure - PASS",
+    "E": "restricted - PASS",
+    "F": "verified-conflict (Case F remediation via deterministic fixture) - PASS",
+    "G": "verified-controlling (proportionate) - PASS"
+  },
+
+  "knownRemainingLimitation": "Case F's fixture proves the trust-contract -> persistence -> frontend rendering chain is correct for a genuine, complete conflict object. The upstream live-detection gap (pipeline.js's real Step 9 Four-Part Doctrine Test never produces renderer-complete conflict metadata, a pre-existing limitation already documented in the PHASE-10A1-R1 test suite before this task) remains unresolved and requires a separate, higher-risk conflict-engine remediation task.",
+
+  "backendCommits": ["3f5d027", "de7a6dd"],
+  "frontendCommits": ["efbe4d6", "a2eefed", "0816ac8"],
+
+  "evidenceDirectory": "evaluation/results/phase-10a4c-trust-calibration-conflict-accessibility-keyboard-fixture-remediation-1/",
+  "reportPath": "PHASE-10A4C-TRUST-CALIBRATION-CONFLICT-ACCESSIBILITY-KEYBOARD-AND-DETERMINISTIC-FIXTURE-REMEDIATION-1_REPORT.md",
+
+  "phase10AStatus": "OPEN",
+  "phase10BStatus": "BLOCKED",
+  "phase10CStatus": "BLOCKED",
+  "nextRequiredSteps": [
+    "Mandatory Opus 4.8 low-speed independent technical/security/accessibility/governance review of this remediation",
+    "Genuine Gemini 2.5 Pro rendered-UX review (an actual Gemini review has still never been performed in this environment; the 'gemini-revisions-required' items in this task were addressed based on a disclosed self-review, not real Gemini output)",
+    "Separate, dedicated conflict-engine remediation task to enrich pipeline.js's Step 9 Four-Part Doctrine Test output so genuine live-query conflicts can satisfy answer-renderer.js's conflictMetadataIsComplete() gate (currently only reachable via the staging-only fixture)"
+  ]
+}

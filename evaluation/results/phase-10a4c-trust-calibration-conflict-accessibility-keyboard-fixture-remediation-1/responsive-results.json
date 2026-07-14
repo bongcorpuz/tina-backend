@@ -1,0 +1,25 @@
+{
+  "executionTimestampUtc": "2026-07-14T08:25:12.337Z",
+  "generalViewportCheck": [
+    { "viewport": "desktop", "width": 1440, "height": 900, "horizontalOverflow": false, "screenshot": "screenshots/responsive-desktop.png" },
+    { "viewport": "tablet", "width": 768, "height": 1024, "horizontalOverflow": false, "screenshot": "screenshots/responsive-tablet.png" },
+    { "viewport": "mobile430", "width": 430, "height": 932, "horizontalOverflow": false, "screenshot": "screenshots/responsive-mobile430.png" },
+    { "viewport": "mobile375", "width": 375, "height": 812, "horizontalOverflow": false, "screenshot": "screenshots/responsive-mobile375.png" },
+    { "viewport": "mobile320", "width": 320, "height": 568, "horizontalOverflow": false, "screenshot": "screenshots/responsive-mobile320.png" }
+  ],
+  "caseCPerViewport": [
+    { "viewport": "desktop", "horizontalOverflow": false, "screenshot": "screenshots/case-C-desktop.png" },
+    { "viewport": "tablet", "horizontalOverflow": false, "screenshot": "screenshots/case-C-tablet.png" },
+    { "viewport": "mobile430", "horizontalOverflow": false, "screenshot": "screenshots/case-C-mobile430.png" },
+    { "viewport": "mobile375", "horizontalOverflow": false, "screenshot": "screenshots/case-C-mobile375.png" },
+    { "viewport": "mobile320", "horizontalOverflow": false, "screenshot": "screenshots/case-C-mobile320.png" }
+  ],
+  "caseFPerViewport": [
+    { "viewport": "desktop", "horizontalOverflow": false, "screenshot": "screenshots/case-F-desktop.png" },
+    { "viewport": "tablet", "horizontalOverflow": false, "screenshot": "screenshots/case-F-tablet.png" },
+    { "viewport": "mobile430", "horizontalOverflow": false, "screenshot": "screenshots/case-F-mobile430.png" },
+    { "viewport": "mobile375", "horizontalOverflow": false, "screenshot": "screenshots/case-F-mobile375.png" },
+    { "viewport": "mobile320", "horizontalOverflow": false, "screenshot": "screenshots/case-F-mobile320.png" }
+  ],
+  "verdict": "PASS -- no horizontal overflow at any viewport, for the general final conversation state or for Case C / Case F specifically at all 5 required viewports (per the task's explicit per-case requirement)."
+}

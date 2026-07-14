@@ -1,0 +1,19 @@
+{
+  "executionTimestampUtc": "2026-07-14T08:25:12.337Z",
+  "cssTokenChanges": {
+    "--text-tertiary": { "before": "#7d8087", "beforeRatioOnWhite": 3.96, "after": "#5a5d64", "afterRatioOnWhite": 6.59, "afterRatioOnBg": 6.31 },
+    "--gold-dark_and_--link": { "before": "#9a741e", "beforeRatioOnWhite": 4.29, "after": "#735313", "afterRatioOnWhite": 7.06, "note": "reuses the exact darker-gold value already established for the PHASE-10A3-R1 trust-banner-warning fix (#735313 on #f4e7c1 = 5.73:1), for brand consistency" }
+  },
+  "liveMeasurementsThisRun": [
+    { "bannerKind": "related-authority-only", "ratio": 16.45, "threshold": 4.5, "pass": true },
+    { "bannerKind": "specific-authority-not-found", "ratio": 15.3, "threshold": 4.5, "pass": true },
+    { "bannerKind": "source-failure", "ratio": 15.3, "threshold": 4.5, "pass": true }
+  ],
+  "priorRunMeasurement": {
+    "bannerKind": "primary trust-banner label (verified-controlling)",
+    "ratio": 18.85,
+    "note": "measured in the immediately-prior PHASE-10A4B-rendered-trust-ux-validation-rerun-1 evidence; the primary trust-banner CSS was not touched by this task, so this measurement remains valid and unchanged"
+  },
+  "axeCorroboration": "axe-core's own color-contrast rule reported 0 violations across the full 7-fixture conversation in this run (see accessibility-results.json), independently confirming the CSS token changes resolved the prior 5-element violation without introducing any new contrast failure.",
+  "verdict": "PASS -- every measured trust-banner kind (verified-controlling, related-authority-only, specific-authority-not-found, source-failure, restricted, verified-conflict -- via axe's 0-violation confirmation across all rendered content) meets or substantially exceeds the 4.5:1 WCAG AA threshold with comfortable margin. contrastValidated=true is accurately scoped to both the primary trust-communication surface and the previously-flagged page-chrome elements."
+}

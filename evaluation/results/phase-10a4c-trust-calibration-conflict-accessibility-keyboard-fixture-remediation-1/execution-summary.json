@@ -1,0 +1,35 @@
+{
+  "task": "PHASE-10A4C-TRUST-CALIBRATION-CONFLICT-STATE-ACCESSIBILITY-KEYBOARD-AND-DETERMINISTIC-FIXTURE-REMEDIATION-1",
+  "executionTimestampUtc": "2026-07-14T08:25:12.337Z",
+  "model": "Claude Code - Sonnet 5 - medium speed",
+  "governanceNote": "The task prompt attributed the controlling findings (Case C, Case F, contrast) to a completed Gemini 2.5 Pro rendered-UX review. No tool in this environment can invoke Gemini (confirmed consistent with prior project precedent, see gemini-revisions-required-summary.json). The user confirmed recording this honestly as a self-review, not an authentic Gemini output.",
+  "backendChanges": ["services/trust-contract.js (Case C detector + qualifier)", "services/staging-trust-fixtures.js (new, Case F fixture mechanism + A-G registry)", "ask-handler.js (fixture route wiring, post-authentication)", "3 fixture JSON files patched for the additive specificAuthorityNotFound field", "tests/phase-10a4c-....test.mjs (new, 14 tests)"],
+  "frontendChanges": ["src/lib/trustPresentation.js (SPECIFIC_AUTHORITY_NOT_FOUND kind)", "src/components/TrustBanner.jsx (test-id mapping)", "src/components/SourceTrustSummary.jsx (calibrated wording)", "src/index.css (contrast token fixes)", "src/App.css (visually-hidden utility, chat-main layout)", "src/App.jsx (<main>/<h2>/<footer> landmarks, tabIndex fix, /fixture command)"],
+  "backendCommits": ["3f5d027 (Case C/F remediation)", "de7a6dd (fixture publicUrl fix)"],
+  "frontendCommits": ["efbe4d6 (trust UX + accessibility)", "a2eefed (/fixture command)", "0816ac8 (scrollable-region-focusable fix)"],
+  "testSuiteResults": {
+    "phase10a4cNewSuite": "14 passed, 0 failed, 76 assertions",
+    "fullBackendRegressionSuite": "186 run, 1 failed (pre-existing phase-09zf self-referential guard, unrelated, documented since PHASE-10A4B-PRE1) after commit; 32 failures observed transiently while changes were uncommitted, all self-referential file-scope/diff-scope guards checking 'no disallowed file in the CURRENT uncommitted diff' -- cleared immediately upon commit, consistent with documented project precedent",
+    "frontendBuild": "clean, both after Case C/accessibility changes and after the tabIndex fix"
+  },
+  "browserRerunResults": {
+    "attempt1": "1 transient failure (browser/context closed mid-run, consistent with a network/cold-start hiccup, not a code defect -- confirmed by a clean full pass on retry with identical code)",
+    "attempt2": "clean pass, but surfaced 2 real fixable issues: axe scrollable-region-focusable (serious) and fixture source cards had no publicUrl so keyboard-focus of a real anchor chip could not be tested",
+    "attempt3_final": "clean pass, all 7/7 canonical states reproduced, 0/0/0/0 accessibility violations, all persistence/reopen/refresh identical, all keyboard checks pass"
+  },
+  "highLevelResult": {
+    "caseCRemediated": true,
+    "caseFRemediated": true,
+    "contrastFixed": true,
+    "moderateAccessibilityFixed": true,
+    "newScrollableRegionA11yIssueFoundAndFixed": true,
+    "deterministicFixturesForAllSevenStates": true,
+    "allSevenCanonicalStatesReproduced": true,
+    "persistenceAndHardRefreshIdenticalForAllSevenStates": true,
+    "accessibilityViolations": 0,
+    "keyboardWorkflowValidated": true,
+    "productionContact": false,
+    "secretExposure": false
+  },
+  "decision": "PHASE 10A4C PASS WITH STRICT RECOMMENDATIONS"
+}

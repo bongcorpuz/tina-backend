@@ -1,0 +1,33 @@
+{
+  "traceThroughPipeline": {
+    "1_queryOrFixtureInput": "e.g. 'Is there a specific BIR issuance on drone delivery service tax treatment invented for this test?' -- a query about a deliberately nonexistent specific issuance",
+    "2_retrievalResult": "General NIRC provisions retrieved as governing authority (genuinely verified, but not specific to the requested issuance)",
+    "3_sourceStatus": "AUTHORITY_FOUND (correct -- general authority was genuinely found)",
+    "4_responseType": "GENERAL_TAX (ordinary /ask path, not a domain-boundary/restricted/procedural path)",
+    "5_authorityConfidence_BEFORE_FIX": "services/trust-contract.js deriveAuthoritySupport(): sourceState===AUTHORITY_FOUND && displayedSourceCount>0 unconditionally returned VERIFIED_CONTROLLING -- no distinction between 'the specific requested issuance was verified' and 'some general governing authority was found and displayed'",
+    "6_trustContractCreation": "buildTrustContract() built authoritySupport:VERIFIED_CONTROLLING from step 5, with no signal carrying the fact that the answer's own prose disclaimed the specific requested authority",
+    "7_limitationMetadata_BEFORE_FIX": "deriveLimitations() had no path to flag this specific scenario",
+    "8_sourceCardMetadata": "general NIRC section source cards, correctly verified as general authority, correctly displayed",
+    "9_persistence": "trust object (including the miscalibrated authoritySupport) persisted via saveMessage(..., trustMetadata: trust) unchanged",
+    "10_historyHydration": "normalizePersistedTrust/normalizeReloadedTrust passthrough -- reproduces whatever was persisted, correctly, but the persisted value was itself miscalibrated before the fix",
+    "11_frontendTrustMapping": "buildTrustPresentation() Tier 6 (VERIFIED_CONTROLLING) renders unconditionally whenever authoritySupport===VERIFIED_CONTROLLING, regardless of what the answer prose says",
+    "12_renderedBanner_BEFORE_FIX": "green/positive 'Verified controlling authority' banner, role=status, OK marker -- the UI's strongest positive signal",
+    "13_sourceSummaryLabel_BEFORE_FIX": "SourceTrustSummary rendered '- Controlling authority' (the same qualifier used for a genuinely on-point controlling authority)",
+    "14_answerDisclaimerPlacement": "The model's own answer prose (first sentence) correctly states 'There is no specific BIR issuance that addresses...' -- but this disclaimer lives only in free-form prose, never reaches the categorical trust object, and is visually subordinate to the banner (which sits below the prose, in the conventional trust-verdict position)"
+  },
+  "conceptsTheContractMustNotCollapse": {
+    "generalAuthorityIsVerified": "TRUE -- the cited NIRC sections are genuinely verified, indexed authority",
+    "specificIssuanceIsVerified": "FALSE -- no specific issuance/ruling/regulation/circular matching the request was found or verified",
+    "answersFactualConclusionIsVerified": "TRUE -- the conclusion 'no such specific issuance exists; general principles apply' is itself an accurate, verifiable statement",
+    "requestedDocumentExists": "FALSE -- this is exactly the fact the pre-fix banner risked obscuring by using the same visual/categorical treatment as a genuinely on-point verified-controlling answer"
+  },
+  "userMisinterpretationMechanism": "A user who reads only the banner (green, 'OK', 'Verified controlling authority') -- the strongest, most visually prominent positive signal in the UI -- could reasonably conclude the specific drone-delivery issuance they asked about was found and verified, when in fact the opposite is true. The answer prose disclaims this correctly, but a banner calibrated to general-authority backing rather than issuance-specific verification outpaces what was actually established for the specific question asked.",
+  "correctTargetSemantics": "The rendered state must prominently communicate: (1) the specific requested issuance was not found/verified; (2) general/related controlling law may still apply; (3) cited authorities support the general explanation, not the existence of the requested issuance; (4) a normal green verified-authority hierarchy must not be used if it risks implying document-specific verification.",
+  "selectedRemediationLayer": "Backend: services/trust-contract.js -- a generalizable text-pattern detector (answerDisclaimsSpecificAuthority) recognizing 'no specific issuance/ruling/regulation/circular ... ' (and 'does not exist') phrasing in the answer's own prose, applied only when sourceState===AUTHORITY_FOUND and displayedSourceCount>0. When it fires, authoritySupport is downgraded from VERIFIED_CONTROLLING to the EXISTING RELATED_AUTHORITY_ONLY canonical state (decision-order preference 1: map to an existing state), plus an additive specificAuthorityNotFound qualifier boolean (decision-order preference 2: add a qualifier while preserving canonical compatibility) so the frontend can render more specific wording than the generic related-authority-only copy. No new top-level trust state was invented (decision-order preference 3 was not needed).",
+  "frontendLayer": "src/lib/trustPresentation.js -- a new TRUST_KIND.SPECIFIC_AUTHORITY_NOT_FOUND sub-kind of RELATED_AUTHORITY_ONLY, rendered with WARNING (amber, role=alert) severity, label 'Specific issuance not found', secondaryLabel 'Grounded in general law', and an explicit description distinguishing general-authority backing from issuance-specific verification. src/components/SourceTrustSummary.jsx renders 'General authorities cited' instead of 'Related authority only' or 'Controlling authority' for this specific qualifier.",
+  "rejectedAlternatives": [
+    "Inventing a brand-new top-level trust state for this scenario -- rejected because RELATED_AUTHORITY_ONLY (plus an additive qualifier) already truthfully represents the underlying condition ('sources shown are relevant but may not directly control this issue') without adding contract surface area.",
+    "Hardcoding detection for the exact literal test query text -- rejected; the detector is a generalizable regex pattern matching the disclaimer's semantic shape (no specific issuance/ruling/regulation/circular + optional 'does not exist' phrasing), verified in tests against multiple different subject matters, not just the drone-delivery example.",
+    "Changing pipeline.js's upstream retrieval/SAE classification (AUTHORITY_FOUND vs RELATED_AUTHORITY_ONLY) to be more conservative globally -- rejected as too invasive/high-risk for this task; would affect the core retrieval-classification logic broadly (governed 'Authority Lock' surface) for a narrower, well-understood presentation-calibration problem that the trust-contract layer can solve safely."
+  ]
+}

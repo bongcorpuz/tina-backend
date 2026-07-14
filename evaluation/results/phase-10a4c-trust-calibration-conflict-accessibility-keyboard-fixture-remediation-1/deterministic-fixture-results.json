@@ -1,0 +1,16 @@
+{
+  "unitLevelVerification": {
+    "method": "node tests/phase-10a4c-trust-calibration-conflict-accessibility-keyboard-fixture-remediation-1.test.mjs",
+    "result": "14 passed, 0 failed, 76 assertions",
+    "allSevenFixturesProduceExactIntendedState": true,
+    "failsClosedOnProduction": true,
+    "failsClosedLocally": true,
+    "deniesUnknownOrNonStringIds": true
+  },
+  "liveBrowserLevelVerification": {
+    "method": "'/fixture <FIXTURE-ID>' typed through the real authenticated chat UI composer against tina-backend-staging via the protected Vercel Preview",
+    "allSevenFixturesReproducedTheirIntendedRenderedState": true,
+    "responseTimesMs": { "A": 6157, "B": 3319, "C": 2789, "D": 2502, "E": 3654, "F": 2973, "G": 3469 }
+  },
+  "verdict": "PASS -- deterministic fixture coverage established and verified at both the unit and live-browser levels for all 7 canonical states (A-G)."
+}

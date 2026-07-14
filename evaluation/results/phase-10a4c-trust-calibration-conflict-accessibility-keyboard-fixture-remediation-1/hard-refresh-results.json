@@ -1,0 +1,8 @@
+{
+  "executionTimestampUtc": "2026-07-14T08:25:12.337Z",
+  "method": "page.reload({ waitUntil: 'networkidle' }) -- a genuine full browser reload, performed immediately after the history-reopen step, on the same 7-fixture conversation.",
+  "postHardRefreshKinds": [null, "verified-controlling", "related-authority-only", "specific-authority-not-found", "source-failure", "restricted", "verified-conflict", "verified-controlling"],
+  "identicalToPreReload": true,
+  "screenshot": "screenshots/history-reopen-hard-refresh.png",
+  "verdict": "PASS -- hard refresh preserves all 7 canonical trust states identically. hardRefreshValidated=true is fully supported for every canonical state."
+}

@@ -1,0 +1,13 @@
+{
+  "executionTimestampUtc": "2026-07-14T08:25:12.337Z",
+  "productionDeploymentCreated": false,
+  "productionApiCalled": false,
+  "productionDataAccessed": false,
+  "frontendMainModified": false,
+  "fixturesUnavailableInProduction": true,
+  "fixturesUnavailableInProductionEvidence": "tests/phase-10a4c-...test.mjs: 'staging fixture registry fails closed on production runtime' -- all 7 fixture IDs denied when isStagingBackendRuntime() returns false, verified against a simulated production Render environment",
+  "hostsContacted": ["non-production tina-ai Vercel Preview deployment (protected, bypass-authorized)", "tina-backend-staging.onrender.com"],
+  "realTaxpayerOrClientDataUsed": false,
+  "externalNotificationSent": false,
+  "verdict": "PASS -- staging/preview only; the new fixture mechanism and all UI/CSS changes verified to have no production effect."
+}

@@ -1,0 +1,24 @@
+{
+  "method": "For each fixture, the backend-intended trust state (services/staging-trust-fixtures.js + services/trust-contract.js, independently unit-verified) is compared against the DOM-observed rendered banner/qualifier from the live authenticated browser.",
+  "correlationTable": [
+    { "id": "A", "backendAuthoritySupport": "VERIFIED_CONTROLLING", "renderedBannerKind": "verified-controlling", "match": true },
+    { "id": "B", "backendAuthoritySupport": "RELATED_AUTHORITY_ONLY", "renderedBannerKind": "related-authority-only", "match": true },
+    { "id": "C", "backendAuthoritySupport": "RELATED_AUTHORITY_ONLY", "backendSpecificAuthorityNotFound": true, "renderedBannerKind": "specific-authority-not-found", "match": true },
+    { "id": "D", "backendSourceState": "RETRIEVAL_TIMEOUT", "backendAuthoritySupport": "NO_VERIFIED_AUTHORITY", "renderedBannerKind": "source-failure", "match": true },
+    { "id": "E", "backendLegalConclusion": "RESTRICTED", "renderedBannerKind": "restricted", "match": true },
+    { "id": "F", "backendHasConflict": true, "backendConflictState": "VERIFIED_CONFLICT", "renderedBannerKind": "verified-conflict", "match": true },
+    { "id": "G", "backendAuthoritySupport": "VERIFIED_CONTROLLING", "renderedBannerKind": "verified-controlling", "match": true }
+  ],
+  "prohibitedContradictionChecks": [
+    { "check": "high confidence + no verified support", "found": false },
+    { "check": "NOT_APPLICABLE + visible source-research summary", "found": false },
+    { "check": "conflict rendered as ordinary verified", "found": false, "note": "Case F resolved -- now correctly renders verified-conflict, not verified-controlling" },
+    { "check": "timeout rendered as no-source", "found": false, "note": "Case D renders source-failure (distinct label 'Source retrieval timed out'), not conflated with a no-indexed-source wording" },
+    { "check": "source-card count mismatch", "found": false },
+    { "check": "trust banner disappearing after reopen", "found": false },
+    { "check": "trust limitation disappearing after refresh", "found": false },
+    { "check": "nonexistent issuance visually implied as verified", "found": false, "note": "Case F1 P2 finding from PHASE-10A4B -- RESOLVED: Case C now renders a distinct amber 'Specific issuance not found' state, not a green verified banner" },
+    { "check": "related authority visually presented as controlling authority", "found": false }
+  ],
+  "verdict": "PASS -- 7/7 correlation matches, 0/9 prohibited contradictions found"
+}

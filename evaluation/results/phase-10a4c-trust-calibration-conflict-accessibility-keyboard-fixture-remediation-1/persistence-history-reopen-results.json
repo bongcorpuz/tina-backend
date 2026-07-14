@@ -1,0 +1,9 @@
+{
+  "executionTimestampUtc": "2026-07-14T08:25:12.337Z",
+  "method": "After all 7 fixture cases were sent in one conversation, the banner kind for every message was read (preReloadKinds). The app was then navigated away and back (in-session history reopen, re-fetching GET /conversations/:id/messages) and the banner kinds re-read (postReopenKinds).",
+  "architectureNote": "This frontend has no multi-conversation list/browse UI -- a single active conversation is tracked via localStorage.tinaConversationId. Reopen means navigating away and back within the same authenticated session, which triggers a genuine re-fetch and re-hydration of persisted messages.",
+  "preReloadKinds": [null, "verified-controlling", "related-authority-only", "specific-authority-not-found", "source-failure", "restricted", "verified-conflict", "verified-controlling"],
+  "postReopenKinds": [null, "verified-controlling", "related-authority-only", "specific-authority-not-found", "source-failure", "restricted", "verified-conflict", "verified-controlling"],
+  "identical": true,
+  "verdict": "PASS -- all 7 fixture-case trust banner kinds (plus the null welcome message) are byte-identical before and after history reopen. browserHistoryReopenValidated=true is fully supported for every canonical state, not just one."
+}

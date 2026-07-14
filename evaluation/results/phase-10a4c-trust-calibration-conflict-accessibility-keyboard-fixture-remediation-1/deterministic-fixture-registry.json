@@ -1,0 +1,21 @@
+{
+  "module": "services/staging-trust-fixtures.js",
+  "securityPosture": {
+    "closedAllowlist": "A fixed set of 7 named fixture IDs (A-VERIFIED-CONTROLLING through G-GENERAL-NON-RESTRICTED). No free-form injection of trust fields, source content, or arbitrary metadata is accepted from the client -- only a fixtureId string is read, and it must exactly match a registry key.",
+    "failsClosedOutsideStaging": "resolveStagingFixture() returns null unless isStagingBackendRuntime(env) is true -- the same server-injected-Render-env gate already proven in security/cors-policy.js's CORS remediation, never the client Host header, never NODE_ENV alone.",
+    "requiresExistingAuthentication": "Wired into ask-handler.js strictly AFTER the existing authenticate middleware / userId check -- no new authentication bypass.",
+    "noDataMutationBeyondNormalPersistence": "Never calls retrieval or an LLM; writes only the same conversation-message persistence every other /ask response already writes for the authenticated caller's own conversation.",
+    "noSecretsOrTaxpayerData": "All fixture content is generic, publicly-safe Philippine tax text (NIRC sections, RR/RMC references); no real client or taxpayer information."
+  },
+  "fixtures": {
+    "A-VERIFIED-CONTROLLING": { "intendedState": "verified-controlling", "sourceStatus": "AUTHORITY_FOUND", "displayedSourceCount": 1 },
+    "B-RELATED-AUTHORITY-ONLY": { "intendedState": "related-authority-only", "sourceStatus": "RELATED_AUTHORITY_ONLY", "displayedSourceCount": 1 },
+    "C-SPECIFIC-AUTHORITY-NOT-FOUND": { "intendedState": "specific-authority-not-found (Case C remediation)", "sourceStatus": "AUTHORITY_FOUND", "displayedSourceCount": 2, "answerContainsDisclaimer": true },
+    "D-RETRIEVAL-TIMEOUT": { "intendedState": "source-failure", "sourceStatus": "RETRIEVAL_TIMEOUT", "displayedSourceCount": 0 },
+    "E-RESTRICTED-OUTCOME-PREDICTION": { "intendedState": "restricted", "responseType": "controlled_loa_legal_conclusion_restricted", "displayedSourceCount": 0 },
+    "F-CONFLICTING-AUTHORITY": { "intendedState": "verified-conflict (Case F remediation)", "sourceStatus": "AUTHORITY_FOUND", "displayedSourceCount": 2, "conflictAnalysisComplete": true },
+    "G-GENERAL-NON-RESTRICTED": { "intendedState": "verified-controlling (proportionate)", "sourceStatus": "AUTHORITY_FOUND", "displayedSourceCount": 1 }
+  },
+  "frontendAccessMethod": "The existing real chat UI: a new '/fixture <FIXTURE-ID>' slash command (src/App.jsx) routes through the normal composer -> /ask flow, typed and sent exactly like every other command, rather than a raw API call bypassing the UI. Harmless if ever reached in production since the backend resolver fails closed there regardless.",
+  "unitTestVerification": "tests/phase-10a4c-trust-calibration-conflict-accessibility-keyboard-fixture-remediation-1.test.mjs: all A-G fixtures produce exactly their intended canonical trust state (14/14 tests pass); registry fails closed on production and local runtimes; unknown/non-string fixture IDs denied even on staging; no secrets in the module source."
+}

@@ -1,0 +1,15 @@
+{
+  "executionTimestampUtc": "2026-07-14T08:25:12.337Z",
+  "tool": "axe-core",
+  "version": "4.12.1",
+  "violationCounts": { "critical": 0, "serious": 0, "moderate": 0, "minor": 0 },
+  "totalViolations": 0,
+  "priorFindingsAndResolution": [
+    { "finding": "color-contrast (serious): 5 page-chrome elements including the trust-adjacent .sources > strong qualifier text, ~3.95:1", "resolution": "RESOLVED -- --text-tertiary and --gold-dark/--link darkened; see contrast-results.json" },
+    { "finding": "heading-order (moderate)", "resolution": "RESOLVED -- added a visually-hidden <h2>Conversation</h2> heading immediately after the app's <h1>" },
+    { "finding": "landmark-one-main (moderate)", "resolution": "RESOLVED -- wrapped the chat area in a <main aria-label='TINA conversation'> landmark" },
+    { "finding": "region (moderate, 22 nodes)", "resolution": "RESOLVED -- the <main> landmark plus converting the footer div to a semantic <footer> brought all page content into a landmark region" },
+    { "finding": "scrollable-region-focusable (serious) -- discovered during this task's first rerun attempt, not previously flagged", "resolution": "RESOLVED -- added tabIndex={0} and an accessible label to .chat-container so keyboard users can scroll the message history via focus" }
+  ],
+  "verdict": "PASS -- 0 critical, 0 serious, 0 moderate, 0 minor violations across the full 7-fixture conversation, confirmed in a second, independent clean rerun after the scrollable-region-focusable fix. accessibilityValidated=true is fully supported."
+}

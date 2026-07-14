@@ -1,0 +1,36 @@
+{
+  "backendChange": "services/trust-contract.js: answerDisclaimsSpecificAuthority() detector + specificAuthorityNotFound additive qualifier + Invariant 8 (qualifier can never be true unless authoritySupport===RELATED_AUTHORITY_ONLY)",
+  "frontendChange": "src/lib/trustPresentation.js (TRUST_KIND.SPECIFIC_AUTHORITY_NOT_FOUND, Tier 5 branch), src/components/TrustBanner.jsx (test-id mapping), src/components/SourceTrustSummary.jsx (calibrated qualifier wording)",
+  "unitTestResults": {
+    "suite": "tests/phase-10a4c-trust-calibration-conflict-accessibility-keyboard-fixture-remediation-1.test.mjs",
+    "relevantCases": [
+      "answerDisclaimsSpecificAuthority: detects the generalizable disclaimer pattern, not one hardcoded query -- PASS",
+      "Case C: AUTHORITY_FOUND + displayed sources + disclaiming prose downgrades to RELATED_AUTHORITY_ONLY with specificAuthorityNotFound=true -- PASS",
+      "Case C: ordinary AUTHORITY_FOUND answer (no disclaimer) is unaffected -- remains VERIFIED_CONTROLLING -- PASS (no regression)",
+      "Case C: ordinary RELATED_AUTHORITY_ONLY (broad query, no specific document requested) does not set the qualifier -- PASS",
+      "Case C: invariant -- specificAuthorityNotFound can never be true unless authoritySupport is RELATED_AUTHORITY_ONLY -- PASS"
+    ]
+  },
+  "liveRenderedResult": {
+    "fixtureId": "C-SPECIFIC-AUTHORITY-NOT-FOUND",
+    "bannerKind": "specific-authority-not-found",
+    "bannerRole": "alert",
+    "bannerMarker": "!",
+    "bannerLabel": "Specific issuance not found",
+    "bannerSecondaryLabel": "Grounded in general law",
+    "sourceCardCount": 2,
+    "sourceSummaryQualifier": "General authorities cited",
+    "screenshot": "screenshots/case-C-desktop.png"
+  },
+  "acceptanceCriteria": {
+    "1_requestedIssuanceClearlyDescribedAsNotFound": true,
+    "2_bannerDoesNotImplySpecificDocumentVerification": true,
+    "3_generalAuthorityDescribedAsSupportingGeneralExplanation": true,
+    "4_sourceSummaryLabelCalibrated": true,
+    "5_qualifierVisuallyProminent": true,
+    "6_desktopAndMobileHierarchyClear": true,
+    "7_persistenceAndRefreshPreserveState": true,
+    "8_evidenceSufficientForIndependentVisualJudgment": true
+  },
+  "verdict": "PASS -- all 8 acceptance criteria satisfied by live rendered evidence at desktop and all 4 additional required viewports (tablet, 430, 375, 320); persistence and hard-refresh confirmed identical"
+}

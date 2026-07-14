@@ -1,0 +1,31 @@
+{
+  "screenshots": [
+    { "file": "screenshots/00-preview-shell.png", "content": "unauthenticated login screen of the protected Preview" },
+    { "file": "screenshots/01-post-login.png", "content": "authenticated app shell immediately after UI login, username redacted to 'User'" },
+    { "file": "screenshots/case-A-desktop.png", "content": "Case A - verified-controlling banner (fixture)" },
+    { "file": "screenshots/case-B-desktop.png", "content": "Case B - related-authority-only banner (fixture)" },
+    { "file": "screenshots/case-C-desktop.png", "content": "Case C - specific-authority-not-found amber banner, calibrated wording (Case C remediation)" },
+    { "file": "screenshots/case-C-tablet.png", "content": "Case C at 768x1024" },
+    { "file": "screenshots/case-C-mobile430.png", "content": "Case C at 430x932" },
+    { "file": "screenshots/case-C-mobile375.png", "content": "Case C at 375x812" },
+    { "file": "screenshots/case-C-mobile320.png", "content": "Case C at 320x568" },
+    { "file": "screenshots/case-D-desktop.png", "content": "Case D - source-failure banner (fixture)" },
+    { "file": "screenshots/case-E-desktop.png", "content": "Case E - restricted banner with Human Review Required tag (fixture)" },
+    { "file": "screenshots/case-F-desktop.png", "content": "Case F - verified-conflict banner, competing authorities visible (Case F remediation via deterministic fixture)" },
+    { "file": "screenshots/case-F-tablet.png", "content": "Case F at 768x1024" },
+    { "file": "screenshots/case-F-mobile430.png", "content": "Case F at 430x932" },
+    { "file": "screenshots/case-F-mobile375.png", "content": "Case F at 375x812" },
+    { "file": "screenshots/case-F-mobile320.png", "content": "Case F at 320x568" },
+    { "file": "screenshots/case-G-desktop.png", "content": "Case G - proportionate general-answer banner (fixture)" },
+    { "file": "screenshots/history-reopen-hard-refresh.png", "content": "post-reopen and post-hard-refresh state showing Cases F and G identical to their original render" },
+    { "file": "screenshots/responsive-desktop.png", "content": "1440x900 final conversation state" },
+    { "file": "screenshots/responsive-tablet.png", "content": "768x1024 final conversation state" },
+    { "file": "screenshots/responsive-mobile430.png", "content": "430x932 final conversation state" },
+    { "file": "screenshots/responsive-mobile375.png", "content": "375x812 final conversation state" },
+    { "file": "screenshots/responsive-mobile320.png", "content": "320x568 final conversation state" }
+  ],
+  "totalScreenshots": 23,
+  "allVisuallyReviewedForSanitizationBeforeCommit": true,
+  "redactionMethod": "context.addInitScript() persistent MutationObserver, installed before any navigation, surviving history reopen/hard refresh/viewport changes/new page loads throughout the entire run",
+  "exclusionsConfirmed": ["no username (all redacted to 'User')", "no password", "no token/cookie", "no private Preview URL/address bar", "no developer tools", "no project/deployment/team ID", "no raw conversation ID", "no confidential prompt content"]
+}

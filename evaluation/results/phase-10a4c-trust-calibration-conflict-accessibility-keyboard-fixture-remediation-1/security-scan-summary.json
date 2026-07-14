@@ -1,0 +1,24 @@
+{
+  "executionTimestampUtc": "2026-07-14T08:25:12.337Z",
+  "secretHandling": {
+    "runtimeVariablesCheckedBy": "boolean presence only; values read only in-memory via node --env-file, never printed, logged, or committed",
+    "envFileOpenedOrPrinted": false,
+    "bypassSecretPassedVia": "x-vercel-protection-bypass request header, sourced only from process.env.VERCEL_AUTOMATION_BYPASS_SECRET",
+    "loginCredentialsPassedVia": "Playwright locator.fill() calls sourced only from process.env.TINA_STAGING_TEST_USERNAME / TINA_STAGING_TEST_PASSWORD",
+    "privatePreviewUrlHandling": "resolved in-memory via authenticated Vercel CLI session, passed as a single-invocation environment variable, never written to any tracked file"
+  },
+  "scanScope": ["all new/modified backend runtime files", "all new/modified frontend files", "the new PHASE-10A4C test suite", "all 19 evidence JSON files", "all 23 committed screenshots (visually reviewed)", "the staged git diff prior to commit"],
+  "patternsChecked": ["bypass secret value", "staging username/password literal", "JWT", "access token", "cookie", "authorization header value", "private Preview hostname", "Vercel deployment/project/team ID", "Render service secret", "raw conversation ID", "taxpayer/client information", "private key"],
+  "scanResults": {
+    "secretValuesFound": "no match",
+    "privatePreviewHostnameFound": "no match",
+    "usernameInScreenshots": "no match -- durable redaction (context.addInitScript MutationObserver, survives navigation/reload/viewport-change) confirmed across all 23 screenshots by visual review, including post-reopen, post-hard-refresh, and per-viewport captures",
+    "deploymentOrProjectIds": "no match",
+    "rawConversationIds": "no match",
+    "taxpayerOrClientData": "no match -- all fixture content is generic, non-confidential Philippine tax reference text"
+  },
+  "anyTrackedCredential": false,
+  "p0Findings": "none",
+  "notesOnPriorIncident": "The PHASE-10A4B rendered-trust-ux-validation-rerun-1 evidence (prior task) disclosed and fixed a screenshot username-leak process defect. This task's script was built with the corrected persistent-redaction pattern from the start; no leak occurred in either rerun attempt of this task.",
+  "verdict": "PASS -- no credential or infrastructure secret exposure in any committed artifact or screenshot."
+}

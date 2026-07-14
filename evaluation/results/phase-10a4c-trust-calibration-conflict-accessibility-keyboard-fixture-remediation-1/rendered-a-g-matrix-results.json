@@ -1,0 +1,20 @@
+{
+  "executionTimestampUtc": "2026-07-14T08:25:12.337Z",
+  "note": "All 7 canonical states were exercised via the deterministic staging fixture registry through the real chat UI ('/fixture <ID>' typed in the composer), not merely 7 responses received to natural-language prompts. Every case reproduced its exact intended trust state.",
+  "cases": [
+    { "id": "A", "fixtureId": "A-VERIFIED-CONTROLLING", "responseTimeMs": 6157, "reproducedIntendedState": true, "bannerKind": "verified-controlling", "role": "status", "marker": "OK", "label": "Verified controlling authority", "sourceCardCount": 1, "sourceSummaryQualifier": "Controlling authority" },
+    { "id": "B", "fixtureId": "B-RELATED-AUTHORITY-ONLY", "responseTimeMs": 3319, "reproducedIntendedState": true, "bannerKind": "related-authority-only", "role": "status", "marker": "i", "label": "Related authority only", "sourceCardCount": 1, "sourceSummaryQualifier": "Related authority only" },
+    { "id": "C", "fixtureId": "C-SPECIFIC-AUTHORITY-NOT-FOUND", "responseTimeMs": 2789, "reproducedIntendedState": true, "bannerKind": "specific-authority-not-found", "role": "alert", "marker": "!", "label": "Specific issuance not found", "secondaryLabel": "Grounded in general law", "sourceCardCount": 2, "sourceSummaryQualifier": "General authorities cited" },
+    { "id": "D", "fixtureId": "D-RETRIEVAL-TIMEOUT", "responseTimeMs": 2502, "reproducedIntendedState": true, "bannerKind": "source-failure", "role": "alert", "marker": "!", "label": "Source retrieval timed out", "sourceCardCount": 0 },
+    { "id": "E", "fixtureId": "E-RESTRICTED-OUTCOME-PREDICTION", "responseTimeMs": 3654, "reproducedIntendedState": true, "bannerKind": "restricted", "role": "alert", "marker": "!", "label": "Final legal conclusion not provided", "humanReviewTag": true, "sourceCardCount": 0 },
+    { "id": "F", "fixtureId": "F-CONFLICTING-AUTHORITY", "responseTimeMs": 2973, "reproducedIntendedState": true, "bannerKind": "verified-conflict", "role": "alert", "marker": "!", "label": "Conflicting authorities identified", "sourceCardCount": 2 },
+    { "id": "G", "fixtureId": "G-GENERAL-NON-RESTRICTED", "responseTimeMs": 3469, "reproducedIntendedState": true, "bannerKind": "verified-controlling", "role": "status", "marker": "OK", "label": "Verified controlling authority", "sourceCardCount": 1, "sourceSummaryQualifier": "Controlling authority" }
+  ],
+  "summary": {
+    "requiredCanonicalCaseCount": 7,
+    "reproducedCanonicalCaseCount": 7,
+    "renderedCanonicalCasePassCount": 7,
+    "renderedCanonicalCaseFailCount": 0,
+    "distinctRenderedStates": ["verified-controlling", "related-authority-only", "specific-authority-not-found", "source-failure", "restricted", "verified-conflict"]
+  }
+}
