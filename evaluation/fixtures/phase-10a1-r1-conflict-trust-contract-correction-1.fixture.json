@@ -10,14 +10,22 @@
         "displayedSourceCount": 2,
         "conflictAnalysis": {
           "hasConflict": true,
-          "trueConflicts": [{ "trueConflict": true }],
+          "trueConflicts": [
+            {
+              "trueConflict": true
+            }
+          ],
           "count": 1,
           "conflict": true,
           "conflictType": "DOCTRINAL_CONFLICT",
           "exactIssue": "whether the withholding obligation attaches at payment or accrual",
           "exactLegalDimension": "timing of the withholding obligation",
-          "sameIssueGate": { "passed": true },
-          "oppositeHoldingGate": { "passed": true },
+          "sameIssueGate": {
+            "passed": true
+          },
+          "oppositeHoldingGate": {
+            "passed": true
+          },
           "resolutionBasis": "the later en banc ruling controls under the hierarchy-of-authority rule"
         }
       },
@@ -31,8 +39,11 @@
         "automaticSubmission": false,
         "hasConflict": true,
         "conflictState": "VERIFIED_CONFLICT",
-        "limitations": ["CONFLICTING_AUTHORITY"],
-        "responseKind": "GENERAL_TAX"
+        "limitations": [
+          "CONFLICTING_AUTHORITY"
+        ],
+        "responseKind": "GENERAL_TAX",
+        "specificAuthorityNotFound": false
       }
     },
     {
@@ -44,7 +55,17 @@
         "displayedSourceCount": 2,
         "conflictAnalysis": {
           "hasConflict": true,
-          "trueConflicts": [{ "trueConflict": true, "parts": { "sameIssue": true, "sameMaterialFacts": true, "sameStatute": true, "oppositeHolding": true } }],
+          "trueConflicts": [
+            {
+              "trueConflict": true,
+              "parts": {
+                "sameIssue": true,
+                "sameMaterialFacts": true,
+                "sameStatute": true,
+                "oppositeHolding": true
+              }
+            }
+          ],
           "count": 1
         }
       },
@@ -58,8 +79,11 @@
         "automaticSubmission": false,
         "hasConflict": false,
         "conflictState": "POTENTIAL_CONFLICT",
-        "limitations": ["POTENTIAL_CONFLICT"],
-        "responseKind": "GENERAL_TAX"
+        "limitations": [
+          "POTENTIAL_CONFLICT"
+        ],
+        "responseKind": "GENERAL_TAX",
+        "specificAuthorityNotFound": false
       }
     },
     {
@@ -70,7 +94,11 @@
         "sourceStatus": "AUTHORITY_FOUND",
         "displayedSourceCount": 1,
         "conflictAnalysis": {
-          "trueConflicts": [{ "trueConflict": true }],
+          "trueConflicts": [
+            {
+              "trueConflict": true
+            }
+          ],
           "count": 1
         }
       },
@@ -84,8 +112,11 @@
         "automaticSubmission": false,
         "hasConflict": false,
         "conflictState": "POTENTIAL_CONFLICT",
-        "limitations": ["POTENTIAL_CONFLICT"],
-        "responseKind": "GENERAL_TAX"
+        "limitations": [
+          "POTENTIAL_CONFLICT"
+        ],
+        "responseKind": "GENERAL_TAX",
+        "specificAuthorityNotFound": false
       }
     },
     {
@@ -95,7 +126,11 @@
       "input": {
         "sourceStatus": "AUTHORITY_FOUND",
         "displayedSourceCount": 3,
-        "conflictAnalysis": { "hasConflict": false, "trueConflicts": [], "count": 0 }
+        "conflictAnalysis": {
+          "hasConflict": false,
+          "trueConflicts": [],
+          "count": 0
+        }
       },
       "expected": {
         "version": "1.0",
@@ -108,14 +143,18 @@
         "hasConflict": false,
         "conflictState": "NO_CONFLICT",
         "limitations": [],
-        "responseKind": "GENERAL_TAX"
+        "responseKind": "GENERAL_TAX",
+        "specificAuthorityNotFound": false
       }
     },
     {
       "id": "D-unknown-missing-conflict-fields",
       "category": "D",
       "description": "No conflict/conflictAnalysis field present at all (legacy/missing) must default safely to UNKNOWN, never throw.",
-      "input": { "sourceStatus": "AUTHORITY_FOUND", "displayedSourceCount": 2 },
+      "input": {
+        "sourceStatus": "AUTHORITY_FOUND",
+        "displayedSourceCount": 2
+      },
       "expected": {
         "version": "1.0",
         "authoritySupport": "VERIFIED_CONTROLLING",
@@ -127,14 +166,19 @@
         "hasConflict": false,
         "conflictState": "UNKNOWN",
         "limitations": [],
-        "responseKind": "GENERAL_TAX"
+        "responseKind": "GENERAL_TAX",
+        "specificAuthorityNotFound": false
       }
     },
     {
       "id": "D2-unknown-malformed-conflictAnalysis",
       "category": "D",
       "description": "conflictAnalysis present but malformed (a string, not an object) must default safely to UNKNOWN, never throw.",
-      "input": { "sourceStatus": "AUTHORITY_FOUND", "displayedSourceCount": 2, "conflictAnalysis": "not-an-object" },
+      "input": {
+        "sourceStatus": "AUTHORITY_FOUND",
+        "displayedSourceCount": 2,
+        "conflictAnalysis": "not-an-object"
+      },
       "expected": {
         "version": "1.0",
         "authoritySupport": "VERIFIED_CONTROLLING",
@@ -146,14 +190,25 @@
         "hasConflict": false,
         "conflictState": "UNKNOWN",
         "limitations": [],
-        "responseKind": "GENERAL_TAX"
+        "responseKind": "GENERAL_TAX",
+        "specificAuthorityNotFound": false
       }
     },
     {
       "id": "E-domain-boundary",
       "category": "E",
       "description": "Non-tax domain-boundary response invents no conflict state, regardless of any stray upstream conflict field.",
-      "input": { "domainBoundary": true, "sourceStatus": "DOMAIN_BOUNDARY_REJECT", "conflictAnalysis": { "hasConflict": true, "trueConflicts": [1], "count": 1 } },
+      "input": {
+        "domainBoundary": true,
+        "sourceStatus": "DOMAIN_BOUNDARY_REJECT",
+        "conflictAnalysis": {
+          "hasConflict": true,
+          "trueConflicts": [
+            1
+          ],
+          "count": 1
+        }
+      },
       "expected": {
         "version": "1.0",
         "authoritySupport": "NOT_APPLICABLE",
@@ -165,7 +220,8 @@
         "hasConflict": false,
         "conflictState": "NOT_APPLICABLE",
         "limitations": [],
-        "responseKind": "DOMAIN_BOUNDARY"
+        "responseKind": "DOMAIN_BOUNDARY",
+        "specificAuthorityNotFound": false
       }
     },
     {
@@ -175,7 +231,15 @@
       "input": {
         "sourceStatus": "AUTHORITY_FOUND",
         "displayedSourceCount": 2,
-        "conflictAnalysis": { "hasConflict": false, "trueConflicts": [{ "trueConflict": true }], "count": 1 }
+        "conflictAnalysis": {
+          "hasConflict": false,
+          "trueConflicts": [
+            {
+              "trueConflict": true
+            }
+          ],
+          "count": 1
+        }
       },
       "expected": {
         "version": "1.0",
@@ -187,8 +251,11 @@
         "automaticSubmission": false,
         "hasConflict": false,
         "conflictState": "POTENTIAL_CONFLICT",
-        "limitations": ["POTENTIAL_CONFLICT"],
-        "responseKind": "GENERAL_TAX"
+        "limitations": [
+          "POTENTIAL_CONFLICT"
+        ],
+        "responseKind": "GENERAL_TAX",
+        "specificAuthorityNotFound": false
       }
     },
     {
@@ -198,8 +265,16 @@
       "input": {
         "sourceStatus": "AUTHORITY_FOUND",
         "displayedSourceCount": 2,
-        "conflict": { "hasConflict": false },
-        "conflictAnalysis": { "hasConflict": true, "trueConflicts": [1], "count": 1 }
+        "conflict": {
+          "hasConflict": false
+        },
+        "conflictAnalysis": {
+          "hasConflict": true,
+          "trueConflicts": [
+            1
+          ],
+          "count": 1
+        }
       },
       "expected": {
         "version": "1.0",
@@ -211,8 +286,11 @@
         "automaticSubmission": false,
         "hasConflict": false,
         "conflictState": "POTENTIAL_CONFLICT",
-        "limitations": ["POTENTIAL_CONFLICT"],
-        "responseKind": "GENERAL_TAX"
+        "limitations": [
+          "POTENTIAL_CONFLICT"
+        ],
+        "responseKind": "GENERAL_TAX",
+        "specificAuthorityNotFound": false
       }
     },
     {
@@ -221,8 +299,16 @@
       "description": "Controlled-procedural responses do not carry general RAG conflict-analysis state; any leftover conflict signal must not be surfaced.",
       "input": {
         "responseType": "controlled_loa_answer",
-        "controlledLoaAnswer": { "controlledLoaAnswer": true },
-        "conflictAnalysis": { "hasConflict": true, "trueConflicts": [1], "count": 1 }
+        "controlledLoaAnswer": {
+          "controlledLoaAnswer": true
+        },
+        "conflictAnalysis": {
+          "hasConflict": true,
+          "trueConflicts": [
+            1
+          ],
+          "count": 1
+        }
       },
       "expected": {
         "version": "1.0",
@@ -235,7 +321,8 @@
         "hasConflict": false,
         "conflictState": "NOT_APPLICABLE",
         "limitations": [],
-        "responseKind": "CONTROLLED_PROCEDURAL"
+        "responseKind": "CONTROLLED_PROCEDURAL",
+        "specificAuthorityNotFound": false
       }
     },
     {
@@ -244,8 +331,16 @@
       "description": "Restricted-legal-conclusion responses do not carry general RAG conflict-analysis state; any leftover conflict signal must not be surfaced.",
       "input": {
         "responseType": "controlled_loa_legal_conclusion_restricted",
-        "controlledLoaAnswer": { "requiresHumanReview": true },
-        "conflictAnalysis": { "hasConflict": true, "trueConflicts": [1], "count": 1 }
+        "controlledLoaAnswer": {
+          "requiresHumanReview": true
+        },
+        "conflictAnalysis": {
+          "hasConflict": true,
+          "trueConflicts": [
+            1
+          ],
+          "count": 1
+        }
       },
       "expected": {
         "version": "1.0",
@@ -258,7 +353,8 @@
         "hasConflict": false,
         "conflictState": "NOT_APPLICABLE",
         "limitations": [],
-        "responseKind": "RESTRICTED_LEGAL_CONCLUSION"
+        "responseKind": "RESTRICTED_LEGAL_CONCLUSION",
+        "specificAuthorityNotFound": false
       }
     }
   ],

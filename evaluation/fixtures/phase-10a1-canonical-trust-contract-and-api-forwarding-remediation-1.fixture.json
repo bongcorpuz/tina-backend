@@ -20,7 +20,8 @@
         "hasConflict": false,
         "conflictState": "UNKNOWN",
         "limitations": [],
-        "responseKind": "GENERAL_TAX"
+        "responseKind": "GENERAL_TAX",
+        "specificAuthorityNotFound": false
       }
     },
     {
@@ -42,7 +43,8 @@
         "hasConflict": false,
         "conflictState": "UNKNOWN",
         "limitations": [],
-        "responseKind": "GENERAL_TAX"
+        "responseKind": "GENERAL_TAX",
+        "specificAuthorityNotFound": false
       }
     },
     {
@@ -66,7 +68,8 @@
         "limitations": [
           "RELATED_AUTHORITY_ONLY"
         ],
-        "responseKind": "GENERAL_TAX"
+        "responseKind": "GENERAL_TAX",
+        "specificAuthorityNotFound": false
       }
     },
     {
@@ -88,7 +91,8 @@
         "hasConflict": false,
         "conflictState": "UNKNOWN",
         "limitations": [],
-        "responseKind": "GENERAL_TAX"
+        "responseKind": "GENERAL_TAX",
+        "specificAuthorityNotFound": false
       }
     },
     {
@@ -111,7 +115,8 @@
         "limitations": [
           "RETRIEVAL_TIMEOUT"
         ],
-        "responseKind": "FALLBACK"
+        "responseKind": "FALLBACK",
+        "specificAuthorityNotFound": false
       }
     },
     {
@@ -134,7 +139,8 @@
         "limitations": [
           "SOURCE_LOOKUP_EMPTY"
         ],
-        "responseKind": "FALLBACK"
+        "responseKind": "FALLBACK",
+        "specificAuthorityNotFound": false
       }
     },
     {
@@ -157,7 +163,8 @@
         "limitations": [
           "SOURCE_PARSE_ERROR"
         ],
-        "responseKind": "FALLBACK"
+        "responseKind": "FALLBACK",
+        "specificAuthorityNotFound": false
       }
     },
     {
@@ -180,7 +187,8 @@
         "limitations": [
           "NO_INDEXED_SOURCE"
         ],
-        "responseKind": "FALLBACK"
+        "responseKind": "FALLBACK",
+        "specificAuthorityNotFound": false
       }
     },
     {
@@ -207,7 +215,8 @@
         "limitations": [
           "POTENTIAL_CONFLICT"
         ],
-        "responseKind": "GENERAL_TAX"
+        "responseKind": "GENERAL_TAX",
+        "specificAuthorityNotFound": false
       }
     },
     {
@@ -233,7 +242,8 @@
         "hasConflict": false,
         "conflictState": "NOT_APPLICABLE",
         "limitations": [],
-        "responseKind": "CONTROLLED_PROCEDURAL"
+        "responseKind": "CONTROLLED_PROCEDURAL",
+        "specificAuthorityNotFound": false
       }
     },
     {
@@ -260,7 +270,8 @@
         "hasConflict": false,
         "conflictState": "NOT_APPLICABLE",
         "limitations": [],
-        "responseKind": "RESTRICTED_LEGAL_CONCLUSION"
+        "responseKind": "RESTRICTED_LEGAL_CONCLUSION",
+        "specificAuthorityNotFound": false
       }
     },
     {
@@ -285,7 +296,8 @@
         "hasConflict": false,
         "conflictState": "NO_CONFLICT",
         "limitations": [],
-        "responseKind": "GENERAL_TAX"
+        "responseKind": "GENERAL_TAX",
+        "specificAuthorityNotFound": false
       }
     },
     {
@@ -306,7 +318,8 @@
         "hasConflict": false,
         "conflictState": "NOT_APPLICABLE",
         "limitations": [],
-        "responseKind": "DOMAIN_BOUNDARY"
+        "responseKind": "DOMAIN_BOUNDARY",
+        "specificAuthorityNotFound": false
       }
     },
     {
@@ -329,7 +342,8 @@
         "limitations": [
           "FALLBACK"
         ],
-        "responseKind": "FALLBACK"
+        "responseKind": "FALLBACK",
+        "specificAuthorityNotFound": false
       }
     },
     {
@@ -347,7 +361,8 @@
         "hasConflict": false,
         "conflictState": "UNKNOWN",
         "limitations": [],
-        "responseKind": "UNKNOWN"
+        "responseKind": "UNKNOWN",
+        "specificAuthorityNotFound": false
       }
     }
   ],
@@ -373,7 +388,8 @@
         "hasConflict": false,
         "conflictState": "NOT_APPLICABLE",
         "limitations": [],
-        "responseKind": "DOMAIN_BOUNDARY"
+        "responseKind": "DOMAIN_BOUNDARY",
+        "specificAuthorityNotFound": false
       }
     },
     {
@@ -399,7 +415,8 @@
         "hasConflict": false,
         "conflictState": "NOT_APPLICABLE",
         "limitations": [],
-        "responseKind": "CONTROLLED_PROCEDURAL"
+        "responseKind": "CONTROLLED_PROCEDURAL",
+        "specificAuthorityNotFound": false
       }
     }
   ]

@@ -105,6 +105,36 @@ function deriveSourceState(result, responseKind) {
   return normalizeRawSourceState(result);
 }
 
+// PHASE-10A4C-TRUST-CALIBRATION-CONFLICT-STATE-ACCESSIBILITY-KEYBOARD-AND-DETERMINISTIC-FIXTURE-REMEDIATION-1
+//
+// Root cause of the Case C trust-calibration finding: AUTHORITY_FOUND +
+// displayedCount > 0 was unconditionally mapped to VERIFIED_CONTROLLING, with
+// no distinction between "the specific document/issuance the user asked
+// about was verified" and "some governing authority (possibly only general)
+// was retrieved and displayed." When the answer's own generated prose
+// explicitly states that no specific requested issuance/ruling/regulation/
+// circular exists, VERIFIED_CONTROLLING overstates what was actually
+// verified for THIS question, even though the general authorities cited are
+// themselves genuinely verified. This detector generalizes the pattern (not
+// tied to any single test query) and, when it fires, maps the state to the
+// existing RELATED_AUTHORITY_ONLY canonical state -- which already
+// accurately describes "sources shown are relevant but may not directly
+// control this issue" -- rather than inventing a new trust state.
+const SPECIFIC_AUTHORITY_DISCLAIMER_RE =
+  /\bno\s+specific\b[^.\n]{0,140}?\b(issuance|ruling|regulation|circular|memorandum|revenue\s+regulation|revenue\s+memorandum|bir\s+issuance)\b|\b(issuance|ruling|regulation|circular)\b[^.\n]{0,60}?\bdoes\s+not\s+(exist|appear\s+to\s+exist)\b/i;
+
+/**
+ * Detects whether the model's own generated answer text disclaims the
+ * existence of a specific requested issuance/ruling/regulation/circular,
+ * even though general authority was cited. Pure string match -- no I/O.
+ *
+ * @param {unknown} answerText
+ * @returns {boolean}
+ */
+export function answerDisclaimsSpecificAuthority(answerText) {
+  return typeof answerText === "string" && SPECIFIC_AUTHORITY_DISCLAIMER_RE.test(answerText);
+}
+
 function deriveAuthoritySupport(result, sourceState, responseKind, hasConflict) {
   if (responseKind === "DOMAIN_BOUNDARY" || responseKind === "CONTROLLED_PROCEDURAL" || responseKind === "RESTRICTED_LEGAL_CONCLUSION") {
     return "NOT_APPLICABLE";
@@ -126,7 +156,14 @@ function deriveAuthoritySupport(result, sourceState, responseKind, hasConflict) 
     // derived here -- it remains a defined-but-currently-unreachable value
     // in the enum until the runtime exposes that distinction. This is a
     // documented limitation, not an invented semantic.
-    return displayedCount > 0 ? "VERIFIED_CONTROLLING" : "NO_VERIFIED_AUTHORITY";
+    if (displayedCount === 0) return "NO_VERIFIED_AUTHORITY";
+    // Case C calibration: general authority was found and displayed, but the
+    // answer's own prose says the specific requested issuance was not found.
+    // Downgrade to RELATED_AUTHORITY_ONLY rather than overstate as
+    // VERIFIED_CONTROLLING -- the cited authorities support the general
+    // explanation, not the existence of the specific requested document.
+    if (answerDisclaimsSpecificAuthority(result.answer)) return "RELATED_AUTHORITY_ONLY";
+    return "VERIFIED_CONTROLLING";
   }
   return "UNKNOWN";
 }
@@ -158,7 +195,7 @@ function deriveAutomaticSubmission(result) {
   return false;
 }
 
-function deriveLimitations(sourceState, hasConflict, responseKind, conflictState) {
+function deriveLimitations(sourceState, hasConflict, responseKind, conflictState, specificAuthorityNotFound) {
   const limitations = [];
   if (hasConflict) limitations.push("CONFLICTING_AUTHORITY");
   // Potential (incomplete-evidence) conflicts are never discarded, only
@@ -166,6 +203,7 @@ function deriveLimitations(sourceState, hasConflict, responseKind, conflictState
   if (conflictState === "POTENTIAL_CONFLICT") limitations.push("POTENTIAL_CONFLICT");
   if (UNSAFE_SOURCE_STATES.has(sourceState)) limitations.push(sourceState);
   if (sourceState === "RELATED_AUTHORITY_ONLY") limitations.push("RELATED_AUTHORITY_ONLY");
+  if (specificAuthorityNotFound) limitations.push("SPECIFIC_AUTHORITY_NOT_FOUND");
   if (responseKind === "FALLBACK" && limitations.length === 0) limitations.push("FALLBACK");
   return limitations;
 }
@@ -234,6 +272,14 @@ function enforceInvariants(candidate) {
     out.conflictState = "POTENTIAL_CONFLICT";
   }
 
+  // Invariant 8 (Case C qualifier): specificAuthorityNotFound can never be
+  // true unless authoritySupport is actually RELATED_AUTHORITY_ONLY -- the
+  // qualifier must never survive a future derivation change that alters
+  // authoritySupport without recomputing the qualifier.
+  if (out.authoritySupport !== "RELATED_AUTHORITY_ONLY") {
+    out.specificAuthorityNotFound = false;
+  }
+
   return out;
 }
 
@@ -253,11 +299,22 @@ export function buildTrustContract(result = {}) {
   const sourceState = deriveSourceState(safeResult, responseKind);
   const { hasConflict, conflictState } = classifyConflictState(safeResult);
   const authoritySupport = deriveAuthoritySupport(safeResult, sourceState, responseKind, hasConflict);
+  // Additive qualifier (not a new top-level trust state): true only when the
+  // Case C downgrade path actually fired -- general authority was found and
+  // displayed, but the answer's own prose disclaims the specific requested
+  // issuance/ruling/regulation/circular. Frontend uses this to render more
+  // specific wording than the generic RELATED_AUTHORITY_ONLY copy, without
+  // affecting ordinary RELATED_AUTHORITY_ONLY cases (e.g. a broad "explain
+  // EWT in general" query) where no specific document was ever requested.
+  const specificAuthorityNotFound =
+    sourceState === "AUTHORITY_FOUND" &&
+    authoritySupport === "RELATED_AUTHORITY_ONLY" &&
+    answerDisclaimsSpecificAuthority(safeResult.answer);
   const legalConclusion = deriveLegalConclusion(responseKind);
   const humanReviewRequired = deriveHumanReviewRequired(safeResult, responseKind);
   const filingReadyDocumentGenerated = deriveFilingReadyDocumentGenerated(safeResult);
   const automaticSubmission = deriveAutomaticSubmission(safeResult);
-  const limitations = deriveLimitations(sourceState, hasConflict, responseKind, conflictState);
+  const limitations = deriveLimitations(sourceState, hasConflict, responseKind, conflictState, specificAuthorityNotFound);
 
   const candidate = {
     version: TRUST_CONTRACT_VERSION,
@@ -270,7 +327,8 @@ export function buildTrustContract(result = {}) {
     hasConflict,
     conflictState,
     limitations,
-    responseKind
+    responseKind,
+    specificAuthorityNotFound
   };
 
   return enforceInvariants(candidate);

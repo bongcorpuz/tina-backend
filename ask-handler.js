@@ -41,7 +41,7 @@ import {
   saveMemoryHooks
 } from "./memory-hooks.js";
 
-import { saveMessage, getHistory } from "./conversation-memory.js";
+import { saveMessage, getHistory, createConversation } from "./conversation-memory.js";
 import { storeFeedbackEntry } from "./feedback-learning.js";
 
 import { extractQuizAnswer, finalizeSourcesForResponse, MAX_VISIBLE_SOURCES } from "./ask-helpers.js";
@@ -71,6 +71,7 @@ import { evaluateUpstreamRestrictedLegalConclusionGate } from "./services/contro
 
 import { sanitizePublicSourceCards } from "./services/ask-handler-public-source-sanitizer.js";
 import { buildResponseTrust } from "./services/trust-contract.js";
+import { resolveStagingFixture } from "./services/staging-trust-fixtures.js";
 
 const ENGINE_VERSION = "9.0.0";
 
@@ -2431,6 +2432,61 @@ export function createAskHandler({
         return res.status(401).json({
           success: false,
           error: "User ID not found in token. Cannot proceed."
+        });
+      }
+
+      // PHASE-10A4C-TRUST-CALIBRATION-CONFLICT-STATE-ACCESSIBILITY-KEYBOARD-AND-DETERMINISTIC-FIXTURE-REMEDIATION-1
+      //
+      // Deterministic, staging-only trust-state fixture short-circuit for
+      // representative authenticated-browser rendered validation. Resolves
+      // to null (fails closed) on any non-staging runtime or unrecognized
+      // fixtureId -- see services/staging-trust-fixtures.js for the fixed,
+      // closed fixture registry and full security posture. Runs AFTER
+      // authentication (userId already validated above), so no new auth
+      // bypass is introduced. Never calls retrieval or an LLM; never
+      // mutates any data beyond the same conversation-message persistence
+      // every other /ask response already writes for the caller's own
+      // conversation.
+      const fixture = resolveStagingFixture(req.body?.fixtureId);
+      if (fixture) {
+        let activeConversationId = conversationId;
+        if (!activeConversationId) {
+          const created = await createConversation(supabase, { userId, title: "Fixture validation" });
+          activeConversationId = created?.id;
+        }
+
+        const fixtureTrust = buildResponseTrust(fixture, fixture.displayedSourceCount, fixture.sourceStatus);
+        const fixtureQuestion = `[fixture:${fixture.fixtureId}]`;
+
+        await saveConversationTurn({
+          conversationId: activeConversationId,
+          userId,
+          question: fixtureQuestion,
+          answerText: fixture.answer,
+          sourcesUsed: fixture.sourceCards,
+          fallbackReferences: [],
+          trust: fixtureTrust
+        });
+
+        return res.json({
+          success: true,
+          engine: "TINA_ASK_HANDLER",
+          version: ENGINE_VERSION,
+          hook: "/ask",
+          mode: "fixture",
+          fixtureId: fixture.fixtureId,
+          answer: fixture.answer,
+          sources: fixture.sourceCards,
+          sourcesUsed: fixture.sourceCards,
+          sourceCards: fixture.sourceCards,
+          educationalSources: null,
+          vectorMatches: fixture.sourceCards.length,
+          trust: fixtureTrust,
+          retrievedSourceCount: fixture.sourceCards.length,
+          displayedSourceCount: fixture.displayedSourceCount,
+          conversationId: activeConversationId,
+          askHandlerVersion: ENGINE_VERSION,
+          contextOrchestrationEnabled: true
         });
       }
 
