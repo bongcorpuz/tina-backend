@@ -8750,3 +8750,8 @@ GEMINI RENDERED-UX ACCEPT WITH STRICT RECOMMENDATIONS
 - Phase 10C: BLOCKED.
 
 Historical records stating that Gemini evidence was missing or pending remain valid as historical entries only and are superseded by this later source artifact.
+
+The Gemini review is recorded based on a project-owner provenance attestation.
+
+The repository recording tools did not independently or cryptographically verify
+Google’s runtime execution.

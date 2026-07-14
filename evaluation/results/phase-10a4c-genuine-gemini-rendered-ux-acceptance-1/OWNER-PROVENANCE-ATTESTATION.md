@@ -15,7 +15,7 @@ I, Bong Corpuz, repository owner and TINA project principal, attest that:
 
 Attested by:
 
-RBong Corpuz  
-TINA Project Owner  
-Date: [2026-07-14]  
-Source platform: [Gemini CLI]  
+Bong Corpuz
+TINA Project Owner
+Date: [2026-07-14]
+Source platform: [Gemini CLI]
