@@ -8755,3 +8755,67 @@ The Gemini review is recorded based on a project-owner provenance attestation.
 
 The repository recording tools did not independently or cryptographically verify
 Google’s runtime execution.
+
+## PHASE-10A5 — Final Closure Gate Rerun (2026-07-14)
+
+```text
+PHASE-10A5-FINAL-CLOSURE-GATE-1-RERUN executed by Codex GPT-5, high-reasoning posture, medium speed.
+
+Backend repository: C:\Projects\tina-backend.
+Backend branch: feature/source-availability-engine-v1.
+Backend HEAD reviewed: af9f590cfe042b0da6fce0bde7e002d2f18173b2.
+Backend sync before result: 0 0.
+
+Frontend repository: C:\Projects\tina-ai.
+Frontend branch: phase-10a3-r1-trust-persistence-accessibility.
+Frontend HEAD reviewed: 0816ac865b4ee55d5bb92534834dadbb0dcfba87.
+Frontend sync: 0 0.
+Frontend main untouched; existing unrelated .gitignore modification untouched.
+
+Dev Factory repository: C:\Projects\tina-dev-factory.
+Dev Factory HEAD reviewed: 91670029ccae10a76385533a283f3c96c7411577.
+Dev Factory not modified.
+
+Prior closure-gate decision: PHASE 10A FINAL CLOSURE GATE REVISIONS REQUIRED.
+Former P1 blocker: genuine Gemini rendered-UX acceptance was asserted by prompt but not durably present in committed evidence.
+Former P1 disposition: SATISFIED.
+
+Owner-attested Gemini provenance accepted as project-owner provenance evidence:
+- owner attestation exists;
+- original Gemini response artifact exists;
+- normalized report exists;
+- decision is GEMINI RENDERED-UX ACCEPT WITH STRICT RECOMMENDATIONS;
+- CURRENT_STATE records owner-attested provenance;
+- no repository tool, Claude, or Codex independently or cryptographically verified Google's runtime execution.
+
+Current blocker counts:
+- P0: 0;
+- P1: 0;
+- P2: 2;
+- P3: 2.
+
+P2 deferrals:
+1. Case C structured specific-authority signal -- MAY DEFER WITH DOCUMENTED LIMITATION. Rendered Case C UX is accepted and no longer misleading; residual risk is prose-detector robustness. Follow-up: PHASE-10A-FOLLOWUP-STRUCTURED-SPECIFIC-AUTHORITY-SIGNAL-1.
+2. Live conflict-detection enrichment -- MAY DEFER WITH DOCUMENTED LIMITATION. Rendered Case F conflict UX is accepted; live conflict detection may under-claim but does not falsely assert settled authority. Follow-up: PHASE-10A-FOLLOWUP-LIVE-CONFLICT-DETECTION-ENRICHMENT-1.
+
+P3 items:
+1. phase-09zf guard stabilization -- pre-existing self-referential test-governance debt. Follow-up: PHASE-TEST-GOVERNANCE-09ZF-GUARD-STABILIZATION-1.
+2. Optional visible focus-ring screenshot enhancement.
+
+Closure checklist result: PASS for all 33 required items, including trust-state contract completeness, all A-G calibrated rendered states, source limitations, source cards, persistence, history reopen, hard refresh, responsive rendering, accessibility, contrast, keyboard focus, evidence sanitization, production fixture fail-closed behavior, fixture registry hardening, backend/API evidence, rendered-UX evidence, independent technical review, durable owner-attested Gemini review, synchronized backend/frontend, and no unrelated modified files.
+
+Final decision: PHASE 10A FINAL CLOSURE GATE PASS WITH DEFERRED P2 ITEMS.
+
+Resulting phase status:
+- Phase 10A: CLOSED;
+- Phase 10B: AUTHORIZED;
+- Phase 10C: BLOCKED.
+
+Result JSON: evaluation/results/phase-10a5-final-closure-gate-1-rerun.json.
+Report: PHASE-10A5-FINAL-CLOSURE-GATE-1-RERUN_REPORT.md.
+
+Mandatory independent review readiness: READY. The independent review must verify the owner-attested evidence basis, no cryptographic Gemini verification claim, blocker counts, P2 deferral safety, checklist support, report/JSON/CURRENT_STATE consistency, Phase 10A closure justification, Phase 10B authorization, Phase 10C blocked status, and documentation-only commit scope.
+
+Next authorized task: PHASE-10B-FOUNDATION-PLANNING-1.
+Do not begin Phase 10B implementation in this closure-gate task.
+```
