@@ -8507,11 +8507,55 @@ Security scan: no credential, token, cookie, private Preview URL, or infrastruct
 
 Decision: PHASE 10A4B RERUN PASS WITH STRICT RECOMMENDATIONS. Strict recommendations: (1) separate remediation task for the Case F semantic-consistency anomaly; (2) separate remediation task for the Case C trust-calibration presentation (banner strength vs. issuance-specific verification); (3) separate remediation task for the 5 axe-flagged color-contrast page-chrome elements; (4) deterministic controlled fixtures still needed for related-authority-only/no-verified-authority/verified-conflict/potential-conflict/source-failure/procedural/verified-supporting states; (5) Case C/F per-viewport screenshot coverage for a future rerun; (6) fuller keyboard Tab-order walkthrough with focus-ring screenshot.
 
-Technical independent review: READY. Gemini rendered-UX review: READY (sanitized screenshots, responsive, accessibility, contrast, Case C, and hard-refresh evidence all present).
+Technical independent review: COMPLETE (see below). Gemini rendered-UX review: still not actually performed (no tool in this environment can invoke Gemini).
 
 Phase 10A remains OPEN -- NOT authorized to close pending both the mandatory Opus 4.8 independent review and Gemini rendered-UX acceptance. Phase 10B and Phase 10C remain BLOCKED. Phase 10A is NOT marked complete.
 
 Artifacts: PHASE-10A4B-RENDERED-TRUST-UX-VALIDATION-RERUN-1_REPORT.md; evaluation/results/phase-10a4b-rendered-trust-ux-validation-rerun-1.json; evaluation/results/phase-10a4b-rendered-trust-ux-validation-rerun-1/ (execution-summary, preview-browser-access-results, rendered-trust-matrix-results, backend-render-correlation-results, persistence-history-reopen-results, hard-refresh-results, responsive-results, accessibility-results, keyboard-navigation-results, contrast-results, case-c-trust-calibration-results, production-safety-summary, security-scan-summary, screenshot-manifest, screenshots/ x15).
+```
+
+### PHASE-10A4B -- Representative Rendered Trust-UX Validation: Independent Review Outcome (2026-07-14)
+
+```text
+Implementation decision: PHASE 10A4B RERUN PASS WITH STRICT RECOMMENDATIONS (recorded above).
+
+Independent technical, security, accessibility, and governance review: INDEPENDENT REVIEW PASS WITH STRICT RECOMMENDATIONS.
+
+Reviewer: Claude Code -- Opus 4.8 -- Low Speed.
+
+Evidence commit reviewed: dc2293d.
+
+Independently accepted gates:
+- protected non-production Preview access;
+- representative browser CORS flow with normal web security (no --disable-web-security, no bypass extension);
+- real staging UI login (actual form fields, not token injection);
+- staging-only backend target confirmed, production never contacted;
+- browser history reopen preserved trust state identically;
+- hard refresh preserved trust state identically;
+- desktop rendering passed;
+- tablet rendering passed;
+- mobile rendering passed at 430, 375, and 320 pixels;
+- primary trust-banner contrast independently corroborated at 18.85:1;
+- screenshot sanitization confirmed (the username-leak defect was found and fixed pre-commit; independently verified no leaking blob ever reached git history);
+- no committed credential exposure (independent secret scan clean);
+- no runtime code modification in the dc2293d validation evidence commit.
+
+Canonical-state qualification (independently confirmed, not merely repeated from the report):
+- Case A -- VERIFIED CONTROLLING: reproduced and passed;
+- Case B -- RELATED AUTHORITY ONLY: NOT reproduced; deterministic coverage required (fixture-coverage gap, not a defect);
+- Case C -- intended no-source/specific-authority-not-found state was not cleanly represented (a verified-controlling banner rendered instead); P2 trust-calibration remediation required;
+- Case D -- timeout/lookup-failure: NOT reproduced; deterministic coverage required;
+- Case E -- RESTRICTED: reproduced and passed;
+- Case F -- conflict state NOT deterministically reproduced (no banner rendered despite conflict-describing prose); P2 conflict-metadata/semantic-calibration investigation required;
+- Case G -- GENERAL: reproduced and passed.
+
+Seven prompts received responses, but only Cases A, E, and G reproduced their intended canonical states. This is NOT characterized as a seven-of-seven canonical-state pass.
+
+Accessibility and UX findings carried forward: primary trust-banner contrast passed (18.85:1); trust-adjacent source text (.sources > strong) measured approximately 3.95:1 and required remediation; full keyboard workflow required completion; deterministic rendered fixtures were required for states B, C, D, and F.
+
+Gate status after this review: PHASE-10A4B technical/browser gate accepted with strict recommendations. Phase 10A: OPEN. Phase 10B: BLOCKED. Phase 10C: BLOCKED. Phase 10A is NOT marked complete.
+
+This review's findings (Case C, Case F, contrast) became the controlling basis for the subsequent PHASE-10A4C remediation task (recorded below).
 ```
 
 ## Phase 10A4C Trust Calibration, Conflict-State, Accessibility, Keyboard, and Deterministic-Fixture Remediation 1 -- PHASE 10A4C PASS WITH STRICT RECOMMENDATIONS (2026-07-14):
@@ -8519,7 +8563,7 @@ Artifacts: PHASE-10A4B-RENDERED-TRUST-UX-VALIDATION-RERUN-1_REPORT.md; evaluatio
 ```text
 GOVERNANCE DISCLOSURE (read first): This task's instructions attributed the controlling findings (Case C, Case F, contrast) to a completed Gemini 2.5 Pro rendered-UX review returning REVISIONS REQUIRED. No tool in this environment can invoke real Gemini 2.5 Pro -- confirmed consistent with this project's own prior precedent (PHASE-10A3 entry above: "Gemini UX review: NOT PERFORMED BY GEMINI 2.5 PRO. No tool in this environment can invoke that model."). This was raised with the user before proceeding; the user confirmed recording this honestly as a SELF-REVIEW against Gemini-style criteria, not an authentic Gemini output. The findings' substance is not fabricated -- they match the P2 items already established in the PHASE-10A4B independent technical review (Opus 4.8). A genuine Gemini 2.5 Pro rendered-UX review has still never been performed for this project and remains a required follow-up before Phase 10A may close.
 
-PHASE-10A4C executed by Claude Code (Sonnet 5, medium). Backend feature/source-availability-engine-v1 starting HEAD dc2293d, final HEAD de7a6dd (commits 3f5d027, de7a6dd), sync 0 0. Frontend phase-10a3-r1-trust-persistence-accessibility starting HEAD 1748788, final HEAD 0816ac8 (commits efbe4d6, a2eefed, 0816ac8), sync 0 0, main untouched throughout.
+PHASE-10A4C executed by Claude Code (Sonnet 5, medium). Backend feature/source-availability-engine-v1 starting HEAD dc2293d, final HEAD 76cc92a (commits 3f5d027, de7a6dd, 76cc92a), sync 0 0. Frontend phase-10a3-r1-trust-persistence-accessibility starting HEAD 1748788, final HEAD 0816ac8 (commits efbe4d6, a2eefed, 0816ac8), sync 0 0, main untouched throughout.
 
 Case C root cause: services/trust-contract.js unconditionally mapped AUTHORITY_FOUND + displayedSourceCount>0 to VERIFIED_CONTROLLING, with no distinction between "specific requested issuance verified" and "some general authority found." Remediation: a generalizable text-pattern detector (answerDisclaimsSpecificAuthority) downgrades to the EXISTING RELATED_AUTHORITY_ONLY state (no new top-level state invented) plus an additive specificAuthorityNotFound qualifier, invariant-enforced. Frontend renders a distinct amber "Specific issuance not found" / "Grounded in general law" banner and a calibrated "General authorities cited" source-summary label. Live-verified at all 5 viewports; persists identically through reopen/refresh.
 
@@ -8537,9 +8581,9 @@ Security: no credential/token/cookie/private-URL/infrastructure-ID in any commit
 
 Decision: PHASE 10A4C PASS WITH STRICT RECOMMENDATIONS. Strict recommendations: (1) genuine Gemini 2.5 Pro rendered-UX review still required (never actually performed for this project); (2) separate conflict-engine remediation task to enrich pipeline.js Step 9 for live-query conflict detection; (3) visible focus-ring screenshot follow-up (P3).
 
-Technical independent review: READY. Gemini re-review: READY (would be the FIRST genuine Gemini review of this evidence chain).
+PHASE-10A4C Opus 4.8 independent review: PENDING. Actual Gemini rendered-UX review: PENDING (would be the FIRST genuine Gemini review of this evidence chain -- no tool in this environment can invoke Gemini; see Governance Disclosure above).
 
-Phase 10A remains OPEN -- NOT authorized to close pending the mandatory Opus 4.8 independent review, a genuine Gemini rendered-UX review, and ideally the separate conflict-engine task. Phase 10B and Phase 10C remain BLOCKED. Phase 10A is NOT marked complete.
+Phase 10A remains OPEN -- NOT authorized to close pending the mandatory PHASE-10A4C Opus 4.8 independent review, a genuine Gemini rendered-UX review, and ideally the separate conflict-engine task. Phase 10B and Phase 10C remain BLOCKED. Phase 10A is NOT marked complete.
 
 Artifacts: PHASE-10A4C-TRUST-CALIBRATION-CONFLICT-ACCESSIBILITY-KEYBOARD-AND-DETERMINISTIC-FIXTURE-REMEDIATION-1_REPORT.md; evaluation/results/phase-10a4c-trust-calibration-conflict-accessibility-keyboard-fixture-remediation-1.json; evaluation/results/phase-10a4c-trust-calibration-conflict-accessibility-keyboard-fixture-remediation-1/ (19 JSON evidence files + screenshots/ x23). Code: services/trust-contract.js, services/staging-trust-fixtures.js, ask-handler.js, tests/phase-10a4c-....test.mjs (backend); src/lib/trustPresentation.js, src/components/TrustBanner.jsx, src/components/SourceTrustSummary.jsx, src/index.css, src/App.css, src/App.jsx (frontend).
 ```
