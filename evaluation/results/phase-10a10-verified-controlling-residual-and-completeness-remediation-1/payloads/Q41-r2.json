@@ -1,0 +1,41 @@
+{
+  "id": "Q41-r2",
+  "group": "q41exact",
+  "prompt": "What is the penalty for failure to issue a BIR-registered invoice?",
+  "answer": "### Short Answer\n\nThis provision is part of the broader regulatory framework that mandates the issuance of official receipts or invoices for sales of goods or services, ensuring proper documentation and compliance with tax obligations. Failure to comply can lead to significant penalties, emphasizing the importance of adhering to BIR regulations.\n\nFor further details, you may refer to the relevant legal text in the NIRC.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "citation-relevance",
+    "gates": {
+      "structural": true,
+      "citationRelevant": false
+    },
+    "reason": "displayed_sources_only_foundational_provisions"
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 2",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 3",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "sanitizedConversationRef": "c1efeb64774247e0"
+}

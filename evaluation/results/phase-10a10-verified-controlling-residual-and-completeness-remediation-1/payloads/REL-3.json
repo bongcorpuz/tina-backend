@@ -1,0 +1,36 @@
+{
+  "id": "REL-3",
+  "group": "related",
+  "prompt": "How is input VAT treated when goods or services are used for both VATable and VAT-exempt sales?",
+  "answer": "### Short Answer\n\n### Controlling Authorities\n2. **Revenue Regulations No. 16-2005** - These regulations provide detailed guidance on the implementation of VAT provisions, including the allocation of input VAT.\n\n### Interpretation\n\n### Practical Meaning\nIn practice, businesses must maintain accurate records of their sales to effectively allocate input VAT. This involves tracking both VATable and VAT-exempt sales to ensure compliance with tax regulations. Failure to properly allocate input VAT can lead to disallowed credits and potential penalties during tax audits. Thus, careful accounting and documentation are essential for businesses engaged in mixed transactions.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "sources": [
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "sanitizedConversationRef": "eeb61f8f8922c877"
+}

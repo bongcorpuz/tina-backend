@@ -1,0 +1,55 @@
+{
+  "id": "M-Q45",
+  "group": "mini",
+  "prompt": "Are PEZA-registered enterprises subject to corporate income tax?",
+  "answer": "### Issue Presented\nAre PEZA-registered enterprises subject to corporate income tax in the Philippines?\n\n### Short Answer\nYes, PEZA-registered enterprises are subject to corporate income tax, but they may benefit from preferential tax rates and incentives under the law.\n\n### Controlling Authorities\nThe relevant provision is Section 27 of the National Internal Revenue Code (NIRC), which outlines the rates of income tax on domestic corporations.\n\n### Legal Interpretation\n\n### Practical Application\nPEZA-registered enterprises should ensure compliance with the requirements set forth by the Philippine Economic Zone Authority (PEZA) to avail themselves of these tax incentives. They must also maintain proper documentation to substantiate their eligibility for the preferential tax rates. It is advisable for these enterprises to consult with tax professionals to navigate the complexities of tax compliance and to maximize the benefits of the incentives available to them.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": false,
+      "materialAlternativesCovered": false,
+      "citationRelevant": true,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": false,
+      "noContradiction": true,
+      "noUnsupportedProposition": false
+    },
+    "reason": "The answer incorrectly states that PEZA-registered enterprises are subject to corporate income tax without addressing their general exemption status."
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 27",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 23",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 24",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 3,
+  "sanitizedConversationRef": "d31f49030d0af321"
+}

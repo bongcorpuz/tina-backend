@@ -1,0 +1,51 @@
+{
+  "id": "M-Q2",
+  "group": "mini",
+  "prompt": "What is the VAT treatment of the sale of a residential lot valued at ₱1.9 million?",
+  "answer": "### Short Answer\nThe sale of a residential lot valued at ₱1.9 million is subject to VAT because it exceeds the threshold of ₱1.5 million for residential lots, as stipulated in the National Internal Revenue Code (NIRC).\n\n### Controlling Authorities\n- **RR 16-2005**: This regulation implements the VAT provisions of the NIRC and clarifies that sales of residential lots exceeding ₱1.5 million are subject to VAT.\n\n### Interpretation\n\n### Practical Meaning\nFor the seller of the residential lot valued at ₱1.9 million, this means that they are required to charge VAT on the sale, which is currently set at 12%. The seller must ensure compliance with VAT regulations, including proper invoicing and remittance of the VAT collected to the Bureau of Internal Revenue (BIR). Buyers should also be aware that the total cost of the lot will include the VAT, impacting their overall financial planning for the purchase.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": false,
+      "materialExceptionsCovered": false,
+      "materialAlternativesCovered": false,
+      "citationRelevant": true,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": false,
+      "noContradiction": true,
+      "noUnsupportedProposition": false
+    },
+    "reason": "The answer incorrectly states an obsolete threshold for VAT on residential lots."
+  },
+  "sources": [
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    },
+    {
+      "label": "RR 4-2007",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "sanitizedConversationRef": "f43a7697f6f58684"
+}

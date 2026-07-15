@@ -1,0 +1,51 @@
+{
+  "id": "Q41-p2",
+  "group": "paraphrase",
+  "prompt": "Which NIRC section provides the penalty for failure to issue an invoice?",
+  "answer": "### Issue Presented\n\nFor further details, you may refer to the NIRC provisions directly.\n\n### Relevant Facts / Assumptions\nThe factual circumstances have not been fully described. The analysis is based on the question as presented.\n\n### Alternative Interpretations\nNo alternative interpretations identified from the available indexed authorities.\n\n### Position Strength\nPosition strength is preliminary and subject to full fact pattern verification.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": false,
+      "primaryIssueAnswered": false,
+      "requiredIssueKeysCovered": false,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": false,
+      "substantive": false,
+      "propositionSupported": false,
+      "materiallyComplete": false,
+      "noContradiction": true,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The answer does not provide the specific NIRC section requested."
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 21",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 2",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "sanitizedConversationRef": "03bba169bee085dd"
+}

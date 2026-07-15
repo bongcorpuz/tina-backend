@@ -1,0 +1,51 @@
+{
+  "id": "Q5-p1",
+  "group": "paraphrase",
+  "prompt": "Is import VAT always 12% for goods used to make export products?",
+  "answer": "### Short Answer\nImport VAT on goods is generally levied at a rate of 12% based on the total value used by the Bureau of Customs in determining tariff and customs duties, as stated in Section 107 of the NIRC.\n\n### Controlling Authorities\n1. **National Internal Revenue Code (NIRC) Section 107**: \"There shall be levied, assessed and collected on every importation of goods a value-added tax equivalent to twelve percent (12%) based on the total value used by the Bureau of Customs in determining tariff and customs duties plus customs duties, excise taxes, if any, and other charges.\"\n2. **Revenue Regulations No. 16-2005**: These regulations implement the provisions of the NIRC regarding VAT, confirming that importers are liable for VAT on imported goods.\n\n### Interpretation\nThe 12% VAT applies uniformly to all importations of goods, regardless of their intended use, including those used to manufacture export products. The VAT is calculated on the total value determined by customs, which includes customs duties and any applicable excise taxes.\n\n### Practical Meaning\nFor businesses importing goods to be used in the production of export products, the 12% VAT is a cost that must be accounted for in their pricing and financial planning. However, businesses that are VAT-registered may be able to recover this VAT as input tax when they sell their finished products, particularly if those products are exported and qualify for zero-rating under the VAT system.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": false,
+      "materialAlternativesCovered": false,
+      "citationRelevant": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": false,
+      "noContradiction": true,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The answer fails to address the zero-rating of VAT for export products, which is a material exception."
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 107",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "sanitizedConversationRef": "1f1e13b051302763"
+}

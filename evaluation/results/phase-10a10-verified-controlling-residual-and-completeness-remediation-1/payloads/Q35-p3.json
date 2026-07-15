@@ -1,0 +1,37 @@
+{
+  "id": "Q35-p3",
+  "group": "paraphrase",
+  "prompt": "When is BIR Form 1701-MS applicable?",
+  "answer": "### Short Answer\nBIR Form 1701-MS is applicable to individuals earning income from business and/or profession who are classified as \"mixed-income earners.\" This form is specifically designed for those whose income includes both compensation and business income.\n\n### Controlling Authorities\nThe relevant authority for this classification is found in the National Internal Revenue Code (NIRC) of 1997, specifically under Section 24, which outlines the income tax rates applicable to individuals, including mixed-income earners.\n\n### Interpretation\n\n### Practical Meaning\nFor tax practitioners, it is essential to advise clients who are mixed-income earners to use BIR Form 1701-MS to accurately report their income. This ensures that they are taxed appropriately on both their compensation and business income, avoiding potential issues with the Bureau of Internal Revenue (BIR) regarding underreporting or misclassification of income.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "citation-relevance",
+    "gates": {
+      "structural": true,
+      "citationRelevant": false
+    },
+    "reason": "displayed_sources_only_foundational_provisions"
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 2",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "sanitizedConversationRef": "8e87117900847b57"
+}

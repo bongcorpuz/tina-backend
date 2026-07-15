@@ -1,0 +1,47 @@
+{
+  "id": "VC-Q28",
+  "group": "verified",
+  "prompt": "What final withholding tax applies to royalties paid to a domestic corporation?",
+  "answer": "### Issue Presented\nRoyalties paid to a domestic corporation are subject to a final withholding tax at the rate of 20%, as specified in Revenue Regulations No. 2-98. This regulation outlines the application of final withholding tax on various income payments, including royalties, under the National Internal Revenue Code, as amended.\n\n### Legal Interpretation\n\nThe withholding obligation arises when a withholding agent makes payment to a resident income payee for a service subject to withholding under applicable revenue regulations.\n\n### Practical Application\n\nThe payor must withhold the applicable rate, remit to the BIR, and issue BIR Form 2307 (certificate of creditable withholding tax) to the payee.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": false,
+      "materialAlternativesCovered": false,
+      "citationRelevant": false,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": false,
+      "noContradiction": true,
+      "noUnsupportedProposition": false
+    },
+    "reason": "The cited regulation does not support the 20% rate for royalties, which is actually 15% under current law."
+  },
+  "sources": [
+    {
+      "label": "Revenue Regulations",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "sanitizedConversationRef": "2494044b91d99b5c"
+}

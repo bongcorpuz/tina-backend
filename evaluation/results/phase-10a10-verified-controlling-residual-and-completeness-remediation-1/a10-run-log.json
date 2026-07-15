@@ -1,0 +1,443 @@
+[
+  {
+    "id": "Q5-r1",
+    "group": "q5exact",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "llm"
+  },
+  {
+    "id": "Q35-r1",
+    "group": "q35exact",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "citation-relevance"
+  },
+  {
+    "id": "Q41-r1",
+    "group": "q41exact",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "citation-relevance"
+  },
+  {
+    "id": "Q5-r2",
+    "group": "q5exact",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "llm"
+  },
+  {
+    "id": "Q35-r2",
+    "group": "q35exact",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "citation-relevance"
+  },
+  {
+    "id": "Q41-r2",
+    "group": "q41exact",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "citation-relevance"
+  },
+  {
+    "id": "Q5-r3",
+    "group": "q5exact",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "llm"
+  },
+  {
+    "id": "Q35-r3",
+    "group": "q35exact",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "citation-relevance"
+  },
+  {
+    "id": "Q41-r3",
+    "group": "q41exact",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "citation-relevance"
+  },
+  {
+    "id": "Q5-p1",
+    "group": "paraphrase",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "llm"
+  },
+  {
+    "id": "Q5-p2",
+    "group": "paraphrase",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "llm"
+  },
+  {
+    "id": "Q5-p3",
+    "group": "paraphrase",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": null,
+    "stage": null
+  },
+  {
+    "id": "Q35-p1",
+    "group": "paraphrase",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "legalConclusion": "UNKNOWN",
+    "responseKind": "FALLBACK",
+    "eligible": null,
+    "stage": null
+  },
+  {
+    "id": "Q35-p2",
+    "group": "paraphrase",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "legalConclusion": "UNKNOWN",
+    "responseKind": "FALLBACK",
+    "eligible": null,
+    "stage": null
+  },
+  {
+    "id": "Q35-p3",
+    "group": "paraphrase",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "citation-relevance"
+  },
+  {
+    "id": "Q41-p1",
+    "group": "paraphrase",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "citation-relevance"
+  },
+  {
+    "id": "Q41-p2",
+    "group": "paraphrase",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "llm"
+  },
+  {
+    "id": "Q41-p3",
+    "group": "paraphrase",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "llm"
+  },
+  {
+    "id": "VC-Q14",
+    "group": "verified",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "llm"
+  },
+  {
+    "id": "VC-Q28",
+    "group": "verified",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "llm"
+  },
+  {
+    "id": "VC-Q32",
+    "group": "verified",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": true,
+    "stage": "llm"
+  },
+  {
+    "id": "VC-Q34",
+    "group": "verified",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": true,
+    "stage": "llm"
+  },
+  {
+    "id": "VC-Q47",
+    "group": "verified",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": true,
+    "stage": "llm"
+  },
+  {
+    "id": "REL-1",
+    "group": "related",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": null,
+    "stage": null
+  },
+  {
+    "id": "REL-2",
+    "group": "related",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "llm"
+  },
+  {
+    "id": "REL-3",
+    "group": "related",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "structural"
+  },
+  {
+    "id": "CONFLICT-1",
+    "group": "conflict",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": null,
+    "stage": null
+  },
+  {
+    "id": "CONFLICT-2",
+    "group": "conflict",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": true,
+    "stage": "llm"
+  },
+  {
+    "id": "MISSING-1",
+    "group": "missing",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": null,
+    "stage": null
+  },
+  {
+    "id": "MISSING-2",
+    "group": "missing",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "llm"
+  },
+  {
+    "id": "RESTRICT-1",
+    "group": "restricted",
+    "authoritySupport": "NOT_APPLICABLE",
+    "legalConclusion": "RESTRICTED",
+    "responseKind": "RESTRICTED_LEGAL_CONCLUSION",
+    "eligible": null,
+    "stage": null
+  },
+  {
+    "id": "RESTRICT-2",
+    "group": "restricted",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": null,
+    "stage": null
+  },
+  {
+    "id": "SRCFAIL-1",
+    "group": "srcfail",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": null,
+    "stage": null
+  },
+  {
+    "id": "SRCFAIL-2",
+    "group": "srcfail",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "llm"
+  },
+  {
+    "id": "M-Q2",
+    "group": "mini",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "llm"
+  },
+  {
+    "id": "M-Q8",
+    "group": "mini",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "llm"
+  },
+  {
+    "id": "M-Q9",
+    "group": "mini",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "llm"
+  },
+  {
+    "id": "M-Q27",
+    "group": "mini",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "llm"
+  },
+  {
+    "id": "M-Q29",
+    "group": "mini",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "llm"
+  },
+  {
+    "id": "M-Q31",
+    "group": "mini",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "structural"
+  },
+  {
+    "id": "M-Q37",
+    "group": "mini",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "structural"
+  },
+  {
+    "id": "M-Q49",
+    "group": "mini",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "llm"
+  },
+  {
+    "id": "M-Q23",
+    "group": "mini",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "legalConclusion": "UNKNOWN",
+    "responseKind": "FALLBACK",
+    "eligible": null,
+    "stage": null
+  },
+  {
+    "id": "M-Q43",
+    "group": "mini",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "legalConclusion": "UNKNOWN",
+    "responseKind": "FALLBACK",
+    "eligible": null,
+    "stage": null
+  },
+  {
+    "id": "M-Q3",
+    "group": "mini",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "structural"
+  },
+  {
+    "id": "M-Q30",
+    "group": "mini",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "llm"
+  },
+  {
+    "id": "M-Q46",
+    "group": "mini",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": true,
+    "stage": "llm"
+  },
+  {
+    "id": "M-Q26",
+    "group": "mini",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": true,
+    "stage": "llm"
+  },
+  {
+    "id": "M-Q45",
+    "group": "mini",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "responseKind": "GENERAL_TAX",
+    "eligible": false,
+    "stage": "llm"
+  }
+]

@@ -1,0 +1,51 @@
+{
+  "id": "Q5-p2",
+  "group": "paraphrase",
+  "prompt": "Does CREATE MORE create an exception to the normal import VAT rule for export enterprises?",
+  "answer": "### Short Answer\nThe CREATE Law does not create an exception to the normal import VAT rule for export enterprises. Under Section 107 of the NIRC, a value-added tax (VAT) is levied on every importation of goods, which applies uniformly regardless of the nature of the business.\n\n### Controlling Authorities\n1. **NIRC Section 107**: \"There shall be levied, assessed and collected on every importation of goods a value-added tax equivalent to twelve percent (12%) based on the total value used by the Bureau of Customs in determining tariff and customs duties plus customs duties, excise taxes, if any, and other charges.\"\n2. **RR 16-2005**: This regulation implements the VAT provisions of the NIRC, confirming that any importer, including export enterprises, is liable for VAT on imported goods.\n\n### Interpretation\nThe provisions of the NIRC and RR 16-2005 clearly state that VAT is applicable to all importations of goods without exception for export enterprises. While the CREATE Law provides various incentives for businesses, it does not alter the fundamental VAT liability on importations.\n\n### Practical Meaning\nExport enterprises must still pay VAT on imported goods as stipulated by the NIRC. This VAT can potentially be recovered through input tax credits if the goods are used in the course of their business operations, but the initial liability remains unchanged. Therefore, export enterprises should plan for this VAT cost in their importation processes.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": false,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": false
+    },
+    "reason": "The cited authorities do not support the claim that the CREATE Law does not provide any exceptions for export enterprises regarding import VAT."
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 107",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "sanitizedConversationRef": "454c7c2f8aa7ea33"
+}

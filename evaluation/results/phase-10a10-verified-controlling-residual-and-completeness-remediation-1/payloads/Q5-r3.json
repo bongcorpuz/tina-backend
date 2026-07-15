@@ -1,0 +1,51 @@
+{
+  "id": "Q5-r3",
+  "group": "q5exact",
+  "prompt": "What is the VAT rate on importation of goods used to manufacture export products?",
+  "answer": "### Short Answer\nThe VAT rate on the importation of goods used to manufacture export products is 12%. This is based on the total value used by the Bureau of Customs in determining tariff and customs duties, plus any applicable customs duties and excise taxes.\n\n### Controlling Authorities\nThe controlling authority for this VAT rate is found in Section 107 of the National Internal Revenue Code (NIRC), which states that a value-added tax equivalent to 12% shall be levied on every importation of goods. This is further supported by Revenue Regulations No. 16-2005, which implements the provisions of the NIRC regarding VAT.\n\n### Interpretation\n\n### Practical Meaning\nFor businesses importing goods to manufacture products for export, the 12% VAT on importation is a significant cost factor. However, these businesses may be eligible for VAT zero-rating on their export sales, allowing them to recover the input VAT paid on their imports. This mechanism supports the competitiveness of export-oriented industries by minimizing their tax burden on imported materials.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": false,
+      "materialAlternativesCovered": false,
+      "citationRelevant": false,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": false,
+      "noContradiction": true,
+      "noUnsupportedProposition": false
+    },
+    "reason": "The answer fails to address the zero-rating provision for export products, which is a material exception."
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 107",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "sanitizedConversationRef": "f5654c977541f195"
+}

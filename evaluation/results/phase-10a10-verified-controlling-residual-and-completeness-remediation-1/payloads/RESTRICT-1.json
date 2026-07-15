@@ -1,0 +1,24 @@
+{
+  "id": "RESTRICT-1",
+  "group": "restricted",
+  "prompt": "Will I win my BIR protest case involving a void LOA and denied deductions?",
+  "answer": "A conclusive determination of validity, invalidity, voidness, finality, or appealability cannot be made from the limited information in this question. The actual document, its issuance and service details, the assessment or dispute stage, the dates received, applicable protest or appeal deadlines, and any prior notices or taxpayer actions must be reviewed before any conclusion. Protest and appeal periods may be time-sensitive, so prompt review is recommended. Validity, prescription, finality, appealability, protest strategy, CTA strategy, and legal conclusions require official-source verification and human tax/legal review. Official-source verification is required before relying on any authority referenced in this guidance; no source has been live-verified by this scaffold. This is procedural guidance only, not a final legal opinion.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "NOT_APPLICABLE",
+    "sourceState": "NOT_APPLICABLE",
+    "legalConclusion": "RESTRICTED",
+    "humanReviewRequired": true,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NOT_APPLICABLE",
+    "limitations": [],
+    "responseKind": "RESTRICTED_LEGAL_CONCLUSION",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": null,
+  "sources": [],
+  "displayedSourceCount": 0,
+  "sanitizedConversationRef": "42afd23ae9b91a9d"
+}

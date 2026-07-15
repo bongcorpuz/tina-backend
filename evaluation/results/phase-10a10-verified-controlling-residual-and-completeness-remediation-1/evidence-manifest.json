@@ -1,0 +1,262 @@
+{
+  "generatedAtUtc": "2026-07-15T16:06:05.548Z",
+  "evidenceDirectory": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/",
+  "fileCount": 51,
+  "files": [
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/a10-run-log.json",
+      "bytes": 10591,
+      "sha256": "e8a1bf8ef1e3c83fd7bfb532743a0c59f62d05b068f17aaf2342bdc0a8414bf5"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/CONFLICT-1.json",
+      "bytes": 2487,
+      "sha256": "194ae9fd689d451ba1fbda2fb0afeacf7609efbe416d2a6741180bc137fb8374"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/CONFLICT-2.json",
+      "bytes": 3321,
+      "sha256": "733a4b50acf9ba4c7b3fe0c645f544fbe61da212ff797635fd48d8311ca20a81"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/M-Q2.json",
+      "bytes": 2366,
+      "sha256": "95b843c812bebacdfff4d65b205d860769d89024fc21f7083b3c7c275a546a13"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/M-Q23.json",
+      "bytes": 891,
+      "sha256": "599df356f77958891fd0a02e1239d87dbc3c3fd7e7f71f70a34763f6832672fd"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/M-Q26.json",
+      "bytes": 2174,
+      "sha256": "3c4782c83592fc1639e3d19ec5a58419a01ee2d816699cbd4f990654bd135ed9"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/M-Q27.json",
+      "bytes": 2069,
+      "sha256": "6cabf9618819d9371c3651f6273a7cc03b72f8d40c0e4866759cf51c2f75764e"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/M-Q29.json",
+      "bytes": 2077,
+      "sha256": "ed5614ba38e1ce83127a32aa394e4030bcf4b743a85280869590943f1035e564"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/M-Q3.json",
+      "bytes": 1874,
+      "sha256": "e695e984ae1cb329d716f80d2722e383045e257046e43095ce89ce54947ec2e1"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/M-Q30.json",
+      "bytes": 2580,
+      "sha256": "d2c100194f6d89419301d190f24e707a6862f019304119b708ab5e41369674a4"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/M-Q31.json",
+      "bytes": 1773,
+      "sha256": "4a2586ad23537409f6ded9eca31cf82256f395eedb23c363ef44d9877210f3e5"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/M-Q37.json",
+      "bytes": 1383,
+      "sha256": "c9df9d095356ed987a7e044a1035afea79e663eb658a6d7720a8a2d783cfb734"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/M-Q43.json",
+      "bytes": 854,
+      "sha256": "f52ef15d663eb9a167d076d5c3451ebe745305026849cb3598c90e1463a169fc"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/M-Q45.json",
+      "bytes": 2563,
+      "sha256": "7f226f2cf97d944a0878f1254ee6e1973363d4ebfec1a7634af3bba6be08232d"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/M-Q46.json",
+      "bytes": 3189,
+      "sha256": "dff5e2f1c07107db5bb279e93d58db5e84ebc67704959b696a5fb78064f71326"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/M-Q49.json",
+      "bytes": 2511,
+      "sha256": "5ee23b7de3f133f70d3ee0f78c50c186cc30aea82e8a90f64fbfdfc9e9b0216f"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/M-Q8.json",
+      "bytes": 3320,
+      "sha256": "96c1815d641adf7a6a454c83869ec2dc81f2c7977ebcfaa422f7060755712315"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/M-Q9.json",
+      "bytes": 2704,
+      "sha256": "2b482cf591ed5d3fc554ed96330535f30ab89d35ca9acd90e59c0102b5bf5a64"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/MISSING-1.json",
+      "bytes": 2932,
+      "sha256": "1c77a408e624fb5cf5fb0164f6076548438529cdbbbb30c1aeb4bdb2508fba4e"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/MISSING-2.json",
+      "bytes": 3017,
+      "sha256": "6f4412590a0b88b30b4fba47bf729ac6afbe12c842d6ba34f8fa72d69573ea03"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/Q35-p1.json",
+      "bytes": 887,
+      "sha256": "2b7dff4296d04e6c86455ce182de4206b0f90e44ea75029de015b8370094d463"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/Q35-p2.json",
+      "bytes": 886,
+      "sha256": "a0c5d4bc25742b02940146e086fb14f505fc34fdac6c95428b5bba76c6f63898"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/Q35-p3.json",
+      "bytes": 1899,
+      "sha256": "ae3ef65d0ce86b4a3bd62cd67bbcc5b33f1139174e2f82a4474bf066544dc9e0"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/Q35-r1.json",
+      "bytes": 1997,
+      "sha256": "36647d739e8a8e1d02b5b0d5cd3073ad788df6473305f29371d0745025841c4d"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/Q35-r2.json",
+      "bytes": 2119,
+      "sha256": "e8c863223cff5499ce4febd348741b570006b49fceea57575b879851c9d5f41f"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/Q35-r3.json",
+      "bytes": 2119,
+      "sha256": "1359dd65a370f49f71bd5f089fe1c04d2f73d8e4d3d135a598c7c75e200e99e4"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/Q41-p1.json",
+      "bytes": 1812,
+      "sha256": "2e025d0e5be639bb318dcece5fc151d35b6c152d57ac3fa47e724a200b06dfd2"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/Q41-p2.json",
+      "bytes": 1890,
+      "sha256": "4884aa6f4764cc76bfa6a3bf4499e970f624938b58fd88c7d67788aeff40b873"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/Q41-p3.json",
+      "bytes": 2046,
+      "sha256": "1fe69af7936d68938a19a373793a7790a5a46fa29d725447dafeed9bab23feff"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/Q41-r1.json",
+      "bytes": 1499,
+      "sha256": "6f9a33cb290fee08a4dd7910b761eac4e001f4533b63a9e83277b53f0334c543"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/Q41-r2.json",
+      "bytes": 1485,
+      "sha256": "461e41366ea1d96b633c75627440ebd1c3e0e5145890eb39a713c92e25d0c2be"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/Q41-r3.json",
+      "bytes": 1494,
+      "sha256": "71a0fbbfa0a8c346ccdcd0abe70813b2e8180d963cc28267e8a3491bbd0e4f90"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/Q5-p1.json",
+      "bytes": 2935,
+      "sha256": "656ad9062d45f769976940640c3a27f74f5d97d0d86e42b160b03e9b56babc69"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/Q5-p2.json",
+      "bytes": 3001,
+      "sha256": "7a2f3ded3297e68832a52d79f7a9df0d4dec3f9b9f5ca387a869bc0fbbcaffc4"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/Q5-p3.json",
+      "bytes": 979,
+      "sha256": "d1547b8871220dc26fb3ae3ce43a79e7ab78bef7339b1c19e7afc62789e4e80b"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/Q5-r1.json",
+      "bytes": 2366,
+      "sha256": "2e4f3e1c0f8ee14343e5a3a45b3b8a52b5e0e3a81d792cf03554c37cfa6033ff"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/Q5-r2.json",
+      "bytes": 2608,
+      "sha256": "db751119aa6c4b358d29b3eb992349c47f51def279a9b287cf6546849aba148b"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/Q5-r3.json",
+      "bytes": 2549,
+      "sha256": "4a4509276e4432304c2b4d9959c5f0edae9a33bfabf24ce85394c5141aebf737"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/REL-1.json",
+      "bytes": 945,
+      "sha256": "e08020efb0a45ad1d784aec8bd7c85c8c66a4f82285a00539caf6f9f419c50a5"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/REL-2.json",
+      "bytes": 2110,
+      "sha256": "b3f5facb8b6fc6a49c48560b9d39ae3eea607e4258bb3a4479d83af6c8ae4343"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/REL-3.json",
+      "bytes": 1631,
+      "sha256": "cf87f9e1d4a971b3bb33ca4c72c26f4638edc4e6aba77d3ed78a134a4d748793"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/RESTRICT-1.json",
+      "bytes": 1565,
+      "sha256": "3b57237e5672a6702916a8542f79564b1ae427c98e7b546a5da0d91677f71f62"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/RESTRICT-2.json",
+      "bytes": 3612,
+      "sha256": "cb4d8d7aef16e77ec55e3e7f44c6009438775145847ca527720c18fab180bdfb"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/SRCFAIL-1.json",
+      "bytes": 1014,
+      "sha256": "5b9e7f922c7d285e89b80255d4c40b1ad123ed9fbf647faaa71612dfb134fe91"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/SRCFAIL-2.json",
+      "bytes": 2559,
+      "sha256": "5d0b9e8ac303dd3541e4eeb1cdd0ad0a585e007c4cac652398b2665689ac0f36"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/VC-Q14.json",
+      "bytes": 2073,
+      "sha256": "b207f34898a67fe6c196407218c5385e69b12d9b5f2e4cb9d0948cf20a20bda2"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/VC-Q28.json",
+      "bytes": 2120,
+      "sha256": "4151e5dc7ff6d5432d3d05247f1bf890c4f9f17b6378b4c47b9d9589fdd0ee57"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/VC-Q32.json",
+      "bytes": 2635,
+      "sha256": "2bfdd3bdba7acda0d4945317d13179a602a0f261dbee84daa9a3a7e506d1bd7c"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/VC-Q34.json",
+      "bytes": 1964,
+      "sha256": "795098eeedb50d9f0f3133fd39d8e3da4c5e3304b104a9a6d44320b0f91eef80"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/payloads/VC-Q47.json",
+      "bytes": 2706,
+      "sha256": "9c71a6a021e4655816b39c7bda72133a4de29366064480f800d9a3d6c9ecf986"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1/root-cause-matrix.md",
+      "bytes": 1671,
+      "sha256": "869eb0242815c3c982dd7597d5bd3cfa08c27f91c025eafcdd86585b451185aa"
+    }
+  ]
+}

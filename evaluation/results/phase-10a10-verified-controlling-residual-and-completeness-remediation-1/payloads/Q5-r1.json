@@ -1,0 +1,51 @@
+{
+  "id": "Q5-r1",
+  "group": "q5exact",
+  "prompt": "What is the VAT rate on importation of goods used to manufacture export products?",
+  "answer": "### Short Answer\nThe VAT rate on the importation of goods used to manufacture export products is 12%. This is based on the total value used by the Bureau of Customs in determining tariff and customs duties, plus any applicable customs duties and excise taxes.\n\n### Controlling Authorities\nThe controlling authority for this VAT rate is found in Section 107 of the National Internal Revenue Code (NIRC), which states that there shall be a value-added tax equivalent to twelve percent (12%) on every importation of goods.\n\n### Interpretation\n\n### Practical Meaning\nFor businesses importing goods to manufacture products for export, the 12% VAT applies to the total landed cost of the goods. This means that companies must account for this VAT in their cost structure, although they may be eligible for input tax credits on VAT paid for goods that are subsequently exported, potentially mitigating the overall tax burden.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": false,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": false,
+      "materialAlternativesCovered": false,
+      "citationRelevant": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": false,
+      "noContradiction": true,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The answer omits the relevant exemption for export-oriented enterprises."
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 107",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "sanitizedConversationRef": "edef4d13eaf638e3"
+}

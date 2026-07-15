@@ -1,0 +1,55 @@
+{
+  "id": "VC-Q34",
+  "group": "verified",
+  "prompt": "What is the deadline for the annual income tax return of an individual?",
+  "answer": "### Short Answer\nThe deadline for the annual income tax return of an individual is April 15 of the following year after the taxable year.\n\n### Interpretation\n\n### Practical Meaning\nFor individuals, this deadline is crucial for compliance with tax obligations. Failing to file by April 15 may result in penalties and interest on any unpaid taxes. Taxpayers should ensure that they prepare their returns in advance to avoid last-minute issues.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The answer correctly states the deadline and is fully supported by relevant citations."
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 23",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 24",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 27",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 3,
+  "sanitizedConversationRef": "aebc147c9a47a514"
+}

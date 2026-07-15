@@ -1,0 +1,41 @@
+{
+  "id": "Q41-r3",
+  "group": "q41exact",
+  "prompt": "What is the penalty for failure to issue a BIR-registered invoice?",
+  "answer": "### Short Answer\n\nThis penalty applies to any person who fails to issue a registered invoice or receipt for sales of goods or services, which is a requirement under the tax code to ensure proper documentation and compliance with tax obligations. \n\nFor further details, you may refer to the relevant provisions of the NIRC, specifically Section 238, which outlines the penalties for violations related to invoicing and documentation.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "citation-relevance",
+    "gates": {
+      "structural": true,
+      "citationRelevant": false
+    },
+    "reason": "displayed_sources_only_foundational_provisions"
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 2",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 3",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "sanitizedConversationRef": "c90598f5268d1ddf"
+}

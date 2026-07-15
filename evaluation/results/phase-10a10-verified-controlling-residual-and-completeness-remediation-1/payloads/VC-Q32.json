@@ -1,0 +1,63 @@
+{
+  "id": "VC-Q32",
+  "group": "verified",
+  "prompt": "What is the deadline for filing an estate tax return, and can it be extended?",
+  "answer": "### Short Answer\nThe deadline for filing an estate tax return is within one year from the decedent's death. An extension of up to 30 days may be granted by the Commissioner in meritorious cases.\n\n### Controlling Authorities\n- **NIRC Sec. 89**: \"The estate tax return required... shall be filed within one (1) year from the decedent's death.\"\n\n### Interpretation\nThe law mandates that the estate tax return must be filed within one year of the death of the decedent. However, the Commissioner of Internal Revenue has the discretion to extend this deadline by an additional 30 days if there are valid reasons presented by the taxpayer.\n\n### Practical Meaning\nThis means that executors or heirs must ensure that the estate tax return is prepared and submitted within the stipulated timeframe to avoid penalties. If circumstances warrant, they can request a short extension, but this must be justified to the Commissioner.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The answer correctly addresses the deadline and extension for filing an estate tax return with relevant citations."
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 89",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 84",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 86",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 88",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 91",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 5,
+  "sanitizedConversationRef": "b63b4e5bebb75a66"
+}

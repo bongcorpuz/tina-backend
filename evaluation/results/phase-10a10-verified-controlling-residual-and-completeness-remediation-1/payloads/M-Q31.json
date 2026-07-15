@@ -1,0 +1,36 @@
+{
+  "id": "M-Q31",
+  "group": "mini",
+  "prompt": "What standard deduction is allowed in computing the net estate?",
+  "answer": "### Short Answer\n\n### Interpretation\nThe standard deduction serves to simplify the estate tax computation by allowing a fixed amount to be deducted from the gross estate, thereby reducing the taxable estate. This deduction is particularly beneficial for smaller estates, as it provides a straightforward method to lower the estate tax liability without the need for detailed itemization of deductions.\n\n### Practical Meaning\nThe allowance of a standard deduction of ₱5,000,000 means that estates valued at or below this amount may not incur any estate tax, as the taxable estate would effectively be zero. For estates exceeding this value, the deduction reduces the taxable base, potentially lowering the overall estate tax due. This provision aims to ease the tax burden on heirs and beneficiaries, facilitating the transfer of assets after death.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 34",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "sanitizedConversationRef": "c6e10ca54076e5c7"
+}

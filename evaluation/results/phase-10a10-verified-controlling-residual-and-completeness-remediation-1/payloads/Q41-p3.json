@@ -1,0 +1,51 @@
+{
+  "id": "Q41-p3",
+  "group": "paraphrase",
+  "prompt": "What criminal penalty applies to an invoicing violation under the NIRC?",
+  "answer": "### Issue Presented\nUnder the National Internal Revenue Code (NIRC), specifically Section 257, the criminal penalty for invoicing violations, such as issuing false or fraudulent invoices, can include imprisonment ranging from 6 months to 6 years, or a fine ranging from ₱1,000 to ₱50,000, or both, at the discretion of the court. \n\nThis provision aims to penalize any person who willfully attempts to evade or defeat any tax imposed by the NIRC or who willfully fails to pay any tax due. The penalties are designed to deter fraudulent activities related to tax compliance and invoicing practices.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": false,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": false
+    },
+    "reason": "The cited sections do not support the specific penalties for invoicing violations."
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 2",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 21",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "sanitizedConversationRef": "608c37477fb3cc1a"
+}

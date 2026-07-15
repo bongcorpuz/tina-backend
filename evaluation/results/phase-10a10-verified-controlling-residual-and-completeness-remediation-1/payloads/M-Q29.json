@@ -1,0 +1,47 @@
+{
+  "id": "M-Q29",
+  "group": "mini",
+  "prompt": "Is a ₱500 one-time courier payment to an individual subject to EWT?",
+  "answer": "### Issue Presented\nA ₱500 one-time courier payment to an individual is not subject to Expanded Withholding Tax (EWT) as it falls below the threshold for income payments that require withholding. According to Revenue Regulations No. 2-98, EWT applies to certain income payments, but small amounts like this are typically exempt.\n\n### Legal Interpretation\n\nThe withholding obligation arises when a withholding agent makes payment to a resident income payee for a service subject to withholding under applicable revenue regulations.\n\n### Practical Application\n\nThe payor must withhold the applicable rate, remit to the BIR, and issue BIR Form 2307 (certificate of creditable withholding tax) to the payee.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": false,
+      "materialAlternativesCovered": false,
+      "citationRelevant": false,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": false,
+      "noContradiction": true,
+      "noUnsupportedProposition": false
+    },
+    "reason": "The answer incorrectly claims an exemption based on an invented threshold for EWT."
+  },
+  "sources": [
+    {
+      "label": "Revenue Regulations",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "sanitizedConversationRef": "c9f2815b70165c32"
+}

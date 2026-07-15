@@ -1,0 +1,65 @@
+{
+  "id": "M-Q8",
+  "group": "mini",
+  "prompt": "Is leasing a residential unit at ₱15,000 per month subject to VAT?",
+  "answer": "### Issue Presented\nIs leasing a residential unit at ₱15,000 per month subject to Value-Added Tax (VAT)?\n\n### Short Answer\nYes, leasing a residential unit at ₱15,000 per month is subject to VAT under certain conditions, specifically if the lessor is a VAT-registered person.\n\n### Controlling Authorities\nThe relevant provisions are found in the National Internal Revenue Code (NIRC):\n- **Section 106**: Value-Added Tax on Sale of Goods or Properties\n- **Section 108**: Value-Added Tax on the Sale of Services, Including Digital Services, and the Use or Lease of Properties\n\n### Legal Interpretation\nUnder **Section 106** of the NIRC, VAT is imposed on the sale, barter, or exchange of goods or properties, which includes the lease of properties. **Section 108** further specifies that VAT is also applicable to the lease of properties, indicating that the gross sales derived from such leases are subject to a 12% VAT. The term \"lease of properties\" encompasses residential units, provided the lessor is engaged in the business of leasing and is VAT-registered.\n\n### Practical Application\nIf the lessor is a VAT-registered entity or individual, the monthly lease payment of ₱15,000 will be subject to a 12% VAT, making the total monthly payment ₱16,800 (₱15,000 + ₱1,800 VAT). However, if the lessor is not VAT-registered, the lease would not be subject to VAT, and the tenant would only pay the agreed rental amount of ₱15,000. It is essential for both parties to confirm the VAT registration status of the lessor to determine the correct tax treatment of the lease payment.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "limitations": [
+      "POTENTIAL_CONFLICT"
+    ],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": false,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": false
+    },
+    "reason": "The cited authorities do not specifically support the claim regarding VAT on residential leases."
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 106",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 105",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 107",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 108",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR 16-2005",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 5,
+  "sanitizedConversationRef": "14d0af1fc71ef5df"
+}

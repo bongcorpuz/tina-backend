@@ -8991,3 +8991,23 @@ Next task: PHASE-10A10-VERIFIED-CONTROLLING-RESIDUAL-AND-COMPLETENESS-REMEDIATIO
 
 Artifacts: PHASE-10A9-FULL-FACTCHECK-RERUN-1_REPORT.md; evaluation/results/phase-10a9-full-factcheck-rerun-1.json; evaluation/results/phase-10a9-full-factcheck-rerun-1/ (execution-manifest, run-log.json, TINA_Tax_FactCheck_Run_Log_v3_COMPLETED.md, scoring-worksheet.json, payloads x150, evidence-manifest with SHA-256).
 ```
+
+## Phase 10A10 Verified-Controlling Residual & Completeness Remediation 1 -- PHASE 10A10 VERIFIED-CONTROLLING REMEDIATION PASS WITH RECOMMENDATIONS (2026-07-16):
+
+```text
+PHASE-10A10-VERIFIED-CONTROLLING-RESIDUAL-AND-COMPLETENESS-REMEDIATION-1 executed by Claude Code (Opus 4.8, low speed) to eliminate the residual invalid VERIFIED_CONTROLLING findings the independent A9 review confirmed (REVISIONS REQUIRED): 3 clusters / 7 invalid runs -- Q5 x3 (import-VAT answer omitting the CREATE MORE exemption), Q35 x3 ("only Form 1701", omitting 1701-MS/1701A, cited only NIRC Sec 2), Q41-r3 (non-responsive penalty answer citing NIRC Secs 2-3). Backend start HEAD 9f98c3c, runtime/final HEAD 728aba6, sync 0 0. Frontend not modified (0816ac8). Dev Factory not modified (9167002).
+
+Root cause: the validator judged operative-claim plausibility but not required-issue-key / material-exception / material-alternative coverage, nor whether displayed sources were specifically relevant to the exact proposition.
+
+Fix (runtime, services/answer-support-validator.js only): (1) a deterministic foundational-citation gate -- if every displayed authority is only a foundational/jurisdictional NIRC provision (Secs 1-6) it cannot support a specific rate/form/penalty -> fail closed (catches Q35 Sec 2, Q41 Secs 2-3); (2) a strengthened controlled-evaluator schema returning answerResponsive, primaryIssueAnswered, requiredIssueKeysCovered, materialExceptionsCovered, materialAlternativesCovered, citationRelevant, citationSupportsProposition, materiallyComplete, unsupportedMaterialProposition, eligibleForVerifiedControlling -- all positive gates required; malformed/timeout/unavailable fail closed; backward-compatible with the PHASE-10A8 field names. Coverage gates apply ONLY when the question implies an exception/alternative (simple correct factual answers not penalized). No hardcoded Q-number logic; no v3.0 expected-answer leakage. Model strategy: only gpt-4o-mini available on the API key (stronger models 403); retained with stronger grounding + the deterministic gate. Targeted tests 18/18; all Phase 10A regression suites green post-commit.
+
+LIVE VALIDATION (49 runs on a local authenticated server at HEAD 728aba6 vs real staging Supabase retrieval + real OpenAI gpt-4o-mini): Q5 exact 0/3 invalid verified; Q35 exact 0/3; Q41 exact 0/3; paraphrases 0/9 verified; mini prior-9 0 verified; 0 invalid VERIFIED_CONTROLLING across ALL runs (6 verified runs audited: 4 valid Q32/Q34/Q47/Q46, 2 questionable-completeness M-Q26/CONFLICT-2, 0 invalid). Legitimate verified reachable (Q32/Q34/Q47). Restricted RESTRICT-1 held; missing-authority -> related; source-failure -> related (safe). 25-question mini fact-check: 0 invalid verified, 0 prior-9 verified, 0 false refusals, 0 fabricated authorities. Safe under-claims persist (Q14/Q28 correct 20% final tax downgraded by gpt-4o-mini recency hallucination).
+
+Severity: P0=0. P1=0 (all three invalid-verified clusters eliminated; full 150-run confirmation deferred to A11). P2=3 (validator precision cost / safe recency under-claims; reduced-but-present questionable-completeness verified; non-LOA outcome-prediction restriction gap carryover). P3=1 (validator latency ~26s). Security: 0.
+
+Decision: PHASE 10A10 VERIFIED-CONTROLLING REMEDIATION PASS WITH RECOMMENDATIONS. Phase 10A remains REOPENED pending full fact-check rerun (NOT closed). Phase 10B: BLOCKED. Phase 10C: BLOCKED. Adversarial suite: DEFERRED. Independent closure review: DEFERRED.
+
+Next task: PHASE-10A11-FULL-FACTCHECK-RERUN-2 (independent review of A10 by a model that did not execute it, then a full 50x3 rerun confirming 0 invalid verified corpus-wide and quantifying the full-corpus precision cost). Highest-value future lever: a stronger/retrieval-grounded validator model.
+
+Artifacts: PHASE-10A10-VERIFIED-CONTROLLING-RESIDUAL-AND-COMPLETENESS-REMEDIATION-1_REPORT.md; evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1.json; evaluation/results/phase-10a10-.../ (root-cause-matrix.md, a10-run-log.json, payloads x49, evidence-manifest with SHA-256). Code: services/answer-support-validator.js, tests/phase-10a10-...test.mjs. Commit 728aba6.
+```

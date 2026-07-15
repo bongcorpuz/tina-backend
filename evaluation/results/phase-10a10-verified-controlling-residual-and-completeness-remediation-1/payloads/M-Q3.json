@@ -1,0 +1,48 @@
+{
+  "id": "M-Q3",
+  "group": "mini",
+  "prompt": "A VAT-registered exporter sells 100% abroad. Can it obtain a refund or tax credit for input VAT?",
+  "answer": "### Short Answer\n\n### Controlling Authorities\n2. **NIRC Section 236** - This section outlines the registration requirements and obligations of VAT-registered persons, reinforcing the eligibility for input VAT claims.\n\n### Interpretation\n\n### Practical Meaning\nFor VAT-registered exporters, this provision is crucial as it alleviates the cash flow burden associated with input VAT on purchases. By allowing refunds or credits for input VAT, the law encourages export activities, making it financially viable for businesses to engage in international trade. Exporters should ensure they maintain proper documentation and comply with the filing requirements to successfully claim these benefits.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 109",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 236",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    },
+    {
+      "label": "RMC 75-2015",
+      "authorityType": "RMC"
+    }
+  ],
+  "displayedSourceCount": 4,
+  "sanitizedConversationRef": "9d541c3ed389f745"
+}
