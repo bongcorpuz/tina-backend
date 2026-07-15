@@ -125,24 +125,61 @@ Flag ONLY these high-confidence error classes (do not flag anything else):
 
 Do NOT flag based on uncertainty about whether a standard numeric rate is current. Treat well-known baseline Philippine values as correct (e.g. 12% VAT, ₱3M VAT threshold, 20% final tax on interest and royalties, 6% estate and donor's tax, ₱250,000 donor's annual exemption, April 15 individual ITR deadline). If the operative claim matches a standard baseline value, do NOT flag it. Only flag a numeric value when it is plainly reversed, fabricated, or a repealed threshold.
 
+PHASE-10A10 -- you must ALSO judge EXACT RESPONSIVENESS and COMPLETE ISSUE COVERAGE, not just plausibility. Before deciding, silently:
+1. Identify what a COMPLETE answer to THIS exact question must contain: the primary issue, every material EXCEPTION/qualification, and every material ALTERNATIVE (e.g. an alternative form, treatment, or regime). Examples of material coverage you must require when the question implies them:
+   - an import-VAT question must address any applicable statutory exemption/special regime (e.g. an export-enterprise exemption), not just the general rate;
+   - a "which form" question must address every mandatory alternative form/classification, not present one form as exclusive;
+   - a "what is the penalty" question must state the actual penalty (fine and/or imprisonment) and the correct penal section, not merely describe the prohibited act.
+2. Check whether the DISPLAYED SOURCE authorities are specifically RELEVANT to the exact proposition. Generic/foundational provisions (e.g. NIRC Sections 1-6 on title, definitions, jurisdiction, or the Commissioner's powers) do NOT support a specific rate, form, or penalty. A cited section that exists but is materially irrelevant does NOT count as support.
+
 Return ONLY JSON:
 {
-  "operativeClaim": "the single key claim you checked",
-  "identifiedError": "a SPECIFIC error you are confident about, or empty string if none",
-  "responsive": true|false,
+  "operativeClaim": "the single key claim",
+  "questionIntent": "what the question actually asks for",
+  "requiredIssueKeys": ["..."],
+  "missingIssueKeys": ["..."],
+  "identifiedError": "a SPECIFIC confident error, or empty string",
+  "answerResponsive": true|false,
+  "primaryIssueAnswered": true|false,
+  "requiredIssueKeysCovered": true|false,
+  "materialExceptionsCovered": true|false,
+  "materialAlternativesCovered": true|false,
+  "citationRelevant": true|false,
+  "citationSupportsProposition": true|false,
   "substantive": true|false,
   "propositionSupported": true|false,
   "materiallyComplete": true|false,
   "contradictsSources": true|false,
-  "hasUnsupportedProposition": true|false,
+  "unsupportedMaterialProposition": true|false,
+  "eligibleForVerifiedControlling": true|false,
   "reason": "one short sentence"
 }
 
-Calibration rules (important):
-- Set propositionSupported=false ONLY when you can name a SPECIFIC, confident error in "identifiedError" (a reversed treatment, an invented exemption, a clearly wrong filing rule, an obsolete threshold, or a numeric rate that clearly conflicts with well-known standard Philippine rates).
-- Do NOT flag merely because you are UNSURE whether a rate/threshold was recently updated. If the stated rate/threshold matches standard well-known Philippine tax values (e.g. 6% estate/donor's tax, 20% final tax on interest/royalties, April 15 ITR deadline, ₱3M VAT threshold, 12% VAT), treat it as supported.
-- When "identifiedError" is empty, set propositionSupported=true and hasUnsupportedProposition=false.
+Rules:
+- Set eligibleForVerifiedControlling=true ONLY when the answer is responsive, the primary issue is answered, all required issue keys / material exceptions / material alternatives are covered, and there is no confident error.
+- IMPORTANT precision rule: only require exception/alternative coverage when the QUESTION actually implies one. A simple factual question with a single correct answer and no material exception (e.g. a standard filing deadline, a standard rate, a one-year period) is materiallyComplete when it states that value correctly -- set materialExceptionsCovered=true and materialAlternativesCovered=true in that case; do NOT invent required exceptions.
+- Do NOT flag a correct baseline value merely because you are unsure it is current (12% VAT, ₱3M VAT threshold, 20% final tax on interest/royalties, 6% estate/donor's tax, ₱250,000 donor's exemption, April 15 ITR deadline, one-year estate-return deadline are correct baselines). For citationRelevant: a correct statement of such a well-known baseline rule is acceptable unless the displayed sources are only generic foundational provisions (NIRC Secs 1-6).
+- Set eligibleForVerifiedControlling=false when the answer OMITS a material exception the question implies (e.g. an import-VAT question ignoring an export-enterprise exemption), presents one form/treatment as the "only" one when a mandatory alternative exists, is non-responsive (e.g. a penalty question that never states the penalty), or relies only on generic foundational provisions for a specific proposition.
 Output JSON only.`;
+
+// Deterministic: displayed sources are ONLY foundational/jurisdictional NIRC
+// provisions (Title I, definitions, Commissioner powers, jurisdiction), which
+// cannot support a specific rate/form/penalty proposition. Catches the Q35
+// (NIRC Sec 2) and Q41 (NIRC Sec 2 & 3) citation-relevance clusters.
+const FOUNDATIONAL_SECTION_RE = /\bsec(?:tion|\.)?\s*0*([1-6])\b(?!\d)/i;
+const SPECIFIC_AUTHORITY_RE = /\bsec(?:tion|\.)?\s*0*([7-9]|[1-9]\d{1,3})\b|\bRR\b|\bRMC\b|\bRMO\b|\bG\.?R\.?\b|\bCTA\b|regulation|circular|ruling|revenue/i;
+export function citesOnlyFoundationalProvisions(sources = []) {
+  const labels = (Array.isArray(sources) ? sources : [])
+    .map((s) => (s && (s.label || s.citation || s.title || s.displayLabel)) || "")
+    .filter(Boolean);
+  if (labels.length === 0) return false; // no displayed sources handled elsewhere
+  let anyFoundational = false;
+  for (const l of labels) {
+    if (SPECIFIC_AUTHORITY_RE.test(l)) return false; // at least one specific authority present
+    if (FOUNDATIONAL_SECTION_RE.test(l)) anyFoundational = true;
+  }
+  return anyFoundational; // all labels foundational and none specific
+}
 
 function sourceCitations(sources) {
   if (!Array.isArray(sources)) return "(none)";
@@ -176,6 +213,18 @@ export async function evaluateAnswerSupport({ question, answer, sources = [], mo
     };
   }
 
+  // PHASE-10A10: deterministic citation-relevance pre-gate. If every displayed
+  // authority is only a foundational/jurisdictional NIRC provision (Secs 1-6),
+  // it cannot support a specific rate/form/penalty proposition -> fail closed.
+  if (citesOnlyFoundationalProvisions(sources)) {
+    return {
+      verifiedEligible: false,
+      stage: "citation-relevance",
+      gates: { structural: true, citationRelevant: false },
+      reason: "displayed_sources_only_foundational_provisions"
+    };
+  }
+
   const oai = client || getClient();
   if (!oai) {
     return { verifiedEligible: false, stage: "unavailable", gates: { structural: true }, reason: "validator_unavailable_fail_closed" };
@@ -202,16 +251,29 @@ export async function evaluateAnswerSupport({ question, answer, sources = [], mo
     ]);
     const raw = resp?.choices?.[0]?.message?.content || "{}";
     const v = JSON.parse(raw);
+    // Backward-compatible gate derivation: PHASE-10A10 structured fields when
+    // present; PHASE-10A8 field names otherwise. Fields absent in a verdict
+    // default to true so pre-A10 mock verdicts (which only set the A8 fields)
+    // stay meaningful; any explicit false fails closed. Negative-polarity
+    // fields (contradictsSources, [has]unsupported...) invert to a safe gate.
+    const dt = (val) => (val === undefined ? true : val === true); // default-true positive gate
+    const responsive = dt(v.answerResponsive) && dt(v.responsive);
     const gates = {
       structural: true,
-      responsive: v.responsive === true,
-      substantive: v.substantive === true,
-      propositionSupported: v.propositionSupported === true,
-      materiallyComplete: v.materiallyComplete === true,
-      noContradiction: v.contradictsSources === false,
-      noUnsupportedProposition: v.hasUnsupportedProposition === false
+      responsive,
+      primaryIssueAnswered: dt(v.primaryIssueAnswered),
+      requiredIssueKeysCovered: dt(v.requiredIssueKeysCovered),
+      materialExceptionsCovered: dt(v.materialExceptionsCovered),
+      materialAlternativesCovered: dt(v.materialAlternativesCovered),
+      citationRelevant: dt(v.citationRelevant),
+      substantive: dt(v.substantive),
+      propositionSupported: dt(v.citationSupportsProposition) && dt(v.propositionSupported),
+      materiallyComplete: dt(v.materiallyComplete),
+      noContradiction: v.contradictsSources === true ? false : true,
+      noUnsupportedProposition: (v.unsupportedMaterialProposition === true || v.hasUnsupportedProposition === true) ? false : true
     };
-    const verifiedEligible = Object.values(gates).every(Boolean);
+    const explicitEligible = v.eligibleForVerifiedControlling !== false; // only an explicit false blocks
+    const verifiedEligible = explicitEligible && Object.values(gates).every(Boolean);
     return { verifiedEligible, stage: "llm", gates, reason: String(v.reason || "").slice(0, 200) };
   } catch (err) {
     return { verifiedEligible: false, stage: "error", gates: { structural: true }, reason: "validator_error_fail_closed" };
