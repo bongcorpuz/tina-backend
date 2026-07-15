@@ -1,0 +1,222 @@
+{
+  "generatedAtUtc": "2026-07-15T05:07:19.779Z",
+  "evidenceDirectory": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/",
+  "fileCount": 43,
+  "files": [
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/execution-manifest.json",
+      "sha256": "0e61f629cffb8a1b2b0008d6026d6fd7fb7e78918f4722c6bd7d4e295138b3f0",
+      "bytes": 918
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/html/Q1-r1.html",
+      "sha256": "6b2ee635af384c026f83f45a21f200bcc91bab1c566ed2c5613bc222cfd4f7d0",
+      "bytes": 2798
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/html/Q10-r1.html",
+      "sha256": "3bc2281f9f3ad71f0658a2d7bbe1f4ace27a9581c46111298f2ca244a262b64b",
+      "bytes": 2505
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/html/Q2-r1.html",
+      "sha256": "e26832dade29e6526689d75632a5bd65361ea956386bf493a334ef845c40e3d9",
+      "bytes": 3969
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/html/Q2-r2.html",
+      "sha256": "81645c023eccca44a79837e154cfd89d14eeda5ec5059d2cd4750d00d2e151cf",
+      "bytes": 3980
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/html/Q2-r3.html",
+      "sha256": "69793c5060ad498fa53263d402b79b7ea70e7bf177ae10dfeb6259cc405ffa58",
+      "bytes": 3868
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/html/Q3-r1.html",
+      "sha256": "a39df2b389712962ed22fefa4ee0df7707c1fa82276a3ca6b0e6c4750d8e3067",
+      "bytes": 2978
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/html/Q4-r1.html",
+      "sha256": "5b44984f8163540d051ecfc6a4548b2299c82ec99bb88e08400f92bd61362815",
+      "bytes": 4776
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/html/Q5-r1.html",
+      "sha256": "299efd14a3b89998e35655440511b0e191c5d7185c8fb4a134f3440a0ee16379",
+      "bytes": 2302
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/html/Q6-r1.html",
+      "sha256": "389510e265d8e00bce45670480bf86c18bf9bc93821ec7469222dff970cda0b5",
+      "bytes": 1843
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/html/Q7-r1.html",
+      "sha256": "9c75bfa4ff4fb76fe893b6f0c7e1292785569dbf118251cf94011e6b7e506ebf",
+      "bytes": 2805
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/html/Q8-r1.html",
+      "sha256": "df917557d2a4856e9f7a28fc1f9feb9e88368471e5808c96b1c95bd5759d3d28",
+      "bytes": 3313
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/html/Q9-r1.html",
+      "sha256": "9992e5b0ccdad8689f6afba032295471754d9489f9a053fb96b8a199c6bcde55",
+      "bytes": 3526
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/html/Q9-r2.html",
+      "sha256": "ee87025420c91b9e3a78863b21baff5347d4c61f4ccedcab51b52d2d35436292",
+      "bytes": 3526
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/html/Q9-r3.html",
+      "sha256": "361bbd43a9cc549eee13778429823f487508cd34f4962876762882fb96beb1a8",
+      "bytes": 3526
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/independent-review-notes.json",
+      "sha256": "db1dfcdcce4efb79efa4027e957eaaeca8e8d05cd5c5d73ab90b53433b6acce3",
+      "bytes": 872
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/payloads/Q1-r1.json",
+      "sha256": "401daa1d0e70ef1f9a7fea38333f89967496406dd93679d2cebe4ba46f021300",
+      "bytes": 21085
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/payloads/Q10-r1.json",
+      "sha256": "512bd341224a37543e4052ec78f111dc7022352015aeebcdc0c15a3f251c500f",
+      "bytes": 12567
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/payloads/Q2-r1.json",
+      "sha256": "2a0839cf111a24d65e574a4f1d7b26523ffc65271a391f30c2736bdcac8372d9",
+      "bytes": 46654
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/payloads/Q2-r2.json",
+      "sha256": "55808689b69d15813cad107cd8b7521fedaa7488128002be612ea16fdf0999bb",
+      "bytes": 46604
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/payloads/Q2-r3.json",
+      "sha256": "149530713378fd428a757cb8d173b758e3d45bcdd6bdeac6878a7873c0cb4884",
+      "bytes": 46262
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/payloads/Q3-r1.json",
+      "sha256": "e4e3e500cd2985b59a46a00394cb7b2beeecb2ed040c23014a5924e78d5ff54b",
+      "bytes": 41314
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/payloads/Q4-r1.json",
+      "sha256": "00d478019718f144ca02bea4e90f162f21557c48b29213e92bf11ba21cb5bb7e",
+      "bytes": 48663
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/payloads/Q5-r1.json",
+      "sha256": "e48c24b4aecac744861057337b2ac9cd91c78dbbca71f7669ab82563c0c28845",
+      "bytes": 46448
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/payloads/Q6-r1.json",
+      "sha256": "2c3e6a95e5620e508d875f7e64401429df0b5f60b64e781cf4c8c833c2a16c30",
+      "bytes": 38648
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/payloads/Q7-r1.json",
+      "sha256": "644033df9cee052c4dbcc5bbb99d6b2527108f424a317689a292b1a2bdbde354",
+      "bytes": 21150
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/payloads/Q8-r1.json",
+      "sha256": "60276747b9ae622434264def750737f34a8d0d657ad6314f2051e6a2b12fce5c",
+      "bytes": 44284
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/payloads/Q9-r1.json",
+      "sha256": "f85b0c287844545a4416eb370f9ace2ccf24238a6bb2217c6d9df0f87261d221",
+      "bytes": 47205
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/payloads/Q9-r2.json",
+      "sha256": "92d35ff3eb1779d7666d16343f3448b090442e3ed70c0befdf2549f2e057e71e",
+      "bytes": 47201
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/payloads/Q9-r3.json",
+      "sha256": "b029a84359a42bcc751b06b0a843d8f85301130fb5890853db207842d8dd762d",
+      "bytes": 47193
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/persistence-evidence.json",
+      "sha256": "dbc06e7cc5a927237f08146fa16d21b3ebf46e1f3790298b8f1a53cddd623760",
+      "bytes": 5056
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/run-log.json",
+      "sha256": "9cbe54156c1f1d06705f6c10867dbd3e25a12c9107b9dcc61efd7fd47bde1d30",
+      "bytes": 54488
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/scoring-matrix.json",
+      "sha256": "6e69c8d5b486c385981157f32eba4d890911e1460b49377a843f4a9e3caa87b2",
+      "bytes": 6110
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/screenshots/Q1-r1-desktop.png",
+      "sha256": "b689f71ffd32d574a7461d5d60cd8a175882d2394dd1a099475197a4fa8a63ca",
+      "bytes": 71617
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/screenshots/Q2-r1-desktop.png",
+      "sha256": "2a6cf1167018c883411436b2cae8a83949fbb5b222e6f59eaadbbdb424d9d314",
+      "bytes": 70395
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/screenshots/Q2-r2-desktop.png",
+      "sha256": "f52ec02d5b70c1a66bab3ddf94d838570db7ed2d8dfe0bbe6b8521935a4e0959",
+      "bytes": 72172
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/screenshots/Q2-r3-desktop.png",
+      "sha256": "ec6fb6a99c80876ec9f7844af7362a7ee97c46f35679f60d53804b3896b83e92",
+      "bytes": 69566
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/screenshots/Q3-r1-desktop.png",
+      "sha256": "b1f18d09b74872bc2b7b6e79768c6ca5c3eda21a2e2cf42e2837fbe002129559",
+      "bytes": 68304
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/screenshots/Q4-r1-desktop.png",
+      "sha256": "b27ccf85dd5347e3703bf95ab0e73266b90fd554d9ef5294f138aa10b759c61a",
+      "bytes": 86780
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/screenshots/Q6-r1-desktop.png",
+      "sha256": "555af4ddeb79ccf1e189e1cd3fc55fcc78d40ab70d09957d6c2f78d69c7755a2",
+      "bytes": 38977
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/screenshots/Q8-r1-desktop.png",
+      "sha256": "64f543c5cf92be7e090988f632337295257b3afb38b5e0e9d63241d69324c222",
+      "bytes": 72831
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/screenshots/Q9-r3-desktop.png",
+      "sha256": "b432f8fc2b2c85db969f60a5b56e22acde10c8e39d4df215c3da630cff12e4da",
+      "bytes": 68001
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r4-full-live-revalidation-1/source-summaries.json",
+      "sha256": "3b8c0a020c94302d6f4b67abc7f6ad9d87615dcf9b7d142852a2b637c7caf190",
+      "bytes": 4550
+    }
+  ]
+}

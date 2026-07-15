@@ -1,0 +1,1246 @@
+{
+  "ask": {
+    "status": 200,
+    "responseTimeMs": 17480,
+    "payload": {
+      "success": true,
+      "engine": "TINA_ASK_HANDLER",
+      "version": "9.0.0",
+      "hook": "/ask",
+      "mode": "LEGAL_ANALYSIS",
+      "routeKind": "NORMAL_RAG",
+      "hookTitle": "Default TINA Assistant",
+      "answer": "### Short Answer\n\n### Controlling Authorities\n2. **NIRC Section 236** - Outlines the registration requirements for VAT-registered persons.\n\n### Interpretation\n\n### Practical Meaning\nFor VAT-registered suppliers selling fresh frozen seafood, they do not need to obtain an additional VAT exemption certificate to validate the VAT-exempt status of their sales. The existing BIR Certificate of Registration is sufficient for compliance and verification purposes. This simplifies the process for suppliers, allowing them to focus on their business operations without the burden of additional documentation for VAT exemption.",
+      "sources": [
+        {
+          "label": "NIRC Sec. 109",
+          "title": "NIRC Sec. 109",
+          "citation": "NIRC Sec. 109",
+          "authorityType": "STATUTE",
+          "displayLabel": "NIRC Sec. 109",
+          "limitationRequired": false,
+          "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk"
+        },
+        {
+          "label": "NIRC Sec. 236",
+          "title": "NIRC Sec. 236",
+          "citation": "NIRC Sec. 236",
+          "authorityType": "STATUTE",
+          "displayLabel": "NIRC Sec. 236",
+          "limitationRequired": false,
+          "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk"
+        },
+        {
+          "label": "RR No. 16-2005",
+          "title": "RR No. 16-2005",
+          "citation": "RR No. 16-2005",
+          "authorityType": "RR",
+          "displayLabel": "RR No. 16-2005",
+          "limitationRequired": false,
+          "publicUrl": "https://drive.google.com/file/d/15AZ5CJymXUzA8eIlfy0A1WXubLw1HmeJ/view?usp=drivesdk"
+        },
+        {
+          "label": "RMC 75-2015",
+          "title": "RMC 75-2015",
+          "citation": "RMC 75-2015",
+          "authorityType": "RMC",
+          "displayLabel": "RMC 75-2015",
+          "limitationRequired": false
+        }
+      ],
+      "sourcesUsed": [
+        {
+          "label": "NIRC Sec. 109",
+          "title": "NIRC Sec. 109",
+          "citation": "NIRC Sec. 109",
+          "authorityType": "STATUTE",
+          "displayLabel": "NIRC Sec. 109",
+          "limitationRequired": false,
+          "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk"
+        },
+        {
+          "label": "NIRC Sec. 236",
+          "title": "NIRC Sec. 236",
+          "citation": "NIRC Sec. 236",
+          "authorityType": "STATUTE",
+          "displayLabel": "NIRC Sec. 236",
+          "limitationRequired": false,
+          "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk"
+        },
+        {
+          "label": "RR No. 16-2005",
+          "title": "RR No. 16-2005",
+          "citation": "RR No. 16-2005",
+          "authorityType": "RR",
+          "displayLabel": "RR No. 16-2005",
+          "limitationRequired": false,
+          "publicUrl": "https://drive.google.com/file/d/15AZ5CJymXUzA8eIlfy0A1WXubLw1HmeJ/view?usp=drivesdk"
+        },
+        {
+          "label": "RMC 75-2015",
+          "title": "RMC 75-2015",
+          "citation": "RMC 75-2015",
+          "authorityType": "RMC",
+          "displayLabel": "RMC 75-2015",
+          "limitationRequired": false
+        }
+      ],
+      "sourceCards": [
+        {
+          "label": "NIRC Sec. 109",
+          "title": "NIRC Sec. 109",
+          "citation": "NIRC Sec. 109",
+          "authorityType": "STATUTE",
+          "displayLabel": "NIRC Sec. 109",
+          "limitationRequired": false,
+          "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk"
+        },
+        {
+          "label": "NIRC Sec. 236",
+          "title": "NIRC Sec. 236",
+          "citation": "NIRC Sec. 236",
+          "authorityType": "STATUTE",
+          "displayLabel": "NIRC Sec. 236",
+          "limitationRequired": false,
+          "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk"
+        },
+        {
+          "label": "RR No. 16-2005",
+          "title": "RR No. 16-2005",
+          "citation": "RR No. 16-2005",
+          "authorityType": "RR",
+          "displayLabel": "RR No. 16-2005",
+          "limitationRequired": false,
+          "publicUrl": "https://drive.google.com/file/d/15AZ5CJymXUzA8eIlfy0A1WXubLw1HmeJ/view?usp=drivesdk"
+        },
+        {
+          "label": "RMC 75-2015",
+          "title": "RMC 75-2015",
+          "citation": "RMC 75-2015",
+          "authorityType": "RMC",
+          "displayLabel": "RMC 75-2015",
+          "limitationRequired": false
+        }
+      ],
+      "educationalSources": null,
+      "vectorMatches": 12,
+      "trust": {
+        "version": "1.0",
+        "authoritySupport": "VERIFIED_CONTROLLING",
+        "sourceState": "AUTHORITY_FOUND",
+        "legalConclusion": "ALLOWED",
+        "humanReviewRequired": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "conflictState": "NO_CONFLICT",
+        "limitations": [],
+        "responseKind": "GENERAL_TAX",
+        "specificAuthorityNotFound": false
+      },
+      "retrievedSourceCount": 12,
+      "displayedSourceCount": 4,
+      "sourceStatus": "AUTHORITY_FOUND",
+      "sourceAvailability": "AUTHORITY_FOUND",
+      "saeStatus": "AUTHORITY_FOUND",
+      "patch024cPostSourcecard": {
+        "executed": true,
+        "sourceCardCount": 4,
+        "beforeLength": 1293,
+        "afterLength": 619,
+        "changed": true,
+        "sourceAvailability": "AUTHORITY_FOUND",
+        "answerMode": "LEGAL_ANALYSIS",
+        "requestId": "route-1784091870273-f852b53f"
+      },
+      "internalError": false,
+      "errorCategory": null,
+      "sourceAvailabilityReason": "12 governing indexed parsed candidate(s) directly govern the issue.",
+      "retrievalTimedOut": false,
+      "relatedSourceCount": 0,
+      "retrievalLayerCounts": {
+        "exactAuthorityMatches": 12,
+        "citationVariantMatches": 0,
+        "metadataMatches": 0,
+        "contentKeywordMatches": 0,
+        "semanticMatches": 0,
+        "fallbackMatches": 0,
+        "supabaseFallbackMatches": 0
+      },
+      "firstSourceLabels": [
+        "NIRC Sec. 109",
+        "NIRC Sec. 236",
+        "RR No. 16-2005",
+        "RMC 75-2015"
+      ],
+      "diagnostics": {
+        "requestId": "route-1784091870273-f852b53f",
+        "route": "/ask",
+        "model": "gpt-4o-mini",
+        "budgetMs": 90000,
+        "pipelineTimings": {
+          "requestStartedAt": 1784091870273,
+          "classificationStartedAt": 1784091870922,
+          "classificationCompletedAt": 1784091870927,
+          "retrievalStartedAt": 1784091870928,
+          "retrievalCompletedAt": 1784091879334,
+          "authorityResolutionStartedAt": 1784091879434,
+          "authorityResolutionCompletedAt": 1784091879435,
+          "generationStartedAt": 1784091880120,
+          "generationCompletedAt": 1784091883653,
+          "renderingStartedAt": 1784091883653,
+          "renderingCompletedAt": 1784091883656,
+          "complianceStartedAt": 1784091883656,
+          "complianceCompletedAt": 1784091883663,
+          "sourceSelectionStartedAt": 1784091883663,
+          "sourceSelectionCompletedAt": 1784091883936,
+          "responseCompletedAt": 1784091884073,
+          "totalMs": 13800
+        },
+        "pipelineStageDurations": {
+          "classificationMs": 5,
+          "retrievalMs": 8406,
+          "authorityResolutionMs": 1,
+          "sourceSelectionMs": 273,
+          "generationMs": 3533,
+          "complianceMs": 7,
+          "renderingMs": 3,
+          "totalMs": 13800
+        },
+        "partialPipelineState": {
+          "retrievalCompleted": true,
+          "classificationCompleted": true,
+          "generationStarted": true,
+          "generationCompleted": true,
+          "complianceStarted": true,
+          "complianceCompleted": true,
+          "retrievedCount": 12,
+          "retrievalLayerCounts": {
+            "exactAuthorityMatches": 12,
+            "citationVariantMatches": 0,
+            "metadataMatches": 0,
+            "contentKeywordMatches": 0,
+            "semanticMatches": 0,
+            "fallbackMatches": 0,
+            "supabaseFallbackMatches": 0
+          },
+          "sourceAvailabilityStatusBeforeTimeout": "AUTHORITY_FOUND",
+          "sourceLabelsBeforeTimeout": [
+            "NIRC Sec. 109",
+            "NIRC Sec. 236",
+            "RR No. 16-2005",
+            "RMC 75-2015"
+          ],
+          "displayedSourceCardCount": 4
+        },
+        "openaiCalls": [
+          {
+            "purpose": "generation",
+            "model": "gpt-4o-mini",
+            "startedAt": 1784091880124,
+            "status": "success",
+            "attempts": [
+              {
+                "attempt": 1,
+                "startedAt": 1784091880124,
+                "completedAt": 1784091883652,
+                "durationMs": 3528,
+                "status": "success",
+                "freshClientUsed": false
+              }
+            ],
+            "completedAt": 1784091883652,
+            "durationMs": 3528,
+            "attempt": 1,
+            "retrySucceeded": false
+          }
+        ],
+        "checkpoints": [
+          {
+            "checkpoint": "CLASSIFICATION_STARTED",
+            "requestId": "route-1784091870273-f852b53f",
+            "elapsedMs": 649,
+            "remainingBudgetMs": 89351,
+            "model": "gpt-4o-mini",
+            "mode": "",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "",
+            "retrievedCount": 0,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "CLASSIFICATION_COMPLETE",
+            "requestId": "route-1784091870273-f852b53f",
+            "elapsedMs": 654,
+            "remainingBudgetMs": 89346,
+            "model": "gpt-4o-mini",
+            "mode": "",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "",
+            "retrievedCount": 0,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "RETRIEVAL_STARTED",
+            "requestId": "route-1784091870273-f852b53f",
+            "elapsedMs": 655,
+            "remainingBudgetMs": 89345,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "",
+            "retrievedCount": 0,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "RETRIEVAL_COMPLETE",
+            "requestId": "route-1784091870273-f852b53f",
+            "elapsedMs": 9061,
+            "remainingBudgetMs": 80939,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "AUTHORITY_RESOLUTION_STARTED",
+            "requestId": "route-1784091870273-f852b53f",
+            "elapsedMs": 9161,
+            "remainingBudgetMs": 80839,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "AUTHORITY_RESOLUTION_COMPLETE",
+            "requestId": "route-1784091870273-f852b53f",
+            "elapsedMs": 9162,
+            "remainingBudgetMs": 80838,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "GENERATION_STARTED",
+            "requestId": "route-1784091870273-f852b53f",
+            "elapsedMs": 9847,
+            "remainingBudgetMs": 80153,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "GENERATION_COMPLETE",
+            "requestId": "route-1784091870273-f852b53f",
+            "elapsedMs": 13380,
+            "remainingBudgetMs": 76620,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "RENDERING_STARTED",
+            "requestId": "route-1784091870273-f852b53f",
+            "elapsedMs": 13380,
+            "remainingBudgetMs": 76620,
+            "model": "gpt-4o-mini",
+            "mode": "LEGAL_ANALYSIS",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "RENDERING_COMPLETE",
+            "requestId": "route-1784091870273-f852b53f",
+            "elapsedMs": 13383,
+            "remainingBudgetMs": 76617,
+            "model": "gpt-4o-mini",
+            "mode": "LEGAL_ANALYSIS",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "COMPLIANCE_STARTED",
+            "requestId": "route-1784091870273-f852b53f",
+            "elapsedMs": 13383,
+            "remainingBudgetMs": 76617,
+            "model": "gpt-4o-mini",
+            "mode": "LEGAL_ANALYSIS",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "COMPLIANCE_COMPLETE",
+            "requestId": "route-1784091870273-f852b53f",
+            "elapsedMs": 13390,
+            "remainingBudgetMs": 76610,
+            "model": "gpt-4o-mini",
+            "mode": "LEGAL_ANALYSIS",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "SOURCE_SELECTION_STARTED",
+            "requestId": "route-1784091870273-f852b53f",
+            "elapsedMs": 13390,
+            "remainingBudgetMs": 76610,
+            "model": "gpt-4o-mini",
+            "mode": "LEGAL_ANALYSIS",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "SOURCE_SELECTION_COMPLETE",
+            "requestId": "route-1784091870273-f852b53f",
+            "elapsedMs": 13663,
+            "remainingBudgetMs": 76337,
+            "model": "gpt-4o-mini",
+            "mode": "LEGAL_ANALYSIS",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 4
+          },
+          {
+            "checkpoint": "RESPONSE_COMPLETE",
+            "requestId": "route-1784091870273-f852b53f",
+            "elapsedMs": 13800,
+            "remainingBudgetMs": 76200,
+            "model": "gpt-4o-mini",
+            "mode": "LEGAL_ANALYSIS",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 4
+          }
+        ]
+      },
+      "pipelineTimings": {
+        "requestStartedAt": 1784091870273,
+        "classificationStartedAt": 1784091870922,
+        "classificationCompletedAt": 1784091870927,
+        "retrievalStartedAt": 1784091870928,
+        "retrievalCompletedAt": 1784091879334,
+        "authorityResolutionStartedAt": 1784091879434,
+        "authorityResolutionCompletedAt": 1784091879435,
+        "generationStartedAt": 1784091880120,
+        "generationCompletedAt": 1784091883653,
+        "renderingStartedAt": 1784091883653,
+        "renderingCompletedAt": 1784091883656,
+        "complianceStartedAt": 1784091883656,
+        "complianceCompletedAt": 1784091883663,
+        "sourceSelectionStartedAt": 1784091883663,
+        "sourceSelectionCompletedAt": 1784091883936,
+        "responseCompletedAt": 1784091884073,
+        "totalMs": 13800
+      },
+      "pipelineStageDurations": {
+        "classificationMs": 5,
+        "retrievalMs": 8406,
+        "authorityResolutionMs": 1,
+        "sourceSelectionMs": 273,
+        "generationMs": 3533,
+        "complianceMs": 7,
+        "renderingMs": 3,
+        "totalMs": 13800
+      },
+      "partialPipelineState": {
+        "retrievalCompleted": true,
+        "classificationCompleted": true,
+        "generationStarted": true,
+        "generationCompleted": true,
+        "complianceStarted": true,
+        "complianceCompleted": true,
+        "retrievedCount": 12,
+        "retrievalLayerCounts": {
+          "exactAuthorityMatches": 12,
+          "citationVariantMatches": 0,
+          "metadataMatches": 0,
+          "contentKeywordMatches": 0,
+          "semanticMatches": 0,
+          "fallbackMatches": 0,
+          "supabaseFallbackMatches": 0
+        },
+        "sourceAvailabilityStatusBeforeTimeout": "AUTHORITY_FOUND",
+        "sourceLabelsBeforeTimeout": [
+          "NIRC Sec. 109",
+          "NIRC Sec. 236",
+          "RR No. 16-2005",
+          "RMC 75-2015"
+        ],
+        "displayedSourceCardCount": 4
+      },
+      "openaiCalls": [
+        {
+          "purpose": "generation",
+          "model": "gpt-4o-mini",
+          "startedAt": 1784091880124,
+          "status": "success",
+          "attempts": [
+            {
+              "attempt": 1,
+              "startedAt": 1784091880124,
+              "completedAt": 1784091883652,
+              "durationMs": 3528,
+              "status": "success",
+              "freshClientUsed": false
+            }
+          ],
+          "completedAt": 1784091883652,
+          "durationMs": 3528,
+          "attempt": 1,
+          "retrySucceeded": false
+        }
+      ],
+      "responseMode": "LEGAL_ANALYSIS",
+      "orchestrationMode": "LEGAL_ANALYSIS",
+      "pipelineVersion": "1.0.0",
+      "activeHook": "/ask",
+      "activeMode": "ASK",
+      "commandMode": "ASK",
+      "requiresQuizMode": false,
+      "requiresDiagnosticMode": false,
+      "requiresReviewMode": false,
+      "requiresSourceVisibility": false,
+      "requiresCaseAnalysis": false,
+      "requiresAuditMode": false,
+      "requiresSeniorCounselMemo": false,
+      "requiresDebugMode": false,
+      "requiresCodePatch": false,
+      "requiresProgressMode": false,
+      "requiresFeedbackMode": false,
+      "metadata": {
+        "engine": "TINA_CONTEXT_ORCHESTRATION_ENGINE",
+        "version": "5.0.0",
+        "complexity": "moderate",
+        "mode": "LEGAL_ANALYSIS",
+        "responseStyle": null,
+        "modeFlags": {
+          "isQuiz": false,
+          "isReviewer": false,
+          "isReview": false,
+          "isSource": false,
+          "isCase": false,
+          "isAudit": false,
+          "isPatch": false,
+          "isDebug": false,
+          "isNonAFMode": false,
+          "isStandardLegal": true,
+          "shouldForceAFStructure": false,
+          "modeValues": [
+            "TECHNICAL",
+            "LEGAL_ANALYSIS",
+            "/ASK",
+            "STANDARD_TAX_MODE",
+            "TECHNICAL",
+            "LEGAL_ANALYSIS",
+            "TECHNICAL",
+            "LEGAL_ANALYSIS",
+            "LEGAL_ANALYSIS",
+            "STANDARD",
+            "STANDARD_TAX"
+          ]
+        },
+        "estimatedInputTokens": "<REDACTED>",
+        "maxCompletionTokens": "<REDACTED>",
+        "sourceCount": 8,
+        "wasTrimmed": false,
+        "authoritySummary": {
+          "controlling": 8,
+          "jurisprudence": 0,
+          "administrative": 0,
+          "accounting": 0,
+          "secondary": 0,
+          "targetAuthorityMatches": 8,
+          "issueMatches": 8,
+          "exactAuthorityMatches": 8,
+          "indexedGoogleDriveAuthorities": 8
+        },
+        "taxEngineContext": {
+          "domainCode": "VAT",
+          "domainName": "Value-Added Tax",
+          "supportedDomain": true,
+          "primaryIssue": "VAT_LIABILITY",
+          "subIssue": "VAT_REGISTRATION",
+          "retrievalStrategy": "ISSUE_AUTHORITY_HIERARCHY_SEMANTIC",
+          "targetAuthorities": [
+            "NIRC Sec. 109(BB)",
+            "NIRC Sec. 236",
+            "RR 16-2005",
+            "RMC 75-2015"
+          ],
+          "controllingAuthorities": [
+            "NIRC Sec. 109(BB)",
+            "NIRC Sec. 236"
+          ],
+          "supportingAuthorities": [
+            "RR 16-2005",
+            "RMC 75-2015"
+          ],
+          "supportingJurisprudence": [],
+          "requiredAnswerSections": [],
+          "doctrinalRules": null,
+          "conflictRules": null
+        },
+        "sanitizedConflicts": null,
+        "diagnostics": {
+          "requestId": "route-1784091870273-f852b53f",
+          "route": "/ask",
+          "model": "gpt-4o-mini",
+          "budgetMs": 90000,
+          "pipelineTimings": {
+            "requestStartedAt": 1784091870273,
+            "classificationStartedAt": 1784091870922,
+            "classificationCompletedAt": 1784091870927,
+            "retrievalStartedAt": 1784091870928,
+            "retrievalCompletedAt": 1784091879334,
+            "authorityResolutionStartedAt": 1784091879434,
+            "authorityResolutionCompletedAt": 1784091879435,
+            "generationStartedAt": 1784091880120,
+            "generationCompletedAt": 1784091883653,
+            "renderingStartedAt": 1784091883653,
+            "renderingCompletedAt": 1784091883656,
+            "complianceStartedAt": 1784091883656,
+            "complianceCompletedAt": 1784091883663,
+            "sourceSelectionStartedAt": 1784091883663,
+            "sourceSelectionCompletedAt": 1784091883936,
+            "responseCompletedAt": 1784091884073,
+            "totalMs": 13800
+          },
+          "pipelineStageDurations": {
+            "classificationMs": 5,
+            "retrievalMs": 8406,
+            "authorityResolutionMs": 1,
+            "sourceSelectionMs": 273,
+            "generationMs": 3533,
+            "complianceMs": 7,
+            "renderingMs": 3,
+            "totalMs": 13800
+          },
+          "partialPipelineState": {
+            "retrievalCompleted": true,
+            "classificationCompleted": true,
+            "generationStarted": true,
+            "generationCompleted": true,
+            "complianceStarted": true,
+            "complianceCompleted": true,
+            "retrievedCount": 12,
+            "retrievalLayerCounts": {
+              "exactAuthorityMatches": 12,
+              "citationVariantMatches": 0,
+              "metadataMatches": 0,
+              "contentKeywordMatches": 0,
+              "semanticMatches": 0,
+              "fallbackMatches": 0,
+              "supabaseFallbackMatches": 0
+            },
+            "sourceAvailabilityStatusBeforeTimeout": "AUTHORITY_FOUND",
+            "sourceLabelsBeforeTimeout": [
+              "NIRC Sec. 109",
+              "NIRC Sec. 236",
+              "RR No. 16-2005",
+              "RMC 75-2015"
+            ],
+            "displayedSourceCardCount": 4
+          },
+          "openaiCalls": [
+            {
+              "purpose": "generation",
+              "model": "gpt-4o-mini",
+              "startedAt": 1784091880124,
+              "status": "success",
+              "attempts": [
+                {
+                  "attempt": 1,
+                  "startedAt": 1784091880124,
+                  "completedAt": 1784091883652,
+                  "durationMs": 3528,
+                  "status": "success",
+                  "freshClientUsed": false
+                }
+              ],
+              "completedAt": 1784091883652,
+              "durationMs": 3528,
+              "attempt": 1,
+              "retrySucceeded": false
+            }
+          ],
+          "checkpoints": [
+            {
+              "checkpoint": "CLASSIFICATION_STARTED",
+              "requestId": "route-1784091870273-f852b53f",
+              "elapsedMs": 649,
+              "remainingBudgetMs": 89351,
+              "model": "gpt-4o-mini",
+              "mode": "",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "",
+              "retrievedCount": 0,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "CLASSIFICATION_COMPLETE",
+              "requestId": "route-1784091870273-f852b53f",
+              "elapsedMs": 654,
+              "remainingBudgetMs": 89346,
+              "model": "gpt-4o-mini",
+              "mode": "",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "",
+              "retrievedCount": 0,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "RETRIEVAL_STARTED",
+              "requestId": "route-1784091870273-f852b53f",
+              "elapsedMs": 655,
+              "remainingBudgetMs": 89345,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "",
+              "retrievedCount": 0,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "RETRIEVAL_COMPLETE",
+              "requestId": "route-1784091870273-f852b53f",
+              "elapsedMs": 9061,
+              "remainingBudgetMs": 80939,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "AUTHORITY_RESOLUTION_STARTED",
+              "requestId": "route-1784091870273-f852b53f",
+              "elapsedMs": 9161,
+              "remainingBudgetMs": 80839,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "AUTHORITY_RESOLUTION_COMPLETE",
+              "requestId": "route-1784091870273-f852b53f",
+              "elapsedMs": 9162,
+              "remainingBudgetMs": 80838,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "GENERATION_STARTED",
+              "requestId": "route-1784091870273-f852b53f",
+              "elapsedMs": 9847,
+              "remainingBudgetMs": 80153,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "GENERATION_COMPLETE",
+              "requestId": "route-1784091870273-f852b53f",
+              "elapsedMs": 13380,
+              "remainingBudgetMs": 76620,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "RENDERING_STARTED",
+              "requestId": "route-1784091870273-f852b53f",
+              "elapsedMs": 13380,
+              "remainingBudgetMs": 76620,
+              "model": "gpt-4o-mini",
+              "mode": "LEGAL_ANALYSIS",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "RENDERING_COMPLETE",
+              "requestId": "route-1784091870273-f852b53f",
+              "elapsedMs": 13383,
+              "remainingBudgetMs": 76617,
+              "model": "gpt-4o-mini",
+              "mode": "LEGAL_ANALYSIS",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "COMPLIANCE_STARTED",
+              "requestId": "route-1784091870273-f852b53f",
+              "elapsedMs": 13383,
+              "remainingBudgetMs": 76617,
+              "model": "gpt-4o-mini",
+              "mode": "LEGAL_ANALYSIS",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "COMPLIANCE_COMPLETE",
+              "requestId": "route-1784091870273-f852b53f",
+              "elapsedMs": 13390,
+              "remainingBudgetMs": 76610,
+              "model": "gpt-4o-mini",
+              "mode": "LEGAL_ANALYSIS",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "SOURCE_SELECTION_STARTED",
+              "requestId": "route-1784091870273-f852b53f",
+              "elapsedMs": 13390,
+              "remainingBudgetMs": 76610,
+              "model": "gpt-4o-mini",
+              "mode": "LEGAL_ANALYSIS",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "SOURCE_SELECTION_COMPLETE",
+              "requestId": "route-1784091870273-f852b53f",
+              "elapsedMs": 13663,
+              "remainingBudgetMs": 76337,
+              "model": "gpt-4o-mini",
+              "mode": "LEGAL_ANALYSIS",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 4
+            },
+            {
+              "checkpoint": "RESPONSE_COMPLETE",
+              "requestId": "route-1784091870273-f852b53f",
+              "elapsedMs": 13800,
+              "remainingBudgetMs": 76200,
+              "model": "gpt-4o-mini",
+              "mode": "LEGAL_ANALYSIS",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 4
+            }
+          ]
+        },
+        "openAiModel": "gpt-4o-mini",
+        "openAiProjectAccessFailure": false,
+        "askHandlerVersion": "9.0.0",
+        "pipelineSupremacy": true,
+        "pipelineVersion": "1.0.0",
+        "correctFlowEnabled": true,
+        "issueClassificationEngineCalled": true,
+        "retrievalEngineCalled": true,
+        "rerankerEngineCalled": true,
+        "fourPartDoctrineTestApplied": true,
+        "retrievalLayerCounts": {
+          "exactAuthorityMatches": 12,
+          "citationVariantMatches": 0,
+          "metadataMatches": 0,
+          "contentKeywordMatches": 0,
+          "semanticMatches": 0,
+          "fallbackMatches": 0,
+          "supabaseFallbackMatches": 0
+        },
+        "firstSourceLabels": [
+          "NIRC Sec. 109",
+          "NIRC Sec. 236",
+          "RR No. 16-2005",
+          "RMC 75-2015"
+        ],
+        "pipelineTimings": {
+          "requestStartedAt": 1784091870273,
+          "classificationStartedAt": 1784091870922,
+          "classificationCompletedAt": 1784091870927,
+          "retrievalStartedAt": 1784091870928,
+          "retrievalCompletedAt": 1784091879334,
+          "authorityResolutionStartedAt": 1784091879434,
+          "authorityResolutionCompletedAt": 1784091879435,
+          "generationStartedAt": 1784091880120,
+          "generationCompletedAt": 1784091883653,
+          "renderingStartedAt": 1784091883653,
+          "renderingCompletedAt": 1784091883656,
+          "complianceStartedAt": 1784091883656,
+          "complianceCompletedAt": 1784091883663,
+          "sourceSelectionStartedAt": 1784091883663,
+          "sourceSelectionCompletedAt": 1784091883936,
+          "responseCompletedAt": 1784091884073,
+          "totalMs": 13800
+        },
+        "pipelineStageDurations": {
+          "classificationMs": 5,
+          "retrievalMs": 8406,
+          "authorityResolutionMs": 1,
+          "sourceSelectionMs": 273,
+          "generationMs": 3533,
+          "complianceMs": 7,
+          "renderingMs": 3,
+          "totalMs": 13800
+        },
+        "partialPipelineState": {
+          "retrievalCompleted": true,
+          "classificationCompleted": true,
+          "generationStarted": true,
+          "generationCompleted": true,
+          "complianceStarted": true,
+          "complianceCompleted": true,
+          "retrievedCount": 12,
+          "retrievalLayerCounts": {
+            "exactAuthorityMatches": 12,
+            "citationVariantMatches": 0,
+            "metadataMatches": 0,
+            "contentKeywordMatches": 0,
+            "semanticMatches": 0,
+            "fallbackMatches": 0,
+            "supabaseFallbackMatches": 0
+          },
+          "sourceAvailabilityStatusBeforeTimeout": "AUTHORITY_FOUND",
+          "sourceLabelsBeforeTimeout": [
+            "NIRC Sec. 109",
+            "NIRC Sec. 236",
+            "RR No. 16-2005",
+            "RMC 75-2015"
+          ],
+          "displayedSourceCardCount": 4
+        },
+        "openaiCalls": [
+          {
+            "purpose": "generation",
+            "model": "gpt-4o-mini",
+            "startedAt": 1784091880124,
+            "status": "success",
+            "attempts": [
+              {
+                "attempt": 1,
+                "startedAt": 1784091880124,
+                "completedAt": 1784091883652,
+                "durationMs": 3528,
+                "status": "success",
+                "freshClientUsed": false
+              }
+            ],
+            "completedAt": 1784091883652,
+            "durationMs": 3528,
+            "attempt": 1,
+            "retrySucceeded": false
+          }
+        ],
+        "routeControllerOnly": true,
+        "noLegalReasoningInsideAskHandler": true,
+        "noSourceRankingInsideAskHandler": true,
+        "noRenderingInsideAskHandler": true,
+        "orchestrationFirstArchitecture": true,
+        "noDirectOpenAICall": true,
+        "noPromptAssembly": true,
+        "tpmConscious": true
+      }
+    }
+  },
+  "hardRefresh": {
+    "status": 200,
+    "payload": {
+      "success": true,
+      "messages": [
+        {
+          "id": "<REDACTED_UUID>",
+          "conversation_id": "<REDACTED>",
+          "user_id": "<REDACTED>",
+          "role": "user",
+          "content": "A VAT-registered supplier sells fresh frozen seafood in its original state. Is the sale VAT-exempt, and is a separate VAT-exemption certificate required, or is the BIR Certificate of Registration sufficient?",
+          "created_at": "2026-07-15T05:04:44.178081+00:00",
+          "sources_used": null,
+          "fallback_references": null,
+          "metadata": {
+            "adaptive": {
+              "riskScore": null,
+              "queryIntent": null,
+              "adaptiveMode": null,
+              "responseMode": null,
+              "responsePlan": null,
+              "assumptionGap": null,
+              "authorityUsed": null,
+              "responseDepth": null,
+              "adaptiveContext": null,
+              "confidenceLevel": null,
+              "positionStrength": null,
+              "retrievalMetadata": null,
+              "supersessionAudit": null,
+              "tinaConversationMemoryVersion": "2.2.0"
+            }
+          },
+          "trust": null
+        },
+        {
+          "id": "<REDACTED_UUID>",
+          "conversation_id": "<REDACTED>",
+          "user_id": "<REDACTED>",
+          "role": "assistant",
+          "content": "### Short Answer\n\n### Controlling Authorities\n2. **NIRC Section 236** - Outlines the registration requirements for VAT-registered persons.\n\n### Interpretation\n\n### Practical Meaning\nFor VAT-registered suppliers selling fresh frozen seafood, they do not need to obtain an additional VAT exemption certificate to validate the VAT-exempt status of their sales. The existing BIR Certificate of Registration is sufficient for compliance and verification purposes. This simplifies the process for suppliers, allowing them to focus on their business operations without the burden of additional documentation for VAT exemption.",
+          "created_at": "2026-07-15T05:04:44.620083+00:00",
+          "sources_used": [
+            {
+              "label": "NIRC Sec. 109",
+              "title": "NIRC Sec. 109",
+              "citation": "NIRC Sec. 109",
+              "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk",
+              "displayLabel": "NIRC Sec. 109",
+              "authorityType": "STATUTE",
+              "limitationRequired": false
+            },
+            {
+              "label": "NIRC Sec. 236",
+              "title": "NIRC Sec. 236",
+              "citation": "NIRC Sec. 236",
+              "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk",
+              "displayLabel": "NIRC Sec. 236",
+              "authorityType": "STATUTE",
+              "limitationRequired": false
+            },
+            {
+              "label": "RR No. 16-2005",
+              "title": "RR No. 16-2005",
+              "citation": "RR No. 16-2005",
+              "publicUrl": "https://drive.google.com/file/d/15AZ5CJymXUzA8eIlfy0A1WXubLw1HmeJ/view?usp=drivesdk",
+              "displayLabel": "RR No. 16-2005",
+              "authorityType": "RR",
+              "limitationRequired": false
+            },
+            {
+              "label": "RMC 75-2015",
+              "title": "RMC 75-2015",
+              "citation": "RMC 75-2015",
+              "displayLabel": "RMC 75-2015",
+              "authorityType": "RMC",
+              "limitationRequired": false
+            }
+          ],
+          "fallback_references": null,
+          "metadata": {
+            "trust": {
+              "version": "1.0",
+              "hasConflict": false,
+              "limitations": [],
+              "sourceState": "AUTHORITY_FOUND",
+              "responseKind": "GENERAL_TAX",
+              "conflictState": "NO_CONFLICT",
+              "legalConclusion": "ALLOWED",
+              "authoritySupport": "VERIFIED_CONTROLLING",
+              "automaticSubmission": false,
+              "humanReviewRequired": false,
+              "specificAuthorityNotFound": false,
+              "filingReadyDocumentGenerated": false
+            },
+            "adaptive": {
+              "riskScore": null,
+              "queryIntent": null,
+              "adaptiveMode": null,
+              "responseMode": null,
+              "responsePlan": null,
+              "assumptionGap": null,
+              "authorityUsed": null,
+              "responseDepth": null,
+              "adaptiveContext": null,
+              "confidenceLevel": null,
+              "positionStrength": null,
+              "retrievalMetadata": null,
+              "supersessionAudit": null,
+              "tinaConversationMemoryVersion": "2.2.0"
+            }
+          },
+          "trust": {
+            "version": "1.0",
+            "hasConflict": false,
+            "limitations": [],
+            "sourceState": "AUTHORITY_FOUND",
+            "responseKind": "GENERAL_TAX",
+            "conflictState": "NO_CONFLICT",
+            "legalConclusion": "ALLOWED",
+            "authoritySupport": "VERIFIED_CONTROLLING",
+            "automaticSubmission": false,
+            "humanReviewRequired": false,
+            "specificAuthorityNotFound": false,
+            "filingReadyDocumentGenerated": false
+          }
+        }
+      ]
+    }
+  },
+  "historyReopen": {
+    "status": 200,
+    "payload": {
+      "success": true,
+      "messages": [
+        {
+          "id": "<REDACTED_UUID>",
+          "conversation_id": "<REDACTED>",
+          "user_id": "<REDACTED>",
+          "role": "user",
+          "content": "A VAT-registered supplier sells fresh frozen seafood in its original state. Is the sale VAT-exempt, and is a separate VAT-exemption certificate required, or is the BIR Certificate of Registration sufficient?",
+          "created_at": "2026-07-15T05:04:44.178081+00:00",
+          "sources_used": null,
+          "fallback_references": null,
+          "metadata": {
+            "adaptive": {
+              "riskScore": null,
+              "queryIntent": null,
+              "adaptiveMode": null,
+              "responseMode": null,
+              "responsePlan": null,
+              "assumptionGap": null,
+              "authorityUsed": null,
+              "responseDepth": null,
+              "adaptiveContext": null,
+              "confidenceLevel": null,
+              "positionStrength": null,
+              "retrievalMetadata": null,
+              "supersessionAudit": null,
+              "tinaConversationMemoryVersion": "2.2.0"
+            }
+          },
+          "trust": null
+        },
+        {
+          "id": "<REDACTED_UUID>",
+          "conversation_id": "<REDACTED>",
+          "user_id": "<REDACTED>",
+          "role": "assistant",
+          "content": "### Short Answer\n\n### Controlling Authorities\n2. **NIRC Section 236** - Outlines the registration requirements for VAT-registered persons.\n\n### Interpretation\n\n### Practical Meaning\nFor VAT-registered suppliers selling fresh frozen seafood, they do not need to obtain an additional VAT exemption certificate to validate the VAT-exempt status of their sales. The existing BIR Certificate of Registration is sufficient for compliance and verification purposes. This simplifies the process for suppliers, allowing them to focus on their business operations without the burden of additional documentation for VAT exemption.",
+          "created_at": "2026-07-15T05:04:44.620083+00:00",
+          "sources_used": [
+            {
+              "label": "NIRC Sec. 109",
+              "title": "NIRC Sec. 109",
+              "citation": "NIRC Sec. 109",
+              "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk",
+              "displayLabel": "NIRC Sec. 109",
+              "authorityType": "STATUTE",
+              "limitationRequired": false
+            },
+            {
+              "label": "NIRC Sec. 236",
+              "title": "NIRC Sec. 236",
+              "citation": "NIRC Sec. 236",
+              "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk",
+              "displayLabel": "NIRC Sec. 236",
+              "authorityType": "STATUTE",
+              "limitationRequired": false
+            },
+            {
+              "label": "RR No. 16-2005",
+              "title": "RR No. 16-2005",
+              "citation": "RR No. 16-2005",
+              "publicUrl": "https://drive.google.com/file/d/15AZ5CJymXUzA8eIlfy0A1WXubLw1HmeJ/view?usp=drivesdk",
+              "displayLabel": "RR No. 16-2005",
+              "authorityType": "RR",
+              "limitationRequired": false
+            },
+            {
+              "label": "RMC 75-2015",
+              "title": "RMC 75-2015",
+              "citation": "RMC 75-2015",
+              "displayLabel": "RMC 75-2015",
+              "authorityType": "RMC",
+              "limitationRequired": false
+            }
+          ],
+          "fallback_references": null,
+          "metadata": {
+            "trust": {
+              "version": "1.0",
+              "hasConflict": false,
+              "limitations": [],
+              "sourceState": "AUTHORITY_FOUND",
+              "responseKind": "GENERAL_TAX",
+              "conflictState": "NO_CONFLICT",
+              "legalConclusion": "ALLOWED",
+              "authoritySupport": "VERIFIED_CONTROLLING",
+              "automaticSubmission": false,
+              "humanReviewRequired": false,
+              "specificAuthorityNotFound": false,
+              "filingReadyDocumentGenerated": false
+            },
+            "adaptive": {
+              "riskScore": null,
+              "queryIntent": null,
+              "adaptiveMode": null,
+              "responseMode": null,
+              "responsePlan": null,
+              "assumptionGap": null,
+              "authorityUsed": null,
+              "responseDepth": null,
+              "adaptiveContext": null,
+              "confidenceLevel": null,
+              "positionStrength": null,
+              "retrievalMetadata": null,
+              "supersessionAudit": null,
+              "tinaConversationMemoryVersion": "2.2.0"
+            }
+          },
+          "trust": {
+            "version": "1.0",
+            "hasConflict": false,
+            "limitations": [],
+            "sourceState": "AUTHORITY_FOUND",
+            "responseKind": "GENERAL_TAX",
+            "conflictState": "NO_CONFLICT",
+            "legalConclusion": "ALLOWED",
+            "authoritySupport": "VERIFIED_CONTROLLING",
+            "automaticSubmission": false,
+            "humanReviewRequired": false,
+            "specificAuthorityNotFound": false,
+            "filingReadyDocumentGenerated": false
+          }
+        }
+      ]
+    }
+  },
+  "sanitizedConversationRef": "7b805ee608aefc72"
+}

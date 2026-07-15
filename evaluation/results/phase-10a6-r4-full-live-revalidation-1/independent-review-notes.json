@@ -1,0 +1,11 @@
+{
+  "decision": "R3 INDEPENDENT REVIEW PASS WITH RECOMMENDATIONS",
+  "runtimeCommitReviewed": "2259dec560cae88e839767728e7fa9dbfcc33707",
+  "evidenceCommitReviewed": "5a6a12d229ea16b9b777044e1d097d6f958b8cec",
+  "notes": [
+    "R3 source fallback is keyed to app-generated bare source-listing output and general query-intent detectors, not a hardcoded Q9 answer.",
+    "Fallback body discloses missing requested authority without claiming non-existence, presents conflict/uncertainty when framed, explains hierarchy, and caps trust at RELATED_AUTHORITY_ONLY through result.sourceOnlyFallback.",
+    "Legitimate analytical verified-control, restricted, and source-failure paths are covered by tests and not blanket-downgraded.",
+    "Recommendation: R3 evidence commit contains generated HTML trailing whitespace; treat as evidence-format debt, not runtime blocker."
+  ]
+}

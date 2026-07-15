@@ -1,0 +1,27 @@
+{
+  "task": "PHASE-10A6-R4-FULL-LIVE-REVALIDATION-1",
+  "executionTimestampUtc": "2026-07-15T04:58:56.018Z",
+  "backendHead": "5a6a12d229ea16b9b777044e1d097d6f958b8cec",
+  "frontendHead": "0816ac865b4ee55d5bb92534834dadbb0dcfba87",
+  "r3RuntimeCommitReviewed": "2259dec560cae88e839767728e7fa9dbfcc33707",
+  "r3EvidenceCommitReviewed": "5a6a12d229ea16b9b777044e1d097d6f958b8cec",
+  "r3IndependentReviewDecision": "R3 INDEPENDENT REVIEW PASS WITH RECOMMENDATIONS",
+  "environment": "real authenticated staging /ask API using a fresh local JWT minted from ignored JWT_SECRET and an active Supabase user record; screenshots are sanitized payload-rendered evidence, not protected-preview UI captures",
+  "totalRuns": 14,
+  "runIds": [
+    "Q1-r1",
+    "Q2-r1",
+    "Q2-r2",
+    "Q2-r3",
+    "Q3-r1",
+    "Q4-r1",
+    "Q5-r1",
+    "Q6-r1",
+    "Q7-r1",
+    "Q8-r1",
+    "Q9-r1",
+    "Q9-r2",
+    "Q9-r3",
+    "Q10-r1"
+  ]
+}

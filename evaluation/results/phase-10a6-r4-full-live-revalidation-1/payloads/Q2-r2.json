@@ -1,0 +1,1103 @@
+{
+  "ask": {
+    "status": 200,
+    "responseTimeMs": 82354,
+    "payload": {
+      "success": true,
+      "engine": "TINA_ASK_HANDLER",
+      "version": "9.0.0",
+      "hook": "/ask",
+      "mode": "CASE_ANALYSIS",
+      "routeKind": "NORMAL_RAG",
+      "hookTitle": "Default TINA Assistant",
+      "answer": "**Case Identified** \nCTA Case No. 9711 – Dizon Farms Produce, Inc. v. CIR\n\n**Facts / Context** \nIn this case, the taxpayer, Dizon Farms Produce, Inc., contested a deficiency tax assessment issued by the Bureau of Internal Revenue (BIR). The taxpayer argued that the assessment was invalid due to the lack of a proper pre-assessment notice (PAN) and the failure of the BIR to comply with due process requirements.\n\n**Issue** \nThe primary issue was whether the BIR's failure to issue a pre-assessment notice (PAN) constituted a violation of the taxpayer's due process rights, thereby rendering the tax assessment null and void.\n\n**Ruling / Holding** \nThe Court of Tax Appeals (CTA) ruled in favor of the taxpayer, stating that the issuance of a PAN is a mandatory requirement for due process in tax assessments. The absence of a PAN invalidated the subsequent deficiency tax assessment.\n\n**Doctrine** \nThe ruling established that tax assessments issued without adhering to due process requirements, specifically the issuance of a PAN, are null and void. This aligns with the principle that while the government has an interest in the swift collection of taxes, it must also respect the rights of taxpayers.\n\n**Application** \nIn applying this doctrine, the CTA emphasized that the BIR must follow the procedural requirements set forth in the law, including the issuance of a PAN, to ensure that taxpayers are given a fair opportunity to contest any findings of deficiency tax. This case reinforces the necessity for the BIR to adhere to due process in tax assessments.\n\n**Status / Limits** \nThe ruling in Dizon Farms Produce, Inc. v. CIR highlights the importance of procedural compliance by the BIR in tax assessments. However, it is limited to the context of due process in tax assessments and does not address other aspects of tax law or the specific BIR revenue memorandum circular that was requested but not located. \n\nIn summary, while the specific BIR circular could not be verified, the principles established in this case regarding due process in tax assessments remain applicable and relevant in similar contexts.\n\nSource limitation: A governing authority was not directly located. Displayed sources are related, supporting, or secondary only. They are not the controlling basis for the answer.",
+      "sources": [
+        {
+          "label": "CTA Case No. 9711",
+          "title": "CTA Case No. 9711",
+          "citation": "CTA Case No. 9711",
+          "authorityType": "CASE",
+          "displayLabel": "CTA Case No. 9711",
+          "limitationRequired": true,
+          "publicUrl": "https://drive.google.com/file/d/1NG5D6VFTArNufblSJ2R-VGMlkydl243L/view?usp=drivesdk"
+        }
+      ],
+      "sourcesUsed": [
+        {
+          "label": "CTA Case No. 9711",
+          "title": "CTA Case No. 9711",
+          "citation": "CTA Case No. 9711",
+          "authorityType": "CASE",
+          "displayLabel": "CTA Case No. 9711",
+          "limitationRequired": true,
+          "publicUrl": "https://drive.google.com/file/d/1NG5D6VFTArNufblSJ2R-VGMlkydl243L/view?usp=drivesdk"
+        }
+      ],
+      "sourceCards": [
+        {
+          "label": "CTA Case No. 9711",
+          "title": "CTA Case No. 9711",
+          "citation": "CTA Case No. 9711",
+          "authorityType": "CASE",
+          "displayLabel": "CTA Case No. 9711",
+          "limitationRequired": true,
+          "publicUrl": "https://drive.google.com/file/d/1NG5D6VFTArNufblSJ2R-VGMlkydl243L/view?usp=drivesdk"
+        }
+      ],
+      "educationalSources": null,
+      "vectorMatches": 5,
+      "trust": {
+        "version": "1.0",
+        "authoritySupport": "RELATED_AUTHORITY_ONLY",
+        "sourceState": "RELATED_AUTHORITY_ONLY",
+        "legalConclusion": "ALLOWED",
+        "humanReviewRequired": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "conflictState": "NO_CONFLICT",
+        "limitations": [
+          "RELATED_AUTHORITY_ONLY"
+        ],
+        "responseKind": "GENERAL_TAX",
+        "specificAuthorityNotFound": false
+      },
+      "retrievedSourceCount": 5,
+      "displayedSourceCount": 1,
+      "sourceStatus": "RELATED_AUTHORITY_ONLY",
+      "sourceAvailability": "RELATED_AUTHORITY_ONLY",
+      "saeStatus": "RELATED_AUTHORITY_ONLY",
+      "patch024cPostSourcecard": {
+        "executed": true,
+        "sourceCardCount": 1,
+        "beforeLength": 2301,
+        "afterLength": 2301,
+        "changed": false,
+        "sourceAvailability": "RELATED_AUTHORITY_ONLY",
+        "answerMode": "CASE_ANALYSIS",
+        "requestId": "route-1784091655651-55f957fb"
+      },
+      "internalError": false,
+      "errorCategory": null,
+      "sourceAvailabilityReason": "[PATCH-027N] Case/jurisprudence query: statute/RR authority cannot alone support AUTHORITY_FOUND.",
+      "retrievalTimedOut": false,
+      "relatedSourceCount": 1,
+      "retrievalLayerCounts": {
+        "exactAuthorityMatches": 4,
+        "citationVariantMatches": 32,
+        "metadataMatches": 92,
+        "contentKeywordMatches": 36,
+        "semanticMatches": 0,
+        "fallbackMatches": 0,
+        "supabaseFallbackMatches": 0
+      },
+      "firstSourceLabels": [
+        "CTA Case No. 9711"
+      ],
+      "diagnostics": {
+        "requestId": "route-1784091655651-55f957fb",
+        "route": "/ask",
+        "model": "gpt-4o-mini",
+        "budgetMs": 90000,
+        "pipelineTimings": {
+          "requestStartedAt": 1784091655651,
+          "classificationStartedAt": 1784091655876,
+          "classificationCompletedAt": 1784091655882,
+          "retrievalStartedAt": 1784091655884,
+          "retrievalCompletedAt": 1784091723907,
+          "authorityResolutionStartedAt": 1784091723934,
+          "authorityResolutionCompletedAt": 1784091723935,
+          "generationStartedAt": 1784091724847,
+          "generationCompletedAt": 1784091729772,
+          "renderingStartedAt": 1784091729772,
+          "renderingCompletedAt": 1784091729775,
+          "complianceStartedAt": 1784091729775,
+          "complianceCompletedAt": 1784091729792,
+          "sourceSelectionStartedAt": 1784091729792,
+          "sourceSelectionCompletedAt": 1784091729800,
+          "responseCompletedAt": 1784091730102,
+          "totalMs": 74451
+        },
+        "pipelineStageDurations": {
+          "classificationMs": 6,
+          "retrievalMs": 68023,
+          "authorityResolutionMs": 1,
+          "sourceSelectionMs": 8,
+          "generationMs": 4925,
+          "complianceMs": 17,
+          "renderingMs": 3,
+          "totalMs": 74451
+        },
+        "partialPipelineState": {
+          "retrievalCompleted": true,
+          "classificationCompleted": true,
+          "generationStarted": true,
+          "generationCompleted": true,
+          "complianceStarted": true,
+          "complianceCompleted": true,
+          "retrievedCount": 12,
+          "retrievalLayerCounts": {
+            "exactAuthorityMatches": 4,
+            "citationVariantMatches": 32,
+            "metadataMatches": 92,
+            "contentKeywordMatches": 36,
+            "semanticMatches": 0,
+            "fallbackMatches": 0,
+            "supabaseFallbackMatches": 0
+          },
+          "sourceAvailabilityStatusBeforeTimeout": "RELATED_AUTHORITY_ONLY",
+          "sourceLabelsBeforeTimeout": [
+            "CTA Case No. 9711"
+          ],
+          "displayedSourceCardCount": 1
+        },
+        "openaiCalls": [
+          {
+            "purpose": "generation",
+            "model": "gpt-4o-mini",
+            "startedAt": 1784091724898,
+            "status": "success",
+            "attempts": [
+              {
+                "attempt": 1,
+                "startedAt": 1784091724898,
+                "completedAt": 1784091729771,
+                "durationMs": 4873,
+                "status": "success",
+                "freshClientUsed": false
+              }
+            ],
+            "completedAt": 1784091729771,
+            "durationMs": 4873,
+            "attempt": 1,
+            "retrySucceeded": false
+          }
+        ],
+        "checkpoints": [
+          {
+            "checkpoint": "CLASSIFICATION_STARTED",
+            "requestId": "route-1784091655651-55f957fb",
+            "elapsedMs": 225,
+            "remainingBudgetMs": 89775,
+            "model": "gpt-4o-mini",
+            "mode": "",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "",
+            "retrievedCount": 0,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "CLASSIFICATION_COMPLETE",
+            "requestId": "route-1784091655651-55f957fb",
+            "elapsedMs": 231,
+            "remainingBudgetMs": 89769,
+            "model": "gpt-4o-mini",
+            "mode": "",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "",
+            "retrievedCount": 0,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "RETRIEVAL_STARTED",
+            "requestId": "route-1784091655651-55f957fb",
+            "elapsedMs": 233,
+            "remainingBudgetMs": 89767,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "",
+            "retrievedCount": 0,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "RETRIEVAL_COMPLETE",
+            "requestId": "route-1784091655651-55f957fb",
+            "elapsedMs": 68256,
+            "remainingBudgetMs": 21744,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "AUTHORITY_RESOLUTION_STARTED",
+            "requestId": "route-1784091655651-55f957fb",
+            "elapsedMs": 68283,
+            "remainingBudgetMs": 21717,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "AUTHORITY_RESOLUTION_COMPLETE",
+            "requestId": "route-1784091655651-55f957fb",
+            "elapsedMs": 68284,
+            "remainingBudgetMs": 21716,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "RELATED_AUTHORITY_ONLY",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "GENERATION_STARTED",
+            "requestId": "route-1784091655651-55f957fb",
+            "elapsedMs": 69196,
+            "remainingBudgetMs": 20804,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "RELATED_AUTHORITY_ONLY",
+            "retrievedCount": 5,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "GENERATION_COMPLETE",
+            "requestId": "route-1784091655651-55f957fb",
+            "elapsedMs": 74121,
+            "remainingBudgetMs": 15879,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "RELATED_AUTHORITY_ONLY",
+            "retrievedCount": 5,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "RENDERING_STARTED",
+            "requestId": "route-1784091655651-55f957fb",
+            "elapsedMs": 74121,
+            "remainingBudgetMs": 15879,
+            "model": "gpt-4o-mini",
+            "mode": "CASE_ANALYSIS",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "RELATED_AUTHORITY_ONLY",
+            "retrievedCount": 5,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "RENDERING_COMPLETE",
+            "requestId": "route-1784091655651-55f957fb",
+            "elapsedMs": 74124,
+            "remainingBudgetMs": 15876,
+            "model": "gpt-4o-mini",
+            "mode": "CASE_ANALYSIS",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "RELATED_AUTHORITY_ONLY",
+            "retrievedCount": 5,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "COMPLIANCE_STARTED",
+            "requestId": "route-1784091655651-55f957fb",
+            "elapsedMs": 74124,
+            "remainingBudgetMs": 15876,
+            "model": "gpt-4o-mini",
+            "mode": "CASE_ANALYSIS",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "RELATED_AUTHORITY_ONLY",
+            "retrievedCount": 5,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "COMPLIANCE_COMPLETE",
+            "requestId": "route-1784091655651-55f957fb",
+            "elapsedMs": 74141,
+            "remainingBudgetMs": 15859,
+            "model": "gpt-4o-mini",
+            "mode": "CASE_ANALYSIS",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "RELATED_AUTHORITY_ONLY",
+            "retrievedCount": 5,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "SOURCE_SELECTION_STARTED",
+            "requestId": "route-1784091655651-55f957fb",
+            "elapsedMs": 74141,
+            "remainingBudgetMs": 15859,
+            "model": "gpt-4o-mini",
+            "mode": "CASE_ANALYSIS",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "RELATED_AUTHORITY_ONLY",
+            "retrievedCount": 5,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "SOURCE_SELECTION_COMPLETE",
+            "requestId": "route-1784091655651-55f957fb",
+            "elapsedMs": 74149,
+            "remainingBudgetMs": 15851,
+            "model": "gpt-4o-mini",
+            "mode": "CASE_ANALYSIS",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "RELATED_AUTHORITY_ONLY",
+            "retrievedCount": 5,
+            "displayedSourceCardCount": 1
+          },
+          {
+            "checkpoint": "RESPONSE_COMPLETE",
+            "requestId": "route-1784091655651-55f957fb",
+            "elapsedMs": 74451,
+            "remainingBudgetMs": 15549,
+            "model": "gpt-4o-mini",
+            "mode": "CASE_ANALYSIS",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "RELATED_AUTHORITY_ONLY",
+            "retrievedCount": 5,
+            "displayedSourceCardCount": 1
+          }
+        ]
+      },
+      "pipelineTimings": {
+        "requestStartedAt": 1784091655651,
+        "classificationStartedAt": 1784091655876,
+        "classificationCompletedAt": 1784091655882,
+        "retrievalStartedAt": 1784091655884,
+        "retrievalCompletedAt": 1784091723907,
+        "authorityResolutionStartedAt": 1784091723934,
+        "authorityResolutionCompletedAt": 1784091723935,
+        "generationStartedAt": 1784091724847,
+        "generationCompletedAt": 1784091729772,
+        "renderingStartedAt": 1784091729772,
+        "renderingCompletedAt": 1784091729775,
+        "complianceStartedAt": 1784091729775,
+        "complianceCompletedAt": 1784091729792,
+        "sourceSelectionStartedAt": 1784091729792,
+        "sourceSelectionCompletedAt": 1784091729800,
+        "responseCompletedAt": 1784091730102,
+        "totalMs": 74451
+      },
+      "pipelineStageDurations": {
+        "classificationMs": 6,
+        "retrievalMs": 68023,
+        "authorityResolutionMs": 1,
+        "sourceSelectionMs": 8,
+        "generationMs": 4925,
+        "complianceMs": 17,
+        "renderingMs": 3,
+        "totalMs": 74451
+      },
+      "partialPipelineState": {
+        "retrievalCompleted": true,
+        "classificationCompleted": true,
+        "generationStarted": true,
+        "generationCompleted": true,
+        "complianceStarted": true,
+        "complianceCompleted": true,
+        "retrievedCount": 12,
+        "retrievalLayerCounts": {
+          "exactAuthorityMatches": 4,
+          "citationVariantMatches": 32,
+          "metadataMatches": 92,
+          "contentKeywordMatches": 36,
+          "semanticMatches": 0,
+          "fallbackMatches": 0,
+          "supabaseFallbackMatches": 0
+        },
+        "sourceAvailabilityStatusBeforeTimeout": "RELATED_AUTHORITY_ONLY",
+        "sourceLabelsBeforeTimeout": [
+          "CTA Case No. 9711"
+        ],
+        "displayedSourceCardCount": 1
+      },
+      "openaiCalls": [
+        {
+          "purpose": "generation",
+          "model": "gpt-4o-mini",
+          "startedAt": 1784091724898,
+          "status": "success",
+          "attempts": [
+            {
+              "attempt": 1,
+              "startedAt": 1784091724898,
+              "completedAt": 1784091729771,
+              "durationMs": 4873,
+              "status": "success",
+              "freshClientUsed": false
+            }
+          ],
+          "completedAt": 1784091729771,
+          "durationMs": 4873,
+          "attempt": 1,
+          "retrySucceeded": false
+        }
+      ],
+      "responseMode": "CASE_ANALYSIS",
+      "orchestrationMode": "CASE_ANALYSIS",
+      "pipelineVersion": "1.0.0",
+      "activeHook": "/ask",
+      "activeMode": "ASK",
+      "commandMode": "ASK",
+      "requiresQuizMode": false,
+      "requiresDiagnosticMode": false,
+      "requiresReviewMode": false,
+      "requiresSourceVisibility": false,
+      "requiresCaseAnalysis": false,
+      "requiresAuditMode": false,
+      "requiresSeniorCounselMemo": false,
+      "requiresDebugMode": false,
+      "requiresCodePatch": false,
+      "requiresProgressMode": false,
+      "requiresFeedbackMode": false,
+      "metadata": {
+        "engine": "TINA_CONTEXT_ORCHESTRATION_ENGINE",
+        "version": "5.0.0",
+        "complexity": "complex",
+        "mode": "CASE_ANALYSIS",
+        "responseStyle": null,
+        "modeFlags": {
+          "isQuiz": false,
+          "isReviewer": false,
+          "isReview": false,
+          "isSource": false,
+          "isCase": true,
+          "isAudit": false,
+          "isPatch": false,
+          "isDebug": false,
+          "isNonAFMode": false,
+          "isStandardLegal": true,
+          "shouldForceAFStructure": false,
+          "modeValues": [
+            "STANDARD",
+            "STANDARD_TAX",
+            "/ASK",
+            "STANDARD_TAX_MODE",
+            "STANDARD",
+            "STANDARD_TAX",
+            "STANDARD",
+            "STANDARD_TAX",
+            "STANDARD_TAX",
+            "CASE_ANALYSIS",
+            "CASE_ANALYSIS"
+          ]
+        },
+        "estimatedInputTokens": "<REDACTED>",
+        "maxCompletionTokens": "<REDACTED>",
+        "sourceCount": 5,
+        "wasTrimmed": false,
+        "authoritySummary": {
+          "controlling": 4,
+          "jurisprudence": 1,
+          "administrative": 0,
+          "accounting": 0,
+          "secondary": 0,
+          "targetAuthorityMatches": 5,
+          "issueMatches": 5,
+          "exactAuthorityMatches": 5,
+          "indexedGoogleDriveAuthorities": 5
+        },
+        "taxEngineContext": {
+          "domainCode": "BIR",
+          "domainName": "BIR / NIRC Organizational",
+          "supportedDomain": false,
+          "primaryIssue": "BIR_ORGANIZATION",
+          "subIssue": "NIRC_DEFINITION",
+          "retrievalStrategy": "ISSUE_JURISPRUDENCE_FIRST",
+          "targetAuthorities": [
+            "NIRC Sec. 21",
+            "NIRC Sec. 2"
+          ],
+          "controllingAuthorities": [
+            "NIRC Sec. 21",
+            "NIRC Sec. 2"
+          ],
+          "supportingAuthorities": [],
+          "supportingJurisprudence": [],
+          "requiredAnswerSections": [],
+          "doctrinalRules": null,
+          "conflictRules": null
+        },
+        "sanitizedConflicts": null,
+        "diagnostics": {
+          "requestId": "route-1784091655651-55f957fb",
+          "route": "/ask",
+          "model": "gpt-4o-mini",
+          "budgetMs": 90000,
+          "pipelineTimings": {
+            "requestStartedAt": 1784091655651,
+            "classificationStartedAt": 1784091655876,
+            "classificationCompletedAt": 1784091655882,
+            "retrievalStartedAt": 1784091655884,
+            "retrievalCompletedAt": 1784091723907,
+            "authorityResolutionStartedAt": 1784091723934,
+            "authorityResolutionCompletedAt": 1784091723935,
+            "generationStartedAt": 1784091724847,
+            "generationCompletedAt": 1784091729772,
+            "renderingStartedAt": 1784091729772,
+            "renderingCompletedAt": 1784091729775,
+            "complianceStartedAt": 1784091729775,
+            "complianceCompletedAt": 1784091729792,
+            "sourceSelectionStartedAt": 1784091729792,
+            "sourceSelectionCompletedAt": 1784091729800,
+            "responseCompletedAt": 1784091730102,
+            "totalMs": 74451
+          },
+          "pipelineStageDurations": {
+            "classificationMs": 6,
+            "retrievalMs": 68023,
+            "authorityResolutionMs": 1,
+            "sourceSelectionMs": 8,
+            "generationMs": 4925,
+            "complianceMs": 17,
+            "renderingMs": 3,
+            "totalMs": 74451
+          },
+          "partialPipelineState": {
+            "retrievalCompleted": true,
+            "classificationCompleted": true,
+            "generationStarted": true,
+            "generationCompleted": true,
+            "complianceStarted": true,
+            "complianceCompleted": true,
+            "retrievedCount": 12,
+            "retrievalLayerCounts": {
+              "exactAuthorityMatches": 4,
+              "citationVariantMatches": 32,
+              "metadataMatches": 92,
+              "contentKeywordMatches": 36,
+              "semanticMatches": 0,
+              "fallbackMatches": 0,
+              "supabaseFallbackMatches": 0
+            },
+            "sourceAvailabilityStatusBeforeTimeout": "RELATED_AUTHORITY_ONLY",
+            "sourceLabelsBeforeTimeout": [
+              "CTA Case No. 9711"
+            ],
+            "displayedSourceCardCount": 1
+          },
+          "openaiCalls": [
+            {
+              "purpose": "generation",
+              "model": "gpt-4o-mini",
+              "startedAt": 1784091724898,
+              "status": "success",
+              "attempts": [
+                {
+                  "attempt": 1,
+                  "startedAt": 1784091724898,
+                  "completedAt": 1784091729771,
+                  "durationMs": 4873,
+                  "status": "success",
+                  "freshClientUsed": false
+                }
+              ],
+              "completedAt": 1784091729771,
+              "durationMs": 4873,
+              "attempt": 1,
+              "retrySucceeded": false
+            }
+          ],
+          "checkpoints": [
+            {
+              "checkpoint": "CLASSIFICATION_STARTED",
+              "requestId": "route-1784091655651-55f957fb",
+              "elapsedMs": 225,
+              "remainingBudgetMs": 89775,
+              "model": "gpt-4o-mini",
+              "mode": "",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "",
+              "retrievedCount": 0,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "CLASSIFICATION_COMPLETE",
+              "requestId": "route-1784091655651-55f957fb",
+              "elapsedMs": 231,
+              "remainingBudgetMs": 89769,
+              "model": "gpt-4o-mini",
+              "mode": "",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "",
+              "retrievedCount": 0,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "RETRIEVAL_STARTED",
+              "requestId": "route-1784091655651-55f957fb",
+              "elapsedMs": 233,
+              "remainingBudgetMs": 89767,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "",
+              "retrievedCount": 0,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "RETRIEVAL_COMPLETE",
+              "requestId": "route-1784091655651-55f957fb",
+              "elapsedMs": 68256,
+              "remainingBudgetMs": 21744,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "AUTHORITY_RESOLUTION_STARTED",
+              "requestId": "route-1784091655651-55f957fb",
+              "elapsedMs": 68283,
+              "remainingBudgetMs": 21717,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "AUTHORITY_RESOLUTION_COMPLETE",
+              "requestId": "route-1784091655651-55f957fb",
+              "elapsedMs": 68284,
+              "remainingBudgetMs": 21716,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "RELATED_AUTHORITY_ONLY",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "GENERATION_STARTED",
+              "requestId": "route-1784091655651-55f957fb",
+              "elapsedMs": 69196,
+              "remainingBudgetMs": 20804,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "RELATED_AUTHORITY_ONLY",
+              "retrievedCount": 5,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "GENERATION_COMPLETE",
+              "requestId": "route-1784091655651-55f957fb",
+              "elapsedMs": 74121,
+              "remainingBudgetMs": 15879,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "RELATED_AUTHORITY_ONLY",
+              "retrievedCount": 5,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "RENDERING_STARTED",
+              "requestId": "route-1784091655651-55f957fb",
+              "elapsedMs": 74121,
+              "remainingBudgetMs": 15879,
+              "model": "gpt-4o-mini",
+              "mode": "CASE_ANALYSIS",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "RELATED_AUTHORITY_ONLY",
+              "retrievedCount": 5,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "RENDERING_COMPLETE",
+              "requestId": "route-1784091655651-55f957fb",
+              "elapsedMs": 74124,
+              "remainingBudgetMs": 15876,
+              "model": "gpt-4o-mini",
+              "mode": "CASE_ANALYSIS",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "RELATED_AUTHORITY_ONLY",
+              "retrievedCount": 5,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "COMPLIANCE_STARTED",
+              "requestId": "route-1784091655651-55f957fb",
+              "elapsedMs": 74124,
+              "remainingBudgetMs": 15876,
+              "model": "gpt-4o-mini",
+              "mode": "CASE_ANALYSIS",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "RELATED_AUTHORITY_ONLY",
+              "retrievedCount": 5,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "COMPLIANCE_COMPLETE",
+              "requestId": "route-1784091655651-55f957fb",
+              "elapsedMs": 74141,
+              "remainingBudgetMs": 15859,
+              "model": "gpt-4o-mini",
+              "mode": "CASE_ANALYSIS",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "RELATED_AUTHORITY_ONLY",
+              "retrievedCount": 5,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "SOURCE_SELECTION_STARTED",
+              "requestId": "route-1784091655651-55f957fb",
+              "elapsedMs": 74141,
+              "remainingBudgetMs": 15859,
+              "model": "gpt-4o-mini",
+              "mode": "CASE_ANALYSIS",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "RELATED_AUTHORITY_ONLY",
+              "retrievedCount": 5,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "SOURCE_SELECTION_COMPLETE",
+              "requestId": "route-1784091655651-55f957fb",
+              "elapsedMs": 74149,
+              "remainingBudgetMs": 15851,
+              "model": "gpt-4o-mini",
+              "mode": "CASE_ANALYSIS",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "RELATED_AUTHORITY_ONLY",
+              "retrievedCount": 5,
+              "displayedSourceCardCount": 1
+            },
+            {
+              "checkpoint": "RESPONSE_COMPLETE",
+              "requestId": "route-1784091655651-55f957fb",
+              "elapsedMs": 74451,
+              "remainingBudgetMs": 15549,
+              "model": "gpt-4o-mini",
+              "mode": "CASE_ANALYSIS",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "RELATED_AUTHORITY_ONLY",
+              "retrievedCount": 5,
+              "displayedSourceCardCount": 1
+            }
+          ]
+        },
+        "openAiModel": "gpt-4o-mini",
+        "openAiProjectAccessFailure": false,
+        "askHandlerVersion": "9.0.0",
+        "pipelineSupremacy": true,
+        "pipelineVersion": "1.0.0",
+        "correctFlowEnabled": true,
+        "issueClassificationEngineCalled": true,
+        "retrievalEngineCalled": true,
+        "rerankerEngineCalled": true,
+        "fourPartDoctrineTestApplied": true,
+        "retrievalLayerCounts": {
+          "exactAuthorityMatches": 4,
+          "citationVariantMatches": 32,
+          "metadataMatches": 92,
+          "contentKeywordMatches": 36,
+          "semanticMatches": 0,
+          "fallbackMatches": 0,
+          "supabaseFallbackMatches": 0
+        },
+        "firstSourceLabels": [
+          "CTA Case No. 9711"
+        ],
+        "pipelineTimings": {
+          "requestStartedAt": 1784091655651,
+          "classificationStartedAt": 1784091655876,
+          "classificationCompletedAt": 1784091655882,
+          "retrievalStartedAt": 1784091655884,
+          "retrievalCompletedAt": 1784091723907,
+          "authorityResolutionStartedAt": 1784091723934,
+          "authorityResolutionCompletedAt": 1784091723935,
+          "generationStartedAt": 1784091724847,
+          "generationCompletedAt": 1784091729772,
+          "renderingStartedAt": 1784091729772,
+          "renderingCompletedAt": 1784091729775,
+          "complianceStartedAt": 1784091729775,
+          "complianceCompletedAt": 1784091729792,
+          "sourceSelectionStartedAt": 1784091729792,
+          "sourceSelectionCompletedAt": 1784091729800,
+          "responseCompletedAt": 1784091730102,
+          "totalMs": 74451
+        },
+        "pipelineStageDurations": {
+          "classificationMs": 6,
+          "retrievalMs": 68023,
+          "authorityResolutionMs": 1,
+          "sourceSelectionMs": 8,
+          "generationMs": 4925,
+          "complianceMs": 17,
+          "renderingMs": 3,
+          "totalMs": 74451
+        },
+        "partialPipelineState": {
+          "retrievalCompleted": true,
+          "classificationCompleted": true,
+          "generationStarted": true,
+          "generationCompleted": true,
+          "complianceStarted": true,
+          "complianceCompleted": true,
+          "retrievedCount": 12,
+          "retrievalLayerCounts": {
+            "exactAuthorityMatches": 4,
+            "citationVariantMatches": 32,
+            "metadataMatches": 92,
+            "contentKeywordMatches": 36,
+            "semanticMatches": 0,
+            "fallbackMatches": 0,
+            "supabaseFallbackMatches": 0
+          },
+          "sourceAvailabilityStatusBeforeTimeout": "RELATED_AUTHORITY_ONLY",
+          "sourceLabelsBeforeTimeout": [
+            "CTA Case No. 9711"
+          ],
+          "displayedSourceCardCount": 1
+        },
+        "openaiCalls": [
+          {
+            "purpose": "generation",
+            "model": "gpt-4o-mini",
+            "startedAt": 1784091724898,
+            "status": "success",
+            "attempts": [
+              {
+                "attempt": 1,
+                "startedAt": 1784091724898,
+                "completedAt": 1784091729771,
+                "durationMs": 4873,
+                "status": "success",
+                "freshClientUsed": false
+              }
+            ],
+            "completedAt": 1784091729771,
+            "durationMs": 4873,
+            "attempt": 1,
+            "retrySucceeded": false
+          }
+        ],
+        "routeControllerOnly": true,
+        "noLegalReasoningInsideAskHandler": true,
+        "noSourceRankingInsideAskHandler": true,
+        "noRenderingInsideAskHandler": true,
+        "orchestrationFirstArchitecture": true,
+        "noDirectOpenAICall": true,
+        "noPromptAssembly": true,
+        "tpmConscious": true
+      }
+    }
+  },
+  "hardRefresh": {
+    "status": 200,
+    "payload": {
+      "success": true,
+      "messages": [
+        {
+          "id": "<REDACTED_UUID>",
+          "conversation_id": "<REDACTED>",
+          "user_id": "<REDACTED>",
+          "role": "user",
+          "content": "A taxpayer requested a specific BIR revenue memorandum circular, but TINA cannot locate the exact issuance. Can TINA still give an answer based on the Tax Code, regulations, and related jurisprudence without implying that the requested circular was verified?",
+          "created_at": "2026-07-15T05:02:10.85667+00:00",
+          "sources_used": null,
+          "fallback_references": null,
+          "metadata": {
+            "adaptive": {
+              "riskScore": null,
+              "queryIntent": null,
+              "adaptiveMode": null,
+              "responseMode": null,
+              "responsePlan": null,
+              "assumptionGap": null,
+              "authorityUsed": null,
+              "responseDepth": null,
+              "adaptiveContext": null,
+              "confidenceLevel": null,
+              "positionStrength": null,
+              "retrievalMetadata": null,
+              "supersessionAudit": null,
+              "tinaConversationMemoryVersion": "2.2.0"
+            }
+          },
+          "trust": null
+        },
+        {
+          "id": "<REDACTED_UUID>",
+          "conversation_id": "<REDACTED>",
+          "user_id": "<REDACTED>",
+          "role": "assistant",
+          "content": "**Case Identified** \nCTA Case No. 9711 – Dizon Farms Produce, Inc. v. CIR\n\n**Facts / Context** \nIn this case, the taxpayer, Dizon Farms Produce, Inc., contested a deficiency tax assessment issued by the Bureau of Internal Revenue (BIR). The taxpayer argued that the assessment was invalid due to the lack of a proper pre-assessment notice (PAN) and the failure of the BIR to comply with due process requirements.\n\n**Issue** \nThe primary issue was whether the BIR's failure to issue a pre-assessment notice (PAN) constituted a violation of the taxpayer's due process rights, thereby rendering the tax assessment null and void.\n\n**Ruling / Holding** \nThe Court of Tax Appeals (CTA) ruled in favor of the taxpayer, stating that the issuance of a PAN is a mandatory requirement for due process in tax assessments. The absence of a PAN invalidated the subsequent deficiency tax assessment.\n\n**Doctrine** \nThe ruling established that tax assessments issued without adhering to due process requirements, specifically the issuance of a PAN, are null and void. This aligns with the principle that while the government has an interest in the swift collection of taxes, it must also respect the rights of taxpayers.\n\n**Application** \nIn applying this doctrine, the CTA emphasized that the BIR must follow the procedural requirements set forth in the law, including the issuance of a PAN, to ensure that taxpayers are given a fair opportunity to contest any findings of deficiency tax. This case reinforces the necessity for the BIR to adhere to due process in tax assessments.\n\n**Status / Limits** \nThe ruling in Dizon Farms Produce, Inc. v. CIR highlights the importance of procedural compliance by the BIR in tax assessments. However, it is limited to the context of due process in tax assessments and does not address other aspects of tax law or the specific BIR revenue memorandum circular that was requested but not located. \n\nIn summary, while the specific BIR circular could not be verified, the principles established in this case regarding due process in tax assessments remain applicable and relevant in similar contexts.\n\nSource limitation: A governing authority was not directly located. Displayed sources are related, supporting, or secondary only. They are not the controlling basis for the answer.",
+          "created_at": "2026-07-15T05:02:12.312285+00:00",
+          "sources_used": [
+            {
+              "label": "CTA Case No. 9711",
+              "title": "CTA Case No. 9711",
+              "citation": "CTA Case No. 9711",
+              "publicUrl": "https://drive.google.com/file/d/1NG5D6VFTArNufblSJ2R-VGMlkydl243L/view?usp=drivesdk",
+              "displayLabel": "CTA Case No. 9711",
+              "authorityType": "CASE",
+              "limitationRequired": true
+            }
+          ],
+          "fallback_references": null,
+          "metadata": {
+            "trust": {
+              "version": "1.0",
+              "hasConflict": false,
+              "limitations": [
+                "RELATED_AUTHORITY_ONLY"
+              ],
+              "sourceState": "RELATED_AUTHORITY_ONLY",
+              "responseKind": "GENERAL_TAX",
+              "conflictState": "NO_CONFLICT",
+              "legalConclusion": "ALLOWED",
+              "authoritySupport": "RELATED_AUTHORITY_ONLY",
+              "automaticSubmission": false,
+              "humanReviewRequired": false,
+              "specificAuthorityNotFound": false,
+              "filingReadyDocumentGenerated": false
+            },
+            "adaptive": {
+              "riskScore": null,
+              "queryIntent": null,
+              "adaptiveMode": null,
+              "responseMode": null,
+              "responsePlan": null,
+              "assumptionGap": null,
+              "authorityUsed": null,
+              "responseDepth": null,
+              "adaptiveContext": null,
+              "confidenceLevel": null,
+              "positionStrength": null,
+              "retrievalMetadata": null,
+              "supersessionAudit": null,
+              "tinaConversationMemoryVersion": "2.2.0"
+            }
+          },
+          "trust": {
+            "version": "1.0",
+            "hasConflict": false,
+            "limitations": [
+              "RELATED_AUTHORITY_ONLY"
+            ],
+            "sourceState": "RELATED_AUTHORITY_ONLY",
+            "responseKind": "GENERAL_TAX",
+            "conflictState": "NO_CONFLICT",
+            "legalConclusion": "ALLOWED",
+            "authoritySupport": "RELATED_AUTHORITY_ONLY",
+            "automaticSubmission": false,
+            "humanReviewRequired": false,
+            "specificAuthorityNotFound": false,
+            "filingReadyDocumentGenerated": false
+          }
+        }
+      ]
+    }
+  },
+  "historyReopen": {
+    "status": 200,
+    "payload": {
+      "success": true,
+      "messages": [
+        {
+          "id": "<REDACTED_UUID>",
+          "conversation_id": "<REDACTED>",
+          "user_id": "<REDACTED>",
+          "role": "user",
+          "content": "A taxpayer requested a specific BIR revenue memorandum circular, but TINA cannot locate the exact issuance. Can TINA still give an answer based on the Tax Code, regulations, and related jurisprudence without implying that the requested circular was verified?",
+          "created_at": "2026-07-15T05:02:10.85667+00:00",
+          "sources_used": null,
+          "fallback_references": null,
+          "metadata": {
+            "adaptive": {
+              "riskScore": null,
+              "queryIntent": null,
+              "adaptiveMode": null,
+              "responseMode": null,
+              "responsePlan": null,
+              "assumptionGap": null,
+              "authorityUsed": null,
+              "responseDepth": null,
+              "adaptiveContext": null,
+              "confidenceLevel": null,
+              "positionStrength": null,
+              "retrievalMetadata": null,
+              "supersessionAudit": null,
+              "tinaConversationMemoryVersion": "2.2.0"
+            }
+          },
+          "trust": null
+        },
+        {
+          "id": "<REDACTED_UUID>",
+          "conversation_id": "<REDACTED>",
+          "user_id": "<REDACTED>",
+          "role": "assistant",
+          "content": "**Case Identified** \nCTA Case No. 9711 – Dizon Farms Produce, Inc. v. CIR\n\n**Facts / Context** \nIn this case, the taxpayer, Dizon Farms Produce, Inc., contested a deficiency tax assessment issued by the Bureau of Internal Revenue (BIR). The taxpayer argued that the assessment was invalid due to the lack of a proper pre-assessment notice (PAN) and the failure of the BIR to comply with due process requirements.\n\n**Issue** \nThe primary issue was whether the BIR's failure to issue a pre-assessment notice (PAN) constituted a violation of the taxpayer's due process rights, thereby rendering the tax assessment null and void.\n\n**Ruling / Holding** \nThe Court of Tax Appeals (CTA) ruled in favor of the taxpayer, stating that the issuance of a PAN is a mandatory requirement for due process in tax assessments. The absence of a PAN invalidated the subsequent deficiency tax assessment.\n\n**Doctrine** \nThe ruling established that tax assessments issued without adhering to due process requirements, specifically the issuance of a PAN, are null and void. This aligns with the principle that while the government has an interest in the swift collection of taxes, it must also respect the rights of taxpayers.\n\n**Application** \nIn applying this doctrine, the CTA emphasized that the BIR must follow the procedural requirements set forth in the law, including the issuance of a PAN, to ensure that taxpayers are given a fair opportunity to contest any findings of deficiency tax. This case reinforces the necessity for the BIR to adhere to due process in tax assessments.\n\n**Status / Limits** \nThe ruling in Dizon Farms Produce, Inc. v. CIR highlights the importance of procedural compliance by the BIR in tax assessments. However, it is limited to the context of due process in tax assessments and does not address other aspects of tax law or the specific BIR revenue memorandum circular that was requested but not located. \n\nIn summary, while the specific BIR circular could not be verified, the principles established in this case regarding due process in tax assessments remain applicable and relevant in similar contexts.\n\nSource limitation: A governing authority was not directly located. Displayed sources are related, supporting, or secondary only. They are not the controlling basis for the answer.",
+          "created_at": "2026-07-15T05:02:12.312285+00:00",
+          "sources_used": [
+            {
+              "label": "CTA Case No. 9711",
+              "title": "CTA Case No. 9711",
+              "citation": "CTA Case No. 9711",
+              "publicUrl": "https://drive.google.com/file/d/1NG5D6VFTArNufblSJ2R-VGMlkydl243L/view?usp=drivesdk",
+              "displayLabel": "CTA Case No. 9711",
+              "authorityType": "CASE",
+              "limitationRequired": true
+            }
+          ],
+          "fallback_references": null,
+          "metadata": {
+            "trust": {
+              "version": "1.0",
+              "hasConflict": false,
+              "limitations": [
+                "RELATED_AUTHORITY_ONLY"
+              ],
+              "sourceState": "RELATED_AUTHORITY_ONLY",
+              "responseKind": "GENERAL_TAX",
+              "conflictState": "NO_CONFLICT",
+              "legalConclusion": "ALLOWED",
+              "authoritySupport": "RELATED_AUTHORITY_ONLY",
+              "automaticSubmission": false,
+              "humanReviewRequired": false,
+              "specificAuthorityNotFound": false,
+              "filingReadyDocumentGenerated": false
+            },
+            "adaptive": {
+              "riskScore": null,
+              "queryIntent": null,
+              "adaptiveMode": null,
+              "responseMode": null,
+              "responsePlan": null,
+              "assumptionGap": null,
+              "authorityUsed": null,
+              "responseDepth": null,
+              "adaptiveContext": null,
+              "confidenceLevel": null,
+              "positionStrength": null,
+              "retrievalMetadata": null,
+              "supersessionAudit": null,
+              "tinaConversationMemoryVersion": "2.2.0"
+            }
+          },
+          "trust": {
+            "version": "1.0",
+            "hasConflict": false,
+            "limitations": [
+              "RELATED_AUTHORITY_ONLY"
+            ],
+            "sourceState": "RELATED_AUTHORITY_ONLY",
+            "responseKind": "GENERAL_TAX",
+            "conflictState": "NO_CONFLICT",
+            "legalConclusion": "ALLOWED",
+            "authoritySupport": "RELATED_AUTHORITY_ONLY",
+            "automaticSubmission": false,
+            "humanReviewRequired": false,
+            "specificAuthorityNotFound": false,
+            "filingReadyDocumentGenerated": false
+          }
+        }
+      ]
+    }
+  },
+  "sanitizedConversationRef": "54b34b76f98cdca8"
+}

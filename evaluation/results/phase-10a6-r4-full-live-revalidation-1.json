@@ -1,0 +1,189 @@
+{
+  "task": "PHASE-10A6-R4-FULL-LIVE-REVALIDATION-1",
+  "backendHead": "5a6a12d229ea16b9b777044e1d097d6f958b8cec",
+  "frontendHead": "0816ac865b4ee55d5bb92534834dadbb0dcfba87",
+  "environment": "real authenticated staging /ask API using a fresh local JWT minted from ignored JWT_SECRET and an active Supabase user record; screenshots are sanitized payload-rendered evidence, not protected-preview UI captures",
+  "r3IndependentReviewDecision": "R3 INDEPENDENT REVIEW PASS WITH RECOMMENDATIONS",
+  "questionsExecuted": 10,
+  "minimumRunsRequired": 14,
+  "totalRuns": 14,
+  "questionsPassed": 8,
+  "questionsPartial": 2,
+  "questionsFailed": 0,
+  "questionsTimedOut": 0,
+  "overclaimCount": 0,
+  "wrongStateCount": 0,
+  "specificAuthorityFailures": 0,
+  "conflictDisclosureFailures": 0,
+  "restrictedOutcomeFailures": 0,
+  "persistenceFailures": 0,
+  "securityFailures": 0,
+  "q2Runs": 3,
+  "q2SubstantiveAnswers": 3,
+  "q2SafeRuns": 3,
+  "q2VerifiedControllingCount": 0,
+  "q9Runs": 3,
+  "q9SubstantiveAnswers": 3,
+  "q9MissingAuthorityDisclosurePasses": 3,
+  "q9ConflictDisclosurePasses": 3,
+  "q9HierarchyExplanationPasses": 3,
+  "q9VerifiedControllingCount": 0,
+  "legitimateVerifiedControlRuns": 2,
+  "legitimateVerifiedControlPasses": 2,
+  "q2StructuredSignalDisposition": "MAY DEFER WITH DOCUMENTED LIMITATION",
+  "potentialConflictDisposition": "MAY DEFER WITH DOCUMENTED LIMITATION",
+  "currentP0Count": 0,
+  "currentP1Count": 0,
+  "currentP2Count": 2,
+  "currentP3Count": 1,
+  "phase10AStatus": "REOPENED - R4 PASSED, PENDING PHASE-10A7",
+  "phase10BStatus": "BLOCKED",
+  "phase10CStatus": "BLOCKED",
+  "independentClosureReviewStatus": "DEFERRED",
+  "decision": "PHASE 10A6-R4 FULL LIVE REVALIDATION PASS WITH RECOMMENDATIONS",
+  "generatedAtUtc": "2026-07-15T05:26:22.999Z",
+  "q2Details": [
+    {
+      "id": "Q2-r1",
+      "trustState": "related-authority-only",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "specificAuthorityNotFound": false,
+      "missingAuthorityDisclosurePass": true,
+      "persistenceConsistent": true
+    },
+    {
+      "id": "Q2-r2",
+      "trustState": "related-authority-only",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "specificAuthorityNotFound": false,
+      "missingAuthorityDisclosurePass": true,
+      "persistenceConsistent": true
+    },
+    {
+      "id": "Q2-r3",
+      "trustState": "related-authority-only",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "specificAuthorityNotFound": false,
+      "missingAuthorityDisclosurePass": true,
+      "persistenceConsistent": true
+    }
+  ],
+  "q9Details": [
+    {
+      "id": "Q9-r1",
+      "trustState": "specific-authority-not-found",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "specificAuthorityNotFound": true,
+      "missingAuthorityDisclosurePass": true,
+      "conflictDisclosurePass": true,
+      "hierarchyExplanationPass": true,
+      "sourceFallbackDisclosure": {
+        "sourceOnlyFallback": true,
+        "specificAuthorityRequested": true,
+        "requestedAuthorityMatched": false,
+        "specificAuthorityNotFound": true,
+        "conflictDetected": true,
+        "substantiveAnswerGenerated": false,
+        "authorityHierarchyQualified": true,
+        "humanReviewRecommended": true
+      },
+      "persistenceConsistent": true
+    },
+    {
+      "id": "Q9-r2",
+      "trustState": "specific-authority-not-found",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "specificAuthorityNotFound": true,
+      "missingAuthorityDisclosurePass": true,
+      "conflictDisclosurePass": true,
+      "hierarchyExplanationPass": true,
+      "sourceFallbackDisclosure": {
+        "sourceOnlyFallback": true,
+        "specificAuthorityRequested": true,
+        "requestedAuthorityMatched": false,
+        "specificAuthorityNotFound": true,
+        "conflictDetected": true,
+        "substantiveAnswerGenerated": false,
+        "authorityHierarchyQualified": true,
+        "humanReviewRecommended": true
+      },
+      "persistenceConsistent": true
+    },
+    {
+      "id": "Q9-r3",
+      "trustState": "specific-authority-not-found",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "specificAuthorityNotFound": true,
+      "missingAuthorityDisclosurePass": true,
+      "conflictDisclosurePass": true,
+      "hierarchyExplanationPass": true,
+      "sourceFallbackDisclosure": {
+        "sourceOnlyFallback": true,
+        "specificAuthorityRequested": true,
+        "requestedAuthorityMatched": false,
+        "specificAuthorityNotFound": true,
+        "conflictDetected": true,
+        "substantiveAnswerGenerated": false,
+        "authorityHierarchyQualified": true,
+        "humanReviewRecommended": true
+      },
+      "persistenceConsistent": true
+    }
+  ],
+  "questionVerdicts": {
+    "Q1": {
+      "verdict": "PASS",
+      "note": "Controlled LOA procedural boundary; no unsupported legal conclusion."
+    },
+    "Q2": {
+      "verdict": "PASS",
+      "note": "3/3 substantive, missing requested RMC disclosed in prose, 0/3 VERIFIED_CONTROLLING, persistence consistent."
+    },
+    "Q3": {
+      "verdict": "PASS",
+      "note": "Verified-controlling remains reachable; substantive answer with displayed authority cards."
+    },
+    "Q4": {
+      "verdict": "PARTIAL_P2",
+      "note": "Broad freight-forwarder answer remains VERIFIED_CONTROLLING on limited source support; no P1 because no missing requested authority or outcome prediction."
+    },
+    "Q5": {
+      "verdict": "PASS",
+      "note": "Verified-controlling remains reachable; VAT-exemption/source-card path preserved."
+    },
+    "Q6": {
+      "verdict": "PASS",
+      "note": "No indexed-source match failed closed to NO_VERIFIED_AUTHORITY/source-failure."
+    },
+    "Q7": {
+      "verdict": "PASS",
+      "note": "Controlled LOA procedural boundary; no unsupported final validity conclusion."
+    },
+    "Q8": {
+      "verdict": "PARTIAL_P2",
+      "note": "Competing-treatment answer remains VERIFIED_CONTROLLING while POTENTIAL_CONFLICT is surfaced; documented conflict completeness limitation."
+    },
+    "Q9": {
+      "verdict": "PASS",
+      "note": "3/3 substantive fallback bodies; missing ruling disclosed; conflict/uncertainty and hierarchy explained; 0/3 VERIFIED_CONTROLLING."
+    },
+    "Q10": {
+      "verdict": "PASS",
+      "note": "Restricted outcome boundary preserved; no win/loss prediction; human review required."
+    }
+  },
+  "screenshotEvidence": {
+    "type": "sanitized payload-rendered evidence screenshots, not protected-preview UI captures",
+    "captured": 9,
+    "total": 14,
+    "failedRunIds": [
+      "Q5-r1",
+      "Q7-r1",
+      "Q9-r1",
+      "Q9-r2",
+      "Q10-r1"
+    ]
+  },
+  "phase10A7MayProceed": true,
+  "exactNextTask": "PHASE-10A7-TAX-FACTCHECK-CAPABILITY-EVALUATION-1"
+}

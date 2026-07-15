@@ -8905,3 +8905,31 @@ Next task: PHASE-10A6-R4-FULL-LIVE-REVALIDATION-1 -- mandatory independent revie
 
 Artifacts: PHASE-10A6-R3-MISSING-AUTHORITY-CONFLICT-DISCLOSURE-REMEDIATION-1_REPORT.md; evaluation/results/phase-10a6-r3-missing-authority-conflict-disclosure-remediation-1.json; evaluation/results/phase-10a6-r3-missing-authority-conflict-disclosure-remediation-1/ (execution-manifest, run-log, evidence-manifest with SHA-256, payloads x10, html x10). Code: services/source-fallback-disclosure.js, services/trust-contract.js, ask-handler.js, tests/phase-10a6-r3-...test.mjs. Commit 2259dec.
 ```
+
+## Phase 10A6-R4 Full Live Revalidation 1 -- PASS WITH RECOMMENDATIONS (2026-07-15):
+
+```text
+PHASE-10A6-R4-FULL-LIVE-REVALIDATION-1 executed by Codex GPT-5, high-reasoning posture, medium speed, as an independent reviewer/revalidator that did not execute PHASE-10A6-R3. Backend start HEAD 5a6a12d229ea16b9b777044e1d097d6f958b8cec; backend branch feature/source-availability-engine-v1. Frontend HEAD 0816ac865b4ee55d5bb92534834dadbb0dcfba87; frontend untouched. Dev Factory untouched. Runtime code, frontend code, fixtures, Gemini, and closure gate were not rerun or modified.
+
+Part I independent R3 review decision: R3 INDEPENDENT REVIEW PASS WITH RECOMMENDATIONS. Runtime commit 2259dec560cae88e839767728e7fa9dbfcc33707 is scoped to the source-only fallback remediation and tests; evidence commit 5a6a12d229ea16b9b777044e1d097d6f958b8cec contains intended evidence artifacts and CURRENT_STATE only. R3 runtime design is general, not hardcoded to Q9; it discloses missing requested authority without claiming non-existence, presents conflict/uncertainty, explains authority hierarchy, keeps fallback trust at RELATED_AUTHORITY_ONLY, and preserves verified/restricted/source-failure behavior. Recommendation: R3 generated HTML evidence has trailing whitespace, an evidence-format issue only.
+
+Part II full live authenticated staging revalidation completed the required 14-run matrix: Q1 once, Q2 three fresh conversations, Q3-Q8 once each, Q9 three fresh conversations, Q10 once. All /ask calls returned HTTP 200. Persistence passed 14/14 after hard refresh and history reopen. Evidence is sanitized; screenshots are payload-rendered evidence captures where available, not protected-preview UI captures.
+
+Q2 result: PASS 3/3. All three runs were substantive, disclosed that the exact RMC was not located or verified, distinguished related/general authority, avoided VERIFIED_CONTROLLING, aligned trust/prose safely, and persisted. Q2 structured specificAuthorityNotFound remains false, but this is MAY DEFER WITH DOCUMENTED LIMITATION because the visible answer and RELATED_AUTHORITY_ONLY trust state are safe.
+
+Q9 result: PASS 3/3. All three runs were substantive, disclosed the requested ruling was not located or verified, disclosed conflict/need for harmonization, explained hierarchy, avoided settled-law framing, avoided VERIFIED_CONTROLLING, aligned trust/prose, and persisted. Q9 VERIFIED_CONTROLLING count: 0/3.
+
+Legitimate verified controls: PASS 2/2 (Q3-r1 and Q5-r1 remained VERIFIED_CONTROLLING with displayed authority support and no missing specific authority or verified conflict). Restricted control: PASS (Q10 remained RESTRICTED and required professional judgment).
+
+Remaining P2 dispositions: (1) Q2 structured specificAuthorityNotFound mismatch -- MAY DEFER WITH DOCUMENTED LIMITATION. (2) Potential-conflict completeness for Q4/Q8-class competing-treatment answers -- MAY DEFER WITH DOCUMENTED LIMITATION. No P1 remains.
+
+Severity: P0=0, P1=0, P2=2, P3=1.
+
+Decision: PHASE 10A6-R4 FULL LIVE REVALIDATION PASS WITH RECOMMENDATIONS. Phase 10A: REOPENED - R4 PASSED, PENDING PHASE-10A7. Phase 10B: BLOCKED. Phase 10C: BLOCKED. Independent closure review: DEFERRED.
+
+Phase 10A7 may proceed as the next authorized task, but Phase 10A remains open and must not be closed by R4.
+
+Exact next task: PHASE-10A7-TAX-FACTCHECK-CAPABILITY-EVALUATION-1.
+
+Artifacts: PHASE-10A6-R4-FULL-LIVE-REVALIDATION-1_REPORT.md; evaluation/results/phase-10a6-r4-full-live-revalidation-1.json; evaluation/results/phase-10a6-r4-full-live-revalidation-1/ (execution manifest, independent-review notes, run log, scoring matrix, persistence evidence, source summaries, sanitized payloads/html/screenshots, evidence manifest).
+```

@@ -1,0 +1,183 @@
+[
+  {
+    "id": "Q1-r1",
+    "questionId": "Q1",
+    "sources": [],
+    "displayedSourceCount": 0,
+    "authoritySupport": "NOT_APPLICABLE",
+    "conflictState": "NOT_APPLICABLE",
+    "sourceFallbackDisclosure": null
+  },
+  {
+    "id": "Q2-r1",
+    "questionId": "Q2",
+    "sources": [
+      "CTA Case No. 9711"
+    ],
+    "displayedSourceCount": 1,
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "conflictState": "NO_CONFLICT",
+    "sourceFallbackDisclosure": null
+  },
+  {
+    "id": "Q2-r2",
+    "questionId": "Q2",
+    "sources": [
+      "CTA Case No. 9711"
+    ],
+    "displayedSourceCount": 1,
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "conflictState": "NO_CONFLICT",
+    "sourceFallbackDisclosure": null
+  },
+  {
+    "id": "Q2-r3",
+    "questionId": "Q2",
+    "sources": [
+      "CTA Case No. 9711"
+    ],
+    "displayedSourceCount": 1,
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "conflictState": "NO_CONFLICT",
+    "sourceFallbackDisclosure": null
+  },
+  {
+    "id": "Q3-r1",
+    "questionId": "Q3",
+    "sources": [
+      "NIRC Sec. 57",
+      "NIRC Sec. 58",
+      "RR No. 2-1998"
+    ],
+    "displayedSourceCount": 3,
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "conflictState": "NO_CONFLICT",
+    "sourceFallbackDisclosure": null
+  },
+  {
+    "id": "Q4-r1",
+    "questionId": "Q4",
+    "sources": [
+      "RR No. 16-2005"
+    ],
+    "displayedSourceCount": 1,
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "conflictState": "NO_CONFLICT",
+    "sourceFallbackDisclosure": null
+  },
+  {
+    "id": "Q5-r1",
+    "questionId": "Q5",
+    "sources": [
+      "NIRC Sec. 109",
+      "NIRC Sec. 236",
+      "RR No. 16-2005",
+      "RMC 75-2015"
+    ],
+    "displayedSourceCount": 4,
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "conflictState": "NO_CONFLICT",
+    "sourceFallbackDisclosure": null
+  },
+  {
+    "id": "Q6-r1",
+    "questionId": "Q6",
+    "sources": [],
+    "displayedSourceCount": 0,
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "conflictState": "NO_CONFLICT",
+    "sourceFallbackDisclosure": null
+  },
+  {
+    "id": "Q7-r1",
+    "questionId": "Q7",
+    "sources": [],
+    "displayedSourceCount": 0,
+    "authoritySupport": "NOT_APPLICABLE",
+    "conflictState": "NOT_APPLICABLE",
+    "sourceFallbackDisclosure": null
+  },
+  {
+    "id": "Q8-r1",
+    "questionId": "Q8",
+    "sources": [
+      "RR 16-2005"
+    ],
+    "displayedSourceCount": 1,
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "conflictState": "POTENTIAL_CONFLICT",
+    "sourceFallbackDisclosure": null
+  },
+  {
+    "id": "Q9-r1",
+    "questionId": "Q9",
+    "sources": [
+      "NIRC Sec. 2",
+      "G.R. No. 226592"
+    ],
+    "displayedSourceCount": 2,
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "conflictState": "NO_CONFLICT",
+    "sourceFallbackDisclosure": {
+      "sourceOnlyFallback": true,
+      "specificAuthorityRequested": true,
+      "requestedAuthorityMatched": false,
+      "specificAuthorityNotFound": true,
+      "conflictDetected": true,
+      "substantiveAnswerGenerated": false,
+      "authorityHierarchyQualified": true,
+      "humanReviewRecommended": true
+    }
+  },
+  {
+    "id": "Q9-r2",
+    "questionId": "Q9",
+    "sources": [
+      "NIRC Sec. 2",
+      "G.R. No. 226592"
+    ],
+    "displayedSourceCount": 2,
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "conflictState": "NO_CONFLICT",
+    "sourceFallbackDisclosure": {
+      "sourceOnlyFallback": true,
+      "specificAuthorityRequested": true,
+      "requestedAuthorityMatched": false,
+      "specificAuthorityNotFound": true,
+      "conflictDetected": true,
+      "substantiveAnswerGenerated": false,
+      "authorityHierarchyQualified": true,
+      "humanReviewRecommended": true
+    }
+  },
+  {
+    "id": "Q9-r3",
+    "questionId": "Q9",
+    "sources": [
+      "NIRC Sec. 2",
+      "G.R. No. 226592"
+    ],
+    "displayedSourceCount": 2,
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "conflictState": "NO_CONFLICT",
+    "sourceFallbackDisclosure": {
+      "sourceOnlyFallback": true,
+      "specificAuthorityRequested": true,
+      "requestedAuthorityMatched": false,
+      "specificAuthorityNotFound": true,
+      "conflictDetected": true,
+      "substantiveAnswerGenerated": false,
+      "authorityHierarchyQualified": true,
+      "humanReviewRecommended": true
+    }
+  },
+  {
+    "id": "Q10-r1",
+    "questionId": "Q10",
+    "sources": [],
+    "displayedSourceCount": 0,
+    "authoritySupport": "NOT_APPLICABLE",
+    "conflictState": "NOT_APPLICABLE",
+    "sourceFallbackDisclosure": null
+  }
+]

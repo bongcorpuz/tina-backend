@@ -1,0 +1,1164 @@
+{
+  "ask": {
+    "status": 200,
+    "responseTimeMs": 22388,
+    "payload": {
+      "success": true,
+      "engine": "TINA_ASK_HANDLER",
+      "version": "9.0.0",
+      "hook": "/ask",
+      "mode": "SOURCE_LOOKUP",
+      "routeKind": "NORMAL_RAG",
+      "hookTitle": "Default TINA Assistant",
+      "answer": "## Summary\n\nTINA retrieved related authorities for this question but did not establish a single verified controlling authority for the exact issue raised. The authorities below are relevant, but they are not, on their own, a settled controlling conclusion for this specific question.\n\n## Requested authority\n\nThe specific issuance requested was not located or verified in TINA's indexed sources. This does not mean the issuance does not exist — only that it could not be retrieved and verified here. The authorities listed below are related and may inform the issue, but they are not a substitute for the requested authority.\n\n## Competing or conflicting authorities\n\nThe available authorities may point in different directions or require harmonization. The retrieved source set does not establish a fully settled, controlling conclusion for this exact issue, and any apparent conflict should be treated as unresolved until reconciled against the governing hierarchy and the specific facts.\n\n## How to weigh these authorities\n\n- A statute (e.g., the National Internal Revenue Code) prevails over an administrative issuance.\n- Controlling Supreme Court jurisprudence prevails over an inconsistent administrative interpretation.\n- Regulations implement, but cannot amend, the statute.\n- Revenue memorandum circulars, revenue memorandum orders, and BIR rulings are interpretive and cannot override higher authority.\n- Applicability still depends on the specific facts, the taxable period, and the exact issue.\n\n## Related authorities\n\n1. NIRC Sec. 2 — STATUTE\n2. G.R. No. 226592 — CASE\n\n## Limitation\n\nThis is a related-authority result, not verified controlling authority. Professional review is recommended before relying on it for a specific position, filing, or transaction.",
+      "sources": [
+        {
+          "label": "NIRC Sec. 2",
+          "title": "NIRC Sec. 2",
+          "citation": "NIRC Sec. 2",
+          "authorityType": "STATUTE",
+          "displayLabel": "NIRC Sec. 2",
+          "limitationRequired": false,
+          "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk"
+        },
+        {
+          "label": "G.R. No. 226592",
+          "title": "G.R. No. 226592",
+          "citation": "G.R. No. 226592",
+          "authorityType": "CASE",
+          "displayLabel": "G.R. No. 226592",
+          "limitationRequired": false,
+          "publicUrl": "https://drive.google.com/file/d/15QgNCQfHkngjD38vcEGUZAyf48smEcJW/view?usp=drivesdk"
+        }
+      ],
+      "sourcesUsed": [
+        {
+          "label": "NIRC Sec. 2",
+          "title": "NIRC Sec. 2",
+          "citation": "NIRC Sec. 2",
+          "authorityType": "STATUTE",
+          "displayLabel": "NIRC Sec. 2",
+          "limitationRequired": false,
+          "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk"
+        },
+        {
+          "label": "G.R. No. 226592",
+          "title": "G.R. No. 226592",
+          "citation": "G.R. No. 226592",
+          "authorityType": "CASE",
+          "displayLabel": "G.R. No. 226592",
+          "limitationRequired": false,
+          "publicUrl": "https://drive.google.com/file/d/15QgNCQfHkngjD38vcEGUZAyf48smEcJW/view?usp=drivesdk"
+        }
+      ],
+      "sourceCards": [
+        {
+          "label": "NIRC Sec. 2",
+          "title": "NIRC Sec. 2",
+          "citation": "NIRC Sec. 2",
+          "authorityType": "STATUTE",
+          "displayLabel": "NIRC Sec. 2",
+          "limitationRequired": false,
+          "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk"
+        },
+        {
+          "label": "G.R. No. 226592",
+          "title": "G.R. No. 226592",
+          "citation": "G.R. No. 226592",
+          "authorityType": "CASE",
+          "displayLabel": "G.R. No. 226592",
+          "limitationRequired": false,
+          "publicUrl": "https://drive.google.com/file/d/15QgNCQfHkngjD38vcEGUZAyf48smEcJW/view?usp=drivesdk"
+        }
+      ],
+      "educationalSources": null,
+      "vectorMatches": 5,
+      "trust": {
+        "version": "1.0",
+        "authoritySupport": "RELATED_AUTHORITY_ONLY",
+        "sourceState": "AUTHORITY_FOUND",
+        "legalConclusion": "ALLOWED",
+        "humanReviewRequired": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "conflictState": "NO_CONFLICT",
+        "limitations": [
+          "SPECIFIC_AUTHORITY_NOT_FOUND"
+        ],
+        "responseKind": "GENERAL_TAX",
+        "specificAuthorityNotFound": true
+      },
+      "sourceFallbackDisclosure": {
+        "sourceOnlyFallback": true,
+        "specificAuthorityRequested": true,
+        "requestedAuthorityMatched": false,
+        "specificAuthorityNotFound": true,
+        "conflictDetected": true,
+        "substantiveAnswerGenerated": false,
+        "authorityHierarchyQualified": true,
+        "humanReviewRecommended": true
+      },
+      "retrievedSourceCount": 5,
+      "displayedSourceCount": 2,
+      "sourceStatus": "AUTHORITY_FOUND",
+      "sourceAvailability": "AUTHORITY_FOUND",
+      "saeStatus": "AUTHORITY_FOUND",
+      "patch024cPostSourcecard": {
+        "executed": true,
+        "sourceCardCount": 2,
+        "beforeLength": 368,
+        "afterLength": 368,
+        "changed": false,
+        "sourceAvailability": "AUTHORITY_FOUND",
+        "answerMode": "SOURCE_LOOKUP",
+        "requestId": "route-1784091962351-3a23bf7d"
+      },
+      "internalError": false,
+      "errorCategory": null,
+      "sourceAvailabilityReason": "6 governing indexed parsed candidate(s) directly govern the issue.",
+      "retrievalTimedOut": false,
+      "relatedSourceCount": 0,
+      "retrievalLayerCounts": {
+        "exactAuthorityMatches": 4,
+        "citationVariantMatches": 32,
+        "metadataMatches": 0,
+        "contentKeywordMatches": 0,
+        "semanticMatches": 12,
+        "fallbackMatches": 0,
+        "supabaseFallbackMatches": 0
+      },
+      "firstSourceLabels": [
+        "NIRC Sec. 2",
+        "G.R. No. 226592"
+      ],
+      "diagnostics": {
+        "requestId": "route-1784091962351-3a23bf7d",
+        "route": "/ask",
+        "model": "gpt-4o-mini",
+        "budgetMs": 90000,
+        "pipelineTimings": {
+          "requestStartedAt": 1784091962351,
+          "classificationStartedAt": 1784091963004,
+          "classificationCompletedAt": 1784091963005,
+          "retrievalStartedAt": 1784091963006,
+          "retrievalCompletedAt": 1784091976021,
+          "authorityResolutionStartedAt": 1784091976120,
+          "authorityResolutionCompletedAt": 1784091976121,
+          "generationStartedAt": 1784091976834,
+          "generationCompletedAt": 1784091979984,
+          "renderingStartedAt": 1784091979984,
+          "renderingCompletedAt": 1784091979987,
+          "complianceStartedAt": 1784091979987,
+          "complianceCompletedAt": 1784091979998,
+          "sourceSelectionStartedAt": 1784091979998,
+          "sourceSelectionCompletedAt": 1784091980001,
+          "responseCompletedAt": 1784091980263,
+          "totalMs": 17912
+        },
+        "pipelineStageDurations": {
+          "classificationMs": 1,
+          "retrievalMs": 13015,
+          "authorityResolutionMs": 1,
+          "sourceSelectionMs": 3,
+          "generationMs": 3150,
+          "complianceMs": 11,
+          "renderingMs": 3,
+          "totalMs": 17912
+        },
+        "partialPipelineState": {
+          "retrievalCompleted": true,
+          "classificationCompleted": true,
+          "generationStarted": true,
+          "generationCompleted": true,
+          "complianceStarted": true,
+          "complianceCompleted": true,
+          "retrievedCount": 12,
+          "retrievalLayerCounts": {
+            "exactAuthorityMatches": 4,
+            "citationVariantMatches": 32,
+            "metadataMatches": 0,
+            "contentKeywordMatches": 0,
+            "semanticMatches": 12,
+            "fallbackMatches": 0,
+            "supabaseFallbackMatches": 0
+          },
+          "sourceAvailabilityStatusBeforeTimeout": "AUTHORITY_FOUND",
+          "sourceLabelsBeforeTimeout": [
+            "NIRC Sec. 2",
+            "G.R. No. 226592"
+          ],
+          "displayedSourceCardCount": 2
+        },
+        "openaiCalls": [
+          {
+            "purpose": "generation",
+            "model": "gpt-4o-mini",
+            "startedAt": 1784091976838,
+            "status": "success",
+            "attempts": [
+              {
+                "attempt": 1,
+                "startedAt": 1784091976838,
+                "completedAt": 1784091979984,
+                "durationMs": 3146,
+                "status": "success",
+                "freshClientUsed": false
+              }
+            ],
+            "completedAt": 1784091979984,
+            "durationMs": 3146,
+            "attempt": 1,
+            "retrySucceeded": false
+          }
+        ],
+        "checkpoints": [
+          {
+            "checkpoint": "CLASSIFICATION_STARTED",
+            "requestId": "route-1784091962351-3a23bf7d",
+            "elapsedMs": 653,
+            "remainingBudgetMs": 89347,
+            "model": "gpt-4o-mini",
+            "mode": "",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "",
+            "retrievedCount": 0,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "CLASSIFICATION_COMPLETE",
+            "requestId": "route-1784091962351-3a23bf7d",
+            "elapsedMs": 654,
+            "remainingBudgetMs": 89346,
+            "model": "gpt-4o-mini",
+            "mode": "",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "",
+            "retrievedCount": 0,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "RETRIEVAL_STARTED",
+            "requestId": "route-1784091962351-3a23bf7d",
+            "elapsedMs": 655,
+            "remainingBudgetMs": 89345,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "",
+            "retrievedCount": 0,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "RETRIEVAL_COMPLETE",
+            "requestId": "route-1784091962351-3a23bf7d",
+            "elapsedMs": 13670,
+            "remainingBudgetMs": 76330,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "AUTHORITY_RESOLUTION_STARTED",
+            "requestId": "route-1784091962351-3a23bf7d",
+            "elapsedMs": 13769,
+            "remainingBudgetMs": 76231,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "AUTHORITY_RESOLUTION_COMPLETE",
+            "requestId": "route-1784091962351-3a23bf7d",
+            "elapsedMs": 13770,
+            "remainingBudgetMs": 76230,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "GENERATION_STARTED",
+            "requestId": "route-1784091962351-3a23bf7d",
+            "elapsedMs": 14483,
+            "remainingBudgetMs": 75517,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 5,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "GENERATION_COMPLETE",
+            "requestId": "route-1784091962351-3a23bf7d",
+            "elapsedMs": 17633,
+            "remainingBudgetMs": 72367,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 5,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "RENDERING_STARTED",
+            "requestId": "route-1784091962351-3a23bf7d",
+            "elapsedMs": 17633,
+            "remainingBudgetMs": 72367,
+            "model": "gpt-4o-mini",
+            "mode": "SOURCE_LOOKUP",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 5,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "RENDERING_COMPLETE",
+            "requestId": "route-1784091962351-3a23bf7d",
+            "elapsedMs": 17636,
+            "remainingBudgetMs": 72364,
+            "model": "gpt-4o-mini",
+            "mode": "SOURCE_LOOKUP",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 5,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "COMPLIANCE_STARTED",
+            "requestId": "route-1784091962351-3a23bf7d",
+            "elapsedMs": 17636,
+            "remainingBudgetMs": 72364,
+            "model": "gpt-4o-mini",
+            "mode": "SOURCE_LOOKUP",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 5,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "COMPLIANCE_COMPLETE",
+            "requestId": "route-1784091962351-3a23bf7d",
+            "elapsedMs": 17647,
+            "remainingBudgetMs": 72353,
+            "model": "gpt-4o-mini",
+            "mode": "SOURCE_LOOKUP",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 5,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "SOURCE_SELECTION_STARTED",
+            "requestId": "route-1784091962351-3a23bf7d",
+            "elapsedMs": 17647,
+            "remainingBudgetMs": 72353,
+            "model": "gpt-4o-mini",
+            "mode": "SOURCE_LOOKUP",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 5,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "SOURCE_SELECTION_COMPLETE",
+            "requestId": "route-1784091962351-3a23bf7d",
+            "elapsedMs": 17650,
+            "remainingBudgetMs": 72350,
+            "model": "gpt-4o-mini",
+            "mode": "SOURCE_LOOKUP",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 5,
+            "displayedSourceCardCount": 2
+          },
+          {
+            "checkpoint": "RESPONSE_COMPLETE",
+            "requestId": "route-1784091962351-3a23bf7d",
+            "elapsedMs": 17912,
+            "remainingBudgetMs": 72088,
+            "model": "gpt-4o-mini",
+            "mode": "SOURCE_LOOKUP",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 5,
+            "displayedSourceCardCount": 2
+          }
+        ]
+      },
+      "pipelineTimings": {
+        "requestStartedAt": 1784091962351,
+        "classificationStartedAt": 1784091963004,
+        "classificationCompletedAt": 1784091963005,
+        "retrievalStartedAt": 1784091963006,
+        "retrievalCompletedAt": 1784091976021,
+        "authorityResolutionStartedAt": 1784091976120,
+        "authorityResolutionCompletedAt": 1784091976121,
+        "generationStartedAt": 1784091976834,
+        "generationCompletedAt": 1784091979984,
+        "renderingStartedAt": 1784091979984,
+        "renderingCompletedAt": 1784091979987,
+        "complianceStartedAt": 1784091979987,
+        "complianceCompletedAt": 1784091979998,
+        "sourceSelectionStartedAt": 1784091979998,
+        "sourceSelectionCompletedAt": 1784091980001,
+        "responseCompletedAt": 1784091980263,
+        "totalMs": 17912
+      },
+      "pipelineStageDurations": {
+        "classificationMs": 1,
+        "retrievalMs": 13015,
+        "authorityResolutionMs": 1,
+        "sourceSelectionMs": 3,
+        "generationMs": 3150,
+        "complianceMs": 11,
+        "renderingMs": 3,
+        "totalMs": 17912
+      },
+      "partialPipelineState": {
+        "retrievalCompleted": true,
+        "classificationCompleted": true,
+        "generationStarted": true,
+        "generationCompleted": true,
+        "complianceStarted": true,
+        "complianceCompleted": true,
+        "retrievedCount": 12,
+        "retrievalLayerCounts": {
+          "exactAuthorityMatches": 4,
+          "citationVariantMatches": 32,
+          "metadataMatches": 0,
+          "contentKeywordMatches": 0,
+          "semanticMatches": 12,
+          "fallbackMatches": 0,
+          "supabaseFallbackMatches": 0
+        },
+        "sourceAvailabilityStatusBeforeTimeout": "AUTHORITY_FOUND",
+        "sourceLabelsBeforeTimeout": [
+          "NIRC Sec. 2",
+          "G.R. No. 226592"
+        ],
+        "displayedSourceCardCount": 2
+      },
+      "openaiCalls": [
+        {
+          "purpose": "generation",
+          "model": "gpt-4o-mini",
+          "startedAt": 1784091976838,
+          "status": "success",
+          "attempts": [
+            {
+              "attempt": 1,
+              "startedAt": 1784091976838,
+              "completedAt": 1784091979984,
+              "durationMs": 3146,
+              "status": "success",
+              "freshClientUsed": false
+            }
+          ],
+          "completedAt": 1784091979984,
+          "durationMs": 3146,
+          "attempt": 1,
+          "retrySucceeded": false
+        }
+      ],
+      "responseMode": "SOURCE_LOOKUP",
+      "orchestrationMode": "SOURCE_LOOKUP",
+      "pipelineVersion": "1.0.0",
+      "activeHook": "/ask",
+      "activeMode": "ASK",
+      "commandMode": "ASK",
+      "requiresQuizMode": false,
+      "requiresDiagnosticMode": false,
+      "requiresReviewMode": false,
+      "requiresSourceVisibility": false,
+      "requiresCaseAnalysis": false,
+      "requiresAuditMode": false,
+      "requiresSeniorCounselMemo": false,
+      "requiresDebugMode": false,
+      "requiresCodePatch": false,
+      "requiresProgressMode": false,
+      "requiresFeedbackMode": false,
+      "metadata": {
+        "engine": "TINA_CONTEXT_ORCHESTRATION_ENGINE",
+        "version": "5.0.0",
+        "complexity": "complex",
+        "mode": "SOURCE_LOOKUP",
+        "responseStyle": null,
+        "modeFlags": {
+          "isQuiz": false,
+          "isReviewer": false,
+          "isReview": false,
+          "isSource": true,
+          "isCase": false,
+          "isAudit": false,
+          "isPatch": false,
+          "isDebug": false,
+          "isNonAFMode": true,
+          "isStandardLegal": false,
+          "shouldForceAFStructure": false,
+          "modeValues": [
+            "STANDARD",
+            "STANDARD_TAX",
+            "/ASK",
+            "STANDARD_TAX_MODE",
+            "STANDARD",
+            "STANDARD_TAX",
+            "STANDARD",
+            "STANDARD_TAX",
+            "STANDARD_TAX",
+            "SOURCE",
+            "SOURCE_LOOKUP"
+          ]
+        },
+        "estimatedInputTokens": "<REDACTED>",
+        "maxCompletionTokens": "<REDACTED>",
+        "sourceCount": 5,
+        "wasTrimmed": false,
+        "authoritySummary": {
+          "controlling": 1,
+          "jurisprudence": 4,
+          "administrative": 0,
+          "accounting": 0,
+          "secondary": 0,
+          "targetAuthorityMatches": 5,
+          "issueMatches": 5,
+          "exactAuthorityMatches": 5,
+          "indexedGoogleDriveAuthorities": 5
+        },
+        "taxEngineContext": {
+          "domainCode": "BIR",
+          "domainName": "BIR / NIRC Organizational",
+          "supportedDomain": false,
+          "primaryIssue": "BIR_ORGANIZATION",
+          "subIssue": "NIRC_DEFINITION",
+          "retrievalStrategy": "SOURCE_FINDER_AUTHORITY_FIRST",
+          "targetAuthorities": [
+            "NIRC Sec. 21",
+            "NIRC Sec. 2"
+          ],
+          "controllingAuthorities": [
+            "NIRC Sec. 21",
+            "NIRC Sec. 2"
+          ],
+          "supportingAuthorities": [],
+          "supportingJurisprudence": [],
+          "requiredAnswerSections": [],
+          "doctrinalRules": null,
+          "conflictRules": null
+        },
+        "sanitizedConflicts": null,
+        "diagnostics": {
+          "requestId": "route-1784091962351-3a23bf7d",
+          "route": "/ask",
+          "model": "gpt-4o-mini",
+          "budgetMs": 90000,
+          "pipelineTimings": {
+            "requestStartedAt": 1784091962351,
+            "classificationStartedAt": 1784091963004,
+            "classificationCompletedAt": 1784091963005,
+            "retrievalStartedAt": 1784091963006,
+            "retrievalCompletedAt": 1784091976021,
+            "authorityResolutionStartedAt": 1784091976120,
+            "authorityResolutionCompletedAt": 1784091976121,
+            "generationStartedAt": 1784091976834,
+            "generationCompletedAt": 1784091979984,
+            "renderingStartedAt": 1784091979984,
+            "renderingCompletedAt": 1784091979987,
+            "complianceStartedAt": 1784091979987,
+            "complianceCompletedAt": 1784091979998,
+            "sourceSelectionStartedAt": 1784091979998,
+            "sourceSelectionCompletedAt": 1784091980001,
+            "responseCompletedAt": 1784091980263,
+            "totalMs": 17912
+          },
+          "pipelineStageDurations": {
+            "classificationMs": 1,
+            "retrievalMs": 13015,
+            "authorityResolutionMs": 1,
+            "sourceSelectionMs": 3,
+            "generationMs": 3150,
+            "complianceMs": 11,
+            "renderingMs": 3,
+            "totalMs": 17912
+          },
+          "partialPipelineState": {
+            "retrievalCompleted": true,
+            "classificationCompleted": true,
+            "generationStarted": true,
+            "generationCompleted": true,
+            "complianceStarted": true,
+            "complianceCompleted": true,
+            "retrievedCount": 12,
+            "retrievalLayerCounts": {
+              "exactAuthorityMatches": 4,
+              "citationVariantMatches": 32,
+              "metadataMatches": 0,
+              "contentKeywordMatches": 0,
+              "semanticMatches": 12,
+              "fallbackMatches": 0,
+              "supabaseFallbackMatches": 0
+            },
+            "sourceAvailabilityStatusBeforeTimeout": "AUTHORITY_FOUND",
+            "sourceLabelsBeforeTimeout": [
+              "NIRC Sec. 2",
+              "G.R. No. 226592"
+            ],
+            "displayedSourceCardCount": 2
+          },
+          "openaiCalls": [
+            {
+              "purpose": "generation",
+              "model": "gpt-4o-mini",
+              "startedAt": 1784091976838,
+              "status": "success",
+              "attempts": [
+                {
+                  "attempt": 1,
+                  "startedAt": 1784091976838,
+                  "completedAt": 1784091979984,
+                  "durationMs": 3146,
+                  "status": "success",
+                  "freshClientUsed": false
+                }
+              ],
+              "completedAt": 1784091979984,
+              "durationMs": 3146,
+              "attempt": 1,
+              "retrySucceeded": false
+            }
+          ],
+          "checkpoints": [
+            {
+              "checkpoint": "CLASSIFICATION_STARTED",
+              "requestId": "route-1784091962351-3a23bf7d",
+              "elapsedMs": 653,
+              "remainingBudgetMs": 89347,
+              "model": "gpt-4o-mini",
+              "mode": "",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "",
+              "retrievedCount": 0,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "CLASSIFICATION_COMPLETE",
+              "requestId": "route-1784091962351-3a23bf7d",
+              "elapsedMs": 654,
+              "remainingBudgetMs": 89346,
+              "model": "gpt-4o-mini",
+              "mode": "",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "",
+              "retrievedCount": 0,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "RETRIEVAL_STARTED",
+              "requestId": "route-1784091962351-3a23bf7d",
+              "elapsedMs": 655,
+              "remainingBudgetMs": 89345,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "",
+              "retrievedCount": 0,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "RETRIEVAL_COMPLETE",
+              "requestId": "route-1784091962351-3a23bf7d",
+              "elapsedMs": 13670,
+              "remainingBudgetMs": 76330,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "AUTHORITY_RESOLUTION_STARTED",
+              "requestId": "route-1784091962351-3a23bf7d",
+              "elapsedMs": 13769,
+              "remainingBudgetMs": 76231,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "AUTHORITY_RESOLUTION_COMPLETE",
+              "requestId": "route-1784091962351-3a23bf7d",
+              "elapsedMs": 13770,
+              "remainingBudgetMs": 76230,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "GENERATION_STARTED",
+              "requestId": "route-1784091962351-3a23bf7d",
+              "elapsedMs": 14483,
+              "remainingBudgetMs": 75517,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 5,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "GENERATION_COMPLETE",
+              "requestId": "route-1784091962351-3a23bf7d",
+              "elapsedMs": 17633,
+              "remainingBudgetMs": 72367,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 5,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "RENDERING_STARTED",
+              "requestId": "route-1784091962351-3a23bf7d",
+              "elapsedMs": 17633,
+              "remainingBudgetMs": 72367,
+              "model": "gpt-4o-mini",
+              "mode": "SOURCE_LOOKUP",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 5,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "RENDERING_COMPLETE",
+              "requestId": "route-1784091962351-3a23bf7d",
+              "elapsedMs": 17636,
+              "remainingBudgetMs": 72364,
+              "model": "gpt-4o-mini",
+              "mode": "SOURCE_LOOKUP",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 5,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "COMPLIANCE_STARTED",
+              "requestId": "route-1784091962351-3a23bf7d",
+              "elapsedMs": 17636,
+              "remainingBudgetMs": 72364,
+              "model": "gpt-4o-mini",
+              "mode": "SOURCE_LOOKUP",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 5,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "COMPLIANCE_COMPLETE",
+              "requestId": "route-1784091962351-3a23bf7d",
+              "elapsedMs": 17647,
+              "remainingBudgetMs": 72353,
+              "model": "gpt-4o-mini",
+              "mode": "SOURCE_LOOKUP",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 5,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "SOURCE_SELECTION_STARTED",
+              "requestId": "route-1784091962351-3a23bf7d",
+              "elapsedMs": 17647,
+              "remainingBudgetMs": 72353,
+              "model": "gpt-4o-mini",
+              "mode": "SOURCE_LOOKUP",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 5,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "SOURCE_SELECTION_COMPLETE",
+              "requestId": "route-1784091962351-3a23bf7d",
+              "elapsedMs": 17650,
+              "remainingBudgetMs": 72350,
+              "model": "gpt-4o-mini",
+              "mode": "SOURCE_LOOKUP",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 5,
+              "displayedSourceCardCount": 2
+            },
+            {
+              "checkpoint": "RESPONSE_COMPLETE",
+              "requestId": "route-1784091962351-3a23bf7d",
+              "elapsedMs": 17912,
+              "remainingBudgetMs": 72088,
+              "model": "gpt-4o-mini",
+              "mode": "SOURCE_LOOKUP",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 5,
+              "displayedSourceCardCount": 2
+            }
+          ]
+        },
+        "openAiModel": "gpt-4o-mini",
+        "openAiProjectAccessFailure": false,
+        "askHandlerVersion": "9.0.0",
+        "pipelineSupremacy": true,
+        "pipelineVersion": "1.0.0",
+        "correctFlowEnabled": true,
+        "issueClassificationEngineCalled": true,
+        "retrievalEngineCalled": true,
+        "rerankerEngineCalled": true,
+        "fourPartDoctrineTestApplied": true,
+        "retrievalLayerCounts": {
+          "exactAuthorityMatches": 4,
+          "citationVariantMatches": 32,
+          "metadataMatches": 0,
+          "contentKeywordMatches": 0,
+          "semanticMatches": 12,
+          "fallbackMatches": 0,
+          "supabaseFallbackMatches": 0
+        },
+        "firstSourceLabels": [
+          "NIRC Sec. 2",
+          "G.R. No. 226592"
+        ],
+        "pipelineTimings": {
+          "requestStartedAt": 1784091962351,
+          "classificationStartedAt": 1784091963004,
+          "classificationCompletedAt": 1784091963005,
+          "retrievalStartedAt": 1784091963006,
+          "retrievalCompletedAt": 1784091976021,
+          "authorityResolutionStartedAt": 1784091976120,
+          "authorityResolutionCompletedAt": 1784091976121,
+          "generationStartedAt": 1784091976834,
+          "generationCompletedAt": 1784091979984,
+          "renderingStartedAt": 1784091979984,
+          "renderingCompletedAt": 1784091979987,
+          "complianceStartedAt": 1784091979987,
+          "complianceCompletedAt": 1784091979998,
+          "sourceSelectionStartedAt": 1784091979998,
+          "sourceSelectionCompletedAt": 1784091980001,
+          "responseCompletedAt": 1784091980263,
+          "totalMs": 17912
+        },
+        "pipelineStageDurations": {
+          "classificationMs": 1,
+          "retrievalMs": 13015,
+          "authorityResolutionMs": 1,
+          "sourceSelectionMs": 3,
+          "generationMs": 3150,
+          "complianceMs": 11,
+          "renderingMs": 3,
+          "totalMs": 17912
+        },
+        "partialPipelineState": {
+          "retrievalCompleted": true,
+          "classificationCompleted": true,
+          "generationStarted": true,
+          "generationCompleted": true,
+          "complianceStarted": true,
+          "complianceCompleted": true,
+          "retrievedCount": 12,
+          "retrievalLayerCounts": {
+            "exactAuthorityMatches": 4,
+            "citationVariantMatches": 32,
+            "metadataMatches": 0,
+            "contentKeywordMatches": 0,
+            "semanticMatches": 12,
+            "fallbackMatches": 0,
+            "supabaseFallbackMatches": 0
+          },
+          "sourceAvailabilityStatusBeforeTimeout": "AUTHORITY_FOUND",
+          "sourceLabelsBeforeTimeout": [
+            "NIRC Sec. 2",
+            "G.R. No. 226592"
+          ],
+          "displayedSourceCardCount": 2
+        },
+        "openaiCalls": [
+          {
+            "purpose": "generation",
+            "model": "gpt-4o-mini",
+            "startedAt": 1784091976838,
+            "status": "success",
+            "attempts": [
+              {
+                "attempt": 1,
+                "startedAt": 1784091976838,
+                "completedAt": 1784091979984,
+                "durationMs": 3146,
+                "status": "success",
+                "freshClientUsed": false
+              }
+            ],
+            "completedAt": 1784091979984,
+            "durationMs": 3146,
+            "attempt": 1,
+            "retrySucceeded": false
+          }
+        ],
+        "routeControllerOnly": true,
+        "noLegalReasoningInsideAskHandler": true,
+        "noSourceRankingInsideAskHandler": true,
+        "noRenderingInsideAskHandler": true,
+        "orchestrationFirstArchitecture": true,
+        "noDirectOpenAICall": true,
+        "noPromptAssembly": true,
+        "tpmConscious": true
+      }
+    }
+  },
+  "hardRefresh": {
+    "status": 200,
+    "payload": {
+      "success": true,
+      "messages": [
+        {
+          "id": "<REDACTED_UUID>",
+          "conversation_id": "<REDACTED>",
+          "user_id": "<REDACTED>",
+          "role": "user",
+          "content": "A company cannot locate the exact BIR ruling requested by the client, but finds a Tax Code provision, a revenue regulation, a Supreme Court case, and a later circular pointing in different directions. Which authority controls, and how should the conflict be presented without overstating certainty?",
+          "created_at": "2026-07-15T05:06:20.387265+00:00",
+          "sources_used": null,
+          "fallback_references": null,
+          "metadata": {
+            "adaptive": {
+              "riskScore": null,
+              "queryIntent": null,
+              "adaptiveMode": null,
+              "responseMode": null,
+              "responsePlan": null,
+              "assumptionGap": null,
+              "authorityUsed": null,
+              "responseDepth": null,
+              "adaptiveContext": null,
+              "confidenceLevel": null,
+              "positionStrength": null,
+              "retrievalMetadata": null,
+              "supersessionAudit": null,
+              "tinaConversationMemoryVersion": "2.2.0"
+            }
+          },
+          "trust": null
+        },
+        {
+          "id": "<REDACTED_UUID>",
+          "conversation_id": "<REDACTED>",
+          "user_id": "<REDACTED>",
+          "role": "assistant",
+          "content": "## Summary\n\nTINA retrieved related authorities for this question but did not establish a single verified controlling authority for the exact issue raised. The authorities below are relevant, but they are not, on their own, a settled controlling conclusion for this specific question.\n\n## Requested authority\n\nThe specific issuance requested was not located or verified in TINA's indexed sources. This does not mean the issuance does not exist — only that it could not be retrieved and verified here. The authorities listed below are related and may inform the issue, but they are not a substitute for the requested authority.\n\n## Competing or conflicting authorities\n\nThe available authorities may point in different directions or require harmonization. The retrieved source set does not establish a fully settled, controlling conclusion for this exact issue, and any apparent conflict should be treated as unresolved until reconciled against the governing hierarchy and the specific facts.\n\n## How to weigh these authorities\n\n- A statute (e.g., the National Internal Revenue Code) prevails over an administrative issuance.\n- Controlling Supreme Court jurisprudence prevails over an inconsistent administrative interpretation.\n- Regulations implement, but cannot amend, the statute.\n- Revenue memorandum circulars, revenue memorandum orders, and BIR rulings are interpretive and cannot override higher authority.\n- Applicability still depends on the specific facts, the taxable period, and the exact issue.\n\n## Related authorities\n\n1. NIRC Sec. 2 — STATUTE\n2. G.R. No. 226592 — CASE\n\n## Limitation\n\nThis is a related-authority result, not verified controlling authority. Professional review is recommended before relying on it for a specific position, filing, or transaction.",
+          "created_at": "2026-07-15T05:06:21.269837+00:00",
+          "sources_used": [
+            {
+              "label": "NIRC Sec. 2",
+              "title": "NIRC Sec. 2",
+              "citation": "NIRC Sec. 2",
+              "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk",
+              "displayLabel": "NIRC Sec. 2",
+              "authorityType": "STATUTE",
+              "limitationRequired": false
+            },
+            {
+              "label": "G.R. No. 226592",
+              "title": "G.R. No. 226592",
+              "citation": "G.R. No. 226592",
+              "publicUrl": "https://drive.google.com/file/d/15QgNCQfHkngjD38vcEGUZAyf48smEcJW/view?usp=drivesdk",
+              "displayLabel": "G.R. No. 226592",
+              "authorityType": "CASE",
+              "limitationRequired": false
+            }
+          ],
+          "fallback_references": null,
+          "metadata": {
+            "trust": {
+              "version": "1.0",
+              "hasConflict": false,
+              "limitations": [
+                "SPECIFIC_AUTHORITY_NOT_FOUND"
+              ],
+              "sourceState": "AUTHORITY_FOUND",
+              "responseKind": "GENERAL_TAX",
+              "conflictState": "NO_CONFLICT",
+              "legalConclusion": "ALLOWED",
+              "authoritySupport": "RELATED_AUTHORITY_ONLY",
+              "automaticSubmission": false,
+              "humanReviewRequired": false,
+              "specificAuthorityNotFound": true,
+              "filingReadyDocumentGenerated": false
+            },
+            "adaptive": {
+              "riskScore": null,
+              "queryIntent": null,
+              "adaptiveMode": null,
+              "responseMode": null,
+              "responsePlan": null,
+              "assumptionGap": null,
+              "authorityUsed": null,
+              "responseDepth": null,
+              "adaptiveContext": null,
+              "confidenceLevel": null,
+              "positionStrength": null,
+              "retrievalMetadata": null,
+              "supersessionAudit": null,
+              "tinaConversationMemoryVersion": "2.2.0"
+            }
+          },
+          "trust": {
+            "version": "1.0",
+            "hasConflict": false,
+            "limitations": [
+              "SPECIFIC_AUTHORITY_NOT_FOUND"
+            ],
+            "sourceState": "AUTHORITY_FOUND",
+            "responseKind": "GENERAL_TAX",
+            "conflictState": "NO_CONFLICT",
+            "legalConclusion": "ALLOWED",
+            "authoritySupport": "RELATED_AUTHORITY_ONLY",
+            "automaticSubmission": false,
+            "humanReviewRequired": false,
+            "specificAuthorityNotFound": true,
+            "filingReadyDocumentGenerated": false
+          }
+        }
+      ]
+    }
+  },
+  "historyReopen": {
+    "status": 200,
+    "payload": {
+      "success": true,
+      "messages": [
+        {
+          "id": "<REDACTED_UUID>",
+          "conversation_id": "<REDACTED>",
+          "user_id": "<REDACTED>",
+          "role": "user",
+          "content": "A company cannot locate the exact BIR ruling requested by the client, but finds a Tax Code provision, a revenue regulation, a Supreme Court case, and a later circular pointing in different directions. Which authority controls, and how should the conflict be presented without overstating certainty?",
+          "created_at": "2026-07-15T05:06:20.387265+00:00",
+          "sources_used": null,
+          "fallback_references": null,
+          "metadata": {
+            "adaptive": {
+              "riskScore": null,
+              "queryIntent": null,
+              "adaptiveMode": null,
+              "responseMode": null,
+              "responsePlan": null,
+              "assumptionGap": null,
+              "authorityUsed": null,
+              "responseDepth": null,
+              "adaptiveContext": null,
+              "confidenceLevel": null,
+              "positionStrength": null,
+              "retrievalMetadata": null,
+              "supersessionAudit": null,
+              "tinaConversationMemoryVersion": "2.2.0"
+            }
+          },
+          "trust": null
+        },
+        {
+          "id": "<REDACTED_UUID>",
+          "conversation_id": "<REDACTED>",
+          "user_id": "<REDACTED>",
+          "role": "assistant",
+          "content": "## Summary\n\nTINA retrieved related authorities for this question but did not establish a single verified controlling authority for the exact issue raised. The authorities below are relevant, but they are not, on their own, a settled controlling conclusion for this specific question.\n\n## Requested authority\n\nThe specific issuance requested was not located or verified in TINA's indexed sources. This does not mean the issuance does not exist — only that it could not be retrieved and verified here. The authorities listed below are related and may inform the issue, but they are not a substitute for the requested authority.\n\n## Competing or conflicting authorities\n\nThe available authorities may point in different directions or require harmonization. The retrieved source set does not establish a fully settled, controlling conclusion for this exact issue, and any apparent conflict should be treated as unresolved until reconciled against the governing hierarchy and the specific facts.\n\n## How to weigh these authorities\n\n- A statute (e.g., the National Internal Revenue Code) prevails over an administrative issuance.\n- Controlling Supreme Court jurisprudence prevails over an inconsistent administrative interpretation.\n- Regulations implement, but cannot amend, the statute.\n- Revenue memorandum circulars, revenue memorandum orders, and BIR rulings are interpretive and cannot override higher authority.\n- Applicability still depends on the specific facts, the taxable period, and the exact issue.\n\n## Related authorities\n\n1. NIRC Sec. 2 — STATUTE\n2. G.R. No. 226592 — CASE\n\n## Limitation\n\nThis is a related-authority result, not verified controlling authority. Professional review is recommended before relying on it for a specific position, filing, or transaction.",
+          "created_at": "2026-07-15T05:06:21.269837+00:00",
+          "sources_used": [
+            {
+              "label": "NIRC Sec. 2",
+              "title": "NIRC Sec. 2",
+              "citation": "NIRC Sec. 2",
+              "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk",
+              "displayLabel": "NIRC Sec. 2",
+              "authorityType": "STATUTE",
+              "limitationRequired": false
+            },
+            {
+              "label": "G.R. No. 226592",
+              "title": "G.R. No. 226592",
+              "citation": "G.R. No. 226592",
+              "publicUrl": "https://drive.google.com/file/d/15QgNCQfHkngjD38vcEGUZAyf48smEcJW/view?usp=drivesdk",
+              "displayLabel": "G.R. No. 226592",
+              "authorityType": "CASE",
+              "limitationRequired": false
+            }
+          ],
+          "fallback_references": null,
+          "metadata": {
+            "trust": {
+              "version": "1.0",
+              "hasConflict": false,
+              "limitations": [
+                "SPECIFIC_AUTHORITY_NOT_FOUND"
+              ],
+              "sourceState": "AUTHORITY_FOUND",
+              "responseKind": "GENERAL_TAX",
+              "conflictState": "NO_CONFLICT",
+              "legalConclusion": "ALLOWED",
+              "authoritySupport": "RELATED_AUTHORITY_ONLY",
+              "automaticSubmission": false,
+              "humanReviewRequired": false,
+              "specificAuthorityNotFound": true,
+              "filingReadyDocumentGenerated": false
+            },
+            "adaptive": {
+              "riskScore": null,
+              "queryIntent": null,
+              "adaptiveMode": null,
+              "responseMode": null,
+              "responsePlan": null,
+              "assumptionGap": null,
+              "authorityUsed": null,
+              "responseDepth": null,
+              "adaptiveContext": null,
+              "confidenceLevel": null,
+              "positionStrength": null,
+              "retrievalMetadata": null,
+              "supersessionAudit": null,
+              "tinaConversationMemoryVersion": "2.2.0"
+            }
+          },
+          "trust": {
+            "version": "1.0",
+            "hasConflict": false,
+            "limitations": [
+              "SPECIFIC_AUTHORITY_NOT_FOUND"
+            ],
+            "sourceState": "AUTHORITY_FOUND",
+            "responseKind": "GENERAL_TAX",
+            "conflictState": "NO_CONFLICT",
+            "legalConclusion": "ALLOWED",
+            "authoritySupport": "RELATED_AUTHORITY_ONLY",
+            "automaticSubmission": false,
+            "humanReviewRequired": false,
+            "specificAuthorityNotFound": true,
+            "filingReadyDocumentGenerated": false
+          }
+        }
+      ]
+    }
+  },
+  "sanitizedConversationRef": "ed7a4a58ebf5d95e"
+}
