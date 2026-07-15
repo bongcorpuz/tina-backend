@@ -1,0 +1,20 @@
+{
+  "task": "PHASE-10A6-R3-MISSING-AUTHORITY-CONFLICT-DISCLOSURE-REMEDIATION-1",
+  "executionTimestampUtc": "2026-07-15T04:36:26.635Z",
+  "backendHead": "2259dec560cae88e839767728e7fa9dbfcc33707",
+  "frontendHead": "0816ac865b4ee55d5bb92534834dadbb0dcfba87",
+  "environment": "local authenticated server (node server.js, current HEAD) against real staging Supabase vector store + real OpenAI; JWT minted in memory from JWT_SECRET for an active app_users record; controlled-LOA ask gate enabled to match staging; all evidence sanitized; server booted with a dummy GOOGLE_SERVICE_ACCOUNT_JSON because Google Drive is ingestion-only and is not used at query-time retrieval",
+  "totalRuns": 10,
+  "runIds": [
+    "Q2-r1",
+    "Q2-r2",
+    "Q2-r3",
+    "Q9-r1",
+    "Q9-r2",
+    "Q9-r3",
+    "Q5-verified",
+    "Q3-verified",
+    "Q8-conflict",
+    "Q10-restricted"
+  ]
+}

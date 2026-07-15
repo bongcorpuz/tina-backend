@@ -1,0 +1,36 @@
+{
+  "id": "Q2-r3",
+  "httpStatus": 200,
+  "responseTimeMs": 40993,
+  "answer": "**Case Identified** \nCTA Case No. 9711 – Dizon Farms Produce, Inc. v. CIR\n\n**Facts / Context** \nIn this case, the taxpayer, Dizon Farms Produce, Inc., contested a deficiency tax assessment issued by the Bureau of Internal Revenue (BIR). The taxpayer argued that the assessment was invalid due to the lack of a proper pre-assessment notice (PAN) and failure to comply with due process requirements.\n\n**Issue** \nThe primary issue was whether the BIR's failure to issue a pre-assessment notice (PAN) constituted a violation of the taxpayer's due process rights, rendering the tax assessment null and void.\n\n**Ruling / Holding** \nThe Court of Tax Appeals (CTA) ruled in favor of the taxpayer, stating that the issuance of a PAN is a mandatory requirement for due process in tax assessments. The absence of a PAN invalidated the subsequent deficiency tax assessment.\n\n**Doctrine** \nThe doctrine established in this case emphasizes that tax assessments must comply with due process requirements, specifically the issuance of a pre-assessment notice. Failure to adhere to this requirement renders the assessment null and void.\n\n**Application** \nIn applying this doctrine, the CTA highlighted that the BIR must provide taxpayers with a PAN, allowing them the opportunity to respond before any formal deficiency tax assessment is issued. This ensures that taxpayers are informed of the basis for the assessment and can contest it if necessary.\n\n**Status / Limits** \nThe ruling in Dizon Farms Produce, Inc. v. CIR reinforces the necessity of due process in tax assessments, particularly the requirement for a PAN. This case serves as a precedent for similar disputes regarding the validity of tax assessments based on procedural deficiencies. No indexed case found for further clarification on related issues.\n\nSource limitation: A governing authority was not directly located. Displayed sources are related, supporting, or secondary only. They are not the controlling basis for the answer.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [
+      "RELATED_AUTHORITY_ONLY"
+    ],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "CTA Case No. 9711",
+      "title": "CTA Case No. 9711",
+      "citation": "CTA Case No. 9711",
+      "authorityType": "CASE",
+      "displayLabel": "CTA Case No. 9711",
+      "limitationRequired": true,
+      "publicUrl": "https://drive.google.com/file/d/1NG5D6VFTArNufblSJ2R-VGMlkydl243L/view?usp=drivesdk"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "sourceStatus": "RELATED_AUTHORITY_ONLY"
+}

@@ -1,0 +1,60 @@
+{
+  "id": "Q5-verified",
+  "httpStatus": 200,
+  "responseTimeMs": 12436,
+  "answer": "### Short Answer\n\n### Controlling Authorities\n- **NIRC Section 236**: Outlines the registration requirements for VAT-registered persons.\n\n### Interpretation\n\n### Practical Meaning\nFor VAT-registered suppliers selling fresh frozen seafood, they can confidently proceed with sales without charging VAT, as these sales are exempt. The existing BIR Certificate of Registration will adequately demonstrate their compliance with VAT regulations, simplifying the process and reducing administrative burdens associated with obtaining separate exemption certificates.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 109",
+      "title": "NIRC Sec. 109",
+      "citation": "NIRC Sec. 109",
+      "authorityType": "STATUTE",
+      "displayLabel": "NIRC Sec. 109",
+      "limitationRequired": false,
+      "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk"
+    },
+    {
+      "label": "NIRC Sec. 236",
+      "title": "NIRC Sec. 236",
+      "citation": "NIRC Sec. 236",
+      "authorityType": "STATUTE",
+      "displayLabel": "NIRC Sec. 236",
+      "limitationRequired": false,
+      "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk"
+    },
+    {
+      "label": "RR No. 16-2005",
+      "title": "RR No. 16-2005",
+      "citation": "RR No. 16-2005",
+      "authorityType": "RR",
+      "displayLabel": "RR No. 16-2005",
+      "limitationRequired": false,
+      "publicUrl": "https://drive.google.com/file/d/15AZ5CJymXUzA8eIlfy0A1WXubLw1HmeJ/view?usp=drivesdk"
+    },
+    {
+      "label": "RMC 75-2015",
+      "title": "RMC 75-2015",
+      "citation": "RMC 75-2015",
+      "authorityType": "RMC",
+      "displayLabel": "RMC 75-2015",
+      "limitationRequired": false
+    }
+  ],
+  "displayedSourceCount": 4,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

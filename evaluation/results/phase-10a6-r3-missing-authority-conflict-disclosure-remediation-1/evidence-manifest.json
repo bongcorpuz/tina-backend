@@ -1,0 +1,117 @@
+{
+  "generatedAtUtc": "2026-07-15T04:36:26.637Z",
+  "evidenceDirectory": "C:/Projects/tina-backend/evaluation/results/phase-10a6-r3-missing-authority-conflict-disclosure-remediation-1/",
+  "fileCount": 22,
+  "files": [
+    {
+      "path": "C:/Projects/tina-backend/evaluation/results/phase-10a6-r3-missing-authority-conflict-disclosure-remediation-1/execution-manifest.json",
+      "bytes": 866,
+      "sha256": "3a86b76b28c012db3eb022028d61f9afec9d22bf1053e9b059b32f3e26ecafe1"
+    },
+    {
+      "path": "C:/Projects/tina-backend/evaluation/results/phase-10a6-r3-missing-authority-conflict-disclosure-remediation-1/html/Q10-restricted.html",
+      "bytes": 1261,
+      "sha256": "bc0cfa2c01f1cdb9bb030aa9c1f83eda195893aa972136b74bcc53a9decc7e83"
+    },
+    {
+      "path": "C:/Projects/tina-backend/evaluation/results/phase-10a6-r3-missing-authority-conflict-disclosure-remediation-1/html/Q2-r1.html",
+      "bytes": 2443,
+      "sha256": "f2e1c5c0aa0517579fc4bd7f2a5a289619360db6fcb0df85330a1f24a901ea76"
+    },
+    {
+      "path": "C:/Projects/tina-backend/evaluation/results/phase-10a6-r3-missing-authority-conflict-disclosure-remediation-1/html/Q2-r2.html",
+      "bytes": 2553,
+      "sha256": "ecee89464e4f8945eb083a069179f3aa0c5141336df221c94d6b546c9af798a6"
+    },
+    {
+      "path": "C:/Projects/tina-backend/evaluation/results/phase-10a6-r3-missing-authority-conflict-disclosure-remediation-1/html/Q2-r3.html",
+      "bytes": 2396,
+      "sha256": "97d20eb3c9eba6aa032ce81b60e3fc1c8da47ee6960cc9ad904e3f085bc413fe"
+    },
+    {
+      "path": "C:/Projects/tina-backend/evaluation/results/phase-10a6-r3-missing-authority-conflict-disclosure-remediation-1/html/Q3-verified.html",
+      "bytes": 1613,
+      "sha256": "6fff46a1023484c70495e647aef4cc440780362c3c6407ceddd33190021ccaec"
+    },
+    {
+      "path": "C:/Projects/tina-backend/evaluation/results/phase-10a6-r3-missing-authority-conflict-disclosure-remediation-1/html/Q5-verified.html",
+      "bytes": 975,
+      "sha256": "32c44b9d4e458fb33272e145ffe291db9f77706117334997cb7683ec2d439996"
+    },
+    {
+      "path": "C:/Projects/tina-backend/evaluation/results/phase-10a6-r3-missing-authority-conflict-disclosure-remediation-1/html/Q8-conflict.html",
+      "bytes": 2465,
+      "sha256": "004b6721fde92293adefa30139f8514dd7d5dd7805e486e9d88c34e355a6fe00"
+    },
+    {
+      "path": "C:/Projects/tina-backend/evaluation/results/phase-10a6-r3-missing-authority-conflict-disclosure-remediation-1/html/Q9-r1.html",
+      "bytes": 2435,
+      "sha256": "d9247a81c1470a00012ef8c0717e85a496f8c060a61243040d9de3a2373d7d9d"
+    },
+    {
+      "path": "C:/Projects/tina-backend/evaluation/results/phase-10a6-r3-missing-authority-conflict-disclosure-remediation-1/html/Q9-r2.html",
+      "bytes": 2435,
+      "sha256": "464aaddec2bd4d803eefd10149582b629c662ca4a99bf25a0dc414510e744005"
+    },
+    {
+      "path": "C:/Projects/tina-backend/evaluation/results/phase-10a6-r3-missing-authority-conflict-disclosure-remediation-1/html/Q9-r3.html",
+      "bytes": 2435,
+      "sha256": "92ad21141a3ea7b2a4cd01fa3cdbadf3e6b773b899fc28d670efc71786c3eb5a"
+    },
+    {
+      "path": "C:/Projects/tina-backend/evaluation/results/phase-10a6-r3-missing-authority-conflict-disclosure-remediation-1/payloads/Q10-restricted.json",
+      "bytes": 1498,
+      "sha256": "efeb90f95484a5c31e5ff3eed76c8ca1bc86085b0b852080232cf937b2ea800e"
+    },
+    {
+      "path": "C:/Projects/tina-backend/evaluation/results/phase-10a6-r3-missing-authority-conflict-disclosure-remediation-1/payloads/Q2-r1.json",
+      "bytes": 3073,
+      "sha256": "d26f1d3deef8ccb737f05cd61b9fba54ce21dc52824ff7e25510d8651895e06d"
+    },
+    {
+      "path": "C:/Projects/tina-backend/evaluation/results/phase-10a6-r3-missing-authority-conflict-disclosure-remediation-1/payloads/Q2-r2.json",
+      "bytes": 3185,
+      "sha256": "1e1f74bbae5835228dea566a89b282407cc5efb57d475b807340683058b624f4"
+    },
+    {
+      "path": "C:/Projects/tina-backend/evaluation/results/phase-10a6-r3-missing-authority-conflict-disclosure-remediation-1/payloads/Q2-r3.json",
+      "bytes": 3026,
+      "sha256": "36658def72fbee617bb6e96c1efafe3673c10e4b87546021751e2352bac0f959"
+    },
+    {
+      "path": "C:/Projects/tina-backend/evaluation/results/phase-10a6-r3-missing-authority-conflict-disclosure-remediation-1/payloads/Q3-verified.json",
+      "bytes": 2815,
+      "sha256": "66f4a148c99865cf7d2519bb5974d4832f7c3e609a1d0d63fc43fe413e518443"
+    },
+    {
+      "path": "C:/Projects/tina-backend/evaluation/results/phase-10a6-r3-missing-authority-conflict-disclosure-remediation-1/payloads/Q5-verified.json",
+      "bytes": 2387,
+      "sha256": "1a5bccbee7d03edbb50f9e591946c952060368bf4d33d109c2fa437229d0530a"
+    },
+    {
+      "path": "C:/Projects/tina-backend/evaluation/results/phase-10a6-r3-missing-authority-conflict-disclosure-remediation-1/payloads/Q8-conflict.json",
+      "bytes": 3385,
+      "sha256": "9ed9eb6f66afccfd36dfdb6a9eaa44f09176d30fc5173eee9165d5baaffeb0c2"
+    },
+    {
+      "path": "C:/Projects/tina-backend/evaluation/results/phase-10a6-r3-missing-authority-conflict-disclosure-remediation-1/payloads/Q9-r1.json",
+      "bytes": 3431,
+      "sha256": "d8d100893629dd9e53c357faf7d2fae645712bd2dadd3781e787c9742f8ef6f9"
+    },
+    {
+      "path": "C:/Projects/tina-backend/evaluation/results/phase-10a6-r3-missing-authority-conflict-disclosure-remediation-1/payloads/Q9-r2.json",
+      "bytes": 3431,
+      "sha256": "8b33095de1eebd30a965c41e9c5808c8a0297559f6498ea602fa81be5516acbe"
+    },
+    {
+      "path": "C:/Projects/tina-backend/evaluation/results/phase-10a6-r3-missing-authority-conflict-disclosure-remediation-1/payloads/Q9-r3.json",
+      "bytes": 3431,
+      "sha256": "edf53656861b26f17130ec109ad71742689a86c9537ccbf5aadea1d90dbd3f99"
+    },
+    {
+      "path": "C:/Projects/tina-backend/evaluation/results/phase-10a6-r3-missing-authority-conflict-disclosure-remediation-1/run-log.json",
+      "bytes": 8582,
+      "sha256": "0d7bc57ebd32c1c6d7af54e36efe2dbf9156e9cb340509364d2028907b13e688"
+    }
+  ]
+}

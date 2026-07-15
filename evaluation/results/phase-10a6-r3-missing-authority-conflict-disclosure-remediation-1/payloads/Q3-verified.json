@@ -1,0 +1,52 @@
+{
+  "id": "Q3-verified",
+  "httpStatus": 200,
+  "responseTimeMs": 9086,
+  "answer": "### Issue Presented\nUnder the National Internal Revenue Code (NIRC), payments classified as rent, such as storage and handling charges under a lease contract, are subject to a 5% Expanded Withholding Tax (EWT) as per Section 57. Conversely, ancillary charges like overtime may be treated as service fees, which are subject to a 2% EWT, depending on their nature and the terms of the contract (NIRC Sec. 57).\n\n### Relevant Facts / Assumptions\nThe factual circumstances have not been fully described. The analysis is based on the question as presented.\n\n### Controlling Authorities\n\nNIRC Sec. 57 authorizes withholding of tax at source. NIRC Sec. 58 governs withholding-agent duties, including withholding, return filing, and remittance obligations.\n\n### Alternative Interpretations\nNo alternative interpretations identified from the available indexed authorities.\n\n### Position Strength\nPosition strength is preliminary and subject to full fact pattern verification.\n\n### Practical Note\n\nVerify the applicable EWT rate and classification with the relevant Revenue Regulation or BIR issuance. Issue BIR Form 2307 (certificate of creditable withholding tax) to the payee for each withholding period.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 57",
+      "title": "NIRC Sec. 57",
+      "citation": "NIRC Sec. 57",
+      "authorityType": "STATUTE",
+      "displayLabel": "NIRC Sec. 57",
+      "limitationRequired": false,
+      "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk"
+    },
+    {
+      "label": "NIRC Sec. 58",
+      "title": "NIRC Sec. 58",
+      "citation": "NIRC Sec. 58",
+      "authorityType": "STATUTE",
+      "displayLabel": "NIRC Sec. 58",
+      "limitationRequired": false,
+      "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk"
+    },
+    {
+      "label": "RR No. 2-1998",
+      "title": "RR No. 2-1998",
+      "citation": "RR No. 2-1998",
+      "authorityType": "RR",
+      "displayLabel": "RR No. 2-1998",
+      "limitationRequired": false,
+      "publicUrl": "https://drive.google.com/file/d/1POFyK9JX_F5rCHXVuVW8vrZbPq-8TNiE/view?usp=drivesdk"
+    }
+  ],
+  "displayedSourceCount": 3,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

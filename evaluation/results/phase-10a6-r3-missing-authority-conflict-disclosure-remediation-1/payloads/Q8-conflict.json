@@ -1,0 +1,45 @@
+{
+  "id": "Q8-conflict",
+  "httpStatus": 200,
+  "responseTimeMs": 13137,
+  "answer": "### Quick Assessment\nThe proper VAT treatment for services received by a PEZA-registered enterprise is zero-rated under Section 106 of the NIRC, provided that the services are directly attributable to its export activities. If the supplier incorrectly classified the invoice as VAT-exempt instead of zero-rated, this could lead to complications in claiming input VAT.\n\n### BIR Likely Position\nThe BIR may assert that the services should have been zero-rated rather than VAT-exempt, which could affect the input VAT recovery for the PEZA-registered enterprise. The BIR might require proper documentation to support the zero-rating claim.\n\n### Taxpayer Position / Defenses\nThe taxpayer can argue that the services received are indeed zero-rated as they are directly related to its export activities. The taxpayer should emphasize compliance with the requirements set forth in the NIRC and relevant regulations.\n\n### Documentary Support Needed\n1. **Service Agreements**: Contracts detailing the nature of the services and their relation to export activities.\n2. **Invoices**: Correctly classified invoices indicating zero-rated VAT.\n3. **Proof of Payment**: Documentation showing payment for the services rendered.\n4. **Export Documentation**: Any export-related documents that substantiate the claim for zero-rating.\n\n### Procedural Issues\nIf the supplier used the wrong invoice classification, the taxpayer may need to request a corrected invoice to ensure compliance with VAT regulations. This correction is crucial for the taxpayer to claim input VAT.\n\n### Risk Level\nThe risk level is moderate. If the BIR audits the transaction and finds discrepancies in VAT classification, it may lead to disallowance of input VAT claims, resulting in potential tax liabilities.\n\n### Recommended Action\nThe taxpayer should:\n1. Communicate with the supplier to rectify the invoice classification.\n2. Gather all necessary documentation to support the zero-rating claim.\n3. Prepare for potential inquiries from the BIR regarding the VAT treatment of the services.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "limitations": [
+      "POTENTIAL_CONFLICT"
+    ],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 106",
+      "title": "NIRC Sec. 106",
+      "citation": "NIRC Sec. 106",
+      "authorityType": "STATUTE",
+      "displayLabel": "NIRC Sec. 106",
+      "limitationRequired": false,
+      "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk"
+    },
+    {
+      "label": "RR 16-2005",
+      "title": "RR 16-2005",
+      "citation": "RR 16-2005",
+      "authorityType": "RR",
+      "displayLabel": "RR 16-2005",
+      "limitationRequired": false,
+      "publicUrl": "https://drive.google.com/file/d/15AZ5CJymXUzA8eIlfy0A1WXubLw1HmeJ/view?usp=drivesdk"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

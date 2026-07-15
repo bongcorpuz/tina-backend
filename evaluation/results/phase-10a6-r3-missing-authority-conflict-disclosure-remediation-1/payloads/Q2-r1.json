@@ -1,0 +1,36 @@
+{
+  "id": "Q2-r1",
+  "httpStatus": 200,
+  "responseTimeMs": 40988,
+  "answer": "**Case Identified** \nCTA Case No. 9711 – Dizon Farms Produce, Inc. v. CIR\n\n**Facts / Context** \nIn this case, the taxpayer, Dizon Farms Produce, Inc., contested a deficiency tax assessment issued by the Bureau of Internal Revenue (BIR). The taxpayer argued that the assessment was invalid due to the lack of a proper pre-assessment notice (PAN) and the failure of the BIR to comply with due process requirements.\n\n**Issue** \nThe primary issue was whether the BIR's failure to issue a proper PAN rendered the deficiency tax assessment null and void, thereby violating the taxpayer's due process rights.\n\n**Ruling / Holding** \nThe Court of Tax Appeals (CTA) ruled in favor of the taxpayer, stating that the BIR's failure to issue a PAN constituted a violation of the taxpayer's due process rights. The court emphasized that tax assessments issued without adhering to due process requirements are null and void.\n\n**Doctrine** \nThe ruling established that the issuance of a PAN is a critical component of the due process requirement in tax assessments. The taxpayer must be given an opportunity to respond to the findings of deficiency tax before the issuance of a final assessment notice (FAN).\n\n**Application** \nIn applying this doctrine, the CTA highlighted that the BIR must follow the procedural requirements set forth in the relevant revenue regulations, specifically noting that the taxpayer has a right to respond to the PAN within a specified period. Failure to comply with these requirements can invalidate the assessment.\n\n**Status / Limits** \nThis case underscores the importance of due process in tax assessments and the necessity for the BIR to adhere to procedural rules. It limits the BIR's ability to enforce tax assessments without proper notification and opportunity for the taxpayer to contest the findings. No indexed case found.\n\nSource limitation: A governing authority was not directly located. Displayed sources are related, supporting, or secondary only. They are not the controlling basis for the answer.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [
+      "RELATED_AUTHORITY_ONLY"
+    ],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "CTA Case No. 9711",
+      "title": "CTA Case No. 9711",
+      "citation": "CTA Case No. 9711",
+      "authorityType": "CASE",
+      "displayLabel": "CTA Case No. 9711",
+      "limitationRequired": true,
+      "publicUrl": "https://drive.google.com/file/d/1NG5D6VFTArNufblSJ2R-VGMlkydl243L/view?usp=drivesdk"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "sourceStatus": "RELATED_AUTHORITY_ONLY"
+}

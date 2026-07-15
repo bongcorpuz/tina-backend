@@ -1,0 +1,36 @@
+{
+  "id": "Q2-r2",
+  "httpStatus": 200,
+  "responseTimeMs": 42619,
+  "answer": "**Case Identified** \nCTA Case No. 9711 – Dizon Farms Produce, Inc. v. CIR\n\n**Facts / Context** \nIn this case, the taxpayer, Dizon Farms Produce, Inc., contested a deficiency tax assessment issued by the Bureau of Internal Revenue (BIR). The taxpayer argued that the assessment was invalid due to the lack of a proper pre-assessment notice (PAN) and failure to comply with due process requirements.\n\n**Issue** \nThe primary issue was whether the BIR's failure to issue a proper PAN rendered the deficiency tax assessment null and void.\n\n**Ruling / Holding** \nThe Court of Tax Appeals (CTA) ruled in favor of the taxpayer, stating that the issuance of a PAN is a mandatory requirement for a valid tax assessment. The court emphasized that tax assessments issued without adhering to due process are considered null and void.\n\n**Doctrine** \nThe ruling established that the BIR must comply with due process requirements, specifically the issuance of a PAN, before proceeding with a deficiency tax assessment. This is in line with the principle that taxpayers have the right to be informed of any tax liabilities and to respond accordingly.\n\n**Application** \nIn applying this doctrine, the CTA highlighted that the BIR's failure to issue a PAN deprived the taxpayer of the opportunity to contest the findings before a formal assessment was made. This case reinforces the importance of procedural safeguards in tax assessments to protect taxpayer rights.\n\n**Status / Limits** \nThis case serves as a precedent for future tax assessments, emphasizing the necessity of following due process. However, it is limited to the context of deficiency tax assessments and does not extend to other areas of tax law unless similar due process issues arise. \n\nNo indexed case found. Based on Philippine tax jurisprudence, the ruling in CTA Case No. 9711 underscores the critical nature of due process in tax assessments, particularly the requirement for a pre-assessment notice.\n\nSource limitation: A governing authority was not directly located. Displayed sources are related, supporting, or secondary only. They are not the controlling basis for the answer.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [
+      "RELATED_AUTHORITY_ONLY"
+    ],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "CTA Case No. 9711",
+      "title": "CTA Case No. 9711",
+      "citation": "CTA Case No. 9711",
+      "authorityType": "CASE",
+      "displayLabel": "CTA Case No. 9711",
+      "limitationRequired": true,
+      "publicUrl": "https://drive.google.com/file/d/1NG5D6VFTArNufblSJ2R-VGMlkydl243L/view?usp=drivesdk"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "sourceStatus": "RELATED_AUTHORITY_ONLY"
+}
