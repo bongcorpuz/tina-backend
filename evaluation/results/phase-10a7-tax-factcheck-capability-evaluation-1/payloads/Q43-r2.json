@@ -1,0 +1,28 @@
+{
+  "runId": "Q43-r2",
+  "caseId": "Q43",
+  "prompt": "What is Oplan Kandado and when can it be applied?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 298,
+  "answer": "TINA is designed to answer questions about Philippine taxation. Please ask a Philippine tax-related question, such as VAT, income tax, withholding tax, BIR compliance, local tax, customs duties, or tax remedies.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "NOT_APPLICABLE",
+    "sourceState": "NOT_APPLICABLE",
+    "legalConclusion": "NOT_APPLICABLE",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NOT_APPLICABLE",
+    "limitations": [],
+    "responseKind": "DOMAIN_BOUNDARY",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [],
+  "displayedSourceCount": 0,
+  "retrievedSourceCount": 0,
+  "sourceStatus": "DOMAIN_BOUNDARY_REJECT"
+}

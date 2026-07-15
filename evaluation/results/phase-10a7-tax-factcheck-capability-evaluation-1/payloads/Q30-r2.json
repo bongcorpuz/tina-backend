@@ -1,0 +1,49 @@
+{
+  "runId": "Q30-r2",
+  "caseId": "Q30",
+  "prompt": "What is the estate tax rate under TRAIN?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 11322,
+  "answer": "### Short Answer\nThe estate tax rate under the Tax Reform for Acceleration and Inclusion (TRAIN) law is a flat rate of 6% on the value of the estate exceeding Five Million Pesos (₱5,000,000).\n\n### Interpretation\nSection 84 of the NIRC specifies that the estate tax is computed based on the net estate of the deceased, which is the gross estate less allowable deductions. The flat rate of 6% applies only to the portion of the estate that exceeds the threshold of ₱5,000,000.\n\n### Practical Meaning\nIn practical terms, this means that estates valued at ₱5,000,000 or less are exempt from estate tax, while estates valued above this threshold will incur a tax liability calculated at 6% of the amount exceeding ₱5,000,000. Executors and heirs must ensure compliance with this tax obligation when settling the estate.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 91",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 84",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 86",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 88",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 89",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 5,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

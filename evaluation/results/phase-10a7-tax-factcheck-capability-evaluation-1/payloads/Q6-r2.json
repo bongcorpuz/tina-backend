@@ -1,0 +1,41 @@
+{
+  "runId": "Q6-r2",
+  "caseId": "Q6",
+  "prompt": "Can a non-VAT-registered seller issue a VAT invoice?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 18112,
+  "answer": "### Issue Presented\nA non-VAT-registered seller cannot issue a VAT invoice. Under Section 236 of the National Internal Revenue Code (NIRC), only VAT-registered persons are authorized to issue VAT invoices. A VAT invoice is a specific document that must be issued by a seller who is registered for VAT, reflecting the VAT charged on the sale of goods or services.\n\nFurthermore, Revenue Regulation No. 16-2005 clarifies that a \"VAT-registered person\" is defined as someone who is registered as a VAT taxpayer under Section 236 of the NIRC. Therefore, if a seller is not registered for VAT, they are not permitted to issue VAT invoices, as doing so would misrepresent their tax status and could lead to penalties.\n\nIn summary, only VAT-registered sellers can issue VAT invoices, and non-VAT-registered sellers must issue official receipts instead.\n\n### Relevant Facts / Assumptions\nThe factual circumstances have not been fully described. The analysis is based on the question as presented.\n\n### Alternative Interpretations\nNo alternative interpretations identified from the available indexed authorities.\n\n### Position Strength\nPosition strength is preliminary and subject to full fact pattern verification.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 236",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    },
+    {
+      "label": "RR 18-2012",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

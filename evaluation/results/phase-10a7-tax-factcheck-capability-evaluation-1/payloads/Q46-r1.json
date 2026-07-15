@@ -1,0 +1,51 @@
+{
+  "runId": "Q46-r1",
+  "caseId": "Q46",
+  "prompt": "Is the sale of gold by a small-scale miner to the Bangko Sentral ng Pilipinas subject to VAT?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 12757,
+  "answer": "### Issue Presented\nIs the sale of gold by a small-scale miner to the Bangko Sentral ng Pilipinas (BSP) subject to Value-Added Tax (VAT)?\n\n### Short Answer\nThe sale of gold by a small-scale miner to the Bangko Sentral ng Pilipinas is not subject to VAT.\n\n### Controlling Authorities\nThe relevant provision is Section 106 of the National Internal Revenue Code (NIRC), which states that there shall be levied, assessed, and collected a value-added tax on every sale of goods or properties. However, the sale of gold to the BSP is treated differently under specific regulations.\n\n### Legal Interpretation\nUnder Section 106 of the NIRC, VAT is imposed on the sale of goods or properties. However, the sale of gold to the BSP is exempt from VAT as it falls under the category of transactions that are not subject to VAT due to the nature of the buyer (the BSP) and the specific provisions governing the sale of precious metals. The Bureau of Internal Revenue (BIR) recognizes that transactions involving the BSP, particularly in the context of gold purchases from small-scale miners, are exempt from VAT to promote the formalization of the gold trading sector and ensure compliance with regulatory standards.\n\n### Practical Application\nSmall-scale miners selling gold to the BSP should ensure they document the transaction properly to substantiate the VAT-exempt status. This includes maintaining records of the sale and any relevant communications with the BSP. It is advisable for small-scale miners to consult with a tax professional or legal advisor to ensure compliance with all applicable regulations and to confirm the VAT-exempt status of their transactions with the BSP.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "limitations": [
+      "POTENTIAL_CONFLICT"
+    ],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 106",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 105",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 107",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 108",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR 16-2005",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 5,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

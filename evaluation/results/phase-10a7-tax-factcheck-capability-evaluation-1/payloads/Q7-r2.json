@@ -1,0 +1,33 @@
+{
+  "runId": "Q7-r2",
+  "caseId": "Q7",
+  "prompt": "How is input VAT treated when goods or services are used for both VATable and VAT-exempt sales?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 14634,
+  "answer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nIn practice, businesses must maintain detailed records of their sales to determine the appropriate allocation of input VAT. This allocation affects the amount of input VAT that can be claimed as a credit against output VAT, potentially increasing the tax liability for businesses with significant exempt sales. Proper allocation is crucial to avoid penalties and ensure compliance with tax regulations.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

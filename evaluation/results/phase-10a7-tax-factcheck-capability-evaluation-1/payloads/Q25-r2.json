@@ -1,0 +1,45 @@
+{
+  "runId": "Q25-r2",
+  "caseId": "Q25",
+  "prompt": "Is EWT required on payments to a VAT-registered law firm?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 10375,
+  "answer": "### Short Answer\nYes, Expanded Withholding Tax (EWT) is required on payments to a VAT-registered law firm. This is in accordance with Section 2.57.2 of the Revenue Regulations (RR) No. 2-98, which mandates withholding on certain payments, including professional fees.\n\n### Controlling Authorities\n- **NIRC Sec. 236**: This section details the registration requirements for VAT-registered persons and the implications for withholding tax.\n\n### Interpretation\nPayments made to VAT-registered professionals, such as law firms, are subject to EWT as they are considered income payments. The law requires that the withholding agent (the entity making the payment) withhold a percentage of the payment as tax, which must then be remitted to the Bureau of Internal Revenue (BIR). This ensures that the tax liability is collected at the source.\n\n### Practical Meaning\nFor businesses engaging the services of a VAT-registered law firm, it is crucial to account for EWT in their payment processes. This means that when making payments for legal services, the business must withhold the appropriate tax amount and remit it to the BIR. Failure to comply with this requirement may result in penalties and interest for the withholding agent.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 109",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 236",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    },
+    {
+      "label": "RMC 75-2015",
+      "authorityType": "RMC"
+    }
+  ],
+  "displayedSourceCount": 4,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

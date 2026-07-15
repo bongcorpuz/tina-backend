@@ -1,0 +1,45 @@
+{
+  "runId": "Q25-r1",
+  "caseId": "Q25",
+  "prompt": "Is EWT required on payments to a VAT-registered law firm?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 22635,
+  "answer": "### Short Answer\n\n### Controlling Authorities\n- **NIRC Sec. 236**: This section provides the registration requirements for VAT-registered persons and the obligations of withholding agents.\n\n### Interpretation\nPayments made to a VAT-registered law firm are subject to EWT because the law firm, as a VAT-registered entity, is required to issue a VAT invoice for its services. The withholding tax applies to the gross amount of the payment, which includes the VAT component. The payer is responsible for withholding the appropriate tax rate and remitting it to the Bureau of Internal Revenue (BIR).\n\n### Practical Meaning\nFor businesses engaging the services of a VAT-registered law firm, it is essential to account for EWT in their financial planning. This means that when making payments, they must withhold the specified percentage of the total invoice amount (including VAT) and remit this to the BIR. Failure to comply with this requirement may result in penalties and interest for the withholding agent.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 109",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 236",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    },
+    {
+      "label": "RMC 75-2015",
+      "authorityType": "RMC"
+    }
+  ],
+  "displayedSourceCount": 4,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

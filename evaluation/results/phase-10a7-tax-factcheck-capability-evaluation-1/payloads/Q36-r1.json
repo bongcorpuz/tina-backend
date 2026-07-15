@@ -1,0 +1,51 @@
+{
+  "runId": "Q36-r1",
+  "caseId": "Q36",
+  "prompt": "What penalties apply to late filing of a VAT return?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 17349,
+  "answer": "### Short Answer\nPenalties for late filing of a VAT return include a compromise penalty and interest on the unpaid tax. The compromise penalty is generally set at a fixed amount, while interest accrues at a rate of 12% per annum on the unpaid tax due.\n\n### Interpretation\n\n### Practical Meaning\nIn practical terms, if a taxpayer fails to file their VAT return by the due date, they should be prepared to pay not only the tax owed but also additional penalties and interest. This can significantly increase the total amount payable, making timely filing crucial for compliance and financial management. Taxpayers are advised to maintain accurate records and file their returns promptly to avoid these penalties.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "limitations": [
+      "POTENTIAL_CONFLICT"
+    ],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 105",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 106",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 107",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 108",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR 16-2005",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 5,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

@@ -1,0 +1,41 @@
+{
+  "runId": "Q9-r3",
+  "caseId": "Q9",
+  "prompt": "Can spouses who both earn compensation income file a joint income tax return?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 12020,
+  "answer": "### Short Answer\nSpouses who both earn compensation income cannot file a joint income tax return; they must file separate returns based on their respective total taxable income.\n\n### Controlling Authorities\nThis is governed by Section 24 of the National Internal Revenue Code (NIRC), which states that married individuals compute their income tax separately based on their respective total taxable income.\n\n### Interpretation\nAccording to Section 24 of the NIRC, while spouses are required to file separate income tax returns, if any income cannot be definitively attributed to either spouse, it shall be divided equally for tax purposes. This provision ensures that each spouse is taxed on their individual income, reflecting their respective earnings accurately.\n\n### Practical Meaning\nIn practice, this means that each spouse must maintain their own records of income and deductions to accurately report their taxable income. They cannot combine their incomes into a single return, which could potentially affect their tax liabilities and eligibility for certain deductions or credits. This separation can also impact their overall tax burden, depending on their individual income levels and applicable tax rates.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 24",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 23",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 27",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

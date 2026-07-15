@@ -1,0 +1,41 @@
+{
+  "runId": "Q45-r1",
+  "caseId": "Q45",
+  "prompt": "Are PEZA-registered enterprises subject to corporate income tax?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 15519,
+  "answer": "### Issue Presented\nAre PEZA-registered enterprises subject to corporate income tax under Philippine law?\n\n### Short Answer\nYes, PEZA-registered enterprises are subject to corporate income tax, but they may benefit from preferential tax rates and incentives under specific conditions.\n\n### Controlling Authorities\nThe relevant provision is Section 27 of the National Internal Revenue Code (NIRC), which outlines the rates of income tax on domestic corporations. Specifically, it states that a corporate income tax rate of twenty-five percent (25%) is imposed on the taxable income derived from all sources within and without the Philippines by every corporation, including those registered with the Philippine Economic Zone Authority (PEZA).\n\n### Legal Interpretation\n\n### Practical Application\nPEZA-registered enterprises should assess their eligibility for tax incentives under the PEZA Law to determine the applicable tax rate on their income. It is crucial for these enterprises to maintain compliance with the requirements set by PEZA to benefit from the reduced tax rates. Additionally, they should keep abreast of any changes in tax legislation that may affect their tax obligations. Proper tax planning and consultation with tax professionals are advisable to optimize their tax position while ensuring compliance with the law.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 27",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 23",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 24",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

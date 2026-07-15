@@ -1,0 +1,49 @@
+{
+  "runId": "Q30-r3",
+  "caseId": "Q30",
+  "prompt": "What is the estate tax rate under TRAIN?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 12364,
+  "answer": "### Short Answer\nThe estate tax rate under the Tax Reform for Acceleration and Inclusion (TRAIN) law is a flat rate of 6% on the value of the estate exceeding Five Million Pesos (₱5,000,000).\n\n### Interpretation\nSection 84 of the NIRC specifies that the estate tax is imposed on the net estate of the decedent, which is the gross estate less allowable deductions. The flat rate of 6% applies only to the portion of the estate that exceeds the threshold of ₱5,000,000.\n\n### Practical Meaning\nIn practical terms, this means that if a decedent's estate is valued at ₱10,000,000, the taxable estate would be ₱5,000,000 (₱10,000,000 - ₱5,000,000), resulting in an estate tax liability of ₱300,000 (6% of ₱5,000,000). This simplified tax structure aims to streamline estate tax calculations and reduce the burden on estates below the threshold.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 91",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 84",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 86",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 88",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 89",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 5,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

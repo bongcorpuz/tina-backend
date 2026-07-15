@@ -1,0 +1,45 @@
+{
+  "runId": "Q47-r2",
+  "caseId": "Q47",
+  "prompt": "What is the donor's tax rate under TRAIN and the exemption threshold?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 28255,
+  "answer": "### Short Answer\nThe donor's tax rate under the Tax Reform for Acceleration and Inclusion (TRAIN) law is six percent (6%) on the total gifts exceeding the exemption threshold of Two hundred fifty thousand pesos (₱250,000) per calendar year.\n\n### Controlling Authorities\nThe relevant provisions are found in the National Internal Revenue Code (NIRC) as amended by the TRAIN law:\n- **Section 99**: Rates of Tax Payable by Donor - \"The tax for each calendar year shall be six percent (6%) computed on the basis of the total gifts in excess of Two hundred fifty thousand pesos (₱250,000) exempt gift made during the calendar year.\"\n\n### Interpretation\nUnder Section 99 of the NIRC, the donor's tax is applied to the total value of gifts made in a calendar year that exceed the exemption threshold. This means that any gifts up to ₱250,000 are exempt from the tax, while gifts above this amount are taxed at a flat rate of 6%.\n\n### Practical Meaning\nIn practical terms, individuals making gifts should keep track of the total value of their gifts throughout the year. Only the amount exceeding ₱250,000 will be subject to the 6% donor's tax. This exemption allows for a significant portion of gifts to be made without incurring tax liability, which can be beneficial for estate planning and charitable contributions.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 99",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 101",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 102",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 104",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 4,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

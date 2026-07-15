@@ -1,0 +1,37 @@
+{
+  "runId": "Q5-r3",
+  "caseId": "Q5",
+  "prompt": "What is the VAT rate on importation of goods used to manufacture export products?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 17509,
+  "answer": "### Short Answer\nThe VAT rate on the importation of goods used to manufacture export products is 12%. This is based on the total value used by the Bureau of Customs in determining tariff and customs duties, plus any applicable customs duties and excise taxes.\n\n### Controlling Authorities\nThe controlling authority for this is Section 107 of the National Internal Revenue Code (NIRC), which states that a value-added tax equivalent to 12% shall be levied on every importation of goods. This is further supported by Revenue Regulations No. 16-2005, which implements the provisions of the NIRC regarding VAT.\n\n### Interpretation\n\n### Practical Meaning\nFor businesses importing goods to manufacture products for export, the 12% VAT on importation is a significant cost that must be factored into pricing and cash flow considerations. However, these businesses may be eligible for input tax credits on the VAT paid upon importation, which can be utilized against their output tax liabilities from sales, including zero-rated export sales. This mechanism helps mitigate the impact of VAT on their overall tax burden.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 107",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

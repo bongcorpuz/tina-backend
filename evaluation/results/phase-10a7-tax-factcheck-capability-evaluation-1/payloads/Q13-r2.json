@@ -1,0 +1,41 @@
+{
+  "runId": "Q13-r2",
+  "caseId": "Q13",
+  "prompt": "Can a self-employed individual with gross sales below ₱3 million opt for the 8% income tax rate?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 8632,
+  "answer": "### Short Answer\nYes, a self-employed individual with gross sales below ₱3 million can opt for the 8% income tax rate, provided their gross sales or gross receipts do not exceed the VAT threshold, which is currently set at ₱3 million.\n\n### Controlling Authorities\nThe relevant provision is found in Section 24(B)(1)(b) of the National Internal Revenue Code (NIRC), which allows self-employed individuals and professionals to choose an 8% tax on gross sales or gross receipts in lieu of the graduated income tax, as long as their gross sales do not exceed the VAT threshold.\n\n### Interpretation\nUnder Section 24(B)(1)(b) of the NIRC, self-employed individuals whose gross sales or receipts do not exceed ₱3 million have the option to pay an 8% income tax on their gross sales or receipts in excess of ₱250,000. This provision is designed to simplify tax compliance for small businesses and self-employed individuals.\n\n### Practical Meaning\nFor self-employed individuals, opting for the 8% tax rate can significantly reduce their tax burden and simplify their tax filing process. This option is particularly beneficial for those with lower gross sales, as it allows them to avoid the complexities of the graduated income tax rates while still contributing to tax revenues.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 24",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 23",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 27",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 11,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

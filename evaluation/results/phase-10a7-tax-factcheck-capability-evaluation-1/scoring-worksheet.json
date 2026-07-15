@@ -1,0 +1,4160 @@
+{
+  "summary": {
+    "casesDefined": 50,
+    "casesExecuted": 50,
+    "totalRuns": 150,
+    "timeouts": 0,
+    "technicalFailures": 0,
+    "persistenceFailures": 0,
+    "trustOverclaimFlaggedCases": [
+      "Q1",
+      "Q2",
+      "Q3",
+      "Q5",
+      "Q6",
+      "Q9",
+      "Q12",
+      "Q13",
+      "Q14",
+      "Q15",
+      "Q24",
+      "Q25",
+      "Q26",
+      "Q27",
+      "Q28",
+      "Q29",
+      "Q30",
+      "Q31",
+      "Q32",
+      "Q33",
+      "Q34",
+      "Q35",
+      "Q36",
+      "Q37",
+      "Q38",
+      "Q41",
+      "Q45",
+      "Q47"
+    ],
+    "authoritySupportInconsistentCases": [],
+    "legalConclusionInconsistentCases": [],
+    "lowPassCoverageCases": [
+      "Q2",
+      "Q5",
+      "Q6",
+      "Q10",
+      "Q11",
+      "Q12",
+      "Q13",
+      "Q16",
+      "Q17",
+      "Q18",
+      "Q20",
+      "Q21",
+      "Q22",
+      "Q23",
+      "Q24",
+      "Q25",
+      "Q26",
+      "Q27",
+      "Q29",
+      "Q31",
+      "Q33",
+      "Q35",
+      "Q36",
+      "Q37",
+      "Q38",
+      "Q39",
+      "Q40",
+      "Q41",
+      "Q42",
+      "Q43",
+      "Q44",
+      "Q45",
+      "Q46",
+      "Q48",
+      "Q49",
+      "Q50"
+    ],
+    "failIndicatorCases": [
+      "Q1",
+      "Q2",
+      "Q3",
+      "Q4",
+      "Q5",
+      "Q7",
+      "Q8",
+      "Q9",
+      "Q12",
+      "Q13",
+      "Q14",
+      "Q15",
+      "Q19",
+      "Q21",
+      "Q24",
+      "Q25",
+      "Q26",
+      "Q27",
+      "Q28",
+      "Q29",
+      "Q31",
+      "Q32",
+      "Q33",
+      "Q34",
+      "Q35",
+      "Q36",
+      "Q37",
+      "Q38",
+      "Q41",
+      "Q45",
+      "Q46",
+      "Q47",
+      "Q48",
+      "Q49"
+    ]
+  },
+  "worksheet": [
+    {
+      "caseId": "Q1",
+      "title": "VAT Registration — Freelance Graphic Designer",
+      "category": "VAT / Registration",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "NIRC Sections 109(CC), 116, and 236, as amended by RA 11976; RR 7-2024.",
+      "passRequires": "States the ₱3 million threshold, uses “exceeding” or equivalent language, and explains voluntary VAT registration and the non-VAT alternative.",
+      "failUnsafeIndicator": "Says VAT registration is mandatory solely because sales are ₱2.8 million; uses an obsolete threshold; or treats ₱3 million as automatically exceeded.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": true,
+      "avgPassTokenCoverage": 0.71,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q1-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 18921,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 4,
+          "sourceOnlyFallback": false,
+          "answerLength": 1526,
+          "passTokenCoverage": 0.75,
+          "passSignalHits": 2,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 4,
+          "citations": []
+        },
+        {
+          "runId": "Q1-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 18626,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 4,
+          "sourceOnlyFallback": false,
+          "answerLength": 1981,
+          "passTokenCoverage": 0.75,
+          "passSignalHits": 2,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 5,
+          "citations": [
+            "Section236"
+          ]
+        },
+        {
+          "runId": "Q1-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 17343,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 4,
+          "sourceOnlyFallback": false,
+          "answerLength": 1550,
+          "passTokenCoverage": 0.63,
+          "passSignalHits": 2,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 5,
+          "citations": []
+        }
+      ]
+    },
+    {
+      "caseId": "Q2",
+      "title": "VAT on Sale of a Residential Lot",
+      "category": "VAT / Real Property",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "NIRC Sections 105, 106, and 109(P); TRAIN amendments; RR 4-2021, RR 8-2021, and RR 1-2024.",
+      "passRequires": "Gives a conditional answer, states that the old lot-only threshold was removed, and distinguishes dealer/ordinary-asset sales from non-dealer capital-asset sales.",
+      "failUnsafeIndicator": "Declares the sale VAT-exempt merely because the price is ₱1.9 million, cites the obsolete residential-lot threshold, or assumes VAT without considering the seller and asset classification.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": true,
+      "avgPassTokenCoverage": 0.29,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q2-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 17892,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 2,
+          "sourceOnlyFallback": false,
+          "answerLength": 801,
+          "passTokenCoverage": 0.29,
+          "passSignalHits": 2,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 3,
+          "citations": [
+            "RR16-2005"
+          ]
+        },
+        {
+          "runId": "Q2-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 19474,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 2,
+          "sourceOnlyFallback": false,
+          "answerLength": 902,
+          "passTokenCoverage": 0.21,
+          "passSignalHits": 2,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 4,
+          "citations": [
+            "Section4"
+          ]
+        },
+        {
+          "runId": "Q2-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 16337,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 2,
+          "sourceOnlyFallback": false,
+          "answerLength": 1225,
+          "passTokenCoverage": 0.36,
+          "passSignalHits": 2,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 4,
+          "citations": [
+            "RR16-2005",
+            "Section109(P",
+            "Section4"
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "Q3",
+      "title": "Input VAT Refund of an Exporter",
+      "category": "VAT / Refund",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "NIRC Section 112, as amended by RA 11976 and RA 12066; current BIR VAT-refund regulations and documentary rules.",
+      "passRequires": "Uses “zero-rated,” states that a refund or tax credit may be claimed for attributable unutilized input VAT, and mentions the two-year filing rule and 90-day processing framework.",
+      "failUnsafeIndicator": "Calls export sales VAT-exempt, states that input VAT is unrecoverable, or describes the refund as unconditional.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": true,
+      "avgPassTokenCoverage": 0.35,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q3-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 20351,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 4,
+          "sourceOnlyFallback": false,
+          "answerLength": 729,
+          "passTokenCoverage": 0.33,
+          "passSignalHits": 0,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 3,
+          "citations": [
+            "Section236"
+          ]
+        },
+        {
+          "runId": "Q3-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 11042,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 4,
+          "sourceOnlyFallback": false,
+          "answerLength": 633,
+          "passTokenCoverage": 0.33,
+          "passSignalHits": 0,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 3,
+          "citations": [
+            "Section236"
+          ]
+        },
+        {
+          "runId": "Q3-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 10482,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 4,
+          "sourceOnlyFallback": false,
+          "answerLength": 766,
+          "passTokenCoverage": 0.4,
+          "passSignalHits": 0,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 3,
+          "citations": [
+            "Section236"
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "Q4",
+      "title": "VAT on Doctors' Professional Fees",
+      "category": "VAT / Professional Services",
+      "recencySensitive": "No",
+      "expectedAuthorities": "NIRC Sections 108 and 109(G); RR 16-2005; RMC 6-2003.",
+      "passRequires": "States that professional services are excluded from the exemption and correctly makes VAT depend on VAT-registration status or the threshold.",
+      "failUnsafeIndicator": "Categorically states that doctors' professional fees are VAT-exempt.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": false,
+      "avgPassTokenCoverage": 0.36,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q4-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 13291,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 762,
+          "passTokenCoverage": 0.36,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 2,
+          "citations": [
+            "RR16-2005"
+          ]
+        },
+        {
+          "runId": "Q4-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 11517,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 959,
+          "passTokenCoverage": 0.36,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 2,
+          "citations": []
+        },
+        {
+          "runId": "Q4-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 10345,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 894,
+          "passTokenCoverage": 0.36,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 2,
+          "citations": [
+            "Section109(G"
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "Q5",
+      "title": "VAT on Imports Used for Export Production",
+      "category": "VAT / Importation / CREATE MORE",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "NIRC Sections 107 and 109(1)(dd), as amended by RA 12066.",
+      "passRequires": "States the 12% general rule and the CREATE MORE exemption, including the 70% test, direct attribution, and non-IPA possibility.",
+      "failUnsafeIndicator": "Says all such imports are automatically 12% VAT, all are automatically exempt, or PEZA/BOI registration is indispensable.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": true,
+      "avgPassTokenCoverage": 0.1,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q5-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 12243,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 2,
+          "sourceOnlyFallback": false,
+          "answerLength": 1052,
+          "passTokenCoverage": 0.08,
+          "passSignalHits": 1,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 1,
+          "citations": [
+            "Section107"
+          ]
+        },
+        {
+          "runId": "Q5-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 11867,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 2,
+          "sourceOnlyFallback": false,
+          "answerLength": 1056,
+          "passTokenCoverage": 0.08,
+          "passSignalHits": 1,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 0,
+          "citations": [
+            "Section107"
+          ]
+        },
+        {
+          "runId": "Q5-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 17509,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 2,
+          "sourceOnlyFallback": false,
+          "answerLength": 1111,
+          "passTokenCoverage": 0.15,
+          "passSignalHits": 1,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 0,
+          "citations": [
+            "Section107"
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "Q6",
+      "title": "Non-VAT Seller Issuing a VAT Invoice",
+      "category": "VAT / Invoicing",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "NIRC Section 113(D) and Section 248(B), as amended by RA 11976; RR 7-2024; RMC 77-2024.",
+      "passRequires": "Answers no and states VAT liability without input credit plus the 50% surcharge.",
+      "failUnsafeIndicator": "Says it is permissible or omits the principal consequence.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": true,
+      "avgPassTokenCoverage": 0.11,
+      "anyFailIndicatorHit": false,
+      "runs": [
+        {
+          "runId": "Q6-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 15452,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 3,
+          "sourceOnlyFallback": false,
+          "answerLength": 1401,
+          "passTokenCoverage": 0.11,
+          "passSignalHits": 0,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 0,
+          "citations": [
+            "Section236"
+          ]
+        },
+        {
+          "runId": "Q6-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 18112,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 3,
+          "sourceOnlyFallback": false,
+          "answerLength": 1205,
+          "passTokenCoverage": 0.11,
+          "passSignalHits": 0,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 0,
+          "citations": [
+            "Section236"
+          ]
+        },
+        {
+          "runId": "Q6-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 19938,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 3,
+          "sourceOnlyFallback": false,
+          "answerLength": 1845,
+          "passTokenCoverage": 0.11,
+          "passSignalHits": 0,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 0,
+          "citations": [
+            "Section236"
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "Q7",
+      "title": "Input VAT Used for VATable and Exempt Sales",
+      "category": "VAT / Input Tax",
+      "recencySensitive": "No",
+      "expectedAuthorities": "NIRC Section 110(B); RR 16-2005.",
+      "passRequires": "Explains direct attribution, non-creditability for exempt sales, and ratable apportionment of common input VAT.",
+      "failUnsafeIndicator": "Says all input VAT is creditable or none is creditable.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": false,
+      "avgPassTokenCoverage": 0.4,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q7-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 15320,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 819,
+          "passTokenCoverage": 0.4,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 1,
+          "citations": []
+        },
+        {
+          "runId": "Q7-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 14634,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 462,
+          "passTokenCoverage": 0.4,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 1,
+          "citations": []
+        },
+        {
+          "runId": "Q7-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 16039,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 910,
+          "passTokenCoverage": 0.4,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 1,
+          "citations": [
+            "Section110(B"
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "Q8",
+      "title": "VAT on Residential Lease at ₱15,000",
+      "category": "VAT / Lease",
+      "recencySensitive": "No",
+      "expectedAuthorities": "NIRC Section 109(Q); RR 16-2005.",
+      "passRequires": "States the ₱15,000 per-unit monthly threshold and that qualifying rent is VAT-exempt regardless of the lessor's aggregate rental income.",
+      "failUnsafeIndicator": "Subjects the unit to VAT solely because rent equals ₱15,000 or because aggregate income exceeds ₱3 million.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": false,
+      "avgPassTokenCoverage": 0.57,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q8-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 16003,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "POTENTIAL_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 5,
+          "sourceOnlyFallback": false,
+          "answerLength": 1565,
+          "passTokenCoverage": 0.54,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 1,
+          "citations": [
+            "Section106",
+            "Section108"
+          ]
+        },
+        {
+          "runId": "Q8-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 14698,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "POTENTIAL_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 5,
+          "sourceOnlyFallback": false,
+          "answerLength": 1508,
+          "passTokenCoverage": 0.62,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 2,
+          "citations": [
+            "Section105",
+            "Section108"
+          ]
+        },
+        {
+          "runId": "Q8-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 13672,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "POTENTIAL_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 5,
+          "sourceOnlyFallback": false,
+          "answerLength": 1449,
+          "passTokenCoverage": 0.54,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 1,
+          "citations": [
+            "Section106",
+            "Section108"
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "Q9",
+      "title": "Joint Income Tax Return of Spouses",
+      "category": "Income Tax / Filing",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "NIRC Section 51(D), as amended by RA 11976; RR 3-2002; RR 11-2018; current BIR Form 1700 and instructions.",
+      "passRequires": "Recognizes joint filing when a return is required, separately computed tax, and substituted-filing qualifications.",
+      "failUnsafeIndicator": "Says joint filing is never allowed or ignores substituted filing.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": true,
+      "avgPassTokenCoverage": 0.57,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q9-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 9939,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 3,
+          "sourceOnlyFallback": false,
+          "answerLength": 1198,
+          "passTokenCoverage": 0.6,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 2,
+          "citations": [
+            "Section24"
+          ]
+        },
+        {
+          "runId": "Q9-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 11028,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 3,
+          "sourceOnlyFallback": false,
+          "answerLength": 1228,
+          "passTokenCoverage": 0.6,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 2,
+          "citations": [
+            "Section24"
+          ]
+        },
+        {
+          "runId": "Q9-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 12020,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 3,
+          "sourceOnlyFallback": false,
+          "answerLength": 1216,
+          "passTokenCoverage": 0.5,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 1,
+          "citations": [
+            "Section24"
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "Q10",
+      "title": "Corporate Income Tax Rate under CREATE",
+      "category": "Income Tax / Corporations",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "NIRC Section 27(A), as amended by RA 11534 and RA 12066.",
+      "passRequires": "States 25%, the 20% alternative, and both statutory conditions.",
+      "failUnsafeIndicator": "Uses the old 30% rate or applies 20% when only one condition is met.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 0,
+      "trustOverclaimFlag": false,
+      "avgPassTokenCoverage": 0.17,
+      "anyFailIndicatorHit": false,
+      "runs": [
+        {
+          "runId": "Q10-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 7083,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 252,
+          "passTokenCoverage": 0.17,
+          "passSignalHits": 1,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q10-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 7899,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 253,
+          "passTokenCoverage": 0.17,
+          "passSignalHits": 1,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q10-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 6623,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 251,
+          "passTokenCoverage": 0.17,
+          "passSignalHits": 1,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 0,
+          "citations": [
+            "Section27(A"
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "Q11",
+      "title": "Taxability of ₱80,000 13th-Month Pay",
+      "category": "Income Tax / Compensation",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "NIRC Section 32(B)(7)(e), as amended by RA 10963.",
+      "passRequires": "States the ₱90,000 aggregate ceiling and treats ₱80,000 as non-taxable on the stated assumption.",
+      "failUnsafeIndicator": "Uses the old ₱82,000 threshold or taxes the entire ₱80,000.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "legalConclusionAcrossRuns": [
+        "UNKNOWN"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 0,
+      "trustOverclaimFlag": false,
+      "avgPassTokenCoverage": 0,
+      "anyFailIndicatorHit": false,
+      "runs": [
+        {
+          "runId": "Q11-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 14098,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 3,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q11-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 12843,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 3,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q11-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 14249,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 3,
+          "failIndicatorHits": 0,
+          "citations": []
+        }
+      ]
+    },
+    {
+      "caseId": "Q12",
+      "title": "ITR Requirement at ₱250,000 Compensation",
+      "category": "Income Tax / Filing",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "NIRC Section 51(A)(2); RR 3-2002; RR 11-2018; current BIR substituted-filing rules.",
+      "passRequires": "Explains that the result is generally no but conditions it on pure compensation and filing-status facts.",
+      "failUnsafeIndicator": "Says all persons at ₱250,000 must file or that substituted filing automatically applies regardless of employer and withholding facts.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": true,
+      "avgPassTokenCoverage": 0.13,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q12-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 9684,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 3,
+          "sourceOnlyFallback": false,
+          "answerLength": 1133,
+          "passTokenCoverage": 0.13,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 0,
+          "citations": [
+            "Section24",
+            "Section24(A)("
+          ]
+        },
+        {
+          "runId": "Q12-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 9518,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 3,
+          "sourceOnlyFallback": false,
+          "answerLength": 1080,
+          "passTokenCoverage": 0.13,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 1,
+          "citations": [
+            "Section24",
+            "Section24(A)("
+          ]
+        },
+        {
+          "runId": "Q12-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 11110,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 3,
+          "sourceOnlyFallback": false,
+          "answerLength": 1051,
+          "passTokenCoverage": 0.13,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 0,
+          "citations": [
+            "Section24"
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "Q13",
+      "title": "Eight Percent Income Tax Option",
+      "category": "Income Tax / Self-Employed",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "NIRC Section 24(A)(2)(b); RR 8-2018; RMO 23-2018.",
+      "passRequires": "States the 8% rate, VAT-threshold condition, in-lieu-of treatment, election requirement, and the different ₱250,000 treatment for pure versus mixed income.",
+      "failUnsafeIndicator": "Applies 8% to corporations, net income, a VAT-registered person, or automatically deducts ₱250,000 for a mixed-income earner.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": true,
+      "avgPassTokenCoverage": 0.2,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q13-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 9094,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 3,
+          "sourceOnlyFallback": false,
+          "answerLength": 1292,
+          "passTokenCoverage": 0.2,
+          "passSignalHits": 2,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 1,
+          "citations": [
+            "Section24(B)("
+          ]
+        },
+        {
+          "runId": "Q13-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 8632,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 3,
+          "sourceOnlyFallback": false,
+          "answerLength": 1270,
+          "passTokenCoverage": 0.2,
+          "passSignalHits": 2,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 1,
+          "citations": [
+            "Section24(B)("
+          ]
+        },
+        {
+          "runId": "Q13-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 7950,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 3,
+          "sourceOnlyFallback": false,
+          "answerLength": 1193,
+          "passTokenCoverage": 0.2,
+          "passSignalHits": 2,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 1,
+          "citations": [
+            "Section24(B)("
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "Q14",
+      "title": "Final Tax on Peso Savings Interest",
+      "category": "Income Tax / Passive Income",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "NIRC Section 24(B)(1), as amended by RA 12214; RR 21-2025 and related CMEPA issuances.",
+      "passRequires": "Answers yes and states 20% final withholding tax.",
+      "failUnsafeIndicator": "Calls ordinary peso savings interest exempt or subjects it to graduated income tax.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": true,
+      "avgPassTokenCoverage": 0.72,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q14-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 9274,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 678,
+          "passTokenCoverage": 0.83,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 3,
+          "citations": []
+        },
+        {
+          "runId": "Q14-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 8958,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 647,
+          "passTokenCoverage": 0.67,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 3,
+          "citations": []
+        },
+        {
+          "runId": "Q14-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 6079,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 647,
+          "passTokenCoverage": 0.67,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 3,
+          "citations": []
+        }
+      ]
+    },
+    {
+      "caseId": "Q15",
+      "title": "Minimum Corporate Income Tax",
+      "category": "Income Tax / Corporations",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "NIRC Section 27(E), as amended by RA 11534.",
+      "passRequires": "States 2%, gross income, exact commencement rule, and the higher-than-regular-tax condition.",
+      "failUnsafeIndicator": "Uses 1% as the current rate or says MCIT begins simply in the fourth operating year without the statutory formulation.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": true,
+      "avgPassTokenCoverage": 0.34,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q15-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 15227,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 2,
+          "sourceOnlyFallback": false,
+          "answerLength": 1199,
+          "passTokenCoverage": 0.29,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 1,
+          "citations": [
+            "RR9-1998"
+          ]
+        },
+        {
+          "runId": "Q15-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 9478,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 2,
+          "sourceOnlyFallback": false,
+          "answerLength": 1154,
+          "passTokenCoverage": 0.43,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 1,
+          "citations": [
+            "RR9-1998"
+          ]
+        },
+        {
+          "runId": "Q15-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 13030,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 2,
+          "sourceOnlyFallback": false,
+          "answerLength": 1142,
+          "passTokenCoverage": 0.29,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 1,
+          "citations": [
+            "RR9-1998"
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "Q16",
+      "title": "Tax on Prizes",
+      "category": "Income Tax / Passive Income",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "NIRC Sections 24(B)(1) and 32(B)(7)(c)-(d), as amended by RA 10963 and RA 12214.",
+      "passRequires": "States the ₱10,000 division, 20% final tax above it, regular treatment at or below it, and acknowledges statutory exclusions.",
+      "failUnsafeIndicator": "Says all prizes are exempt or all are automatically subject to one treatment without checking exclusions.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "legalConclusionAcrossRuns": [
+        "UNKNOWN"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 0,
+      "trustOverclaimFlag": false,
+      "avgPassTokenCoverage": 0,
+      "anyFailIndicatorHit": false,
+      "runs": [
+        {
+          "runId": "Q16-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 13679,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q16-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 13888,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q16-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 17055,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 0,
+          "citations": []
+        }
+      ]
+    },
+    {
+      "caseId": "Q17",
+      "title": "Dividend Paid to an NRA-NETB",
+      "category": "Income Tax / Nonresident Alien",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "NIRC Section 25(B), as amended; applicable Philippine tax treaty and treaty-relief rules.",
+      "passRequires": "States 25%, Philippine-source income, and treaty qualification.",
+      "failUnsafeIndicator": "Uses the resident-individual dividend rate or another rate without a valid treaty basis.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "legalConclusionAcrossRuns": [
+        "UNKNOWN"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 0,
+      "trustOverclaimFlag": false,
+      "avgPassTokenCoverage": 0,
+      "anyFailIndicatorHit": false,
+      "runs": [
+        {
+          "runId": "Q17-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 22361,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q17-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 10680,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q17-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 11019,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 0,
+          "citations": []
+        }
+      ]
+    },
+    {
+      "caseId": "Q18",
+      "title": "Optional Standard Deduction",
+      "category": "Income Tax / Deductions",
+      "recencySensitive": "No",
+      "expectedAuthorities": "NIRC Section 34(L).",
+      "passRequires": "States 40% and correctly distinguishes the individual and corporate bases.",
+      "failUnsafeIndicator": "Uses the same base for both taxpayer types.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 0,
+      "trustOverclaimFlag": false,
+      "avgPassTokenCoverage": 0.33,
+      "anyFailIndicatorHit": false,
+      "runs": [
+        {
+          "runId": "Q18-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 11163,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 250,
+          "passTokenCoverage": 0.33,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q18-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 6708,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 250,
+          "passTokenCoverage": 0.33,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q18-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 6362,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 250,
+          "passTokenCoverage": 0.33,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 0,
+          "citations": []
+        }
+      ]
+    },
+    {
+      "caseId": "Q19",
+      "title": "Capital Gains Tax on Unlisted Shares",
+      "category": "Capital Gains / Shares",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "Current NIRC Section 24(B)(3) for individuals, Section 27(D)(4) for domestic corporations, and Section 28 as applicable, as amended by RA 12214.",
+      "passRequires": "States 15% on net capital gain and does not use the old tiered rates.",
+      "failUnsafeIndicator": "Uses 5%/10%, applies the tax to gross selling price, or ignores a material taxpayer/source distinction.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 0,
+      "trustOverclaimFlag": false,
+      "avgPassTokenCoverage": 0.44,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q19-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 9675,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 295,
+          "passTokenCoverage": 0.44,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 1,
+          "citations": [
+            "Section24(D)("
+          ]
+        },
+        {
+          "runId": "Q19-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 12616,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 285,
+          "passTokenCoverage": 0.44,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 1,
+          "citations": [
+            "Section24(D)("
+          ]
+        },
+        {
+          "runId": "Q19-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 11880,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 314,
+          "passTokenCoverage": 0.44,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 1,
+          "citations": [
+            "Section24(D)("
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "Q20",
+      "title": "Principal-Residence CGT Exemption",
+      "category": "Capital Gains / Real Property",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "Current NIRC Section 24 provision on capital gains from real property and the principal-residence proviso, as amended; RR 13-99.",
+      "passRequires": "States the 6% general rule, 18 months, 30-day notice, once-in-ten-years condition, and full-use requirement.",
+      "failUnsafeIndicator": "Treats every principal-residence sale as automatically exempt.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "legalConclusionAcrossRuns": [
+        "UNKNOWN"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 0,
+      "trustOverclaimFlag": false,
+      "avgPassTokenCoverage": 0,
+      "anyFailIndicatorHit": false,
+      "runs": [
+        {
+          "runId": "Q20-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 12605,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 3,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q20-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 12733,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 3,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q20-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 9363,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 3,
+          "failIndicatorHits": 0,
+          "citations": []
+        }
+      ]
+    },
+    {
+      "caseId": "Q21",
+      "title": "Documentary Stamp Tax on Real Property Sale",
+      "category": "Documentary Stamp Tax",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "NIRC Section 196, as amended by RA 10963.",
+      "passRequires": "States ₱15 per ₱1,000 or fraction and the higher-value rule.",
+      "failUnsafeIndicator": "Uses the old ₱7.50 rate or only the contract price when a higher statutory value exists.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "legalConclusionAcrossRuns": [
+        "UNKNOWN"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 0,
+      "trustOverclaimFlag": false,
+      "avgPassTokenCoverage": 0,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q21-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 16459,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 3,
+          "failIndicatorHits": 1,
+          "citations": []
+        },
+        {
+          "runId": "Q21-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 15791,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 3,
+          "failIndicatorHits": 1,
+          "citations": []
+        },
+        {
+          "runId": "Q21-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 21374,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 3,
+          "failIndicatorHits": 1,
+          "citations": []
+        }
+      ]
+    },
+    {
+      "caseId": "Q22",
+      "title": "Sale of Real Property Classified as Ordinary Asset",
+      "category": "Capital Gains / Ordinary Assets",
+      "recencySensitive": "No",
+      "expectedAuthorities": "NIRC provisions on regular income and capital gains from real property; RR 7-2003; applicable CWT and VAT regulations.",
+      "passRequires": "Answers no, distinguishes capital and ordinary assets, and identifies regular income tax.",
+      "failUnsafeIndicator": "Applies 6% CGT to an ordinary asset.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "legalConclusionAcrossRuns": [
+        "UNKNOWN"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 0,
+      "trustOverclaimFlag": false,
+      "avgPassTokenCoverage": 0,
+      "anyFailIndicatorHit": false,
+      "runs": [
+        {
+          "runId": "Q22-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 12952,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q22-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 12633,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q22-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 9753,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 0,
+          "citations": []
+        }
+      ]
+    },
+    {
+      "caseId": "Q23",
+      "title": "Holding-Period Rule for Personal Property",
+      "category": "Capital Gains / Individuals",
+      "recencySensitive": "No",
+      "expectedAuthorities": "NIRC Section 39(B).",
+      "passRequires": "States both the 100% and 50% rules and limits them to assets governed by Section 39.",
+      "failUnsafeIndicator": "Applies the rule indiscriminately to real property or unlisted shares.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "NOT_APPLICABLE"
+      ],
+      "legalConclusionAcrossRuns": [
+        "NOT_APPLICABLE"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 0,
+      "trustOverclaimFlag": false,
+      "avgPassTokenCoverage": 0,
+      "anyFailIndicatorHit": false,
+      "runs": [
+        {
+          "runId": "Q23-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 310,
+          "authoritySupport": "NOT_APPLICABLE",
+          "legalConclusion": "NOT_APPLICABLE",
+          "conflictState": "NOT_APPLICABLE",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 211,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 5,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q23-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 332,
+          "authoritySupport": "NOT_APPLICABLE",
+          "legalConclusion": "NOT_APPLICABLE",
+          "conflictState": "NOT_APPLICABLE",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 211,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 5,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q23-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 302,
+          "authoritySupport": "NOT_APPLICABLE",
+          "legalConclusion": "NOT_APPLICABLE",
+          "conflictState": "NOT_APPLICABLE",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 211,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 5,
+          "failIndicatorHits": 0,
+          "citations": []
+        }
+      ]
+    },
+    {
+      "caseId": "Q24",
+      "title": "EWT on Professional Fees Paid to an Individual",
+      "category": "Withholding Tax",
+      "recencySensitive": "No",
+      "expectedAuthorities": "RR 2-1998, as amended by RR 11-2018; current BIR Forms 2307 and 1601-EQ instructions.",
+      "passRequires": "States 5% and 10%, the ₱3 million condition, and the declaration requirement.",
+      "failUnsafeIndicator": "Uses the obsolete 10%/15% individual rates or gives one rate without the condition.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": true,
+      "avgPassTokenCoverage": 0.2,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q24-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 12261,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 708,
+          "passTokenCoverage": 0.2,
+          "passSignalHits": 1,
+          "passSignalsTotal": 3,
+          "failIndicatorHits": 1,
+          "citations": []
+        },
+        {
+          "runId": "Q24-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 9817,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 650,
+          "passTokenCoverage": 0.2,
+          "passSignalHits": 1,
+          "passSignalsTotal": 3,
+          "failIndicatorHits": 1,
+          "citations": [
+            "Section2"
+          ]
+        },
+        {
+          "runId": "Q24-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 11102,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 714,
+          "passTokenCoverage": 0.2,
+          "passSignalHits": 1,
+          "passSignalsTotal": 3,
+          "failIndicatorHits": 1,
+          "citations": []
+        }
+      ]
+    },
+    {
+      "caseId": "Q25",
+      "title": "EWT on Payment to a VAT-Registered Law Firm",
+      "category": "Withholding Tax / General Professional Partnerships",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "RR 2-1998, as amended by RR 11-2018; RMC 50-2018; current withholding-tax forms and instructions.",
+      "passRequires": "Explains that VAT status is not determinative and correctly distinguishes an individual, GPP, and taxable juridical payee.",
+      "failUnsafeIndicator": "Automatically imposes a flat 10% merely because the firm is VAT-registered, or imposes EWT on a qualifying GPP's gross professional receipts without addressing RMC 50-2018.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": true,
+      "avgPassTokenCoverage": 0.1,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q25-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 22635,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 4,
+          "sourceOnlyFallback": false,
+          "answerLength": 1006,
+          "passTokenCoverage": 0.1,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 2,
+          "citations": []
+        },
+        {
+          "runId": "Q25-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 10375,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 4,
+          "sourceOnlyFallback": false,
+          "answerLength": 1227,
+          "passTokenCoverage": 0.1,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 2,
+          "citations": [
+            "Section2"
+          ]
+        },
+        {
+          "runId": "Q25-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 11299,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 4,
+          "sourceOnlyFallback": false,
+          "answerLength": 1457,
+          "passTokenCoverage": 0.1,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 2,
+          "citations": [
+            "RR16-2005",
+            "Section2"
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "Q26",
+      "title": "EWT Remittance Deadlines",
+      "category": "Withholding Tax / Compliance",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "NIRC Section 58, as amended by RA 11976; RR 11-2018; current BIR tax calendar and form instructions.",
+      "passRequires": "Explains the 0619-E and 1601-EQ system and their baseline deadlines, with an eFPS/current-calendar caveat.",
+      "failUnsafeIndicator": "Provides one universal deadline for all withholding taxes.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": true,
+      "avgPassTokenCoverage": 0,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q26-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 7343,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 818,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 1,
+          "citations": []
+        },
+        {
+          "runId": "Q26-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 6976,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 798,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 1,
+          "citations": []
+        },
+        {
+          "runId": "Q26-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 7692,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 810,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 1,
+          "citations": []
+        }
+      ]
+    },
+    {
+      "caseId": "Q27",
+      "title": "EWT on Equipment Rental",
+      "category": "Withholding Tax / Rentals",
+      "recencySensitive": "No",
+      "expectedAuthorities": "RR 2-1998, as amended, including RR 11-2018.",
+      "passRequires": "States 5% and the annual ₱10,000 threshold with a payor/payment classification caveat.",
+      "failUnsafeIndicator": "Says equipment rental is never subject to EWT or uses an unrelated rate.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": true,
+      "avgPassTokenCoverage": 0.25,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q27-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 8361,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 692,
+          "passTokenCoverage": 0.25,
+          "passSignalHits": 1,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 3,
+          "citations": []
+        },
+        {
+          "runId": "Q27-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 6860,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 727,
+          "passTokenCoverage": 0.25,
+          "passSignalHits": 0,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 3,
+          "citations": []
+        },
+        {
+          "runId": "Q27-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 6694,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 645,
+          "passTokenCoverage": 0.25,
+          "passSignalHits": 1,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 3,
+          "citations": []
+        }
+      ]
+    },
+    {
+      "caseId": "Q28",
+      "title": "Final Tax on Royalties of a Domestic Corporation",
+      "category": "Income Tax / Passive Income",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "Current NIRC Section 27(D)(6), as amended by RA 12214.",
+      "passRequires": "States 20% final tax.",
+      "failUnsafeIndicator": "Calls it creditable withholding tax or subjects ordinary passive royalties solely to regular CIT.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": true,
+      "avgPassTokenCoverage": 0.67,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q28-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 7018,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 749,
+          "passTokenCoverage": 0.67,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 3,
+          "citations": [
+            "RR2-98"
+          ]
+        },
+        {
+          "runId": "Q28-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 9188,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 761,
+          "passTokenCoverage": 0.67,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 3,
+          "citations": []
+        },
+        {
+          "runId": "Q28-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 8565,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 744,
+          "passTokenCoverage": 0.67,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 3,
+          "citations": []
+        }
+      ]
+    },
+    {
+      "caseId": "Q29",
+      "title": "EWT and a ₱500 One-Time Courier Payment",
+      "category": "Withholding Tax / Small Payments",
+      "recencySensitive": "No",
+      "expectedAuthorities": "RR 2-1998, as amended by RR 11-2018 and RR 31-2020; RMC 8-2014.",
+      "passRequires": "States that there is no universal de minimis exemption and identifies the limited TWA casual-purchase rule.",
+      "failUnsafeIndicator": "Declares every payment below ₱10,000 exempt from EWT.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": true,
+      "avgPassTokenCoverage": 0,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q29-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 7270,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 744,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 2,
+          "citations": [
+            "RR2-98"
+          ]
+        },
+        {
+          "runId": "Q29-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 10516,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 713,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 2,
+          "citations": []
+        },
+        {
+          "runId": "Q29-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 6705,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 716,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 2,
+          "citations": []
+        }
+      ]
+    },
+    {
+      "caseId": "Q30",
+      "title": "Estate Tax Rate",
+      "category": "Estate Tax",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "NIRC Section 84, as amended by RA 10963.",
+      "passRequires": "States 6% of net taxable estate and recognizes date-of-death applicability.",
+      "failUnsafeIndicator": "Uses the old graduated 5%-20% schedule for a post-TRAIN death.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": true,
+      "avgPassTokenCoverage": 0.39,
+      "anyFailIndicatorHit": false,
+      "runs": [
+        {
+          "runId": "Q30-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 17569,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 5,
+          "sourceOnlyFallback": false,
+          "answerLength": 953,
+          "passTokenCoverage": 0.33,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q30-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 11322,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 5,
+          "sourceOnlyFallback": false,
+          "answerLength": 814,
+          "passTokenCoverage": 0.33,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 0,
+          "citations": [
+            "Section84"
+          ]
+        },
+        {
+          "runId": "Q30-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 12364,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 5,
+          "sourceOnlyFallback": false,
+          "answerLength": 838,
+          "passTokenCoverage": 0.5,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 0,
+          "citations": [
+            "Section84"
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "Q31",
+      "title": "Estate Tax Standard Deduction",
+      "category": "Estate Tax / Deductions",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "NIRC Sections 86(A)(5) and 86(B)(1)-(2), as amended by RA 10963; RR 12-2018.",
+      "passRequires": "States both amounts and the correct taxpayer categories.",
+      "failUnsafeIndicator": "Uses the old ₱1 million deduction or applies proportionality to the ₱500,000 standard deduction itself.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": true,
+      "avgPassTokenCoverage": 0,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q31-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 6422,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 383,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 3,
+          "citations": []
+        },
+        {
+          "runId": "Q31-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 8673,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 900,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 3,
+          "citations": [
+            "Section86"
+          ]
+        },
+        {
+          "runId": "Q31-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 14477,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 1303,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 3,
+          "citations": [
+            "Section34"
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "Q32",
+      "title": "Estate Tax Return Deadline",
+      "category": "Estate Tax / Compliance",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "NIRC Section 90, as amended by RA 10963.",
+      "passRequires": "States one year and the maximum 30-day filing extension, distinguishing payment extensions.",
+      "failUnsafeIndicator": "Uses the old six-month filing deadline.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": true,
+      "avgPassTokenCoverage": 0.48,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q32-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 12311,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 5,
+          "sourceOnlyFallback": false,
+          "answerLength": 1231,
+          "passTokenCoverage": 0.44,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 1,
+          "citations": []
+        },
+        {
+          "runId": "Q32-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 8901,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 5,
+          "sourceOnlyFallback": false,
+          "answerLength": 1100,
+          "passTokenCoverage": 0.44,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 1,
+          "citations": [
+            "Section89"
+          ]
+        },
+        {
+          "runId": "Q32-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 16605,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 5,
+          "sourceOnlyFallback": false,
+          "answerLength": 909,
+          "passTokenCoverage": 0.56,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 1,
+          "citations": [
+            "Section89"
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "Q33",
+      "title": "Family Home Deduction",
+      "category": "Estate Tax / Deductions",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "NIRC Section 86(A)(4), as amended by RA 10963; RR 12-2018.",
+      "passRequires": "States the ₱10 million cap and qualification requirement.",
+      "failUnsafeIndicator": "Uses the old ₱1 million cap or deducts property that was not the decedent's qualifying family home.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": true,
+      "avgPassTokenCoverage": 0,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q33-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 9051,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 483,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 1,
+          "citations": []
+        },
+        {
+          "runId": "Q33-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 9664,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 517,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 1,
+          "citations": []
+        },
+        {
+          "runId": "Q33-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 10589,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 547,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 1,
+          "citations": []
+        }
+      ]
+    },
+    {
+      "caseId": "Q34",
+      "title": "Annual Individual ITR Deadline",
+      "category": "Income Tax / Compliance",
+      "recencySensitive": "Low",
+      "expectedAuthorities": "NIRC Section 51(C); current annual BIR filing issuances.",
+      "passRequires": "States April 15 and recognizes valid deadline adjustments.",
+      "failUnsafeIndicator": "Provides a different ordinary annual deadline.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": true,
+      "avgPassTokenCoverage": 0.4,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q34-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 8227,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 3,
+          "sourceOnlyFallback": false,
+          "answerLength": 444,
+          "passTokenCoverage": 0.4,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 1,
+          "citations": []
+        },
+        {
+          "runId": "Q34-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 7663,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 3,
+          "sourceOnlyFallback": false,
+          "answerLength": 449,
+          "passTokenCoverage": 0.4,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 2,
+          "citations": []
+        },
+        {
+          "runId": "Q34-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 12122,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 3,
+          "sourceOnlyFallback": false,
+          "answerLength": 502,
+          "passTokenCoverage": 0.4,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 1,
+          "citations": []
+        }
+      ]
+    },
+    {
+      "caseId": "Q35",
+      "title": "Annual ITR Form for a Self-Employed Individual",
+      "category": "Income Tax / Forms",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "RA 11976; BIR Form 1701-MS and its instructions; BIR Forms 1701 and 1701A; RMC 34-2025; RMC 20-2026.",
+      "passRequires": "Identifies 1701-MS, 1701A, and 1701 and explains the principal conditions.",
+      "failUnsafeIndicator": "Says all self-employed individuals use only 1701A or only 1701, ignoring the current 1701-MS framework.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": true,
+      "avgPassTokenCoverage": 0.17,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q35-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 18053,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 956,
+          "passTokenCoverage": 0.17,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 2,
+          "citations": [
+            "Section24"
+          ]
+        },
+        {
+          "runId": "Q35-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 17517,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 1112,
+          "passTokenCoverage": 0.17,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 2,
+          "citations": [
+            "Section24"
+          ]
+        },
+        {
+          "runId": "Q35-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 12889,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 548,
+          "passTokenCoverage": 0.17,
+          "passSignalHits": 1,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 2,
+          "citations": []
+        }
+      ]
+    },
+    {
+      "caseId": "Q36",
+      "title": "Late Filing of a VAT Return",
+      "category": "VAT / Penalties",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "NIRC Sections 114, 248, and 249; RA 11976; RR 6-2024; RMC 52-2023.",
+      "passRequires": "Differentiates micro/small from medium/large taxpayers, states the relevant reduced and general rates, and recognizes that 2550M is optional.",
+      "failUnsafeIndicator": "States that every taxpayer always owes 25% and 12% or that 2550M remains mandatory.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": true,
+      "avgPassTokenCoverage": 0.1,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q36-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 17349,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "POTENTIAL_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 5,
+          "sourceOnlyFallback": false,
+          "answerLength": 710,
+          "passTokenCoverage": 0.15,
+          "passSignalHits": 0,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 1,
+          "citations": []
+        },
+        {
+          "runId": "Q36-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 11198,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "POTENTIAL_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 5,
+          "sourceOnlyFallback": false,
+          "answerLength": 794,
+          "passTokenCoverage": 0.08,
+          "passSignalHits": 0,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 0,
+          "citations": [
+            "Section248",
+            "Section249"
+          ]
+        },
+        {
+          "runId": "Q36-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 16819,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "POTENTIAL_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 5,
+          "sourceOnlyFallback": false,
+          "answerLength": 785,
+          "passTokenCoverage": 0.08,
+          "passSignalHits": 0,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 1,
+          "citations": []
+        }
+      ]
+    },
+    {
+      "caseId": "Q37",
+      "title": "BIR Assessment Prescriptive Period",
+      "category": "Tax Procedure / Assessment",
+      "recencySensitive": "No",
+      "expectedAuthorities": "NIRC Sections 203 and 222; relevant Supreme Court jurisprudence on waivers and false returns.",
+      "passRequires": "States the three-year rule and “whichever is later,” and identifies the exceptional ten-year rule.",
+      "failUnsafeIndicator": "Uses ten years as the ordinary period.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": true,
+      "avgPassTokenCoverage": 0.04,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q37-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 17204,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 59,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q37-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 17759,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 431,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 1,
+          "citations": []
+        },
+        {
+          "runId": "Q37-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 10140,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 537,
+          "passTokenCoverage": 0.13,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 0,
+          "citations": []
+        }
+      ]
+    },
+    {
+      "caseId": "Q38",
+      "title": "BIR Registration of a New Business",
+      "category": "Registration / EOPT",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "NIRC Section 236, as amended by RA 11976; RR 7-2024; RMC 14-2024; RMC 91-2024.",
+      "passRequires": "States the registration requirement, Forms 1901/1903, before-commencement rule for business taxpayers, and abolition of the ₱500 fee.",
+      "failUnsafeIndicator": "Requires payment of the abolished annual registration fee.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": true,
+      "avgPassTokenCoverage": 0.28,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q38-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 11952,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 4,
+          "sourceOnlyFallback": false,
+          "answerLength": 754,
+          "passTokenCoverage": 0.25,
+          "passSignalHits": 1,
+          "passSignalsTotal": 4,
+          "failIndicatorHits": 1,
+          "citations": []
+        },
+        {
+          "runId": "Q38-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 11759,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 4,
+          "sourceOnlyFallback": false,
+          "answerLength": 762,
+          "passTokenCoverage": 0.25,
+          "passSignalHits": 1,
+          "passSignalsTotal": 4,
+          "failIndicatorHits": 1,
+          "citations": []
+        },
+        {
+          "runId": "Q38-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 15880,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 4,
+          "sourceOnlyFallback": false,
+          "answerLength": 614,
+          "passTokenCoverage": 0.33,
+          "passSignalHits": 1,
+          "passSignalsTotal": 4,
+          "failIndicatorHits": 1,
+          "citations": []
+        }
+      ]
+    },
+    {
+      "caseId": "Q39",
+      "title": "Registration of Books of Accounts",
+      "category": "Books and Records / EOPT",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "NIRC Sections 235 and 236, as amended by RA 11976; RR 7-2024; RMC 91-2024.",
+      "passRequires": "States the new-business manual-book deadline and distinguishes other book types; states five-year preservation.",
+      "failUnsafeIndicator": "Says all books must be registered before operations, all must be restamped annually, or uses the obsolete ordinary ten-year preservation period.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "legalConclusionAcrossRuns": [
+        "UNKNOWN"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 0,
+      "trustOverclaimFlag": false,
+      "avgPassTokenCoverage": 0,
+      "anyFailIndicatorHit": false,
+      "runs": [
+        {
+          "runId": "Q39-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 24829,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q39-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 14649,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q39-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 9505,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 0,
+          "citations": []
+        }
+      ]
+    },
+    {
+      "caseId": "Q40",
+      "title": "Compromise Settlement of a Tax Assessment",
+      "category": "Tax Procedure / Collection",
+      "recencySensitive": "Moderate",
+      "expectedAuthorities": "NIRC Section 204(A); RR 30-2002, as amended by RR 8-2004 and RR 9-2013; relevant BIR compromise procedures.",
+      "passRequires": "States both grounds, the statutory 10%/40% framework, and that financial-incapacity rates are fact-specific under RR 30-2002.",
+      "failUnsafeIndicator": "Reverses the 10% and 40% rules or guarantees approval without the statutory and regulatory conditions.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "legalConclusionAcrossRuns": [
+        "UNKNOWN"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 0,
+      "trustOverclaimFlag": false,
+      "avgPassTokenCoverage": 0,
+      "anyFailIndicatorHit": false,
+      "runs": [
+        {
+          "runId": "Q40-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 18147,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "POTENTIAL_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 5,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q40-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 16509,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "POTENTIAL_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 5,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q40-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 21974,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "POTENTIAL_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 5,
+          "failIndicatorHits": 0,
+          "citations": []
+        }
+      ]
+    },
+    {
+      "caseId": "Q41",
+      "title": "Failure to Issue a Required Invoice",
+      "category": "Penalties / Invoicing",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "NIRC Sections 115 and 264; RA 11976; RR 6-2024; RR 7-2024; RMC 77-2024.",
+      "passRequires": "States the statutory fine and imprisonment and recognizes administrative/EOPT consequences.",
+      "failUnsafeIndicator": "Describes nonissuance as a minor violation with no serious penalty.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": true,
+      "avgPassTokenCoverage": 0,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q41-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 12876,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 2,
+          "sourceOnlyFallback": false,
+          "answerLength": 408,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 1,
+          "citations": [
+            "Section264"
+          ]
+        },
+        {
+          "runId": "Q41-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 11820,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 2,
+          "sourceOnlyFallback": false,
+          "answerLength": 370,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 0,
+          "citations": [
+            "Section238"
+          ]
+        },
+        {
+          "runId": "Q41-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 13612,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 2,
+          "sourceOnlyFallback": false,
+          "answerLength": 524,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 1,
+          "citations": [
+            "Section238"
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "Q42",
+      "title": "Penalties on a ₱200,000 Corporate ITR Underpayment",
+      "category": "Income Tax / Penalties",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "NIRC Sections 248 and 249; RA 11976; RR 6-2024.",
+      "passRequires": "Explains deficiency versus delinquency consequences, taxpayer-class reductions, and the conditional nature of surcharge.",
+      "failUnsafeIndicator": "Automatically adds 25% and 12% to every ₱200,000 underpayment without classification or timing facts.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "legalConclusionAcrossRuns": [
+        "UNKNOWN"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 0,
+      "trustOverclaimFlag": false,
+      "avgPassTokenCoverage": 0,
+      "anyFailIndicatorHit": false,
+      "runs": [
+        {
+          "runId": "Q42-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 11134,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q42-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 15027,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q42-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 11040,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 0,
+          "citations": []
+        }
+      ]
+    },
+    {
+      "caseId": "Q43",
+      "title": "Oplan Kandado",
+      "category": "Tax Enforcement",
+      "recencySensitive": "Moderate",
+      "expectedAuthorities": "NIRC Section 115; RMO 3-2009.",
+      "passRequires": "Identifies temporary closure, valid statutory grounds, and minimum closure framework.",
+      "failUnsafeIndicator": "Calls it permanent closure or invents grounds outside the governing law.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "NOT_APPLICABLE"
+      ],
+      "legalConclusionAcrossRuns": [
+        "NOT_APPLICABLE"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 0,
+      "trustOverclaimFlag": false,
+      "avgPassTokenCoverage": 0,
+      "anyFailIndicatorHit": false,
+      "runs": [
+        {
+          "runId": "Q43-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 283,
+          "authoritySupport": "NOT_APPLICABLE",
+          "legalConclusion": "NOT_APPLICABLE",
+          "conflictState": "NOT_APPLICABLE",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 211,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q43-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 298,
+          "authoritySupport": "NOT_APPLICABLE",
+          "legalConclusion": "NOT_APPLICABLE",
+          "conflictState": "NOT_APPLICABLE",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 211,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q43-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 366,
+          "authoritySupport": "NOT_APPLICABLE",
+          "legalConclusion": "NOT_APPLICABLE",
+          "conflictState": "NOT_APPLICABLE",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 211,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 0,
+          "citations": []
+        }
+      ]
+    },
+    {
+      "caseId": "Q44",
+      "title": "PayPal Payment from a Foreign Client",
+      "category": "Income Tax / Source and Residency",
+      "recencySensitive": "No",
+      "expectedAuthorities": "NIRC Sections 23 and 42.",
+      "passRequires": "States the resident-citizen worldwide-income rule and the place-of-performance source rule.",
+      "failUnsafeIndicator": "Says the income is exempt merely because the client or PayPal account is abroad.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "legalConclusionAcrossRuns": [
+        "UNKNOWN"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 0,
+      "trustOverclaimFlag": false,
+      "avgPassTokenCoverage": 0,
+      "anyFailIndicatorHit": false,
+      "runs": [
+        {
+          "runId": "Q44-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 14100,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q44-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 10074,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q44-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 14531,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 0,
+          "citations": []
+        }
+      ]
+    },
+    {
+      "caseId": "Q45",
+      "title": "Corporate Income Tax of a PEZA-Registered Enterprise",
+      "category": "Tax Incentives / CREATE MORE",
+      "recencySensitive": "Highly sensitive",
+      "expectedAuthorities": "NIRC Sections 27, 28, 294, 295, and 311, as amended by RA 11534 and RA 12066; RR 9-2025; RR 1-2026; PEZA/FIRB registration documents.",
+      "passRequires": "States that tax depends on the incentive regime, distinguishes export enterprises from domestic-market enterprises, mentions ITH/SCIT/EDR, and states the 20% EDR rate.",
+      "failUnsafeIndicator": "Says PEZA enterprises are entirely exempt, gives every DME a 5% SCIT option, or discusses RR 9-2025 local-sale VAT without the RR 1-2026 amendment.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": true,
+      "avgPassTokenCoverage": 0.31,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q45-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 15519,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 3,
+          "sourceOnlyFallback": false,
+          "answerLength": 1335,
+          "passTokenCoverage": 0.33,
+          "passSignalHits": 0,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 3,
+          "citations": [
+            "Section27"
+          ]
+        },
+        {
+          "runId": "Q45-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 16139,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 3,
+          "sourceOnlyFallback": false,
+          "answerLength": 1180,
+          "passTokenCoverage": 0.33,
+          "passSignalHits": 0,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 3,
+          "citations": [
+            "Section27"
+          ]
+        },
+        {
+          "runId": "Q45-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 14253,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 3,
+          "sourceOnlyFallback": false,
+          "answerLength": 1132,
+          "passTokenCoverage": 0.27,
+          "passSignalHits": 0,
+          "passSignalsTotal": 1,
+          "failIndicatorHits": 3,
+          "citations": [
+            "Section27"
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "Q46",
+      "title": "Sale of Gold to the BSP",
+      "category": "VAT / Special Law",
+      "recencySensitive": "Moderate",
+      "expectedAuthorities": "RA 11256; applicable implementing rules and BIR guidance, including RMC 40-2020; NIRC Section 109 as applicable.",
+      "passRequires": "States VAT exemption and the registered-miner/accredited-trader qualification.",
+      "failUnsafeIndicator": "Calls it zero-rated, automatically VATable, or exempt without seller qualification.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": false,
+      "avgPassTokenCoverage": 0.33,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q46-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 12757,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "POTENTIAL_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 5,
+          "sourceOnlyFallback": false,
+          "answerLength": 1674,
+          "passTokenCoverage": 0.2,
+          "passSignalHits": 0,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 1,
+          "citations": [
+            "Section106"
+          ]
+        },
+        {
+          "runId": "Q46-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 13330,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "POTENTIAL_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 5,
+          "sourceOnlyFallback": false,
+          "answerLength": 1556,
+          "passTokenCoverage": 0.4,
+          "passSignalHits": 2,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 1,
+          "citations": [
+            "Section106",
+            "Section108"
+          ]
+        },
+        {
+          "runId": "Q46-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 10788,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "POTENTIAL_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 5,
+          "sourceOnlyFallback": false,
+          "answerLength": 1558,
+          "passTokenCoverage": 0.4,
+          "passSignalHits": 0,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 1,
+          "citations": [
+            "Section106",
+            "Section108"
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "Q47",
+      "title": "Donor's Tax Rate and Annual Exemption",
+      "category": "Donor's Tax",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "NIRC Section 99, as amended by RA 10963.",
+      "passRequires": "States 6%, the aggregate ₱250,000 annual exemption, and removal of the stranger distinction.",
+      "failUnsafeIndicator": "Uses the old graduated rates or 30% stranger rate.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": true,
+      "avgPassTokenCoverage": 0.38,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q47-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 28088,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 4,
+          "sourceOnlyFallback": false,
+          "answerLength": 1094,
+          "passTokenCoverage": 0.38,
+          "passSignalHits": 2,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 2,
+          "citations": [
+            "Section99"
+          ]
+        },
+        {
+          "runId": "Q47-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 28255,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 4,
+          "sourceOnlyFallback": false,
+          "answerLength": 1311,
+          "passTokenCoverage": 0.38,
+          "passSignalHits": 2,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 1,
+          "citations": [
+            "Section99"
+          ]
+        },
+        {
+          "runId": "Q47-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 26677,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 4,
+          "sourceOnlyFallback": false,
+          "answerLength": 1059,
+          "passTokenCoverage": 0.38,
+          "passSignalHits": 2,
+          "passSignalsTotal": 2,
+          "failIndicatorHits": 1,
+          "citations": [
+            "Section99"
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "Q48",
+      "title": "Bad-Debt Deduction of a Corporation",
+      "category": "Income Tax / Deductions",
+      "recencySensitive": "No",
+      "expectedAuthorities": "NIRC Section 34(E); NIRC Section 36(B) as applicable; RR 5-1999; relevant Supreme Court jurisprudence.",
+      "passRequires": "States valid debt, business connection, actual worthlessness, charge-off, evidence, and nuanced prior-income rule.",
+      "failUnsafeIndicator": "Allows a general reserve, treats prior income inclusion as universally indispensable, or ignores related-party and worthlessness requirements.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": false,
+      "avgPassTokenCoverage": 0.12,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q48-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 14435,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 949,
+          "passTokenCoverage": 0.18,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 2,
+          "citations": []
+        },
+        {
+          "runId": "Q48-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 15113,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 625,
+          "passTokenCoverage": 0.09,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 2,
+          "citations": []
+        },
+        {
+          "runId": "Q48-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 10065,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 1,
+          "sourceOnlyFallback": false,
+          "answerLength": 642,
+          "passTokenCoverage": 0.09,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 1,
+          "citations": []
+        }
+      ]
+    },
+    {
+      "caseId": "Q49",
+      "title": "VAT on Personal Effects of a Returning Resident",
+      "category": "VAT / Customs",
+      "recencySensitive": "Moderate",
+      "expectedAuthorities": "NIRC Section 109(F); RA 10863, Section 800(f); current BOC CAO/CMO and returning-resident guidance.",
+      "passRequires": "Links VAT exemption to customs qualification and identifies the principal conditions.",
+      "failUnsafeIndicator": "Says all returning-resident effects are unconditionally exempt or all are automatically taxable.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "legalConclusionAcrossRuns": [
+        "ALLOWED"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 3,
+      "trustOverclaimFlag": false,
+      "avgPassTokenCoverage": 0.25,
+      "anyFailIndicatorHit": true,
+      "runs": [
+        {
+          "runId": "Q49-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 20436,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 2,
+          "sourceOnlyFallback": false,
+          "answerLength": 931,
+          "passTokenCoverage": 0.25,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 1,
+          "citations": [
+            "RR16-2005",
+            "Section107"
+          ]
+        },
+        {
+          "runId": "Q49-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 10211,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 2,
+          "sourceOnlyFallback": false,
+          "answerLength": 887,
+          "passTokenCoverage": 0.25,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 1,
+          "citations": [
+            "RR16-2005",
+            "Section107"
+          ]
+        },
+        {
+          "runId": "Q49-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 10582,
+          "authoritySupport": "VERIFIED_CONTROLLING",
+          "legalConclusion": "ALLOWED",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 2,
+          "sourceOnlyFallback": false,
+          "answerLength": 1442,
+          "passTokenCoverage": 0.25,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 1,
+          "citations": [
+            "RR16-2005",
+            "Section107"
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "Q50",
+      "title": "Official Receipt versus Invoice after EOPT",
+      "category": "Invoicing / EOPT",
+      "recencySensitive": "Yes",
+      "expectedAuthorities": "NIRC Sections 113 and 237, as amended by RA 11976; RR 7-2024; RR 11-2024; RMC 77-2024.",
+      "passRequires": "States that invoices are principal documents for both goods and services, ORs are supplementary, and VAT/Non-VAT invoices and valid descriptive labels are recognized.",
+      "failUnsafeIndicator": "Repeats “OR for services, SI for goods,” or insists that only the literal title “Sales Invoice” is legally valid.",
+      "runsCaptured": 3,
+      "authoritySupportAcrossRuns": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "legalConclusionAcrossRuns": [
+        "UNKNOWN"
+      ],
+      "authoritySupportConsistent": true,
+      "legalConclusionConsistent": true,
+      "verifiedControllingRuns": 0,
+      "trustOverclaimFlag": false,
+      "avgPassTokenCoverage": 0,
+      "anyFailIndicatorHit": false,
+      "runs": [
+        {
+          "runId": "Q50-r1",
+          "httpStatus": 200,
+          "responseTimeMs": 10738,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q50-r2",
+          "httpStatus": 200,
+          "responseTimeMs": 14616,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 0,
+          "citations": []
+        },
+        {
+          "runId": "Q50-r3",
+          "httpStatus": 200,
+          "responseTimeMs": 15350,
+          "authoritySupport": "NO_VERIFIED_AUTHORITY",
+          "legalConclusion": "UNKNOWN",
+          "conflictState": "NO_CONFLICT",
+          "specificAuthorityNotFound": false,
+          "humanReviewRequired": false,
+          "displayedSourceCount": 0,
+          "sourceOnlyFallback": false,
+          "answerLength": 151,
+          "passTokenCoverage": 0,
+          "passSignalHits": 0,
+          "passSignalsTotal": 0,
+          "failIndicatorHits": 0,
+          "citations": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "runId": "Q49-r3",
+  "caseId": "Q49",
+  "prompt": "Is the importation of personal effects or household goods by a returning resident subject to VAT?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 10582,
+  "answer": "### Issue Presented\nIs the importation of personal effects or household goods by a returning resident subject to VAT?\n\n### Short Answer\nYes, the importation of personal effects or household goods by a returning resident is subject to VAT. This is governed by Section 107 of the National Internal Revenue Code (NIRC).\n\n### Controlling Authorities\n1. **NIRC Section 107** - Value-Added Tax on Importation of Goods.\n2. **RR 16-2005** - Implementing regulations related to VAT on importation.\n\n### Legal Interpretation\nUnder Section 107 of the NIRC, a value-added tax (VAT) is levied on every importation of goods at a rate of twelve percent (12%) based on the total value used by the Bureau of Customs for determining tariff and customs duties, plus any applicable customs duties and excise taxes. This provision applies irrespective of the nature of the goods being imported, including personal effects or household goods. RR 16-2005 further clarifies that all importations, regardless of whether the importer is engaged in trade or business, are subject to VAT.\n\n### Practical Application\nReturning residents should be aware that when importing personal effects or household goods, they will incur VAT based on the total value assessed by customs. It is advisable for individuals to prepare for this tax liability when planning their return to the Philippines, as the VAT must be settled prior to the release of the goods from customs custody.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 107",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

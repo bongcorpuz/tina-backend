@@ -1,0 +1,37 @@
+{
+  "runId": "Q2-r1",
+  "caseId": "Q2",
+  "prompt": "What is the VAT treatment of the sale of a residential lot valued at ₱1.9 million?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 17892,
+  "answer": "### Short Answer\nThe sale of a residential lot valued at ₱1.9 million is subject to VAT because it exceeds the threshold of ₱1.5 million for residential lots, as stipulated in the National Internal Revenue Code (NIRC).\n\n### Controlling Authorities\n- **RR 16-2005**: Implements the VAT provisions and clarifies the treatment of sales of real properties.\n\n### Interpretation\n\n### Practical Meaning\nIn practical terms, the seller of the residential lot valued at ₱1.9 million must charge VAT at the applicable rate (currently 12%) on the sale. This means that the total amount payable by the buyer will include the VAT, which the seller is responsible for remitting to the Bureau of Internal Revenue (BIR). The seller should ensure proper invoicing and compliance with VAT regulations to avoid penalties.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    },
+    {
+      "label": "RR 4-2007",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

@@ -1,0 +1,37 @@
+{
+  "runId": "Q49-r1",
+  "caseId": "Q49",
+  "prompt": "Is the importation of personal effects or household goods by a returning resident subject to VAT?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 20436,
+  "answer": "### Issue Presented\nIs the importation of personal effects or household goods by a returning resident subject to VAT?\n\n### Short Answer\nYes, the importation of personal effects or household goods by a returning resident is subject to VAT. This is governed by Section 107 of the National Internal Revenue Code (NIRC).\n\n### Controlling Authorities\n1. **NIRC Sec. 107** - Value-Added Tax on Importation of Goods.\n2. **RR 16-2005** - Implementing regulations for VAT on importation.\n\n### Legal Interpretation\n\n### Practical Application\nReturning residents importing personal effects or household goods should be aware that they will incur VAT liabilities upon importation. It is essential for them to prepare for this tax obligation, as the VAT must be paid prior to the release of the goods from customs custody. Proper documentation and valuation of the imported items will be necessary to ensure compliance with the VAT regulations.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 107",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

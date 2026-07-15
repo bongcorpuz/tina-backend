@@ -1,0 +1,51 @@
+{
+  "runId": "Q8-r1",
+  "caseId": "Q8",
+  "prompt": "Is leasing a residential unit at ₱15,000 per month subject to VAT?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 16003,
+  "answer": "### Issue Presented\nIs leasing a residential unit at ₱15,000 per month subject to VAT?\n\n### Short Answer\nYes, leasing a residential unit at ₱15,000 per month is subject to VAT under certain conditions as outlined in the NIRC.\n\n### Controlling Authorities\nThe relevant provisions are found in the National Internal Revenue Code (NIRC):\n- **Section 106**: Value-Added Tax on Sale of Goods or Properties\n- **Section 108**: Value-Added Tax on the Sale of Services, Including the Use or Lease of Properties\n\n### Legal Interpretation\nUnder **Section 106** of the NIRC, VAT is levied on the sale, barter, or exchange of goods or properties, which includes the lease of properties. **Section 108** further specifies that VAT is applicable to the sale or exchange of services, including the lease of properties. The tax rate is set at 12% of the gross sales or receipts derived from these transactions. \n\nHowever, residential leases are generally exempt from VAT if the monthly rental does not exceed ₱15,000. Since the rental amount in this case is exactly ₱15,000, it falls within the threshold for VAT exemption. Therefore, the lease is not subject to VAT.\n\n### Practical Application\nIn practice, if the rental amount is ₱15,000 or less, the lessor is not required to charge VAT on the lease payments. However, if the rental exceeds ₱15,000, the lessor must register for VAT and charge the applicable VAT on the lease payments. It is advisable for lessors to keep accurate records of rental agreements and monitor rental amounts to ensure compliance with VAT regulations.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "limitations": [
+      "POTENTIAL_CONFLICT"
+    ],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 106",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 105",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 107",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 108",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR 16-2005",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 5,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

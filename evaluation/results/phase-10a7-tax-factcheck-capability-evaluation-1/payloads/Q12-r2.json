@@ -1,0 +1,41 @@
+{
+  "runId": "Q12-r2",
+  "caseId": "Q12",
+  "prompt": "Is an individual with ₱250,000 gross compensation income in 2024 required to file an income tax return?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 9518,
+  "answer": "### Short Answer\nAn individual with ₱250,000 gross compensation income in 2024 is not required to file an income tax return. This is because the income is within the tax-exempt threshold established under the Tax Reform for Acceleration and Inclusion (TRAIN) Law.\n\n### Controlling Authorities\nThe relevant provision is found in Section 24 of the National Internal Revenue Code (NIRC), which states that individuals earning not over ₱250,000 are exempt from income tax.\n\n### Interpretation\nAccording to Section 24(A)(2)(a) of the NIRC, the income tax rates for individuals specify that those with gross compensation income not exceeding ₱250,000 are subject to a 0% tax rate. Therefore, they are not required to file an income tax return, as there is no tax liability.\n\n### Practical Meaning\nFor individuals earning ₱250,000 or less, this means they can avoid the administrative burden of filing an income tax return, as their income is not taxable. This provision aims to simplify tax compliance for low-income earners and reduce the number of individuals needing to file returns.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 24",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 23",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 27",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

@@ -1,0 +1,37 @@
+{
+  "runId": "Q41-r2",
+  "caseId": "Q41",
+  "prompt": "What is the penalty for failure to issue a BIR-registered invoice?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 11820,
+  "answer": "### Short Answer\n\nThis penalty is applicable to any person who, in the course of trade or business, fails to issue the required invoices or receipts as mandated by the BIR. The BIR has the authority to enforce these penalties to ensure compliance with tax regulations.\n\nFor further details, you may refer to the relevant provisions of the NIRC, particularly Section 238.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 2",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 3",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

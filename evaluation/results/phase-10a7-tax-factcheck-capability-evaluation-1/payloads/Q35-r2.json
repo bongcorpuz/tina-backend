@@ -1,0 +1,33 @@
+{
+  "runId": "Q35-r2",
+  "caseId": "Q35",
+  "prompt": "What BIR form is used for the annual ITR of a self-employed individual or professional?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 17517,
+  "answer": "### Short Answer\nThe BIR form used for the annual Income Tax Return (ITR) of a self-employed individual or professional is BIR Form 1701.\n\n### Controlling Authorities\nThis is governed by the National Internal Revenue Code (NIRC) of 1997, specifically under Section 24, which outlines the income tax rates applicable to individuals, including self-employed individuals and professionals.\n\n### Interpretation\nBIR Form 1701 is specifically designed for individuals earning income from business or profession. It requires the reporting of gross income, allowable deductions, and the computation of the income tax due. The form must be filed annually, reflecting the income earned during the preceding calendar year.\n\n### Practical Meaning\nFor self-employed individuals and professionals, using BIR Form 1701 ensures compliance with tax obligations. It is essential for accurately reporting income and calculating the correct tax liability, thereby avoiding penalties for underreporting or late filing. Proper completion of this form is crucial for maintaining good standing with the Bureau of Internal Revenue (BIR).",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 2",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

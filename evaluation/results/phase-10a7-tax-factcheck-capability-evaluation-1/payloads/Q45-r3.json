@@ -1,0 +1,41 @@
+{
+  "runId": "Q45-r3",
+  "caseId": "Q45",
+  "prompt": "Are PEZA-registered enterprises subject to corporate income tax?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 14253,
+  "answer": "### Issue Presented\nAre PEZA-registered enterprises subject to corporate income tax in the Philippines?\n\n### Short Answer\nYes, PEZA-registered enterprises are subject to corporate income tax, but they may benefit from preferential tax rates under certain conditions as specified in the NIRC.\n\n### Controlling Authorities\nThe relevant provision is Section 27 of the National Internal Revenue Code (NIRC), which outlines the rates of income tax on domestic corporations. Specifically, it states that a corporate income tax rate of twenty-five percent (25%) is imposed on the taxable income derived from all sources within and without the Philippines by every corporation.\n\n### Legal Interpretation\n\n### Practical Application\nPEZA-registered enterprises should ensure they are compliant with the regulations governing their registration to avail of the preferential tax rates. They must accurately report their income and adhere to the guidelines established by both PEZA and the Bureau of Internal Revenue (BIR) to benefit from the lower tax rates. Failure to comply may result in the standard corporate income tax rate being applied.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 27",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 23",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 24",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

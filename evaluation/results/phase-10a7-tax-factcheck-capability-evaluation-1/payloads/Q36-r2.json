@@ -1,0 +1,51 @@
+{
+  "runId": "Q36-r2",
+  "caseId": "Q36",
+  "prompt": "What penalties apply to late filing of a VAT return?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 11198,
+  "answer": "### Short Answer\nPenalties for late filing of a VAT return include a fine of PHP 1,000 and an additional 25% of the tax due, as stipulated in the National Internal Revenue Code (NIRC).\n\n### Controlling Authorities\nThe relevant provisions are found in the NIRC, specifically:\n- **Section 248**: Penalties for failure to file returns and pay taxes.\n- **Section 249**: Additional penalties for late payment of taxes.\n\n### Interpretation\n\n### Practical Meaning\nFor businesses, this means that failing to file VAT returns on time not only incurs a fixed penalty but also results in a significant additional cost based on the amount of tax owed. It is crucial for VAT-registered entities to adhere to filing deadlines to avoid these penalties, which can accumulate and impact overall tax liabilities.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "limitations": [
+      "POTENTIAL_CONFLICT"
+    ],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 105",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 106",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 107",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 108",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR 16-2005",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 5,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

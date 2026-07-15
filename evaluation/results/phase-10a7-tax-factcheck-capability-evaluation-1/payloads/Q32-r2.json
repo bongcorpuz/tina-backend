@@ -1,0 +1,49 @@
+{
+  "runId": "Q32-r2",
+  "caseId": "Q32",
+  "prompt": "What is the deadline for filing an estate tax return, and can it be extended?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 8901,
+  "answer": "### Short Answer\nThe deadline for filing an estate tax return is within one year from the decedent's death. An extension of up to 30 days may be granted by the Commissioner in meritorious cases.\n\n### Controlling Authorities\n- **NIRC Section 89**: \"The estate tax return required... shall be filed within one (1) year from the decedent's death.\"\n- **NIRC Section 89**: \"The Commissioner shall have authority to grant, in meritorious cases, a reasonable extension not exceeding thirty (30) days for filing the return.\"\n\n### Interpretation\nThe law mandates that the estate tax return must be filed within one year of the death of the decedent. However, the Commissioner of Internal Revenue has the discretion to extend this deadline by an additional 30 days if there are valid reasons presented by the taxpayer.\n\n### Practical Meaning\nThis means that executors or heirs must be diligent in preparing the estate tax return within the specified timeframe to avoid penalties. If circumstances arise that hinder timely filing, they can seek a short extension, but this must be justified to the Commissioner.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 89",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 84",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 86",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 88",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 91",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 5,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

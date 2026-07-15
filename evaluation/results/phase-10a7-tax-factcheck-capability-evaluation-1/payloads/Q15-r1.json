@@ -1,0 +1,37 @@
+{
+  "runId": "Q15-r1",
+  "caseId": "Q15",
+  "prompt": "How is MCIT computed and when does it apply?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 15227,
+  "answer": "### Issue Presented\nHow is the Minimum Corporate Income Tax (MCIT) computed and when does it apply?\n\n### Short Answer\nThe Minimum Corporate Income Tax (MCIT) is computed at a rate of 2% of the gross income as of the end of the taxable year, applicable starting from the fourth taxable year following the year in which the corporation commenced its business operations, when the MCIT exceeds the regular corporate income tax (RCIT) for that year.\n\n### Controlling Authorities\n- **RR 9-1998**: This regulation provides further details on the implementation of the MCIT.\n\n### Legal Interpretation\n\n### Practical Application\nCorporations should monitor their gross income and compute their regular corporate income tax to determine if the MCIT applies. If a corporation's gross income is low or if it incurs losses, it may find itself subject to the MCIT starting from the fourth year of operations. Any excess MCIT over the regular income tax can be carried forward and credited against the normal income tax for the next three taxable years. This provision allows corporations to manage their tax liabilities effectively, especially in the early years of operation when profitability may be uncertain.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 27",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR 9-1998",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

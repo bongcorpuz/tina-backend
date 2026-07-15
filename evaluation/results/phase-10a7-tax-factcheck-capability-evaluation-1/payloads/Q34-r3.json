@@ -1,0 +1,41 @@
+{
+  "runId": "Q34-r3",
+  "caseId": "Q34",
+  "prompt": "What is the deadline for the annual income tax return of an individual?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 12122,
+  "answer": "### Short Answer\nThe deadline for the annual income tax return of an individual is April 15 of the following year after the taxable year.\n\n### Interpretation\n\n### Practical Meaning\nFor individuals, this deadline is crucial for compliance with tax obligations. Failure to file on time may result in penalties and interest on any taxes owed. Taxpayers should ensure that they prepare their returns in advance to meet this deadline and avoid any potential issues with the Bureau of Internal Revenue (BIR).",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 23",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 24",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 27",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

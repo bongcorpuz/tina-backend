@@ -1,0 +1,45 @@
+{
+  "runId": "Q1-r1",
+  "caseId": "Q1",
+  "prompt": "Freelance graphic designer, ₱2.8 million annual gross receipts: Is VAT registration required?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 18921,
+  "answer": "### Issue Presented\n\n### Quick Assessment\n- **Annual Gross Receipts**: ₱2.8 million\n- **VAT Registration Requirement**: Required if gross receipts exceed ₱3 million.\n\n### BIR Likely Position\n\n### Taxpayer Position / Defenses\nThe taxpayer can argue that they are not currently required to register for VAT since their gross receipts have not yet exceeded the ₱3 million threshold. However, they should be prepared to register if their income increases.\n\n### Documentary Support Needed\n- Financial statements showing gross receipts for the past year.\n- Any contracts or agreements that may indicate future income projections.\n\n### Procedural Issues\nIf the designer's gross receipts approach or exceed the threshold, they must register with the appropriate Revenue District Office within the prescribed time frame.\n\n### Risk Level\nThe risk level is moderate. If the designer's income increases unexpectedly, they may face penalties for failing to register on time.\n\n### Recommended Action\nIt is advisable for the graphic designer to monitor their gross receipts closely and consider voluntary VAT registration to mitigate risks associated with exceeding the threshold.\n\n### Relevant Facts / Assumptions\nThe factual circumstances have not been fully described. The analysis is based on the question as presented.\n\n### Alternative Interpretations\nNo alternative interpretations identified from the available indexed authorities.\n\n### Position Strength\nPosition strength is preliminary and subject to full fact pattern verification.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 109",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    },
+    {
+      "label": "NIRC Sec. 236",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RMC 75-2015",
+      "authorityType": "RMC"
+    }
+  ],
+  "displayedSourceCount": 4,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

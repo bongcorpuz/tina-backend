@@ -1,0 +1,41 @@
+{
+  "runId": "Q12-r1",
+  "caseId": "Q12",
+  "prompt": "Is an individual with ₱250,000 gross compensation income in 2024 required to file an income tax return?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 9684,
+  "answer": "### Short Answer\nAn individual with ₱250,000 gross compensation income in 2024 is not required to file an income tax return. This is because the income is within the tax-exempt threshold established under the Tax Reform for Acceleration and Inclusion (TRAIN) Law.\n\n### Controlling Authorities\nThe relevant provision is found in Section 24 of the National Internal Revenue Code (NIRC), which states that individuals with gross income not exceeding ₱250,000 are exempt from income tax.\n\n### Interpretation\nAccording to Section 24(A)(2)(a) of the NIRC, the tax rates for individuals are structured such that income not exceeding ₱250,000 is subject to a 0% tax rate. Therefore, individuals earning exactly ₱250,000 are not liable for income tax and are not required to file a return.\n\n### Practical Meaning\nFor practical purposes, this means that individuals earning a gross compensation income of ₱250,000 in 2024 will not have any tax liability and thus do not need to file an income tax return. This exemption simplifies compliance for low-income earners and encourages tax participation among individuals within this income bracket.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 24",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 23",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 27",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

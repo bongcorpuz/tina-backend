@@ -1,0 +1,33 @@
+{
+  "runId": "Q31-r3",
+  "caseId": "Q31",
+  "prompt": "What standard deduction is allowed in computing the net estate?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 14477,
+  "answer": "### Short Answer\nIn computing the net estate, the standard deduction allowed is based on the provisions of the National Internal Revenue Code (NIRC). Specifically, Section 34 of the NIRC outlines the allowable deductions from gross income, which includes deductions related to estate tax computations.\n\n### Controlling Authorities\nThe primary authority governing deductions in estate tax computations is found in the National Internal Revenue Code (NIRC), specifically **Section 34**.\n\n### Interpretation\nSection 34 of the NIRC provides a framework for allowable deductions from gross income, which can be applied in the context of computing the net estate. While the section primarily addresses income tax deductions, the principles can be analogously applied to estate tax computations, allowing for deductions that are necessary and ordinary in the context of managing the estate.\n\n### Practical Meaning\nThe practical implication of Section 34 is that when calculating the net estate for estate tax purposes, the executor or administrator may deduct certain expenses that are deemed necessary for the administration of the estate. This may include funeral expenses, debts of the decedent, and other related costs, thereby reducing the taxable estate and potentially lowering the estate tax liability.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 34",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

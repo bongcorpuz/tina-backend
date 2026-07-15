@@ -1,0 +1,33 @@
+{
+  "runId": "Q26-r3",
+  "caseId": "Q26",
+  "prompt": "When must a withholding agent remit expanded withholding tax to the BIR?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 7692,
+  "answer": "### Short Answer\nA withholding agent must remit the expanded withholding tax to the Bureau of Internal Revenue (BIR) on or before the 10th day of the month following the month when the income payment was made. This is in accordance with Revenue Regulations No. 2-98, which implements provisions of the National Internal Revenue Code.\n\n### Interpretation\n\nAdvertising service payments may be subject to expanded withholding tax when paid by a withholding agent to a resident income payee, subject to the applicable classification and rate under withholding tax regulations.\n\n### Practical Meaning\n\nThe payor withholds the applicable EWT from the payment and remits it to the BIR. The withheld amount is creditable against the payee's income tax, subject to proper withholding certificates and filing compliance.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "Revenue Regulations",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 6,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

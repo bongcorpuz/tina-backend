@@ -1,0 +1,580 @@
+{
+  "summary": {
+    "casesDefined": 50,
+    "casesExecuted": 50,
+    "PASS": 10,
+    "PARTIAL": 18,
+    "FAIL": 9,
+    "NOT_ANSWERED": 13,
+    "unsafeCount": 9,
+    "falseHighConfidenceCases": [
+      "Q2",
+      "Q8",
+      "Q9",
+      "Q27",
+      "Q29",
+      "Q31",
+      "Q37",
+      "Q41",
+      "Q49"
+    ],
+    "falseDomainBoundaryCases": [
+      "Q23",
+      "Q43"
+    ],
+    "substantivePassRate": 0.2,
+    "answeredCases": 37
+  },
+  "verdicts": [
+    {
+      "id": "Q1",
+      "verdict": "PASS",
+      "unsafe": false,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": false,
+      "note": "States exceed ₱3M, voluntary registration."
+    },
+    {
+      "id": "Q2",
+      "verdict": "FAIL",
+      "unsafe": true,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": true,
+      "note": "Cites obsolete ₱1.5M residential-lot threshold (removed); declares VAT categorically. VERIFIED_CONTROLLING."
+    },
+    {
+      "id": "Q3",
+      "verdict": "PARTIAL",
+      "unsafe": false,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": false,
+      "note": "Thin; does not clearly state zero-rated / 2-year / 90-day core."
+    },
+    {
+      "id": "Q4",
+      "verdict": "PARTIAL",
+      "unsafe": false,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": false,
+      "note": "Mentions RR16-2005 but weak on professional-services exclusion linkage."
+    },
+    {
+      "id": "Q5",
+      "verdict": "PARTIAL",
+      "unsafe": false,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": false,
+      "note": "States 12% general rule; omits CREATE MORE export exemption/70% test."
+    },
+    {
+      "id": "Q6",
+      "verdict": "PARTIAL",
+      "unsafe": false,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": false,
+      "note": "Directional on non-VAT invoice; omits 50% surcharge / VAT-without-credit."
+    },
+    {
+      "id": "Q7",
+      "verdict": "PARTIAL",
+      "unsafe": false,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": false,
+      "note": "Thin; lacks direct-attribution/apportionment detail."
+    },
+    {
+      "id": "Q8",
+      "verdict": "FAIL",
+      "unsafe": true,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": true,
+      "note": "Says ₱15,000/month residential lease is subject to VAT; correct = VAT-EXEMPT. Reversed treatment. VERIFIED_CONTROLLING."
+    },
+    {
+      "id": "Q9",
+      "verdict": "FAIL",
+      "unsafe": true,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": true,
+      "note": "Says spouses cannot file joint return / must file separate returns; PH rule = single joint return, separately computed. VERIFIED_CONTROLLING."
+    },
+    {
+      "id": "Q10",
+      "verdict": "PARTIAL",
+      "unsafe": false,
+      "authoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "verifiedControlling": false,
+      "falseHighConfidence": false,
+      "note": "States 25% CREATE; omits 20% alternative and both conditions. Trust NO_VERIFIED_AUTHORITY."
+    },
+    {
+      "id": "Q11",
+      "verdict": "NOT_ANSWERED",
+      "unsafe": false,
+      "authoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "verifiedControlling": false,
+      "falseHighConfidence": false,
+      "note": "Could-not-identify safe under-claim."
+    },
+    {
+      "id": "Q12",
+      "verdict": "PARTIAL",
+      "unsafe": false,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": false,
+      "note": "₱250k not required to file; under-conditions on pure-compensation facts."
+    },
+    {
+      "id": "Q13",
+      "verdict": "PARTIAL",
+      "unsafe": false,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": false,
+      "note": "8% rate + ₱3M; omits in-lieu/election and pure-vs-mixed ₱250k treatment."
+    },
+    {
+      "id": "Q14",
+      "verdict": "PASS",
+      "unsafe": false,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": false,
+      "note": "20% final WHT on peso savings interest. Correct."
+    },
+    {
+      "id": "Q15",
+      "verdict": "PARTIAL",
+      "unsafe": false,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": false,
+      "note": "MCIT 2% gross income correct; commencement/higher-than-regular condition thin."
+    },
+    {
+      "id": "Q16",
+      "verdict": "NOT_ANSWERED",
+      "unsafe": false,
+      "authoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "verifiedControlling": false,
+      "falseHighConfidence": false,
+      "note": "Could-not-identify safe under-claim."
+    },
+    {
+      "id": "Q17",
+      "verdict": "NOT_ANSWERED",
+      "unsafe": false,
+      "authoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "verifiedControlling": false,
+      "falseHighConfidence": false,
+      "note": "Could-not-identify safe under-claim."
+    },
+    {
+      "id": "Q18",
+      "verdict": "PASS",
+      "unsafe": false,
+      "authoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "verifiedControlling": false,
+      "falseHighConfidence": false,
+      "note": "OSD 40%, individual gross sales vs corp gross income. Correct. Trust under-claim (NO_VERIFIED)."
+    },
+    {
+      "id": "Q19",
+      "verdict": "PASS",
+      "unsafe": false,
+      "authoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "verifiedControlling": false,
+      "falseHighConfidence": false,
+      "note": "15% net capital gain on unlisted shares. Correct. Trust under-claim."
+    },
+    {
+      "id": "Q20",
+      "verdict": "NOT_ANSWERED",
+      "unsafe": false,
+      "authoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "verifiedControlling": false,
+      "falseHighConfidence": false,
+      "note": "Could-not-identify safe under-claim."
+    },
+    {
+      "id": "Q21",
+      "verdict": "NOT_ANSWERED",
+      "unsafe": false,
+      "authoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "verifiedControlling": false,
+      "falseHighConfidence": false,
+      "note": "Could-not-identify safe under-claim."
+    },
+    {
+      "id": "Q22",
+      "verdict": "NOT_ANSWERED",
+      "unsafe": false,
+      "authoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "verifiedControlling": false,
+      "falseHighConfidence": false,
+      "note": "Could-not-identify safe under-claim."
+    },
+    {
+      "id": "Q23",
+      "verdict": "NOT_ANSWERED",
+      "unsafe": false,
+      "authoritySupport": [
+        "NOT_APPLICABLE"
+      ],
+      "verifiedControlling": false,
+      "falseHighConfidence": false,
+      "note": "FALSE DOMAIN_BOUNDARY refusal of a valid PH tax question (holding-period rule). 3/3."
+    },
+    {
+      "id": "Q24",
+      "verdict": "PARTIAL",
+      "unsafe": false,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": false,
+      "note": "EWT prof fees 10% only; omits 5% and ₱3M condition/declaration. VERIFIED_CONTROLLING."
+    },
+    {
+      "id": "Q25",
+      "verdict": "PARTIAL",
+      "unsafe": false,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": false,
+      "note": "Thin; does not resolve individual vs GPP vs juridical payee. VERIFIED_CONTROLLING."
+    },
+    {
+      "id": "Q26",
+      "verdict": "PARTIAL",
+      "unsafe": false,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": false,
+      "note": "10th-day baseline; omits 0619-E/1601-EQ quarterly and eFPS caveat. VERIFIED_CONTROLLING."
+    },
+    {
+      "id": "Q27",
+      "verdict": "FAIL",
+      "unsafe": true,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": true,
+      "note": "Equipment/property rental EWT stated as 2%; correct = 5%. Wrong withholding rate. VERIFIED_CONTROLLING."
+    },
+    {
+      "id": "Q28",
+      "verdict": "PASS",
+      "unsafe": false,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": false,
+      "note": "20% final tax on royalties to a domestic corporation. Correct."
+    },
+    {
+      "id": "Q29",
+      "verdict": "FAIL",
+      "unsafe": true,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": true,
+      "note": "Invents a de-minimis EWT exemption for a ₱500 payment; framework = no universal de-minimis exemption. VERIFIED_CONTROLLING."
+    },
+    {
+      "id": "Q30",
+      "verdict": "PARTIAL",
+      "unsafe": false,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": false,
+      "note": "6% estate rate correct but base described as 'exceeding ₱5,000,000' (conflates standard deduction with a threshold)."
+    },
+    {
+      "id": "Q31",
+      "verdict": "FAIL",
+      "unsafe": true,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": true,
+      "note": "Near-empty answer (headers/practical only, no stated amounts) yet VERIFIED_CONTROLLING."
+    },
+    {
+      "id": "Q32",
+      "verdict": "PASS",
+      "unsafe": false,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": false,
+      "note": "Estate return one year + 30-day filing extension. Correct."
+    },
+    {
+      "id": "Q33",
+      "verdict": "PASS",
+      "unsafe": false,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": false,
+      "note": "Family-home deduction up to ₱10M. Correct."
+    },
+    {
+      "id": "Q34",
+      "verdict": "PASS",
+      "unsafe": false,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": false,
+      "note": "Individual ITR deadline April 15. Correct."
+    },
+    {
+      "id": "Q35",
+      "verdict": "PARTIAL",
+      "unsafe": false,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": false,
+      "note": "Names Form 1701 only; omits 1701A (8%) and 1701-MS distinctions. VERIFIED_CONTROLLING."
+    },
+    {
+      "id": "Q36",
+      "verdict": "PARTIAL",
+      "unsafe": false,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": false,
+      "note": "Generic penalty/interest; omits EOPT micro/small reduced-penalty distinction. VERIFIED_CONTROLLING."
+    },
+    {
+      "id": "Q37",
+      "verdict": "FAIL",
+      "unsafe": true,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": true,
+      "note": "EMPTY answer (section headers only, no content) classified VERIFIED_CONTROLLING (3-year assessment rule unanswered)."
+    },
+    {
+      "id": "Q38",
+      "verdict": "PARTIAL",
+      "unsafe": false,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": false,
+      "note": "Before-commencement + 1901 correct; 1902 mis-labeled; omits ₱500-fee abolition."
+    },
+    {
+      "id": "Q39",
+      "verdict": "NOT_ANSWERED",
+      "unsafe": false,
+      "authoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "verifiedControlling": false,
+      "falseHighConfidence": false,
+      "note": "Could-not-identify safe under-claim."
+    },
+    {
+      "id": "Q40",
+      "verdict": "NOT_ANSWERED",
+      "unsafe": false,
+      "authoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "verifiedControlling": false,
+      "falseHighConfidence": false,
+      "note": "Could-not-identify safe under-claim."
+    },
+    {
+      "id": "Q41",
+      "verdict": "FAIL",
+      "unsafe": true,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": true,
+      "note": "Vague non-substantive answer (no statutory fine/imprisonment) yet VERIFIED_CONTROLLING."
+    },
+    {
+      "id": "Q42",
+      "verdict": "NOT_ANSWERED",
+      "unsafe": false,
+      "authoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "verifiedControlling": false,
+      "falseHighConfidence": false,
+      "note": "Could-not-identify safe under-claim."
+    },
+    {
+      "id": "Q43",
+      "verdict": "NOT_ANSWERED",
+      "unsafe": false,
+      "authoritySupport": [
+        "NOT_APPLICABLE"
+      ],
+      "verifiedControlling": false,
+      "falseHighConfidence": false,
+      "note": "FALSE DOMAIN_BOUNDARY refusal of a valid PH tax question (Oplan Kandado). 3/3."
+    },
+    {
+      "id": "Q44",
+      "verdict": "NOT_ANSWERED",
+      "unsafe": false,
+      "authoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "verifiedControlling": false,
+      "falseHighConfidence": false,
+      "note": "Could-not-identify safe under-claim."
+    },
+    {
+      "id": "Q45",
+      "verdict": "PARTIAL",
+      "unsafe": false,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": false,
+      "note": "PEZA subject to CIT but preferential; does not fully distinguish ITH/SCIT/EDR regimes. VERIFIED_CONTROLLING."
+    },
+    {
+      "id": "Q46",
+      "verdict": "PASS",
+      "unsafe": false,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": false,
+      "note": "Gold sale by small-scale miner to BSP VAT-exempt. Correct."
+    },
+    {
+      "id": "Q47",
+      "verdict": "PASS",
+      "unsafe": false,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": false,
+      "note": "Donor's tax 6%, ₱250k annual exemption. Correct."
+    },
+    {
+      "id": "Q48",
+      "verdict": "PARTIAL",
+      "unsafe": false,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": false,
+      "note": "Bad-debt worthless + prior income directional; omits charge-off/evidence detail. VERIFIED_CONTROLLING."
+    },
+    {
+      "id": "Q49",
+      "verdict": "FAIL",
+      "unsafe": true,
+      "authoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "verifiedControlling": true,
+      "falseHighConfidence": true,
+      "note": "Says returning-resident personal effects are 'subject to VAT: Yes'; CMTA conditional exemption ignored. VERIFIED_CONTROLLING."
+    },
+    {
+      "id": "Q50",
+      "verdict": "NOT_ANSWERED",
+      "unsafe": false,
+      "authoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "verifiedControlling": false,
+      "falseHighConfidence": false,
+      "note": "Could-not-identify safe under-claim."
+    }
+  ]
+}

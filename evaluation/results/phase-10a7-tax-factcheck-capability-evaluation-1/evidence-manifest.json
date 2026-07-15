@@ -1,0 +1,787 @@
+{
+  "generatedAtUtc": "2026-07-15T06:41:45.599Z",
+  "evidenceDirectory": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/",
+  "fileCount": 156,
+  "files": [
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/TINA_Tax_FactCheck_Run_Log_v2_COMPLETED.md",
+      "bytes": 9889,
+      "sha256": "2d3cfe546e460ee0b0c412414619dc52a4c1e550675584f460c234f1710f38a8"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/execution-manifest.json",
+      "bytes": 41146,
+      "sha256": "9f236ef6295aea71095427c0a401a310ccdc9602ed5b7c9e678dbbdc56366a27"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q1-r1.json",
+      "bytes": 2678,
+      "sha256": "8a8e6618b35abbd3736723a7a29989035ee18f4626c25c136926887dc5602ce8"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q1-r2.json",
+      "bytes": 3136,
+      "sha256": "b2a5d917070774a383e031bfbca67490baf970009300ece88604fbb2d5c406e3"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q1-r3.json",
+      "bytes": 2701,
+      "sha256": "be1cf1e338bd947b57bc91da3153d9a03682f360bbbb82b8117fa41aabe11cee"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q10-r1.json",
+      "bytes": 1038,
+      "sha256": "6e31297cbc31f367b1ca7ad222c78a8a700648ab1126418a20a0137e9aa15f21"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q10-r2.json",
+      "bytes": 1039,
+      "sha256": "c0b257f5a483bf9e106b386405a81fddd339bd71021bb9c2d500010a8adcf02a"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q10-r3.json",
+      "bytes": 1037,
+      "sha256": "7bea64311743e88d0eb5aba4f75fd80be7b16d2a5954b5c151f5577ed516b09f"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q11-r1.json",
+      "bytes": 980,
+      "sha256": "8abbe1a86a68576e7d5afae621310b87d27e3ce0bdab9919530ca27b90a88fcd"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q11-r2.json",
+      "bytes": 980,
+      "sha256": "b4ff3bbc7531db5380ab3fc4edc2980ea8779ac8c97ad455e79f058290a1716e"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q11-r3.json",
+      "bytes": 980,
+      "sha256": "beb66548ecaa3cea61bb3c9417208fdf884e0fe83300d48cffd99f4d9b8e44a8"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q12-r1.json",
+      "bytes": 2208,
+      "sha256": "a6ba05f41d479113a77bfd940e22a7090a0470e9cc1288a984287404344d0e73"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q12-r2.json",
+      "bytes": 2153,
+      "sha256": "e9704f9a66ef18c695e51c61127d9227d598843d6be7944c625279fa4701059d"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q12-r3.json",
+      "bytes": 2127,
+      "sha256": "564dbce1184fdab927fa5d3a4a57ff5475ff3e6f833ff2ee95047506a7a0580d"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q13-r1.json",
+      "bytes": 2358,
+      "sha256": "ce9deff2fcbeaef922ac13deb8cd40d8fc55e9c00a7552e813e024979582e0ea"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q13-r2.json",
+      "bytes": 2336,
+      "sha256": "f8cfeb91e553e079ed205f4043123cdec00eb96e73e8a6b7ed35429789704645"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q13-r3.json",
+      "bytes": 2263,
+      "sha256": "09fbd8d48b216bfecc7961afa9478a4a2b4cb36fe4b988cda35b7a6e943b52a2"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q14-r1.json",
+      "bytes": 1566,
+      "sha256": "c656728bee24bdce5662020395c8e901b67d85b97edcdde12cbfc816875748d9"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q14-r2.json",
+      "bytes": 1535,
+      "sha256": "9979e6dca022ebb3ac9ae33e39f87a1c4c5033e198ada15d6b757b15a09641c2"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q14-r3.json",
+      "bytes": 1535,
+      "sha256": "47b60726844b94353856e8f2d9f223f8693a4b8c6d896e33dc47cac586bcb856"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q15-r1.json",
+      "bytes": 2121,
+      "sha256": "6cb9241fa246bb19164ad058c785c028aae44d6f0602aae03ac6aba2e9a5eff8"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q15-r2.json",
+      "bytes": 2075,
+      "sha256": "61fbcc2b02cbcfac907c07f0192c38bf51bd7a7e9e709276e6194f169020ff5b"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q15-r3.json",
+      "bytes": 2064,
+      "sha256": "003d4e80a144e2b5043ba86be28d913d2251ca046fac3dd2017fe59dcb99e1a3"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q16-r1.json",
+      "bytes": 955,
+      "sha256": "503ff7b3fcbc2279fa7de3dcb4081de8424ee87ecb66a7be9572485f8584397f"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q16-r2.json",
+      "bytes": 955,
+      "sha256": "25ddc811693627cb5b74b23d4300308249169577fffbd0d2b7f9ff8018bdc76f"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q16-r3.json",
+      "bytes": 955,
+      "sha256": "12dafa94e1c0b203d4e49937eef074a8de2ced72af35c85b2c73bbbaa74faf7a"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q17-r1.json",
+      "bytes": 1015,
+      "sha256": "dfc2198c4947d2a540387ff7e40126c795bdaef5612720174920bd5fed7ac70b"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q17-r2.json",
+      "bytes": 1015,
+      "sha256": "56f99faf993f630454bc518126b833d705e809eafb4d40a072df93971c5e3392"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q17-r3.json",
+      "bytes": 1015,
+      "sha256": "f31ae9a82d06918ecd9060cd1ee9ad7b03d4a5e80f09bb92a60709e7313f6402"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q18-r1.json",
+      "bytes": 1023,
+      "sha256": "2bb61b0ac852bbb5f6beb5c22ca1005a54adeae50daeb11d7b2f10f0d0f82f21"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q18-r2.json",
+      "bytes": 1022,
+      "sha256": "5857dc590f566d70f96c168d0af7fc6673b6a36906a8f250f77a8e0ccd16dd56"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q18-r3.json",
+      "bytes": 1022,
+      "sha256": "b762978cd56bd4953c2d6a369900101673e338a337a7965a6e7e190fd9f72df6"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q19-r1.json",
+      "bytes": 1087,
+      "sha256": "34f1e4c9849cf07cf43721c0927f1b7934bcb15041184780077ba5d57382583b"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q19-r2.json",
+      "bytes": 1078,
+      "sha256": "c2d092c27171a9a4d42b75f9ffdbd06cc5e33dba2be823e3dacd78f1e2f1bcaf"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q19-r3.json",
+      "bytes": 1107,
+      "sha256": "eb1312feb89a751482116303ac5c08df9c41241e243898bf93e1883bbe17f8bf"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q2-r1.json",
+      "bytes": 1761,
+      "sha256": "d78603b73aaaa388274be9a83709d2fb440c0656897fade565072603067db49b"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q2-r2.json",
+      "bytes": 1862,
+      "sha256": "60afba5dfdc926f00b4ad7048ffe9f5c55e8f05c6722846c90dccbd86378d8be"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q2-r3.json",
+      "bytes": 2188,
+      "sha256": "110e1f87d4f8978e965443b8005c293402bbe42ab50fb554bfba5be7d0c47b09"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q20-r1.json",
+      "bytes": 997,
+      "sha256": "642a429c143906ab3c7ba385bc11baef3d5554ce47ced0445c3b198202ee261d"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q20-r2.json",
+      "bytes": 997,
+      "sha256": "97f57831dfa024740a6bc79a59274f78d9b4963b776218c68c64f918cc2fc333"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q20-r3.json",
+      "bytes": 996,
+      "sha256": "8e5903cc8911c9025b819d2e4b74c4ed8f26bae55ddcbab4e9b905d688d86303"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q21-r1.json",
+      "bytes": 951,
+      "sha256": "9891eaa1c7f917d6be059d58a78a4fecd5477d1ce6204c01aa9e5e477d753bb0"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q21-r2.json",
+      "bytes": 951,
+      "sha256": "429cd594ef1a94b010ae1f806188dfac187fa9f6905c72cc753ccef4a4d86861"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q21-r3.json",
+      "bytes": 951,
+      "sha256": "382e4071a7d7d5621330b40ba5fb913d574ce3af71a02b71f19fc97beb9b0bd9"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q22-r1.json",
+      "bytes": 997,
+      "sha256": "f895f83ca90b754bcf71171cc194b7687dadfdba010da5106906d2d0cbf841fc"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q22-r2.json",
+      "bytes": 997,
+      "sha256": "7fc3466b1bc1709771a23a263893eddcb682cbde20c3e4bb2463d005fb4394c8"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q22-r3.json",
+      "bytes": 996,
+      "sha256": "d78507f5de96ba6e85ee7cf0cf15a9c3f8717895564d06fd91c24046c84157c0"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q23-r1.json",
+      "bytes": 1026,
+      "sha256": "a9923b368703403b5b85966c1c4b3a4167b0a0fdd87a306327aa0ed3173c355a"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q23-r2.json",
+      "bytes": 1026,
+      "sha256": "9f452dc349a7bf4293cb50b6f4d3e1089e4ccc27971c4a4afe4dff4f377165f8"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q23-r3.json",
+      "bytes": 1026,
+      "sha256": "8736d8c3066c4040576732c14c291d4e97e2566d9f6718228f6d668010f9f150"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q24-r1.json",
+      "bytes": 1600,
+      "sha256": "7abdda6ead35f92a8416caf87bc87028dc9151f191af7b04629ba78b7e0183e0"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q24-r2.json",
+      "bytes": 1541,
+      "sha256": "6367ba21324eaaed5815efa56a72eeb0a2c903681237e7f3fe02cf7b60619801"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q24-r3.json",
+      "bytes": 1606,
+      "sha256": "f1e89d6fbbf71901ae775734b0e9e061ee064804299a60e5e5aed6c5553a16f7"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q25-r1.json",
+      "bytes": 2094,
+      "sha256": "0d557624c2bf83c8f6878343189426ab3a14f968e8c78571249e42db7e412df7"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q25-r2.json",
+      "bytes": 2316,
+      "sha256": "aa7e997c0b8fcd6765af3e4859a347630601f51c2e9f91011c50a87015727368"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q25-r3.json",
+      "bytes": 2547,
+      "sha256": "b874d49d0b30090f240521c6a397304294f7db9dad5e0fb7c339e03596e4dba0"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q26-r1.json",
+      "bytes": 1696,
+      "sha256": "91a53566e13d3defcf55a8d730ef56e99c2bd7c58f7b31b1ec0cef3d4ebed1ef"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q26-r2.json",
+      "bytes": 1676,
+      "sha256": "17fadeeb07f56f59096472b54b2d21bf57bcb6358b651a5aad0dd9df07c0f2b4"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q26-r3.json",
+      "bytes": 1688,
+      "sha256": "611b2c9b0926bd3071593216a31ba82fb08832572ffe066add3d5e48adf8e36d"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q27-r1.json",
+      "bytes": 1540,
+      "sha256": "d8e41959312c9088b715b8747ca53d074e7588af70744be7f682a27702f5ec30"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q27-r2.json",
+      "bytes": 1575,
+      "sha256": "2a246ddedc18bd8a16479890f4a9d45b2afac3e10135ffae6572ca13e71b2285"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q27-r3.json",
+      "bytes": 1493,
+      "sha256": "8668206d65787c7b29648a2c62b373041c111416604425cb2a255a382508cef2"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q28-r1.json",
+      "bytes": 1634,
+      "sha256": "a384ec8ca09954db4fcf83766b975348d7c9c63b106d2d689cd69623f62c2d03"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q28-r2.json",
+      "bytes": 1646,
+      "sha256": "d17649817a64ce9996c2c6a1021602c789c6ab552e3149c98d43cd223783fce4"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q28-r3.json",
+      "bytes": 1629,
+      "sha256": "e9dcd8548fe98a6fc449369c9068ef2129eb0abaa1141e3e3afbbb92ee609164"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q29-r1.json",
+      "bytes": 1621,
+      "sha256": "a2ffbde0fc0376b4dee633cbc779f1cef6f2cf3cea5e8a92a26ca1fcb76713e4"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q29-r2.json",
+      "bytes": 1591,
+      "sha256": "15559cd4831f6ebb955c0fc4aee043fff3e56a525bb01d33da7e2c6c8a64fc8c"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q29-r3.json",
+      "bytes": 1593,
+      "sha256": "9c3feb76ed8f591f5e95da913dbe3e2874b95bb97fa99f49f135a703d1823799"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q3-r1.json",
+      "bytes": 1853,
+      "sha256": "ae7cf6993addcdc0f1d73a1d2018738644f034d534d690c5305d7d14605eed06"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q3-r2.json",
+      "bytes": 1757,
+      "sha256": "08b1e6ce31649cc5b01e1b049c5e6213e6b01690350cdcf9f566ad28a02b3675"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q3-r3.json",
+      "bytes": 1890,
+      "sha256": "497a595b34ebe80fb0e830783273878046b768b6b96b6fc2e919675adda1c1ac"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q30-r1.json",
+      "bytes": 2111,
+      "sha256": "8a1a18308cf7971784ca8c6a35600f75fcd85e1b78a10737fa00015eafec7c85"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q30-r2.json",
+      "bytes": 1974,
+      "sha256": "aeaa87d3b2a9a936075ef7f464a1c2b6623ee28c06af6822fabecedd9c437311"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q30-r3.json",
+      "bytes": 2006,
+      "sha256": "90aab621dc25ca2933305bd4a0159a31d423eb7fa1be97ec6c4f0c0bc35fc0cb"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q31-r1.json",
+      "bytes": 1247,
+      "sha256": "89e88ecffb0781a45404a5d02050b60d8a713c7763a6c50d17a8f98ec5589a8a"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q31-r2.json",
+      "bytes": 1766,
+      "sha256": "9d6925d4aeacf12862899304940d9a5c4b81d4725d09fb75e2c8ebc89aea0bbc"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q31-r3.json",
+      "bytes": 2173,
+      "sha256": "4a01b04e1d7a777ef9bcc756ebdbed0cb1f5763fd1b2b6b1500ed2c68df195c2"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q32-r1.json",
+      "bytes": 2425,
+      "sha256": "ea7a42ba1df875974b3bb67e86934bb79b3290edd66edaad5c2d4988ba42fe26"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q32-r2.json",
+      "bytes": 2296,
+      "sha256": "5acf951aed531375ac9c485cf07fdbe3e13e959bed1b769d6adcfc4e9894c3a6"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q32-r3.json",
+      "bytes": 2100,
+      "sha256": "8ec518f1fcc39ec62a4e8eb26ce80d4f37731c8951aa4c02de320143b5fedb13"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q33-r1.json",
+      "bytes": 1357,
+      "sha256": "bc10504ca1388d055bb51dcc2faff94daa132f206c927c09004c3222ea8160e9"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q33-r2.json",
+      "bytes": 1391,
+      "sha256": "729ccd78caeab680dfef5583eba4b31f268ec01f461918aef2d31793ac05603c"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q33-r3.json",
+      "bytes": 1422,
+      "sha256": "0e7219beaee3419d6fde2aa07b08c970f3dda92c0824a6f0a69c86029e70b5e6"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q34-r1.json",
+      "bytes": 1471,
+      "sha256": "b701ab6d318047d320cff4788676614105c87af8ddd9380422966b9b0fb49c7e"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q34-r2.json",
+      "bytes": 1476,
+      "sha256": "c9cf939c2561d80cf8cefe8a1973b3342604a4e77a161b29785fc20d7752326e"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q34-r3.json",
+      "bytes": 1530,
+      "sha256": "4d066d704279e8f23487df45d8d0b402887a7bd5cdf4dc31324d7e356c93fb7b"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q35-r1.json",
+      "bytes": 1849,
+      "sha256": "22d32865565e54d58197920a4b939ae734fa497db56c8d5c6e7bf0b71f701f57"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q35-r2.json",
+      "bytes": 2005,
+      "sha256": "1b05d13998e52d1f8069e364ffabfbdead4217a7ecb4eec25a43e653e7578be9"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q35-r3.json",
+      "bytes": 1437,
+      "sha256": "1cb162efdf92ac378cc3d7570545c05de1b2ea69cd564b8bbb264caf9055724a"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q36-r1.json",
+      "bytes": 1909,
+      "sha256": "d98801bef1c1fce69ea8ec1e984a2f010b9ceff3000f8aabe9bf05d79da714bc"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q36-r2.json",
+      "bytes": 1998,
+      "sha256": "f07700ca0f7efdfbe2608e30365b40284bc061cee8455eed8f89b9487ce2193d"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q36-r3.json",
+      "bytes": 1984,
+      "sha256": "308cac4c9aef2cc638978259277b5e6eac0b1cb302ac1dc9213e7b7a8bcae117"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q37-r1.json",
+      "bytes": 925,
+      "sha256": "8504e92c0c1394536019845f701e793057af6c58247324e1fd8a9d4be112a6b3"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q37-r2.json",
+      "bytes": 1298,
+      "sha256": "fa5d2afb28ac09585cf97ad14aa91fc6546e4836592fdc4b72d8696274ad3fea"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q37-r3.json",
+      "bytes": 1404,
+      "sha256": "487dd62ca8929deaa2b1f6dbfd4859628156dc48c8e74ed46763a2ec31d3703c"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q38-r1.json",
+      "bytes": 1854,
+      "sha256": "6dd5429a71fa1c381ddd5f6d1a46c213646b6136b4bcf092bb28f5bddd4d3686"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q38-r2.json",
+      "bytes": 1862,
+      "sha256": "df905dd7b61d7c9cb2df145cf96346aa6cfbe092f0c7ec664d5e52b5a6fd6c06"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q38-r3.json",
+      "bytes": 1714,
+      "sha256": "3943521089a0d3d513f835c9b5e47cf72e4b4818c7e55c081c6cfc4f1e56864b"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q39-r1.json",
+      "bytes": 978,
+      "sha256": "6d9a1dc75543bf99da516273ba6454ad9f877d3f07e446650ffcdb8806eb4cc5"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q39-r2.json",
+      "bytes": 978,
+      "sha256": "c94f231c0d3bf09cda9016276e17fde382dad15802a7469fc7f4563d11cb3c9a"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q39-r3.json",
+      "bytes": 977,
+      "sha256": "cb3550f1e7da61cbac02a334c20d702ae85d8cec7dbea72a9e6c5f7838c19a5b"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q4-r1.json",
+      "bytes": 1611,
+      "sha256": "a24643bd54be91dcbf32a029663bed8d8b0b838076ea5e6b05b7129102954000"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q4-r2.json",
+      "bytes": 1808,
+      "sha256": "756640dbcb4561b77555ab9e0d37ae8ca6edf4d6defdf158b703f35f69adb038"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q4-r3.json",
+      "bytes": 1744,
+      "sha256": "a2998afb6128c7e611fe39f030640db6055452ea1394ea8bf9a28e5f361eb2b4"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q40-r1.json",
+      "bytes": 1007,
+      "sha256": "f412383a00e5cd85b78f890ad9fd0f174af3dcbe3b11627e83f814cef5c006bc"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q40-r2.json",
+      "bytes": 1007,
+      "sha256": "26b1f254021a382af5ca3c76fd649cfd988cd4d1c660d6f011cf24f7d396ace5"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q40-r3.json",
+      "bytes": 1007,
+      "sha256": "eaeecd75bd99a9eb8d668581e03cbe9c0041bc2b18d2e07acff7eaa13bf1e318"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q41-r1.json",
+      "bytes": 1350,
+      "sha256": "77345afcfbe80d720f35eabce999bca23f6f79dae6d8c66afd1e6cb20dc6861a"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q41-r2.json",
+      "bytes": 1312,
+      "sha256": "82fc95ee90b181be6f7388f4038e948ab83d1f51e66fb743219859e22c60d1f1"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q41-r3.json",
+      "bytes": 1466,
+      "sha256": "41fc5d0ce5a7f5881ea75f1762f0c48ffab5775c381f433f6d84bc4d35fe7753"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q42-r1.json",
+      "bytes": 990,
+      "sha256": "b489a76e0162c393b83344208b5707d76c7735962eebde4b8414549f9125a121"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q42-r2.json",
+      "bytes": 990,
+      "sha256": "3f5e84e07218011f1b3dd668ec8891c7d3e11211aa76eb21e0d4128bc6624448"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q42-r3.json",
+      "bytes": 990,
+      "sha256": "b2f41fbf8012e4d93c9c3c239804a4f42715b6dbc4e924823db43e66cad34581"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q43-r1.json",
+      "bytes": 989,
+      "sha256": "1e8c661e03d537ac8c7f5a6b745046fc94480d9a3b1b2dc64369f35717fb084a"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q43-r2.json",
+      "bytes": 989,
+      "sha256": "34045dc461c3a190653cf9711ce351a7b9ed288e8ab680d61b73098fe878bd9a"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q43-r3.json",
+      "bytes": 989,
+      "sha256": "fcdeeae86abebf2f6e52b6d59e54b0090f46986baa5ca61f879f2fbf66e25c6f"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q44-r1.json",
+      "bytes": 986,
+      "sha256": "85d1086608ed2fd9bfe44ce1c82f9443a125590c74e0ccdca0b572294648d2b8"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q44-r2.json",
+      "bytes": 986,
+      "sha256": "02a76e66547a84532a4c07620391b730c25293553daebcdcb4e449cf5bd3398a"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q44-r3.json",
+      "bytes": 986,
+      "sha256": "a72983a0a87eecc29c9afd8a084be9aa7896e76a4c0a08caf8d24293ffd9f134"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q45-r1.json",
+      "bytes": 2362,
+      "sha256": "e058f46d8caa5b4ba61c212ecea145b5f37b77213139f0cd6854b5050524d392"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q45-r2.json",
+      "bytes": 2207,
+      "sha256": "2ef1ffe1a9132351410b5f11f99d6187da29fee1cffd7d68144ad92822109eb7"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q45-r3.json",
+      "bytes": 2159,
+      "sha256": "9b9e94cf51f180869aa2ce202b257dc277be8e4a7b0ce3c61de3ca8d9ad515de"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q46-r1.json",
+      "bytes": 2921,
+      "sha256": "bd2e9b8630df6628a78e6fedb922174324fe8ef7abdd9410aa285bce56bdbc71"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q46-r2.json",
+      "bytes": 2804,
+      "sha256": "08c9de040847f5ca36f8b9073a3dcc3d0962b8e5a25070e51e7d97dee4d437aa"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q46-r3.json",
+      "bytes": 2806,
+      "sha256": "e7505d94c59082e75a1f5a665880237e76e3277d5ef4db53ecd0cc49684ce022"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q47-r1.json",
+      "bytes": 2211,
+      "sha256": "36f1674319e827c2143ac1a1579e7c84ef6fe334b4eea27e6d2a00123b5c9cc4"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q47-r2.json",
+      "bytes": 2432,
+      "sha256": "4dc10d8321239b716b1c9ae63b9bd6e81832fd6ae2cb0be1dd4fb5528c1f789f"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q47-r3.json",
+      "bytes": 2176,
+      "sha256": "a588d556a5556cd4e0184bf818b478da167e3c8de83b6e96cd4072a16dafd6cc"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q48-r1.json",
+      "bytes": 1843,
+      "sha256": "08de8cbbe249b3671f8de47a0d7fe597ee4765c829968561d5b8af6292f00d7a"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q48-r2.json",
+      "bytes": 1515,
+      "sha256": "171a8e1fd94dfb4eae58ac3c53bee6dce262a5876fce3e888d92e1e4560544af"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q48-r3.json",
+      "bytes": 1532,
+      "sha256": "34a98ace9fe4570a013f769c25cfdcc2e0589c8852af7320f1708485a9dc96f2"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q49-r1.json",
+      "bytes": 1913,
+      "sha256": "d9175a034558d6e5064cd131b20eba919f623ec822c9a390ad197255ee02c4ff"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q49-r2.json",
+      "bytes": 1869,
+      "sha256": "ee71bc566332371436b40f30f94bc69f08734dccf8ee83addbdb168837fe69e8"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q49-r3.json",
+      "bytes": 2425,
+      "sha256": "b32692663ff2a0cd2bef6145e2190a89a192597f5ca3030dd22993c1dc6b59e2"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q5-r1.json",
+      "bytes": 2012,
+      "sha256": "fecaf542c51156d49f9fc6c6835c0fae4f82d857cdae0c4ab8dd7a152ee98789"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q5-r2.json",
+      "bytes": 2016,
+      "sha256": "aabe47f4ef073de1cde18ee29f3de4c90fb237af5b417ac6f8ba59ef31dbc2eb"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q5-r3.json",
+      "bytes": 2071,
+      "sha256": "078ca9f9e67ac842af7dd72469282316b13783adcf1d112a21016d15b0f7f6bc"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q50-r1.json",
+      "bytes": 972,
+      "sha256": "99992dbc65c0975ea81a138e779d9d49fa694f83af27ac6ff2c09c00c9044288"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q50-r2.json",
+      "bytes": 972,
+      "sha256": "a5be4c249b6a4eb001d50e129134a5beb6faf74edf335f7bcaf78e3d10e481aa"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q50-r3.json",
+      "bytes": 972,
+      "sha256": "f9c88c051dc2dc6c866be167795cb52ab2fb8db5a906a243e99dbe73c85ce33f"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q6-r1.json",
+      "bytes": 2413,
+      "sha256": "9f67d075c4cd882a6fbd320be40781d0d55f868eaaa10e4a23a3f42c7e968d32"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q6-r2.json",
+      "bytes": 2213,
+      "sha256": "0e76f3fcc4f3bdb58cdfa02a95436a10bd458132fdacdfb40b7f556190162760"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q6-r3.json",
+      "bytes": 2857,
+      "sha256": "66518049bd3c29a9ad978475a605c15a712742bdd30eec2c086eb0136a857e2a"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q7-r1.json",
+      "bytes": 1714,
+      "sha256": "647f5dde8758010afa7215b0211a4e777a33f96e7c0c1aab40c7b1a0a755dced"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q7-r2.json",
+      "bytes": 1354,
+      "sha256": "7b3b859dc3bd72e481367fa561d50056add57ea06016793f0a528c4de3c89d26"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q7-r3.json",
+      "bytes": 1806,
+      "sha256": "4fdf136a444e9fd4b870284f6cc845a4ef01e10fa2d3ca21d4cd390dea34b565"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q8-r1.json",
+      "bytes": 2801,
+      "sha256": "e1fbeb9113d87d51110eefdb6eeab33624cefb43c37afb63407c50ade33c594c"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q8-r2.json",
+      "bytes": 2740,
+      "sha256": "7a5a689954468786392cd3702e602bb41cabf8bb5e18af7fee3cb03e5d9489f1"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q8-r3.json",
+      "bytes": 2681,
+      "sha256": "c54b400dba6716a4a5852c5053b1f7f8ea530b75358f7b933734eab8e1247d84"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q9-r1.json",
+      "bytes": 2233,
+      "sha256": "3f66064ac8a05217ace2debc745b9282afb3f76ca6d5dc7bbb140351c68dba2d"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q9-r2.json",
+      "bytes": 2264,
+      "sha256": "f807304572de2d38d8a73d80351be0a258bf25072239cddf4b359a254f05f5ae"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/payloads/Q9-r3.json",
+      "bytes": 2252,
+      "sha256": "f39b26de48dbd1fb824927765a883cd8c53d9242cc5586270226a56e170eccd0"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/run-log.json",
+      "bytes": 65534,
+      "sha256": "2c847357bea4d3f2469a26420075dc084915a5237fc3199ade1c5aebfbbe23b6"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/scoring-verdicts.json",
+      "bytes": 16050,
+      "sha256": "bbddf2a85ca821a987524505ab7fe36754ee60a97b5cb03600410f5a05a5107f"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/scoring-worksheet.json",
+      "bytes": 141714,
+      "sha256": "5dbe315e608bc623503aa7012d6e0a2eb36f2b896db82558a407e4a4d2febcdd"
+    },
+    {
+      "path": "evaluation/results/phase-10a7-tax-factcheck-capability-evaluation-1/source-verification-notes.md",
+      "bytes": 2513,
+      "sha256": "05dc3a622566cb49bb5b348f133f273da15ff5c70d68797234c5f0469402c62f"
+    }
+  ]
+}

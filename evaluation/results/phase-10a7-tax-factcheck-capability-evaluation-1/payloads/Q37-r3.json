@@ -1,0 +1,33 @@
+{
+  "runId": "Q37-r3",
+  "caseId": "Q37",
+  "prompt": "What is the BIR assessment period when a taxpayer filed a return?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 10140,
+  "answer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nIn practical terms, taxpayers should be aware that once they file their tax returns, they have a three-year window during which the BIR can audit their returns and assess any additional taxes owed. After this period, the BIR generally loses the right to assess additional taxes unless specific exceptions apply, such as cases of fraud or failure to file a return. This timeframe encourages timely compliance and provides certainty for taxpayers regarding their tax obligations.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 22",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

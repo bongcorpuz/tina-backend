@@ -1,0 +1,33 @@
+{
+  "runId": "Q7-r3",
+  "caseId": "Q7",
+  "prompt": "How is input VAT treated when goods or services are used for both VATable and VAT-exempt sales?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 16039,
+  "answer": "### Short Answer\n\n### Controlling Authorities\n1. **National Internal Revenue Code (NIRC) Section 110(B)** - This section provides the rules for the allocation of input VAT when goods or services are used for both taxable and exempt sales.\n2. **Revenue Regulations No. 16-2005** - These regulations implement the provisions of the NIRC regarding VAT, including the allocation of input VAT.\n\n### Interpretation\n\n### Practical Meaning\nIn practice, businesses must maintain accurate records of their sales to determine the correct allocation of input VAT. This involves calculating the ratio of VATable sales to total sales to ensure compliance with tax regulations. Failure to properly allocate input VAT can result in disallowed credits and potential penalties during tax audits. Therefore, it is crucial for VAT-registered entities to implement a systematic approach to track and allocate input VAT effectively.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

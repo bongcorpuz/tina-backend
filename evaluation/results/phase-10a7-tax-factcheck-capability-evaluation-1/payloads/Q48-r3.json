@@ -1,0 +1,33 @@
+{
+  "runId": "Q48-r3",
+  "caseId": "Q48",
+  "prompt": "What conditions must a corporation satisfy to claim a bad debt as a deductible expense?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 10065,
+  "answer": "### Short Answer\nTo claim a bad debt as a deductible expense, a corporation must demonstrate that the debt is indeed worthless and that it has been previously included in gross income.\n\n### Interpretation\n\n### Practical Meaning\nIn practice, this means that corporations should maintain thorough documentation of their accounts receivable and collection efforts. When a debt is deemed uncollectible, the corporation should formally write it off in its accounting records and ensure that it has previously recognized the income from that debt. This process not only supports the deduction claim but also aligns with proper accounting practices.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 34",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

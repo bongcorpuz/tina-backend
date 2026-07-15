@@ -1,0 +1,33 @@
+{
+  "runId": "Q33-r3",
+  "caseId": "Q33",
+  "prompt": "Is the family home deductible from the gross estate, and up to how much?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 10589,
+  "answer": "### Short Answer\nYes, the family home is deductible from the gross estate, up to a maximum amount of P10,000.\n\n### Interpretation\n\n### Practical Meaning\nIn practical terms, this means that when calculating the estate tax, the value of the family home can be deducted from the total gross estate, thereby reducing the taxable estate. This deduction is particularly beneficial for families, as it helps to lessen the financial burden of estate taxes on the heirs, allowing them to retain the family home without it being fully subjected to taxation.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 34",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

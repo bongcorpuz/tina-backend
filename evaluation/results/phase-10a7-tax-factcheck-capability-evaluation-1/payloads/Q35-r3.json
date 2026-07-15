@@ -1,0 +1,33 @@
+{
+  "runId": "Q35-r3",
+  "caseId": "Q35",
+  "prompt": "What BIR form is used for the annual ITR of a self-employed individual or professional?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 12889,
+  "answer": "### Short Answer\nThe BIR form used for the annual Income Tax Return (ITR) of a self-employed individual or professional is BIR Form 1701.\n\n### Interpretation\n\n### Practical Meaning\nFor self-employed individuals and professionals, using BIR Form 1701 is essential for compliance with tax obligations. It ensures that they accurately report their income and pay the correct amount of tax due, thereby avoiding penalties for non-compliance. Proper filing of this form is crucial for maintaining good standing with the Bureau of Internal Revenue (BIR).",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 2",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}

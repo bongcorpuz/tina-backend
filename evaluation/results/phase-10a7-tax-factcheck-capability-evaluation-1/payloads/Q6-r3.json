@@ -1,0 +1,41 @@
+{
+  "runId": "Q6-r3",
+  "caseId": "Q6",
+  "prompt": "Can a non-VAT-registered seller issue a VAT invoice?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 19938,
+  "answer": "### Issue Presented\nA non-VAT-registered seller cannot issue a VAT invoice. Under Section 236 of the National Internal Revenue Code (NIRC), only VAT-registered persons are authorized to issue VAT invoices. This is further supported by Revenue Regulation No. 16-2005, which defines a \"VAT-registered person\" as someone registered as a VAT taxpayer under the provisions of the NIRC.\n\n### Quick Assessment\n- **BIR Likely Position**: The BIR will assert that a non-VAT-registered seller is not permitted to issue VAT invoices, as they are not recognized as VAT taxpayers under the law.\n- **Taxpayer Position / Defenses**: The taxpayer may argue that they are not required to register for VAT due to their sales volume being below the threshold, but this does not grant them the authority to issue VAT invoices.\n- **Documentary Support Needed**: Evidence of the seller's registration status with the BIR, sales records to demonstrate the volume of sales, and any correspondence with the BIR regarding VAT registration.\n- **Procedural Issues**: If the seller has mistakenly issued a VAT invoice, they may need to correct this through proper channels to avoid penalties.\n- **Risk Level**: Medium risk of penalties for issuing incorrect invoices and potential issues with clients expecting VAT refunds.\n- **Recommended Action**: The seller should cease issuing VAT invoices immediately and consult with a tax advisor to rectify any past transactions that may have been incorrectly documented.\n\n### Relevant Facts / Assumptions\nThe factual circumstances have not been fully described. The analysis is based on the question as presented.\n\n### Alternative Interpretations\nNo alternative interpretations identified from the available indexed authorities.\n\n### Position Strength\nPosition strength is preliminary and subject to full fact pattern verification.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 236",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    },
+    {
+      "label": "RR 18-2012",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND"
+}
