@@ -1,0 +1,499 @@
+{
+  "ask": {
+    "status": 200,
+    "responseTimeMs": 13729,
+    "payload": {
+      "success": true,
+      "engine": "TINA_ASK_HANDLER",
+      "version": "9.0.0",
+      "hook": "/ask",
+      "mode": "STANDARD_TAX_MODE",
+      "routeKind": "NORMAL_RAG",
+      "hookTitle": "Default TINA Assistant",
+      "answer": "If you received a BIR LOA/eLA, do not ignore it. Preserve the date and manner of receipt, keep a copy of the notice, and verify it through the available BIR verification process (for example, the REVIE / LOA Verifier process under RMC No. 5-2026) where applicable. Prepare a document compliance matrix, submit through controlled transmittal, and keep proof of submission. Do not fabricate unavailable or non-existent documents; use substitute proof where appropriate. This is procedural guidance only. Human tax/legal review remains required for validity, prescription, finality, appealability, protest strategy, CTA strategy, or legal conclusions. Check the following details: Taxpayer name, TIN, Taxable period, Tax types covered, Issuing office, LOA/eLA number, Audit case number, Revenue Officer (RO), Group Supervisor (GS), Approving/signing official, Documents requested. Avoid unnecessary admissions. Monitor possible next stages: additional document request, NOD/DOD, PAN, FAN/FLD, protest, FDDA, and CTA appeal-watch. Official-source verification is required before relying on any authority referenced in this guidance; no source has been live-verified by this scaffold.",
+      "sources": [],
+      "sourcesUsed": [],
+      "sourceCards": [],
+      "educationalSources": null,
+      "vectorMatches": 0,
+      "responseType": "controlled_loa_answer",
+      "trust": {
+        "version": "1.0",
+        "authoritySupport": "NOT_APPLICABLE",
+        "sourceState": "NOT_APPLICABLE",
+        "legalConclusion": "NOT_APPLICABLE",
+        "humanReviewRequired": true,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "conflictState": "NOT_APPLICABLE",
+        "limitations": [],
+        "responseKind": "CONTROLLED_PROCEDURAL",
+        "specificAuthorityNotFound": false
+      },
+      "retrievedSourceCount": 0,
+      "displayedSourceCount": 0,
+      "sourceStatus": "RELATED_AUTHORITY_ONLY",
+      "sourceAvailability": "RELATED_AUTHORITY_ONLY",
+      "saeStatus": "RELATED_AUTHORITY_ONLY",
+      "patch024cPostSourcecard": null,
+      "internalError": false,
+      "errorCategory": null,
+      "sourceAvailabilityReason": "Indexed candidates exist, but none satisfy governing direct-authority requirements.",
+      "retrievalTimedOut": false,
+      "relatedSourceCount": 0,
+      "retrievalLayerCounts": null,
+      "firstSourceLabels": [],
+      "diagnostics": {
+        "timeout": false,
+        "timeoutType": null,
+        "elapsedMs": 10422,
+        "budgetMs": 90000,
+        "pipelineTimings": {
+          "AUTHORITY_RESOLUTION_STARTED": {
+            "event": "AUTHORITY_RESOLUTION_STARTED",
+            "stageName": "authorityResolution",
+            "at": "2026-07-15T00:58:19.644Z",
+            "elapsedMs": 1,
+            "remainingBudgetMs": 89999,
+            "budgetMs": 90000
+          },
+          "AUTHORITY_RESOLUTION_COMPLETE": {
+            "event": "AUTHORITY_RESOLUTION_COMPLETE",
+            "stageName": "authorityResolution",
+            "at": "2026-07-15T00:58:19.645Z",
+            "elapsedMs": 2,
+            "remainingBudgetMs": 89998,
+            "budgetMs": 90000
+          },
+          "RETRIEVAL_STARTED": {
+            "event": "RETRIEVAL_STARTED",
+            "stageName": "retrieval",
+            "at": "2026-07-15T00:58:19.645Z",
+            "elapsedMs": 2,
+            "remainingBudgetMs": 89998,
+            "budgetMs": 90000
+          },
+          "RESPONSE_COMPLETE": {
+            "event": "RESPONSE_COMPLETE",
+            "stageName": "response",
+            "at": "2026-07-15T00:58:30.065Z",
+            "elapsedMs": 10422,
+            "remainingBudgetMs": 79578,
+            "budgetMs": 90000
+          }
+        },
+        "pipelineStageDurations": {
+          "authorityResolution": {
+            "startedAt": "2026-07-15T00:58:19.644Z",
+            "completedAt": "2026-07-15T00:58:19.645Z",
+            "durationMs": 1,
+            "status": "completed"
+          },
+          "retrieval": {
+            "startedAt": "2026-07-15T00:58:19.645Z",
+            "completedAt": null,
+            "durationMs": null,
+            "status": "started"
+          }
+        },
+        "partialPipelineState": {
+          "retrievalCompleted": false,
+          "classificationCompleted": false,
+          "generationStarted": false,
+          "generationCompleted": false,
+          "complianceStarted": false,
+          "complianceCompleted": false,
+          "retrievedCount": 0,
+          "displayedSourceCardCount": 0,
+          "sourceAvailabilityStatusBeforeTimeout": null,
+          "sourceLabelsBeforeTimeout": [],
+          "retrievalLayerCounts": {}
+        },
+        "openaiCalls": []
+      },
+      "pipelineTimings": {
+        "requestStartedAt": 1784077099425,
+        "classificationStartedAt": 1784077099643,
+        "classificationCompletedAt": 1784077099644,
+        "retrievalStartedAt": 1784077099646,
+        "retrievalCompletedAt": 1784077109183,
+        "authorityResolutionStartedAt": 1784077109207,
+        "authorityResolutionCompletedAt": 1784077109208,
+        "responseCompletedAt": 1784077110065,
+        "totalMs": 10640
+      },
+      "pipelineStageDurations": {
+        "classificationMs": 1,
+        "retrievalMs": 9537,
+        "authorityResolutionMs": 1,
+        "totalMs": 10640
+      },
+      "partialPipelineState": {
+        "retrievalCompleted": true,
+        "classificationCompleted": true,
+        "generationStarted": false,
+        "generationCompleted": false,
+        "complianceStarted": false,
+        "complianceCompleted": false,
+        "retrievedCount": 12,
+        "retrievalLayerCounts": {
+          "exactAuthorityMatches": 15,
+          "citationVariantMatches": 0,
+          "metadataMatches": 0,
+          "contentKeywordMatches": 0,
+          "semanticMatches": 0,
+          "fallbackMatches": 0,
+          "supabaseFallbackMatches": 0
+        },
+        "sourceAvailabilityStatusBeforeTimeout": "RELATED_AUTHORITY_ONLY",
+        "sourceLabelsBeforeTimeout": [
+          "RR 18-2013",
+          "RR 18-2013",
+          "RR 18-2013",
+          "NIRC Sec. 228",
+          "RR 18-2013"
+        ]
+      },
+      "openaiCalls": [],
+      "responseMode": "STANDARD_TAX_MODE",
+      "orchestrationMode": "STANDARD_TAX_MODE",
+      "pipelineVersion": "1.0.0",
+      "activeHook": "/ask",
+      "activeMode": "ASK",
+      "commandMode": "ASK",
+      "requiresQuizMode": false,
+      "requiresDiagnosticMode": false,
+      "requiresReviewMode": false,
+      "requiresSourceVisibility": false,
+      "requiresCaseAnalysis": false,
+      "requiresAuditMode": false,
+      "requiresSeniorCounselMemo": false,
+      "requiresDebugMode": false,
+      "requiresCodePatch": false,
+      "requiresProgressMode": false,
+      "requiresFeedbackMode": false,
+      "metadata": {
+        "openAiModel": "gpt-4o-mini",
+        "openAiProjectAccessFailure": false,
+        "askHandlerVersion": "9.0.0",
+        "pipelineSupremacy": true,
+        "pipelineVersion": "1.0.0",
+        "correctFlowEnabled": true,
+        "issueClassificationEngineCalled": true,
+        "retrievalEngineCalled": true,
+        "rerankerEngineCalled": true,
+        "fourPartDoctrineTestApplied": true,
+        "retrievalLayerCounts": null,
+        "firstSourceLabels": [],
+        "diagnostics": {
+          "timeout": false,
+          "timeoutType": null,
+          "elapsedMs": 10422,
+          "budgetMs": 90000,
+          "pipelineTimings": {
+            "AUTHORITY_RESOLUTION_STARTED": {
+              "event": "AUTHORITY_RESOLUTION_STARTED",
+              "stageName": "authorityResolution",
+              "at": "2026-07-15T00:58:19.644Z",
+              "elapsedMs": 1,
+              "remainingBudgetMs": 89999,
+              "budgetMs": 90000
+            },
+            "AUTHORITY_RESOLUTION_COMPLETE": {
+              "event": "AUTHORITY_RESOLUTION_COMPLETE",
+              "stageName": "authorityResolution",
+              "at": "2026-07-15T00:58:19.645Z",
+              "elapsedMs": 2,
+              "remainingBudgetMs": 89998,
+              "budgetMs": 90000
+            },
+            "RETRIEVAL_STARTED": {
+              "event": "RETRIEVAL_STARTED",
+              "stageName": "retrieval",
+              "at": "2026-07-15T00:58:19.645Z",
+              "elapsedMs": 2,
+              "remainingBudgetMs": 89998,
+              "budgetMs": 90000
+            },
+            "RESPONSE_COMPLETE": {
+              "event": "RESPONSE_COMPLETE",
+              "stageName": "response",
+              "at": "2026-07-15T00:58:30.065Z",
+              "elapsedMs": 10422,
+              "remainingBudgetMs": 79578,
+              "budgetMs": 90000
+            }
+          },
+          "pipelineStageDurations": {
+            "authorityResolution": {
+              "startedAt": "2026-07-15T00:58:19.644Z",
+              "completedAt": "2026-07-15T00:58:19.645Z",
+              "durationMs": 1,
+              "status": "completed"
+            },
+            "retrieval": {
+              "startedAt": "2026-07-15T00:58:19.645Z",
+              "completedAt": null,
+              "durationMs": null,
+              "status": "started"
+            }
+          },
+          "partialPipelineState": {
+            "retrievalCompleted": false,
+            "classificationCompleted": false,
+            "generationStarted": false,
+            "generationCompleted": false,
+            "complianceStarted": false,
+            "complianceCompleted": false,
+            "retrievedCount": 0,
+            "displayedSourceCardCount": 0,
+            "sourceAvailabilityStatusBeforeTimeout": null,
+            "sourceLabelsBeforeTimeout": [],
+            "retrievalLayerCounts": {}
+          },
+          "openaiCalls": []
+        },
+        "pipelineTimings": {
+          "requestStartedAt": 1784077099425,
+          "classificationStartedAt": 1784077099643,
+          "classificationCompletedAt": 1784077099644,
+          "retrievalStartedAt": 1784077099646,
+          "retrievalCompletedAt": 1784077109183,
+          "authorityResolutionStartedAt": 1784077109207,
+          "authorityResolutionCompletedAt": 1784077109208,
+          "responseCompletedAt": 1784077110065,
+          "totalMs": 10640
+        },
+        "pipelineStageDurations": {
+          "classificationMs": 1,
+          "retrievalMs": 9537,
+          "authorityResolutionMs": 1,
+          "totalMs": 10640
+        },
+        "partialPipelineState": {
+          "retrievalCompleted": true,
+          "classificationCompleted": true,
+          "generationStarted": false,
+          "generationCompleted": false,
+          "complianceStarted": false,
+          "complianceCompleted": false,
+          "retrievedCount": 12,
+          "retrievalLayerCounts": {
+            "exactAuthorityMatches": 15,
+            "citationVariantMatches": 0,
+            "metadataMatches": 0,
+            "contentKeywordMatches": 0,
+            "semanticMatches": 0,
+            "fallbackMatches": 0,
+            "supabaseFallbackMatches": 0
+          },
+          "sourceAvailabilityStatusBeforeTimeout": "RELATED_AUTHORITY_ONLY",
+          "sourceLabelsBeforeTimeout": [
+            "RR 18-2013",
+            "RR 18-2013",
+            "RR 18-2013",
+            "NIRC Sec. 228",
+            "RR 18-2013"
+          ]
+        },
+        "openaiCalls": [],
+        "routeControllerOnly": true,
+        "noLegalReasoningInsideAskHandler": true,
+        "noSourceRankingInsideAskHandler": true,
+        "noRenderingInsideAskHandler": true,
+        "orchestrationFirstArchitecture": true,
+        "noDirectOpenAICall": true,
+        "noPromptAssembly": true,
+        "tpmConscious": true
+      }
+    }
+  },
+  "hardRefresh": {
+    "status": 200,
+    "payload": {
+      "success": true,
+      "messages": [
+        {
+          "id": "<REDACTED_UUID>",
+          "conversation_id": "<REDACTED>",
+          "user_id": "<REDACTED>",
+          "role": "user",
+          "content": "A taxpayer received a PAN and FAN with inconsistent tax computations, different assessment bases, and possible defects in the LOA. Which defects affect substantive validity, due process, or only the correctness of the computation?",
+          "created_at": "2026-07-15T00:58:30.172229+00:00",
+          "sources_used": null,
+          "fallback_references": null,
+          "metadata": {
+            "adaptive": {
+              "riskScore": null,
+              "queryIntent": null,
+              "adaptiveMode": null,
+              "responseMode": null,
+              "responsePlan": null,
+              "assumptionGap": null,
+              "authorityUsed": null,
+              "responseDepth": null,
+              "adaptiveContext": null,
+              "confidenceLevel": null,
+              "positionStrength": null,
+              "retrievalMetadata": null,
+              "supersessionAudit": null,
+              "tinaConversationMemoryVersion": "2.2.0"
+            }
+          },
+          "trust": null
+        },
+        {
+          "id": "<REDACTED_UUID>",
+          "conversation_id": "<REDACTED>",
+          "user_id": "<REDACTED>",
+          "role": "assistant",
+          "content": "If you received a BIR LOA/eLA, do not ignore it. Preserve the date and manner of receipt, keep a copy of the notice, and verify it through the available BIR verification process (for example, the REVIE / LOA Verifier process under RMC No. 5-2026) where applicable. Prepare a document compliance matrix, submit through controlled transmittal, and keep proof of submission. Do not fabricate unavailable or non-existent documents; use substitute proof where appropriate. This is procedural guidance only. Human tax/legal review remains required for validity, prescription, finality, appealability, protest strategy, CTA strategy, or legal conclusions. Check the following details: Taxpayer name, TIN, Taxable period, Tax types covered, Issuing office, LOA/eLA number, Audit case number, Revenue Officer (RO), Group Supervisor (GS), Approving/signing official, Documents requested. Avoid unnecessary admissions. Monitor possible next stages: additional document request, NOD/DOD, PAN, FAN/FLD, protest, FDDA, and CTA appeal-watch. Official-source verification is required before relying on any authority referenced in this guidance; no source has been live-verified by this scaffold.",
+          "created_at": "2026-07-15T00:58:30.67419+00:00",
+          "sources_used": null,
+          "fallback_references": null,
+          "metadata": {
+            "trust": {
+              "version": "1.0",
+              "hasConflict": false,
+              "limitations": [],
+              "sourceState": "NOT_APPLICABLE",
+              "responseKind": "CONTROLLED_PROCEDURAL",
+              "conflictState": "NOT_APPLICABLE",
+              "legalConclusion": "NOT_APPLICABLE",
+              "authoritySupport": "NOT_APPLICABLE",
+              "automaticSubmission": false,
+              "humanReviewRequired": true,
+              "specificAuthorityNotFound": false,
+              "filingReadyDocumentGenerated": false
+            },
+            "adaptive": {
+              "riskScore": null,
+              "queryIntent": null,
+              "adaptiveMode": null,
+              "responseMode": null,
+              "responsePlan": null,
+              "assumptionGap": null,
+              "authorityUsed": null,
+              "responseDepth": null,
+              "adaptiveContext": null,
+              "confidenceLevel": null,
+              "positionStrength": null,
+              "retrievalMetadata": null,
+              "supersessionAudit": null,
+              "tinaConversationMemoryVersion": "2.2.0"
+            }
+          },
+          "trust": {
+            "version": "1.0",
+            "hasConflict": false,
+            "limitations": [],
+            "sourceState": "NOT_APPLICABLE",
+            "responseKind": "CONTROLLED_PROCEDURAL",
+            "conflictState": "NOT_APPLICABLE",
+            "legalConclusion": "NOT_APPLICABLE",
+            "authoritySupport": "NOT_APPLICABLE",
+            "automaticSubmission": false,
+            "humanReviewRequired": true,
+            "specificAuthorityNotFound": false,
+            "filingReadyDocumentGenerated": false
+          }
+        }
+      ]
+    }
+  },
+  "historyReopen": {
+    "status": 200,
+    "payload": {
+      "success": true,
+      "messages": [
+        {
+          "id": "<REDACTED_UUID>",
+          "conversation_id": "<REDACTED>",
+          "user_id": "<REDACTED>",
+          "role": "user",
+          "content": "A taxpayer received a PAN and FAN with inconsistent tax computations, different assessment bases, and possible defects in the LOA. Which defects affect substantive validity, due process, or only the correctness of the computation?",
+          "created_at": "2026-07-15T00:58:30.172229+00:00",
+          "sources_used": null,
+          "fallback_references": null,
+          "metadata": {
+            "adaptive": {
+              "riskScore": null,
+              "queryIntent": null,
+              "adaptiveMode": null,
+              "responseMode": null,
+              "responsePlan": null,
+              "assumptionGap": null,
+              "authorityUsed": null,
+              "responseDepth": null,
+              "adaptiveContext": null,
+              "confidenceLevel": null,
+              "positionStrength": null,
+              "retrievalMetadata": null,
+              "supersessionAudit": null,
+              "tinaConversationMemoryVersion": "2.2.0"
+            }
+          },
+          "trust": null
+        },
+        {
+          "id": "<REDACTED_UUID>",
+          "conversation_id": "<REDACTED>",
+          "user_id": "<REDACTED>",
+          "role": "assistant",
+          "content": "If you received a BIR LOA/eLA, do not ignore it. Preserve the date and manner of receipt, keep a copy of the notice, and verify it through the available BIR verification process (for example, the REVIE / LOA Verifier process under RMC No. 5-2026) where applicable. Prepare a document compliance matrix, submit through controlled transmittal, and keep proof of submission. Do not fabricate unavailable or non-existent documents; use substitute proof where appropriate. This is procedural guidance only. Human tax/legal review remains required for validity, prescription, finality, appealability, protest strategy, CTA strategy, or legal conclusions. Check the following details: Taxpayer name, TIN, Taxable period, Tax types covered, Issuing office, LOA/eLA number, Audit case number, Revenue Officer (RO), Group Supervisor (GS), Approving/signing official, Documents requested. Avoid unnecessary admissions. Monitor possible next stages: additional document request, NOD/DOD, PAN, FAN/FLD, protest, FDDA, and CTA appeal-watch. Official-source verification is required before relying on any authority referenced in this guidance; no source has been live-verified by this scaffold.",
+          "created_at": "2026-07-15T00:58:30.67419+00:00",
+          "sources_used": null,
+          "fallback_references": null,
+          "metadata": {
+            "trust": {
+              "version": "1.0",
+              "hasConflict": false,
+              "limitations": [],
+              "sourceState": "NOT_APPLICABLE",
+              "responseKind": "CONTROLLED_PROCEDURAL",
+              "conflictState": "NOT_APPLICABLE",
+              "legalConclusion": "NOT_APPLICABLE",
+              "authoritySupport": "NOT_APPLICABLE",
+              "automaticSubmission": false,
+              "humanReviewRequired": true,
+              "specificAuthorityNotFound": false,
+              "filingReadyDocumentGenerated": false
+            },
+            "adaptive": {
+              "riskScore": null,
+              "queryIntent": null,
+              "adaptiveMode": null,
+              "responseMode": null,
+              "responsePlan": null,
+              "assumptionGap": null,
+              "authorityUsed": null,
+              "responseDepth": null,
+              "adaptiveContext": null,
+              "confidenceLevel": null,
+              "positionStrength": null,
+              "retrievalMetadata": null,
+              "supersessionAudit": null,
+              "tinaConversationMemoryVersion": "2.2.0"
+            }
+          },
+          "trust": {
+            "version": "1.0",
+            "hasConflict": false,
+            "limitations": [],
+            "sourceState": "NOT_APPLICABLE",
+            "responseKind": "CONTROLLED_PROCEDURAL",
+            "conflictState": "NOT_APPLICABLE",
+            "legalConclusion": "NOT_APPLICABLE",
+            "authoritySupport": "NOT_APPLICABLE",
+            "automaticSubmission": false,
+            "humanReviewRequired": true,
+            "specificAuthorityNotFound": false,
+            "filingReadyDocumentGenerated": false
+          }
+        }
+      ]
+    }
+  },
+  "sanitizedConversationRef": "2f808ee89f7cf06a"
+}

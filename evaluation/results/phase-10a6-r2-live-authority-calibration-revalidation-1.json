@@ -1,0 +1,380 @@
+{
+  "task": "PHASE-10A6-R2-LIVE-AUTHORITY-CALIBRATION-REVALIDATION-1",
+  "generatedAtUtc": "2026-07-15T01:05:33.031Z",
+  "decision": "PHASE 10A6-R2 LIVE REVALIDATION REMEDIATION REQUIRED",
+  "phaseStatus": {
+    "phase10A": "REOPENED",
+    "phase10B": "BLOCKED",
+    "phase10C": "BLOCKED",
+    "independentClosureReview": "DEFERRED"
+  },
+  "executor": {
+    "agent": "Codex",
+    "model": "GPT-5",
+    "reasoningPosture": "high",
+    "speed": "medium",
+    "independentOfR1Executor": true,
+    "r1ExecutorRecordedAs": "Claude Code Opus 4.8"
+  },
+  "repositories": {
+    "backend": {
+      "path": "C:/Projects/tina-backend",
+      "branch": "feature/source-availability-engine-v1",
+      "startHead": "687e55d0b254b7a0776f6e753c12f46ffa79cc17",
+      "finalArtifactCommit": null
+    },
+    "frontend": {
+      "path": "C:/Projects/tina-ai",
+      "head": "0816ac865b4ee55d5bb92534834dadbb0dcfba87",
+      "modified": false
+    },
+    "devFactory": {
+      "path": "C:/Projects/tina-dev-factory",
+      "modified": false
+    }
+  },
+  "independentR1Review": {
+    "remediationCommitReviewed": "665bd303dca7051ed6c485b372ed17e04a063f6e",
+    "recordCommitReviewed": "687e55d0b254b7a0776f6e753c12f46ffa79cc17",
+    "decision": "R1 REMEDIATION REVIEW PASS WITH RECOMMENDATIONS",
+    "conclusion": "R1 structurally remediated the source-presence verified-controlling overclaim by downgrading app-generated bare source listings before VERIFIED_CONTROLLING can be selected. R1 does not remediate richer missing-requested-authority and conflict-disclosure defects."
+  },
+  "liveValidation": {
+    "environment": "authenticated staging /ask API using a fresh local JWT minted from ignored JWT_SECRET and an active Supabase user record; screenshots are sanitized payload-rendered evidence, not protected-preview UI captures",
+    "totalRuns": 14,
+    "requiredRunCountSatisfied": true,
+    "q2FreshConversations": 3,
+    "q9FreshConversations": 3,
+    "allHttp200": true,
+    "timeouts": [],
+    "persistence": {
+      "allConsistent": true,
+      "evidence": [
+        {
+          "id": "Q1-r1",
+          "hardRefreshMessageCount": 2,
+          "historyReopenMessageCount": 2,
+          "assistantTrustState": "procedural",
+          "consistent": true
+        },
+        {
+          "id": "Q2-r1",
+          "hardRefreshMessageCount": 2,
+          "historyReopenMessageCount": 2,
+          "assistantTrustState": "related-authority-only",
+          "consistent": true
+        },
+        {
+          "id": "Q2-r2",
+          "hardRefreshMessageCount": 2,
+          "historyReopenMessageCount": 2,
+          "assistantTrustState": "related-authority-only",
+          "consistent": true
+        },
+        {
+          "id": "Q2-r3",
+          "hardRefreshMessageCount": 2,
+          "historyReopenMessageCount": 2,
+          "assistantTrustState": "related-authority-only",
+          "consistent": true
+        },
+        {
+          "id": "Q3-r1",
+          "hardRefreshMessageCount": 2,
+          "historyReopenMessageCount": 2,
+          "assistantTrustState": "verified-controlling",
+          "consistent": true
+        },
+        {
+          "id": "Q4-r1",
+          "hardRefreshMessageCount": 2,
+          "historyReopenMessageCount": 2,
+          "assistantTrustState": "verified-controlling",
+          "consistent": true
+        },
+        {
+          "id": "Q5-r1",
+          "hardRefreshMessageCount": 2,
+          "historyReopenMessageCount": 2,
+          "assistantTrustState": "verified-controlling",
+          "consistent": true
+        },
+        {
+          "id": "Q6-r1",
+          "hardRefreshMessageCount": 2,
+          "historyReopenMessageCount": 2,
+          "assistantTrustState": "source-failure",
+          "consistent": true
+        },
+        {
+          "id": "Q7-r1",
+          "hardRefreshMessageCount": 2,
+          "historyReopenMessageCount": 2,
+          "assistantTrustState": "procedural",
+          "consistent": true
+        },
+        {
+          "id": "Q8-r1",
+          "hardRefreshMessageCount": 2,
+          "historyReopenMessageCount": 2,
+          "assistantTrustState": "potential-conflict",
+          "consistent": true
+        },
+        {
+          "id": "Q9-r1",
+          "hardRefreshMessageCount": 2,
+          "historyReopenMessageCount": 2,
+          "assistantTrustState": "related-authority-only",
+          "consistent": true
+        },
+        {
+          "id": "Q9-r2",
+          "hardRefreshMessageCount": 2,
+          "historyReopenMessageCount": 2,
+          "assistantTrustState": "related-authority-only",
+          "consistent": true
+        },
+        {
+          "id": "Q9-r3",
+          "hardRefreshMessageCount": 2,
+          "historyReopenMessageCount": 2,
+          "assistantTrustState": "related-authority-only",
+          "consistent": true
+        },
+        {
+          "id": "Q10-r1",
+          "hardRefreshMessageCount": 2,
+          "historyReopenMessageCount": 2,
+          "assistantTrustState": "restricted",
+          "consistent": true
+        }
+      ]
+    },
+    "screenshots": {
+      "type": "sanitized payload-rendered evidence screenshots, not protected-preview UI captures",
+      "captured": 11,
+      "total": 14,
+      "statuses": [
+        {
+          "id": "Q1-r1",
+          "status": "captured_sanitized_payload_render",
+          "path": "screenshots/Q1-r1-desktop.png"
+        },
+        {
+          "id": "Q2-r1",
+          "status": "captured_sanitized_payload_render",
+          "path": "screenshots/Q2-r1-desktop.png"
+        },
+        {
+          "id": "Q2-r2",
+          "status": "captured_sanitized_payload_render",
+          "path": "screenshots/Q2-r2-desktop.png"
+        },
+        {
+          "id": "Q2-r3",
+          "status": "captured_sanitized_payload_render",
+          "path": "screenshots/Q2-r3-desktop.png"
+        },
+        {
+          "id": "Q3-r1",
+          "status": "blocked_3221225477",
+          "path": null
+        },
+        {
+          "id": "Q4-r1",
+          "status": "captured_sanitized_payload_render",
+          "path": "screenshots/Q4-r1-desktop.png"
+        },
+        {
+          "id": "Q5-r1",
+          "status": "captured_sanitized_payload_render",
+          "path": "screenshots/Q5-r1-desktop.png"
+        },
+        {
+          "id": "Q6-r1",
+          "status": "captured_sanitized_payload_render",
+          "path": "screenshots/Q6-r1-desktop.png"
+        },
+        {
+          "id": "Q7-r1",
+          "status": "captured_sanitized_payload_render",
+          "path": "screenshots/Q7-r1-desktop.png"
+        },
+        {
+          "id": "Q8-r1",
+          "status": "captured_sanitized_payload_render",
+          "path": "screenshots/Q8-r1-desktop.png"
+        },
+        {
+          "id": "Q9-r1",
+          "status": "blocked_3221225477",
+          "path": null
+        },
+        {
+          "id": "Q9-r2",
+          "status": "captured_sanitized_payload_render",
+          "path": "screenshots/Q9-r2-desktop.png"
+        },
+        {
+          "id": "Q9-r3",
+          "status": "captured_sanitized_payload_render",
+          "path": "screenshots/Q9-r3-desktop.png"
+        },
+        {
+          "id": "Q10-r1",
+          "status": "blocked_3221225477",
+          "path": null
+        }
+      ]
+    }
+  },
+  "matrixAssessment": {
+    "Q1": {
+      "verdict": "PASS",
+      "severity": null,
+      "note": "Controlled LOA/procedural boundary preserved; no unsupported validity conclusion."
+    },
+    "Q2": {
+      "verdict": "PASS_WITH_P2_RECOMMENDATION",
+      "severity": "P2",
+      "note": "All three runs returned related-authority-only and disclosed the requested circular could not be located in prose; structured specificAuthorityNotFound remained false."
+    },
+    "Q3": {
+      "verdict": "PASS",
+      "severity": null,
+      "note": "Verified-controlling path remained available for an analytical answer with displayed sources."
+    },
+    "Q4": {
+      "verdict": "PARTIAL",
+      "severity": "P2",
+      "note": "Prior mild over-claim risk remains: broad freight-forwarder answer classified verified-controlling on one displayed source."
+    },
+    "Q5": {
+      "verdict": "PASS",
+      "severity": null,
+      "note": "VAT-exemption answer retained verified-controlling classification with displayed sources."
+    },
+    "Q6": {
+      "verdict": "PASS",
+      "severity": null,
+      "note": "No indexed source path failed closed to source-failure / no verified authority."
+    },
+    "Q7": {
+      "verdict": "PASS",
+      "severity": null,
+      "note": "Controlled LOA/procedural boundary preserved for assessment-defect prompt."
+    },
+    "Q8": {
+      "verdict": "PASS",
+      "severity": null,
+      "note": "Potential-conflict trust state persisted and displayed with POTENTIAL_CONFLICT limitation."
+    },
+    "Q9": {
+      "verdict": "FAIL",
+      "severity": "P1",
+      "note": "All three runs avoided VERIFIED_CONTROLLING but returned only a bare indexed-source list; the requested missing BIR ruling was not disclosed and the stated authority conflict was not presented or qualified."
+    },
+    "Q10": {
+      "verdict": "PASS",
+      "severity": null,
+      "note": "Outcome-prediction request remained restricted and required human professional judgment."
+    }
+  },
+  "criticalFindings": [
+    {
+      "id": "R2-Q9-P1-MISSING-RULING-CONFLICT-DISCLOSURE",
+      "severity": "P1",
+      "reproducibility": "3/3 Q9 runs",
+      "evidenceRunIds": [
+        "Q9-r1",
+        "Q9-r2",
+        "Q9-r3"
+      ],
+      "description": "Q9 no longer renders as verified-controlling, but all three live responses are bare source listings. They do not disclose that the requested BIR ruling was not located and do not present the prompt-stated conflict among statute, regulation, Supreme Court authority, and later circular."
+    }
+  ],
+  "blockerCounts": {
+    "P0": 0,
+    "P1": 1,
+    "P2": 2,
+    "P3": 1
+  },
+  "remainingNonBlockingItems": [
+    "Q2 structured specificAuthorityNotFound remains false even though prose disclosure and related-only trust state are safe.",
+    "Q4 mild verified-controlling overclaim risk remains from prior 10A6 matrix.",
+    "Three local sanitized screenshot captures failed with Chrome exit code 3221225477; payload JSON and persistence evidence remain complete."
+  ],
+  "q2Summary": [
+    {
+      "id": "Q2-r1",
+      "trustState": "related-authority-only",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "RELATED_AUTHORITY_ONLY",
+      "specificAuthorityNotFound": false,
+      "proseDisclosesMissingCircular": true,
+      "persistenceConsistent": true
+    },
+    {
+      "id": "Q2-r2",
+      "trustState": "related-authority-only",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "RELATED_AUTHORITY_ONLY",
+      "specificAuthorityNotFound": false,
+      "proseDisclosesMissingCircular": true,
+      "persistenceConsistent": true
+    },
+    {
+      "id": "Q2-r3",
+      "trustState": "related-authority-only",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "RELATED_AUTHORITY_ONLY",
+      "specificAuthorityNotFound": false,
+      "proseDisclosesMissingCircular": true,
+      "persistenceConsistent": true
+    }
+  ],
+  "q9Summary": [
+    {
+      "id": "Q9-r1",
+      "trustState": "related-authority-only",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "AUTHORITY_FOUND",
+      "conflictState": "NO_CONFLICT",
+      "specificAuthorityNotFound": false,
+      "bareSourceListing": true,
+      "disclosesMissingRequestedRuling": false,
+      "presentsConflictOrUncertainty": false,
+      "persistenceConsistent": true
+    },
+    {
+      "id": "Q9-r2",
+      "trustState": "related-authority-only",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "AUTHORITY_FOUND",
+      "conflictState": "NO_CONFLICT",
+      "specificAuthorityNotFound": false,
+      "bareSourceListing": true,
+      "disclosesMissingRequestedRuling": false,
+      "presentsConflictOrUncertainty": false,
+      "persistenceConsistent": true
+    },
+    {
+      "id": "Q9-r3",
+      "trustState": "related-authority-only",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "AUTHORITY_FOUND",
+      "conflictState": "NO_CONFLICT",
+      "specificAuthorityNotFound": false,
+      "bareSourceListing": true,
+      "disclosesMissingRequestedRuling": false,
+      "presentsConflictOrUncertainty": false,
+      "persistenceConsistent": true
+    }
+  ],
+  "artifacts": {
+    "resultJson": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1.json",
+    "report": "PHASE-10A6-R2-LIVE-AUTHORITY-CALIBRATION-REVALIDATION-1_REPORT.md",
+    "evidenceDirectory": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/"
+  },
+  "nextAuthorizedTask": "PHASE-10A6-R3-SPECIFIC-AUTHORITY-AND-CONFLICT-DISCLOSURE-REMEDIATION-1"
+}

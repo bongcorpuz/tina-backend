@@ -1,0 +1,1017 @@
+{
+  "ask": {
+    "status": 200,
+    "responseTimeMs": 13456,
+    "payload": {
+      "success": true,
+      "engine": "TINA_ASK_HANDLER",
+      "version": "9.0.0",
+      "hook": "/ask",
+      "mode": "STANDARD_TAX_MODE",
+      "routeKind": "NORMAL_RAG",
+      "hookTitle": "Default TINA Assistant",
+      "answer": "### Issue Presented\nUnder the National Internal Revenue Code (NIRC), payments classified as rent, such as storage and handling charges under a lease agreement, are subject to a 5% Expanded Withholding Tax (EWT) as per Section 28(B)(1). Conversely, ancillary charges related to services, such as overtime, may be subject to a 2% EWT as per Section 28(B)(5)(a). The classification depends on the nature of the charges and the terms of the contract.\n\n### Relevant Facts / Assumptions\nThe factual circumstances have not been fully described. The analysis is based on the question as presented.\n\n### Controlling Authorities\n\nNIRC Sec. 57 authorizes withholding of tax at source. NIRC Sec. 58 governs withholding-agent duties, including withholding, return filing, and remittance obligations.\n\n### Alternative Interpretations\nNo alternative interpretations identified from the available indexed authorities.\n\n### Position Strength\nPosition strength is preliminary and subject to full fact pattern verification.\n\n### Practical Note\n\nVerify the applicable EWT rate and classification with the relevant Revenue Regulation or BIR issuance. Issue BIR Form 2307 (certificate of creditable withholding tax) to the payee for each withholding period.",
+      "sources": [
+        {
+          "label": "NIRC Sec. 57",
+          "title": "NIRC Sec. 57",
+          "citation": "NIRC Sec. 57",
+          "authorityType": "STATUTE",
+          "displayLabel": "NIRC Sec. 57",
+          "limitationRequired": false,
+          "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk"
+        },
+        {
+          "label": "NIRC Sec. 58",
+          "title": "NIRC Sec. 58",
+          "citation": "NIRC Sec. 58",
+          "authorityType": "STATUTE",
+          "displayLabel": "NIRC Sec. 58",
+          "limitationRequired": false,
+          "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk"
+        },
+        {
+          "label": "RR No. 2-1998",
+          "title": "RR No. 2-1998",
+          "citation": "RR No. 2-1998",
+          "authorityType": "RR",
+          "displayLabel": "RR No. 2-1998",
+          "limitationRequired": false,
+          "publicUrl": "https://drive.google.com/file/d/1POFyK9JX_F5rCHXVuVW8vrZbPq-8TNiE/view?usp=drivesdk"
+        }
+      ],
+      "sourcesUsed": [
+        {
+          "label": "NIRC Sec. 57",
+          "title": "NIRC Sec. 57",
+          "citation": "NIRC Sec. 57",
+          "authorityType": "STATUTE",
+          "displayLabel": "NIRC Sec. 57",
+          "limitationRequired": false,
+          "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk"
+        },
+        {
+          "label": "NIRC Sec. 58",
+          "title": "NIRC Sec. 58",
+          "citation": "NIRC Sec. 58",
+          "authorityType": "STATUTE",
+          "displayLabel": "NIRC Sec. 58",
+          "limitationRequired": false,
+          "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk"
+        },
+        {
+          "label": "RR No. 2-1998",
+          "title": "RR No. 2-1998",
+          "citation": "RR No. 2-1998",
+          "authorityType": "RR",
+          "displayLabel": "RR No. 2-1998",
+          "limitationRequired": false,
+          "publicUrl": "https://drive.google.com/file/d/1POFyK9JX_F5rCHXVuVW8vrZbPq-8TNiE/view?usp=drivesdk"
+        }
+      ],
+      "sourceCards": [
+        {
+          "label": "NIRC Sec. 57",
+          "title": "NIRC Sec. 57",
+          "citation": "NIRC Sec. 57",
+          "authorityType": "STATUTE",
+          "displayLabel": "NIRC Sec. 57",
+          "limitationRequired": false,
+          "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk"
+        },
+        {
+          "label": "NIRC Sec. 58",
+          "title": "NIRC Sec. 58",
+          "citation": "NIRC Sec. 58",
+          "authorityType": "STATUTE",
+          "displayLabel": "NIRC Sec. 58",
+          "limitationRequired": false,
+          "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk"
+        },
+        {
+          "label": "RR No. 2-1998",
+          "title": "RR No. 2-1998",
+          "citation": "RR No. 2-1998",
+          "authorityType": "RR",
+          "displayLabel": "RR No. 2-1998",
+          "limitationRequired": false,
+          "publicUrl": "https://drive.google.com/file/d/1POFyK9JX_F5rCHXVuVW8vrZbPq-8TNiE/view?usp=drivesdk"
+        }
+      ],
+      "educationalSources": null,
+      "vectorMatches": 12,
+      "trust": {
+        "version": "1.0",
+        "authoritySupport": "VERIFIED_CONTROLLING",
+        "sourceState": "AUTHORITY_FOUND",
+        "legalConclusion": "ALLOWED",
+        "humanReviewRequired": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "conflictState": "NO_CONFLICT",
+        "limitations": [],
+        "responseKind": "GENERAL_TAX",
+        "specificAuthorityNotFound": false
+      },
+      "retrievedSourceCount": 12,
+      "displayedSourceCount": 3,
+      "sourceStatus": "AUTHORITY_FOUND",
+      "sourceAvailability": "AUTHORITY_FOUND",
+      "saeStatus": "AUTHORITY_FOUND",
+      "patch024cPostSourcecard": {
+        "executed": true,
+        "sourceCardCount": 3,
+        "beforeLength": 1235,
+        "afterLength": 1235,
+        "changed": false,
+        "sourceAvailability": "AUTHORITY_FOUND",
+        "answerMode": "STANDARD_TAX_MODE",
+        "requestId": "route-1784077009238-c53d90d3"
+      },
+      "internalError": false,
+      "errorCategory": null,
+      "sourceAvailabilityReason": "[PATCH-017G] Authority-locked EWT source cards preserved after source-state synchronization.",
+      "retrievalTimedOut": false,
+      "relatedSourceCount": 0,
+      "retrievalLayerCounts": {
+        "exactAuthorityMatches": 12,
+        "citationVariantMatches": 0,
+        "metadataMatches": 0,
+        "contentKeywordMatches": 0,
+        "semanticMatches": 0,
+        "fallbackMatches": 0,
+        "supabaseFallbackMatches": 0
+      },
+      "firstSourceLabels": [
+        "NIRC Sec. 57",
+        "NIRC Sec. 58",
+        "RR No. 2-1998"
+      ],
+      "diagnostics": {
+        "requestId": "route-1784077009238-c53d90d3",
+        "route": "/ask",
+        "model": "gpt-4o-mini",
+        "budgetMs": 90000,
+        "pipelineTimings": {
+          "requestStartedAt": 1784077009238,
+          "classificationStartedAt": 1784077009468,
+          "classificationCompletedAt": 1784077009469,
+          "retrievalStartedAt": 1784077009472,
+          "retrievalCompletedAt": 1784077015376,
+          "authorityResolutionStartedAt": 1784077015400,
+          "authorityResolutionCompletedAt": 1784077015401,
+          "generationStartedAt": 1784077016110,
+          "renderingStartedAt": 1784077017894,
+          "renderingCompletedAt": 1784077017899,
+          "complianceStartedAt": 1784077017899,
+          "complianceCompletedAt": 1784077017908,
+          "sourceSelectionStartedAt": 1784077017908,
+          "sourceSelectionCompletedAt": 1784077017919,
+          "responseCompletedAt": 1784077018038,
+          "totalMs": 8800
+        },
+        "pipelineStageDurations": {
+          "classificationMs": 1,
+          "retrievalMs": 5904,
+          "authorityResolutionMs": 1,
+          "sourceSelectionMs": 11,
+          "complianceMs": 9,
+          "renderingMs": 5,
+          "totalMs": 8800
+        },
+        "partialPipelineState": {
+          "retrievalCompleted": true,
+          "classificationCompleted": true,
+          "generationStarted": true,
+          "generationCompleted": false,
+          "complianceStarted": true,
+          "complianceCompleted": true,
+          "retrievedCount": 12,
+          "retrievalLayerCounts": {
+            "exactAuthorityMatches": 12,
+            "citationVariantMatches": 0,
+            "metadataMatches": 0,
+            "contentKeywordMatches": 0,
+            "semanticMatches": 0,
+            "fallbackMatches": 0,
+            "supabaseFallbackMatches": 0
+          },
+          "sourceAvailabilityStatusBeforeTimeout": "AUTHORITY_FOUND",
+          "sourceLabelsBeforeTimeout": [
+            "NIRC Sec. 57",
+            "NIRC Sec. 58",
+            "RR No. 2-1998"
+          ],
+          "displayedSourceCardCount": 3
+        },
+        "openaiCalls": [],
+        "checkpoints": [
+          {
+            "checkpoint": "CLASSIFICATION_STARTED",
+            "requestId": "route-1784077009238-c53d90d3",
+            "elapsedMs": 230,
+            "remainingBudgetMs": 89770,
+            "model": "gpt-4o-mini",
+            "mode": "",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "",
+            "retrievedCount": 0,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "CLASSIFICATION_COMPLETE",
+            "requestId": "route-1784077009238-c53d90d3",
+            "elapsedMs": 231,
+            "remainingBudgetMs": 89769,
+            "model": "gpt-4o-mini",
+            "mode": "",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "",
+            "retrievedCount": 0,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "RETRIEVAL_STARTED",
+            "requestId": "route-1784077009238-c53d90d3",
+            "elapsedMs": 234,
+            "remainingBudgetMs": 89766,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "",
+            "retrievedCount": 0,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "RETRIEVAL_COMPLETE",
+            "requestId": "route-1784077009238-c53d90d3",
+            "elapsedMs": 6138,
+            "remainingBudgetMs": 83862,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "AUTHORITY_RESOLUTION_STARTED",
+            "requestId": "route-1784077009238-c53d90d3",
+            "elapsedMs": 6162,
+            "remainingBudgetMs": 83838,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "AUTHORITY_RESOLUTION_COMPLETE",
+            "requestId": "route-1784077009238-c53d90d3",
+            "elapsedMs": 6163,
+            "remainingBudgetMs": 83837,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "GENERATION_STARTED",
+            "requestId": "route-1784077009238-c53d90d3",
+            "elapsedMs": 6872,
+            "remainingBudgetMs": 83128,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "RENDERING_STARTED",
+            "requestId": "route-1784077009238-c53d90d3",
+            "elapsedMs": 8656,
+            "remainingBudgetMs": 81344,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "RENDERING_COMPLETE",
+            "requestId": "route-1784077009238-c53d90d3",
+            "elapsedMs": 8661,
+            "remainingBudgetMs": 81339,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "COMPLIANCE_STARTED",
+            "requestId": "route-1784077009238-c53d90d3",
+            "elapsedMs": 8661,
+            "remainingBudgetMs": 81339,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "COMPLIANCE_COMPLETE",
+            "requestId": "route-1784077009238-c53d90d3",
+            "elapsedMs": 8670,
+            "remainingBudgetMs": 81330,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "SOURCE_SELECTION_STARTED",
+            "requestId": "route-1784077009238-c53d90d3",
+            "elapsedMs": 8670,
+            "remainingBudgetMs": 81330,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "SOURCE_SELECTION_COMPLETE",
+            "requestId": "route-1784077009238-c53d90d3",
+            "elapsedMs": 8681,
+            "remainingBudgetMs": 81319,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 3
+          },
+          {
+            "checkpoint": "RESPONSE_COMPLETE",
+            "requestId": "route-1784077009238-c53d90d3",
+            "elapsedMs": 8800,
+            "remainingBudgetMs": 81200,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 3
+          }
+        ]
+      },
+      "pipelineTimings": {
+        "requestStartedAt": 1784077009238,
+        "classificationStartedAt": 1784077009468,
+        "classificationCompletedAt": 1784077009469,
+        "retrievalStartedAt": 1784077009472,
+        "retrievalCompletedAt": 1784077015376,
+        "authorityResolutionStartedAt": 1784077015400,
+        "authorityResolutionCompletedAt": 1784077015401,
+        "generationStartedAt": 1784077016110,
+        "renderingStartedAt": 1784077017894,
+        "renderingCompletedAt": 1784077017899,
+        "complianceStartedAt": 1784077017899,
+        "complianceCompletedAt": 1784077017908,
+        "sourceSelectionStartedAt": 1784077017908,
+        "sourceSelectionCompletedAt": 1784077017919,
+        "responseCompletedAt": 1784077018038,
+        "totalMs": 8800
+      },
+      "pipelineStageDurations": {
+        "classificationMs": 1,
+        "retrievalMs": 5904,
+        "authorityResolutionMs": 1,
+        "sourceSelectionMs": 11,
+        "complianceMs": 9,
+        "renderingMs": 5,
+        "totalMs": 8800
+      },
+      "partialPipelineState": {
+        "retrievalCompleted": true,
+        "classificationCompleted": true,
+        "generationStarted": true,
+        "generationCompleted": false,
+        "complianceStarted": true,
+        "complianceCompleted": true,
+        "retrievedCount": 12,
+        "retrievalLayerCounts": {
+          "exactAuthorityMatches": 12,
+          "citationVariantMatches": 0,
+          "metadataMatches": 0,
+          "contentKeywordMatches": 0,
+          "semanticMatches": 0,
+          "fallbackMatches": 0,
+          "supabaseFallbackMatches": 0
+        },
+        "sourceAvailabilityStatusBeforeTimeout": "AUTHORITY_FOUND",
+        "sourceLabelsBeforeTimeout": [
+          "NIRC Sec. 57",
+          "NIRC Sec. 58",
+          "RR No. 2-1998"
+        ],
+        "displayedSourceCardCount": 3
+      },
+      "openaiCalls": [],
+      "responseMode": "STANDARD_TAX_MODE",
+      "orchestrationMode": "STANDARD_TAX_MODE",
+      "pipelineVersion": "1.0.0",
+      "activeHook": "/ask",
+      "activeMode": "ASK",
+      "commandMode": "ASK",
+      "requiresQuizMode": false,
+      "requiresDiagnosticMode": false,
+      "requiresReviewMode": false,
+      "requiresSourceVisibility": false,
+      "requiresCaseAnalysis": false,
+      "requiresAuditMode": false,
+      "requiresSeniorCounselMemo": false,
+      "requiresDebugMode": false,
+      "requiresCodePatch": false,
+      "requiresProgressMode": false,
+      "requiresFeedbackMode": false,
+      "metadata": {
+        "mode": "STANDARD_TAX_MODE",
+        "engine": "fast-ewt-cap",
+        "version": "1.0",
+        "sourceCount": 4,
+        "maxCompletionTokens": "<REDACTED>",
+        "wasTrimmed": false,
+        "diagnostics": {
+          "requestId": "route-1784077009238-c53d90d3",
+          "route": "/ask",
+          "model": "gpt-4o-mini",
+          "budgetMs": 90000,
+          "pipelineTimings": {
+            "requestStartedAt": 1784077009238,
+            "classificationStartedAt": 1784077009468,
+            "classificationCompletedAt": 1784077009469,
+            "retrievalStartedAt": 1784077009472,
+            "retrievalCompletedAt": 1784077015376,
+            "authorityResolutionStartedAt": 1784077015400,
+            "authorityResolutionCompletedAt": 1784077015401,
+            "generationStartedAt": 1784077016110,
+            "renderingStartedAt": 1784077017894,
+            "renderingCompletedAt": 1784077017899,
+            "complianceStartedAt": 1784077017899,
+            "complianceCompletedAt": 1784077017908,
+            "sourceSelectionStartedAt": 1784077017908,
+            "sourceSelectionCompletedAt": 1784077017919,
+            "responseCompletedAt": 1784077018038,
+            "totalMs": 8800
+          },
+          "pipelineStageDurations": {
+            "classificationMs": 1,
+            "retrievalMs": 5904,
+            "authorityResolutionMs": 1,
+            "sourceSelectionMs": 11,
+            "complianceMs": 9,
+            "renderingMs": 5,
+            "totalMs": 8800
+          },
+          "partialPipelineState": {
+            "retrievalCompleted": true,
+            "classificationCompleted": true,
+            "generationStarted": true,
+            "generationCompleted": false,
+            "complianceStarted": true,
+            "complianceCompleted": true,
+            "retrievedCount": 12,
+            "retrievalLayerCounts": {
+              "exactAuthorityMatches": 12,
+              "citationVariantMatches": 0,
+              "metadataMatches": 0,
+              "contentKeywordMatches": 0,
+              "semanticMatches": 0,
+              "fallbackMatches": 0,
+              "supabaseFallbackMatches": 0
+            },
+            "sourceAvailabilityStatusBeforeTimeout": "AUTHORITY_FOUND",
+            "sourceLabelsBeforeTimeout": [
+              "NIRC Sec. 57",
+              "NIRC Sec. 58",
+              "RR No. 2-1998"
+            ],
+            "displayedSourceCardCount": 3
+          },
+          "openaiCalls": [],
+          "checkpoints": [
+            {
+              "checkpoint": "CLASSIFICATION_STARTED",
+              "requestId": "route-1784077009238-c53d90d3",
+              "elapsedMs": 230,
+              "remainingBudgetMs": 89770,
+              "model": "gpt-4o-mini",
+              "mode": "",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "",
+              "retrievedCount": 0,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "CLASSIFICATION_COMPLETE",
+              "requestId": "route-1784077009238-c53d90d3",
+              "elapsedMs": 231,
+              "remainingBudgetMs": 89769,
+              "model": "gpt-4o-mini",
+              "mode": "",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "",
+              "retrievedCount": 0,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "RETRIEVAL_STARTED",
+              "requestId": "route-1784077009238-c53d90d3",
+              "elapsedMs": 234,
+              "remainingBudgetMs": 89766,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "",
+              "retrievedCount": 0,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "RETRIEVAL_COMPLETE",
+              "requestId": "route-1784077009238-c53d90d3",
+              "elapsedMs": 6138,
+              "remainingBudgetMs": 83862,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "AUTHORITY_RESOLUTION_STARTED",
+              "requestId": "route-1784077009238-c53d90d3",
+              "elapsedMs": 6162,
+              "remainingBudgetMs": 83838,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "AUTHORITY_RESOLUTION_COMPLETE",
+              "requestId": "route-1784077009238-c53d90d3",
+              "elapsedMs": 6163,
+              "remainingBudgetMs": 83837,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "GENERATION_STARTED",
+              "requestId": "route-1784077009238-c53d90d3",
+              "elapsedMs": 6872,
+              "remainingBudgetMs": 83128,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "RENDERING_STARTED",
+              "requestId": "route-1784077009238-c53d90d3",
+              "elapsedMs": 8656,
+              "remainingBudgetMs": 81344,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "RENDERING_COMPLETE",
+              "requestId": "route-1784077009238-c53d90d3",
+              "elapsedMs": 8661,
+              "remainingBudgetMs": 81339,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "COMPLIANCE_STARTED",
+              "requestId": "route-1784077009238-c53d90d3",
+              "elapsedMs": 8661,
+              "remainingBudgetMs": 81339,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "COMPLIANCE_COMPLETE",
+              "requestId": "route-1784077009238-c53d90d3",
+              "elapsedMs": 8670,
+              "remainingBudgetMs": 81330,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "SOURCE_SELECTION_STARTED",
+              "requestId": "route-1784077009238-c53d90d3",
+              "elapsedMs": 8670,
+              "remainingBudgetMs": 81330,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "SOURCE_SELECTION_COMPLETE",
+              "requestId": "route-1784077009238-c53d90d3",
+              "elapsedMs": 8681,
+              "remainingBudgetMs": 81319,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 3
+            },
+            {
+              "checkpoint": "RESPONSE_COMPLETE",
+              "requestId": "route-1784077009238-c53d90d3",
+              "elapsedMs": 8800,
+              "remainingBudgetMs": 81200,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 3
+            }
+          ]
+        },
+        "openAiModel": "gpt-4o-mini",
+        "openAiProjectAccessFailure": false,
+        "askHandlerVersion": "9.0.0",
+        "pipelineSupremacy": true,
+        "pipelineVersion": "1.0.0",
+        "correctFlowEnabled": true,
+        "issueClassificationEngineCalled": true,
+        "retrievalEngineCalled": true,
+        "rerankerEngineCalled": true,
+        "fourPartDoctrineTestApplied": true,
+        "retrievalLayerCounts": {
+          "exactAuthorityMatches": 12,
+          "citationVariantMatches": 0,
+          "metadataMatches": 0,
+          "contentKeywordMatches": 0,
+          "semanticMatches": 0,
+          "fallbackMatches": 0,
+          "supabaseFallbackMatches": 0
+        },
+        "firstSourceLabels": [
+          "NIRC Sec. 57",
+          "NIRC Sec. 58",
+          "RR No. 2-1998"
+        ],
+        "pipelineTimings": {
+          "requestStartedAt": 1784077009238,
+          "classificationStartedAt": 1784077009468,
+          "classificationCompletedAt": 1784077009469,
+          "retrievalStartedAt": 1784077009472,
+          "retrievalCompletedAt": 1784077015376,
+          "authorityResolutionStartedAt": 1784077015400,
+          "authorityResolutionCompletedAt": 1784077015401,
+          "generationStartedAt": 1784077016110,
+          "renderingStartedAt": 1784077017894,
+          "renderingCompletedAt": 1784077017899,
+          "complianceStartedAt": 1784077017899,
+          "complianceCompletedAt": 1784077017908,
+          "sourceSelectionStartedAt": 1784077017908,
+          "sourceSelectionCompletedAt": 1784077017919,
+          "responseCompletedAt": 1784077018038,
+          "totalMs": 8800
+        },
+        "pipelineStageDurations": {
+          "classificationMs": 1,
+          "retrievalMs": 5904,
+          "authorityResolutionMs": 1,
+          "sourceSelectionMs": 11,
+          "complianceMs": 9,
+          "renderingMs": 5,
+          "totalMs": 8800
+        },
+        "partialPipelineState": {
+          "retrievalCompleted": true,
+          "classificationCompleted": true,
+          "generationStarted": true,
+          "generationCompleted": false,
+          "complianceStarted": true,
+          "complianceCompleted": true,
+          "retrievedCount": 12,
+          "retrievalLayerCounts": {
+            "exactAuthorityMatches": 12,
+            "citationVariantMatches": 0,
+            "metadataMatches": 0,
+            "contentKeywordMatches": 0,
+            "semanticMatches": 0,
+            "fallbackMatches": 0,
+            "supabaseFallbackMatches": 0
+          },
+          "sourceAvailabilityStatusBeforeTimeout": "AUTHORITY_FOUND",
+          "sourceLabelsBeforeTimeout": [
+            "NIRC Sec. 57",
+            "NIRC Sec. 58",
+            "RR No. 2-1998"
+          ],
+          "displayedSourceCardCount": 3
+        },
+        "openaiCalls": [],
+        "routeControllerOnly": true,
+        "noLegalReasoningInsideAskHandler": true,
+        "noSourceRankingInsideAskHandler": true,
+        "noRenderingInsideAskHandler": true,
+        "orchestrationFirstArchitecture": true,
+        "noDirectOpenAICall": true,
+        "noPromptAssembly": true,
+        "tpmConscious": true
+      }
+    }
+  },
+  "hardRefresh": {
+    "status": 200,
+    "payload": {
+      "success": true,
+      "messages": [
+        {
+          "id": "<REDACTED_UUID>",
+          "conversation_id": "<REDACTED>",
+          "user_id": "<REDACTED>",
+          "role": "user",
+          "content": "A Philippine company paid storage, handling, overtime, and ancillary charges under a contract titled “Contract of Lease.” Which payments are subject to 5% EWT as rent and which may be subject to 2% EWT as services, especially where the contract provides one bundled price?",
+          "created_at": "2026-07-15T00:56:58.173459+00:00",
+          "sources_used": null,
+          "fallback_references": null,
+          "metadata": {
+            "adaptive": {
+              "riskScore": null,
+              "queryIntent": null,
+              "adaptiveMode": null,
+              "responseMode": null,
+              "responsePlan": null,
+              "assumptionGap": null,
+              "authorityUsed": null,
+              "responseDepth": null,
+              "adaptiveContext": null,
+              "confidenceLevel": null,
+              "positionStrength": null,
+              "retrievalMetadata": null,
+              "supersessionAudit": null,
+              "tinaConversationMemoryVersion": "2.2.0"
+            }
+          },
+          "trust": null
+        },
+        {
+          "id": "<REDACTED_UUID>",
+          "conversation_id": "<REDACTED>",
+          "user_id": "<REDACTED>",
+          "role": "assistant",
+          "content": "### Issue Presented\nUnder the National Internal Revenue Code (NIRC), payments classified as rent, such as storage and handling charges under a lease agreement, are subject to a 5% Expanded Withholding Tax (EWT) as per Section 28(B)(1). Conversely, ancillary charges related to services, such as overtime, may be subject to a 2% EWT as per Section 28(B)(5)(a). The classification depends on the nature of the charges and the terms of the contract.\n\n### Relevant Facts / Assumptions\nThe factual circumstances have not been fully described. The analysis is based on the question as presented.\n\n### Controlling Authorities\n\nNIRC Sec. 57 authorizes withholding of tax at source. NIRC Sec. 58 governs withholding-agent duties, including withholding, return filing, and remittance obligations.\n\n### Alternative Interpretations\nNo alternative interpretations identified from the available indexed authorities.\n\n### Position Strength\nPosition strength is preliminary and subject to full fact pattern verification.\n\n### Practical Note\n\nVerify the applicable EWT rate and classification with the relevant Revenue Regulation or BIR issuance. Issue BIR Form 2307 (certificate of creditable withholding tax) to the payee for each withholding period.",
+          "created_at": "2026-07-15T00:56:59.103306+00:00",
+          "sources_used": [
+            {
+              "label": "NIRC Sec. 57",
+              "title": "NIRC Sec. 57",
+              "citation": "NIRC Sec. 57",
+              "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk",
+              "displayLabel": "NIRC Sec. 57",
+              "authorityType": "STATUTE",
+              "limitationRequired": false
+            },
+            {
+              "label": "NIRC Sec. 58",
+              "title": "NIRC Sec. 58",
+              "citation": "NIRC Sec. 58",
+              "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk",
+              "displayLabel": "NIRC Sec. 58",
+              "authorityType": "STATUTE",
+              "limitationRequired": false
+            },
+            {
+              "label": "RR No. 2-1998",
+              "title": "RR No. 2-1998",
+              "citation": "RR No. 2-1998",
+              "publicUrl": "https://drive.google.com/file/d/1POFyK9JX_F5rCHXVuVW8vrZbPq-8TNiE/view?usp=drivesdk",
+              "displayLabel": "RR No. 2-1998",
+              "authorityType": "RR",
+              "limitationRequired": false
+            }
+          ],
+          "fallback_references": null,
+          "metadata": {
+            "trust": {
+              "version": "1.0",
+              "hasConflict": false,
+              "limitations": [],
+              "sourceState": "AUTHORITY_FOUND",
+              "responseKind": "GENERAL_TAX",
+              "conflictState": "NO_CONFLICT",
+              "legalConclusion": "ALLOWED",
+              "authoritySupport": "VERIFIED_CONTROLLING",
+              "automaticSubmission": false,
+              "humanReviewRequired": false,
+              "specificAuthorityNotFound": false,
+              "filingReadyDocumentGenerated": false
+            },
+            "adaptive": {
+              "riskScore": null,
+              "queryIntent": null,
+              "adaptiveMode": null,
+              "responseMode": null,
+              "responsePlan": null,
+              "assumptionGap": null,
+              "authorityUsed": null,
+              "responseDepth": null,
+              "adaptiveContext": null,
+              "confidenceLevel": null,
+              "positionStrength": null,
+              "retrievalMetadata": null,
+              "supersessionAudit": null,
+              "tinaConversationMemoryVersion": "2.2.0"
+            }
+          },
+          "trust": {
+            "version": "1.0",
+            "hasConflict": false,
+            "limitations": [],
+            "sourceState": "AUTHORITY_FOUND",
+            "responseKind": "GENERAL_TAX",
+            "conflictState": "NO_CONFLICT",
+            "legalConclusion": "ALLOWED",
+            "authoritySupport": "VERIFIED_CONTROLLING",
+            "automaticSubmission": false,
+            "humanReviewRequired": false,
+            "specificAuthorityNotFound": false,
+            "filingReadyDocumentGenerated": false
+          }
+        }
+      ]
+    }
+  },
+  "historyReopen": {
+    "status": 200,
+    "payload": {
+      "success": true,
+      "messages": [
+        {
+          "id": "<REDACTED_UUID>",
+          "conversation_id": "<REDACTED>",
+          "user_id": "<REDACTED>",
+          "role": "user",
+          "content": "A Philippine company paid storage, handling, overtime, and ancillary charges under a contract titled “Contract of Lease.” Which payments are subject to 5% EWT as rent and which may be subject to 2% EWT as services, especially where the contract provides one bundled price?",
+          "created_at": "2026-07-15T00:56:58.173459+00:00",
+          "sources_used": null,
+          "fallback_references": null,
+          "metadata": {
+            "adaptive": {
+              "riskScore": null,
+              "queryIntent": null,
+              "adaptiveMode": null,
+              "responseMode": null,
+              "responsePlan": null,
+              "assumptionGap": null,
+              "authorityUsed": null,
+              "responseDepth": null,
+              "adaptiveContext": null,
+              "confidenceLevel": null,
+              "positionStrength": null,
+              "retrievalMetadata": null,
+              "supersessionAudit": null,
+              "tinaConversationMemoryVersion": "2.2.0"
+            }
+          },
+          "trust": null
+        },
+        {
+          "id": "<REDACTED_UUID>",
+          "conversation_id": "<REDACTED>",
+          "user_id": "<REDACTED>",
+          "role": "assistant",
+          "content": "### Issue Presented\nUnder the National Internal Revenue Code (NIRC), payments classified as rent, such as storage and handling charges under a lease agreement, are subject to a 5% Expanded Withholding Tax (EWT) as per Section 28(B)(1). Conversely, ancillary charges related to services, such as overtime, may be subject to a 2% EWT as per Section 28(B)(5)(a). The classification depends on the nature of the charges and the terms of the contract.\n\n### Relevant Facts / Assumptions\nThe factual circumstances have not been fully described. The analysis is based on the question as presented.\n\n### Controlling Authorities\n\nNIRC Sec. 57 authorizes withholding of tax at source. NIRC Sec. 58 governs withholding-agent duties, including withholding, return filing, and remittance obligations.\n\n### Alternative Interpretations\nNo alternative interpretations identified from the available indexed authorities.\n\n### Position Strength\nPosition strength is preliminary and subject to full fact pattern verification.\n\n### Practical Note\n\nVerify the applicable EWT rate and classification with the relevant Revenue Regulation or BIR issuance. Issue BIR Form 2307 (certificate of creditable withholding tax) to the payee for each withholding period.",
+          "created_at": "2026-07-15T00:56:59.103306+00:00",
+          "sources_used": [
+            {
+              "label": "NIRC Sec. 57",
+              "title": "NIRC Sec. 57",
+              "citation": "NIRC Sec. 57",
+              "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk",
+              "displayLabel": "NIRC Sec. 57",
+              "authorityType": "STATUTE",
+              "limitationRequired": false
+            },
+            {
+              "label": "NIRC Sec. 58",
+              "title": "NIRC Sec. 58",
+              "citation": "NIRC Sec. 58",
+              "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk",
+              "displayLabel": "NIRC Sec. 58",
+              "authorityType": "STATUTE",
+              "limitationRequired": false
+            },
+            {
+              "label": "RR No. 2-1998",
+              "title": "RR No. 2-1998",
+              "citation": "RR No. 2-1998",
+              "publicUrl": "https://drive.google.com/file/d/1POFyK9JX_F5rCHXVuVW8vrZbPq-8TNiE/view?usp=drivesdk",
+              "displayLabel": "RR No. 2-1998",
+              "authorityType": "RR",
+              "limitationRequired": false
+            }
+          ],
+          "fallback_references": null,
+          "metadata": {
+            "trust": {
+              "version": "1.0",
+              "hasConflict": false,
+              "limitations": [],
+              "sourceState": "AUTHORITY_FOUND",
+              "responseKind": "GENERAL_TAX",
+              "conflictState": "NO_CONFLICT",
+              "legalConclusion": "ALLOWED",
+              "authoritySupport": "VERIFIED_CONTROLLING",
+              "automaticSubmission": false,
+              "humanReviewRequired": false,
+              "specificAuthorityNotFound": false,
+              "filingReadyDocumentGenerated": false
+            },
+            "adaptive": {
+              "riskScore": null,
+              "queryIntent": null,
+              "adaptiveMode": null,
+              "responseMode": null,
+              "responsePlan": null,
+              "assumptionGap": null,
+              "authorityUsed": null,
+              "responseDepth": null,
+              "adaptiveContext": null,
+              "confidenceLevel": null,
+              "positionStrength": null,
+              "retrievalMetadata": null,
+              "supersessionAudit": null,
+              "tinaConversationMemoryVersion": "2.2.0"
+            }
+          },
+          "trust": {
+            "version": "1.0",
+            "hasConflict": false,
+            "limitations": [],
+            "sourceState": "AUTHORITY_FOUND",
+            "responseKind": "GENERAL_TAX",
+            "conflictState": "NO_CONFLICT",
+            "legalConclusion": "ALLOWED",
+            "authoritySupport": "VERIFIED_CONTROLLING",
+            "automaticSubmission": false,
+            "humanReviewRequired": false,
+            "specificAuthorityNotFound": false,
+            "filingReadyDocumentGenerated": false
+          }
+        }
+      ]
+    }
+  },
+  "sanitizedConversationRef": "8f1c0c73ebe83478"
+}

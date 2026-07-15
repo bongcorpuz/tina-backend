@@ -8863,3 +8863,25 @@ Next task: PHASE-10A6-R2-LIVE-AUTHORITY-CALIBRATION-REVALIDATION-1 -- mandatory 
 
 Artifacts: PHASE-10A6-R1-SOURCE-PRESENCE-OVERCLAIM-REMEDIATION-1_REPORT.md; evaluation/results/phase-10a6-r1-source-presence-overclaim-remediation-1.json; evaluation/results/phase-10a6-r1-source-presence-overclaim-remediation-1/ (raw-revalidation-output.json + screenshots/). Code: services/trust-contract.js (answerIsBareSourceListing guard), tests/phase-10a6-r1-source-presence-overclaim-remediation-1.test.mjs. Commit 665bd30.
 ```
+
+## Phase 10A6-R2 Live Authority Calibration Revalidation 1 -- REMEDIATION REQUIRED (2026-07-15):
+
+```text
+PHASE-10A6-R2-LIVE-AUTHORITY-CALIBRATION-REVALIDATION-1 executed by Codex GPT-5, high-reasoning posture, medium speed, as an independent reviewer/revalidator that did not execute PHASE-10A6-R1. Backend start HEAD 687e55d0b254b7a0776f6e753c12f46ffa79cc17; backend branch feature/source-availability-engine-v1. Frontend HEAD 0816ac865b4ee55d5bb92534834dadbb0dcfba87; frontend untouched. Dev Factory untouched. Runtime code, frontend code, fixtures, Gemini, and closure gate were not rerun or modified.
+
+Part I independent R1 review decision: R1 REMEDIATION REVIEW PASS WITH RECOMMENDATIONS. R1 commit 665bd303dca7051ed6c485b372ed17e04a063f6e structurally fixes the source-presence verified-controlling overclaim for app-generated bare "Indexed sources found:" answers by downgrading them before VERIFIED_CONTROLLING selection. This resolves the narrow Q9 green-banner overclaim but does not provide richer missing-requested-authority or conflict-disclosure behavior.
+
+Part II live authenticated staging revalidation completed the required 14-run matrix: Q1 once, Q2 three fresh conversations, Q3-Q8 once each, Q9 three fresh conversations, Q10 once. All /ask calls returned HTTP 200. Conversation persistence was corrected by creating backend conversations before /ask; hard-refresh/history-reopen checks returned two messages and matching assistant trust state for all 14 runs. Evidence screenshots are sanitized payload-rendered captures, not protected-preview UI screenshots; 11/14 captured, while three local Chrome screenshot captures failed with exit code 3221225477.
+
+Headline result: R1 behavior is confirmed but Phase 10A remains blocked. Q9 is no longer VERIFIED_CONTROLLING in any run (0/3); all Q9 runs are RELATED_AUTHORITY_ONLY. However, Q9 still fails 3/3 because the answer body is only a bare "Indexed sources found:" list and does not disclose that the requested BIR ruling is missing or present the prompt-stated conflict/uncertainty. This is a reproducible P1 under the R2 acceptance criteria.
+
+Other results: Q2 passes safety in 3/3 runs by returning RELATED_AUTHORITY_ONLY and prose-disclosing that the requested circular could not be located, but structured specificAuthorityNotFound remains false (P2). Q4 retains a mild verified-controlling overclaim risk (P2). Q1/Q7 controlled procedural, Q6 source-failure, Q8 potential-conflict, and Q10 restricted outcome-boundary behavior passed.
+
+Severity: P0=0, P1=1, P2=2, P3=1.
+
+Decision: PHASE 10A6-R2 LIVE REVALIDATION REMEDIATION REQUIRED. Phase 10A: REOPENED. Phase 10B: BLOCKED / DO NOT START. Phase 10C: BLOCKED. Independent closure review: DEFERRED.
+
+Exact next task: PHASE-10A6-R3-SPECIFIC-AUTHORITY-AND-CONFLICT-DISCLOSURE-REMEDIATION-1 -- remediate Q9 so missing requested authority and conflict/uncertainty are explicitly represented in the response body and trust contract, then rerun live validation before any Phase 10A re-closure consideration.
+
+Artifacts: PHASE-10A6-R2-LIVE-AUTHORITY-CALIBRATION-REVALIDATION-1_REPORT.md; evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1.json; evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/ (run-log, payloads, persistence evidence, source summaries, sanitized screenshots/html).
+```

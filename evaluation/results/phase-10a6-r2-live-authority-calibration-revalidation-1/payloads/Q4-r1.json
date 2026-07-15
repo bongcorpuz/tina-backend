@@ -1,0 +1,1096 @@
+{
+  "ask": {
+    "status": 200,
+    "responseTimeMs": 21924,
+    "payload": {
+      "success": true,
+      "engine": "TINA_ASK_HANDLER",
+      "version": "9.0.0",
+      "hook": "/ask",
+      "mode": "COMPLEX_ADVISORY",
+      "routeKind": "NORMAL_RAG",
+      "hookTitle": "Default TINA Assistant",
+      "answer": "### Quick Assessment\nThe classification of amounts advanced by a freight forwarder for shipping-line, airline, customs, and port charges depends on the nature of the transaction and the relationship with the client. These amounts can be categorized as reimbursements, pass-through advances, VATable sales, zero-rated services, or ordinary gross receipts based on specific criteria outlined in the National Internal Revenue Code (NIRC) and relevant regulations.\n\n### BIR Likely Position\nThe Bureau of Internal Revenue (BIR) is likely to classify these amounts based on whether they are considered part of the freight forwarder's service or merely pass-through costs. If the freight forwarder charges a fee for its services, the amounts may be treated as VATable sales. Conversely, if the amounts are strictly reimbursements for costs incurred on behalf of the client, they may not be subject to VAT.\n\n### Taxpayer Position / Defenses\nThe taxpayer can argue that amounts advanced for shipping, airline, customs, and port charges are pass-through expenses and should not be subject to VAT if they are merely reimbursed without markup. If the freight forwarder provides a service that qualifies for zero-rating under the NIRC, such as export services, they may also claim that these amounts should be treated as zero-rated sales.\n\n### Documentary Support Needed\n1. **Invoices and Receipts**: Documentation showing the actual amounts paid to shipping lines, airlines, customs, and ports.\n2. **Contracts**: Agreements with clients detailing the nature of the services provided and the treatment of advanced charges.\n3. **VAT Registration**: Proof of VAT registration to support claims for zero-rating or VAT exemptions.\n4. **Payment Records**: Evidence of payments made to third parties for the charges being advanced.\n\n### Procedural Issues\nThe taxpayer must ensure compliance with VAT regulations, including proper invoicing and documentation to support claims for zero-rating or reimbursement treatment. Failure to maintain adequate records may lead to challenges during a BIR audit.\n\n### Risk Level\nThe risk level is moderate to high, depending on the clarity of the documentation and the nature of the charges. If the BIR determines that the amounts are VATable sales rather than reimbursements, the taxpayer may face additional tax liabilities.\n\n### Recommended Action\n1. **Review Contracts**: Ensure that contracts with clients clearly define the nature of the charges and the treatment of advanced payments.\n2. **Maintain Documentation**: Keep thorough records of all transactions, including invoices and receipts for advanced charges.\n3. **Consult with a Tax Advisor**: Engage a tax professional to assess the specific circumstances and prepare for potential BIR inquiries.\n\n### Competing Characterizations\nNo competing characterizations identified from the available authorities.\n\n### Evidence / Substance Factors\nThe applicable substance-over-form factors have not been fully assessed.\n\n### Most Defensible Position\nPosition determination requires full fact pattern assessment.",
+      "sources": [
+        {
+          "label": "RR No. 16-2005",
+          "title": "RR No. 16-2005",
+          "citation": "RR No. 16-2005",
+          "authorityType": "RR",
+          "displayLabel": "RR No. 16-2005",
+          "limitationRequired": false,
+          "publicUrl": "https://drive.google.com/file/d/15AZ5CJymXUzA8eIlfy0A1WXubLw1HmeJ/view?usp=drivesdk"
+        }
+      ],
+      "sourcesUsed": [
+        {
+          "label": "RR No. 16-2005",
+          "title": "RR No. 16-2005",
+          "citation": "RR No. 16-2005",
+          "authorityType": "RR",
+          "displayLabel": "RR No. 16-2005",
+          "limitationRequired": false,
+          "publicUrl": "https://drive.google.com/file/d/15AZ5CJymXUzA8eIlfy0A1WXubLw1HmeJ/view?usp=drivesdk"
+        }
+      ],
+      "sourceCards": [
+        {
+          "label": "RR No. 16-2005",
+          "title": "RR No. 16-2005",
+          "citation": "RR No. 16-2005",
+          "authorityType": "RR",
+          "displayLabel": "RR No. 16-2005",
+          "limitationRequired": false,
+          "publicUrl": "https://drive.google.com/file/d/15AZ5CJymXUzA8eIlfy0A1WXubLw1HmeJ/view?usp=drivesdk"
+        }
+      ],
+      "educationalSources": null,
+      "vectorMatches": 12,
+      "trust": {
+        "version": "1.0",
+        "authoritySupport": "VERIFIED_CONTROLLING",
+        "sourceState": "AUTHORITY_FOUND",
+        "legalConclusion": "ALLOWED",
+        "humanReviewRequired": false,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "conflictState": "NO_CONFLICT",
+        "limitations": [],
+        "responseKind": "GENERAL_TAX",
+        "specificAuthorityNotFound": false
+      },
+      "retrievedSourceCount": 12,
+      "displayedSourceCount": 1,
+      "sourceStatus": "AUTHORITY_FOUND",
+      "sourceAvailability": "AUTHORITY_FOUND",
+      "saeStatus": "AUTHORITY_FOUND",
+      "patch024cPostSourcecard": {
+        "executed": true,
+        "sourceCardCount": 1,
+        "beforeLength": 3082,
+        "afterLength": 3082,
+        "changed": false,
+        "sourceAvailability": "AUTHORITY_FOUND",
+        "answerMode": "COMPLEX_ADVISORY",
+        "requestId": "route-1784077027870-a2df339e"
+      },
+      "internalError": false,
+      "errorCategory": null,
+      "sourceAvailabilityReason": "12 governing indexed parsed candidate(s) directly govern the issue.",
+      "retrievalTimedOut": false,
+      "relatedSourceCount": 0,
+      "retrievalLayerCounts": {
+        "exactAuthorityMatches": 12,
+        "citationVariantMatches": 0,
+        "metadataMatches": 0,
+        "contentKeywordMatches": 0,
+        "semanticMatches": 0,
+        "fallbackMatches": 0,
+        "supabaseFallbackMatches": 0
+      },
+      "firstSourceLabels": [
+        "RR No. 16-2005"
+      ],
+      "diagnostics": {
+        "requestId": "route-1784077027870-a2df339e",
+        "route": "/ask",
+        "model": "gpt-4o-mini",
+        "budgetMs": 90000,
+        "pipelineTimings": {
+          "requestStartedAt": 1784077027870,
+          "classificationStartedAt": 1784077028100,
+          "classificationCompletedAt": 1784077028101,
+          "retrievalStartedAt": 1784077028102,
+          "retrievalCompletedAt": 1784077036175,
+          "authorityResolutionStartedAt": 1784077036274,
+          "authorityResolutionCompletedAt": 1784077036275,
+          "generationStartedAt": 1784077037184,
+          "generationCompletedAt": 1784077043795,
+          "renderingStartedAt": 1784077043796,
+          "renderingCompletedAt": 1784077043799,
+          "complianceStartedAt": 1784077043799,
+          "complianceCompletedAt": 1784077043805,
+          "sourceSelectionStartedAt": 1784077043805,
+          "sourceSelectionCompletedAt": 1784077043811,
+          "responseCompletedAt": 1784077044141,
+          "totalMs": 16271
+        },
+        "pipelineStageDurations": {
+          "classificationMs": 1,
+          "retrievalMs": 8073,
+          "authorityResolutionMs": 1,
+          "sourceSelectionMs": 6,
+          "generationMs": 6611,
+          "complianceMs": 6,
+          "renderingMs": 3,
+          "totalMs": 16271
+        },
+        "partialPipelineState": {
+          "retrievalCompleted": true,
+          "classificationCompleted": true,
+          "generationStarted": true,
+          "generationCompleted": true,
+          "complianceStarted": true,
+          "complianceCompleted": true,
+          "retrievedCount": 12,
+          "retrievalLayerCounts": {
+            "exactAuthorityMatches": 12,
+            "citationVariantMatches": 0,
+            "metadataMatches": 0,
+            "contentKeywordMatches": 0,
+            "semanticMatches": 0,
+            "fallbackMatches": 0,
+            "supabaseFallbackMatches": 0
+          },
+          "sourceAvailabilityStatusBeforeTimeout": "AUTHORITY_FOUND",
+          "sourceLabelsBeforeTimeout": [
+            "RR No. 16-2005"
+          ],
+          "displayedSourceCardCount": 1
+        },
+        "openaiCalls": [
+          {
+            "purpose": "generation",
+            "model": "gpt-4o-mini",
+            "startedAt": 1784077037189,
+            "status": "success",
+            "attempts": [
+              {
+                "attempt": 1,
+                "startedAt": 1784077037189,
+                "completedAt": 1784077043795,
+                "durationMs": 6606,
+                "status": "success",
+                "freshClientUsed": false
+              }
+            ],
+            "completedAt": 1784077043795,
+            "durationMs": 6606,
+            "attempt": 1,
+            "retrySucceeded": false
+          }
+        ],
+        "checkpoints": [
+          {
+            "checkpoint": "CLASSIFICATION_STARTED",
+            "requestId": "route-1784077027870-a2df339e",
+            "elapsedMs": 230,
+            "remainingBudgetMs": 89770,
+            "model": "gpt-4o-mini",
+            "mode": "",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "",
+            "retrievedCount": 0,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "CLASSIFICATION_COMPLETE",
+            "requestId": "route-1784077027870-a2df339e",
+            "elapsedMs": 231,
+            "remainingBudgetMs": 89769,
+            "model": "gpt-4o-mini",
+            "mode": "",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "",
+            "retrievedCount": 0,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "RETRIEVAL_STARTED",
+            "requestId": "route-1784077027870-a2df339e",
+            "elapsedMs": 232,
+            "remainingBudgetMs": 89768,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "",
+            "retrievedCount": 0,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "RETRIEVAL_COMPLETE",
+            "requestId": "route-1784077027870-a2df339e",
+            "elapsedMs": 8305,
+            "remainingBudgetMs": 81695,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "AUTHORITY_RESOLUTION_STARTED",
+            "requestId": "route-1784077027870-a2df339e",
+            "elapsedMs": 8404,
+            "remainingBudgetMs": 81596,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "AUTHORITY_RESOLUTION_COMPLETE",
+            "requestId": "route-1784077027870-a2df339e",
+            "elapsedMs": 8405,
+            "remainingBudgetMs": 81595,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "GENERATION_STARTED",
+            "requestId": "route-1784077027870-a2df339e",
+            "elapsedMs": 9314,
+            "remainingBudgetMs": 80686,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "GENERATION_COMPLETE",
+            "requestId": "route-1784077027870-a2df339e",
+            "elapsedMs": 15925,
+            "remainingBudgetMs": 74075,
+            "model": "gpt-4o-mini",
+            "mode": "STANDARD_TAX_MODE",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "RENDERING_STARTED",
+            "requestId": "route-1784077027870-a2df339e",
+            "elapsedMs": 15926,
+            "remainingBudgetMs": 74074,
+            "model": "gpt-4o-mini",
+            "mode": "COMPLEX_ADVISORY",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "RENDERING_COMPLETE",
+            "requestId": "route-1784077027870-a2df339e",
+            "elapsedMs": 15929,
+            "remainingBudgetMs": 74071,
+            "model": "gpt-4o-mini",
+            "mode": "COMPLEX_ADVISORY",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "COMPLIANCE_STARTED",
+            "requestId": "route-1784077027870-a2df339e",
+            "elapsedMs": 15929,
+            "remainingBudgetMs": 74071,
+            "model": "gpt-4o-mini",
+            "mode": "COMPLEX_ADVISORY",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "COMPLIANCE_COMPLETE",
+            "requestId": "route-1784077027870-a2df339e",
+            "elapsedMs": 15935,
+            "remainingBudgetMs": 74065,
+            "model": "gpt-4o-mini",
+            "mode": "COMPLEX_ADVISORY",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "SOURCE_SELECTION_STARTED",
+            "requestId": "route-1784077027870-a2df339e",
+            "elapsedMs": 15935,
+            "remainingBudgetMs": 74065,
+            "model": "gpt-4o-mini",
+            "mode": "COMPLEX_ADVISORY",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 0
+          },
+          {
+            "checkpoint": "SOURCE_SELECTION_COMPLETE",
+            "requestId": "route-1784077027870-a2df339e",
+            "elapsedMs": 15941,
+            "remainingBudgetMs": 74059,
+            "model": "gpt-4o-mini",
+            "mode": "COMPLEX_ADVISORY",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 1
+          },
+          {
+            "checkpoint": "RESPONSE_COMPLETE",
+            "requestId": "route-1784077027870-a2df339e",
+            "elapsedMs": 16271,
+            "remainingBudgetMs": 73729,
+            "model": "gpt-4o-mini",
+            "mode": "COMPLEX_ADVISORY",
+            "route": "/ask",
+            "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+            "retrievedCount": 12,
+            "displayedSourceCardCount": 1
+          }
+        ]
+      },
+      "pipelineTimings": {
+        "requestStartedAt": 1784077027870,
+        "classificationStartedAt": 1784077028100,
+        "classificationCompletedAt": 1784077028101,
+        "retrievalStartedAt": 1784077028102,
+        "retrievalCompletedAt": 1784077036175,
+        "authorityResolutionStartedAt": 1784077036274,
+        "authorityResolutionCompletedAt": 1784077036275,
+        "generationStartedAt": 1784077037184,
+        "generationCompletedAt": 1784077043795,
+        "renderingStartedAt": 1784077043796,
+        "renderingCompletedAt": 1784077043799,
+        "complianceStartedAt": 1784077043799,
+        "complianceCompletedAt": 1784077043805,
+        "sourceSelectionStartedAt": 1784077043805,
+        "sourceSelectionCompletedAt": 1784077043811,
+        "responseCompletedAt": 1784077044141,
+        "totalMs": 16271
+      },
+      "pipelineStageDurations": {
+        "classificationMs": 1,
+        "retrievalMs": 8073,
+        "authorityResolutionMs": 1,
+        "sourceSelectionMs": 6,
+        "generationMs": 6611,
+        "complianceMs": 6,
+        "renderingMs": 3,
+        "totalMs": 16271
+      },
+      "partialPipelineState": {
+        "retrievalCompleted": true,
+        "classificationCompleted": true,
+        "generationStarted": true,
+        "generationCompleted": true,
+        "complianceStarted": true,
+        "complianceCompleted": true,
+        "retrievedCount": 12,
+        "retrievalLayerCounts": {
+          "exactAuthorityMatches": 12,
+          "citationVariantMatches": 0,
+          "metadataMatches": 0,
+          "contentKeywordMatches": 0,
+          "semanticMatches": 0,
+          "fallbackMatches": 0,
+          "supabaseFallbackMatches": 0
+        },
+        "sourceAvailabilityStatusBeforeTimeout": "AUTHORITY_FOUND",
+        "sourceLabelsBeforeTimeout": [
+          "RR No. 16-2005"
+        ],
+        "displayedSourceCardCount": 1
+      },
+      "openaiCalls": [
+        {
+          "purpose": "generation",
+          "model": "gpt-4o-mini",
+          "startedAt": 1784077037189,
+          "status": "success",
+          "attempts": [
+            {
+              "attempt": 1,
+              "startedAt": 1784077037189,
+              "completedAt": 1784077043795,
+              "durationMs": 6606,
+              "status": "success",
+              "freshClientUsed": false
+            }
+          ],
+          "completedAt": 1784077043795,
+          "durationMs": 6606,
+          "attempt": 1,
+          "retrySucceeded": false
+        }
+      ],
+      "responseMode": "COMPLEX_ADVISORY",
+      "orchestrationMode": "COMPLEX_ADVISORY",
+      "pipelineVersion": "1.0.0",
+      "activeHook": "/ask",
+      "activeMode": "ASK",
+      "commandMode": "ASK",
+      "requiresQuizMode": false,
+      "requiresDiagnosticMode": false,
+      "requiresReviewMode": false,
+      "requiresSourceVisibility": false,
+      "requiresCaseAnalysis": false,
+      "requiresAuditMode": false,
+      "requiresSeniorCounselMemo": false,
+      "requiresDebugMode": false,
+      "requiresCodePatch": false,
+      "requiresProgressMode": false,
+      "requiresFeedbackMode": false,
+      "metadata": {
+        "engine": "TINA_CONTEXT_ORCHESTRATION_ENGINE",
+        "version": "5.0.0",
+        "complexity": "moderate",
+        "mode": "COMPLEX_ADVISORY",
+        "responseStyle": null,
+        "modeFlags": {
+          "isQuiz": false,
+          "isReviewer": false,
+          "isReview": false,
+          "isSource": false,
+          "isCase": false,
+          "isAudit": true,
+          "isPatch": false,
+          "isDebug": false,
+          "isNonAFMode": true,
+          "isStandardLegal": false,
+          "shouldForceAFStructure": false,
+          "modeValues": [
+            "EVIDENCE_HEAVY",
+            "COMPLEX_ADVISORY",
+            "/ASK",
+            "STANDARD_TAX_MODE",
+            "EVIDENCE_HEAVY",
+            "COMPLEX_ADVISORY",
+            "EVIDENCE_HEAVY",
+            "COMPLEX_ADVISORY",
+            "COMPLEX_ADVISORY",
+            "STANDARD",
+            "STANDARD_TAX"
+          ]
+        },
+        "estimatedInputTokens": "<REDACTED>",
+        "maxCompletionTokens": "<REDACTED>",
+        "sourceCount": 10,
+        "wasTrimmed": false,
+        "authoritySummary": {
+          "controlling": 10,
+          "jurisprudence": 0,
+          "administrative": 0,
+          "accounting": 0,
+          "secondary": 0,
+          "targetAuthorityMatches": 10,
+          "issueMatches": 8,
+          "exactAuthorityMatches": 10,
+          "indexedGoogleDriveAuthorities": 10
+        },
+        "taxEngineContext": {
+          "domainCode": "VAT",
+          "domainName": "VAT Zero-Rating",
+          "supportedDomain": true,
+          "primaryIssue": "ZERO_RATED_SALES",
+          "subIssue": "ZERO_RATING",
+          "retrievalStrategy": "ISSUE_AUTHORITY_HIERARCHY_SEMANTIC",
+          "targetAuthorities": [
+            "NIRC Sec. 106(A)(2)",
+            "NIRC Sec. 108(B)",
+            "RR 16-2005"
+          ],
+          "controllingAuthorities": [
+            "NIRC Sec. 106(A)(2)",
+            "NIRC Sec. 108(B)"
+          ],
+          "supportingAuthorities": [
+            "RR 16-2005"
+          ],
+          "supportingJurisprudence": [],
+          "requiredAnswerSections": [],
+          "doctrinalRules": null,
+          "conflictRules": null
+        },
+        "sanitizedConflicts": null,
+        "diagnostics": {
+          "requestId": "route-1784077027870-a2df339e",
+          "route": "/ask",
+          "model": "gpt-4o-mini",
+          "budgetMs": 90000,
+          "pipelineTimings": {
+            "requestStartedAt": 1784077027870,
+            "classificationStartedAt": 1784077028100,
+            "classificationCompletedAt": 1784077028101,
+            "retrievalStartedAt": 1784077028102,
+            "retrievalCompletedAt": 1784077036175,
+            "authorityResolutionStartedAt": 1784077036274,
+            "authorityResolutionCompletedAt": 1784077036275,
+            "generationStartedAt": 1784077037184,
+            "generationCompletedAt": 1784077043795,
+            "renderingStartedAt": 1784077043796,
+            "renderingCompletedAt": 1784077043799,
+            "complianceStartedAt": 1784077043799,
+            "complianceCompletedAt": 1784077043805,
+            "sourceSelectionStartedAt": 1784077043805,
+            "sourceSelectionCompletedAt": 1784077043811,
+            "responseCompletedAt": 1784077044141,
+            "totalMs": 16271
+          },
+          "pipelineStageDurations": {
+            "classificationMs": 1,
+            "retrievalMs": 8073,
+            "authorityResolutionMs": 1,
+            "sourceSelectionMs": 6,
+            "generationMs": 6611,
+            "complianceMs": 6,
+            "renderingMs": 3,
+            "totalMs": 16271
+          },
+          "partialPipelineState": {
+            "retrievalCompleted": true,
+            "classificationCompleted": true,
+            "generationStarted": true,
+            "generationCompleted": true,
+            "complianceStarted": true,
+            "complianceCompleted": true,
+            "retrievedCount": 12,
+            "retrievalLayerCounts": {
+              "exactAuthorityMatches": 12,
+              "citationVariantMatches": 0,
+              "metadataMatches": 0,
+              "contentKeywordMatches": 0,
+              "semanticMatches": 0,
+              "fallbackMatches": 0,
+              "supabaseFallbackMatches": 0
+            },
+            "sourceAvailabilityStatusBeforeTimeout": "AUTHORITY_FOUND",
+            "sourceLabelsBeforeTimeout": [
+              "RR No. 16-2005"
+            ],
+            "displayedSourceCardCount": 1
+          },
+          "openaiCalls": [
+            {
+              "purpose": "generation",
+              "model": "gpt-4o-mini",
+              "startedAt": 1784077037189,
+              "status": "success",
+              "attempts": [
+                {
+                  "attempt": 1,
+                  "startedAt": 1784077037189,
+                  "completedAt": 1784077043795,
+                  "durationMs": 6606,
+                  "status": "success",
+                  "freshClientUsed": false
+                }
+              ],
+              "completedAt": 1784077043795,
+              "durationMs": 6606,
+              "attempt": 1,
+              "retrySucceeded": false
+            }
+          ],
+          "checkpoints": [
+            {
+              "checkpoint": "CLASSIFICATION_STARTED",
+              "requestId": "route-1784077027870-a2df339e",
+              "elapsedMs": 230,
+              "remainingBudgetMs": 89770,
+              "model": "gpt-4o-mini",
+              "mode": "",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "",
+              "retrievedCount": 0,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "CLASSIFICATION_COMPLETE",
+              "requestId": "route-1784077027870-a2df339e",
+              "elapsedMs": 231,
+              "remainingBudgetMs": 89769,
+              "model": "gpt-4o-mini",
+              "mode": "",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "",
+              "retrievedCount": 0,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "RETRIEVAL_STARTED",
+              "requestId": "route-1784077027870-a2df339e",
+              "elapsedMs": 232,
+              "remainingBudgetMs": 89768,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "",
+              "retrievedCount": 0,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "RETRIEVAL_COMPLETE",
+              "requestId": "route-1784077027870-a2df339e",
+              "elapsedMs": 8305,
+              "remainingBudgetMs": 81695,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "AUTHORITY_RESOLUTION_STARTED",
+              "requestId": "route-1784077027870-a2df339e",
+              "elapsedMs": 8404,
+              "remainingBudgetMs": 81596,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "AUTHORITY_RESOLUTION_COMPLETE",
+              "requestId": "route-1784077027870-a2df339e",
+              "elapsedMs": 8405,
+              "remainingBudgetMs": 81595,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "GENERATION_STARTED",
+              "requestId": "route-1784077027870-a2df339e",
+              "elapsedMs": 9314,
+              "remainingBudgetMs": 80686,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "GENERATION_COMPLETE",
+              "requestId": "route-1784077027870-a2df339e",
+              "elapsedMs": 15925,
+              "remainingBudgetMs": 74075,
+              "model": "gpt-4o-mini",
+              "mode": "STANDARD_TAX_MODE",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "RENDERING_STARTED",
+              "requestId": "route-1784077027870-a2df339e",
+              "elapsedMs": 15926,
+              "remainingBudgetMs": 74074,
+              "model": "gpt-4o-mini",
+              "mode": "COMPLEX_ADVISORY",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "RENDERING_COMPLETE",
+              "requestId": "route-1784077027870-a2df339e",
+              "elapsedMs": 15929,
+              "remainingBudgetMs": 74071,
+              "model": "gpt-4o-mini",
+              "mode": "COMPLEX_ADVISORY",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "COMPLIANCE_STARTED",
+              "requestId": "route-1784077027870-a2df339e",
+              "elapsedMs": 15929,
+              "remainingBudgetMs": 74071,
+              "model": "gpt-4o-mini",
+              "mode": "COMPLEX_ADVISORY",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "COMPLIANCE_COMPLETE",
+              "requestId": "route-1784077027870-a2df339e",
+              "elapsedMs": 15935,
+              "remainingBudgetMs": 74065,
+              "model": "gpt-4o-mini",
+              "mode": "COMPLEX_ADVISORY",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "SOURCE_SELECTION_STARTED",
+              "requestId": "route-1784077027870-a2df339e",
+              "elapsedMs": 15935,
+              "remainingBudgetMs": 74065,
+              "model": "gpt-4o-mini",
+              "mode": "COMPLEX_ADVISORY",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 0
+            },
+            {
+              "checkpoint": "SOURCE_SELECTION_COMPLETE",
+              "requestId": "route-1784077027870-a2df339e",
+              "elapsedMs": 15941,
+              "remainingBudgetMs": 74059,
+              "model": "gpt-4o-mini",
+              "mode": "COMPLEX_ADVISORY",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 1
+            },
+            {
+              "checkpoint": "RESPONSE_COMPLETE",
+              "requestId": "route-1784077027870-a2df339e",
+              "elapsedMs": 16271,
+              "remainingBudgetMs": 73729,
+              "model": "gpt-4o-mini",
+              "mode": "COMPLEX_ADVISORY",
+              "route": "/ask",
+              "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+              "retrievedCount": 12,
+              "displayedSourceCardCount": 1
+            }
+          ]
+        },
+        "openAiModel": "gpt-4o-mini",
+        "openAiProjectAccessFailure": false,
+        "askHandlerVersion": "9.0.0",
+        "pipelineSupremacy": true,
+        "pipelineVersion": "1.0.0",
+        "correctFlowEnabled": true,
+        "issueClassificationEngineCalled": true,
+        "retrievalEngineCalled": true,
+        "rerankerEngineCalled": true,
+        "fourPartDoctrineTestApplied": true,
+        "retrievalLayerCounts": {
+          "exactAuthorityMatches": 12,
+          "citationVariantMatches": 0,
+          "metadataMatches": 0,
+          "contentKeywordMatches": 0,
+          "semanticMatches": 0,
+          "fallbackMatches": 0,
+          "supabaseFallbackMatches": 0
+        },
+        "firstSourceLabels": [
+          "RR No. 16-2005"
+        ],
+        "pipelineTimings": {
+          "requestStartedAt": 1784077027870,
+          "classificationStartedAt": 1784077028100,
+          "classificationCompletedAt": 1784077028101,
+          "retrievalStartedAt": 1784077028102,
+          "retrievalCompletedAt": 1784077036175,
+          "authorityResolutionStartedAt": 1784077036274,
+          "authorityResolutionCompletedAt": 1784077036275,
+          "generationStartedAt": 1784077037184,
+          "generationCompletedAt": 1784077043795,
+          "renderingStartedAt": 1784077043796,
+          "renderingCompletedAt": 1784077043799,
+          "complianceStartedAt": 1784077043799,
+          "complianceCompletedAt": 1784077043805,
+          "sourceSelectionStartedAt": 1784077043805,
+          "sourceSelectionCompletedAt": 1784077043811,
+          "responseCompletedAt": 1784077044141,
+          "totalMs": 16271
+        },
+        "pipelineStageDurations": {
+          "classificationMs": 1,
+          "retrievalMs": 8073,
+          "authorityResolutionMs": 1,
+          "sourceSelectionMs": 6,
+          "generationMs": 6611,
+          "complianceMs": 6,
+          "renderingMs": 3,
+          "totalMs": 16271
+        },
+        "partialPipelineState": {
+          "retrievalCompleted": true,
+          "classificationCompleted": true,
+          "generationStarted": true,
+          "generationCompleted": true,
+          "complianceStarted": true,
+          "complianceCompleted": true,
+          "retrievedCount": 12,
+          "retrievalLayerCounts": {
+            "exactAuthorityMatches": 12,
+            "citationVariantMatches": 0,
+            "metadataMatches": 0,
+            "contentKeywordMatches": 0,
+            "semanticMatches": 0,
+            "fallbackMatches": 0,
+            "supabaseFallbackMatches": 0
+          },
+          "sourceAvailabilityStatusBeforeTimeout": "AUTHORITY_FOUND",
+          "sourceLabelsBeforeTimeout": [
+            "RR No. 16-2005"
+          ],
+          "displayedSourceCardCount": 1
+        },
+        "openaiCalls": [
+          {
+            "purpose": "generation",
+            "model": "gpt-4o-mini",
+            "startedAt": 1784077037189,
+            "status": "success",
+            "attempts": [
+              {
+                "attempt": 1,
+                "startedAt": 1784077037189,
+                "completedAt": 1784077043795,
+                "durationMs": 6606,
+                "status": "success",
+                "freshClientUsed": false
+              }
+            ],
+            "completedAt": 1784077043795,
+            "durationMs": 6606,
+            "attempt": 1,
+            "retrySucceeded": false
+          }
+        ],
+        "routeControllerOnly": true,
+        "noLegalReasoningInsideAskHandler": true,
+        "noSourceRankingInsideAskHandler": true,
+        "noRenderingInsideAskHandler": true,
+        "orchestrationFirstArchitecture": true,
+        "noDirectOpenAICall": true,
+        "noPromptAssembly": true,
+        "tpmConscious": true
+      }
+    }
+  },
+  "hardRefresh": {
+    "status": 200,
+    "payload": {
+      "success": true,
+      "messages": [
+        {
+          "id": "<REDACTED_UUID>",
+          "conversation_id": "<REDACTED>",
+          "user_id": "<REDACTED>",
+          "role": "user",
+          "content": "A freight forwarder advances shipping-line, airline, customs, and port charges to clients. When are these amounts reimbursements, pass-through advances, VATable sales, zero-rated services, or ordinary gross receipts?",
+          "created_at": "2026-07-15T00:57:24.695391+00:00",
+          "sources_used": null,
+          "fallback_references": null,
+          "metadata": {
+            "adaptive": {
+              "riskScore": null,
+              "queryIntent": null,
+              "adaptiveMode": null,
+              "responseMode": null,
+              "responsePlan": null,
+              "assumptionGap": null,
+              "authorityUsed": null,
+              "responseDepth": null,
+              "adaptiveContext": null,
+              "confidenceLevel": null,
+              "positionStrength": null,
+              "retrievalMetadata": null,
+              "supersessionAudit": null,
+              "tinaConversationMemoryVersion": "2.2.0"
+            }
+          },
+          "trust": null
+        },
+        {
+          "id": "<REDACTED_UUID>",
+          "conversation_id": "<REDACTED>",
+          "user_id": "<REDACTED>",
+          "role": "assistant",
+          "content": "### Quick Assessment\nThe classification of amounts advanced by a freight forwarder for shipping-line, airline, customs, and port charges depends on the nature of the transaction and the relationship with the client. These amounts can be categorized as reimbursements, pass-through advances, VATable sales, zero-rated services, or ordinary gross receipts based on specific criteria outlined in the National Internal Revenue Code (NIRC) and relevant regulations.\n\n### BIR Likely Position\nThe Bureau of Internal Revenue (BIR) is likely to classify these amounts based on whether they are considered part of the freight forwarder's service or merely pass-through costs. If the freight forwarder charges a fee for its services, the amounts may be treated as VATable sales. Conversely, if the amounts are strictly reimbursements for costs incurred on behalf of the client, they may not be subject to VAT.\n\n### Taxpayer Position / Defenses\nThe taxpayer can argue that amounts advanced for shipping, airline, customs, and port charges are pass-through expenses and should not be subject to VAT if they are merely reimbursed without markup. If the freight forwarder provides a service that qualifies for zero-rating under the NIRC, such as export services, they may also claim that these amounts should be treated as zero-rated sales.\n\n### Documentary Support Needed\n1. **Invoices and Receipts**: Documentation showing the actual amounts paid to shipping lines, airlines, customs, and ports.\n2. **Contracts**: Agreements with clients detailing the nature of the services provided and the treatment of advanced charges.\n3. **VAT Registration**: Proof of VAT registration to support claims for zero-rating or VAT exemptions.\n4. **Payment Records**: Evidence of payments made to third parties for the charges being advanced.\n\n### Procedural Issues\nThe taxpayer must ensure compliance with VAT regulations, including proper invoicing and documentation to support claims for zero-rating or reimbursement treatment. Failure to maintain adequate records may lead to challenges during a BIR audit.\n\n### Risk Level\nThe risk level is moderate to high, depending on the clarity of the documentation and the nature of the charges. If the BIR determines that the amounts are VATable sales rather than reimbursements, the taxpayer may face additional tax liabilities.\n\n### Recommended Action\n1. **Review Contracts**: Ensure that contracts with clients clearly define the nature of the charges and the treatment of advanced payments.\n2. **Maintain Documentation**: Keep thorough records of all transactions, including invoices and receipts for advanced charges.\n3. **Consult with a Tax Advisor**: Engage a tax professional to assess the specific circumstances and prepare for potential BIR inquiries.\n\n### Competing Characterizations\nNo competing characterizations identified from the available authorities.\n\n### Evidence / Substance Factors\nThe applicable substance-over-form factors have not been fully assessed.\n\n### Most Defensible Position\nPosition determination requires full fact pattern assessment.",
+          "created_at": "2026-07-15T00:57:25.583858+00:00",
+          "sources_used": [
+            {
+              "label": "RR No. 16-2005",
+              "title": "RR No. 16-2005",
+              "citation": "RR No. 16-2005",
+              "publicUrl": "https://drive.google.com/file/d/15AZ5CJymXUzA8eIlfy0A1WXubLw1HmeJ/view?usp=drivesdk",
+              "displayLabel": "RR No. 16-2005",
+              "authorityType": "RR",
+              "limitationRequired": false
+            }
+          ],
+          "fallback_references": null,
+          "metadata": {
+            "trust": {
+              "version": "1.0",
+              "hasConflict": false,
+              "limitations": [],
+              "sourceState": "AUTHORITY_FOUND",
+              "responseKind": "GENERAL_TAX",
+              "conflictState": "NO_CONFLICT",
+              "legalConclusion": "ALLOWED",
+              "authoritySupport": "VERIFIED_CONTROLLING",
+              "automaticSubmission": false,
+              "humanReviewRequired": false,
+              "specificAuthorityNotFound": false,
+              "filingReadyDocumentGenerated": false
+            },
+            "adaptive": {
+              "riskScore": null,
+              "queryIntent": null,
+              "adaptiveMode": null,
+              "responseMode": null,
+              "responsePlan": null,
+              "assumptionGap": null,
+              "authorityUsed": null,
+              "responseDepth": null,
+              "adaptiveContext": null,
+              "confidenceLevel": null,
+              "positionStrength": null,
+              "retrievalMetadata": null,
+              "supersessionAudit": null,
+              "tinaConversationMemoryVersion": "2.2.0"
+            }
+          },
+          "trust": {
+            "version": "1.0",
+            "hasConflict": false,
+            "limitations": [],
+            "sourceState": "AUTHORITY_FOUND",
+            "responseKind": "GENERAL_TAX",
+            "conflictState": "NO_CONFLICT",
+            "legalConclusion": "ALLOWED",
+            "authoritySupport": "VERIFIED_CONTROLLING",
+            "automaticSubmission": false,
+            "humanReviewRequired": false,
+            "specificAuthorityNotFound": false,
+            "filingReadyDocumentGenerated": false
+          }
+        }
+      ]
+    }
+  },
+  "historyReopen": {
+    "status": 200,
+    "payload": {
+      "success": true,
+      "messages": [
+        {
+          "id": "<REDACTED_UUID>",
+          "conversation_id": "<REDACTED>",
+          "user_id": "<REDACTED>",
+          "role": "user",
+          "content": "A freight forwarder advances shipping-line, airline, customs, and port charges to clients. When are these amounts reimbursements, pass-through advances, VATable sales, zero-rated services, or ordinary gross receipts?",
+          "created_at": "2026-07-15T00:57:24.695391+00:00",
+          "sources_used": null,
+          "fallback_references": null,
+          "metadata": {
+            "adaptive": {
+              "riskScore": null,
+              "queryIntent": null,
+              "adaptiveMode": null,
+              "responseMode": null,
+              "responsePlan": null,
+              "assumptionGap": null,
+              "authorityUsed": null,
+              "responseDepth": null,
+              "adaptiveContext": null,
+              "confidenceLevel": null,
+              "positionStrength": null,
+              "retrievalMetadata": null,
+              "supersessionAudit": null,
+              "tinaConversationMemoryVersion": "2.2.0"
+            }
+          },
+          "trust": null
+        },
+        {
+          "id": "<REDACTED_UUID>",
+          "conversation_id": "<REDACTED>",
+          "user_id": "<REDACTED>",
+          "role": "assistant",
+          "content": "### Quick Assessment\nThe classification of amounts advanced by a freight forwarder for shipping-line, airline, customs, and port charges depends on the nature of the transaction and the relationship with the client. These amounts can be categorized as reimbursements, pass-through advances, VATable sales, zero-rated services, or ordinary gross receipts based on specific criteria outlined in the National Internal Revenue Code (NIRC) and relevant regulations.\n\n### BIR Likely Position\nThe Bureau of Internal Revenue (BIR) is likely to classify these amounts based on whether they are considered part of the freight forwarder's service or merely pass-through costs. If the freight forwarder charges a fee for its services, the amounts may be treated as VATable sales. Conversely, if the amounts are strictly reimbursements for costs incurred on behalf of the client, they may not be subject to VAT.\n\n### Taxpayer Position / Defenses\nThe taxpayer can argue that amounts advanced for shipping, airline, customs, and port charges are pass-through expenses and should not be subject to VAT if they are merely reimbursed without markup. If the freight forwarder provides a service that qualifies for zero-rating under the NIRC, such as export services, they may also claim that these amounts should be treated as zero-rated sales.\n\n### Documentary Support Needed\n1. **Invoices and Receipts**: Documentation showing the actual amounts paid to shipping lines, airlines, customs, and ports.\n2. **Contracts**: Agreements with clients detailing the nature of the services provided and the treatment of advanced charges.\n3. **VAT Registration**: Proof of VAT registration to support claims for zero-rating or VAT exemptions.\n4. **Payment Records**: Evidence of payments made to third parties for the charges being advanced.\n\n### Procedural Issues\nThe taxpayer must ensure compliance with VAT regulations, including proper invoicing and documentation to support claims for zero-rating or reimbursement treatment. Failure to maintain adequate records may lead to challenges during a BIR audit.\n\n### Risk Level\nThe risk level is moderate to high, depending on the clarity of the documentation and the nature of the charges. If the BIR determines that the amounts are VATable sales rather than reimbursements, the taxpayer may face additional tax liabilities.\n\n### Recommended Action\n1. **Review Contracts**: Ensure that contracts with clients clearly define the nature of the charges and the treatment of advanced payments.\n2. **Maintain Documentation**: Keep thorough records of all transactions, including invoices and receipts for advanced charges.\n3. **Consult with a Tax Advisor**: Engage a tax professional to assess the specific circumstances and prepare for potential BIR inquiries.\n\n### Competing Characterizations\nNo competing characterizations identified from the available authorities.\n\n### Evidence / Substance Factors\nThe applicable substance-over-form factors have not been fully assessed.\n\n### Most Defensible Position\nPosition determination requires full fact pattern assessment.",
+          "created_at": "2026-07-15T00:57:25.583858+00:00",
+          "sources_used": [
+            {
+              "label": "RR No. 16-2005",
+              "title": "RR No. 16-2005",
+              "citation": "RR No. 16-2005",
+              "publicUrl": "https://drive.google.com/file/d/15AZ5CJymXUzA8eIlfy0A1WXubLw1HmeJ/view?usp=drivesdk",
+              "displayLabel": "RR No. 16-2005",
+              "authorityType": "RR",
+              "limitationRequired": false
+            }
+          ],
+          "fallback_references": null,
+          "metadata": {
+            "trust": {
+              "version": "1.0",
+              "hasConflict": false,
+              "limitations": [],
+              "sourceState": "AUTHORITY_FOUND",
+              "responseKind": "GENERAL_TAX",
+              "conflictState": "NO_CONFLICT",
+              "legalConclusion": "ALLOWED",
+              "authoritySupport": "VERIFIED_CONTROLLING",
+              "automaticSubmission": false,
+              "humanReviewRequired": false,
+              "specificAuthorityNotFound": false,
+              "filingReadyDocumentGenerated": false
+            },
+            "adaptive": {
+              "riskScore": null,
+              "queryIntent": null,
+              "adaptiveMode": null,
+              "responseMode": null,
+              "responsePlan": null,
+              "assumptionGap": null,
+              "authorityUsed": null,
+              "responseDepth": null,
+              "adaptiveContext": null,
+              "confidenceLevel": null,
+              "positionStrength": null,
+              "retrievalMetadata": null,
+              "supersessionAudit": null,
+              "tinaConversationMemoryVersion": "2.2.0"
+            }
+          },
+          "trust": {
+            "version": "1.0",
+            "hasConflict": false,
+            "limitations": [],
+            "sourceState": "AUTHORITY_FOUND",
+            "responseKind": "GENERAL_TAX",
+            "conflictState": "NO_CONFLICT",
+            "legalConclusion": "ALLOWED",
+            "authoritySupport": "VERIFIED_CONTROLLING",
+            "automaticSubmission": false,
+            "humanReviewRequired": false,
+            "specificAuthorityNotFound": false,
+            "filingReadyDocumentGenerated": false
+          }
+        }
+      ]
+    }
+  },
+  "sanitizedConversationRef": "ad39ebb4c651df70"
+}

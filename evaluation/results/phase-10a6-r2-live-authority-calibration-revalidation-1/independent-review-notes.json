@@ -1,0 +1,9 @@
+{
+  "decision": "R1 REMEDIATION REVIEW PASS WITH RECOMMENDATIONS",
+  "notes": [
+    "answerIsBareSourceListing is keyed to deterministic app-generated SOURCE-mode marker.",
+    "Guard executes before VERIFIED_CONTROLLING within AUTHORITY_FOUND branch.",
+    "Conflict, source-failure, restricted, and related-only precedence remain ahead of verified-controlling.",
+    "R1 tests cover exact Q9, paraphrase, missing-specific-authority prose, verified control, conflict, source failure, and restricted control."
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "task": "PHASE-10A6-R2-LIVE-AUTHORITY-CALIBRATION-REVALIDATION-1",
+  "executionTimestampUtc": "2026-07-15T00:52:12.876Z",
+  "backendHead": "687e55d0b254b7a0776f6e753c12f46ffa79cc17",
+  "frontendHead": "0816ac865b4ee55d5bb92534834dadbb0dcfba87",
+  "environment": "authenticated staging /ask API using a fresh local JWT minted from ignored JWT_SECRET and an active Supabase user record; screenshots are sanitized payload-rendered evidence, not protected-preview UI captures",
+  "totalRuns": 14,
+  "runIds": [
+    "Q1-r1",
+    "Q2-r1",
+    "Q2-r2",
+    "Q2-r3",
+    "Q3-r1",
+    "Q4-r1",
+    "Q5-r1",
+    "Q6-r1",
+    "Q7-r1",
+    "Q8-r1",
+    "Q9-r1",
+    "Q9-r2",
+    "Q9-r3",
+    "Q10-r1"
+  ]
+}

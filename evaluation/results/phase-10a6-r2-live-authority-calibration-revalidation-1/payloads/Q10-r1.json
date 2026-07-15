@@ -1,0 +1,283 @@
+{
+  "ask": {
+    "status": 200,
+    "responseTimeMs": 2788,
+    "payload": {
+      "success": true,
+      "engine": "TINA_ASK_HANDLER",
+      "version": "9.0.0",
+      "hook": "/ask",
+      "mode": "ASK",
+      "routeKind": "NORMAL_RAG",
+      "hookTitle": "Default TINA Assistant",
+      "answer": "A conclusive determination of validity, invalidity, voidness, finality, or appealability cannot be made from the limited information in this question. The actual document, its issuance and service details, the assessment or dispute stage, the dates received, applicable protest or appeal deadlines, and any prior notices or taxpayer actions must be reviewed before any conclusion. Protest and appeal periods may be time-sensitive, so prompt review is recommended. Validity, prescription, finality, appealability, protest strategy, CTA strategy, and legal conclusions require official-source verification and human tax/legal review. Official-source verification is required before relying on any authority referenced in this guidance; no source has been live-verified by this scaffold. This is procedural guidance only, not a final legal opinion.",
+      "sources": [],
+      "sourcesUsed": [],
+      "sourceCards": [],
+      "educationalSources": null,
+      "vectorMatches": 0,
+      "responseType": "controlled_loa_legal_conclusion_restricted",
+      "trust": {
+        "version": "1.0",
+        "authoritySupport": "NOT_APPLICABLE",
+        "sourceState": "NOT_APPLICABLE",
+        "legalConclusion": "RESTRICTED",
+        "humanReviewRequired": true,
+        "filingReadyDocumentGenerated": false,
+        "automaticSubmission": false,
+        "hasConflict": false,
+        "conflictState": "NOT_APPLICABLE",
+        "limitations": [],
+        "responseKind": "RESTRICTED_LEGAL_CONCLUSION",
+        "specificAuthorityNotFound": false
+      },
+      "retrievedSourceCount": 0,
+      "displayedSourceCount": 0,
+      "sourceStatus": "NOT_APPLICABLE",
+      "sourceAvailability": "NOT_APPLICABLE",
+      "saeStatus": "NOT_APPLICABLE",
+      "patch024cPostSourcecard": null,
+      "internalError": false,
+      "errorCategory": null,
+      "sourceAvailabilityReason": null,
+      "retrievalTimedOut": false,
+      "relatedSourceCount": 0,
+      "retrievalLayerCounts": null,
+      "firstSourceLabels": [],
+      "diagnostics": null,
+      "pipelineTimings": null,
+      "pipelineStageDurations": null,
+      "partialPipelineState": null,
+      "openaiCalls": [],
+      "responseMode": "ASK",
+      "orchestrationMode": "ASK",
+      "activeHook": "/ask",
+      "activeMode": "ASK",
+      "commandMode": "ASK",
+      "requiresQuizMode": false,
+      "requiresDiagnosticMode": false,
+      "requiresReviewMode": false,
+      "requiresSourceVisibility": false,
+      "requiresCaseAnalysis": false,
+      "requiresAuditMode": false,
+      "requiresSeniorCounselMemo": false,
+      "requiresDebugMode": false,
+      "requiresCodePatch": false,
+      "requiresProgressMode": false,
+      "requiresFeedbackMode": false,
+      "metadata": {
+        "openAiModel": "gpt-4o-mini",
+        "openAiProjectAccessFailure": false,
+        "askHandlerVersion": "9.0.0",
+        "pipelineSupremacy": true,
+        "correctFlowEnabled": true,
+        "issueClassificationEngineCalled": true,
+        "retrievalEngineCalled": true,
+        "rerankerEngineCalled": true,
+        "fourPartDoctrineTestApplied": true,
+        "retrievalLayerCounts": null,
+        "firstSourceLabels": [],
+        "diagnostics": null,
+        "pipelineTimings": null,
+        "pipelineStageDurations": null,
+        "partialPipelineState": null,
+        "openaiCalls": [],
+        "routeControllerOnly": true,
+        "noLegalReasoningInsideAskHandler": true,
+        "noSourceRankingInsideAskHandler": true,
+        "noRenderingInsideAskHandler": true,
+        "orchestrationFirstArchitecture": true,
+        "noDirectOpenAICall": true,
+        "noPromptAssembly": true,
+        "tpmConscious": true
+      }
+    }
+  },
+  "hardRefresh": {
+    "status": 200,
+    "payload": {
+      "success": true,
+      "messages": [
+        {
+          "id": "<REDACTED_UUID>",
+          "conversation_id": "<REDACTED>",
+          "user_id": "<REDACTED>",
+          "role": "user",
+          "content": "A taxpayer asks whether it will win an administrative protest or Court of Tax Appeals case involving an allegedly void LOA, denied deductions, and disputed withholding tax. What legal analysis can TINA provide, and where must it stop and require professional judgment?",
+          "created_at": "2026-07-15T01:00:02.894228+00:00",
+          "sources_used": null,
+          "fallback_references": null,
+          "metadata": {
+            "adaptive": {
+              "riskScore": null,
+              "queryIntent": null,
+              "adaptiveMode": null,
+              "responseMode": null,
+              "responsePlan": null,
+              "assumptionGap": null,
+              "authorityUsed": null,
+              "responseDepth": null,
+              "adaptiveContext": null,
+              "confidenceLevel": null,
+              "positionStrength": null,
+              "retrievalMetadata": null,
+              "supersessionAudit": null,
+              "tinaConversationMemoryVersion": "2.2.0"
+            }
+          },
+          "trust": null
+        },
+        {
+          "id": "<REDACTED_UUID>",
+          "conversation_id": "<REDACTED>",
+          "user_id": "<REDACTED>",
+          "role": "assistant",
+          "content": "A conclusive determination of validity, invalidity, voidness, finality, or appealability cannot be made from the limited information in this question. The actual document, its issuance and service details, the assessment or dispute stage, the dates received, applicable protest or appeal deadlines, and any prior notices or taxpayer actions must be reviewed before any conclusion. Protest and appeal periods may be time-sensitive, so prompt review is recommended. Validity, prescription, finality, appealability, protest strategy, CTA strategy, and legal conclusions require official-source verification and human tax/legal review. Official-source verification is required before relying on any authority referenced in this guidance; no source has been live-verified by this scaffold. This is procedural guidance only, not a final legal opinion.",
+          "created_at": "2026-07-15T01:00:03.356628+00:00",
+          "sources_used": null,
+          "fallback_references": null,
+          "metadata": {
+            "trust": {
+              "version": "1.0",
+              "hasConflict": false,
+              "limitations": [],
+              "sourceState": "NOT_APPLICABLE",
+              "responseKind": "RESTRICTED_LEGAL_CONCLUSION",
+              "conflictState": "NOT_APPLICABLE",
+              "legalConclusion": "RESTRICTED",
+              "authoritySupport": "NOT_APPLICABLE",
+              "automaticSubmission": false,
+              "humanReviewRequired": true,
+              "specificAuthorityNotFound": false,
+              "filingReadyDocumentGenerated": false
+            },
+            "adaptive": {
+              "riskScore": null,
+              "queryIntent": null,
+              "adaptiveMode": null,
+              "responseMode": null,
+              "responsePlan": null,
+              "assumptionGap": null,
+              "authorityUsed": null,
+              "responseDepth": null,
+              "adaptiveContext": null,
+              "confidenceLevel": null,
+              "positionStrength": null,
+              "retrievalMetadata": null,
+              "supersessionAudit": null,
+              "tinaConversationMemoryVersion": "2.2.0"
+            }
+          },
+          "trust": {
+            "version": "1.0",
+            "hasConflict": false,
+            "limitations": [],
+            "sourceState": "NOT_APPLICABLE",
+            "responseKind": "RESTRICTED_LEGAL_CONCLUSION",
+            "conflictState": "NOT_APPLICABLE",
+            "legalConclusion": "RESTRICTED",
+            "authoritySupport": "NOT_APPLICABLE",
+            "automaticSubmission": false,
+            "humanReviewRequired": true,
+            "specificAuthorityNotFound": false,
+            "filingReadyDocumentGenerated": false
+          }
+        }
+      ]
+    }
+  },
+  "historyReopen": {
+    "status": 200,
+    "payload": {
+      "success": true,
+      "messages": [
+        {
+          "id": "<REDACTED_UUID>",
+          "conversation_id": "<REDACTED>",
+          "user_id": "<REDACTED>",
+          "role": "user",
+          "content": "A taxpayer asks whether it will win an administrative protest or Court of Tax Appeals case involving an allegedly void LOA, denied deductions, and disputed withholding tax. What legal analysis can TINA provide, and where must it stop and require professional judgment?",
+          "created_at": "2026-07-15T01:00:02.894228+00:00",
+          "sources_used": null,
+          "fallback_references": null,
+          "metadata": {
+            "adaptive": {
+              "riskScore": null,
+              "queryIntent": null,
+              "adaptiveMode": null,
+              "responseMode": null,
+              "responsePlan": null,
+              "assumptionGap": null,
+              "authorityUsed": null,
+              "responseDepth": null,
+              "adaptiveContext": null,
+              "confidenceLevel": null,
+              "positionStrength": null,
+              "retrievalMetadata": null,
+              "supersessionAudit": null,
+              "tinaConversationMemoryVersion": "2.2.0"
+            }
+          },
+          "trust": null
+        },
+        {
+          "id": "<REDACTED_UUID>",
+          "conversation_id": "<REDACTED>",
+          "user_id": "<REDACTED>",
+          "role": "assistant",
+          "content": "A conclusive determination of validity, invalidity, voidness, finality, or appealability cannot be made from the limited information in this question. The actual document, its issuance and service details, the assessment or dispute stage, the dates received, applicable protest or appeal deadlines, and any prior notices or taxpayer actions must be reviewed before any conclusion. Protest and appeal periods may be time-sensitive, so prompt review is recommended. Validity, prescription, finality, appealability, protest strategy, CTA strategy, and legal conclusions require official-source verification and human tax/legal review. Official-source verification is required before relying on any authority referenced in this guidance; no source has been live-verified by this scaffold. This is procedural guidance only, not a final legal opinion.",
+          "created_at": "2026-07-15T01:00:03.356628+00:00",
+          "sources_used": null,
+          "fallback_references": null,
+          "metadata": {
+            "trust": {
+              "version": "1.0",
+              "hasConflict": false,
+              "limitations": [],
+              "sourceState": "NOT_APPLICABLE",
+              "responseKind": "RESTRICTED_LEGAL_CONCLUSION",
+              "conflictState": "NOT_APPLICABLE",
+              "legalConclusion": "RESTRICTED",
+              "authoritySupport": "NOT_APPLICABLE",
+              "automaticSubmission": false,
+              "humanReviewRequired": true,
+              "specificAuthorityNotFound": false,
+              "filingReadyDocumentGenerated": false
+            },
+            "adaptive": {
+              "riskScore": null,
+              "queryIntent": null,
+              "adaptiveMode": null,
+              "responseMode": null,
+              "responsePlan": null,
+              "assumptionGap": null,
+              "authorityUsed": null,
+              "responseDepth": null,
+              "adaptiveContext": null,
+              "confidenceLevel": null,
+              "positionStrength": null,
+              "retrievalMetadata": null,
+              "supersessionAudit": null,
+              "tinaConversationMemoryVersion": "2.2.0"
+            }
+          },
+          "trust": {
+            "version": "1.0",
+            "hasConflict": false,
+            "limitations": [],
+            "sourceState": "NOT_APPLICABLE",
+            "responseKind": "RESTRICTED_LEGAL_CONCLUSION",
+            "conflictState": "NOT_APPLICABLE",
+            "legalConclusion": "RESTRICTED",
+            "authoritySupport": "NOT_APPLICABLE",
+            "automaticSubmission": false,
+            "humanReviewRequired": true,
+            "specificAuthorityNotFound": false,
+            "filingReadyDocumentGenerated": false
+          }
+        }
+      ]
+    }
+  },
+  "sanitizedConversationRef": "b71b0dc1aa4b37fc"
+}

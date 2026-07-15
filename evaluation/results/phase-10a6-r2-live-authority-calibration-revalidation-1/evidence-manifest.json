@@ -1,0 +1,227 @@
+{
+  "generatedAtUtc": "2026-07-15T01:06:59.291Z",
+  "evidenceDirectory": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/",
+  "fileCount": 44,
+  "files": [
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/execution-manifest.json",
+      "bytes": 698,
+      "sha256": "92be49e92978b2af76881afbb71a9d2586ad676d74866672ec2c7ef2c6e7d1d4"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/html/Q1-r1.html",
+      "bytes": 2787,
+      "sha256": "b8816ec4fb0acd5144c9091bf914dcb61731d7e494eb5d33db24d2ff5e7b73b1"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/html/Q10-r1.html",
+      "bytes": 2494,
+      "sha256": "2f4ae15ab1fc386617493252b054b01726653db1c16ea5ca44b9cfbeb34f1b7e"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/html/Q2-r1.html",
+      "bytes": 4106,
+      "sha256": "e81d50c268c951f40648e64ef92405727a9d851437d296e252431f2bb563cf3a"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/html/Q2-r2.html",
+      "bytes": 3949,
+      "sha256": "17ba71743cb14d1bf99805ca23ca17b5f35f6996e762ef95717f174c5b6e4b13"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/html/Q2-r3.html",
+      "bytes": 3898,
+      "sha256": "a0b4c50214345b8ba20625eafaaf8af8a5333afeba3c3c5bb124ef4f73df47cc"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/html/Q3-r1.html",
+      "bytes": 2953,
+      "sha256": "fc56d2819752aa3a8f2ee05a15766dd307c8ac949759246a8ad8bf3874112c77"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/html/Q4-r1.html",
+      "bytes": 4703,
+      "sha256": "4405f5a4da728dc1b8bd1c7c3e63d87eeaca2a4c552a939fe1fa7a81dd1c2e8b"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/html/Q5-r1.html",
+      "bytes": 2296,
+      "sha256": "b502f9aa9f640e513156e0dab82212fce2f3f892a2632dce6dccadbdb42f569b"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/html/Q6-r1.html",
+      "bytes": 1832,
+      "sha256": "586202ae807f0fd9b87cd6db097d112ddc080c06b3ffdc99bfe8c12b94d369d9"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/html/Q7-r1.html",
+      "bytes": 2794,
+      "sha256": "8c63aad49a2f8fec82f1cf4bdd404eb4e6e65ebeb98216d342a52552c0233fa3"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/html/Q8-r1.html",
+      "bytes": 4278,
+      "sha256": "c1b0323930f4e7fd7d97154ee9cba5783261309283b960e6ca90d5fc288d9e4e"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/html/Q9-r1.html",
+      "bytes": 2100,
+      "sha256": "83f150177f1751c546923adf159bc77de90357bb6afcd994044ed81de95d4253"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/html/Q9-r2.html",
+      "bytes": 2100,
+      "sha256": "b6d664ff4f8ad9ee7cca93f8973380181e8fafb57666366d241682b9a6c29a94"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/html/Q9-r3.html",
+      "bytes": 2100,
+      "sha256": "eff94aaed60be4020ef83433b3109bccef30679f56857162930522ea154fcbcf"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/independent-review-notes.json",
+      "bytes": 515,
+      "sha256": "5b7b2fce354a5dfb0896b7f647908fcc2c52f5f31bece3f482437d95c40c4673"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/payloads/Q1-r1.json",
+      "bytes": 21076,
+      "sha256": "3c4165b9ff0c406f93b04593a47c8705472af9f12e4ff3be631c7d64e5688fcb"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/payloads/Q10-r1.json",
+      "bytes": 12566,
+      "sha256": "27e89b4d1bf9af3dc104bb6bea2f04722c42c3ccd0431ec9b2add00b422c2ae5"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/payloads/Q2-r1.json",
+      "bytes": 46978,
+      "sha256": "f32b22a1d5ff2d740600f4c531e7c52fc93f2cd79e855708ac4f38bdbaa013dc"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/payloads/Q2-r2.json",
+      "bytes": 46542,
+      "sha256": "d6a762f96111807f21fc7231951dc9856a7e47f63b2ab5db4a6cee0622eca0b9"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/payloads/Q2-r3.json",
+      "bytes": 46508,
+      "sha256": "e33f412dba57b3ccf47037950a91b9b58245bfeb980205c24d00d1eb2f58ccbb"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/payloads/Q3-r1.json",
+      "bytes": 41267,
+      "sha256": "c1dd0f6757e544f08e2a879eb319b4865f8427b747f160a6b5fadfc13e43e353"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/payloads/Q4-r1.json",
+      "bytes": 48437,
+      "sha256": "4644a4628917e7a7a34dc3b9d41c7b260b25f1031affabe96924279c46d63fa9"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/payloads/Q5-r1.json",
+      "bytes": 46462,
+      "sha256": "140485d94589e4afd15df1f6ed6dce007886130f4d2ba819d6d6bdce32cc41d9"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/payloads/Q6-r1.json",
+      "bytes": 38653,
+      "sha256": "146025c20baaa887186f862c9e849081962994a851bd8b39e237171842fe759b"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/payloads/Q7-r1.json",
+      "bytes": 21147,
+      "sha256": "b65151b292bb95be5c3828ebdd7588098f8fee15fce0286138fdcd95dcf6e55e"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/payloads/Q8-r1.json",
+      "bytes": 49181,
+      "sha256": "f555e6d31cb7aced85c0fd57a019324a40d706907b4b22265b264d44ceaf7383"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/payloads/Q9-r1.json",
+      "bytes": 42249,
+      "sha256": "59e953fd54bc4ec4924727230d108d72565a089a953bf93f06c108a8a91631bc"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/payloads/Q9-r2.json",
+      "bytes": 42237,
+      "sha256": "7ddc87249d8f3a7327fc48d86b571c73f7d06a7ef9ee8057fce8e279fbf8856d"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/payloads/Q9-r3.json",
+      "bytes": 42243,
+      "sha256": "784819db2ead3dc79fa4d338d327301edadf64a8ceaecfdee5574571309c524b"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/persistence-evidence.json",
+      "bytes": 5019,
+      "sha256": "5f00e0f8fdd3e02bfa79d12bcee9f0715376e1fb9f214a75383938e0b9271a24"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/run-log.json",
+      "bytes": 46166,
+      "sha256": "dcff67052a2e82fd1f15db5be2588f19d642805cc4037ab7eefe25291fc60e67"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/screenshots/Q1-r1-desktop.png",
+      "bytes": 71621,
+      "sha256": "34434c6ccf5be25279664f380eeee29bced353260b378122b665a270ff0a2836"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/screenshots/Q2-r1-desktop.png",
+      "bytes": 73741,
+      "sha256": "5674b24d9735531da41bcaabd203f332f946fe79a8da858980e6b6a5b9cbf563"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/screenshots/Q2-r2-desktop.png",
+      "bytes": 69882,
+      "sha256": "e7eaf853e7251e40863559a1ac2313e4b6f77236295a256576621b16d8c5b8d6"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/screenshots/Q2-r3-desktop.png",
+      "bytes": 71008,
+      "sha256": "e2480f991007c4764ec36d047fc064671e95ff9d41c4fae301568df39100899c"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/screenshots/Q4-r1-desktop.png",
+      "bytes": 90185,
+      "sha256": "f60f71958084ce57125b5bcf95f7ad0854ed74993ff30499a03a269df797c69f"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/screenshots/Q5-r1-desktop.png",
+      "bytes": 55211,
+      "sha256": "accf01f9b1dc8188fc558ed65b462ed2b4129fbdaeaf3d9b0ba58560fc425211"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/screenshots/Q6-r1-desktop.png",
+      "bytes": 38886,
+      "sha256": "27653f3dcce78f38594f4aa3a21ecab651feca801a7276a60aa4a0651a357af4"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/screenshots/Q7-r1-desktop.png",
+      "bytes": 72146,
+      "sha256": "f6c668ef11822a34b7b0206b184a63318937b05a29904cbe2031656fcd679d11"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/screenshots/Q8-r1-desktop.png",
+      "bytes": 87625,
+      "sha256": "9008deb3864cbceff880a51fa16dc517b6a77996cf3ee48c74d0629ef119404e"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/screenshots/Q9-r2-desktop.png",
+      "bytes": 53775,
+      "sha256": "0d54dc11a9711590f31bd722d7daeae2872419490fdbf81f45e6b323eff349ff"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/screenshots/Q9-r3-desktop.png",
+      "bytes": 53791,
+      "sha256": "eb4c3c4015862bd5b10e09b097c341b87ff045ba53dcf6fc0e34b551019afa71"
+    },
+    {
+      "path": "evaluation/results/phase-10a6-r2-live-authority-calibration-revalidation-1/source-summaries.json",
+      "bytes": 3089,
+      "sha256": "3292c4b6462fe932aa1f6280cd75709b3dfe2fe97a6aeaf0dc6bf6993ef35c58"
+    }
+  ]
+}

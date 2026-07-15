@@ -1,0 +1,736 @@
+{
+  "task": "PHASE-10A6-R2-LIVE-AUTHORITY-CALIBRATION-REVALIDATION-1",
+  "executionTimestampUtc": "2026-07-15T00:52:12.876Z",
+  "backendHead": "687e55d0b254b7a0776f6e753c12f46ffa79cc17",
+  "frontendHead": "0816ac865b4ee55d5bb92534834dadbb0dcfba87",
+  "environment": "authenticated staging /ask API using a fresh local JWT minted from ignored JWT_SECRET and an active Supabase user record; screenshots are sanitized payload-rendered evidence, not protected-preview UI captures",
+  "authMethod": "Authorization header value created in memory only; token and user identity never written",
+  "runs": [
+    {
+      "ordinal": 1,
+      "id": "Q1-r1",
+      "questionId": "Q1",
+      "prompt": "A BIR Letter of Authority was issued, later replaced, but the replacement LOA was served after the original 120-day audit period. Is the resulting assessment valid, and what is the effect of replacement versus revalidation?",
+      "sanitizedConversationRef": "7b947a0c01ed99e2",
+      "httpStatus": 200,
+      "responseTimeMs": 11164,
+      "timedOut": false,
+      "answer": "If you received a BIR LOA/eLA, do not ignore it. Preserve the date and manner of receipt, keep a copy of the notice, and verify it through the available BIR verification process (for example, the REVIE / LOA Verifier process under RMC No. 5-2026) where applicable. Prepare a document compliance matrix, submit through controlled transmittal, and keep proof of submission. Do not fabricate unavailable or non-existent documents; use substitute proof where appropriate. This is procedural guidance only. Human tax/legal review remains required for validity, prescription, finality, appealability, protest strategy, CTA strategy, or legal conclusions. Check the following details: Taxpayer name, TIN, Taxable period, Tax types covered, Issuing office, LOA/eLA number, Audit case number, Revenue Officer (RO), Group Supervisor (GS), Approving/signing official, Documents requested. Avoid unnecessary admissions. Monitor possible next stages: additional document request, NOD/DOD, PAN, FAN/FLD, protest, FDDA, and CTA appeal-watch. Official-source verification is required before relying on any authority referenced in this guidance; no source has been live-verified by this scaffold.",
+      "answerLength": 1179,
+      "classification": {
+        "trustState": "procedural",
+        "authoritySupport": "NOT_APPLICABLE",
+        "sourceState": "NOT_APPLICABLE",
+        "conflictState": "NOT_APPLICABLE",
+        "hasConflict": false,
+        "specificAuthorityNotFound": false,
+        "legalConclusion": "NOT_APPLICABLE",
+        "humanReviewRequired": true,
+        "responseKind": "CONTROLLED_PROCEDURAL",
+        "responseType": "controlled_loa_answer",
+        "limitations": []
+      },
+      "sources": [],
+      "displayedSourceCount": 0,
+      "sourceStatus": "AUTHORITY_FOUND",
+      "citedAuthorities": [],
+      "exactRequestedAuthorityFoundStatus": "not_structured_or_not_applicable",
+      "conflictStatus": "NOT_APPLICABLE",
+      "hardRefresh": {
+        "status": 200,
+        "messageCount": 2,
+        "assistantTrustState": "procedural",
+        "success": true
+      },
+      "historyReopen": {
+        "status": 200,
+        "messageCount": 2,
+        "assistantTrustState": "procedural",
+        "success": true
+      },
+      "persistenceConsistent": true,
+      "sanitizedBackendPayloadPath": "payloads/Q1-r1.json",
+      "desktopScreenshot": "screenshots/Q1-r1-desktop.png",
+      "desktopScreenshotStatus": "captured_sanitized_payload_render"
+    },
+    {
+      "ordinal": 2,
+      "id": "Q2-r1",
+      "questionId": "Q2",
+      "prompt": "A taxpayer requested a specific BIR revenue memorandum circular, but TINA cannot locate the exact issuance. Can TINA still give an answer based on the Tax Code, regulations, and related jurisprudence without implying that the requested circular was verified?",
+      "sanitizedConversationRef": "3a03bdf78400aca9",
+      "httpStatus": 200,
+      "responseTimeMs": 77004,
+      "timedOut": false,
+      "answer": "**Case Identified** \nCTA Case No. 9711 – Dizon Farms Produce, Inc. v. CIR\n\n**Facts / Context** \nIn this case, the taxpayer, Dizon Farms Produce, Inc., contested a deficiency tax assessment issued by the Bureau of Internal Revenue (BIR). The taxpayer argued that the assessment was invalid due to the BIR's failure to comply with the due process requirements mandated by law.\n\n**Issue** \nThe primary issue was whether the BIR's failure to issue a Pre-Assessment Notice (PAN) constituted a violation of the taxpayer's due process rights, thereby rendering the tax assessment null and void.\n\n**Ruling / Holding** \nThe Court of Tax Appeals (CTA) ruled in favor of the taxpayer, stating that the issuance of a PAN is a critical component of the due process requirements in tax assessments. The court emphasized that tax assessments issued without adhering to these due process rights are considered null and void.\n\n**Doctrine** \nThe doctrine established in this case highlights the necessity of following due process in tax assessments, specifically the requirement for the BIR to issue a PAN before any deficiency tax assessment can be validly made. This aligns with the principle that taxpayers have the right to be informed of any deficiencies and to respond accordingly.\n\n**Application** \nIn applying this ruling, it is clear that any tax assessment made by the BIR must comply with the procedural requirements set forth in the law, including the issuance of a PAN. Failure to do so not only undermines the assessment's validity but also infringes upon the taxpayer's rights.\n\n**Status / Limits** \nThis case underscores the importance of procedural compliance in tax assessments. It serves as a precedent for future cases where taxpayers may challenge the validity of assessments based on procedural grounds. However, it is limited to the context of due process in tax assessments and does not address other substantive tax issues. \n\nIn conclusion, while the specific BIR revenue memorandum circular requested by the taxpayer could not be located, the principles derived from the NIRC and the ruling in Dizon Farms Produce, Inc. v. CIR provide a framework for understanding the procedural requirements that the BIR must follow in tax assessments.\n\nSource limitation: A governing authority was not directly located. Displayed sources are related, supporting, or secondary only. They are not the controlling basis for the answer.",
+      "answerLength": 2426,
+      "classification": {
+        "trustState": "related-authority-only",
+        "authoritySupport": "RELATED_AUTHORITY_ONLY",
+        "sourceState": "RELATED_AUTHORITY_ONLY",
+        "conflictState": "NO_CONFLICT",
+        "hasConflict": false,
+        "specificAuthorityNotFound": false,
+        "legalConclusion": "ALLOWED",
+        "humanReviewRequired": false,
+        "responseKind": "GENERAL_TAX",
+        "responseType": null,
+        "limitations": [
+          "RELATED_AUTHORITY_ONLY"
+        ]
+      },
+      "sources": [
+        "CTA Case No. 9711"
+      ],
+      "displayedSourceCount": 1,
+      "sourceStatus": "RELATED_AUTHORITY_ONLY",
+      "citedAuthorities": [
+        "CTA Case No. 9711"
+      ],
+      "exactRequestedAuthorityFoundStatus": "not_structured_or_not_applicable",
+      "conflictStatus": "NO_CONFLICT",
+      "hardRefresh": {
+        "status": 200,
+        "messageCount": 2,
+        "assistantTrustState": "related-authority-only",
+        "success": true
+      },
+      "historyReopen": {
+        "status": 200,
+        "messageCount": 2,
+        "assistantTrustState": "related-authority-only",
+        "success": true
+      },
+      "persistenceConsistent": true,
+      "sanitizedBackendPayloadPath": "payloads/Q2-r1.json",
+      "desktopScreenshot": "screenshots/Q2-r1-desktop.png",
+      "desktopScreenshotStatus": "captured_sanitized_payload_render"
+    },
+    {
+      "ordinal": 3,
+      "id": "Q2-r2",
+      "questionId": "Q2",
+      "prompt": "A taxpayer requested a specific BIR revenue memorandum circular, but TINA cannot locate the exact issuance. Can TINA still give an answer based on the Tax Code, regulations, and related jurisprudence without implying that the requested circular was verified?",
+      "sanitizedConversationRef": "962a3cfa7ee1583c",
+      "httpStatus": 200,
+      "responseTimeMs": 77835,
+      "timedOut": false,
+      "answer": "**Case Identified** \nCTA Case No. 9711 – Dizon Farms Produce, Inc. v. CIR\n\n**Facts / Context** \nIn this case, the taxpayer, Dizon Farms Produce, Inc., contested a deficiency tax assessment issued by the Bureau of Internal Revenue (BIR). The taxpayer argued that the assessment was invalid due to the lack of a proper pre-assessment notice (PAN), which is a critical component of the due process in tax assessments.\n\n**Issue** \nThe primary issue was whether the BIR's failure to issue a pre-assessment notice (PAN) rendered the deficiency tax assessment null and void.\n\n**Ruling / Holding** \nThe Court of Tax Appeals (CTA) ruled in favor of the taxpayer, stating that the absence of a PAN violated the taxpayer's due process rights. The court emphasized that tax assessments issued without adhering to the due process requirements are considered null and void.\n\n**Doctrine** \nThe ruling established that the issuance of a pre-assessment notice is a mandatory requirement for valid tax assessments. The taxpayer must be given an opportunity to respond to the findings of the BIR before any formal assessment is made.\n\n**Application** \nIn applying this doctrine, the CTA highlighted that the BIR must follow the procedural requirements set forth in the relevant regulations, specifically noting that the taxpayer has a right to be informed of the basis for the tax assessment and to contest it before any final determination is made.\n\n**Status / Limits** \nThis case underscores the importance of due process in tax assessments and serves as a precedent for similar cases where taxpayers challenge the validity of assessments based on procedural grounds. The ruling is limited to the context of due process in tax assessments and does not address other substantive tax issues.\n\nIn summary, while the specific BIR revenue memorandum circular requested by the taxpayer could not be located, the principles established in CTA Case No. 9711 provide a clear framework regarding the necessity of due process in tax assessments, which is grounded in the provisions of the National Internal Revenue Code (NIRC).\n\nSource limitation: A governing authority was not directly located. Displayed sources are related, supporting, or secondary only. They are not the controlling basis for the answer.",
+      "answerLength": 2280,
+      "classification": {
+        "trustState": "related-authority-only",
+        "authoritySupport": "RELATED_AUTHORITY_ONLY",
+        "sourceState": "RELATED_AUTHORITY_ONLY",
+        "conflictState": "NO_CONFLICT",
+        "hasConflict": false,
+        "specificAuthorityNotFound": false,
+        "legalConclusion": "ALLOWED",
+        "humanReviewRequired": false,
+        "responseKind": "GENERAL_TAX",
+        "responseType": null,
+        "limitations": [
+          "RELATED_AUTHORITY_ONLY"
+        ]
+      },
+      "sources": [
+        "CTA Case No. 9711"
+      ],
+      "displayedSourceCount": 1,
+      "sourceStatus": "RELATED_AUTHORITY_ONLY",
+      "citedAuthorities": [
+        "CTA Case No. 9711"
+      ],
+      "exactRequestedAuthorityFoundStatus": "not_structured_or_not_applicable",
+      "conflictStatus": "NO_CONFLICT",
+      "hardRefresh": {
+        "status": 200,
+        "messageCount": 2,
+        "assistantTrustState": "related-authority-only",
+        "success": true
+      },
+      "historyReopen": {
+        "status": 200,
+        "messageCount": 2,
+        "assistantTrustState": "related-authority-only",
+        "success": true
+      },
+      "persistenceConsistent": true,
+      "sanitizedBackendPayloadPath": "payloads/Q2-r2.json",
+      "desktopScreenshot": "screenshots/Q2-r2-desktop.png",
+      "desktopScreenshotStatus": "captured_sanitized_payload_render"
+    },
+    {
+      "ordinal": 4,
+      "id": "Q2-r3",
+      "questionId": "Q2",
+      "prompt": "A taxpayer requested a specific BIR revenue memorandum circular, but TINA cannot locate the exact issuance. Can TINA still give an answer based on the Tax Code, regulations, and related jurisprudence without implying that the requested circular was verified?",
+      "sanitizedConversationRef": "82badb33cde66adf",
+      "httpStatus": 200,
+      "responseTimeMs": 86943,
+      "timedOut": false,
+      "answer": "**Case Identified** \nCTA Case No. 9711 – Dizon Farms Produce, Inc. v. CIR\n\n**Facts / Context** \nIn this case, the taxpayer, Dizon Farms Produce, Inc., contested a deficiency tax assessment issued by the Bureau of Internal Revenue (BIR). The taxpayer argued that the assessment was invalid due to the lack of a proper pre-assessment notice (PAN) and the failure of the BIR to comply with due process requirements.\n\n**Issue** \nThe primary issue was whether the BIR's failure to issue a PAN constituted a violation of the taxpayer's due process rights, rendering the tax assessment null and void.\n\n**Ruling / Holding** \nThe Court of Tax Appeals (CTA) ruled in favor of the taxpayer, stating that the issuance of a PAN is a mandatory requirement for a valid tax assessment. The court emphasized that tax assessments issued without adhering to due process are null and void.\n\n**Doctrine** \nThe doctrine established in this case is that the BIR must comply with due process requirements, specifically the issuance of a PAN, before issuing a final assessment notice (FAN). This is crucial to ensure that taxpayers are given an opportunity to contest the findings of the BIR.\n\n**Application** \nIn applying this doctrine, the CTA highlighted that the BIR's failure to issue a PAN deprived the taxpayer of the opportunity to respond to the findings of deficiency tax. As a result, the assessment was deemed invalid, reinforcing the importance of procedural compliance in tax assessments.\n\n**Status / Limits** \nThis ruling underscores the necessity for the BIR to follow due process in tax assessments. However, it is limited to cases where the absence of a PAN is proven, and does not extend to other procedural or substantive issues that may arise in tax assessments. \n\nIn summary, while the specific BIR revenue memorandum circular requested by the taxpayer could not be located, the principles established in CTA Case No. 9711 provide a clear framework regarding the importance of due process in tax assessments, particularly the requirement for a PAN.\n\nSource limitation: A governing authority was not directly located. Displayed sources are related, supporting, or secondary only. They are not the controlling basis for the answer.",
+      "answerLength": 2226,
+      "classification": {
+        "trustState": "related-authority-only",
+        "authoritySupport": "RELATED_AUTHORITY_ONLY",
+        "sourceState": "RELATED_AUTHORITY_ONLY",
+        "conflictState": "NO_CONFLICT",
+        "hasConflict": false,
+        "specificAuthorityNotFound": false,
+        "legalConclusion": "ALLOWED",
+        "humanReviewRequired": false,
+        "responseKind": "GENERAL_TAX",
+        "responseType": null,
+        "limitations": [
+          "RELATED_AUTHORITY_ONLY"
+        ]
+      },
+      "sources": [
+        "CTA Case No. 9711"
+      ],
+      "displayedSourceCount": 1,
+      "sourceStatus": "RELATED_AUTHORITY_ONLY",
+      "citedAuthorities": [
+        "CTA Case No. 9711"
+      ],
+      "exactRequestedAuthorityFoundStatus": "not_structured_or_not_applicable",
+      "conflictStatus": "NO_CONFLICT",
+      "hardRefresh": {
+        "status": 200,
+        "messageCount": 2,
+        "assistantTrustState": "related-authority-only",
+        "success": true
+      },
+      "historyReopen": {
+        "status": 200,
+        "messageCount": 2,
+        "assistantTrustState": "related-authority-only",
+        "success": true
+      },
+      "persistenceConsistent": true,
+      "sanitizedBackendPayloadPath": "payloads/Q2-r3.json",
+      "desktopScreenshot": "screenshots/Q2-r3-desktop.png",
+      "desktopScreenshotStatus": "captured_sanitized_payload_render"
+    },
+    {
+      "ordinal": 5,
+      "id": "Q3-r1",
+      "questionId": "Q3",
+      "prompt": "A Philippine company paid storage, handling, overtime, and ancillary charges under a contract titled “Contract of Lease.” Which payments are subject to 5% EWT as rent and which may be subject to 2% EWT as services, especially where the contract provides one bundled price?",
+      "sanitizedConversationRef": "8f1c0c73ebe83478",
+      "httpStatus": 200,
+      "responseTimeMs": 13456,
+      "timedOut": false,
+      "answer": "### Issue Presented\nUnder the National Internal Revenue Code (NIRC), payments classified as rent, such as storage and handling charges under a lease agreement, are subject to a 5% Expanded Withholding Tax (EWT) as per Section 28(B)(1). Conversely, ancillary charges related to services, such as overtime, may be subject to a 2% EWT as per Section 28(B)(5)(a). The classification depends on the nature of the charges and the terms of the contract.\n\n### Relevant Facts / Assumptions\nThe factual circumstances have not been fully described. The analysis is based on the question as presented.\n\n### Controlling Authorities\n\nNIRC Sec. 57 authorizes withholding of tax at source. NIRC Sec. 58 governs withholding-agent duties, including withholding, return filing, and remittance obligations.\n\n### Alternative Interpretations\nNo alternative interpretations identified from the available indexed authorities.\n\n### Position Strength\nPosition strength is preliminary and subject to full fact pattern verification.\n\n### Practical Note\n\nVerify the applicable EWT rate and classification with the relevant Revenue Regulation or BIR issuance. Issue BIR Form 2307 (certificate of creditable withholding tax) to the payee for each withholding period.",
+      "answerLength": 1235,
+      "classification": {
+        "trustState": "verified-controlling",
+        "authoritySupport": "VERIFIED_CONTROLLING",
+        "sourceState": "AUTHORITY_FOUND",
+        "conflictState": "NO_CONFLICT",
+        "hasConflict": false,
+        "specificAuthorityNotFound": false,
+        "legalConclusion": "ALLOWED",
+        "humanReviewRequired": false,
+        "responseKind": "GENERAL_TAX",
+        "responseType": null,
+        "limitations": []
+      },
+      "sources": [
+        "NIRC Sec. 57",
+        "NIRC Sec. 58",
+        "RR No. 2-1998"
+      ],
+      "displayedSourceCount": 3,
+      "sourceStatus": "AUTHORITY_FOUND",
+      "citedAuthorities": [
+        "NIRC Sec. 57",
+        "NIRC Sec. 58",
+        "RR No. 2-1998"
+      ],
+      "exactRequestedAuthorityFoundStatus": "not_structured_or_not_applicable",
+      "conflictStatus": "NO_CONFLICT",
+      "hardRefresh": {
+        "status": 200,
+        "messageCount": 2,
+        "assistantTrustState": "verified-controlling",
+        "success": true
+      },
+      "historyReopen": {
+        "status": 200,
+        "messageCount": 2,
+        "assistantTrustState": "verified-controlling",
+        "success": true
+      },
+      "persistenceConsistent": true,
+      "sanitizedBackendPayloadPath": "payloads/Q3-r1.json",
+      "desktopScreenshot": null,
+      "desktopScreenshotStatus": "blocked_3221225477"
+    },
+    {
+      "ordinal": 6,
+      "id": "Q4-r1",
+      "questionId": "Q4",
+      "prompt": "A freight forwarder advances shipping-line, airline, customs, and port charges to clients. When are these amounts reimbursements, pass-through advances, VATable sales, zero-rated services, or ordinary gross receipts?",
+      "sanitizedConversationRef": "ad39ebb4c651df70",
+      "httpStatus": 200,
+      "responseTimeMs": 21924,
+      "timedOut": false,
+      "answer": "### Quick Assessment\nThe classification of amounts advanced by a freight forwarder for shipping-line, airline, customs, and port charges depends on the nature of the transaction and the relationship with the client. These amounts can be categorized as reimbursements, pass-through advances, VATable sales, zero-rated services, or ordinary gross receipts based on specific criteria outlined in the National Internal Revenue Code (NIRC) and relevant regulations.\n\n### BIR Likely Position\nThe Bureau of Internal Revenue (BIR) is likely to classify these amounts based on whether they are considered part of the freight forwarder's service or merely pass-through costs. If the freight forwarder charges a fee for its services, the amounts may be treated as VATable sales. Conversely, if the amounts are strictly reimbursements for costs incurred on behalf of the client, they may not be subject to VAT.\n\n### Taxpayer Position / Defenses\nThe taxpayer can argue that amounts advanced for shipping, airline, customs, and port charges are pass-through expenses and should not be subject to VAT if they are merely reimbursed without markup. If the freight forwarder provides a service that qualifies for zero-rating under the NIRC, such as export services, they may also claim that these amounts should be treated as zero-rated sales.\n\n### Documentary Support Needed\n1. **Invoices and Receipts**: Documentation showing the actual amounts paid to shipping lines, airlines, customs, and ports.\n2. **Contracts**: Agreements with clients detailing the nature of the services provided and the treatment of advanced charges.\n3. **VAT Registration**: Proof of VAT registration to support claims for zero-rating or VAT exemptions.\n4. **Payment Records**: Evidence of payments made to third parties for the charges being advanced.\n\n### Procedural Issues\nThe taxpayer must ensure compliance with VAT regulations, including proper invoicing and documentation to support claims for zero-rating or reimbursement treatment. Failure to maintain adequate records may lead to challenges during a BIR audit.\n\n### Risk Level\nThe risk level is moderate to high, depending on the clarity of the documentation and the nature of the charges. If the BIR determines that the amounts are VATable sales rather than reimbursements, the taxpayer may face additional tax liabilities.\n\n### Recommended Action\n1. **Review Contracts**: Ensure that contracts with clients clearly define the nature of the charges and the treatment of advanced payments.\n2. **Maintain Documentation**: Keep thorough records of all transactions, including invoices and receipts for advanced charges.\n3. **Consult with a Tax Advisor**: Engage a tax professional to assess the specific circumstances and prepare for potential BIR inquiries.\n\n### Competing Characterizations\nNo competing characterizations identified from the available authorities.\n\n### Evidence / Substance Factors\nThe applicable substance-over-form factors have not been fully assessed.\n\n### Most Defensible Position\nPosition determination requires full fact pattern assessment.",
+      "answerLength": 3082,
+      "classification": {
+        "trustState": "verified-controlling",
+        "authoritySupport": "VERIFIED_CONTROLLING",
+        "sourceState": "AUTHORITY_FOUND",
+        "conflictState": "NO_CONFLICT",
+        "hasConflict": false,
+        "specificAuthorityNotFound": false,
+        "legalConclusion": "ALLOWED",
+        "humanReviewRequired": false,
+        "responseKind": "GENERAL_TAX",
+        "responseType": null,
+        "limitations": []
+      },
+      "sources": [
+        "RR No. 16-2005"
+      ],
+      "displayedSourceCount": 1,
+      "sourceStatus": "AUTHORITY_FOUND",
+      "citedAuthorities": [
+        "RR No. 16-2005"
+      ],
+      "exactRequestedAuthorityFoundStatus": "not_structured_or_not_applicable",
+      "conflictStatus": "NO_CONFLICT",
+      "hardRefresh": {
+        "status": 200,
+        "messageCount": 2,
+        "assistantTrustState": "verified-controlling",
+        "success": true
+      },
+      "historyReopen": {
+        "status": 200,
+        "messageCount": 2,
+        "assistantTrustState": "verified-controlling",
+        "success": true
+      },
+      "persistenceConsistent": true,
+      "sanitizedBackendPayloadPath": "payloads/Q4-r1.json",
+      "desktopScreenshot": "screenshots/Q4-r1-desktop.png",
+      "desktopScreenshotStatus": "captured_sanitized_payload_render"
+    },
+    {
+      "ordinal": 7,
+      "id": "Q5-r1",
+      "questionId": "Q5",
+      "prompt": "A VAT-registered supplier sells fresh frozen seafood in its original state. Is the sale VAT-exempt, and is a separate VAT-exemption certificate required, or is the BIR Certificate of Registration sufficient?",
+      "sanitizedConversationRef": "1febfa7a1818f5a0",
+      "httpStatus": 200,
+      "responseTimeMs": 18082,
+      "timedOut": false,
+      "answer": "### Short Answer\n\n### Controlling Authorities\n- **NIRC Section 236**: This section outlines the registration requirements for VAT-registered persons, confirming that the BIR Certificate of Registration is adequate for VAT-exempt transactions.\n\n### Interpretation\n\n### Practical Meaning\nFor VAT-registered suppliers selling fresh frozen seafood, this ruling simplifies compliance. They can confidently sell these products without charging VAT, relying on their BIR Certificate of Registration as proof of their VAT-exempt status. This reduces administrative burdens and potential confusion regarding additional documentation.",
+      "answerLength": 624,
+      "classification": {
+        "trustState": "verified-controlling",
+        "authoritySupport": "VERIFIED_CONTROLLING",
+        "sourceState": "AUTHORITY_FOUND",
+        "conflictState": "NO_CONFLICT",
+        "hasConflict": false,
+        "specificAuthorityNotFound": false,
+        "legalConclusion": "ALLOWED",
+        "humanReviewRequired": false,
+        "responseKind": "GENERAL_TAX",
+        "responseType": null,
+        "limitations": []
+      },
+      "sources": [
+        "NIRC Sec. 109",
+        "NIRC Sec. 236",
+        "RR No. 16-2005",
+        "RMC 75-2015"
+      ],
+      "displayedSourceCount": 4,
+      "sourceStatus": "AUTHORITY_FOUND",
+      "citedAuthorities": [
+        "NIRC Sec. 109",
+        "NIRC Sec. 236",
+        "RR No. 16-2005",
+        "RMC 75-2015"
+      ],
+      "exactRequestedAuthorityFoundStatus": "not_structured_or_not_applicable",
+      "conflictStatus": "NO_CONFLICT",
+      "hardRefresh": {
+        "status": 200,
+        "messageCount": 2,
+        "assistantTrustState": "verified-controlling",
+        "success": true
+      },
+      "historyReopen": {
+        "status": 200,
+        "messageCount": 2,
+        "assistantTrustState": "verified-controlling",
+        "success": true
+      },
+      "persistenceConsistent": true,
+      "sanitizedBackendPayloadPath": "payloads/Q5-r1.json",
+      "desktopScreenshot": "screenshots/Q5-r1-desktop.png",
+      "desktopScreenshotStatus": "captured_sanitized_payload_render"
+    },
+    {
+      "ordinal": 8,
+      "id": "Q6-r1",
+      "questionId": "Q6",
+      "prompt": "A condominium corporation wants to create a separate stock corporation to provide leasing support, short-stay compliance, and building-access coordination. Can the condominium corporation own the majority of the shares and receive dividends without violating its non-stock, non-profit character?",
+      "sanitizedConversationRef": "6f7c11a518b266cd",
+      "httpStatus": 200,
+      "responseTimeMs": 16720,
+      "timedOut": false,
+      "answer": "TINA could not identify an indexed authority matching the specific transaction or claim described.\n\nThis does not mean that no law or authority exists.",
+      "answerLength": 151,
+      "classification": {
+        "trustState": "source-failure",
+        "authoritySupport": "NO_VERIFIED_AUTHORITY",
+        "sourceState": "NO_INDEXED_SOURCE",
+        "conflictState": "NO_CONFLICT",
+        "hasConflict": false,
+        "specificAuthorityNotFound": false,
+        "legalConclusion": "UNKNOWN",
+        "humanReviewRequired": false,
+        "responseKind": "FALLBACK",
+        "responseType": null,
+        "limitations": [
+          "NO_INDEXED_SOURCE"
+        ]
+      },
+      "sources": [],
+      "displayedSourceCount": 0,
+      "sourceStatus": "NO_INDEXED_SOURCE",
+      "citedAuthorities": [],
+      "exactRequestedAuthorityFoundStatus": "not_structured_or_not_applicable",
+      "conflictStatus": "NO_CONFLICT",
+      "hardRefresh": {
+        "status": 200,
+        "messageCount": 2,
+        "assistantTrustState": "source-failure",
+        "success": true
+      },
+      "historyReopen": {
+        "status": 200,
+        "messageCount": 2,
+        "assistantTrustState": "source-failure",
+        "success": true
+      },
+      "persistenceConsistent": true,
+      "sanitizedBackendPayloadPath": "payloads/Q6-r1.json",
+      "desktopScreenshot": "screenshots/Q6-r1-desktop.png",
+      "desktopScreenshotStatus": "captured_sanitized_payload_render"
+    },
+    {
+      "ordinal": 9,
+      "id": "Q7-r1",
+      "questionId": "Q7",
+      "prompt": "A taxpayer received a PAN and FAN with inconsistent tax computations, different assessment bases, and possible defects in the LOA. Which defects affect substantive validity, due process, or only the correctness of the computation?",
+      "sanitizedConversationRef": "2f808ee89f7cf06a",
+      "httpStatus": 200,
+      "responseTimeMs": 13729,
+      "timedOut": false,
+      "answer": "If you received a BIR LOA/eLA, do not ignore it. Preserve the date and manner of receipt, keep a copy of the notice, and verify it through the available BIR verification process (for example, the REVIE / LOA Verifier process under RMC No. 5-2026) where applicable. Prepare a document compliance matrix, submit through controlled transmittal, and keep proof of submission. Do not fabricate unavailable or non-existent documents; use substitute proof where appropriate. This is procedural guidance only. Human tax/legal review remains required for validity, prescription, finality, appealability, protest strategy, CTA strategy, or legal conclusions. Check the following details: Taxpayer name, TIN, Taxable period, Tax types covered, Issuing office, LOA/eLA number, Audit case number, Revenue Officer (RO), Group Supervisor (GS), Approving/signing official, Documents requested. Avoid unnecessary admissions. Monitor possible next stages: additional document request, NOD/DOD, PAN, FAN/FLD, protest, FDDA, and CTA appeal-watch. Official-source verification is required before relying on any authority referenced in this guidance; no source has been live-verified by this scaffold.",
+      "answerLength": 1179,
+      "classification": {
+        "trustState": "procedural",
+        "authoritySupport": "NOT_APPLICABLE",
+        "sourceState": "NOT_APPLICABLE",
+        "conflictState": "NOT_APPLICABLE",
+        "hasConflict": false,
+        "specificAuthorityNotFound": false,
+        "legalConclusion": "NOT_APPLICABLE",
+        "humanReviewRequired": true,
+        "responseKind": "CONTROLLED_PROCEDURAL",
+        "responseType": "controlled_loa_answer",
+        "limitations": []
+      },
+      "sources": [],
+      "displayedSourceCount": 0,
+      "sourceStatus": "RELATED_AUTHORITY_ONLY",
+      "citedAuthorities": [],
+      "exactRequestedAuthorityFoundStatus": "not_structured_or_not_applicable",
+      "conflictStatus": "NOT_APPLICABLE",
+      "hardRefresh": {
+        "status": 200,
+        "messageCount": 2,
+        "assistantTrustState": "procedural",
+        "success": true
+      },
+      "historyReopen": {
+        "status": 200,
+        "messageCount": 2,
+        "assistantTrustState": "procedural",
+        "success": true
+      },
+      "persistenceConsistent": true,
+      "sanitizedBackendPayloadPath": "payloads/Q7-r1.json",
+      "desktopScreenshot": "screenshots/Q7-r1-desktop.png",
+      "desktopScreenshotStatus": "captured_sanitized_payload_render"
+    },
+    {
+      "ordinal": 10,
+      "id": "Q8-r1",
+      "questionId": "Q8",
+      "prompt": "A PEZA-registered enterprise received services that were treated as VAT-exempt instead of zero-rated. What is the proper VAT treatment, what documentary requirements apply, and what happens if the supplier used the wrong invoice classification?",
+      "sanitizedConversationRef": "7459de214c71d690",
+      "httpStatus": 200,
+      "responseTimeMs": 18158,
+      "timedOut": false,
+      "answer": "### Quick Assessment\nA PEZA-registered enterprise receiving services that were incorrectly treated as VAT-exempt instead of zero-rated may face issues regarding input tax recovery and compliance with VAT regulations. The correct treatment for services rendered to PEZA-registered entities is typically zero-rated under the NIRC.\n\n### BIR Likely Position\nThe BIR is likely to assert that the services provided should have been zero-rated under Section 106 of the NIRC, which applies to sales of services rendered to VAT-registered persons, including those registered with PEZA. If the supplier issued a VAT-exempt invoice instead of a zero-rated invoice, the BIR may argue that the enterprise cannot claim input VAT on those services.\n\n### Taxpayer Position / Defenses\nThe taxpayer can argue that the services received qualify for zero-rating under Section 106 of the NIRC, which allows for zero-rated treatment for services rendered to PEZA-registered enterprises. The taxpayer may also contend that the supplier's misclassification of the invoice does not negate the entitlement to zero-rated treatment, especially if the services are directly related to the export activities of the PEZA-registered enterprise.\n\n### Documentary Support Needed\n1. **Service Contracts**: Documentation detailing the nature of the services provided and their relevance to the PEZA-registered activities.\n2. **Invoices**: Original invoices issued by the supplier, indicating the VAT treatment applied.\n3. **PEZA Registration**: Proof of the enterprise's PEZA registration and its compliance with the requirements for zero-rated transactions.\n4. **Payment Records**: Evidence of payment for the services rendered.\n\n### Procedural Issues\nIf the supplier issued the wrong classification on the invoice, the taxpayer may need to request a corrected invoice from the supplier to properly reflect the zero-rated status. This correction is crucial for claiming input VAT.\n\n### Risk Level\nThe risk level is moderate. If the BIR audits the transaction and finds that the services were improperly classified, the enterprise may face disallowance of input VAT claims, leading to potential tax liabilities.\n\n### Recommended Action\n1. **Engage with the Supplier**: Request a corrected invoice reflecting the zero-rated status of the services.\n2. **Document Preparation**: Gather all necessary documentation to support the claim for zero-rated treatment.\n3. **Consult with a Tax Advisor**: Consider consulting with a tax professional to navigate the implications of the misclassification and to prepare for any potential BIR inquiries.",
+      "answerLength": 2602,
+      "classification": {
+        "trustState": "potential-conflict",
+        "authoritySupport": "VERIFIED_CONTROLLING",
+        "sourceState": "AUTHORITY_FOUND",
+        "conflictState": "POTENTIAL_CONFLICT",
+        "hasConflict": false,
+        "specificAuthorityNotFound": false,
+        "legalConclusion": "ALLOWED",
+        "humanReviewRequired": false,
+        "responseKind": "GENERAL_TAX",
+        "responseType": null,
+        "limitations": [
+          "POTENTIAL_CONFLICT"
+        ]
+      },
+      "sources": [
+        "NIRC Sec. 106",
+        "RR 16-2005"
+      ],
+      "displayedSourceCount": 2,
+      "sourceStatus": "AUTHORITY_FOUND",
+      "citedAuthorities": [
+        "NIRC Sec. 106",
+        "RR 16-2005"
+      ],
+      "exactRequestedAuthorityFoundStatus": "not_structured_or_not_applicable",
+      "conflictStatus": "POTENTIAL_CONFLICT",
+      "hardRefresh": {
+        "status": 200,
+        "messageCount": 2,
+        "assistantTrustState": "potential-conflict",
+        "success": true
+      },
+      "historyReopen": {
+        "status": 200,
+        "messageCount": 2,
+        "assistantTrustState": "potential-conflict",
+        "success": true
+      },
+      "persistenceConsistent": true,
+      "sanitizedBackendPayloadPath": "payloads/Q8-r1.json",
+      "desktopScreenshot": "screenshots/Q8-r1-desktop.png",
+      "desktopScreenshotStatus": "captured_sanitized_payload_render"
+    },
+    {
+      "ordinal": 11,
+      "id": "Q9-r1",
+      "questionId": "Q9",
+      "prompt": "A company cannot locate the exact BIR ruling requested by the client, but finds a Tax Code provision, a revenue regulation, a Supreme Court case, and a later circular pointing in different directions. Which authority controls, and how should the conflict be presented without overstating certainty?",
+      "sanitizedConversationRef": "1db398957c0e15e7",
+      "httpStatus": 200,
+      "responseTimeMs": 16753,
+      "timedOut": false,
+      "answer": "Indexed sources found:\n\n1. [NIRC Sec. 2 – Primary Statute](https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk) — 01-tax-code/nirc-1997-ra-10963-(bir).pdf\n2. [G.R. No. 226592 – Supreme Court Decision](https://drive.google.com/file/d/15QgNCQfHkngjD38vcEGUZAyf48smEcJW/view?usp=drivesdk) — 06-court-cases/g.r.-no.-226592.-july-27-2021.pdf",
+      "answerLength": 368,
+      "classification": {
+        "trustState": "related-authority-only",
+        "authoritySupport": "RELATED_AUTHORITY_ONLY",
+        "sourceState": "AUTHORITY_FOUND",
+        "conflictState": "NO_CONFLICT",
+        "hasConflict": false,
+        "specificAuthorityNotFound": false,
+        "legalConclusion": "ALLOWED",
+        "humanReviewRequired": false,
+        "responseKind": "GENERAL_TAX",
+        "responseType": null,
+        "limitations": []
+      },
+      "sources": [
+        "NIRC Sec. 2",
+        "G.R. No. 226592"
+      ],
+      "displayedSourceCount": 2,
+      "sourceStatus": "AUTHORITY_FOUND",
+      "citedAuthorities": [
+        "NIRC Sec. 2",
+        "G.R. No. 226592"
+      ],
+      "exactRequestedAuthorityFoundStatus": "not_structured_or_not_applicable",
+      "conflictStatus": "NO_CONFLICT",
+      "hardRefresh": {
+        "status": 200,
+        "messageCount": 2,
+        "assistantTrustState": "related-authority-only",
+        "success": true
+      },
+      "historyReopen": {
+        "status": 200,
+        "messageCount": 2,
+        "assistantTrustState": "related-authority-only",
+        "success": true
+      },
+      "persistenceConsistent": true,
+      "sanitizedBackendPayloadPath": "payloads/Q9-r1.json",
+      "desktopScreenshot": null,
+      "desktopScreenshotStatus": "blocked_3221225477"
+    },
+    {
+      "ordinal": 12,
+      "id": "Q9-r2",
+      "questionId": "Q9",
+      "prompt": "A company cannot locate the exact BIR ruling requested by the client, but finds a Tax Code provision, a revenue regulation, a Supreme Court case, and a later circular pointing in different directions. Which authority controls, and how should the conflict be presented without overstating certainty?",
+      "sanitizedConversationRef": "123181bcaebfeeb8",
+      "httpStatus": 200,
+      "responseTimeMs": 15495,
+      "timedOut": false,
+      "answer": "Indexed sources found:\n\n1. [NIRC Sec. 2 – Primary Statute](https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk) — 01-tax-code/nirc-1997-ra-10963-(bir).pdf\n2. [G.R. No. 226592 – Supreme Court Decision](https://drive.google.com/file/d/15QgNCQfHkngjD38vcEGUZAyf48smEcJW/view?usp=drivesdk) — 06-court-cases/g.r.-no.-226592.-july-27-2021.pdf",
+      "answerLength": 368,
+      "classification": {
+        "trustState": "related-authority-only",
+        "authoritySupport": "RELATED_AUTHORITY_ONLY",
+        "sourceState": "AUTHORITY_FOUND",
+        "conflictState": "NO_CONFLICT",
+        "hasConflict": false,
+        "specificAuthorityNotFound": false,
+        "legalConclusion": "ALLOWED",
+        "humanReviewRequired": false,
+        "responseKind": "GENERAL_TAX",
+        "responseType": null,
+        "limitations": []
+      },
+      "sources": [
+        "NIRC Sec. 2",
+        "G.R. No. 226592"
+      ],
+      "displayedSourceCount": 2,
+      "sourceStatus": "AUTHORITY_FOUND",
+      "citedAuthorities": [
+        "NIRC Sec. 2",
+        "G.R. No. 226592"
+      ],
+      "exactRequestedAuthorityFoundStatus": "not_structured_or_not_applicable",
+      "conflictStatus": "NO_CONFLICT",
+      "hardRefresh": {
+        "status": 200,
+        "messageCount": 2,
+        "assistantTrustState": "related-authority-only",
+        "success": true
+      },
+      "historyReopen": {
+        "status": 200,
+        "messageCount": 2,
+        "assistantTrustState": "related-authority-only",
+        "success": true
+      },
+      "persistenceConsistent": true,
+      "sanitizedBackendPayloadPath": "payloads/Q9-r2.json",
+      "desktopScreenshot": "screenshots/Q9-r2-desktop.png",
+      "desktopScreenshotStatus": "captured_sanitized_payload_render"
+    },
+    {
+      "ordinal": 13,
+      "id": "Q9-r3",
+      "questionId": "Q9",
+      "prompt": "A company cannot locate the exact BIR ruling requested by the client, but finds a Tax Code provision, a revenue regulation, a Supreme Court case, and a later circular pointing in different directions. Which authority controls, and how should the conflict be presented without overstating certainty?",
+      "sanitizedConversationRef": "2e7975df382ff41f",
+      "httpStatus": 200,
+      "responseTimeMs": 16791,
+      "timedOut": false,
+      "answer": "Indexed sources found:\n\n1. [NIRC Sec. 2 – Primary Statute](https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk) — 01-tax-code/nirc-1997-ra-10963-(bir).pdf\n2. [G.R. No. 226592 – Supreme Court Decision](https://drive.google.com/file/d/15QgNCQfHkngjD38vcEGUZAyf48smEcJW/view?usp=drivesdk) — 06-court-cases/g.r.-no.-226592.-july-27-2021.pdf",
+      "answerLength": 368,
+      "classification": {
+        "trustState": "related-authority-only",
+        "authoritySupport": "RELATED_AUTHORITY_ONLY",
+        "sourceState": "AUTHORITY_FOUND",
+        "conflictState": "NO_CONFLICT",
+        "hasConflict": false,
+        "specificAuthorityNotFound": false,
+        "legalConclusion": "ALLOWED",
+        "humanReviewRequired": false,
+        "responseKind": "GENERAL_TAX",
+        "responseType": null,
+        "limitations": []
+      },
+      "sources": [
+        "NIRC Sec. 2",
+        "G.R. No. 226592"
+      ],
+      "displayedSourceCount": 2,
+      "sourceStatus": "AUTHORITY_FOUND",
+      "citedAuthorities": [
+        "NIRC Sec. 2",
+        "G.R. No. 226592"
+      ],
+      "exactRequestedAuthorityFoundStatus": "not_structured_or_not_applicable",
+      "conflictStatus": "NO_CONFLICT",
+      "hardRefresh": {
+        "status": 200,
+        "messageCount": 2,
+        "assistantTrustState": "related-authority-only",
+        "success": true
+      },
+      "historyReopen": {
+        "status": 200,
+        "messageCount": 2,
+        "assistantTrustState": "related-authority-only",
+        "success": true
+      },
+      "persistenceConsistent": true,
+      "sanitizedBackendPayloadPath": "payloads/Q9-r3.json",
+      "desktopScreenshot": "screenshots/Q9-r3-desktop.png",
+      "desktopScreenshotStatus": "captured_sanitized_payload_render"
+    },
+    {
+      "ordinal": 14,
+      "id": "Q10-r1",
+      "questionId": "Q10",
+      "prompt": "A taxpayer asks whether it will win an administrative protest or Court of Tax Appeals case involving an allegedly void LOA, denied deductions, and disputed withholding tax. What legal analysis can TINA provide, and where must it stop and require professional judgment?",
+      "sanitizedConversationRef": "b71b0dc1aa4b37fc",
+      "httpStatus": 200,
+      "responseTimeMs": 2788,
+      "timedOut": false,
+      "answer": "A conclusive determination of validity, invalidity, voidness, finality, or appealability cannot be made from the limited information in this question. The actual document, its issuance and service details, the assessment or dispute stage, the dates received, applicable protest or appeal deadlines, and any prior notices or taxpayer actions must be reviewed before any conclusion. Protest and appeal periods may be time-sensitive, so prompt review is recommended. Validity, prescription, finality, appealability, protest strategy, CTA strategy, and legal conclusions require official-source verification and human tax/legal review. Official-source verification is required before relying on any authority referenced in this guidance; no source has been live-verified by this scaffold. This is procedural guidance only, not a final legal opinion.",
+      "answerLength": 845,
+      "classification": {
+        "trustState": "restricted",
+        "authoritySupport": "NOT_APPLICABLE",
+        "sourceState": "NOT_APPLICABLE",
+        "conflictState": "NOT_APPLICABLE",
+        "hasConflict": false,
+        "specificAuthorityNotFound": false,
+        "legalConclusion": "RESTRICTED",
+        "humanReviewRequired": true,
+        "responseKind": "RESTRICTED_LEGAL_CONCLUSION",
+        "responseType": "controlled_loa_legal_conclusion_restricted",
+        "limitations": []
+      },
+      "sources": [],
+      "displayedSourceCount": 0,
+      "sourceStatus": "NOT_APPLICABLE",
+      "citedAuthorities": [],
+      "exactRequestedAuthorityFoundStatus": "not_structured_or_not_applicable",
+      "conflictStatus": "NOT_APPLICABLE",
+      "hardRefresh": {
+        "status": 200,
+        "messageCount": 2,
+        "assistantTrustState": "restricted",
+        "success": true
+      },
+      "historyReopen": {
+        "status": 200,
+        "messageCount": 2,
+        "assistantTrustState": "restricted",
+        "success": true
+      },
+      "persistenceConsistent": true,
+      "sanitizedBackendPayloadPath": "payloads/Q10-r1.json",
+      "desktopScreenshot": null,
+      "desktopScreenshotStatus": "blocked_3221225477"
+    }
+  ]
+}

@@ -1,0 +1,226 @@
+[
+  {
+    "id": "Q1-r1",
+    "hardRefresh": {
+      "status": 200,
+      "messageCount": 2,
+      "assistantTrustState": "procedural",
+      "success": true
+    },
+    "historyReopen": {
+      "status": 200,
+      "messageCount": 2,
+      "assistantTrustState": "procedural",
+      "success": true
+    },
+    "persistenceConsistent": true
+  },
+  {
+    "id": "Q2-r1",
+    "hardRefresh": {
+      "status": 200,
+      "messageCount": 2,
+      "assistantTrustState": "related-authority-only",
+      "success": true
+    },
+    "historyReopen": {
+      "status": 200,
+      "messageCount": 2,
+      "assistantTrustState": "related-authority-only",
+      "success": true
+    },
+    "persistenceConsistent": true
+  },
+  {
+    "id": "Q2-r2",
+    "hardRefresh": {
+      "status": 200,
+      "messageCount": 2,
+      "assistantTrustState": "related-authority-only",
+      "success": true
+    },
+    "historyReopen": {
+      "status": 200,
+      "messageCount": 2,
+      "assistantTrustState": "related-authority-only",
+      "success": true
+    },
+    "persistenceConsistent": true
+  },
+  {
+    "id": "Q2-r3",
+    "hardRefresh": {
+      "status": 200,
+      "messageCount": 2,
+      "assistantTrustState": "related-authority-only",
+      "success": true
+    },
+    "historyReopen": {
+      "status": 200,
+      "messageCount": 2,
+      "assistantTrustState": "related-authority-only",
+      "success": true
+    },
+    "persistenceConsistent": true
+  },
+  {
+    "id": "Q3-r1",
+    "hardRefresh": {
+      "status": 200,
+      "messageCount": 2,
+      "assistantTrustState": "verified-controlling",
+      "success": true
+    },
+    "historyReopen": {
+      "status": 200,
+      "messageCount": 2,
+      "assistantTrustState": "verified-controlling",
+      "success": true
+    },
+    "persistenceConsistent": true
+  },
+  {
+    "id": "Q4-r1",
+    "hardRefresh": {
+      "status": 200,
+      "messageCount": 2,
+      "assistantTrustState": "verified-controlling",
+      "success": true
+    },
+    "historyReopen": {
+      "status": 200,
+      "messageCount": 2,
+      "assistantTrustState": "verified-controlling",
+      "success": true
+    },
+    "persistenceConsistent": true
+  },
+  {
+    "id": "Q5-r1",
+    "hardRefresh": {
+      "status": 200,
+      "messageCount": 2,
+      "assistantTrustState": "verified-controlling",
+      "success": true
+    },
+    "historyReopen": {
+      "status": 200,
+      "messageCount": 2,
+      "assistantTrustState": "verified-controlling",
+      "success": true
+    },
+    "persistenceConsistent": true
+  },
+  {
+    "id": "Q6-r1",
+    "hardRefresh": {
+      "status": 200,
+      "messageCount": 2,
+      "assistantTrustState": "source-failure",
+      "success": true
+    },
+    "historyReopen": {
+      "status": 200,
+      "messageCount": 2,
+      "assistantTrustState": "source-failure",
+      "success": true
+    },
+    "persistenceConsistent": true
+  },
+  {
+    "id": "Q7-r1",
+    "hardRefresh": {
+      "status": 200,
+      "messageCount": 2,
+      "assistantTrustState": "procedural",
+      "success": true
+    },
+    "historyReopen": {
+      "status": 200,
+      "messageCount": 2,
+      "assistantTrustState": "procedural",
+      "success": true
+    },
+    "persistenceConsistent": true
+  },
+  {
+    "id": "Q8-r1",
+    "hardRefresh": {
+      "status": 200,
+      "messageCount": 2,
+      "assistantTrustState": "potential-conflict",
+      "success": true
+    },
+    "historyReopen": {
+      "status": 200,
+      "messageCount": 2,
+      "assistantTrustState": "potential-conflict",
+      "success": true
+    },
+    "persistenceConsistent": true
+  },
+  {
+    "id": "Q9-r1",
+    "hardRefresh": {
+      "status": 200,
+      "messageCount": 2,
+      "assistantTrustState": "related-authority-only",
+      "success": true
+    },
+    "historyReopen": {
+      "status": 200,
+      "messageCount": 2,
+      "assistantTrustState": "related-authority-only",
+      "success": true
+    },
+    "persistenceConsistent": true
+  },
+  {
+    "id": "Q9-r2",
+    "hardRefresh": {
+      "status": 200,
+      "messageCount": 2,
+      "assistantTrustState": "related-authority-only",
+      "success": true
+    },
+    "historyReopen": {
+      "status": 200,
+      "messageCount": 2,
+      "assistantTrustState": "related-authority-only",
+      "success": true
+    },
+    "persistenceConsistent": true
+  },
+  {
+    "id": "Q9-r3",
+    "hardRefresh": {
+      "status": 200,
+      "messageCount": 2,
+      "assistantTrustState": "related-authority-only",
+      "success": true
+    },
+    "historyReopen": {
+      "status": 200,
+      "messageCount": 2,
+      "assistantTrustState": "related-authority-only",
+      "success": true
+    },
+    "persistenceConsistent": true
+  },
+  {
+    "id": "Q10-r1",
+    "hardRefresh": {
+      "status": 200,
+      "messageCount": 2,
+      "assistantTrustState": "restricted",
+      "success": true
+    },
+    "historyReopen": {
+      "status": 200,
+      "messageCount": 2,
+      "assistantTrustState": "restricted",
+      "success": true
+    },
+    "persistenceConsistent": true
+  }
+]
