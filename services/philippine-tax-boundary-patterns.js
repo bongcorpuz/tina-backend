@@ -173,6 +173,27 @@ export const PH_TAX_ALLOW_PATTERNS = [
   /\bPhilippine\s+(tax|vat|bir|nirc|income|withholding|customs|tariff|duty|duties|law|code)/i,
   /\bPhilippines\s+(tax|vat|bir|nirc)/i,
   /\bFilipino\s+tax/i,
+
+  // ── PHASE-10A8: core tax concepts that can appear without the word "tax" ──
+  // PHASE-10A7 found valid tax questions falsely refused as DOMAIN_BOUNDARY
+  // because they contained no standalone "tax" token: e.g. "holding-period
+  // rule for an individual's capital gain on personal property" (Q23) and
+  // "Oplan Kandado" (Q43). These patterns are tax-specific and do not admit
+  // generic finance queries.
+  /\bcapital\s+gains?\b/i,
+  /\bholding\s+period\b/i,
+  /\bordinary\s+asset[s]?\b/i,
+  /\bcapital\s+asset[s]?\b/i,
+  /\bOplan\s+Kandado\b/i,
+  /\bKandado\b/i,
+  /\bclosure\s+of\s+business\b/i,
+  /\bzero[- ]rated\s+sale[s]?\b/i,
+  /\binput\s+VAT\b/i,
+  /\boutput\s+VAT\b/i,
+  /\bfinal\s+withholding\s+tax\b/i,
+  /\bexpanded\s+withholding\b/i,
+  /\boptional\s+standard\s+deduction\b/i,
+  /\bde\s+minimis\b/i,
 ];
 
 // ─── Non-tax REJECT patterns ──────────────────────────────────────────────────

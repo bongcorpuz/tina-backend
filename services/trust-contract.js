@@ -210,6 +210,22 @@ function deriveAuthoritySupport(result, sourceState, responseKind, hasConflict) 
     // VERIFIED_CONTROLLING -- the cited authorities support the general
     // explanation, not the existence of the specific requested document.
     if (answerDisclaimsSpecificAuthority(result.answer)) return "RELATED_AUTHORITY_ONLY";
+    // PHASE-10A8: VERIFIED_CONTROLLING requires positive answer-support
+    // attestation, not just retrieval/source presence. PHASE-10A7 confirmed the
+    // systemic defect: empty, wrong, incomplete, or unsupported answers were
+    // classified verified purely because governing sources were retrieved and
+    // displayed. The live ask path runs a controlled answer-support validator
+    // (services/answer-support-validator.js) and threads result.answerSupport.
+    // When that attestation is present and NOT eligible, fail closed to
+    // RELATED_AUTHORITY_ONLY. When it is absent (pure internal/deterministic
+    // callers such as unit fixtures that do not represent a live generated
+    // answer), legacy behavior is preserved so the retrieval-level contract
+    // stays testable; the live path always sets answerSupport (fail-closed on
+    // validator error/unavailability), so a real user answer is never verified
+    // without an attestation.
+    if (result.answerSupport && result.answerSupport.verifiedEligible !== true) {
+      return "RELATED_AUTHORITY_ONLY";
+    }
     return "VERIFIED_CONTROLLING";
   }
   return "UNKNOWN";

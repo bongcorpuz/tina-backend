@@ -79,6 +79,7 @@ import {
   buildStructuredSourceFallbackAnswer,
   buildSourceFallbackDisclosureMeta
 } from "./services/source-fallback-disclosure.js";
+import { evaluateAnswerSupport } from "./services/answer-support-validator.js";
 
 const ENGINE_VERSION = "9.0.0";
 
@@ -2343,6 +2344,33 @@ export function createAskHandler({
         ? "PIPELINE_ERROR"
         : resultSources.length ? "ISSUE_MATCHED_CONTEXT_USED" : "RETRIEVAL_TIMEOUT");
 
+    // PHASE-10A8-TRUST-CALIBRATION-AND-ANSWER-CORRECTNESS-REMEDIATION-1
+    //
+    // Answer-support gate. VERIFIED_CONTROLLING must depend on the final answer
+    // being substantive, responsive, correct, materially complete, and actually
+    // supported -- not merely on retrieval/source presence (the systemic
+    // PHASE-10A7 defect). Only the verified-CANDIDATE responses need validation:
+    // AUTHORITY_FOUND with displayed sources, not the structured source-only
+    // fallback, and not a controlled procedural / restricted / domain-boundary
+    // response (those never reach VERIFIED_CONTROLLING). The controlled
+    // validator runs a deterministic structural gate plus a constrained
+    // post-generation evaluator and fails CLOSED on any error/unavailability.
+    // The trust contract reads result.answerSupport.verifiedEligible.
+    const _verifiedCandidate =
+      String(responseSourceStatus).toUpperCase() === "AUTHORITY_FOUND" &&
+      visibleSources.length > 0 &&
+      result.sourceOnlyFallback !== true &&
+      result.domainBoundary !== true &&
+      result.responseType !== "controlled_loa_answer" &&
+      result.responseType !== "controlled_loa_legal_conclusion_restricted";
+    if (_verifiedCandidate) {
+      result.answerSupport = await evaluateAnswerSupport({
+        question: typeof question === "string" ? question : "",
+        answer: result.answer || "",
+        sources: visibleSources
+      });
+    }
+
     const payload = {
       success: true,
       engine: "TINA_ASK_HANDLER",
@@ -2378,6 +2406,10 @@ export function createAskHandler({
       // source-only fallback path (null on all other paths). Kept off the
       // frozen canonical trust contract shape.
       ...(sourceFallbackDisclosure ? { sourceFallbackDisclosure } : {}),
+
+      // PHASE-10A8: additive answer-support attestation (present only for
+      // verified-candidate responses). Kept off the frozen trust contract shape.
+      ...(result.answerSupport ? { answerSupport: result.answerSupport } : {}),
 
       retrievedSourceCount: result.retrievedSourceCount ?? resultSources.length,
       displayedSourceCount: result.displayedSourceCount ?? visibleSources.length,
