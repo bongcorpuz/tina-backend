@@ -184,6 +184,17 @@ function deriveAuthoritySupport(result, sourceState, responseKind, hasConflict) 
     // in the enum until the runtime exposes that distinction. This is a
     // documented limitation, not an invented semantic.
     if (displayedCount === 0) return "NO_VERIFIED_AUTHORITY";
+    // PHASE-10A6-R3: structured, enrichment-proof gate. When the response
+    // assembly layer has replaced a bare source-listing with a STRUCTURED
+    // explanatory fallback body (missing-authority + conflict + hierarchy
+    // disclosure), it sets result.sourceOnlyFallback === true. Because that
+    // body is deliberately no longer a bare "Indexed sources found:" listing,
+    // the prose-based answerIsBareSourceListing() detector below would no
+    // longer fire -- so without this structured signal the response would
+    // regress to VERIFIED_CONTROLLING. A source-only fallback established no
+    // verified controlling authority for the exact issue; it caps at
+    // RELATED_AUTHORITY_ONLY regardless of body wording.
+    if (safeBool(result.sourceOnlyFallback)) return "RELATED_AUTHORITY_ONLY";
     // PHASE-10A6-R1: source presence alone is NOT proposition support. A bare
     // source-listing response (SOURCE-mode deterministic output that discards
     // analysis and just lists retrieved sources) must never be classified
@@ -342,10 +353,21 @@ export function buildTrustContract(result = {}) {
   // specific wording than the generic RELATED_AUTHORITY_ONLY copy, without
   // affecting ordinary RELATED_AUTHORITY_ONLY cases (e.g. a broad "explain
   // EWT in general" query) where no specific document was ever requested.
+  // PHASE-10A6-R3: also true for the structured source-only fallback path,
+  // where the enriched body explicitly discloses that a specifically requested
+  // authority was not located/matched. That disclosure is threaded as a
+  // structured boolean (result.specificAuthorityRequested with
+  // result.requestedAuthorityMatched !== true) rather than re-detected from
+  // prose, because the safe wording intentionally avoids the
+  // "does not exist" phrasing that answerDisclaimsSpecificAuthority keys on.
   const specificAuthorityNotFound =
-    sourceState === "AUTHORITY_FOUND" &&
     authoritySupport === "RELATED_AUTHORITY_ONLY" &&
-    answerDisclaimsSpecificAuthority(safeResult.answer);
+    (
+      (sourceState === "AUTHORITY_FOUND" && answerDisclaimsSpecificAuthority(safeResult.answer)) ||
+      (safeBool(safeResult.sourceOnlyFallback) &&
+        safeBool(safeResult.specificAuthorityRequested) &&
+        safeResult.requestedAuthorityMatched !== true)
+    );
   const legalConclusion = deriveLegalConclusion(responseKind);
   const humanReviewRequired = deriveHumanReviewRequired(safeResult, responseKind);
   const filingReadyDocumentGenerated = deriveFilingReadyDocumentGenerated(safeResult);

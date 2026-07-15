@@ -71,7 +71,14 @@ import { evaluateUpstreamRestrictedLegalConclusionGate } from "./services/contro
 
 import { sanitizePublicSourceCards } from "./services/ask-handler-public-source-sanitizer.js";
 import { buildResponseTrust } from "./services/trust-contract.js";
+import { answerIsBareSourceListing } from "./services/trust-contract.js";
 import { resolveStagingFixture } from "./services/staging-trust-fixtures.js";
+import {
+  querySeeksSpecificAuthority,
+  queryFramesAuthorityConflict,
+  buildStructuredSourceFallbackAnswer,
+  buildSourceFallbackDisclosureMeta
+} from "./services/source-fallback-disclosure.js";
 
 const ENGINE_VERSION = "9.0.0";
 
@@ -2278,6 +2285,47 @@ export function createAskHandler({
     const visibleSources = sanitizePublicSourceCards(visibleSourcesRaw);
     const publicResultSourceCards = sanitizePublicSourceCards(resultSourceCards);
 
+    // PHASE-10A6-R3-MISSING-AUTHORITY-CONFLICT-DISCLOSURE-REMEDIATION-1
+    //
+    // Structured explanatory fallback. PHASE-10A6-R1 stopped the SOURCE-mode
+    // bare "Indexed sources found:" listing from being classified
+    // VERIFIED_CONTROLLING; PHASE-10A6-R2 confirmed the remaining P1: the
+    // answer BODY was still a bare source list that did not disclose that a
+    // requested authority was not located and did not present the stated
+    // conflict among authorities. When the rendered answer is a bare source
+    // listing and sources are available, replace it with a substantive body
+    // that discloses the missing requested authority (if any), presents the
+    // competing/uncertain authorities, and explains the governing hierarchy.
+    // A structured `sourceOnlyFallback` boolean is threaded onto `result` so
+    // the trust contract keeps this response at RELATED_AUTHORITY_ONLY even
+    // though the enriched body is no longer a bare listing (it must never
+    // regress to VERIFIED_CONTROLLING). No fabricated facts or conclusions.
+    let sourceFallbackDisclosure = null;
+    if (answerIsBareSourceListing(result.answer) && visibleSources.length > 0) {
+      const _fallbackQuery = typeof question === "string" ? question : "";
+      const _specificAuthorityRequested = querySeeksSpecificAuthority(_fallbackQuery);
+      const _authorityConflictFramed = queryFramesAuthorityConflict(_fallbackQuery);
+      result.answer = buildStructuredSourceFallbackAnswer({
+        sources: visibleSources,
+        specificAuthorityRequested: _specificAuthorityRequested,
+        conflictFramed: _authorityConflictFramed
+      });
+      // Structured signal read by the trust contract (input side) so this
+      // response stays RELATED_AUTHORITY_ONLY even though the enriched body is
+      // no longer a bare listing. Must never regress to VERIFIED_CONTROLLING.
+      result.sourceOnlyFallback = true;
+      result.specificAuthorityRequested = _specificAuthorityRequested;
+      result.requestedAuthorityMatched = false;
+      result.authorityConflictFramed = _authorityConflictFramed;
+      // Additive payload-level disclosure metadata (kept off the frozen trust
+      // contract shape). Persistence/reopen and the frontend can read it.
+      sourceFallbackDisclosure = buildSourceFallbackDisclosureMeta({
+        sourceOnlyFallback: true,
+        specificAuthorityRequested: _specificAuthorityRequested,
+        conflictFramed: _authorityConflictFramed
+      });
+    }
+
     console.log("TINA MODE DOWNSTREAM DEBUG:", {
       responseMode: result.responseMode || result.orchestration?.mode || hookConfig.mode,
       orchestrationMode: result.orchestrationMode || result.orchestration?.mode || hookConfig.mode,
@@ -2325,6 +2373,11 @@ export function createAskHandler({
         result.displayedSourceCount ?? visibleSources.length,
         responseSourceStatus
       ),
+
+      // PHASE-10A6-R3: additive structured disclosure metadata for the
+      // source-only fallback path (null on all other paths). Kept off the
+      // frozen canonical trust contract shape.
+      ...(sourceFallbackDisclosure ? { sourceFallbackDisclosure } : {}),
 
       retrievedSourceCount: result.retrievedSourceCount ?? resultSources.length,
       displayedSourceCount: result.displayedSourceCount ?? visibleSources.length,
