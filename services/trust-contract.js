@@ -135,6 +135,33 @@ export function answerDisclaimsSpecificAuthority(answerText) {
   return typeof answerText === "string" && SPECIFIC_AUTHORITY_DISCLAIMER_RE.test(answerText);
 }
 
+// PHASE-10A6-R1-SOURCE-PRESENCE-OVERCLAIM-REMEDIATION-1
+//
+// Structural marker for a "bare source-listing" response: the SOURCE-mode
+// deterministic renderer in answer-renderer.js discards the model's analytical
+// answer and emits a canned "Indexed sources found:" list of retrieved sources
+// (see answer-renderer.js: `appendDisclosureBeforeSources("Indexed sources
+// found:", ...)`). This canned prefix is app-generated and deterministic (not
+// model prose), so keying off it is a structured signal with near-zero false
+// positives -- a genuine analytical VERIFIED_CONTROLLING answer never contains
+// it. A source LISTING is not proposition-level support: it does not establish
+// that the listed authorities control the precise issue, support the answer, or
+// resolve any conflict, and it cannot disclose that a specifically requested
+// issuance was missing. Confirmed root cause of the PHASE-10A6 Q9 P1 overclaim:
+// a bare "Indexed sources found:" response was classified VERIFIED_CONTROLLING.
+const BARE_SOURCE_LISTING_RE = /(^|\n)\s*indexed sources found\s*:/i;
+
+/**
+ * Detects whether the answer is a bare source-listing (SOURCE-mode deterministic
+ * output) rather than a proposition-level analytical answer. Pure string match.
+ *
+ * @param {unknown} answerText
+ * @returns {boolean}
+ */
+export function answerIsBareSourceListing(answerText) {
+  return typeof answerText === "string" && BARE_SOURCE_LISTING_RE.test(answerText);
+}
+
 function deriveAuthoritySupport(result, sourceState, responseKind, hasConflict) {
   if (responseKind === "DOMAIN_BOUNDARY" || responseKind === "CONTROLLED_PROCEDURAL" || responseKind === "RESTRICTED_LEGAL_CONCLUSION") {
     return "NOT_APPLICABLE";
@@ -157,6 +184,15 @@ function deriveAuthoritySupport(result, sourceState, responseKind, hasConflict) 
     // in the enum until the runtime exposes that distinction. This is a
     // documented limitation, not an invented semantic.
     if (displayedCount === 0) return "NO_VERIFIED_AUTHORITY";
+    // PHASE-10A6-R1: source presence alone is NOT proposition support. A bare
+    // source-listing response (SOURCE-mode deterministic output that discards
+    // analysis and just lists retrieved sources) must never be classified
+    // VERIFIED_CONTROLLING -- it cannot establish that the listed authorities
+    // control the precise issue, and it cannot disclose that a specifically
+    // requested issuance was missing. Fail closed to RELATED_AUTHORITY_ONLY
+    // (the retrieved authorities may still be displayed as related). This is
+    // the structured gate for the confirmed PHASE-10A6 Q9 P1 overclaim.
+    if (answerIsBareSourceListing(result.answer)) return "RELATED_AUTHORITY_ONLY";
     // Case C calibration: general authority was found and displayed, but the
     // answer's own prose says the specific requested issuance was not found.
     // Downgrade to RELATED_AUTHORITY_ONLY rather than overstate as
