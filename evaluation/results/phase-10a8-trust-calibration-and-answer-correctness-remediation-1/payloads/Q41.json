@@ -1,0 +1,35 @@
+{
+  "id": "Q41",
+  "group": "nine",
+  "prompt": "What is the penalty for failure to issue a BIR-registered invoice?",
+  "answer": "### Short Answer\n\nAdditionally, under Section 106 of the NIRC, the Bureau of Internal Revenue (BIR) has the authority to impose penalties for violations related to the issuance of invoices, which may include administrative penalties and fines. \n\nIn practice, the failure to issue a BIR-registered invoice can lead to significant tax compliance issues, including the disallowance of input VAT claims and potential assessments for unreported sales. \n\nFor further details, you may refer to the relevant provisions in the NIRC, particularly Section 238 regarding penalties for failure to issue invoices and Section 106 concerning the BIR's authority to enforce compliance.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "noContradiction": false,
+      "noUnsupportedProposition": false
+    },
+    "reason": "Section 238 of the NIRC does not specifically address penalties for failure to issue invoices."
+  },
+  "sanitizedConversationRef": "3a825c8b1fa912e5"
+}

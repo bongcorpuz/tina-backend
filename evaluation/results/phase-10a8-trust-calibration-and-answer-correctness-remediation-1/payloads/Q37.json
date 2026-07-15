@@ -1,0 +1,29 @@
+{
+  "id": "Q37",
+  "group": "nine",
+  "prompt": "What is the BIR assessment period when a taxpayer filed a return?",
+  "answer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nFor taxpayers, this means that they should retain their records and documentation for at least three years after filing their tax returns, as the BIR may initiate an audit within this timeframe. After three years, the taxpayer is generally protected from additional assessments for that tax year, unless specific exceptions apply, such as cases of fraud or failure to file a return.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "sanitizedConversationRef": "75ffcb1a6375bbe1"
+}

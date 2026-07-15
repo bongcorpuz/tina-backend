@@ -1,0 +1,35 @@
+{
+  "id": "Q34",
+  "group": "mini",
+  "prompt": "What is the deadline for the annual income tax return of an individual?",
+  "answer": "### Short Answer\nThe deadline for the annual income tax return of an individual is April 15 of the following year after the close of the taxable year.\n\n### Interpretation\n\n### Practical Meaning\nTaxpayers should ensure that their income tax returns are filed by April 15 to avoid penalties and interest for late filing. It is advisable to prepare and gather necessary documentation well in advance of this deadline to facilitate timely submission.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The stated deadline is correct according to current Philippine tax law."
+  },
+  "sanitizedConversationRef": "e2f245bd39155641"
+}

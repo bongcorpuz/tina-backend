@@ -1,0 +1,24 @@
+{
+  "id": "MISSING-1",
+  "group": "control",
+  "prompt": "A company cannot locate the exact BIR ruling requested by the client, but finds a Tax Code provision, a revenue regulation, a Supreme Court case, and a later circular pointing in different directions. Which authority controls, and how should the conflict be presented without overstating certainty?",
+  "answer": "## Summary\n\nTINA retrieved related authorities for this question but did not establish a single verified controlling authority for the exact issue raised. The authorities below are relevant, but they are not, on their own, a settled controlling conclusion for this specific question.\n\n## Requested authority\n\nThe specific issuance requested was not located or verified in TINA's indexed sources. This does not mean the issuance does not exist — only that it could not be retrieved and verified here. The authorities listed below are related and may inform the issue, but they are not a substitute for the requested authority.\n\n## Competing or conflicting authorities\n\nThe available authorities may point in different directions or require harmonization. The retrieved source set does not establish a fully settled, controlling conclusion for this exact issue, and any apparent conflict should be treated as unresolved until reconciled against the governing hierarchy and the specific facts.\n\n## How to weigh these authorities\n\n- A statute (e.g., the National Internal Revenue Code) prevails over an administrative issuance.\n- Controlling Supreme Court jurisprudence prevails over an inconsistent administrative interpretation.\n- Regulations implement, but cannot amend, the statute.\n- Revenue memorandum circulars, revenue memorandum orders, and BIR rulings are interpretive and cannot override higher authority.\n- Applicability still depends on the specific facts, the taxable period, and the exact issue.\n\n## Related authorities\n\n1. NIRC Sec. 2 — STATUTE\n2. G.R. No. 226592 — CASE\n\n## Limitation\n\nThis is a related-authority result, not verified controlling authority. Professional review is recommended before relying on it for a specific position, filing, or transaction.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [
+      "SPECIFIC_AUTHORITY_NOT_FOUND"
+    ],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": true
+  },
+  "answerSupport": null,
+  "sanitizedConversationRef": "035191662b12506c"
+}

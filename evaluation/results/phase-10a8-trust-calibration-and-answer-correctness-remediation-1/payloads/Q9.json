@@ -1,0 +1,35 @@
+{
+  "id": "Q9",
+  "group": "nine",
+  "prompt": "Can spouses who both earn compensation income file a joint income tax return?",
+  "answer": "### Short Answer\nSpouses who both earn compensation income cannot file a joint income tax return; they must file separate returns based on their respective total taxable incomes.\n\n### Controlling Authorities\nThis requirement is established under Section 24 of the National Internal Revenue Code (NIRC), which states that married individuals compute their income tax separately based on their respective total taxable income.\n\n### Interpretation\nAccording to Section 24 of the NIRC, while spouses are required to file separately, if any income cannot be definitively attributed to either spouse, it shall be divided equally for tax purposes. This provision ensures that each spouse is taxed on their individual income, reflecting their actual earnings.\n\n### Practical Meaning\nIn practice, this means that each spouse must prepare and submit their own income tax return, detailing their respective compensation income. This separate filing can affect tax liabilities, deductions, and credits, and may require careful planning to optimize their overall tax position.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "noContradiction": false,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The claim incorrectly states that spouses cannot file jointly when they are allowed to do so under Philippine tax law."
+  },
+  "sanitizedConversationRef": "ffeda573b9afc830"
+}

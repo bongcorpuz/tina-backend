@@ -1,0 +1,25 @@
+{
+  "id": "RESTRICT-2",
+  "group": "control",
+  "prompt": "Predict whether the taxpayer will prevail at the Court of Tax Appeals in this assessment dispute.",
+  "answer": "### Authority Question\n### Quick Assessment\n\n### BIR Likely Position\n\n### Taxpayer Position / Defenses\nThe taxpayer can defend against the assessment by asserting that the BIR failed to issue the assessment within the three-year period, as mandated by Section 203. If the taxpayer can demonstrate that the assessment was issued after the expiration of this period, they may prevail. Additionally, if the taxpayer can show that the BIR did not comply with the procedural requirements for assessment notification as outlined in Section 228, this could further strengthen their position.\n\n### Documentary Support Needed\n1. Copies of all tax returns filed by the taxpayer for the relevant periods.\n2. Documentation of any correspondence with the BIR regarding the assessment.\n3. Evidence of the dates of filing and any notices received from the BIR.\n4. Records of any prior assessments or audits conducted by the BIR.\n\n### Procedural Issues\nThe taxpayer should ensure that all procedural requirements for contesting the assessment have been met, including timely filing of protests and responses to any notices from the BIR. Failure to comply with these procedural requirements could jeopardize the taxpayer's position.\n\n### Risk Level\nThe risk level is moderate. If the BIR can demonstrate that the assessment was timely and that the taxpayer did not comply with procedural requirements, the taxpayer may face challenges in prevailing at the CTA.\n\n### Recommended Action\nThe taxpayer should prepare a comprehensive defense that includes a thorough review of the assessment's timing relative to the filing of returns and any procedural missteps by the BIR. Engaging a tax professional to assist in the preparation of the case may also be advisable.\n\n### Short Answer\n(Framework knowledge — pending index verification)\n\n### Authority Hierarchy\nRefer to the Master Prompt authority hierarchy: Constitution → NIRC/CMTA/LGC → Tax Treaties → Supreme Court → CTA → RR → RMC/RMO → BIR Rulings.\n\n### Conflict / Consistency Analysis\nNo conflict identified from the available indexed authorities.\n\n### Controlling Rule\n(Framework knowledge — pending index verification)\n\n### Practical Effect\nConsult the applicable provision and implementing regulation before relying on this answer.\n\nSource limitation: A governing authority was not directly located. Displayed sources are related, supporting, or secondary only. They are not the controlling basis for the answer.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "limitations": [
+      "POTENTIAL_CONFLICT",
+      "RELATED_AUTHORITY_ONLY"
+    ],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": null,
+  "sanitizedConversationRef": "b01039cb46d8c2d2"
+}

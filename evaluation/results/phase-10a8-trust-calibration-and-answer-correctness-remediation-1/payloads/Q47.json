@@ -1,0 +1,35 @@
+{
+  "id": "Q47",
+  "group": "mini",
+  "prompt": "What is the donor's tax rate under TRAIN and the exemption threshold?",
+  "answer": "### Short Answer\nThe donor's tax rate under the Tax Reform for Acceleration and Inclusion (TRAIN) law is six percent (6%) on the total gifts exceeding Two Hundred Fifty Thousand Pesos (₱250,000).\n\n### Controlling Authorities\nThis is governed by Section 99 of the National Internal Revenue Code (NIRC), which states that the tax for each calendar year shall be six percent (6%) computed on the basis of the total gifts in excess of the exemption threshold of ₱250,000.\n\n### Interpretation\nUnder the TRAIN law, any gifts made by an individual that exceed the exemption threshold of ₱250,000 are subject to a donor's tax rate of 6%. This means that only the amount of gifts that surpass this threshold will be taxed at the specified rate.\n\n### Practical Meaning\nIn practical terms, individuals making gifts should be aware that they can give up to ₱250,000 without incurring any donor's tax liability. However, any amount gifted beyond this limit will be taxed at 6%, which necessitates careful planning for larger gifts to manage potential tax implications effectively.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The answer correctly states the donor's tax rate and exemption threshold under current Philippine tax law."
+  },
+  "sanitizedConversationRef": "22e378bcf764d9eb"
+}

@@ -1,0 +1,35 @@
+{
+  "id": "Q32",
+  "group": "mini",
+  "prompt": "What is the deadline for filing an estate tax return, and can it be extended?",
+  "answer": "### Short Answer\nThe deadline for filing an estate tax return is within one (1) year from the decedent's death. An extension of up to thirty (30) days may be granted by the Commissioner in meritorious cases.\n\n### Controlling Authorities\n- **NIRC Section 89**: \"The estate tax return required... shall be filed within one (1) year from the decedent's death.\"\n\n### Interpretation\nThe law mandates that the estate tax return must be submitted within one year following the death of the individual whose estate is being taxed. This provision ensures timely compliance with tax obligations related to the estate. Additionally, the Commissioner has the discretion to extend this deadline by up to thirty days if there are valid reasons presented by the taxpayer.\n\n### Practical Meaning\nIn practice, executors or administrators of an estate must be vigilant about the one-year deadline to avoid penalties or complications. If circumstances arise that hinder timely filing, they can seek a brief extension from the Commissioner, which can provide necessary relief in managing the estate's affairs.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The claim accurately reflects the current law regarding the estate tax return deadline."
+  },
+  "sanitizedConversationRef": "f055f0e100af8cfd"
+}

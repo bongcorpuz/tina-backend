@@ -1,0 +1,35 @@
+{
+  "id": "Q5",
+  "group": "mini",
+  "prompt": "What is the VAT rate on importation of goods used to manufacture export products?",
+  "answer": "### Short Answer\nThe VAT rate on the importation of goods used to manufacture export products is 12%. This is based on the total value used by the Bureau of Customs in determining tariff and customs duties, plus any applicable customs duties and excise taxes.\n\n### Controlling Authorities\nThe controlling authority for this is Section 107 of the National Internal Revenue Code (NIRC), which states that there shall be levied, assessed, and collected a value-added tax equivalent to twelve percent (12%) on every importation of goods. This is further supported by Revenue Regulations No. 16-2005, which implements the provisions of the NIRC regarding VAT.\n\n### Interpretation\n\n### Practical Meaning\nFor businesses importing goods to manufacture products for export, the 12% VAT on importation is a significant cost that must be factored into pricing and cash flow considerations. However, if the exported products are sold by a VAT-registered person, they may qualify for zero-rating under certain conditions, allowing them to recover the input VAT paid on the imported goods. This mechanism can help mitigate the impact of the VAT on overall profitability.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The claim accurately reflects the current VAT rate and treatment under Philippine tax law."
+  },
+  "sanitizedConversationRef": "ed61e7e32b82dfea"
+}

@@ -1,0 +1,35 @@
+{
+  "id": "Q2",
+  "group": "nine",
+  "prompt": "What is the VAT treatment of the sale of a residential lot valued at ₱1.9 million?",
+  "answer": "### Short Answer\nThe sale of a residential lot valued at ₱1.9 million is subject to VAT because it exceeds the threshold of ₱1.5 million for residential lots.\n\n### Interpretation\nAccording to Section 4.106-3 of RR 16-2005, the sale of real properties held primarily for sale to customers or held for lease in the ordinary course of trade or business is subject to VAT. Specifically, residential lots sold for more than ₱1.5 million are taxable at the standard VAT rate of 12%. Since the sale price of ₱1.9 million exceeds this threshold, it falls under the taxable category.\n\n### Practical Meaning\nFor a seller of a residential lot valued at ₱1.9 million, this means that they must charge VAT on the sale, which is currently at 12%. The seller is responsible for remitting this VAT to the Bureau of Internal Revenue (BIR). Buyers should be aware that the total cost will include this VAT, impacting their overall expenditure on the property.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "noContradiction": false,
+      "noUnsupportedProposition": false
+    },
+    "reason": "The current threshold for VAT on residential lots is ₱3 million, not ₱1.5 million."
+  },
+  "sanitizedConversationRef": "b2ef4825fcb6e9e0"
+}

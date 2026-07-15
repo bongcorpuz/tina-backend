@@ -1,0 +1,29 @@
+{
+  "id": "Q31",
+  "group": "nine",
+  "prompt": "What standard deduction is allowed in computing the net estate?",
+  "answer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nThe standard deduction simplifies the process of calculating the net estate by providing a fixed amount that can be deducted without the need for detailed documentation of expenses. This can be particularly beneficial for estates that may not have significant liabilities or expenses to offset against the gross estate. By applying this deduction, the estate can potentially reduce its tax liability, making it easier for heirs to receive their inheritance.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "sanitizedConversationRef": "36e36b1df6e7cce8"
+}
