@@ -1,0 +1,103 @@
+{
+  "executionTimestampUtc": "2026-07-15T00:13:20.357Z",
+  "runs": [
+    {
+      "id": "Q9-r1",
+      "timedOut": false,
+      "rendered": {
+        "renderedKind": "related-authority-only",
+        "renderedLabel": "Related authority only",
+        "answerExcerpt": "Indexed sources found:\n\nNIRC Sec. 2 – Primary Statute — 01-tax-code/nirc-1997-ra-10963-(bir).pdf\nG.R. No. 226592 – Supreme Court Decision — 06-court-cases/g.r.-no.-226592.-july-27-2021.pdf\n"
+      },
+      "backendAuthoritySupport": "RELATED_AUTHORITY_ONLY",
+      "backendConflictState": "NO_CONFLICT",
+      "backendSpecificAuthNotFound": false,
+      "backendLegalConclusion": "ALLOWED",
+      "backendHumanReview": false
+    },
+    {
+      "id": "Q9-r2",
+      "timedOut": false,
+      "rendered": {
+        "renderedKind": "related-authority-only",
+        "renderedLabel": "Related authority only",
+        "answerExcerpt": "Indexed sources found:\n\nNIRC Sec. 2 – Primary Statute — 01-tax-code/nirc-1997-ra-10963-(bir).pdf\nG.R. No. 226592 – Supreme Court Decision — 06-court-cases/g.r.-no.-226592.-july-27-2021.pdf\n"
+      },
+      "backendAuthoritySupport": "RELATED_AUTHORITY_ONLY",
+      "backendConflictState": "NO_CONFLICT",
+      "backendSpecificAuthNotFound": false,
+      "backendLegalConclusion": "ALLOWED",
+      "backendHumanReview": false
+    },
+    {
+      "id": "Q9-r3",
+      "timedOut": false,
+      "rendered": {
+        "renderedKind": "related-authority-only",
+        "renderedLabel": "Related authority only",
+        "answerExcerpt": "Indexed sources found:\n\nNIRC Sec. 2 – Primary Statute — 01-tax-code/nirc-1997-ra-10963-(bir).pdf\nG.R. No. 226592 – Supreme Court Decision — 06-court-cases/g.r.-no.-226592.-july-27-2021.pdf\n"
+      },
+      "backendAuthoritySupport": "RELATED_AUTHORITY_ONLY",
+      "backendConflictState": "NO_CONFLICT",
+      "backendSpecificAuthNotFound": false,
+      "backendLegalConclusion": "ALLOWED",
+      "backendHumanReview": false
+    },
+    {
+      "id": "Q2-r1",
+      "timedOut": false,
+      "rendered": {
+        "renderedKind": "none",
+        "renderedLabel": null,
+        "answerExcerpt": ""
+      },
+      "backendAuthoritySupport": null,
+      "backendConflictState": null,
+      "backendSpecificAuthNotFound": null,
+      "backendLegalConclusion": null,
+      "backendHumanReview": null
+    },
+    {
+      "id": "Q2-r2",
+      "timedOut": false,
+      "rendered": {
+        "renderedKind": "none",
+        "renderedLabel": null,
+        "answerExcerpt": ""
+      },
+      "backendAuthoritySupport": null,
+      "backendConflictState": null,
+      "backendSpecificAuthNotFound": null,
+      "backendLegalConclusion": null,
+      "backendHumanReview": null
+    },
+    {
+      "id": "VERIFIED-CONTROL",
+      "timedOut": false,
+      "rendered": {
+        "renderedKind": "verified-controlling",
+        "renderedLabel": "Verified controlling authority",
+        "answerExcerpt": "Short Answer\nThe standard corporate income tax rate for domestic corporations is 25% as per the provisions of the Tax Reform for Acceleration and Inclusion (TRAIN) Law.\nInterpretation\nPractical Meaning\nFor domestic corporations, this means that they must calculate their taxable income and apply the "
+      },
+      "backendAuthoritySupport": "VERIFIED_CONTROLLING",
+      "backendConflictState": "NO_CONFLICT",
+      "backendSpecificAuthNotFound": false,
+      "backendLegalConclusion": "ALLOWED",
+      "backendHumanReview": false
+    },
+    {
+      "id": "RESTRICTED-CONTROL",
+      "timedOut": false,
+      "rendered": {
+        "renderedKind": "restricted",
+        "renderedLabel": "Final legal conclusion not provided",
+        "answerExcerpt": "A conclusive determination of validity, invalidity, voidness, finality, or appealability cannot be made from the limited information in this question. The actual document, its issuance and service details, the assessment or dispute stage, the dates received, applicable protest or appeal deadlines, a"
+      },
+      "backendAuthoritySupport": "NOT_APPLICABLE",
+      "backendConflictState": "NOT_APPLICABLE",
+      "backendSpecificAuthNotFound": false,
+      "backendLegalConclusion": "RESTRICTED",
+      "backendHumanReview": true
+    }
+  ]
+}

@@ -8843,3 +8843,23 @@ Exact next task: PHASE-10A6-R1-SOURCE-PRESENCE-OVERCLAIM-REMEDIATION-1 -- a sepa
 
 Artifacts: PHASE-10A6-LIVE-AUTHORITY-CALIBRATION-VALIDATION-1_REPORT.md; evaluation/results/phase-10a6-live-authority-calibration-validation-1.json; evaluation/results/phase-10a6-live-authority-calibration-validation-1/ (raw-live-output.json + screenshots/ Q1-Q10).
 ```
+
+## Phase 10A6-R1 Source-Presence Overclaim Remediation 1 -- PHASE 10A6-R1 OVERCLAIM REMEDIATION PASS WITH RECOMMENDATIONS (2026-07-15):
+
+```text
+PHASE-10A6-R1-SOURCE-PRESENCE-OVERCLAIM-REMEDIATION-1 executed by Claude Code (Opus 4.8, low speed) to remediate the confirmed PHASE-10A6 Q9 P1 overclaim. Backend feature/source-availability-engine-v1 start HEAD 28620a5, final HEAD 665bd30, sync 0 0. Frontend not modified (0816ac8). Dev Factory not modified.
+
+Confirmed root cause: the SOURCE-mode deterministic renderer (answer-renderer.js) discards the model's analytical answer and emits a canned "Indexed sources found:" source listing; deriveAuthoritySupport (services/trust-contract.js) mapped AUTHORITY_FOUND + displayedSourceCount>0 to VERIFIED_CONTROLLING regardless -- so a bare source list with no proposition-level analysis was classified verified controlling authority. Source presence was treated as sufficient for verified controlling.
+
+Fix: a structured bare-source-listing guard (answerIsBareSourceListing, keyed off the app's own canned deterministic "Indexed sources found:" marker -- not fragile model prose) fails closed to RELATED_AUTHORITY_ONLY before VERIFIED_CONTROLLING can be selected. Empirically verified against the real captured Q9 data (Q9 VERIFIED_CONTROLLING -> RELATED_AUTHORITY_ONLY; legitimate analytical answers Q3/Q4/Q5/Q8 unchanged). Regression tests 9/9 (exact Q9, paraphrase, prose-disclaimer, genuine verified control preserved, generic bare listing, conflict precedence, source failure, restricted). A-G trust-state suites pass (the one phase-10a1 diff-scope-guard failure is the pre-existing self-referential guard that clears on commit).
+
+LIVE REVALIDATION on staging (backend deployed with 665bd30, confirmed by the behavior change): Q9 x3 -> 0/3 VERIFIED_CONTROLLING, all 3 RELATED_AUTHORITY_ONLY (visually confirmed: green "Verified controlling authority" replaced by info "Related authority only" on the identical prompt+bare-listing). Legitimate verified control ("standard corporate income tax rate") -> VERIFIED_CONTROLLING preserved (no blanket downgrade). Restricted control ("Will I win my BIR case?") -> RESTRICTED + human review, intact. Q2 x2 revalidation INCONCLUSIVE this pass (capture fired mid-generation, spinner visible; Q2 did not overclaim; Q2 is not a bare-listing path so R1 does not change it) -- Q2's separate missing-authority-disclosure P2 remains open for R2.
+
+Severity now: P0=0, P1=0 (Q9 overclaim RESOLVED), P2=3 (Q2 disclosure; question-aware structured requested-authority/conflict signals for fuller SPECIFIC_AUTHORITY_NOT_FOUND/CONFLICTING_AUTHORITY precedence; clean Q2 re-capture in R2), P3=0. No production contact; no secret exposure; frontend untouched.
+
+Decision: PHASE 10A6-R1 OVERCLAIM REMEDIATION PASS WITH RECOMMENDATIONS. Phase 10A remains REOPENED pending formal revalidation (NOT closed by this task). Phase 10B: BLOCKED. Phase 10C: BLOCKED. Independent closure review: DEFERRED.
+
+Next task: PHASE-10A6-R2-LIVE-AUTHORITY-CALIBRATION-REVALIDATION-1 -- mandatory independent review of this remediation (by a model that did not execute it), then a full live re-validation (10-question matrix, clean Q2 capture, Q9 x3), before any Phase 10A re-closure consideration.
+
+Artifacts: PHASE-10A6-R1-SOURCE-PRESENCE-OVERCLAIM-REMEDIATION-1_REPORT.md; evaluation/results/phase-10a6-r1-source-presence-overclaim-remediation-1.json; evaluation/results/phase-10a6-r1-source-presence-overclaim-remediation-1/ (raw-revalidation-output.json + screenshots/). Code: services/trust-contract.js (answerIsBareSourceListing guard), tests/phase-10a6-r1-source-presence-overclaim-remediation-1.test.mjs. Commit 665bd30.
+```
