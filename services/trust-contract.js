@@ -162,6 +162,32 @@ export function answerIsBareSourceListing(answerText) {
   return typeof answerText === "string" && BARE_SOURCE_LISTING_RE.test(answerText);
 }
 
+// PHASE-10A10-R2: canonical answer-support eligibility check. VERIFIED_CONTROLLING
+// requires a PRESENT, valid attestation: a non-null, non-array object with own
+// boolean schemaValid===true AND own boolean verifiedEligible===true. Pure; uses
+// strict own-property + typeof checks (no truthiness). Reused by the trust
+// contract, response assembly, and tests as the single source of truth.
+export function isVerifiedAnswerSupport(answerSupport) {
+  const failureReasons = [];
+  const present = answerSupport !== undefined && answerSupport !== null;
+  const objectValid = present && typeof answerSupport === "object" && !Array.isArray(answerSupport);
+  if (!present) failureReasons.push("answerSupport_absent");
+  else if (!objectValid) failureReasons.push("answerSupport_not_object");
+
+  const hasSchema = objectValid && Object.prototype.hasOwnProperty.call(answerSupport, "schemaValid");
+  const hasEligible = objectValid && Object.prototype.hasOwnProperty.call(answerSupport, "verifiedEligible");
+  if (objectValid && !hasSchema) failureReasons.push("missing_schemaValid");
+  if (objectValid && !hasEligible) failureReasons.push("missing_verifiedEligible");
+
+  const schemaValid = hasSchema && answerSupport.schemaValid === true;
+  const verifiedEligible = hasEligible && answerSupport.verifiedEligible === true;
+  if (hasSchema && answerSupport.schemaValid !== true) failureReasons.push("schemaValid_not_true");
+  if (hasEligible && answerSupport.verifiedEligible !== true) failureReasons.push("verifiedEligible_not_true");
+
+  const eligible = objectValid && schemaValid && verifiedEligible;
+  return { present, objectValid, schemaValid, verifiedEligible, eligible, failureReasons };
+}
+
 function deriveAuthoritySupport(result, sourceState, responseKind, hasConflict) {
   if (responseKind === "DOMAIN_BOUNDARY" || responseKind === "CONTROLLED_PROCEDURAL" || responseKind === "RESTRICTED_LEGAL_CONCLUSION") {
     return "NOT_APPLICABLE";
@@ -210,20 +236,19 @@ function deriveAuthoritySupport(result, sourceState, responseKind, hasConflict) 
     // VERIFIED_CONTROLLING -- the cited authorities support the general
     // explanation, not the existence of the specific requested document.
     if (answerDisclaimsSpecificAuthority(result.answer)) return "RELATED_AUTHORITY_ONLY";
-    // PHASE-10A8: VERIFIED_CONTROLLING requires positive answer-support
-    // attestation, not just retrieval/source presence. PHASE-10A7 confirmed the
-    // systemic defect: empty, wrong, incomplete, or unsupported answers were
-    // classified verified purely because governing sources were retrieved and
-    // displayed. The live ask path runs a controlled answer-support validator
-    // (services/answer-support-validator.js) and threads result.answerSupport.
-    // When that attestation is present and NOT eligible, fail closed to
-    // RELATED_AUTHORITY_ONLY. When it is absent (pure internal/deterministic
-    // callers such as unit fixtures that do not represent a live generated
-    // answer), legacy behavior is preserved so the retrieval-level contract
-    // stays testable; the live path always sets answerSupport (fail-closed on
-    // validator error/unavailability), so a real user answer is never verified
-    // without an attestation.
-    if (result.answerSupport && result.answerSupport.verifiedEligible !== true) {
+    // PHASE-10A8 / 10A10-R2: VERIFIED_CONTROLLING requires a PRESENT, valid
+    // answer-support attestation -- not just retrieval/source presence. The
+    // PHASE-10A7 systemic defect and the PHASE-10A10-R1 review's fail-open both
+    // trace to treating an ABSENT attestation as trusted. answerSupport is now
+    // MANDATORY: it must be a non-null, non-array object with own boolean
+    // schemaValid===true AND own boolean verifiedEligible===true. Anything else
+    // (absent, null, false, string, array, empty, missing/false schemaValid or
+    // verifiedEligible, wrong type, inherited) fails closed to
+    // RELATED_AUTHORITY_ONLY. The live ask path always sets answerSupport from
+    // the controlled validator (fail-closed on error/unavailability), so a real
+    // user answer is never verified without a valid attestation, and no legacy /
+    // internal caller can reach verified without supplying one.
+    if (!isVerifiedAnswerSupport(result.answerSupport).eligible) {
       return "RELATED_AUTHORITY_ONLY";
     }
     return "VERIFIED_CONTROLLING";

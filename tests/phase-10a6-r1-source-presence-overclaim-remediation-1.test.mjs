@@ -52,7 +52,8 @@ await test("R3: prose disclaiming a specific issuance stays RELATED_AUTHORITY_ON
 // R4 -- genuine controlling authority: an analytical answer must REMAIN VERIFIED_CONTROLLING.
 await test("R4: genuine analytical answer with controlling authority remains VERIFIED_CONTROLLING (no blanket downgrade)", () => {
   const answer = "Short Answer\nThe standard corporate income tax rate for domestic corporations is 25% on taxable income, as provided in NIRC Sec. 27(A).";
-  const trust = buildResponseTrust({ answer }, 1, "AUTHORITY_FOUND");
+  // PHASE-10A10-R2: VERIFIED_CONTROLLING requires a present, valid attestation.
+  const trust = buildResponseTrust({ answer, answerSupport: { schemaValid: true, verifiedEligible: true } }, 1, "AUTHORITY_FOUND");
   check(trust.authoritySupport === "VERIFIED_CONTROLLING", `expected VERIFIED_CONTROLLING, got ${trust.authoritySupport}`);
 });
 

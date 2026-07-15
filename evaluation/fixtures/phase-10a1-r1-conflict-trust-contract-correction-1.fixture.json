@@ -67,6 +67,10 @@
             }
           ],
           "count": 1
+        },
+        "answerSupport": {
+          "schemaValid": true,
+          "verifiedEligible": true
         }
       },
       "expected": {
@@ -100,6 +104,10 @@
             }
           ],
           "count": 1
+        },
+        "answerSupport": {
+          "schemaValid": true,
+          "verifiedEligible": true
         }
       },
       "expected": {
@@ -130,6 +138,10 @@
           "hasConflict": false,
           "trueConflicts": [],
           "count": 0
+        },
+        "answerSupport": {
+          "schemaValid": true,
+          "verifiedEligible": true
         }
       },
       "expected": {
@@ -153,7 +165,11 @@
       "description": "No conflict/conflictAnalysis field present at all (legacy/missing) must default safely to UNKNOWN, never throw.",
       "input": {
         "sourceStatus": "AUTHORITY_FOUND",
-        "displayedSourceCount": 2
+        "displayedSourceCount": 2,
+        "answerSupport": {
+          "schemaValid": true,
+          "verifiedEligible": true
+        }
       },
       "expected": {
         "version": "1.0",
@@ -177,7 +193,11 @@
       "input": {
         "sourceStatus": "AUTHORITY_FOUND",
         "displayedSourceCount": 2,
-        "conflictAnalysis": "not-an-object"
+        "conflictAnalysis": "not-an-object",
+        "answerSupport": {
+          "schemaValid": true,
+          "verifiedEligible": true
+        }
       },
       "expected": {
         "version": "1.0",
@@ -239,6 +259,10 @@
             }
           ],
           "count": 1
+        },
+        "answerSupport": {
+          "schemaValid": true,
+          "verifiedEligible": true
         }
       },
       "expected": {
@@ -274,6 +298,10 @@
             1
           ],
           "count": 1
+        },
+        "answerSupport": {
+          "schemaValid": true,
+          "verifiedEligible": true
         }
       },
       "expected": {

@@ -7,7 +7,11 @@
       "input": {
         "responseType": "rag_answer",
         "sourceStatus": "AUTHORITY_FOUND",
-        "displayedSourceCount": 2
+        "displayedSourceCount": 2,
+        "answerSupport": {
+          "schemaValid": true,
+          "verifiedEligible": true
+        }
       },
       "expected": {
         "version": "1.0",
@@ -30,7 +34,11 @@
       "input": {
         "responseType": "rag_answer",
         "sourceStatus": "AUTHORITY_FOUND",
-        "displayedSourceCount": 1
+        "displayedSourceCount": 1,
+        "answerSupport": {
+          "schemaValid": true,
+          "verifiedEligible": true
+        }
       },
       "expected": {
         "version": "1.0",
@@ -200,6 +208,10 @@
         "displayedSourceCount": 2,
         "conflict": {
           "hasConflict": true
+        },
+        "answerSupport": {
+          "schemaValid": true,
+          "verifiedEligible": true
         }
       },
       "expected": {
@@ -283,6 +295,10 @@
         "displayedSourceCount": 5,
         "conflict": {
           "hasConflict": false
+        },
+        "answerSupport": {
+          "schemaValid": true,
+          "verifiedEligible": true
         }
       },
       "expected": {

@@ -290,6 +290,7 @@ export async function evaluateAnswerSupport({ question, answer, sources = [], mo
   if (!structural.pass) {
     return {
       verifiedEligible: false,
+      schemaValid: false,
       stage: "structural",
       gates: { structural: false },
       reason: structural.reason
@@ -302,6 +303,7 @@ export async function evaluateAnswerSupport({ question, answer, sources = [], mo
   if (citesOnlyFoundationalProvisions(sources)) {
     return {
       verifiedEligible: false,
+      schemaValid: false,
       stage: "citation-relevance",
       gates: { structural: true, citationRelevant: false },
       reason: "displayed_sources_only_foundational_provisions"
@@ -310,7 +312,7 @@ export async function evaluateAnswerSupport({ question, answer, sources = [], mo
 
   const oai = client || getClient();
   if (!oai) {
-    return { verifiedEligible: false, stage: "unavailable", gates: { structural: true }, reason: "validator_unavailable_fail_closed" };
+    return { verifiedEligible: false, schemaValid: false, stage: "unavailable", gates: { structural: true }, reason: "validator_unavailable_fail_closed" };
   }
 
   const usedModel = model || process.env.ANSWER_SUPPORT_VALIDATOR_MODEL || process.env.OPENAI_MODEL || "gpt-4o-mini";
@@ -354,7 +356,7 @@ export async function evaluateAnswerSupport({ question, answer, sources = [], mo
       reason: schema.verifiedEligible ? String(v.reason || "").slice(0, 200) : (schema.failureReasons[0] || "schema_fail_closed")
     };
   } catch (err) {
-    return { verifiedEligible: false, stage: "error", gates: { structural: true }, reason: "validator_error_fail_closed" };
+    return { verifiedEligible: false, schemaValid: false, stage: "error", gates: { structural: true }, reason: "validator_error_fail_closed" };
   }
 }
 

@@ -58,6 +58,10 @@ export const STAGING_TRUST_FIXTURES = Object.freeze({
       "Short Answer\nRevenue Regulation No. 2-98 governs the general rules on withholding tax in the Philippines, including the obligation of withholding agents to deduct and remit tax on specified income payments.",
     sourceStatus: "AUTHORITY_FOUND",
     displayedSourceCount: 1,
+    // PHASE-10A10-R2: VERIFIED_CONTROLLING requires a present, valid
+    // answer-support attestation. This fixture supplies a canonical one so it
+    // demonstrates the reachable verified state.
+    answerSupport: { schemaValid: true, verifiedEligible: true },
     sourceCards: [sourceCard({ title: "RR No. 2-98", normalizedReference: "RR No. 2-98", authorityType: "REVENUE_REGULATION", publicUrl: "https://www.bir.gov.ph/" })]
   },
   "B-RELATED-AUTHORITY-ONLY": {
@@ -125,6 +129,8 @@ export const STAGING_TRUST_FIXTURES = Object.freeze({
       "Short Answer\nThe standard corporate income tax rate for domestic corporations in the Philippines is 25% on taxable income, as provided in the NIRC.",
     sourceStatus: "AUTHORITY_FOUND",
     displayedSourceCount: 1,
+    // PHASE-10A10-R2: verified state requires a present, valid attestation.
+    answerSupport: { schemaValid: true, verifiedEligible: true },
     sourceCards: [sourceCard({ title: "NIRC Sec. 27(A)", normalizedReference: "NIRC Sec. 27(A)", authorityType: "STATUTE" })]
   }
 });

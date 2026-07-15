@@ -115,9 +115,10 @@ await test("A11-A13: malformed / timeout-shaped / unavailable validator fails cl
 });
 
 // A14 missing answerSupport (internal caller) preserves legacy; A15 empty issue-key handled
-await test("A14: absent answerSupport preserves legacy verified for internal callers", () => {
+// PHASE-10A10-R2: absent answerSupport now fails closed (no attestation -> no verified).
+await test("A14: absent answerSupport fails closed to RELATED_AUTHORITY_ONLY", () => {
   const t = buildResponseTrust({ answer: SUB }, 1, "AUTHORITY_FOUND");
-  check(t.authoritySupport === "VERIFIED_CONTROLLING", "legacy verified when no attestation");
+  check(t.authoritySupport === "RELATED_AUTHORITY_ONLY", "no attestation -> fail closed");
 });
 
 // A17-A20 other canonical states preserved

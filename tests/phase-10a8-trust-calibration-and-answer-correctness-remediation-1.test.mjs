@@ -167,9 +167,10 @@ await test("validator: malformed LLM output fails closed", async () => {
 });
 
 // ── legacy seam: absent answerSupport preserves retrieval-level verified (unit callers) ──
-await test("legacy: absent answerSupport preserves VERIFIED_CONTROLLING for internal callers", () => {
+// PHASE-10A10-R2: absent answerSupport now FAILS CLOSED (no attestation -> no verified).
+await test("absent answerSupport fails closed to RELATED_AUTHORITY_ONLY (no legacy verified)", () => {
   const trust = buildResponseTrust({ answer: SUBSTANTIVE }, 1, "AUTHORITY_FOUND");
-  check(trust.authoritySupport === "VERIFIED_CONTROLLING", "no answerSupport -> legacy verified");
+  check(trust.authoritySupport === "RELATED_AUTHORITY_ONLY", "no answerSupport -> fail closed");
 });
 
 console.log(`\nPHASE-10A8 trust-calibration tests: ${passed} passed, ${failed} failed, ${assertions} assertions`);

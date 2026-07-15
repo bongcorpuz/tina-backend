@@ -97,8 +97,8 @@ await test("invariant edge cases hold under the defensive enforcement pass", () 
 });
 
 await test("verified-authority mapping: controlling vs related-only vs missing-cards-cannot-be-controlling", () => {
-  const controlling = buildTrustContract({ sourceStatus: "AUTHORITY_FOUND", displayedSourceCount: 2 });
-  check(controlling.authoritySupport === "VERIFIED_CONTROLLING", "AUTHORITY_FOUND with displayed cards is VERIFIED_CONTROLLING");
+  const controlling = buildTrustContract({ sourceStatus: "AUTHORITY_FOUND", displayedSourceCount: 2, answerSupport: { schemaValid: true, verifiedEligible: true } });
+  check(controlling.authoritySupport === "VERIFIED_CONTROLLING", "AUTHORITY_FOUND with displayed cards + valid attestation is VERIFIED_CONTROLLING");
 
   const relatedOnly = buildTrustContract({ sourceStatus: "RELATED_AUTHORITY_ONLY", displayedSourceCount: 0 });
   check(relatedOnly.authoritySupport === "RELATED_AUTHORITY_ONLY", "RELATED_AUTHORITY_ONLY never claims controlling authority");

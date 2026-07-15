@@ -67,7 +67,7 @@ await test("Case C: AUTHORITY_FOUND + displayed sources + disclaiming prose down
 });
 
 await test("Case C: ordinary AUTHORITY_FOUND answer (no disclaimer) is unaffected -- remains VERIFIED_CONTROLLING", () => {
-  const result = { answer: "The standard corporate income tax rate is 25% under NIRC Sec. 27(A).", sourceStatus: "AUTHORITY_FOUND", displayedSourceCount: 1 };
+  const result = { answer: "The standard corporate income tax rate is 25% under NIRC Sec. 27(A).", sourceStatus: "AUTHORITY_FOUND", displayedSourceCount: 1, answerSupport: { schemaValid: true, verifiedEligible: true } };
   const trust = buildResponseTrust(result, 1, "AUTHORITY_FOUND");
   check(trust.authoritySupport === "VERIFIED_CONTROLLING", "unchanged: no regression for ordinary verified answers");
   check(trust.specificAuthorityNotFound === false, "qualifier false");

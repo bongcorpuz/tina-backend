@@ -47,6 +47,10 @@ function simulateAskHandler({ answer, question, visibleSources, sourceStatus = "
       specificAuthorityRequested,
       conflictFramed: authorityConflictFramed
     });
+  } else {
+    // PHASE-10A10-R2: mirror the real ask-handler, which attaches a valid
+    // answer-support attestation for verified-candidate (non-fallback) answers.
+    result.answerSupport = { schemaValid: true, verifiedEligible: true };
   }
   const trust = buildResponseTrust(result, displayedSourceCount, sourceStatus);
   return { result, trust, disclosure };
