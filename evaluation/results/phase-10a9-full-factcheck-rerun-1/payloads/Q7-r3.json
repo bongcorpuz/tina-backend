@@ -1,0 +1,48 @@
+{
+  "runId": "Q7-r3",
+  "caseId": "Q7",
+  "runNumber": 3,
+  "prompt": "How is input VAT treated when goods or services are used for both VATable and VAT-exempt sales?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 11400,
+  "answer": "### Short Answer\n\n### Controlling Authorities\n1. **National Internal Revenue Code (NIRC) Section 110(B)** - This section outlines the rules for the allocation of input VAT when goods or services are used for both taxable and exempt sales.\n2. **Revenue Regulations No. 16-2005** - These regulations provide detailed guidance on the implementation of VAT provisions, including the allocation of input VAT.\n\n### Interpretation\n\n### Practical Meaning\nIn practice, businesses engaged in both VATable and VAT-exempt activities must carefully track their sales and related input VAT. They should implement a systematic approach to allocate input VAT based on the proportion of taxable sales, which may involve maintaining detailed records and possibly using accounting software to facilitate accurate calculations. Failure to properly allocate input VAT could result in disallowed input VAT claims and potential penalties during a tax audit.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "1418da770ff31d08",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

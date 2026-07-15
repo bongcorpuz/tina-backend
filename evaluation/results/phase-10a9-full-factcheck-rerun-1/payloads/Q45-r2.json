@@ -1,0 +1,62 @@
+{
+  "runId": "Q45-r2",
+  "caseId": "Q45",
+  "runNumber": 2,
+  "prompt": "Are PEZA-registered enterprises subject to corporate income tax?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 19374,
+  "answer": "### Issue Presented\nAre PEZA-registered enterprises subject to corporate income tax in the Philippines?\n\n### Short Answer\nPEZA-registered enterprises are generally subject to corporate income tax, but they may benefit from preferential tax rates or exemptions under specific conditions set forth in the law.\n\n### Controlling Authorities\nThe relevant provisions are found in the National Internal Revenue Code (NIRC), specifically:\n- **Section 27**: Rates of Income Tax on Domestic Corporations.\n\n### Legal Interpretation\nUnder Section 27 of the NIRC, domestic corporations, including those registered with the Philippine Economic Zone Authority (PEZA), are subject to a corporate income tax rate of 25% on their taxable income derived from all sources within and without the Philippines. However, PEZA-registered enterprises may be entitled to a reduced tax rate of 20% if they meet certain criteria, such as having a net taxable income not exceeding P5 million and total assets not exceeding P100 million, excluding land. Additionally, PEZA enterprises may be eligible for other incentives, including income tax holidays or exemptions, depending on their specific activities and compliance with PEZA regulations.\n\n### Practical Application\nPEZA-registered enterprises should assess their eligibility for tax incentives under the PEZA law and the NIRC. They must ensure compliance with the requirements to benefit from lower tax rates or exemptions. It is advisable for these enterprises to maintain accurate records and documentation to support their claims for any preferential tax treatment. Consulting with a tax professional or legal advisor familiar with PEZA regulations can help navigate the complexities of corporate taxation for these entities.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "noContradiction": false,
+      "noUnsupportedProposition": false
+    },
+    "reason": "The claimed 20% tax rate for PEZA-registered enterprises is not a current provision under Philippine tax law."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 27",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 23",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 24",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "a77c5ca2bbd77a88",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

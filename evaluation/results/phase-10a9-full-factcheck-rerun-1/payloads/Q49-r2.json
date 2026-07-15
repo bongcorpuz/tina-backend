@@ -1,0 +1,58 @@
+{
+  "runId": "Q49-r2",
+  "caseId": "Q49",
+  "runNumber": 2,
+  "prompt": "Is the importation of personal effects or household goods by a returning resident subject to VAT?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 17282,
+  "answer": "### Issue Presented\nIs the importation of personal effects or household goods by a returning resident subject to VAT?\n\n### Short Answer\nYes, the importation of personal effects or household goods by a returning resident is subject to VAT. This is governed by Section 107 of the National Internal Revenue Code (NIRC).\n\n### Controlling Authorities\n- **NIRC Sec. 107**: Value-Added Tax on Importation of Goods.\n- **RR 16-2005**: Implementing regulations for VAT on importation.\n\n### Legal Interpretation\n\n### Practical Application\nReturning residents importing personal effects or household goods must be aware that these items are not exempt from VAT. They should prepare to pay the VAT based on the total value assessed by customs, which includes any applicable duties. It is advisable for returning residents to consult with customs officials or a tax professional to ensure compliance and to understand any potential exemptions or reductions that may apply under specific circumstances.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": false
+    },
+    "reason": "Returning residents are generally exempt from VAT on personal effects and household goods under certain conditions."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 107",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "33f2f695dc9abbc1",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

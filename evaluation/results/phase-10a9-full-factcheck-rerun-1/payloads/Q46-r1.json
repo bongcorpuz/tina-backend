@@ -1,0 +1,72 @@
+{
+  "runId": "Q46-r1",
+  "caseId": "Q46",
+  "runNumber": 1,
+  "prompt": "Is the sale of gold by a small-scale miner to the Bangko Sentral ng Pilipinas subject to VAT?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 21972,
+  "answer": "### Issue Presented\nIs the sale of gold by a small-scale miner to the Bangko Sentral ng Pilipinas (BSP) subject to Value-Added Tax (VAT)?\n\n### Short Answer\nThe sale of gold by a small-scale miner to the Bangko Sentral ng Pilipinas is not subject to VAT.\n\n### Controlling Authorities\nThe relevant provision is Section 106 of the National Internal Revenue Code (NIRC), which states that there shall be levied, assessed, and collected a value-added tax on every sale of goods or properties. However, the sale of gold to the BSP is specifically exempt from VAT under the provisions of the NIRC.\n\n### Legal Interpretation\nSection 106 of the NIRC imposes VAT on the sale of goods or properties, but it also allows for exemptions under specific circumstances. The sale of gold to the BSP is treated as a transaction that falls under the category of tax-exempt sales, as the BSP is a government entity engaged in the purchase of gold for monetary purposes. This aligns with the provisions that exempt certain transactions from VAT, particularly those involving government entities.\n\n### Practical Application\nIn practice, small-scale miners selling gold to the BSP should not charge VAT on their sales. They should ensure proper documentation of the transaction to substantiate the tax-exempt status of the sale. This will help avoid any potential disputes with the Bureau of Internal Revenue (BIR) regarding VAT liability on such transactions. It is advisable for small-scale miners to maintain clear records and consult with tax professionals to ensure compliance with all relevant tax regulations.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "limitations": [
+      "POTENTIAL_CONFLICT"
+    ],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "noContradiction": false,
+      "noUnsupportedProposition": false
+    },
+    "reason": "The claim that the sale is exempt from VAT is incorrect as it does not align with current tax law."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 106",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 105",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 107",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 108",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR 16-2005",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 5,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "cd1656e5387dfcf3",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

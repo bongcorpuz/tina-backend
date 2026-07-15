@@ -1,0 +1,72 @@
+{
+  "runId": "Q8-r3",
+  "caseId": "Q8",
+  "runNumber": 3,
+  "prompt": "Is leasing a residential unit at ₱15,000 per month subject to VAT?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 18481,
+  "answer": "### Issue Presented\nIs leasing a residential unit at ₱15,000 per month subject to VAT?\n\n### Short Answer\nYes, leasing a residential unit at ₱15,000 per month is subject to VAT, as it falls under the definition of lease of properties for consideration.\n\n### Controlling Authorities\nThe relevant provisions are found in the National Internal Revenue Code (NIRC) of 1997, specifically:\n- **Section 106**: Value-Added Tax on Sale of Goods or Properties\n- **Section 108**: Value-Added Tax on the Sale of Services, Including the Use or Lease of Properties\n\n### Legal Interpretation\nUnder **Section 106** of the NIRC, there is a value-added tax levied on every sale, barter, or exchange of goods or properties, which includes the lease of properties. **Section 108** further specifies that a value-added tax equivalent to twelve percent (12%) is imposed on the gross sales derived from the lease of properties. Since the lease of a residential unit constitutes a transaction for consideration, it is subject to VAT.\n\n### Practical Application\nIn practical terms, if you are leasing a residential unit for ₱15,000 per month, the lessor (landlord) is required to charge VAT on the rental amount. This means that the total monthly rental payment would be ₱15,000 plus 12% VAT, resulting in a total of ₱16,800. The lessor must also ensure compliance with VAT registration requirements and proper invoicing to reflect the VAT charged.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "limitations": [
+      "POTENTIAL_CONFLICT"
+    ],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": false
+    },
+    "reason": "Leasing a residential unit for ₱15,000 per month is exempt from VAT under current law."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 106",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 105",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 107",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 108",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR 16-2005",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 5,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "8f93c7a9d0b1aaa9",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

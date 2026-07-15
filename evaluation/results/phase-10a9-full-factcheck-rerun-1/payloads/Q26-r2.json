@@ -1,0 +1,54 @@
+{
+  "runId": "Q26-r2",
+  "caseId": "Q26",
+  "runNumber": 2,
+  "prompt": "When must a withholding agent remit expanded withholding tax to the BIR?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 11120,
+  "answer": "### Short Answer\nA withholding agent must remit the expanded withholding tax to the Bureau of Internal Revenue (BIR) on or before the 10th day of the month following the month in which the income payment subject to withholding was made. This is in accordance with Revenue Regulations No. 2-98, which implements the provisions of the National Internal Revenue Code.\n\n### Interpretation\n\nAdvertising service payments may be subject to expanded withholding tax when paid by a withholding agent to a resident income payee, subject to the applicable classification and rate under withholding tax regulations.\n\n### Practical Meaning\n\nThe payor withholds the applicable EWT from the payment and remits it to the BIR. The withheld amount is creditable against the payee's income tax, subject to proper withholding certificates and filing compliance.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The claim about the remittance deadline is accurate according to current regulations."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "Revenue Regulations",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 6,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "019c391c9e077a52",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

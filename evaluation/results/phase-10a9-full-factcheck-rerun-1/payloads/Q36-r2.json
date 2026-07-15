@@ -1,0 +1,72 @@
+{
+  "runId": "Q36-r2",
+  "caseId": "Q36",
+  "runNumber": 2,
+  "prompt": "What penalties apply to late filing of a VAT return?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 19671,
+  "answer": "### Short Answer\nPenalties for late filing of a VAT return include a fine of PHP 1,000 and an additional 25% of the tax due, as stipulated in the National Internal Revenue Code (NIRC).\n\n### Controlling Authorities\nThe relevant provisions are found in the NIRC, specifically:\n- **Section 248**: Imposes penalties for failure to file returns and pay taxes.\n- **Section 249**: Details the penalties for late payment of taxes.\n\n### Interpretation\n\n### Practical Meaning\nIn practice, businesses must ensure that their VAT returns are filed on or before the due date to avoid incurring penalties. The financial implications of these penalties can be significant, especially for businesses with substantial VAT liabilities. Therefore, maintaining accurate records and timely filing processes is essential for compliance and financial management.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "limitations": [
+      "POTENTIAL_CONFLICT"
+    ],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "noContradiction": false,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The penalties for late filing of VAT returns have changed and are not accurately represented in the answer."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 105",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 106",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 107",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 108",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR 16-2005",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 5,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "075bbc7c08692e9e",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

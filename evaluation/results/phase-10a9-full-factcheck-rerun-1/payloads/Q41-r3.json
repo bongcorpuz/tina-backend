@@ -1,0 +1,58 @@
+{
+  "runId": "Q41-r3",
+  "caseId": "Q41",
+  "runNumber": 3,
+  "prompt": "What is the penalty for failure to issue a BIR-registered invoice?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 13771,
+  "answer": "### Short Answer\n\nThis penalty applies to any person who, in the course of trade or business, fails to issue the required invoices or receipts for sales of goods or services, as mandated by the BIR. The law aims to ensure compliance with proper invoicing practices to maintain accurate tax records and facilitate tax collection.\n\nFor further details, you may refer to the specific provisions in the NIRC, particularly Section 238, which outlines the penalties for violations related to invoicing and other tax-related obligations.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The answer correctly references the relevant section of the NIRC regarding invoicing penalties."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 2",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 3",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "9c76ff439bc31d9b",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

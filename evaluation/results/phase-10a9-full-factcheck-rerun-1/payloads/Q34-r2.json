@@ -1,0 +1,62 @@
+{
+  "runId": "Q34-r2",
+  "caseId": "Q34",
+  "runNumber": 2,
+  "prompt": "What is the deadline for the annual income tax return of an individual?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 14241,
+  "answer": "### Short Answer\nThe deadline for filing the annual income tax return of an individual is April 15 of the following year after the taxable year.\n\n### Interpretation\n\n### Practical Meaning\nTaxpayers should ensure that their income tax returns are filed by April 15 to avoid penalties and interest for late filing. It is advisable to prepare and gather necessary documents well in advance of this deadline to facilitate timely submission.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The stated deadline is correct according to current Philippine tax law."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 23",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 24",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 27",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "f28bc49d6a898864",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "runId": "Q25-r2",
+  "caseId": "Q25",
+  "runNumber": 2,
+  "prompt": "Is EWT required on payments to a VAT-registered law firm?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 21080,
+  "answer": "### Short Answer\n\n### Controlling Authorities\n2. **NIRC Sec. 236** - This section details the registration requirements for individuals and entities subject to internal revenue tax, including VAT.\n\n### Interpretation\nPayments made to VAT-registered professionals, such as law firms, are subject to EWT as they are considered income payments. The law requires withholding to ensure that taxes are collected at the source, thereby facilitating compliance with tax obligations.\n\n### Practical Meaning\nFor businesses engaging VAT-registered law firms, it is essential to withhold the appropriate EWT on payments made for legal services. This not only ensures compliance with tax regulations but also mitigates the risk of penalties for non-compliance. The withheld amount must be remitted to the Bureau of Internal Revenue (BIR) in accordance with the prescribed deadlines.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 109",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 236",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    },
+    {
+      "label": "RMC 75-2015",
+      "authorityType": "RMC"
+    }
+  ],
+  "displayedSourceCount": 4,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "c344e89bc75cbc0b",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

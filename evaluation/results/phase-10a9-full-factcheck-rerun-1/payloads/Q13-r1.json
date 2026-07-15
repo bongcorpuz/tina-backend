@@ -1,0 +1,62 @@
+{
+  "runId": "Q13-r1",
+  "caseId": "Q13",
+  "runNumber": 1,
+  "prompt": "Can a self-employed individual with gross sales below ₱3 million opt for the 8% income tax rate?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 19593,
+  "answer": "### Short Answer\nYes, a self-employed individual with gross sales below ₱3 million can opt for the 8% income tax rate, provided their gross sales or gross receipts do not exceed the VAT threshold of ₱3 million.\n\n### Controlling Authorities\nThe relevant provision is found in Section 24(B)(1)(b) of the National Internal Revenue Code (NIRC), which allows self-employed individuals and professionals to choose an 8% tax on gross sales or receipts exceeding ₱250,000 in lieu of the graduated income tax rates.\n\n### Interpretation\nUnder the NIRC, self-employed individuals whose gross sales or receipts do not exceed ₱3 million are eligible to opt for the 8% income tax rate. This option is available as long as their gross income exceeds the threshold of ₱250,000. The 8% rate applies to the income in excess of this threshold, simplifying tax compliance for smaller businesses.\n\n### Practical Meaning\nFor self-employed individuals, this means they can benefit from a simplified tax structure, potentially reducing their overall tax burden compared to the graduated income tax rates. This option is particularly advantageous for those with lower gross sales, as it streamlines tax calculations and filing requirements.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "noContradiction": false,
+      "noUnsupportedProposition": false
+    },
+    "reason": "The statement misrepresents the eligibility criteria for the 8% income tax rate."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 24",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 23",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 27",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 11,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "f6d1d5699730f07f",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

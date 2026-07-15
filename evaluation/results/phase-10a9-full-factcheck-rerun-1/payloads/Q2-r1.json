@@ -1,0 +1,58 @@
+{
+  "runId": "Q2-r1",
+  "caseId": "Q2",
+  "runNumber": 1,
+  "prompt": "What is the VAT treatment of the sale of a residential lot valued at ₱1.9 million?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 22629,
+  "answer": "### Short Answer\nThe sale of a residential lot valued at ₱1.9 million is subject to VAT because it exceeds the threshold of ₱1.5 million for residential lots.\n\n### Interpretation\nAccording to Section 4.106-3 of RR 16-2005, the sale of real properties held primarily for sale to customers or held for lease in the ordinary course of trade or business is subject to VAT. Since the residential lot's selling price of ₱1.9 million exceeds the ₱1.5 million threshold, it falls under the taxable category for VAT purposes.\n\n### Practical Meaning\nFor the seller, this means that they must charge VAT on the sale of the residential lot and remit this tax to the Bureau of Internal Revenue (BIR). The seller should also ensure that the VAT is properly reflected in the sales documents. For the buyer, the VAT will be included in the total purchase price, effectively increasing the cost of acquiring the property.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "noContradiction": false,
+      "noUnsupportedProposition": false
+    },
+    "reason": "The current threshold for VAT on residential lots is ₱3 million, not ₱1.5 million."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    },
+    {
+      "label": "RR 4-2007",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "faba87e2d5a2e1df",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

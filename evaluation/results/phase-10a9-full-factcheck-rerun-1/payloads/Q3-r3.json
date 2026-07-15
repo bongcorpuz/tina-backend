@@ -1,0 +1,60 @@
+{
+  "runId": "Q3-r3",
+  "caseId": "Q3",
+  "runNumber": 3,
+  "prompt": "A VAT-registered exporter sells 100% abroad. Can it obtain a refund or tax credit for input VAT?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 15765,
+  "answer": "### Short Answer\n\n### Controlling Authorities\n2. **NIRC Section 236** - This section outlines the registration requirements for VAT, ensuring that those who are registered can avail themselves of the benefits associated with VAT, including refunds.\n\n### Interpretation\n\n### Practical Meaning\nFor VAT-registered exporters, this provision is crucial as it allows them to recover the VAT they have paid on their inputs, effectively reducing their overall tax burden. To claim the refund or credit, exporters must ensure they maintain proper documentation and comply with the filing requirements set forth by the Bureau of Internal Revenue (BIR). This mechanism supports exporters by improving cash flow and competitiveness in the international market.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 109",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 236",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    },
+    {
+      "label": "RMC 75-2015",
+      "authorityType": "RMC"
+    }
+  ],
+  "displayedSourceCount": 4,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "4ba721436300647f",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "runId": "Q12-r3",
+  "caseId": "Q12",
+  "runNumber": 3,
+  "prompt": "Is an individual with ₱250,000 gross compensation income in 2024 required to file an income tax return?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 18521,
+  "answer": "### Short Answer\nAn individual with ₱250,000 gross compensation income in 2024 is not required to file an income tax return, as this amount is exempt from income tax under the current tax regulations.\n\n### Controlling Authorities\nThe relevant provision is Section 24 of the National Internal Revenue Code (NIRC), which states that individuals with gross income not exceeding ₱250,000 are exempt from income tax.\n\n### Interpretation\nAccording to Section 24 of the NIRC, the tax rates for individuals specify that income up to ₱250,000 is subject to a 0% tax rate. This means that individuals earning this amount do not have a tax liability and are therefore not required to file an income tax return.\n\n### Practical Meaning\nFor practical purposes, individuals earning ₱250,000 or less in gross compensation income can benefit from the exemption, simplifying their tax obligations. They do not need to file a return, which reduces administrative burdens and compliance costs.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The claim is accurate as individuals earning ₱250,000 or less are exempt from filing an income tax return."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 24",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 23",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 27",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "090ebe441b6f15f2",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "runId": "Q5-r2",
+  "caseId": "Q5",
+  "runNumber": 2,
+  "prompt": "What is the VAT rate on importation of goods used to manufacture export products?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 30012,
+  "answer": "### Short Answer\nThe VAT rate on the importation of goods used to manufacture export products is 12%. This is based on the total value determined by the Bureau of Customs, which includes customs duties and other charges.\n\n### Controlling Authorities\nThe applicable provision is Section 107 of the National Internal Revenue Code (NIRC), which states that a value-added tax equivalent to 12% shall be levied on every importation of goods. This is further supported by Revenue Regulations No. 16-2005.\n\n### Interpretation\n\n### Practical Meaning\nFor businesses importing goods intended for manufacturing export products, the VAT of 12% will be applied at the point of importation. This tax must be paid before the goods are released from customs custody. It is important for businesses to factor this cost into their pricing and cash flow management, as it affects the overall cost of goods sold and can impact profitability.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The claim accurately reflects the current VAT rate on importation of goods."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 107",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "21c2d71dd345bcfd",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

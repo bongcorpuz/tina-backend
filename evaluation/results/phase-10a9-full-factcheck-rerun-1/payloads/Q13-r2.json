@@ -1,0 +1,62 @@
+{
+  "runId": "Q13-r2",
+  "caseId": "Q13",
+  "runNumber": 2,
+  "prompt": "Can a self-employed individual with gross sales below ₱3 million opt for the 8% income tax rate?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 16856,
+  "answer": "### Short Answer\nYes, a self-employed individual with gross sales below ₱3 million can opt for the 8% income tax rate, provided their gross sales or gross receipts do not exceed the VAT threshold of ₱3 million.\n\n### Controlling Authorities\nThe relevant provision is found in Section 24(B)(1)(b) of the National Internal Revenue Code (NIRC), which states that self-employed individuals and/or professionals whose gross sales or gross receipts do not exceed the VAT threshold may opt for an 8% tax on gross sales or gross receipts in lieu of the graduated income tax rates.\n\n### Interpretation\nUnder the NIRC, self-employed individuals with gross sales or receipts exceeding ₱250,000 but not exceeding ₱3 million can choose to be taxed at a flat rate of 8% on their gross sales or receipts. This option simplifies tax compliance and is beneficial for those who prefer a straightforward tax calculation rather than the graduated rates.\n\n### Practical Meaning\nFor self-employed individuals, opting for the 8% tax rate can lead to easier tax management and potentially lower tax liabilities, especially if their income is relatively modest. This option is particularly advantageous for those whose gross sales are close to the VAT threshold, as it allows them to avoid the complexities of the graduated tax system while still complying with tax obligations.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "noContradiction": false,
+      "noUnsupportedProposition": false
+    },
+    "reason": "The threshold for opting for the 8% rate is gross sales or receipts not exceeding ₱3 million, not below."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 24",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 23",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 27",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 11,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "c8f5d12d65d0d4a6",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

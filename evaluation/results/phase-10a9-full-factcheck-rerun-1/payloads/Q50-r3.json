@@ -1,0 +1,38 @@
+{
+  "runId": "Q50-r3",
+  "caseId": "Q50",
+  "runNumber": 3,
+  "prompt": "What is the current rule on Official Receipts versus Sales Invoices?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 11023,
+  "answer": "TINA could not identify an indexed authority matching the specific transaction or claim described.\n\nThis does not mean that no law or authority exists.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "NO_INDEXED_SOURCE",
+    "legalConclusion": "UNKNOWN",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [
+      "NO_INDEXED_SOURCE"
+    ],
+    "responseKind": "FALLBACK",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": null,
+  "sourceFallbackDisclosure": null,
+  "sources": [],
+  "displayedSourceCount": 0,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "NO_INDEXED_SOURCE",
+  "sanitizedConversationRef": "28303950af0e1dfb",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

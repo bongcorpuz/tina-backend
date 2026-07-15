@@ -8973,3 +8973,21 @@ Next task: PHASE-10A9-FULL-FACTCHECK-RERUN-1 (independent review of this remedia
 
 Artifacts: PHASE-10A8-TRUST-CALIBRATION-AND-ANSWER-CORRECTNESS-REMEDIATION-1_REPORT.md; evaluation/results/phase-10a8-trust-calibration-and-answer-correctness-remediation-1.json; evaluation/results/phase-10a8-trust-calibration-and-answer-correctness-remediation-1/ (v8-run-log.json, payloads x30, evidence-manifest with SHA-256). Code: services/answer-support-validator.js, services/trust-contract.js, ask-handler.js, services/philippine-tax-boundary-patterns.js, tests/phase-10a8-...test.mjs. Commit 104bcee.
 ```
+
+## Phase 10A9 Full Fact-Check Rerun 1 -- PHASE 10A9 FULL FACTCHECK RERUN REMEDIATION REQUIRED (2026-07-15):
+
+```text
+PHASE-10A9-FULL-FACTCHECK-RERUN-1 executed by Claude Code (Opus 4.8, low speed): the complete post-A8 rerun of the v3.0 fact-check (50 questions x 3 fresh runs = 150/150) against the corrected runtime (HEAD bb1f1af, runtime 104bcee with the answer-support validator active), real staging Supabase retrieval + real OpenAI gpt-4o-mini (generation + validator). Backend sync 0 0. Frontend not modified (0816ac8). Dev Factory not modified (9167002). No runtime/frontend/fixture/framework change.
+
+RESULT: the A8 remediation is a MAJOR, verified safety improvement -- false-high-confidence dropped from 9 cases (A7) to 1 residual run (A9); authority-status hallucinations 9 -> 1; both prior false refusals (Q23,Q43) resolved (now safe NO_VERIFIED_AUTHORITY, no DOMAIN_BOUNDARY); trust calibration 0.62 -> 0.85. 0 timeouts, 0 technical failures, 0 persistence failures, 0 unsafe inconsistency (legal conclusion identical across all 3 runs for every case). Every VERIFIED_CONTROLLING run (36 across 17 cases) was manually audited: 14 valid, 21 questionable (correct core but materially incomplete -- completeness gate too lax, e.g. Q5 omits CREATE MORE exemption, Q30 conflates the 5M standard deduction with a threshold), 1 INVALID. Safe under-claims: 41 runs (correct answers safely downgraded to RELATED_AUTHORITY_ONLY by the gpt-4o-mini validator -- precision cost).
+
+RESIDUAL P1 (why remediation required): Q41-r3 invalid VERIFIED_CONTROLLING -- 'What is the penalty for failure to issue a BIR-registered invoice?' answered non-responsively (states no penalty) and cites Section 238 (issuance obligation) rather than the penalty provision, yet was verified in 1 of 3 runs (validator false-pass; trust laundering H8). Under the severity rules any invalid VERIFIED_CONTROLLING is a P1. Q37 also verified 1/3 but that run is correct for the exact question (questionable completeness, not invalid). Prior nine: 8/9 fully resolved; Q41 not fully resolved.
+
+Severity: P0=0. P1=1 (Q41-r3 invalid verified). P2=4 (validator precision cost / 41 safe under-claims; 21 questionable-completeness verified; trust-state instability across runs (9 cases, safe); retrieval coverage gap + non-LOA outcome-prediction restriction gap carried from A8). P3=1 (validator latency). Security: 0. Accuracy unchanged (~0.38) since generation was not targeted; the improvement is entirely in trust calibration.
+
+Decision: PHASE 10A9 FULL FACTCHECK RERUN REMEDIATION REQUIRED. Phase 10A: REOPENED FOR REMEDIATION. Phase 10B: BLOCKED. Phase 10C: BLOCKED. Independent closure review: DEFERRED. Adversarial suite: DEFERRED (may NOT proceed until A9 passes). The A8 evidence-correction (Q14/Q28/Q46 were all downgraded; verified reachability shown by other cases) is preserved and the inaccurate 1/3 dedicated-control statement is not repeated.
+
+Next task: PHASE-10A10-VERIFIED-CONTROLLING-RESIDUAL-AND-COMPLETENESS-REMEDIATION-1 (stricter responsiveness + citation-relevance gate so a non-responsive/mis-cited answer cannot be verified; tighten the completeness gate for the questionable-verified class; then re-run the fact-check). Highest-value lever remains a stronger/retrieval-grounded validator model.
+
+Artifacts: PHASE-10A9-FULL-FACTCHECK-RERUN-1_REPORT.md; evaluation/results/phase-10a9-full-factcheck-rerun-1.json; evaluation/results/phase-10a9-full-factcheck-rerun-1/ (execution-manifest, run-log.json, TINA_Tax_FactCheck_Run_Log_v3_COMPLETED.md, scoring-worksheet.json, payloads x150, evidence-manifest with SHA-256).
+```

@@ -1,0 +1,58 @@
+{
+  "runId": "Q2-r2",
+  "caseId": "Q2",
+  "runNumber": 2,
+  "prompt": "What is the VAT treatment of the sale of a residential lot valued at ₱1.9 million?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 21730,
+  "answer": "### Short Answer\nThe sale of a residential lot valued at ₱1.9 million is subject to VAT because it exceeds the threshold of ₱1.5 million for residential lots, as stipulated in the National Internal Revenue Code (NIRC).\n\n### Controlling Authorities\n- **RR 16-2005**: Implements the VAT provisions and specifies the VAT treatment for sales of real properties.\n\n### Interpretation\n\n### Practical Meaning\nIn practical terms, the seller of the residential lot valued at ₱1.9 million must charge VAT at the applicable rate (currently 12%) on the sale. This means that the seller will need to include VAT in the selling price or separately state it in the sales document, and remit the collected VAT to the Bureau of Internal Revenue (BIR). The buyer should be aware that the total cost will include this VAT, impacting the overall transaction value.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "noContradiction": false,
+      "noUnsupportedProposition": false
+    },
+    "reason": "The current threshold for VAT exemption on residential lots is ₱3 million, not ₱1.5 million."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    },
+    {
+      "label": "RR 4-2007",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "a222573bf84163de",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

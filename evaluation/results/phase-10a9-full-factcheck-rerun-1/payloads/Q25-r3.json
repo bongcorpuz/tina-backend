@@ -1,0 +1,66 @@
+{
+  "runId": "Q25-r3",
+  "caseId": "Q25",
+  "runNumber": 3,
+  "prompt": "Is EWT required on payments to a VAT-registered law firm?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 23394,
+  "answer": "### Short Answer\nYes, Expanded Withholding Tax (EWT) is required on payments to a VAT-registered law firm. This is in accordance with Section 2.57.2 of the Revenue Regulations (RR) No. 2-98, which mandates withholding tax on payments made to professionals, including lawyers.\n\n### Controlling Authorities\n2. **NIRC Sec. 236** - This section details the registration requirements for persons subject to internal revenue tax, including VAT.\n\n### Interpretation\nPayments made to VAT-registered professionals, such as law firms, are subject to EWT as they are considered income payments. The law requires withholding tax to ensure tax compliance and collection at the source. The VAT registration of the law firm does not exempt the payer from withholding obligations.\n\n### Practical Meaning\nFor businesses engaging VAT-registered law firms, it is essential to withhold the appropriate EWT on payments made for legal services. This ensures compliance with tax regulations and avoids potential penalties for non-compliance. The withheld amount must be remitted to the Bureau of Internal Revenue (BIR) as part of the company's tax obligations.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "noContradiction": false,
+      "noUnsupportedProposition": false
+    },
+    "reason": "The cited RR No. 2-98 does not mandate EWT on payments to VAT-registered law firms."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 109",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 236",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    },
+    {
+      "label": "RMC 75-2015",
+      "authorityType": "RMC"
+    }
+  ],
+  "displayedSourceCount": 4,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "949816fbe8f1772f",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

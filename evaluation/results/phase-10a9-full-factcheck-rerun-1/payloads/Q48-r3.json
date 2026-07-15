@@ -1,0 +1,54 @@
+{
+  "runId": "Q48-r3",
+  "caseId": "Q48",
+  "runNumber": 3,
+  "prompt": "What conditions must a corporation satisfy to claim a bad debt as a deductible expense?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 10638,
+  "answer": "### Short Answer\nA corporation must satisfy specific conditions to claim a bad debt as a deductible expense, primarily that the debt must be considered worthless and must have been previously included in gross income.\n\n### Interpretation\n\n### Practical Meaning\nIn practice, this means that corporations should maintain thorough documentation of their accounts receivable and any collection efforts undertaken. When a debt is deemed uncollectible, the corporation can then deduct it from its taxable income, thereby reducing its overall tax liability. This deduction is crucial for accurately reflecting the financial position of the corporation and ensuring compliance with tax regulations.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The conditions for claiming a bad debt as a deductible expense are accurately stated."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 34",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "f870f645f3e9cc0e",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

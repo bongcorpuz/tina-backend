@@ -1,0 +1,66 @@
+{
+  "runId": "Q1-r3",
+  "caseId": "Q1",
+  "runNumber": 3,
+  "prompt": "Freelance graphic designer, ₱2.8 million annual gross receipts: Is VAT registration required?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 22663,
+  "answer": "### Issue Presented\n\nHowever, if you anticipate that your gross receipts will exceed ₱3 million in the next 12 months, you may be required to register. Additionally, Section 236 of the NIRC mandates that any person engaged in business must register with the Bureau of Internal Revenue (BIR) if they meet the criteria.\n\nIn summary, based on your current gross receipts, VAT registration is not required unless you expect to exceed the threshold in the near future.\n\n### Relevant Facts / Assumptions\nThe factual circumstances have not been fully described. The analysis is based on the question as presented.\n\n### Alternative Interpretations\nNo alternative interpretations identified from the available indexed authorities.\n\n### Position Strength\nPosition strength is preliminary and subject to full fact pattern verification.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "noContradiction": false,
+      "noUnsupportedProposition": false
+    },
+    "reason": "A freelance graphic designer with ₱2.8 million in gross receipts is required to register for VAT as they are below the threshold but must register if they exceed ₱3 million."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 109",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 236",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    },
+    {
+      "label": "RMC 75-2015",
+      "authorityType": "RMC"
+    }
+  ],
+  "displayedSourceCount": 4,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "e5afd89619ca8a5a",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

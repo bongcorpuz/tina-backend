@@ -1,0 +1,48 @@
+{
+  "runId": "Q4-r2",
+  "caseId": "Q4",
+  "runNumber": 2,
+  "prompt": "Are doctors' professional fees subject to VAT?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 14556,
+  "answer": "### Issue Presented\nAre doctors' professional fees subject to Value-Added Tax (VAT)?\n\n### Short Answer\n\n### Controlling Authorities\n2. **RR 16-2005** - This regulation implements the VAT provisions of the NIRC and provides further clarification on the application of VAT to services rendered by professionals, including medical practitioners.\n\n### Legal Interpretation\n\n### Practical Application\nIn practice, doctors who are VAT-registered must charge VAT on their professional fees. However, if a doctor provides services that are exempt from VAT under the provisions of the NIRC, they should not charge VAT on those specific services. It is essential for medical practitioners to assess their services against the exemptions listed in the NIRC and ensure compliance with VAT regulations to avoid potential penalties.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "661fa723082b9f40",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

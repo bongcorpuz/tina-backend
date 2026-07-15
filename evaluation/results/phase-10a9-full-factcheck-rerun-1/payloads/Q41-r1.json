@@ -1,0 +1,58 @@
+{
+  "runId": "Q41-r1",
+  "caseId": "Q41",
+  "runNumber": 1,
+  "prompt": "What is the penalty for failure to issue a BIR-registered invoice?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 23669,
+  "answer": "### Short Answer\n\nThis provision is part of the broader regulatory framework that mandates the issuance of official receipts or invoices for sales of goods or services, ensuring proper documentation and compliance with tax obligations. Failure to comply can lead to significant penalties, emphasizing the importance of adhering to BIR regulations.\n\nFor further details, you may refer to the NIRC, specifically Section 238, which outlines the penalties for various violations related to tax compliance.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": false
+    },
+    "reason": "Section 238 does not specifically cover penalties for failure to issue a BIR-registered invoice."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 2",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 3",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "bf75385b0bbe7564",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

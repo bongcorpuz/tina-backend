@@ -1,0 +1,54 @@
+{
+  "runId": "Q28-r3",
+  "caseId": "Q28",
+  "runNumber": 3,
+  "prompt": "What final withholding tax applies to royalties paid to a domestic corporation?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 10769,
+  "answer": "### Issue Presented\nAccording to Revenue Regulations No. 2-98, royalties paid to a domestic corporation are subject to a final withholding tax at the rate of 20%. This withholding tax constitutes a full and final payment of the income tax due from the payee on the said income, meaning the payee is not required to file an income tax return for that specific income.\n\n### Legal Interpretation\n\nThe withholding obligation arises when a withholding agent makes payment to a resident income payee for a service subject to withholding under applicable revenue regulations.\n\n### Practical Application\n\nThe payor must withhold the applicable rate, remit to the BIR, and issue BIR Form 2307 (certificate of creditable withholding tax) to the payee.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "noContradiction": false,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The stated final withholding tax rate of 20% for royalties is incorrect; it is 15% under current law."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "Revenue Regulations",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 6,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "89d1c237cc3da47b",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

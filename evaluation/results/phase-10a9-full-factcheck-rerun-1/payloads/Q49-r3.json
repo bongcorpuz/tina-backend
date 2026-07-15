@@ -1,0 +1,58 @@
+{
+  "runId": "Q49-r3",
+  "caseId": "Q49",
+  "runNumber": 3,
+  "prompt": "Is the importation of personal effects or household goods by a returning resident subject to VAT?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 16521,
+  "answer": "### Issue Presented\nIs the importation of personal effects or household goods by a returning resident subject to VAT?\n\n### Short Answer\nYes, the importation of personal effects or household goods by a returning resident is subject to VAT. This is governed by Section 107 of the National Internal Revenue Code (NIRC).\n\n### Controlling Authorities\n- **NIRC Section 107**: Value-Added Tax on Importation of Goods.\n- **RR 16-2005**: Implementing regulations for VAT on importation.\n\n### Legal Interpretation\n\n### Practical Application\nReturning residents should be aware that when importing personal effects or household goods, they will be required to pay VAT based on the total value assessed by customs. It is advisable for individuals to prepare for this tax liability when planning their return to the Philippines, as the VAT must be settled prior to the release of the goods from customs custody.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "noContradiction": false,
+      "noUnsupportedProposition": false
+    },
+    "reason": "Returning residents are exempt from VAT on personal effects or household goods up to a certain value, which contradicts the claim."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 107",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "da8b62bc40311f1a",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

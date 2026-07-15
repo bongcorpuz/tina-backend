@@ -1,0 +1,48 @@
+{
+  "runId": "Q31-r2",
+  "caseId": "Q31",
+  "runNumber": 2,
+  "prompt": "What standard deduction is allowed in computing the net estate?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 10993,
+  "answer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nThe P5,000,000 standard deduction effectively lowers the taxable estate, which can result in a significant reduction in the estate tax liability. This provision is particularly beneficial for estates that may not have substantial debts or expenses to deduct, as it provides a straightforward method to reduce the taxable base. Executors and estate administrators should ensure that this deduction is applied when preparing the estate tax return to optimize tax liabilities.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 34",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "f61a98ad5d582adb",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

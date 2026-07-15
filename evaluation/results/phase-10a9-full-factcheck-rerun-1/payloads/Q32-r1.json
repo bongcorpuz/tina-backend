@@ -1,0 +1,70 @@
+{
+  "runId": "Q32-r1",
+  "caseId": "Q32",
+  "runNumber": 1,
+  "prompt": "What is the deadline for filing an estate tax return, and can it be extended?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 17501,
+  "answer": "### Short Answer\nThe deadline for filing an estate tax return is within one year from the decedent's death. An extension of up to 30 days may be granted by the Commissioner in meritorious cases.\n\n### Controlling Authorities\nThe relevant provisions are found in Section 89 of the National Internal Revenue Code (NIRC), which states that the estate tax return must be filed within one year from the decedent's death and allows for a possible extension of up to 30 days.\n\n### Interpretation\n\n### Practical Meaning\nThis means that executors or heirs must ensure that the estate tax return is filed within the specified timeframe to avoid penalties. If circumstances warrant, they can request an extension from the Commissioner, but this is limited to a maximum of 30 days. Proper planning and timely filing are crucial to comply with tax obligations and avoid complications in the estate settlement process.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The claim about the deadline and extension aligns with current Philippine tax law."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 89",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 84",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 86",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 88",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 91",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 5,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "b2191e257111b4c9",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

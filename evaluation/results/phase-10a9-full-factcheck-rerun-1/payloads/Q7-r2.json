@@ -1,0 +1,48 @@
+{
+  "runId": "Q7-r2",
+  "caseId": "Q7",
+  "runNumber": 2,
+  "prompt": "How is input VAT treated when goods or services are used for both VATable and VAT-exempt sales?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 10673,
+  "answer": "### Short Answer\n\n### Controlling Authorities\n1. **National Internal Revenue Code (NIRC) Section 110(B)** - This section outlines the rules for the allocation of input VAT when goods or services are used for both taxable and exempt sales.\n2. **Revenue Regulations No. 16-2005** - These regulations provide detailed guidance on the implementation of VAT provisions, including the allocation of input VAT.\n\n### Interpretation\n\n### Practical Meaning\nIn practice, businesses must maintain accurate records of their sales to determine the correct allocation of input VAT. This involves calculating the ratio of VATable sales to total sales and applying this ratio to the input VAT incurred on purchases. Failure to properly allocate input VAT can lead to disallowed claims and potential penalties during tax audits. Thus, careful accounting and documentation are essential for compliance and to maximize VAT recovery.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "ff4546232cc9fefe",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

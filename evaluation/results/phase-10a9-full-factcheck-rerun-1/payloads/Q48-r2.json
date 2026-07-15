@@ -1,0 +1,54 @@
+{
+  "runId": "Q48-r2",
+  "caseId": "Q48",
+  "runNumber": 2,
+  "prompt": "What conditions must a corporation satisfy to claim a bad debt as a deductible expense?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 13930,
+  "answer": "### Short Answer\nTo claim a bad debt as a deductible expense, a corporation must demonstrate that the debt is considered worthless and that it has been previously included in gross income.\n\n### Interpretation\n\n### Practical Meaning\nIn practice, this means that corporations must maintain adequate records of their accounts receivable and collection efforts. They should document the circumstances that led to the determination that a debt is worthless, such as bankruptcy of the debtor or other financial difficulties. This documentation is crucial for substantiating the deduction in case of an audit by the Bureau of Internal Revenue (BIR).",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The answer correctly outlines the conditions for claiming a bad debt deduction."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 34",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "8e4e42b6fbfa7ab8",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

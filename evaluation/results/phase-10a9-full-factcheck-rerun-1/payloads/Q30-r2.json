@@ -1,0 +1,70 @@
+{
+  "runId": "Q30-r2",
+  "caseId": "Q30",
+  "runNumber": 2,
+  "prompt": "What is the estate tax rate under TRAIN?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 17626,
+  "answer": "### Short Answer\nThe estate tax rate under the Tax Reform for Acceleration and Inclusion (TRAIN) Law is a flat rate of 6% on the value of the estate exceeding Five Million Pesos (₱5,000,000).\n\n### Interpretation\nUnder the TRAIN Law, the estate tax is calculated based on the net estate of the decedent, which is the gross estate less allowable deductions. The flat rate of 6% applies only to the portion of the estate that exceeds the threshold of ₱5,000,000.\n\n### Practical Meaning\nFor estates valued at ₱5,000,000 or less, no estate tax is due. For estates exceeding this threshold, the tax liability is computed at 6% of the amount over ₱5,000,000. This simplification aims to streamline the estate tax process and reduce the burden on smaller estates.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The claim accurately reflects the current estate tax rate and threshold under TRAIN."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 91",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 84",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 86",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 88",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 89",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 5,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "f2fe4ff467f2bc28",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

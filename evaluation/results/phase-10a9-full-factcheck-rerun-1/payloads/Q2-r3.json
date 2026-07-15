@@ -1,0 +1,52 @@
+{
+  "runId": "Q2-r3",
+  "caseId": "Q2",
+  "runNumber": 3,
+  "prompt": "What is the VAT treatment of the sale of a residential lot valued at ₱1.9 million?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 17135,
+  "answer": "### Short Answer\n\n### Controlling Authorities\n- **National Internal Revenue Code (NIRC) Section 109(P)**: Exempts the sale of residential lots valued at ₱1.5 million or less from VAT.\n- **Revenue Regulations No. 16-2005**: Implements the provisions of the NIRC regarding VAT exemptions.\n\n### Interpretation\n\n### Practical Meaning\nIn practical terms, the sale of the residential lot for ₱1.9 million will incur a VAT liability at the applicable rate (currently 12% as per the VAT law) because it exceeds the exemption limit. The seller must ensure that VAT is properly accounted for in the transaction, and the buyer should be aware that the total cost will include VAT.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    },
+    {
+      "label": "RR 4-2007",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "1b98d8749531bc87",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

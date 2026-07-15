@@ -1,0 +1,70 @@
+{
+  "runId": "Q32-r3",
+  "caseId": "Q32",
+  "runNumber": 3,
+  "prompt": "What is the deadline for filing an estate tax return, and can it be extended?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 17586,
+  "answer": "### Short Answer\nThe deadline for filing an estate tax return is within one (1) year from the decedent's death. An extension of up to thirty (30) days may be granted by the Commissioner in meritorious cases.\n\n### Controlling Authorities\n- **NIRC Section 89**: \"Time for Filing. [...] The estate tax return required [...] shall be filed within one (1) year from the decedent's death. [...] The Commissioner shall have authority to grant, in meritorious cases, a reasonable extension not exceeding thirty (30) days for filing the return.\"\n\n### Interpretation\nThe law mandates that the estate tax return must be submitted within one year following the death of the individual whose estate is being taxed. This provision ensures timely compliance with tax obligations. The Commissioner of Internal Revenue has the discretion to extend this deadline by an additional thirty days if justified by the circumstances surrounding the estate.\n\n### Practical Meaning\nIn practice, this means that executors or administrators of estates must be diligent in preparing and filing the estate tax return within the specified timeframe to avoid penalties. If unforeseen circumstances arise that hinder timely filing, they can seek a brief extension from the Commissioner, but this must be done within the original one-year period.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The claim accurately reflects current Philippine tax law regarding estate tax return deadlines."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 89",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 84",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 86",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 88",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 91",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 5,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "8281fe25cec6f637",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

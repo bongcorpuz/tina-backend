@@ -1,0 +1,54 @@
+{
+  "runId": "Q24-r1",
+  "caseId": "Q24",
+  "runNumber": 1,
+  "prompt": "What is the expanded withholding tax rate on professional fees paid to an individual?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 11655,
+  "answer": "### Short Answer\nThe expanded withholding tax rate on professional fees paid to an individual is 10%. This is specified in Revenue Regulations No. 2-98, which implements provisions of the National Internal Revenue Code.\n\n### Interpretation\n\nAdvertising service payments may be subject to expanded withholding tax when paid by a withholding agent to a resident income payee, subject to the applicable classification and rate under withholding tax regulations.\n\n### Practical Meaning\n\nThe payor withholds the applicable EWT from the payment and remits it to the BIR. The withheld amount is creditable against the payee's income tax, subject to proper withholding certificates and filing compliance.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "noContradiction": false,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The stated withholding tax rate of 10% is incorrect; it should be 15% for professional fees."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "Revenue Regulations",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 6,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "d993e505f529b4bf",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

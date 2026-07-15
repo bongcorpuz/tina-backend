@@ -1,0 +1,62 @@
+{
+  "runId": "Q45-r1",
+  "caseId": "Q45",
+  "runNumber": 1,
+  "prompt": "Are PEZA-registered enterprises subject to corporate income tax?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 17454,
+  "answer": "### Issue Presented\nAre PEZA-registered enterprises subject to corporate income tax in the Philippines?\n\n### Short Answer\nPEZA-registered enterprises are generally subject to corporate income tax, but they may benefit from preferential tax rates or exemptions under specific conditions set forth in the law.\n\n### Controlling Authorities\nThe primary authority governing corporate income tax is found in the National Internal Revenue Code (NIRC), specifically:\n- **Section 27**: Rates of Income Tax on Domestic Corporations.\n\n### Legal Interpretation\nUnder Section 27 of the NIRC, domestic corporations, including those registered with the Philippine Economic Zone Authority (PEZA), are subject to a corporate income tax rate of 25% on their taxable income derived from all sources within and without the Philippines. However, PEZA-registered enterprises may qualify for special tax incentives, such as a reduced tax rate of 5% on gross income earned, as provided under the Special Economic Zone Act and related regulations. This preferential treatment is contingent upon compliance with the requirements set forth by PEZA and the NIRC.\n\n### Practical Application\nPEZA-registered enterprises should assess their eligibility for the 5% tax rate on gross income, which can significantly reduce their tax liability compared to the standard corporate income tax rate. It is crucial for these enterprises to maintain compliance with PEZA regulations and ensure proper documentation to avail of these tax incentives. Additionally, they should consult with tax professionals to navigate the complexities of tax obligations and incentives effectively.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The answer accurately reflects the tax treatment of PEZA-registered enterprises under current law."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 27",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 23",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 24",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "a01ad04b1ee36490",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

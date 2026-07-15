@@ -1,0 +1,66 @@
+{
+  "runId": "Q3-r2",
+  "caseId": "Q3",
+  "runNumber": 2,
+  "prompt": "A VAT-registered exporter sells 100% abroad. Can it obtain a refund or tax credit for input VAT?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 18754,
+  "answer": "### Short Answer\nA VAT-registered exporter that sells 100% of its goods abroad can obtain a refund or tax credit for input VAT. This is provided under the provisions of the NIRC that allow for the refund of input VAT on zero-rated sales.\n\n### Interpretation\n\n### Practical Meaning\nFor VAT-registered exporters, this provision is significant as it effectively allows them to recover the VAT they have paid on inputs, thereby reducing their overall tax burden. This encourages export activities by ensuring that exporters are not disadvantaged by VAT costs, thus promoting competitiveness in the international market. To claim the refund or credit, exporters must comply with the necessary documentation and filing requirements as stipulated by the Bureau of Internal Revenue (BIR).",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The claim accurately reflects the provisions for VAT refunds on zero-rated sales."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 109",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 236",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    },
+    {
+      "label": "RMC 75-2015",
+      "authorityType": "RMC"
+    }
+  ],
+  "displayedSourceCount": 4,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "684d64e8fc6eba9e",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

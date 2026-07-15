@@ -1,0 +1,62 @@
+{
+  "runId": "Q45-r3",
+  "caseId": "Q45",
+  "runNumber": 3,
+  "prompt": "Are PEZA-registered enterprises subject to corporate income tax?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 17806,
+  "answer": "### Issue Presented\nAre PEZA-registered enterprises subject to corporate income tax under Philippine law?\n\n### Short Answer\nYes, PEZA-registered enterprises are subject to corporate income tax, but they may benefit from preferential tax rates or exemptions depending on their specific activities and compliance with PEZA regulations.\n\n### Controlling Authorities\nThe relevant provision is Section 27 of the National Internal Revenue Code (NIRC), which outlines the rates of income tax on domestic corporations. Specifically, it states that domestic corporations are generally taxed at a rate of 25% on their taxable income derived from all sources within and without the Philippines.\n\n### Legal Interpretation\n\n### Practical Application\nPEZA-registered enterprises should carefully assess their eligibility for tax incentives and ensure compliance with PEZA regulations to maximize their benefits. They must also maintain accurate records of their income and expenses to determine their taxable income correctly. It is advisable for these enterprises to consult with tax professionals to navigate the complexities of tax compliance and to take full advantage of the incentives available to them under the law.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "noContradiction": false,
+      "noUnsupportedProposition": false
+    },
+    "reason": "PEZA-registered enterprises typically enjoy tax incentives, including exemptions from the standard corporate income tax."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 27",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 23",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 24",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "1e7a5ab89fa3d33a",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

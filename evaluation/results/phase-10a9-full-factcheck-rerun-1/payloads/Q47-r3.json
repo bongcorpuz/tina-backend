@@ -1,0 +1,66 @@
+{
+  "runId": "Q47-r3",
+  "caseId": "Q47",
+  "runNumber": 3,
+  "prompt": "What is the donor's tax rate under TRAIN and the exemption threshold?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 32818,
+  "answer": "### Short Answer\nThe donor's tax rate under the Tax Reform for Acceleration and Inclusion (TRAIN) is six percent (6%) on the total gifts exceeding Two Hundred Fifty Thousand Pesos (₱250,000).\n\n### Controlling Authorities\nThis is governed by Section 99 of the National Internal Revenue Code (NIRC), which states that the tax for each calendar year shall be six percent (6%) computed on the basis of the total gifts in excess of the exemption threshold of ₱250,000.\n\n### Interpretation\nThe donor's tax applies to gifts made during the calendar year, and only the amount that exceeds the exemption threshold of ₱250,000 is subject to the six percent (6%) tax rate. This means that if a donor gives gifts totaling ₱300,000, only ₱50,000 would be taxable at the 6% rate.\n\n### Practical Meaning\nFor individuals making gifts, it is essential to keep track of the total value of gifts given within a calendar year to determine any tax liability. Gifts below the exemption threshold are not taxed, providing a significant benefit for smaller gifts. Donors should ensure compliance with the filing requirements to avoid penalties.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The stated donor's tax rate and exemption threshold are correct according to current Philippine tax law."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 99",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 101",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 102",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 104",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 4,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "46b52a0f20f52ad7",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "runId": "Q1-r2",
+  "caseId": "Q1",
+  "runNumber": 2,
+  "prompt": "Freelance graphic designer, ₱2.8 million annual gross receipts: Is VAT registration required?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 23059,
+  "answer": "### Issue Presented\n\n### Quick Assessment\n- **Annual Gross Receipts**: ₱2.8 million\n- **VAT Registration Threshold**: ₱3 million\n- **VAT Registration Requirement**: Not required yet, but must monitor future receipts.\n\n### BIR Likely Position\nThe Bureau of Internal Revenue (BIR) will likely assert that the individual is not yet required to register for VAT since the gross receipts do not exceed the ₱3 million threshold. However, if the designer anticipates exceeding this threshold in the next 12 months, they should consider registering voluntarily.\n\n### Taxpayer Position / Defenses\nThe taxpayer can argue that they are currently below the VAT registration threshold and thus not required to register. However, they should maintain accurate records of gross receipts to ensure compliance if they exceed the threshold in the future.\n\n### Documentary Support Needed\n- **Financial Statements**: To substantiate gross receipts.\n- **Sales Invoices**: To verify income sources.\n- **Projected Income Statements**: If considering voluntary registration.\n\n### Procedural Issues\nIf the taxpayer anticipates exceeding the threshold, they should prepare for potential registration and compliance with VAT regulations.\n\n### Risk Level\n**Low Risk**: Currently below the VAT threshold, but must monitor income closely to avoid future non-compliance.\n\n### Recommended Action\nContinue to monitor gross receipts closely. If approaching the threshold, consider voluntary registration to avoid any compliance issues.\n\n### Relevant Facts / Assumptions\nThe factual circumstances have not been fully described. The analysis is based on the question as presented.\n\n### Alternative Interpretations\nNo alternative interpretations identified from the available indexed authorities.\n\n### Position Strength\nPosition strength is preliminary and subject to full fact pattern verification.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 109",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    },
+    {
+      "label": "NIRC Sec. 236",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RMC 75-2015",
+      "authorityType": "RMC"
+    }
+  ],
+  "displayedSourceCount": 4,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "94baa10f8bce083b",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

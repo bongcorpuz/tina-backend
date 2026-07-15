@@ -1,0 +1,66 @@
+{
+  "runId": "Q38-r3",
+  "caseId": "Q38",
+  "runNumber": 3,
+  "prompt": "Is a new business required to register with the BIR, and what form is used?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 16267,
+  "answer": "### Short Answer\nYes, a new business is required to register with the Bureau of Internal Revenue (BIR) before commencing operations. The form used for registration is BIR Form No. 1901 for self-employed individuals or BIR Form No. 1902 for employees earning compensation income.\n\n### Interpretation\n\n### Practical Meaning\nFor new businesses, timely registration with the BIR is crucial to avoid penalties and ensure compliance with tax laws. Completing the appropriate registration form allows the business to obtain a Tax Identification Number (TIN) and fulfill its tax obligations from the outset of operations. Failure to register can lead to complications, including fines and issues with tax compliance.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The claim about registration is accurate and supported by current tax law."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "RR No. 11-2018",
+      "authorityType": "RR"
+    },
+    {
+      "label": "RR No. 2-1998",
+      "authorityType": "RR"
+    },
+    {
+      "label": "NIRC Sec. 2",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 3",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 4,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "07ce13d3ddc6546d",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

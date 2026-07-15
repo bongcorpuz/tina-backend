@@ -1,0 +1,58 @@
+{
+  "runId": "Q15-r2",
+  "caseId": "Q15",
+  "runNumber": 2,
+  "prompt": "How is MCIT computed and when does it apply?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 26111,
+  "answer": "### Issue Presented\nHow is the Minimum Corporate Income Tax (MCIT) computed and when does it apply?\n\n### Short Answer\nThe Minimum Corporate Income Tax (MCIT) is computed at a rate of 2% of the gross income as of the end of the taxable year, applicable starting from the fourth taxable year following the year in which the corporation commenced its business operations, when the MCIT exceeds the regular corporate income tax (RCIT) for that year.\n\n### Controlling Authorities\n- **RR 9-1998**: This regulation provides further details on the implementation of the MCIT.\n\n### Legal Interpretation\n\n### Practical Application\nCorporations should monitor their gross income and tax liabilities closely, especially as they approach the fourth year of operations. If a corporation's gross income is low or if it incurs losses, it may find itself subject to the MCIT, which could be higher than the regular income tax due. Additionally, any excess MCIT paid can be carried forward and credited against the normal income tax for the next three taxable years. This necessitates careful tax planning to optimize tax liabilities and ensure compliance with the applicable tax laws.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The claim about the MCIT rate and its application is accurate according to current tax law."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 27",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR 9-1998",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "0489f528c40ee704",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "runId": "Q31-r3",
+  "caseId": "Q31",
+  "runNumber": 3,
+  "prompt": "What standard deduction is allowed in computing the net estate?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 14025,
+  "answer": "### Short Answer\nIn computing the net estate, the standard deduction allowed is based on the provisions of the National Internal Revenue Code (NIRC), specifically under Section 86, which provides for a standard deduction of Five Million Pesos (₱5,000,000) for the estate of a decedent.\n\n### Interpretation\n\n### Practical Meaning\nThe standard deduction of ₱5,000,000 reduces the taxable estate, thereby potentially lowering the estate tax liability. This provision is particularly beneficial for estates that may not have significant deductible expenses, allowing for a more straightforward calculation of the net estate subject to tax. Executors should ensure that this deduction is applied correctly to optimize the estate's tax position.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "noContradiction": false,
+      "noUnsupportedProposition": false
+    },
+    "reason": "The standard deduction for estate tax is actually ₱5,000,000 as per Section 86, not Section 34."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 34",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "8d6ab220b9a6d166",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

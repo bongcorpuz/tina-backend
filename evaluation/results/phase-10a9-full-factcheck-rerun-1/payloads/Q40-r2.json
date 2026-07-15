@@ -1,0 +1,39 @@
+{
+  "runId": "Q40-r2",
+  "caseId": "Q40",
+  "runNumber": 2,
+  "prompt": "Can a taxpayer request a compromise settlement, and on what grounds?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 16403,
+  "answer": "TINA could not identify an indexed authority matching the specific transaction or claim described.\n\nThis does not mean that no law or authority exists.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "NO_INDEXED_SOURCE",
+    "legalConclusion": "UNKNOWN",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "limitations": [
+      "POTENTIAL_CONFLICT",
+      "NO_INDEXED_SOURCE"
+    ],
+    "responseKind": "FALLBACK",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": null,
+  "sourceFallbackDisclosure": null,
+  "sources": [],
+  "displayedSourceCount": 0,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "NO_INDEXED_SOURCE",
+  "sanitizedConversationRef": "5a2731d58012fd65",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

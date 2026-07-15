@@ -1,0 +1,62 @@
+{
+  "runId": "Q13-r3",
+  "caseId": "Q13",
+  "runNumber": 3,
+  "prompt": "Can a self-employed individual with gross sales below ₱3 million opt for the 8% income tax rate?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 17532,
+  "answer": "### Short Answer\nYes, a self-employed individual with gross sales below ₱3 million can opt for the 8% income tax rate, provided their gross sales or gross receipts do not exceed the VAT threshold of ₱3 million.\n\n### Controlling Authorities\nThe relevant provision is Section 24(B)(1)(b) of the National Internal Revenue Code (NIRC), which allows self-employed individuals and professionals to choose an 8% tax rate on gross sales or gross receipts in excess of ₱250,000, provided they do not exceed the VAT threshold.\n\n### Interpretation\nUnder Section 24(B)(1)(b) of the NIRC, self-employed individuals whose gross sales or receipts do not exceed ₱3 million can opt for the 8% income tax rate on their income exceeding ₱250,000. This option simplifies tax compliance for small businesses and is beneficial for those with lower income levels.\n\n### Practical Meaning\nFor self-employed individuals, this means they can potentially reduce their tax burden significantly by opting for the 8% rate instead of the graduated income tax rates. This option is particularly advantageous for those with gross sales below the VAT threshold, as it streamlines their tax obligations and provides a clear and predictable tax liability.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "noContradiction": false,
+      "noUnsupportedProposition": false
+    },
+    "reason": "The 8% income tax rate applies to gross sales exceeding ₱250,000, not based on the ₱3 million VAT threshold."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 24",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 23",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 27",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 11,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "c54d32cc33a93ae8",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

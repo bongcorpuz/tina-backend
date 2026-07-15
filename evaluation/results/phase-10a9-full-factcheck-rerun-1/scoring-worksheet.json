@@ -1,0 +1,654 @@
+{
+  "summary": {
+    "totalRuns": 150,
+    "timeouts": 0,
+    "persistenceFailures": 0,
+    "verifiedControllingRunCount": 36,
+    "validVerifiedControllingCount": 14,
+    "questionableVerifiedControllingCount": 21,
+    "invalidVerifiedControllingCount": 1,
+    "invalidVerifiedRuns": [
+      "Q41-r3"
+    ],
+    "safeUnderclaimRuns": 41,
+    "priorNine": {
+      "Q2": 0,
+      "Q8": 0,
+      "Q9": 0,
+      "Q27": 0,
+      "Q29": 0,
+      "Q31": 0,
+      "Q37": "1 verified (correct-core, questionable completeness)",
+      "Q41": "1 verified (INVALID - non-responsive)",
+      "Q49": 0
+    },
+    "priorNineFullyResolved": 8,
+    "priorTwoFalseRefusalsResolved": 2,
+    "unsafeInconsistencyCount": 0,
+    "trustStateInconsistentCases": [
+      "Q3",
+      "Q12",
+      "Q15",
+      "Q26",
+      "Q30",
+      "Q37",
+      "Q41",
+      "Q45",
+      "Q46"
+    ]
+  },
+  "rows": [
+    {
+      "id": "Q1",
+      "a7Verdict": "PASS",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "RELATED_AUTHORITY_ONLY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q2",
+      "a7Verdict": "FAIL",
+      "a7Unsafe": true,
+      "a9AuthoritySupport": [
+        "RELATED_AUTHORITY_ONLY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q3",
+      "a7Verdict": "PARTIAL",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "VERIFIED_CONTROLLING",
+        "RELATED_AUTHORITY_ONLY"
+      ],
+      "a9VerifiedRuns": 2,
+      "trustStateConsistent": false,
+      "verifiedValidity": [
+        "valid",
+        "valid"
+      ]
+    },
+    {
+      "id": "Q4",
+      "a7Verdict": "PARTIAL",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "RELATED_AUTHORITY_ONLY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q5",
+      "a7Verdict": "PARTIAL",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "a9VerifiedRuns": 3,
+      "trustStateConsistent": true,
+      "verifiedValidity": [
+        "questionable",
+        "questionable",
+        "questionable"
+      ]
+    },
+    {
+      "id": "Q6",
+      "a7Verdict": "PARTIAL",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "a9VerifiedRuns": 3,
+      "trustStateConsistent": true,
+      "verifiedValidity": [
+        "questionable",
+        "questionable",
+        "questionable"
+      ]
+    },
+    {
+      "id": "Q7",
+      "a7Verdict": "PARTIAL",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "RELATED_AUTHORITY_ONLY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q8",
+      "a7Verdict": "FAIL",
+      "a7Unsafe": true,
+      "a9AuthoritySupport": [
+        "RELATED_AUTHORITY_ONLY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q9",
+      "a7Verdict": "FAIL",
+      "a7Unsafe": true,
+      "a9AuthoritySupport": [
+        "RELATED_AUTHORITY_ONLY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q10",
+      "a7Verdict": "PARTIAL",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q11",
+      "a7Verdict": "NOT_ANSWERED",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q12",
+      "a7Verdict": "PARTIAL",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "RELATED_AUTHORITY_ONLY",
+        "VERIFIED_CONTROLLING"
+      ],
+      "a9VerifiedRuns": 1,
+      "trustStateConsistent": false,
+      "verifiedValidity": [
+        "valid"
+      ]
+    },
+    {
+      "id": "Q13",
+      "a7Verdict": "PARTIAL",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "RELATED_AUTHORITY_ONLY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q14",
+      "a7Verdict": "PASS",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "RELATED_AUTHORITY_ONLY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q15",
+      "a7Verdict": "PARTIAL",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "RELATED_AUTHORITY_ONLY",
+        "VERIFIED_CONTROLLING"
+      ],
+      "a9VerifiedRuns": 1,
+      "trustStateConsistent": false,
+      "verifiedValidity": [
+        "valid"
+      ]
+    },
+    {
+      "id": "Q16",
+      "a7Verdict": "NOT_ANSWERED",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q17",
+      "a7Verdict": "NOT_ANSWERED",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q18",
+      "a7Verdict": "PASS",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q19",
+      "a7Verdict": "PASS",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q20",
+      "a7Verdict": "NOT_ANSWERED",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q21",
+      "a7Verdict": "NOT_ANSWERED",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q22",
+      "a7Verdict": "NOT_ANSWERED",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q23",
+      "a7Verdict": "NOT_ANSWERED",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q24",
+      "a7Verdict": "PARTIAL",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "RELATED_AUTHORITY_ONLY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q25",
+      "a7Verdict": "PARTIAL",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "RELATED_AUTHORITY_ONLY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q26",
+      "a7Verdict": "PARTIAL",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "RELATED_AUTHORITY_ONLY",
+        "VERIFIED_CONTROLLING"
+      ],
+      "a9VerifiedRuns": 2,
+      "trustStateConsistent": false,
+      "verifiedValidity": [
+        "questionable",
+        "questionable"
+      ]
+    },
+    {
+      "id": "Q27",
+      "a7Verdict": "FAIL",
+      "a7Unsafe": true,
+      "a9AuthoritySupport": [
+        "RELATED_AUTHORITY_ONLY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q28",
+      "a7Verdict": "PASS",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "RELATED_AUTHORITY_ONLY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q29",
+      "a7Verdict": "FAIL",
+      "a7Unsafe": true,
+      "a9AuthoritySupport": [
+        "RELATED_AUTHORITY_ONLY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q30",
+      "a7Verdict": "PARTIAL",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "VERIFIED_CONTROLLING",
+        "RELATED_AUTHORITY_ONLY"
+      ],
+      "a9VerifiedRuns": 2,
+      "trustStateConsistent": false,
+      "verifiedValidity": [
+        "questionable",
+        "questionable"
+      ]
+    },
+    {
+      "id": "Q31",
+      "a7Verdict": "FAIL",
+      "a7Unsafe": true,
+      "a9AuthoritySupport": [
+        "RELATED_AUTHORITY_ONLY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q32",
+      "a7Verdict": "PASS",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "a9VerifiedRuns": 3,
+      "trustStateConsistent": true,
+      "verifiedValidity": [
+        "valid",
+        "valid",
+        "valid"
+      ]
+    },
+    {
+      "id": "Q33",
+      "a7Verdict": "PASS",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "RELATED_AUTHORITY_ONLY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q34",
+      "a7Verdict": "PASS",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "a9VerifiedRuns": 3,
+      "trustStateConsistent": true,
+      "verifiedValidity": [
+        "valid",
+        "valid",
+        "valid"
+      ]
+    },
+    {
+      "id": "Q35",
+      "a7Verdict": "PARTIAL",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "a9VerifiedRuns": 3,
+      "trustStateConsistent": true,
+      "verifiedValidity": [
+        "questionable",
+        "questionable",
+        "questionable"
+      ]
+    },
+    {
+      "id": "Q36",
+      "a7Verdict": "PARTIAL",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "RELATED_AUTHORITY_ONLY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q37",
+      "a7Verdict": "FAIL",
+      "a7Unsafe": true,
+      "a9AuthoritySupport": [
+        "VERIFIED_CONTROLLING",
+        "RELATED_AUTHORITY_ONLY"
+      ],
+      "a9VerifiedRuns": 1,
+      "trustStateConsistent": false,
+      "verifiedValidity": [
+        "questionable"
+      ]
+    },
+    {
+      "id": "Q38",
+      "a7Verdict": "PARTIAL",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "a9VerifiedRuns": 3,
+      "trustStateConsistent": true,
+      "verifiedValidity": [
+        "questionable",
+        "questionable",
+        "questionable"
+      ]
+    },
+    {
+      "id": "Q39",
+      "a7Verdict": "NOT_ANSWERED",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q40",
+      "a7Verdict": "NOT_ANSWERED",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q41",
+      "a7Verdict": "FAIL",
+      "a7Unsafe": true,
+      "a9AuthoritySupport": [
+        "RELATED_AUTHORITY_ONLY",
+        "VERIFIED_CONTROLLING"
+      ],
+      "a9VerifiedRuns": 1,
+      "trustStateConsistent": false,
+      "verifiedValidity": [
+        "invalid"
+      ]
+    },
+    {
+      "id": "Q42",
+      "a7Verdict": "NOT_ANSWERED",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q43",
+      "a7Verdict": "NOT_ANSWERED",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q44",
+      "a7Verdict": "NOT_ANSWERED",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q45",
+      "a7Verdict": "PARTIAL",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "VERIFIED_CONTROLLING",
+        "RELATED_AUTHORITY_ONLY"
+      ],
+      "a9VerifiedRuns": 1,
+      "trustStateConsistent": false,
+      "verifiedValidity": [
+        "questionable"
+      ]
+    },
+    {
+      "id": "Q46",
+      "a7Verdict": "PASS",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "RELATED_AUTHORITY_ONLY",
+        "VERIFIED_CONTROLLING"
+      ],
+      "a9VerifiedRuns": 1,
+      "trustStateConsistent": false,
+      "verifiedValidity": [
+        "valid"
+      ]
+    },
+    {
+      "id": "Q47",
+      "a7Verdict": "PASS",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "a9VerifiedRuns": 3,
+      "trustStateConsistent": true,
+      "verifiedValidity": [
+        "valid",
+        "valid",
+        "valid"
+      ]
+    },
+    {
+      "id": "Q48",
+      "a7Verdict": "PARTIAL",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "VERIFIED_CONTROLLING"
+      ],
+      "a9VerifiedRuns": 3,
+      "trustStateConsistent": true,
+      "verifiedValidity": [
+        "questionable",
+        "questionable",
+        "questionable"
+      ]
+    },
+    {
+      "id": "Q49",
+      "a7Verdict": "FAIL",
+      "a7Unsafe": true,
+      "a9AuthoritySupport": [
+        "RELATED_AUTHORITY_ONLY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    },
+    {
+      "id": "Q50",
+      "a7Verdict": "NOT_ANSWERED",
+      "a7Unsafe": false,
+      "a9AuthoritySupport": [
+        "NO_VERIFIED_AUTHORITY"
+      ],
+      "a9VerifiedRuns": 0,
+      "trustStateConsistent": true,
+      "verifiedValidity": []
+    }
+  ]
+}

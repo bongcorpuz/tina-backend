@@ -1,0 +1,58 @@
+{
+  "runId": "Q41-r2",
+  "caseId": "Q41",
+  "runNumber": 2,
+  "prompt": "What is the penalty for failure to issue a BIR-registered invoice?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 12927,
+  "answer": "### Short Answer\n\nThis penalty applies to any person who fails to issue a registered invoice or receipt for sales of goods or services, as required under the tax code. The Bureau of Internal Revenue (BIR) has the authority to enforce these penalties as part of its mandate to ensure compliance with tax laws (NIRC Sec. 2). \n\nFor further details, you may refer to the specific provisions in the NIRC regarding penalties for non-compliance.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": false
+    },
+    "reason": "The cited sections do not detail the specific penalties for failing to issue a registered invoice."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 2",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 3",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "a94903a23b6b0d3f",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

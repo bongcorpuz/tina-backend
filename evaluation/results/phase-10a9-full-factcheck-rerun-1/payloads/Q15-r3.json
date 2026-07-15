@@ -1,0 +1,58 @@
+{
+  "runId": "Q15-r3",
+  "caseId": "Q15",
+  "runNumber": 3,
+  "prompt": "How is MCIT computed and when does it apply?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 27057,
+  "answer": "### Issue Presented\nHow is the Minimum Corporate Income Tax (MCIT) computed and when does it apply?\n\n### Short Answer\nThe Minimum Corporate Income Tax (MCIT) is computed at a rate of 2% of the gross income as of the end of the taxable year, applicable starting from the fourth taxable year following the year in which the corporation commenced its business operations, when the MCIT exceeds the regular corporate income tax (RCIT) for that year.\n\n### Controlling Authorities\n- **RR 9-1998**: This regulation provides further details on the implementation of the MCIT.\n\n### Legal Interpretation\n\n### Practical Application\nCorporations should monitor their gross income and regular income tax liabilities closely, especially as they approach the fourth year of operations. If the MCIT is greater than the RCIT, the corporation must pay the MCIT. Additionally, any excess MCIT paid can be carried forward and credited against the normal income tax for the next three taxable years. This mechanism ensures that corporations do not face undue tax burdens during their initial years of operation, while also providing a safety net for those that may not yet be profitable.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "noContradiction": false,
+      "noUnsupportedProposition": true
+    },
+    "reason": "MCIT is computed based on gross income, not just at the end of the taxable year."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 27",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR 9-1998",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "c9310e480aede86f",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

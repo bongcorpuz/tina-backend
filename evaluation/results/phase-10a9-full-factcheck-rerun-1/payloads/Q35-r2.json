@@ -1,0 +1,54 @@
+{
+  "runId": "Q35-r2",
+  "caseId": "Q35",
+  "runNumber": 2,
+  "prompt": "What BIR form is used for the annual ITR of a self-employed individual or professional?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 14696,
+  "answer": "### Short Answer\nThe BIR form used for the annual Income Tax Return (ITR) of a self-employed individual or professional is BIR Form 1701.\n\n### Controlling Authorities\nThis is governed by the National Internal Revenue Code (NIRC) of 1997, specifically under Section 24, which outlines the income tax obligations of individuals, including self-employed professionals.\n\n### Interpretation\nBIR Form 1701 is specifically designed for individuals earning income from business or profession, allowing them to report their income, deductions, and compute their tax liabilities accordingly. This form is essential for compliance with the tax obligations set forth in the NIRC.\n\n### Practical Meaning\nFor self-employed individuals and professionals, using BIR Form 1701 ensures that they accurately report their income and pay the correct amount of tax due. It is crucial for maintaining compliance with tax laws and avoiding penalties for underreporting or failing to file the necessary returns.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The claim about BIR Form 1701 is accurate and supported by the NIRC."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 2",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "7fdc78d485e001ad",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

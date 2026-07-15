@@ -1,0 +1,54 @@
+{
+  "runId": "Q31-r1",
+  "caseId": "Q31",
+  "runNumber": 1,
+  "prompt": "What standard deduction is allowed in computing the net estate?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 13544,
+  "answer": "### Short Answer\nIn computing the net estate, the standard deduction allowed is based on the provisions of the National Internal Revenue Code (NIRC), specifically under Section 86, which provides for a standard deduction of P5,000,000 for the estate of a decedent.\n\n### Interpretation\n\n### Practical Meaning\nThe practical implication of this standard deduction is that it reduces the taxable estate, thereby potentially lowering the estate tax liability. This provision is particularly beneficial for smaller estates, as it provides a straightforward deduction that can ease the financial burden on heirs during the estate settlement process.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "noContradiction": false,
+      "noUnsupportedProposition": false
+    },
+    "reason": "The standard deduction for estate tax is actually provided under Section 86 of the NIRC, not Section 34."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 34",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "22a904b506876985",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

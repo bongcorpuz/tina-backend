@@ -1,0 +1,54 @@
+{
+  "runId": "Q33-r2",
+  "caseId": "Q33",
+  "runNumber": 2,
+  "prompt": "Is the family home deductible from the gross estate, and up to how much?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 15625,
+  "answer": "### Short Answer\nYes, the family home is deductible from the gross estate, with a maximum deduction of up to P10 million.\n\n### Interpretation\n\n### Practical Meaning\nThe deduction of the family home from the gross estate reduces the taxable estate, potentially lowering the estate tax liability. This provision is particularly beneficial for families, as it allows them to retain a significant portion of their home’s value from estate taxation, ensuring that the family home can be passed on to heirs without incurring substantial tax burdens.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "noContradiction": false,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The stated maximum deduction for the family home is incorrect according to current tax law."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 34",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "c68d3013baea326a",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

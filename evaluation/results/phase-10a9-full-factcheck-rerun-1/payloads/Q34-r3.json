@@ -1,0 +1,62 @@
+{
+  "runId": "Q34-r3",
+  "caseId": "Q34",
+  "runNumber": 3,
+  "prompt": "What is the deadline for the annual income tax return of an individual?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 11871,
+  "answer": "### Short Answer\nThe deadline for filing the annual income tax return of an individual in the Philippines is on or before April 15 of the following year after the close of the taxable year.\n\n### Interpretation\n\n### Practical Meaning\nFor individuals, this deadline is crucial for compliance with tax obligations. Failure to file on time may result in penalties and interest on any unpaid taxes. Taxpayers should ensure that they prepare their returns in advance to avoid last-minute issues and to take advantage of any potential deductions or credits available to them.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "noContradiction": true,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The stated deadline is correct according to current Philippine tax law."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 23",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 24",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 27",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "baaa36b36708f615",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

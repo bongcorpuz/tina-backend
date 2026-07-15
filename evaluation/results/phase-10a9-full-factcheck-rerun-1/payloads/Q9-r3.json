@@ -1,0 +1,62 @@
+{
+  "runId": "Q9-r3",
+  "caseId": "Q9",
+  "runNumber": 3,
+  "prompt": "Can spouses who both earn compensation income file a joint income tax return?",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 28261,
+  "answer": "### Short Answer\nSpouses who both earn compensation income cannot file a joint income tax return; they must file separate returns based on their respective total taxable incomes.\n\n### Controlling Authorities\nThis requirement is established under Section 24 of the National Internal Revenue Code (NIRC), which states that married individuals compute their income tax separately based on their respective total taxable income.\n\n### Interpretation\nSection 24 of the NIRC specifies that each spouse must report their income separately unless income cannot be definitively attributed to either spouse, in which case it is divided equally for tax purposes. This means that even if both spouses earn compensation income, they are required to file individual returns.\n\n### Practical Meaning\nIn practice, this means that each spouse will need to prepare and submit their own income tax return, reflecting only their income and applicable deductions. This can affect their overall tax liability, as they will not be able to combine their incomes for tax computation purposes, which may limit potential tax benefits available to joint filers in other jurisdictions.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "gates": {
+      "structural": true,
+      "responsive": true,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "noContradiction": false,
+      "noUnsupportedProposition": true
+    },
+    "reason": "The claim incorrectly states that spouses cannot file jointly when they can choose to do so under Philippine tax law."
+  },
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 24",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 23",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 27",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "9396f72d94572732",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}
