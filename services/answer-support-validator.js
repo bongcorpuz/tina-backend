@@ -190,6 +190,89 @@ function sourceCitations(sources) {
   return items.length ? items.join("; ") : "(none)";
 }
 
+// PHASE-10A10-R1: single canonical source of the mandatory verified-eligibility
+// schema. Positive fields must be OWN boolean `true`; negative-risk fields must
+// be OWN boolean `false`. Used by the parser and the tests -- no duplicated
+// field lists.
+export const REQUIRED_POSITIVE_BOOLEANS = Object.freeze([
+  "answerResponsive",
+  "primaryIssueAnswered",
+  "requiredIssueKeysCovered",
+  "materialExceptionsCovered",
+  "materialAlternativesCovered",
+  "citationRelevant",
+  "citationSupportsProposition",
+  "substantive",
+  "propositionSupported",
+  "materiallyComplete",
+  "eligibleForVerifiedControlling"
+]);
+export const REQUIRED_NEGATIVE_BOOLEANS = Object.freeze([
+  "contradictsSources",
+  "unsupportedMaterialProposition"
+]);
+
+function readOwnBoolean(obj, field) {
+  // Distinguishes: not own | not boolean | boolean. Reads a possible getter
+  // once inside a try/catch so a malicious getter cannot throw past us.
+  if (!Object.prototype.hasOwnProperty.call(obj, field)) return { own: false };
+  let val;
+  try { val = obj[field]; } catch { return { own: true, threw: true }; }
+  return { own: true, value: val, isBoolean: typeof val === "boolean" };
+}
+
+/**
+ * Strictly validates a raw validator verdict against the canonical mandatory
+ * schema. Pure. Every mandatory field must be an own, boolean-typed property
+ * with the safe value. Anything else fails closed.
+ * @param {unknown} v
+ * @returns {{schemaValid:boolean, verifiedEligible:boolean, missingFields:string[], invalidTypeFields:string[], invalidValueFields:string[], inheritedFieldsRejected:string[], failureReasons:string[], gates:object}}
+ */
+export function validateVerdictSchema(v) {
+  const missingFields = [];
+  const invalidTypeFields = [];
+  const invalidValueFields = [];
+  const inheritedFieldsRejected = [];
+  const gates = { structural: true };
+
+  if (!v || typeof v !== "object" || Array.isArray(v)) {
+    return {
+      schemaValid: false, verifiedEligible: false,
+      missingFields: [...REQUIRED_POSITIVE_BOOLEANS, ...REQUIRED_NEGATIVE_BOOLEANS],
+      invalidTypeFields: [], invalidValueFields: [], inheritedFieldsRejected: [],
+      failureReasons: ["verdict_not_object"], gates
+    };
+  }
+
+  const checkField = (field, wantValue) => {
+    const r = readOwnBoolean(v, field);
+    if (!r.own) { missingFields.push(field); gates[field] = false; return; }
+    if (r.threw || !r.isBoolean) { invalidTypeFields.push(field); gates[field] = false; return; }
+    if (r.value !== wantValue) { invalidValueFields.push(field); gates[field] = false; return; }
+    gates[field] = true;
+  };
+
+  for (const f of REQUIRED_POSITIVE_BOOLEANS) checkField(f, true);
+  for (const f of REQUIRED_NEGATIVE_BOOLEANS) checkField(f, false);
+
+  // Note: inherited (prototype-chain) mandatory fields are treated as missing
+  // by hasOwnProperty, so they are already rejected via missingFields; record
+  // them explicitly for diagnostics when they exist only on the prototype.
+  for (const f of [...REQUIRED_POSITIVE_BOOLEANS, ...REQUIRED_NEGATIVE_BOOLEANS]) {
+    if (!Object.prototype.hasOwnProperty.call(v, f) && f in v) inheritedFieldsRejected.push(f);
+  }
+
+  const schemaValid = missingFields.length === 0 && invalidTypeFields.length === 0;
+  const verifiedEligible = schemaValid && invalidValueFields.length === 0;
+  const failureReasons = [];
+  if (missingFields.length) failureReasons.push("missing_fields:" + missingFields.join(","));
+  if (invalidTypeFields.length) failureReasons.push("invalid_type_fields:" + invalidTypeFields.join(","));
+  if (invalidValueFields.length) failureReasons.push("unsafe_value_fields:" + invalidValueFields.join(","));
+  if (inheritedFieldsRejected.length) failureReasons.push("inherited_fields_rejected:" + inheritedFieldsRejected.join(","));
+
+  return { schemaValid, verifiedEligible, missingFields, invalidTypeFields, invalidValueFields, inheritedFieldsRejected, failureReasons, gates };
+}
+
 /**
  * Evaluates whether an answer is eligible for VERIFIED_CONTROLLING. Never throws;
  * any error/unavailability yields verifiedEligible=false (fail closed).
@@ -251,33 +334,36 @@ export async function evaluateAnswerSupport({ question, answer, sources = [], mo
     ]);
     const raw = resp?.choices?.[0]?.message?.content || "{}";
     const v = JSON.parse(raw);
-    // Backward-compatible gate derivation: PHASE-10A10 structured fields when
-    // present; PHASE-10A8 field names otherwise. Fields absent in a verdict
-    // default to true so pre-A10 mock verdicts (which only set the A8 fields)
-    // stay meaningful; any explicit false fails closed. Negative-polarity
-    // fields (contradictsSources, [has]unsupported...) invert to a safe gate.
-    const dt = (val) => (val === undefined ? true : val === true); // default-true positive gate
-    const responsive = dt(v.answerResponsive) && dt(v.responsive);
-    const gates = {
-      structural: true,
-      responsive,
-      primaryIssueAnswered: dt(v.primaryIssueAnswered),
-      requiredIssueKeysCovered: dt(v.requiredIssueKeysCovered),
-      materialExceptionsCovered: dt(v.materialExceptionsCovered),
-      materialAlternativesCovered: dt(v.materialAlternativesCovered),
-      citationRelevant: dt(v.citationRelevant),
-      substantive: dt(v.substantive),
-      propositionSupported: dt(v.citationSupportsProposition) && dt(v.propositionSupported),
-      materiallyComplete: dt(v.materiallyComplete),
-      noContradiction: v.contradictsSources === true ? false : true,
-      noUnsupportedProposition: (v.unsupportedMaterialProposition === true || v.hasUnsupportedProposition === true) ? false : true
+    // PHASE-10A10-R1: strict fail-closed schema validation. Every mandatory
+    // safety field must be an OWN, boolean-typed property with the correct
+    // (safe) value. An absent, undefined, null, wrong-type, or inherited field
+    // fails closed -- no default-true, no inference from other fields, no
+    // legacy compatibility path. eligibleForVerifiedControlling===true is
+    // necessary but not sufficient.
+    const schema = validateVerdictSchema(v);
+    return {
+      verifiedEligible: schema.verifiedEligible,
+      stage: "llm",
+      schemaValid: schema.schemaValid,
+      missingFields: schema.missingFields,
+      invalidTypeFields: schema.invalidTypeFields,
+      invalidValueFields: schema.invalidValueFields,
+      inheritedFieldsRejected: schema.inheritedFieldsRejected,
+      failureReasons: schema.failureReasons,
+      gates: schema.gates,
+      reason: schema.verifiedEligible ? String(v.reason || "").slice(0, 200) : (schema.failureReasons[0] || "schema_fail_closed")
     };
-    const explicitEligible = v.eligibleForVerifiedControlling !== false; // only an explicit false blocks
-    const verifiedEligible = explicitEligible && Object.values(gates).every(Boolean);
-    return { verifiedEligible, stage: "llm", gates, reason: String(v.reason || "").slice(0, 200) };
   } catch (err) {
     return { verifiedEligible: false, stage: "error", gates: { structural: true }, reason: "validator_error_fail_closed" };
   }
 }
 
-export default { extractSubstance, structuralSupportGate, evaluateAnswerSupport };
+export default {
+  extractSubstance,
+  structuralSupportGate,
+  citesOnlyFoundationalProvisions,
+  validateVerdictSchema,
+  evaluateAnswerSupport,
+  REQUIRED_POSITIVE_BOOLEANS,
+  REQUIRED_NEGATIVE_BOOLEANS
+};
