@@ -1,0 +1,13 @@
+{
+  "task": "PHASE-10A10-R1 pre-edit fail-open reproduction",
+  "runtimeUnderTest": "728aba6 (A10 validator, before R1)",
+  "method": "evaluateAnswerSupport with an injected mock client returning partial/wrong-type JSON; substantive answer + non-foundational source so structural and citation gates pass, isolating the LLM-schema path.",
+  "cases": [
+    { "id": "S3", "verdict": "4 fields present (answerResponsive, primaryIssueAnswered, materiallyComplete, eligibleForVerifiedControlling); 8 mandatory A10 safety fields OMITTED", "verifiedEligible_before": true, "defect": true },
+    { "id": "S14", "verdict": "{ eligibleForVerifiedControlling: true } only", "verifiedEligible_before": true, "defect": true },
+    { "id": "S8", "verdict": "all positives present but negative-risk field (unsupportedMaterialProposition) OMITTED", "verifiedEligible_before": true, "defect": true },
+    { "id": "S11", "verdict": "answerResponsive is string \"true\"", "verifiedEligible_before": false, "defect": false, "note": "=== true already rejected strings; the defect is specifically ABSENT fields defaulting true" }
+  ],
+  "rootCause": "gate derivation used dt(v.field) which defaults an ABSENT field to true; a valid but incomplete JSON therefore satisfied the positive gates and, with eligibleForVerifiedControlling:true, produced verifiedEligible:true.",
+  "severity": "P1 trust-safety fail-open"
+}

@@ -1,0 +1,59 @@
+{
+  "id": "VC-Q34-r3",
+  "group": "verified",
+  "prompt": "What is the deadline for the annual income tax return of an individual?",
+  "answer": "### Short Answer\nThe deadline for the annual income tax return of an individual is April 15 of the following year after the taxable year.\n\n### Interpretation\n\n### Practical Meaning\nFor individuals, this deadline is crucial for tax planning and compliance. Failure to file on time may result in penalties, interest charges, and potential legal issues with the Bureau of Internal Revenue (BIR). Taxpayers should ensure that they have all necessary documentation and calculations completed well in advance of this deadline to facilitate timely filing.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "eligibleForVerifiedControlling": true,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true
+    },
+    "reason": "The answer correctly states the deadline and is supported by relevant citations."
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 23"
+    },
+    {
+      "label": "NIRC Sec. 24"
+    },
+    {
+      "label": "NIRC Sec. 27"
+    }
+  ],
+  "sanitizedConversationRef": "2147456de7a34ec7"
+}

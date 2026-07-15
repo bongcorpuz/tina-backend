@@ -1,0 +1,64 @@
+{
+  "id": "VC-Q34-r2",
+  "group": "verified",
+  "prompt": "What is the deadline for the annual income tax return of an individual?",
+  "answer": "### Short Answer\nThe deadline for filing the annual income tax return of an individual is on or before April 15 of the following year after the close of the taxable year.\n\n### Interpretation\n\n### Practical Meaning\nFor individuals, this deadline is crucial for compliance with tax obligations. Failure to file on time may result in penalties and interest on any unpaid taxes. Taxpayers should ensure that they have all necessary documentation and calculations completed well in advance of this deadline to avoid last-minute issues.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [
+      "citationRelevant",
+      "eligibleForVerifiedControlling"
+    ],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [
+      "unsafe_value_fields:citationRelevant,eligibleForVerifiedControlling"
+    ],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": false,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "eligibleForVerifiedControlling": false,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true
+    },
+    "reason": "unsafe_value_fields:citationRelevant,eligibleForVerifiedControlling"
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 23"
+    },
+    {
+      "label": "NIRC Sec. 24"
+    },
+    {
+      "label": "NIRC Sec. 27"
+    }
+  ],
+  "sanitizedConversationRef": "f3370e616e11d4c7"
+}

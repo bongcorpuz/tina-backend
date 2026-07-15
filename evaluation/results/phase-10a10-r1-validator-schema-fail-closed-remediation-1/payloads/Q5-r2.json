@@ -1,0 +1,63 @@
+{
+  "id": "Q5-r2",
+  "group": "q5",
+  "prompt": "What is the VAT rate on importation of goods used to manufacture export products?",
+  "answer": "### Short Answer\nThe VAT rate on the importation of goods used to manufacture export products is 12%. This is based on the total value used by the Bureau of Customs in determining tariff and customs duties, plus any applicable customs duties and excise taxes.\n\n### Controlling Authorities\nThe controlling authority for this is Section 107 of the National Internal Revenue Code (NIRC), which states that a value-added tax equivalent to 12% shall be levied on every importation of goods. This is further supported by Revenue Regulations No. 16-2005.\n\n### Interpretation\n\n### Practical Meaning\nFor businesses importing goods to manufacture products for export, the 12% VAT applies at the point of importation. This VAT is payable before the goods are released from customs custody. However, if the goods are subsequently used in the production of zero-rated export products, the business may be eligible to claim input tax credits or refunds on the VAT paid, effectively reducing their overall tax burden.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [
+      "materialExceptionsCovered",
+      "materialAlternativesCovered",
+      "materiallyComplete",
+      "eligibleForVerifiedControlling"
+    ],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [
+      "unsafe_value_fields:materialExceptionsCovered,materialAlternativesCovered,materiallyComplete,eligibleForVerifiedControlling"
+    ],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": false,
+      "materialAlternativesCovered": false,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": false,
+      "eligibleForVerifiedControlling": false,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true
+    },
+    "reason": "unsafe_value_fields:materialExceptionsCovered,materialAlternativesCovered,materiallyComplete,eligibleForVerifiedControlling"
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "sanitizedConversationRef": "79372b18bb348618"
+}

@@ -9011,3 +9011,23 @@ Next task: PHASE-10A11-FULL-FACTCHECK-RERUN-2 (independent review of A10 by a mo
 
 Artifacts: PHASE-10A10-VERIFIED-CONTROLLING-RESIDUAL-AND-COMPLETENESS-REMEDIATION-1_REPORT.md; evaluation/results/phase-10a10-verified-controlling-residual-and-completeness-remediation-1.json; evaluation/results/phase-10a10-.../ (root-cause-matrix.md, a10-run-log.json, payloads x49, evidence-manifest with SHA-256). Code: services/answer-support-validator.js, tests/phase-10a10-...test.mjs. Commit 728aba6.
 ```
+
+## Phase 10A10-R1 Validator Schema Fail-Closed Remediation 1 -- PHASE 10A10-R1 VALIDATOR SCHEMA REMEDIATION PASS WITH RECOMMENDATIONS (2026-07-16):
+
+```text
+PHASE-10A10-R1-VALIDATOR-SCHEMA-FAIL-CLOSED-REMEDIATION-1 executed by Claude Code (Opus 4.8, low speed) to fix the validator-schema fail-open P1 the independent A10 review confirmed (REVISIONS REQUIRED): a syntactically valid but incomplete validator JSON could omit mandatory A10 safety fields and still yield verifiedEligible=true. Backend start HEAD 2f6235b, runtime/final HEAD 2e636a1, sync 0 0. Frontend not modified (0816ac8). Dev Factory not modified (9167002).
+
+Pre-edit reproduction (runtime 728aba6): a 4-field partial verdict, an {eligibleForVerifiedControlling:true}-only verdict, and a verdict with the negative-risk field omitted ALL yielded verifiedEligible=true. Root cause: gate derivation used dt(field) which defaulted ABSENT fields to true.
+
+Fix (services/answer-support-validator.js only): removed the dt() default-true path; added validateVerdictSchema() with a single canonical required-field set -- REQUIRED_POSITIVE_BOOLEANS (11: answerResponsive, primaryIssueAnswered, requiredIssueKeysCovered, materialExceptionsCovered, materialAlternativesCovered, citationRelevant, citationSupportsProposition, substantive, propositionSupported, materiallyComplete, eligibleForVerifiedControlling) and REQUIRED_NEGATIVE_BOOLEANS (2: contradictsSources, unsupportedMaterialProposition). Every mandatory field must be an OWN (Object.hasOwnProperty) boolean of the correct polarity; absent/undefined/null/wrong-type/inherited/throwing-getter -> schema invalid -> fail closed. Returns { schemaValid, verifiedEligible, missingFields, invalidTypeFields, invalidValueFields, inheritedFieldsRejected, failureReasons, gates }. eligibleForVerifiedControlling===true is necessary but not sufficient. The PHASE-10A8 GOOD test mock was updated to the full canonical schema (backward compat subordinate to trust safety); no production default-true remains. Targeted tests 22/22 (S1-S26 incl. partial/missing/wrong-type/null/undefined/inherited/getter/empty/legacy-shape); all Phase 10A regression suites green post-commit.
+
+LIVE VALIDATION (25 runs at HEAD 2e636a1 vs real staging Supabase + real OpenAI gpt-4o-mini): every VERIFIED_CONTROLLING run had schemaValid=true (0 schema fail-open). Legitimate verified controls reachable (Q32 3/3, Q47 3/3, Q34 2/3; the real gpt-4o-mini reliably returns the complete schema). Q5/Q35/Q41 0 verified each. Restricted RESTRICT-1 held; conflict/missing/source-failure -> RELATED_AUTHORITY_ONLY. 15-question mini regression: 0 invalid verified, 0 schema fail-open, 0 prior-9 verified, 0 false refusals, 0 fabricated authorities.
+
+Severity: P0=0. P1=0 (schema fail-open eliminated; unit-proven + live allVerifiedHaveSchemaValid=true). P2=3 (validator precision cost / safe under-claims; questionable-completeness verified; non-LOA outcome-prediction restriction gap -- all carryover). P3=1 (validator latency ~15-27s). Security: 0.
+
+Decision: PHASE 10A10-R1 VALIDATOR SCHEMA REMEDIATION PASS WITH RECOMMENDATIONS. Phase 10A remains REOPENED pending full fact-check rerun (NOT closed). Phase 10B: BLOCKED. Phase 10C: BLOCKED. Adversarial suite: DEFERRED. Independent closure review: DEFERRED.
+
+Next task: PHASE-10A11-FULL-FACTCHECK-RERUN-2 (independent review of R1 by a model that did not execute it, then the full 50x3 rerun confirming 0 invalid verified corpus-wide and quantifying the full-corpus precision cost; A11 may proceed only with P0=0 and P1=0).
+
+Artifacts: PHASE-10A10-R1-VALIDATOR-SCHEMA-FAIL-CLOSED-REMEDIATION-1_REPORT.md; evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1.json; evaluation/results/phase-10a10-r1-.../ (pre-edit-reproduction-matrix.json, r1-run-log.json, payloads x25, evidence-manifest with SHA-256). Code: services/answer-support-validator.js, tests/phase-10a10-r1-...test.mjs, tests/phase-10a8-...test.mjs (GOOD mock). Commit 2e636a1.
+```

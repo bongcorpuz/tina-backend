@@ -1,0 +1,65 @@
+{
+  "id": "M-Q2",
+  "group": "mini",
+  "prompt": "What is the VAT treatment of the sale of a residential lot valued at ₱1.9 million?",
+  "answer": "### Short Answer\nThe sale of a residential lot valued at ₱1.9 million is subject to VAT because it exceeds the threshold of ₱1.5 million for residential lots.\n\n### Interpretation\nAccording to Section 4.106-3 of Revenue Regulations No. 16-2005, the sale of real properties held primarily for sale to customers or held for lease in the ordinary course of trade or business is subject to VAT. Specifically, residential lots sold for more than ₱1.5 million are taxable at the standard VAT rate of 12%. Since the sale price of ₱1.9 million exceeds this threshold, it falls under the VAT liability category.\n\n### Practical Meaning\nFor a seller of a residential lot valued at ₱1.9 million, this means that they must charge VAT on the sale, which is currently at 12%. The seller is responsible for remitting this VAT to the Bureau of Internal Revenue (BIR). Buyers should be aware that the total cost will include VAT, which is an additional expense on top of the sale price.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [
+      "citationSupportsProposition",
+      "propositionSupported",
+      "materiallyComplete",
+      "eligibleForVerifiedControlling",
+      "contradictsSources",
+      "unsupportedMaterialProposition"
+    ],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [
+      "unsafe_value_fields:citationSupportsProposition,propositionSupported,materiallyComplete,eligibleForVerifiedControlling,contradictsSources,unsupportedMaterialProposition"
+    ],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "citationSupportsProposition": false,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": false,
+      "eligibleForVerifiedControlling": false,
+      "contradictsSources": false,
+      "unsupportedMaterialProposition": false
+    },
+    "reason": "unsafe_value_fields:citationSupportsProposition,propositionSupported,materiallyComplete,eligibleForVerifiedControlling,contradictsSources,unsupportedMaterialProposition"
+  },
+  "sources": [
+    {
+      "label": "RR No. 16-2005"
+    },
+    {
+      "label": "RR 4-2007"
+    }
+  ],
+  "sanitizedConversationRef": "399c87f2658be368"
+}

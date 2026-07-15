@@ -1,0 +1,142 @@
+{
+  "generatedAtUtc": "2026-07-15T23:11:26.375Z",
+  "evidenceDirectory": "evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1/",
+  "fileCount": 27,
+  "files": [
+    {
+      "path": "evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1/payloads/CONFLICT-1.json",
+      "bytes": 2361,
+      "sha256": "1d60e754cd2e54130d73052305f6923b1b72c9d6a0bb0c6b6a49988d56953953"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1/payloads/M-Q2.json",
+      "bytes": 3087,
+      "sha256": "815ced043fee3ff59376cd2895fee8310c644af4c66eb7108101f8b0c55009b1"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1/payloads/M-Q26.json",
+      "bytes": 2406,
+      "sha256": "8f19ef2263ea3ba968e4ff95bb0825f44b47c799312dde0745286463fbf55c1c"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1/payloads/M-Q30.json",
+      "bytes": 2523,
+      "sha256": "2b9d2f0702d943cb2d81dd2ce50dfe7fe8949c68dcb034519112b3ff7bff58a9"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1/payloads/M-Q46.json",
+      "bytes": 3533,
+      "sha256": "de23472367625dc3ea3f8a603278ed114a7e278aa5e1017439a21296219a330a"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1/payloads/M-Q8.json",
+      "bytes": 4129,
+      "sha256": "a2ae50d7bfb8ccd6b53ae0cc9fd6e9f9a9d187a31155536c002d586948ea017b"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1/payloads/M-Q9.json",
+      "bytes": 3450,
+      "sha256": "f21023e004852693933481631b3e68db89f2021877ed74eb3822c03e89a00ba3"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1/payloads/MISSING-1.json",
+      "bytes": 3554,
+      "sha256": "78923b102e069d73aaf0adcb732c3c0c5168fc266ae63712beefa801a59eb968"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1/payloads/Q35-r1.json",
+      "bytes": 1992,
+      "sha256": "114bb3e127abb68cc403ca931037ca40cf7e3d3504cbe4a9e83d2ed00ebf734b"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1/payloads/Q35-r2.json",
+      "bytes": 2032,
+      "sha256": "a75a815fe587f2685b4aac30fac301fa2b55ecf95446912a446a1a7de20cf5c6"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1/payloads/Q41-r1.json",
+      "bytes": 1517,
+      "sha256": "184912d198e424e4a17492ec0671cd97bc9bba7d231dafe65992460efa776486"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1/payloads/Q41-r2.json",
+      "bytes": 1416,
+      "sha256": "43a97b8fce20a83a145c52c6d9d22979e80c054e572f4f45206955b18d711686"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1/payloads/Q5-r1.json",
+      "bytes": 3370,
+      "sha256": "f632d1be0029187c76062c0dde5ffe004ea23409fe87f4f343e493196628939e"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1/payloads/Q5-r2.json",
+      "bytes": 2959,
+      "sha256": "a1ede57de50cff5fa55bd59f04c2a082681027007d921ff9f0ac40a26af6ea66"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1/payloads/RESTRICT-1.json",
+      "bytes": 1536,
+      "sha256": "238465ee17de13dc099b0bdb868946120d6225120ac3d449b6f8e545a2855fde"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1/payloads/SRCFAIL-1.json",
+      "bytes": 985,
+      "sha256": "ca1072864b5f8762bbe752b990f89f5909bf11cd4631e5ec17a9ba0fd723db72"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1/payloads/VC-Q32-r1.json",
+      "bytes": 3015,
+      "sha256": "c8b21f2488eb9fef59be170667c23cb7e4b5840b2ca7c8faa7e3e3162c3654f1"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1/payloads/VC-Q32-r2.json",
+      "bytes": 3170,
+      "sha256": "a4d724dac2d85af75b81267cd0a6853137bfb49556648d6409e9ed152190086b"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1/payloads/VC-Q32-r3.json",
+      "bytes": 3029,
+      "sha256": "6266e7e017387c50a4fcb43ee7d0fc146f52dee6141474513bd82708268ca7da"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1/payloads/VC-Q34-r1.json",
+      "bytes": 2162,
+      "sha256": "1c69caa16b219497165b6898f0f2b1961ab51b56d9fa50d7efb003722187182f"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1/payloads/VC-Q34-r2.json",
+      "bytes": 2336,
+      "sha256": "11a834f407c870a3517934d09f69b2781726a57e08e0d0b809ae68a608ae6f40"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1/payloads/VC-Q34-r3.json",
+      "bytes": 2211,
+      "sha256": "73557d3d581aa245ad87653b2960406dbdf9074de3f43fcb8d394a51f97b28cb"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1/payloads/VC-Q47-r1.json",
+      "bytes": 2857,
+      "sha256": "9d620e3fc9705c6eb6cf45195dcfe33150eb43385536be49cb684635f4fe6e97"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1/payloads/VC-Q47-r2.json",
+      "bytes": 2760,
+      "sha256": "a1e8cf51cbe2783762da300a22d266621a9792230568f0ce7ea0e0911075c40c"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1/payloads/VC-Q47-r3.json",
+      "bytes": 2772,
+      "sha256": "0a42f362d0c979d6407593e92cacf4c1939347dbf3817c483cddd3e69d0f61d5"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1/pre-edit-reproduction-matrix.json",
+      "bytes": 1393,
+      "sha256": "868ec2d6ffa71794ada4592d80e7959fa8f39391bbeb64d82ce4949a15998b05"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1/r1-run-log.json",
+      "bytes": 5351,
+      "sha256": "504bb7b2065635933fe36291d21fbb892d9e791596d36acf36dcdc2689c161bb"
+    }
+  ]
+}

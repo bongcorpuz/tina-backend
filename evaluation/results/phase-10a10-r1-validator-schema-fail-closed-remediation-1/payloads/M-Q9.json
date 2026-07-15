@@ -1,0 +1,70 @@
+{
+  "id": "M-Q9",
+  "group": "mini",
+  "prompt": "Can spouses who both earn compensation income file a joint income tax return?",
+  "answer": "### Short Answer\nSpouses who both earn compensation income cannot file a joint income tax return; they must file separate returns based on their respective total taxable income.\n\n### Controlling Authorities\nThis is governed by Section 24 of the National Internal Revenue Code (NIRC), which states that married individuals compute their income tax separately based on their respective total taxable income.\n\n### Interpretation\nAccording to Section 24 of the NIRC, each spouse is required to file their own income tax return and report their individual income. If any income cannot be definitively attributed to either spouse, it should be divided equally for tax purposes. This provision emphasizes the separate taxation of spouses, even if both earn compensation income.\n\n### Practical Meaning\nIn practice, this means that each spouse will need to maintain their own records of income and deductions and file individual returns. This can affect tax planning strategies, as they cannot combine their incomes for tax purposes, which may limit certain deductions or credits that could be more beneficial if filed jointly.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [
+      "materialExceptionsCovered",
+      "materialAlternativesCovered",
+      "citationSupportsProposition",
+      "propositionSupported",
+      "materiallyComplete",
+      "eligibleForVerifiedControlling",
+      "contradictsSources",
+      "unsupportedMaterialProposition"
+    ],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [
+      "unsafe_value_fields:materialExceptionsCovered,materialAlternativesCovered,citationSupportsProposition,propositionSupported,materiallyComplete,eligibleForVerifiedControlling,contradictsSources,unsupportedMaterialProposition"
+    ],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": false,
+      "materialAlternativesCovered": false,
+      "citationRelevant": true,
+      "citationSupportsProposition": false,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": false,
+      "eligibleForVerifiedControlling": false,
+      "contradictsSources": false,
+      "unsupportedMaterialProposition": false
+    },
+    "reason": "unsafe_value_fields:materialExceptionsCovered,materialAlternativesCovered,citationSupportsProposition,propositionSupported,materiallyComplete,eligibleForVerifiedControlling,contradictsSources,unsupportedMaterialProposition"
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 24"
+    },
+    {
+      "label": "NIRC Sec. 23"
+    },
+    {
+      "label": "NIRC Sec. 27"
+    }
+  ],
+  "sanitizedConversationRef": "2a0d9fa025bd1048"
+}

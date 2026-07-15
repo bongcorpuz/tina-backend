@@ -1,0 +1,77 @@
+{
+  "id": "M-Q8",
+  "group": "mini",
+  "prompt": "Is leasing a residential unit at ₱15,000 per month subject to VAT?",
+  "answer": "### Issue Presented\nIs leasing a residential unit at ₱15,000 per month subject to VAT?\n\n### Short Answer\nYes, leasing a residential unit at ₱15,000 per month is subject to VAT under certain conditions as outlined in the NIRC.\n\n### Controlling Authorities\n- **Section 106, NIRC**: This section states that there shall be levied, assessed, and collected a value-added tax equivalent to twelve percent (12%) of the gross sales derived from the sale or exchange of goods or properties, including the lease of properties.\n- **Section 108, NIRC**: This section specifically addresses the value-added tax on the sale of services and the use or lease of properties, confirming that leasing is subject to VAT.\n\n### Legal Interpretation\nUnder Section 106 of the NIRC, the leasing of properties is considered a taxable transaction if it is conducted in the course of trade or business. Section 108 further clarifies that the lease of properties is subject to VAT at a rate of 12% on the gross amount received. However, residential leases may be exempt from VAT if the total monthly rental does not exceed ₱15,000, as per the provisions of the Tax Code regarding exemptions for residential leases.\n\n### Practical Application\nIn practice, if the monthly lease amount is exactly ₱15,000, it is at the threshold where VAT exemption may apply. If the lease is for residential purposes and the total monthly rent does not exceed ₱15,000, the lessor may not be required to charge VAT. However, if the lease exceeds this amount, the lessor must register for VAT and charge the applicable VAT on the rental payments. It is advisable for lessors to confirm their registration status and the nature of the lease to ensure compliance with VAT regulations.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "limitations": [
+      "POTENTIAL_CONFLICT"
+    ],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [
+      "materialExceptionsCovered",
+      "materialAlternativesCovered",
+      "citationSupportsProposition",
+      "propositionSupported",
+      "materiallyComplete",
+      "eligibleForVerifiedControlling",
+      "unsupportedMaterialProposition"
+    ],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [
+      "unsafe_value_fields:materialExceptionsCovered,materialAlternativesCovered,citationSupportsProposition,propositionSupported,materiallyComplete,eligibleForVerifiedControlling,unsupportedMaterialProposition"
+    ],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": false,
+      "materialAlternativesCovered": false,
+      "citationRelevant": true,
+      "citationSupportsProposition": false,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": false,
+      "eligibleForVerifiedControlling": false,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": false
+    },
+    "reason": "unsafe_value_fields:materialExceptionsCovered,materialAlternativesCovered,citationSupportsProposition,propositionSupported,materiallyComplete,eligibleForVerifiedControlling,unsupportedMaterialProposition"
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 106"
+    },
+    {
+      "label": "NIRC Sec. 105"
+    },
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "NIRC Sec. 108"
+    },
+    {
+      "label": "RR 16-2005"
+    }
+  ],
+  "sanitizedConversationRef": "9e6f0e5213d307fb"
+}
