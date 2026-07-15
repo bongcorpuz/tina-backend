@@ -9031,3 +9031,23 @@ Next task: PHASE-10A11-FULL-FACTCHECK-RERUN-2 (independent review of R1 by a mod
 
 Artifacts: PHASE-10A10-R1-VALIDATOR-SCHEMA-FAIL-CLOSED-REMEDIATION-1_REPORT.md; evaluation/results/phase-10a10-r1-validator-schema-fail-closed-remediation-1.json; evaluation/results/phase-10a10-r1-.../ (pre-edit-reproduction-matrix.json, r1-run-log.json, payloads x25, evidence-manifest with SHA-256). Code: services/answer-support-validator.js, tests/phase-10a10-r1-...test.mjs, tests/phase-10a8-...test.mjs (GOOD mock). Commit 2e636a1.
 ```
+
+## Phase 10A10-R2 Missing-answerSupport Fail-Closed Remediation 1 -- PHASE 10A10-R2 MISSING-ANSWERSUPPORT REMEDIATION PASS WITH RECOMMENDATIONS (2026-07-16):
+
+```text
+PHASE-10A10-R2-MISSING-ANSWERSUPPORT-FAIL-CLOSED-REMEDIATION-1 executed by Claude Code (Opus 4.8, low speed) to fix the trust-contract fail-open the independent R1 review confirmed (REVISIONS REQUIRED): buildResponseTrust with AUTHORITY_FOUND + displayed sources + NO answerSupport still returned VERIFIED_CONTROLLING. Backend start HEAD 34c2886, runtime/final HEAD 3de68f8, sync 0 0. Frontend not modified (0816ac8). Dev Factory not modified (9167002).
+
+Pre-edit reproduction (runtime 2e636a1): answerSupport omitted -> VERIFIED_CONTROLLING; null -> VERIFIED_CONTROLLING; {verifiedEligible:true} without schemaValid -> VERIFIED_CONTROLLING. Root cause: deriveAuthoritySupport used `if (result.answerSupport && result.answerSupport.verifiedEligible !== true) ...` so an absent/null attestation was falsy, skipped the guard, and fell through to verified; schemaValid was not required.
+
+Fix: answerSupport is now MANDATORY for VERIFIED_CONTROLLING. New pure helper isVerifiedAnswerSupport(answerSupport) in services/trust-contract.js requires a present, non-null, non-array object with OWN boolean schemaValid===true AND OWN boolean verifiedEligible===true (Object.hasOwnProperty + strict typeof; returns {present,objectValid,schemaValid,verifiedEligible,eligible,failureReasons}). The AUTHORITY_FOUND branch now requires isVerifiedAnswerSupport(result.answerSupport).eligible before verified; the R1 legacy seam (absent answerSupport -> verified) is removed. evaluateAnswerSupport now emits schemaValid:false on all fail-closed stages. staging-trust-fixtures A/G verified fixtures + the phase-10a1/10a1-r1 fixture JSONs + the legitimate-verified inline tests (10a1/10a4c/10a6-r1/10a6-r3) supply a canonical attestation; two legacy-seam tests (10a8/10a10 A14) were flipped to expect the safe downgrade (backward compat subordinate to trust safety). Targeted tests 27/27 (A1-A30 incl. omitted/null/false/string/array/empty/missing-field/wrong-type/inherited/schema-false/eligible-false + precedence + async failure via the real validator); all Phase 10A regression suites green post-commit.
+
+LIVE VALIDATION (25 runs at HEAD 3de68f8 vs real staging Supabase + real OpenAI gpt-4o-mini): every VERIFIED_CONTROLLING run had a PRESENT answerSupport with schemaValid=true (allVerifiedHavePresentAttestationWithSchemaValid=true) -- 0 fail-open. Legitimate verified reachable (Q32 3/3, Q47 3/3, Q34 2/3). Q5/Q35/Q41 0 verified each. Restricted RESTRICT-1 held; conflict/missing/source-failure -> RELATED_AUTHORITY_ONLY. 15-question mini regression: 0 invalid verified, 0 missing-answerSupport verified, 0 schema fail-open, prior-9 -> RELATED_AUTHORITY_ONLY, 0 false refusals, 0 fabricated authorities.
+
+Severity: P0=0. P1=0 (missing-answerSupport fail-open eliminated; unit A1-A30 + live). P2=3 (validator precision cost / safe under-claims; questionable-completeness verified; non-LOA outcome-prediction restriction gap -- all carryover). P3=1 (validator latency). Security: 0.
+
+Decision: PHASE 10A10-R2 MISSING-ANSWERSUPPORT REMEDIATION PASS WITH RECOMMENDATIONS. Phase 10A remains REOPENED pending full fact-check rerun (NOT closed). Phase 10B: BLOCKED. Phase 10C: BLOCKED. Adversarial suite: DEFERRED. Independent closure review: DEFERRED.
+
+Next task: PHASE-10A11-FULL-FACTCHECK-RERUN-2 (only after an independent R2 review passes) -- the full 50x3 rerun confirming 0 invalid verified corpus-wide and quantifying the full-corpus precision cost; A11 may proceed only with P0=0 and P1=0.
+
+Artifacts: PHASE-10A10-R2-MISSING-ANSWERSUPPORT-FAIL-CLOSED-REMEDIATION-1_REPORT.md; evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1.json; evaluation/results/phase-10a10-r2-.../ (pre-edit-reproduction-matrix.json, trust-call-site-inventory.md, r2-run-log.json, payloads x25, evidence-manifest with SHA-256). Code: services/trust-contract.js, services/answer-support-validator.js, services/staging-trust-fixtures.js, tests/phase-10a10-r2-...test.mjs + updated legacy tests/fixtures. Commit 3de68f8.
+```

@@ -1,0 +1,62 @@
+{
+  "id": "VC-Q47-r3",
+  "group": "verified",
+  "prompt": "What is the donor's tax rate under TRAIN and the exemption threshold?",
+  "answer": "### Short Answer\nThe donor's tax rate under the Tax Reform for Acceleration and Inclusion (TRAIN) law is six percent (6%) on the total gifts exceeding the exemption threshold of Two hundred fifty thousand pesos (₱250,000) per calendar year.\n\n### Controlling Authorities\nThe relevant provisions are found in the National Internal Revenue Code (NIRC) as amended by the TRAIN law:\n- **Section 99**: Rates of Tax Payable by Donor.\n\n### Interpretation\nAccording to Section 99 of the NIRC, the donor's tax is imposed at a rate of 6% on the total value of gifts made during the calendar year that exceed the exemption threshold of ₱250,000. This means that any gifts below this threshold are exempt from donor's tax.\n\n### Practical Meaning\nIn practical terms, individuals making gifts should be aware that only the amount exceeding ₱250,000 in a calendar year will be subject to the 6% donor's tax. This exemption allows for a significant portion of gifts to be made without incurring tax liability, which can be beneficial for estate planning and charitable contributions.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "eligibleForVerifiedControlling": true,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true
+    },
+    "reason": "The answer correctly states the donor's tax rate and exemption threshold with relevant citations."
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 99"
+    },
+    {
+      "label": "NIRC Sec. 101"
+    },
+    {
+      "label": "NIRC Sec. 102"
+    },
+    {
+      "label": "NIRC Sec. 104"
+    }
+  ],
+  "sanitizedConversationRef": "fc652e6ff39dca25"
+}

@@ -1,0 +1,13 @@
+{
+  "task": "PHASE-10A10-R2 pre-edit missing-answerSupport fail-open reproduction",
+  "runtimeUnderTest": "2e636a1 (R1 validator; trust-contract legacy seam intact)",
+  "method": "buildResponseTrust with AUTHORITY_FOUND + displayed source, varying result.answerSupport.",
+  "cases": [
+    { "id": "A2", "answerSupport": "omitted", "authoritySupport_before": "VERIFIED_CONTROLLING", "defect": true },
+    { "id": "A4", "answerSupport": "null", "authoritySupport_before": "VERIFIED_CONTROLLING", "defect": true },
+    { "id": "A9", "answerSupport": "{ verifiedEligible: true } (no schemaValid)", "authoritySupport_before": "VERIFIED_CONTROLLING", "defect": true },
+    { "id": "A8", "answerSupport": "{} empty object", "authoritySupport_before": "RELATED_AUTHORITY_ONLY", "defect": false, "note": "downgraded only incidentally (verifiedEligible !== true)" }
+  ],
+  "rootCause": "deriveAuthoritySupport AUTHORITY_FOUND branch used `if (result.answerSupport && result.answerSupport.verifiedEligible !== true) return RELATED_AUTHORITY_ONLY; return VERIFIED_CONTROLLING;` -- an ABSENT or null answerSupport is falsy, skips the guard, and falls through to VERIFIED_CONTROLLING. schemaValid was not required.",
+  "severity": "P1 trust-safety fail-open (no attestation -> verified)"
+}

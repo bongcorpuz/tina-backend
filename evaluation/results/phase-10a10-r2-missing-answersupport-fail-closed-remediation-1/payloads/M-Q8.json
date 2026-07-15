@@ -1,0 +1,77 @@
+{
+  "id": "M-Q8",
+  "group": "mini",
+  "prompt": "Is leasing a residential unit at ₱15,000 per month subject to VAT?",
+  "answer": "### Issue Presented\nIs leasing a residential unit at ₱15,000 per month subject to VAT?\n\n### Short Answer\nYes, leasing a residential unit at ₱15,000 per month is subject to VAT under certain conditions as specified in the NIRC.\n\n### Controlling Authorities\nThe relevant provisions are found in the National Internal Revenue Code (NIRC):\n- **Section 106**: Value-Added Tax on Sale of Goods or Properties.\n- **Section 108**: Value-Added Tax on the Sale of Services, Including the Use or Lease of Properties.\n\n### Legal Interpretation\nUnder **Section 106** of the NIRC, a value-added tax (VAT) is levied on the sale, barter, or exchange of goods or properties, which includes the lease of properties. Specifically, **Section 108** states that VAT is also applicable to the lease of properties, indicating that the gross sales derived from such leases are subject to a 12% VAT. However, residential leases are generally exempt from VAT if the monthly rental does not exceed ₱15,000. Since the rental amount is exactly ₱15,000, it falls within the threshold for VAT exemption.\n\n### Practical Application\nIn practice, if the lease of the residential unit is at ₱15,000 per month, it is exempt from VAT. However, if the rental amount exceeds this threshold, the lessor would be required to charge VAT on the rental payments. It is essential for lessors to monitor the rental amounts and ensure compliance with VAT regulations to avoid potential penalties.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "limitations": [
+      "POTENTIAL_CONFLICT"
+    ],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [
+      "materialExceptionsCovered",
+      "materialAlternativesCovered",
+      "citationSupportsProposition",
+      "propositionSupported",
+      "materiallyComplete",
+      "eligibleForVerifiedControlling",
+      "unsupportedMaterialProposition"
+    ],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [
+      "unsafe_value_fields:materialExceptionsCovered,materialAlternativesCovered,citationSupportsProposition,propositionSupported,materiallyComplete,eligibleForVerifiedControlling,unsupportedMaterialProposition"
+    ],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": false,
+      "materialAlternativesCovered": false,
+      "citationRelevant": true,
+      "citationSupportsProposition": false,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": false,
+      "eligibleForVerifiedControlling": false,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": false
+    },
+    "reason": "unsafe_value_fields:materialExceptionsCovered,materialAlternativesCovered,citationSupportsProposition,propositionSupported,materiallyComplete,eligibleForVerifiedControlling,unsupportedMaterialProposition"
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 106"
+    },
+    {
+      "label": "NIRC Sec. 105"
+    },
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "NIRC Sec. 108"
+    },
+    {
+      "label": "RR 16-2005"
+    }
+  ],
+  "sanitizedConversationRef": "eaf185ba6765e9a1"
+}

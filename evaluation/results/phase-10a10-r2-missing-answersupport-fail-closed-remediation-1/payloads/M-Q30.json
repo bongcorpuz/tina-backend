@@ -1,0 +1,65 @@
+{
+  "id": "M-Q30",
+  "group": "mini",
+  "prompt": "What is the estate tax rate under TRAIN?",
+  "answer": "### Short Answer\nThe estate tax rate under the Tax Reform for Acceleration and Inclusion (TRAIN) law is a flat rate of 6% on the value of the estate exceeding Five Million Pesos (₱5,000,000).\n\n### Interpretation\nUnder Section 84 of the NIRC, the estate tax is computed based on the net estate of the decedent, which is the gross estate less allowable deductions. The flat rate of 6% applies only to the portion of the estate that exceeds the threshold of ₱5,000,000.\n\n### Practical Meaning\nFor estates valued at ₱5,000,000 or less, no estate tax is due. For estates exceeding this threshold, the tax is calculated at 6% of the amount over ₱5,000,000. This simplification aims to ease the tax burden on smaller estates while ensuring that larger estates contribute a fair share to government revenues.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "eligibleForVerifiedControlling": true,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true
+    },
+    "reason": "The answer correctly states the estate tax rate and threshold under TRAIN with relevant citations."
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 91"
+    },
+    {
+      "label": "NIRC Sec. 84"
+    },
+    {
+      "label": "NIRC Sec. 86"
+    },
+    {
+      "label": "NIRC Sec. 88"
+    },
+    {
+      "label": "NIRC Sec. 89"
+    }
+  ],
+  "sanitizedConversationRef": "48cdafe0a03994fb"
+}

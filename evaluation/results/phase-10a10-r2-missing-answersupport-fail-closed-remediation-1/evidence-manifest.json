@@ -1,0 +1,147 @@
+{
+  "generatedAtUtc": "2026-07-15T23:43:07.805Z",
+  "evidenceDirectory": "evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1/",
+  "fileCount": 28,
+  "files": [
+    {
+      "path": "evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1/payloads/CONFLICT-1.json",
+      "bytes": 2361,
+      "sha256": "e2d7d5596ac1df0f821bad5bed17fbc17e2f3357c7705008d39125ce7abd2506"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1/payloads/M-Q2.json",
+      "bytes": 3281,
+      "sha256": "e5426534b5976d9fa5bcb71db512157b1dc6affa5f5c91820bce06001ab0b77a"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1/payloads/M-Q26.json",
+      "bytes": 2834,
+      "sha256": "48478e9a4ef0df494880663849e5c29e99bebebe1dc530dca3ac0bf1a5b9f978"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1/payloads/M-Q30.json",
+      "bytes": 2537,
+      "sha256": "342658dc3cd2f1f7af45e763bef458293e2d82a786b0b32247b2f221f376ca1b"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1/payloads/M-Q46.json",
+      "bytes": 3470,
+      "sha256": "410252d72e35f1bd12a9dce877d046f3f25d609e8a8badb08602e2f73ea713fa"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1/payloads/M-Q8.json",
+      "bytes": 3845,
+      "sha256": "3e887d195bb05cc8f12d9be58b8e035c46e722abd2af47f49a68bc762b27146e"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1/payloads/M-Q9.json",
+      "bytes": 3373,
+      "sha256": "c3c1f93f55993b369e568f503340ec1e61f9539682b4afec7a010391ac4b672d"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1/payloads/MISSING-1.json",
+      "bytes": 3624,
+      "sha256": "08454c239ff1ffd8850cb8e3fcee639e22fc6fb83e9d4be1f9d28fe65dec36da"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1/payloads/Q35-r1.json",
+      "bytes": 1999,
+      "sha256": "e040e50baa4598ea27318e8ee2a4bf3ef440a01f0ac7f966e7b2d1a1da9a08d1"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1/payloads/Q35-r2.json",
+      "bytes": 1924,
+      "sha256": "2d365828344bdaabca5ac26f1f78b8a47b4a324a5ba4ee859dc2a3b439791ef8"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1/payloads/Q41-r1.json",
+      "bytes": 1430,
+      "sha256": "c1c50b76dfc00f0185a208a887c609d78d035051b411b82ba7f73c89875134c6"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1/payloads/Q41-r2.json",
+      "bytes": 1502,
+      "sha256": "afa8da4a6bf1c3ff999878055ff0d78e67655c5fff670a27b868425d1e315cf5"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1/payloads/Q5-r1.json",
+      "bytes": 3308,
+      "sha256": "f70829dad3e52f7b48772c74aedaa6959db78bccbc3c15cd6fe5229fbc047090"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1/payloads/Q5-r2.json",
+      "bytes": 3251,
+      "sha256": "66dcc653c538150d98070d4d4f56dd160be2d938a05e00180b3b8205ff194ade"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1/payloads/RESTRICT-1.json",
+      "bytes": 1536,
+      "sha256": "e6abeecc98c3d44d268387f7bdd810d61b306f82b9819bc85de5427a1627a9f3"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1/payloads/SRCFAIL-1.json",
+      "bytes": 985,
+      "sha256": "db0f6c95bd1d202095ba5cb8a93dc7177fdee0af6278b38693b55bd756471fa4"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1/payloads/VC-Q32-r1.json",
+      "bytes": 3207,
+      "sha256": "491eb4183b5e7afdcc3914224b743d4a2d3fedc3edce732edf71744b0b7fa086"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1/payloads/VC-Q32-r2.json",
+      "bytes": 3020,
+      "sha256": "5144117df9c5d88b4da0b3d1b2e6370ad393e9300ad68a3aeb8e774bb98ced91"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1/payloads/VC-Q32-r3.json",
+      "bytes": 2558,
+      "sha256": "851e4c62127a1f6c308932aa28e77f009b65246f79b210975ddfe3585d258b16"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1/payloads/VC-Q34-r1.json",
+      "bytes": 2270,
+      "sha256": "bbc2b45b77b58b49051123add9b5673761e9200143e10e718ccad4b046b3e664"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1/payloads/VC-Q34-r2.json",
+      "bytes": 2146,
+      "sha256": "e7cff99f1bb3a7e3b9ca06eeb5be38808913867b24346a717613797ea20f9397"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1/payloads/VC-Q34-r3.json",
+      "bytes": 2115,
+      "sha256": "e30abf8ea2c9e83e20efef8bc3113ee288e26d7fe3ea0dc14f39a9fa20b9a22c"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1/payloads/VC-Q47-r1.json",
+      "bytes": 2965,
+      "sha256": "4ee68f4a1a85c6fbdffcff53ef915647b3c134c24950fb08fb56bbadb34081e5"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1/payloads/VC-Q47-r2.json",
+      "bytes": 3262,
+      "sha256": "379026375933eb7a053823cd806c32969f2e280be6128a7f21f9e3242311a523"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1/payloads/VC-Q47-r3.json",
+      "bytes": 2801,
+      "sha256": "6a96d82ff2597c1f5ee4a38352c337b1746ade4226e936b592875962dc4e7684"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1/pre-edit-reproduction-matrix.json",
+      "bytes": 1276,
+      "sha256": "9b5266c4b66c3743e857e5319d84526cccdcd6ce0ed7f708d262da33228cdbc4"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1/r2-run-log.json",
+      "bytes": 5749,
+      "sha256": "4887bab539fa1e300c7379e1a72d19575122d04362835f27285eb4f91ff6bf6b"
+    },
+    {
+      "path": "evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1/trust-call-site-inventory.md",
+      "bytes": 1747,
+      "sha256": "4bec5633d64af6867aa764eece8534c3f9ecac1e76e80b3d354a21b0557fa506"
+    }
+  ]
+}
