@@ -1,0 +1,35 @@
+{
+  "id": "M-Q48",
+  "group": "mini",
+  "prompt": "What conditions must a corporation satisfy to claim a bad debt as a deductible expense?",
+  "answer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nIn practice, corporations should maintain thorough documentation of their collection efforts and the circumstances leading to the determination that a debt is worthless. This includes records of communications with the debtor, any legal actions taken, and financial statements reflecting the debt's status. Proper documentation is crucial for substantiating the deduction in case of an audit by the Bureau of Internal Revenue (BIR).",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 34"
+    }
+  ],
+  "sanitizedConversationRef": "54ce8484ca9d4912"
+}

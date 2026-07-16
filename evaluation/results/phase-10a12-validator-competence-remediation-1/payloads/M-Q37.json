@@ -1,0 +1,35 @@
+{
+  "id": "M-Q37",
+  "group": "mini",
+  "prompt": "What is the BIR assessment period when a taxpayer filed a return?",
+  "answer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nFor taxpayers, this means that they should maintain accurate records and ensure compliance with tax laws for at least three years after filing their returns. If there are any discrepancies or fraudulent activities, they could face assessments up to ten years later. Taxpayers should be aware of these timelines to manage their tax liabilities effectively and to prepare for any potential audits by the BIR.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 22"
+    }
+  ],
+  "sanitizedConversationRef": "0bc33a824a67858e"
+}

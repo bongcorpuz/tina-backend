@@ -1,0 +1,39 @@
+{
+  "id": "Q41-r1",
+  "group": "q41",
+  "prompt": "What is the penalty for failure to issue a BIR-registered invoice?",
+  "answer": "### Short Answer\n\nThis penalty applies to any person who fails to comply with the invoicing requirements set forth in the tax code, which is essential for proper tax documentation and compliance. The BIR has the authority to enforce these penalties to ensure adherence to tax laws and regulations. \n\nFor further details, you may refer to the specific provisions of the NIRC regarding penalties for non-compliance with invoicing requirements.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "citation-relevance",
+    "gates": {
+      "structural": true,
+      "citationRelevant": false
+    },
+    "reason": "displayed_sources_only_foundational_provisions"
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 2"
+    },
+    {
+      "label": "NIRC Sec. 3"
+    }
+  ],
+  "sanitizedConversationRef": "8862c4022d87ea64"
+}

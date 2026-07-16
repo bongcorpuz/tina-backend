@@ -1,0 +1,11 @@
+{
+  "task": "PHASE-10A12 Q5 re-validation + competence matrix",
+  "liveEvidenceLoop": "The initial A12 live harness (guard covering only the Q8 residential-VAT reversal) surfaced a re-emergent invalid verified: Q5-r2 asserted a UNIVERSAL 12% import VAT ('uniformly set at 12% for all goods, regardless of business activities'), affirmatively denying the CREATE MORE export-enterprise exemption -- an LLM (gpt-4o-mini) materialExceptionsCovered false-negative, same root cause as Q8, different cluster. A deterministic detectImportVatExemptionOmission guard was added (import + export-manufacturing context + universal-12% assertion + no CREATE MORE/exemption mention -> fail closed) and the cluster re-validated.",
+  "q8": { "exactRuns": 5, "exactInvalidVerified": 0, "paraphraseRuns": 6, "paraphraseInvalidVerified": 0, "paraphraseValidVerified": ["Q8-p5 (correct 'No' answer)"], "guardActivations": 4 },
+  "q5Revalidation": { "runs": 3, "invalidVerified": 0, "states": ["RELATED_AUTHORITY_ONLY","RELATED_AUTHORITY_ONLY","RELATED_AUTHORITY_ONLY"] },
+  "q8Revalidation": { "runs": 2, "invalidVerified": 0 },
+  "deterministicGuards": ["detectTreatmentContradiction (residential-lease VAT per-unit-exemption vs aggregate-3M reversal)", "detectImportVatExemptionOmission (import-VAT export-manufacturing CREATE MORE omission)"],
+  "accessorHardening": "isVerifiedAnswerSupport now inspects property descriptors: accessor (getter/setter) mandatory fields are rejected (accessorFieldsRejected); a throwing getter is caught (descriptorReadFailure) and fails closed without propagating; only plain data-boolean own properties can verify.",
+  "modelInventory": "Only gpt-4o-mini is available on the API key (stronger models return 403). Retained with source-contradiction/polarity prompt hardening + deterministic guards; no silent model change.",
+  "schemaAdditions": ["treatmentDirectionMatches (positive)", "thresholdDimensionMatches (positive)", "sourcePropositionAligned (positive)", "answerContradictsControllingSource (negative)"]
+}

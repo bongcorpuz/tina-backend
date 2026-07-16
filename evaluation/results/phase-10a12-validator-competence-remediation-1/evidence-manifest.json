@@ -1,0 +1,257 @@
+{
+  "generatedAtUtc": "2026-07-16T05:02:38.849Z",
+  "evidenceDirectory": "evaluation/results/phase-10a12-validator-competence-remediation-1/",
+  "fileCount": 50,
+  "files": [
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/a12-run-log.json",
+      "bytes": 11585,
+      "sha256": "526ac5857cf8f3bad71afc6a27b158ad517d64b71258b6bd9519fddd552627cf"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/CONFLICT-1.json",
+      "bytes": 2361,
+      "sha256": "75989f612f7dfdff528eb81e6c32a284ebbbc5c2851e6a8b0e36441c210597e9"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/CONFLICT-2.json",
+      "bytes": 2134,
+      "sha256": "d2b6d9db4dabe9640f167a3cc46770b0a58e2a307d293b4a21acae03487c0fcc"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/M-Q12.json",
+      "bytes": 2932,
+      "sha256": "958160852f7a526f3ba7718fbefdf41e85d7043c4186f75cec19174d1bbf82c4"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/M-Q15.json",
+      "bytes": 2877,
+      "sha256": "9668692fc93edf4f1156b9602e0fe5457af487a6b1ab5954c6bd437c6c9c4652"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/M-Q2.json",
+      "bytes": 3579,
+      "sha256": "2abb1bbd75b4904e2b1e524a8811a9f6a94ee1af5eccb5d86c12d64767818f9e"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/M-Q23.json",
+      "bytes": 862,
+      "sha256": "342dcdec592a1cdba3c92f7ecad8bc3973d22c13bb4bc162d1303bd5d79c1395"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/M-Q26.json",
+      "bytes": 1397,
+      "sha256": "73f04adf5928b1ccaa914b823619509107ca73a28afefaa301e1d3c48463cd6e"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/M-Q27.json",
+      "bytes": 2952,
+      "sha256": "55e3e141c3b90858c93685086d2c1a5e3ee9b53fd1a92bfe061ab1aa3c85d73b"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/M-Q29.json",
+      "bytes": 1577,
+      "sha256": "e2027d6e068cbce8153b51310dda1f532bd415c50c9912ecf9aaad0e0983b10a"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/M-Q30.json",
+      "bytes": 2644,
+      "sha256": "80f96450d4dc58a169f72645639e1c0cdf13f65d7feff4a1c9beec113f3745bc"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/M-Q31.json",
+      "bytes": 1583,
+      "sha256": "b56536d37effe3ea493d2cb8d21f9745f4abdfa6b2fb04e8f72336364beb7f43"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/M-Q37.json",
+      "bytes": 1353,
+      "sha256": "b52c3def474010c44b0f7bf53149a5540b6fad0856747301acdcb991a76c6a30"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/M-Q43.json",
+      "bytes": 825,
+      "sha256": "3fbd04e043bf29d94ec5976a3d7cecc1b909050ed01918559ad05c44d800abe4"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/M-Q48.json",
+      "bytes": 1401,
+      "sha256": "9a79c8075a0c148ddca9cc6088d0c6e0486f1d1d4a056bf40dd5c782782a8336"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/M-Q49.json",
+      "bytes": 3883,
+      "sha256": "8cee19abc993edad81e0db5b63f0b74b8563b72e96cbfdd737723ed1ca33b975"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/M-Q6.json",
+      "bytes": 2823,
+      "sha256": "5731406a33042134d968223d1dc111d0b33c6d4902c2341889b28e05e71e969c"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/M-Q9.json",
+      "bytes": 3664,
+      "sha256": "cd9db3d53fed69161cd98b191728a94d710a33317e40c51b529e0b52f0b5742d"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/MISSING-1.json",
+      "bytes": 3760,
+      "sha256": "79811c198eda929e938ed85048a216f66ec3ee948436fb7130cdc526732d3aa7"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/MISSING-2.json",
+      "bytes": 2818,
+      "sha256": "b9ebde46e75d26235fd3d070e87d48d28df7de5a1a2ae301bc824b32c40bed48"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/Q35-r1.json",
+      "bytes": 2093,
+      "sha256": "632227e6ba605b546d457e39c9a5d8308ebeb04b0e8838f8748e80a3b42c7fac"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/Q35-r2.json",
+      "bytes": 1951,
+      "sha256": "3e2ba8b9654654ad372f0777d04076e787296f3cae4f9a6cbfa54a21efa3b2f8"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/Q41-r1.json",
+      "bytes": 1427,
+      "sha256": "0b62b2f2d12e18b8c633bdebfce439b713dd6dcc71474172caae86b241e05a58"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/Q41-r2.json",
+      "bytes": 1453,
+      "sha256": "b42640a23658da9e666cf91dc74532471fda85418d400caf60c1e1cb7a5ab867"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/Q5-r1.json",
+      "bytes": 3811,
+      "sha256": "d7864ade95dcfb565fa6c9edb4edf00776d4dfc19f5f495b0ddd480c4ec5352a"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/Q5-r2.json",
+      "bytes": 3447,
+      "sha256": "d99cec6fd59c65ee0390c42f0b6c84207bbd2686ae49ca2a6be02d1cb7dea77c"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/Q8-p1.json",
+      "bytes": 1374,
+      "sha256": "e44580511be3bbe63dce4529f76def4620699b95c8008f389a7693c25dd39148"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/Q8-p2.json",
+      "bytes": 1410,
+      "sha256": "44537e26ada53472eee09abb8d287eb376e8b7decaf5605c9e745b05b9634273"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/Q8-p3.json",
+      "bytes": 906,
+      "sha256": "e58e65de6b4c5b66f3f7a03a6e853744b140822f350af33daec7e0b4785b27e4"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/Q8-p4.json",
+      "bytes": 3407,
+      "sha256": "2ddeca6a402aa64b358563e64094c3b1e5c5ced53745557792cace211fb81464"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/Q8-p5.json",
+      "bytes": 3732,
+      "sha256": "a5a041df22a74766fe9d017a5e01a0d118fa2db6b787178929d8c979df2199e5"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/Q8-p6.json",
+      "bytes": 916,
+      "sha256": "69f7ac24954468338cc3909c647f62faff36d93740d746066f551970c3b82fdb"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/Q8-r1.json",
+      "bytes": 2587,
+      "sha256": "cfd74328c3a5b2a830ba47e0dfd82dc5ddaa1848b579f5f86c3d5b4044bc6d86"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/Q8-r2.json",
+      "bytes": 4388,
+      "sha256": "4423330b4669893a0c766a4727c1f82b3524b043372279675a0c82ba88c76665"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/Q8-r3.json",
+      "bytes": 2389,
+      "sha256": "945a946c812bf4ac70a71287fa998f48f5fa74fdaa65e6010bd62a14e8c4f9bf"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/Q8-r4.json",
+      "bytes": 2342,
+      "sha256": "fdd3e050c1b46ddd822a8818ad2b54bbb198ae130f258da39b128f2b967de003"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/Q8-r5.json",
+      "bytes": 2655,
+      "sha256": "d6d71972aa076eff386310d7ff94a818f4a85ff5c2052e7960b30e0a515f61f6"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/REL-Q10.json",
+      "bytes": 942,
+      "sha256": "0b0ecf80ea8b657bc590378cdf6753bedb2a27471c0497cc82313a0d5ede3c81"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/REL-Q24.json",
+      "bytes": 3090,
+      "sha256": "484416654cc410a1f56cda718d1c3fcfb9099924093ea81c3b7afb9e63170a9a"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/REL-Q7.json",
+      "bytes": 1634,
+      "sha256": "4ffd4c1922685a51487df821eca43e507b17de271c1a2315c884921355812b42"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/RESTRICT-1.json",
+      "bytes": 1536,
+      "sha256": "cbd6d236b6aea6d4b452aacd626a7d17fb1e8296796fd566d46b2ba3544b0b9b"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/RESTRICT-2.json",
+      "bytes": 4244,
+      "sha256": "c730ded4fabbd24ffbc934a853753992cfc375e2023cb09d05f136e67f61b569"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/SRCFAIL-1.json",
+      "bytes": 985,
+      "sha256": "ba2dd6edd0098860e33c405ab9c78613051b9042dcd861d21fa77e5225f4c8c4"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/SRCFAIL-2.json",
+      "bytes": 3511,
+      "sha256": "eba06fce2e4dd0a75f6355e0f61076482c424011abc7db9e21fe7c82965d53b6"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/VC-Q14.json",
+      "bytes": 2910,
+      "sha256": "57375c9773ba0b58e5bc53e9ec35e96cc49cd5eabfa42b2bc5194910539d2664"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/VC-Q32.json",
+      "bytes": 3109,
+      "sha256": "e69e8e542347ef6c056d692bcf01f60342bdd06d7f3148eae1122cb281faf8ad"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/VC-Q34.json",
+      "bytes": 2299,
+      "sha256": "fa2797fdc7f2d02d69ab24e085f2841ade9a95b52ae5e58e2ce1c76bc3be1473"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/VC-Q46.json",
+      "bytes": 4030,
+      "sha256": "bfa6a8e5d80429fd3c41b417c9c995121ffe9d1ba671eba67464058c870b77e7"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/payloads/VC-Q47.json",
+      "bytes": 3053,
+      "sha256": "b8151def6550276d21de0fac83f569a349b3985e7b43e7c95f43cbc8665086cc"
+    },
+    {
+      "path": "evaluation/results/phase-10a12-validator-competence-remediation-1/q5-revalidation-and-competence-matrix.json",
+      "bytes": 2032,
+      "sha256": "86870719cfc9ddd8d1b74340564087b5094fcf294d3138b796cbfec91613830b"
+    }
+  ]
+}

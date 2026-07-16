@@ -1,0 +1,35 @@
+{
+  "id": "REL-Q7",
+  "group": "related",
+  "prompt": "How is input VAT treated when goods or services are used for both VATable and VAT-exempt sales?",
+  "answer": "### Short Answer\n\n### Controlling Authorities\n- **RR 16-2005**: This regulation implements the provisions of the NIRC regarding VAT, including the treatment of input VAT.\n\n### Interpretation\n\n### Practical Meaning\nIn practice, businesses must maintain accurate records of their sales to determine the correct allocation of input VAT. This involves calculating the percentage of VATable sales relative to total sales and applying this percentage to the total input VAT incurred. Failure to properly allocate input VAT can lead to disallowed claims and potential penalties during tax audits. Therefore, careful tracking and documentation of sales types are essential for compliance and maximizing VAT recovery.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "sources": [
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "sanitizedConversationRef": "5ff0f6e4d4479b8a"
+}

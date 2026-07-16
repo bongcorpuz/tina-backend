@@ -1,0 +1,35 @@
+{
+  "id": "Q8-p2",
+  "group": "q8para",
+  "prompt": "Does exceeding the ₱3 million VAT threshold make every residential lease VATable?",
+  "answer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nIn practice, landlords and lessors should monitor their gross receipts from residential leases to ensure they remain below the ₱3 million threshold to maintain VAT exemption. If their total gross receipts from residential leases exceed this amount, they will then be required to register for VAT and charge it on their lease transactions. This regulation helps to protect smaller landlords from the administrative burden of VAT compliance.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "sources": [
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "sanitizedConversationRef": "725aeaba61919cf3"
+}

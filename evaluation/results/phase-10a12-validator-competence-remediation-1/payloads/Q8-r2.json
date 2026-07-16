@@ -1,0 +1,84 @@
+{
+  "id": "Q8-r2",
+  "group": "q8exact",
+  "prompt": "Is leasing a residential unit at ₱15,000 per month subject to VAT?",
+  "answer": "### Issue Presented\nIs leasing a residential unit at ₱15,000 per month subject to VAT?\n\n### Short Answer\nYes, leasing a residential unit at ₱15,000 per month is subject to VAT under certain conditions.\n\n### Controlling Authorities\nThe relevant provisions are found in the National Internal Revenue Code (NIRC) Sections 106 and 108. Section 106 states that there shall be a value-added tax (VAT) on the sale or lease of goods or properties, while Section 108 specifically addresses the VAT on the lease of properties.\n\n### Legal Interpretation\nAccording to Section 106 of the NIRC, any person who, in the course of trade or business, leases goods or properties is subject to VAT. Section 108 further clarifies that the VAT is levied on the gross sales derived from the lease of properties. However, residential leases are generally exempt from VAT if the monthly rental does not exceed ₱15,000. Since the rental amount of ₱15,000 is at the threshold, it is crucial to determine if the lease is considered a residential lease or a commercial lease. If it is classified as a residential lease, it would typically be exempt from VAT.\n\n### Practical Application\nIn practice, if the lease of the residential unit is strictly for residential purposes and the rental amount is exactly ₱15,000, it would not be subject to VAT. However, if the lease is deemed to be for commercial purposes or if the rental exceeds ₱15,000, then VAT would apply. It is advisable to confirm the nature of the lease agreement and ensure compliance with the relevant tax regulations.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "limitations": [
+      "POTENTIAL_CONFLICT"
+    ],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [
+      "materialExceptionsCovered",
+      "citationSupportsProposition",
+      "propositionSupported",
+      "materiallyComplete",
+      "treatmentDirectionMatches",
+      "sourcePropositionAligned",
+      "eligibleForVerifiedControlling",
+      "contradictsSources",
+      "unsupportedMaterialProposition",
+      "answerContradictsControllingSource"
+    ],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [
+      "unsafe_value_fields:materialExceptionsCovered,citationSupportsProposition,propositionSupported,materiallyComplete,treatmentDirectionMatches,sourcePropositionAligned,eligibleForVerifiedControlling,contradictsSources,unsupportedMaterialProposition,answerContradictsControllingSource"
+    ],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": false,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "citationSupportsProposition": false,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": false,
+      "treatmentDirectionMatches": false,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": false,
+      "eligibleForVerifiedControlling": false,
+      "contradictsSources": false,
+      "unsupportedMaterialProposition": false,
+      "answerContradictsControllingSource": false
+    },
+    "reason": "unsafe_value_fields:materialExceptionsCovered,citationSupportsProposition,propositionSupported,materiallyComplete,treatmentDirectionMatches,sourcePropositionAligned,eligibleForVerifiedControlling,contradictsSources,unsupportedMaterialProposition,answerContradictsControllingSource"
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 106"
+    },
+    {
+      "label": "NIRC Sec. 105"
+    },
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "NIRC Sec. 108"
+    },
+    {
+      "label": "RR 16-2005"
+    }
+  ],
+  "sanitizedConversationRef": "a6d0260d2269dcc0"
+}

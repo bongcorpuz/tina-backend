@@ -1,0 +1,71 @@
+{
+  "id": "Q8-p5",
+  "group": "q8para",
+  "prompt": "Can the VAT-registration threshold override the residential-unit exemption?",
+  "answer": "### Authority Question\nCan the VAT-registration threshold override the residential-unit exemption?\n\n### Short Answer\nNo, the VAT-registration threshold does not override the residential-unit exemption. The exemption for residential units is specifically provided under the law and is not contingent upon the VAT-registration threshold.\n\n### Authority Hierarchy\n1. **NIRC Section 106** - This section outlines the imposition of VAT on the sale of goods and properties, including exemptions.\n2. **NIRC Section 108** - This section details VAT on the sale of services and the use or lease of properties, which includes provisions for exemptions.\n3. **RR 16-2005** - This regulation provides further clarification on the implementation of VAT exemptions, including those applicable to residential units.\n\n### Conflict / Consistency Analysis\nThere is no conflict between the VAT-registration threshold and the residential-unit exemption. The residential-unit exemption is a specific provision that applies regardless of whether the seller is VAT-registered or not. The VAT-registration threshold primarily affects the obligation to register for VAT and does not negate existing exemptions.\n\n### Controlling Rule\nThe controlling rule is found in **NIRC Section 106**, which states that certain sales, including those of residential units, are exempt from VAT. This exemption is not influenced by the VAT-registration threshold.\n\n### Practical Effect\nThe practical effect is that developers or sellers of residential units are exempt from VAT regardless of their registration status, provided they meet the criteria for the exemption. This ensures that residential properties remain affordable and accessible, as the VAT does not apply to these transactions.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "limitations": [
+      "POTENTIAL_CONFLICT"
+    ],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "treatmentDirectionMatches": true,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": true,
+      "eligibleForVerifiedControlling": true,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true,
+      "answerContradictsControllingSource": true
+    },
+    "reason": "The answer correctly addresses the question and is fully supported by relevant citations."
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 106"
+    },
+    {
+      "label": "NIRC Sec. 105"
+    },
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "NIRC Sec. 108"
+    },
+    {
+      "label": "RR 16-2005"
+    }
+  ],
+  "sanitizedConversationRef": "ad9852abb06bfce4"
+}

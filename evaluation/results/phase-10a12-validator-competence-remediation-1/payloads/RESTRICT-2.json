@@ -1,0 +1,30 @@
+{
+  "id": "RESTRICT-2",
+  "group": "restricted",
+  "prompt": "Predict whether the taxpayer will prevail at the Court of Tax Appeals in this assessment dispute.",
+  "answer": "### Authority Question\nTo predict whether the taxpayer will prevail at the Court of Tax Appeals (CTA) in this assessment dispute, we must analyze the relevant legal framework and the specific circumstances surrounding the assessment.\n\n### 1. Quick Assessment\n\n### 2. BIR Likely Position\nThe Bureau of Internal Revenue (BIR) may argue that the assessment is valid if it was issued within the three-year period prescribed by Section 203. If the taxpayer filed a return beyond the prescribed period, the BIR could assert that the three-year period should be counted from the date the return was filed, as stated in Section 203.\n\n### 3. Taxpayer Position / Defenses\nThe taxpayer can defend against the assessment by asserting that the BIR failed to issue the assessment within the legally mandated three-year period. If the taxpayer filed their return on time and the BIR issued the assessment after the expiration of the three-year period, this could be a strong basis for the taxpayer's position.\n\n### 4. Documentary Support Needed\nTo support the taxpayer's position, the following documents should be gathered:\n- A copy of the filed tax return, including the date of filing.\n- Any correspondence with the BIR regarding the assessment.\n- Evidence of timely filing and compliance with tax obligations.\n\n### 5. Procedural Issues\nIf the BIR did not provide a pre-assessment notice as required under Section 228, this could render the assessment void. The taxpayer should verify whether they received proper notification of the findings before the assessment was issued.\n\n### 6. Risk Level\nThe risk level for the taxpayer hinges on the timing of the assessment relative to the filing of the return. If the assessment was issued within the three-year period, the risk of losing the dispute increases. Conversely, if the assessment was issued after the expiration of the three-year period, the taxpayer has a strong chance of prevailing.\n\n### 7. Recommended Action\nThe taxpayer should prepare to contest the assessment by filing a protest with the BIR, citing the expiration of the assessment period under Section 203. If the BIR denies the protest, the taxpayer should appeal to the CTA within the prescribed timeframe.\n\n### 8. Sources / Source Cards\n- **CTA Case No. 9711 – Dizon Farms Produce, Inc. v. CIR**: Discusses the importance of timely assessments and the protection of taxpayer rights against indefinite investigations.\n\nIn conclusion, the taxpayer's likelihood of prevailing at the CTA will depend significantly on the timing of the assessment relative to the filing of the tax return and adherence to procedural requirements by the BIR.\n\n### Short Answer\n(Framework knowledge — pending index verification)\n\n### Authority Hierarchy\nRefer to the Master Prompt authority hierarchy: Constitution → NIRC/CMTA/LGC → Tax Treaties → Supreme Court → CTA → RR → RMC/RMO → BIR Rulings.\n\n### Conflict / Consistency Analysis\nNo conflict identified from the available indexed authorities.\n\n### Controlling Rule\n(Framework knowledge — pending index verification)\n\n### Practical Effect\nConsult the applicable provision and implementing regulation before relying on this answer.\n\nSource limitation: A governing authority was not directly located. Displayed sources are related, supporting, or secondary only. They are not the controlling basis for the answer.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "RELATED_AUTHORITY_ONLY",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "limitations": [
+      "POTENTIAL_CONFLICT",
+      "RELATED_AUTHORITY_ONLY"
+    ],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": null,
+  "sources": [
+    {
+      "label": "CTA Case No. 9711"
+    }
+  ],
+  "sanitizedConversationRef": "68ea4b9837e9f048"
+}

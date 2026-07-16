@@ -1,0 +1,50 @@
+{
+  "id": "Q8-r5",
+  "group": "q8exact",
+  "prompt": "Is leasing a residential unit at ₱15,000 per month subject to VAT?",
+  "answer": "### Issue Presented\nIs leasing a residential unit at ₱15,000 per month subject to Value-Added Tax (VAT)?\n\n### Short Answer\nYes, leasing a residential unit at ₱15,000 per month is subject to VAT. This is governed by Section 108 of the National Internal Revenue Code (NIRC), which imposes VAT on the lease of properties.\n\n### Controlling Authorities\n1. **NIRC Section 108** - Value-Added Tax on the Sale of Services, Including the Use or Lease of Properties.\n2. **NIRC Section 105** - Persons Liable for VAT.\n\n### Legal Interpretation\nUnder Section 108 of the NIRC, there is a clear provision that states a value-added tax equivalent to twelve percent (12%) shall be levied on the gross sales derived from the lease of properties. The term \"lease of properties\" encompasses residential units, thus making the rental income from leasing a residential unit subject to VAT. Additionally, Section 105 establishes that any person engaged in the lease of goods or properties in the course of trade or business is liable for VAT.\n\n### Practical Application\nFor a residential unit leased at ₱15,000 per month, the landlord must charge VAT on top of the rental amount, resulting in a total monthly charge of ₱16,800 (₱15,000 + ₱1,800 VAT). The landlord is responsible for remitting the VAT collected to the Bureau of Internal Revenue (BIR). It is essential for landlords to ensure compliance with VAT regulations to avoid penalties and interest on unpaid taxes.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "limitations": [
+      "POTENTIAL_CONFLICT"
+    ],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "treatment-contradiction",
+    "gates": {
+      "structural": true,
+      "treatmentDirectionMatches": false
+    },
+    "reason": "residential_per_unit_exemption_reversed_to_taxable"
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 105"
+    },
+    {
+      "label": "NIRC Sec. 106"
+    },
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "NIRC Sec. 108"
+    },
+    {
+      "label": "RR 16-2005"
+    }
+  ],
+  "sanitizedConversationRef": "8f00f07e368c74bb"
+}

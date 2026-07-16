@@ -1,0 +1,35 @@
+{
+  "id": "M-Q31",
+  "group": "mini",
+  "prompt": "What standard deduction is allowed in computing the net estate?",
+  "answer": "### Short Answer\n\n### Interpretation\nThe standard deduction of P5,000,000 is applicable to the gross estate of a decedent, which helps reduce the taxable estate before calculating the estate tax due. This deduction is particularly beneficial as it simplifies the computation process for estates, allowing for a significant reduction in the taxable amount.\n\n### Practical Meaning\nThe inclusion of a standard deduction in the computation of the net estate means that estates valued at or below P5,000,000 may not incur any estate tax liability. For larger estates, this deduction can significantly lower the taxable base, thereby reducing the overall estate tax burden on the heirs or beneficiaries.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 34"
+    }
+  ],
+  "sanitizedConversationRef": "207890741c236a6c"
+}

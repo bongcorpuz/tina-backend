@@ -1,0 +1,38 @@
+{
+  "id": "CONFLICT-2",
+  "group": "conflict",
+  "prompt": "A PEZA enterprise received services treated as VAT-exempt instead of zero-rated; how should the conflicting VAT treatments be resolved?",
+  "answer": "### Short Answer\n\n### Controlling Authorities\n1. **NIRC Section 109** - Exempt Transactions\n\n### Interpretation\nUnder Section 109 of the NIRC, certain transactions are exempt from VAT, while Section 106 provides for zero-rated transactions, particularly those involving export sales or services rendered to PEZA-registered enterprises. The distinction is crucial because zero-rated transactions allow the input VAT to be claimed as a credit, whereas exempt transactions do not. If the services in question qualify as zero-rated under Section 106, the PEZA enterprise should assert this classification to recover input VAT.\n\n### Practical Meaning\nIn practice, the PEZA enterprise should review the nature of the services received to determine if they meet the criteria for zero-rating. If they do, the enterprise can file for a refund or credit of the input VAT. If the services are incorrectly classified as exempt, the enterprise may need to engage with the BIR to rectify the classification and ensure compliance with VAT regulations, potentially involving a formal request for reclassification or a ruling from the BIR.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "sources": [
+    {
+      "label": "NIRC Sec. 109"
+    },
+    {
+      "label": "RR 16-2005"
+    }
+  ],
+  "sanitizedConversationRef": "61befd794f843c96"
+}
