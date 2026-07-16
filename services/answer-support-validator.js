@@ -384,13 +384,179 @@ export function detectImportVatExemptionOmission(question, answer) {
   return { contradiction: false, reason: "" };
 }
 
+// PHASE-10A12-R3: Q5 source-sufficiency gate. The confirmed A12-R2 P1-1 defect:
+// Q5-p1 received VERIFIED_CONTROLLING for an answer that concluded goods used to
+// make export products "may qualify for zero-rating", citing ONLY generic VAT
+// authority (NIRC Sec 107, RR No. 16-2005). Those authorities do not establish
+// the CREATE MORE / RA No. 12066 export-enterprise exemption or zero-rating
+// basis. The existing detectImportVatExemptionOmission guard only fires on a
+// UNIVERSAL 12% assertion or an EXPLICIT denial; it does not catch an incentive
+// treatment GRANTED (exemption/zero-rating) on generic authority alone. This
+// gate closes that gap: an incentive-import answer may not verify unless a
+// SPECIFIC incentive authority actually supports the incentive treatment.
+//
+// Generalizable within the import-VAT incentive class -- it keys on normalized
+// dimensions (import context, incentive/export context, incentive treatment
+// claim, authority specificity), not the literal strings "Q5", "CREATE MORE",
+// "RA 12066", or "import VAT". A generic statute citation is never accepted as
+// support for a specific incentive conclusion. Pure -- no I/O.
+const IMPORT_CONTEXT_RE = /\bimport\w*|importation\b/i;
+const INCENTIVE_CONTEXT_RE = /\bexport\b|export[- ]oriented|\brbe\b|registered (business )?enterprise|ecozone|\bpeza\b|freeport|\bincentiv\w+|create more\b/i;
+// Specific Philippine incentive authorities that CAN support an export-enterprise
+// import-VAT exemption / zero-rating conclusion. Generic VAT provisions (NIRC
+// Sec 106-109, RR 16-2005) are deliberately excluded.
+const SPECIFIC_INCENTIVE_AUTHORITY_RE =
+  /\bR\.?\s*A\.?\s*(no\.?\s*)?(12066|11534|7916|11916)\b|republic act\s*(no\.?\s*)?(12066|11534|7916)|create\s*more|\bcreate act\b|\bpeza\b|section\s*0*(29[4-9]|3[0-1][0-9])\b|title\s*xiii|fiscal incentiv\w+|\bIPA\b|investment promotion agenc\w+|RR\s*(no\.?\s*)?(3-2025|21-2021|9-2021|5-2021|7-2022)|RMC\s*(no\.?\s*)?\d/i;
+// Generic VAT authority (present but not incentive-specific).
+const GENERIC_VAT_AUTHORITY_RE =
+  /\bsec(?:tion|\.)?\s*0*10[6-9]\b|RR\s*(no\.?\s*)?16-2005|value[- ]added tax act/i;
+const CLAIMS_EXEMPTION_RE = /\bvat[- ]?exempt\w*|exempt(ion)?\s+from\s+(the\s+)?vat|not\s+subject\s+to\s+(the\s+)?vat\b/i;
+const CLAIMS_ZERORATING_RE = /\bzero[- ]?rat(e|ed|ing)\b/i;
+const CLAIMS_QUALIFY_RE = /\bmay\s+qualify|can\s+qualify|qualif\w+\s+for\s+(the\s+)?(exemption|zero|special)|special\s+(regime|treatment)\b/i;
+const GRANTS_DEFINITIVE_INCENTIVE_RE = /\b(is|are|shall be|will be)\s+(vat[- ]?exempt\w*|zero[- ]?rated|exempt)\b/i;
+const INCENTIVE_CONDITION_RE = /\bregistered\b|export[- ]oriented|directly attributable|\b70\s*%|qualif\w+|\bIPA\b|accredit\w+|in-house|customs territory|export enterprise|conditions?\b/i;
+const PERIOD_APPLICABILITY_RE = /\beffectiv\w+|took effect|transition\w*|as amended|beginning\s+\d|\b20\d{2}\b|prospective\w*|until\b/i;
+// A QUESTION that posits a QUALIFYING / registered export enterprise in the
+// incentive regime -- the correct answer must rest on the incentive authority,
+// so a VERIFIED_CONTROLLING answer on generic VAT authority alone is unsound
+// (the confirmed Q5-par10 defect: a "qualified registered export enterprise ...
+// under CREATE MORE" import answered with a generic input-tax-credit treatment
+// citing only NIRC Sec 107 / RR 16-2005). Distinguished from a NON-qualifying
+// framing (e.g. "does not meet the CREATE MORE conditions"), where the general
+// rule legitimately controls and generic authority is sufficient.
+const POSITIVE_QUALIFYING_RE = /\bqualified\b|registered (export )?(business )?enterprise|export[- ]oriented enterprise|\brbe\b|ipa[- ]registered|registered project|registered export/i;
+const NEGATIVE_QUALIFYING_RE = /\b(does not|doesn't|do not|not)\s+(meet|qualif|register)|non[- ]qualif|fails to|ordinary importer|purely domestic|not (a )?registered|unregistered|does not export/i;
+const INCENTIVE_REGIME_Q_RE = /create more\b|\bincentiv\w+|vat[- ]exempt\w*|\bexemption\b|zero[- ]rat\w*|\bR\.?\s*A\.?\s*(no\.?\s*)?(12066|11534)\b/i;
+
+/**
+ * Q5-class import-VAT incentive source-sufficiency check. Determines whether an
+ * incentive treatment (exemption / zero-rating) asserted for an import question
+ * is actually supported by a SPECIFIC incentive authority, or is granted on
+ * generic VAT authority alone. Pure.
+ * @param {object} params
+ * @param {string} params.question
+ * @param {string} params.answer
+ * @param {Array}  [params.sources]
+ * @returns {{applicable:boolean, sufficient:boolean, reason:string, diagnostics:object}}
+ */
+export function evaluateImportVatIncentiveSourceSufficiency({ question, answer, sources = [] } = {}) {
+  const q = typeof question === "string" ? question : "";
+  const a = typeof answer === "string" ? answer : "";
+  const ctx = q + "\n" + a;
+  const sourceLabels = (Array.isArray(sources) ? sources : [])
+    .map((s) => (s && (s.label || s.citation || s.title || s.displayLabel)) || "")
+    .filter(Boolean)
+    .join(" ; ");
+  const authorityText = sourceLabels + " ; " + a;
+
+  const claimsExemption = CLAIMS_EXEMPTION_RE.test(a);
+  const claimsZeroRating = CLAIMS_ZERORATING_RE.test(a);
+  const claimsQualify = CLAIMS_QUALIFY_RE.test(a);
+  const incentiveTreatmentClaimed = claimsExemption || claimsZeroRating || claimsQualify;
+
+  const importContext = IMPORT_CONTEXT_RE.test(ctx);
+  const incentiveContext = INCENTIVE_CONTEXT_RE.test(ctx);
+  const applicable = importContext && (incentiveContext || incentiveTreatmentClaimed);
+
+  // Authority SUFFICIENCY keys on the DISPLAYED SOURCE CARDS, not answer prose.
+  // A prose name-drop of "CREATE MORE" with only generic VAT source cards is
+  // citation laundering and must NOT count as specific-authority support -- the
+  // VERIFIED_CONTROLLING badge rests on the displayed authorities.
+  const specificIncentiveAuthorityInSources = SPECIFIC_INCENTIVE_AUTHORITY_RE.test(sourceLabels);
+  const specificIncentiveAuthorityMentionedInAnswer = SPECIFIC_INCENTIVE_AUTHORITY_RE.test(a);
+  const specificIncentiveAuthorityPresent = specificIncentiveAuthorityInSources;
+  const genericVatAuthorityPresent = GENERIC_VAT_AUTHORITY_RE.test(authorityText);
+  const genericAuthorityOnly = !specificIncentiveAuthorityPresent && genericVatAuthorityPresent;
+  const qualifyingIncentiveQuestion =
+    POSITIVE_QUALIFYING_RE.test(q) && INCENTIVE_REGIME_Q_RE.test(q) && !NEGATIVE_QUALIFYING_RE.test(q);
+  const conditionMentioned = INCENTIVE_CONDITION_RE.test(a);
+  const periodMentioned = PERIOD_APPLICABILITY_RE.test(a);
+  const grantsDefinitiveIncentive = GRANTS_DEFINITIVE_INCENTIVE_RE.test(a);
+
+  const exemptionBasisSupported = claimsExemption ? specificIncentiveAuthorityPresent : true;
+  const zeroRatingBasisSupported = claimsZeroRating ? specificIncentiveAuthorityPresent : true;
+  const incentiveConditionSupported = incentiveTreatmentClaimed
+    ? (specificIncentiveAuthorityPresent && conditionMentioned)
+    : true;
+  const periodApplicabilitySupported = incentiveTreatmentClaimed
+    ? (specificIncentiveAuthorityPresent && periodMentioned)
+    : true;
+  // Substituting "zero-rated" for "exempt" (or vice versa) is only supportable
+  // when a specific incentive authority is present to establish the label.
+  const treatmentLabelMatchesAuthority = (claimsExemption || claimsZeroRating)
+    ? specificIncentiveAuthorityPresent
+    : true;
+
+  const diagnostics = {
+    applicable,
+    incentiveTreatmentClaimed,
+    claimsExemption,
+    claimsZeroRating,
+    specificIncentiveAuthorityPresent,
+    exemptionBasisSupported,
+    zeroRatingBasisSupported,
+    treatmentLabelMatchesAuthority,
+    periodApplicabilitySupported,
+    genericAuthorityOnly,
+    incentiveConditionSupported,
+    specificIncentiveAuthorityInSources,
+    specificIncentiveAuthorityMentionedInAnswer,
+    qualifyingIncentiveQuestion
+  };
+
+  if (!applicable) {
+    return { applicable, sufficient: true, reason: "", diagnostics };
+  }
+  // A qualifying-incentive QUESTION answered with only generic VAT source cards
+  // cannot be VERIFIED_CONTROLLING -- the incentive authority is missing from the
+  // displayed authorities (covers answers that omit the incentive entirely and
+  // give a generic treatment, and blocks prose citation laundering).
+  if (qualifyingIncentiveQuestion && !specificIncentiveAuthorityInSources) {
+    return {
+      applicable,
+      sufficient: false,
+      reason: "qualified_incentive_question_answered_on_generic_authority",
+      diagnostics
+    };
+  }
+  if (!incentiveTreatmentClaimed) {
+    return { applicable, sufficient: true, reason: "", diagnostics };
+  }
+  // Core fail-closed rule: an incentive treatment granted on generic authority
+  // alone (no specific incentive authority anywhere) cannot verify.
+  if (!specificIncentiveAuthorityPresent) {
+    return {
+      applicable,
+      sufficient: false,
+      reason: "incentive_treatment_claimed_without_specific_incentive_authority",
+      diagnostics
+    };
+  }
+  // Specific authority present but a DEFINITIVE incentive granted with no
+  // qualifying taxpayer/transaction condition stated -> unsupported grant.
+  if (grantsDefinitiveIncentive && !conditionMentioned) {
+    return {
+      applicable,
+      sufficient: false,
+      reason: "incentive_granted_without_qualifying_condition",
+      diagnostics
+    };
+  }
+  return { applicable, sufficient: true, reason: "", diagnostics };
+}
+
 // PHASE-10A12-R2: generic (non-LOA) outcome-prediction guard. A question that
 // asks TINA to predict/guarantee the outcome of a protest, refund, audit, or
 // litigation must never receive VERIFIED_CONTROLLING -- a controlling
 // "verified" badge on a predicted outcome is unsafe regardless of how the LLM
 // scores the prose. Pure; keys off the QUESTION intent, not fluency, and is not
 // LOA-specific.
-const OUTCOME_PREDICTION_RE = /\b(will|won't|would|can|could)\s+(i|we|my|our|the taxpayer|the client|it|they)\b[^.?\n]{0,80}\b(win|won|succeed|success|prevail|lose|be cancell?ed|be approved|be granted|be waived|be reversed|be upheld)\b|\b(guarante\w*|assur\w*|promis\w*|predict\w*|likelihood|chances?|odds|probability)\b[^.?\n]{0,80}\b(win|succeed|success|prevail|approv\w+|grant\w+|cancell?\w+|favor\w*|outcome|refund)\b|\bwill\s+(the\s+)?bir\s+(cancel|approve|grant|waive|reverse)\b|\bprevail\s+(at|before|in)\s+(the\s+)?(court of tax appeals|cta|bir)\b/i;
+// PHASE-10A12-R3: closed two gaps found live (RES-2): (a) a guarantee/predict
+// trigger followed by a BARE verb ("guarantee ... cancel my assessment") --
+// cancell?\w+ required a trailing word char and missed "cancel"; widened to
+// cancell?\w* and added bare grant/approve/waive/reverse/uphold forms; (b) a
+// "the BIR will cancel ..." ordering (subject before "will").
+const OUTCOME_PREDICTION_RE = /\b(will|won't|would|can|could)\s+(i|we|my|our|the taxpayer|the client|it|they)\b[^.?\n]{0,80}\b(win|won|succeed|success|prevail|lose|be cancell?ed|be approved|be granted|be waived|be reversed|be upheld)\b|\b(guarante\w*|assur\w*|promis\w*|predict\w*|likelihood|chances?|odds|probability)\b[^.?\n]{0,80}\b(win|succeed|success|prevail|approv\w*|grant\w*|cancell?\w*|waiv\w*|revers\w*|uph[eo]ld\w*|favor\w*|outcome|refund)\b|\b(the\s+)?bir\s+will\s+(cancel|approve|grant|waive|reverse|uphold)|\bwill\s+(the\s+)?bir\s+(cancel|approve|grant|waive|reverse)\b|\bprevail\s+(at|before|in)\s+(the\s+)?(court of tax appeals|cta|bir)\b/i;
 
 /**
  * Detects a request to predict/guarantee a tax controversy outcome. Pure.
@@ -424,6 +590,28 @@ export async function evaluateAnswerSupport({ question, answer, sources = [], mo
   const exemptionOmission = detectImportVatExemptionOmission(question, answer);
   if (exemptionOmission.contradiction) {
     return { verifiedEligible: false, schemaValid: false, stage: "material-exception-omission", gates: { structural: true, materialExceptionsCovered: false }, reason: exemptionOmission.reason };
+  }
+  // PHASE-10A12-R3: Q5 source-sufficiency gate. An incentive treatment
+  // (exemption / zero-rating) granted on generic VAT authority alone, without a
+  // specific incentive authority (RA 12066 / CREATE MORE / equivalent), fails
+  // closed regardless of LLM approval (the confirmed A12-R2 P1-1 defect).
+  const incentiveSufficiency = evaluateImportVatIncentiveSourceSufficiency({ question, answer, sources });
+  if (incentiveSufficiency.applicable && !incentiveSufficiency.sufficient) {
+    return {
+      verifiedEligible: false,
+      schemaValid: false,
+      stage: "incentive-source-sufficiency",
+      gates: {
+        structural: true,
+        specificIncentiveAuthorityPresent: incentiveSufficiency.diagnostics.specificIncentiveAuthorityPresent,
+        exemptionBasisSupported: incentiveSufficiency.diagnostics.exemptionBasisSupported,
+        zeroRatingBasisSupported: incentiveSufficiency.diagnostics.zeroRatingBasisSupported,
+        incentiveConditionSupported: incentiveSufficiency.diagnostics.incentiveConditionSupported,
+        genericAuthorityOnly: incentiveSufficiency.diagnostics.genericAuthorityOnly
+      },
+      incentiveSufficiency: incentiveSufficiency.diagnostics,
+      reason: incentiveSufficiency.reason
+    };
   }
   if (detectOutcomePredictionRequest(question)) {
     return { verifiedEligible: false, schemaValid: false, stage: "outcome-prediction", gates: { structural: true }, reason: "outcome_prediction_request_cannot_be_verified" };
@@ -507,6 +695,7 @@ export default {
   structuralSupportGate,
   citesOnlyFoundationalProvisions,
   validateVerdictSchema,
+  evaluateImportVatIncentiveSourceSufficiency,
   evaluateAnswerSupport,
   REQUIRED_POSITIVE_BOOLEANS,
   REQUIRED_NEGATIVE_BOOLEANS

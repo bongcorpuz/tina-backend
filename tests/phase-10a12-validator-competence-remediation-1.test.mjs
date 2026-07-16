@@ -147,7 +147,12 @@ await test("Cimport-1: export-mfg import-VAT answer omitting CREATE MORE exempti
   check(trust.authoritySupport === "RELATED_AUTHORITY_ONLY", `must not verify, got ${trust.authoritySupport}`);
 });
 await test("Cimport-2: import-VAT answer covering CREATE MORE -> verified reachable", async () => {
-  const { trust } = await trustFor("What is the VAT rate on importation of goods used to manufacture export products?", Q5_CORRECT, FULL);
+  // PHASE-10A12-R3: legitimate reachability now requires the incentive authority
+  // to appear in the DISPLAYED SOURCE CARDS (not merely named in prose). A
+  // generic/unsupportive source card can no longer carry a CREATE MORE exemption
+  // conclusion (citation laundering closed by the Q5 source-sufficiency gate).
+  const incentiveSrc = [{ label: "RA No. 12066 (CREATE MORE)" }, { label: "NIRC Sec. 295" }];
+  const { trust } = await trustFor("What is the VAT rate on importation of goods used to manufacture export products?", Q5_CORRECT, FULL, incentiveSrc);
   check(trust.authoritySupport === "VERIFIED_CONTROLLING", `expected verified, got ${trust.authoritySupport}`);
 });
 await test("Cimport-3: import-VAT guard no false-positive on unrelated import / correct answer", () => {
