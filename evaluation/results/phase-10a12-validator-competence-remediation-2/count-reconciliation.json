@@ -1,0 +1,43 @@
+{
+  "phase": "PHASE-10A12-VALIDATOR-COMPETENCE-REMEDIATION-2",
+  "reconciledFrom": "FINAL_RUNTIME_ONLY",
+  "runtimeCommit": "bd19b3d7a220132a618a3777a33fdfa0b34099ea",
+  "payloadDir": "evaluation/results/phase-10a12-validator-competence-remediation-2/payloads",
+  "totalPayloads": 66,
+  "byAuthoritySupport": {
+    "VERIFIED_CONTROLLING": 13,
+    "RELATED_AUTHORITY_ONLY": 44,
+    "NO_VERIFIED_AUTHORITY": 9
+  },
+  "checksum": "13 + 44 + 9 = 66",
+  "byCluster": {
+    "Q5": { "total": 11, "exact": 5, "paraphrase": 6, "verified": 1, "invalidVerified": 0 },
+    "Q8": { "total": 15, "exact": 3, "paraphrase": 12, "verified": 3, "invalidVerified": 0, "falseRefusals": 0 },
+    "Q35": { "total": 3, "verified": 0 },
+    "Q41": { "total": 3, "verified": 0 },
+    "RES_outcomePrediction": { "total": 6, "verified": 0, "falseRefusals": 0 },
+    "verifiedControls_VC": { "total": 5, "verified": 3, "reachability": "3/5" },
+    "miniFactCheck_M": { "total": 21, "verified": 5 },
+    "CONFLICT": { "total": 1, "verified": 0 },
+    "MISSING": { "total": 1, "verified": 1, "note": "meta-answer: yes, an answer can be given without an unsupported citation — valid" },
+    "SRCFAIL": { "total": 1, "verified": 0 }
+  },
+  "verifiedIds": [
+    "M-Q12", "M-Q15", "M-Q26", "M-Q30", "M-Q6", "MISSING-1",
+    "Q5-p1", "Q8-p10", "Q8-p12", "Q8-p5", "VC-Q32", "VC-Q34", "VC-Q47"
+  ],
+  "verifiedAudit": {
+    "allSchemaValid": true,
+    "invalidVerifiedCount": 0,
+    "substantiveCorrectness": "Q5-p1 correctly pairs 12% import VAT with export zero-rating; Q8-p5/p10/p12 correctly hold residential <= P15,000/unit VAT-exempt regardless of aggregate; VC/M controls are standard correct answers; MISSING-1 is a valid meta-answer."
+  },
+  "safetyMetrics": {
+    "q5InvalidVerified": 0,
+    "q8InvalidVerified": 0,
+    "q8FalseRefusals": 0,
+    "unrestrictedOutcomePredictions": 0,
+    "accessorGetterExecutions": 0,
+    "invalidVerifiedOverall": 0,
+    "guardActivations": 6
+  }
+}

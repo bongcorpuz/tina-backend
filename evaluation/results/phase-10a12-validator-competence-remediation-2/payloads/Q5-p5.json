@@ -1,0 +1,45 @@
+{
+  "id": "Q5-p5",
+  "group": "q5para",
+  "prompt": "Is a registered export enterprise's importation of production inputs VAT-exempt under CREATE MORE?",
+  "runtimeCommit": "bd19b3d7a220132a618a3777a33fdfa0b34099ea",
+  "answer": "### Short Answer\nThe importation of production inputs by a registered export enterprise is subject to VAT under Section 107 of the National Internal Revenue Code (NIRC). However, if the goods are directly used in the production of goods for export, they may qualify for zero-rating under certain conditions.\n\n### Controlling Authorities\n1. **NIRC Section 107**: This section imposes a value-added tax on the importation of goods.\n2. **RR 16-2005**: This regulation implements the provisions of the NIRC regarding VAT, including the treatment of importations.\n\n### Interpretation\nUnder Section 107 of the NIRC, a value-added tax equivalent to 12% is levied on every importation of goods. This tax is applicable regardless of the status of the importer as a registered export enterprise. However, RR 16-2005 provides that certain importations may be zero-rated if they are directly used in the production of goods for export. This means that while the initial importation is subject to VAT, the registered export enterprise may claim a refund or credit for the VAT paid if the inputs are used in the production of goods that are subsequently exported.\n\n### Practical Meaning\nFor registered export enterprises, while they are initially liable for VAT on imported production inputs, they can potentially recover this VAT if the inputs are utilized in the manufacturing of goods intended for export. This creates a cash flow advantage, as the VAT paid can be reclaimed, effectively making the importation cost-neutral for export-oriented production. It is crucial for enterprises to maintain proper documentation to support their claims for zero-rating or VAT refunds.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "material-exception-omission",
+    "gates": {
+      "structural": true,
+      "materialExceptionsCovered": false
+    },
+    "reason": "import_vat_denies_create_more_export_exemption"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "560f5770c35a82e8"
+}

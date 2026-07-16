@@ -1,0 +1,77 @@
+{
+  "id": "Q8-p5",
+  "group": "q8para",
+  "prompt": "Can the VAT-registration threshold override the residential-unit exemption?",
+  "runtimeCommit": "bd19b3d7a220132a618a3777a33fdfa0b34099ea",
+  "answer": "### Authority Question\nCan the VAT-registration threshold override the residential-unit exemption?\n\n### Short Answer\nNo, the VAT-registration threshold does not override the residential-unit exemption. Under the National Internal Revenue Code (NIRC), residential units are generally exempt from VAT regardless of the VAT-registration threshold.\n\n### Authority Hierarchy\n1. **NIRC Section 106** - This section outlines the imposition of VAT on the sale of goods and properties, including the conditions under which VAT applies.\n2. **NIRC Section 108** - This section specifies the VAT on the sale of services and the use or lease of properties, reinforcing the general VAT framework.\n3. **RR 16-2005** - This revenue regulation provides further clarification on VAT exemptions, including those applicable to residential units.\n\n### Conflict / Consistency Analysis\nThe VAT-registration threshold is primarily concerned with determining whether a seller is required to register for VAT based on their gross sales. However, the exemption for residential units is a specific provision that applies regardless of the seller's VAT registration status. Thus, there is no conflict; the exemption remains intact irrespective of the VAT-registration threshold.\n\n### Controlling Rule\nThe controlling rule is found in **NIRC Section 106**, which states that VAT is levied on sales of goods and properties, but residential units are exempt from VAT under specific provisions, ensuring that the threshold for VAT registration does not affect this exemption.\n\n### Practical Effect\nThe practical effect is that developers or sellers of residential units do not need to worry about their VAT-registration status affecting the tax-exempt status of their sales. This encourages the development and sale of residential properties without the burden of VAT, promoting housing accessibility.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "limitations": [
+      "POTENTIAL_CONFLICT"
+    ],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "treatmentDirectionMatches": true,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": true,
+      "eligibleForVerifiedControlling": true,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true,
+      "answerContradictsControllingSource": true
+    },
+    "reason": "The answer correctly addresses the question and is fully supported by relevant citations."
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": true,
+  "sources": [
+    {
+      "label": "NIRC Sec. 106"
+    },
+    {
+      "label": "NIRC Sec. 105"
+    },
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "NIRC Sec. 108"
+    },
+    {
+      "label": "RR 16-2005"
+    }
+  ],
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "ed5d8410fa569832"
+}

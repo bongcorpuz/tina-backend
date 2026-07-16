@@ -1,0 +1,41 @@
+{
+  "id": "M-Q31",
+  "group": "mini",
+  "prompt": "What standard deduction is allowed in computing the net estate?",
+  "runtimeCommit": "bd19b3d7a220132a618a3777a33fdfa0b34099ea",
+  "answer": "### Short Answer\n\n### Interpretation\nThe standard deduction serves to simplify the computation of the net estate by providing a fixed amount that can be deducted from the gross estate. This deduction is applicable regardless of the actual expenses incurred by the estate, thereby facilitating the estate settlement process.\n\n### Practical Meaning\nThe inclusion of a standard deduction of ₱5,000,000 in the computation of the net estate reduces the taxable estate, potentially lowering the estate tax liability. This provision is particularly beneficial for estates with minimal deductions or expenses, as it ensures that a portion of the estate is exempt from taxation, thereby providing relief to the heirs.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 34"
+    }
+  ],
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "3cf1d095c6e4b665"
+}

@@ -1,0 +1,74 @@
+{
+  "id": "Q5-p6",
+  "group": "q5para",
+  "prompt": "When is importation of goods for manufacturing exports subject to 12% VAT and when is it exempt?",
+  "runtimeCommit": "bd19b3d7a220132a618a3777a33fdfa0b34099ea",
+  "answer": "### Issue Presented\nWhen is the importation of goods for manufacturing exports subject to 12% VAT, and when is it exempt?\n\n### Short Answer\nImportation of goods for manufacturing exports is generally subject to a 12% VAT unless specifically exempted under certain provisions of the law.\n\n### Controlling Authorities\n1. **Section 107, NIRC** - Value-Added Tax on Importation of Goods.\n2. **Revenue Regulations No. 16-2005** - Consolidated Value-Added Tax Regulations.\n\n### Legal Interpretation\n\n### Practical Application\nIn practice, manufacturers importing goods for export should ensure they are registered as VAT taxpayers and that their importation qualifies for zero-rating to avoid the 12% VAT. They must maintain proper documentation to substantiate their claims for exemption or zero-rating, including proof of export sales. If the importation does not meet the criteria for exemption, the 12% VAT will apply, and the tax must be settled prior to the release of goods from customs custody.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [
+      "requiredIssueKeysCovered",
+      "materialExceptionsCovered",
+      "materialAlternativesCovered",
+      "materiallyComplete",
+      "eligibleForVerifiedControlling"
+    ],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [
+      "unsafe_value_fields:requiredIssueKeysCovered,materialExceptionsCovered,materialAlternativesCovered,materiallyComplete,eligibleForVerifiedControlling"
+    ],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": false,
+      "materialExceptionsCovered": false,
+      "materialAlternativesCovered": false,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": false,
+      "treatmentDirectionMatches": true,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": true,
+      "eligibleForVerifiedControlling": false,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true,
+      "answerContradictsControllingSource": true
+    },
+    "reason": "unsafe_value_fields:requiredIssueKeysCovered,materialExceptionsCovered,materialAlternativesCovered,materiallyComplete,eligibleForVerifiedControlling"
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "2b20d420b93f38de"
+}

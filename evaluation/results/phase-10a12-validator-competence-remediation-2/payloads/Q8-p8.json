@@ -1,0 +1,41 @@
+{
+  "id": "Q8-p8",
+  "group": "q8para",
+  "prompt": "Are residential units rented at ₱12,000 monthly VAT-exempt regardless of the owner's total rentals?",
+  "runtimeCommit": "bd19b3d7a220132a618a3777a33fdfa0b34099ea",
+  "answer": "### Short Answer\n\n### Controlling Authorities\n- **RR 16-2005**: This regulation implements the provisions of the NIRC regarding VAT, including the exemptions applicable to residential leases.\n\n### Interpretation\n\n### Practical Meaning\nIn practice, if a landlord rents out residential units at ₱12,000 per month, they can benefit from VAT exemption as long as their total annual rental income from all properties does not exceed ₱1,919,500. If the total rentals exceed this amount, the landlord would be required to register for VAT and charge it on the rental income.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "4c33ef845132b6df"
+}

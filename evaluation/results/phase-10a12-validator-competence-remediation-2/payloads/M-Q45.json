@@ -1,0 +1,79 @@
+{
+  "id": "M-Q45",
+  "group": "mini",
+  "prompt": "Are PEZA-registered enterprises subject to corporate income tax?",
+  "runtimeCommit": "bd19b3d7a220132a618a3777a33fdfa0b34099ea",
+  "answer": "### Issue Presented\nAre PEZA-registered enterprises subject to corporate income tax under Philippine law?\n\n### Short Answer\nYes, PEZA-registered enterprises are subject to corporate income tax, but they may benefit from preferential tax rates or exemptions depending on their specific activities and compliance with the relevant laws.\n\n### Controlling Authorities\nThe primary authority governing corporate income tax is found in the National Internal Revenue Code (NIRC), specifically:\n- **Section 27**: Rates of Income Tax on Domestic Corporations.\n\n### Legal Interpretation\nUnder Section 27 of the NIRC, domestic corporations, including those registered with the Philippine Economic Zone Authority (PEZA), are generally subject to a corporate income tax rate of 25% on their taxable income derived from all sources within and without the Philippines. However, PEZA-registered enterprises may be eligible for a lower tax rate of 20% if their net taxable income does not exceed P5 million and their total assets do not exceed P100 million, excluding land. Additionally, certain PEZA-registered enterprises may qualify for tax incentives, including income tax holidays or reduced rates, depending on their compliance with the conditions set forth in the PEZA Law and other relevant regulations.\n\n### Practical Application\nPEZA-registered enterprises should carefully assess their eligibility for tax incentives and ensure compliance with the requirements to benefit from lower tax rates. It is advisable for these enterprises to maintain proper documentation and consult with tax professionals to navigate the complexities of tax obligations and incentives effectively. Regular reviews of their tax status and compliance with PEZA regulations can help mitigate risks associated with tax assessments and ensure they maximize available benefits.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [
+      "citationSupportsProposition",
+      "propositionSupported",
+      "sourcePropositionAligned",
+      "eligibleForVerifiedControlling",
+      "contradictsSources",
+      "unsupportedMaterialProposition",
+      "answerContradictsControllingSource"
+    ],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [
+      "unsafe_value_fields:citationSupportsProposition,propositionSupported,sourcePropositionAligned,eligibleForVerifiedControlling,contradictsSources,unsupportedMaterialProposition,answerContradictsControllingSource"
+    ],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "citationSupportsProposition": false,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "treatmentDirectionMatches": true,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": false,
+      "eligibleForVerifiedControlling": false,
+      "contradictsSources": false,
+      "unsupportedMaterialProposition": false,
+      "answerContradictsControllingSource": false
+    },
+    "reason": "unsafe_value_fields:citationSupportsProposition,propositionSupported,sourcePropositionAligned,eligibleForVerifiedControlling,contradictsSources,unsupportedMaterialProposition,answerContradictsControllingSource"
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 27"
+    },
+    {
+      "label": "NIRC Sec. 23"
+    },
+    {
+      "label": "NIRC Sec. 24"
+    }
+  ],
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "a7ae7752bb4661c6"
+}

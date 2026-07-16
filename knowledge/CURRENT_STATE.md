@@ -9087,3 +9087,23 @@ Next task: PHASE-10A13-FULL-FACTCHECK-RERUN-3 (after an independent A12 review b
 
 Artifacts: PHASE-10A12-VALIDATOR-COMPETENCE-REMEDIATION-1_REPORT.md; evaluation/results/phase-10a12-validator-competence-remediation-1.json; evaluation/results/phase-10a12-.../ (q5-revalidation-and-competence-matrix.json, a12-run-log.json, payloads x48, evidence-manifest with SHA-256). Code: services/answer-support-validator.js, services/trust-contract.js, tests/phase-10a12-...test.mjs + updated mocks. Commits ca5b740, 64502b7, b01b0507.
 ```
+
+## Phase 10A12-R2 Validator-Competence Remediation 2 -- PHASE 10A12-R2 PASS WITH RECOMMENDATIONS (2026-07-16):
+
+```text
+PHASE-10A12-VALIDATOR-COMPETENCE-REMEDIATION-2 executed by Claude Code (Opus 4.8) to remediate the independent review of A12-R1 (REVISIONS REQUIRED: P0=0, P1=1, P2=6, P3=1). Backend start HEAD d8338a1, runtime commits 0fab628 + bd19b3d (final HEAD bd19b3d), sync 0 0. Frontend not modified (c7569229). Dev Factory not modified (9167002). Protected untracked paths (.vscode/, evaluation/factcheck/) untouched.
+
+P1 (Q5 post-guard evidence + reconciliation) RESOLVED: committed post-guard Q5 live evidence at the final runtime -- Q5-p2 (a CREATE MORE export-enterprise exemption DENIAL) is blocked to RELATED_AUTHORITY_ONLY by a new detectImportVatExemptionOmission denial branch (CREATE_MORE_DENIAL_RE; IMPORT_EXPORT_MFG_RE extended to 'export enterprise'; asserts12 regex fixed to 12\s*%). All counts reconciled from the FINAL runtime only: 66 payloads = 13 VERIFIED + 44 RELATED + 9 NO_VERIFIED. Q5 invalid verified = 0.
+
+P2s RESOLVED/CORRECTED: (a) DIRECT schema validator hardened -- validateVerdictSchema/readOwnBoolean reject accessor descriptors via Object.getOwnPropertyDescriptor BEFORE value access; getters never execute; throwing getters and proxies throwing in getOwnPropertyDescriptor fail closed without propagating (tests R2-1..R2-8). Accessor getter executions = 0. (b) Q8 paraphrase false refusals fixed via residential-lease/lessor/per-unit boundary allow-patterns; Q8 false refusals = 0. (c) Generic non-LOA outcome-prediction gap closed -- detectOutcomePredictionRequest fails closed independent of any LOA gate (OUTCOME_PREDICTION_RE stems guarante\w*|assur\w*|promis\w*|predict\w*); RES-1/RES-6 (previously VERIFIED) now RELATED (stage outcome-prediction); unrestricted outcome predictions = 0. (d) Source-grounding claim CORRECTED -- architecture labeled CLUSTER_SPECIFIC_WITH_FAIL_CLOSED_SCHEMA, sourceExcerptGrounded:false; full operative source-excerpt grounding recorded as P2 carryover. (e) Evidence reconciliation + superseded-evidence-map (A12-R1 invalid Q5-r2 retained historical, marked superseded).
+
+Official-authority worksheets (statute/BIR only): Q8 = NIRC Sec.109 (RA 10963/TRAIN) + RR 13-2018 (residential <=P15,000/month PER UNIT VAT-exempt regardless of aggregate; P3M aggregate governs only units above P15,000; not generalized). Q5 = NIRC Sec.107 (12% import VAT) + RA 12066 CREATE MORE (registered export-enterprise importation VAT-exempt). Verified audit (13 verified, all schemaValid, 0 invalid): Q5-p1 pairs 12% with export zero-rating; Q8-p5/p10/p12 correctly hold per-unit exemption; VC/M controls + MISSING-1 valid. Model inventory: gpt-4o-mini AVAILABLE; gpt-4o/gpt-4-turbo/o1 -> 403 model_not_found (live-probed) -- safety-critical correctness not delegated to LLM; deterministic guards override. R2 tests 10/10.
+
+Severity: P0=0. P1=0. P2 carryover=1 (full operative source-excerpt grounding). P3=1 (30-question mini fact-check 20/30 captured this runtime; remainder transient-fetch skipped). Security: 0.
+
+Decision: PHASE 10A12-R2 PASS WITH RECOMMENDATIONS. Phase 10A remains REOPENED (NOT closed). Phase 10B: BLOCKED. Phase 10C: BLOCKED. Adversarial suite: DEFERRED. Independent A12-R2 review: DEFERRED (prepared, NOT run this session). A13 NOT begun.
+
+Next task: independent A12-R2 review by a model that did not execute it; then PHASE-10A13-FULL-FACTCHECK-RERUN-3 (only with P0=0 and P1=0).
+
+Artifacts: PHASE-10A12-VALIDATOR-COMPETENCE-REMEDIATION-2_REPORT.md; evaluation/results/phase-10a12-validator-competence-remediation-2.json; evaluation/results/phase-10a12-validator-competence-remediation-2/ (payloads x66, worksheets/official-authority-worksheets.md, model-inventory.json, count-reconciliation.json, superseded-evidence-map.md, mini-factcheck.md, EVIDENCE_MANIFEST.sha256). Code: services/answer-support-validator.js, services/philippine-tax-boundary-patterns.js, tests/phase-10a12-r2-...test.mjs. Commits 0fab628, bd19b3d.
+```

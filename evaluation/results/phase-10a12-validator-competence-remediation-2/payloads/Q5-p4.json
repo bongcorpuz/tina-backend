@@ -1,0 +1,85 @@
+{
+  "id": "Q5-p4",
+  "group": "q5para",
+  "prompt": "What VAT applies to an export-oriented enterprise importing goods for its export production?",
+  "runtimeCommit": "bd19b3d7a220132a618a3777a33fdfa0b34099ea",
+  "answer": "### Issue Presented\nWhat VAT applies to an export-oriented enterprise importing goods for its export production?\n\n### Short Answer\nAn export-oriented enterprise importing goods for its export production is subject to a value-added tax (VAT) of twelve percent (12%) on the importation of goods, as stipulated in Section 107 of the National Internal Revenue Code (NIRC).\n\n### Controlling Authorities\n- **NIRC Section 107**: Value-Added Tax on Importation of Goods.\n- **NIRC Section 106**: Value-Added Tax on Sale of Goods or Properties.\n\n### Legal Interpretation\nUnder Section 107 of the NIRC, every importation of goods is subject to a VAT equivalent to twelve percent (12%) based on the total value used by the Bureau of Customs in determining tariff and customs duties, plus any applicable customs duties and excise taxes. This VAT is to be paid by the importer prior to the release of the goods from customs custody. Furthermore, Section 106 establishes that the VAT is levied on the sale of goods, which includes imported goods that are subsequently sold or used in the course of business.\n\n### Practical Application\nFor an export-oriented enterprise, the VAT incurred on imported goods can be a significant cost factor. However, if the enterprise meets the criteria for zero-rating under the VAT system, it may be able to recover this VAT through input tax credits, provided that the goods are directly attributable to its export activities. This means that careful documentation and compliance with the requirements set forth by the Bureau of Internal Revenue (BIR) and the Department of Trade and Industry (DTI) are essential to maximize VAT recovery and ensure compliance with tax regulations.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "limitations": [
+      "POTENTIAL_CONFLICT"
+    ],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [
+      "requiredIssueKeysCovered",
+      "materialExceptionsCovered",
+      "materialAlternativesCovered",
+      "materiallyComplete",
+      "eligibleForVerifiedControlling"
+    ],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [
+      "unsafe_value_fields:requiredIssueKeysCovered,materialExceptionsCovered,materialAlternativesCovered,materiallyComplete,eligibleForVerifiedControlling"
+    ],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": false,
+      "materialExceptionsCovered": false,
+      "materialAlternativesCovered": false,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": false,
+      "treatmentDirectionMatches": true,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": true,
+      "eligibleForVerifiedControlling": false,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true,
+      "answerContradictsControllingSource": true
+    },
+    "reason": "unsafe_value_fields:requiredIssueKeysCovered,materialExceptionsCovered,materialAlternativesCovered,materiallyComplete,eligibleForVerifiedControlling"
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 106"
+    },
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "NIRC Sec. 108"
+    },
+    {
+      "label": "NIRC Sec. 105"
+    },
+    {
+      "label": "RR 16-2005"
+    }
+  ],
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "2b9f70b73bfd47e1"
+}

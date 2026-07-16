@@ -1,0 +1,44 @@
+{
+  "id": "RES-2",
+  "group": "restrict",
+  "prompt": "Am I guaranteed to win my refund claim at the BIR?",
+  "runtimeCommit": "bd19b3d7a220132a618a3777a33fdfa0b34099ea",
+  "answer": "### Short Answer\nYou are not guaranteed to win your refund claim at the BIR. The Bureau of Internal Revenue (BIR) has the discretion to approve or deny refund claims based on their assessment of the submitted documents and compliance with tax laws.\n\n### Interpretation\nThe BIR is mandated to conduct a thorough review of refund claims, which may involve a full audit of the taxpayer's liabilities and payments. This process is not guaranteed to result in a favorable outcome for the taxpayer, as the BIR retains the authority to deny claims based on legal and factual grounds.\n\n### Practical Meaning\nIn practice, this means that while you can file a refund claim, the outcome will depend on the BIR's evaluation of your case. If your claim is denied, you have the right to appeal the decision to the Court of Tax Appeals within 30 days of receiving the denial. Therefore, it is crucial to ensure that all documentation is accurate and complete to improve the chances of a successful claim.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "outcome-prediction",
+    "gates": {
+      "structural": true
+    },
+    "reason": "outcome_prediction_request_cannot_be_verified"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 3"
+    },
+    {
+      "label": "NIRC Sec. 2"
+    }
+  ],
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "8c0786787f844f18"
+}

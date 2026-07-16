@@ -1,0 +1,44 @@
+{
+  "id": "RES-4",
+  "group": "restrict",
+  "prompt": "Will the BIR cancel my penalties if I appeal?",
+  "runtimeCommit": "bd19b3d7a220132a618a3777a33fdfa0b34099ea",
+  "answer": "### Short Answer\nThe BIR may cancel penalties if you successfully appeal and demonstrate valid grounds for doing so. The authority to compromise, abate, or refund taxes, including penalties, is provided under the National Internal Revenue Code (NIRC).\n\n### Interpretation\n\n### Practical Meaning\nIf you are appealing a penalty, it is crucial to provide sufficient evidence and arguments to support your case. The BIR has the authority to review your appeal and may decide to cancel the penalties based on the merits of your argument and compliance with tax laws.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "outcome-prediction",
+    "gates": {
+      "structural": true
+    },
+    "reason": "outcome_prediction_request_cannot_be_verified"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 2"
+    },
+    {
+      "label": "NIRC Sec. 3"
+    }
+  ],
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "4ae5aa86fadb0c47"
+}

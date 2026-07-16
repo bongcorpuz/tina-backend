@@ -1,0 +1,63 @@
+{
+  "id": "Q8-p10",
+  "group": "q8para",
+  "prompt": "Does RR 13-2018 make ₱15,000/month residential leases exempt?",
+  "runtimeCommit": "bd19b3d7a220132a618a3777a33fdfa0b34099ea",
+  "answer": "### Short Answer\nResidential leases of ₱15,000 per month are exempt from Value-Added Tax (VAT) under certain conditions as specified in Revenue Regulations No. 13-2018.\n\n### Interpretation\nRevenue Regulations No. 13-2018 specifies that residential leases with a monthly rental of ₱15,000 or less are exempt from VAT. This aligns with the provisions of the NIRC, which provides for exemptions on certain transactions, including residential leases, to promote affordable housing.\n\n### Practical Meaning\nIn practical terms, landlords receiving monthly rent of ₱15,000 or less for residential properties do not need to charge VAT on these leases. This exemption can make housing more affordable for tenants and reduce the administrative burden on landlords regarding VAT compliance.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "treatmentDirectionMatches": true,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": true,
+      "eligibleForVerifiedControlling": true,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true,
+      "answerContradictsControllingSource": true
+    },
+    "reason": "The answer correctly states the exemption and aligns with RR 13-2018."
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": true,
+  "sources": [
+    {
+      "label": "RR No. 13-2018"
+    }
+  ],
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "1faae6f7d61113fd"
+}

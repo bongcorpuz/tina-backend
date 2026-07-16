@@ -1,0 +1,41 @@
+{
+  "id": "Q8-p2",
+  "group": "q8para",
+  "prompt": "Does exceeding the ₱3 million VAT threshold make every residential lease VATable?",
+  "runtimeCommit": "bd19b3d7a220132a618a3777a33fdfa0b34099ea",
+  "answer": "### Short Answer\n\n### Controlling Authorities\n- **RR 16-2005**: This regulation implements the VAT provisions of the NIRC and reiterates the exemption for residential leases under the specified threshold.\n\n### Interpretation\n\n### Practical Meaning\nFor landlords and property owners, this means that if their total residential lease income is below ₱3 million, they do not need to charge VAT on their rental income. However, once their total residential lease income exceeds this threshold, they must register for VAT and charge it on their leases. This distinction is crucial for compliance and tax planning purposes.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "e37c71a98b40fad1"
+}

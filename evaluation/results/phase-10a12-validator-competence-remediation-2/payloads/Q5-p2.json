@@ -1,0 +1,45 @@
+{
+  "id": "Q5-p2",
+  "group": "q5para",
+  "prompt": "Does CREATE MORE create an exception to the normal import VAT rule for export enterprises?",
+  "runtimeCommit": "bd19b3d7a220132a618a3777a33fdfa0b34099ea",
+  "answer": "### Short Answer\nThe CREATE Law does not create an exception to the normal import VAT rule for export enterprises. Under Section 107 of the NIRC, importation of goods is subject to VAT, and this is further clarified by RR 16-2005.\n\n### Controlling Authorities\n1. **NIRC Sec. 107** - Value-Added Tax on Importation of Goods.\n2. **RR 16-2005** - Consolidated Value-Added Tax Regulations of 2005.\n\n### Interpretation\nSection 107 of the NIRC mandates that a value-added tax (VAT) equivalent to twelve percent (12%) is levied on every importation of goods. This includes all importers, regardless of whether they are engaged in export activities. RR 16-2005 reiterates that any person or entity importing goods is liable for VAT, emphasizing that this obligation applies uniformly without exceptions for export enterprises.\n\n### Practical Meaning\nFor export enterprises, while they may benefit from zero-rated sales on their export transactions, this does not exempt them from paying VAT on imported goods. They will still need to pay the VAT upon importation, although they can later claim input tax credits on these imports if they are VAT-registered and the imports are used in their business operations. Thus, the CREATE Law does not alter the existing VAT obligations related to importation for export enterprises.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "material-exception-omission",
+    "gates": {
+      "structural": true,
+      "materialExceptionsCovered": false
+    },
+    "reason": "import_vat_denies_create_more_export_exemption"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "7f5bff3d647c0079"
+}

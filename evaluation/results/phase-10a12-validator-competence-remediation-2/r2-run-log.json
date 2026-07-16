@@ -1,0 +1,662 @@
+[
+  {
+    "id": "Q5-r1",
+    "group": "q5exact",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "material-exception-omission",
+    "sv": false,
+    "ve": false
+  },
+  {
+    "id": "Q5-r2",
+    "group": "q5exact",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "material-exception-omission",
+    "sv": false,
+    "ve": false
+  },
+  {
+    "id": "Q5-r3",
+    "group": "q5exact",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": false
+  },
+  {
+    "id": "Q5-r4",
+    "group": "q5exact",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": false
+  },
+  {
+    "id": "Q5-r5",
+    "group": "q5exact",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": false
+  },
+  {
+    "id": "Q5-p1",
+    "group": "q5para",
+    "as": "VERIFIED_CONTROLLING",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": true
+  },
+  {
+    "id": "Q5-p2",
+    "group": "q5para",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "material-exception-omission",
+    "sv": false,
+    "ve": false
+  },
+  {
+    "id": "Q5-p3",
+    "group": "q5para",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": null,
+    "sv": null,
+    "ve": null
+  },
+  {
+    "id": "Q5-p4",
+    "group": "q5para",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": false
+  },
+  {
+    "id": "Q5-p5",
+    "group": "q5para",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "material-exception-omission",
+    "sv": false,
+    "ve": false
+  },
+  {
+    "id": "Q5-p6",
+    "group": "q5para",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": false
+  },
+  {
+    "id": "Q8-r1",
+    "group": "q8exact",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "treatment-contradiction",
+    "sv": false,
+    "ve": false
+  },
+  {
+    "id": "Q8-r2",
+    "group": "q8exact",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": false
+  },
+  {
+    "id": "Q8-r3",
+    "group": "q8exact",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "treatment-contradiction",
+    "sv": false,
+    "ve": false
+  },
+  {
+    "id": "Q8-p1",
+    "group": "q8para",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": false
+  },
+  {
+    "id": "Q8-p2",
+    "group": "q8para",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "structural",
+    "sv": false,
+    "ve": false
+  },
+  {
+    "id": "Q8-p3",
+    "group": "q8para",
+    "as": "NO_VERIFIED_AUTHORITY",
+    "lc": "UNKNOWN",
+    "rk": "FALLBACK",
+    "stage": null,
+    "sv": null,
+    "ve": null
+  },
+  {
+    "id": "Q8-p4",
+    "group": "q8para",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": false
+  },
+  {
+    "id": "Q8-p5",
+    "group": "q8para",
+    "as": "VERIFIED_CONTROLLING",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": true
+  },
+  {
+    "id": "Q8-p6",
+    "group": "q8para",
+    "as": "NO_VERIFIED_AUTHORITY",
+    "lc": "UNKNOWN",
+    "rk": "FALLBACK",
+    "stage": null,
+    "sv": null,
+    "ve": null
+  },
+  {
+    "id": "Q8-p7",
+    "group": "q8para",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": false
+  },
+  {
+    "id": "Q8-p8",
+    "group": "q8para",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "structural",
+    "sv": false,
+    "ve": false
+  },
+  {
+    "id": "Q8-p9",
+    "group": "q8para",
+    "as": "NO_VERIFIED_AUTHORITY",
+    "lc": "UNKNOWN",
+    "rk": "FALLBACK",
+    "stage": null,
+    "sv": null,
+    "ve": null
+  },
+  {
+    "id": "Q8-p10",
+    "group": "q8para",
+    "as": "VERIFIED_CONTROLLING",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": true
+  },
+  {
+    "id": "Q8-p11",
+    "group": "q8para",
+    "as": "NO_VERIFIED_AUTHORITY",
+    "lc": "UNKNOWN",
+    "rk": "FALLBACK",
+    "stage": null,
+    "sv": null,
+    "ve": null
+  },
+  {
+    "id": "Q8-p12",
+    "group": "q8para",
+    "as": "VERIFIED_CONTROLLING",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": true
+  },
+  {
+    "id": "Q35-r1",
+    "group": "q35",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "citation-relevance",
+    "sv": false,
+    "ve": false
+  },
+  {
+    "id": "Q41-r1",
+    "group": "q41",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "citation-relevance",
+    "sv": false,
+    "ve": false
+  },
+  {
+    "id": "Q35-r2",
+    "group": "q35",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "citation-relevance",
+    "sv": false,
+    "ve": false
+  },
+  {
+    "id": "Q41-r2",
+    "group": "q41",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "citation-relevance",
+    "sv": false,
+    "ve": false
+  },
+  {
+    "id": "Q35-r3",
+    "group": "q35",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "citation-relevance",
+    "sv": false,
+    "ve": false
+  },
+  {
+    "id": "Q41-r3",
+    "group": "q41",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "citation-relevance",
+    "sv": false,
+    "ve": false
+  },
+  {
+    "id": "RES-1",
+    "group": "restrict",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "outcome-prediction",
+    "sv": false,
+    "ve": false
+  },
+  {
+    "id": "RES-2",
+    "group": "restrict",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "outcome-prediction",
+    "sv": false,
+    "ve": false
+  },
+  {
+    "id": "RES-3",
+    "group": "restrict",
+    "as": "NO_VERIFIED_AUTHORITY",
+    "lc": "UNKNOWN",
+    "rk": "FALLBACK",
+    "stage": null,
+    "sv": null,
+    "ve": null
+  },
+  {
+    "id": "RES-4",
+    "group": "restrict",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "outcome-prediction",
+    "sv": false,
+    "ve": false
+  },
+  {
+    "id": "RES-5",
+    "group": "restrict",
+    "as": "NO_VERIFIED_AUTHORITY",
+    "lc": "UNKNOWN",
+    "rk": "FALLBACK",
+    "stage": null,
+    "sv": null,
+    "ve": null
+  },
+  {
+    "id": "RES-6",
+    "group": "restrict",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "outcome-prediction",
+    "sv": false,
+    "ve": false
+  },
+  {
+    "id": "VC-Q32",
+    "group": "verified",
+    "as": "VERIFIED_CONTROLLING",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": true
+  },
+  {
+    "id": "VC-Q34",
+    "group": "verified",
+    "as": "VERIFIED_CONTROLLING",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": true
+  },
+  {
+    "id": "VC-Q47",
+    "group": "verified",
+    "as": "VERIFIED_CONTROLLING",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": true
+  },
+  {
+    "id": "VC-Q46",
+    "group": "verified",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": false
+  },
+  {
+    "id": "VC-Q28",
+    "group": "verified",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": false
+  },
+  {
+    "id": "CONFLICT-1",
+    "group": "conflict",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": null,
+    "sv": null,
+    "ve": null
+  },
+  {
+    "id": "MISSING-1",
+    "group": "missing",
+    "as": "VERIFIED_CONTROLLING",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": true
+  },
+  {
+    "id": "SRCFAIL-1",
+    "group": "srcfail",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": null,
+    "sv": null,
+    "ve": null
+  },
+  {
+    "id": "M-Q2",
+    "group": "mini",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": false
+  },
+  {
+    "id": "M-Q9",
+    "group": "mini",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": false
+  },
+  {
+    "id": "M-Q27",
+    "group": "mini",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": false
+  },
+  {
+    "id": "M-Q29",
+    "group": "mini",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "error",
+    "sv": false,
+    "ve": false
+  },
+  {
+    "id": "M-Q31",
+    "group": "mini",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "structural",
+    "sv": false,
+    "ve": false
+  },
+  {
+    "id": "M-Q37",
+    "group": "mini",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "structural",
+    "sv": false,
+    "ve": false
+  },
+  {
+    "id": "M-Q49",
+    "group": "mini",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": false
+  },
+  {
+    "id": "M-Q23",
+    "group": "mini",
+    "as": "NO_VERIFIED_AUTHORITY",
+    "lc": "UNKNOWN",
+    "rk": "FALLBACK",
+    "stage": null,
+    "sv": null,
+    "ve": null
+  },
+  {
+    "id": "M-Q43",
+    "group": "mini",
+    "as": "NO_VERIFIED_AUTHORITY",
+    "lc": "UNKNOWN",
+    "rk": "FALLBACK",
+    "stage": null,
+    "sv": null,
+    "ve": null
+  },
+  {
+    "id": "M-Q30",
+    "group": "mini",
+    "as": "VERIFIED_CONTROLLING",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": true
+  },
+  {
+    "id": "M-Q26",
+    "group": "mini",
+    "as": "VERIFIED_CONTROLLING",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": true
+  },
+  {
+    "id": "M-Q6",
+    "group": "mini",
+    "as": "VERIFIED_CONTROLLING",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": true
+  },
+  {
+    "id": "M-Q48",
+    "group": "mini",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": false
+  },
+  {
+    "id": "M-Q15",
+    "group": "mini",
+    "as": "VERIFIED_CONTROLLING",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": true
+  },
+  {
+    "id": "M-Q12",
+    "group": "mini",
+    "as": "VERIFIED_CONTROLLING",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": true
+  },
+  {
+    "id": "M-Q3",
+    "group": "mini",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "structural",
+    "sv": false,
+    "ve": false
+  },
+  {
+    "id": "M-Q7",
+    "group": "mini",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "structural",
+    "sv": false,
+    "ve": false
+  },
+  {
+    "id": "M-Q14",
+    "group": "mini",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": false
+  },
+  {
+    "id": "M-Q19",
+    "group": "mini",
+    "as": "NO_VERIFIED_AUTHORITY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": null,
+    "sv": null,
+    "ve": null
+  },
+  {
+    "id": "M-Q45",
+    "group": "mini",
+    "as": "RELATED_AUTHORITY_ONLY",
+    "lc": "ALLOWED",
+    "rk": "GENERAL_TAX",
+    "stage": "llm",
+    "sv": true,
+    "ve": false
+  }
+]

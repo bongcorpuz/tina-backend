@@ -1,0 +1,88 @@
+{
+  "phase": "PHASE-10A12-VALIDATOR-COMPETENCE-REMEDIATION-2",
+  "decision": "PASS WITH RECOMMENDATIONS",
+  "remediates": "Independent review of A12-R1 (REVISIONS REQUIRED: P0=0, P1=1, P2=6, P3=1)",
+  "runtimeCommit": "bd19b3d7a220132a618a3777a33fdfa0b34099ea",
+  "startHead": "d8338a15c0a34ddd3620edf8a7dd617067225133",
+  "evidenceDir": "evaluation/results/phase-10a12-validator-competence-remediation-2/",
+  "capturedAt_utc": "2026-07-16",
+  "runtimeCommits": [
+    { "sha": "0fab628", "summary": "reject accessors in direct schema validator and fix Q8 paraphrase refusals" },
+    { "sha": "bd19b3d", "summary": "add outcome-prediction guard, CREATE MORE denial guard, tax-controversy boundary allow" }
+  ],
+  "findingResolutions": {
+    "P1_q5EvidenceAndReconciliation": {
+      "status": "RESOLVED",
+      "detail": "Committed post-guard Q5 live evidence exists at the final runtime; Q5-p2 (CREATE MORE denial) blocked to RELATED_AUTHORITY_ONLY via material-exception-omission guard. All counts reconciled from the final runtime only (count-reconciliation.json).",
+      "q5InvalidVerified": 0
+    },
+    "P2_directSchemaAccessorHardening": {
+      "status": "RESOLVED",
+      "detail": "validateVerdictSchema/readOwnBoolean reject accessor descriptors before value access using Object.getOwnPropertyDescriptor; getters never execute; throwing getters and proxies that throw in getOwnPropertyDescriptor fail closed without propagating. Verified by phase-10a12-r2 tests R2-1..R2-8.",
+      "accessorGetterExecutions": 0
+    },
+    "P2_q8ParaphraseFalseRefusals": {
+      "status": "RESOLVED",
+      "detail": "Residential-lease/lessor/per-unit boundary allow-patterns added; Q8 paraphrases now ALLOW.",
+      "q8FalseRefusals": 0
+    },
+    "P2_genericOutcomePredictionGap": {
+      "status": "RESOLVED",
+      "detail": "detectOutcomePredictionRequest fails closed on non-LOA outcome-prediction/guarantee questions independent of any LOA gate; RES-1/RES-6 (previously VERIFIED) now RELATED.",
+      "unrestrictedOutcomePredictions": 0
+    },
+    "P2_sourceGroundingClaimCorrection": {
+      "status": "CORRECTED",
+      "guardArchitecture": "CLUSTER_SPECIFIC_WITH_FAIL_CLOSED_SCHEMA",
+      "sourceExcerptGrounded": false,
+      "detail": "Implementation is NOT described as fully source-grounded. Guards are cluster-specific deterministic rules plus fail-closed schema validation. Full operative source-excerpt grounding is recorded as a P2 carryover."
+    },
+    "P2_evidenceReconciliation": {
+      "status": "RESOLVED",
+      "detail": "See count-reconciliation.json and superseded-evidence-map.md. A12-R1 invalid Q5-r2 retained as historical audit trail, marked superseded."
+    },
+    "P2_clusterSpecificArchitecture": {
+      "status": "ACKNOWLEDGED",
+      "detail": "Guards are cluster-specific; generalization to full operative-source-excerpt grounding is a P2 carryover, not claimed as complete."
+    }
+  },
+  "metrics": {
+    "totalPayloads": 66,
+    "byAuthoritySupport": { "VERIFIED_CONTROLLING": 13, "RELATED_AUTHORITY_ONLY": 44, "NO_VERIFIED_AUTHORITY": 9 },
+    "q5ExactVerified": 0,
+    "q5InvalidVerified": 0,
+    "q8ExactVerified": 0,
+    "q8InvalidVerified": 0,
+    "q8FalseRefusals": 0,
+    "q35Verified": 0,
+    "q41Verified": 0,
+    "outcomePredictionVerified": 0,
+    "falseRefusals": 0,
+    "accessorGetterExecutions": 0,
+    "invalidVerifiedOverall": 0,
+    "allVerifiedSchemaValid": true,
+    "verifiedControlReachability": "3/5",
+    "guardActivations": 6,
+    "latencyMs": { "avg": 16587, "p50": 15912, "p95": 25746 }
+  },
+  "modelInventory": {
+    "answerSupportModel": "gpt-4o-mini (AVAILABLE)",
+    "strongerModels": "gpt-4o / gpt-4-turbo / o1 -> 403 model_not_found (AUTHORIZATION_DENIED)",
+    "mitigation": "Deterministic fail-closed guards override LLM approval; schema/accessor hardening fails closed regardless of model."
+  },
+  "carryovers": [
+    { "priority": "P2", "item": "Full operative source-excerpt grounding (guards currently cluster-specific deterministic)." },
+    { "priority": "P3", "item": "Complete the 30-question mini fact-check set (20/30 captured this runtime; remainder skipped on transient fetch)." }
+  ],
+  "unitTests": "tests/phase-10a12-r2-validator-competence-remediation-2.test.mjs (R2-1..R2-10) pass.",
+  "stopConditions": "A13 not begun; adversarial suite not run; Phase 10A not closed; 10B/10C not begun; independent review not run this session; Gemini not rerun.",
+  "evidence": [
+    "payloads/ (66 sanitized live payloads, stamped bd19b3d)",
+    "worksheets/official-authority-worksheets.md",
+    "model-inventory.json",
+    "count-reconciliation.json",
+    "superseded-evidence-map.md",
+    "mini-factcheck.md",
+    "EVIDENCE_MANIFEST.sha256"
+  ]
+}
