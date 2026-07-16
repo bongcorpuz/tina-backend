@@ -132,6 +132,11 @@ PHASE-10A10 -- you must ALSO judge EXACT RESPONSIVENESS and COMPLETE ISSUE COVER
    - a "what is the penalty" question must state the actual penalty (fine and/or imprisonment) and the correct penal section, not merely describe the prohibited act.
 2. Check whether the DISPLAYED SOURCE authorities are specifically RELEVANT to the exact proposition. Generic/foundational provisions (e.g. NIRC Sections 1-6 on title, definitions, jurisdiction, or the Commissioner's powers) do NOT support a specific rate, form, or penalty. A cited section that exists but is materially irrelevant does NOT count as support.
 
+PHASE-10A12 -- you must ALSO verify TREATMENT DIRECTION (polarity), THRESHOLD DIMENSION, and GENERAL-vs-SPECIFIC rule, and that the answer does NOT contradict the controlling source. Compare the answer's operative tax TREATMENT against the controlling source's treatment:
+- TREATMENT POLARITY: taxable vs exempt; zero-rated vs exempt; input-VAT vs output-VAT; refund vs credit; seller vs buyer obligation; withholding-agent vs payee; required vs not-required; allowed vs prohibited. If the answer reverses the source's polarity, set treatmentDirectionMatches=false and answerContradictsControllingSource=true.
+- THRESHOLD DIMENSION: a per-unit / per-transaction exemption threshold is NOT the same as a taxpayer-level aggregate VAT-REGISTRATION threshold. Do not accept an answer that substitutes the ₱3,000,000 aggregate registration threshold for a specific per-unit/transaction exemption. Example of a REVERSAL you MUST reject: concluding that a residential unit rent at or below the ₱15,000 per-unit monthly exemption is "subject to VAT" because the lessor's total annual rental income exceeds ₱3,000,000. A residential unit at/below the per-unit monthly threshold is VAT-EXEMPT regardless of the lessor's aggregate. If dimensions do not match, set thresholdDimensionMatches=false.
+- GENERAL vs SPECIFIC: a general rule must not override a more specific exemption/special treatment. If the answer improperly applied the general rule where a specific exemption controls, set sourcePropositionAligned=false.
+
 Return ONLY JSON:
 {
   "operativeClaim": "the single key claim",
@@ -149,8 +154,12 @@ Return ONLY JSON:
   "substantive": true|false,
   "propositionSupported": true|false,
   "materiallyComplete": true|false,
+  "treatmentDirectionMatches": true|false,
+  "thresholdDimensionMatches": true|false,
+  "sourcePropositionAligned": true|false,
   "contradictsSources": true|false,
   "unsupportedMaterialProposition": true|false,
+  "answerContradictsControllingSource": true|false,
   "eligibleForVerifiedControlling": true|false,
   "reason": "one short sentence"
 }
@@ -160,6 +169,7 @@ Rules:
 - IMPORTANT precision rule: only require exception/alternative coverage when the QUESTION actually implies one. A simple factual question with a single correct answer and no material exception (e.g. a standard filing deadline, a standard rate, a one-year period) is materiallyComplete when it states that value correctly -- set materialExceptionsCovered=true and materialAlternativesCovered=true in that case; do NOT invent required exceptions.
 - Do NOT flag a correct baseline value merely because you are unsure it is current (12% VAT, ₱3M VAT threshold, 20% final tax on interest/royalties, 6% estate/donor's tax, ₱250,000 donor's exemption, April 15 ITR deadline, one-year estate-return deadline are correct baselines). For citationRelevant: a correct statement of such a well-known baseline rule is acceptable unless the displayed sources are only generic foundational provisions (NIRC Secs 1-6).
 - Set eligibleForVerifiedControlling=false when the answer OMITS a material exception the question implies (e.g. an import-VAT question ignoring an export-enterprise exemption), presents one form/treatment as the "only" one when a mandatory alternative exists, is non-responsive (e.g. a penalty question that never states the penalty), or relies only on generic foundational provisions for a specific proposition.
+- PHASE-10A12 fields: when the answer's treatment matches the correct/controlling treatment and there is no polarity/threshold/general-vs-specific problem, set treatmentDirectionMatches=true, thresholdDimensionMatches=true, sourcePropositionAligned=true, and answerContradictsControllingSource=false. When you detect a reversed treatment, a substituted threshold dimension, an improperly applied general rule, or a source contradiction, set the corresponding field to its UNSAFE value AND eligibleForVerifiedControlling=false.
 Output JSON only.`;
 
 // Deterministic: displayed sources are ONLY foundational/jurisdictional NIRC
@@ -205,11 +215,17 @@ export const REQUIRED_POSITIVE_BOOLEANS = Object.freeze([
   "substantive",
   "propositionSupported",
   "materiallyComplete",
+  // PHASE-10A12 source-contradiction / treatment-direction alignment (mandatory).
+  "treatmentDirectionMatches",
+  "thresholdDimensionMatches",
+  "sourcePropositionAligned",
   "eligibleForVerifiedControlling"
 ]);
 export const REQUIRED_NEGATIVE_BOOLEANS = Object.freeze([
   "contradictsSources",
-  "unsupportedMaterialProposition"
+  "unsupportedMaterialProposition",
+  // PHASE-10A12: the answer must NOT contradict the controlling source.
+  "answerContradictsControllingSource"
 ]);
 
 function readOwnBoolean(obj, field) {
@@ -273,6 +289,53 @@ export function validateVerdictSchema(v) {
   return { schemaValid, verifiedEligible, missingFields, invalidTypeFields, invalidValueFields, inheritedFieldsRejected, failureReasons, gates };
 }
 
+// PHASE-10A12: deterministic treatment-contradiction guard. Catches known
+// dangerous legal-treatment reversals / threshold substitutions that a fluent
+// but wrong answer can slip past a weak LLM validator (the confirmed Q8-r2
+// defect: a residential unit rent at/below the ₱15,000 per-unit monthly
+// exemption declared "subject to VAT" by substituting the general ₱3M
+// aggregate VAT-registration threshold for the specific per-unit exemption).
+// Generalizable within the residential-lease VAT class; a firing here forces a
+// safe downgrade even if the LLM validator approves. Pure -- no I/O.
+const RESIDENTIAL_LEASE_RE = /\bresidential\b[^.\n]{0,40}\b(unit|lease|leasing|rent(al)?|dwelling)\b|\b(lease|leasing|rent(al)?)\b[^.\n]{0,40}\bresidential\b/i;
+const TAXABLE_CONCLUSION_RE = /\b(subject to (the )?vat|vatable|is subject to (the )?value[- ]added tax|12%\s*vat (applies|shall|is)|liable (to|for) vat)\b/i;
+const EXEMPT_CONCLUSION_RE = /\b(vat[- ]exempt|exempt from (the )?vat|not subject to (the )?vat|no vat)\b/i;
+const AGGREGATE_3M_TRIGGER_RE = /(exceed|exceeds|above|over|more than|greater than)[^.\n]{0,40}(₱|php|p)?\s*3[,.]?0{3}[,.]?0{3}|(₱|php|p)?\s*3\s*million|total (annual )?(gross )?(rental )?(sales|receipts|income)[^.\n]{0,60}(₱|php|p)?\s*3/i;
+const PERUNIT_15K_RE = /(₱|php|p)?\s*1[45][,.]?0{3}\b|15[,. ]?000|\bper[- ]unit\b|\b15\s*thousand\b/i;
+
+/**
+ * Detects a material Philippine-tax treatment contradiction in the answer that
+ * must prevent VERIFIED_CONTROLLING. Pure. Currently covers the residential-lease
+ * VAT per-unit-exemption vs aggregate-registration-threshold reversal.
+ * @param {string} question
+ * @param {string} answer
+ * @returns {{contradiction:boolean, reason:string}}
+ */
+export function detectTreatmentContradiction(question, answer) {
+  const q = typeof question === "string" ? question : "";
+  const a = typeof answer === "string" ? answer : "";
+  const ctx = q + "\n" + a;
+  const residential = RESIDENTIAL_LEASE_RE.test(ctx);
+  if (!residential) return { contradiction: false, reason: "" };
+  const perUnit = PERUNIT_15K_RE.test(ctx);
+  if (!perUnit) return { contradiction: false, reason: "" };
+  // A per-unit residential lease at/below ₱15,000/month is categorically VAT-exempt.
+  // If the answer's operative conclusion is TAXABLE, it is a reversal -- especially
+  // when justified by the aggregate ₱3M registration threshold (threshold substitution).
+  const concludesTaxable = TAXABLE_CONCLUSION_RE.test(a);
+  const usesAggregateTrigger = AGGREGATE_3M_TRIGGER_RE.test(a);
+  const concludesExempt = EXEMPT_CONCLUSION_RE.test(a);
+  if (concludesTaxable && usesAggregateTrigger) {
+    return { contradiction: true, reason: "residential_per_unit_exemption_reversed_via_aggregate_3M_threshold" };
+  }
+  // Affirmative taxable conclusion for a ≤₱15k residential unit without a clear
+  // exemption statement is also a reversal.
+  if (concludesTaxable && !concludesExempt && /(^|\n)\s*#*\s*(short answer|issue presented)[^\n]*\n[^\n]*\byes\b/i.test(a)) {
+    return { contradiction: true, reason: "residential_per_unit_exemption_reversed_to_taxable" };
+  }
+  return { contradiction: false, reason: "" };
+}
+
 /**
  * Evaluates whether an answer is eligible for VERIFIED_CONTROLLING. Never throws;
  * any error/unavailability yields verifiedEligible=false (fail closed).
@@ -286,6 +349,13 @@ export function validateVerdictSchema(v) {
  * @returns {Promise<{verifiedEligible:boolean, stage:string, gates:object, reason:string}>}
  */
 export async function evaluateAnswerSupport({ question, answer, sources = [], model, client } = {}) {
+  // PHASE-10A12: deterministic treatment-contradiction guard runs FIRST and
+  // overrides any LLM approval -- a known legal-treatment reversal can never
+  // reach VERIFIED_CONTROLLING.
+  const contradiction = detectTreatmentContradiction(question, answer);
+  if (contradiction.contradiction) {
+    return { verifiedEligible: false, schemaValid: false, stage: "treatment-contradiction", gates: { structural: true, treatmentDirectionMatches: false }, reason: contradiction.reason };
+  }
   const structural = structuralSupportGate(answer);
   if (!structural.pass) {
     return {

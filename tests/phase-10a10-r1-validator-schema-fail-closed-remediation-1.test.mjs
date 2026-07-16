@@ -25,7 +25,7 @@ function check(c, m) { assertions++; assert(c, m); }
 const mock = (v) => ({ chat: { completions: { create: async () => ({ choices: [{ message: { content: JSON.stringify(v) } }] }) } } });
 const SUB = "### Short Answer\nThe standard corporate income tax rate for domestic corporations is 25% of taxable income under NIRC Section 27(A) as amended by the CREATE Act, with a 20% preferential rate for qualifying corporations meeting the net-taxable-income and total-asset conditions.";
 const SRC = [{ label: "NIRC Sec. 27(A)" }];
-const FULL = Object.freeze({ answerResponsive: true, primaryIssueAnswered: true, requiredIssueKeysCovered: true, materialExceptionsCovered: true, materialAlternativesCovered: true, citationRelevant: true, citationSupportsProposition: true, substantive: true, propositionSupported: true, materiallyComplete: true, contradictsSources: false, unsupportedMaterialProposition: false, eligibleForVerifiedControlling: true, reason: "ok" });
+const FULL = Object.freeze({ answerResponsive: true, primaryIssueAnswered: true, requiredIssueKeysCovered: true, materialExceptionsCovered: true, materialAlternativesCovered: true, citationRelevant: true, citationSupportsProposition: true, substantive: true, propositionSupported: true, materiallyComplete: true, treatmentDirectionMatches: true, thresholdDimensionMatches: true, sourcePropositionAligned: true, answerContradictsControllingSource: false, contradictsSources: false, unsupportedMaterialProposition: false, eligibleForVerifiedControlling: true, reason: "ok" });
 
 async function evalVerdict(v) { return evaluateAnswerSupport({ question: "q", answer: SUB, sources: SRC, client: mock(v) }); }
 async function trustFor(v) { const answerSupport = await evalVerdict(v); return buildResponseTrust({ answer: SUB, answerSupport }, 1, "AUTHORITY_FOUND"); }
@@ -172,7 +172,7 @@ await test("S26: legacy (A8) validator shape -> not verified in production", asy
 await test("canonical required-field set integrity", () => {
   check(REQUIRED_POSITIVE_BOOLEANS.includes("eligibleForVerifiedControlling"), "eligibility in positive set");
   check(REQUIRED_NEGATIVE_BOOLEANS.includes("unsupportedMaterialProposition"), "risk field in negative set");
-  check(REQUIRED_POSITIVE_BOOLEANS.length === 11 && REQUIRED_NEGATIVE_BOOLEANS.length === 2, "canonical counts");
+  check(REQUIRED_POSITIVE_BOOLEANS.length === 14 && REQUIRED_NEGATIVE_BOOLEANS.length === 3, "canonical counts");
 });
 
 console.log(`\nPHASE-10A10-R1 validator schema fail-closed tests: ${passed} passed, ${failed} failed, ${assertions} assertions`);

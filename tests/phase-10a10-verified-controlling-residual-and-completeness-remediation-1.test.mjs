@@ -27,7 +27,7 @@ function mockClient(verdict) {
   return { chat: { completions: { create: async () => ({ choices: [{ message: { content: JSON.stringify(verdict) } }] }) } } };
 }
 // Strengthened-schema verdicts.
-const ALL_GOOD = { answerResponsive: true, primaryIssueAnswered: true, requiredIssueKeysCovered: true, materialExceptionsCovered: true, materialAlternativesCovered: true, citationRelevant: true, citationSupportsProposition: true, substantive: true, propositionSupported: true, materiallyComplete: true, contradictsSources: false, unsupportedMaterialProposition: false, eligibleForVerifiedControlling: true, reason: "ok" };
+const ALL_GOOD = { answerResponsive: true, primaryIssueAnswered: true, requiredIssueKeysCovered: true, materialExceptionsCovered: true, materialAlternativesCovered: true, citationRelevant: true, citationSupportsProposition: true, substantive: true, propositionSupported: true, materiallyComplete: true, treatmentDirectionMatches: true, thresholdDimensionMatches: true, sourcePropositionAligned: true, answerContradictsControllingSource: false, contradictsSources: false, unsupportedMaterialProposition: false, eligibleForVerifiedControlling: true, reason: "ok" };
 const MISSING_EXCEPTION = { ...ALL_GOOD, materialExceptionsCovered: false, materiallyComplete: false, eligibleForVerifiedControlling: false, reason: "omits CREATE MORE export-enterprise exemption" };
 const MISSING_ALTERNATIVE = { ...ALL_GOOD, materialAlternativesCovered: false, materiallyComplete: false, eligibleForVerifiedControlling: false, reason: "presents Form 1701 as the only form; omits 1701-MS" };
 const NON_RESPONSIVE = { ...ALL_GOOD, answerResponsive: false, primaryIssueAnswered: false, eligibleForVerifiedControlling: false, reason: "does not state the penalty" };

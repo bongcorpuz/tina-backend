@@ -169,23 +169,45 @@ export function answerIsBareSourceListing(answerText) {
 // contract, response assembly, and tests as the single source of truth.
 export function isVerifiedAnswerSupport(answerSupport) {
   const failureReasons = [];
+  const accessorFieldsRejected = [];
+  let descriptorReadFailure = false;
   const present = answerSupport !== undefined && answerSupport !== null;
   const objectValid = present && typeof answerSupport === "object" && !Array.isArray(answerSupport);
   if (!present) failureReasons.push("answerSupport_absent");
   else if (!objectValid) failureReasons.push("answerSupport_not_object");
 
-  const hasSchema = objectValid && Object.prototype.hasOwnProperty.call(answerSupport, "schemaValid");
-  const hasEligible = objectValid && Object.prototype.hasOwnProperty.call(answerSupport, "verifiedEligible");
-  if (objectValid && !hasSchema) failureReasons.push("missing_schemaValid");
-  if (objectValid && !hasEligible) failureReasons.push("missing_verifiedEligible");
+  // PHASE-10A12: read each safety-critical field only if it is an OWN, plain
+  // DATA property. Accessor (getter/setter) descriptors are rejected outright --
+  // a getter returning true must never verify, and a throwing getter must never
+  // propagate. Never throws; any descriptor/read failure fails closed.
+  const readPlainOwnBoolean = (obj, field) => {
+    let desc;
+    try { desc = Object.getOwnPropertyDescriptor(obj, field); }
+    catch { descriptorReadFailure = true; return { has: false }; }
+    if (!desc) return { has: false };
+    if (typeof desc.get === "function" || typeof desc.set === "function") {
+      accessorFieldsRejected.push(field);
+      return { has: true, accessor: true };
+    }
+    return { has: true, value: desc.value, isBoolean: typeof desc.value === "boolean" };
+  };
 
-  const schemaValid = hasSchema && answerSupport.schemaValid === true;
-  const verifiedEligible = hasEligible && answerSupport.verifiedEligible === true;
-  if (hasSchema && answerSupport.schemaValid !== true) failureReasons.push("schemaValid_not_true");
-  if (hasEligible && answerSupport.verifiedEligible !== true) failureReasons.push("verifiedEligible_not_true");
+  const s = objectValid ? readPlainOwnBoolean(answerSupport, "schemaValid") : { has: false };
+  const e = objectValid ? readPlainOwnBoolean(answerSupport, "verifiedEligible") : { has: false };
+  if (objectValid && !s.has) failureReasons.push("missing_schemaValid");
+  if (objectValid && !e.has) failureReasons.push("missing_verifiedEligible");
+  if (s.accessor) failureReasons.push("schemaValid_is_accessor");
+  if (e.accessor) failureReasons.push("verifiedEligible_is_accessor");
+  if (descriptorReadFailure) failureReasons.push("descriptor_read_failure");
 
-  const eligible = objectValid && schemaValid && verifiedEligible;
-  return { present, objectValid, schemaValid, verifiedEligible, eligible, failureReasons };
+  const schemaValid = s.has && !s.accessor && s.isBoolean === true && s.value === true;
+  const verifiedEligible = e.has && !e.accessor && e.isBoolean === true && e.value === true;
+  if (s.has && !s.accessor && s.value !== true) failureReasons.push("schemaValid_not_true");
+  if (e.has && !e.accessor && e.value !== true) failureReasons.push("verifiedEligible_not_true");
+
+  const objectShapeValid = objectValid && accessorFieldsRejected.length === 0 && !descriptorReadFailure;
+  const eligible = objectShapeValid && schemaValid && verifiedEligible;
+  return { present, objectValid, objectShapeValid, schemaValid, verifiedEligible, eligible, accessorFieldsRejected, descriptorReadFailure, failureReasons };
 }
 
 function deriveAuthoritySupport(result, sourceState, responseKind, hasConflict) {
