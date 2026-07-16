@@ -210,6 +210,19 @@ export const PH_TAX_ALLOW_PATTERNS = [
   /\bstatutory\s+(monthly\s+)?threshold\b/i,
   /\bVAT[- ]exempt\w*\b/i,
   /\bexemption\s+threshold\b/i,
+
+  // ── PHASE-10A12-R2: tax-controversy outcome terms (kept out of DOMAIN_BOUNDARY
+  // so an outcome-prediction question receives a governed, non-verified answer
+  // instead of a false refusal, e.g. "likelihood my audit will be resolved in my
+  // favor"). Tax-specific.
+  /\bBIR\s+audit\b/i,
+  /\btax\s+audit\b/i,
+  /\bdeficiency\s+assessment\b/i,
+  /\badministrative\s+protest\b/i,
+  /\brefund\s+claim\b/i,
+  /\bprotest\b/i,
+  /\bpenalt(y|ies)\b/i,
+  /\baudit\b[^.\n]{0,40}(favor|win|succeed|prevail|resolved|outcome|assessment)/i,
 ];
 
 // ─── Non-tax REJECT patterns ──────────────────────────────────────────────────

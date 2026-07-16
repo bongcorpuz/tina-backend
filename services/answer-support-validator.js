@@ -353,7 +353,9 @@ export function detectTreatmentContradiction(question, answer) {
 // exemption materially misstates the treatment for the exact question asked
 // (the confirmed Q5 defect class). Generalizable to "a specific-exemption
 // question answered with only the general taxable rule". Pure.
-const IMPORT_EXPORT_MFG_RE = /import\w*[^.\n]{0,60}(export product|manufactur\w+ export|export[- ]oriented|goods used to (manufacture|make) export)|(export product|manufactur\w+ export)[^.\n]{0,60}import/i;
+const IMPORT_EXPORT_MFG_RE = /import\w*[^.\n]{0,60}(export product|manufactur\w+ export|export[- ]oriented|export enterprise|goods used to (manufacture|make) export)|(export product|manufactur\w+ export|export enterprise)[^.\n]{0,60}import/i;
+// Explicit DENIAL that the CREATE MORE export-enterprise VAT exemption exists.
+const CREATE_MORE_DENIAL_RE = /(does not|doesn't|do not|no|not)\s+(create|provide|grant|have|establish|allow)\s+(an?\s+)?(exception|exemption)|\bnot (vat[- ])?exempt\b|applies?\s+(uniformly|to all|equally)|regardless of[^.\n]{0,40}(export|status|enterprise|activit)/i;
 const UNIVERSAL_12_RE = /\b(uniform(ly)?|all (goods|imports|importers)|every importation|regardless|automatically|in all cases)\b/i;
 const CREATE_MORE_EXEMPTION_RE = /\b(create more|export[- ]oriented enterprise|vat[- ]exempt|exemption|70%|directly attributable|zero[- ]rated|special regime|ipa)\b/i;
 
@@ -375,7 +377,28 @@ export function detectImportVatExemptionOmission(question, answer) {
   if (asserts12 && universalDenial && !mentionsExemption) {
     return { contradiction: true, reason: "import_vat_omits_create_more_export_exemption" };
   }
+  // Explicit denial that the CREATE MORE export-enterprise exemption exists.
+  if (CREATE_MORE_DENIAL_RE.test(a)) {
+    return { contradiction: true, reason: "import_vat_denies_create_more_export_exemption" };
+  }
   return { contradiction: false, reason: "" };
+}
+
+// PHASE-10A12-R2: generic (non-LOA) outcome-prediction guard. A question that
+// asks TINA to predict/guarantee the outcome of a protest, refund, audit, or
+// litigation must never receive VERIFIED_CONTROLLING -- a controlling
+// "verified" badge on a predicted outcome is unsafe regardless of how the LLM
+// scores the prose. Pure; keys off the QUESTION intent, not fluency, and is not
+// LOA-specific.
+const OUTCOME_PREDICTION_RE = /\b(will|won't|would|can|could)\s+(i|we|my|our|the taxpayer|the client|it|they)\b[^.?\n]{0,80}\b(win|won|succeed|success|prevail|lose|be cancell?ed|be approved|be granted|be waived|be reversed|be upheld)\b|\b(guarante\w*|assur\w*|promis\w*|predict\w*|likelihood|chances?|odds|probability)\b[^.?\n]{0,80}\b(win|succeed|success|prevail|approv\w+|grant\w+|cancell?\w+|favor\w*|outcome|refund)\b|\bwill\s+(the\s+)?bir\s+(cancel|approve|grant|waive|reverse)\b|\bprevail\s+(at|before|in)\s+(the\s+)?(court of tax appeals|cta|bir)\b/i;
+
+/**
+ * Detects a request to predict/guarantee a tax controversy outcome. Pure.
+ * @param {string} question
+ * @returns {boolean}
+ */
+export function detectOutcomePredictionRequest(question) {
+  return typeof question === "string" && OUTCOME_PREDICTION_RE.test(question);
 }
 
 /**
@@ -401,6 +424,9 @@ export async function evaluateAnswerSupport({ question, answer, sources = [], mo
   const exemptionOmission = detectImportVatExemptionOmission(question, answer);
   if (exemptionOmission.contradiction) {
     return { verifiedEligible: false, schemaValid: false, stage: "material-exception-omission", gates: { structural: true, materialExceptionsCovered: false }, reason: exemptionOmission.reason };
+  }
+  if (detectOutcomePredictionRequest(question)) {
+    return { verifiedEligible: false, schemaValid: false, stage: "outcome-prediction", gates: { structural: true }, reason: "outcome_prediction_request_cannot_be_verified" };
   }
   const structural = structuralSupportGate(answer);
   if (!structural.pass) {

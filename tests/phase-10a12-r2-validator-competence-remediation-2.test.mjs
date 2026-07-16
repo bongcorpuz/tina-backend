@@ -8,6 +8,8 @@
 import assert from "node:assert/strict";
 import {
   validateVerdictSchema,
+  detectOutcomePredictionRequest,
+  evaluateAnswerSupport,
   REQUIRED_POSITIVE_BOOLEANS,
   REQUIRED_NEGATIVE_BOOLEANS
 } from "../services/answer-support-validator.js";
@@ -110,6 +112,24 @@ await test("R2-9: Q8 residential-lease paraphrases now ALLOW (not domain-boundar
     check(r.decision === "ALLOW" && r.isPhilippineTax === true, `expected ALLOW for: ${q}`);
   }
   check(detectPhilippineTaxBoundary("How do I bake bread?", "/ask").decision === "REJECT", "non-tax still rejected");
+});
+
+// R10: generic non-LOA outcome-prediction guard -> never verified.
+await test("R2-10: outcome-prediction/guarantee questions cannot verify (non-LOA)", async () => {
+  const mock = (v) => ({ chat: { completions: { create: async () => ({ choices: [{ message: { content: JSON.stringify(v) } }] }) } } });
+  const F = FULL();
+  for (const q of [
+    "Will my administrative protest against this deficiency assessment succeed?",
+    "Am I guaranteed to win my refund claim at the BIR?",
+    "Predict whether the taxpayer will prevail at the Court of Tax Appeals in this dispute.",
+    "Guarantee me that my VAT refund will be approved."
+  ]) {
+    check(detectOutcomePredictionRequest(q) === true, `detect: ${q}`);
+    const r = await evaluateAnswerSupport({ question: q, answer: "### Short Answer\nYour protest may succeed if filed correctly and supported by valid arguments; the outcome depends on the facts and BIR discretion, and this is not a guarantee of success.", sources: [{ label: "NIRC Sec. 228" }], client: mock(F) });
+    check(r.verifiedEligible === false && r.stage === "outcome-prediction", `${q} must not verify`);
+  }
+  // non-prediction still can verify
+  check(detectOutcomePredictionRequest("What is the estate tax rate under TRAIN?") === false, "non-prediction");
 });
 
 console.log(`\nPHASE-10A12-R2 tests: ${passed} passed, ${failed} failed, ${assertions} assertions`);
