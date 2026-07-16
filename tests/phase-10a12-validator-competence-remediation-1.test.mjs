@@ -13,6 +13,7 @@ import { buildResponseTrust, isVerifiedAnswerSupport } from "../services/trust-c
 import {
   evaluateAnswerSupport,
   detectTreatmentContradiction,
+  detectImportVatExemptionOmission,
   REQUIRED_POSITIVE_BOOLEANS,
   REQUIRED_NEGATIVE_BOOLEANS
 } from "../services/answer-support-validator.js";
@@ -137,6 +138,23 @@ await test("C18-C21: restricted / conflict / missing-authority / source-failure 
   const fail = buildResponseTrust({ answer: "TINA could not complete source retrieval in time." }, 0, "RETRIEVAL_TIMEOUT");
   check(fail.authoritySupport === "NO_VERIFIED_AUTHORITY", "source failure");
 });
+// Import-VAT CREATE MORE material-exception guard (Q5 class).
+const Q5_WRONG = "### Short Answer\nThe VAT rate on the importation of goods used to manufacture export products is 12%. The VAT on importation is uniformly set at 12% for all goods, regardless of their business activities.";
+const Q5_CORRECT = "### Short Answer\nThe general rule is 12% import VAT, but under CREATE MORE, importation by an export-oriented enterprise (≥70% export) directly attributable to export activity may be VAT-exempt.";
+await test("Cimport-1: export-mfg import-VAT answer omitting CREATE MORE exemption -> guard overrides, not verified", async () => {
+  const { trust, answerSupport } = await trustFor("What is the VAT rate on importation of goods used to manufacture export products?", Q5_WRONG, FULL);
+  check(answerSupport.stage === "material-exception-omission", `expected guard stage, got ${answerSupport.stage}`);
+  check(trust.authoritySupport === "RELATED_AUTHORITY_ONLY", `must not verify, got ${trust.authoritySupport}`);
+});
+await test("Cimport-2: import-VAT answer covering CREATE MORE -> verified reachable", async () => {
+  const { trust } = await trustFor("What is the VAT rate on importation of goods used to manufacture export products?", Q5_CORRECT, FULL);
+  check(trust.authoritySupport === "VERIFIED_CONTROLLING", `expected verified, got ${trust.authoritySupport}`);
+});
+await test("Cimport-3: import-VAT guard no false-positive on unrelated import / correct answer", () => {
+  check(detectImportVatExemptionOmission("What is the VAT on imported cars?", "Imported cars are subject to 12% VAT uniformly.").contradiction === false, "unrelated import");
+  check(detectImportVatExemptionOmission("import goods to manufacture export products", Q5_CORRECT).contradiction === false, "correct with CREATE MORE");
+});
+
 // polarity detector non-firing on unrelated / commercial / correct.
 await test("polarity detector: no false-positive on unrelated / commercial / correct-exempt", () => {
   check(detectTreatmentContradiction("What is the estate tax rate?", "The estate tax rate is 6%.").contradiction === false, "unrelated");

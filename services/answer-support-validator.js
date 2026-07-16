@@ -336,6 +336,38 @@ export function detectTreatmentContradiction(question, answer) {
   return { contradiction: false, reason: "" };
 }
 
+// PHASE-10A12: import-VAT / CREATE MORE material-exception guard. A question
+// specifically about importing goods to MANUFACTURE EXPORT PRODUCTS implies the
+// CREATE MORE export-oriented-enterprise VAT exemption. An answer that asserts a
+// UNIVERSAL 12% import VAT (all/every/uniform/regardless) while OMITTING that
+// exemption materially misstates the treatment for the exact question asked
+// (the confirmed Q5 defect class). Generalizable to "a specific-exemption
+// question answered with only the general taxable rule". Pure.
+const IMPORT_EXPORT_MFG_RE = /import\w*[^.\n]{0,60}(export product|manufactur\w+ export|export[- ]oriented|goods used to (manufacture|make) export)|(export product|manufactur\w+ export)[^.\n]{0,60}import/i;
+const UNIVERSAL_12_RE = /\b(uniform(ly)?|all (goods|imports|importers)|every importation|regardless|automatically|in all cases)\b/i;
+const CREATE_MORE_EXEMPTION_RE = /\b(create more|export[- ]oriented enterprise|vat[- ]exempt|exemption|70%|directly attributable|zero[- ]rated|special regime|ipa)\b/i;
+
+/**
+ * Detects a material-exception omission that reverses/misstates the treatment
+ * for an export-manufacturing import-VAT question. Pure.
+ * @param {string} question
+ * @param {string} answer
+ * @returns {{contradiction:boolean, reason:string}}
+ */
+export function detectImportVatExemptionOmission(question, answer) {
+  const q = typeof question === "string" ? question : "";
+  const a = typeof answer === "string" ? answer : "";
+  const ctx = q + "\n" + a;
+  if (!IMPORT_EXPORT_MFG_RE.test(ctx)) return { contradiction: false, reason: "" };
+  const asserts12 = /\b12%\b|twelve percent|subject to (the )?vat/i.test(a);
+  const universalDenial = UNIVERSAL_12_RE.test(a);
+  const mentionsExemption = CREATE_MORE_EXEMPTION_RE.test(a);
+  if (asserts12 && universalDenial && !mentionsExemption) {
+    return { contradiction: true, reason: "import_vat_omits_create_more_export_exemption" };
+  }
+  return { contradiction: false, reason: "" };
+}
+
 /**
  * Evaluates whether an answer is eligible for VERIFIED_CONTROLLING. Never throws;
  * any error/unavailability yields verifiedEligible=false (fail closed).
@@ -355,6 +387,10 @@ export async function evaluateAnswerSupport({ question, answer, sources = [], mo
   const contradiction = detectTreatmentContradiction(question, answer);
   if (contradiction.contradiction) {
     return { verifiedEligible: false, schemaValid: false, stage: "treatment-contradiction", gates: { structural: true, treatmentDirectionMatches: false }, reason: contradiction.reason };
+  }
+  const exemptionOmission = detectImportVatExemptionOmission(question, answer);
+  if (exemptionOmission.contradiction) {
+    return { verifiedEligible: false, schemaValid: false, stage: "material-exception-omission", gates: { structural: true, materialExceptionsCovered: false }, reason: exemptionOmission.reason };
   }
   const structural = structuralSupportGate(answer);
   if (!structural.pass) {
