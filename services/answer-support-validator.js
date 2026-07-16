@@ -229,12 +229,18 @@ export const REQUIRED_NEGATIVE_BOOLEANS = Object.freeze([
 ]);
 
 function readOwnBoolean(obj, field) {
-  // Distinguishes: not own | not boolean | boolean. Reads a possible getter
-  // once inside a try/catch so a malicious getter cannot throw past us.
-  if (!Object.prototype.hasOwnProperty.call(obj, field)) return { own: false };
-  let val;
-  try { val = obj[field]; } catch { return { own: true, threw: true }; }
-  return { own: true, value: val, isBoolean: typeof val === "boolean" };
+  // PHASE-10A12-R2: reject ACCESSOR descriptors BEFORE any value access -- a
+  // getter must never execute during safety validation. Inspects the own
+  // property descriptor (guarding a proxy that throws in
+  // getOwnPropertyDescriptor); only a plain own data property is read.
+  let desc;
+  try { desc = Object.getOwnPropertyDescriptor(obj, field); }
+  catch { return { own: true, threw: true, accessor: true }; }
+  if (!desc) return { own: false };
+  if (typeof desc.get === "function" || typeof desc.set === "function") {
+    return { own: true, accessor: true };
+  }
+  return { own: true, value: desc.value, isBoolean: typeof desc.value === "boolean" };
 }
 
 /**
@@ -274,8 +280,12 @@ export function validateVerdictSchema(v) {
   // Note: inherited (prototype-chain) mandatory fields are treated as missing
   // by hasOwnProperty, so they are already rejected via missingFields; record
   // them explicitly for diagnostics when they exist only on the prototype.
+  // PHASE-10A12-R2: guarded so a hostile proxy that throws in its descriptor/has
+  // traps cannot propagate an exception past the validator (fails closed).
   for (const f of [...REQUIRED_POSITIVE_BOOLEANS, ...REQUIRED_NEGATIVE_BOOLEANS]) {
-    if (!Object.prototype.hasOwnProperty.call(v, f) && f in v) inheritedFieldsRejected.push(f);
+    try {
+      if (!Object.prototype.hasOwnProperty.call(v, f) && f in v) inheritedFieldsRejected.push(f);
+    } catch { /* hostile proxy trap -> ignore; already fails closed via missingFields/invalidTypeFields */ }
   }
 
   const schemaValid = missingFields.length === 0 && invalidTypeFields.length === 0;

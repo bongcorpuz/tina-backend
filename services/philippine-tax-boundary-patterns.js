@@ -194,6 +194,22 @@ export const PH_TAX_ALLOW_PATTERNS = [
   /\bexpanded\s+withholding\b/i,
   /\boptional\s+standard\s+deduction\b/i,
   /\bde\s+minimis\b/i,
+
+  // ── PHASE-10A12-R2: residential-lease VAT-exemption concepts that appear
+  // without a standalone "tax" token. The A12 review found Q8 paraphrases
+  // falsely REJECTed as DOMAIN_BOUNDARY (e.g. "which controls: the per-unit
+  // residential exemption or the lessor's total annual rental income?" and
+  // "the lessor owns many residential units but each is rented below the
+  // statutory monthly threshold"). Tax-specific; do not admit generic queries.
+  /\blessor\b/i,
+  /\blessee\b/i,
+  /\brental\s+income\b/i,
+  /\bresidential\s+(unit|lease|leasing|rent(al)?|dwelling)\b/i,
+  /\bper[- ]unit\s+(exemption|threshold|rent)\b/i,
+  /\bmonthly\s+(rent(al)?|threshold)\b/i,
+  /\bstatutory\s+(monthly\s+)?threshold\b/i,
+  /\bVAT[- ]exempt\w*\b/i,
+  /\bexemption\s+threshold\b/i,
 ];
 
 // ─── Non-tax REJECT patterns ──────────────────────────────────────────────────
