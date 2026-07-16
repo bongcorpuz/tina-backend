@@ -359,7 +359,7 @@ export function detectImportVatExemptionOmission(question, answer) {
   const a = typeof answer === "string" ? answer : "";
   const ctx = q + "\n" + a;
   if (!IMPORT_EXPORT_MFG_RE.test(ctx)) return { contradiction: false, reason: "" };
-  const asserts12 = /\b12%\b|twelve percent|subject to (the )?vat/i.test(a);
+  const asserts12 = /12\s*%|twelve percent|subject to (the )?vat/i.test(a);
   const universalDenial = UNIVERSAL_12_RE.test(a);
   const mentionsExemption = CREATE_MORE_EXEMPTION_RE.test(a);
   if (asserts12 && universalDenial && !mentionsExemption) {
