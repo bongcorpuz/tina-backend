@@ -1,0 +1,39 @@
+{
+  "id": "M-Q4",
+  "group": "mini",
+  "prompt": "Are doctors' professional fees subject to VAT?",
+  "runtimeCommit": "1b36eeadb26d69f2b9ae28c8422afcc3fdd5c6d2",
+  "answer": "### Issue Presented\nAre doctors' professional fees subject to Value-Added Tax (VAT)?\n\n### Short Answer\n\n### Controlling Authorities\n2. **Revenue Regulations No. 16-2005** - Implementing regulations for VAT.\n\n### Legal Interpretation\n\n### Practical Application\nIn practice, doctors who are VAT-registered must charge VAT on their professional fees unless they qualify for an exemption under the provisions of the NIRC. It is essential for medical practitioners to assess their services against the criteria for VAT exemption to ensure compliance and proper tax treatment. If a doctor provides services that are exempt, they must maintain proper documentation to support their VAT-exempt status.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "05a471133d4a281c"
+}

@@ -1,0 +1,15 @@
+  FAIL  tests\phase-09zf-controlled-loa-gate-ordering-remediation-1.test.mjs  (1205 ms)
+PASS fixture lists all four previously failing safe queries
+PASS all safe queries -- including previously failing ones -- match the controlled LOA gate
+PASS previously failing replacement eLA query is covered and matches
+PASS previously failing consolidated eLA query is covered and matches
+PASS previously failing notice for presentation/submission query is covered and matches
+PASS previously failing reminder before subpoena query is covered and matches
+PHASE-09ZF-CONTROLLED-LOA-GATE-ORDERING-REMEDIATION-1 tests: 16 passed, 2 failed, 177 assertions
+FAIL no disallowed runtime, package, env, database, frontend, or production files changed
+FAIL git diff scope is reported (encoded via allowed-file check above)
+  PASS  tests\phase-10a10-r1-validator-schema-fail-closed-remediation-1.test.mjs  (20315 ms)
+  PASS  tests\phase-10a10-r2-missing-answersupport-fail-closed-remediation-1.test.mjs  (20347 ms)
+Syntax checks: 10 run, 0 failed
+Test suites:   195 run, 1 failed
+GATE FAILED

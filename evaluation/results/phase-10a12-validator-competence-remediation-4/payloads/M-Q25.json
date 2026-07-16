@@ -1,0 +1,48 @@
+{
+  "id": "M-Q25",
+  "group": "mini",
+  "prompt": "Is EWT required on payments to a VAT-registered law firm?",
+  "runtimeCommit": "1b36eeadb26d69f2b9ae28c8422afcc3fdd5c6d2",
+  "answer": "### Short Answer\n\n### Controlling Authorities\n- **NIRC Sec. 236**: This section details the registration requirements for VAT-registered persons, confirming their obligation to withhold taxes on payments made to them.\n\n### Interpretation\nPayments made to VAT-registered law firms are subject to EWT because these firms are considered VAT-registered persons under the NIRC. As such, any payments for their services fall under the purview of withholding tax regulations, specifically requiring the payer to withhold a certain percentage of the payment as tax.\n\n### Practical Meaning\nFor businesses or individuals making payments to VAT-registered law firms, it is essential to withhold the appropriate EWT and remit it to the Bureau of Internal Revenue (BIR). Failure to comply with this requirement may result in penalties and interest for the payer, as they are responsible for ensuring that the withholding tax is properly deducted and remitted.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 109"
+    },
+    {
+      "label": "NIRC Sec. 236"
+    },
+    {
+      "label": "RR No. 16-2005"
+    },
+    {
+      "label": "RMC 75-2015"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "a7f059efe350963f"
+}

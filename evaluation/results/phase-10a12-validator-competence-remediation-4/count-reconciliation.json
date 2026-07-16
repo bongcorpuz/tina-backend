@@ -1,0 +1,37 @@
+{
+  "phase": "PHASE-10A12-VALIDATOR-COMPETENCE-REMEDIATION-4",
+  "reconciledFrom": "FINAL_RUNTIME_ONLY",
+  "runtimeCommit": "1b36eeadb26d69f2b9ae28c8422afcc3fdd5c6d2",
+  "canonicalManifest": "canonical-mini-set-manifest.json",
+  "canonicalSetSha256": "8e019480b2e710f9575e5f47d72716d9e94680b8bb3caa904cfe27f05c0f6ea1",
+  "membershipMatchesFrozenManifest": true,
+  "totalPayloads": 30,
+  "byAuthoritySupport": {
+    "VERIFIED_CONTROLLING": 5,
+    "RELATED_AUTHORITY_ONLY": 16,
+    "NO_VERIFIED_AUTHORITY": 9
+  },
+  "checksum": "5 + 16 + 9 = 30",
+  "miniFactcheck": {
+    "intended": 30,
+    "completed": 30,
+    "missing": 0,
+    "duplicate": 0,
+    "verified": 5,
+    "invalidVerified": 0,
+    "fabricatedAuthorities": 0,
+    "falseRefusals": 0
+  },
+  "verifiedIds": [
+    "M-Q1",
+    "M-Q12",
+    "M-Q15",
+    "M-Q30",
+    "M-Q6"
+  ],
+  "validVerified": 5,
+  "questionableVerified": 0,
+  "invalidVerified": 0,
+  "persistenceFailures": 0,
+  "securityFailures": 0
+}

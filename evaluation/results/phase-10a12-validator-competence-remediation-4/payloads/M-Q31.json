@@ -1,0 +1,39 @@
+{
+  "id": "M-Q31",
+  "group": "mini",
+  "prompt": "What standard deduction is allowed in computing the net estate?",
+  "runtimeCommit": "1b36eeadb26d69f2b9ae28c8422afcc3fdd5c6d2",
+  "answer": "### Short Answer\n\n### Controlling Authorities\n- **National Internal Revenue Code (NIRC) Section 86**: This section outlines the allowable deductions in computing the net estate for estate tax purposes.\n\n### Interpretation\n\n### Practical Meaning\nThe standard deduction effectively reduces the taxable estate, thereby lowering the estate tax liability. This provision is particularly beneficial for estates that may not have significant liabilities or expenses to deduct, allowing for a more straightforward calculation of the estate tax due. Executors and heirs should be aware of this deduction to ensure compliance and optimize tax outcomes during the estate settlement process.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 34"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "1607ba240d3bcd6b"
+}
