@@ -1,0 +1,95 @@
+{
+  "taskId": "PHASE-10A12-R4-INDEPENDENT-VALIDATOR-COMPETENCE-REVIEW-1",
+  "reviewer": "Codex GPT-5 high reasoning low speed",
+  "date": "2026-07-16",
+  "repository": "C:\\Projects\\tina-backend",
+  "branch": "feature/source-availability-engine-v1",
+  "reviewedRemediation": "PHASE-10A12-VALIDATOR-COMPETENCE-REMEDIATION-4",
+  "manifestCommitReviewed": "1b36eeadb26d69f2b9ae28c8422afcc3fdd5c6d2",
+  "evidenceHeadReviewed": "987ada9275994bcfe74105b344055f24637e4328",
+  "decision": "REVISIONS_REQUIRED",
+  "a13Authorized": false,
+  "phase10AStatus": "REOPENED_PENDING_A12_R4_REVISIONS",
+  "phase10BStatus": "BLOCKED",
+  "phase10CStatus": "BLOCKED",
+  "adversarialSuiteStatus": "DEFERRED",
+  "didExecuteRemediation4": false,
+  "runtimeCodeModifiedByReview": false,
+  "severityCounts": { "P0": 0, "P1": 2, "P2": 5, "P3": 1, "security": 0 },
+  "p1AProspectiveSetAuthorityAndImmutability": {
+    "status": "FAIL",
+    "deterministicSelectionReproduced": true,
+    "manifestPayloadMatch": true,
+    "explicitPreExecutionOwnerAuthorizationFound": false,
+    "sourceBankCommitted": false,
+    "firstLiveRequestTimestampPresent": false,
+    "manifestPushedBeforeLiveExecutionProven": false,
+    "finding": "Deterministic manifest and payload reconciliation pass, but governed authorization/source-bank/chronology proof is incomplete."
+  },
+  "p1BRepositoryWideRunner": {
+    "status": "FAIL",
+    "requiredCommand": "node scripts/run-regressions.mjs",
+    "run1": { "exitCode": 1, "durationSecondsApprox": 161, "syntaxChecks": { "run": 10, "failed": 0 }, "testSuites": { "run": 195, "failed": 2 } },
+    "run2": { "exitCode": 1, "durationSecondsApprox": 161, "syntaxChecks": { "run": 10, "failed": 0 }, "testSuites": { "run": 195, "failed": 2 } },
+    "failedSuites": [
+      { "path": "tests\\phase-09r-tax-memo-runtime-staging-smoke-1.test.mjs", "summary": "35 passed, 1 failed, 115 assertions; staging reachability consistency assertion failed after staging temporarily unreachable warning" },
+      { "path": "tests\\phase-09zf-controlled-loa-gate-ordering-remediation-1.test.mjs", "summary": "16 passed, 2 failed, 177 assertions; working-tree/diff-scope assertions failed" }
+    ]
+  },
+  "canonicalSelection": {
+    "status": "REPRODUCED",
+    "reservedIds": [5,8,28,32,34,35,41,46,47],
+    "eligiblePoolSize": 41,
+    "selectedIds": ["M-Q1","M-Q2","M-Q3","M-Q4","M-Q6","M-Q7","M-Q9","M-Q10","M-Q11","M-Q12","M-Q13","M-Q14","M-Q15","M-Q16","M-Q17","M-Q18","M-Q19","M-Q20","M-Q21","M-Q22","M-Q23","M-Q24","M-Q25","M-Q26","M-Q27","M-Q29","M-Q30","M-Q31","M-Q33","M-Q36"],
+    "canonicalSetSha256": "8e019480b2e710f9575e5f47d72716d9e94680b8bb3caa904cfe27f05c0f6ea1",
+    "serialization": "SHA-256 of manifest questions as id<TAB>prompt rows joined by LF with no trailing LF",
+    "perQuestionHashMismatches": 0
+  },
+  "mini30PayloadReconciliation": {
+    "payloadFiles": 30,
+    "missing": 0,
+    "extra": 0,
+    "duplicateIds": 0,
+    "duplicatePayloadHashes": 0,
+    "runtimeCommitsObserved": ["1b36eeadb26d69f2b9ae28c8422afcc3fdd5c6d2"],
+    "promptMismatches": 0,
+    "persistenceFailures": 0,
+    "byAuthoritySupport": { "VERIFIED_CONTROLLING": 5, "RELATED_AUTHORITY_ONLY": 16, "NO_VERIFIED_AUTHORITY": 9 },
+    "verifiedIds": ["M-Q1","M-Q6","M-Q12","M-Q15","M-Q30"],
+    "invalidVerified": 0,
+    "falseRefusals": 0,
+    "fabricatedAuthority": 0,
+    "unrestrictedOutcomePrediction": 0,
+    "evidenceManifestFilesChecked": 42,
+    "evidenceManifestHashMismatches": 0
+  },
+  "focusedTests": {
+    "a12r4": "No dedicated A12-R4 test file found; R4 is evidence-only.",
+    "a12r3": "20 passed, 0 failed, 46 assertions",
+    "a12r2": "10 passed, 0 failed, 31 assertions",
+    "a12r1": "19 passed, 0 failed, 42 assertions",
+    "a10r1": "22 passed, 0 failed, 37 assertions",
+    "a10r2": "27 passed, 0 failed, 33 assertions",
+    "a10Verified": "18 passed, 0 failed, 30 assertions",
+    "a8": "24 passed, 0 failed, 37 assertions",
+    "outcomePredictionRegression": "9 passed, 0 failed, 77 assertions"
+  },
+  "preR3Provenance": {
+    "preR3Canonical30Found": false,
+    "r4ExactMax20ClaimConfirmed": false,
+    "treeWidePreR3DistinctMqPayloadMax": 22,
+    "treeWidePreR3MaxCommit": "a976ba6",
+    "narrowA12R2PhaseDirectoryMiniCount": 20,
+    "alternateMiniIdSchemesFound": 0,
+    "finding": "No pre-R3 canonical 30 was found, but the exact claim that max distinct pre-R3 M-Q payload IDs was 20 is overprecise."
+  },
+  "securityAndScope": {
+    "r4RuntimeCodeChanges": 0,
+    "r4TestCodeChanges": 0,
+    "reviewSecretScanMatches": 0,
+    "protectedUntrackedPathsPreserved": [".claude/", ".vscode/", "evaluation/factcheck/"],
+    "frontendModifiedByReview": false,
+    "devFactoryModifiedByReview": false,
+    "backendServerStartedByReview": false
+  }
+}

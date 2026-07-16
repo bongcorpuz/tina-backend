@@ -1,0 +1,12 @@
+# Findings Table
+
+| ID | Severity | Finding | Live evidence | Required action | A13 blocking |
+| --- | --- | --- | --- | --- | --- |
+| P1-A | P1 | Prospective canonical-set authority and pre-run immutability are not fully proven. | No explicit pre-execution owner authorization found in governed evidence; referenced master bank is untracked and has no source-bank commit; payload/runlog lack first-live-request timestamps; pushed-before-live claim not independently proven. | Repeat under captured owner authorization or add accepted governance evidence; commit/hash source bank; capture immutable chronology. | Yes |
+| P1-B | P1 | Repository-wide runner requirement failed. | Two exact `node scripts/run-regressions.mjs` runs exited 1; both had 195 suites run, 2 failed. | Produce two exact clean-process exit-0 runs or explicit pre-existing governance superseding the criterion. | Yes |
+| P2-1 | P2 | Pre-R3 max-20 claim is overprecise. | Tree-wide pre-R3 scan found 22 distinct `M-Q*.json` payload IDs in commit `a976ba6`; no pre-R3 canonical 30 found. | Correct provenance language to distinguish phase-local 20 from accumulated tree-wide 22. | No |
+| P2-2 | P2 | Full operative source excerpts remain absent. | R4 result keeps `sourceExcerptGrounded=false`. | Carry forward or implement source-excerpt-grounded validation. | No |
+| P2-3 | P2 | Guard architecture remains cluster-specific. | R4 result keeps `CLUSTER_SPECIFIC_WITH_FAIL_CLOSED_SCHEMA`; R4 makes no runtime change. | Treat A13 as discovery gate; consider broader source-grounded validator. | No |
+| P2-4 | P2 | Q5 period applicability remains diagnostic-only. | A12-R3 tests pass, but period mismatch is not an independent hard-fail branch. | Decide whether unsupported period applicability should fail closed. | No |
+| P2-5 | P2 | Placeholder/retrieval runtime-equivalence evidence remains incomplete. | No R4 artifact closes the prior placeholder/runtime-equivalence provenance issue. | Add explicit retrieval credential/runtime equivalence evidence. | No |
+| P3-1 | P3 | Environment noise remains. | Protected untracked paths remain; pre-existing localhost 5173 listeners remain; no backend server started by review. | Keep protected paths untouched and avoid treating environment noise as pass evidence. | No |
