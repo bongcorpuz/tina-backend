@@ -39,19 +39,29 @@ const SYNTAX_CHECK_FILES = [
 
 // ─── 2. Test discovery ────────────────────────────────────────────────────────
 
+// PHASE-10A12-R5: network-dependent staging-smoke suites are SEPARATED into a
+// dedicated MANDATORY lane (scripts/run-staging-smokes.mjs, run via `node scripts/run-staging-smokes.mjs`)
+// so a transient staging outage cannot make this DETERMINISTIC local gate flap.
+// They are NOT removed or made optional — they remain a mandatory, blocking gate
+// that must independently pass. This regex identifies them for exclusion + notice.
+const STAGING_SMOKE_RE = /staging-smoke.*\.test\.mjs$/;
+
 function discoverTests() {
-  const patchSuites = existsSync(join(ROOT, "tests"))
+  const all = existsSync(join(ROOT, "tests"))
     ? readdirSync(join(ROOT, "tests"))
         .filter((f) => f.endsWith(".test.mjs"))
         .sort()
-        .map((f) => join("tests", f))
     : [];
+  const stagingSmokes = all.filter((f) => STAGING_SMOKE_RE.test(f));
+  const patchSuites = all
+    .filter((f) => !STAGING_SMOKE_RE.test(f))
+    .map((f) => join("tests", f));
 
   const stageSuites = readdirSync(ROOT)
     .filter((f) => /^_stage.*_test\.mjs$/.test(f))
     .sort();
 
-  return [...patchSuites, ...stageSuites];
+  return { deterministic: [...patchSuites, ...stageSuites], stagingSmokes };
 }
 
 // ─── 3. Runner ────────────────────────────────────────────────────────────────
@@ -88,8 +98,8 @@ for (const file of SYNTAX_CHECK_FILES) {
   if (!r.ok) console.error(r.output.trim());
 }
 
-console.log("\n── Regression / stage suites");
-const tests = discoverTests();
+console.log("\n── Regression / stage suites (deterministic, local)");
+const { deterministic: tests, stagingSmokes } = discoverTests();
 if (tests.length === 0) {
   console.error("  No test files discovered — failing the gate.");
   process.exit(1);
@@ -112,5 +122,13 @@ const failed = syntaxFailures + testFailures;
 console.log(`\n${"═".repeat(62)}`);
 console.log(`Syntax checks: ${SYNTAX_CHECK_FILES.length - missingSyntaxTargets.length} run, ${syntaxFailures} failed${missingSyntaxTargets.length ? `, ${missingSyntaxTargets.length} skipped (missing: ${missingSyntaxTargets.join(", ")})` : ""}`);
 console.log(`Test suites:   ${tests.length} run, ${testFailures} failed`);
-console.log(failed === 0 ? "GATE PASSED" : "GATE FAILED");
+if (stagingSmokes.length) {
+  console.log(
+    `\nMANDATORY STAGING LANE: ${stagingSmokes.length} network-dependent staging-smoke suite(s) are ` +
+    `SEPARATED into the mandatory staging gate and must be run + pass independently via ` +
+    `\`node scripts/run-staging-smokes.mjs\`. They are NOT optional and NOT skipped:\n  - ` +
+    stagingSmokes.join("\n  - ")
+  );
+}
+console.log(failed === 0 ? "GATE PASSED (deterministic local lane)" : "GATE FAILED");
 process.exit(failed === 0 ? 0 : 1);
