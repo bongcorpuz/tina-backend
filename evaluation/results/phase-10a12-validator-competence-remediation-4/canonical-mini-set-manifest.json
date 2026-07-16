@@ -1,0 +1,220 @@
+{
+  "task": "PHASE-10A12-VALIDATOR-COMPETENCE-REMEDIATION-4",
+  "purpose": "New PROSPECTIVE canonical 30-question mini fact-check set. The pre-R3 canonical membership was proven unestablishable (max 20 mini IDs in any pre-R3 committed evidence); this set is created under explicit R4 authorization and does NOT retroactively validate the A12-R3 mini set.",
+  "masterBank": "evaluation/factcheck/TINA_Tax_FactCheck_Corrected_Validated_Master_v3_0.md",
+  "masterQuestionCount": 50,
+  "selectionMethod": {
+    "rule": "From the master question bank Q1..QN, exclude the reserved cluster/control IDs, sort the remaining eligible IDs ascending by master number, and take the first 30. Fully deterministic and reproducible.",
+    "reservedClusterControlIds": [
+      5,
+      8,
+      28,
+      32,
+      34,
+      35,
+      41,
+      46,
+      47
+    ],
+    "reservedRationale": "Q5 = import-VAT/CREATE MORE cluster; Q8 = residential-lease VAT cluster; Q35 & Q41 = citation-relevance clusters; Q28/Q32/Q34/Q46/Q47 = verified-controlling reachability controls. Excluded so the mini fact-check stays independent of the dedicated probe/control sets.",
+    "eligiblePoolSize": 41,
+    "eligiblePool": [
+      "M-Q1",
+      "M-Q2",
+      "M-Q3",
+      "M-Q4",
+      "M-Q6",
+      "M-Q7",
+      "M-Q9",
+      "M-Q10",
+      "M-Q11",
+      "M-Q12",
+      "M-Q13",
+      "M-Q14",
+      "M-Q15",
+      "M-Q16",
+      "M-Q17",
+      "M-Q18",
+      "M-Q19",
+      "M-Q20",
+      "M-Q21",
+      "M-Q22",
+      "M-Q23",
+      "M-Q24",
+      "M-Q25",
+      "M-Q26",
+      "M-Q27",
+      "M-Q29",
+      "M-Q30",
+      "M-Q31",
+      "M-Q33",
+      "M-Q36",
+      "M-Q37",
+      "M-Q38",
+      "M-Q39",
+      "M-Q40",
+      "M-Q42",
+      "M-Q43",
+      "M-Q44",
+      "M-Q45",
+      "M-Q48",
+      "M-Q49",
+      "M-Q50"
+    ],
+    "selectedCount": 30
+  },
+  "frozenAt": "committed BEFORE any live test execution",
+  "canonicalSetSha256": "8e019480b2e710f9575e5f47d72716d9e94680b8bb3caa904cfe27f05c0f6ea1",
+  "questions": [
+    {
+      "id": "M-Q1",
+      "masterId": 1,
+      "prompt": "Freelance graphic designer, ₱2.8 million annual gross receipts: Is VAT registration required?"
+    },
+    {
+      "id": "M-Q2",
+      "masterId": 2,
+      "prompt": "What is the VAT treatment of the sale of a residential lot valued at ₱1.9 million?"
+    },
+    {
+      "id": "M-Q3",
+      "masterId": 3,
+      "prompt": "A VAT-registered exporter sells 100% abroad. Can it obtain a refund or tax credit for input VAT?"
+    },
+    {
+      "id": "M-Q4",
+      "masterId": 4,
+      "prompt": "Are doctors' professional fees subject to VAT?"
+    },
+    {
+      "id": "M-Q6",
+      "masterId": 6,
+      "prompt": "Can a non-VAT-registered seller issue a VAT invoice?"
+    },
+    {
+      "id": "M-Q7",
+      "masterId": 7,
+      "prompt": "How is input VAT treated when goods or services are used for both VATable and VAT-exempt sales?"
+    },
+    {
+      "id": "M-Q9",
+      "masterId": 9,
+      "prompt": "Can spouses who both earn compensation income file a joint income tax return?"
+    },
+    {
+      "id": "M-Q10",
+      "masterId": 10,
+      "prompt": "What is the income tax rate for a domestic corporation under CREATE?"
+    },
+    {
+      "id": "M-Q11",
+      "masterId": 11,
+      "prompt": "Is ₱80,000 of 13th-month pay received by a rank-and-file employee taxable?"
+    },
+    {
+      "id": "M-Q12",
+      "masterId": 12,
+      "prompt": "Is an individual with ₱250,000 gross compensation income in 2024 required to file an income tax return?"
+    },
+    {
+      "id": "M-Q13",
+      "masterId": 13,
+      "prompt": "Can a self-employed individual with gross sales below ₱3 million opt for the 8% income tax rate?"
+    },
+    {
+      "id": "M-Q14",
+      "masterId": 14,
+      "prompt": "Is interest on a Philippine peso savings account subject to final withholding tax?"
+    },
+    {
+      "id": "M-Q15",
+      "masterId": 15,
+      "prompt": "How is MCIT computed and when does it apply?"
+    },
+    {
+      "id": "M-Q16",
+      "masterId": 16,
+      "prompt": "Are prizes won in a Philippine competition taxable?"
+    },
+    {
+      "id": "M-Q17",
+      "masterId": 17,
+      "prompt": "What tax applies to a dividend paid to a nonresident alien not engaged in trade or business in the Philippines?"
+    },
+    {
+      "id": "M-Q18",
+      "masterId": 18,
+      "prompt": "What is the OSD rate for individuals and corporations?"
+    },
+    {
+      "id": "M-Q19",
+      "masterId": 19,
+      "prompt": "What is the tax rate on the sale of shares not traded on a stock exchange?"
+    },
+    {
+      "id": "M-Q20",
+      "masterId": 20,
+      "prompt": "Is the sale of a principal residence subject to capital gains tax, and when may it be exempt?"
+    },
+    {
+      "id": "M-Q21",
+      "masterId": 21,
+      "prompt": "How is DST computed on a sale of real property?"
+    },
+    {
+      "id": "M-Q22",
+      "masterId": 22,
+      "prompt": "Is the sale of real property classified as an ordinary asset subject to 6% capital gains tax?"
+    },
+    {
+      "id": "M-Q23",
+      "masterId": 23,
+      "prompt": "What is the holding-period rule for an individual's capital gain on personal property?"
+    },
+    {
+      "id": "M-Q24",
+      "masterId": 24,
+      "prompt": "What is the expanded withholding tax rate on professional fees paid to an individual?"
+    },
+    {
+      "id": "M-Q25",
+      "masterId": 25,
+      "prompt": "Is EWT required on payments to a VAT-registered law firm?"
+    },
+    {
+      "id": "M-Q26",
+      "masterId": 26,
+      "prompt": "When must a withholding agent remit expanded withholding tax to the BIR?"
+    },
+    {
+      "id": "M-Q27",
+      "masterId": 27,
+      "prompt": "Is equipment rental income subject to EWT?"
+    },
+    {
+      "id": "M-Q29",
+      "masterId": 29,
+      "prompt": "Is a ₱500 one-time courier payment to an individual subject to EWT?"
+    },
+    {
+      "id": "M-Q30",
+      "masterId": 30,
+      "prompt": "What is the estate tax rate under TRAIN?"
+    },
+    {
+      "id": "M-Q31",
+      "masterId": 31,
+      "prompt": "What standard deduction is allowed in computing the net estate?"
+    },
+    {
+      "id": "M-Q33",
+      "masterId": 33,
+      "prompt": "Is the family home deductible from the gross estate, and up to how much?"
+    },
+    {
+      "id": "M-Q36",
+      "masterId": 36,
+      "prompt": "What penalties apply to late filing of a VAT return?"
+    }
+  ]
+}
