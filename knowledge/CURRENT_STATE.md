@@ -9211,3 +9211,29 @@ Next task: remediate the M-Q36 penalty-question invalid-verified defect (determi
 
 Artifacts: PHASE-10A12-VALIDATOR-COMPETENCE-REMEDIATION-5_REPORT.md; evaluation/results/phase-10a12-validator-competence-remediation-5.json; evaluation/results/phase-10a12-validator-competence-remediation-5/ (canonical-mini-set-manifest.json, canonical-mini-set-hashes.sha256, selection-rationale.md, source-bank-snapshot/*.SNAPSHOT.md, payloads x30, count-reconciliation.json, mini-factcheck-30.md, verified-audit.md, mini-factcheck-manual-audit.md, deterministic-gate.log, staging-gate.log, security-scan.md, EVIDENCE_MANIFEST.sha256). Code: scripts/run-regressions.mjs, scripts/run-staging-smokes.mjs (new), tests/phase-09zf-controlled-loa-gate-ordering-remediation-1.test.mjs. Commits 272d6bf (runner fix), cd04630 (governed freeze pre-run), evidence commit follows. No runtime pipeline/validator code change.
 ```
+
+## Phase 10A12-R5 Independent Validator-Competence Review 1 -- REVISIONS REQUIRED (2026-07-16):
+
+```text
+PHASE-10A12-R5-INDEPENDENT-VALIDATOR-COMPETENCE-REVIEW-1 executed by Codex GPT-5 (high reasoning, low speed) as an independent review of PHASE-10A12-VALIDATOR-COMPETENCE-REMEDIATION-5. Reviewer did NOT execute remediation 5 and did NOT modify remediation runtime/test code, frontend, or dev-factory code. Backend reviewed on branch feature/source-availability-engine-v1 at evidence HEAD 093d48ac049b2c1008eadf11a0b8e938e9a83bf8. Protected untracked .claude/, .vscode/, and evaluation/factcheck/ preserved.
+
+Positive evidence: R5 source-bank snapshot exists and reproduced as SHA-256 526106e594667705df227930dff3d9a4717ec99b171626bf708db43f4eac4bed; local master was byte-identical. Canonical deterministic selection reproduced exactly: M-Q1,M-Q2,M-Q3,M-Q4,M-Q6,M-Q7,M-Q9,M-Q10,M-Q11,M-Q12,M-Q13,M-Q14,M-Q15,M-Q16,M-Q17,M-Q18,M-Q19,M-Q20,M-Q21,M-Q22,M-Q23,M-Q24,M-Q25,M-Q26,M-Q27,M-Q29,M-Q30,M-Q31,M-Q33,M-Q36. canonicalSetSha256 reproduced as 8e019480b2e710f9575e5f47d72716d9e94680b8bb3caa904cfe27f05c0f6ea1. Evidence manifest 43/43 hashes matched. Payload mechanics reconciled: 30 files, missing 0, extra 0, duplicate IDs 0, unique payload hashes 30, prompt mismatches 0, runtime mismatches 0, all runtime cd046304111d26a439c4c37321881524acd41eb6. Counts: VERIFIED_CONTROLLING 6 + RELATED_AUTHORITY_ONLY 14 + NO_VERIFIED_AUTHORITY 10 = 30.
+
+P1-A BLOCKER: M-Q36 is INVALID VERIFIED_CONTROLLING. The VAT late-filing penalty answer fabricates a monthly 25% penalty capped at 50% and cites only general VAT authorities (NIRC 105-108, RR 16-2005), not penalty/procedural authorities required by the frozen bank (including NIRC 114/248/249, RA 11976, RR 6-2024, RMC 52-2023). Root cause: no deterministic penalty/procedural source-sufficiency gate; LLM validator accepted topic-adjacent but non-controlling sources.
+
+P1-B BLOCKER: deterministic runner gate failed live twice. `node scripts/run-regressions.mjs` exited 1 both independent runs. Each run reported syntax 10/0 and suites 188 run / 1 failed. Failed suite: tests\phase-09zf-controlled-loa-gate-ordering-remediation-1.test.mjs, rejecting `.claude/settings.local.json` despite protected untracked directories being preserved.
+
+P1-C BLOCKER: mandatory staging gate failed live twice. `node scripts/run-staging-smokes.mjs` exited 1 both independent runs. Each run reported 7 suites run / 1 failed. Failed suite: tests\phase-09r-tax-memo-runtime-staging-smoke-1.test.mjs, because staging reachability was not consistent with a PASS decision. Per assignment, staging unavailable/failing means runner gate fails.
+
+P1-D BLOCKER: M-Q25 is also invalid/questionable as VERIFIED_CONTROLLING. The answer treats VAT registration as effectively dispositive for EWT on payments to a law firm, does not distinguish sole practitioner/GPP/taxable juridical entity, and cites VAT registration/invoicing authorities rather than EWT/legal-form authorities required by the frozen bank.
+
+P2: explicit owner authorization and first-live request chronology artifacts remain incomplete as independent evidence, though git ancestry supports freeze-before-evidence; claimed 09ZF simulated-reversion evidence was not found as a committed standalone artifact; validator architecture remains cluster-specific and LLM-dependent. P3: M-Q10 transient degenerate attempts were retained in runlogs before the final safe committed payload.
+
+Severity: P0=0. P1=4. P2=3. P3=1. Security=0 confirmed credentials; one harmless false-positive on the word risk-classified.
+
+Decision: PHASE 10A12-R5 INDEPENDENT VALIDATOR-COMPETENCE REVIEW 1 = REVISIONS REQUIRED. Phase 10A remains REOPENED_PENDING_A12_R6_REMEDIATION (NOT closed). Phase 10B: BLOCKED. Phase 10C: BLOCKED. Adversarial suite: DEFERRED. A13: NOT AUTHORIZED. Production/reindex/model-change: NOT AUTHORIZED.
+
+Next task: R6 remediation must add deterministic proposition-class source-sufficiency gates, especially penalty/procedural and EWT/legal-form guards, make both runner lanes pass from the protected working state, rerun the governed canonical mini-30, and obtain independent review before A13.
+
+Artifacts: PHASE-10A12-R5-INDEPENDENT-VALIDATOR-COMPETENCE-REVIEW-1_REPORT.md; evaluation/results/phase-10a12-r5-independent-validator-competence-review-1.json; evaluation/results/phase-10a12-r5-independent-validator-competence-review-1/ (findings-table.md, authorization-and-chronology-determination.md, source-bank-verification-table.md, canonical-set-reproduction-table.md, runner-lane-reconciliation.md, independent-runner-logs.md, mini-30-payload-reconciliation.md, m-q36-legal-and-validator-analysis.md, m-q25-additional-verified-analysis.md, root-cause-determination.md, r6-remediation-recommendations.md, security-and-scope-review.md, evidence-summary.md). Review artifact commit follows.
+```

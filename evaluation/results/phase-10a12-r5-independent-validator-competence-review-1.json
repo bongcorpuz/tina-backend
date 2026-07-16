@@ -1,0 +1,67 @@
+{
+  "phase": "PHASE-10A12-R5-INDEPENDENT-VALIDATOR-COMPETENCE-REVIEW-1",
+  "reviewer": "Codex GPT-5 high reasoning low speed",
+  "date": "2026-07-16",
+  "branch": "feature/source-availability-engine-v1",
+  "reviewed_head": "093d48ac049b2c1008eadf11a0b8e938e9a83bf8",
+  "reviewed_commits": {
+    "runner_remediation": "272d6bf",
+    "governed_freeze": "cd04630",
+    "r5_evidence": "093d48a"
+  },
+  "decision": "REVISIONS_REQUIRED",
+  "a13_authorized": false,
+  "severity_counts": { "P0": 0, "P1": 4, "P2": 3, "P3": 1, "security": 0 },
+  "gates": {
+    "source_bank_snapshot": "PASS",
+    "canonical_selection": "PASS",
+    "evidence_manifest_hashes": "PASS",
+    "mini_30_payload_mechanics": "PASS",
+    "verified_legal_audit": "FAIL",
+    "deterministic_runner_lane": "FAIL",
+    "staging_runner_lane": "FAIL",
+    "overall": "REVISIONS_REQUIRED"
+  },
+  "verified_audit": {
+    "claimed_verified_controlling": 6,
+    "invalid_verified_ids": ["M-Q36", "M-Q25"],
+    "primary_invalid_verified": "M-Q36"
+  },
+  "source_bank": {
+    "snapshot_sha256": "526106e594667705df227930dff3d9a4717ec99b171626bf708db43f4eac4bed",
+    "rows": 50,
+    "duplicate_ids": 0,
+    "snapshot_matches_local_master": true
+  },
+  "canonical_set": {
+    "sha256": "8e019480b2e710f9575e5f47d72716d9e94680b8bb3caa904cfe27f05c0f6ea1",
+    "ids": ["M-Q1", "M-Q2", "M-Q3", "M-Q4", "M-Q6", "M-Q7", "M-Q9", "M-Q10", "M-Q11", "M-Q12", "M-Q13", "M-Q14", "M-Q15", "M-Q16", "M-Q17", "M-Q18", "M-Q19", "M-Q20", "M-Q21", "M-Q22", "M-Q23", "M-Q24", "M-Q25", "M-Q26", "M-Q27", "M-Q29", "M-Q30", "M-Q31", "M-Q33", "M-Q36"],
+    "per_question_hash_mismatches": 0
+  },
+  "runner_live_evidence": {
+    "run_regressions": [
+      {"run": 1, "exit_code": 1, "syntax": "10/0", "suites": "188 run / 1 failed", "failed_suite": "tests\\phase-09zf-controlled-loa-gate-ordering-remediation-1.test.mjs"},
+      {"run": 2, "exit_code": 1, "syntax": "10/0", "suites": "188 run / 1 failed", "failed_suite": "tests\\phase-09zf-controlled-loa-gate-ordering-remediation-1.test.mjs"}
+    ],
+    "run_staging_smokes": [
+      {"run": 1, "exit_code": 1, "suites": "7 run / 1 failed", "failed_suite": "tests\\phase-09r-tax-memo-runtime-staging-smoke-1.test.mjs"},
+      {"run": 2, "exit_code": 1, "suites": "7 run / 1 failed", "failed_suite": "tests\\phase-09r-tax-memo-runtime-staging-smoke-1.test.mjs"}
+    ]
+  },
+  "payload_reconciliation": {
+    "payload_files": 30,
+    "missing_ids": [],
+    "extra_ids": [],
+    "duplicate_ids": [],
+    "unique_payload_hashes": 30,
+    "prompt_mismatches": 0,
+    "runtime_mismatches": 0,
+    "runtime_commit": "cd046304111d26a439c4c37321881524acd41eb6",
+    "counts": { "VERIFIED_CONTROLLING": 6, "RELATED_AUTHORITY_ONLY": 14, "NO_VERIFIED_AUTHORITY": 10 }
+  },
+  "security_scan": {
+    "credentials_found": false,
+    "notes": "One rg hit was the harmless substring risk-classified in the source-bank snapshot."
+  },
+  "next_required_phase": "R6 remediation before any A13 authorization"
+}
