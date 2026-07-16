@@ -1,0 +1,60 @@
+{
+  "runId": "Q35-r3",
+  "caseId": "Q35",
+  "runNumber": 3,
+  "prompt": "What BIR form is used for the annual ITR of a self-employed individual or professional?",
+  "defectClusterTag": "Q35-form-1701-MS-alternative",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 8643,
+  "answer": "### Short Answer\nThe BIR form used for the annual Income Tax Return (ITR) of a self-employed individual or professional is BIR Form 1701.\n\n### Controlling Authorities\nThis is governed by the National Internal Revenue Code (NIRC) of 1997, specifically under Section 24, which outlines the income tax rates applicable to individuals, including self-employed individuals and professionals.\n\n### Interpretation\nBIR Form 1701 is specifically designed for individuals earning income from business or profession. It allows self-employed individuals to report their income, deductions, and compute their tax liability based on the applicable tax rates as stipulated in the NIRC.\n\n### Practical Meaning\nSelf-employed individuals and professionals must use BIR Form 1701 to ensure compliance with tax regulations. Proper completion of this form is essential for accurately reporting income and fulfilling tax obligations, thereby avoiding penalties for non-compliance.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "citation-relevance",
+    "gates": {
+      "structural": true,
+      "citationRelevant": false
+    },
+    "reason": "displayed_sources_only_foundational_provisions"
+  },
+  "answerSupportPresent": true,
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "answerSupportStage": "citation-relevance",
+  "answerSupportGates": {
+    "structural": true,
+    "citationRelevant": false
+  },
+  "answerSupportReason": "displayed_sources_only_foundational_provisions",
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 2",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "6266337d16d09bc8",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

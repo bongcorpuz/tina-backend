@@ -1,0 +1,108 @@
+{
+  "runId": "Q9-r3",
+  "caseId": "Q9",
+  "runNumber": 3,
+  "prompt": "Can spouses who both earn compensation income file a joint income tax return?",
+  "defectClusterTag": null,
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 18023,
+  "answer": "### Short Answer\nSpouses who both earn compensation income cannot file a joint income tax return; they must file separate returns based on their respective total taxable incomes.\n\n### Controlling Authorities\nThis requirement is established under Section 24 of the National Internal Revenue Code (NIRC), which states that married individuals compute their income tax separately based on their respective total taxable income.\n\n### Interpretation\nAccording to Section 24 of the NIRC, while spouses are required to file separately, if any income cannot be definitively attributed to either spouse, it shall be divided equally for tax purposes. This provision ensures that each spouse is taxed on their individual income, reflecting their respective earnings accurately.\n\n### Practical Meaning\nIn practice, this means that each spouse must prepare and submit their own income tax return, detailing their individual compensation income. This separate filing can affect their overall tax liability, as they will not be able to combine their incomes for tax computation purposes, which may limit potential tax benefits available to joint filers in other jurisdictions.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [
+      "primaryIssueAnswered",
+      "materialExceptionsCovered",
+      "materialAlternativesCovered",
+      "citationSupportsProposition",
+      "propositionSupported",
+      "materiallyComplete",
+      "eligibleForVerifiedControlling",
+      "unsupportedMaterialProposition"
+    ],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [
+      "unsafe_value_fields:primaryIssueAnswered,materialExceptionsCovered,materialAlternativesCovered,citationSupportsProposition,propositionSupported,materiallyComplete,eligibleForVerifiedControlling,unsupportedMaterialProposition"
+    ],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": false,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": false,
+      "materialAlternativesCovered": false,
+      "citationRelevant": true,
+      "citationSupportsProposition": false,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": false,
+      "eligibleForVerifiedControlling": false,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": false
+    },
+    "reason": "unsafe_value_fields:primaryIssueAnswered,materialExceptionsCovered,materialAlternativesCovered,citationSupportsProposition,propositionSupported,materiallyComplete,eligibleForVerifiedControlling,unsupportedMaterialProposition"
+  },
+  "answerSupportPresent": true,
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": false,
+  "answerSupportStage": "llm",
+  "answerSupportGates": {
+    "structural": true,
+    "answerResponsive": true,
+    "primaryIssueAnswered": false,
+    "requiredIssueKeysCovered": true,
+    "materialExceptionsCovered": false,
+    "materialAlternativesCovered": false,
+    "citationRelevant": true,
+    "citationSupportsProposition": false,
+    "substantive": true,
+    "propositionSupported": false,
+    "materiallyComplete": false,
+    "eligibleForVerifiedControlling": false,
+    "contradictsSources": true,
+    "unsupportedMaterialProposition": false
+  },
+  "answerSupportReason": "unsafe_value_fields:primaryIssueAnswered,materialExceptionsCovered,materialAlternativesCovered,citationSupportsProposition,propositionSupported,materiallyComplete,eligibleForVerifiedControlling,unsupportedMaterialProposition",
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 24",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 23",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 27",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "60ef7af7398a6458",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

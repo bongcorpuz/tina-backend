@@ -1,0 +1,97 @@
+{
+  "runId": "Q26-r2",
+  "caseId": "Q26",
+  "runNumber": 2,
+  "prompt": "When must a withholding agent remit expanded withholding tax to the BIR?",
+  "defectClusterTag": null,
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 14112,
+  "answer": "### Short Answer\nA withholding agent must remit the expanded withholding tax to the Bureau of Internal Revenue (BIR) on or before the 10th day of the month following the month in which the income payment was made. This is in accordance with Revenue Regulations No. 2-98, which implements the provisions of the National Internal Revenue Code.\n\n### Interpretation\n\nAdvertising service payments may be subject to expanded withholding tax when paid by a withholding agent to a resident income payee, subject to the applicable classification and rate under withholding tax regulations.\n\n### Practical Meaning\n\nThe payor withholds the applicable EWT from the payment and remits it to the BIR. The withheld amount is creditable against the payee's income tax, subject to proper withholding certificates and filing compliance.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [
+      "citationRelevant",
+      "citationSupportsProposition",
+      "propositionSupported",
+      "eligibleForVerifiedControlling",
+      "unsupportedMaterialProposition"
+    ],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [
+      "unsafe_value_fields:citationRelevant,citationSupportsProposition,propositionSupported,eligibleForVerifiedControlling,unsupportedMaterialProposition"
+    ],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": false,
+      "citationSupportsProposition": false,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "eligibleForVerifiedControlling": false,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": false
+    },
+    "reason": "unsafe_value_fields:citationRelevant,citationSupportsProposition,propositionSupported,eligibleForVerifiedControlling,unsupportedMaterialProposition"
+  },
+  "answerSupportPresent": true,
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": false,
+  "answerSupportStage": "llm",
+  "answerSupportGates": {
+    "structural": true,
+    "answerResponsive": true,
+    "primaryIssueAnswered": true,
+    "requiredIssueKeysCovered": true,
+    "materialExceptionsCovered": true,
+    "materialAlternativesCovered": true,
+    "citationRelevant": false,
+    "citationSupportsProposition": false,
+    "substantive": true,
+    "propositionSupported": false,
+    "materiallyComplete": true,
+    "eligibleForVerifiedControlling": false,
+    "contradictsSources": true,
+    "unsupportedMaterialProposition": false
+  },
+  "answerSupportReason": "unsafe_value_fields:citationRelevant,citationSupportsProposition,propositionSupported,eligibleForVerifiedControlling,unsupportedMaterialProposition",
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "Revenue Regulations",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 6,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "57a462e3ee8fcf8d",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "runId": "Q15-r3",
+  "caseId": "Q15",
+  "runNumber": 3,
+  "prompt": "How is MCIT computed and when does it apply?",
+  "defectClusterTag": null,
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 20880,
+  "answer": "### Issue Presented\nHow is the Minimum Corporate Income Tax (MCIT) computed and when does it apply?\n\n### Short Answer\nThe Minimum Corporate Income Tax (MCIT) is computed at a rate of 2% of the gross income as of the end of the taxable year, applicable starting from the fourth taxable year following the year in which the corporation commenced its business operations, when the MCIT exceeds the regular corporate income tax (RCIT) for that year.\n\n### Controlling Authorities\n2. **RR 9-1998** - This regulation provides the implementing rules for the MCIT.\n\n### Legal Interpretation\n\n### Practical Application\nCorporations must calculate their gross income, which includes all income derived from their business activities, and apply the 2% rate to this amount. If the resulting MCIT is greater than the regular corporate income tax for the year, the corporation will pay the MCIT. Any excess MCIT can be carried forward and credited against the normal income tax for the next three taxable years. This provision ensures that corporations that may not be profitable in the short term still contribute to the tax base, while also allowing for relief in future profitable years.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [
+      "citationRelevant",
+      "citationSupportsProposition",
+      "propositionSupported",
+      "eligibleForVerifiedControlling",
+      "unsupportedMaterialProposition"
+    ],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [
+      "unsafe_value_fields:citationRelevant,citationSupportsProposition,propositionSupported,eligibleForVerifiedControlling,unsupportedMaterialProposition"
+    ],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": false,
+      "citationSupportsProposition": false,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "eligibleForVerifiedControlling": false,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": false
+    },
+    "reason": "unsafe_value_fields:citationRelevant,citationSupportsProposition,propositionSupported,eligibleForVerifiedControlling,unsupportedMaterialProposition"
+  },
+  "answerSupportPresent": true,
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": false,
+  "answerSupportStage": "llm",
+  "answerSupportGates": {
+    "structural": true,
+    "answerResponsive": true,
+    "primaryIssueAnswered": true,
+    "requiredIssueKeysCovered": true,
+    "materialExceptionsCovered": true,
+    "materialAlternativesCovered": true,
+    "citationRelevant": false,
+    "citationSupportsProposition": false,
+    "substantive": true,
+    "propositionSupported": false,
+    "materiallyComplete": true,
+    "eligibleForVerifiedControlling": false,
+    "contradictsSources": true,
+    "unsupportedMaterialProposition": false
+  },
+  "answerSupportReason": "unsafe_value_fields:citationRelevant,citationSupportsProposition,propositionSupported,eligibleForVerifiedControlling,unsupportedMaterialProposition",
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 27",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR 9-1998",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "ac5186e55fda2b2f",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

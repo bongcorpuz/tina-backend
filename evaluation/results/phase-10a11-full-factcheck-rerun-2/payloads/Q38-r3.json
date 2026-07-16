@@ -1,0 +1,107 @@
+{
+  "runId": "Q38-r3",
+  "caseId": "Q38",
+  "runNumber": 3,
+  "prompt": "Is a new business required to register with the BIR, and what form is used?",
+  "defectClusterTag": null,
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 15259,
+  "answer": "### Short Answer\nYes, a new business is required to register with the Bureau of Internal Revenue (BIR) before commencing operations. The form used for registration is BIR Form No. 1901 for self-employed individuals or BIR Form No. 1902 for employees earning compensation income.\n\n### Interpretation\n\n### Practical Meaning\nFor new businesses, timely registration with the BIR is crucial to avoid penalties and ensure compliance with tax laws. Utilizing the correct forms (BIR Form No. 1901 or 1902) facilitates proper registration and helps establish a taxpayer's identity within the BIR system, which is essential for fulfilling tax obligations and availing of any tax incentives or benefits.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [
+      "materialExceptionsCovered",
+      "materiallyComplete",
+      "eligibleForVerifiedControlling"
+    ],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [
+      "unsafe_value_fields:materialExceptionsCovered,materiallyComplete,eligibleForVerifiedControlling"
+    ],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": false,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": false,
+      "eligibleForVerifiedControlling": false,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true
+    },
+    "reason": "unsafe_value_fields:materialExceptionsCovered,materiallyComplete,eligibleForVerifiedControlling"
+  },
+  "answerSupportPresent": true,
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": false,
+  "answerSupportStage": "llm",
+  "answerSupportGates": {
+    "structural": true,
+    "answerResponsive": true,
+    "primaryIssueAnswered": true,
+    "requiredIssueKeysCovered": true,
+    "materialExceptionsCovered": false,
+    "materialAlternativesCovered": true,
+    "citationRelevant": true,
+    "citationSupportsProposition": true,
+    "substantive": true,
+    "propositionSupported": true,
+    "materiallyComplete": false,
+    "eligibleForVerifiedControlling": false,
+    "contradictsSources": true,
+    "unsupportedMaterialProposition": true
+  },
+  "answerSupportReason": "unsafe_value_fields:materialExceptionsCovered,materiallyComplete,eligibleForVerifiedControlling",
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "RR No. 11-2018",
+      "authorityType": "RR"
+    },
+    {
+      "label": "RR No. 2-1998",
+      "authorityType": "RR"
+    },
+    {
+      "label": "NIRC Sec. 2",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 3",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 4,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "2e178630045e6e1b",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

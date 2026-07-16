@@ -1,0 +1,99 @@
+{
+  "runId": "Q4-r1",
+  "caseId": "Q4",
+  "runNumber": 1,
+  "prompt": "Are doctors' professional fees subject to VAT?",
+  "defectClusterTag": null,
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 21111,
+  "answer": "### Issue Presented\nAre doctors' professional fees subject to Value-Added Tax (VAT) in the Philippines?\n\n### Short Answer\nDoctors' professional fees are generally exempt from VAT under specific provisions of the National Internal Revenue Code (NIRC).\n\n### Legal Interpretation\n\n### Practical Application\nIn practice, this means that doctors do not need to charge VAT on their professional fees when providing medical services. However, it is essential for medical practitioners to ensure that they are compliant with the requirements set forth in the NIRC and the implementing regulations to maintain their VAT-exempt status. Proper documentation and adherence to the definitions of exempt services are crucial to avoid any potential disputes with the Bureau of Internal Revenue (BIR).",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [
+      "materialExceptionsCovered",
+      "materialAlternativesCovered",
+      "citationSupportsProposition",
+      "propositionSupported",
+      "materiallyComplete",
+      "eligibleForVerifiedControlling",
+      "unsupportedMaterialProposition"
+    ],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [
+      "unsafe_value_fields:materialExceptionsCovered,materialAlternativesCovered,citationSupportsProposition,propositionSupported,materiallyComplete,eligibleForVerifiedControlling,unsupportedMaterialProposition"
+    ],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": false,
+      "materialAlternativesCovered": false,
+      "citationRelevant": true,
+      "citationSupportsProposition": false,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": false,
+      "eligibleForVerifiedControlling": false,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": false
+    },
+    "reason": "unsafe_value_fields:materialExceptionsCovered,materialAlternativesCovered,citationSupportsProposition,propositionSupported,materiallyComplete,eligibleForVerifiedControlling,unsupportedMaterialProposition"
+  },
+  "answerSupportPresent": true,
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": false,
+  "answerSupportStage": "llm",
+  "answerSupportGates": {
+    "structural": true,
+    "answerResponsive": true,
+    "primaryIssueAnswered": true,
+    "requiredIssueKeysCovered": true,
+    "materialExceptionsCovered": false,
+    "materialAlternativesCovered": false,
+    "citationRelevant": true,
+    "citationSupportsProposition": false,
+    "substantive": true,
+    "propositionSupported": false,
+    "materiallyComplete": false,
+    "eligibleForVerifiedControlling": false,
+    "contradictsSources": true,
+    "unsupportedMaterialProposition": false
+  },
+  "answerSupportReason": "unsafe_value_fields:materialExceptionsCovered,materialAlternativesCovered,citationSupportsProposition,propositionSupported,materiallyComplete,eligibleForVerifiedControlling,unsupportedMaterialProposition",
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "b5ea23e7681a3714",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

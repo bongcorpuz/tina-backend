@@ -9051,3 +9051,21 @@ Next task: PHASE-10A11-FULL-FACTCHECK-RERUN-2 (only after an independent R2 revi
 
 Artifacts: PHASE-10A10-R2-MISSING-ANSWERSUPPORT-FAIL-CLOSED-REMEDIATION-1_REPORT.md; evaluation/results/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1.json; evaluation/results/phase-10a10-r2-.../ (pre-edit-reproduction-matrix.json, trust-call-site-inventory.md, r2-run-log.json, payloads x25, evidence-manifest with SHA-256). Code: services/trust-contract.js, services/answer-support-validator.js, services/staging-trust-fixtures.js, tests/phase-10a10-r2-...test.mjs + updated legacy tests/fixtures. Commit 3de68f8.
 ```
+
+## Phase 10A11 Full Fact-Check Rerun 2 -- PHASE 10A11 FULL FACTCHECK RERUN REMEDIATION REQUIRED (2026-07-16):
+
+```text
+PHASE-10A11-FULL-FACTCHECK-RERUN-2 executed by Claude Code (Opus 4.8, low speed): the second full post-remediation rerun of the v3.0 fact-check (50 questions x 3 = 150/150) against the A10-R2 runtime (HEAD 1a8bcc1; runtime lineage 728aba6 + 2e636a1 + 3de68f8, all confirmed ancestors), real staging Supabase retrieval + real OpenAI gpt-4o-mini (generation + validator). Backend sync 0 0. Frontend not modified (0816ac8). Dev Factory not modified (9167002). No runtime/framework/frontend change.
+
+RESULT: the A10/A10-R1/A10-R2 remediations HOLD corpus-wide. The three prior invalid-verified clusters are eliminated: Q5 0/3, Q35 0/3, Q41 0/3 VERIFIED_CONTROLLING. Every one of the 24 VERIFIED_CONTROLLING runs had a PRESENT answerSupport with schemaValid===true AND verifiedEligible===true -- verifiedWithoutValidAttestation=0 (the A10-R1 schema + A10-R2 mandatory-attestation gates hold across the whole corpus). Both prior false refusals resolved (Q23/Q43 -> NO_VERIFIED_AUTHORITY). 0 timeouts, 0 technical failures, 0 persistence failures, 0 unsafe inconsistency, 0 fabricated authorities. Verified audit (24 runs): 13 valid, 10 questionable-completeness (Q30/Q38/Q48/Q6), 1 INVALID. Trust calibration 0.62 -> 0.87; safe under-claims 52.
+
+RESIDUAL P1 (why remediation required): Q8-r2 invalid VERIFIED_CONTROLLING -- a reversed-VAT answer ('leasing a residential unit at PHP15,000/month is subject to VAT'; correct = VAT-exempt) reached verified in 1 of 3 runs (r1/r3 correctly RELATED_AUTHORITY_ONLY). The attestation was structurally VALID (schemaValid+verifiedEligible true); the gpt-4o-mini validator's PH-tax judgment false-approved a wrong answer. This is a VALIDATOR-MODEL COMPETENCE false-negative, NOT a schema/attestation fail-open. Prior nine: 8/9 resolved (Q8 residual). Under the severity rules any invalid VERIFIED_CONTROLLING is a P1.
+
+Severity: P0=0. P1=1 (Q8-r2 invalid verified). P2=4 (validator precision cost / 52 safe under-claims; questionable-completeness verified (10); non-LOA outcome-prediction restriction gap; accessor/getter hardening of isVerifiedAnswerSupport -- R2 independent-review carryover, no live production bypass). P3=1 (validator latency). Security: 0.
+
+Decision: PHASE 10A11 FULL FACTCHECK RERUN REMEDIATION REQUIRED. Phase 10A: REOPENED FOR REMEDIATION. Phase 10B: BLOCKED. Phase 10C: BLOCKED. Adversarial suite: DEFERRED (may NOT proceed). Independent closure review: DEFERRED. The structural trust architecture is proven to hold corpus-wide; the remaining gap is the validator model's tax-correctness competence.
+
+Next task: PHASE-10A12-VALIDATOR-COMPETENCE-REMEDIATION-1 -- raise validator competence on reversed/wrong-treatment answers (a stronger or retrieval-text-grounded validator model and/or a deterministic reversed-treatment guard) to eliminate the Q8-class false-negative; also remediate the accessor-hardening P2; then re-run the fact-check. Independent review of A11 (by a model that did not execute it) precedes A12.
+
+Artifacts: PHASE-10A11-FULL-FACTCHECK-RERUN-2_REPORT.md; evaluation/results/phase-10a11-full-factcheck-rerun-2.json; evaluation/results/phase-10a11-full-factcheck-rerun-2/ (execution-manifest, run-log.json, TINA_Tax_FactCheck_Run_Log_v3_RERUN2_COMPLETED.md, scoring-worksheet.json, payloads x150, evidence-manifest with SHA-256).
+```

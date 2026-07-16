@@ -1,0 +1,61 @@
+{
+  "summary": {
+    "totalRuns": 150,
+    "timeouts": 0,
+    "persistenceFailures": 0,
+    "verifiedControllingRunCount": 24,
+    "validVerifiedControllingCount": 13,
+    "questionableVerifiedControllingCount": 10,
+    "invalidVerifiedControllingCount": 1,
+    "invalidVerifiedRuns": [
+      "Q8-r2"
+    ],
+    "verifiedWithoutValidAttestation": 0,
+    "unansweredNoAuthCases": 16,
+    "safeUnderclaimRuns": 52,
+    "clusters": {
+      "Q5": 0,
+      "Q35": 0,
+      "Q41": 0
+    },
+    "priorNine": {
+      "Q2": 0,
+      "Q8": "1 INVALID (reversed VAT, r2)",
+      "Q9": 0,
+      "Q27": 0,
+      "Q29": 0,
+      "Q31": 0,
+      "Q37": 0,
+      "Q41": 0,
+      "Q49": 0
+    },
+    "priorNineFullyResolved": 8,
+    "priorTwoFalseRefusalsResolved": 2
+  },
+  "verifiedAudit": {
+    "Q12-r1": "valid",
+    "Q12-r2": "valid",
+    "Q12-r3": "valid",
+    "Q15-r1": "valid",
+    "Q15-r2": "valid",
+    "Q30-r1": "questionable",
+    "Q30-r2": "questionable",
+    "Q30-r3": "questionable",
+    "Q32-r1": "valid",
+    "Q32-r2": "valid",
+    "Q32-r3": "valid",
+    "Q38-r1": "questionable",
+    "Q38-r2": "questionable",
+    "Q46-r1": "valid",
+    "Q46-r2": "valid",
+    "Q47-r1": "valid",
+    "Q47-r2": "valid",
+    "Q47-r3": "valid",
+    "Q48-r1": "questionable",
+    "Q48-r3": "questionable",
+    "Q6-r1": "questionable",
+    "Q6-r2": "questionable",
+    "Q6-r3": "questionable",
+    "Q8-r2": "invalid"
+  }
+}

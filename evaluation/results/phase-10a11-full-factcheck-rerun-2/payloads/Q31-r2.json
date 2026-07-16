@@ -1,0 +1,58 @@
+{
+  "runId": "Q31-r2",
+  "caseId": "Q31",
+  "runNumber": 2,
+  "prompt": "What standard deduction is allowed in computing the net estate?",
+  "defectClusterTag": null,
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 8847,
+  "answer": "### Short Answer\n\n### Interpretation\nThe standard deduction serves to simplify the computation of the net estate by allowing a fixed amount to be deducted from the gross estate, thereby reducing the taxable estate. This deduction is particularly beneficial for estates that may not have extensive deductions or for those who wish to avoid the complexities of itemizing deductions.\n\n### Practical Meaning\nThe allowance of a standard deduction of ₱5,000,000 means that estates valued at or below this threshold may not incur estate taxes, as the taxable estate would effectively be zero. For estates exceeding this amount, the standard deduction reduces the taxable base, potentially lowering the estate tax liability significantly. This provision aims to ease the tax burden on heirs and beneficiaries during the transfer of wealth following a decedent's death.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "answerSupportPresent": true,
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "answerSupportStage": "structural",
+  "answerSupportGates": {
+    "structural": false
+  },
+  "answerSupportReason": "empty_primary_answer_section",
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 34",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "6d424afd5e9c7055",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

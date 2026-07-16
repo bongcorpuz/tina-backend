@@ -1,0 +1,89 @@
+{
+  "runId": "Q48-r1",
+  "caseId": "Q48",
+  "runNumber": 1,
+  "prompt": "What conditions must a corporation satisfy to claim a bad debt as a deductible expense?",
+  "defectClusterTag": null,
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 11116,
+  "answer": "### Short Answer\nTo claim a bad debt as a deductible expense, a corporation must demonstrate that the debt is indeed worthless and that it has been previously included in gross income.\n\n### Interpretation\n\n### Practical Meaning\nIn practice, this means that corporations should maintain thorough documentation of their accounts receivable and any collection efforts made. This documentation will be crucial in substantiating the deduction in case of an audit by the Bureau of Internal Revenue (BIR). Additionally, corporations should ensure that the debts they are writing off as bad debts were indeed reported as income in prior periods to qualify for the deduction.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "eligibleForVerifiedControlling": true,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true
+    },
+    "reason": "The answer fully addresses the conditions for claiming a bad debt deduction and is supported by the cited authority."
+  },
+  "answerSupportPresent": true,
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": true,
+  "answerSupportStage": "llm",
+  "answerSupportGates": {
+    "structural": true,
+    "answerResponsive": true,
+    "primaryIssueAnswered": true,
+    "requiredIssueKeysCovered": true,
+    "materialExceptionsCovered": true,
+    "materialAlternativesCovered": true,
+    "citationRelevant": true,
+    "citationSupportsProposition": true,
+    "substantive": true,
+    "propositionSupported": true,
+    "materiallyComplete": true,
+    "eligibleForVerifiedControlling": true,
+    "contradictsSources": true,
+    "unsupportedMaterialProposition": true
+  },
+  "answerSupportReason": "The answer fully addresses the conditions for claiming a bad debt deduction and is supported by the cited authority.",
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 34",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "1a9f5f819f698416",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

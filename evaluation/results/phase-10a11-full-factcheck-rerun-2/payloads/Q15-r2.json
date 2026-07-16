@@ -1,0 +1,93 @@
+{
+  "runId": "Q15-r2",
+  "caseId": "Q15",
+  "runNumber": 2,
+  "prompt": "How is MCIT computed and when does it apply?",
+  "defectClusterTag": null,
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 22720,
+  "answer": "### Issue Presented\nHow is the Minimum Corporate Income Tax (MCIT) computed and when does it apply?\n\n### Short Answer\nThe Minimum Corporate Income Tax (MCIT) is computed at a rate of 2% of the gross income as of the end of the taxable year, applicable starting from the fourth taxable year following the year in which the corporation commenced its business operations, provided that the MCIT exceeds the regular corporate income tax for that year.\n\n### Controlling Authorities\n- **RR 9-1998**: This regulation provides the implementing rules for the MCIT.\n\n### Legal Interpretation\n\n### Practical Application\nCorporations should monitor their gross income and tax liabilities closely, especially as they approach the fourth year of operations. If the MCIT is greater than the RCIT, they must prepare to remit the MCIT. Additionally, any excess MCIT paid can be carried forward and credited against the normal income tax for the next three taxable years. This mechanism ensures that corporations are not unduly penalized during periods of low profitability, allowing for tax relief in subsequent years.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "eligibleForVerifiedControlling": true,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true
+    },
+    "reason": "The answer correctly addresses the computation and application of MCIT with relevant citations."
+  },
+  "answerSupportPresent": true,
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": true,
+  "answerSupportStage": "llm",
+  "answerSupportGates": {
+    "structural": true,
+    "answerResponsive": true,
+    "primaryIssueAnswered": true,
+    "requiredIssueKeysCovered": true,
+    "materialExceptionsCovered": true,
+    "materialAlternativesCovered": true,
+    "citationRelevant": true,
+    "citationSupportsProposition": true,
+    "substantive": true,
+    "propositionSupported": true,
+    "materiallyComplete": true,
+    "eligibleForVerifiedControlling": true,
+    "contradictsSources": true,
+    "unsupportedMaterialProposition": true
+  },
+  "answerSupportReason": "The answer correctly addresses the computation and application of MCIT with relevant citations.",
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 27",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR 9-1998",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "1b9e818ceb813594",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

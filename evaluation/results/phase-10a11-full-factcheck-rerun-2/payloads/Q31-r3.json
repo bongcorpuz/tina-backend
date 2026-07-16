@@ -1,0 +1,58 @@
+{
+  "runId": "Q31-r3",
+  "caseId": "Q31",
+  "runNumber": 3,
+  "prompt": "What standard deduction is allowed in computing the net estate?",
+  "defectClusterTag": null,
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 8069,
+  "answer": "### Short Answer\n\n### Interpretation\nThe standard deduction serves to reduce the taxable estate, thereby lowering the estate tax liability. This deduction is applicable to the estate of a decedent who is a resident citizen, providing a significant tax relief in the estate tax computation.\n\n### Practical Meaning\nThe P5,000,000 standard deduction effectively means that the first P5,000,000 of the estate's value is exempt from estate tax, which can be particularly beneficial for families managing the estate of a deceased loved one. This provision simplifies the estate tax calculation and provides a financial cushion during a challenging time.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "answerSupportPresent": true,
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "answerSupportStage": "structural",
+  "answerSupportGates": {
+    "structural": false
+  },
+  "answerSupportReason": "empty_primary_answer_section",
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 34",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "70625530b6a53493",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "runId": "Q7-r3",
+  "caseId": "Q7",
+  "runNumber": 3,
+  "prompt": "How is input VAT treated when goods or services are used for both VATable and VAT-exempt sales?",
+  "defectClusterTag": null,
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 11826,
+  "answer": "### Short Answer\n\n### Controlling Authorities\n2. **Revenue Regulations No. 16-2005** - These regulations implement the provisions of the NIRC regarding VAT, including the allocation of input VAT.\n\n### Interpretation\n\n### Practical Meaning\nIn practice, businesses must carefully track their sales to determine the correct allocation of input VAT. This involves calculating the percentage of total sales that are VATable versus exempt and applying this ratio to the input VAT incurred on purchases. Failure to properly allocate input VAT can result in disallowed claims and potential penalties during tax audits. Therefore, maintaining accurate records and documentation is crucial for compliance and maximizing VAT recovery.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "answerSupportPresent": true,
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "answerSupportStage": "structural",
+  "answerSupportGates": {
+    "structural": false
+  },
+  "answerSupportReason": "empty_primary_answer_section",
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "RR No. 16-2005",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "2144f499f4ba59f0",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

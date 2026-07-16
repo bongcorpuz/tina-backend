@@ -1,0 +1,64 @@
+{
+  "runId": "Q41-r3",
+  "caseId": "Q41",
+  "runNumber": 3,
+  "prompt": "What is the penalty for failure to issue a BIR-registered invoice?",
+  "defectClusterTag": "Q41-invoice-penalty-responsiveness",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 20813,
+  "answer": "### Short Answer\n\nThis penalty applies to any person who fails to issue a receipt or invoice as required by the tax code, which is essential for proper tax documentation and compliance. The BIR has the authority to enforce these penalties to ensure adherence to tax regulations.\n\nFor further details, you may refer to the relevant provisions in the NIRC, particularly Section 238, which outlines the penalties for violations related to invoicing and receipt issuance.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "citation-relevance",
+    "gates": {
+      "structural": true,
+      "citationRelevant": false
+    },
+    "reason": "displayed_sources_only_foundational_provisions"
+  },
+  "answerSupportPresent": true,
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "answerSupportStage": "citation-relevance",
+  "answerSupportGates": {
+    "structural": true,
+    "citationRelevant": false
+  },
+  "answerSupportReason": "displayed_sources_only_foundational_provisions",
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 2",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 3",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "ca4911be15dc90a6",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

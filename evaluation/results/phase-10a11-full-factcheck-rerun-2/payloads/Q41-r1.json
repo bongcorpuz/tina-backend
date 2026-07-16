@@ -1,0 +1,64 @@
+{
+  "runId": "Q41-r1",
+  "caseId": "Q41",
+  "runNumber": 1,
+  "prompt": "What is the penalty for failure to issue a BIR-registered invoice?",
+  "defectClusterTag": "Q41-invoice-penalty-responsiveness",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 13365,
+  "answer": "### Short Answer\n\nIn summary, the failure to issue a BIR-registered invoice can lead to both monetary fines and potential imprisonment, emphasizing the importance of compliance with invoicing requirements in the Philippines.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "citation-relevance",
+    "gates": {
+      "structural": true,
+      "citationRelevant": false
+    },
+    "reason": "displayed_sources_only_foundational_provisions"
+  },
+  "answerSupportPresent": true,
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "answerSupportStage": "citation-relevance",
+  "answerSupportGates": {
+    "structural": true,
+    "citationRelevant": false
+  },
+  "answerSupportReason": "displayed_sources_only_foundational_provisions",
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 2",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 3",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 2,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "6d0e456f2a55f9df",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

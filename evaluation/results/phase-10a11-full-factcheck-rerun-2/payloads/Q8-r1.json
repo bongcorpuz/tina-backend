@@ -1,0 +1,114 @@
+{
+  "runId": "Q8-r1",
+  "caseId": "Q8",
+  "runNumber": 1,
+  "prompt": "Is leasing a residential unit at ₱15,000 per month subject to VAT?",
+  "defectClusterTag": null,
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 21624,
+  "answer": "### Issue Presented\nIs leasing a residential unit at ₱15,000 per month subject to Value-Added Tax (VAT)?\n\n### Short Answer\nYes, leasing a residential unit at ₱15,000 per month is subject to VAT under certain conditions, specifically if the lessor is a VAT-registered person.\n\n### Controlling Authorities\nThe relevant provisions are found in the National Internal Revenue Code (NIRC):\n- **Section 106**: Value-Added Tax on Sale of Goods or Properties.\n- **Section 108**: Value-Added Tax on the Sale of Services, Including the Use or Lease of Properties.\n\n### Legal Interpretation\nUnder **Section 106** of the NIRC, VAT is levied on the sale, barter, or exchange of goods or properties, which includes the lease of real properties. **Section 108** further specifies that VAT is applicable to the sale or exchange of services, including the lease of properties. The tax is imposed at a rate of 12% on the gross sales or receipts derived from such transactions. Therefore, if the lessor is engaged in the business of leasing and is VAT-registered, the monthly lease payment of ₱15,000 would be subject to VAT.\n\n### Practical Application\nIf the lessor is not VAT-registered or if the lease pertains to a residential unit that is exempt from VAT under specific provisions (e.g., if the total annual rental income does not exceed ₱3,000,000), then the lease may not be subject to VAT. However, if the lessor is VAT-registered and the lease is for a residential unit, the lessor must charge VAT on the rental amount, resulting in a total monthly payment of ₱16,800 (₱15,000 + ₱1,800 VAT). It is essential for lessors to determine their VAT registration status and the nature of the lease to comply with tax obligations.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "limitations": [
+      "POTENTIAL_CONFLICT"
+    ],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [
+      "materialExceptionsCovered",
+      "materialAlternativesCovered",
+      "materiallyComplete",
+      "eligibleForVerifiedControlling"
+    ],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [
+      "unsafe_value_fields:materialExceptionsCovered,materialAlternativesCovered,materiallyComplete,eligibleForVerifiedControlling"
+    ],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": false,
+      "materialAlternativesCovered": false,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": false,
+      "eligibleForVerifiedControlling": false,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true
+    },
+    "reason": "unsafe_value_fields:materialExceptionsCovered,materialAlternativesCovered,materiallyComplete,eligibleForVerifiedControlling"
+  },
+  "answerSupportPresent": true,
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": false,
+  "answerSupportStage": "llm",
+  "answerSupportGates": {
+    "structural": true,
+    "answerResponsive": true,
+    "primaryIssueAnswered": true,
+    "requiredIssueKeysCovered": true,
+    "materialExceptionsCovered": false,
+    "materialAlternativesCovered": false,
+    "citationRelevant": true,
+    "citationSupportsProposition": true,
+    "substantive": true,
+    "propositionSupported": true,
+    "materiallyComplete": false,
+    "eligibleForVerifiedControlling": false,
+    "contradictsSources": true,
+    "unsupportedMaterialProposition": true
+  },
+  "answerSupportReason": "unsafe_value_fields:materialExceptionsCovered,materialAlternativesCovered,materiallyComplete,eligibleForVerifiedControlling",
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 106",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 105",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 107",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 108",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "RR 16-2005",
+      "authorityType": "RR"
+    }
+  ],
+  "displayedSourceCount": 5,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "1a306e5f967b4982",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "runId": "Q31-r1",
+  "caseId": "Q31",
+  "runNumber": 1,
+  "prompt": "What standard deduction is allowed in computing the net estate?",
+  "defectClusterTag": null,
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 9329,
+  "answer": "### Short Answer\n\n### Interpretation\nThe standard deduction serves to reduce the taxable estate, thereby lowering the estate tax liability. This deduction is applicable to the estate of a decedent who is a resident citizen, providing a significant tax relief in the estate tax computation.\n\n### Practical Meaning\nFor estate planning and tax compliance, the P5,000,000 standard deduction can be a crucial factor in determining the net estate subject to tax. Executors and estate administrators should ensure that this deduction is properly accounted for to minimize the estate tax burden on the heirs.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "answerSupportPresent": true,
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "answerSupportStage": "structural",
+  "answerSupportGates": {
+    "structural": false
+  },
+  "answerSupportReason": "empty_primary_answer_section",
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 34",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "d3b13c4699c3d5a0",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

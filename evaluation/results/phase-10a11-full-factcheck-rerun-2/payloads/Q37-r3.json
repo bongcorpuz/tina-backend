@@ -1,0 +1,58 @@
+{
+  "runId": "Q37-r3",
+  "caseId": "Q37",
+  "runNumber": 3,
+  "prompt": "What is the BIR assessment period when a taxpayer filed a return?",
+  "defectClusterTag": null,
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 8965,
+  "answer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nFor taxpayers, this means they should maintain accurate records for at least three years after filing their returns, as they may be subject to audits or assessments during this period. For the BIR, it establishes a clear timeframe to ensure compliance and enforce tax laws effectively.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "answerSupportPresent": true,
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "answerSupportStage": "structural",
+  "answerSupportGates": {
+    "structural": false
+  },
+  "answerSupportReason": "empty_primary_answer_section",
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 22",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "419bdd2c3dbdf06f",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

@@ -1,0 +1,777 @@
+{
+  "generatedAtUtc": "2026-07-16T00:54:44.410Z",
+  "evidenceDirectory": "evaluation/results/phase-10a11-full-factcheck-rerun-2/",
+  "fileCount": 154,
+  "files": [
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/TINA_Tax_FactCheck_Run_Log_v3_RERUN2_COMPLETED.md",
+      "bytes": 4897,
+      "sha256": "5b8d95fdba4e76b6d0355470deb74b6948f90cb090b37e33dba044938e38c03d"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/execution-manifest.json",
+      "bytes": 46748,
+      "sha256": "9112c8486b51c0111eda291715d45b027064426bf76b51c44f5a14cde81387ff"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q1-r1.json",
+      "bytes": 4554,
+      "sha256": "30ecc3e38c49984c5cbc9b2c6072306d867e07ee112447621af015f3cc9f0857"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q1-r2.json",
+      "bytes": 4554,
+      "sha256": "54c7658eec4d9a942f0c1608e21433a5f865d6753b1e3f1d6c99ebed81ab3f77"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q1-r3.json",
+      "bytes": 4405,
+      "sha256": "f5db2f3213a76cb4e5c6e86150565e25d8e51161661ea46992aacd51090f875c"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q10-r1.json",
+      "bytes": 1226,
+      "sha256": "9d7ee7d8a04d0e1b0a1355ee0cdca6c4b6a39970eba441bb79f69dae78d352c4"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q10-r2.json",
+      "bytes": 1226,
+      "sha256": "65405ef79716d671469a28e9bece7ca1bc71006e3e0ddd44e7fbb23ce2cdb15c"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q10-r3.json",
+      "bytes": 1425,
+      "sha256": "d23f63deeefa4970b3cfa4014fab553f82a906fd4a6f3e991ae76585a05589c5"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q11-r1.json",
+      "bytes": 1405,
+      "sha256": "040cf441a49e7fabe93e1767c0c5829b087d53bdc98317dc6cf35f3b91f7d216"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q11-r2.json",
+      "bytes": 1405,
+      "sha256": "fb9d2c9b9b86b453d9d5d2e937bdfdefdd5c3282ae3962bdd96f96718b9a8882"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q11-r3.json",
+      "bytes": 1405,
+      "sha256": "3bce84a4a85599359f8a070bf78b6c4183c274a484d3896d35153cbe58fa1033"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q12-r1.json",
+      "bytes": 3964,
+      "sha256": "0a01d628dafcedcc2083923fd51b2828f988d029d89de88a8302de1e81556a84"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q12-r2.json",
+      "bytes": 4020,
+      "sha256": "0a51af55e19f2600b5b60feaee5d0929af020ea533e92877320c7b5e9542c306"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q12-r3.json",
+      "bytes": 3967,
+      "sha256": "b92c91831567656ad47b17683918c56323e36c967c3cd07343c57689c331bb8c"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q13-r1.json",
+      "bytes": 4527,
+      "sha256": "ea6fb49961fd742d4e30d2308dab864af4c18c377f97c9240a116ded5a2aa47b"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q13-r2.json",
+      "bytes": 4311,
+      "sha256": "aa64bb3ed1baa9dac0b8b471729b606ffe82d50175026ebef83af4ab80d47d54"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q13-r3.json",
+      "bytes": 4592,
+      "sha256": "126cd0642ec5457d42457e01c4483825de0e55c6ac046815d25206bff8358318"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q14-r1.json",
+      "bytes": 3963,
+      "sha256": "7b0e9cbba5380d5f201f08039635e93ab3d25d7c8becd1a1e17c0ff9192c659a"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q14-r2.json",
+      "bytes": 4089,
+      "sha256": "8bed071c5735bda70582d7f986fdc2d17e269d4d13b8f396e80c5dcba6345ca4"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q14-r3.json",
+      "bytes": 1946,
+      "sha256": "4bb3db13e8464cbec1b8e4f353925f8a7339ee9662a167eaffdedfd6750ec234"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q15-r1.json",
+      "bytes": 3950,
+      "sha256": "dbf3c6d2d1f8e0a1fbe023e62ef953e5e41c6e5d7e6adf9fa90b97b3f4310aaa"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q15-r2.json",
+      "bytes": 3899,
+      "sha256": "b9aeea8e5e3f3ed0e9fb5f8239cf96dbd7de8b507d24bec6ba9f46f2ac1af009"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q15-r3.json",
+      "bytes": 4429,
+      "sha256": "773c6b1bb4feb06fd625d91d3a497d3f010ca4f9ba1bd1be259769b5e903fc10"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q16-r1.json",
+      "bytes": 1380,
+      "sha256": "ab13338404ba165f6d31d8fceb465563416404ed365a92ec754a88afd2fc1207"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q16-r2.json",
+      "bytes": 1380,
+      "sha256": "77897ef26a1fe65b6701535cd3c433abf96bbecff597c57be67d7bfd36304e26"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q16-r3.json",
+      "bytes": 1380,
+      "sha256": "59d59aecbd000f8cc1869cc34bc94c19693c4f47399d17e79fa557145985772f"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q17-r1.json",
+      "bytes": 1440,
+      "sha256": "d3a20199ef35067fd2304c83d97e10c361e32fc05a60af8e0b6696e95b11446f"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q17-r2.json",
+      "bytes": 1440,
+      "sha256": "8cc303b9f1d30c7c94cf2045cea9eb2a686c9ffef66b8b49add7f036b8472448"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q17-r3.json",
+      "bytes": 1440,
+      "sha256": "161a91067468e45d1adf305787cf2b6ff11416ef75937dd411543f8e12d7f8b0"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q18-r1.json",
+      "bytes": 1447,
+      "sha256": "d125ff5dc0df84c20351eef83a78516d3fadacbb268b6ca45035a7077068acab"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q18-r2.json",
+      "bytes": 1447,
+      "sha256": "3a24a90341beb1016338660d8ddfbcdcb27a6d8c4f070eb4ed894a90073f2e3b"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q18-r3.json",
+      "bytes": 1447,
+      "sha256": "3f37010871887edb0b72db877693e9438db1f0a6b996a2ab25c571f1942f50b7"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q19-r1.json",
+      "bytes": 1488,
+      "sha256": "cf8bd30401b8924ae55620b85bfa9b8b06f2622004c0997fa7601bbde45e2533"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q19-r2.json",
+      "bytes": 1510,
+      "sha256": "17702b541a9c9fb2fd7dbc15e8da3727cd4c9750621c900aeecd83a02ac5ad24"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q19-r3.json",
+      "bytes": 1511,
+      "sha256": "0a80b1fa2655d77c132275e96a83c9f37c417b261b221a812c0c97292076dbc5"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q2-r1.json",
+      "bytes": 4469,
+      "sha256": "0d402e79688c580b01c6eb684cb107cd730c9fa4718872b31620275ea1946dba"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q2-r2.json",
+      "bytes": 4430,
+      "sha256": "55dc80a4bd9d2e39b781eca155e793e4ea45ff1a5ba7e5095117d86f56060acb"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q2-r3.json",
+      "bytes": 4362,
+      "sha256": "6acfeb5dcf01e60413118563ca4067d8e297bf0c76ff2fb819eab2b7d9341512"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q20-r1.json",
+      "bytes": 1422,
+      "sha256": "e3dcc2fd58cb69652464aba3a8a95417364c03150086b59e2153749da53088c4"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q20-r2.json",
+      "bytes": 1422,
+      "sha256": "8d20c41936ac3311ceaa0de2e9d5ff99479a787cfa3feabf06c1729320ab0ee1"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q20-r3.json",
+      "bytes": 1422,
+      "sha256": "f5d353b371b12bb9ad3b8b7a7c22731a3731d8ff04774130e4fe79c5b2e8f2fe"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q21-r1.json",
+      "bytes": 1376,
+      "sha256": "915ceac0759d4db8bbcc88be99f1fe1c751ab7f52673e61c1812b59e700d133c"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q21-r2.json",
+      "bytes": 1376,
+      "sha256": "0bba273ec642034554b3cb4437fb97582c0ed7b7218690cf0d9aea6a34d444f1"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q21-r3.json",
+      "bytes": 1376,
+      "sha256": "28c0e09b43095424f7c4b028bb63950a73ab7d63e7a5e8d765a1c0b91c992554"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q22-r1.json",
+      "bytes": 1421,
+      "sha256": "68110948df42038a89193bfa24726a5b470102aac8bbe037fdf82eccf63fea00"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q22-r2.json",
+      "bytes": 1421,
+      "sha256": "c4e9340470ff37595381c073b8d35322189e863ec3be1407a38f1a46009c0bcb"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q22-r3.json",
+      "bytes": 1421,
+      "sha256": "095564cb9e9957200d2bf8f2b74d1e4ba0d6f7071c36a4a1d6ca4446c2fde804"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q23-r1.json",
+      "bytes": 1415,
+      "sha256": "80d8a841c078634463ed15d0a26a308ceba2fe37520653da58d7523dc52f5f23"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q23-r2.json",
+      "bytes": 1415,
+      "sha256": "19ca98d7db0f318b10789915db2f65aa552684ab6a3f862a2dfc0b79c78880dc"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q23-r3.json",
+      "bytes": 1415,
+      "sha256": "0eb830e944e93cd9f4f8a55909f0f2ccf2bf1bea467c7b6155b7c69091a5d413"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q24-r1.json",
+      "bytes": 4253,
+      "sha256": "c3502a3ca0e2368ba5887820c3c0d213de2c5b4e0bf4f017d40f109443a5d18e"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q24-r2.json",
+      "bytes": 4184,
+      "sha256": "e223d46f612f7fee492dbaab7b7a5cecc3608afe95d74d910e5234b018eb0f85"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q24-r3.json",
+      "bytes": 4269,
+      "sha256": "ecf3878e825ec655912d92b07a3716fa60809a7c6939bfe28070db07365d16b8"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q25-r1.json",
+      "bytes": 2693,
+      "sha256": "5e0738301669ca9f9326431e5ced0bab7f015a60e9f5b1f25e32075a50f59d29"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q25-r2.json",
+      "bytes": 3950,
+      "sha256": "24a742e3fddb7e4a68c01d7ef300307152ade3b4bd4e3d6304c696fbe4aead9e"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q25-r3.json",
+      "bytes": 3773,
+      "sha256": "19782e0be35416a0c445e84620bf922b6a88785b31ce0267a55f95ffb934fdff"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q26-r1.json",
+      "bytes": 3886,
+      "sha256": "3358cea458038996de3bd4596bc0e18dd883de03cfd216c2483f5fa242a9cffc"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q26-r2.json",
+      "bytes": 4029,
+      "sha256": "7044c6c65e7ebdc8429415ac3aa0717d556d60672775d99b3b54e3e422e3d9a1"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q26-r3.json",
+      "bytes": 3818,
+      "sha256": "ce58d3977157de5bce5df20b4b277c1725f368f4a1bc862de3d46b2c69346bbc"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q27-r1.json",
+      "bytes": 3873,
+      "sha256": "f6e0587399e5510c0b4bd1b95366b7cdc17f9772496f31ab881471e2bd44a2dd"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q27-r2.json",
+      "bytes": 4082,
+      "sha256": "77a702002bf87494a0333fc5c64de2f5cac217c8112fb266e697b881f88a93ee"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q27-r3.json",
+      "bytes": 3869,
+      "sha256": "78fc513551f651457eba6e23bd7ad900fa9c0dc311be95df579b04798c10b093"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q28-r1.json",
+      "bytes": 4309,
+      "sha256": "c9b1a64fb5c48d676a617f05a3ce713824aff390b4d4577f4afd751012728ae8"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q28-r2.json",
+      "bytes": 4258,
+      "sha256": "7107696de2256b144d8b9e08a36f3a27797d09efc02582a320821c29cac51d86"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q28-r3.json",
+      "bytes": 4383,
+      "sha256": "82cb0cf52774b308958202c474e5dfd434684a2f28d542fb78f009565373607d"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q29-r1.json",
+      "bytes": 4326,
+      "sha256": "d6a1d1409a61493492bdbbaa2fa8229fd220f666f7553b0dbe0e26296944a72c"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q29-r2.json",
+      "bytes": 4378,
+      "sha256": "d81b859a4006d1f078f37dffa2c7bbe5482ef13b5cdc70b4e25287f93a198695"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q29-r3.json",
+      "bytes": 4237,
+      "sha256": "e21b378f749b86c95bd7c621509a77b7acaa936c1be9143a807b6046c235dbb0"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q3-r1.json",
+      "bytes": 4097,
+      "sha256": "70fda58c83f946541a591d6b73b599659a0a558bc5b1d6fff762db6b3320c039"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q3-r2.json",
+      "bytes": 4450,
+      "sha256": "7caa89ad9213494da29181a2beb80b433ce8eb9c5e45067f7eaab114cade52ad"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q3-r3.json",
+      "bytes": 4048,
+      "sha256": "de166784e6e233f272550f771f8aa542e3184864d8bf9d53a7bb4da2a73a4333"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q30-r1.json",
+      "bytes": 3892,
+      "sha256": "bd47a33ef5aab0a1d9b2f27b0398c5f1ada09996a8fbaeea4ec86b6dbad4adf1"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q30-r2.json",
+      "bytes": 3900,
+      "sha256": "98913e3efb783dc02a4a1313ae542bc52cfd35a29156967694f35991badf6852"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q30-r3.json",
+      "bytes": 3868,
+      "sha256": "ed8fe87cfa18f088103e90f49444253bd257982b7dc7b0da9fc43eee885bee5e"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q31-r1.json",
+      "bytes": 2130,
+      "sha256": "bd29fa5c69862a893d2c2dff09c202a0f2efde0c238f4d4bfebb74f425cb0225"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q31-r2.json",
+      "bytes": 2392,
+      "sha256": "96cb9984e0f9df1f2a69cfb65b3021de47e17e22563d73198db3110ca759ce7c"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q31-r3.json",
+      "bytes": 2177,
+      "sha256": "fb487e6af0c63990de6d9214942ecf30688a5af77510a6bbf772c23431851647"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q32-r1.json",
+      "bytes": 4405,
+      "sha256": "5bff6bfcff73e2ed704577338b4dd5f33aaa2f8dedecbacddb73264652419451"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q32-r2.json",
+      "bytes": 4330,
+      "sha256": "f216e7a022cc0692c60ef2ee8f2b918625c734c9e04ce6ba21cfab2b7a5a4116"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q32-r3.json",
+      "bytes": 4291,
+      "sha256": "fc4f9478385c0df03e746322999ddc7b6c76eb9c30a5b7c1144802f2119f94c6"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q33-r1.json",
+      "bytes": 3808,
+      "sha256": "62b3a8504a4f2b7fd5e43bfaddfbd55745b5823e26c498f16b1161e8e58a5fa7"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q33-r2.json",
+      "bytes": 3760,
+      "sha256": "f288875a5dbf6149f364b8a230cf6eea6ffa117220abe810249be7cf9de2f34a"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q33-r3.json",
+      "bytes": 3575,
+      "sha256": "325a9e4bd58e3f12621889a94bbcad3a3a4827b6fac4a17d900b9d0aa37df3aa"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q34-r1.json",
+      "bytes": 3542,
+      "sha256": "da5dba9212351bd886c72a412a0396dd78a0abdb5f033ae1c698fa49dae20fbe"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q34-r2.json",
+      "bytes": 3544,
+      "sha256": "29b1994331f429473f2fc204614a54cd7c95418096602ef2f09e74085f68fd68"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q34-r3.json",
+      "bytes": 3442,
+      "sha256": "4a1022945fb85baec160308e3f2ed8753416a6335362373903bbb66a7295661a"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q35-r1.json",
+      "bytes": 2804,
+      "sha256": "e5f28a48aa3a58996f2350bef8bf4344d57fb3bcf4de2596bc5ee915f8080f5d"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q35-r2.json",
+      "bytes": 2656,
+      "sha256": "575086aab515562b6494cfac90dc944b3a79b451e090a603546f9227cff7e1ab"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q35-r3.json",
+      "bytes": 2655,
+      "sha256": "e2b0b3d4bef50d226a9e35459301531a71ce9b83500bc5893094aab994fc4a54"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q36-r1.json",
+      "bytes": 4629,
+      "sha256": "dd1ff887279d1bf8aea5b2037fc4bd28567e2d22ae581b525272edb949e2af55"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q36-r2.json",
+      "bytes": 4228,
+      "sha256": "e451bf7b7e03f013b6f8b725a4a99796f86caa9966cd7adf5603913b86dc3461"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q36-r3.json",
+      "bytes": 4736,
+      "sha256": "43b8c607e6278784db04cd34226bcce7f5eec135c3b5d883c46c2b2425d1c8fd"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q37-r1.json",
+      "bytes": 2083,
+      "sha256": "c72c2695e176f1c8736adc647ff0899aac9332d38491c748d5cdf02a05c5dec0"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q37-r2.json",
+      "bytes": 3504,
+      "sha256": "7f1de1dc0f6245e6f066f9a0a73d523c32c7a8d6d66b1cb32ade71aed367f653"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q37-r3.json",
+      "bytes": 1876,
+      "sha256": "7b9156192ae36ef4dd81032ce37fd6661a99c9041b9c1bde2b07fa5877e4bfcf"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q38-r1.json",
+      "bytes": 3684,
+      "sha256": "146bca7bb3433d8db181bbf7ae3e8b2ad752599f7297fe770b111de5d6ac185d"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q38-r2.json",
+      "bytes": 3667,
+      "sha256": "5f1b39072cb950ce8e0878329323669e84b6f2ed717dd92b7b08aa138655a42d"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q38-r3.json",
+      "bytes": 3894,
+      "sha256": "747d9270eca3fe716a7a0ada39669c93ecfe63f4e74d383ca88972f604a9b1d4"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q39-r1.json",
+      "bytes": 1402,
+      "sha256": "c6a28bfa136386a6a193b255548b3d372dc93f73b7d99cd82f750d60ae9371b2"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q39-r2.json",
+      "bytes": 1402,
+      "sha256": "e04c43c2a9e91dfda2b450579e306da3df9a6a7181f800699b8be172fd9b0468"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q39-r3.json",
+      "bytes": 1402,
+      "sha256": "a65b0c8500de28fb4b2045925469d2b696ab506b24591ca3e798e4e4cceab905"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q4-r1.json",
+      "bytes": 4210,
+      "sha256": "f9b9aed48a89de3ee361d531c165c725e3709a5b7ee54ee547ca70301ca145b3"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q4-r2.json",
+      "bytes": 2541,
+      "sha256": "ccb2802b5c26ee0db3a08acfc351eb601972a74d565b145d2d9f5f697a8acd03"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q4-r3.json",
+      "bytes": 2409,
+      "sha256": "ddc822be70cafdaded595d97dfa416e1add1733c28fb159efe6ff14e1f2429a3"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q40-r1.json",
+      "bytes": 1432,
+      "sha256": "9b29c2c1cee164defc9ed4b05a2f5b45dd94aef261df36c958e0a1ed97f32d28"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q40-r2.json",
+      "bytes": 1432,
+      "sha256": "f9de69ae0a89ae07a35eb864caa522f14487b2335c8bcb2b4d84c7a1ffec87a7"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q40-r3.json",
+      "bytes": 1432,
+      "sha256": "8809f821ca33751950796eb5954f1ab6cb4bfb41e4d774f20d8c29298ac1fcd3"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q41-r1.json",
+      "bytes": 1975,
+      "sha256": "d46c53053c7c25ba52c7fce1dcb74ee3ac56edf549687d97c20d095bd7b4cdac"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q41-r2.json",
+      "bytes": 4218,
+      "sha256": "1d330e136762db59153936f27f5262643510f5a54655ee772e562ba688067276"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q41-r3.json",
+      "bytes": 2220,
+      "sha256": "0ff1da58a3dd9d9df63bbcbd5f3676f72515532c3144046f91cc91196b126f23"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q42-r1.json",
+      "bytes": 1414,
+      "sha256": "99787be47fb1d66a3583bb57a1b2f74ae3eae9b55a7487568b713156af5fa0e2"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q42-r2.json",
+      "bytes": 1414,
+      "sha256": "5b4b7cd3ff425afd6ffb0877461c74b35ca83f76b67f57223db376e2be4b16c9"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q42-r3.json",
+      "bytes": 1414,
+      "sha256": "c66314b295218d0d49def36ed2f35c7625d46a03228298fd3a009fb97b34a75a"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q43-r1.json",
+      "bytes": 1378,
+      "sha256": "947fd07393497872fd3fd04e64296d26c94a67e90de0a463073c73326d532af6"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q43-r2.json",
+      "bytes": 1378,
+      "sha256": "79719bb2c635a2d3f038725917035dd158b1d938685ec8f2e705ba6f09fe9265"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q43-r3.json",
+      "bytes": 1378,
+      "sha256": "a56f5fb7080dfb0a31601c55139437acdf82deb9ccd75dfc8b28967be8011f63"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q44-r1.json",
+      "bytes": 1410,
+      "sha256": "ef23b76f45376d3bba6c226095c2a85566c7a4db283d59f13bfd9da5bf4a0978"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q44-r2.json",
+      "bytes": 1410,
+      "sha256": "392ad1621b902e28c3e9d2e52e09e208d6a8228860db6939557b16e70b65e312"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q44-r3.json",
+      "bytes": 1410,
+      "sha256": "261246edfb3f1e70a41ba7ad4b6c71cd5f57b642993bac2bd90ab31dea7011a3"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q45-r1.json",
+      "bytes": 4818,
+      "sha256": "e4f2e5d44746fe0dbe3489e1d950172fde0a7063d4fbb60ae74d388a8ea0f2cb"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q45-r2.json",
+      "bytes": 4823,
+      "sha256": "b851d6a8798af0dfbac17068f3aa5466da2b82045c83528b0c87abf235f58982"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q45-r3.json",
+      "bytes": 5002,
+      "sha256": "57d92bf860d985113e9ab022a4397efe1a328d6c5e20ef56f5e74c939be5de52"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q46-r1.json",
+      "bytes": 4875,
+      "sha256": "ef365e01c91f9ee8e28fb8d790298b23d43d9261e593bae807bb8396124590d2"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q46-r2.json",
+      "bytes": 4790,
+      "sha256": "c5d680b900274cb8f031e0a10129232c86059f3d9b0d720f98ac7acf28d4fe3a"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q46-r3.json",
+      "bytes": 5212,
+      "sha256": "90fb2dcbfc9ba89a70253ddb1bdf92457cb3631c69d15ea265db6d92ecf7dcdf"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q47-r1.json",
+      "bytes": 4178,
+      "sha256": "0a3cbb32170fca28f1c017a2cf90f52049658ee77915d63f05d28502478b842a"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q47-r2.json",
+      "bytes": 4094,
+      "sha256": "2ef0d2182bf2a0c9e8fff4a758f5c655decc7d7af4d8ee47c9690afe11cc8691"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q47-r3.json",
+      "bytes": 4156,
+      "sha256": "c49f70c9c7f5ee74872f24a6ba5af2d2e2d3756c74172f5f157179098a297ef6"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q48-r1.json",
+      "bytes": 3474,
+      "sha256": "1fd7581a0811dfe793ca7be2c381e06f3615e35d85d946590e1cd286c22bce29"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q48-r2.json",
+      "bytes": 3779,
+      "sha256": "87b151e67e2c4bc01bbab34f17023744b4c9f0307d20767107679b868f3a8450"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q48-r3.json",
+      "bytes": 3787,
+      "sha256": "351fbee45607335db2686d6f25f16b32dc1d90135e759a8ae7530c9d2a7cd5d1"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q49-r1.json",
+      "bytes": 5104,
+      "sha256": "2036fbb1eb225fcd806665d1becd0616aef19ff7a8cc27e390439ec3e9ff78bf"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q49-r2.json",
+      "bytes": 4538,
+      "sha256": "40f4367e0dfc4469050a5e46f0204b94916cc060485b2d04b8080294c77b15ad"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q49-r3.json",
+      "bytes": 4949,
+      "sha256": "a94f318c8423ec086ed850787fa4538ebd2b6f0d6e712406e83fd6d8fae1990e"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q5-r1.json",
+      "bytes": 4611,
+      "sha256": "01510d72a2308f567e7cb37a808c70e155a0c09ebd1395078bc1d68e5677eb41"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q5-r2.json",
+      "bytes": 4708,
+      "sha256": "e372a47b82febc93e8126a5bab3c8abd753a7b6d93157139e07f99f217592999"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q5-r3.json",
+      "bytes": 4677,
+      "sha256": "7b59b1ed102d4efdff0e83e4bfca7e3934df5c6e5e2ba3d8c7200df8c22225ac"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q50-r1.json",
+      "bytes": 1397,
+      "sha256": "46acbd41f5e34b2557642e6d7fb0a788d6e3214ce9d202358896aa1a90954ae9"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q50-r2.json",
+      "bytes": 1397,
+      "sha256": "882d461582c54fc98944ae837664972c9cd99ec6dfdb82862a926ee06743e9c0"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q50-r3.json",
+      "bytes": 1396,
+      "sha256": "b4c569267b0295505cf4c6ae69ed4d3792559298fc98d3c92dd7ca2b8b44b19a"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q6-r1.json",
+      "bytes": 3926,
+      "sha256": "d792a731b3ebbbf43428e54ca87582decaf353516ce368c52eda339467c5e8d3"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q6-r2.json",
+      "bytes": 4094,
+      "sha256": "f8a9e36b976fb2f46ca04807829aeeee470d2402e344d39e5e605071379a113f"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q6-r3.json",
+      "bytes": 4340,
+      "sha256": "163f22116ef249237f6dddd6ba61724ea475de50412c03c2b2cbbf379e2f92af"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q7-r1.json",
+      "bytes": 2207,
+      "sha256": "6e2f3af5329b73f43feddaf12fe1d4077fd9a08f5b30f84f7d0324114350cef3"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q7-r2.json",
+      "bytes": 2128,
+      "sha256": "003d4183776eb9712a3161582c359311e40010586b961e628ca85f9d51b6c9d4"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q7-r3.json",
+      "bytes": 2283,
+      "sha256": "73c4018ed5194b0466bda6b5cf178a7120191721668bda63bd8419eb7858ea29"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q8-r1.json",
+      "bytes": 5172,
+      "sha256": "f6de37439f05abaec2cd8e32fe8d1993993d4d6cc8b033c605757789528c058c"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q8-r2.json",
+      "bytes": 4605,
+      "sha256": "95f0aa1557f0cc00a03c1f5704f6b892e5d6534f4c0dcfac7f2909c185d13d15"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q8-r3.json",
+      "bytes": 5248,
+      "sha256": "618250eaabdfe6becfd6092d3b268e718eefc73f297b3f37a4f85c8f42eec3b4"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q9-r1.json",
+      "bytes": 4701,
+      "sha256": "dde898e5e8aa8b9a3a0294931ad296149865b75b32debc84ab1312b94c5e9c52"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q9-r2.json",
+      "bytes": 4766,
+      "sha256": "1b50571bcf7561ec87d56ed1791141ac10778e4168159ac968aac9a50ed6901a"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/payloads/Q9-r3.json",
+      "bytes": 4870,
+      "sha256": "62fd1c5e9397f911f84133ec5b2420e50e85f450378025af39e375bf92f9cc01"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/run-log.json",
+      "bytes": 41245,
+      "sha256": "7ead950dd09b80953350869718f96ce514fcf460ebd4873da050b121333ff5fd"
+    },
+    {
+      "path": "evaluation/results/phase-10a11-full-factcheck-rerun-2/scoring-worksheet.json",
+      "bytes": 1401,
+      "sha256": "421c85c7d009c0ec754c05d1917ffe8f50aa82a26067877189e2b272e2e7bb20"
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "runId": "Q47-r3",
+  "caseId": "Q47",
+  "runNumber": 3,
+  "prompt": "What is the donor's tax rate under TRAIN and the exemption threshold?",
+  "defectClusterTag": null,
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 19696,
+  "answer": "### Short Answer\nThe donor's tax rate under the Tax Reform for Acceleration and Inclusion (TRAIN) is six percent (6%) on the total gifts exceeding Two Hundred Fifty Thousand Pesos (₱250,000).\n\n### Controlling Authorities\nThis is governed by Section 99 of the National Internal Revenue Code (NIRC), which states that the tax for each calendar year shall be six percent (6%) computed on the basis of the total gifts in excess of the exemption threshold of ₱250,000.\n\n### Interpretation\nThe donor's tax applies to gifts made during the calendar year, and only the amount exceeding the exemption threshold is subject to the six percent (6%) tax rate. This means that if a donor gives gifts totaling ₱300,000, only ₱50,000 would be taxable at the 6% rate.\n\n### Practical Meaning\nIn practical terms, individuals making gifts should be aware of the ₱250,000 exemption limit to avoid unnecessary tax liabilities. Proper documentation and valuation of gifts are essential to ensure compliance and accurate tax reporting. Donors should also consider the implications of their gifting strategies, especially if they are close to the exemption threshold.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "eligibleForVerifiedControlling": true,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true
+    },
+    "reason": "The answer correctly states the donor's tax rate and exemption threshold, fully addressing the question."
+  },
+  "answerSupportPresent": true,
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": true,
+  "answerSupportStage": "llm",
+  "answerSupportGates": {
+    "structural": true,
+    "answerResponsive": true,
+    "primaryIssueAnswered": true,
+    "requiredIssueKeysCovered": true,
+    "materialExceptionsCovered": true,
+    "materialAlternativesCovered": true,
+    "citationRelevant": true,
+    "citationSupportsProposition": true,
+    "substantive": true,
+    "propositionSupported": true,
+    "materiallyComplete": true,
+    "eligibleForVerifiedControlling": true,
+    "contradictsSources": true,
+    "unsupportedMaterialProposition": true
+  },
+  "answerSupportReason": "The answer correctly states the donor's tax rate and exemption threshold, fully addressing the question.",
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 99",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 101",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 102",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 104",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 4,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "febb5a93acc96f13",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}

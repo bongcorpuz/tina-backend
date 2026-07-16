@@ -1,0 +1,109 @@
+{
+  "runId": "Q41-r2",
+  "caseId": "Q41",
+  "runNumber": 2,
+  "prompt": "What is the penalty for failure to issue a BIR-registered invoice?",
+  "defectClusterTag": "Q41-invoice-penalty-responsiveness",
+  "httpStatus": 200,
+  "attempts": 1,
+  "responseTimeMs": 23051,
+  "answer": "### Short Answer\n\nAdditionally, under Section 106 of the NIRC, the Bureau of Internal Revenue (BIR) has the authority to impose penalties for violations related to the issuance of invoices, which may include administrative penalties and fines.\n\nIn practice, the failure to issue a BIR-registered invoice can lead to significant financial and legal repercussions for businesses, including potential audits and assessments by the BIR. It is crucial for businesses to maintain compliance with invoicing requirements to avoid these penalties.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [
+      "answerResponsive",
+      "primaryIssueAnswered",
+      "requiredIssueKeysCovered",
+      "citationRelevant",
+      "citationSupportsProposition",
+      "substantive",
+      "propositionSupported",
+      "materiallyComplete",
+      "eligibleForVerifiedControlling"
+    ],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [
+      "unsafe_value_fields:answerResponsive,primaryIssueAnswered,requiredIssueKeysCovered,citationRelevant,citationSupportsProposition,substantive,propositionSupported,materiallyComplete,eligibleForVerifiedControlling"
+    ],
+    "gates": {
+      "structural": true,
+      "answerResponsive": false,
+      "primaryIssueAnswered": false,
+      "requiredIssueKeysCovered": false,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": false,
+      "citationSupportsProposition": false,
+      "substantive": false,
+      "propositionSupported": false,
+      "materiallyComplete": false,
+      "eligibleForVerifiedControlling": false,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true
+    },
+    "reason": "unsafe_value_fields:answerResponsive,primaryIssueAnswered,requiredIssueKeysCovered,citationRelevant,citationSupportsProposition,substantive,propositionSupported,materiallyComplete,eligibleForVerifiedControlling"
+  },
+  "answerSupportPresent": true,
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": false,
+  "answerSupportStage": "llm",
+  "answerSupportGates": {
+    "structural": true,
+    "answerResponsive": false,
+    "primaryIssueAnswered": false,
+    "requiredIssueKeysCovered": false,
+    "materialExceptionsCovered": true,
+    "materialAlternativesCovered": true,
+    "citationRelevant": false,
+    "citationSupportsProposition": false,
+    "substantive": false,
+    "propositionSupported": false,
+    "materiallyComplete": false,
+    "eligibleForVerifiedControlling": false,
+    "contradictsSources": true,
+    "unsupportedMaterialProposition": true
+  },
+  "answerSupportReason": "unsafe_value_fields:answerResponsive,primaryIssueAnswered,requiredIssueKeysCovered,citationRelevant,citationSupportsProposition,substantive,propositionSupported,materiallyComplete,eligibleForVerifiedControlling",
+  "sourceFallbackDisclosure": null,
+  "sources": [
+    {
+      "label": "NIRC Sec. 106",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 2",
+      "authorityType": "STATUTE"
+    },
+    {
+      "label": "NIRC Sec. 3",
+      "authorityType": "STATUTE"
+    }
+  ],
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sanitizedConversationRef": "91bb715a2a1e14e1",
+  "persistence": {
+    "hardRefreshCount": 2,
+    "historyReopenCount": 2,
+    "consistent": true
+  }
+}
