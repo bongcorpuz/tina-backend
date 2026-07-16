@@ -1,0 +1,70 @@
+{
+  "id": "M-Q3",
+  "group": "mini",
+  "prompt": "A VAT-registered exporter sells 100% abroad. Can it obtain a refund or tax credit for input VAT?",
+  "runtimeCommit": "cd046304111d26a439c4c37321881524acd41eb6",
+  "answer": "### Short Answer\nA VAT-registered exporter that sells 100% of its goods abroad can obtain a refund or tax credit for input VAT. This is provided under the provisions of the NIRC that allow for the refund of input VAT on zero-rated sales.\n\n### Interpretation\n\n### Practical Meaning\nFor a VAT-registered exporter, this provision allows for the recovery of input VAT, which can significantly enhance liquidity and reduce the overall tax burden. The exporter must ensure proper documentation and compliance with the requirements set forth by the Bureau of Internal Revenue (BIR) to successfully claim the refund or credit. This includes maintaining accurate records of sales and purchases, as well as filing the appropriate claims within the prescribed periods.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "treatmentDirectionMatches": true,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": true,
+      "eligibleForVerifiedControlling": true,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true,
+      "answerContradictsControllingSource": true
+    },
+    "reason": "The answer correctly addresses the question and is supported by relevant citations."
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": true,
+  "sources": [
+    {
+      "label": "NIRC Sec. 109"
+    },
+    {
+      "label": "NIRC Sec. 236"
+    },
+    {
+      "label": "RR No. 16-2005"
+    },
+    {
+      "label": "RMC 75-2015"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "e7302ad607a6fefb"
+}

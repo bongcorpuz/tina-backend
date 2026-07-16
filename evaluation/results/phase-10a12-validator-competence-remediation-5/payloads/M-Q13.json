@@ -1,0 +1,45 @@
+{
+  "id": "M-Q13",
+  "group": "mini",
+  "prompt": "Can a self-employed individual with gross sales below ₱3 million opt for the 8% income tax rate?",
+  "runtimeCommit": "cd046304111d26a439c4c37321881524acd41eb6",
+  "answer": "### Short Answer\nYes, a self-employed individual with gross sales below ₱3 million can opt for the 8% income tax rate, provided their gross sales or gross receipts do not exceed the VAT threshold of ₱3 million.\n\n### Controlling Authorities\nThe relevant provision is found in Section 24(B)(1)(b) of the National Internal Revenue Code (NIRC), which allows self-employed individuals and professionals to choose an 8% tax on gross sales or gross receipts in excess of ₱250,000 in lieu of the graduated income tax rates.\n\n### Interpretation\nUnder the NIRC, self-employed individuals whose gross sales or receipts do not exceed the VAT threshold (₱3 million) can avail themselves of the 8% income tax rate. This option is beneficial as it simplifies tax compliance and potentially reduces the overall tax burden compared to the graduated income tax rates.\n\n### Practical Meaning\nFor self-employed individuals earning below ₱3 million, opting for the 8% tax rate can lead to easier tax calculations and filing. They will only need to pay tax on their income exceeding ₱250,000, which can be advantageous for managing their tax liabilities effectively.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "error",
+    "gates": {
+      "structural": true
+    },
+    "reason": "validator_error_fail_closed"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 24"
+    },
+    {
+      "label": "NIRC Sec. 23"
+    },
+    {
+      "label": "NIRC Sec. 27"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "3773b2c54cabaad0"
+}

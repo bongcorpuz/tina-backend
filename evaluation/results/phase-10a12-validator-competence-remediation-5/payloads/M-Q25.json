@@ -1,0 +1,70 @@
+{
+  "id": "M-Q25",
+  "group": "mini",
+  "prompt": "Is EWT required on payments to a VAT-registered law firm?",
+  "runtimeCommit": "cd046304111d26a439c4c37321881524acd41eb6",
+  "answer": "### Short Answer\nYes, Expanded Withholding Tax (EWT) is required on payments to a VAT-registered law firm.\n\n### Interpretation\nUnder the NIRC, VAT-registered professionals, such as law firms, are required to issue VAT invoices for their services. When a business pays for these services, it must withhold EWT as mandated by the tax code. The withholding tax is a mechanism to ensure that the government collects tax revenue at the point of payment, thereby reducing the risk of tax evasion.\n\n### Practical Meaning\nFor businesses engaging the services of a VAT-registered law firm, it is essential to account for EWT in their payment processes. This means that when making payments, the business must withhold the appropriate percentage of the payment as EWT and remit it to the Bureau of Internal Revenue (BIR). Failure to comply with this requirement may result in penalties and interest for the business.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "treatmentDirectionMatches": true,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": true,
+      "eligibleForVerifiedControlling": true,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true,
+      "answerContradictsControllingSource": true
+    },
+    "reason": "The answer correctly states that EWT is required and covers the necessary details."
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": true,
+  "sources": [
+    {
+      "label": "NIRC Sec. 109"
+    },
+    {
+      "label": "NIRC Sec. 236"
+    },
+    {
+      "label": "RR No. 16-2005"
+    },
+    {
+      "label": "RMC 75-2015"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "016c1012b99dee5d"
+}

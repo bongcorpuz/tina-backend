@@ -1,0 +1,49 @@
+{
+  "phase": "PHASE-10A12-VALIDATOR-COMPETENCE-REMEDIATION-5",
+  "reconciledFrom": "FINAL_RUNTIME_ONLY",
+  "runtimeCommit": "cd046304111d26a439c4c37321881524acd41eb6",
+  "freezeCommit": "cd046304111d26a439c4c37321881524acd41eb6",
+  "canonicalSetSha256": "8e019480b2e710f9575e5f47d72716d9e94680b8bb3caa904cfe27f05c0f6ea1",
+  "sourceBankSnapshotSha256": "526106e594667705df227930dff3d9a4717ec99b171626bf708db43f4eac4bed",
+  "membershipMatchesFrozenManifest": true,
+  "runtimeStampMismatches": 0,
+  "promptMismatchesVsManifest": 0,
+  "totalPayloads": 30,
+  "byAuthoritySupport": {
+    "VERIFIED_CONTROLLING": 6,
+    "RELATED_AUTHORITY_ONLY": 14,
+    "NO_VERIFIED_AUTHORITY": 10
+  },
+  "checksum": "6 + 14 + 10 = 30",
+  "miniFactcheck": {
+    "intended": 30,
+    "completed": 30,
+    "missing": 0,
+    "duplicate": 0,
+    "verified": 6,
+    "validVerified": 5,
+    "invalidVerified": 1,
+    "fabricatedAuthorities": 0,
+    "falseRefusals": 0
+  },
+  "verifiedIds": [
+    "M-Q1",
+    "M-Q12",
+    "M-Q15",
+    "M-Q25",
+    "M-Q3",
+    "M-Q36"
+  ],
+  "validVerifiedIds": [
+    "M-Q1",
+    "M-Q12",
+    "M-Q15",
+    "M-Q25",
+    "M-Q3"
+  ],
+  "invalidVerifiedIds": [
+    "M-Q36"
+  ],
+  "persistenceFailures": 0,
+  "securityFailures": 0
+}

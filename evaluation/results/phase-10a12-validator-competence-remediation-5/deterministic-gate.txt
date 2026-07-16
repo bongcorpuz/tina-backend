@@ -1,0 +1,11 @@
+Syntax checks: 10 run, 0 failed
+Test suites:   188 run, 0 failed
+MANDATORY STAGING LANE: 7 network-dependent staging-smoke suite(s) are SEPARATED into the mandatory staging gate and must be run + pass independently via `node scripts/run-staging-smokes.mjs`. They are NOT optional and NOT skipped:
+  - patch-08k-memory-staging-smoke-1.test.mjs
+  - patch-08s-followup-backend-routes-health-minimization-staging-smoke-1.test.mjs
+  - patch-08s-followup-backend-security-headers-rate-limits-staging-smoke-1.test.mjs
+  - patch-08s-followup-index-secret-header-auth-staging-smoke-1.test.mjs
+  - patch-08s-followup-index-secret-query-removal-staging-smoke-1.test.mjs
+  - phase-09r-tax-memo-runtime-staging-smoke-1.test.mjs
+  - phase-09zb-controlled-loa-answer-staging-smoke-1.test.mjs
+GATE PASSED (deterministic local lane)

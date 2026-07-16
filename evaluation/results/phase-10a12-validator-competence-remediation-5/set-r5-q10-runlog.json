@@ -1,0 +1,22 @@
+[
+  {
+    "id": "M-Q10",
+    "group": "mini",
+    "attempt": 1,
+    "ok": false,
+    "reason": "transient status=200 answerLen=16"
+  },
+  {
+    "id": "M-Q10",
+    "group": "mini",
+    "attempt": 2,
+    "ok": true,
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "AUTHORITY_FOUND",
+    "asStage": null,
+    "verifiedEligible": null,
+    "asReason": null,
+    "persist": 2,
+    "sha256": "8bdb0ca32896a167ab8e6d17de8bac76c909aae638a59ae08637f3a8b0877470"
+  }
+]

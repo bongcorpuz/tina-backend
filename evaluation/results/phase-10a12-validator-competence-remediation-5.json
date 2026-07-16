@@ -1,0 +1,79 @@
+{
+  "task": "PHASE-10A12-VALIDATOR-COMPETENCE-REMEDIATION-5",
+  "scope": "Prospectively establish a GOVERNED canonical mini-30 from the master Q1-Q50 bank with an immutable source-bank snapshot + hashes + rationale + manifest committed BEFORE any live run; fresh live rerun of all 30; and remediate the two run-regressions.mjs exit-1 failures without removing/weakening/bypassing/silently-skipping/making-non-blocking any coverage. Prospective only; does NOT retroactively validate A12-R3/A12-R4; does NOT authorize A13, adversarial, 10A closure, 10B, 10C, production, reindex, or a model change.",
+  "backendStartHead": "044506e8cc640396fa6936afe73fb43c8564b0ba",
+  "runnerFixCommit": "272d6bf59f2f6147d6c08e14a5f4bb7c6082cf80",
+  "freezeCommit": "cd046304111d26a439c4c37321881524acd41eb6",
+  "runtimeCommit": "cd046304111d26a439c4c37321881524acd41eb6",
+
+  "partB_runnerRemediation": {
+    "beforeExitCode": 1,
+    "failure1_phase09zf": "Non-durable self-referential assertion (pipeline.js + fixture required in WORKING TREE or LAST commit) -> false after later commits. Re-anchored to CURRENT, FAILABLE state (09ZF remediation present in pipeline.js + fixture exists); proven failable against a simulated reverted pipeline (NOT a fixed-commit tautology). No behavioral coverage removed.",
+    "failure2_stagingSmoke": "7 network-dependent staging-smoke suites SEPARATED into a dedicated MANDATORY blocking lane (scripts/run-staging-smokes.mjs) so a transient staging outage cannot flap the deterministic gate. NOT removed/optional/skipped/non-blocking; must be run + pass independently.",
+    "deterministicGate": { "syntaxChecks": 10, "syntaxFailed": 0, "suites": 188, "suitesFailed": 0, "exitCode": 0 },
+    "stagingGate": { "suites": 7, "suitesFailed": 0, "exitCode": 0 },
+    "totalCoveragePreserved": "188 + 7 = 195 suites (same total the independent review counted), split across the deterministic and mandatory-staging lanes; nothing removed.",
+    "packageJsonModified": false
+  },
+
+  "partA_governedCanonicalSet": {
+    "preR3MembershipProvable": false,
+    "immutableSourceBankSnapshot": "source-bank-snapshot/TINA_Tax_FactCheck_Corrected_Validated_Master_v3_0.SNAPSHOT.md",
+    "sourceBankSnapshotSha256": "526106e594667705df227930dff3d9a4717ec99b171626bf708db43f4eac4bed",
+    "snapshotByteIdenticalToMaster": true,
+    "perQuestionHashesCommitted": true,
+    "selectionMethod": "Exclude reserved cluster/control IDs {5,8,28,32,34,35,41,46,47}; sort eligible ascending; first 30 (independently validated A12-R4 rule).",
+    "canonicalSetSha256": "8e019480b2e710f9575e5f47d72716d9e94680b8bb3caa904cfe27f05c0f6ea1",
+    "manifestFrozenAndPushedBeforeLiveRun": true
+  },
+
+  "liveRerun": {
+    "runtimeCommit": "cd046304111d26a439c4c37321881524acd41eb6",
+    "intended": 30,
+    "completed": 30,
+    "membershipMatchesFrozenManifest": true,
+    "runtimeStampMismatches": 0,
+    "promptMismatchesVsManifest": 0,
+    "byAuthoritySupport": { "VERIFIED_CONTROLLING": 6, "RELATED_AUTHORITY_ONLY": 14, "NO_VERIFIED_AUTHORITY": 10 },
+    "verified": 6,
+    "validVerified": 5,
+    "invalidVerified": 1,
+    "invalidVerifiedIds": ["M-Q36"],
+    "fabricatedAuthorities": 0,
+    "falseRefusals": 0,
+    "persistenceFailures": 0
+  },
+
+  "liveAuditFinding_P1": {
+    "id": "M-Q36",
+    "summary": "INVALID VERIFIED — a fabricated late-VAT-filing penalty rule ('25% of the tax due for each month of delay, not exceeding 50%') received VERIFIED_CONTROLLING. The 25% surcharge (NIRC Sec 248) is one-time, not monthly; the per-period charge is 12% p.a. interest (Sec 249). Cited authorities are the general VAT-imposition sections (105-108) + RR 16-2005, not the penalty provisions.",
+    "rootCause": "gpt-4o-mini validator-competence limitation on penalty computations + penalty-question citation-relevance gap. The existing Q5/Q8 deterministic guards are cluster-specific and do not cover penalty questions.",
+    "remediationAuthorizedUnderR5": false,
+    "recommendedNextRemediation": "A deterministic penalty/procedural source-sufficiency guard (analogous to the Q5 import-VAT incentive gate) requiring penalty propositions to cite the penalty provisions (Sec 248/249/254 etc.) or fail closed."
+  },
+
+  "sourceExcerptGrounded": false,
+  "guardArchitecture": "CLUSTER_SPECIFIC_WITH_FAIL_CLOSED_SCHEMA",
+  "officialAuthorityOnly": true,
+  "countsReconciled": true,
+  "securityScan": "clean",
+  "coverageWeakenedOrRemoved": false,
+  "retroactivelyValidatesA12R3orA12R4": false,
+
+  "currentP0Count": 0,
+  "currentP1Count": 1,
+  "currentP2Count": 5,
+  "currentP3Count": 1,
+
+  "phase10AStatus": "REOPENED_PENDING_INDEPENDENT_REVIEW",
+  "phase10BStatus": "BLOCKED",
+  "phase10CStatus": "BLOCKED",
+  "a13Status": "NOT_AUTHORIZED",
+  "adversarialStatus": "DEFERRED",
+  "productionStatus": "NOT_AUTHORIZED",
+  "reindexStatus": "NOT_AUTHORIZED",
+  "modelChangeStatus": "NOT_AUTHORIZED",
+
+  "decision": "REVISIONS REQUIRED",
+  "decisionRationale": "R5's authorized structural deliverables are COMPLETE and correct: the governed canonical mini-30 is frozen against an immutable source-bank snapshot with per-question hashes committed+pushed before any live run, the 30 were rerun fresh with exact membership/runtime match, and both the deterministic (188/0) and mandatory-staging (7/7) gates pass with no coverage removed or weakened. However, the authorized live rerun of the governed set surfaced one P1 INVALID VERIFIED (M-Q36), so the governed mini set is established-but-not-clean and cannot be claimed as validated. Remediating M-Q36 (a new validator guard) is beyond the narrow R5 authorization and is carried to the next remediation."
+}
