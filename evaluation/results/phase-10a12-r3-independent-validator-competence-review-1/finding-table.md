@@ -1,0 +1,12 @@
+# Finding Table
+
+| ID | Severity | Finding | Live evidence | Required action | A13 blocking |
+| --- | --- | --- | --- | --- | --- |
+| P1-1 | P1 | Mini fact-check canonical membership is not proven. | R3 report and CURRENT_STATE state the intended 30-set had never been enumerated beyond 20; prior A12-R2 evidence contains 20 mini IDs; no pre-R3 canonical exact 30 list found. | Produce verifiable pre-R3 canonical provenance for the exact 30, or obtain explicit governance acceptance that R3 created a new documented 30-question sample. | Yes |
+| P1-2 | P1 | Claimed repo regression runner pass was not reproduced live. | `node scripts/run-regressions.mjs` exited 1; 195 suites run, 2 failed. | Re-run and commit passing repo regression evidence, or reconcile/correct claims so repo-wide runner failure is explicit. | Yes |
+| P2-1 | P2 | M-Q33 retry provenance is incomplete. | set-mini10-runlog shows M-Q33 persist=0 before later clean retry; transient inventory documents M-Q36 but not M-Q33. | Document M-Q33 retry/non-persist path or produce a clearer run manifest. | No |
+| P2-2 | P2 | sourceExcerptGrounded is false. | R3 result records `sourceExcerptGrounded:false`; validator does not consume full operative source excerpts. | Carry forward as limitation or implement operative source excerpt grounding. | No |
+| P2-3 | P2 | Guard architecture remains cluster-specific. | R3 result records `CLUSTER_SPECIFIC_WITH_FAIL_CLOSED_SCHEMA`; Q5/Q8 guards target known clusters. | Treat A13 as discovery gate; consider broader source-grounded validator. | No |
+| P2-4 | P2 | Q5 period applicability is diagnostic rather than independently hard-fail enforced. | Code records period diagnostics, but hard-fail branches focus on source-card authority and missing qualifying conditions. | Decide whether unsupported period/time applicability should fail closed independently. | No |
+| P2-5 | P2 | GOOGLE_SERVICE_ACCOUNT_JSON placeholder/runtime-equivalence provenance is not explicitly evidenced. | No R3 artifact directly proves placeholder override could not alter retrieval behavior; no direct retrieval-disabled evidence found. | Add environment/runtime-equivalence evidence for retrieval credentials and source fetch behavior. | No |
+| P3-1 | P3 | Environmental noise observed. | Backend untracked .claude/.vscode/evaluation/factcheck; frontend .gitignore modified; localhost 5173 listener observed. | Keep protected paths untouched; avoid treating unrelated process/worktree noise as remediation evidence. | No |
