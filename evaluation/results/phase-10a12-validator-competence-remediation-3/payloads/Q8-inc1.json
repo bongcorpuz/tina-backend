@@ -1,0 +1,39 @@
+{
+  "id": "Q8-inc1",
+  "group": "q8incomplete",
+  "prompt": "Is a residential lease subject to VAT?",
+  "runtimeCommit": "6ce2d6fd613e7f3109022f5a0f5ea006e9122546",
+  "answer": "### Issue Presented\nIs a residential lease subject to Value-Added Tax (VAT) in the Philippines?\n\n### Short Answer\n\n### Controlling Authorities\n2. **Revenue Regulations No. 16-2005** - These regulations implement the provisions of the NIRC regarding VAT, including exemptions.\n\n### Legal Interpretation\n\n### Practical Application\nIn practice, landlords of residential properties should not include VAT in the rental fees charged to tenants. This exemption allows for a more affordable rental market for residential tenants, as they are not burdened with additional VAT costs. Landlords should ensure compliance with the regulations by properly documenting their rental agreements and maintaining records that reflect the VAT-exempt status of their residential leases.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "ba260f631c0d418f"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "Q8-par2",
+  "group": "q8para",
+  "prompt": "Is monthly residential rent of ₱15,000 within the VAT-exempt threshold?",
+  "runtimeCommit": "6ce2d6fd613e7f3109022f5a0f5ea006e9122546",
+  "answer": "### Short Answer\n\n### Controlling Authorities\n2. **RR 16-2005** - This regulation implements the provisions of the NIRC regarding VAT, including the exemptions applicable to residential leases.\n\n### Interpretation\n\n### Practical Meaning\nFor landlords receiving ₱15,000 or less in monthly rent, they are not required to charge VAT on the rental payments. This means that tenants will pay only the agreed rental amount without any additional VAT charges. Landlords should ensure that their rental agreements reflect this exemption to avoid any potential tax liabilities.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "3de7bbc4c04f004e"
+}

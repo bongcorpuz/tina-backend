@@ -1,0 +1,39 @@
+{
+  "id": "Q8-par3",
+  "group": "q8para",
+  "prompt": "Are residential units leased at ₱15,000 per month VAT-exempt or VATable?",
+  "runtimeCommit": "6ce2d6fd613e7f3109022f5a0f5ea006e9122546",
+  "answer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nFor landlords leasing residential units at ₱15,000 per month, this means they are not required to charge VAT on the rental payments. This exemption can make the rental more attractive to potential tenants and reduce the administrative burden of VAT compliance for the lessor. However, landlords should ensure that their rental agreements clearly reflect the rental amount to maintain compliance with the VAT exemption criteria.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "81d19841533c891f"
+}

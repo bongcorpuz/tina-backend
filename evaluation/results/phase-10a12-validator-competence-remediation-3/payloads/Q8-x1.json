@@ -1,0 +1,52 @@
+{
+  "id": "Q8-x1",
+  "group": "q8exact",
+  "prompt": "Is leasing a residential unit at ₱15,000 per month subject to VAT?",
+  "runtimeCommit": "6ce2d6fd613e7f3109022f5a0f5ea006e9122546",
+  "answer": "### Issue Presented\nIs leasing a residential unit at ₱15,000 per month subject to VAT?\n\n### Short Answer\nYes, leasing a residential unit at ₱15,000 per month is subject to VAT, as it falls under the definition of lease of properties for consideration.\n\n### Controlling Authorities\nThe relevant provisions are found in the National Internal Revenue Code (NIRC) of 1997, specifically:\n- Section 106: Value-Added Tax on Sale of Goods or Properties\n- Section 108: Value-Added Tax on the Sale of Services, Including Digital Services, and the Use or Lease of Properties\n\n### Legal Interpretation\nUnder Section 106 of the NIRC, there is a value-added tax levied on the sale, barter, or exchange of goods or properties, which includes the lease of properties. Section 108 further clarifies that VAT is also applicable to the lease of properties, stating that there shall be a value-added tax equivalent to twelve percent (12%) of the gross sales derived from the lease of properties. Since the lease amount of ₱15,000 exceeds the threshold for VAT applicability, the lessor is required to charge VAT on the rental income.\n\n### Practical Application\nIn practice, the lessor must register for VAT if their gross sales exceed the VAT threshold and must issue VAT invoices for the rental payments received. The VAT collected must be remitted to the Bureau of Internal Revenue (BIR). It is essential for lessors to maintain proper documentation and comply with VAT regulations to avoid penalties and ensure proper tax compliance.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "treatment-contradiction",
+    "gates": {
+      "structural": true,
+      "treatmentDirectionMatches": false
+    },
+    "reason": "residential_per_unit_exemption_reversed_to_taxable"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 106"
+    },
+    {
+      "label": "NIRC Sec. 105"
+    },
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "NIRC Sec. 108"
+    },
+    {
+      "label": "RR 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "6d63e69fbd28734e"
+}

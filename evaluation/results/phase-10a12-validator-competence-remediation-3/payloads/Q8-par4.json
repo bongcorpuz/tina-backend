@@ -1,0 +1,69 @@
+{
+  "id": "Q8-par4",
+  "group": "q8para",
+  "prompt": "For a ₱15,000/month residential lease, is value-added tax imposed on the tenant?",
+  "runtimeCommit": "6ce2d6fd613e7f3109022f5a0f5ea006e9122546",
+  "answer": "### Short Answer\nValue-added tax (VAT) is not imposed on the tenant for a residential lease of ₱15,000 per month, as residential leases are exempt from VAT under the provisions of the National Internal Revenue Code (NIRC).\n\n### Interpretation\n\n### Practical Meaning\nFor a residential lease priced at ₱15,000 per month, the landlord is not required to charge VAT, and the tenant will not incur any VAT liability. This exemption encourages affordable housing options and simplifies tax compliance for landlords renting out residential properties.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [
+      "citationRelevant",
+      "citationSupportsProposition",
+      "propositionSupported",
+      "eligibleForVerifiedControlling",
+      "unsupportedMaterialProposition"
+    ],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [
+      "unsafe_value_fields:citationRelevant,citationSupportsProposition,propositionSupported,eligibleForVerifiedControlling,unsupportedMaterialProposition"
+    ],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": false,
+      "citationSupportsProposition": false,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "treatmentDirectionMatches": true,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": true,
+      "eligibleForVerifiedControlling": false,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": false,
+      "answerContradictsControllingSource": true
+    },
+    "reason": "unsafe_value_fields:citationRelevant,citationSupportsProposition,propositionSupported,eligibleForVerifiedControlling,unsupportedMaterialProposition"
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "RR 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "f755503c5bf4e8d5"
+}

@@ -1,0 +1,74 @@
+{
+  "id": "M-Q29",
+  "group": "mini",
+  "prompt": "Is a ₱500 one-time courier payment to an individual subject to EWT?",
+  "runtimeCommit": "6ce2d6fd613e7f3109022f5a0f5ea006e9122546",
+  "answer": "### Issue Presented\nA ₱500 one-time courier payment to an individual is not subject to Expanded Withholding Tax (EWT) as it falls under the threshold for EWT applicability. According to Revenue Regulations No. 2-98, EWT applies to income payments that exceed certain amounts, and since this payment is below the threshold, it is not subject to EWT.\n\n### Legal Interpretation\n\nThe withholding obligation arises when a withholding agent makes payment to a resident income payee for a service subject to withholding under applicable revenue regulations.\n\n### Practical Application\n\nThe payor must withhold the applicable rate, remit to the BIR, and issue BIR Form 2307 (certificate of creditable withholding tax) to the payee.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [
+      "citationRelevant",
+      "citationSupportsProposition",
+      "propositionSupported",
+      "materiallyComplete",
+      "thresholdDimensionMatches",
+      "sourcePropositionAligned",
+      "eligibleForVerifiedControlling",
+      "contradictsSources",
+      "unsupportedMaterialProposition",
+      "answerContradictsControllingSource"
+    ],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [
+      "unsafe_value_fields:citationRelevant,citationSupportsProposition,propositionSupported,materiallyComplete,thresholdDimensionMatches,sourcePropositionAligned,eligibleForVerifiedControlling,contradictsSources,unsupportedMaterialProposition,answerContradictsControllingSource"
+    ],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": false,
+      "citationSupportsProposition": false,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": false,
+      "treatmentDirectionMatches": true,
+      "thresholdDimensionMatches": false,
+      "sourcePropositionAligned": false,
+      "eligibleForVerifiedControlling": false,
+      "contradictsSources": false,
+      "unsupportedMaterialProposition": false,
+      "answerContradictsControllingSource": false
+    },
+    "reason": "unsafe_value_fields:citationRelevant,citationSupportsProposition,propositionSupported,materiallyComplete,thresholdDimensionMatches,sourcePropositionAligned,eligibleForVerifiedControlling,contradictsSources,unsupportedMaterialProposition,answerContradictsControllingSource"
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "Revenue Regulations"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "61a43a5ae8c3a6a0"
+}

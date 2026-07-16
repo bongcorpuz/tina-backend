@@ -1,0 +1,43 @@
+{
+  "id": "Q5-r2b",
+  "group": "q5r2exact",
+  "prompt": "What is the VAT rate on importation of goods used to manufacture export products?",
+  "runtimeCommit": "6ce2d6fd613e7f3109022f5a0f5ea006e9122546",
+  "answer": "### Short Answer\nThe VAT rate on the importation of goods used to manufacture export products is 12%. This is based on the total value used by the Bureau of Customs in determining tariff and customs duties, plus any applicable customs duties and excise taxes.\n\n### Controlling Authorities\n1. **NIRC Sec. 107** - Value-Added Tax on Importation of Goods: \"There shall be levied, assessed and collected on every importation of goods a value-added tax equivalent to twelve percent (12%) based on the total value used by the Bureau of Customs in determining tariff and customs duties plus customs duties, excise taxes, if any, and other charges.\"\n2. **RR 16-2005** - Consolidated Value-Added Tax Regulations: This regulation implements the provisions of the NIRC regarding VAT on importation.\n\n### Interpretation\nThe VAT on importation is uniformly set at 12% for all goods, including those intended for manufacturing export products. The VAT is calculated based on the total value determined by the Bureau of Customs, which includes the customs duties and any excise taxes applicable to the goods being imported.\n\n### Practical Meaning\nFor businesses importing goods to manufacture products for export, the 12% VAT will be a cost that must be accounted for in their pricing and financial planning. However, these businesses may be eligible for VAT refunds or zero-rating on their export sales, which can mitigate the impact of the VAT on their overall tax burden.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "material-exception-omission",
+    "gates": {
+      "structural": true,
+      "materialExceptionsCovered": false
+    },
+    "reason": "import_vat_omits_create_more_export_exemption"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "12f6a2283988a5a5"
+}

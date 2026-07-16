@@ -1,0 +1,63 @@
+{
+  "id": "Q5-par5",
+  "group": "q5para",
+  "prompt": "During the transition to CREATE MORE, how is import VAT treated for a registered export enterprise?",
+  "runtimeCommit": "6ce2d6fd613e7f3109022f5a0f5ea006e9122546",
+  "answer": "### Short Answer\nFor a registered export enterprise, import VAT is levied at a rate of 12% on the total value of the goods as determined by the Bureau of Customs, plus any applicable customs duties and excise taxes. This VAT is payable prior to the release of the goods from customs custody.\n\n### Controlling Authorities\nThe relevant provisions are found in Section 107 of the National Internal Revenue Code (NIRC) and Revenue Regulations No. 16-2005. Section 107 states that there shall be a value-added tax on importation of goods, while RR 16-2005 outlines the liability of importers for VAT.\n\n### Interpretation\nSection 107 of the NIRC specifies that the VAT on importation is based on the total value used by the Bureau of Customs, which includes customs duties and other charges. This means that registered export enterprises, despite their export status, are still required to pay VAT upon importation of goods. However, they may later claim input tax credits for the VAT paid on these imports if the goods are used in their business operations.\n\n### Practical Meaning\nFor registered export enterprises, the import VAT represents a cash flow requirement at the point of importation. While they must initially pay this tax, they can recover it through input tax credits, which can be offset against their output tax liabilities from sales. This mechanism helps to alleviate the financial burden of VAT on imports, particularly for businesses engaged in export activities.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "incentive-source-sufficiency",
+    "gates": {
+      "structural": true,
+      "specificIncentiveAuthorityPresent": false,
+      "exemptionBasisSupported": true,
+      "zeroRatingBasisSupported": true,
+      "incentiveConditionSupported": true,
+      "genericAuthorityOnly": true
+    },
+    "incentiveSufficiency": {
+      "applicable": true,
+      "incentiveTreatmentClaimed": false,
+      "claimsExemption": false,
+      "claimsZeroRating": false,
+      "specificIncentiveAuthorityPresent": false,
+      "exemptionBasisSupported": true,
+      "zeroRatingBasisSupported": true,
+      "treatmentLabelMatchesAuthority": true,
+      "periodApplicabilitySupported": true,
+      "genericAuthorityOnly": true,
+      "incentiveConditionSupported": true,
+      "specificIncentiveAuthorityInSources": false,
+      "specificIncentiveAuthorityMentionedInAnswer": false,
+      "qualifyingIncentiveQuestion": true
+    },
+    "reason": "qualified_incentive_question_answered_on_generic_authority"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "4da4cc8b453f1707"
+}

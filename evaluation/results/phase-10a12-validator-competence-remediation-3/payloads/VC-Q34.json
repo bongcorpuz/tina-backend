@@ -1,0 +1,67 @@
+{
+  "id": "VC-Q34",
+  "group": "vcontrol",
+  "prompt": "What is the deadline for filing the annual individual income tax return?",
+  "runtimeCommit": "6ce2d6fd613e7f3109022f5a0f5ea006e9122546",
+  "answer": "### Short Answer\nThe deadline for filing the annual individual income tax return in the Philippines is April 15 of the following year after the taxable year.\n\n### Interpretation\n\n### Practical Meaning\nTaxpayers must ensure that their income tax returns are filed by April 15 to avoid penalties and interest on late payments. It is advisable for individuals to prepare their returns in advance to ensure compliance with this deadline.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "treatmentDirectionMatches": true,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": true,
+      "eligibleForVerifiedControlling": true,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true,
+      "answerContradictsControllingSource": true
+    },
+    "reason": "The answer correctly states the filing deadline and is fully supported by relevant citations."
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": true,
+  "sources": [
+    {
+      "label": "NIRC Sec. 24"
+    },
+    {
+      "label": "NIRC Sec. 23"
+    },
+    {
+      "label": "NIRC Sec. 27"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "7d354da2be07e0d4"
+}

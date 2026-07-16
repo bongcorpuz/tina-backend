@@ -1,0 +1,51 @@
+{
+  "id": "M-Q36",
+  "group": "mini",
+  "prompt": "What penalties apply to late filing of a VAT return?",
+  "runtimeCommit": "6ce2d6fd613e7f3109022f5a0f5ea006e9122546",
+  "answer": "### Short Answer\nPenalties for late filing of a VAT return include a fine of not less than One Thousand Pesos (₱1,000) but not more than Twenty-Five Thousand Pesos (₱25,000), and/or imprisonment of not less than six months but not more than two years, as stipulated under the National Internal Revenue Code (NIRC).\n\n### Interpretation\n\n### Practical Meaning\nIn practical terms, businesses and individuals must ensure that their VAT returns are filed on time to avoid incurring significant fines and potential imprisonment. This underscores the necessity for effective tax compliance systems and timely filing practices to mitigate the risk of penalties.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "error",
+    "gates": {
+      "structural": true
+    },
+    "reason": "validator_error_fail_closed"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 105"
+    },
+    {
+      "label": "NIRC Sec. 106"
+    },
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "NIRC Sec. 108"
+    },
+    {
+      "label": "RR 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "9c5d8f7d9b7a0fab"
+}

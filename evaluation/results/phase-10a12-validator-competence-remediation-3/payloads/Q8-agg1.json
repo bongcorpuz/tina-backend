@@ -1,0 +1,40 @@
+{
+  "id": "Q8-agg1",
+  "group": "q8aggregate",
+  "prompt": "A lessor's total annual residential rental income exceeds ₱3,000,000 but each unit rents at ₱15,000/month. Are those units subject to VAT?",
+  "runtimeCommit": "6ce2d6fd613e7f3109022f5a0f5ea006e9122546",
+  "answer": "### Issue Presented\nAre residential rental units with a total annual income exceeding ₱3,000,000, where each unit rents at ₱15,000/month, subject to VAT?\n\n### Short Answer\n\n### Controlling Authorities\n2. **Revenue Regulations No. 16-2005** - These regulations implement the provisions of the NIRC regarding VAT, including the treatment of residential leases.\n\n### Legal Interpretation\n\n### Practical Application\nIn practice, the lessor must register as a VAT taxpayer with the Bureau of Internal Revenue (BIR) and begin charging VAT on the monthly rental payments. The lessor should also ensure compliance with VAT filing requirements, including the submission of VAT returns and payment of any VAT due. Failure to comply with these requirements may result in penalties and interest on unpaid taxes.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "treatment-contradiction",
+    "gates": {
+      "structural": true,
+      "treatmentDirectionMatches": false
+    },
+    "reason": "residential_per_unit_exemption_reversed_via_aggregate_3M_threshold"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "204dc8d902fbcc5b"
+}

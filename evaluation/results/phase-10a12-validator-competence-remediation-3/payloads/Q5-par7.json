@@ -1,0 +1,64 @@
+{
+  "id": "Q5-par7",
+  "group": "q5para",
+  "prompt": "If an importer does not meet the CREATE MORE conditions, is the importation still exempt from VAT?",
+  "runtimeCommit": "6ce2d6fd613e7f3109022f5a0f5ea006e9122546",
+  "answer": "### Short Answer\nImporters who do not meet the CREATE MORE conditions are still liable for VAT on importation. Under Section 107 of the NIRC, VAT is imposed on every importation of goods, regardless of the conditions met by the importer.\n\n### Controlling Authorities\n1. **NIRC Section 107** - This section states that there shall be a value-added tax levied on every importation of goods.\n2. **RR 16-2005** - This regulation clarifies that any person importing goods is liable for VAT as imposed by the NIRC.\n\n### Interpretation\nThe provisions of the NIRC and the implementing regulations clearly establish that VAT is applicable to all importations of goods. The CREATE MORE conditions, which may provide certain exemptions or benefits, do not negate the fundamental VAT liability on importation. Therefore, even if an importer does not qualify under these conditions, the obligation to pay VAT remains intact.\n\n### Practical Meaning\nFor importers, this means that they must account for VAT in their cost structure regardless of their eligibility for any incentives under the CREATE MORE law. This VAT liability must be settled prior to the release of goods from customs custody, impacting cash flow and pricing strategies for imported goods.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "treatmentDirectionMatches": true,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": true,
+      "eligibleForVerifiedControlling": true,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true,
+      "answerContradictsControllingSource": true
+    },
+    "reason": "The answer correctly addresses the VAT liability on importation and aligns with the cited authorities."
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": true,
+  "sources": [
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "2dddc1c999fc1011"
+}

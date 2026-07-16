@@ -1,0 +1,43 @@
+{
+  "id": "Q5-par1",
+  "group": "q5para",
+  "prompt": "A registered export enterprise imports raw materials directly used in its registered export activity. Is the importation subject to VAT?",
+  "runtimeCommit": "6ce2d6fd613e7f3109022f5a0f5ea006e9122546",
+  "answer": "### Issue Presented\nIs the importation of raw materials by a registered export enterprise, directly used in its registered export activity, subject to VAT?\n\n### Short Answer\nYes, the importation of raw materials is subject to VAT. Under Section 107 of the NIRC, VAT is levied on every importation of goods.\n\n### Controlling Authorities\n1. **NIRC Section 107** - Value-Added Tax on Importation of Goods.\n2. **RR 16-2005** - Implementing regulations for VAT on importation.\n\n### Legal Interpretation\nSection 107 of the NIRC explicitly states that a value-added tax equivalent to twelve percent (12%) is imposed on every importation of goods, calculated based on the total value used by the Bureau of Customs for determining tariff and customs duties, plus any applicable customs duties and excise taxes. This provision applies regardless of the purpose of the importation, including when the goods are intended for use in export activities. Furthermore, RR 16-2005 reinforces this by clarifying that all importations of taxable goods are subject to VAT, irrespective of the importer's status as a VAT-registered person.\n\n### Practical Application\nFor a registered export enterprise importing raw materials, it is crucial to account for the VAT on these imports as part of the overall cost structure. The VAT paid on importation can potentially be claimed as input tax if the enterprise is engaged in taxable activities, including export sales. Therefore, while the importation incurs VAT, it also provides an opportunity for tax recovery, which can enhance cash flow management for the enterprise.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "material-exception-omission",
+    "gates": {
+      "structural": true,
+      "materialExceptionsCovered": false
+    },
+    "reason": "import_vat_omits_create_more_export_exemption"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "bcdbc48e80557a56"
+}

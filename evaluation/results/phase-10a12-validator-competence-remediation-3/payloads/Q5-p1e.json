@@ -1,0 +1,63 @@
+{
+  "id": "Q5-p1e",
+  "group": "q5exact",
+  "prompt": "Is import VAT always 12% for goods used to make export products?",
+  "runtimeCommit": "6ce2d6fd613e7f3109022f5a0f5ea006e9122546",
+  "answer": "### Short Answer\nImport VAT on goods used to make export products is generally 12%, as mandated by Section 107 of the National Internal Revenue Code (NIRC).\n\n### Controlling Authorities\n1. **NIRC Section 107**: \"There shall be levied, assessed and collected on every importation of goods a value-added tax equivalent to twelve percent (12%) based on the total value used by the Bureau of Customs in determining tariff and customs duties plus customs duties, excise taxes, if any, and other charges.\"\n2. **RR 16-2005**: This regulation implements the provisions of the NIRC regarding VAT, confirming that importers are liable for VAT on imported goods.\n\n### Interpretation\nThe NIRC explicitly states that a 12% VAT is imposed on all importations of goods, which includes those intended for export production. This VAT is calculated based on the total value determined by the Bureau of Customs, inclusive of any applicable customs duties and excise taxes. There are no provisions in the NIRC or the implementing regulations that suggest a different VAT rate for goods used in the production of export products.\n\n### Practical Meaning\nFor businesses importing goods to manufacture products for export, the standard import VAT of 12% applies. This means that companies must account for this VAT in their cost structure when importing materials. However, they may be eligible for input tax credits on this VAT if they are VAT-registered and the goods are used in taxable transactions, including zero-rated export sales. This can help mitigate the financial impact of the import VAT on their overall tax liability.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "incentive-source-sufficiency",
+    "gates": {
+      "structural": true,
+      "specificIncentiveAuthorityPresent": false,
+      "exemptionBasisSupported": true,
+      "zeroRatingBasisSupported": false,
+      "incentiveConditionSupported": false,
+      "genericAuthorityOnly": true
+    },
+    "incentiveSufficiency": {
+      "applicable": true,
+      "incentiveTreatmentClaimed": true,
+      "claimsExemption": false,
+      "claimsZeroRating": true,
+      "specificIncentiveAuthorityPresent": false,
+      "exemptionBasisSupported": true,
+      "zeroRatingBasisSupported": false,
+      "treatmentLabelMatchesAuthority": false,
+      "periodApplicabilitySupported": false,
+      "genericAuthorityOnly": true,
+      "incentiveConditionSupported": false,
+      "specificIncentiveAuthorityInSources": false,
+      "specificIncentiveAuthorityMentionedInAnswer": false,
+      "qualifyingIncentiveQuestion": false
+    },
+    "reason": "incentive_treatment_claimed_without_specific_incentive_authority"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "b519217dbabf3895"
+}

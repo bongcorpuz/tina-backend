@@ -1,0 +1,8 @@
+[phase-10a12-r3-validator-competence-remediation-3] 20 passed, 0 failed, 46 assertions (exit 0)
+[phase-10a12-r2-validator-competence-remediation-2] PHASE-10A12-R2 tests: 10 passed, 0 failed, 31 assertions (exit 0)
+[phase-10a12-validator-competence-remediation-1] PHASE-10A12 validator-competence tests: 19 passed, 0 failed, 42 assertions (exit 0)
+[phase-10a10-r1-validator-schema-fail-closed-remediation-1] PHASE-10A10-R1 validator schema fail-closed tests: 22 passed, 0 failed, 37 assertions (exit 0)
+[phase-10a10-r2-missing-answersupport-fail-closed-remediation-1] PHASE-10A10-R2 missing-answerSupport fail-closed tests: 27 passed, 0 failed, 33 assertions (exit 0)
+[phase-10a10-verified-controlling-residual-and-completeness-remediation-1] PHASE-10A10 verified-controlling residual tests: 18 passed, 0 failed, 30 assertions (exit 0)
+[phase-10a8-trust-calibration-and-answer-correctness-remediation-1] PHASE-10A8 trust-calibration tests: 24 passed, 0 failed, 37 assertions (exit 0)
+SUITES ok=7 failing=0

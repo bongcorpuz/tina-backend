@@ -1,0 +1,78 @@
+{
+  "id": "Q5-par8",
+  "group": "q5para",
+  "prompt": "Is every importation of goods automatically subject to 12% VAT regardless of the importer's status?",
+  "runtimeCommit": "6ce2d6fd613e7f3109022f5a0f5ea006e9122546",
+  "answer": "### Issue Presented\nIs every importation of goods automatically subject to 12% VAT regardless of the importer's status?\n\n### Short Answer\nYes, every importation of goods is subject to a 12% VAT, regardless of the importer's status. This is mandated by Section 107 of the National Internal Revenue Code (NIRC).\n\n### Controlling Authorities\n1. **NIRC Sec. 107** - Value-Added Tax on Importation of Goods.\n2. **RR 16-2005** - Consolidated Value-Added Tax Regulations of 2005.\n\n### Legal Interpretation\n\n### Practical Application\nIn practice, this means that any entity or individual importing goods into the Philippines must account for the 12% VAT as part of their importation costs. This VAT must be paid prior to the release of the goods from customs custody. Importers should ensure they are prepared for this tax liability, as it is a non-negotiable requirement under Philippine tax law.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [
+      "requiredIssueKeysCovered",
+      "materialExceptionsCovered",
+      "materialAlternativesCovered",
+      "citationSupportsProposition",
+      "propositionSupported",
+      "materiallyComplete",
+      "sourcePropositionAligned",
+      "eligibleForVerifiedControlling",
+      "contradictsSources",
+      "unsupportedMaterialProposition",
+      "answerContradictsControllingSource"
+    ],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [
+      "unsafe_value_fields:requiredIssueKeysCovered,materialExceptionsCovered,materialAlternativesCovered,citationSupportsProposition,propositionSupported,materiallyComplete,sourcePropositionAligned,eligibleForVerifiedControlling,contradictsSources,unsupportedMaterialProposition,answerContradictsControllingSource"
+    ],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": false,
+      "materialExceptionsCovered": false,
+      "materialAlternativesCovered": false,
+      "citationRelevant": true,
+      "citationSupportsProposition": false,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": false,
+      "treatmentDirectionMatches": true,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": false,
+      "eligibleForVerifiedControlling": false,
+      "contradictsSources": false,
+      "unsupportedMaterialProposition": false,
+      "answerContradictsControllingSource": false
+    },
+    "reason": "unsafe_value_fields:requiredIssueKeysCovered,materialExceptionsCovered,materialAlternativesCovered,citationSupportsProposition,propositionSupported,materiallyComplete,sourcePropositionAligned,eligibleForVerifiedControlling,contradictsSources,unsupportedMaterialProposition,answerContradictsControllingSource"
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "bc4dab33e19fe8cf"
+}

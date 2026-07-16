@@ -1,0 +1,81 @@
+{
+  "id": "Q8-inc2",
+  "group": "q8incomplete",
+  "prompt": "Is renting out property subject to VAT?",
+  "runtimeCommit": "6ce2d6fd613e7f3109022f5a0f5ea006e9122546",
+  "answer": "### Issue Presented\nIs renting out property subject to Value-Added Tax (VAT) in the Philippines?\n\n### Short Answer\nYes, renting out property is subject to VAT under certain conditions. Specifically, the lease of properties is considered a sale of services and is subject to VAT as stipulated in the National Internal Revenue Code (NIRC).\n\n### Controlling Authorities\nThe relevant provisions are found in the NIRC:\n- **Section 106**: Value-Added Tax on Sale of Goods or Properties.\n- **Section 108**: Value-Added Tax on the Sale of Services, Including the Use or Lease of Properties.\n\n### Legal Interpretation\nAccording to **Section 106** of the NIRC, VAT is levied on every sale, barter, or exchange of goods or properties, which includes real properties held for lease in the ordinary course of trade or business. Furthermore, **Section 108** explicitly states that there shall be a VAT equivalent to twelve percent (12%) on the gross sales derived from the lease of properties. This means that if a person or entity is engaged in the business of leasing properties, they are required to register for VAT and charge it on their rental income.\n\n### Practical Application\nIn practice, landlords who lease properties in the course of trade or business must ensure they are VAT-registered if their gross annual sales exceed the threshold set by the Bureau of Internal Revenue (BIR). They must charge VAT on the rental payments and remit this tax to the BIR. Failure to comply with these VAT obligations can result in penalties and interest on unpaid taxes. It is advisable for property owners to consult with a tax professional to ensure compliance with VAT regulations and to understand any exemptions or special rules that may apply to their specific situation.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [
+      "requiredIssueKeysCovered",
+      "materialExceptionsCovered",
+      "materialAlternativesCovered",
+      "materiallyComplete",
+      "eligibleForVerifiedControlling"
+    ],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [
+      "unsafe_value_fields:requiredIssueKeysCovered,materialExceptionsCovered,materialAlternativesCovered,materiallyComplete,eligibleForVerifiedControlling"
+    ],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": false,
+      "materialExceptionsCovered": false,
+      "materialAlternativesCovered": false,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": false,
+      "treatmentDirectionMatches": true,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": true,
+      "eligibleForVerifiedControlling": false,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true,
+      "answerContradictsControllingSource": true
+    },
+    "reason": "unsafe_value_fields:requiredIssueKeysCovered,materialExceptionsCovered,materialAlternativesCovered,materiallyComplete,eligibleForVerifiedControlling"
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 106"
+    },
+    {
+      "label": "NIRC Sec. 108"
+    },
+    {
+      "label": "NIRC Sec. 105"
+    },
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "RR 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "4fc9356953fb12f2"
+}

@@ -1,0 +1,7 @@
+{
+  "generationModel": "gpt-4o-mini",
+  "answerSupportValidatorModel": "gpt-4o-mini",
+  "strongerModelsAvailable": false,
+  "note": "Only gpt-4o-mini is available on the API key (stronger models return 403). Competence raised via deterministic pre-gates + fail-closed schema, not a model change.",
+  "runtimeCommit": "6ce2d6fd613e7f3109022f5a0f5ea006e9122546"
+}

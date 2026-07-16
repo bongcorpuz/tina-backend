@@ -1,0 +1,63 @@
+{
+  "id": "Q5-par9",
+  "group": "q5para",
+  "prompt": "Are all imports used for export production automatically VAT-exempt?",
+  "runtimeCommit": "6ce2d6fd613e7f3109022f5a0f5ea006e9122546",
+  "answer": "### Short Answer\nNot all imports used for export production are automatically VAT-exempt. Only those imports by export-oriented enterprises that meet specific criteria are exempt from VAT.\n\n### Controlling Authorities\nThe relevant provision is found in Section 109 of the National Internal Revenue Code (NIRC), which outlines exempt transactions, including the importation of goods by export-oriented enterprises whose export sales constitute at least seventy percent (70%) of their total annual production.\n\n### Interpretation\nAccording to Section 109 of the NIRC, the exemption applies specifically to imports that are directly attributable to the export activities of the enterprise. This means that the goods imported must be essential for the production of goods intended for export, and the enterprise must demonstrate compliance with the export sales threshold.\n\n### Practical Meaning\nFor businesses engaged in export production, it is crucial to ensure that their imports qualify for VAT exemption by maintaining proper documentation and records that prove the direct link between the imported goods and their export activities. Failure to meet the criteria may result in VAT liability on those imports.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "incentive-source-sufficiency",
+    "gates": {
+      "structural": true,
+      "specificIncentiveAuthorityPresent": false,
+      "exemptionBasisSupported": false,
+      "zeroRatingBasisSupported": true,
+      "incentiveConditionSupported": false,
+      "genericAuthorityOnly": true
+    },
+    "incentiveSufficiency": {
+      "applicable": true,
+      "incentiveTreatmentClaimed": true,
+      "claimsExemption": true,
+      "claimsZeroRating": false,
+      "specificIncentiveAuthorityPresent": false,
+      "exemptionBasisSupported": false,
+      "zeroRatingBasisSupported": true,
+      "treatmentLabelMatchesAuthority": false,
+      "periodApplicabilitySupported": false,
+      "genericAuthorityOnly": true,
+      "incentiveConditionSupported": false,
+      "specificIncentiveAuthorityInSources": false,
+      "specificIncentiveAuthorityMentionedInAnswer": false,
+      "qualifyingIncentiveQuestion": false
+    },
+    "reason": "incentive_treatment_claimed_without_specific_incentive_authority"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 109"
+    },
+    {
+      "label": "RR 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "3688c2d1f1032086"
+}

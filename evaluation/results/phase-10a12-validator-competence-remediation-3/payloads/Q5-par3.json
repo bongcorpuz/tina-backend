@@ -1,0 +1,43 @@
+{
+  "id": "Q5-par3",
+  "group": "q5para",
+  "prompt": "Does CREATE MORE grant an import VAT exemption on goods imported by export-oriented enterprises?",
+  "runtimeCommit": "6ce2d6fd613e7f3109022f5a0f5ea006e9122546",
+  "answer": "### Short Answer\nThe CREATE Act does not grant an import VAT exemption on goods imported by export-oriented enterprises. Under Section 107 of the NIRC, a value-added tax (VAT) is levied on the importation of goods, which includes those imported by export-oriented enterprises.\n\n### Controlling Authorities\n1. **National Internal Revenue Code (NIRC) Section 107**: This section states that there shall be a VAT levied on every importation of goods at a rate of 12% based on the total value used by the Bureau of Customs in determining tariff and customs duties.\n2. **Revenue Regulations No. 16-2005**: These regulations implement the provisions of the NIRC regarding VAT, confirming that any person or entity importing goods is liable for the VAT imposed under Section 107.\n\n### Interpretation\nThe provisions of the NIRC and the implementing regulations clearly establish that VAT is applicable to all importations of goods, regardless of the status of the importer as an export-oriented enterprise. While export-oriented enterprises may benefit from other incentives under the CREATE Act, such as income tax holidays or reduced corporate income tax rates, these do not extend to exemptions from import VAT.\n\n### Practical Meaning\nFor export-oriented enterprises, while they may enjoy certain tax incentives, they must still account for and pay VAT on imported goods. This VAT can potentially be recovered as input tax if the goods are used in the course of their business operations, but it does not exempt them from the initial VAT liability upon importation. Therefore, careful tax planning is necessary to manage cash flow related to VAT on imports.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "material-exception-omission",
+    "gates": {
+      "structural": true,
+      "materialExceptionsCovered": false
+    },
+    "reason": "import_vat_denies_create_more_export_exemption"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "db7b150b5b638cfd"
+}

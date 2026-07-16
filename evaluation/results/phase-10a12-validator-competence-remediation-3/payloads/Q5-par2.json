@@ -1,0 +1,64 @@
+{
+  "id": "Q5-par2",
+  "group": "q5para",
+  "prompt": "A purely domestic trading company that does not export imports goods. Is its importation subject to 12% VAT or exempt?",
+  "runtimeCommit": "6ce2d6fd613e7f3109022f5a0f5ea006e9122546",
+  "answer": "### Issue Presented\nIs the importation of goods by a purely domestic trading company subject to 12% VAT or exempt?\n\n### Short Answer\nThe importation of goods by a purely domestic trading company is subject to a 12% VAT. This is mandated by Section 107 of the National Internal Revenue Code (NIRC).\n\n### Controlling Authorities\n1. **NIRC Section 107** - Value-Added Tax on Importation of Goods.\n2. **RR 16-2005** - Implementing regulations for VAT, specifically addressing importation.\n\n### Legal Interpretation\n\n### Practical Application\nFor a purely domestic trading company that imports goods, it must account for and pay the 12% VAT upon importation. This VAT is a cost that should be factored into the pricing of goods sold domestically. The company should ensure compliance with customs regulations and maintain proper documentation to support the VAT payment, as this will be necessary for any potential input tax claims if the company is VAT-registered.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "treatmentDirectionMatches": true,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": true,
+      "eligibleForVerifiedControlling": true,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true,
+      "answerContradictsControllingSource": true
+    },
+    "reason": "The answer correctly identifies the VAT treatment of importation for a domestic trading company and cites relevant authorities."
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": true,
+  "sources": [
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "29d30a72875fddef"
+}

@@ -1,0 +1,140 @@
+[
+  {
+    "id": "M-Q1",
+    "group": "mini",
+    "attempt": 1,
+    "ok": true,
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "asStage": "llm",
+    "verifiedEligible": false,
+    "asReason": "unsafe_value_fields:citationSupportsProposition,propositionSupported,sourcePropositionAligned,eligibleForVerifiedControlling,contradictsSources,answerContradictsControllingSource",
+    "persist": 2,
+    "sha256": "89dddaffd525da14d9906e54be60b5a29753e2f56e36a3ea2ea212cc9ccbc1c6"
+  },
+  {
+    "id": "M-Q4",
+    "group": "mini",
+    "attempt": 1,
+    "ok": true,
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "asStage": "structural",
+    "verifiedEligible": false,
+    "asReason": "empty_primary_answer_section",
+    "persist": 2,
+    "sha256": "b6a73cef1c8a90bb1104a8318a22b7d98e094a3bc56ed8722012ca8e2e157c16"
+  },
+  {
+    "id": "M-Q11",
+    "group": "mini",
+    "attempt": 1,
+    "ok": true,
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "NO_INDEXED_SOURCE",
+    "asStage": null,
+    "verifiedEligible": null,
+    "asReason": null,
+    "persist": 2,
+    "sha256": "273f14b04c9288681c0b9275b03acbf3a15619b186e9e0500796821329193b80"
+  },
+  {
+    "id": "M-Q13",
+    "group": "mini",
+    "attempt": 1,
+    "ok": true,
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "asStage": "error",
+    "verifiedEligible": false,
+    "asReason": "validator_error_fail_closed",
+    "persist": 2,
+    "sha256": "c7c02d16c8ab3bd34b43b7145491ba57eadb7048b7d590912ac05f528b75e860"
+  },
+  {
+    "id": "M-Q17",
+    "group": "mini",
+    "attempt": 1,
+    "ok": true,
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "NO_INDEXED_SOURCE",
+    "asStage": null,
+    "verifiedEligible": null,
+    "asReason": null,
+    "persist": 2,
+    "sha256": "6455026ea240db1a37f7e336cc9867d56336cf32a533bd6fc8bc3aeeb123ae7e"
+  },
+  {
+    "id": "M-Q18",
+    "group": "mini",
+    "attempt": 1,
+    "ok": true,
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "asStage": "llm",
+    "verifiedEligible": true,
+    "asReason": "The answer correctly states the optional standard deduction rates and is fully responsive to the question.",
+    "persist": 2,
+    "sha256": "f1380cd0d09565100be6d56c9d4a18f1cce15765bf1c07da679c7f9dd1816f93"
+  },
+  {
+    "id": "M-Q21",
+    "group": "mini",
+    "attempt": 1,
+    "ok": true,
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "NO_INDEXED_SOURCE",
+    "asStage": null,
+    "verifiedEligible": null,
+    "asReason": null,
+    "persist": 2,
+    "sha256": "1c3f4a1749c59ad9d48efac01d4b9489e33de401dfedb7fe88c4b8ce33601879"
+  },
+  {
+    "id": "M-Q24",
+    "group": "mini",
+    "attempt": 1,
+    "ok": true,
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "asStage": "llm",
+    "verifiedEligible": false,
+    "asReason": "unsafe_value_fields:citationSupportsProposition,propositionSupported,eligibleForVerifiedControlling,contradictsSources,unsupportedMaterialProposition,answerContradictsControllingSource",
+    "persist": 2,
+    "sha256": "3b4a4a29eb3233264a93273ca6ac8850e64b8c2dcc5ba57ffff95690d06c3568"
+  },
+  {
+    "id": "M-Q33",
+    "group": "mini",
+    "attempt": 1,
+    "ok": true,
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "asStage": "error",
+    "verifiedEligible": false,
+    "asReason": "validator_error_fail_closed",
+    "persist": 0,
+    "sha256": "48dc5c39ede118f750814ce65c02e27783d4e2d1e19ffe76f2844c821516bac6"
+  },
+  {
+    "id": "M-Q36",
+    "group": "mini",
+    "attempt": 1,
+    "ok": false,
+    "reason": "transient status=200 answerLen=187"
+  },
+  {
+    "id": "M-Q36",
+    "group": "mini",
+    "attempt": 2,
+    "ok": false,
+    "reason": "transient status=200 answerLen=187"
+  },
+  {
+    "id": "M-Q36",
+    "group": "mini",
+    "attempt": 3,
+    "ok": false,
+    "reason": "transient status=200 answerLen=187"
+  }
+]

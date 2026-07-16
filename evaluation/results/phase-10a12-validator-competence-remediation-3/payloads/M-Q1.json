@@ -1,0 +1,79 @@
+{
+  "id": "M-Q1",
+  "group": "mini",
+  "prompt": "A freelance graphic designer has ₱2.8 million annual gross receipts. Is VAT registration required?",
+  "runtimeCommit": "6ce2d6fd613e7f3109022f5a0f5ea006e9122546",
+  "answer": "### Issue Presented\n\nHowever, if there are reasonable grounds to believe that the gross sales for the next twelve months will exceed ₱3 million, registration may still be necessary. It is advisable for the designer to monitor their income closely and consider voluntary registration if they anticipate surpassing the threshold.\n\n**Key Legal Basis:**\n\n**Practical Implication:**\nThe designer can operate without VAT registration unless their gross receipts increase significantly or they choose to register voluntarily for business reasons.\n\n### Relevant Facts / Assumptions\nThe factual circumstances have not been fully described. The analysis is based on the question as presented.\n\n### Alternative Interpretations\nNo alternative interpretations identified from the available indexed authorities.\n\n### Position Strength\nPosition strength is preliminary and subject to full fact pattern verification.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [
+      "citationSupportsProposition",
+      "propositionSupported",
+      "sourcePropositionAligned",
+      "eligibleForVerifiedControlling",
+      "contradictsSources",
+      "answerContradictsControllingSource"
+    ],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [
+      "unsafe_value_fields:citationSupportsProposition,propositionSupported,sourcePropositionAligned,eligibleForVerifiedControlling,contradictsSources,answerContradictsControllingSource"
+    ],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "citationSupportsProposition": false,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "treatmentDirectionMatches": true,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": false,
+      "eligibleForVerifiedControlling": false,
+      "contradictsSources": false,
+      "unsupportedMaterialProposition": true,
+      "answerContradictsControllingSource": false
+    },
+    "reason": "unsafe_value_fields:citationSupportsProposition,propositionSupported,sourcePropositionAligned,eligibleForVerifiedControlling,contradictsSources,answerContradictsControllingSource"
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 109"
+    },
+    {
+      "label": "RR No. 16-2005"
+    },
+    {
+      "label": "NIRC Sec. 236"
+    },
+    {
+      "label": "RMC 75-2015"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "9a4bce1c017c5d1e"
+}

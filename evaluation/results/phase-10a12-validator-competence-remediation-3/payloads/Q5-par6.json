@@ -1,0 +1,63 @@
+{
+  "id": "Q5-par6",
+  "group": "q5para",
+  "prompt": "What is the general VAT rule on importation of goods, and does an incentive rule change it for exporters?",
+  "runtimeCommit": "6ce2d6fd613e7f3109022f5a0f5ea006e9122546",
+  "answer": "### Short Answer\nThe general VAT rule on the importation of goods is that a value-added tax (VAT) of 12% is levied on every importation, based on the total value used by the Bureau of Customs for determining tariff and customs duties, plus any applicable customs duties and excise taxes. This is stipulated under Section 107 of the National Internal Revenue Code (NIRC).\n\n### Controlling Authorities\n1. **NIRC Section 107**: \"Value-Added Tax on Importation of Goods\" establishes the VAT on imported goods.\n2. **RR 16-2005**: This regulation implements the provisions of the NIRC regarding VAT, confirming that importers are liable for VAT on taxable goods.\n\n### Interpretation\nAccording to Section 107 of the NIRC, the VAT on importation is calculated based on the total value determined by the Bureau of Customs, which includes customs duties and any excise taxes. This means that the VAT is effectively a consumption tax applied at the point of entry into the country. For exporters, the VAT treatment may differ as they can benefit from zero-rated sales on export transactions, allowing them to recover input VAT on their purchases related to these exports.\n\n### Practical Meaning\nFor businesses engaged in importing goods, it is crucial to account for the VAT as part of the total cost of goods imported. This VAT must be paid before the goods are released from customs custody. Exporters, on the other hand, can take advantage of the zero-rating on their export sales, which means they do not charge VAT on their sales to foreign buyers, thus enhancing their competitiveness in international markets while allowing them to claim back input VAT on related purchases.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "incentive-source-sufficiency",
+    "gates": {
+      "structural": true,
+      "specificIncentiveAuthorityPresent": false,
+      "exemptionBasisSupported": true,
+      "zeroRatingBasisSupported": false,
+      "incentiveConditionSupported": false,
+      "genericAuthorityOnly": true
+    },
+    "incentiveSufficiency": {
+      "applicable": true,
+      "incentiveTreatmentClaimed": true,
+      "claimsExemption": false,
+      "claimsZeroRating": true,
+      "specificIncentiveAuthorityPresent": false,
+      "exemptionBasisSupported": true,
+      "zeroRatingBasisSupported": false,
+      "treatmentLabelMatchesAuthority": false,
+      "periodApplicabilitySupported": false,
+      "genericAuthorityOnly": true,
+      "incentiveConditionSupported": false,
+      "specificIncentiveAuthorityInSources": false,
+      "specificIncentiveAuthorityMentionedInAnswer": false,
+      "qualifyingIncentiveQuestion": false
+    },
+    "reason": "incentive_treatment_claimed_without_specific_incentive_authority"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "a1357969bd76e9c9"
+}

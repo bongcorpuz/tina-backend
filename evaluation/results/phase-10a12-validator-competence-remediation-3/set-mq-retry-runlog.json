@@ -1,0 +1,28 @@
+[
+  {
+    "id": "M-Q36",
+    "group": "mini",
+    "attempt": 1,
+    "ok": true,
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "asStage": "error",
+    "verifiedEligible": false,
+    "asReason": "validator_error_fail_closed",
+    "persist": 2,
+    "sha256": "2f9955d644d4d2985bf6920b6fd16c7d97d7a6ac7be1b374d2e549451deb5596"
+  },
+  {
+    "id": "M-Q33",
+    "group": "mini",
+    "attempt": 1,
+    "ok": true,
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "asStage": "llm",
+    "verifiedEligible": false,
+    "asReason": "unsafe_value_fields:citationSupportsProposition,propositionSupported,thresholdDimensionMatches,eligibleForVerifiedControlling,contradictsSources,unsupportedMaterialProposition,answerContradictsControllingSource",
+    "persist": 2,
+    "sha256": "221fb4f3c4a940de8763d8f9cdc4bad3567f0139610c56303fae6375c3cb2338"
+  }
+]

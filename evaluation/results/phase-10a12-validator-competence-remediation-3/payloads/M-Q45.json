@@ -1,0 +1,74 @@
+{
+  "id": "M-Q45",
+  "group": "mini",
+  "prompt": "Are PEZA-registered enterprises subject to corporate income tax?",
+  "runtimeCommit": "6ce2d6fd613e7f3109022f5a0f5ea006e9122546",
+  "answer": "### Issue Presented\nAre PEZA-registered enterprises subject to corporate income tax under Philippine law?\n\n### Short Answer\nYes, PEZA-registered enterprises are subject to corporate income tax, but they may benefit from preferential tax rates or exemptions depending on their specific activities and compliance with PEZA regulations.\n\n### Controlling Authorities\nThe relevant provision is Section 27 of the National Internal Revenue Code (NIRC), which outlines the rates of income tax on domestic corporations. Specifically, it states that a corporate income tax rate of twenty-five percent (25%) is imposed on the taxable income derived from all sources within and without the Philippines by every corporation.\n\n### Legal Interpretation\n\n### Practical Application\nPEZA-registered enterprises should carefully assess their compliance with PEZA regulations to determine their tax obligations. While they are generally subject to corporate income tax, they may avail themselves of lower tax rates or exemptions if they meet specific criteria set forth by PEZA. It is advisable for these enterprises to maintain proper documentation and consult with tax professionals to ensure they maximize available tax benefits while remaining compliant with tax laws.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [
+      "materialExceptionsCovered",
+      "materialAlternativesCovered",
+      "materiallyComplete",
+      "eligibleForVerifiedControlling"
+    ],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [
+      "unsafe_value_fields:materialExceptionsCovered,materialAlternativesCovered,materiallyComplete,eligibleForVerifiedControlling"
+    ],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": false,
+      "materialAlternativesCovered": false,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": false,
+      "treatmentDirectionMatches": true,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": true,
+      "eligibleForVerifiedControlling": false,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true,
+      "answerContradictsControllingSource": true
+    },
+    "reason": "unsafe_value_fields:materialExceptionsCovered,materialAlternativesCovered,materiallyComplete,eligibleForVerifiedControlling"
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 27"
+    },
+    {
+      "label": "NIRC Sec. 23"
+    },
+    {
+      "label": "NIRC Sec. 24"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "268fba5ad604c1a8"
+}

@@ -1,0 +1,94 @@
+{
+  "phase": "PHASE-10A12-VALIDATOR-COMPETENCE-REMEDIATION-3",
+  "reconciledFrom": "FINAL_RUNTIME_ONLY",
+  "runtimeCommit": "6ce2d6fd613e7f3109022f5a0f5ea006e9122546",
+  "payloadDir": "evaluation/results/phase-10a12-validator-competence-remediation-3/payloads",
+  "totalPayloads": 66,
+  "byAuthoritySupport": {
+    "RELATED_AUTHORITY_ONLY": 47,
+    "NO_VERIFIED_AUTHORITY": 7,
+    "VERIFIED_CONTROLLING": 12
+  },
+  "checksum": "12 + 47 + 7 = 66",
+  "byCluster": {
+    "mini": {
+      "total": 30,
+      "verified": 7,
+      "invalidVerified": 0
+    },
+    "Q5": {
+      "total": 18,
+      "verified": 2,
+      "invalidVerified": 0
+    },
+    "Q8": {
+      "total": 10,
+      "verified": 0,
+      "invalidVerified": 0
+    },
+    "restriction": {
+      "total": 3,
+      "verified": 0,
+      "invalidVerified": 0
+    },
+    "vcontrol": {
+      "total": 5,
+      "verified": 3,
+      "invalidVerified": 0
+    }
+  },
+  "verifiedRuns": 12,
+  "verifiedIds": [
+    "M-Q12",
+    "M-Q15",
+    "M-Q18",
+    "M-Q3",
+    "M-Q30",
+    "M-Q48",
+    "M-Q6",
+    "Q5-par2",
+    "Q5-par7",
+    "VC-Q32",
+    "VC-Q34",
+    "VC-Q47"
+  ],
+  "validVerified": 12,
+  "questionableVerified": 0,
+  "invalidVerified": 0,
+  "q5": {
+    "total": 18,
+    "verified": 2,
+    "invalidVerified": 0,
+    "unsafeApprovals": 0,
+    "falseRefusals": 0
+  },
+  "q8": {
+    "total": 10,
+    "verified": 0,
+    "invalidVerified": 0,
+    "falseRefusals": 0
+  },
+  "miniFactcheck": {
+    "intended": 30,
+    "completed": 30,
+    "verified": 7,
+    "invalidVerified": 0,
+    "duplicate": 0
+  },
+  "vcontrol": {
+    "total": 5,
+    "verified": 3,
+    "reachability": "3/5"
+  },
+  "restriction": {
+    "total": 3,
+    "verified": 0,
+    "unrestrictedOutcomePredictions": 0
+  },
+  "safeUnderclaims": 46,
+  "unsafeApprovals": 0,
+  "falseRefusals": 0,
+  "fabricatedAuthorities": 0,
+  "persistenceFailures": 0,
+  "securityFailures": 0
+}
