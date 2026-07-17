@@ -171,6 +171,14 @@ await test("E-valid: correct net-estate computations (no fixed amount / one pref
   check(reachable(g("What is the estate tax?", "The standard deduction is one of the allowable deductions under Section 86; 6% of the net estate.", ESTATE_COMP)), "standard deduction as one deduction");
 });
 
+await test("E-donor: a donor's-tax answer with a real 250k threshold that mentions 'estate planning' is NOT an estate misstatement", () => {
+  const r = g("What is the donor's tax rate and exemption threshold under TRAIN?",
+    "The donor's tax is 6% on total gifts exceeding the 250,000 exemption threshold; this helps estate planning.",
+    S("NIRC Sec. 99", "NIRC Sec. 101"));
+  check(r.propositionClass !== "tax_computation_basis", "not classified as an estate computation");
+  check(reachable(r), "donor's tax reachable (not a false refusal)");
+});
+
 // ── F. Generic-return false positives ────────────────────────────────────────
 await test("F: non-tax 'return' senses are not filing propositions", () => {
   for (const [q, a] of [

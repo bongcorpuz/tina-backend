@@ -815,13 +815,14 @@ const ESTATE_SUBTRACT_ONE_APPLY_RE = /\b(?:subtract|deduct|less|minus)\b[^.\n]{0
 function analyzeEstateComputation(answerNorm, contextNorm) {
   const a = answerNorm || "";
   const ctx = (contextNorm || "") + " \n " + a;
-  // Estate context: an explicit estate-tax marker, OR the estate is under discussion
-  // together with a computation cue in the answer (rate/deduction/threshold/exceeding/
-  // value of the estate). This lets the estate context come from the question while the
-  // computation claim (and any misstatement) is asserted in the answer.
-  const isEstate = /\bestate[- ]?tax\b|\bnet estate\b|\bgross estate\b|\bdecedent\b|\bestate of\b/.test(ctx) ||
-    (/\bestate\b/.test(ctx) && /\b6 ?%|six percent|deduction|threshold|exceed\w*|excess|tax-free|value of the estate\b/.test(a));
-  if (!isEstate) return { isEstateComputation: false };
+  // Estate context requires a genuine estate-TAX marker (estate tax / gross estate /
+  // net estate / decedent / value of the estate). Bare "estate" (e.g. "estate planning")
+  // does NOT qualify, so a donor's-tax answer that legitimately has a 250k exemption
+  // threshold and merely mentions "estate planning" is not misclassified as an estate
+  // computation. A donor/gift context is explicitly excluded.
+  const isEstate = /\bestate[- ]?tax\b|\bnet estate\b|\bgross estate\b|\bdecedent\b|\bestate of the\b|\bvalue of the estate\b/.test(ctx);
+  const isDonor = /\bdonor'?s tax\b|\bgift tax\b|\bdonation\b|\bof gifts?\b|\btotal gifts?\b/.test(ctx);
+  if (!isEstate || isDonor) return { isEstateComputation: false };
   const components = {
     rate: /\b6 ?%|\bsix percent\b|\bflat rate\b/.test(a),
     netEstate: /\bnet estate\b/.test(a),
