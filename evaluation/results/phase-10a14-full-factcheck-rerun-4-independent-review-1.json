@@ -1,0 +1,128 @@
+{
+    "task":  "PHASE-10A14-FULL-FACTCHECK-RERUN-4-INDEPENDENT-REVIEW-1",
+    "decision":  "REVISIONS REQUIRED",
+    "reviewer":  "Codex GPT-5 high reasoning low speed",
+    "repository":  "C:/Projects/tina-backend",
+    "branch":  "feature/source-availability-engine-v1",
+    "startingHead":  "952563f8d52176e80de5c32a07b38ef619e9d018",
+    "reviewedExecution":  "PHASE-10A14-FULL-FACTCHECK-RERUN-4",
+    "canonical":  {
+                      "questions":  50,
+                      "rounds":  3,
+                      "payloads":  150,
+                      "runlogEntries":  150,
+                      "uniqueSlots":  150,
+                      "duplicateSlots":  0,
+                      "missingSlots":  0,
+                      "payloadRunlogHashMismatches":  0,
+                      "persistenceFailures":  0
+                  },
+    "payloadAuthoritySupport":  {
+                                    "VERIFIED_CONTROLLING":  26,
+                                    "RELATED_AUTHORITY_ONLY":  76,
+                                    "NO_VERIFIED_AUTHORITY":  48
+                                },
+    "verifiedAdjudication":  {
+                                 "verifiedPayloads":  26,
+                                 "validVerified":  17,
+                                 "questionableVerified":  9,
+                                 "invalidVerified":  0,
+                                 "questionableSlots":  [
+                                                           "Q12-r1",
+                                                           "Q12-r2",
+                                                           "Q12-r3",
+                                                           "Q30-r1",
+                                                           "Q30-r2",
+                                                           "Q30-r3",
+                                                           "Q34-r1",
+                                                           "Q34-r2",
+                                                           "Q34-r3"
+                                                       ]
+                             },
+    "severityCounts":  {
+                           "P0":  0,
+                           "P1":  3,
+                           "P2":  3,
+                           "P3":  1
+                       },
+    "passCriteria":  {
+                         "p0Zero":  true,
+                         "p1Zero":  false,
+                         "questionableVerifiedZero":  false,
+                         "invalidVerifiedZero":  true,
+                         "canonicalSlotsReconciled":  true,
+                         "runnersPassed":  true,
+                         "securityScopeClean":  true
+                     },
+    "runnerVerification":  {
+                               "deterministic":  "190 passed, 0 failed, exit 0",
+                               "syntax":  "10 passed, 0 failed",
+                               "staging":  "7 passed, 0 failed, exit 0 after approved network rerun",
+                               "combined":  "197 passed, 0 failed"
+                           },
+    "findings":  [
+                     {
+                         "id":  "IR1-P1-001",
+                         "severity":  "P1",
+                         "slots":  [
+                                       "Q12-r1",
+                                       "Q12-r2",
+                                       "Q12-r3"
+                                   ],
+                         "summary":  "No-filing-required compensation answer verified without filing-return authority."
+                     },
+                     {
+                         "id":  "IR1-P1-002",
+                         "severity":  "P1",
+                         "slots":  [
+                                       "Q30-r1",
+                                       "Q30-r2",
+                                       "Q30-r3"
+                                   ],
+                         "summary":  "Estate-tax rate answer conflates rate/base/deduction and taxpayer distinctions."
+                     },
+                     {
+                         "id":  "IR1-P1-003",
+                         "severity":  "P1",
+                         "slots":  [
+                                       "Q34-r1",
+                                       "Q34-r2",
+                                       "Q34-r3"
+                                   ],
+                         "summary":  "Individual AITR deadline verified on non-deadline source cards."
+                     },
+                     {
+                         "id":  "IR1-P2-001",
+                         "severity":  "P2",
+                         "slots":  [
+                                       "SIDE-REG-POS"
+                                   ],
+                         "summary":  "Registration-positive sidecar failed due to non-controlling retrieval."
+                     },
+                     {
+                         "id":  "IR1-P2-002",
+                         "severity":  "P2",
+                         "slots":  [
+                                       "SIDE-VATEXC-POS"
+                                   ],
+                         "summary":  "VAT-exemption-positive sidecar failed due to general VAT retrieval."
+                     },
+                     {
+                         "id":  "IR1-P2-003",
+                         "severity":  "P2",
+                         "slots":  [
+                                       "Q3-r1",
+                                       "Q3-r3"
+                                   ],
+                         "summary":  "Exporter refund citation precision weakness."
+                     },
+                     {
+                         "id":  "IR1-P3-001",
+                         "severity":  "P3",
+                         "slots":  [
+                                       "Q10 retries"
+                                   ],
+                         "summary":  "Degenerate 16-character technical retries preserved and excluded from canonical count."
+                     }
+                 ]
+}

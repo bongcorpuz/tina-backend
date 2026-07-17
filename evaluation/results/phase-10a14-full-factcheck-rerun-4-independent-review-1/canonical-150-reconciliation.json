@@ -1,0 +1,18 @@
+{
+  "payloadFiles": 150,
+  "runlogEntries": 150,
+  "uniqueCanonicalSlots": 150,
+  "missingSlots": 0,
+  "duplicateSlots": 0,
+  "payloadRunlogHashMismatches": 0,
+  "persistenceCount": { "2": 150 },
+  "runtimeCommitCounts": { "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6": 150 },
+  "authoritySupportCounts": {
+    "VERIFIED_CONTROLLING": 26,
+    "RELATED_AUTHORITY_ONLY": 76,
+    "NO_VERIFIED_AUTHORITY": 48
+  },
+  "checksum": "26 + 76 + 48 = 150",
+  "mechanicalReconciliationVerdict": "PASS",
+  "legalTrustAdjudicationVerdict": "FAIL"
+}
