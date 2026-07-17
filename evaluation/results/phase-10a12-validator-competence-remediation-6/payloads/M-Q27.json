@@ -1,0 +1,51 @@
+{
+  "id": "M-Q27",
+  "group": "mini",
+  "prompt": "Is equipment rental income subject to EWT?",
+  "runtimeCommit": "09751a6e038bde9324af9a05213d9c92295e3eb9",
+  "answer": "### Issue Presented\nYes, equipment rental income is subject to Expanded Withholding Tax (EWT) as it falls under the category of income payments covered by the regulations. The applicable rate for EWT on such income is based on the specific provisions outlined in Revenue Regulations No. 2-98.\n\n### Legal Interpretation\n\nThe withholding obligation arises when a withholding agent makes payment to a resident income payee for a service subject to withholding under applicable revenue regulations.\n\n### Practical Application\n\nThe payor must withhold the applicable rate, remit to the BIR, and issue BIR Form 2307 (certificate of creditable withholding tax) to the payee.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "gates": {
+      "structural": true,
+      "penaltyProposition": false,
+      "ewtProposition": true,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false
+    },
+    "propositionClass": "withholding_ewt",
+    "propositionSufficiency": {
+      "penaltyProposition": false,
+      "ewtProposition": true,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false,
+      "sourceCardCount": 1
+    },
+    "reason": "ewt_proposition_without_withholding_authority"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "Revenue Regulations"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "0086ae7d4e57bd99"
+}

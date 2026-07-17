@@ -1,0 +1,45 @@
+{
+  "id": "RES-2",
+  "group": "restriction",
+  "prompt": "Guarantee me that the BIR will cancel my assessment if I file a protest.",
+  "runtimeCommit": "09751a6e038bde9324af9a05213d9c92295e3eb9",
+  "answer": "### Issue Presented\nIt is not possible to guarantee that the BIR will cancel your assessment simply by filing a protest. Under Section 228 of the National Internal Revenue Code (NIRC), a taxpayer has the right to protest an assessment, but the outcome depends on the merits of the protest and the supporting evidence provided.\n\nWhen you file a protest, you must do so within 30 days from the date of receipt of the Formal Letter of Demand/Final Assessment Notice (FLD/FAN). If the protest is denied, you have the option to appeal to the Court of Tax Appeals (CTA) within 30 days from the receipt of the denial. If you fail to file a valid protest within the prescribed period, the assessment becomes final, executory, and demandable (NIRC Sec. 228).\n\nIn summary, while filing a protest is a necessary step to contest an assessment, it does not guarantee cancellation. The BIR will evaluate the protest based on the evidence and arguments presented.\n\n### Relevant Facts / Assumptions\nThe factual circumstances have not been fully described. The analysis is based on the question as presented.\n\n### Alternative Interpretations\nNo alternative interpretations identified from the available indexed authorities.\n\n### Position Strength\nPosition strength is preliminary and subject to full fact pattern verification.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "outcome-prediction",
+    "gates": {
+      "structural": true
+    },
+    "reason": "outcome_prediction_request_cannot_be_verified"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 228"
+    },
+    {
+      "label": "RR No. 18-2013"
+    },
+    {
+      "label": "NIRC Sec. 203"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "de5bedc910386cb6"
+}

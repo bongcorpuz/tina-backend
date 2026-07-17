@@ -1,0 +1,40 @@
+{
+  "id": "Q8-agg1",
+  "group": "q8aggregate",
+  "prompt": "A lessor's total annual residential rental income exceeds ₱3,000,000 but each unit rents at ₱15,000/month. Are those units subject to VAT?",
+  "runtimeCommit": "09751a6e038bde9324af9a05213d9c92295e3eb9",
+  "answer": "### Issue Presented\nAre residential rental units, each renting at ₱15,000 per month, subject to VAT given that the lessor's total annual rental income exceeds ₱3,000,000?\n\n### Short Answer\n\n### Controlling Authorities\n- **RR 16-2005**: Implements the provisions of the NIRC regarding VAT, including the exemption criteria for residential leases.\n\n### Legal Interpretation\n\n### Practical Application\nIn practice, the lessor must register as a VAT taxpayer and charge VAT on the rental income received from the residential units. This means that the lessor will need to issue VAT invoices and remit the VAT collected to the Bureau of Internal Revenue (BIR). Additionally, the lessor should maintain proper records of all transactions to ensure compliance with VAT regulations and facilitate any potential audits by the BIR.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "treatment-contradiction",
+    "gates": {
+      "structural": true,
+      "treatmentDirectionMatches": false
+    },
+    "reason": "residential_per_unit_exemption_reversed_via_aggregate_3M_threshold"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "3911751733642260"
+}

@@ -1,0 +1,60 @@
+{
+  "id": "M-Q25",
+  "group": "mini",
+  "prompt": "Is EWT required on payments to a VAT-registered law firm?",
+  "runtimeCommit": "09751a6e038bde9324af9a05213d9c92295e3eb9",
+  "answer": "### Short Answer\nYes, Expanded Withholding Tax (EWT) is required on payments to a VAT-registered law firm. This is in accordance with the provisions of the National Internal Revenue Code (NIRC).\n\n### Interpretation\nUnder Section 236 of the NIRC, any person engaged in the sale of services, including law firms, that exceeds the threshold for VAT registration must register and comply with VAT regulations. Payments made to these VAT-registered entities are subject to EWT as mandated by the BIR, as they are considered income payments subject to withholding tax.\n\n### Practical Meaning\nFor businesses making payments to VAT-registered law firms, it is essential to withhold the appropriate EWT from these payments and remit it to the Bureau of Internal Revenue (BIR). This ensures compliance with tax regulations and avoids potential penalties for non-compliance.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "gates": {
+      "structural": true,
+      "penaltyProposition": false,
+      "ewtProposition": true,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false
+    },
+    "propositionClass": "withholding_ewt",
+    "propositionSufficiency": {
+      "penaltyProposition": false,
+      "ewtProposition": true,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false,
+      "sourceCardCount": 4
+    },
+    "reason": "ewt_proposition_without_withholding_authority"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 109"
+    },
+    {
+      "label": "NIRC Sec. 236"
+    },
+    {
+      "label": "RR No. 16-2005"
+    },
+    {
+      "label": "RMC 75-2015"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "d83fe0c3567071b9"
+}

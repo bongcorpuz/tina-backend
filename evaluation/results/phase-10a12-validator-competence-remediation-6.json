@@ -1,0 +1,84 @@
+{
+  "task": "PHASE-10A12-VALIDATOR-COMPETENCE-REMEDIATION-6",
+  "scope": "Remediate the four R5 P1 findings (M-Q36 invalid verified; M-Q25 invalid/questionable verified; deterministic runner failed; staging runner failed) via a generalizable proposition-specific source-sufficiency control and a runner scope-check fix, then rerun the UNCHANGED governed canonical mini-30. Does NOT authorize A13, the adversarial suite, Phase 10A closure, 10B, 10C, model change, reindex, or deployment.",
+  "backendStartHead": "6622cf1dde14a79294a53ab67abdaae1f76e0271",
+  "validatorCommit": "920ed53f9bf2cbfff0472269d25a1dc970e33205",
+  "runnerFixCommit": "09751a6e038bde9324af9a05213d9c92295e3eb9",
+  "runtimeCommit": "09751a6e038bde9324af9a05213d9c92295e3eb9",
+
+  "p1_1_mQ36": {
+    "finding": "M-Q36 invalid VERIFIED_CONTROLLING (fabricated monthly-25% penalty on general VAT authority).",
+    "rootCause": "penalty proposition verified on non-penalty (general VAT-imposition) source cards; surcharge/interest and one-time/periodic confusion.",
+    "remediation": "proposition-source-sufficiency penalty sub-gate; requires penalty authority (Sec 248/249/250/253/254/255, RA 11976/EOPT, RR 6-2024, RMC 52-2023).",
+    "liveResult": "M-Q36 -> RELATED_AUTHORITY_ONLY, verifiedEligible=false, stage proposition-source-sufficiency. Invalid verified = 0."
+  },
+  "p1_2_mQ25": {
+    "finding": "M-Q25 invalid/questionable VERIFIED_CONTROLLING (categorical EWT on VAT registration/invoicing authority; no legal-form analysis).",
+    "rootCause": "authority-topic mismatch + generic-source-card laundering + missing statutory (legal-form/GPP) conditions -- DISTINCT from M-Q36.",
+    "remediation": "proposition-source-sufficiency EWT sub-gate; requires withholding authority (RR 2-1998/11-2018, RMC 50-2018, Sec 57/58).",
+    "liveResult": "M-Q25 -> RELATED_AUTHORITY_ONLY, verifiedEligible=false, stage proposition-source-sufficiency. Invalid/questionable verified = 0."
+  },
+  "p1_3_deterministicRunner": {
+    "finding": "deterministic lane exited 1 twice in review (09ZF flagged untracked .claude/settings.local.json).",
+    "rootCause": "09ZF allowed-file scope check untracked filter excluded .vscode/, evaluation/factcheck/, .env but not .claude/ (a protected untracked path); environment-dependent (global gitignore variance).",
+    "remediation": "add .claude/ to the 09ZF untracked exclusion; no suite deleted/weakened/skipped/forced/non-blocking; guard still fails on real disallowed changes (proven).",
+    "result": "deterministic lane 189 suites, 0 failed, exit 0 (twice)."
+  },
+  "p1_4_stagingRunner": {
+    "finding": "staging lane exited 1 twice in review (09R staging unreachable).",
+    "rootCause": "actual transient staging unavailability during the review window; 09R correctly fails (does not skip) when staging is down.",
+    "remediation": "none to the staging lane (must remain mandatory + blocking); staging reachable at R6 execution.",
+    "result": "staging lane 7 suites, 0 failed, exit 0 (twice)."
+  },
+
+  "governedMini30": {
+    "manifestUnchanged": true,
+    "canonicalSetSha256": "8e019480b2e710f9575e5f47d72716d9e94680b8bb3caa904cfe27f05c0f6ea1",
+    "sourceBankSnapshotSha256": "526106e594667705df227930dff3d9a4717ec99b171626bf708db43f4eac4bed",
+    "intended": 30, "completed": 30, "membershipMatchesFrozenManifest": true,
+    "runtimeStampMismatches": 0, "promptMismatchesVsManifest": 0,
+    "byAuthoritySupport": { "VERIFIED_CONTROLLING": 4, "RELATED_AUTHORITY_ONLY": 16, "NO_VERIFIED_AUTHORITY": 10 },
+    "verified": ["M-Q6", "M-Q12", "M-Q15", "M-Q30"],
+    "invalidVerified": 0, "questionableVerified": 0, "fabricatedAuthorities": 0, "falseRefusals": 0,
+    "unrestrictedOutcomePredictions": 0, "persistenceFailures": 0,
+    "mQ25": "RELATED_AUTHORITY_ONLY", "mQ36": "RELATED_AUTHORITY_ONLY"
+  },
+
+  "ws8Regression": {
+    "q5ExactInvalidVerified": 0,
+    "q5ValidVerifiedReachable": ["Q5-rbe1", "Q5-rbe2"],
+    "q8InvalidVerified": 0,
+    "restrictionVerified": 0,
+    "accessorGetterExecutions": 0,
+    "accessorExceptions": 0,
+    "accessorVerified": 0,
+    "note": "Q5 incentive-source-sufficiency gate preserved unchanged; accessor/outcome-prediction/persistence covered by the A12-R2/R3 + A10 suites (all pass)."
+  },
+
+  "suiteAccounting": { "deterministic": 189, "staging": 7, "combined": 196, "priorCombined": 195, "delta": "+1 new R6 focused suite (justified)" },
+  "validatorSuitesGreen": { "a12r6": 16, "a12r3": 20, "a12r2": 10, "a12r1": 19, "a10r1": 22, "a10r2": 27, "a10verified": 18, "a8": 24 },
+
+  "sourceExcerptGrounded": false,
+  "guardArchitecture": "PROPOSITION_CLASS_SOURCE_SUFFICIENCY_WITH_FAIL_CLOSED_SCHEMA",
+  "officialAuthorityOnly": true,
+  "countsReconciled": true,
+  "securityScan": "clean",
+  "coverageWeakenedOrRemoved": false,
+
+  "currentP0Count": 0,
+  "currentP1Count": 0,
+  "currentP2Count": 4,
+  "currentP3Count": 1,
+
+  "phase10AStatus": "REOPENED_PENDING_INDEPENDENT_REVIEW",
+  "phase10BStatus": "BLOCKED",
+  "phase10CStatus": "BLOCKED",
+  "a13Status": "NOT_AUTHORIZED",
+  "adversarialStatus": "DEFERRED",
+  "productionStatus": "NOT_AUTHORIZED",
+  "reindexStatus": "NOT_AUTHORIZED",
+  "modelChangeStatus": "NOT_AUTHORIZED",
+
+  "decision": "PASS",
+  "decisionRationale": "All four R5 P1 findings remediated with live evidence: M-Q36 and M-Q25 no longer verify (0 invalid/questionable verified across the governed mini-30 and WS8); the deterministic lane exits 0 twice (189/0) and the staging lane exits 0 twice (7/7); no coverage removed or weakened. Governed mini-30 = 30/30 with membership/runtime/prompt exact match; valid VERIFIED_CONTROLLING reachability preserved (mini M-Q6/M-Q12/M-Q15/M-Q30; Q5 rbe1/rbe2). Q5 invalid=0, Q8 invalid=0, accessor 0, outcome-prediction restriction holds. Official authorities only; security clean; worktree clean."
+}

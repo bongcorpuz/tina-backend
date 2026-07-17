@@ -1,0 +1,43 @@
+{
+  "id": "Q5-p1c",
+  "group": "q5exact",
+  "prompt": "Is import VAT always 12% for goods used to make export products?",
+  "runtimeCommit": "09751a6e038bde9324af9a05213d9c92295e3eb9",
+  "answer": "### Short Answer\nImport VAT on goods is generally levied at a rate of 12% based on the total value used by the Bureau of Customs in determining tariff and customs duties, as stated in Section 107 of the National Internal Revenue Code (NIRC).\n\n### Controlling Authorities\n1. **NIRC Sec. 107**: \"There shall be levied, assessed and collected on every importation of goods a value-added tax equivalent to twelve percent (12%) based on the total value used by the Bureau of Customs in determining tariff and customs duties plus customs duties, excise taxes, if any, and other charges.\"\n2. **RR 16-2005**: This regulation implements the provisions of the NIRC regarding VAT, confirming that importers are liable for VAT on imported goods.\n\n### Interpretation\nThe 12% VAT applies uniformly to all importations of goods, including those intended for export production. However, while the import VAT is 12%, goods that are subsequently exported may qualify for zero-rating under certain conditions, allowing exporters to recover the VAT paid on inputs.\n\n### Practical Meaning\nFor businesses importing goods to manufacture export products, they will initially incur a 12% VAT on those imports. However, they can potentially recover this VAT through zero-rating provisions when the finished products are exported. This mechanism ensures that the VAT system does not impose a tax burden on exported goods, promoting competitiveness in international markets.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "material-exception-omission",
+    "gates": {
+      "structural": true,
+      "materialExceptionsCovered": false
+    },
+    "reason": "import_vat_omits_create_more_export_exemption"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "86aad440b40e06f1"
+}

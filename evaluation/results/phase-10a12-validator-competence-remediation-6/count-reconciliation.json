@@ -1,0 +1,51 @@
+{
+  "phase": "PHASE-10A12-VALIDATOR-COMPETENCE-REMEDIATION-6",
+  "reconciledFrom": "FINAL_RUNTIME_ONLY",
+  "runtimeCommit": "09751a6e038bde9324af9a05213d9c92295e3eb9",
+  "governedManifest": "evaluation/results/phase-10a12-validator-competence-remediation-5/canonical-mini-set-manifest.json (UNCHANGED)",
+  "canonicalSetSha256": "8e019480b2e710f9575e5f47d72716d9e94680b8bb3caa904cfe27f05c0f6ea1",
+  "sourceBankSnapshotSha256": "526106e594667705df227930dff3d9a4717ec99b171626bf708db43f4eac4bed",
+  "membershipMatchesFrozenManifest": true,
+  "runtimeStampMismatches": 0,
+  "promptMismatchesVsManifest": 0,
+  "miniFactcheck": {
+    "intended": 30,
+    "completed": 30,
+    "missing": 0,
+    "duplicate": 0,
+    "byAuthoritySupport": {
+      "RELATED_AUTHORITY_ONLY": 16,
+      "VERIFIED_CONTROLLING": 4,
+      "NO_VERIFIED_AUTHORITY": 10
+    },
+    "checksum": "4 + 16 + 10 = 30",
+    "verified": [
+      "M-Q12",
+      "M-Q15",
+      "M-Q30",
+      "M-Q6"
+    ],
+    "invalidVerified": 0,
+    "questionableVerified": 0,
+    "fabricatedAuthorities": 0,
+    "falseRefusals": 0,
+    "mQ25": "RELATED_AUTHORITY_ONLY",
+    "mQ36": "RELATED_AUTHORITY_ONLY",
+    "remediationConfirmed": true
+  },
+  "ws8Regression": {
+    "runs": 8,
+    "q5ExactInvalidVerified": 0,
+    "q5ValidVerifiedReachable": [
+      "Q5-rbe1",
+      "Q5-rbe2"
+    ],
+    "q8InvalidVerified": 0,
+    "restrictionVerified": 0
+  },
+  "totalVerified": 6,
+  "totalInvalidVerified": 0,
+  "totalQuestionableVerified": 0,
+  "persistenceFailures": 0,
+  "securityFailures": 0
+}

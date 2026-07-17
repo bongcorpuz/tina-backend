@@ -1,0 +1,77 @@
+{
+  "id": "M-Q3",
+  "group": "mini",
+  "prompt": "A VAT-registered exporter sells 100% abroad. Can it obtain a refund or tax credit for input VAT?",
+  "runtimeCommit": "09751a6e038bde9324af9a05213d9c92295e3eb9",
+  "answer": "### Short Answer\nYes, a VAT-registered exporter that sells 100% of its goods abroad can obtain a refund or tax credit for input VAT. This is provided under specific conditions outlined in the tax code.\n\n### Interpretation\n\n### Practical Meaning\nFor VAT-registered exporters, this provision is significant as it allows them to recover the VAT they paid on inputs, effectively reducing their overall tax burden. To successfully claim a refund or credit, the exporter must ensure that they maintain proper documentation and comply with the procedural requirements set forth by the Bureau of Internal Revenue (BIR). This includes filing the appropriate claims within the prescribed time limits and providing evidence of the zero-rated sales.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [
+      "materialExceptionsCovered",
+      "materialAlternativesCovered",
+      "materiallyComplete",
+      "eligibleForVerifiedControlling"
+    ],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [
+      "unsafe_value_fields:materialExceptionsCovered,materialAlternativesCovered,materiallyComplete,eligibleForVerifiedControlling"
+    ],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": false,
+      "materialAlternativesCovered": false,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": false,
+      "treatmentDirectionMatches": true,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": true,
+      "eligibleForVerifiedControlling": false,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true,
+      "answerContradictsControllingSource": true
+    },
+    "reason": "unsafe_value_fields:materialExceptionsCovered,materialAlternativesCovered,materiallyComplete,eligibleForVerifiedControlling"
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 109"
+    },
+    {
+      "label": "NIRC Sec. 236"
+    },
+    {
+      "label": "RR No. 16-2005"
+    },
+    {
+      "label": "RMC 75-2015"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "c14334cb5a5894cc"
+}

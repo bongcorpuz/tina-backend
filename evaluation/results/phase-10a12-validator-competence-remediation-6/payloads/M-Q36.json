@@ -1,0 +1,63 @@
+{
+  "id": "M-Q36",
+  "group": "mini",
+  "prompt": "What penalties apply to late filing of a VAT return?",
+  "runtimeCommit": "09751a6e038bde9324af9a05213d9c92295e3eb9",
+  "answer": "### Short Answer\nPenalties for late filing of a VAT return include a fine of PHP 1,000 and an additional 25% of the tax due, as stipulated in the National Internal Revenue Code (NIRC).\n\n### Controlling Authorities\nThe relevant provisions are found in the National Internal Revenue Code (NIRC) Sections 248 and 249, which outline the penalties for late filing and payment of taxes.\n\n### Interpretation\n\n### Practical Meaning\nIn practice, if a taxpayer fails to file their VAT return by the deadline, they will incur an immediate fine of PHP 1,000. Furthermore, if the tax due is not settled within the prescribed time, an additional 25% of the unpaid tax will be added as a penalty. This can significantly increase the total amount owed, emphasizing the importance of timely filing and payment to avoid unnecessary financial burdens.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "gates": {
+      "structural": true,
+      "penaltyProposition": true,
+      "ewtProposition": false,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false
+    },
+    "propositionClass": "penalty_procedural",
+    "propositionSufficiency": {
+      "penaltyProposition": true,
+      "ewtProposition": false,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false,
+      "sourceCardCount": 5
+    },
+    "reason": "penalty_proposition_without_penalty_authority"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 105"
+    },
+    {
+      "label": "NIRC Sec. 106"
+    },
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "NIRC Sec. 108"
+    },
+    {
+      "label": "RR 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "860356ba7a55cd18"
+}

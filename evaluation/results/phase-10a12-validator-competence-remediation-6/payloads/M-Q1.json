@@ -1,0 +1,48 @@
+{
+  "id": "M-Q1",
+  "group": "mini",
+  "prompt": "Freelance graphic designer, ₱2.8 million annual gross receipts: Is VAT registration required?",
+  "runtimeCommit": "09751a6e038bde9324af9a05213d9c92295e3eb9",
+  "answer": "### Issue Presented\n\n### Quick Assessment\n- **Annual Gross Receipts**: ₱2.8 million\n- **VAT Registration Requirement**: Required due to exceeding the threshold.\n\n### BIR Likely Position\nThe Bureau of Internal Revenue (BIR) will likely assert that the freelance graphic designer must register for VAT as the gross receipts are close to the threshold, and any increase in income could push it over the limit.\n\n### Taxpayer Position / Defenses\nThe taxpayer can argue that they are not yet required to register for VAT since their gross receipts are below the ₱3 million threshold. However, they should prepare for potential scrutiny if their income increases.\n\n### Documentary Support Needed\n- Proof of gross receipts (e.g., invoices, sales records).\n- Documentation of any business expenses to support claims of income.\n\n### Procedural Issues\nIf the BIR assesses VAT registration, the taxpayer must ensure compliance with registration requirements and maintain proper documentation to avoid penalties.\n\n### Risk Level\nThe risk level is moderate; while the taxpayer is currently below the threshold, any increase in income could trigger VAT registration requirements.\n\n### Recommended Action\nThe taxpayer should monitor their income closely and consider registering for VAT if they anticipate exceeding the threshold in the near future. It may also be prudent to consult with a tax advisor to ensure compliance with VAT regulations.\n\n### Relevant Facts / Assumptions\nThe factual circumstances have not been fully described. The analysis is based on the question as presented.\n\n### Alternative Interpretations\nNo alternative interpretations identified from the available indexed authorities.\n\n### Position Strength\nPosition strength is preliminary and subject to full fact pattern verification.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 109"
+    },
+    {
+      "label": "RR No. 16-2005"
+    },
+    {
+      "label": "NIRC Sec. 236"
+    },
+    {
+      "label": "RMC 75-2015"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "4d5a3887bc6d8c0d"
+}
