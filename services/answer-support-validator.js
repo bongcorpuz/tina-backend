@@ -629,123 +629,325 @@ function normalizeTaxText(t) {
     .replace(/\bdon't\b/g, "do not").replace(/\bdoesn't\b/g, "does not").replace(/\bdidn't\b/g, "did not")
     .replace(/\bi'm\b/g, "i am").replace(/\bwon't\b/g, "will not").replace(/\bcan't\b/g, "cannot")
     // bounded Taglish -> English concept
-    .replace(/\bmag[- ]?file\b|\bmagfa[- ]?file\b|\bnag[- ]?file\b/g, " file ")
-    .replace(/\bi[- ]?submit\b|\bise[- ]?submit\b|\bisu[- ]?submit\b/g, " submit ")
+    .replace(/\bmag[- ]?file\b|\bmagfa[- ]?file\b|\bnag[- ]?file\b|\bi[- ]?file\b|\bmakapag[- ]?file\b/g, " file ")
+    .replace(/\bi[- ]?submit\b|\bise[- ]?submit\b|\bisu[- ]?submit\b|\bmagsumite\b|\bmag[- ]?sumite\b/g, " submit ")
+    .replace(/\bihahabol\b|\bihabol\b|\bmaihabol\b/g, " file late catch up ")
     .replace(/\bkailangan(?:\s+ko)?(?:\s+pa)?(?:\s+ba)?\b/g, " need required ")
-    .replace(/\bhanggang kailan\b/g, " until when deadline ")
-    .replace(/\blate na ba\b|\blate na\b/g, " already late ")
+    .replace(/\bhanggang ka[il]+an\b/g, " until when deadline ")
+    .replace(/\blate na ba\b|\blate na\b|\bhuli na ba\b|\bhuli na\b/g, " already late ")
     .replace(/\bhuling araw\b/g, " last day ")
-    .replace(/\bkailan(?:\s+ang)?\b/g, " when ")
+    // "pwede/puwede pa (bang) mag-file/isumite/ihabol" -> can still file
+    .replace(/\bp[uw]+ede pa\b/g, " can still ")
+    .replace(/\bmay oras pa\b/g, " time remaining still ")
+    .replace(/\bka[il]+an(?:\s+ang)?\b/g, " when ")
+    .replace(/\banong petsa\b/g, " what date ")
     .replace(/\btax[- ]?free\b/g, " tax-free ")
     .replace(/\s+/g, " ").trim();
 }
 
-// --- concept families (applied to normalized text) ---
-const C_FILING_ACT = /\b(file|filing|filed|submit|submitting|submitted|furnish|lodge|send|sending|report(?:ing)?|accomplish|declare)\b/;
-const C_RETURN_OBJECT = /\b(income tax return|annual (?:income tax )?return|tax return|\breturn\b|donor'?s tax return|estate tax return|vat return|percentage tax return|quarterly return)\b/;
+// PHASE-10A14-R3: clause-scoped multi-proposition architecture. The R2 independent
+// review confirmed five P1 defects rooted in COMBINED-TEXT global suppression and
+// POOLED authority matching: (P1-1) a wrong object anywhere in the combined text
+// suppressed a separate decisive return-filing proposition; (P1-2) common relative-
+// period / Taglish deadline forms were unclassified; (P1-3) filing-deadline authority
+// pooled every tax type, so estate authority satisfied an individual ITR deadline and
+// vice-versa; (P1-4) a correct estate computation on unrelated authority passed the
+// gate merely because no misstatement pattern fired; (P1-5) a standard-deduction-as-
+// threshold misstatement in a new surface form was missed. The model below segments
+// text into clauses, detects propositions PER CLAUSE (so one wrong object cannot erase
+// another), classifies each filing proposition's tax/return/taxpayer object, matches
+// authority by an explicit tax-type compatibility matrix, and evaluates estate
+// computations by legal RELATIONSHIP plus positive component-authority sufficiency.
+// No question IDs, exact prompts, amounts, dates, or reviewer phrases govern behavior.
+
+// Split into bounded clause spans on sentence/semicolon/colon/bullet/newline
+// boundaries and on contrastive/coordinating conjunctions that separate distinct
+// actions or legal conclusions ("but", "however", "although", "while", "whereas",
+// ", and ", ", or ").
+function segmentClauses(text) {
+  const n = normalizeTaxText(text);
+  if (!n) return [];
+  return n
+    .split(/[.;:\n•\-]{1,}|\bbut\b|\bhowever\b|\balthough\b|\bwhile\b|\bwhereas\b|,\s+(?:and|or)\s+/)
+    .map((c) => c.trim())
+    .filter((c) => c.length > 0);
+}
+
+// --- concept families (applied to a single normalized clause) ---
+const C_FILING_ACT = /\b(file|filing|filed|submit|submitting|submitted|furnish|lodge|send|sending|accomplish|declare)\b/;
+// A tax RETURN object. Strong forms are unambiguous; the bare word "return" counts
+// only when a filing act or tax context is present in the same clause and it is not a
+// non-tax "return" (return of capital, rate of return, sales return, return a document).
+const RETURN_OBJECT_STRONG = /\b(income tax return|annual (?:income tax )?return|quarterly (?:income tax )?return|estate tax return|donor'?s tax return|vat return|percentage tax return|corporate (?:income tax )?return)\b/;
+const RETURN_OBJECT_BARE = /\b(tax return|the return|a return|annual return|the annual return|no return|separate return|substituted filing)\b/;
+const GENERIC_RETURN_FALSE_POS = /\b(return of capital|rate of return|sales return|invest\w* return|return on|goods return\w*|return\w* goods|return the|return to (?:the )?(?:office|sender|customer)|product return|merchandise return)\b/;
 const C_OBLIGATION = /\b(required|require|need|needs|needed|must|have to|has to|had to|should|necessary|obligat\w+|oblige\w*|exempt from filing|not required|no need|no (?:income tax )?return|substituted filing|do(?:es)? not (?:have|need) to|not (?:have|need) to)\b/;
-// Genuine deadline signals only. Bare "due"/"late" are deliberately excluded: they
-// collide with liability sense ("no tax is due") and penalty sense ("late filing of
-// a VAT return"), which are NOT deadline propositions. A trailing/query "due" is
-// admitted only in an explicit temporal frame (when/return ... due).
-const C_TEMPORAL = /\b(deadline|due date|last day|closing date|filed by|submit by|on or before|already late|late na|how many days|until when|what date|by what date|when to file|filing closes|closing of filing)\b|\bwhen (?:is|are|will|would|shall)\b[^.?\n]{0,60}\bdue\b|\breturn\b[^.?\n]{0,40}\bdue\b|\bdue\b[^.?\n]{0,40}\breturn\b/;
-// wrong / non-return filing objects (must NOT invoke the return-filing gates)
-const C_WRONG_FILING_OBJECT = /\b(protest|invoice|invoices|official receipt|receipts?|document|documents|supporting|attachment|financial statement|books?(?: of accounts)?|filing cabinet|sec (?:registration|filing)|dti|business permit|permit application|court|appeal|refund claim|claim for refund|memorandum)\b/;
-// non-filing deadline objects (governed by other controls, not filing_deadline)
-const C_PAYMENT_OBJECT = /\b(pay(?:ment)?|remit(?:tance)?|settle the tax|pay the (?:tax|estate tax|vat))\b/;
-const C_ASSESSMENT_OBJECT = /\b(assessment period|prescriptive period|prescription|period (?:to|within which)[^.\n]{0,40}assess|assess the tax|right to assess)\b/;
-const C_PROTEST_REG_OBJECT = /\b(protest|register|registration|appeal to the (?:cta|court)|reply to the (?:pan|fan|fld))\b/;
+// Non-return objects. Presence in a clause makes THAT clause a non-return proposition;
+// it does not suppress a return proposition detected in another clause.
+const OBJ_PROTEST = /\bprotest\b/;
+const OBJ_DOCUMENT = /\b(document|documents|supporting|attachment|financial statement|books?(?: of accounts)?|official receipt|receipts?|invoice|invoices|memorandum|schedule)\b/;
+const OBJ_REFUND = /\b(refund claim|claim for refund|refund|tax credit)\b/;
+const OBJ_REGISTRATION = /\b(register|registration|business permit|permit application|dti|sec (?:registration|filing))\b/;
+const OBJ_PAYMENT = /\b(pay(?:ment)?|remit(?:tance)?|settle the tax|pay the (?:tax|estate tax|vat))\b/;
+const OBJ_ASSESSMENT = /\b(assessment period|prescriptive period|prescription|period (?:to|within which)[^.\n]{0,40}assess|assess the tax|right to assess)\b/;
+const OBJ_APPEAL = /\b(appeal|petition for review|elevate to the (?:cta|court))\b/;
+// Genuine deadline signals. Bare "due"/"late" are admitted ONLY when return-scoped in
+// the clause (so "no tax is due" and penalty "late filing" are excluded). Relative-
+// period and Taglish forms (normalized) are included.
+const C_TEMPORAL_GENERAL = /\b(deadline|due date|last day|closing date|filed by|submit by|on or before|already late|overdue|still file|file today|can still (?:file|submit)|filing period (?:still )?open|filing closes|closing of filing|how many days|how much time|time remaining|until when|until april|until january|until february|until march|until may|until june|until july|until august|until september|until october|until november|until december|what date|by what date|final date|final filing date)\b/;
+// Return-scoped "due"/"already late"/"overdue"/"late for" only. Bare "late filing"
+// (a penalty-offense noun phrase) is deliberately NOT a deadline signal.
+const C_TEMPORAL_RETURN_SCOPED = /\breturn\b[^.\n]{0,25}\b(due|overdue|already late|late for|too late)\b|\b(due|overdue|already late|late for|too late|am i late|are we late)\b[^.\n]{0,25}\breturn\b/;
+// Answer-introduced conclusions (a definite filing/deadline conclusion in the answer).
+const A_FILING_CONCLUSION = /\b(no (?:income tax )?return (?:is )?(?:required|needed|necessary)|not required to (?:file|submit|furnish|send|lodge)|exempt from filing|(?:do|does) not (?:have|need) to (?:file|submit)|substituted filing (?:applies|is available|is allowed)|(?:must|required to|need to) (?:file|submit) (?:a |an )?(?:income tax |annual |estate tax |donor'?s tax |vat |corporate )?return|no (?:separate )?(?:income tax )?return (?:is )?(?:required|needed))\b/;
+const A_DEADLINE_CONCLUSION = /\b(?:filed?|due|submit(?:ted)?)\s+(?:on or )?before\b|\bdue (?:on|by)\b|\bdeadline is\b|\blast day (?:to|for|is)\b|\buntil (?:april|january|february|march|may|june|july|august|september|october|november|december|the \d)|\bon or before (?:april|january|february|march|may|june|july|august|september|october|november|december|the \d)|\bstill (?:file|be filed)\b|\balready late\b/;
 
-// Answer-introduced definite conclusions (gate even when the question was vague).
-const A_FILING_CONCLUSION = /\b(no (?:income tax )?return (?:is )?(?:required|needed|necessary)|not required to (?:file|submit|furnish|send|lodge)|exempt from filing|(?:do|does) not (?:have|need) to (?:file|submit)|substituted filing (?:applies|is available|is allowed)|(?:must|required to|need to) (?:file|submit) (?:a |an )?(?:income tax |annual )?return|no (?:separate )?(?:income tax )?return (?:is )?(?:required|needed))\b/;
-const A_DEADLINE_CONCLUSION = /\b(?:filed?|due|submit(?:ted)?)\s+(?:on or )?before\b|\bdue (?:on|by)\b|\bdeadline is\b|\blast day (?:to|for|is)\b|\bon or before (?:april|january|february|march|may|june|july|august|september|october|november|december|the \d)/;
+// --- tax-type / return-type / taxpayer-type classification (deterministic) ---
+// Resolve tax/return/taxpayer type from a single text span. Returns unknown when no
+// marker is present so the caller can fall back to broader context.
+function resolveTypeMarkers(t) {
+  const estate = /\bestate tax\b|\bestate tax return\b|\bgross estate\b|\bnet estate\b|\bdecedent\b|\bestate of\b/.test(t);
+  const donor = /\bdonor'?s tax\b|\bdonor'?s tax return\b|\bdonation\b|\bgift tax\b|\bdonor\b/.test(t);
+  const vat = /\bvat return\b|\bvalue[- ]added tax\b|\bvat\b/.test(t);
+  const percentage = /\bpercentage tax\b/.test(t);
+  const corporate = /\bcorporat\w+\b|\bdomestic corporation\b|\bcompany'?s (?:income tax )?return\b/.test(t);
+  const individualMarker = /\bindividual\b|\bemployee\b|\bself[- ]?employed\b|\bmixed[- ]?income\b|\bcompensation\b|\bpurely compensation\b|\bsole proprietor\b|\bincome tax return\b|\bannual return\b/.test(t);
+  let taxType = "unknown", returnType = "unknown", taxpayerType = "unknown";
+  if (estate) { taxType = "estate_tax"; returnType = "estate"; taxpayerType = "estate"; }
+  else if (donor) { taxType = "donor_tax"; returnType = "donor"; taxpayerType = "donor"; }
+  else if (percentage) { taxType = "percentage_tax"; returnType = "percentage"; taxpayerType = /\bcorporat/.test(t) ? "corporation" : "individual"; }
+  else if (vat) { taxType = "vat"; returnType = "vat"; taxpayerType = "vat_taxpayer"; }
+  else if (corporate) { taxType = "corporate_income_tax"; returnType = "corporate_income"; taxpayerType = "corporation"; }
+  else if (individualMarker) {
+    taxType = "individual_income_tax"; returnType = "individual_income";
+    taxpayerType = /\bself[- ]?employed\b/.test(t) ? "self_employed"
+      : /\bmixed[- ]?income\b/.test(t) ? "mixed_income"
+      : /\bemployee\b|\bcompensation\b/.test(t) ? "employee" : "individual";
+  }
+  return { taxType, returnType, taxpayerType };
+}
 
-// Filing/return provisions per tax type (establish the obligation AND the deadline).
-const FILING_OBLIGATION_AUTHORITY_RE = /\bsec(?:tion|\.)?\s*0*(51|51[- ]?A|52|56|74|75)\b|RR\s*(no\.?\s*)?(2-98|2-1998|11-2018|8-2018)|substituted filing/i;
-const FILING_DEADLINE_AUTHORITY_RE = /\bsec(?:tion|\.)?\s*0*(51|51[- ]?A|52|56|74|75|77|90|91|103|114|128)\b|RR\s*(no\.?\s*)?(2-98|11-2018|8-2018)/i;
+// Clause-FIRST classification: a clause's own tax-type markers take precedence, so a
+// different tax type discussed elsewhere in the text cannot bleed into this clause's
+// proposition. Context is consulted only when the clause itself is ambiguous.
+function classifyReturnContext(clause, contextText) {
+  let m = resolveTypeMarkers(clause);
+  if (m.returnType === "unknown") {
+    const ctx = resolveTypeMarkers(contextText || "");
+    if (ctx.returnType !== "unknown") m = ctx;
+  }
+  const scope = clause + " \n " + (m.returnType !== "unknown" ? "" : (contextText || ""));
+  const substituted = /\bsubstituted filing\b/.test(scope);
+  const quarterly = /\bquarterly\b/.test(scope);
+  let returnType = m.returnType;
+  if (returnType === "individual_income" && substituted) returnType = "individual_substituted";
+  else if (returnType === "individual_income" && quarterly) returnType = "individual_quarterly";
+  else if (returnType === "corporate_income" && quarterly) returnType = "corporate_quarterly";
+  return { taxType: m.taxType, returnType, taxpayerType: m.taxpayerType, substituted };
+}
 
-// Estate-tax computation semantic model. Estate tax is 6% of the NET estate (gross
-// estate less allowable deductions incl. the standard deduction). Any formulation
-// that treats a deduction as a threshold / tax-free first amount / gross-less-amount
-// / excess-over / exemption bracket misstates the base.
-const ESTATE_TAX_RE = /\bestate tax\b/;
-const ESTATE_BASE_MISSTATEMENT_RE = new RegExp([
-  // rate applied to the (value of the) estate / gross estate ... exceeding/over [amount]
+// --- authority classification (SOURCE CARD labels only), per tax type ---
+const AUTH_IND_FILING = /\bsec(?:tion|\.)?\s*0*(51|51[- ]?a|56|74)\b|RR\s*(no\.?\s*)?(2-98|2-1998|11-2018|8-2018)/i;
+const AUTH_SUBSTITUTED = /\bsec(?:tion|\.)?\s*0*51[- ]?a\b|RR\s*(no\.?\s*)?(2-98|2-1998|11-2018)|substituted filing/i;
+const AUTH_CORP_FILING = /\bsec(?:tion|\.)?\s*0*(52|75|76|77)\b/i;
+const AUTH_ESTATE_FILING = /\bsec(?:tion|\.)?\s*0*(90|91)\b/i;
+const AUTH_DONOR_FILING = /\bsec(?:tion|\.)?\s*0*(99|103)\b/i;
+const AUTH_VAT_FILING = /\bsec(?:tion|\.)?\s*0*114\b/i;
+const AUTH_PCT_FILING = /\bsec(?:tion|\.)?\s*0*(116|128)\b/i;
+// Estate computation authority: rate (Sec 84) and base/deduction (Sec 85/86).
+const AUTH_ESTATE_RATE = /\bsec(?:tion|\.)?\s*0*84\b/i;
+const AUTH_ESTATE_BASE_DEDUCTION = /\bsec(?:tion|\.)?\s*0*(85|86)\b/i;
+
+function classifyAuthorities(sourceLabels) {
+  const s = sourceLabels || "";
+  return {
+    indFiling: AUTH_IND_FILING.test(s),
+    substituted: AUTH_SUBSTITUTED.test(s),
+    corpFiling: AUTH_CORP_FILING.test(s),
+    estateFiling: AUTH_ESTATE_FILING.test(s),
+    donorFiling: AUTH_DONOR_FILING.test(s),
+    vatFiling: AUTH_VAT_FILING.test(s),
+    pctFiling: AUTH_PCT_FILING.test(s),
+    estateRate: AUTH_ESTATE_RATE.test(s),
+    estateBaseDeduction: AUTH_ESTATE_BASE_DEDUCTION.test(s)
+  };
+}
+
+// Deterministic authority-compatibility matrix: a filing proposition's required
+// authority must match its EXACT return/tax type. Filing authority of a different tax
+// type is related but NOT controlling.
+function filingAuthorityCompatible(returnType, auth) {
+  switch (returnType) {
+    case "individual_income":
+    case "individual_quarterly": return auth.indFiling;
+    case "individual_substituted": return auth.substituted;
+    case "corporate_income":
+    case "corporate_quarterly": return auth.corpFiling;
+    case "estate": return auth.estateFiling;
+    case "donor": return auth.donorFiling;
+    case "vat": return auth.vatFiling;
+    case "percentage": return auth.pctFiling;
+    default: return false; // unknown/unresolved tax type -> insufficient
+  }
+}
+
+// --- estate computation component + relationship model ---
+// Amount-anchored base misstatements (Q30 family): rate applied to estate value
+// exceeding an amount, excess-over an amount, first-amount tax-free, gross-less-amount.
+const ESTATE_AMOUNT_MISSTATEMENT_RE = new RegExp([
   "(?:6 ?%|six percent|flat rate)[^.\\n]{0,90}\\b(?:value of the estate|estate value|gross estate|the estate)\\b[^.\\n]{0,40}\\b(?:exceed\\w*|over|above|in excess of)",
   "\\bon (?:the )?(?:value of the estate|estate value|gross estate)\\b[^.\\n]{0,40}\\b(?:exceed\\w*|over|above)",
-  // excess-over / amounts exceeding a stated amount
   "\\b(?:excess over|on the excess|in excess of|amount[s]? exceeding|exceeding|over|above)\\b[^.\\n]{0,20}(?:peso|php|p|₱)?\\s*[\\d,]{4,}",
-  // first amount is tax-free
   "\\bfirst\\b[^.\\n]{0,30}\\btax-free\\b",
   "\\bfirst\\b[^.\\n]{0,25}(?:peso|php|p|₱)?\\s*[\\d,]{4,}[^.\\n]{0,25}\\b(?:tax-free|exempt|not taxed|no tax)\\b",
-  // estate-tax threshold
-  "\\bestate[- ]?tax threshold\\b",
-  "\\bthreshold\\b[^.\\n]{0,30}\\bestate\\b|\\bestate\\b[^.\\n]{0,30}\\bthreshold\\b",
-  // gross estate less a stated amount
-  "\\bgross estate\\b[^.\\n]{0,20}\\bless\\b[^.\\n]{0,20}(?:peso|php|p|₱)?\\s*[\\d,]{4,}",
-  // only the balance over the deduction is taxed
-  "\\bonly the balance\\b|\\bbalance (?:over|above|in excess of) (?:the )?(?:standard )?deduction\\b",
-  // standard deduction described as an exemption / zero-rate bracket
-  "\\bstandard deduction\\b[^.\\n]{0,30}\\b(?:exemption|exempt|tax-free|zero[- ]rate)\\b",
-  "\\bdeduction\\b[^.\\n]{0,20}\\b(?:is|as) (?:an? )?(?:exemption|zero[- ]rate)\\b"
+  "\\bgross estate\\b[^.\\n]{0,20}\\bless\\b[^.\\n]{0,20}(?:peso|php|p|₱)?\\s*[\\d,]{4,}"
 ].join("|"));
+// Relational misstatements (P1-5 family): a deduction / first amount treated as a
+// THRESHOLD / floor / exemption bracket / sole base reducer, without any fixed amount
+// or one preferred phrase. The correct relation (net estate = gross LESS all allowable
+// deductions) uses less/minus/after ALL deductions and is NOT matched here.
+const ESTATE_DEDUCTION_AS_BOUNDARY_RE = /\b(?:above|over|in excess of|excess over|exceeding|beyond|past|begins? after|start\w* after|only the (?:balance|excess|amount)[^.\n]{0,30}(?:over|above|after|beyond))\b[^.\n]{0,40}\b(?:standard|basic|the|first|allowable)?\s*deduction\b/;
+const ESTATE_DEDUCTION_AS_THRESHOLD_RE = /\b(?:standard|basic|the)?\s*deduction\b[^.\n]{0,30}\b(?:is|as|serves as|acts as|treated as|equals?|becomes)\b[^.\n]{0,20}\b(?:threshold|exemption|tax-free|floor|cutoff|estate[- ]?tax base|the base|taxable base)\b|\b(?:estate[- ]?tax )?threshold\b[^.\n]{0,25}\b(?:standard|basic)?\s*deduction\b|\bstandard deduction is the\b[^.\n]{0,20}\bthreshold\b/;
+const ESTATE_FIRST_AMOUNT_OUTSIDE_RE = /\bfirst\b[^.\n]{0,40}\b(?:tax-free|exempt|outside the (?:tax )?base|not taxed|no tax|not part of the (?:tax )?base)\b/;
+const ESTATE_GROSS_LESS_SINGLE_RE = /\bgross estate\b[^.\n]{0,25}\b(?:less|minus|reduced by)\b[^.\n]{0,20}\b(?:standard|basic) deduction\b[^.\n]{0,25}\b(?:equals?|is|=|becomes|gives|yields|as the)\b[^.\n]{0,20}\b(?:taxable|net) estate\b/;
+const ESTATE_SUBTRACT_ONE_APPLY_RE = /\b(?:subtract|deduct|less|minus)\b[^.\n]{0,20}\b(?:standard|basic) deduction\b[^.\n]{0,40}\b(?:apply|applies|applied|multiply)\b[^.\n]{0,20}\b(?:rate|6 ?%|tax)\b/;
+
+function analyzeEstateComputation(answerNorm, contextNorm) {
+  const a = answerNorm || "";
+  const ctx = (contextNorm || "") + " \n " + a;
+  // Estate context: an explicit estate-tax marker, OR the estate is under discussion
+  // together with a computation cue in the answer (rate/deduction/threshold/exceeding/
+  // value of the estate). This lets the estate context come from the question while the
+  // computation claim (and any misstatement) is asserted in the answer.
+  const isEstate = /\bestate[- ]?tax\b|\bnet estate\b|\bgross estate\b|\bdecedent\b|\bestate of\b/.test(ctx) ||
+    (/\bestate\b/.test(ctx) && /\b6 ?%|six percent|deduction|threshold|exceed\w*|excess|tax-free|value of the estate\b/.test(a));
+  if (!isEstate) return { isEstateComputation: false };
+  const components = {
+    rate: /\b6 ?%|\bsix percent\b|\bflat rate\b/.test(a),
+    netEstate: /\bnet estate\b/.test(a),
+    grossEstate: /\bgross estate\b/.test(a),
+    deduction: /\bdeduction\b|\ballowable deduction/.test(a),
+    standardDeduction: /\bstandard deduction\b/.test(a),
+    threshold: /\bthreshold\b/.test(a)
+  };
+  const relationshipError =
+    ESTATE_AMOUNT_MISSTATEMENT_RE.test(a) ||
+    ESTATE_DEDUCTION_AS_BOUNDARY_RE.test(a) ||
+    ESTATE_DEDUCTION_AS_THRESHOLD_RE.test(a) ||
+    ESTATE_FIRST_AMOUNT_OUTSIDE_RE.test(a) ||
+    ESTATE_GROSS_LESS_SINGLE_RE.test(a) ||
+    ESTATE_SUBTRACT_ONE_APPLY_RE.test(a) ||
+    // Estate tax is a flat 6% on the NET estate; it has no threshold/exemption bracket.
+    // A "threshold" claim in an estate computation is inherently a base misstatement
+    // (conflating the standard deduction/exemption with a taxable-base threshold).
+    components.threshold === true;
+  // A component cue OR a detected relationship error makes this a decisive estate
+  // computation (so an "outside the tax base" misstatement is not lost for lack of a
+  // 6%/deduction cue).
+  const isComputation = components.rate || components.netEstate || components.grossEstate ||
+    components.deduction || components.threshold || /\bexceed\w*|excess|tax-free|outside the (?:tax )?base\b/.test(a) ||
+    relationshipError;
+  return { isEstateComputation: isComputation, components, relationshipError };
+}
 
 /**
- * Deterministic semantic detection of the filing-obligation, filing-deadline, and
- * estate-tax-computation propositions from the (normalized) question and answer,
- * with object disambiguation and answer-introduced-conclusion handling. Pure.
- * @returns {{filingObligation:boolean, filingDeadline:boolean, estateComputation:boolean, estateBaseMisstatement:boolean, deadlineObject:(string|null), filingObject:(string|null), evidence:object}}
+ * Clause-scoped multi-proposition ledger for filing/deadline/estate propositions.
+ * Detects each proposition independently within mixed-object text and classifies its
+ * tax/return object. Pure.
+ * @returns {{propositions:Array, filingObligation:boolean, filingDeadline:boolean, estateComputation:boolean, estateBaseMisstatement:boolean, deadlineObject:(string|null), filingObject:(string|null), evidence:object}}
  */
 export function detectFilingAndEstatePropositions(question, answer) {
   const qN = normalizeTaxText(question);
   const aN = normalizeTaxText(answer);
-  const both = qN + " \n " + aN;
+  const bothCtx = qN + " \n " + aN;
+  const clauses = [
+    ...segmentClauses(question).map((c) => ({ side: "question", clause: c })),
+    ...segmentClauses(answer).map((c) => ({ side: "answer", clause: c }))
+  ];
 
-  // ---- object disambiguation (shared) ----
-  const wrongFilingObject = C_WRONG_FILING_OBJECT.test(both);
-  const assessmentObject = C_ASSESSMENT_OBJECT.test(both);
-  const returnObjectPresent = C_RETURN_OBJECT.test(both);
+  const propositions = [];
+  let pid = 0;
+  for (const { side, clause } of clauses) {
+    const notGeneric = !GENERIC_RETURN_FALSE_POS.test(clause);
+    const hasStrongReturn = RETURN_OBJECT_STRONG.test(clause);
+    const hasBareReturn = RETURN_OBJECT_BARE.test(clause) && notGeneric;
+    const hasFilingAct = C_FILING_ACT.test(clause);
+    // A return-scoped temporal ("the return was due", "late for the return") makes the
+    // "return" a tax return in context (guarded against non-tax "return" senses).
+    const returnScopedTemporal = C_TEMPORAL_RETURN_SCOPED.test(clause) && notGeneric && /\breturn\b/.test(clause);
+    const returnObject = hasStrongReturn || (hasBareReturn && (hasFilingAct || /\btax\b/.test(clause))) || returnScopedTemporal;
+    // dominant non-return object in THIS clause (only relevant when no return object here)
+    const wrongObjectHere = (OBJ_PROTEST.test(clause) || OBJ_DOCUMENT.test(clause) || OBJ_REFUND.test(clause) ||
+      OBJ_REGISTRATION.test(clause) || OBJ_APPEAL.test(clause)) && !returnObject;
+    const assessmentHere = OBJ_ASSESSMENT.test(clause);
+    const paymentHere = OBJ_PAYMENT.test(clause) && !returnObject && !hasFilingAct;
 
-  // ---- filing obligation ----
-  // Question raises a filing obligation: a filing act / return object together with
-  // an obligation/exemption concept, and the object is a tax return (not a protest,
-  // document, invoice, refund claim, registration, etc.).
-  const qHasFilingConcept = (C_FILING_ACT.test(qN) || C_RETURN_OBJECT.test(qN)) && C_OBLIGATION.test(qN);
-  const qFilingObligation = qHasFilingConcept && !wrongFilingObject && !assessmentObject &&
-    (C_RETURN_OBJECT.test(qN) || /\bfil\w*|submit/.test(qN));
-  // Answer independently states a definite filing conclusion (about a return).
-  const aFilingConclusion = A_FILING_CONCLUSION.test(aN) && !wrongFilingObject;
-  const filingObligation = qFilingObligation || aFilingConclusion;
+    // filing obligation: a return object + obligation/exemption concept, or an answer-
+    // introduced filing conclusion, in THIS clause; the object must be a tax return.
+    const obligationConcept = C_OBLIGATION.test(clause);
+    const answerFilingConclusion = side === "answer" && A_FILING_CONCLUSION.test(clause);
+    const filingObligationHere = !wrongObjectHere && !assessmentHere &&
+      ((returnObject && obligationConcept) || answerFilingConclusion);
 
-  // ---- filing deadline ----
-  // A temporal/deadline concept whose OBJECT is a tax-return filing (a filing act or
-  // a return object), excluding payment/assessment/prescription/protest/registration.
-  const temporalPresent = C_TEMPORAL.test(both) || A_DEADLINE_CONCLUSION.test(aN);
-  const filingActOrReturn = C_FILING_ACT.test(both) || returnObjectPresent;
-  const paymentOnly = C_PAYMENT_OBJECT.test(both) && !C_FILING_ACT.test(both) && !returnObjectPresent;
-  const protestReg = C_PROTEST_REG_OBJECT.test(both) && !returnObjectPresent && !/\bfile[sd]?\b[^.\n]{0,20}return/.test(both);
-  let deadlineObject = null;
-  if (temporalPresent) {
-    if (assessmentObject) deadlineObject = "assessment_or_prescription";
-    else if (paymentOnly) deadlineObject = "payment";
-    else if (protestReg) deadlineObject = "protest_or_registration";
-    else if (filingActOrReturn) deadlineObject = "return_filing";
+    // filing deadline: a temporal concept whose object is a tax-return filing.
+    const temporalHere = C_TEMPORAL_GENERAL.test(clause) || C_TEMPORAL_RETURN_SCOPED.test(clause) ||
+      (side === "answer" && A_DEADLINE_CONCLUSION.test(clause));
+    const filingActOrReturnHere = hasFilingAct || returnObject;
+    const filingDeadlineHere = temporalHere && filingActOrReturnHere &&
+      !assessmentHere && !paymentHere && !wrongObjectHere;
+
+    if (filingObligationHere || filingDeadlineHere) {
+      const ctx = classifyReturnContext(clause, bothCtx);
+      if (filingDeadlineHere) {
+        propositions.push({
+          propositionId: `p${pid++}`, sourceSide: side, sourceClause: clause,
+          propositionClass: "filing_deadline", action: "file", objectType: "tax_return",
+          taxType: ctx.taxType, returnType: ctx.returnType, taxpayerType: ctx.taxpayerType,
+          substituted: ctx.substituted, decisive: true
+        });
+      }
+      if (filingObligationHere) {
+        propositions.push({
+          propositionId: `p${pid++}`, sourceSide: side, sourceClause: clause,
+          propositionClass: "filing_obligation", action: "file", objectType: "tax_return",
+          taxType: ctx.taxType, returnType: ctx.returnType, taxpayerType: ctx.taxpayerType,
+          substituted: ctx.substituted, decisive: true
+        });
+      }
+    }
   }
-  const filingDeadline = deadlineObject === "return_filing";
 
-  // ---- estate computation ----
-  const estateComputation = ESTATE_TAX_RE.test(both) && /(\d+ ?%|percent|flat rate|tax-free|threshold|deduction|excess|exceed)/.test(aN);
-  const estateBaseMisstatement = ESTATE_TAX_RE.test(both) && ESTATE_BASE_MISSTATEMENT_RE.test(aN);
+  // estate computation (answer-level component model; estate context may come from Q)
+  const est = analyzeEstateComputation(aN, bothCtx);
+  if (est.isEstateComputation) {
+    propositions.push({
+      propositionId: `p${pid++}`, sourceSide: "answer", sourceClause: aN,
+      propositionClass: "tax_computation_basis", objectType: "estate_tax_computation",
+      taxType: "estate_tax", returnType: "estate", taxpayerType: "estate",
+      computationComponents: est.components, relationshipError: est.relationshipError, decisive: true
+    });
+  }
+
+  const filingObligation = propositions.some((p) => p.propositionClass === "filing_obligation");
+  const filingDeadline = propositions.some((p) => p.propositionClass === "filing_deadline");
+  const estateComputation = est.isEstateComputation === true;
+  const estateBaseMisstatement = est.isEstateComputation === true && est.relationshipError === true;
+  const firstDeadline = propositions.find((p) => p.propositionClass === "filing_deadline");
 
   return {
+    propositions,
     filingObligation, filingDeadline, estateComputation, estateBaseMisstatement,
-    deadlineObject, filingObject: filingObligation ? "tax_return" : null,
+    deadlineObject: firstDeadline ? "return_filing" : null,
+    filingObject: filingObligation ? "tax_return" : null,
     evidence: {
-      qFilingObligation, aFilingConclusion, wrongFilingObject, assessmentObject,
-      returnObjectPresent, temporalPresent, filingActOrReturn, paymentOnly, protestReg
+      clauseCount: clauses.length,
+      filingObligationClauses: propositions.filter((p) => p.propositionClass === "filing_obligation").map((p) => p.sourceClause),
+      filingDeadlineClauses: propositions.filter((p) => p.propositionClass === "filing_deadline").map((p) => p.sourceClause),
+      estate: est.isEstateComputation ? { components: est.components, relationshipError: est.relationshipError } : null
     }
   };
 }
+
 
 /**
  * Proposition-specific source-sufficiency check. Determines the answer's decisive
@@ -790,13 +992,11 @@ export function evaluatePropositionSourceSufficiency({ question, answer, sources
   const vatExceptionClaim = VAT_EXCEPTION_CLAIM_RE.test(a);
   const vatExceptionProposition = vatExceptionClaim && /\bvat\b|value[- ]added tax|subject to (the )?vat|import|sale|lease|transaction|gold|export/i.test(q + " " + a);
 
-  // PHASE-10A14-R2: semantic detection of the filing/deadline/estate propositions
-  // (concept-based, object-aware, answer-introduced) replaces the R1 phrase regexes.
+  // PHASE-10A14-R3: clause-scoped multi-proposition ledger for filing/deadline/estate.
   const sem = detectFilingAndEstatePropositions(q, a);
-  // Deadline is classified before obligation so a return-deadline question is not
-  // mistaken for an obligation.
+  const auth = classifyAuthorities(sourceLabels);
   const filingDeadlineProposition = sem.filingDeadline;
-  const filingObligationProposition = !filingDeadlineProposition && sem.filingObligation;
+  const filingObligationProposition = sem.filingObligation;
   const estateComputationProposition = sem.estateComputation;
   const estateBaseMisstatement = sem.estateBaseMisstatement;
 
@@ -805,8 +1005,6 @@ export function evaluatePropositionSourceSufficiency({ question, answer, sources
   const hasRegistrationAuthority = REGISTRATION_AUTHORITY_RE.test(sourceLabels);
   const hasVatExceptionAuthority = VAT_EXCEPTION_AUTHORITY_RE.test(sourceLabels);
   const hasGeneralVatImposition = GENERAL_VAT_IMPOSITION_RE.test(sourceLabels);
-  const hasFilingObligationAuthority = FILING_OBLIGATION_AUTHORITY_RE.test(sourceLabels);
-  const hasFilingDeadlineAuthority = FILING_DEADLINE_AUTHORITY_RE.test(sourceLabels);
 
   const diagnostics = {
     penaltyProposition,
@@ -818,14 +1016,14 @@ export function evaluatePropositionSourceSufficiency({ question, answer, sources
     estateComputationProposition,
     estateBaseMisstatement,
     deadlineObject: sem.deadlineObject,
+    propositionLedger: sem.propositions,
     semanticEvidence: sem.evidence,
+    authorityClasses: auth,
     hasPenaltyAuthority,
     hasWithholdingAuthority,
     hasRegistrationAuthority,
     hasVatExceptionAuthority,
     hasGeneralVatImposition,
-    hasFilingObligationAuthority,
-    hasFilingDeadlineAuthority,
     generalVatOnly: hasGeneralVatImposition && !hasVatExceptionAuthority,
     sourceCardCount: (Array.isArray(sources) ? sources : []).length
   };
@@ -852,28 +1050,50 @@ export function evaluatePropositionSourceSufficiency({ question, answer, sources
   if (vatExceptionProposition && !hasVatExceptionAuthority) {
     return { applicable: true, sufficient: false, reason: "vat_exception_proposition_without_exception_authority", propositionClass: "vat_exception", diagnostics };
   }
-  // PHASE-10A14-R1: a filing-obligation conclusion (required / not required to file,
-  // substituted filing, joint/separate return) asserted without filing authority --
-  // only tax-rate / residency / corporate / withholding provisions -- cannot verify
-  // (the Q12 class: "no tax due" laundered into "no filing required").
-  if (filingObligationProposition && !hasFilingObligationAuthority) {
-    return { applicable: true, sufficient: false, reason: "filing_obligation_proposition_without_filing_authority", propositionClass: "filing_obligation", diagnostics };
+
+  // PHASE-10A14-R3: evaluate every decisive filing/deadline proposition in the ledger.
+  // Each proposition's required authority is matched to its EXACT tax/return type via
+  // the compatibility matrix (a filing authority of the wrong tax type is related but
+  // not controlling). The first unsupported decisive proposition fails closed; a
+  // strongly-supported proposition cannot launder a weaker unsupported one.
+  const filingProps = sem.propositions.filter(
+    (p) => p.propositionClass === "filing_obligation" || p.propositionClass === "filing_deadline"
+  );
+  for (const p of filingProps) {
+    const compatible = filingAuthorityCompatible(p.returnType, auth);
+    if (!compatible) {
+      const reason = p.propositionClass === "filing_deadline"
+        ? "filing_deadline_proposition_without_matching_return_authority"
+        : "filing_obligation_proposition_without_matching_return_authority";
+      return {
+        applicable: true, sufficient: false, reason,
+        propositionClass: p.propositionClass,
+        diagnostics: { ...diagnostics, failedProposition: p }
+      };
+    }
   }
-  // PHASE-10A14-R1: a filing-deadline conclusion asserted without deadline/return
-  // authority for the applicable taxpayer/return -- only rate/residency provisions --
-  // cannot verify (the Q34 class). Preserves reachability: an estate-return deadline
-  // citing the estate-return provisions (Sec 90/91) passes (the Q32 class).
-  if (filingDeadlineProposition && !hasFilingDeadlineAuthority) {
-    return { applicable: true, sufficient: false, reason: "filing_deadline_proposition_without_deadline_authority", propositionClass: "filing_deadline", diagnostics };
+
+  // PHASE-10A14-R3: estate-tax computation. (1) A base misstatement -- detected by legal
+  // RELATIONSHIP (deduction/first-amount treated as threshold/floor/sole base reducer)
+  // as well as amount-anchored forms -- fails closed. (2) A CORRECT estate computation
+  // still requires POSITIVE authority for each decisive component actually asserted
+  // (rate -> Sec 84; base/deduction -> Sec 85/86); a correct sentence on unrelated or
+  // foundational authority fails closed.
+  const estateProp = sem.propositions.find((p) => p.propositionClass === "tax_computation_basis");
+  if (estateProp) {
+    if (estateProp.relationshipError) {
+      return { applicable: true, sufficient: false, reason: "estate_tax_base_deduction_threshold_conflation", propositionClass: "tax_computation_basis", diagnostics: { ...diagnostics, failedProposition: estateProp } };
+    }
+    const c = estateProp.computationComponents || {};
+    const needsRate = c.rate === true;
+    const needsBaseOrDeduction = c.netEstate === true || c.grossEstate === true || c.deduction === true || c.standardDeduction === true;
+    const rateOk = !needsRate || auth.estateRate;
+    const baseOk = !needsBaseOrDeduction || auth.estateBaseDeduction;
+    if (!rateOk || !baseOk) {
+      return { applicable: true, sufficient: false, reason: "estate_computation_without_estate_authority", propositionClass: "tax_computation_basis", diagnostics: { ...diagnostics, failedProposition: estateProp } };
+    }
   }
-  // PHASE-10A14-R1: an estate-tax computation that misstates the base -- applying the
-  // rate to "the (value of the) estate ... exceeding [amount]" instead of the NET
-  // estate, conflating the standard deduction with a threshold -- cannot verify (the
-  // Q30 class). A correctly-stated estate computation ("6% of the net estate; a
-  // standard deduction applies") does not trip this and remains reachable.
-  if (estateBaseMisstatement) {
-    return { applicable: true, sufficient: false, reason: "estate_tax_base_deduction_threshold_conflation", propositionClass: "tax_computation_basis", diagnostics };
-  }
+
   const applicable = penaltyProposition || ewtProposition || registrationProposition || vatExceptionProposition
     || filingObligationProposition || filingDeadlineProposition || estateComputationProposition;
   const propositionClass = penaltyProposition ? "penalty_procedural"
