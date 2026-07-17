@@ -104,17 +104,22 @@ await test("B5: FINAL withholding tax on passive income is NOT the EWT class (no
 });
 
 // ── C. Cross-domain non-applicability / no over-fire ─────────────────────────
-await test("C1: substantive non-penalty/non-EWT/non-registration/non-VAT-exception questions are not applicable", () => {
-  // PHASE-10A13-R1: registration and VAT-exception are now covered proposition
-  // classes; a general VAT rate, estate rate/deadline, and a plain invoicing rule
-  // remain out of scope. (Registration reachability is asserted separately below.)
+await test("C1: substantive out-of-scope questions are not applicable", () => {
+  // PHASE-10A13-R1 / PHASE-10A14-R1: registration, VAT-exception, filing-obligation,
+  // filing-deadline, and estate tax-computation are now covered proposition classes.
+  // A general VAT rate and a plain invoicing rule remain out of scope. (Estate
+  // rate/deadline reachability is asserted separately below.)
   const cases = [
     ["What is the VAT rate on importation?", "12%.", GENERIC_VAT],
-    ["What is the estate tax rate under TRAIN?", "6%.", [{ label: "NIRC Sec. 84" }]],
-    ["Can a non-VAT seller issue a VAT invoice?", "No.", [{ label: "NIRC Sec. 236" }]],
-    ["What is the deadline for filing an estate tax return?", "Within one year of death; 30-day extension possible.", [{ label: "NIRC Sec. 90" }]]
+    ["Can a non-VAT seller issue a VAT invoice?", "No.", [{ label: "NIRC Sec. 236" }]]
   ];
   for (const [q, a, s] of cases) check(g(q, a, s).applicable === false, `not applicable: ${q}`);
+});
+await test("C1c: a correctly-stated estate rate and an estate-return deadline with proper authority remain reachable", () => {
+  const rate = g("What is the estate tax rate under TRAIN?", "The estate tax is a flat 6% of the net estate; a standard deduction applies.", [{ label: "NIRC Sec. 84" }, { label: "NIRC Sec. 86" }]);
+  check(rate.applicable === true && rate.propositionClass === "tax_computation_basis" && rate.sufficient === true, "estate rate (net base) reachable");
+  const dl = g("What is the deadline for filing an estate tax return?", "Within one year of death under Section 90; 30-day extension possible.", [{ label: "NIRC Sec. 90" }]);
+  check(dl.applicable === true && dl.propositionClass === "filing_deadline" && dl.sufficient === true, "estate-return deadline reachable");
 });
 await test("C1b: a registration question with proper registration authority (Sec 236) is applicable and sufficient (reachable)", () => {
   const r = g("Is a new business required to register with the BIR?", "Yes, register under Section 236; a sole proprietor uses BIR Form 1901.", [{ label: "NIRC Sec. 236" }]);

@@ -602,6 +602,30 @@ const GENERAL_VAT_IMPOSITION_RE = /\bsec(?:tion|\.)?\s*0*10[5-8]\b|RR\s*(no\.?\s
 // (Sec 106(A)(2) / 108(B)), the incentive authorities, and specific exception laws.
 const VAT_EXCEPTION_AUTHORITY_RE = /\bsec(?:tion|\.)?\s*0*109\b|\bsec(?:tion|\.)?\s*0*10[68]\s*\(?\s*[ab]\s*\)?\s*\(?\s*2|zero[- ]?rated\s+sale|R\.?\s*A\.?\s*(no\.?\s*)?(11256|9994|10963|11534|12066|10378|9593|11534)\b|create\s*more|\bpeza\b|ecozone|freeport|RR\s*(no\.?\s*)?(4-2007|13-2018|9-2021|3-2025|21-2021|5-2021)/i;
 
+// PHASE-10A14-R1: filing-obligation, filing-deadline, and estate tax-base classes.
+// The A14 independent review confirmed three compound-proposition laundering P1s:
+// Q12 (a no-filing-required conclusion verified on income-tax RATE/residency
+// provisions with no filing authority), Q34 (an ITR filing DEADLINE verified on
+// rate/residency provisions with no deadline authority), and Q30 (an estate-tax
+// computation that misstates the base -- "6% on the value of the estate exceeding
+// P5,000,000", treating the P5M standard deduction as a threshold on estate value).
+// Class-based; no question IDs, exact prompts, income amounts, dates, or deny lists.
+//
+// --- filing-obligation proposition (whether a return must be filed) ---
+const FILING_OBLIGATION_PROPOSITION_RE = /\b(required to file|not required to file|obligation to file|must file|need(?:s)? to file|exempt from filing|no (?:income tax )?(?:return )?filing|substituted filing|who (?:must|are required to) file|file (?:a |an )?(?:income tax |annual )?(?:return|itr))\b|\bjoint (?:income tax )?return\b|\bseparate (?:income tax )?return\b/i;
+// --- filing-deadline proposition (when a return is due) ---
+const FILING_DEADLINE_PROPOSITION_RE = /\b(deadline|due date)\b|\bwhen\s+(?:is|are|must|should|to)\b[^.\n]{0,50}\b(?:due|file)\b|\bfiled?\s+(?:on or )?before\b|\blast day (?:to|for) fil|\breturn\b[^.\n]{0,25}\bdue\b|\bdue\b[^.\n]{0,25}\breturn\b/i;
+// Filing/return provisions per tax type (establish the obligation AND the deadline).
+const FILING_OBLIGATION_AUTHORITY_RE = /\bsec(?:tion|\.)?\s*0*(51|51[- ]?A|52|56|74|75)\b|RR\s*(no\.?\s*)?(2-98|2-1998|11-2018|8-2018)|substituted filing/i;
+const FILING_DEADLINE_AUTHORITY_RE = /\bsec(?:tion|\.)?\s*0*(51|51[- ]?A|52|56|74|75|77|90|91|103|114|128)\b|RR\s*(no\.?\s*)?(2-98|11-2018|8-2018)/i;
+// --- estate-tax computation base misstatement ---
+// Estate tax is 6% of the NET estate (gross estate less allowable deductions,
+// including a standard deduction). Applying the rate to "the (value of the) estate
+// / gross estate ... exceeding [amount]" treats a deduction as a threshold on the
+// estate value -- a base/deduction/threshold conflation.
+const ESTATE_TAX_RE = /\bestate tax\b/i;
+const ESTATE_BASE_MISSTATEMENT_RE = /(?:6\s*%|six percent|flat rate)[^.\n]{0,90}\b(?:value of the estate|estate value|gross estate|the estate)\b[^.\n]{0,40}\bexceed\w*|\bon (?:the )?(?:value of the estate|estate value|gross estate)\b[^.\n]{0,40}\bexceed\w*/i;
+
 /**
  * Proposition-specific source-sufficiency check. Determines the answer's decisive
  * proposition class (currently: penalty/procedural computation, expanded-withholding
@@ -645,22 +669,44 @@ export function evaluatePropositionSourceSufficiency({ question, answer, sources
   const vatExceptionClaim = VAT_EXCEPTION_CLAIM_RE.test(a);
   const vatExceptionProposition = vatExceptionClaim && /\bvat\b|value[- ]added tax|subject to (the )?vat|import|sale|lease|transaction|gold|export/i.test(q + " " + a);
 
+  // PHASE-10A14-R1: filing-DEADLINE proposition is more specific (about WHEN); a
+  // filing-OBLIGATION proposition is about WHETHER a return must be filed. Deadline
+  // is classified first so a "deadline" question is not mistaken for an obligation.
+  const filingDeadlineProposition = FILING_DEADLINE_PROPOSITION_RE.test(q) && /\bfil\w*|return|itr\b/i.test(q + " " + a);
+  // Question-led: the QUESTION must raise the filing obligation, so an answer that
+  // merely mentions filing a return/claim in passing (e.g. a refund or rate question)
+  // does not trip this gate. Reinforced by the answer asserting a filing conclusion.
+  const filingObligationAnswerClaim = FILING_OBLIGATION_PROPOSITION_RE.test(a) || /\b(not )?required to file|need(?:s)? (?:not )?to file|exempt from filing|substituted filing\b/i.test(a);
+  const filingObligationProposition = !filingDeadlineProposition && FILING_OBLIGATION_PROPOSITION_RE.test(q) && filingObligationAnswerClaim;
+  // PHASE-10A14-R1: estate-tax computation with a base misstatement (rate applied to
+  // "estate value ... exceeding [amount]" rather than the NET estate).
+  const estateComputationProposition = ESTATE_TAX_RE.test(q + " " + a) && /(\d+\s*%|percent|flat rate)/i.test(a);
+  const estateBaseMisstatement = estateComputationProposition && ESTATE_BASE_MISSTATEMENT_RE.test(a);
+
   const hasPenaltyAuthority = PENALTY_AUTHORITY_RE.test(sourceLabels);
   const hasWithholdingAuthority = WITHHOLDING_AUTHORITY_RE.test(sourceLabels);
   const hasRegistrationAuthority = REGISTRATION_AUTHORITY_RE.test(sourceLabels);
   const hasVatExceptionAuthority = VAT_EXCEPTION_AUTHORITY_RE.test(sourceLabels);
   const hasGeneralVatImposition = GENERAL_VAT_IMPOSITION_RE.test(sourceLabels);
+  const hasFilingObligationAuthority = FILING_OBLIGATION_AUTHORITY_RE.test(sourceLabels);
+  const hasFilingDeadlineAuthority = FILING_DEADLINE_AUTHORITY_RE.test(sourceLabels);
 
   const diagnostics = {
     penaltyProposition,
     ewtProposition,
     registrationProposition,
     vatExceptionProposition,
+    filingObligationProposition,
+    filingDeadlineProposition,
+    estateComputationProposition,
+    estateBaseMisstatement,
     hasPenaltyAuthority,
     hasWithholdingAuthority,
     hasRegistrationAuthority,
     hasVatExceptionAuthority,
     hasGeneralVatImposition,
+    hasFilingObligationAuthority,
+    hasFilingDeadlineAuthority,
     generalVatOnly: hasGeneralVatImposition && !hasVatExceptionAuthority,
     sourceCardCount: (Array.isArray(sources) ? sources : []).length
   };
@@ -687,11 +733,37 @@ export function evaluatePropositionSourceSufficiency({ question, answer, sources
   if (vatExceptionProposition && !hasVatExceptionAuthority) {
     return { applicable: true, sufficient: false, reason: "vat_exception_proposition_without_exception_authority", propositionClass: "vat_exception", diagnostics };
   }
-  const applicable = penaltyProposition || ewtProposition || registrationProposition || vatExceptionProposition;
+  // PHASE-10A14-R1: a filing-obligation conclusion (required / not required to file,
+  // substituted filing, joint/separate return) asserted without filing authority --
+  // only tax-rate / residency / corporate / withholding provisions -- cannot verify
+  // (the Q12 class: "no tax due" laundered into "no filing required").
+  if (filingObligationProposition && !hasFilingObligationAuthority) {
+    return { applicable: true, sufficient: false, reason: "filing_obligation_proposition_without_filing_authority", propositionClass: "filing_obligation", diagnostics };
+  }
+  // PHASE-10A14-R1: a filing-deadline conclusion asserted without deadline/return
+  // authority for the applicable taxpayer/return -- only rate/residency provisions --
+  // cannot verify (the Q34 class). Preserves reachability: an estate-return deadline
+  // citing the estate-return provisions (Sec 90/91) passes (the Q32 class).
+  if (filingDeadlineProposition && !hasFilingDeadlineAuthority) {
+    return { applicable: true, sufficient: false, reason: "filing_deadline_proposition_without_deadline_authority", propositionClass: "filing_deadline", diagnostics };
+  }
+  // PHASE-10A14-R1: an estate-tax computation that misstates the base -- applying the
+  // rate to "the (value of the) estate ... exceeding [amount]" instead of the NET
+  // estate, conflating the standard deduction with a threshold -- cannot verify (the
+  // Q30 class). A correctly-stated estate computation ("6% of the net estate; a
+  // standard deduction applies") does not trip this and remains reachable.
+  if (estateBaseMisstatement) {
+    return { applicable: true, sufficient: false, reason: "estate_tax_base_deduction_threshold_conflation", propositionClass: "tax_computation_basis", diagnostics };
+  }
+  const applicable = penaltyProposition || ewtProposition || registrationProposition || vatExceptionProposition
+    || filingObligationProposition || filingDeadlineProposition || estateComputationProposition;
   const propositionClass = penaltyProposition ? "penalty_procedural"
     : ewtProposition ? "withholding_ewt"
     : registrationProposition ? "registration_procedural"
-    : vatExceptionProposition ? "vat_exception" : null;
+    : vatExceptionProposition ? "vat_exception"
+    : filingDeadlineProposition ? "filing_deadline"
+    : filingObligationProposition ? "filing_obligation"
+    : estateComputationProposition ? "tax_computation_basis" : null;
   return { applicable, sufficient: true, reason: "", propositionClass, diagnostics };
 }
 
