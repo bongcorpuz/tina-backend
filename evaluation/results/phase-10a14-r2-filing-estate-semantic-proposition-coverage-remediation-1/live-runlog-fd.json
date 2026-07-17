@@ -1,0 +1,144 @@
+{
+  "filing_deadline": [
+    {
+      "id": "FD-01",
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_deadline",
+      "reason": "filing_deadline_proposition_without_deadline_authority",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "AUTHORITY_FOUND",
+      "labels": [
+        "NIRC Sec. 24",
+        "NIRC Sec. 23",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "FD-02",
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_deadline",
+      "reason": "filing_deadline_proposition_without_deadline_authority",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "AUTHORITY_FOUND",
+      "labels": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "FD-03",
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_deadline",
+      "reason": "filing_deadline_proposition_without_deadline_authority",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "AUTHORITY_FOUND",
+      "labels": [
+        "NIRC Sec. 24",
+        "NIRC Sec. 23",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "FD-04",
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_deadline",
+      "reason": "filing_deadline_proposition_without_deadline_authority",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "AUTHORITY_FOUND",
+      "labels": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "FD-05",
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_deadline",
+      "reason": "filing_deadline_proposition_without_deadline_authority",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "AUTHORITY_FOUND",
+      "labels": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "FD-06",
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_deadline",
+      "reason": "filing_deadline_proposition_without_deadline_authority",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "AUTHORITY_FOUND",
+      "labels": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "FD-07",
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_deadline",
+      "reason": "filing_deadline_proposition_without_deadline_authority",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "AUTHORITY_FOUND",
+      "labels": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "FD-08",
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_deadline",
+      "reason": "filing_deadline_proposition_without_deadline_authority",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "AUTHORITY_FOUND",
+      "labels": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "FD-09",
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_deadline",
+      "reason": "filing_deadline_proposition_without_deadline_authority",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "AUTHORITY_FOUND",
+      "labels": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "FD-10",
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_deadline",
+      "reason": "filing_deadline_proposition_without_deadline_authority",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "AUTHORITY_FOUND",
+      "labels": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ]
+    }
+  ]
+}

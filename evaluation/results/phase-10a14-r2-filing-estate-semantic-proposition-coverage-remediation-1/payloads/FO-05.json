@@ -1,0 +1,66 @@
+{
+  "id": "FO-05",
+  "group": "filing_obligation",
+  "prompt": "Tell me whether an individual earning below the threshold must file an income tax return.",
+  "attempt": 1,
+  "runtimeCommit": "22b845afe1fe16bfa4821804d528f469366e4f8c",
+  "answer": "### Short Answer\nAn individual earning below the threshold of P250,000 is not required to file an income tax return. This is established under Section 24 of the National Internal Revenue Code (NIRC).\n\n### Controlling Authorities\n- **NIRC Section 24**: This section outlines the income tax rates applicable to individuals, stating that individuals with taxable income not exceeding P250,000 are exempt from income tax.\n\n### Interpretation\nAccording to Section 24 of the NIRC, individuals whose taxable income does not exceed P250,000 are not subject to income tax. This exemption applies to all forms of income, including salaries and wages, as long as the total taxable income remains below the specified threshold.\n\n### Practical Meaning\nFor individuals earning below P250,000, there is no obligation to file an income tax return, which simplifies compliance for low-income earners. However, it is advisable for individuals to keep records of their income and any deductions they may be eligible for, as this can be beneficial for future tax assessments or if their income increases.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_obligation",
+    "reason": "filing_obligation_proposition_without_filing_authority",
+    "propositionSufficiency": {
+      "penaltyProposition": false,
+      "ewtProposition": false,
+      "registrationProposition": false,
+      "vatExceptionProposition": false,
+      "filingObligationProposition": true,
+      "filingDeadlineProposition": false,
+      "estateComputationProposition": false,
+      "estateBaseMisstatement": false,
+      "deadlineObject": null,
+      "semanticEvidence": {
+        "qFilingObligation": true,
+        "aFilingConclusion": true,
+        "wrongFilingObject": false,
+        "assessmentObject": false,
+        "returnObjectPresent": true,
+        "temporalPresent": false,
+        "filingActOrReturn": true,
+        "paymentOnly": false,
+        "protestReg": false
+      },
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false,
+      "hasRegistrationAuthority": false,
+      "hasVatExceptionAuthority": false,
+      "hasGeneralVatImposition": false,
+      "hasFilingObligationAuthority": false,
+      "hasFilingDeadlineAuthority": false,
+      "generalVatOnly": false,
+      "sourceCardCount": 3
+    }
+  },
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 11,
+  "sourceLabels": [
+    "NIRC Sec. 24",
+    "NIRC Sec. 23",
+    "NIRC Sec. 27"
+  ],
+  "sanitizedConversationRef": "8a2698cccd03e18f2e639b14",
+  "sha256": "81aad6b59e01d43a779bdcb2867c019dd60547faf9e7f958e104da37e43f6b05"
+}

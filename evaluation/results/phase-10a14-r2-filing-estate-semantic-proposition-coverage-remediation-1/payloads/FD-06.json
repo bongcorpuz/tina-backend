@@ -1,0 +1,66 @@
+{
+  "id": "FD-06",
+  "group": "filing_deadline",
+  "prompt": "Hanggang kailan ang paghahain ng annual income tax return ng isang indibidwal?",
+  "attempt": 1,
+  "runtimeCommit": "22b845afe1fe16bfa4821804d528f469366e4f8c",
+  "answer": "### Short Answer\nAng deadline para sa paghahain ng annual income tax return ng isang indibidwal ay sa ika-15 ng Abril ng taon kasunod ng taxable year. Ito ay nakasaad sa Section 51 ng National Internal Revenue Code (NIRC).\n\n### Interpretation\nAyon sa Section 51 ng NIRC, ang mga indibidwal na nagkakaroon ng kita ay kinakailangang magsumite ng kanilang annual income tax return (ITR) sa takdang panahon, na karaniwang sa ika-15 ng Abril. Ang mga indibidwal na may kita mula sa negosyo o propesyon ay dapat ding isama ang kanilang kita sa ITR na ito.\n\n### Practical Meaning\nMahalaga ang pagsunod sa deadline na ito upang maiwasan ang mga penalties at interes na maaaring ipataw ng Bureau of Internal Revenue (BIR) sa mga late filers. Ang tamang paghahain ng ITR ay nagbibigay-daan din sa mga indibidwal na makakuha ng mga tax refunds kung sila ay eligible.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_deadline",
+    "reason": "filing_deadline_proposition_without_deadline_authority",
+    "propositionSufficiency": {
+      "penaltyProposition": false,
+      "ewtProposition": false,
+      "registrationProposition": false,
+      "vatExceptionProposition": false,
+      "filingObligationProposition": false,
+      "filingDeadlineProposition": true,
+      "estateComputationProposition": false,
+      "estateBaseMisstatement": false,
+      "deadlineObject": "return_filing",
+      "semanticEvidence": {
+        "qFilingObligation": false,
+        "aFilingConclusion": false,
+        "wrongFilingObject": false,
+        "assessmentObject": false,
+        "returnObjectPresent": true,
+        "temporalPresent": true,
+        "filingActOrReturn": true,
+        "paymentOnly": false,
+        "protestReg": false
+      },
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false,
+      "hasRegistrationAuthority": false,
+      "hasVatExceptionAuthority": false,
+      "hasGeneralVatImposition": false,
+      "hasFilingObligationAuthority": false,
+      "hasFilingDeadlineAuthority": false,
+      "generalVatOnly": false,
+      "sourceCardCount": 3
+    }
+  },
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "sourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "sanitizedConversationRef": "6bb5066bae393afc98c65b5e",
+  "sha256": "435ed8eddfa673bfc30d241add4e4ef6ab89cd6bce53ff72516af8e4c1d69648"
+}

@@ -1,0 +1,67 @@
+{
+  "id": "PR-Q38-reg",
+  "group": "prior",
+  "prompt": "Is a new business required to register with the BIR before commencing operations?",
+  "attempt": 1,
+  "runtimeCommit": "22b845afe1fe16bfa4821804d528f469366e4f8c",
+  "answer": "### Short Answer\n\n### Interpretation\nThe law mandates that any individual or entity intending to engage in business activities must complete their registration with the BIR prior to starting operations. This registration is crucial for ensuring compliance with tax obligations and for the proper assessment and collection of taxes.\n\n### Practical Meaning\nFor new businesses, this means that they must take the necessary steps to register with the BIR and obtain a Tax Identification Number (TIN) before they can legally operate and conduct transactions. Failure to register may result in penalties and complications with tax compliance.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "registration_procedural",
+    "reason": "registration_proposition_without_registration_authority",
+    "propositionSufficiency": {
+      "penaltyProposition": false,
+      "ewtProposition": false,
+      "registrationProposition": true,
+      "vatExceptionProposition": false,
+      "filingObligationProposition": false,
+      "filingDeadlineProposition": false,
+      "estateComputationProposition": false,
+      "estateBaseMisstatement": false,
+      "deadlineObject": null,
+      "semanticEvidence": {
+        "qFilingObligation": false,
+        "aFilingConclusion": false,
+        "wrongFilingObject": false,
+        "assessmentObject": false,
+        "returnObjectPresent": false,
+        "temporalPresent": false,
+        "filingActOrReturn": false,
+        "paymentOnly": false,
+        "protestReg": true
+      },
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": true,
+      "hasRegistrationAuthority": false,
+      "hasVatExceptionAuthority": false,
+      "hasGeneralVatImposition": false,
+      "hasFilingObligationAuthority": true,
+      "hasFilingDeadlineAuthority": true,
+      "generalVatOnly": false,
+      "sourceCardCount": 4
+    }
+  },
+  "displayedSourceCount": 4,
+  "retrievedSourceCount": 12,
+  "sourceLabels": [
+    "RR No. 11-2018",
+    "RR No. 2-1998",
+    "NIRC Sec. 2",
+    "NIRC Sec. 3"
+  ],
+  "sanitizedConversationRef": "d0c1d76af648ad9414186199",
+  "sha256": "7ea3994cd76c81e3c3c04b55ede65a3767fc3ef678e4a21d7e239fd8b082476e"
+}

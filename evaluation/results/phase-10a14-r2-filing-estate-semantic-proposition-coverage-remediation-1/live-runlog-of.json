@@ -1,0 +1,62 @@
+{
+  "overfire": [
+    {
+      "id": "OF-refund",
+      "verifiedEligible": true,
+      "stage": "llm",
+      "cls": null,
+      "reason": "The answer correctly addresses the question and cites relevant provisions.",
+      "authoritySupport": "VERIFIED_CONTROLLING",
+      "sourceState": "AUTHORITY_FOUND",
+      "labels": [
+        "NIRC Sec. 109",
+        "NIRC Sec. 236",
+        "RR No. 16-2005",
+        "RMC 75-2015"
+      ]
+    },
+    {
+      "id": "OF-payment",
+      "verifiedEligible": null,
+      "stage": null,
+      "cls": null,
+      "reason": null,
+      "authoritySupport": "NO_VERIFIED_AUTHORITY",
+      "sourceState": "NO_INDEXED_SOURCE",
+      "labels": [
+        "civil-code-philippines.docx",
+        "civil-code-philippines.docx",
+        "NIRC Sec. 6",
+        "NIRC Sec. 6",
+        "NIRC Sec. 6"
+      ]
+    },
+    {
+      "id": "OF-protest",
+      "verifiedEligible": true,
+      "stage": "llm",
+      "cls": null,
+      "reason": "The answer correctly states the deadline and is fully supported by relevant citations.",
+      "authoritySupport": "VERIFIED_CONTROLLING",
+      "sourceState": "AUTHORITY_FOUND",
+      "labels": [
+        "NIRC Sec. 228",
+        "RR No. 18-2013",
+        "NIRC Sec. 203",
+        "NIRC Sec. 222"
+      ]
+    },
+    {
+      "id": "OF-assessment",
+      "verifiedEligible": false,
+      "stage": "structural",
+      "cls": null,
+      "reason": "empty_primary_answer_section",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "AUTHORITY_FOUND",
+      "labels": [
+        "NIRC Sec. 22"
+      ]
+    }
+  ]
+}

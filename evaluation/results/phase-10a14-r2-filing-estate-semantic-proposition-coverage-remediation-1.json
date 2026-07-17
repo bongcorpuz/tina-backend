@@ -1,0 +1,80 @@
+{
+  "task": "PHASE-10A14-R2-FILING-OBLIGATION-DEADLINE-AND-ESTATE-TAX-SEMANTIC-PROPOSITION-COVERAGE-REMEDIATION-1",
+  "startingHead": "7736ceecc96e5dad99250bd0ea43c813dce3204f",
+  "runtimeCommit": "22b845afe1fe16bfa4821804d528f469366e4f8c",
+  "model": "gpt-4o-mini",
+
+  "problem": "A14-R1 detected filing_obligation, filing_deadline, and tax_computation_basis (estate) with brittle phrase-oriented regexes; the A14-R1 independent review (REVISIONS REQUIRED) bypassed all three with paraphrase / statement / short-follow-up / answer-introduced / Taglish forms and equivalent estate base misstatements.",
+
+  "ws1_reproduction": {
+    "method": "committed pre-R2 validator at HEAD 7736cee replayed against the reviewer probes",
+    "filing_obligation_probes_missed": true,
+    "filing_deadline_probes_missed": true,
+    "estate_base_misstatement_probes_not_blocked": true,
+    "note": "Pre-R2 left filing_obligation/filing_deadline probes unclassified and classified estate probes but did not block them (phrase-dependent misstatement detector)."
+  },
+
+  "remediation": {
+    "control": "evaluatePropositionSourceSufficiency rebuilt on a deterministic semantic proposition layer",
+    "new_export": "detectFilingAndEstatePropositions(question, answer)",
+    "normalizer": "normalizeTaxText (ITR expansion, contraction expansion, bounded Taglish mapping)",
+    "concept_signals": ["C_FILING_ACT", "C_RETURN_OBJECT", "C_OBLIGATION", "C_TEMPORAL", "A_FILING_CONCLUSION", "A_DEADLINE_CONCLUSION"],
+    "object_disambiguation": ["C_WRONG_FILING_OBJECT", "C_PAYMENT_OBJECT", "C_ASSESSMENT_OBJECT", "C_PROTEST_REG_OBJECT"],
+    "deadline_object_resolution": "only return_filing invokes filing_deadline; payment/protest/registration/assessment/prescription excluded",
+    "temporal_tightening": "bare 'due' and 'late' removed (collide with 'no tax is due' liability sense and 'late filing of a VAT return' penalty sense); genuine deadline frames only",
+    "estate_base_misstatement": "concept-based (excess-over / first-N-tax-free / threshold / gross-less-N / value-exceeding); guarded so donor's-tax real threshold is not misclassified",
+    "usesQuestionIdsOrExactPromptsOrAmountsOrDatesOrReviewerPhraseDenyLists": false,
+    "runsBeforeModelValidator": true, "failsClosed": true, "neverUpgradesTrust": true, "sourceCardKeyed": true,
+    "passageGrounding": "not implemented; continuing P2"
+  },
+
+  "ws10_focused_suite": {
+    "file": "tests/phase-10a14-r2-filing-estate-semantic-proposition-coverage.test.mjs",
+    "tests": 33, "failed": 0, "assertions": 38,
+    "matrix": "A paraphrase, B statement/answer-introduced, C temporal variants, D estate concepts, E normalizer, F object-disambiguation/overfire, G positive reachability, H gate-never-upgrades"
+  },
+
+  "ws11_reviewer_probe_replay": {
+    "filing_obligation": "5/5 closed", "filing_deadline": "7/7 closed", "estate": "4/4 closed",
+    "allClosedWithCorrectClass": true
+  },
+
+  "ws12_all26_replay": {
+    "totalVerified": 26,
+    "targetsBlocked": ["Q12-r1","Q12-r2","Q12-r3","Q30-r1","Q30-r2","Q30-r3","Q34-r1","Q34-r2","Q34-r3"],
+    "targetsBlockedCount": 9,
+    "targetClasses": {"Q12": "filing_obligation", "Q30": "tax_computation_basis", "Q34": "filing_deadline"},
+    "validVerifiedNewlyBlocked": 0
+  },
+
+  "ws13_targeted_live_validation": {
+    "runtimeCommit": "22b845afe1fe16bfa4821804d528f469366e4f8c", "totalProbes": 42,
+    "filing_obligation_negatives": {"n": 10, "verified": 0, "blockedAtGate": 7, "otherFailClosed": 3, "invalidVerified": 0},
+    "filing_deadline_negatives": {"n": 10, "verified": 0, "blockedAtGate": 10, "invalidVerified": 0},
+    "estate_negatives": {"n": 10, "verified": 1, "verifiedIsCorrectNetEstateAnswer": true, "baseMisstatementVerified": 0, "blockedAtGate": 1, "invalidVerified": 0},
+    "positives": {"estateDeadline": "VERIFIED_CONTROLLING", "donor": "VERIFIED_CONTROLLING", "selfEmployedFiling": "blocked - retrieval surfaced rate not Sec 51 (P2 retrieval-surfacing)", "mcit": "structural fail-closed"},
+    "overfireControls": {"refund": "VERIFIED on own authority", "payment": "NO_VERIFIED_AUTHORITY", "protest": "VERIFIED on own authority", "assessment": "structural", "blockedByOurClasses": 0},
+    "priorSafeguards": {"Q36_penalty": "blocked penalty_procedural", "Q38_registration": "blocked registration_procedural", "Q25_ewt": "structural fail-closed", "Q46_vatException": "llm fail-closed", "invalidVerified": 0},
+    "invalidVerifiedTotal": 0
+  },
+
+  "ws14_regression": {
+    "deterministicSuites": 192, "deterministicFailed": 0, "deterministicCycles": 2, "deterministicExit": 0,
+    "stagingSuites": 7, "stagingFailed": 0, "stagingCycles": 2, "stagingExit": 0,
+    "combinedSuites": 199, "suiteDelta": "+1 vs prior 198 = new A14-R2 focused suite (justified)",
+    "note": "The two deterministic cycles were run on a clean committed tree; the 09zf allowed-file gate requires a clean worktree."
+  },
+
+  "officialAuthorityOnly": true, "securityScan": "clean", "worktreeClean": true,
+  "runtimeScope": "validator code + one new focused test only; no corpus/index/model/frontend/DevFactory/production change; committed A14 / A14-R1 / A13-R1 evidence unchanged; protected untracked paths (.claude, .vscode, evaluation/factcheck) untouched",
+
+  "currentP0Count": 0, "currentP1Count": 0, "currentP2Count": 6, "currentP3Count": 1,
+  "p2Notes": "passage-level grounding not implemented; gate class-enumerated (extensible, not exhaustive); gpt-4o-mini limitation; positive filing_obligation retrieval-surfacing (Sec 51 not always surfaced); + prior carryovers",
+  "p3Notes": "Q10 intermittent degenerate generation (transient)",
+
+  "phase10AStatus": "OPEN_PENDING_INDEPENDENT_REVIEW", "phase10BStatus": "BLOCKED", "phase10CStatus": "BLOCKED",
+  "adversarialStatus": "DEFERRED", "productionStatus": "NOT_AUTHORIZED", "reindexStatus": "NOT_AUTHORIZED", "modelChangeStatus": "NOT_AUTHORIZED", "fullFactcheckStatus": "NOT_AUTHORIZED",
+
+  "decision": "PASS",
+  "decisionRationale": "The three A14-R1 P1 phrase-dependence defects are remediated by a deterministic SEMANTIC proposition layer (concept + object model + normalizer; no question IDs / exact prompts / amounts / dates / reviewer-phrase deny lists). WS1 proves the pre-R2 runtime missed every reviewer probe; WS11 shows all 16 reviewer probes now fail closed with the correct class; the all-26 replay newly blocks exactly the 9 Q12/Q30/Q34 slots with 0 valid verified newly blocked; and live validation over 42 probes yields 0 invalid verified (30/30 filing/deadline negatives not verified, 0 estate base misstatements verified) while correct estate/donor/deadline answers remain reachable (3 VERIFIED_CONTROLLING), object-disambiguation controls are not over-blocked, and all prior safeguards hold. Deterministic runner passes twice (192/0) and staging twice (7/7); the new focused suite is 33/0; security and worktree clean. Does NOT authorize another full 50x3, Phase 10A closure, adversarial, 10B/10C, model change, reindex, or deployment; the mandatory independent review is next."
+}

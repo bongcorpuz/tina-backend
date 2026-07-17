@@ -1,0 +1,31 @@
+{
+  "id": "ES-07",
+  "group": "estate",
+  "prompt": "Is the first 5,000,000 of an estate exempt from estate tax under TRAIN?",
+  "attempt": 1,
+  "runtimeCommit": "22b845afe1fe16bfa4821804d528f469366e4f8c",
+  "answer": "TINA could not identify an indexed authority matching the specific transaction or claim described.\n\nThis does not mean that no law or authority exists.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "NO_INDEXED_SOURCE",
+    "legalConclusion": "UNKNOWN",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "FALLBACK",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": null,
+  "displayedSourceCount": 0,
+  "retrievedSourceCount": 12,
+  "sourceLabels": [
+    "civil-code-philippines.docx",
+    "civil-code-philippines.docx",
+    "NIRC Sec. 6",
+    "NIRC Sec. 6",
+    "RA 11534"
+  ],
+  "sanitizedConversationRef": "871bf173506c10ad146fcdf1",
+  "sha256": "98f56137649e934366b5cad92ad920aaedaccad9a2b427d9a4bdbd57d149cfef"
+}

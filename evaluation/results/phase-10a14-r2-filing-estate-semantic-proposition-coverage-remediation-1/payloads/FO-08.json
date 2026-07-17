@@ -1,0 +1,66 @@
+{
+  "id": "FO-08",
+  "group": "filing_obligation",
+  "prompt": "Are individuals earning purely compensation income exempt from filing an income tax return?",
+  "attempt": 1,
+  "runtimeCommit": "22b845afe1fe16bfa4821804d528f469366e4f8c",
+  "answer": "### Short Answer\nIndividuals earning purely compensation income are not exempt from filing an income tax return. Under Section 24 of the National Internal Revenue Code (NIRC), all individuals, including those earning compensation income, are required to file income tax returns unless they fall under specific exemptions.\n\n### Controlling Authorities\nThe controlling authority for this matter is Section 24 of the NIRC, which outlines the income tax rates and filing requirements for individuals. It specifies that all income derived from sources within the Philippines is subject to income tax, and individuals must file returns accordingly.\n\n### Interpretation\nSection 24 of the NIRC states that individuals are taxable on their income derived from all sources within the Philippines. While minimum wage earners are exempt from income tax, this exemption does not extend to all individuals earning compensation income. Therefore, those earning above the minimum wage threshold must file their income tax returns.\n\n### Practical Meaning\nIn practical terms, individuals earning purely compensation income must file their income tax returns if their income exceeds the minimum threshold set by the NIRC. Failure to file can result in penalties and interest on unpaid taxes. It is essential for individuals to be aware of their filing obligations to ensure compliance with tax laws.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_obligation",
+    "reason": "filing_obligation_proposition_without_filing_authority",
+    "propositionSufficiency": {
+      "penaltyProposition": false,
+      "ewtProposition": false,
+      "registrationProposition": false,
+      "vatExceptionProposition": false,
+      "filingObligationProposition": true,
+      "filingDeadlineProposition": false,
+      "estateComputationProposition": false,
+      "estateBaseMisstatement": false,
+      "deadlineObject": null,
+      "semanticEvidence": {
+        "qFilingObligation": true,
+        "aFilingConclusion": true,
+        "wrongFilingObject": false,
+        "assessmentObject": false,
+        "returnObjectPresent": true,
+        "temporalPresent": false,
+        "filingActOrReturn": true,
+        "paymentOnly": false,
+        "protestReg": false
+      },
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false,
+      "hasRegistrationAuthority": false,
+      "hasVatExceptionAuthority": false,
+      "hasGeneralVatImposition": false,
+      "hasFilingObligationAuthority": false,
+      "hasFilingDeadlineAuthority": false,
+      "generalVatOnly": false,
+      "sourceCardCount": 3
+    }
+  },
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "sourceLabels": [
+    "NIRC Sec. 24",
+    "NIRC Sec. 23",
+    "NIRC Sec. 27"
+  ],
+  "sanitizedConversationRef": "558fe543214b1f36a01c676c",
+  "sha256": "c42fad5018d8c5744cd9c7adcae3b3aa1fbb95b140774d9c149f1323774c6253"
+}

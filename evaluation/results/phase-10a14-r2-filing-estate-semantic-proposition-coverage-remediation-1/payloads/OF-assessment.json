@@ -1,0 +1,33 @@
+{
+  "id": "OF-assessment",
+  "group": "overfire",
+  "prompt": "What is the BIR's period to assess a taxpayer who filed a return?",
+  "attempt": 1,
+  "runtimeCommit": "22b845afe1fe16bfa4821804d528f469366e4f8c",
+  "answer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nFor taxpayers, this means that once they file their tax return, they can expect that the BIR has a three-year window to review their return and potentially issue an assessment for any unpaid taxes. After this period, the BIR generally loses the right to assess additional taxes for that particular tax year, providing a level of certainty and closure for taxpayers regarding their tax obligations.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "reason": "empty_primary_answer_section",
+    "propositionSufficiency": null
+  },
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "sourceLabels": [
+    "NIRC Sec. 22"
+  ],
+  "sanitizedConversationRef": "6ce6d38da07e6ea04c5776b4",
+  "sha256": "77ead501ea1dd268c131e669e05081dbe03bec51bd8b30d4727230e30274944d"
+}

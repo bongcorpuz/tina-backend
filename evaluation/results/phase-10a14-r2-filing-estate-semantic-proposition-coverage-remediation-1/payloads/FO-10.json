@@ -1,0 +1,35 @@
+{
+  "id": "FO-10",
+  "group": "filing_obligation",
+  "prompt": "Is an employee whose tax was fully withheld still required to file an annual income tax return?",
+  "attempt": 1,
+  "runtimeCommit": "22b845afe1fe16bfa4821804d528f469366e4f8c",
+  "answer": "### Issue Presented\nIs an employee whose tax was fully withheld still required to file an annual income tax return?\n\n### Short Answer\n\n### Accounting Treatment\nFrom an accounting perspective, employers are required to withhold income tax from employees' compensation. The withheld amounts are recorded as liabilities until remitted to the Bureau of Internal Revenue (BIR). Employees should ensure that their income tax withheld is accurately reflected in their annual income tax return.\n\n### Tax Treatment\nUnder Section 24 of the NIRC, individuals are subject to income tax on their taxable income. Even if the tax has been fully withheld, employees must file their annual income tax return to report their total income and determine if they owe additional taxes or are entitled to a refund. The filing serves as a reconciliation of the withheld amounts against the actual tax liability.\n\n### Differences and Reconciliation\nThe requirement to file a return exists regardless of whether the tax withheld equals the actual tax due. Employees may have other sources of income or deductions that could affect their overall tax liability. Filing allows for the reconciliation of any discrepancies between the withheld tax and the actual tax owed.\n\n### Practical Note\nEmployees should keep records of their income and any other relevant documents to facilitate the filing process. It is advisable to file the return even if they expect no additional tax liability, as this ensures compliance with tax regulations and may prevent issues with the BIR in the future.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "reason": "empty_primary_answer_section",
+    "propositionSufficiency": null
+  },
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "sourceLabels": [
+    "NIRC Sec. 24",
+    "NIRC Sec. 23",
+    "NIRC Sec. 27"
+  ],
+  "sanitizedConversationRef": "c5a958bf0ca33751189cf288",
+  "sha256": "26f0fb468213633a39d1a1da1a5373e3c97b89aa069d9b237ae8dde34a9a1c07"
+}

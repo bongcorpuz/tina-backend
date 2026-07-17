@@ -1,0 +1,36 @@
+{
+  "id": "OF-protest",
+  "group": "overfire",
+  "prompt": "What is the deadline to file a protest against a final assessment notice?",
+  "attempt": 1,
+  "runtimeCommit": "22b845afe1fe16bfa4821804d528f469366e4f8c",
+  "answer": "### Short Answer\nThe deadline to file a protest against a Final Assessment Notice (FAN) is within thirty (30) days from the date of receipt of the notice.\n\n### Controlling Authorities\nThis is governed by Section 228 of the National Internal Revenue Code (NIRC) and further clarified by Revenue Regulations No. 18-2013.\n\n### Interpretation\nSection 228 of the NIRC states that a taxpayer may protest an assessment by filing a written request for reconsideration or reinvestigation within thirty (30) days from receipt of the FAN. If the taxpayer fails to file a valid protest within this period, the assessment becomes final, executory, and demandable.\n\n### Practical Meaning\nTaxpayers must be vigilant about the thirty-day window to ensure their right to contest an assessment. If they miss this deadline, they lose the opportunity to challenge the assessment, which can lead to enforced collection actions by the Bureau of Internal Revenue (BIR). Therefore, timely action is crucial in tax compliance and dispute resolution.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "schemaValid": true,
+    "stage": "llm",
+    "reason": "The answer correctly states the deadline and is fully supported by relevant citations.",
+    "propositionSufficiency": null
+  },
+  "displayedSourceCount": 4,
+  "retrievedSourceCount": 12,
+  "sourceLabels": [
+    "NIRC Sec. 228",
+    "RR No. 18-2013",
+    "NIRC Sec. 203",
+    "NIRC Sec. 222"
+  ],
+  "sanitizedConversationRef": "32a6e5ffbfe77be52cdb6693",
+  "sha256": "de5dd1251ad61d2daac7b2d986c1b9affa01f1e079d94368129b26258ff7bb4a"
+}

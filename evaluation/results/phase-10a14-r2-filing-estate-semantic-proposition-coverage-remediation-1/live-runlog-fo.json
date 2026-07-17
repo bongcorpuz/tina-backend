@@ -1,0 +1,148 @@
+{
+  "filing_obligation": [
+    {
+      "id": "FO-01",
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_obligation",
+      "reason": "filing_obligation_proposition_without_filing_authority",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "AUTHORITY_FOUND",
+      "labels": [
+        "NIRC Sec. 24",
+        "NIRC Sec. 23",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "FO-02",
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_obligation",
+      "reason": "filing_obligation_proposition_without_filing_authority",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "AUTHORITY_FOUND",
+      "labels": [
+        "NIRC Sec. 24",
+        "NIRC Sec. 23",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "FO-03",
+      "verifiedEligible": null,
+      "stage": null,
+      "cls": null,
+      "reason": null,
+      "authoritySupport": "NO_VERIFIED_AUTHORITY",
+      "sourceState": "NO_INDEXED_SOURCE",
+      "labels": [
+        "NIRC Sec. 24",
+        "NIRC Sec. 24",
+        "NIRC Sec. 24",
+        "NIRC Sec. 24",
+        "NIRC Sec. 23"
+      ]
+    },
+    {
+      "id": "FO-04",
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_obligation",
+      "reason": "filing_obligation_proposition_without_filing_authority",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "AUTHORITY_FOUND",
+      "labels": [
+        "NIRC Sec. 24",
+        "NIRC Sec. 23",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "FO-05",
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_obligation",
+      "reason": "filing_obligation_proposition_without_filing_authority",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "AUTHORITY_FOUND",
+      "labels": [
+        "NIRC Sec. 24",
+        "NIRC Sec. 23",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "FO-06",
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_obligation",
+      "reason": "filing_obligation_proposition_without_filing_authority",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "AUTHORITY_FOUND",
+      "labels": [
+        "NIRC Sec. 24",
+        "NIRC Sec. 23",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "FO-07",
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_obligation",
+      "reason": "filing_obligation_proposition_without_filing_authority",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "AUTHORITY_FOUND",
+      "labels": [
+        "NIRC Sec. 24",
+        "NIRC Sec. 23",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "FO-08",
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_obligation",
+      "reason": "filing_obligation_proposition_without_filing_authority",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "AUTHORITY_FOUND",
+      "labels": [
+        "NIRC Sec. 24",
+        "NIRC Sec. 23",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "FO-09",
+      "verifiedEligible": null,
+      "stage": null,
+      "cls": null,
+      "reason": null,
+      "authoritySupport": "NO_VERIFIED_AUTHORITY",
+      "sourceState": "NO_INDEXED_SOURCE",
+      "labels": [
+        "NIRC Sec. 24",
+        "NIRC Sec. 24",
+        "NIRC Sec. 24",
+        "NIRC Sec. 24",
+        "NIRC Sec. 23"
+      ]
+    },
+    {
+      "id": "FO-10",
+      "verifiedEligible": false,
+      "stage": "structural",
+      "cls": null,
+      "reason": "empty_primary_answer_section",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "AUTHORITY_FOUND",
+      "labels": [
+        "NIRC Sec. 24",
+        "NIRC Sec. 23",
+        "NIRC Sec. 27"
+      ]
+    }
+  ]
+}

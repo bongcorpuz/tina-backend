@@ -1,0 +1,35 @@
+{
+  "id": "PR-Q25-ewt",
+  "group": "prior",
+  "prompt": "Is expanded withholding tax required on payments to a VAT-registered law firm?",
+  "attempt": 1,
+  "runtimeCommit": "22b845afe1fe16bfa4821804d528f469366e4f8c",
+  "answer": "### Short Answer\n\n### Interpretation\n\nAdvertising service payments may be subject to expanded withholding tax when paid by a withholding agent to a resident income payee, subject to the applicable classification and rate under withholding tax regulations.\n\n### Practical Meaning\n\nThe payor withholds the applicable EWT from the payment and remits it to the BIR. The withheld amount is creditable against the payee's income tax, subject to proper withholding certificates and filing compliance.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "reason": "empty_primary_answer_section",
+    "propositionSufficiency": null
+  },
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 6,
+  "sourceLabels": [
+    "RR 2-98",
+    "RR 16-2005",
+    "RMC 75-2015"
+  ],
+  "sanitizedConversationRef": "9e050db6b36de9018070f86f",
+  "sha256": "acd3174c1012c800eab2323bf746ed595a8c1a79761f2056a909ad0f0a9ea368"
+}

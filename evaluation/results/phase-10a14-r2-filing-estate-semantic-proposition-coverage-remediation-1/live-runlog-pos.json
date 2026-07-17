@@ -1,0 +1,61 @@
+{
+  "positive": [
+    {
+      "id": "POS-filing",
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_obligation",
+      "reason": "filing_obligation_proposition_without_filing_authority",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "AUTHORITY_FOUND",
+      "labels": [
+        "NIRC Sec. 24",
+        "NIRC Sec. 23",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "POS-deadline-estate",
+      "verifiedEligible": true,
+      "stage": "llm",
+      "cls": null,
+      "reason": "The answer correctly addresses the deadline and extension for filing an estate tax return with appropriate citations.",
+      "authoritySupport": "VERIFIED_CONTROLLING",
+      "sourceState": "AUTHORITY_FOUND",
+      "labels": [
+        "NIRC Sec. 89",
+        "NIRC Sec. 84",
+        "NIRC Sec. 86",
+        "NIRC Sec. 88",
+        "NIRC Sec. 91"
+      ]
+    },
+    {
+      "id": "POS-donor",
+      "verifiedEligible": true,
+      "stage": "llm",
+      "cls": null,
+      "reason": "The answer correctly states the donor's tax rate and exemption threshold with appropriate citations.",
+      "authoritySupport": "VERIFIED_CONTROLLING",
+      "sourceState": "AUTHORITY_FOUND",
+      "labels": [
+        "NIRC Sec. 99",
+        "NIRC Sec. 101",
+        "NIRC Sec. 102",
+        "NIRC Sec. 104"
+      ]
+    },
+    {
+      "id": "POS-mcit",
+      "verifiedEligible": false,
+      "stage": "structural",
+      "cls": null,
+      "reason": "empty_primary_answer_section",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "AUTHORITY_FOUND",
+      "labels": [
+        "NIRC Sec. 22"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "id": "ES-08",
+  "group": "estate",
+  "prompt": "Under TRAIN, is estate tax 6% of the amount of the estate exceeding 5,000,000?",
+  "attempt": 1,
+  "runtimeCommit": "22b845afe1fe16bfa4821804d528f469366e4f8c",
+  "answer": "TINA could not identify an indexed authority matching the specific transaction or claim described.\n\nThis does not mean that no law or authority exists.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "NO_INDEXED_SOURCE",
+    "legalConclusion": "UNKNOWN",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "FALLBACK",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": null,
+  "displayedSourceCount": 0,
+  "retrievedSourceCount": 12,
+  "sourceLabels": [
+    "civil-code-philippines.docx",
+    "civil-code-philippines.docx",
+    "NIRC Sec. 6",
+    "NIRC Sec. 6",
+    "RA 11534"
+  ],
+  "sanitizedConversationRef": "6840d066664917e0a509bca3",
+  "sha256": "408de8bbf701cce6438dd72e60748105b71d193704dbe24f92450a3ca70d56c9"
+}

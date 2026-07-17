@@ -1,0 +1,34 @@
+{
+  "id": "PR-Q46-vatexc",
+  "group": "prior",
+  "prompt": "Is the sale of a residential lot exempt from VAT?",
+  "attempt": 1,
+  "runtimeCommit": "22b845afe1fe16bfa4821804d528f469366e4f8c",
+  "answer": "### Short Answer\nThe sale of a residential lot is exempt from VAT if the selling price does not exceed P1,500,000. However, if the selling price exceeds this threshold, the sale is subject to VAT.\n\n### Interpretation\n\n### Practical Meaning\nFor real estate sellers, this means that if they are selling a residential lot for P1,500,000 or less, they do not need to charge VAT on the sale. However, if the sale price exceeds P1,500,000, they must charge VAT and remit it to the Bureau of Internal Revenue (BIR). This distinction is crucial for pricing strategies and compliance with tax obligations in real estate transactions.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": true,
+    "stage": "llm",
+    "reason": "unsafe_value_fields:citationSupportsProposition,propositionSupported,materiallyComplete,thresholdDimensionMatches,sourcePropositionAligned,eligibleForVerifiedControlling,contradictsSources,unsupportedMaterialProposition,answerContradictsControllingSource",
+    "propositionSufficiency": null
+  },
+  "displayedSourceCount": 2,
+  "retrievedSourceCount": 12,
+  "sourceLabels": [
+    "RR No. 16-2005",
+    "RR 4-2007"
+  ],
+  "sanitizedConversationRef": "d2b4e32ea15f2a9abbc9152f",
+  "sha256": "a14802f6a51a297ef9e40c083ba69e5277b5796ff82b94c0aee46ed1dd4f7c43"
+}

@@ -1,0 +1,17 @@
+{
+  "totalVerified": 26,
+  "targetsBlocked": [
+    "Q12-r1 -> filing_obligation",
+    "Q12-r2 -> filing_obligation",
+    "Q12-r3 -> filing_obligation",
+    "Q30-r1 -> tax_computation_basis",
+    "Q30-r2 -> tax_computation_basis",
+    "Q30-r3 -> tax_computation_basis",
+    "Q34-r1 -> filing_deadline",
+    "Q34-r2 -> filing_deadline",
+    "Q34-r3 -> filing_deadline"
+  ],
+  "targetsBlockedCount": 9,
+  "validNewlyBlocked": [],
+  "validNewlyBlockedCount": 0
+}

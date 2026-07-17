@@ -1,0 +1,33 @@
+{
+  "estate": {
+    "n": 10,
+    "verified": 1,
+    "gateBlocked_by_our_stage": 1
+  },
+  "filing_deadline": {
+    "n": 10,
+    "verified": 0,
+    "gateBlocked_by_our_stage": 10
+  },
+  "filing_obligation": {
+    "n": 10,
+    "verified": 0,
+    "gateBlocked_by_our_stage": 7
+  },
+  "overfire": {
+    "n": 4,
+    "verified": 2,
+    "gateBlocked_by_our_stage": 0
+  },
+  "positive": {
+    "n": 4,
+    "verified": 2,
+    "gateBlocked_by_our_stage": 1
+  },
+  "prior": {
+    "n": 4,
+    "verified": 0,
+    "gateBlocked_by_our_stage": 2
+  }
+}
+INVALID_VERIFIED(neg families): estate:ES-09

@@ -1,0 +1,66 @@
+{
+  "id": "FD-09",
+  "group": "filing_deadline",
+  "prompt": "Confirm the filing date for the individual annual income tax return.",
+  "attempt": 1,
+  "runtimeCommit": "22b845afe1fe16bfa4821804d528f469366e4f8c",
+  "answer": "### Short Answer\nThe filing date for the individual annual income tax return in the Philippines is on or before April 15 of the following year after the close of the taxable year.\n\n### Interpretation\n\n### Practical Meaning\nTaxpayers should ensure that their income tax returns are filed by April 15 to avoid penalties and interest for late filing. It is advisable to prepare and submit the return well in advance of this deadline to ensure compliance and to allow for any potential issues that may arise during the filing process.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_deadline",
+    "reason": "filing_deadline_proposition_without_deadline_authority",
+    "propositionSufficiency": {
+      "penaltyProposition": false,
+      "ewtProposition": false,
+      "registrationProposition": false,
+      "vatExceptionProposition": false,
+      "filingObligationProposition": false,
+      "filingDeadlineProposition": true,
+      "estateComputationProposition": false,
+      "estateBaseMisstatement": false,
+      "deadlineObject": "return_filing",
+      "semanticEvidence": {
+        "qFilingObligation": false,
+        "aFilingConclusion": false,
+        "wrongFilingObject": false,
+        "assessmentObject": false,
+        "returnObjectPresent": true,
+        "temporalPresent": true,
+        "filingActOrReturn": true,
+        "paymentOnly": false,
+        "protestReg": false
+      },
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false,
+      "hasRegistrationAuthority": false,
+      "hasVatExceptionAuthority": false,
+      "hasGeneralVatImposition": false,
+      "hasFilingObligationAuthority": false,
+      "hasFilingDeadlineAuthority": false,
+      "generalVatOnly": false,
+      "sourceCardCount": 3
+    }
+  },
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "sourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "sanitizedConversationRef": "91ab9e4de88f6f49b60e8328",
+  "sha256": "4b462ed00fa0f51677c9e502fbaf28e9b0d729de39c34192c4e4d06607eada5b"
+}

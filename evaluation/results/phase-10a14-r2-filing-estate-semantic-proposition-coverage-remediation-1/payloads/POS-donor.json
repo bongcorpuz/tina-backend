@@ -1,0 +1,36 @@
+{
+  "id": "POS-donor",
+  "group": "positive",
+  "prompt": "What is the donor's tax rate and exemption threshold under the TRAIN law?",
+  "attempt": 1,
+  "runtimeCommit": "22b845afe1fe16bfa4821804d528f469366e4f8c",
+  "answer": "### Short Answer\nThe donor's tax rate under the TRAIN law is six percent (6%) on the total gifts made in excess of Two hundred fifty thousand pesos (₱250,000).\n\n### Interpretation\nAccording to Section 99 of the NIRC, the donor's tax applies to gifts made during the calendar year that exceed the exemption threshold of ₱250,000. The tax is calculated at a rate of 6% on the amount exceeding this threshold.\n\n### Practical Meaning\nIn practical terms, individuals making gifts totaling more than ₱250,000 in a calendar year will be liable to pay a donor's tax of 6% on the amount that exceeds this exemption limit. For example, if a donor gives gifts worth ₱300,000, the taxable amount would be ₱50,000, resulting in a tax liability of ₱3,000.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "schemaValid": true,
+    "stage": "llm",
+    "reason": "The answer correctly states the donor's tax rate and exemption threshold with appropriate citations.",
+    "propositionSufficiency": null
+  },
+  "displayedSourceCount": 4,
+  "retrievedSourceCount": 12,
+  "sourceLabels": [
+    "NIRC Sec. 99",
+    "NIRC Sec. 101",
+    "NIRC Sec. 102",
+    "NIRC Sec. 104"
+  ],
+  "sanitizedConversationRef": "a6ac591f0026a40bc04292e6",
+  "sha256": "39bbeb45c298203139ceb151c4deea45a9935bfcf2c6f1dd305c0e57fa84aa65"
+}

@@ -1,0 +1,66 @@
+{
+  "id": "FO-06",
+  "group": "filing_obligation",
+  "prompt": "Explain whether a compensation income earner is required to file an income tax return under the TRAIN law.",
+  "attempt": 1,
+  "runtimeCommit": "22b845afe1fe16bfa4821804d528f469366e4f8c",
+  "answer": "### Short Answer\nYes, a compensation income earner is required to file an income tax return under the TRAIN law if their taxable income exceeds the threshold set by the law.\n\n### Interpretation\nCompensation income earners must file an income tax return if their total taxable income exceeds P250,000. The TRAIN law provides a graduated tax rate structure, meaning that individuals will pay different rates depending on their income level. Specifically, those earning above the threshold will be taxed according to the applicable rates outlined in Section 24 of the NIRC.\n\n### Practical Meaning\nFor compensation income earners, this means that if their annual income exceeds P250,000, they must file an income tax return to report their income and pay the corresponding tax. Failure to file when required can lead to penalties and interest on unpaid taxes. It is essential for individuals to keep track of their income and understand their filing obligations to comply with tax laws effectively.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_obligation",
+    "reason": "filing_obligation_proposition_without_filing_authority",
+    "propositionSufficiency": {
+      "penaltyProposition": false,
+      "ewtProposition": false,
+      "registrationProposition": false,
+      "vatExceptionProposition": false,
+      "filingObligationProposition": true,
+      "filingDeadlineProposition": false,
+      "estateComputationProposition": false,
+      "estateBaseMisstatement": false,
+      "deadlineObject": null,
+      "semanticEvidence": {
+        "qFilingObligation": true,
+        "aFilingConclusion": true,
+        "wrongFilingObject": false,
+        "assessmentObject": false,
+        "returnObjectPresent": true,
+        "temporalPresent": false,
+        "filingActOrReturn": true,
+        "paymentOnly": false,
+        "protestReg": false
+      },
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false,
+      "hasRegistrationAuthority": false,
+      "hasVatExceptionAuthority": false,
+      "hasGeneralVatImposition": false,
+      "hasFilingObligationAuthority": false,
+      "hasFilingDeadlineAuthority": false,
+      "generalVatOnly": false,
+      "sourceCardCount": 3
+    }
+  },
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "sourceLabels": [
+    "NIRC Sec. 24",
+    "NIRC Sec. 23",
+    "NIRC Sec. 27"
+  ],
+  "sanitizedConversationRef": "dd8683a9e5dc648ba26a4179",
+  "sha256": "c30d7441bcd8e064f6cb7119e4003441c339004f794f8e071d9d93130b20d16c"
+}

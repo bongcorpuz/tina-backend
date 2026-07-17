@@ -1,0 +1,66 @@
+{
+  "id": "FD-07",
+  "group": "filing_deadline",
+  "prompt": "How many days does an individual have to file the annual income tax return?",
+  "attempt": 1,
+  "runtimeCommit": "22b845afe1fe16bfa4821804d528f469366e4f8c",
+  "answer": "### Short Answer\nAn individual has until April 15 of the following year to file their annual income tax return.\n\n### Interpretation\nThe deadline for filing the annual income tax return is set to ensure that individuals report their income and pay any taxes due in a timely manner. The April 15 deadline allows the Bureau of Internal Revenue (BIR) to process returns and collect taxes efficiently.\n\n### Practical Meaning\nTaxpayers should prepare their financial records and tax documents well in advance of the April 15 deadline to avoid penalties for late filing. It is advisable to consult with a tax professional if there are complexities in the income or deductions to ensure compliance with tax laws.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_deadline",
+    "reason": "filing_deadline_proposition_without_deadline_authority",
+    "propositionSufficiency": {
+      "penaltyProposition": false,
+      "ewtProposition": false,
+      "registrationProposition": false,
+      "vatExceptionProposition": false,
+      "filingObligationProposition": false,
+      "filingDeadlineProposition": true,
+      "estateComputationProposition": false,
+      "estateBaseMisstatement": false,
+      "deadlineObject": "return_filing",
+      "semanticEvidence": {
+        "qFilingObligation": false,
+        "aFilingConclusion": false,
+        "wrongFilingObject": true,
+        "assessmentObject": false,
+        "returnObjectPresent": true,
+        "temporalPresent": true,
+        "filingActOrReturn": true,
+        "paymentOnly": false,
+        "protestReg": false
+      },
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false,
+      "hasRegistrationAuthority": false,
+      "hasVatExceptionAuthority": false,
+      "hasGeneralVatImposition": false,
+      "hasFilingObligationAuthority": false,
+      "hasFilingDeadlineAuthority": false,
+      "generalVatOnly": false,
+      "sourceCardCount": 3
+    }
+  },
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "sourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "sanitizedConversationRef": "61d2dfd073f76bb2d149da2e",
+  "sha256": "46b0841f1f97947d749ea85a94f905159709fb67b68b641618efd8fbe3801eb4"
+}

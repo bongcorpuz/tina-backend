@@ -1,0 +1,68 @@
+{
+  "id": "ES-01",
+  "group": "estate",
+  "prompt": "What is the estate tax rate under the TRAIN law?",
+  "attempt": 1,
+  "runtimeCommit": "22b845afe1fe16bfa4821804d528f469366e4f8c",
+  "answer": "### Short Answer\n\n### Interpretation\nUnder Section 84 of the NIRC, the estate tax is imposed on the transfer of the net estate of a decedent. The TRAIN law simplified the estate tax structure by establishing a single rate of 6% for estates valued above the threshold of ₱5,000,000, which means that estates valued at or below this amount are exempt from estate tax.\n\n### Practical Meaning\nThis change in the estate tax rate under the TRAIN law aims to ease the tax burden on smaller estates while ensuring that larger estates contribute a fair share. Executors and heirs should be aware of this threshold to determine their tax obligations accurately and ensure compliance with the filing requirements.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "tax_computation_basis",
+    "reason": "estate_tax_base_deduction_threshold_conflation",
+    "propositionSufficiency": {
+      "penaltyProposition": false,
+      "ewtProposition": false,
+      "registrationProposition": false,
+      "vatExceptionProposition": false,
+      "filingObligationProposition": false,
+      "filingDeadlineProposition": false,
+      "estateComputationProposition": true,
+      "estateBaseMisstatement": true,
+      "deadlineObject": null,
+      "semanticEvidence": {
+        "qFilingObligation": false,
+        "aFilingConclusion": false,
+        "wrongFilingObject": false,
+        "assessmentObject": false,
+        "returnObjectPresent": false,
+        "temporalPresent": false,
+        "filingActOrReturn": true,
+        "paymentOnly": false,
+        "protestReg": false
+      },
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false,
+      "hasRegistrationAuthority": false,
+      "hasVatExceptionAuthority": false,
+      "hasGeneralVatImposition": false,
+      "hasFilingObligationAuthority": false,
+      "hasFilingDeadlineAuthority": true,
+      "generalVatOnly": false,
+      "sourceCardCount": 5
+    }
+  },
+  "displayedSourceCount": 5,
+  "retrievedSourceCount": 12,
+  "sourceLabels": [
+    "NIRC Sec. 91",
+    "NIRC Sec. 84",
+    "NIRC Sec. 86",
+    "NIRC Sec. 88",
+    "NIRC Sec. 89"
+  ],
+  "sanitizedConversationRef": "eccf51395d9e2e8d9b7dded2",
+  "sha256": "f4d59f940e668ef9e4e4dbd9b1ba5466b4d50a9373624d282be9ea9f36b1123c"
+}

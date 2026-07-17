@@ -1,0 +1,62 @@
+{
+  "prior": [
+    {
+      "id": "PR-Q36-penalty",
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "penalty_procedural",
+      "reason": "penalty_proposition_without_penalty_authority",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "AUTHORITY_FOUND",
+      "labels": [
+        "NIRC Sec. 105",
+        "NIRC Sec. 106",
+        "NIRC Sec. 107",
+        "NIRC Sec. 108",
+        "RR 16-2005"
+      ]
+    },
+    {
+      "id": "PR-Q25-ewt",
+      "verifiedEligible": false,
+      "stage": "structural",
+      "cls": null,
+      "reason": "empty_primary_answer_section",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "AUTHORITY_FOUND",
+      "labels": [
+        "RR 2-98",
+        "RR 16-2005",
+        "RMC 75-2015"
+      ]
+    },
+    {
+      "id": "PR-Q38-reg",
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "registration_procedural",
+      "reason": "registration_proposition_without_registration_authority",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "AUTHORITY_FOUND",
+      "labels": [
+        "RR No. 11-2018",
+        "RR No. 2-1998",
+        "NIRC Sec. 2",
+        "NIRC Sec. 3"
+      ]
+    },
+    {
+      "id": "PR-Q46-vatexc",
+      "verifiedEligible": false,
+      "stage": "llm",
+      "cls": null,
+      "reason": "unsafe_value_fields:citationSupportsProposition,propositionSupported,materiallyComplete,thresholdDimensionMatches,sourcePropositionAligned,eligibleForVerifiedControlling,contradictsSources,unsupportedMaterialProposition,answerContradictsControllingSource",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "sourceState": "AUTHORITY_FOUND",
+      "labels": [
+        "RR No. 16-2005",
+        "RR 4-2007"
+      ]
+    }
+  ]
+}

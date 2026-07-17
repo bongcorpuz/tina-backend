@@ -1,0 +1,37 @@
+{
+  "id": "POS-deadline-estate",
+  "group": "positive",
+  "prompt": "What is the deadline for filing an estate tax return, and can it be extended?",
+  "attempt": 1,
+  "runtimeCommit": "22b845afe1fe16bfa4821804d528f469366e4f8c",
+  "answer": "### Short Answer\nThe deadline for filing an estate tax return is within one year from the decedent's death. An extension of up to 30 days may be granted by the Commissioner in meritorious cases.\n\n### Controlling Authorities\n- **NIRC Sec. 89**: \"The estate tax return required... shall be filed within one (1) year from the decedent's death. The Commissioner shall have authority to grant, in meritorious cases, a reasonable extension not exceeding thirty (30) days for filing the return.\"\n\n### Interpretation\nThe law mandates that the estate tax return must be submitted within one year following the death of the individual whose estate is being taxed. However, the Commissioner of Internal Revenue has the discretion to extend this deadline by an additional 30 days if there are valid reasons presented by the taxpayer.\n\n### Practical Meaning\nThis means that executors or heirs must be diligent in preparing the estate tax return within the stipulated timeframe. If they anticipate challenges in meeting the deadline, they should proactively seek an extension from the Commissioner to avoid penalties or issues with compliance.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "schemaValid": true,
+    "stage": "llm",
+    "reason": "The answer correctly addresses the deadline and extension for filing an estate tax return with appropriate citations.",
+    "propositionSufficiency": null
+  },
+  "displayedSourceCount": 5,
+  "retrievedSourceCount": 12,
+  "sourceLabels": [
+    "NIRC Sec. 89",
+    "NIRC Sec. 84",
+    "NIRC Sec. 86",
+    "NIRC Sec. 88",
+    "NIRC Sec. 91"
+  ],
+  "sanitizedConversationRef": "a9c797758f905d63cbfdf57a",
+  "sha256": "b9a8dbebe4fd0756e1dc3030383a0ad1a31b4f17142239e1cf17209a9416f3e1"
+}

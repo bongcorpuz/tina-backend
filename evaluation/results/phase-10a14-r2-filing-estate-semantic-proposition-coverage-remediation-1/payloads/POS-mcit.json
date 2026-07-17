@@ -1,0 +1,33 @@
+{
+  "id": "POS-mcit",
+  "group": "positive",
+  "prompt": "What is the minimum corporate income tax rate for a domestic corporation?",
+  "attempt": 1,
+  "runtimeCommit": "22b845afe1fe16bfa4821804d528f469366e4f8c",
+  "answer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nFor domestic corporations, this means that 20% of their net taxable income will be owed as corporate income tax. Corporations must ensure accurate accounting of their income and expenses to determine their taxable income correctly, as this will directly affect their tax liability.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "reason": "empty_primary_answer_section",
+    "propositionSufficiency": null
+  },
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "sourceLabels": [
+    "NIRC Sec. 22"
+  ],
+  "sanitizedConversationRef": "9f91b4e6860854bd41ae5f96",
+  "sha256": "57ac6fbb2559a12ddfaa273585f5be27036daed91c3a8f2dc23e2391cf1c72c8"
+}

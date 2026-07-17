@@ -1,0 +1,34 @@
+{
+  "id": "ES-06",
+  "group": "estate",
+  "prompt": "Magkano ang estate tax sa ilalim ng TRAIN law?",
+  "attempt": 1,
+  "runtimeCommit": "22b845afe1fe16bfa4821804d528f469366e4f8c",
+  "answer": "### Short Answer\n\n### Interpretation\nSa ilalim ng TRAIN Law, ang estate tax ay ipinapataw sa netong halaga ng ari-arian ng namatay na tao. Ang halaga ng net estate ay ang kabuuang halaga ng mga ari-arian na naiwan ng namatay, binawasan ng mga utang at iba pang obligasyon. Ang unang P5,000,000 ng net estate ay hindi pinapatawan ng buwis, at ang anumang halaga na lumampas dito ay sasailalim sa 6% na rate.\n\n### Practical Meaning\nIbig sabihin nito, kung ang net estate ng isang namatay ay P10,000,000, ang estate tax na dapat bayaran ay 6% ng P5,000,000 (P10,000,000 - P5,000,000), na katumbas ng P300,000. Ang mga tagapagmana o executor ng estate ay responsable sa pagbabayad ng buwis na ito bago ang paglipat ng mga ari-arian sa mga tagapagmana.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "reason": "empty_primary_answer_section",
+    "propositionSufficiency": null
+  },
+  "displayedSourceCount": 2,
+  "retrievedSourceCount": 12,
+  "sourceLabels": [
+    "NIRC Sec. 2",
+    "NIRC Sec. 6"
+  ],
+  "sanitizedConversationRef": "fdba64c03e766dbf5f3c790d",
+  "sha256": "1e7ab172bd3faf297424c41c58efb32fb0a2235f2ce45c94bf7b07376441bdae"
+}

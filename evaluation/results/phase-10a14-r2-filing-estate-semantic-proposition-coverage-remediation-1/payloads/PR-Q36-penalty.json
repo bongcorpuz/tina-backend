@@ -1,0 +1,68 @@
+{
+  "id": "PR-Q36-penalty",
+  "group": "prior",
+  "prompt": "What penalties apply to late filing of a VAT return?",
+  "attempt": 1,
+  "runtimeCommit": "22b845afe1fe16bfa4821804d528f469366e4f8c",
+  "answer": "### Short Answer\nPenalties for late filing of a VAT return include a fine of PHP 1,000 and an additional 25% of the tax due, as stipulated under the National Internal Revenue Code (NIRC).\n\n### Controlling Authorities\nThe relevant provisions are found in the NIRC, specifically:\n- **Section 248**: Imposes penalties for failure to file returns and pay taxes.\n- **Section 249**: Details the penalties for late payment of taxes.\n\n### Interpretation\n\n### Practical Meaning\nFor VAT-registered entities, timely filing of returns is crucial to avoid incurring penalties that can significantly increase the tax liability. The PHP 1,000 fine, coupled with the 25% surcharge on any unpaid tax, can accumulate quickly, leading to substantial financial implications for businesses. Therefore, it is advisable for taxpayers to maintain a strict schedule for filing VAT returns to mitigate these risks.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "penalty_procedural",
+    "reason": "penalty_proposition_without_penalty_authority",
+    "propositionSufficiency": {
+      "penaltyProposition": true,
+      "ewtProposition": false,
+      "registrationProposition": false,
+      "vatExceptionProposition": false,
+      "filingObligationProposition": false,
+      "filingDeadlineProposition": false,
+      "estateComputationProposition": false,
+      "estateBaseMisstatement": false,
+      "deadlineObject": null,
+      "semanticEvidence": {
+        "qFilingObligation": false,
+        "aFilingConclusion": false,
+        "wrongFilingObject": false,
+        "assessmentObject": false,
+        "returnObjectPresent": true,
+        "temporalPresent": false,
+        "filingActOrReturn": true,
+        "paymentOnly": false,
+        "protestReg": false
+      },
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false,
+      "hasRegistrationAuthority": false,
+      "hasVatExceptionAuthority": false,
+      "hasGeneralVatImposition": true,
+      "hasFilingObligationAuthority": false,
+      "hasFilingDeadlineAuthority": false,
+      "generalVatOnly": true,
+      "sourceCardCount": 5
+    }
+  },
+  "displayedSourceCount": 5,
+  "retrievedSourceCount": 12,
+  "sourceLabels": [
+    "NIRC Sec. 105",
+    "NIRC Sec. 106",
+    "NIRC Sec. 107",
+    "NIRC Sec. 108",
+    "RR 16-2005"
+  ],
+  "sanitizedConversationRef": "5d58900e415327e2f3246272",
+  "sha256": "53550a933da815adf79fcefd8eea96e815c61eddd86b7004c3fdaa71183bf90d"
+}

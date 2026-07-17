@@ -1,0 +1,37 @@
+{
+  "id": "ES-03",
+  "group": "estate",
+  "prompt": "What is the estate tax on an estate under the TRAIN law?",
+  "attempt": 1,
+  "runtimeCommit": "22b845afe1fe16bfa4821804d528f469366e4f8c",
+  "answer": "### Short Answer\nThe estate tax under the TRAIN law is imposed on the transfer of the net estate of a deceased person, which is defined as the gross estate less allowable deductions. The tax rate is based on the net estate value, with a graduated rate structure.\n\n### Interpretation\nUnder Section 84 of the NIRC, the estate tax is calculated based on the net estate of the decedent, which includes the total value of all properties owned at the time of death, minus allowable deductions such as debts, funeral expenses, and other related costs. The estate tax return must be filed within one year from the date of death, and the tax must be paid at the time of filing the return (NIRC Sec. 91).\n\n### Practical Meaning\nIn practical terms, this means that executors or administrators of estates must carefully assess the total value of the estate and apply the appropriate deductions to determine the taxable amount. The graduated tax rates apply to the net estate, which can significantly affect the tax liability. Executors should ensure compliance with filing deadlines to avoid penalties and interest on unpaid taxes.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": true,
+    "stage": "llm",
+    "reason": "unsafe_value_fields:materialExceptionsCovered,materialAlternativesCovered,materiallyComplete,eligibleForVerifiedControlling",
+    "propositionSufficiency": null
+  },
+  "displayedSourceCount": 5,
+  "retrievedSourceCount": 12,
+  "sourceLabels": [
+    "NIRC Sec. 88",
+    "NIRC Sec. 89",
+    "NIRC Sec. 91",
+    "NIRC Sec. 84",
+    "NIRC Sec. 86"
+  ],
+  "sanitizedConversationRef": "3a2f0dbcce764e9d1375d469",
+  "sha256": "4f9778dd3ccb1d134449ae4fae452dcb38d46056bf706c0f6c82724de63008da"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "OF-refund",
+  "group": "overfire",
+  "prompt": "Can a VAT-registered exporter obtain a refund or tax credit for its input VAT?",
+  "attempt": 1,
+  "runtimeCommit": "22b845afe1fe16bfa4821804d528f469366e4f8c",
+  "answer": "### Short Answer\nYes, a VAT-registered exporter can obtain a refund or tax credit for its input VAT. This is governed by the provisions of the National Internal Revenue Code (NIRC).\n\n### Interpretation\n\n### Practical Meaning\nFor VAT-registered exporters, this means they can effectively manage their cash flow by recovering input VAT that they have paid on goods and services used in their export operations. To initiate a refund or credit claim, exporters must ensure they comply with the necessary documentation and procedural requirements set forth by the Bureau of Internal Revenue (BIR). This includes filing the appropriate forms and providing evidence of the input VAT incurred.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "schemaValid": true,
+    "stage": "llm",
+    "reason": "The answer correctly addresses the question and cites relevant provisions.",
+    "propositionSufficiency": null
+  },
+  "displayedSourceCount": 4,
+  "retrievedSourceCount": 12,
+  "sourceLabels": [
+    "NIRC Sec. 109",
+    "NIRC Sec. 236",
+    "RR No. 16-2005",
+    "RMC 75-2015"
+  ],
+  "sanitizedConversationRef": "248bab7566b43cd88892c9a1",
+  "sha256": "372f36ccf63a98424ec1e454ad97d8f560185d459899b6fd91e6cc50d82eb2e8"
+}

@@ -1,0 +1,66 @@
+{
+  "id": "FO-07",
+  "group": "filing_obligation",
+  "prompt": "Kailangan pa bang mag-file ng income tax return ang isang minimum wage earner?",
+  "attempt": 1,
+  "runtimeCommit": "22b845afe1fe16bfa4821804d528f469366e4f8c",
+  "answer": "### Short Answer\nHindi na kailangan mag-file ng income tax return ang isang minimum wage earner dahil sila ay exempted sa pagbabayad ng income tax.\n\n### Controlling Authorities\nAyon sa Section 24 ng National Internal Revenue Code (NIRC), ang mga minimum wage earners ay exempted mula sa pagbabayad ng income tax sa kanilang taxable income.\n\n### Interpretation\nAng Section 24 ng NIRC ay nagtatakda na ang mga minimum wage earners, na tinukoy sa Section 22(HH), ay hindi kailangang magbayad ng income tax sa kanilang kita. Kasama sa exemption na ito ang holiday pay, overtime pay, night shift differential pay, at hazard pay na natanggap ng mga minimum wage earners.\n\n### Practical Meaning\nSa praktikal na aspeto, ang mga minimum wage earners ay hindi na kinakailangang mag-file ng income tax return, na nagreresulta sa mas kaunting administratibong pasanin para sa kanila. Ang exemption na ito ay nagbibigay-daan sa kanila na mapanatili ang kanilang kabuhayan nang hindi kinakailangang maglaan ng oras at resources para sa tax compliance.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_obligation",
+    "reason": "filing_obligation_proposition_without_filing_authority",
+    "propositionSufficiency": {
+      "penaltyProposition": false,
+      "ewtProposition": false,
+      "registrationProposition": false,
+      "vatExceptionProposition": false,
+      "filingObligationProposition": true,
+      "filingDeadlineProposition": false,
+      "estateComputationProposition": false,
+      "estateBaseMisstatement": false,
+      "deadlineObject": null,
+      "semanticEvidence": {
+        "qFilingObligation": true,
+        "aFilingConclusion": false,
+        "wrongFilingObject": false,
+        "assessmentObject": false,
+        "returnObjectPresent": true,
+        "temporalPresent": false,
+        "filingActOrReturn": true,
+        "paymentOnly": false,
+        "protestReg": false
+      },
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false,
+      "hasRegistrationAuthority": false,
+      "hasVatExceptionAuthority": false,
+      "hasGeneralVatImposition": false,
+      "hasFilingObligationAuthority": false,
+      "hasFilingDeadlineAuthority": false,
+      "generalVatOnly": false,
+      "sourceCardCount": 3
+    }
+  },
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "sourceLabels": [
+    "NIRC Sec. 24",
+    "NIRC Sec. 23",
+    "NIRC Sec. 27"
+  ],
+  "sanitizedConversationRef": "48e39449013bebcbf427692f",
+  "sha256": "0770e6cace582cc0682c77ceb8c59eeeea6399f29dbdbc2ac25569f4369b4876"
+}
