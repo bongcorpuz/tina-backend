@@ -1,0 +1,48 @@
+{
+  "id": "Q46-p2",
+  "group": "q46para",
+  "prompt": "What is the VAT treatment of a small-scale miner selling gold to the Bangko Sentral ng Pilipinas?",
+  "runtimeCommit": "508a64dce8219d2dcfc82dcd226ed7fdbc015fb6",
+  "answer": "### Short Answer\nThe sale of gold by a small-scale miner to the Bangko Sentral ng Pilipinas (BSP) is subject to Value-Added Tax (VAT) under the provisions of the National Internal Revenue Code (NIRC). Specifically, the sale is considered a taxable transaction, and the small-scale miner is liable to pay VAT at the rate of 12% on the gross sales.\n\n### Controlling Authorities\n1. **NIRC Sec. 105** - Defines persons liable for VAT, stating that any person who sells goods in the course of trade or business is subject to VAT.\n2. **NIRC Sec. 106** - Specifies that there shall be a VAT of 12% on every sale of goods or properties, including gold.\n3. **NIRC Sec. 108** - Addresses the VAT on the sale of goods and services, reinforcing the tax liability on such transactions.\n\n### Interpretation\nUnder **Section 105** of the NIRC, any person engaged in the sale of goods, including small-scale miners selling gold, is liable for VAT. **Section 106** explicitly states that a VAT of 12% is levied on the gross sales of goods sold, which includes gold. Therefore, the transaction between the small-scale miner and the BSP falls under the VAT regime, making the miner responsible for collecting and remitting the VAT to the Bureau of Internal Revenue (BIR).\n\n### Practical Meaning\nFor small-scale miners, this means that when selling gold to the BSP, they must charge VAT at the applicable rate of 12% on the sale price. They are required to issue a VAT invoice and ensure compliance with VAT filing and payment obligations. This treatment aligns with the general VAT framework in the Philippines, ensuring that the sale of gold is treated consistently with other taxable goods. Failure to comply with these VAT obligations may result in penalties and interest for the miner.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "error",
+    "gates": {
+      "structural": true
+    },
+    "reason": "validator_error_fail_closed"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 105"
+    },
+    {
+      "label": "NIRC Sec. 106"
+    },
+    {
+      "label": "NIRC Sec. 108"
+    },
+    {
+      "label": "RR 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "c60196f117d1c7ea"
+}

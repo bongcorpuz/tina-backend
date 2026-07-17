@@ -1,0 +1,69 @@
+{
+  "id": "Q36-a",
+  "group": "q36",
+  "prompt": "What penalties apply to late filing of a VAT return?",
+  "runtimeCommit": "508a64dce8219d2dcfc82dcd226ed7fdbc015fb6",
+  "answer": "### Short Answer\nPenalties for late filing of a VAT return include a fine of PHP 1,000 and an additional 25% of the tax due, as stipulated in the National Internal Revenue Code (NIRC).\n\n### Interpretation\n\n### Practical Meaning\nIn practical terms, if a taxpayer fails to file their VAT return by the deadline, they will incur a fixed penalty of PHP 1,000, along with a percentage penalty based on the amount of tax owed. This can significantly increase the financial burden on the taxpayer, emphasizing the importance of adhering to filing deadlines to avoid unnecessary penalties.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "gates": {
+      "structural": true,
+      "penaltyProposition": true,
+      "ewtProposition": false,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false
+    },
+    "propositionClass": "penalty_procedural",
+    "propositionSufficiency": {
+      "penaltyProposition": true,
+      "ewtProposition": false,
+      "registrationProposition": false,
+      "vatExceptionProposition": false,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false,
+      "hasRegistrationAuthority": false,
+      "hasVatExceptionAuthority": false,
+      "hasGeneralVatImposition": true,
+      "generalVatOnly": true,
+      "sourceCardCount": 5
+    },
+    "reason": "penalty_proposition_without_penalty_authority"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 105"
+    },
+    {
+      "label": "NIRC Sec. 106"
+    },
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "NIRC Sec. 108"
+    },
+    {
+      "label": "RR 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "83be47dbd6d31e97"
+}

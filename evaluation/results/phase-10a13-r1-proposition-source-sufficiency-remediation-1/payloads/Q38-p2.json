@@ -1,0 +1,60 @@
+{
+  "id": "Q38-p2",
+  "group": "q38para",
+  "prompt": "What BIR registration form must a new corporation file?",
+  "runtimeCommit": "508a64dce8219d2dcfc82dcd226ed7fdbc015fb6",
+  "answer": "### Short Answer\nA new corporation must file BIR Form 1903 for registration with the Bureau of Internal Revenue (BIR).\n\n### Interpretation\nBIR Form 1903 is specifically designed for corporations, partnerships, and other non-individual entities. This form collects essential information about the corporation, including its name, address, and nature of business, which is necessary for tax identification and compliance purposes.\n\n### Practical Meaning\nFiling BIR Form 1903 is a crucial step for new corporations to ensure they are recognized as legitimate taxpayers. This registration allows the BIR to monitor tax obligations and compliance, facilitating the proper assessment and collection of taxes owed by the corporation. Failure to register can lead to penalties and complications in conducting business operations.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "gates": {
+      "structural": true,
+      "penaltyProposition": false,
+      "ewtProposition": false,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false
+    },
+    "propositionClass": "registration_procedural",
+    "propositionSufficiency": {
+      "penaltyProposition": false,
+      "ewtProposition": false,
+      "registrationProposition": true,
+      "vatExceptionProposition": false,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false,
+      "hasRegistrationAuthority": false,
+      "hasVatExceptionAuthority": false,
+      "hasGeneralVatImposition": false,
+      "generalVatOnly": false,
+      "sourceCardCount": 2
+    },
+    "reason": "registration_proposition_without_registration_authority"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 2"
+    },
+    {
+      "label": "NIRC Sec. 3"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "e45fcd98dbfe12e3"
+}

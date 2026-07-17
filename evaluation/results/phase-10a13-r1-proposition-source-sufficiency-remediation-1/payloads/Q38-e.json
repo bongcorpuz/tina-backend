@@ -1,0 +1,66 @@
+{
+  "id": "Q38-e",
+  "group": "q38exact",
+  "prompt": "Is a new business required to register with the BIR, and what form is used?",
+  "runtimeCommit": "508a64dce8219d2dcfc82dcd226ed7fdbc015fb6",
+  "answer": "### Short Answer\nYes, a new business is required to register with the Bureau of Internal Revenue (BIR). The registration must be completed using BIR Form No. 1901 for self-employed individuals or BIR Form No. 1902 for employees earning compensation income.\n\n### Interpretation\n\n### Practical Meaning\nFor new businesses, timely registration with the BIR is crucial to avoid penalties and ensure compliance with tax laws. Completing the appropriate registration form allows the business to obtain a Tax Identification Number (TIN), which is necessary for filing tax returns and fulfilling other tax-related obligations. Failure to register can lead to complications in tax compliance and potential legal issues with the BIR.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "gates": {
+      "structural": true,
+      "penaltyProposition": false,
+      "ewtProposition": false,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": true
+    },
+    "propositionClass": "registration_procedural",
+    "propositionSufficiency": {
+      "penaltyProposition": false,
+      "ewtProposition": false,
+      "registrationProposition": true,
+      "vatExceptionProposition": false,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": true,
+      "hasRegistrationAuthority": false,
+      "hasVatExceptionAuthority": false,
+      "hasGeneralVatImposition": false,
+      "generalVatOnly": false,
+      "sourceCardCount": 4
+    },
+    "reason": "registration_proposition_without_registration_authority"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "RR No. 11-2018"
+    },
+    {
+      "label": "RR No. 2-1998"
+    },
+    {
+      "label": "NIRC Sec. 2"
+    },
+    {
+      "label": "NIRC Sec. 3"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "26d12227fee0f451"
+}
