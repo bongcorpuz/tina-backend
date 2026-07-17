@@ -1,0 +1,64 @@
+{
+  "task": "PHASE-10A14-R1-FILING-OBLIGATION-DEADLINE-AND-TAX-BASE-SOURCE-SUFFICIENCY-REMEDIATION-1",
+  "startingHead": "b04f5b012bcfa2466bf04b806da05115d28ca1ce",
+  "runtimeCommit": "b7e40fc2af25db1c9eebbb23d1d537b3ec4bf1c8",
+  "model": "gpt-4o-mini",
+
+  "reproduction": {
+    "method": "committed A14 payload replay through the pre-patch validator",
+    "Q12_r1r2r3_preVerified": true, "Q30_r1r2r3_preVerified": true, "Q34_r1r2r3_preVerified": true,
+    "prePatchGateCaught": false,
+    "note": "All 9 slots committed VERIFIED_CONTROLLING; the pre-patch proposition gate returned applicable=false, proving the runtime permitted the compound-proposition laundering."
+  },
+
+  "remediation": {
+    "control": "evaluatePropositionSourceSufficiency extended with three class-based sub-gates",
+    "classes": ["filing_obligation", "filing_deadline", "tax_computation_basis"],
+    "classBased": true, "usesQuestionIdsOrExactStringsOrAmountsOrDenyLists": false,
+    "filing_obligation": "required/not-required-to-file / substituted-filing / joint-or-separate-return conclusions require filing authority (Sec 51/52/56/74/75, substituted-filing RRs); fail closed on rate/residency/corporate/withholding; question-led (Q3/Q47 not over-fired). Q12 class.",
+    "filing_deadline": "return-deadline conclusions require deadline/return authority per tax type (Sec 51 individual, 52/77 corporate, 90/91 estate, 103 donor, 114 VAT); fail closed on rate/residency. Q34 class; Q32 estate-return deadline remains reachable.",
+    "tax_computation_basis": "an estate-tax computation applying the rate to the '(value of the) estate ... exceeding [amount]' (treating the standard deduction as a threshold, misstating the NET-estate base) fails closed; a correct 'net estate' computation remains reachable; donor's-tax P250,000 real threshold not misclassified. Q30 class.",
+    "compoundCompleteness": "each detected proposition class is evaluated sequentially and fails closed on the first unsupported decisive component; a strong component cannot launder a weak unsupported one.",
+    "modelValidatorCannotOverride": true,
+    "passageGrounding": "not implemented; continuing P2"
+  },
+
+  "all26Replay": {
+    "newlyBlocked": ["Q12-r1", "Q12-r2", "Q12-r3", "Q30-r1", "Q30-r2", "Q30-r3", "Q34-r1", "Q34-r2", "Q34-r3"],
+    "validVerifiedNewlyBlocked": 0,
+    "note": "Exactly the 9 Q12/Q30/Q34 slots newly fail closed; the 17 independently-VALID A14 verified results (Q1/Q3/Q6/Q15/Q32/Q47/Q48) are unaffected. Prior Q38/Q46 remediation intact."
+  },
+
+  "targetedLiveValidation": {
+    "runtimeCommit": "b7e40fc2af25db1c9eebbb23d1d537b3ec4bf1c8", "totalRuns": 26,
+    "q12": { "runs": 6, "verified": 0, "invalidVerified": 0 },
+    "q30": { "runs": 5, "verified": 0, "invalidVerified": 0 },
+    "q34": { "runs": 5, "verified": 0, "invalidVerified": 0 },
+    "reachabilityVerified": ["Q32-ctl (estate-return deadline on Sec 91 -> filing_deadline reachable)", "Q47-reach (donor's 6%)", "Q15-reach (MCIT)"],
+    "priorClusters": { "Q5": 0, "Q8": 0, "Q25": 0, "Q36": 0, "Q38": 0, "Q46": 0 },
+    "outcomePredictionVerified": 0, "persistenceFailures": 0, "invalidVerified": 0, "questionableVerified": 0
+  },
+
+  "priorSafeguards": { "q5InvalidVerified": 0, "q8InvalidVerified": 0, "q25InvalidVerified": 0, "q36InvalidVerified": 0, "q38InvalidVerified": 0, "q46InvalidVerified": 0, "accessorGetterExecutions": 0, "accessorExceptions": 0, "accessorVerified": 0, "unrestrictedOutcomePrediction": 0, "fabricatedAuthority": 0, "falseRefusal": 0, "modelOverride": 0, "validVerifiedReachable": true },
+
+  "focusedTests": { "a14r1": 16, "a13r1": 17, "a12r6": 18, "a12r3": 20, "a12r2": 10, "a12r1": 19, "a10r1": 22, "a10r2": 27, "a10verified": 18, "a8": 24, "allPass": true },
+
+  "regression": {
+    "deterministicCycle1": { "suites": 191, "failed": 0, "exit": 0 },
+    "deterministicCycle2": { "suites": 191, "failed": 0, "exit": 0 },
+    "stagingCycle1": { "suites": 7, "failed": 0, "exit": 0 },
+    "stagingCycle2": { "suites": 7, "failed": 0, "exit": 0 },
+    "combinedSuites": 198, "suiteDelta": "+1 vs prior 197 = new A14-R1 focused suite (justified)"
+  },
+
+  "officialAuthorityOnly": true, "securityScan": "clean", "countsReconciled": true, "worktreeClean": true,
+  "runtimeScope": "validator code + one focused test + one R6 fixture update only; no corpus/index/model/frontend/DevFactory/production change; committed A14 evidence unchanged",
+
+  "currentP0Count": 0, "currentP1Count": 0, "currentP2Count": 6, "currentP3Count": 1,
+
+  "phase10AStatus": "OPEN_PENDING_INDEPENDENT_REVIEW", "phase10BStatus": "BLOCKED", "phase10CStatus": "BLOCKED",
+  "adversarialStatus": "DEFERRED", "productionStatus": "NOT_AUTHORIZED", "reindexStatus": "NOT_AUTHORIZED", "modelChangeStatus": "NOT_AUTHORIZED",
+
+  "decision": "PASS",
+  "decisionRationale": "All three A14-review P1 compound-proposition laundering classes are remediated by class-based deterministic controls (no question IDs/prompts/amounts/dates/deny lists): filing_obligation (Q12), filing_deadline (Q34), and tax_computation_basis estate base misstatement (Q30). Committed-payload replay proves the pre-patch runtime permitted all 9 slots and the patched runtime blocks them; the all-26 replay newly blocks exactly those 9 and leaves the 17 valid verified unaffected (0 false refusals). Targeted live validation: Q12/Q30/Q34 exact x5 each -> 0 verified; valid reachability preserved (Q32 estate-return deadline VERIFIED on Sec 91; Q47 donor's; Q15 MCIT). Q5/Q8/Q25/Q36/Q38/Q46 safeguards intact; accessor 0/0/0; outcome-prediction holds; fabricated authority 0; model override 0. Deterministic runner passes twice (191/0) and staging twice (7/7); all focused tests pass; security clean; worktree clean. Does NOT authorize another full 50x3, Phase 10A closure, adversarial, 10B/10C, model change, reindex, or deployment; the independent review is next."
+}
