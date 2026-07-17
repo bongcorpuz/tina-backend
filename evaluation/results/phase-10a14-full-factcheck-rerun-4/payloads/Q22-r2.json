@@ -1,0 +1,29 @@
+{
+  "id": "Q22",
+  "round": 2,
+  "prompt": "Is the sale of real property classified as an ordinary asset subject to 6% capital gains tax?",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "answer": "TINA could not identify an indexed authority matching the specific transaction or claim described.\n\nThis does not mean that no law or authority exists.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "NO_INDEXED_SOURCE",
+    "legalConclusion": "UNKNOWN",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "FALLBACK",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": null,
+  "answerSupportSchemaValid": null,
+  "answerSupportVerifiedEligible": null,
+  "sources": [],
+  "sourceStatus": "NO_INDEXED_SOURCE",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "d9f7987475a8ea1b",
+  "requestSha256": "7b483eb28c314babee8261aa624a33eea04f31fb73c782e1c59f16e74be2202f",
+  "responseSha256": "e3d789c4d85ee15e7bdcea9b618ffc614858700dd7ef7ddb5f953235b7bd3c2a"
+}

@@ -1,0 +1,59 @@
+{
+  "id": "Q24",
+  "round": 3,
+  "prompt": "What is the expanded withholding tax rate on professional fees paid to an individual?",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "answer": "### Short Answer\nThe expanded withholding tax rate on professional fees paid to an individual is 10%. This is specified in Revenue Regulations No. 2-98, which implements the provisions of the National Internal Revenue Code regarding withholding taxes.\n\n### Interpretation\n\nAdvertising service payments may be subject to expanded withholding tax when paid by a withholding agent to a resident income payee, subject to the applicable classification and rate under withholding tax regulations.\n\n### Practical Meaning\n\nThe payor withholds the applicable EWT from the payment and remits it to the BIR. The withheld amount is creditable against the payee's income tax, subject to proper withholding certificates and filing compliance.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "gates": {
+      "structural": true,
+      "penaltyProposition": false,
+      "ewtProposition": true,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false
+    },
+    "propositionClass": "withholding_ewt",
+    "propositionSufficiency": {
+      "penaltyProposition": false,
+      "ewtProposition": true,
+      "registrationProposition": false,
+      "vatExceptionProposition": false,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false,
+      "hasRegistrationAuthority": false,
+      "hasVatExceptionAuthority": false,
+      "hasGeneralVatImposition": false,
+      "generalVatOnly": false,
+      "sourceCardCount": 1
+    },
+    "reason": "ewt_proposition_without_withholding_authority"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "Revenue Regulations"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "8122e7b9a89255e5",
+  "requestSha256": "0d0f930d849c34f6104e16187f7b56daeed41684a86df923b6de590100c74bce",
+  "responseSha256": "80061312e4786cd8c822fad9f18c238db2332e995eb8dcf1d26b96c08e7dc765"
+}

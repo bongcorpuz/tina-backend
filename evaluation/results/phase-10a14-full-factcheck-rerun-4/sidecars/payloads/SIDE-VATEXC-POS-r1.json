@@ -1,0 +1,71 @@
+{
+  "id": "SIDE-VATEXC-POS",
+  "round": 1,
+  "prompt": "Is the sale of agricultural and marine food products in their original state subject to VAT?",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "answer": "### Issue Presented\nIs the sale of agricultural and marine food products in their original state subject to VAT?\n\n### Short Answer\nThe sale of agricultural and marine food products in their original state is generally exempt from VAT under Philippine law.\n\n### Controlling Authorities\nThe relevant provision is found in Section 106 of the National Internal Revenue Code (NIRC), which outlines the imposition of VAT on the sale of goods and properties.\n\n### Legal Interpretation\nSection 106 of the NIRC states that value-added tax is levied on every sale, barter, or exchange of goods or properties. However, specific exemptions apply to certain transactions, including the sale of agricultural and marine food products in their original state. This exemption is further supported by the provisions of the Tax Code that delineate which goods are subject to VAT and which are exempt.\n\n### Practical Application\nIn practice, this means that farmers and fishermen selling their products directly to consumers or retailers do not need to charge VAT on these sales. This exemption encourages the sale of local agricultural and marine products, promoting food security and supporting local economies. However, businesses involved in processing or further manufacturing these products may be subject to VAT on their sales, depending on the nature of their transactions.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "gates": {
+      "structural": true,
+      "penaltyProposition": false,
+      "ewtProposition": false,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false
+    },
+    "propositionClass": "vat_exception",
+    "propositionSufficiency": {
+      "penaltyProposition": false,
+      "ewtProposition": false,
+      "registrationProposition": false,
+      "vatExceptionProposition": true,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false,
+      "hasRegistrationAuthority": false,
+      "hasVatExceptionAuthority": false,
+      "hasGeneralVatImposition": true,
+      "generalVatOnly": true,
+      "sourceCardCount": 5
+    },
+    "reason": "vat_exception_proposition_without_exception_authority"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 106"
+    },
+    {
+      "label": "NIRC Sec. 105"
+    },
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "NIRC Sec. 108"
+    },
+    {
+      "label": "RR 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "99b80bfc1eed2d7e",
+  "requestSha256": "e64c0b6ddddae0e819267d75049b28b2ef90c2354d0347ff5fdaf42889994729",
+  "responseSha256": "8c282ab1623069b8e180bbd1239d98a54a2d33b8715ae0de26a6dc6e7189694d"
+}

@@ -1,0 +1,79 @@
+{
+  "id": "Q45",
+  "round": 1,
+  "prompt": "Are PEZA-registered enterprises subject to corporate income tax?",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "answer": "### Issue Presented\nAre PEZA-registered enterprises subject to corporate income tax under Philippine law?\n\n### Short Answer\nYes, PEZA-registered enterprises are subject to corporate income tax, but they may benefit from preferential tax rates or exemptions depending on their specific activities and compliance with PEZA regulations.\n\n### Controlling Authorities\nThe relevant provisions are found in the National Internal Revenue Code (NIRC), specifically:\n- **Section 27**: Rates of Income Tax on Domestic Corporations, which imposes a corporate income tax rate of 25% effective July 1, 2020, on the taxable income derived from all sources within and without the Philippines.\n\n### Legal Interpretation\nUnder Section 27 of the NIRC, all domestic corporations, including those registered with the Philippine Economic Zone Authority (PEZA), are generally subject to corporate income tax. However, PEZA-registered enterprises may qualify for special tax rates or exemptions as provided under the Special Economic Zone Act and related regulations. For instance, certain PEZA-registered enterprises may be entitled to a reduced corporate income tax rate of 5% on gross income earned, in lieu of the regular corporate income tax, provided they meet specific conditions set forth by PEZA.\n\n### Practical Application\nPEZA-registered enterprises should carefully assess their compliance with PEZA regulations to determine their eligibility for preferential tax rates. It is advisable for these enterprises to maintain proper documentation and consult with tax professionals to ensure they are availing of all applicable tax incentives while fulfilling their tax obligations under the NIRC.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [
+      "materialExceptionsCovered",
+      "materialAlternativesCovered",
+      "citationSupportsProposition",
+      "propositionSupported",
+      "materiallyComplete",
+      "eligibleForVerifiedControlling",
+      "unsupportedMaterialProposition"
+    ],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [
+      "unsafe_value_fields:materialExceptionsCovered,materialAlternativesCovered,citationSupportsProposition,propositionSupported,materiallyComplete,eligibleForVerifiedControlling,unsupportedMaterialProposition"
+    ],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": false,
+      "materialAlternativesCovered": false,
+      "citationRelevant": true,
+      "citationSupportsProposition": false,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": false,
+      "treatmentDirectionMatches": true,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": true,
+      "eligibleForVerifiedControlling": false,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": false,
+      "answerContradictsControllingSource": true
+    },
+    "reason": "unsafe_value_fields:materialExceptionsCovered,materialAlternativesCovered,citationSupportsProposition,propositionSupported,materiallyComplete,eligibleForVerifiedControlling,unsupportedMaterialProposition"
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 27"
+    },
+    {
+      "label": "NIRC Sec. 23"
+    },
+    {
+      "label": "NIRC Sec. 24"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "65d763666f3486f0",
+  "requestSha256": "a2d25c2b62fd06faf2929ff2fa1d514f78d403e726be1b026d6be83290651631",
+  "responseSha256": "8f8061c93272bcdf286541c0aea5f2f53f42edfca7334cb38f9523a1ff6c1817"
+}

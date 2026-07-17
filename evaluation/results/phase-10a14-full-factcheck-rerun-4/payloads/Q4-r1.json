@@ -1,0 +1,59 @@
+{
+  "id": "Q4",
+  "round": 1,
+  "prompt": "Are doctors' professional fees subject to VAT?",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "answer": "### Issue Presented\nAre doctors' professional fees subject to Value-Added Tax (VAT)?\n\n### Short Answer\nDoctors' professional fees are generally subject to VAT unless specifically exempted under the National Internal Revenue Code (NIRC).\n\n### Legal Interpretation\n\n### Practical Application\nIn practice, doctors should assess whether their services qualify for VAT exemption based on the nature of the services provided and the status of their clients. For instance, services rendered to government entities or certain non-profit organizations may be exempt. It is advisable for medical professionals to maintain proper documentation to support any claims for VAT exemption and to consult with a tax professional to ensure compliance with VAT regulations.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "gates": {
+      "structural": true,
+      "penaltyProposition": false,
+      "ewtProposition": false,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false
+    },
+    "propositionClass": "vat_exception",
+    "propositionSufficiency": {
+      "penaltyProposition": false,
+      "ewtProposition": false,
+      "registrationProposition": false,
+      "vatExceptionProposition": true,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false,
+      "hasRegistrationAuthority": false,
+      "hasVatExceptionAuthority": false,
+      "hasGeneralVatImposition": true,
+      "generalVatOnly": true,
+      "sourceCardCount": 1
+    },
+    "reason": "vat_exception_proposition_without_exception_authority"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "269537973b836ce8",
+  "requestSha256": "1f57e6fc38f0152022d5c2e6c3fbfb035592f4efcfff141b3ff8dc67c447a667",
+  "responseSha256": "05ab8c07fefbb5c542fd0c7b8edec1eebdcc2969d5ee5f481f89b628a3979f1d"
+}

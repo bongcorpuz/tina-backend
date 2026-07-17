@@ -1,0 +1,45 @@
+{
+  "id": "Q5",
+  "round": 1,
+  "prompt": "What is the VAT rate on importation of goods used to manufacture export products?",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "answer": "### Short Answer\nThe VAT rate on the importation of goods used to manufacture export products is 12%. This is based on the total value used by the Bureau of Customs in determining tariff and customs duties, plus any applicable customs duties and excise taxes.\n\n### Controlling Authorities\n1. **NIRC Sec. 107**: \"There shall be levied, assessed and collected on every importation of goods a value-added tax equivalent to twelve percent (12%) based on the total value used by the Bureau of Customs in determining tariff and customs duties plus customs duties, excise taxes, if any, and other charges.\"\n2. **RR 16-2005**: This regulation implements the provisions of the NIRC regarding VAT, confirming that importers are liable for VAT on imported goods.\n\n### Interpretation\nThe VAT on importation is uniformly set at 12% as stipulated in Section 107 of the NIRC. This applies to all importations, including those intended for manufacturing export products. The VAT is calculated based on the total value determined by the Bureau of Customs, which includes the customs duties and any excise taxes applicable.\n\n### Practical Meaning\nFor businesses importing goods to manufacture products for export, the 12% VAT will be an upfront cost that must be paid before the goods are released from customs custody. This VAT can potentially be recovered as input tax if the business is VAT-registered and the exported products qualify for zero-rating under the VAT system. Thus, while the VAT represents a cost at the point of importation, it can be offset against future VAT liabilities on sales.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "material-exception-omission",
+    "gates": {
+      "structural": true,
+      "materialExceptionsCovered": false
+    },
+    "reason": "import_vat_omits_create_more_export_exemption"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "3bc152ac976eb288",
+  "requestSha256": "8e6b35b7c8b5e15d65c112a1bc36349094d2f9e0f83ee39a1a4e6a535b1a5386",
+  "responseSha256": "96fb8a0fd9537f39ff7afecb63db19b59682e863ea20656b634bab6ed64f0c32"
+}

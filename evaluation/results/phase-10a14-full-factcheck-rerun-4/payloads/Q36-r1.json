@@ -1,0 +1,71 @@
+{
+  "id": "Q36",
+  "round": 1,
+  "prompt": "What penalties apply to late filing of a VAT return?",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "answer": "### Short Answer\nPenalties for late filing of a VAT return include a fine of PHP 1,000 and an additional 25% of the tax due for each month of delay, up to a maximum of 50% of the total tax due.\n\n### Interpretation\n\n### Practical Meaning\nIn practice, this means that if a taxpayer fails to file their VAT return by the deadline, they will incur an immediate fine of PHP 1,000. Additionally, for each month that the return remains unfiled, they will face an escalating penalty based on the amount of tax due, which can significantly increase the total liability if the delay extends over several months. Taxpayers should be aware of these penalties to avoid unnecessary financial burdens.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "gates": {
+      "structural": true,
+      "penaltyProposition": true,
+      "ewtProposition": false,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false
+    },
+    "propositionClass": "penalty_procedural",
+    "propositionSufficiency": {
+      "penaltyProposition": true,
+      "ewtProposition": false,
+      "registrationProposition": false,
+      "vatExceptionProposition": false,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false,
+      "hasRegistrationAuthority": false,
+      "hasVatExceptionAuthority": false,
+      "hasGeneralVatImposition": true,
+      "generalVatOnly": true,
+      "sourceCardCount": 5
+    },
+    "reason": "penalty_proposition_without_penalty_authority"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 105"
+    },
+    {
+      "label": "NIRC Sec. 106"
+    },
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "NIRC Sec. 108"
+    },
+    {
+      "label": "RR 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "35ff2ccf291101fe",
+  "requestSha256": "121e090e1b64de23b2cfa17b2862ce2a129e1d69a3abe47afcec1666a3cdbb6c",
+  "responseSha256": "fdf5d7e4adbe9fd4d3c1a78313e96c60759b9404a8f0ef0c61fb1c8691a58ba3"
+}

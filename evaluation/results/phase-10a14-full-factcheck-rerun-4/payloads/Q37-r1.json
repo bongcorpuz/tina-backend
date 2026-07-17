@@ -1,0 +1,41 @@
+{
+  "id": "Q37",
+  "round": 1,
+  "prompt": "What is the BIR assessment period when a taxpayer filed a return?",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "answer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "non_substantive_or_headers_only"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 22"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "9a3ea98f43c7565f",
+  "requestSha256": "152a74cb18909700bf250d1f1131a59c9315eaf5e3f6087cc42733ebd22bc819",
+  "responseSha256": "f451e33855fbce5a08a5e797a97739dfb9b1f0d92ec814de1f6573d25f035f6b"
+}

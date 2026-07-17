@@ -1,0 +1,41 @@
+{
+  "id": "Q31",
+  "round": 3,
+  "prompt": "What standard deduction is allowed in computing the net estate?",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "answer": "### Short Answer\n\n### Interpretation\nThe standard deduction of P5,000,000 is a fixed amount that can be deducted from the gross estate of a decedent who is a resident citizen. This deduction is intended to simplify the computation of the net estate and reduce the taxable base for estate tax purposes.\n\n### Practical Meaning\nThe standard deduction effectively lowers the taxable estate, which can result in a reduced estate tax liability. This provision is particularly beneficial for the heirs, as it allows them to retain a larger portion of the estate after tax obligations are met. It is essential for estate planners and executors to consider this deduction when preparing the estate tax return to ensure compliance and optimize tax outcomes.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 34"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "049f70016c3b1958",
+  "requestSha256": "a47a94c81a1f1ca9cf0701b7054c4d4a130c97d79af569e3aa67a0fe839a99ac",
+  "responseSha256": "4beb1810c85fc8743a6e3b7729d8677f01789fd5012bf002d0e3836ef350c6cb"
+}

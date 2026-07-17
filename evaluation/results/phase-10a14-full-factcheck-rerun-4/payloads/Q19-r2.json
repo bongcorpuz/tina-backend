@@ -1,0 +1,29 @@
+{
+  "id": "Q19",
+  "round": 2,
+  "prompt": "What is the tax rate on the sale of shares not traded on a stock exchange?",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "answer": "### Short Answer\nThe tax rate on the sale of shares not traded on a stock exchange is 15% of the net capital gains realized from the sale, as specified under Section 24(D)(1) of the National Internal Revenue Code (NIRC), as amended. This applies to the sale of shares classified as capital assets.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": null,
+  "answerSupportSchemaValid": null,
+  "answerSupportVerifiedEligible": null,
+  "sources": [],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "32454792a225c755",
+  "requestSha256": "a9b04ee3a2dd51a751580179073ae1eb4bd47ee6d6e55396ca8fc1f05b75f1b8",
+  "responseSha256": "59bf164b612237558642db50bb9ae8daa70acc5cd35defcb089e656d92c092ff"
+}

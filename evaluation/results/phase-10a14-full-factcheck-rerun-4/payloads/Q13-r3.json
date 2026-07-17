@@ -1,0 +1,47 @@
+{
+  "id": "Q13",
+  "round": 3,
+  "prompt": "Can a self-employed individual with gross sales below ₱3 million opt for the 8% income tax rate?",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "answer": "### Short Answer\nYes, a self-employed individual with gross sales below ₱3 million can opt for the 8% income tax rate, provided their gross sales or receipts do not exceed the VAT threshold of ₱3 million.\n\n### Controlling Authorities\nThe relevant provision is found in Section 24 of the National Internal Revenue Code (NIRC), which states that self-employed individuals and professionals may choose to apply an 8% tax on gross sales or receipts in excess of ₱250,000 in lieu of the graduated income tax rates.\n\n### Interpretation\n\n### Practical Meaning\nFor self-employed individuals, this means that if their gross sales are below ₱3 million and above ₱250,000, they can benefit from a flat 8% tax rate on their income, simplifying their tax obligations and potentially reducing their overall tax liability compared to the graduated rates. This option is particularly advantageous for small businesses and professionals looking to streamline their tax compliance.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "error",
+    "gates": {
+      "structural": true
+    },
+    "reason": "validator_error_fail_closed"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 24"
+    },
+    {
+      "label": "NIRC Sec. 23"
+    },
+    {
+      "label": "NIRC Sec. 27"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "0b3eccf504f111cc",
+  "requestSha256": "ece0647184fe33d917a393c4cb27a4c108d1d947867a8918aa52d4f72cd8dad2",
+  "responseSha256": "f0d9ac7379e4b27a4d5b9f3eaf4b5b63a204cf955c48b7bbb01b13e28782c5d5"
+}

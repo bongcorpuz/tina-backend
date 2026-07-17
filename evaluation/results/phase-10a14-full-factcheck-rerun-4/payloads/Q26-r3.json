@@ -1,0 +1,59 @@
+{
+  "id": "Q26",
+  "round": 3,
+  "prompt": "When must a withholding agent remit expanded withholding tax to the BIR?",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "answer": "### Short Answer\nA withholding agent must remit the expanded withholding tax to the Bureau of Internal Revenue (BIR) on or before the 10th day of the month following the month when the income payment was made. This is in accordance with Revenue Regulations No. 2-98, which implements the provisions of the National Internal Revenue Code.\n\n### Interpretation\n\nAdvertising service payments may be subject to expanded withholding tax when paid by a withholding agent to a resident income payee, subject to the applicable classification and rate under withholding tax regulations.\n\n### Practical Meaning\n\nThe payor withholds the applicable EWT from the payment and remits it to the BIR. The withheld amount is creditable against the payee's income tax, subject to proper withholding certificates and filing compliance.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "gates": {
+      "structural": true,
+      "penaltyProposition": false,
+      "ewtProposition": true,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false
+    },
+    "propositionClass": "withholding_ewt",
+    "propositionSufficiency": {
+      "penaltyProposition": false,
+      "ewtProposition": true,
+      "registrationProposition": false,
+      "vatExceptionProposition": false,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false,
+      "hasRegistrationAuthority": false,
+      "hasVatExceptionAuthority": false,
+      "hasGeneralVatImposition": false,
+      "generalVatOnly": false,
+      "sourceCardCount": 1
+    },
+    "reason": "ewt_proposition_without_withholding_authority"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "Revenue Regulations"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "19f69409728af54c",
+  "requestSha256": "f7a72aa4aadb7a001544365d64115b719e5e9b0c3ca3aaaac0132ad5495bd08e",
+  "responseSha256": "a95eca98fbb55e8f46e3aa88427f4f0b55baa33fd994f7fd932431159b4dd7f9"
+}

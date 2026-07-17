@@ -1,0 +1,68 @@
+{
+  "id": "Q25",
+  "round": 2,
+  "prompt": "Is EWT required on payments to a VAT-registered law firm?",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "answer": "### Short Answer\nYes, Expanded Withholding Tax (EWT) is required on payments to a VAT-registered law firm.\n\n### Interpretation\nThe requirement for EWT on payments to VAT-registered law firms stems from the general principle that any payment for services rendered by a VAT-registered entity is subject to withholding tax. This is to ensure that the government collects tax revenues at the source, thereby minimizing tax evasion and ensuring compliance with tax obligations.\n\n### Practical Meaning\nFor businesses engaging the services of a VAT-registered law firm, it is essential to withhold the appropriate EWT from payments made for legal services. This withholding must be remitted to the Bureau of Internal Revenue (BIR) in accordance with the prescribed rates and timelines. Failure to comply with this requirement may result in penalties and interest for the business.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "gates": {
+      "structural": true,
+      "penaltyProposition": false,
+      "ewtProposition": true,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false
+    },
+    "propositionClass": "withholding_ewt",
+    "propositionSufficiency": {
+      "penaltyProposition": false,
+      "ewtProposition": true,
+      "registrationProposition": false,
+      "vatExceptionProposition": false,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false,
+      "hasRegistrationAuthority": true,
+      "hasVatExceptionAuthority": true,
+      "hasGeneralVatImposition": true,
+      "generalVatOnly": false,
+      "sourceCardCount": 4
+    },
+    "reason": "ewt_proposition_without_withholding_authority"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 109"
+    },
+    {
+      "label": "NIRC Sec. 236"
+    },
+    {
+      "label": "RR No. 16-2005"
+    },
+    {
+      "label": "RMC 75-2015"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "acf610c32c5304af",
+  "requestSha256": "33fb5678d2fbe595fdbfb941d35c13c2939b6a20530d940f6d2db12e6f1f6013",
+  "responseSha256": "99e7fb0cd1ad92e775d123a56c8e033c41489986ac6a54e1df85e61455b44b74"
+}

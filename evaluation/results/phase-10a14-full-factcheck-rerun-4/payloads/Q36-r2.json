@@ -1,0 +1,71 @@
+{
+  "id": "Q36",
+  "round": 2,
+  "prompt": "What penalties apply to late filing of a VAT return?",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "answer": "### Short Answer\nPenalties for late filing of a VAT return include a compromise penalty and interest on the unpaid tax. The compromise penalty is typically set at a fixed amount, while interest accrues at a rate of 12% per annum on the unpaid tax due.\n\n### Interpretation\n\n### Practical Meaning\nFor taxpayers, this means that if a VAT return is not filed on time, they will incur additional costs due to penalties and interest. It is crucial for businesses to ensure timely filing to avoid these financial repercussions. Taxpayers should also be aware that the BIR may impose stricter penalties for repeated offenses or significant delays in filing.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "gates": {
+      "structural": true,
+      "penaltyProposition": true,
+      "ewtProposition": false,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false
+    },
+    "propositionClass": "penalty_procedural",
+    "propositionSufficiency": {
+      "penaltyProposition": true,
+      "ewtProposition": false,
+      "registrationProposition": false,
+      "vatExceptionProposition": false,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false,
+      "hasRegistrationAuthority": false,
+      "hasVatExceptionAuthority": false,
+      "hasGeneralVatImposition": true,
+      "generalVatOnly": true,
+      "sourceCardCount": 5
+    },
+    "reason": "penalty_proposition_without_penalty_authority"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 105"
+    },
+    {
+      "label": "NIRC Sec. 106"
+    },
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "NIRC Sec. 108"
+    },
+    {
+      "label": "RR 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "6af294d6eceac9f1",
+  "requestSha256": "ac793fabca80b09da4ecfe276d3cd2b3d2ceee2b35b92db82e6b8b144e431979",
+  "responseSha256": "d61afb933ce50f6cd3e7cd3b57661432d2075669bab98ec5ae6bcf920912ce66"
+}

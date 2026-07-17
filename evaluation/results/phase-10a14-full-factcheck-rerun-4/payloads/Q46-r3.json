@@ -1,0 +1,71 @@
+{
+  "id": "Q46",
+  "round": 3,
+  "prompt": "Is the sale of gold by a small-scale miner to the Bangko Sentral ng Pilipinas subject to VAT?",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "answer": "### Issue Presented\nIs the sale of gold by a small-scale miner to the Bangko Sentral ng Pilipinas (BSP) subject to Value-Added Tax (VAT)?\n\n### Short Answer\nThe sale of gold by a small-scale miner to the Bangko Sentral ng Pilipinas is not subject to VAT. This is based on the provisions of the National Internal Revenue Code (NIRC) which provide specific exemptions for certain transactions.\n\n### Controlling Authorities\n1. **NIRC Section 106** - Value-Added Tax on Sale of Goods or Properties.\n2. **NIRC Section 108** - Value-Added Tax on the Sale of Services, Including Digital Services, and the Use or Lease of Properties.\n\n### Legal Interpretation\nUnder **Section 106 of the NIRC**, VAT is levied on every sale, barter, or exchange of goods or properties. However, certain transactions are exempt from VAT, particularly those involving the sale of gold to the BSP, which is treated as a government transaction. The BSP is a government entity, and transactions involving the sale of gold to it are generally exempt from VAT under the provisions of the NIRC and relevant regulations.\n\n### Practical Application\nIn practice, small-scale miners selling gold to the BSP should not charge VAT on these transactions. This exemption is significant as it simplifies the tax compliance process for small-scale miners and encourages them to engage in legitimate sales to the BSP without the burden of VAT. It is advisable for miners to maintain proper documentation of these transactions to substantiate their VAT-exempt status in case of any inquiries from tax authorities.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "gates": {
+      "structural": true,
+      "penaltyProposition": false,
+      "ewtProposition": false,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false
+    },
+    "propositionClass": "vat_exception",
+    "propositionSufficiency": {
+      "penaltyProposition": false,
+      "ewtProposition": false,
+      "registrationProposition": false,
+      "vatExceptionProposition": true,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false,
+      "hasRegistrationAuthority": false,
+      "hasVatExceptionAuthority": false,
+      "hasGeneralVatImposition": true,
+      "generalVatOnly": true,
+      "sourceCardCount": 5
+    },
+    "reason": "vat_exception_proposition_without_exception_authority"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 106"
+    },
+    {
+      "label": "NIRC Sec. 108"
+    },
+    {
+      "label": "NIRC Sec. 105"
+    },
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "RR 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "02459b8c1e63d236",
+  "requestSha256": "62e592bf2755d695f12f7696dcf411f812b13b0d1a6981c95ed5a664276f87b4",
+  "responseSha256": "e1a1635af8d2492f5981dfc9060239a3a8b5d0d11133c9864eb31cded60b4057"
+}

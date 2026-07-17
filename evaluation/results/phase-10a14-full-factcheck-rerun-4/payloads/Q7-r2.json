@@ -1,0 +1,59 @@
+{
+  "id": "Q7",
+  "round": 2,
+  "prompt": "How is input VAT treated when goods or services are used for both VATable and VAT-exempt sales?",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "answer": "### Short Answer\n\n### Controlling Authorities\n- **National Internal Revenue Code (NIRC) Section 110(B)**: This section provides the framework for the allocation of input VAT when goods or services are used for both taxable and exempt transactions.\n- **Revenue Regulations No. 16-2005**: These regulations implement the provisions of the NIRC regarding VAT, including the allocation of input VAT.\n\n### Interpretation\n\n### Practical Meaning\nIn practice, businesses must carefully track their sales to ensure compliance with VAT regulations. They should maintain detailed records of both VATable and VAT-exempt sales to accurately allocate input VAT. Failure to properly allocate input VAT can lead to disallowed claims and potential penalties from the Bureau of Internal Revenue (BIR). This allocation process is crucial for maintaining proper VAT compliance and optimizing tax recovery.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "gates": {
+      "structural": true,
+      "penaltyProposition": false,
+      "ewtProposition": false,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false
+    },
+    "propositionClass": "vat_exception",
+    "propositionSufficiency": {
+      "penaltyProposition": false,
+      "ewtProposition": false,
+      "registrationProposition": false,
+      "vatExceptionProposition": true,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false,
+      "hasRegistrationAuthority": false,
+      "hasVatExceptionAuthority": false,
+      "hasGeneralVatImposition": true,
+      "generalVatOnly": true,
+      "sourceCardCount": 1
+    },
+    "reason": "vat_exception_proposition_without_exception_authority"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "1d43841edc39ecba",
+  "requestSha256": "93440d99a49648ed1899f1793840eafb47304b5cd60be47cc0034ab8c0be7c90",
+  "responseSha256": "d14fdea0bc6a97b6184b1f841d6b5eeb889354eb5cb4080f04d2ca5529bcc8a1"
+}

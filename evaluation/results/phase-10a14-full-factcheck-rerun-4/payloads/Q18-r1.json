@@ -1,0 +1,29 @@
+{
+  "id": "Q18",
+  "round": 1,
+  "prompt": "What is the OSD rate for individuals and corporations?",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "answer": "### Short Answer\nThe Optional Standard Deduction (OSD) rate for individuals is 40% of gross sales or receipts, while for corporations, it is 40% of gross income. This is stipulated under Section 34(L) of the National Internal Revenue Code (NIRC), as amended.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": null,
+  "answerSupportSchemaValid": null,
+  "answerSupportVerifiedEligible": null,
+  "sources": [],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "fbf320b96344b7ab",
+  "requestSha256": "e4104540947fc075ac62cf9c58706aa5f523d4e441670cb1a0876c3d59624f5e",
+  "responseSha256": "0b2787fc3323d9547c9decf1ff3ef8c874ebb8247e1618e9781bb99b37aff141"
+}

@@ -1,0 +1,65 @@
+{
+  "id": "Q5",
+  "round": 3,
+  "prompt": "What is the VAT rate on importation of goods used to manufacture export products?",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "answer": "### Short Answer\nThe VAT rate on the importation of goods used to manufacture export products is 12%. This is based on the total value used by the Bureau of Customs in determining tariff and customs duties, plus any applicable customs duties and excise taxes.\n\n### Controlling Authorities\nThe controlling authority for this is Section 107 of the National Internal Revenue Code (NIRC), which states that there shall be levied, assessed, and collected a value-added tax equivalent to twelve percent (12%) on every importation of goods. This is further supported by Revenue Regulations No. 16-2005.\n\n### Interpretation\n\n### Practical Meaning\nFor businesses importing goods to manufacture products for export, the 12% VAT on importation is a significant cost that must be factored into pricing and cash flow considerations. However, these businesses may also benefit from zero-rated VAT on their export sales, allowing them to recover input taxes related to their imported goods, thereby mitigating the impact of the VAT on their overall operations.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "incentive-source-sufficiency",
+    "gates": {
+      "structural": true,
+      "specificIncentiveAuthorityPresent": false,
+      "exemptionBasisSupported": true,
+      "zeroRatingBasisSupported": false,
+      "incentiveConditionSupported": false,
+      "genericAuthorityOnly": true
+    },
+    "incentiveSufficiency": {
+      "applicable": true,
+      "incentiveTreatmentClaimed": true,
+      "claimsExemption": false,
+      "claimsZeroRating": true,
+      "specificIncentiveAuthorityPresent": false,
+      "exemptionBasisSupported": true,
+      "zeroRatingBasisSupported": false,
+      "treatmentLabelMatchesAuthority": false,
+      "periodApplicabilitySupported": false,
+      "genericAuthorityOnly": true,
+      "incentiveConditionSupported": false,
+      "specificIncentiveAuthorityInSources": false,
+      "specificIncentiveAuthorityMentionedInAnswer": false,
+      "qualifyingIncentiveQuestion": false
+    },
+    "reason": "incentive_treatment_claimed_without_specific_incentive_authority"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "33ec0aa511f73df7",
+  "requestSha256": "ad91b5f048b41dd83865703c4cc13c390f8767069b2a3de14af0063c31c5e64b",
+  "responseSha256": "3375432ba3deef6e78adcd2157976f041874adb67f6dc8076bf1186b6eaca782"
+}

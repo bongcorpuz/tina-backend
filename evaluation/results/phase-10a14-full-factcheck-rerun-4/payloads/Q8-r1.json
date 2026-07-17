@@ -1,0 +1,71 @@
+{
+  "id": "Q8",
+  "round": 1,
+  "prompt": "Is leasing a residential unit at ₱15,000 per month subject to VAT?",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "answer": "### Issue Presented\nIs leasing a residential unit at ₱15,000 per month subject to Value-Added Tax (VAT)?\n\n### Short Answer\nYes, leasing a residential unit at ₱15,000 per month is subject to VAT under certain conditions as specified in the National Internal Revenue Code (NIRC).\n\n### Controlling Authorities\nThe relevant provisions are found in the NIRC:\n- **Section 106**: Value-Added Tax on Sale of Goods or Properties\n- **Section 108**: Value-Added Tax on the Sale of Services, Including the Use or Lease of Properties\n\n### Legal Interpretation\nUnder **Section 106** of the NIRC, VAT is levied on the sale, barter, or exchange of goods or properties, which includes real properties held for lease in the ordinary course of trade or business. **Section 108** further specifies that VAT is also applicable to the lease of properties, indicating that the gross sales derived from such leases are subject to a 12% VAT. However, residential leases may be exempt from VAT if the monthly rental does not exceed ₱15,000, as per the provisions of the Tax Reform for Acceleration and Inclusion (TRAIN) Law, which exempts residential leases below this threshold from VAT.\n\n### Practical Application\nIn practice, if the monthly lease of the residential unit is exactly ₱15,000, it is at the threshold where VAT exemption applies. Therefore, if the lease is strictly for residential purposes and does not exceed this amount, it would not be subject to VAT. However, if the lease amount exceeds ₱15,000, the lessor must register for VAT and charge the applicable VAT on the rental payments. It is essential for landlords to assess the nature of the lease and the amount charged to determine their VAT obligations accurately.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "gates": {
+      "structural": true,
+      "penaltyProposition": false,
+      "ewtProposition": false,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false
+    },
+    "propositionClass": "vat_exception",
+    "propositionSufficiency": {
+      "penaltyProposition": false,
+      "ewtProposition": false,
+      "registrationProposition": false,
+      "vatExceptionProposition": true,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false,
+      "hasRegistrationAuthority": false,
+      "hasVatExceptionAuthority": false,
+      "hasGeneralVatImposition": true,
+      "generalVatOnly": true,
+      "sourceCardCount": 5
+    },
+    "reason": "vat_exception_proposition_without_exception_authority"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 106"
+    },
+    {
+      "label": "NIRC Sec. 105"
+    },
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "NIRC Sec. 108"
+    },
+    {
+      "label": "RR 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "7f4475bb33a6bc36",
+  "requestSha256": "a7f010d8f3186b08e61bf38f8746bb94968bfb84ed9806da2fdd86ee9702211c",
+  "responseSha256": "a585eb1eaa545d19f195db142dc2fea491f572a7ecc2086477d3dbbf2f710d6a"
+}

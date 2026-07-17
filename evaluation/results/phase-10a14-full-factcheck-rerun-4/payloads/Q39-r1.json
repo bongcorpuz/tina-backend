@@ -1,0 +1,29 @@
+{
+  "id": "Q39",
+  "round": 1,
+  "prompt": "What is the deadline for registering books of accounts for a new business?",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "answer": "TINA could not identify an indexed authority matching the specific transaction or claim described.\n\nThis does not mean that no law or authority exists.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "NO_INDEXED_SOURCE",
+    "legalConclusion": "UNKNOWN",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "FALLBACK",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": null,
+  "answerSupportSchemaValid": null,
+  "answerSupportVerifiedEligible": null,
+  "sources": [],
+  "sourceStatus": "NO_INDEXED_SOURCE",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "094a7857bc636dd6",
+  "requestSha256": "ad7c5506d8f2184a058aad36e30f236f05b9f9159e18309f66af99dd26b9f9c9",
+  "responseSha256": "ce9c5d67e6652aabb8bc67df0e3bfe48437c5878f21f34cdcee29a898b688df3"
+}

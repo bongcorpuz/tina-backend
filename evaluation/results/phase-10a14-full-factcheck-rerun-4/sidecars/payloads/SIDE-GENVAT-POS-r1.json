@@ -1,0 +1,72 @@
+{
+  "id": "SIDE-GENVAT-POS",
+  "round": 1,
+  "prompt": "What is the VAT rate on the sale of goods in the Philippines?",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "answer": "### Short Answer\nThe VAT rate on the sale of goods in the Philippines is twelve percent (12%).\n\n### Controlling Authorities\nThis is established under Section 106 of the National Internal Revenue Code (NIRC), which states that there shall be levied, assessed, and collected a value-added tax equivalent to twelve percent (12%) of the gross sales of goods or properties sold, bartered, or exchanged.\n\n### Interpretation\nSection 106 of the NIRC specifies that the VAT is an indirect tax that can be passed on to the buyer. It applies to every sale, barter, or exchange of goods or properties, and the seller or transferor is responsible for paying this tax.\n\n### Practical Meaning\nIn practical terms, businesses engaged in the sale of goods must charge their customers an additional 12% on top of the selling price as VAT. This tax is then remitted to the Bureau of Internal Revenue (BIR). It is essential for businesses to properly account for this tax in their pricing strategies and ensure compliance with VAT regulations to avoid penalties.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "treatmentDirectionMatches": true,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": true,
+      "eligibleForVerifiedControlling": true,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true,
+      "answerContradictsControllingSource": true
+    },
+    "reason": "The answer correctly states the VAT rate and is fully supported by relevant citations."
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": true,
+  "sources": [
+    {
+      "label": "NIRC Sec. 106"
+    },
+    {
+      "label": "NIRC Sec. 105"
+    },
+    {
+      "label": "NIRC Sec. 108"
+    },
+    {
+      "label": "RR 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "78b5ad47fcb076c6",
+  "requestSha256": "f4ed898b9755e314354f9828ad8b982eb0d2ff0a57649ae975a2af3f26f0b55f",
+  "responseSha256": "321618ec48ad7c4642684d1a325034202db58089ecda0ba79d656b3a4e2461db"
+}

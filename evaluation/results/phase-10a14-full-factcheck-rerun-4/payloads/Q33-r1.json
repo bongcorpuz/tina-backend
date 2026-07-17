@@ -1,0 +1,72 @@
+{
+  "id": "Q33",
+  "round": 1,
+  "prompt": "Is the family home deductible from the gross estate, and up to how much?",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "answer": "### Short Answer\nYes, the family home is deductible from the gross estate, up to a maximum of P10,000,000.\n\n### Interpretation\n\n### Practical Meaning\nThe deduction for the family home can significantly impact the estate tax calculation for heirs. By allowing a deduction of up to P10,000,000, it provides a financial relief mechanism for families, ensuring that a substantial portion of the family residence is not subjected to estate tax, thus preserving family assets for the heirs.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [
+      "citationSupportsProposition",
+      "propositionSupported",
+      "thresholdDimensionMatches",
+      "eligibleForVerifiedControlling",
+      "unsupportedMaterialProposition",
+      "answerContradictsControllingSource"
+    ],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [
+      "unsafe_value_fields:citationSupportsProposition,propositionSupported,thresholdDimensionMatches,eligibleForVerifiedControlling,unsupportedMaterialProposition,answerContradictsControllingSource"
+    ],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "citationSupportsProposition": false,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "treatmentDirectionMatches": true,
+      "thresholdDimensionMatches": false,
+      "sourcePropositionAligned": true,
+      "eligibleForVerifiedControlling": false,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": false,
+      "answerContradictsControllingSource": false
+    },
+    "reason": "unsafe_value_fields:citationSupportsProposition,propositionSupported,thresholdDimensionMatches,eligibleForVerifiedControlling,unsupportedMaterialProposition,answerContradictsControllingSource"
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 34"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "4113c1eb04e1bfa9",
+  "requestSha256": "461380e004f49abd0fda89d6823eb010e7a5a4d4bb562172cf8df7ec4a7332a9",
+  "responseSha256": "1a97ae7eaa0343331a35e20e7bca2f2886074f910655d1f6df40f01f41937831"
+}

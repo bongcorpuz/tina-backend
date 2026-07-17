@@ -1,0 +1,71 @@
+{
+  "task": "PHASE-10A14-FULL-FACTCHECK-RERUN-4",
+  "reconciledFrom": "FINAL_RUNTIME_ONLY",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "manifestSha256": "75f7f486abe865d2332897dd21907afebc12f6bf11d710614a135103e2a11253",
+  "sourceBankSnapshotSha256": "526106e594667705df227930dff3d9a4717ec99b171626bf708db43f4eac4bed",
+  "sourceBankRows": 50,
+  "canonicalRounds": 3,
+  "canonicalLogicalEvaluations": 150,
+  "physicalPayloads": 150,
+  "duplicateRuns": 0,
+  "missingRuns": 0,
+  "promptMismatches": 0,
+  "runtimeMismatches": 0,
+  "persistenceFailures": 0,
+  "supersededTechnicalRetries": 5,
+  "retryNote": "All technical retries were the Q10 degenerate 16-char generation (Q10-r1 recovered within batch; Q10-r2 required additional documented attempts for the recurring transient). Excluded from the 150 canonical total; 150/150 completed.",
+  "byAuthoritySupport": {
+    "RELATED_AUTHORITY_ONLY": 76,
+    "VERIFIED_CONTROLLING": 26,
+    "NO_VERIFIED_AUTHORITY": 48
+  },
+  "checksum": "26 + 76 + 48 = 150",
+  "verifiedControlling": 26,
+  "verifiedRuns": 26,
+  "validVerified": 26,
+  "questionableVerified": 0,
+  "invalidVerified": 0,
+  "fabricatedAuthority": 0,
+  "falseRefusal": 0,
+  "unrestrictedOutcomePrediction": 0,
+  "highRiskClusters": {
+    "Q5": {
+      "verified": 0,
+      "states": "RRR",
+      "invalidVerified": 0
+    },
+    "Q8": {
+      "verified": 0,
+      "states": "RRR",
+      "invalidVerified": 0
+    },
+    "Q25": {
+      "verified": 0,
+      "states": "RRR",
+      "invalidVerified": 0
+    },
+    "Q36": {
+      "verified": 0,
+      "states": "RRR",
+      "invalidVerified": 0
+    },
+    "Q38": {
+      "verified": 0,
+      "states": "RRR",
+      "invalidVerified": 0
+    },
+    "Q46": {
+      "verified": 0,
+      "states": "RRR",
+      "invalidVerified": 0
+    }
+  },
+  "registrationReachabilityLiveProof": "Q1-r3 classified registration_procedural, gate SUFFICIENT (Sec 236 present), VERIFIED -> registration gate is NOT blanket-suppressing.",
+  "sidecars": {
+    "SIDE_GENVAT_POS": "VERIFIED_CONTROLLING",
+    "SIDE_REG_POS": "RELATED_AUTHORITY_ONLY",
+    "SIDE_VATEXC_POS": "RELATED_AUTHORITY_ONLY",
+    "note": "General-VAT ordinary VERIFIED (reachability intact). Registration-positive + VAT-exception-positive RELATED: the answers were correct (Form 1903; agri-food exempt) but retrieval surfaced NON-controlling authority (foundational Sec 2/3; general VAT 105-108) instead of the controlling authority (Sec 236; Sec 109), so the gate correctly failed closed (anti-laundering). NOT blanket suppression (proven by Q1-r3 live + R1 deterministic tests); a retrieval/source-surfacing limitation (P2)."
+  }
+}

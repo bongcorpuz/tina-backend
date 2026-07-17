@@ -1,0 +1,66 @@
+{
+  "id": "Q15",
+  "round": 1,
+  "prompt": "How is MCIT computed and when does it apply?",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "answer": "### Issue Presented\nHow is the Minimum Corporate Income Tax (MCIT) computed and when does it apply?\n\n### Short Answer\nThe Minimum Corporate Income Tax (MCIT) is computed at a rate of 2% of the gross income as of the end of the taxable year, applicable starting from the fourth taxable year following the year in which the corporation commenced its business operations, when the MCIT exceeds the regular corporate income tax (RCIT) for that year.\n\n### Controlling Authorities\n- **RR 9-1998**: This regulation provides further details on the implementation of the MCIT.\n\n### Legal Interpretation\n\n### Practical Application\nCorporations should monitor their gross income and tax liabilities closely, especially as they approach the fourth year of operations. If the MCIT is applicable, they must ensure compliance by calculating the tax based on their gross income and comparing it with their RCIT. Any excess MCIT can be carried forward and credited against the normal income tax for the next three taxable years, providing a potential tax relief for future periods.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "treatmentDirectionMatches": true,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": true,
+      "eligibleForVerifiedControlling": true,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true,
+      "answerContradictsControllingSource": true
+    },
+    "reason": "The answer correctly addresses the computation and applicability of MCIT without errors."
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": true,
+  "sources": [
+    {
+      "label": "NIRC Sec. 27"
+    },
+    {
+      "label": "RR 9-1998"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "d6c7b0269fdb513c",
+  "requestSha256": "841bbc61eb4c1de2f93c1d72ae7a27cb1c9c67f41db8acb83c8d434f193b60f1",
+  "responseSha256": "73053544dd917ec73561507b55d0a34f07c6dd5c01ad3c84fe0b60a29567c789"
+}

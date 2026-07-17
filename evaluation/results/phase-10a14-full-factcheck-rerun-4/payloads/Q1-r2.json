@@ -1,0 +1,50 @@
+{
+  "id": "Q1",
+  "round": 2,
+  "prompt": "Freelance graphic designer, ₱2.8 million annual gross receipts: Is VAT registration required?",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "answer": "### Issue Presented\n\n### Quick Assessment\n- **Annual Gross Receipts**: ₱2.8 million\n- **VAT Registration Threshold**: ₱3 million\n- **Current Status**: Not yet required to register but may need to if future receipts exceed the threshold.\n\n### BIR Likely Position\nThe Bureau of Internal Revenue (BIR) may argue that the designer should register for VAT if there are reasonable grounds to believe that gross receipts will exceed ₱3 million in the next 12 months, as per Section 236 of the NIRC.\n\n### Taxpayer Position / Defenses\nThe taxpayer can argue that they are currently below the VAT registration threshold and are not required to register unless they exceed ₱3 million in gross receipts in the next 12 months.\n\n### Documentary Support Needed\n- Financial statements or records of gross receipts for the past 12 months.\n- Projections of future income to substantiate claims regarding expected gross receipts.\n\n### Procedural Issues\nIf the BIR assesses the taxpayer for VAT registration, the taxpayer must ensure compliance with registration requirements and maintain proper documentation to support their position.\n\n### Risk Level\nThe risk level is moderate. If the taxpayer does not register and later exceeds the threshold, they may face penalties and interest for failure to register timely.\n\n### Recommended Action\nMonitor gross receipts closely and prepare to register for VAT if projections indicate that the threshold will be exceeded. Maintain accurate records to support the current position.\n\n### Relevant Facts / Assumptions\nThe factual circumstances have not been fully described. The analysis is based on the question as presented.\n\n### Alternative Interpretations\nNo alternative interpretations identified from the available indexed authorities.\n\n### Position Strength\nPosition strength is preliminary and subject to full fact pattern verification.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 109"
+    },
+    {
+      "label": "NIRC Sec. 236"
+    },
+    {
+      "label": "RR No. 16-2005"
+    },
+    {
+      "label": "RMC 75-2015"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "0f14cacc539f5f68",
+  "requestSha256": "64f580ba5e80e260eb0dc80ab593fee20411594a741faea3f5098fb0065e11ab",
+  "responseSha256": "8c0335eecd947a97e545b304fdf472b5c3620b8410f2e7a5ec1672a840188b59"
+}

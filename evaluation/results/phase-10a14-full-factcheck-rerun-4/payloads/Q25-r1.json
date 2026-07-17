@@ -1,0 +1,68 @@
+{
+  "id": "Q25",
+  "round": 1,
+  "prompt": "Is EWT required on payments to a VAT-registered law firm?",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "answer": "### Short Answer\n\n### Controlling Authorities\n- **NIRC Section 236**: This section details the registration requirements and obligations of VAT-registered persons.\n- **RR 16-2005**: This regulation provides guidelines on the withholding tax on payments to professionals, including VAT-registered entities.\n\n### Interpretation\nUnder the NIRC, payments made to VAT-registered professionals, such as law firms, are subject to EWT. The law requires that the withholding agent (the entity making the payment) withhold a certain percentage of the payment as tax before remitting the balance to the service provider. This ensures compliance with tax obligations and proper remittance to the Bureau of Internal Revenue (BIR).\n\n### Practical Meaning\nFor businesses engaging the services of a VAT-registered law firm, it is essential to account for EWT in their payment processes. This means that when making payments, the business must withhold the appropriate tax amount and remit it to the BIR. Failure to comply with these withholding requirements may result in penalties and interest for the business, as well as potential issues for the law firm regarding their tax compliance.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "gates": {
+      "structural": true,
+      "penaltyProposition": false,
+      "ewtProposition": true,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false
+    },
+    "propositionClass": "withholding_ewt",
+    "propositionSufficiency": {
+      "penaltyProposition": false,
+      "ewtProposition": true,
+      "registrationProposition": false,
+      "vatExceptionProposition": false,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false,
+      "hasRegistrationAuthority": true,
+      "hasVatExceptionAuthority": true,
+      "hasGeneralVatImposition": true,
+      "generalVatOnly": false,
+      "sourceCardCount": 4
+    },
+    "reason": "ewt_proposition_without_withholding_authority"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 109"
+    },
+    {
+      "label": "NIRC Sec. 236"
+    },
+    {
+      "label": "RR No. 16-2005"
+    },
+    {
+      "label": "RMC 75-2015"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "f7e55bad3253e233",
+  "requestSha256": "633af589893b94e8bd5aee707bd9d817d94caae342b4dd5aa3fb41aae6889001",
+  "responseSha256": "73d2cd767e3156bc8d0817c58c415dd1fd084e4194f8d8bf7bc96f951e7cea95"
+}

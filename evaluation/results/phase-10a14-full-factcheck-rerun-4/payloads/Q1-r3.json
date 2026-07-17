@@ -1,0 +1,72 @@
+{
+  "id": "Q1",
+  "round": 3,
+  "prompt": "Freelance graphic designer, ₱2.8 million annual gross receipts: Is VAT registration required?",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "answer": "### Issue Presented\n\nHowever, since the gross receipts are below the threshold, the designer is not mandated to register for VAT. Section 236 of the NIRC states that any person whose gross sales or receipts exceed the threshold must register for VAT. Therefore, based on the current gross receipts, VAT registration is not required.\n\n### Quick Assessment\n- **Gross Receipts**: ₱2.8 million\n- **VAT Registration Requirement**: Not required as it is below the ₱3 million threshold.\n\n### BIR Likely Position\nThe BIR may assert that the designer should monitor their gross receipts closely, as exceeding the threshold in the future would necessitate VAT registration.\n\n### Taxpayer Position / Defenses\nThe taxpayer can argue that they are currently below the VAT registration threshold and thus not required to register.\n\n### Documentary Support Needed\n- Financial statements or income statements to substantiate gross receipts.\n- Any relevant contracts or invoices to demonstrate the nature of services provided.\n\n### Procedural Issues\nNone identified at this time, as the taxpayer is currently compliant with the registration requirements.\n\n### Risk Level\nLow risk of non-compliance as long as gross receipts remain below the threshold.\n\n### Recommended Action\nContinue to monitor gross receipts and consider voluntary VAT registration if future projections indicate exceeding the threshold.\n\n### Relevant Facts / Assumptions\nThe factual circumstances have not been fully described. The analysis is based on the question as presented.\n\n### Alternative Interpretations\nNo alternative interpretations identified from the available indexed authorities.\n\n### Position Strength\nPosition strength is preliminary and subject to full fact pattern verification.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "treatmentDirectionMatches": true,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": true,
+      "eligibleForVerifiedControlling": true,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true,
+      "answerContradictsControllingSource": true
+    },
+    "reason": "The answer correctly identifies that VAT registration is not required based on the current gross receipts being below the threshold."
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": true,
+  "sources": [
+    {
+      "label": "NIRC Sec. 109"
+    },
+    {
+      "label": "NIRC Sec. 236"
+    },
+    {
+      "label": "RR No. 16-2005"
+    },
+    {
+      "label": "RMC 75-2015"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "91a8448cd8bf0b0f",
+  "requestSha256": "4180cb0ac5c320ba7290326db7c745ed1a94ccd0b599d79e243c65b161e0d366",
+  "responseSha256": "d29dc44740b49535135f98227eb37291b974f1d0f3fbfe7fe0b44d9ce5c674c3"
+}

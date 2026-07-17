@@ -1,0 +1,50 @@
+{
+  "id": "Q3",
+  "round": 2,
+  "prompt": "A VAT-registered exporter sells 100% abroad. Can it obtain a refund or tax credit for input VAT?",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "answer": "### Short Answer\n\n### Controlling Authorities\n2. **NIRC Section 236** - This section outlines the registration requirements for VAT-registered persons, ensuring compliance with VAT regulations.\n\n### Interpretation\n\n### Practical Meaning\nFor VAT-registered exporters, the ability to claim refunds or tax credits for input VAT is a significant financial advantage. It enhances cash flow and competitiveness in the international market by allowing exporters to recover VAT on inputs used in producing goods for export. To successfully claim this refund, exporters must ensure proper documentation and compliance with the requirements set forth by the Bureau of Internal Revenue (BIR).",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 109"
+    },
+    {
+      "label": "NIRC Sec. 236"
+    },
+    {
+      "label": "RR No. 16-2005"
+    },
+    {
+      "label": "RMC 75-2015"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "5b5ee515f559ae8b",
+  "requestSha256": "e9a0dc5f79020415827ddb090bf1e41a7d4e7e38e964a31fec73ac74fdd0e4ba",
+  "responseSha256": "669e48fbadd3a024e7b72ba53c0de6179d4b15f4e6642228503c159563a725d0"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "Q14",
+  "round": 3,
+  "prompt": "Is interest on a Philippine peso savings account subject to final withholding tax?",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "answer": "### Issue Presented\nYes, interest from any peso bank deposit is subject to final withholding tax at the rate of 20%. This is specified in Revenue Regulations No. 2-98, which implements provisions of the National Internal Revenue Code.\n\n### Legal Interpretation\n\nThe withholding obligation arises when a withholding agent makes payment to a resident income payee for a service subject to withholding under applicable revenue regulations.\n\n### Practical Application\n\nThe payor must withhold the applicable rate, remit to the BIR, and issue BIR Form 2307 (certificate of creditable withholding tax) to the payee.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "error",
+    "gates": {
+      "structural": true
+    },
+    "reason": "validator_error_fail_closed"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "Revenue Regulations"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "c0bf8888f4cd5a80",
+  "requestSha256": "2323587bb4608d048633cbc0e50760adcdee2bbe6c4bf23f37705a6427d49432",
+  "responseSha256": "cb686706b7049ba9401d3383d1110a3fb0f63b12cf868c36168aba224448bc1e"
+}
