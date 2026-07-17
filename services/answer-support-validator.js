@@ -611,20 +611,141 @@ const VAT_EXCEPTION_AUTHORITY_RE = /\bsec(?:tion|\.)?\s*0*109\b|\bsec(?:tion|\.)
 // P5,000,000", treating the P5M standard deduction as a threshold on estate value).
 // Class-based; no question IDs, exact prompts, income amounts, dates, or deny lists.
 //
-// --- filing-obligation proposition (whether a return must be filed) ---
-const FILING_OBLIGATION_PROPOSITION_RE = /\b(required to file|not required to file|obligation to file|must file|need(?:s)? to file|exempt from filing|no (?:income tax )?(?:return )?filing|substituted filing|who (?:must|are required to) file|file (?:a |an )?(?:income tax |annual )?(?:return|itr))\b|\bjoint (?:income tax )?return\b|\bseparate (?:income tax )?return\b/i;
-// --- filing-deadline proposition (when a return is due) ---
-const FILING_DEADLINE_PROPOSITION_RE = /\b(deadline|due date)\b|\bwhen\s+(?:is|are|must|should|to)\b[^.\n]{0,50}\b(?:due|file)\b|\bfiled?\s+(?:on or )?before\b|\blast day (?:to|for) fil|\breturn\b[^.\n]{0,25}\bdue\b|\bdue\b[^.\n]{0,25}\breturn\b/i;
+// PHASE-10A14-R2: SEMANTIC proposition coverage. The R1 phrase-oriented detectors
+// missed ordinary paraphrases, statement forms, short follow-ups, answer-introduced
+// conclusions, and Taglish for the filing-obligation, filing-deadline, and estate
+// tax-computation classes. The layer below recognizes CONCEPTS (action, object,
+// obligation, temporal, computation) across common forms rather than one sentence
+// pattern, disambiguates the OBJECT (a tax return vs a payment/protest/registration/
+// assessment/prescription/document), and gates answer-introduced conclusions. No
+// question IDs, exact prompts, amounts, dates, or reviewer phrases govern behavior.
+
+// Bounded normalization: lowercase, expand ITR/AITR and a few contractions, and
+// map a few bounded Taglish tax terms to their English concept so detection is not
+// tied to formal American-English phrasing.
+function normalizeTaxText(t) {
+  return (typeof t === "string" ? t : "").toLowerCase()
+    .replace(/\baitr\b|\bitr\b/g, " income tax return ")
+    .replace(/\bdon't\b/g, "do not").replace(/\bdoesn't\b/g, "does not").replace(/\bdidn't\b/g, "did not")
+    .replace(/\bi'm\b/g, "i am").replace(/\bwon't\b/g, "will not").replace(/\bcan't\b/g, "cannot")
+    // bounded Taglish -> English concept
+    .replace(/\bmag[- ]?file\b|\bmagfa[- ]?file\b|\bnag[- ]?file\b/g, " file ")
+    .replace(/\bi[- ]?submit\b|\bise[- ]?submit\b|\bisu[- ]?submit\b/g, " submit ")
+    .replace(/\bkailangan(?:\s+ko)?(?:\s+pa)?(?:\s+ba)?\b/g, " need required ")
+    .replace(/\bhanggang kailan\b/g, " until when deadline ")
+    .replace(/\blate na ba\b|\blate na\b/g, " already late ")
+    .replace(/\bhuling araw\b/g, " last day ")
+    .replace(/\bkailan(?:\s+ang)?\b/g, " when ")
+    .replace(/\btax[- ]?free\b/g, " tax-free ")
+    .replace(/\s+/g, " ").trim();
+}
+
+// --- concept families (applied to normalized text) ---
+const C_FILING_ACT = /\b(file|filing|filed|submit|submitting|submitted|furnish|lodge|send|sending|report(?:ing)?|accomplish|declare)\b/;
+const C_RETURN_OBJECT = /\b(income tax return|annual (?:income tax )?return|tax return|\breturn\b|donor'?s tax return|estate tax return|vat return|percentage tax return|quarterly return)\b/;
+const C_OBLIGATION = /\b(required|require|need|needs|needed|must|have to|has to|had to|should|necessary|obligat\w+|oblige\w*|exempt from filing|not required|no need|no (?:income tax )?return|substituted filing|do(?:es)? not (?:have|need) to|not (?:have|need) to)\b/;
+// Genuine deadline signals only. Bare "due"/"late" are deliberately excluded: they
+// collide with liability sense ("no tax is due") and penalty sense ("late filing of
+// a VAT return"), which are NOT deadline propositions. A trailing/query "due" is
+// admitted only in an explicit temporal frame (when/return ... due).
+const C_TEMPORAL = /\b(deadline|due date|last day|closing date|filed by|submit by|on or before|already late|late na|how many days|until when|what date|by what date|when to file|filing closes|closing of filing)\b|\bwhen (?:is|are|will|would|shall)\b[^.?\n]{0,60}\bdue\b|\breturn\b[^.?\n]{0,40}\bdue\b|\bdue\b[^.?\n]{0,40}\breturn\b/;
+// wrong / non-return filing objects (must NOT invoke the return-filing gates)
+const C_WRONG_FILING_OBJECT = /\b(protest|invoice|invoices|official receipt|receipts?|document|documents|supporting|attachment|financial statement|books?(?: of accounts)?|filing cabinet|sec (?:registration|filing)|dti|business permit|permit application|court|appeal|refund claim|claim for refund|memorandum)\b/;
+// non-filing deadline objects (governed by other controls, not filing_deadline)
+const C_PAYMENT_OBJECT = /\b(pay(?:ment)?|remit(?:tance)?|settle the tax|pay the (?:tax|estate tax|vat))\b/;
+const C_ASSESSMENT_OBJECT = /\b(assessment period|prescriptive period|prescription|period (?:to|within which)[^.\n]{0,40}assess|assess the tax|right to assess)\b/;
+const C_PROTEST_REG_OBJECT = /\b(protest|register|registration|appeal to the (?:cta|court)|reply to the (?:pan|fan|fld))\b/;
+
+// Answer-introduced definite conclusions (gate even when the question was vague).
+const A_FILING_CONCLUSION = /\b(no (?:income tax )?return (?:is )?(?:required|needed|necessary)|not required to (?:file|submit|furnish|send|lodge)|exempt from filing|(?:do|does) not (?:have|need) to (?:file|submit)|substituted filing (?:applies|is available|is allowed)|(?:must|required to|need to) (?:file|submit) (?:a |an )?(?:income tax |annual )?return|no (?:separate )?(?:income tax )?return (?:is )?(?:required|needed))\b/;
+const A_DEADLINE_CONCLUSION = /\b(?:filed?|due|submit(?:ted)?)\s+(?:on or )?before\b|\bdue (?:on|by)\b|\bdeadline is\b|\blast day (?:to|for|is)\b|\bon or before (?:april|january|february|march|may|june|july|august|september|october|november|december|the \d)/;
+
 // Filing/return provisions per tax type (establish the obligation AND the deadline).
 const FILING_OBLIGATION_AUTHORITY_RE = /\bsec(?:tion|\.)?\s*0*(51|51[- ]?A|52|56|74|75)\b|RR\s*(no\.?\s*)?(2-98|2-1998|11-2018|8-2018)|substituted filing/i;
 const FILING_DEADLINE_AUTHORITY_RE = /\bsec(?:tion|\.)?\s*0*(51|51[- ]?A|52|56|74|75|77|90|91|103|114|128)\b|RR\s*(no\.?\s*)?(2-98|11-2018|8-2018)/i;
-// --- estate-tax computation base misstatement ---
-// Estate tax is 6% of the NET estate (gross estate less allowable deductions,
-// including a standard deduction). Applying the rate to "the (value of the) estate
-// / gross estate ... exceeding [amount]" treats a deduction as a threshold on the
-// estate value -- a base/deduction/threshold conflation.
-const ESTATE_TAX_RE = /\bestate tax\b/i;
-const ESTATE_BASE_MISSTATEMENT_RE = /(?:6\s*%|six percent|flat rate)[^.\n]{0,90}\b(?:value of the estate|estate value|gross estate|the estate)\b[^.\n]{0,40}\bexceed\w*|\bon (?:the )?(?:value of the estate|estate value|gross estate)\b[^.\n]{0,40}\bexceed\w*/i;
+
+// Estate-tax computation semantic model. Estate tax is 6% of the NET estate (gross
+// estate less allowable deductions incl. the standard deduction). Any formulation
+// that treats a deduction as a threshold / tax-free first amount / gross-less-amount
+// / excess-over / exemption bracket misstates the base.
+const ESTATE_TAX_RE = /\bestate tax\b/;
+const ESTATE_BASE_MISSTATEMENT_RE = new RegExp([
+  // rate applied to the (value of the) estate / gross estate ... exceeding/over [amount]
+  "(?:6 ?%|six percent|flat rate)[^.\\n]{0,90}\\b(?:value of the estate|estate value|gross estate|the estate)\\b[^.\\n]{0,40}\\b(?:exceed\\w*|over|above|in excess of)",
+  "\\bon (?:the )?(?:value of the estate|estate value|gross estate)\\b[^.\\n]{0,40}\\b(?:exceed\\w*|over|above)",
+  // excess-over / amounts exceeding a stated amount
+  "\\b(?:excess over|on the excess|in excess of|amount[s]? exceeding|exceeding|over|above)\\b[^.\\n]{0,20}(?:peso|php|p|₱)?\\s*[\\d,]{4,}",
+  // first amount is tax-free
+  "\\bfirst\\b[^.\\n]{0,30}\\btax-free\\b",
+  "\\bfirst\\b[^.\\n]{0,25}(?:peso|php|p|₱)?\\s*[\\d,]{4,}[^.\\n]{0,25}\\b(?:tax-free|exempt|not taxed|no tax)\\b",
+  // estate-tax threshold
+  "\\bestate[- ]?tax threshold\\b",
+  "\\bthreshold\\b[^.\\n]{0,30}\\bestate\\b|\\bestate\\b[^.\\n]{0,30}\\bthreshold\\b",
+  // gross estate less a stated amount
+  "\\bgross estate\\b[^.\\n]{0,20}\\bless\\b[^.\\n]{0,20}(?:peso|php|p|₱)?\\s*[\\d,]{4,}",
+  // only the balance over the deduction is taxed
+  "\\bonly the balance\\b|\\bbalance (?:over|above|in excess of) (?:the )?(?:standard )?deduction\\b",
+  // standard deduction described as an exemption / zero-rate bracket
+  "\\bstandard deduction\\b[^.\\n]{0,30}\\b(?:exemption|exempt|tax-free|zero[- ]rate)\\b",
+  "\\bdeduction\\b[^.\\n]{0,20}\\b(?:is|as) (?:an? )?(?:exemption|zero[- ]rate)\\b"
+].join("|"));
+
+/**
+ * Deterministic semantic detection of the filing-obligation, filing-deadline, and
+ * estate-tax-computation propositions from the (normalized) question and answer,
+ * with object disambiguation and answer-introduced-conclusion handling. Pure.
+ * @returns {{filingObligation:boolean, filingDeadline:boolean, estateComputation:boolean, estateBaseMisstatement:boolean, deadlineObject:(string|null), filingObject:(string|null), evidence:object}}
+ */
+export function detectFilingAndEstatePropositions(question, answer) {
+  const qN = normalizeTaxText(question);
+  const aN = normalizeTaxText(answer);
+  const both = qN + " \n " + aN;
+
+  // ---- object disambiguation (shared) ----
+  const wrongFilingObject = C_WRONG_FILING_OBJECT.test(both);
+  const assessmentObject = C_ASSESSMENT_OBJECT.test(both);
+  const returnObjectPresent = C_RETURN_OBJECT.test(both);
+
+  // ---- filing obligation ----
+  // Question raises a filing obligation: a filing act / return object together with
+  // an obligation/exemption concept, and the object is a tax return (not a protest,
+  // document, invoice, refund claim, registration, etc.).
+  const qHasFilingConcept = (C_FILING_ACT.test(qN) || C_RETURN_OBJECT.test(qN)) && C_OBLIGATION.test(qN);
+  const qFilingObligation = qHasFilingConcept && !wrongFilingObject && !assessmentObject &&
+    (C_RETURN_OBJECT.test(qN) || /\bfil\w*|submit/.test(qN));
+  // Answer independently states a definite filing conclusion (about a return).
+  const aFilingConclusion = A_FILING_CONCLUSION.test(aN) && !wrongFilingObject;
+  const filingObligation = qFilingObligation || aFilingConclusion;
+
+  // ---- filing deadline ----
+  // A temporal/deadline concept whose OBJECT is a tax-return filing (a filing act or
+  // a return object), excluding payment/assessment/prescription/protest/registration.
+  const temporalPresent = C_TEMPORAL.test(both) || A_DEADLINE_CONCLUSION.test(aN);
+  const filingActOrReturn = C_FILING_ACT.test(both) || returnObjectPresent;
+  const paymentOnly = C_PAYMENT_OBJECT.test(both) && !C_FILING_ACT.test(both) && !returnObjectPresent;
+  const protestReg = C_PROTEST_REG_OBJECT.test(both) && !returnObjectPresent && !/\bfile[sd]?\b[^.\n]{0,20}return/.test(both);
+  let deadlineObject = null;
+  if (temporalPresent) {
+    if (assessmentObject) deadlineObject = "assessment_or_prescription";
+    else if (paymentOnly) deadlineObject = "payment";
+    else if (protestReg) deadlineObject = "protest_or_registration";
+    else if (filingActOrReturn) deadlineObject = "return_filing";
+  }
+  const filingDeadline = deadlineObject === "return_filing";
+
+  // ---- estate computation ----
+  const estateComputation = ESTATE_TAX_RE.test(both) && /(\d+ ?%|percent|flat rate|tax-free|threshold|deduction|excess|exceed)/.test(aN);
+  const estateBaseMisstatement = ESTATE_TAX_RE.test(both) && ESTATE_BASE_MISSTATEMENT_RE.test(aN);
+
+  return {
+    filingObligation, filingDeadline, estateComputation, estateBaseMisstatement,
+    deadlineObject, filingObject: filingObligation ? "tax_return" : null,
+    evidence: {
+      qFilingObligation, aFilingConclusion, wrongFilingObject, assessmentObject,
+      returnObjectPresent, temporalPresent, filingActOrReturn, paymentOnly, protestReg
+    }
+  };
+}
 
 /**
  * Proposition-specific source-sufficiency check. Determines the answer's decisive
@@ -669,19 +790,15 @@ export function evaluatePropositionSourceSufficiency({ question, answer, sources
   const vatExceptionClaim = VAT_EXCEPTION_CLAIM_RE.test(a);
   const vatExceptionProposition = vatExceptionClaim && /\bvat\b|value[- ]added tax|subject to (the )?vat|import|sale|lease|transaction|gold|export/i.test(q + " " + a);
 
-  // PHASE-10A14-R1: filing-DEADLINE proposition is more specific (about WHEN); a
-  // filing-OBLIGATION proposition is about WHETHER a return must be filed. Deadline
-  // is classified first so a "deadline" question is not mistaken for an obligation.
-  const filingDeadlineProposition = FILING_DEADLINE_PROPOSITION_RE.test(q) && /\bfil\w*|return|itr\b/i.test(q + " " + a);
-  // Question-led: the QUESTION must raise the filing obligation, so an answer that
-  // merely mentions filing a return/claim in passing (e.g. a refund or rate question)
-  // does not trip this gate. Reinforced by the answer asserting a filing conclusion.
-  const filingObligationAnswerClaim = FILING_OBLIGATION_PROPOSITION_RE.test(a) || /\b(not )?required to file|need(?:s)? (?:not )?to file|exempt from filing|substituted filing\b/i.test(a);
-  const filingObligationProposition = !filingDeadlineProposition && FILING_OBLIGATION_PROPOSITION_RE.test(q) && filingObligationAnswerClaim;
-  // PHASE-10A14-R1: estate-tax computation with a base misstatement (rate applied to
-  // "estate value ... exceeding [amount]" rather than the NET estate).
-  const estateComputationProposition = ESTATE_TAX_RE.test(q + " " + a) && /(\d+\s*%|percent|flat rate)/i.test(a);
-  const estateBaseMisstatement = estateComputationProposition && ESTATE_BASE_MISSTATEMENT_RE.test(a);
+  // PHASE-10A14-R2: semantic detection of the filing/deadline/estate propositions
+  // (concept-based, object-aware, answer-introduced) replaces the R1 phrase regexes.
+  const sem = detectFilingAndEstatePropositions(q, a);
+  // Deadline is classified before obligation so a return-deadline question is not
+  // mistaken for an obligation.
+  const filingDeadlineProposition = sem.filingDeadline;
+  const filingObligationProposition = !filingDeadlineProposition && sem.filingObligation;
+  const estateComputationProposition = sem.estateComputation;
+  const estateBaseMisstatement = sem.estateBaseMisstatement;
 
   const hasPenaltyAuthority = PENALTY_AUTHORITY_RE.test(sourceLabels);
   const hasWithholdingAuthority = WITHHOLDING_AUTHORITY_RE.test(sourceLabels);
@@ -700,6 +817,8 @@ export function evaluatePropositionSourceSufficiency({ question, answer, sources
     filingDeadlineProposition,
     estateComputationProposition,
     estateBaseMisstatement,
+    deadlineObject: sem.deadlineObject,
+    semanticEvidence: sem.evidence,
     hasPenaltyAuthority,
     hasWithholdingAuthority,
     hasRegistrationAuthority,
