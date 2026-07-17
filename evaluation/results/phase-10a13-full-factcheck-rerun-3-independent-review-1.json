@@ -1,0 +1,94 @@
+{
+  "task": "PHASE-10A13-FULL-FACTCHECK-RERUN-3-INDEPENDENT-REVIEW-1",
+  "reviewer": "Codex GPT-5",
+  "independence": {
+    "reviewerDidNotExecuteA13": true,
+    "reviewedExecutionTask": "PHASE-10A13-FULL-FACTCHECK-RERUN-3",
+    "reviewedHead": "938cb53f8539e014a4e29d126d9f9f67b0ce4734"
+  },
+  "repository": {
+    "path": "C:\\Projects\\tina-backend",
+    "branch": "feature/source-availability-engine-v1",
+    "startingHead": "938cb53f8539e014a4e29d126d9f9f67b0ce4734",
+    "syncAtStart": "0 0",
+    "protectedUntrackedPreserved": [".claude/", ".vscode/", "evaluation/factcheck/"]
+  },
+  "executionReconciliation": {
+    "runtimeCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+    "manifestSha256": "7ef642344406546bc92fa820e41869c15fbd7ef1df7a619487eb65dfd6a86d79",
+    "sourceBankSnapshotSha256": "526106e594667705df227930dff3d9a4717ec99b171626bf708db43f4eac4bed",
+    "sourceBankRows": 50,
+    "questionIds": "Q1..Q50",
+    "canonicalRounds": 3,
+    "canonicalLogicalEvaluations": 150,
+    "completedCanonicalEvaluations": 150,
+    "payloadFiles": 150,
+    "missingRuns": 0,
+    "duplicateRuns": 0,
+    "promptMismatches": 0,
+    "runtimeMismatches": 0,
+    "persistenceFailures": 0,
+    "persistenceCountExpected": 2,
+    "persistenceCountBad": 0,
+    "supersededTechnicalRetries": 3,
+    "retryDisposition": "Q10 degenerate 16-character technical responses preserved in retry log and excluded from canonical total."
+  },
+  "classificationReconciliation": {
+    "VERIFIED_CONTROLLING": 30,
+    "RELATED_AUTHORITY_ONLY": 72,
+    "NO_VERIFIED_AUTHORITY": 48,
+    "checksum": "30 + 72 + 48 = 150"
+  },
+  "verifiedAdjudication": {
+    "totalVerifiedControlling": 30,
+    "validVerified": 26,
+    "questionableVerified": 1,
+    "invalidVerified": 3,
+    "invalidVerifiedIds": ["Q38-r1", "Q38-r2", "Q38-r3"],
+    "questionableVerifiedIds": ["Q46-r1"]
+  },
+  "runnerVerification": {
+    "committedPreRunDeterministic": "189 suites, 0 failures, exit 0",
+    "committedPreRunStaging": "7 suites, 0 failures, exit 0",
+    "committedPostRunDeterministic": "189 suites, 0 failures, exit 0",
+    "committedPostRunStaging": "7 suites, 0 failures, exit 0",
+    "independentDeterministicRerun": "189 suites, 0 failures, exit 0",
+    "independentStagingRerunSandboxed": "7 suites, 1 failure due staging unreachable/reachability consistency",
+    "independentStagingRerunNetworkEnabled": "7 suites, 0 failures, exit 0",
+    "combinedSuiteAccounting": 196
+  },
+  "evidenceHashIntegrity": {
+    "evidenceManifestEntries": 165,
+    "hashMismatches": 0,
+    "uncoveredEvidenceFiles": 0,
+    "runlogPayloadHashMismatches": 0
+  },
+  "securityAndScope": {
+    "secretsFound": false,
+    "runtimeCodeModifiedByA13": false,
+    "validatorCodeModifiedByA13": false,
+    "testCodeModifiedByA13": false,
+    "sourceBankModifiedByA13": false,
+    "frontendModified": false,
+    "devFactoryModified": false,
+    "productionDeployment": false,
+    "reindexing": false,
+    "modelChange": false
+  },
+  "severity": {
+    "P0": 0,
+    "P1": 2,
+    "P2": 6,
+    "P3": 1
+  },
+  "decision": "REVISIONS REQUIRED",
+  "phase10AStatus": "REOPENED_PENDING_SOURCE_SUFFICIENCY_REMEDIATION",
+  "phase10BStatus": "BLOCKED",
+  "phase10CStatus": "BLOCKED",
+  "a13ClosureAuthorized": false,
+  "adversarialSuiteStatus": "DEFERRED",
+  "productionStatus": "NOT_AUTHORIZED",
+  "reindexStatus": "NOT_AUTHORIZED",
+  "modelChangeStatus": "NOT_AUTHORIZED",
+  "nextAuthorizationRecommendation": "Authorize a source-sufficiency remediation targeting proposition classes, not question IDs: registration/procedural form selection and exemption-vs-zero-rating / transaction-specific exception treatment, preferably with passage-level proposition support."
+}
