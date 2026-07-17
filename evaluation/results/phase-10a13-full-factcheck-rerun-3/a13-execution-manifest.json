@@ -1,0 +1,1199 @@
+{
+  "task": "PHASE-10A13-FULL-FACTCHECK-RERUN-3",
+  "type": "EVALUATION_ONLY_NO_REMEDIATION",
+  "authorization": "Owner-authorized governed full 50x3 fact-check rerun on feature/source-availability-engine-v1 from HEAD 9559bf3; evaluation and evidence generation only; no runtime/validator/question/corpus/index/model/deploy changes; A13 does not close Phase 10A.",
+  "startingHead": "9559bf3b2eb73bce7cfa3cf49c4c2f4c4fccc1cf",
+  "runtimeBearingLineage": [
+    "920ed53 validator: proposition-source-sufficiency",
+    "09751a6 runner fix (= R6 runtime)",
+    "fe7d22e R6 two-cycle evidence",
+    "9559bf3 R6 independent review (evidence only)"
+  ],
+  "branch": "feature/source-availability-engine-v1",
+  "model": "gpt-4o-mini",
+  "modelConfiguration": {
+    "generationModel": "gpt-4o-mini",
+    "answerSupportValidatorModel": "gpt-4o-mini (OPENAI_MODEL default)",
+    "temperatureValidator": 0,
+    "note": "current gpt-4o-mini configuration; no model migration authorized"
+  },
+  "validatorConfiguration": "services/answer-support-validator.js at runtime commit; deterministic pre-gates (treatment-contradiction, import-VAT incentive [Q5], proposition-source-sufficiency [penalty+EWT], outcome-prediction, structural, citation-relevance) then constrained gpt-4o-mini evaluator with strict fail-closed schema.",
+  "retrievalConfiguration": "real staging Supabase vector store + OpenAI embeddings; unchanged; no reindex.",
+  "sourceBankSnapshot": "evaluation/results/phase-10a12-validator-competence-remediation-5/source-bank-snapshot/TINA_Tax_FactCheck_Corrected_Validated_Master_v3_0.SNAPSHOT.md",
+  "sourceBankSnapshotSha256": "526106e594667705df227930dff3d9a4717ec99b171626bf708db43f4eac4bed",
+  "questionCount": 50,
+  "questionIds": [
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "Q6",
+    "Q7",
+    "Q8",
+    "Q9",
+    "Q10",
+    "Q11",
+    "Q12",
+    "Q13",
+    "Q14",
+    "Q15",
+    "Q16",
+    "Q17",
+    "Q18",
+    "Q19",
+    "Q20",
+    "Q21",
+    "Q22",
+    "Q23",
+    "Q24",
+    "Q25",
+    "Q26",
+    "Q27",
+    "Q28",
+    "Q29",
+    "Q30",
+    "Q31",
+    "Q32",
+    "Q33",
+    "Q34",
+    "Q35",
+    "Q36",
+    "Q37",
+    "Q38",
+    "Q39",
+    "Q40",
+    "Q41",
+    "Q42",
+    "Q43",
+    "Q44",
+    "Q45",
+    "Q46",
+    "Q47",
+    "Q48",
+    "Q49",
+    "Q50"
+  ],
+  "questions": [
+    {
+      "id": "Q1",
+      "masterId": 1,
+      "prompt": "Freelance graphic designer, ₱2.8 million annual gross receipts: Is VAT registration required?",
+      "promptSha256": "4a073c1d02f6bab18f45b67b2682ce2bef2729c5f1e0d8a59725a1b70eccf75b",
+      "normalizedSha256": "774db902b6389d87f3599a634f491efa7ce995e6ec307127c852dfe2a81263b0"
+    },
+    {
+      "id": "Q2",
+      "masterId": 2,
+      "prompt": "What is the VAT treatment of the sale of a residential lot valued at ₱1.9 million?",
+      "promptSha256": "a0e2ac4e3d804742310c2cf0c5f2674410db7a9fa626e24c3f8d745706d118cf",
+      "normalizedSha256": "330a5fd9509d66b11285e16a49cc012080d0b0f1532ea5604791ff67342cc2e2"
+    },
+    {
+      "id": "Q3",
+      "masterId": 3,
+      "prompt": "A VAT-registered exporter sells 100% abroad. Can it obtain a refund or tax credit for input VAT?",
+      "promptSha256": "98dba3612f33977d48d48a0510035daed438e200f82dc67247bd80fd7112f6a4",
+      "normalizedSha256": "0fb604e5a5a892eaaf4778d0d88220e794ee6c82c927238025a01f7f92e60f18"
+    },
+    {
+      "id": "Q4",
+      "masterId": 4,
+      "prompt": "Are doctors' professional fees subject to VAT?",
+      "promptSha256": "3c0affed6b2e81821e30701f7830dfca3933761ddc653fa242e0b733c25221a1",
+      "normalizedSha256": "4ec432e4e9ccc545846d0face806bdf1726b06da5de1e5eeaead7390bc4fb296"
+    },
+    {
+      "id": "Q5",
+      "masterId": 5,
+      "prompt": "What is the VAT rate on importation of goods used to manufacture export products?",
+      "promptSha256": "f674742f36ece88f6e4095426b2e8a9fdebffdbe30439a053893315a6b607239",
+      "normalizedSha256": "3fce1fad609c47674ffbd7d606c9b5972ab26f12187fff09df37c2eea4103c87"
+    },
+    {
+      "id": "Q6",
+      "masterId": 6,
+      "prompt": "Can a non-VAT-registered seller issue a VAT invoice?",
+      "promptSha256": "c1f79088897184f0d4162e99b646c28b2dd2af29fc6274fd9ffdda4a8ed36f56",
+      "normalizedSha256": "915c3b8d2475c7e17995c811f7f1de123ea98d2841d8d1c5f41fbc3f89bbd3d5"
+    },
+    {
+      "id": "Q7",
+      "masterId": 7,
+      "prompt": "How is input VAT treated when goods or services are used for both VATable and VAT-exempt sales?",
+      "promptSha256": "f53093c41044a1e5e37f7c6b672a99c2786a06e7826b0e3b365c7cd30f0bd45b",
+      "normalizedSha256": "9be729a91f2a3a3faedf6396ac05f2711a2e56c393467e0f6810f5cee999d242"
+    },
+    {
+      "id": "Q8",
+      "masterId": 8,
+      "prompt": "Is leasing a residential unit at ₱15,000 per month subject to VAT?",
+      "promptSha256": "8b28d4e2336ce3f03f1b367315e9de7e11e3eca9b1c41a20295066a3727932f6",
+      "normalizedSha256": "9be96f38e868111adc73d8afb5f2e3ebc408b26e4d3a3647dfe84d71509b0793"
+    },
+    {
+      "id": "Q9",
+      "masterId": 9,
+      "prompt": "Can spouses who both earn compensation income file a joint income tax return?",
+      "promptSha256": "38f0e3ef2783812e2b44d7172dc29ea63a0aaf5ff4808c736c7c042dc3100ac1",
+      "normalizedSha256": "37f5787fba40b8d2771f98b8df98cc8c5cff09ca56139f96954dae72ef033214"
+    },
+    {
+      "id": "Q10",
+      "masterId": 10,
+      "prompt": "What is the income tax rate for a domestic corporation under CREATE?",
+      "promptSha256": "3b0741570d856754839e4cbb5d1010787c624ed157cb64e3a2bf8bd5b026434e",
+      "normalizedSha256": "d553f2322d1d8beeb1601b3fa5eb831768d4655ccbd3976cbcab164c18495bb1"
+    },
+    {
+      "id": "Q11",
+      "masterId": 11,
+      "prompt": "Is ₱80,000 of 13th-month pay received by a rank-and-file employee taxable?",
+      "promptSha256": "a61af086d38cde924daad8d8c64dcd03da0aacbd8ee40140af0778ecc68c0f98",
+      "normalizedSha256": "fd9e986641341db57af6e691119142f52461d03679d68f4e73d57be3106cfcda"
+    },
+    {
+      "id": "Q12",
+      "masterId": 12,
+      "prompt": "Is an individual with ₱250,000 gross compensation income in 2024 required to file an income tax return?",
+      "promptSha256": "91d30ef980dfe5f2412cf8c6a24c92113ee8b23a8b50211e8224f391c3ac1b67",
+      "normalizedSha256": "ae56b25be89ee1705cc6fde51918d941c80fe7c66d5bff3f5d9f6afe7a4d0f1e"
+    },
+    {
+      "id": "Q13",
+      "masterId": 13,
+      "prompt": "Can a self-employed individual with gross sales below ₱3 million opt for the 8% income tax rate?",
+      "promptSha256": "625617299a5eeb04e42547c1469b81ab1b8b1212d1b4e2ff5a7187b837aee588",
+      "normalizedSha256": "715cb433bed58ec2003b39a780385846033273fb668c23fba299159942d916b3"
+    },
+    {
+      "id": "Q14",
+      "masterId": 14,
+      "prompt": "Is interest on a Philippine peso savings account subject to final withholding tax?",
+      "promptSha256": "6aecf9eff03dbbae3fb33d7ce4c982f6b0f6b4f4bb49c342ca20c0b00537432a",
+      "normalizedSha256": "46b4accc4937e65b7740276848817c7118ef4ae46a833eb8f8aab1814fee6def"
+    },
+    {
+      "id": "Q15",
+      "masterId": 15,
+      "prompt": "How is MCIT computed and when does it apply?",
+      "promptSha256": "aa7c2356b02d23b5b69e9485509a8cbff2a4af713975af40c7d1b648be129c2b",
+      "normalizedSha256": "6f9adf43add4dad8da5505e13797af8d09126c95943bcaa3dc910d9016e82893"
+    },
+    {
+      "id": "Q16",
+      "masterId": 16,
+      "prompt": "Are prizes won in a Philippine competition taxable?",
+      "promptSha256": "11e0e29fa5986c5236261b7f4c6369e04cf44a85da3130068ca9b6567af13fd2",
+      "normalizedSha256": "41772cc31205b9721ef604ba2ba9144e491b11a24cd31d0e18ecf5e7727ace66"
+    },
+    {
+      "id": "Q17",
+      "masterId": 17,
+      "prompt": "What tax applies to a dividend paid to a nonresident alien not engaged in trade or business in the Philippines?",
+      "promptSha256": "19c0d3e43ddc3b442dc5467046426608e377cf5d0bade819d788408aed500570",
+      "normalizedSha256": "4c2d4cafd864328eb116190c63c2766fe567c3762d7b448cd15b7ff8c29fda17"
+    },
+    {
+      "id": "Q18",
+      "masterId": 18,
+      "prompt": "What is the OSD rate for individuals and corporations?",
+      "promptSha256": "4fe5c0631defe0d57031a13ee5b1027e782ba6062f19af78c3afef1f8e57796e",
+      "normalizedSha256": "e1e1372955c04b8328991d2d13124a521f7b3f848c1741558a089cd69d16cf3c"
+    },
+    {
+      "id": "Q19",
+      "masterId": 19,
+      "prompt": "What is the tax rate on the sale of shares not traded on a stock exchange?",
+      "promptSha256": "f3cff7df2b29ec0e26ba586719649800afdae18c7c65deffa1f8c35548525893",
+      "normalizedSha256": "022119a3bbe5fd9e166af4b044fbc4763737ad0bd1a013452ab971b68e83c2ff"
+    },
+    {
+      "id": "Q20",
+      "masterId": 20,
+      "prompt": "Is the sale of a principal residence subject to capital gains tax, and when may it be exempt?",
+      "promptSha256": "8ae071a133d7be723ad21f6d268af43b515a19ae4c0297dbc5d4e92d075fe919",
+      "normalizedSha256": "f2e751fabf8097c3941508071e7300e9dfb4b6c75db6a9f234485e4d20fc3276"
+    },
+    {
+      "id": "Q21",
+      "masterId": 21,
+      "prompt": "How is DST computed on a sale of real property?",
+      "promptSha256": "2cf0336855a6c023dcb42e09300e2ab4bd794cfc10b64b43255a74432af18c58",
+      "normalizedSha256": "add4335ea9c804495548765aeab7cacc458b401e79163c5b7c367df972a2021c"
+    },
+    {
+      "id": "Q22",
+      "masterId": 22,
+      "prompt": "Is the sale of real property classified as an ordinary asset subject to 6% capital gains tax?",
+      "promptSha256": "0cf135841f6e5a8d65c7e63aa6f1db8d9feaed20e29f6c5b55aa9181a8edac39",
+      "normalizedSha256": "f39176d5c504b0afdf0f557d5fcd89d9d0b66dcf5d267d7f32d38b00fead0cf3"
+    },
+    {
+      "id": "Q23",
+      "masterId": 23,
+      "prompt": "What is the holding-period rule for an individual's capital gain on personal property?",
+      "promptSha256": "4c3f12b8be31b45e513478c73ebcfad8b4052bc3b725257deaea112c829ac1ff",
+      "normalizedSha256": "2149f48a544517a88dd24d59bbd3c28ecb6cd2e6fc77ec3a84338f6a8ca0d7f8"
+    },
+    {
+      "id": "Q24",
+      "masterId": 24,
+      "prompt": "What is the expanded withholding tax rate on professional fees paid to an individual?",
+      "promptSha256": "aeb8781bdae19ee076d0c3e95ba28d682e19b2806380d08123ec41d3c1ca8ccc",
+      "normalizedSha256": "02a4b86d9fdf09be191b2a3bcb687f48c8f0962365c078404f23dc3723baf911"
+    },
+    {
+      "id": "Q25",
+      "masterId": 25,
+      "prompt": "Is EWT required on payments to a VAT-registered law firm?",
+      "promptSha256": "91f463e0b5b36d8244fd2611f152f43cc8ecb0f1bca6db732caa8345517a929a",
+      "normalizedSha256": "9b706ad1a1c99955dcaa490df8a067e1cb5024038938e4d302e15b4a9233b185"
+    },
+    {
+      "id": "Q26",
+      "masterId": 26,
+      "prompt": "When must a withholding agent remit expanded withholding tax to the BIR?",
+      "promptSha256": "4c85ee4e21f1cf87bed9754a2d9309e60919462b44bb8f6c4fd6a6948f5ebad4",
+      "normalizedSha256": "bc8f95e43ba83c3e2ae2725e23b31905c1ed7dafef0b35e42375328c8a0b2764"
+    },
+    {
+      "id": "Q27",
+      "masterId": 27,
+      "prompt": "Is equipment rental income subject to EWT?",
+      "promptSha256": "fa8106101e239d7a0212ac68ccb0749361b799883363f5c48bf64e1a89166fcf",
+      "normalizedSha256": "37e3356546c7925e61783cfed01cec2a6f8d2d8c7fb027d57415d1bed3b6134e"
+    },
+    {
+      "id": "Q28",
+      "masterId": 28,
+      "prompt": "What final withholding tax applies to royalties paid to a domestic corporation?",
+      "promptSha256": "779ef2242faca5c8c10e204ff0ea5c9f12c720d81eefc3226ced3ad808927aa8",
+      "normalizedSha256": "a3b8721d7ac45bbf752456f1f7939e04cb931e01b780ed87c044e17e3d6f3f4e"
+    },
+    {
+      "id": "Q29",
+      "masterId": 29,
+      "prompt": "Is a ₱500 one-time courier payment to an individual subject to EWT?",
+      "promptSha256": "7b52dd1a96f77ef29cf69af85394a5d25d3e8c9e80dda54d1a41d8e7a47d1b57",
+      "normalizedSha256": "9b7888bc67075d3ba39ad4791d8f0564a7758c54fcb22bcdad68c66690e68bb6"
+    },
+    {
+      "id": "Q30",
+      "masterId": 30,
+      "prompt": "What is the estate tax rate under TRAIN?",
+      "promptSha256": "f41539a07a9c37e7cbf1b51ff092b73c46de822a7459b6402d7350562cf57052",
+      "normalizedSha256": "580d704779c10c07ffc55365357266fb92562c93fd5ef180f844cf5d92681a7e"
+    },
+    {
+      "id": "Q31",
+      "masterId": 31,
+      "prompt": "What standard deduction is allowed in computing the net estate?",
+      "promptSha256": "9a86aaa2921f8f46de607d4df5ab14a61924289a9ed1bd4e6ee6228f0fa739e6",
+      "normalizedSha256": "6d6ef26fbddc4cd6a4ead8c420c6e392f185d6b86f52eee2a7ea700fc651139b"
+    },
+    {
+      "id": "Q32",
+      "masterId": 32,
+      "prompt": "What is the deadline for filing an estate tax return, and can it be extended?",
+      "promptSha256": "a64f0c25381c7fe3215a0431e102e44a8defd13b14a1af730a2bb788286c244e",
+      "normalizedSha256": "322a7526c6c6965c7342c4cbba63c925808489db7b69b54802d8fc79f08cb145"
+    },
+    {
+      "id": "Q33",
+      "masterId": 33,
+      "prompt": "Is the family home deductible from the gross estate, and up to how much?",
+      "promptSha256": "cc798bfdbb97b6b6840efd6723346b484bf727a6306e2a5c1d18b58c4cbf291e",
+      "normalizedSha256": "69f2b948cc3cb3a1897e143622f89a129725214acacf5939ee61157206a267c9"
+    },
+    {
+      "id": "Q34",
+      "masterId": 34,
+      "prompt": "What is the deadline for the annual income tax return of an individual?",
+      "promptSha256": "5c65ca1207d7f7f36965ad8fd38b199be3cd23022984f1a126fdf55b05fd52b1",
+      "normalizedSha256": "5bf9653fa561531e8f029f26e97b2def2c0c8c1c82963cde670b6c26402b403a"
+    },
+    {
+      "id": "Q35",
+      "masterId": 35,
+      "prompt": "What BIR form is used for the annual ITR of a self-employed individual or professional?",
+      "promptSha256": "335b5cc47498b072dedd5c0868e2665df59a0c6b568dc6d572162c87156c5bf9",
+      "normalizedSha256": "7758b8f8934b828d78e808ac5b3404f4dd99d5d55158e23fe8d58335d8ce8363"
+    },
+    {
+      "id": "Q36",
+      "masterId": 36,
+      "prompt": "What penalties apply to late filing of a VAT return?",
+      "promptSha256": "68b361b24df5bbb079e417ec9850420fcafee91302a1e452d6272d83ec4a99e8",
+      "normalizedSha256": "083e971ace5e070e76b1f3cd5cf91b0915492da1eb169989fdf544fc46c6d531"
+    },
+    {
+      "id": "Q37",
+      "masterId": 37,
+      "prompt": "What is the BIR assessment period when a taxpayer filed a return?",
+      "promptSha256": "234328f050700690735354ec29d09420522fcfe99f905dbd11ca2c81299e7786",
+      "normalizedSha256": "5f06181aa2d6150640f2237ecc28776fa5a5ad6354b95d69fb680ced11ca21d6"
+    },
+    {
+      "id": "Q38",
+      "masterId": 38,
+      "prompt": "Is a new business required to register with the BIR, and what form is used?",
+      "promptSha256": "e0629a45ce16ca3aea4eb686cbfa553dbc52a3154f6a9c1a2d6875831c7eb571",
+      "normalizedSha256": "df56c49754dc015242abcb77ecb1086aa1a20efdb4cf2dcc877aedac24a02d11"
+    },
+    {
+      "id": "Q39",
+      "masterId": 39,
+      "prompt": "What is the deadline for registering books of accounts for a new business?",
+      "promptSha256": "30b296893d325f51fbb44fa964f75e4471aae0c17381256f47d83537d9bb122f",
+      "normalizedSha256": "f48d9c4c698d16790292083e0f41e4ed8fbb90a1566a92c6d17099f0937123fb"
+    },
+    {
+      "id": "Q40",
+      "masterId": 40,
+      "prompt": "Can a taxpayer request a compromise settlement, and on what grounds?",
+      "promptSha256": "387c23bbd1d6b60a904aa1551cf9f28adad6f5c687d1f1ddd63ec7e05a7caadd",
+      "normalizedSha256": "cadc9e43047b2e1338776642b1dda02a37f7e317741cef1994d75da97e58ee61"
+    },
+    {
+      "id": "Q41",
+      "masterId": 41,
+      "prompt": "What is the penalty for failure to issue a BIR-registered invoice?",
+      "promptSha256": "ac4d0d20c5f568fd42f4d604150befb408a1eaeea764bbe40662b5debd992fc6",
+      "normalizedSha256": "fac339a3e3ec95253076ecbec14b00ee7b00c97028da5d1d5107016d6922f081"
+    },
+    {
+      "id": "Q42",
+      "masterId": 42,
+      "prompt": "What penalties apply to a ₱200,000 underpayment discovered in a filed corporate ITR?",
+      "promptSha256": "e12b461c1a0942ffa37e0e4617a138892ee9ab01078e1167a7abb767bbd5ae9b",
+      "normalizedSha256": "182a3889009757257bc3b54ffc308bb5f9b3452cd66c33671f22f3424524238c"
+    },
+    {
+      "id": "Q43",
+      "masterId": 43,
+      "prompt": "What is Oplan Kandado and when can it be applied?",
+      "promptSha256": "b618cf7554c12b3ea2c9115134887ed333deae092347f60cea84cbedbb7f64fd",
+      "normalizedSha256": "9c05eb967b96a409145bf55376bc161e3da143997e0124c6aad2b36d2469094d"
+    },
+    {
+      "id": "Q44",
+      "masterId": 44,
+      "prompt": "Is a freelancer's PayPal payment from a foreign client taxable in the Philippines?",
+      "promptSha256": "b7fa8ce3637e57a55b61a5fc6e97e184fd1e165ef2a7106d012e5c97b01863a6",
+      "normalizedSha256": "70d714b97577a8fa1d668c40ea5d101d55235ce812f9a1403e5ae8c3ec50589a"
+    },
+    {
+      "id": "Q45",
+      "masterId": 45,
+      "prompt": "Are PEZA-registered enterprises subject to corporate income tax?",
+      "promptSha256": "ff07ff4d71ee5036695d1d4b9e4f959efff311326f4a9576e0548f95805425d9",
+      "normalizedSha256": "861de6aceba7567a59e775fe6b4ea248176c8e9b9e0fd5644a969cf6df10664d"
+    },
+    {
+      "id": "Q46",
+      "masterId": 46,
+      "prompt": "Is the sale of gold by a small-scale miner to the Bangko Sentral ng Pilipinas subject to VAT?",
+      "promptSha256": "1838f8e87d794c8a295dec32edcbde91bed41ccb8ba890faef25273299351afb",
+      "normalizedSha256": "0dc487a85fe4f56046f2d2b7ad814577e606f8fa12212a3ad2af55587711b354"
+    },
+    {
+      "id": "Q47",
+      "masterId": 47,
+      "prompt": "What is the donor's tax rate under TRAIN and the exemption threshold?",
+      "promptSha256": "e9738113be4803be3845681ff5da3309a3780e0b526c844b4556a79bcbd8b85d",
+      "normalizedSha256": "7e0870c15c31c591be090bc9221f35477a6a4b2e68f9f34fa8370ee2a9eb88a6"
+    },
+    {
+      "id": "Q48",
+      "masterId": 48,
+      "prompt": "What conditions must a corporation satisfy to claim a bad debt as a deductible expense?",
+      "promptSha256": "915c2c37c7ff34749a4cd74f565b728e54ab283c6e79bd6d858bb50ed29d3b6d",
+      "normalizedSha256": "4cab27748138905eb4bb256977f557c516cff7e7c17cb7ed8b536201ed1e809b"
+    },
+    {
+      "id": "Q49",
+      "masterId": 49,
+      "prompt": "Is the importation of personal effects or household goods by a returning resident subject to VAT?",
+      "promptSha256": "d78b26012bcae3894c81a08efaa3a81134707731772bfd88fc29ead0553a39db",
+      "normalizedSha256": "422948f0176e692b9d0b3c1f2e0fee30aa870f1c20fdf4b3d4c9d837545c26ad"
+    },
+    {
+      "id": "Q50",
+      "masterId": 50,
+      "prompt": "What is the current rule on Official Receipts versus Sales Invoices?",
+      "promptSha256": "84ad8c72787d6c431e19a84c45a50571118bbc4cf2bb2b7d44a271e2e22713e2",
+      "normalizedSha256": "917f47ce2c3f74f4915e7ae863ae1edbf1e96f13634ae8c6d725fc757215dc33"
+    }
+  ],
+  "canonicalRunSlots": [
+    {
+      "slot": 1,
+      "round": 1,
+      "id": "Q1"
+    },
+    {
+      "slot": 2,
+      "round": 1,
+      "id": "Q2"
+    },
+    {
+      "slot": 3,
+      "round": 1,
+      "id": "Q3"
+    },
+    {
+      "slot": 4,
+      "round": 1,
+      "id": "Q4"
+    },
+    {
+      "slot": 5,
+      "round": 1,
+      "id": "Q5"
+    },
+    {
+      "slot": 6,
+      "round": 1,
+      "id": "Q6"
+    },
+    {
+      "slot": 7,
+      "round": 1,
+      "id": "Q7"
+    },
+    {
+      "slot": 8,
+      "round": 1,
+      "id": "Q8"
+    },
+    {
+      "slot": 9,
+      "round": 1,
+      "id": "Q9"
+    },
+    {
+      "slot": 10,
+      "round": 1,
+      "id": "Q10"
+    },
+    {
+      "slot": 11,
+      "round": 1,
+      "id": "Q11"
+    },
+    {
+      "slot": 12,
+      "round": 1,
+      "id": "Q12"
+    },
+    {
+      "slot": 13,
+      "round": 1,
+      "id": "Q13"
+    },
+    {
+      "slot": 14,
+      "round": 1,
+      "id": "Q14"
+    },
+    {
+      "slot": 15,
+      "round": 1,
+      "id": "Q15"
+    },
+    {
+      "slot": 16,
+      "round": 1,
+      "id": "Q16"
+    },
+    {
+      "slot": 17,
+      "round": 1,
+      "id": "Q17"
+    },
+    {
+      "slot": 18,
+      "round": 1,
+      "id": "Q18"
+    },
+    {
+      "slot": 19,
+      "round": 1,
+      "id": "Q19"
+    },
+    {
+      "slot": 20,
+      "round": 1,
+      "id": "Q20"
+    },
+    {
+      "slot": 21,
+      "round": 1,
+      "id": "Q21"
+    },
+    {
+      "slot": 22,
+      "round": 1,
+      "id": "Q22"
+    },
+    {
+      "slot": 23,
+      "round": 1,
+      "id": "Q23"
+    },
+    {
+      "slot": 24,
+      "round": 1,
+      "id": "Q24"
+    },
+    {
+      "slot": 25,
+      "round": 1,
+      "id": "Q25"
+    },
+    {
+      "slot": 26,
+      "round": 1,
+      "id": "Q26"
+    },
+    {
+      "slot": 27,
+      "round": 1,
+      "id": "Q27"
+    },
+    {
+      "slot": 28,
+      "round": 1,
+      "id": "Q28"
+    },
+    {
+      "slot": 29,
+      "round": 1,
+      "id": "Q29"
+    },
+    {
+      "slot": 30,
+      "round": 1,
+      "id": "Q30"
+    },
+    {
+      "slot": 31,
+      "round": 1,
+      "id": "Q31"
+    },
+    {
+      "slot": 32,
+      "round": 1,
+      "id": "Q32"
+    },
+    {
+      "slot": 33,
+      "round": 1,
+      "id": "Q33"
+    },
+    {
+      "slot": 34,
+      "round": 1,
+      "id": "Q34"
+    },
+    {
+      "slot": 35,
+      "round": 1,
+      "id": "Q35"
+    },
+    {
+      "slot": 36,
+      "round": 1,
+      "id": "Q36"
+    },
+    {
+      "slot": 37,
+      "round": 1,
+      "id": "Q37"
+    },
+    {
+      "slot": 38,
+      "round": 1,
+      "id": "Q38"
+    },
+    {
+      "slot": 39,
+      "round": 1,
+      "id": "Q39"
+    },
+    {
+      "slot": 40,
+      "round": 1,
+      "id": "Q40"
+    },
+    {
+      "slot": 41,
+      "round": 1,
+      "id": "Q41"
+    },
+    {
+      "slot": 42,
+      "round": 1,
+      "id": "Q42"
+    },
+    {
+      "slot": 43,
+      "round": 1,
+      "id": "Q43"
+    },
+    {
+      "slot": 44,
+      "round": 1,
+      "id": "Q44"
+    },
+    {
+      "slot": 45,
+      "round": 1,
+      "id": "Q45"
+    },
+    {
+      "slot": 46,
+      "round": 1,
+      "id": "Q46"
+    },
+    {
+      "slot": 47,
+      "round": 1,
+      "id": "Q47"
+    },
+    {
+      "slot": 48,
+      "round": 1,
+      "id": "Q48"
+    },
+    {
+      "slot": 49,
+      "round": 1,
+      "id": "Q49"
+    },
+    {
+      "slot": 50,
+      "round": 1,
+      "id": "Q50"
+    },
+    {
+      "slot": 51,
+      "round": 2,
+      "id": "Q1"
+    },
+    {
+      "slot": 52,
+      "round": 2,
+      "id": "Q2"
+    },
+    {
+      "slot": 53,
+      "round": 2,
+      "id": "Q3"
+    },
+    {
+      "slot": 54,
+      "round": 2,
+      "id": "Q4"
+    },
+    {
+      "slot": 55,
+      "round": 2,
+      "id": "Q5"
+    },
+    {
+      "slot": 56,
+      "round": 2,
+      "id": "Q6"
+    },
+    {
+      "slot": 57,
+      "round": 2,
+      "id": "Q7"
+    },
+    {
+      "slot": 58,
+      "round": 2,
+      "id": "Q8"
+    },
+    {
+      "slot": 59,
+      "round": 2,
+      "id": "Q9"
+    },
+    {
+      "slot": 60,
+      "round": 2,
+      "id": "Q10"
+    },
+    {
+      "slot": 61,
+      "round": 2,
+      "id": "Q11"
+    },
+    {
+      "slot": 62,
+      "round": 2,
+      "id": "Q12"
+    },
+    {
+      "slot": 63,
+      "round": 2,
+      "id": "Q13"
+    },
+    {
+      "slot": 64,
+      "round": 2,
+      "id": "Q14"
+    },
+    {
+      "slot": 65,
+      "round": 2,
+      "id": "Q15"
+    },
+    {
+      "slot": 66,
+      "round": 2,
+      "id": "Q16"
+    },
+    {
+      "slot": 67,
+      "round": 2,
+      "id": "Q17"
+    },
+    {
+      "slot": 68,
+      "round": 2,
+      "id": "Q18"
+    },
+    {
+      "slot": 69,
+      "round": 2,
+      "id": "Q19"
+    },
+    {
+      "slot": 70,
+      "round": 2,
+      "id": "Q20"
+    },
+    {
+      "slot": 71,
+      "round": 2,
+      "id": "Q21"
+    },
+    {
+      "slot": 72,
+      "round": 2,
+      "id": "Q22"
+    },
+    {
+      "slot": 73,
+      "round": 2,
+      "id": "Q23"
+    },
+    {
+      "slot": 74,
+      "round": 2,
+      "id": "Q24"
+    },
+    {
+      "slot": 75,
+      "round": 2,
+      "id": "Q25"
+    },
+    {
+      "slot": 76,
+      "round": 2,
+      "id": "Q26"
+    },
+    {
+      "slot": 77,
+      "round": 2,
+      "id": "Q27"
+    },
+    {
+      "slot": 78,
+      "round": 2,
+      "id": "Q28"
+    },
+    {
+      "slot": 79,
+      "round": 2,
+      "id": "Q29"
+    },
+    {
+      "slot": 80,
+      "round": 2,
+      "id": "Q30"
+    },
+    {
+      "slot": 81,
+      "round": 2,
+      "id": "Q31"
+    },
+    {
+      "slot": 82,
+      "round": 2,
+      "id": "Q32"
+    },
+    {
+      "slot": 83,
+      "round": 2,
+      "id": "Q33"
+    },
+    {
+      "slot": 84,
+      "round": 2,
+      "id": "Q34"
+    },
+    {
+      "slot": 85,
+      "round": 2,
+      "id": "Q35"
+    },
+    {
+      "slot": 86,
+      "round": 2,
+      "id": "Q36"
+    },
+    {
+      "slot": 87,
+      "round": 2,
+      "id": "Q37"
+    },
+    {
+      "slot": 88,
+      "round": 2,
+      "id": "Q38"
+    },
+    {
+      "slot": 89,
+      "round": 2,
+      "id": "Q39"
+    },
+    {
+      "slot": 90,
+      "round": 2,
+      "id": "Q40"
+    },
+    {
+      "slot": 91,
+      "round": 2,
+      "id": "Q41"
+    },
+    {
+      "slot": 92,
+      "round": 2,
+      "id": "Q42"
+    },
+    {
+      "slot": 93,
+      "round": 2,
+      "id": "Q43"
+    },
+    {
+      "slot": 94,
+      "round": 2,
+      "id": "Q44"
+    },
+    {
+      "slot": 95,
+      "round": 2,
+      "id": "Q45"
+    },
+    {
+      "slot": 96,
+      "round": 2,
+      "id": "Q46"
+    },
+    {
+      "slot": 97,
+      "round": 2,
+      "id": "Q47"
+    },
+    {
+      "slot": 98,
+      "round": 2,
+      "id": "Q48"
+    },
+    {
+      "slot": 99,
+      "round": 2,
+      "id": "Q49"
+    },
+    {
+      "slot": 100,
+      "round": 2,
+      "id": "Q50"
+    },
+    {
+      "slot": 101,
+      "round": 3,
+      "id": "Q1"
+    },
+    {
+      "slot": 102,
+      "round": 3,
+      "id": "Q2"
+    },
+    {
+      "slot": 103,
+      "round": 3,
+      "id": "Q3"
+    },
+    {
+      "slot": 104,
+      "round": 3,
+      "id": "Q4"
+    },
+    {
+      "slot": 105,
+      "round": 3,
+      "id": "Q5"
+    },
+    {
+      "slot": 106,
+      "round": 3,
+      "id": "Q6"
+    },
+    {
+      "slot": 107,
+      "round": 3,
+      "id": "Q7"
+    },
+    {
+      "slot": 108,
+      "round": 3,
+      "id": "Q8"
+    },
+    {
+      "slot": 109,
+      "round": 3,
+      "id": "Q9"
+    },
+    {
+      "slot": 110,
+      "round": 3,
+      "id": "Q10"
+    },
+    {
+      "slot": 111,
+      "round": 3,
+      "id": "Q11"
+    },
+    {
+      "slot": 112,
+      "round": 3,
+      "id": "Q12"
+    },
+    {
+      "slot": 113,
+      "round": 3,
+      "id": "Q13"
+    },
+    {
+      "slot": 114,
+      "round": 3,
+      "id": "Q14"
+    },
+    {
+      "slot": 115,
+      "round": 3,
+      "id": "Q15"
+    },
+    {
+      "slot": 116,
+      "round": 3,
+      "id": "Q16"
+    },
+    {
+      "slot": 117,
+      "round": 3,
+      "id": "Q17"
+    },
+    {
+      "slot": 118,
+      "round": 3,
+      "id": "Q18"
+    },
+    {
+      "slot": 119,
+      "round": 3,
+      "id": "Q19"
+    },
+    {
+      "slot": 120,
+      "round": 3,
+      "id": "Q20"
+    },
+    {
+      "slot": 121,
+      "round": 3,
+      "id": "Q21"
+    },
+    {
+      "slot": 122,
+      "round": 3,
+      "id": "Q22"
+    },
+    {
+      "slot": 123,
+      "round": 3,
+      "id": "Q23"
+    },
+    {
+      "slot": 124,
+      "round": 3,
+      "id": "Q24"
+    },
+    {
+      "slot": 125,
+      "round": 3,
+      "id": "Q25"
+    },
+    {
+      "slot": 126,
+      "round": 3,
+      "id": "Q26"
+    },
+    {
+      "slot": 127,
+      "round": 3,
+      "id": "Q27"
+    },
+    {
+      "slot": 128,
+      "round": 3,
+      "id": "Q28"
+    },
+    {
+      "slot": 129,
+      "round": 3,
+      "id": "Q29"
+    },
+    {
+      "slot": 130,
+      "round": 3,
+      "id": "Q30"
+    },
+    {
+      "slot": 131,
+      "round": 3,
+      "id": "Q31"
+    },
+    {
+      "slot": 132,
+      "round": 3,
+      "id": "Q32"
+    },
+    {
+      "slot": 133,
+      "round": 3,
+      "id": "Q33"
+    },
+    {
+      "slot": 134,
+      "round": 3,
+      "id": "Q34"
+    },
+    {
+      "slot": 135,
+      "round": 3,
+      "id": "Q35"
+    },
+    {
+      "slot": 136,
+      "round": 3,
+      "id": "Q36"
+    },
+    {
+      "slot": 137,
+      "round": 3,
+      "id": "Q37"
+    },
+    {
+      "slot": 138,
+      "round": 3,
+      "id": "Q38"
+    },
+    {
+      "slot": 139,
+      "round": 3,
+      "id": "Q39"
+    },
+    {
+      "slot": 140,
+      "round": 3,
+      "id": "Q40"
+    },
+    {
+      "slot": 141,
+      "round": 3,
+      "id": "Q41"
+    },
+    {
+      "slot": 142,
+      "round": 3,
+      "id": "Q42"
+    },
+    {
+      "slot": 143,
+      "round": 3,
+      "id": "Q43"
+    },
+    {
+      "slot": 144,
+      "round": 3,
+      "id": "Q44"
+    },
+    {
+      "slot": 145,
+      "round": 3,
+      "id": "Q45"
+    },
+    {
+      "slot": 146,
+      "round": 3,
+      "id": "Q46"
+    },
+    {
+      "slot": 147,
+      "round": 3,
+      "id": "Q47"
+    },
+    {
+      "slot": 148,
+      "round": 3,
+      "id": "Q48"
+    },
+    {
+      "slot": 149,
+      "round": 3,
+      "id": "Q49"
+    },
+    {
+      "slot": 150,
+      "round": 3,
+      "id": "Q50"
+    }
+  ],
+  "expectedCanonicalRunCount": 150,
+  "deterministicRunOrder": "Round 1: Q1..Q50; Round 2: Q1..Q50; Round 3: Q1..Q50",
+  "retryPolicy": "Retries only for demonstrated technical failure (transport/timeout/truncation/malformed/transient persistence). Max 3 attempts per canonical slot. Failed/superseded attempts retained in evidence but EXCLUDED from the 150 canonical total. Never retry to obtain a legally more favorable answer.",
+  "persistenceRequirement": "each canonical run persists 2 messages (user+assistant); persistence.count captured.",
+  "classificationSchema": [
+    "VALID VERIFIED",
+    "QUESTIONABLE VERIFIED",
+    "INVALID VERIFIED",
+    "VALID RELATED",
+    "INVALID OR MISLEADING RELATED",
+    "VALID NO-VERIFIED",
+    "FALSE REFUSAL",
+    "FABRICATED AUTHORITY",
+    "UNRESTRICTED OUTCOME PREDICTION",
+    "OTHER MATERIAL DEFECT"
+  ],
+  "evidenceSerializationRules": "One sanitized JSON payload per canonical run under payloads/<Qn>-r<round>.json: id, round, prompt, runtimeCommit, answer, trust (subset), answerSupport, sources[{label}], sourceStatus, persistence.count, sanitizedConversationRef (truncated SHA-256), requestSha256, responseSha256. No secrets/PII/raw conversation IDs.",
+  "runtimeCommit": "9559bf3b2eb73bce7cfa3cf49c4c2f4c4fccc1cf"
+}
