@@ -1,0 +1,4 @@
+══ TINA REGRESSION GATE ═════════════════════════════════════
+Syntax checks: 10 run, 0 failed
+Test suites:   190 run, 0 failed
+GATE PASSED (deterministic local lane)

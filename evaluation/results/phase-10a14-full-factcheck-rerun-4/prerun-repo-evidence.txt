@@ -1,0 +1,14 @@
+# A14 pre-run repository & process evidence
+
+## git status --branch --short
+## feature/source-availability-engine-v1...origin/feature/source-availability-engine-v1
+?? evaluation/results/phase-10a14-full-factcheck-rerun-4/
+
+HEAD: e381e3c9dc34af70772a91ae693b68d2376d5a0a
+upstream: e381e3c9dc34af70772a91ae693b68d2376d5a0a
+sync (HEAD...upstream): 0	0
+diff --stat (tracked): 
+
+## ports (recorded, not terminated)
+port 10000: 0 listeners (none = no stale A14 server)
+port 5173: 2 listeners (pre-existing, unrelated, NOT terminated)
