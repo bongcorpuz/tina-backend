@@ -1,0 +1,75 @@
+{
+  "id": "Q30-e",
+  "group": "q30",
+  "prompt": "What is the estate tax rate under TRAIN?",
+  "runtimeCommit": "b7e40fc2af25db1c9eebbb23d1d537b3ec4bf1c8",
+  "answer": "### Short Answer\nThe estate tax rate under the Tax Reform for Acceleration and Inclusion (TRAIN) law is a progressive rate ranging from 0% to 6% on the net estate value exceeding PHP 5 million.\n\n### Interpretation\nUnder Section 84 of the NIRC, the estate tax is imposed on the transfer of the net estate of a decedent. The tax rates are structured progressively, meaning that the applicable rate increases as the value of the estate increases, with the first PHP 5 million being exempt from tax.\n\n### Practical Meaning\nFor estates valued at PHP 5 million or less, no estate tax is due. For estates exceeding this threshold, the tax is calculated based on the net estate value, applying the progressive rates up to a maximum of 6%. This structure aims to alleviate the tax burden on smaller estates while ensuring that larger estates contribute a fair share to government revenues.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "gates": {
+      "structural": true,
+      "penaltyProposition": false,
+      "ewtProposition": false,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false
+    },
+    "propositionClass": "tax_computation_basis",
+    "propositionSufficiency": {
+      "penaltyProposition": false,
+      "ewtProposition": false,
+      "registrationProposition": false,
+      "vatExceptionProposition": false,
+      "filingObligationProposition": false,
+      "filingDeadlineProposition": false,
+      "estateComputationProposition": true,
+      "estateBaseMisstatement": true,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false,
+      "hasRegistrationAuthority": false,
+      "hasVatExceptionAuthority": false,
+      "hasGeneralVatImposition": false,
+      "hasFilingObligationAuthority": false,
+      "hasFilingDeadlineAuthority": true,
+      "generalVatOnly": false,
+      "sourceCardCount": 5
+    },
+    "reason": "estate_tax_base_deduction_threshold_conflation"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 91"
+    },
+    {
+      "label": "NIRC Sec. 84"
+    },
+    {
+      "label": "NIRC Sec. 86"
+    },
+    {
+      "label": "NIRC Sec. 88"
+    },
+    {
+      "label": "NIRC Sec. 89"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "1521282bdefd52a8"
+}

@@ -1,0 +1,73 @@
+{
+  "id": "Q32-ctl",
+  "group": "reach",
+  "prompt": "What is the deadline for filing an estate tax return, and can it be extended?",
+  "runtimeCommit": "b7e40fc2af25db1c9eebbb23d1d537b3ec4bf1c8",
+  "answer": "### Short Answer\nThe deadline for filing an estate tax return is within one (1) year from the decedent's death. An extension of up to thirty (30) days may be granted by the Commissioner in meritorious cases.\n\n### Controlling Authorities\n- **NIRC Section 89**: This section specifies the time for filing the estate tax return and the conditions under which an extension may be granted.\n\n### Interpretation\nAccording to Section 89 of the NIRC, the estate tax return must be filed within one year from the date of death of the decedent. The Commissioner of Internal Revenue has the authority to grant a reasonable extension of time for filing the return, not exceeding thirty days, in cases where there are valid reasons.\n\n### Practical Meaning\nThis means that executors or heirs must ensure that the estate tax return is filed within the stipulated one-year period to avoid penalties. If circumstances warrant, they can apply for a short extension, but this must be justified and is limited to an additional thirty days. Proper planning and timely filing are crucial to comply with tax obligations and avoid complications.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "treatmentDirectionMatches": true,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": true,
+      "eligibleForVerifiedControlling": true,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true,
+      "answerContradictsControllingSource": true
+    },
+    "reason": "The answer correctly states the deadline and conditions for extension, supported by relevant citations."
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": true,
+  "sources": [
+    {
+      "label": "NIRC Sec. 89"
+    },
+    {
+      "label": "NIRC Sec. 84"
+    },
+    {
+      "label": "NIRC Sec. 86"
+    },
+    {
+      "label": "NIRC Sec. 88"
+    },
+    {
+      "label": "NIRC Sec. 91"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "94ee770ebc80bdf0"
+}

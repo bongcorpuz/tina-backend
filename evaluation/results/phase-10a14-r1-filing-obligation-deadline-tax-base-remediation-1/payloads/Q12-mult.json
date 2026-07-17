@@ -1,0 +1,69 @@
+{
+  "id": "Q12-mult",
+  "group": "q12para",
+  "prompt": "An employee had two employers during the year. Is the employee still not required to file an income tax return?",
+  "runtimeCommit": "b7e40fc2af25db1c9eebbb23d1d537b3ec4bf1c8",
+  "answer": "### Short Answer\nAn employee with two employers during the year is still required to file an income tax return if their total income exceeds the tax-exempt threshold. This is governed by Section 24 of the National Internal Revenue Code (NIRC).\n\n### Controlling Authorities\nThe relevant provision is found in Section 24 of the NIRC, which outlines the income tax rates applicable to individuals based on their total taxable income.\n\n### Interpretation\nUnder Section 24 of the NIRC, individuals are taxed on their total income derived from all sources within and outside the Philippines. If an employee has multiple employers, their combined income must be assessed to determine if it exceeds the threshold for tax liability. If the total income exceeds the exempt amount, the employee must file an income tax return.\n\n### Practical Meaning\nFor practical purposes, employees should keep track of their income from all employers throughout the year. If their total income exceeds the threshold set by the NIRC, they are obligated to file an income tax return, regardless of having multiple sources of income. This ensures compliance with tax obligations and avoids potential penalties for failure to file.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "gates": {
+      "structural": true,
+      "penaltyProposition": false,
+      "ewtProposition": false,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false
+    },
+    "propositionClass": "filing_obligation",
+    "propositionSufficiency": {
+      "penaltyProposition": false,
+      "ewtProposition": false,
+      "registrationProposition": false,
+      "vatExceptionProposition": false,
+      "filingObligationProposition": true,
+      "filingDeadlineProposition": false,
+      "estateComputationProposition": false,
+      "estateBaseMisstatement": false,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false,
+      "hasRegistrationAuthority": false,
+      "hasVatExceptionAuthority": false,
+      "hasGeneralVatImposition": false,
+      "hasFilingObligationAuthority": false,
+      "hasFilingDeadlineAuthority": false,
+      "generalVatOnly": false,
+      "sourceCardCount": 3
+    },
+    "reason": "filing_obligation_proposition_without_filing_authority"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 24"
+    },
+    {
+      "label": "NIRC Sec. 23"
+    },
+    {
+      "label": "NIRC Sec. 27"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "3aa36aa58f73e748"
+}

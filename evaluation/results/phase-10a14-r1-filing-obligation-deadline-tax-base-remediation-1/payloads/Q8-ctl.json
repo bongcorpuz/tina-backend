@@ -1,0 +1,75 @@
+{
+  "id": "Q8-ctl",
+  "group": "cluster",
+  "prompt": "Is leasing a residential unit at ₱15,000 per month subject to VAT?",
+  "runtimeCommit": "b7e40fc2af25db1c9eebbb23d1d537b3ec4bf1c8",
+  "answer": "### Issue Presented\nIs leasing a residential unit at ₱15,000 per month subject to Value-Added Tax (VAT)?\n\n### Short Answer\nYes, leasing a residential unit at ₱15,000 per month is subject to VAT under certain conditions, specifically if the lessor is a VAT-registered person.\n\n### Controlling Authorities\nThe relevant provisions are found in the National Internal Revenue Code (NIRC) Sections 105, 106, and 108. Section 106 states that there shall be a value-added tax equivalent to twelve percent (12%) of the gross sales derived from the sale or exchange of goods or properties, including the lease of properties. Section 108 further specifies that VAT is applicable to the lease of properties.\n\n### Legal Interpretation\nUnder Section 105 of the NIRC, any person engaged in the course of trade or business who leases properties is subject to VAT. Section 106 explicitly includes the lease of properties as a taxable transaction. Therefore, if the lessor is registered for VAT and the lease amount exceeds the threshold set by the Bureau of Internal Revenue (BIR), the lease payments would be subject to VAT. However, if the lessor is not VAT-registered or if the lease is for residential purposes and falls below the threshold, it may be exempt from VAT.\n\n### Practical Application\nIn practice, if you are leasing a residential unit for ₱15,000 per month, you should confirm whether the lessor is VAT-registered. If they are, the rental payments will include VAT at the applicable rate. If the lessor is not VAT-registered or if the lease is considered exempt (e.g., if it is a residential lease below the threshold), then VAT would not apply. It is advisable to verify the lessor's VAT registration status and consult the latest BIR guidelines regarding VAT exemptions for residential leases.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "gates": {
+      "structural": true,
+      "penaltyProposition": false,
+      "ewtProposition": false,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false
+    },
+    "propositionClass": "vat_exception",
+    "propositionSufficiency": {
+      "penaltyProposition": false,
+      "ewtProposition": false,
+      "registrationProposition": false,
+      "vatExceptionProposition": true,
+      "filingObligationProposition": false,
+      "filingDeadlineProposition": false,
+      "estateComputationProposition": false,
+      "estateBaseMisstatement": false,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false,
+      "hasRegistrationAuthority": false,
+      "hasVatExceptionAuthority": false,
+      "hasGeneralVatImposition": true,
+      "hasFilingObligationAuthority": false,
+      "hasFilingDeadlineAuthority": false,
+      "generalVatOnly": true,
+      "sourceCardCount": 5
+    },
+    "reason": "vat_exception_proposition_without_exception_authority"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 105"
+    },
+    {
+      "label": "NIRC Sec. 106"
+    },
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "NIRC Sec. 108"
+    },
+    {
+      "label": "RR 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "8665ba52ea4828de"
+}

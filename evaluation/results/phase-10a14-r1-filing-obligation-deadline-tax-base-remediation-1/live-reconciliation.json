@@ -1,0 +1,42 @@
+{
+  "task": "PHASE-10A14-R1-FILING-OBLIGATION-DEADLINE-AND-TAX-BASE-SOURCE-SUFFICIENCY-REMEDIATION-1",
+  "runtimeCommit": "b7e40fc2af25db1c9eebbb23d1d537b3ec4bf1c8",
+  "targetedLiveRuns": 26,
+  "q12": {
+    "runs": 6,
+    "verified": 0,
+    "invalidVerified": 0
+  },
+  "q30": {
+    "runs": 5,
+    "verified": 0,
+    "invalidVerified": 0
+  },
+  "q34": {
+    "runs": 5,
+    "verified": 0,
+    "invalidVerified": 0
+  },
+  "priorClusters": {
+    "q5": 0,
+    "q8": 0,
+    "q25": 0,
+    "q36": 0,
+    "q38": 0,
+    "q46": 0
+  },
+  "reachabilityVerified": [
+    "Q15-reach",
+    "Q32-ctl",
+    "Q47-reach"
+  ],
+  "outcomePredictionVerified": 0,
+  "persistenceFailures": 0,
+  "verifiedIds": [
+    "Q15-reach",
+    "Q32-ctl",
+    "Q47-reach"
+  ],
+  "invalidVerified": 0,
+  "questionableVerified": 0
+}
