@@ -1,0 +1,120 @@
+{
+  "task": "PHASE-10A13-R1-PROPOSITION-SOURCE-SUFFICIENCY-REMEDIATION-1-INDEPENDENT-REVIEW-1",
+  "reviewer": "Codex GPT-5",
+  "independence": {
+    "reviewerDidNotExecuteRemediation": true,
+    "reviewedRemediation": "PHASE-10A13-R1-PROPOSITION-SOURCE-SUFFICIENCY-REMEDIATION-1"
+  },
+  "repository": {
+    "path": "C:\\Projects\\tina-backend",
+    "branch": "feature/source-availability-engine-v1",
+    "reviewStartHead": "5d42a173ee96a9b30643f28c91b67d73b6afccb9",
+    "expectedAncestryConfirmed": true,
+    "ancestry": [
+      "d6fbf2977d02c86c57dba85b44eea52220bd580f",
+      "508a64dce8219d2dcfc82dcd226ed7fdbc015fb6",
+      "f5bf024",
+      "5d42a173ee96a9b30643f28c91b67d73b6afccb9"
+    ],
+    "syncAtStart": "0 0",
+    "protectedUntrackedPreserved": [".claude/", ".vscode/", "evaluation/factcheck/"]
+  },
+  "scopeReview": {
+    "runtimeChanges": ["services/answer-support-validator.js"],
+    "testChanges": [
+      "tests/phase-10a12-r6-proposition-source-sufficiency.test.mjs",
+      "tests/phase-10a12-validator-competence-remediation-1.test.mjs",
+      "tests/phase-10a13-r1-proposition-source-sufficiency.test.mjs"
+    ],
+    "evidenceChangesOnlyAfterRuntimeCommit": true,
+    "unauthorizedChangesFound": false,
+    "corpusIndexModelFrontendDevFactoryProductionChanged": false
+  },
+  "prePatchReproduction": {
+    "q38VerifiedBeforePatch": ["Q38-r1", "Q38-r2", "Q38-r3"],
+    "q46VerifiedBeforePatch": ["Q46-r1"],
+    "prePatchGateCoveredRegistrationOrVatException": false,
+    "prePatchGateClasses": ["penalty_procedural", "withholding_ewt"]
+  },
+  "codeReview": {
+    "classBased": true,
+    "questionIdHardcodingInRuntime": false,
+    "exactPromptMatchingInRuntime": false,
+    "answerStringMatchingInRuntime": false,
+    "denyListBehaviorFound": false,
+    "testOnlyBehaviorFound": false,
+    "deterministicGateBeforeLlmValidator": true,
+    "modelCanOverrideFailedDeterministicGate": false,
+    "runtimeNotes": [
+      "Runtime mentions Q38/Q46 only in comments.",
+      "Executable VAT context regex includes broad transaction words including gold; this does not by itself allow verification and is treated as context detection, not a hardcoded pass/fail branch.",
+      "The gate remains source-card-label/provision-class based; passage-level proposition support remains P2."
+    ]
+  },
+  "all30Replay": {
+    "runsReviewed": 30,
+    "newlyBlocked": ["Q38-r1", "Q38-r2", "Q38-r3", "Q46-r1"],
+    "otherValidVerifiedBlocked": 0,
+    "falseRefusalIntroduced": 0
+  },
+  "targetedLiveEvidence": {
+    "runtimeCommit": "508a64dce8219d2dcfc82dcd226ed7fdbc015fb6",
+    "payloads": 23,
+    "q38Runs": 8,
+    "q38Verified": 0,
+    "q46ExactRuns": 5,
+    "q46ExactVerified": 0,
+    "q46SpecificExemptionControlVerified": true,
+    "verifiedIds": ["Q46-p1", "Q47-a"],
+    "priorSafeguardsVerifiedCounts": {
+      "Q5": 0,
+      "Q8": 0,
+      "Q25": 0,
+      "Q36": 0
+    },
+    "persistenceFailures": 0,
+    "payloadRunlogHashMismatches": 0,
+    "invalidVerified": 0,
+    "questionableVerified": 0,
+    "registrationReachabilityNote": "The 23 live payloads did not include a full live VERIFIED registration-positive control; Q1-a failed structurally. Focused tests and an independent mocked approving validator probe show the deterministic gate does not suppress valid registration with Sec. 236/RR 7-2012 authority."
+  },
+  "testsAndRegression": {
+    "focusedSuite": "17 tests, 0 failures, 21 assertions",
+    "independentDeterministicRerun": "190 suites, 0 failures, exit 0",
+    "independentStagingSandboxed": "7 suites, 1 failure due staging reachability",
+    "independentStagingNetworkEnabled": "7 suites, 0 failures, exit 0",
+    "combinedSuiteAccounting": 197
+  },
+  "evidenceHashIntegrity": {
+    "remediationEvidenceManifestEntries": 33,
+    "remediationEvidenceHashMismatches": 0
+  },
+  "priorSafeguards": {
+    "q5InvalidVerified": 0,
+    "q8InvalidVerified": 0,
+    "q25InvalidVerified": 0,
+    "q36InvalidVerified": 0,
+    "accessorGetterExecutions": 0,
+    "accessorExceptions": 0,
+    "accessorVerified": 0,
+    "unrestrictedOutcomePrediction": 0,
+    "fabricatedAuthority": 0,
+    "falseRefusal": 0,
+    "modelValidatorOverrideOfFailedGate": 0
+  },
+  "severity": {
+    "P0": 0,
+    "P1": 0,
+    "P2": 7,
+    "P3": 1
+  },
+  "decision": "PASS",
+  "phase10AStatus": "REOPENED_PENDING_SEPARATE_NEXT_AUTHORIZATION",
+  "phase10BStatus": "BLOCKED",
+  "phase10CStatus": "BLOCKED",
+  "a13ClosureAuthorized": false,
+  "adversarialStatus": "DEFERRED",
+  "productionStatus": "NOT_AUTHORIZED",
+  "reindexStatus": "NOT_AUTHORIZED",
+  "modelChangeStatus": "NOT_AUTHORIZED"
+}
