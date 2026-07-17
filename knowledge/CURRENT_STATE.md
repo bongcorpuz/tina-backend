@@ -9375,3 +9375,25 @@ Decision: PHASE 10A13-R1 PROPOSITION-SOURCE-SUFFICIENCY REMEDIATION 1 INDEPENDEN
 
 Artifacts: PHASE-10A13-R1-PROPOSITION-SOURCE-SUFFICIENCY-REMEDIATION-1-INDEPENDENT-REVIEW-1_REPORT.md; evaluation/results/phase-10a13-r1-proposition-source-sufficiency-remediation-1-independent-review-1.json; evaluation/results/phase-10a13-r1-proposition-source-sufficiency-remediation-1-independent-review-1/ (findings-table.md, repository-scope-and-code-review.md, replay-and-targeted-evidence.md, tests-regression-security.md, EVIDENCE_MANIFEST.sha256). Review artifact commit follows. No runtime/validator/test/source-bank changes by the reviewer.
 ```
+
+## Phase 10A14 Full Fact-Check Rerun 4 -- PHASE 10A14 PASS (2026-07-17):
+
+```text
+PHASE-10A14-FULL-FACTCHECK-RERUN-4 executed by Claude Code (Opus 4.8, low speed) as an EVALUATION-ONLY governed full 50x3 fact-check on the FROZEN post-R1 runtime (registration_procedural + vat_exception gates present, unchanged since 508a64d). Backend start HEAD e381e3c; pre-execution manifest commit = runtime commit 87ce0c7 (manifestSha256 75f7f486, sourceBankSnapshotSha256 526106e5), committed+pushed BEFORE the first canonical request with remote-head verified; sync 0 0. Frontend (c7569229)/Dev Factory/corpus/index/model untouched. Protected untracked .claude/.vscode/evaluation/factcheck untouched. Port 5173 (unrelated) recorded, not terminated.
+
+PRE-RUN gates: deterministic 190/0 exit 0 + staging 7/7 exit 0. LIVE 50x3 (runtime 87ce0c7, local server vs real staging Supabase + real OpenAI gpt-4o-mini): 150/150, 0 duplicates/missing/prompt-mismatches/runtime-mismatches, persist=2 all; technical retries = Q10 degenerate 16-char generation only (excluded from canonical). Counts: VERIFIED_CONTROLLING 26 + RELATED 76 + NO_VERIFIED 48 = 150.
+
+ADJUDICATION: all 26 verified individually VALID (0 invalid, 0 questionable) -- the settled VALID-class questions (Q1/Q3/Q6/Q12/Q15/Q30/Q32/Q34/Q47/Q48). High-risk clusters Q5/Q8/Q25/Q36/Q38/Q46 all verified 0/3 (RRR): Q38 (registration/procedural, A13 was 3/3 invalid) and Q46 (transaction-specific VAT exception, A13 was 1/3 questionable) ELIMINATED live -- each round fails closed at the deterministic gate on non-controlling authority. fabricated authority 0; unrestricted outcome prediction 0; model override of a deterministic gate 0; accessor 0/0/0; no material false refusal; no material cross-round legal contradiction (trust-state variation only on correct answers).
+
+REACHABILITY: registration DEMONSTRATED LIVE (Q1-r3 classified registration_procedural, gate SUFFICIENT with Sec 236 present, VERIFIED -> gate NOT blanket-suppressing); ordinary general-VAT DEMONSTRATED (SIDE-GENVAT-POS VERIFIED, 12% on Sec 106); VAT-exception reachability preserved (R1 tests + A13-R1 live Q46-p1 exempt on Sec 109). P2: dedicated SIDE-REG-POS + SIDE-VATEXC-POS RELATED -- correct answers but retrieval surfaced non-controlling authority (foundational Sec 2/3; general VAT 105-108) instead of Sec 236/Sec 109, so the gate correctly failed closed; a retrieval/source-surfacing limitation, NOT blanket suppression.
+
+POST-RUN gates: deterministic 190/0 exit 0 + staging 7/7 exit 0 (combined 197). Security clean. No runtime/validator/test/question/source/corpus/index/model change.
+
+Severity: P0=0. P1=0. P2=5 (registration/VAT-exception positive-sidecar retrieval-surfacing limitation; passage-level grounding not implemented; gate class-enumerated; gpt-4o-mini limitation; Q3/Q34 same-tax-type citation precision). P3=1 (Q10 degenerate generation). Security 0.
+
+Decision: PHASE 10A14 PASS. A14 PASS does NOT close Phase 10A. Phase 10A remains OPEN pending an independent A14 review (a model that did not execute A14) AND a separately authorized Phase 10A closure gate. Phase 10B: BLOCKED. Phase 10C: BLOCKED. Adversarial: DEFERRED. Production/reindex/model-change: NOT AUTHORIZED.
+
+Next task: PHASE-10A14-FULL-FACTCHECK-RERUN-4-INDEPENDENT-REVIEW-1.
+
+Artifacts: PHASE-10A14-FULL-FACTCHECK-RERUN-4_REPORT.md; evaluation/results/phase-10a14-full-factcheck-rerun-4.json; evaluation/results/phase-10a14-full-factcheck-rerun-4/ (a14-execution-manifest.json/.md/.sha256, question-hashes.sha256, prerun-repo-evidence.txt, prerun-deterministic.txt, prerun-staging.txt, payloads x150, sidecars/, a14-runlog.jsonl, a14-retry-log.jsonl, execution-timestamps.txt, count-reconciliation.json, adjudication-worksheet-all-150.md, verified-detailed-adjudication.md, cross-round-consistency-matrix.md, high-risk-cluster-and-reachability-analysis.md, source-citation-integrity-and-safety.md, persistence-reconciliation.md, findings-and-severity.md, postrun-deterministic.txt, postrun-staging.txt, security-and-scope-review.md, EVIDENCE_MANIFEST.sha256). Commits 87ce0c7 (manifest, pushed pre-live), ca07014 (150-run + sidecar evidence), final result/report/CURRENT_STATE commit follows. No runtime/validator code change.
+```

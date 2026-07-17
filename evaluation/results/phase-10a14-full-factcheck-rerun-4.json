@@ -1,0 +1,67 @@
+{
+  "task": "PHASE-10A14-FULL-FACTCHECK-RERUN-4",
+  "type": "EVALUATION_ONLY_NO_REMEDIATION",
+  "startingHead": "e381e3c9dc34af70772a91ae693b68d2376d5a0a",
+  "manifestCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "runtimeCommit": "87ce0c7571f9bd57514b6c2dfb45e9427d19c6b6",
+  "runtimeCodeUnchangedSinceR1": true,
+  "model": "gpt-4o-mini",
+  "manifestSha256": "75f7f486abe865d2332897dd21907afebc12f6bf11d710614a135103e2a11253",
+  "sourceBankSnapshotSha256": "526106e594667705df227930dff3d9a4717ec99b171626bf708db43f4eac4bed",
+  "frozenControls": { "registration_procedural": "present, unchanged", "vat_exception": "present, unchanged", "executesBeforeValidator": true, "failsClosed": true, "notReversibleByModelApproval": true },
+
+  "execution": {
+    "sourceBankRows": 50, "canonicalRounds": 3, "canonicalLogicalEvaluations": 150,
+    "completed": 150, "physicalPayloads": 150, "duplicateRuns": 0, "missingRuns": 0, "substitutions": 0,
+    "promptMismatches": 0, "runtimeMismatches": 0, "persistenceFailures": 0,
+    "supersededTechnicalRetries": "Q10 degenerate-generation only (excluded from canonical); 150/150 completed"
+  },
+
+  "counts": {
+    "byAuthoritySupport": { "VERIFIED_CONTROLLING": 26, "RELATED_AUTHORITY_ONLY": 76, "NO_VERIFIED_AUTHORITY": 48 },
+    "checksum": "26 + 76 + 48 = 150",
+    "verifiedControlling": 26, "validVerified": 26, "questionableVerified": 0, "invalidVerified": 0,
+    "fabricatedAuthority": 0, "falseRefusal": 0, "unrestrictedOutcomePrediction": 0, "modelOverrideOfDeterministicGate": 0
+  },
+
+  "highRiskClusters": {
+    "Q5": { "verified": 0, "states": "RRR", "invalidVerified": 0 },
+    "Q8": { "verified": 0, "states": "RRR", "invalidVerified": 0 },
+    "Q25": { "verified": 0, "states": "RRR", "invalidVerified": 0 },
+    "Q36": { "verified": 0, "states": "RRR", "invalidVerified": 0 },
+    "Q38": { "verified": 0, "states": "RRR", "invalidVerified": 0, "note": "registration/procedural remediation holds live across all 3 rounds (A13 was 3/3 invalid)" },
+    "Q46": { "verified": 0, "states": "RRR", "invalidVerified": 0, "note": "transaction-specific VAT-exception remediation holds live across all 3 rounds (A13 was 1/3 questionable)" }
+  },
+
+  "reachability": {
+    "registrationVerifiedLive": "Q1-r3 (registration_procedural, gate SUFFICIENT with Sec 236 present) VERIFIED -> gate is NOT blanket-suppressing",
+    "generalVatVerifiedLive": "SIDE-GENVAT-POS VERIFIED (12% on Sec 106) -> vat_exception gate does not over-block the general rule",
+    "vatExceptionReachable": "proven (R1 deterministic tests + A13-R1 live Q46-p1 exempt on Sec 109)",
+    "sidecarRegPos": "RELATED", "sidecarVatExcPos": "RELATED", "sidecarGenVatPos": "VERIFIED_CONTROLLING",
+    "sidecarRelatedCause": "correct answers, but retrieval surfaced non-controlling authority (foundational Sec 2/3; general VAT 105-108) instead of Sec 236/Sec 109; gate correctly failed closed. NOT blanket suppression; a retrieval/source-surfacing P2."
+  },
+
+  "crossRound": { "materialLegalContradiction": 0, "note": "trust-state variation on some correct answers (VERIFIED vs RELATED), legal treatment consistent; no verified round contradicts another" },
+
+  "priorSafeguards": { "q5InvalidVerified": 0, "q8InvalidVerified": 0, "q25InvalidVerified": 0, "q36InvalidVerified": 0, "accessorGetterExecutions": 0, "accessorExceptions": 0, "accessorVerified": 0, "unrestrictedOutcomePrediction": 0, "fabricatedAuthority": 0, "falseRefusal": 0 },
+
+  "regression": {
+    "deterministicPreRun": { "syntax": "10/0", "suites": 190, "failed": 0, "exit": 0 },
+    "stagingPreRun": { "suites": 7, "failed": 0, "exit": 0 },
+    "deterministicPostRun": { "syntax": "10/0", "suites": 190, "failed": 0, "exit": 0 },
+    "stagingPostRun": { "suites": 7, "failed": 0, "exit": 0 },
+    "combinedSuites": 197
+  },
+
+  "officialAuthorityOnly": true, "securityScan": "clean", "countsReconciled": true, "worktreeClean": true,
+  "runtimeOrValidatorModified": false,
+
+  "currentP0Count": 0, "currentP1Count": 0, "currentP2Count": 5, "currentP3Count": 1,
+
+  "phase10AStatus": "OPEN_PENDING_INDEPENDENT_A14_REVIEW_AND_CLOSURE_GATE",
+  "phase10BStatus": "BLOCKED", "phase10CStatus": "BLOCKED",
+  "adversarialStatus": "DEFERRED", "productionStatus": "NOT_AUTHORIZED", "reindexStatus": "NOT_AUTHORIZED", "modelChangeStatus": "NOT_AUTHORIZED",
+
+  "decision": "PASS",
+  "decisionRationale": "The governed full 50x3 rerun on the frozen post-R1 runtime completed 150/150 with 0 duplicates/missing/mismatches and persistence clean. All 26 VERIFIED_CONTROLLING results were individually adjudicated VALID (invalid verified 0, questionable verified 0). All six high-risk clusters (Q5/Q8/Q25/Q36/Q38/Q46) verified 0/3 -- the R1 registration/VAT-exception remediation holds live (A13's Q38 3/3 invalid and Q46 1/3 questionable are eliminated). Fabricated authority 0, unrestricted outcome prediction 0, model override of a deterministic gate 0, accessor 0/0/0, no material false refusal, no material cross-round legal contradiction. Valid reachability is preserved and NOT blanket-suppressed: a registration proposition verified live (Q1-r3 on Sec 236) and the ordinary general-VAT rule verified (SIDE-GENVAT). Pre-run and post-run deterministic (190/0) and staging (7/7) gates pass; counts/hashes reconcile; security clean; worktree clean; no stale server. P2 (non-blocking): the dedicated registration-positive and VAT-exception-positive sidecars did not reach VERIFIED live because retrieval surfaced non-controlling authority (Sec 2/3; general VAT) rather than the controlling authority (Sec 236; Sec 109) -- a retrieval/source-surfacing limitation, not gate blanket-suppression. A14 PASS does not close Phase 10A; an independent A14 review and a separate closure gate are required."
+}
