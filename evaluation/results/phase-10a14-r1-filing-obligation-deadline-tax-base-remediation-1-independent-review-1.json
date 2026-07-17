@@ -1,0 +1,93 @@
+{
+    "task":  "PHASE-10A14-R1-FILING-OBLIGATION-DEADLINE-AND-TAX-BASE-SOURCE-SUFFICIENCY-REMEDIATION-1-INDEPENDENT-REVIEW-1",
+    "decision":  "REVISIONS REQUIRED",
+    "repository":  "C:/Projects/tina-backend",
+    "branch":  "feature/source-availability-engine-v1",
+    "startingHead":  "4b17849e00a5cd1ced8189bb27a4d16bebcb7788",
+    "reviewedRuntimeCommit":  "b7e40fc2af25db1c9eebbb23d1d537b3ec4bf1c8",
+    "replay":  {
+                   "a14VerifiedPayloads":  26,
+                   "newlyBlocked":  [
+                                        "Q12-r1",
+                                        "Q12-r2",
+                                        "Q12-r3",
+                                        "Q30-r1",
+                                        "Q30-r2",
+                                        "Q30-r3",
+                                        "Q34-r1",
+                                        "Q34-r2",
+                                        "Q34-r3"
+                                    ],
+                   "unaffected":  17
+               },
+    "targetedLive":  {
+                         "payloads":  26,
+                         "q12Runs":  6,
+                         "q12Verified":  0,
+                         "q30Runs":  5,
+                         "q30Verified":  0,
+                         "q34Runs":  5,
+                         "q34Verified":  0,
+                         "reachabilityVerified":  [
+                                                      "Q15-reach",
+                                                      "Q32-ctl",
+                                                      "Q47-reach"
+                                                  ],
+                         "priorSafeguardsVerified":  0,
+                         "persistenceFailures":  0,
+                         "runlogPayloadHashMismatches":  0
+                     },
+    "runners":  {
+                    "syntax":  "10 passed, 0 failed",
+                    "deterministic":  "191 passed, 0 failed",
+                    "staging":  "7 passed, 0 failed after approved network rerun",
+                    "combined":  "198 passed, 0 failed"
+                },
+    "severityCounts":  {
+                           "P0":  0,
+                           "P1":  3,
+                           "P2":  2,
+                           "P3":  0
+                       },
+    "findings":  [
+                     {
+                         "id":  "IR1-P1-001",
+                         "severity":  "P1",
+                         "summary":  "filing_obligation materially under-detects ordinary Q12-class formulations"
+                     },
+                     {
+                         "id":  "IR1-P1-002",
+                         "severity":  "P1",
+                         "summary":  "filing_deadline materially under-detects ordinary Q34-class formulations"
+                     },
+                     {
+                         "id":  "IR1-P1-003",
+                         "severity":  "P1",
+                         "summary":  "tax_computation_basis estate detector is materially phrase-dependent"
+                     },
+                     {
+                         "id":  "IR1-P2-001",
+                         "severity":  "P2",
+                         "summary":  "filing-obligation positive reachability is deterministic but lacks direct live payload"
+                     },
+                     {
+                         "id":  "IR1-P2-002",
+                         "severity":  "P2",
+                         "summary":  "correct estate-computation positive reachability is deterministic but lacks direct live payload"
+                     }
+                 ],
+    "passCriteria":  {
+                         "p0Zero":  true,
+                         "p1Zero":  false,
+                         "materialUnderDetectionAbsent":  false,
+                         "estatePhraseDependenceAbsent":  false,
+                         "exactTargetsBlocked":  true,
+                         "validA14VerifiedUnaffected":  true,
+                         "runnersPassed":  true,
+                         "securityScopeClean":  true
+                     },
+    "sources":  [
+                    "https://efps.bir.gov.ph/EFPSWeb_war/forms2013Version/1701/includes/1701_help.html",
+                    "https://lawphil.net/statutes/repacts/ra2017/ra_10963_2017.html"
+                ]
+}
