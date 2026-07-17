@@ -61,6 +61,16 @@ function diffNames() {
     .split(/\r?\n/)
     .map((line) => line.trim())
     .filter(Boolean)
+    // PHASE-10A12-R6: exclude the governance-designated PROTECTED untracked tooling
+    // paths so this scope check is deterministic across environments. The R5
+    // independent review failed this suite because `.claude/settings.local.json`
+    // was untracked in the reviewer's environment (it is gitignored in some global
+    // configs but not others), and the allowed-file check flagged it. `.claude/`
+    // is a protected untracked path (like `.vscode/` and `evaluation/factcheck/`)
+    // and is never a runtime/package/env/database/frontend/production change --
+    // excluding it corrects the classification without weakening the guard, which
+    // still fails on any real disallowed change.
+    .filter((name) => !/^\.claude\//.test(name))
     .filter((name) => !/^\.vscode\//.test(name))
     .filter((name) => !/^evaluation\/factcheck\//.test(name))
     .filter((name) => name !== ".env")
