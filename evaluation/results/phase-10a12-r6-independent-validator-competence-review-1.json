@@ -1,0 +1,71 @@
+{
+  "phase": "PHASE-10A12-R6-INDEPENDENT-VALIDATOR-COMPETENCE-REVIEW-1",
+  "reviewer": "Codex GPT-5 high reasoning low speed",
+  "date": "2026-07-17",
+  "branch": "feature/source-availability-engine-v1",
+  "reviewed_head": "fe7d22e4ca54d6415cd58b51fb4cf2cb2107cd70",
+  "reviewed_commits": {
+    "validator_source_sufficiency": "920ed53",
+    "runner_remediation": "09751a6",
+    "fresh_mini30_evidence": "173e0b6",
+    "final_two_cycle_logs_manifest": "fe7d22e"
+  },
+  "decision": "PASS",
+  "a13_recommendation": "MAY_PROCEED_ONLY_TO_SEPARATELY_AUTHORIZED_NEXT_A12_STEP",
+  "a13_authorized_by_this_review": false,
+  "severity_counts": { "P0": 0, "P1": 0, "P2": 6, "P3": 1, "security": 0 },
+  "r5_p1_closure": {
+    "m_q36_invalid_verified": "CLOSED_RELATED_AUTHORITY_ONLY_PROPOSITION_SOURCE_SUFFICIENCY",
+    "m_q25_invalid_or_questionable_verified": "CLOSED_RELATED_AUTHORITY_ONLY_PROPOSITION_SOURCE_SUFFICIENCY",
+    "deterministic_runner_failure": "CLOSED_TWO_INDEPENDENT_EXIT_0_RUNS_189_0",
+    "staging_runner_failure": "CLOSED_TWO_NETWORK_EXIT_0_RUNS_7_0"
+  },
+  "governed_mini30": {
+    "source_bank_snapshot_sha256": "526106e594667705df227930dff3d9a4717ec99b171626bf708db43f4eac4bed",
+    "canonical_set_sha256": "8e019480b2e710f9575e5f47d72716d9e94680b8bb3caa904cfe27f05c0f6ea1",
+    "payload_files": 30,
+    "missing": [],
+    "extra": [],
+    "duplicates": [],
+    "unique_payload_hashes": 30,
+    "prompt_mismatches": [],
+    "runtime_mismatches": [],
+    "runtime_commit": "09751a6e038bde9324af9a05213d9c92295e3eb9",
+    "persistence_failures": [],
+    "by_authority_support": { "VERIFIED_CONTROLLING": 4, "RELATED_AUTHORITY_ONLY": 16, "NO_VERIFIED_AUTHORITY": 10 },
+    "verified_ids": ["M-Q6", "M-Q12", "M-Q15", "M-Q30"],
+    "invalid_verified": 0,
+    "questionable_verified_blockers": 0,
+    "fabricated_authority": 0,
+    "false_refusal": 0,
+    "unrestricted_outcome_prediction": 0
+  },
+  "m_q25": {
+    "classification": "RELATED_AUTHORITY_ONLY",
+    "answer_support_stage": "proposition-source-sufficiency",
+    "reason": "ewt_proposition_without_withholding_authority",
+    "verified_eligible": false
+  },
+  "m_q36": {
+    "classification": "RELATED_AUTHORITY_ONLY",
+    "answer_support_stage": "proposition-source-sufficiency",
+    "reason": "penalty_proposition_without_penalty_authority",
+    "verified_eligible": false
+  },
+  "runner_cycles": {
+    "deterministic": [
+      { "cycle": 1, "exit_code": 0, "syntax": "10/0", "suites": "189/0" },
+      { "cycle": 2, "exit_code": 0, "syntax": "10/0", "suites": "189/0" }
+    ],
+    "staging_network_access": [
+      { "cycle": 1, "exit_code": 0, "suites": "7/0" },
+      { "cycle": 2, "exit_code": 0, "suites": "7/0" }
+    ],
+    "sandbox_network_control": { "exit_code": 1, "suites": "7/1", "interpreted_as": "review_environment_network_noise_after_escalated_network_runs_passed" }
+  },
+  "suite_accounting": { "deterministic_tests": 183, "root_stage_tests": 6, "deterministic_total": 189, "staging_total": 7, "combined_total": 196, "delta_from_r5": "+1 focused R6 deterministic suite" },
+  "focused_r6_suite": { "passed": 16, "failed": 0, "assertions": 30 },
+  "evidence_manifest": { "rows": 53, "hash_mismatches": 0 },
+  "security": { "confirmed_secrets": 0, "notes": "Scan hits were benign .env/string references in tests/report text, not committed secret values." },
+  "status_after_review_before_artifacts": { "sync": "0 0", "tracked_dirty": false, "protected_untracked": [".claude/", ".vscode/", "evaluation/factcheck/"] }
+}
