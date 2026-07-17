@@ -104,21 +104,28 @@ await test("B5: FINAL withholding tax on passive income is NOT the EWT class (no
 });
 
 // ── C. Cross-domain non-applicability / no over-fire ─────────────────────────
-await test("C1: substantive VAT/income/estate/registration/invoicing questions are not applicable", () => {
+await test("C1: substantive non-penalty/non-EWT/non-registration/non-VAT-exception questions are not applicable", () => {
+  // PHASE-10A13-R1: registration and VAT-exception are now covered proposition
+  // classes; a general VAT rate, estate rate/deadline, and a plain invoicing rule
+  // remain out of scope. (Registration reachability is asserted separately below.)
   const cases = [
     ["What is the VAT rate on importation?", "12%.", GENERIC_VAT],
     ["What is the estate tax rate under TRAIN?", "6%.", [{ label: "NIRC Sec. 84" }]],
-    ["Is a new business required to register with the BIR?", "Yes, register using BIR Form 1901.", [{ label: "NIRC Sec. 236" }]],
     ["Can a non-VAT seller issue a VAT invoice?", "No.", [{ label: "NIRC Sec. 236" }]],
     ["What is the deadline for filing an estate tax return?", "Within one year of death; 30-day extension possible.", [{ label: "NIRC Sec. 90" }]]
   ];
   for (const [q, a, s] of cases) check(g(q, a, s).applicable === false, `not applicable: ${q}`);
 });
-await test("C2: penalty mentioned incidentally in a non-penalty answer does NOT trip the gate (question-led)", () => {
-  // A registration answer that mentions penalties in passing must not be gated as a penalty proposition.
+await test("C1b: a registration question with proper registration authority (Sec 236) is applicable and sufficient (reachable)", () => {
+  const r = g("Is a new business required to register with the BIR?", "Yes, register under Section 236; a sole proprietor uses BIR Form 1901.", [{ label: "NIRC Sec. 236" }]);
+  check(r.applicable === true && r.propositionClass === "registration_procedural", "registration class");
+  check(r.sufficient === true, "sufficient with Sec 236");
+});
+await test("C2: penalty mentioned incidentally in a registration answer is NOT classified as a penalty proposition (question-led)", () => {
   const r = g("Is a new business required to register with the BIR, and what form is used?",
-    "Yes, register using BIR Form 1901. Failure to register may result in penalties and interest.", [{ label: "NIRC Sec. 236" }]);
-  check(r.applicable === false, "question-led: not a penalty proposition");
+    "Yes, register under Section 236 using BIR Form 1901. Failure to register may result in penalties and interest.", [{ label: "NIRC Sec. 236" }]);
+  check(r.propositionClass !== "penalty_procedural", "not a penalty proposition");
+  check(r.sufficient === true, "not blocked (registration authority present)");
 });
 await test("C3: withholding-tax assessment procedure question without EWT answer claim not over-blocked", () => {
   const r = g("What is the BIR assessment period when a taxpayer filed a return?", "Three years from filing under Sec 203.", [{ label: "NIRC Sec. 203" }]);

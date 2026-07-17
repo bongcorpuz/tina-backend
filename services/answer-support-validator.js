@@ -577,6 +577,31 @@ const PENALTY_AUTHORITY_RE = /\bsec(?:tion|\.)?\s*0*(248|249|250|253|254|255)\b|
 // withholding-at-source provisions.
 const WITHHOLDING_AUTHORITY_RE = /RR\s*(no\.?\s*)?(2-1998|2-98|11-2018|14-2002|17-2003|6-2001)|RMC\s*(no\.?\s*)?50-2018|\bsec(?:tion|\.)?\s*0*(57|58)\b|expanded withholding|creditable withholding/i;
 
+// PHASE-10A13-R1: registration/procedural and transaction-specific VAT-exception
+// classes. A13 found these classes laundered on non-controlling authority: Q38
+// (business-registration + form) verified on withholding regs + foundational
+// NIRC Sec 2/3; Q46 (gold-to-BSP VAT treatment) verified on general VAT-imposition
+// sections. These signals are class-based -- no question IDs, exact prompts, or
+// answer-string deny lists.
+//
+// Registration/procedural PROPOSITION: obligation to register, registration
+// category, applicable registration form, or registration procedure (amend/update/
+// close/transfer/cancel). Distinguished from a tax-RETURN-form question (which is
+// not a registration act).
+const REGISTRATION_PROPOSITION_RE = /\b(register|registration|registering)\b|BIR\s*Form\s*(no\.?\s*)?190\d\b|(amend\w*|cancel\w*|updat\w*|transfer\w*|clos\w+)\s+(the\s+)?(bir\s+)?registration|registration\s+(of|for)\s+(a\s+)?(new\s+)?(business|taxpayer|branch|entity)/i;
+// Registration authority: the registration provisions and registration issuances.
+// Foundational (Sec 1-6) and withholding authority are deliberately NOT here.
+const REGISTRATION_AUTHORITY_RE = /\bsec(?:tion|\.)?\s*0*(236|237|238|258)\b|RR\s*(no\.?\s*)?(7-2012|11-2008|7-2024|4-2024|7-2011)|RMC\s*(no\.?\s*)?(57-2020|17-2024|37-2019|19-2018|136-2022)/i;
+// Transaction-specific VAT-treatment EXCEPTION claim (an exception to the general
+// 12% imposition): exempt, zero-rated, not subject to VAT, or outside VAT scope.
+const VAT_EXCEPTION_CLAIM_RE = /\bvat[- ]?exempt\w*|zero[- ]?rat(e|ed|ing)|not\s+subject\s+to\s+(the\s+)?(value[- ]added tax|vat)\b|outside\s+the\s+scope\s+of\s+(the\s+)?vat|exempt\s+from\s+(the\s+)?(value[- ]added tax|vat)/i;
+// General VAT-imposition authority (the general regime -- NOT an exception basis).
+const GENERAL_VAT_IMPOSITION_RE = /\bsec(?:tion|\.)?\s*0*10[5-8]\b|RR\s*(no\.?\s*)?16-2005/i;
+// VAT exemption / zero-rating / transaction-specific exception authority. Includes
+// the exempt-transactions catalog (Sec 109), the zero-rating subsections
+// (Sec 106(A)(2) / 108(B)), the incentive authorities, and specific exception laws.
+const VAT_EXCEPTION_AUTHORITY_RE = /\bsec(?:tion|\.)?\s*0*109\b|\bsec(?:tion|\.)?\s*0*10[68]\s*\(?\s*[ab]\s*\)?\s*\(?\s*2|zero[- ]?rated\s+sale|R\.?\s*A\.?\s*(no\.?\s*)?(11256|9994|10963|11534|12066|10378|9593|11534)\b|create\s*more|\bpeza\b|ecozone|freeport|RR\s*(no\.?\s*)?(4-2007|13-2018|9-2021|3-2025|21-2021|5-2021)/i;
+
 /**
  * Proposition-specific source-sufficiency check. Determines the answer's decisive
  * proposition class (currently: penalty/procedural computation, expanded-withholding
@@ -607,14 +632,36 @@ export function evaluatePropositionSourceSufficiency({ question, answer, sources
   const ewtAnswerClaim = EWT_PROPOSITION_RE.test(a) || (/\bwithhold/i.test(a) && !FINAL_WHT_RE.test(a));
   const ewtProposition = ewtQuestion && ewtAnswerClaim;
 
+  // PHASE-10A13-R1: registration/procedural proposition (question-led). The QUESTION
+  // asks about a registration act (register / registration form / registration
+  // procedure); reinforced by the answer stating the obligation or a form.
+  const registrationQuestion = REGISTRATION_PROPOSITION_RE.test(q);
+  const registrationAnswerClaim = REGISTRATION_PROPOSITION_RE.test(a) || /\bBIR\s*Form\b|\bregister\w*|\brequired to register\b/i.test(a);
+  const registrationProposition = registrationQuestion && registrationAnswerClaim;
+
+  // PHASE-10A13-R1: transaction-specific VAT-exception proposition (answer-led). The
+  // ANSWER asserts an exception to the general VAT imposition (exempt / zero-rated /
+  // not subject to VAT / outside scope) as its decisive treatment.
+  const vatExceptionClaim = VAT_EXCEPTION_CLAIM_RE.test(a);
+  const vatExceptionProposition = vatExceptionClaim && /\bvat\b|value[- ]added tax|subject to (the )?vat|import|sale|lease|transaction|gold|export/i.test(q + " " + a);
+
   const hasPenaltyAuthority = PENALTY_AUTHORITY_RE.test(sourceLabels);
   const hasWithholdingAuthority = WITHHOLDING_AUTHORITY_RE.test(sourceLabels);
+  const hasRegistrationAuthority = REGISTRATION_AUTHORITY_RE.test(sourceLabels);
+  const hasVatExceptionAuthority = VAT_EXCEPTION_AUTHORITY_RE.test(sourceLabels);
+  const hasGeneralVatImposition = GENERAL_VAT_IMPOSITION_RE.test(sourceLabels);
 
   const diagnostics = {
     penaltyProposition,
     ewtProposition,
+    registrationProposition,
+    vatExceptionProposition,
     hasPenaltyAuthority,
     hasWithholdingAuthority,
+    hasRegistrationAuthority,
+    hasVatExceptionAuthority,
+    hasGeneralVatImposition,
+    generalVatOnly: hasGeneralVatImposition && !hasVatExceptionAuthority,
     sourceCardCount: (Array.isArray(sources) ? sources : []).length
   };
 
@@ -626,8 +673,26 @@ export function evaluatePropositionSourceSufficiency({ question, answer, sources
   if (ewtProposition && !hasWithholdingAuthority) {
     return { applicable: true, sufficient: false, reason: "ewt_proposition_without_withholding_authority", propositionClass: "withholding_ewt", diagnostics };
   }
-  const applicable = penaltyProposition || ewtProposition;
-  return { applicable, sufficient: true, reason: "", propositionClass: applicable ? (penaltyProposition ? "penalty_procedural" : "withholding_ewt") : null, diagnostics };
+  // PHASE-10A13-R1: registration/form/procedure proposition asserted without
+  // registration authority (only foundational / withholding / general / topically
+  // adjacent) cannot verify (the Q38 class).
+  if (registrationProposition && !hasRegistrationAuthority) {
+    return { applicable: true, sufficient: false, reason: "registration_proposition_without_registration_authority", propositionClass: "registration_procedural", diagnostics };
+  }
+  // PHASE-10A13-R1: a transaction-specific VAT exception (exempt / zero-rated / not
+  // subject to VAT) asserted on general VAT-imposition authority alone, without a
+  // specific exemption/zero-rating/exception authority, cannot verify (the Q46
+  // class). Preserves valid reachability: an exception answer citing Sec 109 / the
+  // zero-rating subsection / a specific exception or incentive law passes.
+  if (vatExceptionProposition && !hasVatExceptionAuthority) {
+    return { applicable: true, sufficient: false, reason: "vat_exception_proposition_without_exception_authority", propositionClass: "vat_exception", diagnostics };
+  }
+  const applicable = penaltyProposition || ewtProposition || registrationProposition || vatExceptionProposition;
+  const propositionClass = penaltyProposition ? "penalty_procedural"
+    : ewtProposition ? "withholding_ewt"
+    : registrationProposition ? "registration_procedural"
+    : vatExceptionProposition ? "vat_exception" : null;
+  return { applicable, sufficient: true, reason: "", propositionClass, diagnostics };
 }
 
 // PHASE-10A12-R2: generic (non-LOA) outcome-prediction guard. A question that

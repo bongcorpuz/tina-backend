@@ -50,7 +50,12 @@ await test("C1: Q8 reversed answer + valid schema + LLM-approved -> guard overri
 });
 // C2: Q8 correct answer -> verified reachable.
 await test("C2: Q8 correct exempt answer -> verified reachable", async () => {
-  const { trust } = await trustFor("Is leasing a residential unit at ₱15,000 per month subject to VAT?", Q8_CORRECT, FULL);
+  // PHASE-10A13-R1: the VAT-exception source-sufficiency gate requires the
+  // exemption authority to appear in the DISPLAYED SOURCE CARDS (Sec 109), not
+  // merely in prose. This is genuine reachability under the strengthened rule; a
+  // residential-lease VAT-exemption cited to income-tax source cards is laundering.
+  const exemptSrc = [{ label: "NIRC Sec. 109" }];
+  const { trust } = await trustFor("Is leasing a residential unit at ₱15,000 per month subject to VAT?", Q8_CORRECT, FULL, exemptSrc);
   check(trust.authoritySupport === "VERIFIED_CONTROLLING", `expected verified, got ${trust.authoritySupport}`);
 });
 // C3/C4 threshold substitution / general rule -> guard (via detector).
