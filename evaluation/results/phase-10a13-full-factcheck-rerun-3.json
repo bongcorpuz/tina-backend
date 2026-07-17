@@ -1,0 +1,91 @@
+{
+  "task": "PHASE-10A13-FULL-FACTCHECK-RERUN-3",
+  "type": "EVALUATION_ONLY_NO_REMEDIATION",
+  "startingHead": "9559bf3b2eb73bce7cfa3cf49c4c2f4c4fccc1cf",
+  "manifestCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+  "runtimeCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+  "runtimeCodeUnchangedSinceR6": true,
+  "model": "gpt-4o-mini",
+  "manifestSha256": "7ef642344406546bc92fa820e41869c15fbd7ef1df7a619487eb65dfd6a86d79",
+  "sourceBankSnapshotSha256": "526106e594667705df227930dff3d9a4717ec99b171626bf708db43f4eac4bed",
+  "sourceBankVerified": { "questions": 50, "ids": "Q1..Q50", "missing": 0, "duplicate": 0 },
+
+  "execution": {
+    "sourceBankRows": 50, "canonicalRounds": 3, "canonicalLogicalEvaluations": 150,
+    "completed": 150, "physicalPayloads": 150, "duplicateRuns": 0, "missingRuns": 0,
+    "substitutions": 0, "promptMismatches": 0, "runtimeMismatches": 0, "persistenceFailures": 0,
+    "supersededTechnicalRetries": 3, "retryNote": "3 Q10 degenerate 16-char generations (technical), retried and excluded from the 150 canonical total; all 150 canonical runs completed."
+  },
+
+  "counts": {
+    "byAuthoritySupport": { "VERIFIED_CONTROLLING": 30, "RELATED_AUTHORITY_ONLY": 72, "NO_VERIFIED_AUTHORITY": 48 },
+    "checksum": "30 + 72 + 48 = 150",
+    "verifiedControlling": 30,
+    "validVerified": 26,
+    "questionableVerified": 1,
+    "invalidVerified": 3,
+    "invalidVerifiedIds": ["Q38-r1", "Q38-r2", "Q38-r3"],
+    "questionableVerifiedIds": ["Q46-r1"],
+    "fabricatedAuthority": 0,
+    "falseRefusal": 0,
+    "unrestrictedOutcomePrediction": 0
+  },
+
+  "findings": [
+    {
+      "id": "Q38", "rounds": "r1,r2,r3 (3/3)", "classification": "INVALID VERIFIED",
+      "detail": "'Is a new business required to register with the BIR, and what form is used?' — states BIR Form 1902 (registration for individuals earning purely COMPENSATION income = employees), not a business-registration form (a new business uses 1901 self-employed or 1903 juridical). Cited authorities are WITHHOLDING regulations (RR 2-1998/11-2018) + foundational NIRC Sec 2/3 — NONE is the registration authority (NIRC Sec 236). Wrong form + registration proposition verified on topic-mismatched/foundational authority (source-card laundering).",
+      "defectClass": "registration/procedural source-sufficiency (NOT covered by the current penalty/EWT gate)"
+    },
+    {
+      "id": "Q46", "rounds": "r1 (1/3)", "classification": "QUESTIONABLE VERIFIED",
+      "detail": "'Is the sale of gold by a small-scale miner to the BSP subject to VAT?' — 'not subject to VAT' conflates VAT-exemption with zero-rating, justified by hedged speculative reasoning ('may be exempt', 'may be exempt under specific provisions or interpretations of tax law') citing only general VAT-imposition sections (105-108, RR 16-2005). No controlling authority for the specific transaction treatment. Nondeterministic (verified only in r1).",
+      "defectClass": "exemption-vs-zero-rating / special-transaction source-sufficiency (NOT covered by the current penalty/EWT gate)"
+    }
+  ],
+
+  "priorRemediationPreservation": {
+    "Q5_verified": 0, "Q8_verified": 0, "Q25_verified": 0, "Q36_verified": 0,
+    "Q5_invalidVerified": 0, "Q8_invalidVerified": 0, "mQ25_invalidVerified": 0, "mQ36_invalidVerified": 0,
+    "note": "Q5 (3/3 incentive-source-sufficiency), Q8 (3/3, treatment-contradiction fired r2), Q25 (3/3 proposition-source-sufficiency), Q36 (3/3 proposition-source-sufficiency) all RELATED, 0 verified. accessor getter executions 0 / exceptions 0 / accessor verified 0 (A12-R2 suite). unrestricted outcome prediction 0. false refusal 0. Prior gates NOT weakened."
+  },
+
+  "crossRunConsistency": {
+    "consistentInvalidVerified": ["Q38 (3/3)"],
+    "nondeterministicQuestionableVerified": ["Q46 (1/3)"],
+    "trustInstabilityValidAnswers": ["Q1 (2/3)", "Q3 (2/3)", "Q6 (2/3)", "Q13 (1/3)", "Q15 (1/3)"],
+    "materialLegalInconsistency": "none among VALID answers (harmless wording/trust variation on correct answers)"
+  },
+
+  "runnerValidation": {
+    "deterministicPreRun": { "suites": 189, "failed": 0, "exit": 0 },
+    "stagingPreRun": { "suites": 7, "failed": 0, "exit": 0 },
+    "deterministicPostRun": { "suites": 189, "failed": 0, "exit": 0 },
+    "stagingPostRun": { "suites": 7, "failed": 0, "exit": 0 },
+    "combinedSuites": 196
+  },
+
+  "officialAuthorityOnly": true,
+  "securityScan": "clean",
+  "countsReconciled": true,
+  "worktreeClean": true,
+  "runtimeOrValidatorModified": false,
+
+  "currentP0Count": 0,
+  "currentP1Count": 2,
+  "currentP1Findings": ["Q38 invalid verified (registration/procedural source-sufficiency)", "Q46 questionable verified (exemption-vs-zero-rating source-sufficiency)"],
+  "currentP2Count": 6,
+  "currentP3Count": 1,
+
+  "phase10AStatus": "REOPENED_PENDING_INDEPENDENT_A13_REVIEW",
+  "phase10BStatus": "BLOCKED",
+  "phase10CStatus": "BLOCKED",
+  "a13ClosureAuthorized": false,
+  "adversarialStatus": "DEFERRED",
+  "productionStatus": "NOT_AUTHORIZED",
+  "reindexStatus": "NOT_AUTHORIZED",
+  "modelChangeStatus": "NOT_AUTHORIZED",
+
+  "decision": "REVISIONS REQUIRED",
+  "decisionRationale": "The governed full 50x3 rerun completed cleanly (150/150, membership/runtime/prompt exact, persistence clean, both runner lanes pass before and after, prior Q5/Q8/Q25/Q36 remediations preserved), but individual adjudication of all 30 VERIFIED_CONTROLLING results found 3 INVALID (Q38, 3/3) and 1 materially QUESTIONABLE (Q46, 1/3). Both belong to the source-card-laundering class the R6 proposition-source-sufficiency gate does NOT yet cover (registration/procedural and exemption-vs-zero-rating). PASS requires invalid verified = 0 and unresolved questionable verified = 0. No remediation is authorized in A13; the defects are preserved for the next remediation."
+}
