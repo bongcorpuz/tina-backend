@@ -1,0 +1,29 @@
+{
+  "id": "Q10",
+  "round": 3,
+  "prompt": "What is the income tax rate for a domestic corporation under CREATE?",
+  "runtimeCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+  "answer": "### Short Answer\nThe income tax rate for a domestic corporation under the CREATE Law is 25%. This is specified in the provisions of the Corporate Recovery and Tax Incentives for Enterprises (CREATE) Act, which amends the National Internal Revenue Code.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": null,
+  "answerSupportSchemaValid": null,
+  "answerSupportVerifiedEligible": null,
+  "sources": [],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "c9b1fa66549cf2f7",
+  "requestSha256": "84f67af966bc99277dc1e673b63f0d738ccc250f8360bd4bdb6105589aa1fa9b",
+  "responseSha256": "3a35b5ea7b85451153ab678082b4b9c897e2909bc112387130c862078d412b11"
+}

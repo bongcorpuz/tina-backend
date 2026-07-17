@@ -1,0 +1,29 @@
+{
+  "id": "Q19",
+  "round": 2,
+  "prompt": "What is the tax rate on the sale of shares not traded on a stock exchange?",
+  "runtimeCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+  "answer": "### Short Answer\nThe tax rate on the sale of shares not traded on a stock exchange is 15% of the net capital gains realized from the sale, as specified in Section 24(D)(1) of the National Internal Revenue Code (NIRC) of the Philippines. This is applicable to individuals selling shares classified as capital assets.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": null,
+  "answerSupportSchemaValid": null,
+  "answerSupportVerifiedEligible": null,
+  "sources": [],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "cdd5fcb8a0658878",
+  "requestSha256": "88cc173eb8cd3e9d5c3a12f67be71117abab0da1ba586b104441c7401de698e4",
+  "responseSha256": "749c800409051bf7e52171d327d407b6afb32357128b51b941d5eb93cb82d543"
+}

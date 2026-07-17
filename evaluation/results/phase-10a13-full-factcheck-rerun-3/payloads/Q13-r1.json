@@ -1,0 +1,47 @@
+{
+  "id": "Q13",
+  "round": 1,
+  "prompt": "Can a self-employed individual with gross sales below ₱3 million opt for the 8% income tax rate?",
+  "runtimeCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+  "answer": "### Short Answer\nYes, a self-employed individual with gross sales below ₱3 million can opt for the 8% income tax rate, provided their gross sales or gross receipts do not exceed the VAT threshold, which is currently set at ₱3 million.\n\n### Interpretation\n\n### Practical Meaning\nFor self-employed individuals, opting for the 8% tax rate can lead to easier tax calculations and filing processes. This option is particularly advantageous for those with lower income levels, as it allows them to pay a fixed percentage on their gross income rather than navigating the complexities of a graduated tax system.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "error",
+    "gates": {
+      "structural": true
+    },
+    "reason": "validator_error_fail_closed"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 24"
+    },
+    {
+      "label": "NIRC Sec. 23"
+    },
+    {
+      "label": "NIRC Sec. 27"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "066cf5a30078606a",
+  "requestSha256": "18eb3d2f020c53bf906f20dc1b62702e216cdaafc5f05ce421287446074b0d67",
+  "responseSha256": "4c21ef89a34b5ff7df12347bbadccf747d49aa03e81e23ecc43b051084166af2"
+}

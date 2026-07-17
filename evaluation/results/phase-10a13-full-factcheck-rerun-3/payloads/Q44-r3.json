@@ -1,0 +1,29 @@
+{
+  "id": "Q44",
+  "round": 3,
+  "prompt": "Is a freelancer's PayPal payment from a foreign client taxable in the Philippines?",
+  "runtimeCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+  "answer": "TINA could not identify an indexed authority matching the specific transaction or claim described.\n\nThis does not mean that no law or authority exists.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "NO_INDEXED_SOURCE",
+    "legalConclusion": "UNKNOWN",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "FALLBACK",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": null,
+  "answerSupportSchemaValid": null,
+  "answerSupportVerifiedEligible": null,
+  "sources": [],
+  "sourceStatus": "NO_INDEXED_SOURCE",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "f41212d9434621cc",
+  "requestSha256": "427e1c48a093c86e9a4909e9077cfd2616bdac66e43cede5348418f2d0c82d00",
+  "responseSha256": "127d4c18ff362b7b894be73ad34244c84762d0667d6b1def0f80a8c941d89684"
+}

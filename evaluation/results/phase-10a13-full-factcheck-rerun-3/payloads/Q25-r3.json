@@ -1,0 +1,62 @@
+{
+  "id": "Q25",
+  "round": 3,
+  "prompt": "Is EWT required on payments to a VAT-registered law firm?",
+  "runtimeCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+  "answer": "### Short Answer\nYes, Expanded Withholding Tax (EWT) is required on payments to a VAT-registered law firm.\n\n### Interpretation\n\n### Practical Meaning\nFor businesses engaging the services of a VAT-registered law firm, it is essential to withhold the appropriate EWT from payments made. This not only ensures compliance with tax regulations but also mitigates the risk of penalties for non-compliance. The withheld amount must be remitted to the BIR in accordance with the prescribed deadlines to avoid interest and penalties.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "gates": {
+      "structural": true,
+      "penaltyProposition": false,
+      "ewtProposition": true,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false
+    },
+    "propositionClass": "withholding_ewt",
+    "propositionSufficiency": {
+      "penaltyProposition": false,
+      "ewtProposition": true,
+      "hasPenaltyAuthority": false,
+      "hasWithholdingAuthority": false,
+      "sourceCardCount": 4
+    },
+    "reason": "ewt_proposition_without_withholding_authority"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 109"
+    },
+    {
+      "label": "NIRC Sec. 236"
+    },
+    {
+      "label": "RR No. 16-2005"
+    },
+    {
+      "label": "RMC 75-2015"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "f17afc5730ab62f6",
+  "requestSha256": "d0568a2164f3de3a9bfa15369db8ac6882938556b7361afa4ea66ef895648347",
+  "responseSha256": "dbdefd329b0ba03f4ce1fe9c677596fdd20ea07dac995e65105bf8a1415e445f"
+}

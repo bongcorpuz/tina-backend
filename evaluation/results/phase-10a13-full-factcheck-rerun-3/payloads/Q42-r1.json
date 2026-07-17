@@ -1,0 +1,29 @@
+{
+  "id": "Q42",
+  "round": 1,
+  "prompt": "What penalties apply to a ₱200,000 underpayment discovered in a filed corporate ITR?",
+  "runtimeCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+  "answer": "TINA could not identify an indexed authority matching the specific transaction or claim described.\n\nThis does not mean that no law or authority exists.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "NO_INDEXED_SOURCE",
+    "legalConclusion": "UNKNOWN",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "FALLBACK",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": null,
+  "answerSupportSchemaValid": null,
+  "answerSupportVerifiedEligible": null,
+  "sources": [],
+  "sourceStatus": "NO_INDEXED_SOURCE",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "a9e345b4fd984995",
+  "requestSha256": "d7bf34872166ada1531f1b6f149aa0a778ed5aee45ba76d84358243fea70e1f6",
+  "responseSha256": "8acabdd8dece55b13d25f2c24d4372384d1f4f748729c7374ae83f20e6fde304"
+}

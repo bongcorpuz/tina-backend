@@ -1,0 +1,29 @@
+{
+  "id": "Q20",
+  "round": 1,
+  "prompt": "Is the sale of a principal residence subject to capital gains tax, and when may it be exempt?",
+  "runtimeCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+  "answer": "TINA could not identify an indexed authority matching the specific transaction or claim described.\n\nThis does not mean that no law or authority exists.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "NO_INDEXED_SOURCE",
+    "legalConclusion": "UNKNOWN",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "FALLBACK",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": null,
+  "answerSupportSchemaValid": null,
+  "answerSupportVerifiedEligible": null,
+  "sources": [],
+  "sourceStatus": "NO_INDEXED_SOURCE",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "da843d835b616b0b",
+  "requestSha256": "5686230451f943ca9190d09aa0895690ff3ab9bad23ac0e566bf3dd026555e2a",
+  "responseSha256": "f24418d5dea7a1513684c5ffbb62c5209fac05abed28d4dcb2a4ca0062b85d65"
+}

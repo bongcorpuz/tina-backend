@@ -1,0 +1,44 @@
+{
+  "id": "Q15",
+  "round": 3,
+  "prompt": "How is MCIT computed and when does it apply?",
+  "runtimeCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+  "answer": "### Issue Presented\nHow is the Minimum Corporate Income Tax (MCIT) computed and when does it apply?\n\n### Short Answer\n\n### Controlling Authorities\n- **RR 9-1998**: This regulation provides the implementing rules for the MCIT.\n\n### Legal Interpretation\n\n### Practical Application\nCorporations should monitor their gross income and tax liabilities closely, especially as they approach the fourth year of operations. If the MCIT exceeds the RCIT, the corporation will be liable to pay the MCIT. Additionally, any excess MCIT paid can be carried forward and credited against the normal income tax for the next three taxable years. This provision allows corporations to manage their tax liabilities effectively and ensures that they do not face unexpected tax burdens as they transition from the initial years of operation.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 27"
+    },
+    {
+      "label": "RR 9-1998"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "0f7f79e907208b44",
+  "requestSha256": "c7cc09d2c6f8cb9d9c286a1735ec1ebcb0ffe94f911efc20bb01d81c5c722921",
+  "responseSha256": "40e8a45830f6b30481b35cb3e2e6f3a3b724d3cb983c51d7d614c5c4efff6332"
+}

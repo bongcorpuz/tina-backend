@@ -1,0 +1,41 @@
+{
+  "id": "Q7",
+  "round": 1,
+  "prompt": "How is input VAT treated when goods or services are used for both VATable and VAT-exempt sales?",
+  "runtimeCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+  "answer": "### Short Answer\n\n### Controlling Authorities\n- **Revenue Regulations No. 16-2005**: These regulations implement the provisions of the NIRC regarding VAT, including the allocation of input VAT.\n\n### Interpretation\n\n### Practical Meaning\nIn practice, businesses must maintain accurate records to determine the extent to which goods or services are used for VATable versus VAT-exempt sales. This allocation affects the amount of input VAT that can be claimed as a credit against output VAT. Failure to properly allocate input VAT may result in disallowed claims and potential penalties during a tax audit. Therefore, it is crucial for businesses to implement a systematic approach to track and allocate input VAT accurately.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "5f3d497368ea76d6",
+  "requestSha256": "a3d15d6bfc94033b45e07ecbf639d0a385b446737cf2ec80c66f71efea8d7ea9",
+  "responseSha256": "305719640c59cb5553067ccd9d394be1df45ca3de0f28fbe88f9491b75d91546"
+}

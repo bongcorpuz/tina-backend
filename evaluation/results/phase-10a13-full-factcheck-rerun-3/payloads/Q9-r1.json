@@ -1,0 +1,82 @@
+{
+  "id": "Q9",
+  "round": 1,
+  "prompt": "Can spouses who both earn compensation income file a joint income tax return?",
+  "runtimeCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+  "answer": "### Short Answer\nSpouses who both earn compensation income cannot file a joint income tax return; they must file separate returns based on their respective total taxable income.\n\n### Controlling Authorities\nUnder Section 24 of the National Internal Revenue Code (NIRC), married individuals compute their income tax separately based on their respective total taxable income.\n\n### Interpretation\nThe NIRC explicitly states that each spouse must report their income separately unless income cannot be definitively attributed to either spouse, in which case it is divided equally for tax purposes. This provision ensures that each spouse is responsible for their own tax liabilities based on their individual earnings.\n\n### Practical Meaning\nIn practice, this means that each spouse will need to prepare and file their own income tax return, detailing their respective compensation income. This separation can affect tax planning strategies, as deductions and credits will also need to be calculated individually, potentially impacting the overall tax liability for the couple.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [
+      "materialExceptionsCovered",
+      "materialAlternativesCovered",
+      "citationSupportsProposition",
+      "propositionSupported",
+      "materiallyComplete",
+      "treatmentDirectionMatches",
+      "sourcePropositionAligned",
+      "eligibleForVerifiedControlling",
+      "contradictsSources",
+      "answerContradictsControllingSource"
+    ],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [
+      "unsafe_value_fields:materialExceptionsCovered,materialAlternativesCovered,citationSupportsProposition,propositionSupported,materiallyComplete,treatmentDirectionMatches,sourcePropositionAligned,eligibleForVerifiedControlling,contradictsSources,answerContradictsControllingSource"
+    ],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": false,
+      "materialAlternativesCovered": false,
+      "citationRelevant": true,
+      "citationSupportsProposition": false,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": false,
+      "treatmentDirectionMatches": false,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": false,
+      "eligibleForVerifiedControlling": false,
+      "contradictsSources": false,
+      "unsupportedMaterialProposition": true,
+      "answerContradictsControllingSource": false
+    },
+    "reason": "unsafe_value_fields:materialExceptionsCovered,materialAlternativesCovered,citationSupportsProposition,propositionSupported,materiallyComplete,treatmentDirectionMatches,sourcePropositionAligned,eligibleForVerifiedControlling,contradictsSources,answerContradictsControllingSource"
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 24"
+    },
+    {
+      "label": "NIRC Sec. 23"
+    },
+    {
+      "label": "NIRC Sec. 27"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "65f05ff1943cec0b",
+  "requestSha256": "f57ecd433e0155c5f6fe7a864fc921c4b12e6ca87400ea150b7bb07682683fcd",
+  "responseSha256": "f060898fb56490048132a91ffbd65ef636759e77f62ccfb49d75ca36db9321c4"
+}

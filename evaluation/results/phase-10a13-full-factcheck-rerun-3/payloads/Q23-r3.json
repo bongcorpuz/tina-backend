@@ -1,0 +1,29 @@
+{
+  "id": "Q23",
+  "round": 3,
+  "prompt": "What is the holding-period rule for an individual's capital gain on personal property?",
+  "runtimeCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+  "answer": "TINA could not identify an indexed authority matching the specific transaction or claim described.\n\nThis does not mean that no law or authority exists.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "NO_INDEXED_SOURCE",
+    "legalConclusion": "UNKNOWN",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "FALLBACK",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": null,
+  "answerSupportSchemaValid": null,
+  "answerSupportVerifiedEligible": null,
+  "sources": [],
+  "sourceStatus": "NO_INDEXED_SOURCE",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "e0b6d39a7eade6b6",
+  "requestSha256": "a7da1d9f48678613d7c20419d8dac90497ad7003dc0e366abd25fa71af58b91b",
+  "responseSha256": "92acc2078a0471e35818c78ba2209fd2573c757b820861e024e9163a1c6c54d5"
+}

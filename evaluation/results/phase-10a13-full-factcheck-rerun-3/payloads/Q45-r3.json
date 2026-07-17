@@ -1,0 +1,47 @@
+{
+  "id": "Q45",
+  "round": 3,
+  "prompt": "Are PEZA-registered enterprises subject to corporate income tax?",
+  "runtimeCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+  "answer": "### Issue Presented\nAre PEZA-registered enterprises subject to corporate income tax in the Philippines?\n\n### Short Answer\nYes, PEZA-registered enterprises are subject to corporate income tax, but they may benefit from preferential tax rates or exemptions depending on their specific registration and compliance with PEZA regulations.\n\n### Controlling Authorities\nThe relevant provision is Section 27 of the National Internal Revenue Code (NIRC), which outlines the rates of income tax on domestic corporations. Specifically, it states that a corporate income tax rate of twenty-five percent (25%) is imposed on the taxable income derived from all sources within and without the Philippines by every corporation organized in, or existing under the laws of the Philippines.\n\n### Legal Interpretation\n\n### Practical Application\nPEZA-registered enterprises should ensure they are compliant with the regulations set by PEZA to avail of the 5% tax rate on gross income. This includes maintaining proper documentation and fulfilling operational requirements as mandated by PEZA. Failure to comply may result in the enterprise being subject to the standard corporate income tax rate of 25%. Therefore, it is crucial for these enterprises to consult with tax professionals to navigate their tax obligations effectively and maximize available incentives.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "error",
+    "gates": {
+      "structural": true
+    },
+    "reason": "validator_error_fail_closed"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 27"
+    },
+    {
+      "label": "NIRC Sec. 23"
+    },
+    {
+      "label": "NIRC Sec. 24"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "7c0f29ad5b95434f",
+  "requestSha256": "1d3c6cbc8e028ae95a6b1e6e68a034162e1ba548f15b3c568b314f780edbef5b",
+  "responseSha256": "f2e314b75ec94176b995ae09d016aff78a2478906bbffc36c4ac62f98ca23d57"
+}

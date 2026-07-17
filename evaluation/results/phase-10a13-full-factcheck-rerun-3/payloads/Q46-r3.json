@@ -1,0 +1,83 @@
+{
+  "id": "Q46",
+  "round": 3,
+  "prompt": "Is the sale of gold by a small-scale miner to the Bangko Sentral ng Pilipinas subject to VAT?",
+  "runtimeCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+  "answer": "### Issue Presented\nIs the sale of gold by a small-scale miner to the Bangko Sentral ng Pilipinas (BSP) subject to Value-Added Tax (VAT)?\n\n### Short Answer\nThe sale of gold by a small-scale miner to the Bangko Sentral ng Pilipinas is not subject to VAT. This is based on the provisions of the National Internal Revenue Code (NIRC) which exempt certain transactions from VAT.\n\n### Controlling Authorities\n1. **NIRC Section 106** - Value-Added Tax on Sale of Goods or Properties.\n2. **NIRC Section 108** - Value-Added Tax on the Sale of Services, Including Digital Services, and the Use or Lease of Properties.\n\n### Legal Interpretation\nUnder Section 106 of the NIRC, VAT is levied on every sale, barter, or exchange of goods or properties. However, certain sales are exempt from VAT, particularly those involving the sale of gold to the BSP, as it is considered a transaction that falls under the purview of government transactions which are typically exempt from VAT. Additionally, Section 108 outlines that the sale of goods to government entities, such as the BSP, may also be exempt from VAT depending on specific provisions or regulations that apply to such transactions.\n\n### Practical Application\nIn practice, small-scale miners selling gold to the BSP should not charge VAT on these transactions. They should ensure proper documentation to support the tax-exempt status of the sale, including any relevant BSP regulations or guidelines that confirm the VAT-exempt nature of such transactions. This will help in maintaining compliance and avoiding any potential tax liabilities.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [
+      "citationRelevant",
+      "citationSupportsProposition",
+      "propositionSupported",
+      "eligibleForVerifiedControlling",
+      "unsupportedMaterialProposition"
+    ],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [
+      "unsafe_value_fields:citationRelevant,citationSupportsProposition,propositionSupported,eligibleForVerifiedControlling,unsupportedMaterialProposition"
+    ],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": false,
+      "citationSupportsProposition": false,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": true,
+      "treatmentDirectionMatches": true,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": true,
+      "eligibleForVerifiedControlling": false,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": false,
+      "answerContradictsControllingSource": true
+    },
+    "reason": "unsafe_value_fields:citationRelevant,citationSupportsProposition,propositionSupported,eligibleForVerifiedControlling,unsupportedMaterialProposition"
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 106"
+    },
+    {
+      "label": "NIRC Sec. 108"
+    },
+    {
+      "label": "NIRC Sec. 105"
+    },
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "RR 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "a04fb01a1a1c3bfb",
+  "requestSha256": "dccb2d1a4b66e3c7ed167b6bec3ad712c1c0bf4ab6bf3f5aa6dce200da930c34",
+  "responseSha256": "4252ad2bc3adf984381b9577c3b8a6b02e5f00208ea4ee0bc8e3ee83bfd08039"
+}

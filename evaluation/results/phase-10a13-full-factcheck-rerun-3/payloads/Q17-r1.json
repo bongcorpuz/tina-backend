@@ -1,0 +1,29 @@
+{
+  "id": "Q17",
+  "round": 1,
+  "prompt": "What tax applies to a dividend paid to a nonresident alien not engaged in trade or business in the Philippines?",
+  "runtimeCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+  "answer": "TINA could not identify an indexed authority matching the specific transaction or claim described.\n\nThis does not mean that no law or authority exists.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "NO_INDEXED_SOURCE",
+    "legalConclusion": "UNKNOWN",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "FALLBACK",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": null,
+  "answerSupportSchemaValid": null,
+  "answerSupportVerifiedEligible": null,
+  "sources": [],
+  "sourceStatus": "NO_INDEXED_SOURCE",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "8d1e596c79e43477",
+  "requestSha256": "ba1365987859288a70c6eb72e0f034427341db388ca5abc3032613fa69e6082d",
+  "responseSha256": "3568e33afff872c1226e71d44b9bbc99e16297e8944aa4e0be049601af5bfd5c"
+}

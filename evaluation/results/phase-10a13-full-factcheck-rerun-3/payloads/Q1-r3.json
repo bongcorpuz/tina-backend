@@ -1,0 +1,72 @@
+{
+  "id": "Q1",
+  "round": 3,
+  "prompt": "Freelance graphic designer, ₱2.8 million annual gross receipts: Is VAT registration required?",
+  "runtimeCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+  "answer": "### Issue Presented\n\nHowever, since the gross receipts are below the threshold, VAT registration is not mandatory. Section 236 of the NIRC states that any person whose gross sales or receipts exceed the threshold must register for VAT. Therefore, as long as the gross receipts remain below ₱3 million, VAT registration is not required.\n\n### Quick Assessment\n- **Annual Gross Receipts**: ₱2.8 million\n- **VAT Registration Requirement**: Not required (as it is below the ₱3 million threshold).\n\n### BIR Likely Position\nThe Bureau of Internal Revenue (BIR) may argue that since the gross receipts are below the threshold, the graphic designer is not mandated to register for VAT.\n\n### Taxpayer Position / Defenses\nThe taxpayer can assert that their gross receipts do not exceed the VAT threshold, thus exempting them from VAT registration.\n\n### Documentary Support Needed\n- Proof of gross receipts (e.g., invoices, sales records).\n- Any relevant correspondence with the BIR regarding VAT registration.\n\n### Procedural Issues\nNone identified, as the taxpayer is not required to register for VAT based on the current gross receipts.\n\n### Risk Level\nLow risk of non-compliance regarding VAT registration, as the gross receipts are below the threshold.\n\n### Recommended Action\nContinue to monitor gross receipts. If they approach or exceed ₱3 million, prepare to register for VAT and comply with VAT filing requirements.\n\n### Relevant Facts / Assumptions\nThe factual circumstances have not been fully described. The analysis is based on the question as presented.\n\n### Alternative Interpretations\nNo alternative interpretations identified from the available indexed authorities.\n\n### Position Strength\nPosition strength is preliminary and subject to full fact pattern verification.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "treatmentDirectionMatches": true,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": true,
+      "eligibleForVerifiedControlling": true,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true,
+      "answerContradictsControllingSource": true
+    },
+    "reason": "The answer correctly states that VAT registration is not required for gross receipts below ₱3 million and covers all necessary issues."
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": true,
+  "sources": [
+    {
+      "label": "NIRC Sec. 109"
+    },
+    {
+      "label": "NIRC Sec. 236"
+    },
+    {
+      "label": "RR No. 16-2005"
+    },
+    {
+      "label": "RMC 75-2015"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "ee7553e084ec6fde",
+  "requestSha256": "5cfd4941b09da15435e33ddd0d244ac725e671a8f7affce6b1a6d73ddacca92b",
+  "responseSha256": "c329f5260ad28128b5d1ac2e16e7f8b7e776befa69672d54d16724982440d205"
+}

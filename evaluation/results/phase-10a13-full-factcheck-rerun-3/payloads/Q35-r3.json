@@ -1,0 +1,42 @@
+{
+  "id": "Q35",
+  "round": 3,
+  "prompt": "What BIR form is used for the annual ITR of a self-employed individual or professional?",
+  "runtimeCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+  "answer": "### Short Answer\nThe BIR form used for the annual Income Tax Return (ITR) of a self-employed individual or professional is BIR Form 1701.\n\n### Controlling Authorities\nThis is governed by the National Internal Revenue Code (NIRC) of 1997, specifically under Section 24, which outlines the income tax rates applicable to individuals, including self-employed individuals and professionals.\n\n### Interpretation\nBIR Form 1701 is specifically designed for individuals earning income from business or profession. It allows self-employed individuals to report their income, deductions, and compute their tax liability based on the applicable tax rates as stipulated in the NIRC.\n\n### Practical Meaning\nSelf-employed individuals and professionals must use BIR Form 1701 to ensure compliance with tax regulations. Properly filing this form is essential for accurately reporting income and fulfilling tax obligations, thereby avoiding penalties for non-compliance.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "citation-relevance",
+    "gates": {
+      "structural": true,
+      "citationRelevant": false
+    },
+    "reason": "displayed_sources_only_foundational_provisions"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 2"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "52aed1e283f93e5f",
+  "requestSha256": "3e34911867067fc245c477a195413063d0b1b24ee183828b4e61c713ddabc0b9",
+  "responseSha256": "c2da1ebee447cfe912ab4a70eb9b5bab4a869299b952e8520fe1f1e253cb99d1"
+}

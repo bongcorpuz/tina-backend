@@ -1,0 +1,29 @@
+{
+  "id": "Q21",
+  "round": 1,
+  "prompt": "How is DST computed on a sale of real property?",
+  "runtimeCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+  "answer": "TINA could not identify an indexed authority matching the specific transaction or claim described.\n\nThis does not mean that no law or authority exists.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "NO_INDEXED_SOURCE",
+    "legalConclusion": "UNKNOWN",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "FALLBACK",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": null,
+  "answerSupportSchemaValid": null,
+  "answerSupportVerifiedEligible": null,
+  "sources": [],
+  "sourceStatus": "NO_INDEXED_SOURCE",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "4a61ad6e95f1767a",
+  "requestSha256": "fe264f0c66779963e623aedbe67f465873520b27800308f01f132998f1fca3da",
+  "responseSha256": "8baf7c5f573dcc3420ae9c3e1d19ed2e737490b8d70ea8cb3812e42c82ffb3af"
+}

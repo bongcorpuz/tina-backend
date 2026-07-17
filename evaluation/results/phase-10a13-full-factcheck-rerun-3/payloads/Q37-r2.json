@@ -1,0 +1,41 @@
+{
+  "id": "Q37",
+  "round": 2,
+  "prompt": "What is the BIR assessment period when a taxpayer filed a return?",
+  "runtimeCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+  "answer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nFor taxpayers, this means that they can generally expect the BIR to assess their tax liabilities within three years of filing their returns. However, if there are any discrepancies or fraudulent activities identified, the BIR retains the right to assess taxes for up to ten years. Taxpayers should maintain accurate records and ensure compliance to avoid extended assessment periods.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "gates": {
+      "structural": false
+    },
+    "reason": "empty_primary_answer_section"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 22"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "06cc76180a0fd73b",
+  "requestSha256": "765be14241a99d53daac2342c0285eee61d65441c857dab333ba5a114dfa0b89",
+  "responseSha256": "d6bf346ad816c95b5424fc425a9fa50fe62587c76fd0c87f97d67cdfde1f06c0"
+}

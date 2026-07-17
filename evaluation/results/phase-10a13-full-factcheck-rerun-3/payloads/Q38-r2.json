@@ -1,0 +1,72 @@
+{
+  "id": "Q38",
+  "round": 2,
+  "prompt": "Is a new business required to register with the BIR, and what form is used?",
+  "runtimeCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+  "answer": "### Short Answer\nYes, a new business is required to register with the Bureau of Internal Revenue (BIR) before commencing operations. The form used for registration is BIR Form No. 1901 for self-employed individuals or BIR Form No. 1902 for employees earning compensation income.\n\n### Interpretation\n\n### Practical Meaning\nFor new businesses, timely registration with the BIR is crucial to avoid penalties and ensure compliance with tax laws. Completing the appropriate registration form allows the business to obtain a Tax Identification Number (TIN), which is necessary for all tax-related transactions. Failure to register can lead to complications in tax compliance and potential legal issues with the BIR.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "treatmentDirectionMatches": true,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": true,
+      "eligibleForVerifiedControlling": true,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true,
+      "answerContradictsControllingSource": true
+    },
+    "reason": "The answer correctly addresses the registration requirement and the forms used without errors."
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": true,
+  "sources": [
+    {
+      "label": "RR No. 11-2018"
+    },
+    {
+      "label": "RR No. 2-1998"
+    },
+    {
+      "label": "NIRC Sec. 2"
+    },
+    {
+      "label": "NIRC Sec. 3"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "1ca45b358037f24d",
+  "requestSha256": "336bd44612d5e16be9df5dec5097185256d33367bb386bd75c5777e1ef844a56",
+  "responseSha256": "6820ed4f4f5ded5c93f667313fcc95f0cccec07d5bcc6992c76da5650a288b97"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "Q43",
+  "round": 3,
+  "prompt": "What is Oplan Kandado and when can it be applied?",
+  "runtimeCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+  "answer": "TINA could not identify an indexed authority matching the specific transaction or claim described.\n\nThis does not mean that no law or authority exists.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "NO_INDEXED_SOURCE",
+    "legalConclusion": "UNKNOWN",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "FALLBACK",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": null,
+  "answerSupportSchemaValid": null,
+  "answerSupportVerifiedEligible": null,
+  "sources": [],
+  "sourceStatus": "NO_INDEXED_SOURCE",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "00ce0ce165c9386f",
+  "requestSha256": "cd203d71ca0ef452e778560c115f125fe1fc11b6ca868eed2f87273d59062dfc",
+  "responseSha256": "bf0df93f17be73642ace932d99db7d8a99c73eeabe52813602240641b404d413"
+}

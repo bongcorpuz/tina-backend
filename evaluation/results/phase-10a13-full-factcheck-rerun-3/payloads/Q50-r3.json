@@ -1,0 +1,29 @@
+{
+  "id": "Q50",
+  "round": 3,
+  "prompt": "What is the current rule on Official Receipts versus Sales Invoices?",
+  "runtimeCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+  "answer": "TINA could not identify an indexed authority matching the specific transaction or claim described.\n\nThis does not mean that no law or authority exists.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "NO_INDEXED_SOURCE",
+    "legalConclusion": "UNKNOWN",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "FALLBACK",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": null,
+  "answerSupportSchemaValid": null,
+  "answerSupportVerifiedEligible": null,
+  "sources": [],
+  "sourceStatus": "NO_INDEXED_SOURCE",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "93fc7bab89e256eb",
+  "requestSha256": "b9a15b951188416ebfa52acdad87de9dbe5060c3fdc197bf223870fe1ba4511b",
+  "responseSha256": "72676adcb6e8e2f3b843ddcf461747b6ab9b523545358d966c1b890c929589c8"
+}

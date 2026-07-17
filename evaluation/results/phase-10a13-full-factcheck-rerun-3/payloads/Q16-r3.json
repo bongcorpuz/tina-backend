@@ -1,0 +1,29 @@
+{
+  "id": "Q16",
+  "round": 3,
+  "prompt": "Are prizes won in a Philippine competition taxable?",
+  "runtimeCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+  "answer": "TINA could not identify an indexed authority matching the specific transaction or claim described.\n\nThis does not mean that no law or authority exists.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "NO_INDEXED_SOURCE",
+    "legalConclusion": "UNKNOWN",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "FALLBACK",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": null,
+  "answerSupportSchemaValid": null,
+  "answerSupportVerifiedEligible": null,
+  "sources": [],
+  "sourceStatus": "NO_INDEXED_SOURCE",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "e20e2ecb260f5c47",
+  "requestSha256": "b999e4981e7b7af3d009fc08394786456894d6640d34b6d46d5ec7f2d2e4c46b",
+  "responseSha256": "17d6f0d83b7ef5f3f4ca6d0e1ee0cf3f0fd45706f9f124a4b3fdf9e9d7fa4755"
+}

@@ -1,0 +1,88 @@
+{
+  "id": "Q8",
+  "round": 3,
+  "prompt": "Is leasing a residential unit at ₱15,000 per month subject to VAT?",
+  "runtimeCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+  "answer": "### Issue Presented\nIs leasing a residential unit at ₱15,000 per month subject to VAT?\n\n### Short Answer\nYes, leasing a residential unit at ₱15,000 per month is subject to VAT under certain conditions.\n\n### Controlling Authorities\nThe relevant provisions are found in the National Internal Revenue Code (NIRC) Sections 105 and 108. Section 105 states that any person who, in the course of trade or business, leases properties is subject to VAT. Section 108 specifically addresses the VAT on the lease of properties.\n\n### Legal Interpretation\nUnder Section 105 of the NIRC, any person engaged in the business of leasing properties is liable for VAT. Section 108 further clarifies that the VAT is levied on the gross sales derived from the lease of properties. The current VAT rate is 12%. However, residential leases are generally exempt from VAT if the monthly rental does not exceed ₱15,000. Therefore, if the lease amount is exactly ₱15,000, it is on the threshold and may not be subject to VAT, provided that the lessor is not VAT-registered.\n\n### Practical Application\nIn practice, if the lessor is not VAT-registered and the rental amount is ₱15,000 or less, the lease is exempt from VAT. However, if the lessor is VAT-registered, they must charge VAT on the rental amount regardless of the threshold. It is advisable for lessors to confirm their VAT registration status and ensure compliance with the applicable tax regulations.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [
+      "materialAlternativesCovered",
+      "citationSupportsProposition",
+      "propositionSupported",
+      "materiallyComplete",
+      "treatmentDirectionMatches",
+      "sourcePropositionAligned",
+      "eligibleForVerifiedControlling",
+      "contradictsSources",
+      "unsupportedMaterialProposition",
+      "answerContradictsControllingSource"
+    ],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [
+      "unsafe_value_fields:materialAlternativesCovered,citationSupportsProposition,propositionSupported,materiallyComplete,treatmentDirectionMatches,sourcePropositionAligned,eligibleForVerifiedControlling,contradictsSources,unsupportedMaterialProposition,answerContradictsControllingSource"
+    ],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": false,
+      "citationRelevant": true,
+      "citationSupportsProposition": false,
+      "substantive": true,
+      "propositionSupported": false,
+      "materiallyComplete": false,
+      "treatmentDirectionMatches": false,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": false,
+      "eligibleForVerifiedControlling": false,
+      "contradictsSources": false,
+      "unsupportedMaterialProposition": false,
+      "answerContradictsControllingSource": false
+    },
+    "reason": "unsafe_value_fields:materialAlternativesCovered,citationSupportsProposition,propositionSupported,materiallyComplete,treatmentDirectionMatches,sourcePropositionAligned,eligibleForVerifiedControlling,contradictsSources,unsupportedMaterialProposition,answerContradictsControllingSource"
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 105"
+    },
+    {
+      "label": "NIRC Sec. 106"
+    },
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "NIRC Sec. 108"
+    },
+    {
+      "label": "RR 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "103f827f5cec7c8d",
+  "requestSha256": "f8110e36b9914e561fc90df66c09ad734ffbc376469d14b8eecdbcacbe76c95c",
+  "responseSha256": "cd0ba865c3da0a2c5df9e48e70c8ed799f3bb97f6d612e8cc1f2aaae29c7fe9b"
+}

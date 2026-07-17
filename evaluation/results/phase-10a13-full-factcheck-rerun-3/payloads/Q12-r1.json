@@ -1,0 +1,69 @@
+{
+  "id": "Q12",
+  "round": 1,
+  "prompt": "Is an individual with ₱250,000 gross compensation income in 2024 required to file an income tax return?",
+  "runtimeCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+  "answer": "### Short Answer\nAn individual with ₱250,000 gross compensation income in 2024 is not required to file an income tax return, as this amount is exempt from income tax under the current tax regulations.\n\n### Controlling Authorities\nThe relevant provision is Section 24 of the National Internal Revenue Code (NIRC), which states that individuals with a taxable income not exceeding ₱250,000 are exempt from income tax.\n\n### Interpretation\nAccording to Section 24 of the NIRC, the income tax rates for individuals indicate that for the taxable year 2024, individuals earning not over ₱250,000 are subject to a 0% tax rate. This means that their gross compensation income does not create a tax liability, and thus, they are not mandated to file an income tax return.\n\n### Practical Meaning\nIn practical terms, individuals earning ₱250,000 or less in gross compensation income can benefit from the tax exemption, relieving them from the obligation to file an income tax return. This simplifies their tax compliance and reduces administrative burdens for those within this income bracket.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "treatmentDirectionMatches": true,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": true,
+      "eligibleForVerifiedControlling": true,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true,
+      "answerContradictsControllingSource": true
+    },
+    "reason": "The answer correctly states the filing requirement based on current tax law."
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": true,
+  "sources": [
+    {
+      "label": "NIRC Sec. 24"
+    },
+    {
+      "label": "NIRC Sec. 23"
+    },
+    {
+      "label": "NIRC Sec. 27"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "9f8aa2506de68f5f",
+  "requestSha256": "5e5a1954b51dfea409065f64d8b3765b87099c166867e73b7ca12d416945bfb7",
+  "responseSha256": "ca67e582e412c40fc46987661793ce75ac63e061431cf657834148096e95dd6c"
+}

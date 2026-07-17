@@ -1,0 +1,44 @@
+{
+  "id": "Q49",
+  "round": 2,
+  "prompt": "Is the importation of personal effects or household goods by a returning resident subject to VAT?",
+  "runtimeCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+  "answer": "### Issue Presented\nIs the importation of personal effects or household goods by a returning resident subject to VAT?\n\n### Short Answer\nYes, the importation of personal effects or household goods by a returning resident is subject to VAT. This is governed by Section 107 of the National Internal Revenue Code (NIRC).\n\n### Controlling Authorities\n- **NIRC Section 107**: Value-Added Tax on Importation of Goods.\n- **RR 16-2005**: Implementing regulations for VAT on importation.\n\n### Legal Interpretation\n\nFurthermore, RR 16-2005 clarifies that all importations, regardless of the nature of the goods, are subject to VAT unless specifically exempted under the law. Personal effects and household goods do not fall under any exempt categories, thus making them liable for VAT upon importation.\n\n### Practical Application\nReturning residents should be aware that when importing personal effects or household goods, they will incur a VAT liability. It is advisable for them to prepare for this tax obligation as part of their importation process. Proper documentation and valuation of the goods will be necessary to ensure compliance with customs regulations and to facilitate the payment of VAT before the release of their imported items.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "error",
+    "gates": {
+      "structural": true
+    },
+    "reason": "validator_error_fail_closed"
+  },
+  "answerSupportSchemaValid": false,
+  "answerSupportVerifiedEligible": false,
+  "sources": [
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "RR No. 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "6755061239c42873",
+  "requestSha256": "87f763489e8bac4cb10b022a3cffe67aa58fe46ba2b9873048c4052c86c655a1",
+  "responseSha256": "01080c81e1c56a402b057d548aa02bece296740a26df7b4e2c1e8e342adc0016"
+}

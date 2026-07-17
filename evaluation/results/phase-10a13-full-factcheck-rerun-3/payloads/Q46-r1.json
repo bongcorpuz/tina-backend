@@ -1,0 +1,75 @@
+{
+  "id": "Q46",
+  "round": 1,
+  "prompt": "Is the sale of gold by a small-scale miner to the Bangko Sentral ng Pilipinas subject to VAT?",
+  "runtimeCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+  "answer": "### Issue Presented\nIs the sale of gold by a small-scale miner to the Bangko Sentral ng Pilipinas (BSP) subject to Value-Added Tax (VAT)?\n\n### Short Answer\nThe sale of gold by a small-scale miner to the Bangko Sentral ng Pilipinas is not subject to VAT.\n\n### Controlling Authorities\nThis conclusion is supported by Section 106 of the National Internal Revenue Code (NIRC), which states that VAT is levied on every sale of goods or properties, but certain transactions, including those involving the BSP, may be exempt.\n\n### Legal Interpretation\nUnder Section 106 of the NIRC, the VAT is imposed on the sale of goods or properties. However, the sale of gold to the BSP is treated differently due to the nature of the transaction and the BSP's role as a government entity. The BSP is involved in the monetary policy and management of the country's gold reserves, and transactions with it may be exempt from VAT under specific provisions or interpretations of tax law.\n\n### Practical Application\nFor small-scale miners selling gold to the BSP, it is essential to document the transaction properly and ensure compliance with any reporting requirements. Since the sale is not subject to VAT, the miners should not charge VAT on the sale price. However, they should also be aware of any other applicable taxes or regulations that may affect their operations.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT",
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "schemaValid": true,
+    "missingFields": [],
+    "invalidTypeFields": [],
+    "invalidValueFields": [],
+    "inheritedFieldsRejected": [],
+    "failureReasons": [],
+    "gates": {
+      "structural": true,
+      "answerResponsive": true,
+      "primaryIssueAnswered": true,
+      "requiredIssueKeysCovered": true,
+      "materialExceptionsCovered": true,
+      "materialAlternativesCovered": true,
+      "citationRelevant": true,
+      "citationSupportsProposition": true,
+      "substantive": true,
+      "propositionSupported": true,
+      "materiallyComplete": true,
+      "treatmentDirectionMatches": true,
+      "thresholdDimensionMatches": true,
+      "sourcePropositionAligned": true,
+      "eligibleForVerifiedControlling": true,
+      "contradictsSources": true,
+      "unsupportedMaterialProposition": true,
+      "answerContradictsControllingSource": true
+    },
+    "reason": "The answer correctly states that the sale of gold to the BSP is not subject to VAT and is supported by relevant legal provisions."
+  },
+  "answerSupportSchemaValid": true,
+  "answerSupportVerifiedEligible": true,
+  "sources": [
+    {
+      "label": "NIRC Sec. 106"
+    },
+    {
+      "label": "NIRC Sec. 105"
+    },
+    {
+      "label": "NIRC Sec. 107"
+    },
+    {
+      "label": "NIRC Sec. 108"
+    },
+    {
+      "label": "RR 16-2005"
+    }
+  ],
+  "sourceStatus": "AUTHORITY_FOUND",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "2ce1d93ff4995ab5",
+  "requestSha256": "f34550b2b1f728d5ec268f86af6d43f92fd013fed8371adcf686515059be63ba",
+  "responseSha256": "a8d4ef2d55489c41f1e5027a3ce50f376122c5914ee16f603d3e55c05f13868e"
+}

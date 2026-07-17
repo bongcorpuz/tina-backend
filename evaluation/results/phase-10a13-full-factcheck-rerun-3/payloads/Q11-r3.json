@@ -1,0 +1,29 @@
+{
+  "id": "Q11",
+  "round": 3,
+  "prompt": "Is ₱80,000 of 13th-month pay received by a rank-and-file employee taxable?",
+  "runtimeCommit": "d71b913ddf39726234dd02d858fac3e5275e865b",
+  "answer": "TINA could not identify an indexed authority matching the specific transaction or claim described.\n\nThis does not mean that no law or authority exists.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "NO_INDEXED_SOURCE",
+    "legalConclusion": "UNKNOWN",
+    "humanReviewRequired": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "responseKind": "FALLBACK",
+    "specificAuthorityNotFound": false
+  },
+  "answerSupport": null,
+  "answerSupportSchemaValid": null,
+  "answerSupportVerifiedEligible": null,
+  "sources": [],
+  "sourceStatus": "NO_INDEXED_SOURCE",
+  "persistence": {
+    "count": 2
+  },
+  "sanitizedConversationRef": "66e9a1110140f0a8",
+  "requestSha256": "41eb22dd506cc94951f7a68631375cc2bb0b1b0429dc1eee5a4e6f31063a8a8e",
+  "responseSha256": "33222bede6c9149f410217026e62d9e54ce75bb13faadf3e3dbf062b36656843"
+}
