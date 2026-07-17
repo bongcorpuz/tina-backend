@@ -1,0 +1,86 @@
+[
+  {
+    "id": "mixed-doc-1",
+    "expected": "filing_obligation fail-closed",
+    "actual": "OPEN:none",
+    "finding": "P1-1"
+  },
+  {
+    "id": "mixed-doc-2",
+    "expected": "filing_obligation fail-closed",
+    "actual": "CLOSED:filing_obligation",
+    "finding": null
+  },
+  {
+    "id": "mixed-protest",
+    "expected": "filing_obligation fail-closed",
+    "actual": "OPEN:none",
+    "finding": "P1-1"
+  },
+  {
+    "id": "mixed-refund",
+    "expected": "filing_obligation fail-closed",
+    "actual": "OPEN:none",
+    "finding": "P1-1"
+  },
+  {
+    "id": "taglish-kelan",
+    "expected": "filing_deadline fail-closed",
+    "actual": "CLOSED:filing_deadline",
+    "finding": null
+  },
+  {
+    "id": "taglish-pwede",
+    "expected": "filing_deadline fail-closed",
+    "actual": "OPEN:none",
+    "finding": "P1-2"
+  },
+  {
+    "id": "taglish-ipasa",
+    "expected": "filing_obligation fail-closed",
+    "actual": "CLOSED:filing_obligation",
+    "finding": null
+  },
+  {
+    "id": "deadline-still-today",
+    "expected": "filing_deadline fail-closed",
+    "actual": "OPEN:none",
+    "finding": "P1-2"
+  },
+  {
+    "id": "deadline-filing-date",
+    "expected": "filing_deadline fail-closed",
+    "actual": "CLOSED:filing_deadline",
+    "finding": null
+  },
+  {
+    "id": "cross-individual-estate-auth",
+    "expected": "filing_deadline fail-closed because authority tax type mismatched",
+    "actual": "OPEN:filing_deadline",
+    "finding": "P1-3"
+  },
+  {
+    "id": "cross-estate-individual-auth",
+    "expected": "filing_deadline fail-closed because authority tax type mismatched",
+    "actual": "OPEN:filing_deadline",
+    "finding": "P1-3"
+  },
+  {
+    "id": "estate-correct-no-estate-auth",
+    "expected": "tax_computation_basis fail-closed because estate authority absent",
+    "actual": "OPEN:tax_computation_basis",
+    "finding": "P1-4"
+  },
+  {
+    "id": "estate-phrase-balance",
+    "expected": "tax_computation_basis fail-closed as standard-deduction-threshold misstatement",
+    "actual": "OPEN:tax_computation_basis; estateBaseMisstatement=false",
+    "finding": "P1-5"
+  },
+  {
+    "id": "overfire-refund",
+    "expected": "no filing/deadline overfire",
+    "actual": "OPEN:none",
+    "finding": null
+  }
+]

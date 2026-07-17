@@ -1,0 +1,119 @@
+{
+  "phase": "PHASE-10A14-R2-FILING-OBLIGATION-DEADLINE-AND-ESTATE-TAX-SEMANTIC-PROPOSITION-COVERAGE-REMEDIATION-1-INDEPENDENT-REVIEW-1",
+  "reviewer": "Codex GPT-5",
+  "date": "2026-07-17",
+  "decision": "REVISIONS REQUIRED",
+  "repository": "C:\\Projects\\tina-backend",
+  "branch": "feature/source-availability-engine-v1",
+  "headVerified": "1aaada2d1eadb2c2a6d8ed41dd563755181ae77e",
+  "expectedAncestryVerified": true,
+  "sync": {
+    "behind": 0,
+    "ahead": 0
+  },
+  "protectedPathsPreserved": [
+    ".claude/",
+    ".vscode/",
+    "evaluation/factcheck/"
+  ],
+  "runnerVerification": {
+    "deterministic": {
+      "command": "node scripts/run-regressions.mjs",
+      "syntaxChecks": {
+        "run": 10,
+        "failed": 0
+      },
+      "deterministicSuites": {
+        "run": 192,
+        "failed": 0
+      },
+      "exitCode": 0
+    },
+    "stagingRestrictedSandbox": {
+      "command": "node scripts/run-staging-smokes.mjs",
+      "stagingSuites": {
+        "run": 7,
+        "failed": 1
+      },
+      "exitCode": 1,
+      "note": "Phase 09R reported staging temporarily unreachable in restricted sandbox."
+    },
+    "stagingNetworkEnabled": {
+      "command": "node scripts/run-staging-smokes.mjs",
+      "stagingSuites": {
+        "run": 7,
+        "failed": 0
+      },
+      "exitCode": 0
+    }
+  },
+  "hashReconciliation": {
+    "executorEvidenceManifestEntries": 59,
+    "executorEvidenceManifestMismatches": 0,
+    "status": "MANIFEST_OK"
+  },
+  "findings": [
+    {
+      "id": "P1-1",
+      "severity": "P1",
+      "title": "Mixed-object suppression still bypasses decisive filing-obligation propositions",
+      "evidence": [
+        "Do I need an ITR and what documents should I submit? / You do not need to file an ITR, but retain supporting documents. -> OPEN:none",
+        "What do I file? / File the protest, but no annual return is required. -> OPEN:none",
+        "The refund claim was filed, but must the taxpayer also file an ITR? / Yes, the taxpayer must file an income tax return. -> OPEN:none"
+      ]
+    },
+    {
+      "id": "P1-2",
+      "severity": "P1",
+      "title": "Common return-deadline formulations remain materially bypassable",
+      "evidence": [
+        "Can I still file today? / Yes, you can still file the annual return until April 15. -> OPEN:none",
+        "Pwede pa bang mag-file? / You can still file the income tax return until April 15. -> OPEN:none"
+      ]
+    },
+    {
+      "id": "P1-3",
+      "severity": "P1",
+      "title": "Filing-deadline authority matching is not tax-type specific",
+      "evidence": [
+        "Individual ITR deadline with only NIRC Sec. 90/91 estate-return authority -> OPEN:filing_deadline",
+        "Estate-tax return deadline with only NIRC Sec. 51 individual filing authority -> OPEN:filing_deadline"
+      ]
+    },
+    {
+      "id": "P1-4",
+      "severity": "P1",
+      "title": "Correct estate-tax computation propositions are not required to have estate computation authority in the deterministic gate",
+      "evidence": [
+        "Correct net-estate computation with only NIRC Sec. 1 and Sec. 6 -> OPEN:tax_computation_basis"
+      ]
+    },
+    {
+      "id": "P1-5",
+      "severity": "P1",
+      "title": "Estate-base misstatement detection remains phrase-dependent",
+      "evidence": [
+        "The estate tax is 6% on the net estate amount above the standard deduction. -> estateBaseMisstatement=false"
+      ]
+    },
+    {
+      "id": "P2-1",
+      "severity": "P2",
+      "title": "Focused R2 tests do not cover the material failures found by independent probes"
+    },
+    {
+      "id": "P2-2",
+      "severity": "P2",
+      "title": "Committed live reconciliation presentation is internally inconsistent for ES-09"
+    }
+  ],
+  "severityCounts": {
+    "P0": 0,
+    "P1": 5,
+    "P2": 2,
+    "P3": 0
+  },
+  "unauthorizedActionsPerformed": false,
+  "nextAuthorizedAction": "R2 remediation revision is required before any PASS, Phase 10A closure, Phase 10B/10C, adversarial release testing, production deployment, reindexing, model change, or full 50x3 rerun."
+}
