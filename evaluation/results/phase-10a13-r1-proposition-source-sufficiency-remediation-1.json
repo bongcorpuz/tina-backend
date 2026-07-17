@@ -1,0 +1,86 @@
+{
+  "task": "PHASE-10A13-R1-PROPOSITION-SOURCE-SUFFICIENCY-REMEDIATION-1",
+  "startingHead": "d6fbf2977d02c86c57dba85b44eea52220bd580f",
+  "runtimeCommit": "508a64dce8219d2dcfc82dcd226ed7fdbc015fb6",
+  "model": "gpt-4o-mini",
+
+  "reproduction": {
+    "method": "committed A13 payload replay through the pre-patch validator",
+    "Q38_r1_r2_r3_preVerified": true,
+    "Q46_r1_preVerified": true,
+    "prePatchGateCaught": false,
+    "note": "All four committed as VERIFIED_CONTROLLING; the pre-patch proposition gate returned applicable=false (uncaught), proving the runtime permitted the invalid/questionable verification."
+  },
+
+  "remediation": {
+    "control": "evaluatePropositionSourceSufficiency extended with two class-based sub-gates",
+    "classes": ["registration_procedural", "vat_exception"],
+    "classBased": true,
+    "usesQuestionIdsOrExactStringsOrDenyLists": false,
+    "registrationRule": "registration / form-selection / registration-procedure propositions require registration authority (NIRC Sec 236/237/238, registration RRs/RMCs); fail closed on foundational (Sec 1-6), withholding, general, or topically adjacent authority.",
+    "vatExceptionRule": "transaction-specific exempt / zero-rated / not-subject-to-VAT / outside-scope claims require exemption/zero-rating/exception authority (Sec 109, zero-rating subsections, specific exception/incentive laws); fail closed on general VAT-imposition authority alone.",
+    "passageGrounding": "not implemented (would require retrieval/corpus change); recorded as continuing P2"
+  },
+
+  "postPatchDeterministic": {
+    "Q38_committedReplay": "fails closed (registration_proposition_without_registration_authority)",
+    "Q46_committedReplay": "fails closed (vat_exception_proposition_without_exception_authority)",
+    "a13ValidVerifiedNewlyBlocked": 0,
+    "note": "Replaying all 30 committed A13 verified payloads: only Q38 (x3) and Q46 (x1) newly fail closed; the 26 valid verified are unaffected."
+  },
+
+  "targetedLiveValidation": {
+    "runtimeCommit": "508a64dce8219d2dcfc82dcd226ed7fdbc015fb6",
+    "totalRuns": 23,
+    "q38": { "runs": 8, "verified": 0, "invalidVerified": 0 },
+    "q46": { "exactRuns": 5, "exactVerified": 0, "paraphraseRuns": 2, "paraphraseVerified": 1, "invalidVerified": 0, "note": "Q46-p1 verified is VALID: correctly classifies VAT-exempt and cites the controlling Sec 109 exemption authority (preserved reachability). Q46 exact x5 fail closed on general VAT authority." },
+    "priorClusters": { "q5Verified": 0, "q8Verified": 0, "q25Verified": 0, "q36Verified": 0 },
+    "validReachabilityVerified": ["Q46-p1", "Q47-a"],
+    "outcomePredictionVerified": 0,
+    "persistenceFailures": 0,
+    "invalidVerified": 0,
+    "questionableVerified": 0
+  },
+
+  "priorSafeguardPreservation": {
+    "q5InvalidVerified": 0, "q8InvalidVerified": 0, "q25InvalidVerified": 0, "q36InvalidVerified": 0,
+    "validVerifiedReachable": true, "q5UnsafeApprovals": 0,
+    "accessorGetterExecutions": 0, "accessorExceptions": 0, "accessorVerified": 0,
+    "unrestrictedOutcomePrediction": 0, "fabricatedAuthority": 0, "falseRefusal": 0,
+    "modelValidatorOverrodeFailedGate": false
+  },
+
+  "focusedTests": { "a13r1": 17, "a12r6": 17, "a12r1": 19, "a12r3": 20, "a12r2": 10, "a10r1": 22, "a10r2": 27, "a8": 24, "allPass": true },
+
+  "regression": {
+    "deterministicCycle1": { "suites": 190, "failed": 0, "exit": 0 },
+    "deterministicCycle2": { "suites": 190, "failed": 0, "exit": 0 },
+    "stagingCycle1": { "suites": 7, "failed": 0, "exit": 0 },
+    "stagingCycle2": { "suites": 7, "failed": 0, "exit": 0 },
+    "combinedSuites": 197,
+    "suiteDelta": "+1 vs prior 196 = new R1 focused suite (justified)"
+  },
+
+  "officialAuthorityOnly": true,
+  "securityScan": "clean",
+  "countsReconciled": true,
+  "worktreeClean": true,
+  "runtimeScope": "validator code + focused tests + two fixture corrections only; no corpus/index/model/frontend/DevFactory/production change",
+
+  "currentP0Count": 0,
+  "currentP1Count": 0,
+  "currentP2Count": 6,
+  "currentP3Count": 1,
+
+  "phase10AStatus": "REOPENED_PENDING_INDEPENDENT_REVIEW",
+  "phase10BStatus": "BLOCKED",
+  "phase10CStatus": "BLOCKED",
+  "a13ClosureAuthorized": false,
+  "adversarialStatus": "DEFERRED",
+  "productionStatus": "NOT_AUTHORIZED",
+  "reindexStatus": "NOT_AUTHORIZED",
+  "modelChangeStatus": "NOT_AUTHORIZED",
+
+  "decision": "PASS",
+  "decisionRationale": "Both A13 P1 defect classes are remediated by class-based deterministic controls (no question IDs/strings/deny lists): Q38-class registration/procedural and Q46-class transaction-specific VAT exception now fail closed on non-controlling authority. Committed-payload replay proves the pre-patch runtime permitted them and the patched runtime blocks them; targeted live validation shows Q38 0 verified (8 runs) and Q46 exact 0 verified, with valid VAT-exemption reachability preserved (Q46-p1 verifies correctly on Sec 109) and valid registration reachability preserved. Q5/Q8/Q25/Q36 protections intact (0 verified); accessor 0/0/0; outcome-prediction holds; false refusal 0; fabricated authority 0. Deterministic runner passes twice (190/0) and staging twice (7/7); all focused tests pass; security clean; worktree clean. Does NOT authorize another full 50x3 rerun, Phase 10A closure, adversarial, 10B/10C, model change, reindex, or deployment; the independent review is the next step."
+}

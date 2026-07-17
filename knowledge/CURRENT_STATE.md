@@ -9298,6 +9298,28 @@ Next task: generalize evaluatePropositionSourceSufficiency to the registration/p
 Artifacts: PHASE-10A13-FULL-FACTCHECK-RERUN-3_REPORT.md; evaluation/results/phase-10a13-full-factcheck-rerun-3.json; evaluation/results/phase-10a13-full-factcheck-rerun-3/ (a13-execution-manifest.json, a13-execution-manifest.sha256, source-bank-question-hashes.sha256, payloads x150, a13-runlog.jsonl, a13-retry-log.jsonl, count-reconciliation.json, fact-check-reconciliation-matrix.md, verified-adjudication-worksheet.md, invalid-questionable-register.md, cross-run-consistency-report.md, deterministic-gate-prerun.txt, staging-gate-prerun.txt, deterministic-gate-postrun.txt, staging-gate-postrun.txt, security-and-scope-review.md, EVIDENCE_MANIFEST.sha256). Commits d71b913 (pre-execution manifest, pushed pre-live), cb4c197 (150-run evidence), final result/report/CURRENT_STATE commit follows. No runtime/validator code change.
 ```
 
+## Phase 10A13-R1 Proposition-Source-Sufficiency Remediation 1 -- PHASE 10A13-R1 PASS (2026-07-17):
+
+```text
+PHASE-10A13-R1-PROPOSITION-SOURCE-SUFFICIENCY-REMEDIATION-1 executed by Claude Code (Opus 4.8, low speed) to remediate the A13-confirmed source-card-laundering P1 classes (Q38 registration/procedural; Q46 transaction-specific VAT exception). Backend start HEAD d6fbf29; runtime commit 508a64d; sync 0 0. Frontend (c7569229), Dev Factory, corpus, index, model untouched. Protected untracked .claude/.vscode/evaluation/factcheck untouched.
+
+WS1 reproduction: replaying the committed A13 payloads through the pre-patch validator, Q38-r1/r2/r3 + Q46-r1 all verifiedEligible=true and the pre-patch proposition gate returned applicable=false (uncaught) -- proving the runtime permitted the defects.
+
+FIX: extended evaluatePropositionSourceSufficiency with two class-based sub-gates (no question IDs/exact prompts/answer-strings/deny lists), source-card-keyed, deterministic, fail-closed: (1) registration_procedural -- registration/form-selection/registration-procedure propositions require registration authority (NIRC Sec 236/237/238, registration RRs/RMCs); fail closed on foundational (Sec 1-6)/withholding/general/adjacent authority; a tax-RETURN-form question is not a registration act. (2) vat_exception -- transaction-specific exempt/zero-rated/not-subject-to-VAT/outside-scope claims require exemption/zero-rating/exception authority (Sec 109, zero-rating subsections, specific exception/incentive laws); fail closed on general VAT-imposition authority alone. Income-tax exemption is not misclassified as VAT; passage-grounding deferred as continuing P2.
+
+POST-PATCH: committed-payload replay -> Q38 (x3) + Q46 (x1) fail closed; the 26 valid A13 verified unaffected (0 false refusals introduced). 17 focused tests pass; all validator suites green (2 prior fixtures corrected to supply the matching source card their prose claims -- Q8 exempt->Sec 109; registration now a covered class).
+
+TARGETED LIVE (runtime 508a64d, 23 runs, local server vs real staging Supabase + real OpenAI gpt-4o-mini): Q38 exact x5 + 3 paraphrases -> 0 verified (proposition-source-sufficiency); Q46 exact x5 -> 0 verified; Q46-p1 VALID verified (correctly VAT-exempt on controlling Sec 109 -> preserved reachability); Q5/Q8/Q25/Q36 -> 0 verified (preserved); Q47 valid verified; RES outcome-prediction held; persist=2 all; invalid verified 0, questionable 0. Prior safeguards: accessor 0/0/0; false refusal 0; fabricated authority 0; model validator did not override any failed deterministic gate. Regression: deterministic 190/0 exit 0 x2; staging 7/7 exit 0 x2; combined 197 (+1 new R1 focused suite). Security clean.
+
+Severity: P0=0. P1=0. P2=6. P3=1. Security 0.
+
+Decision: PHASE 10A13-R1 PASS. Phase 10A remains REOPENED_PENDING_INDEPENDENT_REVIEW (NOT closed). Phase 10B: BLOCKED. Phase 10C: BLOCKED. Adversarial: DEFERRED. Another full 50x3 / A13 closure / production / reindex / model-change: NOT AUTHORIZED.
+
+Next task: PHASE-10A13-R1-PROPOSITION-SOURCE-SUFFICIENCY-REMEDIATION-1-INDEPENDENT-REVIEW-1 (a model that did not execute this remediation).
+
+Artifacts: PHASE-10A13-R1-PROPOSITION-SOURCE-SUFFICIENCY-REMEDIATION-1_REPORT.md; evaluation/results/phase-10a13-r1-proposition-source-sufficiency-remediation-1.json; evaluation/results/phase-10a13-r1-proposition-source-sufficiency-remediation-1/ (payloads x23, live-reconciliation.json, q38-q46-reproduction-and-root-cause.md, proposition-source-sufficiency-design-record.md, prior-safeguard-preservation-matrix.md, security-and-scope-review.md, deterministic-gate-cycle1.txt, deterministic-gate-cycle2.txt, staging-gate-cycle1.txt, staging-gate-cycle2.txt, set-r1live-runlog.json, EVIDENCE_MANIFEST.sha256). Code: services/answer-support-validator.js, tests/phase-10a13-r1-proposition-source-sufficiency.test.mjs, tests/phase-10a12-r6-proposition-source-sufficiency.test.mjs, tests/phase-10a12-validator-competence-remediation-1.test.mjs. Commits 508a64d (validator+tests), f5bf024 (live evidence), final result/report commit follows.
+```
+
 ## Phase 10A13 Full Fact-Check Rerun 3 Independent Review 1 -- REVISIONS REQUIRED (2026-07-17):
 
 ```text
