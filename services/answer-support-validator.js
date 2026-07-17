@@ -545,6 +545,91 @@ export function evaluateImportVatIncentiveSourceSufficiency({ question, answer, 
   return { applicable, sufficient: true, reason: "", diagnostics };
 }
 
+// PHASE-10A12-R6: general PROPOSITION-SPECIFIC source-sufficiency control. The R5
+// independent review confirmed a CLASS-LEVEL laundering defect (M-Q36 and M-Q25):
+// a decisive legal proposition of one type received VERIFIED_CONTROLLING on source
+// cards that are topically adjacent but do NOT control that proposition -- a
+// penalty computation "supported" by general VAT-imposition sections (Sec 105-108),
+// and an EWT conclusion "supported" by VAT registration/invoicing authority
+// (Sec 109/236, RR 16-2005). This control classifies the answer's decisive
+// proposition and requires the DISPLAYED SOURCE CARDS to carry authority of the
+// MATCHING class, failing closed when the decisive proposition lacks a controlling
+// authority of its own class. It keys on normalized topical signals (proposition
+// class, authority class), NOT question IDs, exact strings, or answer-specific deny
+// lists, so it covers a legal-risk class rather than a single question. Pure.
+//
+// --- proposition-class signals (question, reinforced by answer) ---
+// Penalty/procedural COMPUTATION propositions (surcharge, interest-as-penalty,
+// compromise penalty, late-filing/payment penalties, failure to file/pay). Bare
+// "interest" (passive-income interest) and generic "filing deadline" are
+// deliberately excluded to avoid over-firing on non-penalty questions.
+const PENALTY_PROPOSITION_RE = /\bpenalt\w+|\bsurcharge\b|compromise penalt\w*|addition to (the )?tax|\blate (filing|payment|remittance)\b|failure to (file|pay|remit)\b|non[- ]?filing|delinquen\w+|deficiency (tax|assessment)|interest (penalty|on (the )?(deficiency|delinquent|unpaid|late))/i;
+// Expanded/creditable withholding (EWT) propositions -- distinct from FINAL
+// withholding tax on passive income (different authority: Sec 24(B)/27(D)).
+const EWT_PROPOSITION_RE = /\b(ewt|expanded withholding|creditable withholding)\b/i;
+const EWT_CONTEXT_RE = /\b(payment|fee|professional|law firm|accounting|service|rental|contractor|supplier|income payment|remit)\b/i;
+const FINAL_WHT_RE = /\bfinal withholding\b/i;
+// --- authority-class signals (SOURCE CARD labels only) ---
+// Penalty authority: the penal/addition-to-tax provisions and the EOPT penalty
+// reliefs. General VAT/income imposition sections are deliberately NOT here.
+const PENALTY_AUTHORITY_RE = /\bsec(?:tion|\.)?\s*0*(248|249|250|253|254|255)\b|R\.?\s*A\.?\s*(no\.?\s*)?11976|\bEOPT\b|RR\s*(no\.?\s*)?6-2024|RMC\s*(no\.?\s*)?52-2023|compromise penalt\w*/i;
+// Withholding authority: the creditable/expanded withholding regulations and the
+// withholding-at-source provisions.
+const WITHHOLDING_AUTHORITY_RE = /RR\s*(no\.?\s*)?(2-1998|2-98|11-2018|14-2002|17-2003|6-2001)|RMC\s*(no\.?\s*)?50-2018|\bsec(?:tion|\.)?\s*0*(57|58)\b|expanded withholding|creditable withholding/i;
+
+/**
+ * Proposition-specific source-sufficiency check. Determines the answer's decisive
+ * proposition class (currently: penalty/procedural computation, expanded-withholding
+ * (EWT)) and requires the cited SOURCE CARDS to carry authority of the matching
+ * class. Fails closed on topic-adjacent-but-non-controlling authority. Pure.
+ * @param {object} params
+ * @param {string} params.question
+ * @param {string} params.answer
+ * @param {Array}  [params.sources]
+ * @returns {{applicable:boolean, sufficient:boolean, reason:string, propositionClass:(string|null), diagnostics:object}}
+ */
+export function evaluatePropositionSourceSufficiency({ question, answer, sources = [] } = {}) {
+  const q = typeof question === "string" ? question : "";
+  const a = typeof answer === "string" ? answer : "";
+  const sourceLabels = (Array.isArray(sources) ? sources : [])
+    .map((s) => (s && (s.label || s.citation || s.title || s.displayLabel)) || "")
+    .filter(Boolean)
+    .join(" ; ");
+
+  // Classify the decisive proposition QUESTION-LED (what is actually being asked),
+  // so an answer that merely mentions penalties in passing does not trip the
+  // penalty gate. A penalty question is the decisive ask when the QUESTION raises a
+  // penalty/procedural computation; reinforced by the answer asserting a penalty.
+  const penaltyQuestion = PENALTY_PROPOSITION_RE.test(q);
+  const penaltyAnswerClaim = PENALTY_PROPOSITION_RE.test(a) || /\d+\s*%|\bphp\s*[\d,]+|₱\s*[\d,]+/i.test(a);
+  const penaltyProposition = penaltyQuestion && penaltyAnswerClaim;
+  const ewtQuestion = EWT_PROPOSITION_RE.test(q) || (/\bwithhold/i.test(q) && !FINAL_WHT_RE.test(q) && EWT_CONTEXT_RE.test(q));
+  const ewtAnswerClaim = EWT_PROPOSITION_RE.test(a) || (/\bwithhold/i.test(a) && !FINAL_WHT_RE.test(a));
+  const ewtProposition = ewtQuestion && ewtAnswerClaim;
+
+  const hasPenaltyAuthority = PENALTY_AUTHORITY_RE.test(sourceLabels);
+  const hasWithholdingAuthority = WITHHOLDING_AUTHORITY_RE.test(sourceLabels);
+
+  const diagnostics = {
+    penaltyProposition,
+    ewtProposition,
+    hasPenaltyAuthority,
+    hasWithholdingAuthority,
+    sourceCardCount: (Array.isArray(sources) ? sources : []).length
+  };
+
+  // Penalty/procedural computation asserted without penalty authority in the cards.
+  if (penaltyProposition && !hasPenaltyAuthority) {
+    return { applicable: true, sufficient: false, reason: "penalty_proposition_without_penalty_authority", propositionClass: "penalty_procedural", diagnostics };
+  }
+  // EWT conclusion asserted without withholding authority in the cards.
+  if (ewtProposition && !hasWithholdingAuthority) {
+    return { applicable: true, sufficient: false, reason: "ewt_proposition_without_withholding_authority", propositionClass: "withholding_ewt", diagnostics };
+  }
+  const applicable = penaltyProposition || ewtProposition;
+  return { applicable, sufficient: true, reason: "", propositionClass: applicable ? (penaltyProposition ? "penalty_procedural" : "withholding_ewt") : null, diagnostics };
+}
+
 // PHASE-10A12-R2: generic (non-LOA) outcome-prediction guard. A question that
 // asks TINA to predict/guarantee the outcome of a protest, refund, audit, or
 // litigation must never receive VERIFIED_CONTROLLING -- a controlling
@@ -611,6 +696,28 @@ export async function evaluateAnswerSupport({ question, answer, sources = [], mo
       },
       incentiveSufficiency: incentiveSufficiency.diagnostics,
       reason: incentiveSufficiency.reason
+    };
+  }
+  // PHASE-10A12-R6: general proposition-specific source-sufficiency control. A
+  // penalty/procedural computation or an EWT conclusion may not verify on
+  // topic-adjacent-but-non-controlling authority (the confirmed R5 M-Q36 / M-Q25
+  // class-level laundering defect). Fails closed regardless of LLM approval.
+  const propositionSufficiency = evaluatePropositionSourceSufficiency({ question, answer, sources });
+  if (propositionSufficiency.applicable && !propositionSufficiency.sufficient) {
+    return {
+      verifiedEligible: false,
+      schemaValid: false,
+      stage: "proposition-source-sufficiency",
+      gates: {
+        structural: true,
+        penaltyProposition: propositionSufficiency.diagnostics.penaltyProposition,
+        ewtProposition: propositionSufficiency.diagnostics.ewtProposition,
+        hasPenaltyAuthority: propositionSufficiency.diagnostics.hasPenaltyAuthority,
+        hasWithholdingAuthority: propositionSufficiency.diagnostics.hasWithholdingAuthority
+      },
+      propositionClass: propositionSufficiency.propositionClass,
+      propositionSufficiency: propositionSufficiency.diagnostics,
+      reason: propositionSufficiency.reason
     };
   }
   if (detectOutcomePredictionRequest(question)) {
@@ -696,6 +803,7 @@ export default {
   citesOnlyFoundationalProvisions,
   validateVerdictSchema,
   evaluateImportVatIncentiveSourceSufficiency,
+  evaluatePropositionSourceSufficiency,
   evaluateAnswerSupport,
   REQUIRED_POSITIVE_BOOLEANS,
   REQUIRED_NEGATIVE_BOOLEANS
