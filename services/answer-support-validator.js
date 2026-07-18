@@ -887,22 +887,8 @@ export function detectFilingAndEstatePropositions(question, answer) {
     // introduced filing conclusion, in THIS clause; the object must be a tax return.
     const obligationConcept = C_OBLIGATION.test(clause);
     const answerFilingConclusion = side === "answer" && A_FILING_CONCLUSION.test(clause);
-    // PHASE-10A14-R5 (P2-R4-003): a DEFINITIVE imperative tax-return instruction
-    // ("File the annual income-tax return", "Submit the ITR", "Accomplish and file
-    // BIR Form 1701") is a decisive filing_obligation proposition even without an
-    // explicit obligation word, and therefore requires compatible filing authority.
-    // The object must be a tax return (RETURN_OBJECT_STRONG / ITR / BIR Form 170x);
-    // non-return imperatives (protest, refund, invoices, registration, capital) are
-    // excluded by wrongObjectHere / notGeneric.
-    // hyphen-tolerant ("income-tax return" == "income tax return")
-    const clauseDehyph = clause.replace(/-/g, " ");
-    const imperativeReturnObject = hasStrongReturn || RETURN_OBJECT_STRONG.test(clauseDehyph) ||
-      (/\bITR\b/.test(clause) && notGeneric) ||
-      (/\b(?:bir\s+)?form\s+170[01]\b/i.test(clause));
-    const imperativeFilingHere = hasFilingAct && imperativeReturnObject && notGeneric &&
-      !wrongObjectHere && !assessmentHere && !paymentHere;
     const filingObligationHere = !wrongObjectHere && !assessmentHere &&
-      ((returnObject && obligationConcept) || answerFilingConclusion || imperativeFilingHere);
+      ((returnObject && obligationConcept) || answerFilingConclusion);
 
     // filing deadline: a temporal concept whose object is a tax-return filing.
     const temporalHere = C_TEMPORAL_GENERAL.test(clause) || C_TEMPORAL_RETURN_SCOPED.test(clause) ||
@@ -932,18 +918,27 @@ export function detectFilingAndEstatePropositions(question, answer) {
     }
   }
 
-  // PHASE-10A14-R5 (P2-R4-003): answer/question-level imperative tax-return filing.
-  // segmentClauses splits on hyphens (so "income-tax return" is torn apart) and a
-  // bare imperative carries no obligation word; scan the full dehyphenated text for a
-  // definitive imperative filing act directed at an INCOME-tax return object. The
-  // required income-tax-return object (income tax return / ITR / annual return / BIR
-  // Form 1700-1701) guards against non-return imperatives (protest, refund, invoices,
-  // registration, capital), which cannot match.
-  const IMPERATIVE_TAX_RETURN_RE = /\b(?:file|submit|lodge|furnish|accomplish(?:\s+and\s+file)?)\b[^.\n]{0,32}\b(?:annual\s+)?(?:income\s+tax\s+return|itr|annual\s+return|(?:bir\s+)?form\s+170[01])\b/i;
-  const imperativeText = (bothCtx || "").replace(/-/g, " ");
-  if (IMPERATIVE_TAX_RETURN_RE.test(imperativeText) &&
+  // PHASE-10A14-R5 (P2-R4-003): DEFINITIVE imperative tax-return filing instruction.
+  // segmentClauses splits on hyphens (so "income-tax return" is torn apart), so scan
+  // the full dehyphenated text. The instruction must be DIRECTIVE mood -- a BASE-form
+  // filing verb (file/submit/lodge/furnish/accomplish and file), optionally led by a
+  // modal (must/should/shall/please) or "to"/"and" -- directed at an INCOME-tax return
+  // object (income tax return / ITR / annual return / BIR Form 1700-1701). This
+  // deliberately EXCLUDES descriptive gerund/nominal uses ("penalty for late filing of
+  // the return", "failure to file", "deadline for filing") via the base-form verb
+  // requirement and a non-imperative-context guard, and excludes non-return objects
+  // (protest, refund, invoices, registration, capital) via the required return object.
+  const IMPERATIVE_TAX_RETURN_RE = /(?:^|[.;:]\s*|\b(?:must|should|shall|please|to|and)\s+)(?:file|submit|lodge|furnish|accomplish(?:\s+and\s+file)?)\s+(?:the\s+|a\s+|an\s+|your\s+)?(?:annual\s+)?(?:income\s+tax\s+return|itr|annual\s+return|(?:bir\s+)?form\s+170[01])\b/i;
+  const NON_IMPERATIVE_FILING_CONTEXT = /\b(penalt\w+|surcharge|interest|late\s+filing|failure\s+to\s+file|deadline|when\s+to\s+file|for\s+filing|of\s+filing)\b/i;
+  // Evaluate the answer and question separately (each begins clean, so a directive
+  // instruction is sentence-initial), and require the SAME text to be free of a
+  // non-imperative descriptive context.
+  const imperativeHit = [aN, qN]
+    .map((t) => String(t || "").replace(/-/g, " "))
+    .some((t) => IMPERATIVE_TAX_RETURN_RE.test(t) && !NON_IMPERATIVE_FILING_CONTEXT.test(t));
+  if (imperativeHit &&
       !propositions.some((p) => p.propositionClass === "filing_obligation")) {
-    const ctx = classifyReturnContext("file annual income tax return " + imperativeText.slice(0, 200), bothCtx);
+    const ctx = classifyReturnContext("file annual income tax return " + String(aN || "").slice(0, 200), bothCtx);
     propositions.push({
       propositionId: `p${pid++}`, sourceSide: "answer", sourceClause: "imperative_tax_return_filing",
       propositionClass: "filing_obligation", action: "file", objectType: "tax_return",
