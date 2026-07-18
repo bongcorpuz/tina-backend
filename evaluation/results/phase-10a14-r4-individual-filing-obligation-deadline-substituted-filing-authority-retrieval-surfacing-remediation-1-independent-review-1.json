@@ -1,0 +1,42 @@
+﻿{
+  "reviewId": "PHASE-10A14-R4-INDIVIDUAL-FILING-OBLIGATION-DEADLINE-AND-SUBSTITUTED-FILING-AUTHORITY-RETRIEVAL-SURFACING-REMEDIATION-1-INDEPENDENT-REVIEW-1",
+  "decision": "REVISIONS REQUIRED",
+  "reviewedHead": "31a4070a705b8e78f58693f2bcbe519d7f605598",
+  "branch": "feature/source-availability-engine-v1",
+  "date": "2026-07-18",
+  "severityCounts": { "P0": 0, "P1": 2, "P2": 1, "P3": 0, "Security": 0 },
+  "runnerResults": {
+    "focusedBridgeSuite": "20/0",
+    "deterministicRegressions": "syntax 10/0; deterministic 194/0",
+    "stagingSmokes": "restricted sandbox 6/7 due reachability; network-enabled rerun 7/0",
+    "gitDiffCheck": "pass"
+  },
+  "positiveEvidence": [
+    "Six R4 commits reconcile linearly from b3b8714 to 31a4070.",
+    "Runtime scope confined to vector-store.js and pipeline.js with one focused test file.",
+    "Read-only live exactAuthoritySearch sample surfaces NIRC Sec. 51, Sec. 51(C), and Sec. 51-A bridge rows for individual filing, individual deadline, substituted filing, and explicit Sec. 51-A.",
+    "All-26 deterministic replay blocks exactly the nine prior Q12/Q30/Q34 verified defects while preserving 17 other verified payloads."
+  ],
+  "blockingFindings": [
+    {
+      "id": "P1-R4-001",
+      "title": "Sec. 51 current-law chain incomplete",
+      "evidence": "R4 bridge hardcodes RA 10963 source rows, but RA 11976 and RA 12214 later amended NIRC Sec. 51.",
+      "requiredBeforePass": "Account for later Sec. 51 amendments or qualify/chain source cards so current-law VERIFIED_CONTROLLING cannot rest on RA 10963 alone."
+    },
+    {
+      "id": "P1-R4-002",
+      "title": "PASS evidence package incomplete/inconsistent",
+      "evidence": "Executor report admits required replays/matrices were not yet run; committed main live matrix shows filing/substituted positives as RELATED_AUTHORITY_ONLY and relies on isolated rows for verification.",
+      "requiredBeforePass": "Provide complete exact/natural live-positive matrix, all-26 replay, R3 failed-positive replay, and prior-safeguard preservation artifacts with hashes."
+    }
+  ],
+  "nonBlockingFindings": [
+    {
+      "id": "P2-R4-003",
+      "title": "Bare imperative filing instructions under-detected",
+      "evidence": "Bare File/Submit/Lodge/Accomplish imperatives returned applicable=false/sufficient=true on Sec. 23/24/27-only sources."
+    }
+  ],
+  "forbiddenActionsPerformed": false
+}

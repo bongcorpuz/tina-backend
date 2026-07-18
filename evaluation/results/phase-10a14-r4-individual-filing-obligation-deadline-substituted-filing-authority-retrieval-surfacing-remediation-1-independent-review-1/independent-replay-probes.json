@@ -1,0 +1,27 @@
+﻿{
+  "all26ReplaySummary": {
+    "verifiedPayloadsReplayed": 26,
+    "blockedLike": ["Q12-r1.json", "Q12-r2.json", "Q12-r3.json", "Q30-r1.json", "Q30-r2.json", "Q30-r3.json", "Q34-r1.json", "Q34-r2.json", "Q34-r3.json"],
+    "sufficientOrOutOfClassCount": 17,
+    "reasons": {
+      "Q12": "filing_obligation_proposition_without_matching_return_authority",
+      "Q30": "estate_tax_base_deduction_threshold_conflation",
+      "Q34": "filing_deadline_proposition_without_matching_return_authority"
+    }
+  },
+  "imperativeProbeSummary": [
+    { "id": "file", "applicable": false, "sufficient": true },
+    { "id": "submit", "applicable": false, "sufficient": true },
+    { "id": "lodge", "applicable": false, "sufficient": true },
+    { "id": "accomplish-form", "applicable": false, "sufficient": true },
+    { "id": "attach-docs", "applicable": true, "sufficient": false, "reason": "filing_obligation_proposition_without_matching_return_authority" },
+    { "id": "mixed-protest-return", "applicable": false, "sufficient": true },
+    { "id": "answer-introduced", "applicable": true, "sufficient": false, "reason": "filing_obligation_proposition_without_matching_return_authority" }
+  ],
+  "liveExactSearchSampleSummary": [
+    { "id": "natural-individual-filing", "refs": ["NIRC Sec. 51", "NIRC Sec. 51(C)", "NIRC Sec. 51-A"], "source": "01-tax-code/nirc-1997-ra-10963-(bir).pdf", "bridge": true, "exact": true, "tier": 1 },
+    { "id": "natural-individual-deadline", "refs": ["NIRC Sec. 51", "NIRC Sec. 51(C)", "NIRC Sec. 51-A"], "source": "01-tax-code/nirc-1997-ra-10963-(bir).pdf", "bridge": true, "exact": true, "tier": 1 },
+    { "id": "natural-substituted", "refs": ["NIRC Sec. 51", "NIRC Sec. 51(C)", "NIRC Sec. 51-A"], "source": "01-tax-code/nirc-1997-ra-10963-(bir).pdf", "bridge": true, "exact": true, "tier": 1 },
+    { "id": "explicit-51a", "refs": ["NIRC Sec. 51", "NIRC Sec. 51(C)", "NIRC Sec. 51-A"], "source": "01-tax-code/nirc-1997-ra-10963-(bir).pdf", "bridge": true, "exact": true, "tier": 1 }
+  ]
+}
