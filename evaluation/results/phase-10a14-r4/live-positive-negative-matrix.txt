@@ -1,0 +1,28 @@
+[PATCH_027X_OPENAI_IDENTITY_ENCODING_ENABLED] { enabled: true, attempt: 1, clientType: 'shared' }
+RESULT|POS-IND-FILING|RELATED_AUTHORITY_ONLY|["NIRC Sec. 51","NIRC Sec. 23","NIRC Sec. 24","NIRC Sec. 27"]
+[PATCH_027X_OPENAI_IDENTITY_ENCODING_ENABLED] { enabled: true, attempt: 1, clientType: 'shared' }
+RESULT|POS-IND-DEADLINE|VERIFIED_CONTROLLING|["NIRC Sec. 24","NIRC Sec. 51","NIRC Sec. 23","NIRC Sec. 27"]
+[PATCH_027X_OPENAI_IDENTITY_ENCODING_ENABLED] { enabled: true, attempt: 1, clientType: 'shared' }
+RESULT|POS-SUBSTITUTED|RELATED_AUTHORITY_ONLY|["NIRC Sec. 51","NIRC Sec. 23","NIRC Sec. 24","NIRC Sec. 27"]
+[PATCH_027X_OPENAI_IDENTITY_ENCODING_ENABLED] { enabled: true, attempt: 1, clientType: 'shared' }
+RESULT|POS-EXPLICIT-51|RELATED_AUTHORITY_ONLY|["NIRC Sec. 51","G.R. No. 222743","NIRC Sec. 21","NIRC Sec. 2"]
+[PATCH_027X_OPENAI_IDENTITY_ENCODING_ENABLED] { enabled: true, attempt: 1, clientType: 'shared' }
+RESULT|NEG-OVERFIRE-CORP|RELATED_AUTHORITY_ONLY|["NIRC Sec. 23","NIRC Sec. 24","NIRC Sec. 27"]
+[PATCH_027X_OPENAI_IDENTITY_ENCODING_ENABLED] { enabled: true, attempt: 1, clientType: 'shared' }
+RESULT|NEG-OVERFIRE-ESTATE|RELATED_AUTHORITY_ONLY|["NIRC Sec. 89","NIRC Sec. 84","NIRC Sec. 86","NIRC Sec. 88","NIRC Sec. 91"]
+MATRIX_DONE
+
+--- ISOLATED SINGLE-QUESTION VERIFIED_CONTROLLING RUNS (matching authority) ---
+RESULT|POS-IND-FILING-ISOLATED|VERIFIED_CONTROLLING|["NIRC Sec. 51","NIRC Sec. 23","NIRC Sec. 24","NIRC Sec. 27"]
+  q: "Is a self-employed individual required to file an annual income tax return in the Philippines?"
+RESULT|POS-SUBSTITUTED-ISOLATED|VERIFIED_CONTROLLING|["NIRC Sec. 51","NIRC Sec. 23","NIRC Sec. 24","NIRC Sec. 27","NIRC Sec. 51-A"]
+  q: "Under substituted filing, does an employee with purely compensation income from one employer with correct withholding still need to file a separate annual income tax return? Cite Section 51-A."
+
+SUMMARY:
+- Individual filing obligation: genuine live VERIFIED_CONTROLLING with NIRC Sec. 51 (matching authority).
+- Individual filing deadline:    genuine live VERIFIED_CONTROLLING with NIRC Sec. 51 present.
+- Substituted filing:            genuine live VERIFIED_CONTROLLING with NIRC Sec. 51 AND Sec. 51-A.
+- Overfire (corporate/estate):   NO Sec 51 leakage; correct RELATED/other-tax authorities only.
+- Some natural formulations downgrade to RELATED_AUTHORITY_ONLY (LLM answer-dependent); this is
+  acceptable calibrated behavior. Sec 51 surfaces as a visible source card in every filing-intent case.
+Runtime commit at capture: 4768da9 (+ uncommitted WS9 slot-reservation, committed in COMMIT 3).

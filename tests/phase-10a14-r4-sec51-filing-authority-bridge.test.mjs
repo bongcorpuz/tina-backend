@@ -198,5 +198,34 @@ await test("OVERFIRE: estate return question surfaces NO Sec. 51 bridge card", a
   assert.ok(!results.some((r) => r.metadata?.sec51FilingAuthorityBridge), "no Sec 51 bridge rows for estate filing");
 });
 
+// WS9 slot reservation: even when many competing NIRC equality chunks are present,
+// the decisive filing authority (Sec 51 / 51(C) / 51-A) must survive the topK window.
+await test("slot reservation: Sec 51/51(C)/51-A survive alongside many Sec 24/23/27 chunks", async () => {
+  // 12 competing income-tax overview chunks (4 each of Sec 23/24/27) that would
+  // otherwise fill the returned window and crowd out the bridge rows.
+  const competing = [];
+  for (const s of ["NIRC Sec. 23", "NIRC Sec. 24", "NIRC Sec. 27"]) {
+    for (let i = 0; i < 4; i++) competing.push(nircRow(`${s}-${i}`, 100 + i, s, `${s} income tax overview text ${i}`));
+  }
+  const supabase = createMockSupabase([...competing, ...CORPUS_ROWS]);
+  const results = await exactAuthoritySearch({
+    supabase,
+    query: "Is a self-employed individual required to file an annual income tax return?",
+    keyword: "self-employed required to file income tax return",
+    topK: 8,
+    includeWeakSources: true,
+    issueClassification: {
+      originalQuery: "Is a self-employed individual required to file an annual income tax return?",
+      normalizedQuery: "Is a self-employed individual required to file an annual income tax return?"
+    },
+    // competing equality authorities present, as in the live pipeline
+    targetAuthorities: ["NIRC Sec. 23", "NIRC Sec. 24", "NIRC Sec. 27", "NIRC Sec. 51"]
+  });
+  const refs = refsOf(results);
+  assert.ok(refs.includes("NIRC Sec. 51"), `Sec. 51 survived: ${JSON.stringify(refs)}`);
+  assert.ok(refs.includes("NIRC Sec. 51-A"), `Sec. 51-A survived: ${JSON.stringify(refs)}`);
+  assert.ok(refs.includes("NIRC Sec. 51(C)"), `Sec. 51(C) survived: ${JSON.stringify(refs)}`);
+});
+
 console.log(`\nphase-10a14-r4-sec51-filing-authority-bridge: ${passed} passed, ${failed} failed`);
 if (failed > 0) process.exit(1);

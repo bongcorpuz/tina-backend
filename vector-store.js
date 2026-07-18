@@ -2616,7 +2616,7 @@ export async function exactAuthoritySearch(arg1, arg2) {
       })
     : [];
 
-  const sorted = uniqueResults(
+  let sorted = uniqueResults(
     sortResultsForTina(
       [...equalityResults, ...ra10963BridgeResults, ...section51BridgeResults],
       query || keyword,
@@ -2624,9 +2624,23 @@ export async function exactAuthoritySearch(arg1, arg2) {
     )
   ).slice(0, safeTopK);
 
+  // WS9 authority-slot reservation: the decisive filing authority (Sec 51 / 51(C) /
+  // 51-A bridge rows) must not be crowded out of the returned window by the many
+  // Sec 23/24/27 income-tax equality chunks. Reserve the leading slots for the
+  // distinct bridge provisions so they survive into the candidate pool and reranker.
   if (section51BridgeResults.length > 0) {
+    const reserved = [];
+    const seenRefs = new Set();
+    for (const r of section51BridgeResults) {
+      const ref = String(r.normalizedReference || r.normalized_reference || "");
+      if (!seenRefs.has(ref)) { seenRefs.add(ref); reserved.push(r); }
+    }
+    const reservedIds = new Set(reserved.map((r) => r.id));
+    const rest = sorted.filter((r) => !reservedIds.has(r.id));
+    sorted = uniqueResults([...reserved, ...rest]).slice(0, Math.max(safeTopK, reserved.length));
     console.log("[SEC_51_FILING_AUTHORITY_BRIDGE HIT]", {
       found: section51BridgeResults.length,
+      reserved: reserved.length,
       returned: sorted.length,
       refs: [...new Set(section51BridgeResults.map((r) => r.normalizedReference))]
     });
