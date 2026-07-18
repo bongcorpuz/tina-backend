@@ -1,5 +1,7 @@
 ce70e4afd79407e4f3f9073198e11cd7c52cf97cc758991bf87593167e7e39e9 *./all-26-replay-adjudication.json
 b9169a7cedb37c19fcf67ef8dd0628ad3df2fbdfc33cbcdcbc1b1711ea6bb5f4 *./design-records-multi-proposition-architecture.md
+cec209fb5226944f92c2677de10e584c694c9e8a74f59b58250e5ae2d8fe6e6b *./deterministic-gate-cycle1.txt
+5f920a265a20ebb4093acabba09335f2dad9086c33a04bb3cc88df238995ab06 *./deterministic-gate-cycle2.txt
 9be932aa59946eb9e3aaa6a7f48d4681d46bb02d963509bccd5fd9b7627f7df2 *./es09-reconciliation-correction-record.md
 79f78a22ed585c04284a9fa1f38e58ace1124b9619f01bf35abbd3bc7422d3c9 *./live-reconciliation.md
 a32ff44c2a4574e0a81c2f0d7ca0918c54a2fb127ce7f7afd64a44ee48489d01 *./live-runlog-dl.json
@@ -71,6 +73,8 @@ fa8630e5cfecbfd54ef3dc9a006c1a5704ee509f5802394058b16078eb8497a6 *./payloads/XT-
 883fb47cbad6043a4bb1d8f6f0201bd9dd46888ea4988c06c7b8ac153e4c36f1 *./payloads/XT-08.json
 7c028ec254d258eefb6dfbcaaca879c534a07e368fa3b6780497d59c6f3ec973 *./prior-safeguard-preservation-matrix.md
 144fa5c9764af99a878c6a626e34ebcff10d473dba0e9674404d0d36644e25e9 *./security-and-scope-review.md
+db62a30edff6983b5808727b1842c616911b4acb7916b36dc7ebf7bd489da5b5 *./staging-gate-cycle1.txt
+11fb807ec2e176c008729a4b9359cf54602c3497f4e8b9f011ae072198df5315 *./staging-gate-cycle2.txt
 7fb1969ee09efe741772b682d2b176b8a57732898fd992c90b777f0a839edd9f *./ws1-prepatch-5p1-reproduction.md
 b9f5dafd371d26cdc25e23fd8cffaf25c854c92b91d45b90a2e873f3fd29f80e *./ws1-prepatch-5p1-reproduction.txt
 b024d34a4ffc20b940dfc6387d3267dd3ed5536d0346c1aa2d793f3a0bf1cc27 *./ws11-reviewer-probe-replay.txt
