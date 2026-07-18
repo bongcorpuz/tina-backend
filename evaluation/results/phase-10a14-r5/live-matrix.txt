@@ -1,0 +1,33 @@
+[PATCH_027X_OPENAI_IDENTITY_ENCODING_ENABLED] { enabled: true, attempt: 1, clientType: 'shared' }
+RESULT|POS-01-indfile|VERIFIED_CONTROLLING|["NIRC Sec. 51","NIRC Sec. 23","NIRC Sec. 24","NIRC Sec. 27"]|chainReviewed=false
+[PATCH_027X_OPENAI_IDENTITY_ENCODING_ENABLED] { enabled: true, attempt: 1, clientType: 'shared' }
+RESULT|POSX-indfile-1|VERIFIED_CONTROLLING|["NIRC Sec. 51","NIRC Sec. 23","NIRC Sec. 24","NIRC Sec. 27"]|chainReviewed=false
+[PATCH_027X_OPENAI_IDENTITY_ENCODING_ENABLED] { enabled: true, attempt: 1, clientType: 'shared' }
+RESULT|POS-03-inddl|VERIFIED_CONTROLLING|["NIRC Sec. 24","NIRC Sec. 51","NIRC Sec. 23","NIRC Sec. 27"]|chainReviewed=false
+[PATCH_027X_OPENAI_IDENTITY_ENCODING_ENABLED] { enabled: true, attempt: 1, clientType: 'shared' }
+RESULT|POSX-inddl-1|VERIFIED_CONTROLLING|["NIRC Sec. 51"]|chainReviewed=false
+[PATCH_027X_OPENAI_IDENTITY_ENCODING_ENABLED] { enabled: true, attempt: 1, clientType: 'shared' }
+RESULT|POS-02-subst|RELATED_AUTHORITY_ONLY|["NIRC Sec. 51","NIRC Sec. 23","NIRC Sec. 24","NIRC Sec. 27"]|chainReviewed=false
+[PATCH_027X_OPENAI_IDENTITY_ENCODING_ENABLED] { enabled: true, attempt: 1, clientType: 'shared' }
+RESULT|POSX-subst-1|RELATED_AUTHORITY_ONLY|["NIRC Sec. 51","NIRC Sec. 51-A"]|chainReviewed=false
+[PATCH_027X_OPENAI_IDENTITY_ENCODING_ENABLED] { enabled: true, attempt: 1, clientType: 'shared' }
+RESULT|TEMP-current-deadline|RELATED_AUTHORITY_ONLY|["NIRC Sec. 24","NIRC Sec. 23","NIRC Sec. 27"]|chainReviewed=false
+[SOURCE AVAILABILITY] NO_INDEXED_SOURCE emitted { outcomeCategory: 'CANDIDATES_RETURNED', candidateCount: 12 }
+[PATCH_027X_OPENAI_IDENTITY_ENCODING_ENABLED] { enabled: true, attempt: 1, clientType: 'shared' }
+[SAE SOURCE CARD SUPPRESSION] {
+  saeStatus: 'NO_INDEXED_SOURCE',
+  sourceCards: 3,
+  sasVisible: 0,
+  dsfVisible: 0,
+  finalBeforeCut: 0
+}
+RESULT|TEMP-cgt-current|NO_VERIFIED_AUTHORITY|[]|chainReviewed=false
+[PATCH_027X_OPENAI_IDENTITY_ENCODING_ENABLED] { enabled: true, attempt: 1, clientType: 'shared' }
+RESULT|IMP-file-itr|RELATED_AUTHORITY_ONLY|["NIRC Sec. 22"]|chainReviewed=false
+[PATCH_027X_OPENAI_IDENTITY_ENCODING_ENABLED] { enabled: true, attempt: 1, clientType: 'shared' }
+RESULT|NEG-corp|RELATED_AUTHORITY_ONLY|["NIRC Sec. 23","NIRC Sec. 24","NIRC Sec. 27"]|chainReviewed=false
+[PATCH_027X_OPENAI_IDENTITY_ENCODING_ENABLED] { enabled: true, attempt: 1, clientType: 'shared' }
+RESULT|NEG-estate|VERIFIED_CONTROLLING|["NIRC Sec. 89","NIRC Sec. 84","NIRC Sec. 86","NIRC Sec. 88","NIRC Sec. 91"]|chainReviewed=false
+[PATCH_027X_OPENAI_IDENTITY_ENCODING_ENABLED] { enabled: true, attempt: 1, clientType: 'shared' }
+RESULT|NEG-protest|VERIFIED_CONTROLLING|["NIRC Sec. 228","RR No. 18-2013","NIRC Sec. 203"]|chainReviewed=false
+R5_MATRIX_DONE
