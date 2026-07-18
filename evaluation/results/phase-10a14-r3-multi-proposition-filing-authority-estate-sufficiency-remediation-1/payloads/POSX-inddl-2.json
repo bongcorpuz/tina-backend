@@ -1,0 +1,25 @@
+{
+  "id": "POSX-inddl-2",
+  "group": "positive_extra",
+  "prompt": "According to the NIRC, on or before what date must an individual file the annual income tax return?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nAn individual must file the annual income tax return on or before April 15 of the following year after the close of the taxable year.\n\n### Interpretation\n\n### Practical Meaning\nFor taxpayers, this means that they need to prepare their financial records and tax documents well in advance of the April 15 deadline to ensure compliance and avoid penalties for late filing. It is advisable to consult with a tax professional to ensure all income is accurately reported and any deductions or credits are properly claimed.",
+  "trust": {
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_deadline",
+    "reason": "filing_deadline_proposition_without_matching_return_authority"
+  },
+  "sourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "responseHash": "c3d6fe18e07701547029867a",
+  "sanitizedConversationRef": "41c81679fc461c651e3e384f",
+  "sha256": "b1d519cdf208c72071d5f942a23b18bf96dd6927d554b8b5d2d026bb3216d126"
+}

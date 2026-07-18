@@ -1,0 +1,89 @@
+{
+  "id": "ES-10",
+  "group": "neg_estate",
+  "prompt": "How is the estate tax base computed after the standard deduction?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nThe estate tax base is computed by taking the gross estate and subtracting allowable deductions, including the standard deduction. Under Section 34 of the National Internal Revenue Code (NIRC), the standard deduction for estate tax purposes is set at a fixed amount, which is deducted from the gross estate to arrive at the taxable estate.\n\n### Controlling Authorities\n- **NIRC Section 34**: This section outlines the allowable deductions from the gross estate, including the standard deduction.\n\n### Interpretation\nIn computing the estate tax base, the gross estate is first determined, which includes all properties, rights, and interests of the decedent at the time of death. From this gross estate, the standard deduction, as specified in Section 34 of the NIRC, is subtracted along with any other allowable deductions (such as debts, funeral expenses, and other related costs) to arrive at the net taxable estate.\n\n### Practical Meaning\nThe practical implication of this computation is that the estate tax liability is based on the net taxable estate after deductions. This means that the higher the allowable deductions, including the standard deduction, the lower the taxable estate and, consequently, the estate tax due. Taxpayers should ensure they accurately calculate their gross estate and apply all relevant deductions to minimize their estate tax burden.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "tax_computation_basis",
+    "reason": "estate_computation_without_estate_authority",
+    "propositionLedger": [
+      {
+        "propositionId": "p0",
+        "sourceSide": "answer",
+        "sourceClause": "### short answer the estate tax base is computed by taking the gross estate and subtracting allowable deductions, including the standard deduction. under section 34 of the national internal revenue code (nirc), the standard deduction for estate tax purposes is set at a fixed amount, which is deducted from the gross estate to arrive at the taxable estate. ### controlling authorities - **nirc section 34**: this section outlines the allowable deductions from the gross estate, including the standard deduction. ### interpretation in computing the estate tax base, the gross estate is first determined, which includes all properties, rights, and interests of the decedent at the time of death. from this gross estate, the standard deduction, as specified in section 34 of the nirc, is subtracted along with any other allowable deductions (such as debts, funeral expenses, and other related costs) to arrive at the net taxable estate. ### practical meaning the practical implication of this computation is that the estate tax liability is based on the net taxable estate after deductions. this means that the higher the allowable deductions, including the standard deduction, the lower the taxable estate and, consequently, the estate tax due. taxpayers should ensure they accurately calculate their gross estate and apply all relevant deductions to minimize their estate tax burden.",
+        "propositionClass": "tax_computation_basis",
+        "objectType": "estate_tax_computation",
+        "taxType": "estate_tax",
+        "returnType": "estate",
+        "taxpayerType": "estate",
+        "computationComponents": {
+          "rate": false,
+          "netEstate": false,
+          "grossEstate": true,
+          "deduction": true,
+          "standardDeduction": true,
+          "threshold": false
+        },
+        "relationshipError": false,
+        "decisive": true
+      }
+    ],
+    "authorityClasses": {
+      "indFiling": false,
+      "substituted": false,
+      "corpFiling": false,
+      "estateFiling": false,
+      "donorFiling": false,
+      "vatFiling": false,
+      "pctFiling": false,
+      "estateRate": false,
+      "estateBaseDeduction": false
+    },
+    "failedProposition": {
+      "propositionId": "p0",
+      "sourceSide": "answer",
+      "sourceClause": "### short answer the estate tax base is computed by taking the gross estate and subtracting allowable deductions, including the standard deduction. under section 34 of the national internal revenue code (nirc), the standard deduction for estate tax purposes is set at a fixed amount, which is deducted from the gross estate to arrive at the taxable estate. ### controlling authorities - **nirc section 34**: this section outlines the allowable deductions from the gross estate, including the standard deduction. ### interpretation in computing the estate tax base, the gross estate is first determined, which includes all properties, rights, and interests of the decedent at the time of death. from this gross estate, the standard deduction, as specified in section 34 of the nirc, is subtracted along with any other allowable deductions (such as debts, funeral expenses, and other related costs) to arrive at the net taxable estate. ### practical meaning the practical implication of this computation is that the estate tax liability is based on the net taxable estate after deductions. this means that the higher the allowable deductions, including the standard deduction, the lower the taxable estate and, consequently, the estate tax due. taxpayers should ensure they accurately calculate their gross estate and apply all relevant deductions to minimize their estate tax burden.",
+      "propositionClass": "tax_computation_basis",
+      "objectType": "estate_tax_computation",
+      "taxType": "estate_tax",
+      "returnType": "estate",
+      "taxpayerType": "estate",
+      "computationComponents": {
+        "rate": false,
+        "netEstate": false,
+        "grossEstate": true,
+        "deduction": true,
+        "standardDeduction": true,
+        "threshold": false
+      },
+      "relationshipError": false,
+      "decisive": true
+    }
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 34"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 34"
+  ],
+  "requestHash": "de02e4baee1e4f080e2bcfbb",
+  "responseHash": "e6d64fe52566c7d081438012",
+  "sanitizedConversationRef": "11e9d00b165660b3dbd2611b",
+  "sha256": "e1e88b564f84a2f5636137f8ae6c6e8f850cfd5d3c75b46272b2cb27c6299e42"
+}

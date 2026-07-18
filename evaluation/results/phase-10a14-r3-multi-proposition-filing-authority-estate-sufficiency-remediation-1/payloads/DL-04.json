@@ -1,0 +1,105 @@
+{
+  "id": "DL-04",
+  "group": "neg_deadline",
+  "prompt": "Was the individual income tax return due yesterday?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nYes, the individual income tax return was due yesterday, April 15, 2023, as per the provisions of the National Internal Revenue Code (NIRC).\n\n### Interpretation\n\n### Practical Meaning\nTaxpayers who did not file their individual income tax returns by the due date may face penalties, including interest on unpaid taxes and possible fines. It is crucial for individuals to comply with this deadline to avoid any legal repercussions or additional financial burdens.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_deadline",
+    "reason": "filing_deadline_proposition_without_matching_return_authority",
+    "propositionLedger": [
+      {
+        "propositionId": "p0",
+        "sourceSide": "question",
+        "sourceClause": "was the individual income tax return due yesterday?",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p1",
+        "sourceSide": "answer",
+        "sourceClause": "### short answer yes, the individual income tax return was due yesterday, april 15, 2023, as per the provisions of the national internal revenue code (nirc)",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p2",
+        "sourceSide": "answer",
+        "sourceClause": "### interpretation ### practical meaning taxpayers who did not file their individual income tax returns by the due date may face penalties, including interest on unpaid taxes and possible fines",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      }
+    ],
+    "authorityClasses": {
+      "indFiling": false,
+      "substituted": false,
+      "corpFiling": false,
+      "estateFiling": false,
+      "donorFiling": false,
+      "vatFiling": false,
+      "pctFiling": false,
+      "estateRate": false,
+      "estateBaseDeduction": false
+    },
+    "failedProposition": {
+      "propositionId": "p0",
+      "sourceSide": "question",
+      "sourceClause": "was the individual income tax return due yesterday?",
+      "propositionClass": "filing_deadline",
+      "action": "file",
+      "objectType": "tax_return",
+      "taxType": "individual_income_tax",
+      "returnType": "individual_income",
+      "taxpayerType": "individual",
+      "substituted": false,
+      "decisive": true
+    }
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 24",
+    "NIRC Sec. 23",
+    "NIRC Sec. 27"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 24",
+    "NIRC Sec. 23",
+    "NIRC Sec. 27"
+  ],
+  "requestHash": "a04342d799089cc6076a82fc",
+  "responseHash": "85f22dfee6e176cc225f2e34",
+  "sanitizedConversationRef": "85c80200a939f9078d2bc956",
+  "sha256": "98ccc2fadee847914bc360da670646f6c32c90cb6605dd3ac09f6b6e71795387"
+}

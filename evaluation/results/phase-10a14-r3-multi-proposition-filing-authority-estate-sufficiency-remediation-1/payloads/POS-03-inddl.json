@@ -1,0 +1,92 @@
+{
+  "id": "POS-03-inddl",
+  "group": "positive",
+  "prompt": "What is the deadline for the individual annual income tax return under the NIRC?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nThe deadline for filing the individual annual income tax return in the Philippines is April 15 of the following year after the taxable year.\n\n### Interpretation\n\n### Practical Meaning\nTaxpayers should ensure that their income tax returns are prepared and submitted by April 15 to avoid penalties and interest for late filing. It is advisable to keep track of any changes in tax regulations or deadlines that may arise, especially in light of any amendments or special provisions that may be enacted by the Bureau of Internal Revenue (BIR).",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_deadline",
+    "reason": "filing_deadline_proposition_without_matching_return_authority",
+    "propositionLedger": [
+      {
+        "propositionId": "p0",
+        "sourceSide": "question",
+        "sourceClause": "what is the deadline for the individual annual income tax return under the nirc?",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p1",
+        "sourceSide": "answer",
+        "sourceClause": "### short answer the deadline for filing the individual annual income tax return in the philippines is april 15 of the following year after the taxable year",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      }
+    ],
+    "authorityClasses": {
+      "indFiling": false,
+      "substituted": false,
+      "corpFiling": false,
+      "estateFiling": false,
+      "donorFiling": false,
+      "vatFiling": false,
+      "pctFiling": false,
+      "estateRate": false,
+      "estateBaseDeduction": false
+    },
+    "failedProposition": {
+      "propositionId": "p0",
+      "sourceSide": "question",
+      "sourceClause": "what is the deadline for the individual annual income tax return under the nirc?",
+      "propositionClass": "filing_deadline",
+      "action": "file",
+      "objectType": "tax_return",
+      "taxType": "individual_income_tax",
+      "returnType": "individual_income",
+      "taxpayerType": "individual",
+      "substituted": false,
+      "decisive": true
+    }
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "requestHash": "73c6dc06196ea1d3d378b43b",
+  "responseHash": "ab4a0c060e10c6ebe5a74472",
+  "sanitizedConversationRef": "c72ab7b39fec4d0d8bc37078",
+  "sha256": "9f38531c0b12c730ff4c13cc8438a2046990f16281cbfdfa16243b9eb67a9118"
+}

@@ -1,0 +1,118 @@
+{
+  "id": "XT-07",
+  "group": "neg_xtax",
+  "prompt": "Is a self-employed individual required to file an annual income tax return?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nYes, a self-employed individual is required to file an annual income tax return. This obligation is established under Section 24 of the National Internal Revenue Code (NIRC).\n\n### Controlling Authorities\n- **NIRC Section 24**: This section imposes income tax on the taxable income of individuals, including self-employed individuals, derived from all sources within and outside the Philippines.\n\n### Interpretation\nSelf-employed individuals, as defined under the NIRC, must report their income and file an annual income tax return. This includes income from business activities and other sources. The tax rates applicable to their income are specified in the same section, which outlines the graduated income tax rates based on the amount of taxable income.\n\n### Practical Meaning\nFor self-employed individuals, the requirement to file an annual income tax return means they must keep accurate records of their income and expenses throughout the year. They need to calculate their taxable income and determine the appropriate tax due based on the graduated rates provided in the NIRC. Failure to file can result in penalties and interest on unpaid taxes.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_obligation",
+    "reason": "filing_obligation_proposition_without_matching_return_authority",
+    "propositionLedger": [
+      {
+        "propositionId": "p0",
+        "sourceSide": "question",
+        "sourceClause": "employed individual required to file an annual income tax return?",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p1",
+        "sourceSide": "answer",
+        "sourceClause": "employed individual is required to file an annual income tax return",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p2",
+        "sourceSide": "answer",
+        "sourceClause": "employed individuals, as defined under the nirc, must report their income and file an annual income tax return",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p3",
+        "sourceSide": "answer",
+        "sourceClause": "employed individuals, the requirement to file an annual income tax return means they must keep accurate records of their income and expenses throughout the year",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      }
+    ],
+    "authorityClasses": {
+      "indFiling": false,
+      "substituted": false,
+      "corpFiling": false,
+      "estateFiling": false,
+      "donorFiling": false,
+      "vatFiling": false,
+      "pctFiling": false,
+      "estateRate": false,
+      "estateBaseDeduction": false
+    },
+    "failedProposition": {
+      "propositionId": "p0",
+      "sourceSide": "question",
+      "sourceClause": "employed individual required to file an annual income tax return?",
+      "propositionClass": "filing_obligation",
+      "action": "file",
+      "objectType": "tax_return",
+      "taxType": "individual_income_tax",
+      "returnType": "individual_income",
+      "taxpayerType": "individual",
+      "substituted": false,
+      "decisive": true
+    }
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 24",
+    "NIRC Sec. 23",
+    "NIRC Sec. 27"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 24",
+    "NIRC Sec. 23",
+    "NIRC Sec. 27"
+  ],
+  "requestHash": "3495649eb3d01ca09c21c089",
+  "responseHash": "ea8510045ab9389f6ca55e30",
+  "sanitizedConversationRef": "b4935f001f6a7d62488b50a1",
+  "sha256": "1fb27510a22643db89be56d28dd0852e6a585d58ea812e05a29aab731d2e3f86"
+}

@@ -1,0 +1,25 @@
+{
+  "id": "POSX-indfile-2",
+  "group": "positive_extra",
+  "prompt": "Cite the NIRC provision requiring individuals to file an income tax return and state the obligation.",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nThe requirement to file an income tax return means that individuals must keep accurate records of their income and expenses throughout the year. Failure to comply with this obligation can result in penalties, including fines and interest on unpaid taxes. It is essential for individuals to be aware of their filing deadlines and to ensure that their returns are submitted accurately to avoid any legal repercussions.",
+  "trust": {
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_obligation",
+    "reason": "filing_obligation_proposition_without_matching_return_authority"
+  },
+  "sourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "responseHash": "c6b214cb4e2aacb79b1e747a",
+  "sanitizedConversationRef": "64f37da01f257ddb46ec1604",
+  "sha256": "0b066e3dfd9a09aec9729a9bc8f85c2df25523ce100849fb0de2dec2a5393f88"
+}

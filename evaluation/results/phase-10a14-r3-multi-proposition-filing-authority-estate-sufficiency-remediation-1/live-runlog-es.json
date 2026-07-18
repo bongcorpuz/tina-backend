@@ -1,0 +1,109 @@
+{
+  "estate": [
+    {
+      "id": "ES-01",
+      "verified": true,
+      "stage": "llm",
+      "reason": "The answer correctly identifies the taxable base and supports it with relevant citations.",
+      "AS": "VERIFIED_CONTROLLING",
+      "labels": [
+        "NIRC Sec. 89",
+        "NIRC Sec. 91",
+        "NIRC Sec. 84",
+        "NIRC Sec. 86",
+        "NIRC Sec. 88"
+      ]
+    },
+    {
+      "id": "ES-02",
+      "verified": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "tax_computation_basis",
+      "reason": "estate_tax_base_deduction_threshold_conflation",
+      "AS": "RELATED_AUTHORITY_ONLY",
+      "labels": [
+        "NIRC Sec. 91",
+        "NIRC Sec. 84",
+        "NIRC Sec. 86",
+        "NIRC Sec. 88",
+        "NIRC Sec. 89"
+      ]
+    },
+    {
+      "id": "ES-03",
+      "verified": null,
+      "stage": null,
+      "cls": null,
+      "reason": null,
+      "AS": "NO_VERIFIED_AUTHORITY",
+      "labels": []
+    },
+    {
+      "id": "ES-04",
+      "verified": null,
+      "stage": null,
+      "cls": null,
+      "reason": null,
+      "AS": "NO_VERIFIED_AUTHORITY",
+      "labels": []
+    },
+    {
+      "id": "ES-05",
+      "verified": null,
+      "stage": null,
+      "cls": null,
+      "reason": null,
+      "AS": "NO_VERIFIED_AUTHORITY",
+      "labels": []
+    },
+    {
+      "id": "ES-06",
+      "verified": null,
+      "stage": null,
+      "cls": null,
+      "reason": null,
+      "AS": "NO_VERIFIED_AUTHORITY",
+      "labels": []
+    },
+    {
+      "id": "ES-07",
+      "verified": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "tax_computation_basis",
+      "reason": "estate_computation_without_estate_authority",
+      "AS": "RELATED_AUTHORITY_ONLY",
+      "labels": [
+        "NIRC Sec. 34"
+      ]
+    },
+    {
+      "id": "ES-08",
+      "verified": null,
+      "stage": null,
+      "cls": null,
+      "reason": null,
+      "AS": "NO_VERIFIED_AUTHORITY",
+      "labels": []
+    },
+    {
+      "id": "ES-09",
+      "verified": null,
+      "stage": null,
+      "cls": null,
+      "reason": null,
+      "AS": "NO_VERIFIED_AUTHORITY",
+      "labels": []
+    },
+    {
+      "id": "ES-10",
+      "verified": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "tax_computation_basis",
+      "reason": "estate_computation_without_estate_authority",
+      "AS": "RELATED_AUTHORITY_ONLY",
+      "labels": [
+        "NIRC Sec. 34"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "id": "POSX-vatdl-1",
+  "group": "positive_extra",
+  "prompt": "Under Section 114 of the NIRC, when is the VAT return filed and paid?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nUnder Section 114 of the NIRC, the VAT return must be filed quarterly, either electronically or manually, and the payment of the VAT is due at the same time as the filing of the return.\n\n### Controlling Authorities\nThe controlling authority for this provision is Section 114 of the National Internal Revenue Code (NIRC).\n\n### Interpretation\nSection 114 outlines the requirements for the filing and payment of the Value-Added Tax (VAT). It mandates that every person liable to pay VAT must submit a quarterly return detailing the VAT due and must pay the corresponding tax at the time of filing. This ensures that the tax is accounted for in a timely manner, aligning the reporting and payment processes.\n\n### Practical Meaning\nIn practice, VAT-registered businesses must prepare their VAT returns for each quarter and ensure that these returns are filed by the deadline, along with the payment of any VAT owed. This process is crucial for compliance with tax obligations and helps avoid penalties associated with late filing or payment.",
+  "trust": {
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND"
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "stage": "llm",
+    "reason": "The answer correctly addresses the filing and payment requirements under Section 114 of the NIRC."
+  },
+  "sourceLabels": [
+    "NIRC Sec. 114",
+    "NIRC Sec. 105",
+    "NIRC Sec. 106",
+    "NIRC Sec. 107",
+    "RR 16-2005"
+  ],
+  "responseHash": "dd0f592b7a1613493d4b00dd",
+  "sanitizedConversationRef": "3295e84c54980db3bac3e3c5",
+  "sha256": "f46ee09bdb4389eca7bfe58fe59653a9194e48491d416ab34519f2cae1389ba8"
+}

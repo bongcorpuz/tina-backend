@@ -1,0 +1,140 @@
+{
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "totalProbes": 60,
+  "byGroup": {
+    "neg_deadline": {
+      "n": 10,
+      "verified": 0,
+      "gateBlocked": 10,
+      "verifiedIds": []
+    },
+    "neg_estate": {
+      "n": 10,
+      "verified": 1,
+      "gateBlocked": 3,
+      "verifiedIds": [
+        "ES-01"
+      ]
+    },
+    "neg_mixed": {
+      "n": 8,
+      "verified": 0,
+      "gateBlocked": 8,
+      "verifiedIds": []
+    },
+    "positive": {
+      "n": 13,
+      "verified": 4,
+      "gateBlocked": 4,
+      "verifiedIds": [
+        "POS-04-estdl",
+        "POS-10-protest",
+        "POS-12-q32est",
+        "POS-13-q47donor"
+      ]
+    },
+    "positive_extra": {
+      "n": 7,
+      "verified": 1,
+      "gateBlocked": 5,
+      "verifiedIds": [
+        "POSX-vatdl-1"
+      ]
+    },
+    "prior": {
+      "n": 4,
+      "verified": 1,
+      "gateBlocked": 2,
+      "verifiedIds": [
+        "PR-Q25"
+      ]
+    },
+    "neg_xtax": {
+      "n": 8,
+      "verified": 1,
+      "gateBlocked": 5,
+      "verifiedIds": [
+        "XT-02"
+      ]
+    }
+  },
+  "allVerified": [
+    {
+      "id": "ES-01",
+      "labels": [
+        "NIRC Sec. 89",
+        "NIRC Sec. 91",
+        "NIRC Sec. 84",
+        "NIRC Sec. 86",
+        "NIRC Sec. 88"
+      ]
+    },
+    {
+      "id": "POS-04-estdl",
+      "labels": [
+        "NIRC Sec. 89",
+        "NIRC Sec. 84",
+        "NIRC Sec. 86",
+        "NIRC Sec. 88",
+        "NIRC Sec. 91"
+      ]
+    },
+    {
+      "id": "POS-10-protest",
+      "labels": [
+        "NIRC Sec. 228",
+        "RR No. 18-2013",
+        "NIRC Sec. 203",
+        "NIRC Sec. 222"
+      ]
+    },
+    {
+      "id": "POS-12-q32est",
+      "labels": [
+        "NIRC Sec. 89",
+        "NIRC Sec. 91",
+        "NIRC Sec. 84",
+        "NIRC Sec. 86",
+        "NIRC Sec. 88"
+      ]
+    },
+    {
+      "id": "POS-13-q47donor",
+      "labels": [
+        "NIRC Sec. 99",
+        "NIRC Sec. 101",
+        "NIRC Sec. 102",
+        "NIRC Sec. 104"
+      ]
+    },
+    {
+      "id": "POSX-vatdl-1",
+      "labels": [
+        "NIRC Sec. 114",
+        "NIRC Sec. 105",
+        "NIRC Sec. 106",
+        "NIRC Sec. 107",
+        "RR 16-2005"
+      ]
+    },
+    {
+      "id": "PR-Q25",
+      "labels": [
+        "RR 2-98",
+        "RR 16-2005",
+        "RMC 75-2015"
+      ]
+    },
+    {
+      "id": "XT-02",
+      "labels": [
+        "NIRC Sec. 89",
+        "NIRC Sec. 84",
+        "NIRC Sec. 86",
+        "NIRC Sec. 88",
+        "NIRC Sec. 91"
+      ]
+    }
+  ],
+  "invalidVerified": 0
+}

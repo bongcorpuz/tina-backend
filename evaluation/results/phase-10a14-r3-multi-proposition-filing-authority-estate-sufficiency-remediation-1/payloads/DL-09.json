@@ -1,0 +1,118 @@
+{
+  "id": "DL-09",
+  "group": "neg_deadline",
+  "prompt": "What is the last day to file the individual annual income tax return?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nThe last day to file the individual annual income tax return is April 15 of the following year after the taxable year.\n\n### Interpretation\n\n### Practical Meaning\nTaxpayers should ensure that their income tax returns are filed by this date to avoid penalties and interest for late filing. It is advisable to prepare and submit returns well in advance of the deadline to account for any potential issues that may arise during the filing process.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_deadline",
+    "reason": "filing_deadline_proposition_without_matching_return_authority",
+    "propositionLedger": [
+      {
+        "propositionId": "p0",
+        "sourceSide": "question",
+        "sourceClause": "what is the last day to file the individual annual income tax return?",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p1",
+        "sourceSide": "answer",
+        "sourceClause": "### short answer the last day to file the individual annual income tax return is april 15 of the following year after the taxable year",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p2",
+        "sourceSide": "answer",
+        "sourceClause": "### interpretation ### practical meaning taxpayers should ensure that their income tax returns are filed by this date to avoid penalties and interest for late filing",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p3",
+        "sourceSide": "answer",
+        "sourceClause": "it is advisable to prepare and submit returns well in advance of the deadline to account for any potential issues that may arise during the filing process",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      }
+    ],
+    "authorityClasses": {
+      "indFiling": false,
+      "substituted": false,
+      "corpFiling": false,
+      "estateFiling": false,
+      "donorFiling": false,
+      "vatFiling": false,
+      "pctFiling": false,
+      "estateRate": false,
+      "estateBaseDeduction": false
+    },
+    "failedProposition": {
+      "propositionId": "p0",
+      "sourceSide": "question",
+      "sourceClause": "what is the last day to file the individual annual income tax return?",
+      "propositionClass": "filing_deadline",
+      "action": "file",
+      "objectType": "tax_return",
+      "taxType": "individual_income_tax",
+      "returnType": "individual_income",
+      "taxpayerType": "individual",
+      "substituted": false,
+      "decisive": true
+    }
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 24",
+    "NIRC Sec. 23",
+    "NIRC Sec. 27"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 24",
+    "NIRC Sec. 23",
+    "NIRC Sec. 27"
+  ],
+  "requestHash": "c36ce178813ba79f03975395",
+  "responseHash": "3df45784eb4608b80f4e779e",
+  "sanitizedConversationRef": "ee56fe06c2ffdcec17a08609",
+  "sha256": "3165e48aa4123b4a458c1ac5c748adf0c9955a50aaf4c570a33232a4a9637b61"
+}

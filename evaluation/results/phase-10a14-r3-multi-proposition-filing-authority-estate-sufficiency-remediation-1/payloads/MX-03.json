@@ -1,0 +1,118 @@
+{
+  "id": "MX-03",
+  "group": "neg_mixed",
+  "prompt": "After filing the protest, is an annual income tax return still required?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nYes, an annual income tax return is still required even after filing a protest. The obligation to file remains regardless of any pending disputes with the Bureau of Internal Revenue (BIR).\n\n### Interpretation\nFiling a protest does not exempt a taxpayer from the obligation to file their annual income tax return. The NIRC requires that all taxpayers comply with filing requirements, and any disputes regarding tax assessments or liabilities do not alter this obligation. The filing of a return is a separate legal requirement that must be fulfilled annually.\n\n### Practical Meaning\nTaxpayers must ensure that they file their annual income tax returns on time, even if they have filed a protest against a tax assessment. Failure to file can result in penalties and interest, regardless of the status of the protest. It is crucial for taxpayers to maintain compliance with filing requirements to avoid additional complications with the BIR.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_obligation",
+    "reason": "filing_obligation_proposition_without_matching_return_authority",
+    "propositionLedger": [
+      {
+        "propositionId": "p0",
+        "sourceSide": "question",
+        "sourceClause": "after filing the protest, is an annual income tax return still required?",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p1",
+        "sourceSide": "answer",
+        "sourceClause": "### short answer yes, an annual income tax return is still required even after filing a protest",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p2",
+        "sourceSide": "answer",
+        "sourceClause": "### interpretation filing a protest does not exempt a taxpayer from the obligation to file their annual income tax return",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p3",
+        "sourceSide": "answer",
+        "sourceClause": "the filing of a return is a separate legal requirement that must be fulfilled annually",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      }
+    ],
+    "authorityClasses": {
+      "indFiling": false,
+      "substituted": false,
+      "corpFiling": false,
+      "estateFiling": false,
+      "donorFiling": false,
+      "vatFiling": false,
+      "pctFiling": false,
+      "estateRate": false,
+      "estateBaseDeduction": false
+    },
+    "failedProposition": {
+      "propositionId": "p0",
+      "sourceSide": "question",
+      "sourceClause": "after filing the protest, is an annual income tax return still required?",
+      "propositionClass": "filing_obligation",
+      "action": "file",
+      "objectType": "tax_return",
+      "taxType": "individual_income_tax",
+      "returnType": "individual_income",
+      "taxpayerType": "individual",
+      "substituted": false,
+      "decisive": true
+    }
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "requestHash": "cb3d22b9ee3348df82794180",
+  "responseHash": "f3813ffcc0fe202282fad354",
+  "sanitizedConversationRef": "4ba4c0799f117b46f1c9a6ef",
+  "sha256": "624ae16f5f6e77d3c9aa2b560e276eacbed8b61845bee7640a3338ef50e250b6"
+}

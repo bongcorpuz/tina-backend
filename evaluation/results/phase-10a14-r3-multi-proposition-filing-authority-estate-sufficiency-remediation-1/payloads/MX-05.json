@@ -1,0 +1,105 @@
+{
+  "id": "MX-05",
+  "group": "neg_mixed",
+  "prompt": "I already submitted the invoices; do I still need to file an income tax return?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Issue Presented\nYou are still required to file an income tax return even if you have submitted invoices. Under Section 23 of the National Internal Revenue Code (NIRC), the filing of a tax return is mandatory for all taxpayers, regardless of whether they have generated income or submitted invoices during the taxable year. \n\nThe income tax return serves as a formal declaration of your taxable income and is essential for the Bureau of Internal Revenue (BIR) to assess your tax liability accurately. Failure to file the return can result in penalties and interest on any taxes due. \n\nIn summary, ensure that you file your income tax return on or before the deadline to comply with tax regulations.\n\n### Relevant Facts / Assumptions\nThe factual circumstances have not been fully described. The analysis is based on the question as presented.\n\n### Alternative Interpretations\nNo alternative interpretations identified from the available indexed authorities.\n\n### Position Strength\nPosition strength is preliminary and subject to full fact pattern verification.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_obligation",
+    "reason": "filing_obligation_proposition_without_matching_return_authority",
+    "propositionLedger": [
+      {
+        "propositionId": "p0",
+        "sourceSide": "question",
+        "sourceClause": "do i still need to file an income tax return?",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p1",
+        "sourceSide": "answer",
+        "sourceClause": "### issue presented you are still required to file an income tax return even if you have submitted invoices",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p2",
+        "sourceSide": "answer",
+        "sourceClause": "in summary, ensure that you file your income tax return on or before the deadline to comply with tax regulations",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      }
+    ],
+    "authorityClasses": {
+      "indFiling": false,
+      "substituted": false,
+      "corpFiling": false,
+      "estateFiling": false,
+      "donorFiling": false,
+      "vatFiling": false,
+      "pctFiling": false,
+      "estateRate": false,
+      "estateBaseDeduction": false
+    },
+    "failedProposition": {
+      "propositionId": "p0",
+      "sourceSide": "question",
+      "sourceClause": "do i still need to file an income tax return?",
+      "propositionClass": "filing_obligation",
+      "action": "file",
+      "objectType": "tax_return",
+      "taxType": "individual_income_tax",
+      "returnType": "individual_income",
+      "taxpayerType": "individual",
+      "substituted": false,
+      "decisive": true
+    }
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "requestHash": "c5b5758034228c86083af9b8",
+  "responseHash": "3c0bc22fd5198faef4e97a82",
+  "sanitizedConversationRef": "db2fa757c119e5ca3725dab2",
+  "sha256": "b95720c4a073e1cd726aa83b0006842725c8d40a4748d5d1ee7c68ad89ab75c5"
+}

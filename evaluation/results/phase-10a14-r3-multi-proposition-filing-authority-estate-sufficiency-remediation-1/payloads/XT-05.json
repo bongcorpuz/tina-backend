@@ -1,0 +1,135 @@
+{
+  "id": "XT-05",
+  "group": "neg_xtax",
+  "prompt": "When is the VAT return due?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nThe VAT return is due on or before the 20th day of the month following the close of each taxable quarter.\n\n### Controlling Authorities\nThis is governed by Section 106 of the National Internal Revenue Code (NIRC), which outlines the obligations of VAT-registered persons regarding the filing of VAT returns.\n\n### Interpretation\nSection 106 of the NIRC specifies that every VAT-registered person must file a return and pay the tax due on or before the 20th day of the month following the end of each taxable quarter. This means that for the first quarter (January to March), the return is due by April 20; for the second quarter (April to June), by July 20; for the third quarter (July to September), by October 20; and for the fourth quarter (October to December), by January 20 of the following year.\n\n### Practical Meaning\nIn practice, VAT-registered businesses must ensure that they prepare and submit their VAT returns timely to avoid penalties and interest for late filing. This requires maintaining accurate records of sales and purchases to calculate the VAT due accurately.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_deadline",
+    "reason": "filing_deadline_proposition_without_matching_return_authority",
+    "propositionLedger": [
+      {
+        "propositionId": "p0",
+        "sourceSide": "question",
+        "sourceClause": "when is the vat return due?",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "vat",
+        "returnType": "vat",
+        "taxpayerType": "vat_taxpayer",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p1",
+        "sourceSide": "answer",
+        "sourceClause": "### short answer the vat return is due on or before the 20th day of the month following the close of each taxable quarter",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "vat",
+        "returnType": "vat",
+        "taxpayerType": "vat_taxpayer",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p2",
+        "sourceSide": "answer",
+        "sourceClause": "registered person must file a return and pay the tax due on or before the 20th day of the month following the end of each taxable quarter",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "vat",
+        "returnType": "vat",
+        "taxpayerType": "vat_taxpayer",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p3",
+        "sourceSide": "answer",
+        "sourceClause": "registered person must file a return and pay the tax due on or before the 20th day of the month following the end of each taxable quarter",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "vat",
+        "returnType": "vat",
+        "taxpayerType": "vat_taxpayer",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p4",
+        "sourceSide": "answer",
+        "sourceClause": "this means that for the first quarter (january to march), the return is due by april 20",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "vat",
+        "returnType": "vat",
+        "taxpayerType": "vat_taxpayer",
+        "substituted": false,
+        "decisive": true
+      }
+    ],
+    "authorityClasses": {
+      "indFiling": false,
+      "substituted": false,
+      "corpFiling": false,
+      "estateFiling": false,
+      "donorFiling": false,
+      "vatFiling": false,
+      "pctFiling": false,
+      "estateRate": false,
+      "estateBaseDeduction": false
+    },
+    "failedProposition": {
+      "propositionId": "p0",
+      "sourceSide": "question",
+      "sourceClause": "when is the vat return due?",
+      "propositionClass": "filing_deadline",
+      "action": "file",
+      "objectType": "tax_return",
+      "taxType": "vat",
+      "returnType": "vat",
+      "taxpayerType": "vat_taxpayer",
+      "substituted": false,
+      "decisive": true
+    }
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 5,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 106",
+    "NIRC Sec. 105",
+    "NIRC Sec. 107",
+    "NIRC Sec. 108",
+    "RR 16-2005"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 106",
+    "NIRC Sec. 105",
+    "NIRC Sec. 107",
+    "NIRC Sec. 108",
+    "RR 16-2005"
+  ],
+  "requestHash": "f21196c527047d58a3bf1841",
+  "responseHash": "30cae197f663ff5ebe2846c7",
+  "sanitizedConversationRef": "d6f1a5ff9f430473ca5d95b1",
+  "sha256": "25dd0238cceadb98281bcf6fac37099db08b6327fa0140a304cd01696aeb1108"
+}

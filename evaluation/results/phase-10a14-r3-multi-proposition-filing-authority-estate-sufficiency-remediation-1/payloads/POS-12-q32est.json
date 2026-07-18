@@ -1,0 +1,46 @@
+{
+  "id": "POS-12-q32est",
+  "group": "positive",
+  "prompt": "What is the deadline for filing an estate tax return and paying the estate tax?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nThe deadline for filing an estate tax return is within one (1) year from the decedent's death, and the estate tax must be paid at the time the return is filed.\n\n### Controlling Authorities\n- **NIRC Section 89**: \"The estate tax return required... shall be filed within one (1) year from the decedent's death.\"\n- **NIRC Section 91**: \"The estate tax imposed... shall be paid... at the time the return is filed.\"\n\n### Interpretation\nThe law mandates that the estate tax return must be submitted within one year following the death of the individual whose estate is being settled. Concurrently, the estate tax payment is due at the time of filing the return, ensuring that both the return and the tax payment are aligned in timing.\n\n### Practical Meaning\nThis means that executors or heirs must be diligent in preparing the estate tax return promptly after the decedent's death to avoid penalties. If additional time is needed, the Commissioner of Internal Revenue may grant an extension of up to 30 days for filing the return in meritorious cases. However, the estate tax payment must still coincide with the return filing date.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "schemaValid": true,
+    "stage": "llm",
+    "reason": "The answer correctly states the deadline and payment requirements, supported by relevant citations.",
+    "propositionLedger": null,
+    "authorityClasses": null,
+    "failedProposition": null
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 5,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 89",
+    "NIRC Sec. 91",
+    "NIRC Sec. 84",
+    "NIRC Sec. 86",
+    "NIRC Sec. 88"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 89",
+    "NIRC Sec. 91",
+    "NIRC Sec. 84",
+    "NIRC Sec. 86",
+    "NIRC Sec. 88"
+  ],
+  "requestHash": "5df3a562f0153b2d4bc7b9fa",
+  "responseHash": "18275f2a63a36a4e58ac4067",
+  "sanitizedConversationRef": "4b3c46b3efcb4db66324cd47",
+  "sha256": "7c26b1d0748ef136f1a3b01c32072aab6d4927afe315afd0f79c66841b35662d"
+}

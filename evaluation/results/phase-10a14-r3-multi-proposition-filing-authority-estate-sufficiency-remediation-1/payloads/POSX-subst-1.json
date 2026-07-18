@@ -1,0 +1,16 @@
+{
+  "id": "POSX-subst-1",
+  "group": "positive_extra",
+  "prompt": "Under RR 2-98 and Section 51-A, when does substituted filing apply to a purely compensation employee?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "I cannot present the available source as controlling authority for this issue.\n\nOnly related or supporting authority was found. Please verify the governing statute, regulation, or controlling issuance before relying on this answer.",
+  "trust": {
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "RELATED_AUTHORITY_ONLY"
+  },
+  "answerSupport": null,
+  "sourceLabels": [],
+  "responseHash": "811a82abe2d37879ab329fd1",
+  "sanitizedConversationRef": "873d22ffe9e0692c6b20a063",
+  "sha256": "aca037597e2e09ea486cdbfb8c5bba622f3737601ced421ffdcf1178a7ca8872"
+}

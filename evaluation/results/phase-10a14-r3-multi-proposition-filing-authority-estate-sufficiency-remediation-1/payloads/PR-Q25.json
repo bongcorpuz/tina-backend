@@ -1,0 +1,42 @@
+{
+  "id": "PR-Q25",
+  "group": "prior",
+  "prompt": "Is expanded withholding tax required on payments to a VAT-registered law firm?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nYes, expanded withholding tax is required on payments to a VAT-registered law firm as these payments fall under the income payments subject to withholding tax as specified in Revenue Regulations No. 2-98. The withholding agent is responsible for withholding the tax, and the income recipient must still file an income tax return to report the income and pay any difference between the withheld tax and the tax due (RR 2-98).\n\n### Interpretation\n\nAdvertising service payments may be subject to expanded withholding tax when paid by a withholding agent to a resident income payee, subject to the applicable classification and rate under withholding tax regulations.\n\n### Practical Meaning\n\nThe payor withholds the applicable EWT from the payment and remits it to the BIR. The withheld amount is creditable against the payee's income tax, subject to proper withholding certificates and filing compliance.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "schemaValid": true,
+    "stage": "llm",
+    "reason": "The answer correctly addresses the applicability of expanded withholding tax and cites relevant regulations.",
+    "propositionLedger": null,
+    "authorityClasses": null,
+    "failedProposition": null
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 6,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "RR 2-98",
+    "RR 16-2005",
+    "RMC 75-2015"
+  ],
+  "topSourceLabels": [
+    "RR 2-98",
+    "RR 16-2005",
+    "RMC 75-2015"
+  ],
+  "requestHash": "4e69bf348a0bbce6e86568b6",
+  "responseHash": "4a944aa0b6059776b084acac",
+  "sanitizedConversationRef": "74302383c2ccd7a4f35f1724",
+  "sha256": "ed608c09e74b3f314e9b5588e6ca107f39371e82368579b3bd9664259e420118"
+}

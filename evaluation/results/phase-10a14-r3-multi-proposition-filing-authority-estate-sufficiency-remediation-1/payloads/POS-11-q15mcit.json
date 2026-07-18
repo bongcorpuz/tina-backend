@@ -1,0 +1,38 @@
+{
+  "id": "POS-11-q15mcit",
+  "group": "positive",
+  "prompt": "What is the minimum corporate income tax rate for a domestic corporation?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nThe minimum corporate income tax rate for a domestic corporation is 20% of the corporation's taxable income. This rate applies to domestic corporations with a net taxable income exceeding P5 million.\n\n### Interpretation\n\n### Practical Meaning\nFor domestic corporations, understanding the applicable tax rate is crucial for financial planning and compliance. Corporations must accurately calculate their taxable income to determine their tax liability. The 20% rate signifies a significant tax obligation for larger corporations, while smaller corporations benefit from a reduced rate, promoting business growth and sustainability.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": true,
+    "stage": "llm",
+    "reason": "unsafe_value_fields:citationSupportsProposition,propositionSupported,eligibleForVerifiedControlling,contradictsSources,unsupportedMaterialProposition,answerContradictsControllingSource",
+    "propositionLedger": null,
+    "authorityClasses": null,
+    "failedProposition": null
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 22"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 22"
+  ],
+  "requestHash": "16d68b8b18f35f7d0e73f9b7",
+  "responseHash": "7a32fecc4717cafc69894382",
+  "sanitizedConversationRef": "eccb341973df117ab25e18d6",
+  "sha256": "159f47b8c3b09faf04af2f595896dbf761853115eba9adab5776614fd6e481c2"
+}

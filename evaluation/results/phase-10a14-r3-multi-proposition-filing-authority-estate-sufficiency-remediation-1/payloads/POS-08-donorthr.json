@@ -1,0 +1,44 @@
+{
+  "id": "POS-08-donorthr",
+  "group": "positive",
+  "prompt": "What is the donor's tax rate and exemption threshold under TRAIN?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nThe donor's tax rate under the Tax Reform for Acceleration and Inclusion (TRAIN) is six percent (6%) on the total gifts made in excess of Two Hundred Fifty Thousand Pesos (₱250,000) during the calendar year.\n\n### Controlling Authorities\n- **NIRC Sec. 99**: \"The tax for each calendar year shall be six percent (6%) computed on the basis of the total gifts in excess of Two Hundred Fifty Thousand Pesos (₱250,000) exempt gift made during the calendar year.\"\n\n### Interpretation\nUnder the provisions of the NIRC, specifically Section 99, any gifts made by an individual that exceed the exemption threshold of ₱250,000 are subject to a donor's tax at a rate of 6%. This means that only the amount over the exemption threshold is taxable.\n\n### Practical Meaning\nIn practical terms, individuals making gifts should be aware that they can give up to ₱250,000 without incurring any donor's tax liability. However, any amount gifted beyond this threshold will be taxed at 6%, necessitating proper record-keeping and potential filing of a donor's tax return to comply with tax obligations.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": true,
+    "stage": "llm",
+    "reason": "unsafe_value_fields:citationRelevant,citationSupportsProposition,propositionSupported,eligibleForVerifiedControlling,unsupportedMaterialProposition",
+    "propositionLedger": null,
+    "authorityClasses": null,
+    "failedProposition": null
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 4,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 99",
+    "NIRC Sec. 101",
+    "NIRC Sec. 102",
+    "NIRC Sec. 104"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 99",
+    "NIRC Sec. 101",
+    "NIRC Sec. 102",
+    "NIRC Sec. 104"
+  ],
+  "requestHash": "12425518cdfc163ee9c559e6",
+  "responseHash": "8fab63b76f6ef73da846b932",
+  "sanitizedConversationRef": "15a9e903073a03d7c3da49f6",
+  "sha256": "3ce8ed95b4d57f1d687c80ff32f7aa6bd73a224dc719b5115c318a747a1d1ee2"
+}

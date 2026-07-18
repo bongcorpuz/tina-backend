@@ -1,0 +1,105 @@
+{
+  "id": "MX-04",
+  "group": "neg_mixed",
+  "prompt": "Should I submit the financial statements, and is an income tax return required?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nYes, you are required to submit financial statements along with your income tax return. This is mandated under Section 23 of the National Internal Revenue Code (NIRC).\n\n### Controlling Authorities\n- **NIRC Section 23**: General Principles of Income Taxation in the Philippines.\n- **NIRC Section 24**: Income Tax Rates.\n\n### Interpretation\nUnder Section 23 of the NIRC, all citizens and residents are required to file an income tax return, which includes reporting their income from all sources. Additionally, Section 24 outlines the income tax rates applicable to individuals and corporations, reinforcing the obligation to file returns that reflect accurate financial statements.\n\n### Practical Meaning\nSubmitting financial statements is essential for compliance with tax regulations. These statements provide the necessary details to accurately assess taxable income and ensure proper tax calculation. Failure to submit these documents may result in penalties or issues with the Bureau of Internal Revenue (BIR).",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_obligation",
+    "reason": "filing_obligation_proposition_without_matching_return_authority",
+    "propositionLedger": [
+      {
+        "propositionId": "p0",
+        "sourceSide": "question",
+        "sourceClause": "is an income tax return required?",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p1",
+        "sourceSide": "answer",
+        "sourceClause": "### short answer yes, you are required to submit financial statements along with your income tax return",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p2",
+        "sourceSide": "answer",
+        "sourceClause": "### interpretation under section 23 of the nirc, all citizens and residents are required to file an income tax return, which includes reporting their income from all sources",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      }
+    ],
+    "authorityClasses": {
+      "indFiling": false,
+      "substituted": false,
+      "corpFiling": false,
+      "estateFiling": false,
+      "donorFiling": false,
+      "vatFiling": false,
+      "pctFiling": false,
+      "estateRate": false,
+      "estateBaseDeduction": false
+    },
+    "failedProposition": {
+      "propositionId": "p0",
+      "sourceSide": "question",
+      "sourceClause": "is an income tax return required?",
+      "propositionClass": "filing_obligation",
+      "action": "file",
+      "objectType": "tax_return",
+      "taxType": "individual_income_tax",
+      "returnType": "individual_income",
+      "taxpayerType": "individual",
+      "substituted": false,
+      "decisive": true
+    }
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "requestHash": "b5ba96604998384559c8b8f0",
+  "responseHash": "4db912fa860f5a67366e5f79",
+  "sanitizedConversationRef": "8a163ef90377834ffce3c965",
+  "sha256": "36813317c3fbb1d257ecbcd7a95174dc00bd264ef2031a5dc3fed342933ecc98"
+}

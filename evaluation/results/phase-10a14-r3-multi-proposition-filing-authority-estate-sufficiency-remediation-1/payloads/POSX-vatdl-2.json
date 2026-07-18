@@ -1,0 +1,27 @@
+{
+  "id": "POSX-vatdl-2",
+  "group": "positive_extra",
+  "prompt": "Cite the NIRC provision on the filing and payment of the VAT return and its deadline.",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\n\n### Controlling Authorities\n- **RR 16-2005**: This revenue regulation provides further details on the implementation of VAT provisions, including filing and payment procedures.\n\n### Interpretation\n\n### Practical Meaning\nFor VAT-registered businesses, it is crucial to adhere to the filing and payment deadlines to avoid penalties and interest for late submissions. Proper accounting practices should be in place to ensure that all sales and purchases are accurately recorded, enabling the timely preparation of VAT returns. Failure to comply with these deadlines can result in significant financial repercussions, including fines and increased scrutiny from the BIR.",
+  "trust": {
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_deadline",
+    "reason": "filing_deadline_proposition_without_matching_return_authority"
+  },
+  "sourceLabels": [
+    "NIRC Sec. 105",
+    "NIRC Sec. 106",
+    "NIRC Sec. 107",
+    "NIRC Sec. 108",
+    "RR 16-2005"
+  ],
+  "responseHash": "2882f8a91aea3f4f6451d463",
+  "sanitizedConversationRef": "909fa9fdaa03c73a1f1a12a0",
+  "sha256": "7026ce1ac56b4f51be079954aa635511db7a72424e512f46f3f73caad6e70032"
+}

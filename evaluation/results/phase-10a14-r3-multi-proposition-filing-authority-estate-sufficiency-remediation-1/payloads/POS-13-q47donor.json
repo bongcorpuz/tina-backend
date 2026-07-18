@@ -1,0 +1,44 @@
+{
+  "id": "POS-13-q47donor",
+  "group": "positive",
+  "prompt": "What is the donor's tax rate under the TRAIN law?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nThe donor's tax rate under the TRAIN law is six percent (6%) on the total gifts in excess of Two hundred fifty thousand pesos (₱250,000) made during the calendar year.\n\n### Interpretation\nSection 99 of the NIRC specifies that the donor's tax is levied on the transfer of property by gift, and the applicable rate is six percent (6%) on the amount exceeding the exempt threshold of ₱250,000. This means that any gifts made within a calendar year that total more than ₱250,000 will be subject to this tax rate.\n\n### Practical Meaning\nIn practical terms, individuals making gifts should be aware that only the portion of their total gifts that exceeds ₱250,000 will be taxed at the 6% rate. This provision encourages charitable giving while ensuring that larger gifts are subject to taxation, thereby contributing to government revenue. Taxpayers should maintain accurate records of their gifts to ensure compliance with tax obligations.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "schemaValid": true,
+    "stage": "llm",
+    "reason": "The answer correctly states the donor's tax rate and threshold under current law with relevant citations.",
+    "propositionLedger": null,
+    "authorityClasses": null,
+    "failedProposition": null
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 4,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 99",
+    "NIRC Sec. 101",
+    "NIRC Sec. 102",
+    "NIRC Sec. 104"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 99",
+    "NIRC Sec. 101",
+    "NIRC Sec. 102",
+    "NIRC Sec. 104"
+  ],
+  "requestHash": "b2789200953e876c12234759",
+  "responseHash": "ac135420ef0729090f67a2ad",
+  "sanitizedConversationRef": "21ee6fda734fcf513a7db998",
+  "sha256": "00356a191ddfd6cb08c24a4b5f5bf8f1a98cd052e344a522384c78e4dc12d866"
+}

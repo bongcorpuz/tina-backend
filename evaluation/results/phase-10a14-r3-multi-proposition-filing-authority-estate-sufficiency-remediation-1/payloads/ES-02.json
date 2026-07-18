@@ -1,0 +1,97 @@
+{
+  "id": "ES-02",
+  "group": "neg_estate",
+  "prompt": "What is the estate tax rate and base under TRAIN?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nThe estate tax rate under the Tax Reform for Acceleration and Inclusion (TRAIN) law is a flat rate of 6% on the net estate value exceeding PHP 5 million.\n\n### Interpretation\nThe estate tax is calculated based on the net estate, which is the gross estate value minus allowable deductions. The flat rate of 6% applies only to the portion of the net estate that exceeds the PHP 5 million threshold.\n\n### Practical Meaning\nFor estates valued at PHP 5 million or less, no estate tax is due. For estates exceeding this threshold, the tax is applied only to the amount above PHP 5 million, simplifying the tax calculation process for larger estates. This change under TRAIN aims to ease the tax burden on smaller estates while maintaining revenue collection from larger estates.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "tax_computation_basis",
+    "reason": "estate_tax_base_deduction_threshold_conflation",
+    "propositionLedger": [
+      {
+        "propositionId": "p0",
+        "sourceSide": "answer",
+        "sourceClause": "### short answer the estate tax rate under the tax reform for acceleration and inclusion (train) law is a flat rate of 6% on the net estate value exceeding php 5 million. ### interpretation the estate tax is calculated based on the net estate, which is the gross estate value minus allowable deductions. the flat rate of 6% applies only to the portion of the net estate that exceeds the php 5 million threshold. ### practical meaning for estates valued at php 5 million or less, no estate tax is due. for estates exceeding this threshold, the tax is applied only to the amount above php 5 million, simplifying the tax calculation process for larger estates. this change under train aims to ease the tax burden on smaller estates while maintaining revenue collection from larger estates.",
+        "propositionClass": "tax_computation_basis",
+        "objectType": "estate_tax_computation",
+        "taxType": "estate_tax",
+        "returnType": "estate",
+        "taxpayerType": "estate",
+        "computationComponents": {
+          "rate": true,
+          "netEstate": true,
+          "grossEstate": true,
+          "deduction": true,
+          "standardDeduction": false,
+          "threshold": true
+        },
+        "relationshipError": true,
+        "decisive": true
+      }
+    ],
+    "authorityClasses": {
+      "indFiling": false,
+      "substituted": false,
+      "corpFiling": false,
+      "estateFiling": true,
+      "donorFiling": false,
+      "vatFiling": false,
+      "pctFiling": false,
+      "estateRate": true,
+      "estateBaseDeduction": true
+    },
+    "failedProposition": {
+      "propositionId": "p0",
+      "sourceSide": "answer",
+      "sourceClause": "### short answer the estate tax rate under the tax reform for acceleration and inclusion (train) law is a flat rate of 6% on the net estate value exceeding php 5 million. ### interpretation the estate tax is calculated based on the net estate, which is the gross estate value minus allowable deductions. the flat rate of 6% applies only to the portion of the net estate that exceeds the php 5 million threshold. ### practical meaning for estates valued at php 5 million or less, no estate tax is due. for estates exceeding this threshold, the tax is applied only to the amount above php 5 million, simplifying the tax calculation process for larger estates. this change under train aims to ease the tax burden on smaller estates while maintaining revenue collection from larger estates.",
+      "propositionClass": "tax_computation_basis",
+      "objectType": "estate_tax_computation",
+      "taxType": "estate_tax",
+      "returnType": "estate",
+      "taxpayerType": "estate",
+      "computationComponents": {
+        "rate": true,
+        "netEstate": true,
+        "grossEstate": true,
+        "deduction": true,
+        "standardDeduction": false,
+        "threshold": true
+      },
+      "relationshipError": true,
+      "decisive": true
+    }
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 5,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 91",
+    "NIRC Sec. 84",
+    "NIRC Sec. 86",
+    "NIRC Sec. 88",
+    "NIRC Sec. 89"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 91",
+    "NIRC Sec. 84",
+    "NIRC Sec. 86",
+    "NIRC Sec. 88",
+    "NIRC Sec. 89"
+  ],
+  "requestHash": "0524dbe02807048eda312e83",
+  "responseHash": "df54f4a314f8dc54f5f2cd0f",
+  "sanitizedConversationRef": "d96887445d4538e1ec34c971",
+  "sha256": "7bff07897e65b85d5a0eeccdac1f11fff6e840c7d05046437c4ff9723f8cd690"
+}

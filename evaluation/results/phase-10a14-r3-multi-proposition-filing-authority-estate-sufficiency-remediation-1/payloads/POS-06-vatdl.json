@@ -1,0 +1,122 @@
+{
+  "id": "POS-06-vatdl",
+  "group": "positive",
+  "prompt": "When is the quarterly VAT return due under the NIRC?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nThe quarterly VAT return is due on or before the 25th day of the month following the close of each taxable quarter.\n\n### Controlling Authorities\nThis is governed by Section 106 of the National Internal Revenue Code (NIRC), which outlines the VAT obligations and filing requirements.\n\n### Interpretation\nSection 106 of the NIRC specifies that VAT-registered persons must file their returns quarterly, with the due date set for the 25th day of the month following the end of each quarter. This means that for the first quarter (January to March), the return is due by April 25; for the second quarter (April to June), by July 25; for the third quarter (July to September), by October 25; and for the fourth quarter (October to December), by January 25 of the following year.\n\n### Practical Meaning\nTaxpayers must ensure timely filing of their VAT returns to avoid penalties and interest for late submissions. It is crucial for businesses to maintain accurate records of their sales and purchases to facilitate the correct computation of VAT due for each quarter.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_deadline",
+    "reason": "filing_deadline_proposition_without_matching_return_authority",
+    "propositionLedger": [
+      {
+        "propositionId": "p0",
+        "sourceSide": "question",
+        "sourceClause": "when is the quarterly vat return due under the nirc?",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "vat",
+        "returnType": "vat",
+        "taxpayerType": "vat_taxpayer",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p1",
+        "sourceSide": "answer",
+        "sourceClause": "### short answer the quarterly vat return is due on or before the 25th day of the month following the close of each taxable quarter",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "vat",
+        "returnType": "vat",
+        "taxpayerType": "vat_taxpayer",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p2",
+        "sourceSide": "answer",
+        "sourceClause": "registered persons must file their returns quarterly, with the due date set for the 25th day of the month following the end of each quarter",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "vat",
+        "returnType": "vat",
+        "taxpayerType": "vat_taxpayer",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p3",
+        "sourceSide": "answer",
+        "sourceClause": "this means that for the first quarter (january to march), the return is due by april 25",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "vat",
+        "returnType": "vat",
+        "taxpayerType": "vat_taxpayer",
+        "substituted": false,
+        "decisive": true
+      }
+    ],
+    "authorityClasses": {
+      "indFiling": false,
+      "substituted": false,
+      "corpFiling": false,
+      "estateFiling": false,
+      "donorFiling": false,
+      "vatFiling": false,
+      "pctFiling": false,
+      "estateRate": false,
+      "estateBaseDeduction": false
+    },
+    "failedProposition": {
+      "propositionId": "p0",
+      "sourceSide": "question",
+      "sourceClause": "when is the quarterly vat return due under the nirc?",
+      "propositionClass": "filing_deadline",
+      "action": "file",
+      "objectType": "tax_return",
+      "taxType": "vat",
+      "returnType": "vat",
+      "taxpayerType": "vat_taxpayer",
+      "substituted": false,
+      "decisive": true
+    }
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 5,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 106",
+    "NIRC Sec. 105",
+    "NIRC Sec. 107",
+    "NIRC Sec. 108",
+    "RR 16-2005"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 106",
+    "NIRC Sec. 105",
+    "NIRC Sec. 107",
+    "NIRC Sec. 108",
+    "RR 16-2005"
+  ],
+  "requestHash": "c7e0f7f479397be6b6b7f204",
+  "responseHash": "10fc56294d6e4351fe0f3909",
+  "sanitizedConversationRef": "74101efc720af9c23bab7716",
+  "sha256": "6ef36efef22ba6139f6587a4346aa1913c8756be1c4a2bb0939efff19f45ccf4"
+}

@@ -1,0 +1,25 @@
+{
+  "id": "POSX-inddl-1",
+  "group": "positive_extra",
+  "prompt": "Under Section 51(C) of the NIRC, what is the filing deadline for the individual annual income tax return?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nTaxpayers should ensure that their income tax returns are filed by April 15 to avoid penalties and interest for late filing. This deadline is crucial for compliance with tax obligations and for the accurate assessment of tax liabilities for the previous year.",
+  "trust": {
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_deadline",
+    "reason": "filing_deadline_proposition_without_matching_return_authority"
+  },
+  "sourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "responseHash": "f2209edfa1cfb52ecea1d68b",
+  "sanitizedConversationRef": "621264bf5cf1ea105e24c6b2",
+  "sha256": "d4ff35893934a05e8a2f98c5a2525404a82b6997f66e58b895742416c2d0e05f"
+}

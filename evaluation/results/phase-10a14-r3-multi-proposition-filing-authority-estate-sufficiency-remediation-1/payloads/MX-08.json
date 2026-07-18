@@ -1,0 +1,118 @@
+{
+  "id": "MX-08",
+  "group": "neg_mixed",
+  "prompt": "Do I keep supporting attachments, and must I file an income tax return?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nYes, you must file an income tax return if you have taxable income. Supporting attachments should be kept as they may be required for verification by the Bureau of Internal Revenue (BIR).\n\n### Controlling Authorities\nUnder Section 23 of the National Internal Revenue Code (NIRC), every citizen of the Philippines residing therein is taxable on all income derived from sources within and without the Philippines. Section 24 of the NIRC specifies the rates of income tax applicable to individuals.\n\n### Interpretation\nThe requirement to file an income tax return is mandated by the NIRC, which states that individuals must report their taxable income. This includes income from various sources, and the tax is computed based on the applicable rates outlined in the law. Supporting documents, such as receipts and proof of income, should be retained to substantiate the income reported and the deductions claimed.\n\n### Practical Meaning\nFiling an income tax return is a legal obligation for individuals with taxable income, and failure to do so may result in penalties. Keeping supporting attachments is crucial for compliance and to defend against any potential audits by the BIR. It is advisable to maintain these records for at least three years, as this is the general prescription period for tax assessments.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_obligation",
+    "reason": "filing_obligation_proposition_without_matching_return_authority",
+    "propositionLedger": [
+      {
+        "propositionId": "p0",
+        "sourceSide": "question",
+        "sourceClause": "must file an income tax return?",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p1",
+        "sourceSide": "answer",
+        "sourceClause": "### short answer yes, you must file an income tax return if you have taxable income",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p2",
+        "sourceSide": "answer",
+        "sourceClause": "### interpretation the requirement to file an income tax return is mandated by the nirc, which states that individuals must report their taxable income",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p3",
+        "sourceSide": "answer",
+        "sourceClause": "### practical meaning filing an income tax return is a legal obligation for individuals with taxable income",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      }
+    ],
+    "authorityClasses": {
+      "indFiling": false,
+      "substituted": false,
+      "corpFiling": false,
+      "estateFiling": false,
+      "donorFiling": false,
+      "vatFiling": false,
+      "pctFiling": false,
+      "estateRate": false,
+      "estateBaseDeduction": false
+    },
+    "failedProposition": {
+      "propositionId": "p0",
+      "sourceSide": "question",
+      "sourceClause": "must file an income tax return?",
+      "propositionClass": "filing_obligation",
+      "action": "file",
+      "objectType": "tax_return",
+      "taxType": "individual_income_tax",
+      "returnType": "individual_income",
+      "taxpayerType": "individual",
+      "substituted": false,
+      "decisive": true
+    }
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "requestHash": "9edaf419756459a747197dd5",
+  "responseHash": "be1b02c1fdbb7b56914407e7",
+  "sanitizedConversationRef": "6da9e72171c36fe85af4d8c4",
+  "sha256": "a15a75dc672c8d6a1f13cdce78808d90014367a2314ed9ffa15719b9dc6f9281"
+}

@@ -1,0 +1,131 @@
+{
+  "id": "MX-01",
+  "group": "neg_mixed",
+  "prompt": "Do I need an income tax return, and what documents should I submit?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nYes, you need to file an income tax return if you have taxable income. The specific documents you should submit include your income tax return form, proof of income (such as payslips or financial statements), and any other supporting documents required by the Bureau of Internal Revenue (BIR).\n\n### Controlling Authorities\nThe requirement to file an income tax return is governed by Section 23 of the National Internal Revenue Code (NIRC), which outlines the general principles of income taxation in the Philippines. Additionally, Section 24 of the NIRC specifies the income tax rates applicable to individuals.\n\n### Interpretation\nUnder Section 23 of the NIRC, all citizens and resident aliens are required to file an income tax return if they derive income from sources within and outside the Philippines. This includes individuals earning compensation, self-employed professionals, and those with business income. Section 24 provides the applicable tax rates based on the amount of taxable income.\n\n### Practical Meaning\nFiling an income tax return is mandatory for individuals with taxable income, and it ensures compliance with Philippine tax laws. The documents required typically include the completed income tax return form, evidence of income (like payslips for employees or financial statements for self-employed individuals), and any deductions or credits claimed. It is advisable to maintain accurate records and consult the BIR guidelines for any specific requirements related to your situation.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_obligation",
+    "reason": "filing_obligation_proposition_without_matching_return_authority",
+    "propositionLedger": [
+      {
+        "propositionId": "p0",
+        "sourceSide": "question",
+        "sourceClause": "do i need an income tax return",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p1",
+        "sourceSide": "answer",
+        "sourceClause": "### short answer yes, you need to file an income tax return if you have taxable income",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p2",
+        "sourceSide": "answer",
+        "sourceClause": "the specific documents you should submit include your income tax return form, proof of income (such as payslips or financial statements)",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p3",
+        "sourceSide": "answer",
+        "sourceClause": "### interpretation under section 23 of the nirc, all citizens and resident aliens are required to file an income tax return if they derive income from sources within and outside the philippines",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p4",
+        "sourceSide": "answer",
+        "sourceClause": "the documents required typically include the completed income tax return form, evidence of income (like payslips for employees or financial statements for self",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      }
+    ],
+    "authorityClasses": {
+      "indFiling": false,
+      "substituted": false,
+      "corpFiling": false,
+      "estateFiling": false,
+      "donorFiling": false,
+      "vatFiling": false,
+      "pctFiling": false,
+      "estateRate": false,
+      "estateBaseDeduction": false
+    },
+    "failedProposition": {
+      "propositionId": "p0",
+      "sourceSide": "question",
+      "sourceClause": "do i need an income tax return",
+      "propositionClass": "filing_obligation",
+      "action": "file",
+      "objectType": "tax_return",
+      "taxType": "individual_income_tax",
+      "returnType": "individual_income",
+      "taxpayerType": "individual",
+      "substituted": false,
+      "decisive": true
+    }
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "requestHash": "b7213da849c9241a1290c3b0",
+  "responseHash": "e68fbbaf0531784601e41f7e",
+  "sanitizedConversationRef": "297e2400110d08317cbd3c58",
+  "sha256": "7233ac2197379b26bf5883c4ecf428ff7265453ca18bdc5c33ccc52e6af38ab7"
+}

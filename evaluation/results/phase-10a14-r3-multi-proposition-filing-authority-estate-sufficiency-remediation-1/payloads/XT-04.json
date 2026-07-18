@@ -1,0 +1,32 @@
+{
+  "id": "XT-04",
+  "group": "neg_xtax",
+  "prompt": "When is the donor's tax return due?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "TINA could not identify an indexed authority matching the specific transaction or claim described.\n\nThis does not mean that no law or authority exists.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "NO_INDEXED_SOURCE",
+    "legalConclusion": "UNKNOWN",
+    "hasConflict": false,
+    "responseKind": "FALLBACK"
+  },
+  "answerSupport": null,
+  "validatorInvoked": false,
+  "displayedSourceCount": 0,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [],
+  "topSourceLabels": [
+    "civil-code-philippines.docx",
+    "civil-code-philippines.docx",
+    "NIRC Sec. 6",
+    "NIRC Sec. 5",
+    "NIRC Sec. 6"
+  ],
+  "requestHash": "3f7ea11ec3276629d00beb8b",
+  "responseHash": "a7e94b3f3f5a335d8ef88164",
+  "sanitizedConversationRef": "4d0ecf8b65b5541c20088481",
+  "sha256": "7256cc1af58a606ea66aaf699c770c08fa60b535a3b8a83518907a81b736cf27"
+}

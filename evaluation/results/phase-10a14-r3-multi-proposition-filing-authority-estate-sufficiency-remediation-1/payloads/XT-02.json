@@ -1,0 +1,46 @@
+{
+  "id": "XT-02",
+  "group": "neg_xtax",
+  "prompt": "What is the deadline for filing an estate tax return?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nThe deadline for filing an estate tax return is within one (1) year from the decedent's death.\n\n### Interpretation\n\n### Practical Meaning\nPractically, this means that executors, administrators, or heirs must ensure that the estate tax return is prepared and submitted within the specified timeframe to avoid penalties and interest on unpaid taxes. If circumstances warrant, they can apply for an extension, but this must be done within the original one-year period.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "schemaValid": true,
+    "stage": "llm",
+    "reason": "The answer correctly states the deadline and is fully supported by relevant citations.",
+    "propositionLedger": null,
+    "authorityClasses": null,
+    "failedProposition": null
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 5,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 89",
+    "NIRC Sec. 84",
+    "NIRC Sec. 86",
+    "NIRC Sec. 88",
+    "NIRC Sec. 91"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 89",
+    "NIRC Sec. 84",
+    "NIRC Sec. 86",
+    "NIRC Sec. 88",
+    "NIRC Sec. 91"
+  ],
+  "requestHash": "d32931b817110cb114d9341f",
+  "responseHash": "199c1440c97f8763e517684c",
+  "sanitizedConversationRef": "e0f76a37a76d4a65ceb1bae2",
+  "sha256": "88c5f3b6bda63c7dffe998b00621d303a6c201171083bb3de967cbb63669789f"
+}

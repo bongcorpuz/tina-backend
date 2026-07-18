@@ -1,0 +1,32 @@
+{
+  "id": "POS-05-donordl",
+  "group": "positive",
+  "prompt": "When must a donor's tax return be filed under the NIRC?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "TINA could not identify an indexed authority matching the specific transaction or claim described.\n\nThis does not mean that no law or authority exists.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "NO_INDEXED_SOURCE",
+    "legalConclusion": "UNKNOWN",
+    "hasConflict": false,
+    "responseKind": "FALLBACK"
+  },
+  "answerSupport": null,
+  "validatorInvoked": false,
+  "displayedSourceCount": 0,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [],
+  "topSourceLabels": [
+    "civil-code-philippines.docx",
+    "civil-code-philippines.docx",
+    "NIRC Sec. 6",
+    "NIRC Sec. 5",
+    "NIRC Sec. 6"
+  ],
+  "requestHash": "31a1b15dbd8b6d506d31e191",
+  "responseHash": "a7e94b3f3f5a335d8ef88164",
+  "sanitizedConversationRef": "991ac5fdd581fb0dddce4038",
+  "sha256": "1bc347d8c384f15eb6ba9b2524a50f79d7981b12f153fb7aa388c2001610c431"
+}

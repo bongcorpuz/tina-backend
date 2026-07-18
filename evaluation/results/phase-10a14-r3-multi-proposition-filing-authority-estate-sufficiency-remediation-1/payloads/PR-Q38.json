@@ -1,0 +1,55 @@
+{
+  "id": "PR-Q38",
+  "group": "prior",
+  "prompt": "Is a new business required to register with the BIR before commencing operations?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\n\n### Interpretation\nThe law mandates that any individual or entity intending to engage in business activities must complete their registration with the BIR prior to starting operations. This registration is crucial for ensuring compliance with tax obligations and for the proper assessment and collection of taxes.\n\n### Practical Meaning\nFor new businesses, this means that they must take the necessary steps to register with the BIR as part of their pre-operational setup. Failure to register before commencing business activities can lead to penalties and complications in tax compliance, potentially affecting the business's ability to operate legally.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "registration_procedural",
+    "reason": "registration_proposition_without_registration_authority",
+    "propositionLedger": [],
+    "authorityClasses": {
+      "indFiling": true,
+      "substituted": true,
+      "corpFiling": false,
+      "estateFiling": false,
+      "donorFiling": false,
+      "vatFiling": false,
+      "pctFiling": false,
+      "estateRate": false,
+      "estateBaseDeduction": false
+    },
+    "failedProposition": null
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 4,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "RR No. 11-2018",
+    "RR No. 2-1998",
+    "NIRC Sec. 2",
+    "NIRC Sec. 3"
+  ],
+  "topSourceLabels": [
+    "RR No. 11-2018",
+    "RR No. 2-1998",
+    "NIRC Sec. 2",
+    "NIRC Sec. 3"
+  ],
+  "requestHash": "1dec9b4fdc180aad7b3e397c",
+  "responseHash": "e58f5abaa1a347a642938543",
+  "sanitizedConversationRef": "dd6b602151f2ef9aec2ff561",
+  "sha256": "10df29ac09cd59549058693c12ac34fabd55db656b8108c56a644d21b4f49075"
+}

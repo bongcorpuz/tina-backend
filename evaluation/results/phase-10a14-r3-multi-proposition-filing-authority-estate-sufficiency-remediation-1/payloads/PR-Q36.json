@@ -1,0 +1,57 @@
+{
+  "id": "PR-Q36",
+  "group": "prior",
+  "prompt": "What penalties apply to late filing of a VAT return?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nPenalties for late filing of a VAT return include a fine of not less than One Thousand Pesos (₱1,000) but not more than Twenty-Five Thousand Pesos (₱25,000), and/or imprisonment of not less than six months but not more than two years, as stipulated under the National Internal Revenue Code (NIRC).\n\n### Controlling Authorities\nThe relevant provisions are found in the National Internal Revenue Code (NIRC), specifically:\n- **Section 250**: Imposes penalties for failure to file returns.\n- **Section 255**: Details the penalties for failure to pay the correct amount of tax.\n\n### Interpretation\n\n### Practical Meaning\nIn practice, businesses and individuals must ensure that their VAT returns are filed on time to avoid incurring significant penalties. The potential for both fines and imprisonment underscores the importance of compliance with tax obligations. Taxpayers should maintain accurate records and be aware of filing deadlines to mitigate the risk of penalties.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "penalty_procedural",
+    "reason": "penalty_proposition_without_penalty_authority",
+    "propositionLedger": [],
+    "authorityClasses": {
+      "indFiling": false,
+      "substituted": false,
+      "corpFiling": false,
+      "estateFiling": false,
+      "donorFiling": false,
+      "vatFiling": false,
+      "pctFiling": false,
+      "estateRate": false,
+      "estateBaseDeduction": false
+    },
+    "failedProposition": null
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 5,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 105",
+    "NIRC Sec. 106",
+    "NIRC Sec. 107",
+    "NIRC Sec. 108",
+    "RR 16-2005"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 105",
+    "NIRC Sec. 106",
+    "NIRC Sec. 107",
+    "NIRC Sec. 108",
+    "RR 16-2005"
+  ],
+  "requestHash": "3a9a623062da97520b119828",
+  "responseHash": "3f93f2add4143c652396a1ea",
+  "sanitizedConversationRef": "361f54c98eb8a08c1292c273",
+  "sha256": "43d87e9aecc04857df2752e065be73115950fcb2b1bd83196d854be46a98a5cd"
+}

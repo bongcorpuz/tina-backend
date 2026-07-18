@@ -1,0 +1,44 @@
+{
+  "id": "POS-09-refund",
+  "group": "positive",
+  "prompt": "Can a VAT-registered exporter obtain a refund or tax credit for input VAT?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\n\n### Controlling Authorities\n2. **NIRC Section 236** - This section outlines the registration requirements and obligations of VAT-registered persons, which includes the ability to claim input VAT.\n\n### Interpretation\n\n### Practical Meaning\nFor VAT-registered exporters, the ability to claim input VAT refunds or credits is a significant financial benefit. It allows them to manage cash flow more effectively by recovering taxes paid on inputs used in their export operations. To successfully claim these refunds or credits, exporters must ensure proper documentation and compliance with the requirements set forth by the Bureau of Internal Revenue (BIR).",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "reason": "empty_primary_answer_section",
+    "propositionLedger": null,
+    "authorityClasses": null,
+    "failedProposition": null
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 4,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 109",
+    "NIRC Sec. 236",
+    "RR No. 16-2005",
+    "RMC 75-2015"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 109",
+    "NIRC Sec. 236",
+    "RR No. 16-2005",
+    "RMC 75-2015"
+  ],
+  "requestHash": "a426bd0f82ef6f9e5a7c2e0a",
+  "responseHash": "72364261a260eb4f578287d9",
+  "sanitizedConversationRef": "5921262b5b0eb4cae7161a96",
+  "sha256": "6027966ae0d3d1249fd32bed253e931010e75226644f7470685d1154394510d9"
+}

@@ -1,0 +1,46 @@
+{
+  "id": "ES-01",
+  "group": "neg_estate",
+  "prompt": "What is the taxable base for the 6% estate tax?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nThe taxable base for the 6% estate tax is the gross estate of the decedent at the time of death, minus allowable deductions as specified in the National Internal Revenue Code (NIRC).\n\n### Controlling Authorities\nThe controlling authority for the estate tax is found in Section 84 of the NIRC, which imposes a tax on the transfer of the net estate of a decedent. The determination of the value of the estate is further elaborated in Section 86, which outlines the deductions allowed from the gross estate.\n\n### Interpretation\nAccording to Section 86 of the NIRC, the gross estate includes all properties, real or personal, situated in the Philippines, as well as any property outside the Philippines owned by the decedent. The estate tax is computed based on the net estate, which is the gross estate less allowable deductions such as funeral expenses, debts, and other expenses related to the estate.\n\n### Practical Meaning\nIn practical terms, this means that when calculating the estate tax, the executor or administrator must first determine the total value of the decedent's estate at the time of death. After identifying the gross estate, they can subtract the allowable deductions to arrive at the net estate, which is then subject to the 6% estate tax rate. Proper documentation and valuation of the estate's assets and liabilities are crucial for compliance and accurate tax assessment.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "schemaValid": true,
+    "stage": "llm",
+    "reason": "The answer correctly identifies the taxable base and supports it with relevant citations.",
+    "propositionLedger": null,
+    "authorityClasses": null,
+    "failedProposition": null
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 5,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 89",
+    "NIRC Sec. 91",
+    "NIRC Sec. 84",
+    "NIRC Sec. 86",
+    "NIRC Sec. 88"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 89",
+    "NIRC Sec. 91",
+    "NIRC Sec. 84",
+    "NIRC Sec. 86",
+    "NIRC Sec. 88"
+  ],
+  "requestHash": "625c9525d58325b221d5f228",
+  "responseHash": "793670f16986b36d27488eb3",
+  "sanitizedConversationRef": "c3b1dfaebf8d54818ab3421a",
+  "sha256": "b8b7caa26b3469d2209ba2113377f1e00e69087ac172f0074a0e48f5ebedaf97"
+}

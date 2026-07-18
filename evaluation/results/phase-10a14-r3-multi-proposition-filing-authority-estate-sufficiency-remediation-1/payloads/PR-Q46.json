@@ -1,0 +1,40 @@
+{
+  "id": "PR-Q46",
+  "group": "prior",
+  "prompt": "Is the sale of a residential lot exempt from VAT?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\n\n### Controlling Authorities\n1. **National Internal Revenue Code (NIRC) Section 109(P)** - This section outlines the exemptions from VAT, specifically stating that the sale of residential lots is exempt if the selling price does not exceed P1,500,000.\n2. **Revenue Regulations No. 16-2005** - These regulations implement the provisions of the NIRC regarding VAT and clarify the conditions under which sales of real properties are subject to VAT.\n\n### Interpretation\n\n### Practical Meaning\nFor sellers of residential lots, it is crucial to determine the selling price to ascertain VAT liability. If the price is at or below P1,500,000, the sale is exempt from VAT, which can be advantageous for attracting buyers. Conversely, if the price exceeds this threshold, the seller must account for VAT in the sale, potentially affecting pricing strategies and overall transaction costs.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "structural",
+    "reason": "empty_primary_answer_section",
+    "propositionLedger": null,
+    "authorityClasses": null,
+    "failedProposition": null
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 2,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "RR No. 16-2005",
+    "RR 4-2007"
+  ],
+  "topSourceLabels": [
+    "RR No. 16-2005",
+    "RR 4-2007"
+  ],
+  "requestHash": "45a2cfa7f16a15b68c3ada1d",
+  "responseHash": "a0741e716ffdb2b0e4ec126a",
+  "sanitizedConversationRef": "e0a5850a5d6e7e5bd5597c88",
+  "sha256": "bd3fdaa9be01e1ad1611e8b637a4516e7e0a565f1f7051780ace9972297f98c3"
+}

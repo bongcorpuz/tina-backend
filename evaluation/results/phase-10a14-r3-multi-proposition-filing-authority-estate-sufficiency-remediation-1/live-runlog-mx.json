@@ -1,0 +1,108 @@
+{
+  "mixed": [
+    {
+      "id": "MX-01",
+      "verified": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_obligation",
+      "reason": "filing_obligation_proposition_without_matching_return_authority",
+      "AS": "RELATED_AUTHORITY_ONLY",
+      "labels": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "MX-02",
+      "verified": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_obligation",
+      "reason": "filing_obligation_proposition_without_matching_return_authority",
+      "AS": "RELATED_AUTHORITY_ONLY",
+      "labels": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "MX-03",
+      "verified": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_obligation",
+      "reason": "filing_obligation_proposition_without_matching_return_authority",
+      "AS": "RELATED_AUTHORITY_ONLY",
+      "labels": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "MX-04",
+      "verified": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_obligation",
+      "reason": "filing_obligation_proposition_without_matching_return_authority",
+      "AS": "RELATED_AUTHORITY_ONLY",
+      "labels": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "MX-05",
+      "verified": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_obligation",
+      "reason": "filing_obligation_proposition_without_matching_return_authority",
+      "AS": "RELATED_AUTHORITY_ONLY",
+      "labels": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "MX-06",
+      "verified": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_obligation",
+      "reason": "filing_obligation_proposition_without_matching_return_authority",
+      "AS": "RELATED_AUTHORITY_ONLY",
+      "labels": [
+        "NIRC Sec. 24",
+        "NIRC Sec. 23",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "MX-07",
+      "verified": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_obligation",
+      "reason": "filing_obligation_proposition_without_matching_return_authority",
+      "AS": "RELATED_AUTHORITY_ONLY",
+      "labels": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "MX-08",
+      "verified": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_obligation",
+      "reason": "filing_obligation_proposition_without_matching_return_authority",
+      "AS": "RELATED_AUTHORITY_ONLY",
+      "labels": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ]
+    }
+  ]
+}

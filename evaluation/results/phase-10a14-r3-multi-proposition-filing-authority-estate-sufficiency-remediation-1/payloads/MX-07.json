@@ -1,0 +1,105 @@
+{
+  "id": "MX-07",
+  "group": "neg_mixed",
+  "prompt": "I filed the appeal; is a separate annual income tax return required?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nYes, a separate annual income tax return is required even if you have filed an appeal. Under the National Internal Revenue Code (NIRC), all taxpayers must file their income tax returns annually.\n\n### Controlling Authorities\nThe requirement to file an annual income tax return is established under Section 23 of the NIRC, which states that every citizen of the Philippines is taxable on all income derived from sources within and without the Philippines.\n\n### Interpretation\nSection 23 of the NIRC mandates that taxpayers must file their income tax returns regardless of any pending appeals. The filing of an income tax return is a separate obligation that must be fulfilled annually, irrespective of any disputes or appeals regarding previous assessments or tax liabilities.\n\n### Practical Meaning\nPractically, this means that you must ensure compliance with the annual filing requirement to avoid penalties or interest for late filing. Filing your return on time is crucial, even if you are contesting a prior tax assessment, as failure to do so could lead to additional complications with the Bureau of Internal Revenue (BIR).",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_obligation",
+    "reason": "filing_obligation_proposition_without_matching_return_authority",
+    "propositionLedger": [
+      {
+        "propositionId": "p0",
+        "sourceSide": "question",
+        "sourceClause": "is a separate annual income tax return required?",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p1",
+        "sourceSide": "answer",
+        "sourceClause": "### short answer yes, a separate annual income tax return is required even if you have filed an appeal",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p2",
+        "sourceSide": "answer",
+        "sourceClause": "the filing of an income tax return is a separate obligation that must be fulfilled annually, irrespective of any disputes or appeals regarding previous assessments or tax liabilities",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      }
+    ],
+    "authorityClasses": {
+      "indFiling": false,
+      "substituted": false,
+      "corpFiling": false,
+      "estateFiling": false,
+      "donorFiling": false,
+      "vatFiling": false,
+      "pctFiling": false,
+      "estateRate": false,
+      "estateBaseDeduction": false
+    },
+    "failedProposition": {
+      "propositionId": "p0",
+      "sourceSide": "question",
+      "sourceClause": "is a separate annual income tax return required?",
+      "propositionClass": "filing_obligation",
+      "action": "file",
+      "objectType": "tax_return",
+      "taxType": "individual_income_tax",
+      "returnType": "individual_income",
+      "taxpayerType": "individual",
+      "substituted": false,
+      "decisive": true
+    }
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "requestHash": "ef6e103c6607656322d3a99f",
+  "responseHash": "6bfd965f6f3aafa2df382cc1",
+  "sanitizedConversationRef": "583ade61412626db0cac5538",
+  "sha256": "33783156a06b1e899cf4923e61a8ef5cb8f2bcaa92a5729637001b62594e8be9"
+}

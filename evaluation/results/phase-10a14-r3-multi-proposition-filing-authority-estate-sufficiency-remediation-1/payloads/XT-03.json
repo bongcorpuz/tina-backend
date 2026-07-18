@@ -1,0 +1,92 @@
+{
+  "id": "XT-03",
+  "group": "neg_xtax",
+  "prompt": "When is the corporate annual income tax return due?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nThe corporate annual income tax return is due on or before the 15th day of the fourth month following the close of the taxable year.\n\n### Interpretation\n\n### Practical Meaning\nCorporations must ensure timely filing of their income tax returns to avoid penalties and interest for late submission. It is crucial for corporate tax compliance to adhere to this deadline, as failure to do so can result in additional tax liabilities and complications with the Bureau of Internal Revenue (BIR).",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_deadline",
+    "reason": "filing_deadline_proposition_without_matching_return_authority",
+    "propositionLedger": [
+      {
+        "propositionId": "p0",
+        "sourceSide": "question",
+        "sourceClause": "when is the corporate annual income tax return due?",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "corporate_income_tax",
+        "returnType": "corporate_income",
+        "taxpayerType": "corporation",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p1",
+        "sourceSide": "answer",
+        "sourceClause": "### short answer the corporate annual income tax return is due on or before the 15th day of the fourth month following the close of the taxable year",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "corporate_income_tax",
+        "returnType": "corporate_income",
+        "taxpayerType": "corporation",
+        "substituted": false,
+        "decisive": true
+      }
+    ],
+    "authorityClasses": {
+      "indFiling": false,
+      "substituted": false,
+      "corpFiling": false,
+      "estateFiling": false,
+      "donorFiling": false,
+      "vatFiling": false,
+      "pctFiling": false,
+      "estateRate": false,
+      "estateBaseDeduction": false
+    },
+    "failedProposition": {
+      "propositionId": "p0",
+      "sourceSide": "question",
+      "sourceClause": "when is the corporate annual income tax return due?",
+      "propositionClass": "filing_deadline",
+      "action": "file",
+      "objectType": "tax_return",
+      "taxType": "corporate_income_tax",
+      "returnType": "corporate_income",
+      "taxpayerType": "corporation",
+      "substituted": false,
+      "decisive": true
+    }
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "requestHash": "9c02bdbf91f468663c606df0",
+  "responseHash": "ad36c892a66c61ad63b4f5a6",
+  "sanitizedConversationRef": "a3343fc9ba3f4d72146d9417",
+  "sha256": "f70ec733631a0e584e83424841d31b7757874c5c92dc81e5d45133cd0be11081"
+}

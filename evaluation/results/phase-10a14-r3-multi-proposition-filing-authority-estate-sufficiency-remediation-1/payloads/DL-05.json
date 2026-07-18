@@ -1,0 +1,118 @@
+{
+  "id": "DL-05",
+  "group": "neg_deadline",
+  "prompt": "Is the filing period for the individual income tax return still open?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nThe filing period for the individual income tax return is typically open until April 15 of the following year after the taxable year.\n\n### Interpretation\nThis means that for the taxable year ending December 31, the individual income tax return must be filed by April 15 of the following year. If April 15 falls on a weekend or holiday, the deadline is extended to the next business day.\n\n### Practical Meaning\nTaxpayers should ensure that their income tax returns are filed by this deadline to avoid penalties and interest on any unpaid taxes. It is advisable to prepare and submit returns early to allow for any potential issues that may arise during the filing process.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_deadline",
+    "reason": "filing_deadline_proposition_without_matching_return_authority",
+    "propositionLedger": [
+      {
+        "propositionId": "p0",
+        "sourceSide": "answer",
+        "sourceClause": "### short answer the filing period for the individual income tax return is typically open until april 15 of the following year after the taxable year",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p1",
+        "sourceSide": "answer",
+        "sourceClause": "### interpretation this means that for the taxable year ending december 31, the individual income tax return must be filed by april 15 of the following year",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p2",
+        "sourceSide": "answer",
+        "sourceClause": "### interpretation this means that for the taxable year ending december 31, the individual income tax return must be filed by april 15 of the following year",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p3",
+        "sourceSide": "answer",
+        "sourceClause": "### practical meaning taxpayers should ensure that their income tax returns are filed by this deadline to avoid penalties and interest on any unpaid taxes",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      }
+    ],
+    "authorityClasses": {
+      "indFiling": false,
+      "substituted": false,
+      "corpFiling": false,
+      "estateFiling": false,
+      "donorFiling": false,
+      "vatFiling": false,
+      "pctFiling": false,
+      "estateRate": false,
+      "estateBaseDeduction": false
+    },
+    "failedProposition": {
+      "propositionId": "p0",
+      "sourceSide": "answer",
+      "sourceClause": "### short answer the filing period for the individual income tax return is typically open until april 15 of the following year after the taxable year",
+      "propositionClass": "filing_deadline",
+      "action": "file",
+      "objectType": "tax_return",
+      "taxType": "individual_income_tax",
+      "returnType": "individual_income",
+      "taxpayerType": "individual",
+      "substituted": false,
+      "decisive": true
+    }
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 24",
+    "NIRC Sec. 23",
+    "NIRC Sec. 27"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 24",
+    "NIRC Sec. 23",
+    "NIRC Sec. 27"
+  ],
+  "requestHash": "fcd171c6f899c9be3273428a",
+  "responseHash": "88a490696334b8e8e2517a5c",
+  "sanitizedConversationRef": "34380324c99e9bc8f9749443",
+  "sha256": "9da996947ff06ddbe2437856f17c278814c8781b9461e6b5f454638b8cf19375"
+}

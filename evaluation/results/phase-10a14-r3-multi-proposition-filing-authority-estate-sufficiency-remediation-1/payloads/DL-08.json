@@ -1,0 +1,105 @@
+{
+  "id": "DL-08",
+  "group": "neg_deadline",
+  "prompt": "Ihahabol ko pa ba ang income tax return ngayon?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\n\n### Interpretation\nFiling your income tax return after the deadline is allowed, but it will incur penalties as stipulated in the NIRC. The penalties may include a surcharge for late payment and interest on the unpaid tax. It is advisable to file as soon as possible to minimize these penalties.\n\n### Practical Meaning\nIf you have missed the deadline, you should prepare and submit your income tax return promptly to avoid further penalties. Additionally, be prepared to pay any taxes due along with the applicable penalties to ensure compliance with tax regulations.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_deadline",
+    "reason": "filing_deadline_proposition_without_matching_return_authority",
+    "propositionLedger": [
+      {
+        "propositionId": "p0",
+        "sourceSide": "answer",
+        "sourceClause": "### short answer ### interpretation filing your income tax return after the deadline is allowed,",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p1",
+        "sourceSide": "answer",
+        "sourceClause": "### practical meaning if you have missed the deadline, you should prepare and submit your income tax return promptly to avoid further penalties",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p2",
+        "sourceSide": "answer",
+        "sourceClause": "### practical meaning if you have missed the deadline, you should prepare and submit your income tax return promptly to avoid further penalties",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      }
+    ],
+    "authorityClasses": {
+      "indFiling": false,
+      "substituted": false,
+      "corpFiling": false,
+      "estateFiling": false,
+      "donorFiling": false,
+      "vatFiling": false,
+      "pctFiling": false,
+      "estateRate": false,
+      "estateBaseDeduction": false
+    },
+    "failedProposition": {
+      "propositionId": "p0",
+      "sourceSide": "answer",
+      "sourceClause": "### short answer ### interpretation filing your income tax return after the deadline is allowed,",
+      "propositionClass": "filing_deadline",
+      "action": "file",
+      "objectType": "tax_return",
+      "taxType": "individual_income_tax",
+      "returnType": "individual_income",
+      "taxpayerType": "individual",
+      "substituted": false,
+      "decisive": true
+    }
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "requestHash": "92f56562bb290b8912a210c1",
+  "responseHash": "274374f469dc7300e8d63379",
+  "sanitizedConversationRef": "3acb65a33a025246567a69b5",
+  "sha256": "de1556a88001ad7207c9eeff38f78b0bf6ab6e17f1450b35827870b8031cbd35"
+}

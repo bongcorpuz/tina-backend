@@ -1,0 +1,25 @@
+{
+  "id": "POSX-indfile-1",
+  "group": "positive_extra",
+  "prompt": "Under Section 51 of the NIRC, is a self-employed individual required to file an annual income tax return?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\n\n### Interpretation\nSection 51 outlines the general requirement for individuals to file income tax returns, which includes self-employed individuals. This provision establishes the obligation to report income derived from all sources, ensuring compliance with tax laws.\n\n### Practical Meaning\nFor self-employed individuals, this means they must keep accurate records of their income and expenses throughout the year to prepare their annual income tax return. Failure to file can result in penalties and interest on unpaid taxes, emphasizing the importance of timely and accurate reporting.",
+  "trust": {
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_obligation",
+    "reason": "filing_obligation_proposition_without_matching_return_authority"
+  },
+  "sourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "responseHash": "f172956b4c329a35a0c7054e",
+  "sanitizedConversationRef": "e41c8dd5b9cc283cceb865ae",
+  "sha256": "158b680898269b4b7e7e057d95d15d8325b48682d83fbd88b849f2b987e642bf"
+}

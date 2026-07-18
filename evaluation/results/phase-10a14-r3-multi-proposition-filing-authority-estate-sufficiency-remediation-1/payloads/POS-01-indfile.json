@@ -1,0 +1,105 @@
+{
+  "id": "POS-01-indfile",
+  "group": "positive",
+  "prompt": "Is a self-employed individual required to file an annual income tax return, and under what section?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\n\n### Interpretation\nSelf-employed individuals must report their income and file an income tax return annually, detailing their earnings from their business or profession. The income tax return must be filed regardless of the amount of income earned, as long as it exceeds the threshold set by the Bureau of Internal Revenue (BIR).\n\n### Practical Meaning\nFor self-employed individuals, this means they must maintain accurate records of their income and expenses throughout the year to ensure compliance with tax obligations. Failure to file the required return can result in penalties and interest on unpaid taxes. It is essential for self-employed individuals to be aware of their filing deadlines and to prepare their returns accurately to avoid issues with the BIR.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_obligation",
+    "reason": "filing_obligation_proposition_without_matching_return_authority",
+    "propositionLedger": [
+      {
+        "propositionId": "p0",
+        "sourceSide": "question",
+        "sourceClause": "employed individual required to file an annual income tax return",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p1",
+        "sourceSide": "answer",
+        "sourceClause": "employed individuals must report their income and file an income tax return annually, detailing their earnings from their business or profession",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p2",
+        "sourceSide": "answer",
+        "sourceClause": "the income tax return must be filed regardless of the amount of income earned, as long as it exceeds the threshold set by the bureau of internal revenue (bir)",
+        "propositionClass": "filing_obligation",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      }
+    ],
+    "authorityClasses": {
+      "indFiling": false,
+      "substituted": false,
+      "corpFiling": false,
+      "estateFiling": false,
+      "donorFiling": false,
+      "vatFiling": false,
+      "pctFiling": false,
+      "estateRate": false,
+      "estateBaseDeduction": false
+    },
+    "failedProposition": {
+      "propositionId": "p0",
+      "sourceSide": "question",
+      "sourceClause": "employed individual required to file an annual income tax return",
+      "propositionClass": "filing_obligation",
+      "action": "file",
+      "objectType": "tax_return",
+      "taxType": "individual_income_tax",
+      "returnType": "individual_income",
+      "taxpayerType": "individual",
+      "substituted": false,
+      "decisive": true
+    }
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "requestHash": "ce9c2250d98a7cb7a98c3fba",
+  "responseHash": "8e5219e8b2b234e017373b62",
+  "sanitizedConversationRef": "aaa05587c26c88fb45add75d",
+  "sha256": "c9494aa3f44786d72954f21f1c00d152243674d4f61a71f16f85df50fdd8bade"
+}

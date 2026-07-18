@@ -1,0 +1,134 @@
+{
+  "deadline": [
+    {
+      "id": "DL-01",
+      "verified": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_deadline",
+      "reason": "filing_deadline_proposition_without_matching_return_authority",
+      "AS": "RELATED_AUTHORITY_ONLY",
+      "labels": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "DL-02",
+      "verified": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_deadline",
+      "reason": "filing_deadline_proposition_without_matching_return_authority",
+      "AS": "RELATED_AUTHORITY_ONLY",
+      "labels": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "DL-03",
+      "verified": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_deadline",
+      "reason": "filing_deadline_proposition_without_matching_return_authority",
+      "AS": "RELATED_AUTHORITY_ONLY",
+      "labels": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "DL-04",
+      "verified": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_deadline",
+      "reason": "filing_deadline_proposition_without_matching_return_authority",
+      "AS": "RELATED_AUTHORITY_ONLY",
+      "labels": [
+        "NIRC Sec. 24",
+        "NIRC Sec. 23",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "DL-05",
+      "verified": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_deadline",
+      "reason": "filing_deadline_proposition_without_matching_return_authority",
+      "AS": "RELATED_AUTHORITY_ONLY",
+      "labels": [
+        "NIRC Sec. 24",
+        "NIRC Sec. 23",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "DL-06",
+      "verified": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_deadline",
+      "reason": "filing_deadline_proposition_without_matching_return_authority",
+      "AS": "RELATED_AUTHORITY_ONLY",
+      "labels": [
+        "NIRC Sec. 24",
+        "NIRC Sec. 23",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "DL-07",
+      "verified": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_deadline",
+      "reason": "filing_deadline_proposition_without_matching_return_authority",
+      "AS": "RELATED_AUTHORITY_ONLY",
+      "labels": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "DL-08",
+      "verified": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_deadline",
+      "reason": "filing_deadline_proposition_without_matching_return_authority",
+      "AS": "RELATED_AUTHORITY_ONLY",
+      "labels": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "DL-09",
+      "verified": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_deadline",
+      "reason": "filing_deadline_proposition_without_matching_return_authority",
+      "AS": "RELATED_AUTHORITY_ONLY",
+      "labels": [
+        "NIRC Sec. 24",
+        "NIRC Sec. 23",
+        "NIRC Sec. 27"
+      ]
+    },
+    {
+      "id": "DL-10",
+      "verified": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "filing_deadline",
+      "reason": "filing_deadline_proposition_without_matching_return_authority",
+      "AS": "RELATED_AUTHORITY_ONLY",
+      "labels": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "id": "ES-06",
+  "group": "neg_estate",
+  "prompt": "Is the first portion of an estate outside the estate tax base?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "TINA could not identify an indexed authority matching the specific transaction or claim described.\n\nThis does not mean that no law or authority exists.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "NO_INDEXED_SOURCE",
+    "legalConclusion": "UNKNOWN",
+    "hasConflict": false,
+    "responseKind": "FALLBACK"
+  },
+  "answerSupport": null,
+  "validatorInvoked": false,
+  "displayedSourceCount": 0,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [],
+  "topSourceLabels": [
+    "civil-code-philippines.docx",
+    "civil-code-philippines.docx",
+    "NIRC Sec. 6",
+    "NIRC Sec. 6",
+    "NIRC Sec. 6"
+  ],
+  "requestHash": "911960991547b283b151eb85",
+  "responseHash": "a7e94b3f3f5a335d8ef88164",
+  "sanitizedConversationRef": "00c756cc94cbf564d2706055",
+  "sha256": "6f0c4c6672db262aa78de006888244e6e5fae8ee841d367f9397cc063f7bee0e"
+}

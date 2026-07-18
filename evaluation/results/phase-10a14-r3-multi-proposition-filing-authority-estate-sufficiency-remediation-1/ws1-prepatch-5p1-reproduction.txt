@@ -1,0 +1,14 @@
+== P1-1 mixed-object filing suppression (all SHOULD close filing_obligation) ==
+MO-1	OPEN:none
+MO-2	OPEN:none
+MO-3	OPEN:none
+== P1-2 relative/Taglish deadline (SHOULD close filing_deadline) ==
+DL-1	OPEN:none
+DL-2	OPEN:none
+== P1-3 cross-tax-type authority laundering (SHOULD close filing_deadline) ==
+XT-1	OPEN:filing_deadline
+XT-2	OPEN:filing_deadline
+== P1-4 correct-but-unsupported estate computation (SHOULD close tax_computation_basis) ==
+EU-1	OPEN:tax_computation_basis
+== P1-5 relational standard-deduction-as-threshold (SHOULD close tax_computation_basis) ==
+ER-1	OPEN:tax_computation_basis

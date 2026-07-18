@@ -1,0 +1,105 @@
+{
+  "id": "DL-07",
+  "group": "neg_deadline",
+  "prompt": "Hanggang kailan ang paghahain ng income tax return?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nAng deadline para sa paghahain ng income tax return ay sa ika-15 ng Abril ng bawat taon para sa mga indibidwal at korporasyon na gumagamit ng kalendaryong taon bilang kanilang taxable year.\n\n### Controlling Authorities\nAng pangunahing batayan para sa paghahain ng income tax return ay nakasaad sa **Section 51** ng National Internal Revenue Code (NIRC), na nagtatakda ng mga obligasyon ng mga taxpayer na magsumite ng kanilang mga tax return.\n\n### Interpretation\nAyon sa NIRC, ang mga indibidwal at korporasyon ay kinakailangang magsumite ng kanilang income tax return sa takdang panahon upang maiwasan ang mga parusa at interes. Ang petsa ng paghahain ay karaniwang itinakda sa ika-15 ng Abril, maliban na lamang kung ito ay isang holiday o kung may ibang mga regulasyon na nagtakda ng ibang petsa.\n\n### Practical Meaning\nMahalagang sundin ang deadline na ito upang maiwasan ang anumang penalties o legal na isyu na maaaring lumitaw mula sa hindi tamang paghahain ng tax return. Ang mga taxpayer ay dapat na maging maingat sa kanilang mga dokumento at tiyakin na ang lahat ng kinakailangang impormasyon ay kumpleto at tama bago ang deadline.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_deadline",
+    "reason": "filing_deadline_proposition_without_matching_return_authority",
+    "propositionLedger": [
+      {
+        "propositionId": "p0",
+        "sourceSide": "question",
+        "sourceClause": "until when deadline ang paghahain ng income tax return?",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p1",
+        "sourceSide": "answer",
+        "sourceClause": "### short answer ang deadline para sa paghahain ng income tax return ay sa ika",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p2",
+        "sourceSide": "answer",
+        "sourceClause": "### practical meaning mahalagang sundin ang deadline na ito upang maiwasan ang anumang penalties o legal na isyu na maaaring lumitaw mula sa hindi tamang paghahain ng tax return",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      }
+    ],
+    "authorityClasses": {
+      "indFiling": false,
+      "substituted": false,
+      "corpFiling": false,
+      "estateFiling": false,
+      "donorFiling": false,
+      "vatFiling": false,
+      "pctFiling": false,
+      "estateRate": false,
+      "estateBaseDeduction": false
+    },
+    "failedProposition": {
+      "propositionId": "p0",
+      "sourceSide": "question",
+      "sourceClause": "until when deadline ang paghahain ng income tax return?",
+      "propositionClass": "filing_deadline",
+      "action": "file",
+      "objectType": "tax_return",
+      "taxType": "individual_income_tax",
+      "returnType": "individual_income",
+      "taxpayerType": "individual",
+      "substituted": false,
+      "decisive": true
+    }
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "requestHash": "2c9108cce0e81868f4463917",
+  "responseHash": "89b722c9c949c8aa25fbaa58",
+  "sanitizedConversationRef": "24bfab93418953c87d7343f7",
+  "sha256": "fa86228bcd6c54827a0fe3a2f2dc16b22816beb45a985a6a7afb55adab9883b1"
+}

@@ -1,0 +1,66 @@
+{
+  "task": "PHASE-10A14-R3-MULTI-PROPOSITION-FILING-AUTHORITY-COMPATIBILITY-AND-ESTATE-COMPUTATION-SUFFICIENCY-REMEDIATION-1",
+  "startingHead": "d5cfceb4fe1d39c09c1eb4db3d34c28b5e0abe0d",
+  "runtimeCommits": ["f44490dffb3acac1b0ff7b0f1a88f90b534a213c", "ba08ae790021ac1e22f438a82372a643dd886de0"],
+  "model": "gpt-4o-mini",
+
+  "ws1_reproduction": {
+    "method": "reviewer P1 probes replayed through the pre-R3 runtime at d5cfceb",
+    "P1_1_mixed_object_suppression": "OPEN:none",
+    "P1_2_relative_taglish_deadline": "OPEN:none",
+    "P1_3_cross_tax_authority_laundering": "OPEN:filing_deadline (wrong tax type accepted)",
+    "P1_4_correct_unsupported_estate": "OPEN:tax_computation_basis",
+    "P1_5_relational_std_deduction_threshold": "OPEN:tax_computation_basis",
+    "allFiveReproduced": true
+  },
+
+  "remediation": {
+    "architecture": "clause-scoped multi-proposition ledger + tax-type authority-compatibility matrix + estate computation component/relationship model with positive authority sufficiency",
+    "newExports": ["detectFilingAndEstatePropositions (ledger)", "segmentClauses/classifyReturnContext/classifyAuthorities/analyzeEstateComputation (internal)"],
+    "P1_1_fix": "per-clause proposition ledger; a wrong object in one clause cannot suppress a return proposition in another",
+    "P1_2_fix": "object-aware relative-period/Taglish deadline model; bare 'late filing'/'no tax is due' excluded",
+    "P1_3_fix": "clause-first tax/return classification + explicit compatibility matrix; filing authority must match exact tax/return type; substituted requires substituted authority",
+    "P1_4_fix": "estate computation requires positive rate (Sec 84) and base/deduction (Sec 85/86) authority for asserted components; foundational-only fails closed",
+    "P1_5_fix": "estate base misstatement by legal relationship (deduction/first-amount as threshold/floor/sole base), independent of amount/phrase",
+    "donorFalseRefusalFix": "estate context requires a genuine estate-TAX marker and excludes donor/gift context (commit ba08ae7; caught live)",
+    "usesQuestionIdsOrPromptsOrAmountsOrDatesOrDenyLists": false,
+    "runsBeforeModelValidator": true, "failsClosed": true, "neverUpgradesTrust": true, "sourceCardKeyed": true
+  },
+
+  "ws10_focused_suite": { "file": "tests/phase-10a14-r3-multi-proposition-filing-authority-estate-sufficiency.test.mjs", "tests": 35, "failed": 0, "assertions": 63 },
+  "ws11_reviewer_probe_replay": { "R1_probes": 16, "R2_probes": 9, "five_P1_forms": 5, "allUnsafeClosedWithCorrectClass": true },
+  "ws12_all26_replay": { "totalVerified": 26, "targetsBlockedCount": 9, "targetClasses": {"Q12": "filing_obligation", "Q30": "tax_computation_basis", "Q34": "filing_deadline"}, "validVerifiedNewlyBlocked": 0, "q3q47_overfire": 0, "q32_reachable": true },
+
+  "ws13_targeted_live_validation": {
+    "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0", "totalProbes": 60,
+    "invalidVerified": 0, "questionableVerified": 0,
+    "negatives": { "mixed_object": {"n": 8, "allFailClosed": true}, "deadline": {"n": 10, "allFailClosed": true}, "cross_tax": {"n": 8, "noLaundering": true}, "estate": {"n": 10, "misstatementsFailClosed": true, "correctUnsupportedFailClosed": true} },
+    "positiveReachabilityDemonstrated": ["estate_return_deadline (Sec 90/91)", "correct_estate_computation (Sec 84/86)", "donor (Sec 99-104)", "vat_return_deadline (Sec 114)", "protest_control (Sec 228)", "ewt_valid (RR 2-98)"],
+    "positiveReachabilityNotDemonstrable": {
+      "classes": ["individual_filing_obligation", "individual_deadline", "substituted_filing"],
+      "reason": "retrieval systematically surfaced only income-tax rate/residency authority (Sec 23/24/27), never Sec 51/51-A, across three bounded formulations per class including explicit 'Section 51' citations",
+      "gateBehavior": "correct (fails closed on non-matching authority)",
+      "classification": "material and systemic retrieval/source-surfacing limitation (pre-existing P2); out of scope to fix in this task"
+    },
+    "donorFalseRefusal": { "caughtLive": true, "fixedInCommit": "ba08ae7", "finalRuntimeFalseRefusalByGate": 0 },
+    "persistenceCountExposed": false
+  },
+
+  "ws14_es09_correction": { "recorded": true, "historicalArtifactPreserved": true, "adjudication": "ES-09 is valid positive estate reachability (correct net-estate on Sec 84/86), not invalid verified; the R2 reconciliation line was a family-wide heuristic defect" },
+
+  "ws15_regression": { "deterministicSuites": 193, "deterministicFailed": 0, "deterministicCycles": 2, "stagingSuites": 7, "stagingFailed": 0, "stagingCycles": 2, "combinedSuites": 200, "suiteDelta": "+1 vs prior 199 = new R3 focused suite (justified)" },
+
+  "ws16_prior_safeguards": { "q5": 0, "q8": 0, "q25": 0, "q36": 0, "q38": 0, "q46": 0, "accessor": "0/0/0", "outcomePredictionVerified": 0, "fabricatedAuthority": 0, "falseRefusalByR3Gate": 0, "modelOverride": 0, "validVerifiedReachable": true },
+
+  "officialAuthorityOnly": true, "securityScan": "clean", "worktreeClean": true,
+  "runtimeScope": "validator code + one new focused test only; no corpus/source-bank/index/model/prompt/frontend/DevFactory/production change; committed R2/R2-review/R1 evidence unchanged; protected untracked paths preserved; no backend server remains",
+
+  "currentP0Count": 0, "currentP1Count": 1, "currentP2Count": 5, "currentP3Count": 1,
+  "p1Blocker": "individual filing-obligation/deadline/substituted live positive reachability cannot be demonstrated due to systemic retrieval-surfacing (Sec 51/51-A never surfaced); the R3 gate is correct; retrieval is out of scope",
+
+  "phase10AStatus": "OPEN_PENDING_INDEPENDENT_REVIEW", "phase10BStatus": "BLOCKED", "phase10CStatus": "BLOCKED",
+  "adversarialStatus": "DEFERRED", "productionStatus": "NOT_AUTHORIZED", "reindexStatus": "NOT_AUTHORIZED", "modelChangeStatus": "NOT_AUTHORIZED", "fullFactcheckStatus": "NOT_AUTHORIZED",
+
+  "decision": "REVISIONS_REQUIRED",
+  "decisionRationale": "The clause-scoped multi-proposition architecture remediates all five R2 P1 gate defects (mixed-object suppression, relative/Taglish deadline, cross-tax authority laundering, correct-but-unsupported estate computation, relational estate misstatement) and a live-caught donor false refusal. Deterministic and negative live evidence is clean: WS1 reproduces all five pre-patch; the 35/0 focused suite and all reviewer-probe replays close every unsafe probe; the all-26 replay blocks exactly the 9 Q12/Q30/Q34 slots with 0 valid newly blocked; live validation over 60 probes yields 0 invalid verified with all negatives failing closed and estate/donor/VAT-deadline/protest/EWT positives verifying on matching authority; no regressions; runners pass twice. PASS is NOT claimed because the packet requires direct LIVE positive reachability for the individual filing-obligation, individual-deadline, and substituted-filing classes, and the systemic retrieval-surfacing limitation (retrieval returns only Sec 23/24/27, never Sec 51/51-A, across bounded formulations) prevents it. Per the packet's retrieval-surfacing rule this material, systemic limitation warrants REVISIONS REQUIRED; no retrieval change was made (out of scope). A separately-authorized retrieval/source-surfacing remediation is required to enable individual-filing live positive reachability before PASS. The mandatory independent review (Codex GPT-5) is next and must not execute R3."
+}

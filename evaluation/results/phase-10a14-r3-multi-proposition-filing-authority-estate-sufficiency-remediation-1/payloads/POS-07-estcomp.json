@@ -1,0 +1,97 @@
+{
+  "id": "POS-07-estcomp",
+  "group": "positive",
+  "prompt": "What is the estate tax rate and how is the net estate computed under TRAIN?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nThe estate tax rate under the Tax Reform for Acceleration and Inclusion (TRAIN) is a flat rate of 6% on the net estate exceeding PHP 5,000,000. The net estate is computed by taking the gross estate and deducting allowable deductions as specified in the National Internal Revenue Code (NIRC).\n\n### Interpretation\nThe gross estate includes all properties, real or personal, of the decedent at the time of death, valued at fair market value. From this gross estate, allowable deductions such as funeral expenses, debts, and other specific exemptions are subtracted to arrive at the net estate. The estate tax is then calculated at 6% of the net estate that exceeds PHP 5,000,000.\n\n### Practical Meaning\nFor estates valued over PHP 5,000,000, the estate tax liability will be 6% of the amount exceeding this threshold. Executors or administrators must ensure accurate valuation and documentation of the estate's assets and deductions to comply with tax obligations and avoid penalties. Proper planning and assessment of the estate's value can significantly impact the tax due.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "tax_computation_basis",
+    "reason": "estate_tax_base_deduction_threshold_conflation",
+    "propositionLedger": [
+      {
+        "propositionId": "p0",
+        "sourceSide": "answer",
+        "sourceClause": "### short answer the estate tax rate under the tax reform for acceleration and inclusion (train) is a flat rate of 6% on the net estate exceeding php 5,000,000. the net estate is computed by taking the gross estate and deducting allowable deductions as specified in the national internal revenue code (nirc). ### interpretation the gross estate includes all properties, real or personal, of the decedent at the time of death, valued at fair market value. from this gross estate, allowable deductions such as funeral expenses, debts, and other specific exemptions are subtracted to arrive at the net estate. the estate tax is then calculated at 6% of the net estate that exceeds php 5,000,000. ### practical meaning for estates valued over php 5,000,000, the estate tax liability will be 6% of the amount exceeding this threshold. executors or administrators must ensure accurate valuation and documentation of the estate's assets and deductions to comply with tax obligations and avoid penalties. proper planning and assessment of the estate's value can significantly impact the tax due.",
+        "propositionClass": "tax_computation_basis",
+        "objectType": "estate_tax_computation",
+        "taxType": "estate_tax",
+        "returnType": "estate",
+        "taxpayerType": "estate",
+        "computationComponents": {
+          "rate": true,
+          "netEstate": true,
+          "grossEstate": true,
+          "deduction": true,
+          "standardDeduction": false,
+          "threshold": true
+        },
+        "relationshipError": true,
+        "decisive": true
+      }
+    ],
+    "authorityClasses": {
+      "indFiling": false,
+      "substituted": false,
+      "corpFiling": false,
+      "estateFiling": true,
+      "donorFiling": false,
+      "vatFiling": false,
+      "pctFiling": false,
+      "estateRate": true,
+      "estateBaseDeduction": true
+    },
+    "failedProposition": {
+      "propositionId": "p0",
+      "sourceSide": "answer",
+      "sourceClause": "### short answer the estate tax rate under the tax reform for acceleration and inclusion (train) is a flat rate of 6% on the net estate exceeding php 5,000,000. the net estate is computed by taking the gross estate and deducting allowable deductions as specified in the national internal revenue code (nirc). ### interpretation the gross estate includes all properties, real or personal, of the decedent at the time of death, valued at fair market value. from this gross estate, allowable deductions such as funeral expenses, debts, and other specific exemptions are subtracted to arrive at the net estate. the estate tax is then calculated at 6% of the net estate that exceeds php 5,000,000. ### practical meaning for estates valued over php 5,000,000, the estate tax liability will be 6% of the amount exceeding this threshold. executors or administrators must ensure accurate valuation and documentation of the estate's assets and deductions to comply with tax obligations and avoid penalties. proper planning and assessment of the estate's value can significantly impact the tax due.",
+      "propositionClass": "tax_computation_basis",
+      "objectType": "estate_tax_computation",
+      "taxType": "estate_tax",
+      "returnType": "estate",
+      "taxpayerType": "estate",
+      "computationComponents": {
+        "rate": true,
+        "netEstate": true,
+        "grossEstate": true,
+        "deduction": true,
+        "standardDeduction": false,
+        "threshold": true
+      },
+      "relationshipError": true,
+      "decisive": true
+    }
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 5,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 89",
+    "NIRC Sec. 91",
+    "NIRC Sec. 84",
+    "NIRC Sec. 86",
+    "NIRC Sec. 88"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 89",
+    "NIRC Sec. 91",
+    "NIRC Sec. 84",
+    "NIRC Sec. 86",
+    "NIRC Sec. 88"
+  ],
+  "requestHash": "7bb81c5d6de6e99b62cc66f3",
+  "responseHash": "7cd7fa56294279ceed6e8430",
+  "sanitizedConversationRef": "0af948f69161b9e13809f13f",
+  "sha256": "a128192c6cd066489d014a4f075833385a580b4ab4ba4ebc11026affab2a0586"
+}

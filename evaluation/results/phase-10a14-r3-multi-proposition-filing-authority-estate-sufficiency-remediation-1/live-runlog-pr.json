@@ -1,0 +1,56 @@
+{
+  "prior": [
+    {
+      "id": "PR-Q36",
+      "verified": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "penalty_procedural",
+      "reason": "penalty_proposition_without_penalty_authority",
+      "AS": "RELATED_AUTHORITY_ONLY",
+      "labels": [
+        "NIRC Sec. 105",
+        "NIRC Sec. 106",
+        "NIRC Sec. 107",
+        "NIRC Sec. 108",
+        "RR 16-2005"
+      ]
+    },
+    {
+      "id": "PR-Q25",
+      "verified": true,
+      "stage": "llm",
+      "reason": "The answer correctly addresses the applicability of expanded withholding tax and cites relevant regulations.",
+      "AS": "VERIFIED_CONTROLLING",
+      "labels": [
+        "RR 2-98",
+        "RR 16-2005",
+        "RMC 75-2015"
+      ]
+    },
+    {
+      "id": "PR-Q38",
+      "verified": false,
+      "stage": "proposition-source-sufficiency",
+      "cls": "registration_procedural",
+      "reason": "registration_proposition_without_registration_authority",
+      "AS": "RELATED_AUTHORITY_ONLY",
+      "labels": [
+        "RR No. 11-2018",
+        "RR No. 2-1998",
+        "NIRC Sec. 2",
+        "NIRC Sec. 3"
+      ]
+    },
+    {
+      "id": "PR-Q46",
+      "verified": false,
+      "stage": "structural",
+      "reason": "empty_primary_answer_section",
+      "AS": "RELATED_AUTHORITY_ONLY",
+      "labels": [
+        "RR No. 16-2005",
+        "RR 4-2007"
+      ]
+    }
+  ]
+}

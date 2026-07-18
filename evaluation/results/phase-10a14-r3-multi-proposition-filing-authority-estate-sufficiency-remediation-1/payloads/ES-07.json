@@ -1,0 +1,89 @@
+{
+  "id": "ES-07",
+  "group": "neg_estate",
+  "prompt": "How does the standard deduction affect the estate tax base?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nThe standard deduction does not directly apply to estate tax calculations in the Philippines. Instead, estate tax is computed based on the net estate, which is determined by deducting allowable expenses and debts from the gross estate, as outlined in the National Internal Revenue Code (NIRC).\n\n### Interpretation\nIn the context of estate tax, the deductions allowed include funeral expenses, judicial expenses, and debts of the decedent, among others. The standard deduction, as typically understood in income tax contexts, does not apply here. Instead, the focus is on specific deductions that directly reduce the gross estate to arrive at the net estate subject to tax.\n\n### Practical Meaning\nFor estate tax purposes, the executor or administrator of the estate must ensure that all allowable deductions are properly documented and claimed to minimize the taxable estate. This involves careful accounting of all debts and expenses related to the estate, rather than relying on a standard deduction. Properly managing these deductions can significantly affect the estate tax liability.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "tax_computation_basis",
+    "reason": "estate_computation_without_estate_authority",
+    "propositionLedger": [
+      {
+        "propositionId": "p0",
+        "sourceSide": "answer",
+        "sourceClause": "### short answer the standard deduction does not directly apply to estate tax calculations in the philippines. instead, estate tax is computed based on the net estate, which is determined by deducting allowable expenses and debts from the gross estate, as outlined in the national internal revenue code (nirc). ### interpretation in the context of estate tax, the deductions allowed include funeral expenses, judicial expenses, and debts of the decedent, among others. the standard deduction, as typically understood in income tax contexts, does not apply here. instead, the focus is on specific deductions that directly reduce the gross estate to arrive at the net estate subject to tax. ### practical meaning for estate tax purposes, the executor or administrator of the estate must ensure that all allowable deductions are properly documented and claimed to minimize the taxable estate. this involves careful accounting of all debts and expenses related to the estate, rather than relying on a standard deduction. properly managing these deductions can significantly affect the estate tax liability.",
+        "propositionClass": "tax_computation_basis",
+        "objectType": "estate_tax_computation",
+        "taxType": "estate_tax",
+        "returnType": "estate",
+        "taxpayerType": "estate",
+        "computationComponents": {
+          "rate": false,
+          "netEstate": true,
+          "grossEstate": true,
+          "deduction": true,
+          "standardDeduction": true,
+          "threshold": false
+        },
+        "relationshipError": false,
+        "decisive": true
+      }
+    ],
+    "authorityClasses": {
+      "indFiling": false,
+      "substituted": false,
+      "corpFiling": false,
+      "estateFiling": false,
+      "donorFiling": false,
+      "vatFiling": false,
+      "pctFiling": false,
+      "estateRate": false,
+      "estateBaseDeduction": false
+    },
+    "failedProposition": {
+      "propositionId": "p0",
+      "sourceSide": "answer",
+      "sourceClause": "### short answer the standard deduction does not directly apply to estate tax calculations in the philippines. instead, estate tax is computed based on the net estate, which is determined by deducting allowable expenses and debts from the gross estate, as outlined in the national internal revenue code (nirc). ### interpretation in the context of estate tax, the deductions allowed include funeral expenses, judicial expenses, and debts of the decedent, among others. the standard deduction, as typically understood in income tax contexts, does not apply here. instead, the focus is on specific deductions that directly reduce the gross estate to arrive at the net estate subject to tax. ### practical meaning for estate tax purposes, the executor or administrator of the estate must ensure that all allowable deductions are properly documented and claimed to minimize the taxable estate. this involves careful accounting of all debts and expenses related to the estate, rather than relying on a standard deduction. properly managing these deductions can significantly affect the estate tax liability.",
+      "propositionClass": "tax_computation_basis",
+      "objectType": "estate_tax_computation",
+      "taxType": "estate_tax",
+      "returnType": "estate",
+      "taxpayerType": "estate",
+      "computationComponents": {
+        "rate": false,
+        "netEstate": true,
+        "grossEstate": true,
+        "deduction": true,
+        "standardDeduction": true,
+        "threshold": false
+      },
+      "relationshipError": false,
+      "decisive": true
+    }
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 1,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 34"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 34"
+  ],
+  "requestHash": "eb07992cde303707c7471349",
+  "responseHash": "514a694764acaf4b0d52d3ca",
+  "sanitizedConversationRef": "6a2840737f6e96cd58333e43",
+  "sha256": "2833622bd708ad446b16b2138f1d1c6bee7dee0cf6b8dbd3eceb5e093a63eb01"
+}

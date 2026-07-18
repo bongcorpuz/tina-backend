@@ -1,0 +1,32 @@
+{
+  "id": "ES-04",
+  "group": "neg_estate",
+  "prompt": "How is estate tax computed under TRAIN?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "TINA could not identify an indexed authority matching the specific transaction or claim described.\n\nThis does not mean that no law or authority exists.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "NO_INDEXED_SOURCE",
+    "legalConclusion": "UNKNOWN",
+    "hasConflict": false,
+    "responseKind": "FALLBACK"
+  },
+  "answerSupport": null,
+  "validatorInvoked": false,
+  "displayedSourceCount": 0,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [],
+  "topSourceLabels": [
+    "civil-code-philippines.docx",
+    "civil-code-philippines.docx",
+    "NIRC Sec. 6",
+    "NIRC Sec. 6",
+    "RA 11534"
+  ],
+  "requestHash": "e5e69b7dd7ea0913241169b7",
+  "responseHash": "a7e94b3f3f5a335d8ef88164",
+  "sanitizedConversationRef": "50cd4b009f68cdb0ceea217e",
+  "sha256": "67abcfc237ae058601eda85f13b0a3f07f894fddd4ac1df8294d1372a6ffa6d1"
+}

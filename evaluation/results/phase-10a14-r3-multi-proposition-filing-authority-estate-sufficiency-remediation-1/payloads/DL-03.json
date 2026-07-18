@@ -1,0 +1,92 @@
+{
+  "id": "DL-03",
+  "group": "neg_deadline",
+  "prompt": "Am I already late for the individual annual income tax return?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nYou are late for the individual annual income tax return if you have not filed it by April 15 of the year following the taxable year.\n\n### Interpretation\nThe NIRC mandates that individual taxpayers must file their income tax returns by April 15. If this date has passed and you have not submitted your return, you are considered late. This may subject you to penalties and interest on any unpaid taxes.\n\n### Practical Meaning\nIf you have missed the April 15 deadline, it is advisable to file your return as soon as possible to minimize penalties. The Bureau of Internal Revenue (BIR) may impose additional charges for late filing, so prompt action is recommended to comply with tax obligations.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": false,
+    "schemaValid": false,
+    "stage": "proposition-source-sufficiency",
+    "propositionClass": "filing_deadline",
+    "reason": "filing_deadline_proposition_without_matching_return_authority",
+    "propositionLedger": [
+      {
+        "propositionId": "p0",
+        "sourceSide": "question",
+        "sourceClause": "am i already late for the individual annual income tax return?",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      },
+      {
+        "propositionId": "p1",
+        "sourceSide": "answer",
+        "sourceClause": "### practical meaning if you have missed the april 15 deadline, it is advisable to file your return as soon as possible to minimize penalties",
+        "propositionClass": "filing_deadline",
+        "action": "file",
+        "objectType": "tax_return",
+        "taxType": "individual_income_tax",
+        "returnType": "individual_income",
+        "taxpayerType": "individual",
+        "substituted": false,
+        "decisive": true
+      }
+    ],
+    "authorityClasses": {
+      "indFiling": false,
+      "substituted": false,
+      "corpFiling": false,
+      "estateFiling": false,
+      "donorFiling": false,
+      "vatFiling": false,
+      "pctFiling": false,
+      "estateRate": false,
+      "estateBaseDeduction": false
+    },
+    "failedProposition": {
+      "propositionId": "p0",
+      "sourceSide": "question",
+      "sourceClause": "am i already late for the individual annual income tax return?",
+      "propositionClass": "filing_deadline",
+      "action": "file",
+      "objectType": "tax_return",
+      "taxType": "individual_income_tax",
+      "returnType": "individual_income",
+      "taxpayerType": "individual",
+      "substituted": false,
+      "decisive": true
+    }
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 3,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "requestHash": "594c29c16c7986a5a2ddfb59",
+  "responseHash": "5c8e30374e71fcf55d09bb7e",
+  "sanitizedConversationRef": "8263150b9972d7ad1ca429b9",
+  "sha256": "c91f2fdd635acc538b40743f3b247c140b3ffd6a7320a9aaec7b893515f70382"
+}

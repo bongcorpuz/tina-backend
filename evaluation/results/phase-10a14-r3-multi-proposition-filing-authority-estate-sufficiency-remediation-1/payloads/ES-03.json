@@ -1,0 +1,32 @@
+{
+  "id": "ES-03",
+  "group": "neg_estate",
+  "prompt": "How is the net estate determined for estate tax?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "TINA could not identify an indexed authority matching the specific transaction or claim described.\n\nThis does not mean that no law or authority exists.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "NO_INDEXED_SOURCE",
+    "legalConclusion": "UNKNOWN",
+    "hasConflict": false,
+    "responseKind": "FALLBACK"
+  },
+  "answerSupport": null,
+  "validatorInvoked": false,
+  "displayedSourceCount": 0,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [],
+  "topSourceLabels": [
+    "civil-code-philippines.docx",
+    "civil-code-philippines.docx",
+    "NIRC Sec. 6",
+    "NIRC Sec. 6",
+    "NIRC Sec. 6"
+  ],
+  "requestHash": "d161122941eb8f3d798c4e40",
+  "responseHash": "a7e94b3f3f5a335d8ef88164",
+  "sanitizedConversationRef": "fdc1b4d410c6f36de08f9170",
+  "sha256": "691e27a1276c3ea69876e1e1a87c99bbca9ea6795f9f9c2536b93b115bc5721a"
+}

@@ -1,0 +1,46 @@
+{
+  "id": "POS-04-estdl",
+  "group": "positive",
+  "prompt": "What is the deadline for filing an estate tax return, and can it be extended?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "### Short Answer\nThe deadline for filing an estate tax return is within one year from the decedent's death. An extension of up to 30 days may be granted by the Commissioner in meritorious cases.\n\n### Controlling Authorities\n- **NIRC Sec. 89**: \"The estate tax return required... shall be filed within one (1) year from the decedent's death. The Commissioner shall have authority to grant, in meritorious cases, a reasonable extension not exceeding thirty (30) days for filing the return.\"\n\n### Interpretation\nThe law mandates that the estate tax return must be submitted within one year following the death of the individual whose estate is being taxed. However, the Commissioner of Internal Revenue has the discretion to extend this deadline by an additional 30 days if there are valid reasons presented by the taxpayer.\n\n### Practical Meaning\nThis means that executors or administrators of an estate must be diligent in preparing the estate tax return within the specified timeframe. If they anticipate difficulties in meeting the deadline, they should apply for an extension as soon as possible to avoid penalties or issues with compliance.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "hasConflict": false,
+    "responseKind": "GENERAL_TAX"
+  },
+  "answerSupport": {
+    "verifiedEligible": true,
+    "schemaValid": true,
+    "stage": "llm",
+    "reason": "The answer correctly states the deadline and extension provisions, supported by relevant citations.",
+    "propositionLedger": null,
+    "authorityClasses": null,
+    "failedProposition": null
+  },
+  "validatorInvoked": true,
+  "displayedSourceCount": 5,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [
+    "NIRC Sec. 89",
+    "NIRC Sec. 84",
+    "NIRC Sec. 86",
+    "NIRC Sec. 88",
+    "NIRC Sec. 91"
+  ],
+  "topSourceLabels": [
+    "NIRC Sec. 89",
+    "NIRC Sec. 84",
+    "NIRC Sec. 86",
+    "NIRC Sec. 88",
+    "NIRC Sec. 91"
+  ],
+  "requestHash": "43648dfca38501284e3f4a47",
+  "responseHash": "f95a97b439ecebc24909f3bc",
+  "sanitizedConversationRef": "36214f70500bce883f5c45a5",
+  "sha256": "3f8532eb85b02141264e1facc911003b658d7168c458cba29dd5b7e17bb2c17e"
+}

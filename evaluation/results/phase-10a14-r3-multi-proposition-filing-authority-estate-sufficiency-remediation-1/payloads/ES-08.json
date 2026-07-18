@@ -1,0 +1,32 @@
+{
+  "id": "ES-08",
+  "group": "neg_estate",
+  "prompt": "Magkano ang estate tax sa ilalim ng TRAIN?",
+  "runtimeCommit": "ba08ae790021ac1e22f438a82372a643dd886de0",
+  "answer": "TINA could not identify an indexed authority matching the specific transaction or claim described.\n\nThis does not mean that no law or authority exists.",
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "NO_VERIFIED_AUTHORITY",
+    "sourceState": "NO_INDEXED_SOURCE",
+    "legalConclusion": "UNKNOWN",
+    "hasConflict": false,
+    "responseKind": "FALLBACK"
+  },
+  "answerSupport": null,
+  "validatorInvoked": false,
+  "displayedSourceCount": 0,
+  "retrievedSourceCount": 12,
+  "persistenceCount": null,
+  "sourceLabels": [],
+  "topSourceLabels": [
+    "civil-code-philippines.docx",
+    "civil-code-philippines.docx",
+    "NIRC Sec. 6",
+    "NIRC Sec. 6",
+    "RA 11534"
+  ],
+  "requestHash": "ee04f350e0a379e48ab97922",
+  "responseHash": "a7e94b3f3f5a335d8ef88164",
+  "sanitizedConversationRef": "6de4482a7b6e718920d252e5",
+  "sha256": "decd78dad85ffdfb39b22613cbeeb714f24faa674a00ca49ce10db2085b79b3c"
+}
