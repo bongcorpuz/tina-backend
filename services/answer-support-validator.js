@@ -887,8 +887,22 @@ export function detectFilingAndEstatePropositions(question, answer) {
     // introduced filing conclusion, in THIS clause; the object must be a tax return.
     const obligationConcept = C_OBLIGATION.test(clause);
     const answerFilingConclusion = side === "answer" && A_FILING_CONCLUSION.test(clause);
+    // PHASE-10A14-R5 (P2-R4-003): a DEFINITIVE imperative tax-return instruction
+    // ("File the annual income-tax return", "Submit the ITR", "Accomplish and file
+    // BIR Form 1701") is a decisive filing_obligation proposition even without an
+    // explicit obligation word, and therefore requires compatible filing authority.
+    // The object must be a tax return (RETURN_OBJECT_STRONG / ITR / BIR Form 170x);
+    // non-return imperatives (protest, refund, invoices, registration, capital) are
+    // excluded by wrongObjectHere / notGeneric.
+    // hyphen-tolerant ("income-tax return" == "income tax return")
+    const clauseDehyph = clause.replace(/-/g, " ");
+    const imperativeReturnObject = hasStrongReturn || RETURN_OBJECT_STRONG.test(clauseDehyph) ||
+      (/\bITR\b/.test(clause) && notGeneric) ||
+      (/\b(?:bir\s+)?form\s+170[01]\b/i.test(clause));
+    const imperativeFilingHere = hasFilingAct && imperativeReturnObject && notGeneric &&
+      !wrongObjectHere && !assessmentHere && !paymentHere;
     const filingObligationHere = !wrongObjectHere && !assessmentHere &&
-      ((returnObject && obligationConcept) || answerFilingConclusion);
+      ((returnObject && obligationConcept) || answerFilingConclusion || imperativeFilingHere);
 
     // filing deadline: a temporal concept whose object is a tax-return filing.
     const temporalHere = C_TEMPORAL_GENERAL.test(clause) || C_TEMPORAL_RETURN_SCOPED.test(clause) ||
@@ -916,6 +930,27 @@ export function detectFilingAndEstatePropositions(question, answer) {
         });
       }
     }
+  }
+
+  // PHASE-10A14-R5 (P2-R4-003): answer/question-level imperative tax-return filing.
+  // segmentClauses splits on hyphens (so "income-tax return" is torn apart) and a
+  // bare imperative carries no obligation word; scan the full dehyphenated text for a
+  // definitive imperative filing act directed at an INCOME-tax return object. The
+  // required income-tax-return object (income tax return / ITR / annual return / BIR
+  // Form 1700-1701) guards against non-return imperatives (protest, refund, invoices,
+  // registration, capital), which cannot match.
+  const IMPERATIVE_TAX_RETURN_RE = /\b(?:file|submit|lodge|furnish|accomplish(?:\s+and\s+file)?)\b[^.\n]{0,32}\b(?:annual\s+)?(?:income\s+tax\s+return|itr|annual\s+return|(?:bir\s+)?form\s+170[01])\b/i;
+  const imperativeText = (bothCtx || "").replace(/-/g, " ");
+  if (IMPERATIVE_TAX_RETURN_RE.test(imperativeText) &&
+      !propositions.some((p) => p.propositionClass === "filing_obligation")) {
+    const ctx = classifyReturnContext("file annual income tax return " + imperativeText.slice(0, 200), bothCtx);
+    propositions.push({
+      propositionId: `p${pid++}`, sourceSide: "answer", sourceClause: "imperative_tax_return_filing",
+      propositionClass: "filing_obligation", action: "file", objectType: "tax_return",
+      taxType: ctx.taxType || "individual_income_tax",
+      returnType: ctx.returnType || "individual_income",
+      taxpayerType: ctx.taxpayerType, substituted: ctx.substituted, decisive: true, imperative: true
+    });
   }
 
   // estate computation (answer-level component model; estate context may come from Q)
@@ -1060,6 +1095,35 @@ export function evaluatePropositionSourceSufficiency({ question, answer, sources
   const filingProps = sem.propositions.filter(
     (p) => p.propositionClass === "filing_obligation" || p.propositionClass === "filing_deadline"
   );
+  // PHASE-10A14-R5 (P1-R4-001): narrow Section 51 temporal-sufficiency control,
+  // evaluated BEFORE ordinary filing-authority compatibility so the stale-current
+  // failure is reported with its precise temporal reason. A capital-gains /
+  // transaction-specific individual return TIMING proposition (NIRC Sec. 51(C)(2)) is
+  // governed for CURRENT periods by RA 12214 (CMEPA). If the answer asserts such
+  // transaction-specific timing for a current period on the ordinary Sec 51/51(C)
+  // authority alone -- without the later amending law (RA 12214) present -- the
+  // current-law chain is incomplete and it must fail closed. The ordinary annual
+  // filing obligation, ordinary April-15 deadline (51(C)(1)), and Section 51-A
+  // substituted filing are UNCHANGED by RA 11976/RA 12214 (officially verified) and
+  // are intentionally NOT affected by this gate.
+  const CGT_TXN_TIMING_RE = /\b(capital gains|sale (?:or exchange )?of shares|shares of stock not traded|disposition of real property|real property under section 24|within thirty \(?30\)? days|30[- ]day return)\b/i;
+  const HISTORICAL_PERIOD_RE = /\b(19|20)\d{2}\b/;
+  const AUTH_RA12214_RE = /\b(?:R\.?A\.?)\s*(?:no\.?\s*)?12214\b|\bCMEPA\b|capital markets efficiency/i;
+  const txnTimingAsserted = filingDeadlineProposition && CGT_TXN_TIMING_RE.test(q + " \n " + a);
+  if (txnTimingAsserted) {
+    const yearMatch = (q + " " + a).match(HISTORICAL_PERIOD_RE);
+    const explicitHistorical = yearMatch && Number(yearMatch[0]) < 2025;
+    const hasLaterLaw = AUTH_RA12214_RE.test(sourceLabels);
+    if (!explicitHistorical && !hasLaterLaw) {
+      return {
+        applicable: true, sufficient: false,
+        reason: "section_51_later_amendment_missing",
+        propositionClass: "filing_deadline",
+        diagnostics: { ...diagnostics, temporalChain: "LATER_AMENDMENT_REQUIRED", requiredLaterLaw: "RA 12214" }
+      };
+    }
+  }
+
   for (const p of filingProps) {
     const compatible = filingAuthorityCompatible(p.returnType, auth);
     if (!compatible) {

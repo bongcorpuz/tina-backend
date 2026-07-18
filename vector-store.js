@@ -12,6 +12,7 @@ import {
   buildNormalizedRefVariants as buildRegistryNormalizedRefVariants,
   isRecognizableAuthorityReference
 } from "./vector-authority-reference-registry.js";
+import { buildSection51AmendmentChainMetadata } from "./section51-authority-chain.js";
 import {
   buildNircLightExpansion,
   buildPossibleSourceKeywords,
@@ -2441,6 +2442,10 @@ async function searchSection51FilingAuthoritySource({
       .map((row) => {
         const ref = assignSection51Ref(row.text || row.content || "", "NIRC Sec. 51");
         const aliases = buildSection51BridgeAliases(ref);
+        // PHASE-10A14-R5: amendment-chain metadata so the card records that the
+        // later chain (RA 11976 EOPT, RA 12214 CMEPA) was reviewed and does not
+        // imply "RA 10963 is the only current authority".
+        const amendmentChain = buildSection51AmendmentChainMetadata(ref);
         return mapRowToResult(
           {
             ...row,
@@ -2462,6 +2467,7 @@ async function searchSection51FilingAuthoritySource({
               normalized_reference: ref,
               normalizedAliases: aliases,
               sec51FilingAuthorityBridge: true,
+              ...amendmentChain,
               isIndexed: true,
               googleDriveIndexed: true,
               retrievalLayer: "LAYER_1_EXACT_NORMALIZED_AUTHORITY",
