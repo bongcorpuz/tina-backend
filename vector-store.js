@@ -2446,7 +2446,7 @@ async function searchSection51FilingAuthoritySource({
         // later chain (RA 11976 EOPT, RA 12214 CMEPA) was reviewed and does not
         // imply "RA 10963 is the only current authority".
         const amendmentChain = buildSection51AmendmentChainMetadata(ref);
-        return mapRowToResult(
+        const mapped = mapRowToResult(
           {
             ...row,
             normalized_reference: ref,
@@ -2480,6 +2480,18 @@ async function searchSection51FilingAuthoritySource({
           queryStr,
           { ...parsed, searchMode }
         );
+        // Surface the amendment-chain summary at the TOP LEVEL (mapRowToResult
+        // flattens fields and drops metadata) so it can survive to the final source
+        // card and record that the later chain (RA 11976/12214) was reviewed (P1-R4-001).
+        return {
+          ...mapped,
+          amendmentChainReviewed: amendmentChain.amendmentChainReviewed,
+          amendmentChainStatus: amendmentChain.amendmentChainStatus,
+          amendmentChainId: amendmentChain.amendmentChainId,
+          currentAuthoritySet: amendmentChain.currentAuthoritySet,
+          amendingAuthorities: amendmentChain.amendingAuthorities,
+          officialAmendmentLaws: amendmentChain.officialAmendmentLaws
+        };
       })
       .filter((row) => !shouldSuppressRow(row, queryStr, parsed));
   } catch (err) {

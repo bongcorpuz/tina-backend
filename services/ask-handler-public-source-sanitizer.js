@@ -39,6 +39,26 @@ export function sanitizePublicSourceCard(card = {}) {
   const displayLabel = publicSourceCardText(card.displayLabel || card.label || citation || title) || title;
   const safeUrl = publicSourceCardUrl(card.publicUrl || card.public_url || "");
 
+  // PHASE-10A14-R5 (P1-R4-001): carry a sanitized Section 51 amendment-chain summary
+  // (non-sensitive: official law identifiers + canonical URLs + reviewed flag) so a
+  // current Section 51 card records that the later amendment chain (RA 11976 EOPT /
+  // RA 12214 CMEPA) was reviewed rather than implying "RA 10963 is the only current
+  // authority".
+  const chainReviewed = card.amendmentChainReviewed === true || card.metadata?.amendmentChainReviewed === true;
+  let amendmentChain;
+  if (chainReviewed) {
+    const laws = card.officialAmendmentLaws || card.metadata?.officialAmendmentLaws || [];
+    amendmentChain = {
+      reviewed: true,
+      status: publicSourceCardText(card.amendmentChainStatus || card.metadata?.amendmentChainStatus || ""),
+      currentAuthoritySet: safeArray(card.currentAuthoritySet || card.metadata?.currentAuthoritySet).map(publicSourceCardText).filter(Boolean),
+      amendingAuthorities: safeArray(card.amendingAuthorities || card.metadata?.amendingAuthorities).map(publicSourceCardText).filter(Boolean),
+      officialLaws: safeArray(laws)
+        .map((l) => ({ id: publicSourceCardText(l.id || ""), title: publicSourceCardText(l.title || ""), url: publicSourceCardUrl(l.url || "") }))
+        .filter((l) => l.id)
+    };
+  }
+
   return {
     label: displayLabel,
     title,
@@ -46,7 +66,8 @@ export function sanitizePublicSourceCard(card = {}) {
     authorityType: publicSourceCardText(card.authorityType || card.authority_type || ""),
     displayLabel,
     limitationRequired: card.limitationRequired === true,
-    ...(safeUrl ? { publicUrl: safeUrl } : {})
+    ...(safeUrl ? { publicUrl: safeUrl } : {}),
+    ...(amendmentChain ? { amendmentChainReviewed: true, amendmentChain } : {})
   };
 }
 
