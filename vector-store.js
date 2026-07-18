@@ -2269,6 +2269,213 @@ async function searchRa10963IndexedTaxCodeSource({
   }
 }
 
+// ── PHASE-10A14-R4: Individual filing / substituted-filing authority bridge ──
+//
+// Root cause (WS3/WS4): NIRC Sec. 51 (Individual Return — filing obligation +
+// 51(C) deadline) and Sec. 51-A (Substituted Filing) statutory text IS indexed
+// in the NIRC-1997-RA-10963 source, but the affected chunks carry a lagged
+// normalized_reference ("NIRC Sec. 50" / "NIRC Sec. 52") because their chunk
+// boundaries straddle the preceding section header. There is NO chunk labeled
+// "NIRC Sec. 51" / "NIRC Sec. 51-A", so the Layer-1 equality lookup on
+// normalized_reference returns zero rows and the decisive filing authority never
+// reaches a final source card (validator then correctly fails closed).
+//
+// This bridge — like the RA 10963 bridge above — does NOT fabricate text and does
+// NOT modify the store. It re-surfaces the genuine indexed Section 51 / 51-A
+// chunks by their stable statutory content markers and re-labels each row with
+// the CORRECT provision so the source card the validator reads carries
+// "NIRC Sec. 51" / "NIRC Sec. 51(C)" / "NIRC Sec. 51-A". No reindex; no DB write.
+//
+// It fires only in the zero-equality gap and only for individual filing /
+// substituted-filing intent, and never for corporate/estate/donor/VAT/percentage
+// filing (overfire guard), so it cannot displace another tax type's authority.
+
+const SEC51_NIRC_SOURCE_FILTER = "%nirc-1997-ra-10963%";
+
+// Content markers uniquely identifying the Section 51 / 51-A statutory region.
+// '.' '(' ')' are literal in SQL ILIKE (only % and _ are wildcards).
+const SEC51_CONTENT_MARKERS = Object.freeze([
+  { marker: "%SEC. 51. Individual Return%", ref: "NIRC Sec. 51" },
+  { marker: "%shall not be required to file an income tax return%", ref: "NIRC Sec. 51" },
+  { marker: "%The income tax return shall be filed in duplicate%", ref: "NIRC Sec. 51" },
+  { marker: "%(C) When to File%", ref: "NIRC Sec. 51(C)" },
+  { marker: "%Substituted Filing of Income Tax Returns by Employees%", ref: "NIRC Sec. 51-A" }
+]);
+
+export function assignSection51Ref(text = "", fallback = "NIRC Sec. 51") {
+  const t = String(text || "");
+  if (/Substituted Filing of Income Tax Returns by Employees/i.test(t)) return "NIRC Sec. 51-A";
+  if (/\(C\)\s*When to File/i.test(t)) return "NIRC Sec. 51(C)";
+  if (/SEC\.?\s*51\.\s*Individual Return/i.test(t)) return "NIRC Sec. 51";
+  return fallback;
+}
+
+function buildSection51BridgeAliases(ref = "NIRC Sec. 51") {
+  const base = [
+    "NIRC Sec. 51",
+    "NIRC Section 51",
+    "Section 51",
+    "Sec. 51",
+    "Sec 51",
+    "Tax Code Section 51",
+    "individual return",
+    "individual income tax return filing"
+  ];
+  if (/51-A/i.test(ref)) {
+    base.push(
+      "NIRC Sec. 51-A",
+      "NIRC Section 51-A",
+      "Section 51-A",
+      "Sec. 51-A",
+      "Sec 51-A",
+      "Section 51A",
+      "substituted filing",
+      "substituted filing of employees"
+    );
+  }
+  if (/51\(C\)/i.test(ref)) {
+    base.push("NIRC Sec. 51(C)", "Section 51(C)", "Sec. 51(C)", "annual income tax return deadline");
+  }
+  return unique(base);
+}
+
+// Intent gate: individual filing obligation / deadline / substituted filing, OR an
+// explicit Section 51 / 51-A request. Cross-tax filing requests are excluded so the
+// bridge cannot substitute Sec 51 for corporate/estate/donor/VAT/percentage returns.
+export function isSection51FilingAuthorityIntent(parsed = {}) {
+  const exactRef = String(parsed.issueClassification?.exactAuthority?.reference || "");
+  const text = [
+    parsed.keyword,
+    parsed.query,
+    exactRef,
+    ...safeArray(parsed.targetAuthorities),
+    ...safeArray(parsed.controllingAuthorities)
+  ]
+    .map((v) => String(v || ""))
+    .join(" ")
+    .trim();
+  if (!text) return false;
+
+  // Overfire guard — another return type is explicitly in scope.
+  const otherReturnType =
+    /\bcorporat\w+\b|\bsec(?:tion|\.)?\s*0*(52|75|76|77)\b/i.test(text) ||
+    /\bestate\b|\bdecedent\b|\bsec(?:tion|\.)?\s*0*(90|91)\b/i.test(text) ||
+    /\bdonor'?s?\b|\bdonation\b|\bgift tax\b|\bsec(?:tion|\.)?\s*0*(99|103)\b/i.test(text) ||
+    /\bvat\b|\bvalue[- ]added tax\b|\bsec(?:tion|\.)?\s*0*114\b/i.test(text) ||
+    /\bpercentage tax\b|\bsec(?:tion|\.)?\s*0*(116|128)\b/i.test(text);
+  if (otherReturnType) return false;
+
+  // Explicit provision request.
+  const explicit =
+    /\bsec(?:tion|\.)?\s*0*51[- ]?a\b/i.test(text) ||
+    /\b51-?a\b/i.test(text) ||
+    /\bsec(?:tion|\.)?\s*0*51\b/i.test(text);
+
+  const substituted = /\bsubstituted filing\b/i.test(text);
+
+  const individualMarker =
+    /\bindividual\b|\bself[- ]?employed\b|\bmixed[- ]?income\b|\bcompensation\b|\bemployee\b|\bprofessional\b|\bsole proprietor\b|\bfreelance\w*\b|\bannual income tax return\b|\b1701\b|\b1700\b|\bITR\b/i.test(
+      text
+    );
+  const filingObligationSignal =
+    /\brequired to file\b|\bneed to file\b|\bmust file\b|\bhave to file\b|\bhas to file\b|\bfile (?:a |an |the )?(?:income tax |annual )?return\b|\bfiling (?:of )?(?:a |an |the )?(?:income tax )?return\b|\bno (?:income tax )?return\b|\bexempt from filing\b|\bwho (?:are|is) required to file\b/i.test(
+      text
+    );
+  const filingDeadlineSignal =
+    /\bdeadline\b|\bdue date\b|\bwhen to file\b|\blast day\b|\buntil when\b|\bon or before\b|\bapril 15\b|\bstill file\b|\balready late\b/i.test(
+      text
+    );
+
+  return (
+    explicit ||
+    substituted ||
+    (individualMarker && (filingObligationSignal || filingDeadlineSignal))
+  );
+}
+
+async function searchSection51FilingAuthoritySource({
+  supabaseClient,
+  poolLimit,
+  parsed = {},
+  searchMode = "SEC_51_FILING_AUTHORITY_BRIDGE"
+} = {}) {
+  if (!supabaseClient || !isSection51FilingAuthorityIntent(parsed)) return [];
+
+  const queryStr = parsed.query || parsed.keyword || "NIRC Section 51";
+  const collected = new Map();
+
+  try {
+    for (const { marker } of SEC51_CONTENT_MARKERS) {
+      const { data, error } = await supabaseClient
+        .from(VECTOR_TABLE)
+        .select(buildSelectColumns())
+        .ilike("source", SEC51_NIRC_SOURCE_FILTER)
+        .ilike("text", marker)
+        .order("chunk_index", { ascending: true })
+        .limit(6);
+
+      if (error) {
+        console.warn("[SEC_51_FILING_AUTHORITY_BRIDGE] Supabase error:", {
+          marker,
+          message: error.message,
+          code: error.code
+        });
+        continue;
+      }
+
+      for (const row of data || []) {
+        if (!collected.has(row.id)) collected.set(row.id, row);
+      }
+    }
+
+    const rows = [...collected.values()];
+    if (!rows.length) return [];
+
+    return rows
+      .map((row) => {
+        const ref = assignSection51Ref(row.text || row.content || "", "NIRC Sec. 51");
+        const aliases = buildSection51BridgeAliases(ref);
+        return mapRowToResult(
+          {
+            ...row,
+            normalized_reference: ref,
+            citationMatchBonus: 1,
+            exactAuthorityMatch: true,
+            targetAuthorityMatch: true,
+            authorityMatchTier: 1,
+            authority_match_tier: 1,
+            isIndexed: true,
+            indexed: true,
+            googleDriveIndexed: true,
+            retrievalLayer: "LAYER_1_EXACT_NORMALIZED_AUTHORITY",
+            retrievalPhase: "LAYER_1_EXACT_NORMALIZED_AUTHORITY",
+            normalized_aliases: aliases,
+            metadata: {
+              ...(row.metadata || {}),
+              normalizedReference: ref,
+              normalized_reference: ref,
+              normalizedAliases: aliases,
+              sec51FilingAuthorityBridge: true,
+              isIndexed: true,
+              googleDriveIndexed: true,
+              retrievalLayer: "LAYER_1_EXACT_NORMALIZED_AUTHORITY",
+              retrievalPhase: "LAYER_1_EXACT_NORMALIZED_AUTHORITY",
+              authorityMatchTier: 1
+            },
+            searchMode
+          },
+          1,
+          queryStr,
+          { ...parsed, searchMode }
+        );
+      })
+      .filter((row) => !shouldSuppressRow(row, queryStr, parsed));
+  } catch (err) {
+    console.warn("[SEC_51_FILING_AUTHORITY_BRIDGE] exception:", err?.message || String(err));
+    return [];
+  }
+}
+
 export async function exactProvisionSearch(arg1, arg2) {
   const parsed   = parseSearchArgs(arg1, arg2, { topK: 8 });
   const { supabaseClient, query, keyword, topK } = parsed;
@@ -2382,9 +2589,34 @@ export async function exactAuthoritySearch(arg1, arg2) {
       })
     : [];
 
+  // PHASE-10A14-R4: individual filing / substituted-filing authority bridge.
+  // Fires only when equality lookup found no Sec 51 / 51-A row (the metadata-label
+  // defect) and the intent is individual filing/deadline/substituted. Re-surfaces the
+  // genuine indexed Section 51 / 51-A chunks with corrected provision labels.
+  const section51BridgeResults = equalityResults.length === 0
+    ? await searchSection51FilingAuthoritySource({
+        supabaseClient,
+        poolLimit,
+        parsed,
+        searchMode: "SEC_51_FILING_AUTHORITY_BRIDGE"
+      })
+    : [];
+
   const sorted = uniqueResults(
-    sortResultsForTina([...equalityResults, ...ra10963BridgeResults], query || keyword, parsed)
+    sortResultsForTina(
+      [...equalityResults, ...ra10963BridgeResults, ...section51BridgeResults],
+      query || keyword,
+      parsed
+    )
   ).slice(0, safeTopK);
+
+  if (section51BridgeResults.length > 0) {
+    console.log("[SEC_51_FILING_AUTHORITY_BRIDGE HIT]", {
+      found: section51BridgeResults.length,
+      returned: sorted.length,
+      refs: [...new Set(section51BridgeResults.map((r) => r.normalizedReference))]
+    });
+  }
 
   if (ra10963BridgeResults.length > 0) {
     console.log("[RA_10963_SOURCE_BRIDGE HIT]", {
