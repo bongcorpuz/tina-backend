@@ -1,0 +1,12 @@
+══ TINA STAGING-SMOKE GATE (mandatory, network-dependent) ════
+  PASS  tests\patch-08k-memory-staging-smoke-1.test.mjs  (121 ms)
+  PASS  tests\patch-08s-followup-backend-routes-health-minimization-staging-smoke-1.test.mjs  (44 ms)
+  PASS  tests\patch-08s-followup-backend-security-headers-rate-limits-staging-smoke-1.test.mjs  (47 ms)
+  PASS  tests\patch-08s-followup-index-secret-header-auth-staging-smoke-1.test.mjs  (44 ms)
+  PASS  tests\patch-08s-followup-index-secret-query-removal-staging-smoke-1.test.mjs  (42 ms)
+  PASS  tests\phase-09r-tax-memo-runtime-staging-smoke-1.test.mjs  (11289 ms)
+  PASS  tests\phase-09zb-controlled-loa-answer-staging-smoke-1.test.mjs  (508 ms)
+
+══════════════════════════════════════════════════════════════
+Staging-smoke suites: 7 run, 0 failed
+STAGING GATE PASSED

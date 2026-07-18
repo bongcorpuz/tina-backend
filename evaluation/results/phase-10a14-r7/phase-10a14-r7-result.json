@@ -1,0 +1,36 @@
+{
+  "task": "PHASE-10A14-R7-EXACT-DATE-SECTION-51C2-EFFECTIVITY-AND-COMPLETE-GOVERNED-LIVE-EVIDENCE-REMEDIATION-1",
+  "executor": "Claude Code — Opus 4.8",
+  "startingHEAD": "ab4a20fe13c05199f80ca54343ed8a59eeb1a595",
+  "model": "gpt-4o-mini", "vectorRows": 5346,
+  "noReindex": true, "noDbWrite": true, "noVectorMutation": true,
+  "decision": "REVISIONS REQUIRED (self-assessed; formal decision belongs to the independent reviewer)",
+  "findings": {
+    "P1-R6-IR-001": {
+      "status": "CLOSED",
+      "evidence": "RA 12214 applicability resolved by EXACT legal date. 2025-01-15 & 2025-06-01 transactions -> PRE_EFFECTIVITY (RA 12214 NOT applicable); [2025-06-13, 2025-08-05) officially-unresolved window -> fail closed (section_51c2_effectivity_date_unresolved); on/after 2025-08-05 -> RA 12214 applicable; 2024 pre, 2026 post; missing exact date for 2025 -> section_51c2_transaction_date_required. Date-only utility (no timezone/year-only). Section 28 July 1 modeled as financial-instrument transitory, not 51(C)(2) effectivity.",
+      "focusedTests": "phase-10a14-r7 14/0"
+    },
+    "P1-R6-IR-002": {
+      "status": "NOT_COMPLETED",
+      "gap": "the complete governed LIVE R1/R2/R3/R4/R5 safeguard matrix (100+ model calls) and a fresh governed LIVE all-26 replay with full per-probe payloads/hashes/persistence and per-answer adjudication were NOT produced as one reconciled package in this task."
+    }
+  },
+  "officialEffectivity": {
+    "law": "RA 12214 (CMEPA)", "approval": "2025-05-29",
+    "generalEffectivityClause": "Section 29 — 15 days after completion of publication (OG or newspaper)",
+    "exactGeneralEffectivityDay": "UNDETERMINED from available official sources",
+    "firmLowerBound": "2025-06-13 (approval+15)", "definitelyOperativeBy": "2025-08-05 (BIR RR 20/21-2025)",
+    "section28Transitory": "2025-07-01 (financial-instrument rate transitory; NOT 51(C)(2) cutover)"
+  },
+  "priorClosuresPreserved": {
+    "public_card_metadata": "R6 sanitizer re-derivation intact (R6 suite 15/0)",
+    "substituted_filing": "compatibility intact (R3/R4/R5 suites pass)",
+    "section_51a_origin": "originatingLaw RA 10963 (R7 test asserts)",
+    "historical_ordinary_filing": "2023 -> HISTORICAL, RA 11976/12214 not applied (R7 test asserts)",
+    "imperative_filing": "R6/R5 imperative tests pass"
+  },
+  "focusedTests": { "phase-10a14-r7": "14/0", "phase-10a14-r6": "15/0", "phase-10a14-r5": "25/0", "phase-10a14-r4": "20/0", "phase-10a14-r3": "35/0" },
+  "gates": { "deterministic": "197/0 x2 clean tree", "staging": "7/0 x2" },
+  "security": { "secrets": 0, "envChange": 0, "dbWrite": 0, "vectorMutation": 0, "reindex": 0, "protectedPathsTouched": 0 }
+}
