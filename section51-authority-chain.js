@@ -20,6 +20,26 @@
 
 "use strict";
 
+import { parseLegalDate, compareLegalDates, extractIsoDate } from "./legal-date-utils.js";
+
+// PHASE-10A14-R7 (P1-R6-IR-001): exact-date effectivity for RA 12214 (CMEPA).
+// Officially verified (lawphil ra_12214_2025; see WS2 record): approved 2025-05-29;
+// Section 29 general effectivity = 15 days after completion of publication; Section 28
+// July 1, 2025 is a FINANCIAL-INSTRUMENT rate transitory (NOT the general effectivity
+// and NOT Section 51(C)(2)'s cutover). The exact publication date is not officially
+// resolvable from available primary sources, so the exact general-effectivity day is
+// undetermined. Firm bounds: effectivity CANNOT precede approval + 15 days
+// (2025-06-13); the law is definitely operative by the BIR implementing regulations
+// (RR 20/21-2025 issued 2025-08-05). Transactions in the [earliest, established) window
+// are temporally NOT ADJUDICABLE -> fail closed (never apply RA 12214 prematurely).
+const RA12214_EFFECTIVITY = Object.freeze({
+  approval: "2025-05-29",
+  earliestPossible: "2025-06-13",   // approval + 15 days (firm lower bound)
+  establishedOperative: "2025-08-05", // BIR implementing RRs issued; definitely effective by
+  transitoryFinancialInstruments: "2025-07-01", // Section 28 (rate transitory; NOT 51(C)(2))
+  generalEffectivityClause: "15 days after completion of publication (Section 29)"
+});
+
 // Official amendment records (identifiers + canonical URLs + effectivity only).
 export const SECTION51_OFFICIAL_LAWS = Object.freeze({
   "RA 8424": Object.freeze({ title: "NIRC of 1997", approved: "1997-12-11", effectivity: "1998-01-01", effectivityYear: 1998, url: "https://lawphil.net/statutes/repacts/ra1997/ra_8424_1997.html" }),
@@ -164,16 +184,65 @@ export function resolveSection51AuthorityChain(input = {}) {
     officialLaws
   };
 
-  // Later-amendment propositions (51(C)(2)) need a resolvable period.
+  // Later-amendment propositions (51(C)(2)): resolve RA 12214 applicability by EXACT
+  // legal DATE, not by year (P1-R6-IR-001). The relevant event date is the transaction /
+  // disposition date; taxableYear alone is insufficient for a transaction-timing
+  // proposition when the year contains the effectivity boundary.
   if (entry.baseStatus === "LATER_AMENDMENT_REQUIRED") {
+    const eventDate = extractIsoDate(input.transactionDate) || extractIsoDate(input.dispositionDate)
+      || extractIsoDate(input.filingEventDate) || null;
+    const eff = RA12214_EFFECTIVITY;
+    const temporalBase = {
+      ...base,
+      effectivity: {
+        approval: eff.approval, earliestPossible: eff.earliestPossible,
+        establishedOperative: eff.establishedOperative,
+        transitoryFinancialInstruments: eff.transitoryFinancialInstruments,
+        clause: eff.generalEffectivityClause
+      },
+      selectedDateField: eventDate ? (input.transactionDate ? "transactionDate" : input.dispositionDate ? "dispositionDate" : "filingEventDate") : null,
+      selectedDate: eventDate
+    };
+
+    if (eventDate) {
+      const beforeEarliest = compareLegalDates(eventDate, eff.earliestPossible) < 0;
+      const onOrAfterEstablished = compareLegalDates(eventDate, eff.establishedOperative) >= 0;
+      if (beforeEarliest) {
+        // Definitively pre-effectivity: RA 12214 not applicable; pre-amendment form applied.
+        return { ...temporalBase, chainStatus: "HISTORICAL_COMPLETE_CHAIN",
+          currentAuthoritySet: ["NIRC Sec. 51(C)"], applicableAmendments: [], notYetEffective: ["RA 12214"],
+          temporalStatus: "PRE_EFFECTIVITY", sufficient: true, reason: null };
+      }
+      if (onOrAfterEstablished) {
+        return { ...temporalBase, chainStatus: "LATER_AMENDMENT_REQUIRED",
+          currentAuthoritySet: ["NIRC Sec. 51(C)", "RA 12214"], applicableAmendments: ["RA 12214"],
+          temporalStatus: "POST_EFFECTIVITY", sufficient: true, reason: null };
+      }
+      // Event falls in the [earliestPossible, establishedOperative) window where the exact
+      // general effectivity date is not officially resolvable -> fail closed (do NOT apply
+      // RA 12214 prematurely; require authoritative effectivity confirmation).
+      return { ...temporalBase, chainStatus: "LATER_AMENDMENT_REQUIRED",
+        applicableAmendments: [], notYetEffective: ["RA 12214"], temporalStatus: "EFFECTIVITY_WINDOW_AMBIGUOUS",
+        sufficient: false, reason: "section_51c2_effectivity_date_unresolved" };
+    }
+
+    // No exact event date. A bare year cannot resolve a transaction-timing boundary.
+    // (reason kept as filing_period_not_resolved for continuity with R5/R6 controls.)
     if (resolvedYear == null) {
-      return { ...base, chainStatus: "LATER_AMENDMENT_REQUIRED", sufficient: false, reason: "filing_period_not_resolved" };
+      return { ...temporalBase, chainStatus: "LATER_AMENDMENT_REQUIRED", sufficient: false, reason: "filing_period_not_resolved" };
     }
-    if (applicableAmendments.length === 0) {
-      // period predates the amending law -> the pre-amendment (base) form applied.
-      return { ...base, chainStatus: "HISTORICAL_COMPLETE_CHAIN", currentAuthoritySet: ["NIRC Sec. 51(C)"], sufficient: true, reason: null };
+    if (resolvedYear < 2025) {
+      return { ...temporalBase, chainStatus: "HISTORICAL_COMPLETE_CHAIN",
+        currentAuthoritySet: ["NIRC Sec. 51(C)"], applicableAmendments: [], notYetEffective: ["RA 12214"],
+        temporalStatus: "PRE_EFFECTIVITY", sufficient: true, reason: null };
     }
-    return { ...base, chainStatus: "LATER_AMENDMENT_REQUIRED", sufficient: true, reason: null };
+    if (resolvedYear > 2025) {
+      return { ...temporalBase, chainStatus: "LATER_AMENDMENT_REQUIRED",
+        currentAuthoritySet: ["NIRC Sec. 51(C)", "RA 12214"], applicableAmendments: ["RA 12214"],
+        temporalStatus: "POST_EFFECTIVITY", sufficient: true, reason: null };
+    }
+    // 2025 with no exact date straddles the effectivity boundary -> exact date required.
+    return { ...temporalBase, chainStatus: "LATER_AMENDMENT_REQUIRED", temporalStatus: "PERIOD_UNRESOLVED", sufficient: false, reason: "section_51c2_transaction_date_required" };
   }
 
   // Ordinary propositions: unchanged through the chain. If the resolved period predates
