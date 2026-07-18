@@ -35,7 +35,8 @@ import {
   exactAuthoritySearch,
   normalizedCitationSearch,
   titleMetadataSearch,
-  exactProvisionSearch
+  exactProvisionSearch,
+  isSection51FilingAuthorityIntent
 }                                                 from "./vector-store.js";
 import { rerankForTina }                          from "./reranker-engine.js";
 import { detectDoctrinalConflicts }               from "./doctrinal-engine.js";
@@ -2449,6 +2450,36 @@ export async function runPipeline({
     model
   });
   ctx.issueClassification = issueClassificationOverride || classify(effectiveQuery);
+
+  // PHASE-10A14-R4: individual filing-authority routing.
+  // Issue classification maps individual filing/deadline/substituted questions to
+  // income-tax overview provisions (Sec 23/24/27/31/32/34) and omits the decisive
+  // filing authority (Sec 51 / 51-A), so those provisions fill every source-card slot
+  // and the compatible filing authority is never surfaced (live-caught). When filing
+  // intent is present (and no cross-tax return scope — guarded by the shared intent
+  // gate), promote Sec 51 (+ 51-A for substituted/explicit) into the target/controlling
+  // authority sets so the retrieval query set, source-card whitelist, slot allocation,
+  // and authority-compatibility all treat the filing provision as controlling.
+  try {
+    const _ic = ctx.issueClassification || {};
+    if (isSection51FilingAuthorityIntent({ issueClassification: _ic })) {
+      const _q = `${_ic.originalQuery || ""} ${_ic.normalizedQuery || effectiveQuery || ""}`;
+      const _wantSubstituted =
+        /\bsubstituted filing\b/i.test(_q) || /\bsec(?:tion|\.)?\s*0*51[- ]?a\b/i.test(_q) || /\b51-?a\b/i.test(_q);
+      const _filingAuths = _wantSubstituted ? ["NIRC Sec. 51", "NIRC Sec. 51-A"] : ["NIRC Sec. 51"];
+      const _mergeAuth = (list) => {
+        const arr = Array.isArray(list) ? [...list] : [];
+        for (const a of _filingAuths) if (!arr.some((x) => String(x).toLowerCase() === a.toLowerCase())) arr.push(a);
+        return arr;
+      };
+      _ic.controllingAuthorities = _mergeAuth(_ic.controllingAuthorities);
+      _ic.targetAuthorities = _mergeAuth(_ic.targetAuthorities);
+      console.log("[R4 FILING AUTHORITY ROUTING]", { promoted: _filingAuths, substituted: _wantSubstituted });
+    }
+  } catch (err) {
+    console.warn("[R4 FILING AUTHORITY ROUTING] skipped:", err?.message || String(err));
+  }
+
   diagnostics.partialPipelineState.classificationCompleted = true;
   markPipelineCheckpoint(diagnostics, "CLASSIFICATION_COMPLETE", {
     timingField: "classificationCompletedAt",

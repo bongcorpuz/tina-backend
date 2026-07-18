@@ -2343,10 +2343,16 @@ function buildSection51BridgeAliases(ref = "NIRC Sec. 51") {
 // explicit Section 51 / 51-A request. Cross-tax filing requests are excluded so the
 // bridge cannot substitute Sec 51 for corporate/estate/donor/VAT/percentage returns.
 export function isSection51FilingAuthorityIntent(parsed = {}) {
-  const exactRef = String(parsed.issueClassification?.exactAuthority?.reference || "");
+  const ic = parsed.issueClassification || {};
+  const exactRef = String(ic.exactAuthority?.reference || "");
+  // The user's filing intent survives on issueClassification.originalQuery /
+  // normalizedQuery even though the layer query (parsed.query) has been reformulated
+  // to rate/general provisions — read both so natural filing questions reach the bridge.
   const text = [
     parsed.keyword,
     parsed.query,
+    ic.originalQuery,
+    ic.normalizedQuery,
     exactRef,
     ...safeArray(parsed.targetAuthorities),
     ...safeArray(parsed.controllingAuthorities)
@@ -2590,10 +2596,18 @@ export async function exactAuthoritySearch(arg1, arg2) {
     : [];
 
   // PHASE-10A14-R4: individual filing / substituted-filing authority bridge.
-  // Fires only when equality lookup found no Sec 51 / 51-A row (the metadata-label
-  // defect) and the intent is individual filing/deadline/substituted. Re-surfaces the
-  // genuine indexed Section 51 / 51-A chunks with corrected provision labels.
-  const section51BridgeResults = equalityResults.length === 0
+  // Fires on individual filing/deadline/substituted intent whenever the decisive
+  // Section 51 / 51-A filing authority is NOT already among the equality results.
+  // It must NOT be gated on equalityResults.length === 0: rate/general provisions
+  // (Sec 23/24/27) legitimately hit the equality lookup for an individual income-tax
+  // question, and those non-filing authorities must not suppress the filing bridge
+  // (live-caught — the metadata-label defect means Sec 51 can never satisfy equality).
+  const equalityHasSection51 = equalityResults.some((r) =>
+    /\bsec(?:tion|\.)?\s*0*51(?:[- ]?a)?\b/i.test(
+      String(r.normalizedReference || r.normalized_reference || r.citation || "")
+    )
+  );
+  const section51BridgeResults = !equalityHasSection51
     ? await searchSection51FilingAuthoritySource({
         supabaseClient,
         poolLimit,
