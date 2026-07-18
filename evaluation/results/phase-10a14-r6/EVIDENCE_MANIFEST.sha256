@@ -1,0 +1,11 @@
+4074011e5f54aee4a1d62794a678bf39917dc25d918c879cd4c4aa691f4b73a1 *evaluation/results/phase-10a14-r6/MANIFEST-AND-REPRODUCTION.md
+b2da46a42d919274a61fa6755a7294231d14d968292bc3b4f9c9f3588555a4c1 *evaluation/results/phase-10a14-r6/deterministic-gate-cycle1.txt
+3391aae99da40dc4517686491fc2b5b067689c1b3bba4f20ed33a60ea570080e *evaluation/results/phase-10a14-r6/deterministic-gate-cycle2.txt
+77aed0e4d749b6b0bc76a1cd7e1dadc7cd7b4c4356c9e2a97eb99f49f7e9b268 *evaluation/results/phase-10a14-r6/live-matrix.txt
+f15fdfff53c658e0e5268c1f95c85591ec9b72eb79539938db3e1bb0ac546b53 *evaluation/results/phase-10a14-r6/phase-10a14-r6-result.json
+fd4d088f9ec48a4e76e7b30bd0bc9798bdccf66b26ebf6a7245defaef72d9ac1 *evaluation/results/phase-10a14-r6/staging-gate-cycle1.txt
+f60d8affb3a9a734e10233eb06f513835a2c598d7b9cf34e331a6ccbbd48b1e3 *evaluation/results/phase-10a14-r6/staging-gate-cycle2.txt
+dfae9208ba659cc897280954cf33d9168c66b113db1db440a933905bc16f5e10 *PHASE-10A14-R6-SECTION-51-TEMPORAL-CARD-PROPAGATION-SUBSTITUTED-FILING-AND-COMPLETE-GOVERNED-EVIDENCE-REMEDIATION-1_REPORT.md
+0e30416adb6611725960f4b14b72c664a8c5a44c2120d033738b559a02472f26 *section51-authority-chain.js
+7e2faf0464cb9f96d6ae02150654bbf2ced7ceec1d7d0678be6c58bcd36c6b38 *services/ask-handler-public-source-sanitizer.js
+c73d7ea520069a04f0df6f9c80c64e68656b824995f3050c3e617d34b1ae8a49 *tests/phase-10a14-r6-temporal-card-propagation-and-51a-origin.test.mjs
