@@ -1,0 +1,26 @@
+{
+  "task": "PHASE-10A14-R6-SECTION-51-TEMPORAL-CARD-PROPAGATION-SUBSTITUTED-FILING-AND-COMPLETE-GOVERNED-EVIDENCE-REMEDIATION-1",
+  "executor": "Claude Code — Opus 4.8",
+  "startingHEAD": "5d3e2adcbfb20d04544187034cf34c874a19dc83",
+  "model": "gpt-4o-mini",
+  "vectorRows": 5346,
+  "noReindex": true, "noDbWrite": true, "noVectorMutation": true,
+  "decision": "REVISIONS REQUIRED (self-assessed; formal decision belongs to the independent reviewer)",
+  "findings": {
+    "P1-R5-001": { "status": "CLOSED", "evidence": "chainReviewed=true on every Section 51 public card across the R6 live matrix (META-obligation, SUBST-*, OBL-2, DL-1, TEMP-hist-2023); non-Section-51 (corporate) card chainReviewed=false. Sanitizer re-derives the governed chain summary from the card provision.", "focusedTests": true },
+    "P1-R5-002": { "status": "CLOSED", "evidence": "governed live VERIFIED_CONTROLLING for substituted filing with Section 51 AND Section 51-A displayed (SUBST-1, SUBST-4). Fact-complete formulations; no best-answer retry of RELATED results." },
+    "P1-R5-003": { "status": "CLOSED", "evidence": "resolver + focused tests: Section 51-A originatingLaw = RA 10963 (created 51-A); RA 8424 = base-code lineage only; officialLaws include RA 10963." },
+    "P1-R5-004": { "status": "CLOSED", "evidence": "event-aware resolver: TY2023 obligation -> HISTORICAL_COMPLETE_CHAIN with RA 11976/12214 notYetEffective (not applied); TY2024 -> RA 12214 notYetEffective; current -> all reviewed; filingEventDate drives resolution when no taxableYear. TEMP-hist-2023 live VERIFIED on Sec 51." },
+    "P1-R5-005": { "status": "PARTIAL", "evidence": "focused R6 live matrix (13 probes) + deterministic all-26 replay preserved from prior phases; the exhaustive governed live R1/R2/R3/R4/R5 safeguard matrix (100+ model calls) with per-probe generated answers/cards/persistence/hashes was NOT executed as one reconciled package in this task.", "gap": "complete governed live safeguard matrix + freshly-executed all-26 live replay remain" }
+  },
+  "liveMatrix": {
+    "individual_filing_obligation": "VERIFIED_CONTROLLING (META-obligation, OBL-2)",
+    "individual_filing_deadline": "VERIFIED_CONTROLLING (DL-1)",
+    "substituted_filing": "VERIFIED_CONTROLLING with Sec 51 + 51-A (SUBST-1, SUBST-4)",
+    "historical_2023_obligation": "VERIFIED_CONTROLLING on Sec 51 (period-correct)",
+    "overfire_corporate": "RELATED_AUTHORITY_ONLY, no Sec 51 leakage, chainReviewed=false"
+  },
+  "focusedTests": { "phase-10a14-r6": "15/0", "phase-10a14-r5": "25/0", "phase-10a14-r4": "20/0", "phase-10a14-r3": "35/0", "phase-10a12-r6": "18/0" },
+  "counts": { "invalidVerified": 0, "questionableVerified": 0, "fabricatedAuthority": 0, "crossTaxLaundering": 0, "staleCurrentVerification": 0, "notYetEffectiveApplied": 0, "materialFalseRefusal": 0 },
+  "security": { "secrets": 0, "envChange": 0, "dbWrite": 0, "vectorMutation": 0, "reindex": 0, "protectedPathsTouched": 0 }
+}

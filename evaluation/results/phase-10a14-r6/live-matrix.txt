@@ -1,0 +1,13 @@
+RESULT|META-obligation|VERIFIED_CONTROLLING|["NIRC Sec. 24","NIRC Sec. 51","NIRC Sec. 23","NIRC Sec. 27"]|chainReviewed=true|51A=false|orig=RA 8424
+RESULT|SUBST-1|VERIFIED_CONTROLLING|["NIRC Sec. 51","NIRC Sec. 23","NIRC Sec. 24","NIRC Sec. 27","NIRC Sec. 51-A"]|chainReviewed=true|51A=true|orig=RA 8424
+RESULT|SUBST-2|RELATED_AUTHORITY_ONLY|["NIRC Sec. 51","RR No. 2-1998","NIRC Sec. 51-A"]|chainReviewed=true|51A=true|orig=RA 8424
+RESULT|SUBST-3|RELATED_AUTHORITY_ONLY|["NIRC Sec. 51","NIRC Sec. 23","NIRC Sec. 24","NIRC Sec. 27","NIRC Sec. 51-A"]|chainReviewed=true|51A=true|orig=RA 8424
+RESULT|SUBST-4|VERIFIED_CONTROLLING|["NIRC Sec. 51","NIRC Sec. 51-A"]|chainReviewed=true|51A=true|orig=RA 8424
+RESULT|SUBST-5|VERIFIED_CONTROLLING|["NIRC Sec. 51","NIRC Sec. 23","NIRC Sec. 24","NIRC Sec. 27","RR No. 2-1998"]|chainReviewed=true|51A=false|orig=RA 8424
+RESULT|SUBST-NEG-multi|VERIFIED_CONTROLLING|["NIRC Sec. 51","NIRC Sec. 51-A"]|chainReviewed=true|51A=true|orig=RA 8424
+RESULT|SUBST-NEG-mixed|VERIFIED_CONTROLLING|["NIRC Sec. 51","NIRC Sec. 51-A"]|chainReviewed=true|51A=true|orig=RA 8424
+RESULT|OBL-2|VERIFIED_CONTROLLING|["NIRC Sec. 24","NIRC Sec. 51","NIRC Sec. 23","NIRC Sec. 27"]|chainReviewed=true|51A=false|orig=RA 8424
+RESULT|DL-1|VERIFIED_CONTROLLING|["NIRC Sec. 24","NIRC Sec. 51","NIRC Sec. 23","NIRC Sec. 27"]|chainReviewed=true|51A=false|orig=RA 8424
+RESULT|TEMP-hist-2023|VERIFIED_CONTROLLING|["NIRC Sec. 24","NIRC Sec. 51","NIRC Sec. 23","NIRC Sec. 27"]|chainReviewed=true|51A=false|orig=RA 8424
+RESULT|NEG-corp|RELATED_AUTHORITY_ONLY|["NIRC Sec. 23","NIRC Sec. 24","NIRC Sec. 27"]|chainReviewed=false|51A=false|orig=null
+R6_MATRIX_DONE
