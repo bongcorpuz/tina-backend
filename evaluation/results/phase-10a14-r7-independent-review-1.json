@@ -1,0 +1,26 @@
+{
+  "task": "PHASE-10A14-R7-EXACT-DATE-SECTION-51C2-EFFECTIVITY-AND-COMPLETE-GOVERNED-LIVE-EVIDENCE-REMEDIATION-1-INDEPENDENT-REVIEW-1",
+  "reviewer": "Codex GPT-5",
+  "reviewedRuntimeCommit": "e1b2efe12af11d0bbb1a94e895a3470218dd7458",
+  "branch": "feature/source-availability-engine-v1",
+  "decision": "REVISIONS REQUIRED",
+  "stageCompleted": "Stage A",
+  "stageBExecuted": false,
+  "stageBStopReason": "Stage A found P1 defects; authorization requires stopping before complete live matrix.",
+  "severity": { "P0": 0, "P1": 4, "P2": 0, "P3": 0 },
+  "findings": [
+    { "id": "P1-R7-IR-001", "severity": "P1", "status": "OPEN", "summary": "Publication evidence is available from Supreme Court E-Library, contradicting R7's officially-unresolvable publication premise." },
+    { "id": "P1-R7-IR-002", "severity": "P1", "status": "OPEN", "summary": "Malformed material transaction dates can still apply RA 12214 through Date-based year fallback." },
+    { "id": "P1-R7-IR-003", "severity": "P1", "status": "OPEN", "summary": "taxableYear/legalAsOfDate can substitute for missing transactionDate in Section 51(C)(2) resolver." },
+    { "id": "P1-R7-IR-004", "severity": "P1", "status": "OPEN", "summary": "Fail-closed malformed-date result can still expose RA 12214 as applicable/current metadata." }
+  ],
+  "focusedSuites": {
+    "r3": "35/0",
+    "r4": "20/0",
+    "r5": "25/0",
+    "r6": "15/0",
+    "r7": "14/0",
+    "phase10a12r6": "18/0"
+  },
+  "security": { "secretsExposed": 0, "dbWrite": 0, "vectorMutation": 0, "reindex": 0, "protectedPathsTouched": 0 }
+}
