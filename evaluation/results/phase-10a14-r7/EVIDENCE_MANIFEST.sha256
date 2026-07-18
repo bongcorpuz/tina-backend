@@ -1,0 +1,10 @@
+f36ac41730ad4ea4c61e0f9aee41f103e52e35a762b8d0cd55923edae0c468d6 *evaluation/results/phase-10a14-r7/MANIFEST-AND-EFFECTIVITY.md
+e59aa74917dc4845347fa7b1cba351290402f8a48e5789eb7280f93f808fd4a6 *evaluation/results/phase-10a14-r7/deterministic-gate-cycle1.txt
+3be0ddf6d791c9b72a71d8169323ee6105d2b5608ef711b430a5009ed0761bd8 *evaluation/results/phase-10a14-r7/deterministic-gate-cycle2.txt
+3b6cfeac7887273241966c8c253f221d678991259875eb487ca7c97fa8990459 *evaluation/results/phase-10a14-r7/phase-10a14-r7-result.json
+8526c32b86e3dae06facc4cf77f22b55e6c7e382437e0d43e4f41b753b9f7b86 *evaluation/results/phase-10a14-r7/staging-gate-cycle1.txt
+0b6274cd220ff17211cb878e36c00b5f437b4edf5d3c6dfb4af2ea83f1bfcc95 *evaluation/results/phase-10a14-r7/staging-gate-cycle2.txt
+c944d0556c88e493286b03cd4ec488add16bec1b83485e1de1ed0ceaac7adc59 *PHASE-10A14-R7-EXACT-DATE-SECTION-51C2-EFFECTIVITY-AND-COMPLETE-GOVERNED-LIVE-EVIDENCE-REMEDIATION-1_REPORT.md
+369c264ea68d13419288d5a82bab000cf36705294f47f03252482eb4903f5ee2 *legal-date-utils.js
+ad8cfd8e1ef3d33294943c97e86b19c3deba01a42eb8db0e9199ad0c27f34150 *section51-authority-chain.js
+0ce8437718e1e710dbb4f02e70891266b28456d8338be856b307cae0f6181e7d *tests/phase-10a14-r7-exact-date-section51c2-effectivity.test.mjs
