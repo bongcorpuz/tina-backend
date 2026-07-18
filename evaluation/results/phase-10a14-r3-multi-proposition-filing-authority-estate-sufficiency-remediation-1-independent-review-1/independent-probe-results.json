@@ -1,0 +1,26 @@
+﻿{
+  "summary": { "total": 18, "expectationFailures": 1 },
+  "deadlineCoverage": {
+    "ordinaryEnglish": ["lodged today", "still time to submit ITR", "filing window closed", "annual return sent", "filing period open", "how long left to file"],
+    "taglishFilipino": ["ihabol ang ITR", "may oras pa para magsumite", "sarado na ba ang filing", "puwede pa ba ngayong araw"],
+    "result": "all classified as filing_deadline and failed closed on rate/residency authority"
+  },
+  "separationControls": {
+    "noTaxDue": "not filing_deadline",
+    "paymentDeadline": "not filing_deadline",
+    "lateFilingPenalty": "penalty_procedural, not filing_deadline"
+  },
+  "crossTaxAndEstate": {
+    "individualDeadlineOnEstateAuthority": "blocked filing_deadline without matching return authority",
+    "estateComputationFoundationalOnly": "blocked estate_computation_without_estate_authority",
+    "estateRelationshipError": "blocked estate_tax_base_deduction_threshold_conflation",
+    "estateComputationFullAuthority": "sufficient"
+  },
+  "edge": {
+    "id": "P2-IMPERATIVE-FILING",
+    "probe": "Submit invoices to customers, and file the annual income tax return.",
+    "result": "not classified as filing_obligation without an obligation modal",
+    "counterexamplesCovered": ["must file", "is required", "need to file", "no annual return is required"],
+    "severity": "P2"
+  }
+}

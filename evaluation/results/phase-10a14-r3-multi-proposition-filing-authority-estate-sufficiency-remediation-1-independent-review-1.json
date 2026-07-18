@@ -1,0 +1,58 @@
+﻿{
+  "task": "PHASE-10A14-R3-MULTI-PROPOSITION-FILING-AUTHORITY-COMPATIBILITY-AND-ESTATE-COMPUTATION-SUFFICIENCY-REMEDIATION-1-INDEPENDENT-REVIEW-1",
+  "reviewer": "Codex GPT-5",
+  "decision": "REVISIONS_REQUIRED",
+  "repository": "C:\\Projects\\tina-backend",
+  "branch": "feature/source-availability-engine-v1",
+  "head": "66b4d2773308a3be205c57967a57981f0f95fb02",
+  "sync": "0 0",
+  "expectedAncestryVerified": true,
+  "trackedWorktreeClean": true,
+  "protectedUntrackedPathsPreserved": [".claude/", ".vscode/", "evaluation/factcheck/"],
+  "fiveFormerR2P1DefectsClosed": true,
+  "formerP1Findings": {
+    "mixedObjectFilingSuppression": "closed",
+    "relativeTaglishDeadlineUnderDetection": "closed",
+    "crossTaxAuthorityLaundering": "closed",
+    "correctUnsupportedEstateComputation": "closed",
+    "estateRelationshipMisstatement": "closed"
+  },
+  "focusedSuite": { "tests": 35, "failed": 0, "assertions": 63 },
+  "runnerVerification": {
+    "deterministicSyntaxChecks": 10,
+    "deterministicSuites": 193,
+    "deterministicFailed": 0,
+    "stagingSandboxResult": "7 run, 1 failed due staging reachability in restricted sandbox",
+    "stagingNetworkEnabledSuites": 7,
+    "stagingNetworkEnabledFailed": 0,
+    "combinedSuites": 200
+  },
+  "liveProbeReconciliation": {
+    "payloads": 60,
+    "verifiedControlling": 8,
+    "invalidVerified": 0,
+    "questionableVerified": 0,
+    "allVerifiedOnMatchingDisplayedAuthority": true
+  },
+  "individualFilingReachability": {
+    "individualFilingObligation": "not_demonstrated_live",
+    "individualFilingDeadline": "not_demonstrated_live",
+    "substitutedFiling": "not_demonstrated_live",
+    "section51Surfaced": false,
+    "section51ASurfaced": false,
+    "classification": "P1_material_systemic_retrieval_source_surfacing_limitation"
+  },
+  "severity": { "P0": 0, "P1": 1, "P2": 2, "P3": 0 },
+  "p1Findings": [
+    {
+      "id": "P1-RETRIEVAL-51-51A",
+      "title": "Section 51/51-A individual filing and substituted filing authority not surfaced live",
+      "evidence": ["POS-01-indfile", "POS-03-inddl", "POSX-indfile-1", "POSX-inddl-1", "POS-02-subst", "POSX-subst-1"],
+      "stage": "retrieval/source-surfacing before validator-compatible displayed source cards"
+    }
+  ],
+  "unauthorizedChangesFound": false,
+  "securityScopeClean": true,
+  "phase10AStatus": "OPEN",
+  "nextTask": "PHASE-10A14-R4-INDIVIDUAL-FILING-OBLIGATION-DEADLINE-AND-SUBSTITUTED-FILING-AUTHORITY-RETRIEVAL-SURFACING-REMEDIATION-1 requires separate authorization"
+}
