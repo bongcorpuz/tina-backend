@@ -1,0 +1,39 @@
+{
+  "task": "PHASE-10A14-R6-SECTION-51-TEMPORAL-CARD-PROPAGATION-SUBSTITUTED-FILING-AND-COMPLETE-GOVERNED-EVIDENCE-REMEDIATION-1-INDEPENDENT-REVIEW-1",
+  "reviewer": "Codex GPT-5",
+  "reviewedRuntimeCommit": "1b86550c5166caa3b4c19263be231c64eb8ee24f",
+  "branch": "feature/source-availability-engine-v1",
+  "decision": "REVISIONS REQUIRED",
+  "severity": { "P0": 0, "P1": 2, "P2": 0, "P3": 1 },
+  "findings": [
+    {
+      "id": "P1-R6-IR-001",
+      "severity": "P1",
+      "status": "OPEN",
+      "summary": "Section 51(C)(2) event-aware resolver applies RA 12214 to pre-effectivity 2025 transaction dates because it partitions by effectivityYear instead of exact date."
+    },
+    {
+      "id": "P1-R6-IR-002",
+      "severity": "P1",
+      "status": "OPEN",
+      "summary": "Complete governed live R1-R5 safeguard matrix plus fresh all-26 live replay remains unproduced as one reconciled package."
+    },
+    {
+      "id": "P3-R6-IR-001",
+      "severity": "P3",
+      "status": "CLOSED",
+      "summary": "Restricted staging reachability failure preserved; network-enabled staging reruns passed 7/0 twice."
+    }
+  ],
+  "runnerEvidence": {
+    "focusedR6": "15/0 exit 0",
+    "deterministicCycle1": "syntax 10/0; deterministic 196/0; exit 0",
+    "deterministicCycle2": "syntax 10/0; deterministic 196/0; exit 0",
+    "restrictedStaging": "6/7 with staging unreachable failure preserved",
+    "networkStagingCycle1": "7/0 exit 0",
+    "networkStagingCycle2": "7/0 exit 0"
+  },
+  "liveModelReplayExecuted": false,
+  "liveModelReplayOmittedReason": "A deterministic P1 temporal defect made PASS impossible; no remediation was authorized.",
+  "security": { "secretsExposed": 0, "dbWrite": 0, "vectorMutation": 0, "reindex": 0, "protectedPathsTouched": 0 }
+}
