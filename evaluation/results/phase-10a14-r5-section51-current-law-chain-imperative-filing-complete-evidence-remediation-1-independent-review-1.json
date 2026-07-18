@@ -1,0 +1,32 @@
+﻿{
+  "reviewId": "PHASE-10A14-R5-SECTION-51-CURRENT-LAW-CHAIN-IMPERATIVE-FILING-AND-COMPLETE-EVIDENCE-REMEDIATION-1-INDEPENDENT-REVIEW-1",
+  "decision": "REVISIONS REQUIRED",
+  "reviewedHead": "47657ec0ecdaa90a7f3a3f134c856f6b37df772c",
+  "base": "188860434cdc221110cb06765739e3f603f52358",
+  "branch": "feature/source-availability-engine-v1",
+  "date": "2026-07-18",
+  "severityCounts": { "P0": 0, "P1": 5, "P2": 1, "P3": 0, "Security": 0 },
+  "runnerResults": {
+    "focusedR5Suite": "25/0",
+    "all26Replay": "9 blocked, 17 preserved, 0 mismatches",
+    "deterministicIndependentCycle1": "syntax 10/0; deterministic 195/0; exit 0",
+    "deterministicIndependentCycle2": "syntax 10/0; deterministic 195/0; exit 0",
+    "stagingRestricted": "7 run, 1 failed due staging reachability assertion",
+    "stagingIndependentCycle1NetworkEnabled": "7/0; exit 0",
+    "stagingIndependentCycle2NetworkEnabled": "7/0; exit 0"
+  },
+  "blockingFindings": [
+    { "id": "P1-R5-001", "title": "Public source cards lose amendment-chain reviewed metadata", "evidence": "R5 live matrix chainReviewed=false for all rows; exact search rows have amendmentChainReviewed=true earlier." },
+    { "id": "P1-R5-002", "title": "Substituted filing not verified in governed R5 main matrix", "evidence": "POS-02-subst and POSX-subst-1 are RELATED_AUTHORITY_ONLY." },
+    { "id": "P1-R5-003", "title": "Sec. 51-A chain omits RA 10963", "evidence": "buildSection51AmendmentChainMetadata('NIRC Sec. 51-A') returns officialLaws [RA 8424] only." },
+    { "id": "P1-R5-004", "title": "Historical ordinary filing period not resolved historically", "evidence": "taxableYear 2023 ordinary filing still returns RA 11976 in amendingAuthorities." },
+    { "id": "P1-R5-005", "title": "Complete governed live prior-safeguard package absent", "evidence": "Executor report admits exhaustive all-26 and full R1/R2/R3/R4 prior-safeguard live matrix were not run as one reconciled package; review filled deterministic all-26 but not the missing governed live matrix." }
+  ],
+  "closedOrSupported": [
+    "P2-R4-003 imperative filing under-detection is closed for tested bare filing commands.",
+    "Current Sec. 51(C)(2) temporal gate fails closed without RA 12214.",
+    "Ordinary annual filing obligation and ordinary April 15 deadline remain legally unchanged by RA 11976/RA 12214 based on reviewed primary sources.",
+    "Fresh deterministic and staging runner cycles pass after clean-tree/network-enabled reruns."
+  ],
+  "forbiddenActionsPerformed": false
+}

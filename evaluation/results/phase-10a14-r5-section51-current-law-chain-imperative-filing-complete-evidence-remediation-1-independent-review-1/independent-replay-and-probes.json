@@ -1,0 +1,29 @@
+﻿{
+  "all26Replay": {
+    "count": 26,
+    "blocked": ["Q12-r1.json", "Q12-r2.json", "Q12-r3.json", "Q30-r1.json", "Q30-r2.json", "Q30-r3.json", "Q34-r1.json", "Q34-r2.json", "Q34-r3.json"],
+    "preservedCount": 17,
+    "mismatchCount": 0
+  },
+  "resolverProbeFindings": [
+    {
+      "id": "sec51a-metadata",
+      "result": "officialAmendmentLaws contains only RA 8424; RA 10963 missing",
+      "severity": "P1"
+    },
+    {
+      "id": "historical-ordinary-2023",
+      "result": "amendingAuthorities contains RA 11976 for pre-effectivity ordinary filing period",
+      "severity": "P1"
+    }
+  ],
+  "temporalProbeSummary": [
+    { "id": "current-cgt-without-ra12214", "sufficient": false, "reason": "section_51_later_amendment_missing" },
+    { "id": "ordinary-april15-sec51", "sufficient": true, "reason": "" },
+    { "id": "imperative-rate-only", "sufficient": false, "reason": "filing_obligation_proposition_without_matching_return_authority" }
+  ],
+  "liveExactSearchMetadata": {
+    "retrievalRowsHaveAmendmentChainReviewed": true,
+    "publicR5MatrixChainReviewed": false
+  }
+}
