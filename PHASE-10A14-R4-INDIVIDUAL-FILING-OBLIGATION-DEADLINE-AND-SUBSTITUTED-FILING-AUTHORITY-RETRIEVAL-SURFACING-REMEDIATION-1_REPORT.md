@@ -1,6 +1,33 @@
 # PHASE-10A14-R4 — Individual Filing / Deadline / Substituted-Filing Authority Retrieval-Surfacing Remediation
 
-Status: **IN PROGRESS — remediation implemented and proven at the failing retrieval stage; full end-to-end live validation + staging lane pending.** No PASS claimed.
+Status: **Remediation implemented and validated end-to-end — genuine live VERIFIED_CONTROLLING achieved for all three required classes.** Remaining: staging-smoke lane + full A14/R1–R3 replay matrices + independent review (separate task).
+
+## End-to-end outcome (WS13–16)
+
+The full failure cascade was localized stage-by-stage with live end-to-end testing and fixed in four stages:
+
+| Stage | Defect | Fix (commit) |
+|---|---|---|
+| C→F corpus metadata | Sec 51 text labeled `Sec 50`, 51-A labeled `Sec 52`; no `Sec 51`/`51-A` chunks | runtime exact-authority bridge (COMMIT 2) |
+| E query-intent loss | Layer-1 query reformulated to rate provisions; filing intent lost | bridge reads `issueClassification.originalQuery`; fires when Sec 51 absent from equality (COMMIT 2b) |
+| missing target authority | classification routes only Sec 23/24/27/31/32/34 | promote Sec 51/51-A to target+controlling on filing intent (COMMIT 2b) |
+| I authority-slot starvation | Sec 51 bridge rows sliced out of topK by Sec 23/24/27 equality chunks | WS9 slot reservation in `exactAuthoritySearch` (COMMIT 3) |
+
+Genuine live results (matching authority), captured in `evaluation/results/phase-10a14-r4/live-positive-negative-matrix.txt`:
+
+- Individual filing **obligation** → `VERIFIED_CONTROLLING` (NIRC Sec. 51)
+- Individual filing **deadline** → `VERIFIED_CONTROLLING` (NIRC Sec. 51 present)
+- **Substituted filing** → `VERIFIED_CONTROLLING` (NIRC Sec. 51 **and** Sec. 51-A)
+- Overfire (corporate/estate) → **no Sec 51 leakage** (correct other-tax authorities only)
+
+Some natural formulations calibrate down to `RELATED_AUTHORITY_ONLY` (LLM answer-dependent) while still surfacing Sec 51 as a visible card — acceptable calibrated behavior, not a false refusal.
+
+Focused suite: **20/0**. Clean-tree deterministic regression: **194/0** (pre-stage-4); a post-COMMIT-3 rerun confirms non-regression.
+
+---
+
+### (Original diagnosis record below)
+
 
 Executor: Claude Code — Opus 4.8
 Controlling P1: `P1-RETRIEVAL-51-51A`
@@ -108,11 +135,18 @@ The decisive filing authority now surfaces with correct provision labels through
 
 ---
 
-## Remaining for a full R4 PASS (not yet done — no PASS claimed)
+## Completed
 
-- **WS13–16 end-to-end live validation (PASS crux):** run the required formulations through the *full* pipeline (ask-handler → proposition ledger → authority compatibility → deterministic sufficiency → trust state) and capture ≥1 genuine live `VERIFIED_CONTROLLING` for each of individual filing obligation, individual filing deadline, and substituted filing, with matching authority; plus the negative/overfire matrix, R3 failed-positive replay, all-26 replay, and prior-safeguard preservation matrix. Requires the live backend/eval harness + LLM generation.
-- **WS17 staging lane:** `node scripts/run-staging-smokes.mjs` (expect 7/0) + clean-tree deterministic re-run ×2.
-- **WS18+ evidence package:** live payloads, EVIDENCE_MANIFEST.sha256, CURRENT_STATE update, COMMIT 1/2/3 sequencing, push, sync `0 0`, process cleanup.
+- WS1–4 diagnosis; WS5–10 remediation (bridge + intent + routing + slot reservation); WS12 focused tests (20/0); WS13–16 core positive + overfire live validation with genuine `VERIFIED_CONTROLLING` for all three required classes; COMMIT 1/2/2b/3 pushed, sync `0 0`.
+
+## Remaining (not claimed complete)
+
+- **WS13/16 extended matrices:** the full multi-formulation positive matrix, R3 failed-positive replay (POS-01/03/…), all-26 A14 replay, and the R1/R2/R3 prior-safeguard preservation matrix (Q12/Q30/Q34 nine blocked slots, donor false-refusal, cross-tax laundering, estate computation) — spot-checks passed (overfire clean; no cross-tax Sec 51 leakage) but the exhaustive replays are not yet run.
+- **WS17 staging lane:** `node scripts/run-staging-smokes.mjs` (expect 7/0) and a second clean-tree deterministic run.
+- **WS18+ closeout:** EVIDENCE_MANIFEST.sha256, CURRENT_STATE update.
+- **Independent review** is a separately authorized task (not part of R4 execution).
+
+No unqualified PASS is asserted here pending the extended replays and staging lane.
 
 ## Scope & security
 
